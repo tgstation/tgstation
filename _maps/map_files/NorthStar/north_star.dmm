@@ -779,7 +779,6 @@
 /area/station/commons/dorms/room3)
 "aiT" = (
 /obj/effect/turf_decal/trimline/brown/arrow_ccw,
-/obj/effect/turf_decal/trimline/brown/mid_joiner,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1386,9 +1385,6 @@
 /area/station/medical/virology/isolation)
 "ari" = (
 /obj/effect/turf_decal/trimline/white/arrow_ccw{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/white/mid_joiner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/side{
@@ -3543,10 +3539,6 @@
 /area/station/commons/toilet)
 "aSR" = (
 /obj/effect/turf_decal/trimline/purple/line,
-/obj/effect/turf_decal/trimline/purple/mid_joiner,
-/obj/effect/turf_decal/trimline/purple/mid_joiner{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 1
 	},
@@ -3585,10 +3577,6 @@
 "aTg" = (
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/effect/turf_decal/trimline/blue/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/blue/mid_joiner,
-/obj/effect/turf_decal/trimline/blue/mid_joiner{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4139,10 +4127,6 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/green/mid_joiner,
-/obj/effect/turf_decal/trimline/green/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4492,7 +4476,6 @@
 /area/station/cargo/storage)
 "bdj" = (
 /obj/effect/turf_decal/trimline/brown/arrow_ccw,
-/obj/effect/turf_decal/trimline/brown/mid_joiner,
 /turf/open/floor/iron/dark/side,
 /area/station/cargo/lobby)
 "bdx" = (
@@ -4907,7 +4890,6 @@
 /area/station/hallway/floor3/aft)
 "biu" = (
 /obj/effect/turf_decal/trimline/red,
-/obj/effect/turf_decal/trimline/white/mid_joiner,
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
@@ -5012,7 +4994,7 @@
 "bjf" = (
 /obj/machinery/light/directional/east,
 /obj/effect/landmark/start/hangover,
-/obj/effect/overlay/coconut,
+/obj/structure/flora/coconuts,
 /turf/open/misc/beach/sand,
 /area/station/hallway/floor2/fore)
 "bjg" = (
@@ -5589,10 +5571,6 @@
 /obj/effect/turf_decal/trimline/brown/arrow_ccw{
 	dir = 10
 	},
-/obj/effect/turf_decal/trimline/brown/mid_joiner,
-/obj/effect/turf_decal/trimline/brown/mid_joiner{
-	dir = 8
-	},
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron/dark/side{
 	dir = 10
@@ -5698,10 +5676,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -8800,10 +8774,6 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/blue/mid_joiner,
-/obj/effect/turf_decal/trimline/blue/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -11180,10 +11150,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -12189,10 +12155,6 @@
 "cYN" = (
 /obj/effect/turf_decal/trimline/green/line,
 /obj/effect/turf_decal/trimline/green/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/green/mid_joiner,
-/obj/effect/turf_decal/trimline/green/mid_joiner{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -13776,10 +13738,6 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/green/mid_joiner,
-/obj/effect/turf_decal/trimline/green/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -15264,7 +15222,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/line,
-/obj/effect/turf_decal/trimline/yellow/mid_joiner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -18502,10 +18459,6 @@
 /area/station/engineering/atmos/hfr_room)
 "eIv" = (
 /obj/effect/turf_decal/trimline/purple/line,
-/obj/effect/turf_decal/trimline/purple/mid_joiner,
-/obj/effect/turf_decal/trimline/purple/mid_joiner{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 1
 	},
@@ -19738,7 +19691,6 @@
 /area/station/maintenance/floor3/starboard/aft)
 "feh" = (
 /obj/effect/turf_decal/trimline/white/arrow_ccw,
-/obj/effect/turf_decal/trimline/white/mid_joiner,
 /obj/machinery/camera/autoname/directional/south,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -20138,10 +20090,6 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/green/mid_joiner,
-/obj/effect/turf_decal/trimline/green/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -20416,12 +20364,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/green/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/green/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/green/mid_joiner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -20866,7 +20808,6 @@
 /area/station/commons/vacant_room/commissary)
 "ftN" = (
 /obj/effect/turf_decal/trimline/white/arrow_ccw,
-/obj/effect/turf_decal/trimline/white/mid_joiner,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -21121,12 +21062,6 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 8
-	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
@@ -21162,7 +21097,6 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/aft)
@@ -21185,9 +21119,6 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -23604,9 +23535,6 @@
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/neutral/mid_joiner{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -25785,12 +25713,6 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/green/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/green/mid_joiner{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -26958,9 +26880,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/white/mid_joiner{
-	dir = 4
-	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
@@ -28420,8 +28339,8 @@
 	req_access = list("medical")
 	},
 /obj/machinery/light_switch/directional/west{
-	pixel_y = -10;
-	pixel_x = -24
+	pixel_x = -24;
+	pixel_y = -10
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
@@ -28691,10 +28610,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -29725,10 +29640,6 @@
 "hJy" = (
 /turf/closed/wall,
 /area/station/maintenance/floor1/port/fore)
-"hJB" = (
-/obj/machinery/light/small/directional/south,
-/turf/closed/wall,
-/area/station/medical/paramedic)
 "hJC" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -33334,7 +33245,6 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
@@ -34381,10 +34291,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -34908,10 +34814,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -35470,8 +35372,8 @@
 "jlq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/toy/plush/lizard_plushie/green{
-	name = "Bites-The-Wires";
-	desc = "A stuffed toy which resembles a wayward Ashlander. This one fills you with hope for the future."
+	desc = "A stuffed toy which resembles a wayward Ashlander. This one fills you with hope for the future.";
+	name = "Bites-The-Wires"
 	},
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 10
@@ -36220,9 +36122,6 @@
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/neutral/mid_joiner{
-	dir = 8
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -36800,17 +36699,11 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor1/port)
 "jCY" = (
-/obj/effect/turf_decal/trimline/blue/mid_joiner{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor/heavy,
-/obj/effect/turf_decal/trimline/purple/mid_joiner{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 8
 	},
@@ -37816,16 +37709,10 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard)
 "jQJ" = (
-/obj/effect/turf_decal/trimline/blue/mid_joiner{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/purple/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/mid_joiner{
 	dir = 8
 	},
 /obj/structure/disposalpipe/junction{
@@ -41406,10 +41293,6 @@
 /area/station/medical/medbay/central)
 "kOj" = (
 /obj/effect/turf_decal/trimline/purple/line,
-/obj/effect/turf_decal/trimline/purple/mid_joiner,
-/obj/effect/turf_decal/trimline/purple/mid_joiner{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 1
 	},
@@ -43229,9 +43112,6 @@
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/neutral/mid_joiner{
-	dir = 8
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -43265,9 +43145,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/neutral/warning{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/neutral/mid_joiner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/side{
@@ -43664,10 +43541,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -44285,12 +44158,6 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/green/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/green/mid_joiner{
-	dir = 8
-	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor/heavy,
 /obj/structure/cable,
@@ -44584,10 +44451,6 @@
 /area/station/tcommsat/computer)
 "lES" = (
 /obj/effect/turf_decal/trimline/purple/line,
-/obj/effect/turf_decal/trimline/purple/mid_joiner,
-/obj/effect/turf_decal/trimline/purple/mid_joiner{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 1
 	},
@@ -45206,9 +45069,6 @@
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/neutral/mid_joiner{
-	dir = 4
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -45450,7 +45310,6 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner,
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
@@ -46686,7 +46545,6 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/aft)
@@ -47268,8 +47126,8 @@
 	dir = 8
 	},
 /obj/item/toy/plush/beeplushie{
-	name = "Bee Haave";
-	desc = "A cute bee toy to calm down hysteric patients."
+	desc = "A cute bee toy to calm down hysteric patients.";
+	name = "Bee Haave"
 	},
 /turf/open/floor/wood,
 /area/station/medical/psychology)
@@ -48808,7 +48666,6 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner,
 /obj/machinery/door/airlock/public/glass{
 	name = "Public Airlock"
 	},
@@ -48822,7 +48679,6 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/aft)
 "mGd" = (
@@ -49560,7 +49416,6 @@
 "mOV" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/trimline/purple/warning,
-/obj/effect/turf_decal/trimline/purple/mid_joiner,
 /obj/structure/chair{
 	dir = 8
 	},
@@ -50622,10 +50477,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -51521,9 +51372,6 @@
 /obj/effect/turf_decal/trimline/brown/arrow_ccw{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/brown/mid_joiner{
-	dir = 8
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -51680,9 +51528,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -52499,12 +52344,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/red/mid_joiner{
 	dir = 8
 	},
 /obj/machinery/door/firedoor/heavy,
@@ -53974,9 +53813,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/white/mid_joiner{
-	dir = 4
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -54555,19 +54391,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/port/fore)
-"nYt" = (
-/obj/effect/turf_decal/trimline/yellow/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/yellow/line,
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/hallway/floor1/fore)
 "nYw" = (
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
@@ -59380,7 +59203,6 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
 "ppi" = (
@@ -59894,8 +59716,8 @@
 "pvT" = (
 /obj/structure/rack,
 /obj/item/toy/plush/plasmamanplushie{
-	name = "Nitrous II";
-	desc = "A stuffed toy that resembles your plasma coworkers. It is cute despite itself."
+	desc = "A stuffed toy that resembles your plasma coworkers. It is cute despite itself.";
+	name = "Nitrous II"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/port/fore)
@@ -60002,9 +59824,6 @@
 "pxz" = (
 /obj/effect/turf_decal/stripes/full,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/structure/railing{
 	dir = 5
 	},
@@ -60466,10 +60285,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -61894,10 +61709,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -61962,7 +61773,6 @@
 /area/station/command/heads_quarters/hop)
 "pZk" = (
 /obj/effect/turf_decal/trimline/white/arrow_ccw,
-/obj/effect/turf_decal/trimline/white/mid_joiner,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -62079,12 +61889,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/red/mid_joiner{
 	dir = 8
 	},
 /obj/machinery/door/firedoor/heavy,
@@ -62568,7 +62372,6 @@
 "qgy" = (
 /obj/structure/railing/corner,
 /obj/effect/turf_decal/trimline/purple/warning,
-/obj/effect/turf_decal/trimline/purple/mid_joiner,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/fore)
 "qgA" = (
@@ -62889,7 +62692,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/purple/warning,
-/obj/effect/turf_decal/trimline/purple/mid_joiner,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/fore)
 "qlo" = (
@@ -63650,10 +63452,10 @@
 /obj/effect/turf_decal/trimline/white/arrow_cw{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/white/mid_joiner{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/secondary/entry)
 "qvv" = (
@@ -64267,9 +64069,7 @@
 /area/station/service/hydroponics)
 "qBy" = (
 /obj/effect/turf_decal/trimline/white/arrow_ccw,
-/obj/effect/turf_decal/trimline/white/mid_joiner,
 /obj/effect/turf_decal/trimline/red/warning,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -64782,10 +64582,6 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/blue/mid_joiner,
-/obj/effect/turf_decal/trimline/blue/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -64970,12 +64766,6 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/green/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/green/mid_joiner{
-	dir = 8
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -65010,9 +64800,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
 	dir = 4
 	},
 /obj/structure/disposalpipe/junction/flip{
@@ -65320,10 +65107,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/junction{
@@ -65492,7 +65275,6 @@
 "qQp" = (
 /obj/effect/turf_decal/trimline/purple/arrow_ccw,
 /obj/machinery/door/firedoor/heavy,
-/obj/effect/turf_decal/trimline/purple/mid_joiner,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/trimline/green/arrow_cw{
 	dir = 1
@@ -65551,9 +65333,6 @@
 /area/station/commons/dorms/room2)
 "qQZ" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/neutral/mid_joiner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/side{
@@ -67409,11 +67188,11 @@
 /obj/effect/turf_decal/trimline/white/arrow_cw{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/white/mid_joiner{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
+	},
+/obj/effect/turf_decal/trimline/white/mid_joiner{
+	dir = 8
 	},
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/secondary/entry)
@@ -68022,12 +67801,6 @@
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 8
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -68078,10 +67851,6 @@
 "rAW" = (
 /obj/effect/turf_decal/trimline/green/line,
 /obj/effect/turf_decal/trimline/green/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/green/mid_joiner,
-/obj/effect/turf_decal/trimline/green/mid_joiner{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -68278,7 +68047,6 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -68580,7 +68348,6 @@
 /area/station/medical/virology)
 "rIs" = (
 /obj/effect/turf_decal/trimline/white/arrow_ccw,
-/obj/effect/turf_decal/trimline/white/mid_joiner,
 /obj/effect/turf_decal/trimline/red/corner,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -69676,9 +69443,6 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
@@ -69781,10 +69545,6 @@
 "sbq" = (
 /obj/effect/turf_decal/trimline/green/line,
 /obj/effect/turf_decal/trimline/green/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/green/mid_joiner,
-/obj/effect/turf_decal/trimline/green/mid_joiner{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -70240,10 +70000,6 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/blue/mid_joiner,
-/obj/effect/turf_decal/trimline/blue/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -70277,12 +70033,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/red/mid_joiner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -71995,9 +71745,6 @@
 "sIf" = (
 /obj/effect/turf_decal/stripes/full,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/structure/railing{
 	dir = 6
 	},
@@ -75768,7 +75515,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/white/arrow_ccw,
-/obj/effect/turf_decal/trimline/white/mid_joiner,
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 8
 	},
@@ -75807,8 +75553,8 @@
 	req_access = list("medical")
 	},
 /obj/machinery/light_switch/directional/west{
-	pixel_y = -10;
-	pixel_x = -24
+	pixel_x = -24;
+	pixel_y = -10
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
@@ -76389,9 +76135,6 @@
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/neutral/mid_joiner{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -76442,10 +76185,6 @@
 "tQq" = (
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/effect/turf_decal/trimline/blue/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/blue/mid_joiner,
-/obj/effect/turf_decal/trimline/blue/mid_joiner{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -77233,9 +76972,6 @@
 /area/station/service/chapel/funeral)
 "ucO" = (
 /obj/effect/turf_decal/trimline/brown/arrow_ccw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/brown/mid_joiner{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -79222,10 +78958,10 @@
 /obj/effect/turf_decal/trimline/white/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/white/mid_joiner{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/secondary/entry)
 "uFI" = (
@@ -79828,12 +79564,12 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor/heavy,
-/obj/effect/turf_decal/trimline/brown/mid_joiner{
-	dir = 1
-	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/mid_joiner{
+	dir = 1
 	},
 /turf/open/floor/iron/textured_large,
 /area/station/cargo/miningdock)
@@ -80052,10 +79788,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -80456,10 +80188,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -81660,10 +81388,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -82311,10 +82035,6 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/green/mid_joiner,
-/obj/effect/turf_decal/trimline/green/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -82452,9 +82172,6 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner{
-	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -83092,10 +82809,6 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/green/mid_joiner,
-/obj/effect/turf_decal/trimline/green/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -83249,10 +82962,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -84179,7 +83888,6 @@
 /obj/structure/railing,
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/purple/warning,
-/obj/effect/turf_decal/trimline/purple/mid_joiner,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/fore)
 "vTt" = (
@@ -86443,7 +86151,6 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/yellow/mid_joiner,
 /obj/machinery/door/airlock/public/glass{
 	name = "Public Airlock"
 	},
@@ -87024,9 +86731,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/white/mid_joiner{
-	dir = 4
-	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
 "wDr" = (
@@ -87778,10 +87482,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -88842,10 +88542,10 @@
 /obj/effect/turf_decal/trimline/white/line{
 	dir = 8
 	},
+/obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/trimline/white/mid_joiner{
 	dir = 8
 	},
-/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/secondary/entry)
 "xap" = (
@@ -89372,9 +89072,6 @@
 /area/station/maintenance/floor3/starboard/aft)
 "xhI" = (
 /obj/machinery/door/firedoor/heavy,
-/obj/effect/turf_decal/trimline/green/mid_joiner{
-	dir = 8
-	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/textured_large,
@@ -89440,12 +89137,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/red/mid_joiner{
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -89722,10 +89413,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/mid_joiner,
-/obj/effect/turf_decal/trimline/red/mid_joiner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -92754,9 +92441,6 @@
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/neutral/mid_joiner{
-	dir = 4
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -93004,16 +92688,10 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "ygC" = (
-/obj/effect/turf_decal/trimline/blue/mid_joiner{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/purple/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/mid_joiner{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -123551,7 +123229,7 @@ kyR
 vOK
 hVG
 bBx
-nYt
+dQd
 vLP
 lsZ
 bwS
@@ -196803,7 +196481,7 @@ kMN
 tEe
 fYt
 rYI
-hJB
+sRR
 qPu
 sEl
 vOo
