@@ -45,7 +45,7 @@
 /datum/element/loomable/proc/on_examine(obj/item/source, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("You could probably process [source] at a <b>[initial(target_type.name)]</b>.")
+	examine_list += span_notice("You could probably process [source] at \a <b>[initial(target_type.name)]</b>.")
 
 /// Checks if the thing we clicked on can be used as a loom, and if we can actually loom the source at present (an example being does the stack have enough in it (if its a stack))
 /datum/element/loomable/proc/try_and_loom_me(obj/item/source, atom/target, mob/living/user)
@@ -72,12 +72,22 @@
 /// If a do_after of the specified loom_time passes, will create a new one of resulting_atom and either delete the item, or .use the required amount if its a stack
 /datum/element/loomable/proc/loom_me(obj/item/source, mob/living/user, atom/target)
 	if(!do_after(user, loom_time, target))
+		user.balloon_alert("interrupted!")
+		return
+
+	///we need to perform another check in case a stack somehow got diminished in the middle of the do_after
+	var/successful = TRUE
+	if(isstack(source))
+		var/obj/item/stack/stack_we_use = source
+		if(!stack_we_use.use(required_amount))
+			successful = FALSE
+	else
+		qdel(source)
+
+	//ripbozo
+	if(!successful)
+		user.balloon_alert("need [required_amount] of [source]!")
 		return
 
 	var/new_thing = new resulting_atom(target.drop_location())
 	user.balloon_alert_to_viewers("[process_completion_verb] [new_thing]")
-	if(isstack(source))
-		var/obj/item/stack/stack_we_use = source
-		stack_we_use.use(required_amount)
-	else
-		qdel(source)
