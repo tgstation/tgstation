@@ -179,7 +179,6 @@
 		/obj/item/food/pizza/pineapple = 10,
 		/obj/item/food/pizza/arnold = 3,
 		/obj/item/food/pizza/energy = 5,
-		/obj/item/food/pizza/energy = 5,
 		/obj/item/food/pizza/mothic_margherita = 10,
 		/obj/item/food/pizza/mothic_firecracker = 5,
 		/obj/item/food/pizza/mothic_five_cheese = 5
