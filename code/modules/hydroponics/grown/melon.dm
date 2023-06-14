@@ -45,6 +45,7 @@
 	desc = "These seeds grow into holymelon plants."
 	icon_state = "seed-holymelon"
 	species = "holymelon"
+	inhand_icon_state = "holymelon"
 	plantname = "Holy Melon Vines"
 	product = /obj/item/food/grown/holymelon
 	genes = list(/datum/plant_gene/trait/glow/yellow, /datum/plant_gene/trait/anti_magic)
