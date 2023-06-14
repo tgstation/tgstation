@@ -524,8 +524,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		to_chat(user, span_warning("\The [src] cannot hold more paper!."))
 		return
 	paper_stack += paper
-	object.forceMove(src)
-	to_chat(user, span_notice("You insert \the [object] into \the [src]'s paper tray."))
+	paper.forceMove(src)
+	to_chat(user, span_notice("You insert \the [paper] into \the [src]'s paper tray."))
 
 /obj/machinery/photocopier/proc/insert_copy_object(obj/item/object, mob/user)
 	if(!copier_empty())
