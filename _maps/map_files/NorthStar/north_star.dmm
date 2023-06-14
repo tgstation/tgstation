@@ -4994,7 +4994,7 @@
 "bjf" = (
 /obj/machinery/light/directional/east,
 /obj/effect/landmark/start/hangover,
-/obj/effect/overlay/coconut,
+/obj/structure/flora/coconuts,
 /turf/open/misc/beach/sand,
 /area/station/hallway/floor2/fore)
 "bjg" = (
