@@ -191,10 +191,7 @@
 /area/station/ai_monitored/security/armory)
 "aeu" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/kirbyplants{
-	icon_state = "plant-20";
-	pixel_y = 3
-	},
+/obj/item/kirbyplants/organic/plant20,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
@@ -3677,9 +3674,7 @@
 /area/station/service/library)
 "bpG" = (
 /obj/machinery/firealarm/directional/east,
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -7077,9 +7072,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "cJm" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
@@ -14345,9 +14338,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "fsb" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-18"
-	},
+/obj/item/kirbyplants/organic/plant18,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -18193,9 +18184,7 @@
 /area/station/maintenance/aft/greater)
 "gOr" = (
 /obj/machinery/airalarm/directional/north,
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
+/obj/item/kirbyplants/organic/applebush,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
 	},
@@ -20120,9 +20109,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "hxB" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
 "hxD" = (
@@ -20825,9 +20812,7 @@
 "hLj" = (
 /obj/machinery/light/directional/west,
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/item/kirbyplants{
-	icon_state = "plant-03"
-	},
+/obj/item/kirbyplants/organic/plant3,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -25447,9 +25432,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "jjS" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-06"
-	},
+/obj/item/kirbyplants/organic/plant6,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -29398,9 +29381,7 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "kFT" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-13"
-	},
+/obj/item/kirbyplants/organic/plant13,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -30130,9 +30111,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
 "kSP" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/structure/sign/departments/botany/directional/east,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/tile/neutral{
@@ -34930,9 +34909,7 @@
 	c_tag = "Departure Lounge - Starboard Fore"
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/item/kirbyplants{
-	icon_state = "plant-14"
-	},
+/obj/item/kirbyplants/organic/plant14,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -36238,9 +36215,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "ndI" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-20"
-	},
+/obj/item/kirbyplants/organic/plant20,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -38045,9 +38020,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "nKG" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -38247,9 +38220,7 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Departure Lounge - Port Fore"
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-24"
-	},
+/obj/item/kirbyplants/organic/plant24,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -40292,9 +40263,7 @@
 /area/station/hallway/primary/central)
 "oAa" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/kirbyplants{
-	icon_state = "plant-14"
-	},
+/obj/item/kirbyplants/organic/plant14,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
 "oAj" = (
@@ -42955,9 +42924,7 @@
 /turf/open/floor/carpet,
 /area/station/commons/vacant_room/office)
 "pzz" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/disposalpipe/segment{
@@ -46845,9 +46812,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/item/kirbyplants{
-	icon_state = "plant-04"
-	},
+/obj/item/kirbyplants/organic/plant4,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -48608,9 +48573,7 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/east,
-/obj/item/kirbyplants{
-	icon_state = "plant-16"
-	},
+/obj/item/kirbyplants/organic/plant16,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -52357,9 +52320,7 @@
 /area/station/command/heads_quarters/qm)
 "sRJ" = (
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/item/kirbyplants{
-	icon_state = "plant-16"
-	},
+/obj/item/kirbyplants/organic/plant16,
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
@@ -58203,9 +58164,7 @@
 /area/station/cargo/sorting)
 "uRA" = (
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
+/obj/item/kirbyplants/organic/applebush,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -59520,9 +59479,7 @@
 	icon_state = "map-right-MS";
 	pixel_y = -32
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-03"
-	},
+/obj/item/kirbyplants/organic/plant3,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -59828,9 +59785,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "vwn" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -64637,9 +64592,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "xiv" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-11"
-	},
+/obj/item/kirbyplants/organic/plant11,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},

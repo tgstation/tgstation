@@ -167,22 +167,14 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "an" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ap" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -599,9 +591,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bz" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/machinery/button/flasher{
 	id = "shuttleflash";
 	pixel_x = -26;
@@ -613,9 +603,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bA" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -846,11 +834,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "cA" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
@@ -1027,11 +1011,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Jv" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/machinery/light/directional/north,
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -1091,11 +1071,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "WT" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,

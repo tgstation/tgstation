@@ -75,11 +75,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aC" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -253,11 +249,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aS" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -518,11 +510,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ih" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)

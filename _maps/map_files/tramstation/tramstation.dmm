@@ -29452,9 +29452,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "jud" = (
@@ -55979,9 +55977,7 @@
 /turf/open/floor/plating,
 /area/station/asteroid)
 "sYh" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
