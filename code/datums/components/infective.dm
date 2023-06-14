@@ -15,6 +15,7 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
+/datum/component/infective/RegisterWithParent()
 	var/static/list/disease_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(try_infect_entered),
 	)
@@ -33,6 +34,21 @@
 			RegisterSignal(parent, COMSIG_GLASS_DRANK, PROC_REF(try_infect_drink))
 	else if(istype(parent, /obj/effect/decal/cleanable/blood/gibs))
 		RegisterSignal(parent, COMSIG_GIBS_STREAK, PROC_REF(try_infect_streak))
+
+/datum/component/infective/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT)
+	UnregisterSignal(parent, COMSIG_MOVABLE_BUCKLE)
+	UnregisterSignal(parent, COMSIG_MOVABLE_BUMP)
+	UnregisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE)
+	if(isitem(parent))
+		UnregisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE)
+		UnregisterSignal(parent, COMSIG_ITEM_ATTACK)
+		UnregisterSignal(parent, COMSIG_ITEM_EQUIPPED)
+		UnregisterSignal(parent, COMSIG_FOOD_EATEN)
+		if(istype(parent, /obj/item/reagent_containers/cup))
+			UnregisterSignal(parent, COMSIG_GLASS_DRANK)
+	else if(istype(parent, /obj/effect/decal/cleanable/blood/gibs))
+		UnregisterSignal(parent, COMSIG_GIBS_STREAK)
 
 /datum/component/infective/proc/try_infect_eat(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
