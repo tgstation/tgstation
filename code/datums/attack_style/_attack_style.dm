@@ -133,7 +133,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 #endif
 
 		affecting_index += 1
-		. |= swing_enters_turf(attacker, weapon, hitting, already_hit, priority_target, right_clicking)
+		if(attacker.CanReach(hitting, weapon))
+			. |= swing_enters_turf(attacker, weapon, hitting, already_hit, priority_target, right_clicking)
 		if(. & ATTACK_SWING_CANCEL)
 			// Cancel attacks stop outright
 			return .
@@ -222,7 +223,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	// Right after dealing damage we handle getting blocked by dense stuff
 	// If there's something dense in the turf the rest of the swing is cancelled
 	// This means wide arc swinging weapons can't hit in tight corridors
-	var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker)
+	var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker, check_obscured = TRUE)
 	if(blocking_us)
 		attacker.visible_message(
 			span_warning("[attacker]'s attack collides with [blocking_us]!"),
@@ -283,10 +284,10 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /datum/attack_style/proc/get_movable_to_layer_effect_over(list/turf/affecting)
 	var/turf/midpoint = affecting[ROUND_UP(length(affecting) / 2)]
 	var/atom/movable/current_pick = midpoint
-	for(var/atom/movable/thing in midpoint)
+	for(var/atom/movable/thing as anything in midpoint)
 		if(isProbablyWallMounted(thing))
 			continue
-		if(thing.invisibility > 0 || thing.alpha < 10)
+		if(thing.invisibility > 0 || thing.alpha < 50) // skipping lightly transparent things.
 			continue
 		if(thing.layer > current_pick.layer)
 			current_pick = thing
@@ -331,8 +332,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /datum/attack_style/melee_weapon/check_pacifism(mob/living/attacker, obj/item/weapon)
 	return weapon.force > 0
 
-/datum/attack_style/melee_weapon/proc/get_swing_description()
-	return "It swings at one tile in the direction you are attacking."
+/datum/attack_style/melee_weapon/proc/get_swing_description(has_alt_style)
+	return "Swings at one tile in the direction you are attacking."
 
 /datum/attack_style/melee_weapon/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	ASSERT(istype(weapon))

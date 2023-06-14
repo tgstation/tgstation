@@ -312,7 +312,7 @@
 
 	// Handle swinging at the clicked atom
 	if(combat_mode)
-		var/datum/attack_style/using_what_style = clicked_with_what.attack_style
+		var/datum/attack_style/using_what_style = (right_clicking && clicked_with_what.alt_attack_style) || clicked_with_what.attack_style
 		// No bludgeon prevents using swing styles, good to use for items that require "click on mob" interaction like scanners
 		if(clicked_with_what.item_flags & NOBLUDGEON)
 			using_what_style = null

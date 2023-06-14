@@ -256,14 +256,15 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * * source_atom - If this is not null, will check whether any contents on the turf can block this atom specifically. Also ignores itself on the turf.
  * * ignore_atoms - Check will ignore any atoms in this list. Useful to prevent an atom from blocking itself on the turf.
  * * type_list - are we checking for types of atoms to ignore and not physical atoms
+ * * check_obscured - if TRUE, obscured atoms are skipped. If FALSE, we just look for the first.
  */
-/turf/proc/is_blocked_turf(exclude_mobs = FALSE, source_atom = null, list/ignore_atoms, type_list = FALSE)
+/turf/proc/is_blocked_turf(exclude_mobs = FALSE, source_atom = null, list/ignore_atoms, type_list = FALSE, check_obscured = FALSE)
 	if(density)
 		return src
 
 	for(var/atom/movable/movable_content as anything in contents)
 		// We don't want to block ourselves
-		if((movable_content == source_atom))
+		if(movable_content == source_atom)
 			continue
 		// dont consider ignored atoms or their types
 		if(length(ignore_atoms))
@@ -271,13 +272,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 				continue
 			else if(type_list && is_type_in_list(movable_content, ignore_atoms))
 				continue
+		if(!movable_content.density)
+			continue
+		if(exclude_mobs && ismob(movable_content))
+			continue
+		if(check_obscured && movable_content.IsObscured())
+			continue
+		if(source_atom && movable_content.CanPass(source_atom, get_dir(src, source_atom)))
+			continue
+		return movable_content
 
-		// If the thing is dense AND we're including mobs or the thing isn't a mob AND if there's a source atom and
-		// it cannot pass through the thing on the turf,  we consider the turf blocked.
-		if(movable_content.density && (!exclude_mobs || !ismob(movable_content)))
-			if(source_atom && movable_content.CanPass(source_atom, get_dir(src, source_atom)))
-				continue
-			return movable_content
 	return FALSE
 
 /**

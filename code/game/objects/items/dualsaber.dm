@@ -216,8 +216,11 @@
 	reverse_for_lefthand = FALSE
 	time_per_turf = 0.05 SECONDS
 
-/datum/attack_style/melee_weapon/swing/requires_wield/desword/get_swing_description()
-	return "It swings out to all adjacent tiles besides directly behind you. It must be active to swing. Right-clicking will swing in the opposite direction."
+/datum/attack_style/melee_weapon/swing/requires_wield/desword/get_swing_description(has_alt_style)
+	. = "Swings out to all adjacent tiles besides directly behind you. It must be active to swing."
+	if(!has_alt_style)
+		. += " Right-clicking will swing in the opposite direction, if no alternate style is set."
+	return .
 
 /datum/attack_style/melee_weapon/swing/requires_wield/desword/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
 	var/list/turfs_in_order = list()

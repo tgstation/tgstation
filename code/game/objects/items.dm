@@ -224,6 +224,9 @@
 	 * Generally don't do that unless it's stuff that would not function as a weapon, like an RCD.
 	 */
 	var/datum/attack_style/melee_weapon/attack_style = /datum/attack_style/melee_weapon
+	/// Attack style used when right-clicking while attacking.
+	/// By default, this is null, which means it will use the same attack style as the left click.
+	var/datum/attack_style/melee_weapon/alt_attack_style = null
 	/// Relates to the sprite of the weapon, used to rotate the sprite to be vertical before animating for attacks
 	var/weapon_sprite_angle = 0
 
@@ -264,6 +267,9 @@
 	if(ispath(attack_style, /datum/attack_style))
 		attack_style = GLOB.attack_styles[attack_style]
 
+	if(ispath(alt_attack_style, /datum/attack_style))
+		alt_attack_style = GLOB.attack_styles[alt_attack_style]
+
 	. = ..()
 
 	// Handle adding item associated actions
@@ -300,6 +306,7 @@
 		remove_item_action(action)
 
 	attack_style = null
+	alt_attack_style = null
 
 	return ..()
 
@@ -436,9 +443,13 @@
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
 
-	var/style_describer = attack_style?.get_swing_description()
+	var/style_describer = attack_style?.get_swing_description(has_alt_style = !!alt_attack_style)
 	if(style_describer)
-		. += span_notice(style_describer)
+		. += span_notice("Left click: [style_describer]")
+
+	var/alt_style_describer = alt_attack_style?.get_swing_description(has_alt_style = TRUE)
+	if(alt_style_describer)
+		. += span_notice("Right click: [alt_style_describer]")
 
 /obj/item/examine_more(mob/user)
 	. = ..()

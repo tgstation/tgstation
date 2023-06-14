@@ -6,8 +6,8 @@
 	/// If TRUE, the list of affected turfs will be reversed if the attack is being sourced from the lefthand
 	var/reverse_for_lefthand = TRUE
 
-/datum/attack_style/melee_weapon/swing/get_swing_description()
-	return "It swings in an arc of three tiles in the direction you are attacking."
+/datum/attack_style/melee_weapon/swing/get_swing_description(has_alt_style)
+	return "Swings in an arc of three tiles in the direction you are attacking."
 
 /datum/attack_style/melee_weapon/swing/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
 	var/num_turfs_to_move = length(affecting)
@@ -45,7 +45,7 @@
 // Swing for weapons which require being wielded
 /datum/attack_style/melee_weapon/swing/requires_wield
 
-/datum/attack_style/melee_weapon/swing/requires_wield/get_swing_description()
+/datum/attack_style/melee_weapon/swing/requires_wield/get_swing_description(has_alt_style)
 	return ..() + " Must be wielded."
 
 /datum/attack_style/melee_weapon/swing/requires_wield/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
@@ -56,8 +56,8 @@
 
 /datum/attack_style/melee_weapon/swing/wider_arc
 
-/datum/attack_style/melee_weapon/swing/wider_arc/get_swing_description()
-	return "It swings in an arc of six tiles in the direction you are attacking."
+/datum/attack_style/melee_weapon/swing/wider_arc/get_swing_description(has_alt_style)
+	return "Swings in an arc of six tiles in the direction you are attacking."
 
 /datum/attack_style/melee_weapon/swing/wider_arc/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
 	var/list/swing_turfs = ..()
@@ -77,10 +77,11 @@
 
 /datum/attack_style/melee_weapon/swing/only_left
 	cd = CLICK_CD_MELEE * 1.5
+	slowdown = 0.8
 	time_per_turf = 0.1 SECONDS
 
-/datum/attack_style/melee_weapon/swing/only_left/get_swing_description()
-	return "It swings in an arc of two tiles in the direction you are attacking, away from your active hand."
+/datum/attack_style/melee_weapon/swing/only_left/get_swing_description(has_alt_style)
+	return "Swings in an arc of two tiles in the direction you are attacking, away from your active hand."
 
 /datum/attack_style/melee_weapon/swing/only_left/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
 	// Does not hit the last turf (right most turf).
@@ -91,4 +92,5 @@
 
 /datum/attack_style/melee_weapon/swing/fast
 	cd = CLICK_CD_MELEE * 1.5
+	slowdown = 0.75
 	time_per_turf = 0.1 SECONDS

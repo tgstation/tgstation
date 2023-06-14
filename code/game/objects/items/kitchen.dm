@@ -114,6 +114,7 @@
 	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	tool_behaviour = TOOL_KNIFE
+	weapon_sprite_angle = 90
 
 /obj/item/knife/kitchen/silicon/examine()
 	. = ..()
@@ -158,6 +159,7 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 	custom_price = PAYCHECK_CREW * 1.5
 	tool_behaviour = TOOL_ROLLINGPIN
+	weapon_sprite_angle = 45
 
 /obj/item/kitchen/rollingpin/illegal
 	name = "metal rolling pin"

@@ -65,6 +65,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	w_class = WEIGHT_CLASS_NORMAL
+	attack_style = /datum/attack_style/melee_weapon/swing/only_left
 
 /obj/item/knife/bloodletter
 	name = "bloodletter"
@@ -73,6 +74,7 @@
 	icon_state = "bloodletter"
 	worn_icon_state = "render"
 	w_class = WEIGHT_CLASS_NORMAL
+	weapon_sprite_angle = 45
 	/// Bleed stacks applied when an organic mob target is hit
 	var/bleed_stacks_per_hit = 3
 
@@ -103,6 +105,8 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_CREW * 5
 	wound_bonus = 15
+	attack_style = /datum/attack_style/melee_weapon/swing/only_left
+	weapon_sprite_angle = 45
 
 /obj/item/knife/hunting
 	name = "hunting knife"
@@ -128,6 +132,7 @@
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "cut")
 	bayonet = TRUE
+	weapon_sprite_angle = 45
 
 /obj/item/knife/combat/survival
 	name = "survival knife"
@@ -160,6 +165,7 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "knife_cyborg"
 	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
+	weapon_sprite_angle = 160
 
 /obj/item/knife/shiv
 	name = "glass shiv"
@@ -175,6 +181,7 @@
 	attack_verb_simple = list("shank", "shiv")
 	armor_type = /datum/armor/none
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
+	weapon_sprite_angle = 25
 
 /obj/item/knife/shiv/Initialize(mapload)
 	flags_1 &= ~CONDUCT_1
@@ -249,6 +256,7 @@
 	icon = 'icons/obj/kitchen.dmi'
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
 	custom_materials = null
+	weapon_sprite_angle = 45
 
 /obj/item/knife/shiv/carrot/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] forcefully drives \the [src] into [user.p_their()] eye! It looks like [user.p_theyre()] trying to commit suicide!"))

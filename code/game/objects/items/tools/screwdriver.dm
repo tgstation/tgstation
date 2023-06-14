@@ -31,6 +31,9 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/screwdriver_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/screwdriver_inhand_right
 	greyscale_config_belt = /datum/greyscale_config/screwdriver_belt
+	attack_style = /datum/attack_style/melee_weapon/stab_out
+	weapon_sprite_angle = 90
+
 	/// If the item should be assigned a random color
 	var/random_color = TRUE
 	/// List of possible random colors

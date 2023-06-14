@@ -26,6 +26,7 @@ Slimecrossing Weapons
 	force = 15
 	throwforce = 15
 	damtype = BRUTE
+	weapon_sprite_angle = 45
 
 /obj/item/knife/rainbowknife/afterattack(atom/O, mob/user, proximity)
 	if(proximity && isliving(O))

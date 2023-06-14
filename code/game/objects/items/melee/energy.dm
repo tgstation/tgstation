@@ -15,6 +15,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_BLOOD_ON_ITEM
 	attack_style = /datum/attack_style/melee_weapon/swing/esword
+	alt_attack_style = /datum/attack_style/melee_weapon/stab_out/esword
 	weapon_sprite_angle = 45
 	blocking_ability = 1.5
 	can_block_flags = BLOCK_ALL_BUT_TACKLE
@@ -164,6 +165,7 @@
 	active_w_class = WEIGHT_CLASS_HUGE
 
 	attack_style = /datum/attack_style/melee_weapon/swing
+	alt_attack_style = null
 
 /obj/item/melee/energy/axe/make_transformable()
 	AddComponent(/datum/component/transforming, \
@@ -352,8 +354,12 @@
 	reverse_for_lefthand = FALSE
 	time_per_turf = 0.1 SECONDS
 
-/datum/attack_style/melee_weapon/swing/esword/get_swing_description()
-	return ..() + " It must be active to swing. Right-clicking will swing in the opposite direction."
+/datum/attack_style/melee_weapon/swing/esword/get_swing_description(has_alt_style)
+	. = ..()
+	. += " It must be active to swing."
+	if(!has_alt_style)
+		. += " Right-clicking will swing in the opposite direction."
+	return .
 
 /datum/attack_style/melee_weapon/swing/esword/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
 	. = ..()
@@ -361,6 +367,21 @@
 		reverse_range(.)
 
 /datum/attack_style/melee_weapon/swing/esword/execute_attack(mob/living/attacker, obj/item/melee/energy/weapon, list/turf/affecting, atom/priority_target, right_clicking)
+	if(!weapon.blade_active)
+		attacker.balloon_alert(attacker, "activate your weapon!")
+		return FALSE
+
+	return ..()
+
+/datum/attack_style/melee_weapon/stab_out/esword
+	cd = CLICK_CD_MELEE * 1.25
+	slowdown = 0.75
+	sprite_size_multiplier = 1.25
+
+/datum/attack_style/melee_weapon/stab_out/esword/get_swing_description(has_alt_style)
+	return ..() + " It must be active to stab."
+
+/datum/attack_style/melee_weapon/stab_out/esword/execute_attack(mob/living/attacker, obj/item/melee/energy/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	if(!weapon.blade_active)
 		attacker.balloon_alert(attacker, "activate your weapon!")
 		return FALSE

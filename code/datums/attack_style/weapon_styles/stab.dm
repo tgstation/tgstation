@@ -1,10 +1,13 @@
 // Direct stabs out to turfs in front
 /datum/attack_style/melee_weapon/stab_out
 	time_per_turf = 0.2 SECONDS
+	/// How far the stab goes
 	var/stab_range = 1
+	/// How long the animation lingers after finishing
+	var/animation_linger_time = 0.2 SECONDS
 
-/datum/attack_style/melee_weapon/stab_out/get_swing_description()
-	return "It stabs out [stab_range] tiles in the direction you are attacking."
+/datum/attack_style/melee_weapon/stab_out/get_swing_description(has_alt_style)
+	return "Stabs out [stab_range] tiles in the direction you are attacking."
 
 /datum/attack_style/melee_weapon/stab_out/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
 	var/max_range = stab_range
@@ -12,9 +15,11 @@
 	var/list/select_turfs = list()
 	while(max_range > 0)
 		var/turf/next_turf = get_step(last_turf, attack_direction)
-		if(!isturf(next_turf) || next_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker))
+		if(istype(next_turf))
+			select_turfs += next_turf
+		// This block stabbing over tables... needs a bit of work to allow that.
+		if(next_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker)) // melbert todo
 			return select_turfs
-		select_turfs += next_turf
 		last_turf = next_turf
 		max_range--
 
@@ -22,9 +27,9 @@
 
 /datum/attack_style/melee_weapon/stab_out/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
 	var/image/attack_image = create_attack_image(attacker, weapon, affecting[1])
-	var/stab_length = stab_range * length(affecting)
-	attacker.do_attack_animation(affecting[1], no_effect = TRUE)
-	flick_overlay_global(attack_image, GLOB.clients, stab_length + stab_range)
+	var/stab_length = time_per_turf * length(affecting)
+	attacker.do_attack_animation(affecting[1], no_effect = TRUE) // melbert todo
+	flick_overlay_global(attack_image, GLOB.clients, stab_length + animation_linger_time)
 	var/start_x = attack_image.pixel_x
 	var/start_y = attack_image.pixel_y
 	var/x_move = 0
@@ -56,7 +61,7 @@
 		easing = CUBIC_EASING|EASE_OUT,
 	)
 	animate(
-		time = stab_range,
+		time = animation_linger_time,
 		alpha = 0,
 		easing = CIRCULAR_EASING|EASE_OUT,
 	)

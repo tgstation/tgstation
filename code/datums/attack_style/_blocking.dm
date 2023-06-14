@@ -182,7 +182,7 @@
 /obj/effect/blocking_effect/Initialize(mapload)
 	. = ..()
 	color = loc.chat_color || LIGHT_COLOR_BLUE
-	alpha = min(loc.alpha, 125)
+	alpha = min(loc.alpha, 200)
 	layer = loc.layer + 0.1
 
 /datum/movespeed_modifier/blocking
