@@ -263,10 +263,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
 
 		notify_ghosts(
-			"A doomsday device has been activated in [get_area_name(src)]!",
-			source = src,
-			header = "DOOOOOOM",
-			action = NOTIFY_JUMP,
+			"[owner_AI] has activated a Doomsday Device!",
+			source = owner_AI,
+			header = "DOOOOOOM!!!",
+			action = NOTIFY_ORBIT,
 		)
 
 		qdel(src)
