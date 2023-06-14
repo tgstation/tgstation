@@ -53,7 +53,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ah" = (
@@ -238,7 +238,7 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aL" = (
@@ -251,7 +251,7 @@
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aM" = (
@@ -426,15 +426,6 @@
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"bM" = (
-/obj/machinery/door/airlock/hatch{
-	req_access = null
-	},
-/obj/effect/turf_decal/tile/dark_blue/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate,
-/turf/open/floor/iron/dark,
-/area/shuttle/pirate)
 "bQ" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
@@ -456,7 +447,7 @@
 	},
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ek" = (
@@ -464,7 +455,7 @@
 	req_access = null
 	},
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ep" = (
@@ -688,7 +679,7 @@
 	},
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "BT" = (
@@ -800,6 +791,15 @@
 	dir = 1
 	},
 /obj/machinery/light/no_nightlight/directional/north,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"SD" = (
+/obj/machinery/door/airlock/hatch{
+	req_access = null
+	},
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Tr" = (
@@ -1050,7 +1050,7 @@ aj
 aJ
 aS
 aj
-bM
+SD
 aj
 aj
 ED
