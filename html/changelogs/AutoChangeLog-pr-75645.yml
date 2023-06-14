@@ -1,7 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - rscadd: "You can now filter by book id in library consoles"
-  - bugfix: "The visitor console now actually has categories to select. Shows how many people actually use it"
-  - admin: "Added a library moderation tool, so you guys can do that again now that statbus has passed into the byond"
-  - server: "Bumped DB version, the library_action table has a few columns that were improperly typed, this fixes that"

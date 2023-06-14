@@ -84,7 +84,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/cult_bastard/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/cult_bastard/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!prob(final_block_chance))
 		return FALSE
 	owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))

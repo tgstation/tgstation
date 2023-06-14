@@ -18,7 +18,6 @@ In any query remember to add a prefix to the table names if you use one.
 -----------------------------------------------------
 Version 5.24, 17 May 2023, by LemonInTheDark
 Modified the library action table to fit ckeys properly, and to properly store ips.
-Adds a new index to the library table to speed up admin searches
 ```sql
  ALTER TABLE `library_action` MODIFY COLUMN `ckey` varchar(32) NOT NULL;
  ALTER TABLE `library_action` MODIFY COLUMN `ip_addr` int(10) unsigned NOT NULL;

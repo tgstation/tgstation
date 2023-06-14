@@ -277,11 +277,15 @@ SUBSYSTEM_DEF(garbage)
 
 #ifdef EXPERIMENT_515_QDEL_HARD_REFERENCE
 	var/refid = D
-#else
-	var/refid = text_ref(D)
-#endif
 	if (D.gc_destroyed <= 0)
 		D.gc_destroyed = queue_time
+#else
+	var/refid = text_ref(D)
+	var/static/uid = 0
+	if (D.gc_destroyed <= 0)
+		uid = WRAP(uid+1, 1, SHORT_REAL_LIMIT - 1)
+		D.gc_destroyed = uid
+#endif
 
 	var/list/queue = queues[level]
 
@@ -361,12 +365,12 @@ SUBSYSTEM_DEF(garbage)
 	I.qdels++
 
 	if(isnull(D.gc_destroyed))
-		if (SEND_SIGNAL(D, COMSIG_PARENT_PREQDELETED, force)) // Give the components a chance to prevent their parent from being deleted
+		if (SEND_SIGNAL(D, COMSIG_PREQDELETED, force)) // Give the components a chance to prevent their parent from being deleted
 			return
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
 		var/start_tick = world.tick_usage
-		SEND_SIGNAL(D, COMSIG_PARENT_QDELETING, force) // Let the (remaining) components know about the result of Destroy
+		SEND_SIGNAL(D, COMSIG_QDELETING, force) // Let the (remaining) components know about the result of Destroy
 		var/hint = D.Destroy(arglist(args.Copy(2))) // Let our friend know they're about to get fucked up.
 		if(world.time != start_time)
 			I.slept_destroy++

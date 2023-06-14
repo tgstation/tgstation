@@ -16,7 +16,7 @@
 	RegisterSignal(owner, COMSIG_MOB_CAST_SPELL, PROC_REF(spell_check))
 	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, PROC_REF(staff_check))
 	//signals that check for guilt
-	RegisterSignal(owner, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_guilt))
+	RegisterSignal(owner, COMSIG_ATOM_ATTACKBY, PROC_REF(attackby_guilt))
 	RegisterSignal(owner, COMSIG_ATOM_HULK_ATTACK, PROC_REF(hulk_guilt))
 	RegisterSignal(owner, COMSIG_ATOM_ATTACK_HAND, PROC_REF(hand_guilt))
 	RegisterSignal(owner, COMSIG_ATOM_ATTACK_PAW, PROC_REF(paw_guilt))
@@ -32,7 +32,7 @@
 /datum/brain_trauma/special/honorbound/on_lose(silent)
 	owner.clear_mood_event("honorbound")
 	UnregisterSignal(owner, list(
-		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_ATTACKBY,
 		COMSIG_ATOM_HULK_ATTACK,
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,
@@ -234,13 +234,13 @@
 	if(QDELETED(honorbound))
 		return FALSE
 
-	RegisterSignal(honorbound, COMSIG_PARENT_QDELETING, PROC_REF(on_honor_trauma_lost))
+	RegisterSignal(honorbound, COMSIG_QDELETING, PROC_REF(on_honor_trauma_lost))
 	honor_trauma = honorbound
 	return ..()
 
 /datum/action/cooldown/spell/pointed/declare_evil/Remove(mob/living/remove_from)
 	. = ..()
-	UnregisterSignal(honor_trauma, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(honor_trauma, COMSIG_QDELETING)
 	honor_trauma = null
 
 /// If we lose our honor trauma somehow, self-delete (and clear references)
