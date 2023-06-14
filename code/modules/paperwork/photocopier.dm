@@ -277,10 +277,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/i
 	for(i in 1 to num_copies)
 		if(i * paper_use > get_paper_count())
-			to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform full operation.\""))
+			to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [i > 1 ? "full " : ""]operation.\""))
 			break
 		if(!has_enough_toner(i * toner_use))
-			to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough toner to perform full operation.\""))
+			to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough toner to perform [i > 1 ? "full " : ""]operation.\""))
 			break
 		if(attempt_charge(src, user) & COMPONENT_OBJ_CANCEL_CHARGE)
 			balloon_alert(user, "insufficient funds!")
