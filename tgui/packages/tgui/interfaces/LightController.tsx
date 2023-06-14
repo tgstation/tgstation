@@ -134,6 +134,7 @@ const LightControl = (props: LightControlProps, context) => {
               <Button
                 fontSize="16px"
                 icon="brush"
+                tooltip="Change light color"
                 textColor={info.color}
                 onClick={() => act('change_color')}>
                 {info.color}
@@ -142,11 +143,19 @@ const LightControl = (props: LightControlProps, context) => {
                 fontSize="16px"
                 color={on ? 'good' : 'bad'}
                 icon="power-off"
+                tooltip="Enable/Disable the light"
                 onClick={() =>
                   act('set_on', {
                     value: !on,
                   })
                 }
+              />
+              <Button
+                fontSize="16px"
+                color="purple"
+                icon="handcuffs"
+                tooltip="Isolate this light for a bit"
+                onClick={() => act('isolate')}
               />
             </Stack.Item>
           </Stack>
@@ -229,6 +238,7 @@ const LightInfo = (props: LightInfoProps, context) => {
               <Button
                 fontSize="16px"
                 icon="upload"
+                tooltip="Use template"
                 onClick={() =>
                   act('mirror_template', {
                     id: light.id,

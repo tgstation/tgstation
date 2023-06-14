@@ -234,9 +234,53 @@
 		if("mirror_template")
 			var/datum/light_template/template = GLOB.light_types[params["id"]]
 			template.mirror_onto(parent)
+		if("isolate")
+			isolate_light(parent)
 
 	parent.light_flags = old_light_flags
 	return TRUE
+
+/// Hides all the lights around a source temporarially, for the sake of figuring out how bad a light bleeds
+/// (Except for turf lights, because they're a part of the "scene" and rarely modified)
+/proc/isolate_light(atom/source, delay = 7 SECONDS)
+	var/list/datum/lighting_corner/interesting_corners = source.light?.effect_str
+
+	var/list/atom/sources = list()
+	for(var/datum/lighting_corner/corner as anything in interesting_corners)
+		for(var/datum/light_source/target_spotted as anything in corner.affecting)
+			if(isturf(target_spotted.source_atom))
+				continue
+			sources[target_spotted.source_atom] = TRUE
+
+	sources -= source // Please don't disable yourself
+	if(!length(sources))
+		return
+
+	// Now that we have all the lights (and a bit more), let's get rid of em
+	for(var/atom/light_source as anything in sources)
+		var/old_light_flags = light_source.light_flags
+		light_source.light_flags &= ~LIGHT_FROZEN
+		light_source.set_light(l_on = FALSE)
+		light_source.light_flags = old_light_flags
+
+	// Now we sleep until the lighting system has processed them
+	var/current_tick = SSlighting.times_fired
+
+	UNTIL(SSlighting.times_fired > current_tick || QDELETED(source) || !source.light)
+
+	if(QDELETED(source) || !source.light)
+		repopulate_lights(sources)
+		return
+
+	// And finally, wait the allotted time, and reawake em
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(repopulate_lights), sources), delay)
+
+/proc/repopulate_lights(list/atom/sources)
+	for(var/atom/light_source as anything in sources)
+		var/old_light_flags = light_source.light_flags
+		light_source.light_flags &= ~LIGHT_FROZEN
+		light_source.set_light(l_on = TRUE)
+		light_source.light_flags = old_light_flags
 
 /atom/movable/screen/light_button/move
 	name = "Move Light"
