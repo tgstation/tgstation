@@ -421,11 +421,9 @@
 		/obj/structure/flora/bush/lavendergrass/style_random,
 		/obj/structure/flora/bush/flowers_yw/style_random,
 		/obj/structure/flora/bush/flowers_br/style_random,
-		/obj/structure/flora/bush/flowers_pp/style_random
+		/obj/structure/flora/bush/flowers_pp/style_random,
 	)
-	var/chosen_type
-	if(!chosen_type || prob(5))
-		chosen_type = pick(possible_flower_types)
+	var/chosen_type = pick(possible_flower_types)
 	var/flower_boots = new chosen_type(get_turf(wearer))
 	animate(flower_boots, alpha = 0, 1 SECONDS)
 	QDEL_IN(flower_boots, 1 SECONDS)
