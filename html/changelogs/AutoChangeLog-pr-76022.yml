@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "MOD plasma cores' improved recharging from sheets (2000 charge up from 1500) is back again."
