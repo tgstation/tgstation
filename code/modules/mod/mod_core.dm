@@ -365,23 +365,24 @@
 	light_color = "#cc00cc"
 	light_range = 2
 
+	// Slightly better than the normal plasma core.
+	// Not super sure if this should just be the same, but will see.
+	maxcharge = 15000
+	charge = 15000
+
 	/// The mob to be spawned by the core
-	var/mob/living/spawned_mob = /mob/living/basic/butterfly/lavaland/temporary
+	var/mob/living/spawned_mob_type = /mob/living/basic/butterfly/lavaland/temporary
 	/// Max number of mobs it can spawn
 	var/max_spawns = 3
 
 	/// Mob spawner for the core
 	var/datum/component/spawner/mob_spawner
 
-	// Slightly better than the normal plasma core.
-	// Not super sure if this should just be the same, but will see.
-	maxcharge = 15000
-	charge = 15000
 
 /obj/item/mod/core/plasma/lavaland/Destroy()
 	if(mod?.wearer)
 		mod.wearer.particles = null
-	. = ..()
+	return ..()
 
 /obj/item/mod/core/plasma/lavaland/proc/new_mob(spawner, mob/living/basic/butterfly/lavaland/temporary/spawned)
 	SIGNAL_HANDLER
@@ -393,7 +394,7 @@
 	if(mod.active)
 		START_PROCESSING(SSprocessing, src)
 		mod.wearer.particles = new /particles/pollen()
-		mob_spawner = mod.wearer.AddComponent(/datum/component/spawner, spawn_types=list(spawned_mob), spawn_time=5 SECONDS, max_spawned=3)
+		mob_spawner = mod.wearer.AddComponent(/datum/component/spawner, spawn_types=list(spawned_mob_type), spawn_time=5 SECONDS, max_spawned=3)
 		RegisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED, PROC_REF(new_mob))
 		RegisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(flowas))
 
@@ -416,7 +417,12 @@
 
 /obj/item/mod/core/plasma/lavaland/proc/flowas(mob/living/wearer)
 	SIGNAL_HANDLER
-	var/static/list/possible_flower_types = list(/obj/structure/flora/bush/lavendergrass/style_random, /obj/structure/flora/bush/flowers_yw/style_random,       /obj/structure/flora/bush/flowers_br/style_random, /obj/structure/flora/bush/flowers_pp/style_random)
+	var/static/list/possible_flower_types = list(
+		/obj/structure/flora/bush/lavendergrass/style_random,
+		/obj/structure/flora/bush/flowers_yw/style_random,
+		/obj/structure/flora/bush/flowers_br/style_random,
+		/obj/structure/flora/bush/flowers_pp/style_random
+	)
 	var/chosen_type
 	if(!chosen_type || prob(5))
 		chosen_type = pick(possible_flower_types)
