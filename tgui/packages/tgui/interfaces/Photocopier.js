@@ -14,7 +14,7 @@ export const Photocopier = (props, context) => {
           <Toner />
         ) : (
           <Section title="Toner">
-            <Box color="label">No inserted toner cartridge.</Box>
+            <Box color="average">No inserted toner cartridge.</Box>
           </Section>
         )}
         <Section title="Paper">

@@ -464,17 +464,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	toner_cartridge.charges -= ASS_TONER_USE
 
 /**
- * Inserts the item into the copier. Called in `attackby()` after a human mob clicked on the copier with a paper, photo, or document.
- *
- * Arugments:
- * * object - the object that got inserted.
- * * user - the mob that inserted the object.
- */
-/obj/machinery/photocopier/proc/do_insertion(obj/item/object, mob/user)
-	object.forceMove(src)
-	to_chat(user, span_notice("You insert [object] into [src]."))
-
-/**
  * Called when someone hits the "remove item" button on the copier UI.
  *
  * If the user is a silicon, it drops the object at the location of the copier. If the user is not a silicon, it tries to put the object in their hands first.
@@ -535,7 +524,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		to_chat(user, span_warning("\The [src] cannot hold more paper!."))
 		return
 	paper_stack += paper
-	do_insertion(paper, user)
+	object.forceMove(src)
+	to_chat(user, span_notice("You insert \the [object] into \the [src]'s paper tray."))
 
 /obj/machinery/photocopier/proc/insert_copy_object(obj/item/object, mob/user)
 	if(!copier_empty())
@@ -544,9 +534,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(!user.temporarilyRemoveItemFromInventory(object))
 		return
 	object_copy = object
-	do_insertion(object, user)
+	object.forceMove(src)
+	to_chat(user, span_notice("You insert \the [object] into \the [src]'s scanner tray."))
 	flick("photocopier1", src)
-
 
 /obj/machinery/photocopier/atom_break(damage_flag)
 	. = ..()
