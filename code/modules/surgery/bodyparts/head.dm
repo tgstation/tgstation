@@ -346,6 +346,7 @@
 	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = 500
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	attack_style = /datum/attack_style/unarmed/generic_damage/mob_attack/bite
 
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -359,3 +360,4 @@
 	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = 50
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
+	attack_style = /datum/attack_style/unarmed/generic_damage/mob_attack/bite/larva

@@ -21,7 +21,7 @@
 		/obj/item/bodypart/leg/right/alien,
 		/obj/item/bodypart/leg/left/alien,
 	)
-	default_harm_style = /datum/attack_style/unarmed/generic_damage/mob_attack/xeno/adult
+	// default_harm_style = /datum/attack_style/unarmed/generic_damage/mob_attack/xeno/adult // Handled by limbs, here for posterity
 
 GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	/datum/strippable_item/hand/left,

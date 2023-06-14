@@ -36,31 +36,26 @@
 /mob/living/carbon/execute_unarmed_attack_style(atom/attack_target, list/modifiers)
 	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	var/obj/item/bodypart/attacking_bodypart = brain?.get_attacking_limb(attack_target) || get_active_hand()
-	var/datum/attack_style/hit_style
+	if(isnull(attacking_bodypart) || attacking_bodypart.bodypart_disabled)
+		return // We need SOMETHING to interact with...
 
+	var/datum/attack_style/hit_style
 	// Top priority - disarm
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		hit_style = default_disarm_style
-		testing("[src] is attempting to use attack style [hit_style] (disarm style)")
+		hit_style = default_disarm_style || attacking_bodypart.attack_style // harm if we can't disarm
 	// Help intent is next priority, if not on combat mode
 	else if(!combat_mode)
 		hit_style = default_help_style
-		testing("[src] is attempting to use attack style [hit_style] (help style)")
-	// Then, every attack is a hulk attack
+	// Then, every attack is a hulk attack. At some point this shouldn't be hardcoded in
 	else if(HAS_TRAIT(src, TRAIT_HULK) && combat_mode)
 		hit_style = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/hulk]
-		testing("[src] is attempting to use attack style [hit_style] (hulk style)")
-	// Then attack from arm
-	else if(!isnull(attacking_bodypart))
-		hit_style = attacking_bodypart.attack_style
-		testing("[src] is attempting to use attack style [hit_style] (bodypart style)")
-	// And if we have no arm, then default harm style
+	// Then attack from arm or head or whatever
 	else
-		hit_style = default_harm_style
-		testing("[src] is attempting to use attack style [hit_style] (harm style)")
+		hit_style = attacking_bodypart.attack_style
+	// We do not go to default harm style. Either we use the limb's style or do nothing.
 
 	if(hit_style)
-		changeNext_move(hit_style.cd * 0.8)
+		// changeNext_move(hit_style.cd * 0.8)
 		hit_style.process_attack(src, attacking_bodypart, attack_target)
 		return TRUE
 	return FALSE
@@ -194,17 +189,14 @@
 /mob/living/proc/execute_unarmed_attack_style(atom/attack_target, list/modifiers)
 	var/datum/attack_style/hit_style
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		hit_style = default_disarm_style
-		testing("[src] is attempting to use attack style [hit_style] (disarm style)")
+		hit_style = default_disarm_style || default_harm_style // harm if we can't disarm
 	else if(!combat_mode)
 		hit_style = default_help_style
-		testing("[src] is attempting to use attack style [hit_style] (help style)")
 	else
 		hit_style = default_harm_style
-		testing("[src] is attempting to use attack style [hit_style] (harm style)")
 
 	if(hit_style)
-		changeNext_move(hit_style.cd * 0.8)
+		// changeNext_move(hit_style.cd * 0.8)
 		hit_style.process_attack(src, null, attack_target)
 		return TRUE
 	return FALSE

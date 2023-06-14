@@ -222,7 +222,7 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	should_draw_greyscale = FALSE
-
+	attack_style = /datum/attack_style/unarmed/generic_damage/mob_attack/xeno/adult
 
 /obj/item/bodypart/arm/right
 	name = "right arm"
@@ -325,6 +325,7 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	should_draw_greyscale = FALSE
+	attack_style = /datum/attack_style/unarmed/generic_damage/mob_attack/xeno/adult
 
 /// Parent Type for arms, should not appear in game.
 /obj/item/bodypart/leg

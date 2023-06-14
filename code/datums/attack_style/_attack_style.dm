@@ -65,16 +65,19 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	weapon?.add_fingerprint(attacker)
 	if(HAS_TRAIT(attacker, TRAIT_PACIFISM) && check_pacifism(attacker, weapon))
 		attacker.balloon_alert(attacker, "you don't want to attack!")
+		attacker.changeNext_move(cd * 0.66)
 		return FALSE
 
 	if(IS_BLOCKING(attacker))
 		attacker.balloon_alert(attacker, "can't act while blocking!")
+		attacker.changeNext_move(cd * 0.66)
 		return FALSE
 
 	var/attack_direction = NONE
 	if(get_turf(attacker) != get_turf(aimed_towards))
 		// This gives a little bit of leeway for angling attacks.
-		// If we straight up use dir, then the window for doing a NSEW attack is far smaller than the window for NE/SE/SW/NW attacks.
+		// If we straight up use dir, then the window for doing a NSEW attack
+		// is far smaller than the window for NE/SE/SW/NW attacks.
 		attack_direction = angle2dir(get_angle(attacker, aimed_towards))
 
 	var/list/affecting = select_targeted_turfs(attacker, attack_direction, right_clicking)
@@ -93,8 +96,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	if(slowdown > 0)
 		attacker.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/ATTACK_SWING_executed, multiplicative_slowdown = slowdown)
 		addtimer(CALLBACK(attacker, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/ATTACK_SWING_executed), cd * 0.2)
-	if(cd > 0)
-		attacker.changeNext_move(cd)
+	attacker.changeNext_move(cd)
 	return TRUE
 
 /datum/attack_style/proc/execute_attack(

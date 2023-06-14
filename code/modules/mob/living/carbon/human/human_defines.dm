@@ -13,7 +13,6 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	can_be_shoved_into = TRUE
 
-	default_harm_style = null // selected by bodyparts.
 	default_disarm_style = /datum/attack_style/unarmed/disarm
 
 	//Hair colour and style

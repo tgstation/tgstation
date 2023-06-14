@@ -368,6 +368,12 @@
 	icon_state = "brain-x"
 	organ_traits = list(TRAIT_CAN_STRIP)
 
+/obj/item/organ/internal/brain/alien/get_attacking_limb(atom/clicking_on)
+	if(owner.num_hands <= 0)
+		return owner.get_bodypart(BODY_ZONE_HEAD)
+
+	return owner.get_active_hand()
+
 /obj/item/organ/internal/brain/primitive //No like books and stompy metal men
 	name = "primitive brain"
 	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
