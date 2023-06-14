@@ -1,4 +1,0 @@
-author: "carshalash"
-delete-after: True
-changes:
-  - bugfix: "Fixes a stuck lightbulb in medbay treatment center. Also fixes an accidental placement of vents/scrubbers which lead to escaping xenos."
