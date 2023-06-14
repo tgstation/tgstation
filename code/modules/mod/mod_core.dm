@@ -369,7 +369,7 @@
 	var/mob/living/spawned_mob = /mob/living/basic/butterfly/lavaland/temporary
 	/// Max number of mobs it can spawn
 	var/max_spawns = 3
-	var/can_spawn = TRUE
+
 	/// Mob spawner for the core
 	var/datum/component/spawner/mob_spawner
 
