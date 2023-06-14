@@ -310,27 +310,26 @@
 		clicked_with_what.melee_attack_chain(src, clicked_on, params)
 		return
 
-	// Handle swinging at the clicked atom
-	if(combat_mode)
+	// No bludgeon prevents using swing styles, good to use for items that require "click on mob" interaction like scanners
+	if(clicked_with_what.item_flags & NOBLUDGEON)
+		// Handles non-combat uses of attacking mobs, like health scanning
+		if(close_enough)
+			changeNext_move(CLICK_CD_MELEE)
+			clicked_with_what.melee_attack_chain(src, clicked_on, params)
+			return
+
+	else if(combat_mode)
+		// Handles swinging at the clicked atom
 		var/datum/attack_style/using_what_style = (right_clicking && clicked_with_what.alt_attack_style) || clicked_with_what.attack_style
-		// No bludgeon prevents using swing styles, good to use for items that require "click on mob" interaction like scanners
-		if(clicked_with_what.item_flags & NOBLUDGEON)
-			using_what_style = null
 		// Surgical tools won't swing if we're clicking on a dude who's in the middle of surgery
 		else if(isliving(clicked_on) && (clicked_with_what.item_flags & SURGICAL_TOOL))
 			var/mob/living/living_clicked = clicked_on
 			if(length(living_clicked.surgeries) && living_clicked.body_position == LYING_DOWN)
-				clicked_with_what = null
+				using_what_style = null
 
 		if(using_what_style)
 			using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking)
 			return
-
-	// Handle non-combat uses of "attacking", more accurately "using an item on a mob", IE surgery
-	if(close_enough)
-		changeNext_move(CLICK_CD_MELEE)
-		clicked_with_what.melee_attack_chain(src, clicked_on, params)
-		return
 
 	// Handle afterattack, called regardless of if an attack was done, allowing "ranged click on" interactions for items
 	if(right_clicking)
