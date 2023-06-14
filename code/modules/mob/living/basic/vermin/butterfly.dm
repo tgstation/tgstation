@@ -85,7 +85,7 @@
 	return FALSE
 
 /// Fade the butterfly out before deleting it.
-// Looks much better than it just blipping out of existence
+/// Looks much better than it just blipping out of existence
 /mob/living/basic/butterfly/lavaland/temporary/proc/fadeout()
 	animate(src, alpha = 0, 1 SECONDS)
 	QDEL_IN(src, 1 SECONDS)
