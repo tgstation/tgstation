@@ -4,7 +4,7 @@
 		"category": "Command Department",
 		"name": "Job Application",
 		"info": [
-			"<h1><table bgcolor=\"royalblue\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Job Application</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"royalblue\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Job Application</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Applicant's name (with signature):</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -13,7 +13,7 @@
 			"<hr />",
 			"<p><font color=\"grey\"><div align=\"justify\">By signing this document, you agree to Nanotrasen's policies on labor protection, occupational health and safety, compensation, and confidentiality.</div></font></p>",
 			"<hr />",
-			"<p><table bgcolor=\"royalblue\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\"><strong>Condemnation Review</strong></font></div></td></tr></table></p>",
+			"<p><table bgcolor=\"royalblue\" width=\"100%\"><th><div align=\"center\"><font color=\"white\"><strong>Condemnation Review</strong></font></div></th></table></p>",
 			"<p><strong>Name of the Head of Personal or deputy head (with signature):</strong></p>",
 			"<p>[___________________________________]</p>",
 			"<p><strong>Head of Personal Decision:</strong></p>",
@@ -33,7 +33,7 @@
 			"<p>[___]:[___]</p>",
 			"<p><font color=\"grey\">Place for a stamp</font></p>",
 			"<hr />",
-			"<p><table bgcolor=\"royalblue\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\"><strong>Appointment decision</strong></font></div></td></tr></table></p>",
+			"<p><table bgcolor=\"royalblue\" width=\"100%\"><th><div align=\"center\"><font color=\"white\"><strong>Appointment decision</strong></font></div></th></table></p>",
 			"<p>[___________________________________]</p>",
 			"<p>[___________________________________]</p>",
 			"<p>[___________________________________]</p>",
@@ -46,7 +46,7 @@
 		"category": "Command Department",
 		"name": "Job termination",
 		"info": [
-			"<h1><table bgcolor=\"royalblue\" width=\"100%\"><tr><td><font color=\"white\"><div align=\"center\">Job Termination</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"royalblue\" width=\"100%\"><th><font color=\"white\"><div align=\"center\">Job Termination</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Name of the dismissed person:</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -86,7 +86,7 @@
 		"category": "Command Department",
 		"name": "Job reassignment",
 		"info": [
-			"<h1><table bgcolor=\"royalblue\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Job Reassignment</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"royalblue\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Job Reassignment</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Name of the person to be reassigned:</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -125,7 +125,7 @@
 		"category": "Command Department",
 		"name": "Complaint form",
 		"info": [
-			"<h1><table bgcolor=\"royalblue\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Complaint form</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"royalblue\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Complaint form</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Complainant's name (with signature):</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -161,7 +161,7 @@
 		"category": "Command Department",
 		"name": "Order form",
 		"info": [
-			"<h1><table bgcolor=\"royalblue\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Order form</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"royalblue\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Order form</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>The name of the orderer (with signature):</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -202,7 +202,7 @@
 		"category": "Command Department",
 		"name": "Permit to perform hazardous work",
 		"info": [
-			"<h1><table bgcolor=\"royalblue\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Permit to perform hazardous work</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"royalblue\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Permit to perform hazardous work</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Permission requestor's name (with signature):</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -231,7 +231,7 @@
 		"category": "Security Department",
 		"name": "Warrant",
 		"info": [
-			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Warrant</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Warrant</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Arrestee's name:</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -257,7 +257,7 @@
 		"category": "Security Department",
 		"name": "Search warrant",
 		"info": [
-			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Search Warrant</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Search Warrant</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Name of the person being searched:</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -283,7 +283,7 @@
 		"category": "Security Department",
 		"name": "Interrogation Report",
 		"info": [
-			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Interrogation Report</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Interrogation Report</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Name of Interrogated:</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -328,7 +328,7 @@
 		"category": "Security Department",
 		"name": "Security Report",
 		"info": [
-			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Security Report</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Security Report</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Name of the reporting person (with signature):</strong></strong></p>",
 			"<p>[___________________________________]</p>",
@@ -366,7 +366,7 @@
 		"category": "Security Department",
 		"name": "Execution order",
 		"info": [
-			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Execution order</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Execution order</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>The name of the condemned to the execution:</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -398,7 +398,7 @@
 		"category": "Security Department",
 		"name": "Permission to possess",
 		"info": [
-			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Permission to possess</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Permission to possess</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Owner's name:</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -435,7 +435,7 @@
 		"category": "Security Department",
 		"name": "Court Summons",
 		"info": [
-			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Court Order</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Court Order</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Requesting Party (with signature):</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -455,7 +455,7 @@
 		"category": "Security Department",
 		"name": "Lawsuit Request Form",
 		"info":[
-			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Lawsuit Request Form</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"firebrick\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Lawsuit Request Form</font></div></th></table></h1>",
 			"<p><strong>Prosecuters's name (with signature):</strong></p>",
 			"<p>[___________________________________]</p>",
 			"<p><strong>Affected Parties:</strong></p>",
@@ -502,7 +502,7 @@
 		"category": "Engineering Department",
 		"name": "Permission to perform non-standard work",
 		"info": [
-			"<h1><table bgcolor=\"darkorange\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Permission to perform non-standard work</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"darkorange\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Permission to perform non-standard work</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Permission requestor's name (with signature):</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -543,7 +543,7 @@
 		"category": "Engineering Department",
 		"name": "Permit for the issuance of engineering equipment",
 		"info": [
-			"<h1><table bgcolor=\"darkorange\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Permit for the issuance of engineering equipment</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"darkorange\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Permit for the issuance of engineering equipment</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Name of the requesting equipment (with signature):</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -588,7 +588,7 @@
 		"category": "Research Department",
 		"name": "Permission to perform non-standard research",
 		"info": [
-			"<h1><table bgcolor=\"darkviolet\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Permission to perform non-standard research</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"darkviolet\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Permission to perform non-standard research</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Permission requestor's name (with signature):</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -629,7 +629,7 @@
 		"category": "Research Department",
 		"name": "Permit for the issuance of research equipment",
 		"info": [
-			"<h1><table bgcolor=\"darkviolet\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Permit for the issuance of research equipment</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"darkviolet\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Permit for the issuance of research equipment</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Name of the requesting equipment (with signature):</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -674,7 +674,7 @@
 		"category": "Medical Department",
 		"name": "Medical prescription",
 		"info": [
-			"<h1><table bgcolor=\"steelblue\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Medical Prescription</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"steelblue\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Medical Prescription</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Patient name:</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -711,7 +711,7 @@
 		"category": "Medical Department",
 		"name": "Autopsy report",
 		"info": [
-			"<h1><table bgcolor=\"steelblue\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Autopsy Report</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"steelblue\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Autopsy Report</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Body Name:</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -745,7 +745,7 @@
 		"category": "Medical Department",
 		"name": "Death Certificate",
 		"info": [
-			"<h1><table bgcolor=\"steelblue\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Death Certificate</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"steelblue\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Death Certificate</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Body Name:</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -776,7 +776,7 @@
 		"category": "Supply Department",
 		"name": "Permission to execute a non-standard order",
 		"info": [
-			"<h1><table bgcolor=\"darkgoldenrod\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Permission to execute a non-standard order</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"darkgoldenrod\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Permission to execute a non-standard order</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>The name of the person requesting the delivery&nbsp;(with signature):</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -821,7 +821,7 @@
 		"category": "Other",
 		"name": "Lunch bill",
 		"info": [
-			"<h1><table bgcolor=\"slategray\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Lunch Bill</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"slategray\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Lunch Bill</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Name of the place:</strong></p>",
 			"<p>[___________________________________]</p>",
@@ -853,7 +853,7 @@
 		"category": "Other",
 		"name": "Provision of paid services",
 		"info": [
-			"<h1><table bgcolor=\"slategray\" width=\"100%\"><tr><td><div align=\"center\"><font color=\"white\">Provision of paid services</font></div></td></tr></table></h1>",
+			"<h1><table bgcolor=\"slategray\" width=\"100%\"><th><div align=\"center\"><font color=\"white\">Provision of paid services</font></div></th></table></h1>",
 			"<hr />",
 			"<p><strong>Name of the place:</strong></p>",
 			"<p>[___________________________________]</p>",
