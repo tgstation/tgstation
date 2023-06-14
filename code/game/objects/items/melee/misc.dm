@@ -42,6 +42,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
+	attack_style = /datum/attack_style/melee_weapon/swing/only_left
 
 /obj/item/melee/synthetic_arm_blade/Initialize(mapload)
 	. = ..()

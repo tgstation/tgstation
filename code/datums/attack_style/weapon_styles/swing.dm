@@ -76,6 +76,8 @@
 	return swing_turfs
 
 /datum/attack_style/melee_weapon/swing/only_left
+	cd = CLICK_CD_MELEE * 1.5
+	time_per_turf = 0.1 SECONDS
 
 /datum/attack_style/melee_weapon/swing/only_left/get_swing_description()
 	return "It swings in an arc of two tiles in the direction you are attacking, away from your active hand."
