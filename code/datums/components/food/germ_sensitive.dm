@@ -69,7 +69,7 @@
 	var/turf/open/open_turf = parent_object.loc
 
 	// Is parent on valid open turf?
-	if(!istype(open_turf) || islava(open_turf) || isasteroidturf(open_turf))
+	if(!istype(open_turf) || islava(open_turf) || isasteroidturf(open_turf) || !parent_object.has_gravity())
 		remove_timer()
 		SEND_SIGNAL(parent, COMSIG_ATOM_GERM_UNEXPOSED, src)
 		return
