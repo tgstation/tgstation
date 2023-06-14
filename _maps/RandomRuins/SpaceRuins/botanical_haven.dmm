@@ -77,7 +77,9 @@
 /turf/open/misc/grass,
 /area/ruin/space/has_grav/powered/botanical_haven)
 "v" = (
-/obj/item/kirbyplants/organic/plant21,
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
 /obj/effect/turf_decal/siding/thinplating_new/terracotta/end{
 	dir = 8
 	},

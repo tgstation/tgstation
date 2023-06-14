@@ -6,7 +6,9 @@
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "aw" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /obj/machinery/light/small/directional/north,
 /obj/structure/sign/painting/library{
 	pixel_y = 32
@@ -173,12 +175,16 @@
 /turf/open/floor/eighties/red,
 /area/centcom/central_command_areas/holding)
 "fG" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
 "fV" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
@@ -241,7 +247,9 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "hm" = (
@@ -703,7 +711,9 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
 "qW" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /turf/open/floor/bamboo/tatami/purple,
 /area/centcom/central_command_areas/holding)
 "ra" = (
@@ -745,7 +755,9 @@
 	},
 /area/centcom/central_command_areas/holding)
 "rV" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "sc" = (
@@ -768,7 +780,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /turf/open/floor/stone,
 /area/centcom/central_command_areas/holding)
 "ts" = (
@@ -834,7 +848,9 @@
 	},
 /area/centcom/central_command_areas/holding)
 "vv" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
 "vA" = (
@@ -842,7 +858,9 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "vH" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
@@ -1428,7 +1446,9 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "Je" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
@@ -1649,7 +1669,9 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
 "Nh" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /obj/machinery/duct,
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
@@ -1709,12 +1731,16 @@
 /turf/open/floor/stone,
 /area/centcom/central_command_areas/holding)
 "Oy" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
 "OA" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /turf/open/floor/bamboo/tatami/purple{
 	dir = 1
 	},

@@ -574,7 +574,9 @@
 /area/shuttle/escape)
 "Hk" = (
 /obj/machinery/light/directional/west,
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},

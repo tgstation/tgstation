@@ -77,7 +77,11 @@
 /area/shuttle/escape)
 "as" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/item/kirbyplants/organic/plant21,
+/obj/item/kirbyplants{
+	icon_state = "plant-21";
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
@@ -137,7 +141,9 @@
 /area/shuttle/escape)
 "aB" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/item/kirbyplants/organic/plant11,
+/obj/item/kirbyplants{
+	icon_state = "plant-11"
+	},
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -454,7 +460,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bu" = (
-/obj/item/kirbyplants/organic/plant22,
+/obj/item/kirbyplants{
+	icon_state = "plant-22"
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "bv" = (

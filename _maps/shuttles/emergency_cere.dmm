@@ -139,7 +139,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aM" = (
-/obj/item/kirbyplants/organic/plant22,
+/obj/item/kirbyplants{
+	icon_state = "plant-22"
+	},
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
@@ -155,7 +157,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aP" = (
-/obj/item/kirbyplants/organic/plant22,
+/obj/item/kirbyplants{
+	icon_state = "plant-22"
+	},
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
@@ -473,7 +477,9 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ca" = (
-/obj/item/kirbyplants/organic/plant21,
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "cb" = (
@@ -491,7 +497,9 @@
 /area/shuttle/escape)
 "cd" = (
 /obj/machinery/light/directional/east,
-/obj/item/kirbyplants/organic/plant21,
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ce" = (

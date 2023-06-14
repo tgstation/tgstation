@@ -1,6 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aq" = (
-/obj/item/kirbyplants/organic/plant21,
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
@@ -125,7 +127,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "iP" = (
-/obj/item/kirbyplants/organic/plant6,
+/obj/item/kirbyplants{
+	icon_state = "plant-06"
+	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
@@ -161,7 +165,9 @@
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travelers_rest)
 "sn" = (
-/obj/item/kirbyplants/organic/plant10,
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
@@ -446,7 +452,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "Vn" = (
-/obj/item/kirbyplants/organic/plant21,
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},

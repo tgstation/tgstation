@@ -3,7 +3,9 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/obj/item/kirbyplants/organic/plant21,
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -628,7 +630,9 @@
 /obj/effect/turf_decal/siding{
 	dir = 9
 	},
-/obj/item/kirbyplants/organic/plant21,
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "rH" = (
@@ -661,7 +665,9 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/obj/item/kirbyplants/organic/plant21,
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -683,7 +689,9 @@
 /obj/effect/turf_decal/siding{
 	dir = 10
 	},
-/obj/item/kirbyplants/organic/plant21,
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "vv" = (
