@@ -11,12 +11,40 @@
 /// How much toner is used for making a copy of a document.
 #define DOCUMENT_TONER_USE 0.75
 /// How much toner is used for making a copy of an ass.
-#define ASS_TONER_USE 0.625
-/// How much toner is used for making a copy of paperwork
+#define ASS_TONER_USE PHOTO_TONER_USE
+/// How much toner is used for making a copy of paperwork.
 #define PAPERWORK_TONER_USE 0.75
 
+// please use integers here
+/// How much paper is used for making a copy of paper. What, are you seriously surprised by this?
+#define PAPER_PAPER_USE 1
+/// How much paper is used for making a copy of a photo.
+#define PHOTO_PAPER_USE 1
+/// How much paper is used for making a copy of a document.
+#define DOCUMENTS_PAPER_USE 10
+/// How much paper is used for making a copy of a photo.
+#define ASS_PAPER_USE PHOTO_PAPER_USE
+/// How much paper is used for making a copy of paperwork.
+#define PAPERWORK_PAPER_USE 20
+
+/// Maximum capacity of a photocopier
+#define MAX_PAPER_CAPACITY 60
 /// The maximum amount of copies you can make with one press of the copy button.
 #define MAX_COPIES_AT_ONCE 10
+
+///Paper blanks (form templates, basically). Loaded from `config/blanks.json`.
+///If invalid or not found, set to null.
+GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
+
+/proc/init_paper_blanks()
+	try
+		var/list/blanks_list = list()
+		var/list/blanks_json = json_decode(file2text("config/blanks.json"))
+		for(var/paper_blank in blanks_json)
+			blanks_list += list("[paper_blank["code"]]" = paper_blank)
+		return blanks_list
+	catch()
+		return null
 
 /obj/machinery/photocopier
 	name = "photocopier"
@@ -41,6 +69,10 @@
 	var/category
 	///Variable that holds a reference to any object supported for photocopying inside the photocopier
 	var/obj/object_copy
+	///
+	var/starting_paper = 30
+	///
+	var/list/paper_stack = list()
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
@@ -63,6 +95,7 @@
 /obj/machinery/photocopier/Destroy()
 	QDEL_NULL(object_copy)
 	QDEL_NULL(toner_cartridge)
+	QDEL_LIST(paper_stack)
 	ass = null //the mob isn't actually contained and just referenced, no need to delete it.
 	return ..()
 
@@ -73,21 +106,32 @@
 		ui = new(user, src, "Photocopier")
 		ui.open()
 
+/obj/machinery/photocopier/ui_static_data(mob/user)
+	var/list/static_data = list()
+
+	var/list/blank_infos = list()
+	var/list/category_names = list()
+	if(GLOB.paper_blanks)
+		for(var/blank_id in GLOB.paper_blanks)
+			var/list/paper_blank = GLOB.paper_blanks[blank_id]
+			blank_infos += list(list(
+				name = paper_blank["name"],
+				category = paper_blank["category"],
+				code = blank_id
+			))
+			category_names |= paper_blank["category"]
+
+	static_data["blanks"] = blank_infos
+	static_data["categories"] = category_names
+
+	return static_data
+
 /obj/machinery/photocopier/ui_data(mob/user)
 	var/list/data = list()
 	data["has_item"] = !copier_empty()
 	data["num_copies"] = num_copies
 
-	try
-		var/list/blanks = json_decode(file2text("config/blanks.json"))
-		if (blanks != null)
-			data["blanks"] = blanks
-			data["category"] = category
-			data["forms_exist"] = TRUE
-		else
-			data["forms_exist"] = FALSE
-	catch()
-		data["forms_exist"] = FALSE
+	data["category"] = category
 
 	if(istype(object_copy, /obj/item/photo))
 		data["is_photo"] = TRUE
@@ -107,6 +151,8 @@
 	else
 		data["has_toner"] = FALSE
 		data["has_enough_toner"] = FALSE
+
+	data["paper_count"] = get_paper_count()
 
 	return data
 
@@ -131,19 +177,19 @@
 						to_chat(usr, span_warning("An error message flashes across [src]'s screen: \"The supplied paper is blank. Aborting.\""))
 						return FALSE
 					// Basic paper
-					do_copy_loop(CALLBACK(src, PROC_REF(make_paper_copy), paper_copy), usr)
+					do_copy_loop(CALLBACK(src, PROC_REF(make_paper_copy), paper_copy), usr, PAPER_PAPER_USE, PAPER_TONER_USE)
 					return TRUE
 				// Copying photo.
 				if(istype(object_copy, /obj/item/photo))
-					do_copy_loop(CALLBACK(src, PROC_REF(make_photo_copy), object_copy), usr)
+					do_copy_loop(CALLBACK(src, PROC_REF(make_photo_copy), object_copy), usr, PHOTO_PAPER_USE, PHOTO_TONER_USE)
 					return TRUE
 				// Copying Documents.
 				if(istype(object_copy, /obj/item/documents))
-					do_copy_loop(CALLBACK(src, PROC_REF(make_document_copy), object_copy), usr)
+					do_copy_loop(CALLBACK(src, PROC_REF(make_document_copy), object_copy), usr, DOCUMENTS_PAPER_USE, DOCUMENT_TONER_USE)
 					return TRUE
 				// Copying paperwork
 				if(istype(object_copy, /obj/item/paperwork))
-					do_copy_loop(CALLBACK(src, PROC_REF(make_paperwork_copy), object_copy), usr)
+					do_copy_loop(CALLBACK(src, PROC_REF(make_paperwork_copy), object_copy), usr, PAPERWORK_PAPER_USE, PAPERWORK_TONER_USE)
 					return TRUE
 
 		// Remove the paper/photo/document from the photocopier.
@@ -201,25 +247,17 @@
 			if (toner_cartridge.charges - PAPER_TONER_USE < 0)
 				to_chat(usr, span_warning("There is not enough toner in [src] to print the form, please replace the cartridge."))
 				return FALSE
-			do_copy_loop(CALLBACK(src, PROC_REF(make_blank_print), params), usr)
+			if(!(params["code"] in GLOB.paper_blanks))
+				return FALSE
+			var/list/blank = GLOB.paper_blanks[params["code"]]
+			do_copy_loop(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE)
 			return TRUE
 
 /**
  * Determines if the photocopier has enough toner to create `num_copies` amount of copies of the currently inserted item.
  */
-/obj/machinery/photocopier/proc/has_enough_toner()
-	if(ass)
-		return toner_cartridge.charges >= (ASS_TONER_USE * num_copies)
-	if(isnull(object_copy))
-		return FALSE
-	if(istype(object_copy, /obj/item/paper))
-		return toner_cartridge.charges >= (PAPER_TONER_USE * num_copies)
-	if(istype(object_copy, /obj/item/documents))
-		return toner_cartridge.charges >= (DOCUMENT_TONER_USE * num_copies)
-	if(istype(object_copy, /obj/item/photo))
-		return toner_cartridge.charges >= (PHOTO_TONER_USE * num_copies)
-	if(istype(object_copy, /obj/item/paperwork))
-		return toner_cartridge.charges >= (PAPERWORK_TONER_USE * num_copies)
+/obj/machinery/photocopier/proc/has_enough_toner(toner_use)
+	return !isnull(toner_cartridge) && toner_cartridge.charges >= toner_use
 
 /**
  * Will invoke the passed in `copy_cb` callback in 1 second intervals, and charge the user 5 credits for each copy made.
@@ -228,12 +266,16 @@
  * * copy_cb - a callback for which proc to call. Should only be one of the `make_x_copy()` procs, such as `make_paper_copy()`.
  * * user - the mob who clicked copy.
  */
-/obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user)
+/obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user, paper_use, toner_use)
 	busy = TRUE
 	update_use_power(ACTIVE_POWER_USE)
 	var/i
 	for(i in 1 to num_copies)
-		if(!toner_cartridge) //someone removed the toner cartridge during printing lol.
+		if(i * paper_use > get_paper_count())
+			to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform full operation.\""))
+			break
+		if(!has_enough_toner(i * toner_use))
+			to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough toner to perform full operation.\""))
 			break
 		if(attempt_charge(src, user) & COMPONENT_OBJ_CANCEL_CHARGE)
 			balloon_alert(user, "insufficient funds!")
@@ -267,6 +309,25 @@
 	copied_item.pixel_x = copied_item.base_pixel_x + rand(-10, 10)
 	copied_item.pixel_y = copied_item.base_pixel_y + rand(-10, 10)
 
+/obj/machinery/photocopier/proc/get_paper_count()
+	return length(paper_stack) + starting_paper
+
+/obj/machinery/photocopier/proc/get_empty_paper()
+	var/obj/item/paper/new_paper = paper_stack != null ? pop(paper_stack) : null
+	if(new_paper == null && starting_paper > 0)
+		new_paper = new /obj/item/paper(loc)
+	return new_paper
+
+/obj/machinery/photocopier/proc/delete_paper(number)
+	if(number > get_paper_count())
+		CRASH("Trying to get more paper than is stored in the photocopier")
+	for(var/_ in 1 to number)
+		var/to_delete = pop(paper_stack)
+		if(to_delete)
+			qdel(to_delete)
+		else
+			starting_paper--
+
 /**
  * Handles the copying of paper. Transfers all the text, stamps and so on from the old paper, to the copy.
  *
@@ -276,9 +337,11 @@
 	if(!paper_copy || !toner_cartridge)
 		return
 
-	var/copy_colour = toner_cartridge.charges > 10 ? COLOR_FULL_TONER_BLACK : COLOR_GRAY;
+	var/obj/item/paper/empty_paper = get_empty_paper()
 
-	var/obj/item/paper/copied_paper = paper_copy.copy(/obj/item/paper, loc, FALSE, copy_colour)
+	var/copy_colour = toner_cartridge.charges > 10 ? COLOR_FULL_TONER_BLACK : COLOR_GRAY
+
+	var/obj/item/paper/copied_paper = paper_copy.copy(empty_paper, loc, FALSE, copy_colour)
 
 	give_pixel_offset(copied_paper)
 
@@ -296,6 +359,7 @@
 		return
 	var/obj/item/photo/copied_pic = new(loc, photo_copy.picture.Copy(color_mode == PHOTO_GREYSCALE ? TRUE : FALSE))
 	give_pixel_offset(copied_pic)
+	delete_paper(PHOTO_PAPER_USE)
 	toner_cartridge.charges -= PHOTO_TONER_USE
 
 /**
@@ -308,6 +372,7 @@
 		return
 	var/obj/item/documents/photocopy/copied_doc = new(loc, document_copy)
 	give_pixel_offset(copied_doc)
+	delete_paper(DOCUMENTS_PAPER_USE)
 	toner_cartridge.charges -= DOCUMENT_TONER_USE
 
 /**
@@ -325,20 +390,22 @@
 		copied_paperwork.stamp_icon = "paper_stamp-pc" //Override with the photocopy overlay sprite
 		copied_paperwork.add_stamp()
 	give_pixel_offset(copied_paperwork)
+	delete_paper(PAPERWORK_PAPER_USE)
 	toner_cartridge.charges -= PAPERWORK_TONER_USE
 
 /**
  * The procedure is called when printing a blank to write off toner consumption.
  */
-/obj/machinery/photocopier/proc/make_blank_print(params)
+/obj/machinery/photocopier/proc/make_blank_print(blank_code)
 	if(!toner_cartridge)
 		return
-	var/obj/item/paper/printblank = new(loc)
-	var/printname = sanitize(params["name"])
+	var/list/blank = GLOB.paper_blanks[blank_code]
+	var/obj/item/paper/printblank = get_empty_paper()
+	var/printname = sanitize(blank["name"])
 	var/list/printinfo
-	for(var/infoline in params["info"])
+	for(var/infoline in blank["info"])
 		printinfo += infoline
-	printblank.name = printname
+	printblank.name = "paper - '[printname]'"
 	printblank.add_raw_text(printinfo)
 	printblank.update_appearance()
 	toner_cartridge.charges -= PAPER_TONER_USE
@@ -389,7 +456,6 @@
 /obj/machinery/photocopier/proc/do_insertion(obj/item/object, mob/user)
 	object.forceMove(src)
 	to_chat(user, span_notice("You insert [object] into [src]."))
-	flick("photocopier1", src)
 
 /**
  * Called when someone hits the "remove item" button on the copier UI.
@@ -416,11 +482,16 @@
 
 /obj/machinery/photocopier/attackby(obj/item/object, mob/user, params)
 	if(istype(object, /obj/item/paper) || istype(object, /obj/item/photo) || istype(object, /obj/item/documents))
+		if(istype(object, /obj/item/paper))
+			var/obj/item/paper/paper = object
+			if(length(paper.raw_text_inputs) == 0)
+				insert_empty_paper(paper, user)
+				return
 		insert_copy_object(object, user)
 
 	else if(istype(object, /obj/item/toner))
 		if(toner_cartridge)
-			to_chat(user, span_warning("[src] already has a toner cartridge inserted. Remove that one first."))
+			to_chat(user, span_warning("[src] already has a toner cartridge inserted."))
 			return
 		object.forceMove(src)
 		toner_cartridge = object
@@ -435,14 +506,27 @@
 		else
 			insert_copy_object(object, user)
 
+/obj/machinery/photocopier/proc/insert_empty_paper(obj/item/paper/paper, mob/user)
+	if(istype(paper, /obj/item/paper/paperslip))
+		return
+	if(!user.temporarilyRemoveItemFromInventory(paper))
+		return
+	if(get_paper_count() >= MAX_PAPER_CAPACITY)
+		to_chat(user, span_warning("\The [src] cannot hold more paper!."))
+		return
+	paper_stack += paper
+	do_insertion(paper, user)
+
 /obj/machinery/photocopier/proc/insert_copy_object(obj/item/object, mob/user)
-	if(copier_empty())
-		if(!user.temporarilyRemoveItemFromInventory(object))
-			return
-		object_copy = object
-		do_insertion(object, user)
-	else
+	if(!copier_empty())
 		to_chat(user, span_warning("There is already something in [src]!"))
+		return
+	if(!user.temporarilyRemoveItemFromInventory(object))
+		return
+	object_copy = object
+	do_insertion(object, user)
+	flick("photocopier1", src)
+
 
 /obj/machinery/photocopier/atom_break(damage_flag)
 	. = ..()
@@ -557,6 +641,11 @@
 	charges = 200
 	max_charges = 200
 
+#undef PAPER_PAPER_USE
+#undef PHOTO_PAPER_USE
+#undef DOCUMENTS_PAPER_USE
+#undef ASS_PAPER_USE
+#undef PAPERWORK_PAPER_USE
 #undef PHOTO_GREYSCALE
 #undef PHOTO_COLOR
 #undef PAPER_TONER_USE

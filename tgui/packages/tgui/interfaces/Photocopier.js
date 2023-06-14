@@ -5,7 +5,7 @@ import { Window } from '../layouts';
 
 export const Photocopier = (props, context) => {
   const { data } = useBackend(context);
-  const { isAI, has_toner, has_item, forms_exist } = data;
+  const { isAI, has_toner, has_item, categories = [] } = data;
 
   return (
     <Window title="Photocopier" width={320} height={512}>
@@ -17,7 +17,7 @@ export const Photocopier = (props, context) => {
             <Box color="average">No inserted toner cartridge.</Box>
           </Section>
         )}
-        {forms_exist ? (
+        {categories.length !== 0 ? (
           <Blanks />
         ) : (
           <Section title="Blanks">
@@ -153,18 +153,11 @@ const Options = (props, context) => {
 
 const Blanks = (props, context) => {
   const { act, data } = useBackend(context);
-  const { blanks, category, has_toner } = data;
+  const { blanks, categories, category, has_toner } = data;
 
-  const sortedBlanks = sortBy((blank) => blanks.category)(blanks || []);
+  const sortedBlanks = sortBy((blank) => blank.name)(blanks || []);
 
-  const categories = [];
-  for (let blank of sortedBlanks) {
-    if (!categories.includes(blank.category)) {
-      categories.push(blank.category);
-    }
-  }
-
-  const selectedCategory = category ?? categories[0];
+  const selectedCategory = category;
   const visibleBlanks = sortedBlanks.filter(
     (blank) => blank.category === selectedCategory
   );
@@ -189,8 +182,7 @@ const Blanks = (props, context) => {
             disabled={!has_toner}
             onClick={() =>
               act('print_blank', {
-                name: blank.name,
-                info: blank.info,
+                code: blank.code,
               })
             }>
             {blank.code}
