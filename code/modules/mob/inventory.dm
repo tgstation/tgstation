@@ -244,7 +244,7 @@
 	// Failed to put in hands - drop the item
 	var/atom/location = drop_location()
 
-	// Try dropping on nearby tables if germ sensitive
+	// Try dropping on nearby tables if germ sensitive (except table behind you)
 	if(HAS_TRAIT(I, TRAIT_GERM_SENSITIVE))
 		var/list/dirs = list( // All dirs in clockwise order
 			NORTH,
