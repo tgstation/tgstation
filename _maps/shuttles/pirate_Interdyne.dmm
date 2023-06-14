@@ -46,13 +46,14 @@
 /obj/machinery/door/airlock/hatch{
 	id_tag = "piratebridgebolt";
 	name = "Bridge";
-	req_access = list("syndicate")
+	req_access = null
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ah" = (
@@ -216,7 +217,7 @@
 /obj/machinery/door/airlock/external/glass/ruin{
 	cyclelinkeddir = 666666;
 	id_tag = "pirateportexternal";
-	req_access = list("syndicate")
+	req_access = null
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -237,18 +238,20 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aL" = (
 /obj/machinery/door/airlock/external/glass/ruin{
 	cyclelinkeddir = 666666;
 	id_tag = "pirateportexternal";
-	req_access = list("syndicate")
+	req_access = null
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aM" = (
@@ -423,6 +426,15 @@
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"bM" = (
+/obj/machinery/door/airlock/hatch{
+	req_access = null
+	},
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
 "bQ" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
@@ -440,17 +452,19 @@
 /area/shuttle/pirate)
 "dV" = (
 /obj/machinery/door/airlock/hatch{
-	req_access = list("syndicate")
+	req_access = null
 	},
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ek" = (
 /obj/machinery/door/airlock/hatch{
-	req_access = list("syndicate")
+	req_access = null
 	},
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ep" = (
@@ -668,10 +682,13 @@
 /area/shuttle/pirate)
 "yi" = (
 /obj/machinery/door/airlock/hatch{
-	req_access = list("syndicate")
+	id_tag = "piratebridgebolt";
+	name = "Bridge";
+	req_access = null
 	},
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "BT" = (
@@ -1033,7 +1050,7 @@ aj
 aJ
 aS
 aj
-yi
+bM
 aj
 aj
 ED
