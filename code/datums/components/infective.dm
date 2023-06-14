@@ -39,7 +39,7 @@
 
 	for(var/disease in diseases)
 		eater.ForceContractDisease(disease)
-	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
+	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND)
 	try_infect(feeder, active_hand_zone)
 
 /datum/component/infective/proc/try_infect_drink(datum/source, mob/living/drinker, mob/living/feeder)
@@ -47,7 +47,7 @@
 
 	for(var/disease in diseases)
 		drinker.ForceContractDisease(disease)
-	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
+	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND)
 	try_infect(feeder, active_hand_zone)
 
 /datum/component/infective/proc/clean(datum/source, clean_types)
@@ -81,7 +81,7 @@
 /datum/component/infective/proc/try_infect_attack_zone(datum/source, mob/living/carbon/target, mob/living/user, hit_zone)
 	SIGNAL_HANDLER
 
-	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
+	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND)
 	try_infect(user, active_hand_zone)
 	try_infect(target, hit_zone)
 
@@ -89,7 +89,7 @@
 	SIGNAL_HANDLER
 	if(!iscarbon(target)) //this case will be handled by try_infect_attack_zone
 		try_infect(target)
-	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
+	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND)
 	try_infect(user, active_hand_zone)
 
 /datum/component/infective/proc/try_infect_equipped(datum/source, mob/living/equipper, slot)
@@ -112,7 +112,7 @@
 	SIGNAL_HANDLER
 
 	if(isliving(arrived))
-		try_infect(arrived, BODY_ZONE_PRECISE_L_FOOT)
+		try_infect(arrived, pick(BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_L_FOOT))
 
 /datum/component/infective/proc/try_infect_streak(datum/source, list/directions, list/output_diseases)
 	SIGNAL_HANDLER
