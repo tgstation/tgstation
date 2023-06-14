@@ -71,9 +71,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/category
 	///Variable that holds a reference to any object supported for photocopying inside the photocopier
 	var/obj/object_copy
-	///
+	/// The amount of paper this photocoper starts with.
 	var/starting_paper = 30
-	///
+	/// A stack for all the empty paper we have newly inserted (LIFO)
 	var/list/paper_stack = list()
 
 /obj/machinery/photocopier/Initialize(mapload)
@@ -261,6 +261,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier/proc/has_enough_toner(toner_use)
 	return !isnull(toner_cartridge) && toner_cartridge.charges >= toner_use
 
+/**
+ * Returns the color used for the printing operation. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
+ */
 /obj/machinery/photocopier/proc/get_toner_color()
 	return toner_cartridge.charges / toner_cartridge.max_charges > TONER_LOW_PERCENTAGE ? COLOR_FULL_TONER_BLACK : COLOR_GRAY
 
@@ -314,9 +317,15 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	copied_item.pixel_x = copied_item.base_pixel_x + rand(-10, 10)
 	copied_item.pixel_y = copied_item.base_pixel_y + rand(-10, 10)
 
+/**
+ * Gets the total amount of paper this printer has stored.
+ */
 /obj/machinery/photocopier/proc/get_paper_count()
 	return length(paper_stack) + starting_paper
 
+/**
+ * Returns an empty paper, used for blanks. Prioritizes paper_stack, creates new paper in case that's empty.
+ */
 /obj/machinery/photocopier/proc/get_empty_paper()
 	var/obj/item/paper/new_paper = pop(paper_stack)
 	if(new_paper == null && starting_paper > 0)
@@ -325,6 +334,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	new_paper.forceMove(loc)
 	return new_paper
 
+/**
+ * Removes an amount of paper from the printer's storage.
+ * This lets us pretend we actually consumed paper when we were printing stuff that isn't directly paper.
+ */
 /obj/machinery/photocopier/proc/delete_paper(number)
 	if(number > get_paper_count())
 		CRASH("Trying to get more paper than is stored in the photocopier")
@@ -510,6 +523,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		else
 			insert_copy_object(object, user)
 
+/**
+ * Proc that handles insertion of empty paper, useful for copying later.
+ */
 /obj/machinery/photocopier/proc/insert_empty_paper(obj/item/paper/paper, mob/user)
 	if(istype(paper, /obj/item/paper/paperslip))
 		return
@@ -650,6 +666,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 #undef DOCUMENTS_PAPER_USE
 #undef ASS_PAPER_USE
 #undef PAPERWORK_PAPER_USE
+#undef MAX_PAPER_CAPACITY
+#undef TONER_LOW_PERCENTAGE
 #undef PHOTO_GREYSCALE
 #undef PHOTO_COLOR
 #undef PAPER_TONER_USE
