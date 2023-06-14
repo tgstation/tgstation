@@ -86,3 +86,7 @@
 	if(length(swing_turfs))
 		swing_turfs.len -= 1
 	return swing_turfs
+
+/datum/attack_style/melee_weapon/swing/fast
+	cd = CLICK_CD_MELEE * 1.5
+	time_per_turf = 0.1 SECONDS

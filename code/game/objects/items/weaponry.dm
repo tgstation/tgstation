@@ -82,6 +82,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_claymore
+	attack_style = /datum/attack_style/melee_weapon/swing
 	resistance_flags = FIRE_PROOF
 
 /datum/armor/item_claymore
@@ -112,6 +113,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_speed = 3
 	throw_range = 5
 	armour_penetration = 35
+	attack_style = /datum/attack_style/melee_weapon/swing/fast
 
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."

@@ -292,8 +292,11 @@
 	return staminaloss
 
 /mob/living/proc/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
-	if(!forced && (status_flags & GODMODE))
-		return FALSE
+	if(!forced)
+		if(status_flags & GODMODE)
+			return FALSE
+		if(amount > 0 && HAS_TRAIT(src, TRAIT_CANNOT_HEAL_STAMINA))
+			return FALSE
 	if(required_biotype && !(mob_biotypes & required_biotype))
 		return
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)

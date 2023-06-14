@@ -185,6 +185,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_XENO_HOST "xeno_host"
 #define TRAIT_STUNIMMUNE "stun_immunity"
+/// This mob cannot gain stamina, only lose it.
+#define TRAIT_CANNOT_HEAL_STAMINA "stamina_regen_blocked"
 #define TRAIT_BATON_RESISTANCE "baton_resistance"
 /// Anti Dual-baton cooldown bypass exploit.
 #define TRAIT_IWASBATONED "iwasbatoned"

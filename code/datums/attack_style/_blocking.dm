@@ -35,6 +35,9 @@
 /datum/status_effect/blocking/on_apply()
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_attacked))
 	RegisterSignals(owner, list(COMSIG_MOB_APPLY_DAMAGE, COMSIG_LIVING_HEALTH_UPDATE), PROC_REF(on_health_update))
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/blocking)
+	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/blocking)
+	ADD_TRAIT(owner, TRAIT_CANNOT_HEAL_STAMINA, id)
 	return TRUE
 
 /datum/status_effect/blocking/refresh(effect, obj/item/new_blocker)
@@ -52,6 +55,9 @@
 		COMSIG_LIVING_HEALTH_UPDATE,
 		COMSIG_MOB_APPLY_DAMAGE,
 	))
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/blocking)
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blocking)
+	REMOVE_TRAIT(owner, TRAIT_CANNOT_HEAL_STAMINA, id)
 
 /datum/status_effect/blocking/Destroy()
 	if(blocking_with)
@@ -113,10 +119,13 @@
 		return NONE
 
 	// Depending on the item (or lack thereof) you are blocking with, the damage taken is converted to more (or maybe less!) stamina damage
+	var/mob/living/attacker = GET_ASSAILANT(hitby)
 	var/defense_multiplier = blocking_with ? blocking_with.get_blocking_ability(source, hitby, damage, attack_type, damage_type) : BARE_HAND_DEFENSE_MULTIPLIER
 	if(defense_multiplier < 0)
 		return NONE
 	var/final_damage = defense_multiplier * damage
+	if(attacker && HAS_TRAIT(attacker, TRAIT_HULK))
+		final_damage *= 1.2 // Hulk attacks are harder to stop
 	if(final_damage > 0)
 		source.apply_damage(final_damage, STAMINA, spread_damage = TRUE)
 
@@ -130,7 +139,8 @@
 			span_danger("[source] blocks [attack_text][blocking_with ? " with [blocking_with]" : ""]!"),
 			span_danger("You block [attack_text][blocking_with ? " with [blocking_with]" : ""]!"),
 		)
-
+	source.add_movespeed_modifier(/datum/movespeed_modifier/successful_block)
+	addtimer(CALLBACK(source, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/successful_block), 0.5 SECONDS)
 	if(!QDELETED(src))
 		animate(shield_overlay, time = 0.15 SECONDS, pixel_x = 2, easing = BACK_EASING|EASE_OUT)
 		animate(time = 0.20 SECONDS, pixel_x = -2, easing = BACK_EASING|EASE_OUT)
@@ -174,3 +184,12 @@
 	color = loc.chat_color || LIGHT_COLOR_BLUE
 	alpha = min(loc.alpha, 125)
 	layer = loc.layer + 0.1
+
+/datum/movespeed_modifier/blocking
+	multiplicative_slowdown = 0.5
+
+/datum/movespeed_modifier/successful_block
+	multiplicative_slowdown = 0.25
+
+/datum/actionspeed_modifier/blocking
+	multiplicative_slowdown = 1
