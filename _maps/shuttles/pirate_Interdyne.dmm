@@ -335,7 +335,9 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/gun/medbeam,
 /obj/item/gun/syringe/rapidsyringe,
-/obj/item/pen/sleepy,
+/obj/item/pen/sleepy{
+	name = "Interdyne Chem Pen"
+	},
 /obj/item/defibrillator/compact/combat/loaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
