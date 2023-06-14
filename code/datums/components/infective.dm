@@ -39,16 +39,14 @@
 
 	for(var/disease in diseases)
 		eater.ForceContractDisease(disease)
-	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND)
-	try_infect(feeder, active_hand_zone)
+	try_infect(feeder, feeder.get_active_held_zone())
 
 /datum/component/infective/proc/try_infect_drink(datum/source, mob/living/drinker, mob/living/feeder)
 	SIGNAL_HANDLER
 
 	for(var/disease in diseases)
 		drinker.ForceContractDisease(disease)
-	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND)
-	try_infect(feeder, active_hand_zone)
+	try_infect(feeder, feeder.get_active_held_zone())
 
 /datum/component/infective/proc/clean(datum/source, clean_types)
 	SIGNAL_HANDLER
@@ -81,16 +79,14 @@
 /datum/component/infective/proc/try_infect_attack_zone(datum/source, mob/living/carbon/target, mob/living/user, hit_zone)
 	SIGNAL_HANDLER
 
-	var/active_hand_zone = (!(user.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND)
-	try_infect(user, active_hand_zone)
+	try_infect(user, user.get_active_held_zone())
 	try_infect(target, hit_zone)
 
 /datum/component/infective/proc/try_infect_attack(datum/source, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
 	if(!iscarbon(target)) //this case will be handled by try_infect_attack_zone
 		try_infect(target)
-	var/active_hand_zone = (!(user.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND)
-	try_infect(user, active_hand_zone)
+	try_infect(user, user.get_active_held_zone())
 
 /datum/component/infective/proc/try_infect_equipped(datum/source, mob/living/equipper, slot)
 	SIGNAL_HANDLER
