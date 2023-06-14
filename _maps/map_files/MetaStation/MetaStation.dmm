@@ -43043,7 +43043,7 @@
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
-/obj/item/kirbyplants/dead/research_director,
+/obj/item/kirbyplants/random/dead/research_director,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
@@ -59406,7 +59406,7 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "vnP" = (
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)

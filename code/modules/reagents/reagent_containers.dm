@@ -4,11 +4,11 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = null
 	w_class = WEIGHT_CLASS_TINY
-	/// The maximum amount of reagents per transfer that will be moved out of this reagent container
+	/// The maximum amount of reagents per transfer that will be moved out of this reagent container. This value's position in possible_transfer_amounts should be reflected in amount_list_position.
 	var/amount_per_transfer_from_this = 5
 	/// The different possible amounts of reagent to transfer out of the container
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
-	/// Where we are in the possible transfer amount list.
+	/// Where we are in the possible transfer amount list. Number should match the position in possible_transfer_amounts corresponding to amount_per_transfer_from_this.
 	var/amount_list_position = 1
 	/// The maximum amount of reagents this container can hold
 	var/volume = 30
