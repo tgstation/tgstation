@@ -422,3 +422,31 @@
   - rscadd: Nuclear Detonation now nukes the syndie base if its on the syndie base.
   - bugfix: Nuclear Detonation now handles not playing a cinematic correctly.
   - refactor: Changed z level iteration for Nuclear Detonation
+2023-06-14:
+  ATHATH:
+  - bugfix: The destabilization of your eigenstate can no longer be paused by stripping
+      naked.
+  DATA-xPUNGED:
+  - bugfix: Beach Bum Basketball Team has water again.
+  - bugfix: Birdshot's gulag now has an item reclaimer, no more will your items fall
+      on the ground!
+  GPeckman:
+  - bugfix: You can no longer duplicate iron by turning sheets into rods and putting
+      the rods back into the protolathe
+  Mey-Ha-Zah:
+  - image: Updated Eastern Monk, Nun, Holiday Priest Chaplain Suits. EricZilla helped.
+  Pumpkinoe:
+  - bugfix: Made some decals on north star look a little nicer.
+  SethLafuente:
+  - rscadd: Added two new pirate types Ex-interdyne Pharmacists and The Grey Tide-6
+  - spellcheck: makes language more appropiate
+  Youtubeboy139:
+  - rscadd: Added security specific gloves
+  - image: Changed all standard security uniforms pink
+  carlarctg:
+  - qol: Plastic sheets chemist tip is more in-depth and clear
+  - qol: Added holy explosion chemist tip
+  carshalash:
+  - bugfix: Fixes a stuck lightbulb in medbay treatment center. Also fixes an accidental
+      placement of vents/scrubbers which lead to escaping xenos.
+  - spellcheck: corrects a typo in most ethereal drinks.
