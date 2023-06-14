@@ -3,12 +3,11 @@
 	var/expire_time
 	var/required_clean_types = CLEAN_TYPE_DISEASE
 
-
-/datum/component/infective/Initialize(list/datum/disease/_diseases, expire_in)
-	if(islist(_diseases))
-		diseases = _diseases
+/datum/component/infective/Initialize(list/datum/disease/diseases, expire_in)
+	if(islist(diseases))
+		src.diseases = diseases
 	else
-		diseases = list(_diseases)
+		src.diseases = list(diseases)
 	if(expire_in)
 		expire_time = world.time + expire_in
 		QDEL_IN(src, expire_in)
@@ -17,7 +16,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	var/static/list/disease_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(try_infect_crossed),
+		COMSIG_ATOM_ENTERED = PROC_REF(try_infect_entered),
 	)
 	AddComponent(/datum/component/connect_loc_behalf, parent, disease_connections)
 
@@ -38,18 +37,18 @@
 /datum/component/infective/proc/try_infect_eat(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
 
-	for(var/V in diseases)
-		eater.ForceContractDisease(V)
-	try_infect(feeder, BODY_ZONE_L_ARM)
+	for(var/disease in diseases)
+		eater.ForceContractDisease(disease)
+	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
+	try_infect(feeder, active_hand_zone)
 
 /datum/component/infective/proc/try_infect_drink(datum/source, mob/living/drinker, mob/living/feeder)
 	SIGNAL_HANDLER
 
 	for(var/disease in diseases)
 		drinker.ForceContractDisease(disease)
-	var/appendage_zone = feeder.held_items.Find(source)
-	appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : appendage_zone % 2 ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
-	try_infect(feeder, appendage_zone)
+	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
+	try_infect(feeder, active_hand_zone)
 
 /datum/component/infective/proc/clean(datum/source, clean_types)
 	SIGNAL_HANDLER
@@ -59,21 +58,20 @@
 		qdel(src)
 		return COMPONENT_CLEANED
 
-/datum/component/infective/proc/try_infect_buckle(datum/source, mob/M, force)
+/datum/component/infective/proc/try_infect_buckle(datum/source, mob/living/buckled, force)
 	SIGNAL_HANDLER
 
-	if(isliving(M))
-		try_infect(M)
+	try_infect(buckled)
 
-/datum/component/infective/proc/try_infect_collide(datum/source, atom/A)
+/datum/component/infective/proc/try_infect_collide(datum/source, atom/collided)
 	SIGNAL_HANDLER
 
-	var/atom/movable/P = parent
-	if(P.throwing)
+	var/atom/movable/movable_parent = parent
+	if(movable_parent.throwing)
 		//this will be handled by try_infect_impact_zone()
 		return
-	if(isliving(A))
-		try_infect(A)
+	if(isliving(collided))
+		try_infect(collided)
 
 /datum/component/infective/proc/try_infect_impact_zone(datum/source, mob/living/target, hit_zone)
 	SIGNAL_HANDLER
@@ -83,16 +81,18 @@
 /datum/component/infective/proc/try_infect_attack_zone(datum/source, mob/living/carbon/target, mob/living/user, hit_zone)
 	SIGNAL_HANDLER
 
-	try_infect(user, BODY_ZONE_L_ARM)
+	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
+	try_infect(user, active_hand_zone)
 	try_infect(target, hit_zone)
 
 /datum/component/infective/proc/try_infect_attack(datum/source, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
 	if(!iscarbon(target)) //this case will be handled by try_infect_attack_zone
 		try_infect(target)
-	try_infect(user, BODY_ZONE_L_ARM)
+	var/active_hand_zone = (!(feeder.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
+	try_infect(user, active_hand_zone)
 
-/datum/component/infective/proc/try_infect_equipped(datum/source, mob/living/L, slot)
+/datum/component/infective/proc/try_infect_equipped(datum/source, mob/living/equipper, slot)
 	SIGNAL_HANDLER
 
 	var/old_bio_armor
@@ -102,13 +102,13 @@
 		old_bio_armor = equipped_item.get_armor_rating(BIO)
 		equipped_item.set_armor_rating(BIO, 0)
 
-	try_infect(L, slot2body_zone(slot))
+	try_infect(equipper, slot2body_zone(slot))
 
 	if(isitem(parent))
 		var/obj/item/equipped_item = parent
 		equipped_item.set_armor_rating(BIO, old_bio_armor)
 
-/datum/component/infective/proc/try_infect_crossed(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/datum/component/infective/proc/try_infect_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	if(isliving(arrived))
@@ -123,6 +123,6 @@
 
 	output_diseases |= diseases
 
-/datum/component/infective/proc/try_infect(mob/living/L, target_zone)
-	for(var/V in diseases)
-		L.ContactContractDisease(V, target_zone)
+/datum/component/infective/proc/try_infect(mob/living/infected, target_zone)
+	for(var/disease in diseases)
+		infected.ContactContractDisease(disease, target_zone)
