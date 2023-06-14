@@ -191,7 +191,7 @@
 		/**
 		 * special snowflake check for machines
 		 * someone attached a signaler to the machines wires
-		 * move it to the machines component parts so it does't get moved out in dump_inventory_contents() which get's called a lot
+		 * move it to the machines component parts so it doesn't get moved out in dump_inventory_contents() which gets called a lot
 		 */
 		if(istype(holder, /obj/machinery))
 			var/obj/machinery/machine = holder
