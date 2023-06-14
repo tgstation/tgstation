@@ -18,6 +18,8 @@
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	ADD_TRAIT(parent, TRAIT_GERM_SENSITIVE, src)
+
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(handle_movement))
 	RegisterSignal(parent, COMSIG_ATOM_WASHED, PROC_REF(wash)) //Wash germs off dirty things
@@ -39,6 +41,7 @@
 		handle_movement()
 
 /datum/component/germ_sensitive/UnregisterFromParent()
+	REMOVE_TRAIT(parent, TRAIT_GERM_SENSITIVE, src)
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_MOVABLE_MOVED,

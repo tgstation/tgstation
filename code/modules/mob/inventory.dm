@@ -202,7 +202,7 @@
 
 
 //Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
-//If both fail it drops it on the floor and returns FALSE.
+//If both fail it drops it on the floor (or nearby tables if germ sensitive) and returns FALSE.
 //This is probably the main one you need to know :)
 /mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, forced = FALSE, ignore_animation = TRUE)
 	if(QDELETED(I))
@@ -240,7 +240,45 @@
 	if(del_on_fail)
 		qdel(I)
 		return FALSE
+
+	// Failed to put in hands - drop the item
 	var/atom/location = drop_location()
+
+	// Try dropping on nearby tables if germ sensitive
+	if(HAS_TRAIT(I, TRAIT_GERM_SENSITIVE))
+		var/list/dirs = list( // All dirs in clockwise order
+			NORTH,
+			NORTHEAST,
+			EAST,
+			SOUTHEAST,
+			SOUTH,
+			SOUTHWEST,
+			WEST,
+			NORTHWEST,
+		)
+		var/dir_count = dirs.len
+		var/facing_dir_index = dirs.Find(dir)
+		var/cw_index = facing_dir_index
+		var/ccw_index = facing_dir_index
+		var/obj/structure/table/table = null
+		for(var/i in 0 to ROUND_UP(dir_count/2))
+			// Try find next table on your right
+			table = locate(/obj/structure/table) in get_step(src, dirs[cw_index])
+			if(!isnull(table))
+				break
+			cw_index++
+			if(cw_index > dir_count)
+				cw_index = 1
+			// Try find next table on your left
+			table = locate(/obj/structure/table) in get_step(src, dirs[ccw_index])
+			if(!isnull(table))
+				break
+			ccw_index--
+			if(cw_index <= 0)
+				cw_index = dir_count
+		if(!isnull(table))
+			location = table.drop_location()
+
 	I.forceMove(location)
 	I.layer = initial(I.layer)
 	SET_PLANE_EXPLICIT(I, initial(I.plane), location)

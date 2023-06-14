@@ -25,7 +25,7 @@
 	var/produce_ants = FALSE
 
 /datum/component/decomposition/Initialize(mapload, decomp_req_handle, decomp_flags = NONE, decomp_result, ant_attracting = FALSE, custom_time = 0)
-	if(!isobj(parent) || !parent.GetComponent(/datum/component/germ_sensitive))
+	if(!isobj(parent) || !HAS_TRAIT(parent, TRAIT_GERM_SENSITIVE))
 		return COMPONENT_INCOMPATIBLE
 
 	src.decomp_flags = decomp_flags
