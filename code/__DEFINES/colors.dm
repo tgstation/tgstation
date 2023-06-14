@@ -38,7 +38,6 @@
 #define COLOR_MOSTLY_PURE_RED "#FF3300"
 #define COLOR_DARK_RED "#A50824"
 #define COLOR_RED_LIGHT "#FF3333"
-#define COLOR_FIRE_LIGHT_RED "#B61C1C"
 #define COLOR_MAROON "#800000"
 #define COLOR_SECURITY_RED "#CB0000"
 #define COLOR_VIVID_RED "#FF3232"
@@ -182,13 +181,39 @@
 
 /// Starlight!
 #define COLOR_STARLIGHT "#8589fa"
+
 /**
  * Some defines to generalise colours used in lighting.
  *
  * Important note: colors can end up significantly different from the basic html picture, especially when saturated
+ *
  */
-/// Bright light used by default in tubes and bulbs
-#define LIGHT_COLOR_DEFAULT "#f3fffa"
+
+// Constructable fixtures and their subtypes
+
+/// Default in tube fixtures. Bright white with a slight green tint. rgb(243, 255, 250)
+#define LIGHT_FIXTURE_TUBE_NEUTRAL "#F3FFFA"
+/// Default in tubes, cold subtypes. Bright white with a slight blue tint.rgb(222, 239, 255)
+#define LIGHT_FIXTURE_TUBE_COLD "#DEEFFF"
+/// Default in tubes, warm subtypes. White with unsaturated orange. rgb(250, 229, 193)
+#define LIGHT_FIXTURE_TUBE_WARM "#FAE5C1"
+/// Default in night shift mode. Warm white with a slight pink tint. rgb(255, 201, 204)
+#define LIGHT_FIXTURE_NIGHT_SHIFT "#FFDDCC"
+/// Default in bulbs. Smaller AND warmer! rgb(255, 214, 170)
+#define LIGHT_FIXTURE_BULB_WARM "#FFD6AA"
+/// Less saturated red. rgb(255, 50, 50)
+#define LIGHT_FIXTURE_RED "#FF3232"
+/// Did you know we have two vars for fire colour? rgb(255, 17, 0)
+#define LIGHT_FIXTURE_RED_FIRE "#FF1100"
+/// For emergencies only, no fires allowed! rgb(255, 78, 78)
+#define LIGHT_FIXTURE_EMERGENCY "#FF4E4E"
+/// Rave party or crime scene. rgb(167, 0, 255)
+#define LIGHT_FIXTURE_BLACKLIGHT "#A700FF"
+/// Why are you still partying, there's a fire! rgb(212, 0, 255)
+#define LIGHT_FIXTURE_BLACKLIGHT_FIRE "#D400FF"
+
+// Other lighting colours
+
 /// Bright but quickly dissipating neon green. rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
 /// Vivid, slightly blue green. rgb(60, 240, 70)
@@ -221,13 +246,15 @@
 #define LIGHT_COLOR_BROWN "#966432"
 /// Mostly pure orange. rgb(250, 150, 50)
 #define LIGHT_COLOR_ORANGE "#FA9632"
+/// Slighty darkened, desaturated red. rgb(182, 28, 28)
+#define LIGHT_COLOR_FIRE_LIGHT_RED "#B61C1C"
 /// Light Purple. rgb(149, 44, 244)
 #define LIGHT_COLOR_PURPLE "#952CF4"
 /// Less-saturated light purple. rgb(155, 81, 255)
 #define LIGHT_COLOR_LAVENDER "#9B51FF"
-///slightly desaturated bright yellow.
+/// Slightly desaturated bright yellow. rgb(255, 247, 67)
 #define LIGHT_COLOR_HOLY_MAGIC "#FFF743"
-/// deep crimson
+/// Deep crimson. rgb(208, 0, 0)
 #define LIGHT_COLOR_BLOOD_MAGIC "#D00000"
 
 /* These ones aren't a direct colour like the ones above, because nothing would fit */

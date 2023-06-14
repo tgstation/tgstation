@@ -434,7 +434,7 @@
 	alert_type = null
 	var/glow_range = 3
 	var/glow_power = 1
-	var/glow_color = LIGHT_COLOR_DEFAULT
+	var/glow_color = LIGHT_FIXTURE_TUBE_NEUTRAL
 	var/datum/component/overlay_lighting/lightbulb
 
 /datum/status_effect/golem_lightbulb/on_apply()
