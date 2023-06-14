@@ -6330,9 +6330,7 @@
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "bBm" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -58316,9 +58314,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/small/directional/south,
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/item/kirbyplants/organic/plant22,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -60516,9 +60512,7 @@
 /area/station/medical/break_room)
 "pkj" = (
 /obj/machinery/light/directional/north,
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
@@ -65568,9 +65562,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "quQ" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
@@ -71610,9 +71602,7 @@
 	name = "WARNING: BLAST DOORS";
 	pixel_y = 32
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/item/kirbyplants/organic/plant22,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -75353,9 +75343,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "sSz" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -82609,9 +82597,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "uIR" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
@@ -82938,9 +82924,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "uNJ" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/item/kirbyplants/organic/plant22,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
@@ -83857,9 +83841,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/small/directional/south,
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/item/kirbyplants/organic/plant22,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
