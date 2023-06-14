@@ -14,6 +14,8 @@
 #define ASS_TONER_USE PHOTO_TONER_USE
 /// How much toner is used for making a copy of paperwork.
 #define PAPERWORK_TONER_USE 0.75
+/// At which toner percentage we start losing color. Toner cartridges are scams.
+#define TONER_LOW_PERCENTAGE 0.4
 
 // please use integers here
 /// How much paper is used for making a copy of paper. What, are you seriously surprised by this?
@@ -259,6 +261,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier/proc/has_enough_toner(toner_use)
 	return !isnull(toner_cartridge) && toner_cartridge.charges >= toner_use
 
+/obj/machinery/photocopier/proc/get_toner_color()
+	return toner_cartridge.charges / toner_cartridge.max_charges > TONER_LOW_PERCENTAGE ? COLOR_FULL_TONER_BLACK : COLOR_GRAY
+
 /**
  * Will invoke the passed in `copy_cb` callback in 1 second intervals, and charge the user 5 credits for each copy made.
  *
@@ -313,9 +318,11 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return length(paper_stack) + starting_paper
 
 /obj/machinery/photocopier/proc/get_empty_paper()
-	var/obj/item/paper/new_paper = paper_stack != null ? pop(paper_stack) : null
+	var/obj/item/paper/new_paper = pop(paper_stack)
 	if(new_paper == null && starting_paper > 0)
-		new_paper = new /obj/item/paper(loc)
+		new_paper = new /obj/item/paper
+		starting_paper--
+	new_paper.forceMove(loc)
 	return new_paper
 
 /obj/machinery/photocopier/proc/delete_paper(number)
@@ -338,16 +345,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		return
 
 	var/obj/item/paper/empty_paper = get_empty_paper()
+	toner_cartridge.charges -= PAPER_TONER_USE
 
-	var/copy_colour = toner_cartridge.charges > 10 ? COLOR_FULL_TONER_BLACK : COLOR_GRAY
+	var/copy_colour = get_toner_color()
 
 	var/obj/item/paper/copied_paper = paper_copy.copy(empty_paper, loc, FALSE, copy_colour)
-
-	give_pixel_offset(copied_paper)
-
 	copied_paper.name = paper_copy.name
-
-	toner_cartridge.charges -= PAPER_TONER_USE
+	give_pixel_offset(copied_paper)
 
 /**
  * Handles the copying of photos, which can be printed in either color or greyscale.
@@ -396,17 +400,17 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /**
  * The procedure is called when printing a blank to write off toner consumption.
  */
-/obj/machinery/photocopier/proc/make_blank_print(blank_code)
+/obj/machinery/photocopier/proc/make_blank_print(list/blank)
 	if(!toner_cartridge)
 		return
-	var/list/blank = GLOB.paper_blanks[blank_code]
+	var/copy_colour = get_toner_color()
 	var/obj/item/paper/printblank = get_empty_paper()
 	var/printname = sanitize(blank["name"])
 	var/list/printinfo
 	for(var/infoline in blank["info"])
 		printinfo += infoline
 	printblank.name = "paper - '[printname]'"
-	printblank.add_raw_text(printinfo)
+	printblank.add_raw_text(printinfo, color = copy_colour)
 	printblank.update_appearance()
 	toner_cartridge.charges -= PAPER_TONER_USE
 

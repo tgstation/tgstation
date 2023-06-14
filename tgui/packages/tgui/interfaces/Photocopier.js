@@ -5,7 +5,7 @@ import { Window } from '../layouts';
 
 export const Photocopier = (props, context) => {
   const { data } = useBackend(context);
-  const { isAI, has_toner, has_item, categories = [] } = data;
+  const { isAI, has_toner, has_item, categories = [], paper_count } = data;
 
   return (
     <Window title="Photocopier" width={320} height={512}>
@@ -14,9 +14,12 @@ export const Photocopier = (props, context) => {
           <Toner />
         ) : (
           <Section title="Toner">
-            <Box color="average">No inserted toner cartridge.</Box>
+            <Box color="label">No inserted toner cartridge.</Box>
           </Section>
         )}
+        <Section title="Paper">
+          <Box color="label">Paper stored: {paper_count}</Box>
+        </Section>
         {categories.length !== 0 ? (
           <Blanks />
         ) : (
@@ -157,7 +160,7 @@ const Blanks = (props, context) => {
 
   const sortedBlanks = sortBy((blank) => blank.name)(blanks || []);
 
-  const selectedCategory = category;
+  const selectedCategory = category ?? categories[0];
   const visibleBlanks = sortedBlanks.filter(
     (blank) => blank.category === selectedCategory
   );
