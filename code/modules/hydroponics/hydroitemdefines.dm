@@ -542,6 +542,7 @@
 	return SHAME
 
 /datum/attack_style/melee_weapon/swing/wider_arc/scythe
+	time_per_turf = 0.05 SECONDS
 	/// Typecache of all structures we can attack in our swing in addition to people.
 	var/static/list/scythe_attackables = typecacheof(list(
 		/obj/structure/spacevine,

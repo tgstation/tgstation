@@ -25,7 +25,7 @@
 	toolspeed = 1.5 //Turn it on first you dork
 	blocking_ability = 2
 	attack_style = /datum/attack_style/melee_weapon/swing/only_left
-	weapon_sprite_angle = 90
+	weapon_sprite_angle = 270
 
 	var/on = FALSE
 	///The looping sound for our chainsaw when running

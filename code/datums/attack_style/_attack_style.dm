@@ -127,6 +127,11 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	// Main attack loop starts here.
 	while(length(affecting))
 		var/turf/hitting = popleft(affecting)
+
+#ifdef TESTING
+		apply_testing_color(hitting, affecting_index)
+#endif
+
 		affecting_index += 1
 		. |= swing_enters_turf(attacker, weapon, hitting, already_hit, priority_target, right_clicking)
 		if(. & ATTACK_SWING_CANCEL)
@@ -174,10 +179,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	right_clicking,
 )
 	SHOULD_CALL_PARENT(TRUE)
-
-#ifdef TESTING
-		apply_testing_color(hitting, affecting_index)
-#endif
 
 	// Gathers up all mobs in the turf being struck. Each mob will have a priority assigned.
 	// Intuitively an attacker will not want to attack certain mobs, such as their friends, or unconscious people over conscious people.

@@ -114,10 +114,11 @@
 			// Things that are supposed to be worn being held in hand - don't count
 			if(worn_thing.slot_flags & CLOTHING_ITEM_SLOTS)
 				continue
+			// Held items skip all cover checks. Kinda a cop out, it would be neat if shields covered arm/chest only, etc
 
 		else if(cover_flags_to_check)
 			// Doesn't cover the body part we're checking
-			if(!(worn_thing.flags_cover & cover_flags_to_check))
+			if(!(worn_thing.body_parts_covered & cover_flags_to_check))
 				continue
 
 		if(worn_thing.IsReflect())

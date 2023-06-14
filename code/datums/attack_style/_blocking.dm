@@ -28,7 +28,7 @@
 
 	var/static/shield_offset_const = (0.8 * world.icon_size)
 	shield_overlay = new(new_owner)
-	shield_overlay.pixel_y += shield_offset_const
+	shield_overlay.pixel_y += shield_offset_const // melbert todo: hides under mobs
 	owner.vis_contents += shield_overlay
 	update_shield()
 
@@ -157,10 +157,10 @@
 	var/datum/status_effect/blocking/blocking_effect = attached_effect
 	ASSERT(istype(blocking_effect))
 	if(blocking_effect.blocking_with)
-		desc += "You are blocking with [blocking_effect.blocking_with], \
+		desc += " You are blocking with [blocking_effect.blocking_with], \
 			which has an effectiveness of [blocking_effect.blocking_with.blocking_ability]."
 	else
-		desc += "You are blocking with your bare hands, \
+		desc += " You are blocking with your bare hands, \
 			which has an effectiveness of [BARE_HAND_DEFENSE_MULTIPLIER]."
 
 /obj/effect/blocking_effect
