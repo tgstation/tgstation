@@ -25,9 +25,12 @@
 		return
 	if(mapload)
 		for (var/i in 1 to range)
+			var/turf/turf_sending = get_step(src, direction)
+			if(isgroundlessturf(turf_sending) && !SSmapping.get_turf_below(turf_sending))
+				continue
 			if (prob(40))
-				new /obj/effect/decal/cleanable/oil/streak(src.loc)
-			if (!step_to(src, get_step(src, direction), 0))
+				new /obj/effect/decal/cleanable/oil/streak(loc)
+			if (!step_to(src, turf_sending, 0))
 				break
 		return
 
@@ -39,7 +42,7 @@
 	if(isclosedturf(loc) || (isgroundlessturf(loc) && !SSmapping.get_turf_below(loc)))
 		return
 	if (prob(40))
-		new /obj/effect/decal/cleanable/oil/streak(src.loc)
+		new /obj/effect/decal/cleanable/oil/streak(loc)
 	else if (prob(10))
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, src)
