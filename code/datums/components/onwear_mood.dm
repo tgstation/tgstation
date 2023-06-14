@@ -21,10 +21,10 @@
 
 /datum/component/onwear_mood/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(affect_wearer))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/onwear_mood/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ATOM_EXAMINE))
 	clear_effects()
 
 /datum/component/onwear_mood/proc/affect_wearer(datum/source, mob/living/target, slot)
@@ -33,7 +33,7 @@
 		return  // only affects "worn" slots by default
 
 	target.add_mood_event(REF(src), saved_event_type)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(clear_effects))
 
 /datum/component/onwear_mood/proc/on_examine(datum/source, mob/user, list/examine_text)
@@ -50,5 +50,5 @@
 	source ||= clothing.loc
 	if(!istype(source))
 		return
-	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_MOB_UNEQUIPPED_ITEM))
+	UnregisterSignal(source, list(COMSIG_ATOM_EXAMINE, COMSIG_MOB_UNEQUIPPED_ITEM))
 	source.clear_mood_event(REF(src))

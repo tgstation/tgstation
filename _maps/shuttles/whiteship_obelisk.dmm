@@ -39,7 +39,7 @@
 /obj/machinery/door/airlock/command{
 	name = "Bridge"
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/tracks{
@@ -83,7 +83,7 @@
 	x_offset = -3;
 	y_offset = -3
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/dark_blue/anticorner{
 	dir = 8
 	},
@@ -188,7 +188,7 @@
 /turf/open/floor/iron/large,
 /area/shuttle/abandoned/crew)
 "kE" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/light/broken/directional/east,
@@ -257,7 +257,7 @@
 /area/shuttle/abandoned)
 "nG" = (
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/light/directional/east,
 /obj/structure/table,
@@ -331,7 +331,7 @@
 /obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/dark_blue/half{
 	dir = 8
@@ -412,7 +412,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "yY" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 8
@@ -452,7 +452,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned/bridge)
 "Br" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/dark_blue/half{
 	dir = 1
@@ -640,7 +640,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/abandoned/bar)
 "Lt" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "rune4";
 	paint_colour = "#DC143C"
@@ -652,7 +652,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/ash,
 /obj/effect/mob_spawn/corpse/human/damaged,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -760,7 +760,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/abandoned/bar)
 "RU" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/monitor{
 	dir = 4
 	},

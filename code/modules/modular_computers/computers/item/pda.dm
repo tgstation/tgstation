@@ -43,6 +43,7 @@
 		/obj/item/toy/crayon,
 		/obj/item/lipstick,
 		/obj/item/flashlight/pen,
+		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/clothing/mask/cigarette,
 	)
 

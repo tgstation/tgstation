@@ -117,13 +117,6 @@
 		else //A minute of silence for all the accidentally broken light tubes.
 			balloon_alert(user, "light tube is broken!")
 			return
-	if(istype(O, /obj/item/lightreplacer))
-		var/obj/item/lightreplacer/L = O
-		if(state == FLOODLIGHT_NEEDS_LIGHTS && L.can_use(user))
-			L.Use(user)
-			new /obj/machinery/power/floodlight(loc)
-			qdel(src)
-			return
 	..()
 
 /obj/machinery/power/floodlight

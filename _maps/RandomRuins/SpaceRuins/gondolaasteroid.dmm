@@ -35,11 +35,7 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "j" = (
-/obj/effect/overlay/coconut,
-/turf/open/floor/grass,
-/area/ruin/space/has_grav)
-"k" = (
-/obj/effect/overlay/palmtree_l,
+/obj/structure/flora/coconuts,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "l" = (
@@ -67,7 +63,7 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "r" = (
-/obj/effect/overlay/palmtree_r,
+/obj/structure/flora/tree/palm,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "s" = (
@@ -410,7 +406,7 @@ b
 b
 b
 d
-k
+r
 d
 d
 q
@@ -419,7 +415,7 @@ d
 j
 d
 d
-k
+r
 d
 d
 d
@@ -852,7 +848,7 @@ b
 d
 d
 d
-k
+r
 d
 i
 i
@@ -1051,7 +1047,7 @@ d
 d
 d
 d
-k
+r
 d
 d
 j

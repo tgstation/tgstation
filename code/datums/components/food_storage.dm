@@ -18,7 +18,7 @@
 
 /datum/component/food_storage/Initialize(_minimum_weight_class = WEIGHT_CLASS_SMALL, _bad_chance = 0, _good_chance = 100)
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(try_inserting_item))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(try_inserting_item))
 	RegisterSignal(parent, COMSIG_CLICK_CTRL, PROC_REF(try_removing_item))
 	RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(consume_food_storage))
 

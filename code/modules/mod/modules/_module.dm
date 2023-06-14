@@ -53,13 +53,13 @@
 	if(ispath(device))
 		device = new device(src)
 		ADD_TRAIT(device, TRAIT_NODROP, MOD_TRAIT)
-		RegisterSignal(device, COMSIG_PARENT_QDELETING, PROC_REF(on_device_deletion))
+		RegisterSignal(device, COMSIG_QDELETING, PROC_REF(on_device_deletion))
 		RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
 
 /obj/item/mod/module/Destroy()
 	mod?.uninstall(src)
 	if(device)
-		UnregisterSignal(device, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(device, COMSIG_QDELETING)
 		QDEL_NULL(device)
 	return ..()
 

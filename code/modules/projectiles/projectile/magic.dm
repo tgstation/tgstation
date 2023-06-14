@@ -141,7 +141,7 @@
 /obj/projectile/magic/door/proc/OpenDoor(obj/machinery/door/D)
 	if(istype(D, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
-		A.locked = FALSE
+		A.unlock()
 	D.open()
 
 /obj/projectile/magic/change

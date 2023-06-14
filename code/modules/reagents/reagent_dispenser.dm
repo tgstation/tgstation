@@ -155,6 +155,8 @@
  * Other dispensers will scatter their contents within range.
  */
 /obj/structure/reagent_dispensers/proc/boom()
+	if(QDELETED(src))
+		return // little bit of sanity sauce before we wreck ourselves somehow
 	var/datum/reagent/fuel/volatiles = reagents.has_reagent(/datum/reagent/fuel)
 	var/fuel_amt = 0
 	if(istype(volatiles) && volatiles.volume >= 25)
@@ -264,14 +266,15 @@
 	if(ZAP_OBJ_DAMAGE & zap_flags)
 		boom()
 
-/obj/structure/reagent_dispensers/fueltank/bullet_act(obj/projectile/P)
-	. = ..()
-	if(QDELETED(src)) //wasn't deleted by the projectile's effects.
-		return
-
-	if(P.damage > 0 && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
-		log_bomber(P.firer, "detonated a", src, "via projectile")
+/obj/structure/reagent_dispensers/fueltank/bullet_act(obj/projectile/hitting_projectile)
+	if(hitting_projectile.damage > 0 && ((hitting_projectile.damage_type == BURN) || (hitting_projectile.damage_type == BRUTE)))
+		log_bomber(hitting_projectile.firer, "detonated a", src, "via projectile")
 		boom()
+		return hitting_projectile.on_hit(src, 0)
+
+	// we override parent like this because otherwise we won't actually properly log the fact that a projectile caused this welding tank to explode.
+	// if this sucks, feel free to change it, but make sure the damn thing will log. thanks.
+	return ..()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_WELDER)
