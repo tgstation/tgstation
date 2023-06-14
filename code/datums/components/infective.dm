@@ -36,6 +36,7 @@
 		RegisterSignal(parent, COMSIG_GIBS_STREAK, PROC_REF(try_infect_streak))
 
 /datum/component/infective/UnregisterFromParent()
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 	UnregisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT)
 	UnregisterSignal(parent, COMSIG_MOVABLE_BUCKLE)
 	UnregisterSignal(parent, COMSIG_MOVABLE_BUMP)
