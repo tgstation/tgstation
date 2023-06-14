@@ -324,7 +324,7 @@
 		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
 	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-	log_combat(src, target, "shoved", "onto [src] (table)")
+	log_combat(shover, target, "shoved", "onto [src] (table)")
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /obj/structure/table/greyscale

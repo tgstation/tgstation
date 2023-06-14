@@ -256,8 +256,8 @@
 	var/obj/effect/portal/portal1 = created[1]
 	var/obj/effect/portal/portal2 = created[2]
 
-	RegisterSignal(portal1, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
-	RegisterSignal(portal2, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
+	RegisterSignal(portal1, COMSIG_QDELETING, PROC_REF(on_portal_destroy))
+	RegisterSignal(portal2, COMSIG_QDELETING, PROC_REF(on_portal_destroy))
 
 	try_move_adjacent(portal1, user.dir)
 	active_portal_pairs[portal1] = portal2

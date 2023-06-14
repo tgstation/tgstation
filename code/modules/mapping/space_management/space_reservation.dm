@@ -79,7 +79,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	//Okay so hear me out. If we place a special turf IN the reserved area, it will be overwritten, so we can't do that
 	//But signals are preserved even between turf changes, so even if we register a signal now it will stay even if that turf is overriden by the template
-	RegisterSignals(pre_cordon_turf, list(COMSIG_PARENT_QDELETING, COMSIG_TURF_RESERVATION_RELEASED), PROC_REF(on_stop_repel))
+	RegisterSignals(pre_cordon_turf, list(COMSIG_QDELETING, COMSIG_TURF_RESERVATION_RELEASED), PROC_REF(on_stop_repel))
 
 /datum/turf_reservation/proc/on_stop_repel(turf/pre_cordon_turf)
 	SHOULD_CALL_PARENT(TRUE)
@@ -89,7 +89,7 @@
 
 ///Unregister all the signals we added in RegisterRepelSignals
 /datum/turf_reservation/proc/stop_repel(turf/pre_cordon_turf)
-	UnregisterSignal(pre_cordon_turf, list(COMSIG_PARENT_QDELETING, COMSIG_TURF_RESERVATION_RELEASED))
+	UnregisterSignal(pre_cordon_turf, list(COMSIG_QDELETING, COMSIG_TURF_RESERVATION_RELEASED))
 
 /datum/turf_reservation/transit/make_repel(turf/pre_cordon_turf)
 	..()

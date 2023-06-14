@@ -29,7 +29,7 @@
 /datum/element/noticable_organ/Detach(obj/item/organ/target)
 	UnregisterSignal(target, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED))
 	if(target.owner)
-		UnregisterSignal(target.owner, COMSIG_PARENT_EXAMINE)
+		UnregisterSignal(target.owner, COMSIG_ATOM_EXAMINE)
 	return ..()
 
 /// Proc that returns true or false if the organ should show its examine check.
@@ -41,12 +41,12 @@
 /datum/element/noticable_organ/proc/on_implanted(obj/item/organ/target, mob/living/carbon/receiver)
 	SIGNAL_HANDLER
 
-	RegisterSignal(receiver, COMSIG_PARENT_EXAMINE, PROC_REF(on_receiver_examine))
+	RegisterSignal(receiver, COMSIG_ATOM_EXAMINE, PROC_REF(on_receiver_examine))
 
 /datum/element/noticable_organ/proc/on_removed(obj/item/organ/target, mob/living/carbon/loser)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(loser, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(loser, COMSIG_ATOM_EXAMINE)
 
 /datum/element/noticable_organ/proc/on_receiver_examine(mob/living/carbon/examined, mob/user, list/examine_list)
 	SIGNAL_HANDLER

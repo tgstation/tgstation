@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Bows properly update their ammo when stored, dropped and stowed. You cannot load a bow without holding it in your inactive hand. You have to hold it to keep the bow loaded."
+  - qol: "You can remove an arrow from the bow with alt+click, much like other ballistic weapons."
+  - bugfix: "The divine bow can be properly stored in the chaplain armor's suit storage, much like all other bulky null rods."
+  - sound: "Bows have sounds for drawing, firing and loading."

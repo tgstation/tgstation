@@ -112,7 +112,6 @@
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/shipping,
-		/datum/computer_file/program/robocontrol,
 	)
 
 /**
@@ -139,7 +138,7 @@
 
 /obj/item/modular_computer/pda/warden
 	name = "warden PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#EA3232#0000CC#363636"
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
@@ -183,7 +182,7 @@
 
 /obj/item/modular_computer/pda/roboticist
 	name = "roboticist PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#484848#0099CC#D94927"
 	starting_programs = list(
 		/datum/computer_file/program/robocontrol,
@@ -191,7 +190,7 @@
 
 /obj/item/modular_computer/pda/geneticist
 	name = "geneticist PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#FAFAFA#000099#0097CA"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
@@ -212,6 +211,8 @@
 
 /obj/item/modular_computer/pda/medical/paramedic
 	name = "paramedic PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
+	greyscale_colors = "#28334D#000099#3F96CC"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/radar/lifeline,
@@ -219,7 +220,7 @@
 
 /obj/item/modular_computer/pda/viro
 	name = "virology PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#FAFAFA#355FAC#57C451"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
@@ -380,6 +381,16 @@
 	. = ..()
 	for(var/datum/computer_file/program/messenger/msg in stored_files)
 		msg.ringer_status = FALSE
+
+/obj/item/modular_computer/pda/psychologist
+	name = "psychologist PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#333333#000099#3F96CC"
+	starting_programs = list(
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/robocontrol,
+	)
 
 /**
  * No Department

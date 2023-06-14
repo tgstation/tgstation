@@ -159,7 +159,7 @@
 	for(var/channel_name in channels)
 		add_radio(src, GLOB.radiochannels[channel_name])
 
-	add_radio(src, FREQ_COMMON)
+	add_radio(src, frequency)
 
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)

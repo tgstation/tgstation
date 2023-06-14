@@ -147,13 +147,13 @@
 	if(isnull(last_feeding)) //Fish start fed.
 		last_feeding = world.time
 	RegisterSignal(aquarium, COMSIG_ATOM_EXITED, PROC_REF(aquarium_exited))
-	RegisterSignal(aquarium, COMSIG_PARENT_ATTACKBY, PROC_REF(attack_reaction))
+	RegisterSignal(aquarium, COMSIG_ATOM_ATTACKBY, PROC_REF(attack_reaction))
 
 /obj/item/fish/proc/aquarium_exited(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 	if(src != gone)
 		return
-	UnregisterSignal(source,list(COMSIG_ATOM_EXITED,COMSIG_PARENT_ATTACKBY))
+	UnregisterSignal(source,list(COMSIG_ATOM_EXITED,COMSIG_ATOM_ATTACKBY))
 
 /// Our aquarium is hit with stuff
 /obj/item/fish/proc/attack_reaction(datum/source, obj/item/thing, mob/user, params)

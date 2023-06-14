@@ -45,6 +45,10 @@
 	plane = FLOOR_PLANE
 	layer = TURF_DECAL_LAYER
 	anchored = TRUE
+	/// Does this decal change colors on holidays
+	var/use_holiday_colors = FALSE
+	/// The pattern used when recoloring the decal
+	var/pattern = PATTERN_DEFAULT
 
 // This is with the intent of optimizing mapload
 // See spawners for more details since we use the same pattern
@@ -54,6 +58,13 @@
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+
+	// If the tile uses holiday colors, apply them here
+	if(use_holiday_colors)
+		var/current_holiday_color = request_holiday_colors(src, pattern)
+		if(current_holiday_color)
+			color = current_holiday_color
+			alpha = DECAL_ALPHA
 
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow
