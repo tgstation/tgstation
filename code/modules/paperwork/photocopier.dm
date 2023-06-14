@@ -14,8 +14,8 @@
 #define ASS_TONER_USE PHOTO_TONER_USE
 /// How much toner is used for making a copy of paperwork.
 #define PAPERWORK_TONER_USE 0.75
-/// At which toner percentage we start losing color. Toner cartridges are scams.
-#define TONER_LOW_PERCENTAGE 0.4
+/// At which toner charge amount we start losing color. Toner cartridges are scams.
+#define TONER_CHARGE_LOW_AMOUNT 2
 
 // please use integers here
 /// How much paper is used for making a copy of paper. What, are you seriously surprised by this?
@@ -23,7 +23,7 @@
 /// How much paper is used for making a copy of a photo.
 #define PHOTO_PAPER_USE 1
 /// How much paper is used for making a copy of a document.
-#define DOCUMENTS_PAPER_USE 10
+#define DOCUMENT_PAPER_USE 10
 /// How much paper is used for making a copy of a photo.
 #define ASS_PAPER_USE PHOTO_PAPER_USE
 /// How much paper is used for making a copy of paperwork.
@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 					return TRUE
 				// Copying Documents.
 				if(istype(object_copy, /obj/item/documents))
-					do_copy_loop(CALLBACK(src, PROC_REF(make_document_copy), object_copy), usr, DOCUMENTS_PAPER_USE, DOCUMENT_TONER_USE)
+					do_copy_loop(CALLBACK(src, PROC_REF(make_document_copy), object_copy), usr, DOCUMENT_PAPER_USE, DOCUMENT_TONER_USE)
 					return TRUE
 				// Copying paperwork
 				if(istype(object_copy, /obj/item/paperwork))
@@ -265,7 +265,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Returns the color used for the printing operation. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
  */
 /obj/machinery/photocopier/proc/get_toner_color()
-	return toner_cartridge.charges / toner_cartridge.max_charges > TONER_LOW_PERCENTAGE ? COLOR_FULL_TONER_BLACK : COLOR_GRAY
+	return toner_cartridge.charges  > TONER_CHARGE_LOW_AMOUNT ? COLOR_FULL_TONER_BLACK : COLOR_GRAY
 
 /**
  * Will invoke the passed in `copy_cb` callback in 1 second intervals, and charge the user 5 credits for each copy made.
@@ -389,7 +389,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		return
 	var/obj/item/documents/photocopy/copied_doc = new(loc, document_copy)
 	give_pixel_offset(copied_doc)
-	delete_paper(DOCUMENTS_PAPER_USE)
+	delete_paper(DOCUMENT_PAPER_USE)
 	toner_cartridge.charges -= DOCUMENT_TONER_USE
 
 /**
@@ -663,11 +663,11 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 #undef PAPER_PAPER_USE
 #undef PHOTO_PAPER_USE
-#undef DOCUMENTS_PAPER_USE
+#undef DOCUMENT_PAPER_USE
 #undef ASS_PAPER_USE
 #undef PAPERWORK_PAPER_USE
 #undef MAX_PAPER_CAPACITY
-#undef TONER_LOW_PERCENTAGE
+#undef TONER_CHARGE_LOW_AMOUNT
 #undef PHOTO_GREYSCALE
 #undef PHOTO_COLOR
 #undef PAPER_TONER_USE
