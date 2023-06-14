@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "microwave's(after it has finished cooking) & other machine's that spit out contents don't spit out assemblies/signallers attached to it's wires."
+  - bugfix: "signallers can be picked up if you attached them to a machine's wire & later deconstructed that machine without detaching it first."
