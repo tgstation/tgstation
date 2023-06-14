@@ -281,13 +281,13 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /// in the list of affecting turfs to play the attack animation over
 /datum/attack_style/proc/get_movable_to_layer_effect_over(list/turf/affecting)
 	var/turf/midpoint = affecting[ROUND_UP(length(affecting) / 2)]
-	var/atom/movable/current_pick
+	var/atom/movable/current_pick = midpoint
 	for(var/atom/movable/thing in midpoint)
 		if(isProbablyWallMounted(thing))
 			continue
 		if(thing.invisibility > 0 || thing.alpha < 10)
 			continue
-		if(isnull(current_pick) || thing.layer > current_pick.layer)
+		if(thing.layer > current_pick.layer)
 			current_pick = thing
 
 	return current_pick

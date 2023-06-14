@@ -543,8 +543,7 @@
 
 /datum/attack_style/melee_weapon/swing/wider_arc/scythe
 	/// Typecache of all structures we can attack in our swing in addition to people.
-	/// Not static cause this is a singleton, no point.
-	var/list/scythe_attackables = typecacheof(list(
+	var/static/list/scythe_attackables = typecacheof(list(
 		/obj/structure/spacevine,
 		/obj/structure/alien/resin/flower_bud,
 	))
@@ -561,7 +560,7 @@
 	for(var/atom/to_hit as anything in typecache_filter_list(hitting.contents, scythe_attackables))
 		if(attacker.CanReach(to_hit, weapon))
 			to_hit.attacked_by(weapon, attacker)
-			. |= ATTACK_STYLE_HIT
+			. |= ATTACK_SWING_HIT
 
 /obj/item/secateurs
 	name = "secateurs"

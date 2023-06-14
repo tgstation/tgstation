@@ -756,6 +756,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	thrown_datums.Cut()
 	return ..()
 
+// This should be integrated with the swing, rather than on the bat
 /obj/item/melee/baseball_bat/pre_attack(atom/movable/target, mob/living/user, params)
 	var/turf/target_turf = get_turf(target)
 	if(!target_turf)
