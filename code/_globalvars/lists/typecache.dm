@@ -26,6 +26,7 @@ GLOBAL_LIST_INIT(typecache_elevated_structures, typecacheof(list(
 	/obj/structure/bonfire,
 	/obj/machinery/grill,
 	/obj/machinery/griddle,
+	/obj/machinery/hydroponics, // So that harvest doesn't catch germs or decompose (includes dirt piles)
 	/obj/machinery/chem_master, // Pills may catch germs
 	/obj/machinery/plumbing/pill_press,
 )))
