@@ -86,7 +86,8 @@
 			list(SOUTH, SOUTHEAST, SOUTHWEST),
 			list(WEST, NORTHWEST, SOUTHWEST),
 			list(EAST, NORTHEAST, SOUTHEAST),
-			GLOB.alldirs, GLOB.alldirs,
+			GLOB.alldirs,
+			GLOB.alldirs,
 			list(),
 		)
 	return ..()
