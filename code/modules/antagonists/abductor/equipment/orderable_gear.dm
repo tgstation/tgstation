@@ -91,9 +91,16 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 
 /datum/abductor_gear/cow
 	name = "Spare Cow"
-	description = "Delivers a leftover specimen from an earlier abduction operation. Great for messing with people."
+	description = "Delivers a leftover specimen from an earlier abduction operation."
 	id = "cow"
-	build_path = /mob/living/basic/cow
+	build_path = /mob/living/basic/cow //maybe spawn some hay too??
+	category = CATEGORY_ADVANCED_GEAR
+
+/datum/abductor_gear/posters
+	name = "Decorative Posters"
+	description = "Some posters, to decorate the walls of the Mothership (or even the station) with."
+	id = "poster"
+	build_path = /mob/living/basic/cow //change this once you know what to do
 	category = CATEGORY_ADVANCED_GEAR
 
 #undef CATEGORY_BASIC_GEAR
