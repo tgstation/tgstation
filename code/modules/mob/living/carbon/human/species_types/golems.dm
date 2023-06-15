@@ -23,7 +23,6 @@
 	mutantlungs = null
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	liked_food = STONE
-	armor = 10
 	payday_modifier = 0.75
 	siemens_coeff = 0
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
@@ -95,6 +94,14 @@
 	))
 
 	return to_add
+
+/datum/species/golem/on_species_gain(mob/living/carbon/human/new_golem, datum/species/old_species, pref_load)
+	. = ..()
+	new_golem.physiology.damage_resistance += 10 //golem is stronk
+
+/datum/species/golem/on_species_loss(mob/living/carbon/human/was_golem, datum/species/new_species, pref_load)
+	. = ..()
+	was_golem.physiology.damage_resistance -= 10
 
 /// Remove nutrient value from non-mineral food, wish this was on an organ and not species but such is life
 /datum/species/golem/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
