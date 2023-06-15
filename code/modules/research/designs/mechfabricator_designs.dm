@@ -1925,11 +1925,11 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
 	)
 
-/datum/design/module/magneto
-	name = "Magneto Charger Module"
-	id = "mod_magneto"
+/datum/design/module/joint_torsion
+	name = "Joint Torsion Ratchet Module"
+	id = "mod_joint_torsion"
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT*2.5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT)
-	build_path = /obj/item/mod/module/magneto
+	build_path = /obj/item/mod/module/joint_torsion
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUITS_MISC
 	)

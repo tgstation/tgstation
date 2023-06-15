@@ -2305,7 +2305,7 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"mod_disposal",
-		"mod_magneto",
+		"mod_joint_torsion",
 		"mod_recycler",
 		"mod_shooting",
 	)

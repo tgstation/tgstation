@@ -597,36 +597,36 @@
 /obj/item/mod/module/signlang_radio/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
 
-///A module that recharges the suit by an itsy tiny bit whenever the user takes a step.
-/obj/item/mod/module/magneto
-	name = "MOD magneto charger module"
-	desc = "A compact, weak AC generator that charges the suit's power cell through deambulation."
-	icon_state = "magneto"
+///A module that recharges the suit by an itsy tiny bit whenever the user takes a step. Originally called "magneto module" but the videogame reference sounds cooler.
+/obj/item/mod/module/joint_torsion
+	name = "MOD joint torsion ratchet module"
+	desc = "A compact, weak AC generator that charges the suit's internal cell through the power of deambulation. It doesn't work in zero G."
+	icon_state = "joint_torsion"
 	complexity = 1
-	incompatible_modules = list(/obj/item/mod/module/magneto)
+	incompatible_modules = list(/obj/item/mod/module/joint_torsion)
 	var/power_per_step = DEFAULT_CHARGE_DRAIN * 0.3
 
-/obj/item/mod/module/magneto/on_suit_activation()
+/obj/item/mod/module/joint_torsion/on_suit_activation()
 	if(!(mod.wearer.movement_type & (FLOATING|FLYING)))
 		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	/// This way we don't even bother to call on_moved() while flying/floating
 	RegisterSignal(mod.wearer, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_movetype_flag_enabled))
 	RegisterSignal(mod.wearer, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_movetype_flag_disabled))
 
-/obj/item/mod/module/magneto/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/joint_torsion/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVETYPE_FLAG_ENABLED, COMSIG_MOVETYPE_FLAG_DISABLED))
 
-/obj/item/mod/module/magneto/proc/on_movetype_flag_enabled(datum/source, flag, old_state)
+/obj/item/mod/module/joint_torsion/proc/on_movetype_flag_enabled(datum/source, flag, old_state)
 	SIGNAL_HANDLER
 	if(!(old_state & (FLOATING|FLYING)) && flag & (FLOATING|FLYING))
 		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 
-/obj/item/mod/module/magneto/proc/on_movetype_flag_disabled(datum/source, flag, old_state)
+/obj/item/mod/module/joint_torsion/proc/on_movetype_flag_disabled(datum/source, flag, old_state)
 	SIGNAL_HANDLER
 	if(old_state & (FLOATING|FLYING) && !(mod.wearer.movement_type & (FLOATING|FLYING)))
 		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
-/obj/item/mod/module/magneto/proc/on_moved(mob/living/carbon/human/wearer, atom/old_loc, movement_dir, forced)
+/obj/item/mod/module/joint_torsion/proc/on_moved(mob/living/carbon/human/wearer, atom/old_loc, movement_dir, forced)
 	SIGNAL_HANDLER
 	//Shouldn't work if the wearer isn't really walking/running around.
 	if(forced || wearer.throwing || wearer.body_position == LYING_DOWN || wearer.buckled || CHECK_MOVE_LOOP_FLAGS(wearer, MOVEMENT_LOOP_OUTSIDE_CONTROL))
