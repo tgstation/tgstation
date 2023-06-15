@@ -312,7 +312,7 @@
 /obj/machinery/power/turbine/turbine_outlet/proc/expel_gases()
 	//turf is blocked don't eject gases
 	if(!TURF_SHARES(output_turf))
-		return null
+		return FALSE
 
 	//eject gases and update turf is any was ejected
 	var/datum/gas_mixture/ejected_gases = machine_gasmix.pump_gas_to(output_turf.air, machine_gasmix.return_pressure())
@@ -612,7 +612,7 @@
 	//================TURBINE WORKING============//
 	//Calculate final power generated based on how much gas was ejected from the turbine
 	var/datum/gas_mixture/ejected_gases = turbine.expel_gases()
-	if(isnull(ejected_gases)) //output turf was blocked with high pressure/temperature gases or by some structure so no power generated
+	if(!ejected_gases) //output turf was blocked with high pressure/temperature gases or by some structure so no power generated
 		rpm = 0
 		produced_energy = 0
 		return
