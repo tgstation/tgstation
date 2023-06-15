@@ -103,6 +103,11 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	ass = null //the mob isn't actually contained and just referenced, no need to delete it.
 	return ..()
 
+/obj/machinery/photocopier/examine(mob/user)
+	. = ..()
+	. += span_notice("You can put any type of empty paper inside to print a blank or copy something onto it.")
+	if(object_copy)
+		. += span_notice("There is something inside the paper scanner.")
 
 /obj/machinery/photocopier/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -205,7 +210,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 				return FALSE
 			var/mob/living/silicon/ai/tempAI = usr
 			if(!length(tempAI.aicamera.stored))
-				to_chat(usr, span_boldannounce("No images saved."))
+				balloon_alert(usr, "no images saved!")
 				return
 			var/datum/picture/selection = tempAI.aicamera.selectpicture(usr)
 			do_copies(CALLBACK(src, PROC_REF(make_photo_copy), selection), usr, PHOTO_PAPER_USE, PHOTO_TONER_USE, 1)
@@ -312,7 +317,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  */
 /obj/machinery/photocopier/proc/check_busy(mob/user)
 	if(busy)
-		to_chat(user, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
+		balloon_alert(user, "printer is busy!")
 		return TRUE
 	return FALSE
 
@@ -510,14 +515,14 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	else if(istype(object, /obj/item/toner))
 		if(toner_cartridge)
-			to_chat(user, span_warning("[src] already has a toner cartridge inserted."))
+			balloon_alert(user, "another cartridge inside!")
 			return
 		object.forceMove(src)
 		toner_cartridge = object
-		to_chat(user, span_notice("You insert [object] into [src]."))
+		balloon_alert(user, "cartridge inserted")
 
 	else if(istype(object, /obj/item/areaeditor/blueprints))
-		to_chat(user, span_warning("The Blueprint is too large to put into the copier. You need to find something else to record the document."))
+		to_chat(user, span_warning("\The [object] is too large to put into the copier. You need to find something else to record the document."))
 
 	else if(istype(object, /obj/item/paperwork))
 		if(istype(object, /obj/item/paperwork/photocopy)) //No infinite paper chain. You need the original paperwork to make more copies.
@@ -532,13 +537,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(istype(paper, /obj/item/paper/paperslip))
 		return
 	if(get_paper_count() >= MAX_PAPER_CAPACITY)
-		to_chat(user, span_warning("\The [src] cannot hold more paper!"))
+		balloon_alert(user, "cannot hold more paper!"))
 		return
 	if(!user.temporarilyRemoveItemFromInventory(paper))
 		return
 	paper_stack += paper
 	paper.forceMove(src)
-	to_chat(user, span_notice("You insert \the [paper] into \the [src]'s paper tray."))
+	balloon_alert(user, "paper inserted")
 
 /obj/machinery/photocopier/proc/insert_copy_object(obj/item/object, mob/user)
 	if(!copier_empty())
