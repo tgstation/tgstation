@@ -43,4 +43,3 @@
 
 /obj/item/paper/carbon_copy
 	icon_state = "cpaper"
-	color = COLOR_FADED_PINK

@@ -35,6 +35,9 @@
 /// The maximum amount of copies you can make with one press of the copy button.
 #define MAX_COPIES_AT_ONCE 10
 
+/// Photocopier copy fee.
+#define PHOTOCOPIER_FEE 5
+
 ///Paper blanks (form templates, basically). Loaded from `config/blanks.json`.
 ///If invalid or not found, set to null.
 GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
@@ -86,7 +89,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /// Simply adds the necessary components for this to function.
 /obj/machinery/photocopier/proc/setup_components()
-	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
+	AddComponent(/datum/component/payment, PHOTOCOPIER_FEE, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 
 /obj/machinery/photocopier/handle_atom_del(atom/deleting_atom)
 	if(deleting_atom == object_copy)
@@ -172,6 +175,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(.)
 		return
 
+	if(machine_stat & (BROKEN|NOPOWER))
+		return
+
 	switch(action)
 		// Copying paper, photos, documents and asses.
 		if("make_copy")
@@ -179,6 +185,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 				return FALSE
 			// ASS COPY. By Miauw
 			if(ass)
+				if(ishuman(ass) && (ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
+					to_chat(usr, span_notice("You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "[ass.p_their()]"] clothes on.") )
+					return FALSE
 				do_copies(CALLBACK(src, PROC_REF(make_ass_copy), usr), usr, ASS_PAPER_USE, ASS_TONER_USE, num_copies)
 				return TRUE
 			else
@@ -188,7 +197,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 					return TRUE
 				// Copying photo.
 				if(istype(object_copy, /obj/item/photo))
-					do_copies(CALLBACK(src, PROC_REF(make_photo_copy), object_copy), usr, PHOTO_PAPER_USE, PHOTO_TONER_USE, num_copies)
+					var/obj/item/photo/photo_copy = object_copy
+					do_copies(CALLBACK(src, PROC_REF(make_photo_copy), photo_copy.picture, color_mode), usr, PHOTO_PAPER_USE, PHOTO_TONER_USE, num_copies)
 					return TRUE
 				// Copying Documents.
 				if(istype(object_copy, /obj/item/documents))
@@ -215,9 +225,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			var/mob/living/silicon/ai/tempAI = usr
 			if(!length(tempAI.aicamera.stored))
 				balloon_alert(usr, "no images saved!")
-				return
+				return FALSE
 			var/datum/picture/selection = tempAI.aicamera.selectpicture(usr)
-			do_copies(CALLBACK(src, PROC_REF(make_photo_copy), selection), usr, PHOTO_PAPER_USE, PHOTO_TONER_USE, 1)
+			do_copies(CALLBACK(src, PROC_REF(make_photo_copy), selection, PHOTO_COLOR), usr, PHOTO_PAPER_USE, PHOTO_TONER_USE, 1)
 			return TRUE
 
 		// Switch between greyscale and color photos
@@ -229,7 +239,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		// Remove the toner cartridge from the copier.
 		if("remove_toner")
 			if(check_busy(usr))
-				return
+				return FALSE
 			var/success = usr.put_in_hands(toner_cartridge)
 			if(!success)
 				toner_cartridge.forceMove(drop_location())
@@ -291,17 +301,28 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		copies_amount = FLOOR(get_paper_count() / paper_use, 1)
 		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [copies_amount >= 1 ? "full " : ""]operation.\"")
 
+	copies_left = copies_amount
+
+	if(copies_amount <= 0)
+		to_chat(user, error_message)
+		reset_busy()
+		return
+
+	if(attempt_charge(src, user, (copies_amount - 1) * PHOTOCOPIER_FEE) & COMPONENT_OBJ_CANCEL_CHARGE)
+		reset_busy()
+		return
+
 	if(error_message)
 		to_chat(user, error_message)
 
-	copies_left = copies_amount
-
+	// if you managed to cancel the copy operation, tough luck. you aren't getting your money back.
 	for(var/i in 1 to copies_amount)
+		if(machine_stat & (BROKEN|NOPOWER))
+			break
+
 		if(!toner_cartridge)
 			break
-		if(attempt_charge(src, user) & COMPONENT_OBJ_CANCEL_CHARGE)
-			balloon_alert(user, "insufficient funds!")
-			break
+
 		// arguments to copy_cb have been set at callback instantiation
 		var/atom/movable/copied_obj = copy_cb.Invoke()
 		if(!copied_obj) // something went wrong, so other copies will go wrong too
@@ -314,6 +335,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		copied_obj.forceMove(drop_location())
 		give_pixel_offset(copied_obj)
 		copies_left--
+
 	copies_left = 0
 	reset_busy()
 
@@ -400,10 +422,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  *
  * Checks first if `picture` exists. Since this proc is called from a timer, it's possible that it was removed.
  */
-/obj/machinery/photocopier/proc/make_photo_copy(obj/item/photo/photo)
-	if(!photo && !photo.picture)
+/obj/machinery/photocopier/proc/make_photo_copy(datum/picture/photo, photo_color)
+	if(!photo)
 		return null
-	var/obj/item/photo/copied_pic = new(src, photo.picture.Copy(color_mode == PHOTO_GREYSCALE ? TRUE : FALSE))
+	var/obj/item/photo/copied_pic = new(src, photo.Copy(photo_color == PHOTO_GREYSCALE ? TRUE : FALSE))
 	delete_paper(PHOTO_PAPER_USE)
 	toner_cartridge.charges -= PHOTO_TONER_USE
 	return copied_pic
@@ -466,10 +488,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier/proc/make_ass_copy(mob/user)
 	if(!check_ass())
 		return null
-	if(ishuman(ass) && (ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
-		to_chat(user, span_notice("You feel kind of silly, copying [ass == user ? "your" : ass][ass == user ? "" : "\'s"] ass with [ass == user ? "your" : "[ass.p_their()]"] clothes on.") )
-		return null
-
 	var/icon/temp_img
 	if(ishuman(ass))
 		var/mob/living/carbon/human/H = ass
@@ -490,6 +508,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	toEmbed.psize_x = 128
 	toEmbed.psize_y = 128
 	copied_ass.set_picture(toEmbed, TRUE, TRUE)
+	delete_paper(ASS_PAPER_USE)
 	toner_cartridge.charges -= ASS_TONER_USE
 	return copied_ass
 
