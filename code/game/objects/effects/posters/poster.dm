@@ -229,7 +229,7 @@
 	return rolled_poster
 
 //separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
-/turf/closed/wall/proc/place_poster(obj/item/poster/rolled_poster, mob/user)
+/turf/closed/proc/place_poster(obj/item/poster/rolled_poster, mob/user)
 	if(!rolled_poster.poster_structure)
 		to_chat(user, span_warning("[rolled_poster] has no poster... inside it? Inform a coder!"))
 		return
@@ -259,15 +259,15 @@
 	playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
 
 	var/turf/user_drop_location = get_turf(user) //cache this so it just falls to the ground if they move. also no tk memes allowed.
-	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, TYPE_PROC_REF(/obj/structure/sign/poster, snowflake_wall_turf_check), src)))
+	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, TYPE_PROC_REF(/obj/structure/sign/poster, snowflake_closed_turf_check), src)))
 		placed_poster.roll_and_drop(user_drop_location)
 		return
 
 	placed_poster.on_placed_poster(user)
 	return TRUE
 
-/obj/structure/sign/poster/proc/snowflake_wall_turf_check(atom/hopefully_still_a_wall_turf) //since turfs never get deleted but instead change type, make sure we're still being placed on a wall.
-	return iswallturf(hopefully_still_a_wall_turf)
+/obj/structure/sign/poster/proc/snowflake_closed_turf_check(atom/hopefully_still_a_closed_turf) //since turfs never get deleted but instead change type, make sure we're still being placed on a wall.
+	return isclosedturf(hopefully_still_a_closed_turf)
 
 /obj/structure/sign/poster/proc/on_placed_poster(mob/user)
 	to_chat(user, span_notice("You place the poster!"))
