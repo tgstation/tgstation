@@ -11,12 +11,12 @@
 	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster/abductor
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/abductor/random, 32)
 
 /obj/structure/sign/poster/abductor
 	icon = 'icons/obj/abductor_posters.dmi'
 	poster_item_name = "abductor poster"
-	poster_item_desc = "A sheet of holofiber resin, with a nanospike perforation on the back end for MAXIMUM ADHESION."
+	poster_item_desc = "A sheet of holofiber resin, with a nanospike perforation on the back end for maximum adhesion."
 	poster_item_icon_state = "rolled_abductor"
 
 /obj/structure/sign/poster/abductor/ayylian
@@ -65,5 +65,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/abductor/ayy_no, 32)
 	name = "Safety Abductor - Piping"
 	desc = "Safety Abductor has nothing to say. Not because it cannot speak, but because Abductors don't have to deal with atmos stuff."
 	icon_state = "ayy_piping"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/abductor/ayy_piping, 32)
+
+/obj/structure/sign/poster/abductor/ayy_fancy
+	name = "Abductor Fancy"
+	desc = "Abductors are the best at doing everything. That includes looking good!"
+	icon_state = "borg_fancy_1"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/abductor/ayy_piping, 32)
