@@ -7,8 +7,9 @@
 	setup_mood()
 	// This needs to be called very very early in human init (before organs / species are created at the minimum)
 	setup_organless_effects()
+	// Physiology needs to be created before species, as some species modify physiology
+	setup_physiology()
 
-	physiology = new()
 	create_dna()
 	dna.species.create_fresh_body(src)
 	setup_human_dna()
@@ -31,6 +32,9 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	GLOB.human_list += src
+
+/mob/living/carbon/human/proc/setup_physiology()
+	physiology = new()
 
 /mob/living/carbon/human/proc/setup_mood()
 	if (CONFIG_GET(flag/disable_human_mood))

@@ -107,8 +107,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/**
 	 * Percentage modifier for overall defense of the race, or less defense, if it's negative
 	 * By itself, this does nothing. It just adds this value to physiology.damage_resistance on species gain!
+	 * REMEMBER, physiology.damage_resistance GETS APPLIED TO PRETTY MUCH ALL DAMAGE IN THE apply_damage() PROC.
 	 **/
-	var/armor = 0
+	var/damage_modifier = 0
 	///multiplier for damage from cold temperature
 	var/coldmod = 1
 	///multiplier for damage from hot temperature
@@ -496,7 +497,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			C.faction += i //Using +=/-= for this in case you also gain the faction from a different source.
 
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, multiplicative_slowdown=speedmod)
-	C.physiology.damage_resistance += armor
+	C.physiology.damage_resistance += damage_modifier
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
@@ -539,7 +540,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	clear_tail_moodlets(C)
 
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
-	C.physiology.damage_resistance -= armor
+	C.physiology.damage_resistance -= damage_modifier
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
