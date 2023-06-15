@@ -191,8 +191,8 @@ Lizard subspecies: SILVER SCALED
 
 /datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/human/new_silverscale, datum/species/old_species, pref_load)
 	old_mutcolor = new_silverscale.dna.features["mcolor"]
-	old_eye_color_left = silverscale.eye_color_left
-	old_eye_color_right = silverscale.eye_color_right
+	old_eye_color_left = new_silverscale.eye_color_left
+	old_eye_color_right = new_silverscale.eye_color_right
 	new_silverscale.dna.features["mcolor"] = "#eeeeee"
 	new_silverscale.eye_color_left = "#0000a0"
 	new_silverscale.eye_color_right = "#0000a0"
