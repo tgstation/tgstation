@@ -609,12 +609,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		// eyes
 		var/obj/item/organ/internal/eyes/eye_organ = species_human.get_organ_slot(ORGAN_SLOT_EYES)
-		if(eye_organ && (noggin.head_flags & HEAD_EYESPRITES))
-			eye_organ.refresh(call_update = FALSE)
-			for(var/mutable_appearance/eye_overlay in eye_organ.generate_body_overlay(species_human))
-				eye_overlay.pixel_y += height_offset
-				standing += eye_overlay
-		else if(!eye_organ && (noggin.head_flags & HEAD_EYEHOLES))
+		if(eye_organ)
+			if(noggin.head_flags & HEAD_EYESPRITES)
+				eye_organ.refresh(call_update = FALSE)
+				for(var/mutable_appearance/eye_overlay in eye_organ.generate_body_overlay(species_human))
+					eye_overlay.pixel_y += height_offset
+					standing += eye_overlay
+		else if(noggin.head_flags & HEAD_EYEHOLES)
 			var/add_pixel_x = 0
 			var/add_pixel_y = 0
 			var/list/feature_offset = noggin.worn_face_offset?.get_offset()
