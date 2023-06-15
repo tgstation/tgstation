@@ -92,6 +92,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		ass = null
 	if(deleting_atom == toner_cartridge)
 		toner_cartridge = null
+	if(deleting_atom in paper_stack)
+		paper_stack -= deleting_atom
 	return ..()
 
 /obj/machinery/photocopier/Destroy()
