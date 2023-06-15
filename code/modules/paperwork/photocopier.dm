@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/busy = FALSE
 	/// Variable needed to determine the selected category of forms on Photocopier.js
 	var/category
-	///Variable that holds a reference to any object supported for photocopying inside the photocopier
+	/// Variable that holds a reference to any object supported for photocopying inside the photocopier
 	var/obj/object_copy
 	/// The amount of paper this photocoper starts with.
 	var/starting_paper = 30
@@ -172,28 +172,24 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 				return FALSE
 			// ASS COPY. By Miauw
 			if(ass)
-				do_copy_loop(CALLBACK(src, PROC_REF(make_ass_copy), usr), usr)
+				do_copies(CALLBACK(src, PROC_REF(make_ass_copy), usr), usr, ASS_PAPER_USE, ASS_TONER_USE, num_copies)
 				return TRUE
 			else
+				// Basic paper
 				if(istype(object_copy, /obj/item/paper))
-					var/obj/item/paper/paper_copy = object_copy
-					if(!paper_copy.get_total_length())
-						to_chat(usr, span_warning("An error message flashes across [src]'s screen: \"The supplied paper is blank. Aborting.\""))
-						return FALSE
-					// Basic paper
-					do_copy_loop(CALLBACK(src, PROC_REF(make_paper_copy), paper_copy), usr, PAPER_PAPER_USE, PAPER_TONER_USE)
+					do_copies(CALLBACK(src, PROC_REF(make_paper_copy), object_copy), usr, PAPER_PAPER_USE, PAPER_TONER_USE, num_copies)
 					return TRUE
 				// Copying photo.
 				if(istype(object_copy, /obj/item/photo))
-					do_copy_loop(CALLBACK(src, PROC_REF(make_photo_copy), object_copy), usr, PHOTO_PAPER_USE, PHOTO_TONER_USE)
+					do_copies(CALLBACK(src, PROC_REF(make_photo_copy), object_copy), usr, PHOTO_PAPER_USE, PHOTO_TONER_USE, num_copies)
 					return TRUE
 				// Copying Documents.
 				if(istype(object_copy, /obj/item/documents))
-					do_copy_loop(CALLBACK(src, PROC_REF(make_document_copy), object_copy), usr, DOCUMENT_PAPER_USE, DOCUMENT_TONER_USE)
+					do_copies(CALLBACK(src, PROC_REF(make_document_copy), object_copy), usr, DOCUMENT_PAPER_USE, DOCUMENT_TONER_USE, num_copies)
 					return TRUE
 				// Copying paperwork
 				if(istype(object_copy, /obj/item/paperwork))
-					do_copy_loop(CALLBACK(src, PROC_REF(make_paperwork_copy), object_copy), usr, PAPERWORK_PAPER_USE, PAPERWORK_TONER_USE)
+					do_copies(CALLBACK(src, PROC_REF(make_paperwork_copy), object_copy), usr, PAPERWORK_PAPER_USE, PAPERWORK_TONER_USE, num_copies)
 					return TRUE
 
 		// Remove the paper/photo/document from the photocopier.
@@ -214,9 +210,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 				to_chat(usr, span_boldannounce("No images saved."))
 				return
 			var/datum/picture/selection = tempAI.aicamera.selectpicture(usr)
-			var/obj/item/photo/photo = new(loc, selection) // AI prints color photos only.
-			give_pixel_offset(photo)
-			toner_cartridge.charges -= PHOTO_TONER_USE
+			do_copies(CALLBACK(src, PROC_REF(make_photo_copy), selection), usr, PHOTO_PAPER_USE, PHOTO_TONER_USE, 1)
 			return TRUE
 
 		// Switch between greyscale and color photos
@@ -248,20 +242,23 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		if("print_blank")
 			if(check_busy(usr))
 				return FALSE
-			if (toner_cartridge.charges - PAPER_TONER_USE < 0)
-				to_chat(usr, span_warning("There is not enough toner in [src] to print the form, please replace the cartridge."))
-				return FALSE
 			if(!(params["code"] in GLOB.paper_blanks))
 				return FALSE
 			var/list/blank = GLOB.paper_blanks[params["code"]]
-			do_copy_loop(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE)
+			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE, num_copies)
 			return TRUE
 
 /**
- * Determines if the photocopier has enough toner to create `num_copies` amount of copies of the currently inserted item.
+ * Determines if the photocopier has enough toner.
  */
 /obj/machinery/photocopier/proc/has_enough_toner(toner_use)
 	return !isnull(toner_cartridge) && toner_cartridge.charges >= toner_use
+
+/**
+ * Determines if the photocopier has enough paper
+ */
+/obj/machinery/photocopier/proc/has_enough_paper(paper_use)
+	return get_paper_count() >= paper_use
 
 /**
  * Returns the color used for the printing operation. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
@@ -270,36 +267,53 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return toner_cartridge.charges  > TONER_CHARGE_LOW_AMOUNT ? COLOR_FULL_TONER_BLACK : COLOR_GRAY
 
 /**
- * Will invoke the passed in `copy_cb` callback in 1 second intervals, and charge the user 5 credits for each copy made.
+ * Will invoke `do_copy_loop` asynchronously. Passes the supplied arguments on to
+ */
+/obj/machinery/photocopier/proc/do_copies(datum/callback/copy_cb, mob/user, paper_use, toner_use, copies_amount)
+	busy = TRUE
+	update_use_power(ACTIVE_POWER_USE)
+	// fucking god proc
+	INVOKE_ASYNC(src, PROC_REF(do_copy_loop), copy_cb, user, paper_use, toner_use, copies_amount)
+
+/**
+ * Will invoke the passed in `copy_cb` callback in 4 second intervals, and charge the user 5 credits for each copy made.
  *
  * Arguments:
  * * copy_cb - a callback for which proc to call. Should only be one of the `make_x_copy()` procs, such as `make_paper_copy()`.
  * * user - the mob who clicked copy.
+ * * paper_use - the amount of paper used in this operation
+ * * toner_use - the amount of toner used in this operation
  */
-/obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user, paper_use, toner_use)
-	busy = TRUE
-	update_use_power(ACTIVE_POWER_USE)
-	var/i
-	for(i in 1 to num_copies)
-		if(i * paper_use > get_paper_count())
-			to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [i > 1 ? "full " : ""]operation.\""))
-			break
-		if(!has_enough_toner(i * toner_use))
-			to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough toner to perform [i > 1 ? "full " : ""]operation.\""))
-			break
+/obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user, paper_use, toner_use, copies_amount)
+	if(!has_enough_paper(paper_use * copies_amount))
+		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [copies_amount >= 1 ? "full " : ""]operation.\""))
+		copies_amount = FLOOR(get_paper_count() / paper_use, 1)
+	if(!has_enough_toner(toner_use * copies_amount))
+		copies_amount = FLOOR(toner_cartridge.charges / toner_use, 1)
+		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough toner to perform [copies_amount >= 1 ? "full " : ""]operation.\""))
+	for(var/i in 1 to copies_amount)
+		if(!toner_cartridge)
+			return
 		if(attempt_charge(src, user) & COMPONENT_OBJ_CANCEL_CHARGE)
 			balloon_alert(user, "insufficient funds!")
 			break
-		addtimer(copy_cb, i SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(reset_busy)), i SECONDS)
+		playsound(src, 'sound/machines/printer.ogg', 50, vary = FALSE)
+		// arguments to copy_cb have been set at callback instantiation
+		if(!copy_cb.Invoke())
+			break
+		sleep(4 SECONDS)
+	reset_busy()
 
 /**
- * Sets busy to `FALSE`. Created as a proc so it can be used in callbacks.
+ * Sets busy to `FALSE`.
  */
 /obj/machinery/photocopier/proc/reset_busy()
 	update_use_power(IDLE_POWER_USE)
 	busy = FALSE
 
+/**
+ * Determines if the printer is currently busy, informs the user if it is.
+ */
 /obj/machinery/photocopier/proc/check_busy(mob/user)
 	if(busy)
 		to_chat(user, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
@@ -326,7 +340,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return length(paper_stack) + starting_paper
 
 /**
- * Returns an empty paper, used for blanks. Prioritizes paper_stack, creates new paper in case that's empty.
+ * Returns an empty paper, used for blanks and paper copies.
+ * Prioritizes `paper_stack`, creates new paper in case `paper_stack` is empty.
  */
 /obj/machinery/photocopier/proc/get_empty_paper()
 	var/obj/item/paper/new_paper = pop(paper_stack)
@@ -338,7 +353,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /**
  * Removes an amount of paper from the printer's storage.
- * This lets us pretend we actually consumed paper when we were printing stuff that isn't directly paper.
+ * This lets us pretend we actually consumed paper when we were actually printing something that wasn't paper.
  */
 /obj/machinery/photocopier/proc/delete_paper(number)
 	if(number > get_paper_count())
@@ -356,8 +371,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Checks first if `paper_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
  */
 /obj/machinery/photocopier/proc/make_paper_copy(obj/item/paper/paper_copy)
-	if(!paper_copy || !toner_cartridge)
-		return
+	if(!paper_copy)
+		return FALSE
 
 	var/obj/item/paper/empty_paper = get_empty_paper()
 	toner_cartridge.charges -= PAPER_TONER_USE
@@ -367,19 +382,21 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/obj/item/paper/copied_paper = paper_copy.copy(empty_paper, loc, FALSE, copy_colour)
 	copied_paper.name = paper_copy.name
 	give_pixel_offset(copied_paper)
+	return TRUE
 
 /**
  * Handles the copying of photos, which can be printed in either color or greyscale.
  *
- * Checks first if `photo_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
+ * Checks first if `picture` exists. Since this proc is called from a timer, it's possible that it was removed.
  */
-/obj/machinery/photocopier/proc/make_photo_copy(obj/item/photo/photo_copy)
-	if(!photo_copy || !toner_cartridge)
-		return
-	var/obj/item/photo/copied_pic = new(loc, photo_copy.picture.Copy(color_mode == PHOTO_GREYSCALE ? TRUE : FALSE))
+/obj/machinery/photocopier/proc/make_photo_copy(datum/picture/picture)
+	if(!picture)
+		return FALSE
+	var/obj/item/photo/copied_pic = new(loc, picture.Copy(color_mode == PHOTO_GREYSCALE ? TRUE : FALSE))
 	give_pixel_offset(copied_pic)
 	delete_paper(PHOTO_PAPER_USE)
 	toner_cartridge.charges -= PHOTO_TONER_USE
+	return TRUE
 
 /**
  * Handles the copying of documents.
@@ -387,12 +404,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Checks first if `document_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
  */
 /obj/machinery/photocopier/proc/make_document_copy(obj/item/documents/document_copy)
-	if(!document_copy || !toner_cartridge)
-		return
+	if(!document_copy)
+		return FALSE
 	var/obj/item/documents/photocopy/copied_doc = new(loc, document_copy)
 	give_pixel_offset(copied_doc)
 	delete_paper(DOCUMENT_PAPER_USE)
 	toner_cartridge.charges -= DOCUMENT_TONER_USE
+	return TRUE
 
 /**
  * Handles the copying of documents.
@@ -401,8 +419,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Copies the stamp from a given piece of paperwork if it is already stamped, allowing for you to sell photocopied paperwork at the risk of losing budget money.
  */
 /obj/machinery/photocopier/proc/make_paperwork_copy(obj/item/paperwork/paperwork_copy)
-	if(!paperwork_copy || !toner_cartridge)
-		return
+	if(!paperwork_copy)
+		return FALSE
 	var/obj/item/paperwork/photocopy/copied_paperwork = new(loc, paperwork_copy)
 	copied_paperwork.copy_stamp_info(paperwork_copy)
 	if(paperwork_copy.stamped)
@@ -411,13 +429,14 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	give_pixel_offset(copied_paperwork)
 	delete_paper(PAPERWORK_PAPER_USE)
 	toner_cartridge.charges -= PAPERWORK_TONER_USE
+	return TRUE
 
 /**
  * The procedure is called when printing a blank to write off toner consumption.
  */
 /obj/machinery/photocopier/proc/make_blank_print(list/blank)
 	if(!toner_cartridge)
-		return
+		return FALSE
 	var/copy_colour = get_toner_color()
 	var/obj/item/paper/printblank = get_empty_paper()
 	var/printname = sanitize(blank["name"])
@@ -428,6 +447,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	printblank.add_raw_text(printinfo, color = copy_colour)
 	printblank.update_appearance()
 	toner_cartridge.charges -= PAPER_TONER_USE
+	return TRUE
 
 /**
  * Handles the copying of an ass photo.
@@ -436,11 +456,11 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Additionally checks that the mob has their clothes off.
  */
 /obj/machinery/photocopier/proc/make_ass_copy(mob/user)
-	if(!check_ass() || !toner_cartridge)
-		return
+	if(!check_ass())
+		return FALSE
 	if(ishuman(ass) && (ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
 		to_chat(user, span_notice("You feel kind of silly, copying [ass == user ? "your" : ass][ass == user ? "" : "\'s"] ass with [ass == user ? "your" : "[ass.p_their()]"] clothes on.") )
-		return
+		return FALSE
 
 	var/icon/temp_img
 	if(ishuman(ass))
@@ -464,6 +484,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	toEmbed.psize_y = 128
 	copied_ass.set_picture(toEmbed, TRUE, TRUE)
 	toner_cartridge.charges -= ASS_TONER_USE
+	return TRUE
 
 /**
  * Called when someone hits the "remove item" button on the copier UI.
