@@ -37,7 +37,7 @@
 
 	ADD_TRAIT(parent, TRAIT_HYPERSPACED, src)
 
-	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNBUCKLE, COMSIG_ATOM_NO_LONGER_PULLED), PROC_REF(update_state))
+	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNBUCKLE, COMSIG_ATOM_NO_LONGER_PULLED, SIGNAL_REMOVETRAIT(TRAIT_FREE_HYPERSPACE_MOVEMENT)), PROC_REF(update_state))
 
 	//Items have this cool thing where they're first put on the floor if you grab them from storage, and then into your hand, which isn't caught by movement signals that well
 	if(isitem(parent))

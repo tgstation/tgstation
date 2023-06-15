@@ -1,10 +1,3 @@
-///spawned stuff should float by the window and not hit the shuttle
-#define SHUTTLE_EVENT_MISS_SHUTTLE 1 << 0
-///spawned stuff should hit the shuttle
-#define SHUTTLE_EVENT_HIT_SHUTTLE 1 << 1
-///self destruct if this is returned in process
-#define SHUTTLE_EVENT_CLEAR 2
-
 ///An event that can run during shuttle flight, and will run for the duration of it (configurable)
 /datum/shuttle_event
 	///How we're announced to ghosts and stuff
@@ -131,7 +124,7 @@
 /datum/shuttle_event/simple_spawner/proc/spawn_movable(spawn_type)
 	post_spawn(new spawn_type (get_spawn_turf()))
 
-///Not tecccccccccccchnically a getter since we can also pop the type out of the spawning list, but thats optional anyway
+///Not technically a getter if remove_from_list_when_spawned=TRUE. Otherwise, this returns the type we're going to spawn and throw at the shuttle
 /datum/shuttle_event/simple_spawner/proc/get_type_to_spawn()
 	. = pick_weight(spawning_list)
 	if(remove_from_list_when_spawned) //if we have this enabled, we decrease the pickweight by 1 till it runs out

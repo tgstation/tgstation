@@ -1147,7 +1147,7 @@
 
 ///Let people know shits about to go down
 /obj/docking_port/mobile/proc/announce_shuttle_events()
-	for(var/datum/shuttle_event/event in event_list)
+	for(var/datum/shuttle_event/event as anything in event_list)
 		notify_ghosts("The [name] has selected: [event.name]")
 
 /obj/docking_port/mobile/emergency/on_emergency_launch()
@@ -1168,9 +1168,6 @@
 /obj/docking_port/mobile/emergency/on_emergency_dock()
 	return
 
-///self destruct if this is returned in process
-#define SHUTTLE_EVENT_CLEAR 2
-
 ///Process all the shuttle events for every shuttle tick we get
 /obj/docking_port/mobile/proc/process_events()
 	var/list/removees
@@ -1180,7 +1177,6 @@
 	for(var/item in removees)
 		event_list.Remove(item)
 
-#undef SHUTTLE_EVENT_CLEAR
 #ifdef TESTING
 #undef DOCKING_PORT_HIGHLIGHT
 #endif
