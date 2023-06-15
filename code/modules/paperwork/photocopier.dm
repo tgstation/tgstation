@@ -531,10 +531,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier/proc/insert_empty_paper(obj/item/paper/paper, mob/user)
 	if(istype(paper, /obj/item/paper/paperslip))
 		return
-	if(!user.temporarilyRemoveItemFromInventory(paper))
-		return
 	if(get_paper_count() >= MAX_PAPER_CAPACITY)
-		to_chat(user, span_warning("\The [src] cannot hold more paper!."))
+		to_chat(user, span_warning("\The [src] cannot hold more paper!"))
+		return
+	if(!user.temporarilyRemoveItemFromInventory(paper))
 		return
 	paper_stack += paper
 	paper.forceMove(src)
