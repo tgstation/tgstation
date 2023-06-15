@@ -10,7 +10,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron = 200)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2)
 	custom_price = PAYCHECK_COMMAND
 
 /obj/item/autopsy_scanner/proc/scan_cadaver(mob/living/carbon/human/user, mob/living/carbon/scanned)

@@ -192,7 +192,7 @@
 	current_target = target
 	active = TRUE
 	current_beam = user.Beam(current_target, icon_state="cosmic_beam", time = 1 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/cosmic)
-	RegisterSignal(current_beam, COMSIG_PARENT_QDELETING, PROC_REF(beam_died))
+	RegisterSignal(current_beam, COMSIG_QDELETING, PROC_REF(beam_died))
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	if(current_target)

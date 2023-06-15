@@ -178,7 +178,7 @@
 				cached_tentacle_turfs -= t
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
-	fromtendril = TRUE
+	from_spawner = TRUE
 
 //tentacles
 /obj/effect/temp_visual/goliath_tentacle

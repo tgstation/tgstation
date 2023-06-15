@@ -47,14 +47,15 @@
 	backpack_contents = list(
 		/obj/item/storage/box/bodybags = 1,
 		/obj/item/autopsy_scanner = 1,
-		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
-		/obj/item/reagent_containers/dropper = 1,
+		/obj/item/storage/medkit/coroner/large = 1,
 	)
 
-	belt = /obj/item/modular_computer/pda/medical
+	belt = /obj/item/modular_computer/pda/coroner
 	ears = /obj/item/radio/headset/headset_srvmed
 	gloves = /obj/item/clothing/gloves/latex/coroner
-	l_pocket = /obj/item/toy/crayon/white
+	head = /obj/item/clothing/head/utility/surgerycap/black
+	l_pocket = /obj/item/clipboard //good for storing autopsy reports and taking notes
+	r_pocket = /obj/item/reagent_containers/dropper
 	mask = /obj/item/clothing/mask/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/toggle/labcoat/coroner

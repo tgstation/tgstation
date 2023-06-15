@@ -64,15 +64,22 @@
 /obj/effect/mine/proc/can_trigger(atom/movable/on_who)
 	if(triggered || !isturf(loc) || iseffect(on_who) || !armed)
 		return FALSE
+
+	var/mob/living/living_mob
+	if(ismob(on_who))
+		if(!isliving(on_who)) //no ghosties.
+			return FALSE
+		living_mob = on_who
+
+	if(living_mob?.incorporeal_move || on_who.movement_type & FLYING)
+		return foot_on_mine ? IS_WEAKREF_OF(on_who, foot_on_mine) : FALSE //Only go boom if their foot was on the mine PRIOR to flying/phasing. You fucked up, you live with the consequences.
+
 	return TRUE
 
 /obj/effect/mine/proc/on_entered(datum/source, atom/movable/arrived)
 	SIGNAL_HANDLER
 
 	if(!can_trigger(arrived))
-		return
-	// Flying = can't step on a mine
-	if(arrived.movement_type & FLYING)
 		return
 	// Someone already on it
 	if(foot_on_mine?.resolve())
@@ -170,7 +177,7 @@
 /obj/effect/mine/gas
 	name = "oxygen mine"
 	var/gas_amount = 360
-	var/gas_type = "o2"
+	var/gas_type = GAS_O2
 
 /obj/effect/mine/gas/mineEffect(mob/victim)
 	atmos_spawn_air("[gas_type]=[gas_amount]")
@@ -178,18 +185,18 @@
 
 /obj/effect/mine/gas/plasma
 	name = "plasma mine"
-	gas_type = "plasma"
+	gas_type = GAS_PLASMA
 
 
 /obj/effect/mine/gas/n2o
 	name = "\improper N2O mine"
-	gas_type = "n2o"
+	gas_type = GAS_N2O
 
 
 /obj/effect/mine/gas/water_vapor
 	name = "chilled vapor mine"
 	gas_amount = 500
-	gas_type = "water_vapor"
+	gas_type = GAS_WATER_VAPOR
 
 /obj/effect/mine/sound
 	name = "honkblaster 1000"

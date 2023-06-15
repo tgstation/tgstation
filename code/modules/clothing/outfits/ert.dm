@@ -284,7 +284,7 @@
 	..()
 	if(visualsOnly)
 		return
-	ADD_TRAIT(H, TRAIT_NAIVE, INNATE_TRAIT)
+	ADD_TRAIT(H.mind, TRAIT_NAIVE, INNATE_TRAIT)
 	H.dna.add_mutation(/datum/mutation/human/clumsy)
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
 		M.mutadone_proof = TRUE

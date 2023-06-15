@@ -22,6 +22,10 @@
 		to_chat(usr, span_danger("Cannot convert into a new_player mob type."))
 		return
 
+	return change_mob_type_unchecked(new_type, location, new_name, delete_old_mob)
+
+/// Version of [change_mob_type] that does no usr prompting (may send an error message though). Satisfies procs with the SHOULD_NOT_SLEEP restriction
+/mob/proc/change_mob_type_unchecked(new_type = null, turf/location = null, new_name = null as text, delete_old_mob = FALSE)
 	var/mob/desired_mob
 	if(isturf(location))
 		desired_mob = new new_type(location)

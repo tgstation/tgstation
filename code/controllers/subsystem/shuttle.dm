@@ -650,7 +650,7 @@ SUBSYSTEM_DEF(shuttle)
 	// Proposals use 2 extra hidden tiles of space, from the cordons that surround them
 	transit_utilized += (proposal.width + 2) * (proposal.height + 2)
 	M.assigned_transit = new_transit_dock
-	RegisterSignal(proposal, COMSIG_PARENT_QDELETING, PROC_REF(transit_space_clearing))
+	RegisterSignal(proposal, COMSIG_QDELETING, PROC_REF(transit_space_clearing))
 
 	return new_transit_dock
 

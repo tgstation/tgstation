@@ -883,6 +883,25 @@
 		[second_queue]
 	"}, "window=check_timer_sources;size=700x700")
 
+/// A debug verb to try and re-establish a connection with the TTS server and to refetch TTS voices.
+/// Since voices are cached beforehand, this is unlikely to update preferences.
+/client/proc/reestablish_tts_connection()
+	set category = "Debug"
+	set name = "Re-establish Connection To TTS"
+	set desc = "Re-establishes connection to the TTS server if possible"
+	if (!check_rights(R_DEBUG))
+		return
+
+	message_admins("[key_name_admin(usr)] attempted to re-establish connection to the TTS HTTP server.")
+	log_admin("[key_name(usr)] attempted to re-establish connection to the TTS HTTP server.")
+	var/success = SStts.establish_connection_to_tts()
+	if(!success)
+		message_admins("[key_name_admin(usr)] failed to re-established the connection to the TTS HTTP server.")
+		log_admin("[key_name(usr)] failed to re-established the connection to the TTS HTTP server.")
+		return
+	message_admins("[key_name_admin(usr)] successfully re-established the connection to the TTS HTTP server.")
+	log_admin("[key_name(usr)] successfully re-established the connection to the TTS HTTP server.")
+
 /proc/generate_timer_source_output(list/datum/timedevent/events)
 	var/list/per_source = list()
 

@@ -65,7 +65,7 @@
 	 *
 	 * E.G.
 	 * factor["Temperature"] = "Minimum temperature of 20 kelvins, maximum temperature of 100 kelvins"
-	 * factor["o2"] = "Minimum oxygen amount of 20 moles, more oxygen increases reaction rate up to 150 moles"
+	 * factor[GAS_O2] = "Minimum oxygen amount of 20 moles, more oxygen increases reaction rate up to 150 moles"
 	 */
 	var/list/factor
 

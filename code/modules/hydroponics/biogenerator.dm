@@ -89,10 +89,10 @@
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
 		new_max_items += MAX_ITEMS_PER_RATING * bin.tier
 
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		new_productivity += manipulator.tier
-		new_efficiency += manipulator.tier
-		new_processed_items_per_cycle += PROCESSED_ITEMS_PER_RATING * manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		new_productivity += servo.tier
+		new_efficiency += servo.tier
+		new_processed_items_per_cycle += PROCESSED_ITEMS_PER_RATING * servo.tier
 
 	max_items = new_max_items
 	efficiency = new_efficiency

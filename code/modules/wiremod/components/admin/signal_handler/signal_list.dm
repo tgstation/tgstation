@@ -26,10 +26,10 @@ GLOBAL_LIST_INIT(integrated_circuit_signal_ids, generate_circuit_signal_list())
 	var/entity = circuit_signal_param("Entity", PORT_TYPE_ATOM)
 
 	return list(
-		COMSIG_PARENT_QDELETING = list(),
-		COMSIG_PARENT_ATTACKBY = list(circuit_signal_response("Cancel Attack", COMPONENT_NO_AFTERATTACK), item, user),
-		COMSIG_PARENT_ATTACKBY_SECONDARY = list(circuit_signal_response("Cancel Attack", COMPONENT_NO_AFTERATTACK), item, user),
-		COMSIG_PARENT_EXAMINE = list(user),
+		COMSIG_QDELETING = list(),
+		COMSIG_ATOM_ATTACKBY = list(circuit_signal_response("Cancel Attack", COMPONENT_NO_AFTERATTACK), item, user),
+		COMSIG_ATOM_ATTACKBY_SECONDARY = list(circuit_signal_response("Cancel Attack", COMPONENT_NO_AFTERATTACK), item, user),
+		COMSIG_ATOM_EXAMINE = list(user),
 
 		COMSIG_ATOM_ATTACK_HAND = list(cancel_attack, user),
 		COMSIG_ATOM_ATTACK_GHOST = list(cancel_attack, user),

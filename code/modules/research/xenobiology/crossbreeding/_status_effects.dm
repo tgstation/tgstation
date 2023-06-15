@@ -558,10 +558,9 @@
 			if(S.amount < S.max_amount)
 				sheets += S
 
-		if(sheets.len > 0)
+		if(sheets.len)
 			var/obj/item/stack/sheet/S = pick(sheets)
-			S.amount++
-			S.update_custom_materials()
+			S.add(1)
 			to_chat(owner, span_notice("[linked_extract] adds a layer of slime to [S], which metamorphosizes into another sheet of material!"))
 	return ..()
 

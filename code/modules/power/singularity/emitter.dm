@@ -94,8 +94,8 @@
 	maximum_fire_delay = max_fire_delay
 	minimum_fire_delay = min_fire_delay
 	fire_delay = fire_shoot_delay
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		power_usage -= 50 * manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		power_usage -= 50 * servo.tier
 	update_mode_power_usage(ACTIVE_POWER_USE, power_usage)
 
 /obj/machinery/power/emitter/examine(mob/user)

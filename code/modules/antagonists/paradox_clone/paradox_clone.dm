@@ -2,7 +2,9 @@
 	name = "\improper Paradox Clone"
 	roundend_category = "Paradox Clone"
 	job_rank = ROLE_PARADOX_CLONE
+	antagpanel_category = ANTAG_GROUP_PARADOX
 	antag_hud_name = "paradox_clone"
+	show_to_ghosts = TRUE
 	suicide_cry = "THERE CAN BE ONLY ONE!!"
 	preview_outfit = /datum/outfit/paradox_clone
 

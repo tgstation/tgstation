@@ -82,6 +82,9 @@
 		to_chat(user, span_warning("You can't put [equipping] on [source], it's stuck to your hand!"))
 		return FALSE
 
+	if (equipping.item_flags & ABSTRACT)
+		return FALSE //I don't know a sane-sounding feedback message for trying to put a slap into someone's hand
+
 	return TRUE
 
 /// Start the equipping process. This is the proc you should yield in.

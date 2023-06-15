@@ -54,7 +54,6 @@
 	name = "engineer's jumpsuit"
 	icon_state = "engine"
 	inhand_icon_state = "engi_suit"
-	species_exception = list(/datum/species/golem/uranium)
 
 /obj/item/clothing/under/rank/engineering/engineer/hazard
 	name = "engineer's hazard jumpsuit"

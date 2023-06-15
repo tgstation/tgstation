@@ -319,7 +319,7 @@
 		/obj/item/stamp/clown,
 		/obj/item/bikehorn,
 		/obj/item/bikehorn/airhorn,
-		/obj/item/paint/anycolor,
+		/obj/item/paint/anycolor/cyborg,
 		/obj/item/soap/nanotrasen/cyborg,
 		/obj/item/pneumatic_cannon/pie/selfcharge/cyborg,
 		/obj/item/razor, //killbait material
@@ -958,7 +958,7 @@
 	if(model)
 		model.storages |= src
 		RegisterSignal(model.robot, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
-		RegisterSignal(model, COMSIG_PARENT_QDELETING, PROC_REF(unregister_from_model))
+		RegisterSignal(model, COMSIG_QDELETING, PROC_REF(unregister_from_model))
 
 /datum/robot_energy_storage/proc/unregister_from_model(obj/item/robot_model/model)
 	SIGNAL_HANDLER

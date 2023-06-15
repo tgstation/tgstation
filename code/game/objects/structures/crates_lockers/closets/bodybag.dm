@@ -1,4 +1,3 @@
-
 /obj/structure/closet/body_bag
 	name = "body bag"
 	desc = "A plastic bag designed for the storage and transportation of cadavers."
@@ -18,11 +17,13 @@
 	drag_slowdown = 0
 	has_closed_overlay = FALSE
 	can_install_electronics = FALSE
+	paint_jobs = null
 
-	///The tagged name of the bodybag, also used to check if the bodybag IS tagged.
-	var/tag_name
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
+	/// The tagged name of the bodybag, also used to check if the bodybag IS tagged.
+	var/tag_name
+
 
 /obj/structure/closet/body_bag/Initialize(mapload)
 	. = ..()
@@ -72,10 +73,9 @@
 	if(tag_name)
 		. += "bodybag_label"
 
-/obj/structure/closet/body_bag/close(mob/living/user)
+/obj/structure/closet/body_bag/after_close(mob/living/user)
 	. = ..()
-	if(.)
-		set_density(FALSE)
+	set_density(FALSE)
 
 /obj/structure/closet/body_bag/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -257,28 +257,24 @@
 		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while its straps are fastened."))
 	return ..()
 
+/obj/structure/closet/body_bag/environmental/prisoner/before_open(mob/living/user, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(sinched && !force)
+		to_chat(user, span_danger("The buckles on [src] are sinched down, preventing it from opening."))
+		return FALSE
+
+	sinched = FALSE //in case it was forced open unsinch it
+	return TRUE
+
 /obj/structure/closet/body_bag/environmental/prisoner/update_icon()
 	. = ..()
 	if(sinched)
 		icon_state = initial(icon_state) + "_sinched"
 	else
 		icon_state = initial(icon_state)
-
-/obj/structure/closet/body_bag/environmental/prisoner/open(mob/living/user, force = FALSE)
-	if(sinched && !force)
-		to_chat(user, span_danger("The buckles on [src] are sinched down, preventing it from opening."))
-		return TRUE
-	if(opened)
-		return FALSE
-	sinched = FALSE
-	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
-	opened = TRUE
-	if(!dense_when_open)
-		set_density(FALSE)
-	dump_contents()
-	update_appearance()
-	after_open(user, force)
-	return TRUE
 
 /obj/structure/closet/body_bag/environmental/prisoner/container_resist_act(mob/living/user)
 	/// copy-pasted with changes because flavor text as well as some other misc stuff
@@ -291,7 +287,7 @@
 		location.relay_container_resist_act(user, src)
 		return
 	if(!sinched)
-		open()
+		open(user)
 		return
 
 	user.changeNext_move(CLICK_CD_BREAKOUT)

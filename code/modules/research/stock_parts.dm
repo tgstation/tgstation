@@ -163,7 +163,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	for(var/i in 1 to 10)
 		new /obj/item/stock_parts/capacitor(src)
 		new /obj/item/stock_parts/scanning_module(src)
-		new /obj/item/stock_parts/manipulator(src)
+		new /obj/item/stock_parts/servo(src)
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
 		new /obj/item/stock_parts/cell/high(src)
@@ -174,7 +174,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	for(var/i in 1 to 10)
 		new /obj/item/stock_parts/capacitor/adv(src)
 		new /obj/item/stock_parts/scanning_module/adv(src)
-		new /obj/item/stock_parts/manipulator/nano(src)
+		new /obj/item/stock_parts/servo/nano(src)
 		new /obj/item/stock_parts/micro_laser/high(src)
 		new /obj/item/stock_parts/matter_bin/adv(src)
 		new /obj/item/stock_parts/cell/super(src)
@@ -185,7 +185,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	for(var/i in 1 to 10)
 		new /obj/item/stock_parts/capacitor/super(src)
 		new /obj/item/stock_parts/scanning_module/phasic(src)
-		new /obj/item/stock_parts/manipulator/pico(src)
+		new /obj/item/stock_parts/servo/pico(src)
 		new /obj/item/stock_parts/micro_laser/ultra(src)
 		new /obj/item/stock_parts/matter_bin/super(src)
 		new /obj/item/stock_parts/cell/hyper(src)
@@ -196,7 +196,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	for(var/i in 1 to 10)
 		new /obj/item/stock_parts/capacitor/quadratic(src)
 		new /obj/item/stock_parts/scanning_module/triphasic(src)
-		new /obj/item/stock_parts/manipulator/femto(src)
+		new /obj/item/stock_parts/servo/femto(src)
 		new /obj/item/stock_parts/micro_laser/quadultra(src)
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
 		new /obj/item/stock_parts/cell/bluespace(src)
@@ -207,7 +207,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	for(var/i in 1 to 10)
 		new /obj/item/stock_parts/capacitor(src)
 		new /obj/item/stock_parts/scanning_module(src)
-		new /obj/item/stock_parts/manipulator(src)
+		new /obj/item/stock_parts/servo(src)
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
 
@@ -243,7 +243,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon = 'icons/obj/stock_parts.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/rating = 1
-	///Used when a base part has a different name to higher tiers of part. For example, machine frames want any manipulator and not just a micro-manipulator.
+	///Used when a base part has a different name to higher tiers of part. For example, machine frames want any servo and not just a micro-servo.
 	var/base_name
 	var/energy_rating = 1
 
@@ -269,12 +269,12 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "scan_module"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/stock_parts/manipulator
-	name = "micro-manipulator"
-	desc = "A tiny little manipulator used in the construction of certain devices."
-	icon_state = "micro_mani"
+/obj/item/stock_parts/servo
+	name = "micro-servo"
+	desc = "A tiny little servo motor used in the construction of certain devices."
+	icon_state = "micro_servo"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3)
-	base_name = "manipulator"
+	base_name = "servo"
 
 /obj/item/stock_parts/micro_laser
 	name = "micro-laser"
@@ -306,10 +306,10 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	energy_rating = 3
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/stock_parts/manipulator/nano
-	name = "nano-manipulator"
-	desc = "A tiny little manipulator used in the construction of certain devices."
-	icon_state = "nano_mani"
+/obj/item/stock_parts/servo/nano
+	name = "nano-servo"
+	desc = "A tiny little servo motor used in the construction of certain devices."
+	icon_state = "nano_servo"
 	rating = 2
 	energy_rating = 3
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3)
@@ -348,10 +348,10 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	energy_rating = 5
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/stock_parts/manipulator/pico
-	name = "pico-manipulator"
-	desc = "A tiny little manipulator used in the construction of certain devices."
-	icon_state = "pico_mani"
+/obj/item/stock_parts/servo/pico
+	name = "pico-servo"
+	desc = "A tiny little servo motor used in the construction of certain devices."
+	icon_state = "pico_servo"
 	rating = 3
 	energy_rating = 5
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3)
@@ -390,10 +390,10 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	energy_rating = 10
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
 
-/obj/item/stock_parts/manipulator/femto
-	name = "femto-manipulator"
-	desc = "A tiny little manipulator used in the construction of certain devices."
-	icon_state = "femto_mani"
+/obj/item/stock_parts/servo/femto
+	name = "femto-servo"
+	desc = "A tiny little servo motor used in the construction of certain devices."
+	icon_state = "femto_servo"
 	rating = 4
 	energy_rating = 10
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.3)

@@ -206,7 +206,7 @@
 	toggle_magazine()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/gun/ballistic/shotgun/bulldog/afterattack_secondary(mob/living/victim, mob/living/user, params)
+/obj/item/gun/ballistic/shotgun/bulldog/afterattack_secondary(mob/living/victim, mob/living/user, proximity_flag, click_parameters)
 	if(secondary_magazine)
 		toggle_magazine()
 	return SECONDARY_ATTACK_CALL_NORMAL

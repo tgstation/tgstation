@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../../backend';
-import { sortBy } from 'common/collections';
+import { sortStrings } from 'common/collections';
 import { Box, Button, Dropdown, Section, Stack, TextArea } from '../../components';
 import { RequestsData, RequestType, RequestPriority } from './types';
 
@@ -13,9 +13,9 @@ export const MessageWriteTab = (props, context) => {
     information_consoles = [],
   } = data;
 
-  const sorted_assistance = sortBy((console) => console)(assistance_consoles);
-  const sorted_supply = sortBy((console) => console)(supply_consoles);
-  const sorted_information = sortBy((console) => console)(information_consoles);
+  const sorted_assistance = sortStrings(assistance_consoles);
+  const sorted_supply = sortStrings(supply_consoles);
+  const sorted_information = sortStrings(information_consoles);
 
   const resetMessage = () => {
     setMessageText('');
@@ -83,7 +83,7 @@ export const MessageWriteTab = (props, context) => {
         {requestType === RequestType.ASSISTANCE && (
           <Dropdown
             width="100%"
-            options={sorted_assistance.map((recipient) => recipient)}
+            options={sorted_assistance}
             selected={recipient}
             displayText={recipient || 'Pick a Recipient'}
             onSelected={(value) => setRecipient(value)}
@@ -92,7 +92,7 @@ export const MessageWriteTab = (props, context) => {
         {requestType === RequestType.SUPPLIES && (
           <Dropdown
             width="100%"
-            options={sorted_supply.map((recipient) => recipient)}
+            options={sorted_supply}
             selected={recipient}
             displayText={recipient || 'Pick a Recipient'}
             onSelected={(value) => setRecipient(value)}
@@ -101,7 +101,7 @@ export const MessageWriteTab = (props, context) => {
         {requestType === RequestType.INFORMATION && (
           <Dropdown
             width="100%"
-            options={sorted_information.map((recipient) => recipient)}
+            options={sorted_information}
             selected={recipient}
             displayText={recipient || 'Pick a Recipient'}
             onSelected={(value) => setRecipient(value)}

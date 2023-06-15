@@ -133,6 +133,9 @@
 	desc = "An odd flower that grows commonly near bodies of lava."
 	icon_state = "fireblossom1"
 	base_icon_state = "fireblossom"
+	light_range = LIGHT_FIRE_BLOSSOM
+	light_power = LIGHT_FIRE_BLOSSOM
+	light_color = COLOR_BIOLUMINESCENCE_YELLOW
 	product_types = list(/obj/item/food/grown/ash_flora/fireblossom = 1)
 	harvested_name = "fire blossom stems"
 	harvested_desc = "A few fire blossom stems, missing their flowers."
@@ -143,6 +146,18 @@
 	regrowth_time_low = 2500
 	regrowth_time_high = 4000
 	number_of_variants = 2
+
+/obj/structure/flora/ash/fireblossom/after_harvest()
+	set_light_power(LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED)
+	set_light_range(LIGHT_POWER_FIRE_BLOSSOM_HARVESTED)
+	update_light()
+	return ..()
+
+/obj/structure/flora/ash/fireblossom/regrow()
+	set_light_power(initial(light_power))
+	set_light_range(initial(light_range))
+	update_light()
+	return ..()
 
 ///Snow flora to exist on icebox.
 /obj/structure/flora/ash/chilly

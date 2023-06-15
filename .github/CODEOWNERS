@@ -24,6 +24,11 @@
 /code/ze_genesis_call/ @Cyberboss
 /tools/tgs_test/ @Cyberboss
 
+# Cobby
+
+/code/modules/reagents/ @ExcessiveUseOfCobblestone
+/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
+/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
 
 # Fikou
 
@@ -58,6 +63,7 @@
 /code/modules/client/preferences/ @Mothblocks
 /code/modules/client/preferences_menu.dm @Mothblocks
 /tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
+/tools/ezdb/ @Mothblocks
 /tools/maplint/source/ @Mothblocks
 /tools/pull_request_hooks/ @Mothblocks
 /tools/screenshot-test-comparison/ @Mothblocks
@@ -125,6 +131,7 @@
 
 /code/modules/wiremod/ @Watermelon914
 /code/modules/antagonists/traitor/ @Watermelon914
+/code/controllers/subsystem/tts.dm @Watermelon914
 
 # ZephyrTFA
 
@@ -138,15 +145,8 @@
 
 # CONTRIBUTORS
 
-# Cobby
-
-/code/modules/reagents/ @ExcessiveUseOfCobblestone
-/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
-/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
-
 # Jordie0608
 
-/SQL/ @Jordie0608
 /code/controllers/subsystem/dbcore.dm @Jordie0608
 /tools/SQLAlertEmail/ @Jordie0608
 
@@ -159,7 +159,6 @@
 
 # MrStonedOne
 
-/SQL/database_changelog.txt @MrStonedOne
 /code/__DEFINES/MC.dm @MrStonedOne
 /code/controllers/admin.dm @MrStonedOne
 /code/controllers/master.dm @MrStonedOne
@@ -183,8 +182,10 @@
 
 # MULTIPLE OWNERS
 
+/SQL/ @Jordie0608 @MrStonedOne
+
 /_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
-/icons/ @Imaginos16 @Krysonism @Twaticus
+/icons/ @Imaginos16 @Krysonism @Twaticus @Wallemations
 /icons/ass/ @Ghilker @tralezab
 
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark

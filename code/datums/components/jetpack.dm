@@ -92,7 +92,6 @@
 
 /datum/component/jetpack/proc/deactivate(datum/source)
 	SIGNAL_HANDLER
-	QDEL_NULL(trail)
 	var/mob/moving = get_mover.Invoke()
 	if(moving)
 		UnregisterSignal(moving, COMSIG_MOVABLE_MOVED)
@@ -100,6 +99,7 @@
 		UnregisterSignal(moving, COMSIG_MOVABLE_SPACEMOVE)
 		UnregisterSignal(moving, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT)
 		UnregisterSignal(moving, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT)
+	QDEL_NULL(trail) //delete AFTER unregistering the mob, otherwise you'll get runtimes.
 
 /datum/component/jetpack/proc/move_react(mob/user)
 	SIGNAL_HANDLER

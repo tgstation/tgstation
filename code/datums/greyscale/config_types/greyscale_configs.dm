@@ -177,6 +177,10 @@
 	name = "Mime PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_mime.json'
 
+/datum/greyscale_config/tablet/stripe_double
+	name = "Double Stripe PDA"
+	json_config = 'code/datums/greyscale/json_configs/pda_stripe_double.json'
+
 /datum/greyscale_config/tablet/stripe_split
 	name = "Split Stripe PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_stripe_split.json'
@@ -301,10 +305,30 @@
 	icon_file = 'icons/mob/clothing/head/winterhood.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wintercoats_hood_worn.json'
 
+/datum/greyscale_config/plush_carp
+	name = "Plushie Carp"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_carp.json'
+
 /datum/greyscale_config/plush_lizard
 	name = "Plushie Lizard"
 	icon_file = 'icons/obj/toys/plushes.dmi'
 	json_config = 'code/datums/greyscale/json_configs/plushie_lizard.json'
+
+/datum/greyscale_config/plush_slime
+	name = "Plushie Slime"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_slime.json'
+
+/datum/greyscale_config/plush_snake
+	name = "Plushie Snake"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_snake.json'
+
+/datum/greyscale_config/plush_spacelizard
+	name = "Plushie Space Lizard"
+	icon_file = 'icons/obj/toys/plushes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/plushie_spacelizard.json'
 
 /datum/greyscale_config/flower_simple
 	name = "Flower"
@@ -908,6 +932,15 @@
 	name = "Worn Football Armor"
 	icon_file = 'icons/mob/clothing/suits/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/football_armor_worn.json'
+
+/datum/greyscale_config/hawaiian_shirt
+	name = "Hawaiian Overshirt"
+	icon_file = 'icons/obj/clothing/suits/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/hawaiian_shirt.json'
+
+/datum/greyscale_config/hawaiian_shirt/worn
+	name = "Hawaiian Overshirt"
+	icon_file = 'icons/mob/clothing/suits/costume.dmi'
 
 /datum/greyscale_config/waistcoat
 	name = "Waistcoat"

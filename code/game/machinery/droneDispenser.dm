@@ -54,6 +54,7 @@
 	materials.insert_amount_mat(starting_amount)
 	materials.precise_insertion = TRUE
 	using_materials = list(/datum/material/iron = iron_cost, /datum/material/glass = glass_cost)
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 /obj/machinery/drone_dispenser/preloaded
 	starting_amount = 5000

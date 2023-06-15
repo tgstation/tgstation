@@ -455,9 +455,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/wizard_station)
 "Uu" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/clothing/suit/wizrobe/red,
 /obj/item/clothing/head/wizard/red,
 /obj/item/staff,

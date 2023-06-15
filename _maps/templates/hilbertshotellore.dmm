@@ -151,12 +151,8 @@
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "aJ" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "aK" = (
@@ -176,18 +172,12 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "aO" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "aP" = (
@@ -205,10 +195,8 @@
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
 "aS" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "aT" = (

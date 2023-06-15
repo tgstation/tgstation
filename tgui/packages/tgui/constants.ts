@@ -183,7 +183,7 @@ const GASES = [
     color: 'lightsteelblue',
   },
   {
-    id: 'nob',
+    id: 'hypernoblium',
     path: '/datum/gas/hypernoblium',
     name: 'Hyper-noblium',
     label: 'Hyper-nob',
@@ -218,7 +218,7 @@ const GASES = [
     color: 'mediumpurple',
   },
   {
-    id: 'pluox',
+    id: 'pluoxium',
     path: '/datum/gas/pluoxium',
     name: 'Pluoxium',
     label: 'Pluoxium',
@@ -232,7 +232,7 @@ const GASES = [
     color: 'olive',
   },
   {
-    id: 'Freon',
+    id: 'freon',
     path: '/datum/gas/freon',
     name: 'Freon',
     label: 'Freon',
@@ -286,6 +286,13 @@ const GASES = [
     name: 'Antinoblium',
     label: 'Anti-Noblium',
     color: 'maroon',
+  },
+  {
+    id: 'nitrium',
+    path: '/datum/gas/nitrium',
+    name: 'Nitrium',
+    label: 'Nitrium',
+    color: 'brown',
   },
 ] as const;
 

@@ -1,4 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - image: "Holy arrows are now 15% less holy (You can no longer click on the 2-pixel hole in the arrowhead and unintentionally click the object below the arrow instead.)"
