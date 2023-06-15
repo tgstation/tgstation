@@ -28994,8 +28994,8 @@
 /area/station/cargo/storage)
 "jlQ" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/storage/belt/holster/energy/thermal,
+/obj/item/storage/belt/holster/energy/thermal,
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,

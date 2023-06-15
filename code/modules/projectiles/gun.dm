@@ -72,6 +72,8 @@
 
 	/// Cooldown for the visible message sent from gun flipping.
 	COOLDOWN_DECLARE(flip_cooldown)
+	/// The amount of time before our gun flip *counts*.
+	var/flip_cooldown_time = 3 SECONDS
 
 /obj/item/gun/Initialize(mapload)
 	. = ..()
@@ -219,7 +221,8 @@
 	if(!COOLDOWN_FINISHED(src, flip_cooldown))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	COOLDOWN_START(src, flip_cooldown, 3 SECONDS)
+	COOLDOWN_START(src, flip_cooldown, flip_cooldown_time)
+
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
 		// yes this will sound silly for bows and wands, but that's a "gun" moment for you
 		user.visible_message(
@@ -235,7 +238,14 @@
 		)
 		playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
 
+	gun_spin_performed(user) //You feel like a badass
+
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/gun/proc/gun_spin_performed(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/gun_spinning_human = user
+		gun_spinning_human.add_mood_event("gun_spin", /datum/mood_event/gun_spin)
 
 /obj/item/gun/afterattack_secondary(mob/living/victim, mob/living/user, proximity_flag, click_parameters)
 	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, GUNPOINT_SHOOTER_STRAY_RANGE))

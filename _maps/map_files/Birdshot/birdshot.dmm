@@ -51171,7 +51171,7 @@
 	pixel_x = -3;
 	pixel_y = -2
 	},
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/storage/belt/holster/energy/thermal,
 /obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)

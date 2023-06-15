@@ -57428,7 +57428,7 @@
 /area/station/science/genetics)
 "oOW" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/storage/belt/holster/energy/thermal,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "oOY" = (

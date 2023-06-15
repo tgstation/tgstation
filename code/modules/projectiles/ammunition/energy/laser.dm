@@ -109,7 +109,7 @@
 /obj/item/ammo_casing/energy/nanite
 	projectile_type = /obj/projectile/bullet/c10mm //henk
 	select_name = "bullet"
-	e_cost = 120
+	e_cost = 100
 	fire_sound = 'sound/weapons/thermalpistol.ogg'
 
 /obj/item/ammo_casing/energy/nanite/inferno

@@ -35,7 +35,6 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/automatic/l6_saw,
 	/obj/item/gun/ballistic/automatic/m90,
 	/obj/item/gun/energy/alien,
-	/obj/item/gun/energy/e_gun/dragnet,
 	/obj/item/gun/energy/e_gun/turret,
 	/obj/item/gun/energy/pulse/carbine,
 	/obj/item/gun/energy/decloner,
@@ -51,9 +50,9 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/rocketlauncher,
 	/obj/item/gun/medbeam,
 	/obj/item/gun/energy/laser/scatter,
-	/obj/item/gun/energy/laser/thermal,
-	/obj/item/gun/energy/laser/thermal/inferno,
-	/obj/item/gun/energy/laser/thermal/cryo,
+	/obj/item/gun/energy/recharge/thermal,
+	/obj/item/gun/energy/recharge/thermal/inferno,
+	/obj/item/gun/energy/recharge/thermal/cryo,
 	/obj/item/gun/energy/gravity_gun))
 
 //if you add anything that isn't covered by the typepaths below, add it to summon_magic_objective_types

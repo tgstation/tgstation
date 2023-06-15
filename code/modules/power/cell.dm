@@ -427,6 +427,9 @@
 /obj/item/stock_parts/cell/emproof/corrupt()
 	return
 
+/obj/item/stock_parts/cell/emproof/thermal
+	maxcharge = 600
+
 /obj/item/stock_parts/cell/emproof/slime
 	name = "EMP-proof slime core"
 	desc = "A yellow slime core infused with plasma. Its organic nature makes it immune to EMPs."

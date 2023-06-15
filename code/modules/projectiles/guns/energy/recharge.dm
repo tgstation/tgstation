@@ -90,6 +90,8 @@
 	. = ..()
 	if(no_charge_state && !can_shoot())
 		icon_state = no_charge_state
+	else
+		icon_state = base_icon_state
 
 /obj/item/gun/energy/recharge/ebow
 	name = "mini energy crossbow"
@@ -127,3 +129,55 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
+
+//Inferno and Cryo Pistols
+
+/obj/item/gun/energy/recharge/thermal //the common parent of these guns, it just shoots hard bullets, somoene might like that?
+	name = "nanite pistol"
+	desc = "A modified handcannon with a metamorphic reserve of decommissioned weaponized nanites. Spit globs of angry robots into the bad guys. \
+		Automatically resets the charge after a time. Recharges instantly if you spin the gun, but you can only do it once per minute. Hope you have a holster!"
+	icon_state = "infernopistol"
+	base_icon_state = "infernopistol"
+	no_charge_state = "infernopistol_empty"
+	inhand_icon_state = "infernopistol"
+	cell_type = /obj/item/stock_parts/cell/emproof/thermal
+	ammo_type = list(/obj/item/ammo_casing/energy/nanite)
+	holds_charge = TRUE
+	obj_flags = UNIQUE_RENAME
+	can_bayonet = TRUE
+	knife_x_offset = 19
+	knife_y_offset = 13
+	w_class = WEIGHT_CLASS_NORMAL
+	dual_wield_spread = 0 //as intended by the coders
+	recharge_time = 1.5 MINUTES //you really should spin the gun
+	flip_cooldown_time = 1 MINUTES //SPEEN
+
+/obj/item/gun/energy/recharge/thermal/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 15, \
+		overlay_y = 9)
+
+/obj/item/gun/energy/recharge/thermal/gun_spin_performed(mob/user)
+	. = ..()
+	reload()
+	deltimer(recharge_timerid)
+
+/obj/item/gun/energy/recharge/thermal/inferno //the magma gun
+	name = "inferno pistol"
+	desc = "A modified handcannon with a metamorphic reserve of decommissioned weaponized nanites. Spit globs of molten angry robots into the bad guys. \
+		While it doesn't manipulate temperature in and of itself, it does cause an violent eruption in anyone who is severely cold. \
+		Automatically resets the charge after a time. Recharges instantly if you spin the gun, but you can only do it once per minute. Hope you have a holster!"
+	ammo_type = list(/obj/item/ammo_casing/energy/nanite/inferno)
+
+/obj/item/gun/energy/recharge/thermal/cryo //the ice gun
+	name = "cryo pistol"
+	desc = "A modified handcannon with a metamorphic reserve of decommissioned weaponized nanites. Spit shards of frozen angry robots into the bad guys. \
+		While it doesn't manipulate temperature in and of itself, it does cause an internal explosion in anyone who is severely hot. \
+		Automatically resets the charge after a time. Recharges instantly if you spin the gun, but you can only do it once per minute. Hope you have a holster!"
+	icon_state = "cryopistol"
+	base_icon_state = "cryopistol"
+	no_charge_state = "cryopistol_empty"
+	inhand_icon_state = "cryopistol"
+	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)

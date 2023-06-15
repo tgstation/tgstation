@@ -9262,8 +9262,8 @@
 /area/station/cargo/storage)
 "dAr" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/storage/belt/holster/energy/thermal,
+/obj/item/storage/belt/holster/energy/thermal,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},

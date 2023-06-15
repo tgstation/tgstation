@@ -258,7 +258,7 @@
 			new /obj/item/dnainjector/geladikinesis(src) // both abilities are probably 3 tc total
 			new /obj/item/dnainjector/cryokinesis(src)
 			new /obj/item/gun/energy/temperature/freeze(src) // ~6 tc
-			new /obj/item/gun/energy/laser/thermal/cryo(src) // ~6 tc
+			new /obj/item/gun/energy/recharge/thermal/cryo(src) // ~6 tc
 			new /obj/item/melee/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue, 8 tc
 
 		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.

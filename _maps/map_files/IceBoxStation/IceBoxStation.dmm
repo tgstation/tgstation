@@ -28936,10 +28936,10 @@
 "jko" = (
 /obj/structure/railing,
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet{
+/obj/item/storage/belt/holster/energy/thermal{
 	pixel_y = 4
 	},
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/storage/belt/holster/energy/thermal,
 /obj/structure/cable,
 /obj/machinery/door/firedoor/border_only,
 /obj/effect/turf_decal/tile/red/half/contrasted{

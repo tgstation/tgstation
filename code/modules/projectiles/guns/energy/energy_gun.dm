@@ -67,30 +67,10 @@
 	icon_state = "hoslaser"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos, /obj/item/ammo_casing/energy/trap/hos)
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-
-/obj/item/gun/energy/e_gun/dragnet
-	name = "\improper DRAGnet"
-	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
-	icon_state = "dragnet"
-	inhand_icon_state = "dragnet"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
-	modifystate = FALSE
-	w_class = WEIGHT_CLASS_NORMAL
-	ammo_x_offset = 1
-
-/obj/item/gun/energy/e_gun/dragnet/add_seclight_point()
-	return
-
-/obj/item/gun/energy/e_gun/dragnet/snare
-	name = "Energy Snare Launcher"
-	desc = "Fires an energy snare that slows the target down."
-	ammo_type = list(/obj/item/ammo_casing/energy/trap)
 
 /obj/item/gun/energy/e_gun/turret
 	name = "hybrid turret gun"

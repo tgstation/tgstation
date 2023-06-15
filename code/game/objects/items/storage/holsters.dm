@@ -28,7 +28,7 @@
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,
 		/obj/item/food/grown/banana,
-		/obj/item/gun/energy/laser/thermal,
+		/obj/item/gun/energy/recharge/thermal,
 		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
 	))
 
@@ -45,7 +45,7 @@
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,
 		/obj/item/food/grown/banana,
-		/obj/item/gun/energy/laser/thermal,
+		/obj/item/gun/energy/recharge/thermal,
 		/obj/item/gun/energy/recharge/ebow,
 	))
 
@@ -55,8 +55,8 @@
 
 /obj/item/storage/belt/holster/energy/thermal/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/gun/energy/laser/thermal/inferno = 1,
-		/obj/item/gun/energy/laser/thermal/cryo = 1,
+		/obj/item/gun/energy/recharge/thermal/inferno = 1,
+		/obj/item/gun/energy/recharge/thermal/cryo = 1,
 	),src)
 
 /obj/item/storage/belt/holster/energy/disabler
@@ -91,7 +91,7 @@
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,
-		/obj/item/gun/energy/laser/thermal,
+		/obj/item/gun/energy/recharge/thermal,
 		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
 	))
 

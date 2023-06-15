@@ -46,16 +46,15 @@
 	projectile_type = /obj/projectile/meteor
 	select_name = "goddamn meteor"
 
-/obj/item/ammo_casing/energy/net
-	projectile_type = /obj/projectile/energy/net
-	select_name = "netting"
-	pellets = 6
-	variance = 40
-	harmful = FALSE
-
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/projectile/energy/trap
-	select_name = "snare"
+	select_name = "trap"
+	harmful = FALSE
+
+/obj/item/ammo_casing/energy/trap/hos
+	projectile_type = /obj/projectile/energy/trap
+	select_name = "trap"
+	e_cost = 300
 	harmful = FALSE
 
 /obj/item/ammo_casing/energy/tesla_cannon

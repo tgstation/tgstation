@@ -389,6 +389,8 @@
 	var/armed = FALSE
 	///How much damage the trap deals when triggered.
 	var/trap_damage = 20
+	///What type of damage it does when triggered.
+	var/trap_damage_type = BRUTE
 
 /obj/item/restraints/legcuffs/beartrap/prearmed
 	armed = TRUE
@@ -460,7 +462,7 @@
 			INVOKE_ASYNC(carbon_victim, TYPE_PROC_REF(/mob/living/carbon, equip_to_slot), src, ITEM_SLOT_LEGCUFFED)
 			SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
-	victim.apply_damage(trap_damage, BRUTE, def_zone)
+	victim.apply_damage(trap_damage, trap_damage_type, def_zone)
 
 /**
  * # Energy snare
@@ -470,22 +472,24 @@
  * A weaker version of the bear trap that can be resisted out of faster and disappears
  */
 /obj/item/restraints/legcuffs/beartrap/energy
-	name = "energy snare"
-	armed = 1
+	name = "energy trap"
+	armed = TRUE
 	icon_state = "e_snare"
-	trap_damage = 0
-	breakouttime = 3 SECONDS
+	trap_damage = 30
+	trap_damage_type = STAMINA
+	breakouttime = 2 SECONDS
 	item_flags = DROPDEL
 	flags_1 = NONE
 
 /obj/item/restraints/legcuffs/beartrap/energy/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(dissipate)), 100)
+	addtimer(CALLBACK(src, PROC_REF(dissipate)), 10 SECONDS)
 
 /**
  * Handles energy snares disappearing
  *
  * If the snare isn't closed on anyone, it will disappear in a shower of sparks.
+ * If it doesn't spawn armed, it arms itself after a delay.
  * Arguments:
  */
 /obj/item/restraints/legcuffs/beartrap/energy/proc/dissipate()
@@ -496,9 +500,6 @@
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user, list/modifiers)
 	spring_trap(null, user)
 	return ..()
-
-/obj/item/restraints/legcuffs/beartrap/energy/cyborg
-	breakouttime = 2 SECONDS // Cyborgs shouldn't have a strong restraint
 
 /obj/item/restraints/legcuffs/bola
 	name = "bola"
@@ -570,8 +571,8 @@
 	ADD_TRAIT(src, TRAIT_UNCATCHABLE, TRAIT_GENERIC) // People said energy bolas being uncatchable is a feature.
 
 /obj/item/restraints/legcuffs/bola/energy/ensnare(atom/hit_atom)
-	var/obj/item/restraints/legcuffs/beartrap/energy/cyborg/B = new (get_turf(hit_atom))
-	B.spring_trap(null, hit_atom, TRUE)
+	var/obj/item/restraints/legcuffs/beartrap/energy/our_trap = new (get_turf(hit_atom))
+	our_trap.spring_trap(null, hit_atom, TRUE)
 	qdel(src)
 
 /**

@@ -1,7 +1,7 @@
 /obj/projectile/energy/inferno
 	name = "molten nanite bullet"
 	icon_state = "infernoshot"
-	damage = 20
+	damage = 25
 	damage_type = BURN
 	armor_flag = ENERGY
 	armour_penetration = 10
@@ -26,7 +26,7 @@
 /obj/projectile/energy/cryo
 	name = "frozen nanite bullet"
 	icon_state = "cryoshot"
-	damage = 20
+	damage = 25
 	damage_type = BRUTE
 	armour_penetration = 10
 	armor_flag = ENERGY
