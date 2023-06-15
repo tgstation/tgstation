@@ -312,10 +312,20 @@
 	if(iscyborg(usr))
 		var/mob/living/silicon/robot/borg = usr
 
+		var/tax = SILICON_LATHE_TAX
+		// I decided this method was better than one extremely long, extremely unreadable if statement
+		// Borgs with the organ bag can print organs for free
+		if((locate(/obj/item/borg/apparatus/organ_storage) in borg.model.modules) && ispath(design.build_path, /obj/item/organ))
+			tax = 0
+		// Borgs with an RPED can print stock parts for free
+		else if((locate(/obj/item/storage/part_replacer/cyborg) in borg.model.modules) && ispath(design.build_path, /obj/item/stock_parts))
+			tax = 0
+
 		if(!borg.cell)
 			return FALSE
 
-		borg.cell.use(SILICON_LATHE_TAX)
+		if(tax)
+			borg.cell.use(tax)
 
 	materials.mat_container.use_materials(efficient_mats, print_quantity)
 	materials.silo_log(src, "built", -print_quantity, "[design.name]", efficient_mats)
