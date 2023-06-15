@@ -270,27 +270,34 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * * paper_use - the amount of paper used in this operation
  * * toner_use - the amount of toner used in this operation
  */
-/obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user, paper_use, toner_use, copies_amount)ä
-	if(get_paper_count() < paper_use * copies_amount)
-		copies_amount = FLOOR(get_paper_count() / paper_use, 1)
-		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [copies_amount >= 1 ? "full " : ""]operation.\""))
+/obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user, paper_use, toner_use, copies_amount)
 	if(!toner_cartridge)
 		copies_amount = 0
-		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"No toner cartridge installed. Aborting.\""))
+		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"No toner cartridge found. Aborting.\""))
 	else if(toner_cartridge.charges < toner_use * copies_amount)
 		copies_amount = FLOOR(toner_cartridge.charges / toner_use, 1)
 		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough toner to perform [copies_amount >= 1 ? "full " : ""]operation.\""))
+	if(get_paper_count() < paper_use * copies_amount)
+		copies_amount = FLOOR(get_paper_count() / paper_use, 1)
+		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [copies_amount >= 1 ? "full " : ""]operation.\""))
+
 	for(var/i in 1 to copies_amount)
 		if(!toner_cartridge)
-			return
+			break
 		if(attempt_charge(src, user) & COMPONENT_OBJ_CANCEL_CHARGE)
 			balloon_alert(user, "insufficient funds!")
 			break
-		playsound(src, 'sound/machines/printer.ogg', 50, vary = FALSE)
 		// arguments to copy_cb have been set at callback instantiation
-		if(!copy_cb.Invoke())
+		var/atom/movable/copied_obj = copy_cb.Invoke()
+		if(!copied_obj) // something went wrong, so other copies will go wrong too
 			break
+
+		playsound(src, 'sound/machines/printer.ogg', 50, vary = FALSE)
 		sleep(4 SECONDS)
+
+		// reveal our copied item
+		copied_obj.forceMove(drop_location())
+		give_pixel_offset(copied_obj)
 	reset_busy()
 
 /**
@@ -337,7 +344,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(new_paper == null && starting_paper > 0)
 		new_paper = new /obj/item/paper
 		starting_paper--
-	new_paper.forceMove(loc)
 	return new_paper
 
 /**
@@ -361,17 +367,16 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  */
 /obj/machinery/photocopier/proc/make_paper_copy(obj/item/paper/paper_copy)
 	if(!paper_copy)
-		return FALSE
+		return null
 
 	var/obj/item/paper/empty_paper = get_empty_paper()
 	toner_cartridge.charges -= PAPER_TONER_USE
 
 	var/copy_colour = get_toner_color()
 
-	var/obj/item/paper/copied_paper = paper_copy.copy(empty_paper, loc, FALSE, copy_colour)
+	var/obj/item/paper/copied_paper = paper_copy.copy(empty_paper, src, FALSE, copy_colour)
 	copied_paper.name = paper_copy.name
-	give_pixel_offset(copied_paper)
-	return TRUE
+	return copied_paper
 
 /**
  * Handles the copying of photos, which can be printed in either color or greyscale.
@@ -380,12 +385,11 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  */
 /obj/machinery/photocopier/proc/make_photo_copy(datum/picture/picture)
 	if(!picture)
-		return FALSE
-	var/obj/item/photo/copied_pic = new(loc, picture.Copy(color_mode == PHOTO_GREYSCALE ? TRUE : FALSE))
-	give_pixel_offset(copied_pic)
+		return null
+	var/obj/item/photo/copied_pic = new(src, picture.Copy(color_mode == PHOTO_GREYSCALE ? TRUE : FALSE))
 	delete_paper(PHOTO_PAPER_USE)
 	toner_cartridge.charges -= PHOTO_TONER_USE
-	return TRUE
+	return copied_pic
 
 /**
  * Handles the copying of documents.
@@ -394,12 +398,11 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  */
 /obj/machinery/photocopier/proc/make_document_copy(obj/item/documents/document_copy)
 	if(!document_copy)
-		return FALSE
-	var/obj/item/documents/photocopy/copied_doc = new(loc, document_copy)
-	give_pixel_offset(copied_doc)
+		return null
+	var/obj/item/documents/photocopy/copied_doc = new(src, document_copy)
 	delete_paper(DOCUMENT_PAPER_USE)
 	toner_cartridge.charges -= DOCUMENT_TONER_USE
-	return TRUE
+	return copied_doc
 
 /**
  * Handles the copying of documents.
@@ -409,23 +412,22 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  */
 /obj/machinery/photocopier/proc/make_paperwork_copy(obj/item/paperwork/paperwork_copy)
 	if(!paperwork_copy)
-		return FALSE
-	var/obj/item/paperwork/photocopy/copied_paperwork = new(loc, paperwork_copy)
+		return null
+	var/obj/item/paperwork/photocopy/copied_paperwork = new(src, paperwork_copy)
 	copied_paperwork.copy_stamp_info(paperwork_copy)
 	if(paperwork_copy.stamped)
 		copied_paperwork.stamp_icon = "paper_stamp-pc" //Override with the photocopy overlay sprite
 		copied_paperwork.add_stamp()
-	give_pixel_offset(copied_paperwork)
 	delete_paper(PAPERWORK_PAPER_USE)
 	toner_cartridge.charges -= PAPERWORK_TONER_USE
-	return TRUE
+	return copied_paperwork
 
 /**
  * The procedure is called when printing a blank to write off toner consumption.
  */
 /obj/machinery/photocopier/proc/make_blank_print(list/blank)
 	if(!toner_cartridge)
-		return FALSE
+		return null
 	var/copy_colour = get_toner_color()
 	var/obj/item/paper/printblank = get_empty_paper()
 	var/printname = sanitize(blank["name"])
@@ -436,7 +438,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	printblank.add_raw_text(printinfo, color = copy_colour)
 	printblank.update_appearance()
 	toner_cartridge.charges -= PAPER_TONER_USE
-	return TRUE
+	return printblank
 
 /**
  * Handles the copying of an ass photo.
@@ -446,10 +448,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  */
 /obj/machinery/photocopier/proc/make_ass_copy(mob/user)
 	if(!check_ass())
-		return FALSE
+		return null
 	if(ishuman(ass) && (ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
 		to_chat(user, span_notice("You feel kind of silly, copying [ass == user ? "your" : ass][ass == user ? "" : "\'s"] ass with [ass == user ? "your" : "[ass.p_their()]"] clothes on.") )
-		return FALSE
+		return null
 
 	var/icon/temp_img
 	if(ishuman(ass))
@@ -466,14 +468,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	else if(isdrone(ass)) //Drones are hot
 		temp_img = icon('icons/ass/assdrone.png')
 
-	var/obj/item/photo/copied_ass = new /obj/item/photo(loc)
+	var/obj/item/photo/copied_ass = new /obj/item/photo(src)
 	var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = "You see [ass]'s ass on the photo.", image = temp_img)
-	give_pixel_offset(copied_ass)
 	toEmbed.psize_x = 128
 	toEmbed.psize_y = 128
 	copied_ass.set_picture(toEmbed, TRUE, TRUE)
 	toner_cartridge.charges -= ASS_TONER_USE
-	return TRUE
+	return copied_ass
 
 /**
  * Called when someone hits the "remove item" button on the copier UI.
