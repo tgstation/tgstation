@@ -9,11 +9,12 @@
 /// How much toner is used for making a copy of a photo.
 #define PHOTO_TONER_USE 0.625
 /// How much toner is used for making a copy of a document.
-#define DOCUMENT_TONER_USE 0.75
+#define DOCUMENT_TONER_USE (PAPER_TONER_USE * DOCUMENT_PAPER_USE)
 /// How much toner is used for making a copy of an ass.
 #define ASS_TONER_USE PHOTO_TONER_USE
 /// How much toner is used for making a copy of paperwork.
-#define PAPERWORK_TONER_USE 0.75
+#define PAPERWORK_TONER_USE (PAPER_TONER_USE * PAPERWORK_PAPER_USE)
+
 /// At which toner charge amount we start losing color. Toner cartridges are scams.
 #define TONER_CHARGE_LOW_AMOUNT 2
 
@@ -23,11 +24,11 @@
 /// How much paper is used for making a copy of a photo.
 #define PHOTO_PAPER_USE 1
 /// How much paper is used for making a copy of a document.
-#define DOCUMENT_PAPER_USE 10
+#define DOCUMENT_PAPER_USE 20
 /// How much paper is used for making a copy of a photo.
 #define ASS_PAPER_USE PHOTO_PAPER_USE
 /// How much paper is used for making a copy of paperwork.
-#define PAPERWORK_PAPER_USE 20
+#define PAPERWORK_PAPER_USE 10
 
 /// Maximum capacity of a photocopier
 #define MAX_PAPER_CAPACITY 60
@@ -71,6 +72,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/category
 	/// Variable that holds a reference to any object supported for photocopying inside the photocopier
 	var/obj/object_copy
+	/// Variable for the UI telling us how many copies are in the queue.
+	var/copies_left = 0
 	/// The amount of paper this photocoper starts with.
 	var/starting_paper = 30
 	/// A stack for all the empty paper we have newly inserted (LIFO)
@@ -141,6 +144,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	data["num_copies"] = num_copies
 
 	data["category"] = category
+	data["copies_left"] = copies_left
 
 	if(istype(object_copy, /obj/item/photo))
 		data["is_photo"] = TRUE
@@ -248,7 +252,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			if(!(params["code"] in GLOB.paper_blanks))
 				return FALSE
 			var/list/blank = GLOB.paper_blanks[params["code"]]
-			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE, num_copies)
+			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE, 1)
 			return TRUE
 
 /**
@@ -290,6 +294,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(error_message)
 		to_chat(user, error_message)
 
+	copies_left = copies_amount
+
 	for(var/i in 1 to copies_amount)
 		if(!toner_cartridge)
 			break
@@ -307,6 +313,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		// reveal our copied item
 		copied_obj.forceMove(drop_location())
 		give_pixel_offset(copied_obj)
+		copies_left--
+	copies_left = 0
 	reset_busy()
 
 /**
@@ -392,10 +400,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  *
  * Checks first if `picture` exists. Since this proc is called from a timer, it's possible that it was removed.
  */
-/obj/machinery/photocopier/proc/make_photo_copy(datum/picture/picture)
-	if(!picture)
+/obj/machinery/photocopier/proc/make_photo_copy(obj/item/photo/photo)
+	if(!photo && !photo.picture)
 		return null
-	var/obj/item/photo/copied_pic = new(src, picture.Copy(color_mode == PHOTO_GREYSCALE ? TRUE : FALSE))
+	var/obj/item/photo/copied_pic = new(src, photo.picture.Copy(color_mode == PHOTO_GREYSCALE ? TRUE : FALSE))
 	delete_paper(PHOTO_PAPER_USE)
 	toner_cartridge.charges -= PHOTO_TONER_USE
 	return copied_pic

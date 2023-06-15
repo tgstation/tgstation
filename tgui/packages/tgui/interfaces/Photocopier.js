@@ -5,7 +5,14 @@ import { Window } from '../layouts';
 
 export const Photocopier = (props, context) => {
   const { data } = useBackend(context);
-  const { isAI, has_toner, has_item, categories = [], paper_count } = data;
+  const {
+    isAI,
+    has_toner,
+    has_item,
+    categories = [],
+    paper_count,
+    copies_left,
+  } = data;
 
   return (
     <Window title="Photocopier" width={320} height={512}>
@@ -19,6 +26,9 @@ export const Photocopier = (props, context) => {
         )}
         <Section title="Paper">
           <Box color="label">Paper stored: {paper_count}</Box>
+          {!!copies_left && (
+            <Box color="label">Copies in queue: {copies_left}</Box>
+          )}
         </Section>
         {categories.length !== 0 ? (
           <Blanks />
