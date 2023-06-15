@@ -617,6 +617,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "Effectively just a Space Swiss Army Knife. Contains a multitude of integrated tools. Right-click it to switch which toolset is active."
 	icon_state = "omnitool"
 	inhand_icon_state = "silencer"
+	force = 8
 	toolspeed = 0.25
 	tool_behaviour = null
 	usesound = 'sound/items/pshoom.ogg'
@@ -696,7 +697,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			"Welding Tool" = image(icon = 'icons/obj/abductor.dmi', icon_state = "welder"),
 		)
 		active_toolset = TOOLSET_HACKING
-		balloon_alert(user, "hacking toolset selected")
+		if(user)
+			balloon_alert(user, "hacking toolset selected")
 	else
 		tool_list = list(
 			"Retractor" = image(icon = 'icons/obj/abductor.dmi', icon_state = "retractor"),
@@ -709,4 +711,5 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter")
 		)
 		active_toolset = TOOLSET_MEDICAL
-		balloon_alert(user, "medical toolset selected")
+		if(user)
+			balloon_alert(user, "medical toolset selected")
