@@ -391,6 +391,8 @@
 	var/trap_damage = 20
 	///What type of damage it does when triggered.
 	var/trap_damage_type = BRUTE
+	///Targeted armor type of our trap. What reduces the damage of this snare.
+	var/targeted_armor_type = MELEE
 
 /obj/item/restraints/legcuffs/beartrap/prearmed
 	armed = TRUE
@@ -455,6 +457,8 @@
 		victim.visible_message(span_danger("[victim] triggers \the [src]."), \
 				span_userdanger("You trigger \the [src]!"))
 	var/def_zone = BODY_ZONE_CHEST
+	var/armor_block = victim.run_armor_check(def_zone, targeted_armor_type)
+
 	if(iscarbon(victim) && victim.body_position == STANDING_UP)
 		var/mob/living/carbon/carbon_victim = victim
 		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -462,7 +466,7 @@
 			INVOKE_ASYNC(carbon_victim, TYPE_PROC_REF(/mob/living/carbon, equip_to_slot), src, ITEM_SLOT_LEGCUFFED)
 			SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
-	victim.apply_damage(trap_damage, trap_damage_type, def_zone)
+	victim.apply_damage(trap_damage, trap_damage_type, def_zone, armor_block)
 
 /**
  * # Energy snare
@@ -477,6 +481,7 @@
 	icon_state = "e_snare"
 	trap_damage = 30
 	trap_damage_type = STAMINA
+	targeted_armor_type = ENERGY
 	breakouttime = 2 SECONDS
 	item_flags = DROPDEL
 	flags_1 = NONE
@@ -500,6 +505,9 @@
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user, list/modifiers)
 	spring_trap(null, user)
 	return ..()
+
+/obj/item/restraints/legcuffs/beartrap/energy/nodamage
+	trap_damage = 0
 
 /obj/item/restraints/legcuffs/bola
 	name = "bola"
@@ -571,7 +579,7 @@
 	ADD_TRAIT(src, TRAIT_UNCATCHABLE, TRAIT_GENERIC) // People said energy bolas being uncatchable is a feature.
 
 /obj/item/restraints/legcuffs/bola/energy/ensnare(atom/hit_atom)
-	var/obj/item/restraints/legcuffs/beartrap/energy/our_trap = new (get_turf(hit_atom))
+	var/obj/item/restraints/legcuffs/beartrap/energy/nodamage/our_trap = new (get_turf(hit_atom))
 	our_trap.spring_trap(null, hit_atom, TRUE)
 	qdel(src)
 
