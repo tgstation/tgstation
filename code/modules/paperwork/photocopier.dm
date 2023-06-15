@@ -151,10 +151,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		data["has_toner"] = TRUE
 		data["current_toner"] = toner_cartridge.charges
 		data["max_toner"] = toner_cartridge.max_charges
-		data["has_enough_toner"] = has_enough_toner()
 	else
 		data["has_toner"] = FALSE
-		data["has_enough_toner"] = FALSE
 
 	data["paper_count"] = get_paper_count()
 
@@ -249,18 +247,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			return TRUE
 
 /**
- * Determines if the photocopier has enough toner.
- */
-/obj/machinery/photocopier/proc/has_enough_toner(toner_use)
-	return !isnull(toner_cartridge) && toner_cartridge.charges >= toner_use
-
-/**
- * Determines if the photocopier has enough paper
- */
-/obj/machinery/photocopier/proc/has_enough_paper(paper_use)
-	return get_paper_count() >= paper_use
-
-/**
  * Returns the color used for the printing operation. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
  */
 /obj/machinery/photocopier/proc/get_toner_color()
@@ -284,11 +270,14 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * * paper_use - the amount of paper used in this operation
  * * toner_use - the amount of toner used in this operation
  */
-/obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user, paper_use, toner_use, copies_amount)
-	if(!has_enough_paper(paper_use * copies_amount))
-		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [copies_amount >= 1 ? "full " : ""]operation.\""))
+/obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user, paper_use, toner_use, copies_amount)ä
+	if(get_paper_count() < paper_use * copies_amount)
 		copies_amount = FLOOR(get_paper_count() / paper_use, 1)
-	if(!has_enough_toner(toner_use * copies_amount))
+		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [copies_amount >= 1 ? "full " : ""]operation.\""))
+	if(!toner_cartridge)
+		copies_amount = 0
+		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"No toner cartridge installed. Aborting.\""))
+	else if(toner_cartridge.charges < toner_use * copies_amount)
 		copies_amount = FLOOR(toner_cartridge.charges / toner_use, 1)
 		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough toner to perform [copies_amount >= 1 ? "full " : ""]operation.\""))
 	for(var/i in 1 to copies_amount)

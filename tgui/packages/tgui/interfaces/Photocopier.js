@@ -76,7 +76,7 @@ const Toner = (props, context) => {
 
 const Options = (props, context) => {
   const { act, data } = useBackend(context);
-  const { color_mode, is_photo, num_copies, has_enough_toner } = data;
+  const { color_mode, is_photo, num_copies } = data;
 
   return (
     <Section title="Options">
@@ -106,7 +106,6 @@ const Options = (props, context) => {
             ml={0.2}
             icon="copy"
             textAlign="center"
-            disabled={!has_enough_toner}
             onClick={() => act('make_copy')}>
             Copy
           </Button>
