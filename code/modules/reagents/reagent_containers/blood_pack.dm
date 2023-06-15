@@ -98,14 +98,6 @@
 	. = ..()
 	. += span_notice("There is a toxin warning on the label. This is for slimepeople.")
 
-/obj/item/reagent_containers/blood/slime
-	blood_type = "OOZE"
-	unique_blood = /datum/reagent/toxin/slimeooze
-
-/obj/item/reagent_containers/blood/slime/examine()
-	.= ..()
-	. += span_notice("This appears to be oozeling blood.")
-
 /obj/item/reagent_containers/blood/universal
 	blood_type = "U"
 
