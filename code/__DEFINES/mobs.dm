@@ -111,8 +111,8 @@
 #define SPECIES_LIZARD_SILVER "silverscale"
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
-#define SPECIES_MONKEY_FREAK "monkey_freak"
-#define SPECIES_MONKEY_HUMAN_LEGGED "monkey_human_legged"
+#define SPECIES_MONKEY_FREAK "monkey freak"
+#define SPECIES_MONKEY_HUMAN_LEGGED "human-legged monkey"
 #define SPECIES_MOTH "moth"
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
@@ -124,7 +124,7 @@
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
-#define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
+#define SPECIES_ZOMBIE_KROKODIL "krokodil zombie"
 
 // Like species IDs, but not specifically attached a species.
 #define BODYPART_ID_ALIEN "alien"
