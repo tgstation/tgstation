@@ -59,15 +59,7 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Facial hair"
 	should_generate_icons = TRUE
-
-/datum/preference/choiced/facial_hairstyle/is_accessible(datum/preferences/preferences)
-	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = new species_type
-	var/obj/item/bodypart/head/fake_head = species.bodypart_overrides[BODY_ZONE_HEAD]
-	if(!(initial(fake_head.head_flags) & HEAD_FACIAL_HAIR))
-		qdel(species)
-		return FALSE
-	return ..()
+	relevant_head_flag = HEAD_FACIAL_HAIR
 
 /datum/preference/choiced/facial_hairstyle/init_possible_values()
 	return generate_possible_values_for_sprite_accessories_on_head(GLOB.facial_hairstyles_list)
