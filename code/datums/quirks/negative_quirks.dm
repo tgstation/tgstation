@@ -658,10 +658,9 @@
 	added_trama_ref = WEAKREF(added_trauma)
 
 /datum/quirk/insanity/post_add()
+	var/rds_policy = get_policy("[type]") || "Please note that your [lowertext(name)] does NOT give you any additional right to attack people or cause chaos."
 	// I don't /think/ we'll need this, but for newbies who think "roleplay as insane" = "license to kill", it's probably a good thing to have.
-	to_chat(quirk_holder, span_big(span_info( \
-		"Please note that your [lowertext(name)] does NOT give you any additional rights to cause harm or chaos to people that you wouldn't already have. \
-	)))
+	to_chat(quirk_holder, span_big(span_info(rds_policy)))
 
 /datum/quirk/insanity/remove()
 	QDEL_NULL(added_trama_ref)
