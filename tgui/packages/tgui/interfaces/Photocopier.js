@@ -44,7 +44,7 @@ export const Photocopier = (props, context) => {
 
 const Toner = (props, context) => {
   const { act, data } = useBackend(context);
-  const { has_toner, max_toner, current_toner } = data;
+  const { max_toner, current_toner } = data;
 
   const average_toner = max_toner * 0.66;
   const bad_toner = max_toner * 0.33;
@@ -53,10 +53,7 @@ const Toner = (props, context) => {
     <Section
       title="Toner"
       buttons={
-        <Button
-          disabled={!has_toner}
-          onClick={() => act('remove_toner')}
-          icon="eject">
+        <Button onClick={() => act('remove_toner')} icon="eject">
           Eject
         </Button>
       }>
@@ -155,7 +152,7 @@ const Options = (props, context) => {
 
 const Blanks = (props, context) => {
   const { act, data } = useBackend(context);
-  const { blanks, categories, category, has_toner } = data;
+  const { blanks, categories, category } = data;
 
   const sortedBlanks = sortBy((blank) => blank.name)(blanks || []);
 
@@ -181,7 +178,6 @@ const Blanks = (props, context) => {
           <Button
             key={blank.code}
             title={blank.name}
-            disabled={!has_toner}
             onClick={() =>
               act('print_blank', {
                 code: blank.code,

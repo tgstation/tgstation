@@ -430,7 +430,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		return null
 	var/copy_colour = get_toner_color()
 	var/obj/item/paper/printblank = get_empty_paper()
-	var/printname = sanitize(blank["name"])
+	var/printname = blank["name"]
 	var/list/printinfo
 	for(var/infoline in blank["info"])
 		printinfo += infoline
