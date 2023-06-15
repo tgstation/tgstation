@@ -102,7 +102,7 @@
 
 	qdel(src)
 
-/mob/living/carbon/AIize(transfer_after = TRUE, client/preference_source)
+/mob/living/carbon/AIize(client/preference_source, transfer_after = TRUE)
 	if (notransform)
 		return
 	notransform = TRUE
@@ -114,7 +114,7 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
 
-/mob/living/carbon/human/AIize(transfer_after = TRUE, client/preference_source)
+/mob/living/carbon/human/AIize(client/preference_source, transfer_after = TRUE)
 	if (notransform)
 		return
 	for(var/t in bodyparts)

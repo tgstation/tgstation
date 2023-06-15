@@ -46,6 +46,13 @@
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
 
+///from base of element/bane/activate(): (item/weapon, mob/user)
+#define COMSIG_OBJECT_PRE_BANING "obj_pre_baning"
+	#define COMPONENT_CANCEL_BANING (1<<0)
+
+///from base of element/bane/activate(): (item/weapon, mob/user)
+#define COMSIG_OBJECT_ON_BANING "obj_on_baning"
+
 /// from base of mob/living/updatehealth()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"
 ///from base of mob/living/death(): (gibbed)

@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed Lavaland Labour Camp Shuttle prisoner-side airlocks having unrestricted access from the side of a wall"

@@ -93,6 +93,7 @@
 		observer.real_name = observer.client.prefs.read_preference(/datum/preference/name/real_name)
 		observer.name = observer.real_name
 		observer.client.init_verbs()
+		observer.client.player_details.time_of_death = world.time
 	observer.update_appearance()
 	observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 	deadchat_broadcast(" has observed.", "<b>[observer.real_name]</b>", follow_target = observer, turf_target = get_turf(observer), message_type = DEADCHAT_DEATHRATTLE)

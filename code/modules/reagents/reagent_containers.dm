@@ -4,11 +4,11 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = null
 	w_class = WEIGHT_CLASS_TINY
-	/// The maximum amount of reagents per transfer that will be moved out of this reagent container
+	/// The maximum amount of reagents per transfer that will be moved out of this reagent container. This value's position in possible_transfer_amounts should be reflected in amount_list_position.
 	var/amount_per_transfer_from_this = 5
 	/// The different possible amounts of reagent to transfer out of the container
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
-	/// Where we are in the possible transfer amount list.
+	/// Where we are in the possible transfer amount list. Number should match the position in possible_transfer_amounts corresponding to amount_per_transfer_from_this.
 	var/amount_list_position = 1
 	/// The maximum amount of reagents this container can hold
 	var/volume = 30
@@ -60,7 +60,7 @@
 /obj/item/reagent_containers/create_reagents(max_vol, flags)
 	. = ..()
 	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
+	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
 
 /obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, params)
 	if (!user.combat_mode)
@@ -69,7 +69,7 @@
 
 /obj/item/reagent_containers/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_QDELETING))
 	return NONE
 
 /obj/item/reagent_containers/proc/add_initial_reagents()

@@ -1,6 +1,7 @@
-/mob/living/simple_animal/hostile/retaliate/spaceman
+/mob/living/basic/spaceman
 	name = "Spaceman"
 	desc = "What in the actual hell..?"
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "old"
 	icon_living = "old"
 	icon_dead = "old_dead"
@@ -8,7 +9,6 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_HUMANOID
 	gender = MALE
-	turns_per_move = 5
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "punches"
@@ -17,7 +17,6 @@
 	maxHealth = 100
 	health = 100
 	speed = 0
-	harm_intent_damage = 8
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attack_verb_continuous = "hits"
@@ -25,5 +24,21 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	del_on_death = 0
-	footstep_type = FOOTSTEP_MOB_SHOE
+	ai_controller = /datum/ai_controller/basic_controller/spaceman
+
+/mob/living/basic/spaceman/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/ai_retaliate)
+
+/datum/ai_controller/basic_controller/spaceman
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)

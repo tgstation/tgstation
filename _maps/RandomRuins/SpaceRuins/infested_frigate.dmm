@@ -321,6 +321,10 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
+"dA" = (
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/open/space/basic,
+/area/template_noop)
 "ef" = (
 /obj/structure/kitchenspike{
 	icon_state = "spikebloodymonkey";
@@ -434,17 +438,6 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"hx" = (
-/obj/effect/decal/cleanable/glass,
-/obj/structure/fluff/broken_flooring{
-	dir = 1;
-	icon_state = "plating"
-	},
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/turf/open/space/basic,
-/area/template_noop)
 "hA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs{
@@ -718,12 +711,6 @@
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"lO" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "pile"
-	},
-/turf/open/space/basic,
-/area/template_noop)
 "lU" = (
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "u_madman_l"
@@ -770,6 +757,10 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
+"mx" = (
+/obj/structure/broken_flooring/singular/directional/south,
+/turf/open/space/basic,
+/area/template_noop)
 "mG" = (
 /obj/structure/bed/maint,
 /obj/effect/decal/cleanable/blood{
@@ -909,6 +900,11 @@
 	},
 /turf/open/space/basic,
 /area/template_noop)
+"pu" = (
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/structure/broken_flooring/pile/directional/west,
+/turf/open/space/basic,
+/area/template_noop)
 "qb" = (
 /obj/effect/turf_decal{
 	dir = 8
@@ -1008,6 +1004,14 @@
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space/has_grav/infested_frigate)
+"rb" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/space/basic,
+/area/template_noop)
 "rd" = (
 /obj/effect/decal/cleanable/blood/gibs/old{
 	icon_state = "gibmid1"
@@ -1045,15 +1049,6 @@
 /obj/item/bedsheet/syndie/double,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
-"rB" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "plating"
-	},
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/turf/open/space/basic,
-/area/template_noop)
 "rL" = (
 /obj/effect/turf_decal{
 	icon_state = "bot_red"
@@ -1097,19 +1092,10 @@
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
-"sL" = (
-/obj/structure/cable,
-/obj/effect/turf_decal{
-	icon_state = "warningline_white"
-	},
-/obj/machinery/light/very_dim/directional/west,
-/obj/effect/turf_decal{
-	icon_state = "warningline_white";
-	dir = 8
-	},
-/obj/machinery/vending/medical/infested_frigate,
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/infested_frigate)
+"sK" = (
+/obj/structure/broken_flooring/pile/directional/east,
+/turf/open/space/basic,
+/area/template_noop)
 "sQ" = (
 /obj/structure/cable,
 /obj/structure/alien/weeds,
@@ -1581,6 +1567,10 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
+"zb" = (
+/obj/structure/broken_flooring/pile/directional/south,
+/turf/open/space/basic,
+/area/template_noop)
 "zE" = (
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
@@ -1712,12 +1702,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"AU" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
-/turf/open/space/basic,
-/area/template_noop)
 "Bh" = (
 /obj/effect/turf_decal{
 	dir = 4
@@ -1851,6 +1835,12 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/infested_frigate)
+"Ey" = (
+/obj/structure/broken_flooring/plating/directional/east,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/space/basic,
+/area/template_noop)
 "Ez" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood{
@@ -2005,17 +1995,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
-"Gn" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 1;
-	icon_state = "plating"
-	},
-/obj/structure/fluff/broken_flooring{
-	dir = 8;
-	icon_state = "pile"
-	},
-/turf/open/space/basic,
-/area/template_noop)
 "Gt" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/exotic/languagebook,
@@ -2465,6 +2444,19 @@
 /obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
+"MN" = (
+/obj/structure/cable,
+/obj/effect/turf_decal{
+	icon_state = "warningline_white"
+	},
+/obj/machinery/light/very_dim/directional/west,
+/obj/effect/turf_decal{
+	icon_state = "warningline_white";
+	dir = 8
+	},
+/obj/machinery/vending/medical/infested_frigate,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/infested_frigate)
 "MW" = (
 /obj/effect/turf_decal{
 	icon_state = "arrows_red";
@@ -2690,13 +2682,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"Qu" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
-/turf/open/space/basic,
-/area/template_noop)
 "QA" = (
 /obj/effect/turf_decal{
 	dir = 1
@@ -2765,13 +2750,6 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"RQ" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
-/turf/open/space/basic,
-/area/template_noop)
 "RS" = (
 /obj/structure/cable,
 /obj/structure/barricade/security,
@@ -3674,7 +3652,7 @@ BO
 nN
 mw
 wP
-sL
+MN
 sA
 HQ
 wP
@@ -3697,7 +3675,7 @@ fM
 fl
 fl
 sT
-Gn
+pu
 xi
 KB
 wP
@@ -3719,11 +3697,11 @@ fl
 fl
 fl
 fl
-RQ
+dA
 fl
 Or
 fl
-rB
+Ey
 zN
 gP
 Lf
@@ -3749,7 +3727,7 @@ RY
 fl
 fl
 fl
-lO
+zb
 fl
 pq
 wq
@@ -3778,7 +3756,7 @@ fl
 fl
 Eg
 fl
-hx
+rb
 Ft
 Qm
 wP
@@ -3795,13 +3773,13 @@ fl
 "}
 (22,1,1) = {"
 fl
-AU
+mx
 fl
 fl
 qF
 aB
 fl
-Qu
+sK
 fl
 fl
 fl
@@ -3858,7 +3836,7 @@ fl
 fl
 fl
 fl
-AU
+mx
 vj
 ug
 Nu
@@ -4124,7 +4102,7 @@ fl
 fl
 fl
 fl
-AU
+mx
 fl
 fl
 fl
