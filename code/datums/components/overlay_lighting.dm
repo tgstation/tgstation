@@ -566,6 +566,8 @@
 			. += lit_turf
 	if(length(.))
 		affected_turfs = .
+		
+	return .
 
 ///Called when current_holder changes loc.
 /datum/component/overlay_lighting/proc/on_holder_dir_change(atom/movable/source, olddir, newdir)
