@@ -310,9 +310,18 @@
 
 /// push gases from its gas mix to output turf
 /obj/machinery/power/turbine/turbine_outlet/proc/expel_gases()
-	if(machine_gasmix.pump_gas_to(output_turf.air, machine_gasmix.return_pressure()))
+	//turf is blocked don't eject gases
+	if(!TURF_SHARES(output_turf))
+		return null
+
+	//eject gases and update turf is any was ejected
+	var/datum/gas_mixture/ejected_gases = machine_gasmix.pump_gas_to(output_turf.air, machine_gasmix.return_pressure())
+	if(ejected_gases)
 		output_turf.update_visuals()
 		output_turf.air_update_turf(TRUE)
+
+	//return ejected gases
+	return ejected_gases
 
 /obj/machinery/power/turbine/turbine_outlet/constructed
 	mapped = FALSE
@@ -561,6 +570,7 @@
 		power_off()
 		return PROCESS_KILL
 
+	//===============COMPRESSOR WORKING========//
 	//Transfer gases from turf to compressor
 	var/temperature = compressor.compress_gases()
 	//Compute damage taken based on temperature
@@ -593,15 +603,20 @@
 		radio.talk_into(src, "Warning, turbine at [get_area_name(src)] taking damage, current integrity at [integrity]%!", engineering_channel)
 		playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 
+	//================ROTOR WORKING============//
 	//The Rotor moves the gases that expands from 1000 L to 3000 L, they cool down and both temperature and pressure lowers
 	var/rotor_work = transfer_gases(compressor.machine_gasmix, machine_gasmix, compressor.compressor_work)
 	//the turbine expands the gases more from 3000 L to 6000 L, cooling them down further.
 	var/turbine_work = transfer_gases(machine_gasmix, turbine.machine_gasmix, abs(rotor_work))
-	//final pressure acheived
-	var/turbine_pressure = max(turbine.machine_gasmix.return_pressure(), 0.01)
 
-	//Calculate final power generated
-	var/work_done =  QUANTIZE(turbine.machine_gasmix.total_moles()) * R_IDEAL_GAS_EQUATION * turbine.machine_gasmix.temperature * log(compressor.compressor_pressure / turbine_pressure)
+	//================TURBINE WORKING============//
+	//Calculate final power generated based on how much gas was ejected from the turbine
+	var/datum/gas_mixture/ejected_gases = turbine.expel_gases()
+	if(isnull(ejected_gases)) //output turf was blocked with high pressure/temperature gases or by some structure so no power generated
+		rpm = 0
+		produced_energy = 0
+		return
+	var/work_done =  QUANTIZE(ejected_gases.total_moles()) * R_IDEAL_GAS_EQUATION * ejected_gases.temperature * log(compressor.compressor_pressure / max(ejected_gases.return_pressure(), 0.01))
 	//removing the work needed to move the compressor but adding back the turbine work that is the one generating most of the power.
 	work_done = max(work_done - compressor.compressor_work * TURBINE_COMPRESSOR_STATOR_INTERACTION_MULTIPLIER - turbine_work, 0)
 	//calculate final acheived rpm
@@ -610,9 +625,6 @@
 	//add energy into the grid
 	produced_energy = rpm * TURBINE_ENERGY_RECTIFICATION_MULTIPLIER * TURBINE_RPM_CONVERSION
 	add_avail(produced_energy)
-
-	/// Transfer gases from turbine to outside turf
-	turbine.expel_gases()
 
 /obj/item/paper/guides/jobs/atmos/turbine
 	name = "paper- 'Quick guide on the new and improved turbine!'"
