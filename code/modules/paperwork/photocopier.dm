@@ -276,15 +276,19 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * * toner_use - the amount of toner used in this operation
  */
 /obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user, paper_use, toner_use, copies_amount)
+	var/error_message = null
 	if(!toner_cartridge)
 		copies_amount = 0
-		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"No toner cartridge found. Aborting.\""))
+		error_message = span_warning("An error message flashes across \the [src]'s screen: \"No toner cartridge found. Aborting.\"")
 	else if(toner_cartridge.charges < toner_use * copies_amount)
 		copies_amount = FLOOR(toner_cartridge.charges / toner_use, 1)
-		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough toner to perform [copies_amount >= 1 ? "full " : ""]operation.\""))
+		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Not enough toner to perform [copies_amount >= 1 ? "full " : ""]operation.\"")
 	if(get_paper_count() < paper_use * copies_amount)
 		copies_amount = FLOOR(get_paper_count() / paper_use, 1)
-		to_chat(user, span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [copies_amount >= 1 ? "full " : ""]operation.\""))
+		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [copies_amount >= 1 ? "full " : ""]operation.\"")
+
+	if(error_message)
+		to_chat(user, error_message)
 
 	for(var/i in 1 to copies_amount)
 		if(!toner_cartridge)
