@@ -611,9 +611,10 @@
 		. += "-[facial_hair_alpha]"
 		if(facial_hair_gradient_style)
 			. += "-[facial_hair_gradient_style]"
-			if(hair_gradient_color)
-				. += "-[facial_hair_gradient_color]"
+			. += "-[facial_hair_gradient_color]"
 
+	if(show_missing_eyes)
+		. += "-SHOW_MISSING_EYES"
 	if(show_debrained)
 		. += "-SHOW_DEBRAINED"
 		return .
@@ -626,9 +627,16 @@
 		. += "-[hair_alpha]"
 		if(hair_gradient_style)
 			. += "-[hair_gradient_style]"
-			if(hair_gradient_color)
-				. += "-[hair_gradient_color]"
+			. += "-[hair_gradient_color]"
 
+	return .
+
+/obj/item/bodypart/head/generate_husk_key()
+	. = ..()
+	if(show_missing_eyes)
+		. += "-SHOW_MISSING_EYES"
+	if(show_debrained)
+		. += "-SHOW_DEBRAINED"
 	return .
 
 GLOBAL_LIST_EMPTY(masked_leg_icons_cache)

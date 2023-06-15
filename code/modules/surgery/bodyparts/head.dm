@@ -221,7 +221,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/item/bodypart/head/get_limb_icon(dropped, draw_external_organs)
-	cut_overlays()
 	. = ..()
 
 	// logic for the overlays changes when dropped (ugh, rework this later if possible)
@@ -235,9 +234,9 @@
 
 		//facial hair
 		if(facial_hairstyle && (head_flags & HEAD_FACIAL_HAIR))
-			var/datum/sprite_accessory/sprite = GLOB.facial_hairstyles_list[facial_hairstyle]
-			if(sprite)
-				var/image/facial_overlay = image(sprite.icon, "[sprite.icon_state]", -HAIR_LAYER, SOUTH)
+			var/datum/sprite_accessory/facial_hair_sprite = GLOB.facial_hairstyles_list[facial_hairstyle]
+			if(facial_hair_sprite)
+				var/image/facial_overlay = image(facial_hair_sprite.icon, "[facial_hair_sprite.icon_state]", -HAIR_LAYER, SOUTH)
 				facial_overlay.color = facial_hair_color
 				facial_overlay.alpha = hair_alpha
 				. += facial_overlay
@@ -247,9 +246,9 @@
 			. += get_debrain_overlay(can_rotate = FALSE)
 		//Otherwise, applies hair
 		else if(hair_style && (head_flags & HEAD_HAIR))
-			var/datum/sprite_accessory/sprite2 = GLOB.hairstyles_list[hair_style]
-			if(sprite2 && (head_flags & HEAD_HAIR))
-				var/image/hair_overlay = image(sprite2.icon, "[sprite2.icon_state]", -HAIR_LAYER, SOUTH)
+			var/datum/sprite_accessory/hair_sprite = GLOB.hairstyles_list[hair_style]
+			if(hair_sprite && (head_flags & HEAD_HAIR))
+				var/image/hair_overlay = image(hair_sprite.icon, "[hair_sprite.icon_state]", -HAIR_LAYER, SOUTH)
 				hair_overlay.color = hair_color
 				hair_overlay.alpha = hair_alpha
 				. += hair_overlay
@@ -264,6 +263,9 @@
 					eye_left.color = eyes.eye_color_left
 				if(eyes.eye_color_right)
 					eye_right.color = eyes.eye_color_right
+			if(eyes.overlay_ignore_lighting)
+				eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, src, alpha = eye_left.alpha)
+				eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, src, alpha = eye_right.alpha)
 			if(worn_face_offset)
 				worn_face_offset.apply_offset(eye_left)
 				worn_face_offset.apply_offset(eye_right)
