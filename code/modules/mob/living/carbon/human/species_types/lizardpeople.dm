@@ -178,6 +178,7 @@ Lizard subspecies: SILVER SCALED
 		TRAIT_WINE_TASTER,
 	)
 	mutantlungs = null
+	armor = 10 //very light silvery scales soften blows
 	species_language_holder = /datum/language_holder/lizard/silver
 	mutanttongue = /obj/item/organ/internal/tongue/lizard/silver
 	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
@@ -198,12 +199,10 @@ Lizard subspecies: SILVER SCALED
 	new_silverscale.eye_color_right = "#0000a0"
 	. = ..()
 	new_silverscale.add_filter("silver_glint", 2, list("type" = "outline", "color" = "#ffffff63", "size" = 2))
-	new_silverscale.physiology.damage_resistance += 10 //very light silvery scales soften blows
 
 /datum/species/lizard/silverscale/on_species_loss(mob/living/carbon/human/was_silverscale, datum/species/new_species, pref_load)
 	was_silverscale.dna.features["mcolor"] = old_mutcolor
 	was_silverscale.eye_color_left = old_eye_color_left
 	was_silverscale.eye_color_right = old_eye_color_right
 	was_silverscale.remove_filter("silver_glint")
-	. = ..()
-	was_silverscale.physiology.damage_resistance -= 10
+	return ..()

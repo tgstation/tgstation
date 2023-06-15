@@ -89,6 +89,7 @@
 	id = SPECIES_ZOMBIE_INFECTIOUS
 	examine_limb_id = SPECIES_ZOMBIE
 	speedmod = 1.6
+	armor = 20 // 120 damage to KO a zombie, which kills it
 	mutanteyes = /obj/item/organ/internal/eyes/zombie
 	mutantbrain = /obj/item/organ/internal/brain/zombie
 	mutanttongue = /obj/item/organ/internal/tongue/zombie
@@ -122,12 +123,10 @@
 /datum/species/zombie/infectious/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species)
 	. = ..()
 	new_zombie.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie)
-	new_zombie.physiology.damage_resistance += 20 // 120 damage to KO a zombie, which kills it
 
 /datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/was_zombie, datum/species/new_species, pref_load)
 	. = ..()
 	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
-	was_zombie.physiology.damage_resistance -= 20
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
