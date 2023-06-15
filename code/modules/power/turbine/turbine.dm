@@ -1,3 +1,5 @@
+#define MINIMUM_TURBINE_PRESSURE 0.01
+
 /obj/machinery/power/turbine
 	density = TRUE
 	resistance_flags = FIRE_PROOF
@@ -68,13 +70,13 @@
 /obj/machinery/power/turbine/proc/transfer_gases(datum/gas_mixture/input_mix, datum/gas_mixture/output_mix, work_amount_to_remove, intake_size = 1)
 	//pump gases. if no gases were transfered then no work was done
 	var/output_volume = output_mix.volume
-	var/output_pressure = max(output_mix.return_pressure(), 0.01)
+	var/output_pressure = max(output_mix.return_pressure(), MINIMUM_TURBINE_PRESSURE)
 	var/datum/gas_mixture/transfered_gases = input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
 	if(!transfered_gases)
 		return 0
 
 	//compute work done
-	var/work_done = QUANTIZE(transfered_gases.total_moles()) * R_IDEAL_GAS_EQUATION * transfered_gases.temperature * log((transfered_gases.volume * max(transfered_gases.return_pressure(), 0.01)) / (output_volume * output_pressure)) * TURBINE_WORK_CONVERSION_MULTIPLIER
+	var/work_done = QUANTIZE(transfered_gases.total_moles()) * R_IDEAL_GAS_EQUATION * transfered_gases.temperature * log((transfered_gases.volume * max(transfered_gases.return_pressure(), )) / (output_volume * output_pressure)) * TURBINE_WORK_CONVERSION_MULTIPLIER
 	if(work_amount_to_remove)
 		work_done = work_done - work_amount_to_remove
 
@@ -257,7 +259,7 @@
  */
 /obj/machinery/power/turbine/inlet_compressor/proc/compress_gases()
 	compressor_work = 0
-	compressor_pressure = 0.01
+	compressor_pressure = MINIMUM_TURBINE_PRESSURE
 	var/datum/gas_mixture/input_turf_mixture = input_turf.return_air()
 	if(!input_turf_mixture)
 		return 0
@@ -267,7 +269,7 @@
 	compressor_work = transfer_gases(input_turf_mixture, machine_gasmix, work_amount_to_remove = 0, intake_size = intake_regulator)
 	input_turf.update_visuals()
 	input_turf.air_update_turf(TRUE)
-	compressor_pressure = max(machine_gasmix.return_pressure(), 0.01)
+	compressor_pressure = max(machine_gasmix.return_pressure(), MINIMUM_TURBINE_PRESSURE)
 
 	return input_turf_mixture.temperature
 
@@ -616,7 +618,7 @@
 		rpm = 0
 		produced_energy = 0
 		return
-	var/work_done =  QUANTIZE(ejected_gases.total_moles()) * R_IDEAL_GAS_EQUATION * ejected_gases.temperature * log(compressor.compressor_pressure / max(ejected_gases.return_pressure(), 0.01))
+	var/work_done =  QUANTIZE(ejected_gases.total_moles()) * R_IDEAL_GAS_EQUATION * ejected_gases.temperature * log(max(compressor.compressor_pressure - compressor.machine_gasmix.return_pressure(), MINIMUM_TURBINE_PRESSURE) / max(ejected_gases.return_pressure(), MINIMUM_TURBINE_PRESSURE))
 	//removing the work needed to move the compressor but adding back the turbine work that is the one generating most of the power.
 	work_done = max(work_done - compressor.compressor_work * TURBINE_COMPRESSOR_STATOR_INTERACTION_MULTIPLIER - turbine_work, 0)
 	//calculate final acheived rpm
@@ -636,3 +638,5 @@
 	-There are 4 tiers for these items, only the first tier can be printed. The next tier of each part can be made by using various materials on the part (clicking with the material in hand, on the part). The material required to reach the next tier is stated in the part's examine text, try shift clicking it!<BR>\
 	-Each tier increases the efficiency (more power), the max reachable RPM, and the max temperature that the machine can process without taking damage (up to fusion temperatures at the last tier!).<BR>\
 	-A word of warning, the machine is very inefficient in its gas consumption and many unburnt gases will pass through. If you want to be cheap you can either pre-burn the gases or add a filtering system to collect the unburnt gases and reuse them."
+
+#undef MINIMUM_TURBINE_PRESSURE
