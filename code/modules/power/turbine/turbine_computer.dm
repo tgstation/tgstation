@@ -68,9 +68,6 @@
 
 	data["max_rpm"] = main_control.max_allowed_rpm
 	data["max_temperature"] = main_control.max_allowed_temperature
-
-	data["can_turn_off"] = main_control.rpm < 1000
-
 	data["regulator"] = QDELETED(main_control.compressor) ? 0 : main_control.compressor.intake_regulator
 
 	return data
