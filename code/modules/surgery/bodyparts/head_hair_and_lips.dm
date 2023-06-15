@@ -28,8 +28,8 @@
 			hair_hidden = TRUE
 		if(item_uniform.flags_inv & HIDEFACIALHAIR)
 			facial_hair_hidden = TRUE
-	//invisibility stuff
-	if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN))
+	//invisibility and husk stuff
+	if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(human_head_owner, TRAIT_HUSK))
 		hair_hidden = TRUE
 		facial_hair_hidden = TRUE
 	//HIDDEN CHECKS END
@@ -63,7 +63,7 @@
 
 	var/atom/location = loc || owner || src
 
-	if(lip_style && (head_flags & HEAD_LIPS))
+	if(!facial_hair_hidden && lip_style && (head_flags & HEAD_LIPS))
 		var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
 		lip_overlay.color = lip_color
 
