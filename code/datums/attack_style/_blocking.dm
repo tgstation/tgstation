@@ -119,11 +119,18 @@
 		return NONE
 
 	// Depending on the item (or lack thereof) you are blocking with, the damage taken is converted to more (or maybe less!) stamina damage
-	var/mob/living/attacker = GET_ASSAILANT(hitby)
 	var/defense_multiplier = blocking_with ? blocking_with.get_blocking_ability(source, hitby, damage, attack_type, damage_type) : BARE_HAND_DEFENSE_MULTIPLIER
 	if(defense_multiplier < 0)
 		return NONE
+	if(damage_type == STAMINA)
+		// This is kinda a "anti-noobtrap" measure.
+		// If you are hit with an attack that does pure stamina damage (no side effects), like disabler fire,
+		// blocking it would serve you no gain and instead harm you by *increasing* the stamina damage you take.
+		// So instead of just disallowing users from blocking stamina attacks, we'll just cap it at 1x.
+		defense_multiplier = min(defense_multiplier, 1)
+
 	var/final_damage = defense_multiplier * damage
+	var/mob/living/attacker = GET_ASSAILANT(hitby)
 	if(attacker && HAS_TRAIT(attacker, TRAIT_HULK))
 		final_damage *= 1.2 // Hulk attacks are harder to stop
 	if(final_damage > 0)
