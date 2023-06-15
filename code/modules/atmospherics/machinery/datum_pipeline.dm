@@ -275,6 +275,7 @@
 	var/datum/gas_mixture/total_gas_mixture = new(volume_sum)
 	total_gas_mixture.temperature = total_heat_capacity ? (total_thermal_energy / total_heat_capacity) : 0
 	total_gas_mixture.gases = total_gases
+	total_gas_mixture.garbage_collect()
 
 	//Update individual gas_mixtures by volume ratio
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
