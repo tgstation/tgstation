@@ -189,9 +189,9 @@
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		return ..()
-	return FALSE
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return FALSE
+	return ..()
 
 /obj/item/melee/energy/sword/cyborg
 	name = "cyborg energy sword"
