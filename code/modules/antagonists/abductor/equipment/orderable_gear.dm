@@ -1,5 +1,7 @@
 GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 
+#define CATEGORY_BASIC_GEAR "Basic Gear"
+#define CATEGORY_ADVANCED_GEAR "Advanced Gear"
 /datum/abductor_gear
 	/// Name of the gear
 	var/name = "Generic Abductor Gear"
@@ -12,7 +14,7 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 	/// Build path of the gear itself
 	var/build_path = null
 	/// Category of the gear
-	var/category = "Basic Gear"
+	var/category = CATEGORY_BASIC_GEAR
 
 /datum/abductor_gear/agent_helmet
 	name = "Agent Helmet"
@@ -50,7 +52,7 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 	description = "A mysterious structure that allows for instant communication between users. Using it inhand will attune it to your mothership's channel. Pretty impressive until you need to eat something."
 	id = "superlingual_matrix"
 	build_path = /obj/item/organ/internal/tongue/abductor
-	category = "Advanced Gear"
+	category = CATEGORY_ADVANCED_GEAR
 
 /datum/abductor_gear/mental_interface
 	name = "Mental Interface Device"
@@ -59,7 +61,7 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 	id = "mental_interface"
 	cost = 2
 	build_path = /obj/item/abductor/mind_device
-	category = "Advanced Gear"
+	category = CATEGORY_ADVANCED_GEAR
 
 /datum/abductor_gear/reagent_synthesizer
 	name = "Reagent Synthesizer"
@@ -67,7 +69,7 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 	id = "reagent_synthesizer"
 	cost = 2
 	build_path = /obj/item/abductor_machine_beacon/chem_dispenser
-	category = "Advanced Gear"
+	category = CATEGORY_ADVANCED_GEAR
 
 /datum/abductor_gear/shrink_ray
 	name = "Shrink Ray Blaster"
@@ -76,7 +78,7 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 	id = "shrink_ray"
 	cost = 2
 	build_path = /obj/item/gun/energy/shrink_ray
-	category = "Advanced Gear"
+	category = CATEGORY_ADVANCED_GEAR
 
 /datum/abductor_gear/omnitool
 	name = "Alien Omnitool"
@@ -85,12 +87,14 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 	id = "omnitool"
 	cost = 2
 	build_path = /obj/item/abductor/alien_omnitool
-	category = "Advanced Gear"
+	category = CATEGORY_ADVANCED_GEAR
 
 /datum/abductor_gear/cow
 	name = "Spare Cow"
-	description = "Delivers a specimen from an earlier abduction operation. Great for messing with people."
+	description = "Delivers a leftover specimen from an earlier abduction operation. Great for messing with people."
 	id = "cow"
-	cost = 1
 	build_path = /mob/living/basic/cow
-	category = "Advanced Gear"
+	category = CATEGORY_ADVANCED_GEAR
+
+#undef CATEGORY_BASIC_GEAR
+#undef CATEGORY_ADVANCED_GEAR
