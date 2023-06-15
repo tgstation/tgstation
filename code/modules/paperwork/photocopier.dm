@@ -537,7 +537,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(istype(paper, /obj/item/paper/paperslip))
 		return
 	if(get_paper_count() >= MAX_PAPER_CAPACITY)
-		balloon_alert(user, "cannot hold more paper!"))
+		balloon_alert(user, "cannot hold more paper!")
 		return
 	if(!user.temporarilyRemoveItemFromInventory(paper))
 		return
@@ -547,13 +547,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /obj/machinery/photocopier/proc/insert_copy_object(obj/item/object, mob/user)
 	if(!copier_empty())
-		to_chat(user, span_warning("There is already something in [src]!"))
+		balloon_alert(user, "already something in scanner tray!")
 		return
 	if(!user.temporarilyRemoveItemFromInventory(object))
 		return
 	object_copy = object
 	object.forceMove(src)
-	to_chat(user, span_notice("You insert \the [object] into \the [src]'s scanner tray."))
+	balloon_alert(user, "copy object inserted")
 	flick("photocopier1", src)
 
 /obj/machinery/photocopier/atom_break(damage_flag)
