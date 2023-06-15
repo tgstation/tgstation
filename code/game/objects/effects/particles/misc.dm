@@ -19,7 +19,7 @@
 
 /particles/echo
 	icon = 'icons/effects/particles/echo.dmi'
-	icon_state = list("echo_1" = 1, "echo_2" = 1, "echo_3" = 2)
+	icon_state = list("echo1" = 1, "echo2" = 1, "echo3" = 2)
 	width = 480
 	height = 480
 	count = 1000
