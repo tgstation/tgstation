@@ -1,5 +1,0 @@
-author: "Capsandi"
-delete-after: True
-changes:
-  - bugfix: "space ambience tracks will no longer cut themselves off"
-  - sound: "added a new ambient track for space"

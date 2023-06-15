@@ -217,3 +217,15 @@
 	desc = "Don't be such a baby, it's just a heart attack. You've bounced back from worse!"
 	database_id = MEDAL_HEALTHY
 	icon = "picofhealth"
+
+/datum/award/achievement/misc/gods_wrath
+	name = "God's Wrath"
+	desc = "Did you think you could get away with defiling the word of God?"
+	database_id = MEDAL_GODS_WRATH
+	icon = "godswrath"
+
+/datum/award/achievement/misc/earthquake_victim
+	name = "A Nasty Fall"
+	desc = "...And the earth opened its mouth and swallowed them and their station- all the HOP's men and all their possessions."
+	database_id = MEDAL_EARTHQUAKE_VICTIM
+	icon = "earthquake"

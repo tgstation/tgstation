@@ -303,7 +303,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/robot_debris,
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "oL" = (
@@ -383,7 +383,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "rZ" = (
@@ -546,7 +546,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "AK" = (
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "AQ" = (
@@ -728,7 +728,7 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/shuttle/escape)
 "IK" = (
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
@@ -893,7 +893,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Uh" = (
-/obj/structure/window/reinforced/survival_pod/spawner,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},

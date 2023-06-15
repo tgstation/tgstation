@@ -27,6 +27,7 @@
 	tastes = list("cheese" = 1, "char" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	burns_on_grill = TRUE
 
 /obj/item/food/mothic_salad
 	name = "mothic salad"

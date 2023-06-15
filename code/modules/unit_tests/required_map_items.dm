@@ -19,6 +19,7 @@
 	expected_types += /mob/living/carbon/human/species/monkey/punpun
 	expected_types += /mob/living/basic/pet/dog/corgi/ian
 	expected_types += /mob/living/simple_animal/parrot/poly
+	expected_types += /obj/machinery/drone_dispenser
 
 /datum/unit_test/required_map_items/Run()
 	setup_expected_types()

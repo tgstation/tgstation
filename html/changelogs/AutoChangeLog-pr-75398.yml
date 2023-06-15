@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "made gorilla transformation when affected by excess amounts of genetic damage work"

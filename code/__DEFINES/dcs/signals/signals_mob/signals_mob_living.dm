@@ -46,6 +46,13 @@
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
 
+///from base of element/bane/activate(): (item/weapon, mob/user)
+#define COMSIG_OBJECT_PRE_BANING "obj_pre_baning"
+	#define COMPONENT_CANCEL_BANING (1<<0)
+
+///from base of element/bane/activate(): (item/weapon, mob/user)
+#define COMSIG_OBJECT_ON_BANING "obj_on_baning"
+
 /// from base of mob/living/updatehealth()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"
 ///from base of mob/living/death(): (gibbed)
@@ -107,7 +114,9 @@
 /// From mob/living/treat_message(): (list/message_args)
 #define COMSIG_LIVING_TREAT_MESSAGE "living_treat_message"
 	/// The index of message_args that corresponds to the actual message
-	#define TREAT_MESSAGE_MESSAGE 1
+	#define TREAT_MESSAGE_ARG 1
+	#define TREAT_TTS_MESSAGE_ARG 2
+	#define TREAT_TTS_FILTER_ARG 3
 
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
@@ -161,3 +170,6 @@
 
 /// From /obj/structure/geyser/attackby() : (obj/structure/geyser/geyser)
 #define COMSIG_LIVING_DISCOVERED_GEYSER "living_discovered_geyser"
+
+/// For when someone is injected with the EHMS virus from /datum/traitor_objective_category/infect
+#define COMSIG_AFTER_INJECT "after_inject"

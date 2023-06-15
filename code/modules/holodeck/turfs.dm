@@ -176,9 +176,6 @@
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
 
-/turf/open/floor/holofloor/snow/cold
-	initial_gas_mix = "nob=7500;TEMP=2.7"
-
 /turf/open/floor/holofloor/dark
 	icon_state = "darkfull"
 	desc = "The surrounding enviroment is so dark you can hardly see yourself."

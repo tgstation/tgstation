@@ -155,7 +155,7 @@
 
 /turf/open/floor/iron/dark/snowdin
 	initial_gas_mix = FROZEN_ATMOS
-	planetary_atmos = 1
+	planetary_atmos = TRUE
 	temperature = 180
 
 /////////// papers

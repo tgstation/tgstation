@@ -42,7 +42,7 @@
 			if(roast_ruiner)
 				roast_ruiner.balloon_alert_to_viewers("oh egads!")
 				var/turf/ruined_roast = get_turf(roast_ruiner)
-				ruined_roast.atmos_spawn_air("plasma=100;TEMP=1000")
+				ruined_roast.atmos_spawn_air("[GAS_PLASMA]=100;[TURF_TEMPERATURE(1000)]")
 				message_admins("Aurora Caelus event caused an oven to ignite at [ADMIN_VERBOSEJMP(ruined_roast)].")
 				log_game("Aurora Caelus event caused an oven to ignite at [loc_name(ruined_roast)].")
 				announce_to_ghosts(roast_ruiner)

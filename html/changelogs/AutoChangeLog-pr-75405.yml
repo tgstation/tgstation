@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Fixed a minor runtime when renaming mechs that don't have a camera attached to them."

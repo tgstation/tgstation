@@ -6,7 +6,7 @@
 	icon_state = "aliens"
 
 /mob/living/carbon/alien/adult/sentinel/Initialize(mapload)
-	var/datum/action/cooldown/alien/sneak/sneaky_beaky = new(src)
+	var/datum/action/cooldown/sneak/alien/sneaky_beaky = new(src)
 	sneaky_beaky.Grant(src)
 	return ..()
 

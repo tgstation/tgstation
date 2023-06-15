@@ -103,7 +103,7 @@
 		M.cut_overlays()
 		M.regenerate_icons()
 
-/obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	DeactivateStealth()
 
 /obj/item/clothing/suit/armor/abductor/vest/IsReflect()
@@ -471,7 +471,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	knockdown_time = 14 SECONDS
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	affect_cyborg = TRUE
-	chunky_finger_usable = TRUE
 
 	var/mode = BATON_STUN
 
@@ -842,7 +841,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	framestackamount = 1
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "bed"
-	can_buckle = 1
+	can_buckle = TRUE
+	buckle_lying = 90
 	/// Amount to inject per second
 	var/inject_am = 0.5
 

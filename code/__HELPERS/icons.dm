@@ -1016,7 +1016,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 	var/image/final_image = image(icon, icon_state=icon_state, loc = A)
 
-	if(ispath(SA, /mob/living/simple_animal/butterfly))
+	if(ispath(SA, /mob/living/basic/butterfly))
 		final_image.color = rgb(rand(0,255), rand(0,255), rand(0,255))
 
 	// For debugging

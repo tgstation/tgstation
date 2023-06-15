@@ -4,7 +4,6 @@
 /turf/open/misc
 	name = "coder/mapper fucked up"
 	desc = "report on github please"
-	icon_state = "BROKEN"
 
 	flags_1 = NO_SCREENTIPS_1
 	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID | NO_RUST

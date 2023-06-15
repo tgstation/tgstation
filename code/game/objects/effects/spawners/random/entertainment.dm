@@ -270,7 +270,7 @@
 		// rare plushies
 		/obj/item/toy/plush/carpplushie = 3,
 		/obj/item/toy/plush/lizard_plushie/green = 3,
-		/obj/item/toy/plush/space_lizard_plushie = 3,
+		/obj/item/toy/plush/lizard_plushie/space/green = 3,
 		/obj/item/toy/plush/awakenedplushie = 3,
 		/obj/item/toy/plush/goatplushie = 3,
 		/obj/item/toy/plush/rouny = 3,
