@@ -234,6 +234,7 @@
 	shard.countdown = null
 	START_PROCESSING(SSobj, src)
 	visible_message(span_warning("[src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all."))
+	transform = transform.Turn(-45)
 
 /obj/item/melee/supermatter_sword/process()
 	if(balanced || throwing || ismob(src.loc) || isnull(src.loc))
@@ -266,6 +267,7 @@
 /obj/item/melee/supermatter_sword/pickup(user)
 	..()
 	balanced = 0
+	transform = transform.Turn(45)
 
 /obj/item/melee/supermatter_sword/ex_act(severity, target)
 	visible_message(
