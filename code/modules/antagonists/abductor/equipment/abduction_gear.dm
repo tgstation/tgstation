@@ -5,6 +5,9 @@
 #define MIND_DEVICE_MESSAGE 1
 #define MIND_DEVICE_CONTROL 2
 
+#define TOOLSET_MEDICAL 1
+#define TOOLSET_HACKING 2
+
 //AGENT VEST
 /obj/item/clothing/suit/armor/abductor/vest
 	name = "agent vest"
@@ -905,6 +908,102 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	bomb = 10
 	bio = 10
 
+/obj/item/abductor/alien_omnitool
+	name = "quizzandric interfacer"
+	desc = "Effectively just a Space Swiss Army Knife. Contains a multitude of integrated tools. Alt-click it to switch which toolset is active."
+	icon_state = "omnitool"
+	inhand_icon_state = "silencer"
+	toolspeed = 0.4
+	tool_behaviour = null
+	///A list of all the tools we offer. Stored as "Tool" for the key, and the icon/icon_state as the value.
+	var/list/tool_list = list()
+	///Which toolset do we have active currently?
+	var/active_toolset = TOOLSET_MEDICAL
+
+/obj/item/abductor/alien_omnitool/Initialize(mapload)
+	. = ..()
+	set_toolset() //This populates the tool list, and sets it to the hacking configuration.
+
+/obj/item/abductor/alien_omnitool/examine()
+	. = ..()
+	. += " The mode is: [tool_behaviour]"
+
+/obj/item/abductor/alien_omnitool/attack_self(mob/user)
+	if(!user)
+		return
+
+	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+	switch(tool_result)
+		if("Retractor")
+			tool_behaviour = TOOL_RETRACTOR
+		if("Hemostat")
+			tool_behaviour = TOOL_HEMOSTAT
+		if("Cautery")
+			tool_behaviour = TOOL_CAUTERY
+		if("Drill")
+			tool_behaviour = TOOL_DRILL
+		if("Scalpel")
+			tool_behaviour = TOOL_SCALPEL
+		if("Saw")
+			tool_behaviour = TOOL_SAW
+		if("Bonesetter")
+			tool_behaviour = TOOL_BONESET
+		if("Blood Filter")
+			tool_behaviour = TOOL_BLOODFILTER
+		if("Crowbar")
+			tool_behaviour = TOOL_CROWBAR
+		if("Multitool")
+			tool_behaviour = TOOL_MULTITOOL
+		if("Screwdriver")
+			tool_behaviour = TOOL_SCREWDRIVER
+		if("Wirecutters")
+			tool_behaviour = TOOL_WIRECUTTER
+		if("Wrench")
+			tool_behaviour = TOOL_WRENCH
+		if("Welding Tool")
+			tool_behaviour = TOOL_WELDER
+
+/obj/item/abductor/alien_omnitool/attack_self_secondary(mob/user, modifiers)
+	if(!user)
+		return
+
+	set_toolset(user)
+	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+
+/obj/item/abductor/alien_omnitool/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
+/obj/item/abductor/alien_omnitool/proc/set_toolset(mob/user)
+	if(active_toolset == TOOLSET_MEDICAL)
+		tool_list =	list("Crowbar" = image(icon = 'icons/obj/tools.dmi', icon_state = "crowbar"),
+			"Multitool" = image(icon = 'icons/obj/device.dmi', icon_state = "multitool"),
+			"Screwdriver" = image(icon = 'icons/obj/tools.dmi', icon_state = "screwdriver_map"),
+			"Wirecutters" = image(icon = 'icons/obj/tools.dmi', icon_state = "cutters_map"),
+			"Wrench" = image(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
+			"Welding Tool" = image(icon = 'icons/obj/tools.dmi', icon_state = "miniwelder"),
+		)
+		active_toolset = TOOLSET_HACKING
+		balloon_alert(user, "hacking toolset selected")
+	else
+		tool_list = list(
+			"Retractor" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "retractor"),
+			"Hemostat" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "hemostat"),
+			"Cautery" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "cautery"),
+			"Drill" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "drill"),
+			"Scalpel" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "scalpel"),
+			"Saw" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "saw"),
+			"Bonesetter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bonesetter"),
+			"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter")
+		)
+		active_toolset = TOOLSET_MEDICAL
+		balloon_alert(user, "medical toolset selected")
+
 #undef BATON_CUFF
 #undef BATON_MODES
 #undef BATON_PROBE
@@ -916,3 +1015,5 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 #undef MIND_DEVICE_MESSAGE
 #undef VEST_COMBAT
 #undef VEST_STEALTH
+#undef TOOLSET_MEDICAL
+#undef TOOLSET_HACKING
