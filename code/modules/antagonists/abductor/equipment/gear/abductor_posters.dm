@@ -73,4 +73,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/abductor/ayy_piping, 32)
 	desc = "Abductors are the best at doing everything. That includes looking good!"
 	icon_state = "ayy_fancy"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/abductor/ayy_piping, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/abductor/ayy_fancy, 32)
