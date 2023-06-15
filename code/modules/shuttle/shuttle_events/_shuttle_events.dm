@@ -134,5 +134,5 @@
 
 ///Do any post-spawn edits you need to do
 /datum/shuttle_event/simple_spawner/proc/post_spawn(atom/movable/spawnee)
-	ADD_TRAIT(spawnee, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT, src) //Lets us spawn and move further away from the shuttle without being teleported into space
-	ADD_TRAIT(spawnee, TRAIT_DEL_ON_SPACE_DUMP, src) //if we hit the cordon, we get deleted. If the shuttle can make you, it can qdel you
+	ADD_TRAIT(spawnee, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT, REF(src)) //Lets us spawn and move further away from the shuttle without being teleported into space
+	ADD_TRAIT(spawnee, TRAIT_DEL_ON_SPACE_DUMP, REF(src)) //if we hit the cordon, we get deleted. If the shuttle can make you, it can qdel you
