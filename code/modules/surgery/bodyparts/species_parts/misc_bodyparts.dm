@@ -2,6 +2,7 @@
 /obj/item/bodypart/head/snail
 	limb_id = SPECIES_SNAIL
 	is_dimorphic = FALSE
+	head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/snail
 	limb_id = SPECIES_SNAIL
@@ -101,6 +102,7 @@
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_SLIMEPERSON
 	is_dimorphic = FALSE
+	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/slime
 	biological_state = BIO_INORGANIC
@@ -128,6 +130,7 @@
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_LUMINESCENT
 	is_dimorphic = TRUE
+	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/luminescent
 	biological_state = BIO_INORGANIC
@@ -155,6 +158,7 @@
 	limb_id = SPECIES_ZOMBIE
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/zombie
 	limb_id = SPECIES_ZOMBIE
