@@ -1,3 +1,18 @@
+
+// These icon_states may be overridden, but are for mapper's convinence
+/obj/item/poster/random_contraband
+	name = "random abductor poster"
+	poster_type = /obj/structure/sign/poster/abductor/random
+	icon_state = "abductor_poster"
+
+/obj/structure/sign/poster/abductor/random
+	name = "random abductor poster"
+	icon_state = "random_abductor"
+	never_random = TRUE
+	random_basetype = /obj/structure/sign/poster/abductor
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
+
 /obj/structure/sign/poster/abductor
 	icon = 'icons/obj/abductor_posters.dmi'
 
@@ -31,7 +46,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/abductor/ayy_recruitment,
 
 /obj/structure/sign/poster/abductor/ayy_cops
 	name = "Abductor Cops"
-	desc = "Abductor Cops, keeping the peace through peace!" //idk what this means
+	desc = "A poster advertising the polarizing 'Abductor Cops' series. Some critics claimed that it stunned them, while others said it put them to sleep."
 	icon_state = "ayy_cops"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/abductor/ayy_cops, 32)
