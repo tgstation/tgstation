@@ -910,10 +910,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/abductor/alien_omnitool
 	name = "quizzandric interfacer"
-	desc = "Effectively just a Space Swiss Army Knife. Contains a multitude of integrated tools. Alt-click it to switch which toolset is active."
+	desc = "Effectively just a Space Swiss Army Knife. Contains a multitude of integrated tools. Right-click it to switch which toolset is active."
 	icon_state = "omnitool"
 	inhand_icon_state = "silencer"
-	toolspeed = 0.4
+	toolspeed = 0.25
 	tool_behaviour = null
 	///A list of all the tools we offer. Stored as "Tool" for the key, and the icon/icon_state as the value.
 	var/list/tool_list = list()
@@ -965,7 +965,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if("Welding Tool")
 			tool_behaviour = TOOL_WELDER
 
-/obj/item/abductor/alien_omnitool/attack_self_secondary(mob/user, modifiers)
+/obj/item/abductor/alien_omnitool/attack_self_secondary(mob/user, modifiers) //ADD SFX FOR USING THE TOOL
 	if(!user)
 		return
 
@@ -979,27 +979,27 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		return FALSE
 	return TRUE
 
-/obj/item/abductor/alien_omnitool/proc/set_toolset(mob/user)
+/obj/item/abductor/alien_omnitool/proc/set_toolset(mob/user) //MAKE THESE ALIEN TOOLS DUHHHH
 	if(active_toolset == TOOLSET_MEDICAL)
-		tool_list =	list("Crowbar" = image(icon = 'icons/obj/tools.dmi', icon_state = "crowbar"),
-			"Multitool" = image(icon = 'icons/obj/device.dmi', icon_state = "multitool"),
-			"Screwdriver" = image(icon = 'icons/obj/tools.dmi', icon_state = "screwdriver_map"),
-			"Wirecutters" = image(icon = 'icons/obj/tools.dmi', icon_state = "cutters_map"),
-			"Wrench" = image(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
-			"Welding Tool" = image(icon = 'icons/obj/tools.dmi', icon_state = "miniwelder"),
+		tool_list =	list("Crowbar" = image(icon = 'icons/obj/abductor.dmi', icon_state = "crowbar"),
+			"Multitool" = image(icon = 'icons/obj/abductor.dmi', icon_state = "multitool"),
+			"Screwdriver" = image(icon = 'icons/obj/abductor.dmi', icon_state = "screwdriver_a"),
+			"Wirecutters" = image(icon = 'icons/obj/abductor.dmi', icon_state = "cutters"),
+			"Wrench" = image(icon = 'icons/obj/abductor.dmi', icon_state = "wrench"),
+			"Welding Tool" = image(icon = 'icons/obj/abductor.dmi', icon_state = "welder"),
 		)
 		active_toolset = TOOLSET_HACKING
 		balloon_alert(user, "hacking toolset selected")
 	else
 		tool_list = list(
-			"Retractor" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "retractor"),
-			"Hemostat" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "hemostat"),
-			"Cautery" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "cautery"),
-			"Drill" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "drill"),
-			"Scalpel" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "scalpel"),
-			"Saw" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "saw"),
-			"Bonesetter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bonesetter"),
-			"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter")
+			"Retractor" = image(icon = 'icons/obj/abductor.dmi', icon_state = "retractor"),
+			"Hemostat" = image(icon = 'icons/obj/abductor.dmi', icon_state = "hemostat"),
+			"Cautery" = image(icon = 'icons/obj/abductor.dmi', icon_state = "cautery"),
+			"Drill" = image(icon = 'icons/obj/abductor.dmi', icon_state = "drill"),
+			"Scalpel" = image(icon = 'icons/obj/abductor.dmi', icon_state = "scalpel"),
+			"Saw" = image(icon = 'icons/obj/abductor.dmi', icon_state = "saw"),
+			"Bonesetter" = image(icon = 'medical/surgery_tools.dmi', icon_state = "bonesetter"),
+			"Blood Filter" = image(icon = 'medical/surgery_tools.dmi', icon_state = "bloodfilter")
 		)
 		active_toolset = TOOLSET_MEDICAL
 		balloon_alert(user, "medical toolset selected")

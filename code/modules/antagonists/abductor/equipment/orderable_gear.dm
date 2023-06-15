@@ -77,3 +77,20 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 	cost = 2
 	build_path = /obj/item/gun/energy/shrink_ray
 	category = "Advanced Gear"
+
+/datum/abductor_gear/omnitool
+	name = "Alien Omnitool"
+	description = "A handheld device with an absurd number of integrated tools. Can be used as a convenient tool replacement for either role. \
+				Right-click it to switch between medical and hacking toolsets."
+	id = "omnitool"
+	cost = 2
+	build_path = /obj/item/abductor/alien_omnitool
+	category = "Advanced Gear"
+
+/datum/abductor_gear/cow
+	name = "Spare Cow"
+	description = "Delivers a specimen from an earlier abduction operation. Great for messing with people."
+	id = "cow"
+	cost = 1
+	build_path = /mob/living/basic/cow
+	category = "Advanced Gear"
