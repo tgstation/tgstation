@@ -105,9 +105,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /obj/machinery/photocopier/examine(mob/user)
 	. = ..()
-	. += span_notice("You can put any type of empty paper inside to print a blank or copy something onto it.")
 	if(object_copy)
-		. += span_notice("There is something inside the paper scanner.")
+		. += span_notice("There is something inside the scanner tray.")
+	. += span_boldnotice("You can put any type of blank paper inside to print a form or to copy something onto it.")
 
 /obj/machinery/photocopier/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -551,7 +551,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /obj/machinery/photocopier/proc/insert_copy_object(obj/item/object, mob/user)
 	if(!copier_empty())
-		balloon_alert(user, "already something in scanner tray!")
+		balloon_alert(user, "scanner tray occupied!")
 		return
 	if(!user.temporarilyRemoveItemFromInventory(object))
 		return
