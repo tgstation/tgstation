@@ -81,12 +81,6 @@
 ///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
 #define BLOOD_CLANS 12
 
-//color source defines for sprite accessories
-#define MUTANT_COLOR "mutant_color"
-#define HAIR_COLOR "hair_color"
-#define FACIAL_HAIR_COLOR "facial_hair_color"
-#define EYE_COLOR "eye_color"
-
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
 #define ORGAN_SLOT_APPENDIX "appendix"
