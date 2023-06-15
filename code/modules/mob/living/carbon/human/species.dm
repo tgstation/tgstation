@@ -770,7 +770,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(!(HAS_TRAIT(source, TRAIT_HUSK)))
 				if(!forced_colour)
 					switch(accessory.color_src)
-						if(MUTCOLORS)
+						if(MUTANT_COLOR)
 							if(fixed_mut_color)
 								accessory_overlay.color = fixed_mut_color
 							else
