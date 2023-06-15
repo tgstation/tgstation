@@ -1,4 +1,0 @@
-author: "FlufflesTheDog"
-delete-after: True
-changes:
-  - bugfix: "VERY small amounts of a gas (<0.0001 mol) in pipenets will once again be fully removed"
