@@ -8,12 +8,12 @@
 /obj/item/mod/module/health_analyzer
 	name = "MOD health analyzer module"
 	desc = "A module installed into the glove of the suit. This is a high-tech biological scanning suite, \
-		allowing the user indepth information on the vitals and injuries of others even at a distance, \
+		allowing the user indepth information on the vitals and injuries of others even at a distance, including even chemical scans, \
 		all with the flick of the wrist. Data is displayed in a convenient package on HUD in the helmet, \
 		but it's up to you to do something with it."
 	icon_state = "health"
 	module_type = MODULE_ACTIVE
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	cooldown_time = 0.5 SECONDS
