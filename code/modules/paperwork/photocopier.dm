@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	if(isAI(user))
 		data["isAI"] = TRUE
-		data["can_AI_print"] = toner_cartridge ? toner_cartridge.charges >= PHOTO_TONER_USE : FALSE
+		data["can_AI_print"] = (toner_cartridge ? toner_cartridge.charges >= PHOTO_TONER_USE : FALSE) && get_paper_count() >= PHOTO_PAPER_USE
 	else
 		data["isAI"] = FALSE
 
