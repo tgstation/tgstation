@@ -66,11 +66,19 @@
  * Handles all the calculations needed for the gases, work done, temperature increase/decrease
  */
 /obj/machinery/power/turbine/proc/transfer_gases(datum/gas_mixture/input_mix, datum/gas_mixture/output_mix, work_amount_to_remove, intake_size = 1)
-	var/work_done = QUANTIZE(input_mix.total_moles()) * R_IDEAL_GAS_EQUATION * input_mix.temperature * log((input_mix.volume * max(input_mix.return_pressure(), 0.01)) / (output_mix.volume * max(output_mix.return_pressure(), 0.01))) * TURBINE_WORK_CONVERSION_MULTIPLIER
+	//pump gases. if no gases were transfered then no work was done
+	var/output_volume = output_mix.volume
+	var/output_pressure = max(output_mix.return_pressure(), 0.01)
+	var/datum/gas_mixture/transfered_gases = input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
+	if(!transfered_gases)
+		return 0
+
+	//compute work done
+	var/work_done = QUANTIZE(transfered_gases.total_moles()) * R_IDEAL_GAS_EQUATION * transfered_gases.temperature * log((transfered_gases.volume * max(transfered_gases.return_pressure(), 0.01)) / (output_volume * output_pressure)) * TURBINE_WORK_CONVERSION_MULTIPLIER
 	if(work_amount_to_remove)
 		work_done = work_done - work_amount_to_remove
 
-	input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
+	//compute temperature & work from temperature if that is a lower value
 	var/output_mix_heat_capacity = output_mix.heat_capacity()
 	if(!output_mix_heat_capacity)
 		return 0
@@ -248,13 +256,16 @@
  * Returns temperature of the gas mix absorbed only if some work was done
  */
 /obj/machinery/power/turbine/inlet_compressor/proc/compress_gases()
+	compressor_work = 0
+	compressor_pressure = 0.01
 	var/datum/gas_mixture/input_turf_mixture = input_turf.return_air()
 	if(!input_turf_mixture)
 		return 0
 
 	//the compressor compresses down the gases from 2500 L to 1000 L
 	//the temperature and pressure rises up, you can regulate this to increase/decrease the amount of gas moved in.
-	compressor_work = transfer_gases(input_turf_mixture, machine_gasmix, intake_size = intake_regulator)
+	compressor_work = transfer_gases(input_turf_mixture, machine_gasmix, work_amount_to_remove = 0, intake_size = intake_regulator)
+	input_turf.update_visuals()
 	input_turf.air_update_turf(TRUE)
 	compressor_pressure = max(machine_gasmix.return_pressure(), 0.01)
 
@@ -299,8 +310,9 @@
 
 /// push gases from its gas mix to output turf
 /obj/machinery/power/turbine/turbine_outlet/proc/expel_gases()
-	machine_gasmix.pump_gas_to(output_turf.air, machine_gasmix.return_pressure())
-	output_turf.air_update_turf(TRUE)
+	if(machine_gasmix.pump_gas_to(output_turf.air, machine_gasmix.return_pressure()))
+		output_turf.update_visuals()
+		output_turf.air_update_turf(TRUE)
 
 /obj/machinery/power/turbine/turbine_outlet/constructed
 	mapped = FALSE
@@ -480,22 +492,6 @@
 	return ..()
 
 /**
- * Called on each atmos tick, calculates the damage done and healed based on temperature
- */
-/obj/machinery/power/turbine/core_rotor/proc/calculate_damage_done(temperature)
-	damage_archived = damage
-	var/temperature_difference = temperature - max_allowed_temperature
-	var/damage_done = round(log(90, max(temperature_difference, 1)), 0.5)
-
-	damage = max(damage + damage_done * 0.5, 0)
-	damage = min(damage_archived + TURBINE_MAX_TAKEN_DAMAGE, damage)
-	if(temperature_difference < 0)
-		damage = max(damage - TURBINE_DAMAGE_HEALING, 0)
-
-	if((damage - damage_archived >= 2 || damage > TURBINE_DAMAGE_ALARM_START) && COOLDOWN_FINISHED(src, turbine_damage_alert))
-		damage_alert(damage_done)
-
-/**
  * Toggle power on and off, not safe
  */
 /obj/machinery/power/turbine/core_rotor/proc/toggle_power()
@@ -553,31 +549,6 @@
 	return !panel_open && !compressor.panel_open && !turbine.panel_open
 
 /**
- * Called once every 15 to 5 seconds (depend on damage done), handles alarm calls
- */
-/obj/machinery/power/turbine/core_rotor/proc/damage_alert(damage_done)
-	COOLDOWN_START(src, turbine_damage_alert, max(round(TURBINE_DAMAGE_ALARM_START - damage_done), 5) SECONDS)
-
-	var/integrity = get_turbine_integrity()
-	if(integrity <= 0)
-		deactivate_parts()
-		if(rpm < 35000)
-			explosion(src, 0, 1, 4)
-			return
-		if(rpm < 87500)
-			explosion(src, 0, 2, 6)
-			return
-		if(rpm < 220000)
-			explosion(src, 1, 3, 7)
-			return
-		if(rpm < 550000)
-			explosion(src, 2, 5, 7)
-		return
-
-	radio.talk_into(src, "Warning, turbine at [get_area_name(src)] taking damage, current integrity at [integrity]%!", engineering_channel)
-	playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
-
-/**
  * Getter for turbine integrity, return the amount in %
  */
 /obj/machinery/power/turbine/core_rotor/proc/get_turbine_integrity()
@@ -590,14 +561,39 @@
 		power_off()
 		return PROCESS_KILL
 
-	// Transfer gases from turf to compressor
-	var/temperature_acheived = compressor.compress_gases()
-	if(!temperature_acheived)
-		return
+	//Transfer gases from turf to compressor
+	var/temperature = compressor.compress_gases()
+	//Compute damage taken based on temperature
+	damage_archived = damage
+	var/temperature_difference = temperature - max_allowed_temperature
+	var/damage_done = round(log(90, max(temperature_difference, 1)), 0.5)
+	damage = max(damage + damage_done * 0.5, 0)
+	damage = min(damage_archived + TURBINE_MAX_TAKEN_DAMAGE, damage)
+	if(temperature_difference < 0)
+		damage = max(damage - TURBINE_DAMAGE_HEALING, 0)
+	//Apply damage if it passes threshold limits
+	if((damage - damage_archived >= 2 || damage > TURBINE_DAMAGE_ALARM_START) && COOLDOWN_FINISHED(src, turbine_damage_alert))
+		COOLDOWN_START(src, turbine_damage_alert, max(round(TURBINE_DAMAGE_ALARM_START - damage_done), 5) SECONDS)
+		//Boom!
+		var/integrity = get_turbine_integrity()
+		if(integrity <= 0)
+			deactivate_parts()
+			if(rpm < 35000)
+				explosion(src, 0, 1, 4)
+				return PROCESS_KILL
+			if(rpm < 87500)
+				explosion(src, 0, 2, 6)
+				return PROCESS_KILL
+			if(rpm < 220000)
+				explosion(src, 1, 3, 7)
+				return PROCESS_KILL
+			if(rpm < 550000)
+				explosion(src, 2, 5, 7)
+			return PROCESS_KILL
+		radio.talk_into(src, "Warning, turbine at [get_area_name(src)] taking damage, current integrity at [integrity]%!", engineering_channel)
+		playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 
-	/// Transfer gases from compressor to rotor
-	calculate_damage_done(temperature_acheived)
-	//the rotor moves the gases that expands from 1000 L to 3000 L, they cool down and both temperature and pressure lowers
+	//The Rotor moves the gases that expands from 1000 L to 3000 L, they cool down and both temperature and pressure lowers
 	var/rotor_work = transfer_gases(compressor.machine_gasmix, machine_gasmix, compressor.compressor_work)
 	//the turbine expands the gases more from 3000 L to 6000 L, cooling them down further.
 	var/turbine_work = transfer_gases(machine_gasmix, turbine.machine_gasmix, abs(rotor_work))
@@ -605,7 +601,7 @@
 	var/turbine_pressure = max(turbine.machine_gasmix.return_pressure(), 0.01)
 
 	//Calculate final power generated
-	var/work_done = QUANTIZE(turbine.machine_gasmix.total_moles()) * R_IDEAL_GAS_EQUATION * turbine.machine_gasmix.temperature * log(compressor.compressor_pressure / turbine_pressure)
+	var/work_done =  QUANTIZE(turbine.machine_gasmix.total_moles()) * R_IDEAL_GAS_EQUATION * turbine.machine_gasmix.temperature * log(compressor.compressor_pressure / turbine_pressure)
 	//removing the work needed to move the compressor but adding back the turbine work that is the one generating most of the power.
 	work_done = max(work_done - compressor.compressor_work * TURBINE_COMPRESSOR_STATOR_INTERACTION_MULTIPLIER - turbine_work, 0)
 	//calculate final acheived rpm
