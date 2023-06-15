@@ -260,24 +260,24 @@
 		var/facing_dir_index = dirs.Find(dir)
 		var/cw_index = facing_dir_index
 		var/ccw_index = facing_dir_index
-		var/obj/structure/table/table = null
-		for(var/i in 0 to ROUND_UP(dir_count/2))
-			// Try find next table on your right
-			table = locate(/obj/structure/table) in get_step(src, dirs[cw_index])
-			if(!isnull(table))
-				break
+		var/list/turfs_ordered = list(get_step(src, dir))
+
+		// Build ordered list of turfs starting from the front facing
+		for(var/i in 1 to ROUND_UP(dir_count/2) - 1)
 			cw_index++
 			if(cw_index > dir_count)
 				cw_index = 1
-			// Try find next table on your left
-			table = locate(/obj/structure/table) in get_step(src, dirs[ccw_index])
-			if(!isnull(table))
-				break
+			turfs_ordered += get_step(src, dirs[cw_index]) // Add next tile on your right
 			ccw_index--
-			if(cw_index <= 0)
-				cw_index = dir_count
-		if(!isnull(table))
-			location = table.drop_location()
+			if(ccw_index <= 0)
+				ccw_index = dir_count
+			turfs_ordered += get_step(src, dirs[ccw_index])	// Add next tile on your left
+
+		// Check tables on these turfs
+		for(var/turf in turfs_ordered)
+			if(locate(/obj/structure/table) in turf)
+				location = turf
+				break
 
 	I.forceMove(location)
 	I.layer = initial(I.layer)
