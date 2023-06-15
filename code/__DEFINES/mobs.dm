@@ -123,7 +123,7 @@
 #define SPECIES_TALLBOY "tallboy"
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
-#define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
+#define SPECIES_ZOMBIE_INFECTIOUS "infectious zombie"
 #define SPECIES_ZOMBIE_KROKODIL "krokodil zombie"
 
 // Like species IDs, but not specifically attached a species.
