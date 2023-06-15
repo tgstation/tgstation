@@ -17417,6 +17417,9 @@
 	dir = 1
 	},
 /obj/machinery/photocopier,
+/obj/item/food/spaghetti/security{
+	pixel_y = 11
+	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
 "gFD" = (

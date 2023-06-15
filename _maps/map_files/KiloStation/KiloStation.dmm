@@ -40721,6 +40721,9 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/item/food/spaghetti/security{
+	pixel_y = 15
+	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hos)
 "nvE" = (
