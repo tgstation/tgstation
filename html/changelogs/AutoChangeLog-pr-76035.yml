@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - refactor: "don't send gas name to gas filter UI as the name is already decoded there from it's ID"

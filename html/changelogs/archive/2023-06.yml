@@ -450,3 +450,51 @@
   - bugfix: Fixes a stuck lightbulb in medbay treatment center. Also fixes an accidental
       placement of vents/scrubbers which lead to escaping xenos.
   - spellcheck: corrects a typo in most ethereal drinks.
+2023-06-15:
+  Cobby:
+  - bugfix: Droppers/Beakers will now go to 1u/15u on the FIRST leftclick.
+  Couls:
+  - admin: fix combat logs for tabling and disposal shoving
+  DaydreamIQ:
+  - qol: The CC pod bay now has proper morgue facilities that don't clip through a
+      glass window
+  FernandoJ8:
+  - spellcheck: adjusted font size from 30px to 15px
+  FlufflesTheDog:
+  - bugfix: VERY small amounts of a gas (<0.0001 mol) in pipenets will once again
+      be fully removed
+  Hatterhat:
+  - bugfix: MOD plasma cores' improved recharging from sheets (2000 charge up from
+      1500) is back again.
+  LT3:
+  - qol: ID card linking now preloads your bank account number
+  - bugfix: Tram controls no longer randomly go blank on Birdshot
+  MTandi:
+  - qol: Chemical burner can be crafted from any open container, not just beakers
+  Melbert:
+  - bugfix: Maybe fixes minor bugs in disease cure, revolution, hooded suit code
+  - code_imp: Adds some runtime safety to Cinematic code
+  Momo8289:
+  - rscadd: Updated the Patch of Eden lavaland ruin with a new item
+  - rscadd: Added the Plasma flower item, which can be used as an upgraded plasma
+      MOD core
+  SyncIt21:
+  - refactor: don't send gas name to gas filter UI as the name is already decoded
+      there from it's ID
+  - bugfix: microwave's(after it has finished cooking) & other machine's that spit
+      out contents don't spit out assemblies/signallers attached to it's wires.
+  - bugfix: signallers can be picked up if you attached them to a machine's wire &
+      later deconstructed that machine without detaching it first.
+  ZephyrTFA:
+  - bugfix: Trees and Coconuts are no longer immune to singularities.
+  bobbahbrown:
+  - server: Fix log categories being erroneously excluded from log files.
+  necromanceranne:
+  - bugfix: Bows properly update their ammo when stored, dropped and stowed. You cannot
+      load a bow without holding it in your inactive hand. You have to hold it to
+      keep the bow loaded.
+  - qol: You can remove an arrow from the bow with alt+click, much like other ballistic
+      weapons.
+  - bugfix: The divine bow can be properly stored in the chaplain armor's suit storage,
+      much like all other bulky null rods.
+  - sound: Bows have sounds for drawing, firing and loading.

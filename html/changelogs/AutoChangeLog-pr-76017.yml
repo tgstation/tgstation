@@ -1,4 +1,0 @@
-author: "Couls"
-delete-after: True
-changes:
-  - admin: "fix combat logs for tabling and disposal shoving"
