@@ -33,7 +33,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	color = CABLE_HEX_COLOR_RED
 	cable_color = CABLE_COLOR_RED
 	cable_layer = CABLE_LAYER_1
-	machinery_layer = null
 	layer = WIRE_LAYER - 0.01
 	icon_state = "l1-1-2-4-8-node"
 
@@ -41,7 +40,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	color = CABLE_HEX_COLOR_BLUE
 	cable_color = CABLE_COLOR_BLUE
 	cable_layer = CABLE_LAYER_3
-	machinery_layer = null
 	layer = WIRE_LAYER + 0.01
 	icon_state = "l4-1-2-4-8-node"
 
