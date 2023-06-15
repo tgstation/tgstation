@@ -1,5 +1,6 @@
 /datum/species/oozeling
 	name = "\improper Oozeling"
+	plural_form = "Slimepeople"
 	id = SPECIES_OOZELING
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
@@ -13,6 +14,7 @@
 		TRAIT_NOFIRE,
 		//TRAIT_ALWAYS_CLEAN,
 		TRAIT_EASYDISMEMBER,
+		TRAIT_NOBLOOD,
 		)
 
 	hair_color = "mutcolor"
@@ -38,8 +40,8 @@
 	)
 
 /datum/species/oozeling/get_species_description()
-	return "Hailing from a planet that was lost long ago, the moths travel \
-		the galaxy as a nomadic people aboard a colossal fleet of ships, seeking a new homeland."
+	return "A species of sentient semi-solids. \
+		They require nutriment in order to maintain their body mass."
 
 /datum/species/oozeling/random_name(gender, unique, lastname, attempts)
 	. = "[pick(GLOB.oozeling_first_names)]"
