@@ -8,6 +8,7 @@
 	// This needs to be called very very early in human init (before organs / species are created at the minimum)
 	setup_organless_effects()
 
+	physiology = new()
 	create_dna()
 	dna.species.create_fresh_body(src)
 	setup_human_dna()
@@ -16,8 +17,6 @@
 	set_species(dna.species.type)
 
 	prepare_huds() //Prevents a nasty runtime on human init
-
-	physiology = new()
 
 	. = ..()
 
