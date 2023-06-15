@@ -32,6 +32,7 @@
 	limb_id = SPECIES_ABDUCTOR
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/abductor
 	biological_state = BIO_INORGANIC
@@ -67,6 +68,7 @@
 	limb_id = SPECIES_JELLYPERSON
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
+	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/jelly
 	biological_state = BIO_INORGANIC
@@ -179,6 +181,7 @@
 /obj/item/bodypart/head/pod
 	limb_id = SPECIES_PODPERSON
 	is_dimorphic = TRUE
+	head_flags = HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_EYEHOLES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/pod
 	limb_id = SPECIES_PODPERSON
@@ -237,6 +240,7 @@
 	limb_id = SPECIES_SHADOW
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/shadow
 	biological_state = BIO_INORGANIC
@@ -277,6 +281,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	head_flags = NONE
 
 /obj/item/bodypart/chest/skeleton
 	biological_state = BIO_BONE
@@ -313,6 +318,7 @@
 /obj/item/bodypart/head/mushroom
 	limb_id = SPECIES_MUSHROOM
 	is_dimorphic = TRUE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/mushroom
 	limb_id = SPECIES_MUSHROOM
@@ -353,6 +359,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	head_flags = NONE
 
 /obj/item/bodypart/head/golem/Initialize(mapload)
 	worn_ears_offset = new(

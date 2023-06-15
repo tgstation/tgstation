@@ -105,6 +105,7 @@
 	var/px_x = 0
 	var/px_y = 0
 
+	/// A copy of the original owner's species datum species_traits list (very hacky)
 	var/species_flags_list = list()
 	///the type of damage overlay (if any) to use when this bodypart is bruised/burned.
 	var/dmg_overlay_type = "human"
@@ -786,7 +787,7 @@
 	// No, xenos don't actually use bodyparts. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
 	var/datum/species/owner_species = human_owner.dna.species
-	species_flags_list = owner_species.species_traits
+	species_flags_list = owner_species.species_traits.Copy()
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
 
 	if(owner_species.use_skintones)

@@ -125,11 +125,6 @@
 
 	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
 	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
-	var/list/overlays = list(eye_left, eye_right)
-
-	if(EYECOLOR in parent.dna?.species.species_traits)
-		eye_right.color = eye_color_right
-		eye_left.color = eye_color_left
 
 	var/obscured = parent.check_obscured_slots(TRUE)
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
@@ -137,11 +132,15 @@
 		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, alpha = eye_right.alpha)
 
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
-	if(my_head?.worn_face_offset)
-		for(var/mutable_appearance/overlay in overlays)
-			my_head.worn_face_offset.apply_offset(overlay)
+	if(my_head)
+		if(my_head.head_flags & HEAD_EYECOLOR)
+			eye_right.color = eye_color_right
+			eye_left.color = eye_color_left
+		if(my_head.worn_face_offset)
+			my_head.worn_face_offset.apply_offset(eye_left)
+			my_head.worn_face_offset.apply_offset(eye_right)
 
-	return overlays
+	return list(eye_left, eye_right)
 
 #undef OFFSET_X
 #undef OFFSET_Y

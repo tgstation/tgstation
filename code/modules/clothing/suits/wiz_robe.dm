@@ -66,7 +66,7 @@
 	inhand_icon_state = "tapehat"
 	dog_fashion = null
 	worn_y_offset = 6
-	body_parts_covered = HEAD|HAIR
+	body_parts_covered = HEAD
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/wizard/magus

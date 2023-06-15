@@ -6,6 +6,7 @@
 	attack_type = BURN // bish buzz
 	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
+	head_flags = HEAD_HAIR|HEAD_FACIAL_HAIR|HEAD_EYESPRITES|HEAD_EYEHOLES|HEAD_DEBRAIN
 
 /obj/item/bodypart/head/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()
