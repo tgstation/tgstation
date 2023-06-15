@@ -1,6 +1,6 @@
 
 // These icon_states may be overridden, but are for mapper's convinence
-/obj/item/poster/random_contraband
+/obj/item/poster/random_abductor
 	name = "random abductor poster"
 	poster_type = /obj/structure/sign/poster/abductor/random
 	icon_state = "abductor_poster"
@@ -15,6 +15,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 
 /obj/structure/sign/poster/abductor
 	icon = 'icons/obj/abductor_posters.dmi'
+	poster_item_name = "abductor poster"
+	poster_item_desc = "A sheet of holofiber resin, with a nanospike perforation on the back end for MAXIMUM ADHESION."
+	poster_item_icon_state = "rolled_abductor"
 
 /obj/structure/sign/poster/abductor/ayylian
 	name = "Ayylian"
@@ -47,7 +50,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/abductor/ayy_recruitment,
 /obj/structure/sign/poster/abductor/ayy_cops
 	name = "Abductor Cops"
 	desc = "A poster advertising the polarizing 'Abductor Cops' series. Some critics claimed that it stunned them, while others said it put them to sleep."
-	icon_state = "ayy_cops"
+	icon_state = "ayyce_cops"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/abductor/ayy_cops, 32)
 
