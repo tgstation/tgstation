@@ -6,8 +6,9 @@
 	icon_state = "lipstick"
 	inhand_icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
-	var/colour = "red"
 	var/open = FALSE
+	/// Actual color of the lipstick, also gets applied to the human
+	var/lipstick_color = COLOR_RED
 	/// A trait that's applied while someone has this lipstick applied, and is removed when the lipstick is removed
 	var/lipstick_trait
 
@@ -31,33 +32,33 @@
 	if(!open)
 		return
 	var/mutable_appearance/colored_overlay = mutable_appearance(icon, "lipstick_uncap_color")
-	colored_overlay.color = colour
+	colored_overlay.color = lipstick_color
 	. += colored_overlay
 
 /obj/item/lipstick/purple
 	name = "purple lipstick"
-	colour = "purple"
+	lipstick_color = COLOR_PURPLE
 
 /obj/item/lipstick/jade
 	//It's still called Jade, but theres no HTML color for jade, so we use lime.
 	name = "jade lipstick"
-	colour = "lime"
+	lipstick_color = COLOR_LIME
 
 /obj/item/lipstick/blue
 	name = "blue lipstick"
-	colour = "blue"
+	lipstick_color = COLOR_BLUE
 
 /obj/item/lipstick/green
 	name = "green lipstick"
-	colour = "green"
+	lipstick_color = COLOR_GREEN
 
 /obj/item/lipstick/white
 	name = "white lipstick"
-	colour = "white"
+	lipstick_color = COLOR_WHITE
 
 /obj/item/lipstick/black
 	name = "black lipstick"
-	colour = "black"
+	lipstick_color = COLOR_BLACK
 
 /obj/item/lipstick/black/death
 	name = "\improper Kiss of Death"
@@ -71,8 +72,16 @@
 /obj/item/lipstick/random/Initialize(mapload)
 	. = ..()
 	icon_state = "lipstick"
-	colour = pick("red","purple","lime","black","green","blue","white")
-	name = "[colour] lipstick"
+	var/static/list/possible_colors
+	if(!possible_colors)
+		possible_colors = list()
+		for(var/obj/item/lipstick/lipstick_path in (typesof(/obj/item/lipstick) - src.type))
+			if(!initial(lipstick_path.lipstick_color))
+				continue
+			possible_colors[initial(lipstick_path.lipstick_color)] = initial(lipstick_path.name)
+	lipstick_color = pick(possible_colors)
+	name = possible_colors[lipstick_color]
+	update_appearance()
 
 /obj/item/lipstick/attack_self(mob/user)
 	to_chat(user, span_notice("You twist [src] [open ? "closed" : "open"]."))
@@ -98,7 +107,7 @@
 	if(target == user)
 		user.visible_message(span_notice("[user] does [user.p_their()] lips with \the [src]."), \
 			span_notice("You take a moment to apply \the [src]. Perfect!"))
-		target.update_lips("lipstick", colour, lipstick_trait)
+		target.update_lips("lipstick", lipstick_color, lipstick_trait)
 		return
 
 	user.visible_message(span_warning("[user] begins to do [target]'s lips with \the [src]."), \
@@ -107,8 +116,7 @@
 		return
 	user.visible_message(span_notice("[user] does [target]'s lips with \the [src]."), \
 		span_notice("You apply \the [src] on [target]'s lips."))
-	target.update_lips("lipstick", colour, lipstick_trait)
-
+	target.update_lips("lipstick", lipstick_color, lipstick_trait)
 
 //you can wipe off lipstick with paper!
 /obj/item/paper/attack(mob/M, mob/user)
@@ -128,7 +136,6 @@
 	user.visible_message(span_notice("[user] wipes [target]'s lipstick off with \the [src]."), \
 		span_notice("You wipe off [target]'s lipstick."))
 	target.update_lips(null)
-
 
 /obj/item/razor
 	name = "electric razor"

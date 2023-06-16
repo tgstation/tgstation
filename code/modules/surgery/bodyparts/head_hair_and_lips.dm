@@ -67,7 +67,7 @@
 	var/atom/location = loc || owner || src
 
 	if(!facial_hair_hidden && lip_style && (head_flags & HEAD_LIPS))
-		var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
+		lip_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
 		lip_overlay.color = lip_color
 
 	if(!facial_hair_hidden && facial_hairstyle && (head_flags & HEAD_FACIAL_HAIR))
