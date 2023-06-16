@@ -328,6 +328,7 @@
 /obj/item/mod/module/defibrillator/combat,
 /obj/item/mod/module/tether,
 /obj/item/screwdriver/nuke,
+/obj/item/mod/module/surgical_processor/preloaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bl" = (
@@ -359,6 +360,7 @@
 /obj/item/mod/module/defibrillator/combat,
 /obj/item/mod/module/tether,
 /obj/item/screwdriver/nuke,
+/obj/item/mod/module/surgical_processor/preloaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bu" = (
@@ -445,6 +447,7 @@
 /obj/item/mod/module/defibrillator/combat,
 /obj/item/mod/module/tether,
 /obj/item/screwdriver/nuke,
+/obj/item/mod/module/surgical_processor/preloaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bX" = (
