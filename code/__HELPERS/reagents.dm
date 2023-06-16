@@ -73,10 +73,10 @@
 /proc/add_chemical_reaction(datum/chemical_reaction/R)
 	if(!GLOB.chemical_reactions_list_reactant_index || !R.required_reagents || !R.required_reagents.len)
 		return
-	var/primary_reagent = R.required_reagents[1]
-	if(!GLOB.chemical_reactions_list_reactant_index[primary_reagent])
-		GLOB.chemical_reactions_list_reactant_index[primary_reagent] = list()
-	GLOB.chemical_reactions_list_reactant_index[primary_reagent] += R
+	var/rand_reagent = pick(R.required_reagents)
+	if(!GLOB.chemical_reactions_list_reactant_index[rand_reagent])
+		GLOB.chemical_reactions_list_reactant_index[rand_reagent] = list()
+	GLOB.chemical_reactions_list_reactant_index[rand_reagent] += R
 
 //Creates foam from the reagent. Metaltype is for metal foam, notification is what to show people in textbox
 /datum/reagents/proc/create_foam(foamtype, foam_volume, result_type = null, notification = null, log = FALSE)
