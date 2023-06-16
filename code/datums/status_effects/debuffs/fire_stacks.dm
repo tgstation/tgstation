@@ -16,7 +16,8 @@
 	var/list/override_types
 	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
-	/// A particle effect, for things like embers
+
+	/// A particle effect, for things like embers - Should be set on update_particles()
 	var/obj/effect/abstract/particle_holder/particle_effect
 
 /datum/status_effect/fire_handler/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
@@ -80,6 +81,8 @@
 			adjust_stacks(override_effect.stacks)
 			qdel(override_effect)
 
+/datum/status_effect/fire_handler/on_apply()
+	. = ..()
 	update_particles()
 
 /datum/status_effect/fire_handler/on_remove()
@@ -89,7 +92,9 @@
 
 /**
  * Updates the particles for the status effects
+ * Should be handled by subtypes!
  */
+
 /datum/status_effect/fire_handler/proc/update_particles()
 	SHOULD_CALL_PARENT(FALSE)
 
@@ -279,6 +284,7 @@
 		extinguish()
 	set_stacks(0)
 	update_overlay()
+	update_particles()
 	return ..()
 
 /datum/status_effect/fire_handler/fire_stacks/update_overlay()
