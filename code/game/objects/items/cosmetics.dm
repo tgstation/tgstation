@@ -40,9 +40,8 @@
 	lipstick_color = COLOR_PURPLE
 
 /obj/item/lipstick/jade
-	//It's still called Jade, but theres no HTML color for jade, so we use lime.
 	name = "jade lipstick"
-	lipstick_color = COLOR_LIME
+	lipstick_color = COLOR_JADE
 
 /obj/item/lipstick/blue
 	name = "blue lipstick"
