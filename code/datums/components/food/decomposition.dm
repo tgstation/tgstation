@@ -66,7 +66,8 @@
 	RegisterSignals(parent, list(
 		COMSIG_ITEM_DROPPED, //Object is dropped anywhere
 		COMSIG_ATOM_EXITED), //Object exits a storage object (boxes, etc)
-		PROC_REF(dropped))
+		PROC_REF(dropped),
+	)
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 
 /datum/component/decomposition/UnregisterFromParent()
