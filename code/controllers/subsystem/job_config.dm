@@ -171,7 +171,8 @@
 
 		return TRUE
 
-/// If we add a new job or more fields to config a job with, quickly spin up a brand new config that inherits all of your old settings, but adds the new job with codebase defaults. Returns TRUE if a file is successfully generated, FALSE otherwise.
+/// If we add a new job or more fields to config a job with, quickly spin up a brand new config that inherits all of your old settings, but adds the new job with codebase defaults.
+/// Returns TRUE if a file is successfully generated, FALSE otherwise.
 /datum/controller/subsystem/job/proc/regenerate_job_config(mob/user)
 	var/toml_file = "[global.config.directory]/jobconfig.toml"
 	var/list/file_data = list()
