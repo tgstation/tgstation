@@ -10650,12 +10650,11 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "cfg" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
+/obj/machinery/status_display/evac/directional/north{
+	pixel_y = 0
 	},
-/obj/structure/closet/firecloset/full,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/entry)
+/turf/closed/wall/r_wall,
+/area/station/engineering/main)
 "cfp" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner,
@@ -16268,9 +16267,14 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "emv" = (
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/engineering/main)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/button/door/directional/east{
+	id = "clownbunker"
+	},
+/turf/open/floor/mineral/bananium,
+/area/ruin/powered/clownplanet{
+	name = "The Noise's Jam-Tastic radical listening Post"
+	})
 "emK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -18488,11 +18492,12 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "fgx" = (
-/obj/machinery/status_display/evac/directional/north{
-	pixel_y = 0
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
-/turf/closed/wall/r_wall,
-/area/station/engineering/main)
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "fgH" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/effect/turf_decal/weather/snow/corner,
@@ -41518,12 +41523,9 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "nHV" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/structure/closet/emcloset,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/entry)
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "nHW" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -52475,7 +52477,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/electric_shock/directional/east,
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet{
 	name = "The Noise's Jam-Tastic radical listening Post"
@@ -66220,6 +66221,17 @@
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/execution/transfer)
+"wxp" = (
+/obj/structure/sign/warning/electric_shock/directional/east{
+	pixel_x = 0;
+	pixel_y = 32
+	},
+/obj/structure/rack,
+/obj/item/clothing/shoes/sneakers,
+/turf/open/floor/plating,
+/area/ruin/powered/clownplanet{
+	name = "The Noise's Jam-Tastic radical listening Post"
+	})
 "wxu" = (
 /obj/machinery/destructive_scanner,
 /obj/effect/turf_decal/trimline/purple/filled/warning{
@@ -69615,14 +69627,12 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
 "xSj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/button/door/directional/east{
-	id = "clownbunker"
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
-/turf/open/floor/mineral/bananium,
-/area/ruin/powered/clownplanet{
-	name = "The Noise's Jam-Tastic radical listening Post"
-	})
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "xSr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -76044,7 +76054,7 @@ aan
 fTI
 agz
 tun
-xSj
+emv
 piT
 gcp
 eES
@@ -77073,7 +77083,7 @@ qoD
 iSw
 oCu
 gcp
-gcp
+wxp
 gxi
 exS
 gcp
@@ -100924,7 +100934,7 @@ eTZ
 eTZ
 eTZ
 kjG
-emv
+nHV
 qqo
 aeL
 aeL
@@ -101953,7 +101963,7 @@ sHH
 sHH
 ccX
 bvI
-fgx
+cfg
 aeL
 aeL
 aeL
@@ -146898,11 +146908,11 @@ jEu
 lQn
 lQn
 lQn
-nHV
+fgx
 nmY
 hNx
 nmY
-cfg
+xSj
 lQn
 lQn
 lQn
