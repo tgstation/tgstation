@@ -2,7 +2,7 @@
 
 /// Part of `update_limb()`, this proc does what the name implies.
 /obj/item/bodypart/head/proc/update_hair_and_lips(dropping_limb, is_creating)
-	// THIS PROC DOES NOT WORK FOR DROPPED HEADS QUITE YET
+	// THIS PROC DOES NOT WORK FOR DROPPED HEADS. YET.
 	if(!owner)
 		return
 	var/mob/living/carbon/human/human_head_owner = owner
