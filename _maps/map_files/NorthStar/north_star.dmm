@@ -24034,10 +24034,6 @@
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/starboard/fore)
-"gjm" = (
-/obj/effect/spawner/random/maintenance/two,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/floor1/port)
 "gjn" = (
 /obj/structure/table,
 /obj/item/stock_parts/matter_bin,
@@ -127328,7 +127324,7 @@ iun
 xgH
 kzE
 kzE
-gjm
+kzE
 kzE
 kzE
 kzE
