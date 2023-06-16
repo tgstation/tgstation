@@ -25,6 +25,7 @@
 			objholder = null
 			tgui_alert(usr,"Area paths are not supported for this mode, use the area edit mode instead.")
 			return
+	BM.preview_selected_item(objholder)
 	deselect_region()
 
 /datum/buildmode_mode/fill/handle_click(client/c, params, obj/object)
