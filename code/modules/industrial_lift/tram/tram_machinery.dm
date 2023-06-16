@@ -34,6 +34,8 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(update_tram_display))
+		icon_screen = "[base_icon_state][tram_part.idle_platform.name]_idle"
+		update_appearance(UPDATE_ICON)
 
 /**
  * Finds the tram from the console

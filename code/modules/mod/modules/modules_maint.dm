@@ -334,3 +334,16 @@
 	QDEL_IN(mod.wearer, FLY_TIME)
 
 #undef FLY_TIME
+
+/obj/item/mod/module/recycler/donk/safe
+	name = "MOD foam dart recycler module"
+	desc = "A mod module that collects and repackages fired foam darts into half-sized ammo boxes. \
+		Activate on a nearby turf or storage to unload stored ammo boxes."
+	icon_state = "donk_safe_recycler"
+	overlay_state_inactive = "module_donk_safe_recycler"
+	overlay_state_active = "module_donk_safe_recycler"
+	complexity = 1
+	efficiency = 1
+	allowed_item_types = list(/obj/item/ammo_casing/caseless/foam_dart)
+	ammobox_type = /obj/item/ammo_box/foambox/mini
+	required_amount = SMALL_MATERIAL_AMOUNT*2.5
