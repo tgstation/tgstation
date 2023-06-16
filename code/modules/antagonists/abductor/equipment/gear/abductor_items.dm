@@ -617,7 +617,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "Effectively just a Space Swiss Army Knife. Contains a multitude of integrated tools. Right-click it to switch which toolset is active."
 	icon_state = "omnitool"
 	inhand_icon_state = "silencer"
-	force = 8
 	toolspeed = 0.25
 	tool_behaviour = null
 	usesound = 'sound/items/pshoom.ogg'
