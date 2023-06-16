@@ -18,6 +18,9 @@ SUBSYSTEM_DEF(chat)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/chat/fire()
+	if(fexists("canary.txt"))
+		to_chat(world, span_boldannounce("CANARY IN THE COAL MINE"))
+
 	for(var/key in payload_by_client)
 		var/client/client = key
 		var/payload = payload_by_client[key]
