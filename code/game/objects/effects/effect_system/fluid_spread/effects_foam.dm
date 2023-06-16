@@ -30,8 +30,8 @@
 	var/atom/movable/result_type = null
 	/// Whether or not this foam can produce a remnant movable if something of the same type is already on its turf.
 	var/allow_duplicate_results = TRUE
-	/// The amount of time this foam stick around for before it dissipates.
-	var/lifetime = 8 SECONDS
+	/// The amount of ticks this foam sticks around for before it dissipates.
+	var/lifetime = 10
 	/// Whether or not this foam should be slippery.
 	var/slippery_foam = TRUE
 
@@ -60,7 +60,7 @@
 		SSfoam.cancel_spread(src)
 	make_result()
 	flick("[icon_state]-disolve", src)
-	QDEL_IN(src, 0.5 SECONDS)
+	qdel(src) // flick is already blocking we dont need to wait for it
 
 /**
  * Makes the foam leave behind something when it dissipates.
@@ -77,8 +77,7 @@
 	return result
 
 /obj/effect/particle_effect/fluid/foam/process(seconds_per_tick)
-	var/ds_seconds_per_tick = seconds_per_tick SECONDS
-	lifetime -= ds_seconds_per_tick
+	lifetime -= 1
 	if(lifetime <= 0)
 		kill_foam()
 		return
