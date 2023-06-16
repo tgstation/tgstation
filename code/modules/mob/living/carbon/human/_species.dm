@@ -597,26 +597,25 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return handle_mutant_bodyparts(species_human)
 	var/list/standing = list()
 
-	var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
-	if((noggin?.head_flags & HEAD_EYESPRITES) && !(HAS_TRAIT(species_human, TRAIT_HUSK)))
-		// eyes (missing eye sprites get handled by the head itself, but sadly we have to do this stupid shit here, for now)
-		var/obj/item/organ/internal/eyes/eye_organ = species_human.get_organ_slot(ORGAN_SLOT_EYES)
-		if(eye_organ))
-			eye_organ.refresh(call_update = FALSE)
-			for(var/mutable_appearance/eye_overlay in eye_organ.generate_body_overlay(species_human))
-				eye_overlay.pixel_y += height_offset
-				standing += eye_overlay
+	if(!HAS_TRAIT(species_human, TRAIT_HUSK))
+		var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
+		if(noggin?.head_flags & HEAD_EYESPRITES)
+			// eyes (missing eye sprites get handled by the head itself, but sadly we have to do this stupid shit here, for now)
+			var/obj/item/organ/internal/eyes/eye_organ = species_human.get_organ_slot(ORGAN_SLOT_EYES)
+			if(eye_organ)
+				eye_organ.refresh(call_update = FALSE)
+				for(var/mutable_appearance/eye_overlay in eye_organ.generate_body_overlay(species_human))
+					eye_overlay.pixel_y += height_offset
+					standing += eye_overlay
 
-	// organic body markings (oh my god this is terrible please rework this)
-	if(HAS_MARKINGS in species_traits)
-		var/obj/item/bodypart/chest/chest = species_human.get_bodypart(BODY_ZONE_CHEST)
-		var/obj/item/bodypart/arm/right/right_arm = species_human.get_bodypart(BODY_ZONE_R_ARM)
-		var/obj/item/bodypart/arm/left/left_arm = species_human.get_bodypart(BODY_ZONE_L_ARM)
-		var/obj/item/bodypart/leg/right/right_leg = species_human.get_bodypart(BODY_ZONE_R_LEG)
-		var/obj/item/bodypart/leg/left/left_leg = species_human.get_bodypart(BODY_ZONE_L_LEG)
-		var/datum/sprite_accessory/markings = GLOB.moth_markings_list[species_human.dna.features["moth_markings"]]
-
-		if(!HAS_TRAIT(species_human, TRAIT_HUSK))
+		// organic body markings (oh my god this is terrible please rework this to be done on the limbs themselves i beg you)
+		if(HAS_MARKINGS in species_traits)
+			var/obj/item/bodypart/chest/chest = species_human.get_bodypart(BODY_ZONE_CHEST)
+			var/obj/item/bodypart/arm/right/right_arm = species_human.get_bodypart(BODY_ZONE_R_ARM)
+			var/obj/item/bodypart/arm/left/left_arm = species_human.get_bodypart(BODY_ZONE_L_ARM)
+			var/obj/item/bodypart/leg/right/right_leg = species_human.get_bodypart(BODY_ZONE_R_LEG)
+			var/obj/item/bodypart/leg/left/left_leg = species_human.get_bodypart(BODY_ZONE_L_LEG)
+			var/datum/sprite_accessory/markings = GLOB.moth_markings_list[species_human.dna.features["moth_markings"]]
 			if(noggin && (IS_ORGANIC_LIMB(noggin)))
 				var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
 				markings_head_overlay.pixel_y += height_offset
