@@ -1,7 +1,7 @@
 /datum/round_event_control/scrubber_overflow
 	name = "Scrubber Overflow: Normal"
 	typepath = /datum/round_event/scrubber_overflow
-	weight = 10
+	weight = 0
 	max_occurrences = 3
 	min_players = 10
 	category = EVENT_CATEGORY_JANITORIAL
