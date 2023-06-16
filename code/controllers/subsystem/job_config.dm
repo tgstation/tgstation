@@ -89,7 +89,7 @@
 				continue
 
 			for(var/datum/job_config_type/config_datum as anything in subtypesof(/datum/job_config_type))
-				var/config_datum_key = config_datum.name
+				var/config_datum_key = initial(config_datum.name)
 				var/config_value = job_config[job_key][config_datum_key]
 				if(!isnum(config_value)) // This will mean that the value was commented out, which means that the server operator didn't want to override the codebase default. So, we skip it.
 					continue
@@ -195,7 +195,7 @@
 		if(job_config[job_key]) // Let's see if any data for this job exists.
 			var/list/working_list = list()
 			for(var/datum/job_config_type/config_datum as anything in subtypesof(/datum/job_config_type))
-				var/config_datum_key = config_datum.name
+				var/config_datum_key = initial(config_datum.name)
 				var/config_read_value = job_config[job_key][config_datum_key]
 				if(!isnum(config_read_value))
 					working_list += list(
@@ -221,7 +221,7 @@
 /datum/controller/subsystem/job/proc/generate_blank_job_config(datum/job/new_occupation)
 	var/returnable_list = list()
 	for(var/datum/job_config_type/config_datum as anything in subtypesof(/datum/job_config_type))
-		var/config_datum_key = config_datum.name
+		var/config_datum_key = initial(config_datum.name)
 		// Commented out keys here in case server operators wish to defer to codebase defaults.
 		returnable_list += list(
 			"# [config_datum_key]" = config_datum.get_value(new_occupation),
@@ -235,7 +235,7 @@
 	// make a quick list to ensure we don't double-dip total_positions and spawn_positions, but still get future config types in
 	var/list/datums_to_read = subtypesof(/datum/job_config_type) - list(/datum/job_config_type/default_positions, /datum/job_config_type/starting_positions)
 	for(var/datum/job_config_type/config_datum as anything in datums_to_read)
-		var/config_datum_key = config_datum.name
+		var/config_datum_key = initial(config_datum.name)
 		returnable_list += list(
 			"# [config_datum_key]" = config_datum.get_value(new_occupation),
 		)
