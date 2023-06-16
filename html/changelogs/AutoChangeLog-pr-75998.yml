@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixed e-cutlasses and bananium swords having invisible inhands"
+  - code_imp: "Removed boilerplate from transforming component"
