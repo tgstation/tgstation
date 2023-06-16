@@ -104,9 +104,14 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return ..()
 
 /obj/machinery/photocopier/Destroy()
-	QDEL_NULL(object_copy)
+	// object_copy can be a traitor objective, don't qdel
+	if(object_copy)
+		object_copy.forceMove(drop_location())
+		object_copy = null
+
 	QDEL_NULL(toner_cartridge)
 	QDEL_LIST(paper_stack)
+
 	ass = null //the mob isn't actually contained and just referenced, no need to delete it.
 	return ..()
 
@@ -114,7 +119,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	. = ..()
 	if(object_copy)
 		. += span_notice("There is something inside the scanner tray.")
-	. += span_boldnotice("You can put any type of blank paper inside to print a form or to copy something onto it.")
+	. += span_notice("You can put any type of blank paper inside to print a form onto it or to copy something onto it.")
 
 /obj/machinery/photocopier/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -269,9 +274,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE, 1)
 			return TRUE
 
-/**
- * Returns the color used for the printing operation. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
- */
+/// Returns the color used for the printing operation. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
 /obj/machinery/photocopier/proc/get_toner_color()
 	return toner_cartridge.charges > TONER_CHARGE_LOW_AMOUNT ? COLOR_FULL_TONER_BLACK : COLOR_GRAY
 
@@ -343,22 +346,17 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	copies_left = 0
 	reset_busy()
 
-/**
- * Sets busy to `FALSE`.
- */
+/// Sets busy to `FALSE`.
 /obj/machinery/photocopier/proc/reset_busy()
 	update_use_power(IDLE_POWER_USE)
 	busy = FALSE
 
-/**
- * Determines if the printer is currently busy, informs the user if it is.
- */
+/// Determines if the printer is currently busy, informs the user if it is.
 /obj/machinery/photocopier/proc/check_busy(mob/user)
 	if(busy)
 		balloon_alert(user, "printer is busy!")
 		return TRUE
 	return FALSE
-
 
 /**
  * Gives items a random x and y pixel offset, between -10 and 10 for each.
@@ -372,9 +370,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	copied_item.pixel_x = copied_item.base_pixel_x + rand(-10, 10)
 	copied_item.pixel_y = copied_item.base_pixel_y + rand(-10, 10)
 
-/**
- * Gets the total amount of paper this printer has stored.
- */
+/// Gets the total amount of paper this printer has stored.
 /obj/machinery/photocopier/proc/get_paper_count()
 	return length(paper_stack) + starting_paper
 
@@ -454,7 +450,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Copies the stamp from a given piece of paperwork if it is already stamped, allowing for you to sell photocopied paperwork at the risk of losing budget money.
  */
 /obj/machinery/photocopier/proc/make_paperwork_copy(obj/item/paperwork/paperwork_copy)
-	if(isnull(paperwo))
+	if(isnull(paperwork_copy))
 		return null
 	var/obj/item/paperwork/photocopy/copied_paperwork = new(src, paperwork_copy)
 	copied_paperwork.copy_stamp_info(paperwork_copy)
@@ -465,9 +461,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	toner_cartridge.charges -= PAPERWORK_TONER_USE
 	return copied_paperwork
 
-/**
- * The procedure is called when printing a blank to write off toner consumption.
- */
+/// The procedure is called when printing a blank to write off toner consumption.
 /obj/machinery/photocopier/proc/make_blank_print(list/blank)
 	var/copy_colour = get_toner_color()
 	var/obj/item/paper/printblank = get_empty_paper()
@@ -528,11 +522,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * * user - the user removing the item.
  */
 /obj/machinery/photocopier/proc/remove_photocopy(obj/item/object, mob/user)
-	if(!issilicon(user)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
-		object.forceMove(user.loc)
-		user.put_in_hands(object)
-	else
+	if(issilicon(user))
 		object.forceMove(drop_location())
+		return
+
+	object.forceMove(user.loc)
+	user.put_in_hands(object)
+
 	to_chat(user, span_notice("You take [object] out of [src]. [busy ? "The [src] comes to a halt." : ""]"))
 
 /obj/machinery/photocopier/wrench_act(mob/living/user, obj/item/tool)
@@ -544,7 +540,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(istype(object, /obj/item/paper) || istype(object, /obj/item/photo) || istype(object, /obj/item/documents))
 		if(istype(object, /obj/item/paper))
 			var/obj/item/paper/paper = object
-			if(length(paper.raw_text_inputs) == 0)
+			if(paper.is_empty())
 				insert_empty_paper(paper, user)
 				return
 		insert_copy_object(object, user)
@@ -566,9 +562,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		else
 			insert_copy_object(object, user)
 
-/**
- * Proc that handles insertion of empty paper, useful for copying later.
- */
+/// Proc that handles insertion of empty paper, useful for copying later.
 /obj/machinery/photocopier/proc/insert_empty_paper(obj/item/paper/paper, mob/user)
 	if(istype(paper, /obj/item/paper/paperslip))
 		return
