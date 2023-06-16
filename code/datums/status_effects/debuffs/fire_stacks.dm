@@ -272,11 +272,7 @@
 	cache_stacks()
 	update_overlay()
 	update_particles()
-	if(!iscarbon(owner))
-		return
-
 	for(var/obj/item/equipped in owner.get_equipped_items())
-		equipped.wash(CLEAN_TYPE_ACID)
 		equipped.extinguish()
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
