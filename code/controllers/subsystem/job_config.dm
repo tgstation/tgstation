@@ -83,14 +83,14 @@
 		for(var/datum/job/occupation as anything in joinable_occupations)
 			var/job_title = occupation.title
 			var/job_key = occupation.config_tag
-			if(!job_config[job_key]) // Job isn't listed, skip it.
+			if(!job_config["[job_key]"]) // Job isn't listed, skip it.
 				// List both job_title and job_key in case they de-sync over time.
 				message_admins(span_notice("[job_title] (with config key [job_key]) is missing from jobconfig.toml! Using codebase defaults."))
 				continue
 
 			for(var/datum/job_config_type/config_datum in subtypesof(/datum/job_config_type))
 				var/config_datum_key = config_datum.name
-				var/config_value = job_config[job_key][config_datum_key]
+				var/config_value = job_config["[job_key]"][config_datum_key]
 				if(!isnum(config_value)) // This will mean that the value was commented out, which means that the server operator didn't want to override the codebase default. So, we skip it.
 					continue
 				config_datum.set_value(occupation, config_value)
@@ -142,7 +142,7 @@
 
 			working_list += generate_job_config_excluding_legacy(occupation)
 
-			file_data[job_key] = working_list
+			file_data["[job_key]"] = working_list
 			continue
 
 		if(!export_toml(user, file_data))
@@ -156,15 +156,15 @@
 			// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator is knows that they override codebase defaults when they remove the comment.
 			// Having comments mean that we allow server operators to defer to codebase standards when they deem acceptable. They must uncomment to override the codebase default.
 			if(is_assistant_job(occupation)) // there's a concession made in jobs.txt that we should just rapidly account for here I KNOW I KNOW.
-				file_data[job_key] = list(
+				file_data["[job_key]"] = list(
 					"# [TOTAL_POSITIONS]" = -1,
 					"# [SPAWN_POSITIONS]" = -1,
 				)
-				file_data[job_key] += generate_job_config_excluding_legacy(occupation)
+				file_data["[job_key]"] += generate_job_config_excluding_legacy(occupation)
 				continue
 
 			// Generate new config from codebase defaults.
-			file_data[job_key] = generate_blank_job_config(occupation)
+			file_data["[job_key]"] = generate_blank_job_config(occupation)
 
 		if(!export_toml(user, file_data))
 			return FALSE
@@ -186,16 +186,16 @@
 		var/job_key = occupation.config_tag
 
 		// Sanity, let's just make sure we don't overwrite anything or add any dupe keys. We also unit test for this, but eh, you never know sometimes.
-		if(file_data[job_key])
+		if(file_data["[job_key]"])
 			stack_trace("We were about to over-write a job key that already exists in file_data while generating a new jobconfig.toml! This should not happen! Verify you do not have any duplicate job keys in your codebase!")
 			continue
 
 		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented. So, let's make sure we keep that pattern.
-		if(job_config[job_key]) // Let's see if any data for this job exists.
+		if(job_config["[job_key]"]) // Let's see if any data for this job exists.
 			var/list/working_list = list()
 			for(var/datum/job_config_type/config_datum in subtypesof(/datum/job_config_type))
 				var/config_datum_key = config_datum.name
-				var/config_read_value = job_config[job_key][config_datum_key]
+				var/config_read_value = job_config["[job_key]"][config_datum_key]
 				if(!isnum(config_read_value))
 					working_list += list(
 						"# [config_datum_key]" = config_datum.get_value(occupation),
@@ -205,12 +205,12 @@
 						config_datum_key = config_read_value,
 					)
 
-			file_data[job_key] = working_list
+			file_data["[job_key]"] = working_list
 
 		else
 
 			to_chat(user, span_notice("New job [job_name] (using key [job_key]) detected! Adding to jobconfig.toml using default codebase values..."))
-			file_data[job_key] = generate_blank_job_config(occupation)
+			file_data["[job_key]"] = generate_blank_job_config(occupation)
 
 	if(!export_toml(user, file_data))
 		return FALSE
@@ -218,7 +218,6 @@
 
 /// This will just return a list for a completely new job that doesn't need to be migrated from an old config (completely new). Just done here to reduce copypasta
 /datum/controller/subsystem/job/proc/generate_blank_job_config(datum/job/new_occupation)
-	var/job_key = new_occupation.config_tag
 	var/returnable_list = list()
 	for(var/datum/job_config_type/config_datum in subtypesof(/datum/job_config_type))
 		var/config_datum_key = config_datum.name
