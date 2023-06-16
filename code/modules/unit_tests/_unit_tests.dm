@@ -183,6 +183,7 @@
 #include "quirks.dm"
 #include "range_return.dm"
 #include "rcd.dm"
+#include "reagent_container_defaults.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_mob_expose.dm"
 #include "reagent_mod_procs.dm"

@@ -168,7 +168,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 /obj/machinery/bluespace_vendor/proc/register_machine(machine)
 	connected_machine = machine
 	LAZYADD(connected_machine.vendors, src)
-	RegisterSignal(connected_machine, COMSIG_PARENT_QDELETING, PROC_REF(unregister_machine))
+	RegisterSignal(connected_machine, COMSIG_QDELETING, PROC_REF(unregister_machine))
 	mode = BS_MODE_IDLE
 	update_appearance()
 
@@ -176,7 +176,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 /obj/machinery/bluespace_vendor/proc/unregister_machine()
 	SIGNAL_HANDLER
 	if(connected_machine)
-		UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(connected_machine, COMSIG_QDELETING)
 		LAZYREMOVE(connected_machine.vendors, src)
 		connected_machine = null
 	mode = BS_MODE_OFF

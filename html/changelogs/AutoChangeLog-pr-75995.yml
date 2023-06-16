@@ -1,0 +1,4 @@
+author: "FernandoJ8"
+delete-after: True
+changes:
+  - bugfix: "Monkey revolutionaries will not be considered for a promotion into Head Revolutionaries unless they're the only candidates... again."

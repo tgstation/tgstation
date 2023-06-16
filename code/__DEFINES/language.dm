@@ -15,6 +15,7 @@
 #define LANGUAGE_CURATOR "curator"
 #define LANGUAGE_GLAND "gland"
 #define LANGUAGE_HAT "hat"
+#define LANGUAGE_QUIRK "quirk"
 #define LANGUAGE_MALF "malf"
 #define LANGUAGE_PIRATE "pirate"
 #define LANGUAGE_MASTER "master"
