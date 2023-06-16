@@ -320,7 +320,7 @@
 
 	updateEmbedding()
 	if(user)
-		balloon_alert(user, "[hidden_name] [active ? "active":"concealed"]")
+		balloon_alert(user, "[hidden_name] [active ? "active" : "concealed"]")
 	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE

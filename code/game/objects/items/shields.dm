@@ -278,7 +278,7 @@
 	SIGNAL_HANDLER
 
 	if(user)
-		balloon_alert(user, "[active ? "activated" : "deactivated"]")
+		balloon_alert(user, active ? "activated" : "deactivated")
 	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -326,7 +326,7 @@
 
 	slot_flags = active ? ITEM_SLOT_BACK : null
 	if(user)
-		balloon_alert(user, "[active ? "extended" : "collapsed"]")
+		balloon_alert(user, active ? "extended" : "collapsed")
 	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 

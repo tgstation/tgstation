@@ -944,7 +944,7 @@
 
 	user.changeNext_move(CLICK_CD_MELEE * 0.25)
 	if(user)
-		balloon_alert(user, "[active ? "opened":"closed"] [src]")
+		balloon_alert(user, "[active ? "opened" : "closed"] [src]")
 	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
