@@ -1,4 +1,5 @@
 #define MINIMUM_TURBINE_PRESSURE 0.01
+#define PRESSURE_DIFF(value,subtract)(max((value)-(subtract), MINIMUM_TURBINE_PRESSURE))
 
 /obj/machinery/power/turbine
 	density = TRUE
@@ -69,14 +70,13 @@
  */
 /obj/machinery/power/turbine/proc/transfer_gases(datum/gas_mixture/input_mix, datum/gas_mixture/output_mix, work_amount_to_remove, intake_size = 1)
 	//pump gases. if no gases were transfered then no work was done
-	var/output_volume = output_mix.volume
 	var/output_pressure = max(output_mix.return_pressure(), MINIMUM_TURBINE_PRESSURE)
 	var/datum/gas_mixture/transfered_gases = input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
 	if(!transfered_gases)
 		return 0
 
-	//compute work done
-	var/work_done = QUANTIZE(transfered_gases.total_moles()) * R_IDEAL_GAS_EQUATION * transfered_gases.temperature * log((transfered_gases.volume * max(transfered_gases.return_pressure(), )) / (output_volume * output_pressure)) * TURBINE_WORK_CONVERSION_MULTIPLIER
+	//compute work done, since transfered_gases is the delta gases moved from input to output we also use the delta pressure of the output mix in the equation
+	var/work_done = QUANTIZE(transfered_gases.total_moles()) * R_IDEAL_GAS_EQUATION * transfered_gases.temperature * log((transfered_gases.volume * max(transfered_gases.return_pressure(), MINIMUM_TURBINE_PRESSURE)) / (output_mix.volume * PRESSURE_DIFF(output_mix.return_pressure(), output_pressure))) * TURBINE_WORK_CONVERSION_MULTIPLIER
 	if(work_amount_to_remove)
 		work_done = work_done - work_amount_to_remove
 
@@ -618,7 +618,7 @@
 		rpm = 0
 		produced_energy = 0
 		return
-	var/work_done =  QUANTIZE(ejected_gases.total_moles()) * R_IDEAL_GAS_EQUATION * ejected_gases.temperature * log(max(compressor.compressor_pressure - compressor.machine_gasmix.return_pressure(), MINIMUM_TURBINE_PRESSURE) / max(ejected_gases.return_pressure(), MINIMUM_TURBINE_PRESSURE))
+	var/work_done =  QUANTIZE(ejected_gases.total_moles()) * R_IDEAL_GAS_EQUATION * ejected_gases.temperature * log(PRESSURE_DIFF(compressor.compressor_pressure, compressor.machine_gasmix.return_pressure()) / max(ejected_gases.return_pressure(), MINIMUM_TURBINE_PRESSURE))
 	//removing the work needed to move the compressor but adding back the turbine work that is the one generating most of the power.
 	work_done = max(work_done - compressor.compressor_work * TURBINE_COMPRESSOR_STATOR_INTERACTION_MULTIPLIER - turbine_work, 0)
 	//calculate final acheived rpm
@@ -639,4 +639,5 @@
 	-Each tier increases the efficiency (more power), the max reachable RPM, and the max temperature that the machine can process without taking damage (up to fusion temperatures at the last tier!).<BR>\
 	-A word of warning, the machine is very inefficient in its gas consumption and many unburnt gases will pass through. If you want to be cheap you can either pre-burn the gases or add a filtering system to collect the unburnt gases and reuse them."
 
+#undef PRESSURE_DIFF
 #undef MINIMUM_TURBINE_PRESSURE
