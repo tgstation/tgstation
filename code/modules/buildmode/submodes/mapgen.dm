@@ -6,8 +6,8 @@
 
 /datum/buildmode_mode/mapgen/show_help(client/builder)
 	to_chat(builder, span_purple(examine_block(
-		"[span_bold("Select corner")] -> Left Mouse Button on turf/obj/mob"
-		"[span_bold("Select generator")] -> Right Mouse Button on buildmode button"))
+		"[span_bold("Select corner")] -> Left Mouse Button on turf/obj/mob\n\
+		[span_bold("Select generator")] -> Right Mouse Button on buildmode button"))
 	)
 
 /datum/buildmode_mode/mapgen/change_settings(client/c)
