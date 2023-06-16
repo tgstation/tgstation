@@ -1,0 +1,4 @@
+author: "stonetear"
+delete-after: True
+changes:
+  - bugfix: "jetpack signals now pass a user argument.  This fixes an error when automatically stowing a captain jetpack into your modsuit."
