@@ -225,10 +225,6 @@
 
 	// logic for the overlays changes when dropped (ugh, rework this later if possible)
 	if(dropped)
-		//BAHHHH don't do any of this if we are husked
-		if(is_husked)
-			return .
-
 		// lipstick
 		if(lip_style && (head_flags & HEAD_LIPS))
 			var/image/lips_overlay = image('icons/mob/species/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER, SOUTH)
@@ -303,8 +299,6 @@
 			var/mutable_appearance/no_eyes = mutable_appearance('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER)
 			worn_face_offset?.apply_offset(no_eyes)
 			. += no_eyes
-
-	return .
 
 /// Returns an appropriate debrained icon state
 /obj/item/bodypart/head/proc/get_debrain_overlay(can_rotate = TRUE)
