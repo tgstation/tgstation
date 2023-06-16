@@ -5072,9 +5072,9 @@
 /turf/open/floor/iron/kitchen/small,
 /area/station/security/prison/mess)
 "cgs" = (
-/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/vending/wardrobe/atmos_wardrobe,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
 "cgy" = (
@@ -45712,6 +45712,12 @@
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/iron/small,
 /area/station/hallway/secondary/exit/departure_lounge)
+"qAz" = (
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister,
+/turf/open/floor/iron,
+/area/station/engineering/atmospherics_engine)
 "qAE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/generic_maintenance_landmark,
@@ -79911,7 +79917,7 @@ buN
 byV
 bCu
 bCu
-bCu
+qAz
 cgs
 jZl
 aJq
