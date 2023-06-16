@@ -39,8 +39,8 @@
 /datum/action/cooldown/spell/apply_mutations/mutate
 	name = "Mutate"
 	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
-	cooldown_time = 40 SECONDS
-	cooldown_reduction_per_rank = 2.5 SECONDS
+	cooldown_time = 60 SECONDS //monkestation edit: from 40 to 60 seconds
+	cooldown_reduction_per_rank = 5 SECONDS //monkestation edit: from 2.5 to 5 seconds
 
 	invocation = "BIRUZ BENNAR"
 	invocation_type = INVOCATION_SHOUT
