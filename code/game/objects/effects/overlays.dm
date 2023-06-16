@@ -8,9 +8,9 @@
 	return
 
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
-	name="beam"
-	icon='icons/effects/beam.dmi'
-	icon_state="b_beam"
+	name = "beam"
+	icon = 'icons/effects/beam.dmi'
+	icon_state = "b_beam"
 	var/atom/BeamSource
 
 /obj/effect/overlay/beam/Initialize(mapload)
@@ -23,6 +23,16 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
 	anchored = TRUE
+
+/obj/effect/overlay/thermite
+	name = "thermite"
+	desc = "Looks hot."
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "2" //what?
+	anchored = TRUE
+	plane = ABOVE_GAME_PLANE
+	layer = FLY_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/overlay/vis
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
