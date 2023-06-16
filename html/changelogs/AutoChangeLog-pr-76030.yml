@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "You can no longer duplicate iron by turning sheets into rods and putting the rods back into the protolathe"

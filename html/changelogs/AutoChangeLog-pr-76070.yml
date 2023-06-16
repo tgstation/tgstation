@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Ghosts can click on active gateways to teleport to the destination set. Doesn't work for secret gateways."

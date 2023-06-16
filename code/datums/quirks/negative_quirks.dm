@@ -534,10 +534,20 @@
 	desc = "You've never hit anything you were aiming for in your life."
 	icon = FA_ICON_BULLSEYE
 	value = -4
-	mob_trait = TRAIT_POOR_AIM
 	medical_record_text = "Patient possesses a strong tremor in both hands."
 	hardcore_value = 3
 	mail_goodies = list(/obj/item/cardboard_cutout) // for target practice
+
+/datum/quirk/poor_aim/add(client/client_source)
+	RegisterSignal(quirk_holder, COMSIG_MOB_FIRED_GUN, PROC_REF(on_mob_fired_gun))
+
+/datum/quirk/poor_aim/remove(client/client_source)
+	UnregisterSignal(quirk_holder, COMSIG_MOB_FIRED_GUN)
+
+/datum/quirk/poor_aim/proc/on_mob_fired_gun(mob/user, obj/item/gun/gun_fired, target, params, zone_override, list/bonus_spread_values)
+	SIGNAL_HANDLER
+	bonus_spread_values[MIN_BONUS_SPREAD_INDEX] += 10
+	bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += 35
 
 /datum/quirk/prosopagnosia
 	name = "Prosopagnosia"
@@ -963,7 +973,16 @@
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/item/reagent_containers/hypospray/medipen) // epinephrine medipen stops allergic reactions
 	var/list/allergies = list()
-	var/list/blacklist = list(/datum/reagent/medicine/c2,/datum/reagent/medicine/epinephrine,/datum/reagent/medicine/adminordrazine,/datum/reagent/medicine/omnizine/godblood,/datum/reagent/medicine/cordiolis_hepatico,/datum/reagent/medicine/synaphydramine,/datum/reagent/medicine/diphenhydramine)
+	var/list/blacklist = list(
+		/datum/reagent/medicine/c2,
+		/datum/reagent/medicine/epinephrine,
+		/datum/reagent/medicine/adminordrazine,
+		/datum/reagent/medicine/omnizine/godblood,
+		/datum/reagent/medicine/cordiolis_hepatico,
+		/datum/reagent/medicine/synaphydramine,
+		/datum/reagent/medicine/diphenhydramine,
+		/datum/reagent/medicine/sansufentanyl
+		)
 	var/allergy_string
 
 /datum/quirk/item_quirk/allergic/add_unique(client/client_source)

@@ -1,0 +1,10 @@
+author: "Rhials :)"
+delete-after: True
+changes:
+  - qol: "The Russian and Bounty Hunter fugitive hunter shuttles now come with enough oxygen for everyone."
+  - balance: "Fugitive Hunters get cool new IDs."
+  - balance: "Fugitive Hunter shuttles are now access restricted."
+  - balance: "The AI wires in the Bounty Hunter/Spacepol Spacevan shuttles now start cut."
+  - balance: "Every fugitive hunter shuttle now has a shuttle pinpointer present."
+  - code_imp: "Fixes the spawner menu text for psyker hunter spawners."
+  - image: "Blue and Orange mapping helper for Hunter Access."
