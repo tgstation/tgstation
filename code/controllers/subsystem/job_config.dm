@@ -73,6 +73,13 @@
 
 // now begins the actual work for SSjob
 
+/// Initializes all of the config singletons for each job config type and adds it to the `job_config_datum_singletons` var list.
+/datum/controller/subsystem/job/proc/generate_config_singletons()
+	for(var/datum/job_config_type/config_datum as anything in subtypesof(/datum/job_config_type))
+		var/config_datum_key = initial(config_datum.name)
+		var/new_config_datum = new config_datum
+		job_config_datum_singletons[config_datum_key] = new_config_datum
+
 /// Called in jobs subsystem initialize if LOAD_JOBS_FROM_TXT config flag is set: reads jobconfig.toml (or if in legacy mode, jobs.txt) to set all of the datum's values to what the server operator wants.
 /datum/controller/subsystem/job/proc/load_jobs_from_config()
 	var/toml_file = "[global.config.directory]/jobconfig.toml"
@@ -88,7 +95,7 @@
 				message_admins(span_notice("[job_title] (with config key [job_key]) is missing from jobconfig.toml! Using codebase defaults."))
 				continue
 
-			for(var/datum/job_config_type/config_datum as anything in subtypesof(/datum/job_config_type))
+			for(var/datum/job_config_type/config_datum as anything in job_config_datum_singletons)
 				var/config_datum_key = initial(config_datum.name)
 				var/config_value = job_config[job_key][config_datum_key]
 				if(!isnum(config_value)) // This will mean that the value was commented out, which means that the server operator didn't want to override the codebase default. So, we skip it.
@@ -194,7 +201,7 @@
 		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented. So, let's make sure we keep that pattern.
 		if(job_config[job_key]) // Let's see if any data for this job exists.
 			var/list/working_list = list()
-			for(var/datum/job_config_type/config_datum as anything in subtypesof(/datum/job_config_type))
+			for(var/datum/job_config_type/config_datum as anything in job_config_datum_singletons)
 				var/config_datum_key = initial(config_datum.name)
 				var/config_read_value = job_config[job_key][config_datum_key]
 				if(!isnum(config_read_value))
@@ -220,7 +227,7 @@
 /// This will just return a list for a completely new job that doesn't need to be migrated from an old config (completely new). Just done here to reduce copypasta
 /datum/controller/subsystem/job/proc/generate_blank_job_config(datum/job/new_occupation)
 	var/returnable_list = list()
-	for(var/datum/job_config_type/config_datum as anything in subtypesof(/datum/job_config_type))
+	for(var/datum/job_config_type/config_datum as anything in job_config_datum_singletons)
 		var/config_datum_key = initial(config_datum.name)
 		// Commented out keys here in case server operators wish to defer to codebase defaults.
 		returnable_list += list(
@@ -235,10 +242,12 @@
 	// make a quick list to ensure we don't double-dip total_positions and spawn_positions, but still get future config types in
 	var/list/datums_to_read = subtypesof(/datum/job_config_type) - list(/datum/job_config_type/default_positions, /datum/job_config_type/starting_positions)
 	for(var/datum/job_config_type/config_datum as anything in datums_to_read)
+		var/initialized_datum = new config_datum //yes i know sob sob
 		var/config_datum_key = initial(config_datum.name)
 		returnable_list += list(
 			"# [config_datum_key]" = config_datum.get_value(new_occupation),
 		)
+		qdel(config_datum)
 
 	return returnable_list
 
