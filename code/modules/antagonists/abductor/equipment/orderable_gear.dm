@@ -107,3 +107,4 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 
 #undef CATEGORY_BASIC_GEAR
 #undef CATEGORY_ADVANCED_GEAR
+#undef CATEGORY_OTHER_GEAR
