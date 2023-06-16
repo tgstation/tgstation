@@ -115,27 +115,27 @@
 /datum/status_effect/blooddrunk/on_apply()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
 	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.brute_mod *= 0.1
-		H.physiology.burn_mod *= 0.1
-		H.physiology.tox_mod *= 0.1
-		H.physiology.oxy_mod *= 0.1
-		H.physiology.clone_mod *= 0.1
-		H.physiology.stamina_mod *= 0.1
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.physiology.brute_mod *= 0.1
+		human_owner.physiology.burn_mod *= 0.1
+		human_owner.physiology.tox_mod *= 0.1
+		human_owner.physiology.oxy_mod *= 0.1
+		human_owner.physiology.clone_mod *= 0.1
+		human_owner.physiology.stamina_mod *= 0.1
 	owner.add_stun_absorption(source = id, priority = 4)
 	owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1, use_reverb = FALSE)
 	return TRUE
 
 /datum/status_effect/blooddrunk/on_remove()
 	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.brute_mod *= 10
-		H.physiology.burn_mod *= 10
-		H.physiology.tox_mod *= 10
-		H.physiology.oxy_mod *= 10
-		H.physiology.clone_mod *= 10
-		H.physiology.stamina_mod *= 10
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT);
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.physiology.brute_mod *= 10
+		human_owner.physiology.burn_mod *= 10
+		human_owner.physiology.tox_mod *= 10
+		human_owner.physiology.oxy_mod *= 10
+		human_owner.physiology.clone_mod *= 10
+		human_owner.physiology.stamina_mod *= 10
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
 	owner.remove_stun_absorption(id)
 
 //Used by changelings to rapidly heal

@@ -33,11 +33,11 @@
 	/// These all have the same arguments sent, so we can handle them all via the same signal handler.
 	/// Note though that we can register other signals to block effects outside of these if we want.
 	var/static/list/incapacitation_effect_signals = list(
-		COMSIG_LIVING_STATUS_STUN,
-		COMSIG_LIVING_STATUS_KNOCKDOWN,
 		COMSIG_LIVING_STATUS_IMMOBILIZE,
-		COMSIG_LIVING_STATUS_PARALYZE,
 		COMSIG_LIVING_STATUS_INCAPACITATE,
+		COMSIG_LIVING_STATUS_KNOCKDOWN,
+		COMSIG_LIVING_STATUS_PARALYZE,
+		COMSIG_LIVING_STATUS_STUN,
 	)
 
 /datum/status_effect/stun_absorption/on_creation(
@@ -145,7 +145,6 @@
 			return FALSE
 
 	// At this point, a stun was successfully absorbed
-	. = TRUE
 
 	// Only do effects if the amount was > 0 seconds
 	if(amount > 0 SECONDS)
@@ -165,7 +164,7 @@
 		if(seconds_of_stuns_absorbed >= max_seconds_of_stuns_blocked)
 			qdel(src)
 
-	return .
+	return TRUE
 
 /**
  * [proc/apply_status_effect] wrapper specifically for [/datum/status_effect/stun_absorption],
