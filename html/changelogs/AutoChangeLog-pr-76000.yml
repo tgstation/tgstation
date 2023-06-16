@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "Refactored Stun Absorptions (Bastard Sword, His Grace)"
+  - refactor: "Refactored Stun Immunity. Note this means that some mobs which, prior, were immune to all forms of incapacitation are now vulnerable to some. Notably, adult non-queen xenomorphs are now vulnerable to falling unconscious."
