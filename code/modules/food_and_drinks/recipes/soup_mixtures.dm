@@ -551,7 +551,10 @@
 	drink_type = VEGETABLES | FRUIT // ??
 
 /datum/chemical_reaction/food/soup/tomatosoup
-	required_reagents = list(/datum/reagent/water = 50)
+	required_reagents = list(
+		/datum/reagent/water = 50,
+		/datum/reagent/consumable/cream = 5
+	)
 	required_ingredients = list(
 		/obj/item/food/grown/tomato = 2,
 	)
