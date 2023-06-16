@@ -94,6 +94,7 @@
 	var/vomiting = FALSE
 	var/vomitCoefficient = 1
 	var/vomitTimeBonus = 0
+	var/treasureChance = 10
 	var/datum/action/cooldown/vomit/goosevomit
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Initialize(mapload)
@@ -181,6 +182,48 @@
 		playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
 		T.add_vomit_floor(src)
 
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/get_treasure_type()
+	var/treasure_type_list = list(/obj/item/sord,
+		/obj/item/storage/wallet,
+		/obj/item/storage/photo_album,
+		/obj/item/storage/box/snappops,
+		/obj/item/storage/crayons,
+		/obj/item/storage/belt/champion,
+		/obj/item/soap/deluxe,
+		/obj/item/pickaxe/diamond,
+		/obj/item/pen/invisible,
+		/obj/item/lipstick/random,
+		/obj/item/grenade/smokebomb,
+		/obj/item/grown/corncob,
+		/obj/item/poster/random_contraband,
+		/obj/item/poster/random_official,
+		/obj/item/book/manual/wiki/barman_recipes,
+		/obj/item/book/manual/chef_recipes,
+		/obj/item/bikehorn,
+		/obj/item/toy/beach_ball,
+		/obj/item/toy/basketball,
+		/obj/item/banhammer,
+		/obj/item/food/grown/ambrosia/deus,
+		/obj/item/food/grown/ambrosia/vulgaris,
+		/obj/item/pai_card,
+		/obj/item/instrument/violin,
+		/obj/item/instrument/guitar,
+		/obj/item/storage/belt/utility/full,
+		/obj/item/clothing/neck/tie/horrible,
+		/obj/item/clothing/suit/jacket/leather,
+		/obj/item/clothing/suit/jacket/leather/biker,
+		/obj/item/clothing/suit/costume/poncho,
+		/obj/item/clothing/suit/costume/poncho/green,
+		/obj/item/clothing/suit/costume/poncho/red,
+		/obj/item/stack/sheet/mineral/coal)
+
+	treasure_type_list += subtypesof(/obj/item/clothing/head/collectable)
+	treasure_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo)) //All toys, except for abstract types and syndicate cards.
+
+	var/treasure_type = pick(treasure_type_list)
+
+	return treasure_type
+
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(atom/A, hard = FALSE)
 	if (stat == DEAD)
 		return
@@ -188,6 +231,10 @@
 		return
 	var/turf/currentTurf = get_turf(src)
 	var/obj/item/food/consumed = A
+	if(prob(treasureChance))
+		qdel(consumed)
+		var/treasure_type = get_treasure_type()
+		consumed = new treasure_type()
 	consumed.forceMove(currentTurf)
 	var/destination = get_edge_target_turf(currentTurf, pick(GLOB.alldirs)) //Pick a random direction to toss them in
 	var/throwRange = hard ? rand(2,8) : 1
