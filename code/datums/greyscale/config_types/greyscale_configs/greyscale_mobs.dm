@@ -1,5 +1,5 @@
 //
-// MOBS
+// CARP
 //
 
 /datum/greyscale_config/carp
@@ -21,16 +21,11 @@
 	name = "Space Carp, Disk in Mouth"
 	json_config = 'code/datums/greyscale/json_configs/carp_disk_mouth.json'
 
-/datum/greyscale_config/garden_gnome
-	name = "Garden Gnome"
-	icon_file = 'icons/mob/simple/garden_gnome.dmi'
-	json_config = 'code/datums/greyscale/json_configs/garden_gnome.json'
-
 //
 // MISC
 //
 
-/datum/greyscale_config/heretic_rune
-	name = "Transmutation Rune"
-	icon_file = 'icons/effects/96x96.dmi'
-	json_config = 'code/datums/greyscale/json_configs/heretic_rune.json'
+/datum/greyscale_config/garden_gnome
+	name = "Garden Gnome"
+	icon_file = 'icons/mob/simple/garden_gnome.dmi'
+	json_config = 'code/datums/greyscale/json_configs/garden_gnome.json'
