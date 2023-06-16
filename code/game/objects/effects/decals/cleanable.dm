@@ -16,6 +16,18 @@
 	///The amount of reagent this decal holds, if decal_reagent is defined
 	var/reagent_amount = 0
 
+/// Creates a cleanable decal on a turf
+/// Use this if your decal is one of one, and thus we should not spawn it if it's there already
+/// Returns either the existing cleanable, the one we created, or null if we can't spawn on that turf
+/turf/proc/spawn_unique_cleanable(obj/effect/decal/cleanable/cleanable_type)
+	// There is no need to spam unique cleanables, they don't stack and it just chews cpu
+	var/obj/effect/decal/cleanable/existing = locate(cleanable_type) in src
+	if(existing)
+		return existing
+	if(decal_turf_compatability(src, initial(cleanable_type.turf_loc_flags)))
+		return null
+	return new cleanable_type(src)
+
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	if (random_icon_states && (icon_state == initial(icon_state)) && length(random_icon_states) > 0)

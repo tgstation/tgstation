@@ -7,6 +7,7 @@
 	plane = GAME_PLANE //makes the graffiti visible over a wall.
 	mergeable_decal = FALSE
 	flags_1 = ALLOW_DARK_PAINTS_1
+	turf_loc_flags = DECAL_BLOCK_GROUNDLESS_TURF
 	var/do_icon_rotate = TRUE
 	var/rotation = 0
 	var/paint_colour = "#FFFFFF"
@@ -30,9 +31,6 @@
 		paint_colour = main
 	add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, PROC_REF(on_painted))
-
-/obj/effect/decal/cleanable/crayon/NeverShouldHaveComeHere(turf/T)
-	return isgroundlessturf(T)
 
 /obj/effect/decal/cleanable/crayon/proc/on_painted(datum/source, mob/user, obj/item/toy/crayon/spraycan/spraycan, is_dark_color)
 	SIGNAL_HANDLER

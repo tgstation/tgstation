@@ -276,7 +276,8 @@
 	new /obj/item/book/granter/crafting_recipe/boneyard_notes(src)
 
 /obj/effect/decal/remains/human/grave
-	turf_loc_check = FALSE
+	turf_loc_flags = NONE
+
 
 //***Fluff items for lore/intrigue
 /obj/item/paper/crumpled/muddy/fluff/elephant_graveyard

@@ -73,7 +73,7 @@
 	layer = ABOVE_WINDOW_LAYER
 	plane = GAME_PLANE
 	vis_flags = VIS_INHERIT_PLANE
-	turf_loc_check = FALSE
+	turf_loc_flags = NONE
 	alpha = 180
 
 /obj/effect/decal/cleanable/blood/tracks
@@ -103,7 +103,7 @@
 	plane = GAME_PLANE
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
-	turf_loc_check = FALSE
+	turf_loc_flags = NONE
 
 	dryname = "rotting gibs"
 	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
