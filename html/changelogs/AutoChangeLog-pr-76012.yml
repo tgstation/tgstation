@@ -1,0 +1,5 @@
+author: "FernandoJ8"
+delete-after: True
+changes:
+  - bugfix: "shipping manifests labelled as erroneous due to missing contents are now guaranteed to be missing contents"
+  - spellcheck: "shipping manifests now display repeated items on a single line"
