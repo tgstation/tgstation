@@ -320,6 +320,9 @@
 		// Borgs with an RPED can print stock parts for free
 		else if((locate(/obj/item/storage/part_replacer/cyborg) in borg.model.modules) && ispath(design.build_path, /obj/item/stock_parts))
 			tax = 0
+		// Borgs with the beaker manipulation apparatus can print beakers for free
+		else if((locate(/obj/item/borg/apparatus/beaker) in borg.model.modules) && ispath(design.build_path, /obj/item/reagent_containers/cup/beaker))
+			tax = 0
 
 		if(!borg.cell)
 			return FALSE
