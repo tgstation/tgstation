@@ -313,16 +313,9 @@
 		var/mob/living/silicon/robot/borg = usr
 
 		var/tax = SILICON_LATHE_TAX
-		// I decided this method was better than one extremely long, extremely unreadable if statement
-		// Borgs with the organ bag can print organs for free
-		if((locate(/obj/item/borg/apparatus/organ_storage) in borg.model.modules) && ispath(design.build_path, /obj/item/organ))
-			tax = 0
-		// Borgs with an RPED can print stock parts for free
-		else if((locate(/obj/item/storage/part_replacer/cyborg) in borg.model.modules) && ispath(design.build_path, /obj/item/stock_parts))
-			tax = 0
-		// Borgs with the beaker manipulation apparatus can print beakers for free
-		else if((locate(/obj/item/borg/apparatus/beaker) in borg.model.modules) && ispath(design.build_path, /obj/item/reagent_containers/cup/beaker))
-			tax = 0
+		for(var/T in GLOB.SILICON_LATHE_TAX_EXCEPTIONS)
+			if((locate(T) in borg.model.modules) && is_path_in_list(design.build_path, GLOB.SILICON_LATHE_TAX_EXCEPTIONS[T]))
+				tax = 0
 
 		if(!borg.cell)
 			return FALSE

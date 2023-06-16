@@ -19,6 +19,19 @@
 #define LATHE_TAX 10
 //How much POWER a borg's cell is taxed if they print something from a departmental lathe.
 #define SILICON_LATHE_TAX 2000
+//The modules that grant exceptions to the silicon lathe tax, and the items for which the exception applies
+//Because some of the modules have lists of accepted item typepaths, even single typepaths have to be encased in lists
+GLOBAL_LIST_INIT(SILICON_LATHE_TAX_EXCEPTIONS, list(
+	/obj/item/borg/apparatus/organ_storage = list(/obj/item/organ),
+	/obj/item/storage/part_replacer/cyborg = list(/obj/item/stock_parts),
+	/obj/item/borg/apparatus/beaker = list(/obj/item/reagent_containers/cup/beaker),
+	/obj/item/electroadaptive_pseudocircuit = list(
+		/obj/item/electronics/firelock,
+		/obj/item/electronics/airalarm,
+		/obj/item/electronics/firealarm,
+		/obj/item/electronics/apc,
+		),
+	))
 
 #define STATION_TARGET_BUFFER 25
 
