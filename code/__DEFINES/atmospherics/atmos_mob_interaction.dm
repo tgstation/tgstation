@@ -144,3 +144,6 @@
 #define SHOES_MIN_TEMP_PROTECT 2.0
 /// For gloves
 #define SHOES_MAX_TEMP_PROTECT 1500
+
+///Minimum temperature for items on fire
+#define BURNING_ITEM_MINIMUM_TEMPERATURE (150+T0C)

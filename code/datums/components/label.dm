@@ -83,9 +83,13 @@
 /datum/component/label/proc/apply_label()
 	var/atom/owner = parent
 	owner.name += " ([label_name])"
+	ADD_TRAIT(owner, TRAIT_HAS_LABEL, src)
+	owner.update_appearance(UPDATE_ICON)
 
 /// Removes the label from the parent's name
 /datum/component/label/proc/remove_label()
 	var/atom/owner = parent
 	owner.name = replacetext(owner.name, "([label_name])", "") // Remove the label text from the parent's name, wherever it's located.
 	owner.name = trim(owner.name) // Shave off any white space from the beginning or end of the parent's name.
+	REMOVE_TRAIT(owner, TRAIT_HAS_LABEL, src)
+	owner.update_appearance(UPDATE_ICON)

@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixed a cheeky way RDS revealed you were an antag before you actually got antag. Sorry, you know who you are."
+  - config: "RDS now has policy.json support, to allow customization of the roundstart \"anti-grief\" message."

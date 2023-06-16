@@ -498,3 +498,26 @@
   - bugfix: The divine bow can be properly stored in the chaplain armor's suit storage,
       much like all other bulky null rods.
   - sound: Bows have sounds for drawing, firing and loading.
+2023-06-16:
+  Ghommie:
+  - rscadd: 'Expanded the Experimental MODsuit Bepis node with three new modules:
+      Magneto Charger, Recycler and Shooting Assistant.'
+  - rscadd: Added a Riot Foam Recycler module to the black market, as well a more
+      innocuous version as maint loot.
+  JohnFulpWillard:
+  - bugfix: Lava will no longer burn 6 of the mirrors in pride ruin
+  - bugfix: Lava will no longer burn plants that spawn in them.
+  MTandi:
+  - qol: You can name barrels with a pen now, changing its icon
+  Melbert:
+  - bugfix: Fix hungover people never spawning stuck in closets
+  Tattle:
+  - image: removed a stray gray pixel from the milk containers
+  carlarctg:
+  - qol: Heretic runes no longer have every single transparent pixel set to 1 alpha,
+      to make it easier to click on objects.
+  - qol: Clearing heretic runes with mansus grasp takes 0.4 seconds of standing still,
+      to prevent you from accidentally clearing it in combat.
+  - code_imp: Added code for effect remover element to use a windup if set.
+  mc-oofert:
+  - bugfix: siliconnect log tab updates correctly
