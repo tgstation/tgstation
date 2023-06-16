@@ -184,6 +184,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DISFIGURED "disfigured"
 /// Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_XENO_HOST "xeno_host"
+/// This mob is immune to stun causing status effects and stamcrit.
+/// Prefer to use [/mob/living/proc/check_stun_immunity] over checking for this trait exactly.
 #define TRAIT_STUNIMMUNE "stun_immunity"
 #define TRAIT_BATON_RESISTANCE "baton_resistance"
 /// Anti Dual-baton cooldown bypass exploit.
@@ -863,7 +865,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHANGELING_DRAIN "drain"
 /// changelings with this trait can no longer talk over the hivemind
 #define CHANGELING_HIVEMIND_MUTE "ling_mute"
-#define HIGHLANDER "highlander"
 #define TRAIT_HULK "hulk"
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
