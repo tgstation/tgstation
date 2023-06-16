@@ -608,7 +608,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					eye_overlay.pixel_y += height_offset
 					standing += eye_overlay
 
-		// organic body markings (oh my god this is terrible please rework this to be done on the limbs themselves)
+		// organic body markings (oh my god this is terrible please rework this to be done on the limbs themselves i beg you)
 		if(HAS_MARKINGS in species_traits)
 			var/obj/item/bodypart/chest/chest = species_human.get_bodypart(BODY_ZONE_CHEST)
 			var/obj/item/bodypart/arm/right/right_arm = species_human.get_bodypart(BODY_ZONE_R_ARM)
