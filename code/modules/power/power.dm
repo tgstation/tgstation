@@ -19,6 +19,8 @@
 	var/datum/powernet/powernet
 	///Cable layer to which the machine is connected.
 	var/machinery_layer = MACHINERY_LAYER_1
+	///Can the machinery_layer be tweked with a multi tool
+	var/can_change_machinery_layer = FALSE
 
 /obj/machinery/power/Initialize(mapload)
 	. = ..()
@@ -43,6 +45,28 @@
 //override this if the machine needs special functionality for making wire nodes appear, ie emitters, generators, etc.
 /obj/machinery/power/proc/should_have_node()
 	return FALSE
+
+/obj/machinery/power/examine(mob/user)
+	. = ..()
+	. += span_notice("It's operating on [lowertext(GLOB.machinery_layer_to_name["[machinery_layer]"])]")
+	if(can_change_machinery_layer)
+		. += span_notice("It's operating layer can be changed with a [EXAMINE_HINT("multitool")].")
+
+//does the required checks to see if this machinery layer can be changed
+/obj/machinery/power/proc/machinery_layer_change_checks(mob/living/user, obj/item/tool)
+	return can_change_machinery_layer
+
+/obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
+	if(!can_change_machinery_layer || !machinery_layer_change_checks(user, tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	var/choice = tgui_input_list(user, "Select Machine Operation Layer", "Select Machinery Layer", GLOB.machinery_layer_to_value)
+	if(isnull(choice))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	machinery_layer = GLOB.machinery_layer_to_value[choice]
+	balloon_alert(user, "now operating on [choice]")
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)

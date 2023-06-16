@@ -13,6 +13,7 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 	buckle_requires_restraints = TRUE
+	can_change_machinery_layer = TRUE
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
@@ -37,6 +38,12 @@
 /obj/machinery/power/energy_accumulator/tesla_coil/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/tesla_coil(src)
+
+/obj/machinery/power/energy_accumulator/tesla_coil/machinery_layer_change_checks(mob/living/user, obj/item/tool)
+	if(anchored)
+		balloon_alert(user, "unanchor first!")
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/energy_accumulator/tesla_coil/RefreshParts()
 	. = ..()

@@ -61,9 +61,17 @@
 			balloon_alert(user, "need ten lengths of cable!")
 			return
 
+
+		var/terminal_machinery_layer = MACHINERY_LAYER_1
+		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+			var/choice = tgui_input_list(user, "Select Terminal Operation Layer", "Select Machinery Layer", GLOB.machinery_layer_to_value)
+			if(!isnull(choice))
+				terminal_machinery_layer = GLOB.machinery_layer_to_value[choice]
+
 		user.visible_message(span_notice("[user.name] adds cables to the APC frame."))
 		balloon_alert(user, "adding cables to the frame...")
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+
 		if(!do_after(user, 20, target = src))
 			return
 		if(installing_cable.get_amount() < 10 || !installing_cable)
@@ -77,7 +85,7 @@
 			return
 		installing_cable.use(10)
 		balloon_alert(user, "cables added to the frame")
-		make_terminal()
+		make_terminal(terminal_machinery_layer)
 		terminal.connect_to_network()
 		return
 
