@@ -2068,6 +2068,14 @@
 	dir = 4
 	},
 /obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	pixel_y = -8
+	},
+/obj/structure/railing/corner{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = -29
+	},
 /turf/open/openspace,
 /area/station/asteroid)
 "afK" = (
@@ -2077,6 +2085,9 @@
 	},
 /obj/structure/ladder,
 /obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	pixel_y = -8
+	},
 /turf/open/openspace,
 /area/station/asteroid)
 "afL" = (
@@ -2088,6 +2099,14 @@
 	dir = 1
 	},
 /obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	pixel_y = -8
+	},
+/obj/structure/railing/corner{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = -29
+	},
 /turf/open/openspace,
 /area/station/asteroid)
 "afN" = (
@@ -2183,6 +2202,15 @@
 "agb" = (
 /obj/structure/railing/corner,
 /obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 1;
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/structure/railing/corner{
+	pixel_y = 30;
+	pixel_x = -31
+	},
 /turf/open/openspace,
 /area/station/asteroid)
 "agc" = (
@@ -2190,6 +2218,11 @@
 /obj/structure/railing,
 /obj/structure/ladder,
 /obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 1;
+	pixel_x = 1;
+	pixel_y = 6
+	},
 /turf/open/openspace,
 /area/station/asteroid)
 "agd" = (
@@ -2197,6 +2230,16 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 1;
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/structure/railing/corner{
+	pixel_y = 30;
+	dir = 8;
+	pixel_x = 32
+	},
 /turf/open/openspace,
 /area/station/asteroid)
 "age" = (
@@ -3931,6 +3974,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/box,
 /obj/machinery/shower/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "arY" = (
@@ -10606,11 +10650,12 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "cfg" = (
-/obj/structure/railing/corner{
-	dir = 4
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
-/turf/open/openspace,
-/area/station/asteroid)
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "cfp" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner,
@@ -10913,6 +10958,9 @@
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "cmx" = (
 /obj/effect/decal/cleanable/confetti,
+/obj/machinery/button/door/directional/south{
+	id = "honkbunker"
+	},
 /turf/open/floor/mineral/bananium,
 /area/ruin/powered/clownplanet{
 	name = "The Noise's Jam-Tastic radical listening Post"
@@ -12678,7 +12726,6 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "cVl" = (
@@ -13054,7 +13101,6 @@
 	desc = "Theodore Was Here.";
 	req_access = "theatre"
 	},
-/obj/effect/turf_decal/sand/plating,
 /obj/structure/fans/tiny,
 /turf/open/ballpit,
 /area/ruin/powered/clownplanet{
@@ -16222,11 +16268,9 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "emv" = (
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/turf/open/openspace,
-/area/station/asteroid)
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "emK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -17153,7 +17197,6 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "eDG" = (
@@ -18445,11 +18488,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "fgx" = (
-/obj/structure/railing/corner{
-	dir = 8
+/obj/machinery/status_display/evac/directional/north{
+	pixel_y = 0
 	},
-/turf/open/openspace,
-/area/station/asteroid)
+/turf/closed/wall/r_wall,
+/area/station/engineering/main)
 "fgH" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/effect/turf_decal/weather/snow/corner,
@@ -22042,6 +22085,7 @@
 	pixel_x = -32
 	},
 /obj/structure/table/glass,
+/obj/machinery/cell_charger,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "gAk" = (
@@ -27872,7 +27916,8 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/airlock/external/glass{
 	name = "The Noise's Jam-Tastic radical listening Post";
-	req_access = "theatre"
+	req_access = "theatre";
+	id = "honkbunker"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -36268,6 +36313,7 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "lNd" = (
@@ -41472,9 +41518,12 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/science)
 "nHV" = (
-/obj/structure/railing/corner,
-/turf/open/openspace,
-/area/station/asteroid)
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "nHW" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -45048,7 +45097,6 @@
 /obj/structure/sign/warning/no_smoking{
 	pixel_y = -32
 	},
-/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
@@ -48569,6 +48617,7 @@
 	dir = 1;
 	pixel_y = -32
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "qqv" = (
@@ -55177,7 +55226,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/button/door/directional/north{
-	id = "midtunnelleft";
+	id = "lefttunnel";
 	name = "Tunnel Access Shutters Toggle"
 	},
 /turf/open/floor/plating,
@@ -58488,7 +58537,6 @@
 /turf/closed/wall,
 /area/station/hallway/secondary/entry)
 "tPV" = (
-/obj/machinery/status_display/evac/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -60441,6 +60489,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
+/obj/machinery/cell_charger,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "uyJ" = (
@@ -68712,6 +68761,10 @@
 	name = "Storage";
 	req_access = "theatre"
 	},
+/obj/machinery/door/poddoor/shutters{
+	name = "Power and stolen shoe storage";
+	id = "clownbunker"
+	},
 /turf/open/floor/iron/herringbone,
 /area/ruin/powered/clownplanet{
 	name = "The Noise's Jam-Tastic radical listening Post"
@@ -69562,9 +69615,14 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
 "xSj" = (
-/obj/machinery/cell_charger,
-/turf/closed/wall/r_wall,
-/area/station/security/checkpoint/engineering)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/button/door/directional/east{
+	id = "clownbunker"
+	},
+/turf/open/floor/mineral/bananium,
+/area/ruin/powered/clownplanet{
+	name = "The Noise's Jam-Tastic radical listening Post"
+	})
 "xSr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -75986,7 +76044,7 @@ aan
 fTI
 agz
 tun
-tun
+xSj
 piT
 gcp
 eES
@@ -99320,7 +99378,7 @@ uGy
 wgc
 hJd
 nxT
-iMH
+csJ
 pwX
 hJd
 aYn
@@ -99577,7 +99635,7 @@ uGy
 wgc
 ycg
 nxT
-iMH
+csJ
 crz
 bHA
 vsI
@@ -100866,7 +100924,7 @@ eTZ
 eTZ
 eTZ
 kjG
-dnl
+emv
 qqo
 aeL
 aeL
@@ -101628,7 +101686,7 @@ bbj
 roB
 kCB
 fuA
-xSj
+roB
 jHP
 tYO
 tpg
@@ -101895,7 +101953,7 @@ sHH
 sHH
 ccX
 bvI
-cjy
+fgx
 aeL
 aeL
 aeL
@@ -146840,11 +146898,11 @@ jEu
 lQn
 lQn
 lQn
-cRJ
+nHV
 nmY
 hNx
 nmY
-uGf
+cfg
 lQn
 lQn
 lQn
@@ -159940,11 +159998,11 @@ tdu
 aHf
 afN
 hGM
-cfg
+afy
 afP
 nJq
 afX
-nHV
+afy
 aHk
 afN
 age
@@ -160197,11 +160255,11 @@ aHk
 afB
 afE
 afJ
-riN
+afy
 afP
 nJq
 afX
-tdu
+afy
 agb
 xis
 agf
@@ -160454,11 +160512,11 @@ age
 afC
 vFt
 afK
-riN
+afy
 afP
 cPu
 afX
-tdu
+afy
 agc
 yiM
 agg
@@ -160711,11 +160769,11 @@ tlH
 afD
 afG
 afM
-riN
+afy
 afP
 nJq
 afX
-tdu
+afy
 agd
 afG
 agh
@@ -160968,11 +161026,11 @@ tdu
 aHf
 age
 xVN
-emv
+afy
 afP
 nJq
 afX
-fgx
+afy
 tlH
 age
 afN
@@ -161739,11 +161797,11 @@ tdu
 aHf
 age
 hGM
-cfg
+afy
 afP
 omp
 afX
-nHV
+afy
 aHk
 age
 afN
@@ -161996,11 +162054,11 @@ aHk
 afB
 afE
 afJ
-riN
+afy
 afP
 omp
 afX
-tdu
+afy
 agb
 afE
 agf
@@ -162253,11 +162311,11 @@ age
 afC
 izU
 afK
-riN
+afy
 afP
 omp
 afX
-tdu
+afy
 agc
 qas
 agg
@@ -162510,11 +162568,11 @@ tlH
 afD
 afG
 afM
-riN
+afy
 afP
 omp
 afX
-tdu
+afy
 agd
 afG
 agh
@@ -162767,11 +162825,11 @@ tdu
 aHf
 afN
 xVN
-emv
+afy
 afP
 omp
 afX
-fgx
+afy
 tlH
 afN
 afN
@@ -173561,11 +173619,11 @@ tdu
 aHf
 afN
 hGM
-cfg
+afy
 afP
 omp
 afX
-nHV
+afy
 aHk
 afN
 age
@@ -173818,11 +173876,11 @@ aHk
 afB
 afE
 afJ
-riN
+afy
 afP
 omp
 afX
-tdu
+afy
 agb
 xis
 agf
@@ -174075,11 +174133,11 @@ age
 afC
 qas
 afK
-riN
+afy
 afP
 omp
 afX
-tdu
+afy
 agc
 izU
 agg
@@ -174332,11 +174390,11 @@ tlH
 afD
 afG
 afM
-riN
+afy
 afP
 omp
 afX
-tdu
+afy
 agd
 afG
 agh
@@ -174589,11 +174647,11 @@ tdu
 aHf
 age
 xVN
-emv
+afy
 afP
 omp
 afX
-fgx
+afy
 tlH
 age
 afN
@@ -175360,11 +175418,11 @@ tdu
 aHf
 age
 hGM
-cfg
+afy
 afP
 ozQ
 afX
-nHV
+afy
 aHk
 age
 afN
@@ -175617,11 +175675,11 @@ aHk
 afB
 afE
 afJ
-riN
+afy
 afP
 ozQ
 afX
-tdu
+afy
 agb
 afE
 agf
@@ -175874,11 +175932,11 @@ age
 afC
 bMb
 afK
-riN
+afy
 afP
 ozQ
 afX
-tdu
+afy
 agc
 mZJ
 agg
@@ -176131,11 +176189,11 @@ tlH
 afD
 afG
 afM
-riN
+afy
 afP
 ozQ
 afX
-tdu
+afy
 agd
 afG
 agh
@@ -176388,11 +176446,11 @@ tdu
 aHf
 afN
 xVN
-emv
+afy
 afP
 afW
 afX
-fgx
+afy
 tlH
 afN
 afN
