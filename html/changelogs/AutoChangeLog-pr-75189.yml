@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Lava will no longer burn 6 of the mirrors in pride ruin"
-  - bugfix: "Lava will no longer burn plants that spawn in them."
