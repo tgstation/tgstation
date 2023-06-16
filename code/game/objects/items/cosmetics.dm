@@ -74,7 +74,7 @@
 	var/static/list/possible_colors
 	if(!possible_colors)
 		possible_colors = list()
-		for(var/obj/item/lipstick/lipstick_path in (typesof(/obj/item/lipstick) - src.type))
+		for(var/obj/item/lipstick/lipstick_path as anything in (typesof(/obj/item/lipstick) - src.type))
 			if(!initial(lipstick_path.lipstick_color))
 				continue
 			possible_colors[initial(lipstick_path.lipstick_color)] = initial(lipstick_path.name)
