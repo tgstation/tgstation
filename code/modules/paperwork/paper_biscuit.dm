@@ -31,7 +31,7 @@
 /obj/item/folder/biscuit/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(isnull(contained_slip) && istype(arrived, /obj/item/paper/paperslip))
-		contained_slip == arrived
+		contained_slip = arrived
 
 /obj/item/folder/biscuit/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] tries to eat [src]! [user.p_theyre()] trying to commit suicide!"))
