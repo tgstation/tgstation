@@ -8298,6 +8298,10 @@
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"buX" = (
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/iron,
+/area/station/science/ordnance/storage)
 "bvk" = (
 /obj/effect/landmark/blobstart,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -20102,6 +20106,7 @@
 /area/station/security/checkpoint/engineering)
 "fSq" = (
 /obj/structure/sign/warning/fire/directional/south,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
 "fSr" = (
@@ -32501,6 +32506,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "kIE" = (
@@ -43003,6 +43009,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
+"oEd" = (
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "oEf" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -103353,7 +103363,7 @@ aaa
 hZr
 gZE
 hJN
-wQm
+oEd
 pwG
 vTF
 akP
@@ -119818,7 +119828,7 @@ gIj
 loa
 ygC
 ygC
-ygC
+buX
 fSq
 dfz
 hji

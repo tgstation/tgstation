@@ -65362,6 +65362,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel)
+"pXY" = (
+/obj/machinery/door/firedoor/heavy,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/station/science/ordnance/storage)
 "pYh" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
@@ -86818,6 +86828,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "vnu" = (
@@ -87541,6 +87552,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -131624,7 +131636,7 @@ wtb
 bKw
 qgo
 vvy
-sBE
+pXY
 tsZ
 sBE
 hkU
