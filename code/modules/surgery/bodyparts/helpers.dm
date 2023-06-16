@@ -166,7 +166,7 @@
 		if(BODY_ZONE_CHEST)
 			new_bodypart = new /obj/item/bodypart/chest/alien()
 	if(new_bodypart)
-		new_bodypart.update_limb(src)
+		new_bodypart.update_limb(is_creating = TRUE)
 
 
 
