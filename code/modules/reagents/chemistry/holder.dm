@@ -65,6 +65,9 @@
 			reagent_to_react_count[reagent_id] += 1
 
 	var/list/reaction_lookup = GLOB.chemical_reactions_list_reactant_index
+	// Create filters based on a random reagent id in the required reagents list - this is used to speed up handle_reactions()
+	// Basically, we only really need to care about ONE reagent, at least when initially filtering, since any others are ignorable
+	// Doing this separately because it relies on the loop above, and this is easier to parse
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
 		var/preferred_id = null
 		for(var/reagent_id as anything in reaction.required_reagents)
@@ -126,9 +129,6 @@
 				if(!GLOB.chemical_reactions_list_product_index[id])
 					GLOB.chemical_reactions_list_product_index[id] = list()
 				GLOB.chemical_reactions_list_product_index[id] += reaction
-
-		// Create filters based on a random reagent id in the required reagents list - this is used to speed up handle_reactions()
-		// Basically, we only really need to care about ONE reagent, at least when initially filtering, since any others are ignorable
 
 
 ///////////////////////////////Main reagents code/////////////////////////////////////////////
@@ -1253,7 +1253,6 @@
 	var/list/cached_reagents = reagent_list
 	. = 0 // This is a relatively hot proc.
 	var/total_ph = 0 // I know I know, I'm sorry
-	#warn is a switch faster then 2 else ifs (and thus datum var reads)
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		if((reagent.volume < 0.05) && !is_reacting)
 			del_reagent(reagent.type)
