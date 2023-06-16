@@ -5327,4 +5327,6 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
+#include "modular_skyraptor\modules\aesthetics\batong\batong.dm"
+#include "modular_skyraptor\modules\aesthetics\oldnewsurgery\oldnewsurgery.dm"
 // END_INCLUDE
