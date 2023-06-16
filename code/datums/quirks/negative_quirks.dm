@@ -973,7 +973,16 @@
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/item/reagent_containers/hypospray/medipen) // epinephrine medipen stops allergic reactions
 	var/list/allergies = list()
-	var/list/blacklist = list(/datum/reagent/medicine/c2,/datum/reagent/medicine/epinephrine,/datum/reagent/medicine/adminordrazine,/datum/reagent/medicine/omnizine/godblood,/datum/reagent/medicine/cordiolis_hepatico,/datum/reagent/medicine/synaphydramine,/datum/reagent/medicine/diphenhydramine)
+	var/list/blacklist = list(
+		/datum/reagent/medicine/c2,
+		/datum/reagent/medicine/epinephrine,
+		/datum/reagent/medicine/adminordrazine,
+		/datum/reagent/medicine/omnizine/godblood,
+		/datum/reagent/medicine/cordiolis_hepatico,
+		/datum/reagent/medicine/synaphydramine,
+		/datum/reagent/medicine/diphenhydramine,
+		/datum/reagent/medicine/sansufentanyl
+		)
 	var/allergy_string
 
 /datum/quirk/item_quirk/allergic/add_unique(client/client_source)
