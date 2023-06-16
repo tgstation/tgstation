@@ -17,7 +17,7 @@
 
 GLOBAL_VAR_INIT(CHARGELEVEL, 0.001) // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
 
-// Converts cable layer name to its human readable name
+// Converts cable layer to its human readable name
 GLOBAL_LIST_INIT(cable_layer_to_name, list(
 	"[CABLE_LAYER_1]" = "Cable Layer 1",
 	"[CABLE_LAYER_2]" = "Cable Layer 2",
