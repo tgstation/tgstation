@@ -145,8 +145,6 @@
 			scale = world.icon_size / width
 		else
 			scale = world.icon_size / height
-	preview_overlay.pixel_x = 0
-	preview_overlay.pixel_y = 0
 	preview_overlay.transform = preview_overlay.transform.Scale(scale)
 	preview_overlay.appearance_flags |= TILE_BOUND
 	preview_overlay.layer = FLOAT_LAYER
