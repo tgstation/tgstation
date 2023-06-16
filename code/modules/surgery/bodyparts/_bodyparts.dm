@@ -910,8 +910,9 @@
 				. += aux_em_block
 		//EMISSIVE CODE END
 
-	//Ok so legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
-	if((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG))
+	//No need to handle leg layering if dropped, we only face south anyways
+	if(!dropped && (body_zone == BODY_ZONE_R_LEG) && (body_zone == BODY_ZONE_L_LEG))
+		//Legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
 		var/obj/item/bodypart/leg/leg_source = src
 		for(var/image/limb_image in .)
 			//remove the old, unmasked image
