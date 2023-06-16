@@ -205,11 +205,20 @@
 "aJ" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/computer/operating,
-/obj/item/disk/surgery/debug{
-	name = "Interdyne Surgical Operations Disk"
-	},
 /obj/machinery/defibrillator_mount/charging{
 	pixel_y = 28
+	},
+/obj/item/disk/surgery/brainwashing{
+	name = "Interdyne Brainwashing Protocol Surgery Disk";
+	pixel_x = -8
+	},
+/obj/item/disk/surgery/sleeper_protocol{
+	name = "Interdyne Sleeper Protocal Surgery Disk";
+	pixel_x = 1
+	},
+/obj/item/disk/surgery/forgottenship{
+	name = "Interdyne Advanced Surgery Procedures Disk";
+	pixel_x = 9
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
