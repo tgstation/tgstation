@@ -91,7 +91,7 @@
 
 /datum/component/jetpack/proc/deactivate(datum/source, mob/user)
 	SIGNAL_HANDLER
-	if(moving)
+	if(user)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 		UnregisterSignal(user, COMSIG_MOVABLE_SPACEMOVE)
