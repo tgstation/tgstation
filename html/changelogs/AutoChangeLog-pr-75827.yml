@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - qol: "Latejoining crew start with crowbars if arrivals enviromental power is OFF"
