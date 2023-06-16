@@ -204,7 +204,7 @@
 
 // create a terminal object pointing towards the SMES
 // wires will attach to this
-/obj/machinery/power/smes/proc/make_terminal(turf/T, var/terminal_machinery_layer)
+/obj/machinery/power/smes/proc/make_terminal(turf/T, terminal_machinery_layer)
 	terminal = new/obj/machinery/power/terminal(T)
 	terminal.machinery_layer = terminal_machinery_layer
 	terminal.setDir(get_dir(T,src))
