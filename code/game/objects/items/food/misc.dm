@@ -87,7 +87,8 @@
 	foodtypes = GROSS
 	w_class = WEIGHT_CLASS_SMALL
 	preserved_food = TRUE //Can't decompose any more than this
-	var/stink_particles //moldy food gets stink lines, yucky yuck
+	/// Variable that holds the reference to the stink lines we get when we're moldy, yucky yuck
+	var/stink_particles
 
 /obj/item/food/badrecipe/Initialize(mapload)
 	. = ..()
