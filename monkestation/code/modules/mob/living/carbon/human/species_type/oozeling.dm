@@ -1,6 +1,6 @@
 /datum/species/oozeling
 	name = "\improper Oozeling"
-	plural_form = "Slimepeople"
+	plural_form = "Oozelings"
 	id = SPECIES_OOZELING
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
