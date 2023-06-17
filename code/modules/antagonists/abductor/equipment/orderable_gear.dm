@@ -2,7 +2,7 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 
 #define CATEGORY_BASIC_GEAR "Basic Gear"
 #define CATEGORY_ADVANCED_GEAR "Advanced Gear"
-#define CATEGORY_OTHER_GEAR "Other Gear"
+#define CATEGORY_MISC_GEAR "Miscellaneous Gear"
 
 /datum/abductor_gear
 	/// Name of the gear
@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 	description = "A mysterious structure that allows for instant communication between users. Using it inhand will attune it to your mothership's channel. Pretty impressive until you need to eat something."
 	id = "superlingual_matrix"
 	build_path = list(/obj/item/organ/internal/tongue/abductor = 1)
-	category = CATEGORY_OTHER_GEAR
+	category = CATEGORY_MISC_GEAR
 
 /datum/abductor_gear/mental_interface
 	name = "Mental Interface Device"
@@ -96,15 +96,15 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 	description = "Delivers a leftover specimen from an earlier abduction operation."
 	id = "cow"
 	build_path = list(/mob/living/basic/cow = 1, /obj/item/food/grown/wheat = 3)
-	category = CATEGORY_OTHER_GEAR
+	category = CATEGORY_MISC_GEAR
 
 /datum/abductor_gear/posters
 	name = "Decorative Posters"
 	description = "Some posters, to decorate the walls of the Mothership (or even the station) with."
 	id = "poster"
 	build_path = list(/obj/item/poster/random_abductor = 2)
-	category = CATEGORY_OTHER_GEAR
+	category = CATEGORY_MISC_GEAR
 
 #undef CATEGORY_BASIC_GEAR
 #undef CATEGORY_ADVANCED_GEAR
-#undef CATEGORY_OTHER_GEAR
+#undef CATEGORY_MISC_GEAR
