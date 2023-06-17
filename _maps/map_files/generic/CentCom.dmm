@@ -6287,7 +6287,9 @@
 /area/centcom/central_command_areas/control)
 "Da" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/bodycontainer/morgue,
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
@@ -6683,6 +6685,23 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/evacuation/ship)
+"Gm" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/pen{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/flashlight/lamp{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/control)
 "Gs" = (
 /obj/machinery/power/smes/magical,
 /obj/effect/turf_decal/stripes/line,
@@ -7542,10 +7561,6 @@
 /obj/structure/flora/bush/sparsegrass,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation/ship)
-"LH" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/centcom/central_command_areas/evacuation/ship)
 "LI" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
@@ -8049,23 +8064,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"Ok" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/pen{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/flashlight/lamp{
-	pixel_x = -5;
-	pixel_y = 6
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
 "Om" = (
 /obj/structure/table/reinforced,
@@ -37826,7 +37824,7 @@ aL
 Lt
 Lt
 aa
-LH
+Lt
 LN
 OW
 yX
@@ -55507,7 +55505,7 @@ Mz
 io
 TU
 WP
-Ok
+Gm
 io
 tO
 tN

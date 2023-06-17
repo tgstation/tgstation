@@ -1,6 +1,6 @@
 #define VV_HTML_ENCODE(thing) ( sanitize ? html_encode(thing) : thing )
 /// Get displayed variable in VV variable list
-/proc/debug_variable(name, value, level, datum/D, sanitize = TRUE) //if D is a list, name will be index, and value will be assoc value.
+/proc/debug_variable(name, value, level, datum/D, sanitize = TRUE, display_flags = NONE) //if D is a list, name will be index, and value will be assoc value.
 	var/header
 	if(D)
 		if(islist(D))
@@ -69,7 +69,7 @@
 		var/list/L = value
 		var/list/items = list()
 
-		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > (IS_NORMAL_LIST(L) ? VV_NORMAL_LIST_NO_EXPAND_THRESHOLD : VV_SPECIAL_LIST_NO_EXPAND_THRESHOLD)))
+		if (!(display_flags & VV_ALWAYS_CONTRACT_LIST) && L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > (IS_NORMAL_LIST(L) ? VV_NORMAL_LIST_NO_EXPAND_THRESHOLD : VV_SPECIAL_LIST_NO_EXPAND_THRESHOLD)))
 			for (var/i in 1 to L.len)
 				var/key = L[i]
 				var/val

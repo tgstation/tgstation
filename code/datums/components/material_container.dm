@@ -30,11 +30,22 @@
 	var/datum/callback/precondition
 	/// A callback invoked after materials are inserted into this container
 	var/datum/callback/after_insert
+	/// A callback invoked after sheets are retrieve from this container
+	var/datum/callback/after_retrieve
 	/// The material container flags. See __DEFINES/materials.dm.
 	var/mat_container_flags
 
 /// Sets up the proper signals and fills the list of materials with the appropriate references.
-/datum/component/material_container/Initialize(list/init_mats, max_amt = 0, _mat_container_flags=NONE, list/allowed_mats=init_mats, list/allowed_items, datum/callback/_insertion_check, datum/callback/_precondition, datum/callback/_after_insert)
+/datum/component/material_container/Initialize(list/init_mats,
+			max_amt = 0,
+			_mat_container_flags=NONE,
+			list/allowed_mats=init_mats,
+			list/allowed_items,
+			datum/callback/_insertion_check,
+			datum/callback/_precondition,
+			datum/callback/_after_insert,
+			datum/callback/_after_retrieve)
+
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -52,6 +63,7 @@
 	insertion_check = _insertion_check
 	precondition = _precondition
 	after_insert = _after_insert
+	after_retrieve = _after_retrieve
 
 	for(var/mat in init_mats) //Make the assoc list material reference -> amount
 		var/mat_ref = GET_MATERIAL_REF(mat)
@@ -79,6 +91,8 @@
 		QDEL_NULL(precondition)
 	if(after_insert)
 		QDEL_NULL(after_insert)
+	if(after_retrieve)
+		QDEL_NULL(after_retrieve)
 	return ..()
 
 
@@ -295,40 +309,40 @@
 /// Proc specifically for inserting items, returns the amount of materials entered.
 /datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, breakdown_flags = mat_container_flags)
 	if(QDELETED(weapon))
-		return -1
+		return MATERIAL_INSERT_ITEM_NO_MATS
 	multiplier = CEILING(multiplier, 0.01)
 
 	var/obj/item/target = weapon
 
 	var/material_amount = get_item_material_amount(target, breakdown_flags) * multiplier
 	if(!material_amount)
-		return -1
+		return MATERIAL_INSERT_ITEM_NO_MATS
 	var/obj/item/stack/item_stack
 	if(isstack(weapon) && !has_space(material_amount)) //not enugh space split and feed as many sheets possible
 		item_stack = weapon
 		var/space_left = max_amount - total_amount
 		if(!space_left)
-			return -2
+			return MATERIAL_INSERT_ITEM_NO_SPACE
 		var/material_per_sheet = material_amount / item_stack.amount
 		var/sheets_to_insert = round(space_left / material_per_sheet)
 		if(!sheets_to_insert)
-			return -2
+			return MATERIAL_INSERT_ITEM_NO_SPACE
 		target = split_stack(item_stack, sheets_to_insert)
 		material_amount = get_item_material_amount(target, breakdown_flags) * multiplier
 	if(!has_space(material_amount))
-		return -2
+		return MATERIAL_INSERT_ITEM_NO_SPACE
 
 	last_inserted_id = insert_item_materials(target, multiplier, breakdown_flags)
 	if(!isnull(last_inserted_id))
 		if(after_insert)
-			after_insert.Invoke(target, last_inserted_id, material_amount)
+			after_insert.Invoke(target, last_inserted_id, material_amount, src)
 		qdel(target) //item gone
 		return material_amount
 	else if(!isnull(item_stack) && item_stack != target) //insertion failed, merge the split stack back into the original
 		var/obj/item/stack/inserting_stack = target
 		item_stack.add(inserting_stack.amount)
 		qdel(inserting_stack)
-	return 0
+	return MATERIAL_INSERT_ITEM_FAILURE
 
 /**
  * Inserts the relevant materials from an item into this material container.
@@ -461,8 +475,8 @@
 	return total_amount_save - total_amount
 
 /// For spawning mineral sheets at a specific location. Used by machines to output sheets.
-/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/M, atom/target = null)
-	if(!M.sheet_type)
+/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/material, atom/target = null)
+	if(!material.sheet_type)
 		return 0 //Add greyscale sheet handling here later
 	if(sheet_amt <= 0)
 		return 0
@@ -470,18 +484,20 @@
 	if(!target)
 		var/atom/parent_atom = parent
 		target = parent_atom.drop_location()
-	if(materials[M] < (sheet_amt * SHEET_MATERIAL_AMOUNT))
-		sheet_amt = round(materials[M] / SHEET_MATERIAL_AMOUNT)
+	if(materials[material] < (sheet_amt * SHEET_MATERIAL_AMOUNT))
+		sheet_amt = round(materials[material] / SHEET_MATERIAL_AMOUNT)
 	var/count = 0
 	while(sheet_amt > MAX_STACK_SIZE)
-		new M.sheet_type(target, MAX_STACK_SIZE, null, list((M) = SHEET_MATERIAL_AMOUNT))
+		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, MAX_STACK_SIZE, null, list((material) = SHEET_MATERIAL_AMOUNT))
+		after_retrieve?.Invoke(new_sheets)
 		count += MAX_STACK_SIZE
-		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, M)
+		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)
 		sheet_amt -= MAX_STACK_SIZE
 	if(sheet_amt >= 1)
-		new M.sheet_type(target, sheet_amt, null, list((M) = SHEET_MATERIAL_AMOUNT))
+		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, sheet_amt, null, list((material) = SHEET_MATERIAL_AMOUNT))
+		after_retrieve?.Invoke(new_sheets)
 		count += sheet_amt
-		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, M)
+		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)
 	return count
 
 

@@ -461,6 +461,12 @@ GLOBAL_VAR(station_nuke_source)
 
 	countdown.start()
 	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+	notify_ghosts(
+		"A nuclear device has been armed in [get_area_name(src)]!",
+		source = src,
+		header = "Nuke Armed",
+		action = NOTIFY_ORBIT,
+	)
 	update_appearance()
 
 /// Disarms the nuke, reverting all pinpointers and the security level

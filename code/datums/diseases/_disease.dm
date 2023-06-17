@@ -87,7 +87,7 @@
 	stage = new_stage
 
 /datum/disease/proc/has_cure()
-	if(!(disease_flags & CURABLE | CHRONIC))
+	if(!(disease_flags & (CURABLE | CHRONIC)))
 		return FALSE
 
 	. = cures.len

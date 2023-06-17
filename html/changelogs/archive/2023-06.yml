@@ -400,3 +400,186 @@
       and gives them a probably-positive 2 minute moodlet when ingesting these.
   - rscadd: The officer's sabre has gained a small amount of bloodthrist for assistants!
   - bugfix: Fixed liver masters being unable to inspect the liver of scientists.
+2023-06-13:
+  ArcaneMusic:
+  - balance: In general, mineral recipe costs for items in larger amounts has been
+      decreased by 2x.
+  - balance: One sheet now contains a total of 100 units of material, down from 2000.
+      Proportionally the costs of items should remain the same, except for the smaller
+      costs of certain recipes.
+  - code_imp: Added a python script to the tools folder, letting you see a mineral
+      breakdown of one/several rounds using silo logs.
+  EricZilla:
+  - image: Someone broke their ankle using the jumpboots in the vendor so we had to
+      buy new ones
+  NotDhu:
+  - bugfix: Maintenance doors/delivery chutes leading into Tramstation's brig have
+      had their access requirements fixed and now actually require security access
+      to open.
+  ZephyrTFA:
+  - bugfix: AIs can no longer enter a limbo state without a core but not dead.
+  - rscadd: Nuclear Detonation now drops security level if it missed the station.
+  - rscadd: Nuclear Detonation now nukes the syndie base if its on the syndie base.
+  - bugfix: Nuclear Detonation now handles not playing a cinematic correctly.
+  - refactor: Changed z level iteration for Nuclear Detonation
+2023-06-14:
+  ATHATH:
+  - bugfix: The destabilization of your eigenstate can no longer be paused by stripping
+      naked.
+  DATA-xPUNGED:
+  - bugfix: Beach Bum Basketball Team has water again.
+  - bugfix: Birdshot's gulag now has an item reclaimer, no more will your items fall
+      on the ground!
+  GPeckman:
+  - bugfix: You can no longer duplicate iron by turning sheets into rods and putting
+      the rods back into the protolathe
+  Mey-Ha-Zah:
+  - image: Updated Eastern Monk, Nun, Holiday Priest Chaplain Suits. EricZilla helped.
+  Pumpkinoe:
+  - bugfix: Made some decals on north star look a little nicer.
+  SethLafuente:
+  - rscadd: Added two new pirate types Ex-interdyne Pharmacists and The Grey Tide-6
+  - spellcheck: makes language more appropiate
+  Youtubeboy139:
+  - rscadd: Added security specific gloves
+  - image: Changed all standard security uniforms pink
+  carlarctg:
+  - qol: Plastic sheets chemist tip is more in-depth and clear
+  - qol: Added holy explosion chemist tip
+  carshalash:
+  - bugfix: Fixes a stuck lightbulb in medbay treatment center. Also fixes an accidental
+      placement of vents/scrubbers which lead to escaping xenos.
+  - spellcheck: corrects a typo in most ethereal drinks.
+2023-06-15:
+  Cobby:
+  - bugfix: Droppers/Beakers will now go to 1u/15u on the FIRST leftclick.
+  Couls:
+  - admin: fix combat logs for tabling and disposal shoving
+  DaydreamIQ:
+  - qol: The CC pod bay now has proper morgue facilities that don't clip through a
+      glass window
+  FernandoJ8:
+  - spellcheck: adjusted font size from 30px to 15px
+  FlufflesTheDog:
+  - bugfix: VERY small amounts of a gas (<0.0001 mol) in pipenets will once again
+      be fully removed
+  Hatterhat:
+  - bugfix: MOD plasma cores' improved recharging from sheets (2000 charge up from
+      1500) is back again.
+  LT3:
+  - qol: ID card linking now preloads your bank account number
+  - bugfix: Tram controls no longer randomly go blank on Birdshot
+  MTandi:
+  - qol: Chemical burner can be crafted from any open container, not just beakers
+  Melbert:
+  - bugfix: Maybe fixes minor bugs in disease cure, revolution, hooded suit code
+  - code_imp: Adds some runtime safety to Cinematic code
+  Momo8289:
+  - rscadd: Updated the Patch of Eden lavaland ruin with a new item
+  - rscadd: Added the Plasma flower item, which can be used as an upgraded plasma
+      MOD core
+  SyncIt21:
+  - refactor: don't send gas name to gas filter UI as the name is already decoded
+      there from it's ID
+  - bugfix: microwave's(after it has finished cooking) & other machine's that spit
+      out contents don't spit out assemblies/signallers attached to it's wires.
+  - bugfix: signallers can be picked up if you attached them to a machine's wire &
+      later deconstructed that machine without detaching it first.
+  ZephyrTFA:
+  - bugfix: Trees and Coconuts are no longer immune to singularities.
+  bobbahbrown:
+  - server: Fix log categories being erroneously excluded from log files.
+  necromanceranne:
+  - bugfix: Bows properly update their ammo when stored, dropped and stowed. You cannot
+      load a bow without holding it in your inactive hand. You have to hold it to
+      keep the bow loaded.
+  - qol: You can remove an arrow from the bow with alt+click, much like other ballistic
+      weapons.
+  - bugfix: The divine bow can be properly stored in the chaplain armor's suit storage,
+      much like all other bulky null rods.
+  - sound: Bows have sounds for drawing, firing and loading.
+2023-06-16:
+  Ghommie:
+  - rscadd: 'Expanded the Experimental MODsuit Bepis node with three new modules:
+      Magneto Charger, Recycler and Shooting Assistant.'
+  - rscadd: Added a Riot Foam Recycler module to the black market, as well a more
+      innocuous version as maint loot.
+  JohnFulpWillard:
+  - bugfix: Lava will no longer burn 6 of the mirrors in pride ruin
+  - bugfix: Lava will no longer burn plants that spawn in them.
+  MTandi:
+  - qol: You can name barrels with a pen now, changing its icon
+  Melbert:
+  - bugfix: Fix hungover people never spawning stuck in closets
+  Tattle:
+  - image: removed a stray gray pixel from the milk containers
+  carlarctg:
+  - qol: Heretic runes no longer have every single transparent pixel set to 1 alpha,
+      to make it easier to click on objects.
+  - qol: Clearing heretic runes with mansus grasp takes 0.4 seconds of standing still,
+      to prevent you from accidentally clearing it in combat.
+  - code_imp: Added code for effect remover element to use a windup if set.
+  mc-oofert:
+  - bugfix: siliconnect log tab updates correctly
+2023-06-17:
+  ChungusGamer666:
+  - bugfix: You can no longer make extra cloth when looming cotton by spamming do
+      afters.
+  - rscadd: Things affected by acid now get cool particles!
+  EliteCreature:
+  - spellcheck: changed gas to correct type in description
+  FernandoJ8:
+  - bugfix: positronic brains now correctly reject the ghosts of people who have used
+      the suicide verb
+  - bugfix: Monkey revolutionaries will not be considered for a promotion into Head
+      Revolutionaries unless they're the only candidates... again.
+  - bugfix: shipping manifests labelled as erroneous due to missing contents are now
+      guaranteed to be missing contents
+  - spellcheck: shipping manifests now display repeated items on a single line
+  LT3:
+  - bugfix: Sansufentanyl won't roll as a potential extreme allergy for Hereditary
+      Manifold Sickness
+  MTandi:
+  - qol: Tubes and Bottles have the main reagent name prefix in Chem/CondiMaster
+  Melbert:
+  - bugfix: Fixed e-cutlasses and bananium swords having invisible inhands
+  - code_imp: Removed boilerplate from transforming component
+  - bugfix: Ghosts can click on active gateways to teleport to the destination set.
+      Doesn't work for secret gateways.
+  - refactor: Refactored Stun Absorptions (Bastard Sword, His Grace)
+  - refactor: Refactored Stun Immunity. Note this means that some mobs which, prior,
+      were immune to all forms of incapacitation are now vulnerable to some. Notably,
+      adult non-queen xenomorphs are now vulnerable to falling unconscious.
+  - bugfix: Runtimes from wingless humans using *wing
+  - bugfix: Fixed a cheeky way RDS revealed you were an antag before you actually
+      got antag. Sorry, you know who you are.
+  - config: RDS now has policy.json support, to allow customization of the roundstart
+      "anti-grief" message.
+  - bugfix: Runtime from ejecting beakers from a chem-master
+  - sound: Welding Gas Masks make the same sound effect as Welding Hard Hats when
+      they toggle
+  Momo8289:
+  - bugfix: After destroying unfathomable quantities of excess coins, their value
+      is back to what it's supposed to be!
+  - bugfix: The divine archer coat's hood now has armor like it's supposed to
+  Rhials :):
+  - qol: The Russian and Bounty Hunter fugitive hunter shuttles now come with enough
+      oxygen for everyone.
+  - balance: Fugitive Hunters get cool new IDs.
+  - balance: Fugitive Hunter shuttles are now access restricted.
+  - balance: The AI wires in the Bounty Hunter/Spacepol Spacevan shuttles now start
+      cut.
+  - balance: Every fugitive hunter shuttle now has a shuttle pinpointer present.
+  - code_imp: Fixes the spawner menu text for psyker hunter spawners.
+  - image: Blue and Orange mapping helper for Hunter Access.
+  SethLafuente:
+  - bugfix: fixes meatballs not having inhand sprites
+  SuperDrish:
+  - rscadd: Minimal Job Age requirments added. Disabled by default.
+  Youtubeboy139:
+  - image: Added a new Land Mine sprite
+  mc-oofert:
+  - qol: Latejoining crew start with crowbars if arrivals enviromental power is OFF
+  stonetear:
+  - bugfix: jetpack signals now pass a user argument.  This fixes an error when automatically
+      stowing a captain jetpack into your modsuit.
