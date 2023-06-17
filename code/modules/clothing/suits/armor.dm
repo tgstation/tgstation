@@ -81,6 +81,13 @@
 	icon_state = "marine_medic"
 	body_parts_covered = CHEST|GROIN
 
+/obj/item/clothing/suit/armor/vest/marine/pmc
+	desc = "set of the finest mass produced, stamped plasteel armor plates for an all-around door-kicking"
+	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	clothing_flags = THICKMATERIAL
+	armor_type = /datum/armor/suit_armor
+
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"
 	desc = "Older generation Type 1 armored vest. Due to degradation over time the vest is far less maneuverable to move in."

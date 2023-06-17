@@ -138,6 +138,13 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/pirate)
+"cV" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/smooth,
+/area/shuttle/pirate)
 "dl" = (
 /obj/structure/sign/calendar/directional/north,
 /turf/open/floor/glass,
@@ -562,6 +569,9 @@
 	},
 /obj/item/clothing/gloves/tackler/combat/insulated,
 /obj/item/storage/belt/military/assault,
+/obj/item/clothing/head/helmet/marine/pmc,
+/obj/item/clothing/suit/armor/vest/marine/pmc,
+/obj/item/clothing/mask/balaclava,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "pD" = (
@@ -593,7 +603,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "qI" = (
-/obj/structure/guncase,
+/obj/structure/guncase/wt550,
+/obj/item/gun/ballistic/automatic/wt550,
+/obj/item/gun/ballistic/automatic/wt550,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "qO" = (
@@ -709,8 +721,8 @@
 	pixel_x = 4
 	},
 /obj/item/spess_knife{
-	pixel_x = 10;
-	pixel_y = -5
+	pixel_x = 2;
+	pixel_y = -4
 	},
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
@@ -928,10 +940,6 @@
 /turf/open/floor/iron/stairs{
 	dir = 1
 	},
-/area/shuttle/pirate)
-"AM" = (
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/pirate)
 "AZ" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
@@ -1359,6 +1367,9 @@
 /obj/item/clothing/gloves/tackler/combat/insulated,
 /obj/item/storage/belt/military/assault,
 /obj/machinery/light/directional/east,
+/obj/item/clothing/head/helmet/marine/pmc,
+/obj/item/clothing/suit/armor/vest/marine/pmc,
+/obj/item/clothing/mask/balaclava,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "Mu" = (
@@ -1805,7 +1816,7 @@
 "ZE" = (
 /obj/item/reagent_containers/cup/glass/bottle/ritual_wine{
 	pixel_y = 14;
-	pixel_x = -9
+	pixel_x = -8
 	},
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -9
@@ -2006,7 +2017,7 @@ PX
 hK
 hK
 hK
-hK
+Bg
 "}
 (8,1,1) = {"
 WR
@@ -2092,7 +2103,7 @@ zh
 gd
 CG
 Xr
-AM
+hK
 WA
 hK
 hK
@@ -2105,7 +2116,7 @@ Ss
 BG
 lf
 ig
-Bg
+hK
 WR
 "}
 (12,1,1) = {"
@@ -2180,7 +2191,7 @@ SG
 BG
 wl
 Pn
-Bg
+hK
 WR
 "}
 (15,1,1) = {"
@@ -2281,7 +2292,7 @@ pD
 hK
 hK
 hK
-hK
+Bg
 "}
 (19,1,1) = {"
 WR
@@ -2290,7 +2301,7 @@ WR
 WR
 WR
 hK
-OC
+cV
 OC
 Mu
 OC
