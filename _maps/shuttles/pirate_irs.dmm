@@ -155,13 +155,14 @@
 "do" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /obj/structure/table/glass,
-/obj/item/storage/box/gloves,
 /obj/item/storage/box/masks{
 	pixel_y = 6
 	},
-/obj/item/clothing/glasses/hud/health{
-	pixel_y = 3
+/obj/item/stack/medical/bone_gel{
+	pixel_x = 10;
+	pixel_y = 2
 	},
+/obj/item/storage/box/gloves,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "dC" = (
@@ -194,7 +195,7 @@
 /area/shuttle/pirate)
 "eg" = (
 /obj/machinery/power/rtg/advanced{
-	power_gen = 318000
+	power_gen = 608000
 	},
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
@@ -263,10 +264,6 @@
 /area/shuttle/pirate)
 "gl" = (
 /obj/structure/table/reinforced,
-/obj/item/assembly/flash{
-	pixel_y = 5
-	},
-/obj/item/restraints/handcuffs,
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 1
 	},
@@ -394,9 +391,6 @@
 /obj/structure/window/reinforced/tinted/spawner/directional/east,
 /obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/item/storage/toolbox/syndicate{
-	pixel_y = 3
-	},
-/obj/item/storage/toolbox/syndicate{
 	pixel_y = -2
 	},
 /obj/item/crowbar/power,
@@ -446,9 +440,6 @@
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
 /obj/item/stack/cable_coil/five,
-/obj/item/storage/toolbox/syndicate{
-	pixel_y = 5
-	},
 /obj/item/storage/box/lights/bulbs{
 	pixel_y = -1
 	},
@@ -459,13 +450,11 @@
 /obj/item/stack/cable_coil/five{
 	pixel_y = -6
 	},
-/obj/item/multitool{
-	pixel_y = -5
-	},
 /obj/item/flashlight/seclite{
 	pixel_y = -8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "mA" = (
@@ -619,13 +608,6 @@
 "qU" = (
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
-"qV" = (
-/obj/machinery/porta_turret/syndicate/pod{
-	faction = list("pirate");
-	dir = 6
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pirate)
 "rf" = (
 /obj/structure/chair/stool/directional/south,
 /obj/structure/cable,
@@ -638,9 +620,6 @@
 /obj/structure/table/glass,
 /obj/item/storage/medkit{
 	pixel_y = -1
-	},
-/obj/item/storage/medkit{
-	pixel_y = 5
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
@@ -692,20 +671,20 @@
 /area/shuttle/pirate)
 "tP" = (
 /obj/structure/table/reinforced,
-/obj/item/tank/jetpack/void{
-	pixel_x = -2
-	},
-/obj/item/tank/jetpack/void{
-	pixel_x = -16
-	},
 /obj/machinery/light/dim/directional/north,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "uc" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/toolbox/mechanical,
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 4
+	},
+/obj/item/assembly/flash{
+	pixel_y = 4
+	},
+/obj/item/restraints/handcuffs{
+	pixel_y = -5;
+	pixel_x = 2
 	},
 /turf/open/floor/iron,
 /area/shuttle/pirate)
@@ -750,9 +729,6 @@
 /area/shuttle/pirate)
 "uC" = (
 /obj/structure/table/reinforced,
-/obj/item/tank/jetpack/void{
-	pixel_x = 3
-	},
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "uJ" = (
@@ -869,7 +845,6 @@
 /area/shuttle/pirate)
 "xQ" = (
 /obj/effect/turf_decal/tile/dark/full,
-/obj/item/lead_pipe,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -962,10 +937,6 @@
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/shuttle/pirate)
-"Bg" = (
-/obj/machinery/porta_turret/syndicate/pod,
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/pirate)
 "Bl" = (
 /obj/machinery/shuttle_scrambler{
@@ -1108,11 +1079,7 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/item/stack/medical/bone_gel{
-	pixel_x = -7;
-	pixel_y = 10
-	},
-/obj/item/healthanalyzer/advanced,
+/obj/item/healthanalyzer,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "FT" = (
@@ -1145,7 +1112,6 @@
 	dir = 1
 	},
 /obj/structure/safe,
-/obj/item/gun/ballistic/revolver/mateba,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
@@ -1155,6 +1121,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 9
 	},
+/obj/item/gun/ballistic/revolver/russian/soul,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "Hf" = (
@@ -1175,15 +1142,6 @@
 	desc = "This bat is made of highly reflective, highly armored material, It seems to be made specifically for busting one's kneecap";
 	pixel_x = 2
 	},
-/obj/item/melee/baseball_bat/ablative{
-	name = "kneecap buster";
-	desc = "This bat is made of highly reflective, highly armored material, It seems to be made specifically for busting one's kneecap";
-	pixel_x = -3
-	},
-/obj/item/hemostat/supermatter{
-	name = "kandahar cock crunch";
-	desc = "Banned in Saudia Arabia for being too safe."
-	},
 /obj/item/restraints/handcuffs{
 	pixel_y = -5;
 	pixel_x = -3
@@ -1197,6 +1155,11 @@
 	},
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 10
+	},
+/obj/item/lead_pipe,
+/obj/item/flamethrower{
+	name = "Fallujah firehose";
+	desc = "Someone's got a friend in Syria!"
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
@@ -1273,6 +1236,16 @@
 /turf/open/floor/iron/stairs{
 	dir = 1
 	},
+/area/shuttle/pirate)
+"Jv" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 5
+	},
+/obj/structure/table/reinforced,
+/obj/item/multitool{
+	pixel_y = 3
+	},
+/turf/open/floor/iron,
 /area/shuttle/pirate)
 "Jx" = (
 /obj/machinery/porta_turret/syndicate/pod{
@@ -1542,6 +1515,13 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Qv" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/iron,
 /area/shuttle/pirate)
 "Qx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
@@ -2020,7 +2000,7 @@ PX
 hK
 hK
 hK
-Bg
+hK
 "}
 (8,1,1) = {"
 WR
@@ -2075,7 +2055,7 @@ hK
 (10,1,1) = {"
 WR
 Ru
-Ts
+Qv
 sE
 Zb
 hK
@@ -2200,7 +2180,7 @@ WR
 (15,1,1) = {"
 WR
 Ru
-UF
+Jv
 uc
 tC
 hK
@@ -2295,7 +2275,7 @@ pD
 hK
 hK
 hK
-Bg
+hK
 "}
 (19,1,1) = {"
 WR
@@ -2418,7 +2398,7 @@ hK
 hK
 hK
 hK
-qV
+hK
 WR
 WR
 "}
