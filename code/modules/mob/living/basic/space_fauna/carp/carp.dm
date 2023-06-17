@@ -281,7 +281,7 @@
 	icon_state = "base_friend"
 	icon_living = "base_friend"
 	icon_dead = "base_friend_dead"
-	greyscale_config = /datum/greyscale_config/friend
+	greyscale_config = /datum/greyscale_config/carp_friend
 
 	attack_verb_continuous = "suckers"
 	attack_verb_simple = "suck"
