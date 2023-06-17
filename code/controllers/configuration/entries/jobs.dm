@@ -1,91 +1,4 @@
-// This file is pretty much just a subsidiary of SSjob, just split out since it has a different function than the majority of what that system does and it's more clear to have it in its own file.
-// That function being handling both loading and generating the config files needed for jobs. Such is life.
-
-#define PLAYTIME_REQUIREMENTS "Playtime Requirements"
-#define REQUIRED_ACCOUNT_AGE "Required Account Age"
-#define REQUIRED_CHARACTER_AGE "Required Character Age"
-#define SPAWN_POSITIONS "Spawn Positions"
-#define TOTAL_POSITIONS "Total Positions"
-
-/// Lightweight datum simply used to store the applicable config type for each job such that the whole system is a tad bit more flexible.
-/datum/job_config_type
-	var/name = "DEFAULT"
-
-/// Simply gets the value of the config type for a given job.
-/datum/job_config_type/proc/get_compile_time_value(datum/job/occupation)
-	SHOULD_CALL_PARENT(FALSE)
-	stack_trace("Attempted to get value for the default job config for [occupation.title] (with config tag [occupation.config_tag])! This is not allowed!")
-
-/// This is the proc that we actually invoke to set the config-based values for each job.
-/datum/job_config_type/proc/set_current_value(datum/job/occupation, value)
-	SHOULD_CALL_PARENT(FALSE)
-	CRASH("Attempted to set value for the default job config for [occupation.title] (with config tag [occupation.config_tag])! This is not allowed!")
-
-/// The number of positions a job can have at any given time.
-/datum/job_config_type/default_positions
-	name = TOTAL_POSITIONS
-
-/datum/job_config_type/default_positions/get_compile_time_value(datum/job/occupation)
-	if(is_assistant_job(occupation)) // yeah i know it's not the "compile time" value but this is just to remain parity with the old system groooan
-		return -1
-	return initial(occupation.total_positions)
-
-/datum/job_config_type/default_positions/set_current_value(datum/job/occupation, value)
-	occupation.total_positions = value
-
-/// The number of positions a job can have at the start of the round.
-/datum/job_config_type/starting_positions
-	name = SPAWN_POSITIONS
-
-/datum/job_config_type/starting_positions/get_compile_time_value(datum/job/occupation)
-	if(is_assistant_job(occupation)) // yeah i know it's not the "compile time" value but this is just to remain parity with the old system groooan
-		return -1
-	return initial(occupation.spawn_positions)
-
-/datum/job_config_type/starting_positions/set_current_value(datum/job/occupation, value)
-	occupation.spawn_positions = value
-
-/// The amount of playtime required to join a job (minutes).
-/datum/job_config_type/playtime_requirements
-	name = PLAYTIME_REQUIREMENTS
-
-/datum/job_config_type/playtime_requirements/get_compile_time_value(datum/job/occupation)
-	return initial(occupation.exp_requirements)
-
-/datum/job_config_type/playtime_requirements/set_current_value(datum/job/occupation, value)
-	occupation.exp_requirements = value
-
-/// The amount of time required to have an account to join a job (days).
-/datum/job_config_type/required_account_age
-	name = REQUIRED_ACCOUNT_AGE
-
-/datum/job_config_type/required_account_age/get_compile_time_value(datum/job/occupation)
-	return initial(occupation.minimal_player_age)
-
-/datum/job_config_type/required_account_age/set_current_value(datum/job/occupation, value)
-	occupation.minimal_player_age = value
-
-/// The required age a character must be to join a job (which is in years).
-/datum/job_config_type/required_character_age
-	name = REQUIRED_CHARACTER_AGE
-
-/datum/job_config_type/required_character_age/get_compile_time_value(datum/job/occupation)
-	return initial(occupation.required_character_age) || 0 // edge case here, this is typically null by default and returning null causes issues. Returning 0 is a safe default.
-
-/datum/job_config_type/required_character_age/set_current_value(datum/job/occupation, value)
-	if(value > AGE_MIN && value < AGE_MAX)
-		occupation.required_character_age = value
-		return
-
-	if(value == 0)
-		occupation.required_character_age = null // they're opting out.
-		return
-
-	var/error_string = "Invalid value for [name] for [occupation.title] (with config tag [occupation.config_tag])! Value must be between [AGE_MIN] and [AGE_MAX]!"
-	error_string += "\nResetting [occupation.title]'s age to default value of [occupation.required_character_age || "0"]!"
-	log_config(error_string)
-
-// now begins the actual work for SSjob
+// This file pretty much just handles all of the interactions between jobconfig.toml and the codebase. This is started by work originating in SSconfig, so I'm okay with it being here.
 
 /// Initializes all of the config singletons for each job config type and adds it to the `job_config_datum_singletons` var list.
 /datum/controller/subsystem/job/proc/generate_config_singletons()
@@ -158,8 +71,8 @@
 			// Playtime Requirements and Required Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
 			// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator is knows that they codebase defaults when they remove the comment.
 			var/list/working_list = list(
-				"# [TOTAL_POSITIONS]" = default_positions,
-				"# [SPAWN_POSITIONS]" = starting_positions,
+				"# [JOB_CONFIG_TOTAL_POSITIONS]" = default_positions,
+				"# [JOB_CONFIG_SPAWN_POSITIONS]" = starting_positions,
 			)
 
 			working_list += generate_job_config_excluding_legacy(occupation)
@@ -179,8 +92,8 @@
 			// Having comments mean that we allow server operators to defer to codebase standards when they deem acceptable. They must uncomment to override the codebase default.
 			if(is_assistant_job(occupation)) // there's a concession made in jobs.txt that we should just rapidly account for here I KNOW I KNOW.
 				file_data[job_key] = list(
-					"# [TOTAL_POSITIONS]" = -1,
-					"# [SPAWN_POSITIONS]" = -1,
+					"# [JOB_CONFIG_TOTAL_POSITIONS]" = -1,
+					"# [JOB_CONFIG_SPAWN_POSITIONS]" = -1,
 				)
 				file_data[job_key] += generate_job_config_excluding_legacy(occupation)
 				continue
@@ -255,7 +168,7 @@
 /datum/controller/subsystem/job/proc/generate_job_config_excluding_legacy(datum/job/new_occupation)
 	var/list/returnable_list = list()
 	// make a quick list to ensure we don't double-dip total_positions and spawn_positions, but still get future config types in
-	var/list/datums_to_read = job_config_datum_singletons - list(TOTAL_POSITIONS, SPAWN_POSITIONS)
+	var/list/datums_to_read = job_config_datum_singletons - list(JOB_CONFIG_TOTAL_POSITIONS, JOB_CONFIG_SPAWN_POSITIONS)
 	for(var/config_datum_key in datums_to_read)
 		var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 		returnable_list += list(
@@ -271,9 +184,3 @@
 	rustg_file_write(payload, file_location)
 	DIRECT_OUTPUT(user, ftp(file(file_location), "jobconfig.toml"))
 	return TRUE
-
-#undef PLAYTIME_REQUIREMENTS
-#undef REQUIRED_ACCOUNT_AGE
-#undef REQUIRED_CHARACTER_AGE
-#undef SPAWN_POSITIONS
-#undef TOTAL_POSITIONS
