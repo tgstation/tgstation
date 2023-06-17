@@ -31,6 +31,7 @@ GLOBAL_LIST_INIT(SILICON_LATHE_TAX_EXCEPTIONS, list(
 		/obj/item/electronics/firealarm,
 		/obj/item/electronics/apc,
 		),
+	/obj/item/borg/apparatus/service = list(/obj/item/plate/oven_tray),
 	))
 
 #define STATION_TARGET_BUFFER 25
