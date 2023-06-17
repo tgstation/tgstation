@@ -248,9 +248,6 @@
 /obj/item/storage/toolbox/ammobox/a762/surplus
 	ammo_to_spawn = /obj/item/ammo_box/a762/surplus
 
-/obj/item/storage/toolbox/ammobox/mm712x82
-	name = "7.12x82mm ammo box"
-
 /obj/item/storage/toolbox/ammobox/wt550m9
 	name = "4.6x30mm ammo box"
 	ammo_to_spawn = /obj/item/ammo_box/magazine/wt550m9

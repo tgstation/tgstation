@@ -141,7 +141,7 @@
 	outfit = /datum/outfit/pirate/irs
 	rank = "Agent"
 
-/obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/generate_pirate_name(spawn_gender)
+/obj/effect/mob_spawn/ghost_role/human/pirate/irs/generate_pirate_name(spawn_gender)
 	var/first_name
 	switch(spawn_gender)
 		if(MALE)
