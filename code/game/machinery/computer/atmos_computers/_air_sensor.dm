@@ -60,10 +60,8 @@
 		input.chamber_id = chamber_id
 		GLOB.objects_by_id_tag[CHAMBER_INPUT_FROM_ID(chamber_id)] = input
 		balloon_alert(user, "connected to input")
-
 	else if(istype(multi_tool.buffer, /obj/machinery/atmospherics/components/unary/vent_pump))
 		var/obj/machinery/atmospherics/components/unary/vent_pump/output = multi_tool.buffer
-
 		//so its no longer controlled by air alarm
 		output.disconnect_from_area()
 		//configuration copied from /obj/machinery/atmospherics/components/unary/vent_pump/siphon
@@ -71,9 +69,11 @@
 		output.pressure_checks = ATMOS_INTERNAL_BOUND
 		output.internal_pressure_bound = 4000
 		output.external_pressure_bound = 0
-
 		output.chamber_id = chamber_id
 		GLOB.objects_by_id_tag[CHAMBER_OUTPUT_FROM_ID(chamber_id)] = output
 		balloon_alert(user, "connected to output")
+	else
+		multi_tool.buffer = src
+		balloon_alert(user, "added to multitool buffer")
 
 	return TRUE

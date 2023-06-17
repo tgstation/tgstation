@@ -146,9 +146,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/caravan/freighter1)
 "lD" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/ruin/caravan/freighter1)
@@ -360,9 +358,7 @@
 /area/shuttle/ruin/caravan/freighter1)
 "zV" = (
 /obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
+/obj/structure/broken_flooring/singular/directional/south,
 /turf/template_noop,
 /area/shuttle/ruin/caravan/freighter1)
 "Bh" = (

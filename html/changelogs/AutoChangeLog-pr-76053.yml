@@ -1,0 +1,7 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "Basic spider eggs no longer flash the byond window when ready to hatch."
+  - qol: "Toy hot potatoes no longer give a ghost notification."
+  - qol: "Deadchat will be notified in the event of an imminent macrobomb detonation, HFR meltdown, organ harvesting,"
+  - qol: "Deadchat will be notified when a nuclear/doomsday device is activated, as well as when a blob-infection bursts."

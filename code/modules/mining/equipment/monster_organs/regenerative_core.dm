@@ -61,5 +61,3 @@
 		This process will trigger automatically if you are badly wounded."
 	button_icon_state = "legion_core_stable"
 	check_flags = NONE
-
-/datum/action/cooldown/monster_core_action/regenerative_core

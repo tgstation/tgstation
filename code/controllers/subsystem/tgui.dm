@@ -200,7 +200,7 @@ SUBSYSTEM_DEF(tgui)
 	for(var/datum/tgui/ui in open_uis_by_src[key])
 		// Check if UI is valid.
 		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
-			ui.process(wait * 0.1, force = 1)
+			INVOKE_ASYNC(ui, TYPE_PROC_REF(/datum/tgui, process), wait * 0.1, TRUE)
 			count++
 	return count
 

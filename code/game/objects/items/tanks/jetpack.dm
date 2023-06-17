@@ -19,7 +19,7 @@
 	. = ..()
 	get_mover = CALLBACK(src, PROC_REF(get_user))
 	check_on_move = CALLBACK(src, PROC_REF(allow_thrust), 0.01)
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE)
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_SUITSTORE)
 	refresh_jetpack()
 
 /obj/item/tank/jetpack/Destroy()
@@ -86,7 +86,7 @@
 	icon_state = "[initial(icon_state)][on ? "-on" : ""]"
 
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
-	if(SEND_SIGNAL(src, COMSIG_JETPACK_ACTIVATED) & JETPACK_ACTIVATION_FAILED)
+	if(SEND_SIGNAL(src, COMSIG_JETPACK_ACTIVATED, user) & JETPACK_ACTIVATION_FAILED)
 		return FALSE
 	on = TRUE
 	update_icon(UPDATE_ICON_STATE)
@@ -95,7 +95,7 @@
 	return TRUE
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
-	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED)
+	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED, user)
 	on = FALSE
 	set_stabilizers(FALSE)
 	update_icon(UPDATE_ICON_STATE)

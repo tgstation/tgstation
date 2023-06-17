@@ -267,7 +267,7 @@
 		return
 
 	our_chili = WEAKREF(our_plant)
-	RegisterSignals(our_plant, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(stop_backfire_effect))
+	RegisterSignals(our_plant, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(stop_backfire_effect))
 
 /*
  * Begin processing the trait on backfire.
@@ -439,6 +439,15 @@
 		spawned_simplemob.melee_damage_lower += round(our_seed.potency * mob_melee_multiplier)
 		spawned_simplemob.melee_damage_upper += round(our_seed.potency * mob_melee_multiplier)
 		spawned_simplemob.move_to_delay -= round(our_seed.production * mob_speed_multiplier)
+
+	if(isbasicmob(spawned_mob))
+		var/mob/living/basic/spawned_basicmob = spawned_mob
+		spawned_basicmob.melee_damage_lower += round(our_seed.potency * mob_melee_multiplier)
+		spawned_basicmob.melee_damage_upper += round(our_seed.potency * mob_melee_multiplier)
+		// basic mob speeds aren't exactly equivalent to simple animal's "move to delay" but this seems balanced enough.
+		var/calculated_speed = initial(spawned_basicmob.speed) - round((our_seed.production * mob_speed_multiplier), 0.01)
+		spawned_basicmob.set_varspeed(calculated_speed)
+
 	our_plant.forceMove(our_plant.drop_location())
 	spawned_mob.visible_message(span_notice("[our_plant] growls as it suddenly awakens!"))
 	qdel(our_plant)
@@ -446,7 +455,7 @@
 /// Killer Tomato's transformation gene.
 /datum/plant_gene/trait/mob_transformation/tomato
 	dangerous = TRUE
-	killer_plant = /mob/living/simple_animal/hostile/killertomato
+	killer_plant = /mob/living/basic/killer_tomato
 	mob_health_multiplier = 0.33
 	mob_melee_multiplier = 0.1
 	mob_speed_multiplier = 0.02
@@ -621,11 +630,11 @@
 /datum/plant_gene/trait/gas_production/on_new_seed(obj/item/seeds/new_seed)
 	RegisterSignal(new_seed, COMSIG_SEED_ON_PLANTED, PROC_REF(set_home_tray))
 	RegisterSignal(new_seed, COMSIG_SEED_ON_GROW, PROC_REF(try_release_gas))
-	RegisterSignal(new_seed, COMSIG_PARENT_QDELETING, PROC_REF(stop_gas))
+	RegisterSignal(new_seed, COMSIG_QDELETING, PROC_REF(stop_gas))
 	stinky_seed = WEAKREF(new_seed)
 
 /datum/plant_gene/trait/gas_production/on_removed(obj/item/seeds/old_seed)
-	UnregisterSignal(old_seed, list(COMSIG_PARENT_QDELETING, COMSIG_SEED_ON_PLANTED, COMSIG_SEED_ON_GROW))
+	UnregisterSignal(old_seed, list(COMSIG_QDELETING, COMSIG_SEED_ON_PLANTED, COMSIG_SEED_ON_GROW))
 	stop_gas()
 
 /*

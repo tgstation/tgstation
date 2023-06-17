@@ -25,3 +25,6 @@
 
 ///from /datum/element/decal/Detach(): (description, cleanable, directional, mutable_appearance/pic)
 #define COMSIG_TURF_DECAL_DETACHED "turf_decal_detached"
+
+///from /obj/item/pushbroom/sweep(): (broom, user, items_to_sweep)
+#define COMSIG_TURF_RECEIVE_SWEEPED_ITEMS "turf_receive_sweeped_items"

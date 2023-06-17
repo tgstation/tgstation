@@ -42,71 +42,69 @@
 	. = ..()
 	if(!ishuman(spawned))
 		return
-	var/mob/living/carbon/human/H = spawned
-	var/obj/item/storage/book/bible/booze/B = new
-
+	var/mob/living/carbon/human/human_spawned = spawned
+	var/obj/item/book/bible/booze/holy_bible = new
 	if(GLOB.religion)
-		if(H.mind)
-			H.mind.holy_role = HOLY_ROLE_PRIEST
-		B.deity_name = GLOB.deity
-		B.name = GLOB.bible_name
+		if(human_spawned.mind)
+			human_spawned.mind.holy_role = HOLY_ROLE_PRIEST
+		holy_bible.deity_name = GLOB.deity
+		holy_bible.name = GLOB.bible_name
 		// These checks are important as there's no guarantee the "HOLY_ROLE_HIGHPRIEST" chaplain has selected a bible skin.
 		if(GLOB.bible_icon_state)
-			B.icon_state = GLOB.bible_icon_state
+			holy_bible.icon_state = GLOB.bible_icon_state
 		if(GLOB.bible_inhand_icon_state)
-			B.inhand_icon_state = GLOB.bible_inhand_icon_state
-		to_chat(H, span_boldnotice("There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain."))
-		H.equip_to_slot_or_del(B, ITEM_SLOT_BACKPACK)
+			holy_bible.inhand_icon_state = GLOB.bible_inhand_icon_state
+		to_chat(human_spawned, span_boldnotice("There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain."))
+		human_spawned.equip_to_slot_or_del(holy_bible, ITEM_SLOT_BACKPACK)
 		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
-		var/obj/item/nullrod/N = new nrt(H)
-		H.put_in_hands(N)
+		var/obj/item/nullrod/nullrod = new nrt(human_spawned)
+		human_spawned.put_in_hands(nullrod)
 		if(GLOB.religious_sect)
-			GLOB.religious_sect.on_conversion(H)
+			GLOB.religious_sect.on_conversion(human_spawned)
 		return
-	if(H.mind)
-		H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
+	if(human_spawned.mind)
+		human_spawned.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 
 	var/new_religion = player_client?.prefs?.read_preference(/datum/preference/name/religion) || DEFAULT_RELIGION
 	var/new_deity = player_client?.prefs?.read_preference(/datum/preference/name/deity) || DEFAULT_DEITY
 	var/new_bible = player_client?.prefs?.read_preference(/datum/preference/name/bible) || DEFAULT_BIBLE
 
-	B.deity_name = new_deity
-
+	holy_bible.deity_name = new_deity
 	switch(lowertext(new_religion))
 		if("homosexuality", "gay", "penis", "ass", "cock", "cocks")
 			new_bible = pick("Guys Gone Wild","Coming Out of The Closet","War of Cocks")
 			switch(new_bible)
 				if("War of Cocks")
-					B.deity_name = pick("Dick Powers", "King Cock")
+					holy_bible.deity_name = pick("Dick Powers", "King Cock")
 				else
-					B.deity_name = pick("Gay Space Jesus", "Gandalf", "Dumbledore")
-			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // starts off brain damaged as fuck
+					holy_bible.deity_name = pick("Gay Space Jesus", "Gandalf", "Dumbledore")
+			human_spawned.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // starts off brain damaged as fuck
 		if("lol", "wtf", "poo", "badmin", "shitmin", "deadmin", "meme", "memes")
 			new_bible = pick("Woody's Got Wood: The Aftermath", "Sweet Bro and Hella Jeff: Expanded Edition","F.A.T.A.L. Rulebook")
 			switch(new_bible)
 				if("Woody's Got Wood: The Aftermath")
-					B.deity_name = pick("Woody", "Andy", "Cherry Flavored Lube")
+					holy_bible.deity_name = pick("Woody", "Andy", "Cherry Flavored Lube")
 				if("Sweet Bro and Hella Jeff: Expanded Edition")
-					B.deity_name = pick("Sweet Bro", "Hella Jeff", "Stairs", "AH")
+					holy_bible.deity_name = pick("Sweet Bro", "Hella Jeff", "Stairs", "AH")
 				if("F.A.T.A.L. Rulebook")
-					B.deity_name = "Twenty Ten-Sided Dice"
-			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // also starts off brain damaged as fuck
+					holy_bible.deity_name = "Twenty Ten-Sided Dice"
+			human_spawned.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100) // also starts off brain damaged as fuck
 		if("servicianism", "partying")
-			B.desc = "Happy, Full, Clean. Live it and give it."
+			holy_bible.desc = "Happy, Full, Clean. Live it and give it."
 		if("weeaboo","kawaii")
 			new_bible = pick("Fanfiction Compendium","Japanese for Dummies","The Manganomicon","Establishing Your O.T.P")
-			B.deity_name = "Anime"
+			holy_bible.deity_name = "Anime"
 		else
 			if(new_bible == DEFAULT_BIBLE)
 				new_bible = DEFAULT_BIBLE_REPLACE(new_bible)
 
-	B.name = new_bible
+	holy_bible.name = new_bible
 
 	GLOB.religion = new_religion
 	GLOB.bible_name = new_bible
-	GLOB.deity = B.deity_name
+	GLOB.deity = holy_bible.deity_name
 
-	H.equip_to_slot_or_del(B, ITEM_SLOT_BACKPACK)
+	human_spawned.equip_to_slot_or_del(holy_bible, ITEM_SLOT_BACKPACK)
 
 	SSblackbox.record_feedback("text", "religion_name", 1, "[new_religion]", 1)
 	SSblackbox.record_feedback("text", "religion_deity", 1, "[new_deity]", 1)

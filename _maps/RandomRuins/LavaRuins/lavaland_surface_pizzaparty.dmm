@@ -576,9 +576,7 @@
 /obj/structure/glowshroom/single,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/north,
-/obj/structure/sign/poster/party_game{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/party_game/directional/north,
 /obj/item/tail_pin,
 /turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)

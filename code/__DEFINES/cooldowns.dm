@@ -58,6 +58,9 @@
 // mob cooldowns
 #define COOLDOWN_YAWN_PROPAGATION "yawn_propagation_cooldown"
 
+// admin verb cooldowns
+#define COOLDOWN_INTERNET_SOUND "internet_sound"
+
 //Shared cooldowns for actions
 #define MOB_SHARED_COOLDOWN_1 (1<<0)
 #define MOB_SHARED_COOLDOWN_2 (1<<1)

@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ac" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/grille,
 /turf/open/floor/plating/icemoon,
@@ -279,9 +279,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/ruin/plasma_facility/operations)
 "ev" = (
-/obj/structure/window/reinforced/unanchored{
-	dir = 1
-	},
+/obj/structure/window/reinforced/unanchored/spawner/directional/north,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "eC" = (
@@ -299,7 +297,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "eM" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/glass,
 /obj/item/shard{
 	pixel_x = 11;
@@ -477,7 +475,7 @@
 /area/ruin/plasma_facility/commons)
 "hN" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/commons)
@@ -631,12 +629,12 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "jT" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/grille,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "kh" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/frame/computer{
 	anchored = 1;
 	dir = 4
@@ -661,9 +659,7 @@
 	},
 /area/ruin/plasma_facility/commons)
 "kA" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/ore/plasma,
 /obj/item/stack/ore/plasma,
 /obj/item/stack/ore/plasma,
@@ -1111,7 +1107,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/glass,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "rF" = (
@@ -1129,9 +1125,7 @@
 /area/ruin/plasma_facility/commons)
 "rS" = (
 /obj/effect/turf_decal/bot/left,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/iron/smooth_half{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -1148,9 +1142,7 @@
 /obj/structure/railing{
 	dir = 5
 	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
 /obj/item/stack/sheet/mineral/silver,
@@ -1760,9 +1752,7 @@
 "FD" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/item/stack/sheet/mineral/uranium/five,
@@ -1888,7 +1878,7 @@
 "Ij" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
@@ -1904,7 +1894,7 @@
 /turf/open/lava/plasma/ice_moon,
 /area/ruin/plasma_facility/operations)
 "IJ" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/glass,
 /obj/item/shard,
 /obj/effect/decal/cleanable/dirt,
@@ -2177,7 +2167,7 @@
 /area/ruin/plasma_facility/operations)
 "MN" = (
 /obj/structure/grille/broken,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)

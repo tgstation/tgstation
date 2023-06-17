@@ -200,7 +200,7 @@
 		/obj/item/clothing/head/costume/powdered_wig = 1,
 		/obj/item/clothing/head/costume/tv_head = 1,
 		/obj/item/clothing/mask/muzzle = 2,
-		/obj/item/clothing/shoes/clown_shoes/ducky_shoes = 1,
+		/obj/item/clothing/shoes/ducky_shoes = 1,
 		/obj/item/clothing/shoes/clown_shoes/meown_shoes = 1,
 		/obj/item/clothing/suit/costume/judgerobe = 1,
 		/obj/item/clothing/head/costume/lobsterhat = 1,

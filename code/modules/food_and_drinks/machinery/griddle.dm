@@ -91,6 +91,15 @@
 	update_appearance()
 	update_grill_audio()
 
+/obj/machinery/griddle/begin_processing()
+	. = ..()
+	for(var/obj/item/item_to_grill as anything in griddled_objects)
+		SEND_SIGNAL(item_to_grill, COMSIG_ITEM_GRILL_TURNED_ON)
+
+/obj/machinery/griddle/end_processing()
+	. = ..()
+	for(var/obj/item/item_to_grill as anything in griddled_objects)
+		SEND_SIGNAL(item_to_grill, COMSIG_ITEM_GRILL_TURNED_OFF)
 
 /obj/machinery/griddle/proc/AddToGrill(obj/item/item_to_grill, mob/user)
 	vis_contents += item_to_grill
@@ -98,10 +107,12 @@
 	item_to_grill.flags_1 |= IS_ONTOP_1
 	item_to_grill.vis_flags |= VIS_INHERIT_PLANE
 
-	SEND_SIGNAL(item_to_grill, COMSIG_ITEM_GRILL_PLACED_ON, user)
+	SEND_SIGNAL(item_to_grill, COMSIG_ITEM_GRILL_PLACED, user)
+	if(on)
+		SEND_SIGNAL(item_to_grill, COMSIG_ITEM_GRILL_TURNED_ON)
 	RegisterSignal(item_to_grill, COMSIG_MOVABLE_MOVED, PROC_REF(ItemMoved))
 	RegisterSignal(item_to_grill, COMSIG_ITEM_GRILLED, PROC_REF(GrillCompleted))
-	RegisterSignal(item_to_grill, COMSIG_PARENT_QDELETING, PROC_REF(ItemRemovedFromGrill))
+	RegisterSignal(item_to_grill, COMSIG_QDELETING, PROC_REF(ItemRemovedFromGrill))
 	update_grill_audio()
 	update_appearance()
 
@@ -111,7 +122,7 @@
 	ungrill.vis_flags &= ~VIS_INHERIT_PLANE
 	griddled_objects -= ungrill
 	vis_contents -= ungrill
-	UnregisterSignal(ungrill, list(COMSIG_ITEM_GRILLED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(ungrill, list(COMSIG_ITEM_GRILLED, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	update_grill_audio()
 
 /obj/machinery/griddle/proc/ItemMoved(obj/item/I, atom/OldLoc, Dir, Forced)

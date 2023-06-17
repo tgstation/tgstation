@@ -9,6 +9,9 @@
 	},
 /turf/open/floor/bamboo,
 /area/ruin/space/has_grav/crashedship/fore)
+"av" = (
+/turf/template_noop,
+/area/space/nearstation)
 "aH" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
@@ -197,10 +200,10 @@
 /area/ruin/space/has_grav/crashedship/aft)
 "ja" = (
 /turf/closed/mineral/random/high_chance,
-/area/space)
+/area/ruin/space/has_grav/crashedship/big_asteroid)
 "kc" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "km" = (
 /obj/structure/girder/displaced,
 /obj/effect/mapping_helpers/broken_floor,
@@ -253,7 +256,7 @@
 "mb" = (
 /obj/item/stack/ore/glass,
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "mu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
@@ -332,7 +335,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space)
+/area/space/nearstation)
 "pb" = (
 /obj/effect/turf_decal/trimline/neutral/filled/shrink_cw,
 /obj/structure/cable,
@@ -436,7 +439,7 @@
 "rm" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/space)
+/area/space/nearstation)
 "rt" = (
 /obj/item/chair,
 /turf/open/misc/asteroid/airless,
@@ -445,10 +448,10 @@
 /obj/item/stack/rods,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space)
+/area/space/nearstation)
 "rZ" = (
 /turf/closed/mineral/random,
-/area/space)
+/area/ruin/space/has_grav/crashedship/big_asteroid)
 "sr" = (
 /obj/effect/spawner/random/maintenance/four,
 /obj/structure/closet/crate,
@@ -456,6 +459,9 @@
 /obj/item/electronics/airlock,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/crashedship/aft)
+"sy" = (
+/turf/closed/mineral/random,
+/area/ruin/space/has_grav/crashedship/small_asteroid)
 "tb" = (
 /obj/item/kirbyplants,
 /turf/open/floor/wood/tile,
@@ -627,7 +633,7 @@
 "zg" = (
 /obj/item/stack/tile/wood,
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "zm" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/decoration,
@@ -748,6 +754,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/crashedship/midship)
+"CB" = (
+/obj/structure/lattice,
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/template_noop,
+/area/space/nearstation)
 "CK" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -812,7 +825,7 @@
 "EL" = (
 /obj/item/stack/ore/silver,
 /turf/open/misc/asteroid/airless,
-/area/space)
+/area/ruin/space/has_grav/crashedship/big_asteroid)
 "EM" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
 /turf/open/floor/plating/airless,
@@ -944,7 +957,7 @@
 "ID" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "IG" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood/parquet,
@@ -953,7 +966,7 @@
 /obj/item/shard,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/space)
+/area/space/nearstation)
 "Jr" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -1017,11 +1030,11 @@
 "KF" = (
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "KO" = (
 /obj/item/light/tube/broken,
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "Ln" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning,
 /obj/effect/turf_decal/trimline/brown/line{
@@ -1050,7 +1063,7 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/template_noop,
-/area/space)
+/area/space/nearstation)
 "Me" = (
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 8
@@ -1083,7 +1096,7 @@
 "MC" = (
 /obj/effect/mob_spawn/corpse/human/laborer,
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "Nc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1125,7 +1138,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/space)
+/area/space/nearstation)
 "Oy" = (
 /obj/machinery/door/firedoor/closed,
 /obj/effect/turf_decal/stripes/line{
@@ -1167,7 +1180,7 @@
 	icon_state = "medium"
 	},
 /turf/template_noop,
-/area/space)
+/area/space/nearstation)
 "Pu" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -1236,7 +1249,7 @@
 /area/ruin/space/has_grav/crashedship/aft)
 "Uz" = (
 /turf/closed/mineral/gibtonite,
-/area/space)
+/area/ruin/space/has_grav/crashedship/big_asteroid)
 "UA" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/space/has_grav/crashedship/fore)
@@ -1290,11 +1303,15 @@
 	},
 /turf/open/floor/iron/dark/side/airless,
 /area/ruin/space/has_grav/crashedship/aft)
+"WN" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "Xu" = (
 /obj/item/shard,
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "Xy" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -1379,7 +1396,7 @@ kc
 kc
 kc
 kc
-rZ
+sy
 kc
 kc
 kc
@@ -1406,8 +1423,8 @@ kc
 kc
 kc
 mb
-rZ
-rZ
+sy
+sy
 kc
 kc
 kc
@@ -1432,11 +1449,11 @@ kc
 kc
 kc
 kc
-rZ
-rZ
-rZ
-rZ
-rZ
+sy
+sy
+sy
+sy
+sy
 kc
 kc
 kc
@@ -1460,11 +1477,11 @@ kc
 kc
 kc
 kc
-rZ
-rZ
-rZ
-rZ
-rZ
+sy
+sy
+sy
+sy
+sy
 kc
 kc
 kc
@@ -1489,10 +1506,10 @@ kc
 kc
 kc
 kc
-rZ
-rZ
-rZ
-rZ
+sy
+sy
+sy
+sy
 kc
 kc
 kc
@@ -1518,8 +1535,8 @@ kc
 kc
 kc
 kc
-rZ
-rZ
+sy
+sy
 kc
 kc
 kc
@@ -1546,8 +1563,8 @@ kc
 kc
 kc
 kc
-rZ
-rZ
+sy
+sy
 kc
 kc
 kc
@@ -1574,7 +1591,7 @@ kc
 kc
 kc
 kc
-rZ
+sy
 kc
 kc
 kc
@@ -1626,7 +1643,7 @@ fY
 eh
 uF
 kc
-fc
+WN
 Ya
 kc
 kc
@@ -1646,7 +1663,7 @@ kc
 kc
 kc
 kc
-kc
+av
 NM
 uF
 Fy
@@ -1674,14 +1691,14 @@ kc
 rm
 nh
 uF
-fc
-fc
+WN
+WN
 uF
 Uk
 mu
 Pb
 uF
-fc
+WN
 kc
 vX
 kc
@@ -1711,7 +1728,7 @@ uF
 uF
 qO
 mb
-fc
+WN
 kc
 kc
 kc
@@ -1738,8 +1755,8 @@ EW
 uF
 xJ
 lG
-fc
-fc
+WN
+WN
 kc
 kc
 kc
@@ -1796,7 +1813,7 @@ iW
 vk
 Nc
 LX
-fc
+WN
 kc
 kc
 kc
@@ -1829,7 +1846,7 @@ kc
 kc
 kc
 kc
-fc
+WN
 kc
 kc
 "}
@@ -1847,15 +1864,15 @@ Ff
 zO
 cR
 EB
-fc
-fc
+WN
+WN
 EM
 fc
 AF
 uF
 kc
 kc
-fc
+WN
 Ku
 Af
 kc
@@ -1881,7 +1898,7 @@ uF
 am
 iI
 uF
-fc
+WN
 ut
 uF
 Xy
@@ -1903,8 +1920,8 @@ Ff
 Ye
 bj
 lG
-fc
-fc
+WN
+WN
 lG
 sr
 lG
@@ -1913,7 +1930,7 @@ mb
 kc
 uF
 Uc
-fc
+WN
 kc
 kc
 "}
@@ -1941,7 +1958,7 @@ kc
 kc
 uF
 lG
-fc
+WN
 kc
 kc
 "}
@@ -1967,7 +1984,7 @@ lg
 vX
 kc
 kc
-fc
+WN
 kc
 kc
 kc
@@ -1986,16 +2003,16 @@ za
 rb
 iU
 OZ
-fc
-fc
+WN
+WN
 qO
-fc
+WN
 mb
 kc
-fc
-fc
+WN
+WN
 kc
-fc
+WN
 kc
 kc
 kc
@@ -2015,15 +2032,15 @@ bc
 Cz
 Ho
 fp
-fc
-fc
+WN
+WN
 km
-fc
+WN
 Ty
-fc
+WN
 Jv
-fc
-fc
+WN
+WN
 kc
 kc
 kc
@@ -2043,15 +2060,15 @@ US
 HT
 zW
 aH
-fc
+WN
 zg
 KF
 kc
-fc
+WN
 aH
 Jv
 mb
-fc
+WN
 kc
 kc
 kc
@@ -2071,9 +2088,9 @@ rb
 HT
 le
 pZ
-fc
-fc
-fc
+WN
+WN
+WN
 zg
 Ty
 Jv
@@ -2099,14 +2116,14 @@ Jv
 HT
 Vp
 fp
-fc
+WN
 Ty
 Qy
 Ty
 fp
 fp
-fc
-fc
+WN
+WN
 UC
 kc
 kc
@@ -2317,7 +2334,7 @@ rZ
 rZ
 rZ
 rZ
-Au
+CB
 kZ
 yk
 fA

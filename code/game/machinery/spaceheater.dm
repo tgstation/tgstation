@@ -72,6 +72,7 @@
 
 /obj/machinery/space_heater/Destroy()
 	SSair.stop_processing_machine(src)
+	QDEL_NULL(cell)
 	return..()
 
 /obj/machinery/space_heater/on_construction()

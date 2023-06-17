@@ -11,7 +11,7 @@
 
 	. = ..()
 
-	if(!gibbed)
+	if(!gibbed && !QDELING(src)) //double check they didn't start getting deleted in ..()
 		attach_rot()
 
 	for(var/T in get_traumas())
@@ -35,15 +35,15 @@
 	for(var/mob/M in src)
 		M.forceMove(Tsec)
 		visible_message(span_danger("[M] bursts out of [src]!"))
-	. = ..()
+	return ..()
 
 /mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts)
 	var/atom/Tsec = drop_location()
 	if(!no_bodyparts)
 		if(no_organs)//so the organs don't get transfered inside the bodyparts we'll drop.
-			for(var/X in organs)
-				if(no_brain || !istype(X, /obj/item/organ/internal/brain))
-					qdel(X)
+			for(var/organ in organs)
+				if(no_brain || !istype(organ, /obj/item/organ/internal/brain))
+					qdel(organ)
 		else //we're going to drop all bodyparts except chest, so the only organs that needs spilling are those inside it.
 			for(var/obj/item/organ/organ as anything in organs)
 				if(no_brain && istype(organ, /obj/item/organ/internal/brain))
@@ -70,6 +70,8 @@
 /mob/living/carbon/spread_bodyparts(skip_head = FALSE)
 	for(var/obj/item/bodypart/part as anything in bodyparts)
 		if(skip_head && part.body_zone == BODY_ZONE_HEAD)
+			continue
+		else if(part.body_zone == BODY_ZONE_CHEST)
 			continue
 		part.drop_limb()
 		part.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)

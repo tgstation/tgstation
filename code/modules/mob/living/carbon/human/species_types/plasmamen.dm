@@ -14,6 +14,7 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_NOBLOOD,
+		TRAIT_NO_DEBRAIN_OVERLAY,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
@@ -28,7 +29,7 @@
 	heatmod = 1.5
 	brutemod = 1.5
 	payday_modifier = 0.75
-	breathid = "plas"
+	breathid = GAS_PLASMA
 	disliked_food = FRUIT | CLOTH
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
@@ -250,12 +251,6 @@
 			SPECIES_PERK_ICON = "fire",
 			SPECIES_PERK_NAME = "Living Torch",
 			SPECIES_PERK_DESC = "Plasmamen instantly ignite when their body makes contact with oxygen.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "Plasma Breathing",
-			SPECIES_PERK_DESC = "Plasmamen must breathe plasma to survive. You receive a tank when you arrive.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,

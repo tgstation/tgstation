@@ -1014,10 +1014,8 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/eva)
 "ch" = (
-/obj/item/surgical_drapes,
-/obj/item/retractor,
-/obj/item/cautery,
 /obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/syndie/surgery,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/medical)
 "ci" = (
@@ -1605,11 +1603,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/armory)
 "dz" = (
-/obj/item/circular_saw,
-/obj/item/surgicaldrill{
-	pixel_y = 5
-	},
-/obj/item/healthanalyzer,
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/light/directional/west,
@@ -1617,6 +1610,7 @@
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/healthanalyzer/advanced,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/medical)
 "dA" = (
@@ -1691,9 +1685,7 @@
 	},
 /obj/effect/turf_decal/stripes/red/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/cc64k_ad{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/cc64k_ad/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/armory)
 "dH" = (
@@ -1837,9 +1829,6 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/medical)
 "dV" = (
-/obj/item/scalpel{
-	pixel_y = 16
-	},
 /obj/structure/table/reinforced,
 /obj/item/bodypart/arm/left/robot{
 	pixel_x = -6
@@ -1847,7 +1836,6 @@
 /obj/item/bodypart/arm/right/robot{
 	pixel_x = 6
 	},
-/obj/item/hemostat,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/medical)

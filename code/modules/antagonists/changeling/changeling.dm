@@ -571,6 +571,9 @@
 		new_profile.worn_icon_state_list[slot] = clothing_item.worn_icon_state
 		new_profile.exists_list[slot] = 1
 
+	new_profile.voice = target.voice
+	new_profile.voice_filter = target.voice_filter
+
 	return new_profile
 
 /*
@@ -759,6 +762,8 @@
 	user.physique = chosen_profile.physique
 	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
 	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
+	user.voice = chosen_profile.voice
+	user.voice_filter = chosen_profile.voice_filter
 
 	chosen_dna.transfer_identity(user, TRUE)
 
@@ -908,6 +913,10 @@
 	var/list/grad_style = list("None", "None")
 	/// The hair and facial hair gradient colours of the profile source.
 	var/list/grad_color = list(null, null)
+	/// The TTS voice of the profile source
+	var/voice
+	/// The TTS filter of the profile filter
+	var/voice_filter = ""
 
 /datum/changeling_profile/Destroy()
 	qdel(dna)
@@ -946,6 +955,8 @@
 	new_profile.quirks = quirks.Copy()
 	new_profile.grad_style = LAZYLISTDUPLICATE(grad_style)
 	new_profile.grad_color = LAZYLISTDUPLICATE(grad_color)
+	new_profile.voice = voice
+	new_profile.voice_filter = voice_filter
 
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()

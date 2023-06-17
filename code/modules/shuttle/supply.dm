@@ -48,9 +48,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	port_direction = EAST
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 
-	//Export categories for this run, this is set by console sending the shuttle.
-	var/export_categories = EXPORT_CARGO
-
 /obj/docking_port/mobile/supply/register()
 	. = ..()
 	SSshuttle.supply = src
@@ -93,10 +90,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	var/list/empty_turfs = list()
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/turf/open/floor/T in shuttle_area)
-			if(T.is_blocked_turf())
+		for(var/turf/open/floor/shuttle_turf in shuttle_area)
+			if(shuttle_turf.is_blocked_turf())
 				continue
-			empty_turfs += T
+			empty_turfs += shuttle_turf
 
 	//quickly and greedily handle chef's grocery runs first, there are a few reasons why this isn't attached to the rest of cargo...
 	//but the biggest reason is that the chef requires produce to cook and do their job, and if they are using this system they
@@ -176,9 +173,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	// we handle packing all the goodies last, since the type of crate we use depends on how many goodies they ordered. If it's more than GOODY_FREE_SHIPPING_MAX
 	// then we send it in a crate (including the CRATE_TAX cost), otherwise send it in a free shipping case
-	for(var/D in goodies_by_buyer)
-		var/list/buying_account_orders = goodies_by_buyer[D]
-		var/datum/bank_account/buying_account = D
+	for(var/buyer_key in goodies_by_buyer)
+		var/list/buying_account_orders = goodies_by_buyer[buyer_key]
+		var/datum/bank_account/buying_account = buyer_key
 		var/buyer = buying_account.account_holder
 
 		if(buying_account_orders.len > GOODY_FREE_SHIPPING_MAX) // no free shipping, send a crate
@@ -199,49 +196,50 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			misc_costs[buyer] += our_order.pack.cost
 			misc_order_num[buyer] = "[misc_order_num[buyer]]#[our_order.id] "
 
-	for(var/I in miscboxes)
-		var/datum/supply_order/SO = new/datum/supply_order()
-		SO.id = misc_order_num[I]
-		SO.generateCombo(miscboxes[I], I, misc_contents[I], misc_costs[I])
-		qdel(SO)
+	for(var/miscbox in miscboxes)
+		var/datum/supply_order/order = new/datum/supply_order()
+		order.id = misc_order_num[miscbox]
+		order.generateCombo(miscboxes[miscbox], miscbox, misc_contents[miscbox], misc_costs[miscbox])
+		qdel(order)
 
 	SSeconomy.import_total += value
 	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
 
+/// Deletes and sells the items on the shuttle
 /obj/docking_port/mobile/supply/proc/sell()
-	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	var/presale_points = D.account_balance
+	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	var/presale_points = cargo_budget.account_balance
 
 	if(!GLOB.exports_list.len) // No exports list? Generate it!
 		setupExports()
 
 	var/msg = ""
 
-	var/datum/export_report/ex = new
+	var/datum/export_report/report = new
 
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/atom/movable/AM in shuttle_area)
-			if(iscameramob(AM))
+		for(var/atom/movable/exporting_atom in shuttle_area)
+			if(iscameramob(exporting_atom))
 				continue
-			if(AM.anchored)
+			if(exporting_atom.anchored)
 				continue
-			export_item_and_contents(AM, export_categories, dry_run = FALSE, external_report = ex)
+			export_item_and_contents(exporting_atom, apply_elastic = TRUE, dry_run = FALSE, external_report = report)
 
-	if(ex.exported_atoms)
-		ex.exported_atoms += "." //ugh
+	if(report.exported_atoms)
+		report.exported_atoms += "." //ugh
 
-	for(var/datum/export/E in ex.total_amount)
-		var/export_text = E.total_printout(ex)
+	for(var/datum/export/exported_datum in report.total_amount)
+		var/export_text = exported_datum.total_printout(report)
 		if(!export_text)
 			continue
 
 		msg += export_text + "\n"
-		D.adjust_money(ex.total_value[E])
+		cargo_budget.adjust_money(report.total_value[exported_datum])
 
-	SSeconomy.export_total += (D.account_balance - presale_points)
+	SSeconomy.export_total += (cargo_budget.account_balance - presale_points)
 	SSshuttle.centcom_message = msg
-	investigate_log("contents sold for [D.account_balance - presale_points] credits. Contents: [ex.exported_atoms ? ex.exported_atoms.Join(",") + "." : "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
+	investigate_log("contents sold for [cargo_budget.account_balance - presale_points] credits. Contents: [report.exported_atoms ? report.exported_atoms.Join(",") + "." : "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
 
 /*
 	Generates a box of mail depending on our exports and imports.

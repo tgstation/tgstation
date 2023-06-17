@@ -207,8 +207,8 @@
 
 	var/total_rating = 1.2
 
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		total_rating -= manipulator.tier * 0.1
+	for(var/datum/stock_part/servo/servo in component_parts)
+		total_rating -= servo.tier * 0.1
 
 	efficiency_coeff = max(total_rating, 0)
 

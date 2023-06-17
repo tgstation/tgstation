@@ -54,7 +54,7 @@
 		if("Golem")
 			outfit = /datum/outfit/consumed_golem
 		if("Operative")
-			outfit = /datum/outfit/syndicatecommandocorpse
+			outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
 		if("Shadow")
 			outfit = /datum/outfit/consumed_shadowperson
 	. = ..()
@@ -201,16 +201,7 @@
 
 /datum/outfit/consumed_golem/pre_equip(mob/living/carbon/human/golem, visualsOnly = FALSE)
 	if(!visualsOnly)
-		golem.set_species(pick(
-			/datum/species/golem/adamantine,
-			/datum/species/golem/diamond,
-			/datum/species/golem/gold,
-			/datum/species/golem/plasma,
-			/datum/species/golem/plasteel,
-			/datum/species/golem/plastitanium,
-			/datum/species/golem/silver,
-			/datum/species/golem/titanium,
-		))
+		golem.set_species(/datum/species/golem)
 	if(prob(30))
 		glasses = pick_weight(list(
 			/obj/item/clothing/glasses/hud/diagnostic = 2,

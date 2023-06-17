@@ -188,6 +188,8 @@
 /// BLOODCULT
 	//Special, for anything that's basically internal
 #define ACCESS_BLOODCULT "bloodcult"
+/// HUNTERS
+#define ACCESS_HUNTER "hunter"
 
 /// - - - END ACCESS IDS - - -
 
@@ -530,6 +532,7 @@
 	/obj/item/modular_computer/pda/mime = list(REGION_GENERAL), \
 	/obj/item/modular_computer/pda/medical = list(REGION_MEDBAY), \
 	/obj/item/modular_computer/pda/viro = list(REGION_MEDBAY), \
+	/obj/item/modular_computer/pda/coroner = list(REGION_MEDBAY), \
 	/obj/item/modular_computer/pda/engineering = list(REGION_ENGINEERING), \
 	/obj/item/modular_computer/pda/security = list(REGION_SECURITY), \
 	/obj/item/modular_computer/pda/detective = list(REGION_SECURITY), \

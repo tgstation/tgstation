@@ -71,7 +71,7 @@
 
 /// Hunts down a specific atom type.
 /datum/ai_behavior/hunt_target
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
 	/// How long do we have to wait after a successful hunt?
 	var/hunt_cooldown = 5 SECONDS
 	/// Do we reset the target after attacking something, so we can check for status changes.
