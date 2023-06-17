@@ -183,9 +183,15 @@
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "eg" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/power/port_gen/pacman/pre_loaded,
-/turf/open/floor/pod/dark,
+/obj/machinery/power/rtg/advanced{
+	power_gen = 318000
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/machinery/door/window/brigdoor/right/directional/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "ej" = (
 /obj/effect/turf_decal/stripes,
@@ -241,6 +247,9 @@
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
+/area/shuttle/pirate)
+"gd" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/pirate)
 "gl" = (
 /obj/structure/table/reinforced,
@@ -307,6 +316,7 @@
 "ig" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/red/dim/directional/south,
+/obj/item/storage/bag/money/vault,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "ip" = (
@@ -350,10 +360,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/pod/dark,
-/area/shuttle/pirate)
-"jA" = (
-/obj/machinery/power/shuttle_engine/huge,
-/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "jX" = (
 /obj/effect/turf_decal/tile/dark/full,
@@ -472,7 +478,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "mN" = (
-/obj/structure/table/reinforced,
+/obj/machinery/loot_locator,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "mQ" = (
@@ -843,6 +849,7 @@
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/machinery/light/directional/south,
+/obj/machinery/door/window/brigdoor/right/directional/north,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "xQ" = (
@@ -860,17 +867,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "yN" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/window/reinforced/plasma/spawner/directional/south,
-/obj/structure/window/reinforced/plasma/spawner/directional/west,
-/obj/machinery/power/rtg/advanced{
-	power_gen = 118000
-	},
-/obj/structure/cable/layer1,
-/obj/machinery/door/window/brigdoor/right/directional/east,
-/obj/structure/window/reinforced/plasma/spawner/directional/north,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "yP" = (
@@ -928,6 +929,10 @@
 	dir = 1
 	},
 /area/shuttle/pirate)
+"AM" = (
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/pirate)
 "AZ" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
@@ -946,6 +951,10 @@
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
+/area/shuttle/pirate)
+"Bg" = (
+/obj/machinery/porta_turret/syndicate/pod,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/pirate)
 "Bl" = (
 /obj/machinery/shuttle_scrambler{
@@ -1036,7 +1045,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/pirate)
 "CM" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
@@ -1056,7 +1065,14 @@
 /area/shuttle/pirate)
 "Ef" = (
 /obj/effect/turf_decal/bot/left,
+/obj/machinery/computer/piratepad_control{
+	dir = 1
+	},
 /turf/open/floor/pod/dark,
+/area/shuttle/pirate)
+"Et" = (
+/obj/machinery/power/shuttle_engine/large,
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Fc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -1092,6 +1108,10 @@
 /obj/effect/turf_decal/tile/dark/full,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/pod/light,
+/area/shuttle/pirate)
+"FU" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst,
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "FY" = (
 /obj/machinery/computer/records/medical/syndie,
@@ -1138,7 +1158,6 @@
 /area/shuttle/pirate)
 "HG" = (
 /obj/effect/turf_decal/tile/dark/full,
-/obj/structure/rack,
 /obj/structure/rack,
 /obj/item/melee/baseball_bat/ablative{
 	name = "kneecap buster";
@@ -1194,9 +1213,11 @@
 "IE" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /obj/structure/table/glass,
-/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute{
+	pixel_y = -1
+	},
 /obj/item/storage/medkit/fire{
-	pixel_y = 4
+	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -1206,6 +1227,12 @@
 /obj/item/toy/cards/deck,
 /turf/open/floor/wood,
 /area/shuttle/pirate)
+"IY" = (
+/obj/effect/turf_decal/trimline/dark_blue/arrow_cw{
+	dir = 6
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
 "IZ" = (
 /turf/open/floor/glass,
 /area/shuttle/pirate)
@@ -1213,11 +1240,14 @@
 /obj/effect/turf_decal/tile/dark_blue/half{
 	dir = 8
 	},
-/obj/machinery/door/airlock/glass_large,
 /obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/public/glass{
+	name = "Auditing Office"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
@@ -1270,6 +1300,14 @@
 /obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/docking_port/mobile/pirate{
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "Pirate Ship";
+	port_direction = 4;
+	preferred_direction = 8;
+	dir = 8
+	},
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "KI" = (
@@ -1433,6 +1471,21 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
+"Pn" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light/red/dim/directional/south,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 3;
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 8;
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/pirate)
 "PP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
@@ -1454,6 +1507,7 @@
 /area/shuttle/pirate)
 "Qc" = (
 /obj/effect/turf_decal/bot/right,
+/obj/machinery/piratepad,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "Qi" = (
@@ -1719,15 +1773,30 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Yf" = (
-/obj/machinery/power/smes,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
-/turf/open/floor/pod/dark,
+/obj/machinery/power/smes/engineering{
+	charge = 1e+006
+	},
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "Yu" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating/airless,
+/area/shuttle/pirate)
+"YJ" = (
+/obj/effect/turf_decal/tile/dark_blue/half{
+	dir = 4
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "Auditing Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/iron/edge{
+	dir = 4
+	},
 /area/shuttle/pirate)
 "Zb" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -1861,8 +1930,8 @@ ur
 lp
 yN
 Yu
+FU
 LX
-jA
 "}
 (5,1,1) = {"
 WR
@@ -1887,7 +1956,7 @@ jp
 Bf
 Yu
 LX
-LX
+Et
 "}
 (6,1,1) = {"
 WR
@@ -1984,8 +2053,8 @@ QQ
 hK
 mG
 BG
-hK
-hK
+gd
+gd
 hK
 hK
 "}
@@ -2020,10 +2089,10 @@ Ru
 RC
 LB
 zh
-hK
+gd
 CG
 Xr
-hK
+AM
 WA
 hK
 hK
@@ -2031,12 +2100,12 @@ WA
 vo
 WA
 hK
-hK
+gd
 Ss
 BG
 lf
 ig
-hK
+Bg
 WR
 "}
 (12,1,1) = {"
@@ -2070,7 +2139,7 @@ LV
 ev
 mA
 pO
-LZ
+YJ
 If
 If
 If
@@ -2095,8 +2164,8 @@ bU
 gl
 nA
 nE
-hK
-hK
+gd
+gd
 hK
 hK
 hK
@@ -2106,12 +2175,12 @@ hK
 mE
 hK
 hK
-hK
+gd
 SG
 BG
 wl
-ig
-hK
+Pn
+Bg
 WR
 "}
 (15,1,1) = {"
@@ -2159,8 +2228,8 @@ Cx
 hK
 tP
 BG
-hK
-hK
+gd
+gd
 hK
 hK
 "}
@@ -2237,7 +2306,7 @@ nI
 HG
 Yu
 LX
-jA
+Et
 "}
 (20,1,1) = {"
 WR
@@ -2286,8 +2355,8 @@ FT
 Mv
 nq
 Yu
-LX
-LX
+FU
+IY
 "}
 (22,1,1) = {"
 WR
