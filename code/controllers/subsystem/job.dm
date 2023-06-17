@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(job)
 	var/list/job_priorities_to_strings
 
 	/// List of job config datum singletons.
-	var/static/list/job_config_datum_singletons
+	var/static/list/job_config_datum_singletons = list()
 
 	/// Are we using the old job config system (txt) or the new job config system (TOML)? IF we are going to use the txt file, then we are in "legacy mode", and this will flip to TRUE.
 	var/legacy_mode = FALSE

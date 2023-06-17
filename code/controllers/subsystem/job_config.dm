@@ -74,7 +74,7 @@
 	name = REQUIRED_CHARACTER_AGE
 
 /datum/job_config_type/required_character_age/get_value(datum/job/occupation)
-	return occupation.required_character_age
+	return occupation.required_character_age || 0 // edge case here, this is typically null by default and returning null causes issues. Returning 0 is a safe default.
 
 /datum/job_config_type/required_character_age/set_value(datum/job/occupation, value)
 	occupation.required_character_age = value
@@ -214,7 +214,7 @@
 				var/config_read_value = job_config[job_key][config_datum_key]
 				if(!isnum(config_read_value))
 					working_list += list(
-						"# [config_datum_key]" = config_datum.get_value(occupation),
+						"# [config_datum_key]" = config_datum.get_value(occupation), // note that this doesn't make a real comment, it just creates a string mismatch.
 					)
 				else
 					working_list += list(
@@ -248,8 +248,8 @@
 /datum/controller/subsystem/job/proc/generate_job_config_excluding_legacy(datum/job/new_occupation)
 	var/list/returnable_list = list()
 	// make a quick list to ensure we don't double-dip total_positions and spawn_positions, but still get future config types in
-	var/list/datums_to_read = subtypesof(/datum/job_config_type) - list(TOTAL_POSITIONS, SPAWN_POSITIONS)
-	for(var/config_datum_key in JOB_CONFIG_TYPE_LIST)
+	var/list/datums_to_read = job_config_datum_singletons - list(TOTAL_POSITIONS, SPAWN_POSITIONS)
+	for(var/config_datum_key in datums_to_read)
 		var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 		returnable_list += list(
 			"# [config_datum_key]" = config_datum.get_value(new_occupation),
