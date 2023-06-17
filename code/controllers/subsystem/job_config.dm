@@ -34,7 +34,7 @@
 	name = TOTAL_POSITIONS
 
 /datum/job_config_type/default_positions/get_value(datum/job/occupation)
-	return occupation.total_positions
+	return initial(occupation.total_positions)
 
 /datum/job_config_type/default_positions/set_value(datum/job/occupation, value)
 	occupation.total_positions = value
@@ -44,7 +44,7 @@
 	name = SPAWN_POSITIONS
 
 /datum/job_config_type/starting_positions/get_value(datum/job/occupation)
-	return occupation.spawn_positions
+	return initial(occupation.spawn_positions)
 
 /datum/job_config_type/starting_positions/set_value(datum/job/occupation, value)
 	occupation.spawn_positions = value
@@ -54,7 +54,7 @@
 	name = PLAYTIME_REQUIREMENTS
 
 /datum/job_config_type/playtime_requirements/get_value(datum/job/occupation)
-	return occupation.exp_requirements
+	return initial(occupation.exp_requirements)
 
 /datum/job_config_type/playtime_requirements/set_value(datum/job/occupation, value)
 	occupation.exp_requirements = value
@@ -64,7 +64,7 @@
 	name = REQUIRED_ACCOUNT_AGE
 
 /datum/job_config_type/required_account_age/get_value(datum/job/occupation)
-	return occupation.minimal_player_age
+	return initial(occupation.minimal_player_age)
 
 /datum/job_config_type/required_account_age/set_value(datum/job/occupation, value)
 	occupation.minimal_player_age = value
@@ -74,10 +74,20 @@
 	name = REQUIRED_CHARACTER_AGE
 
 /datum/job_config_type/required_character_age/get_value(datum/job/occupation)
-	return occupation.required_character_age || 0 // edge case here, this is typically null by default and returning null causes issues. Returning 0 is a safe default.
+	return initial(occupation.required_character_age) || 0 // edge case here, this is typically null by default and returning null causes issues. Returning 0 is a safe default.
 
 /datum/job_config_type/required_character_age/set_value(datum/job/occupation, value)
-	occupation.required_character_age = value
+	if(value > AGE_MIN && value < AGE_MAX)
+		occupation.required_character_age = value
+		return
+
+	if(value == 0)
+		occupation.required_character_age = null // they're opting out.
+		return
+
+	var/error_string = "Invalid value for [name] for [occupation.title] (with config tag [occupation.config_tag])! Value must be between [AGE_MIN] and [AGE_MAX]!"
+	error_string += "\nResetting [occupation.title]'s age to default value of [occupation.required_character_age || "0"]!"
+	log_config(error_string)
 
 // now begins the actual work for SSjob
 
@@ -218,7 +228,7 @@
 					)
 				else
 					working_list += list(
-						config_datum_key = config_read_value,
+						"[config_datum_key]" = config_read_value,
 					)
 
 			file_data[job_key] = working_list
