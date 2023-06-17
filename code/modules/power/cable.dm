@@ -24,7 +24,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/linked_dirs = 0 //bitflag
 	var/node = FALSE //used for sprites display
 	var/cable_layer = CABLE_LAYER_2 //bitflag
-	var/machinery_layer = MACHINERY_LAYER_1 //bitflag
 	var/datum/powernet/powernet
 	var/cable_color = CABLE_COLOR_YELLOW
 	var/is_fully_initialized = FALSE
@@ -60,19 +59,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	update_appearance(UPDATE_ICON)
 	is_fully_initialized = TRUE
 
-/obj/structure/cable/multitool_act(mob/living/user, obj/item/tool)
-	var/choice = tgui_input_list(user, "Select Machine Operation Layer", "Select Machinery Layer", GLOB.machinery_layer_to_value)
-	if(isnull(choice))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-
-	machinery_layer = GLOB.machinery_layer_to_value[choice]
-	balloon_alert(user, "now operating on [choice]")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
 /obj/structure/cable/examine(mob/user)
 	. = ..()
-	. += span_notice("Its on [lowertext(GLOB.cable_layer_to_name["[cable_layer]"])].")
-	. += span_notice("Its operating on [lowertext(GLOB.machinery_layer_to_name["[machinery_layer]"])].")
+	. += span_notice("Its operating on the [lowertext(GLOB.cable_layer_to_name["[cable_layer]"])].")
 	. += span_notice("Use a [EXAMINE_HINT("multitool")] to change it's machine layer.")
 	if(isobserver(user))
 		. += get_power_info()

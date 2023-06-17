@@ -1,10 +1,9 @@
 #define CABLE_LAYER_1 (1<<0)
+	#define CABLE_LAYER_1_NAME "Red Power Line"
 #define CABLE_LAYER_2 (1<<1)
+	#define CABLE_LAYER_2_NAME "Yellow Power Line"
 #define CABLE_LAYER_3 (1<<2)
-
-#define MACHINERY_LAYER_1 (1<<0)
-#define MACHINERY_LAYER_2 (1<<1)
-#define MACHINERY_LAYER_3 (1<<2)
+	#define CABLE_LAYER_3_NAME "Blue Power Line"
 
 #define SOLAR_TRACK_OFF 0
 #define SOLAR_TRACK_TIMED 1
@@ -19,21 +18,15 @@ GLOBAL_VAR_INIT(CHARGELEVEL, 0.001) // Cap for how fast cells charge, as a perce
 
 // Converts cable layer to its human readable name
 GLOBAL_LIST_INIT(cable_layer_to_name, list(
-	"[CABLE_LAYER_1]" = "Cable Layer 1",
-	"[CABLE_LAYER_2]" = "Cable Layer 2",
-	"[CABLE_LAYER_3]" = "Cable Layer 3"
+	"[CABLE_LAYER_1]" = CABLE_LAYER_1_NAME,
+	"[CABLE_LAYER_2]" = CABLE_LAYER_2_NAME,
+	"[CABLE_LAYER_3]" = CABLE_LAYER_3_NAME
 ))
 
-// Converts machine layer name to its value
-GLOBAL_LIST_INIT(machinery_layer_to_value, list(
-	"Machine Layer 1" = MACHINERY_LAYER_1,
-	"Machine Layer 2" = MACHINERY_LAYER_2,
-	"Machine Layer 3" = MACHINERY_LAYER_3
+// Converts cable color name to its layer
+GLOBAL_LIST_INIT(cable_name_to_layer, list(
+	CABLE_LAYER_1_NAME = CABLE_LAYER_1,
+	CABLE_LAYER_2_NAME = CABLE_LAYER_2,
+	CABLE_LAYER_3_NAME = CABLE_LAYER_3
 ))
 
-// Converts machine layer to human readable name
-GLOBAL_LIST_INIT(machinery_layer_to_name, list(
-	"[MACHINERY_LAYER_1]" = "Machine Layer 1",
-	"[MACHINERY_LAYER_2]" = "Machine Layer 2",
-	"[MACHINERY_LAYER_3]" = "Machine Layer 3"
-))
