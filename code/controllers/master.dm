@@ -470,7 +470,6 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			if (starting_tick_usage > TICK_LIMIT_MC) //if there isn't enough time to bother doing anything this tick, sleep a bit.
 				sleep_delta *= 2
 				current_ticklimit = TICK_LIMIT_RUNNING * 0.5
-				AttemptProfileDump(CONFIG_GET(number/sleep_profile_delay))
 				sleep(world.tick_lag * (processing * sleep_delta))
 				continue
 
