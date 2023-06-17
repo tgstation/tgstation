@@ -66,13 +66,6 @@
 /obj/item/reagent_containers/cup/rag,
 /turf/open/floor/iron/kitchen,
 /area/shuttle/pirate)
-"by" = (
-/obj/structure/chair/stool/bar/directional/south,
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 4
-	},
-/turf/open/floor/iron/grimy,
-/area/shuttle/pirate)
 "bA" = (
 /obj/effect/mob_spawn/ghost_role/human/pirate/irs,
 /obj/machinery/light/directional/north,
@@ -904,12 +897,6 @@
 	dir = 1
 	},
 /area/shuttle/pirate)
-"AZ" = (
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 4
-	},
-/turf/open/floor/iron/grimy,
-/area/shuttle/pirate)
 "Bf" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -952,12 +939,11 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/pirate)
 "Cf" = (
-/obj/effect/turf_decal/siding/dark_green,
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 4
-	},
 /obj/machinery/vending/autodrobe{
 	onstation = 0
+	},
+/obj/effect/turf_decal/siding/dark_green{
+	dir = 6
 	},
 /turf/open/floor/wood,
 /area/shuttle/pirate)
@@ -1968,8 +1954,8 @@ NW
 bO
 hK
 Cf
-AZ
-by
+lE
+QV
 Ck
 uy
 hK

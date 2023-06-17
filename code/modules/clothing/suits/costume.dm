@@ -584,6 +584,6 @@
 	name = "internal revenue service jacket"
 	desc = "I'm crazy enough to take on The Owl, but the IRS? Nooo thank you!"
 	icon_state = "irs_suit"
-	inhand_icon_state = "irs_suit"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
