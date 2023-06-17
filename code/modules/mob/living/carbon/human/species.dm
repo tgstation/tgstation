@@ -1373,7 +1373,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
 	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
-	var/hit_percent = (100-(armor+blocked))/100
+	var/hit_percent = (100-(damage_modifier+blocked))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!damage || (!forced && hit_percent <= 0))
 		return 0
