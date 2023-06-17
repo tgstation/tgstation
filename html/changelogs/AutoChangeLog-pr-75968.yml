@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "finishing & closing the turbine core rotor part will now connect itself to the cable beneath it allowing it to share its produced power with everyone."
+  - bugfix: "turbine's now give detailed balloon alerts if you have a missing component, or something is not aligned correctly during turbine construction"
+  - bugfix: "turbine's will not produce power in vaccume"
+  - bugfix: "turbine's won't function if any of it's components are damaged or misaligned after linking or during processing"

@@ -296,10 +296,12 @@
 		return
 	//blunt items are more likely to knock out, but sharp ones are still capable of doing it
 	if(prob(CEILING(actual_damage * (sharpness & (SHARP_EDGED|SHARP_POINTY) ? 0.65 : 1), 1)))
-		source.visible_message(
-			span_warning("[source] gets knocked out!"),
-			span_userdanger("You are knocked out!"),
-			vision_distance = COMBAT_MESSAGE_RANGE,
+		//don't display the message if little mac is already KO'd
+		if(!source.IsUnconscious())
+			source.visible_message(
+				span_warning("[source] gets knocked out!"),
+				span_userdanger("You get knocked out!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
 		)
 		source.Unconscious(3 SECONDS)
 
@@ -668,12 +670,9 @@
 	added_trama_ref = WEAKREF(added_trauma)
 
 /datum/quirk/insanity/post_add()
-	if(!quirk_holder.mind || quirk_holder.mind.special_role)
-		return
-	// I don't /think/ we'll need this, but for newbies who think "roleplay as insane" = "license to kill",
-	// it's probably a good thing to have.
-	to_chat(quirk_holder, span_big(span_bold(span_info("Please note that your [lowertext(name)] does NOT give you the right to attack people or otherwise cause any interference to \
-		the round. You are not an antagonist, and the rules will treat you the same as other crewmembers."))))
+	var/rds_policy = get_policy("[type]") || "Please note that your [lowertext(name)] does NOT give you any additional right to attack people or cause chaos."
+	// I don't /think/ we'll need this, but for newbies who think "roleplay as insane" = "license to kill", it's probably a good thing to have.
+	to_chat(quirk_holder, span_big(span_info(rds_policy)))
 
 /datum/quirk/insanity/remove()
 	QDEL_NULL(added_trama_ref)

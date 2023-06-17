@@ -1,0 +1,4 @@
+author: "YehnBeep"
+delete-after: True
+changes:
+  - bugfix: "Birdshot now has an (oddly placed) atmosdrobe."
