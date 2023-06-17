@@ -19,8 +19,8 @@ SUBSYSTEM_DEF(tgui)
 
 	/// A list of UIs scheduled to process
 	var/list/current_run = list()
-	/// A list of open UIs
-	var/list/open_uis = list()
+	/// A list of all open UIs
+	var/list/all_uis = list()
 	/// The HTML base used for all UIs.
 	var/basehtml
 
@@ -36,12 +36,12 @@ SUBSYSTEM_DEF(tgui)
 	close_all_uis()
 
 /datum/controller/subsystem/tgui/stat_entry(msg)
-	msg = "P:[length(open_uis)]"
+	msg = "P:[length(all_uis)]"
 	return ..()
 
 /datum/controller/subsystem/tgui/fire(resumed = FALSE)
 	if(!resumed)
-		src.current_run = open_uis.Copy()
+		src.current_run = all_uis.Copy()
 	// Cache for sanic speed (lists are references anyways)
 	var/list/current_run = src.current_run
 	while(current_run.len)
@@ -230,7 +230,7 @@ SUBSYSTEM_DEF(tgui)
  */
 /datum/controller/subsystem/tgui/proc/close_all_uis()
 	var/count = 0
-	for(var/datum/tgui/ui in open_uis)
+	for(var/datum/tgui/ui in all_uis)
 		// Check if UI is valid.
 		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 			ui.close()
@@ -287,7 +287,7 @@ SUBSYSTEM_DEF(tgui)
 /datum/controller/subsystem/tgui/proc/on_open(datum/tgui/ui)
 	var/key = "[REF(ui.src_object)]"
 	LAZYOR(ui.src_object.open_uis, ui)
-	open_uis |= ui
+	all_uis |= ui
 
 /**
  * private
@@ -300,7 +300,7 @@ SUBSYSTEM_DEF(tgui)
  */
 /datum/controller/subsystem/tgui/proc/on_close(datum/tgui/ui)
 	// Remove it from the list of processing UIs.
-	open_uis -= ui
+	all_uis -= ui
 	current_run -= ui
 	// If the user exists, remove it from them too.
 	if(ui.user)
@@ -341,7 +341,7 @@ SUBSYSTEM_DEF(tgui)
 	for(var/datum/tgui/ui in source.tgui_open_uis)
 		// Inform the UIs of their new owner.
 		ui.user = target
-		target.tgui_open_uis.Add(ui)
+		target.tgui_open_uis += ui
 	// Clear the old list.
 	source.tgui_open_uis.Cut()
 	return TRUE
