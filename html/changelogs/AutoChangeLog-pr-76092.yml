@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "you need to be in proximity of the airlock painter to eject its cartridge."
