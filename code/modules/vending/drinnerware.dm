@@ -19,7 +19,7 @@
 		),
 		list(
 			"name" = "Eating Utensils",
-			"icon" = FA_ICON_CODE_FORK,
+			"icon" = FA_ICON_UTENSILS,
 			"products" = list(
 				/obj/item/kitchen/fork = 6,
 				/obj/item/kitchen/spoon = 10,
@@ -38,7 +38,7 @@
 		),
 		list(
 			"name" = "Condiments",
-			"icon" = FA_ICON_BOTTLE_WATER,
+			"icon" = FA_ICON_BOTTLE_DROPLET,
 			"products" = list(
 				/obj/item/reagent_containers/condiment/pack/ketchup = 5,
 				/obj/item/reagent_containers/condiment/pack/hotsauce = 5,
@@ -65,7 +65,7 @@
 	)
 	refill_canister = /obj/item/vending_refill/dinnerware
 	default_price = PAYCHECK_CREW * 0.8
-	extra_price = PAYCHECK_COMMAND
+	extra_price = PAYCHECK_CREW * 3.2
 	payment_department = ACCOUNT_SRV
 	light_mask = "dinnerware-light-mask"
 
