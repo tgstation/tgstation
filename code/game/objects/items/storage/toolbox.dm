@@ -236,8 +236,9 @@
 	var/ammo_to_spawn
 
 /obj/item/storage/toolbox/ammobox/PopulateContents()
-	for(var/i in 1 to 6)
-		new ammo_to_spawn(src)
+	if(!isnull(ammo_to_spawn))
+		for(var/i in 1 to 6)
+			new ammo_to_spawn(src)
 
 /obj/item/storage/toolbox/ammobox/a762
 	name = "7.62mm ammo box (Surplus?)"

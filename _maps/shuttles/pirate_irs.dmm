@@ -664,12 +664,12 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 4
 	},
+/obj/item/restraints/handcuffs{
+	pixel_y = -3;
+	pixel_x = 2
+	},
 /obj/item/assembly/flash{
 	pixel_y = 4
-	},
-/obj/item/restraints/handcuffs{
-	pixel_y = -5;
-	pixel_x = 2
 	},
 /turf/open/floor/iron,
 /area/shuttle/pirate)
@@ -1106,7 +1106,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 9
 	},
-/obj/item/gun/ballistic/revolver/russian/soul,
+/obj/item/gun/ballistic/revolver/mateba,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "Hf" = (
@@ -1204,7 +1204,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/public/glass{
-	name = "Auditing Office"
+	name = "Bridge"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/edge{
@@ -1761,11 +1761,11 @@
 /obj/effect/turf_decal/tile/dark_blue/half{
 	dir = 4
 	},
-/obj/machinery/door/airlock/public/glass{
-	name = "Auditing Office"
-	},
 /obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/airlock/public/glass{
+	name = "Bridge"
+	},
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
