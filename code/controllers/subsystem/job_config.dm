@@ -20,63 +20,63 @@
 	var/name = "DEFAULT"
 
 /// Simply gets the value of the config type for a given job.
-/datum/job_config_type/proc/get_value(datum/job/occupation)
-	// This is a stub proc, it's meant to be overridden by the actual job datum.
-	return "ERROR"
+/datum/job_config_type/proc/get_compile_time_value(datum/job/occupation)
+	SHOULD_CALL_PARENT(FALSE)
+	stack_trace("Attempted to get value for the default job config for [occupation.title] (with config tag [occupation.config_tag])! This is not allowed!")
 
 /// This is the proc that we actually invoke to set the config-based values for each job.
-/datum/job_config_type/proc/set_value(datum/job/occupation, value)
-	// This is a stub proc, it's meant to be overridden by the actual job datum.
-	return "ERROR"
+/datum/job_config_type/proc/set_current_value(datum/job/occupation, value)
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("Attempted to set value for the default job config for [occupation.title] (with config tag [occupation.config_tag])! This is not allowed!")
 
 /// The number of positions a job can have at any given time.
 /datum/job_config_type/default_positions
 	name = TOTAL_POSITIONS
 
-/datum/job_config_type/default_positions/get_value(datum/job/occupation)
+/datum/job_config_type/default_positions/get_compile_time_value(datum/job/occupation)
 	return initial(occupation.total_positions)
 
-/datum/job_config_type/default_positions/set_value(datum/job/occupation, value)
+/datum/job_config_type/default_positions/set_current_value(datum/job/occupation, value)
 	occupation.total_positions = value
 
 /// The number of positions a job can have at the start of the round.
 /datum/job_config_type/starting_positions
 	name = SPAWN_POSITIONS
 
-/datum/job_config_type/starting_positions/get_value(datum/job/occupation)
+/datum/job_config_type/starting_positions/get_compile_time_value(datum/job/occupation)
 	return initial(occupation.spawn_positions)
 
-/datum/job_config_type/starting_positions/set_value(datum/job/occupation, value)
+/datum/job_config_type/starting_positions/set_current_value(datum/job/occupation, value)
 	occupation.spawn_positions = value
 
 /// The amount of playtime required to join a job (minutes).
 /datum/job_config_type/playtime_requirements
 	name = PLAYTIME_REQUIREMENTS
 
-/datum/job_config_type/playtime_requirements/get_value(datum/job/occupation)
+/datum/job_config_type/playtime_requirements/get_compile_time_value(datum/job/occupation)
 	return initial(occupation.exp_requirements)
 
-/datum/job_config_type/playtime_requirements/set_value(datum/job/occupation, value)
+/datum/job_config_type/playtime_requirements/set_current_value(datum/job/occupation, value)
 	occupation.exp_requirements = value
 
 /// The amount of time required to have an account to join a job (days).
 /datum/job_config_type/required_account_age
 	name = REQUIRED_ACCOUNT_AGE
 
-/datum/job_config_type/required_account_age/get_value(datum/job/occupation)
+/datum/job_config_type/required_account_age/get_compile_time_value(datum/job/occupation)
 	return initial(occupation.minimal_player_age)
 
-/datum/job_config_type/required_account_age/set_value(datum/job/occupation, value)
+/datum/job_config_type/required_account_age/set_current_value(datum/job/occupation, value)
 	occupation.minimal_player_age = value
 
 /// The required age a character must be to join a job (which is in years).
 /datum/job_config_type/required_character_age
 	name = REQUIRED_CHARACTER_AGE
 
-/datum/job_config_type/required_character_age/get_value(datum/job/occupation)
+/datum/job_config_type/required_character_age/get_compile_time_value(datum/job/occupation)
 	return initial(occupation.required_character_age) || 0 // edge case here, this is typically null by default and returning null causes issues. Returning 0 is a safe default.
 
-/datum/job_config_type/required_character_age/set_value(datum/job/occupation, value)
+/datum/job_config_type/required_character_age/set_current_value(datum/job/occupation, value)
 	if(value > AGE_MIN && value < AGE_MAX)
 		occupation.required_character_age = value
 		return
@@ -118,7 +118,7 @@
 				var/config_value = job_config[job_key][config_datum_key]
 				if(!isnum(config_value)) // This will mean that the value was commented out, which means that the server operator didn't want to override the codebase default. So, we skip it.
 					continue
-				config_datum.set_value(occupation, config_value)
+				config_datum.set_current_value(occupation, config_value)
 
 	else // legacy mode, so just run the old parser.
 		var/jobsfile = file("[global.config.directory]/jobs.txt")
@@ -224,7 +224,7 @@
 				var/config_read_value = job_config[job_key][config_datum_key]
 				if(!isnum(config_read_value))
 					working_list += list(
-						"# [config_datum_key]" = config_datum.get_value(occupation), // note that this doesn't make a real comment, it just creates a string mismatch.
+						"# [config_datum_key]" = config_datum.get_compile_time_value(occupation), // note that this doesn't make a real comment, it just creates a string mismatch.
 					)
 				else
 					working_list += list(
@@ -249,7 +249,7 @@
 		var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 		// Commented out keys here in case server operators wish to defer to codebase defaults.
 		returnable_list += list(
-			"# [config_datum_key]" = config_datum.get_value(new_occupation),
+			"# [config_datum_key]" = config_datum.get_compile_time_value(new_occupation),
 		)
 
 	return returnable_list
@@ -262,7 +262,7 @@
 	for(var/config_datum_key in datums_to_read)
 		var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 		returnable_list += list(
-			"# [config_datum_key]" = config_datum.get_value(new_occupation),
+			"# [config_datum_key]" = config_datum.get_compile_time_value(new_occupation),
 		)
 
 	return returnable_list
