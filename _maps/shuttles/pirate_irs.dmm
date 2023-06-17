@@ -50,7 +50,8 @@
 "ba" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced/tinted/spawner/directional/west,
-/obj/item/gun/ballistic/shotgun/automatic/dual_tube,
+/obj/item/storage/box/breacherslug,
+/obj/item/gun/ballistic/shotgun/doublebarrel/breacherslug,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "bo" = (

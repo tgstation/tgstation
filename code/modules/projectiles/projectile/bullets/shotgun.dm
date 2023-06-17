@@ -128,3 +128,16 @@
 /obj/projectile/bullet/scattershot
 	icon_state = "pellet"
 	damage = 24
+
+//Breaching Ammo
+
+/obj/projectile/bullet/shotgun_breaching
+	name = "12g breaching round"
+	desc = "A breaching round designed to destroy airlocks and windows with only a few shots, but is ineffective against other targets."
+	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	damage = 5 //does shit damage to everything except doors and windows
+
+/obj/projectile/bullet/shotgun_breaching/on_hit(atom/target)
+	if(istype(target, /obj/structure/window) || istype(target, /obj/structure/grille) || istype(target, /obj/machinery/door) || istype(target, /obj/structure/door_assembly))
+		damage = 1000 //one shot to break a window or grille, or two shots to breach an airlock door
+	..()
