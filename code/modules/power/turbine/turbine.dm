@@ -406,6 +406,10 @@
 	return TRUE
 
 /obj/machinery/power/turbine/core_rotor/multitool_act(mob/living/user, obj/item/tool)
+	//allow cable layer changing
+	if(panel_open)
+		return ..()
+
 	//failed checks
 	if(!activate_parts(user))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -420,8 +424,11 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/turbine/core_rotor/multitool_act_secondary(mob/living/user, obj/item/tool)
+	//allow cable layer changing
 	if(panel_open)
 		return ..()
+
+	//works same as regular left click
 	return multitool_act(user, tool)
 
 /// convinience proc for balloon alert which returns if viewer is null
