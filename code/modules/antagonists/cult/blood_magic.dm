@@ -420,17 +420,17 @@
 			to_chat(user, span_warning("The spell had no effect!"))
 		else
 			to_chat(user, span_cultitalic("In a brilliant flash of red, [target] falls to the ground!"))
-			target.Paralyze(16 SECONDS)
+			target.Paralyze(4 SECONDS)
 			target.flash_act(1, TRUE)
 			if(issilicon(target))
 				var/mob/living/silicon/silicon_target = target
 				silicon_target.emp_act(EMP_HEAVY)
 			else if(iscarbon(target))
 				var/mob/living/carbon/carbon_target = target
-				carbon_target.adjust_silence(12 SECONDS)
-				carbon_target.adjust_stutter(30 SECONDS)
-				carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/slurring/cult)
-				carbon_target.set_jitter_if_lower(30 SECONDS)
+				carbon_target.adjust_silence(30 SECONDS)
+				carbon_target.adjust_stutter(60 SECONDS)
+				carbon_target.adjust_timed_status_effect(60 SECONDS, /datum/status_effect/speech/slurring/cult)
+				carbon_target.set_jitter_if_lower(60 SECONDS)
 		uses--
 	..()
 
