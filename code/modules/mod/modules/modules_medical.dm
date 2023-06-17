@@ -51,13 +51,6 @@
 			chemscan(mod.wearer, target)
 	drain_power(use_power_cost)
 
-/// Sets the show_vitals variable on this health analyzer, used for choosing if the vitals readout is shown in the MODsuit's UI.
-/// Shamelessly copied from the jetpack's stabilizer-setting code, because I'm assuming this was needed for it.
-/obj/item/mod/module/health_analyzer/proc/set_vitals_readout(new_vitals)
-	if(show_vitals == new_vitals)
-		return
-	show_vitals = new_vitals
-
 /obj/item/mod/module/health_analyzer/get_configuration()
 	. = ..()
 	.["mode"] = add_ui_configuration("Scan Mode", "list", mode, modes)
@@ -68,7 +61,7 @@
 		if("mode")
 			mode = value
 		if("show_vitals")
-			set_vitals_readout(text2num(value))
+			show_vitals = value
 
 #undef HEALTH_SCAN
 #undef WOUND_SCAN

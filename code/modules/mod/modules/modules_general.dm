@@ -179,7 +179,8 @@
 	/// Does this show the round ID and shift time?
 	var/show_time = FALSE
 	/// Death sound. May or may not be funny.
-	var/death_sound = 'sound/effects/hl2_style_flatline.ogg'
+	// thank you fikou for the custom flatline sound
+	var/death_sound = 'sound/effects/flatline3.ogg'
 	/// Death sound volume. Please be responsible with this.
 	var/death_sound_volume = 50
 
