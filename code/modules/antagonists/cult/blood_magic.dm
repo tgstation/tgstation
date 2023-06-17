@@ -420,7 +420,7 @@
 			to_chat(user, span_warning("The spell had no effect!"))
 		else
 			to_chat(user, span_cultitalic("In a brilliant flash of red, [target] falls to the ground!"))
-			target.Paralyze(4 SECONDS)
+			target.Paralyze(8 SECONDS)
 			target.flash_act(1, TRUE)
 			if(issilicon(target))
 				var/mob/living/silicon/silicon_target = target
