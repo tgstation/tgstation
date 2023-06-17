@@ -5329,4 +5329,8 @@
 #include "interface\skin.dmf"
 #include "modular_skyraptor\modules\aesthetics\batong\batong.dm"
 #include "modular_skyraptor\modules\aesthetics\oldnewsurgery\oldnewsurgery.dm"
+#include "modular_skyraptor\modules\icspawning\code\cards_ids.dm"
+#include "modular_skyraptor\modules\icspawning\code\observer.dm"
+#include "modular_skyraptor\modules\icspawning\code\spell.dm"
+#include "modular_skyraptor\modules\icspawning\code\standard.dm"
 // END_INCLUDE
