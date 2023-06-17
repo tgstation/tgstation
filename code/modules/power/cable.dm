@@ -61,8 +61,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/structure/cable/examine(mob/user)
 	. = ..()
-	. += span_notice("Its operating on the [lowertext(GLOB.cable_layer_to_name["[cable_layer]"])].")
-	. += span_notice("Use a [EXAMINE_HINT("multitool")] to change it's machine layer.")
 	if(isobserver(user))
 		. += get_power_info()
 
