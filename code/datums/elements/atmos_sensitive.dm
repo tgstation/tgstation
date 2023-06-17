@@ -9,7 +9,8 @@
 	if(!isatom(target)) //How
 		return ELEMENT_INCOMPATIBLE
 	var/atom/to_track = target
-	to_track.RegisterSignal(to_track.loc, COMSIG_TURF_EXPOSE, TYPE_PROC_REF(/atom, check_atmos_process))
+	if(to_track.loc)
+		to_track.RegisterSignal(to_track.loc, COMSIG_TURF_EXPOSE, TYPE_PROC_REF(/atom, check_atmos_process))
 	RegisterSignal(to_track, COMSIG_MOVABLE_MOVED, PROC_REF(react_to_move))
 
 	if(!mapload && isopenturf(to_track.loc))
@@ -18,7 +19,8 @@
 	return ..()
 
 /datum/element/atmos_sensitive/Detach(atom/source)
-	UnregisterSignal(source.loc, COMSIG_TURF_EXPOSE)
+	if(source.loc)
+		UnregisterSignal(source.loc, COMSIG_TURF_EXPOSE)
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 	if(source.flags_1 & ATMOS_IS_PROCESSING_1)
 		source.atmos_end()
@@ -29,8 +31,10 @@
 /datum/element/atmos_sensitive/proc/react_to_move(atom/source, atom/movable/oldloc, direction, forced)
 	SIGNAL_HANDLER
 
-	source.UnregisterSignal(oldloc, COMSIG_TURF_EXPOSE)
-	source.RegisterSignal(source.loc, COMSIG_TURF_EXPOSE, TYPE_PROC_REF(/atom, check_atmos_process))
+	if(oldloc)
+		source.UnregisterSignal(oldloc, COMSIG_TURF_EXPOSE)
+	if(source.loc)
+		source.RegisterSignal(source.loc, COMSIG_TURF_EXPOSE, TYPE_PROC_REF(/atom, check_atmos_process))
 	source.atmos_conditions_changed() //Make sure you're properly registered
 
 /atom/proc/check_atmos_process(datum/source, datum/gas_mixture/air, exposed_temperature)
