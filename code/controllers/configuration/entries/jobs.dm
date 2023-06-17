@@ -26,8 +26,6 @@
 			for(var/config_datum_key in job_config_datum_configurables)
 				var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 				var/config_value = job_config[job_key][config_datum_key]
-				if(!isnum(config_value)) // This will mean that the value was commented out, which means that the server operator didn't want to override the codebase default. So, we skip it.
-					continue
 				config_datum.set_current_value(occupation, config_value)
 
 	else // legacy mode, so just run the old parser.
