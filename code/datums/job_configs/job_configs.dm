@@ -18,7 +18,7 @@
 /// Will return TRUE if the value is valid, FALSE if it is not.
 /datum/job_config_type/proc/validate_value(value)
 	SHOULD_CALL_PARENT(FALSE)
-	stack_trace("Attempted to validate value for the default job config for [occupation.title] (with config tag [occupation.config_tag])! This is not allowed!")
+	stack_trace("Attempted to validate value for the default job config! You're doing something wrong!!")
 
 /// This is the proc that we actually invoke to set the config-based values for each job. Is also intended to handle all in-depth logic checks.
 /datum/job_config_type/proc/set_current_value(datum/job/occupation, value)
