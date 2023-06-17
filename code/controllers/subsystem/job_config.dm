@@ -7,14 +7,6 @@
 #define SPAWN_POSITIONS "Spawn Positions"
 #define TOTAL_POSITIONS "Total Positions"
 
-#define JOB_CONFIG_TYPE_LIST list( \
-	PLAYTIME_REQUIREMENTS, \
-	REQUIRED_ACCOUNT_AGE, \
-	REQUIRED_CHARACTER_AGE, \
-	SPAWN_POSITIONS, \
-	TOTAL_POSITIONS, \
-)
-
 /// Lightweight datum simply used to store the applicable config type for each job such that the whole system is a tad bit more flexible.
 /datum/job_config_type
 	var/name = "DEFAULT"
@@ -95,6 +87,7 @@
 /datum/controller/subsystem/job/proc/generate_config_singletons()
 	for(var/datum/job_config_type/config_datum as anything in subtypesof(/datum/job_config_type))
 		var/config_datum_key = initial(config_datum.name)
+		job_config_datum_configurables += config_datum_key
 		var/new_config_datum = new config_datum
 		job_config_datum_singletons[config_datum_key] = new_config_datum
 
@@ -113,7 +106,7 @@
 				message_admins(span_notice("[job_title] (with config key [job_key]) is missing from jobconfig.toml! Using codebase defaults."))
 				continue
 
-			for(var/config_datum_key in JOB_CONFIG_TYPE_LIST)
+			for(var/config_datum_key in job_config_datum_configurables)
 				var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 				var/config_value = job_config[job_key][config_datum_key]
 				if(!isnum(config_value)) // This will mean that the value was commented out, which means that the server operator didn't want to override the codebase default. So, we skip it.
@@ -219,7 +212,7 @@
 		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented. So, let's make sure we keep that pattern.
 		if(job_config[job_key]) // Let's see if any data for this job exists.
 			var/list/working_list = list()
-			for(var/config_datum_key in JOB_CONFIG_TYPE_LIST)
+			for(var/config_datum_key in job_config_datum_configurables)
 				var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 				var/config_read_value = job_config[job_key][config_datum_key]
 				if(!isnum(config_read_value))
@@ -245,7 +238,7 @@
 /// This will just return a list for a completely new job that doesn't need to be migrated from an old config (completely new). Just done here to reduce copypasta
 /datum/controller/subsystem/job/proc/generate_blank_job_config(datum/job/new_occupation)
 	var/returnable_list = list()
-	for(var/config_datum_key in JOB_CONFIG_TYPE_LIST)
+	for(var/config_datum_key in job_config_datum_configurables)
 		var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 		// Commented out keys here in case server operators wish to defer to codebase defaults.
 		returnable_list += list(
@@ -274,8 +267,6 @@
 	rustg_file_write(payload, file_location)
 	DIRECT_OUTPUT(user, ftp(file(file_location), "jobconfig.toml"))
 	return TRUE
-
-#undef JOB_CONFIG_TYPE_LIST
 
 #undef PLAYTIME_REQUIREMENTS
 #undef REQUIRED_ACCOUNT_AGE
