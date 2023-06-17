@@ -95,24 +95,9 @@
 "bT" = (
 /obj/structure/sink/kitchen/directional/east,
 /obj/machinery/button/door/directional/south{
-	id = pirate_irs_bar
+	id = "pirate_irs_bar"
 	},
 /turf/open/floor/iron/kitchen,
-/area/shuttle/pirate)
-"bU" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	id = pirate_irs_bridge
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = pirate_irs_bridge;
-	dir = 1
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = pirate_irs_bridge;
-	dir = 1
-	},
-/turf/open/floor/plating,
 /area/shuttle/pirate)
 "bV" = (
 /obj/machinery/computer/shuttle/pirate,
@@ -125,7 +110,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	dir = 8;
-	id = pirate_irs_bridge
+	id = "pirate_irs_bridge"
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -273,7 +258,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	dir = 8;
-	id = pirate_irs_bar
+	id = "pirate_irs_bar"
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -880,7 +865,7 @@
 "zh" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/button/door/directional/south{
-	id = pirate_irs_bridge
+	id = "pirate_irs_bridge"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -900,7 +885,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	dir = 8;
-	id = pirate_irs
+	id = "pirate_irs"
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -1476,7 +1461,7 @@
 "PP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	id = pirate_irs_bridge;
+	id = "pirate_irs_bridge";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1547,14 +1532,7 @@
 "Rh" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	id = pirate_irs_bridge
-	},
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"Ru" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	id = pirate_irs_bridge;
+	id = "pirate_irs_bridge";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1749,7 +1727,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	dir = 1;
-	id = pirate_irs_bridge
+	id = "pirate_irs_bridge"
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -1806,7 +1784,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/button/door/directional/north{
-	id = pirate_irs
+	id = "pirate_irs"
 	},
 /obj/item/melee/baton/telescopic{
 	pixel_y = 11;
@@ -2054,7 +2032,7 @@ hK
 "}
 (10,1,1) = {"
 WR
-Ru
+Rh
 Qv
 sE
 Zb
@@ -2079,7 +2057,7 @@ WR
 "}
 (11,1,1) = {"
 Lo
-Ru
+Rh
 RC
 LB
 zh
@@ -2103,7 +2081,7 @@ hK
 WR
 "}
 (12,1,1) = {"
-Ru
+Rh
 bV
 Th
 mA
@@ -2128,7 +2106,7 @@ hK
 WR
 "}
 (13,1,1) = {"
-Ru
+Rh
 LV
 ev
 mA
@@ -2154,7 +2132,7 @@ WR
 "}
 (14,1,1) = {"
 sP
-bU
+Rh
 gl
 nA
 nE
@@ -2179,7 +2157,7 @@ WR
 "}
 (15,1,1) = {"
 WR
-Ru
+Rh
 Jv
 uc
 tC
