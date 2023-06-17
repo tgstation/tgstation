@@ -2146,11 +2146,11 @@
 	icon_state = "warningline_white";
 	dir = 1
 	},
-/obj/item/storage/toolbox/a762{
+/obj/item/storage/toolbox/ammobox/a762{
 	pixel_y = 16;
 	pixel_x = 5
 	},
-/obj/item/storage/toolbox/a762{
+/obj/item/storage/toolbox/ammobox/a762{
 	pixel_y = 8;
 	pixel_x = 3
 	},

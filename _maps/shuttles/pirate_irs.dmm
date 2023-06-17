@@ -143,6 +143,10 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
+/obj/item/storage/toolbox/ammobox/wt550m9{
+	pixel_y = 6
+	},
+/obj/item/storage/toolbox/ammobox/wt550m9,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "dl" = (
