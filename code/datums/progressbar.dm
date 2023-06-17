@@ -21,7 +21,7 @@
 /datum/progressbar/New(mob/User, goal_number, atom/target)
 	. = ..()
 	if (!istype(target))
-		EXCEPTION("Invalid target given")
+		throw EXCEPTION("Invalid target given")
 	if(QDELETED(User) || !istype(User))
 		stack_trace("/datum/progressbar created with [isnull(User) ? "null" : "invalid"] user")
 		qdel(src)
