@@ -68,7 +68,7 @@
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	cable_layer = GLOB.cable_name_to_layer[choice]
-	balloon_alert(user, "now operating on [choice]")
+	balloon_alert(user, "now operating on the [choice]")
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/proc/add_avail(amount)
