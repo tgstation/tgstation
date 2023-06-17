@@ -64,8 +64,9 @@
 		var/terminal_cable_layer = CABLE_LAYER_1
 		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
 			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
-			if(!isnull(choice))
-				terminal_cable_layer = GLOB.cable_name_to_layer[choice]
+			if(isnull(choice))
+				return
+			terminal_cable_layer = GLOB.cable_name_to_layer[choice]
 
 		user.visible_message(span_notice("[user.name] adds cables to the APC frame."))
 		balloon_alert(user, "adding cables to the frame...")
