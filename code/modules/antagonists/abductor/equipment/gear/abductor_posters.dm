@@ -3,7 +3,14 @@
 /obj/item/poster/random_abductor
 	name = "random abductor poster"
 	poster_type = /obj/structure/sign/poster/abductor/random
-	icon_state = "abductor_poster"
+	icon = 'icons/obj/abductor_posters.dmi'
+	icon_state = "rolled_abductor"
+
+/obj/structure/sign/poster/abductor
+	icon = 'icons/obj/abductor_posters.dmi'
+	poster_item_name = "abductor poster"
+	poster_item_desc = "A sheet of holofiber resin, with a nanospike perforation on the back end for maximum adhesion."
+	poster_item_icon_state = "rolled_abductor"
 
 /obj/structure/sign/poster/abductor/random
 	name = "random abductor poster"
@@ -12,12 +19,6 @@
 	random_basetype = /obj/structure/sign/poster/abductor
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/abductor/random, 32)
-
-/obj/structure/sign/poster/abductor
-	icon = 'icons/obj/abductor_posters.dmi'
-	poster_item_name = "abductor poster"
-	poster_item_desc = "A sheet of holofiber resin, with a nanospike perforation on the back end for maximum adhesion."
-	poster_item_icon_state = "rolled_abductor"
 
 /obj/structure/sign/poster/abductor/ayylian
 	name = "Ayylian"
