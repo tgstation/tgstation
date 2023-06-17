@@ -382,10 +382,10 @@
 	use_power(active_power_usage)
 	do_animate("opening")
 	set_opacity(0)
-	sleep(0.5 SECONDS)
+	SLEEP_NOT_DEL(0.5 SECONDS)
 	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
-	sleep(0.5 SECONDS)
+	SLEEP_NOT_DEL(0.5 SECONDS)
 	layer = initial(layer)
 	update_appearance()
 	set_opacity(0)
