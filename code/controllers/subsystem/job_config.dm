@@ -1,11 +1,19 @@
 // This file is pretty much just a subsidiary of SSjob, just split out since it has a different function than the majority of what that system does and it's more clear to have it in its own file.
 // That function being handling both loading and generating the config files needed for jobs. Such is life.
 
-#define TOTAL_POSITIONS "Total Positions"
-#define SPAWN_POSITIONS "Spawn Positions"
 #define PLAYTIME_REQUIREMENTS "Playtime Requirements"
 #define REQUIRED_ACCOUNT_AGE "Required Account Age"
 #define REQUIRED_CHARACTER_AGE "Required Character Age"
+#define SPAWN_POSITIONS "Spawn Positions"
+#define TOTAL_POSITIONS "Total Positions"
+
+#define JOB_CONFIG_TYPE_LIST list( \
+	PLAYTIME_REQUIREMENTS, \
+	REQUIRED_ACCOUNT_AGE, \
+	REQUIRED_CHARACTER_AGE, \
+	SPAWN_POSITIONS, \
+	TOTAL_POSITIONS, \
+)
 
 /// Lightweight datum simply used to store the applicable config type for each job such that the whole system is a tad bit more flexible.
 /datum/job_config_type
@@ -95,8 +103,8 @@
 				message_admins(span_notice("[job_title] (with config key [job_key]) is missing from jobconfig.toml! Using codebase defaults."))
 				continue
 
-			for(var/datum/job_config_type/config_datum as anything in job_config_datum_singletons)
-				var/config_datum_key = initial(config_datum.name)
+			for(var/config_datum_key in JOB_CONFIG_TYPE_LIST)
+				var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 				var/config_value = job_config[job_key][config_datum_key]
 				if(!isnum(config_value)) // This will mean that the value was commented out, which means that the server operator didn't want to override the codebase default. So, we skip it.
 					continue
@@ -201,8 +209,8 @@
 		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented. So, let's make sure we keep that pattern.
 		if(job_config[job_key]) // Let's see if any data for this job exists.
 			var/list/working_list = list()
-			for(var/datum/job_config_type/config_datum as anything in job_config_datum_singletons)
-				var/config_datum_key = initial(config_datum.name)
+			for(var/config_datum_key in JOB_CONFIG_TYPE_LIST)
+				var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 				var/config_read_value = job_config[job_key][config_datum_key]
 				if(!isnum(config_read_value))
 					working_list += list(
@@ -227,8 +235,8 @@
 /// This will just return a list for a completely new job that doesn't need to be migrated from an old config (completely new). Just done here to reduce copypasta
 /datum/controller/subsystem/job/proc/generate_blank_job_config(datum/job/new_occupation)
 	var/returnable_list = list()
-	for(var/datum/job_config_type/config_datum as anything in job_config_datum_singletons)
-		var/config_datum_key = initial(config_datum.name)
+	for(var/config_datum_key in JOB_CONFIG_TYPE_LIST)
+		var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 		// Commented out keys here in case server operators wish to defer to codebase defaults.
 		returnable_list += list(
 			"# [config_datum_key]" = config_datum.get_value(new_occupation),
@@ -240,14 +248,12 @@
 /datum/controller/subsystem/job/proc/generate_job_config_excluding_legacy(datum/job/new_occupation)
 	var/list/returnable_list = list()
 	// make a quick list to ensure we don't double-dip total_positions and spawn_positions, but still get future config types in
-	var/list/datums_to_read = subtypesof(/datum/job_config_type) - list(/datum/job_config_type/default_positions, /datum/job_config_type/starting_positions)
-	for(var/datum/job_config_type/config_datum as anything in datums_to_read)
-		var/initialized_datum = new config_datum //yes i know sob sob
-		var/config_datum_key = initial(config_datum.name)
+	var/list/datums_to_read = subtypesof(/datum/job_config_type) - list(TOTAL_POSITIONS, SPAWN_POSITIONS)
+	for(var/config_datum_key in JOB_CONFIG_TYPE_LIST)
+		var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 		returnable_list += list(
 			"# [config_datum_key]" = config_datum.get_value(new_occupation),
 		)
-		qdel(config_datum)
 
 	return returnable_list
 
@@ -259,8 +265,10 @@
 	DIRECT_OUTPUT(user, ftp(file(file_location), "jobconfig.toml"))
 	return TRUE
 
-#undef TOTAL_POSITIONS
-#undef SPAWN_POSITIONS
+#undef JOB_CONFIG_TYPE_LIST
+
 #undef PLAYTIME_REQUIREMENTS
 #undef REQUIRED_ACCOUNT_AGE
 #undef REQUIRED_CHARACTER_AGE
+#undef SPAWN_POSITIONS
+#undef TOTAL_POSITIONS
