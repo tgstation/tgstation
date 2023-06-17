@@ -20,8 +20,9 @@
 SUBSYSTEM_DEF(fluids)
 	name = "Fluid"
 	wait = 0 // Will be autoset to whatever makes the most sense given the spread and effect waits.
-	flags = SS_BACKGROUND|SS_KEEP_TIMING
+	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_GAME|RUNLEVEL_POSTGAME
+	priority = FIRE_PRIORITY_FLUIDS
 
 	// Fluid spread processing:
 	/// The amount of time (in deciseconds) before a fluid node is created and when it spreads.
