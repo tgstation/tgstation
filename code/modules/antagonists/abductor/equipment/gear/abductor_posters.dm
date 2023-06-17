@@ -1,9 +1,8 @@
 
-// These icon_states may be overridden, but are for mapper's convinence
 /obj/item/poster/random_abductor
 	name = "random abductor poster"
 	poster_type = /obj/structure/sign/poster/abductor/random
-	icon = 'icons/obj/abductor_posters.dmi'
+	icon = 'icons/obj/poster.dmi'
 	icon_state = "rolled_abductor"
 
 /obj/structure/sign/poster/abductor
@@ -11,6 +10,12 @@
 	poster_item_name = "abductor poster"
 	poster_item_desc = "A sheet of holofiber resin, with a nanospike perforation on the back end for maximum adhesion."
 	poster_item_icon_state = "rolled_abductor"
+
+/obj/structure/sign/poster/abductor/tear_poster(mob/user)
+	if(!isabductor(user))
+		balloon_alert(user, "it won't budge!")
+		return
+	..()
 
 /obj/structure/sign/poster/abductor/random
 	name = "random abductor poster"

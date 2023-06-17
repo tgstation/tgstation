@@ -193,16 +193,7 @@
 		return
 	if(ruined)
 		return
-
-	visible_message(span_notice("[user] rips [src] in a single, decisive motion!") )
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
-	spring_trap(user)
-
-	var/obj/structure/sign/poster/ripped/R = new(loc)
-	R.pixel_y = pixel_y
-	R.pixel_x = pixel_x
-	R.add_fingerprint(user)
-	qdel(src)
+	tear_poster(user)
 
 /obj/structure/sign/poster/proc/spring_trap(mob/user)
 	var/obj/item/shard/payload = trap?.resolve()
@@ -271,6 +262,17 @@
 
 /obj/structure/sign/poster/proc/on_placed_poster(mob/user)
 	to_chat(user, span_notice("You place the poster!"))
+
+/obj/structure/sign/poster/proc/tear_poster(mob/user)
+	visible_message(span_notice("[user] rips [src] in a single, decisive motion!") )
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
+	spring_trap(user)
+
+	var/obj/structure/sign/poster/ripped/R = new(loc)
+	R.pixel_y = pixel_y
+	R.pixel_x = pixel_x
+	R.add_fingerprint(user)
+	qdel(src)
 
 // Various possible posters follow
 
