@@ -34,7 +34,7 @@
 	trim_state = "trim_securityofficer"
 	department_color = COLOR_CENTCOM_BLUE
 	subdepartment_color = COLOR_COMMAND_BLUE
-	sechud_icon_state = SECHUD_CENTCOM
+	sechud_icon_state = SECHUD_DEATH_COMMANDO
 	access = list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS)
 
 /datum/id_trim/syndicom/irs/auditor
@@ -45,6 +45,7 @@
 /datum/id_trim/syndicom/captain
 	assignment = "Syndicate Ship Captain"
 	trim_state = "trim_captain"
+	sechud_icon_state = SECHUD_QUARTERMASTER
 	access = list(ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER, ACCESS_ROBOTICS)
 
 /// Trim for Syndicate mobs, outfits and corpses.

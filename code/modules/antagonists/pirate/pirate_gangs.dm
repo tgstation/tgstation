@@ -155,6 +155,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 /datum/pirate_gang/irs
 	name = "Space IRS"
 
+	is_heavy_threat = TRUE
 	ship_template_id = "irs"
 	ship_name_pool = "irs_names"
 

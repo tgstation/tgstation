@@ -146,7 +146,6 @@
 /obj/item/storage/toolbox/ammobox/wt550m9{
 	pixel_y = 6
 	},
-/obj/item/storage/toolbox/ammobox/wt550m9,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "dl" = (
@@ -571,11 +570,11 @@
 /obj/item/clothing/shoes/jackboots{
 	pixel_y = -7
 	},
-/obj/item/clothing/gloves/tackler/combat/insulated,
 /obj/item/storage/belt/military/assault,
 /obj/item/clothing/head/helmet/marine/pmc,
 /obj/item/clothing/suit/armor/vest/marine/pmc,
 /obj/item/clothing/mask/balaclava,
+/obj/item/clothing/gloves/combat,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "pD" = (
@@ -1368,12 +1367,12 @@
 /obj/item/clothing/shoes/jackboots{
 	pixel_y = -7
 	},
-/obj/item/clothing/gloves/tackler/combat/insulated,
 /obj/item/storage/belt/military/assault,
 /obj/machinery/light/directional/east,
 /obj/item/clothing/head/helmet/marine/pmc,
 /obj/item/clothing/suit/armor/vest/marine/pmc,
 /obj/item/clothing/mask/balaclava,
+/obj/item/clothing/gloves/combat,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "Mu" = (
