@@ -24,7 +24,10 @@
 
 /obj/machinery/power/terminal/examine(mob/user)
 	. = ..()
-	. += span_notice("It's [QDELETED(powernet) ? "disconnected from" : "charging from"] the [lowertext(GLOB.cable_layer_to_name["[cable_layer]"])].")
+	if(!QDELETED(powernet))
+			. += span_notice("It's [QDELETED(powernet) "disconnected from" : "operating on"] the [lowertext(GLOB.cable_layer_to_name["[cable_layer]"])].")
+		else
+			. += span_warning("It's disconnected from the [lowertext(GLOB.cable_layer_to_name["[cable_layer]"])
 
 /obj/machinery/power/terminal/should_have_node()
 	return TRUE
