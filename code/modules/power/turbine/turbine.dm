@@ -333,6 +333,7 @@
 	desc = "The middle part of a turbine generator, contains the rotor and the main computer."
 	icon = 'icons/obj/turbine/turbine.dmi'
 	icon_state = "core_rotor"
+	can_change_cable_layer = TRUE
 
 	circuit = /obj/item/circuitboard/machine/turbine_rotor
 
@@ -398,6 +399,12 @@
 	QDEL_NULL(radio)
 	return ..()
 
+/obj/machinery/power/turbine/core_rotor/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		balloon_alert(user, "open panel first!")
+		return FALSE
+	return TRUE
+
 /obj/machinery/power/turbine/core_rotor/multitool_act(mob/living/user, obj/item/tool)
 	//failed checks
 	if(!activate_parts(user))
@@ -413,6 +420,8 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/turbine/core_rotor/multitool_act_secondary(mob/living/user, obj/item/tool)
+	if(panel_open)
+		return ..()
 	return multitool_act(user, tool)
 
 /// convinience proc for balloon alert which returns if viewer is null

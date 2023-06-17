@@ -71,6 +71,9 @@
 	balloon_alert(user, "now operating on the [choice]")
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/power/multitool_act_secondary(mob/living/user, obj/item/tool)
+	return multitool_act(user, tool)
+
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
