@@ -1,4 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes:
-  - server: "fix logging infoleak from the lack of continuation markets on new lines."

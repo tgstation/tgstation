@@ -1,0 +1,4 @@
+author: "ChungusGamer666"
+delete-after: True
+changes:
+  - bugfix: "Glass joes will no longer appear to get knocked out, while already knocked out."

@@ -1,4 +1,4 @@
-//general or un-matched particles, make a new file if a few can be sorted together.
+// General or un-matched particles, make a new file if a few can be sorted together.
 /particles/pollen
 	icon = 'icons/effects/particles/pollen.dmi'
 	icon_state = "pollen"
