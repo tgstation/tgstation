@@ -106,8 +106,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/speedmod = 0
 	/**
 	 * Percentage modifier for overall defense of the race, or less defense, if it's negative
-	 * By itself, this does nothing. It just adds this value to physiology.damage_resistance on species gain!
-	 * REMEMBER, physiology.damage_resistance GETS APPLIED TO PRETTY MUCH ALL DAMAGE IN THE apply_damage() PROC.
+	 * THIS MODIFIES ALL DAMAGE TYPES.
 	 **/
 	var/damage_modifier = 0
 	///multiplier for damage from cold temperature
@@ -497,7 +496,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			C.faction += i //Using +=/-= for this in case you also gain the faction from a different source.
 
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, multiplicative_slowdown=speedmod)
-	C.physiology.damage_resistance += damage_modifier
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
@@ -540,7 +538,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	clear_tail_moodlets(C)
 
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
-	C.physiology.damage_resistance -= damage_modifier
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
@@ -1376,7 +1373,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
 	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
-	var/hit_percent = (100-blocked)/100
+	var/hit_percent = (100-(armor+blocked))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!damage || (!forced && hit_percent <= 0))
 		return 0
