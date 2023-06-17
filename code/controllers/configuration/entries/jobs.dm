@@ -130,7 +130,7 @@
 			for(var/config_datum_key in job_config_datum_configurables)
 				var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 				var/config_read_value = job_config[job_key][config_datum_key]
-				if(!isnum(config_read_value))
+				if(!config_datum.validate_value(config_read_value))
 					working_list += list(
 						"# [config_datum_key]" = config_datum.get_compile_time_value(occupation), // note that this doesn't make a real comment, it just creates a string mismatch.
 					)

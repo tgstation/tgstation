@@ -13,8 +13,14 @@
 	SHOULD_CALL_PARENT(FALSE)
 	stack_trace("Attempted to get value for the default job config for [occupation.title] (with config tag [occupation.config_tag])! This is not allowed!")
 
-/// This is the proc that we actually invoke to set the config-based values for each job. Is also intended to handle all sanity checks.
-/// Will return TRUE if the value was set successfully, FALSE otherwise.
+/// Validate the value of the config type for a given job. There can be overrides for special instances on subtypes.
+/// Isn't meant for in-depth logic, just bare-bones sanity checks. Like: is this number a number? Is this string a string? In-depth sanity checks should be done in the set_current_value proc.
+/// Will return TRUE if the value is valid, FALSE if it is not.
+/datum/job_config_type/proc/validate_value(value)
+	SHOULD_CALL_PARENT(FALSE)
+	stack_trace("Attempted to validate value for the default job config for [occupation.title] (with config tag [occupation.config_tag])! This is not allowed!")
+
+/// This is the proc that we actually invoke to set the config-based values for each job. Is also intended to handle all in-depth logic checks.
 /datum/job_config_type/proc/set_current_value(datum/job/occupation, value)
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("Attempted to set value for the default job config for [occupation.title] (with config tag [occupation.config_tag])! This is not allowed!")
@@ -28,8 +34,13 @@
 		return -1
 	return initial(occupation.total_positions)
 
+/datum/job_config_type/default_positions/validate_value(value)
+	if(isnum(value))
+		return TRUE
+	return FALSE
+
 /datum/job_config_type/default_positions/set_current_value(datum/job/occupation, value)
-	if(!isnum(config_value)) // This will mean that the value was commented out, which means that the server operator didn't want to override the codebase default. So, we skip it.
+	if(!validate_value(value))
 		return FALSE
 	occupation.total_positions = value
 	return TRUE
@@ -43,8 +54,13 @@
 		return -1
 	return initial(occupation.spawn_positions)
 
+/datum/job_config_type/starting_positions/validate_value(value)
+	if(isnum(value))
+		return TRUE
+	return FALSE
+
 /datum/job_config_type/starting_positions/set_current_value(datum/job/occupation, value)
-	if(!isnum(config_value)) // This will mean that the value was commented out, which means that the server operator didn't want to override the codebase default. So, we skip it.
+	if(!validate_value(value))
 		return FALSE
 	occupation.spawn_positions = value
 	return TRUE
@@ -56,8 +72,13 @@
 /datum/job_config_type/playtime_requirements/get_compile_time_value(datum/job/occupation)
 	return initial(occupation.exp_requirements)
 
+/datum/job_config_type/playtime_requirements/validate_value(value)
+	if(isnum(value))
+		return TRUE
+	return FALSE
+
 /datum/job_config_type/playtime_requirements/set_current_value(datum/job/occupation, value)
-	if(!isnum(config_value)) // This will mean that the value was commented out, which means that the server operator didn't want to override the codebase default. So, we skip it.
+	if(!validate_value(value)) // This will mean that the value was commented out, which means that the server operator didn't want to override the codebase default. So, we skip it.
 		return FALSE
 	occupation.exp_requirements = value
 	return TRUE
@@ -69,8 +90,13 @@
 /datum/job_config_type/required_account_age/get_compile_time_value(datum/job/occupation)
 	return initial(occupation.minimal_player_age)
 
+/datum/job_config_type/required_account_age/validate_value(value)
+	if(isnum(value))
+		return TRUE
+	return FALSE
+
 /datum/job_config_type/required_account_age/set_current_value(datum/job/occupation, value)
-	if(!isnum(config_value)) // This will mean that the value was commented out, which means that the server operator didn't want to override the codebase default. So, we skip it.
+	if(!validate_value(value)) // This will mean that the value was commented out, which means that the server operator didn't want to override the codebase default. So, we skip it.
 		return FALSE
 	occupation.minimal_player_age = value
 	return TRUE
@@ -82,7 +108,15 @@
 /datum/job_config_type/required_character_age/get_compile_time_value(datum/job/occupation)
 	return initial(occupation.required_character_age) || 0 // edge case here, this is typically null by default and returning null causes issues. Returning 0 is a safe default.
 
+/datum/job_config_type/required_character_age/validate_value(value) // here we don't care about the value being out of bounds, just wanna make sure it's a number
+	if(isnum(value))
+		return TRUE
+	return FALSE
+
 /datum/job_config_type/required_character_age/set_current_value(datum/job/occupation, value)
+	if(!validate_value(value))
+		return FALSE
+
 	if(value > AGE_MIN && value < AGE_MAX)
 		occupation.required_character_age = value
 		return TRUE
