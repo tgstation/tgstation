@@ -214,7 +214,7 @@
 	name = "supermatter sword"
 	desc = "In a station full of bad ideas, this might just be the worst."
 	icon = 'icons/obj/weapons/sword.dmi'
-	icon_state = "supermatter_sword"
+	icon_state = "supermatter_sword_balanced"
 	inhand_icon_state = "supermatter_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -234,9 +234,6 @@
 	shard.countdown = null
 	START_PROCESSING(SSobj, src)
 	visible_message(span_warning("[src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all."))
-	var/matrix/transformation = matrix()
-	transformation.Turn(-45)
-	transform = transformation
 
 /obj/item/melee/supermatter_sword/process()
 	if(balanced || throwing || ismob(src.loc) || isnull(src.loc))
@@ -269,7 +266,7 @@
 /obj/item/melee/supermatter_sword/pickup(user)
 	..()
 	balanced = 0
-	transform = matrix()
+	icon_state = "supermatter_sword"
 
 /obj/item/melee/supermatter_sword/ex_act(severity, target)
 	visible_message(
