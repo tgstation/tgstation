@@ -31,8 +31,8 @@
 		/obj/item/microfusion_gun_attachment/grip,
 		/obj/item/microfusion_gun_attachment/rail,
 		/obj/item/microfusion_gun_attachment/rail,
-		/obj/item/microfusion_gun_attachment/repeater,
-		/obj/item/microfusion_gun_attachment/repeater,
+		/obj/item/microfusion_gun_attachment/barrel/repeater,
+		/obj/item/microfusion_gun_attachment/barrel/repeater,
 	)
 	crate_name = "MCR-01 Military Attachments Crate Type A"
 
@@ -44,11 +44,11 @@
 		/obj/item/microfusion_gun_attachment/grip,
 		/obj/item/microfusion_gun_attachment/grip,
 		/obj/item/microfusion_gun_attachment/grip,
-		/obj/item/microfusion_gun_attachment/scatter,
-		/obj/item/microfusion_gun_attachment/scatter,
-		/obj/item/microfusion_gun_attachment/scatter,
+		/obj/item/microfusion_gun_attachment/barrel/scatter,
+		/obj/item/microfusion_gun_attachment/barrel/scatter,
+		/obj/item/microfusion_gun_attachment/barrel/scatter,
 		/obj/item/microfusion_gun_attachment/scope,
-		/obj/item/microfusion_gun_attachment/lance,
+		/obj/item/microfusion_gun_attachment/barrel/lance,
 	)
 	crate_name = "MCR-01 Military Attachments Crate Type B"
 
@@ -59,12 +59,12 @@
 	cost = CARGO_CRATE_VALUE * 20
 	contraband = TRUE
 	contains = list(
-		/obj/item/microfusion_gun_attachment/honk,
-		/obj/item/microfusion_gun_attachment/honk,
-		/obj/item/microfusion_gun_attachment/honk,
-		/obj/item/microfusion_gun_attachment/honk_camo,
-		/obj/item/microfusion_gun_attachment/honk_camo,
-		/obj/item/microfusion_gun_attachment/honk_camo,
+		/obj/item/microfusion_gun_attachment/barrel/honk,
+		/obj/item/microfusion_gun_attachment/barrel/honk,
+		/obj/item/microfusion_gun_attachment/barrel/honk,
+		/obj/item/microfusion_gun_attachment/camo/honk,
+		/obj/item/microfusion_gun_attachment/camo/honk,
+		/obj/item/microfusion_gun_attachment/camo/honk,
 		/obj/item/food/pie/cream,
 		/obj/item/food/pie/cream,
 		/obj/item/food/pie/cream,

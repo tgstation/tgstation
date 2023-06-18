@@ -71,6 +71,10 @@
 	var/base_fire_delay = 0
 	/// Do we use more power because of attachments?
 	var/extra_power_usage = 0
+	/// Spread from attachments.
+	var/attachment_spread = 0
+	/// Recoil from attachments.
+	var/attachment_recoil = 0
 
 /obj/item/gun/microfusion/emp_act(severity)
 	. = ..()
@@ -615,7 +619,7 @@
 		balloon_alert(user, "can't install!")
 		return FALSE
 	for(var/obj/item/microfusion_gun_attachment/iterating_attachment in attachments)
-		if(is_type_in_list(microfusion_gun_attachment, iterating_attachment.incompatable_attachments))
+		if(is_type_in_list(microfusion_gun_attachment, iterating_attachment.incompatible_attachments))
 			balloon_alert(user, "not compatible with [iterating_attachment]!")
 			return FALSE
 		if(iterating_attachment.slot != GUN_SLOT_UNIQUE && iterating_attachment.slot == microfusion_gun_attachment.slot)
@@ -746,3 +750,10 @@
 				return
 			phase_emitter.toggle_cooling_system(usr)
 
+/// Recalculates the spread, based on attachment-provided values.
+/obj/item/gun/microfusion/proc/recalculate_spread()
+	spread = max(0, attachment_spread)
+
+/// Recalculates the recoil, based on attachment-provided values.
+/obj/item/gun/microfusion/proc/recalculate_recoil()
+	recoil = max(0, attachment_recoil)

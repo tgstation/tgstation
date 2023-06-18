@@ -44,7 +44,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/living = target
-		living.fire_stacks += 2
+		living.adjust_fire_stacks(2)
 		living.ignite_mob()
 
 /obj/projectile/beam/laser/microfusion/hellfire
@@ -59,21 +59,43 @@
 /obj/projectile/beam/laser/microfusion/scatter
 	name = "scatter microfusion laser"
 
-/obj/projectile/beam/laser/microfusion/scattermax
+/obj/projectile/beam/laser/microfusion/scatter/max
 	name = "scatter microfusion laser"
 
 /obj/projectile/beam/laser/microfusion/repeater
 	damage = 10
 
 /obj/projectile/beam/laser/microfusion/penetrator
-	name = "scatter microfusion laser"
+	name = "focused microfusion laser"
 	damage = 15
 	armour_penetration = 50
 
 /obj/projectile/beam/laser/microfusion/lance
 	name = "lance microfusion laser"
-	damage = 40 // Were turning the gun into a heavylaser
+	damage = 40 // We're turning the gun into a heavylaser
 	tracer_type = /obj/effect/projectile/tracer/heavy_laser
 	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
 	impact_type = /obj/effect/projectile/impact/heavy_laser
 	speed = 0.4
+
+/obj/projectile/beam/laser/microfusion/xray
+	name = "x-ray microfusion laser"
+	icon_state = "laser_greyscale"
+	color = COLOR_GREEN
+	light_color = COLOR_GREEN
+	projectile_piercing = PASSCLOSEDTURF|PASSGRILLE|PASSGLASS
+
+/obj/projectile/beam/laser/microfusion/honk
+	name = "funny microfusion laser"
+	icon_state = "laser_greyscale"
+	color = COLOR_VIVID_YELLOW
+	light_color = COLOR_VIVID_YELLOW
+	damage_type = STAMINA
+	damage = 20
+	armor_flag = ENERGY
+	hitsound = 'sound/misc/slip.ogg'
+	impact_type = /obj/effect/projectile/impact/disabler
+
+/obj/projectile/beam/laser/microfusion/honk/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/slippery, 20)

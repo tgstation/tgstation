@@ -25,7 +25,7 @@
 		/obj/item/microfusion_gun_attachment/pulse,
 		/obj/item/microfusion_gun_attachment/grip,
 		/obj/item/microfusion_gun_attachment/rail,
-		/obj/item/microfusion_gun_attachment/black_camo,
+		/obj/item/microfusion_gun_attachment/camo,
 	)
 
 //For syndicate uplink.
