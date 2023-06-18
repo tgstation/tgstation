@@ -322,13 +322,15 @@
 
 /obj/item/melee/baton/telescopic/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = active_force, \
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
 		clumsy_check = FALSE, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
-		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
+		attack_verb_simple_on = list("smack", "strike", "crack", "beat"), \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
@@ -361,8 +363,9 @@
 
 	src.active = active
 	inhand_icon_state = active ? on_inhand_icon_state : null // When inactive, there is no inhand icon_state.
-	balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(user ? user : src, on_sound, 50, TRUE)
+	if(user)
+		balloon_alert(user, active ? "extended" : "collapsed")
+	playsound(src, on_sound, 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/baton/telescopic/contractor_baton
