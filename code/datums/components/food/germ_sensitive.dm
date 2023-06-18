@@ -5,6 +5,7 @@
 
 /// Possible diseases
 GLOBAL_LIST_INIT(floor_diseases, list(
+	/datum/disease/advance/nebula_nausea = 2,
 	/datum/disease/advance/gastritium = 2,
 	/datum/disease/advance/carpellosis = 1,
 ))
