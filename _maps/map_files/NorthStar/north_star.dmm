@@ -22262,7 +22262,7 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /turf/open/space/openspace,
-/area/station/maintenance/floor2/starboard)
+/area/space/nearstation)
 "fLz" = (
 /obj/effect/turf_decal/stripes/end,
 /obj/effect/turf_decal/stripes/white/end,
