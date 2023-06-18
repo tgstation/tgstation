@@ -37,31 +37,29 @@
 /obj/item/papercutter/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
+	if(!isnull(held_item))
+		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			if(isnull(stored_blade))
+				return NONE
+			context[SCREENTIP_CONTEXT_LMB] = "[(blade_secured ? "Unsecure" : "Secure")] blade"
+		if(istype(held_item, /obj/item/paper))
+			if(!isnull(stored_paper))
+				return NONE
+			context[SCREENTIP_CONTEXT_LMB] = "Insert paper"
+		if(istype(held_item, /obj/item/hatchet/cutterblade))
+			if(!isnull(stored_blade))
+				return NONE
+			context[SCREENTIP_CONTEXT_LMB] = "Insert blade"
+
 	if(!isnull(stored_paper))
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove paper"
+		if(!(isnull(stored_blade)) && blade_secured)
+			context[SCREENTIP_CONTEXT_RMB] = "Cut paper"
+
 	else if(!isnull(stored_blade) && !blade_secured)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove blade"
 
-	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_RMB] = "Cut paper"
-
-	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-		if(isnull(stored_blade))
-			return
-		context[SCREENTIP_CONTEXT_LMB] = "[(blade_secured ? "Unsecure" : "Secure")] blade"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	if(istype(held_item, /obj/item/paper))
-		if(!isnull(stored_paper))
-			return
-		context[SCREENTIP_CONTEXT_LMB] = "Insert paper"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	if(istype(held_item, /obj/item/hatchet/cutterblade))
-		if(!isnull(stored_blade))
-			return
-		context[SCREENTIP_CONTEXT_LMB] = "Insert blade"
-		return CONTEXTUAL_SCREENTIP_SET
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/papercutter/deconstruct(disassembled)
 	..()
