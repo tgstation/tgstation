@@ -245,7 +245,7 @@
 	flags_1 |= INITIALIZED_1
 
 	if(loc)
-		SEND_SIGNAL(loc, COMSIG_ATOM_INITIALIZED_ON, src) /// Sends a signal that the new atom `src`, has been created at `loc`
+		SEND_SIGNAL(loc, COMSIG_ATOM_INITIALIZED_ON, src, mapload) /// Sends a signal that the new atom `src`, has been created at `loc`
 
 	SET_PLANE_IMPLICIT(src, plane)
 
