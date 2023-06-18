@@ -700,14 +700,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"Ms" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 8
-	},
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/structure/barricade/wooden/crude,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "Mz" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/structure/chair/wood{
@@ -893,13 +885,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/lunar_sand/plating,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 4
-	},
 /obj/structure/barricade/wooden/crude,
+/obj/effect/spawner/structure/window/hollow/survival_pod,
+/obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Un" = (
@@ -1044,15 +1032,15 @@ lt
 jx
 jx
 Od
-Ms
+Uf
 Uf
 Od
-Ms
-Ms
-Ms
+Uf
+Uf
+Uf
 Od
-Ms
-Ms
+Uf
+Uf
 Od
 jx
 jx
