@@ -96,6 +96,7 @@
 		"sec_38",
 		"sec_beanbag_slug",
 		"sec_dart",
+		"buckshot_shell",
 		"sec_Islug",
 		"sec_rshot",
 		"servingtray",
