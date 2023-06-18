@@ -7,6 +7,7 @@
 	slot = ORGAN_SLOT_TONGUE
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
+	voice_filter = ""
 	/**
 	 * A cached list of paths of all the languages this tongue is capable of speaking
 	 *
@@ -99,6 +100,7 @@
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	if(!sense_of_taste)
 		ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
+	tongue_owner.voice_filter = voice_filter
 
 /obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
 	. = ..()
@@ -108,6 +110,7 @@
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+	tongue_owner.voice_filter = initial(tongue_owner.voice_filter)
 
 /obj/item/organ/internal/tongue/could_speak_language(datum/language/language_path)
 	return (language_path in languages_possible)
@@ -411,6 +414,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	attack_verb_simple = list("beep", "boop")
 	modifies_speech = TRUE
 	taste_sensitivity = 25 // not as good as an organic tongue
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 /obj/item/organ/internal/tongue/robot/can_speak_language(language)
 	return TRUE // THE MAGIC OF ELECTRONICS
@@ -423,6 +427,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	color = "#96DB00" // TODO proper sprite, rather than recoloured pink tongue
 	desc = "A minutely toothed, chitious ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."
 	modifies_speech = TRUE
+	voice_filter = "atempo=0.5" // makes them talk really slow
 
 /obj/item/organ/internal/tongue/snail/modify_speech(datum/source, list/speech_args)
 	var/new_message
