@@ -8786,6 +8786,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "bAa" = (
@@ -9184,6 +9187,9 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
@@ -14017,6 +14023,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "dsZ" = (
@@ -17959,6 +17966,7 @@
 /area/station/service/theater)
 "eSU" = (
 /obj/machinery/power/port_gen/pacman,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
 "eTl" = (
@@ -45002,8 +45010,10 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
 	},
-/obj/structure/table,
 /obj/machinery/firealarm/directional/east,
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "pal" = (
@@ -46309,6 +46319,9 @@
 	dir = 1
 	},
 /obj/structure/closet/toolcloset,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "pxi" = (
@@ -49210,6 +49223,9 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
@@ -57605,6 +57621,9 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "tte" = (
@@ -63703,9 +63722,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "vyD" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/machinery/airalarm/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -66249,13 +66265,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/processing)
-"wtS" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/engineering/gravity_generator)
 "wuc" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 1
@@ -67467,7 +67476,8 @@
 /area/station/service/kitchen/coldroom)
 "wSh" = (
 /obj/structure/cable,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/station/engineering/gravity_generator)
 "wSi" = (
 /turf/open/floor/iron/recharge_floor,
@@ -67779,6 +67789,9 @@
 /area/station/engineering/break_room)
 "wYP" = (
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "wYX" = (
@@ -103435,8 +103448,8 @@ bVW
 laz
 kic
 swg
-uKK
-wtS
+wSh
+ajF
 bzP
 fal
 aks
