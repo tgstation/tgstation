@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// [/obj/machinery/power/supermatter_crystal/proc/count_down]
 /datum/sm_delam/proc/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	if (sm.is_main_engine)
-		SSpersistence.highscore_since_engine_exploded = SSpersistence.rounds_since_engine_exploded
+		SSpersistence.delam_highscore = SSpersistence.rounds_since_engine_exploded
 		SSpersistence.rounds_since_engine_exploded = ROUNDCOUNT_ENGINE_JUST_EXPLODED
 		for (var/obj/machinery/incident_display/sign as anything in GLOB.map_delamination_counters)
 			sign.update_delam_count(ROUNDCOUNT_ENGINE_JUST_EXPLODED)

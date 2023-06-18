@@ -83,7 +83,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 /obj/machinery/incident_display/LateInitialize()
 	. = ..()
 	GLOB.map_delamination_counters += src
-	update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.highscore_since_engine_exploded)
+	update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.delam_highscore)
 	for(var/obj/structure/industrial_lift/tram/tram as anything in GLOB.lifts)
 		RegisterSignal(tram, COMSIG_TRAM_COLLISION, PROC_REF(update_tram_count))
 
@@ -95,7 +95,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 /obj/machinery/incident_display/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
-		return
+		return FALSE
 
 	if(atom_integrity >= max_integrity && !(machine_stat & BROKEN))
 		balloon_alert(user, "it doesn't need repairs!")
@@ -114,7 +114,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 // Switch modes with multitool
 /obj/machinery/incident_display/multitool_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
-		return
+		return FALSE
 
 	if(sign_features == DISPLAY_TRAM)
 		tool.play_tool_sound(src)
@@ -123,7 +123,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		desc = DESC_DUAL
 		icon_state = "stat_display_dual"
 		sign_features = DISPLAY_DELAM | DISPLAY_TRAM
-		update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.highscore_since_engine_exploded)
+		update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.delam_highscore)
 		update_tram_count(src, SSpersistence.tram_hits_this_round)
 		update_appearance()
 		return TRUE
@@ -144,7 +144,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		desc = DESC_DELAM
 		icon_state = "stat_display_delam"
 		sign_features = DISPLAY_DELAM
-		update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.highscore_since_engine_exploded)
+		update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.delam_highscore)
 		update_appearance()
 		return TRUE
 
@@ -168,10 +168,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 /obj/machinery/incident_display/deconstruct()
 	if(flags_1 & NODECONSTRUCT_1)
 		return
-	else
-		new /obj/item/stack/sheet/mineral/titanium(drop_location(), 2)
-		new /obj/item/shard(drop_location())
-		new /obj/item/shard(drop_location())
+
+	new /obj/item/stack/sheet/mineral/titanium(drop_location(), 2)
+	new /obj/item/shard(drop_location())
+	new /obj/item/shard(drop_location())
 
 	qdel(src)
 
