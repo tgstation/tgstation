@@ -1,4 +1,0 @@
-author: "bobbahbrown"
-delete-after: True
-changes:
-  - server: "Fix log categories being erroneously excluded from log files."
