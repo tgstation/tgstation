@@ -1,0 +1,5 @@
+author: "CliffracerX"
+delete-after: True
+changes:
+  - rscadd: "ICSpawning module"
+  - admin: "ctrl-click a ghost to ICspawn them"
