@@ -35,7 +35,7 @@
 
 	spawning_list = list(/mob/living/basic/carp/passive = 1)
 	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE | SHUTTLE_EVENT_MISS_SHUTTLE
-	spawns_per_spawn = 2
+	spawns_per_spawn = 1
 	spawn_probability_per_process = 100
 
 	remove_from_list_when_spawned = FALSE
