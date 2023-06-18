@@ -98,8 +98,8 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	var/bonus_tc = 2
 	/// Bonus progression to grant if you booby trap successfully
 	var/bonus_progression = 5 MINUTES
-	/// The trap device we give out
-	var/obj/item/traitor_machine_trapper/tool
+	/// Have we given out a traitor trap item?
+	var/traitor_trapper_given = FALSE
 
 /datum/traitor_objective/sabotage_machinery/trap/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	. = ..()
@@ -122,7 +122,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 
 /datum/traitor_objective/sabotage_machinery/trap/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
-	if(!tool)
+	if(!traitor_trapper_given)
 		buttons += add_ui_button("", "Pressing this will materialize an explosive trap in your hand, which you can conceal within the target machine", "wifi", "summon_gear")
 	return buttons
 
@@ -130,9 +130,10 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	. = ..()
 	switch(action)
 		if("summon_gear")
-			if(tool)
+			if(traitor_trapper_given)
 				return
-			tool = new(user.drop_location())
+			traitor_trapper_given = TRUE
+			var/obj/item/traitor_machine_trapper/tool = new(user.drop_location())
 			user.put_in_hands(tool)
 			tool.balloon_alert(user, "a booby trap materializes in your hand")
 			tool.target_machine_path = applicable_jobs[chosen_job]
