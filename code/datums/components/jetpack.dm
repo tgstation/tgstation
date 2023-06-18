@@ -47,6 +47,7 @@
 
 /datum/component/jetpack/proc/activate(datum/source, mob/user)
 	SIGNAL_HANDLER
+
 	if(!check_on_move.Invoke(TRUE))
 		return JETPACK_COMPONENT_ACTIVATION_FAILED
 
@@ -65,13 +66,14 @@
 
 /datum/component/jetpack/proc/deactivate(datum/source, mob/user)
 	SIGNAL_HANDLER
-	if(user)
-		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
-		UnregisterSignal(user, COMSIG_MOVABLE_SPACEMOVE)
-		UnregisterSignal(user, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT)
-		UnregisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT)
-	QDEL_NULL(trail) //delete AFTER unregistering the mob, otherwise you'll get runtimes.
+
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(user, COMSIG_MOVABLE_SPACEMOVE)
+	UnregisterSignal(user, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT)
+	UnregisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT)
+
+	QDEL_NULL(trail)
 
 /datum/component/jetpack/proc/move_react(mob/user)
 	SIGNAL_HANDLER
