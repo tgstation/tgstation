@@ -57,7 +57,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT, PROC_REF(block_starting_visuals))
 	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT, PROC_REF(ignore_ending_block))
 
-	if(trail && effect_type != trail.type)
+	if(trail)
 		QDEL_NULL(trail)
 	trail = new effect_type
 	trail.auto_process = FALSE
