@@ -2,12 +2,14 @@
 
 /// Time needed for bacteria to infect the parent object
 #define GERM_EXPOSURE_DELAY (5 SECONDS) // Five-second rule
-/// Max number of symptoms on the random disease
-#define MAX_DISEASE_SYMPTOMS 2
-/// Max strength of the random disease
-#define MAX_DISEASE_STRENGTH 3
 
-/// Makes edible items infective if left on floor, also sending corresponding signals to parent
+/// Possible diseases
+GLOBAL_LIST_INIT(floor_diseases, list(
+	/datum/disease/advance/gastritium = 2,
+	/datum/disease/advance/carpellosis = 1,
+))
+
+/// Makes items infective if left on floor, also sending corresponding signals to parent
 /datum/component/germ_sensitive
 	/// Timer for counting delay before becoming infective
 	var/timer_id
@@ -110,9 +112,8 @@
 		return
 	infective = TRUE
 
-	var/datum/disease/advance/random/random_disease = new(max_symptoms = rand(MAX_DISEASE_SYMPTOMS), max_level = rand(MAX_DISEASE_STRENGTH))
-	random_disease.name = "Unknown"
-	parent.AddComponent(/datum/component/infective, list(random_disease), weak = TRUE)
+	var/random_disease = pick_weight(GLOB.floor_diseases)
+	parent.AddComponent(/datum/component/infective, new random_disease, weak = TRUE)
 
 /datum/component/germ_sensitive/proc/wash()
 	if(infective)
@@ -120,5 +121,3 @@
 		qdel(parent.GetComponent(/datum/component/infective))
 
 #undef GERM_EXPOSURE_DELAY
-#undef MAX_DISEASE_SYMPTOMS
-#undef MAX_DISEASE_STRENGTH

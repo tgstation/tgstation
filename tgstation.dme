@@ -1115,6 +1115,8 @@
 #include "code\datums\diseases\wizarditis.dm"
 #include "code\datums\diseases\advance\advance.dm"
 #include "code\datums\diseases\advance\presets.dm"
+#include "code\datums\diseases\advance\floor_diseases\carpellosis.dm"
+#include "code\datums\diseases\advance\floor_diseases\gastritium.dm"
 #include "code\datums\diseases\advance\symptoms\beard.dm"
 #include "code\datums\diseases\advance\symptoms\chills.dm"
 #include "code\datums\diseases\advance\symptoms\choking.dm"

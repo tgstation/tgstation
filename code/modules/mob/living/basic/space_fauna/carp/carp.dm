@@ -261,3 +261,16 @@
 	obj_damage = 15
 
 #undef RARE_CAYENNE_CHANCE
+
+/**
+ * Carp-parasite from carpellosis disease
+ */
+/mob/living/basic/carp/ella
+	name = "Ella"
+	real_name = "Ella"
+	desc = "It came out of someone."
+	gold_core_spawnable = NO_SPAWN
+
+/mob/living/basic/carp/ella/Initialize(mapload)
+	. = ..()
+	death() // It comes into the world dead when the disease is cured
