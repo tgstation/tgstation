@@ -878,7 +878,6 @@
 /area/shuttle/pirate)
 "yN" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/cable,
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
 	},
