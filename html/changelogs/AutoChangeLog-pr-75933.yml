@@ -1,6 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscadd: "Assistants get a new liver trait, maintenance metabolism. This trait only lets them process maintenance drugs, grey bull, and pump-up for 20% more time and gives them a probably-positive 2 minute moodlet when ingesting these."
-  - rscadd: "The officer's sabre has gained a small amount of bloodthrist for assistants!"
-  - bugfix: "Fixed liver masters being unable to inspect the liver of scientists."

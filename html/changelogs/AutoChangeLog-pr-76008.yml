@@ -1,0 +1,6 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - rscadd: "Adds shuttle events! If shuttle escapes weren't exciting before (doubtful), they definitely are now! I'm joking it's mostly an atmosphere thing."
+  - admin: "Adds an admin panel to interact with shuttle events, under the Events tab: Change Shuttle Events"
+  - bugfix: "Objects spawned in hyperspace will properly catch hyperspace drift"

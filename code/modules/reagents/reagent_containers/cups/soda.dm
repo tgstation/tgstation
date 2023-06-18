@@ -9,6 +9,7 @@
 /obj/item/reagent_containers/cup/soda_cans
 	name = "soda can"
 	icon = 'icons/obj/drinks/soda.dmi'
+	icon_state = "cola"
 	icon_state_preview = "cola"
 	reagent_flags = NONE
 	spillable = FALSE

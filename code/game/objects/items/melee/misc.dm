@@ -355,14 +355,13 @@
 	var/static/list/ovens
 	/// The beam that links to the oven we use
 	var/datum/beam/beam
-	/// Whether or stick is extended and can recieve sausage
-	var/extended = FALSE
 
 /obj/item/melee/roastingstick/Initialize(mapload)
 	. = ..()
 	if (!ovens)
 		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		hitsound_on = hitsound, \
 		clumsy_check = FALSE, \
 		inhand_icon_change = FALSE, \
@@ -390,16 +389,16 @@
 /obj/item/melee/roastingstick/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	extended = active
 	inhand_icon_state = active ? "nullrod" : null
-	balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
-	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	if(user)
+		balloon_alert(user, "[active ? "extended" : "collapsed"] [src]")
+	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
 	..()
 	if (istype(target, /obj/item/food/sausage))
-		if (!extended)
+		if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 			to_chat(user, span_warning("You must extend [src] to attach anything to it!"))
 			return
 		if (held_sausage)
@@ -430,7 +429,7 @@
 
 /obj/item/melee/roastingstick/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if (!extended)
+	if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return
 	if (!is_type_in_typecache(target, ovens))
 		return

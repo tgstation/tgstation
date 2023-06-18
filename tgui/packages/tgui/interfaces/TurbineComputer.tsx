@@ -1,9 +1,24 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, LabeledList, Section, Box, Modal, ProgressBar, NumberInput } from '../components';
 import { Window } from '../layouts';
 
+type TurbineInfo = {
+  connected: BooleanLike;
+  active: BooleanLike;
+  rpm: number;
+  power: number;
+  temp: number;
+  integrity: number;
+  parts_linked: BooleanLike;
+  parts_ready: BooleanLike;
+  max_rpm: number;
+  max_temperature: number;
+  regulator: number;
+};
+
 export const TurbineComputer = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<TurbineInfo>(context);
   const parts_not_connected = !data.parts_linked && (
     <Modal>
       <Box
@@ -40,7 +55,7 @@ export const TurbineComputer = (props, context) => {
               icon={data.active ? 'power-off' : 'times'}
               content={data.active ? 'Online' : 'Offline'}
               selected={data.active}
-              disabled={!data.can_turn_off || !data.parts_linked}
+              disabled={!!(data.rpm >= 1000) || !data.parts_linked}
               onClick={() => act('toggle_power')}
             />
           }>
@@ -50,7 +65,7 @@ export const TurbineComputer = (props, context) => {
             <LabeledList.Item label="Intake Regulator">
               <NumberInput
                 animated
-                value={parseFloat(data.regulator * 100)}
+                value={data.regulator * 100}
                 unit="%"
                 minValue={1}
                 maxValue={100}
@@ -70,9 +85,8 @@ export const TurbineComputer = (props, context) => {
                   good: [60, 100],
                   average: [40, 59],
                   bad: [0, 39],
-                }}>
-                {data.integrity + ' %'}
-              </ProgressBar>
+                }}
+              />
             </LabeledList.Item>
             <LabeledList.Item label="Turbine Speed">
               {data.rpm} RPM

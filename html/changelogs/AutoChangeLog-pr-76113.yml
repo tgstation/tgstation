@@ -1,0 +1,4 @@
+author: "Pepsilawn"
+delete-after: True
+changes:
+  - bugfix: "you cannot use departmental budget cards as withdrawal sources for NT Pay anymore"

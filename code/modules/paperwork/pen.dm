@@ -186,6 +186,7 @@
 					label.apply_label()
 				to_chat(user, span_notice("You have successfully renamed \the [oldname] to [O]."))
 				O.renamedByPlayer = TRUE
+				O.update_appearance(UPDATE_ICON)
 
 		if(penchoice == "Description")
 			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 280)
@@ -198,6 +199,7 @@
 				O.AddComponent(/datum/component/rename, O.name, input)
 				to_chat(user, span_notice("You have successfully changed [O]'s description."))
 				O.renamedByPlayer = TRUE
+				O.update_appearance(UPDATE_ICON)
 
 		if(penchoice == "Reset")
 			if(QDELETED(O) || !user.can_perform_action(O))
@@ -213,6 +215,7 @@
 
 			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
 			O.renamedByPlayer = FALSE
+			O.update_appearance(UPDATE_ICON)
 
 /obj/item/pen/get_writing_implement_details()
 	return list(
@@ -265,8 +268,6 @@
 	var/hidden_desc = "It's a normal black ink pe- Wait. That's a thing used to stab people!"
 	/// The real icons used when extended.
 	var/hidden_icon = "edagger"
-	/// Whether or pen is extended
-	var/extended = FALSE
 
 /obj/item/pen/edagger/Initialize(mapload)
 	. = ..()
@@ -274,7 +275,8 @@
 	speed = 6 SECONDS, \
 	butcher_sound = 'sound/weapons/blade1.ogg', \
 	)
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = 18, \
 		throwforce_on = 35, \
 		throw_speed_on = 4, \
@@ -286,7 +288,7 @@
 	RegisterSignal(src, COMSIG_DETECTIVE_SCANNED, PROC_REF(on_scan))
 
 /obj/item/pen/edagger/suicide_act(mob/living/user)
-	if(extended)
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		user.visible_message(span_suicide("[user] forcefully rams the pen into their mouth!"))
 	else
 		user.visible_message(span_suicide("[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -302,7 +304,6 @@
 /obj/item/pen/edagger/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	extended = active
 	if(active)
 		name = hidden_name
 		desc = hidden_desc
@@ -321,8 +322,9 @@
 		embedding = list(embed_chance = EMBED_CHANCE)
 
 	updateEmbedding()
-	balloon_alert(user, "[hidden_name] [active ? "active":"concealed"]")
-	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
+	if(user)
+		balloon_alert(user, "[hidden_name] [active ? "active" : "concealed"]")
+	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -360,12 +362,11 @@
 	desc = "A pen with an extendable screwdriver tip. This one has a yellow cap."
 	icon_state = "pendriver"
 	toolspeed = 1.2  // gotta have some downside
-	/// whether the pen is extended
-	var/extended = FALSE
 
 /obj/item/pen/screwdriver/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		throwforce_on = 5, \
 		w_class_on = WEIGHT_CLASS_SMALL, \
 		sharpness_on = TRUE, \
@@ -375,24 +376,14 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(toggle_screwdriver))
 	AddElement(/datum/element/update_icon_updates_onmob)
 
-
-/obj/item/pen/screwdriver/vv_edit_var(var_name, var_value)
-	if(var_name == NAMEOF(src, extended))
-		if(var_value != extended)
-			var/datum/component/transforming/transforming_comp = GetComponent(/datum/component/transforming)
-			transforming_comp.on_attack_self(src)
-			datum_flags |= DF_VAR_EDITED
-			return
-	return ..()
-
 /obj/item/pen/screwdriver/proc/toggle_screwdriver(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
-	extended = active
+
 	if(user)
-		balloon_alert(user, "[extended ? "extended" : "retracted"]")
+		balloon_alert(user, active ? "extended" : "retracted")
 	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
-	if(!extended)
+	if(!active)
 		tool_behaviour = initial(tool_behaviour)
 		RemoveElement(/datum/element/eyestab)
 	else
@@ -404,5 +395,5 @@
 
 /obj/item/pen/screwdriver/update_icon_state()
 	. = ..()
-	icon_state = "[initial(icon_state)][extended ? "_out":null]"
+	icon_state = "[initial(icon_state)][HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "_out" : null]"
 	inhand_icon_state = initial(inhand_icon_state) //since transforming component switches the icon.

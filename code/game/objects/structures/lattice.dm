@@ -17,7 +17,6 @@
 	var/number_of_mats = 1
 	var/build_material = /obj/item/stack/rods
 
-
 /datum/armor/structure_lattice
 	melee = 50
 	fire = 80

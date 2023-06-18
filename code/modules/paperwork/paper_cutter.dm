@@ -7,12 +7,16 @@
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	pass_flags = PASSTABLE
+
 	/// The paper currently loaded inside the cutter
 	var/obj/item/paper/stored_paper
+
 	/// The blade currently loaded inside the cutter
 	var/obj/item/hatchet/cutterblade/stored_blade
+
 	/// Whether the cutter blade is secured or not.
 	var/blade_secured = TRUE
+
 	/// The chance for a clumsy person to cut themselves on the blade
 	/// Should probably be low-ish to prevent people spamming it quite so easily
 	var/cut_self_chance = 5
@@ -20,22 +24,61 @@
 /obj/item/papercutter/Initialize(mapload)
 	. = ..()
 	stored_blade = new /obj/item/hatchet/cutterblade(src)
+	register_context()
 	update_appearance()
 
 /obj/item/papercutter/Destroy(force)
-	if(stored_paper)
-		stored_paper.forceMove(get_turf(src))
-		stored_paper = null
-	if(stored_blade)
-		stored_blade.forceMove(get_turf(src))
-		stored_blade = null
+	if(!isnull(stored_paper))
+		QDEL_NULL(stored_paper)
+	if(!isnull(stored_blade))
+		QDEL_NULL(stored_blade)
 	return ..()
 
-/obj/item/papercutter/examine(mob/user)
+/obj/item/papercutter/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	. += "<b>Right-Click</b> to cut paper once it's inside."
-	if(stored_blade)
-		. += "The blade could be [blade_secured ? "un" : ""]secured with a <b>screwdriver</b>[blade_secured ? "" : " or removed with an <b>empty hand</b>"]."
+
+	if(!isnull(stored_paper))
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove paper"
+	else if(!isnull(stored_blade) && !blade_secured)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove blade"
+
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_RMB] = "Cut paper"
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		if(isnull(stored_blade))
+			return
+		context[SCREENTIP_CONTEXT_LMB] = "[(blade_secured ? "Unsecure" : "Secure")] blade"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/paper))
+		if(!isnull(stored_paper))
+			return
+		context[SCREENTIP_CONTEXT_LMB] = "Insert paper"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/hatchet/cutterblade))
+		if(!isnull(stored_blade))
+			return
+		context[SCREENTIP_CONTEXT_LMB] = "Insert blade"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/papercutter/deconstruct(disassembled)
+	..()
+	if(!disassembled)
+		return
+
+	if(!isnull(stored_paper))
+		stored_paper.forceMove(drop_location())
+	if(!isnull(stored_blade))
+		stored_blade.forceMove(drop_location())
+
+/obj/item/papercutter/Exit(atom/movable/leaving, direction)
+	if(leaving == stored_paper)
+		stored_paper = null
+	if(leaving == stored_blade)
+		stored_blade = null
+	return ..()
 
 /obj/item/papercutter/suicide_act(mob/living/user)
 	if(iscarbon(user) && stored_blade)
@@ -53,25 +96,24 @@
 	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
-
 /obj/item/papercutter/update_icon_state()
 	icon_state = (stored_blade ? "[initial(icon_state)]-cutter" : "[initial(icon_state)]")
 	return ..()
 
 /obj/item/papercutter/update_overlays()
 	. =..()
-	if(stored_paper)
+	if(!isnull(stored_paper))
 		. += "paper"
 
 /obj/item/papercutter/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!stored_blade && !blade_secured)
-		balloon_alert(user, "no blade to secure!")
+		balloon_alert(user, "no blade!")
 		return
+
 	tool.play_tool_sound(src)
-	balloon_alert(user, "blade [blade_secured ? "un" : ""]secured")
+	balloon_alert(user, "[blade_secured ? "un" : ""]secured")
 	blade_secured = !blade_secured
 	return TOOL_ACT_TOOLTYPE_SUCCESS
-
 
 /obj/item/papercutter/attackby(obj/item/inserted_item, mob/user, params)
 	if(istype(inserted_item, /obj/item/paper) && !istype(inserted_item, /obj/item/paper/paperslip))
@@ -97,29 +139,15 @@
 
 	return ..()
 
-/obj/item/papercutter/attack_hand(mob/user, list/modifiers)
-	add_fingerprint(user)
+/obj/item/papercutter/AltClick(mob/user)
+	if(!user.Adjacent(src))
+		return ..()
 
-	if(!stored_blade && stored_paper)
-		balloon_alert(user, "no blade!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	else if(!blade_secured)
-		balloon_alert(user, "blade removed")
-		user.put_in_hands(stored_blade)
-		stored_blade = null
-		update_appearance()
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	else if(stored_paper)
-		balloon_alert(user, "paper removed")
+	// can only remove one at a time
+	if(!isnull(stored_paper))
 		user.put_in_hands(stored_paper)
-		stored_paper = null
-		update_appearance()
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	// If there's a secured blade but no paper, just pick it up
-	return ..()
+	else if(!isnull(stored_blade) && !blade_secured)
+		user.put_in_hands(stored_blade)
 
 /obj/item/papercutter/attack_hand_secondary(mob/user, list/modifiers)
 	if(!stored_blade)
