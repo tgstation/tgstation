@@ -105,6 +105,10 @@
 	. = ..()
 	pack = AddComponent(/datum/component/jetpack, COMSIG_MODULE_TRIGGERED, COMSIG_MODULE_DEACTIVATED, CALLBACK(src, PROC_REF(allow_thrust)), /datum/effect_system/trail_follow/ion/grav_allowed)
 
+/obj/item/mod/module/jetpack/Destroy()
+	pack = null
+	. = ..()
+
 /obj/item/mod/module/jetpack/on_activation()
 	. = ..()
 	if(!.)

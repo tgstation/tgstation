@@ -19,6 +19,10 @@
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_SUITSTORE)
 	pack = AddComponent(/datum/component/jetpack, COMSIG_JETPACK_ACTIVATED, COMSIG_JETPACK_DEACTIVATED, CALLBACK(src, PROC_REF(allow_thrust), 0.01), /datum/effect_system/trail_follow/ion)
 
+/obj/item/tank/jetpack/Destroy()
+	pack = null
+	. = ..()
+
 /obj/item/tank/jetpack/item_action_slot_check(slot)
 	if(slot & slot_flags)
 		return TRUE
