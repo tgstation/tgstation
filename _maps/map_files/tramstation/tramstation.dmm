@@ -3563,7 +3563,8 @@
 	dir = 6
 	},
 /mob/living/simple_animal/pet/cat/kitten{
-	name = "Blu"
+	name = "Blu";
+	gender = "female"
 	},
 /obj/structure/bed/dogbed{
 	desc = "A comfy-looking cat bed. You can even strap your pet in, in case the gravity turns off.";
@@ -49314,7 +49315,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/space/basic,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "qAy" = (
 /obj/structure/weightmachine/stacklifter,
@@ -64284,7 +64285,7 @@
 /area/station/commons/dorms)
 "vIa" = (
 /obj/machinery/button/door/directional/west{
-	id = "Engineering2";
+	id = "Engineering3";
 	name = "Engineering Lockdown";
 	pixel_y = 22;
 	req_access = list("engineering");
@@ -65626,11 +65627,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "Engineering3"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "engi-entrance"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "Engineering3"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
