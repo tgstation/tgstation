@@ -270,6 +270,19 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	AM.forceMove(target.get_target_turf())
 	target.post_transfer(AM)
 
+/obj/machinery/gateway/attack_ghost(mob/user)
+	. = ..()
+	if(.)
+		return
+	var/turf/tar_turf = target?.get_target_turf()
+	if(isnull(tar_turf))
+		to_chat(user, span_warning("There's no active destination for the gateway... or it's broken. Maybe try again later?"))
+		return
+	if(is_secret_level(tar_turf.z) && !user.client?.holder)
+		to_chat(user, span_warning("The gateway destination is secret."))
+		return
+	Transfer(user)
+
 /* Station's primary gateway */
 /obj/machinery/gateway/centerstation
 	destination_type = /datum/gateway_destination/gateway/home
