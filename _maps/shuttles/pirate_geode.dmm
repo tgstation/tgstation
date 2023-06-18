@@ -747,10 +747,8 @@
 /area/shuttle/pirate)
 "Nb" = (
 /obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/survival_pod,
 /obj/structure/barricade/wooden/crude,
-/obj/effect/spawner/structure/window/hollow/survival_pod{
-	dir = 3
-	},
 /turf/open/misc/dirt{
 	planetary_atmos = 0;
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
@@ -901,8 +899,13 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/lunar_sand/plating,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
 /obj/structure/barricade/wooden/crude,
-/obj/effect/spawner/structure/window/hollow/survival_pod,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Un" = (
