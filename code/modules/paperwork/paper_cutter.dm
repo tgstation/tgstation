@@ -71,7 +71,7 @@
 	if(!isnull(stored_blade))
 		stored_blade.forceMove(drop_location())
 
-/obj/item/papercutter/Exit(atom/movable/leaving, direction)
+/obj/item/papercutter/Exited(atom/movable/leaving, direction)
 	if(leaving == stored_paper)
 		stored_paper = null
 	if(leaving == stored_blade)
@@ -149,10 +149,8 @@
 	// can only remove one at a time; paper goes first, as its most likely what players will want to be taking out
 	if(!isnull(stored_paper))
 		user.put_in_hands(stored_paper)
-		stored_paper = null
 	else if(!isnull(stored_blade) && !blade_secured)
 		user.put_in_hands(stored_blade)
-		stored_blade = null
 	update_appearance()
 
 /obj/item/papercutter/attack_hand_secondary(mob/user, list/modifiers)
