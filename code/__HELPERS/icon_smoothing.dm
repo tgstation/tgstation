@@ -379,33 +379,31 @@ xxx xxx xxx
 	// Did you know you can pass defines into other defines? very handy, lets take advantage of it here to allow 0 cost variation
 	#define SEARCH_ADJ_IN_DIR(direction, direction_flag, ADJ_FOUND, WORLD_BORDER) \
 		do { \
-			set_adj_in_dir: { \
-				var/turf/neighbor = get_step(src, direction); \
-				if(neighbor) { \
-					var/neighbor_smoothing_groups = neighbor.smoothing_groups; \
-					if(neighbor_smoothing_groups) { \
-						for(var/target in canSmoothWith) { \
-							if(canSmoothWith[target] & neighbor_smoothing_groups[target]) { \
-								##ADJ_FOUND(neighbor, direction, direction_flag); \
-							} \
+			var/turf/neighbor = get_step(src, direction); \
+			if(neighbor) { \
+				var/neighbor_smoothing_groups = neighbor.smoothing_groups; \
+				if(neighbor_smoothing_groups) { \
+					for(var/target in canSmoothWith) { \
+						if(canSmoothWith[target] & neighbor_smoothing_groups[target]) { \
+							##ADJ_FOUND(neighbor, direction, direction_flag); \
 						} \
 					} \
-					if(smooth_obj) { \
-						for(var/atom/movable/thing as anything in neighbor) { \
-							var/thing_smoothing_groups = thing.smoothing_groups; \
-							if(!thing.anchored || isnull(thing_smoothing_groups)) { \
-								continue; \
-							}; \
-							for(var/target in canSmoothWith) { \
-								if(canSmoothWith[target] & thing_smoothing_groups[target]) { \
-									##ADJ_FOUND(thing, direction, direction_flag); \
-								} \
-							} \
-						} \
-					} \
-				} else if (smooth_border) { \
-					##WORLD_BORDER(null, direction, direction_flag); \
 				} \
+				if(smooth_obj) { \
+					for(var/atom/movable/thing as anything in neighbor) { \
+						var/thing_smoothing_groups = thing.smoothing_groups; \
+						if(!thing.anchored || isnull(thing_smoothing_groups)) { \
+							continue; \
+						}; \
+						for(var/target in canSmoothWith) { \
+							if(canSmoothWith[target] & thing_smoothing_groups[target]) { \
+								##ADJ_FOUND(thing, direction, direction_flag); \
+							} \
+						} \
+					} \
+				} \
+			} else if (smooth_border) { \
+				##WORLD_BORDER(null, direction, direction_flag); \
 			} \
 		} while(FALSE) \
 
@@ -424,9 +422,9 @@ xxx xxx xxx
 		BORDER_FOUND(dummy, direction, direction_flag);
 
 	// We're building 2 different types of smoothing searches here
-	// One for standard bitmask smoothing
-	#define SET_ADJ_IN_DIR(direction, direction_flag) SEARCH_ADJ_IN_DIR(direction, direction_flag, BITMASK_FOUND, BITMASK_FOUND)
-	// and another for border object work
+	// One for standard bitmask smoothing (We provide a label so our macro can eary exit, as it wants to do)
+	#define SET_ADJ_IN_DIR(direction, direction_flag) do { set_adj_in_dir: { SEARCH_ADJ_IN_DIR(direction, direction_flag, BITMASK_FOUND, BITMASK_FOUND) }} while(FALSE)
+	// and another for border object work (Doesn't early exit because we can hit more then one direction by checking the same turf)
 	#define SET_BORDER_ADJ_IN_DIR(direction) SEARCH_ADJ_IN_DIR(direction, direction, BORDER_FOUND, WORLD_BORDER_FOUND)
 
 	// Let's go over all our cardinals
