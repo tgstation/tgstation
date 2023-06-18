@@ -2612,13 +2612,6 @@
 	taste_description = "mild carbonated malt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/rice_beer
-	required_drink_type = /datum/reagent/consumable/ethanol/rice_beer
-	name = "glass of rice beer"
-	desc = "A glass of fine, light rice beer. Best enjoyed cold."
-	icon = 'icons/obj/drinks/drinks.dmi'
-	icon_state = "rice_beer"
-
 /datum/reagent/consumable/ethanol/shochu
 	name = "Shochu"
 	description = "Also known as soju or baijiu, this drink is made from fermented rice, much like sake, but at a generally higher proof making it more similar to a true spirit."
@@ -2627,13 +2620,6 @@
 	quality = DRINK_NICE
 	taste_description = "stiff rice wine"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/glass_style/drinking_glass/shochu
-	required_drink_type = /datum/reagent/consumable/ethanol/shochu
-	name = "glass of shochu"
-	desc = "A glass of strong rice wine."
-	icon = 'icons/obj/drinks/drinks.dmi'
-	icon_state = "ginvodkaglass"
 
 /datum/reagent/consumable/ethanol/yuyake
 	name = "Yūyake"
@@ -2644,13 +2630,6 @@
 	taste_description = "sweet melon"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/yuyake
-	required_drink_type = /datum/reagent/consumable/ethanol/yuyake
-	name = "glass of yūyake"
-	desc = "It's the saccharine essence of the 70s in a glass... the 1970s, that is!"
-	icon = 'icons/obj/drinks/drinks.dmi'
-	icon_state = "glass_red"
-
 /datum/reagent/consumable/ethanol/coconut_rum
 	name = "Coconut Rum"
 	description = "The distilled essence of the beach. Tastes like bleach-blonde hair and suncream."
@@ -2659,13 +2638,6 @@
 	quality = DRINK_NICE
 	taste_description = "coconut rum"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/glass_style/drinking_glass/coconut_rum
-	required_drink_type = /datum/reagent/consumable/ethanol/coconut_rum
-	name = "glass of coconut rum"
-	desc = "Breathe in and relax, you're on vacation until this glass is empty."
-	icon = 'icons/obj/drinks/drinks.dmi'
-	icon_state = "ginvodkaglass"
 
 // Mixed Martian Drinks
 /datum/reagent/consumable/ethanol/yuyakita
@@ -2677,13 +2649,6 @@
 	taste_description = "death"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/yuyakita
-	required_drink_type = /datum/reagent/consumable/ethanol/yuyakita
-	name = "Yūyakita"
-	desc = "And I looked, and behold a pale horse: and his name that sat on him was Death, and Hell followed with him."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "yuyakita"
-
 /datum/reagent/consumable/ethanol/saibasan
 	name = "Saibāsan"
 	description = "A drink glorifying Cybersun's enduring business."
@@ -2692,13 +2657,6 @@
 	quality = DRINK_NICE
 	taste_description = "betrayal"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/glass_style/drinking_glass/saibasan
-	required_drink_type = /datum/reagent/consumable/ethanol/saibasan
-	name = "Saibāsan"
-	desc = "A drink made in honour of Cybersun Industries' 600th year of continual business. Officially, you're meant to call this a \"Hong Kong Cooler\" on Nanotrasen stations, but that name sucks."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "saibasan"
 
 /datum/reagent/consumable/ethanol/banzai_ti
 	name = "Banzai-Tī"
@@ -2709,13 +2667,6 @@
 	taste_description = "an asian twist on the liquor cabinet"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/banzai_ti
-	required_drink_type = /datum/reagent/consumable/ethanol/banzai_ti
-	name = "Banzai-Tī"
-	desc = "A drink to last ten-thousand years- better sip slowly then."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "banzai_ti"
-
 /datum/reagent/consumable/ethanol/sanraizusoda
 	name = "Sanraizusōda"
 	description = "It's a melon cream soda, except with alcohol- what's not to love? Well... possibly the hangovers."
@@ -2724,13 +2675,6 @@
 	quality = DRINK_NICE
 	taste_description = "creamy melon soda"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/glass_style/drinking_glass/sanraizusoda
-	required_drink_type = /datum/reagent/consumable/ethanol/sanraizusoda
-	name = "Sanraizusōda"
-	desc = "A popular children's dessert from Japan, made adult with the addition of booze. Kanpai!"
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "sanraizusoda"
 
 /datum/reagent/consumable/ethanol/kumicho
 	name = "Kumichō"
@@ -2741,13 +2685,6 @@
 	taste_description = "rice and rye"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/kumicho
-	required_drink_type = /datum/reagent/consumable/ethanol/kumicho
-	name = "Kumichō"
-	desc = "Much like the American Godfather, the Kumichō is sophisticated, strong, and almost certainly tied to illicit activities."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "kumicho"
-
 /datum/reagent/consumable/ethanol/red_planet
 	name = "Red Planet"
 	description = "Made in celebration of the Martian Concession, the Red Planet is based on the classic El Presidente, and is as patriotic as it is bright crimson."
@@ -2756,13 +2693,6 @@
 	quality = DRINK_NICE
 	taste_description = "the spirit of freedom"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/glass_style/drinking_glass/red_planet
-	required_drink_type = /datum/reagent/consumable/ethanol/red_planet
-	name = "Red Planet"
-	desc = "A patriotic drink from Mars, commonly enjoyed on September 15th: the day that peace was declared following the Martian uprising, with the Martian Concession granting Mars proper representation as part of the Terran Federation."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "red_planet"
 
 /datum/reagent/consumable/ethanol/amaterasu
 	name = "Amaterasu"
@@ -2773,13 +2703,6 @@
 	taste_description = "sweet nectar of the gods"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/amaterasu
-	required_drink_type = /datum/reagent/consumable/ethanol/amaterasu
-	name = "Amaterasu"
-	desc = "And so Amaterasu emerged from the Heavenly Rock Cave, and light was restored to the world."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "amaterasu"
-
 /datum/reagent/consumable/ethanol/nekomimosa
 	name = "Nekomimosa"
 	description = "An overly sweet cocktail, made with melon liqueur, melon juice, and champagne (which contains no melon, unfortunately)."
@@ -2788,13 +2711,6 @@
 	quality = DRINK_NICE
 	taste_description = "MELON"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/glass_style/drinking_glass/nekomimosa
-	required_drink_type = /datum/reagent/consumable/ethanol/nekomimosa
-	name = "Nekomimosa"
-	desc = "A syrupy mess of a cocktail, dedicated to a felinid popstar that took Mars by storm a few years ago."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "nekomimosa"
 
 /datum/reagent/consumable/ethanol/sentai_quencha //melon soda, triple citrus, shochu, blue curacao
 	name = "Sentai Quencha"
@@ -2805,13 +2721,6 @@
 	taste_description = "ultimate ninja power"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/sentai_quencha
-	required_drink_type = /datum/reagent/consumable/ethanol/sentai_quencha
-	name = "Sentai Quencha"
-	desc = "Tastes like ultimate ninja power. And melon. And citrus. And some other stuff."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "sentai_quencha"
-
 /datum/reagent/consumable/ethanol/bosozoku
 	name = "Bōsōzoku"
 	description = "A simple summer drink from Mars, made from a 1:1 mix of rice beer and lemonade."
@@ -2820,13 +2729,6 @@
 	quality = DRINK_NICE
 	taste_description = "bittersweet lemon"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/glass_style/drinking_glass/bosozoku
-	required_drink_type = /datum/reagent/consumable/ethanol/bosozoku
-	name = "Bōsōzoku"
-	desc = "A refreshing summer drink enjoyed across Mars and beyond. Any resemblance to shandies or radlers is unintentional."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "bosozoku"
 
 /datum/reagent/consumable/ethanol/ersatzche
 	name = "Ersatzche"
@@ -2837,13 +2739,6 @@
 	taste_description = "spicy pineapple beer"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/ersatzche
-	required_drink_type = /datum/reagent/consumable/ethanol/ersatzche
-	name = "Ersatzche"
-	desc = "An interesting drink invented in the Blue Room Bar and Grill in New Osaka. It's a tasty take on Mexican tepache, made with a beer base."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "ersatzche"
-
 /datum/reagent/consumable/ethanol/red_city_am
 	name = "Red City AM"
 	description = "A breakfast drink from New Osaka, for when you really need to get drunk at 9:30 in the morning in more socially acceptable manner than drinking bagwine on the bullet train. Not that you should drink this on the bullet train either."
@@ -2852,13 +2747,6 @@
 	quality = DRINK_NICE
 	taste_description = "breakfast in a glass"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/glass_style/drinking_glass/red_city_am
-	required_drink_type = /datum/reagent/consumable/ethanol/red_city_am
-	name = "Red City AM"
-	desc = "A popular breakfast drink from New Osaka's bars- for the enterprising day drinker."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "red_city_am"
 
 /datum/reagent/consumable/ethanol/kings_ransom
 	name = "King's Ransom"
@@ -2869,13 +2757,6 @@
 	taste_description = "bitter raspberry"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/kings_ransom
-	required_drink_type = /datum/reagent/consumable/ethanol/kings_ransom
-	name = "King's Ransom"
-	desc = "A weird drink that manages to marry a number of seemingly conflicting flavours into a single harmonious taste."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "kings_ransom"
-
 /datum/reagent/consumable/ethanol/four_bit
 	name = "Four Bit"
 	description = "A drink to power your typing hands."
@@ -2884,13 +2765,6 @@
 	quality = DRINK_NICE
 	taste_description = "cyberspace"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/glass_style/drinking_glass/four_bit
-	required_drink_type = /datum/reagent/consumable/ethanol/four_bit
-	name = "Four Bit"
-	desc = "Straight out of the pits of a Martian hacking convention."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "four_bit"
 
 /datum/reagent/consumable/ethanol/white_hawaiian //coconut milk, coconut rum, coffee liqueur
 	name = "White Hawaiian"
@@ -2901,13 +2775,6 @@
 	taste_description = "COCONUT"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/white_hawaiian
-	required_drink_type = /datum/reagent/consumable/ethanol/white_hawaiian
-	name = "White Hawaiian"
-	desc = "One of the infinite variations on the White Russian, this drink gets away from the frozen north and into the heat of the ring of fire with a host of toasty coconut flavours."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "white_hawaiian"
-
 /datum/reagent/consumable/ethanol/maui_sunrise //coconut rum, pineapple juice, yuyake, triple citrus, lemon-lime soda
 	name = "Maui Sunrise"
 	description = "Behind this drink's red facade lurks a sharp, complex flavour."
@@ -2916,13 +2783,6 @@
 	quality = DRINK_NICE
 	taste_description = "sunrise over the pacific"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/glass_style/drinking_glass/maui_sunrise
-	required_drink_type = /datum/reagent/consumable/ethanol/maui_sunrise
-	name = "Maui Sunrise"
-	desc = "Take a sip and be transported to the Aloha state. Metaphorically, of course."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "maui_sunrise"
 
 /datum/reagent/consumable/ethanol/imperial_mai_tai //navy rum, rum, lime, triple sec, korta nectar
 	name = "Imperial Mai Tai"
@@ -2933,13 +2793,6 @@
 	taste_description = "spicy nutty rum"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/imperial_mai_tai
-	required_drink_type = /datum/reagent/consumable/ethanol/imperial_mai_tai
-	name = "Imperial Mai Tai"
-	desc = "I mean, who springs for orgeat these days anyway? Korta nut's the new big thing, baby."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "imperial_mai_tai"
-
 /datum/reagent/consumable/ethanol/konococo_rumtini //todo: add espresso | coffee, coffee liqueur, coconut rum, sugar
 	name = "Konococo Rumtini"
 	description = "Coconut rum, coffee liqueur, and espresso- an odd combination, to be sure, but a welcomed one."
@@ -2949,13 +2802,6 @@
 	taste_description = "coconut coffee"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/konococo_rumtini
-	required_drink_type = /datum/reagent/consumable/ethanol/konococo_rumtini
-	name = "Konococo Rumtini"
-	desc = "Considered an acceptable breakfast drink in Little Hawaii."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "konococo_rumtini"
-
 /datum/reagent/consumable/ethanol/blue_hawaiian //pineapple juice, lemon juice, coconut rum, blue curacao
 	name = "Blue Hawaiian"
 	description = "Sweet, sharp and coconutty."
@@ -2964,13 +2810,6 @@
 	quality = DRINK_NICE
 	taste_description = "the aloha state"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/glass_style/drinking_glass/blue_hawaiian
-	required_drink_type = /datum/reagent/consumable/ethanol/blue_hawaiian
-	name = "Blue Hawaiian"
-	desc = "It's a tropical vacation in a glass."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "blue_hawaiian"
 
 #undef ALCOHOL_EXPONENT
 #undef ALCOHOL_THRESHOLD_MODIFIER

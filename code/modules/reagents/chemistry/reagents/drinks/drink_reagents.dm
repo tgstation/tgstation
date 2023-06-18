@@ -1135,26 +1135,12 @@
 	taste_description = "bubbly yerba mate"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/hakka_mate
-	required_drink_type = /datum/reagent/consumable/hakka_mate
-	name = "glass of Hakka-Mate"
-	desc = "The perfect drink for hacking. Just don't pour it on your computer, that'll only slow you down."
-	icon = 'icons/obj/drinks/drinks.dmi'
-	icon_state = "hakka_mate"
-
 /datum/reagent/consumable/coconut_milk
 	name = "Coconut Milk"
 	description = "A versatile milk substitute that's perfect for everything from cooking to making cocktails."
 	color = "#DFDFDF"
 	taste_description = "milky coconut"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/glass_style/drinking_glass/coconut_milk
-	required_drink_type = /datum/reagent/consumable/coconut_milk
-	name = "glass of coconut milk"
-	desc = "The essence of the tropics, contained safely within a glass."
-	icon = 'icons/obj/drinks/drinks.dmi'
-	icon_state = "glass_white"
 
 /datum/reagent/consumable/melon_soda
 	name = "Melon Soda"
@@ -1163,26 +1149,12 @@
 	taste_description = "fizzy melon"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/melon_soda
-	required_drink_type = /datum/reagent/consumable/melon_soda
-	name = "glass of melon soda"
-	desc = "As enjoyed by Japanese children and 30-something Japan enthusiasts."
-	icon = 'icons/obj/drinks/drinks.dmi'
-	icon_state = "melon_soda"
-
 /datum/reagent/consumable/volt_energy
 	name = "24-Volt Energy"
 	description = "An artificially coloured and flavoured electric energy drink, in lanternfruit flavour. Made for ethereals, by ethereals."
 	color = "#99E550"
 	taste_description = "sour pear"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/glass_style/drinking_glass/volt_energy
-	required_drink_type = /datum/reagent/consumable/volt_energy
-	name = "glass of 24-Volt Energy"
-	desc = "It's sharp, it's sour, it's electrifying!"
-	icon = 'icons/obj/drinks/drinks.dmi'
-	icon_state = "volt_energy"
 
 /datum/reagent/consumable/volt_energy/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
