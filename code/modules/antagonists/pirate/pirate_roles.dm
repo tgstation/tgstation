@@ -139,6 +139,7 @@
 	icon_state = "sleeper"
 	prompt_name = "An agent of the space IRS"
 	outfit = /datum/outfit/pirate/irs
+	fluff_spawn = null // dirs are fucked and I don't have the energy to deal with it
 	rank = "Agent"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/irs/generate_pirate_name(spawn_gender)

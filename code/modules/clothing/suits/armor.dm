@@ -68,6 +68,15 @@
 	acid = 50
 	wound = 20
 
+/datum/armor/vest_marine/pmc
+		melee = 40
+		bullet = 50
+		laser = 40
+		energy = 40
+		bomb = 50
+		bio = 100
+		acid = 50
+		wound = 20
 /obj/item/clothing/suit/armor/vest/marine/security
 	name = "large tactical armor vest"
 	icon_state = "marine_security"
