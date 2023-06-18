@@ -63,7 +63,6 @@
 		var/datum/species/ethereal/eth_holder = potato_oc.dna.species
 		species_color = eth_holder.current_color
 
-
 /obj/item/bodypart/leg/left/ethereal
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
