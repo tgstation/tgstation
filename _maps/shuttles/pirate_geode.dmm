@@ -42,10 +42,6 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ev" = (
@@ -95,7 +91,6 @@
 /turf/open/misc/dirt,
 /area/shuttle/pirate)
 "hM" = (
-/obj/structure/cable,
 /obj/item/stack/sheet/bluespace_crystal,
 /obj/machinery/button/door{
 	id = "geodebridge";
@@ -129,10 +124,6 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "jh" = (
@@ -179,14 +170,6 @@
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"kx" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "kM" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/effect/turf_decal/weather/dirt{
@@ -199,7 +182,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "kV" = (
@@ -275,7 +257,6 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/turretid{
 	icon_state = "control_kill";
 	lethal = 1;
@@ -295,11 +276,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"pi" = (
-/obj/structure/fluff/minepost,
-/obj/structure/cable,
-/turf/open/misc/dirt/jungle,
-/area/shuttle/pirate)
 "pC" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/effect/turf_decal/weather/dirt{
@@ -308,10 +284,6 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "pO" = (
@@ -348,22 +320,6 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"rO" = (
-/obj/effect/turf_decal/lunar_sand/plating,
-/obj/effect/turf_decal/weather/dirt{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "tD" = (
@@ -425,10 +381,6 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 7
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "wz" = (
@@ -453,10 +405,6 @@
 "xS" = (
 /obj/structure/chair/wood,
 /turf/open/misc/dirt/jungle,
-/area/shuttle/pirate)
-"yh" = (
-/obj/structure/cable,
-/turf/closed/wall/mineral/iron,
 /area/shuttle/pirate)
 "yu" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -491,10 +439,6 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
 /obj/machinery/light/small/blacklight/directional{
 	dir = 8
 	},
@@ -623,7 +567,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Hm" = (
@@ -646,10 +589,6 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 7
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
 /obj/item/stack/ore/gold,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -687,10 +626,10 @@
 /area/shuttle/pirate)
 "Ku" = (
 /obj/effect/turf_decal/lunar_sand/plating,
-/obj/structure/cable,
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "KK" = (
@@ -714,10 +653,6 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Mz" = (
@@ -739,10 +674,10 @@
 	},
 /obj/item/multitool,
 /obj/item/storage/toolbox/electrical,
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Nb" = (
@@ -844,13 +779,6 @@
 /obj/machinery/shuttle_scrambler,
 /turf/open/misc/dirt/jungle,
 /area/shuttle/pirate)
-"Rv" = (
-/obj/effect/turf_decal/weather/dirt{
-	dir = 3
-	},
-/obj/structure/cable,
-/turf/closed/wall/mineral/iron,
-/area/shuttle/pirate)
 "Ss" = (
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/machinery/light/small/blacklight/directional,
@@ -883,10 +811,6 @@
 /area/shuttle/pirate)
 "SP" = (
 /obj/effect/turf_decal/lunar_sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
 /obj/machinery/light/small/blacklight/directional{
 	dir = 8
 	},
@@ -1094,7 +1018,7 @@ zS
 IP
 DM
 JL
-kx
+TC
 SP
 Ih
 ga
@@ -1236,14 +1160,14 @@ XB
 Od
 fB
 qO
-kx
+TC
 GQ
 pC
 iu
 pC
 GQ
 pC
-rO
+xN
 ge
 Ss
 Od
@@ -1323,7 +1247,7 @@ YK
 Qo
 el
 At
-kx
+TC
 iu
 iu
 Zw
@@ -1341,7 +1265,7 @@ jx
 Od
 jD
 TC
-yh
+Od
 hM
 oV
 Hm
@@ -1367,8 +1291,8 @@ NT
 Qg
 vP
 vY
-pi
-Rv
+NT
+tD
 uP
 JV
 QL
