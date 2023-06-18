@@ -356,7 +356,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 
-#define EIGENSTASIUM_MAX_BUFFER -250
+#define EIGENSTASIUM_MAX_BUFFER -251
 #define EIGENSTASIUM_STABILISATION_RATE 5
 #define EIGENSTASIUM_PHASE_1_END 50
 #define EIGENSTASIUM_PHASE_2_END 80
@@ -416,6 +416,10 @@
 			stable_message = TRUE
 		return
 	stable_message = FALSE
+
+	
+	//Increment cycle
+	current_cycle++ //needs to be done here because phase 2 can early return
 
 	//These run on specific cycles
 	switch(current_cycle)
@@ -509,9 +513,6 @@
 				human_species.randomize_active_underwear(human_mob)
 
 			owner.remove_status_effect(/datum/status_effect/eigenstasium)
-
-	//Finally increment cycle
-	current_cycle++
 
 /datum/status_effect/eigenstasium/proc/remove_clone_from_var()
 	SIGNAL_HANDLER
