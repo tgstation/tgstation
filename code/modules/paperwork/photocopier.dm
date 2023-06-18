@@ -40,8 +40,8 @@
 /// Photocopier copy fee.
 #define PHOTOCOPIER_FEE 5
 
-///Paper blanks (form templates, basically). Loaded from `config/blanks.json`.
-///If invalid or not found, set to null.
+/// Paper blanks (form templates, basically). Loaded from `config/blanks.json`.
+/// If invalid or not found, set to null.
 GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /proc/init_paper_blanks()
@@ -282,9 +282,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier/proc/get_toner_color()
 	return toner_cartridge.charges > TONER_CHARGE_LOW_AMOUNT ? COLOR_FULL_TONER_BLACK : COLOR_GRAY
 
-/**
- * Will invoke `do_copy_loop` asynchronously. Passes the supplied arguments on to
- */
+
+/// Will invoke `do_copy_loop` asynchronously. Passes the supplied arguments on to it.
 /obj/machinery/photocopier/proc/do_copies(datum/callback/copy_cb, mob/user, paper_use, toner_use, copies_amount)
 	busy = TRUE
 	update_use_power(ACTIVE_POWER_USE)
@@ -299,6 +298,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * * user - the mob who clicked copy.
  * * paper_use - the amount of paper used in this operation
  * * toner_use - the amount of toner used in this operation
+ * * copies_amount - the amount of copies we should make
  */
 /obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user, paper_use, toner_use, copies_amount)
 	var/error_message = null
@@ -395,7 +395,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  */
 /obj/machinery/photocopier/proc/delete_paper(number)
 	if(number > get_paper_count())
-		CRASH("Trying to get more paper than is stored in the photocopier")
+		CRASH("Trying to delete more paper than is stored in the photocopier")
 	for(var/i in 1 to number)
 		var/to_delete = pop(paper_stack)
 		if(to_delete)
@@ -465,7 +465,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	toner_cartridge.charges -= PAPERWORK_TONER_USE
 	return copied_paperwork
 
-/// The procedure is called when printing a blank to write off toner consumption.
+/// Handles the copying of blanks. No mutating state, so this should not fail.
 /obj/machinery/photocopier/proc/make_blank_print(list/blank)
 	var/copy_colour = get_toner_color()
 	var/obj/item/paper/printblank = get_empty_paper()
