@@ -94,14 +94,12 @@
 	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
-/obj/item/papercutter/update_icon_state()
-	icon_state = (stored_blade ? "[initial(icon_state)]-cutter" : "[initial(icon_state)]")
-	return ..()
-
 /obj/item/papercutter/update_overlays()
-	. =..()
+	. = ..()
 	if(!isnull(stored_paper))
 		. += "paper"
+	if(!isnull(stored_blade))
+		. += "cutter_overlay"
 
 /obj/item/papercutter/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!stored_blade && !blade_secured)
@@ -146,6 +144,7 @@
 		user.put_in_hands(stored_paper)
 	else if(!isnull(stored_blade) && !blade_secured)
 		user.put_in_hands(stored_blade)
+	update_appearance()
 
 /obj/item/papercutter/attack_hand_secondary(mob/user, list/modifiers)
 	if(!stored_blade)
