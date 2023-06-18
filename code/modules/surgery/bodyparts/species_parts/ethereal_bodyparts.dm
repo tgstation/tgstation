@@ -104,7 +104,7 @@
 	attack_type = BURN // bish buzz
 	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	brute_modifier = 1.25 //ethereal are weak to brute damage
+	brute_modifier = 1.25 //ethereal are weak to brute damages
 
 /obj/item/bodypart/head/ethereal/lustrous/update_limb(dropping_limb, is_creating)
 	. = ..()
