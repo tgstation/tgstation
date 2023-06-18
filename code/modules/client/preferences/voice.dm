@@ -23,7 +23,12 @@
 /datum/preference/choiced/voice/apply_to_human(mob/living/carbon/human/target, value)
 	if(SStts.tts_enabled && !(value in SStts.available_speakers))
 		value = pick(SStts.available_speakers) // As a failsafe
-	target.voice = value
+	var/use_tts = TRUE
+	if(CONFIG_GET(flag/tts_allow_player_voice_disabling))
+		if(target.client)
+			use_tts = target.client.prefs.read_preference(/datum/preference/toggle/tts_voice_disable)
+	if(use_tts)
+		target.voice = value
 
 /datum/preference/numeric/tts_voice_pitch
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -54,6 +59,6 @@
 	return TRUE
 
 /datum/preference/toggle/tts_voice_disable/is_accessible(datum/preferences/preferences)
-	if(!SStts.tts_enabled)
+	if(!SStts.tts_enabled || !CONFIG_GET(flag/tts_allow_player_voice_disabling))
 		return FALSE
 	return ..()

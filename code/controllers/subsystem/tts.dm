@@ -272,7 +272,7 @@ SUBSYSTEM_DEF(tts)
 
 	var/shell_scrubbed_input = tts_speech_filter(message)
 	shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 300)
-	var/identifier = "[sha1(speaker + filter + shell_scrubbed_input + num2text(pitch) + silicon)].[world.time]"
+	var/identifier = "[sha1(speaker + filter + shell_scrubbed_input + num2text(pitch) + num2text(silicon))].[world.time]"
 	if(!(speaker in available_speakers))
 		return
 
