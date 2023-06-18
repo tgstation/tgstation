@@ -14,7 +14,7 @@
 /// Uses directional object smoothing, so we care not only about something being on the right turf, but also its direction
 /// Changes the meaning of smoothing_junction, instead of representing the directions we are smoothing in
 /// it represents the sides of our directional border object that have a neighbor
-/// Is incompatible with SMOOTH_CORNERS because border turfs don't have corners
+/// Is incompatible with SMOOTH_CORNERS because border objects don't have corners
 #define SMOOTH_BORDER_OBJECT (1<<6)
 
 DEFINE_BITFIELD(smoothing_flags, list(
