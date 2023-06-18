@@ -521,6 +521,11 @@
 		mat = GET_MATERIAL_REF(mat)
 	return materials[mat]
 
+/datum/component/material_container/ui_static_data(mob/user)
+	var/list/data = list()
+	data["SHEET_MATERIAL_AMOUNT"] = SHEET_MATERIAL_AMOUNT
+	return data
+
 /// List format is list(material_name = list(amount = ..., ref = ..., etc.))
 /datum/component/material_container/ui_data(mob/user)
 	var/list/data = list()
@@ -532,7 +537,6 @@
 			"name" = material.name,
 			"ref" = REF(material),
 			"amount" = amount,
-			"SHEET_MATERIAL_AMOUNT" = SHEET_MATERIAL_AMOUNT,
 			"sheets" = round(amount / SHEET_MATERIAL_AMOUNT),
 			"removable" = amount >= SHEET_MATERIAL_AMOUNT,
 			"color" = material.greyscale_colors
