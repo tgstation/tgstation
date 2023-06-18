@@ -3556,7 +3556,7 @@
 /area/station/maintenance/starboard/aft)
 "bhs" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/item/kirbyplants/fullysynthetic{
+/obj/item/kirbyplants/random/fullysynthetic{
 	pixel_x = -8;
 	pixel_y = 21
 	},
@@ -9569,7 +9569,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
-/obj/item/kirbyplants/dead/research_director,
+/obj/item/kirbyplants/random/dead/research_director,
 /obj/machinery/computer/security/telescreen/rd{
 	dir = 4;
 	pixel_x = -26
@@ -32773,7 +32773,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "kuu" = (
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "kuy" = (
@@ -39097,7 +39097,7 @@
 /area/station/maintenance/starboard/aft)
 "mwU" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/item/kirbyplants/fullysynthetic{
+/obj/item/kirbyplants/random/fullysynthetic{
 	pixel_x = 10;
 	pixel_y = 19
 	},

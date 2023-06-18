@@ -1,7 +1,0 @@
-author: "YehnBeep"
-delete-after: True
-changes:
-  - bugfix: "Lavaland's cafeteria fridge is no longer access-locked."
-  - bugfix: "The mining vendor's bar pod's machinery no longer has access restrictions miners can't use."
-  - bugfix: "The bar pod's vending machines no longer believe they are on station."
-  - qol: "The bar pod's bathroom also has less unused space."
