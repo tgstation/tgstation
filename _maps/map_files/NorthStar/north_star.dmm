@@ -22261,7 +22261,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
-/turf/open/space/basic,
+/turf/open/space/openspace,
 /area/station/maintenance/floor2/starboard)
 "fLz" = (
 /obj/effect/turf_decal/stripes/end,
