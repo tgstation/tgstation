@@ -9,6 +9,7 @@
 /area/shuttle/pirate)
 "af" = (
 /obj/structure/rack,
+/obj/item/storage/box/flashbangs,
 /obj/structure/window/reinforced/tinted/spawner/directional/south,
 /obj/structure/window/reinforced/tinted/spawner/directional/west,
 /obj/item/grenade/smokebomb{
@@ -43,6 +44,12 @@
 	},
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"aC" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/pirate)
 "aT" = (
 /turf/open/floor/iron/white,
@@ -90,7 +97,8 @@
 "bT" = (
 /obj/structure/sink/kitchen/directional/east,
 /obj/machinery/button/door/directional/south{
-	id = "pirate_irs_bar"
+	id = "pirate_irs_bar";
+	name = "Privacy Shutters"
 	},
 /turf/open/floor/iron/kitchen,
 /area/shuttle/pirate)
@@ -126,6 +134,7 @@
 /obj/item/storage/toolbox/ammobox/wt550m9{
 	pixel_y = 6
 	},
+/obj/item/storage/toolbox/ammobox/wt550m9,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "dl" = (
@@ -378,13 +387,14 @@
 /turf/open/floor/glass,
 /area/shuttle/pirate)
 "lc" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "pirateportexternal"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "pirateportexternal"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "lf" = (
@@ -470,6 +480,17 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
+"nB" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "piratestarboardexternal"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/pod/light,
+/area/shuttle/pirate)
 "nE" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/structure/cable,
@@ -515,7 +536,8 @@
 /area/shuttle/pirate)
 "pg" = (
 /obj/machinery/door/airlock/vault{
-	name = "Vault"
+	name = "Vault";
+	id_tag = "pirate_irs_vault"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
@@ -523,6 +545,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/pirate)
+"px" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	faction = list("pirate");
+	dir = 6
+	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/pirate)
 "py" = (
 /obj/structure/closet/syndicate,
@@ -601,6 +630,18 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
+/area/shuttle/pirate)
+"sr" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
+/obj/machinery/button/door/directional/south{
+	id = "piratestarboardexternal";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/pirate)
 "sE" = (
 /obj/structure/table/reinforced,
@@ -854,9 +895,6 @@
 /area/shuttle/pirate)
 "zh" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/machinery/button/door/directional/south{
-	id = "pirate_irs_bridge"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
@@ -893,6 +931,10 @@
 /turf/open/floor/iron/stairs{
 	dir = 1
 	},
+/area/shuttle/pirate)
+"AB" = (
+/obj/effect/turf_decal/trimline/dark_blue/arrow_cw,
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Bf" = (
 /obj/effect/turf_decal/stripes{
@@ -1014,6 +1056,12 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/irs,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/pirate)
+"DV" = (
+/obj/effect/turf_decal/trimline/dark_blue/arrow_ccw{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
 "Ef" = (
 /obj/effect/turf_decal/bot/left,
 /obj/machinery/computer/piratepad_control{
@@ -1023,6 +1071,7 @@
 /area/shuttle/pirate)
 "Et" = (
 /obj/machinery/power/shuttle_engine/large,
+/obj/effect/turf_decal/trimline/dark_blue/arrow_ccw,
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Fn" = (
@@ -1101,7 +1150,9 @@
 /area/shuttle/pirate)
 "HG" = (
 /obj/effect/turf_decal/tile/dark/full,
-/obj/structure/rack,
+/obj/structure/rack{
+	desc = "someones got a friend in Syria!"
+	},
 /obj/item/melee/baseball_bat/ablative{
 	name = "kneecap buster";
 	desc = "This bat is made of highly reflective, highly armored material, It seems to be made specifically for busting one's kneecap";
@@ -1128,6 +1179,18 @@
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
+"HO" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
+/obj/machinery/button/door/directional/south{
+	id = "pirateportexternal";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/pirate)
 "If" = (
 /obj/effect/turf_decal/tile/dark_blue/half{
 	dir = 4
@@ -1138,6 +1201,10 @@
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
+/area/shuttle/pirate)
+"Ik" = (
+/obj/effect/turf_decal/trimline/dark_blue/arrow_ccw,
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Ir" = (
 /obj/effect/turf_decal/siding/thinplating_new{
@@ -1240,9 +1307,6 @@
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "KE" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "pirateportexternal"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -1257,6 +1321,10 @@
 	preferred_direction = 8;
 	dir = 8
 	},
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "piratestarboardexternal"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "KI" = (
@@ -1280,6 +1348,11 @@
 "LB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
+/area/shuttle/pirate)
+"LM" = (
+/obj/machinery/power/shuttle_engine/large,
+/obj/effect/turf_decal/trimline/dark_blue/arrow_cw,
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "LV" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate,
@@ -1402,12 +1475,13 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "pirateportexternal"
-	},
 /obj/effect/mapping_helpers/airlock/access/any/syndicate,
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "pirateportexternal"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "Ot" = (
@@ -1486,6 +1560,10 @@
 	dir = 9
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	id = "pirate_irs_bridge";
+	name = "Bridge Shutters"
+	},
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "Qx" = (
@@ -1654,6 +1732,18 @@
 /obj/item/plate,
 /turf/open/floor/wood,
 /area/shuttle/pirate)
+"Uk" = (
+/obj/machinery/door/airlock/vault{
+	name = "Vault";
+	id_tag = "pirate_irs_vault"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/pirate)
 "UF" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -1724,6 +1814,18 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"Ya" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
+/obj/machinery/button/door/directional/north{
+	id = "pirate_irs_vault";
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	name = "Vault Lockdown"
+	},
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/pirate)
 "Yf" = (
 /obj/machinery/power/rtg/advanced{
 	power_gen = 608000
@@ -1772,7 +1874,8 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/button/door/directional/north{
-	id = "pirate_irs"
+	id = "pirate_irs";
+	name = "Privacy Shutters"
 	},
 /obj/item/melee/baton/telescopic{
 	pixel_y = 11;
@@ -1839,7 +1942,7 @@ hK
 hK
 Qx
 hK
-hK
+sP
 WR
 WR
 "}
@@ -1891,7 +1994,7 @@ lp
 yN
 Yu
 FU
-LX
+DV
 "}
 (5,1,1) = {"
 WR
@@ -1941,7 +2044,7 @@ vF
 eg
 Yu
 LX
-LX
+Ik
 "}
 (7,1,1) = {"
 WR
@@ -2012,7 +2115,7 @@ rf
 QQ
 hK
 mG
-BG
+HO
 gd
 gd
 hK
@@ -2065,7 +2168,7 @@ Ss
 BG
 lf
 ig
-hK
+aC
 WR
 "}
 (12,1,1) = {"
@@ -2127,7 +2230,7 @@ nE
 gd
 gd
 hK
-hK
+Uk
 hK
 hK
 hK
@@ -2140,7 +2243,7 @@ SG
 BG
 wl
 Pn
-hK
+aC
 WR
 "}
 (15,1,1) = {"
@@ -2187,7 +2290,7 @@ yl
 Cx
 hK
 tP
-BG
+sr
 gd
 gd
 hK
@@ -2213,7 +2316,7 @@ FN
 hK
 uJ
 BG
-lc
+nB
 fE
 qU
 KE
@@ -2225,7 +2328,7 @@ sP
 PP
 PP
 hK
-BG
+Ya
 BG
 BG
 BG
@@ -2266,7 +2369,7 @@ nI
 HG
 Yu
 LX
-Et
+LM
 "}
 (20,1,1) = {"
 WR
@@ -2291,7 +2394,7 @@ ac
 xQ
 Yu
 LX
-LX
+AB
 "}
 (21,1,1) = {"
 WR
@@ -2364,7 +2467,7 @@ hK
 hK
 hK
 hK
-hK
+px
 WR
 WR
 "}
