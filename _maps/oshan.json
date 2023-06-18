@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"map_name": "Oshan Station",
-	"map_path": "map_files/oshan",
+	"map_path": "map_files/Oshan",
 	"map_file": "oshan.dmm",
 	"minetype": "oshan",
 	"space_ruin_levels": 0,
