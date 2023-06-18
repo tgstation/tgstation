@@ -1,7 +1,7 @@
 /obj/structure/window/reinforced/tram
 	name = "tram window"
 	desc = "A window made out of a titanium-silicate alloy. It looks tough to break. Is that a challenge?"
-	icon = 'icons/obj/smooth_structures/tram_window.dmi'
+	icon = 'icons/obj/structures_tall.dmi'
 	icon_state = "tram_mid"
 	smoothing_flags = SMOOTH_BITMASK|SMOOTH_BORDER_OBJECT
 	canSmoothWith = SMOOTH_GROUP_WINDOW_DIRECTIONAL_TRAM
@@ -46,6 +46,7 @@
 /obj/structure/window/reinforced/tram/front
 	name = "tram wall"
 	desc = "A lightweight titanium composite structure with a windscreen installed."
+	icon = 'icons/obj/smooth_structures/tram_window.dmi'
 	icon_state = "tram_window-0"
 	base_icon_state = "tram_window"
 	wtype = "shuttle"

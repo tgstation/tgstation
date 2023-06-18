@@ -613,7 +613,7 @@
 /obj/machinery/door/firedoor/update_overlays()
 	. = ..()
 	if(welded)
-		. += density ? "welded" : "welded_open"
+		. += welded
 	if(alarm_type && powered() && !ignore_alarms)
 		var/mutable_appearance/hazards
 		hazards = mutable_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]")

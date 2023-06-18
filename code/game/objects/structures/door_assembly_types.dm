@@ -125,7 +125,7 @@
 
 /obj/structure/door_assembly/door_assembly_vault
 	name = "vault door assembly"
-	icon = 'icons/obj/doors/airlocks/vault/vault.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/vault/vault.dmi'
 	base_name = "vault door"
 	overlays_file = 'icons/obj/doors/airlocks/vault/overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/vault
