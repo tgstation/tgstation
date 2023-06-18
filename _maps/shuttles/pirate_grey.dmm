@@ -131,10 +131,6 @@
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"eK" = (
-/obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/floor/plating/airless,
-/area/shuttle/pirate)
 "eU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -1514,7 +1510,7 @@ zB
 Ww
 Ww
 Ww
-eK
+Ww
 Ww
 Ww
 Ww
