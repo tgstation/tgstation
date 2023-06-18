@@ -51,7 +51,8 @@ SUBSYSTEM_DEF(persistence)
 	save_scars()
 	save_custom_outfits()
 	save_delamination_counter()
-	save_tram_counter()
+	if(SStramprocess.can_fire)
+		save_tram_counter()
 
 ///Loads up Poly's speech buffer.
 /datum/controller/subsystem/persistence/proc/load_poly()
@@ -560,7 +561,6 @@ SUBSYSTEM_DEF(persistence)
 	tram_hits_last_round = text2num(file2text(TRAM_COUNT_FILEPATH))
 
 /datum/controller/subsystem/persistence/proc/save_tram_counter()
-	if(SSmapping.config?.map_name == "Tramstation" || SSmapping.config?.map_name == "Birdshot Station")
 		rustg_file_write("[tram_hits_this_round]", TRAM_COUNT_FILEPATH)
 
 #undef DELAMINATION_COUNT_FILEPATH
