@@ -33,11 +33,11 @@
 /obj/item/scalpel/advanced/on_transform(obj/item/source, mob/user, active)
 	. = ..()
 	if(active)
-		set_light_range(2)
-		set_light_color("#007FFF")
+		//set_light_range(2)
+		set_light_color("#FF6600")
 	else
-		set_light_range(2)
-		set_light_color("#FF0000")
+		//set_light_range(2)
+		set_light_color("#AAFF00")
 
 /obj/item/retractor/advanced
 	icon = 'modular_skyraptor/modules/aesthetics/oldnewsurgery/oldnewsurgery.dmi'
@@ -52,10 +52,10 @@
 /obj/item/cautery/advanced/on_transform(obj/item/source, mob/user, active)
 	. = ..()
 	if(active)
-		set_light_range(1)
-		set_light_color("#007FFF")
+		//set_light_range(1)
+		set_light_color("#FF6600")
 	else
-		set_light_range(1)
+		//set_light_range(1)
 		set_light_color("#AAFF00")
 
 /obj/item/surgical_drapes
