@@ -586,4 +586,11 @@
 	. = ..()
 	set_listening(FALSE)
 
+/obj/item/radio/security
+	name = "security radio"
+
+/obj/item/radio/security/Initialize(mapload)
+	. = ..()
+	set_frequency(150.1)
+
 #undef FREQ_LISTENING
