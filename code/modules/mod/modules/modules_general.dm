@@ -96,32 +96,14 @@
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_jetpack"
 	overlay_state_active = "module_jetpack_on"
-	/// Do we stop the wearer from gliding in space.
-	var/stabilizers = FALSE
 	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
-	var/datum/callback/get_mover
-	var/datum/callback/check_on_move
+	/// the jet pack component
+	var/datum/component/jetpack/pack
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
-	get_mover = CALLBACK(src, PROC_REF(get_user))
-	check_on_move = CALLBACK(src, PROC_REF(allow_thrust))
-	refresh_jetpack()
-
-/obj/item/mod/module/jetpack/Destroy()
-	get_mover = null
-	check_on_move = null
-	return ..()
-
-/obj/item/mod/module/jetpack/proc/refresh_jetpack()
-	AddComponent(/datum/component/jetpack, stabilizers, COMSIG_MODULE_TRIGGERED, COMSIG_MODULE_DEACTIVATED, MOD_ABORT_USE, get_mover, check_on_move, /datum/effect_system/trail_follow/ion/grav_allowed)
-
-/obj/item/mod/module/jetpack/proc/set_stabilizers(new_stabilizers)
-	if(stabilizers == new_stabilizers)
-		return
-	stabilizers = new_stabilizers
-	refresh_jetpack()
+	pack = AddComponent(/datum/component/jetpack, COMSIG_MODULE_TRIGGERED, COMSIG_MODULE_DEACTIVATED, CALLBACK(src, PROC_REF(allow_thrust)), /datum/effect_system/trail_follow/ion/grav_allowed)
 
 /obj/item/mod/module/jetpack/on_activation()
 	. = ..()
@@ -137,12 +119,12 @@
 
 /obj/item/mod/module/jetpack/get_configuration()
 	. = ..()
-	.["stabilizers"] = add_ui_configuration("Stabilizers", "bool", stabilizers)
+	.["stabilizers"] = add_ui_configuration("Stabilizers", "bool", pack.stabilize)
 
 /obj/item/mod/module/jetpack/configure_edit(key, value)
 	switch(key)
 		if("stabilizers")
-			set_stabilizers(text2num(value))
+			pack.stabilize = (text2num(value))
 
 /obj/item/mod/module/jetpack/proc/allow_thrust(use_fuel = TRUE)
 	if(!use_fuel)
@@ -150,9 +132,6 @@
 	if(!drain_power(use_power_cost))
 		return FALSE
 	return TRUE
-
-/obj/item/mod/module/jetpack/proc/get_user()
-	return mod.wearer
 
 /obj/item/mod/module/jetpack/advanced
 	name = "MOD advanced ion jetpack module"

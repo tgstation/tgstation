@@ -3,16 +3,15 @@
 // So propulsion through space on move, that sort of thing
 /datum/component/jetpack
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	/// Checks to ensure if we can move & if we can activate
 	var/datum/callback/check_on_move
-	var/datum/callback/get_mover
 	/// If we should stabilize ourselves when not drifting
 	var/stabilize = FALSE
 	/// The signal we listen for as an activation
 	var/activation_signal
 	/// The signal we listen for as a de-activation
 	var/deactivation_signal
-	/// The return flag our parent expects for a failed activation
-	var/return_flag
+	/// The effect system for the jet pack trail
 	var/datum/effect_system/trail_follow/trail
 	/// The typepath to instansiate our trail as, when we need it
 	var/effect_type
@@ -22,12 +21,10 @@
  * * stabilize - If we should drift when we finish moving, or sit stable in space]
  * * activation_signal - Signal we activate on
  * * deactivation_signal - Signal we deactivate on
- * * return_flag - Flag to return if activation fails
- * * get_mover - Callback we use to get the "moving" thing, for trail purposes, alongside signal registration
  * * check_on_move - Callback we call each time we attempt a move, we expect it to retun true if the move is ok, false otherwise. It expects an arg, TRUE if fuel should be consumed, FALSE othewise
  * * effect_type - Type of trail_follow to spawn
  */
-/datum/component/jetpack/Initialize(stabilize, activation_signal, deactivation_signal, return_flag, datum/callback/get_mover, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
+/datum/component/jetpack/Initialize(activation_signal, deactivation_signal, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -39,55 +36,32 @@
 		RegisterSignal(parent, deactivation_signal, PROC_REF(deactivate))
 
 	src.check_on_move = check_on_move
-	src.get_mover = get_mover
-	src.stabilize = stabilize
-	src.return_flag = return_flag
 	src.activation_signal = activation_signal
 	src.deactivation_signal = deactivation_signal
 	src.effect_type = effect_type
-
-/datum/component/jetpack/InheritComponent(datum/component/component, original, stabilize, activation_signal, deactivation_signal, return_flag, datum/callback/get_mover, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
-	UnregisterSignal(parent, src.activation_signal)
-	if(src.deactivation_signal)
-		UnregisterSignal(parent, src.deactivation_signal)
-	RegisterSignal(parent, activation_signal, PROC_REF(activate))
-	if(deactivation_signal)
-		RegisterSignal(parent, deactivation_signal, PROC_REF(deactivate))
-
-	src.check_on_move = check_on_move
-	src.get_mover = get_mover
-	src.stabilize = stabilize
-	src.activation_signal = activation_signal
-	src.deactivation_signal = deactivation_signal
-	src.effect_type = effect_type
-
-	if(trail && effect_type != trail.type)
-		QDEL_NULL(trail)
-		setup_trail()
 
 /datum/component/jetpack/Destroy()
 	QDEL_NULL(trail)
 	QDEL_NULL(check_on_move)
 	return ..()
 
-/datum/component/jetpack/proc/setup_trail()
-	var/mob/moving = get_mover.Invoke()
-	if(!moving || trail)
-		return
-	trail = new effect_type
-	trail.auto_process = FALSE
-	trail.set_up(moving)
-
 /datum/component/jetpack/proc/activate(datum/source, mob/user)
 	SIGNAL_HANDLER
-	if(!thrust(user))
-		return return_flag
-	trail.start()
+	if(!check_on_move.Invoke(TRUE))
+		return JETPACK_COMPONENT_ACTIVATION_FAILED
+
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(move_react))
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move_react))
 	RegisterSignal(user, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(spacemove_react))
 	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT, PROC_REF(block_starting_visuals))
 	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT, PROC_REF(ignore_ending_block))
+
+	if(trail && effect_type != trail.type)
+		QDEL_NULL(trail)
+	trail = new effect_type
+	trail.auto_process = FALSE
+	trail.set_up(user)
+	trail.start()
 
 /datum/component/jetpack/proc/deactivate(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -133,8 +107,6 @@
 /datum/component/jetpack/proc/thrust()
 	if(!check_on_move.Invoke(TRUE))
 		return FALSE
-	if(!trail)
-		setup_trail()
 	trail.generate_effect()
 	return TRUE
 
