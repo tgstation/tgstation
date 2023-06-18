@@ -114,6 +114,7 @@
 	head = /obj/item/clothing/head/costume/irs
 	shoes = /obj/item/clothing/shoes/laceup
 	ears = /obj/item/radio/headset/syndicate
+	ears = /obj/item/radio/headset/syndicate/alt
 
 /datum/outfit/pirate/irs/auditor
 	name = "IRS Head Auditor"
@@ -121,6 +122,6 @@
 	uniform = /obj/item/clothing/under/suit/charcoal
 	neck = /obj/item/clothing/neck/tie/red/tied
 	suit = null
-	ears = /obj/item/radio/headset/syndicate/alt
+	ears = /obj/item/radio/headset/syndicate/alt/leader
 	head = null
 	belt = /obj/item/storage/belt/holster/detective/full/ert
