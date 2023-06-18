@@ -583,3 +583,40 @@
   stonetear:
   - bugfix: jetpack signals now pass a user argument.  This fixes an error when automatically
       stowing a captain jetpack into your modsuit.
+2023-06-18:
+  ChungusGamer666:
+  - refactor: Species brute and burn damage modifiers are now handled by bodyparts,
+      instead of being universal. Go ham at the surgical bay.
+  - bugfix: Glass joes will no longer appear to get knocked out, while already knocked
+      out.
+  LemonInTheDark:
+  - admin: VV for global vars will now load MUCH faster, in exchange lists are now
+      perma contracted in that particular pane
+  Pickle-Coding:
+  - balance: Armour penetration calculation is now the inverse function of armour
+      stacking.
+  - bugfix: Fix space dragon fire breath hitting the same target multiple times in
+      a single stream.
+  Rhials:
+  - qol: Basic spider eggs no longer flash the byond window when ready to hatch.
+  - qol: Toy hot potatoes no longer give a ghost notification.
+  - qol: Deadchat will be notified in the event of an imminent macrobomb detonation,
+      HFR meltdown, organ harvesting,
+  - qol: Deadchat will be notified when a nuclear/doomsday device is activated, as
+      well as when a blob-infection bursts.
+  SyncIt21:
+  - bugfix: finishing & closing the turbine core rotor part will now connect itself
+      to the cable beneath it allowing it to share its produced power with everyone.
+  - bugfix: turbine's now give detailed balloon alerts if you have a missing component,
+      or something is not aligned correctly during turbine construction
+  - bugfix: turbine's will not produce power in vaccume
+  - bugfix: turbine's won't function if any of it's components are damaged or misaligned
+      after linking or during processing
+  - bugfix: you need to be in proximity of the airlock painter to eject its cartridge.
+  - bugfix: you don't hit the windoor after it has finished opening/closing.
+  YehnBeep:
+  - rscdel: Positronic brains no longer check for suicide verb use.
+  - bugfix: Birdshot now has an (oddly placed) atmosdrobe.
+  ZephyrTFA:
+  - bugfix: Deconstructing a papercutter will now spit out its internals if present.
+  - qol: Papercutters now have contextual tips

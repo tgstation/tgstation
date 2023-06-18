@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - bugfix: "Fix space dragon fire breath hitting the same target multiple times in a single stream."
