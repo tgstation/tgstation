@@ -9,6 +9,7 @@
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
 	exotic_bloodtype = "LE"
 	siemens_coeff = 0.5 //They thrive on energy
+	brutemod = 1.25 //They're weak to punches
 	payday_modifier = 0.75
 	species_traits = list(
 		DYNCOLORS,
@@ -241,3 +242,46 @@
 	)
 
 	return to_add
+
+/datum/species/ethereal/lustrous
+	name = "Lustrous"
+	id = SPECIES_ETHEREAL_LUSTROUS
+	examine_limb_id = SPECIES_ETHEREAL
+	mutantbrain = /obj/item/organ/internal/brain/lustrous
+	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
+	species_traits = list(
+		DYNCOLORS,
+		AGENDER,
+		NO_UNDERWEAR,
+		NOEYESPRITES,
+	)
+	inherent_traits = list(
+		TRAIT_BALD,
+		TRAIT_TENACIOUS,
+		TRAIT_NOBREATH,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_VIRUSIMMUNE,
+	)
+	bodypart_overrides = list(
+	BODY_ZONE_HEAD = /obj/item/bodypart/head/ethereal/lustrous,
+	BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/ethereal,
+	BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/ethereal,
+	BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/ethereal,
+	BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/ethereal,
+	BODY_ZONE_CHEST = /obj/item/bodypart/chest/ethereal,
+	)
+
+/datum/species/ethereal/lustrous/get_scream_sound(mob/living/carbon/human/ethereal)
+	return pick(
+		'sound/voice/ethereal/lustrous_scream_1.ogg',
+		'sound/voice/ethereal/lustrous_scream_2.ogg',
+		'sound/voice/ethereal/lustrous_scream_3.ogg',
+	)
+
+/datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load)
+	..()
+	default_color = new_lustrous.dna.features["ethcolor"]
+	new_lustrous.dna.features["ethcolor"] = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)] //Picks one of 5 lustrous-specific colors.
+
+
