@@ -55,15 +55,15 @@
 
 
 	base_gases = list(
-		/datum/gas/water_vapor=10,
+		/datum/gas/oxygen=10,
 		/datum/gas/carbon_dioxide=10,
 	)
 	normal_gases = list(
-		/datum/gas/water_vapor=10,
+		/datum/gas/oxygen=10,
 		/datum/gas/carbon_dioxide=10,
 	)
 	restricted_gases = list(
-		/datum/gas/water_vapor=10,
+		/datum/gas/oxygen=10,
 		/datum/gas/carbon_dioxide=10,
 	)
 

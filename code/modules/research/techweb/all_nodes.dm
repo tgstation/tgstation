@@ -226,6 +226,7 @@
 		"boxcutter",
 		"cable_coil",
 		"cable_coil",
+		"industrial_coil",
 		"crowbar",
 		"cultivator",
 		"decal_painter",
