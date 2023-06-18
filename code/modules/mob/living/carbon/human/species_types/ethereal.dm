@@ -263,12 +263,12 @@
 		TRAIT_VIRUSIMMUNE,
 	)
 	bodypart_overrides = list(
-	BODY_ZONE_HEAD = /obj/item/bodypart/head/ethereal/lustrous,
-	BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/ethereal,
-	BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/ethereal,
-	BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/ethereal,
-	BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/ethereal,
-	BODY_ZONE_CHEST = /obj/item/bodypart/chest/ethereal,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/ethereal/lustrous,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/ethereal,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/ethereal,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/ethereal,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/ethereal,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/ethereal,
 	)
 
 /datum/species/ethereal/lustrous/get_scream_sound(mob/living/carbon/human/ethereal)
