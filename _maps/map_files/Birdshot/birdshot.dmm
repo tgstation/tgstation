@@ -5147,7 +5147,8 @@
 "chF" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/industrial_lift/tram,
-/obj/structure/window/reinforced/tram/directional/south/obj/structure/rack,
+/obj/structure/window/reinforced/tram/directional/south,
+/obj/structure/rack,
 /turf/open/floor/noslip/tram_platform,
 /area/station/maintenance/port/aft)
 "chO" = (
@@ -8804,7 +8805,8 @@
 	dir = 1
 	},
 /obj/structure/industrial_lift/tram/white,
-/obj/structure/window/reinforced/tram/directional/north/obj/structure/chair/sofa/bench/right,
+/obj/structure/window/reinforced/tram/directional/north,
+/obj/structure/chair/sofa/bench/right,
 /turf/open/floor/noslip/tram_platform,
 /area/station/maintenance/port/aft)
 "dEt" = (
@@ -12526,7 +12528,8 @@
 	dir = 1
 	},
 /obj/structure/industrial_lift/tram/white,
-/obj/structure/window/reinforced/tram/directional/north/obj/structure/chair/sofa/bench/left,
+/obj/structure/window/reinforced/tram/directional/north,
+/obj/structure/chair/sofa/bench/left,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/noslip/tram_platform,
 /area/station/maintenance/port/aft)
@@ -15632,7 +15635,8 @@
 "gem" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/industrial_lift/tram/white,
-/obj/structure/window/reinforced/tram/directional/south/obj/structure/chair/sofa/bench/left{
+/obj/structure/window/reinforced/tram/directional/south,
+/obj/structure/chair/sofa/bench/left{
 	dir = 1
 	},
 /obj/machinery/light/small/directional/west,
@@ -31960,7 +31964,8 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tram/directional/west/obj/structure/chair{
+/obj/structure/window/reinforced/tram/directional/west,
+/obj/structure/chair{
 	dir = 1
 	},
 /obj/structure/industrial_lift/tram,
@@ -33211,7 +33216,8 @@
 	dir = 1
 	},
 /obj/structure/industrial_lift/tram/white,
-/obj/structure/window/reinforced/tram/directional/north/obj/structure/chair/sofa/bench/right,
+/obj/structure/window/reinforced/tram/directional/north,
+/obj/structure/chair/sofa/bench/right,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/noslip/tram_platform,
 /area/station/maintenance/port/aft)
@@ -38128,7 +38134,8 @@
 "nXL" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/industrial_lift/tram/white,
-/obj/structure/window/reinforced/tram/directional/south/obj/structure/chair/sofa/bench/right{
+/obj/structure/window/reinforced/tram/directional/south,
+/obj/structure/chair/sofa/bench/right{
 	dir = 1
 	},
 /obj/machinery/light/small/directional/east,
@@ -38323,7 +38330,8 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tram/directional/west/obj/structure/industrial_lift/tram/white,
+/obj/structure/window/reinforced/tram/directional/west,
+/obj/structure/industrial_lift/tram/white,
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
 "ocb" = (
@@ -44455,7 +44463,8 @@
 "qfQ" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/industrial_lift/tram/white,
-/obj/structure/window/reinforced/tram/directional/south/obj/structure/chair/sofa/bench/left{
+/obj/structure/window/reinforced/tram/directional/south,
+/obj/structure/chair/sofa/bench/left{
 	dir = 1
 	},
 /turf/open/floor/noslip/tram_platform,
@@ -46393,7 +46402,8 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tram/directional/east/obj/structure/chair/comfy/shuttle,
+/obj/structure/window/reinforced/tram/directional/east,
+/obj/structure/chair/comfy/shuttle,
 /obj/structure/industrial_lift/tram,
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
@@ -49600,7 +49610,8 @@
 "rLv" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/industrial_lift/tram/white,
-/obj/structure/window/reinforced/tram/directional/south/obj/structure/chair/sofa/bench/right{
+/obj/structure/window/reinforced/tram/directional/south,
+/obj/structure/chair/sofa/bench/right{
 	dir = 1
 	},
 /turf/open/floor/noslip/tram_platform,
@@ -52151,7 +52162,8 @@
 	dir = 1
 	},
 /obj/structure/industrial_lift/tram/white,
-/obj/structure/window/reinforced/tram/directional/north/obj/structure/chair/sofa/bench/left,
+/obj/structure/window/reinforced/tram/directional/north,
+/obj/structure/chair/sofa/bench/left,
 /turf/open/floor/noslip/tram_platform,
 /area/station/maintenance/port/aft)
 "sBp" = (
@@ -60205,7 +60217,8 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tram/directional/west/obj/structure/chair/comfy/shuttle,
+/obj/structure/window/reinforced/tram/directional/west,
+/obj/structure/chair/comfy/shuttle,
 /obj/structure/industrial_lift/tram,
 /turf/open/floor/noslip/tram_platform,
 /area/station/security/tram)
@@ -67746,7 +67759,8 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tram/directional/east/obj/structure/chair{
+/obj/structure/window/reinforced/tram/directional/east,
+/obj/structure/chair{
 	dir = 1
 	},
 /obj/structure/industrial_lift/tram,

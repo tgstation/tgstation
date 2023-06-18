@@ -33897,7 +33897,8 @@
 /area/station/science/explab)
 "kYp" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/window/reinforced/tram/directional/south/obj/machinery/destination_sign/south{
+/obj/structure/window/reinforced/tram/directional/south,
+/obj/machinery/destination_sign/south{
 	pixel_y = -11
 	},
 /obj/effect/landmark/start/hangover,
@@ -41387,7 +41388,8 @@
 /area/station/hallway/secondary/command)
 "nKp" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/window/reinforced/tram/directional/north/obj/structure/chair/sofa/bench/tram/right{
+/obj/structure/window/reinforced/tram/directional/north,
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 8
 	},
 /turf/open/openspace,
@@ -41730,7 +41732,8 @@
 /area/station/engineering/main)
 "nQc" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/window/reinforced/tram/directional/north/obj/machinery/destination_sign/north{
+/obj/structure/window/reinforced/tram/directional/north,
+/obj/machinery/destination_sign/north{
 	pixel_y = 10
 	},
 /obj/structure/chair/sofa/bench/tram/left{
@@ -43072,7 +43075,8 @@
 /obj/machinery/destination_sign/north{
 	pixel_y = 10
 	},
-/obj/structure/window/reinforced/tram/directional/north/obj/structure/chair/sofa/bench/tram/right{
+/obj/structure/window/reinforced/tram/directional/north,
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 8
 	},
 /turf/open/openspace,
@@ -53006,7 +53010,8 @@
 /area/station/security/warden)
 "rZD" = (
 /obj/structure/industrial_lift/tram,
-/obj/structure/window/reinforced/tram/directional/south/obj/structure/chair/sofa/bench/tram/right{
+/obj/structure/window/reinforced/tram/directional/south,
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 4
 	},
 /turf/open/openspace,
@@ -60891,7 +60896,8 @@
 /obj/machinery/destination_sign/south{
 	pixel_y = -11
 	},
-/obj/structure/window/reinforced/tram/directional/south/obj/effect/landmark/start/hangover,
+/obj/structure/window/reinforced/tram/directional/south,
+/obj/effect/landmark/start/hangover,
 /obj/structure/chair/sofa/bench/tram/left{
 	dir = 8
 	},
