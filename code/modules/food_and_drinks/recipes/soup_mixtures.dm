@@ -1797,7 +1797,7 @@
 	name = "Teriyaki Sauce"
 	description = "A Japanese sauce that's heavy on umami."
 	data = list("umami" = 1)
-	color = "#D49D26"
+	color = "#3F0D02"
 
 /datum/glass_style/has_foodtype/soup/teriyaki
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/teriyaki
@@ -1844,7 +1844,7 @@
 	name = "Shōyu Ramen"
 	description = "A soy-sauce based ramen, with noodles, fishcake, barbecued meat and a boiled egg."
 	data = list("egg" = 1, "fish" = 1, "noodles" = 1, "meat" = 1, "broth" = 1)
-	color = "#F0DD5A"
+	color = "#442621"
 
 /datum/glass_style/has_foodtype/soup/shoyu_ramen
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/shoyu_ramen
@@ -1869,13 +1869,14 @@
 		/datum/reagent/consumable/nutriment/vitamin = 8,
 		/datum/reagent/consumable/nutriment/protein = 8,
 	)
+	percentage_of_nutriment_converted = 0.2
 
 // Gyuramen
 /datum/reagent/consumable/nutriment/soup/gyuramen
 	name = "Gyuramen Miy Käzu"
 	description = "A rich beef and onion ramen with cheese- blending several cultural influences seemlessly into one tasty dish."
 	data = list("beef broth" = 1, "onion" = 1, "cheese" = 1)
-	color = "#F0DD5A"
+	color = "#442621"
 
 /datum/glass_style/has_foodtype/soup/gyuramen
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/gyuramen
@@ -1900,13 +1901,14 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/nutriment/protein = 10,
 	)
+	percentage_of_nutriment_converted = 0.15
 
 // New Osaka Sunrise
 /datum/reagent/consumable/nutriment/soup/new_osaka_sunrise
 	name = "New Osaka Sunrise Soup"
 	description = "A bright, flavourful miso soup with tofu that commonly forms part of a traditional Martian breakfast, at least in the capital."
 	data = list("miso" = 1, "tofu" = 1, "onion" = 1, "eggplant" = 1)
-	color = "#F0DD5A"
+	color = "#EAB26E"
 
 /datum/glass_style/has_foodtype/soup/new_osaka_sunrise
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/new_osaka_sunrise
@@ -1930,13 +1932,14 @@
 		/datum/reagent/consumable/nutriment/vitamin = 8,
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
+	percentage_of_nutriment_converted = 0.15
 
 // Satsuma Black
 /datum/reagent/consumable/nutriment/soup/satsuma_black
 	name = "Satsuma Black Soup"
 	description = "A rich, heavy seafood and noodle soup from Mars, employing squid ink to give a strong taste of the sea."
 	data = list("seafood" = 1, "tofu" = 1, "noodles" = 1)
-	color = "#F0DD5A"
+	color = "#171221"
 
 /datum/glass_style/has_foodtype/soup/satsuma_black
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/satsuma_black
@@ -1960,13 +1963,14 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
+	percentage_of_nutriment_converted = 0.15
 
 // Dragon Style
 /datum/reagent/consumable/nutriment/soup/dragon_ramen
 	name = "Dragon Style Ramen"
 	description = "For the ramen fan who hates their tastebuds and digestive tract. Traditionally made with seven different chilis, although after two or so the point sorta gets lost."
 	data = list("meat" = 1, "liquid hot magma" = 1, "noodles" = 1)
-	color = "#F0DD5A"
+	color = "#980F00"
 
 /datum/glass_style/has_foodtype/soup/dragon_ramen
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/dragon_ramen
@@ -1983,7 +1987,8 @@
 	)
 	required_ingredients = list(
 		/obj/item/food/spaghetti/boilednoodles = 1,
-		/obj/item/food/grown/ghost_chili = 2,
+		/obj/item/food/grown/ghost_chili = 1,
+		/obj/item/food/grown/chili = 1,
 		/obj/item/food/kamaboko_slice = 1,
 		/obj/item/food/boiledegg = 1,
 	)
@@ -1992,13 +1997,14 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
+	ingredient_reagent_multiplier = 0.3 //reduces the impact of the chilis to manageable levels
 
 // Hong Kong Borscht
 /datum/reagent/consumable/nutriment/soup/hong_kong_borscht
 	name = "Hong Kong Borscht"
 	description = "Also known as luo song tang or Russian soup, this dish bears little to no resemblance to Eastern European borscht- indeed, it's a tomato-based soup with no beets in sight."
 	data = list("tomato" = 1, "meat" = 1, "cabbage" = 1)
-	color = "#F0DD5A"
+	color = "#CA4810"
 
 /datum/glass_style/has_foodtype/soup/hong_kong_borscht
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/hong_kong_borscht
@@ -2031,7 +2037,7 @@
 	name = "Hong Kong Macaroni Soup"
 	description = "A favourite from Hong Kong's Cha Chaan Tengs, this macaroni soup came to Mars with Cantonese settlers under Cybersun Industries, and has become as much of a breakfast staple there as it is in its homeland."
 	data = list("cream" = 1, "chicken" = 1, "pasta" = 1, "ham" = 1)
-	color = "#F0DD5A"
+	color = "#FFFAB5"
 
 /datum/glass_style/has_foodtype/soup/hong_kong_macaroni
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/hong_kong_macaroni
@@ -2061,7 +2067,7 @@
 	name = "Fox's Prize Soup"
 	description = "Originally based on the Chinese classic of egg-drop soup, fox's prize soup iterated on the concept via the addition of aburaage and dashi, making a dish that would truly appeal to any hungry fox."
 	data = list("egg" = 1, "chicken" = 1, "fried tofu" = 1, "umami broth" = 1)
-	color = "#F0DD5A"
+	color = "#E9B200"
 
 /datum/glass_style/has_foodtype/soup/foxs_prize_soup
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/foxs_prize_soup
@@ -2083,14 +2089,13 @@
 		/datum/reagent/consumable/nutriment/soup/foxs_prize_soup = 30,
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
-	percentage_of_nutriment_converted = 0.2
 
 // Secret Noodle Soup
 /datum/reagent/consumable/nutriment/soup/secret_noodle_soup
 	name = "Secret Noodle Soup"
 	description = "Made to a secret family recipe (that's in several cookbooks). What is the secret ingredient, you ask? Well, let's just say it could be anything..."
 	data = list("noodles" = 1, "chicken" = 1, "aromatic broth" = 1)
-	color = "#F0DD5A"
+	color = "#D9BB79"
 
 /datum/glass_style/has_foodtype/soup/secret_noodle_soup
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/secret_noodle_soup
@@ -2106,19 +2111,19 @@
 	required_ingredients = list(
 		/obj/item/food/meat/cutlet/chicken = 1,
 		/obj/item/food/spaghetti/boilednoodles = 1,
+		/obj/item/food/grown/mushroom/chanterelle = 1,
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/secret_noodle_soup = 30,
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
-	percentage_of_nutriment_converted = 0.2
 
 // Budae-Jjigae
 /datum/reagent/consumable/nutriment/soup/budae_jjigae
 	name = "Budae-Jjigae"
 	description = "A dish born of the American presence in South Korea, made with ingredients typical to the 1960s American army base- hot dogs, chap, and baked beans, as well as a number of native Korean ingredients such as gochujang and kimchi."
 	data = list("hot dog" = 1, "pork" = 1, "beans" = 1, "kimchi" = 1, "noodles" = 1)
-	color = "#F0DD5A"
+	color = "#C8400E"
 
 /datum/glass_style/has_foodtype/soup/budae_jjigae
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/budae_jjigae
@@ -2143,7 +2148,7 @@
 		/datum/reagent/consumable/nutriment/soup/budae_jjigae = 30,
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
-	percentage_of_nutriment_converted = 0.2
+	percentage_of_nutriment_converted = 0.1
 
 // 24-Volt Fish
 // Simply poach the fish in boiling energy drink, easy as

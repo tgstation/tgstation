@@ -587,7 +587,7 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol/tequila = 2, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/ethanol/yuyake = 1)
 
 /datum/chemical_reaction/drink/saibasan
-	results = list(/datum/reagent/consumable/ethanol/saibasan = 15)
+	results = list(/datum/reagent/consumable/ethanol/saibasan = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/shochu = 2, /datum/reagent/consumable/ethanol/yuyake = 2, /datum/reagent/consumable/triple_citrus = 3, /datum/reagent/consumable/cherryjelly = 3)
 
 /datum/chemical_reaction/drink/banzai_ti
@@ -603,7 +603,7 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol/godfather = 2, /datum/reagent/consumable/ethanol/shochu = 1, /datum/reagent/consumable/ethanol/bitters = 1)
 
 /datum/chemical_reaction/drink/red_planet
-	results = list(/datum/reagent/consumable/ethanol/red_planet = 4)
+	results = list(/datum/reagent/consumable/ethanol/red_planet = 8)
 	required_reagents = list(/datum/reagent/consumable/ethanol/shochu = 2, /datum/reagent/consumable/ethanol/triple_sec = 2, /datum/reagent/consumable/ethanol/vermouth = 2, /datum/reagent/consumable/grenadine = 1, /datum/reagent/consumable/ethanol/bitters = 1)
 
 /datum/chemical_reaction/drink/amaterasu
@@ -622,7 +622,7 @@
 	results = list(/datum/reagent/consumable/ethanol/bosozoku = 2)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rice_beer = 1, /datum/reagent/consumable/lemonade = 1)
 
-/datum/chemical_reaction/drink/yuyakita
+/datum/chemical_reaction/drink/ersatzche
 	results = list(/datum/reagent/consumable/ethanol/ersatzche = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rice_beer = 5, /datum/reagent/consumable/pineapplejuice = 3, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/sugar = 1)
 
