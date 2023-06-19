@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - admin: "VV for global vars will now load MUCH faster, in exchange lists are now perma contracted in that particular pane"
