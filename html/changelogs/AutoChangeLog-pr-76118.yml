@@ -1,5 +1,0 @@
-author: "ATH1909"
-delete-after: True
-changes:
-  - bugfix: "In addition to the beakers and bottles they could already hold, mediborg beaker apparatuses can now hold test tubes."
-  - spellcheck: "The descriptions of beaker and drink apparatuses have been updated to more accurately reflect what they can and can't hold."

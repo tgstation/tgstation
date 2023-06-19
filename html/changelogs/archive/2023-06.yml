@@ -620,3 +620,32 @@
   ZephyrTFA:
   - bugfix: Deconstructing a papercutter will now spit out its internals if present.
   - qol: Papercutters now have contextual tips
+2023-06-19:
+  ATH1909:
+  - bugfix: In addition to the beakers and bottles they could already hold, mediborg
+      beaker apparatuses can now hold test tubes.
+  - spellcheck: The descriptions of beaker and drink apparatuses have been updated
+      to more accurately reflect what they can and can't hold.
+  ChungusGamer666:
+  - bugfix: Exotic blood types no longer persist through species change if the new
+      species does not have an exotic blood type
+  Melbert:
+  - bugfix: Fix Hard Delete from the captain's spare ID code paper
+  - bugfix: Fixed a maint loot spawner located inside a wall in North Star Chemistry
+      Lab Maintenance
+  - bugfix: Fix hard delete in traitor trap tool objective
+  - bugfix: Fixed hard delete with Kinetic Crusher causing the projectile function
+      to brick
+  OrionTheFox:
+  - bugfix: fixed the context tips on papercutters
+  - bugfix: fixes papercutters not properly updating their icons, removing their stored
+      papers/blades, and eating papers when one is already stored
+  Pepsilawn:
+  - bugfix: you cannot use departmental budget cards as withdrawal sources for NT
+      Pay anymore
+  Time-Green:
+  - rscadd: Adds shuttle events! If shuttle escapes weren't exciting before (doubtful),
+      they definitely are now! I'm joking it's mostly an atmosphere thing.
+  - admin: 'Adds an admin panel to interact with shuttle events, under the Events
+      tab: Change Shuttle Events'
+  - bugfix: Objects spawned in hyperspace will properly catch hyperspace drift
