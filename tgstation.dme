@@ -5379,5 +5379,8 @@
 #include "modular_skyraptor\modules\icspawning\code\observer.dm"
 #include "modular_skyraptor\modules\icspawning\code\spell.dm"
 #include "modular_skyraptor\modules\icspawning\code\standard.dm"
+#include "modular_skyraptor\modules\species_slugcat\code\scug_bodyparts.dm"
+#include "modular_skyraptor\modules\species_slugcat\code\scug_mutantparts.dm"
+#include "modular_skyraptor\modules\species_slugcat\code\scug_organs.dm"
 #include "modular_skyraptor\modules\species_slugcat\code\scug_species.dm"
 // END_INCLUDE
