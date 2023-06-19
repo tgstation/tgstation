@@ -1,15 +1,27 @@
+/**
+ * Note that we can stack explosive implants and thus increase the payload's devastation radius. (https://github.com/tgstation/tgstation/pull/50674)
+ * That's why the three devastation values for the microbomb implant are balanced around in such a way
+ * that one can't buy a bunch of small implants to stack them up and get a payload of devastation
+ * equal to that of a macrobomb implant on a cheaper price.
+ */
 /obj/item/implant/explosive
 	name = "microbomb implant"
 	desc = "And boom goes the weasel."
 	icon_state = "explosive"
-	actions_types = list(/datum/action/item_action/explosive_implant)
-	// Explosive implant action is always available.
-	var/weak = 2
-	var/medium = 0.8
-	var/heavy = 0.4
-	var/delay = 7
-	var/popup = FALSE // is the DOUWANNABLOWUP window open?
+	actions_types = list(/datum/action/item_action/explosive_implant) //Explosive implant action is always available.
+	///Whether the implant's explosion sequence has been activated or not
 	var/active = FALSE
+	///The final countdown (delay before we explode)
+	var/delay = 0.7 SECONDS
+	///Radius of weak devastation explosive impact
+	var/devastation_weak = 2
+	///Radius of medium devastation explosive impact
+	var/devastation_medium = 0.8
+	///Radius of heavy devastation explosive impact
+	var/devastation_heavy = 0.4
+	///Whether the confirmation UI popup is active or not
+	var/popup = FALSE
+
 
 /obj/item/implant/explosive/proc/on_death(datum/source, gibbed)
 	SIGNAL_HANDLER
@@ -46,16 +58,16 @@
 			return FALSE
 	if(cause == "death" && HAS_TRAIT(imp_in, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION))
 		return FALSE
-	heavy = round(heavy)
-	medium = round(medium)
-	weak = round(weak)
+	devastation_heavy = round(devastation_heavy)
+	devastation_medium = round(devastation_medium)
+	devastation_weak = round(devastation_weak)
 	to_chat(imp_in, span_notice("You activate your [name]."))
 	active = TRUE
 	var/turf/boomturf = get_turf(imp_in)
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(boomturf)], with cause of [cause].")
-//If the delay is short, just blow up already jeez
-	if(delay <= 7)
-		explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak, explosion_cause = src)
+	//If the delay is short, just blow up already jeez
+	if(delay <= 0.7 SECONDS)
+		explosion(src, devastation_range = devastation_heavy, heavy_impact_range = devastation_medium, light_impact_range = devastation_weak, flame_range = devastation_weak, flash_range = devastation_weak, explosion_cause = src)
 		if(imp_in)
 			imp_in.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
 			imp_in.gib(TRUE)
@@ -64,13 +76,14 @@
 	timed_explosion()
 
 /obj/item/implant/explosive/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
-	for(var/X in target.implants)
-		if(istype(X, /obj/item/implant/explosive)) //we don't use our own type here, because macrobombs inherit this proc and need to be able to upgrade microbombs
-			var/obj/item/implant/explosive/imp_e = X
-			imp_e.heavy += heavy
-			imp_e.medium += medium
-			imp_e.weak += weak
-			imp_e.delay += delay
+	for(var/target_implant in target.implants)
+		if(istype(target_implant, /obj/item/implant/explosive)) //we don't use our own type here, because macrobombs inherit this proc and need to be able to upgrade microbombs
+			//We merge the two implants into a single bigger, badder one by adding the injected implant's values into the already present implant
+			var/obj/item/implant/explosive/implant_to_upgrade = target_implant
+			implant_to_upgrade.devastation_heavy += devastation_heavy
+			implant_to_upgrade.devastation_medium += devastation_medium
+			implant_to_upgrade.devastation_weak += devastation_weak
+			implant_to_upgrade.delay += delay
 			qdel(src)
 			return TRUE
 
@@ -83,20 +96,24 @@
 	if(.)
 		UnregisterSignal(target, COMSIG_LIVING_DEATH)
 
+/**
+ * Explosive activation sequence for implants with a delay longer than 0.7 seconds.
+ * Make the implantee beep a few times, keel over and explode. Usually to a devastating effect.
+ */
 /obj/item/implant/explosive/proc/timed_explosion()
 	imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
-	sleep(delay*0.25)
+	stoplag(delay * 0.25)
 	if(imp_in && !imp_in.stat)
 		imp_in.visible_message(span_warning("[imp_in] doubles over in pain!"))
-		imp_in.Paralyze(140)
-	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
-	sleep(delay*0.25)
-	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
-	sleep(delay*0.25)
-	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
-	sleep(delay*0.25)
-	explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak, explosion_cause = src)
+		imp_in.Paralyze(14 SECONDS)
+	//total of 4 bomb beeps, and we've already beeped once
+	var/bomb_beeps_until_boom = 3
+	while(bomb_beeps_until_boom > 0)
+		playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
+		stoplag(delay * 0.25)
+		bomb_beeps_until_boom--
+	explosion(src, devastation_range = devastation_heavy, heavy_impact_range = devastation_medium, light_impact_range = devastation_weak, flame_range = devastation_weak, flash_range = devastation_weak, explosion_cause = src)
 	if(imp_in)
 		imp_in.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
 		imp_in.gib(TRUE)
@@ -106,10 +123,10 @@
 	name = "macrobomb implant"
 	desc = "And boom goes the weasel. And everything else nearby."
 	icon_state = "explosive"
-	weak = 20 //the strength and delay of 10 microbombs
-	medium = 8
-	heavy = 4
-	delay = 70
+	delay = 7 SECONDS
+	devastation_weak = 20 //the strength and delay of 10 microbombs
+	devastation_medium = 8
+	devastation_heavy = 4
 
 /obj/item/implanter/explosive
 	name = "implanter (microbomb)"
