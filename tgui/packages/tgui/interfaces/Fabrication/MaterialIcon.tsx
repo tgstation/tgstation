@@ -1,5 +1,6 @@
 import { classes } from 'common/react';
 import { Icon } from '../../components';
+import { Material } from './Types';
 
 const MATERIAL_ICONS: Record<string, [number, string][]> = {
   'iron': [
@@ -72,7 +73,7 @@ export type MaterialIconProps = {
  * A 32x32 material icon. Animates between different stack sizes of the given
  * material.
  */
-export const MaterialIcon = (props: MaterialIconProps) => {
+export const MaterialIcon = (props: MaterialIconProps, material: Material) => {
   const { materialName, amount } = props;
   const icons = MATERIAL_ICONS[materialName];
 
@@ -84,7 +85,7 @@ export const MaterialIcon = (props: MaterialIconProps) => {
 
   while (
     icons[activeIdx + 1] &&
-    icons[activeIdx + 1][0] <= (amount ?? 200_000) / 2_000
+    icons[activeIdx + 1][0] <= (amount ?? 200_000) / 2_000 // todo: how does this work exactly? change to use the define
   ) {
     activeIdx += 1;
   }

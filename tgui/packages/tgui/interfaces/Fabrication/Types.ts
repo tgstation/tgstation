@@ -21,7 +21,7 @@ export type Material = {
   ref: string;
 
   /**
-   * The amount of material; 2,000 units is one sheet.
+   * The amount of material in units.
    */
   amount: number;
 
@@ -39,6 +39,11 @@ export type Material = {
    * The color of the material.
    */
   color: string;
+
+  /**
+   * The define of material units amount per sheet.
+   */
+  sheet_material_amount: number;
 };
 
 /**

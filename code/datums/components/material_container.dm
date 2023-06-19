@@ -550,7 +550,8 @@
 			"amount" = amount,
 			"sheets" = round(amount / SHEET_MATERIAL_AMOUNT),
 			"removable" = amount >= SHEET_MATERIAL_AMOUNT,
-			"color" = material.greyscale_colors
+			"color" = material.greyscale_colors,
+			"sheet_material_amount" = SHEET_MATERIAL_AMOUNT
 		))
 
 	return data

@@ -79,8 +79,6 @@ const MaterialCounter = (props: MaterialCounterProps, context) => {
     false
   );
 
-  const canEject = material.amount > 2_000;
-
   return (
     <div
       onMouseEnter={() => setHovering(true)}
@@ -88,7 +86,7 @@ const MaterialCounter = (props: MaterialCounterProps, context) => {
       className={classes([
         'MaterialDock',
         hovering && 'MaterialDock--active',
-        !canEject && 'MaterialDock--disabled',
+        !material.removable && 'MaterialDock--disabled',
       ])}>
       <Stack vertial direction={'column-reverse'}>
         <Flex
@@ -157,7 +155,7 @@ const EjectButton = (props: EjectButtonProps, context) => {
       color={'transparent'}
       className={classes([
         'Fabricator__PrintAmount',
-        amount * 2_000 > available && 'Fabricator__PrintAmount--disabled',
+        amount * material.sheet_material_amount > available && 'Fabricator__PrintAmount--disabled',
       ])}
       onClick={() => onEject(amount)}>
       &times;{amount}
