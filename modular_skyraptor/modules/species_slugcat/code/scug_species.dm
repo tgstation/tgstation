@@ -26,7 +26,7 @@
 		///obj/item/organ/external/spines = "None",
 		/obj/item/organ/external/tail/lizard = "Smooth",
 	)
-	//mutanttongue = /obj/item/organ/internal/tongue/lizard
+	mutanteyes = /obj/item/organ/internal/eyes/slugcat
 
 	coldmod = 1
 	heatmod = 1
