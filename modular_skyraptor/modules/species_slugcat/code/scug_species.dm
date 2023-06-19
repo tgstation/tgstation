@@ -1,6 +1,6 @@
 #define SCUG_NAMES list("Survivor", "Monk", "Hunter", "Gourmand", "Artificer", "Rivulet", "Saint", "Guardian", "Protector", "Emissary", "Prophet", "Warrior", "Artist", "Explorer", "Wanderer", "Traveler", \
 						"Cook", "Engineer", "Tinkerer", "Mage", "Magician", "Gardener", "Leader", "Guide", "Nomad", "Technomancer", "Vanguard", "Nymph", "Lancer", "Savage", "Florist", "Luminary", \
-						"Apothecary", "Healer")
+						"Apothecary", "Healer", "Inventor", "Coder", "Commander", "Beastmaster", "Attendant")
 
 /datum/species/slugcat
 	// Slugcats from Rain World, revamped to fit into
@@ -16,6 +16,7 @@
 		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
+	species_language_holder = /datum/language_holder/synthetic
 
 	mutant_bodyparts = list("body_markings" = "None", "legs" = "Normal Legs")
 	external_organs = list(
@@ -25,7 +26,7 @@
 		/obj/item/organ/external/spines = "None",
 		/obj/item/organ/external/tail/lizard = "Smooth",
 	)
-	mutanttongue = /obj/item/organ/internal/tongue/lizard
+	//mutanttongue = /obj/item/organ/internal/tongue/lizard
 
 	coldmod = 1
 	heatmod = 1
@@ -34,24 +35,22 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	disliked_food = DAIRY | SUGAR | FRIED
 	liked_food = GORE | MEAT | RAW
-	digitigrade_customization = DIGITIGRADE_FORCED
+	//scugs have forced digi thru custom legs, this is necessary until we rework the digi_customization setting to allow for other digileg types
+	//digitigrade_customization = DIGITIGRADE_FORCED
 
 	ass_image = 'icons/ass/asslizard.png' //one day this system gets deleted.  one day...
 
 	bodypart_overrides = list(
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/lizard,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/lizard,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/lizard,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/slugcat,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/slugcat,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/slugcat,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/slugcat,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/digitigrade/slugcat,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/digitigrade/slugcat,
 	)
 
 /datum/species/slugcat/random_name(gender,unique,lastname)
-	if(rand(100) <= 10)
-
-	else
-		return "The [pick(SCUG_NAMES)]"
+	return "The [pick(SCUG_NAMES)]"
 
 /datum/species/slugcat/randomize_features(mob/living/carbon/human/human_mob)
 	human_mob.dna.features["body_markings"] = pick(GLOB.body_markings_list)
@@ -74,6 +73,7 @@
 			human_being.add_quirk(/datum/quirk/mute)
 		else
 			to_chat(carbon_being, span_danger("You can't seem to get any more mute.  (Did you take a duplicate Mute?)"))
+	return ..()
 
 /datum/species/slugcat/on_species_loss(mob/living/carbon/human/human_being, datum/species/old_species, pref_load)
 	if(human_being.client.prefs.all_quirks)
@@ -87,6 +87,7 @@
 			human_being.remove_quirk(/datum/quirk/mute)
 		else
 			to_chat(human_being, span_notice("You were never mute!  Whew."))
+	return ..()
 
 
 /// Pretty UI stuff goes here.
