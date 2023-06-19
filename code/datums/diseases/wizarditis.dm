@@ -28,8 +28,7 @@
 	/// The robe type to give the infected
 	var/robe_type
 
-/datum/disease/wizarditis/New()
-	. = ..()
+/datum/disease/wizarditis/after_add()
 	switch(pick("blue", "red", "yellow"))
 		if("blue")
 			hat_type = /obj/item/clothing/head/wizard
