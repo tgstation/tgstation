@@ -98,7 +98,7 @@
 	else
 		to_chat(user, "<span class='warning'>the extrapolator has no scanner installed</span>")
 
-/obj/item/extrapolator/proc/scan(atom/AM, var/list/diseases = list(), mob/user)
+/obj/item/extrapolator/proc/scan(atom/AM, list/diseases = list(), mob/user)
 	to_chat(user, "<span class='notice'><b>[src] detects the following diseases:</b></span>")
 	for(var/datum/disease/D in diseases)
 		if(istype(D, /datum/disease/advance))
@@ -118,7 +118,7 @@
 		else
 			to_chat(user, "<span class='info'><font color='green'><b>[D.name]</b>, stage [D.stage]/[D.max_stages].</font></span>")
 
-/obj/item/extrapolator/proc/extrapolate(atom/AM, var/list/diseases = list(), mob/user, isolate = FALSE, timer = 200)
+/obj/item/extrapolator/proc/extrapolate(atom/AM, list/diseases = list(), mob/user, isolate = FALSE, timer = 200)
 	var/list/advancediseases = list()
 	var/list/symptoms = list()
 	if(using)
@@ -158,7 +158,7 @@
 			create_culture(A, user, AM)
 	using = FALSE
 
-/obj/item/extrapolator/proc/create_culture(var/datum/disease/advance/A, mob/user)
+/obj/item/extrapolator/proc/create_culture(datum/disease/advance/A, mob/user)
 	if(cooldown > world.time - (10))
 		to_chat(user, "<span class='warning'>The extrapolator is still recharging!</span>")
 		return

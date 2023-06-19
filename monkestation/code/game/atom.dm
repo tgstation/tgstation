@@ -5,6 +5,6 @@
 *
 * Default behaviour is to send COMSIG_ATOM_EXTRAPOLATOR_ACT and return FALSE
 */
-/atom/proc/extrapolator_act(mob/user, var/obj/item/extrapolator/E, scan = TRUE)
+/atom/proc/extrapolator_act(mob/user, obj/item/extrapolator/E, scan = TRUE)
 	SEND_SIGNAL(src,COMSIG_ATOM_EXTRAPOLATOR_ACT, user, E, scan)
 	return FALSE
