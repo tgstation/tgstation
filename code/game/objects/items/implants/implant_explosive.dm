@@ -110,9 +110,12 @@
 	//total of 4 bomb beeps, and we've already beeped once
 	var/bomb_beeps_until_boom = 3
 	while(bomb_beeps_until_boom > 0)
-		playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
+		//for extra spice
+		var/beep_volume = 35
+		playsound(loc, 'sound/items/timer.ogg', beep_volume, FALSE)
 		stoplag(delay * 0.25)
 		bomb_beeps_until_boom--
+		beep_volume += 5
 	explosion(src, devastation_range = devastation_heavy, heavy_impact_range = devastation_medium, light_impact_range = devastation_weak, flame_range = devastation_weak, flash_range = devastation_weak, explosion_cause = src)
 	if(imp_in)
 		imp_in.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
