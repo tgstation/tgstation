@@ -2135,11 +2135,3 @@
 	var/mutable_appearance/glow_appearance = new(glow)
 	add_overlay(glow_appearance)
 	LAZYADD(update_overlays_on_z, glow_appearance)
-/**
-  * Respond to our atom being checked by a virus extrapolator
-  *
-  * Default behaviour is to send COMSIG_ATOM_EXTRAPOLATOR_ACT and return FALSE
-  */
-/atom/proc/extrapolator_act(mob/user, var/obj/item/extrapolator/E, scan = TRUE)
-	SEND_SIGNAL(src,COMSIG_ATOM_EXTRAPOLATOR_ACT, user, E, scan)
-	return FALSE
