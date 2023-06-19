@@ -78,27 +78,25 @@
 	trail.auto_process = FALSE
 	trail.set_up(moving)
 
-/datum/component/jetpack/proc/activate(datum/source)
+/datum/component/jetpack/proc/activate(datum/source, mob/user)
 	SIGNAL_HANDLER
-	var/mob/moving = get_mover.Invoke()
-	if(!thrust(moving))
+	if(!thrust(user))
 		return return_flag
 	trail.start()
-	RegisterSignal(moving, COMSIG_MOVABLE_MOVED, PROC_REF(move_react))
-	RegisterSignal(moving, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move_react))
-	RegisterSignal(moving, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(spacemove_react))
-	RegisterSignal(moving, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT, PROC_REF(block_starting_visuals))
-	RegisterSignal(moving, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT, PROC_REF(ignore_ending_block))
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(move_react))
+	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move_react))
+	RegisterSignal(user, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(spacemove_react))
+	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT, PROC_REF(block_starting_visuals))
+	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT, PROC_REF(ignore_ending_block))
 
-/datum/component/jetpack/proc/deactivate(datum/source)
+/datum/component/jetpack/proc/deactivate(datum/source, mob/user)
 	SIGNAL_HANDLER
-	var/mob/moving = get_mover.Invoke()
-	if(moving)
-		UnregisterSignal(moving, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(moving, COMSIG_MOVABLE_PRE_MOVE)
-		UnregisterSignal(moving, COMSIG_MOVABLE_SPACEMOVE)
-		UnregisterSignal(moving, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT)
-		UnregisterSignal(moving, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT)
+	if(user)
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
+		UnregisterSignal(user, COMSIG_MOVABLE_SPACEMOVE)
+		UnregisterSignal(user, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT)
+		UnregisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT)
 	QDEL_NULL(trail) //delete AFTER unregistering the mob, otherwise you'll get runtimes.
 
 /datum/component/jetpack/proc/move_react(mob/user)
@@ -118,6 +116,8 @@
 
 /datum/component/jetpack/proc/pre_move_react(mob/user)
 	SIGNAL_HANDLER
+	if(!trail)
+		return FALSE
 	trail.oldposition = get_turf(user)
 
 /datum/component/jetpack/proc/spacemove_react(mob/user, movement_dir, continuous_move)

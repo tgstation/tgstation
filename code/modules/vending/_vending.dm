@@ -206,7 +206,7 @@
 		circuit = null
 		build_inv = TRUE
 	. = ..()
-	wires = new /datum/wires/vending(src)
+	set_wires(new /datum/wires/vending(src))
 
 	if(SStts.tts_enabled)
 		var/static/vendor_voice_by_type = list()

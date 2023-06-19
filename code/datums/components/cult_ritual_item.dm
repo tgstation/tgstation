@@ -47,7 +47,7 @@
 /datum/component/cult_ritual_item/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(try_scribe_rune))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(try_purge_holywater))
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, PROC_REF(try_hit_object))
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(try_hit_object))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, PROC_REF(try_clear_rune))
 
 	if(examine_message)
@@ -57,7 +57,7 @@
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_ATTACK_SELF,
 		COMSIG_ITEM_ATTACK,
-		COMSIG_ITEM_ATTACK_OBJ,
+		COMSIG_ITEM_ATTACK_ATOM,
 		COMSIG_ITEM_ATTACK_EFFECT,
 		COMSIG_ATOM_EXAMINE,
 		))
@@ -115,7 +115,7 @@
 	INVOKE_ASYNC(src, PROC_REF(do_purge_holywater), target, user)
 
 /*
- * Signal proc for [COMSIG_ITEM_ATTACK_OBJ].
+ * Signal proc for [COMSIG_ITEM_ATTACK_ATOM].
  * Allows the ritual items to unanchor cult buildings or destroy rune girders.
  */
 /datum/component/cult_ritual_item/proc/try_hit_object(datum/source, obj/structure/target, mob/cultist)
