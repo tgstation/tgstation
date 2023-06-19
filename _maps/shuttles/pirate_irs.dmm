@@ -246,6 +246,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 1
 	},
+/obj/machinery/recharger,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "hf" = (

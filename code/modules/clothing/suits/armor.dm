@@ -68,7 +68,7 @@
 	acid = 50
 	wound = 20
 
-/datum/armor/vest_marine/pmc
+/datum/armor/pmc
 	melee = 40
 	bullet = 50
 	laser = 60
@@ -96,7 +96,7 @@
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
-	armor_type = /datum/armor/vest_marine/pmc
+	armor_type = /datum/armor/pmc
 
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"

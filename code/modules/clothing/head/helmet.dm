@@ -126,7 +126,7 @@
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	clothing_flags = null
-	armor_type = /datum/armor/head_helmet
+	armor_type = /datum/armor/pmc
 
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"
