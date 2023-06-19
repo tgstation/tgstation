@@ -1,6 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - qol: "Heretic runes no longer have every single transparent pixel set to 1 alpha, to make it easier to click on objects."
-  - qol: "Clearing heretic runes with mansus grasp takes 0.4 seconds of standing still, to prevent you from accidentally clearing it in combat."
-  - code_imp: "Added code for effect remover element to use a windup if set."
