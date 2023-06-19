@@ -83,7 +83,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return
 
 /proc/get_consistent_feature_entry(list/list)
-	return (list - SPRITE_ACCESSORY_NONE)[1]
+	var/consistent_entry = (list - SPRITE_ACCESSORY_NONE)[1]
+	ASSERT(!isnull(consistent_entry))
+	return consistent_entry
 
 /proc/create_consistent_human_dna(mob/living/carbon/human/target)
 	target.dna.initialize_dna(skip_index = TRUE)
