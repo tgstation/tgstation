@@ -100,17 +100,29 @@
 	if(ishuman(user))
 		return pick('modular_skyraptor/modules/newemotes/sounds/voice/trills.ogg')
 
-/datum/emote/living/carbon/moff
-	key = "moff"
-	key_third_person = "moffs"
+/datum/emote/living/carbon/msqueak
+	key = "msqueak"
+	key_third_person = "msqueaks"
 	message = "makes a tiny squeak!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	audio_cooldown = 1 SECONDS
 	vary = TRUE
 
-/datum/emote/living/carbon/moff/get_sound(mob/living/user)
+/datum/emote/living/carbon/msqueak/get_sound(mob/living/user)
 	if(ishuman(user))
 		return pick('modular_skyraptor/modules/newemotes/sounds/voice/mothsqueak.ogg')
+
+/datum/emote/living/carbon/chitter
+	key = "chitter"
+	key_third_person = "chitters"
+	message = "chitters!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	audio_cooldown = 1 SECONDS
+	vary = TRUE
+
+/datum/emote/living/carbon/chitter/get_sound(mob/living/user)
+	if(ishuman(user))
+		return pick('modular_skyraptor/modules/newemotes/sounds/voice/mothchitter.ogg')
 
 /datum/emote/living/carbon/merp
 	key = "merp"
