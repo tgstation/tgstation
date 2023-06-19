@@ -2904,6 +2904,7 @@
 #include "code\modules\atmospherics\machinery\portable\scrubber.dm"
 #include "code\modules\autowiki\autowiki.dm"
 #include "code\modules\autowiki\pages\base.dm"
+#include "code\modules\autowiki\pages\plants.dm"
 #include "code\modules\autowiki\pages\soup.dm"
 #include "code\modules\autowiki\pages\techweb.dm"
 #include "code\modules\autowiki\pages\vending.dm"
