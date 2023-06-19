@@ -249,9 +249,13 @@
 /obj/item/storage/toolbox/ammobox/a762/surplus
 	ammo_to_spawn = /obj/item/ammo_box/a762/surplus
 
-/obj/item/storage/toolbox/ammobox/m556
-	name = "5.56mm ammo box"
-	ammo_to_spawn = /obj/item/ammo_box/magazine/m556/box
+/obj/item/storage/toolbox/ammobox/wt550m9
+	name = "4.6x30mm ammo box"
+	ammo_to_spawn = /obj/item/ammo_box/magazine/wt550m9
+
+/obj/item/storage/toolbox/ammobox/wt550m9ap
+	name = "4.6x30mm AP ammo box"
+	ammo_to_spawn = /obj/item/ammo_box/magazine/wt550m9ap
 
 /obj/item/storage/toolbox/maint_kit
 	name = "gun maintenance kit"

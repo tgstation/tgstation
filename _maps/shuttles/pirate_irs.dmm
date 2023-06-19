@@ -128,10 +128,10 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/storage/toolbox/ammobox/m556{
-	pixel_y = 7
+/obj/item/storage/toolbox/ammobox/wt550m9{
+	pixel_y = 6
 	},
-/obj/item/storage/toolbox/ammobox/m556,
+/obj/item/storage/toolbox/ammobox/wt550m9ap,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "dl" = (
@@ -604,9 +604,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "qI" = (
-/obj/item/gun/ballistic/automatic/ar/irs,
-/obj/item/gun/ballistic/automatic/ar/irs,
-/obj/structure/guncase/irs,
+/obj/structure/guncase/wt550,
+/obj/item/gun/ballistic/automatic/wt550,
+/obj/item/gun/ballistic/automatic/wt550,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "qO" = (

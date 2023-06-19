@@ -229,27 +229,10 @@
 	icon_state = "arg"
 	inhand_icon_state = "arg"
 	slot_flags = 0
-	mag_type = /obj/item/ammo_box/magazine/m556/box
+	mag_type = /obj/item/ammo_box/magazine/m556
 	can_suppress = FALSE
 	burst_size = 3
 	fire_delay = 1
-
-/obj/item/gun/ballistic/automatic/ar/irs
-	name = "\improper NT-SL8 'Defender'"
-	desc = "A bastardized export version of Nanotrasen's standard service rifle the NT-ARG 'Boarder' \
-		for commercial sale outside of the corporation. Mostly used in the hands of PMC's and governmental authority. \
-		Its devastating burst fire rate has been replaced with semi-automatic fire and less than optimal fire rate."
-	fire_delay = 1.2 SECONDS
-	burst_size = 1
-	can_bayonet = TRUE
-	knife_x_offset = 25
-	knife_y_offset = 12
-	select = 1
-	actions_types = list()
-
-/obj/item/gun/ballistic/automatic/ar/irs/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/automatic_fire, autofire_shot_delay = 1.2 SECONDS)
 
 // L6 SAW //
 
