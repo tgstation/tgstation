@@ -30,7 +30,7 @@
 	desc = "A bulky scanning device, used to extract genetic material of potential pathogens"
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_TINY
 	var/using = FALSE
 	var/scan = TRUE
 	var/cooldown
