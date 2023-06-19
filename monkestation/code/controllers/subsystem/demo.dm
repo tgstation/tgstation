@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(demo)
 		if(GLOB.revdata.originmastercommit) revdata_list["originmastercommit"] = "[GLOB.revdata.originmastercommit]"
 		revdata_list["repo"] = "Monkestation/Monkestation2.0"
 	var/revdata_str = json_encode(revdata_list);
-	var/result = call(DEMO_WRITER, "demo_start")(GLOB.demo_log, revdata_str)
+	var/result = RUSTG_CALL(DEMO_WRITER, "demo_start")(GLOB.demo_log, revdata_str)
 
 	if(result == "SUCCESS")
 		demo_started = 1
