@@ -14,6 +14,8 @@
 	max_stages = 5
 	/// The chance of Carp Ella to spawn on cure
 	var/ella_spawn_chance = 10
+	/// Whether the max stage was achieved in disease lifecycle
+	var/max_stage_reached = FALSE
 	/// Carp ability gained on max stage
 	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/rift_ability
 	/// Whether the host has carp ability
@@ -50,6 +52,7 @@
 			else if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
 				affected_mob.visible_message("gnashes.", visible_message_flags = EMOTE_MESSAGE)
 		if(5)
+			max_stage_reached = TRUE
 			grant_ability()
 			if(SPT_PROB(2, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
 				gnash_someone()
@@ -64,7 +67,7 @@
 /datum/disease/advance/carpellosis/cure()
 	if(ability_granted)
 		rift_ability.Remove(affected_mob)
-	if(stage == max_stages && prob(ella_spawn_chance))
+	if(max_stage_reached && prob(ella_spawn_chance))
 		to_chat(affected_mob, span_warning("Something comes out of you!"))
 		new /mob/living/basic/carp/ella(affected_mob.loc)
 	return ..()
