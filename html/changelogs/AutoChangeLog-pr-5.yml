@@ -1,0 +1,10 @@
+author: "CliffracerX"
+delete-after: True
+changes:
+  - rscadd: "meme emotes (the *agony series)"
+  - rscadd: "some familiar generalist emotes (*clap1, etc)"
+  - rscadd: "some familiar species noises (*wurble, *peep, *msqueak, etc)"
+  - sound: "sound for the new emotes"
+  - image: "reworks medkit sprites to match the rugged aesthetic of tools"
+  - image: "reworks medkit inhands to better match their inventory sprites"
+  - image: "reworks surgical tools"
