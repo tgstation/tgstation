@@ -118,6 +118,7 @@ GLOBAL_VAR(restart_counter)
 		var/realtime = world.realtime
 		var/texttime = time2text(realtime, "YYYY/MM/DD")
 		GLOB.log_directory = "data/logs/[texttime]/round-"
+		GLOB.demo_directory = "data/replays"
 		GLOB.picture_logging_prefix = "L_[time2text(realtime, "YYYYMMDD")]_"
 		GLOB.picture_log_directory = "data/picture_logs/[texttime]/round-"
 		if(GLOB.round_id)
@@ -135,7 +136,7 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
 	GLOB.logger.init_logging()
-	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
+	GLOB.demo_log = "[GLOB.demo_directory]/[GLOB.round_id]_demo.log"
 	GLOB.dynamic_log = "[GLOB.log_directory]/dynamic.log"
 	GLOB.filter_log = "[GLOB.log_directory]/filters.log"
 	GLOB.lua_log = "[GLOB.log_directory]/lua.log"
@@ -318,6 +319,7 @@ GLOBAL_VAR(restart_counter)
 
 /world/Del()
 	auxcleanup()
+	SSdemo?.Shutdown()
 	. = ..()
 
 /world/proc/update_status()

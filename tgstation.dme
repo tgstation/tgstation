@@ -5267,6 +5267,7 @@
 #include "monkestation\code\__HELPERS\_lists.dm"
 #include "monkestation\code\__HELPERS\mobs.dm"
 #include "monkestation\code\__HELPERS\reagents.dm"
+#include "monkestation\code\controllers\subsystem\demo.dm"
 #include "monkestation\code\datums\antag_tokens.dm"
 #include "monkestation\code\datums\patreon_data.dm"
 #include "monkestation\code\datums\stamina_container.dm"
