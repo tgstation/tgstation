@@ -1020,6 +1020,9 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
+/obj/machinery/defibrillator_mount/loaded{
+	pixel_y = -32
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "CB" = (

@@ -255,7 +255,7 @@
 
 /obj/item/storage/toolbox/ammobox/wt550m9ap
 	name = "4.6x30mm AP ammo box"
-	ammo_to_spawn = /obj/item/ammo_box/magazine/wt550m9ap
+	ammo_to_spawn = /obj/item/ammo_box/magazine/wt550m9/wtap
 
 /obj/item/storage/toolbox/maint_kit
 	name = "gun maintenance kit"
