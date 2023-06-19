@@ -36,7 +36,8 @@
 /area/station/engineering/supermatter/room)
 "hb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
+/obj/item/stack/tile/iron,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "ix" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -100,7 +101,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/obj/item/stack/tile/iron,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "oy" = (
 /obj/structure/cable,
@@ -117,6 +119,7 @@
 	},
 /obj/structure/cable,
 /obj/structure/cable/layer1,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "oM" = (
@@ -143,7 +146,8 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable/layer1,
-/turf/open/floor/iron,
+/obj/item/stack/cable_coil,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "ro" = (
 /obj/machinery/door/airlock/external,
@@ -154,6 +158,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/structure/cable,
 /obj/structure/cable/layer1,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "se" = (
@@ -274,6 +279,10 @@
 /obj/structure/cable/layer1,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"EX" = (
+/obj/item/stack/tile/iron,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "FU" = (
 /turf/open/floor/plating,
 /area/space/nearstation)
@@ -311,6 +320,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/space/basic,
 /area/space/nearstation)
+"JJ" = (
+/obj/structure/cable,
+/obj/item/stack/tile/iron,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
 "Lt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -436,6 +450,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "WI" = (
@@ -738,8 +753,8 @@ WI
 WI
 WI
 WI
-zz
-zz
+WI
+WI
 "}
 (13,1,1) = {"
 Ho
@@ -751,6 +766,8 @@ JE
 Ho
 Ho
 Ho
+Zh
+Zh
 zz
 zz
 iY
@@ -760,19 +777,19 @@ Ou
 Ou
 zz
 iY
-zz
-zz
 "}
 (14,1,1) = {"
 Ho
 ix
-JE
+EX
 Pp
 JE
 JE
 wL
 Ho
 Zh
+Zh
+Zh
 zz
 zz
 by
@@ -782,18 +799,18 @@ FU
 FU
 ZS
 by
-zz
-zz
 "}
 (15,1,1) = {"
 Ho
 qR
 mz
-Pp
+JJ
 JE
 JE
 JE
 tY
+Zh
+Zh
 Zh
 zz
 zz
@@ -804,8 +821,6 @@ zz
 ZS
 yp
 ZS
-zz
-zz
 "}
 (16,1,1) = {"
 Om
@@ -817,6 +832,8 @@ RT
 JE
 tY
 Zh
+Zh
+Zh
 zz
 zz
 ZS
@@ -826,8 +843,6 @@ ZS
 zz
 ZS
 ZS
-zz
-zz
 "}
 (17,1,1) = {"
 lq
@@ -839,6 +854,8 @@ Gr
 JE
 tY
 Zh
+Zh
+Zh
 zz
 zz
 ZS
@@ -848,8 +865,6 @@ vK
 ZS
 zz
 ZS
-zz
-zz
 "}
 (18,1,1) = {"
 Om
@@ -861,6 +876,8 @@ Hk
 JE
 tY
 Zh
+Zh
+Zh
 zz
 zz
 ZS
@@ -870,8 +887,6 @@ ZS
 zz
 ZS
 ZS
-zz
-zz
 "}
 (19,1,1) = {"
 Ho
@@ -883,6 +898,8 @@ JE
 JE
 tY
 Zh
+Zh
+Zh
 zz
 zz
 Vm
@@ -892,8 +909,6 @@ zz
 AI
 yp
 ZS
-zz
-zz
 "}
 (20,1,1) = {"
 Ho
@@ -905,6 +920,8 @@ Rb
 Ho
 Ho
 Zh
+Zh
+Zh
 zz
 zz
 by
@@ -914,8 +931,6 @@ FU
 FU
 ZS
 by
-zz
-zz
 "}
 (21,1,1) = {"
 Ho
@@ -927,6 +942,8 @@ Gn
 Ho
 Ho
 Ho
+Zh
+Zh
 zz
 zz
 oy
@@ -936,8 +953,6 @@ Ou
 Ou
 zz
 oy
-zz
-zz
 "}
 (22,1,1) = {"
 Ho
@@ -958,8 +973,8 @@ WI
 WI
 WI
 WI
-zz
-zz
+WI
+WI
 "}
 (23,1,1) = {"
 Ho

@@ -23,7 +23,7 @@ Difficulty: Extremely Hard
 	movement_type = GROUND
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	speak_emote = list("roars")
-	armour_penetration = 100
+	armour_penetration = 50
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	vision_range = 18 // large vision range so combat doesn't abruptly end when someone runs a bit away
@@ -191,7 +191,7 @@ Difficulty: Extremely Hard
 	name = "frost orb"
 	icon_state = "ice_1"
 	damage = 20
-	armour_penetration = 100
+	armour_penetration = 50
 	speed = 1
 	pixel_speed_multiplier = 0.1
 	range = 500
@@ -207,7 +207,7 @@ Difficulty: Extremely Hard
 	name = "machine-gun snowball"
 	icon_state = "nuclear_particle"
 	damage = 5
-	armour_penetration = 100
+	armour_penetration = 50
 	speed = 1
 	pixel_speed_multiplier = 0.333
 	range = 150
@@ -218,7 +218,7 @@ Difficulty: Extremely Hard
 	name = "ice blast"
 	icon_state = "ice_2"
 	damage = 15
-	armour_penetration = 100
+	armour_penetration = 50
 	speed = 1
 	pixel_speed_multiplier = 0.333
 	range = 150

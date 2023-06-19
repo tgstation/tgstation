@@ -1,0 +1,4 @@
+author: "dwasint"
+delete-after: True
+changes:
+  - balance: "most traitor roles now have a minimum population required to roll, this will prevent heretics from spawning every round"

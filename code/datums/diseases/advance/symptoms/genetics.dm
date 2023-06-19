@@ -24,10 +24,11 @@
 	var/no_reset = FALSE
 	var/mutadone_proof = NONE
 	threshold_descs = list(
-		"Resistance 8" = "The negative and mildly negative mutations caused by the virus are mutadone-proof (but will still be undone when the virus is cured if the resistance 14 threshold is not met).",
+		"Resistance 8" = "The mutations caused by the virus are mutadone-proof (but will still be undone when the virus is cured if the resistance 14 threshold is not met).",
 		"Resistance 14" = "The host's genetic alterations are not undone when the virus is cured.",
 		"Stage Speed 10" = "The virus activates dormant mutations at a much faster rate.",
-		"Stealth 5" = "Only activates negative mutations in hosts."
+		"Stealth 5" = "Only activates negative mutations in hosts.",
+		"Stealth -7" = "excludes strong negative mutations."
 	)
 
 /datum/symptom/genetic_mutation/Start(datum/disease/advance/A)
@@ -36,11 +37,13 @@
 		return
 	if(A.totalStealth() >= 5) //only give them bad mutations
 		excludemuts = POSITIVE
+	if(A.totalStealth() <= -7) //only give them good mutations
+		excludemuts = NEGATIVE
 	if(A.totalStageSpeed() >= 10) //activate dormant mutations more often at around 1.5x the pace
 		symptom_delay_min = 20
 		symptom_delay_max = 40
 	if(A.totalResistance() >= 8) //mutadone won't save you now
-		mutadone_proof = (NEGATIVE | MINOR_NEGATIVE)
+		mutadone_proof = (NEGATIVE | MINOR_NEGATIVE | POSITIVE)
 	if(A.totalResistance() >= 14) //one does not simply escape Nurgle's grasp
 		no_reset = TRUE
 

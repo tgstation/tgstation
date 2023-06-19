@@ -270,6 +270,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "yn" = (

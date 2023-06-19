@@ -84,7 +84,7 @@ Bonus
 /datum/symptom/asphyxiation
 
 	name = "Acute respiratory distress syndrome"
-	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation. May also lead to heart attacks."
+	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation. May also lead to brain damage in critical patients."
 	illness = "Iron Lungs"
 	stealth = -2
 	resistance = -0

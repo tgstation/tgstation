@@ -48,7 +48,7 @@
 	name = "Assassinate %TARGET% the %JOB TITLE%, and plant a calling card"
 	description = "Kill your target and plant a calling card in the pockets of your victim. If your calling card gets destroyed before you are able to plant it, this objective will fail."
 	progression_reward = 2 MINUTES
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = list(2, 4)
 
 	var/obj/item/paper/calling_card/card
 
@@ -62,7 +62,7 @@
 	name = "Behead %TARGET%, the %JOB TITLE%"
 	description = "Behead and hold %TARGET%'s head to succeed this objective. If the head gets destroyed before you can do this, you will fail this objective."
 	progression_reward = 2 MINUTES
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = list(2, 4)
 
 	///the body who needs to hold the head
 	var/mob/living/needs_to_hold_head
@@ -71,7 +71,7 @@
 
 /datum/traitor_objective/target_player/assassinate/behead/heads_of_staff
 	progression_reward = 4 MINUTES
-	telecrystal_reward = list(2, 3)
+	telecrystal_reward = list(3, 5)
 
 	heads_of_staff = TRUE
 

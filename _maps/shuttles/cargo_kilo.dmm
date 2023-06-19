@@ -58,6 +58,7 @@
 	id = "QMLoad";
 	name = "off ramp"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "j" = (
@@ -93,6 +94,7 @@
 /obj/docking_port/mobile/supply{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/supply)
 "n" = (
@@ -145,6 +147,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/supply)
 "s" = (
@@ -165,6 +168,7 @@
 	id = "QMLoad2";
 	name = "on ramp"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "u" = (

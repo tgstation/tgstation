@@ -49,7 +49,7 @@
 	desc = "An anime implant fitted for a persons lower half."
 	icon_state = "antennae"
 
-	zone = BODY_ZONE_PRECISE_GROIN
+	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_ANIME_BOTTOM
 
 	preference = "feature_anime_bottom"

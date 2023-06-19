@@ -275,6 +275,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "J" = (

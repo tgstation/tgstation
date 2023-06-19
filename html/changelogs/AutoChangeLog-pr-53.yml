@@ -1,0 +1,8 @@
+author: "Salted-Zen"
+delete-after: True
+changes:
+  - balance: "Colossus, Wendigo, And Demonic Frost Miner's projectiles now all have 50% armor penetration instead of 100%"
+  - balance: "Wendigo no longer creates a 3x3 shockwave every single time he moves"
+  - balance: "Wendigo's scream attack (teleporting to the center and firing a pattern of bolts) now has a 5 second cooldown instead of 10"
+  - balance: "Demonic Frost Miner's melee attack has 50% armor penetration"
+  - balance: "Demonic Icewing Watcher's move speed reduced as to make them less ass to fight"

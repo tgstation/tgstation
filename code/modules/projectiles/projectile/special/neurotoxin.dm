@@ -3,15 +3,20 @@
 	icon_state = "neurotoxin"
 	damage = 5
 	damage_type = TOX
-	paralyze = 10 SECONDS
+	knockdown = 2 SECONDS //monkestation edit: replaced 10 second paralyze with thise
 	armor_flag = BIO
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/neurotoxin
 
 /obj/projectile/neurotoxin/on_hit(atom/target, blocked = FALSE)
 	if(isalien(target))
-		paralyze = 0 SECONDS
+		knockdown = 0 SECONDS //monkestation edit: from paralyze to knockdown
 		damage = 0
+	if(ishuman(target)) //monkestation edit
+		var/mob/living/carbon/human/h_mob = target //monkestation edit
+		if(h_mob.can_inject()) //monkestation edit
+			h_mob.stamina.adjust(-40) //monkestation edit
 	return ..()
+
 
 /obj/projectile/neurotoxin/damaging //for ai controlled aliums
 	damage = 30

@@ -14,6 +14,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/syndicate3)
 "bt" = (
@@ -232,6 +233,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/syndicate3)
 "zP" = (

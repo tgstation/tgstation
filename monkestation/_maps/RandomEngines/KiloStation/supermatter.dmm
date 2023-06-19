@@ -59,7 +59,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "eo" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -127,6 +126,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gZ" = (
@@ -166,6 +166,7 @@
 	dir = 1
 	},
 /obj/machinery/status_display/evac/directional/north,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "hR" = (
@@ -184,13 +185,14 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "hW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "ic" = (
@@ -225,7 +227,6 @@
 /area/station/engineering/supermatter)
 "jM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -337,26 +338,13 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
-"mS" = (
-/obj/machinery/computer/station_alert{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/engineering/supermatter/room)
 "nb" = (
-/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/item/storage/toolbox/electrical,
-/obj/item/clothing/mask/gas,
-/turf/open/floor/iron/dark,
+/obj/machinery/light/directional/south,
+/obj/structure/cable,
+/obj/structure/cable,
+/turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "np" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -429,6 +417,7 @@
 /obj/machinery/shower/directional/east{
 	name = "emergency shower"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "ql" = (
@@ -451,9 +440,9 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Laser Room"
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "qQ" = (
@@ -484,6 +473,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "rW" = (
@@ -538,7 +528,6 @@
 /area/station/engineering/supermatter/room)
 "tB" = (
 /obj/machinery/firealarm/directional/south,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -610,8 +599,8 @@
 "vL" = (
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "wk" = (
@@ -692,12 +681,14 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/worn_out/directional/south,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "xX" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "xY" = (
@@ -775,6 +766,10 @@
 /obj/structure/sign/warning/fire,
 /turf/closed/wall/r_wall/rust,
 /area/station/engineering/supermatter)
+"AQ" = (
+/obj/structure/cable,
+/turf/closed/wall/rust,
+/area/station/engineering/supermatter/room)
 "Bl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -830,6 +825,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "Ee" = (
+/obj/structure/cable,
 /turf/closed/wall,
 /area/station/engineering/supermatter/room)
 "Ei" = (
@@ -994,8 +990,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "Ii" = (
@@ -1004,6 +1000,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/light/directional/west,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Ir" = (
@@ -1051,6 +1048,7 @@
 /obj/machinery/shower/directional/east{
 	name = "emergency shower"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "JH" = (
@@ -1140,6 +1138,18 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"LO" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical,
+/obj/item/clothing/mask/gas,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "LZ" = (
 /obj/machinery/meter,
 /obj/effect/turf_decal/stripes/line,
@@ -1187,6 +1197,7 @@
 /obj/item/geiger_counter,
 /obj/structure/table,
 /obj/structure/sign/warning/xeno_mining/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "NC" = (
@@ -1204,6 +1215,7 @@
 	name = "Cooling Loop Bypass"
 	},
 /obj/machinery/light/directional/east,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "NO" = (
@@ -1213,6 +1225,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/south,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Pp" = (
@@ -1275,7 +1288,6 @@
 /area/space/nearstation)
 "RN" = (
 /obj/machinery/airalarm/directional/east,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -1322,12 +1334,15 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "Tl" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/computer/station_alert{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /obj/structure/cable,
-/turf/open/floor/engine,
+/turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "Tt" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1402,6 +1417,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "VI" = (
@@ -1702,7 +1718,7 @@ LM
 hj
 fj
 ML
-Tl
+Fu
 ma
 Fu
 Fu
@@ -1726,7 +1742,7 @@ QB
 pJ
 Si
 JH
-QB
+JH
 NK
 VD
 LZ
@@ -1798,7 +1814,7 @@ aJ
 kM
 pk
 Iu
-dN
+nb
 Cu
 GL
 GL
@@ -1956,7 +1972,7 @@ oK
 xt
 rj
 rj
-yM
+rj
 Ii
 rz
 hW
@@ -1972,11 +1988,11 @@ aK
 "}
 (19,1,1) = {"
 zp
+NC
+oe
 LD
 Ib
-NC
 Ib
-oe
 re
 th
 jM
@@ -1995,12 +2011,12 @@ aK
 "}
 (20,1,1) = {"
 zp
+Tl
+LO
 rW
 Qn
-nb
 dq
-mS
-Ar
+AQ
 Ee
 fx
 Ar

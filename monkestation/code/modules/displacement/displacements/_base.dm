@@ -3,6 +3,7 @@
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_TOGETHER
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE
 	mouse_opacity = FALSE
+	var/size = 0
 
 /obj/effect/distortion/Initialize(mapload)
 	. = ..()

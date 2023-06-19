@@ -2,7 +2,7 @@
 #define THANKS_RANK "9641441"
 #define ASSISTANT_RANK "9641458"
 #define COMMAND_RANK "9641523"
-#define TRAITOR_RANK "Traitor Tier" //muh defines
+#define TRAITOR_RANK "9641531" //muh defines
 #define NUKIE_RANK "9641543"
 
 #define ACCESS_THANKS_RANK 1

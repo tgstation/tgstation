@@ -58,6 +58,14 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	var/temperature_shift_needs_action = FALSE
 	///this groups list of currently running turfs, we iterate over this to stop redundancy
 	var/list/current_temperature_queue = list()
+	///do we evaporate
+	var/evaporates = TRUE
+	///can we merge?
+	var/can_merge = TRUE
+	///number in decimal value that acts as a multiplier to the amount of liquids lost in applications
+	var/loss_precent = 1
+	///do we have any containing expose turf chemicals with volume to look for?
+	var/exposure = FALSE
 
 ///NEW/DESTROY
 /datum/liquid_group/New(height, obj/effect/abstract/liquid_turf/created_liquid)
@@ -83,7 +91,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	if(!T)
 		return
 	if(!T.liquids)
-		T.liquids = new(null, src)
+		T.liquids = new(T, src)
 		cached_edge_turfs[T] = list(NORTH, SOUTH, EAST, WEST)
 
 	if(!members)
@@ -206,6 +214,9 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			member.liquid_height = expected_turf_height + member.turf_height
 
 /datum/liquid_group/proc/process_member(turf/member)
+	if(isspaceturf(member))
+		remove_any(member.liquids, reagents_per_turf)
+
 	if(!(member in members))
 		return
 	turf_reagents.expose(member, TOUCH, liquid = TRUE)
@@ -215,14 +226,16 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		qdel(turf_reagents)
 	turf_reagents = new(100000)
 
+	exposure = FALSE
 	var/list/passed_list = list()
 	for(var/reagent_type in reagents.reagent_list)
 		var/datum/reagent/pulled_reagent = reagent_type
 		var/amount = pulled_reagent.volume / members.len
 		if(!amount)
 			continue
-		remove_specific(src, amount * 0.2, reagent_type)
 		passed_list[pulled_reagent.type] = amount
+		if(pulled_reagent.turf_exposure)
+			exposure = TRUE
 
 	turf_reagents.add_reagent_list(passed_list)
 	turf_reagents.chem_temp = group_temperature
@@ -714,7 +727,6 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		var/amount = pulled_reagent.volume / members.len
 		if(!amount)
 			continue
-		remove_specific(src, amount * 0.2, reagent_type)
 		passed_list[pulled_reagent.type] = amount
 
 	exposed_reagents.add_reagent_list(passed_list)
@@ -787,7 +799,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 		water_rush(new_turf, source_turf)
 
-	else if(source_turf.liquids && source_turf.liquids.liquid_group && new_turf.liquids && new_turf.liquids.liquid_group && new_turf.liquids.liquid_group != source_turf.liquids.liquid_group && source_turf.turf_height == new_turf.turf_height)
+	else if(source_turf.liquids && source_turf.liquids.liquid_group && new_turf.liquids && new_turf.liquids.liquid_group && new_turf.liquids.liquid_group != source_turf.liquids.liquid_group && source_turf.turf_height == new_turf.turf_height && new_turf.liquids.liquid_group.can_merge)
 		merge_group(new_turf.liquids.liquid_group)
 		return FALSE
 	else if(source_turf.turf_height != new_turf.turf_height)

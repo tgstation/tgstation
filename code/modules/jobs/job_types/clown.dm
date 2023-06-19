@@ -50,6 +50,13 @@
 		butt = new/obj/item/organ/internal/butt/clown
 		butt.Insert(spawned)
 
+	var/obj/item/organ/internal/bladder/bladder = spawned.get_organ_slot(ORGAN_SLOT_BLADDER)
+	if(bladder)
+		bladder.Remove(spawned, 1)
+		QDEL_NULL(bladder)
+		bladder = new/obj/item/organ/internal/bladder/clown
+		bladder.Insert(spawned)
+
 /datum/outfit/job/clown
 	name = "Clown"
 	jobtype = /datum/job/clown
