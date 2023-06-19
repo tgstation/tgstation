@@ -18,12 +18,12 @@
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	species_language_holder = /datum/language_holder/synthetic
 
-	mutant_bodyparts = list("body_markings" = "None", "legs" = "Normal Legs")
+	//mutant_bodyparts = list("body_markings" = "None", "legs" = "Normal Legs")
 	external_organs = list(
-		/obj/item/organ/external/horns = "None",
-		/obj/item/organ/external/frills = "None",
-		/obj/item/organ/external/snout = "Round",
-		/obj/item/organ/external/spines = "None",
+		///obj/item/organ/external/horns = "None",
+		///obj/item/organ/external/frills = "None",
+		///obj/item/organ/external/snout = "Round",
+		///obj/item/organ/external/spines = "None",
 		/obj/item/organ/external/tail/lizard = "Smooth",
 	)
 	//mutanttongue = /obj/item/organ/internal/tongue/lizard
@@ -76,21 +76,28 @@
 	return ..()
 
 /datum/species/slugcat/on_species_loss(mob/living/carbon/human/human_being, datum/species/old_species, pref_load)
-	if(human_being.client.prefs.all_quirks)
-		to_chat(human_being, span_danger("The mark of communication leaves you!"))
-		// FOR THE LOVE OF GOD DON'T HARDCODE THESE IF YOU CAN HELP IT
-		if("Signer" in human_being.client.prefs.all_quirks)
-			human_being.remove_quirk(/datum/quirk/item_quirk/signer)
-		else
-			to_chat(human_being, span_notice("You never knew how to sign to begin with..."))
-		if("Mute" in human_being.client.prefs.all_quirks)
-			human_being.remove_quirk(/datum/quirk/mute)
-		else
-			to_chat(human_being, span_notice("You were never mute!  Whew."))
+	if(human_being.client)
+		if(human_being.client.prefs)
+			if(human_being.client.prefs.all_quirks)
+				to_chat(human_being, span_danger("The mark of communication leaves you!"))
+				// FOR THE LOVE OF GOD DON'T HARDCODE THESE IF YOU CAN HELP IT
+				if("Signer" in human_being.client.prefs.all_quirks)
+					human_being.remove_quirk(/datum/quirk/item_quirk/signer)
+				else
+					to_chat(human_being, span_notice("You never knew how to sign to begin with..."))
+				if("Mute" in human_being.client.prefs.all_quirks)
+					human_being.remove_quirk(/datum/quirk/mute)
+				else
+					to_chat(human_being, span_notice("You were never mute!  Whew."))
 	return ..()
 
 
 /// Pretty UI stuff goes here.
+/datum/species/lizard/get_species_description()
+	return "Nimble omnivores with chronic mutism and a natural aptitude for talking to machines, the Slugcats are a rare sight in systems far from their homeworld of Talon III.  \
+		Genetically engineered over untold cycles by their AI caretakers, the Iterators, Slugcats are crafty and intelligent, with incredible capabilities yet incredible fragility, \
+		still carrying the scars of their homeworld's brush with death."
+
 /datum/species/slugcat/get_species_lore()
 	return list(
 		"Nimble omnivores, both predator and prey, they served as the eyes and ears of the Iterators as they worked to uncover the secrets of their progenitor species, the Ancients.  \
