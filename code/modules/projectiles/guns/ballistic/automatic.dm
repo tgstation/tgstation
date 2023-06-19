@@ -239,11 +239,17 @@
 	desc = "A bastardized export version of Nanotrasen's standard service rifle the NT-ARG 'Boarder' \
 		for commercial sale outside of the corporation. Mostly used in the hands of PMC's and governmental authority. \
 		Its devastating burst fire rate has been replaced with semi-automatic fire and less than optimal fire rate."
-	fire_delay = 8
+	fire_delay = 1.2 SECONDS
 	burst_size = 1
 	can_bayonet = TRUE
 	knife_x_offset = 25
 	knife_y_offset = 12
+	select = 1
+	actions_types = list()
+
+/obj/item/gun/ballistic/automatic/ar/irs/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, autofire_shot_delay = 1.2 SECONDS)
 
 // L6 SAW //
 

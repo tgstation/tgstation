@@ -1478,7 +1478,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
-/turf/open/floor/glass,
+/turf/open/floor/iron/white,
 /area/shuttle/pirate)
 "NX" = (
 /obj/machinery/jukebox{
@@ -1621,7 +1621,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
-/turf/open/floor/glass,
+/turf/open/floor/iron/white,
 /area/shuttle/pirate)
 "RB" = (
 /obj/effect/turf_decal/stripes{
