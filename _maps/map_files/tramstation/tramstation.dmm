@@ -16305,7 +16305,6 @@
 	},
 /obj/machinery/newscaster/directional/south,
 /obj/structure/reagent_dispensers/water_cooler,
-/obj/machinery/incident_display/delam/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "eqJ" = (
