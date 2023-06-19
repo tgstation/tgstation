@@ -42,6 +42,9 @@ GLOBAL_PROTECT(lawchanges)
 GLOBAL_VAR(log_directory)
 GLOBAL_PROTECT(log_directory)
 
+GLOBAL_VAR(demo_directory)
+GLOBAL_PROTECT(demo_directory)
+
 GLOBAL_VAR(lua_log)
 GLOBAL_PROTECT(lua_log)
 
