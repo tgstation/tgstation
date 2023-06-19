@@ -62,12 +62,12 @@
 	return ..()
 
 /datum/disease/advance/carpellosis/cure()
-	. = ..()
 	if(ability_granted)
 		rift_ability.Remove(affected_mob)
 	if(stage == max_stages && prob(ella_spawn_chance))
 		to_chat(affected_mob, span_warning("Something comes out of you!"))
 		new /mob/living/basic/carp/ella(affected_mob.loc)
+	return ..()
 
 /datum/disease/advance/carpellosis/proc/grant_ability()
 	if(ability_granted)
