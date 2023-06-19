@@ -5378,4 +5378,7 @@
 #include "modular_skyraptor\modules\icspawning\code\observer.dm"
 #include "modular_skyraptor\modules\icspawning\code\spell.dm"
 #include "modular_skyraptor\modules\icspawning\code\standard.dm"
+#include "modular_skyraptor\modules\newemotes\newemotes_memes.dm"
+#include "modular_skyraptor\modules\newemotes\newemotes_normal.dm"
 // END_INCLUDE
+

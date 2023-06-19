@@ -25,7 +25,7 @@
 
 /obj/item/scalpel/advanced
 	icon = 'modular_skyraptor/modules/aesthetics/oldnewsurgery/oldnewsurgery.dmi'
-	light_color = "#FF0000"
+	light_color = "#AAFF00"
 	light_range = 2
 	lefthand_file = 'modular_skyraptor/modules/aesthetics/oldnewsurgery/oldnewsurgery_inhand_l.dmi'
 	righthand_file = 'modular_skyraptor/modules/aesthetics/oldnewsurgery/oldnewsurgery_inhand_r.dmi'
@@ -34,10 +34,10 @@
 	. = ..()
 	if(active)
 		set_light_range(2)
-		set_light_color("#007FFF")
+		set_light_color("#FF6600")
 	else
 		set_light_range(2)
-		set_light_color("#FF0000")
+		set_light_color("#AAFF00")
 
 /obj/item/retractor/advanced
 	icon = 'modular_skyraptor/modules/aesthetics/oldnewsurgery/oldnewsurgery.dmi'
@@ -48,14 +48,15 @@
 	icon = 'modular_skyraptor/modules/aesthetics/oldnewsurgery/oldnewsurgery.dmi'
 	lefthand_file = 'modular_skyraptor/modules/aesthetics/oldnewsurgery/oldnewsurgery_inhand_l.dmi'
 	righthand_file = 'modular_skyraptor/modules/aesthetics/oldnewsurgery/oldnewsurgery_inhand_r.dmi'
+	light_color = "#AAFF00"
 
 /obj/item/cautery/advanced/on_transform(obj/item/source, mob/user, active)
 	. = ..()
 	if(active)
-		set_light_range(1)
-		set_light_color("#007FFF")
+		//set_light_range(1)
+		set_light_color("#FF6600")
 	else
-		set_light_range(1)
+		//set_light_range(1)
 		set_light_color("#AAFF00")
 
 /obj/item/surgical_drapes
@@ -65,3 +66,6 @@
 	icon = 'modular_skyraptor/modules/aesthetics/oldnewsurgery/oldnewsurgery.dmi'
 	lefthand_file = 'modular_skyraptor/modules/aesthetics/oldnewsurgery/oldnewsurgery_inhand_l.dmi'
 	righthand_file = 'modular_skyraptor/modules/aesthetics/oldnewsurgery/oldnewsurgery_inhand_r.dmi'
+
+/obj/item/storage/medkit/coroner
+	icon = 'modular_skyraptor/modules/aesthetics/oldnewsurgery/oldnewsurgery.dmi'

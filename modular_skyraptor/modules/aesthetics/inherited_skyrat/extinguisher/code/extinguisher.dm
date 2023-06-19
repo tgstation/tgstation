@@ -31,3 +31,6 @@
 			icon_state = "extinguisher_standard_open"
 	else
 		icon_state = "extinguisher_empty_open"
+
+/obj/item/extinguisher
+	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/extinguisher/icons/extinguisher.dmi'
