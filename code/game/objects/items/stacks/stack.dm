@@ -566,7 +566,7 @@
  * - [inhand][boolean]: Whether or not the stack to check should act like it's in a mob's hand.
  */
 /obj/item/stack/proc/can_merge(obj/item/stack/check, inhand = FALSE)
-	// We don't use istype here, since that will match subtypes, and stack things that shouldn't stack
+	// We don't only use istype here, since that will match subtypes, and stack things that shouldn't stack
 	if(!istype(check) || check.merge_type != merge_type)
 		return FALSE
 	if(mats_per_unit ~! check.mats_per_unit) // ~! in case of lists this operator checks only keys, but not values
