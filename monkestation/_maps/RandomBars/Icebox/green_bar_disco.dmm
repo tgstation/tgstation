@@ -214,10 +214,10 @@
 "lE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/clown,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/effect/landmark/start/clown,
 /turf/open/floor/carpet/green,
 /area/station/service/theater)
 "lG" = (
