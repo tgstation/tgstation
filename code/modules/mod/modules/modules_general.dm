@@ -201,7 +201,7 @@
 	.["statusdna"] = mod.wearer?.dna.unique_enzymes
 	.["statusviruses"] = null
 	if(!length(mod.wearer?.diseases))
-		return
+		return .
 	var/list/viruses = list()
 	for(var/datum/disease/virus as anything in mod.wearer.diseases)
 		var/list/virus_data = list()
@@ -212,6 +212,8 @@
 		virus_data["cure"] = virus.cure_text
 		viruses += list(virus_data)
 	.["statusviruses"] = viruses
+	
+	return .
 
 /obj/item/mod/module/status_readout/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_DEATH, PROC_REF(death_sound))
