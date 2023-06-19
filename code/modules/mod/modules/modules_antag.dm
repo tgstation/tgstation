@@ -145,7 +145,7 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic too
 	max_charges = 15
 	recharge_start_delay = 0 SECONDS
-	charge_recovery = 8
+	charge_recovery = 12 //monkestation edit: from 8 to 12
 	shield_icon_file = 'icons/effects/magic.dmi'
 	shield_icon = "mageshield"
 	recharge_path = /obj/item/wizard_armour_charge

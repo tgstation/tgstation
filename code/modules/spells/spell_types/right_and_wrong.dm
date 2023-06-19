@@ -5,7 +5,7 @@ GLOBAL_DATUM(summon_guns, /datum/summon_things_controller)
 GLOBAL_DATUM(summon_magic, /datum/summon_things_controller)
 
 // 1 in 50 chance of getting something really special.
-#define SPECIALIST_MAGIC_PROB 2
+#define SPECIALIST_MAGIC_PROB 5 //monkestation edit: from 2 to 5 so now its 1 in 20, these are cool but not THAT cool
 
 GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/energy/disabler,
