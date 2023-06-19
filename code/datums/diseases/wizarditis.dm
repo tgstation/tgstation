@@ -119,7 +119,7 @@
 			human_mob.equip_to_slot_or_del(new hat_type(human_mob), ITEM_SLOT_HEAD)
 
 	if(prob(chance) && !(human_mob.wear_suit?.item_flags & CASTING_CLOTHES))
-		if(human_mob.dropItemToGround(human_mob.head))
+		if(human_mob.dropItemToGround(human_mob.wear_suit))
 			human_mob.equip_to_slot_or_del(new robe_type(human_mob), ITEM_SLOT_OCLOTHING)
 
 	if(prob(chance) && !istype(human_mob.shoes, /obj/item/clothing/shoes/sandal/magic))
@@ -153,6 +153,7 @@
 	random_spells += sneeze_blink
 
 	var/datum/action/cooldown/spell/smoke/sneeze_smoke = new(src)
+	sneeze_smoke.smoke_amt = 2
 	random_spells += sneeze_smoke
 
 	var/datum/action/cooldown/spell/spacetime_dist/sneeze_spacetime = new(src)
