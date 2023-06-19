@@ -93,7 +93,7 @@
 
 
 /// Pretty UI stuff goes here.
-/datum/species/lizard/get_species_description()
+/datum/species/slugcat/get_species_description()
 	return "Nimble omnivores with chronic mutism and a natural aptitude for talking to machines, the Slugcats are a rare sight in systems far from their homeworld of Talon III.  \
 		Genetically engineered over untold cycles by their AI caretakers, the Iterators, Slugcats are crafty and intelligent, with incredible capabilities yet incredible fragility, \
 		still carrying the scars of their homeworld's brush with death."
