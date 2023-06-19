@@ -22,13 +22,13 @@
 	else
 		dry()
 
-/obj/effect/decal/cleanable/blood/process()
-	if(world.time > drytime)
-		dry()
-
 /obj/effect/decal/cleanable/blood/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/obj/effect/decal/cleanable/blood/process()
+	if(world.time > drytime)
+		dry()
 
 /obj/effect/decal/cleanable/blood/proc/get_timer()
 	drytime = world.time + 3 MINUTES
@@ -63,7 +63,7 @@
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
 	add_blood_DNA(list("Non-human DNA" = random_blood_type())) // Needs to happen before ..()
-	. = ..()
+	return ..()
 
 /obj/effect/decal/cleanable/blood/splatter
 	icon_state = "gibbl1"
@@ -135,7 +135,7 @@
 /obj/effect/decal/cleanable/blood/gibs/on_entered(datum/source, atom/movable/L)
 	if(isliving(L) && has_gravity(loc))
 		playsound(loc, 'sound/effects/footstep/gib_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 20 : 50, TRUE)
-	. = ..()
+	return ..()
 
 /obj/effect/decal/cleanable/blood/gibs/proc/on_pipe_eject(atom/source, direction)
 	SIGNAL_HANDLER
@@ -157,8 +157,9 @@
 	if(!step_to(src, get_step(src, direction), 0))
 		return
 	if(mapload)
-		for (var/i = 1, i < range, i++)
-			new /obj/effect/decal/cleanable/blood/splatter(loc, streak_diseases)
+		for (var/i in 1 to range)
+			if(!isgroundlessturf(loc) || SSmapping.get_turf_below(loc))
+				new /obj/effect/decal/cleanable/blood/splatter(loc)
 			if (!step_to(src, get_step(src, direction), 0))
 				break
 		return
@@ -168,6 +169,8 @@
 
 /obj/effect/decal/cleanable/blood/gibs/proc/spread_movement_effects(datum/move_loop/has_target/source)
 	SIGNAL_HANDLER
+	if(isclosedturf(loc) || (isgroundlessturf(loc) && !SSmapping.get_turf_below(loc)))
+		return
 	new /obj/effect/decal/cleanable/blood/splatter(loc, streak_diseases)
 
 /obj/effect/decal/cleanable/blood/gibs/up
@@ -403,6 +406,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 	if(istype(bumped_atom, /obj/structure/window))
 		var/obj/structure/window/bumped_window = bumped_atom
 		if(!bumped_window.fulltile)
+			hit_endpoint = TRUE
 			qdel(src)
 			return
 
