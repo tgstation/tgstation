@@ -103,7 +103,7 @@
 /obj/item/implant/explosive/proc/timed_explosion()
 	imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
-	stoplag(delay * 0.25)
+	sleep(delay * 0.25)
 	if(imp_in && !imp_in.stat)
 		imp_in.visible_message(span_warning("[imp_in] doubles over in pain!"))
 		imp_in.Paralyze(14 SECONDS)
@@ -113,7 +113,7 @@
 		//for extra spice
 		var/beep_volume = 35
 		playsound(loc, 'sound/items/timer.ogg', beep_volume, FALSE)
-		stoplag(delay * 0.25)
+		sleep(delay * 0.25)
 		bomb_beeps_until_boom--
 		beep_volume += 5
 	explosion(src, devastation_range = devastation_heavy, heavy_impact_range = devastation_medium, light_impact_range = devastation_weak, flame_range = devastation_weak, flash_range = devastation_weak, explosion_cause = src)
