@@ -214,6 +214,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 	if(world.time - SSticker.round_start_time <= 300 SECONDS)
 		speed_round = TRUE
 
+	SSdemo.flush()
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
 			C?.RollCredits()
