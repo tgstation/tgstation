@@ -129,10 +129,10 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/storage/toolbox/ammobox/wt550m9{
-	pixel_y = 6
+/obj/item/storage/toolbox/ammobox/m556{
+	pixel_y = 7
 	},
-/obj/item/storage/toolbox/ammobox/wt550m9,
+/obj/item/storage/toolbox/ammobox/m556,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "dl" = (
@@ -563,6 +563,7 @@
 /obj/item/clothing/suit/armor/vest/marine/pmc,
 /obj/item/clothing/mask/balaclava,
 /obj/item/clothing/gloves/combat,
+/obj/item/storage/backpack/security,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "pD" = (
@@ -594,9 +595,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "qI" = (
-/obj/structure/guncase/wt550,
-/obj/item/gun/ballistic/automatic/wt550,
-/obj/item/gun/ballistic/automatic/wt550,
+/obj/item/gun/ballistic/automatic/ar/irs,
+/obj/item/gun/ballistic/automatic/ar/irs,
+/obj/structure/guncase/irs,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "qO" = (
@@ -747,6 +748,7 @@
 /area/shuttle/pirate)
 "uC" = (
 /obj/structure/table/reinforced,
+/obj/item/storage/backpack/satchel,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "uJ" = (
@@ -1385,6 +1387,7 @@
 /obj/item/clothing/suit/armor/vest/marine/pmc,
 /obj/item/clothing/mask/balaclava,
 /obj/item/clothing/gloves/combat,
+/obj/item/storage/backpack/security,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "Mu" = (
