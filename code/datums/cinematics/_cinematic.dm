@@ -111,8 +111,7 @@
 	// This does potentially mean some mobs could lose their notrasnform and
 	// not be locked down by cinematics, but that should be very unlikely.
 	if(!watching_mob.notransform)
-		locked += WEAKREF(watching_mob)
-		watching_mob.notransform = TRUE
+		lock_mob(watching_mob)
 
 	// Only show the actual cinematic to cliented mobs.
 	if(!watching_client || (watching_client in watching))
@@ -146,13 +145,22 @@
 		remove_watcher(viewing_client)
 
 	for(var/datum/weakref/locked_ref as anything in locked)
-		var/mob/locked_mob = locked_ref.resolve()
-		if(QDELETED(locked_mob))
-			continue
-		locked_mob.notransform = FALSE
-		UnregisterSignal(locked_mob, COMSIG_MOB_CLIENT_LOGIN)
+		unlock_mob(locked_ref)
 
 	qdel(src)
+
+/// Locks a mob, preventing them from moving, being hurt, or acting
+/datum/cinematic/proc/lock_mob(mob/to_lock)
+	locked += WEAKREF(to_lock)
+	to_lock.notransform = TRUE
+
+/// Unlocks a previously locked weakref
+/datum/cinematic/proc/unlock_mob(datum/weakref/mob_ref)
+	var/mob/locked_mob = mob_ref.resolve()
+	if(isnull(locked_mob))
+		return
+	locked_mob.notransform = FALSE
+	UnregisterSignal(locked_mob, COMSIG_MOB_CLIENT_LOGIN)
 
 /// Removes the passed client from our watching list.
 /datum/cinematic/proc/remove_watcher(client/no_longer_watching)

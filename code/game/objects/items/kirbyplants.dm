@@ -18,6 +18,8 @@
 	var/trimmable = TRUE
 	/// Whether this plant is dead and requires a seed to revive
 	var/dead = FALSE
+	///If it's a special named plant, set this to true to prevent dead-name overriding.
+	var/custom_plant_name = FALSE
 	var/list/static/random_plant_states
 
 /obj/item/kirbyplants/Initialize(mapload)
@@ -25,6 +27,24 @@
 	AddComponent(/datum/component/tactical)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_unwielded=10, force_wielded=10)
 	AddElement(/datum/element/beauty, 500)
+	if(icon_state != base_icon_state && icon_state != "plant-25") //mapedit support
+		base_icon_state = icon_state
+	update_appearance()
+
+/obj/item/kirbyplants/update_name(updates)
+	. = ..()
+	if(custom_plant_name)
+		return
+	name = "[dead ? "dead ":null][initial(name)]"
+
+/obj/item/kirbyplants/update_desc(updates)
+	. = ..()
+	desc = dead ? "The unidentifiable plant remnants make you feel like planting something new in the pot." : initial(desc)
+
+/obj/item/kirbyplants/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, dead))
+		update_appearance()
 
 /obj/item/kirbyplants/update_icon_state()
 	. = ..()
@@ -42,7 +62,7 @@
 		if(do_after(user,3 SECONDS,target=src))
 			qdel(I)
 			dead = FALSE
-			update_appearance(UPDATE_ICON)
+			update_appearance()
 
 /// Cycle basic plant visuals
 /obj/item/kirbyplants/proc/change_visual()
@@ -50,18 +70,8 @@
 		generate_states()
 	var/current = random_plant_states.Find(icon_state)
 	var/next = WRAP(current+1,1,length(random_plant_states))
-	icon_state = random_plant_states[next]
-
-/obj/item/kirbyplants/random
-	icon = 'icons/obj/flora/_flora.dmi'
-	icon_state = "random_plant"
-
-/obj/item/kirbyplants/random/Initialize(mapload)
-	. = ..()
-	icon = 'icons/obj/flora/plants.dmi'
-	if(!random_plant_states)
-		generate_states()
-	icon_state = pick(random_plant_states)
+	base_icon_state = random_plant_states[next]
+	update_appearance(UPDATE_ICON)
 
 /obj/item/kirbyplants/proc/generate_states()
 	random_plant_states = list()
@@ -74,15 +84,46 @@
 		random_plant_states += "plant-[number]"
 	random_plant_states += "applebush"
 
-/obj/item/kirbyplants/dead
-	name = "dead potted plant"
-	desc = "The unidentifiable plant remnants make you feel like planting something new in the pot."
+/obj/item/kirbyplants/random
+	icon = 'icons/obj/flora/_flora.dmi'
+	icon_state = "random_plant"
+
+/obj/item/kirbyplants/random/Initialize(mapload)
+	. = ..()
+	icon = 'icons/obj/flora/plants.dmi'
+	randomize_base_icon_state()
+
+//Handles randomizing the icon during initialize()
+/obj/item/kirbyplants/random/proc/randomize_base_icon_state()
+	if(!random_plant_states)
+		generate_states()
+	base_icon_state = pick(random_plant_states)
+	if(!dead) //no need to update the icon if we're already dead.
+		update_appearance(UPDATE_ICON)
+
+/obj/item/kirbyplants/random/dead
 	icon_state = "plant-25"
 	dead = TRUE
 
-/obj/item/kirbyplants/dead/research_director
+/obj/item/kirbyplants/random/dead/research_director
 	name = "RD's potted plant"
-	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
+	custom_plant_name = TRUE
+
+/obj/item/kirbyplants/random/dead/update_desc(updates)
+	. = ..()
+	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"[dead ? "\nIt doesn't look very healthy...":null]"
+
+/obj/item/kirbyplants/random/fullysynthetic
+	name = "plastic potted plant"
+	desc = "A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch."
+	icon_state = "plant-26"
+	custom_materials = (list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4))
+	trimmable = FALSE
+
+//Handles randomizing the icon during initialize()
+/obj/item/kirbyplants/random/fullysynthetic/randomize_base_icon_state()
+	base_icon_state = "plant-[rand(26, 29)]"
+	update_appearance(UPDATE_ICON)
 
 /obj/item/kirbyplants/photosynthetic
 	name = "photosynthetic potted plant"
@@ -91,21 +132,11 @@
 	light_color = COLOR_BRIGHT_BLUE
 	light_range = 3
 
-/obj/item/kirbyplants/fullysynthetic
-	name = "plastic potted plant"
-	desc = "A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch."
-	icon_state = "plant-26"
-	custom_materials = (list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4))
-	trimmable = FALSE
-
-/obj/item/kirbyplants/fullysynthetic/Initialize(mapload)
-	. = ..()
-	icon_state = "plant-[rand(26, 29)]"
-
 /obj/item/kirbyplants/potty
 	name = "Potty the Potted Plant"
 	desc = "A secret agent staffed in the station's bar to protect the mystical cakehat."
 	icon_state = "potty"
+	custom_plant_name = TRUE
 	trimmable = FALSE
 
 /obj/item/kirbyplants/fern
