@@ -128,10 +128,10 @@
 	for(var/V in diseases)
 		L.ContactContractDisease(V, target_zone)
 
-/datum/component/infective/proc/extrapolation(datum/source, mob/user, var/obj/item/extrapolator/E, scan = TRUE)
+/datum/component/infective/proc/extrapolation(datum/source, mob/user, obj/item/extrapolator/E, scan = TRUE)
 	SIGNAL_HANDLER
 
 	if(scan)
 		E.scan(source, diseases, user)
 	else
-		INVOKE_ASYNC(E, /obj/item/extrapolator.proc/extrapolate, source, diseases, user)
+		PROC_REF(E, /obj/item/extrapolator.proc/extrapolate, source, diseases, user)
