@@ -40,6 +40,8 @@ SUBSYSTEM_DEF(hotspots)
 		while(sanity_cap > 0 && (!random_turf || istype(random_turf.loc, /area/station)))
 			random_turf = locate(rand(1, world.maxx),rand(1, world.maxy), SSmapping.levels_by_trait(ZTRAIT_STATION)[1])
 			sanity_cap--
+		if(!random_turf)
+			message_admins("ERROR: No random turf returned this is a severe issue")
 		new_hotspot.move_center(random_turf)
 
 /datum/controller/subsystem/hotspots/proc/debug_clear()
