@@ -77,6 +77,10 @@
 	camera_holder = null
 	clear_paper()
 
+/// Determines whether this paper has been written or stamped to.
+/obj/item/paper/proc/is_empty()
+	return !(LAZYLEN(raw_text_inputs) || LAZYLEN(raw_stamp_data))
+
 /// Returns a deep copy list of raw_text_inputs, or null if the list is empty or doesn't exist.
 /obj/item/paper/proc/copy_raw_text()
 	if(!LAZYLEN(raw_text_inputs))
@@ -124,7 +128,13 @@
  * * greyscale_override - If set to a colour string and coloured is false, it will override the default of COLOR_WEBSAFE_DARK_GRAY when copying.
  */
 /obj/item/paper/proc/copy(paper_type = /obj/item/paper, atom/location = loc, colored = TRUE, greyscale_override = null)
-	var/obj/item/paper/new_paper = new paper_type(location)
+	var/obj/item/paper/new_paper
+	if(ispath(paper_type, /obj/item/paper))
+		new_paper = new paper_type(location)
+	else if(istype(paper_type, /obj/item/paper))
+		new_paper = paper_type
+	else
+		CRASH("invalid paper_type [paper_type], paper type path or instance expected")
 
 	new_paper.raw_text_inputs = copy_raw_text()
 	new_paper.raw_field_input_data = copy_field_text()
