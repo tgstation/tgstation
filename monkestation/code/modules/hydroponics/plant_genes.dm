@@ -13,7 +13,3 @@
 	. = ..()
 	if(!.)
 		return
-
-	//var/obj/item/seeds/our_seed = our_plant.get_plant_seed()   //this code is pointless, the trait does the work.
-	//if(our_seed.potency > 100 )
-	//	our_seed.potency = 100 //very simple
