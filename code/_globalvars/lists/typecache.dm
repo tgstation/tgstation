@@ -31,6 +31,7 @@ GLOBAL_LIST_INIT(typecache_elevated_structures, typecacheof(list(
 	/obj/machinery/microwave,
 	/obj/machinery/oven,
 	/obj/machinery/stove,
+	/obj/machinery/gibber,
 	//Botany
 	/obj/machinery/hydroponics, // So that harvest doesn't catch germs or decompose (includes dirt piles)
 	//Medbay
