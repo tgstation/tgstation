@@ -43,7 +43,7 @@
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	RegisterSignal(src,COMSIG_PARENT_ATTACKBY, PROC_REF(feed_feedback))
+	RegisterSignal(src,COMSIG_ATOM_ATTACKBY, PROC_REF(feed_feedback))
 
 /obj/structure/aquarium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()

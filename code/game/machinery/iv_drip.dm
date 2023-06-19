@@ -28,7 +28,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	use_power = NO_POWER_USE
 	///What are we sticking our needle in?
-	var/mob/attached
+	var/atom/attached
 	///Are we donating or injecting?
 	var/mode = IV_INJECTING
 	///The chemicals flow speed
@@ -305,7 +305,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 ///called when an IV is attached
-/obj/machinery/iv_drip/proc/attach_iv(mob/target, mob/user)
+/obj/machinery/iv_drip/proc/attach_iv(atom/target, mob/user)
 	if(isliving(target))
 		user.visible_message(span_warning("[usr] begins attaching [src] to [target]..."), span_warning("You begin attaching [src] to [target]."))
 		if(!do_after(usr, 1 SECONDS, target))
@@ -316,7 +316,9 @@
 	var/datum/reagents/container = get_reagents()
 	log_combat(usr, target, "attached", src, "containing: ([container.get_reagent_log_string()])")
 	add_fingerprint(usr)
-	target.throw_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
+	if(isliving(target))
+		var/mob/living/target_mob = target
+		target_mob.throw_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
 	attached = target
 	START_PROCESSING(SSmachines, src)
 	update_appearance(UPDATE_ICON)
@@ -327,7 +329,9 @@
 /obj/machinery/iv_drip/proc/detach_iv()
 	if(attached)
 		visible_message(span_notice("[attached] is detached from [src]."))
-		attached.clear_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
+		if(isliving(attached))
+			var/mob/living/attached_mob = attached
+			attached_mob.clear_alert(ALERT_IV_CONNECTED, /atom/movable/screen/alert/iv_connected)
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
 	attached = null
 	update_appearance(UPDATE_ICON)

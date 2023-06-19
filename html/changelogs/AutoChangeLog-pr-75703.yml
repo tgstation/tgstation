@@ -1,4 +1,0 @@
-author: "Licks-the-Crystal"
-delete-after: True
-changes:
-  - bugfix: "Stops grilles from electrocuting or tesla-ing when there's a floor between the grille and the cable."

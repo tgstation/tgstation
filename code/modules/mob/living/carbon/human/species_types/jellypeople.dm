@@ -30,7 +30,6 @@
 	toxic_food = NONE
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
-	burnmod = 0.5 // = 1/2x generic burn damage
 	payday_modifier = 0.75
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	inherent_factions = list(FACTION_SLIME)
@@ -686,10 +685,11 @@
 	project_action = new(src)
 	project_action.Grant(grant_to)
 
-	grant_to.AddComponent(/datum/component/mind_linker, \
+	grant_to.AddComponent( \
+		/datum/component/mind_linker/active_linking, \
 		network_name = "Slime Link", \
-		linker_action_path = /datum/action/innate/link_minds, \
 		signals_which_destroy_us = list(COMSIG_SPECIES_LOSS), \
+		linker_action_path = /datum/action/innate/link_minds, \
 	)
 
 //Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW
@@ -813,7 +813,7 @@
 		return FALSE
 
 	return TRUE
-	
+
 #undef JELLY_REGEN_RATE
 #undef JELLY_REGEN_RATE_EMPTY
 #undef BLOOD_VOLUME_LOSE_NUTRITION

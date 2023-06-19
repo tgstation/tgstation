@@ -46,7 +46,14 @@
 /obj/item/cult_bastard/proc/on_spin(mob/living/user, duration)
 	var/oldcolor = user.color
 	user.color = "#ff0000"
-	user.add_stun_absorption("bloody bastard sword", duration, 2, "doesn't even flinch as the sword's power courses through them!", "You shrug off the stun!", " glowing with a blazing red aura!")
+	user.add_stun_absorption(
+		source = name,
+		duration = duration,
+		priority = 2,
+		message = span_warning("%EFFECT_OWNER doesn't even flinch as the sword's power courses through [user.p_them()]!"),
+		self_message = span_boldwarning("You shrug off the stun!"),
+		examine_message = span_warning("%EFFECT_OWNER_THEYRE glowing with a blazing red aura!"),
+	)
 	user.spin(duration, 1)
 	animate(user, color = oldcolor, time = duration, easing = EASE_IN)
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, update_atom_colour)), duration)
@@ -84,7 +91,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/cult_bastard/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/cult_bastard/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!prob(final_block_chance))
 		return FALSE
 	owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))

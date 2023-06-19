@@ -241,6 +241,9 @@
 		/obj/item/mod/module/jetpack/advanced,
 	)
 
+/obj/item/mod/control/pre_equipped/nuclear/unrestricted
+	req_access = null
+
 /obj/item/mod/control/pre_equipped/elite
 	theme = /datum/mod_theme/elite
 	applied_cell = /obj/item/stock_parts/cell/bluespace

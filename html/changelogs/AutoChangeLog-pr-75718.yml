@@ -1,8 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - code_imp: "Modularized plasmamen plasma breathing species trait code to automatically apply to all species"
-  - code_imp: "Liver shrugging differences/Alcohol tolerance differences now displayed in the species trait panel"
-  - code_imp: "Nobreath and Nogenes now accounted for in species trait code"
-  - rscadd: "Podpeople now have species traits"
-  - rscadd: "Plasmamen genelessness is now displayed in their species panel"

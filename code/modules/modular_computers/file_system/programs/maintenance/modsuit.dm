@@ -23,12 +23,12 @@
 	if(controlled_suit)
 		unsync_modsuit()
 	controlled_suit = attacking_item
-	RegisterSignal(controlled_suit, COMSIG_PARENT_QDELETING, PROC_REF(unsync_modsuit))
+	RegisterSignal(controlled_suit, COMSIG_QDELETING, PROC_REF(unsync_modsuit))
 	user.balloon_alert(user, "suit updated")
 	return TRUE
 
 /datum/computer_file/program/maintenance/modsuit_control/proc/unsync_modsuit(atom/source)
-	UnregisterSignal(controlled_suit, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(controlled_suit, COMSIG_QDELETING)
 	controlled_suit = null
 
 /datum/computer_file/program/maintenance/modsuit_control/ui_data(mob/user)
