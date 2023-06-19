@@ -334,6 +334,7 @@
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_spawner.dm"
 #include "code\__DEFINES\research\anomalies.dm"
 #include "code\__DEFINES\research\research_categories.dm"
+#include "code\__DEFINES\~skyraptor_defines\species_slugcat.dm"
 #include "code\__HELPERS\_auxtools_api.dm"
 #include "code\__HELPERS\_lists.dm"
 #include "code\__HELPERS\_planes.dm"
@@ -5378,4 +5379,5 @@
 #include "modular_skyraptor\modules\icspawning\code\observer.dm"
 #include "modular_skyraptor\modules\icspawning\code\spell.dm"
 #include "modular_skyraptor\modules\icspawning\code\standard.dm"
+#include "modular_skyraptor\modules\species_slugcat\code\scug_species.dm"
 // END_INCLUDE

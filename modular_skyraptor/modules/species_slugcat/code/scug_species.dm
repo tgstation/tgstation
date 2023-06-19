@@ -1,0 +1,132 @@
+#define SCUG_NAMES list("Survivor", "Monk", "Hunter", "Gourmand", "Artificer", "Rivulet", "Saint", "Guardian", "Protector", "Emissary", "Prophet", "Warrior", "Artist", "Explorer", "Wanderer", "Traveler", \
+						"Cook", "Engineer", "Tinkerer", "Mage", "Magician", "Gardener", "Leader", "Guide", "Nomad", "Technomancer", "Vanguard", "Nymph", "Lancer", "Savage", "Florist", "Luminary", \
+						"Apothecary", "Healer")
+
+/datum/species/slugcat
+	// Slugcats from Rain World, revamped to fit into
+	name = "\improper Slugcat"
+	plural_form = "Slugcats"
+	id = SPECIES_SLUGCAT
+	species_traits = list(
+		MUTCOLORS,
+		EYECOLOR,
+		LIPS,
+	)
+	inherent_traits = list(
+		TRAIT_TACKLING_TAILED_DEFENDER,
+	)
+	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
+
+	mutant_bodyparts = list("body_markings" = "None", "legs" = "Normal Legs")
+	external_organs = list(
+		/obj/item/organ/external/horns = "None",
+		/obj/item/organ/external/frills = "None",
+		/obj/item/organ/external/snout = "Round",
+		/obj/item/organ/external/spines = "None",
+		/obj/item/organ/external/tail/lizard = "Smooth",
+	)
+	mutanttongue = /obj/item/organ/internal/tongue/lizard
+
+	coldmod = 1
+	heatmod = 1
+	payday_modifier = 1 //we're going to be doing a master_files override to universally set payday mod to 1 bcuz it's still some serious wtfery
+
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	disliked_food = DAIRY | SUGAR | FRIED
+	liked_food = GORE | MEAT | RAW
+	digitigrade_customization = DIGITIGRADE_FORCED
+
+	ass_image = 'icons/ass/asslizard.png' //one day this system gets deleted.  one day...
+
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/lizard,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/lizard,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/lizard,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard,
+	)
+
+/datum/species/slugcat/random_name(gender,unique,lastname)
+	if(rand(100) <= 10)
+
+	else
+		return "The [pick(SCUG_NAMES)]"
+
+/datum/species/slugcat/randomize_features(mob/living/carbon/human/human_mob)
+	human_mob.dna.features["body_markings"] = pick(GLOB.body_markings_list)
+	randomize_external_organs(human_mob)
+
+/datum/species/slugcat/get_scream_sound(mob/living/carbon/human/lizard)
+	return pick(
+		'modular_skyraptor/modules/species_slugcat/sounds/scugscream_1.ogg',
+	)
+
+/datum/species/slugcat/on_species_gain(mob/living/carbon/carbon_being, datum/species/old_species, pref_load)
+	var/mob/living/carbon/human/human_being = carbon_being
+	if(human_being)
+		to_chat(carbon_being, span_notice("The mark of communication be upon you."))
+		if(!human_being.has_quirk(/datum/quirk/item_quirk/signer))
+			human_being.add_quirk(/datum/quirk/item_quirk/signer)
+		else
+			to_chat(carbon_being, span_danger("You can't seem to sign any more than you already can.  (Did you take a duplicate Signer?)"))
+		if(!human_being.has_quirk(/datum/quirk/mute))
+			human_being.add_quirk(/datum/quirk/mute)
+		else
+			to_chat(carbon_being, span_danger("You can't seem to get any more mute.  (Did you take a duplicate Mute?)"))
+
+/datum/species/slugcat/on_species_loss(mob/living/carbon/human/human_being, datum/species/old_species, pref_load)
+	if(human_being.client.prefs.all_quirks)
+		to_chat(human_being, span_danger("The mark of communication leaves you!"))
+		// FOR THE LOVE OF GOD DON'T HARDCODE THESE IF YOU CAN HELP IT
+		if("Signer" in human_being.client.prefs.all_quirks)
+			human_being.remove_quirk(/datum/quirk/item_quirk/signer)
+		else
+			to_chat(human_being, span_notice("You never knew how to sign to begin with..."))
+		if("Mute" in human_being.client.prefs.all_quirks)
+			human_being.remove_quirk(/datum/quirk/mute)
+		else
+			to_chat(human_being, span_notice("You were never mute!  Whew."))
+
+
+/// Pretty UI stuff goes here.
+/datum/species/slugcat/get_species_lore()
+	return list(
+		"Nimble omnivores, both predator and prey, they served as the eyes and ears of the Iterators as they worked to uncover the secrets of their progenitor species, the Ancients.  \
+			Over time, Iterators began to see Slugcats as more than mere servants, treating them as friends and trusted allies despite their small stature.  Gazes At Satellites, the leader \
+			of the Primary Group began a research project in tandem with 6 Small Stones to uplift the Slugcats to a more sturdy form.",
+
+		"After many cycles of genetic engineering and aid towards guided evolution, Slugcats have ascended to a more recognizable humanoid form, trading some of their nimbleness for craftiness \
+			and intelligence to more than rival their most notable compeititors, the Scavs.  When SolFed exploration probes entered orbit of Tallon III, they were contacted by Gazes At Satellites, \
+			and soon Slugcats entered the collective consciousness of the Solar Federation.",
+
+		"Slugcats remain uncommonly seen beyond the Talon system, as their numbers remain few despite improvements that have been made to the safety and stability of the so-called \"Rain World's\" eco-system.  \
+			As such, those who do choose to venture beyond their world must do so with their Iterator's express approval and guidance, and typically seek employ and residence within SolFed outposts near the Talon system.  \
+			Slugcats who venture beyond Talon III typically retain the titles given to them by their tribe & Iterator, such as \"The Hunter\" or \"The Artificer\", although some take on the names given to them by their compatriots beyond the stars.",
+	)
+
+/datum/species/slugcat/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "hands",
+			SPECIES_PERK_NAME = "Natural Signer",
+			SPECIES_PERK_DESC = "As a species of mutes, Slugcats communicate almost solely through sign language.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "user-robot",
+			SPECIES_PERK_NAME = "Mark of Communication",
+			SPECIES_PERK_DESC = "All slugcats who leave Talon III must receive the Mark of Communication from their Iterator, letting them understand artificial tongues.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "message-slash",
+			SPECIES_PERK_NAME = "Hereditary Mutism",
+			SPECIES_PERK_DESC = "Slugcats' vocal chords are almost completely deteriorated after untold cycles of hiding from predators, rendering them almost completely mute.",
+		),
+	)
+
+	return to_add
