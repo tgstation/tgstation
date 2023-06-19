@@ -189,3 +189,11 @@
 /obj/machinery/griddle/stand/update_overlays()
 	. = ..()
 	. += "front_bar"
+
+/obj/machinery/griddle/plate
+	name = "grill plate"
+	desc = "A compact grilling plate that can be embedded into a table."
+	variant = "_table"
+	circuit = /obj/item/circuitboard/machine/griddle/plate
+	pass_flags = PASSTABLE
+	anchored_tabletop_offset = 3

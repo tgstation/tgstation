@@ -1153,11 +1153,25 @@
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/griddle
-	name = "Griddle"
+	name = "Griddle (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/griddle
 	req_components = list(/datum/stock_part/micro_laser = 1)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/griddle/screwdriver_act(mob/living/user, obj/item/tool)
+	if(build_path == /obj/machinery/griddle)
+		name = "Grill Plate (Machine Board)"
+		build_path = /obj/machinery/griddle/plate
+	else
+		name = "Griddle (Machine Board)"
+		build_path = /obj/machinery/griddle
+	to_chat(user, span_notice("You set the board to [name]."))
+	return TRUE
+
+/obj/item/circuitboard/machine/griddle/plate
+	name = "Grill Plate (Machine Board)"
+	build_path = /obj/machinery/griddle/plate
 
 /obj/item/circuitboard/machine/oven
 	name = "Oven"

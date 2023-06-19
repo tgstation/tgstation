@@ -120,7 +120,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	if(!istype(target, /obj/machinery/griddle))
 		return SECONDARY_ATTACK_CALL_NORMAL
 
-	var/atom/broken_egg = new /obj/item/food/rawegg(target.loc)
+	var/obj/item/food/rawegg/broken_egg = new(target)
 	broken_egg.pixel_x = pixel_x
 	broken_egg.pixel_y = pixel_y
 	playsound(get_turf(user), 'sound/items/sheath.ogg', 40, TRUE)
