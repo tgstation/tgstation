@@ -5367,6 +5367,7 @@
 #include "monkestation\code\modules\displacement\displacements\large\assets.dm"
 #include "monkestation\code\modules\food_and_drinks\recipes\boiling.dm"
 #include "monkestation\code\modules\hydroponics\botanical_lexicon.dm"
+#include "monkestation\code\modules\hydroponics\plant_genes.dm"
 #include "monkestation\code\modules\hydroponics\seeds.dm"
 #include "monkestation\code\modules\hydroponics\machines\composter.dm"
 #include "monkestation\code\modules\hydroponics\machines\infuser.dm"
