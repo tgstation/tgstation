@@ -3453,6 +3453,7 @@
 #include "code\modules\food_and_drinks\recipes\drinks\drinks_lizard.dm"
 #include "code\modules\food_and_drinks\recipes\drinks\drinks_moth.dm"
 #include "code\modules\food_and_drinks\recipes\drinks\drinks_non-alcoholic.dm"
+#include "code\modules\food_and_drinks\recipes\drinks\drinks_shaken.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_bread.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_burger.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_cake.dm"
