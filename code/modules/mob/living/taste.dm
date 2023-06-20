@@ -43,4 +43,44 @@
 			last_taste_time = world.time
 			last_taste_text = text_output
 
+/**
+ * Gets foodtypes that this mob likes
+ */
+/mob/living/proc/get_liked_food()
+	return NONE
+
+/mob/living/carbon/get_liked_food()
+	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	// No tongue, no tastin'
+	if(!tongue || HAS_TRAIT(src, TRAIT_AGEUSIA))
+		return NONE
+	return tongue.liked_food
+
+/**
+ * Gets foodtypes that this mob dislikes
+ */
+/mob/living/proc/get_disliked_food()
+	return NONE
+
+/mob/living/carbon/get_disliked_food()
+	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	// No tongue, no tastin'
+	if(!tongue || HAS_TRAIT(src, TRAIT_AGEUSIA))
+		return NONE
+	return tongue.disliked_food
+
+/**
+ * Gets foodtypes that this mob hates
+ * Toxic food is the only foodtype that ignores the ageusia trait, keep it like that.
+ */
+/mob/living/proc/get_toxic_food()
+	return NONE
+
+/mob/living/carbon/get_toxic_food()
+	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	// No tongue, no tastin'
+	if(!tongue)
+		return NONE
+	return tongue.toxic_food
+
 #undef DEFAULT_TASTE_SENSITIVITY

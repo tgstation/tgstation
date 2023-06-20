@@ -480,22 +480,25 @@ Behavior that's still missing from this component that original food items had t
 	last_check_time = world.time
 
 	if(HAS_TRAIT(H, TRAIT_AGEUSIA))
-		if(foodtypes & H.dna.species.toxic_food)
+		var/toxic_food = H.get_toxic_food()
+		if(foodtypes & toxic_food)
 			to_chat(H, span_warning("You don't feel so good..."))
 			H.adjust_disgust(25 + 30 * fraction)
 		return // Don't care about the later checks if user has ageusia
 
 	var/food_taste_reaction
-
 	if(check_liked) //Callback handling; use this as an override for special food like donuts
 		food_taste_reaction = check_liked.Invoke(fraction, H)
 
 	if(!food_taste_reaction)
-		if(foodtypes & H.dna.species.toxic_food)
+		var/toxic_food = H.get_toxic_food()
+		var/disliked_food = H.get_disliked_food()
+		var/liked_food = H.get_liked_food()
+		if(foodtypes & toxic_food)
 			food_taste_reaction = FOOD_TOXIC
-		else if(foodtypes & H.dna.species.disliked_food)
+		else if(foodtypes & disliked_food)
 			food_taste_reaction = FOOD_DISLIKED
-		else if(foodtypes & H.dna.species.liked_food)
+		else if(foodtypes & liked_food)
 			food_taste_reaction = FOOD_LIKED
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food

@@ -34,6 +34,12 @@
 	/// Determines how "sensitive" this tongue is to tasting things, lower is more sensitive.
 	/// See [/mob/living/proc/get_taste_sensitivity].
 	var/taste_sensitivity = 15
+	/// Food this tongue likes
+	var/liked_food = NONE
+	/// Food this tongue dislikes
+	var/disliked_food = GROSS
+	/// Food this tongue hates REALLY badly
+	var/toxic_food = TOXIC
 	/// Whether this tongue modifies speech via signal
 	var/modifies_speech = FALSE
 
