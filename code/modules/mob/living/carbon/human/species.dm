@@ -1046,7 +1046,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  **/
 /datum/species/proc/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
-	. = SEND_SIGNAL(affect, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, affected, seconds_per_tick, times_fired)
+	. = SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, affected, seconds_per_tick, times_fired)
 	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
 		return
 	if(chem.type == exotic_blood)
