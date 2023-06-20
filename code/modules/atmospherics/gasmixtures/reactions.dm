@@ -536,7 +536,8 @@
 	var/volume = air.return_volume()
 	var/environment_effciency = volume/pressure		//More volume and less pressure gives better rates
 	var/ratio_efficency = min(cached_gases[/datum/gas/nitrous_oxide][MOLES]/cached_gases[/datum/gas/plasma][MOLES], 1)  //Less n2o than plasma give lower rates
-	var/bz_formed = min(0.01 * ratio_efficency * environment_effciency, cached_gases[/datum/gas/nitrous_oxide][MOLES] * INVERSE(0.4), cached_gases[/datum/gas/plasma][MOLES] * INVERSE(0.8))
+	var/nitrous_oxide_decomposed_factor = max(4 * (cached_gases[/datum/gas/plasma][MOLES] / (cached_gases[/datum/gas/nitrous_oxide][MOLES] + cached_gases[/datum/gas/plasma][MOLES]) - 0.75), 0) // Nitrous oxide decomposes when there are more than 3 parts plasma per n2o.
+	var/bz_formed = min(0.01 * ratio_efficency * environment_effciency, cached_gases[/datum/gas/nitrous_oxide][MOLES] * INVERSE(0.4), cached_gases[/datum/gas/plasma][MOLES] * INVERSE(0.8 * (1 - nitrous_oxide_decomposed_factor)))
 
 	if (cached_gases[/datum/gas/nitrous_oxide][MOLES] - bz_formed * 0.4 < 0  || cached_gases[/datum/gas/plasma][MOLES] - (0.8 * bz_formed) < 0 || bz_formed <= 0)
 		return NO_REACTION
@@ -549,7 +550,6 @@
 	*Plasma acts as a catalyst on decomposition, so it doesn't get consumed in the process.
 	*N2O decomposes with its normal decomposition energy
 	*/
-	var/nitrous_oxide_decomposed_factor = max(4 * (cached_gases[/datum/gas/plasma][MOLES] / (cached_gases[/datum/gas/nitrous_oxide][MOLES] + cached_gases[/datum/gas/plasma][MOLES]) - 0.75), 0)
 	if (nitrous_oxide_decomposed_factor>0)
 		ASSERT_GAS(/datum/gas/nitrogen, air)
 		ASSERT_GAS(/datum/gas/oxygen, air)
