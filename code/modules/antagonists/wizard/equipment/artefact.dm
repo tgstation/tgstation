@@ -417,6 +417,8 @@
 	var/summoning_time = 1 SECONDS
 	/// Checks if the scepter is channeling a vendor already.
 	var/scepter_is_busy_summoning = FALSE
+	/// Checks if the scepter is busy channeling recharges
+	var/scepter_is_busy_recharging = FALSE
 	///Number of summoning charges left.
 	var/summon_vendor_charges = RUNIC_SCEPTER_MAX_CHARGES
 
@@ -429,6 +431,9 @@
 	)
 
 /obj/item/runic_vendor_scepter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if(scepter_is_busy_recharging)
+		user.balloon_alert(user, "busy!")
+		return
 	if(!check_allowed_items(target, not_inside = TRUE))
 		return
 	. |= AFTERATTACK_PROCESSED_ITEM
@@ -475,9 +480,12 @@
 /obj/item/runic_vendor_scepter/attack_self(mob/user, modifiers)
 	. = ..()
 	user.balloon_alert(user, "recharging...")
+	scepter_is_busy_recharging = TRUE
 	if(!do_after(user, 5 SECONDS))
+		scepter_is_busy_recharging = FALSE
 		return
 	user.balloon_alert(user, "fully charged")
+	scepter_is_busy_recharging = FALSE
 	summon_vendor_charges = RUNIC_SCEPTER_MAX_CHARGES
 
 /obj/item/runic_vendor_scepter/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)

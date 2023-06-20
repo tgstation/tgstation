@@ -21,7 +21,7 @@
 		stack_trace("Someone mapped in the meme vending machine the wizard scepter spawns, please remove it")
 
 	addtimer(CALLBACK(src, PROC_REF(decay)), time_to_decay, TIMER_STOPPABLE)
-	runic_pulse()
+	INVOKE_ASYNC(src, PROC_REF(runic_pulse))
 
 	switch(pick(1,3))
 		if(1)
