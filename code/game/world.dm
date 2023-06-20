@@ -137,7 +137,6 @@ GLOBAL_VAR(restart_counter)
 
 	GLOB.logger.init_logging()
 
-	GLOB.round_id_log = "[GLOB.demo_directory]/round_number.txt"
 	GLOB.demo_log = "[GLOB.demo_directory]/[GLOB.round_id]_demo.txt"
 	GLOB.dynamic_log = "[GLOB.log_directory]/dynamic.log"
 	GLOB.filter_log = "[GLOB.log_directory]/filters.log"
