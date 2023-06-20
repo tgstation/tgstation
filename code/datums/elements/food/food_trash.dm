@@ -51,6 +51,13 @@
 
 	var/obj/item/trash_item = generate_trash_procpath ? call(source, generate_trash_procpath)() : new trash(edible_object.drop_location())
 
+	if(istype(source, /obj/item/food/grown) && istype(trash_item, /obj/item/food))
+		var/obj/item/food/grown/plant = source
+		var/reagent_purity = plant.seed.get_reagent_purity()
+		var/obj/item/food/result_food = trash_item
+		result_food.starting_reagent_purity = reagent_purity
+		result_food.adjust_reagent_purity()
+
 	if(isliving(edible_object.loc))
 		var/mob/living/food_holding_mob = edible_object.loc
 		food_holding_mob.dropItemToGround(edible_object)
