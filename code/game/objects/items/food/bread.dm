@@ -17,6 +17,7 @@
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 	AddComponent(/datum/component/food_storage)
+	register_context()
 
 /obj/item/food/bread/make_processable()
 	if (slice_type)
@@ -36,6 +37,25 @@
 /obj/item/food/breadslice/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
+
+/obj/item/food/bread/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	var/screentip_change = FALSE
+
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_CTRL_RMB] = "Remove embedded item (if any)"
+		screentip_change = TRUE
+
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_KNIFE)
+		context[SCREENTIP_CONTEXT_LMB] = "Slice"
+		context[SCREENTIP_CONTEXT_RMB] = "Embed item"
+		screentip_change = TRUE
+
+	if(istype(held_item) && held_item.w_class <= WEIGHT_CLASS_SMALL)
+		context[SCREENTIP_CONTEXT_RMB] = "Embed item"
+		screentip_change = TRUE
+
+	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
 
 /obj/item/food/bread/plain
 	name = "bread"
