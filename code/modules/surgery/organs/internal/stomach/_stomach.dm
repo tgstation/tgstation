@@ -270,7 +270,7 @@
 /obj/item/organ/internal/stomach/bone
 	name = "mass of bones"
 	desc = "You have no idea what this strange ball of bones does."
-	icon_state = "stomach-p"
+	icon_state = "stomach-bone"
 	metabolism_efficiency = 0.025 //very bad
 	organ_traits = list(TRAIT_NOHUNGER)
 
@@ -278,8 +278,8 @@
 	name = "digestive crystal"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 	icon_state = "stomach-p"
-	organ_traits = null
 	metabolism_efficiency = 0.06
+	organ_traits = null
 
 /obj/item/organ/internal/stomach/cybernetic
 	name = "basic cybernetic stomach"
