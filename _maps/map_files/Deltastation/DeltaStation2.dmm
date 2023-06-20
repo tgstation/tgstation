@@ -80196,6 +80196,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron,
 /area/station/science/research)
 "ucW" = (
@@ -81383,6 +81384,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron,
 /area/station/science/research)
 "utj" = (

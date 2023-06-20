@@ -32304,6 +32304,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/station/maintenance/department/prison)
+"lQE" = (
+/obj/effect/mapping_helpers/airlock/unres,
+/turf/closed/wall/r_wall,
+/area/station/science/auxlab/firing_range)
 "lQG" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/iron/small,
@@ -33648,6 +33652,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/white/textured_half{
 	dir = 1
 	},
@@ -53659,10 +53664,10 @@
 /obj/machinery/door/airlock{
 	name = "Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "tat" = (
@@ -55491,6 +55496,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/white/textured_half{
 	dir = 1
 	},
@@ -64565,6 +64571,9 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
 /turf/open/floor/iron/white/textured_half{
 	dir = 1
 	},
@@ -64855,6 +64864,9 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
 /turf/open/floor/iron/white/textured_half{
 	dir = 1
 	},
@@ -119042,7 +119054,7 @@ blb
 utm
 utm
 utm
-utm
+lQE
 utm
 xok
 xCV
