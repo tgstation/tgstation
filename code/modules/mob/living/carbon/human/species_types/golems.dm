@@ -40,6 +40,7 @@
 	mutantbrain = /obj/item/organ/internal/brain/golem
 	mutanttongue = /obj/item/organ/internal/tongue/golem
 	mutantstomach = /obj/item/organ/internal/stomach/golem
+	mutantliver = /obj/item/organ/internal/liver/golem
 	mutantappendix = /obj/item/organ/internal/appendix/golem
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem,
