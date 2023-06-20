@@ -3,6 +3,7 @@
 
 /obj/item/organ/internal/stomach
 	name = "stomach"
+	desc = "Onaka ga suite imasu."
 	icon_state = "stomach"
 	visual = FALSE
 	w_class = WEIGHT_CLASS_SMALL
@@ -10,7 +11,6 @@
 	slot = ORGAN_SLOT_STOMACH
 	attack_verb_continuous = list("gores", "squishes", "slaps", "digests")
 	attack_verb_simple = list("gore", "squish", "slap", "digest")
-	desc = "Onaka ga suite imasu."
 
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY * 1.15 // ~13 minutes, the stomach is one of the first organs to die
@@ -275,7 +275,7 @@
 /obj/item/organ/internal/stomach/bone/plasmaman
 	name = "digestive crystal"
 	icon_state = "stomach-p"
-	organ_traits = list()
+	organ_traits = null
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 	metabolism_efficiency = 0.06
 

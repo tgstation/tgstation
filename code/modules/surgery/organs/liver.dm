@@ -60,6 +60,26 @@
 
 	qdel(GetComponent(/datum/component/squeak))
 
+/// Registers COMSIG_MOB_REAGENT_CHECK from owner
+/obj/item/organ/internal/liver/on_insert(mob/living/carbon/organ_owner, special)
+	. = ..()
+	RegisterSignal(organ_owner, COMSIG_MOB_REAGENT_CHECK, PROC_REF(handle_chemical))
+
+/// Unregisters COMSIG_MOB_REAGENT_CHECK from owner
+/obj/item/organ/internal/liver/on_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	UnregisterSignal(organ_owner, COMSIG_MOB_REAGENT_CHECK)
+
+/**
+ * This proc can be overriden by liver subtypes so they can handle certain chemicals in special ways.
+ * Return null to continue running the normal on_mob_life() for that reagent.
+ * Return COMSIG_MOB_STOP_REAGENT_CHECK to not run the normal metabolism effects.
+ * NOTE: If you return COMSIG_MOB_STOP_REAGENT_CHECK, that reagent will not be removed like normal! You must handle it manually.
+ **/
+/obj/item/organ/internal/liver/proc/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
+	return
+
 /obj/item/organ/internal/liver/examine(mob/user)
 	. = ..()
 
@@ -105,13 +125,13 @@
 #define HAS_PAINFUL_TOXIN 2
 
 /obj/item/organ/internal/liver/on_life(seconds_per_tick, times_fired)
-	var/mob/living/carbon/liver_owner = owner
 	. = ..() //perform general on_life()
-
+	var/mob/living/carbon/liver_owner = owner
 	if(!istype(liver_owner))
 		return
-	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM)) //If your liver is failing or you lack a metabolism then we use the liverless version of metabolize
-		liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose=TRUE, liverless=TRUE)
+	//If your liver is failing or you lack a metabolism then we use the liverless version of metabolize
+	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM))
+		liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
 		return
 
 	var/obj/belly = liver_owner.get_organ_slot(ORGAN_SLOT_STOMACH)
@@ -214,12 +234,6 @@
 
 /obj/item/organ/internal/liver/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantliver
-
-/obj/item/organ/internal/liver/plasmaman
-	name = "reagent processing crystal"
-	icon_state = "liver-p"
-	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
-	status = ORGAN_MINERAL
 
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/internal/liver/alien

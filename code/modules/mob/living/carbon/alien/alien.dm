@@ -66,9 +66,6 @@
 	else
 		clear_alert(ALERT_XENO_FIRE)
 
-/mob/living/carbon/alien/reagent_check(datum/reagent/R, seconds_per_tick, times_fired) //can metabolize all reagents
-	return FALSE
-
 /mob/living/carbon/alien/getTrail()
 	if(getBruteLoss() < 200)
 		return pick (list("xltrails_1", "xltrails2"))

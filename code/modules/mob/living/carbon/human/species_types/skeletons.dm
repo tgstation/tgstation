@@ -32,7 +32,7 @@
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/internal/tongue/bone
-	mutantstomach = /obj/item/organ/internal/stomach/bone
+	mutantstomach = null
 	mutantappendix = null
 	mutantheart = null
 	mutantliver = null
@@ -64,43 +64,44 @@
 	return ..()
 
 //Can still metabolize milk through meme magic
-/datum/species/skeleton/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
+/datum/species/skeleton/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
 	. = ..()
+	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
+		return
 	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
-		H.adjustStaminaLoss(7.5 * REM * seconds_per_tick, 0)
-		H.adjustBruteLoss(0.5 * REM * seconds_per_tick, 0)
+		affected.adjustStaminaLoss(7.5 * REM * seconds_per_tick, 0)
+		affected.adjustBruteLoss(0.5 * REM * seconds_per_tick, 0)
 		if(SPT_PROB(10, seconds_per_tick))
 			switch(rand(1, 3))
 				if(1)
-					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
+					affected.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = chem.type)
 				if(2)
-					H.manual_emote(pick("oofs silently.", "looks like [H.p_their()] bones hurt.", "grimaces, as though [H.p_their()] bones hurt."))
+					affected.manual_emote(pick("oofs silently.", "looks like [affected.p_their()] bones hurt.", "grimaces, as though [affected.p_their()] bones hurt."))
 				if(3)
-					to_chat(H, span_warning("Your bones hurt!"))
+					to_chat(affected, span_warning("Your bones hurt!"))
 		if(chem.overdosed)
-			if(SPT_PROB(2, seconds_per_tick) && iscarbon(H)) //big oof
+			if(SPT_PROB(2, seconds_per_tick)) //big oof
 				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
-				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
-				if(bp)
-					playsound(H, get_sfx(SFX_DESECRATION), 50, TRUE, -1) //You just want to socialize
-					H.visible_message(span_warning("[H] rattles loudly and flails around!!"), span_danger("Your bones hurt so much that your missing muscles spasm!!"))
-					H.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
-					bp.receive_damage(200, 0, 0) //But I don't think we should
+				var/obj/item/bodypart/bodypart = affected.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
+				if(bodypart)
+					playsound(affected, get_sfx(SFX_DESECRATION), 50, TRUE, -1) //You just want to socialize
+					affected.visible_message(span_warning("[affected] rattles loudly and flails around!!"), span_danger("Your bones hurt so much that your missing muscles spasm!!"))
+					affected.say("OOF!!", forced = chem.type)
+					bodypart.receive_damage(brute = 200) //But I don't think we should
 				else
-					to_chat(H, span_warning("Your missing arm aches from wherever you left it."))
-					H.emote("sigh")
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
-		return TRUE
+					to_chat(affected, span_warning("Your missing [parse_zone(selected_part)] aches from wherever you left it."))
+					affected.emote("sigh")
+		affected.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
+		return COMSIG_MOB_STOP_REAGENT_CHECK
 	if(chem.type == /datum/reagent/consumable/milk)
 		if(chem.volume > 50)
-			H.reagents.remove_reagent(chem.type, chem.volume - 5)
-			to_chat(H, span_warning("The excess milk is dripping off your bones!"))
-		H.heal_bodypart_damage(2.5 * REM * seconds_per_tick, 2.5 * REM * seconds_per_tick)
-
-		for(var/datum/wound/iter_wound as anything in H.all_wounds)
+			affected.reagents.remove_reagent(chem.type, (50 - chem.volume))
+			to_chat(affected, span_warning("The excess milk is dripping off your bones!"))
+		affected.heal_bodypart_damage(2.5 * REM * seconds_per_tick, 2.5 * REM * seconds_per_tick)
+		for(var/datum/wound/iter_wound as anything in affected.all_wounds)
 			iter_wound.on_xadone(1 * REM * seconds_per_tick)
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
-		return FALSE
+		affected.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
+		return
 
 /datum/species/skeleton/get_species_description()
 	return "A rattling skeleton! They descend upon Space Station 13 \
