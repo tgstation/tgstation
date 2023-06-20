@@ -1,27 +1,59 @@
 /*
-TEMPLATES AND VARIABLES
-GrownPlantTemplate
-	REQUIRED:
-		seed_name - name of the plant species
-		seed_icon - name for the plant's result seed image file
-	OPTIONAL:
-		name - name of the plant
-		icon - name for the plant's result image file
-		desc - description of plant
-		genes - the genes the plant has by default, amounts are not specified because they are not static
-		mutations - the possible plants this plant can mutate into
+VARIABLES
+	template_data keys
+		REQUIRED:
+			name       - name of the plant
+			icon       - name for the plant's result image file
+			seed_name  - name of the plant species
+			seed_icon  - name for the plant's result seed image file
+		OPTIONAL:
+			desc       - description of plant
+			genes      - concatenated string seperated by <br>
+			reagents   - concatenated string seperated by <br>
+			plant_type - only accepts Weed Adaptation and Fungal Vitality
+			mutations  - the possible plants this plant can mutate into
+
+INFRASTRUCTURE:
+	GrownPlant - template, generates a table entry
+	GrownPlantTable - template, generates the table for us to put data in
 
 TODO:
-	Create metatemplate that lays out all data into one contiguous table automatically
-	Seperate code into functions, make formatting smarter so we don't have a trailing <br>
-	Implement content table for genes, make all plant genes reference this table
-	Filter out "reagent genes" and link to appropriate area of chemistry guide for each
-	Make sure the plants list is exhaustive, should contain every plant in the game
-	Find out how to do as little formatting as possible, we want all UX to happen on the wiki
+	Plant genes table
+	Brewing stats
+	Reagent values - try creating object instance and using watch
+	Subtemplate reagents and brewing
 */
 
 /datum/autowiki/plants
 	page = "Template:Autowiki/Content/Plants"
+
+/datum/autowiki/plants/proc/parse_genes(obj/item/seeds/seed, data)
+	var/genes = ""
+	var/reagents = ""
+	for(var/datum/plant_gene/gene as anything in seed.genes)
+		if(gene.type == /datum/plant_gene/reagent)
+			reagents += "[gene.name]<br>"
+			continue
+		if(gene.parent_type == /datum/plant_gene/trait/plant_type)
+			data["plant_type"] = escape_value("[gene.name]")
+		genes += "[gene.name]<br>"
+
+	if(genes)
+		data["genes"] = escape_value(genes)
+	if(reagents)
+		data["reagents"] = escape_value(reagents)
+
+	return TRUE
+
+/datum/autowiki/plants/proc/parse_mutations(obj/item/seeds/seed, data)
+	var/mutations = ""
+	for(var/obj/item/seeds/mutated_seed as anything in seed.mutatelist)
+		mutations += "[initial(mutated_seed.plantname)]<br>"
+
+	if(mutations != "")
+		data["mutations"] = escape_value(mutations)
+
+	return TRUE
 
 /datum/autowiki/plants/generate()
 	var/output = ""
@@ -48,20 +80,11 @@ TODO:
 
 		upload_icon(getFlatIcon(plant_seed, no_anim = TRUE), seed_filename)
 
-		var/genes = ""
-		for(var/datum/plant_gene/gene as anything in plant_seed.genes)
-			genes += "[gene.name]<br>"
-
-		var/mutations = ""
-		for(var/obj/item/seeds/mutated_seed as anything in plant_seed.mutatelist)
-			mutations += "[initial(mutated_seed.plantname)]<br>"
+		parse_genes(plant_seed, template_data)
+		parse_mutations(plant_seed, template_data)
 
 		template_data["seed_icon"] = seed_filename
 		template_data["seed_name"] = escape_value(plant_seed.name)
-		if(genes != "")
-			template_data["genes"] = escape_value(genes)
-		if(mutations != "")
-			template_data["mutations"] = escape_value(mutations)
 
 		output += include_template("Autowiki/GrownPlantTemplate", template_data)
 
