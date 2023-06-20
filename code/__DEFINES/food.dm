@@ -98,18 +98,37 @@ DEFINE_BITFIELD(foodtypes, list(
 #define DRINK_GOOD 2
 #define DRINK_VERYGOOD 3
 #define DRINK_FANTASTIC 4
-
-#define FOOD_QUALITY_BAD_4 -4
-#define FOOD_QUALITY_BAD_3 -3
-#define FOOD_QUALITY_BAD_2 -2
-#define FOOD_QUALITY_BAD_1 -1
-#define FOOD_QUALITY_NORMAL 0
-#define FOOD_QUALITY_GOOD_1 1
-#define FOOD_QUALITY_GOOD_2 2
-#define FOOD_QUALITY_GOOD_3 3
-#define FOOD_QUALITY_GOOD_4 4
-
 #define FOOD_AMAZING 5
+
+#define FOOD_QUALITY_NORMAL 1
+#define FOOD_QUALITY_NICE 2
+#define FOOD_QUALITY_GOOD 3
+#define FOOD_QUALITY_VERYGOOD 4
+#define FOOD_QUALITY_FANTASTIC 5
+#define FOOD_QUALITY_AMAZING 6
+#define FOOD_QUALITY_TOP 7
+
+/// Labels for food quality
+GLOBAL_LIST_INIT(food_quality_description, list(
+	FOOD_QUALITY_NORMAL = "mediocore",
+	FOOD_QUALITY_NICE = "nice",
+	FOOD_QUALITY_GOOD = "good",
+	FOOD_QUALITY_VERYGOOD = "very good",
+	FOOD_QUALITY_FANTASTIC = "fantastic",
+	FOOD_QUALITY_AMAZING = "amazing",
+	FOOD_QUALITY_TOP = "godlike",
+))
+
+/// Mood events for food quality
+GLOBAL_LIST_INIT(food_quality_events, list(
+	FOOD_QUALITY_NORMAL = /datum/mood_event/food,
+	FOOD_QUALITY_NICE = /datum/mood_event/food/nice,
+	FOOD_QUALITY_GOOD = /datum/mood_event/food/good,
+	FOOD_QUALITY_VERYGOOD = /datum/mood_event/food/verygood,
+	FOOD_QUALITY_FANTASTIC = /datum/mood_event/food/fantastic,
+	FOOD_QUALITY_AMAZING = /datum/mood_event/food/amazing,
+	FOOD_QUALITY_TOP = /datum/mood_event/food/top,
+))
 
 /// Food is "in a container", not in a code sense, but in a literal sense (canned foods)
 #define FOOD_IN_CONTAINER (1<<0)

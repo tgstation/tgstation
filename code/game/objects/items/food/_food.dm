@@ -128,21 +128,18 @@
 ///Retrieve the average purity of the food reagents
 /obj/item/food/proc/get_quality()
 	if(!reagents.reagent_list.len)
-		return DRINK_FANTASTIC // No reagents equal to top quality
+		return FOOD_QUALITY_NORMAL // No reagents equal to normal quality
 
-	var/total_purity
-	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
-		total_purity += reagent.purity
-	var/average_purity = total_purity / reagents.reagent_list.len
-	var/quality_min = FOOD_QUALITY_BAD_4
-	var/quality_max = FOOD_QUALITY_GOOD_4
-	var/quality = round(LERP(quality_min, quality_max, average_purity))
+	var/average_purity = reagents.get_average_purity()
+	var/purity_above_base = clamp((average_purity - 0.5) * 2, 0, 1)
+	var/quality_min = FOOD_QUALITY_NORMAL
+	var/quality_max = FOOD_QUALITY_TOP
+	var/quality = round(LERP(quality_min, quality_max, purity_above_base))
 	return quality
 
 /// TODO: DEBUG, REMOVE
 /obj/item/food/examine(mob/user)
 	. = ..()
-	. += span_notice("Quality: [get_quality()]")
 	. += span_notice("Reagent purities:")
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		. += span_notice("- [reagent.name] [reagent.volume]u: [round(reagent.purity * 100)]% pure")

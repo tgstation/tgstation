@@ -214,6 +214,28 @@ Behavior that's still missing from this component that original food items had t
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
 		examine_list += span_notice("It is [lowertext(english_list(types))].")
 
+	if(istype(parent, /obj/item/food))
+		var/obj/item/food/food = parent
+		var/quality = get_preceived_food_quality(user, food)
+		if(quality > 0)
+			var/quality_label = GLOB.food_quality_description[quality]
+			examine_list += span_green("You find this meal [quality_label].")
+		else
+			examine_list += span_warning("You find this meal inedible.")
+		var/purity = food.get_average_purity()
+		switch(purity)
+			if(0 to 0.2)
+				examine_list += span_warning("The ingredients are terrible.")
+			if(0.2 to 0.4)
+				examine_list += span_warning("The ingredients are synthetic.")
+			if(0.4 to 0.6)
+				examine_list += span_notice("The ingredients are mediocore.")
+			if(0.6 to 0.8)
+				examine_list += span_green("The ingredients are good.")
+			if(0.8 to 1)
+				examine_list += span_green("The ingredients are finest.")
+
+
 	var/datum/mind/mind = user.mind
 	if(mind && HAS_TRAIT_FROM(parent, TRAIT_FOOD_CHEF_MADE, REF(mind)))
 		examine_list += span_green("[parent] was made by you!")
@@ -498,26 +520,58 @@ Behavior that's still missing from this component that original food items had t
 		else if(foodtypes & H.dna.species.liked_food)
 			food_taste_reaction = FOOD_LIKED
 
-	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
-		food_taste_reaction = isjellyperson(H) ? FOOD_LIKED : FOOD_TOXIC
+	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER) && !isjellyperson(H)) // it's not real food
+		food_taste_reaction = FOOD_TOXIC
 
-	switch(food_taste_reaction)
-		if(FOOD_TOXIC)
-			to_chat(H,span_warning("What the hell was that thing?!"))
-			H.adjust_disgust(25 + 30 * fraction)
-			H.add_mood_event("toxic_food", /datum/mood_event/disgusting_food)
-		if(FOOD_DISLIKED)
-			to_chat(H,span_notice("That didn't taste very good..."))
-			H.adjust_disgust(11 + 15 * fraction)
-			H.add_mood_event("gross_food", /datum/mood_event/gross_food)
-		if(FOOD_LIKED)
-			to_chat(H,span_notice("I love this taste!"))
-			H.adjust_disgust(-5 + -2.5 * fraction)
-			H.add_mood_event("fav_food", /datum/mood_event/favorite_food)
-			if(istype(parent, /obj/item/food))
-				var/obj/item/food/memorable_food = parent
-				if(memorable_food.venue_value >= FOOD_PRICE_EXOTIC)
-					H.add_mob_memory(/datum/memory/good_food, food = parent)
+	if(food_taste_reaction == FOOD_TOXIC)
+		to_chat(H,span_warning("What the hell was that thing?!"))
+		H.adjust_disgust(25 + 30 * fraction)
+		H.add_mood_event("toxic_food", /datum/mood_event/disgusting_food)
+		return
+
+	if(!istype(parent, /obj/item/food))
+		return
+	var/obj/item/food/food = parent
+	var/food_quality = get_preceived_food_quality(H, parent)
+	if(food_quality <= 0)
+		to_chat(H,span_notice("That didn't taste very good..."))
+		H.adjust_disgust(11 + 15 * fraction)
+		H.add_mood_event("gross_food", /datum/mood_event/gross_food)
+	else
+		food_quality = min(food_quality, FOOD_QUALITY_TOP)
+		var/timeout_mod = food.reagents.get_average_purity() * 2 // 100% at average purity 50%
+		var/event = GLOB.food_quality_events[food_quality]
+		H.add_mood_event("quality_food", event, timeout_mod)
+		H.adjust_disgust(-5 + -2 * food_quality * fraction)
+
+		var/quality_label = GLOB.food_quality_description[food_quality]
+		to_chat(H,span_notice("That's \an [quality_label] meal."))
+
+		if(food.venue_value >= FOOD_PRICE_EXOTIC)
+			H.add_mob_memory(/datum/memory/good_food, food = parent)
+
+/// Get food quality adjusted according to species diet
+/datum/component/edible/proc/get_preceived_food_quality(mob/living/carbon/human/eater, obj/item/food/food)
+	var/food_quality = food.get_quality()
+
+	if(HAS_TRAIT(food, TRAIT_FOOD_SILVER)) // it's not real food
+		food_quality += isjellyperson(eater) ? 2 : -4
+
+	food_quality -= 4 * count_matching_foodtypes(foodtypes, eater.dna.species.toxic_food)
+	food_quality -= 2 * count_matching_foodtypes(foodtypes, eater.dna.species.disliked_food)
+	food_quality += count_matching_foodtypes(foodtypes, eater.dna.species.liked_food)
+
+	return food_quality
+
+/// Get the number of matching food types in provided bitfields
+/datum/component/edible/proc/count_matching_foodtypes(bitfield_one, bitfield_two)
+    var/count = 0
+    var/matching_bits = bitfield_one & bitfield_two
+    while (matching_bits > 0)
+        if (matching_bits & 1)
+            count++
+        matching_bits >>= 1
+    return count
 
 ///Delete the item when it is fully eaten
 /datum/component/edible/proc/On_Consume(mob/living/eater, mob/living/feeder)

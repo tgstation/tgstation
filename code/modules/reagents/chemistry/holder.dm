@@ -1332,6 +1332,13 @@
 			return round(cached_reagent.purity, 0.01)
 	return 0
 
+/// Get the average purity of all reagents
+/datum/reagents/proc/get_average_purity()
+	var/weighted_purity
+	for(var/datum/reagent/reagent as anything in reagent_list)
+		weighted_purity += reagent.volume * reagent.purity
+	return weighted_purity / total_volume
+
 /// Get a comma separated string of every reagent name in this holder. UNUSED
 /datum/reagents/proc/get_reagent_names()
 	var/list/names = list()
