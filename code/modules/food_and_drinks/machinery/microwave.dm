@@ -378,7 +378,7 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
-	if(HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
+	if(cooker && (HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7)))
 		muck()
 		return
 	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
