@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Maintenance data disks now properly transfer from PC to disk"
+  - bugfix: "Disks can no longer be flooded with the same app repeatedly."
