@@ -74,7 +74,7 @@
 /atom/proc/flash_lighting_fx(range = FLASH_LIGHT_RANGE, power = FLASH_LIGHT_POWER, color = COLOR_WHITE, duration = FLASH_LIGHT_DURATION, light_type = /obj/effect/dummy/lighting_obj)
 	if(!duration)
 		stack_trace("Lighting FX obj created on \[[type]\] without a duration")
-	var/obj/effect/dummy/light_obj = light_type(get_turf(src), range, power, color, duration)
+	var/obj/effect/dummy/light_obj = new light_type(get_turf(src), range, power, color, duration)
 	return light_obj
 
 /mob/living/flash_lighting_fx(range = FLASH_LIGHT_RANGE, power = FLASH_LIGHT_POWER, color = COLOR_WHITE, duration = FLASH_LIGHT_DURATION, light_type = /obj/effect/dummy/lighting_obj/moblight)
