@@ -2,7 +2,7 @@
 	/// Current amount of upgrades
 	var/amount = 0
 	/// Maximum amount of upgrades
-	var/maxamount = 3
+	var/max_amount = 3
 	/// Item we use to upgrade the armor
 	var/obj/item/upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide
 	/// Armor modification we apply
@@ -30,7 +30,7 @@
 	UnregisterSignal(parent, COMSIG_ATOM_DESTRUCTION)
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 	if(istype(parent, /obj/vehicle/sealed/mecha/working/ripley))
-		UnrgisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
+		UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -100,9 +100,9 @@
 
 	if(!amount)
 		return
-		var/overlay_string = "ripley-g"
-		if(amount >= 3)
-			overlay_string += "-full"
-		if(!LAZYLEN(mech.occupants))
-			overlay_string += "-open"
-		overlays += overlay_string
+	var/overlay_string = "ripley-g"
+	if(amount >= 3)
+		overlay_string += "-full"
+	if(!LAZYLEN(mech.occupants))
+		overlay_string += "-open"
+	overlays += overlay_string
