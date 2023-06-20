@@ -55,9 +55,9 @@
 		TEST_ASSERT(lab_rat.get_organ_slot(test_organ.slot) == test_organ, TEST_ORGAN_INSERT_MESSAGE(test_organ, "should make the organ available via human's `get_organ_slot()` proc."))
 
 	if(LAZYLEN(test_organ.organ_traits))
-		TEST_ASSERT(LAZYLEN(lab_rat.status_traits), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should add Traits to lazylist `human.status_traits`."))
+		TEST_ASSERT(LAZYLEN(lab_rat._status_traits), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should add Traits to lazylist `human._status_traits`."))
 		for(var/test_trait in test_organ.organ_traits)
-			TEST_ASSERT(HAS_TRAIT(lab_rat, test_trait), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should add Trait `[test_trait]` to lazylist `human.status_traits`"))
+			TEST_ASSERT(HAS_TRAIT(lab_rat, test_trait), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should add Trait `[test_trait]` to lazylist `human._status_traits`"))
 
 	if(LAZYLEN(test_organ.actions))
 		TEST_ASSERT(LAZYLEN(lab_rat.actions), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should add Actions to lazylist `human.actions`."))

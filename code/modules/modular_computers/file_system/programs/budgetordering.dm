@@ -218,7 +218,7 @@
 				if(!istype(id_card))
 					computer.say("No ID card detected.")
 					return
-				if(istype(id_card, /obj/item/card/id/departmental_budget))
+				if(IS_DEPARTMENTAL_CARD(id_card))
 					computer.say("[id_card] cannot be used to make purchases.")
 					return
 				account = id_card.registered_account
