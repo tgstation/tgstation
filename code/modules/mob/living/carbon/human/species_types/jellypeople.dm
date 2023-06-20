@@ -496,25 +496,18 @@
 	/// The cooldown of us using exteracts
 	COOLDOWN_DECLARE(extract_cooldown)
 
-//Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW
-/datum/species/jelly/luminescent/Destroy(force, ...)
+//Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW and have to i guess
+/datum/species/jelly/luminescent/Destroy(force)
 	current_extract = null
-	QDEL_NULL(glow)
-	QDEL_LIST(luminescent_actions)
+	if(glow)
+		QDEL_NULL(glow)
+	if(luminescent_actions)
+		QDEL_LIST(luminescent_actions)
 	return ..()
-
-
-/datum/species/jelly/luminescent/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	if(current_extract)
-		current_extract.forceMove(C.drop_location())
-		current_extract = null
-	QDEL_NULL(glow)
-	QDEL_LIST(luminescent_actions)
 
 /datum/species/jelly/luminescent/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species)
 	. = ..()
-	glow = new_jellyperson.mob_light()
+	glow = new_jellyperson.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
 	update_glow(new_jellyperson)
 
 	luminescent_actions = list()
@@ -531,7 +524,17 @@
 	extract_major.Grant(new_jellyperson)
 	luminescent_actions += integrate_extract
 
-/// Updates the glow of our internal glow thing.
+/datum/species/jelly/luminescent/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	if(current_extract)
+		current_extract.forceMove(C.drop_location())
+		current_extract = null
+	if(glow)
+		QDEL_NULL(glow)
+	if(luminescent_actions)
+		QDEL_LIST(luminescent_actions)
+
+/// Updates the glow of our internal glow object
 /datum/species/jelly/luminescent/proc/update_glow(mob/living/carbon/human/glowie, intensity)
 	if(intensity)
 		glow_intensity = intensity
