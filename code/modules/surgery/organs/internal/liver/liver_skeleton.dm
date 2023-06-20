@@ -1,6 +1,7 @@
 /obj/item/organ/internal/liver/bone
 	name = "mass of bones"
 	desc = "You have no idea what this strange ball of bones does."
+	icon_state = "liver-p"
 	organ_traits = list(TRAIT_NOMETABOLISM)
 
 /obj/item/organ/internal/liver/bone/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)

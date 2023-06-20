@@ -5,12 +5,12 @@
 
 /obj/item/organ/internal/liver
 	name = "liver"
+	desc = "Pairing suggestion: chianti and fava beans."
 	icon_state = "liver"
 	visual = FALSE
 	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LIVER
-	desc = "Pairing suggestion: chianti and fava beans."
 
 	maxHealth = STANDARD_ORGAN_THRESHOLD
 	healing_factor = STANDARD_ORGAN_HEALING
@@ -238,15 +238,15 @@
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/internal/liver/alien
 	name = "alien liver" // doesnt matter for actual aliens because they dont take toxin damage
-	icon_state = "liver-x" // Same sprite as fly-person liver.
 	desc = "A liver that used to belong to a killer alien, who knows what it used to eat."
+	icon_state = "liver-x" // Same sprite as fly-person liver.
 	liver_resistance = 0.333 * LIVER_DEFAULT_TOX_RESISTANCE // -66%
 	toxTolerance = 15 // complete toxin immunity like xenos have would be too powerful
 
 /obj/item/organ/internal/liver/cybernetic
 	name = "basic cybernetic liver"
-	icon_state = "liver-c"
 	desc = "A very basic device designed to mimic the functions of a human liver. Handles toxins slightly worse than an organic liver."
+	icon_state = "liver-c"
 	organ_flags = ORGAN_SYNTHETIC
 	toxTolerance = 2
 	liver_resistance = 0.9 * LIVER_DEFAULT_TOX_RESISTANCE // -10%
@@ -255,8 +255,8 @@
 
 /obj/item/organ/internal/liver/cybernetic/tier2
 	name = "cybernetic liver"
-	icon_state = "liver-c-u"
 	desc = "An electronic device designed to mimic the functions of a human liver. Handles toxins slightly better than an organic liver."
+	icon_state = "liver-c-u"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 5 //can shrug off up to 5u of toxins
 	liver_resistance = 1.2 * LIVER_DEFAULT_TOX_RESISTANCE // +20%
@@ -264,8 +264,8 @@
 
 /obj/item/organ/internal/liver/cybernetic/tier3
 	name = "upgraded cybernetic liver"
-	icon_state = "liver-c-u2"
 	desc = "An upgraded version of the cybernetic liver, designed to improve further upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
+	icon_state = "liver-c-u2"
 	alcohol_tolerance = 0.001
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 10 //can shrug off up to 10u of toxins

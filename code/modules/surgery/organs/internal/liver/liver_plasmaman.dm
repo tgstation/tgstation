@@ -1,7 +1,7 @@
 /obj/item/organ/internal/liver/bone/plasmaman
 	name = "reagent processing crystal"
-	icon_state = "liver-p"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
+	icon_state = "liver-p"
 	status = ORGAN_MINERAL
 
 /obj/item/organ/internal/liver/bone/plasmaman/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
