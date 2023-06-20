@@ -129,7 +129,6 @@
 		/obj/item/storage/backpack/satchel/eng = 3,
 		/obj/item/storage/backpack/industrial = 3,
 		/obj/item/storage/backpack/duffelbag/engineering = 3,
-		/obj/item/radio/headset/headset_eng = 3,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/atmos_wardrobe
 	payment_department = ACCOUNT_ENG
@@ -583,7 +582,6 @@
 		/obj/item/storage/backpack/virology = 2,
 		/obj/item/storage/backpack/satchel/vir = 2,
 		/obj/item/storage/backpack/duffelbag/virology = 2,
-		/obj/item/storage/bag/bio = 2,
 		/obj/item/radio/headset/headset_med = 2,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
