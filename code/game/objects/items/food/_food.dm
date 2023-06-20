@@ -125,7 +125,7 @@
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		reagent.purity = starting_reagent_purity
 
-///Retrieve the average purity of the food reagents
+/// TODO: Replace with complexity buff
 /obj/item/food/proc/get_quality()
 	if(!reagents.reagent_list.len)
 		return FOOD_QUALITY_NORMAL // No reagents equal to normal quality

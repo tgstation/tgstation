@@ -222,7 +222,7 @@ Behavior that's still missing from this component that original food items had t
 			examine_list += span_green("You find this meal [quality_label].")
 		else
 			examine_list += span_warning("You find this meal inedible.")
-		var/purity = food.get_average_purity()
+		var/purity = food.reagents.get_average_purity()
 		switch(purity)
 			if(0 to 0.2)
 				examine_list += span_warning("The ingredients are terrible.")
@@ -231,7 +231,7 @@ Behavior that's still missing from this component that original food items had t
 			if(0.4 to 0.6)
 				examine_list += span_notice("The ingredients are mediocore.")
 			if(0.6 to 0.8)
-				examine_list += span_green("The ingredients are good.")
+				examine_list += span_green("The ingredients are organic.")
 			if(0.8 to 1)
 				examine_list += span_green("The ingredients are finest.")
 
