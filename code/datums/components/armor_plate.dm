@@ -98,7 +98,8 @@
 /datum/component/armor_plate/proc/apply_mech_overlays(obj/vehicle/sealed/mecha/mech, list/overlays)
 	SIGNAL_HANDLER
 
-	if(amount)
+	if(!amount)
+		return
 		var/overlay_string = "ripley-g"
 		if(amount >= 3)
 			overlay_string += "-full"
