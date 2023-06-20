@@ -494,6 +494,12 @@
  * Palm Trees *
  **************/
 
+/obj/structure/flora/coconuts
+	gender = PLURAL
+	name = "coconuts"
+	icon = 'icons/misc/beach.dmi'
+	icon_state = "coconuts"
+
 /obj/structure/flora/tree/palm
 	name = "palm tree"
 	desc = "A tree straight from the tropics."

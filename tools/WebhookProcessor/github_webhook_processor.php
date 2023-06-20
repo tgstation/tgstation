@@ -211,7 +211,7 @@ function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_labe
 
 function set_labels($payload, $labels, $remove) {
 	global $repoAutoTaggerWhitelist;
-	if(!in_array($repoAutoTaggerWhitelist, $payload['repository']['name'])) {
+	if(!in_array($payload['repository']['name'], $repoAutoTaggerWhitelist)) {
 		return;
 	}
 
