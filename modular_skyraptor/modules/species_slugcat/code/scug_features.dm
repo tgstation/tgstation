@@ -119,7 +119,7 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Body markings"
 	should_generate_icons = TRUE
-	relevant_mutant_bodypart = "bodymarks_slugcat"
+	relevant_mutant_bodypart = "bodymarks_scug"
 
 /datum/preference/choiced/slugcat_body_markings/init_possible_values()
 	var/list/values = list()
