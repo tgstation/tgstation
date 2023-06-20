@@ -790,9 +790,11 @@
 	)
 /obj/item/toy/plush/shark
 	name = "shark plushie"
-	desc = "A plushie depicting a somewhat cartoonish shark. The tag calls it a 'hákarl', noting that it was made by an obscure furniture manufacturer in old Scandinavia. Popular with cute girls who wear striped socks."
+	desc = "A plushie depicting a somewhat cartoonish shark. The tag calls it a 'hákarl', noting that it was made by an obscure furniture manufacturer in old Scandinavia. Popular with cute girls who wear striped knee-high socks."
 	icon = 'icons/obj/toys/plushes_wide.dmi'
+	lefthand_file = 'icons/mob/inhands/items/plushes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/plushes_righthand.dmi'
 	icon_state = "blahaj"
-	inhand_icon_state = null
+	inhand_icon_state = "blahaj"
 	attack_verb_continuous = list("gnaws", "gnashes", "chews")
-	attack_verb_simple = list("gnaw", "gnashe", "chew")
+	attack_verb_simple = list("gnaw", "gnash", "chew")
