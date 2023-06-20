@@ -36,7 +36,6 @@
 	SIGNAL_HANDLER
 
 	var/p_They = parent.p_they(TRUE)
-	var/p_they = parent.p_they()
 	var/p_Their = parent.p_their(TRUE)
 	var/p_Theyre = parent.p_theyre(TRUE)
 	var/p_have = parent.p_have()
