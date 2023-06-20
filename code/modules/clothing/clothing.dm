@@ -469,7 +469,7 @@ BLIND     // can't see anything
 	var/female_icon_state = "female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
 	var/icon/female_cropping_mask = icon("icon" = 'icons/mob/clothing/under/masking_helpers.dmi', "icon_state" = female_icon_state)
 	female_clothing_icon.Blend(female_cropping_mask, ICON_MULTIPLY)
-	female_clothing_icon = fcopy_rsc(female_clothing_icon)
+	female_clothing_icon = SSdemo.embed_resource(fcopy_rsc(female_clothing_icon))
 	GLOB.female_clothing_icons[index] = female_clothing_icon
 
 /obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
