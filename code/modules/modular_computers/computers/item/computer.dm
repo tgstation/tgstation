@@ -788,7 +788,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
-	if(!tool.use_tool(src, user, 20, volume=50, amount=1))
+	if(!tool.use_tool(src, user, 20, volume=50))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	atom_integrity = max_integrity
 	to_chat(user, span_notice("You repair \the [src]."))
