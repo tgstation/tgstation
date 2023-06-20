@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	var/send_count = 0
 
 	// Apply some lag based on traffic rates
-	var/netlag = 5 SECONDS
+	var/netlag = round(traffic / 50)
 	if(netlag > signal.data["slow"])
 		signal.data["slow"] = netlag
 
