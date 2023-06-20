@@ -84,7 +84,7 @@
 				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 				var/obj/item/bodypart/bodypart = affected.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
 				if(bodypart)
-					playsound(affected, get_sfx(SFX_DESECRATION), 50, TRUE, -1) //You just want to socialize
+					playsound(affected, SFX_DESECRATION, 50, vary = TRUE) //You just want to socialize
 					affected.visible_message(span_warning("[affected] rattles loudly and flails around!!"), span_danger("Your bones hurt so much that your missing muscles spasm!!"))
 					affected.say("OOF!!", forced = chem.type)
 					bodypart.receive_damage(brute = 200) //But I don't think we should

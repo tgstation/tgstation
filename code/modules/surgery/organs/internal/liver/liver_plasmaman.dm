@@ -19,7 +19,7 @@
 		if(SPT_PROB(10, seconds_per_tick))
 			switch(rand(1, 3))
 				if(1)
-					INVOKE_ASYNC(organ_owner, TYPE_PROC_REF(/mob, say), pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = chem.type)
+					INVOKE_ASYNC(organ_owner, TYPE_PROC_REF(/atom/movable, say), pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = chem.type)
 				if(2)
 					organ_owner.manual_emote(pick("oofs silently.", "looks like [organ_owner.p_their()] bones hurt.", "grimaces, as though [organ_owner.p_their()] bones hurt."))
 				if(3)
@@ -31,7 +31,7 @@
 				if(bodypart)
 					playsound(organ_owner, SFX_DESECRATION, 50, vary = TRUE) //You just want to socialize
 					organ_owner.visible_message(span_warning("[organ_owner] rattles loudly and flails around!!"), span_danger("Your bones hurt so much that your missing muscles spasm!!"))
-					INVOKE_ASYNC(organ_owner, TYPE_PROC_REF(/mob, say), "OOF!!", forced = chem.type)
+					INVOKE_ASYNC(organ_owner, TYPE_PROC_REF(/atom/movable, say), "OOF!!", forced = chem.type)
 					bodypart.receive_damage(brute = 200) //But I don't think we should
 				else
 					to_chat(organ_owner, span_warning("Your missing [parse_zone(selected_part)] aches from wherever you left it."))
