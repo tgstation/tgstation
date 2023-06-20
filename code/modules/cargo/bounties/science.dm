@@ -82,7 +82,7 @@
 	description = "Our big data division needs more powerful hardware to play 'Outbomb Cuban Pe-', err, to closely monitor threats in your sector. Send us a working modular computer console."
 	reward = CARGO_CRATE_VALUE * 6
 	required_count = 1
-	wanted_types = list(/obj/machinery/modular_computer/console = TRUE)
+	wanted_types = list(/obj/machinery/modular_computer = TRUE)
 	require_powered = FALSE
 
 /datum/bounty/item/science/ntnet/console/applies_to(obj/O)

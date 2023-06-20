@@ -20,7 +20,7 @@
 					state = 1
 				return
 			if(P.tool_behaviour == TOOL_WELDER)
-				if(!P.tool_start_check(user, amount=0))
+				if(!P.tool_start_check(user, amount=1))
 					return
 
 				to_chat(user, span_notice("You start deconstructing the frame..."))
