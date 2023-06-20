@@ -13,7 +13,7 @@
 		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
-	mutant_bodyparts = list("bodymarks_lizard" = "None", "legs" = "Normal Legs")
+	mutant_bodyparts = list("bodymarks_lizard" = "None", "legs" = "Normal Legs") //SKYRAPTOR EDITS: bodymarks_lizard from body_markings, new lizard subtypes for stability
 	external_organs = list(
 		/obj/item/organ/external/horns/lizard = "None",
 		/obj/item/organ/external/frills/lizard = "None",
@@ -116,6 +116,25 @@
 		"On their homeworld, lizards celebrate their 16th birthday by enrolling in a mandatory 5 year military tour of duty. \
 		Roles range from combat to civil service and everything in between. As the old slogan goes: \"Your place will be found!\"",
 	)
+
+/// SKYRAPTOR EDIT BEGIN
+
+/datum/species/lizard/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
+	var/obj/item/organ/external/snout_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/snout)
+	if(snout_tmp)
+		snout_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/snouts/lizard/sharplight)
+	var/obj/item/organ/external/horns_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/horns/lizard)
+	if(horns_tmp)
+		horns_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/horns/lizard/ram)
+	var/obj/item/organ/external/frills_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/frills/lizard)
+	if(frills_tmp)
+		frills_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/frills/lizard/aquatic)
+	var/obj/item/organ/external/spines_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/spines)
+	if(spines_tmp)
+		snout_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/spines/none)
+	human_for_preview.update_body_parts()
+
+/// SKYRAPTOR EDIT END
 
 // Override for the default temperature perks, so we can give our specific "cold blooded" perk.
 /datum/species/lizard/create_pref_temperature_perks()

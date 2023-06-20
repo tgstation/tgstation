@@ -93,6 +93,15 @@
 
 
 /// Pretty UI stuff goes here.
+/datum/species/slugcat/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
+	var/obj/item/organ/external/snout_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/snout/slugcat)
+	if(snout_tmp)
+		snout_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/snouts/slugcat/standard)
+	var/obj/item/organ/external/horns_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/horns/slugcat)
+	if(horns_tmp)
+		horns_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/horns/slugcat/standard)
+	human_for_preview.update_body_parts()
+
 /datum/species/slugcat/get_species_description()
 	return "Nimble omnivores with chronic mutism and a natural aptitude for talking to machines, the Slugcats are a rare sight in systems far from their homeworld of Talon III.  \
 		Genetically engineered over untold cycles by their AI caretakers, the Iterators, Slugcats are crafty and intelligent, with incredible capabilities yet incredible fragility, \
