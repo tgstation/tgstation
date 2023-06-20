@@ -289,3 +289,9 @@
 	desc = "A standard-sized coffeepot, for use with a coffeemaker."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/reagent_containers/cup/coffeepot)
+
+/datum/supply_pack/goody/blahaj
+	name = "Shark plushie"
+	desc = "A soft, warm companion for midday naps."
+	cost = PAYCHECK_CREW
+	contains = list(/obj/item/toy/plush/shark)
