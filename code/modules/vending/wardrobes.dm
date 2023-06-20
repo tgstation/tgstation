@@ -78,7 +78,6 @@
 		/obj/item/storage/backpack/duffelbag/med = 4,
 		/obj/item/storage/backpack/medic = 4,
 		/obj/item/storage/backpack/satchel/med = 4,
-		/obj/item/radio/headset/headset_med = 4,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 	payment_department = ACCOUNT_MED
@@ -107,7 +106,6 @@
 		/obj/item/storage/backpack/industrial = 3,
 		/obj/item/storage/backpack/satchel/eng = 3,
 		/obj/item/storage/backpack/duffelbag/engineering = 3,
-		/obj/item/radio/headset/headset_eng = 3,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 	payment_department = ACCOUNT_ENG
@@ -224,7 +222,6 @@
 		/obj/item/storage/backpack/science = 3,
 		/obj/item/storage/backpack/satchel/science = 3,
 		/obj/item/storage/backpack/duffelbag/science = 3,
-		/obj/item/storage/bag/xeno = 3,
 		/obj/item/radio/headset/headset_sci = 3,
 		
 	)
