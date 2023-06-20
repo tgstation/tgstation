@@ -1,6 +1,9 @@
 /datum/config_entry/flag/demos_enabled
 	default = FALSE
 
+/datum/config_entry/string/replay_password
+	default = "mrhouse101"
+	
 SUBSYSTEM_DEF(demo)
 	name = "Demo"
 	wait = 1

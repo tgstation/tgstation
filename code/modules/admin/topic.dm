@@ -732,7 +732,7 @@
 		show_player_panel(target_mob)
 
 	else if(href_list["adminopendemo"])
-		usr.client << link("http://replays.monkestation.com/viewer/?roundid=[GLOB.round_id]")
+		usr.client << link("http://replays.monkestation.com/viewer/?roundid=[GLOB.round_id]&password=[CONFIG_GET(string/replay_password)]")
 
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
