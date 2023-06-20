@@ -111,30 +111,31 @@
 
 /// Turns the nutriments and vitamins into the distill reagent or fruit wine
 /obj/item/food/grown/proc/ferment()
+	var/reagent_purity = seed.get_reagent_purity()
+	var/purity_above_base = clamp((reagent_purity - 0.5) * 2, 0, 1)
+	var/quality_min = 0
+	var/quality_max = DRINK_FANTASTIC
+	var/quality = round(LERP(quality_min, quality_max, purity_above_base))
 	for(var/datum/reagent/reagent in reagents.reagent_list)
-		if(reagent.type != /datum/reagent/consumable/nutriment && reagent.type != /datum/reagent/consumable/nutriment/vitamin)
+		if(!istype(reagent, /datum/reagent/consumable))
 			continue
-		var/purity = clamp(seed.lifespan/200 + seed.endurance/200, 0, 1)
-		var/quality_min = 0
-		var/quality_max = DRINK_FANTASTIC
-		var/quality = round(LERP(quality_min, quality_max, purity))
 		if(distill_reagent)
 			var/data = list()
 			var/datum/reagent/consumable/ethanol/booze = distill_reagent
 			data["quality"] = quality
-			data["boozepwr"] = round(initial(booze.boozepwr) * purity)
-			reagents.add_reagent(distill_reagent, reagent.volume, data, added_purity = purity)
+			data["boozepwr"] = round(initial(booze.boozepwr) * reagent_purity * 2) // default boozepwr at 50% purity
+			reagents.add_reagent(distill_reagent, reagent.volume, data, added_purity = reagent_purity)
 		else
 			var/data = list()
 			data["names"] = list("[initial(name)]" = 1)
 			data["color"] = filling_color
-			data["boozepwr"] = round(wine_power * purity)
+			data["boozepwr"] = round(wine_power * reagent_purity * 2) // default boozepwr at 50% purity
 			data["quality"] = quality
 			if(wine_flavor)
 				data["tastes"] = list(wine_flavor = 1)
 			else
 				data["tastes"] = list(tastes[1] = 1)
-			reagents.add_reagent(/datum/reagent/consumable/ethanol/fruit_wine, reagent.volume, data, added_purity = purity)
+			reagents.add_reagent(/datum/reagent/consumable/ethanol/fruit_wine, reagent.volume, data, added_purity = reagent_purity)
 		reagents.del_reagent(reagent.type)
 
 /obj/item/food/grown/on_grind()

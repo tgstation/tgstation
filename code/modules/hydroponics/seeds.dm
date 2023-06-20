@@ -266,19 +266,19 @@
 		reagent_max += reagents_add[rid]
 	if(IS_EDIBLE(T) || istype(T, /obj/item/grown))
 		var/obj/item/food/grown/grown_edible = T
+		var/reagent_purity = get_reagent_purity()
 		for(var/rid in reagents_add)
 			var/reagent_overflow_mod = reagents_add[rid]
 			if(reagent_max > 1)
 				reagent_overflow_mod = (reagents_add[rid]/ reagent_max)
 			var/edible_vol = grown_edible.reagents ? grown_edible.reagents.maximum_volume : 0
 			var/amount = max(1, round((edible_vol)*(potency/100) * reagent_overflow_mod, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
-			var/purity = clamp(0.5 + lifespan/400 + endurance/400 + (rand(instability)/200 - 0.25), 0, 1) // 50% base + up to 25% for lifespan + up to 25% for endurance -/+ up to 25% for instability
 			var/list/data
 			if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
 				data = list("blood_type" = "O-")
 			if(istype(grown_edible) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
 				data = grown_edible.tastes // apple tastes of apple.
-			T.reagents.add_reagent(rid, amount, data, added_purity = purity)
+			T.reagents.add_reagent(rid, amount, data, added_purity = reagent_purity)
 
 		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
 		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_results)
@@ -302,6 +302,14 @@
 			T.reagents.chem_temp = max(3, (T.reagents.chem_temp + num_nutriment * -5))
 			T.reagents.handle_reactions()
 			playsound(T.loc, 'sound/effects/space_wind.ogg', 50)
+
+/// Returns reagent purity based on seed stats
+/obj/item/seeds/proc/get_reagent_purity()
+	var/purity_from_lifespan = lifespan / 400 //up to +25% for lifespan
+	var/purity_from_endurance = endurance / 400 //up to +25% for endurance
+	var/purity_from_instability = rand(-instability, instability) / 400  //up to +-25% at random for instability
+	var/result_purity = clamp(0.5 + purity_from_lifespan + purity_from_endurance + purity_from_instability, 0, 1) //50% base + stats
+	return result_purity
 
 /// Setters procs ///
 

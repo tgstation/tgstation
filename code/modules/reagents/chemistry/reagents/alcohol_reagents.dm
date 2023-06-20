@@ -41,7 +41,7 @@
 
 /datum/reagent/consumable/ethanol/New(list/data)
 	if(LAZYLEN(data))
-		if(data["quality"])
+		if(!isnull(data["quality"]))
 			quality = data["quality"]
 			name = "Natural " + name
 		if(data["boozepwr"])
