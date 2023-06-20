@@ -35,6 +35,11 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 /obj/item/food/egg/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/boiledegg)
 
+/obj/item/food/egg/organic
+	name = "organic egg"
+	desc = "A 100% natural egg from the best hens."
+	starting_reagent_purity = 1
+
 /obj/item/food/egg/rotten
 	food_reagents = list(/datum/reagent/consumable/eggrot = 10, /datum/reagent/consumable/mold = 10)
 	foodtypes = GROSS

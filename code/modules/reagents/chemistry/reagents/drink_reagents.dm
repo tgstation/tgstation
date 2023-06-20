@@ -297,6 +297,9 @@
 /datum/reagent/consumable/milk/synthetic
 	creation_purity = 0.3
 
+/datum/reagent/consumable/milk/whole
+	creation_purity = 1
+
 /datum/glass_style/has_foodtype/drinking_glass/milk
 	required_drink_type = /datum/reagent/consumable/milk
 	name = "glass of milk"

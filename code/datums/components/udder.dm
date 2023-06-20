@@ -62,7 +62,7 @@
 /obj/item/udder
 	name = "udder"
 	///typepath of reagent produced by the udder
-	var/reagent_produced_typepath = /datum/reagent/consumable/milk
+	var/reagent_produced_typepath = /datum/reagent/consumable/milk/whole
 	///how much the udder holds
 	var/size = 50
 	///mob that has the udder component
