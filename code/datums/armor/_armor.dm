@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 	return ..()
 
 /datum/armor/GenerateTag()
-	..()
+	. = ..()
 	tag = replacetext("[type]", "/", "-")
 
 /datum/armor/vv_edit_var(var_name, var_value)

@@ -1,86 +1,99 @@
 /datum/component/armor_plate
+	/// Current amount of upgrades
 	var/amount = 0
+	/// Maximum amount of upgrades
 	var/maxamount = 3
-	var/upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide
+	/// Item we use to upgrade the armor
+	var/obj/item/upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide
+	/// Armor modification we apply
 	var/datum/armor/armor_mod = /datum/armor/armor_plate
-	var/upgrade_name
 
 /datum/armor/armor_plate
 	melee = 10
 
-/datum/component/armor_plate/Initialize(_maxamount, obj/item/_upgrade_item, datum/armor/_added_armor)
-	if(!isobj(parent))
+/datum/component/armor_plate/Initialize(max_amount = 3, obj/item/upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide, datum/armor/added_armor = /datum/armor/armor_plate)
+	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
+	src.max_amount = max_amount
+	src.upgrade_item = upgrade_item
+	src.armor_mod = added_armor
 
+/datum/component/armor_plate/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_DESTRUCTION, PROC_REF(on_atom_destruction))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(applyplate))
-	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(dropplates))
 	if(istype(parent, /obj/vehicle/sealed/mecha/working/ripley))
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_mech_overlays))
 
-	if(_maxamount)
-		maxamount = _maxamount
-	if(_upgrade_item)
-		upgrade_item = _upgrade_item
-	if(_added_armor)
-		armor_mod = _added_armor
-	var/obj/item/typecast = upgrade_item
-	upgrade_name = initial(typecast.name)
+/datum/component/armor_plate/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_ATOM_DESTRUCTION)
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
+	if(istype(parent, /obj/vehicle/sealed/mecha/working/ripley))
+		UnrgisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	//upgrade_item could also be typecast here instead
+	var/p_They = parent.p_they(TRUE)
+	var/p_they = parent.p_they()
+	var/p_Their = parent.p_their(TRUE)
+	var/p_Theyre = parent.p_theyre(TRUE)
+	var/p_have = parent.p_have()
+	var/upgrade_name = initial(upgrade_item.name)
 	if(ismecha(parent))
 		if(amount)
 			if(amount < maxamount)
-				examine_list += span_notice("Its armor is enhanced with [amount] [upgrade_name].")
+				examine_list += span_notice("[p_Their] armor is enhanced with [amount] [upgrade_name].")
 			else
-				examine_list += span_notice("It's wearing a fearsome carapace entirely composed of [upgrade_name] - its pilot must be an experienced monster hunter.")
+				examine_list += span_notice("[p_Theyre] wearing a fearsome carapace entirely composed of [upgrade_name] - [p_Their] pilot must be an experienced monster hunter.")
 		else
-			examine_list += span_notice("It has attachment points for strapping monster hide on for added protection.")
+			examine_list += span_notice("[´p_They] [p_have] attachment points for strapping monster hide on for added protection.")
 	else
 		if(amount)
-			examine_list += span_notice("It has been strengthened with [amount]/[maxamount] [upgrade_name].")
+			examine_list += span_notice("[p_They] [p_have] been strengthened with [amount]/[maxamount] [upgrade_name].")
 		else
-			examine_list += span_notice("It can be strengthened with up to [maxamount] [upgrade_name].")
+			examine_list += span_notice("[p_They] can be strengthened with up to [maxamount] [upgrade_name].")
 
-/datum/component/armor_plate/proc/applyplate(datum/source, obj/item/I, mob/user, params)
+/datum/component/armor_plate/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(!istype(I,upgrade_item))
+	if(!istype(attacking_item, upgrade_item))
 		return
+
 	if(amount >= maxamount)
 		to_chat(user, span_warning("You can't improve [parent] any further!"))
 		return
 
-	if(istype(I,/obj/item/stack))
-		I.use(1)
+	if(isstack(attacking_item))
+		var/obj/item/stack/stack_item = attacking_item
+		stack_item.use(1)
 	else
-		if(length(I.contents))
-			to_chat(user, span_warning("[I] cannot be used for armoring while there's something inside!"))
-			return
-		qdel(I)
+		qdel(attacking_item)
 
-	var/obj/O = parent
 	amount++
-	O.set_armor(O.get_armor().add_other_armor(armor_mod))
+	var/atom/atom_parent = parent
+	atom_parent.set_armor(atom_parent.get_armor().add_other_armor(armor_mod))
+	var/datum/armor/armor_datum = get_armor_by_type(armor_mod)
+	//how did this happen?
+	if(!armor_datum)
+		return
+	var/list/improvements = list()
+	for(var/rating in armor_datum.get_rating_list())
+		improvements += lowertext(rating)
+	var/improvements_text = english_list(improvements)
+	to_chat(user, span_info("You strengthen [parent], improving [parent.p_their()] resistance against [improvements_text]."))
+	SEND_SIGNAL(atom_parent, COMSIG_ARMOR_PLATED, amount, maxamount)
 
-	if(ismecha(O))
-		var/obj/vehicle/sealed/mecha/R = O
-		R.update_appearance()
-		to_chat(user, span_info("You strengthen [R], improving its resistance against melee, bullet and laser damage."))
-	else
-		SEND_SIGNAL(O, COMSIG_ARMOR_PLATED, amount, maxamount)
-		to_chat(user, span_info("You strengthen [O], improving its resistance against melee attacks."))
-
-
-/datum/component/armor_plate/proc/dropplates(datum/source, force)
+/datum/component/armor_plate/proc/on_atom_destruction(atom/source, damage_flag)
 	SIGNAL_HANDLER
 
-	if(ismecha(parent)) //items didn't drop the plates before and it causes erroneous behavior for the time being with collapsible helmets
-		for(var/i in 1 to amount)
-			new upgrade_item(get_turf(parent))
+	//items didn't drop the plates before and it causes erroneous behavior with collapsible helmets
+	if(!ismecha(parent))
+		return
+
+	for(var/i in 1 to amount)
+		new upgrade_item(get_turf(parent))
 
 /datum/component/armor_plate/proc/apply_mech_overlays(obj/vehicle/sealed/mecha/mech, list/overlays)
 	SIGNAL_HANDLER
