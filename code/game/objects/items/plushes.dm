@@ -788,3 +788,11 @@
 		'sound/effects/slosh.ogg' = 1,
 		'sound/effects/splat.ogg' = 2
 	)
+/obj/item/toy/plush/shark
+	name = "shark plushie"
+	desc = "A plushie depicting a somewhat cartoonish shark. The tag calls it a 'hákarl', noting that it was made by an obscure furniture manufacturer in old Scandinavia. Popular with cute girls who wear striped socks."
+	icon = 'icons/obj/toys/plushes_wide.dmi'
+	icon_state = "blahaj"
+	inhand_icon_state = null
+	attack_verb_continuous = list("gnaws", "gnashes", "chews")
+	attack_verb_simple = list("gnaw", "gnashe", "chew")
