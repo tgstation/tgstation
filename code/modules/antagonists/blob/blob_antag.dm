@@ -132,6 +132,15 @@
 	blob_cam.place_blob_core(placement_override, pop_override = TRUE)
 	playsound(get_turf(blob_cam), 'sound/ambience/antag/blobalert.ogg', 50, FALSE)
 
+	notify_ghosts(
+		"A Blob host has burst in [get_area_name(blob_cam.blob_core)]",
+		source = blob_cam.blob_core,
+		action = NOTIFY_ORBIT,
+		ghost_sound = 'sound/ambience/antag/blobalert.ogg',
+		header = "Blob Awakening!",
+		notify_volume = 75
+	)
+
 /datum/antagonist/blob/antag_listing_status()
 	. = ..()
 	if(owner?.current)

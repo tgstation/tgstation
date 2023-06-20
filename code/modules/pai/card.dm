@@ -69,7 +69,7 @@
 	SSpai.pai_card_list += src
 
 /obj/item/pai_card/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_they()] can't keep living without real human intimacy!"))
+	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_they(TRUE)] can't keep living without real human intimacy!"))
 	return OXYLOSS
 
 /obj/item/pai_card/update_overlays()

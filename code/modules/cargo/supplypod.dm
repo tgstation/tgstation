@@ -476,7 +476,7 @@
 	vis_contents += glow_effect
 	glow_effect.layer = GASFIRE_LAYER
 	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
-	RegisterSignal(glow_effect, COMSIG_PARENT_QDELETING, PROC_REF(remove_glow))
+	RegisterSignal(glow_effect, COMSIG_QDELETING, PROC_REF(remove_glow))
 
 /obj/structure/closet/supplypod/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
@@ -493,7 +493,7 @@
 
 /obj/structure/closet/supplypod/proc/remove_glow()
 	SIGNAL_HANDLER
-	UnregisterSignal(glow_effect, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(glow_effect, COMSIG_QDELETING)
 	vis_contents -= glow_effect
 	glow_effect = null
 

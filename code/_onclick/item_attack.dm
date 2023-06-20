@@ -127,7 +127,7 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /atom/proc/attackby(obj/item/attacking_item, mob/user, params)
-	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, attacking_item, user, params) & COMPONENT_NO_AFTERATTACK)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACKBY, attacking_item, user, params) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
 	return FALSE
 
@@ -142,7 +142,7 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /atom/proc/attackby_secondary(obj/item/weapon, mob/user, params)
-	var/signal_result = SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY_SECONDARY, weapon, user, params)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_ATOM_ATTACKBY_SECONDARY, weapon, user, params)
 
 	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -228,7 +228,7 @@
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
 /obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, attacked_atom, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ATOM, attacked_atom, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
 	if(item_flags & NOBLUDGEON)
 		return

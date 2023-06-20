@@ -17,10 +17,10 @@
 	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_ACT, PROC_REF(on_microwaved))
 
 	if(!ispath(result_typepath, default_typepath))
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/microwavable/Detach(datum/source)
-	UnregisterSignal(source, list(COMSIG_ITEM_MICROWAVE_ACT, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(source, list(COMSIG_ITEM_MICROWAVE_ACT, COMSIG_ATOM_EXAMINE))
 	return ..()
 
 /**
@@ -66,7 +66,7 @@
 	return recipe_result
 
 /**
- * Signal proc for [COMSIG_PARENT_EXAMINE].
+ * Signal proc for [COMSIG_ATOM_EXAMINE].
  * Lets examiners know we can be microwaved if we're not the default mess type
  */
 /datum/element/microwavable/proc/on_examine(atom/source, mob/user, list/examine_list)

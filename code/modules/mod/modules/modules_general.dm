@@ -524,8 +524,8 @@
 			))
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
-	RegisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE, PROC_REF(add_examine))
-	RegisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY, PROC_REF(place_hat))
+	RegisterSignal(mod.helmet, COMSIG_ATOM_EXAMINE, PROC_REF(add_examine))
+	RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACKBY, PROC_REF(place_hat))
 	RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(remove_hat))
 
 /obj/item/mod/module/hat_stabilizer/on_suit_deactivation(deleting = FALSE)
@@ -533,8 +533,8 @@
 		return
 	if(attached_hat)	//knock off the helmet if its on their head. Or, technically, auto-rightclick it for them; that way it saves us code, AND gives them the bubble
 		remove_hat(src, mod.wearer)
-	UnregisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE)
-	UnregisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(mod.helmet, COMSIG_ATOM_EXAMINE)
+	UnregisterSignal(mod.helmet, COMSIG_ATOM_ATTACKBY)
 	UnregisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
 
 /obj/item/mod/module/hat_stabilizer/proc/add_examine(datum/source, mob/user, list/base_examine)
@@ -596,3 +596,181 @@
 
 /obj/item/mod/module/signlang_radio/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
+
+///A module that recharges the suit by an itsy tiny bit whenever the user takes a step. Originally called "magneto module" but the videogame reference sounds cooler.
+/obj/item/mod/module/joint_torsion
+	name = "MOD joint torsion ratchet module"
+	desc = "A compact, weak AC generator that charges the suit's internal cell through the power of deambulation. It doesn't work in zero G."
+	icon_state = "joint_torsion"
+	complexity = 1
+	incompatible_modules = list(/obj/item/mod/module/joint_torsion)
+	var/power_per_step = DEFAULT_CHARGE_DRAIN * 0.3
+
+/obj/item/mod/module/joint_torsion/on_suit_activation()
+	if(!(mod.wearer.movement_type & (FLOATING|FLYING)))
+		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	/// This way we don't even bother to call on_moved() while flying/floating
+	RegisterSignal(mod.wearer, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_movetype_flag_enabled))
+	RegisterSignal(mod.wearer, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_movetype_flag_disabled))
+
+/obj/item/mod/module/joint_torsion/on_suit_deactivation(deleting = FALSE)
+	UnregisterSignal(mod.wearer, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVETYPE_FLAG_ENABLED, COMSIG_MOVETYPE_FLAG_DISABLED))
+
+/obj/item/mod/module/joint_torsion/proc/on_movetype_flag_enabled(datum/source, flag, old_state)
+	SIGNAL_HANDLER
+	if(!(old_state & (FLOATING|FLYING)) && flag & (FLOATING|FLYING))
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+
+/obj/item/mod/module/joint_torsion/proc/on_movetype_flag_disabled(datum/source, flag, old_state)
+	SIGNAL_HANDLER
+	if(old_state & (FLOATING|FLYING) && !(mod.wearer.movement_type & (FLOATING|FLYING)))
+		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+
+/obj/item/mod/module/joint_torsion/proc/on_moved(mob/living/carbon/human/wearer, atom/old_loc, movement_dir, forced)
+	SIGNAL_HANDLER
+	//Shouldn't work if the wearer isn't really walking/running around.
+	if(forced || wearer.throwing || wearer.body_position == LYING_DOWN || wearer.buckled || CHECK_MOVE_LOOP_FLAGS(wearer, MOVEMENT_LOOP_OUTSIDE_CONTROL))
+		return
+	mod.core.add_charge(power_per_step)
+
+/// Module that shoves garbage inside its material container when the user crosses it, and eject the recycled material with MMB.
+/obj/item/mod/module/recycler
+	name = "MOD recycler module"
+	desc = "An innovative garbage collection module that recycles gathered trash into usable material. \
+		Doesn't work on debris and some items. May recycle live ammunition. \
+		Activate on a nearby turf or storage to unload stored material."
+	icon_state = "recycler"
+	module_type = MODULE_ACTIVE
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	complexity = 2
+	incompatible_modules = list(/obj/item/mod/module/recycler)
+	overlay_state_inactive = "module_recycler"
+	overlay_state_active = "module_recycler"
+	/// A multiplier of the amount of material extracted from the item
+	var/efficiency = 1
+	/// Items that will be collected
+	var/list/allowed_item_types = list(
+		/obj/item/trash,
+		/obj/item/shard,
+		/obj/item/light,
+		/obj/item/broken_bottle,
+		/obj/item/ammo_casing,
+		/obj/item/cigbutt,
+	)
+	/// Materials that will be extracted.
+	var/list/accepted_mats = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/silver,
+		/datum/material/plasma,
+		/datum/material/gold,
+		/datum/material/diamond,
+		/datum/material/plastic,
+		/datum/material/uranium,
+		/datum/material/bananium,
+		/datum/material/titanium,
+		/datum/material/bluespace,
+	)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_obj_entered),
+		COMSIG_ATOM_INITIALIZED_ON = PROC_REF(on_atom_initialized_on),
+	)
+	var/datum/component/connect_loc_behalf/connector
+
+/obj/item/mod/module/recycler/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/material_container, accepted_mats, 50 * SHEET_MATERIAL_AMOUNT, MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, _after_retrieve=CALLBACK(src, PROC_REF(attempt_insert_storage)))
+
+/obj/item/mod/module/recycler/on_activation()
+	. = ..()
+	if(!.)
+		return
+	connector = AddComponent(/datum/component/connect_loc_behalf, mod.wearer, loc_connections)
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
+
+/obj/item/mod/module/recycler/on_deactivation(display_message, deleting = FALSE)
+	. = ..()
+	if(!.)
+		return
+	QDEL_NULL(connector)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
+
+/obj/item/mod/module/recycler/proc/on_wearer_moved(datum/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+	for(var/obj/item/item in mod.wearer.loc)
+		if(!is_type_in_list(item, allowed_item_types))
+			return
+		insert_trash(item)
+
+/obj/item/mod/module/recycler/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
+	SIGNAL_HANDLER
+	if(!is_type_in_list(arrived, allowed_item_types))
+		return
+	insert_trash(arrived)
+
+/obj/item/mod/module/recycler/proc/on_atom_initialized_on(atom/loc, atom/new_atom)
+	SIGNAL_HANDLER
+	if(!is_type_in_list(new_atom, allowed_item_types))
+		return
+	//Give the new atom the time to fully initialize and maybe live if the wearer moves away.
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/mod/module/recycler, insert_trash_if_nearby), new_atom), 0.5 SECONDS)
+
+/obj/item/mod/module/recycler/proc/insert_trash_if_nearby(atom/new_atom)
+	if(new_atom && mod?.wearer && new_atom.loc == mod.wearer.loc)
+		insert_trash(new_atom)
+
+/obj/item/mod/module/recycler/proc/insert_trash(obj/item/item)
+	var/datum/component/material_container/container = GetComponent(/datum/component/material_container)
+	var/retrieved = container.insert_item(item, multiplier = efficiency, breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
+	if(retrieved == MATERIAL_INSERT_ITEM_NO_MATS) //even if it doesn't have any material to give, trash is trash.
+		qdel(item)
+	playsound(src, SFX_RUSTLE, 50, TRUE, -5)
+
+/obj/item/mod/module/recycler/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	if(!target?.atom_storage)
+		target = get_turf(target)
+		if(!isopenturf(target) || !mod.wearer.Adjacent(target))
+			return FALSE
+	dispense(target)
+
+/obj/item/mod/module/recycler/proc/dispense(atom/target)
+	var/datum/component/material_container/container = GetComponent(/datum/component/material_container)
+	if(container.retrieve_all(target))
+		balloon_alert(mod.wearer, "material dispensed")
+		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
+		return
+	balloon_alert(mod.wearer, "not enough material")
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+
+/obj/item/mod/module/recycler/proc/attempt_insert_storage(obj/item/to_drop)
+	if(!isturf(to_drop.loc) && !to_drop.loc.atom_storage?.attempt_insert(to_drop, mod.wearer, override = TRUE))
+		to_drop.forceMove(to_drop.loc.drop_location())
+
+///A black market variant of the above that dispenses riot foam dart boxes
+/obj/item/mod/module/recycler/donk
+	name = "MOD riot foam dart recycler module"
+	desc = "A mod module collects and repackages fired foam darts (and garbage) into half-sized boxes of riot foam darts. \
+		Activate on a nearby turf or storage to unload stored ammo boxes."
+	icon_state = "donk_recycler"
+	overlay_state_inactive = "module_donk_recycler"
+	overlay_state_active = "module_donk_recycler"
+	efficiency = 0.7 // Stops getting as many riot foam darts as one consumes.
+	accepted_mats = list(/datum/material/iron)
+	///The type of ammo box that it dispenses
+	var/ammobox_type = /obj/item/ammo_box/foambox/riot/mini
+	///The cost of each dispensed ammo box
+	var/required_amount = SHEET_MATERIAL_AMOUNT*12.5
+
+/obj/item/mod/module/recycler/donk/dispense(atom/target)
+	var/datum/component/material_container/container = GetComponent(/datum/component/material_container)
+	if(!container.use_amount_mat(required_amount, /datum/material/iron))
+		balloon_alert(mod.wearer, "not enough material")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+		return
+	var/obj/item/ammo_box/product = new ammobox_type(target)
+	attempt_insert_storage(product)
+	balloon_alert(mod.wearer, "ammo box dispensed.")
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
