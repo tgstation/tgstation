@@ -567,7 +567,7 @@
  */
 /obj/item/stack/proc/can_merge(obj/item/stack/check, inhand = FALSE)
 	// We don't only use istype here, since that will match subtypes, and stack things that shouldn't stack
-	if(!istype(check) || check.merge_type != merge_type)
+	if(!istype(check, merge_type) || check.merge_type != merge_type)
 		return FALSE
 	if(mats_per_unit ~! check.mats_per_unit) // ~! in case of lists this operator checks only keys, but not values
 		return FALSE
