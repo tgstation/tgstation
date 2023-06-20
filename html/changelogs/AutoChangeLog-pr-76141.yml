@@ -1,0 +1,4 @@
+author: "Addust"
+delete-after: True
+changes:
+  - bugfix: "somehow, somewhere, a ship's engine has been changed."

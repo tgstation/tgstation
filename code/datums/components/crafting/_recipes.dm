@@ -45,6 +45,21 @@
 /datum/crafting_recipe/New()
 	if(!(result in reqs))
 		blacklist += result
+	// These should be excluded from all crafting recipies
+	blacklist += list(
+		/obj/item/cautery/augment,
+		/obj/item/circular_saw/augment,
+		/obj/item/crowbar/cyborg,
+		/obj/item/hemostat/augment,
+		/obj/item/multitool/cyborg,
+		/obj/item/retractor/augment,
+		/obj/item/scalpel/augment,
+		/obj/item/screwdriver/cyborg,
+		/obj/item/surgicaldrill/augment,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/wrench/cyborg,
+	)
 	if(tool_behaviors)
 		tool_behaviors = string_list(tool_behaviors)
 	if(tool_paths)
