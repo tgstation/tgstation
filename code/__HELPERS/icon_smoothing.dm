@@ -377,10 +377,10 @@ xxx xxx xxx
 	var/border_object_smoothing = (smoothing_flags & SMOOTH_BORDER_OBJECT)
 
 	// Did you know you can pass defines into other defines? very handy, lets take advantage of it here to allow 0 cost variation
-	#define SEARCH_ADJ_IN_DIR(direction, direction_flag, ADJ_FOUND, WORLD_BORDER) \
+	#define SEARCH_ADJ_IN_DIR(direction, direction_flag, ADJ_FOUND, WORLD_BORDER, BORDER_CHECK) \
 		do { \
 			var/turf/neighbor = get_step(src, direction); \
-			if(neighbor) { \
+			if(neighbor && ##BORDER_CHECK(neighbor, direction)) { \
 				var/neighbor_smoothing_groups = neighbor.smoothing_groups; \
 				if(neighbor_smoothing_groups) { \
 					for(var/target in canSmoothWith) { \
@@ -392,7 +392,7 @@ xxx xxx xxx
 				if(smooth_obj) { \
 					for(var/atom/movable/thing as anything in neighbor) { \
 						var/thing_smoothing_groups = thing.smoothing_groups; \
-						if(!thing.anchored || isnull(thing_smoothing_groups)) { \
+						if(!thing.anchored || isnull(thing_smoothing_groups) || !##BORDER_CHECK(thing, direction)) { \
 							continue; \
 						}; \
 						for(var/target in canSmoothWith) { \
@@ -410,6 +410,9 @@ xxx xxx xxx
 	#define BITMASK_FOUND(target, direction, direction_flag) \
 		new_junction |= direction_flag; \
 		break set_adj_in_dir; \
+	/// Check that non border objects use to smooth against border objects
+	/// Returns true if the smooth is acceptable, FALSE otherwise
+	#define BITMASK_ON_BORDER_CHECK(target, direction) (!(target.smoothing_flags & SMOOTH_BORDER_OBJECT) || CAN_DIAGONAL_SMOOTH(target, src, turn(direction, 180)))
 
 	#define BORDER_FOUND(target, direction, direction_flag) new_junction |= CAN_DIAGONAL_SMOOTH(src, target, direction)
 	// Border objects require an object as context, so we need a dummy. I'm sorry
@@ -420,12 +423,14 @@ xxx xxx xxx
 			dummy.smoothing_flags &= ~SMOOTH_BORDER_OBJECT; \
 		} \
 		BORDER_FOUND(dummy, direction, direction_flag);
+	// Handle handle border on border checks. no-op, we handle this check inside CAN_DIAGONAL_SMOOTH
+	#define BORDER_ON_BORDER_CHECK(target, direction) (TRUE)
 
 	// We're building 2 different types of smoothing searches here
 	// One for standard bitmask smoothing (We provide a label so our macro can eary exit, as it wants to do)
-	#define SET_ADJ_IN_DIR(direction, direction_flag) do { set_adj_in_dir: { SEARCH_ADJ_IN_DIR(direction, direction_flag, BITMASK_FOUND, BITMASK_FOUND) }} while(FALSE)
+	#define SET_ADJ_IN_DIR(direction, direction_flag) do { set_adj_in_dir: { SEARCH_ADJ_IN_DIR(direction, direction_flag, BITMASK_FOUND, BITMASK_FOUND, BITMASK_ON_BORDER_CHECK) }} while(FALSE)
 	// and another for border object work (Doesn't early exit because we can hit more then one direction by checking the same turf)
-	#define SET_BORDER_ADJ_IN_DIR(direction) SEARCH_ADJ_IN_DIR(direction, direction, BORDER_FOUND, WORLD_BORDER_FOUND)
+	#define SET_BORDER_ADJ_IN_DIR(direction) SEARCH_ADJ_IN_DIR(direction, direction, BORDER_FOUND, WORLD_BORDER_FOUND, BORDER_ON_BORDER_CHECK)
 
 	// Let's go over all our cardinals
 	if(border_object_smoothing)
