@@ -105,3 +105,8 @@
 #define PATTERN_RANDOM "random"
 /// Generate rainbow color turf decals
 #define PATTERN_RAINBOW "rainbow"
+
+/**
+ * Finds the midpoint of two given turfs.
+ */
+#define TURF_MIDPOINT(a, b) (locate(((a.x + b.x) * 0.5), (a.y + b.y) * 0.5, (a.z + b.z) * 0.5))
