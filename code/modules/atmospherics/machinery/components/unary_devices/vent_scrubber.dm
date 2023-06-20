@@ -25,9 +25,6 @@
 	var/widenet = FALSE
 	///List of the turfs near the scrubber, used for widenet
 	var/list/turf/adjacent_turfs = list()
-
-	///Enables the use of plunger_act for ending the vent clog random event
-	var/clogged = FALSE
 	///The area this scrubber is assigned to
 	var/area/assigned_area
 
@@ -301,7 +298,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/welder_act(mob/living/user, obj/item/welder)
 	..()
-	if(!welder.tool_start_check(user, amount=0))
+	if(!welder.tool_start_check(user, amount=1))
 		return TRUE
 	to_chat(user, span_notice("Now welding the scrubber."))
 	if(welder.use_tool(src, user, 20, volume=50))
@@ -359,58 +356,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4
 	piping_layer = 4
 	icon_state = "scrub_map_on-4"
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/plunger_act(obj/item/plunger/plunger, mob/living/user, reinforced)
-	if(!clogged)
-		return
-
-	if(welded)
-		to_chat(user, span_notice("You cannot pump [src] if it's welded shut!"))
-		return
-
-	to_chat(user, span_notice("You begin pumping [src] with your plunger."))
-	if(do_after(user, 6 SECONDS, target = src))
-		to_chat(user, span_notice("You finish pumping [src]."))
-		clogged = FALSE
-
-/**
- * Sets "clogged" to TRUE.
- *
- * Sets the clogged value to be true. Called during the scrubber clog event to begin the production of mobs, and allows for the plunger_act to run.
- */
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/clog()
-	clogged = TRUE
-
-/**
- * Sets "clogged" to FALSE.
- *
- * Changes the clogged value to be false. Called during the scrubber clog event to stop the production of mobs and prevent further plunger use.
- */
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/unclog()
-	clogged = FALSE
-
-/**
- * Produces a mob based on the input given by scrubber clog event.
- *
- * Used by the scrubber clog random event to handle the spawning of mobs. The proc recieves the mob that will be spawned,
- * and the event's current list of living mobs produced by the event so far. After checking if the vent is welded, the
- * new mob is created on the scrubber's turf, then added to the living_mobs list.
- *
- * Arguments:
- * * spawned_mob - Stores which mob will be spawned and added to the living_mobs list.
- * * living_mobs - Used to add the spawned mob to the list of currently living mobs produced by this vent.
- * Relevant code for how the list is handled is in the scrubber_clog.dm file.
- */
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/produce_mob(spawned_mob, list/living_mobs)
-	if(welded)
-		return
-
-	var/mob/new_mob = new spawned_mob(get_turf(src))
-	living_mobs += WEAKREF(new_mob)
-	visible_message(span_warning("[new_mob] crawls out of [src]!"))
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/disconnect()
 	..()

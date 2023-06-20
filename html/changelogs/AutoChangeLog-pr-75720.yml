@@ -1,5 +1,0 @@
-author: "coldud13"
-delete-after: True
-changes:
-  - bugfix: "Disposals pipes for the Detective's office & Mining cafeteria now work on tram."
-  - bugfix: "Replaced an open space with a floor at the courtroom holding area."

@@ -79,6 +79,12 @@
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
+"be" = (
+/obj/structure/broken_flooring/plating/directional/east,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/space/basic,
+/area/template_noop)
 "bg" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -338,6 +344,25 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
+"er" = (
+/obj/structure/lattice,
+/obj/structure/alien/resin/membrane{
+	max_integrity = 1600;
+	desc = "Resin just thin enough to let light pass through, but it's congealing in the same way as the thicker stuff.";
+	name = "viscous resin membrane"
+	},
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/structure/door_assembly/door_assembly_hatch{
+	anchored = 1;
+	name = "crew quarters";
+	desc = "People lived in this place.";
+	layer = 2.8
+	},
+/turf/template_noop,
+/area/ruin/space/has_grav/infested_frigate)
 "eE" = (
 /mob/living/simple_animal/hostile/alien{
 	faction = list("syndicate","xenomorph")
@@ -413,11 +438,6 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/space/basic,
 /area/template_noop)
-"gP" = (
-/obj/effect/decal/cleanable/glass,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/template_noop)
 "hm" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	dir = 5;
@@ -434,17 +454,6 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"hx" = (
-/obj/effect/decal/cleanable/glass,
-/obj/structure/fluff/broken_flooring{
-	dir = 1;
-	icon_state = "plating"
-	},
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/turf/open/space/basic,
-/area/template_noop)
 "hA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs{
@@ -718,12 +727,6 @@
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"lO" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "pile"
-	},
-/turf/open/space/basic,
-/area/template_noop)
 "lU" = (
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "u_madman_l"
@@ -748,6 +751,10 @@
 /obj/effect/decal/cleanable/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/infested_frigate)
+"mo" = (
+/obj/structure/mirror/broken,
+/turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "mp" = (
 /obj/structure/sign/departments/medbay/alt/directional/east,
@@ -1045,15 +1052,6 @@
 /obj/item/bedsheet/syndie/double,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
-"rB" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "plating"
-	},
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/turf/open/space/basic,
-/area/template_noop)
 "rL" = (
 /obj/effect/turf_decal{
 	icon_state = "bot_red"
@@ -1069,6 +1067,10 @@
 /obj/effect/decal/cleanable/plastic,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
+"rO" = (
+/obj/structure/broken_flooring/pile/directional/south,
+/turf/open/space/basic,
+/area/template_noop)
 "so" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/broken_missile,
@@ -1095,22 +1097,6 @@
 /area/ruin/space/has_grav/infested_frigate)
 "sE" = (
 /obj/machinery/door/airlock/hatch,
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/infested_frigate)
-"sL" = (
-/obj/structure/cable,
-/obj/effect/turf_decal{
-	icon_state = "warningline_white"
-	},
-/obj/machinery/light/very_dim/directional/west,
-/obj/effect/turf_decal{
-	icon_state = "warningline_white";
-	dir = 8
-	},
-/obj/machinery/vending/medical{
-	req_access = list("theatre");
-	products = list(/obj/item/stack/medical/gauze=0,/obj/item/reagent_containers/syringe=7,/obj/item/reagent_containers/dropper=3,/obj/item/healthanalyzer=0,/obj/item/wrench/medical=0,/obj/item/stack/sticky_tape/surgical=0,/obj/item/healthanalyzer/wound=0,/obj/item/stack/medical/ointment=0,/obj/item/stack/medical/suture=1,/obj/item/stack/medical/bone_gel/four=1,/obj/item/cane/white=2)
-	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "sQ" = (
@@ -1615,6 +1601,10 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/airless,
 /area/template_noop)
+"zU" = (
+/obj/structure/broken_flooring/pile/directional/east,
+/turf/open/space/basic,
+/area/template_noop)
 "zV" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/effect/turf_decal{
@@ -1715,12 +1705,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"AU" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
-/turf/open/space/basic,
-/area/template_noop)
 "Bh" = (
 /obj/effect/turf_decal{
 	dir = 4
@@ -1968,28 +1952,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
-"Ft" = (
-/obj/structure/lattice,
-/obj/effect/decal/cleanable/glass{
-	dir = 1
-	},
-/obj/structure/alien/resin/membrane{
-	max_integrity = 1600;
-	desc = "Resin just thin enough to let light pass through, but it's congealing in the same way as the thicker stuff.";
-	name = "viscous resin membrane"
-	},
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/structure/door_assembly/door_assembly_hatch{
-	anchored = 1;
-	name = "crew quarters";
-	desc = "People lived in this place.";
-	layer = 2.8
-	},
-/turf/template_noop,
-/area/ruin/space/has_grav/infested_frigate)
 "FJ" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/effect/turf_decal{
@@ -2008,17 +1970,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
-"Gn" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 1;
-	icon_state = "plating"
-	},
-/obj/structure/fluff/broken_flooring{
-	dir = 8;
-	icon_state = "pile"
-	},
-/turf/open/space/basic,
-/area/template_noop)
 "Gt" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/exotic/languagebook,
@@ -2105,6 +2056,28 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
+"HD" = (
+/obj/structure/broken_flooring/singular/directional/south,
+/turf/open/space/basic,
+/area/template_noop)
+"HH" = (
+/obj/structure/cable,
+/obj/effect/turf_decal{
+	icon_state = "warningline_white"
+	},
+/obj/machinery/light/very_dim/directional/west,
+/obj/effect/turf_decal{
+	icon_state = "warningline_white";
+	dir = 8
+	},
+/obj/machinery/vending/medical/infested_frigate,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/infested_frigate)
+"HP" = (
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/structure/broken_flooring/pile/directional/west,
+/turf/open/space/basic,
+/area/template_noop)
 "HQ" = (
 /obj/machinery/iv_drip,
 /obj/item/clothing/mask/facehugger/dead,
@@ -2394,12 +2367,6 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"Mm" = (
-/obj/structure/mirror{
-	icon_state = "mirror_broke"
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/space/has_grav/infested_frigate)
 "Mp" = (
 /obj/effect/turf_decal{
 	dir = 4
@@ -2669,6 +2636,13 @@
 "Qg" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/space/has_grav/infested_frigate)
+"Qj" = (
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/space/basic,
+/area/template_noop)
 "Qm" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -2693,13 +2667,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"Qu" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
-/turf/open/space/basic,
-/area/template_noop)
 "QA" = (
 /obj/effect/turf_decal{
 	dir = 1
@@ -2707,6 +2674,10 @@
 /obj/machinery/suit_storage_unit/open,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
+"QL" = (
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/open/space/basic,
+/area/template_noop)
 "Ru" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
@@ -2768,13 +2739,6 @@
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"RQ" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
-/turf/open/space/basic,
-/area/template_noop)
 "RS" = (
 /obj/structure/cable,
 /obj/structure/barricade/security,
@@ -3403,7 +3367,7 @@ fl
 fl
 fl
 fl
-Mm
+mo
 mG
 wP
 bJ
@@ -3677,7 +3641,7 @@ BO
 nN
 mw
 wP
-sL
+HH
 sA
 HQ
 wP
@@ -3700,7 +3664,7 @@ fM
 fl
 fl
 sT
-Gn
+HP
 xi
 KB
 wP
@@ -3722,13 +3686,13 @@ fl
 fl
 fl
 fl
-RQ
+QL
 fl
 Or
 fl
-rB
+be
 zN
-gP
+sT
 Lf
 wP
 VQ
@@ -3752,7 +3716,7 @@ RY
 fl
 fl
 fl
-lO
+rO
 fl
 pq
 wq
@@ -3781,8 +3745,8 @@ fl
 fl
 Eg
 fl
-hx
-Ft
+Qj
+er
 Qm
 wP
 Vo
@@ -3798,13 +3762,13 @@ fl
 "}
 (22,1,1) = {"
 fl
-AU
+HD
 fl
 fl
 qF
 aB
 fl
-Qu
+zU
 fl
 fl
 fl
@@ -3861,7 +3825,7 @@ fl
 fl
 fl
 fl
-AU
+HD
 vj
 ug
 Nu
@@ -4127,7 +4091,7 @@ fl
 fl
 fl
 fl
-AU
+HD
 fl
 fl
 fl
