@@ -294,6 +294,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/milk
 
+/datum/reagent/consumable/milk/synthetic
+	creation_purity = 0.3
+
 /datum/glass_style/has_foodtype/drinking_glass/milk
 	required_drink_type = /datum/reagent/consumable/milk
 	name = "glass of milk"
@@ -333,6 +336,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/soymilk
 
+/datum/reagent/consumable/soymilk/synthetic
+	creation_purity = 0.3
+
 /datum/glass_style/drinking_glass/soymilk
 	required_drink_type = /datum/reagent/consumable/soymilk
 	name = "glass of soy milk"
@@ -352,6 +358,9 @@
 	taste_description = "creamy milk"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/cream
+
+/datum/reagent/consumable/cream/synthetic
+	creation_purity = 0.3
 
 /datum/glass_style/drinking_glass/cream
 	required_drink_type = /datum/reagent/consumable/cream

@@ -94,6 +94,9 @@
 	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
 		surgery.speed_modifier = max(0.1 * power_multiplier, surgery.speed_modifier)
 
+/datum/reagent/consumable/ethanol/synthetic
+	creation_purity = 0.3
+
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
 	description = "An alcoholic beverage brewed since ancient times on Old Earth. Still popular today."
