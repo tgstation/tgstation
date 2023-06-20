@@ -40,5 +40,4 @@
 		organ_owner.heal_bodypart_damage(2.5 * REM * seconds_per_tick)
 		for(var/datum/wound/iter_wound as anything in organ_owner.all_wounds)
 			iter_wound.on_xadone(1 * REM * seconds_per_tick)
-		organ_owner.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
 		return // Do normal metabolism
