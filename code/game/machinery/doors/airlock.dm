@@ -939,12 +939,12 @@
 		else
 			return TOOL_ACT_TOOLTYPE_SUCCESS
 
-	if(!tool.tool_start_check(user, amount=2))
+	if(!tool.tool_start_check(user, amount=1))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	to_chat(user, span_notice("You begin cutting the [layer_flavor]..."))
 
-	if(!tool.use_tool(src, user, 4 SECONDS, volume=50, amount=2))
+	if(!tool.use_tool(src, user, 4 SECONDS, volume=50))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	if(!panel_open || security_level != starting_level)
@@ -1056,7 +1056,7 @@
 			return
 
 		if(atom_integrity < max_integrity)
-			if(!W.tool_start_check(user, amount=0))
+			if(!W.tool_start_check(user, amount=1))
 				return
 			user.visible_message(span_notice("[user] begins welding the airlock."), \
 							span_notice("You begin repairing the airlock..."), \
@@ -1071,7 +1071,7 @@
 			to_chat(user, span_notice("The airlock doesn't need repairing."))
 
 /obj/machinery/door/airlock/try_to_weld_secondary(obj/item/weldingtool/tool, mob/user)
-	if(!tool.tool_start_check(user, amount=0))
+	if(!tool.tool_start_check(user, amount=1))
 		return
 	user.visible_message(span_notice("[user] begins [welded ? "unwelding":"welding"] the airlock."), \
 		span_notice("You begin [welded ? "unwelding":"welding"] the airlock..."), \

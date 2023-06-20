@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - bugfix: "Wheelchairs now make noises when they're meant to again, and don't make noises on the tram nor on conveyor belts"

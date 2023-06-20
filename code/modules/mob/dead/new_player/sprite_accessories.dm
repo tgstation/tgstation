@@ -41,7 +41,7 @@
 				male += D.name
 				female += D.name
 	if(add_blank)
-		L["None"] = new /datum/sprite_accessory/blank
+		L[SPRITE_ACCESSORY_NONE] = new /datum/sprite_accessory/blank
 
 	return L
 
