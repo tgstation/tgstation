@@ -98,6 +98,9 @@
 	user.visible_message(span_notice("[user] crushes [src] into meat."), span_notice("You crush [src] into something that resembles meat."))
 	playsound(user, 'sound/effects/blobattack.ogg', 50, TRUE)
 	var/obj/item/food/meat/slab/meatwheat/M = new
+	var/reagent_purity = seed.get_reagent_purity()
+	M.starting_reagent_purity = reagent_purity
+	M.adjust_reagent_purity()
 	qdel(src)
 	user.put_in_hands(M)
 	return 1
