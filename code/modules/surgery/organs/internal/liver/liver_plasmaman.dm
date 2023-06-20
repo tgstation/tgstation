@@ -9,9 +9,10 @@
 	//parent returned COMSIG_MOB_STOP_REAGENT_CHECK or we are failing
 	if(. || (organ_flags & ORGAN_FAILING))
 		return
+	// plasmamen use plasma to reform their bones or whatever
 	if(istype(chem, /datum/reagent/toxin/plasma) || istype(chem, /datum/reagent/toxin/hot_ice))
 		for(var/datum/wound/iter_wound as anything in organ_owner.all_wounds)
-			iter_wound.on_xadone(4 * REM * seconds_per_tick) // plasmamen use plasma to reform their bones or whatever
+			iter_wound.on_xadone(4 * REM * seconds_per_tick)
 		return // Do normal metabolism
 	if(istype(chem, /datum/reagent/gunpowder))
 		organ_owner.set_timed_status_effect(15 SECONDS * seconds_per_tick, /datum/status_effect/drugginess)
