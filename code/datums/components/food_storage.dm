@@ -21,6 +21,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY_SECONDARY, PROC_REF(try_inserting_item))
 	RegisterSignal(parent, COMSIG_CLICK_CTRL, PROC_REF(try_removing_item))
 	RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(consume_food_storage))
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
 	var/atom/food = parent
 	initial_volume = food.reagents.total_volume
@@ -199,3 +200,31 @@
 	//if there's nothing else in the food, or we found nothing valid
 	stored_item = null
 	return FALSE
+
+/**
+ * Adds context sensitivy directly to the processable file for screentips
+ * Arguments:
+ * * source - refers to item that will display its screentip
+ * * context - refers to, in this case, an item that can be proccessed into another item via add element proccessable
+ * * held_item - refers to tool used by add element proccessable to process one item into another item
+ * * user - refers to user who will see the screentip when the proper context and tool are there
+ */
+
+/datum/component/food_storage/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
+	SIGNAL_HANDLER
+	var/screentip_change = FALSE
+
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_CTRL_RMB] = "Remove embedded item (if any)"
+		screentip_change = TRUE
+
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_KNIFE)
+		context[SCREENTIP_CONTEXT_LMB] = "Slice"
+		context[SCREENTIP_CONTEXT_RMB] = "Embed item"
+		screentip_change = TRUE
+
+	if(istype(held_item) && held_item.w_class <= WEIGHT_CLASS_SMALL && held_item != source && !IS_EDIBLE(held_item))
+		context[SCREENTIP_CONTEXT_RMB] = "Embed item"
+		screentip_change = TRUE
+
+	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
