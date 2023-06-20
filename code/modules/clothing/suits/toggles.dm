@@ -29,6 +29,10 @@
 		on_removed = CALLBACK(src, PROC_REF(on_hood_down)),\
 	)
 
+/obj/item/clothing/suit/hooded/Destroy()
+	hood = null
+	return ..()
+
 /// Override to only create the hood conditionally
 /obj/item/clothing/suit/hooded/proc/can_create_hood()
 	return TRUE
