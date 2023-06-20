@@ -77,6 +77,7 @@
 	tastes = list("meat" = 4, "scales" = 1)
 	foodtypes = MEAT | RAW | GORE
 	venue_value = FOOD_MEAT_MUTANT
+	starting_reagent_purity = 0.4 // Take a look at their diet
 
 /obj/item/food/meat/slab/human/mutant/lizard/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/human/lizard, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
@@ -147,6 +148,7 @@
 	desc = "A synthetic slab of meat."
 	foodtypes = RAW | MEAT //hurr durr chemicals were harmed in the production of this meat thus its non-vegan.
 	venue_value = FOOD_PRICE_WORTHLESS
+	starting_reagent_purity = 0.3
 
 /obj/item/food/meat/slab/synthmeat/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/synth, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
@@ -164,6 +166,7 @@
 /obj/item/food/meat/slab/monkey
 	name = "monkey meat"
 	foodtypes = RAW | MEAT
+	starting_reagent_purity = 0.3 // Monkeys are considered synthetic life
 
 /obj/item/food/meat/slab/bugmeat
 	name = "bug meat"
@@ -411,6 +414,7 @@
 	desc = "A slab of raw chicken. Remember to wash your hands!"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6) //low fat
 	tastes = list("chicken" = 1)
+	starting_reagent_purity = 1
 
 /obj/item/food/meat/slab/chicken/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/chicken, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
@@ -428,10 +432,15 @@
 	icon_state = "pig_meat"
 	tastes = list("pig" = 1)
 	foodtypes = RAW | MEAT | GORE
+	starting_reagent_purity = 1
 
 /obj/item/food/meat/slab/pig/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/pig, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
 
+/obj/item/food/meat/slab/grassfed
+	name = "eco meat"
+	desc = "A slab of 100% grass fed award-winning farm meat."
+	starting_reagent_purity = 1
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 /obj/item/food/meat/steak

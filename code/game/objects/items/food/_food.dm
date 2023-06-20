@@ -46,6 +46,8 @@
 	var/decomp_req_handle = FALSE
 	///Used to set custom decomposition times for food. Set to 0 to have it automatically set via the food's flags.
 	var/decomposition_time = 0
+	///Used to set custom starting reagent purity for synthetic and natural food. Ignored when set to null.
+	var/starting_reagent_purity = null
 
 /obj/item/food/Initialize(mapload)
 	. = ..()
@@ -64,6 +66,8 @@
 	make_decompose(mapload)
 	make_bakeable()
 	make_microwaveable()
+	if(!starting_reagent_purity)
+		adjust_reagent_purity()
 	ADD_TRAIT(src, FISHING_BAIT_TRAIT, INNATE_TRAIT)
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
@@ -113,3 +117,32 @@
 /obj/item/food/proc/make_decompose(mapload)
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
+
+///Adjusts reagent purity
+/obj/item/food/proc/adjust_reagent_purity()
+	if(!starting_reagent_purity || !reagents.reagent_list.len)
+		return
+	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+		reagent.purity = starting_reagent_purity
+
+///Retrieve the average purity of the food reagents
+/obj/item/food/proc/get_quality()
+	if(!reagents.reagent_list.len)
+		return DRINK_FANTASTIC // No reagents equal to top quality
+
+	var/total_purity
+	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+		total_purity += reagent.purity
+	var/average_purity = total_purity / reagents.reagent_list.len
+	var/quality_min = FOOD_QUALITY_BAD_4
+	var/quality_max = FOOD_QUALITY_GOOD_4
+	var/quality = round(LERP(quality_min, quality_max, average_purity))
+	return quality
+
+/// TODO: DEBUG, REMOVE
+/obj/item/food/examine(mob/user)
+	. = ..()
+	. += span_notice("Quality: [get_quality()]")
+	. += span_notice("Reagent purities:")
+	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+		. += span_notice("- [reagent.name] [reagent.volume]u: [round(reagent.purity * 100)]% pure")

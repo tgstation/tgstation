@@ -98,6 +98,17 @@ DEFINE_BITFIELD(foodtypes, list(
 #define DRINK_GOOD 2
 #define DRINK_VERYGOOD 3
 #define DRINK_FANTASTIC 4
+
+#define FOOD_QUALITY_BAD_4 -4
+#define FOOD_QUALITY_BAD_3 -3
+#define FOOD_QUALITY_BAD_2 -2
+#define FOOD_QUALITY_BAD_1 -1
+#define FOOD_QUALITY_NORMAL 0
+#define FOOD_QUALITY_GOOD_1 1
+#define FOOD_QUALITY_GOOD_2 2
+#define FOOD_QUALITY_GOOD_3 3
+#define FOOD_QUALITY_GOOD_4 4
+
 #define FOOD_AMAZING 5
 
 /// Food is "in a container", not in a code sense, but in a literal sense (canned foods)
