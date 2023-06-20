@@ -48,7 +48,7 @@
 			else
 				examine_list += span_notice("[p_Theyre] wearing a fearsome carapace entirely composed of [upgrade_name] - [p_Their] pilot must be an experienced monster hunter.")
 		else
-			examine_list += span_notice("[p_They] [p_have] attachment points for strapping monster hide on for added protection.")
+			examine_list += span_notice("[p_They] [p_have] attachment points for strapping [upgrade_name] on for added protection.")
 	else
 		if(amount)
 			examine_list += span_notice("[p_They] [p_have] been strengthened with [amount]/[maxamount] [upgrade_name].")
