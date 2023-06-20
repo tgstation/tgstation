@@ -110,12 +110,6 @@
 	var/pod_style = STYLE_SYNDICATE
 	/// Do we use a random subtype of the outfit?
 	var/use_subtypes = TRUE
-	/// How much TC to reimburse if clicking on uplink
-	var/tc_to_reimburse = 25
-
-/obj/item/antag_spawner/nuke_ops/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/uplink_reimburse, tc_to_reimburse)
 
 /obj/item/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
@@ -180,7 +174,6 @@
 	antag_datum = /datum/antagonist/nukeop/clownop
 	pod_style = STYLE_HONK
 	use_subtypes = FALSE
-	tc_to_reimburse = 20
 
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele
@@ -192,17 +185,14 @@
 /obj/item/antag_spawner/nuke_ops/borg_tele/assault
 	name = "syndicate assault cyborg beacon"
 	borg_to_spawn = "Assault"
-	tc_to_reimburse = 65
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/medical
 	name = "syndicate medical beacon"
 	borg_to_spawn = "Medical"
-	tc_to_reimburse = 35
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 	name = "syndicate saboteur beacon"
 	borg_to_spawn = "Saboteur"
-	tc_to_reimburse = 35
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/silicon/robot/borg

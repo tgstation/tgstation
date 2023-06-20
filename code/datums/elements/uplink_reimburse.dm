@@ -1,4 +1,3 @@
-
 /**
  * Uplinik Reimburse element.
  * When element is applied onto items, it allows them to be reimbursed if an user pokes an item with a uplink component with them.
@@ -16,12 +15,10 @@
 	. = ..()
 
 	if(!isitem(target))
-		stack_trace("uplink_reimburse element added to non-item object: \[[target]\]")
 		return ELEMENT_INCOMPATIBLE
 
 	src.refundable_tc = refundable_tc
 
-	RegisterSignal(target, COMSIG_TRAITOR_BUY_ITEM_DISCOUNTED, PROC_REF(update_tc))
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, PROC_REF(reimburse))
 
@@ -30,25 +27,15 @@
 
 	return ..()
 
-///signal called when item is bought!
-/datum/element/uplink_reimburse/proc/update_tc(datum/uplink_item/item_datum)
-	SIGNAL_HANDLER
-
-	refundable_tc = item_datum.cost
-
 ///signal called on parent being examined
 /datum/element/uplink_reimburse/proc/on_examine(datum/target, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	var/examine_string
-
 	if(!IS_TRAITOR(user) && !IS_NUKE_OP(user))
-		examine_string = "There's a label on the side, but it's written in indecipherable gibberish. You have no idea what it means!"
+		examine_list += span_warning("There's a label on the side, but it's written in indecipherable gibberish. You have no idea what it means!")
 		return
 
-	examine_string = "There's a label written in codespeak on the side, saying that this item can be refunded for [refundable_tc] by applying it onto an uplink."
-
-	examine_list += span_notice(examine_string)
+	examine_list += span_notice("There's a label written in codespeak on the side, saying that this item can be refunded for [refundable_tc] by applying it onto an uplink.")
 
 /datum/element/uplink_reimburse/proc/reimburse(obj/item/refund_item, mob/user, datum/component/uplink/uplink_comp)
 	SIGNAL_HANDLER

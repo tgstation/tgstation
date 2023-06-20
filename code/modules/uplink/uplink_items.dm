@@ -38,6 +38,10 @@
 	var/item = null
 	/// Cost of the item.
 	var/cost = 0
+	/// Amount of TC to refund, in case there's a TC penalty for refunds.
+	var/refund_amount = 0
+	/// Whether this item is refundable or not.
+	var/refundable = FALSE
 	// Chance of being included in the surplus crate.
 	var/surplus = 100
 	/// Whether this can be discounted or not
@@ -122,8 +126,8 @@
 		A = new spawn_path(get_turf(user))
 	else
 		A = spawn_path
-	if(discounted)
-		SEND_SIGNAL(A, COMSIG_TRAITOR_BUY_ITEM_DISCOUNTED)
+	if(refundable)
+		A.AddElement(/datum/element/uplink_reimburse, (refund_amount ? refund_amount : cost))
 	if(ishuman(user) && isitem(A))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))

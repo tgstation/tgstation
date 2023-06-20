@@ -551,6 +551,7 @@
 	cost = 20
 	purchasable_from = UPLINK_CLOWN_OPS
 	restricted = TRUE
+	refundable = TRUE
 
 /datum/uplink_item/support/reinforcement
 	name = "Reinforcements"
@@ -560,6 +561,7 @@
 	cost = 25
 	purchasable_from = UPLINK_NUKE_OPS
 	restricted = TRUE
+	refundable = TRUE
 
 /datum/uplink_item/support/reinforcement/assault_borg
 	name = "Syndicate Assault Cyborg"
