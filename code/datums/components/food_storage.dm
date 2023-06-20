@@ -216,7 +216,6 @@
 /datum/component/food_storage/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 	. = NONE
-	var/screentip_change = FALSE
 
 	if(isnull(held_item) || held_item == source)
 		context[SCREENTIP_CONTEXT_CTRL_RMB] = "Remove embedded item (if any)"
