@@ -32304,10 +32304,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/station/maintenance/department/prison)
-"lQE" = (
-/obj/effect/mapping_helpers/airlock/unres,
-/turf/closed/wall/r_wall,
-/area/station/science/auxlab/firing_range)
 "lQG" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/iron/small,
@@ -119054,7 +119050,7 @@ blb
 utm
 utm
 utm
-lQE
+utm
 utm
 xok
 xCV
