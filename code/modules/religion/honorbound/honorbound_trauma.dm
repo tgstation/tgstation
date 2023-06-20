@@ -168,7 +168,7 @@
 	SIGNAL_HANDLER
 	punishment(user, spell_cast.school)
 
-/datum/brain_trauma/special/honorbound/proc/staff_check(mob/user, obj/item/gun/gun_fired, target, params, zone_override)
+/datum/brain_trauma/special/honorbound/proc/staff_check(mob/user, obj/item/gun/gun_fired, target, params, zone_override, list/bonus_spread_values)
 	SIGNAL_HANDLER
 	if(!istype(gun_fired, /obj/item/gun/magic))
 		return

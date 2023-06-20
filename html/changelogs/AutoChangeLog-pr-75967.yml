@@ -1,7 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - rscadd: "Nuclear Detonation now drops security level if it missed the station."
-  - rscadd: "Nuclear Detonation now nukes the syndie base if its on the syndie base."
-  - bugfix: "Nuclear Detonation now handles not playing a cinematic correctly."
-  - refactor: "Changed z level iteration for Nuclear Detonation"
