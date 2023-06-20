@@ -99,6 +99,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["tail_lizard"] = "Smooth"
 	target.dna.features["pod_hair"] = "Ivy"
 
+	for(var/spath in subtypesof(/datum/mutant_spritecat))
+		var/datum/mutant_spritecat/S = new spath()
+		if(S)
+			target.dna.features[S.id] = S.default
+
+
 /// Provides a dummy that is consistently bald, white, naked, etc.
 /mob/living/carbon/human/dummy/consistent
 

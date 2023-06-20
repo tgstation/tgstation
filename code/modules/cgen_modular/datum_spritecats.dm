@@ -16,6 +16,8 @@ GLOBAL_LIST_EMPTY(mutant_spritecat_list)
 	var/id
 	//a pointer to the sprite accessory type that'll be initialized
 	var/sprite_acc
+	//the default state, used for consistent human dummies augbdfaugahfg
+	var/default = "None"
 
 	//this is the proc that should call anything necessary for setting up the category while getting around BYOND jank
 	//yes i am naming it init_jank, this is the spess experience at its finest

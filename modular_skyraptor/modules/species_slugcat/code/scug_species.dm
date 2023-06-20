@@ -94,12 +94,15 @@
 
 /// Pretty UI stuff goes here.
 /datum/species/slugcat/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
+	world.log << "SKYRAPTOR ALERT: SETTING UP SCUG PREVIEW"
 	var/obj/item/organ/external/snout_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/snout/slugcat)
 	if(snout_tmp)
 		snout_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/snouts/slugcat/standard)
+		snout_tmp.bodypart_overlay.sprite_datum = /datum/sprite_accessory/snouts/slugcat/standard
 	var/obj/item/organ/external/horns_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/horns/slugcat)
 	if(horns_tmp)
 		horns_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/horns/slugcat/standard)
+		horns_tmp.bodypart_overlay.sprite_datum = /datum/sprite_accessory/horns/slugcat/standard
 	human_for_preview.update_body_parts()
 
 /datum/species/slugcat/get_species_description()

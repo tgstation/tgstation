@@ -5,6 +5,7 @@ GLOBAL_LIST_EMPTY(snouts_list_lizard)
 	name = "Lizard Snouts"
 	id = "snout_lizard"
 	sprite_acc = /datum/sprite_accessory/snouts/lizard
+	default = "Sharp + Light"
 
 /datum/mutant_spritecat/lizard_snout/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts/lizard, GLOB.snouts_list_lizard)
@@ -40,6 +41,7 @@ GLOBAL_LIST_EMPTY(bodymarks_list_lizard)
 	name = "Lizard Bodymarks"
 	id = "bodymarks_lizard"
 	sprite_acc = /datum/sprite_accessory/body_markings/lizard
+	default = "Light Belly"
 
 /datum/mutant_spritecat/lizard_bodymarks/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings/lizard, GLOB.bodymarks_list_lizard)
@@ -104,6 +106,7 @@ GLOBAL_LIST_EMPTY(horns_list_lizard)
 	name = "Lizard Horns"
 	id = "horns_lizard"
 	sprite_acc = /datum/sprite_accessory/horns/lizard
+	default = "Ram"
 
 /datum/mutant_spritecat/lizard_horns/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns/lizard, GLOB.horns_list_lizard)
@@ -147,6 +150,7 @@ GLOBAL_LIST_EMPTY(frills_list_lizard)
 	name = "Lizard Frills"
 	id = "frills_lizard"
 	sprite_acc = /datum/sprite_accessory/frills/lizard
+	default = "Aquatic"
 
 /datum/mutant_spritecat/lizard_frills/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills/lizard, GLOB.frills_list_lizard)

@@ -5,6 +5,7 @@ GLOBAL_LIST_EMPTY(snouts_list_slugcat)
 	name = "Slugcat Snouts"
 	id = "snout_scug"
 	sprite_acc = /datum/sprite_accessory/snouts/slugcat
+	default = "Standard"
 
 /datum/mutant_spritecat/slugcat_snout/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts/slugcat, GLOB.snouts_list_slugcat)
@@ -28,6 +29,7 @@ GLOBAL_LIST_EMPTY(bodymarks_list_slugcat)
 	name = "Slugcat Bodymarks"
 	id = "bodymarks_scug"
 	sprite_acc = /datum/sprite_accessory/body_markings/slugcat
+	default = "None"
 
 /datum/mutant_spritecat/slugcat_bodymarks/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings/slugcat, GLOB.bodymarks_list_slugcat)
@@ -84,6 +86,7 @@ GLOBAL_LIST_EMPTY(horns_list_slugcat)
 	name = "Slugcat Horns"
 	id = "horns_scug"
 	sprite_acc = /datum/sprite_accessory/horns/slugcat
+	default = "Standard"
 
 /datum/mutant_spritecat/slugcat_horns/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns/slugcat, GLOB.horns_list_slugcat)
