@@ -78,9 +78,9 @@
 		create_deployable()
 
 /datum/component/toggle_attached_clothing/Destroy(force, silent)
-	var/obj/item/parent_gear = parent
-	var/mob/living/carbon/human/wearer = parent_gear.loc
 	if (deployable)
+		var/obj/item/parent_gear = parent
+		var/mob/living/carbon/human/wearer = parent_gear.loc
 		wearer.dropItemToGround(deployable, force = TRUE, silent = TRUE)
 	QDEL_NULL(deployable)
 	QDEL_NULL(toggle_action)
