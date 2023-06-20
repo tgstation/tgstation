@@ -32,10 +32,10 @@
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/internal/tongue/bone
-	mutantstomach = null
+	mutantstomach = /obj/item/organ/internal/stomach/bone
 	mutantappendix = null
 	mutantheart = null
-	mutantliver = null
+	mutantliver = /obj/item/organ/internal/liver/bone
 	mutantlungs = null
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW | GORE
@@ -67,40 +67,6 @@
 /datum/species/skeleton/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
 	. = ..()
 	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
-		affected.adjustStaminaLoss(7.5 * REM * seconds_per_tick, 0)
-		affected.adjustBruteLoss(0.5 * REM * seconds_per_tick, 0)
-		if(SPT_PROB(10, seconds_per_tick))
-			switch(rand(1, 3))
-				if(1)
-					affected.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = chem.type)
-				if(2)
-					affected.manual_emote(pick("oofs silently.", "looks like [affected.p_their()] bones hurt.", "grimaces, as though [affected.p_their()] bones hurt."))
-				if(3)
-					to_chat(affected, span_warning("Your bones hurt!"))
-		if(chem.overdosed)
-			if(SPT_PROB(2, seconds_per_tick)) //big oof
-				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
-				var/obj/item/bodypart/bodypart = affected.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
-				if(bodypart)
-					playsound(affected, SFX_DESECRATION, 50, vary = TRUE) //You just want to socialize
-					affected.visible_message(span_warning("[affected] rattles loudly and flails around!!"), span_danger("Your bones hurt so much that your missing muscles spasm!!"))
-					affected.say("OOF!!", forced = chem.type)
-					bodypart.receive_damage(brute = 200) //But I don't think we should
-				else
-					to_chat(affected, span_warning("Your missing [parse_zone(selected_part)] aches from wherever you left it."))
-					affected.emote("sigh")
-		affected.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
-		return COMSIG_MOB_STOP_REAGENT_CHECK
-	if(chem.type == /datum/reagent/consumable/milk)
-		if(chem.volume > 50)
-			affected.reagents.remove_reagent(chem.type, (50 - chem.volume))
-			to_chat(affected, span_warning("The excess milk is dripping off your bones!"))
-		affected.heal_bodypart_damage(2.5 * REM * seconds_per_tick, 2.5 * REM * seconds_per_tick)
-		for(var/datum/wound/iter_wound as anything in affected.all_wounds)
-			iter_wound.on_xadone(1 * REM * seconds_per_tick)
-		affected.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
 		return
 
 /datum/species/skeleton/get_species_description()

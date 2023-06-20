@@ -268,6 +268,7 @@
 	return ..()
 
 /obj/item/organ/internal/stomach/bone
+	name = "mass of bones"
 	desc = "You have no idea what this strange ball of bones does."
 	metabolism_efficiency = 0.025 //very bad
 	organ_traits = list(TRAIT_NOHUNGER)

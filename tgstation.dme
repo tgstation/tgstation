@@ -5052,6 +5052,7 @@
 #include "code\modules\surgery\organs\external\wings\moth_wings.dm"
 #include "code\modules\surgery\organs\external\wings\wings.dm"
 #include "code\modules\surgery\organs\internal\liver\liver_plasmaman.dm"
+#include "code\modules\surgery\organs\internal\liver\liver_skeleton.dm"
 #include "code\modules\surgery\organs\internal\stomach\_stomach.dm"
 #include "code\modules\surgery\organs\internal\stomach\stomach_ethereal.dm"
 #include "code\modules\surgery\organs\internal\stomach\stomach_golem.dm"
