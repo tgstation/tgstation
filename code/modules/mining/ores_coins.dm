@@ -245,13 +245,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/gibtonite/Destroy()
 	qdel(wires)
-	wires = null
+	set_wires(null)
 	return ..()
 
 /obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && isigniter(I))
 		user.visible_message(span_notice("[user] attaches [I] to [src]."), span_notice("You attach [I] to [src]."))
-		wires = new /datum/wires/explosive/gibtonite(src)
+		set_wires(new /datum/wires/explosive/gibtonite(src))
 		attacher = key_name(user)
 		qdel(I)
 		add_overlay("Gibtonite_igniter")

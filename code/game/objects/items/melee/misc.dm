@@ -214,7 +214,7 @@
 	name = "supermatter sword"
 	desc = "In a station full of bad ideas, this might just be the worst."
 	icon = 'icons/obj/weapons/sword.dmi'
-	icon_state = "supermatter_sword"
+	icon_state = "supermatter_sword_balanced"
 	inhand_icon_state = "supermatter_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -266,6 +266,7 @@
 /obj/item/melee/supermatter_sword/pickup(user)
 	..()
 	balanced = 0
+	icon_state = "supermatter_sword"
 
 /obj/item/melee/supermatter_sword/ex_act(severity, target)
 	visible_message(

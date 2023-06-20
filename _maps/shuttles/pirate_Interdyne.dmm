@@ -45,13 +45,15 @@
 "ag" = (
 /obj/machinery/door/airlock/hatch{
 	id_tag = "piratebridgebolt";
-	name = "Bridge"
+	name = "Bridge";
+	req_access = null
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ah" = (
@@ -113,7 +115,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor/right/directional/west{
-	req_access = list("surgery")
+	req_access = list("syndicate")
 	},
 /obj/structure/bed,
 /turf/open/floor/iron/dark,
@@ -198,24 +200,33 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/portable_atmospherics/canister/healium,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/item/wrench/medical,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aJ" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/computer/operating,
-/obj/item/disk/surgery/debug,
 /obj/machinery/defibrillator_mount/charging{
 	pixel_y = 28
+	},
+/obj/item/disk/surgery/brainwashing{
+	name = "Interdyne Brainwashing Protocol Surgery Disk";
+	pixel_x = -8
+	},
+/obj/item/disk/surgery/sleeper_protocol{
+	name = "Interdyne Sleeper Protocal Surgery Disk";
+	pixel_x = 1
+	},
+/obj/item/disk/surgery/forgottenship{
+	name = "Interdyne Advanced Surgery Procedures Disk";
+	pixel_x = 9
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aK" = (
 /obj/machinery/door/airlock/external/glass/ruin{
-	cyclelinkedairlock = null;
 	cyclelinkeddir = 666666;
 	id_tag = "pirateportexternal";
-	req_access = list("surgery")
+	req_access = null
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -236,19 +247,20 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aL" = (
 /obj/machinery/door/airlock/external/glass/ruin{
-	cyclelinkedairlock = null;
 	cyclelinkeddir = 666666;
 	id_tag = "pirateportexternal";
-	req_access = list("surgery")
+	req_access = null
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aM" = (
@@ -315,6 +327,8 @@
 /obj/machinery/suit_storage_unit/medical,
 /obj/item/mod/module/defibrillator/combat,
 /obj/item/mod/module/tether,
+/obj/item/screwdriver/nuke,
+/obj/item/mod/module/surgical_processor/preloaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bl" = (
@@ -334,7 +348,9 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/gun/medbeam,
 /obj/item/gun/syringe/rapidsyringe,
-/obj/item/pen/sleepy,
+/obj/item/pen/sleepy{
+	name = "Interdyne Chem Pen"
+	},
 /obj/item/defibrillator/compact/combat/loaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -343,6 +359,8 @@
 /obj/machinery/suit_storage_unit/medical,
 /obj/item/mod/module/defibrillator/combat,
 /obj/item/mod/module/tether,
+/obj/item/screwdriver/nuke,
+/obj/item/mod/module/surgical_processor/preloaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bu" = (
@@ -358,7 +376,7 @@
 /obj/structure/window/reinforced/unanchored/spawner/directional/north,
 /obj/structure/bed,
 /obj/machinery/door/window/brigdoor/right/directional/west{
-	req_access = list("surgery")
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -428,20 +446,28 @@
 /obj/machinery/suit_storage_unit/medical,
 /obj/item/mod/module/defibrillator/combat,
 /obj/item/mod/module/tether,
+/obj/item/screwdriver/nuke,
+/obj/item/mod/module/surgical_processor/preloaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bX" = (
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "dV" = (
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	req_access = null
+	},
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ek" = (
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	req_access = null
+	},
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ep" = (
@@ -467,7 +493,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor/right/directional/south{
-	req_access = list("surgery")
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -493,7 +519,7 @@
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor/left/directional/east{
-	req_access = list("surgery")
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
@@ -595,6 +621,9 @@
 /obj/item/cautery/advanced,
 /obj/item/cautery/advanced,
 /obj/item/cautery/advanced,
+/obj/item/surgical_drapes,
+/obj/item/surgical_drapes,
+/obj/item/surgical_drapes,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "wf" = (
@@ -655,9 +684,14 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "yi" = (
-/obj/machinery/door/airlock/hatch,
+/obj/machinery/door/airlock/hatch{
+	id_tag = "piratebridgebolt";
+	name = "Bridge";
+	req_access = null
+	},
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "BT" = (
@@ -691,6 +725,7 @@
 /obj/item/reagent_containers/cup/beaker/meta/salbutamol{
 	list_reagents = list(/datum/reagent/medicine/c2/convermol = 180)
 	},
+/obj/item/wrench/medical,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ED" = (
@@ -768,6 +803,15 @@
 	dir = 1
 	},
 /obj/machinery/light/no_nightlight/directional/north,
+/turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"SD" = (
+/obj/machinery/door/airlock/hatch{
+	req_access = null
+	},
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Tr" = (
@@ -1018,7 +1062,7 @@ aj
 aJ
 aS
 aj
-yi
+SD
 aj
 aj
 ED
