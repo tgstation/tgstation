@@ -98,11 +98,11 @@
 	var/obj/item/organ/external/snout_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/snout/slugcat)
 	if(snout_tmp)
 		snout_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/snouts/slugcat/standard)
-		snout_tmp.bodypart_overlay.sprite_datum = /datum/sprite_accessory/snouts/slugcat/standard
+		snout_tmp.bodypart_overlay.sprite_datum = new /datum/sprite_accessory/snouts/slugcat/standard() //do NOT do this this is bad and ugly
 	var/obj/item/organ/external/horns_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/horns/slugcat)
 	if(horns_tmp)
 		horns_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/horns/slugcat/standard)
-		horns_tmp.bodypart_overlay.sprite_datum = /datum/sprite_accessory/horns/slugcat/standard
+		horns_tmp.bodypart_overlay.sprite_datum = new /datum/sprite_accessory/horns/slugcat/standard()
 	human_for_preview.update_body_parts()
 
 /datum/species/slugcat/get_species_description()

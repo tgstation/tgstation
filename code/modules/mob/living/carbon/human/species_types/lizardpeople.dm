@@ -124,25 +124,25 @@
 	var/obj/item/organ/external/snout_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/snout)
 	if(snout_tmp)
 		snout_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/snouts/lizard/sharplight)
-		snout_tmp.bodypart_overlay.sprite_datum = /datum/sprite_accessory/snouts/lizard/sharplight
+		snout_tmp.bodypart_overlay.sprite_datum = new /datum/sprite_accessory/snouts/lizard/sharplight()
 	else
 		world.log << "SKYRAPTOR ERROR: LIZARD PREVIEW IS MISSING ITS SNOUT!"
 	var/obj/item/organ/external/horns_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/horns/lizard)
 	if(horns_tmp)
 		horns_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/horns/lizard/ram)
-		horns_tmp.bodypart_overlay.sprite_datum = /datum/sprite_accessory/horns/lizard/ram
+		horns_tmp.bodypart_overlay.sprite_datum = new /datum/sprite_accessory/horns/lizard/ram()
 	else
 		world.log << "SKYRAPTOR ERROR: LIZARD PREVIEW IS MISSING ITS HORNS!"
 	var/obj/item/organ/external/frills_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/frills/lizard)
 	if(frills_tmp)
 		frills_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/frills/lizard/aquatic)
-		frills_tmp.bodypart_overlay.sprite_datum = /datum/sprite_accessory/frills/lizard/aquatic
+		frills_tmp.bodypart_overlay.sprite_datum = new /datum/sprite_accessory/frills/lizard/aquatic()
 	else
 		world.log << "SKYRAPTOR ERROR: LIZARD PREVIEW IS MISSING ITS FRILLS!"
 	var/obj/item/organ/external/spines_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/spines)
 	if(spines_tmp)
 		spines_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/spines/none)
-		spines_tmp.bodypart_overlay.sprite_datum = /datum/sprite_accessory/spines/none
+		spines_tmp.bodypart_overlay.sprite_datum = new /datum/sprite_accessory/spines/none()
 	else
 		world.log << "SKYRAPTOR ERROR: LIZARD PREVIEW IS MISSING ITS SPINES!"
 	human_for_preview.update_body_parts()
