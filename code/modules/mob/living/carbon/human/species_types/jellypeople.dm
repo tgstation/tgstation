@@ -499,10 +499,8 @@
 //Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW and have to i guess
 /datum/species/jelly/luminescent/Destroy(force)
 	current_extract = null
-	if(glow)
-		QDEL_NULL(glow)
-	if(luminescent_actions)
-		QDEL_LIST(luminescent_actions)
+	QDEL_NULL(glow)
+	QDEL_LIST(luminescent_actions)
 	return ..()
 
 /datum/species/jelly/luminescent/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species)
@@ -529,10 +527,8 @@
 	if(current_extract)
 		current_extract.forceMove(C.drop_location())
 		current_extract = null
-	if(glow)
-		QDEL_NULL(glow)
-	if(luminescent_actions)
-		QDEL_LIST(luminescent_actions)
+	QDEL_NULL(glow)
+	QDEL_LIST(luminescent_actions)
 
 /// Updates the glow of our internal glow object
 /datum/species/jelly/luminescent/proc/update_glow(mob/living/carbon/human/glowie, intensity)

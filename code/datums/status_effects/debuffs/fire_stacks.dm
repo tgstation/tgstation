@@ -260,9 +260,7 @@
  */
 
 /datum/status_effect/fire_handler/fire_stacks/proc/extinguish()
-	if(moblight)
-		QDEL_NULL(moblight)
-
+	QDEL_NULL(moblight)
 	on_fire = FALSE
 	owner.clear_mood_event("on_fire")
 	SEND_SIGNAL(owner, COMSIG_LIVING_EXTINGUISHED, owner)

@@ -53,8 +53,7 @@
 	var/default_color
 
 /datum/species/ethereal/Destroy(force)
-	if(ethereal_light)
-		QDEL_NULL(ethereal_light)
+	QDEL_NULL(ethereal_light)
 	return ..()
 
 /datum/species/ethereal/on_species_gain(mob/living/carbon/new_ethereal, datum/species/old_species, pref_load)
@@ -85,8 +84,7 @@
 	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMAG_ACT)
 	UnregisterSignal(former_ethereal, COMSIG_ATOM_EMP_ACT)
 	UnregisterSignal(former_ethereal, COMSIG_LIGHT_EATER_ACT)
-	if(ethereal_light)
-		QDEL_NULL(ethereal_light)
+	QDEL_NULL(ethereal_light)
 	return ..()
 
 /datum/species/ethereal/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
