@@ -197,14 +197,14 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		L[DNA_MUTANT_COLOR_BLOCK] = sanitize_hexcolor(features["mcolor"], include_crunch = FALSE)
 	if(features["ethcolor"])
 		L[DNA_ETHEREAL_COLOR_BLOCK] = sanitize_hexcolor(features["ethcolor"], include_crunch = FALSE)
-	if(features["body_markings"])
-		L[DNA_LIZARD_MARKINGS_BLOCK] = construct_block(GLOB.body_markings_list.Find(features["body_markings"]), GLOB.body_markings_list.len)
+	if(features["bodymarks_lizard"]) //SKYRAPTOR EDIT: body_markings generalized to bodymarks_lizard
+		L[DNA_LIZARD_MARKINGS_BLOCK] = construct_block(GLOB.bodymarks_list_lizard.Find(features["bodymarks_lizard"]), GLOB.bodymarks_list_lizard.len)
 	if(features["tail_cat"])
 		L[DNA_TAIL_BLOCK] = construct_block(GLOB.tails_list_human.Find(features["tail_cat"]), GLOB.tails_list_human.len)
 	if(features["tail_lizard"])
 		L[DNA_LIZARD_TAIL_BLOCK] = construct_block(GLOB.tails_list_lizard.Find(features["tail_lizard"]), GLOB.tails_list_lizard.len)
-	if(features["snout"])
-		L[DNA_SNOUT_BLOCK] = construct_block(GLOB.snouts_list.Find(features["snout"]), GLOB.snouts_list.len)
+	if(features["snout_lizard"]) //SKYRAPTOR EDIT: snouts_list to snouts_list_lizard specifically
+		L[DNA_SNOUT_BLOCK] = construct_block(GLOB.snouts_list_lizard.Find(features["snout_lizard"]), GLOB.snouts_list_lizard.len)
 	if(features["horns"])
 		L[DNA_HORNS_BLOCK] = construct_block(GLOB.horns_list.Find(features["horns"]), GLOB.horns_list.len)
 	if(features["frills"])
@@ -223,6 +223,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		L[DNA_MUSHROOM_CAPS_BLOCK] = construct_block(GLOB.caps_list.Find(features["caps"]), GLOB.caps_list.len)
 	if(features["pod_hair"])
 		L[DNA_POD_HAIR_BLOCK] = construct_block(GLOB.pod_hair_list.Find(features["pod_hair"]), GLOB.pod_hair_list.len)
+
+	/// SKYRAPTOR EDIT BEGIN: modular_chargen - allow custom dna features to exist
+	for(var/spath in subtypesof(/datum/mutant_newdnafeature))
+		var/datum/mutant_newdnafeature/S = new spath()
+		S.gen_unique_features(features, L)
+	/// SKYRAPTOR EDIT END: modular_chargen
 
 	for(var/blocknum in 1 to DNA_FEATURE_BLOCKS)
 		. += L[blocknum] || random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters)
@@ -331,12 +337,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			set_uni_feature_block(blocknumber, sanitize_hexcolor(features["mcolor"], include_crunch = FALSE))
 		if(DNA_ETHEREAL_COLOR_BLOCK)
 			set_uni_feature_block(blocknumber, sanitize_hexcolor(features["ethcolor"], include_crunch = FALSE))
-		if(DNA_LIZARD_MARKINGS_BLOCK)
-			set_uni_feature_block(blocknumber, construct_block(GLOB.body_markings_list.Find(features["body_markings"]), GLOB.body_markings_list.len))
+		if(DNA_LIZARD_MARKINGS_BLOCK) //SKYRAPTOR EDIT: bodymarks_lizard specifically
+			set_uni_feature_block(blocknumber, construct_block(GLOB.bodymarks_list_lizard.Find(features["bodymarks_lizard"]), GLOB.bodymarks_list_lizard.len))
 		if(DNA_TAIL_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.tails_list.Find(features["tail_lizard"]), GLOB.tails_list.len))
-		if(DNA_SNOUT_BLOCK)
-			set_uni_feature_block(blocknumber, construct_block(GLOB.snouts_list.Find(features["snout"]), GLOB.snouts_list.len))
+		if(DNA_SNOUT_BLOCK) //SKYRAPTOR EDIT: snout to snout_lizard
+			set_uni_feature_block(blocknumber, construct_block(GLOB.snouts_list.Find(features["snout_lizard"]), GLOB.snouts_list.len))
 		if(DNA_HORNS_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.horns_list.Find(features["horns"]), GLOB.horns_list.len))
 		if(DNA_FRILLS_BLOCK)
@@ -597,10 +603,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.features["mcolor"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_MUTANT_COLOR_BLOCK))
 	if(dna.features["ethcolor"])
 		dna.features["ethcolor"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_ETHEREAL_COLOR_BLOCK))
-	if(dna.features["body_markings"])
-		dna.features["body_markings"] = GLOB.body_markings_list[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_MARKINGS_BLOCK), GLOB.body_markings_list.len)]
-	if(dna.features["snout"])
-		dna.features["snout"] = GLOB.snouts_list[deconstruct_block(get_uni_feature_block(features, DNA_SNOUT_BLOCK), GLOB.snouts_list.len)]
+	if(dna.features["bodymarks_lizard"]) //SKYRAPTOR EDIT: bodymarks_lizard
+		dna.features["bodymarks_lizard"] = GLOB.bodymarks_list_lizard[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_MARKINGS_BLOCK), GLOB.bodymarks_list_lizard.len)]
+	if(dna.features["snout_lizard"]) //SKYRAPTOR EDIT: snout_lizard
+		dna.features["snout_lizard"] = GLOB.snouts_list_lizard[deconstruct_block(get_uni_feature_block(features, DNA_SNOUT_BLOCK), GLOB.snouts_list_lizard.len)]
 	if(dna.features["horns"])
 		dna.features["horns"] = GLOB.horns_list[deconstruct_block(get_uni_feature_block(features, DNA_HORNS_BLOCK), GLOB.horns_list.len)]
 	if(dna.features["frills"])
@@ -627,6 +633,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.features["caps"] = GLOB.caps_list[deconstruct_block(get_uni_feature_block(features, DNA_MUSHROOM_CAPS_BLOCK), GLOB.caps_list.len)]
 	if(dna.features["pod_hair"])
 		dna.features["pod_hair"] = GLOB.pod_hair_list[deconstruct_block(get_uni_feature_block(features, DNA_POD_HAIR_BLOCK), GLOB.pod_hair_list.len)]
+
+	/// SKYRAPTOR EDIT BEGIN: modular_chargen - this is the other part of new dna features
+	for(var/spath in subtypesof(/datum/mutant_newdnafeature))
+		var/datum/mutant_newdnafeature/S = new spath()
+		S.update_appear(dna, features)
+	/// SKYRAPTOR EDIT END
 
 	for(var/obj/item/organ/external/external_organ in organs)
 		external_organ.mutate_feature(features, src)

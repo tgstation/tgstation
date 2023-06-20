@@ -233,7 +233,7 @@
 
 /datum/bodypart_overlay/mutant/snout
 	layers = EXTERNAL_ADJACENT
-	feature_key = "snout"
+	feature_key = "snout_lizard"
 
 /datum/bodypart_overlay/mutant/snout/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.wear_mask?.flags_inv & HIDESNOUT) && !(human.head?.flags_inv & HIDESNOUT))
@@ -241,7 +241,7 @@
 	return FALSE
 
 /datum/bodypart_overlay/mutant/snout/get_global_feature_list()
-	return GLOB.snouts_list
+	return GLOB.snouts_list_lizard
 
 ///A moth's antennae
 /obj/item/organ/external/antennae

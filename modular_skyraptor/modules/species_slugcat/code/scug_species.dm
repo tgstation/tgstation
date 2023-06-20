@@ -15,16 +15,16 @@
 	inherent_traits = list(
 		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
-	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
+	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	species_language_holder = /datum/language_holder/synthetic
 
-	//mutant_bodyparts = list("body_markings" = "None", "legs" = "Normal Legs")
+	mutant_bodyparts = list("bodymarks_scug" = "None")
 	external_organs = list(
-		///obj/item/organ/external/horns = "None",
-		///obj/item/organ/external/frills = "None",
-		///obj/item/organ/external/snout = "Round",
-		///obj/item/organ/external/spines = "None",
+		/obj/item/organ/external/horns/slugcat = "Standard",
+		/obj/item/organ/external/snout/slugcat = "Standard",
 		/obj/item/organ/external/tail/lizard = "Smooth",
+		///obj/item/organ/external/frills/ = "None",
+		///obj/item/organ/external/spines = "None",
 	)
 	mutanteyes = /obj/item/organ/internal/eyes/slugcat
 
@@ -53,7 +53,7 @@
 	return "The [pick(SCUG_NAMES)]"
 
 /datum/species/slugcat/randomize_features(mob/living/carbon/human/human_mob)
-	human_mob.dna.features["body_markings"] = pick(GLOB.body_markings_list)
+	//human_mob.dna.features["body_markings"] = pick(GLOB.body_markings_list)
 	randomize_external_organs(human_mob)
 
 /datum/species/slugcat/get_scream_sound(mob/living/carbon/human/lizard)

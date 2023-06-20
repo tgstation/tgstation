@@ -751,12 +751,25 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			switch(bodypart)
 				if("ears")
 					accessory = GLOB.ears_list[source.dna.features["ears"]]
-				if("body_markings")
-					accessory = GLOB.body_markings_list[source.dna.features["body_markings"]]
+					//source_id = "standard ears: [bodypart]"
+				if("bodymarks_lizard")
+					accessory = GLOB.bodymarks_list_lizard[source.dna.features["bodymarks_lizard"]]
+					//source_id = "standard bodymarks: [bodypart]"
 				if("legs")
 					accessory = GLOB.legs_list[source.dna.features["legs"]]
+					//source_id = "standard legs: [bodypart]"
 				if("caps")
 					accessory = GLOB.caps_list[source.dna.features["caps"]]
+					//source_id = "standard caps: [bodypart]"
+			/// SKYRAPTOR EDIT BEGIN: modular_chargen
+			//Custom mutant bodyparts go brrr
+			for(var/spath in subtypesof(/datum/mutant_newmutantpart))
+				var/datum/mutant_newmutantpart/S = new spath()
+				var/accessory_tmp = S.get_accessory(bodypart, source.dna.features)
+				if(accessory_tmp != FALSE)
+					accessory = accessory_tmp
+					//source_id = "modularized: [bodypart]"
+			//SKYRAPTOR EDIT END: modular_chargen
 
 			if(!accessory || accessory.icon_state == "none")
 				continue

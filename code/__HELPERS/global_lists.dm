@@ -33,6 +33,14 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list)
 
+	/// SKYRAPTOR STATION EDIT BEGIN: modular_chargen
+	/// Custom sprite accessory subtype categorization
+	for(var/spath in subtypesof(/datum/mutant_spritecat))
+		var/datum/mutant_spritecat/S = new spath()
+		GLOB.mutant_spritecat_list[S.id] = spath
+		S.init_jank()
+	/// SKYRAPTOR STATION EDIT END: modular_chargen
+
 /// Inits GLOB.species_list. Not using GLOBAL_LIST_INIT b/c it depends on GLOB.string_lists
 /proc/init_species_list()
 	for(var/spath in subtypesof(/datum/species))
