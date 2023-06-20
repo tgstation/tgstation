@@ -42,7 +42,7 @@
 	var/upgrade_name = initial(upgrade_item.name)
 	if(ismecha(parent))
 		if(amount)
-			if(amount < maxamount)
+			if(amount < max_amount)
 				examine_list += span_notice("[p_Their] armor is enhanced with [amount] [upgrade_name].")
 			else
 				examine_list += span_notice("[p_Theyre] wearing a fearsome carapace entirely composed of [upgrade_name] - [p_Their] pilot must be an experienced monster hunter.")
@@ -50,9 +50,9 @@
 			examine_list += span_notice("[p_They] [p_have] attachment points for strapping [upgrade_name] on for added protection.")
 	else
 		if(amount)
-			examine_list += span_notice("[p_They] [p_have] been strengthened with [amount]/[maxamount] [upgrade_name].")
+			examine_list += span_notice("[p_They] [p_have] been strengthened with [amount]/[max_amount] [upgrade_name].")
 		else
-			examine_list += span_notice("[p_They] can be strengthened with up to [maxamount] [upgrade_name].")
+			examine_list += span_notice("[p_They] can be strengthened with up to [max_amount] [upgrade_name].")
 
 /datum/component/armor_plate/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user, params)
 	SIGNAL_HANDLER
@@ -60,7 +60,7 @@
 	if(!istype(attacking_item, upgrade_item))
 		return
 
-	if(amount >= maxamount)
+	if(amount >= max_amount)
 		to_chat(user, span_warning("You can't improve [parent] any further!"))
 		return
 
@@ -82,7 +82,7 @@
 		improvements += lowertext(rating)
 	var/improvements_text = english_list(improvements)
 	to_chat(user, span_info("You strengthen [parent], improving [parent.p_their()] resistance against [improvements_text]."))
-	SEND_SIGNAL(atom_parent, COMSIG_ARMOR_PLATED, amount, maxamount)
+	SEND_SIGNAL(atom_parent, COMSIG_ARMOR_PLATED, amount, max_amount)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/armor_plate/proc/on_atom_destruction(atom/source, damage_flag)
