@@ -68,6 +68,7 @@ SUBSYSTEM_DEF(demo)
 	dummy_observer.key = dummy_observer.ckey = ckey
 	dummy_observer.name = dummy_observer.real_name = "SSdemo Dummy Observer"
 
+	WRITE_LOG(GLOB.round_id_log, "[GLOB.round_id]")
 	var/revdata_list = list()
 	if(GLOB.revdata)
 		revdata_list["commit"] = "[GLOB.revdata.commit || GLOB.revdata.originmastercommit]"
