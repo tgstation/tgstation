@@ -1,0 +1,5 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - bugfix: "Cat Butcherer can no longer remove a tail you don't have."
+  - bugfix: "You can no longer manipulate \"None\" organs"
