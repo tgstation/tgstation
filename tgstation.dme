@@ -5384,9 +5384,12 @@
 #include "modular_skyraptor\modules\icspawning\code\observer.dm"
 #include "modular_skyraptor\modules\icspawning\code\spell.dm"
 #include "modular_skyraptor\modules\icspawning\code\standard.dm"
+#include "modular_skyraptor\modules\newemotes\newemotes_memes.dm"
+#include "modular_skyraptor\modules\newemotes\newemotes_normal.dm"
 #include "modular_skyraptor\modules\species_slugcat\code\scug_bodyparts.dm"
 #include "modular_skyraptor\modules\species_slugcat\code\scug_features.dm"
 #include "modular_skyraptor\modules\species_slugcat\code\scug_mutantparts.dm"
 #include "modular_skyraptor\modules\species_slugcat\code\scug_organs.dm"
 #include "modular_skyraptor\modules\species_slugcat\code\scug_species.dm"
 // END_INCLUDE
+
