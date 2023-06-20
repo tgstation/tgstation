@@ -15,6 +15,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	"Glass" = 'icons/hud/screen_glass.dmi',
 	"Trasen-Knox" = 'icons/hud/screen_trasenknox.dmi',
 	"Detective" = 'icons/hud/screen_detective.dmi',
+	"GrimyPoop" = 'monkestation/icons/hud/screen_grimypoop.dmi',
 ))
 
 /proc/ui_style2icon(ui_style)
