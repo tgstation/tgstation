@@ -84,6 +84,7 @@
 	var/improvements_text = english_list(improvements)
 	to_chat(user, span_info("You strengthen [parent], improving [parent.p_their()] resistance against [improvements_text]."))
 	SEND_SIGNAL(atom_parent, COMSIG_ARMOR_PLATED, amount, maxamount)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/armor_plate/proc/on_atom_destruction(atom/source, damage_flag)
 	SIGNAL_HANDLER
