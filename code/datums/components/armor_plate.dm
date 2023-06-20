@@ -77,7 +77,7 @@
 	var/datum/armor/armor_datum = get_armor_by_type(armor_mod)
 	//how did this happen?
 	if(!armor_datum)
-		return
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 	var/list/improvements = list()
 	for(var/rating in armor_datum.get_rating_list())
 		improvements += lowertext(rating)
