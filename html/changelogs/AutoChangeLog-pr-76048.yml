@@ -1,8 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes:
-  - rscadd: "Photocopiers now use actual paper instead of materializing it out of thin air."
-  - rscadd: "Adds the \"Access Request\" form."
-  - refactor: "Greatly improve the reliability and performance of photocopiers."
-  - qol: "Changed the blanks so they look nicer, whilst also fixing the lawsuit request form."
-  - qol: "Nanotrasen's bureaucracy division has \"\"improved\"\" the quality of their printer toner after many complaints from furious customers."

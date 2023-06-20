@@ -649,3 +649,31 @@
   - admin: 'Adds an admin panel to interact with shuttle events, under the Events
       tab: Change Shuttle Events'
   - bugfix: Objects spawned in hyperspace will properly catch hyperspace drift
+2023-06-20:
+  ChungusGamer666:
+  - rscadd: Food now gets stink lines when going bad. Uh oh, stinky.
+  DaydreamIQ:
+  - qol: Abductor organ surgery steps shifted around to match other surgeries
+  GoldenAlpharex:
+  - bugfix: Wheelchairs now make noises when they're meant to again, and don't make
+      noises on the tram nor on conveyor belts
+  MTandi:
+  - qol: You can make hairless hide from the entire stack of hides at once
+  Melbert:
+  - qol: Categorizes chef vendor
+  Mey-Ha-Zah:
+  - image: 'Updated several Null Rod Graphics. Also updated: the supermatter sword.'
+  OrionTheFox:
+  - qol: made Balaclavas layer below glasses and radios
+  SethLafuente:
+  - bugfix: Fixes a few Interdyne Pirates map flaws
+  - bugfix: fixes holymelons not having inhand sprites
+  distributivgesetz:
+  - rscadd: Photocopiers now use actual paper instead of materializing it out of thin
+      air.
+  - rscadd: Adds the "Access Request" form.
+  - refactor: Greatly improve the reliability and performance of photocopiers.
+  - qol: Changed the blanks so they look nicer, whilst also fixing the lawsuit request
+      form.
+  - qol: Nanotrasen's bureaucracy division has ""improved"" the quality of their printer
+      toner after many complaints from furious customers.
