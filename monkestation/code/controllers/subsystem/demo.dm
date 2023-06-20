@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(demo)
 
 	var/revdata_list = list()
 	if(GLOB.revdata)
-		revdata_list["commit"] = "[GLOB.revdata.commit || GLOB.revdata.originmastercommit]"
+		revdata_list["commit"] = "[GLOB.revdata.originmastercommit]"
 		if(GLOB.revdata.originmastercommit) revdata_list["originmastercommit"] = "[GLOB.revdata.originmastercommit]"
 		revdata_list["repo"] = "Monkestation/Monkestation2.0"
 	var/revdata_str = json_encode(revdata_list);
