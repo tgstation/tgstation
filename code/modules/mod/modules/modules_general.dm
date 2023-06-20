@@ -178,8 +178,7 @@
 	tgui_id = "status_readout"
 	/// Does this show the round ID and shift time?
 	var/show_time = FALSE
-	/// Death sound. May or may not be funny.
-	// thank you fikou for the custom flatline sound
+	/// Death sound. May or may not be funny. Vareditable at your own risk.
 	var/death_sound = 'sound/effects/flatline3.ogg'
 	/// Death sound volume. Please be responsible with this.
 	var/death_sound_volume = 50

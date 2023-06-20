@@ -295,8 +295,10 @@
 		Like other similar units, this one hooks into the suit's spine, and is capable of capturing and displaying \
 		all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
 		and even useful information such as their overall health and wellness. This one comes with a clock that calibrates to the \
-		local system time, and an operational ID number display."
+		local system time, and an operational ID number display. The vital monitor's speaker has been removed."
 	show_time = TRUE
+	death_sound = null
+	death_sound_volume = null
 
 ///Energy Net - Ensnares enemies in a net that prevents movement.
 /obj/item/mod/module/energy_net
