@@ -74,11 +74,11 @@
  * This proc can be overriden by liver subtypes so they can handle certain chemicals in special ways.
  * Return null to continue running the normal on_mob_life() for that reagent.
  * Return COMSIG_MOB_STOP_REAGENT_CHECK to not run the normal metabolism effects.
+ *
  * NOTE: If you return COMSIG_MOB_STOP_REAGENT_CHECK, that reagent will not be removed like normal! You must handle it manually.
  **/
 /obj/item/organ/internal/liver/proc/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
-	return
 
 /obj/item/organ/internal/liver/examine(mob/user)
 	. = ..()
