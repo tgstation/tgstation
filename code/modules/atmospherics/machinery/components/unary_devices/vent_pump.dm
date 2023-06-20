@@ -212,7 +212,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/welder)
 	..()
-	if(!welder.tool_start_check(user, amount=0))
+	if(!welder.tool_start_check(user, amount=1))
 		return TRUE
 	to_chat(user, span_notice("You begin welding the vent..."))
 	if(welder.use_tool(src, user, 20, volume=50))
