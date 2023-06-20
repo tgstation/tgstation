@@ -40,6 +40,11 @@
 	. = ..()
 	scanner = new(src)
 
+/obj/item/extrapolator/Destroy()
+	qdel(scanner)
+	scanner = null
+	return ..()
+
 /obj/item/extrapolator/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/scanning_module))
 		if(!scanner)
@@ -118,7 +123,7 @@
 		else
 			to_chat(user, "<span class='info'><font color='green'><b>[D.name]</b>, stage [D.stage]/[D.max_stages].</font></span>")
 
-/obj/item/extrapolator/proc/extrapolate(atom/AM, list/diseases = list(), mob/user, isolate = FALSE, timer = 200)
+/obj/item/extrapolator/proc/extrapolate(atom/AM, list/diseases = list(), mob/user, isolate = FALSE, timer = 100)
 	var/list/advancediseases = list()
 	var/list/symptoms = list()
 	if(using)
@@ -150,7 +155,7 @@
 		//symptomholder.Finalize()
 		symptomholder.Refresh()
 		to_chat(user, "<span class='warning'>you begin isolating [chosen].</span>")
-		if(do_after(user, (600 / (scanner.rating + 1)), target = AM))
+		if(do_after(user, (120 / (scanner.rating + 1)), target = AM))
 			create_culture(symptomholder, user, AM)
 	else
 		using = TRUE
@@ -163,7 +168,7 @@
 		to_chat(user, "<span class='warning'>The extrapolator is still recharging!</span>")
 		return
 	var/list/data = list("viruses" = list(A))
-	var/obj/item/reagent_containers/cup/glass/B = new(user.loc)
+	var/obj/item/reagent_containers/cup/bottle/B = new(user.loc)
 	cooldown = world.time
 	if(!(user.get_item_for_held_index(user.active_hand_index) == src))
 		to_chat(user, "<span class='warning'>The extrapolator must be held in your active hand to work!</span>")
