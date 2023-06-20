@@ -29,7 +29,7 @@
 
 	// Chaplains are understandably 100% immune
 	if(hit_mob.can_block_magic(MAGIC_RESISTANCE_HOLY))
-		hit_mob.mob_light(_color = LIGHT_COLOR_HOLY_MAGIC, _range = 2, _duration = 10 SECONDS)
+		hit_mob.mob_light(color = LIGHT_COLOR_HOLY_MAGIC, range = 2, duration = 10 SECONDS)
 
 		var/mutable_appearance/forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 		hit_mob.add_overlay(forbearance)
@@ -43,7 +43,7 @@
 
 	//To make battles more fun, both sides can't bullshit stun hand the other
 	if(IS_CULTIST(hit_mob))
-		hit_mob.mob_light(_color = LIGHT_COLOR_BLOOD_MAGIC, _range = 2, _duration = 30 SECONDS)
+		hit_mob.mob_light(color = LIGHT_COLOR_BLOOD_MAGIC, range = 2, duration = 30 SECONDS)
 
 		hit_mob.adjust_stutter(15 SECONDS)
 		hit_mob.adjust_jitter(15 SECONDS)
@@ -72,7 +72,7 @@
 		return TRUE
 
 	//Successful Invokation
-	invoker.mob_light(_color = LIGHT_COLOR_CLOCKWORK, _range = 2, _duration = 1 SECONDS)
+	invoker.mob_light(color = LIGHT_COLOR_CLOCKWORK, range = 2, duration = 1 SECONDS)
 
 	if(issilicon(hit_mob))
 		var/mob/living/silicon/borgo = hit_mob
