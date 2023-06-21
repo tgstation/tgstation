@@ -195,8 +195,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// This supresses the "dosen't appear to be himself" examine text for if the mob is run by an AI controller. Should be used on any NPC human subtypes. Monkeys are the prime example.
 	var/ai_controlled_species = FALSE
 
-	/// Was on_species_gain ever actually called?
-	/// Species code is really odd...
+	/**
+	 * Was on_species_gain ever actually called?
+	 * Species code is really odd...
+	 **/
 	var/properly_gained = FALSE
 
 ///////////
