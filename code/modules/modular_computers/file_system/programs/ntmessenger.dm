@@ -39,6 +39,16 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 // Why do we have this?
 /proc/StringifyMessengerTarget(obj/item/modular_computer/messenger)
 	return STRINGIFY_PDA_TARGET(messenger.saved_identification, messenger.saved_job)
+
+/datum/pda_chat
+	/// Refs to the other user
+	var/users = null
+	/// A list of messages, formatted as {"ref":string,"msg":string,"everyone":bool}
+	var/list/messages = list()
+
+/datum/pda_chat/proc/add(user, msg, everyone = FALSE)
+	messages += list(list("ref" = user, "msg" = msg, "everyone" = everyone))
+
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
 	filedesc = "Direct Messenger"
@@ -68,13 +78,13 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	/// Scanned photo for sending purposes.
 	var/datum/picture/saved_image
 	/// The messages currently saved in the app.
-	var/list/messages = list()
+	var/list/datum/pda_msg/messages = list()
 	/// Associative list of unread messages - Format: msgr_ref -> number of unreads
-	var/list/unread_messages = list()
+	var/list/datum/pda_msg/unread_messages = list()
 	/// Whether the user is invisible to the message list.
 	var/invisible = FALSE
 	/// Whose chatlogs we currently have open. If we are in the contacts list, this is null.
-	var/viewing_messages_of = null
+	var/datum/pda_msg/viewing_messages_of = null
 	// Whether or not this device is currently hidden from the message monitor.
 	var/monitor_hidden = FALSE
 	// Whether or not we're sorting by job.
