@@ -109,6 +109,6 @@
 		if(foodtypes & get_toxic_foodtypes())
 			return FOOD_TOXIC
 		return
-	return tongue.get_food_taste_reaction(food, edible)
+	return tongue.get_food_taste_reaction(food, foodtypes)
 
 #undef DEFAULT_TASTE_SENSITIVITY
