@@ -21,6 +21,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/stage = 0
 	/// Acid overlay appearance we apply
 	var/acid_overlay
+	/// Boolean for if we ignore mobs when applying acid to turf contents
+	var/turf_acid_ignores_mobs
 	/// The ambient sound of acid eating away at the parent [/atom].
 	var/datum/looping_sound/acid/sizzle
 	/// Particle holder for acid particles (sick)
@@ -28,7 +30,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	/// The proc used to handle the parent [/atom] when processing. TODO: Unify damage and resistance flags so that this doesn't need to exist!
 	var/datum/callback/process_effect
 
-/datum/component/acid/Initialize(acid_power = ACID_POWER_MELT_TURF, acid_volume = 50, acid_overlay = GLOB.acid_overlay, acid_particles = /particles/acid)
+/datum/component/acid/Initialize(acid_power = ACID_POWER_MELT_TURF, acid_volume = 50, acid_overlay = GLOB.acid_overlay, acid_particles = /particles/acid, turf_acid_ignores_mobs = FALSE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -146,8 +148,14 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/acid_used = min(acid_volume * 0.05, 20) * seconds_per_tick
 	var/applied_targets = 0
 	for(var/atom/movable/target_movable as anything in target_turf)
+		// Dont apply acid to things under the turf
 		if(target_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(target_movable, TRAIT_T_RAY_VISIBLE))
 			continue
+		// Ignore mobs if turf_acid_ignores_mobs is TRUE
+		if(turf_acid_ignores_mobs)
+			if(ismob(target_movable))
+				continue
+		// Apply the acid
 		if(target_movable.acid_act(acid_power, acid_used))
 			applied_targets++
 
