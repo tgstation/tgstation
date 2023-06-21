@@ -41,7 +41,7 @@
 
 /obj/machinery/air_sensor/return_air()
 	if(!on)
-		return 
+		return
 	. = ..()
 	use_power(active_power_usage) //use power for analyzing gases
 
@@ -114,6 +114,12 @@
 
 	return TRUE
 
+/**
+ * A portable version of the /obj/machinery/air_sensor
+ * Wrenching it & turning it on will convert it back to /obj/machinery/air_sensor
+ * Unwelding /obj/machinery/air_sensor will turn it back to /obj/item/air_sensor
+ * The logic is same as meters
+ */
 /obj/item/air_sensor
 	name = "Air Sensor"
 	desc = "A device designed to detect gases and their concentration in an area."

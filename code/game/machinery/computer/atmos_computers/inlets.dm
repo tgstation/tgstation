@@ -1,6 +1,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored
 	on = TRUE
 	volume_rate = MAX_TRANSFER_RATE
+	/// The air sensor type this injector is linked to
 	var/chamber_id
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/Initialize(mapload)
