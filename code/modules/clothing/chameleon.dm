@@ -391,6 +391,7 @@
 	bio = 10
 	fire = 50
 	acid = 50
+	wound = 10
 
 /obj/item/clothing/under/chameleon/Initialize(mapload)
 	. = ..()

@@ -1,0 +1,5 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - bugfix: "autolathe, protolathe, mech fabricator and component printers material capacity are now in 20 times less, as intended."
+  - bugfix: "protolathe material menu now should display material ejecting correctly."
