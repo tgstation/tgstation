@@ -72,21 +72,23 @@
 
 
 //== TAIL
-/*/datum/preference/choiced/slugcat_tail
-	savefile_key = "feature_lizard_tail" //avoid fuckery
+/datum/preference/choiced/slugcat_tail
+	savefile_key = "feature_slugcat_tail" //avoid fuckery
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_external_organ = /obj/item/organ/external/tail/slugcat
+	main_feature_name = "Tail"
+	should_generate_icons = TRUE
 
 /datum/preference/choiced/slugcat_tail/init_possible_values()
 	return assoc_to_keys_features(GLOB.tails_list_slugcat)
 
 /datum/preference/choiced/slugcat_tail/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[NK006_slugcat_TAIL_ID] = value
+	target.dna.features["tail_scug"] = value
 
 /datum/preference/choiced/slugcat_tail/create_default_value()
-	var/datum/sprite_accessory/tails/slugcat/midfinless/tail = /datum/sprite_accessory/tails/slugcat/midfinless
-	return initial(tail.name)*/
+	var/datum/sprite_accessory/tails/slugcat/standard/tail = /datum/sprite_accessory/tails/slugcat/standard
+	return initial(tail.name)
 
 
 

@@ -10,6 +10,7 @@
 	species_traits = list(
 		MUTCOLORS,
 		EYECOLOR,
+		HAIR,
 		LIPS,
 	)
 	inherent_traits = list(
@@ -22,7 +23,7 @@
 	external_organs = list(
 		/obj/item/organ/external/horns/slugcat = "Standard",
 		/obj/item/organ/external/snout/slugcat = "Standard",
-		/obj/item/organ/external/tail/lizard = "Smooth",
+		/obj/item/organ/external/tail/slugcat = "Standard",
 		///obj/item/organ/external/frills/ = "None",
 		///obj/item/organ/external/spines = "None",
 	)
@@ -53,7 +54,10 @@
 	return "The [pick(SCUG_NAMES)]"
 
 /datum/species/slugcat/randomize_features(mob/living/carbon/human/human_mob)
-	//human_mob.dna.features["body_markings"] = pick(GLOB.body_markings_list)
+	human_mob.undershirt = random_undershirt(human_mob.gender)
+	human_mob.underwear = random_underwear(human_mob.gender)
+	human_mob.socks = random_socks(human_mob.gender)
+	human_mob.hairstyle = random_hairstyle(human_mob.gender)
 	randomize_external_organs(human_mob)
 
 /datum/species/slugcat/get_scream_sound(mob/living/carbon/human/lizard)
@@ -94,6 +98,12 @@
 
 /// Pretty UI stuff goes here.
 /datum/species/slugcat/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
+	//previews Saint
+	human_for_preview.hairstyle = "Messy"
+	human_for_preview.hair_color = "#365904"
+	human_for_preview.dna.features["mcolor"] = "#87a629"
+	human_for_preview.eye_color_left = "#39c9e6"
+	human_for_preview.eye_color_right = "#ffd659"
 	world.log << "SKYRAPTOR ALERT: SETTING UP SCUG PREVIEW"
 	var/obj/item/organ/external/snout_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/snout/slugcat)
 	if(snout_tmp)
@@ -103,6 +113,10 @@
 	if(horns_tmp)
 		horns_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/horns/slugcat/standard)
 		horns_tmp.bodypart_overlay.sprite_datum = new /datum/sprite_accessory/horns/slugcat/standard()
+	var/obj/item/organ/external/tail_tmp = human_for_preview.get_organ_by_type(/obj/item/organ/external/tail/slugcat)
+	if(tail_tmp)
+		tail_tmp.bodypart_overlay.set_appearance(/datum/sprite_accessory/tails/slugcat/standard)
+		tail_tmp.bodypart_overlay.sprite_datum = new /datum/sprite_accessory/tails/slugcat/standard()
 	human_for_preview.update_body_parts()
 
 /datum/species/slugcat/get_species_description()

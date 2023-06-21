@@ -100,3 +100,44 @@ GLOBAL_LIST_EMPTY(horns_list_slugcat)
 /datum/sprite_accessory/horns/slugcat/standard
 	name = "Standard"
 	icon_state = "standard"
+
+/datum/sprite_accessory/horns/slugcat/tall
+	name = "Tall"
+	icon_state = "tall"
+
+/datum/sprite_accessory/horns/slugcat/sharp
+	name = "Sharp"
+	icon_state = "sharp"
+
+/datum/sprite_accessory/horns/slugcat/forward
+	name = "Forward"
+	icon_state = "forward"
+
+/datum/sprite_accessory/horns/slugcat/flopped
+	name = "Flopped"
+	icon_state = "flopped"
+
+/datum/sprite_accessory/horns/slugcat/fluffy
+	name = "Fluffy"
+	icon_state = "fluffy"
+
+
+
+// == SECTION 4: TAILS ==
+GLOBAL_LIST_EMPTY(tails_list_slugcat)
+/datum/mutant_spritecat/slugcat_tails
+	name = "Slugcat Tails"
+	id = "tail_scug"
+	sprite_acc = /datum/sprite_accessory/tails/slugcat
+
+/datum/mutant_spritecat/slugcat_tails/init_jank()
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/slugcat, GLOB.tails_list_slugcat)
+		world.log << "CELEBRATE: FOR THE SCUGS HAVE TAILS"
+		return ..()
+
+/datum/sprite_accessory/tails/slugcat
+	icon = 'modular_skyraptor/modules/species_slugcat/icons/slugcat_tails.dmi'
+
+/datum/sprite_accessory/tails/slugcat/standard
+	name = "Standard"
+	icon_state = "std"

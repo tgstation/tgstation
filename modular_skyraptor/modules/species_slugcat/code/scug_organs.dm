@@ -5,6 +5,9 @@
 	eye_icon_state = "scugeyes"
 	icon_state = "eyeballs-moth"
 
+
+
+// SNOUT
 /obj/item/organ/external/snout/slugcat
 	name = "slugcat snout"
 	desc = "Woa...Sluggy."
@@ -20,6 +23,9 @@
 /datum/bodypart_overlay/mutant/snout/slugcat/get_global_feature_list()
 	return GLOB.snouts_list_slugcat
 
+
+
+// HORNS
 /obj/item/organ/external/horns/slugcat
 	name = "slugcat horns"
 	desc = "Taking the place of ears for a little bit because hrngh."
@@ -34,3 +40,21 @@
 
 /datum/bodypart_overlay/mutant/horns/slugcat/get_global_feature_list()
 	return GLOB.horns_list_slugcat
+
+
+
+// TAILS
+// == AKULA TAIL ==
+/obj/item/organ/external/tail/slugcat
+	name = "slugcat tail"
+	desc = "A soft and weighty tail that feels more like one of those chiropractic pillows than a regular tail."
+
+	preference = "feature_slugcat_tail" //this is SPECIFICALLY to make prefs play nice
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/slugcat
+
+/datum/bodypart_overlay/mutant/tail/slugcat
+	feature_key = "tail_scug"
+
+/datum/bodypart_overlay/mutant/tail/slugcat/get_global_feature_list()
+	return GLOB.tails_list_slugcat
