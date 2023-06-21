@@ -43,7 +43,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/enzyme
-	name = "Synthetic Universal Enzyme"
+	name = "Synthetic Enzyme"
 	id = "enzyme"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
