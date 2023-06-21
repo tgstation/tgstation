@@ -454,7 +454,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/on_species_gain(mob/living/carbon/human/C, datum/species/old_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if((AGENDER in species_traits))
+	if(AGENDER in species_traits)
 		C.gender = PLURAL
 
 	if(C.hud_used)
