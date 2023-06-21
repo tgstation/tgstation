@@ -285,6 +285,7 @@ SUBSYSTEM_DEF(tgui)
  * required ui datum/tgui The UI to be added.
  */
 /datum/controller/subsystem/tgui/proc/on_open(datum/tgui/ui)
+	var/key = "[REF(ui.src_object)]"
 	LAZYOR(ui.src_object.open_uis, ui)
 	all_uis |= ui
 
