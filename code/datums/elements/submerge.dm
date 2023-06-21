@@ -253,7 +253,7 @@
 	SIGNAL_HANDLER
 	var/matrix/new_transform = matrix()
 	new_transform.Scale(1/source.current_size)
-	new_transform.Turn(-source.lying_angle)
+	new_transform.Turn(-new_lying_angle)
 
 	var/atom/movable/submerge_overlay/vis_overlay = submerge_movables[source]
 	if(is_opposite_angle)
