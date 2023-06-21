@@ -21,7 +21,10 @@
 		// carbons without tongues normally have TRAIT_AGEUSIA but sensible fallback
 		. = DEFAULT_TASTE_SENSITIVITY
 
-// non destructively tastes a reagent container
+/**
+ * Non destructively tastes a reagent container
+ * and gives feedback to the user.
+ **/
 /mob/living/proc/taste(datum/reagents/from)
 	if(HAS_TRAIT(src, TRAIT_AGEUSIA))
 		return
@@ -44,43 +47,67 @@
 			last_taste_text = text_output
 
 /**
- * Gets foodtypes that this mob likes
- */
-/mob/living/proc/get_liked_food()
+ * Gets food flags that this mob likes
+ **/
+/mob/living/proc/get_liked_foodtypes()
 	return NONE
 
-/mob/living/carbon/get_liked_food()
+/mob/living/carbon/get_liked_foodtypes()
 	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
 	// No tongue, no tastin'
-	if(!tongue || HAS_TRAIT(src, TRAIT_AGEUSIA))
+	if(!tongue?.sense_of_taste || HAS_TRAIT(src, TRAIT_AGEUSIA))
 		return NONE
 	return tongue.liked_food
 
 /**
- * Gets foodtypes that this mob dislikes
- */
-/mob/living/proc/get_disliked_food()
+ * Gets food flags that this mob dislikes
+ **/
+/mob/living/proc/get_disliked_foodtypes()
 	return NONE
 
-/mob/living/carbon/get_disliked_food()
+/mob/living/carbon/get_disliked_foodtypes()
 	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
 	// No tongue, no tastin'
-	if(!tongue || HAS_TRAIT(src, TRAIT_AGEUSIA))
+	if(!tongue?.sense_of_taste || HAS_TRAIT(src, TRAIT_AGEUSIA))
 		return NONE
 	return tongue.disliked_food
 
 /**
- * Gets foodtypes that this mob hates
- * Toxic food is the only foodtype that ignores the ageusia trait, keep it like that.
- */
-/mob/living/proc/get_toxic_food()
+ * Gets food flags that this mob hates
+ * Toxic food is the only foodtype that ignores ageusia, keep it like that!
+ **/
+/mob/living/proc/get_toxic_foodtypes()
 	return NONE
 
-/mob/living/carbon/get_toxic_food()
+/mob/living/carbon/get_toxic_foodtypes()
 	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
 	// No tongue, no tastin'
 	if(!tongue)
 		return NONE
 	return tongue.toxic_food
+
+/**
+ * Gets the food reaction a mob would normally have from the given food item,
+ * assuming that no check_liked callback was used in the edible component.
+ *
+ * Does not get called if the owner has ageusia.
+ **/
+/mob/living/proc/get_food_taste_reaction(obj/item/food, datum/component/edible/edible)
+	var/food_taste_reaction
+	if(edible.foodtypes & get_toxic_foodtypes())
+		food_taste_reaction = FOOD_TOXIC
+	else if(foodtypes & get_disliked_foodtypes())
+		food_taste_reaction = FOOD_DISLIKED
+	else if(foodtypes & get_liked_foodtypes())
+		food_taste_reaction = FOOD_LIKED
+	return food_taste_reaction
+
+/mob/living/carbon/get_food_taste_reaction(obj/item/food, datum/component/edible/edible)
+	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	// No tongue, no tastin'
+	if(!tongue)
+		return NONE
+	return tongue.get_food_taste_reaction(food, edible)
+
 
 #undef DEFAULT_TASTE_SENSITIVITY
