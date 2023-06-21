@@ -715,13 +715,11 @@
 	var/creepy_plush_type = "mothperson" //for modularizing creepy toys
 	var/has_creepy_icons = FALSE //for updating icons
 
-	// actions_types = list(/datum/action/item_action/toggle_light)
+	// only used for the base moth plush light
 	light_system = MOVABLE_LIGHT
 	light_range = 4
 	light_power = 1
-	light_on = FALSE
-	/// Can we toggle this light on and off (used for contexual screentips only)
-	// var/toggle_context = TRUE
+
 	/// Is the light turned on or off currently
 	var/on = FALSE
 
@@ -730,7 +728,6 @@
 	if(icon_state == "[initial(icon_state)]-on")
 		on = TRUE
 	update_brightness()
-	// register_context()
 
 /obj/item/toy/plush/moth/attack_self(mob/user)
 	. = ..()
@@ -757,18 +754,6 @@
 	user.dust(just_ash = FALSE, drop_items = TRUE)
 	return MANUAL_SUICIDE
 
-// /obj/item/flashlight/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-// 	// single use lights can be toggled on once
-// 	if(isnull(held_item) && (toggle_context || !on))
-// 		context[SCREENTIP_CONTEXT_RMB] = "Toggle light"
-// 		return CONTEXTUAL_SCREENTIP_SET
-
-// 	if(istype(held_item, /obj/item/flashlight) && (toggle_context || !on))
-// 		context[SCREENTIP_CONTEXT_LMB] = "Toggle light"
-// 		return CONTEXTUAL_SCREENTIP_SET
-
-// 	return NONE
-
 /obj/item/toy/plush/moth/proc/update_brightness()
 	if(on)
 		icon_state = "[initial(icon_state)]_on"
@@ -783,9 +768,7 @@
 /obj/item/toy/plush/moth/proc/toggle_light()
 	if (icon_state == "moffplush_on" || icon_state == "moffplush")
 		on = !on
-		// playsound(src, on ? sound_on : sound_off, 40, TRUE)
 		update_brightness()
-		// update_item_action_buttons()
 
 		set_light_on(on)
 		if(light_system == STATIC_LIGHT)
