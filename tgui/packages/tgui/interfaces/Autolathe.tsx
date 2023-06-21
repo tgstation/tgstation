@@ -8,25 +8,16 @@ import { BooleanLike, classes } from 'common/react';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import { Material } from './Fabrication/Types';
 
-type AutolatheDesign = Design & {
-  buildable: BooleanLike;
-  mult5: BooleanLike;
-  mult10: BooleanLike;
-  mult25: BooleanLike;
-  mult50: BooleanLike;
-  sheet: BooleanLike;
-};
-
 type AutolatheData = {
   materials: Material[];
   materialtotal: number;
   materialsmax: number;
-  designs: AutolatheDesign[];
+  designs: Design[];
   active: BooleanLike;
 };
 
 export const Autolathe = (props, context) => {
-  const { act, data } = useBackend<AutolatheData>(context);
+  const { data } = useBackend<AutolatheData>(context);
   const { materialtotal, materialsmax, materials, designs, active } = data;
 
   const filteredMaterials = materials.filter((material) => material.amount > 0);
@@ -148,7 +139,7 @@ const PrintButton = (props: PrintButtonProps, context) => {
 };
 
 type AutolatheRecipeProps = {
-  design: AutolatheDesign;
+  design: Design;
   availableMaterials: MaterialMap;
 };
 
@@ -199,37 +190,17 @@ const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
         </div>
       </Tooltip>
 
-      {!!design.mult5 && (
-        <PrintButton
-          design={design}
-          quantity={5}
-          availableMaterials={availableMaterials}
-        />
-      )}
+      <PrintButton
+        design={design}
+        quantity={5}
+        availableMaterials={availableMaterials}
+      />
 
-      {!!design.mult10 && (
-        <PrintButton
-          design={design}
-          quantity={10}
-          availableMaterials={availableMaterials}
-        />
-      )}
-
-      {!!design.mult25 && (
-        <PrintButton
-          design={design}
-          quantity={25}
-          availableMaterials={availableMaterials}
-        />
-      )}
-
-      {!!design.mult50 && (
-        <PrintButton
-          design={design}
-          quantity={50}
-          availableMaterials={availableMaterials}
-        />
-      )}
+      <PrintButton
+        design={design}
+        quantity={10}
+        availableMaterials={availableMaterials}
+      />
 
       <div
         className={classes([

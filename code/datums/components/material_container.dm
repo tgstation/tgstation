@@ -10,8 +10,6 @@
 */
 
 /datum/component/material_container
-	/// The total amount of materials this material container contains
-	var/total_amount = 0
 	/// The maximum amount of materials this material container can contain
 	var/max_amount
 	/// Map of material ref -> amount
@@ -95,7 +93,6 @@
 		QDEL_NULL(after_retrieve)
 	return ..()
 
-
 /datum/component/material_container/RegisterWithParent()
 	. = ..()
 
@@ -103,7 +100,6 @@
 		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
 		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-
 
 /datum/component/material_container/vv_edit_var(var_name, var_value)
 	var/old_flags = mat_container_flags
@@ -222,7 +218,7 @@
 		else
 			//decode the error & print it
 			var/error_msg
-			if(inserted == -2)
+			if(inserted == MATERIAL_INSERT_ITEM_NO_SPACE)
 				error_msg = "[parent] has insufficient space to accept the [target]"
 			else
 				error_msg = "[target] has insufficient materials to be accepted by [parent]"
@@ -263,9 +259,9 @@
 	if(!material_amount)
 		return MATERIAL_INSERT_ITEM_NO_MATS
 	var/obj/item/stack/item_stack
-	if(isstack(weapon) && !has_space(material_amount)) //not enugh space split and feed as many sheets possible
+	if(isstack(weapon) && !has_space(material_amount)) //not enough space split and feed as many sheets possible
 		item_stack = weapon
-		var/space_left = max_amount - total_amount
+		var/space_left = max_amount - total_amount()
 		if(!space_left)
 			return MATERIAL_INSERT_ITEM_NO_SPACE
 		var/material_per_sheet = material_amount / item_stack.amount
@@ -274,9 +270,13 @@
 			return MATERIAL_INSERT_ITEM_NO_SPACE
 		target = split_stack(item_stack, sheets_to_insert)
 		material_amount = get_item_material_amount(target, breakdown_flags) * multiplier
+	material_amount = OPTIMAL_COST(material_amount)
+
+	//not enough space, time to bail
 	if(!has_space(material_amount))
 		return MATERIAL_INSERT_ITEM_NO_SPACE
 
+	//do the insert
 	last_inserted_id = insert_item_materials(target, multiplier, breakdown_flags)
 	if(!isnull(last_inserted_id))
 		if(after_insert)
@@ -300,12 +300,12 @@
 /datum/component/material_container/proc/insert_item_materials(obj/item/source, multiplier = 1, breakdown_flags = mat_container_flags)
 	var/primary_mat
 	var/max_mat_value = 0
+
 	var/list/item_materials = source.get_material_composition(breakdown_flags)
 	for(var/MAT in item_materials)
 		if(!can_hold_material(MAT))
 			continue
-		materials[MAT] += item_materials[MAT] * multiplier
-		total_amount += item_materials[MAT] * multiplier
+		materials[MAT] += OPTIMAL_COST(item_materials[MAT] * multiplier)
 		if(item_materials[MAT] > max_mat_value)
 			max_mat_value = item_materials[MAT]
 			primary_mat = MAT
@@ -329,12 +329,21 @@
 		return TRUE
 	return FALSE
 
+/// returns the total amount of material in the container
+/datum/component/material_container/proc/total_amount()
+	. = 0
+	for(var/i in materials)
+		. += get_material_amount(i)
+
 /// For inserting an amount of material
 /datum/component/material_container/proc/insert_amount_mat(amt, datum/material/mat)
-	if(amt <= 0 || !has_space(amt))
+	if(amt <= 0)
+		return 0
+	amt = OPTIMAL_COST(amt)
+	if(!has_space(amt))
 		return 0
 
-	var/total_amount_saved = total_amount
+	var/total_amount_saved = total_amount()
 	if(mat)
 		if(!istype(mat))
 			mat = GET_MATERIAL_REF(mat)
@@ -347,77 +356,35 @@
 		amt /= num_materials
 		for(var/i in materials)
 			materials[i] += amt
-			total_amount += amt
-	return (total_amount - total_amount_saved)
+	return (total_amount() - total_amount_saved)
 
 /// Uses an amount of a specific material, effectively removing it.
 /datum/component/material_container/proc/use_amount_mat(amt, datum/material/mat)
 	if(!istype(mat))
 		mat = GET_MATERIAL_REF(mat)
-
-	if(!mat)
+	if(!mat || !materials[mat])
 		return 0
+
+	if(amt <= 0)
+		return 0
+	amt = OPTIMAL_COST(amt)
 	var/amount = materials[mat]
 	if(amount < amt)
 		return 0
 
 	materials[mat] -= amt
-	total_amount -= amt
 	return amt
 
-/// Proc for transfering materials to another container.
-/datum/component/material_container/proc/transer_amt_to(datum/component/material_container/T, amt, datum/material/mat)
-	if(!istype(mat))
-		mat = GET_MATERIAL_REF(mat)
-	if((amt == 0) || (!T) || (!mat))
-		return FALSE
-	if(amt<0)
-		return T.transer_amt_to(src, -amt, mat)
-	var/tr = min(amt, materials[mat], T.can_insert_amount_mat(amt, mat))
-	if(tr)
-		use_amount_mat(tr, mat)
-		T.insert_amount_mat(tr, mat)
-		return tr
-	return FALSE
-
-/// Proc for checking if there is room in the component, returning the amount or else the amount lacking.
-/datum/component/material_container/proc/can_insert_amount_mat(amt, datum/material/mat)
-	if(!amt || !mat)
-		return 0
-
-	if((total_amount + amt) <= max_amount)
-		return amt
-	else
-		return (max_amount - total_amount)
-
-
 /// For consuming a dictionary of materials. mats is the map of materials to use and the corresponding amounts, example: list(M/datum/material/glass =100, datum/material/iron=SMALL_MATERIAL_AMOUNT * 2)
-/datum/component/material_container/proc/use_materials(list/mats, multiplier=1)
+/datum/component/material_container/proc/use_materials(list/mats, multiplier = 1)
 	if(!mats || !length(mats))
 		return FALSE
 
-	var/list/mats_to_remove = list() //Assoc list MAT | AMOUNT
+	var/amount_removed = 0
+	for(var/i in mats)
+		amount_removed += use_amount_mat(mats[i] * multiplier, i)
 
-	for(var/x in mats) //Loop through all required materials
-		var/datum/material/req_mat = x
-		if(!istype(req_mat))
-			req_mat = GET_MATERIAL_REF(req_mat) //Get the ref if necesary
-		if(!materials[req_mat]) //Do we have the resource?
-			return FALSE //Can't afford it
-		var/amount_required = mats[x] * multiplier
-		if(amount_required < 0)
-			return FALSE //No negative mats
-		if(!(materials[req_mat] >= amount_required)) // do we have enough of the resource?
-			return FALSE //Can't afford it
-		mats_to_remove[req_mat] += amount_required //Add it to the assoc list of things to remove
-		continue
-
-	var/total_amount_save = total_amount
-
-	for(var/i in mats_to_remove)
-		total_amount_save -= use_amount_mat(mats_to_remove[i], i)
-
-	return total_amount_save - total_amount
+	return amount_removed
 
 /// For spawning mineral sheets at a specific location. Used by machines to output sheets.
 /datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/material, atom/target = null)
@@ -456,11 +423,11 @@
 
 /// Proc that returns TRUE if the container has space
 /datum/component/material_container/proc/has_space(amt = 0)
-	return (total_amount + amt) <= max_amount
+	return (total_amount() + amt) <= max_amount
 
 /// Checks if its possible to afford a certain amount of materials. Takes a dictionary of materials.
 /datum/component/material_container/proc/has_materials(list/mats, multiplier=1)
-	if(!mats || !mats.len)
+	if(!length(mats))
 		return FALSE
 
 	for(var/x in mats) //Loop through all required materials
@@ -480,21 +447,11 @@
 
 	return TRUE
 
-/// Returns all the categories in a recipe.
-/datum/component/material_container/proc/get_categories(list/mats)
-	var/list/categories = list()
-	for(var/x in mats) //Loop through all required materials
-		if(!istext(x)) //This means its not a category
-			continue
-		categories += x
-	return categories
-
 /// Returns TRUE if you have enough of the specified material.
 /datum/component/material_container/proc/has_enough_of_material(datum/material/req_mat, amount, multiplier=1)
 	if(!materials[req_mat]) //Do we have the resource?
 		return FALSE //Can't afford it
-	var/amount_required = amount * multiplier
-	if(materials[req_mat] >= amount_required) // do we have enough of the resource?
+	if(materials[req_mat] >= OPTIMAL_COST(amount * multiplier)) // do we have enough of the resource?
 		return TRUE
 	return FALSE //Can't afford it
 
@@ -502,7 +459,7 @@
 /datum/component/material_container/proc/has_enough_of_category(category, amount, multiplier=1)
 	for(var/i in SSmaterials.materials_by_category[category])
 		var/datum/material/mat = i
-		if(materials[mat] >= amount) //we have enough
+		if(materials[mat] >= OPTIMAL_COST(amount * multiplier)) //we have enough
 			return TRUE
 	return FALSE
 
@@ -553,8 +510,6 @@
 			"name" = material.name,
 			"ref" = REF(material),
 			"amount" = amount,
-			"sheets" = round(amount / SHEET_MATERIAL_AMOUNT),
-			"removable" = amount >= SHEET_MATERIAL_AMOUNT,
 			"color" = material.greyscale_colors
 		))
 

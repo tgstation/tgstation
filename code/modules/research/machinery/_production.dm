@@ -120,28 +120,43 @@
 		ui = new(user, src, "Fabricator")
 		ui.open()
 
+/// Updates the static data for the UI when material is inserted
+/obj/machinery/rnd/production/proc/update_ui()
+	update_static_data_for_all_viewers()
+
 /obj/machinery/rnd/production/ui_static_data(mob/user)
 	var/list/data
 	if(isnull(materials.mat_container))
 		data = list()
 	else
 		data = materials.mat_container.ui_static_data()
+		if(!materials.mat_container.after_insert)
+			materials.mat_container.after_insert = CALLBACK(src, TYPE_PROC_REF(/obj/machinery/rnd/production, update_ui))
 
 	var/list/designs = list()
 
 	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
-	var/max_multiplier
+	var/max_multiplier = INFINITY
 	var/coefficient
 	for(var/datum/design/design in cached_designs)
 		var/cost = list()
-		coefficient = efficient_with(design.build_path) ? efficiency_coeff : 1
-		for(var/datum/material/material in design.materials)
-			cost[material.name] = design.materials[material] * coefficient
-			max_multiplier = min(50, round(materials.mat_container.get_material_amount(material) / (design.materials[material] * coefficient)))
-		var/icon_size = spritesheet.icon_size_id(design.id)
 
+		max_multiplier = INFINITY
+		coefficient = build_efficiency(design.build_path)
+		for(var/i in design.materials)
+			var/datum/material/mat = i
+
+			var/design_cost = OPTIMAL_COST(design.materials[i] * coefficient)
+			if(istype(mat))
+				cost[mat.name] = design_cost
+			else
+				cost[i] = design_cost
+
+			max_multiplier = min(max_multiplier, 50, round(materials.mat_container.get_material_amount(i) / design_cost))
+
+		var/icon_size = spritesheet.icon_size_id(design.id)
 		designs[design.id] = list(
 			"name" = design.name,
 			"desc" = design.get_description(),
@@ -229,8 +244,11 @@
 
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 
-/obj/machinery/rnd/production/proc/efficient_with(path)
-	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
+/obj/machinery/rnd/production/proc/build_efficiency(path)
+	if(ispath(path, /obj/item/stack/sheet) || ispath(path, /obj/item/stack/ore/bluespace_crystal))
+		return 1
+	else
+		return efficiency_coeff
 
 /obj/machinery/rnd/production/proc/user_try_print_id(design_id, print_quantity)
 	if(!design_id)
@@ -267,37 +285,29 @@
 		say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
 
-	var/power = active_power_usage
-
 	print_quantity = clamp(print_quantity, 1, 50)
+	var/coefficient = build_efficiency(design.build_path)
 
-	for(var/material in design.materials)
-		power += round(design.materials[material] * print_quantity / 35)
-
-	power = min(active_power_usage, power)
-	use_power(power)
-
-	var/coefficient = efficient_with(design.build_path) ? efficiency_coeff : 1
-	var/list/efficient_mats = list()
-
-	for(var/material in design.materials)
-		efficient_mats[material] = design.materials[material] * coefficient
-
-	if(!materials.mat_container.has_materials(efficient_mats, print_quantity))
+	//check if sufficient materials/reagents are available
+	if(!materials.mat_container.has_materials(design.materials, print_quantity * coefficient))
 		say("Not enough materials to complete prototype[print_quantity > 1? "s" : ""].")
 		return FALSE
-
 	for(var/reagent in design.reagents_list)
 		if(!reagents.has_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient))
 			say("Not enough reagents to complete prototype[print_quantity > 1? "s" : ""].")
 			return FALSE
 
+	//use power
+	var/power = active_power_usage
+	for(var/material in design.materials)
+		power += round(design.materials[material] * print_quantity / 35)
+	power = min(active_power_usage, power)
+	use_power(power)
+
 	// Charge the lathe tax at least once per ten items.
 	var/total_cost = LATHE_TAX * max(round(print_quantity / 10), 1)
-
 	if(!charges_tax)
 		total_cost = 0
-
 	if(isliving(usr))
 		var/mob/living/user = usr
 		var/obj/item/card/id/card = user.get_idcard(TRUE)
@@ -309,34 +319,31 @@
 			var/datum/bank_account/our_acc = card.registered_account
 			if(our_acc.account_job.departments_bitflags & allowed_department_flags)
 				total_cost = 0 // We are not charging crew for printing their own supplies and equipment.
-
 	if(attempt_charge(src, usr, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
 		say("Insufficient funds to complete prototype. Please present a holochip or valid ID card.")
 		return FALSE
-
 	if(iscyborg(usr))
 		var/mob/living/silicon/robot/borg = usr
-
 		if(!borg.cell)
 			return FALSE
-
 		borg.cell.use(SILICON_LATHE_TAX)
 
-	materials.mat_container.use_materials(efficient_mats, print_quantity)
+	//consume materials
+	materials.mat_container.use_materials(design.materials, print_quantity * coefficient)
+	var/list/efficient_mats = list()
+	for(var/material in design.materials)
+		efficient_mats[material] = design.materials[material] * print_quantity * coefficient
 	materials.silo_log(src, "built", -print_quantity, "[design.name]", efficient_mats)
-
 	for(var/reagent in design.reagents_list)
 		reagents.remove_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient)
-
+	//produce item
 	busy = TRUE
-
 	if(production_animation)
 		flick(production_animation, src)
-
 	var/time_coefficient = design.lathe_time_factor * efficiency_coeff
-
 	addtimer(CALLBACK(src, PROC_REF(reset_busy)), (30 * time_coefficient * print_quantity) ** 0.5)
 	addtimer(CALLBACK(src, PROC_REF(do_print), design.build_path, print_quantity, efficient_mats), (32 * time_coefficient * print_quantity) ** 0.8)
+	update_static_data_for_all_viewers()
 
 	return TRUE
 

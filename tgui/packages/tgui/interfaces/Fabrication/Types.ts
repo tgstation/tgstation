@@ -31,16 +31,6 @@ export type Material = {
   SHEET_MATERIAL_AMOUNT: number;
 
   /**
-   * The number of sheets.
-   */
-  sheets: number;
-
-  /**
-   * Whether the material can be removed.
-   */
-  removable: BooleanLike;
-
-  /**
    * The color of the material.
    */
   color: string;
