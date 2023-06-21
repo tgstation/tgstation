@@ -146,6 +146,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/acid_used = min(acid_volume * 0.05, 20) * seconds_per_tick
 	var/applied_targets = 0
 	for(var/atom/movable/target_movable as anything in target_turf)
+		if(target_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(target_movable, TRAIT_T_RAY_VISIBLE))
+			continue
 		if(target_movable.acid_act(acid_power, acid_used))
 			applied_targets++
 
