@@ -200,6 +200,8 @@ Doesn't work on other aliens/AI.*/
 	desc = "Drench an object in acid, destroying it over time."
 	button_icon_state = "alien_acid"
 	plasma_cost = 200
+	var/corrosion_acid_power = 200
+	var/corrosion_acid_volume = 1000
 
 /datum/action/cooldown/alien/acid/corrosion/set_click_ability(mob/on_who)
 	. = ..()
@@ -229,8 +231,8 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/alien/acid/corrosion/Activate(atom/target)
 	if(isturf(target))
-		target.AddComponent(/datum/component/acid, 200, 1000, GLOB.acid_overlay, /particles/acid, turf_acid_ignores_mobs = TRUE)
-	else if(!target.acid_act(200, 1000))
+		target.AddComponent(/datum/component/acid, corrosion_acid_power, corrosion_acid_volume, GLOB.acid_overlay, /particles/acid, turf_acid_ignores_mobs = TRUE)
+	else if(!target.acid_act(corrosion_acid_power, corrosion_acid_volume))
 		to_chat(owner, span_noticealien("You cannot dissolve this object."))
 		return FALSE
 
