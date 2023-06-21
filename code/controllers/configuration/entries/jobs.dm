@@ -51,12 +51,13 @@
 	config_documentation = initial(config_documentation) // Reset to default juuuuust in case.
 
 	if(fexists(file(toml_path)))
-		to_chat(src, span_notice("Generating new jobconfig.toml, pulling from the old config settings."))
+		to_chat(user, span_notice("Generating new jobconfig.toml, pulling from the old config settings."))
 		if(!regenerate_job_config(user))
 			return FALSE
 		return TRUE
 
 	if(fexists(file(jobstext))) // Generate the new TOML format, migrating from the text format.
+		to_chat(user, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
 		if(!import_config_from_txt(user))
 			return FALSE
 		return TRUE
@@ -64,19 +65,7 @@
 	// Generate the new TOML format, using codebase defaults.
 	to_chat(user, span_notice("Generating new jobconfig.toml, using codebase defaults."))
 	for(var/datum/job/occupation as anything in joinable_occupations)
-		var/job_key = occupation.config_tag
-		// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator is knows that they override codebase defaults when they remove the comment.
-		// Having comments mean that we allow server operators to defer to codebase standards when they deem acceptable. They must uncomment to override the codebase default.
-		if(is_assistant_job(occupation)) // there's a concession made in jobs.txt that we should just rapidly account for here I KNOW I KNOW.
-			file_data[job_key] = list(
-				"# [JOB_CONFIG_TOTAL_POSITIONS]" = -1,
-				"# [JOB_CONFIG_SPAWN_POSITIONS]" = -1,
-			)
-			file_data[job_key] += generate_job_config_excluding_legacy(occupation)
-			continue
-
-		// Generate new config from codebase defaults.
-		file_data[job_key] = generate_blank_job_config(occupation)
+		file_data[occupation.config_tag] = generate_blank_job_config(occupation)
 
 	if(!export_toml(user, file_data))
 		return FALSE
@@ -86,8 +75,7 @@
 /// Loads the job config from the TXT and creates a new TOML file from it.
 /// Returns TRUE if a file is successfully generated, FALSE otherwise.
 /datum/controller/subsystem/job/proc/import_config_from_txt(mob/user)
-	to_chat(user, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
-	jobstext = file2text(file(jobstext)) // walter i'm dying (get the file from the string, then parse it into a larger text string)
+	jobstext = file2text(file("[global.config.directory]/jobs.txt")) // walter i'm dying (get the file from the string, then parse it into a larger text string)
 	config_documentation += "\n\n## This TOML was migrated from jobs.txt. All variables are COMMENTED and will not load by default! Please verify to ensure that they are correct, and uncomment the key as you want, comparing it to the old config.\n\n" // small warning
 
 	for(var/datum/job/occupation as anything in joinable_occupations)
@@ -106,7 +94,6 @@
 		)
 
 		working_list += generate_job_config_excluding_legacy(occupation)
-
 		file_data[job_key] = working_list
 
 	if(!export_toml(user, file_data))
@@ -133,7 +120,7 @@
 			continue
 
 		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented. So, let's make sure we keep that pattern.
-		if(!job_config[job_key]) // Let's see if any data for this job exists.
+		if(!job_config[job_key])
 			to_chat(user, span_notice("New job [occupation.title] (using key [job_key]) detected! Adding to jobconfig.toml using default codebase values..."))
 			file_data[job_key] = generate_blank_job_config(occupation)
 			continue
@@ -163,7 +150,9 @@
 	var/returnable_list = list()
 	for(var/config_datum_key in job_config_datum_singletons)
 		var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
-		// Commented out keys here in case server operators wish to defer to codebase defaults.
+		// Remember, every time we write the TOML from scratch, we want to have it commented out by default.
+		// This is to ensure that the server operator is knows that they override codebase defaults when they remove the comment.
+		// Having comments mean that we allow server operators to defer to codebase standards when they deem acceptable. They must uncomment to override the codebase default.
 		returnable_list += list(
 			"# [config_datum_key]" = config_datum.get_compile_time_value(new_occupation),
 		)
