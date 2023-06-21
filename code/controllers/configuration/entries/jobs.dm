@@ -118,7 +118,6 @@
 
 	var/job_config = rustg_read_toml_file(toml_path)
 	for(var/datum/job/occupation as anything in joinable_occupations)
-		var/job_name = occupation.title
 		var/job_key = occupation.config_tag
 
 		if(file_data[job_key])
@@ -127,7 +126,7 @@
 
 		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented. So, let's make sure we keep that pattern.
 		if(!job_config[job_key]) // Let's see if any data for this job exists.
-			to_chat(user, span_notice("New job [job_name] (using key [job_key]) detected! Adding to jobconfig.toml using default codebase values..."))
+			to_chat(user, span_notice("New job [occupation.title] (using key [job_key]) detected! Adding to jobconfig.toml using default codebase values..."))
 			file_data[job_key] = generate_blank_job_config(occupation)
 			continue
 
