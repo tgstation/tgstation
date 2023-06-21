@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
  * - action: Text that visually describes the action (smelted/deposited/resupplied...)
  * - amount: The amount of sheets/objects deposited/withdrawn by this action. Positive for depositing, negative for withdrawing.
  * - noun: Name of the object the action was performed with (sheet, units, ore...)
- * - [mats][list]: Assoc list in format (material datum = amount of raw materials). Wants the actual amount of raw (iron, glass...) materials involved in this action. If you have 10 metal sheets each worth 2000 iron you would pass a list with the iron material datum = 20000
+ * - [mats][list]: Assoc list in format (material datum = amount of raw materials). Wants the actual amount of raw (iron, glass...) materials involved in this action. If you have 10 metal sheets each worth 100 iron you would pass a list with the iron material datum = 1000
  */
 /obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats)
 	if (!length(mats))
