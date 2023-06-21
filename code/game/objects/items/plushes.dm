@@ -705,7 +705,7 @@
 	name = "moth plushie"
 	desc = "A plushie depicting an adorable mothperson. It's a huggable bug!"
 	icon_state = "moffplush"
-	inhand_icon_state = null
+	inhand_icon_state = "moffplush"
 	attack_verb_continuous = list("flutters", "flaps")
 	attack_verb_simple = list("flutter", "flap")
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
@@ -714,6 +714,27 @@
 	var/suicide_text = "stares deeply into the eyes of" //for modularizing creepy toys
 	var/creepy_plush_type = "mothperson" //for modularizing creepy toys
 	var/has_creepy_icons = FALSE //for updating icons
+
+	// actions_types = list(/datum/action/item_action/toggle_light)
+	light_system = MOVABLE_LIGHT
+	light_range = 4
+	light_power = 1
+	light_on = FALSE
+	/// Can we toggle this light on and off (used for contexual screentips only)
+	// var/toggle_context = TRUE
+	/// Is the light turned on or off currently
+	var/on = FALSE
+
+/obj/item/toy/plush/moth/Initialize(mapload)
+	. = ..()
+	if(icon_state == "[initial(icon_state)]-on")
+		on = TRUE
+	update_brightness()
+	// register_context()
+
+/obj/item/toy/plush/moth/attack_self(mob/user)
+	. = ..()
+	toggle_light()
 
 /obj/item/toy/plush/moth/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -735,6 +756,43 @@
 		forceMove(random_open_spot)
 	user.dust(just_ash = FALSE, drop_items = TRUE)
 	return MANUAL_SUICIDE
+
+// /obj/item/flashlight/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+// 	// single use lights can be toggled on once
+// 	if(isnull(held_item) && (toggle_context || !on))
+// 		context[SCREENTIP_CONTEXT_RMB] = "Toggle light"
+// 		return CONTEXTUAL_SCREENTIP_SET
+
+// 	if(istype(held_item, /obj/item/flashlight) && (toggle_context || !on))
+// 		context[SCREENTIP_CONTEXT_LMB] = "Toggle light"
+// 		return CONTEXTUAL_SCREENTIP_SET
+
+// 	return NONE
+
+/obj/item/toy/plush/moth/proc/update_brightness()
+	if(on)
+		icon_state = "[initial(icon_state)]_on"
+		if(!isnull(inhand_icon_state))
+			inhand_icon_state = "[initial(inhand_icon_state)]_on"
+	else
+		icon_state = initial(icon_state)
+		if(!isnull(inhand_icon_state))
+			inhand_icon_state = initial(inhand_icon_state)
+
+
+/obj/item/toy/plush/moth/proc/toggle_light()
+	if (icon_state == "moffplush_on" || icon_state == "moffplush")
+		on = !on
+		// playsound(src, on ? sound_on : sound_off, 40, TRUE)
+		update_brightness()
+		// update_item_action_buttons()
+
+		set_light_on(on)
+		if(light_system == STATIC_LIGHT)
+			update_light()
+
+		return TRUE
+	return FALSE
 
 /obj/item/toy/plush/pkplush
 	name = "peacekeeper plushie"
