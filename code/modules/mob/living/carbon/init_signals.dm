@@ -16,6 +16,8 @@
 /mob/living/carbon/proc/on_nobreath_trait_gain(datum/source)
 	SIGNAL_HANDLER
 
+	setOxyLoss(0)
+	losebreath = 0
 	failed_last_breath = FALSE
 
 	clear_alert(ALERT_TOO_MUCH_OXYGEN)
@@ -59,7 +61,7 @@
 	SIGNAL_HANDLER
 
 	for(var/datum/disease/disease as anything in diseases)
-			disease.cure(FALSE)
+		disease.cure(FALSE)
 
 /**
  * On gain of TRAIT_TOXIMMUNE

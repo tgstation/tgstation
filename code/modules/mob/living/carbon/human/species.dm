@@ -857,13 +857,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
-	if(HAS_TRAIT(H, TRAIT_NOBREATH))
-		H.setOxyLoss(0)
-		H.losebreath = 0
-
-		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
-		if((H.health < H.crit_threshold) && takes_crit_damage && H.stat != DEAD)
-			H.adjustBruteLoss(0.5 * seconds_per_tick)
+	if(HAS_TRAIT(H, TRAIT_NOBREATH) && H.stat != DEAD && (H.health < H.crit_threshold) && !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
+		H.adjustBruteLoss(0.5 * seconds_per_tick)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
