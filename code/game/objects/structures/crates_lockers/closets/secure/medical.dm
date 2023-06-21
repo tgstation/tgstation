@@ -92,6 +92,7 @@
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/cmo(src)
 	new /obj/item/storage/lockbox/medal/med(src)
+	new /obj/item/extrapolator(src)
 
 /obj/structure/closet/secure_closet/chief_medical/populate_contents_immediate()
 	. = ..()

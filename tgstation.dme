@@ -5537,6 +5537,7 @@
 #include "monkestation\code\modules\research\designs\computer_designs.dm"
 #include "monkestation\code\modules\research\designs\electronic_designs.dm"
 #include "monkestation\code\modules\research\designs\machine_designs.dm"
+#include "monkestation\code\modules\research\designs\medical_designs.dm"
 #include "monkestation\code\modules\research\designs\nanite_designs.dm"
 #include "monkestation\code\modules\research\nanites\nanite_chamber.dm"
 #include "monkestation\code\modules\research\nanites\nanite_chamber_computer.dm"
