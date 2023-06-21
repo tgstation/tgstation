@@ -473,8 +473,8 @@
 
 /obj/item/mod/module/plasma_stabilizer/generate_worn_overlay()
 	if(locate(/obj/item/mod/module/infiltrator) in mod.modules)
-		return
-	. = ..()
+		return list()
+	return ..()
 
 /obj/item/mod/module/plasma_stabilizer/on_equip()
 	ADD_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
