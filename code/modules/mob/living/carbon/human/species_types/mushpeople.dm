@@ -22,7 +22,6 @@
 
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING
 
-	burnmod = 1.25
 	heatmod = 1.5
 
 	mutanttongue = /obj/item/organ/internal/tongue/mush

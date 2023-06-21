@@ -10,6 +10,7 @@
 	bio = 10
 	fire = 60
 	acid = 20
+	wound = 5
 
 /obj/item/clothing/under/rank/engineering/chief_engineer
 	desc = "It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of \"Chief Engineer\". Made from fire resistant materials."
@@ -22,6 +23,7 @@
 	bio = 10
 	fire = 80
 	acid = 40
+	wound = 5
 
 /obj/item/clothing/under/rank/engineering/chief_engineer/skirt
 	name = "chief engineer's jumpskirt"

@@ -47,13 +47,13 @@
 /obj/item/pizzabox/proc/register_bomb(new_bomb)
 	bomb = new_bomb
 	if(istype(bomb))
-		RegisterSignal(bomb, COMSIG_PARENT_QDELETING, PROC_REF(clear_bomb))
+		RegisterSignal(bomb, COMSIG_QDELETING, PROC_REF(clear_bomb))
 
 /obj/item/pizzabox/proc/clear_bomb(datum/source)
 	SIGNAL_HANDLER
 	if(isnull(bomb))
 		return
-	UnregisterSignal(bomb, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(bomb, COMSIG_QDELETING)
 	bomb = null
 
 /obj/item/pizzabox/Destroy()
@@ -221,7 +221,7 @@
 		if(open && !bomb)
 			if(!user.transferItemToLoc(I, src))
 				return
-			wires = new /datum/wires/explosive/pizza(src)
+			set_wires(new /datum/wires/explosive/pizza(src))
 			register_bomb(I)
 			balloon_alert(user, "bomb placed")
 			update_appearance()
@@ -300,7 +300,7 @@
 /obj/item/pizzabox/proc/unprocess()
 	STOP_PROCESSING(SSobj, src)
 	qdel(wires)
-	wires = null
+	set_wires(null)
 	update_appearance()
 
 /obj/item/pizzabox/bomb/Initialize(mapload)
@@ -309,7 +309,7 @@
 		var/randompizza = pick(subtypesof(/obj/item/food/pizza))
 		pizza = new randompizza(src)
 	register_bomb(new /obj/item/bombcore/miniature/pizza(src))
-	wires = new /datum/wires/explosive/pizza(src)
+	set_wires(new /datum/wires/explosive/pizza(src))
 
 /obj/item/pizzabox/bomb/armed
 	bomb_timer = 5

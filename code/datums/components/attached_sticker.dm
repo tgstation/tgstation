@@ -52,11 +52,11 @@
 		RegisterSignal(parent, COMSIG_LIVING_IGNITED, PROC_REF(on_ignite))
 	if(washable)
 		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(peel))
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_attached_qdel))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_attached_qdel))
 
 /datum/component/attached_sticker/UnregisterFromParent()
 	if(sticker.resistance_flags & FLAMMABLE)
-		UnregisterSignal(parent, list(COMSIG_LIVING_IGNITED, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(parent, list(COMSIG_LIVING_IGNITED, COMSIG_QDELETING))
 		if(signal_turf)
 			UnregisterSignal(signal_turf, COMSIG_TURF_EXPOSE)
 			signal_turf = null
@@ -77,7 +77,7 @@
 	qdel(sticker)
 	peel()
 
-/// Signal handler for COMSIG_PARENT_QDELETING, deletes this sticker if the attached object is deleted
+/// Signal handler for COMSIG_QDELETING, deletes this sticker if the attached object is deleted
 /datum/component/attached_sticker/proc/on_attached_qdel(datum/source)
 	SIGNAL_HANDLER
 	qdel(sticker)

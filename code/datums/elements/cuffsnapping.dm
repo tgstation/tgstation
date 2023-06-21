@@ -41,11 +41,11 @@
 	src.snap_time_weak = snap_time_weak
 	src.snap_time_strong = snap_time_strong
 
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ITEM_ATTACK , PROC_REF(try_cuffsnap_target))
 
 /datum/element/cuffsnapping/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK, COMSIG_ATOM_EXAMINE))
 
 	return ..()
 

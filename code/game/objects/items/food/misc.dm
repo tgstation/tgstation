@@ -87,10 +87,14 @@
 	foodtypes = GROSS
 	w_class = WEIGHT_CLASS_SMALL
 	preserved_food = TRUE //Can't decompose any more than this
+	/// Variable that holds the reference to the stink lines we get when we're moldy, yucky yuck
+	var/stink_particles
 
 /obj/item/food/badrecipe/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(OnGrill))
+	if(stink_particles)
+		particles = new stink_particles
 
 /obj/item/food/badrecipe/moldy
 	name = "moldy mess"
@@ -100,6 +104,7 @@
 	ant_attracting = TRUE
 	decomp_type = null
 	decomposition_time = 30 SECONDS
+	stink_particles = /particles/stink
 
 /obj/item/food/badrecipe/moldy/bacteria
 	name = "bacteria rich moldy mess"

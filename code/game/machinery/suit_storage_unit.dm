@@ -62,7 +62,7 @@
 	var/card_reader_installed = FALSE
 	/// physical reference of the players id card to check for PERSONAL access level
 	var/datum/weakref/id_card = null
-	/// should we prevent furthur access change
+	/// should we prevent further access change
 	var/access_locked = FALSE
 
 /obj/machinery/suit_storage_unit/standard_unit
@@ -172,7 +172,7 @@
 	. = ..()
 
 	set_access()
-	wires = new /datum/wires/suit_storage_unit(src)
+	set_wires(new /datum/wires/suit_storage_unit(src))
 	if(suit_type)
 		suit = new suit_type(src)
 	if(helmet_type)

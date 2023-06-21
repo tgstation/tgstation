@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed the honourbound trauma not reacting to attacks from basic mobs"
+  - bugfix: "Fixed the \"Declare Evil\" spell not working against the medical department."
