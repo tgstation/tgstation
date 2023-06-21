@@ -1,0 +1,4 @@
+author: "Peliex"
+delete-after: True
+changes:
+  - bugfix: "changed station floor tiles to be worth 25 instead of 50, one quarter of an iron sheet."
