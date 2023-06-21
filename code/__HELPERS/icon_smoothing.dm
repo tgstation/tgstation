@@ -470,8 +470,14 @@ xxx xxx xxx
 
 	set_smoothed_icon_state(new_junction)
 
+	#undef SET_BORDER_ADJ_IN_DIR
 	#undef SET_ADJ_IN_DIR
-
+	#undef BORDER_ON_BORDER_CHECK
+	#undef WORLD_BORDER_FOUND
+	#undef BORDER_FOUND
+	#undef BITMASK_ON_BORDER_CHECK
+	#undef BITMASK_FOUND
+	#undef SEARCH_ADJ_IN_DIR
 
 ///Changes the icon state based on the new junction bitmask
 /atom/proc/set_smoothed_icon_state(new_junction)
@@ -651,3 +657,4 @@ xxx xxx xxx
 
 #undef DEFAULT_UNDERLAY_ICON
 #undef DEFAULT_UNDERLAY_ICON_STATE
+#undef CAN_DIAGONAL_SMOOTH
