@@ -96,9 +96,9 @@
 	var/food_taste_reaction
 	if(edible.foodtypes & get_toxic_foodtypes())
 		food_taste_reaction = FOOD_TOXIC
-	else if(foodtypes & get_disliked_foodtypes())
+	else if(edible.foodtypes & get_disliked_foodtypes())
 		food_taste_reaction = FOOD_DISLIKED
-	else if(foodtypes & get_liked_foodtypes())
+	else if(edible.foodtypes & get_liked_foodtypes())
 		food_taste_reaction = FOOD_LIKED
 	return food_taste_reaction
 

@@ -489,7 +489,7 @@ Behavior that's still missing from this component that original food items had t
 		food_taste_reaction = check_liked.Invoke(fraction, gourmand)
 
 	if(!food_taste_reaction)
-		food_taste_reaction = gourmand.get_food_taste_reaction(parent, src)
+		food_taste_reaction = gourmand.get_food_taste_reaction(parent, foodtypes)
 
 	switch(food_taste_reaction)
 		if(FOOD_TOXIC)

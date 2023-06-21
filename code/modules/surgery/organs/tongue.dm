@@ -97,9 +97,9 @@
  * Can be overriden by subtypes for more complex behavior.
  * Does not get called if the owner has ageusia.
  **/
-/obj/item/organ/internal/tongue/proc/get_food_taste_reaction(obj/item/food, datum/component/edible/edible)
+/obj/item/organ/internal/tongue/proc/get_food_taste_reaction(obj/item/food, foodtypes = NONE)
 	var/food_taste_reaction
-	if(edible.foodtypes & toxic_foodtypes)
+	if(foodtypes & toxic_foodtypes)
 		food_taste_reaction = FOOD_TOXIC
 	else if(foodtypes & disliked_foodtypes)
 		food_taste_reaction = FOOD_DISLIKED
@@ -507,9 +507,9 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	disliked_foodtypes = GROSS
 	toxic_foodtypes = NONE
 
-/obj/item/organ/internal/tongue/jelly/get_food_taste_reaction(obj/item/food, datum/component/edible/edible)
+/obj/item/organ/internal/tongue/jelly/get_food_taste_reaction(obj/item/food, foodtypes = NONE)
 	// a silver slime created this? what a delicacy!
-	if(HAS_TRAIT(food, TRAIT_foodtypes_SILVER))
+	if(HAS_TRAIT(food, TRAIT_FOOD_SILVER))
 		return FOOD_LIKED
 	return ..()
 
@@ -541,7 +541,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "poofs"
 
 /obj/item/organ/internal/tongue/pod
-	name "podperson tongue"
+	name = "podperson tongue"
 	desc = "A plant-like organ used for speaking and eating."
 	say_mod = "whistles"
 	liked_foodtypes = VEGETABLES | FRUIT | GRAIN

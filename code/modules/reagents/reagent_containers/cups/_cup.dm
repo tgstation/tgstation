@@ -43,13 +43,7 @@
 			gourmand.adjust_disgust(25 + 30 * fraction)
 		return
 
-	var/food_taste_reaction
-	if(check_liked) //Callback handling; use this as an override for special food like donuts
-		food_taste_reaction = check_liked.Invoke(fraction, gourmand)
-
-	if(!food_taste_reaction)
-		food_taste_reaction = gourmand.get_food_taste_reaction(parent, src)
-
+	var/food_taste_reaction = gourmand.get_food_taste_reaction(src, drink_type)
 	switch(food_taste_reaction)
 		if(FOOD_TOXIC)
 			to_chat(gourmand,span_warning("What the hell was that thing?!"))
