@@ -199,6 +199,17 @@
 	name = pick(possible_names)
 	desc = possible_names[name]
 
+/obj/item/gun/ballistic/revolver/chaplain/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(!istype(target, /obj/effect/rune))
+		return
+
+	var/obj/effect/rune/target_rune = target
+	if(target_rune.log_when_erased)
+		user.log_message("erased [target_rune.cultist_name] rune using a chaplain revolver", LOG_GAME)
+		message_admins("[ADMIN_LOOKUPFLW(user)] erased a [target_rune.cultist_name] rune with a chaplain revolver.")
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
+
 /obj/item/gun/ballistic/revolver/chaplain/suicide_act(mob/living/user)
 	. = ..()
 	name = "Habemus Papam"
