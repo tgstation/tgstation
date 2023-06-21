@@ -677,3 +677,27 @@
       form.
   - qol: Nanotrasen's bureaucracy division has ""improved"" the quality of their printer
       toner after many complaints from furious customers.
+2023-06-21:
+  Addust:
+  - bugfix: somehow, somewhere, a ship's engine has been changed.
+  Couls:
+  - qol: Welders now have a more consistent fuel usage
+  JohnFulpWillard:
+  - bugfix: Maintenance data disks now properly transfer from PC to disk
+  - bugfix: Disks can no longer be flooded with the same app repeatedly.
+  LT3:
+  - spellcheck: Fixed a few typos
+  Rhials:
+  - bugfix: The walls adjacent to the Infiltrator docking port will no longer bend
+      diagonally into walls.
+  SyncIt21:
+  - bugfix: Modular machinery computer UI opens again
+  ZephyrTFA:
+  - bugfix: Cat Butcherer can no longer remove a tail you don't have.
+  - bugfix: You can no longer manipulate "None" organs
+  carlarctg:
+  - bugfix: Fixed being unable to reimburse syndicate spawners via uplinks. This includes
+      nukie reinforcements, cyborgs, and holoparasite injectors.
+  - refactor: Turned TC reimbursement into a bespoke element.
+  - spellcheck: Tuned demon's blood message when there's no ghosts to pick to be a
+      little more understandable and sensible.

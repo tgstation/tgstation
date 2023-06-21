@@ -385,6 +385,7 @@
 	energy = 5
 	fire = 25
 	acid = 25
+	wound = 10
 
 /obj/item/clothing/shoes/combat/coldres
 	name = "insulated combat boots"
