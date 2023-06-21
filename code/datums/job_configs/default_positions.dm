@@ -8,11 +8,3 @@
 		return TRUE
 	return FALSE
 
-/datum/job_config_type/default_positions/set_current_value(datum/job/occupation, value)
-	. = ..()
-
-	if(!.)
-		return FALSE
-
-	occupation.total_positions = value
-	return TRUE

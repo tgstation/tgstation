@@ -17,9 +17,7 @@
 	return FALSE
 
 /datum/job_config_type/required_character_age/set_current_value(datum/job/occupation, value)
-	. = ..()
-
-	if(!.)
+	if(!validate_value(value))
 		return FALSE
 
 	if(value > AGE_MIN && value < AGE_MAX)

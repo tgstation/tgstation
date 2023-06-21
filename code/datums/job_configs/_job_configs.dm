@@ -11,7 +11,7 @@
 	var/name = "DEFAULT"
 
 	/// The name of the variable on the job datum that we will be accessing.
-	var/datum_var_name = "type" // use this as the default so we runtime in case something is yonked. it's also guaranteed to always exist because NAMEOF() does static analysis too.
+	var/datum_var_name = "type" // we use this as the default because A) it always exists and B) if we try and modify it, we runtime. perfect for what we need
 
 /datum/job_config_type/New()
 	. = ..()
@@ -36,8 +36,7 @@
 /// This is the proc that we actually invoke to set the config-based values for each job. Is also intended to handle all in-depth logic checks pertient to the job datum itself.
 /// Return TRUE if the value was set successfully (or if expected behavior did indeed occur), FALSE if it was not.
 /datum/job_config_type/proc/set_current_value(datum/job/occupation, value)
-	SHOULD_CALL_PARENT(TRUE)
-	if(validate_value(value))
-		return TRUE
-
-	return FALSE
+	if(!validate_value(value))
+		return FALSE
+	occupation.vars[datum_var_name] = value
+	return TRUE
