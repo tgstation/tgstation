@@ -22,7 +22,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	/// Acid overlay appearance we apply
 	var/acid_overlay
 	/// Boolean for if we ignore mobs when applying acid to turf contents
-	var/turf_acid_ignores_mobs
+	var/turf_acid_ignores_mobs = FALSE
 	/// The ambient sound of acid eating away at the parent [/atom].
 	var/datum/looping_sound/acid/sizzle
 	/// Particle holder for acid particles (sick)
@@ -50,6 +50,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		src.max_volume = MOB_ACID_VOLUME_MAX
 		src.process_effect = CALLBACK(src, PROC_REF(process_mob), parent)
 	else if(isturf(parent))
+		src.turf_acid_ignores_mobs = turf_acid_ignores_mobs
 		src.max_volume = TURF_ACID_VOLUME_MAX
 		src.process_effect = CALLBACK(src, PROC_REF(process_turf), parent)
 	//if we failed all other checks, we must be an /atom/movable that uses integrity
@@ -152,9 +153,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		if(target_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(target_movable, TRAIT_T_RAY_VISIBLE))
 			continue
 		// Ignore mobs if turf_acid_ignores_mobs is TRUE
-		if(turf_acid_ignores_mobs)
-			if(ismob(target_movable))
-				continue
+		if(turf_acid_ignores_mobs && ismob(target_movable))
+			continue
 		// Apply the acid
 		if(target_movable.acid_act(acid_power, acid_used))
 			applied_targets++
@@ -243,6 +243,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /datum/component/acid/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
+	if(turf_acid_ignores_mobs)
+		return
 	if(!isliving(arrived))
 		return
 	var/mob/living/crosser = arrived

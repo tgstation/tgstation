@@ -228,7 +228,9 @@ Doesn't work on other aliens/AI.*/
 	return ..()
 
 /datum/action/cooldown/alien/acid/corrosion/Activate(atom/target)
-	if(!target.acid_act(200, 1000))
+	if(isturf(target))
+		target.AddComponent(/datum/component/acid, 200, 1000, GLOB.acid_overlay, /particles/acid, TRUE)
+	else if(!target.acid_act(200, 1000))
 		to_chat(owner, span_noticealien("You cannot dissolve this object."))
 		return FALSE
 
