@@ -197,8 +197,15 @@
 					continue
 				number_of_alphanumeric++
 				last_char_group = NUMBERS_DETECTED
-			// '  -  .
-			if(39,45,46) //Common name punctuation
+
+			// "  '
+			if(34, 39) //Quotes and Apostrophes for nickname text and punctuation
+				if(last_char_group == NO_CHARS_DETECTED)
+					if(strict)
+						return
+				last_char_group = SYMBOLS_DETECTED
+			// -  .
+			if(45,46) //Common name punctuation
 				if(last_char_group == NO_CHARS_DETECTED)
 					if(strict)
 						return
