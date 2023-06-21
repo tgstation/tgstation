@@ -5,8 +5,7 @@
 	for(var/datum/job_config_type/config_datum as anything in subtypesof(/datum/job_config_type))
 		var/config_datum_key = initial(config_datum.name)
 		job_config_datum_configurables += config_datum_key
-		var/new_config_datum = new config_datum
-		job_config_datum_singletons[config_datum_key] = new_config_datum
+		job_config_datum_singletons[config_datum_key] = new config_datum
 
 /// Called in jobs subsystem initialize if LOAD_JOBS_FROM_TXT config flag is set: reads jobconfig.toml (or if in legacy mode, jobs.txt) to set all of the datum's values to what the server operator wants.
 /datum/controller/subsystem/job/proc/load_jobs_from_config()
