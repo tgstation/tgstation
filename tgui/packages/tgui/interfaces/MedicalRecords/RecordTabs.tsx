@@ -54,15 +54,6 @@ export const MedicalRecordTabs = (props, context) => {
               Create
             </Button>
           </Stack.Item>
-          <Stack.Item>
-            <Button.Confirm
-              content="Purge"
-              icon="trash"
-              disabled={!station_z}
-              onClick={() => act('purge_records')}
-              tooltip="Wipe all record data."
-            />
-          </Stack.Item>
         </Stack>
       </Stack.Item>
     </Stack>

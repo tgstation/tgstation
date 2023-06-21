@@ -4993,6 +4993,12 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
+/obj/structure/bed/dogbed,
+/mob/living/basic/pet/dog/bullterrier{
+	name = "Walter";
+	real_name = "Walter";
+	desc = "It's Walter!"
+	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "bNM" = (
@@ -9099,6 +9105,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/storage)
 "dij" = (
@@ -16184,6 +16191,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/mapping_helpers/burnt_floor,
+/mob/living/carbon/human/species/monkey/dukeman,
 /turf/open/floor/plating,
 /area/station/security/prison)
 "fxY" = (
@@ -32810,6 +32818,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/storage)
 "kOw" = (
@@ -56375,6 +56384,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "sIF" = (
@@ -67006,6 +67016,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "wbT" = (

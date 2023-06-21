@@ -93,6 +93,9 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 			return
 	else if(!new_player_mob.put_in_hands(created_item, FALSE))
 		var/obj/item/storage/backpack/backpack = new_player_mob_living.get_item_by_slot(ITEM_SLOT_BACK)
+		if(!backpack)
+			to_chat(new_player_mob, "There was an error spawning in your items, you will not be charged")
+			return
 		backpack.atom_storage.attempt_insert(created_item, new_player_mob, force = TRUE)
 
 	owners_prefs.adjust_metacoins(new_player_mob.client.ckey, initial(bought_item.item_cost), donator_multipler = FALSE)

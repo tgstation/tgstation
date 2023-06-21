@@ -91,10 +91,12 @@ SUBSYSTEM_DEF(mapping)
 
 	///Random rooms template list, gets initialized and filled when server starts.
 	var/list/random_room_templates = list()
+	var/list/random_bar_templates = list()
+	var/list/random_engine_templates = list()
 	///Temporary list, where room spawners are kept roundstart. Not used later.
 	var/list/random_room_spawners = list()
-	var/list/random_engine_templates = list()
 	var/list/random_engine_spawners = list()
+	var/list/random_bar_spawners = list()
 
 /datum/controller/subsystem/mapping/PreInit()
 	..()
@@ -352,6 +354,7 @@ Used by the AI doomsday and the self-destruct nuke.
 	areas_in_z = SSmapping.areas_in_z
 
 	random_engine_templates = SSmapping.random_engine_templates
+	random_bar_templates = SSmapping.random_bar_templates
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
@@ -439,7 +442,7 @@ Used by the AI doomsday and the self-destruct nuke.
 	var/start_time = REALTIMEOFDAY
 	for(var/obj/effect/spawner/random_engines/engine_spawner as() in random_engine_spawners)
 		var/list/possible_engine_templates = list()
-		var/datum/map_template/random_engines/engine_candidate
+		var/datum/map_template/random_room/random_engines/engine_candidate
 		shuffle_inplace(random_engine_templates)
 		for(var/ID in random_engine_templates)
 			engine_candidate = random_engine_templates[ID]
@@ -448,12 +451,33 @@ Used by the AI doomsday and the self-destruct nuke.
 				continue
 			possible_engine_templates[engine_candidate] = engine_candidate.weight
 		if(possible_engine_templates.len)
-			var/datum/map_template/random_engines/template = pick_weight(possible_engine_templates)
+			var/datum/map_template/random_room/random_engines/template = pick_weight(possible_engine_templates)
 			template.stationinitload(get_turf(engine_spawner), centered = template.centerspawner)
 		SSmapping.random_engine_spawners -= engine_spawner
 		qdel(engine_spawner)
 	random_engine_spawners = null
 	INIT_ANNOUNCE("Loaded Random Engine in [(REALTIMEOFDAY - start_time)/10]s!")
+
+
+/datum/controller/subsystem/mapping/proc/load_random_bars()
+	var/start_time = REALTIMEOFDAY
+	for(var/obj/effect/spawner/random_bar/bar_spawner as() in random_bar_spawners)
+		var/list/possible_bar_templates = list()
+		var/datum/map_template/random_room/random_bar/bar_candidate
+		shuffle_inplace(random_bar_templates)
+		for(var/ID in random_bar_templates)
+			bar_candidate = random_bar_templates[ID]
+			if(config.map_name != bar_candidate.station_name || bar_candidate.weight == 0 || bar_spawner.room_height != bar_candidate.template_height || bar_spawner.room_width != bar_candidate.template_width)
+				bar_candidate = null
+				continue
+			possible_bar_templates[bar_candidate] = bar_candidate.weight
+		if(possible_bar_templates.len)
+			var/datum/map_template/random_room/random_bar/template = pick_weight(possible_bar_templates)
+			template.stationinitload(get_turf(bar_spawner), centered = template.centerspawner)
+		SSmapping.random_bar_spawners -= bar_spawner
+		qdel(bar_spawner)
+	random_bar_spawners = null
+	INIT_ANNOUNCE("Loaded Random Bars in [(REALTIMEOFDAY - start_time)/10]s!")
 /// New Random Bars and Engines Spawning - MonkeStation Edit End
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
@@ -472,6 +496,7 @@ Used by the AI doomsday and the self-destruct nuke.
 	LoadStationRooms()
 
 	load_random_engines()
+	load_random_bars()
 
 	if(SSdbcore.Connect())
 		var/datum/db_query/query_round_map_name = SSdbcore.NewQuery({"
@@ -627,7 +652,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	preloadHolodeckTemplates()
 
 /datum/controller/subsystem/mapping/proc/LoadStationRoomTemplates()
-	for(var/item in subtypesof(/datum/map_template/random_room))
+	for(var/item in (subtypesof(/datum/map_template/random_room) - typesof(/datum/map_template/random_room/random_bar) - typesof(/datum/map_template/random_room/random_engines)))
 		var/datum/map_template/random_room/room_type = item
 		if(!(initial(room_type.mappath)))
 			message_admins("Template [initial(room_type.name)] found without mappath. Yell at coders")
@@ -636,13 +661,22 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		random_room_templates[R.room_id] = R
 		map_templates[R.room_id] = R
 
-	for(var/item in subtypesof(/datum/map_template/random_engines))
-		var/datum/map_template/random_engines/room_type = item
+	for(var/item in subtypesof(/datum/map_template/random_room/random_engines))
+		var/datum/map_template/random_room/random_engines/room_type = item
 		if(!(initial(room_type.mappath)))
 			message_admins("Engine Template [initial(room_type.name)] found without mappath. Yell at coders")
 			continue
-		var/datum/map_template/random_engines/E = new room_type()
+		var/datum/map_template/random_room/random_engines/E = new room_type()
 		random_engine_templates[E.room_id] = E
+		map_templates[E.room_id] = E
+
+	for(var/item in subtypesof(/datum/map_template/random_room/random_bar))
+		var/datum/map_template/random_room/random_bar/room_type = item
+		if(!(initial(room_type.mappath)))
+			message_admins("Bar Template [initial(room_type.name)] found without mappath. Yell at coders")
+			continue
+		var/datum/map_template/random_room/random_bar/E = new room_type()
+		random_bar_templates[E.room_id] = E
 		map_templates[E.room_id] = E
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()

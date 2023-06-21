@@ -9,7 +9,7 @@
 	for(var/target in targets)
 		var/mob/living/ook = target
 		if(ishuman(ook))
-			var/mob/living/carbon/human/human_ook
+			var/mob/living/carbon/human/human_ook = target
 			human_ook.alternative_laughs += 'monkestation/sound/misc/ook_loves_cats.ogg'
 
 			var/obj/item/organ/internal/ears/cat/new_ears = new

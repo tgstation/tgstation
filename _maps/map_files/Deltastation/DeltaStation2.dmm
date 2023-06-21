@@ -65362,6 +65362,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel)
+"pXY" = (
+/obj/machinery/door/firedoor/heavy,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/station/science/ordnance/storage)
 "pYh" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
@@ -86818,6 +86828,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "vnu" = (
@@ -87541,6 +87552,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -87845,6 +87857,10 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/station/medical/treatment_center)
+"vyM" = (
+/mob/living/carbon/human/species/monkey/dukeman,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "vyO" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
@@ -97397,6 +97413,15 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/station/security/prison)
+"xPE" = (
+/obj/structure/bed/dogbed,
+/mob/living/basic/pet/dog/bullterrier{
+	name = "Walter";
+	real_name = "Walter";
+	desc = "It's Walter!"
+	},
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "xPH" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -131611,7 +131636,7 @@ wtb
 bKw
 qgo
 vvy
-sBE
+pXY
 tsZ
 sBE
 hkU
@@ -147500,7 +147525,7 @@ vra
 qZs
 gft
 clO
-jvs
+xPE
 eJv
 mON
 xTW
@@ -152596,7 +152621,7 @@ cVV
 itW
 nJg
 jHw
-vxr
+vyM
 jMs
 iOc
 fwL

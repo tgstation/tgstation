@@ -147,6 +147,10 @@ GLOBAL_LIST_INIT(loadout_pocket_items, generate_loadout_items(/datum/loadout_ite
 	name = "Newspaper"
 	item_path = /obj/item/newspaper
 
+/datum/loadout_item/pocket_items/pet_beacon
+	name = "Pet Delivery Beacon"
+	item_path = /obj/item/choice_beacon/pet
+
 
 /*
 *	DONATOR
@@ -163,7 +167,3 @@ GLOBAL_LIST_INIT(loadout_pocket_items, generate_loadout_items(/datum/loadout_ite
 /datum/loadout_item/pocket_items/donator/havana_cigar_case
 	name = "Havanian Cigars"
 	item_path = /obj/item/storage/fancy/cigarettes/cigars/havana
-
-/datum/loadout_item/pocket_items/donator/vape
-	name = "E-Cigarette"
-	item_path = /obj/item/clothing/mask/vape

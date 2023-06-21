@@ -469,6 +469,21 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			to_chat(M, message, avoid_highlighting = speaker_key == M.key)
 
+	var/demo_message = message
+
+	if(follow_target)
+		var/F
+		if(turf_target)
+			F = FOLLOW_OR_TURF_LINK(SSdemo, follow_target, turf_target)
+		else
+			F = FOLLOW_LINK(SSdemo, follow_target)
+		demo_message = "[F] [message]"
+	else if(turf_target)
+		var/turf_link = TURF_LINK(SSdemo, turf_target)
+		demo_message = "[turf_link] [message]"
+
+	to_chat(SSdemo, demo_message)
+	
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
 	var/static/list/mob_spawn_meancritters = list() // list of possible hostile mobs
