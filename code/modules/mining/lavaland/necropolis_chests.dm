@@ -117,6 +117,7 @@
 	name = "\improper Ancient Sarcophagus"
 	desc = "Once guarded by the King of Demons, this sarcophagus contains the relics of an ancient soldier."
 	icon_state = "necro_bubblegum"
+	base_icon_state = "necro_bubblegum"
 	lid_x = -26
 	lid_y = 2
 
