@@ -5,13 +5,13 @@
 #define ADD_TRAIT(target, trait, source) \
 	do { \
 		var/list/_L; \
-		if (!target.status_traits) { \
-			target.status_traits = list(); \
-			_L = target.status_traits; \
+		if (!target._status_traits) { \
+			target._status_traits = list(); \
+			_L = target._status_traits; \
 			_L[trait] = list(source); \
 			SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
 		} else { \
-			_L = target.status_traits; \
+			_L = target._status_traits; \
 			if (_L[trait]) { \
 				_L[trait] |= list(source); \
 			} else { \
@@ -22,7 +22,7 @@
 	} while (0)
 #define REMOVE_TRAIT(target, trait, sources) \
 	do { \
-		var/list/_L = target.status_traits; \
+		var/list/_L = target._status_traits; \
 		var/list/_S; \
 		if (sources && !islist(sources)) { \
 			_S = list(sources); \
@@ -40,13 +40,13 @@
 				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
 			}; \
 			if (!length(_L)) { \
-				target.status_traits = null \
+				target._status_traits = null \
 			}; \
 		} \
 	} while (0)
 #define REMOVE_TRAIT_NOT_FROM(target, trait, sources) \
 	do { \
-		var/list/_traits_list = target.status_traits; \
+		var/list/_traits_list = target._status_traits; \
 		var/list/_sources_list; \
 		if (sources && !islist(sources)) { \
 			_sources_list = list(sources); \
@@ -64,13 +64,13 @@
 				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
 			}; \
 			if (!length(_traits_list)) { \
-				target.status_traits = null \
+				target._status_traits = null \
 			}; \
 		} \
 	} while (0)
 #define REMOVE_TRAITS_NOT_IN(target, sources) \
 	do { \
-		var/list/_L = target.status_traits; \
+		var/list/_L = target._status_traits; \
 		var/list/_S = sources; \
 		if (_L) { \
 			for (var/_T in _L) { \
@@ -81,14 +81,14 @@
 					}; \
 				};\
 			if (!length(_L)) { \
-				target.status_traits = null\
+				target._status_traits = null\
 			};\
 		}\
 	} while (0)
 
 #define REMOVE_TRAITS_IN(target, sources) \
 	do { \
-		var/list/_L = target.status_traits; \
+		var/list/_L = target._status_traits; \
 		var/list/_S = sources; \
 		if (sources && !islist(sources)) { \
 			_S = list(sources); \
@@ -104,15 +104,18 @@
 					}; \
 				};\
 			if (!length(_L)) { \
-				target.status_traits = null\
+				target._status_traits = null\
 			};\
 		}\
 	} while (0)
 
-#define HAS_TRAIT(target, trait) (target.status_traits?[trait] ? TRUE : FALSE)
-#define HAS_TRAIT_FROM(target, trait, source) (HAS_TRAIT(target, trait) && (source in target.status_traits[trait]))
-#define HAS_TRAIT_FROM_ONLY(target, trait, source) (HAS_TRAIT(target, trait) && (source in target.status_traits[trait]) && (length(target.status_traits[trait]) == 1))
-#define HAS_TRAIT_NOT_FROM(target, trait, source) (HAS_TRAIT(target, trait) && (length(target.status_traits[trait] - source) > 0))
+#define HAS_TRAIT(target, trait) (target._status_traits?[trait] ? TRUE : FALSE)
+#define HAS_TRAIT_FROM(target, trait, source) (HAS_TRAIT(target, trait) && (source in target._status_traits[trait]))
+#define HAS_TRAIT_FROM_ONLY(target, trait, source) (HAS_TRAIT(target, trait) && (source in target._status_traits[trait]) && (length(target._status_traits[trait]) == 1))
+#define HAS_TRAIT_NOT_FROM(target, trait, source) (HAS_TRAIT(target, trait) && (length(target._status_traits[trait] - source) > 0))
+/// Returns a list of trait sources for this trait. Only useful for wacko cases and internal futzing
+/// You should not be using this
+#define GET_TRAIT_SOURCES(target, trait) target._status_traits?[trait] || list()
 
 /*
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
@@ -146,6 +149,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ILLITERATE "illiterate"
 /// Mute. Can't talk.
 #define TRAIT_MUTE "mute"
+/// Softspoken. Always whisper.
+#define TRAIT_SOFTSPOKEN "softspoken"
 /// Gibs on death and slips like ice.
 #define TRAIT_CURSED "cursed"
 /// Emotemute. Can't... emote.
@@ -179,6 +184,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DISFIGURED "disfigured"
 /// Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_XENO_HOST "xeno_host"
+/// This mob is immune to stun causing status effects and stamcrit.
+/// Prefer to use [/mob/living/proc/check_stun_immunity] over checking for this trait exactly.
 #define TRAIT_STUNIMMUNE "stun_immunity"
 #define TRAIT_BATON_RESISTANCE "baton_resistance"
 /// Anti Dual-baton cooldown bypass exploit.
@@ -352,6 +359,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HYPERSPACED "hyperspaced"
 ///Gives the movable free hyperspace movement without being pulled during shuttle transit
 #define TRAIT_FREE_HYPERSPACE_MOVEMENT "free_hyperspace_movement"
+///Lets the movable move freely in the soft-cordon area of transit space, which would otherwise teleport them away just before they got to see the true cordon
+#define TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT "free_hyperspace_softcordon_movement"
+///Deletes the object upon being dumped into space, usually from exiting hyperspace. Useful if you're spawning in a lot of stuff for hyperspace events that dont need to flood the entire game
+#define TRAIT_DEL_ON_SPACE_DUMP "del_on_hyperspace_leave"
 /// Gets double arcade prizes
 #define TRAIT_GAMERGOD "gamer-god"
 #define TRAIT_GIANT "giant"
@@ -481,6 +492,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HATED_BY_DOGS "hated_by_dogs"
 /// Mobs with this trait will not be immobilized when held up
 #define TRAIT_NOFEAR_HOLDUPS "no_fear_holdup"
+/// Mob has gotten an armor buff from adamantine extract
+#define TRAIT_ADAMANTINE_EXTRACT_ARMOR "adamantine_extract_armor"
+/// Mobs with this trait won't be able to dual wield guns.
+#define TRAIT_NO_GUN_AKIMBO "no_gun_akimbo"
+
+/// Projectile with this trait will always hit the defined zone of a struck living mob.
+#define TRAIT_ALWAYS_HIT_ZONE "always_hit_zone"
+
+/// Mobs with this trait do care about a few grizzly things, such as digging up graves. They also really do not like bringing people back to life or tending wounds, but love autopies, dissections and amputations.
+#define TRAIT_MORBID "morbid"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -497,6 +518,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ROYAL_METABOLISM "royal_metabolism"
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
 #define TRAIT_BALLMER_SCIENTIST "ballmer_scientist"
+#define TRAIT_MAINTENANCE_METABOLISM "maintenance_metabolism"
 
 //LUNG TRAITS
 /// Lungs always breathe normally when in vacuum/space.
@@ -620,6 +642,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_APC_SHOCKING "apc_shocking"
 /// Properly wielded two handed item
 #define TRAIT_WIELDED "wielded"
+/// A transforming item that is actively extended / transformed
+#define TRAIT_TRANSFORM_ACTIVE "active_transform"
 /// Buckling yourself to objects with this trait won't immobilize you
 #define TRAIT_NO_IMMOBILIZE "no_immobilize"
 /// Prevents stripping this equipment
@@ -650,7 +674,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SELF_AWARE "self_aware"
 #define TRAIT_FREERUNNING "freerunning"
 #define TRAIT_SKITTISH "skittish"
-#define TRAIT_POOR_AIM "poor_aim"
 #define TRAIT_PROSOPAGNOSIA "prosopagnosia"
 #define TRAIT_TAGGER "tagger"
 #define TRAIT_PHOTOGRAPHER "photographer"
@@ -844,6 +867,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CURRENTLY_CLEANING "currently_cleaning"
 /// Objects with this trait are deleted if they fall into chasms, rather than entering abstract storage
 #define TRAIT_CHASM_DESTROYED "chasm_destroyed"
+/// Trait from being under the floor in some manner
+#define TRAIT_UNDERFLOOR "underfloor"
 
 // unique trait sources, still defines
 #define EMP_TRAIT "emp_trait"
@@ -851,7 +876,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHANGELING_DRAIN "drain"
 /// changelings with this trait can no longer talk over the hivemind
 #define CHANGELING_HIVEMIND_MUTE "ling_mute"
-#define HIGHLANDER "highlander"
 #define TRAIT_HULK "hulk"
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
@@ -935,8 +959,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
 #define MOOD_DATUM_TRAIT "mood_datum"
 #define DRONE_SHY_TRAIT "drone_shy"
-/// Pacifism trait given by stabilized light pink extracts.
-#define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
+/// Trait given by stabilized light pink extracts
+#define STABILIZED_LIGHT_PINK_EXTRACT_TRAIT "stabilized_light_pink"
+/// Trait given by adamantine extracts
+#define ADAMANTINE_EXTRACT_TRAIT "adamantine_extract"
 /// Given by the multiple_lives component to the previous body of the mob upon death.
 #define EXPIRED_LIFE_TRAIT "expired_life"
 /// Trait given to an atom/movable when they orbit something.
@@ -947,6 +973,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHOKING_TRAIT "choking_trait"
 /// Trait given by hallucinations
 #define HALLUCINATION_TRAIT "hallucination_trait"
+
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
@@ -1056,7 +1083,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TACKLING_TAILED_DEFENDER "tackling_tailed_defender"
 
 /// Is runechat for this atom/movable currently disabled, regardless of prefs or anything?
-#define TRAIT_RUNECHAT_HIDDEN "runechat_hudden"
+#define TRAIT_RUNECHAT_HIDDEN "runechat_hidden"
+
+/// the object has a label applied
+#define TRAIT_HAS_LABEL "labeled"
 
 /// some trait sorces dirived from bodyparts BODYPART_TRAIT is generic.
 #define BODYPART_TRAIT "bodypart"

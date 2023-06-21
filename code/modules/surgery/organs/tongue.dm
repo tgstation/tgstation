@@ -157,10 +157,10 @@
 /datum/action/item_action/organ_action/statue/New(Target)
 	. = ..()
 	statue = new
-	RegisterSignal(statue, COMSIG_PARENT_QDELETING, PROC_REF(statue_destroyed))
+	RegisterSignal(statue, COMSIG_QDELETING, PROC_REF(statue_destroyed))
 
 /datum/action/item_action/organ_action/statue/Destroy()
-	UnregisterSignal(statue, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(statue, COMSIG_QDELETING)
 	QDEL_NULL(statue)
 	. = ..()
 

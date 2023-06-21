@@ -161,7 +161,7 @@
 			break
 	if(!validdest) //Didn't find our destination in the list of valid destinations, something bad happening
 		log_admin("[user] attempted to href dock exploit on [src] with target location \"[dest_id]\"")
-		message_admins("[user] just attempted to href dock exploit on [src] with target location \"[dest_id]\"")
+		message_admins("[user] just attempted to href dock exploit on [src] with target location \"[url_encode(dest_id)]\"")
 		return SHUTTLE_CONSOLE_DESTINVALID
 	switch(SSshuttle.moveShuttle(shuttleId, dest_id, TRUE))
 		if(DOCKING_SUCCESS)

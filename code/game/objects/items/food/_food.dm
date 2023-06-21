@@ -46,6 +46,8 @@
 	var/decomp_req_handle = FALSE
 	///Used to set custom decomposition times for food. Set to 0 to have it automatically set via the food's flags.
 	var/decomposition_time = 0
+	///Used to set decomposition stink particles for food, will have no particles if null
+	var/decomposition_particles = /particles/stink
 	///Used to set custom starting reagent purity for synthetic and natural food. Ignored when set to null.
 	var/starting_reagent_purity = null
 
@@ -116,7 +118,7 @@
 ///Set decomp_req_handle to TRUE to only make it decompose when someone picks it up.
 /obj/item/food/proc/make_decompose(mapload)
 	if(!preserved_food)
-		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
+		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time, stink_particles = decomposition_particles)
 
 ///Adjusts reagent purity
 /obj/item/food/proc/adjust_reagent_purity()

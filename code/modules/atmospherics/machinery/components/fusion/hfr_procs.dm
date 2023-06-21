@@ -92,20 +92,20 @@
 	update_appearance()
 	linked_interface.active = TRUE
 	linked_interface.update_appearance()
-	RegisterSignal(linked_interface, COMSIG_PARENT_QDELETING, PROC_REF(unregister_signals))
+	RegisterSignal(linked_interface, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	linked_input.active = TRUE
 	linked_input.update_appearance()
-	RegisterSignal(linked_input, COMSIG_PARENT_QDELETING, PROC_REF(unregister_signals))
+	RegisterSignal(linked_input, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	linked_output.active = TRUE
 	linked_output.update_appearance()
-	RegisterSignal(linked_output, COMSIG_PARENT_QDELETING, PROC_REF(unregister_signals))
+	RegisterSignal(linked_output, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	linked_moderator.active = TRUE
 	linked_moderator.update_appearance()
-	RegisterSignal(linked_moderator, COMSIG_PARENT_QDELETING, PROC_REF(unregister_signals))
+	RegisterSignal(linked_moderator, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		corner.active = TRUE
 		corner.update_appearance()
-		RegisterSignal(corner, COMSIG_PARENT_QDELETING, PROC_REF(unregister_signals))
+		RegisterSignal(corner, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	soundloop = new(src, TRUE)
 	soundloop.volume = 5
 
@@ -118,15 +118,15 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/unregister_signals(only_signals = FALSE)
 	SIGNAL_HANDLER
 	if(linked_interface)
-		UnregisterSignal(linked_interface, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(linked_interface, COMSIG_QDELETING)
 	if(linked_input)
-		UnregisterSignal(linked_input, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(linked_input, COMSIG_QDELETING)
 	if(linked_output)
-		UnregisterSignal(linked_output, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(linked_output, COMSIG_QDELETING)
 	if(linked_moderator)
-		UnregisterSignal(linked_moderator, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(linked_moderator, COMSIG_QDELETING)
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
-		UnregisterSignal(corner, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(corner, COMSIG_QDELETING)
 	if(!only_signals)
 		deactivate()
 
@@ -416,6 +416,16 @@
 				Get as far away as possible from the reactor or find a way to shut it down.", "Alert")
 	var/speaking = "[emergency_alert] The Hypertorus fusion reactor has reached critical integrity failure. Emergency magnetic dampeners online."
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
+
+	notify_ghosts(
+		"The [src] has begun melting down!",
+		source = src,
+		header = "Meltdown Incoming",
+		action = NOTIFY_ORBIT,
+		ghost_sound = 'sound/machines/warning-buzzer.ogg',
+		notify_volume = 75
+	)
+
 	for(var/i in HYPERTORUS_COUNTDOWN_TIME to 0 step -10)
 		if(critical_threshold_proximity < melting_point) // Cutting it a bit close there engineers
 			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
