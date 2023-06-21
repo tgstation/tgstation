@@ -47,7 +47,6 @@
 /datum/controller/subsystem/job/proc/generate_config(mob/user)
 	var/toml_path = "[global.config.directory]/jobconfig.toml"
 	var/jobstext = "[global.config.directory]/jobs.txt"
-	var/list/file_data = list()
 	config_documentation = initial(config_documentation) // Reset to default juuuuust in case.
 
 	if(fexists(file(toml_path)))
@@ -64,6 +63,7 @@
 
 	// Generate the new TOML format, using codebase defaults.
 	to_chat(user, span_notice("Generating new jobconfig.toml, using codebase defaults."))
+	var/list/file_data = list()
 	for(var/datum/job/occupation as anything in joinable_occupations)
 		file_data[occupation.config_tag] = generate_blank_job_config(occupation)
 
@@ -75,13 +75,13 @@
 /// Loads the job config from the TXT and creates a new TOML file from it.
 /// Returns TRUE if a file is successfully generated, FALSE otherwise.
 /datum/controller/subsystem/job/proc/import_config_from_txt(mob/user)
-	jobstext = file2text(file("[global.config.directory]/jobs.txt")) // walter i'm dying (get the file from the string, then parse it into a larger text string)
+	var/unrolled_jobs_txt = file2text(file("[global.config.directory]/jobs.txt")) // walter i'm dying (get the file from the string, then parse it into a larger text string)
+	var/list/file_data = list()
 	config_documentation += "\n\n## This TOML was migrated from jobs.txt. All variables are COMMENTED and will not load by default! Please verify to ensure that they are correct, and uncomment the key as you want, comparing it to the old config.\n\n" // small warning
 
 	for(var/datum/job/occupation as anything in joinable_occupations)
-		var/job_key = occupation.config_tag
 		var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)") // TXT system used the occupation's name, we convert it to the new config_key system here.
-		parser.Find(jobstext)
+		parser.Find(unrolled_jobs_txt)
 
 		var/default_positions = text2num(parser.group[1])
 		var/starting_positions = text2num(parser.group[2])
@@ -94,7 +94,7 @@
 		)
 
 		working_list += generate_job_config_excluding_legacy(occupation)
-		file_data[job_key] = working_list
+		file_data[occupation.config_tag] = working_list
 
 	if(!export_toml(user, file_data))
 		return FALSE
