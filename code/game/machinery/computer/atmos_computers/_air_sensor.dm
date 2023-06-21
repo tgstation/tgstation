@@ -41,7 +41,7 @@
 
 /obj/machinery/air_sensor/return_air()
 	if(!on)
-		return null
+		return 
 	. = ..()
 	use_power(active_power_usage) //use power for analyzing gases
 
@@ -209,7 +209,7 @@
 		return
 
 	loc.balloon_alert(user, "dismantling sensor")
-	if(!tool.use_tool(src, user, 20, volume = 30, amount = 1))
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 30, amount = 1))
 		return
 	loc.balloon_alert(user, "sensor dismanteled")
 
