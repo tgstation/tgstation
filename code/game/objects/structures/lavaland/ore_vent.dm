@@ -1,5 +1,6 @@
 /obj/structure/ore_vent
 	name = "untapped ore vent"
+	desc = "An ore vent, brimming with underground ore. Scan with an advanced mining scanner to "
 	icon = 'icons/obj/lavaland/terrain.dmi' /// note to self, new sprites. get on it
 	icon_state = "geyser"
 
@@ -41,7 +42,6 @@
  */
 /obj/structure/ore_vent/proc/create_mineral_contents()
 	var/list/refined_list = list()
-	// say("hiii")
 	say(pick_weight(mineral_breakdown))
 	for(var/iteration in 1 to minerals_per_boulder)
 		var/picked_mat = pick_weight(mineral_breakdown) // Material should be picked, weighed by random weights.
