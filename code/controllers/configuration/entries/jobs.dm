@@ -15,7 +15,7 @@
 		return
 
 	var/toml_path = "[global.config.directory]/jobconfig.toml"
-	var/job_config = rustg_read_toml_file(toml_path)
+	var/list/job_config = rustg_read_toml_file(toml_path)
 
 	for(var/datum/job/occupation as anything in joinable_occupations)
 		var/job_key = occupation.config_tag
@@ -116,7 +116,7 @@
 		to_chat(user, span_notice("No jobconfig.toml found in the config folder! If this is not expected, please notify a server operator or coders. You may need to generate a new config file by running 'Generate Job Configuration' from the Server tab."))
 		return FALSE
 
-	var/job_config = rustg_read_toml_file(toml_path)
+	var/list/job_config = rustg_read_toml_file(toml_path)
 	for(var/datum/job/occupation as anything in joinable_occupations)
 		var/job_key = occupation.config_tag
 
