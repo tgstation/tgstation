@@ -10,7 +10,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
 	step_energy_drain = 15 //slightly higher energy drain since you movin those wheels FAST
-	armor_type = /datum/armor/working_clarke
+	armor_type = /datum/armor/mecha_clarke
 	equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,
@@ -28,8 +28,9 @@
 	enter_delay = 40
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS
 	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
+	allow_diagonal_movement = TRUE
 
-/datum/armor/working_clarke
+/datum/armor/mecha_clarke
 	melee = 20
 	bullet = 10
 	laser = 20
@@ -40,10 +41,11 @@
 
 /obj/vehicle/sealed/mecha/working/clarke/Initialize(mapload)
 	. = ..()
-	box = new(src)
+	ore_box = new(src)
 
-/obj/vehicle/sealed/mecha/working/clarke/Destroy()
-	INVOKE_ASYNC(box, TYPE_PROC_REF(/obj/structure/ore_box, dump_box_contents))
+/obj/vehicle/sealed/mecha/working/clarke/atom_destruction()
+	if(ore_box)
+		INVOKE_ASYNC(box, TYPE_PROC_REF(/obj/structure/ore_box, dump_box_contents))
 	return ..()
 
 /obj/vehicle/sealed/mecha/working/clarke/generate_actions()
@@ -60,22 +62,19 @@
 	icon_state = "bin"
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
-	/// Var to avoid istype checking every time the topic button is pressed. This will only work inside Clarke mechs.
-	var/obj/vehicle/sealed/mecha/working/clarke/hostmech
 
-/obj/item/mecha_parts/mecha_equipment/orebox_manager/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+/obj/item/mecha_parts/mecha_equipment/orebox_manager/attach(obj/vehicle/sealed/mecha/mecha, attach_right = FALSE)
 	. = ..()
-	if(istype(M, /obj/vehicle/sealed/mecha/working/clarke))
-		hostmech = M
+	ADD_TRAIT(mecha, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/detach()
-	hostmech = null //just in case
+	REMOVE_TRAIT(chassis, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/ui_act(action, list/params)
 	. = ..()
 	if(action == "toggle")
-		hostmech.box?.dump_box_contents()
+		chassis.ore_box?.dump_box_contents()
 		activated = TRUE
 
 #define SEARCH_COOLDOWN (1 MINUTES)

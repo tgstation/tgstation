@@ -22,13 +22,16 @@
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/mecha/hydraulic.ogg'
 
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/M)
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/mecha)
 	. = ..()
-	cargo_holder = M
+	if(istype(mecha, /obj/vehicle/sealed/mecha/working/ripley))
+		cargo_holder = mecha
+	ADD_TRAIT(mecha, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/detach(atom/moveto = null)
-	. = ..()
+	REMOVE_TRAIT(mecha, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
 	cargo_holder = null
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/action(mob/living/source, atom/target, list/modifiers)
 	if(!action_checks(target))
@@ -75,8 +78,8 @@
 		LAZYADD(cargo_holder.cargo, clamptarget)
 		clamptarget.forceMove(chassis)
 		clamptarget.set_anchored(FALSE)
-		if(!cargo_holder.box && istype(clamptarget, /obj/structure/ore_box))
-			cargo_holder.box = clamptarget
+		if(!cargo_holder.ore_box && istype(clamptarget, /obj/structure/ore_box))
+			cargo_holder.ore_box = clamptarget
 		to_chat(source, "[icon2html(src, source)][span_notice("[target] successfully loaded.")]")
 		log_message("Loaded [clamptarget]. Cargo compartment capacity: [cargo_holder.cargo_capacity - LAZYLEN(cargo_holder.cargo)]", LOG_MECHA)
 

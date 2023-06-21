@@ -9,7 +9,7 @@
 	max_integrity = 200
 	ui_x = 1200
 	lights_power = 7
-	armor_type = /datum/armor/working_ripley
+	armor_type = /datum/armor/mecha_ripley
 	max_equip_by_category = list(
 		MECHA_UTILITY = 2,
 		MECHA_POWER = 1,
@@ -32,6 +32,7 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
+	allow_diagonal_movement = TRUE
 	/// Amount of Goliath hides attached to the mech
 	var/hides = 0
 	/// List of all things in Ripley's Cargo Compartment
@@ -43,7 +44,7 @@
 	/// How fast the mech is in normal pressure
 	var/slow_pressure_step_in = 2
 
-/datum/armor/working_ripley
+/datum/armor/mecha_ripley
 	melee = 40
 	bullet = 20
 	laser = 10
@@ -90,13 +91,13 @@
 	max_temperature = 30000
 	max_integrity = 250
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_TEMP_CONTROL|MECHA_INT_TANK_BREACH|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
-	armor_type = /datum/armor/ripley_mk2
+	armor_type = /datum/armor/mecha_ripley_mk2
 	wreckage = /obj/structure/mecha_wreckage/ripley/mk2
 	enclosed = TRUE
 	enter_delay = 40
 	silicon_icon_state = null
 
-/datum/armor/ripley_mk2
+/datum/armor/mecha_ripley_mk2
 	melee = 40
 	bullet = 30
 	laser = 30
@@ -151,10 +152,7 @@
 
 /obj/vehicle/sealed/mecha/working/ripley/mining/Initialize(mapload)
 	. = ..()
-	take_damage(125) // Low starting health
-
-/obj/vehicle/sealed/mecha/working/ripley/mining/Initialize(mapload)
-	. = ..()
+	take_damage(125)
 	if(cell)
 		cell.charge = FLOOR(cell.charge * 0.25, 1) //Starts at very low charge
 	if(prob(70)) //Maybe add a drill
@@ -243,11 +241,10 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
 		to_chat(miner.occupants, "[icon2html(src,  miner.occupants)][span_notice("You unload [crate].")]")
 		crate.forceMove(drop_location())
 		LAZYREMOVE(miner.cargo, crate)
-		if(crate == miner.box)
-			miner.box = null
+		if(crate == miner.ore_box)
+			miner.ore_box = null
 		log_message("Unloaded [crate]. Cargo compartment capacity: [miner.cargo_capacity - LAZYLEN(miner.cargo)]", LOG_MECHA)
 		return TRUE
-
 
 /obj/vehicle/sealed/mecha/working/ripley/relay_container_resist_act(mob/living/user, obj/O)
 	to_chat(user, span_notice("You lean on the back of [O] and start pushing so it falls out of [src]."))
