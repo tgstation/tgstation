@@ -1,6 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "Fixed being unable to reimburse syndicate spawners via uplinks. This includes nukie reinforcements, cyborgs, and holoparasite injectors."
-  - refactor: "Turned TC reimbursement into a bespoke element."
-  - spellcheck: "Tuned demon's blood message when there's no ghosts to pick to be a little more understandable and sensible."
