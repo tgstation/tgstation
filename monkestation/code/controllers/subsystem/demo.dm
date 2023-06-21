@@ -1,5 +1,5 @@
 /datum/config_entry/flag/demos_enabled
-	default = FALSE
+	default = TRUE
 
 /datum/config_entry/string/replay_password
 	default = "mrhouse101"
