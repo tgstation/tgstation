@@ -35,6 +35,7 @@
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
+	var/upgrade_name = initial(upgrade_item.name)
 	if(ismecha(parent))
 		if(amount)
 			if(amount < max_amount)
