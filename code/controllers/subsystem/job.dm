@@ -85,10 +85,10 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/Initialize()
 	setup_job_lists()
+	job_config_datum_singletons = generate_config_singletons() // we set this up here regardless in case someone wants to use the verb to generate the config file.
 	if(!length(all_occupations))
 		SetupOccupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
-		job_config_datum_singletons = generate_config_singletons()
 		load_jobs_from_config()
 	set_overflow_role(CONFIG_GET(string/overflow_job))
 	return SS_INIT_SUCCESS

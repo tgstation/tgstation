@@ -10,6 +10,10 @@
 
 /// Sets all of the job datum configurable values to what they've been set to in the config file, jobconfig.toml.
 /datum/controller/subsystem/job/proc/load_jobs_from_config()
+	if(!length(job_config_datum_singletons))
+		stack_trace("SSjob tried to load jobs from config, but the config singletons were not initialized! Likely tried to load jobs before SSjob was initialized.")
+		return
+
 	if(legacy_mode)
 		legacy_load()
 		return
