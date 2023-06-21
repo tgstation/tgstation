@@ -2,7 +2,7 @@
 	name = "laser musket"
 	desc = "A rudimentary laser weapon, it's crude systems incapable of holding more than a single shot."
 	icon_state = "musket" //set to musket
-	inhand_icon_state = "laser"//set to musket
+	inhand_icon_state = "musket"//set to musket
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket)
 	var/is_charging = FALSE
 
