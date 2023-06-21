@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(demo)
 	if(demo_started)
 		for(var/I in 1 to target_list.len)
 			if(!istext(target_list[I])) target_list[I] = "\ref[target_list[I]]"
-		call(DEMO_WRITER, "demo_chat")(target_list.Join(","), "\ref[message_str]", "[is_text]")
+		RUSTG_CALL(DEMO_WRITER, "demo_chat")(target_list.Join(","), "\ref[message_str]", "[is_text]")
 	else if(chat_list)
 		chat_list[++chat_list.len] = list(world.time, target_list, message_str, is_text)
 
@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(demo)
 
 	var/revdata_list = list()
 	if(GLOB.revdata)
-		revdata_list["commit"] = "[GLOB.revdata.commit || GLOB.revdata.originmastercommit]"
+		revdata_list["commit"] = "[GLOB.revdata.originmastercommit]"
 		if(GLOB.revdata.originmastercommit) revdata_list["originmastercommit"] = "[GLOB.revdata.originmastercommit]"
 		revdata_list["repo"] = "Monkestation/Monkestation2.0"
 	var/revdata_str = json_encode(revdata_list);
@@ -82,14 +82,14 @@ SUBSYSTEM_DEF(demo)
 			embed_resource(arglist(L))
 
 		for(var/list/L in chat_list)
-			call(DEMO_WRITER, "demo_set_time_override")(L[1])
+			RUSTG_CALL(DEMO_WRITER, "demo_set_time_override")(L[1])
 			var/list/target_list = L[2]
 			for(var/I in 1 to target_list.len)
 				if(!istext(target_list[I])) target_list[I] = "\ref[target_list[I]]"
-			call(DEMO_WRITER, "demo_chat")(target_list.Join(","), "\ref[L[3]]", "[L[4]]")
-		call(DEMO_WRITER, "demo_set_time_override")("null")
+			RUSTG_CALL(DEMO_WRITER, "demo_chat")(target_list.Join(","), "\ref[L[3]]", "[L[4]]")
+		RUSTG_CALL(DEMO_WRITER, "demo_set_time_override")("null")
 
-		last_size = text2num(call(DEMO_WRITER, "demo_get_size")())
+		last_size = text2num(RUSTG_CALL(DEMO_WRITER, "demo_get_size")())
 	else
 		log_world("Failed to initialize demo system: [result]")
 
@@ -102,18 +102,18 @@ SUBSYSTEM_DEF(demo)
 	if(!CONFIG_GET(flag/demos_enabled))
 		return
 	if(demo_started)
-		last_size = text2num(call(DEMO_WRITER, "demo_flush")())
+		last_size = text2num(RUSTG_CALL(DEMO_WRITER, "demo_flush")())
 
 /datum/controller/subsystem/demo/proc/flush()
 	if(!CONFIG_GET(flag/demos_enabled))
 		return
 	if(demo_started)
-		last_size = text2num(call(DEMO_WRITER, "demo_flush")())
+		last_size = text2num(RUSTG_CALL(DEMO_WRITER, "demo_flush")())
 
 /datum/controller/subsystem/demo/Shutdown()
 	if(!CONFIG_GET(flag/demos_enabled))
 		return
-	call(DEMO_WRITER, "demo_end")()
+	RUSTG_CALL(DEMO_WRITER, "demo_end")()
 
 /datum/controller/subsystem/demo/stat_entry(msg)
 	msg += "ALL: [format_size(last_size)] | RSC: [format_size(last_embedded_size)]"
@@ -142,7 +142,7 @@ SUBSYSTEM_DEF(demo)
 	var/size = length(file(path))
 	last_embedded_size += size
 	log_world("Embedding \ref[res] [res] from [path] ([size] bytes)")
-	if(call(DEMO_WRITER, "demo_embed_resource")("\ref[res]", path) != "SUCCESS")
+	if(RUSTG_CALL(DEMO_WRITER, "demo_embed_resource")("\ref[res]", path) != "SUCCESS")
 		log_world("Failed to copy \ref[res] [res] from [path]!")
 	embedded_list[res] = 1
 	if(do_del)
