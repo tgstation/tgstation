@@ -9687,9 +9687,7 @@
 /area/station/security/processing)
 "cWH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /obj/machinery/camera/directional/west{
 	c_tag = "Labor Camp Cellblock";
 	network = list("labor")
@@ -25495,9 +25493,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/prison/toilet)
 "igi" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/machinery/camera/directional/west{
 	c_tag = "Service Bar Staircase"
 	},
@@ -42060,9 +42056,7 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "nvt" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "nvE" = (
@@ -47473,9 +47467,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "pdx" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /turf/open/floor/sepia,
 /area/station/security/prison/rec)
 "pdy" = (
@@ -51329,9 +51321,7 @@
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
+/obj/item/kirbyplants/organic/applebush,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "qqz" = (
@@ -62324,9 +62314,7 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "tQW" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /turf/open/floor/iron/dark,
 /area/mine/eva)
 "tQX" = (
@@ -63933,9 +63921,7 @@
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
 "usx" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)

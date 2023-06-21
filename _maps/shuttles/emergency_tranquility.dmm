@@ -36,8 +36,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-22";
+/obj/item/kirbyplants/organic/plant22{
 	pixel_x = -8
 	},
 /turf/open/floor/wood,
@@ -666,9 +665,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-03"
-	},
+/obj/item/kirbyplants/organic/plant3,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "nq" = (
@@ -2097,9 +2094,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "MO" = (
@@ -2446,9 +2441,7 @@
 /area/shuttle/escape)
 "SM" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "SR" = (
@@ -2472,9 +2465,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/item/kirbyplants/organic/plant22,
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "Tq" = (
