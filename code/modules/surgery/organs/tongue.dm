@@ -103,7 +103,7 @@
 		food_taste_reaction = FOOD_TOXIC
 	else if(foodtypes & disliked_foodtypes)
 		food_taste_reaction = FOOD_DISLIKED
-	else if(foodtypes & toxic_foodtypes)
+	else if(foodtypes & liked_foodtypes)
 		food_taste_reaction = FOOD_LIKED
 	return food_taste_reaction
 
