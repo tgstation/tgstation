@@ -246,7 +246,6 @@
 		/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace,
 		/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/ranged,
 		/mob/living/simple_animal/hostile/retaliate/snake,
-		/mob/living/simple_animal/hostile/retaliate/spaceman,
 		/mob/living/simple_animal/hostile/retaliate/trader,
 		/mob/living/simple_animal/hostile/retaliate/trader/mrbones,
 		/mob/living/simple_animal/hostile/skeleton,

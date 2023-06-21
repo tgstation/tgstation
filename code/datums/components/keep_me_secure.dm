@@ -26,13 +26,13 @@
 	last_move = world.time
 	if (secured_callback || unsecured_callback)
 		START_PROCESSING(SSobj, src)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(on_examine_more))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
 
 
 /datum/component/keep_me_secure/UnregisterFromParent()
 	STOP_PROCESSING(SSobj, src)
-	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
 /// Returns whether the game is supposed to consider the parent "secure".
 /datum/component/keep_me_secure/proc/is_secured()

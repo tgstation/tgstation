@@ -832,8 +832,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			if(3)
 				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
 			if(4)
-				to_chat(src, span_notice("Oh, I actually feel quite alright!")) //you thought
-				physiology.damage_resistance = -20000
+				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
+				physiology.damage_resistance -= 20000 //you thought
 			if(5)
 				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
 				reagents.add_reagent(/datum/reagent/aslimetoxin, 10)
