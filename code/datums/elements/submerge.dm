@@ -266,8 +266,6 @@
 	 * Why? While visual overlays can be animated, their fixed point stays at the center of the icon of the atom
 	 * they're attached to and not theirs, which can make manipulating the transform var a pain, but because
 	 * we cannot do that with normal overlay or filters (reliably), we have to bend a knee and try to compensate it.
-	 *
-	 * I'm unsure if this also applies to locs without the KEEP_TOGETHER apperance flag, but that's also NOT an option here.
 	 */
 	vis_overlay.overlays = list(vis_overlay.overlay_appearance)
 
