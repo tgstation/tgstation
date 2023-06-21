@@ -57,30 +57,7 @@
 		return TRUE
 
 	if(fexists(file(jobstext))) // Generate the new TOML format, migrating from the text format.
-		to_chat(user, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
-		jobstext = file2text(file(jobstext)) // walter i'm dying (get the file from the string, then parse it into a larger text string)
-		config_documentation += "\n\n## This TOML was migrated from jobs.txt. All variables are COMMENTED and will not load by default! Please verify to ensure that they are correct, and uncomment the key as you want, comparing it to the old config.\n\n" // small warning
-		for(var/datum/job/occupation as anything in joinable_occupations)
-			var/job_key = occupation.config_tag
-			var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)") // TXT system used the occupation's name, we convert it to the new config_key system here.
-			parser.Find(jobstext)
-
-			var/default_positions = text2num(parser.group[1])
-			var/starting_positions = text2num(parser.group[2])
-
-			// Playtime Requirements and Required Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
-			// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator is knows that they codebase defaults when they remove the comment.
-			var/list/working_list = list(
-				"# [JOB_CONFIG_TOTAL_POSITIONS]" = default_positions,
-				"# [JOB_CONFIG_SPAWN_POSITIONS]" = starting_positions,
-			)
-
-			working_list += generate_job_config_excluding_legacy(occupation)
-
-			file_data[job_key] = working_list
-			continue
-
-		if(!export_toml(user, file_data))
+		if(!import_config_from_txt(user))
 			return FALSE
 		return TRUE
 
@@ -100,6 +77,37 @@
 
 		// Generate new config from codebase defaults.
 		file_data[job_key] = generate_blank_job_config(occupation)
+
+	if(!export_toml(user, file_data))
+		return FALSE
+
+	return TRUE
+
+/// Loads the job config from the TXT and creates a new TOML file from it.
+/// Returns TRUE if a file is successfully generated, FALSE otherwise.
+/datum/controller/subsystem/job/proc/import_config_from_txt(mob/user)
+	to_chat(user, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
+	jobstext = file2text(file(jobstext)) // walter i'm dying (get the file from the string, then parse it into a larger text string)
+	config_documentation += "\n\n## This TOML was migrated from jobs.txt. All variables are COMMENTED and will not load by default! Please verify to ensure that they are correct, and uncomment the key as you want, comparing it to the old config.\n\n" // small warning
+
+	for(var/datum/job/occupation as anything in joinable_occupations)
+		var/job_key = occupation.config_tag
+		var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)") // TXT system used the occupation's name, we convert it to the new config_key system here.
+		parser.Find(jobstext)
+
+		var/default_positions = text2num(parser.group[1])
+		var/starting_positions = text2num(parser.group[2])
+
+		// Playtime Requirements and Required Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
+		// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator is knows that they codebase defaults when they remove the comment.
+		var/list/working_list = list(
+			"# [JOB_CONFIG_TOTAL_POSITIONS]" = default_positions,
+			"# [JOB_CONFIG_SPAWN_POSITIONS]" = starting_positions,
+		)
+
+		working_list += generate_job_config_excluding_legacy(occupation)
+
+		file_data[job_key] = working_list
 
 	if(!export_toml(user, file_data))
 		return FALSE
