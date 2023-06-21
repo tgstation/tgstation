@@ -85,25 +85,25 @@
 
 	if(HAS_TRAIT(user, TRAIT_ENTRAILS_READER) || (user.mind && HAS_TRAIT(user.mind, TRAIT_ENTRAILS_READER)) || isobserver(user))
 		if(HAS_TRAIT(src, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-			. += "Fatty deposits and sprinkle residue, imply that this is the liver of someone in <em>security</em>."
+			. += span_info("Fatty deposits and sprinkle residue, imply that this is the liver of someone in <em>security</em>.")
 		if(HAS_TRAIT(src, TRAIT_CULINARY_METABOLISM))
-			. += "The high iron content and slight smell of garlic, implies that this is the liver of a <em>cook</em>."
+			. += span_info("The high iron content and slight smell of garlic, implies that this is the liver of a <em>cook</em>.")
 		if(HAS_TRAIT(src, TRAIT_COMEDY_METABOLISM))
-			. += "A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, implies that this is the liver of a <em>clown</em>."
+			. += span_info("A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, implies that this is the liver of a <em>clown</em>.")
 		if(HAS_TRAIT(src, TRAIT_MEDICAL_METABOLISM))
-			. += "Marks of stress and a faint whiff of medicinal alcohol, imply that this is the liver of a <em>medical worker</em>."
+			. += span_info("Marks of stress and a faint whiff of medicinal alcohol, imply that this is the liver of a <em>medical worker</em>.")
 		if(HAS_TRAIT(src, TRAIT_ENGINEER_METABOLISM))
-			. += "Signs of radiation exposure and space adaption, implies that this is the liver of an <em>engineer</em>."
+			. += span_info("Signs of radiation exposure and space adaption, implies that this is the liver of an <em>engineer</em>.")
 		if(HAS_TRAIT(src, TRAIT_BALLMER_SCIENTIST))
-			. += "Strange glowing residues, sprinklings of congealed solid plasma, and what seem to be tumors indicate this is the radiated liver of a <em>scientist</em>."
+			. += span_info("Strange glowing residues, sprinklings of congealed solid plasma, and what seem to be tumors indicate this is the radiated liver of a <em>scientist</em>.")
 		if(HAS_TRAIT(src, TRAIT_MAINTENANCE_METABOLISM))
-			. += "A half-digested rat's tail (somehow), disgusting sludge, and the faint smell of Grey Bull imply this is what remains of an <em>assistant</em>'s liver."
+			. += span_info("A half-digested rat's tail (somehow), disgusting sludge, and the faint smell of Grey Bull imply this is what remains of an <em>assistant</em>'s liver.")
 
 		// royal trumps pretender royal
 		if(HAS_TRAIT(src, TRAIT_ROYAL_METABOLISM))
-			. += "A rich diet of luxury food, suppleness from soft beds, implies that this is the liver of a <em>head of staff</em>."
+			. += span_info("A rich diet of luxury food, suppleness from soft beds, implies that this is the liver of a <em>head of staff</em>.")
 		else if(HAS_TRAIT(src, TRAIT_PRETENDER_ROYAL_METABOLISM))
-			. += "A diet of imitation caviar, and signs of insomnia, implies that this is the liver of <em>someone who wants to be a head of staff</em>."
+			. += span_info("A diet of imitation caviar, and signs of insomnia, implies that this is the liver of <em>someone who wants to be a head of staff</em>.")
 
 /obj/item/organ/internal/liver/before_organ_replacement(obj/item/organ/replacement)
 	. = ..()
