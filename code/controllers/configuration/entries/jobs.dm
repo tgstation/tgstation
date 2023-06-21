@@ -10,10 +10,10 @@
 
 /// Called in jobs subsystem initialize if LOAD_JOBS_FROM_TXT config flag is set: reads jobconfig.toml (or if in legacy mode, jobs.txt) to set all of the datum's values to what the server operator wants.
 /datum/controller/subsystem/job/proc/load_jobs_from_config()
-	var/toml_file = "[global.config.directory]/jobconfig.toml"
+	var/toml_path = "[global.config.directory]/jobconfig.toml"
 
 	if(!legacy_mode) // this flag is set during the setup of SSconfig, and all warnings were handled there.
-		var/job_config = rustg_read_toml_file(toml_file)
+		var/job_config = rustg_read_toml_file(toml_path)
 
 		for(var/datum/job/occupation as anything in joinable_occupations)
 			var/job_title = occupation.title
@@ -43,12 +43,12 @@
 /// Called from an admin debug verb that generates the jobconfig.toml file and then allows the end user to download it to their machine.
 /// Returns TRUE if a file is successfully generated, FALSE otherwise.
 /datum/controller/subsystem/job/proc/generate_config(mob/user)
-	var/toml_file = "[global.config.directory]/jobconfig.toml"
+	var/toml_path = "[global.config.directory]/jobconfig.toml"
 	var/jobstext = "[global.config.directory]/jobs.txt"
 	var/list/file_data = list()
 	config_documentation = initial(config_documentation) // Reset to default juuuuust in case.
 
-	if(fexists(file(toml_file)))
+	if(fexists(file(toml_path)))
 		to_chat(src, span_notice("Generating new jobconfig.toml, pulling from the old config settings."))
 		if(!regenerate_job_config(user))
 			return FALSE
@@ -107,14 +107,14 @@
 /// If we add a new job or more fields to config a job with, quickly spin up a brand new config that inherits all of your old settings, but adds the new job with codebase defaults.
 /// Returns TRUE if a file is successfully generated, FALSE otherwise.
 /datum/controller/subsystem/job/proc/regenerate_job_config(mob/user)
-	var/toml_file = "[global.config.directory]/jobconfig.toml"
+	var/toml_path = "[global.config.directory]/jobconfig.toml"
 	var/list/file_data = list()
 
-	if(!fexists(file(toml_file))) // You need an existing (valid) TOML for this to work. Sanity check if someone calls this directly instead of through 'Generate Job Configuration' verb.
+	if(!fexists(file(toml_path))) // You need an existing (valid) TOML for this to work. Sanity check if someone calls this directly instead of through 'Generate Job Configuration' verb.
 		to_chat(user, span_notice("No jobconfig.toml found in the config folder! If this is not expected, please notify a server operator or coders. You may need to generate a new config file by running 'Generate Job Configuration' from the Server tab."))
 		return FALSE
 
-	var/job_config = rustg_read_toml_file(toml_file)
+	var/job_config = rustg_read_toml_file(toml_path)
 	for(var/datum/job/occupation as anything in joinable_occupations)
 		var/job_name = occupation.title
 		var/job_key = occupation.config_tag
