@@ -149,7 +149,7 @@
 
 /obj/item/airlock_painter/AltClick(mob/user)
 	. = ..()
-	if(ink)
+	if(ink && user.can_perform_action(src))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		ink.forceMove(user.drop_location())
 		user.put_in_hands(ink)

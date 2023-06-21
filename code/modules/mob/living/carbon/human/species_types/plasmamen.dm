@@ -25,9 +25,7 @@
 	mutantstomach = /obj/item/organ/internal/stomach/bone/plasmaman
 	mutantappendix = null
 	mutantheart = null
-	burnmod = 1.5
 	heatmod = 1.5
-	brutemod = 1.5
 	payday_modifier = 0.75
 	breathid = GAS_PLASMA
 	disliked_food = FRUIT | CLOTH

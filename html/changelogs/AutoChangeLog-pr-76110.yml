@@ -1,0 +1,5 @@
+author: "TheVekter"
+delete-after: True
+changes:
+  - qol: "Embedding an object inside a cake or loaf of bread now requires a right-click instead of a left-click. No more accidentally putting your knife inside it!"
+  - qol: "Added context tips for slicing, embedding, and removing embedded items from cake, bread, and cheese wheels."

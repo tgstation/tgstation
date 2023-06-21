@@ -285,6 +285,7 @@
 	name = "Titan's Finale"
 	desc = "A single-use ability that shoots a large amount of projectiles around you."
 	cooldown_time = 2.5 SECONDS
+	projectile_type = /obj/projectile/colossus
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/Activate(atom/target_atom)
 	. = ..()
