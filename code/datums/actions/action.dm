@@ -378,7 +378,7 @@
 	build_all_button_icons(update_flag, forced)
 
 /// A general use signal proc that reacts to an event and updates JUST our button's status
-/datum/action/proc/update_status_on_signal(datum/source)
+/datum/action/proc/update_status_on_signal(datum/source, new_stat, old_stat)
 	SIGNAL_HANDLER
 
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
