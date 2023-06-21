@@ -23,7 +23,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_DESTRUCTION, PROC_REF(on_atom_destruction))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	if(istype(parent, /obj/vehicle/sealed/mecha/working/ripley))
-		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_mech_overlays))
+		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_ripley_overlays))
 
 /datum/component/armor_plate/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
@@ -92,7 +92,7 @@
 	for(var/i in 1 to amount)
 		new upgrade_item(get_turf(parent))
 
-/datum/component/armor_plate/proc/apply_mech_overlays(obj/vehicle/sealed/mecha/mech, list/overlays)
+/datum/component/armor_plate/proc/apply_ripley_overlays(obj/vehicle/sealed/mecha/mech, list/overlays)
 	SIGNAL_HANDLER
 
 	if(!amount)
