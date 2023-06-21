@@ -42,6 +42,7 @@ SUBSYSTEM_DEF(hotspots)
 			sanity_cap--
 		if(!random_turf)
 			message_admins("ERROR: No random turf returned this is a severe issue")
+			continue
 		new_hotspot.move_center(random_turf)
 
 /datum/controller/subsystem/hotspots/proc/debug_clear()
