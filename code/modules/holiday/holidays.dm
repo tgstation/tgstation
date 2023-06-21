@@ -660,7 +660,7 @@
 	mail_holiday = TRUE
 
 /datum/holiday/xmas/getStationPrefix()
-	return pick("Jesus", "Yule", "Bible", "Elf", "Santa", "Sleigh", "Fir", "Chimney", "Sack", "Present", "Crucifixion", "Birthday", "Claus", "Merry", "Ho Ho Ho")
+	return pick("Jesus", "Yule", "Bible", "Elf", "Santa", "Sleigh", "Fir", "Chimney", "Sack", "Present", "Crucifixion", "Birthday", "Claus", "Merry", "Ho Ho Ho", "Jolly")
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
