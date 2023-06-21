@@ -199,20 +199,6 @@
 /datum/reagent/consumable/milk/whole
 	creation_purity = 1
 
-/datum/glass_style/has_foodtype/drinking_glass/milk
-	required_drink_type = /datum/reagent/consumable/milk
-	name = "glass of milk"
-	desc = "White and nutritious goodness!"
-	icon_state = "glass_white"
-	drink_type = DAIRY | BREAKFAST
-
-/datum/glass_style/has_foodtype/juicebox/milk
-	required_drink_type = /datum/reagent/consumable/milk
-	name = "carton of milk"
-	desc = "An excellent source of calcium for growing space explorers."
-	icon_state = "milkbox"
-	drink_type = DAIRY | BREAKFAST
-
 // Milk is good for humans, but bad for plants.
 // The sugars cannot be used by plants, and the milk fat harms growth. Except shrooms.
 /datum/reagent/consumable/milk/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -241,12 +227,6 @@
 /datum/reagent/consumable/soymilk/synthetic
 	creation_purity = 0.3
 
-/datum/glass_style/drinking_glass/soymilk
-	required_drink_type = /datum/reagent/consumable/soymilk
-	name = "glass of soy milk"
-	desc = "White and nutritious soy goodness!"
-	icon_state = "glass_white"
-
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
 		affected_mob.heal_bodypart_damage(1, 0)
@@ -263,12 +243,6 @@
 
 /datum/reagent/consumable/cream/synthetic
 	creation_purity = 0.3
-
-/datum/glass_style/drinking_glass/cream
-	required_drink_type = /datum/reagent/consumable/cream
-	name = "glass of cream"
-	desc = "Ewwww..."
-	icon_state = "glass_white"
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
