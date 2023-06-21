@@ -5,7 +5,7 @@
 /datum/job_config_type/required_character_age/get_compile_time_value(datum/job/occupation)
 	return initial(occupation.required_character_age) || 0 // edge case here, this is typically null by default and returning null causes issues. Returning 0 is a safe default.
 
-/datum/job_config_type/required_character_age/validate_value(value) // here we don't care about the value being out of bounds, just wanna make sure it's a number
+/datum/job_config_type/required_character_age/validate_value(value)
 	if(isnum(value))
 		return TRUE
 	return FALSE
