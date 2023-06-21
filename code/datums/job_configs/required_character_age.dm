@@ -1,9 +1,15 @@
 /// The required age a character must be to join a job (which is in years).
 /datum/job_config_type/required_character_age
 	name = JOB_CONFIG_REQUIRED_CHARACTER_AGE
+	datum_var_name = required_character_age
 
 /datum/job_config_type/required_character_age/get_compile_time_value(datum/job/occupation)
-	return initial(occupation.required_character_age) || 0 // edge case here, this is typically null by default and returning null causes issues. Returning 0 is a safe default.
+	. = ..()
+
+	if(!isnull(.))
+		return .
+
+	return 0
 
 /datum/job_config_type/required_character_age/validate_value(value)
 	if(isnum(value))

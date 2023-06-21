@@ -2,8 +2,7 @@
 /datum/job_config_type/required_account_age
 	name = JOB_CONFIG_REQUIRED_ACCOUNT_AGE
 
-/datum/job_config_type/required_account_age/get_compile_time_value(datum/job/occupation)
-	return initial(occupation.minimal_player_age)
+	datum_var_name = minimal_player_age
 
 /datum/job_config_type/required_account_age/validate_value(value)
 	if(isnum(value))
