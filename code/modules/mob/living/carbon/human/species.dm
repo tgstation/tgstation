@@ -1901,9 +1901,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/obj/item/organ/internal/tongue/fake_tongue = mutanttongue
 
 	return list(
-		"liked_food" = bitfield_to_list(initial(fake_tongue.liked_food), food_flags),
-		"disliked_food" = bitfield_to_list(initial(fake_tongue.disliked_food), food_flags),
-		"toxic_food" = bitfield_to_list(initial(fake_tongue.toxic_food), food_flags),
+		"liked_food" = bitfield_to_list(initial(fake_tongue.liked_foodtypes), food_flags),
+		"disliked_food" = bitfield_to_list(initial(fake_tongue.disliked_foodtypes), food_flags),
+		"toxic_food" = bitfield_to_list(initial(fake_tongue.toxic_foodtypes), food_flags),
 	)
 
 /**

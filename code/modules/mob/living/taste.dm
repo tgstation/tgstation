@@ -57,7 +57,7 @@
 	// No tongue, no tastin'
 	if(!tongue?.sense_of_taste || HAS_TRAIT(src, TRAIT_AGEUSIA))
 		return NONE
-	return tongue.liked_food
+	return tongue.liked_foodtypes
 
 /**
  * Gets food flags that this mob dislikes
@@ -70,7 +70,7 @@
 	// No tongue, no tastin'
 	if(!tongue?.sense_of_taste || HAS_TRAIT(src, TRAIT_AGEUSIA))
 		return NONE
-	return tongue.disliked_food
+	return tongue.disliked_foodtypes
 
 /**
  * Gets food flags that this mob hates
@@ -84,7 +84,7 @@
 	// No tongue, no tastin'
 	if(!tongue)
 		return NONE
-	return tongue.toxic_food
+	return tongue.toxic_foodtypes
 
 /**
  * Gets the food reaction a mob would normally have from the given food item,

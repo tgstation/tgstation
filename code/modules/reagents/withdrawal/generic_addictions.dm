@@ -112,9 +112,12 @@
 		affected_human.facial_hairstyle = "Beard (Full)"
 		affected_human.update_body_parts()
 	//Only like gross food
-	affected_human.dna?.species.liked_food = GROSS
-	affected_human.dna?.species.disliked_food = NONE
-	affected_human.dna?.species.toxic_food = ~GROSS
+	var/obj/item/organ/internal/tongue/tongue = affected_carbon.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		return
+	tongue.liked_foodtypes = GROSS
+	tongue.disliked_foodtypes = NONE
+	tongue.toxic_foodtypes = ~GROSS
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -145,10 +148,12 @@
 	affected_carbon.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 	if(!ishuman(affected_carbon))
 		return
-	var/mob/living/carbon/human/affected_human = affected_carbon
-	affected_human.dna?.species.liked_food = initial(affected_human.dna?.species.liked_food)
-	affected_human.dna?.species.disliked_food = initial(affected_human.dna?.species.disliked_food)
-	affected_human.dna?.species.toxic_food = initial(affected_human.dna?.species.toxic_food)
+	//restore tongue's tastes
+	var/obj/item/organ/tongue/tongue = affected_carbon.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(tongue)
+		tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
+		tongue.disliked_foodtypes = initial(tongue.disliked_foodtypes)
+		tongue.toxic_foodtypes = initial(tongue.toxic_foodtypes)
 	REMOVE_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
 	var/obj/item/organ/internal/eyes/eyes = affected_human.get_organ_by_type(/obj/item/organ/internal/eyes)
 	eyes.refresh()

@@ -541,7 +541,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "poofs"
 
 /obj/item/organ/internal/tongue/pod
-	name = "podperson tongue"
+	name = "pod tongue"
 	desc = "A plant-like organ used for speaking and eating."
 	say_mod = "whistles"
 	liked_foodtypes = VEGETABLES | FRUIT | GRAIN
