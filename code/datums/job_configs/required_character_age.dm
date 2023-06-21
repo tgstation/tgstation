@@ -1,12 +1,12 @@
 /// The required age a character must be to join a job (which is in years).
 /datum/job_config_type/required_character_age
 	name = JOB_CONFIG_REQUIRED_CHARACTER_AGE
-	datum_var_name = required_character_age
+	datum_var_name = "required_character_age"
 
 /datum/job_config_type/required_character_age/get_compile_time_value(datum/job/occupation)
 	. = ..()
 
-	if(!isnull(.))
+	if(isnum(.))
 		return .
 
 	return 0

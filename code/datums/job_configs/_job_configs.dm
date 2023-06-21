@@ -13,6 +13,14 @@
 	/// The name of the variable on the job datum that we will be accessing.
 	var/datum_var_name = "type" // use this as the default so we runtime in case something is yonked. it's also guaranteed to always exist because NAMEOF() does static analysis too.
 
+/datum/job_config_type/New()
+	. = ..()
+	if(PERFORM_ALL_TESTS(focus_only/missing_job_datum_variables))
+		var/datum/job/test_occupation = new()
+		if(!test_occupation.vars.Find(datum_var_name))
+			stack_trace("'[datum_var_name]' is not a valid variable on /datum/job!")
+		qdel(test_occupation)
+
 /// Simply gets the value of the config type for a given job. There can be overrides for special instances on subtypes.
 /datum/job_config_type/proc/get_compile_time_value(datum/job/occupation)
 	return occupation.vars[datum_var_name]
