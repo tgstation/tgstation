@@ -35,11 +35,11 @@
 	/// See [/mob/living/proc/get_taste_sensitivity].
 	var/taste_sensitivity = 15
 	/// Food this tongue likes
-	var/liked_food = NONE
+	var/liked_food = JUNKFOOD | FRIED //human tastes are default
 	/// Food this tongue dislikes
-	var/disliked_food = GROSS
+	var/disliked_food = GROSS | RAW | CLOTH | BUGS | GORE //human tastes are default
 	/// Food this tongue hates REALLY badly
-	var/toxic_food = TOXIC
+	var/toxic_food = TOXIC //human tastes are default
 	/// Whether this tongue modifies speech via signal
 	var/modifies_speech = FALSE
 
@@ -129,6 +129,8 @@
 	taste_sensitivity = 10 // combined nose + tongue, extra sensitive
 	modifies_speech = TRUE
 	languages_native = list(/datum/language/draconic)
+	liked_food = GORE | MEAT | SEAFOOD | NUTS | BUGS
+	disliked_food = GRAIN | DAIRY | CLOTH | GROSS
 
 /obj/item/organ/internal/tongue/lizard/modify_speech(datum/source, list/speech_args)
 	var/static/regex/lizard_hiss = new("s+", "g")
@@ -287,6 +289,8 @@
 	say_mod = "moans"
 	modifies_speech = TRUE
 	taste_sensitivity = 32
+	liked_food = GROSS | MEAT | RAW | GORE
+	disliked_food = NONE
 
 // List of english words that translate to zombie phrases
 GLOBAL_LIST_INIT(english_to_zombie, list())
@@ -378,6 +382,8 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	attack_verb_continuous = list("bites", "chatters", "chomps", "enamelles", "bones")
 	attack_verb_simple = list("bite", "chatter", "chomp", "enamel", "bone")
 	sense_of_taste = FALSE
+	liked_food = GROSS | MEAT | RAW | GORE | DAIRY //skeletons eat spooky shit... and dairy, of course
+	disliked_food = NONE
 	modifies_speech = TRUE
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
@@ -405,6 +411,8 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	desc = "Like animated skeletons, Plasmamen vibrate their teeth in order to produce speech."
 	icon_state = "tongueplasma"
 	modifies_speech = FALSE
+	liked_food = VEGETABLES
+	disliked_food = FRUIT | CLOTH
 
 /obj/item/organ/internal/tongue/robot
 	name = "robotic voicebox"
@@ -446,6 +454,9 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	icon_state = "electrotongue"
 	say_mod = "crackles"
 	taste_sensitivity = 10 // ethereal tongues function (very loosely) like a gas spectrometer: vaporising a small amount of the food and allowing it to pass to the nose, resulting in more sensitive taste
+	liked_food = NONE //no food is particularly liked by ethereals
+	disliked_food = GROSS
+	toxic_food = NONE //no food is particularly toxic to ethereals
 	attack_verb_continuous = list("shocks", "jolts", "zaps")
 	attack_verb_simple = list("shock", "jolt", "zap")
 
@@ -457,21 +468,31 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	name = "felinid tongue"
 	desc = "A fleshy muscle mostly used for meowing."
 	say_mod = "meows"
+	liked_food = SEAFOOD | ORANGES | BUGS | GORE
+	disliked_food = GROSS | CLOTH | RAW
 
 /obj/item/organ/internal/tongue/jelly
 	name = "jelly tongue"
 	desc = "Ah... That's not the sound I expected it to make. Sounds like a Space Autumn Bird."
 	say_mod = "chirps"
+	liked_food = MEAT | BUGS
+	disliked_food = GROSS
+	toxic_food = NONE
 
 /obj/item/organ/internal/tongue/monkey
 	name = "primitive tongue"
 	desc = "For aggressively chimpering. And consuming bananas."
 	say_mod = "chimpers"
+	liked_food = MEAT | FRUIT | BUGS
+	disliked_food = CLOTH
 
 /obj/item/organ/internal/tongue/moth
 	name = "moth tongue"
 	desc = "Moths don't have tongues. Someone get god on the phone, tell them I'm not happy."
 	say_mod = "flutters"
+	liked_food = VEGETABLES | DAIRY | CLOTH
+	disliked_food = FRUIT | GROSS | BUGS | GORE
+	toxic_food = MEAT | RAW | SEAFOOD
 
 /obj/item/organ/internal/tongue/zombie
 	name = "rotting tongue"
@@ -481,15 +502,24 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/mush
 	name = "mush-tongue-room"
 	desc = "You poof with this. Got it?"
-	say_mod = "poofs"
-
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "mycelium-angel"
+	say_mod = "poofs"
+
+/obj/item/organ/internal/tongue/pod
+	name "podperson tongue"
+	desc = "A plant-like organ used for speaking and eating."
+	say_mod = "chirps"
+	liked_food = VEGETABLES | FRUIT | GRAIN
+	disliked_food = GORE | MEAT | DAIRY | SEAFOOD | BUGS
 
 /obj/item/organ/internal/tongue/golem
 	name = "golem tongue"
-	color = COLOR_WEBSAFE_DARK_GRAY
 	desc = "This silicate plate doesn't seem particularly mobile, but golems use it to form sounds."
+	color = COLOR_WEBSAFE_DARK_GRAY
+	status = ORGAN_MINERAL
 	say_mod = "rumbles"
 	sense_of_taste = FALSE
-	status = ORGAN_MINERAL
+	liked_food = STONE
+	disliked_food = NONE //you don't care for much else besides stone
+	toxic_food = NONE //you can eat fucking uranium

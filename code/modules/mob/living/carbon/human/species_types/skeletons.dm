@@ -37,8 +37,6 @@
 	mutantheart = null
 	mutantliver = null
 	mutantlungs = null
-	disliked_food = NONE
-	liked_food = GROSS | MEAT | RAW | GORE
 	wing_types = list(/obj/item/organ/external/wings/functional/skeleton)
 	//They can technically be in an ERT
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN

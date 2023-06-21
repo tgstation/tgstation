@@ -49,12 +49,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/meat = /obj/item/food/meat/slab/human
 	///What skin the species drops when gibbed by a gibber machine.
 	var/skinned_type
-	///Bitfield for food types that the species likes, giving them a mood boost. Lizards like meat, for example.
-	var/liked_food = NONE
-	///Bitfield for food types that the species dislikes, giving them disgust. Humans hate raw food, for example.
-	var/disliked_food = GROSS
-	///Bitfield for food types that the species absolutely hates, giving them even more disgust than disliked food. Meat is "toxic" to moths, for example.
-	var/toxic_food = TOXIC
 	///flags for inventory slots the race can't equip stuff to. Golems cannot wear jumpsuits, for example.
 	var/no_equip_flags
 	///What languages this species can understand and say. Use a [language holder datum][/datum/language_holder] in this var.
@@ -78,9 +72,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
-	///Internal organs that are unique to this race, like a tail.
+	///Internal organs that are unique to this race, like a tail. list(typepath of organ 1, typepath of organ 2s)
 	var/list/mutant_organs = list()
-
 	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
 	var/list/external_organs = list()
 	///Replaces default brain with a different organ
@@ -1901,15 +1894,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Returns a list, or null if they have no diet.
  */
 /datum/species/proc/get_species_diet()
-	if(TRAIT_NOHUNGER in inherent_traits)
+	if((TRAIT_NOHUNGER in inherent_traits) || !mutanttongue)
 		return null
 
 	var/list/food_flags = FOOD_FLAGS
+	var/obj/item/organ/internal/tongue/fake_tongue = mutanttongue
 
 	return list(
-		"liked_food" = bitfield_to_list(liked_food, food_flags),
-		"disliked_food" = bitfield_to_list(disliked_food, food_flags),
-		"toxic_food" = bitfield_to_list(toxic_food, food_flags),
+		"liked_food" = bitfield_to_list(initial(fake_tongue.liked_food), food_flags),
+		"disliked_food" = bitfield_to_list(initial(fake_tongue.disliked_food), food_flags),
+		"toxic_food" = bitfield_to_list(initial(fake_tongue.toxic_food), food_flags),
 	)
 
 /**
