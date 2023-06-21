@@ -286,6 +286,18 @@
 		/obj/item/mod/module/visor/diaghud,
 	)
 
+
+/obj/item/mod/control/pre_equipped/interdyne
+	theme = /datum/mod_theme/interdyne
+	applied_cell = /obj/item/stock_parts/cell/super
+	applied_modules = list(
+		/obj/item/mod/module/storage/syndicate,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/health_analyzer,
+		/obj/item/mod/module/injector,
+		/obj/item/mod/module/surgical_processor,
+	)
+
 /obj/item/mod/control/pre_equipped/enchanted
 	theme = /datum/mod_theme/enchanted
 	applied_core = /obj/item/mod/core/infinite

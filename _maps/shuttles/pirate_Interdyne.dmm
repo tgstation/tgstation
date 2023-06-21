@@ -312,7 +312,7 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/medical,
+/obj/machinery/suit_storage_unit/interdyne,
 /obj/item/mod/module/defibrillator/combat,
 /obj/item/mod/module/tether,
 /turf/open/floor/iron/dark,
@@ -340,7 +340,7 @@
 /area/shuttle/pirate)
 "br" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
-/obj/machinery/suit_storage_unit/medical,
+/obj/machinery/suit_storage_unit/interdyne,
 /obj/item/mod/module/defibrillator/combat,
 /obj/item/mod/module/tether,
 /turf/open/floor/iron/dark,
@@ -425,7 +425,7 @@
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/medical,
+/obj/machinery/suit_storage_unit/interdyne,
 /obj/item/mod/module/defibrillator/combat,
 /obj/item/mod/module/tether,
 /turf/open/floor/iron/dark,
