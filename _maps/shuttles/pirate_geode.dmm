@@ -5,10 +5,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "geodebridge"
 	},
-/turf/open/misc/dirt{
-	planetary_atmos = 0;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/misc/dirt/jungle,
 /area/shuttle/pirate)
 "aM" = (
 /obj/machinery/power/shuttle_engine/huge{
@@ -91,7 +88,7 @@
 /area/shuttle/pirate)
 "gM" = (
 /obj/structure/barricade/wooden,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt/jungle,
 /area/shuttle/pirate)
 "hM" = (
 /obj/item/stack/sheet/bluespace_crystal,
@@ -219,9 +216,6 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/shuttle/pirate)
-"mv" = (
-/turf/open/misc/dirt,
 /area/shuttle/pirate)
 "nk" = (
 /obj/structure/table/wood,
@@ -422,10 +416,7 @@
 "xg" = (
 /obj/structure/grille,
 /obj/effect/spawner/structure/window/hollow/survival_pod,
-/turf/open/misc/dirt{
-	planetary_atmos = 0;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/misc/dirt/jungle,
 /area/shuttle/pirate)
 "xN" = (
 /obj/effect/turf_decal/lunar_sand/plating,
@@ -729,10 +720,7 @@
 /obj/structure/grille,
 /obj/effect/spawner/structure/window/hollow/survival_pod,
 /obj/structure/barricade/wooden/crude,
-/turf/open/misc/dirt{
-	planetary_atmos = 0;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/misc/dirt/jungle,
 /area/shuttle/pirate)
 "NT" = (
 /obj/structure/fluff/minepost,
@@ -1238,7 +1226,7 @@ lt
 "}
 (14,1,1) = {"
 lt
-mv
+Sy
 Nb
 fO
 pO
