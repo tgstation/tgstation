@@ -68,7 +68,7 @@
 	if(prob(0.666) && mapload)
 		new /mob/living/simple_animal/bot/mulebot/paranormal(loc)
 		return INITIALIZE_HINT_QDEL
-	wires = new /datum/wires/mulebot(src)
+	set_wires(new /datum/wires/mulebot(src))
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/cargo_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/cargo_technician]
@@ -208,7 +208,7 @@
 	if(!load || ismob(load)) //mob offsets and such are handled by the riding component / buckling
 		return
 	var/mutable_appearance/load_overlay = mutable_appearance(load.icon, load.icon_state, layer + 0.01)
-	load_overlay.pixel_y = initial(load.pixel_y) + 9
+	load_overlay.pixel_y = initial(load.pixel_y) + 11
 	. += load_overlay
 
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
@@ -462,7 +462,7 @@
 	if(cell)
 		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
 	else
-		. += text("No Cell Inserted!")
+		. += "No Cell Inserted!"
 	if(load)
 		. += "Current Load: [get_load_name()]"
 

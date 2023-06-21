@@ -67,14 +67,14 @@
 	if(istype(src, /obj/machinery/smartfridge/drying_rack))
 		return FALSE
 	if(welded_down)
-		if(!tool.tool_start_check(user, amount=1))
+		if(!tool.tool_start_check(user, amount=2))
 			return TRUE
 		user.visible_message(
 			span_notice("[user.name] starts to cut the [name] free from the floor."),
 			span_notice("You start to cut [src] free from the floor..."),
 			span_hear("You hear welding."),
 		)
-		if(!tool.use_tool(src, user, delay=100, amount=1, volume=100))
+		if(!tool.use_tool(src, user, delay=100, volume=100))
 			return FALSE
 		welded_down = FALSE
 		to_chat(user, span_notice("You cut [src] free from the floor."))
@@ -82,14 +82,14 @@
 	if(!anchored)
 		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
 		return TRUE
-	if(!tool.tool_start_check(user, amount=1))
+	if(!tool.tool_start_check(user, amount=2))
 		return TRUE
 	user.visible_message(
 		span_notice("[user.name] starts to weld the [name] to the floor."),
 		span_notice("You start to weld [src] to the floor..."),
 		span_hear("You hear welding."),
 	)
-	if(!tool.use_tool(src, user, delay=100, amount=1, volume=100))
+	if(!tool.use_tool(src, user, delay=100, volume=100))
 		balloon_alert(user, "cancelled!")
 		return FALSE
 	welded_down = TRUE
@@ -101,7 +101,7 @@
 	if(istype(src, /obj/machinery/smartfridge/drying_rack))
 		return FALSE
 	if(machine_stat & BROKEN)
-		if(!tool.tool_start_check(user, amount=0))
+		if(!tool.tool_start_check(user, amount=1))
 			return FALSE
 		user.visible_message(
 			span_notice("[user] is repairing [src]."),
@@ -500,7 +500,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	atmos_spawn_air("TEMP=1000")
+	atmos_spawn_air("[TURF_TEMPERATURE(1000)]")
 
 
 // ----------------------------

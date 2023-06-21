@@ -47,9 +47,7 @@
 "aN" = (
 /obj/machinery/vending/cigarette/beach,
 /obj/effect/turf_decal/sand,
-/obj/structure/sign/poster/contraband/have_a_puff{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/have_a_puff/directional/west,
 /turf/open/floor/iron,
 /area/ruin/powered/beach)
 "aP" = (
@@ -343,9 +341,7 @@
 /area/ruin/powered/beach)
 "kb" = (
 /obj/machinery/light/directional/north,
-/obj/structure/sign/poster/contraband/ambrosia_vulgaris{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/north,
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "kd" = (
@@ -398,10 +394,6 @@
 "lT" = (
 /obj/structure/sign/warning/gas_mask/directional/north,
 /turf/open/floor/plating,
-/area/ruin/powered/beach)
-"me" = (
-/obj/effect/overlay/palmtree_r,
-/turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "mh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -661,9 +653,7 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "xg" = (
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/west,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "xn" = (
@@ -729,9 +719,7 @@
 /area/ruin/powered/beach)
 "zK" = (
 /obj/effect/turf_decal/sand,
-/obj/structure/sign/poster/contraband/starkist{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/starkist/directional/north,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "zT" = (
@@ -809,7 +797,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "Cb" = (
-/obj/effect/overlay/coconut,
+/obj/structure/flora/coconuts,
 /obj/machinery/light/directional/north,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
@@ -924,9 +912,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "FZ" = (
-/obj/structure/sign/poster/contraband/space_up{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/space_up/directional/west,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Ga" = (
@@ -937,9 +923,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Gf" = (
-/obj/structure/sign/poster/contraband/space_cola{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/space_cola/directional/north,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "GA" = (
@@ -1154,7 +1138,7 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "Ou" = (
-/obj/effect/overlay/palmtree_l,
+/obj/structure/flora/tree/palm,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "OE" = (
@@ -1195,7 +1179,7 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "Qx" = (
-/obj/effect/overlay/coconut,
+/obj/structure/flora/coconuts,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "QF" = (
@@ -1458,9 +1442,7 @@
 /turf/open/floor/carpet/blue,
 /area/ruin/powered/beach)
 "Zq" = (
-/obj/structure/sign/poster/official/high_class_martini{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/high_class_martini/directional/west,
 /obj/effect/mob_spawn/ghost_role/human/bartender{
 	dir = 4
 	},
@@ -1966,7 +1948,7 @@ Bp
 wL
 MZ
 dj
-me
+Ou
 aE
 VI
 sl

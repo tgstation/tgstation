@@ -295,7 +295,7 @@
 	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	arm.unarmed_attack_sound = 'sound/weapons/slash.ogg'
 	arm.unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
-	RegisterSignal(arm, COMSIG_PARENT_QDELETING, PROC_REF(on_arm_destroyed))
+	RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 	LAZYADD(modified_arms, arm)
 
 /datum/status_effect/golem/diamond/on_remove()
@@ -315,7 +315,7 @@
 	arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
 	arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
 	arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
-	UnregisterSignal(arm, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(arm, COMSIG_QDELETING)
 
 /// Remove references to deleted arms
 /datum/status_effect/golem/diamond/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
@@ -365,7 +365,7 @@
 	arm.unarmed_damage_low += damage_increase
 	arm.unarmed_damage_high += damage_increase
 	arm.unarmed_stun_threshold += damage_increase // We don't want to make knockdown more likely
-	RegisterSignal(arm, COMSIG_PARENT_QDELETING, PROC_REF(on_arm_destroyed))
+	RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 	LAZYADD(modified_arms, arm)
 
 /datum/status_effect/golem/titanium/on_remove()
@@ -384,7 +384,7 @@
 	arm.unarmed_damage_low -= damage_increase
 	arm.unarmed_damage_high -= damage_increase
 	arm.unarmed_stun_threshold -= damage_increase
-	UnregisterSignal(arm, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(arm, COMSIG_QDELETING)
 
 /// Remove references to deleted arms
 /datum/status_effect/golem/titanium/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)

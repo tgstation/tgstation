@@ -3,9 +3,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -367,9 +365,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "kO" = (
-/obj/structure/sign/poster/official/love_ian{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/love_ian/directional/south,
 /obj/effect/turf_decal/siding,
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
@@ -400,9 +396,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "lx" = (
-/obj/structure/sign/poster/official/help_others{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/help_others/directional/north,
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -634,9 +628,7 @@
 /obj/effect/turf_decal/siding{
 	dir = 9
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "rH" = (
@@ -669,9 +661,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -693,9 +683,7 @@
 /obj/effect/turf_decal/siding{
 	dir = 10
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "vv" = (
@@ -1119,9 +1107,7 @@
 "KN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/chem_dispenser/drinks/fullupgrade,
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/north,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)

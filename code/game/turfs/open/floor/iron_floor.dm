@@ -437,10 +437,7 @@
 
 /turf/open/floor/iron/kitchen_coldroom
 	name = "cold room floor"
-
-/turf/open/floor/iron/kitchen_coldroom/Initialize(mapload)
 	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
-	return ..()
 
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor
 	icon_state = "freezerfloor"

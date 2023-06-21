@@ -91,7 +91,7 @@
 	VAR_PRIVATE/should_update_icon = FALSE
 
 /obj/item/radio/Initialize(mapload)
-	wires = new /datum/wires/radio(src)
+	set_wires(new /datum/wires/radio(src))
 	secure_radio_connections = list()
 	. = ..()
 
@@ -159,7 +159,7 @@
 	for(var/channel_name in channels)
 		add_radio(src, GLOB.radiochannels[channel_name])
 
-	add_radio(src, FREQ_COMMON)
+	add_radio(src, frequency)
 
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)

@@ -62,6 +62,7 @@
 	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, PROC_REF(on_storage_dump))
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(trash_carbon),
+		COMSIG_TURF_RECEIVE_SWEEPED_ITEMS = PROC_REF(ready_for_trash),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
@@ -115,7 +116,7 @@
 			to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
 			return
 		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
-			if(!I.tool_start_check(user, amount=0))
+			if(!I.tool_start_check(user, amount=1))
 				return
 
 			to_chat(user, span_notice("You start slicing the floorweld off \the [src]..."))
@@ -559,7 +560,21 @@
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
 		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
-	log_combat(src, target, "shoved", "into [src] (disposal bin)")
+	log_combat(shover, target, "shoved", "into [src] (disposal bin)")
 	return COMSIG_CARBON_SHOVE_HANDLED
+
+///Called when a push broom is trying to sweep items onto the turf this object is standing on. Garbage will be moved inside.
+/obj/machinery/disposal/proc/ready_for_trash(datum/source, obj/item/pushbroom/broom, mob/user, list/items_to_sweep)
+	SIGNAL_HANDLER
+	if(!items_to_sweep)
+		return
+	for (var/obj/item/garbage in items_to_sweep)
+		garbage.forceMove(src)
+
+	items_to_sweep.Cut()
+
+	update_appearance()
+	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
+	playsound(broom.loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
 #undef SEND_PRESSURE

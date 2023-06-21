@@ -51,11 +51,6 @@
 	light_color = LIGHT_COLOR_DARK_BLUE
 	var/light_mask = "elev-light-mask"
 
-	/// The soundloop of elevator music
-	var/datum/looping_sound/elevator_music/elevator_music
-	/// Will the elevator music play?
-	var/elevator_music_toggle = TRUE
-
 /obj/machinery/elevator_control_panel/Initialize(mapload)
 	. = ..()
 
@@ -69,21 +64,13 @@
 	// this is just here for redundancy's sake.
 	. = INITIALIZE_HINT_LATELOAD
 
-	if(elevator_music_toggle)
-		elevator_music = new(src, start_immediately = TRUE)
-
 	maploaded = mapload
 	// Maploaded panels link in LateInitialize...
 	if(mapload)
 		return
 
 	// And non-mapload panels link in Initialize
-	var/datum/lift_master/lift = get_associated_lift()
-	if(!lift)
-		return
-
-	lift_weakref = WEAKREF(lift)
-	populate_destinations_list(lift)
+	link_with_lift(log_error = FALSE)
 
 /obj/machinery/elevator_control_panel/LateInitialize()
 	. = ..()
@@ -93,13 +80,21 @@
 
 	// This is exclusively for linking in mapload, just to ensure all elevator parts are created,
 	// and also so we can throw mapping errors to let people know if they messed up setup.
+	link_with_lift(log_error = TRUE)
+
+/// Link with associated lift objects, only log failure to find a lift in LateInit because those are mapped in
+/obj/machinery/elevator_control_panel/proc/link_with_lift(log_error = FALSE)
 	var/datum/lift_master/lift = get_associated_lift()
 	if(!lift)
-		log_mapping("Elevator control panel at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
+		if (log_error)
+			log_mapping("Elevator control panel at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
 		return
 
 	lift_weakref = WEAKREF(lift)
 	populate_destinations_list(lift)
+	if ((linked_elevator_id in GLOB.elevator_music))
+		var/obj/effect/abstract/elevator_music_zone/music = GLOB.elevator_music[linked_elevator_id]
+		music.link_to_panel(src)
 
 /obj/machinery/elevator_control_panel/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -127,14 +122,6 @@
 
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(user, "safeties overridden")
-
-/obj/machinery/elevator_control_panel/power_change()
-	if(machine_stat & (BROKEN|NOPOWER|EMPED))
-		elevator_music.stop()
-	else
-		elevator_music.start()
-	return ..()
-
 
 /obj/machinery/elevator_control_panel/multitool_act(mob/living/user)
 	var/datum/lift_master/lift = lift_weakref?.resolve()

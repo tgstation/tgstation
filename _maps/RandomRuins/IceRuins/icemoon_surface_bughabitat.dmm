@@ -29,7 +29,7 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "cK" = (
-/mob/living/simple_animal/hostile/ant{
+/mob/living/basic/ant{
 	environment_smash = 0
 	},
 /turf/open/floor/grass,

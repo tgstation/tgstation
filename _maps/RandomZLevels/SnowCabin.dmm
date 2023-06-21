@@ -665,9 +665,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ct" = (
-/obj/structure/sign/poster/official/soft_cap_pop_art{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/soft_cap_pop_art/directional/north,
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -1144,7 +1142,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ei" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/glass,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1211,7 +1209,7 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin)
 "et" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
@@ -1764,12 +1762,12 @@
 /area/awaymission/cabin/caves/mountain)
 "fZ" = (
 /obj/structure/weightmachine,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/awaymission/cabin/caves/mountain)
 "gb" = (
 /obj/structure/weightmachine/weightlifter,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/engine,
 /area/awaymission/cabin/caves/mountain)
@@ -1794,14 +1792,12 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/awaymission/cabin/caves/mountain)
 "gp" = (
-/obj/structure/sign/poster/contraband/pwr_game{
-	pixel_x = 32
-	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/poster/contraband/pwr_game/directional/east,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/awaymission/cabin/caves/mountain)
 "gr" = (
@@ -1811,12 +1807,12 @@
 	},
 /area/awaymission/cabin/caves/mountain)
 "gs" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/awaymission/cabin/caves/mountain)
 "gt" = (
 /obj/structure/punching_bag,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/awaymission/cabin/caves/mountain)
 "gu" = (
@@ -1999,9 +1995,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hh" = (
-/obj/structure/sign/poster/official/fruit_bowl{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/fruit_bowl/directional/north,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hi" = (
@@ -2010,20 +2004,16 @@
 /area/awaymission/cabin)
 "hj" = (
 /obj/machinery/light/directional/west,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hk" = (
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/east,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hl" = (
-/obj/structure/sign/poster/official/here_for_your_safety{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/here_for_your_safety/directional/north,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "hm" = (
@@ -2034,9 +2024,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hn" = (
-/obj/structure/sign/poster/official/high_class_martini{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/high_class_martini/directional/north,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ho" = (
@@ -2053,17 +2041,15 @@
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "hr" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/generic,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "hs" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/contraband/missing_gloves{
-	pixel_x = 32
-	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/missing_gloves/directional/east,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
@@ -2171,9 +2157,7 @@
 /area/awaymission/cabin)
 "hI" = (
 /obj/effect/landmark/awaystart,
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/south,
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
@@ -2280,11 +2264,11 @@
 	anchored = 1;
 	name = "vault door"
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red/snow_cabin,
 /area/awaymission/cabin/caves/sovietcave)
 "im" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
@@ -2299,7 +2283,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ip" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/hatch,
 /obj/structure/barricade/wooden,
 /turf/open/floor/mineral/plastitanium/red{
@@ -2307,7 +2291,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "iq" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /mob/living/simple_animal/hostile/hivebot/range{
 	desc = "Looks like he's been left behind.";
 	faction = list("russian");
@@ -2319,7 +2303,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "ir" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/sandbags,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
@@ -2725,7 +2709,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jK" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/mine/stun,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
@@ -2741,7 +2725,7 @@
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "jN" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
@@ -2919,27 +2903,27 @@
 /area/awaymission/cabin)
 "kF" = (
 /obj/structure/barricade/sandbags,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "kG" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "kH" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "kI" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/assembly/infra,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
@@ -2947,13 +2931,13 @@
 /area/awaymission/cabin/caves/sovietcave)
 "kJ" = (
 /obj/effect/decal/hammerandsickle,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "kK" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/glass/bottle/vodka,
 /turf/open/floor/mineral/plastitanium/red{
@@ -2961,7 +2945,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "kL" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/head/helmet/rus_ushanka,
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/east,
@@ -2970,7 +2954,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "kM" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/mineral/sandbags{
 	pixel_x = -2;
@@ -3041,7 +3025,7 @@
 /area/awaymission/cabin/caves/mountain)
 "lb" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
@@ -3053,9 +3037,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "lz" = (
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/south,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "lC" = (
@@ -3076,7 +3058,7 @@
 /turf/closed/wall/ice,
 /area/awaymission/cabin/caves)
 "lS" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
@@ -3190,7 +3172,7 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "my" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/gun/ballistic/automatic/surplus{
 	desc = "Uses 10mm ammo and its bulky frame prevents one-hand firing. It has the word CHEKOV engraved on the stock.";
 	name = "chekov's rifle"
@@ -3234,7 +3216,7 @@
 /turf/open/floor/iron/dark/snowdin,
 /area/awaymission/cabin/caves)
 "mI" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
@@ -3252,21 +3234,21 @@
 /area/awaymission/cabin/caves/sovietcave)
 "mM" = (
 /obj/machinery/door/airlock/hatch,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "mN" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "mO" = (
 /obj/machinery/light/directional/north,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
@@ -3276,7 +3258,7 @@
 /area/awaymission/cabin/caves)
 "mR" = (
 /obj/effect/decal/cleanable/vomit/old,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
@@ -3287,7 +3269,7 @@
 	name = "Soviet Door"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
@@ -3360,7 +3342,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "nq" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/mine/sound/bwoink,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
@@ -3370,13 +3352,13 @@
 /obj/effect/mine/sound/bwoink{
 	name = "explosive mine"
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "ns" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2{
 	desc = "No, the spider web doesn't have any secrets. For fucksake."
 	},
@@ -3385,7 +3367,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "nt" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/ladder/unbreakable/rune{
 	color = "#ff0000";
 	desc = "ONE HUNDRED AND TEN PERCENT REAL.";
@@ -3422,7 +3404,7 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "nL" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/grunge,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
@@ -3469,7 +3451,7 @@
 /area/awaymission/cabin)
 "nV" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance"
 	},
@@ -4000,9 +3982,7 @@
 	},
 /area/awaymission/cabin/caves)
 "AC" = (
-/obj/structure/sign/poster/official/no_erp{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/no_erp/directional/south,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
@@ -4079,9 +4059,7 @@
 	},
 /area/awaymission/cabin/caves)
 "Fq" = (
-/obj/structure/sign/poster/official/space_cops{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/space_cops/directional/north,
 /obj/effect/light_emitter{
 	name = "outdoor light";
 	set_cap = 3;
@@ -4447,7 +4425,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "Rp" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red/snow_cabin,
 /area/awaymission/cabin/caves/sovietcave)
 "Rs" = (
@@ -4522,9 +4500,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "RY" = (
-/obj/structure/sign/poster/official/do_not_question{
-	pixel_x = 32
-	},
+/obj/structure/sign/poster/official/do_not_question/directional/east,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)

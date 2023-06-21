@@ -33,8 +33,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///The alpha used by the hair. 255 is completely solid, 0 is invisible.
 	var/hair_alpha = 255
 
-	///Examine text when the person has cellular damage.
-	var/cellular_damage_desc = DEFAULT_CLONE_EXAMINE_TEXT
 	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
 	var/examine_limb_id
 	///Never, Optional, or Forced digi legs?
@@ -71,8 +69,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	  * Layer hiding is handled by [/datum/species/proc/handle_mutant_bodyparts] below.
 	  */
 	var/list/mutant_bodyparts = list()
-	///Internal organs that are unique to this race, like a tail.
-	var/list/mutant_organs = list()
 	///The bodyparts this species uses. assoc of bodypart string - bodypart type. Make sure all the fucking entries are in or I'll skin you alive.
 	var/list/bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left,
@@ -82,18 +78,37 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
+	///Internal organs that are unique to this race, like a tail.
+	var/list/mutant_organs = list()
 
 	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
 	var/list/external_organs = list()
+	///Replaces default brain with a different organ
+	var/obj/item/organ/internal/brain/mutantbrain = /obj/item/organ/internal/brain
+	///Replaces default heart with a different organ
+	var/obj/item/organ/internal/heart/mutantheart = /obj/item/organ/internal/heart
+	///Replaces default lungs with a different organ
+	var/obj/item/organ/internal/lungs/mutantlungs = /obj/item/organ/internal/lungs
+	///Replaces default eyes with a different organ
+	var/obj/item/organ/internal/eyes/mutanteyes = /obj/item/organ/internal/eyes
+	///Replaces default ears with a different organ
+	var/obj/item/organ/internal/ears/mutantears = /obj/item/organ/internal/ears
+	///Replaces default tongue with a different organ
+	var/obj/item/organ/internal/tongue/mutanttongue = /obj/item/organ/internal/tongue
+	///Replaces default liver with a different organ
+	var/obj/item/organ/internal/liver/mutantliver = /obj/item/organ/internal/liver
+	///Replaces default stomach with a different organ
+	var/obj/item/organ/internal/stomach/mutantstomach = /obj/item/organ/internal/stomach
+	///Replaces default appendix with a different organ.
+	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
 
 	///Multiplier for the race's speed. Positive numbers make it move slower, negative numbers make it move faster.
 	var/speedmod = 0
-	///Percentage modifier for overall defense of the race, or less defense, if it's negative.
-	var/armor = 0
-	///multiplier for brute damage
-	var/brutemod = 1
-	///multiplier for burn damage
-	var/burnmod = 1
+	/**
+	 * Percentage modifier for overall defense of the race, or less defense, if it's negative
+	 * THIS MODIFIES ALL DAMAGE TYPES.
+	 **/
+	var/damage_modifier = 0
 	///multiplier for damage from cold temperature
 	var/coldmod = 1
 	///multiplier for damage from hot temperature
@@ -143,35 +158,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/inherent_factions
 
 	///What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]
-	var/breathid = "o2"
+	var/breathid = GAS_O2
 
 	///What anim to use for dusting
 	var/dust_anim = "dust-h"
 	///What anim to use for gibbing
 	var/gib_anim = "gibbed-h"
-
-	// Prefer anything other than setting these to null, such as TRAITS
-	// why?
-	// because traits also disable the downsides of not having an organ, removing organs but not having the trait or logic will make your species die
-
-	///Replaces default brain with a different organ
-	var/obj/item/organ/internal/brain/mutantbrain = /obj/item/organ/internal/brain
-	///Replaces default heart with a different organ
-	var/obj/item/organ/internal/heart/mutantheart = /obj/item/organ/internal/heart
-	///Replaces default lungs with a different organ
-	var/obj/item/organ/internal/lungs/mutantlungs = /obj/item/organ/internal/lungs
-	///Replaces default eyes with a different organ
-	var/obj/item/organ/internal/eyes/mutanteyes = /obj/item/organ/internal/eyes
-	///Replaces default ears with a different organ
-	var/obj/item/organ/internal/ears/mutantears = /obj/item/organ/internal/ears
-	///Replaces default tongue with a different organ
-	var/obj/item/organ/internal/tongue/mutanttongue = /obj/item/organ/internal/tongue
-	///Replaces default liver with a different organ
-	var/obj/item/organ/internal/liver/mutantliver = /obj/item/organ/internal/liver
-	///Replaces default stomach with a different organ
-	var/obj/item/organ/internal/stomach/mutantstomach = /obj/item/organ/internal/stomach
-	///Replaces default appendix with a different organ.
-	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
 
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
@@ -421,6 +413,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/species_organs = mutant_organs + external_organs
 	for(var/organ_path in species_organs)
 		var/obj/item/organ/current_organ = organ_holder.get_organ_by_type(organ_path)
+		if(ispath(organ_path, /obj/item/organ/external) && !should_external_organ_apply_to(organ_path, organ_holder))
+			if(!isnull(current_organ) && replace_current)
+				// if we have an organ here and we're replacing organs, remove it
+				current_organ.Remove(organ_holder)
+				QDEL_NULL(current_organ)
+			continue
+
 		if(!current_organ || replace_current)
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
 			// If there's an existing mutant organ, we're technically replacing it.
@@ -452,7 +451,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * old_species - The species that the carbon used to be before becoming this race, used for regenerating organs.
  * * pref_load - Preferences to be loaded from character setup, loads in preferred mutant things like bodyparts, digilegs, skin color, etc.
  */
-/datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+/datum/species/proc/on_species_gain(mob/living/carbon/human/C, datum/species/old_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
 	// Drop the items the new species can't wear
 	if((AGENDER in species_traits))
@@ -466,19 +465,27 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	C.mob_biotypes = inherent_biotypes
 	C.mob_respiration_type = inherent_respiration_type
 
-	if (old_species.type != type)
+	if(old_species.type != type)
 		replace_body(C, src)
 
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
 
 	INVOKE_ASYNC(src, PROC_REF(worn_items_fit_body_check), C, TRUE)
 
+	//Assigns exotic blood type if the species has one
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
+	//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
+	//(why the fuck is blood type not tied to a fucking DNA block?)
+	else if(old_species.exotic_bloodtype && !exotic_bloodtype)
+		C.dna.blood_type = random_blood_type()
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/human = C
 		for(var/obj/item/organ/external/organ_path as anything in external_organs)
+			if(!should_external_organ_apply_to(organ_path, human))
+				continue
+
 			//Load a persons preferences from DNA
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(human, special=TRUE, drop_if_replaced=FALSE)
@@ -1279,7 +1286,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/spec_attacked_by(obj/item/weapon, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/human)
 	// Allows you to put in item-specific reactions based on species
 	if(user != human)
-		if(human.check_shields(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration))
+		if(human.check_shields(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration, weapon.damtype))
 			return FALSE
 	if(human.check_block())
 		human.visible_message(span_warning("[human] blocks [weapon]!"), \
@@ -1381,7 +1388,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
 	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
-	var/hit_percent = (100-(blocked+armor))/100
+	var/hit_percent = (100-(damage_modifier+blocked))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!damage || (!forced && hit_percent <= 0))
 		return 0
@@ -1400,7 +1407,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	switch(damagetype)
 		if(BRUTE)
 			H.damageoverlaytemp = 20
-			var/damage_amount = forced ? damage : damage * hit_percent * brutemod * H.physiology.brute_mod
+			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.brute_mod
 			if(BP)
 				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction, damage_source = attacking_item))
 					H.update_damage_overlays()
@@ -1408,7 +1415,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				H.adjustBruteLoss(damage_amount)
 		if(BURN)
 			H.damageoverlaytemp = 20
-			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
+			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.burn_mod
 			if(BP)
 				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction, damage_source = attacking_item))
 					H.update_damage_overlays()
@@ -1936,6 +1943,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	species_perks += create_pref_temperature_perks()
 	species_perks += create_pref_traits_perks()
 	species_perks += create_pref_biotypes_perks()
+	species_perks += create_pref_organs_perks()
 	species_perks += create_pref_language_perk()
 
 	// Some overrides may return `null`, prevent those from jamming up the list.
@@ -1976,10 +1984,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Returns a list containing perks, or an empty list.
  */
 /datum/species/proc/create_pref_damage_perks()
+	// We use the chest to figure out brute and burn mod perks
+	var/obj/item/bodypart/chest/fake_chest = bodypart_overrides[BODY_ZONE_CHEST]
+
 	var/list/to_add = list()
 
 	// Brute related
-	if(brutemod > 1)
+	if(initial(fake_chest.brute_modifier) > 1)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "band-aid",
@@ -1987,29 +1998,29 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_DESC = "[plural_form] are weak to brute damage.",
 		))
 
-	if(brutemod < 1)
+	if(initial(fake_chest.brute_modifier) < 1)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "shield-alt",
 			SPECIES_PERK_NAME = "Brutal Resilience",
-			SPECIES_PERK_DESC = "[plural_form] are resilient to bruising and brute damage.",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to brute damage.",
 		))
 
 	// Burn related
-	if(burnmod > 1)
+	if(initial(fake_chest.burn_modifier) > 1)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "burn",
-			SPECIES_PERK_NAME = "Fire Weakness",
-			SPECIES_PERK_DESC = "[plural_form] are weak to fire and burn damage.",
+			SPECIES_PERK_NAME = "Burn Weakness",
+			SPECIES_PERK_DESC = "[plural_form] are weak to burn damage.",
 		))
 
-	if(burnmod < 1)
+	if(initial(fake_chest.burn_modifier) < 1)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "shield-alt",
-			SPECIES_PERK_NAME = "Fire Resilience",
-			SPECIES_PERK_DESC = "[plural_form] are resilient to flames, and burn damage.",
+			SPECIES_PERK_NAME = "Burn Resilience",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to burn damage.",
 		))
 
 	// Shock damage
@@ -2154,6 +2165,22 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				causing toxins will instead cause healing. Be careful around purging chemicals!",
 		))
 
+	if (TRAIT_GENELESS in inherent_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "dna",
+			SPECIES_PERK_NAME = "No Genes",
+			SPECIES_PERK_DESC = "[plural_form] have no genes, making genetic scrambling a useless weapon, but also locking them out from getting genetic powers.",
+		))
+
+	if (TRAIT_NOBREATH in inherent_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "No Respiration",
+			SPECIES_PERK_DESC = "[plural_form] have no need to breathe!",
+		))
+
 	return to_add
 
 /**
@@ -2171,6 +2198,77 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_NAME = "Undead",
 			SPECIES_PERK_DESC = "[plural_form] are of the undead! The undead do not have the need to eat or breathe, and \
 				most viruses will not be able to infect a walking corpse. Their worries mostly stop at remaining in one piece, really.",
+		))
+
+	return to_add
+
+/**
+ * Adds any perks relating to inherent differences to this species' organs.
+ * This proc is only suitable for generic differences, like alcohol tolerance, or heat threshold for breathing.
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_organs_perks()
+	RETURN_TYPE(/list)
+
+	var/list/to_add = list()
+
+	to_add += create_pref_liver_perks()
+	to_add += create_pref_lung_perks()
+
+	return to_add
+
+/datum/species/proc/create_pref_liver_perks()
+	RETURN_TYPE(/list)
+
+	var/list/to_add = list()
+
+	var/alcohol_tolerance = initial(mutantliver.alcohol_tolerance)
+	var/obj/item/organ/internal/liver/base_liver = /obj/item/organ/internal/liver
+	var/tolerance_difference = alcohol_tolerance - initial(base_liver.alcohol_tolerance)
+
+	if (tolerance_difference != 0)
+		var/difference_positive = (tolerance_difference > 0)
+		var/more_or_less = (difference_positive) ? "more" : "less"
+		var/perk_type = (difference_positive) ? SPECIES_NEGATIVE_PERK : SPECIES_POSITIVE_PERK
+		var/perk_name = "Alcohol " + ((difference_positive) ? "Weakness" : "Tolerance")
+		var/percent_difference = (alcohol_tolerance / initial(base_liver.alcohol_tolerance)) * 100
+
+		to_add += list(list(
+			SPECIES_PERK_TYPE = perk_type,
+			SPECIES_PERK_ICON = "wine-glass",
+			SPECIES_PERK_NAME = perk_name,
+			SPECIES_PERK_DESC = "[name] livers are [more_or_less] susceptable to alcohol than human livers, by about [percent_difference]%."
+		))
+
+	var/tox_shrugging = initial(mutantliver.toxTolerance)
+	var/shrugging_difference = tox_shrugging - initial(base_liver.toxTolerance)
+	if (shrugging_difference != 0)
+		var/difference_positive = (shrugging_difference > 0)
+		var/more_or_less = (difference_positive) ? "more" : "less"
+		var/perk_type = (difference_positive) ? SPECIES_POSITIVE_PERK : SPECIES_NEGATIVE_PERK
+		var/perk_name = ("Toxin " + ((difference_positive) ? "Resistant" : "Vulnerable")) + " Liver"
+
+		to_add += list(list(
+			SPECIES_PERK_TYPE = perk_type,
+			SPECIES_PERK_ICON = "biohazard",
+			SPECIES_PERK_NAME = perk_name,
+			SPECIES_PERK_DESC = "[name] livers are capable of rapidly shrugging off [tox_shrugging]u of toxins, which is [more_or_less] than humans."
+		))
+
+	return to_add
+
+/datum/species/proc/create_pref_lung_perks()
+	RETURN_TYPE(/list)
+
+	var/list/to_add = list()
+
+	if (breathid != GAS_O2)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "[capitalize(breathid)] Breathing",
+			SPECIES_PERK_DESC = "[plural_form] must breathe [breathid] to survive. You receive a tank when you arrive.",
 		))
 
 	return to_add
@@ -2213,15 +2311,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	new_species ||= target.dna.species //If no new species is provided, assume its src.
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
+	var/list/final_bodypart_overrides = new_species.bodypart_overrides.Copy()
 	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features["legs"] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
-		new_species.bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
-		new_species.bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
+		final_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
+		final_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
 
 	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
 			continue
 
-		var/path = new_species.bodypart_overrides?[old_part.body_zone]
+		var/path = final_bodypart_overrides?[old_part.body_zone]
 		var/obj/item/bodypart/new_part
 		if(path)
 			new_part = new path()

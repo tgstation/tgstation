@@ -16,7 +16,6 @@
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
 	inherent_factions = list(FACTION_PLANTS, FACTION_VINES)
 
-	burnmod = 1.25
 	heatmod = 1.5
 	payday_modifier = 0.75
 	meat = /obj/item/food/meat/slab/human/mutant/plant
@@ -76,6 +75,34 @@
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return TRUE
 	return ..()
+
+/datum/species/pod/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+		SPECIES_PERK_ICON = "lightbulb",
+		SPECIES_PERK_NAME = "Photosynthetic",
+		SPECIES_PERK_DESC = "As long as you are concious, and within a well-lit area, you will slowly heal brute, burn, toxin and oxygen damage and gain nutrition - and never get fat! \
+		However, if you are LOW on nutrition, you will progressively take brute damage until you die or enter the light once more."
+	))
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = "biohazard",
+		SPECIES_PERK_NAME = "Weedkiller Susceptability",
+		SPECIES_PERK_DESC = "Being a floral life form, you are susceptable to anti-florals and will take extra toxin damage from it!"
+	))
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = "briefcase-medical",
+		SPECIES_PERK_NAME = "Semi-Complex Biology",
+		SPECIES_PERK_DESC = "Your biology is extremely complex, making ordinary health scanners unable to scan you. Make sure the doctor treating you either has a \
+		plant analyzer or a advanced health scanner!"
+	))
+
+	return to_add
 
 /datum/species/pod/randomize_features(mob/living/carbon/human_mob)
 	randomize_external_organs(human_mob)

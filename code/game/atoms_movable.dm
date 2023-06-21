@@ -209,7 +209,7 @@
 	if(spatial_grid_key)
 		SSspatial_grid.force_remove_from_grid(src)
 
-	LAZYCLEARLIST(client_mobs_in_contents)
+	LAZYNULL(client_mobs_in_contents)
 
 	. = ..()
 
@@ -221,7 +221,7 @@
 	//This absolutely must be after moveToNullspace()
 	//We rely on Entered and Exited to manage this list, and the copy of this list that is on any /atom/movable "Containers"
 	//If we clear this before the nullspace move, a ref to this object will be hung in any of its movable containers
-	LAZYCLEARLIST(important_recursive_contents)
+	LAZYNULL(important_recursive_contents)
 
 
 	vis_locs = null //clears this atom out of all viscontents
@@ -758,7 +758,6 @@
 				if(target_turf != current_turf || (moving_diagonally != SECOND_DIAG_STEP && ISDIAGONALDIR(pull_dir)) || get_dist(src, pulling) > 1)
 					pulling.move_from_pull(src, target_turf, glide_size)
 			check_pulling()
-
 
 	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
 	//This means that if you don't override it late like this, it will just be set back by the movement update that's called when you move turfs.

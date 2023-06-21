@@ -10,6 +10,9 @@
 	/// Icon to use as a 32x32 preview in crafting menus and such
 	var/icon_preview
 	var/icon_state_preview
+	/// The vertical pixel offset applied when the object is anchored on a tile with table
+	/// Ignored when set to 0 - to avoid shifting directional wall-mounted objects above tables
+	var/anchored_tabletop_offset = 0
 
 	var/damtype = BRUTE
 	var/force = 0
@@ -61,6 +64,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/Initialize(mapload)
 	. = ..()
+
+	check_on_table()
 
 	if (id_tag)
 		GLOB.objects_by_id_tag[id_tag] = src
@@ -181,7 +186,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	SIGNAL_HANDLER
 	if(!machine)
 		return
-	UnregisterSignal(machine, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(machine, COMSIG_QDELETING)
 	machine.on_unset_machine(src)
 	machine = null
 
@@ -193,7 +198,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(machine)
 		unset_machine()
 	machine = O
-	RegisterSignal(O, COMSIG_PARENT_QDELETING, PROC_REF(unset_machine))
+	RegisterSignal(O, COMSIG_QDELETING, PROC_REF(unset_machine))
 	if(istype(O))
 		O.obj_flags |= IN_USE
 
@@ -328,8 +333,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return TRUE
 	return ..()
 
-/obj/proc/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
-	return
+/obj/proc/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
+	return SEND_SIGNAL(src, COMSIG_PLUNGER_ACT, attacking_plunger, user, reinforced)
 
 // Should move all contained objects to it's location.
 /obj/proc/dump_contents()
@@ -351,7 +356,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		var/datum/reagent/R = reagent
 		. |= R.expose_obj(src, reagents[R])
 
-///attempt to freeze this obj if possible. returns TRUE if it succeeded, FALSE otherwise.
+/// Attempt to freeze this obj if possible. returns TRUE if it succeeded, FALSE otherwise.
 /obj/proc/freeze()
 	if(HAS_TRAIT(src, TRAIT_FROZEN))
 		return FALSE
@@ -361,6 +366,55 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	AddElement(/datum/element/frozen)
 	return TRUE
 
-///unfreezes this obj if its frozen
+/// Unfreezes this obj if its frozen
 /obj/proc/unfreeze()
 	SEND_SIGNAL(src, COMSIG_OBJ_UNFREEZE)
+
+/// If we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
+/obj/proc/can_be_unfasten_wrench(mob/user, silent)
+	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
+		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
+		return FAILED_UNFASTEN
+	return SUCCESSFUL_UNFASTEN
+
+/// Try to unwrench an object in a WONDERFUL DYNAMIC WAY
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/wrench, time = 20)
+	if((flags_1 & NODECONSTRUCT_1) || wrench.tool_behaviour != TOOL_WRENCH)
+		return CANT_UNFASTEN
+
+	var/turf/ground = get_turf(src)
+	if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+		to_chat(user, span_notice("You fail to secure [src]."))
+		return CANT_UNFASTEN
+	var/can_be_unfasten = can_be_unfasten_wrench(user)
+	if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
+		return can_be_unfasten
+	if(time)
+		to_chat(user, span_notice("You begin [anchored ? "un" : ""]securing [src]..."))
+	wrench.play_tool_sound(src, 50)
+	var/prev_anchored = anchored
+	//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
+	if(!wrench.use_tool(src, user, time, extra_checks = CALLBACK(src, PROC_REF(unfasten_wrench_check), prev_anchored, user)))
+		return FAILED_UNFASTEN
+	if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+		to_chat(user, span_notice("You fail to secure [src]."))
+		return CANT_UNFASTEN
+	to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
+	set_anchored(!anchored)
+	check_on_table()
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
+	return SUCCESSFUL_UNFASTEN
+
+/// For the do_after, this checks if unfastening conditions are still valid
+/obj/proc/unfasten_wrench_check(prev_anchored, mob/user)
+	if(anchored != prev_anchored)
+		return FALSE
+	if(can_be_unfasten_wrench(user, TRUE) != SUCCESSFUL_UNFASTEN) //if we aren't explicitly successful, cancel the fuck out
+		return FALSE
+	return TRUE
+
+/// Adjusts the vertical pixel offset when the object is anchored on a tile with table
+/obj/proc/check_on_table()
+	if(anchored_tabletop_offset != 0 && !istype(src, /obj/structure/table) && locate(/obj/structure/table) in loc)
+		pixel_y = anchored ? anchored_tabletop_offset : initial(pixel_y)

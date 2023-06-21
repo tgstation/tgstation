@@ -11,7 +11,7 @@
 
 	//the if "armor" check is because this is used for everything on /living, including humans
 	if(armour_penetration)
-		our_armor = max(0, our_armor - armour_penetration)
+		our_armor = armour_penetration == 100 ? 0 : 100 * max(our_armor - armour_penetration, 0) / (100 - armour_penetration)
 		if(penetrated_text)
 			to_chat(src, span_userdanger("[penetrated_text]"))
 		else

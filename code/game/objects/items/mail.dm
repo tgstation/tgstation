@@ -107,25 +107,48 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
 			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = destination_tag.currTag
-			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
+			playsound(loc, 'sound/machines/twobeep_high.ogg', vol = 100, vary = TRUE)
+
+/obj/item/mail/multitool_act(mob/living/user, obj/item/tool)
+	if(user.get_inactive_held_item() == src)
+		balloon_alert(user, "nothing to disable!")
+		return TRUE
+	balloon_alert(user, "hold it!")
+	return FALSE
+
 
 /obj/item/mail/attack_self(mob/user)
+	if(!unwrap(user))
+		return FALSE
+	return after_unwrap(user)
+
+/// proc for unwrapping a mail. Goes just for an unwrapping procces, returns FALSE if it fails.
+/obj/item/mail/proc/unwrap(mob/user)
 	if(recipient_ref)
 		var/datum/mind/recipient = recipient_ref.resolve()
 		// If the recipient's mind has gone, then anyone can open their mail
 		// whether a mind can actually be qdel'd is an exercise for the reader
 		if(recipient && recipient != user?.mind)
 			to_chat(user, span_notice("You can't open somebody else's mail! That's <em>illegal</em>!"))
-			return
+			return FALSE
 
-	to_chat(user, span_notice("You start to unwrap the package..."))
+	balloon_alert(user, "unwrapping...")
 	if(!do_after(user, 1.5 SECONDS, target = user))
-		return
-	user.temporarilyRemoveItemFromInventory(src, TRUE)
-	if(contents.len)
-		user.put_in_hands(contents[1])
-	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+		return FALSE
+	return TRUE
+
+// proc that goes after unwrapping a mail.
+/obj/item/mail/proc/after_unwrap(mob/user)
+	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
+	for(var/obj/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
+		if(isitem(stuff))
+			user.put_in_hands(stuff)
+		else
+			stuff.forceMove(drop_location())
+	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
 	qdel(src)
+	return TRUE
+
 
 /obj/item/mail/examine_more(mob/user)
 	. = ..()
@@ -185,7 +208,12 @@
 
 	if(prob(25))
 		special_name = TRUE
-		junk = pick(list(/obj/item/paper/pamphlet/gateway, /obj/item/paper/pamphlet/violent_video_games, /obj/item/paper/fluff/junkmail_redpill, /obj/effect/decal/cleanable/ash))
+		junk = pick(list(
+			/obj/item/paper/pamphlet/gateway,
+			/obj/item/paper/pamphlet/violent_video_games,
+			/obj/item/paper/fluff/junkmail_redpill,
+			/obj/effect/decal/cleanable/ash,
+		))
 
 	var/list/junk_names = list(
 		/obj/item/paper/pamphlet/gateway = "[initial(name)] for [pick(GLOB.adjectives)] adventurers",
@@ -332,3 +360,153 @@
 /obj/item/paper/fluff/junkmail_generic/Initialize(mapload)
 	default_raw_text = pick(GLOB.junkmail_messages)
 	return ..()
+
+/obj/item/mail/traitor
+	var/armed = FALSE
+	var/datum/weakref/made_by_ref
+	/// Cached information about who made it for logging purposes
+	var/made_by_cached_name
+	/// Cached information about who made it for logging purposes
+	var/made_by_cached_ckey
+	goodie_count = 0
+
+/obj/item/mail/traitor/envelope
+	name = "envelope"
+	icon_state = "mail_large"
+	stamp_max = 2
+	stamp_offset_y = 5
+
+/obj/item/mail/traitor/after_unwrap(mob/user)
+	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
+	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
+	for(var/obj/item/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
+		if(user.put_in_hands(stuff) && armed)
+			log_bomber(user, "opened armed mail made by [made_by_cached_name] ([made_by_cached_ckey]), activating", stuff)
+			INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item, attack_self), user)
+	qdel(src)
+	return TRUE
+
+/obj/item/mail/traitor/multitool_act(mob/living/user, obj/item/tool)
+	if(armed == FALSE || user.get_inactive_held_item() != src)
+		return ..()
+	if(IS_WEAKREF_OF(user.mind, made_by_ref))
+		balloon_alert(user, "disarming trap...")
+		if(!do_after(user, 2 SECONDS, target = src))
+			return FALSE
+		balloon_alert(user, "disarmed")
+		playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
+		armed = FALSE
+		return TRUE
+	else
+		balloon_alert(user, "tinkering with something...")
+
+		if(!do_after(user, 2 SECONDS, target = src))
+			after_unwrap(user)
+			return FALSE
+		if(prob(50))
+			balloon_alert(user, "disarmed something...?")
+			playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
+			armed = FALSE
+			return TRUE
+		else
+			after_unwrap(user)
+			return TRUE
+
+/obj/item/storage/mail_counterfeit_device
+	name = "GLA-2 mail counterfeit device"
+	desc = "Device that actually able to counterfeit NT's mail. This device also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also it might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs."
+	w_class = WEIGHT_CLASS_NORMAL
+	icon = 'icons/obj/device_syndie.dmi'
+	icon_state = "mail_counterfeit_device"
+
+/obj/item/storage/mail_counterfeit_device/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 1
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/mail_counterfeit_device/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<i>You notice the manufacture marking on the side of the device...</i>")
+	. += "\t[span_info("Guerilla Letter Assembler")]"
+	. += "\t[span_info("GLA Postal Service, right on schedule.")]"
+	return .
+
+/obj/item/storage/mail_counterfeit_device/attack_self(mob/user, modifiers)
+	var/mail_type = tgui_alert(user, "Make it look like an envelope or like normal mail?", "Mail Counterfeiting", list("Mail", "Envelope"))
+	if(isnull(mail_type))
+		return FALSE
+	if(loc != user)
+		return FALSE
+	mail_type = lowertext(mail_type)
+
+	var/mail_armed = tgui_alert(user, "Arm it?", "Mail Counterfeiting", list("Yes", "No")) == "Yes"
+	if(isnull(mail_armed))
+		return FALSE
+	if(loc != user)
+		return FALSE
+
+	var/list/mail_recipients = list("Anyone")
+	var/list/mail_recipients_for_input = list("Anyone")
+	var/list/used_names = list()
+	for(var/datum/record/locked/person in sort_record(GLOB.manifest.locked))
+		if(isnull(person.mind_ref))
+			continue
+		mail_recipients += person.mind_ref
+		mail_recipients_for_input += avoid_assoc_duplicate_keys(person.name, used_names)
+
+	var/recipient = tgui_input_list(user, "Choose a recipient", "Mail Counterfeiting", mail_recipients_for_input)
+	if(isnull(recipient))
+		return FALSE
+	if(!(src in user.contents))
+		return FALSE
+
+	var/index = mail_recipients_for_input.Find(recipient)
+
+	var/obj/item/mail/traitor/shady_mail
+	if(mail_type == "mail")
+		shady_mail = new /obj/item/mail/traitor
+	else
+		shady_mail = new /obj/item/mail/traitor/envelope
+
+	shady_mail.made_by_cached_ckey = user.ckey
+	shady_mail.made_by_cached_name = user.mind.name
+
+	if(index == 1)
+		var/mail_name = tgui_input_text(user, "Enter mail title, or leave it blank", "Mail Counterfeiting")
+		if(!(src in user.contents))
+			return FALSE
+		if(reject_bad_text(mail_name, ascii_only = FALSE))
+			shady_mail.name = mail_name
+		else
+			shady_mail.name = mail_type
+	else
+		shady_mail.initialize_for_recipient(mail_recipients[index])
+
+	atom_storage.hide_contents(user)
+	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
+	shady_mail.contents += contents
+	shady_mail.armed = mail_armed
+	shady_mail.made_by_ref = WEAKREF(user.mind)
+	user.put_in_hands(shady_mail)
+	qdel(src)
+
+/// Unobtainable item mostly for (b)admin purposes.
+/obj/item/storage/mail_counterfeit_device/advanced
+	name = "GLA-MACRO mail counterfeit device"
+
+/obj/item/storage/mail_counterfeit_device/advanced/Initialize(mapload)
+	. = ..()
+	desc += " This model is highly advanced and capable of compressing items, making mail's storage space comparable to standard backpack."
+	create_storage(max_slots = 21, max_total_storage = 21)
+	atom_storage.allow_big_nesting = TRUE
+
+/// Unobtainable item mostly for (b)admin purposes.
+/obj/item/storage/mail_counterfeit_device/bluespace
+	name = "GLA-ULTRA mail counterfeit device"
+
+/obj/item/storage/mail_counterfeit_device/bluespace/Initialize(mapload)
+	. = ..()
+	desc += " This model is the most advanced and capable of performing crazy bluespace compressions, making mail's storage space comparable to bluespace backpack."
+	create_storage(max_specific_storage = WEIGHT_CLASS_GIGANTIC, max_total_storage = 35, max_slots = 30)
+	atom_storage.allow_big_nesting = TRUE

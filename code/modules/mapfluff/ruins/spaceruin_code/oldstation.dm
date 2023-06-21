@@ -1,12 +1,37 @@
 /////////// Oldstation items
 
 /obj/item/paper/fluff/ruins/oldstation
-	name = "Cryo Awakening Alert"
-	default_raw_text = "<B>**WARNING**</B><BR><BR>Catastrophic damage sustained to station. Powernet exhausted to reawaken crew.<BR><BR>Immediate Objectives<br><br>1: Activate emergency power generator<br>2: Lift station lockdown on the bridge<br><br>Please locate the 'Damage Report' on the bridge for a detailed situation report."
+	name = "Cryo Awakening Report"
+	default_raw_text = "Catastrophic damage sustained to station. Powernet exhausted to reawaken crew.<br><br> \
+		Immediate Objectives: \
+		<ol> \
+		<li>Activate emergency power generator.</li> \
+		<li>Lift station lockdown on the bridge.</li> \
+		<li>Locate the 'Damage Report' on the bridge for a detailed situation report.</li> \
+		</ol>"
 
 /obj/item/paper/fluff/ruins/oldstation/damagereport
 	name = "Damage Report"
-	default_raw_text = "<b>*Damage Report*</b><br><br><b>Alpha Station</b> - Destroyed<br><br><b>Beta Station</b> - Catastrophic Damage. Medical, destroyed. Atmospherics and Engine Core, partially destroyed.<br><br><b>Charlie Station</b> - Multiple asteroid impacts, no loss in air pressure.<br><br><b>Delta Station</b> - Intact. <b>WARNING</b>: Unknown force occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.<br><br>Recommendation - Reestablish station powernet via solar array. Reestablish station atmospherics system to restore air."
+	default_raw_text = "<h2>WARNING</h2> \
+		<ul> \
+		<li>Shields down. Space Carp invasion imminent.</li> \
+		<li>Unknown force has overtaken AI satellite and occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.</li> \
+		</ul> \
+		<h2>Status</h2> \
+		<ol> \
+		<li><b>Alpha Station</b> - Destroyed.</li> \
+		<li><b>Beta Station</b> - Catastrophic Damage. Medical, destroyed. Atmospherics and Engine Core, partially destroyed.</li> \
+		<li><b>Charlie Station</b> - Multiple asteroid impacts, no loss in air pressure.</li> \
+		<li><b>Delta Station</b> - Intact.</li> \
+		</ol> \
+		<h2>Recommended Actions</h2> \
+		<ol> \
+		<li>Locate arms at Charlie Station Security.</li> \
+		<li>Move at a sufficient distance from the windows to avoid encounters with Space Carp.</li> \
+		<li>Reestablish station powernet via Charlie Station Engineering solar array.</li> \
+		<li>Restore life support systems: atmospherics, artificial gravity, hydroponics.</li> \
+		<li>Avoid Delta Station until arrival of Nanotrasen Special Response Team.</li> \
+		</ol>"
 
 /obj/item/paper/fluff/ruins/oldstation/protosuit
 	name = "B01-MOD modular suit Report"
@@ -48,17 +73,9 @@
 	default_raw_text = "<b>*Inventory*</b><br><br>(1) Prototype MODsuit<br><br>(1)Health Analyser<br><br>(1)Prototype Energy Gun<br><br>(1)Singularity Generation Disk<br><br><b>DO NOT REMOVE WITHOUT \
 	THE CAPTAIN AND RESEARCH DIRECTOR'S AUTHORISATION</b>"
 
-/obj/item/paper/fluff/ruins/oldstation/report
-	name = "Crew Reawakening Report"
-	default_raw_text = "Artificial Program's report to surviving crewmembers.<br><br>Crew were placed into cryostasis on March 10th, 2445.<br><br>Crew were awoken from cryostasis around June, 2557.<br><br> \
-	<b>SIGNIFICANT EVENTS OF NOTE</b><br>1: The primary radiation detectors were taken offline after 112 years due to power failure, secondary radiation detectors showed no residual \
-	radiation on station. Deduction, primarily detector was malfunctioning and was producing a radiation signal when there was none.<br><br>2: A data burst from a nearby Nanotrasen Space \
-	Station was received, this data burst contained research data that has been uploaded to our RnD labs.<br><br>3: An unknown force has occupied Delta station. Additionally, a school of common space carp have \
-	taken refuge in the space surrounding all remaining stations, primarily Beta station. "
-
 /obj/item/paper/fluff/ruins/oldstation/generator_manual
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type portable generator manual"
-	default_raw_text = "You can barely make out a faded sentence... <br><br> Wrench down the generator on top of a wire node connected to either a SMES input terminal or the power grid."
+	default_raw_text = "Wrench down the generator on top of a wire node connected to either a SMES input terminal or the power grid."
 
 /obj/item/paper/fluff/ruins/oldstation/protosleep
 	name = "Prototype Delivery"
@@ -78,18 +95,19 @@
 	default_raw_text = "It has been several months since our Molly passed away. She was our most valuable crew member, especially compared to that prick that happily threw a party to make sure `that beef won't go to waste`...<br><br> \
 	Oh, how I miss her warm milk...<br><br>I've put Molly's biopsy in the fridge and almost completed the solution.<br><br> \
 	Next steps:<ul><li>Pour the broth to the growing vat (beaker nearby)</li><li>Add one dropper of the solution</li><li>Add Molly's biopsy to the vat</li></ul> \
-	Just need to make sure to use the correct bottle this time... I'll even mark it as `<b>Solution for Molly</b>`, or I tend to mix things up... <br>I can already feel the endorphin release from hugging her again.<br><br> \
+	Just need to make sure to use the correct bottle this time... I'll even mark it as <b>\"Solution for Molly\"</b>, or I tend to mix things up... <br>I can already feel the endorphin release from hugging her again.<br><br> \
 	If everything goes well, I will try out those slimes the papers praising as the future of science. They say that the cell lines may be found on anything moldy and rotting, and these small blobs have crazy mutation potential when properly fed."
 
 /obj/item/paper/fluff/ruins/oldstation/biolab_note_emergency
 	name = "Diary note - Emergency"
 	default_raw_text = "OH GOD, the station is still creaking from a heavy impact in the port direction. The power is down, coms not responding, the air supply pipe depressurized and I can feel the artificial gravity weakening. \
 	The whole department is running around in panic. I'll just pray that engineers won't let the engine delaminate.<br><br> ...And the alien spawn have broken out of the containment area due to the impact and slipped into the vent.<br><br> \
-	I have a bad feeling about this, but I doubt that now is the right time to make guys hunt for what they call my `pet cockroach`... And RD is scary..."
+	I have a bad feeling about this, but I doubt that now is the right time to make guys hunt for what they call my \"pet cockroach\"... And RD is scary..."
 
 /obj/item/paper/fluff/ruins/oldstation/apc_note
 	name = "DO NOT TOUCH!"
-	default_raw_text = "This is a spare pre-charged APC battery for emergencies ONLY. DO NOT use it for stun prods, Bob."
+	default_raw_text = "This is a spare pre-charged APC battery for emergencies ONLY. DO NOT use it for stun prods, Bob.<br><br> \
+	Note: Use crowbar to remove the APC cover and take out the malfunctioning battery."
 
 /obj/machinery/mod_installer
 	name = "modular outerwear device installator"

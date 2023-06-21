@@ -37,7 +37,7 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/planetengi)
 "as" = (
-/obj/machinery/modular_computer/console/preset/civilian{
+/obj/machinery/modular_computer/preset/civilian{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
@@ -238,9 +238,7 @@
 /area/ruin/planetengi)
 "br" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
-/obj/structure/sign/poster/official/build{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/build/directional/west,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "bs" = (
@@ -634,9 +632,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/pda_ad{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/pda_ad/directional/south,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "dg" = (
@@ -752,9 +748,7 @@
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/grey_tide{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/grey_tide/directional/north,
 /turf/open/floor/iron/icemoon,
 /area/ruin/planetengi)
 "dC" = (

@@ -4,9 +4,9 @@
 
 /datum/martial_art/mushpunch/harm_act(mob/living/A, mob/living/D)
 	var/atk_verb
-	to_chat(A, span_spider("You begin to wind up an attack..."))
+	to_chat(A, span_spiderbroodmother("You begin to wind up an attack..."))
 	if(!do_after(A, 2.5 SECONDS, target = D))
-		to_chat(A, span_spider("<b>Your attack was interrupted!</b>"))
+		to_chat(A, span_spiderbroodmother("<b>Your attack was interrupted!</b>"))
 		return TRUE //martial art code was a mistake
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	atk_verb = pick("punch", "smash", "crack")
@@ -31,7 +31,7 @@
 /obj/item/mushpunch/attack_self(mob/living/user)
 	if(!istype(user) || !user)
 		return
-	var/message = span_spider("You devour [src], and a confluence of skill and power from the mushroom enhances your punches! You do need a short moment to charge these powerful punches.")
+	var/message = span_spiderbroodmother("You devour [src], and a confluence of skill and power from the mushroom enhances your punches! You do need a short moment to charge these powerful punches.")
 	to_chat(user, message)
 	var/datum/martial_art/mushpunch/mush = new(null)
 	mush.teach(user)

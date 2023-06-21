@@ -199,6 +199,7 @@
 	name = "lethal injection syringe"
 	desc = "A syringe used for lethal injections. It can hold up to 50 units."
 	amount_per_transfer_from_this = 50
+	has_variable_transfer_amount = FALSE
 	volume = 50
 
 /obj/item/reagent_containers/syringe/lethal/choral
@@ -211,6 +212,7 @@
 	name = "Mulligan"
 	desc = "A syringe used to completely change the users identity."
 	amount_per_transfer_from_this = 1
+	has_variable_transfer_amount = FALSE
 	volume = 1
 	list_reagents = list(/datum/reagent/mulligan = 1)
 
@@ -218,6 +220,7 @@
 	name = "Gluttony's Blessing"
 	desc = "A syringe recovered from a dread place. It probably isn't wise to use."
 	amount_per_transfer_from_this = 1
+	has_variable_transfer_amount = FALSE
 	volume = 1
 	list_reagents = list(/datum/reagent/gluttonytoxin = 1)
 

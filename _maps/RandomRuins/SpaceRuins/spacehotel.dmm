@@ -53,9 +53,7 @@
 /turf/open/floor/catwalk_floor,
 /area/ruin/space/has_grav/hotel/dock)
 "aE" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-03"
-	},
+/obj/item/kirbyplants/organic/plant3,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/hotel/pool)
 "aH" = (
@@ -178,9 +176,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "bV" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "bX" = (
@@ -481,9 +477,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -532,9 +526,7 @@
 	},
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "fT" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-16"
-	},
+/obj/item/kirbyplants/organic/plant16,
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/carpet/blue,
 /area/ruin/space/has_grav/hotel)
@@ -665,9 +657,7 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "gW" = (
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/cleanliness/directional/north,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/hotel/pool)
 "hb" = (
@@ -1138,9 +1128,7 @@
 /area/ruin/space/has_grav/hotel/bar)
 "km" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
+/obj/item/kirbyplants/organic/applebush,
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel)
@@ -1247,9 +1235,7 @@
 /area/ruin/space/has_grav/hotel/bar)
 "lh" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/poster/official/no_erp{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/no_erp/directional/north,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/hotel)
 "lj" = (
@@ -1276,9 +1262,7 @@
 /area/template_noop)
 "lu" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
@@ -1782,9 +1766,7 @@
 /area/template_noop)
 "qL" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -2369,9 +2351,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
@@ -2429,9 +2409,7 @@
 	},
 /area/ruin/space/has_grav/hotel)
 "ya" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-06"
-	},
+/obj/item/kirbyplants/organic/plant6,
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "yd" = (
@@ -2554,9 +2532,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "zJ" = (
@@ -3027,9 +3003,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "Gi" = (
 /obj/machinery/light/directional/north,
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -3103,9 +3077,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "Hy" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -3165,9 +3137,7 @@
 	},
 /area/ruin/space/has_grav/hotel/dock)
 "Ib" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-16"
-	},
+/obj/item/kirbyplants/organic/plant16,
 /obj/structure/sign/poster/random/directional/north,
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/carpet/blue,
@@ -3396,9 +3366,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -3656,18 +3624,14 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-16"
-	},
+/obj/item/kirbyplants/organic/plant16,
 /turf/open/floor/carpet/blue,
 /area/ruin/space/has_grav/hotel)
 "PB" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-03"
-	},
+/obj/item/kirbyplants/organic/plant3,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel)
 "PD" = (
@@ -3806,9 +3770,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-16"
-	},
+/obj/item/kirbyplants/organic/plant16,
 /obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/carpet/blue,
 /area/ruin/space/has_grav/hotel)
@@ -4468,9 +4430,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-13"
-	},
+/obj/item/kirbyplants/organic/plant13,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/hotel/dock)
 "YE" = (
@@ -4563,9 +4523,7 @@
 /area/ruin/space/has_grav/hotel)
 "Zv" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark/corner,
 /area/ruin/space/has_grav/hotel)

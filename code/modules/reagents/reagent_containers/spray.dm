@@ -89,7 +89,7 @@
 	reagent_puff.sprayer = src
 	reagent_puff.lifetime = puff_reagent_left
 	reagent_puff.stream = stream_mode
-	reagent_puff.RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/obj/effect/decal/chempuff, loop_ended))
+	reagent_puff.RegisterSignal(our_loop, COMSIG_QDELETING, TYPE_PROC_REF(/obj/effect/decal/chempuff, loop_ended))
 	reagent_puff.RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, TYPE_PROC_REF(/obj/effect/decal/chempuff, check_move))
 
 /obj/item/reagent_containers/spray/attack_self(mob/user)
@@ -235,7 +235,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	amount_per_transfer_from_this = 1
-	possible_transfer_amounts = list(1)
+	has_variable_transfer_amount = FALSE
 	can_toggle_range = FALSE
 	current_range = 1
 	volume = 10

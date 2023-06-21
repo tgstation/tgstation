@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	lift_load -= potential_rider
 	changed_gliders -= potential_rider
 
-	UnregisterSignal(potential_rider, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
+	UnregisterSignal(potential_rider, list(COMSIG_QDELETING, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/new_lift_contents)
 	SIGNAL_HANDLER
@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		ADD_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
 
 	lift_load += new_lift_contents
-	RegisterSignal(new_lift_contents, COMSIG_PARENT_QDELETING, PROC_REF(RemoveItemFromLift))
+	RegisterSignal(new_lift_contents, COMSIG_QDELETING, PROC_REF(RemoveItemFromLift))
 
 	return TRUE
 

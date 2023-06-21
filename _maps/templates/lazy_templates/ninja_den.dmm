@@ -6,9 +6,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "aw" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/machinery/light/small/directional/north,
 /obj/structure/sign/painting/library{
 	pixel_y = 32
@@ -175,16 +173,12 @@
 /turf/open/floor/eighties/red,
 /area/centcom/central_command_areas/holding)
 "fG" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
 "fV" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
@@ -247,9 +241,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "hm" = (
@@ -711,9 +703,7 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
 "qW" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /turf/open/floor/bamboo/tatami/purple,
 /area/centcom/central_command_areas/holding)
 "ra" = (
@@ -755,9 +745,7 @@
 	},
 /area/centcom/central_command_areas/holding)
 "rV" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "sc" = (
@@ -780,9 +768,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /turf/open/floor/stone,
 /area/centcom/central_command_areas/holding)
 "ts" = (
@@ -848,9 +834,7 @@
 	},
 /area/centcom/central_command_areas/holding)
 "vv" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
 "vA" = (
@@ -858,9 +842,7 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "vH" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
@@ -1446,9 +1428,7 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
 "Je" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
@@ -1669,9 +1649,7 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/holding)
 "Nh" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/machinery/duct,
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
@@ -1731,16 +1709,12 @@
 /turf/open/floor/stone,
 /area/centcom/central_command_areas/holding)
 "Oy" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
 "OA" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /turf/open/floor/bamboo/tatami/purple{
 	dir = 1
 	},
@@ -1757,10 +1731,8 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/holding)
 "PB" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment{
-	pixel_x = 4
-	},
-/turf/closed/wall/mineral/wood,
+/obj/structure/sign/poster/contraband/syndicate_recruitment/directional/south,
+/turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
 "PK" = (
 /obj/structure/table/reinforced/rglass,
@@ -1909,7 +1881,7 @@
 /area/centcom/central_command_areas/holding)
 "TS" = (
 /obj/structure/rack,
-/obj/item/nullrod/scythe/vibro{
+/obj/item/nullrod/vibro{
 	damtype = "stamina";
 	force = 30;
 	pixel_x = 5;
@@ -2033,7 +2005,7 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
 "Wc" = (
-/obj/machinery/modular_computer/console/preset/research{
+/obj/machinery/modular_computer/preset/research{
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
@@ -3217,8 +3189,8 @@ dg
 dg
 dg
 iH
-mw
 PB
+dg
 dg
 dg
 dg

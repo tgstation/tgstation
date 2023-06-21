@@ -11,7 +11,7 @@
 /area/shuttle/escape)
 "aE" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/sandy_dirt,
 /area/shuttle/escape/simulation)
 "aG" = (
@@ -36,7 +36,7 @@
 /area/shuttle/escape)
 "cy" = (
 /obj/effect/turf_decal/sand,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/sandy_dirt,
 /area/shuttle/escape/simulation)
 "cL" = (
@@ -52,7 +52,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "em" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/punji_sticks/spikes,
 /turf/open/misc/grass,
 /area/shuttle/escape/simulation)
@@ -150,7 +150,7 @@
 	},
 /area/shuttle/escape/simulation)
 "hd" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/grass,
 /area/shuttle/escape/simulation)
 "he" = (
@@ -347,7 +347,7 @@
 /turf/open/indestructible/binary,
 /area/shuttle/escape/simulation)
 "oO" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/sandy_dirt,
 /area/shuttle/escape/simulation)
 "oY" = (
@@ -462,7 +462,7 @@
 "sK" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/sandy_dirt,
 /area/shuttle/escape/simulation)
 "sS" = (
@@ -672,8 +672,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "CT" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
+/obj/item/kirbyplants/organic/plant21{
 	pixel_x = -3;
 	pixel_y = 3
 	},

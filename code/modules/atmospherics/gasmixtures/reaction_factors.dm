@@ -98,7 +98,7 @@
 	factor = list(
 		/datum/gas/bz = "5 moles of BZ needs to be present for the reaction to occur. BZ is consumed at 0.05 reaction rate.",
 		/datum/gas/tritium = "20 moles of tritium needs to be present for the reaction to occur. Tritium is consumed at 1 reaction rate",
-		/datum/gas/nitrogen = "10 moles of tritium needs to be present for the reaction to occur. Nitrogen is consumed at 1 reaction rate",
+		/datum/gas/nitrogen = "10 moles of nitrogen needs to be present for the reaction to occur. Nitrogen is consumed at 1 reaction rate",
 		/datum/gas/nitrium = "Nitrium is produced at 1 reaction rate",
 		"Temperature" = "Can only occur above [NITRIUM_FORMATION_MIN_TEMP] kelvins",
 		"Energy" = "[NITRIUM_FORMATION_ENERGY] joules of energy is absorbed per reaction rate",
