@@ -8,7 +8,7 @@
 
 	return returnable_list
 
-/// Called in jobs subsystem initialize if LOAD_JOBS_FROM_TXT config flag is set: reads jobconfig.toml (or if in legacy mode, jobs.txt) to set all of the datum's values to what the server operator wants.
+/// Sets all of the job datum configurable values to what they've been set to in the config file, jobconfig.toml.
 /datum/controller/subsystem/job/proc/load_jobs_from_config()
 	if(legacy_mode)
 		legacy_load()
