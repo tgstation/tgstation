@@ -198,7 +198,7 @@
 			/mob/living/basic/butterfly,
 			/mob/living/simple_animal/crab,
 			/mob/living/simple_animal/crab/evil,
-			/mob/living/simple_animal/pet/penguin/baby,
+			/mob/living/basic/pet/penguin/baby,
 			/mob/living/basic/pet/fox,
 			/mob/living/simple_animal/pet/cat,
 			/mob/living/simple_animal/pet/cat/kitten,

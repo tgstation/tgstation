@@ -86,13 +86,13 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"conspiracies" = typecacheof(list(
 		/mob/living/simple_animal/bot/secbot,
 		/mob/living/simple_animal/drone,
-		/mob/living/simple_animal/pet/penguin,
+		/mob/living/basic/pet/penguin,
 	)),
 	"birds" = typecacheof(list(
 		/mob/living/simple_animal/chick,
 		/mob/living/basic/chicken,
 		/mob/living/simple_animal/parrot,
-		/mob/living/simple_animal/pet/penguin,
+		/mob/living/basic/pet/penguin,
 	)),
 	"anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
 	"insects" = typecacheof(list(
