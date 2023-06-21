@@ -23,7 +23,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
 	var/sexes = TRUE
-	///A bitfield of "bodytypes", updated by /datum/obj/item/bodypart/proc/synchronize_bodytypes()
+	///A bitfield of "bodytypes", updated by /obj/item/bodypart/proc/synchronize_bodytypes()
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 
 	///The maximum number of bodyparts this species can have.
