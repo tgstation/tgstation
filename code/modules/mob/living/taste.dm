@@ -29,7 +29,6 @@
 	if(HAS_TRAIT(src, TRAIT_AGEUSIA))
 		return
 
-
 	if(last_taste_time + 50 < world.time)
 		var/taste_sensitivity = get_taste_sensitivity()
 		var/text_output = from.generate_taste_message(src, taste_sensitivity)
@@ -74,16 +73,16 @@
 
 /**
  * Gets food flags that this mob hates
- * Toxic food is the only foodtype that ignores ageusia, keep it like that!
+ * Toxic food is the only category that ignores ageusia, KEEP IT LIKE THAT!
  **/
 /mob/living/proc/get_toxic_foodtypes()
-	return NONE
+	return TOXIC
 
 /mob/living/carbon/get_toxic_foodtypes()
 	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
 	// No tongue, no tastin'
 	if(!tongue)
-		return NONE
+		return TOXIC
 	return tongue.toxic_foodtypes
 
 /**
@@ -92,22 +91,24 @@
  *
  * Does not get called if the owner has ageusia.
  **/
-/mob/living/proc/get_food_taste_reaction(obj/item/food, datum/component/edible/edible)
+/mob/living/proc/get_food_taste_reaction(obj/item/food, foodtypes)
 	var/food_taste_reaction
-	if(edible.foodtypes & get_toxic_foodtypes())
+	if(foodtypes & get_toxic_foodtypes())
 		food_taste_reaction = FOOD_TOXIC
-	else if(edible.foodtypes & get_disliked_foodtypes())
+	else if(foodtypes & get_disliked_foodtypes())
 		food_taste_reaction = FOOD_DISLIKED
-	else if(edible.foodtypes & get_liked_foodtypes())
+	else if(foodtypes & get_liked_foodtypes())
 		food_taste_reaction = FOOD_LIKED
 	return food_taste_reaction
 
-/mob/living/carbon/get_food_taste_reaction(obj/item/food, datum/component/edible/edible)
+/mob/living/carbon/get_food_taste_reaction(obj/item/food, foodtypes)
 	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
 	// No tongue, no tastin'
-	if(!tongue)
-		return NONE
+	if(!tongue?.sense_of_taste || HAS_TRAIT(src, TRAIT_AGEUSIA))
+		// i hate that i have to do this, but we want to ensure toxic food is still BAD
+		if(foodtypes & get_toxic_foodtypes())
+			return FOOD_TOXIC
+		return
 	return tongue.get_food_taste_reaction(food, edible)
-
 
 #undef DEFAULT_TASTE_SENSITIVITY

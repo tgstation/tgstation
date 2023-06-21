@@ -36,12 +36,6 @@
 	if((drink_type & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
 		gourmand.add_mood_event("breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
-	// We don't care about the later checks if user has ageusia
-	if(HAS_TRAIT(gourmand, TRAIT_AGEUSIA))
-		if(drink_type & gourmand.get_toxic_foodtypes())
-			to_chat(gourmand, span_warning("You don't feel so good..."))
-			gourmand.adjust_disgust(25 + 30 * fraction)
-		return
 
 	var/food_taste_reaction = gourmand.get_food_taste_reaction(src, drink_type)
 	switch(food_taste_reaction)
