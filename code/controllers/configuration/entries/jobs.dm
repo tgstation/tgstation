@@ -154,7 +154,7 @@
 /// This will just return a list for a completely new job that doesn't need to be migrated from an old config (completely new). Just done here to reduce copypasta
 /datum/controller/subsystem/job/proc/generate_blank_job_config(datum/job/new_occupation)
 	var/returnable_list = list()
-	for(var/config_datum_key in job_config_datum_configurables)
+	for(var/config_datum_key in job_config_datum_singletons)
 		var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 		// Commented out keys here in case server operators wish to defer to codebase defaults.
 		returnable_list += list(
