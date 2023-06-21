@@ -130,6 +130,11 @@ GLOBAL_LIST_INIT(food_quality_events, list(
 	FOOD_QUALITY_TOP = /datum/mood_event/food/top,
 ))
 
+/// Food quality change according to species diet
+#define TOXIC_FOOD_QUALITY_CHANGE -4
+#define DISLIKED_FOOD_QUALITY_CHANGE -2
+#define LIKED_FOOD_QUALITY_CHANGE 2
+
 /// Food is "in a container", not in a code sense, but in a literal sense (canned foods)
 #define FOOD_IN_CONTAINER (1<<0)
 /// Finger food can be eaten while walking / running around

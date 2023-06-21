@@ -220,6 +220,8 @@ Behavior that's still missing from this component that original food items had t
 		if(quality > 0)
 			var/quality_label = GLOB.food_quality_description[quality]
 			examine_list += span_green("You find this meal [quality_label].")
+		else if (quality == 0)
+			examine_list += span_notice("You find this meal edible.")
 		else
 			examine_list += span_warning("You find this meal inedible.")
 		var/purity = food.reagents.get_average_purity()
@@ -557,9 +559,9 @@ Behavior that's still missing from this component that original food items had t
 	if(HAS_TRAIT(food, TRAIT_FOOD_SILVER)) // it's not real food
 		food_quality += isjellyperson(eater) ? 2 : -4
 
-	food_quality -= 4 * count_matching_foodtypes(foodtypes, eater.dna.species.toxic_food)
-	food_quality -= 2 * count_matching_foodtypes(foodtypes, eater.dna.species.disliked_food)
-	food_quality += count_matching_foodtypes(foodtypes, eater.dna.species.liked_food)
+	food_quality += TOXIC_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.dna.species.toxic_food)
+	food_quality += DISLIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.dna.species.disliked_food)
+	food_quality += LIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.dna.species.liked_food)
 
 	return food_quality
 
