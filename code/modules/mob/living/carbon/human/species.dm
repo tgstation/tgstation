@@ -1897,7 +1897,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if((TRAIT_NOHUNGER in inherent_traits) || !mutanttongue)
 		return null
 
-	var/list/food_flags = FOOD_FLAGS
+	var/static/list/food_flags = FOOD_FLAGS
 	var/obj/item/organ/internal/tongue/fake_tongue = mutanttongue
 
 	return list(
