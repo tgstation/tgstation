@@ -110,3 +110,6 @@
 #define COMSIG_ATOM_TIMESTOP_FREEZE "atom_timestop_freeze"
 /// when the timestop ability effect ends on the atom: (datum/proximity_monitor/advanced/timestop)
 #define COMSIG_ATOM_TIMESTOP_UNFREEZE "atom_timestop_unfreeze"
+
+/// Called on [/atom/SpinAnimation()] : (speed, loops, segments, angle)
+#define COMSIG_ATOM_SPIN_ANIMATION "atom_spin_animation"

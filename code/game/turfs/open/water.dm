@@ -14,6 +14,10 @@
 	clawfootstep = FOOTSTEP_WATER
 	heavyfootstep = FOOTSTEP_WATER
 
+/turf/open/water/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/submerge, icon, icon_state, "submerge", "#88BBCC")
+
 /turf/open/water/jungle
 
 /turf/open/water/beach

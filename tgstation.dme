@@ -1247,6 +1247,7 @@
 #include "code\datums\elements\squish.dm"
 #include "code\datums\elements\sticker.dm"
 #include "code\datums\elements\strippable.dm"
+#include "code\datums\elements\submerge.dm"
 #include "code\datums\elements\swabbable.dm"
 #include "code\datums\elements\temporary_atom.dm"
 #include "code\datums\elements\tenacious.dm"

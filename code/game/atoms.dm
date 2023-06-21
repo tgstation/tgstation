@@ -2178,3 +2178,12 @@
 	var/mutable_appearance/glow_appearance = new(glow)
 	add_overlay(glow_appearance)
 	LAZYADD(update_overlays_on_z, glow_appearance)
+
+/atom/proc/SpinAnimation(speed = 1 SECONDS, loops = -1, clockwise = 1, segments = 3, parallel = TRUE)
+	if(!segments)
+		return
+	var/segment = 360/segments
+	if(!clockwise)
+		segment = -segment
+	SEND_SIGNAL(src, COMSIG_ATOM_SPIN_ANIMATION, speed, loops, segments, segment)
+	transform.do_spin_animation(src, speed, loops, segments, segment, parallel)

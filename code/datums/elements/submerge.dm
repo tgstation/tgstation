@@ -1,0 +1,324 @@
+/**
+ * A visual element that makes movables entering the attached turfs look half-submerged into that turf.
+ *
+ * Abandon all hope, ye who read forth, for this submerge works on mind-numbing workarounds,
+ */
+/datum/element/submerge
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
+	///An association list of turfs that have this element attached and their affected contents.
+	var/list/attached_turfs_and_movables = list()
+
+	/**
+	 * A list of movables that shouldn't be affected by the element, either because it'd look bad
+	 * or barely perceptible.
+	 */
+	var/static/list/movables_to_ignore
+	///A list of icons generated from a target and a mask, later used as appearances for the overlays.
+	var/static/list/generated_submerge_icons = list()
+	///A list of instances of /atom/movable/submerge_overlay then used as visual overlays for the submerged movables.
+	var/list/generated_visual_overlays = list()
+	///An association list of movables as key and overlays as assoc.
+	var/list/submerge_movables
+
+	var/icon
+	var/icon_state
+	var/mask_icon
+	var/color
+	var/alpha
+
+/datum/element/submerge/Attach(turf/target, icon, icon_state, mask_icon, color, alpha = 210)
+	. = ..()
+	if(!isturf(target) || !icon || !icon_state || !mask_icon)
+		return ELEMENT_INCOMPATIBLE
+
+	if(!movables_to_ignore)
+		movables_to_ignore = typecacheof(list(
+			/obj/effect,
+			/mob/dead,
+			/obj/projectile,
+		))
+
+		movables_to_ignore += GLOB.WALLITEMS_INTERIOR
+		movables_to_ignore += GLOB.WALLITEMS_EXTERIOR
+
+	src.icon = icon
+	src.icon_state = icon_state
+	src.color = color
+	src.alpha = alpha
+	src.mask_icon = mask_icon
+
+	/**
+	 * Hello, you may be wondering why we're blending icons and not simply
+	 * overlaying one mutable appearance with the blend multiply on another.
+	 * Well, the latter option doesn't work as neatly when ultimately added
+	 * to an atom with the KEEP_TOGETHER appearance flag, with the mask also
+	 * applying to said atom, when we don't want it to.
+	 */
+	var/icon/submerge_icon = generated_submerge_icons["[icon]-[icon_state]-[mask_icon]"]
+	if(!submerge_icon)
+		submerge_icon = icon('icons/turf/floors.dmi', "riverwater_motion")
+		var/icon/sub_mask = icon('icons/effects/effects.dmi', "submerge")
+		submerge_icon.Blend(sub_mask, ICON_MULTIPLY)
+		submerge_icon = fcopy_rsc(submerge_icon)
+		generated_submerge_icons["[icon]-[icon_state]-[mask_icon]"] = submerge_icon
+
+	RegisterSignals(target, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_INITIALIZED_ON), PROC_REF(on_init_or_entered))
+	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(on_atom_exited))
+	attached_turfs_and_movables += target
+	for(var/atom/movable/movable as anything in target)
+		on_init_or_entered(target, movable)
+
+/datum/element/submerge/Detach(turf/source)
+	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_INITIALIZED_ON, COMSIG_ATOM_EXITED))
+	for(var/atom/movable/movable as anything in attached_turfs_and_movables[source])
+		remove_from_element(source, movable)
+	attached_turfs_and_movables -= source
+	return ..()
+
+/datum/element/submerge/proc/on_init_or_entered(turf/source, atom/movable/movable)
+	SIGNAL_HANDLER
+	if(!ISINRANGE_EX(movable.layer, WATER_LEVEL_LAYER, ABOVE_ALL_MOB_LAYER) || !ISINRANGE(movable.plane, FLOOR_PLANE, GAME_PLANE_UPPER_FOV_HIDDEN))
+		return
+	if(HAS_TRAIT(movable, TRAIT_SUBMERGED))
+		return
+	if(is_type_in_typecache(movable, movables_to_ignore))
+		return
+
+	var/atom/movable/buckled
+	if(isliving(movable))
+		var/mob/living/living_mob = movable
+		RegisterSignal(living_mob, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
+		buckled = living_mob.buckled
+
+	try_submerge(movable, buckled)
+	RegisterSignal(movable, COMSIG_QDELETING, PROC_REF(on_movable_qdel))
+	LAZYADD(attached_turfs_and_movables[source], movable)
+	ADD_TRAIT(movable, TRAIT_SUBMERGED, ELEMENT_TRAIT(src))
+
+/datum/element/submerge/proc/on_movable_qdel(atom/movable/source)
+	SIGNAL_HANDLER
+	remove_from_element(source.loc, source)
+
+/datum/element/submerge/proc/add_submerge_overlay(atom/movable/movable)
+	var/icon/movable_icon = icon(movable.icon)
+	var/width = movable_icon.Width() || world.icon_size
+	var/height = movable_icon.Height() || world.icon_size
+
+	to_chat(world, "MHM")
+
+	var/atom/movable/submerge_overlay/vis_overlay = generated_visual_overlays["[width]x[height]"]
+
+	if(!vis_overlay) //create the overlay if not already done.
+		vis_overlay = new(null)
+
+		/**
+		 * vis contents spin around the center of the icon of their vis locs
+		 * but since we want the appearance to stay where it should be,
+		 * we have to counteract this one.
+		 */
+		var/extra_width = (width - world.icon_size) / 2
+		var/extra_height = (height - world.icon_size) / 2
+		var/mutable_appearance/overlay_appearance = new()
+		var/icon/submerge_icon = generated_submerge_icons["[icon]-[icon_state]-[mask_icon]"]
+		var/last_i = width/world.icon_size
+		for(var/i in -1 to last_i)
+			var/mutable_appearance/underwater = mutable_appearance(icon, icon_state)
+			underwater.pixel_x = world.icon_size * i - extra_width
+			underwater.pixel_y = -world.icon_size - extra_height
+			overlay_appearance.overlays += underwater
+
+			var/mutable_appearance/water_level = mutable_appearance(submerge_icon)
+			water_level.pixel_x = world.icon_size * i - extra_width
+			water_level.pixel_y = -extra_height
+			overlay_appearance.overlays += water_level
+
+		vis_overlay.overlay_appearance = overlay_appearance
+
+		vis_overlay.color = color
+		vis_overlay.alpha = alpha
+		vis_overlay.extra_width = extra_width
+		vis_overlay.extra_height = extra_height
+		vis_overlay.overlays = list(overlay_appearance)
+
+		generated_visual_overlays["[width]x[height]"] = vis_overlay
+
+
+	ADD_KEEP_TOGETHER(movable, ELEMENT_TRAIT(src))
+
+	/**
+	 * Let's give an unique submerge visual only to those movables that would
+	 * benefit from this the most, for the sake of a smidge of lightweightness.
+	 */
+	if(HAS_TRAIT(movable, TRAIT_UNIQUE_SUBMERGE))
+		var/atom/movable/submerge_overlay/original_vis_overlay = vis_overlay
+		vis_overlay = new(null)
+		vis_overlay.appearance = original_vis_overlay
+		vis_overlay.extra_width = original_vis_overlay.extra_width
+		vis_overlay.extra_height = original_vis_overlay.extra_height
+		vis_overlay.overlay_appearance = original_vis_overlay.overlay_appearance
+		SEND_SIGNAL(movable, COMSIG_MOVABLE_EDIT_UNIQUE_SUBMERGE_OVERLAY, vis_overlay)
+		RegisterSignal(movable, COMSIG_ATOM_SPIN_ANIMATION, PROC_REF(on_spin_animation))
+		RegisterSignal(movable, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_update_transform))
+
+	movable.vis_contents |= vis_overlay
+
+	LAZYSET(submerge_movables, movable, vis_overlay)
+
+/// Remove the vis_overlay, the keep together trait and some signals from the movable
+/datum/element/submerge/proc/remove_submerge_overlay(atom/movable/movable)
+	var/atom/movable/submerge_overlay/vis_overlay = LAZYACCESS(submerge_movables, movable)
+	if(!vis_overlay)
+		return
+	movable.vis_contents -= vis_overlay
+	LAZYREMOVE(submerge_movables, movable)
+	if(HAS_TRAIT(movable, TRAIT_UNIQUE_SUBMERGE))
+		UnregisterSignal(movable, list(COMSIG_ATOM_SPIN_ANIMATION, COMSIG_LIVING_POST_UPDATE_TRANSFORM))
+		qdel(vis_overlay)
+	REMOVE_KEEP_TOGETHER(movable, ELEMENT_TRAIT(src))
+
+/**
+ * Called by init_or_entered() and on_set_buckled().
+ * This applies the overlay if neither the movable or whatever is buckled to (exclusive to living mobs) are flying
+ * as well as movetype signals when the movable isn't buckled.
+ */
+/datum/element/submerge/proc/try_submerge(atom/movable/movable, atom/movable/buckled)
+	var/atom/movable/to_check = buckled || movable
+	if(!(to_check.movement_type & (FLYING|FLOATING)))
+		add_submerge_overlay(movable)
+		if(!buckled)
+			RegisterSignal(movable, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_move_flag_enabled))
+	else if(!buckled)
+		RegisterSignal(movable, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_move_flag_disabled))
+
+/**
+ * Called by on_set_buckled() and remove_from_element().
+ * This removes the filter and signals from the movable unless it doesn't have them.
+ */
+/datum/element/submerge/proc/try_unsubmerge(atom/movable/movable, atom/movable/buckled)
+	var/atom/movable/to_check = buckled || movable
+	if(!(to_check.movement_type & (FLYING|FLOATING)))
+		remove_submerge_overlay(movable)
+		if(!buckled)
+			UnregisterSignal(movable, COMSIG_MOVETYPE_FLAG_ENABLED)
+	else if(!buckled)
+		UnregisterSignal(movable, COMSIG_MOVETYPE_FLAG_DISABLED)
+
+/datum/element/submerge/proc/on_set_buckled(mob/living/source, atom/movable/new_buckled)
+	SIGNAL_HANDLER
+	try_unsubmerge(source, source.buckled)
+	try_submerge(source, new_buckled)
+
+///Removes the overlay from mob and bucklees is flying.
+/datum/element/submerge/proc/on_move_flag_enabled(atom/movable/source, flag, old_movement_type)
+	SIGNAL_HANDLER
+	if(flag & (FLYING | FLOATING))
+		UnregisterSignal(source, COMSIG_MOVETYPE_FLAG_ENABLED)
+		RegisterSignal(source, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_move_flag_disabled))
+		remove_submerge_overlay(source)
+		for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
+			remove_submerge_overlay(buckled_mob)
+
+///Readds the overlay to the mob and bucklees if no longer flying.
+/datum/element/submerge/proc/on_move_flag_disabled(atom/movable/source, flag, old_movement_type)
+	SIGNAL_HANDLER
+	if(flag & (FLYING|FLOATING) && !(source.movement_type & (FLYING|FLOATING)))
+		UnregisterSignal(source, COMSIG_MOVETYPE_FLAG_DISABLED)
+		RegisterSignal(source, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_move_flag_enabled))
+		add_submerge_overlay(source)
+		for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
+			add_submerge_overlay(buckled_mob)
+
+/datum/element/submerge/proc/on_atom_exited(turf/source, atom/movable/exited, direction)
+	SIGNAL_HANDLER
+	if(!(exited.loc in attached_turfs_and_movables))
+		remove_from_element(source, exited)
+	else
+		LAZYREMOVE(attached_turfs_and_movables[source], exited)
+		LAZYADD(attached_turfs_and_movables[exited.loc], exited)
+
+/datum/element/submerge/proc/remove_from_element(turf/source, atom/movable/movable)
+	var/atom/movable/buckled
+	if(isliving(movable))
+		var/mob/living/living_mob = movable
+		buckled = living_mob.buckled
+	try_unsubmerge(movable, buckled)
+
+	UnregisterSignal(movable, list(COMSIG_LIVING_SET_BUCKLED, COMSIG_QDELETING))
+	REMOVE_TRAIT(movable, TRAIT_SUBMERGED, ELEMENT_TRAIT(src))
+	LAZYREMOVE(attached_turfs_and_movables[source], movable)
+
+/// A band-aid to keep the overlay from scaling and rotating along with the source
+/datum/element/submerge/proc/on_update_transform(mob/living/source, resize, new_lying_angle, is_opposite_angle)
+	SIGNAL_HANDLER
+	var/matrix/new_transform = matrix()
+	new_transform.Scale(1/source.current_size)
+	new_transform.Turn(-source.lying_angle)
+
+	var/atom/movable/submerge_overlay/vis_overlay = submerge_movables[source]
+	if(is_opposite_angle)
+		vis_overlay.transform = new_transform
+		vis_overlay.adjust_living_overlay_offset(source)
+		return
+
+	/**
+	 * Here, we temporarily switch from the offset of the mutable appearance to one for movable used as visual overlay.
+	 * Why? While visual overlays can be animated, their fixed point stays at the center of the icon of the atom
+	 * they're attached to and not theirs, which can make manipulating the transform var a pain, but because
+	 * we cannot do that with normal overlay or filters (reliably), we have to bend a knee and try to compensate it.
+	 *
+	 * I'm unsure if this also applies to locs without the KEEP_TOGETHER apperance flag, but that's also NOT an option here.
+	 */
+	vis_overlay.overlays = list(vis_overlay.overlay_appearance)
+
+	/// Oh, yeah, didn't I mention turning a visual overlay affects its pixel x/y/w/z too? Yeah, it sucks.
+	var/new_x = vis_overlay.extra_width
+	var/new_y = vis_overlay.extra_height
+	var/old_div = source.current_size/resize
+	var/offset_lying = source.rotate_on_lying ? PIXEL_Y_OFFSET_LYING : source.get_pixel_y_offset_standing(source.current_size/resize)
+	switch(source.lying_prev)
+		if(270)
+			vis_overlay.pixel_x += -offset_lying / old_div
+		if(90)
+			vis_overlay.pixel_x += offset_lying / old_div
+		if(0)
+			vis_overlay.pixel_y += -source.get_pixel_y_offset_standing(source.current_size/resize) / old_div
+
+	switch(new_lying_angle)
+		if(270)
+			new_x += -source.body_position_pixel_y_offset / source.current_size
+		if(90)
+			new_x += source.body_position_pixel_y_offset / source.current_size
+		if(0)
+			new_y += -source.body_position_pixel_y_offset / source.current_size
+
+	animate(vis_overlay, transform = new_transform, pixel_x = new_x, pixel_y = new_y, time = UPDATE_TRANSFORM_ANIMATION_TIME, easing = (EASE_IN|EASE_OUT))
+	addtimer(CALLBACK(vis_overlay, TYPE_PROC_REF(/atom/movable/submerge_overlay, adjust_living_overlay_offset), source), UPDATE_TRANSFORM_ANIMATION_TIME)
+
+/datum/element/submerge/proc/on_spin_animation(atom/source, speed, loops, segments, segment)
+	SIGNAL_HANDLER
+	var/atom/movable/submerge_overlay/vis_overlay = submerge_movables[source]
+	vis_overlay.transform.do_spin_animation(vis_overlay, speed, loops, segments, -segment)
+
+
+///The not-quite-perfect movable used by the submerge element for its nefarious deeds.
+/atom/movable/submerge_overlay
+	appearance_flags = RESET_TRANSFORM|RESET_COLOR|KEEP_TOGETHER
+	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blend_mode = BLEND_INSET_OVERLAY
+	layer = WATER_VISUAL_OVERLAY_LAYER
+	var/mutable_appearance/overlay_appearance
+	var/extra_width = 0
+	var/extra_height = 0
+
+/atom/movable/submerge_overlay/Initialize(mapload)
+	. = ..()
+	verbs.Cut() //"Cargo cultttttt" or something. Either way, they're better off without verbs.
+
+/atom/movable/submerge_overlay/proc/adjust_living_overlay_offset(mob/living/source)
+	pixel_x = extra_width
+	pixel_y = extra_height
+	overlay_appearance.pixel_y = -source.body_position_pixel_y_offset
+	overlays = list(overlay_appearance)
+	overlay_appearance.pixel_y = 0 //reset the offset when done, or things will break.

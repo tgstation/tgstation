@@ -61,7 +61,7 @@
 
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
 
-	var/rotate_on_lying = 1
+	rotate_on_lying = TRUE
 
 	/// Gets filled up in [/datum/species/proc/replace_body].
 	/// Will either contain a list of typepaths if nothing has been created yet,

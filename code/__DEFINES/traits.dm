@@ -866,6 +866,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CHASM_DESTROYED "chasm_destroyed"
 /// Trait from being under the floor in some manner
 #define TRAIT_UNDERFLOOR "underfloor"
+/// If this movable is currently treading in a turf with the submerge element.
+#define TRAIT_SUBMERGED "submerged"
+/**
+ * With this, the submerge overlay will give the atom its own submersion visual overlay
+ * instead of one that's also shared with other movables, thus making editing its appearance possible.
+ */
+#define TRAIT_UNIQUE_SUBMERGE "unique_submerge"
 
 // unique trait sources, still defines
 #define EMP_TRAIT "emp_trait"

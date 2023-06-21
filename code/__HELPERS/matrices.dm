@@ -43,26 +43,27 @@
 	. = new_angle - old_angle
 	Turn(.) //BYOND handles cases such as -270, 360, 540 etc. DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE SHIT
 
-/atom/proc/SpinAnimation(speed = 10, loops = -1, clockwise = 1, segments = 3, parallel = TRUE)
-	if(!segments)
-		return
-	var/segment = 360/segments
-	if(!clockwise)
-		segment = -segment
+/**
+ * Animates source spinning around itself.
+ * * segments - the number of segments the animation has. Not sure how this is really necessary.
+ * * angle - the angle turned per segment, in degrees
+ * * parallel - if the animation is parallel or not.
+ */
+/matrix/proc/do_spin_animation(source, speed = 10, loops = -1, segments = 3, angle = 120, parallel = TRUE)
 	var/list/matrices = list()
 	for(var/i in 1 to segments-1)
-		var/matrix/M = matrix(transform)
-		M.Turn(segment*i)
-		matrices += M
-	var/matrix/last = matrix(transform)
+		var/matrix/segment_matrix = matrix(src)
+		segment_matrix.Turn(angle*i)
+		matrices += segment_matrix
+	var/matrix/last = matrix(src)
 	matrices += last
 
 	speed /= segments
 
 	if(parallel)
-		animate(src, transform = matrices[1], time = speed, loops , flags = ANIMATION_PARALLEL)
+		animate(source, transform = matrices[1], time = speed, loops , flags = ANIMATION_PARALLEL)
 	else
-		animate(src, transform = matrices[1], time = speed, loops)
+		animate(source, transform = matrices[1], time = speed, loops)
 	for(var/i in 2 to segments) //2 because 1 is covered above
 		animate(transform = matrices[i], time = speed)
 		//doesn't have an object argument because this is "Stacking" with the animate call above
