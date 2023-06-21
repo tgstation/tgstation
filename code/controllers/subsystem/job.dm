@@ -64,11 +64,11 @@ SUBSYSTEM_DEF(job)
 	/// Dictionary that maps job priorities to low/medium/high. Keys have to be number-strings as assoc lists cannot be indexed by integers. Set in setup_job_lists.
 	var/list/job_priorities_to_strings
 
-	/// List of job config datum singletons.
-	var/list/job_config_datum_singletons = list()
-
 	/// Are we using the old job config system (txt) or the new job config system (TOML)? IF we are going to use the txt file, then we are in "legacy mode", and this will flip to TRUE.
 	var/legacy_mode = FALSE
+
+	/// List of job config datum singletons.
+	var/list/job_config_datum_singletons = list()
 
 	/// This is just the message we prepen and put into all of the config files to ensure documentation. We use this in more than one place, so let's put it in the SS to make life a bit easier.
 	var/config_documentation = "## This is the configuration file for the job system.\n## This will only be enabled when the config flag LOAD_JOBS_FROM_TXT is enabled.\n\
