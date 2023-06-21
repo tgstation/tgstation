@@ -218,7 +218,7 @@
 	. = NONE
 
 	if(isnull(held_item) || held_item == source)
-		context[SCREENTIP_CONTEXT_CTRL_RMB] = "Remove embedded item (if any)"
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove embedded item (if any)"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item) && held_item.w_class <= WEIGHT_CLASS_SMALL && held_item != source && !IS_EDIBLE(held_item))
