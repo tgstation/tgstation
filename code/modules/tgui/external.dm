@@ -70,7 +70,7 @@
  * change static data.
  */
 /datum/proc/update_static_data_for_all_viewers()
-	for (var/datum/tgui/window as anything in open_uis)
+	for (var/datum/tgui/window as anything in SStgui.open_uis_by_src[REF(src)])
 		window.send_full_update()
 
 /**

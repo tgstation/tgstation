@@ -17,10 +17,6 @@
 	  */
 	var/gc_destroyed
 
-	/// Open uis owned by this datum
-	/// Lazy, since this case is semi rare
-	var/list/open_uis
-
 	/// Active timers with this datum as the target
 	var/list/_active_timers
 	/// Status traits attached to this datum. associative list of the form: list(trait name (string) = list(source1, source2, source3,...))
