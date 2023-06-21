@@ -10,34 +10,37 @@
 
 /// Called in jobs subsystem initialize if LOAD_JOBS_FROM_TXT config flag is set: reads jobconfig.toml (or if in legacy mode, jobs.txt) to set all of the datum's values to what the server operator wants.
 /datum/controller/subsystem/job/proc/load_jobs_from_config()
+	if(legacy_mode)
+		legacy_load()
+		return
+
 	var/toml_path = "[global.config.directory]/jobconfig.toml"
+	var/job_config = rustg_read_toml_file(toml_path)
 
-	if(!legacy_mode)
-		var/job_config = rustg_read_toml_file(toml_path)
+	for(var/datum/job/occupation as anything in joinable_occupations)
+		var/job_key = occupation.config_tag
+		if(!job_config[job_key]) // Job isn't listed, skip it.
+			// List both job_title and job_key in case they de-sync over time.
+			message_admins(span_notice("[occupation.title] (with config key [job_key]) is missing from jobconfig.toml! Using codebase defaults."))
+			continue
 
-		for(var/datum/job/occupation as anything in joinable_occupations)
-			var/job_key = occupation.config_tag
-			if(!job_config[job_key]) // Job isn't listed, skip it.
-				// List both job_title and job_key in case they de-sync over time.
-				message_admins(span_notice("[occupation.title] (with config key [job_key]) is missing from jobconfig.toml! Using codebase defaults."))
-				continue
+		for(var/config_datum_key in job_config_datum_singletons)
+			var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
+			var/config_value = job_config[job_key][config_datum_key]
+			config_datum.set_current_value(occupation, config_value)
 
-			for(var/config_datum_key in job_config_datum_singletons)
-				var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
-				var/config_value = job_config[job_key][config_datum_key]
-				config_datum.set_current_value(occupation, config_value)
-
-	else // legacy mode, so just run the old parser.
-		var/jobsfile = file("[global.config.directory]/jobs.txt")
-		if(!fexists(jobsfile)) // sanity with a trace
-			stack_trace("Despite SSconfig setting SSjob.legacy_mode to TRUE, jobs.txt was not found in the config directory! Something has gone terribly wrong!")
-			return
-		var/jobstext = file2text(jobsfile)
-		for(var/datum/job/occupation as anything in joinable_occupations)
-			var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)")
-			parser.Find(jobstext)
-			occupation.total_positions = text2num(parser.group[1])
-			occupation.spawn_positions = text2num(parser.group[2])
+/// Operates the legacy jobs.txt parser to load jobs from the old config system.
+/datum/controller/subsystem/job/proc/legacy_load()
+	var/jobsfile = file("[global.config.directory]/jobs.txt")
+	if(!fexists(jobsfile)) // sanity with a trace
+		stack_trace("Despite SSconfig setting SSjob.legacy_mode to TRUE, jobs.txt was not found in the config directory! Something has gone terribly wrong!")
+		return
+	var/jobstext = file2text(jobsfile)
+	for(var/datum/job/occupation as anything in joinable_occupations)
+		var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)")
+		parser.Find(jobstext)
+		occupation.total_positions = text2num(parser.group[1])
+		occupation.spawn_positions = text2num(parser.group[2])
 
 /// Will generate a new jobconfig.toml file if one does not exist, or if one does exist, will migrate the old jobs.txt file into the new TOML format for download
 /// Returns TRUE if a file is successfully generated, FALSE otherwise.
