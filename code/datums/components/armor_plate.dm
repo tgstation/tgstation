@@ -35,24 +35,19 @@
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	var/p_They = parent.p_they(TRUE)
-	var/p_Their = parent.p_their(TRUE)
-	var/p_Theyre = parent.p_theyre(TRUE)
-	var/p_have = parent.p_have()
-	var/upgrade_name = initial(upgrade_item.name)
 	if(ismecha(parent))
 		if(amount)
 			if(amount < max_amount)
-				examine_list += span_notice("[p_Their] armor is enhanced with [amount] [upgrade_name].")
+				examine_list += span_notice("[parent.p_their(TRUE)] armor is enhanced with [amount] [upgrade_name].")
 			else
-				examine_list += span_notice("[p_Theyre] wearing a fearsome carapace entirely composed of [upgrade_name] - [p_Their] pilot must be an experienced monster hunter.")
+				examine_list += span_notice("[parent.p_theyre(TRUE)] wearing a fearsome carapace entirely composed of [upgrade_name] - [parent.p_their(TRUE)] pilot must be an experienced monster hunter.")
 		else
-			examine_list += span_notice("[p_They] [p_have] attachment points for strapping [upgrade_name] on for added protection.")
+			examine_list += span_notice("[parent.p_they(TRUE)] [parent.p_have()] attachment points for strapping [upgrade_name] on for added protection.")
 	else
 		if(amount)
-			examine_list += span_notice("[p_They] [p_have] been strengthened with [amount]/[max_amount] [upgrade_name].")
+			examine_list += span_notice("[parent.p_they(TRUE)] [parent.p_have()] been strengthened with [amount]/[max_amount] [upgrade_name].")
 		else
-			examine_list += span_notice("[p_They] can be strengthened with up to [max_amount] [upgrade_name].")
+			examine_list += span_notice("[parent.p_they(TRUE)] can be strengthened with up to [max_amount] [upgrade_name].")
 
 /datum/component/armor_plate/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user, params)
 	SIGNAL_HANDLER
@@ -81,7 +76,9 @@
 	for(var/rating in armor_datum.get_rating_list())
 		improvements += lowertext(rating)
 	var/improvements_text = english_list(improvements)
-	to_chat(user, span_info("You strengthen [parent], improving [parent.p_their()] resistance against [improvements_text]."))
+	to_chat(user, span_info("You strengthen [atom_parent], improving [atom_parent.p_their()] resistance against [improvements_text]."))
+	if(istype(atom_parent, /obj/vehicle/sealed/mecha/working/ripley))
+		atom_parent.update_appearance()
 	SEND_SIGNAL(atom_parent, COMSIG_ARMOR_PLATED, amount, max_amount)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
