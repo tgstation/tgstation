@@ -16,23 +16,3 @@
 	name = "medieval Jewish hat"
 	desc = "A silly looking hat, intended to be placed on the heads of the station's oppressed religious minorities."
 	icon_state = "medievaljewhat"
-
-/obj/item/clothing/head/chaplain/taqiyah/white
-	name = "white taqiyah"
-	desc = "An extra-mustahabb way of showing your devotion to Allah."
-	icon_state = "taqiyahwhite"
-
-/obj/item/clothing/head/chaplain/taqiyah/white/Initialize(mapload)
-	. = ..()
-
-	create_storage(storage_type = /datum/storage/pockets/small)
-
-/obj/item/clothing/head/chaplain/taqiyah/red
-	name = "red taqiyah"
-	desc = "An extra-mustahabb way of showing your devotion to Allah."
-	icon_state = "taqiyahred"
-
-/obj/item/clothing/head/chaplain/taqiyah/red/Initialize(mapload)
-	. = ..()
-
-	create_storage(storage_type = /datum/storage/pockets/small)

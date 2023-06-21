@@ -475,8 +475,6 @@
 		/obj/item/storage/fancy/candle_box = 2,
 		/obj/item/clothing/head/chaplain/kippah = 3,
 		/obj/item/clothing/suit/chaplainsuit/whiterobe = 1,
-		/obj/item/clothing/head/chaplain/taqiyah/white = 1,
-		/obj/item/clothing/head/chaplain/taqiyah/red = 3,
 		/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 1,
 		/obj/item/clothing/head/rasta = 1,
 		/obj/item/clothing/suit/chaplainsuit/shrinehand = 1,

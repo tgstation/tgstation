@@ -708,30 +708,6 @@
 /datum/holiday/programmers/getStationPrefix()
 	return pick("span>","DEBUG: ","null","/list","EVENT PREFIX NOT FOUND") //Portability
 
-// ISLAMIC
-
-/datum/holiday/islamic
-	name = "Islamic calendar code broken"
-
-/datum/holiday/islamic/shouldCelebrate(dd, mm, yyyy, ddd)
-	var/datum/foreign_calendar/islamic/cal = new(yyyy, mm, dd)
-	return ..(cal.dd, cal.mm, cal.yyyy, ddd)
-
-/datum/holiday/islamic/ramadan
-	name = "Start of Ramadan"
-	begin_month = 9
-	begin_day = 1
-	end_day = 3
-
-/datum/holiday/islamic/ramadan/getStationPrefix()
-	return pick("Haram","Halaal","Jihad","Muslim", "Al", "Mohammad", "Rashidun", "Umayyad", "Abbasid", "Abdul", "Fatimid", "Ayyubid", "Almohad", "Abu")
-
-/datum/holiday/islamic/ramadan/end
-	name = "End of Ramadan"
-	end_month = 10
-	begin_day = 28
-	end_day = 1
-
 // HEBREW
 
 /datum/holiday/hebrew

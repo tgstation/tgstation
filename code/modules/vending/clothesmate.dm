@@ -24,7 +24,6 @@
 				/obj/item/clothing/neck/tie = 6,
 				/obj/item/clothing/head/rasta = 3,
 				/obj/item/clothing/head/chaplain/kippah = 3,
-				/obj/item/clothing/head/chaplain/taqiyah/red = 3,
 				/obj/item/clothing/head/hats/tophat = 3,
 				/obj/item/clothing/head/fedora = 3,
 				/obj/item/clothing/head/hats/bowler = 3,

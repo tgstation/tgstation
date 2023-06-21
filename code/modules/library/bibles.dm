@@ -1,6 +1,5 @@
 GLOBAL_LIST_INIT(biblenames, list(
 	"Bible",
-	"Quran",
 	"Scrapbook",
 	"Burning Bible",
 	"Clown Bible",
@@ -23,7 +22,6 @@ GLOBAL_LIST_INIT(biblenames, list(
 // if your bible has no custom itemstate, use one of the existing ones
 GLOBAL_LIST_INIT(biblestates, list(
 	"bible",
-	"koran",
 	"scrapbook",
 	"burning",
 	"honk1",
@@ -44,7 +42,6 @@ GLOBAL_LIST_INIT(biblestates, list(
 ))
 GLOBAL_LIST_INIT(bibleitemstates, list(
 	"bible",
-	"koran",
 	"scrapbook",
 	"burning",
 	"honk1",

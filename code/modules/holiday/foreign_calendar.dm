@@ -1,6 +1,5 @@
 #define BYOND_EPOCH 2451544.5
 #define HEBREW_EPOCH 347995.5
-#define ISLAMIC_EPOCH 1948439.5
 #define GREGORIAN_EPOCH 1721424.5
 
 /*
@@ -44,21 +43,6 @@ by John Walker 2015, released under public domain
 ///Converts BYOND realtime to Julian Day
 /datum/foreign_calendar/proc/realtime_to_jd(realtime)
 	return round(realtime / 864000) + BYOND_EPOCH
-
-//////////////////////////////
-//     Islamic Calendar     //
-//////////////////////////////
-/datum/foreign_calendar/islamic/proc/leap_islamic(yr)
-	return ((yr * 11 + 14) % 30) < 11
-
-/datum/foreign_calendar/islamic/set_date()
-	var/jd_adj = round(jd) + 0.5 // adjust julian date so it ends in .5
-	yyyy = round(((30 * (jd_adj - ISLAMIC_EPOCH)) + 10646) / 10631)
-	mm = min(12, CEILING(((jd - (29 + islamic_to_jd(yyyy, 1, 1))) / 29.5) + 1, 1))
-	dd = jd - islamic_to_jd(yyyy, mm, 1) + 1
-
-/datum/foreign_calendar/islamic/proc/islamic_to_jd(year, month, day)
-	return day + CEILING(29.5 * (month - 1), 1) + (year - 1) * 354 + round((3 + (11 * year)) / 30) + ISLAMIC_EPOCH - 1
 
 //////////////////////////////
 //      Hebrew Calendar     //
@@ -152,7 +136,6 @@ by John Walker 2015, released under public domain
 	//  Nope, it's a 30 day month
 	return 30
 
-#undef ISLAMIC_EPOCH
 #undef BYOND_EPOCH
 #undef HEBREW_EPOCH
 #undef GREGORIAN_EPOCH
