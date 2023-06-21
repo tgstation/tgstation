@@ -11,6 +11,7 @@
 /datum/armor/under_abductor
 	bomb = 10
 	bio = 10
+	wound = 5
 
 //AGENT VEST
 /obj/item/clothing/suit/armor/abductor/vest
