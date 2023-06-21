@@ -31,4 +31,5 @@
 	var/error_string = "Invalid value for [name] for [occupation.title] (with config tag [occupation.config_tag])! Value must be between [AGE_MIN] and [AGE_MAX]!"
 	error_string += "\n[occupation.title]'s required age will remain the default value of [occupation.required_character_age || "0 (OFF)"]!"
 	log_config(error_string)
+	log_job_debug(error_string)
 	return FALSE
