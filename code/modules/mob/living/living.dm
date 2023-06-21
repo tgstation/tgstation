@@ -648,7 +648,7 @@
 /mob/living/proc/get_pixel_y_offset_standing(value)
 	var/icon/living_icon = icon(icon)
 	var/height = living_icon.Height()
-	return ((value-1) * height/2)
+	return (value-1) * height/2
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()
