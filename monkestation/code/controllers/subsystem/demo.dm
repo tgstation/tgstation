@@ -1,6 +1,9 @@
 /datum/config_entry/flag/demos_enabled
 	default = FALSE
 
+/datum/config_entry/string/replay_password
+	default = "mrhouse101"
+
 SUBSYSTEM_DEF(demo)
 	name = "Demo"
 	wait = 1
@@ -68,6 +71,9 @@ SUBSYSTEM_DEF(demo)
 	dummy_observer.key = dummy_observer.ckey = ckey
 	dummy_observer.name = dummy_observer.real_name = "SSdemo Dummy Observer"
 
+	var/rounder = file("[GLOB.demo_directory]/round_number.txt")
+	fdel(rounder)
+	WRITE_FILE(rounder, "[GLOB.round_id]")
 	var/revdata_list = list()
 	if(GLOB.revdata)
 		revdata_list["commit"] = "[GLOB.revdata.originmastercommit]"

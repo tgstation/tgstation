@@ -2,11 +2,13 @@
 	event_name = "Amongus Everyone"
 	event_duration = 15 MINUTES
 	event_flags = TWITCH_AFFECTS_ALL
+	id_tag = "amongus-all15"
 
 /datum/twitch_event/amongus/ook
 	event_name = "Amongus Ook"
 	event_duration = 30 MINUTES
 	event_flags = TWITCH_AFFECTS_STREAMER
+	id_tag = "amongus-ook10"
 
 
 /datum/twitch_event/amongus/run_event()

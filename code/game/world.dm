@@ -136,7 +136,8 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
 	GLOB.logger.init_logging()
-	GLOB.demo_log = "[GLOB.demo_directory]/[GLOB.round_id]_demo.log"
+
+	GLOB.demo_log = "[GLOB.demo_directory]/[GLOB.round_id]_demo.txt"
 	GLOB.dynamic_log = "[GLOB.log_directory]/dynamic.log"
 	GLOB.filter_log = "[GLOB.log_directory]/filters.log"
 	GLOB.lua_log = "[GLOB.log_directory]/lua.log"

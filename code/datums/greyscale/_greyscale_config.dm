@@ -243,6 +243,7 @@
 	icon_bundle = fcopy_rsc(icon_bundle)
 	icon_cache[key] = icon_bundle
 	var/icon/output = icon(icon_bundle)
+	SSdemo.embed_resource(output)
 	return output
 
 /// Handles the actual icon manipulation to create the spritesheet
