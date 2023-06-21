@@ -1,0 +1,6 @@
+author: "kawoppi"
+delete-after: True
+changes:
+  - image: "added lizard inhand- and onhead sprites"
+  - image: "added space lizard inhand- and onhead sprites"
+  - bugfix: "changed held weight class of lizards from normal to tiny"

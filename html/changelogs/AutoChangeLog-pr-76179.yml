@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "Maps loaded post init will no longer randomly enter a failed state. Hopefully."

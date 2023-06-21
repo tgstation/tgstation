@@ -1,0 +1,4 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - bugfix: "Adds wound armor to ALL jumpsuits that were missing it"

@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes:
+  - balance: "The Atmospheric MODsuit now comes pre equipped with the quick carry module. Go save some lives!"
