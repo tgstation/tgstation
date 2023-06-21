@@ -28022,7 +28022,7 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "The Noise's Jam-Tastic radical listening Post";
 	req_access = "theatre";
-	id = "honkbunker"
+	
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -99328,7 +99328,7 @@ acL
 abM
 abM
 ada
-abM
+acK
 abM
 acL
 acx
