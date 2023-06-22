@@ -467,10 +467,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/unit_test_top_right
 	name = "unit test zone top right"
 
-/// Marks the starting position of where gateways should start spawning in the gateway room.
-/obj/effect/landmark/gateway_spawn_start
-	name = "gateway spawn start"
-
 /obj/effect/landmark/start/hangover
 	name = "hangover spawn"
 	icon_state = "hangover_spawn"
