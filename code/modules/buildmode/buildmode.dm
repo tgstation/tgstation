@@ -22,7 +22,7 @@
 	// dirswitch UI
 	var/atom/movable/screen/buildmode/bdir/dirbutton
 	var/list/dirswitch_buttons = list()
-	// item preview for selected item
+	/// item preview for selected item
 	var/atom/movable/screen/buildmode/preview_item/preview
 
 /datum/buildmode/New(client/c)
