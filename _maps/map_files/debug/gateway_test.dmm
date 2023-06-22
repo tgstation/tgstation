@@ -1,96 +1,148 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/wall/r_wall,
-/area/misc/testroom)
+/turf/closed/indestructible/reinforced,
+/area/misc/testroom/gateway_room)
 "c" = (
-/obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/misc/testroom)
+/obj/effect/turf_decal/stripes/white/full,
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
 "d" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/misc/testroom)
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
 "f" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/extinguisher_cabinet/directional/east,
-/turf/open/floor/iron,
-/area/misc/testroom)
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 9
+	},
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "g" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
-/turf/open/floor/iron,
-/area/misc/testroom)
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "h" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/iron,
-/area/misc/testroom)
-"l" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
+"j" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 6
 	},
+/obj/structure/sign/flag/ssc/directional/north,
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
+"l" = (
 /obj/machinery/computer/communications{
 	dir = 8
 	},
-/turf/open/floor/iron,
-/area/misc/testroom)
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "m" = (
-/obj/item/radio/intercom/directional/east,
-/turf/open/floor/iron,
-/area/misc/testroom)
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "n" = (
-/obj/effect/turf_decal/bot_white/right,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/misc/testroom)
+/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
+"p" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 10
+	},
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
 "q" = (
-/obj/effect/turf_decal/bot_white/left,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/misc/testroom)
+/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
 "r" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/shutters/indestructible,
 /turf/open/floor/iron,
-/area/misc/testroom)
+/area/misc/testroom/gateway_room)
 "t" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron,
-/area/misc/testroom)
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 5
+	},
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "u" = (
-/obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/sign/flag/nanotrasen/directional/north,
-/turf/open/floor/iron/dark,
-/area/misc/testroom)
+/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/obj/structure/sign/flag/terragov/directional/north,
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
 "v" = (
 /obj/machinery/gateway/centerstation,
-/turf/open/floor/iron/dark,
-/area/misc/testroom)
+/obj/effect/turf_decal/stripes/white/box,
+/obj/effect/turf_decal/trimline/blue,
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
 "y" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/sign/poster/official/corporate_perks_vacation/directional/east,
-/turf/open/floor/iron/dark,
-/area/misc/testroom)
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
 "z" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/effect/landmark/blobstart,
-/turf/open/floor/iron,
-/area/misc/testroom)
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "B" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/iron,
-/area/misc/testroom)
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "C" = (
-/turf/open/floor/iron,
-/area/misc/testroom)
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "D" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -99,22 +151,25 @@
 /obj/effect/landmark/latejoin,
 /obj/effect/landmark/observer_start,
 /obj/effect/landmark/start,
-/turf/open/floor/iron,
-/area/misc/testroom)
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "E" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Gateway Chamber"
 	},
-/turf/open/floor/iron,
-/area/misc/testroom)
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "G" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/card/id/advanced/gold/captains_spare,
-/turf/open/floor/iron,
-/area/misc/testroom)
+/obj/item/toy/figure/curator{
+	pixel_y = 5
+	},
+/obj/item/card/id/advanced/debug,
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "H" = (
 /turf/open/space/basic,
 /area/space)
@@ -123,8 +178,15 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/full,
-/turf/open/floor/iron,
-/area/misc/testroom)
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
+"J" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
 "K" = (
 /obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/rglass{
@@ -132,19 +194,22 @@
 	},
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/rods/fifty,
-/obj/effect/turf_decal/bot{
-	dir = 1
-	},
 /obj/item/toy/plush/lizard_plushie/space/green{
 	name = "Travels-The-Stars";
 	desc = "The greatest gateway explorer ever created."
 	},
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/item/storage/toolbox/emergency,
-/obj/machinery/airalarm/directional/north,
 /obj/machinery/firealarm/directional/west,
-/turf/open/floor/iron,
-/area/misc/testroom)
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/sign/calendar/directional/north,
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "M" = (
 /obj/structure/chair/stool/directional/east,
 /obj/effect/turf_decal/stripes/line{
@@ -156,22 +221,37 @@
 /obj/machinery/keycard_auth/directional/west{
 	pixel_y = -7
 	},
-/turf/open/floor/iron,
-/area/misc/testroom)
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
+"N" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/obj/structure/sign/warning/radiation/directional/east,
+/turf/open/indestructible/dark,
+/area/misc/testroom/gateway_room)
 "O" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/vending/wallmed/directional/west,
-/turf/open/floor/iron,
-/area/misc/testroom)
+/obj/machinery/suit_storage_unit/centcom,
+/obj/structure/sign/warning/engine_safety/directional/south,
+/obj/structure/sign/warning/no_smoking/circle/directional/west,
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "P" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/iron,
-/area/misc/testroom)
+/obj/structure/sign/poster/official/corporate_perks_vacation/directional/west,
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
+"Q" = (
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "R" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -184,12 +264,11 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/north,
-/turf/open/floor/iron,
-/area/misc/testroom)
+/turf/open/indestructible,
+/area/misc/testroom/gateway_room)
 "W" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/misc/testroom)
+/turf/closed/indestructible/fakeglass,
+/area/misc/testroom/gateway_room)
 
 (1,1,1) = {"
 H
@@ -254,8 +333,8 @@ H
 (6,1,1) = {"
 H
 a
-n
-c
+j
+q
 q
 d
 C
@@ -269,8 +348,8 @@ a
 u
 v
 c
-d
-C
+J
+Q
 z
 r
 H
@@ -278,8 +357,8 @@ H
 (8,1,1) = {"
 H
 a
-q
-c
+p
+N
 n
 y
 m
