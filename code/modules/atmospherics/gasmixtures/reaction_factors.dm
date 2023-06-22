@@ -45,23 +45,23 @@
 
 /datum/gas_reaction/freonfire/init_factors()
 	factor = list(
-		/datum/gas/oxygen = "Oxygen consumption is determined by the temperature, ranging from [OXYGEN_BURN_RATIO_BASE] of the reaction rate at [FREON_LOWER_TEMPERATURE] Kelvins to [OXYGEN_BURN_RATIO_BASE-1] at [FREON_MAXIMUM_BURN_TEMPERATURE] Kelvins. Higher oxygen concentration up to [FREON_OXYGEN_FULLBURN] times the freon increases the reaction rate.",
-		/datum/gas/freon = "Freon is consumed at 1 reaction rate. It's relationship with oxygen also determines reaction speed",
-		/datum/gas/carbon_dioxide = "Carbon Dioxide is formed at 1 reaction rate.",
+		/datum/gas/oxygen = "Oxygen consumption is determined by the temperature, ranging from [OXYGEN_BURN_RATIO_BASE] moles per mole of freon consumed at [FREON_LOWER_TEMPERATURE] Kelvins to [OXYGEN_BURN_RATIO_BASE-1] moles per mole of freon consumed at [FREON_MAXIMUM_BURN_TEMPERATURE] Kelvins. Higher oxygen concentration up to [FREON_OXYGEN_FULLBURN] times the freon increases freon consumption rate.",
+		/datum/gas/freon = "Freon is consumed at a rate that scales with the distance of the temperature from [FREON_MAXIMUM_BURN_TEMPERATURE]K. Its relationship with oxygen also determines consumption rate.",
+		/datum/gas/carbon_dioxide = "Carbon Dioxide is formed at 1 mole per mole of freon consumed.",
 		"Temperature" = "Can only occur between [FREON_LOWER_TEMPERATURE] - [FREON_MAXIMUM_BURN_TEMPERATURE] Kelvin",
-		"Energy" = "[FIRE_FREON_ENERGY_CONSUMED] joules of energy is absorbed per reaction rate",
-		"Hot Ice" = "This reaction has a small chance to produce hot ice when occuring between [HOT_ICE_FORMATION_MINIMUM_TEMPERATURE]-[HOT_ICE_FORMATION_MAXIMUM_TEMPERATURE] kelvins",
+		"Energy" = "[FIRE_FREON_ENERGY_CONSUMED] joules of energy is absorbed per mole of freon consumed.",
+		"Hot Ice" = "This reaction produces hot ice when occuring between [HOT_ICE_FORMATION_MINIMUM_TEMPERATURE]-[HOT_ICE_FORMATION_MAXIMUM_TEMPERATURE] kelvins",
 	)
 
 
 /datum/gas_reaction/nitrousformation/init_factors()
 	factor = list(
-		/datum/gas/oxygen = "10 moles of Oxygen needs to be present for the reaction to occur. Oxygen is consumed at 1 reaction rate",
-		/datum/gas/nitrogen = " 20 moles of Nitrogen needs to be present for the reaction to occur. Nitrogen is consumed at 2 reaction rate",
+		/datum/gas/oxygen = "10 moles of Oxygen needs to be present for the reaction to occur. Oxygen is consumed at 0.5 moles per mole of nitrous oxide formed.",
+		/datum/gas/nitrogen = " 20 moles of Nitrogen needs to be present for the reaction to occur. Nitrogen is consumed at 1 mole per mole of nitrous oxife formed.",
 		/datum/gas/bz = "5 moles of BZ needs to be present for the reaction to occur. Not consumed.",
-		/datum/gas/nitrous_oxide = "Nitrous oxide is produced at 1 reaction rate",
+		/datum/gas/nitrous_oxide = "Nitrous oxide gets produced rapidly.",
 		"Temperature" = "Can only occur between [N2O_FORMATION_MIN_TEMPERATURE] - [N2O_FORMATION_MAX_TEMPERATURE] Kelvin",
-		"Energy" = "[N2O_FORMATION_ENERGY] joules of energy is released per reaction rate",
+		"Energy" = "[N2O_FORMATION_ENERGY] joules of energy is released per mole of nitrous oxide formed.",
 	)
 
 /datum/gas_reaction/nitrous_decomp/init_factors()
