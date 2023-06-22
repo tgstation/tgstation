@@ -1161,8 +1161,8 @@
 
 /datum/mod_theme/interdyne
 	name = "interdyne"
-	desc = "A corpse-snatching and rapid-retrieval modsuit, resulting from a lucrative tech exchange between Intrudyne Pharmaceutics and Cybersun Industries."
-	extended_desc = "While Woffle Co. and Azik Interstellar provide the means, Donk Co., Tiger Cooperative, Animal Rights Consortium and \
+	desc = "A corpse-snatching and rapid-retrieval modsuit, resulting from a lucrative tech exchange between Interdyne Pharmaceutics and Cybersun Industries."
+	extended_desc = "While Waffle Co. and Azik Interstellar provide the means, Donk Co., Tiger Cooperative, Animal Rights Consortium and \
 		Gorlex Marauders willing or easly bribable brawn, S.E.L.F. and MI13 information, the clear syndicate tech providers would be Interdyne and Cybersun, \
 		their combined knowledge in technologies rivaled by only most enigmatic of aliens, and certainly not by any Nanostrasen scientist. \
 		This modsuit model is one of rare fruits created by their joint operations, mashing scrapped designs with super soldier enhancements. \
@@ -1176,8 +1176,8 @@
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2.2
-	slowdown_inactive = 0.5
-	slowdown_active = 0.1
+	slowdown_inactive = 0.0
+	slowdown_active = -0.5
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced, /obj/item/mod/module/organ_thrower)
 	allowed_suit_storage = list(
 		/obj/item/healthanalyzer,
@@ -1231,15 +1231,15 @@
 	)
 
 /datum/armor/mod_theme_interdyne
-	melee = 10
-	bullet = 5
-	laser = 10
-	energy = 5
-	bomb = 10
+	melee = 30
+	bullet = 20
+	laser = 20
+	energy = 30
+	bomb = 20
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 5
+	wound = 30
 
 /datum/mod_theme/enchanted
 	name = "enchanted"
