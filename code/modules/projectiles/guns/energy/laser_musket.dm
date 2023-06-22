@@ -23,7 +23,7 @@
 			charging_cell.give(500)
 			update_appearance()
 			is_charging = FALSE
-			balloon_alert(user, "charging")
+			balloon_alert(user, "charged")
 	else
 		balloon_alert(user, "already charged!")
 
