@@ -1,9 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - rscadd: "air sensor's are craftable"
-  - refactor: "air sensor's can now be turned off by hand and can only be deconstructed by a welding tool"
-  - refactor: "removed `Params()` proc"
-  - qol: "unwrenched air sensors can be picked up & recycled like regular item's"
-  - rscdel: "air sensor are removed from the RPD UI"
-  - qol: "air sensor's are no longer restricted by their unique ID's which mean you can craft as many air sensors as you want."

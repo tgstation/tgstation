@@ -1,8 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - rscadd: "The Vorpal Scythe, a special null rod variant that gains power from beheading people! But it is fickle about when and how you use its power. Replaces the Reaper Scythe."
-  - rscadd: "Beheading via the special death knell attack empowers the scythe, but only on humans with a mind, and requires you to use the right-click button to wind up the slice. If you succeed, you empower your scythe for a bit!"
-  - rscadd: "If they don't have a mind, you cause the heads to float around. OoooOOOooo! Spooky!"
-  - rscadd: "With the sinister crystal that holds the Vorpal Scythe within bound to your arm, you are Morbid! You love to do pretty unsettling things, like dissections for fun! But helping the living stay alive is abhorrent to you!"
-  - rscadd: "...unless you get to do it while screaming 'IT LIVES!' via Revival surgery. Screw conventional medicine and science, you know the true way to bring back the dead!"
