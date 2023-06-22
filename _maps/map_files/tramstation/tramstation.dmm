@@ -7837,10 +7837,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "bhG" = (
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/machinery/door/airlock/bananium{
-	req_access = "theatre"
-	},
+/obj/machinery/door/airlock/bananium,
+/obj/effect/mapping_helpers/airlock/access/all/service/theatre,
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/ruin/powered/clownplanet{
 	name = "The Noise's Jam-Tastic radical listening Post"
@@ -12330,8 +12328,7 @@
 "cMf" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/airlock/bananium{
-	name = "Honkroom";
-	req_access = "theatre"
+	name = "Honkroom"
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/powered/clownplanet{
@@ -13148,13 +13145,12 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/airlock/external/glass{
 	name = "The Noise's Jam-Tastic radical listening Post";
-	desc = "Theodore Was Here.";
-	req_access = "theatre"
+	desc = "Theodore Was Here."
 	},
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/all/service/theatre,
 /turf/open/ballpit,
 /area/ruin/powered/clownplanet{
 	name = "The Noise's Jam-Tastic radical listening Post"
@@ -15226,7 +15222,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "dQO" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -25790,6 +25785,12 @@
 /obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
 /area/station/commons/dorms)
+"hVb" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/glass/reinforced,
+/area/station/engineering/break_room)
 "hVo" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -28018,14 +28019,12 @@
 /area/station/asteroid)
 "iOC" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/airlock/external/glass{
-	name = "The Noise's Jam-Tastic radical listening Post";
-	req_access = "theatre";
-	
+	name = "The Noise's Jam-Tastic radical listening Post"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/service/theatre,
 /turf/open/ballpit,
 /area/ruin/powered/clownplanet{
 	name = "The Noise's Jam-Tastic radical listening Post"
@@ -102687,7 +102686,7 @@ gYI
 wlQ
 gul
 uHI
-uHI
+hVb
 wYO
 tdf
 uJI
@@ -107596,7 +107595,7 @@ orh
 uxn
 inb
 pHM
-inb
+oNq
 slb
 oEf
 ixc
