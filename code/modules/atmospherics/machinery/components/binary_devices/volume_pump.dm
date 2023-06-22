@@ -1,4 +1,4 @@
-// Every cycle, the pump uses the air in air_in to try and make air_out the perfect pressure.
+// Every cycle, the pump uses the air in air_in to try and move a specific volume of gas into air_out.
 //
 // node1, air1, network1 correspond to input
 // node2, air2, network2 correspond to output
