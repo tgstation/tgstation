@@ -153,6 +153,17 @@
 	return call(object, delegate)(arglist(calling_arguments))
 
 /**
+ * Invokes this callback on the passed in object/arguments, forgetting about both it right after
+ * Useful for callbacks we hold onto
+ * Accepts the object to call on, and a list of arguments
+ * I need to pass args around in lists and arglist() was not fucking happy with me, so we're doing this
+ */
+/datum/callback/proc/FleetingInvoke(datum/object, list/arguments)
+	src.object = object
+	. = Invoke(arglist(arguments))
+	src.object = null
+
+/**
 	Helper datum for the select callbacks proc
  */
 /datum/callback_select

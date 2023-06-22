@@ -35,6 +35,10 @@
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
+	if(PERFORM_ALL_TESTS(non_stack_sheet_type))
+		if(!ispath(sheet_type, /obj/item/stack))
+			stack_trace("Non stack [sheet_type] found in [type]'s sheet_type variable")
+
 	if(!can_engrave)
 		ADD_TRAIT(src, TRAIT_NOT_ENGRAVABLE, INNATE_TRAIT)
 	if(is_station_level(z))
@@ -89,14 +93,14 @@
 	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/closed/wall/proc/break_wall()
-	new sheet_type(src, sheet_amount)
+	SSwardrobe.provide_type(sheet_type, src, SET_STACK_AMOUNT(sheet_amount))
 	if(girder_type)
 		return new girder_type(src)
 
 /turf/closed/wall/proc/devastate_wall()
-	new sheet_type(src, sheet_amount)
+	SSwardrobe.provide_type(sheet_type, src, SET_STACK_AMOUNT(sheet_amount))
 	if(girder_type)
-		new /obj/item/stack/sheet/iron(src)
+		SSwardrobe.provide_type(/obj/item/stack/sheet/iron, src)
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)

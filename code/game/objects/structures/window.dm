@@ -349,13 +349,13 @@
 	var/obj/effect/decal/debris_type = glass_material_ref.debris_type
 	var/list/dropped_debris = list()
 	if(!isnull(shard_type))
-		dropped_debris += new shard_type(location)
+		dropped_debris += SSwardrobe.provide_type(shard_type, location)
 		if (fulltile)
-			dropped_debris += new shard_type(location)
+			dropped_debris += SSwardrobe.provide_type(shard_type, location)
 	if(!isnull(debris_type))
-		dropped_debris += new debris_type(location)
+		dropped_debris += SSwardrobe.provide_type(debris_type, location)
 	if (reinf)
-		dropped_debris += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
+		dropped_debris += SSwardrobe.provide_type(/obj/item/stack/rods, location, SET_STACK_AMOUNT(fulltile ? 2 : 1))
 	return dropped_debris
 
 /obj/structure/window/proc/AfterRotation(mob/user, degrees)
@@ -876,7 +876,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 		. += span_info("It looks a bit damaged, you may be able to fix it with some <b>paper</b>.")
 
 /obj/structure/window/paperframe/spawn_debris(location)
-	. = list(new /obj/item/stack/sheet/mineral/wood(location))
+	. = list(SSwardrobe.provide_type(/obj/item/stack/sheet/mineral/wood, location))
 	for (var/i in 1 to rand(1,4))
 		. += new /obj/item/paper/natural(location)
 

@@ -92,6 +92,8 @@
 		if(istype(sheet_module.source))
 			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
 			sheet_module.is_cyborg = TRUE
+			/// This stack is weird, not allowed to reinsert it anymore
+			sheet_module.preload = FALSE
 
 	if(added_module.loc != src)
 		added_module.forceMove(src)

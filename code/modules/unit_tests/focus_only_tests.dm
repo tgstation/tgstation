@@ -35,3 +35,6 @@
 
 /// Checks for bad icon / icon state setups in cooking crafting menu
 /datum/unit_test/focus_only/bad_cooking_crafting_icons
+
+/// Ensures all sheet_type vars on /turf/closed/wall are /obj/item/stacks
+/datum/unit_test/focus_only/non_stack_sheet_type

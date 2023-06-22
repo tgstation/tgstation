@@ -18,6 +18,9 @@ SUBSYSTEM_DEF(wardrobe)
 	/// List of type -> list(insertion callback, removal callback) callbacks for insertion/removal to use.
 	/// Set in setup_callbacks, used in canonization.
 	var/list/initial_callbacks = list()
+	/// List of key -> /datum/callbacks for optional invokation. See code/__DEFINES/wardrobe.dm
+	/// Allows callers to request something particular happen to their object, along with arguments
+	var/list/keyed_callbacks = list()
 	/// Canonical list of types required to fill all preloaded stocks once.
 	/// Type -> list(count, last inspection timestamp, call on insert, call on removal)
 	var/list/canon_minimum = list()
@@ -43,6 +46,9 @@ SUBSYSTEM_DEF(wardrobe)
 	load_outfits()
 	load_species()
 	load_storage_contents()
+	load_stacks()
+	load_shards()
+	load_abstract()
 	hard_refresh_queue()
 	stock_hit = 0
 	stock_miss = 0
@@ -91,7 +97,7 @@ SUBSYSTEM_DEF(wardrobe)
 				order_list[type_to_stock] = (amount_to_stock - (i - 1)) // Account for types we've already created
 				return
 			var/atom/movable/new_member = new type_to_stock()
-			stash_object(new_member)
+			yield_object(new_member)
 
 		order_list -= type_to_stock
 		if(MC_TICK_CHECK)
@@ -154,9 +160,10 @@ SUBSYSTEM_DEF(wardrobe)
  *
  * Arguments:
  * * type to stock - What type exactly do you want us to remember?
+ * * amount - Optional, how many of this type would you like to store
  *
 */
-/datum/controller/subsystem/wardrobe/proc/canonize_type(type_to_stock)
+/datum/controller/subsystem/wardrobe/proc/canonize_type(type_to_stock, amount = 1)
 	if(!type_to_stock)
 		return
 	if(!ispath(type_to_stock))
@@ -172,8 +179,17 @@ SUBSYSTEM_DEF(wardrobe)
 			master_info[WARDROBE_CACHE_CALL_INSERT] = callback_info[WARDROBE_CALLBACK_INSERT]
 			master_info[WARDROBE_CACHE_CALL_REMOVAL] = callback_info[WARDROBE_CALLBACK_REMOVE]
 		canon_minimum[type_to_stock] = master_info
-	master_info[WARDROBE_CACHE_COUNT] += 1
+	master_info[WARDROBE_CACHE_COUNT] += amount
 	one_go_master++
+
+/// Canonizes a typepath if and only if initial(typepath.to_read) is truthy
+#define CANNONIZE_IF_VAR(typepath, type_to_make, amount, to_read) \
+	do { \
+		var##typepath/remembered = type_to_make; \
+		if(initial(remembered.##to_read)) { \
+			canonize_type(type_to_make, amount); \
+		} \
+	} while(FALSE)
 
 /datum/controller/subsystem/wardrobe/proc/add_queue_item(queued_type, amount)
 	var/amount_held = order_list[queued_type] || 0
@@ -204,15 +220,26 @@ SUBSYSTEM_DEF(wardrobe)
 
 	order_list[queued_type] = amount
 
+/// Take an existing object, and insert it into our storage or failing that delete it
+/// You no longer own this object after passing it in
+/datum/controller/subsystem/wardrobe/proc/yield_object(atom/movable/object)
+	if(!stash_object(object))
+		qdel(object)
+
 /// Take an existing object, and insert it into our storage
-/// If we can't or won't take it, it's deleted. You do not own this object after passing it in
+/// If we can't or won't take it, we return FALSE. TRUE otherwise
+/// You only continue to own this object if TRUE is returned
 /datum/controller/subsystem/wardrobe/proc/stash_object(atom/movable/object)
 	var/object_type = object.type
 	var/list/master_info = canon_minimum[object_type]
 	// I will not permit objects you didn't reserve ahead of time
 	if(!master_info)
-		qdel(object)
-		return
+		return FALSE
+
+	// Fuck off
+	if(QDELETED(object))
+		stack_trace("We tried to stash a qdeleted object, what did you do")
+		return FALSE
 
 	var/stock_target = master_info[WARDROBE_CACHE_COUNT] * cache_intensity
 	var/amount_held = 0
@@ -222,12 +249,7 @@ SUBSYSTEM_DEF(wardrobe)
 
 	// Doublely so for things we already have too much of
 	if(amount_held - stock_target >= overflow_lienency)
-		qdel(object)
-		return
-	// Fuck off
-	if(QDELETED(object))
-		stack_trace("We tried to stash a qdeleted object, what did you do")
-		return
+		return FALSE
 
 	if(!stock_info)
 		stock_info = new /list(WARDROBE_STOCK_CALL_REMOVAL)
@@ -236,21 +258,39 @@ SUBSYSTEM_DEF(wardrobe)
 		stock_info[WARDROBE_STOCK_CALL_REMOVAL] = master_info[WARDROBE_CACHE_CALL_REMOVAL]
 		preloaded_stock[object_type] = stock_info
 
+	object.moveToNullspace()
 	var/datum/callback/do_on_insert = stock_info[WARDROBE_STOCK_CALL_INSERT]
 	if(do_on_insert)
-		do_on_insert.object = object
-		do_on_insert.Invoke()
-		do_on_insert.object = null
+		do_on_insert.FleetingInvoke(object)
 
-	object.moveToNullspace()
 	stock_info[WARDROBE_STOCK_CONTENTS] += object
+	return TRUE
 
-/datum/controller/subsystem/wardrobe/proc/provide_type(datum/requested_type, atom/movable/location)
+/// Returns an object of requested_type at location.
+/// If we queue that type, the passed in callback key will be invoked on it, with the passed in extra arguments as args
+/datum/controller/subsystem/wardrobe/proc/provide_type(datum/requested_type, atom/movable/location, callback_key, ...)
 	var/atom/movable/requested_object
+	var/datum/callback/invoke_before_move
+	var/list/invoke_args
+	if(!canon_minimum[requested_type])
+		requested_object = new requested_type(location)
+		return requested_object
+
+	if(callback_key)
+		invoke_before_move = keyed_callbacks[callback_key]
+		// Copies in any extra args that might be passed in by callback defines
+		if(length(args) >= 4)
+			invoke_args = args.Copy(4, 0)
+		else
+			invoke_args = list()
+
 	var/list/stock_info = preloaded_stock[requested_type]
 	if(!stock_info)
 		stock_miss++
-		requested_object = new requested_type(location)
+		requested_object = new requested_type()
+		if(invoke_before_move)
+			invoke_before_move.FleetingInvoke(requested_object, invoke_args)
+		requested_object.forceMove(location)
 		return requested_object
 
 	var/list/contents = stock_info[WARDROBE_STOCK_CONTENTS]
@@ -261,17 +301,21 @@ SUBSYSTEM_DEF(wardrobe)
 	if(QDELETED(requested_object))
 		stack_trace("We somehow ended up with a qdeleted or null object in SSwardrobe's stock. Something's weird, likely to do with reinsertion. Typepath of [requested_type]")
 		stock_miss++
-		requested_object = new requested_type(location)
+		requested_object = new requested_type()
+		if(invoke_before_move)
+			invoke_before_move.FleetingInvoke(requested_object, invoke_args)
+		requested_object.forceMove(location)
 		return requested_object
+
+	if(invoke_before_move)
+		invoke_before_move.FleetingInvoke(requested_object, invoke_args)
 
 	if(location)
 		requested_object.forceMove(location)
 
 	var/datum/callback/do_on_removal = stock_info[WARDROBE_STOCK_CALL_REMOVAL]
 	if(do_on_removal)
-		do_on_removal.object = requested_object
-		do_on_removal.Invoke()
-		do_on_removal.object = null
+		do_on_removal.FleetingInvoke(requested_object)
 
 	stock_hit++
 	add_queue_item(requested_type, 1) // Requeue the item, under the assumption we'll never see it again
@@ -298,20 +342,30 @@ SUBSYSTEM_DEF(wardrobe)
 	if(!length(stock_info[WARDROBE_STOCK_CONTENTS]))
 		preloaded_stock -= unload_type
 
-/// Sets up insertion and removal callbacks by typepath
+/// Sets up insertion and removal callbacks by typepath, alongside our bespoke requestable callbacks
 /// We will always use the deepest path. So /obj/item/blade/knife superceeds the entries of /obj/item and /obj/item/blade
 /// Mind this
 /datum/controller/subsystem/wardrobe/proc/setup_callbacks()
-	var/list/play_with = new /list(WARDROBE_CALLBACK_REMOVE) // Turns out there's a global list of pdas. Let's work around that yeah?
-
-	play_with = new /list(WARDROBE_CALLBACK_REMOVE) // Don't want organs rotting on the job
-	play_with[WARDROBE_CALLBACK_INSERT] = CALLBACK(null, TYPE_PROC_REF(/obj/item/organ,enter_wardrobe))
-	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, TYPE_PROC_REF(/obj/item/organ,exit_wardrobe))
+	var/list/play_with = new /list(WARDROBE_CALLBACK_REMOVE) // Don't want organs rotting on the job
+	play_with[WARDROBE_CALLBACK_INSERT] = CALLBACK(null, TYPE_PROC_REF(/obj/item/organ, enter_wardrobe))
+	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, TYPE_PROC_REF(/obj/item/organ, exit_wardrobe))
 	initial_callbacks[/obj/item/organ] = play_with
 
 	play_with = new /list(WARDROBE_CALLBACK_REMOVE)
-	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, TYPE_PROC_REF(/obj/item/storage/box/survival,wardrobe_removal))
+	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, TYPE_PROC_REF(/obj/item/storage/box/survival, wardrobe_removal))
 	initial_callbacks[/obj/item/storage/box/survival] = play_with
+
+	play_with = new /list(WARDROBE_CALLBACK_REMOVE)
+	play_with[WARDROBE_CALLBACK_INSERT] = CALLBACK(null, TYPE_PROC_REF(/obj/item/stack, on_wardrobe_insertion))
+	initial_callbacks[/obj/item/stack] = play_with
+
+	play_with = new /list(WARDROBE_CALLBACK_REMOVE)
+	play_with[WARDROBE_CALLBACK_INSERT] = CALLBACK(null, TYPE_PROC_REF(/obj/effect/abstract/z_holder, clear))
+	initial_callbacks[/obj/effect/abstract/z_holder] = play_with
+
+	// Ok now onto the bespoke ones
+	// Gives stacks a way to set their amount before the stack moves and is potentially given up again
+	keyed_callbacks[WARDROBE_STACK_AMOUNT] = CALLBACK(null, TYPE_PROC_REF(/obj/item/stack, add))
 
 /datum/controller/subsystem/wardrobe/proc/load_outfits()
 	for(var/datum/outfit/to_stock as anything in subtypesof(/datum/outfit))
@@ -328,8 +382,8 @@ SUBSYSTEM_DEF(wardrobe)
 			continue
 		var/datum/species/fossil_record = new to_record()
 		for(var/obj/item/species_request as anything in fossil_record.get_types_to_preload())
-			for(var/i in 1 to 5) // Store 5 of each species, since that seems on par with 1 of each outfit
-				canonize_type(species_request)
+			// Store 5 of each species, since that seems on par with 1 of each outfit
+			canonize_type(species_request, 5)
 		CHECK_TICK
 
 /datum/controller/subsystem/wardrobe/proc/load_storage_contents()
@@ -344,3 +398,34 @@ SUBSYSTEM_DEF(wardrobe)
 		for(var/datum/a_really_small_box as anything in somehow_more_boxes)
 			canonize_type(a_really_small_box)
 		qdel(another_crate)
+		CHECK_TICK
+
+/datum/controller/subsystem/wardrobe/proc/load_stacks()
+	for(var/obj/item/stack/stackable as anything in subtypesof(/obj/item/stack))
+		if(!initial(stackable.preload))
+			continue
+		// 5 of each type, just to provide a decent baseline
+		canonize_type(stackable, 5)
+		CHECK_TICK
+	// I want to be prepared for explosions
+	var/turf/closed/wall/read_from = /turf/closed/wall
+	CANNONIZE_IF_VAR(/obj/item/stack, initial(read_from.sheet_type), 400, preload)
+	read_from = /turf/closed/wall/r_wall
+	CANNONIZE_IF_VAR(/obj/item/stack, initial(read_from.sheet_type), 200, preload)
+	CANNONIZE_IF_VAR(/obj/item/stack, /obj/item/stack/rods, 200, preload)
+
+/datum/controller/subsystem/wardrobe/proc/load_shards()
+	for(var/obj/item/shard/secret_sauce as anything in subtypesof(/obj/item/shard))
+		if(!initial(secret_sauce.preload))
+			continue
+		// 5 of each type, just to provide a decent buffer for explosions in engi and stuff
+		canonize_type(secret_sauce, 5)
+		CHECK_TICK
+	// I want to be ready for exploisions and massive window shattering
+	CANNONIZE_IF_VAR(/obj/item/shard, /obj/item/shard, 200, preload)
+
+/datum/controller/subsystem/wardrobe/proc/load_abstract()
+	// We make and delete a LOT of these all at once (explosions, shuttles, etc)
+	// It's worth caching them, and they have low side effects so it's safe too
+	canonize_type(/obj/effect/abstract/z_holder, 300)
+

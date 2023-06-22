@@ -294,6 +294,8 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/shiv_type = /obj/item/knife/shiv
 	var/craft_time = 3.5 SECONDS
 	var/obj/item/stack/sheet/weld_material = /obj/item/stack/sheet/glass
+	/// If we should precreate and hold onto copies of this shard, to make spawning them later faster
+	var/preload = TRUE
 	embedding = list("embed_chance" = 65)
 
 /datum/armor/item_shard

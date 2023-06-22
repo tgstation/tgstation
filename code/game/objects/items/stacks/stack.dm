@@ -76,8 +76,16 @@
 	/// Expected lifetime of this bandage in seconds is thus absorption_capacity/absorption_rate,
 	/// or until the cut heals, whichever comes first
 	var/absorption_rate
+	/// If this subtype of /obj/item/stack accepts being preloaded, that is created and stored in a buffer until needed
+	/// Also allows insertion into said queue if we load and merge with another stack during init
+	var/preload = TRUE
+	/// If we have moved since being stocked in SSwardrobe
+	/// We use this to allow reinsertion if we unstock and then move onto a turf already full of sheets
+	var/reinsertion_safe = TRUE
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
+	if(!preload)
+		reinsertion_safe = FALSE
 	if(new_amount != null)
 		amount = new_amount
 	while(amount > max_amount)
@@ -100,7 +108,10 @@
 				continue
 			if(can_merge(item_stack))
 				INVOKE_ASYNC(src, PROC_REF(merge_without_del), item_stack)
-				if(is_zero_amount(delete_if_zero = FALSE))
+				/// Now, if we merged and have nothing left, we're gonna insert ourselves
+				/// Into the wardrobe pool. If that fails, we tell SSatoms to nuke us
+				/// This is only safe because we have not been in the world long enough to get like c4 stuck or something
+				if(is_zero_amount(delete_if_zero = FALSE) && (reinsertion_safe || !SSwardrobe.stash_object(src)))
 					return INITIALIZE_HINT_QDEL
 
 	recipes = get_main_recipes().Copy()
@@ -122,6 +133,18 @@
 
 	if(is_path_in_list(merge_type, GLOB.golem_stack_food_directory))
 		AddComponent(/datum/component/golem_food, golem_food_key = merge_type)
+
+// Reinsertion is no longer allowed after moving
+/obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	if(old_loc != loc)
+		reinsertion_safe = FALSE
+	return ..()
+
+/// Resets our amount to its initial value
+/// Also re-enables reinsertion in future
+/obj/item/stack/proc/on_wardrobe_insertion()
+	reinsertion_safe = TRUE
+	reset_amount()
 
 /** Sets the amount of materials per unit for this stack.
  *
@@ -506,10 +529,7 @@
 	amount -= used
 	if(check && is_zero_amount(delete_if_zero = TRUE))
 		return TRUE
-	if(length(mats_per_unit))
-		update_custom_materials()
-	update_appearance()
-	update_weight()
+	on_amount_change()
 	return TRUE
 
 /obj/item/stack/tool_use_check(mob/living/user, amount)
@@ -540,6 +560,8 @@
 		return source.energy < cost
 	if(amount < 1)
 		if(delete_if_zero)
+			if(reinsertion_safe && SSwardrobe.stash_object(src))
+				return TRUE
 			qdel(src)
 		return TRUE
 	return FALSE
@@ -554,6 +576,15 @@
 		source.add_charge(_amount * cost)
 	else
 		amount += _amount
+	on_amount_change()
+
+/// Resets our amount to its initial value
+/obj/item/stack/proc/reset_amount()
+	amount = initial(amount)
+	on_amount_change()
+
+/// Called when the amount var is modified
+/obj/item/stack/proc/on_amount_change()
 	if(length(mats_per_unit))
 		update_custom_materials()
 	update_appearance()
@@ -632,7 +663,8 @@
 		return
 
 	if(!arrived.throwing && can_merge(arrived))
-		INVOKE_ASYNC(src, PROC_REF(merge), arrived)
+		// We merge into the arrived stack so we can reinsert it if safe
+		INVOKE_ASYNC(arrived, PROC_REF(merge), src)
 
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting, inhand = TRUE))
