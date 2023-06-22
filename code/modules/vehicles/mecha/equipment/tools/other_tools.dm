@@ -281,11 +281,11 @@
 	///Type of fuel the generator is using. Is set in generator_init() to add the starting amount of fuel
 	var/obj/item/stack/sheet/fuel = null
 	///Fuel used per second while idle, not generating, in units
-	var/fuelrate_idle = 12.5
+	var/fuelrate_idle = 0.00625 * SHEET_MATERIAL_AMOUNT
 	///Fuel used per second while actively generating, in units
-	var/fuelrate_active = 100
+	var/fuelrate_active = 0.05 * SHEET_MATERIAL_AMOUNT
 	///Maximum fuel capacity of the generator, in units
-	var/max_fuel = 150000
+	var/max_fuel = 75 * SHEET_MATERIAL_AMOUNT
 	///Energy recharged per second
 	var/rechargerate = 10
 
@@ -312,11 +312,11 @@
 	. = ..()
 	if(action == "toggle")
 		if(activated)
-			to_chat(usr, "[icon2html(src, usr)][span_warning("Power generation enabled.")]")
+			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Power generation enabled.")]")
 			START_PROCESSING(SSobj, src)
 			log_message("Activated.", LOG_MECHA)
 		else
-			to_chat(usr, "[icon2html(src, usr)][span_warning("Power generation disabled.")]")
+			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Power generation disabled.")]")
 			STOP_PROCESSING(SSobj, src)
 			log_message("Deactivated.", LOG_MECHA)
 		return TRUE

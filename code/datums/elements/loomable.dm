@@ -34,12 +34,12 @@
 	src.process_completion_verb = process_completion_verb
 	src.target_needs_anchoring = target_needs_anchoring
 	src.loom_time = loom_time
-	RegisterSignal(target, COMSIG_ITEM_ATTACK_OBJ, PROC_REF(try_and_loom_me))
+	RegisterSignal(target, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(try_and_loom_me))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/loomable/Detach(obj/item/source)
 	. = ..()
-	UnregisterSignal(source, list(COMSIG_ITEM_ATTACK_OBJ, COMSIG_ATOM_EXAMINE))
+	UnregisterSignal(source, list(COMSIG_ITEM_ATTACK_ATOM, COMSIG_ATOM_EXAMINE))
 
 /// Adds an examine blurb to the description of any item that can be loomed
 /datum/element/loomable/proc/on_examine(obj/item/source, mob/examiner, list/examine_list)

@@ -1,4 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes:
-  - bugfix: "positronic brains now correctly reject the ghosts of people who have used the suicide verb"

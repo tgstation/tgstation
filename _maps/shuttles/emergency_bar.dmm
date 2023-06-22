@@ -134,8 +134,7 @@
 /obj/machinery/flasher/directional/north{
 	id = "cockpit_flasher"
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
+/obj/item/kirbyplants/organic/plant21{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -273,8 +272,7 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "bc" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
+/obj/item/kirbyplants/organic/plant21{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -394,8 +392,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bG" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
+/obj/item/kirbyplants/organic/plant21{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -475,9 +472,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bT" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
