@@ -5,6 +5,7 @@
 	icon = 'icons/obj/pillow.dmi'
 	icon_state = "pillow_1_t"
 	inhand_icon_state = "pillow_t"
+	worn_icon_state = "nothing"  //Large enough to warrent an actual sprite for this
 	lefthand_file = 'icons/mob/inhands/items/pillow_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/pillow_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
