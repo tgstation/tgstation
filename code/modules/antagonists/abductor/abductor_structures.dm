@@ -15,35 +15,35 @@
 	framestack = /obj/item/stack/sheet/mineral/abductor
 	framestackamount = 1
 
-/obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH)
+/obj/structure/table_frame/abductor/attackby(obj/item/attacking_item, mob/user, params)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, span_notice("You start disassembling [src]..."))
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 30))
+		attacking_item.play_tool_sound(src)
+		if(attacking_item.use_tool(src, user, 30))
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			for(var/i in 0 to framestackamount)
 				new framestack(get_turf(src))
 			qdel(src)
 			return
-	if(istype(I, /obj/item/stack/sheet/mineral/abductor))
-		var/obj/item/stack/sheet/P = I
-		if(P.get_amount() < 1)
+	if(istype(attacking_item, /obj/item/stack/sheet/mineral/abductor))
+		var/obj/item/stack/sheet/stacked_sheets = attacking_item
+		if(stacked_sheets.get_amount() < 1)
 			to_chat(user, span_warning("You need one alien alloy sheet to do this!"))
 			return
-		to_chat(user, span_notice("You start adding [P] to [src]..."))
+		to_chat(user, span_notice("You start adding [stacked_sheets] to [src]..."))
 		if(do_after(user, 50, target = src))
-			P.use(1)
+			stacked_sheets.use(1)
 			new /obj/structure/table/abductor(src.loc)
 			qdel(src)
 		return
-	if(istype(I, /obj/item/stack/sheet/mineral/silver))
-		var/obj/item/stack/sheet/P = I
-		if(P.get_amount() < 1)
+	if(istype(attacking_item, /obj/item/stack/sheet/mineral/silver))
+		var/obj/item/stack/sheet/stacked_sheets = attacking_item
+		if(stacked_sheets.get_amount() < 1)
 			to_chat(user, span_warning("You need one sheet of silver to do this!"))
 			return
-		to_chat(user, span_notice("You start adding [P] to [src]..."))
+		to_chat(user, span_notice("You start adding [stacked_sheets] to [src]..."))
 		if(do_after(user, 50, target = src))
-			P.use(1)
+			stacked_sheets.use(1)
 			new /obj/structure/table/optable/abductor(src.loc)
 			qdel(src)
 
@@ -94,11 +94,11 @@
 
 /obj/structure/table/optable/abductor/process(seconds_per_tick)
 	. = PROCESS_KILL
-	for(var/mob/living/carbon/C in get_turf(src))
+	for(var/mob/living/carbon/victim in get_turf(src))
 		. = TRUE
 		for(var/chemical in injected_reagents)
-			if(C.reagents.get_reagent_amount(chemical) < inject_amount * seconds_per_tick)
-				C.reagents.add_reagent(chemical, inject_amount * seconds_per_tick)
+			if(victim.reagents.get_reagent_amount(chemical) < inject_amount * seconds_per_tick)
+				victim.reagents.add_reagent(chemical, inject_amount * seconds_per_tick)
 	return .
 
 /obj/structure/table/optable/abductor/Destroy()

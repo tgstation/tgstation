@@ -94,25 +94,25 @@
 		return
 	stealth_active = TRUE
 	if(ishuman(loc))
-		var/mob/living/carbon/human/M = loc
-		new /obj/effect/temp_visual/dir_setting/ninja/cloak(get_turf(M), M.dir)
-		M.name_override = disguise.name
-		M.icon = disguise.icon
-		M.icon_state = disguise.icon_state
-		M.cut_overlays()
-		M.add_overlay(disguise.overlays)
-		M.update_held_items()
+		var/mob/living/carbon/human/wearer = loc
+		new /obj/effect/temp_visual/dir_setting/ninja/cloak(get_turf(wearer), wearer.dir)
+		wearer.name_override = disguise.name
+		wearer.icon = disguise.icon
+		wearer.icon_state = disguise.icon_state
+		wearer.cut_overlays()
+		wearer.add_overlay(disguise.overlays)
+		wearer.update_held_items()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
 		return
 	stealth_active = FALSE
 	if(ishuman(loc))
-		var/mob/living/carbon/human/M = loc
-		new /obj/effect/temp_visual/dir_setting/ninja(get_turf(M), M.dir)
-		M.name_override = null
-		M.cut_overlays()
-		M.regenerate_icons()
+		var/mob/living/carbon/human/wearer = loc
+		new /obj/effect/temp_visual/dir_setting/ninja(get_turf(wearer), wearer.dir)
+		wearer.name_override = null
+		wearer.cut_overlays()
+		wearer.regenerate_icons()
 
 /obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	DeactivateStealth()
@@ -135,13 +135,13 @@
 		if(combat_cooldown < initial(combat_cooldown))
 			to_chat(loc, span_warning("Combat injection is still recharging."))
 			return
-		var/mob/living/carbon/human/M = loc
-		M.adjustStaminaLoss(-75)
-		M.SetUnconscious(0)
-		M.SetStun(0)
-		M.SetKnockdown(0)
-		M.SetImmobilized(0)
-		M.SetParalyzed(0)
+		var/mob/living/carbon/human/wearer = loc
+		wearer.adjustStaminaLoss(-75)
+		wearer.SetUnconscious(0)
+		wearer.SetStun(0)
+		wearer.SetKnockdown(0)
+		wearer.SetImmobilized(0)
+		wearer.SetParalyzed(0)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 
@@ -152,8 +152,8 @@
 
 /obj/item/clothing/suit/armor/abductor/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	for(var/obj/machinery/abductor/console/C in GLOB.machines)
-		if(C.vest == src)
-			C.vest = null
+	for(var/obj/machinery/abductor/console/mothership_console in GLOB.machines)
+		if(mothership_console.vest == src)
+			mothership_console.vest = null
 			break
 	return ..()
