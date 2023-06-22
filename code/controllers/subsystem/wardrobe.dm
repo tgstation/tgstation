@@ -90,6 +90,109 @@ SUBSYSTEM_DEF(wardrobe)
 			current_task = SSWARDROBE_STOCK
 			last_inspect_time = world.time
 
+/// Runs a speed test for all our various types
+/// Measures the average cost of providing vs spawning, and deletion vs stashing
+/datum/controller/subsystem/wardrobe/proc/speed_test(turf/spawn_on, attempt_count = 200)
+	var/old_overflow_lienency = overflow_lienency
+	overflow_lienency = INFINITY
+
+	// Stock everything I want IMMEDIATELY
+	force_stock_wardrobe(attempt_count)
+
+	// List of lists in the form list(type, new_cost, provide_cost, qdel_cost, stash_cost)
+	var/list/type_info = list()
+	for(var/atom/movable/type_to_test as anything in preloaded_stock)
+		var/new_cost = 0
+		var/provide_cost = 0
+		var/qdel_cost = 0
+		var/stash_cost = 0
+		for(var/i in 1 to attempt_count)
+			// Stopwatches are one per proc, so lets give them their own scope
+			do {
+				STAT_START_STOPWATCH
+				var/atom/hh = new type_to_test(spawn_on)
+				STAT_STOP_STOPWATCH
+				new_cost += STAT_TIME
+				qdel(hh)
+			} while(FALSE)
+			// In case subobjects are also tracked, this avoids any mistakes
+			force_stock_wardrobe(attempt_count)
+			// Now provide()
+			do {
+				STAT_START_STOPWATCH
+				var/atom/hh = SSwardrobe.provide(type_to_test, spawn_on)
+				STAT_STOP_STOPWATCH
+				provide_cost += STAT_TIME
+				qdel(hh)
+			} while(FALSE)
+			force_stock_wardrobe(attempt_count)
+			// qdel()
+			do {
+				var/atom/hh = SSwardrobe.provide(type_to_test, spawn_on)
+				STAT_START_STOPWATCH
+				qdel(hh)
+				STAT_STOP_STOPWATCH
+				qdel_cost += STAT_TIME
+			} while(FALSE)
+			force_stock_wardrobe(attempt_count)
+			// stash_object()
+			do {
+				var/atom/hh = SSwardrobe.provide(type_to_test, spawn_on)
+				STAT_START_STOPWATCH
+				SSwardrobe.stash_object(hh)
+				STAT_STOP_STOPWATCH
+				stash_cost += STAT_TIME
+			} while(FALSE)
+			force_stock_wardrobe(attempt_count)
+		type_info += list(list(type_to_test, new_cost, provide_cost, qdel_cost, stash_cost))
+
+	overflow_lienency = old_overflow_lienency
+	// Ok now we have our data, time to print it
+	var/list/wardrobe_info = list("<B>Performance information ([attempt_count] runs)</B><BR><BR><ol>")
+	sortTim(type_info, cmp=/proc/cmp_wardrobe_performance)
+	for(var/list/deets in type_info)
+		wardrobe_info += "<li><u>[deets[1]]</u><ul>"
+		wardrobe_info += "<li>New: [deets[2]]ms</li>"
+		wardrobe_info += "<li>Provide: [deets[3]]ms</li>"
+		wardrobe_info += "<li>Qdel: [deets[4]]ms</li>"
+		wardrobe_info += "<li>Stash: [deets[5]]ms</li>"
+		wardrobe_info += "</ul></li>"
+	wardrobe_info += "</ol>"
+
+	usr << browse(wardrobe_info.Join(), "window=wardrobe_perf")
+
+/proc/cmp_wardrobe_performance(list/A, list/B)
+	var/create_delta_a = A[3] - A[2]
+	var/create_delta_b = B[3] - B[2]
+	var/del_delta_a = A[5] - A[4]
+	var/del_delta_b = B[5] - B[4]
+	if((create_delta_a + del_delta_a) / 2 > (create_delta_b + del_delta_b) / 2)
+		return 1
+	return -1
+
+/// Stocks the wardrobe to stock_to items, no more no less
+/// Only usable for testing, will not work well in production as it'll likely just get run over by other code
+/datum/controller/subsystem/wardrobe/proc/force_stock_wardrobe(stock_to)
+	for(var/datum/loaded_type as anything in canon_minimum)
+		var/list/stock_info = preloaded_stock[loaded_type]
+		var/amount_held = 0
+		if(stock_info)
+			amount_held = length(stock_info[WARDROBE_STOCK_CONTENTS])
+
+		var/target_delta = amount_held - stock_to
+
+		// If we've got anything over the line, cut it back down
+		if(target_delta > 0)
+			unload_stock(loaded_type, target_delta, force = TRUE)
+			continue
+		// If we have more then we target, just don't you feel me?
+		else if (target_delta == 0)
+			continue
+
+		// If we don't have enough, queue enough to make up the remainder
+		for(var/i in 1 to abs(target_delta))
+			yield_object(new loaded_type())
+
 /// Turns the order list into actual loaded items, this is where most work is done
 /datum/controller/subsystem/wardrobe/proc/stock_wardrobe()
 	for(var/atom/movable/type_to_stock as anything in order_list)
@@ -262,7 +365,8 @@ SUBSYSTEM_DEF(wardrobe)
 		stock_info[WARDROBE_STOCK_CALL_REMOVAL] = master_info[WARDROBE_CACHE_CALL_REMOVAL]
 		preloaded_stock[object_type] = stock_info
 
-	object.moveToNullspace()
+	if(object.loc != null)
+		object.moveToNullspace()
 	var/datum/callback/do_on_insert = stock_info[WARDROBE_STOCK_CALL_INSERT]
 	if(do_on_insert)
 		do_on_insert.FleetingInvoke(object)
@@ -274,8 +378,7 @@ SUBSYSTEM_DEF(wardrobe)
 /datum/controller/subsystem/wardrobe/proc/provide(datum/requested_type, atom/movable/location, ...)
 	var/atom/movable/requested_object
 	if(!canon_minimum[requested_type])
-		requested_object = new requested_type(location)
-		return requested_object
+		return new requested_type(location)
 
 	var/list/misc_callbacks
 	if(length(args) >= 3) // If we got callbacks passed in throw them all in one list for ease of processing
@@ -287,7 +390,8 @@ SUBSYSTEM_DEF(wardrobe)
 		requested_object = new requested_type()
 		if(length(misc_callbacks))
 			apply_misc_callbacks(requested_object, misc_callbacks)
-		requested_object.forceMove(location)
+		if(location)
+			requested_object.forceMove(location)
 		return requested_object
 
 	var/list/contents = stock_info[WARDROBE_STOCK_CONTENTS]
@@ -301,7 +405,8 @@ SUBSYSTEM_DEF(wardrobe)
 		requested_object = new requested_type()
 		if(length(misc_callbacks))
 			apply_misc_callbacks(requested_object, misc_callbacks)
-		requested_object.forceMove(location)
+		if(location)
+			requested_object.forceMove(location)
 		return requested_object
 
 	if(length(misc_callbacks))
