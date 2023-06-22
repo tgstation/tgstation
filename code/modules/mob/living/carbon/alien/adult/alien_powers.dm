@@ -228,10 +228,9 @@ Doesn't work on other aliens/AI.*/
 	return ..()
 
 /datum/action/cooldown/alien/acid/corrosion/Activate(atom/target)
-	//if(!target.acid_act(200, 1000))
-	//	to_chat(owner, span_noticealien("You cannot dissolve this object."))
-	//	return FALSE
-	target.AddComponent(/datum/component/acid, 200, 1000, GLOB.acid_overlay, FALSE)
+	if(!target.acid_act(200, 1000))
+		to_chat(owner, span_noticealien("You cannot dissolve this object."))
+		return FALSE
 
 	owner.visible_message(
 		span_alertalien("[owner] vomits globs of vile stuff all over [target]. It begins to sizzle and melt under the bubbling mess of acid!"),
