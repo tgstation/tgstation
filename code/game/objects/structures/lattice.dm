@@ -15,7 +15,7 @@
 	smoothing_groups = SMOOTH_GROUP_LATTICE
 	canSmoothWith = SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_OPEN_FLOOR
 	var/number_of_mats = 1
-	var/build_material = /obj/item/stack/rods
+	var/obj/item/stack/build_material = /obj/item/stack/rods
 	/// Are we allowed to precreate these in SSwardrobe?
 	var/preload = TRUE
 
@@ -65,7 +65,7 @@
 
 /obj/structure/lattice/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new build_material(get_turf(src), number_of_mats)
+		SSwardrobe.provide(build_material, get_turf(src), STACK_AMOUNT(number_of_mats))
 	qdel(src)
 
 /obj/structure/lattice/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)

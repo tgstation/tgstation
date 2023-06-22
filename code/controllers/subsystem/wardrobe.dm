@@ -278,7 +278,7 @@ SUBSYSTEM_DEF(wardrobe)
 		return requested_object
 
 	var/list/misc_callbacks
-	if(length(args >= 3)) // If we got callbacks passed in throw them all in one list for ease of processing
+	if(length(args) >= 3) // If we got callbacks passed in throw them all in one list for ease of processing
 		misc_callbacks = args.Copy(3)
 
 	var/list/stock_info = preloaded_stock[requested_type]
@@ -422,7 +422,8 @@ SUBSYSTEM_DEF(wardrobe)
 	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/stack, initial(read_from.sheet_type), 400, preload)
 	read_from = /turf/closed/wall/r_wall
 	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/stack, initial(read_from.sheet_type), 200, preload)
-	CANNONIZE_IF_VAR(/obj/item/stack, 200, preload)
+	// We do this a lot, should have a healthy supply of them
+	CANNONIZE_IF_VAR(/obj/item/stack/cable_coil, 200, preload)
 
 /datum/controller/subsystem/wardrobe/proc/load_shards()
 	for(var/obj/item/shard/secret_sauce as anything in typesof(/obj/item/shard))
