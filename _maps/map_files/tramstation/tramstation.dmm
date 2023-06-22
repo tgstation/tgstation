@@ -54296,6 +54296,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
+/obj/machinery/photocopier,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "sql" = (
