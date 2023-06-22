@@ -39,7 +39,7 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_inhand_right
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit_worn
 	w_class = WEIGHT_CLASS_BULKY
-	armor_type = /datum/armor/curator_nasa
+	armor_type = /datum/armor/clothing_under/curator_nasa
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST | GROIN | LEGS | ARMS //Needs gloves and shoes with cold protection to be fully protected.
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -48,5 +48,5 @@
 	can_adjust = FALSE
 	resistance_flags = NONE
 
-/datum/armor/curator_nasa
+/datum/armor/clothing_under/curator_nasa
 	bio = 95

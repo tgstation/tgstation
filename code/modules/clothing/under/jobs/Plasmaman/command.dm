@@ -5,9 +5,9 @@
 	inhand_icon_state = null
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
-	armor_type = /datum/armor/plasmaman_captain
+	armor_type = /datum/armor/clothing_under/plasmaman_captain
 
-/datum/armor/plasmaman_captain
+/datum/armor/clothing_under/plasmaman_captain
 	bio = 100
 	fire = 95
 	acid = 95
@@ -24,11 +24,11 @@
 	desc = "A plasmaman containment suit decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "hos_envirosuit"
 	inhand_icon_state = null
-	armor_type = /datum/armor/security_head_of_security/plasmaman
+	armor_type = /datum/armor/clothing_under/security_head_of_security/plasmaman
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/datum/armor/security_head_of_security/plasmaman
+/datum/armor/clothing_under/security_head_of_security/plasmaman
 	bio = 100
 	fire = 95
 	acid = 95
@@ -38,9 +38,9 @@
 	desc = "An air-tight suit designed to be used by plasmamen insane enough to achieve the rank of \"Chief Engineer\"."
 	icon_state = "ce_envirosuit"
 	inhand_icon_state = null
-	armor_type = /datum/armor/plasmaman_chief_engineer
+	armor_type = /datum/armor/clothing_under/plasmaman_chief_engineer
 
-/datum/armor/plasmaman_chief_engineer
+/datum/armor/clothing_under/plasmaman_chief_engineer
 	bio = 100
 	fire = 95
 	acid = 95
@@ -50,9 +50,9 @@
 	desc = "It's an envirosuit worn by those with the experience to be \"Chief Medical Officer\"."
 	icon_state = "cmo_envirosuit"
 	inhand_icon_state = null
-	armor_type = /datum/armor/plasmaman_chief_medical_officer
+	armor_type = /datum/armor/clothing_under/plasmaman_chief_medical_officer
 
-/datum/armor/plasmaman_chief_medical_officer
+/datum/armor/clothing_under/plasmaman_chief_medical_officer
 	bio = 100
 	fire = 95
 	acid = 95
@@ -62,9 +62,9 @@
 	desc = "It's an envirosuit worn by those with the know-how to achieve the position of \"Research Director\"."
 	icon_state = "rd_envirosuit"
 	inhand_icon_state = null
-	armor_type = /datum/armor/plasmaman_research_director
+	armor_type = /datum/armor/clothing_under/plasmaman_research_director
 
-/datum/armor/plasmaman_research_director
+/datum/armor/clothing_under/plasmaman_research_director
 	bio = 100
 	fire = 95
 	acid = 95

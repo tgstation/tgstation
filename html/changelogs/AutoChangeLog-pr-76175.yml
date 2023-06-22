@@ -1,0 +1,4 @@
+author: "YehnBeep"
+delete-after: True
+changes:
+  - bugfix: "Science department hallways now have unrestricted one-way exits on Delta, Birdshot, and Icebox, to make these maps consistent with the others."
