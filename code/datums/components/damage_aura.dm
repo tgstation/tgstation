@@ -91,7 +91,7 @@
 
 /// What effect the damage aura has if it has an owner.
 /datum/component/damage_aura/proc/owner_effect(mob/living/owner_mob, seconds_per_tick)
-	owner_mob.adjustStaminaLoss(-20 * seconds_per_tick, updating_stamina = FALSE)
+	owner_mob.stamina.adjust(20 * seconds_per_tick)
 	owner_mob.adjustBruteLoss(-1 * seconds_per_tick, updating_health = FALSE)
 	owner_mob.adjustFireLoss(-1 * seconds_per_tick, updating_health = FALSE)
 	owner_mob.adjustToxLoss(-1 * seconds_per_tick, updating_health = FALSE, forced = TRUE)
@@ -122,7 +122,7 @@
 		if (iscarbon(candidate))
 			candidate.adjustToxLoss(toxin_damage * seconds_per_tick, updating_health = FALSE)
 			candidate.adjustOxyLoss(suffocation_damage * seconds_per_tick, updating_health = FALSE)
-			candidate.adjustStaminaLoss(stamina_damage * seconds_per_tick, updating_stamina = FALSE)
+			candidate.stamina.adjust(-stamina_damage * seconds_per_tick)
 			candidate.adjustCloneLoss(clone_damage * seconds_per_tick, updating_health = FALSE)
 
 			for (var/organ in organ_damage)
