@@ -171,4 +171,4 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_received = "Payment received, We salute you for being law-abiding tax-paying citizens"
 	response_too_late = "Too late, A team has already been sent out resolve this matter directly."
 	response_not_enough = "You filed your taxes incorrectly, A team has been sent to assist in liquidating assets and arrest you for tax fraud. \
-		Nothing personal kid."
+		Nothing personel kid."
