@@ -105,5 +105,5 @@
 	#define MOVABLE_SAY_QUOTE_MESSAGE_SPANS 2
 	#define MOVABLE_SAY_QUOTE_MESSAGE_MODS 3
 
-/// From /datum/element/submerge/proc/add_submerge_overlay(): (visual_overlay)
-#define COMSIG_MOVABLE_EDIT_UNIQUE_SUBMERGE_OVERLAY "movable_edit_unique_submerge_overlay"
+/// From /datum/element/immerse/proc/add_submerge_overlay(): (visual_overlay)
+#define COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY "movable_edit_unique_submerge_overlay"

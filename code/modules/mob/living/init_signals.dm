@@ -54,7 +54,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-	RegisterSignal(src, COMSIG_MOVABLE_EDIT_UNIQUE_SUBMERGE_OVERLAY, PROC_REF(edit_submerge_overlay))
+	RegisterSignal(src, COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY, PROC_REF(edit_immerse_overlay))
 
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
@@ -248,8 +248,8 @@
 	SIGNAL_HANDLER
 	refresh_gravity()
 
-/// Called in [/datum/element/submerge//apply_filter]
-/mob/living/proc/edit_submerge_overlay(datum/source, atom/movable/submerge_overlay/vis_overlay)
+/// Called in [/datum/element/immerse/apply_filter]
+/mob/living/proc/edit_immerse_overlay(datum/source, atom/movable/immerse_overlay/vis_overlay)
 	SIGNAL_HANDLER
 
 	vis_overlay.transform = vis_overlay.transform.Scale(1/current_size)

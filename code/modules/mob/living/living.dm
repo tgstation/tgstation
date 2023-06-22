@@ -15,7 +15,7 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
-	ADD_TRAIT(src, TRAIT_UNIQUE_SUBMERGE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_UNIQUE_IMMERSE, INNATE_TRAIT)
 
 /mob/living/prepare_huds()
 	..()

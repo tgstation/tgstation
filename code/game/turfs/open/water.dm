@@ -16,7 +16,7 @@
 
 /turf/open/water/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/submerge, icon, icon_state, "submerge", "#88BBCC")
+	AddElement(/datum/element/immerse, icon, icon_state, "submerge", "#88BBCC")
 
 /turf/open/water/jungle
 

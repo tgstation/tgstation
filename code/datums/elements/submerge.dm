@@ -1,9 +1,9 @@
 /**
- * A visual element that makes movables entering the attached turfs look half-submerged into that turf.
+ * A visual element that makes movables entering the attached turfs look immersed into that turf.
  *
- * Abandon all hope, ye who read forth, for this submerge works on mind-numbing workarounds,
+ * Abandon all hope, ye who read forth, for this immerse works on mind-numbing workarounds,
  */
-/datum/element/submerge
+/datum/element/immerse
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 	///An association list of turfs that have this element attached and their affected contents.
@@ -15,11 +15,11 @@
 	 */
 	var/static/list/movables_to_ignore
 	///A list of icons generated from a target and a mask, later used as appearances for the overlays.
-	var/static/list/generated_submerge_icons = list()
-	///A list of instances of /atom/movable/submerge_overlay then used as visual overlays for the submerged movables.
+	var/static/list/generated_immerse_icons = list()
+	///A list of instances of /atom/movable/immerse_overlay then used as visual overlays for the immersed movables.
 	var/list/generated_visual_overlays = list()
 	///An association list of movables as key and overlays as assoc.
-	var/list/submerge_movables
+	var/list/immersed_movables
 
 	var/icon
 	var/icon_state
@@ -27,7 +27,7 @@
 	var/color
 	var/alpha
 
-/datum/element/submerge/Attach(turf/target, icon, icon_state, mask_icon, color, alpha = 210)
+/datum/element/immerse/Attach(turf/target, icon, icon_state, mask_icon, color, alpha = 210)
 	. = ..()
 	if(!isturf(target) || !icon || !icon_state || !mask_icon)
 		return ELEMENT_INCOMPATIBLE
@@ -55,13 +55,13 @@
 	 * to an atom with the KEEP_TOGETHER appearance flag, with the mask also
 	 * applying to said atom, when we don't want it to.
 	 */
-	var/icon/submerge_icon = generated_submerge_icons["[icon]-[icon_state]-[mask_icon]"]
-	if(!submerge_icon)
-		submerge_icon = icon(icon, icon_state)
+	var/icon/immerse_icon = generated_immerse_icons["[icon]-[icon_state]-[mask_icon]"]
+	if(!immerse_icon)
+		immerse_icon = icon(icon, icon_state)
 		var/icon/sub_mask = icon('icons/effects/effects.dmi', mask_icon)
-		submerge_icon.Blend(sub_mask, ICON_MULTIPLY)
-		submerge_icon = fcopy_rsc(submerge_icon)
-		generated_submerge_icons["[icon]-[icon_state]-[mask_icon]"] = submerge_icon
+		immerse_icon.Blend(sub_mask, ICON_MULTIPLY)
+		immerse_icon = fcopy_rsc(immerse_icon)
+		generated_immerse_icons["[icon]-[icon_state]-[mask_icon]"] = immerse_icon
 
 	RegisterSignals(target, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_INITIALIZED_ON), PROC_REF(on_init_or_entered))
 	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(on_atom_exited))
@@ -69,18 +69,18 @@
 	for(var/atom/movable/movable as anything in target)
 		on_init_or_entered(target, movable)
 
-/datum/element/submerge/Detach(turf/source)
+/datum/element/immerse/Detach(turf/source)
 	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_INITIALIZED_ON, COMSIG_ATOM_EXITED))
 	for(var/atom/movable/movable as anything in attached_turfs_and_movables[source])
 		remove_from_element(source, movable)
 	attached_turfs_and_movables -= source
 	return ..()
 
-/datum/element/submerge/proc/on_init_or_entered(turf/source, atom/movable/movable)
+/datum/element/immerse/proc/on_init_or_entered(turf/source, atom/movable/movable)
 	SIGNAL_HANDLER
 	if(!ISINRANGE_EX(movable.layer, WATER_LEVEL_LAYER, ABOVE_ALL_MOB_LAYER) || !ISINRANGE(movable.plane, FLOOR_PLANE, GAME_PLANE_UPPER_FOV_HIDDEN))
 		return
-	if(HAS_TRAIT(movable, TRAIT_SUBMERGED))
+	if(HAS_TRAIT(movable, TRAIT_IMMERSED))
 		return
 	if(is_type_in_typecache(movable, movables_to_ignore))
 		return
@@ -91,24 +91,24 @@
 		RegisterSignal(living_mob, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
 		buckled = living_mob.buckled
 
-	try_submerge(movable, buckled)
+	try_immerse(movable, buckled)
 	RegisterSignal(movable, COMSIG_QDELETING, PROC_REF(on_movable_qdel))
 	LAZYADD(attached_turfs_and_movables[source], movable)
-	ADD_TRAIT(movable, TRAIT_SUBMERGED, ELEMENT_TRAIT(src))
+	ADD_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
 
-/datum/element/submerge/proc/on_movable_qdel(atom/movable/source)
+/datum/element/immerse/proc/on_movable_qdel(atom/movable/source)
 	SIGNAL_HANDLER
 	remove_from_element(source.loc, source)
 
-/datum/element/submerge/proc/add_submerge_overlay(atom/movable/movable)
+/datum/element/immerse/proc/add_immerse_overlay(atom/movable/movable)
 	var/icon/movable_icon = icon(movable.icon)
 	var/width = movable_icon.Width() || world.icon_size
 	var/height = movable_icon.Height() || world.icon_size
 
-	var/atom/movable/submerge_overlay/vis_overlay = generated_visual_overlays["[width]x[height]"]
+	var/atom/movable/immerse_overlay/vis_overlay = generated_visual_overlays["[width]x[height]"]
 
 	if(!vis_overlay) //create the overlay if not already done.
-		vis_overlay = new(null)
+		vis_overlay = new(null, src)
 
 		/**
 		 * vis contents spin around the center of the icon of their vis locs
@@ -118,7 +118,7 @@
 		var/extra_width = (width - world.icon_size) / 2
 		var/extra_height = (height - world.icon_size) / 2
 		var/mutable_appearance/overlay_appearance = new()
-		var/icon/submerge_icon = generated_submerge_icons["[icon]-[icon_state]-[mask_icon]"]
+		var/icon/immerse_icon = generated_immerse_icons["[icon]-[icon_state]-[mask_icon]"]
 		var/last_i = width/world.icon_size
 		for(var/i in -1 to last_i)
 			var/mutable_appearance/underwater = mutable_appearance(icon, icon_state)
@@ -126,18 +126,19 @@
 			underwater.pixel_y = -world.icon_size - extra_height
 			overlay_appearance.overlays += underwater
 
-			var/mutable_appearance/water_level = mutable_appearance(submerge_icon)
+			var/mutable_appearance/water_level = mutable_appearance(immerse_icon)
 			water_level.pixel_x = world.icon_size * i - extra_width
 			water_level.pixel_y = -extra_height
 			overlay_appearance.overlays += water_level
 
-		vis_overlay.overlay_appearance = overlay_appearance
 
 		vis_overlay.color = color
 		vis_overlay.alpha = alpha
+		vis_overlay.overlays = list(overlay_appearance)
+
 		vis_overlay.extra_width = extra_width
 		vis_overlay.extra_height = extra_height
-		vis_overlay.overlays = list(overlay_appearance)
+		vis_overlay.overlay_appearance = overlay_appearance
 
 		generated_visual_overlays["[width]x[height]"] = vis_overlay
 
@@ -145,32 +146,32 @@
 	ADD_KEEP_TOGETHER(movable, ELEMENT_TRAIT(src))
 
 	/**
-	 * Let's give an unique submerge visual only to those movables that would
+	 * Let's give an unique immerse visual only to those movables that would
 	 * benefit from this the most, for the sake of a smidge of lightweightness.
 	 */
-	if(HAS_TRAIT(movable, TRAIT_UNIQUE_SUBMERGE))
-		var/atom/movable/submerge_overlay/original_vis_overlay = vis_overlay
+	if(HAS_TRAIT(movable, TRAIT_UNIQUE_IMMERSE))
+		var/atom/movable/immerse_overlay/original_vis_overlay = vis_overlay
 		vis_overlay = new(null)
 		vis_overlay.appearance = original_vis_overlay
 		vis_overlay.extra_width = original_vis_overlay.extra_width
 		vis_overlay.extra_height = original_vis_overlay.extra_height
 		vis_overlay.overlay_appearance = original_vis_overlay.overlay_appearance
-		SEND_SIGNAL(movable, COMSIG_MOVABLE_EDIT_UNIQUE_SUBMERGE_OVERLAY, vis_overlay)
+		SEND_SIGNAL(movable, COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY, vis_overlay)
 		RegisterSignal(movable, COMSIG_ATOM_SPIN_ANIMATION, PROC_REF(on_spin_animation))
 		RegisterSignal(movable, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_update_transform))
 
 	movable.vis_contents |= vis_overlay
 
-	LAZYSET(submerge_movables, movable, vis_overlay)
+	LAZYSET(immersed_movables, movable, vis_overlay)
 
 /// Remove the vis_overlay, the keep together trait and some signals from the movable
-/datum/element/submerge/proc/remove_submerge_overlay(atom/movable/movable)
-	var/atom/movable/submerge_overlay/vis_overlay = LAZYACCESS(submerge_movables, movable)
+/datum/element/immerse/proc/remove_immerse_overlay(atom/movable/movable)
+	var/atom/movable/immerse_overlay/vis_overlay = LAZYACCESS(immersed_movables, movable)
 	if(!vis_overlay)
 		return
 	movable.vis_contents -= vis_overlay
-	LAZYREMOVE(submerge_movables, movable)
-	if(HAS_TRAIT(movable, TRAIT_UNIQUE_SUBMERGE))
+	LAZYREMOVE(immersed_movables, movable)
+	if(HAS_TRAIT(movable, TRAIT_UNIQUE_IMMERSE))
 		UnregisterSignal(movable, list(COMSIG_ATOM_SPIN_ANIMATION, COMSIG_LIVING_POST_UPDATE_TRANSFORM))
 		qdel(vis_overlay)
 	REMOVE_KEEP_TOGETHER(movable, ELEMENT_TRAIT(src))
@@ -180,10 +181,10 @@
  * This applies the overlay if neither the movable or whatever is buckled to (exclusive to living mobs) are flying
  * as well as movetype signals when the movable isn't buckled.
  */
-/datum/element/submerge/proc/try_submerge(atom/movable/movable, atom/movable/buckled)
+/datum/element/immerse/proc/try_immerse(atom/movable/movable, atom/movable/buckled)
 	var/atom/movable/to_check = buckled || movable
 	if(!(to_check.movement_type & (FLYING|FLOATING)))
-		add_submerge_overlay(movable)
+		add_immerse_overlay(movable)
 		if(!buckled)
 			RegisterSignal(movable, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_move_flag_enabled))
 	else if(!buckled)
@@ -193,41 +194,41 @@
  * Called by on_set_buckled() and remove_from_element().
  * This removes the filter and signals from the movable unless it doesn't have them.
  */
-/datum/element/submerge/proc/try_unsubmerge(atom/movable/movable, atom/movable/buckled)
+/datum/element/immerse/proc/try_unimmerse(atom/movable/movable, atom/movable/buckled)
 	var/atom/movable/to_check = buckled || movable
 	if(!(to_check.movement_type & (FLYING|FLOATING)))
-		remove_submerge_overlay(movable)
+		remove_immerse_overlay(movable)
 		if(!buckled)
 			UnregisterSignal(movable, COMSIG_MOVETYPE_FLAG_ENABLED)
 	else if(!buckled)
 		UnregisterSignal(movable, COMSIG_MOVETYPE_FLAG_DISABLED)
 
-/datum/element/submerge/proc/on_set_buckled(mob/living/source, atom/movable/new_buckled)
+/datum/element/immerse/proc/on_set_buckled(mob/living/source, atom/movable/new_buckled)
 	SIGNAL_HANDLER
-	try_unsubmerge(source, source.buckled)
-	try_submerge(source, new_buckled)
+	try_unimmerse(source, source.buckled)
+	try_immerse(source, new_buckled)
 
 ///Removes the overlay from mob and bucklees is flying.
-/datum/element/submerge/proc/on_move_flag_enabled(atom/movable/source, flag, old_movement_type)
+/datum/element/immerse/proc/on_move_flag_enabled(atom/movable/source, flag, old_movement_type)
 	SIGNAL_HANDLER
 	if(flag & (FLYING | FLOATING))
 		UnregisterSignal(source, COMSIG_MOVETYPE_FLAG_ENABLED)
 		RegisterSignal(source, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_move_flag_disabled))
-		remove_submerge_overlay(source)
+		remove_immerse_overlay(source)
 		for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
-			remove_submerge_overlay(buckled_mob)
+			remove_immerse_overlay(buckled_mob)
 
 ///Readds the overlay to the mob and bucklees if no longer flying.
-/datum/element/submerge/proc/on_move_flag_disabled(atom/movable/source, flag, old_movement_type)
+/datum/element/immerse/proc/on_move_flag_disabled(atom/movable/source, flag, old_movement_type)
 	SIGNAL_HANDLER
 	if(flag & (FLYING|FLOATING) && !(source.movement_type & (FLYING|FLOATING)))
 		UnregisterSignal(source, COMSIG_MOVETYPE_FLAG_DISABLED)
 		RegisterSignal(source, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_move_flag_enabled))
-		add_submerge_overlay(source)
+		add_immerse_overlay(source)
 		for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
-			add_submerge_overlay(buckled_mob)
+			add_immerse_overlay(buckled_mob)
 
-/datum/element/submerge/proc/on_atom_exited(turf/source, atom/movable/exited, direction)
+/datum/element/immerse/proc/on_atom_exited(turf/source, atom/movable/exited, direction)
 	SIGNAL_HANDLER
 	if(!(exited.loc in attached_turfs_and_movables))
 		remove_from_element(source, exited)
@@ -235,25 +236,25 @@
 		LAZYREMOVE(attached_turfs_and_movables[source], exited)
 		LAZYADD(attached_turfs_and_movables[exited.loc], exited)
 
-/datum/element/submerge/proc/remove_from_element(turf/source, atom/movable/movable)
+/datum/element/immerse/proc/remove_from_element(turf/source, atom/movable/movable)
 	var/atom/movable/buckled
 	if(isliving(movable))
 		var/mob/living/living_mob = movable
 		buckled = living_mob.buckled
-	try_unsubmerge(movable, buckled)
+	try_unimmerse(movable, buckled)
 
 	UnregisterSignal(movable, list(COMSIG_LIVING_SET_BUCKLED, COMSIG_QDELETING))
-	REMOVE_TRAIT(movable, TRAIT_SUBMERGED, ELEMENT_TRAIT(src))
+	REMOVE_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
 	LAZYREMOVE(attached_turfs_and_movables[source], movable)
 
-/// A band-aid to keep the overlay from scaling and rotating along with the source
-/datum/element/submerge/proc/on_update_transform(mob/living/source, resize, new_lying_angle, is_opposite_angle)
+/// A band-aid to keep the overlay from scaling and rotating along with its owner
+/datum/element/immerse/proc/on_update_transform(mob/living/source, resize, new_lying_angle, is_opposite_angle)
 	SIGNAL_HANDLER
 	var/matrix/new_transform = matrix()
 	new_transform.Scale(1/source.current_size)
 	new_transform.Turn(-new_lying_angle)
 
-	var/atom/movable/submerge_overlay/vis_overlay = submerge_movables[source]
+	var/atom/movable/immerse_overlay/vis_overlay = immersed_movables[source]
 	if(is_opposite_angle)
 		vis_overlay.transform = new_transform
 		vis_overlay.adjust_living_overlay_offset(source)
@@ -289,32 +290,42 @@
 			new_y += -source.body_position_pixel_y_offset / source.current_size
 
 	animate(vis_overlay, transform = new_transform, pixel_x = new_x, pixel_y = new_y, time = UPDATE_TRANSFORM_ANIMATION_TIME, easing = (EASE_IN|EASE_OUT))
-	addtimer(CALLBACK(vis_overlay, TYPE_PROC_REF(/atom/movable/submerge_overlay, adjust_living_overlay_offset), source), UPDATE_TRANSFORM_ANIMATION_TIME)
+	addtimer(CALLBACK(vis_overlay, TYPE_PROC_REF(/atom/movable/immerse_overlay, adjust_living_overlay_offset), source), UPDATE_TRANSFORM_ANIMATION_TIME)
 
-/datum/element/submerge/proc/on_spin_animation(atom/source, speed, loops, segments, segment)
+/datum/element/immerse/proc/on_spin_animation(atom/source, speed, loops, segments, segment)
 	SIGNAL_HANDLER
-	var/atom/movable/submerge_overlay/vis_overlay = submerge_movables[source]
+	var/atom/movable/immerse_overlay/vis_overlay = immersed_movables[source]
 	vis_overlay.transform.do_spin_animation(vis_overlay, speed, loops, segments, -segment)
 
+///Make sure to remove hard refs from the element.
+/datum/element/immerse/proc/clear_overlay_refs(atom/movable/immerse_overlay/source)
+	//Assume that every vis loc is also in the immersed_movables list
+	for(var/atom/movable/vis_loc as anything in source.vis_locs)
+		remove_from_element(vis_loc.loc, vis_loc)
+	LAZYREMOVE(generated_visual_overlays, source)
+	source.overlay_appearance = null
+	return ..()
 
-///The not-quite-perfect movable used by the submerge element for its nefarious deeds.
-/atom/movable/submerge_overlay
+///The not-quite-perfect movable used by the immerse element for its nefarious deeds.
+/atom/movable/immerse_overlay
 	appearance_flags = RESET_TRANSFORM|RESET_COLOR|KEEP_TOGETHER
 	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_INSET_OVERLAY
 	layer = WATER_VISUAL_OVERLAY_LAYER
+	plane = FLOAT_PLANE
 	var/mutable_appearance/overlay_appearance
 	var/extra_width = 0
 	var/extra_height = 0
 
-/atom/movable/submerge_overlay/Initialize(mapload)
+/atom/movable/immerse_overlay/Initialize(mapload, datum/element/immerse/element)
 	. = ..()
 	verbs.Cut() //"Cargo cultttttt" or something. Either way, they're better off without verbs.
+	element.RegisterSignal(src, COMSIG_QDELETING, TYPE_PROC_REF(/datum/element/immerse, clear_overlay_refs))
 
-/atom/movable/submerge_overlay/proc/adjust_living_overlay_offset(mob/living/source)
+/atom/movable/immerse_overlay/proc/adjust_living_overlay_offset(mob/living/source)
 	pixel_x = extra_width
 	pixel_y = extra_height
 	overlay_appearance.pixel_y = -source.body_position_pixel_y_offset
 	overlays = list(overlay_appearance)
-	overlay_appearance.pixel_y = 0 //reset the offset when done, or things will break.
+	overlay_appearance.pixel_y = 0
