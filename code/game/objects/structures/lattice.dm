@@ -16,10 +16,6 @@
 	canSmoothWith = SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_OPEN_FLOOR
 	var/number_of_mats = 1
 	var/obj/item/stack/build_material = /obj/item/stack/rods
-	/// Are we allowed to precreate these in SSwardrobe?
-	var/preload = TRUE
-
-/datum/armor/structure_lattice
 	melee = 50
 	fire = 80
 	acid = 50
@@ -33,22 +29,11 @@
 
 /obj/structure/lattice/Initialize(mapload)
 	. = ..()
-	if(!loc_acceptable())
-		return INITIALIZE_HINT_QDEL
-
-/obj/structure/lattice/proc/loc_acceptable()
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT == src)
 			continue
 		stack_trace("multiple lattices found in ([loc.x], [loc.y], [loc.z])")
-		return FALSE
-	return TRUE
-
-/obj/structure/lattice/structure_unpooled()
-	if(!loc_acceptable())
-		qdel(src)
-		return
-	return ..()
+		return INITIALIZE_HINT_QDEL
 
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
@@ -86,7 +71,7 @@
 		to_chat(user, span_notice("You build a catwalk."))
 		var/turf/turf = loc
 		qdel(src)
-		SSwardrobe.provide(/obj/structure/lattice/catwalk, turf)
+		new /obj/structure/lattice/catwalk(turf)
 		return TRUE
 	return FALSE
 

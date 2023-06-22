@@ -273,6 +273,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(lattice_underneath)
 		var/turf/new_turf = ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
 		if(!istype(new_turf, /turf/open/floor))
-			SSwardrobe.provide(/obj/structure/lattice, src)
+			new /obj/structure/lattice(src)
 	else
 		ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)

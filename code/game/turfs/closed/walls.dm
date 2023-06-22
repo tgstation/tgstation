@@ -95,7 +95,7 @@
 /turf/closed/wall/proc/break_wall()
 	SSwardrobe.provide(sheet_type, src, STACK_AMOUNT(sheet_amount))
 	if(girder_type)
-		return SSwardrobe.provide(girder_type, src)
+		return new girder_type(src)
 
 /turf/closed/wall/proc/devastate_wall()
 	SSwardrobe.provide(sheet_type, src, STACK_AMOUNT(sheet_amount))

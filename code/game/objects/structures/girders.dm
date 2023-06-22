@@ -19,8 +19,6 @@
 		/obj/item/stack/sheet/runed_metal = 1,
 		exotic_material = 2 // this needs to be refactored properly
 	)
-	/// Are we allowed to precreate these in SSwardrobe?
-	var/preload = TRUE
 
 /obj/structure/girder/examine(mob/user)
 	. = ..()
@@ -188,8 +186,8 @@
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
-					var/obj/structure/girder/reinforced/reinforce_us = SSwardrobe.provide(/obj/structure/girder/reinforced, loc)
-					transfer_fingerprints_to(reinforce_us)
+					var/obj/structure/girder/reinforced/R = new (loc)
+					transfer_fingerprints_to(R)
 					qdel(src)
 				return
 
@@ -333,8 +331,8 @@
 		balloon_alert(user, "removing inner grille...")
 		if(tool.use_tool(src, user, 40, volume=100))
 			SSwardrobe.provide(/obj/item/stack/sheet/plasteel, get_turf(src))
-			var/obj/structure/girder/cut_down = SSwardrobe.provide(/obj/structure/girder, loc)
-			transfer_fingerprints_to(cut_down)
+			var/obj/structure/girder/G = new (loc)
+			transfer_fingerprints_to(G)
 			qdel(src)
 		return TRUE
 
@@ -346,15 +344,15 @@
 
 		balloon_alert(user, "securing frame...")
 		if(tool.use_tool(src, user, 40, volume=100))
-			var/obj/structure/girder/secured = SSwardrobe.provide(/obj/structure/girder, loc)
-			transfer_fingerprints_to(secured)
+			var/obj/structure/girder/G = new (loc)
+			transfer_fingerprints_to(G)
 			qdel(src)
 		return TRUE
 	else if(state == GIRDER_NORMAL && can_displace)
 		balloon_alert(user, "unsecuring frame...")
 		if(tool.use_tool(src, user, 40, volume=100))
-			var/obj/structure/girder/displaced/unsecure = SSwardrobe.provide(/obj/structure/girder/displaced, loc)
-			transfer_fingerprints_to(unsecure)
+			var/obj/structure/girder/displaced/D = new (loc)
+			transfer_fingerprints_to(D)
 			qdel(src)
 		return TRUE
 
@@ -375,7 +373,7 @@
 	qdel(src)
 
 /obj/structure/girder/narsie_act()
-	SSwardrobe.provide(/obj/structure/girder/cult, loc)
+	new /obj/structure/girder/cult(loc)
 	qdel(src)
 
 /obj/structure/girder/displaced

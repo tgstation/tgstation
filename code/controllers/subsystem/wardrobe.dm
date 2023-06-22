@@ -48,8 +48,6 @@ SUBSYSTEM_DEF(wardrobe)
 	load_storage_contents()
 	load_stacks()
 	load_shards()
-	load_girders()
-	load_lattice()
 	load_abstract()
 	hard_refresh_queue()
 	stock_hit = 0
@@ -288,7 +286,7 @@ SUBSYSTEM_DEF(wardrobe)
 	one_go_master++
 
 /// Canonizes a typepath if and only if initial(typepath.to_read) is truthy
-#define CANNONIZE_IF_VAR_TYPEPATH(typepath, type_to_make, amount, to_read) \
+#define CANNONIZE_IF_VAR(typepath, type_to_make, amount, to_read) \
 	do { \
 		var##typepath/remembered = type_to_make; \
 		if(initial(remembered.##to_read)) { \
@@ -472,10 +470,6 @@ SUBSYSTEM_DEF(wardrobe)
 	play_with[WARDROBE_CALLBACK_INSERT] = CALLBACK(null, TYPE_PROC_REF(/obj/effect/abstract/z_holder, clear))
 	initial_callbacks[/obj/effect/abstract/z_holder] = play_with
 
-	play_with = new /list(WARDROBE_CALLBACK_REMOVE)
-	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, TYPE_PROC_REF(/obj/structure, structure_unpooled))
-	initial_callbacks[/obj/structure] = play_with
-
 	// Ok now onto the bespoke ones
 	// Gives stacks a way to set their amount before the stack moves and is potentially given up again
 	keyed_callbacks[WARDROBE_STACK_AMOUNT] = CALLBACK(null, TYPE_PROC_REF(/obj/item/stack, add))
@@ -524,45 +518,23 @@ SUBSYSTEM_DEF(wardrobe)
 		CHECK_TICK
 	// I want to be prepared for explosions
 	var/turf/closed/wall/read_from = /turf/closed/wall
-	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/stack, initial(read_from.sheet_type), 400, preload)
+	CANNONIZE_IF_VAR(/obj/item/stack, initial(read_from.sheet_type), 400, preload)
 	read_from = /turf/closed/wall/r_wall
 	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/stack, initial(read_from.sheet_type), 200, preload)
-	// We do this a lot, should have a healthy supply of them
 	CANNONIZE_IF_VAR(/obj/item/stack/cable_coil, 200, preload)
 
 /datum/controller/subsystem/wardrobe/proc/load_shards()
-	for(var/obj/item/shard/secret_sauce as anything in typesof(/obj/item/shard))
+	for(var/obj/item/shard/secret_sauce as anything in subtypesof(/obj/item/shard))
 		if(!initial(secret_sauce.preload))
 			continue
 		// 5 of each type, just to provide a decent buffer for explosions in engi and stuff
 		canonize_type(secret_sauce, 5)
 		CHECK_TICK
 	// I want to be ready for exploisions and massive window shattering
-	CANNONIZE_IF_VAR(/obj/item/shard, 200, preload)
-
-/datum/controller/subsystem/wardrobe/proc/load_girders()
-	for(var/obj/structure/girder/frame as anything in typesof(/obj/structure/girder))
-		if(!initial(frame.preload))
-			continue
-		// 5 of each type, just in case someone makes these
-		canonize_type(frame, 5)
-		CHECK_TICK
-	// I want to be ready for exploisions and the singulo ya feel me?
-	CANNONIZE_IF_VAR(/obj/structure/girder, 200, preload)
-	CANNONIZE_IF_VAR(/obj/structure/girder/reinforced, 200, preload)
-
-/datum/controller/subsystem/wardrobe/proc/load_lattice()
-	// Just in case shit happens on lavaland or somewhere else
-	for(var/obj/structure/lattice/walkway as anything in subtypesof(/obj/structure/lattice) - /obj/structure/lattice/catwalk)
-		if(!initial(walkway.preload))
-			continue
-		canonize_type(walkway, 20)
-		CHECK_TICK
-	// Lot of these so we can handle singulos/players well
-	CANNONIZE_IF_VAR(/obj/structure/lattice, 200, preload)
-	CANNONIZE_IF_VAR(/obj/structure/lattice/catwalk, 100, preload)
+	CANNONIZE_IF_VAR(/obj/item/shard, /obj/item/shard, 200, preload)
 
 /datum/controller/subsystem/wardrobe/proc/load_abstract()
 	// We make and delete a LOT of these all at once (explosions, shuttles, etc)
 	// It's worth caching them, and they have low side effects so it's safe too
 	canonize_type(/obj/effect/abstract/z_holder, 300)
+

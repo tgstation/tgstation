@@ -353,7 +353,7 @@
 			qdel(catwalk_bait)
 			to_chat(user, span_notice("You construct a catwalk."))
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-			SSwardrobe.provide(/obj/structure/lattice/catwalk, src)
+			new /obj/structure/lattice/catwalk(src)
 		else
 			to_chat(user, span_warning("You need two rods to build a catwalk!"))
 		return
@@ -361,7 +361,7 @@
 	if(used_rods.use(1))
 		to_chat(user, span_notice("You construct a lattice."))
 		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-		SSwardrobe.provide(/obj/structure/lattice, src)
+		new /obj/structure/lattice(src)
 	else
 		to_chat(user, span_warning("You need one rod to build a lattice."))
 

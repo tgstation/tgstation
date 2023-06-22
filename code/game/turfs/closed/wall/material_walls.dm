@@ -13,7 +13,7 @@
 /turf/closed/wall/material/break_wall()
 	for(var/datum/material/spawning as anything in custom_materials)
 		SSwardrobe.provide(spawning.sheet_type, src, STACK_AMOUNT(GET_SHEET_COUNT(custom_materials, spawning)))
-	return SSwardrobe.provide(girder_type, src)
+	return new girder_type(src)
 
 /turf/closed/wall/material/devastate_wall()
 	for(var/datum/material/spawning as anything in custom_materials)

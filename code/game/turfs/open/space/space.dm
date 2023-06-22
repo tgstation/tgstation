@@ -228,7 +228,7 @@
 			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
 			if(lattice)
 				qdel(lattice)
-			SSwardrobe.provide(/obj/structure/lattice/catwalk, src)
+			new /obj/structure/lattice/catwalk(src)
 			return TRUE
 	return FALSE
 

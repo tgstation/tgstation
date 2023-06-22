@@ -75,7 +75,7 @@
 				if(!isplatingturf(impacted_thing))
 					var/turf/open/floor/floor_to_break = impacted_thing
 					if(floor_to_break.overfloor_placed && floor_to_break.floor_tile && prob(20))
-						SSwardrobe.provide(floor_to_break.floor_tile, floor_to_break)
+						new floor_to_break.floor_tile(floor_to_break)
 						floor_to_break.make_plating(TRUE)
 						floor_to_break.broken = TRUE
 						floor_to_break.burnt = TRUE
