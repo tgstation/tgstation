@@ -206,11 +206,13 @@ SUBSYSTEM_DEF(mapping)
 	if(multiz_levels.len < z_level)
 		multiz_levels.len = z_level
 
-	if(level_trait(z_level, ZTRAIT_UP) != TRUE || level_trait(z_level, ZTRAIT_DOWN) != TRUE)
+	var/z_above = level_trait(z_level, ZTRAIT_UP)
+	var/z_below = level_trait(z_level, ZTRAIT_DOWN)
+	if(!(z_above == TRUE && z_above == FALSE) || !(z_below == TRUE && z_below == FALSE))
 		stack_trace("Warning, numeric mapping offsets are deprecated. Instead, mark z level connections by setting UP/DOWN to true if the connection is allowed")
 	multiz_levels[z_level] = new /list(LARGEST_Z_LEVEL_INDEX)
-	multiz_levels[z_level][Z_LEVEL_UP] = !!level_trait(z_level, ZTRAIT_UP)
-	multiz_levels[z_level][Z_LEVEL_DOWN] = !!level_trait(z_level, ZTRAIT_DOWN)
+	multiz_levels[z_level][Z_LEVEL_UP] = !!z_above
+	multiz_levels[z_level][Z_LEVEL_DOWN] = !!z_below
 
 /datum/controller/subsystem/mapping/proc/calculate_z_level_gravity(z_level_number)
 	if(!isnum(z_level_number) || z_level_number < 1)
