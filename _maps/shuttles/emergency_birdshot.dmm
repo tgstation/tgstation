@@ -491,9 +491,7 @@
 "xN" = (
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
+/obj/item/kirbyplants/organic/applebush,
 /obj/item/trash/boritos/purple,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -551,9 +549,7 @@
 /area/shuttle/escape)
 "AQ" = (
 /obj/machinery/light/small/directional/north,
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
+/obj/item/kirbyplants/organic/applebush,
 /obj/effect/decal/cleanable/garbage{
 	pixel_x = -5;
 	pixel_y = 2

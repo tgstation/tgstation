@@ -649,3 +649,137 @@
   - admin: 'Adds an admin panel to interact with shuttle events, under the Events
       tab: Change Shuttle Events'
   - bugfix: Objects spawned in hyperspace will properly catch hyperspace drift
+2023-06-20:
+  ChungusGamer666:
+  - rscadd: Food now gets stink lines when going bad. Uh oh, stinky.
+  DaydreamIQ:
+  - qol: Abductor organ surgery steps shifted around to match other surgeries
+  GoldenAlpharex:
+  - bugfix: Wheelchairs now make noises when they're meant to again, and don't make
+      noises on the tram nor on conveyor belts
+  MTandi:
+  - qol: You can make hairless hide from the entire stack of hides at once
+  Melbert:
+  - qol: Categorizes chef vendor
+  Mey-Ha-Zah:
+  - image: 'Updated several Null Rod Graphics. Also updated: the supermatter sword.'
+  OrionTheFox:
+  - qol: made Balaclavas layer below glasses and radios
+  SethLafuente:
+  - bugfix: Fixes a few Interdyne Pirates map flaws
+  - bugfix: fixes holymelons not having inhand sprites
+  distributivgesetz:
+  - rscadd: Photocopiers now use actual paper instead of materializing it out of thin
+      air.
+  - rscadd: Adds the "Access Request" form.
+  - refactor: Greatly improve the reliability and performance of photocopiers.
+  - qol: Changed the blanks so they look nicer, whilst also fixing the lawsuit request
+      form.
+  - qol: Nanotrasen's bureaucracy division has ""improved"" the quality of their printer
+      toner after many complaints from furious customers.
+2023-06-21:
+  Addust:
+  - bugfix: somehow, somewhere, a ship's engine has been changed.
+  Couls:
+  - qol: Welders now have a more consistent fuel usage
+  JohnFulpWillard:
+  - bugfix: Maintenance data disks now properly transfer from PC to disk
+  - bugfix: Disks can no longer be flooded with the same app repeatedly.
+  LT3:
+  - spellcheck: Fixed a few typos
+  Rhials:
+  - bugfix: The walls adjacent to the Infiltrator docking port will no longer bend
+      diagonally into walls.
+  SyncIt21:
+  - bugfix: Modular machinery computer UI opens again
+  ZephyrTFA:
+  - bugfix: Cat Butcherer can no longer remove a tail you don't have.
+  - bugfix: You can no longer manipulate "None" organs
+  carlarctg:
+  - bugfix: Fixed being unable to reimburse syndicate spawners via uplinks. This includes
+      nukie reinforcements, cyborgs, and holoparasite injectors.
+  - refactor: Turned TC reimbursement into a bespoke element.
+  - spellcheck: Tuned demon's blood message when there's no ghosts to pick to be a
+      little more understandable and sensible.
+2023-06-22:
+  Ghommie:
+  - bugfix: Fixed the honourbound trauma not reacting to attacks from basic mobs
+  - bugfix: Fixed the "Declare Evil" spell not working against the medical department.
+  Guillaume Prata:
+  - balance: The Atmospheric MODsuit now comes pre equipped with the quick carry module.
+      Go save some lives!
+  Helg2:
+  - bugfix: autolathe, protolathe, mech fabricator and component printers material
+      capacity are now in 20 times less, as intended.
+  - bugfix: protolathe material menu now should display material ejecting correctly.
+  Jolly:
+  - qol: The potted plants have been changed slightly behind the scenes. Mappers may
+      enjoy being able to pick a wider selection of plants to put in maps now, because
+      they've all been made into their own items.
+  LemonInTheDark:
+  - bugfix: Maps loaded post init will no longer randomly enter a failed state. Hopefully.
+  Melbert:
+  - bugfix: The colossus's finale attack is now 100x more lethal, because it was firing
+      100x fewer projectiles than intended
+  - bugfix: Fix shooting guns without a magazine loaded making no fire sound effect
+  - bugfix: Fixed EMP'd / signaled microwaves not running as they should
+  - bugfix: Fix runtimes from Bileworms targeting mechas (or other objects people
+      are hiding in)
+  Peliex:
+  - bugfix: changed station floor tiles to be worth 25 instead of 50, one quarter
+      of an iron sheet.
+  Rhials:
+  - bugfix: attacking non-carbon mobs with a cuffsnapping object will no longer runtime.
+  Sealed101:
+  - sound: explosive implant's beeps get louder as it gets closer to exploding
+  - bugfix: fixed mecha generators using way too much fuel due to using the old values
+      of material units per sheet
+  - bugfix: fixed sechailers/SWAT masks not using the installed air filter
+  - bugfix: fixed Godwoken Syndrome VoG commands triggering the spam filter
+  SyncIt21:
+  - bugfix: ' material container[and hence autolathe] now won''t touch the content''s
+      of abstract/hologram item''s like the tentacle gun'
+  - bugfix: material container[and hence autolathe] consuming indestructible items
+  - bugfix: material container[and hence autolathe] cosuming half the content's of
+      an object and leaving out the rest if there isn't space producing broken behaviour
+      in those item's
+  - qol: material container[and hence autolathe] display's the item name consumed
+      and it's material worth to let player's fully know the content's of the item
+      being recycled
+  - rscadd: air sensor's are craftable
+  - refactor: air sensor's can now be turned off by hand and can only be deconstructed
+      by a welding tool
+  - refactor: removed `Params()` proc
+  - qol: unwrenched air sensors can be picked up & recycled like regular item's
+  - rscdel: air sensor are removed from the RPD UI
+  - qol: air sensor's are no longer restricted by their unique ID's which mean you
+      can craft as many air sensors as you want.
+  TheVekter:
+  - qol: Embedding an object inside a cake or loaf of bread now requires a right-click
+      instead of a left-click. No more accidentally putting your knife inside it!
+  - qol: Added context tips for slicing, embedding, and removing embedded items from
+      cake, bread, and cheese wheels.
+  carlarctg:
+  - bugfix: Adds wound armor to ALL jumpsuits that were missing it
+  cnleth:
+  - bugfix: Rockets can no longer embed in people and cause blunt wounds instead of
+      piercing
+  kawoppi:
+  - image: added lizard inhand- and onhead sprites
+  - image: added space lizard inhand- and onhead sprites
+  - bugfix: changed held weight class of lizards from normal to tiny
+  necromanceranne:
+  - rscadd: The Vorpal Scythe, a special null rod variant that gains power from beheading
+      people! But it is fickle about when and how you use its power. Replaces the
+      Reaper Scythe.
+  - rscadd: Beheading via the special death knell attack empowers the scythe, but
+      only on humans with a mind, and requires you to use the right-click button to
+      wind up the slice. If you succeed, you empower your scythe for a bit!
+  - rscadd: If they don't have a mind, you cause the heads to float around. OoooOOOooo!
+      Spooky!
+  - rscadd: With the sinister crystal that holds the Vorpal Scythe within bound to
+      your arm, you are Morbid! You love to do pretty unsettling things, like dissections
+      for fun! But helping the living stay alive is abhorrent to you!
+  - rscadd: '...unless you get to do it while screaming ''IT LIVES!'' via Revival
+      surgery. Screw conventional medicine and science, you know the true way to bring
+      back the dead!'

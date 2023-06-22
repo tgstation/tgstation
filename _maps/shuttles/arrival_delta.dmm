@@ -178,38 +178,10 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
-"ar" = (
-/obj/machinery/status_display/evac{
-	pixel_x = -32
-	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/shuttle/arrival)
 "as" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/south,
-/turf/open/floor/iron,
-/area/shuttle/arrival)
-"at" = (
-/obj/machinery/status_display/ai{
-	pixel_x = 32
-	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "au" = (
@@ -253,18 +225,6 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
-"aA" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/shuttle/arrival)
 "aB" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -284,16 +244,6 @@
 /obj/item/folder,
 /obj/item/storage/dice,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/shuttle/arrival)
-"aE" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "aF" = (
@@ -470,9 +420,7 @@
 /obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
@@ -490,27 +438,21 @@
 /obj/machinery/status_display/ai{
 	pixel_x = 32
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "Ns" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "ZZ" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
