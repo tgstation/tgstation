@@ -70,7 +70,7 @@
 		to_chat(user, span_notice("You construct a lattice."))
 		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 		// Create a lattice, without reverting to our baseturf
-		new /obj/structure/lattice(src)
+		SSwardrobe.provide(/obj/structure/lattice, src)
 		return
 	else if(istype(C, /obj/item/stack/tile/iron))
 		build_with_floor_tiles(C, user)

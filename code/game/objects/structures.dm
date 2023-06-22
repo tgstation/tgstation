@@ -19,18 +19,28 @@
 
 /obj/structure/Initialize(mapload)
 	. = ..()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
-		QUEUE_SMOOTH(src)
-		QUEUE_SMOOTH_NEIGHBORS(src)
-		if(smoothing_flags & SMOOTH_CORNERS)
-			icon_state = ""
-	GLOB.cameranet.updateVisibility(src)
+	if(loc)
+		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+			QUEUE_SMOOTH(src)
+			QUEUE_SMOOTH_NEIGHBORS(src)
+			if(smoothing_flags & SMOOTH_CORNERS)
+				icon_state = ""
+		GLOB.cameranet.updateVisibility(src)
 
 /obj/structure/Destroy()
 	GLOB.cameranet.updateVisibility(src)
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
+
+/// Handles structure setup when they've been moved from the object pool
+/obj/structure/proc/structure_unpooled()
+	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		QUEUE_SMOOTH(src)
+		QUEUE_SMOOTH_NEIGHBORS(src)
+		if(smoothing_flags & SMOOTH_CORNERS)
+			icon_state = ""
+	GLOB.cameranet.updateVisibility(src)
 
 /obj/structure/ui_act(action, params)
 	add_fingerprint(usr)
