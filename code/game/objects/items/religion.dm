@@ -3,6 +3,7 @@
 	desc = "A banner with Nanotrasen's logo on it."
 	icon = 'icons/obj/banner.dmi'
 	icon_state = "banner"
+	worn_icon_state = "nothing" //This is big enough to warrent a worn icon state
 	inhand_icon_state = "banner"
 	force = 8
 	attack_verb_continuous = list("forcefully inspires", "violently encourages", "relentlessly galvanizes")
