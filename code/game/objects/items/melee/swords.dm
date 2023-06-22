@@ -44,8 +44,7 @@
 /obj/item/melee/sword/rust
 	name = "rusty broadsword"
 	desc = "A sharp steel forged sword. It's edge is rusty and corroded."
-	icon_state = "broadsword_rust
-	inhand_icon_state = "broadsword_rust"
+	icon_state = "broadsword_rust"
 	force = 15
 	wound_bonus = 5
 	var/broken_icon = "broadsword_broken"
@@ -53,7 +52,7 @@
 	/// How many hits a sword can deal and block before it breaks.
 	var/rustiness = 15
 	/// If the sword is broken or not.
-	var/broken = FALSE
+	var/broken = 0
 
 /obj/item/melee/sword/rust/afterattack()
 	. = ..()
@@ -61,7 +60,7 @@
 		return
 	decrease_uses()
 
-/obj/item/melee/sword/rust/on_hit_reaction()
+/obj/item/melee/sword/rust/proc/on_hit_reaction()
 	. = ..()
 	if(!.)
 		return
@@ -79,7 +78,7 @@
 	if(broken == TRUE)
 		return
 	to_chat(user, span_warning("[src]'s blade breaks leaving you with half a sword!"))
-	broken = TRUE
+	broken = 1
 	name = broken + name
 	icon_state = broken_icon
 	inhand_icon_state = broken_icon
@@ -94,21 +93,21 @@
 /obj/item/melee/sword/rust/gold
 	name = "rusty gilded broadsword"
 	desc = "A sharp steel forged sword. It's got a rich guard and pommel. It's edge is rusty and corroded."
-	icon_state = "broadsword_gold"
+	icon_state = "broadsword_gold_rust"
 	inhand_icon_state = "broadsword_gold"
 	broken_icon = "broadswordgold_broken"
 
 /obj/item/melee/sword/rust/claymore
 	name = "rusty claymore"
 	desc = "A rusted claymore, it smells damp and it has seen better days."
-	icon_state = "rusty_claymore"
+	icon_state = "claymore_rust"
 	inhand_icon_state = "claymore"
 	broken_icon = "claymore_broken"
 
 /obj/item/melee/sword/rust/claymoregold
 	name = "rusty holy claymore"
 	desc = "A weapon fit for a crusade... or it used to be..."
-	icon_state = "claymore_gold"
+	icon_state = "claymore_gold_rust"
 	inhand_icon_state = "claymore_gold"
 	broken_icon = "claymore_gold_broken"
 
@@ -133,7 +132,7 @@
 	embedding = list("embed_chance" = 30, "impact_pain_mult" = 10)
 
 /obj/item/melee/sword/reforged/shitty
-	var/broken = FALSE
+	var/broken = 0
 	var/rustiness = 1
 	var/broken_icon = "reforged_broken"
 
@@ -143,7 +142,7 @@
 		return
 	decrease_uses()
 
-/obj/item/melee/sword/reforged/shitty/on_hit_reaction()
+/obj/item/melee/sword/reforged/shitty/proc/on_hit_reaction()
 	. = ..()
 	if(!.)
 		return
@@ -161,9 +160,9 @@
 	if(broken == TRUE)
 		return
 	to_chat(user, span_warning("[src]'s blade shatters! It was a cheap felinid imitation! WHAT A PIECE OF SHIT!"))
-	broken = TRUE
+	broken = 1
 	name = "broken fake longsword"
-	description = "A cheap piece of felinid forged trash."
+	desc = "A cheap piece of felinid forged trash."
 	icon_state = broken_icon
 	inhand_icon_state = broken_icon
 	update_icon()
