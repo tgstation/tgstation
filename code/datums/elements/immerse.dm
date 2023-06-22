@@ -304,7 +304,6 @@
 		remove_from_element(vis_loc.loc, vis_loc)
 	LAZYREMOVE(generated_visual_overlays, source)
 	source.overlay_appearance = null
-	return ..()
 
 ///The not-quite-perfect movable used by the immerse element for its nefarious deeds.
 /atom/movable/immerse_overlay
