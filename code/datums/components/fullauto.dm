@@ -62,9 +62,8 @@
 	if(autofire_stat == AUTOFIRE_STAT_FIRING)
 		stop_autofiring() //Let's stop shooting to avoid issues.
 		return
-	var/mob/living/arizona_ranger = user
-	if(arizona_ranger.is_holding(parent))
-		autofire_on(arizona_ranger.client)
+	if(user.is_holding(parent))
+		autofire_on(user.client)
 
 // There is a gun and there is a user wielding it. The component now waits for the mouse click.
 /datum/component/automatic_fire/proc/autofire_on(client/usercli)
