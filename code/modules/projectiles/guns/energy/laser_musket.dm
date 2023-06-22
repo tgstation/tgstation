@@ -1,6 +1,6 @@
 /obj/item/gun/energy/laser/musket
 	name = "laser musket"
-	desc = "A rudimentary laser weapon, it has a hand crank on the side to charge it up."
+	desc = "A hand-crafted laser weapon, it has a hand crank on the side to charge it up."
 	icon_state = "musket"
 	inhand_icon_state = "musket"
 	worn_icon_state = "las_musket"
