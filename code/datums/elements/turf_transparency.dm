@@ -50,12 +50,10 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/abstract/z_holder/Destroy()
-	if(pillar)
-		pillar.drawing_object -= show_for
-		pillar = null
-	show_for = null
+	clear()
 	return ..()
 
+/// Gives this z holder the turf from below as visuals
 /obj/effect/abstract/z_holder/proc/display(turf/display, datum/z_pillar/behalf_of)
 	if(pillar)
 		CRASH("We attempted to use a z holder to display when it was already in use, what'd you do")
@@ -64,6 +62,17 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	show_for = display
 	vis_contents += display
 	behalf_of.drawing_object[display] = src
+
+/// Clears this z_holder off the turf
+/obj/effect/abstract/z_holder/proc/clear()
+	if(pillar)
+		pillar.drawing_object -= show_for
+		pillar = null
+	show_for = null
+
+
+/obj/effect/abstract/z_holder/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
+	return TRUE // Please just stop
 
 /// Grouping datum that manages transparency for a block of space
 /// Setup to ease debugging, and to make add/remove operations cheaper
@@ -110,7 +119,8 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 			return
 
 		holding.vis_contents -= to_display
-		qdel(holding)
+		// We do very little with these, so it's safe to reinsert them like this
+		SSwardrobe.yield_object(holding)
 		drawing_object -= to_display
 		visual_target.vis_contents += to_display
 		return
@@ -124,7 +134,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	if(istransparentturf(visual_target) || isopenspaceturf(visual_target))
 		visual_target.vis_contents += to_display
 	else
-		var/obj/effect/abstract/z_holder/hold_this = new(visual_target)
+		var/obj/effect/abstract/z_holder/hold_this = SSwardrobe.provide_type(/obj/effect/abstract/z_holder, visual_target)
 		hold_this.display(to_display, src)
 
 /// Hides an existing turf from our vis_contents, or the vis_contents of the source if applicable
@@ -140,7 +150,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	turf_sources -= to_hide
 	var/obj/effect/abstract/z_holder/holding = drawing_object[to_hide]
 	if(holding)
-		qdel(holding)
+		SSwardrobe.yield_object(holding)
 	else
 		var/turf/visual_target = to_hide.above()
 		visual_target.vis_contents -= to_hide
@@ -169,7 +179,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	if(istransparentturf(parent) || isopenspaceturf(parent))
 		parent.vis_contents += orphan
 	else
-		var/obj/effect/abstract/z_holder/hold_this = new(parent)
+		var/obj/effect/abstract/z_holder/hold_this = SSwardrobe.provide_type(/obj/effect/abstract/z_holder, parent)
 		hold_this.display(orphan, src)
 
 /datum/element/turf_z_transparency
