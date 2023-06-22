@@ -21,8 +21,11 @@
 	///Designs imported from technology disks that we can print.
 	var/list/imported_designs = list()
 
+	///The container to hold materials
+	var/datum/component/material_container/materials
+
 /obj/machinery/autolathe/Initialize(mapload)
-	AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, TYPE_PROC_REF(/obj/machinery/autolathe, AfterMaterialInsert)))
+	materials = AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, TYPE_PROC_REF(/obj/machinery/autolathe, AfterMaterialInsert)))
 	. = ..()
 	set_wires(new /datum/wires/autolathe(src))
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe])
@@ -30,6 +33,7 @@
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe]
 
 /obj/machinery/autolathe/Destroy()
+	materials = null
 	QDEL_NULL(wires)
 	return ..()
 
@@ -61,9 +65,6 @@
 	var/list/data = list()
 
 	data["materials"] = list()
-
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-
 	data["materialtotal"] = materials.total_amount()
 	data["materialsmax"] = materials.max_amount
 	data["active"] = busy
@@ -87,7 +88,6 @@
 		max_multiplier = INFINITY
 		var/coeff = (ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency)
 		var/list/cost = list()
-		var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
 		for(var/i in design.materials)
 			var/datum/material/mat = i
 
@@ -97,7 +97,7 @@
 			else
 				cost[i] = design_cost
 
-			max_multiplier = min(max_multiplier, 50, round(mats.get_material_amount(i) / design_cost))
+			max_multiplier = min(max_multiplier, 50, round(materials.get_material_amount(i) / design_cost))
 
 		//create & send ui data
 		var/icon_size = spritesheet.icon_size_id(design.id)
@@ -154,7 +154,6 @@
 		multiplier = clamp(multiplier, 1, 50)
 
 		//check for materials
-		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/list/materials_used = list()
 		var/list/custom_materials = list() // These will apply their material effect, should usually only be one.
 		for(var/mat in being_built.materials)
@@ -206,7 +205,6 @@
 		return TRUE
 
 /obj/machinery/autolathe/on_deconstruction()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 
 /obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
@@ -315,7 +313,6 @@
 	var/mat_capacity = 0
 	for(var/datum/stock_part/matter_bin/new_matter_bin in component_parts)
 		mat_capacity += new_matter_bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = mat_capacity
 
 	var/efficiency=1.8
@@ -325,7 +322,6 @@
 
 /obj/machinery/autolathe/examine(mob/user)
 	. += ..()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[creation_efficiency*100]%</b>.")
 

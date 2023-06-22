@@ -120,18 +120,12 @@
 		ui = new(user, src, "Fabricator")
 		ui.open()
 
-/// Updates the static data for the UI when material is inserted
-/obj/machinery/rnd/production/proc/update_ui()
-	update_static_data_for_all_viewers()
-
 /obj/machinery/rnd/production/ui_static_data(mob/user)
 	var/list/data
 	if(isnull(materials.mat_container))
 		data = list()
 	else
 		data = materials.mat_container.ui_static_data()
-		if(!materials.mat_container.after_insert)
-			materials.mat_container.after_insert = CALLBACK(src, TYPE_PROC_REF(/obj/machinery/rnd/production, update_ui))
 
 	var/list/designs = list()
 
