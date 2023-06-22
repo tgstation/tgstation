@@ -42,7 +42,7 @@
 	/// Slowdown of the MOD when active.
 	var/slowdown_active = 0.75
 	/// How long this MOD takes each part to seal.
-	var/activation_step_time= MOD_ACTIVATION_STEP_TIME
+	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
 	/// Theme used by the MOD TGUI.
 	var/ui_theme = "ntos"
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
