@@ -24,8 +24,7 @@
 		/obj/item/organ/external/horns/slugcat = "Standard",
 		/obj/item/organ/external/snout/slugcat = "Standard",
 		/obj/item/organ/external/tail/slugcat = "Standard",
-		///obj/item/organ/external/frills/ = "None",
-		///obj/item/organ/external/spines = "None",
+		/obj/item/organ/external/frills/slugcat = "None",
 	)
 	mutanteyes = /obj/item/organ/internal/eyes/slugcat
 

@@ -92,6 +92,27 @@
 
 
 
+//== FRILLS
+/datum/preference/choiced/slugcat_frills
+	savefile_key = "feature_slugcat_frills"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_FEATURES
+	main_feature_name = "Frills"
+	should_generate_icons = TRUE
+	relevant_external_organ = /obj/item/organ/external/frills/slugcat
+
+/datum/preference/choiced/slugcat_frills/init_possible_values()
+	return generate_slugcat_side_shots(GLOB.frills_list_slugcat, "frills_scug", include_snout = TRUE)
+
+/datum/preference/choiced/slugcat_frills/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["frills_scug"] = value
+
+/datum/preference/choiced/slugcat_frills/create_default_value()
+	var/datum/sprite_accessory/frills/slugcat/none/frills = /datum/sprite_accessory/frills/slugcat/none
+	return initial(frills.name)
+
+
+
 //== EARS
 /*/datum/preference/choiced/slugcat_ears
 	savefile_key = "feature_human_ears"

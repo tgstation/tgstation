@@ -44,12 +44,12 @@
 
 
 // TAILS
-// == AKULA TAIL ==
 /obj/item/organ/external/tail/slugcat
 	name = "slugcat tail"
 	desc = "A soft and weighty tail that feels more like one of those chiropractic pillows than a regular tail."
 
 	preference = "feature_slugcat_tail"
+	wag_flags = WAG_ABLE
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/slugcat
 
@@ -58,3 +58,20 @@
 
 /datum/bodypart_overlay/mutant/tail/slugcat/get_global_feature_list()
 	return GLOB.tails_list_slugcat
+
+
+
+// FRILLS
+/obj/item/organ/external/frills/slugcat
+	name = "slugcat frills"
+	desc = "Somewhere between fluff and gills, depending on the slugcat."
+
+	preference = "feature_slugcat_frills"
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/frills/slugcat
+
+/datum/bodypart_overlay/mutant/frills/slugcat
+	feature_key = "frills_scug"
+
+/datum/bodypart_overlay/mutant/frills/slugcat/get_global_feature_list()
+	return GLOB.frills_list_slugcat

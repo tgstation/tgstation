@@ -20,6 +20,14 @@ GLOBAL_LIST_EMPTY(snouts_list_slugcat)
 	name = "Standard"
 	icon_state = "standard"
 
+/datum/sprite_accessory/snouts/slugcat/sharp
+	name = "Sharp"
+	icon_state = "sharp"
+
+/datum/sprite_accessory/snouts/slugcat/round
+	name = "Round"
+	icon_state = "round"
+
 /datum/mutant_newdnafeature/slugcat_snout
 	name = "Slugcat Snout DNA"
 	id = "snout_scug"
@@ -162,6 +170,7 @@ GLOBAL_LIST_EMPTY(tails_list_slugcat)
 	name = "Slugcat Tails"
 	id = "tail_scug"
 	sprite_acc = /datum/sprite_accessory/tails/slugcat
+	default = "Standard"
 
 /datum/mutant_spritecat/slugcat_tails/init_jank()
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/slugcat, GLOB.tails_list_slugcat)
@@ -179,6 +188,10 @@ GLOBAL_LIST_EMPTY(tails_list_slugcat)
 	name = "Standard"
 	icon_state = "std"
 
+/datum/sprite_accessory/tails/slugcat/thick
+	name = "Thick"
+	icon_state = "thick"
+
 /datum/mutant_newdnafeature/slugcat_tail
 	name = "Slugcat Tails DNA"
 	id = "tail_scug"
@@ -191,4 +204,55 @@ GLOBAL_LIST_EMPTY(tails_list_slugcat)
 /datum/mutant_newdnafeature/slugcat_tail/update_appear(var/datum/dna/dna, var/features)
 	if(dna.features[id])
 		dna.features[id] = GLOB.tails_list_slugcat[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_TAIL_BLOCK), GLOB.tails_list_slugcat.len)]
+	return ..()
+
+
+
+
+// == SECTION 5: FRILLS ==
+GLOBAL_LIST_EMPTY(frills_list_slugcat)
+
+/datum/mutant_spritecat/slugcat_frills
+	name = "Slugcat Frills"
+	id = "frills_scug"
+	sprite_acc = /datum/sprite_accessory/frills/slugcat
+	default = "None"
+
+/datum/mutant_spritecat/slugcat_frills/init_jank()
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills/slugcat, GLOB.frills_list_slugcat)
+		world.log << "CELEBRATE: FOR THE SCUGS HAVE SNOOTS"
+		return ..()
+
+/datum/sprite_accessory/frills/slugcat
+	icon = 'modular_skyraptor/modules/species_slugcat/icons/slugcat_external.dmi'
+	em_block = TRUE
+
+/datum/sprite_accessory/frills/slugcat/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/frills/slugcat/aquatic
+	name = "Aquatic"
+	icon_state = "aquatic"
+
+/datum/sprite_accessory/frills/slugcat/sharp
+	name = "Sharp"
+	icon_state = "sharp"
+
+/datum/sprite_accessory/frills/slugcat/fluffy
+	name = "Fluffy"
+	icon_state = "fluffy"
+
+/datum/mutant_newdnafeature/slugcat_frills
+	name = "Slugcat Frills DNA"
+	id = "frills_scug"
+
+/datum/mutant_newdnafeature/slugcat_frills/gen_unique_features(var/features, var/L)
+	if(features[id])
+		L[DNA_FRILLS_BLOCK] = construct_block(GLOB.frills_list_slugcat.Find(features[id]), GLOB.frills_list_slugcat.len)
+	return ..()
+
+/datum/mutant_newdnafeature/slugcat_frills/update_appear(var/datum/dna/dna, var/features)
+	if(dna.features[id])
+		dna.features[id] = GLOB.frills_list_slugcat[deconstruct_block(get_uni_feature_block(features, DNA_FRILLS_BLOCK), GLOB.frills_list_slugcat.len)]
 	return ..()
