@@ -154,7 +154,7 @@
 	holder.screen += preview
 
 /datum/buildmode/proc/close_preview()
-	if(!preview)
+	if(isnull(preview))
 		return
 	holder.screen -= preview
 	qdel(preview)
