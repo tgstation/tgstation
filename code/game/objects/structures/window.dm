@@ -246,7 +246,7 @@
 	to_chat(user, span_notice("You begin to disassemble [src]..."))
 	if(!tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
-	var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
+	var/obj/item/stack/sheet/G = SSwardrobe.provide(glass_type, user.loc, STACK_AMOUNT(glass_amount))
 	if (!QDELETED(G))
 		G.add_fingerprint(user)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)

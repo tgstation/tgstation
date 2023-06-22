@@ -17,7 +17,7 @@
 	if(!I.use_tool(src, user, 40, volume=50))
 		return TRUE
 	var/obj/vehicle/ridden/scooter/skateboard/improvised/skater = new(drop_location())
-	new /obj/item/stack/rods(drop_location(), 2)
+	SSwardrobe.provide(/obj/item/stack/rods, drop_location(), STACK_AMOUNT(2))
 	to_chat(user, span_notice("You remove the handlebars from [src]."))
 	if(has_buckled_mobs())
 		var/mob/living/carbon/carbons = buckled_mobs[1]
@@ -223,7 +223,7 @@
 /obj/item/scooter_frame/wrench_act(mob/living/user, obj/item/I)
 	..()
 	to_chat(user, span_notice("You deconstruct [src]."))
-	new /obj/item/stack/rods(drop_location(), 10)
+	SSwardrobe.provide(/obj/item/stack/rods, drop_location(), STACK_AMOUNT(10))
 	I.play_tool_sound(src)
 	qdel(src)
 	return TRUE
@@ -255,7 +255,7 @@
 	if(!I.use_tool(src, user, 20, volume=50))
 		return
 	to_chat(user, span_notice("You deconstruct the wheels on [src]."))
-	new /obj/item/stack/sheet/iron(drop_location(), 5)
+	SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location(), STACK_AMOUNT(5))
 	new /obj/item/scooter_frame(drop_location())
 	if(has_buckled_mobs())
 		var/mob/living/carbon/skatergirl = buckled_mobs[1]

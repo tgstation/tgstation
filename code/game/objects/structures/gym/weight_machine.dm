@@ -80,8 +80,8 @@
 	balloon_alert(user, "deconstructing...")
 	if (!do_after(user, 10 SECONDS, target = src))
 		return FALSE
-	new /obj/item/stack/sheet/iron(get_turf(src), 5)
-	new /obj/item/stack/rods(get_turf(src), 2)
+	SSwardrobe.provide(/obj/item/stack/sheet/iron, get_turf(src), STACK_AMOUNT(5))
+	SSwardrobe.provide(/obj/item/stack/rods, get_turf(src), STACK_AMOUNT(2))
 	new /obj/item/chair(get_turf(src))
 	qdel(src)
 	return TRUE

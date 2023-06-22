@@ -28,7 +28,7 @@
 		return
 	tool.play_tool_sound(src)
 	to_chat(user, span_notice("You cut the final wires."))
-	var/obj/item/stack/cable_coil/cables = new(drop_location(), 5)
+	varvar/obj/item/stack/cable_coil/cables = SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location(), STACK_AMOUNT(5))
 	user.put_in_hands(cables)
 	buildstage = AIR_ALARM_BUILD_NO_WIRES
 	update_appearance()
@@ -91,13 +91,13 @@
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, 2)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
 		if((buildstage == AIR_ALARM_BUILD_NO_WIRES) || (buildstage == AIR_ALARM_BUILD_COMPLETE))
 			var/obj/item/electronics/airalarm/alarm = new(loc)
 			if(!disassembled)
 				alarm.take_damage(alarm.max_integrity * 0.5, sound_effect = FALSE)
 		if((buildstage == AIR_ALARM_BUILD_COMPLETE))
-			new /obj/item/stack/cable_coil(loc, 3)
+			SSwardrobe.provide(/obj/item/stack/cable_coil, loc, STACK_AMOUNT(3))
 	qdel(src)
 
 /obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)

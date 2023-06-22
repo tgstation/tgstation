@@ -391,7 +391,7 @@
 	if(tilestack)
 		tilestack.forceMove(drop_location())
 
-	new /obj/item/stack/tile/iron/base(Tsec, 1)
+	SSwardrobe.provide(/obj/item/stack/tile/iron/base, Tsec, STACK_AMOUNT(1))
 	return ..()
 
 /mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)

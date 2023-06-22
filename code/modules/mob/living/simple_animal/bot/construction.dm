@@ -520,7 +520,7 @@
 					return
 			if(I.tool_behaviour == TOOL_WRENCH) //Deconstruct
 				if(I.use_tool(src, user, 0, volume=40))
-					new /obj/item/stack/sheet/iron(Tsec, 2)
+					SSwardrobe.provide(/obj/item/stack/sheet/iron, Tsec, STACK_AMOUNT(2))
 					to_chat(user, span_notice("You disconnect the hygienebot assembly."))
 					qdel(src)
 

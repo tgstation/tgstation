@@ -16,7 +16,7 @@
 
 /obj/structure/frame/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, 5)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(5))
 		if(circuit)
 			circuit.forceMove(loc)
 			circuit = null
@@ -158,7 +158,7 @@
 				if(P.use_tool(src, user, 40, volume=50))
 					if(state == 1)
 						to_chat(user, span_notice("You disassemble the frame."))
-						var/obj/item/stack/sheet/iron/M = new (loc, 5)
+						varvar/obj/item/stack/sheet/iron/M = SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(5))
 						if (!QDELETED(M))
 							M.add_fingerprint(user)
 						qdel(src)
@@ -222,7 +222,7 @@
 				to_chat(user, span_notice("You remove the cables."))
 				state = 1
 				icon_state = "box_0"
-				new /obj/item/stack/cable_coil(drop_location(), 5)
+				SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location(), STACK_AMOUNT(5))
 				return
 
 		if(3)
@@ -420,7 +420,7 @@
 /obj/structure/frame/machine/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(state >= 2)
-			new /obj/item/stack/cable_coil(loc , 5)
+			SSwardrobe.provide(/obj/item/stack/cable_coil, loc, STACK_AMOUNT(5))
 
 		dump_contents()
 	..()

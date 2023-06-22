@@ -243,7 +243,7 @@
 	if(state != STATE_WIRED)
 		return
 
-	new /obj/item/stack/cable_coil(drop_location(), 2)
+	SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location(), STACK_AMOUNT(2))
 	I.play_tool_sound(src)
 	to_chat(user, span_notice("You cut the wires from the circuits."))
 	state = STATE_WELDED
@@ -270,7 +270,7 @@
 
 /obj/structure/camera_assembly/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, loc)
 	qdel(src)
 
 

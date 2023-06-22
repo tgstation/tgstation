@@ -71,8 +71,8 @@ Charged extracts:
 	effect_desc = "Produces a bunch of metal and plasteel."
 
 /obj/item/slimecross/charged/metal/do_effect(mob/user)
-	new /obj/item/stack/sheet/iron(get_turf(user), 25)
-	new /obj/item/stack/sheet/plasteel(get_turf(user), 10)
+	SSwardrobe.provide(/obj/item/stack/sheet/iron, get_turf(user), STACK_AMOUNT(25))
+	SSwardrobe.provide(/obj/item/stack/sheet/plasteel, get_turf(user), STACK_AMOUNT(10))
 	user.visible_message(span_notice("[src] grows into a plethora of metals!"))
 	..()
 
@@ -90,7 +90,7 @@ Charged extracts:
 	effect_desc = "Creates several sheets of plasma."
 
 /obj/item/slimecross/charged/darkpurple/do_effect(mob/user)
-	new /obj/item/stack/sheet/mineral/plasma(get_turf(user), 10)
+	SSwardrobe.provide(/obj/item/stack/sheet/mineral/plasma, get_turf(user), STACK_AMOUNT(10))
 	user.visible_message(span_notice("[src] produces a large amount of plasma!"))
 	..()
 
@@ -120,7 +120,7 @@ Charged extracts:
 	effect_desc = "Makes a bluespace polycrystal."
 
 /obj/item/slimecross/charged/bluespace/do_effect(mob/user)
-	new /obj/item/stack/sheet/bluespace_crystal(get_turf(user), 10)
+	SSwardrobe.provide(/obj/item/stack/sheet/bluespace_crystal, get_turf(user), STACK_AMOUNT(10))
 	user.visible_message(span_notice("[src] produces several sheets of polycrystal!"))
 	..()
 
@@ -147,7 +147,7 @@ Charged extracts:
 	effect_desc = "Creates bananium. Oh no."
 
 /obj/item/slimecross/charged/pyrite/do_effect(mob/user)
-	new /obj/item/stack/sheet/mineral/bananium(get_turf(user), 10)
+	SSwardrobe.provide(/obj/item/stack/sheet/mineral/bananium, get_turf(user), STACK_AMOUNT(10))
 	user.visible_message(span_warning("[src] solidifies with a horrifying banana stench!"))
 	..()
 

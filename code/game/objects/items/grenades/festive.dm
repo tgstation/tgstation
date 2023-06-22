@@ -42,7 +42,7 @@
 /obj/item/sparkler/process(seconds_per_tick)
 	burntime -= seconds_per_tick
 	if(burntime <= 0)
-		new /obj/item/stack/rods(drop_location())
+		SSwardrobe.provide(/obj/item/stack/rods, drop_location())
 		qdel(src)
 	else
 		open_flame(heat)

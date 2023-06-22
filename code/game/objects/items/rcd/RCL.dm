@@ -48,10 +48,10 @@
 			var/diff = loaded.amount % 30
 			if(diff)
 				loaded.use(diff)
-				new /obj/item/stack/pipe_cleaner_coil(get_turf(user), diff)
+				SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil, get_turf(user), STACK_AMOUNT(diff))
 			else
 				loaded.use(30)
-				new /obj/item/stack/pipe_cleaner_coil(get_turf(user), 30)
+				SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil, get_turf(user), STACK_AMOUNT(30))
 		qdel(src)
 		return
 
@@ -61,10 +61,10 @@
 		var/diff = loaded.amount % 30
 		if(diff)
 			loaded.use(diff)
-			new /obj/item/stack/pipe_cleaner_coil(get_turf(user), diff)
+			SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil, get_turf(user), STACK_AMOUNT(diff))
 		else
 			loaded.use(30)
-			new /obj/item/stack/pipe_cleaner_coil(get_turf(user), 30)
+			SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil, get_turf(user), STACK_AMOUNT(30))
 	loaded.max_amount = initial(loaded.max_amount)
 	if(!user.put_in_hands(loaded))
 		loaded.forceMove(get_turf(user))

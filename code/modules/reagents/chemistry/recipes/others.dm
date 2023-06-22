@@ -54,7 +54,7 @@
 /datum/chemical_reaction/plasma_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
-		new /obj/item/stack/sheet/mineral/plasma(location)
+		SSwardrobe.provide(/obj/item/stack/sheet/mineral/plasma, location)
 
 /datum/chemical_reaction/gold_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/gold = 20, /datum/reagent/iron = 1)
@@ -65,7 +65,7 @@
 /datum/chemical_reaction/gold_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
-		new /obj/item/stack/sheet/mineral/gold(location)
+		SSwardrobe.provide(/obj/item/stack/sheet/mineral/gold, location)
 
 /datum/chemical_reaction/uranium_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/uranium = 20, /datum/reagent/potassium = 1)
@@ -76,7 +76,7 @@
 /datum/chemical_reaction/uranium_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
-		new /obj/item/stack/sheet/mineral/uranium(location)
+		SSwardrobe.provide(/obj/item/stack/sheet/mineral/uranium, location)
 
 /datum/chemical_reaction/capsaicincondensation
 	results = list(/datum/reagent/consumable/condensedcapsaicin = 5)
@@ -688,7 +688,7 @@
 /datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
-		new /obj/item/stack/sheet/plastic(location)
+		SSwardrobe.provide(/obj/item/stack/sheet/plastic, location)
 
 /datum/chemical_reaction/pax
 	results = list(/datum/reagent/pax = 3)
@@ -785,7 +785,7 @@
 /datum/chemical_reaction/silver_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
-		new /obj/item/stack/sheet/mineral/silver(location)
+		SSwardrobe.provide(/obj/item/stack/sheet/mineral/silver, location)
 
 /datum/chemical_reaction/bone_gel
 	required_reagents = list(/datum/reagent/bone_dust = 10, /datum/reagent/carbon = 10)
@@ -798,7 +798,7 @@
 /datum/chemical_reaction/bone_gel/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
-		new /obj/item/stack/medical/bone_gel/one(location)
+		SSwardrobe.provide(/obj/item/stack/medical/bone_gel/one, location)
 
 ////Ice and water
 

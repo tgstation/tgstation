@@ -67,7 +67,7 @@
 			if(!released_type || !(initial(released_type.merge_type) in machine.stack_list))
 				return //someone tried to spawn materials by spoofing hrefs
 			var/obj/item/stack/sheet/inp = machine.stack_list[initial(released_type.merge_type)]
-			var/obj/item/stack/sheet/out = new inp.type(null, inp.amount)
+			var/obj/item/stack/sheet/out = SSwardrobe.provide(inp.type, null, STACK_AMOUNT(inp.amount))
 			inp.amount = 0
 			machine.unload_mineral(out)
 			return TRUE
@@ -153,6 +153,6 @@
 	qdel(inp)
 
 	while(storage.amount >= stack_amt) //Get rid of excessive stackage
-		var/obj/item/stack/sheet/out = new inp.type(null, stack_amt)
+		var/obj/item/stack/sheet/out = SSwardrobe.provide(inp.type, null, STACK_AMOUNT(stack_amt))
 		unload_mineral(out)
 		storage.amount -= stack_amt

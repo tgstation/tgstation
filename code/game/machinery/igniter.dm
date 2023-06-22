@@ -57,7 +57,7 @@
 
 /obj/machinery/igniter/deconstruct(disassembled)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, 5)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(5))
 		new /obj/item/assembly/igniter(loc)
 	return ..()
 

@@ -706,7 +706,7 @@
 /obj/item/stack/proc/split_stack(mob/user, amount)
 	if(!use(amount, TRUE, FALSE))
 		return null
-	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE, mats_per_unit)
+	var/obj/item/stack/F = SSwardrobe.provide(type, user ? user : drop_location(), STACK_AMOUNT(amount), STACK_MATS(mats_per_unit))
 	. = F
 	F.copy_evidences(src)
 	loc.atom_storage?.refresh_views()

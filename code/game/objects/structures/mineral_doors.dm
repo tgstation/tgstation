@@ -37,9 +37,9 @@
 
 /obj/structure/mineral_door/Initialize(mapload)
 	. = ..()
-	var/obj/item/stack/initialized_mineral = new sheetType // Okay this kinda sucks.
+	var/obj/item/stack/initialized_mineral = SSwardrobe.provide(sheetType).
 	set_custom_materials(initialized_mineral.mats_per_unit, sheetAmount)
-	qdel(initialized_mineral)
+	SSwardrobe.yield_object(initialized_mineral)
 	air_update_turf(TRUE, TRUE)
 
 /obj/structure/mineral_door/Destroy()

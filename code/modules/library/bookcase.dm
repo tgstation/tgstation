@@ -146,7 +146,7 @@
 				else
 					I.play_tool_sound(src, 100)
 					to_chat(user, span_notice("You pry the shelf out."))
-					new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
+					SSwardrobe.provide(/obj/item/stack/sheet/mineral/wood, drop_location(), STACK_AMOUNT(2))
 					state = BOOKCASE_ANCHORED
 					update_appearance()
 			else
@@ -174,7 +174,7 @@
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
 	var/atom/Tsec = drop_location()
-	new /obj/item/stack/sheet/mineral/wood(Tsec, 4)
+	SSwardrobe.provide(/obj/item/stack/sheet/mineral/wood, Tsec, STACK_AMOUNT(4))
 	for(var/obj/item/I in contents)
 		if(!isbook(I)) //Wake me up inside
 			continue

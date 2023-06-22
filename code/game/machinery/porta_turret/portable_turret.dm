@@ -312,7 +312,7 @@ DEFINE_BITFIELD(turret_flags, list(
 						stored_gun = null
 					to_chat(user, span_notice("You remove the turret and salvage some components."))
 					if(prob(50))
-						new /obj/item/stack/sheet/iron(loc, rand(1,4))
+						SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(rand(1, 4)))
 					if(prob(50))
 						new /obj/item/assembly/prox_sensor(loc)
 				else

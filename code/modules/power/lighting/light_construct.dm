@@ -108,7 +108,7 @@
 					return
 				to_chat(user, span_notice("You begin deconstructing [src]..."))
 				if (tool.use_tool(src, user, 30, volume=50))
-					new /obj/item/stack/sheet/iron(drop_location(), sheets_refunded)
+					SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location(), STACK_AMOUNT(sheets_refunded))
 					user.visible_message(span_notice("[user.name] deconstructs [src]."), \
 						span_notice("You deconstruct [src]."), span_hear("You hear a ratchet."))
 					playsound(src, 'sound/items/deconstruct.ogg', 75, TRUE)
@@ -133,7 +133,7 @@
 			if(tool.tool_behaviour == TOOL_WIRECUTTER)
 				stage = LIGHT_CONSTRUCT_EMPTY
 				icon_state = "[fixture_type]-construct-stage1"
-				new /obj/item/stack/cable_coil(drop_location(), 1, "red")
+				SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location(), STACK_AMOUNT(1))
 				user.visible_message(span_notice("[user.name] removes the wiring from [src]."), \
 					span_notice("You remove the wiring from [src]."), span_hear("You hear clicking."))
 				tool.play_tool_sound(src, 100)
@@ -164,7 +164,7 @@
 
 /obj/structure/light_construct/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, sheets_refunded)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(sheets_refunded))
 	qdel(src)
 
 /obj/structure/light_construct/small

@@ -52,7 +52,7 @@
 
 /obj/structure/closet/secure_closet/miner/PopulateContents()
 	..()
-	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
+	SSwardrobe.provide(/obj/item/stack/sheet/mineral/sandbags, src, STACK_AMOUNT(5))
 	new /obj/item/storage/box/emptysandbags(src)
 	new /obj/item/shovel(src)
 	new /obj/item/pickaxe/mini(src)

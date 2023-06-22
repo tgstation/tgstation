@@ -138,7 +138,7 @@
 	new /obj/item/multitool(src)
 	new /obj/item/holosign_creator/atmos(src)
 	new /obj/item/extinguisher/mini(src)
-	new /obj/item/stack/cable_coil(src)
+	SSwardrobe.provide(/obj/item/stack/cable_coil, src)
 
 /obj/item/storage/belt/utility/full/powertools/rcd/PopulateContents()
 	new /obj/item/screwdriver/power(src)
@@ -147,7 +147,7 @@
 	new /obj/item/multitool(src)
 	new /obj/item/construction/rcd/loaded/upgraded(src)
 	new /obj/item/extinguisher/mini(src)
-	new /obj/item/stack/cable_coil(src)
+	SSwardrobe.provide(/obj/item/stack/cable_coil, src)
 
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
 	SSwardrobe.provide(/obj/item/screwdriver, src)
@@ -567,7 +567,7 @@
 	new /obj/item/crowbar/abductor(src)
 	new /obj/item/wirecutters/abductor(src)
 	new /obj/item/multitool/abductor(src)
-	new /obj/item/stack/cable_coil(src)
+	SSwardrobe.provide(/obj/item/stack/cable_coil, src)
 
 /obj/item/storage/belt/military/army
 	name = "army belt"

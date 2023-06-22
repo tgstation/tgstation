@@ -104,7 +104,7 @@
 
 ///convinience proc to quickly convert the tile design into an physical tile to lay on the plating
 /datum/tile_info/proc/new_tile(loc)
-	var/obj/item/stack/tile/final_tile = new tile_type(loc, 1)
+	var/obj/item/stack/tile/final_tile = SSwardrobe.provide(/obj/item/stack/tile, loc, STACK_AMOUNT(1))
 	final_tile.turf_dir = selected_direction
 	return final_tile
 

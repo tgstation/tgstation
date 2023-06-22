@@ -181,7 +181,7 @@
 		if(get_amount() < 2)
 			balloon_alert(user, "not enough gauze!")
 			return
-		new /obj/item/stack/sheet/cloth(I.drop_location())
+		SSwardrobe.provide(/obj/item/stack/sheet/cloth, I.drop_location())
 		if(user.CanReach(src))
 			user.visible_message(span_notice("[user] cuts [src] into pieces of cloth with [I]."), \
 				span_notice("You cut [src] into pieces of cloth with [I]."), \

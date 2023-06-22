@@ -39,8 +39,8 @@
 	AddComponent(/datum/component/simple_rotation) //Since it's technically a chair I want it to have chair properties
 
 /obj/vehicle/ridden/wheelchair/atom_destruction(damage_flag)
-	new /obj/item/stack/rods(drop_location(), 1)
-	new /obj/item/stack/sheet/iron(drop_location(), 1)
+	SSwardrobe.provide(/obj/item/stack/rods, drop_location(), STACK_AMOUNT(1))
+	SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location(), STACK_AMOUNT(1))
 	return ..()
 
 /obj/vehicle/ridden/wheelchair/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
@@ -61,8 +61,8 @@
 	to_chat(user, span_notice("You begin to detach the wheels..."))
 	if(I.use_tool(src, user, 40, volume=50))
 		to_chat(user, span_notice("You detach the wheels and deconstruct the chair."))
-		new /obj/item/stack/rods(drop_location(), 6)
-		new /obj/item/stack/sheet/iron(drop_location(), 4)
+		SSwardrobe.provide(/obj/item/stack/rods, drop_location(), STACK_AMOUNT(6))
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location(), STACK_AMOUNT(4))
 		qdel(src)
 	return TRUE
 

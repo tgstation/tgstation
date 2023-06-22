@@ -404,7 +404,7 @@
 			for(var/direction in GLOB.alldirs)
 				var/turf/dirturf = get_step(Start,direction)
 				if(prob(50))
-					new /obj/item/stack/spacecash/c1000(dirturf)
+					SSwardrobe.provide(/obj/item/stack/spacecash/c1000, dirturf)
 					continue
 				var/obj/item/storage/bag/money/bag_money = new(dirturf)
 				for(var/i in 1 to rand(5,50))

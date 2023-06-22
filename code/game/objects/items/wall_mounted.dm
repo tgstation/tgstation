@@ -68,17 +68,17 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/wallframe/wrench_act(mob/living/user, obj/item/tool)
-	var/metal_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/iron)]/SHEET_MATERIAL_AMOUNT) //Replace this shit later
-	var/glass_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/glass)]/SHEET_MATERIAL_AMOUNT) //Replace this shit later
+	var/metal_amt = GET_SHEET_COUNT(custom_materials, GET_MATERIAL_REF(/datum/material/iron)) //Replace this shit later
+	var/glass_amt = GET_SHEET_COUNT(custom_materials, GET_MATERIAL_REF(/datum/material/glass)) //Replace this shit later
 
 	if(!metal_amt && !glass_amt)
 		return FALSE
 	to_chat(user, span_notice("You dismantle [src]."))
 	tool.play_tool_sound(src)
 	if(metal_amt)
-		new /obj/item/stack/sheet/iron(get_turf(src), metal_amt)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, get_turf(src), STACK_AMOUNT(metal_amt))
 	if(glass_amt)
-		new /obj/item/stack/sheet/glass(get_turf(src), glass_amt)
+		SSwardrobe.provide(/obj/item/stack/sheet/glass, get_turf(src), STACK_AMOUNT(glass_amt))
 	qdel(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

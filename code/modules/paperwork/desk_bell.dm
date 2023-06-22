@@ -81,8 +81,8 @@
 		balloon_alert(user, "disassembled")
 		playsound(user, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
 		if(!broken_ringer) // Drop 2 if it's not broken.
-			new/obj/item/stack/sheet/iron(drop_location())
-		new/obj/item/stack/sheet/iron(drop_location())
+			SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location())
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location())
 		qdel(src)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	return ..()

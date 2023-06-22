@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 
 /obj/structure/marker_beacon/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		var/obj/item/stack/marker_beacon/M = new(loc)
+		var/obj/item/stack/marker_beacon/M = SSwardrobe.provide(/obj/item/stack/marker_beacon, loc)
 		M.picked_color = picked_color
 		M.update_appearance()
 	qdel(src)
@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		return
 	to_chat(user, span_notice("You start picking [src] up..."))
 	if(do_after(user, remove_speed, target = src))
-		var/obj/item/stack/marker_beacon/M = new(loc)
+		var/obj/item/stack/marker_beacon/M = SSwardrobe.provide(/obj/item/stack/marker_beacon, loc)
 		M.picked_color = picked_color
 		M.update_appearance()
 		transfer_fingerprints_to(M)

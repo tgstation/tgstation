@@ -295,7 +295,7 @@ at the cost of risking a vicious bite.**/
 
 /obj/structure/steam_vent/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, 1)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(1))
 		new /obj/item/stock_parts/water_recycler(loc, 1)
 	qdel(src)
 

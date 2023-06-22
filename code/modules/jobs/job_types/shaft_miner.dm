@@ -102,10 +102,10 @@
 	var/obj/item/clothing/suit/hooded/explorer/explorer_suit = locate() in miner_contents
 	if(explorer_suit)
 		for(var/i in 1 to 3)
-			var/obj/item/stack/sheet/animalhide/goliath_hide/plating = new()
+			var/obj/item/stack/sheet/animalhide/goliath_hide/plating = SSwardrobe.provide(/obj/item/stack/sheet/animalhide/goliath_hide)
 			explorer_suit.attackby(plating)
 		for(var/i in 1 to 3)
-			var/obj/item/stack/sheet/animalhide/goliath_hide/plating = new()
+			var/obj/item/stack/sheet/animalhide/goliath_hide/plating = SSwardrobe.provide(/obj/item/stack/sheet/animalhide/goliath_hide)
 			explorer_suit.hood.attackby(plating)
 	for(var/obj/item/gun/energy/recharge/kinetic_accelerator/accelerator in miner_contents)
 		var/obj/item/knife/combat/survival/knife = new(accelerator)

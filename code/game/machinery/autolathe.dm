@@ -320,7 +320,7 @@
 	materials.use_materials(materials_used)
 
 	if(is_stack)
-		var/obj/item/stack/N = new being_built.build_path(A, multiplier, FALSE)
+		var/obj/item/stack/N = SSwardrobe.provide(being_built.build_path, A, STACK_AMOUNT(multiplier))
 		N.update_appearance()
 	else
 		for(var/i in 1 to multiplier)

@@ -90,7 +90,7 @@
 	if(tool.use_tool(src, user, 10 SECONDS, volume = 50))
 		var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
 		var/amount = recipe.reqs[/obj/item/stack/cable_coil]
-		new /obj/item/stack/cable_coil(loc, amount)
+		SSwardrobe.provide(/obj/item/stack/cable_coil, loc, STACK_AMOUNT(amount))
 		deconstruction = BLASTDOOR_NEEDS_WIRES
 		balloon_alert(user, "removed internal cables")
 	return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -108,7 +108,7 @@
 	if(tool.use_tool(src, user, 15 SECONDS, volume = 50))
 		var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
 		var/amount = recipe.reqs[/obj/item/stack/sheet/plasteel]
-		new /obj/item/stack/sheet/plasteel(loc, amount)
+		SSwardrobe.provide(/obj/item/stack/sheet/plasteel, loc, STACK_AMOUNT(amount))
 		user.balloon_alert(user, "torn apart")
 		qdel(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS

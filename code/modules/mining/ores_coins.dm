@@ -445,7 +445,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(!string_attached)
 		return TRUE
 
-	new /obj/item/stack/cable_coil(drop_location(), 1)
+	SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location(), STACK_AMOUNT(1))
 	overlays = list()
 	string_attached = null
 	to_chat(user, span_notice("You detach the string from the coin."))

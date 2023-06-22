@@ -772,7 +772,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	computer_id_slot?.forceMove(drop_location())
 	inserted_disk?.forceMove(drop_location())
 	inserted_pai?.forceMove(drop_location())
-	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
+	SSwardrobe.provide(/obj/item/stack/sheet/iron, get_turf(loc), STACK_AMOUNT(steel_sheet_cost))
 	user.balloon_alert(user, "disassembled")
 	relay_qdel()
 	qdel(src)
@@ -803,7 +803,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(!(flags_1 & NODECONSTRUCT_1))
 		physical.visible_message(span_notice("\The [src] breaks apart!"))
 		var/turf/newloc = get_turf(src)
-		new /obj/item/stack/sheet/iron(newloc, round(steel_sheet_cost / 2))
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, newloc, STACK_AMOUNT(round(steel_sheet_cost / 2)))
 	relay_qdel()
 
 // Used by processor to relay qdel() to machinery type.

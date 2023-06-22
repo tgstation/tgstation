@@ -384,7 +384,7 @@
 			break_light_tube()
 		if(status != LIGHT_EMPTY)
 			drop_light_tube()
-		new /obj/item/stack/cable_coil(loc, 1, "red")
+		SSwardrobe.provide(/obj/item/stack/cable_coil, loc, STACK_AMOUNT(1))
 	transfer_fingerprints_to(new_light)
 
 	var/obj/item/stock_parts/cell/real_cell = get_cell()

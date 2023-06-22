@@ -49,7 +49,7 @@
 	if(istype(W, /obj/item/gun/energy/plasmacutter))
 		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=100))
-			var/obj/item/stack/sheet/iron/M = new (loc, 2)
+			varvar/obj/item/stack/sheet/iron/M = SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
 			if (!QDELETED(M))
 				M.add_fingerprint(user)
 			qdel(src)
@@ -290,7 +290,7 @@
 			if(state != GIRDER_TRAM)
 				return
 			state = GIRDER_DISASSEMBLED
-			var/obj/item/stack/sheet/iron/M = new (loc, 2)
+			varvar/obj/item/stack/sheet/iron/M = SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
 			if (!QDELETED(M))
 				M.add_fingerprint(user)
 			qdel(src)
@@ -302,7 +302,7 @@
 			if(state != GIRDER_DISPLACED)
 				return
 			state = GIRDER_DISASSEMBLED
-			var/obj/item/stack/sheet/iron/M = new (loc, 2)
+			varvar/obj/item/stack/sheet/iron/M = SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
 			if (!QDELETED(M))
 				M.add_fingerprint(user)
 			qdel(src)
@@ -330,7 +330,7 @@
 	if(state == GIRDER_REINF_STRUTS)
 		balloon_alert(user, "removing inner grille...")
 		if(tool.use_tool(src, user, 40, volume=100))
-			new /obj/item/stack/sheet/plasteel(get_turf(src))
+			SSwardrobe.provide(/obj/item/stack/sheet/plasteel, get_turf(src))
 			var/obj/structure/girder/G = new (loc)
 			transfer_fingerprints_to(G)
 			qdel(src)
@@ -412,7 +412,7 @@
 
 		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=50))
-			var/obj/item/stack/sheet/runed_metal/R = new(drop_location(), 1)
+			varvar/obj/item/stack/sheet/runed_metal/R = SSwardrobe.provide(/obj/item/stack/sheet/runed_metal, drop_location(), STACK_AMOUNT(1))
 			transfer_fingerprints_to(R)
 			qdel(src)
 
@@ -439,7 +439,7 @@
 
 /obj/structure/girder/cult/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
+		SSwardrobe.provide(/obj/item/stack/sheet/runed_metal, drop_location(), STACK_AMOUNT(1))
 	qdel(src)
 
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -478,7 +478,7 @@
 			return
 		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=50))
-			var/obj/item/stack/sheet/bronze/B = new(drop_location(), 2)
+			varvar/obj/item/stack/sheet/bronze/B = SSwardrobe.provide(/obj/item/stack/sheet/bronze, drop_location(), STACK_AMOUNT(2))
 			transfer_fingerprints_to(B)
 			qdel(src)
 

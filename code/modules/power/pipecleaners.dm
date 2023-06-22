@@ -84,9 +84,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	d2 = text2num(copytext(icon_state, dash + length(icon_state[dash])))
 
 	if(d1)
-		stored = new/obj/item/stack/pipe_cleaner_coil(null, 2, null, null, null)
+		stored = SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil, null, STACK_AMOUNT(2))
 	else
-		stored = new/obj/item/stack/pipe_cleaner_coil(null, 1, null, null, null)
+		stored = SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil, null, STACK_AMOUNT(1))
 
 	if(!param_color)
 		param_color = "white"

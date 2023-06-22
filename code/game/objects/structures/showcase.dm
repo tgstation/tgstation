@@ -147,7 +147,7 @@
 	if(!tool.use_tool(src, user, 2 SECONDS, volume=100))
 		return
 	to_chat(user, span_notice("You start to crowbar the showcase apart..."))
-	new /obj/item/stack/sheet/iron(drop_location(), 4)
+	SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location(), STACK_AMOUNT(4))
 	qdel(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

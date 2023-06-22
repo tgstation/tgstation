@@ -254,7 +254,7 @@
 				queen_bee = null
 
 /obj/structure/beebox/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/mineral/wood (loc, 20)
+	SSwardrobe.provide(/obj/item/stack/sheet/mineral/wood, loc, STACK_AMOUNT(20))
 	for(var/mob/living/simple_animal/hostile/bee/B in bees)
 		if(B.loc == src)
 			B.forceMove(drop_location())

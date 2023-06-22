@@ -82,7 +82,7 @@
 	if (!do_after(user, 10 SECONDS, target = src))
 		return FALSE
 	new /obj/item/flamethrower(get_turf(src))
-	new /obj/item/stack/sheet/iron(get_turf(src))
+	SSwardrobe.provide(/obj/item/stack/sheet/iron, get_turf(src))
 	var/obj/item/tank/internals/plasma/ptank = new /obj/item/tank/internals/plasma(get_turf(src))
 	ptank.air_contents.gases[/datum/gas/plasma][MOLES] = (0)
 	qdel(src)

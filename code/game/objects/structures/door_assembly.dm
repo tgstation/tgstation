@@ -77,10 +77,10 @@
 			if(W.use_tool(src, user, 40, volume=50))
 				to_chat(user, span_notice("You weld the glass panel out."))
 				if(heat_proof_finished)
-					new /obj/item/stack/sheet/rglass(get_turf(src))
+					SSwardrobe.provide(/obj/item/stack/sheet/rglass, get_turf(src))
 					heat_proof_finished = 0
 				else
-					new /obj/item/stack/sheet/glass(get_turf(src))
+					SSwardrobe.provide(/obj/item/stack/sheet/glass, get_turf(src))
 				glass = 0
 		else if(!anchored)
 			user.visible_message(span_warning("[user] disassembles the airlock assembly."), \
@@ -143,7 +143,7 @@
 			if(state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS)
 				return
 			to_chat(user, span_notice("You cut the wires from the airlock assembly."))
-			new/obj/item/stack/cable_coil(get_turf(user), 1)
+			SSwardrobe.provide(/obj/item/stack/cable_coil, get_turf(user), STACK_AMOUNT(1))
 			state = AIRLOCK_ASSEMBLY_NEEDS_WIRES
 			name = "secured airlock assembly"
 
@@ -224,10 +224,10 @@
 									if(MA.noglass && glass) //in case the new door doesn't support glass. prevents the new one from reverting to a normal airlock after being constructed.
 										var/obj/item/stack/sheet/dropped_glass
 										if(heat_proof_finished)
-											dropped_glass = new /obj/item/stack/sheet/rglass(drop_location())
+											dropped_glass = SSwardrobe.provide(/obj/item/stack/sheet/rglass, drop_location())
 											heat_proof_finished = FALSE
 										else
-											dropped_glass = new /obj/item/stack/sheet/glass(drop_location())
+											dropped_glass = SSwardrobe.provide(/obj/item/stack/sheet/glass, drop_location())
 										glass = FALSE
 										to_chat(user, span_notice("As you finish, a [dropped_glass.singular_name] falls out of [MA]'s frame."))
 

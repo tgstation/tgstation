@@ -282,7 +282,7 @@
 						if(!istype(src,  /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_CUT)
 							return TRUE
 						balloon_alert(user, "pried off")
-						new /obj/item/stack/sheet/plasteel(src, 2)
+						SSwardrobe.provide(/obj/item/stack/sheet/plasteel, src, STACK_AMOUNT(2))
 						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 					return TRUE
 

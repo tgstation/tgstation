@@ -534,7 +534,8 @@
 		robot_suit.l_leg = null
 		robot_suit.r_leg.forceMove(T)
 		robot_suit.r_leg = null
-		new /obj/item/stack/cable_coil(T, robot_suit.chest.wired)
+		if(robot_suit.chest.wired)
+			SSwardrobe.provide(/obj/item/stack/cable_coil, T, STACK_AMOUNT(1))
 		robot_suit.chest.forceMove(T)
 		robot_suit.chest.wired = FALSE
 		robot_suit.chest = null
@@ -555,7 +556,7 @@
 		new /obj/item/robot_suit(T)
 		new /obj/item/bodypart/leg/left/robot(T)
 		new /obj/item/bodypart/leg/right/robot(T)
-		new /obj/item/stack/cable_coil(T, 1)
+		SSwardrobe.provide(/obj/item/stack/cable_coil, T, STACK_AMOUNT(1))
 		new /obj/item/bodypart/chest/robot(T)
 		new /obj/item/bodypart/arm/left/robot(T)
 		new /obj/item/bodypart/arm/right/robot(T)

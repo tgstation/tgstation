@@ -87,7 +87,7 @@
 		amount_to_consume -= consumed
 
 	//spawn the cable. if it merged with the stak below then you pick that up else put it in the user's hand
-	var/obj/item/stack/cable_coil/new_cable = new(user.drop_location(), amount)
+	varvar/obj/item/stack/cable_coil/new_cable = SSwardrobe.provide(/obj/item/stack/cable_coil, user.drop_location(), STACK_AMOUNT(amount))
 	if(QDELETED(new_cable))
 		balloon_alert(user, "merged with stack below!")
 	else
@@ -193,7 +193,7 @@
 		var/create_amount = min(30, current_amount)
 		if(create_amount <= 0)
 			return null
-		cable = new/obj/item/stack/cable_coil(src, create_amount)
+		cable = SSwardrobe.provide(/obj/item/stack/cable_coil, src, STACK_AMOUNT(create_amount))
 	return modify_cable(cable)
 
 /// check if the turf has the same cable layer as this design. If it does don't put cable here

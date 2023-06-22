@@ -54,7 +54,7 @@
 			else if(used.tool_behaviour == TOOL_CROWBAR && !anchored)
 				used.play_tool_sound(src, 75)
 				to_chat(user, span_notice("You dismantle the turret construction."))
-				new /obj/item/stack/sheet/iron(loc, 5)
+				SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(5))
 				qdel(src)
 				return
 
@@ -93,7 +93,7 @@
 				if(used.use_tool(src, user, 20, volume = 50, amount = 5)) //uses up 5 fuel
 					build_step = PTURRET_BOLTED
 					to_chat(user, span_notice("You remove the turret's interior metal armor."))
-					new /obj/item/stack/sheet/iron(drop_location(), 2)
+					SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location(), STACK_AMOUNT(2))
 					return
 
 
@@ -177,7 +177,7 @@
 			else if(used.tool_behaviour == TOOL_CROWBAR)
 				used.play_tool_sound(src, 75)
 				to_chat(user, span_notice("You pry off the turret's exterior armor."))
-				new /obj/item/stack/sheet/iron(loc, 2)
+				SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
 				build_step = PTURRET_CLOSED
 				return
 

@@ -868,7 +868,7 @@
 
 /obj/item/rack_parts/attackby(obj/item/W, mob/user, params)
 	if (W.tool_behaviour == TOOL_WRENCH)
-		new /obj/item/stack/sheet/iron(user.loc)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, user.loc)
 		qdel(src)
 	else
 		. = ..()

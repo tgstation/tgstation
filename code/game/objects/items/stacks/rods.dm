@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		balloon_alert(user, "not enough rods!")
 		return
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
-		var/obj/item/stack/sheet/iron/new_item = new(user.loc)
+		var/obj/item/stack/sheet/iron/new_item = SSwardrobe.provide(/obj/item/stack/sheet/iron, user.loc)
 		user.visible_message(
 			span_notice("[user.name] shaped [src] into iron sheets with [tool]."),
 			blind_message = span_hear("You hear welding."),
@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
-		var/obj/item/stack/tile/iron/two/new_item = new(user.loc)
+		var/obj/item/stack/tile/iron/two/new_item = SSwardrobe.provide(/obj/item/stack/tile/iron/two, user.loc)
 		user.visible_message(
 			span_notice("[user.name] shaped [src] into floor tiles with [tool]."),
 			blind_message = span_hear("You hear welding."),

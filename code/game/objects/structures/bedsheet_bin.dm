@@ -127,7 +127,7 @@ LINEN BINS
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
 		if (!(flags_1 & HOLOGRAM_1))
-			var/obj/item/stack/sheet/cloth/shreds = new (get_turf(src), stack_amount)
+			varvar/obj/item/stack/sheet/cloth/shreds = SSwardrobe.provide(/obj/item/stack/sheet/cloth, get_turf(src), STACK_AMOUNT(stack_amount))
 			if(!QDELETED(shreds)) //stacks merged
 				transfer_fingerprints_to(shreds)
 				shreds.add_fingerprint(user)
@@ -654,7 +654,7 @@ LINEN BINS
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(tool.use_tool(src, user, 0.5 SECONDS, volume=50))
 		to_chat(user, span_notice("You disassemble the [src]."))
-		new /obj/item/stack/rods(loc, 2)
+		SSwardrobe.provide(/obj/item/stack/rods, loc, STACK_AMOUNT(2))
 		qdel(src)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 

@@ -72,7 +72,7 @@
 			if(anchored)
 				return TRUE
 			to_chat(user, span_notice("You cut apart [src]."))
-			var/obj/item/stack/sheet/plastic/five/P = new(loc)
+			var/obj/item/stack/sheet/plastic/five/P = SSwardrobe.provide(/obj/item/stack/sheet/plastic/five, loc)
 			if (!QDELETED(P))
 				P.add_fingerprint(user)
 			qdel(src)
@@ -129,7 +129,7 @@
 
 /obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/plastic/five(loc)
+		SSwardrobe.provide(/obj/item/stack/sheet/plastic/five, loc)
 	qdel(src)
 
 /obj/structure/plasticflaps/Initialize(mapload)

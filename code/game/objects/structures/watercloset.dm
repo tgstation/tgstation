@@ -445,7 +445,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		return
 
 	if(istype(O, /obj/item/stack/ore/glass))
-		new /obj/item/stack/sheet/sandblock(loc)
+		SSwardrobe.provide(/obj/item/stack/sheet/sandblock, loc)
 		to_chat(user, span_notice("You wet the sand in the sink and form it into a block."))
 		O.use(1)
 		return
@@ -672,7 +672,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 		return
 
 	if(istype(O, /obj/item/stack/ore/glass))
-		new /obj/item/stack/sheet/sandblock(loc)
+		SSwardrobe.provide(/obj/item/stack/sheet/sandblock, loc)
 		to_chat(user, span_notice("You wet the sand and form it into a block."))
 		O.use(1)
 		return
@@ -791,9 +791,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	toggle()
 
 /obj/structure/curtain/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/cloth (loc, 2)
-	new /obj/item/stack/sheet/plastic (loc, 2)
-	new /obj/item/stack/rods (loc, 1)
+	SSwardrobe.provide(/obj/item/stack/sheet/cloth, loc, STACK_AMOUNT(2))
+	SSwardrobe.provide(/obj/item/stack/sheet/plastic, loc, STACK_AMOUNT(2))
+	SSwardrobe.provide(/obj/item/stack/rods, loc, STACK_AMOUNT(1))
 	qdel(src)
 
 /obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -819,8 +819,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	opaque_closed = TRUE
 
 /obj/structure/curtain/cloth/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/cloth (loc, 4)
-	new /obj/item/stack/rods (loc, 1)
+	SSwardrobe.provide(/obj/item/stack/sheet/cloth, loc, STACK_AMOUNT(4))
+	SSwardrobe.provide(/obj/item/stack/rods, loc, STACK_AMOUNT(1))
 	qdel(src)
 
 /obj/structure/curtain/cloth/fancy

@@ -21,7 +21,7 @@
 		if(I.use_tool(src, user, 50))
 			user.visible_message(span_notice("[user] disassembles [src]!"), span_notice("You break down [src] into scrap metal."))
 			playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
-			new/obj/item/stack/sheet/iron(drop_location())
+			SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location())
 			qdel(src)
 		return
 	..()

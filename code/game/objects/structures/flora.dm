@@ -198,12 +198,12 @@
 		if(ispath(product, /obj/item/stack))
 			var/product_left = amount_to_create
 			while(product_left > 0)
-				var/obj/item/stack/new_stack = new product(turf_below)
+				var/obj/item/stack/new_stack = SSwardrobe.provide(product, turf_below)
 				product_left -= new_stack.amount = min(product_left, new_stack.max_amount)
 				. += new_stack
 		else
 			for(var/iteration in 1 to amount_to_create)
-				. += new product(turf_below)
+				. += SSwardrobe.provide(product, turf_below)
 
 	//This bit of code determines what should be shown to the user when this is harvested
 	var/message = harvest_message_med || harvest_message_high || harvest_message_low

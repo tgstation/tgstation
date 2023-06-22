@@ -177,7 +177,7 @@
 
 /obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, 4)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(4))
 	qdel(src)
 
 /obj/machinery/icecream_vat/AltClick(mob/living/user)

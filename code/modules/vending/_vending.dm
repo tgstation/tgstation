@@ -272,7 +272,7 @@
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(!refill_canister) //the non constructable vendors drop metal instead of a machine frame.
 		if(!(flags_1 & NODECONSTRUCT_1))
-			new /obj/item/stack/sheet/iron(loc, 3)
+			SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(3))
 		qdel(src)
 	else
 		..()

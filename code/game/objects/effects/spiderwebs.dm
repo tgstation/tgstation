@@ -48,7 +48,7 @@
 		user.balloon_alert(user, "interrupted!")
 		return
 	qdel(src)
-	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
+	var/obj/item/stack/sheet/cloth/woven_cloth = SSwardrobe.provide(/obj/item/stack/sheet/cloth)
 	user.put_in_hands(woven_cloth)
 
 /obj/structure/spider/stickyweb/Initialize(mapload)

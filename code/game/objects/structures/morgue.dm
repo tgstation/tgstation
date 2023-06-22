@@ -107,7 +107,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/deconstruct(disassembled = TRUE)
 	if (!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, 5)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(5))
 	toggle_organ_decay(src)
 	qdel(src)
 
@@ -236,7 +236,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	if(!length(compiled)) // No mobs?
 		icon_state = "morgue3"
 		return ..()
-	
+
 	if(!(obj_flags & EMAGGED))
 		for(var/mob/living/occupant as anything in compiled)
 			var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
@@ -382,7 +382,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	return ..()
 
 /obj/structure/tray/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/iron (loc, 2)
+	SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
 	qdel(src)
 
 /obj/structure/tray/attack_paw(mob/user, list/modifiers)

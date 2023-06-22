@@ -21,7 +21,7 @@
 			to_chat(user, span_warning("There is another network terminal here!"))
 			return
 		else
-			new /obj/item/stack/cable_coil(T, 10)
+			SSwardrobe.provide(/obj/item/stack/cable_coil, T, STACK_AMOUNT(10))
 			to_chat(user, span_notice("You cut the cables and disassemble the unused power terminal."))
 			qdel(E)
 	return TRUE

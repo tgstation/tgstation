@@ -136,8 +136,8 @@
 		qdel(src)
 
 /obj/structure/cannon/trash/Destroy()
-	new /obj/item/stack/sheet/iron/five(src.loc)
-	new /obj/item/stack/rods(src.loc)
+	SSwardrobe.provide(/obj/item/stack/sheet/iron/five, src.loc)
+	SSwardrobe.provide(/obj/item/stack/rods, src.loc)
 	. = ..()
 
 #undef BAD_FUEL_DAMAGE_TAX

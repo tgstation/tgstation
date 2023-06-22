@@ -155,7 +155,7 @@ All the important duct code:
 	reset_connects(0)
 	update_appearance()
 	if(ispath(drop_on_wrench))
-		var/obj/item/stack/ducts/duct_stack = new drop_on_wrench(drop_location())
+		var/obj/item/stack/ducts/duct_stack = SSwardrobe.provide(drop_on_wrench, drop_location())
 		duct_stack.duct_color = GLOB.pipe_color_name[duct_color] || DUCT_COLOR_OMNI
 		duct_stack.duct_layer = GLOB.plumbing_layer_names["[duct_layer]"] || GLOB.plumbing_layer_names["[DUCT_LAYER_DEFAULT]"]
 		duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
@@ -361,7 +361,7 @@ All the important duct code:
 			return
 
 		// Turn into a duct stack and then merge to the in-hand stack.
-		var/obj/item/stack/ducts/stack = new(duct.loc, 1, FALSE)
+		varvar/obj/item/stack/ducts/stack = SSwardrobe.provide(/obj/item/stack/ducts, duct.loc, STACK_AMOUNT(1))
 		qdel(duct)
 		if(stack.can_merge(src))
 			stack.merge(src)

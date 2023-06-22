@@ -258,7 +258,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		if(!attacking_item.use_tool(src, user, 4 SECONDS, volume = 40))
 			return
 		set_operating(FALSE)
-		var/obj/item/stack/conveyor/belt_item = new /obj/item/stack/conveyor(loc, 1, TRUE, null, null, id)
+		var/obj/item/stack/conveyor/belt_item = SSwardrobe.provide(/obj/item/stack/conveyor, loc, STACK_AMOUNT(1), CONVEYOR_ID(id))
 		if(!QDELETED(belt_item)) //God I hate stacks
 			transfer_fingerprints_to(belt_item)
 
@@ -470,7 +470,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/item/conveyor_switch_construct/attack_self(mob/user)
 	for(var/obj/item/stack/conveyor/belt in view())
-		belt.id = id
+		belt.set_id(id)
 	to_chat(user, span_notice("You have linked all nearby conveyor belt assemblies to this switch."))
 
 /obj/item/conveyor_switch_construct/afterattack(atom/target, mob/user, proximity)
@@ -504,7 +504,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/item/stack/conveyor/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1, _id)
 	. = ..()
-	id = _id
+	set_id(_id)
 
 /obj/item/stack/conveyor/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -523,13 +523,16 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(istype(item_used, /obj/item/conveyor_switch_construct))
 		to_chat(user, span_notice("You link the switch to the conveyor belt assembly."))
 		var/obj/item/conveyor_switch_construct/switch_construct = item_used
-		id = switch_construct.id
+		set_id(switch_construct.id)
 
 /obj/item/stack/conveyor/update_weight()
 	return FALSE
 
 /obj/item/stack/conveyor/thirty
 	amount = 30
+
+/obj/item/stack/conveyor/proc/set_id(new_id)
+	id = new_id
 
 /obj/item/paper/guides/conveyor
 	name = "paper- 'Nano-it-up U-build series, #9: Build your very own conveyor belt, in SPACE'"

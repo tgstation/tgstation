@@ -232,7 +232,7 @@
 						balloon_alert(user, "cables removed")
 						state = SCREWED_CORE
 						update_appearance()
-						new /obj/item/stack/cable_coil(drop_location(), 5)
+						SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location(), STACK_AMOUNT(5))
 					return
 
 				if(istype(P, /obj/item/stack/sheet/rglass))
@@ -308,7 +308,7 @@
 					balloon_alert(user, "removed glass panel")
 					state = CABLED_CORE
 					update_appearance()
-					new /obj/item/stack/sheet/rglass(loc, 2)
+					SSwardrobe.provide(/obj/item/stack/sheet/rglass, loc, STACK_AMOUNT(2))
 					return
 
 				if(P.tool_behaviour == TOOL_SCREWDRIVER)
@@ -385,13 +385,13 @@
 
 /obj/structure/ai_core/deconstruct(disassembled = TRUE)
 	if(state >= GLASS_CORE)
-		new /obj/item/stack/sheet/rglass(loc, 2)
+		SSwardrobe.provide(/obj/item/stack/sheet/rglass, loc, STACK_AMOUNT(2))
 	if(state >= CABLED_CORE)
-		new /obj/item/stack/cable_coil(loc, 5)
+		SSwardrobe.provide(/obj/item/stack/cable_coil, loc, STACK_AMOUNT(5))
 	if(circuit)
 		circuit.forceMove(loc)
 		circuit = null
-	new /obj/item/stack/sheet/plasteel(loc, 4)
+	SSwardrobe.provide(/obj/item/stack/sheet/plasteel, loc, STACK_AMOUNT(4))
 	qdel(src)
 
 /// Quick proc to call to see if the brainmob inside of us has suicided. Returns TRUE if we have, FALSE in any other scenario.

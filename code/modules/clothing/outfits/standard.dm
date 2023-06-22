@@ -210,7 +210,7 @@
 	for(var/obj/item/briefcase_item in sec_briefcase)
 		qdel(briefcase_item)
 	for(var/i = 3 to 0 step -1)
-		sec_briefcase.contents += new /obj/item/stack/spacecash/c1000
+		sec_briefcase.contents += SSwardrobe.provide(/obj/item/stack/sheet/spacecash/c1000)
 	sec_briefcase.contents += new /obj/item/gun/energy/recharge/ebow
 	sec_briefcase.contents += new /obj/item/gun/ballistic/revolver/mateba
 	sec_briefcase.contents += new /obj/item/ammo_box/a357

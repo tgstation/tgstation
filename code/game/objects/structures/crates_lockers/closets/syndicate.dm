@@ -63,43 +63,43 @@
 
 	//Iron (common ore)
 	if(pickednum >= 2)
-		new /obj/item/stack/sheet/iron(src, rand(common_min, common_max))
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, src, STACK_AMOUNT(rand(common_min, common_max)))
 
 	//Glass (common ore)
 	if(pickednum >= 5)
-		new /obj/item/stack/sheet/glass(src, rand(common_min, common_max))
+		SSwardrobe.provide(/obj/item/stack/sheet/glass, src, STACK_AMOUNT(rand(common_min, common_max)))
 
 	//Plasteel (common ore) Because it has a million more uses then plasma
 	if(pickednum >= 10)
-		new /obj/item/stack/sheet/plasteel(src, rand(common_min, common_max))
+		SSwardrobe.provide(/obj/item/stack/sheet/plasteel, src, STACK_AMOUNT(rand(common_min, common_max)))
 
 	//Plasma (rare ore)
 	if(pickednum >= 15)
-		new /obj/item/stack/sheet/mineral/plasma(src, rand(rare_min, rare_max))
+		SSwardrobe.provide(/obj/item/stack/sheet/mineral/plasma, src, STACK_AMOUNT(rand(rare_min, rare_max)))
 
 	//Silver (rare ore)
 	if(pickednum >= 20)
-		new /obj/item/stack/sheet/mineral/silver(src, rand(rare_min, rare_max))
+		SSwardrobe.provide(/obj/item/stack/sheet/mineral/silver, src, STACK_AMOUNT(rand(rare_min, rare_max)))
 
 	//Gold (rare ore)
 	if(pickednum >= 30)
-		new /obj/item/stack/sheet/mineral/gold(src, rand(rare_min, rare_max))
+		SSwardrobe.provide(/obj/item/stack/sheet/mineral/gold, src, STACK_AMOUNT(rand(rare_min, rare_max)))
 
 	//Uranium (rare ore)
 	if(pickednum >= 40)
-		new /obj/item/stack/sheet/mineral/uranium(src, rand(rare_min, rare_max))
+		SSwardrobe.provide(/obj/item/stack/sheet/mineral/uranium, src, STACK_AMOUNT(rand(rare_min, rare_max)))
 
 	//Titanium (rare ore)
 	if(pickednum >= 40)
-		new /obj/item/stack/sheet/mineral/titanium(src, rand(rare_min, rare_max))
+		SSwardrobe.provide(/obj/item/stack/sheet/mineral/titanium, src, STACK_AMOUNT(rand(rare_min, rare_max)))
 
 	//Plastitanium (rare ore)
 	if(pickednum >= 40)
-		new /obj/item/stack/sheet/mineral/plastitanium(src, rand(rare_min, rare_max))
+		SSwardrobe.provide(/obj/item/stack/sheet/mineral/plastitanium, src, STACK_AMOUNT(rand(rare_min, rare_max)))
 
 	//Diamond (rare HONK)
 	if(pickednum >= 45)
-		new /obj/item/stack/sheet/mineral/diamond(src, rand(rare_min, rare_max))
+		SSwardrobe.provide(/obj/item/stack/sheet/mineral/diamond, src, STACK_AMOUNT(rand(rare_min, rare_max)))
 
 	//Jetpack (You hit the jackpot!)
 	if(pickednum == 50)

@@ -738,9 +738,9 @@
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
-	new /obj/item/stack/rods(Tsec)
-	new /obj/item/stack/rods(Tsec)
-	new /obj/item/stack/cable_coil/cut(Tsec)
+	SSwardrobe.provide(/obj/item/stack/rods, Tsec)
+	SSwardrobe.provide(/obj/item/stack/rods, Tsec)
+	SSwardrobe.provide(/obj/item/stack/cable_coil/cut, Tsec)
 	if(cell)
 		cell.forceMove(Tsec)
 		cell.update_appearance()

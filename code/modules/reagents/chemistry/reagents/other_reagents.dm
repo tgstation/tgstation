@@ -224,7 +224,7 @@
 
 	else if(istype(exposed_obj, /obj/item/stack/sheet/hairlesshide))
 		var/obj/item/stack/sheet/hairlesshide/HH = exposed_obj
-		new /obj/item/stack/sheet/wethide(get_turf(HH), HH.amount)
+		SSwardrobe.provide(/obj/item/stack/sheet/wethide, get_turf(HH), STACK_AMOUNT(HH.amount))
 		qdel(HH)
 
 
@@ -842,7 +842,7 @@
 
 	var/obj/item/stack/sheet/iron/metal = exposed_obj
 	reac_volume = min(reac_volume, metal.amount)
-	new/obj/item/stack/sheet/bronze(get_turf(metal), reac_volume)
+	SSwardrobe.provide(/obj/item/stack/sheet/bronze, get_turf(metal), STACK_AMOUNT(reac_volume))
 	metal.use(reac_volume)
 
 /datum/reagent/nitrogen

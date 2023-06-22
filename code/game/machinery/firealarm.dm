@@ -336,7 +336,7 @@
 				if(tool.tool_behaviour == TOOL_WIRECUTTER)
 					buildstage = FIRE_ALARM_BUILD_NO_WIRES
 					tool.play_tool_sound(src)
-					new /obj/item/stack/cable_coil(user.loc, 5)
+					SSwardrobe.provide(/obj/item/stack/cable_coil, user.loc, STACK_AMOUNT(5))
 					to_chat(user, span_notice("You cut the wires from \the [src]."))
 					update_appearance()
 					return
@@ -436,13 +436,13 @@
 
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, 1)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(1))
 		if(buildstage > FIRE_ALARM_BUILD_NO_CIRCUIT)
 			var/obj/item/item = new /obj/item/electronics/firealarm(loc)
 			if(!disassembled)
 				item.update_integrity(item.max_integrity * 0.5)
 		if(buildstage > FIRE_ALARM_BUILD_NO_WIRES)
-			new /obj/item/stack/cable_coil(loc, 3)
+			SSwardrobe.provide(/obj/item/stack/cable_coil, loc, STACK_AMOUNT(3))
 	qdel(src)
 
 // Allows users to examine the state of the thermal sensor

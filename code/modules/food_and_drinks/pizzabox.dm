@@ -146,7 +146,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(pizza || bomb || !foldable)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	var/obj/item/stack/sheet/cardboard/cardboard = new(user.drop_location())
+	var/obj/item/stack/sheet/cardboard/cardboard = SSwardrobe.provide(/obj/item/stack/sheet/cardboard, user.drop_location())
 	user.put_in_active_hand(cardboard)
 	qdel(src)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN

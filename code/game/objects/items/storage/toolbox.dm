@@ -150,14 +150,14 @@
 	new /obj/item/wirecutters(src)
 	new /obj/item/t_scanner(src)
 	new /obj/item/crowbar(src)
-	var/obj/item/stack/cable_coil/new_cable_one = new(src, MAXCOIL)
+	varvar/obj/item/stack/cable_coil/new_cable_one = SSwardrobe.provide(/obj/item/stack/cable_coil, src, STACK_AMOUNT(MAXCOIL))
 	new_cable_one.set_cable_color(pickedcolor)
-	var/obj/item/stack/cable_coil/new_cable_two = new(src, MAXCOIL)
+	varvar/obj/item/stack/cable_coil/new_cable_two = SSwardrobe.provide(/obj/item/stack/cable_coil, src, STACK_AMOUNT(MAXCOIL))
 	new_cable_two.set_cable_color(pickedcolor)
 	if(prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	else
-		var/obj/item/stack/cable_coil/new_cable_three = new(src, MAXCOIL)
+		varvar/obj/item/stack/cable_coil/new_cable_three = SSwardrobe.provide(/obj/item/stack/cable_coil, src, STACK_AMOUNT(MAXCOIL))
 		new_cable_three.set_cable_color(pickedcolor)
 
 /obj/item/storage/toolbox/syndicate
@@ -193,7 +193,7 @@
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/stack/cable_coil(src,MAXCOIL,pickedcolor)
+	SSwardrobe.provide(/obj/item/stack/cable_coil, src, STACK_AMOUNT(MAXCOIL))
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
 
@@ -213,15 +213,15 @@
 /obj/item/storage/toolbox/artistic/PopulateContents()
 	new /obj/item/storage/crayons(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/stack/pipe_cleaner_coil/red(src)
-	new /obj/item/stack/pipe_cleaner_coil/yellow(src)
-	new /obj/item/stack/pipe_cleaner_coil/blue(src)
-	new /obj/item/stack/pipe_cleaner_coil/green(src)
-	new /obj/item/stack/pipe_cleaner_coil/pink(src)
-	new /obj/item/stack/pipe_cleaner_coil/orange(src)
-	new /obj/item/stack/pipe_cleaner_coil/cyan(src)
-	new /obj/item/stack/pipe_cleaner_coil/white(src)
-	new /obj/item/stack/pipe_cleaner_coil/brown(src)
+	SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil/red, src)
+	SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil/yellow, src)
+	SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil/blue, src)
+	SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil/green, src)
+	SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil/pink, src)
+	SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil/orange, src)
+	SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil/cyan, src)
+	SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil/white, src)
+	SSwardrobe.provide(/obj/item/stack/pipe_cleaner_coil/brown, src)
 
 /obj/item/storage/toolbox/a762
 	name = "7.62mm ammo box (Surplus?)"

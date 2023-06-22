@@ -153,7 +153,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 			flasher_obj.id = id
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		else
-			new /obj/item/stack/sheet/iron (loc, 2)
+			SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
 	qdel(src)
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored

@@ -405,7 +405,7 @@
 	cached_gases[/datum/gas/carbon_dioxide][MOLES] += freon_burn_rate
 
 	if(temperature < HOT_ICE_FORMATION_MAXIMUM_TEMPERATURE && temperature > HOT_ICE_FORMATION_MINIMUM_TEMPERATURE && prob(HOT_ICE_FORMATION_PROB) && isturf(holder))
-		new /obj/item/stack/sheet/hot_ice(holder)
+		SSwardrobe.provide(/obj/item/stack/sheet/hot_ice, holder)
 
 	SET_REACTION_RESULTS(freon_burn_rate * (1 + oxygen_burn_ratio))
 	var/energy_consumed = FIRE_FREON_ENERGY_CONSUMED * freon_burn_rate

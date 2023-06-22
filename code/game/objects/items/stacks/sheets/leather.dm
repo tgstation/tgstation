@@ -170,7 +170,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 
 /obj/item/stack/sheet/wethide/burn()
 	visible_message(span_notice("[src] burns up, leaving a sheet of leather behind!"))
-	new /obj/item/stack/sheet/leather(loc) // only one sheet remains to incentivise not burning your wethide to dry it
+	SSwardrobe.provide(/obj/item/stack/sheet/leather, loc) // only one sheet remains to incentivise not burning your wethide to dry it
 	qdel(src)
 
 
@@ -288,7 +288,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 		user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
 		if(do_after(user, 50, target = src))
 			to_chat(user, span_notice("You cut the hair from this [src.singular_name]."))
-			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), 1)
+			SSwardrobe.provide(/obj/item/stack/sheet/hairlesshide, user.drop_location(), STACK_AMOUNT(1))
 			use(1)
 	else
 		return ..()
@@ -310,7 +310,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 /obj/item/stack/sheet/wethide/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	wetness--
 	if(wetness == 0)
-		new /obj/item/stack/sheet/leather(drop_location(), 1)
+		SSwardrobe.provide(/obj/item/stack/sheet/leather, drop_location(), STACK_AMOUNT(1))
 		wetness = initial(wetness)
 		use(1)
 

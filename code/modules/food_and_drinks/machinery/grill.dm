@@ -115,8 +115,8 @@
 	if(grilled_item)
 		finish_grill()
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron(loc, 5)
-		new /obj/item/stack/rods(loc, 5)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(5))
+		SSwardrobe.provide(/obj/item/stack/rods, loc, STACK_AMOUNT(5))
 	..()
 
 /obj/machinery/grill/attack_ai(mob/user)

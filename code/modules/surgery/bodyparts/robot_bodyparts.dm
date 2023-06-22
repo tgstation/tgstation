@@ -234,7 +234,7 @@
 	. = TRUE
 	cutter.play_tool_sound(src)
 	to_chat(user, span_notice("You cut the wires out of [src]."))
-	new /obj/item/stack/cable_coil(drop_location(), 1)
+	SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location(), STACK_AMOUNT(1))
 	wired = FALSE
 
 /obj/item/bodypart/chest/robot/screwdriver_act(mob/living/user, obj/item/screwtool)
@@ -265,7 +265,7 @@
 /obj/item/bodypart/chest/robot/drop_organs(mob/user, violent_removal)
 	var/atom/drop_loc = drop_location()
 	if(wired)
-		new /obj/item/stack/cable_coil(drop_loc, 1)
+		SSwardrobe.provide(/obj/item/stack/cable_coil, drop_loc, STACK_AMOUNT(1))
 		wired = FALSE
 	if(cell)
 		cell.forceMove(drop_loc)

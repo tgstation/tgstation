@@ -32,7 +32,7 @@
 		return
 
 	to_chat(user, span_notice("You fold [src] flat."))
-	var/trash = new /obj/item/stack/sheet/iron(user.loc)
+	var/trash = SSwardrobe.provide(/obj/item/stack/sheet/iron, user.loc)
 	qdel(src)
 	user.put_in_hands(trash)
 

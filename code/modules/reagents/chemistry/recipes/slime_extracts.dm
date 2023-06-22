@@ -72,8 +72,8 @@
 
 /datum/chemical_reaction/slime/slimemetal/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/turf/location = get_turf(holder.my_atom)
-	new /obj/item/stack/sheet/plasteel(location, 5)
-	new /obj/item/stack/sheet/iron(location, 15)
+	SSwardrobe.provide(/obj/item/stack/sheet/plasteel, location, STACK_AMOUNT(5))
+	SSwardrobe.provide(/obj/item/stack/sheet/iron, location, STACK_AMOUNT(15))
 	..()
 
 /datum/chemical_reaction/slime/slimeglass
@@ -82,8 +82,8 @@
 
 /datum/chemical_reaction/slime/slimeglass/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/turf/location = get_turf(holder.my_atom)
-	new /obj/item/stack/sheet/rglass(location, 5)
-	new /obj/item/stack/sheet/glass(location, 15)
+	SSwardrobe.provide(/obj/item/stack/sheet/rglass, location, STACK_AMOUNT(5))
+	SSwardrobe.provide(/obj/item/stack/sheet/glass, location, STACK_AMOUNT(15))
 	..()
 
 //Gold
@@ -295,7 +295,7 @@
 	required_container = /obj/item/slime_extract/darkpurple
 
 /datum/chemical_reaction/slime/slimeplasma/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/stack/sheet/mineral/plasma(get_turf(holder.my_atom), 3)
+	SSwardrobe.provide(/obj/item/stack/sheet/mineral/plasma, get_turf(holder.my_atom), STACK_AMOUNT(3))
 	..()
 
 //Red
@@ -412,7 +412,7 @@
 	required_container = /obj/item/slime_extract/adamantine
 
 /datum/chemical_reaction/slime/adamantine/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/stack/sheet/mineral/adamantine(get_turf(holder.my_atom))
+	SSwardrobe.provide(/obj/item/stack/sheet/mineral/adamantine, get_turf(holder.my_atom))
 	..()
 
 //Bluespace
@@ -421,7 +421,7 @@
 	required_container = /obj/item/slime_extract/bluespace
 
 /datum/chemical_reaction/slime/slimefloor2/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/stack/tile/bluespace(get_turf(holder.my_atom), 25)
+	SSwardrobe.provide(/obj/item/stack/tile/bluespace, get_turf(holder.my_atom), STACK_AMOUNT(25))
 	..()
 
 
@@ -430,7 +430,7 @@
 	required_container = /obj/item/slime_extract/bluespace
 
 /datum/chemical_reaction/slime/slimecrystal/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/obj/item/stack/ore/bluespace_crystal/BC = new (get_turf(holder.my_atom))
+	var/obj/item/stack/ore/bluespace_crystal/BC = SSwardrobe.provide(/obj/item/stack/ore/bluespace_crystal, get_turf(holder.my_atom))
 	BC.visible_message(span_notice("The [BC.name] appears out of thin air!"))
 	..()
 
@@ -492,7 +492,7 @@
 	required_container = /obj/item/slime_extract/sepia
 
 /datum/chemical_reaction/slime/slimefloor/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/stack/tile/sepia(get_turf(holder.my_atom), 25)
+	SSwardrobe.provide(/obj/item/stack/tile/sepia, get_turf(holder.my_atom), STACK_AMOUNT(25))
 	..()
 
 //Pyrite

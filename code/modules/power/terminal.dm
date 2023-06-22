@@ -61,7 +61,7 @@
 			do_sparks(5, TRUE, master)
 			return
 
-		var/obj/item/stack/cable_coil/cable = new (drop_location(), 10)
+		varvar/obj/item/stack/cable_coil/cable = SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location(), STACK_AMOUNT(10))
 		qdel(src)
 		cable.balloon_alert(user, "cable terminal dismantled")
 

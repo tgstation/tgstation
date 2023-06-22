@@ -150,7 +150,7 @@
 			else
 				computer.visible_message(span_notice("\The [computer] prints out paper."))
 				if(ticket_count >= 1)
-					new /obj/item/stack/arcadeticket((get_turf(computer)), 1)
+					SSwardrobe.provide(/obj/item/stack/arcadeticket, get_turf(computer), STACK_AMOUNT(1))
 					to_chat(usr, span_notice("[computer] dispenses a ticket!"))
 					ticket_count -= 1
 					computer.stored_paper -= 1

@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	. += span_notice("You can build a wall girder (unanchored) by right clicking on an empty floor.")
 
 /obj/item/stack/sheet/iron/narsie_act()
-	new /obj/item/stack/sheet/runed_metal(loc, amount)
+	SSwardrobe.provide(/obj/item/stack/sheet/runed_metal, loc, STACK_AMOUNT(amount))
 	qdel(src)
 
 /obj/item/stack/sheet/iron/fifty
@@ -194,7 +194,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 
 /obj/item/stack/sheet/iron/welder_act(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
-		var/obj/item/stack/rods/two/new_item = new(user.loc)
+		var/obj/item/stack/rods/two/new_item = SSwardrobe.provide(/obj/item/stack/rods/two, user.loc)
 		user.visible_message(
 			span_notice("[user.name] shaped [src] into floor rods with [tool]."),
 			blind_message = span_hear("You hear welding."),
@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 
 /obj/item/stack/sheet/iron/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
-		var/obj/item/stack/tile/iron/four/new_item = new(user.loc)
+		var/obj/item/stack/tile/iron/four/new_item = SSwardrobe.provide(/obj/item/stack/tile/iron/four, user.loc)
 		user.visible_message(
 			span_notice("[user.name] shaped [src] into floor tiles with [tool]."),
 			blind_message = span_hear("You hear welding."),

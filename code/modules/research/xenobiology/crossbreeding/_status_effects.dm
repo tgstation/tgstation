@@ -650,7 +650,7 @@
 	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
 		to_chat(owner, span_warning("[linked_extract] kept your hands wet! It wets [O]!"))
 		var/obj/item/stack/sheet/hairlesshide/HH = O
-		new /obj/item/stack/sheet/wethide(get_turf(HH), HH.amount)
+		SSwardrobe.provide(/obj/item/stack/sheet/wethide, get_turf(HH), STACK_AMOUNT(HH.amount))
 		qdel(HH)
 	..()
 

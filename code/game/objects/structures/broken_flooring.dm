@@ -28,7 +28,7 @@
 /obj/structure/broken_flooring/crowbar_act(mob/living/user, obj/item/I)
 	I.play_tool_sound(src, 80)
 	balloon_alert(user, "tile reclaimed")
-	new /obj/item/stack/tile/iron(get_turf(src))
+	SSwardrobe.provide(/obj/item/stack/tile/iron, get_turf(src))
 	qdel(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

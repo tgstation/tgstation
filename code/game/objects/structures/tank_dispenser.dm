@@ -108,7 +108,7 @@
 		for(var/X in src)
 			var/obj/item/I = X
 			I.forceMove(loc)
-		new /obj/item/stack/sheet/iron (loc, 2)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
 	qdel(src)
 
 /obj/structure/tank_dispenser/proc/dispense(tank_type, mob/receiver)

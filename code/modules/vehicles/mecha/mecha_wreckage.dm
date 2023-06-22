@@ -74,7 +74,7 @@
 	if(wires_removed)
 		to_chat(user, span_notice("You don't see anything that can be cut with [I]!"))
 		return
-	var/N = new /obj/item/stack/cable_coil(get_turf(user), rand(1,3))
+	var/N = SSwardrobe.provide(/obj/item/stack/cable_coil, get_turf(user), STACK_AMOUNT(rand(1,3)))
 	user.visible_message(span_notice("[user] cuts [N] from [src]."), span_notice("You cut [N] from [src]."))
 	wires_removed = TRUE
 

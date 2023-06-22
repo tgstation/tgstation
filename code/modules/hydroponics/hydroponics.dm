@@ -1173,7 +1173,7 @@
 	return //Soil has no electricity.
 
 /obj/machinery/hydroponics/soil/deconstruct(disassembled)
-	new /obj/item/stack/ore/glass(drop_location(), 3)
+	SSwardrobe.provide(/obj/item/stack/ore/glass, drop_location(), STACK_AMOUNT(3))
 	return ..()
 
 ///The usb port circuit

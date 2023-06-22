@@ -106,11 +106,11 @@
 
 				if(W.use_tool(src, user, 40, volume=50))
 					to_chat(user, span_notice("You disassemble the windoor assembly."))
-					var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
+					varvar/obj/item/stack/sheet/rglass/RG = SSwardrobe.provide(/obj/item/stack/sheet/rglass, get_turf(src), STACK_AMOUNT(5))
 					if (!QDELETED(RG))
 						RG.add_fingerprint(user)
 					if(secure)
-						var/obj/item/stack/rods/R = new (get_turf(src), 4)
+						varvar/obj/item/stack/rods/R = SSwardrobe.provide(/obj/item/stack/rods, get_turf(src), STACK_AMOUNT(4))
 						if (!QDELETED(R))
 							R.add_fingerprint(user)
 					qdel(src)
@@ -205,7 +205,7 @@
 						return
 
 					to_chat(user, span_notice("You cut the windoor wires."))
-					new/obj/item/stack/cable_coil(get_turf(user), 1)
+					SSwardrobe.provide(/obj/item/stack/cable_coil, get_turf(user), STACK_AMOUNT(1))
 					state = "01"
 					if(secure)
 						name = "secure anchored windoor assembly"

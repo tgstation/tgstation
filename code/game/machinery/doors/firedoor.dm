@@ -865,9 +865,9 @@
 					user.visible_message(span_notice("[user] cuts apart [src]!"), \
 						span_notice("You cut [src] into metal."))
 					var/turf/tagetloc = get_turf(src)
-					new /obj/item/stack/sheet/iron(tagetloc, 3)
+					SSwardrobe.provide(/obj/item/stack/sheet/iron, tagetloc, STACK_AMOUNT(3))
 					if(reinforced)
-						new /obj/item/stack/sheet/plasteel(tagetloc, 2)
+						SSwardrobe.provide(/obj/item/stack/sheet/plasteel, tagetloc, STACK_AMOUNT(2))
 					qdel(src)
 				return
 			if(istype(attacking_object, /obj/item/electroadaptive_pseudocircuit))

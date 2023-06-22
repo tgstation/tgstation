@@ -28,9 +28,9 @@
 /obj/structure/tramwall/Initialize(mapload)
 	AddElement(/datum/element/blocks_explosives)
 	. = ..()
-	var/obj/item/stack/initialized_mineral = new mineral
+	var/obj/item/stack/initialized_mineral = SSwardrobe.provide(mineral)
 	set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
-	qdel(initialized_mineral)
+	SSwardrobe.yield_object(initialized_mineral)
 	air_update_turf(TRUE, TRUE)
 
 /obj/structure/tramwall/attackby(obj/item/welder, mob/user, params)

@@ -85,8 +85,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 		set_sign(new /datum/barsign/hiddensigns/signoff)
 
 /obj/machinery/barsign/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/iron(drop_location(), 2)
-	new /obj/item/stack/cable_coil(drop_location(), 2)
+	SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location(), STACK_AMOUNT(2))
+	SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location(), STACK_AMOUNT(2))
 	qdel(src)
 
 /obj/machinery/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)

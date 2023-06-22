@@ -131,8 +131,8 @@
 	if(!I.use_tool(src, user, 40, volume=50))
 		return TRUE
 	to_chat(user, span_notice("You detach the wheels and deconstruct the chair."))
-	new /obj/item/stack/rods(drop_location(), 8)
-	new /obj/item/stack/sheet/iron(drop_location(), 10)
+	SSwardrobe.provide(/obj/item/stack/rods, drop_location(), STACK_AMOUNT(8))
+	SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location(), STACK_AMOUNT(10))
 	for(var/datum/stock_part/part in component_parts)
 		new part.physical_object_type(drop_location())
 	qdel(src)

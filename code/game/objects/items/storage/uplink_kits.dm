@@ -129,7 +129,7 @@
 			new /obj/item/card/emag(src) // 4 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/card/id/advanced/mining(src)
-			new /obj/item/stack/spacecash/c10000(src) // this is technically 10 tc but not really
+			SSwardrobe.provide(/obj/item/stack/spacecash/c10000, src) // this is technically 10 tc but not really
 			if(prob(70))
 				new /obj/item/toy/spinningtoy(src) //lol
 			else
@@ -274,7 +274,7 @@
 	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do. 8 tc
 	new /obj/item/gun/ballistic/revolver(src) // 13 tc old one stays in the old box
 	new /obj/item/implanter/freedom(src) // 5 tc
-	new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
+	SSwardrobe.provide(/obj/item/stack/telecrystal, src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
 
 /obj/item/storage/box/syndicate/contract_kit
 	name = "Contract Kit"

@@ -81,7 +81,7 @@
 
 	if(!tool.use_tool(src, user, 30, volume=50))
 		return TRUE
-	new /obj/item/stack/sheet/iron(loc, 5)
+	SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(5))
 	qdel(src)
 
 	return TRUE
@@ -92,7 +92,7 @@
 
 	icon_state = "floodlight_c1"
 	state = FLOODLIGHT_NEEDS_WIRES
-	new /obj/item/stack/cable_coil(loc, 5)
+	SSwardrobe.provide(/obj/item/stack/cable_coil, loc, STACK_AMOUNT(5))
 
 	return TRUE
 

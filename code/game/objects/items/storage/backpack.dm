@@ -385,7 +385,7 @@
 	qdel(smuggled_goods)
 
 /obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
-	new /obj/item/stack/tile/iron/base(src)
+	SSwardrobe.provide(/obj/item/stack/tile/iron/base, src)
 	new /obj/item/crowbar(src)
 
 	..()
@@ -532,7 +532,7 @@
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/stack/cable_coil(src)
+	SSwardrobe.provide(/obj/item/stack/cable_coil, src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
 
@@ -597,8 +597,8 @@
 	new /obj/item/surgicaldrill(src)
 	new /obj/item/bonesetter(src)
 	new /obj/item/blood_filter(src)
-	new /obj/item/stack/medical/bone_gel(src)
-	new /obj/item/stack/sticky_tape/surgical(src)
+	SSwardrobe.provide(/obj/item/stack/medical/bone_gel, src)
+	SSwardrobe.provide(/obj/item/stack/sticky_tape/surgical, src)
 	new /obj/item/roller(src)
 	new /obj/item/clothing/suit/jacket/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)

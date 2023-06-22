@@ -325,8 +325,7 @@
 /obj/structure/closet/crate/goldcrate/populate_contents_immediate()
 	. = ..()
 
-	for(var/i in 1 to 3)
-		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
+	SSwardrobe.provide(/obj/item/stack/sheet/mineral/gold, src, STACK_AMOUNT(3))
 
 /obj/structure/closet/crate/silvercrate
 	name = "silver crate"

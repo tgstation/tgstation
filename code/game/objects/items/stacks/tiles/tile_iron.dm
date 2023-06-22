@@ -108,7 +108,7 @@
 		balloon_alert(user, "not enough tiles!")
 		return
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
-		var/obj/item/stack/sheet/iron/new_item = new(user.loc)
+		var/obj/item/stack/sheet/iron/new_item = SSwardrobe.provide(/obj/item/stack/sheet/iron, user.loc)
 		user.visible_message(
 			span_notice("[user.name] shaped [src] into sheets with [tool]."),
 			blind_message = span_hear("You hear welding."),
@@ -124,7 +124,7 @@
 		balloon_alert(user, "not enough tiles!")
 		return
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
-		var/obj/item/stack/rods/new_item = new(user.loc)
+		var/obj/item/stack/rods/new_item = SSwardrobe.provide(/obj/item/stack/rods, user.loc)
 		user.visible_message(
 			span_notice("[user.name] shaped [src] into rods with [tool]."),
 			blind_message = span_hear("You hear welding."),

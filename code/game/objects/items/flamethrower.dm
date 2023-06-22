@@ -100,7 +100,7 @@
 	if(ptank)
 		ptank.forceMove(T)
 		ptank = null
-	new /obj/item/stack/rods(T)
+	SSwardrobe.provide(/obj/item/stack/rods, T)
 	qdel(src)
 
 /obj/item/flamethrower/screwdriver_act(mob/living/user, obj/item/tool)

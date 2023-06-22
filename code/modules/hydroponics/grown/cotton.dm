@@ -38,7 +38,7 @@
 	var/seed_modifier = 0
 	if(seed)
 		seed_modifier = round(seed.potency / 25)
-	var/obj/item/stack/cotton = new cotton_type(user.loc, 1 + seed_modifier)
+	var/obj/item/stack/cotton = SSwardrobe.provide(cotton_type, user.loc, STACK_AMOUNT(1 + seed_modifier))
 	var/old_cotton_amount = cotton.amount
 	for(var/obj/item/stack/potential_stack in user.loc)
 		if(QDELETED(potential_stack))

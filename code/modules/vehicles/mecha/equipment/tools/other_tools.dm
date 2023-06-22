@@ -367,7 +367,7 @@
 
 ///Introduces the actual fuel type to be used, as well as the starting amount of said fuel
 /obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
-	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 0)
+	fuel = SSwardrobe.provide(/obj/item/stack/sheet/mineral/plasma, src, STACK_AMOUNT(1))
 
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
 

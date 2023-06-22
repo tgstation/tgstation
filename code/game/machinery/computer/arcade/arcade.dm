@@ -564,7 +564,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				obj_flags &= ~EMAGGED
 				xp_gained += 100
 			else
-				new /obj/item/stack/arcadeticket((get_turf(src)), 2)
+				SSwardrobe.provide(/obj/item/stack/arcadeticket, get_turf(src), STACK_AMOUNT(2))
 				to_chat(user, span_notice("[src] dispenses 2 tickets!"))
 				xp_gained += 50
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
@@ -671,7 +671,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
 		user.won_game()
 		playsound(src, 'sound/arcade/win.ogg', 50, TRUE)
-		new /obj/item/stack/arcadeticket((get_turf(src)), rand(6,10))
+		SSwardrobe.provide(/obj/item/stack/arcadeticket, get_turf(src), STACK_AMOUNT(rand(6, 10)))
 		to_chat(user, span_notice("[src] dispenses a handful of tickets!"))
 		return
 	else if(!do_they_still_have_that_hand(user, chopchop))

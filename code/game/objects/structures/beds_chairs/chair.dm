@@ -372,7 +372,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
 	else if(custom_materials[GET_MATERIAL_REF(/datum/material/iron)])
-		new /obj/item/stack/rods(get_turf(loc), 2)
+		SSwardrobe.provide(/obj/item/stack/rods, get_turf(loc), STACK_AMOUNT(2))
 	qdel(src)
 
 

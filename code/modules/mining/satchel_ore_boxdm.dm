@@ -91,7 +91,7 @@
 			to_chat(usr, span_notice("You open the release hatch on the box.."))
 
 /obj/structure/ore_box/deconstruct(disassembled = TRUE, mob/user)
-	var/obj/item/stack/sheet/mineral/wood/WD = new (loc, 4)
+	varvar/obj/item/stack/sheet/mineral/wood/WD = SSwardrobe.provide(/obj/item/stack/sheet/mineral/wood, loc, STACK_AMOUNT(4))
 	if(user && !QDELETED(WD))
 		WD.add_fingerprint(user)
 	dump_box_contents()

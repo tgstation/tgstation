@@ -573,7 +573,7 @@
 			var/quantity = candidate.amount
 			if(candidate.use(quantity))
 				uses --
-				new /obj/item/stack/sheet/runed_metal(T,quantity)
+				SSwardrobe.provide(/obj/item/stack/sheet/runed_metal, T, STACK_AMOUNT(quantity))
 				to_chat(user, span_warning("A dark cloud emanates from you hand and swirls around the plasteel, transforming it into runed metal!"))
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else if(istype(target,/mob/living/silicon/robot))

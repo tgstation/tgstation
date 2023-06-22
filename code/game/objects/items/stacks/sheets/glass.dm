@@ -62,14 +62,14 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		CC.use(5)
 		use(1)
 		to_chat(user, span_notice("You attach wire to the [name]."))
-		var/obj/item/stack/light_w/new_tile = new(user.loc)
+		var/obj/item/stack/light_w/new_tile = SSwardrobe.provide(/obj/item/stack/light_w, user.loc)
 		if (!QDELETED(new_tile))
 			new_tile.add_fingerprint(user)
 		return
 	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
 		if (V.get_amount() >= 1 && get_amount() >= 1)
-			var/obj/item/stack/sheet/rglass/RG = new (get_turf(user))
+			var/obj/item/stack/sheet/rglass/RG = SSwardrobe.provide(/obj/item/stack/sheet/rglass, get_turf(user))
 			if(!QDELETED(RG))
 				RG.add_fingerprint(user)
 			var/replace = user.get_inactive_held_item() == src
@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
 		if (V.get_amount() >= 1 && get_amount() >= 1)
-			var/obj/item/stack/sheet/plasmarglass/RG = new (get_turf(user))
+			var/obj/item/stack/sheet/plasmarglass/RG = SSwardrobe.provide(/obj/item/stack/sheet/plasmarglass, get_turf(user))
 			if (!QDELETED(RG))
 				RG.add_fingerprint(user)
 			var/replace = user.get_inactive_held_item() == src
@@ -379,7 +379,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 
 /obj/item/shard/welder_act(mob/living/user, obj/item/I)
 	if(I.use_tool(src, user, 0, volume=50))
-		var/obj/item/stack/sheet/new_glass = new weld_material
+		var/obj/item/stack/sheet/new_glass = SSwardrobe.provide(weld_material)
 		to_chat(user, span_notice("You melt [src] down into [new_glass.name]."))
 		new_glass.forceMove((Adjacent(user) ? user.drop_location() : loc)) //stack merging is handled automatically.
 		qdel(src)

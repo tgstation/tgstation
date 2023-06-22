@@ -822,9 +822,9 @@
 
 /turf/closed/mineral/strong/proc/drop_ores()
 	if(prob(10))
-		new /obj/item/stack/sheet/mineral/mythril(src, 5)
+		SSwardrobe.provide(/obj/item/stack/sheet/mineral/mythril, src, STACK_AMOUNT(5))
 	else
-		new /obj/item/stack/sheet/mineral/adamantine(src, 5)
+		SSwardrobe.provide(/obj/item/stack/sheet/mineral/adamantine, src, STACK_AMOUNT(5))
 
 /turf/closed/mineral/strong/acid_melt()
 	return

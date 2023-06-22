@@ -91,7 +91,7 @@
 		return
 	balloon_alert(user, "barricade deconstructed")
 	tool.play_tool_sound(src)
-	new /obj/item/stack/sheet/mineral/wood(get_turf(src), drop_amount)
+	SSwardrobe.provide(/obj/item/stack/sheet/mineral/wood, get_turf(src), STACK_AMOUNT(drop_amount))
 	qdel(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -110,7 +110,7 @@
 	max_integrity = 75
 
 /obj/structure/barricade/wooden/make_debris()
-	new /obj/item/stack/sheet/mineral/wood(get_turf(src), drop_amount)
+	SSwardrobe.provide(/obj/item/stack/sheet/mineral/wood, get_turf(src), STACK_AMOUNT(drop_amount))
 
 /obj/structure/barricade/sandbags
 	name = "sandbags"

@@ -107,7 +107,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 /obj/structure/noticeboard/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!disassembled)
-			new /obj/item/stack/sheet/mineral/wood(loc)
+			SSwardrobe.provide(/obj/item/stack/sheet/mineral/wood, loc)
 		else
 			new /obj/item/wallframe/noticeboard(loc)
 	for(var/obj/item/content in contents)

@@ -65,7 +65,7 @@
 
 /obj/structure/tank_holder/deconstruct(disassembled = TRUE)
 	var/atom/Tsec = drop_location()
-	new /obj/item/stack/rods(Tsec, 2)
+	SSwardrobe.provide(/obj/item/stack/rods, Tsec, STACK_AMOUNT(2))
 	if(tank)
 		tank.forceMove(Tsec)
 		after_detach_tank()

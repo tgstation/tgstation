@@ -410,7 +410,7 @@
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
-	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
+	SSwardrobe.provide(/obj/item/stack/sheet/mineral/wood, drop_location(), STACK_AMOUNT(10))
 
 	//remove all component parts inherited from smartfridge cause they were not required in crafting
 	var/obj/item/circuitboard/machine/smartfridge/board = locate() in component_parts

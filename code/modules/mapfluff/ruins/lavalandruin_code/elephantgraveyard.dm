@@ -71,11 +71,11 @@
 
 /turf/closed/mineral/strong/wasteland/drop_ores()
 	if(prob(10))
-		new /obj/item/stack/ore/iron(src, 1)
-		new /obj/item/stack/ore/glass(src, 1)
+		SSwardrobe.provide(/obj/item/stack/ore/iron, src, STACK_AMOUNT(1))
+		SSwardrobe.provide(/obj/item/stack/ore/glass, src, STACK_AMOUNT(1))
 		new /obj/effect/decal/remains/human/grave(src, 1)
 	else
-		new /obj/item/stack/sheet/bone(src, 1)
+		SSwardrobe.provide(/obj/item/stack/sheet/bone, src, STACK_AMOUNT(1))
 
 //***Oil well puddles.
 /obj/structure/sink/oil_well //You're not going to enjoy bathing in this...
