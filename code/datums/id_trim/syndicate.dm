@@ -40,12 +40,12 @@
 /datum/id_trim/syndicom/irs/auditor
 	assignment = "Internal Revenue Service Head Auditor"
 	trim_state = "trim_quartermaster"
+	sechud_icon_state = SECHUD_QUARTERMASTER
 
 /// Trim for Syndicate mobs, outfits and corpses.
 /datum/id_trim/syndicom/captain
 	assignment = "Syndicate Ship Captain"
 	trim_state = "trim_captain"
-	sechud_icon_state = SECHUD_QUARTERMASTER
 	access = list(ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER, ACCESS_ROBOTICS)
 
 /// Trim for Syndicate mobs, outfits and corpses.
