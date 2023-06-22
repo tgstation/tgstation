@@ -109,6 +109,8 @@ All ShuttleMove procs go here
 
 	abstract_move(newT)
 
+	SSdemo.mark_dirty(src)
+
 	return TRUE
 
 // Called on atoms after everything has been moved

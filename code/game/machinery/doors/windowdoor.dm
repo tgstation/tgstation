@@ -82,6 +82,7 @@
 		return
 
 	set_light(l_range = 0)
+	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/window/update_overlays()
 	. = ..()

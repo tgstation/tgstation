@@ -318,7 +318,6 @@ GLOBAL_VAR(restart_counter)
 
 /world/Del()
 	auxcleanup()
-	SSdemo?.Shutdown()
 	. = ..()
 
 /world/proc/update_status()

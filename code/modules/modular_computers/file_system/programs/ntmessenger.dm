@@ -350,7 +350,6 @@
 		if(isobserver(player_mob) && (player_mob.client?.prefs.chat_toggles & CHAT_GHOSTPDA))
 			to_chat(player_mob, "[FOLLOW_LINK(player_mob, user)] [ghost_message]")
 
-	to_chat(SSdemo, "[FOLLOW_LINK(SSdemo, user)] [ghost_message]")
 	// Log in the talk log
 	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [message_data["name"]] to [signal.format_target()]")
 	if(rigged)
