@@ -1,7 +1,7 @@
 // Every cycle, the pump uses the air in air_in to try and move a specific volume of gas into air_out.
 //
-// node1, air1, network1 correspond to input
-// node2, air2, network2 correspond to output
+// node1, air1, network1 corresponds to input
+// node2, air2, network2 corresponds to output
 //
 // Thus, the two variables affect pump operation are set in New():
 //   air1.volume
@@ -72,7 +72,7 @@
 	var/input_starting_pressure = air1.return_pressure()
 	var/output_starting_pressure = air2.return_pressure()
 
-	if((input_starting_pressure < VOLUME_PUMP_LEAK_AMOUNT) || ((output_starting_pressure > VOLUME_PUMP_MAX_OUTPUT_PRESSURE)) && !overclocked)
+	if((input_starting_pressure < VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE) || ((output_starting_pressure > VOLUME_PUMP_MAX_OUTPUT_PRESSURE)) && !overclocked)
 		return
 
 	if(overclocked && (output_starting_pressure-input_starting_pressure > VOLUME_PUMP_OVERPRESSURE_ALLOWANCE))//Overclocked pumps can only force gas a certain amount.
