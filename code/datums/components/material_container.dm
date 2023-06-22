@@ -417,12 +417,11 @@
 /datum/component/material_container/proc/use_amount_mat(amt, datum/material/mat)
 	if(!istype(mat))
 		mat = GET_MATERIAL_REF(mat)
-	if(!mat || !materials[mat])
-		return 0
 
 	if(amt <= 0)
 		return 0
 	amt = OPTIMAL_COST(amt)
+
 	var/amount = materials[mat]
 	if(amount < amt)
 		return 0
@@ -511,9 +510,8 @@
 	return FALSE //Can't afford it
 
 /// Returns TRUE if you have enough of a specified material category (Which could be multiple materials)
-/datum/component/material_container/proc/has_enough_of_category(category, amount, multiplier=1)
-	for(var/i in SSmaterials.materials_by_category[category])
-		var/datum/material/mat = i
+/datum/component/material_container/proc/has_enough_of_category(category, amount, multiplier = 1)
+	for(var/datum/material/mat in SSmaterials.materials_by_category[category])
 		if(materials[mat] >= OPTIMAL_COST(amount * multiplier)) //we have enough
 			return TRUE
 	return FALSE
@@ -546,7 +544,10 @@
 /// Returns the amount of a specific material in this container.
 /datum/component/material_container/proc/get_material_amount(datum/material/mat)
 	if(!istype(mat))
-		mat = GET_MATERIAL_REF(mat)
+		if(ispath(mat))
+			mat = GET_MATERIAL_REF(mat)
+		else
+			return 0 //we don't deal with category materials
 	return materials[mat]
 
 /datum/component/material_container/ui_static_data(mob/user)
