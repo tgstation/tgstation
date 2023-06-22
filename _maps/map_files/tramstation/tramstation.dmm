@@ -25331,6 +25331,12 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"hMM" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/yellow/filled/warning,
+/obj/machinery/recharge_station,
+/turf/open/floor/plastic,
+/area/station/engineering/break_room)
 "hMQ" = (
 /obj/structure/sign/warning/secure_area{
 	name = "HIGH SECURITY STORAGE";
@@ -49331,6 +49337,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "qAy" = (
@@ -54038,7 +54045,6 @@
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "smo" = (
-/obj/effect/turf_decal/trimline/yellow/filled/corner,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -102690,7 +102696,7 @@ uHI
 uHI
 wYO
 tdf
-uJI
+hMM
 fXQ
 flV
 sjm
