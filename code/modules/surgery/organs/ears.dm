@@ -111,9 +111,19 @@
 	icon_state = "ears-c-u"
 	desc = "Allows the user to understand one of several commonly spoken languages. Grants no ability to speak these languages."
 	damage_multiplier = 0.5
-	var/list/language_list = list(/datum/language/common, /datum/language/uncommon, /datum/language/moffic, /datum/language/draconic, /datum/language/calcic, /datum/language/voltaic, /datum/language/nekomimetic)
-	var/list/language_list_pretty = list()
+	var/list/language_list = list()
 	var/datum/language/chosen_language = /datum/language/common
+
+/obj/item/organ/internal/ears/cybernetic/translation/Initialize(mapload)
+	. = ..()
+	for (var/species_id in get_selectable_species())
+		var/datum/species/current_species = GLOB.species_list[species_id]
+		var/datum/language_holder/lang_holder = initial(current_species.species_language_holder)
+		var/datum/language_holder/lang_holder_obj = new lang_holder(src)
+
+		for(var/datum/language/lang as anything in lang_holder_obj.understood_languages)
+			if (!(lang in language_list))
+				language_list[initial(lang.name)] = lang
 
 /obj/item/organ/internal/ears/cybernetic/translation/examine(mob/user)
 	. = ..()
@@ -124,15 +134,10 @@
 	if(.)
 		return TRUE
 
-	var/i
-	for(i = 1, i <= language_list.len, i++)
-		var/datum/language/m = language_list[i]
-		language_list_pretty[initial(m.name)] = m
-
-	var/lang_name = tgui_input_list(user, "Select a language", "Language", language_list_pretty)
+	var/lang_name = tgui_input_list(user, "Select a language", "Language", language_list)
 
 	if(!isnull(lang_name))
-		chosen_language = language_list_pretty[lang_name]
+		chosen_language = language_list[lang_name]
 		to_chat(user, span_notice("You modify [src] to translate [initial(lang_name)] speech."))
 
 /obj/item/organ/internal/ears/cybernetic/translation/on_insert(mob/living/carbon/ear_owner)
