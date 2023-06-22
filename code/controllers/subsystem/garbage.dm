@@ -278,7 +278,7 @@ SUBSYSTEM_DEF(garbage)
 #endif
 	if (D.gc_destroyed <= 0)
 		D.gc_destroyed = queue_time
-
+	
 	var/list/queue = queues[level]
 
 	queue[++queue.len] = list(queue_time, refid, D.gc_destroyed) // not += for byond reasons

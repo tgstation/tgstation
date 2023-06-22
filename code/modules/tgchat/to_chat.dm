@@ -37,11 +37,6 @@
 	if(avoid_highlighting) message["avoidHighlighting"] = avoid_highlighting
 	var/message_blob = TGUI_CREATE_MESSAGE("chat/message", message)
 	var/message_html = message_to_html(message)
-
-	if(!confidential)
-		var/scraped = message["html"]
-		SSdemo.write_chat(target, scraped)
-
 	if(islist(target))
 		for(var/_target in target)
 			var/client/client = CLIENT_FROM_VAR(_target)

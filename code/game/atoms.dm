@@ -197,6 +197,7 @@
 		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
+
 /**
  * The primary method that objects are setup in SS13 with
  *
