@@ -3934,6 +3934,8 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/contraband/permabrig_weapon,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "arI" = (
@@ -18693,6 +18695,8 @@
 /obj/effect/spawner/random/trash/bin,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/dim/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "fio" = (
@@ -24431,8 +24435,6 @@
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/spawner/random/contraband/landmine,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "hsN" = (
@@ -40722,6 +40724,11 @@
 /obj/effect/turf_decal/tile/dark_green/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
+"nrf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "nrh" = (
 /obj/structure/table/glass,
 /obj/item/storage/fancy/coffee_cart_rack{
@@ -45847,6 +45854,8 @@
 /area/station/medical/medbay/central)
 "ppB" = (
 /obj/item/clothing/under/rank/nanotrasen_consultant/hubert,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "pqU" = (
@@ -62492,6 +62501,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
+"vcG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/starboard/lesser)
 "vcI" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -110431,7 +110445,7 @@ abM
 abM
 abM
 ppB
-mwK
+vcG
 fin
 arH
 arP
@@ -110687,7 +110701,7 @@ abM
 abM
 abM
 abM
-abM
+nrf
 mCL
 hsx
 xci
