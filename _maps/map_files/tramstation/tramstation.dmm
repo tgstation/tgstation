@@ -1719,6 +1719,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/lattice/catwalk,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "aeN" = (
@@ -17107,6 +17108,9 @@
 	dir = 5
 	},
 /obj/structure/table/glass,
+/obj/effect/spawner/random/bureaucracy/folder,
+/obj/effect/spawner/random/bureaucracy/pen,
+/obj/effect/spawner/random/bureaucracy/stamp,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "eAU" = (
@@ -21253,6 +21257,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"ghs" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/effect/spawner/random/bureaucracy/paper,
+/turf/open/floor/plastic,
+/area/station/engineering/break_room)
 "ghz" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/construction/engineering)
@@ -23525,6 +23537,7 @@
 	dir = 9
 	},
 /obj/structure/table/glass,
+/obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "gZP" = (
@@ -24884,12 +24897,6 @@
 /area/station/cargo/warehouse)
 "hDj" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -25227,6 +25234,8 @@
 	dir = 8
 	},
 /obj/structure/table/glass,
+/obj/effect/spawner/random/decoration/material,
+/obj/effect/spawner/random/engineering/toolbox,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "hKj" = (
@@ -34240,6 +34249,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/lattice/catwalk,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "kWN" = (
@@ -38442,6 +38452,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/lattice/catwalk,
 /turf/open/misc/asteroid,
 /area/station/engineering/atmos)
 "mxm" = (
@@ -44140,9 +44151,6 @@
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "oGj" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
@@ -55141,6 +55149,7 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/lattice/catwalk,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "sDC" = (
@@ -65492,6 +65501,7 @@
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/lattice/catwalk,
 /turf/open/misc/asteroid,
 /area/station/engineering/atmos)
 "wdZ" = (
@@ -70852,6 +70862,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/lattice/catwalk,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "yjU" = (
@@ -105825,7 +105836,7 @@ rji
 qjU
 aaa
 ulV
-cgR
+ghs
 rsz
 rsz
 tXf
