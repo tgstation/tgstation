@@ -26,7 +26,7 @@
 				to_chat(user, span_notice("You start deconstructing the frame..."))
 				if(P.use_tool(src, user, 20, volume=50))
 					to_chat(user, span_notice("You deconstruct the frame."))
-					varvar/obj/item/stack/sheet/iron = SSwardrobe.provide(/obj/item/stack/sheet, drop_location(), STACK_AMOUNT(5))
+					var/obj/item/stack/sheet/iron/M = SSwardrobe.provide(/obj/item/stack/sheet, drop_location(), STACK_AMOUNT(5))
 					if (!QDELETED(M))
 						M.add_fingerprint(user)
 					qdel(src)
@@ -91,7 +91,7 @@
 				to_chat(user, span_notice("You remove the cables."))
 				state = 2
 				icon_state = "2"
-				varvar/obj/item/stack/cable_coil/A = SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location(), STACK_AMOUNT(5))
+				var/obj/item/stack/cable_coil/A = SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location(), STACK_AMOUNT(5))
 				if (!QDELETED(A))
 					A.add_fingerprint(user)
 				return
@@ -114,7 +114,7 @@
 				to_chat(user, span_notice("You remove the glass panel."))
 				state = 3
 				icon_state = "3"
-				varvar/obj/item/stack/sheet/glass/G = SSwardrobe.provide(/obj/item/stack/sheet/glass, drop_location(), STACK_AMOUNT(2))
+				var/obj/item/stack/sheet/glass/G = SSwardrobe.provide(/obj/item/stack/sheet/glass, drop_location(), STACK_AMOUNT(2))
 				if (!QDELETED(G))
 					G.add_fingerprint(user)
 				return

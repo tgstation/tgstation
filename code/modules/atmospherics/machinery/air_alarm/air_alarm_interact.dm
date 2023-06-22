@@ -28,7 +28,7 @@
 		return
 	tool.play_tool_sound(src)
 	to_chat(user, span_notice("You cut the final wires."))
-	varvar/obj/item/stack/cable_coil/cables = SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location(), STACK_AMOUNT(5))
+	var/obj/item/stack/cable_coil/cables = SSwardrobe.provide(/obj/item/stack/cable_coil, drop_location(), STACK_AMOUNT(5))
 	user.put_in_hands(cables)
 	buildstage = AIR_ALARM_BUILD_NO_WIRES
 	update_appearance()

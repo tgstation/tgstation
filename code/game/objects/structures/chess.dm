@@ -14,7 +14,7 @@
 	to_chat(user, span_notice("You start to take apart the chess piece."))
 	if(!do_after(user, 0.5 SECONDS, target = src))
 		return TRUE
-	varvar/obj/item/stack/sheet/iron/metal_sheets = SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location(), STACK_AMOUNT(2))
+	var/obj/item/stack/sheet/iron/metal_sheets = SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location(), STACK_AMOUNT(2))
 	if (!QDELETED(metal_sheets))
 		metal_sheets.add_fingerprint(user)
 	tool.play_tool_sound(src)

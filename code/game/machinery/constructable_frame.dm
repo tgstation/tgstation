@@ -158,7 +158,7 @@
 				if(P.use_tool(src, user, 40, volume=50))
 					if(state == 1)
 						to_chat(user, span_notice("You disassemble the frame."))
-						varvar/obj/item/stack/sheet/iron/M = SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(5))
+						var/obj/item/stack/sheet/iron/M = SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(5))
 						if (!QDELETED(M))
 							M.add_fingerprint(user)
 						qdel(src)

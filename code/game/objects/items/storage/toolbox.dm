@@ -150,14 +150,14 @@
 	new /obj/item/wirecutters(src)
 	new /obj/item/t_scanner(src)
 	new /obj/item/crowbar(src)
-	varvar/obj/item/stack/cable_coil/new_cable_one = SSwardrobe.provide(/obj/item/stack/cable_coil, src, STACK_AMOUNT(MAXCOIL))
+	var/obj/item/stack/cable_coil/new_cable_one = SSwardrobe.provide(/obj/item/stack/cable_coil, src, STACK_AMOUNT(MAXCOIL))
 	new_cable_one.set_cable_color(pickedcolor)
-	varvar/obj/item/stack/cable_coil/new_cable_two = SSwardrobe.provide(/obj/item/stack/cable_coil, src, STACK_AMOUNT(MAXCOIL))
+	var/obj/item/stack/cable_coil/new_cable_two = SSwardrobe.provide(/obj/item/stack/cable_coil, src, STACK_AMOUNT(MAXCOIL))
 	new_cable_two.set_cable_color(pickedcolor)
 	if(prob(5))
 		new /obj/item/clothing/gloves/color/yellow(src)
 	else
-		varvar/obj/item/stack/cable_coil/new_cable_three = SSwardrobe.provide(/obj/item/stack/cable_coil, src, STACK_AMOUNT(MAXCOIL))
+		var/obj/item/stack/cable_coil/new_cable_three = SSwardrobe.provide(/obj/item/stack/cable_coil, src, STACK_AMOUNT(MAXCOIL))
 		new_cable_three.set_cable_color(pickedcolor)
 
 /obj/item/storage/toolbox/syndicate
@@ -188,7 +188,6 @@
 	material_flags = NONE
 
 /obj/item/storage/toolbox/drone/PopulateContents()
-	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/screwdriver(src)
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool(src)

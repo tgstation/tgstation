@@ -193,7 +193,7 @@ SUBSYSTEM_DEF(wardrobe)
 		} \
 	} while(FALSE)
 
-#define CANNONIZE_IF_VAR(typepath, type_to_make, amount, to_read) CANNONIZE_IF_VAR_TYPEPATH(typepath, typepath, amount, to_read)
+#define CANNONIZE_IF_VAR(typepath, amount, to_read) CANNONIZE_IF_VAR_TYPEPATH(typepath, typepath, amount, to_read)
 
 /datum/controller/subsystem/wardrobe/proc/add_queue_item(queued_type, amount)
 	var/amount_held = order_list[queued_type] || 0

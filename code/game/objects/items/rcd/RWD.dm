@@ -87,7 +87,7 @@
 		amount_to_consume -= consumed
 
 	//spawn the cable. if it merged with the stak below then you pick that up else put it in the user's hand
-	varvar/obj/item/stack/cable_coil/new_cable = SSwardrobe.provide(/obj/item/stack/cable_coil, user.drop_location(), STACK_AMOUNT(amount))
+	var/obj/item/stack/cable_coil/new_cable = SSwardrobe.provide(/obj/item/stack/cable_coil, user.drop_location(), STACK_AMOUNT(amount))
 	if(QDELETED(new_cable))
 		balloon_alert(user, "merged with stack below!")
 	else

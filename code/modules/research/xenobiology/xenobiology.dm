@@ -180,7 +180,7 @@
 /obj/item/slime_extract/metal/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			varvar/obj/item/stack/sheet/glass/O = SSwardrobe.provide(/obj/item/stack/sheet/glass, null, STACK_AMOUNT(5))
+			var/obj/item/stack/sheet/glass/O = SSwardrobe.provide(/obj/item/stack/sheet/glass, null, STACK_AMOUNT(5))
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
@@ -188,7 +188,7 @@
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			varvar/obj/item/stack/sheet/iron/O = SSwardrobe.provide(/obj/item/stack/sheet/iron, null, STACK_AMOUNT(5))
+			var/obj/item/stack/sheet/iron/O = SSwardrobe.provide(/obj/item/stack/sheet/iron, null, STACK_AMOUNT(5))
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
@@ -223,7 +223,7 @@
 /obj/item/slime_extract/darkpurple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			varvar/obj/item/stack/sheet/mineral/plasma/O = SSwardrobe.provide(/obj/item/stack/sheet/mineral/plasma, null, STACK_AMOUNT(1))
+			var/obj/item/stack/sheet/mineral/plasma/O = SSwardrobe.provide(/obj/item/stack/sheet/mineral/plasma, null, STACK_AMOUNT(1))
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)

@@ -51,7 +51,7 @@
 	if(istype(W, /obj/item/gun/energy/plasmacutter))
 		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=100))
-			varvar/obj/item/stack/sheet/iron/M = SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
+			var/obj/item/stack/sheet/iron/M = SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
 			if (!QDELETED(M))
 				M.add_fingerprint(user)
 			qdel(src)
@@ -292,7 +292,7 @@
 			if(state != GIRDER_TRAM)
 				return
 			state = GIRDER_DISASSEMBLED
-			varvar/obj/item/stack/sheet/iron/M = SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
+			var/obj/item/stack/sheet/iron/M = SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
 			if (!QDELETED(M))
 				M.add_fingerprint(user)
 			qdel(src)
@@ -304,7 +304,7 @@
 			if(state != GIRDER_DISPLACED)
 				return
 			state = GIRDER_DISASSEMBLED
-			varvar/obj/item/stack/sheet/iron/M = SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
+			var/obj/item/stack/sheet/iron/M = SSwardrobe.provide(/obj/item/stack/sheet/iron, loc, STACK_AMOUNT(2))
 			if (!QDELETED(M))
 				M.add_fingerprint(user)
 			qdel(src)
@@ -414,7 +414,7 @@
 
 		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=50))
-			varvar/obj/item/stack/sheet/runed_metal/R = SSwardrobe.provide(/obj/item/stack/sheet/runed_metal, drop_location(), STACK_AMOUNT(1))
+			var/obj/item/stack/sheet/runed_metal/R = SSwardrobe.provide(/obj/item/stack/sheet/runed_metal, drop_location(), STACK_AMOUNT(1))
 			transfer_fingerprints_to(R)
 			qdel(src)
 
@@ -480,7 +480,7 @@
 			return
 		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=50))
-			varvar/obj/item/stack/sheet/bronze/B = SSwardrobe.provide(/obj/item/stack/sheet/bronze, drop_location(), STACK_AMOUNT(2))
+			var/obj/item/stack/sheet/bronze/B = SSwardrobe.provide(/obj/item/stack/sheet/bronze, drop_location(), STACK_AMOUNT(2))
 			transfer_fingerprints_to(B)
 			qdel(src)
 

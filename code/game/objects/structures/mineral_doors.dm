@@ -37,7 +37,7 @@
 
 /obj/structure/mineral_door/Initialize(mapload)
 	. = ..()
-	var/obj/item/stack/initialized_mineral = SSwardrobe.provide(sheetType).
+	var/obj/item/stack/initialized_mineral = SSwardrobe.provide(sheetType)
 	set_custom_materials(initialized_mineral.mats_per_unit, sheetAmount)
 	SSwardrobe.yield_object(initialized_mineral)
 	air_update_turf(TRUE, TRUE)

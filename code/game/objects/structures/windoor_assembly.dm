@@ -106,11 +106,11 @@
 
 				if(W.use_tool(src, user, 40, volume=50))
 					to_chat(user, span_notice("You disassemble the windoor assembly."))
-					varvar/obj/item/stack/sheet/rglass/RG = SSwardrobe.provide(/obj/item/stack/sheet/rglass, get_turf(src), STACK_AMOUNT(5))
+					var/obj/item/stack/sheet/rglass/RG = SSwardrobe.provide(/obj/item/stack/sheet/rglass, get_turf(src), STACK_AMOUNT(5))
 					if (!QDELETED(RG))
 						RG.add_fingerprint(user)
 					if(secure)
-						varvar/obj/item/stack/rods/R = SSwardrobe.provide(/obj/item/stack/rods, get_turf(src), STACK_AMOUNT(4))
+						var/obj/item/stack/rods/R = SSwardrobe.provide(/obj/item/stack/rods, get_turf(src), STACK_AMOUNT(4))
 						if (!QDELETED(R))
 							R.add_fingerprint(user)
 					qdel(src)

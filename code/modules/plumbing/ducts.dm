@@ -361,7 +361,7 @@ All the important duct code:
 			return
 
 		// Turn into a duct stack and then merge to the in-hand stack.
-		varvar/obj/item/stack/ducts/stack = SSwardrobe.provide(/obj/item/stack/ducts, duct.loc, STACK_AMOUNT(1))
+		var/obj/item/stack/ducts/stack = SSwardrobe.provide(/obj/item/stack/ducts, duct.loc, STACK_AMOUNT(1))
 		qdel(duct)
 		if(stack.can_merge(src))
 			stack.merge(src)

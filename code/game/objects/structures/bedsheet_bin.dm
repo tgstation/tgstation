@@ -127,7 +127,7 @@ LINEN BINS
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
 		if (!(flags_1 & HOLOGRAM_1))
-			varvar/obj/item/stack/sheet/cloth/shreds = SSwardrobe.provide(/obj/item/stack/sheet/cloth, get_turf(src), STACK_AMOUNT(stack_amount))
+			var/obj/item/stack/sheet/cloth/shreds = SSwardrobe.provide(/obj/item/stack/sheet/cloth, get_turf(src), STACK_AMOUNT(stack_amount))
 			if(!QDELETED(shreds)) //stacks merged
 				transfer_fingerprints_to(shreds)
 				shreds.add_fingerprint(user)

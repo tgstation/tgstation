@@ -35,7 +35,7 @@
 /obj/item/stack/light_w/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	var/atom/Tsec = user.drop_location()
-	varvar/obj/item/stack/cable_coil/CC = SSwardrobe.provide(/obj/item/stack/cable_coil, Tsec, STACK_AMOUNT(5))
+	var/obj/item/stack/cable_coil/CC = SSwardrobe.provide(/obj/item/stack/cable_coil, Tsec, STACK_AMOUNT(5))
 	if (!QDELETED(CC))
 		CC.add_fingerprint(user)
 	var/obj/item/stack/sheet/glass/G = SSwardrobe.provide(/obj/item/stack/sheet/glass, Tsec)

@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	if (tc_to_distribute > 0) // What shall we do with the remainder...
 		for (var/mob/living/basic/carp/pet/cayenne/C in GLOB.mob_living_list)
 			if (C.stat != DEAD)
-				varvar/obj/item/stack/telecrystal/TC = SSwardrobe.provide(/obj/item/stack/telecrystal, C.drop_location(), STACK_AMOUNT(tc_to_distribute))
+				var/obj/item/stack/telecrystal/TC = SSwardrobe.provide(/obj/item/stack/telecrystal, C.drop_location(), STACK_AMOUNT(tc_to_distribute))
 				TC.throw_at(get_step(C, C.dir), 3, 3)
 				C.visible_message(span_notice("[C] coughs up a half-digested telecrystal"),span_notice("You cough up a half-digested telecrystal!"))
 				break
