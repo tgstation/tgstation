@@ -292,6 +292,7 @@
 /area/shuttle/pirate)
 "hW" = (
 /obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/bot/left,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "ie" = (
@@ -460,6 +461,7 @@
 "mG" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/light/dim/directional/north,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "mN" = (
@@ -940,6 +942,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/effect/turf_decal/bot/right,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "Ah" = (
