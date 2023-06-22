@@ -30,6 +30,7 @@
 	speed = 4 SECONDS, \
 	effectiveness = 105, \
 	)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/melee/sword/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -50,23 +51,23 @@
 	var/broken_icon = "broadsword_broken"
 
 	/// How many hits a sword can deal and block before it breaks.
-	var/rustiness = 15
+	var/rustiness = 15 // It may say 15, but it's 16 hits/blocks before it breaks.
 	/// If the sword is broken or not.
 	var/broken = 0
 
-/obj/item/melee/sword/rust/afterattack()
+/obj/item/melee/sword/rust/afterattack(target, mob/user)
 	. = ..()
-	if(rustiness <= 0)
-		return
-	decrease_uses()
+	if(broken)
+		return ..()
+	decrease_uses(user)
 
-/obj/item/melee/sword/rust/proc/on_hit_reaction()
+/obj/item/melee/sword/rust/hit_reaction(mob/user)
 	. = ..()
 	if(!.)
 		return
-	if(rustiness <= 0)
-		return
-	decrease_uses()
+	if(broken)
+		return ..()
+	decrease_uses(user)
 
 /obj/item/melee/sword/rust/proc/decrease_uses(mob/user)
 	if(rustiness == 0)
@@ -79,10 +80,11 @@
 		return
 	to_chat(user, span_warning("[src]'s blade breaks leaving you with half a sword!"))
 	broken = 1
-	name = broken + name
+	name = "broken [initial(name)]"
 	icon_state = broken_icon
 	inhand_icon_state = broken_icon
-	update_icon()
+	update_appearance()
+	playsound(user, 'sound/effects/structure_stress/pop3.ogg', 100, TRUE)
 	force -= 5
 	wound_bonus = 5
 	throw_range = 2
@@ -133,22 +135,22 @@
 
 /obj/item/melee/sword/reforged/shitty
 	var/broken = 0
-	var/rustiness = 1
+	var/rustiness = 0 //This isn't a mistake, this causes it to break instantly upon use.
 	var/broken_icon = "reforged_broken"
 
-/obj/item/melee/sword/reforged/shitty/afterattack()
+/obj/item/melee/sword/reforged/shitty/afterattack(target, mob/user)
 	. = ..()
-	if(rustiness <= 0)
-		return
-	decrease_uses()
+	if(broken)
+		return ..()
+	decrease_uses(user)
 
-/obj/item/melee/sword/reforged/shitty/proc/on_hit_reaction()
+/obj/item/melee/sword/reforged/shitty/hit_reaction(mob/user)
 	. = ..()
+	if(broken)
+		return ..()
 	if(!.)
 		return
-	if(rustiness <= 0)
-		return
-	decrease_uses()
+	decrease_uses(user)
 
 /obj/item/melee/sword/reforged/shitty/proc/decrease_uses(mob/user)
 	if(rustiness == 0)
@@ -157,15 +159,16 @@
 	rustiness--
 
 /obj/item/melee/sword/reforged/shitty/proc/no_uses(mob/user)
-	if(broken == TRUE)
+	if(broken == 1)
 		return
-	to_chat(user, span_warning("[src]'s blade shatters! It was a cheap felinid imitation! WHAT A PIECE OF SHIT!"))
+	to_chat(user, span_warning("The [src]'s blade shatters! It was a cheap felinid imitation! WHAT A PIECE OF SHIT!"))
 	broken = 1
 	name = "broken fake longsword"
 	desc = "A cheap piece of felinid forged trash."
 	icon_state = broken_icon
 	inhand_icon_state = broken_icon
-	update_icon()
+	update_appearance()
+	playsound(user, 'sound/effects/glassbr1.ogg', 100, TRUE)
 	force -= 20
 	throwforce = 5
 	throw_range = 1
