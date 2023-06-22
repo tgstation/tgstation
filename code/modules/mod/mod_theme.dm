@@ -1170,7 +1170,7 @@
 		to their legs. Combination of these mechanisms is very energy draining - but results in next to no speed reduction for the wearer.\
 		Over the years, many a rich person, including Nanostrasen officials with premium subscriptions, had their life or genes rescued thanks to \
 		unrivaled speed of this suit model. Equally as many, however, mysteriously dissapeared in the flash of these white suits after they forgot \
-		to pay off said subscryptions in due time or posted unfavourable opinions on Intrudyne's gene-modding tech and ethics. "
+		to pay off said subscriptions in due time or publicly communicated unfavourable opinions on Intrudyne's gene-modding tech and ethics. "
 	default_skin = "interdyne"
 	armor_type = /datum/armor/mod_theme_interdyne
 	resistance_flags = FIRE_PROOF|ACID_PROOF
