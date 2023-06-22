@@ -90,7 +90,7 @@
 		amount = new_amount
 	while(amount > max_amount)
 		amount -= max_amount
-		new type(loc, max_amount, FALSE)
+		SSwardrobe.provide(type, loc, STACK_AMOUNT(max_amount))
 	if(!merge_type)
 		merge_type = type
 
@@ -459,7 +459,7 @@
 
 /obj/item/stack/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, amount))
-		add(clamp(vval, 1-amount, max_amount - amount)) //there must always be one.
+		set_amount(clamp(vval, 1, max_amount)) //there must always be one.
 		return TRUE
 	else if(vname == NAMEOF(src, max_amount))
 		max_amount = max(vval, 1)
@@ -581,6 +581,20 @@
 /// Resets our amount to its initial value
 /obj/item/stack/proc/reset_amount()
 	amount = initial(amount)
+	on_amount_change()
+
+/** Sets our amount to a passed in value
+ *
+ * Arguments:
+ * - _amount: The number of units to use in this stack
+ */
+/obj/item/stack/proc/set_amount(_amount)
+	if(is_cyborg)
+		return
+	while(_amount > max_amount)
+		_amount -= max_amount
+		SSwardrobe.provide(type, loc, STACK_AMOUNT(max_amount))
+	amount = _amount
 	on_amount_change()
 
 /// Called when the amount var is modified

@@ -472,9 +472,9 @@ SUBSYSTEM_DEF(wardrobe)
 
 	// Ok now onto the bespoke ones
 	// Gives stacks a way to set their amount before the stack moves and is potentially given up again
-	keyed_callbacks[WARDROBE_STACK_AMOUNT] = CALLBACK(null, TYPE_PROC_REF(/obj/item/stack, add))
+	keyed_callbacks[WARDROBE_STACK_AMOUNT] = CALLBACK(null, TYPE_PROC_REF(/obj/item/stack, set_amount))
 	keyed_callbacks[WARDROBE_STACK_MATS] = CALLBACK(null, TYPE_PROC_REF(/obj/item/stack, set_mats_per_unit))
-	keyed_callbacks[WARDROBE_CONVEYOR_ID] = CALLBACK(null, TYPE_PROC_REF(/obj/item/stack/conveyor, set_mats_per_unit))
+	keyed_callbacks[WARDROBE_CONVEYOR_ID] = CALLBACK(null, TYPE_PROC_REF(/obj/item/stack/conveyor, set_id))
 
 /datum/controller/subsystem/wardrobe/proc/load_outfits()
 	for(var/datum/outfit/to_stock as anything in subtypesof(/datum/outfit))
