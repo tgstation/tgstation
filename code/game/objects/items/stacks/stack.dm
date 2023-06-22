@@ -673,7 +673,8 @@
 	SIGNAL_HANDLER
 
 	// Edge case. This signal will also be sent when src has entered the turf. Don't want to merge with ourselves.
-	if(arrived == src)
+	// Similar for checking deleted, signals will continue to send after being deleted (assuming they started before being deleted), gotta cover for that
+	if(arrived == src || QDELETED(src) || QDELETED(arrived))
 		return
 
 	if(!arrived.throwing && can_merge(arrived))
