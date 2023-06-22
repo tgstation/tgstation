@@ -462,7 +462,7 @@
 /obj/structure/tank_frame/deconstruct(disassembled)
 	if(disassembled)
 		for(var/datum/material/mat as anything in custom_materials)
-			new mat.sheet_type(drop_location(), custom_materials[mat] / SHEET_MATERIAL_AMOUNT)
+			SSwardrobe.provide_type(mat.sheet_type, drop_location(), SET_STACK_AMOUNT(custom_materials[mat] / SHEET_MATERIAL_AMOUNT))
 	return ..()
 
 /obj/structure/tank_frame/update_icon(updates)
@@ -539,7 +539,7 @@
 	if(!tool.use_tool(src, user, 2 SECONDS))
 		return
 	construction_state = TANK_FRAME
-	new material_end_product.sheet_type(drop_location(), TANK_PLATING_SHEETS)
+	SSwardrobe.provide_type(material_end_product.sheet_type, drop_location(), SET_STACK_AMOUNT(TANK_PLATING_SHEETS))
 	material_end_product = null
 	update_appearance()
 

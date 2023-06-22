@@ -28,7 +28,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
 	var/list/categories = list()
 	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets
-	var/sheet_type
+	var/obj/item/stack/sheet/sheet_type
 	///This is a modifier for force, and resembles the strength of the material
 	var/strength_modifier = 1
 	///This is a modifier for integrity, and resembles the strength of the material

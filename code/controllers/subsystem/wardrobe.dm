@@ -266,30 +266,23 @@ SUBSYSTEM_DEF(wardrobe)
 	stock_info[WARDROBE_STOCK_CONTENTS] += object
 	return TRUE
 
-/// Returns an object of requested_type at location.
-/// If we queue that type, the passed in callback key will be invoked on it, with the passed in extra arguments as args
-/datum/controller/subsystem/wardrobe/proc/provide_type(datum/requested_type, atom/movable/location, callback_key, ...)
+/// Returns an object of requested_type at location, alongside a set of of lists of a defined key and arguments to call on the new object
+/datum/controller/subsystem/wardrobe/proc/provide_type(datum/requested_type, atom/movable/location, ...)
 	var/atom/movable/requested_object
-	var/datum/callback/invoke_before_move
-	var/list/invoke_args
 	if(!canon_minimum[requested_type])
 		requested_object = new requested_type(location)
 		return requested_object
 
-	if(callback_key)
-		invoke_before_move = keyed_callbacks[callback_key]
-		// Copies in any extra args that might be passed in by callback defines
-		if(length(args) >= 4)
-			invoke_args = args.Copy(4, 0)
-		else
-			invoke_args = list()
+	var/list/misc_callbacks
+	if(length(args >= 3)) // If we got callbacks passed in throw them all in one list for ease of processing
+		misc_callbacks = args.Copy(3)
 
 	var/list/stock_info = preloaded_stock[requested_type]
 	if(!stock_info)
 		stock_miss++
 		requested_object = new requested_type()
-		if(invoke_before_move)
-			invoke_before_move.FleetingInvoke(requested_object, invoke_args)
+		if(length(misc_callbacks))
+			apply_misc_callbacks(requested_object, misc_callbacks)
 		requested_object.forceMove(location)
 		return requested_object
 
@@ -302,13 +295,13 @@ SUBSYSTEM_DEF(wardrobe)
 		stack_trace("We somehow ended up with a qdeleted or null object in SSwardrobe's stock. Something's weird, likely to do with reinsertion. Typepath of [requested_type]")
 		stock_miss++
 		requested_object = new requested_type()
-		if(invoke_before_move)
-			invoke_before_move.FleetingInvoke(requested_object, invoke_args)
+		if(length(misc_callbacks))
+			apply_misc_callbacks(requested_object, misc_callbacks)
 		requested_object.forceMove(location)
 		return requested_object
 
-	if(invoke_before_move)
-		invoke_before_move.FleetingInvoke(requested_object, invoke_args)
+	if(length(misc_callbacks))
+		apply_misc_callbacks(requested_object, misc_callbacks)
 
 	if(location)
 		requested_object.forceMove(location)
@@ -323,6 +316,13 @@ SUBSYSTEM_DEF(wardrobe)
 		preloaded_stock -= requested_type
 
 	return requested_object
+
+/// Applies a list of lists of callbacks in the form list(list(define key, arg, ...), ...)
+/datum/controller/subsystem/wardrobe/proc/apply_misc_callbacks(datum/apply_to, list/callbacks)
+	for(var/list/callback as anything in callbacks)
+		var/key = callback[1]
+		var/datum/callback/invoke = keyed_callbacks[key]
+		invoke.FleetingInvoke(apply_to, callback - key)
 
 /// Unloads an amount of some type we have in stock
 /// Private function, for internal use only
@@ -366,6 +366,7 @@ SUBSYSTEM_DEF(wardrobe)
 	// Ok now onto the bespoke ones
 	// Gives stacks a way to set their amount before the stack moves and is potentially given up again
 	keyed_callbacks[WARDROBE_STACK_AMOUNT] = CALLBACK(null, TYPE_PROC_REF(/obj/item/stack, add))
+	keyed_callbacks[WARDROBE_STACK_MATS] = CALLBACK(null, TYPE_PROC_REF(/obj/item/stack, set_mats_per_unit))
 
 /datum/controller/subsystem/wardrobe/proc/load_outfits()
 	for(var/datum/outfit/to_stock as anything in subtypesof(/datum/outfit))

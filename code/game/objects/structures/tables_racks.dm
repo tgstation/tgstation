@@ -292,9 +292,8 @@
 		if(buildstack)
 			new buildstack(T, buildstackamount)
 		else
-			for(var/i in custom_materials)
-				var/datum/material/M = i
-				new M.sheet_type(T, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
+			for(var/datum/material/spawning as anything in custom_materials)
+				SSwardrobe.provide_type(spawning.sheet_type, T, SET_STACK_AMOUNT(FLOOR(custom_materials[spawning] / SHEET_MATERIAL_AMOUNT, 1)))
 		if(!wrench_disassembly)
 			new frame(T)
 		else

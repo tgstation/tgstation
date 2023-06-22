@@ -433,13 +433,13 @@
 		sheet_amt = round(materials[material] / SHEET_MATERIAL_AMOUNT)
 	var/count = 0
 	while(sheet_amt > MAX_STACK_SIZE)
-		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, MAX_STACK_SIZE, null, list((material) = SHEET_MATERIAL_AMOUNT))
+		var/obj/item/stack/sheet/new_sheets = SSwardrobe.provide_type(material.sheet_type, target, SET_STACK_AMOUNT(MAX_STACK_SIZE), SET_STACK_MATS(list((material) = SHEET_MATERIAL_AMOUNT)))
 		after_retrieve?.Invoke(new_sheets)
 		count += MAX_STACK_SIZE
 		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)
 		sheet_amt -= MAX_STACK_SIZE
 	if(sheet_amt >= 1)
-		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, sheet_amt, null, list((material) = SHEET_MATERIAL_AMOUNT))
+		var/obj/item/stack/sheet/new_sheets = SSwardrobe.provide_type(material.sheet_type, target, SET_STACK_AMOUNT(sheet_amt), SET_STACK_MATS(list((material) = SHEET_MATERIAL_AMOUNT)))
 		after_retrieve?.Invoke(new_sheets)
 		count += sheet_amt
 		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)

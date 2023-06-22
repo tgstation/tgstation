@@ -289,5 +289,5 @@
 
 /datum/exploration_event/simple/resource/mineral_deposit/dispense_loot(obj/item/exodrone/drone)
 	var/datum/material/chosen_mat = GET_MATERIAL_REF(chosen_material_type)
-	var/obj/loot = new chosen_mat.sheet_type(loot_amount)
+	var/obj/loot = SSwardrobe.provide_type(chosen_mat.sheet_type, null, SET_STACK_AMOUNT(loot_amount))
 	drone.try_transfer(loot)
