@@ -40,6 +40,7 @@
 	name = "divine archer hood"
 	desc = "A divine hood included, because have you ever got the sun in your eyes during archery? Oh, it's just the worst."
 	icon_state = "archerhood"
+	armor_type = /datum/armor/chaplainsuit_armor_weaker
 
 /// gloves
 /obj/item/clothing/gloves/divine_archer

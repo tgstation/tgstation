@@ -30,7 +30,6 @@
 	toxic_food = NONE
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
-	burnmod = 0.5 // = 1/2x generic burn damage
 	payday_modifier = 0.75
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	inherent_factions = list(FACTION_SLIME)
@@ -488,7 +487,7 @@
 	/// How strong is our glow
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	/// Internal dummy used to glow (very cool)
-	var/obj/effect/dummy/luminescent_glow/glow
+	var/obj/effect/dummy/lighting_obj/moblight/glow
 	/// The slime extract we currently have integrated
 	var/obj/item/slime_extract/current_extract
 	/// A list of all luminescent related actions we have
@@ -496,25 +495,16 @@
 	/// The cooldown of us using exteracts
 	COOLDOWN_DECLARE(extract_cooldown)
 
-//Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW
-/datum/species/jelly/luminescent/Destroy(force, ...)
+//Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW and have to i guess
+/datum/species/jelly/luminescent/Destroy(force)
 	current_extract = null
 	QDEL_NULL(glow)
 	QDEL_LIST(luminescent_actions)
 	return ..()
 
-
-/datum/species/jelly/luminescent/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	if(current_extract)
-		current_extract.forceMove(C.drop_location())
-		current_extract = null
-	QDEL_NULL(glow)
-	QDEL_LIST(luminescent_actions)
-
 /datum/species/jelly/luminescent/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species)
 	. = ..()
-	glow = new(new_jellyperson)
+	glow = new_jellyperson.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
 	update_glow(new_jellyperson)
 
 	luminescent_actions = list()
@@ -531,26 +521,19 @@
 	extract_major.Grant(new_jellyperson)
 	luminescent_actions += integrate_extract
 
-/// Updates the glow of our internal glow thing.
-/datum/species/jelly/luminescent/proc/update_glow(mob/living/carbon/C, intensity)
+/datum/species/jelly/luminescent/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	if(current_extract)
+		current_extract.forceMove(C.drop_location())
+		current_extract = null
+	QDEL_NULL(glow)
+	QDEL_LIST(luminescent_actions)
+
+/// Updates the glow of our internal glow object
+/datum/species/jelly/luminescent/proc/update_glow(mob/living/carbon/human/glowie, intensity)
 	if(intensity)
 		glow_intensity = intensity
-	glow.set_light_range_power_color(glow_intensity, glow_intensity, C.dna.features["mcolor"])
-
-/obj/effect/dummy/luminescent_glow
-	name = "luminescent glow"
-	desc = "Tell a coder if you're seeing this."
-	icon_state = "nothing"
-	light_system = MOVABLE_LIGHT
-	light_range = LUMINESCENT_DEFAULT_GLOW
-	light_power = 2.5
-	light_color = COLOR_WHITE
-
-/obj/effect/dummy/luminescent_glow/Initialize(mapload)
-	. = ..()
-	if(!isliving(loc))
-		return INITIALIZE_HINT_QDEL
-
+	glow.set_light_range_power_color(glow_intensity, glow_intensity, glowie.dna.features["mcolor"])
 
 /datum/action/innate/integrate_extract
 	name = "Integrate Extract"

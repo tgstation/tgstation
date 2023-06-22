@@ -34,12 +34,13 @@
 /datum/element/relay_attackers/proc/after_attackby(atom/target, obj/item/weapon, mob/attacker)
 	SIGNAL_HANDLER
 	if(weapon.force)
-		relay_attacker(target, attacker)
+		relay_attacker(target, attacker, weapon.damtype == STAMINA ? ATTACKER_STAMINA_ATTACK : NONE)
 
 /datum/element/relay_attackers/proc/on_attack_generic(atom/target, mob/living/attacker, list/modifiers)
 	SIGNAL_HANDLER
-	if(attacker.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
-		relay_attacker(target, attacker)
+	var/shoving = LAZYACCESS(modifiers, RIGHT_CLICK) ? ATTACKER_SHOVING : NONE
+	if(attacker.combat_mode || shoving)
+		relay_attacker(target, attacker, shoving)
 
 /datum/element/relay_attackers/proc/on_attack_npc(atom/target, mob/living/attacker)
 	SIGNAL_HANDLER
@@ -52,7 +53,7 @@
 		return
 	if(!ismob(hit_projectile.firer))
 		return
-	relay_attacker(target, hit_projectile.firer)
+	relay_attacker(target, hit_projectile.firer, hit_projectile.damage_type == STAMINA ? ATTACKER_STAMINA_ATTACK : NONE)
 
 /datum/element/relay_attackers/proc/on_hitby(atom/target, atom/movable/hit_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
@@ -64,7 +65,7 @@
 	var/mob/thrown_by = hit_item.thrownby?.resolve()
 	if(!ismob(thrown_by))
 		return
-	relay_attacker(target, thrown_by)
+	relay_attacker(target, thrown_by, hit_item.damtype == STAMINA ? ATTACKER_STAMINA_ATTACK : NONE)
 
 /datum/element/relay_attackers/proc/on_attack_hulk(atom/target, mob/attacker)
 	SIGNAL_HANDLER
@@ -75,5 +76,5 @@
 	relay_attacker(target, mecha_attacker)
 
 /// Send out a signal identifying whoever just attacked us (usually a mob but sometimes a mech or turret)
-/datum/element/relay_attackers/proc/relay_attacker(atom/victim, atom/attacker)
-	SEND_SIGNAL(victim, COMSIG_ATOM_WAS_ATTACKED, attacker)
+/datum/element/relay_attackers/proc/relay_attacker(atom/victim, atom/attacker, attack_flags)
+	SEND_SIGNAL(victim, COMSIG_ATOM_WAS_ATTACKED, attacker, attack_flags)

@@ -417,11 +417,6 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/space/basic,
 /area/template_noop)
-"gP" = (
-/obj/effect/decal/cleanable/glass,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/template_noop)
 "hm" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	dir = 5;
@@ -1004,14 +999,6 @@
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space/has_grav/infested_frigate)
-"rb" = (
-/obj/effect/decal/cleanable/glass,
-/obj/structure/broken_flooring/plating/directional/north,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/turf/open/space/basic,
-/area/template_noop)
 "rd" = (
 /obj/effect/decal/cleanable/blood/gibs/old{
 	icon_state = "gibmid1"
@@ -1955,28 +1942,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
-"Ft" = (
-/obj/structure/lattice,
-/obj/effect/decal/cleanable/glass{
-	dir = 1
-	},
-/obj/structure/alien/resin/membrane{
-	max_integrity = 1600;
-	desc = "Resin just thin enough to let light pass through, but it's congealing in the same way as the thicker stuff.";
-	name = "viscous resin membrane"
-	},
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/item/ammo_casing/spent,
-/obj/structure/door_assembly/door_assembly_hatch{
-	anchored = 1;
-	name = "crew quarters";
-	desc = "People lived in this place.";
-	layer = 2.8
-	},
-/turf/template_noop,
-/area/ruin/space/has_grav/infested_frigate)
 "FJ" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/effect/turf_decal{
@@ -2140,26 +2105,6 @@
 /obj/structure/cable,
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/infested_frigate)
-"IO" = (
-/obj/effect/turf_decal{
-	icon_state = "warningline_white";
-	dir = 1
-	},
-/obj/item/storage/toolbox/ammobox/a762{
-	pixel_y = 16;
-	pixel_x = 5
-	},
-/obj/item/storage/toolbox/ammobox/a762{
-	pixel_y = 8;
-	pixel_x = 3
-	},
-/obj/item/storage/box/handcuffs{
-	pixel_y = 2;
-	pixel_x = -8
-	},
-/obj/structure/table/glass/plasmaglass,
-/turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "IS" = (
 /obj/item/ammo_casing/spent,
@@ -2352,6 +2297,25 @@
 /obj/structure/alien/weeds,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
+"LD" = (
+/obj/structure/lattice,
+/obj/structure/alien/resin/membrane{
+	max_integrity = 1600;
+	desc = "Resin just thin enough to let light pass through, but it's congealing in the same way as the thicker stuff.";
+	name = "viscous resin membrane"
+	},
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/structure/door_assembly/door_assembly_hatch{
+	anchored = 1;
+	name = "crew quarters";
+	desc = "People lived in this place.";
+	layer = 2.8
+	},
+/turf/template_noop,
+/area/ruin/space/has_grav/infested_frigate)
 "LF" = (
 /obj/structure/cable,
 /turf/closed/wall/mineral/plastitanium,
@@ -2369,12 +2333,6 @@
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/infested_frigate)
-"Mm" = (
-/obj/structure/mirror{
-	icon_state = "mirror_broke"
-	},
-/turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "Mp" = (
 /obj/effect/turf_decal{
@@ -2805,6 +2763,26 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
+"SD" = (
+/obj/effect/turf_decal{
+	icon_state = "warningline_white";
+	dir = 1
+	},
+/obj/item/storage/toolbox/ammobox/a762{
+	pixel_y = 16;
+	pixel_x = 5
+	},
+/obj/item/storage/toolbox/ammobox/a762{
+	pixel_y = 8;
+	pixel_x = 3
+	},
+/obj/item/storage/box/handcuffs{
+	pixel_y = 2;
+	pixel_x = -8
+	},
+/obj/structure/table/glass/plasmaglass,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/infested_frigate)
 "SE" = (
 /obj/structure/alien/egg/burst,
 /obj/item/ammo_casing/spent,
@@ -2881,6 +2859,13 @@
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
+"TQ" = (
+/obj/structure/broken_flooring/plating/directional/north,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/obj/item/ammo_casing/spent,
+/turf/open/space/basic,
+/area/template_noop)
 "Ux" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -3117,6 +3102,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/infested_frigate)
+"Yu" = (
+/obj/structure/mirror/broken,
+/turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "YV" = (
 /obj/effect/turf_decal{
@@ -3378,7 +3367,7 @@ fl
 fl
 fl
 fl
-Mm
+Yu
 mG
 wP
 bJ
@@ -3703,7 +3692,7 @@ Or
 fl
 Ey
 zN
-gP
+sT
 Lf
 wP
 VQ
@@ -3756,8 +3745,8 @@ fl
 fl
 Eg
 fl
-rb
-Ft
+TQ
+LD
 Qm
 wP
 Vo
@@ -3978,7 +3967,7 @@ bD
 wP
 zV
 kS
-IO
+SD
 wP
 wu
 wP
