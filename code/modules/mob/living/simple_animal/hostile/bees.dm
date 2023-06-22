@@ -94,7 +94,7 @@
 		beehome = null
 	if((flags_1 & HOLOGRAM_1))
 		return ..()
-	var/obj/item/trash/bee/bee_to_eat = new(loc, src)
+	new /obj/item/trash/bee(loc, src)
 	beegent = null
 	return ..()
 
@@ -181,11 +181,11 @@
 
 /mob/living/simple_animal/hostile/bee/proc/assign_reagent(datum/reagent/R)
 	if(istype(R))
+		//clear the old since this one is going to have some new value
+		RemoveElement(/datum/element/venomous, beegent.type, injection_range)
 		beegent = R
 		name = "[initial(name)] ([R.name])"
 		real_name = name
-		//clear the old since this one is going to have some new value
-		RemoveElement(/datum/element/venomous)
 		var/static/list/injection_range = list(1, 5)
 		AddElement(/datum/element/venomous, beegent.type, injection_range)
 		generate_bee_visuals()
