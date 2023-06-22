@@ -31609,8 +31609,8 @@
 	base_state = "right";
 	dir = 4;
 	icon_state = "right";
-	name = "Atmospherics Front Desk";
-	req_access = list("atmospherics")
+	name = "Engineering Front Desk";
+	req_access = list("engineering")
 	},
 /obj/structure/desk_bell{
 	pixel_x = -7
@@ -68019,7 +68019,7 @@
 /obj/machinery/button/door/directional/east{
 	id = "atmos";
 	name = "Atmospherics Lockdown";
-	req_access = list("atmospherics")
+	req_access = list("engineering")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
