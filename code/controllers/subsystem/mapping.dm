@@ -141,6 +141,9 @@ SUBSYSTEM_DEF(mapping)
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
 
+	else if (SSmapping.config.load_all_away_missions) // we're likely in a local testing environment, so punch it.
+		load_all_away_missions()
+
 	loading_ruins = TRUE
 	setup_ruins()
 	loading_ruins = FALSE
@@ -915,3 +918,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /// Returns true if the map we're playing on is on a planet
 /datum/controller/subsystem/mapping/proc/is_planetary()
 	return config.planetary
+
+/// For unit testing purposes, will add every single away mission known to God and man.
+/datum/controller/subsystem/mapping/proc/load_all_away_missions()
+	var/map_directory = "_maps/RandomZLevels"
+	var/list/all_away_missions = generate_map_list_from_directory(map_directory)
+	for(var/entry in all_away_missions)
+		load_new_z_level(file_name, map_directory, secret = FALSE)

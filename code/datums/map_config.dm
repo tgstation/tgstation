@@ -44,8 +44,8 @@
 	/// List of unit tests that are skipped when running this map
 	var/list/skipped_tests
 
-	/// List of unit tests that are only ran when running this map
-	var/list/explicitly_ran_tests
+	/// Boolean that tells SSmapping to load all away missions in the codebase. Defaults to false for ease.
+	var/load_all_away_missions = FALSE
 
 /**
  * Proc that simply loads the default map config, which should always be functional.
@@ -186,6 +186,9 @@
 	if ("blacklist_file" in json)
 		blacklist_file = json["blacklist_file"]
 
+	if ("load_all_away_missions" in json)
+		load_all_away_missions = json["load_all_away_missions"]
+
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
 	if ("job_changes" in json)
@@ -213,14 +216,6 @@
 			stack_trace("Invalid path in mapping config for ignored unit tests: \[[path_as_text]\]")
 			continue
 		LAZYADD(skipped_tests, path_real)
-
-	// Check for unit tests to run, these would be ran on purpose-built maps for these tests
-	for(var/path_as_text in json["explicitly_ran_tests"])
-		var/path_real = text2path(path_as_text)
-		if(!ispath(path_real, /datum/unit_test))
-			stack_trace("Invalid path in mapping config for unit tests to run: \[[path_as_text]\]")
-			continue
-		LAZYADD(explicitly_ran_tests, path_real)
 #endif
 
 	defaulted = FALSE
