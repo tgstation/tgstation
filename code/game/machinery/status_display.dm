@@ -72,7 +72,7 @@
 	if(flags_1 & NODECONSTRUCT_1)
 		return
 	if(!disassembled)
-		new SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location(), STACK_AMOUNT(2))
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location(), STACK_AMOUNT(2))
 		SSwardrobe.provide(/obj/item/shard, drop_location())
 		SSwardrobe.provide(/obj/item/shard, drop_location())
 	else
