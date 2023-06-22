@@ -482,7 +482,7 @@
 
 	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
 		for(var/i in 1 to speed)
-			var/obj/item/shard/shard = SSwardrobe.provide_type(/obj/item/shard, get_turf(user))
+			var/obj/item/shard/shard = SSwardrobe.provide(/obj/item/shard, get_turf(user))
 			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=3, pain_chance=5)
 			shard.updateEmbedding()
 			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)

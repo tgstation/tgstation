@@ -153,7 +153,7 @@
 	return
 
 #define EQUIP_OUTFIT_ITEM(item_path, slot_name) if(##item_path) { \
-	user.equip_to_slot_or_del(SSwardrobe.provide_type(##item_path, user), ##slot_name, TRUE); \
+	user.equip_to_slot_or_del(SSwardrobe.provide(##item_path, user), ##slot_name, TRUE); \
 	var/obj/item/outfit_item = user.get_item_by_slot(##slot_name); \
 	if (outfit_item && outfit_item.type == ##item_path) { \
 		outfit_item.on_outfit_equip(user, visualsOnly, ##slot_name); \
@@ -223,14 +223,14 @@
 	if(accessory)
 		var/obj/item/clothing/under/U = user.w_uniform
 		if(U)
-			U.attach_accessory(SSwardrobe.provide_type(accessory, user))
+			U.attach_accessory(SSwardrobe.provide(accessory, user))
 		else
 			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
 	if(l_hand)
-		user.put_in_l_hand(SSwardrobe.provide_type(l_hand, user))
+		user.put_in_l_hand(SSwardrobe.provide(l_hand, user))
 	if(r_hand)
-		user.put_in_r_hand(SSwardrobe.provide_type(r_hand, user))
+		user.put_in_r_hand(SSwardrobe.provide(r_hand, user))
 
 	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon.
 		if(l_pocket)
@@ -265,13 +265,13 @@
 				user.open_internals(user.get_item_by_slot(internals_slot))
 		if(implants)
 			for(var/implant_type in implants)
-				var/obj/item/implant/implanter = SSwardrobe.provide_type(implant_type, user)
+				var/obj/item/implant/implanter = SSwardrobe.provide(implant_type, user)
 				implanter.implant(user, null, TRUE)
 
 		// Insert the skillchips associated with this outfit into the target.
 		if(skillchips)
 			for(var/skillchip_path in skillchips)
-				var/obj/item/skillchip/skillchip_instance = SSwardrobe.provide_type(skillchip_path)
+				var/obj/item/skillchip/skillchip_instance = SSwardrobe.provide(skillchip_path)
 				var/implant_msg = user.implant_skillchip(skillchip_instance)
 				if(implant_msg)
 					stack_trace("Failed to implant [user] with [skillchip_instance], on job [src]. Failure message: [implant_msg]")

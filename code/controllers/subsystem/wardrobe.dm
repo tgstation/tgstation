@@ -267,7 +267,7 @@ SUBSYSTEM_DEF(wardrobe)
 	return TRUE
 
 /// Returns an object of requested_type at location, alongside a set of of lists of a defined key and arguments to call on the new object
-/datum/controller/subsystem/wardrobe/proc/provide_type(datum/requested_type, atom/movable/location, ...)
+/datum/controller/subsystem/wardrobe/proc/provide(datum/requested_type, atom/movable/location, ...)
 	var/atom/movable/requested_object
 	if(!canon_minimum[requested_type])
 		requested_object = new requested_type(location)

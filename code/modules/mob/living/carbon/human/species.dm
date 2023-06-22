@@ -363,7 +363,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			continue
 
 		var/used_neworgan = FALSE
-		new_organ = SSwardrobe.provide_type(new_organ)
+		new_organ = SSwardrobe.provide(new_organ)
 		var/should_have = new_organ.get_availability(src, organ_holder)
 
 		// Check for an existing organ, and if there is one check to see if we should remove it
@@ -414,7 +414,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	for(var/organ_path in species_organs)
 		var/obj/item/organ/current_organ = organ_holder.get_organ_by_type(organ_path)
 		if(!current_organ || replace_current)
-			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
+			var/obj/item/organ/replacement = SSwardrobe.provide(organ_path)
 			// If there's an existing mutant organ, we're technically replacing it.
 			// Let's abuse the snowflake proc that skillchips added. Basically retains
 			// feature parity with every other organ too.
@@ -472,7 +472,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/mob/living/carbon/human/human = C
 		for(var/obj/item/organ/external/organ_path as anything in external_organs)
 			//Load a persons preferences from DNA
-			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
+			var/obj/item/organ/external/new_organ = SSwardrobe.provide(organ_path)
 			new_organ.Insert(human, special=TRUE, drop_if_replaced=FALSE)
 
 	if(length(inherent_traits))

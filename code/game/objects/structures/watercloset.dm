@@ -90,7 +90,7 @@
 			new buildstacktype(loc,buildstackamount)
 		else
 			for(var/datum/material/spawning as anything in custom_materials)
-				SSwardrobe.provide_type(spawning.sheet_type, loc, SET_STACK_AMOUNT(FLOOR(custom_materials[spawning] / SHEET_MATERIAL_AMOUNT, 1)))
+				SSwardrobe.provide(spawning.sheet_type, loc, STACK_AMOUNT(GET_SHEET_COUNT(custom_materials, spawning)))
 	..()
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
@@ -509,7 +509,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		new buildstacktype(loc,buildstackamount)
 	else
 		for(var/datum/material/spawning as anything in custom_materials)
-			SSwardrobe.provide_type(spawning.sheet_type, loc, SET_STACK_AMOUNT(FLOOR(custom_materials[spawning] / SHEET_MATERIAL_AMOUNT, 1)))
+			SSwardrobe.provide(spawning.sheet_type, loc, STACK_AMOUNT(GET_SHEET_COUNT(custom_materials, spawning)))
 
 /obj/structure/sink/proc/begin_reclamation()
 	START_PROCESSING(SSplumbing, src)
@@ -571,8 +571,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	return ..()
 
 /obj/structure/sinkframe/proc/drop_materials()
-	for(var/datum/material/material as anything in custom_materials)
-		SSwardrobe.provide_type(material.sheet_type, loc, SET_STACK_AMOUNT(FLOOR(custom_materials[material] / SHEET_MATERIAL_AMOUNT, 1)))
+	for(var/datum/material/spawning as anything in custom_materials)
+		SSwardrobe.provide(spawning.sheet_type, loc, STACK_AMOUNT(GET_SHEET_COUNT(custom_materials, spawning)))
 	return
 
 //Water source, use the type water_source for unlimited water sources like classic sinks.

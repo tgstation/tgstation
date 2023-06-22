@@ -72,3 +72,6 @@
 #define MATERIAL_SLOWDOWN_PLASTEEL (0.05)
 /// The slowdown value of one [SHEET_MATERIAL_AMOUNT] of alien alloy.
 #define MATERIAL_SLOWDOWN_ALIEN_ALLOY (0.1)
+
+/// Takes a materials list and a material key, returns the amount of sheets creatable with our resources
+#define GET_SHEET_COUNT(materials_list, material) (FLOOR(materials_list[material] / SHEET_MATERIAL_AMOUNT, 1))

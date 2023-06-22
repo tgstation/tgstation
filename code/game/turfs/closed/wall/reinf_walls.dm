@@ -37,8 +37,8 @@
 			return span_notice("The support rods have been <i>sliced through</i>, and the outer sheath is <b>connected loosely</b> to the girder.")
 
 /turf/closed/wall/r_wall/devastate_wall()
-	SSwardrobe.provide_type(sheet_type, src, SET_STACK_AMOUNT(sheet_amount))
-	SSwardrobe.provide_type(/obj/item/stack/sheet/iron, src, SET_STACK_AMOUNT(2))
+	SSwardrobe.provide(sheet_type, src, STACK_AMOUNT(sheet_amount))
+	SSwardrobe.provide(/obj/item/stack/sheet/iron, src, STACK_AMOUNT(2))
 
 /turf/closed/wall/r_wall/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()

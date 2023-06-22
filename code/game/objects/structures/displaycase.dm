@@ -87,7 +87,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		dump()
 		if(!disassembled)
-			SSwardrobe.provide_type(/obj/item/shard, drop_location())
+			SSwardrobe.provide(/obj/item/shard, drop_location())
 			trigger_alarm()
 	qdel(src)
 
@@ -96,7 +96,7 @@
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		set_density(FALSE)
 		broken = TRUE
-		SSwardrobe.provide_type(/obj/item/shard, drop_location())
+		SSwardrobe.provide(/obj/item/shard, drop_location())
 		playsound(src, SFX_SHATTER, 70, TRUE)
 		update_appearance()
 		trigger_alarm()

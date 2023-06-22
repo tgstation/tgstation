@@ -63,7 +63,7 @@
 		return
 	if(QDELING(src) || !hit_atom)	//Invalid loc
 		return
-	var/obj/item/shard/ampoule_shard = SSwardrobe.provide_type(/obj/item/shard, drop_location())
+	var/obj/item/shard/ampoule_shard = SSwardrobe.provide(/obj/item/shard, drop_location())
 	playsound(src, SFX_SHATTER, 40, TRUE)
 	transfer_fingerprints_to(ampoule_shard)
 	spillable = TRUE

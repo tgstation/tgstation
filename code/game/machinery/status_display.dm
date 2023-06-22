@@ -72,9 +72,9 @@
 	if(flags_1 & NODECONSTRUCT_1)
 		return
 	if(!disassembled)
-		new SSwardrobe.provide_type(/obj/item/stack/sheet/iron, drop_location(), SET_STACK_AMOUNT(2))
-		SSwardrobe.provide_type(/obj/item/shard, drop_location())
-		SSwardrobe.provide_type(/obj/item/shard, drop_location())
+		new SSwardrobe.provide(/obj/item/stack/sheet/iron, drop_location(), STACK_AMOUNT(2))
+		SSwardrobe.provide(/obj/item/shard, drop_location())
+		SSwardrobe.provide(/obj/item/shard, drop_location())
 	else
 		new /obj/item/wallframe/status_display(drop_location())
 	qdel(src)

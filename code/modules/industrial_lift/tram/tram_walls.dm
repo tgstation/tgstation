@@ -305,7 +305,7 @@
 		if(disassembled)
 			new girder_type(loc)
 		for(var/datum/material/spawning as anything in custom_materials)
-			SSwardrobe.provide_type(spawning.sheet_type, loc, SET_STACK_AMOUNT(FLOOR(custom_materials[spawning] / SHEET_MATERIAL_AMOUNT, 1)))
+			SSwardrobe.provide(spawning.sheet_type, loc, STACK_AMOUNT(GET_SHEET_COUNT(custom_materials, spawning)))
 	qdel(src)
 
 /obj/structure/tramwall/material/mat_update_desc(mat)

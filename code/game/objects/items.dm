@@ -1240,7 +1240,7 @@
 		if(custom_materials[GET_MATERIAL_REF(/datum/material/glass)] >= total_material_amount * 0.60)
 			if(prob(66)) //66% chance to break it
 				/// The glass shard that is spawned into the source item
-				var/obj/item/shard/broken_glass = SSwardrobe.provide_type(/obj/item/shard, loc)
+				var/obj/item/shard/broken_glass = SSwardrobe.provide(/obj/item/shard, loc)
 				broken_glass.name = "broken [name]"
 				broken_glass.desc = "This used to be \a [name], but it sure isn't anymore."
 				playsound(victim, SFX_SHATTER, 25, TRUE)

@@ -56,7 +56,7 @@
 			var/datum/material/custom_material = GET_MATERIAL_REF(mat)
 			var/amount = max(0,round(custom_materials[mat]/SHEET_MATERIAL_AMOUNT) + amount_mod)
 			if(amount > 0)
-				SSwardrobe.provide_type(custom_material.sheet_type, drop_location(), SET_STACK_AMOUNT(amount))
+				SSwardrobe.provide(custom_material.sheet_type, drop_location(), STACK_AMOUNT(amount))
 	qdel(src)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////

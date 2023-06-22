@@ -293,7 +293,7 @@
 			new buildstack(T, buildstackamount)
 		else
 			for(var/datum/material/spawning as anything in custom_materials)
-				SSwardrobe.provide_type(spawning.sheet_type, T, SET_STACK_AMOUNT(FLOOR(custom_materials[spawning] / SHEET_MATERIAL_AMOUNT, 1)))
+				SSwardrobe.provide(spawning.sheet_type, T, STACK_AMOUNT(GET_SHEET_COUNT(custom_materials, spawning)))
 		if(!wrench_disassembly)
 			new frame(T)
 		else
@@ -436,7 +436,7 @@
 
 	new frame(loc)
 
-	var/obj/item/shard/shard = SSwardrobe.provide_type(glass_shard_type, loc)
+	var/obj/item/shard/shard = SSwardrobe.provide(glass_shard_type, loc)
 	shard.throw_impact(victim)
 
 	victim.Paralyze(100)

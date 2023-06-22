@@ -195,7 +195,7 @@
 		desc = "A carton with the bottom half burst open. Might give you a papercut."
 	else
 		if(prob(33))
-			var/obj/item/shard/stab_with = SSwardrobe.provide_type(/obj/item/shard, to_mimic.drop_location())
+			var/obj/item/shard/stab_with = SSwardrobe.provide(/obj/item/shard, to_mimic.drop_location())
 			target.Bumped(stab_with)
 		playsound(src, SFX_SHATTER, 70, TRUE)
 	name = "broken [to_mimic.name]"

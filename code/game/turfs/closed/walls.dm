@@ -93,14 +93,14 @@
 	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/closed/wall/proc/break_wall()
-	SSwardrobe.provide_type(sheet_type, src, SET_STACK_AMOUNT(sheet_amount))
+	SSwardrobe.provide(sheet_type, src, STACK_AMOUNT(sheet_amount))
 	if(girder_type)
 		return new girder_type(src)
 
 /turf/closed/wall/proc/devastate_wall()
-	SSwardrobe.provide_type(sheet_type, src, SET_STACK_AMOUNT(sheet_amount))
+	SSwardrobe.provide(sheet_type, src, STACK_AMOUNT(sheet_amount))
 	if(girder_type)
-		SSwardrobe.provide_type(/obj/item/stack/sheet/iron, src)
+		SSwardrobe.provide(/obj/item/stack/sheet/iron, src)
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)

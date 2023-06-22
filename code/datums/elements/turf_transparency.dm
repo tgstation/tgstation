@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	if(istransparentturf(visual_target) || isopenspaceturf(visual_target))
 		visual_target.vis_contents += to_display
 	else
-		var/obj/effect/abstract/z_holder/hold_this = SSwardrobe.provide_type(/obj/effect/abstract/z_holder, visual_target)
+		var/obj/effect/abstract/z_holder/hold_this = SSwardrobe.provide(/obj/effect/abstract/z_holder, visual_target)
 		hold_this.display(to_display, src)
 
 /// Hides an existing turf from our vis_contents, or the vis_contents of the source if applicable
@@ -179,7 +179,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	if(istransparentturf(parent) || isopenspaceturf(parent))
 		parent.vis_contents += orphan
 	else
-		var/obj/effect/abstract/z_holder/hold_this = SSwardrobe.provide_type(/obj/effect/abstract/z_holder, parent)
+		var/obj/effect/abstract/z_holder/hold_this = SSwardrobe.provide(/obj/effect/abstract/z_holder, parent)
 		hold_this.display(orphan, src)
 
 /datum/element/turf_z_transparency

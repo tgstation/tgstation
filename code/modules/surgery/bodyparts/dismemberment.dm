@@ -460,7 +460,7 @@
 			var/zone = initial(organ_path.zone)
 			if(zone != limb_zone)
 				continue
-			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
+			var/obj/item/organ/external/new_organ = SSwardrobe.provide(organ_path)
 			new_organ.Insert(src)
 
 		update_body_parts()

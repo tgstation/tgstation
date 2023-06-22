@@ -383,7 +383,7 @@
 			new girder_type(loc)
 		for(var/material in custom_materials)
 			var/datum/material/material_datum = material
-			SSwardrobe.provide_type(material_datum.sheet_type, loc, SET_STACK_AMOUNT(FLOOR(custom_materials[material_datum] / SHEET_MATERIAL_AMOUNT, 1)))
+			SSwardrobe.provide(material_datum.sheet_type, loc, STACK_AMOUNT(GET_SHEET_COUNT(custom_materials, material_datum)))
 	qdel(src)
 
 /obj/structure/falsewall/material/mat_update_desc(mat)

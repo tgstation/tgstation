@@ -16,7 +16,7 @@
 	. = ..()
 
 /turf/closed/wall/mineral/cult/devastate_wall()
-	SSwardrobe.provide_type(sheet_type, src, SET_STACK_AMOUNT(sheet_amount))
+	SSwardrobe.provide(sheet_type, src, STACK_AMOUNT(sheet_amount))
 
 /turf/closed/wall/mineral/cult/Exited(atom/movable/gone, direction)
 	. = ..()
