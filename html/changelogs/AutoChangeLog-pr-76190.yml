@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "attacking non-carbon mobs with a cuffsnapping object will no longer runtime."

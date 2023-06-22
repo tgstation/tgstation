@@ -231,21 +231,30 @@
 		/datum/language/terrum,
 		/datum/language/voltaic,
 	)
-	var/extra_language
+	var/datum/language/extra_language
 	mail_goodies = list(/obj/item/taperecorder, /obj/item/clothing/head/frenchberet, /obj/item/clothing/mask/fakemoustache/italian)
 
 /datum/quirk/bilingual/add(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
 	//prevents yourself from learning a language you already have
 	for(var/datum/language/spoken as anything in possible_languages)
-		if(human_holder.has_language(spoken))
+		if(quirk_holder.has_language(spoken))
 			possible_languages -= spoken
+	if(!length(possible_languages))
+		return
 	extra_language = pick(possible_languages)
-	human_holder.grant_language(extra_language, understood = TRUE, spoken =  TRUE, source =  LANGUAGE_QUIRK)
+	quirk_holder.grant_language(extra_language, understood = TRUE, spoken = TRUE, source = LANGUAGE_QUIRK)
+
+/datum/quirk/bilingual/post_add()
+	if(extra_language)
+		to_chat(quirk_holder, span_info("From your bilingualism, you are additionally fluent in [initial(extra_language.name)]."))
+	else
+		to_chat(quirk_holder, span_info("You are already fluent in all languages, making you far more than bilingual."))
 
 /datum/quirk/bilingual/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.remove_language(extra_language)
+	if(!extra_language)
+		return
+
+	quirk_holder.remove_language(extra_language)
 
 /datum/quirk/item_quirk/poster_boy
 	name = "Poster Boy"
