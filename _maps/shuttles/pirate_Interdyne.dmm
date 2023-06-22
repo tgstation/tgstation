@@ -325,10 +325,7 @@
 	dir = 4
 	},
 /obj/machinery/suit_storage_unit/interdyne,
-/obj/item/mod/module/defibrillator/combat,
-/obj/item/mod/module/tether,
 /obj/item/screwdriver/nuke,
-/obj/item/mod/module/surgical_processor/preloaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bl" = (
@@ -357,10 +354,7 @@
 "br" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
 /obj/machinery/suit_storage_unit/interdyne,
-/obj/item/mod/module/defibrillator/combat,
-/obj/item/mod/module/tether,
 /obj/item/screwdriver/nuke,
-/obj/item/mod/module/surgical_processor/preloaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bu" = (
@@ -444,10 +438,7 @@
 	dir = 4
 	},
 /obj/machinery/suit_storage_unit/interdyne,
-/obj/item/mod/module/defibrillator/combat,
-/obj/item/mod/module/tether,
 /obj/item/screwdriver/nuke,
-/obj/item/mod/module/surgical_processor/preloaded,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bX" = (

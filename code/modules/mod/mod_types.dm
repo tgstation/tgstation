@@ -296,7 +296,7 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/health_analyzer,
 		/obj/item/mod/module/injector,
-		/obj/item/mod/module/surgical_processor,
+		/obj/item/mod/module/surgical_processor/preloaded,
 	)
 
 /obj/item/mod/control/pre_equipped/enchanted

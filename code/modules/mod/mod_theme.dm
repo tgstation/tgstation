@@ -1175,10 +1175,10 @@
 	armor_type = /datum/armor/mod_theme_interdyne
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	charge_drain = DEFAULT_CHARGE_DRAIN * 2.2
+	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	slowdown_inactive = 0.0
 	slowdown_active = -0.5
-	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced, /obj/item/mod/module/organ_thrower)
+	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced, /obj/item/mod/module/organ_thrower, /obj/item/mod/module/defibrillator/combat, /obj/item/mod/module/tether)
 	allowed_suit_storage = list(
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/dropper,
@@ -1232,8 +1232,8 @@
 
 /datum/armor/mod_theme_interdyne
 	melee = 30
-	bullet = 20
-	laser = 20
+	bullet = 30
+	laser = 30
 	energy = 30
 	bomb = 20
 	bio = 100
