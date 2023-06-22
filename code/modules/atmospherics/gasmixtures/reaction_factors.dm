@@ -7,37 +7,37 @@
 
 /datum/gas_reaction/miaster/init_factors()
 	factor = list(
-		/datum/gas/miasma = "Miasma is consumed at 1 reaction rate.",
-		/datum/gas/oxygen = "Oxygen is produced at 1 reaction rate.",
-		"Temperature" = "Higher temperature increases the reaction rate.",
-		"Energy" = "[MIASTER_STERILIZATION_ENERGY] joules of energy is released per rate.",
+		/datum/gas/miasma = "Miasma is sterilized at a rate that scales with the difference between the temperature and [MIASTER_STERILIZATION_TEMP]K.",
+		/datum/gas/oxygen = "One mole of oxygen is released per mole of miasma consumed.",
+		"Temperature" = "Higher temperature increases the speed of miasma sterilization.",
+		"Energy" = "[MIASTER_STERILIZATION_ENERGY] joules of energy is released per mole of miasma sterilized.",
 	)
 
 /datum/gas_reaction/plasmafire/init_factors()
 	factor = list(
-		/datum/gas/oxygen = "Oxygen consumption is determined by the temperature, ranging from [OXYGEN_BURN_RATIO_BASE] of the reaction rate at [PLASMA_MINIMUM_BURN_TEMPERATURE] Kelvins to [OXYGEN_BURN_RATIO_BASE-1] at [PLASMA_UPPER_TEMPERATURE] Kelvins. Higher oxygen concentration up to [PLASMA_OXYGEN_FULLBURN]x times the plasma increases the reaction rate.",
-		/datum/gas/plasma = "Plasma is consumed at 1 reaction rate. It's relationship with oxygen also determines reaction speed",
-		/datum/gas/tritium = "Tritium is formed at 1 reaction rate if there are 97 times more oxygen than plasma.",
-		/datum/gas/water_vapor = "Water vapor is formed at 0.25 reaction rate if tritium isn't being formed.",
-		/datum/gas/carbon_dioxide = "Carbon Dioxide is formed at 0.75 reaction rate if tritium isn't being formed.",
-		"Temperature" = "Minimum temperature of [PLASMA_MINIMUM_BURN_TEMPERATURE] kelvin to occur. Higher temperature up to [PLASMA_UPPER_TEMPERATURE] increases the oxygen efficiency and also the reaction rate.",
-		"Energy" = "[FIRE_PLASMA_ENERGY_RELEASED] joules of energy is released per reaction rate",
+		/datum/gas/oxygen = "Oxygen consumption is determined by the temperature, ranging from [OXYGEN_BURN_RATIO_BASE] per mole of plasma consumed at [PLASMA_MINIMUM_BURN_TEMPERATURE] Kelvins to [OXYGEN_BURN_RATIO_BASE-1] per mole of plasma consumed at [PLASMA_UPPER_TEMPERATURE] Kelvins. Higher oxygen concentration up to [PLASMA_OXYGEN_FULLBURN] times the plasma increases the speed of plasma consumption.",
+		/datum/gas/plasma = "Plasma is consumed at a rate that scales with the difference between the temperature and [PLASMA_MINIMUM_BURN_TEMPERATURE]K, with maximum scaling at [PLASMA_UPPER_TEMPERATURE].",
+		/datum/gas/tritium = "Tritium is formed at 1 mole per mole of plasma consumed if there are at least 97 times more oxygen than plasma.",
+		/datum/gas/water_vapor = "Water vapor is formed at 0.25 moles per mole of plasma consumed if tritium isn't being formed.",
+		/datum/gas/carbon_dioxide = "Carbon Dioxide is formed at 0.75 moles per mole of plasma consumed if tritium isn't being formed.",
+		"Temperature" = "Minimum temperature of [PLASMA_MINIMUM_BURN_TEMPERATURE] kelvin to occur. Higher temperature up to [PLASMA_UPPER_TEMPERATURE] increases the oxygen efficiency and also the plasma consumption rate.",
+		"Energy" = "[FIRE_PLASMA_ENERGY_RELEASED] joules of energy is released per mole of plasma consumed.",
 	)
 
 /datum/gas_reaction/h2fire/init_factors()
 	factor = list(
-		/datum/gas/oxygen = "Oxygen is consumed at 0.5 reaction rate. Higher oxygen concentration up to [HYDROGEN_OXYGEN_FULLBURN] times the hydrogen increases the reaction rate.",
-		/datum/gas/hydrogen = "Hydrogen is consumed at 1 reaction rate. Its relationship with oxygen also determines the reaction speed.",
-		/datum/gas/water_vapor = "Water vapor is formed at 1 reaction rate.",
+		/datum/gas/oxygen = "Oxygen is consumed at 0.5 moles per mole of hydrogen consumed. Higher oxygen concentration up to [HYDROGEN_OXYGEN_FULLBURN] times the hydrogen increases the hydrogen consumption rate.",
+		/datum/gas/hydrogen = "Hydrogen is consumed rapidly fast as long as there's enough oxygen to allow combustion.",
+		/datum/gas/water_vapor = "Water vapor is produced at 1 mole per mole of hydrogen combusted.",
 		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST] kelvin to occur",
 		"Energy" = "[FIRE_HYDROGEN_ENERGY_RELEASED] joules of energy is released per mol of hydrogen consumed.",
 	)
 
 /datum/gas_reaction/tritfire/init_factors()
 	factor = list(
-		/datum/gas/oxygen = "Oxygen is consumed at 0.5 reaction rate. Higher oxygen concentration up to [TRITIUM_OXYGEN_FULLBURN] times the tritium increases the reaction rate.",
-		/datum/gas/tritium = "Tritium is consumed at 1 reaction rate. Its relationship with oxygen also determines the reaction speed.",
-		/datum/gas/water_vapor = "Water vapor is formed at 1 reaction rate.",
+		/datum/gas/oxygen = "Oxygen is consumed at 0.5 moles per mole of tritium consumed. Higher oxygen concentration up to [TRITIUM_OXYGEN_FULLBURN] times the tritium increases the tritium consumption rate.",
+		/datum/gas/tritium = "Tritium is consumed at rapidly fast as long as there's enough oxygen to allow combustion.",
+		/datum/gas/water_vapor = "Water vapor is produced at 1 mole per mole of tritium combusted.",
 		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST] kelvin to occur",
 		"Energy" = "[FIRE_TRITIUM_ENERGY_RELEASED] joules of energy is released per mol of tritium consumed.",
 		"Radiation" = "This reaction emits radiation proportional to the amount of energy released.",
