@@ -63,12 +63,6 @@
 		return TRUE
 	return ..()
 
-//Can still metabolize milk through meme magic
-/datum/species/skeleton/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-
 /datum/species/skeleton/get_species_description()
 	return "A rattling skeleton! They descend upon Space Station 13 \
 		Every year to spook the crew! \"I've got a BONE to pick with you!\""
