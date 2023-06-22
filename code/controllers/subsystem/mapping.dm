@@ -206,8 +206,8 @@ SUBSYSTEM_DEF(mapping)
 	if(multiz_levels.len < z_level)
 		multiz_levels.len = z_level
 
-	var/linked_down = level_trait(z_level, ZTRAIT_DOWN)
-	var/linked_up = level_trait(z_level, ZTRAIT_UP)
+	if(level_trait(z_level, ZTRAIT_UP) != TRUE || level_trait(z_level, ZTRAIT_DOWN) != TRUE)
+		stack_trace("Warning, numeric mapping offsets are deprecated. Instead, mark z level connections by setting UP/DOWN to true if the connection is allowed")
 	multiz_levels[z_level] = new /list(LARGEST_Z_LEVEL_INDEX)
 	multiz_levels[z_level][Z_LEVEL_UP] = !!level_trait(z_level, ZTRAIT_UP)
 	multiz_levels[z_level][Z_LEVEL_DOWN] = !!level_trait(z_level, ZTRAIT_DOWN)
