@@ -57,8 +57,8 @@
 	 */
 	var/icon/submerge_icon = generated_submerge_icons["[icon]-[icon_state]-[mask_icon]"]
 	if(!submerge_icon)
-		submerge_icon = icon('icons/turf/floors.dmi', "riverwater_motion")
-		var/icon/sub_mask = icon('icons/effects/effects.dmi', "submerge")
+		submerge_icon = icon(icon, icon_state)
+		var/icon/sub_mask = icon('icons/effects/effects.dmi', mask_icon)
 		submerge_icon.Blend(sub_mask, ICON_MULTIPLY)
 		submerge_icon = fcopy_rsc(submerge_icon)
 		generated_submerge_icons["[icon]-[icon_state]-[mask_icon]"] = submerge_icon
