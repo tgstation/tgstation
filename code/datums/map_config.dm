@@ -44,6 +44,9 @@
 	/// List of unit tests that are skipped when running this map
 	var/list/skipped_tests
 
+	/// List of unit tests that are only ran when running this map
+	var/list/explicitly_ran_tests
+
 /**
  * Proc that simply loads the default map config, which should always be functional.
  */
@@ -210,6 +213,14 @@
 			stack_trace("Invalid path in mapping config for ignored unit tests: \[[path_as_text]\]")
 			continue
 		LAZYADD(skipped_tests, path_real)
+
+	// Check for unit tests to run, these would be ran on purpose-built maps for these tests
+	for(var/path_as_text in json["explicitly_ran_tests"])
+		var/path_real = text2path(path_as_text)
+		if(!ispath(path_real, /datum/unit_test))
+			stack_trace("Invalid path in mapping config for unit tests to run: \[[path_as_text]\]")
+			continue
+		LAZYADD(explicitly_ran_tests, path_real)
 #endif
 
 	defaulted = FALSE

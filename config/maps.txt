@@ -49,6 +49,9 @@ endmap
 
 # Debug-only maps.
 
+map gateway_test
+endmap
+
 map multiz_debug
 endmap
 
