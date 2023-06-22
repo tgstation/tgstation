@@ -919,9 +919,23 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/is_planetary()
 	return config.planetary
 
-/// For unit testing purposes, will add every single away mission known to God and man.
+/// For debug purposes, will add every single away mission known to God and man.
 /datum/controller/subsystem/mapping/proc/load_all_away_missions()
+	var/confirmation_alert_result = null
+	if(IsAdminAdvancedProcCall())
+		if(!check_rights(R_DEBUG))
+			return
+		var/confirmation_string = "This will load every single away mission in the _maps/RandomZLevels directory. This might cause a bit of lag that can only be cleared on a world restart. Are you sure you want to do this?"
+		confirmation_alert_result = tgui_alert(usr, confirmation_string, "DEBUG ONLY!!!", list("Yes", "Cancel"))
+		if(confirmation_alert_result != "Yes")
+			return
+
+	CONFIG_SET(number/gateway_delay, 0) // this isn't the playground anymore, you decided to hit "Yes" on the debug-only proc
 	var/map_directory = "_maps/RandomZLevels"
 	var/list/all_away_missions = generate_map_list_from_directory(map_directory)
 	for(var/entry in all_away_missions)
-		load_new_z_level(file_name, map_directory, secret = FALSE)
+		load_new_z_level(entry, entry, secret = FALSE) // entry in both fields so we know if something failed to load since it'll log the full file name of what was loaded.
+
+	if(!isnull(confirmation_alert_result))
+		message_admins("[key_name_admin(usr)] has loaded every single away mission in the _maps/RandomZLevels directory.")
+		log_game("[key_name(usr)] has loaded every single away mission in the _maps/RandomZLevels directory.")
