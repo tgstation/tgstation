@@ -500,6 +500,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Projectile with this trait will always hit the defined zone of a struck living mob.
 #define TRAIT_ALWAYS_HIT_ZONE "always_hit_zone"
 
+/// Mobs with this trait do care about a few grizzly things, such as digging up graves. They also really do not like bringing people back to life or tending wounds, but love autopies, dissections and amputations.
+#define TRAIT_MORBID "morbid"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
