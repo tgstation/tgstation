@@ -157,8 +157,7 @@
 	if(isnull(preview))
 		return
 	holder.screen -= preview
-	qdel(preview)
-	preview = null
+	QDEL_NULL(preview)
 
 /datum/buildmode/proc/change_mode(newmode)
 	mode.exit_mode(src)
