@@ -1,4 +1,4 @@
-/obj/item/sword
+/obj/item/melee/sword
 	name = "broadsword"
 	desc = "A sharp steel forged sword. It's fine edge shines in the light."
 	icon = 'icons/obj/weapons/sword.dmi'
@@ -24,24 +24,24 @@
 	resistance_flags = FIRE_PROOF
 	embedding = list("embed_chance" = 20, "impact_pain_mult" = 10) //It's a sword, thrown swords can stick into people.
 
-/obj/item/sword/Initialize(mapload)
+/obj/item/melee/sword/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, \
 	speed = 4 SECONDS, \
 	effectiveness = 105, \
 	)
 
-/obj/item/sword/suicide_act(mob/living/user)
+/obj/item/melee/sword/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/sword/gold
+/obj/item/melee/sword/gold
 	name = "gilded broadsword"
 	desc = "A sharp steel forged sword. It's got a rich guard and pommel. It's fine edge shines in the light."
 	icon_state = "broadsword_gold"
 	inhand_icon_state = "broadsword_gold"
 
-/obj/item/sword/rust
+/obj/item/melee/sword/rust
 	name = "rusty broadsword"
 	desc = "A sharp steel forged sword. It's edge is rusty and corroded."
 	icon_state = "broadsword_rust
@@ -55,13 +55,13 @@
 	/// If the sword is broken or not.
 	var/broken = FALSE
 
-/obj/item/sword/rust/afterattack()
+/obj/item/melee/sword/rust/afterattack()
 	. = ..()
 	if(rustiness <= 0)
 		return
 	decrease_uses()
 
-/obj/item/sword/rust/on_hit_reaction()
+/obj/item/melee/sword/rust/on_hit_reaction()
 	. = ..()
 	if(!.)
 		return
@@ -69,13 +69,13 @@
 		return
 	decrease_uses()
 
-/obj/item/sword/rust/proc/decrease_uses(mob/user)
+/obj/item/melee/sword/rust/proc/decrease_uses(mob/user)
 	if(rustiness == 0)
 		no_uses(user)
 		return
 	rustiness--
 
-/obj/item/sword/rust/proc/no_uses(mob/user)
+/obj/item/melee/sword/rust/proc/no_uses(mob/user)
 	if(broken == TRUE)
 		return
 	to_chat(user, span_warning("[src]'s blade breaks leaving you with half a sword!"))
@@ -91,35 +91,35 @@
 	block_chance = 20
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/sword/rust/gold
+/obj/item/melee/sword/rust/gold
 	name = "rusty gilded broadsword"
 	desc = "A sharp steel forged sword. It's got a rich guard and pommel. It's edge is rusty and corroded."
 	icon_state = "broadsword_gold"
 	inhand_icon_state = "broadsword_gold"
 	broken_icon = "broadswordgold_broken"
 
-/obj/item/sword/rust/claymore
+/obj/item/melee/sword/rust/claymore
 	name = "rusty claymore"
 	desc = "A rusted claymore, it smells damp and it has seen better days."
 	icon_state = "rusty_claymore"
 	inhand_icon_state = "claymore"
 	broken_icon = "claymore_broken"
 
-/obj/item/sword/rust/claymoregold
+/obj/item/melee/sword/rust/claymoregold
 	name = "rusty holy claymore"
 	desc = "A weapon fit for a crusade... or it used to be..."
 	icon_state = "claymore_gold"
 	inhand_icon_state = "claymore_gold"
 	broken_icon = "claymore_gold_broken"
 
-	/obj/item/sword/rust/claymoregold
+/obj/item/melee/sword/rust/claymoregold
 	name = "rusty dark blade"
 	desc = "Once used by worshipers of forbidden gods, now its covered in old rust."
 	icon_state = "cultblade_rust"
 	inhand_icon_state = "cultblade_rust"
 	broken_icon = "cultblade_broken"
 
-/obj/item/sword/reforged
+/obj/item/melee/sword/reforged
 	name = "Reforged longsword"
 	desc = "A hard steel blade, it's edge has been forged to be incredibly strong. It feels light."
 	icon_state = "reforged"
@@ -132,18 +132,18 @@
 	armour_penetration = 15
 	embedding = list("embed_chance" = 30, "impact_pain_mult" = 10)
 
-/obj/item/sword/reforged/shitty
+/obj/item/melee/sword/reforged/shitty
 	var/broken = FALSE
 	var/rustiness = 1
 	var/broken_icon = "reforged_broken"
 
-/obj/item/sword/reforged/shitty/afterattack()
+/obj/item/melee/sword/reforged/shitty/afterattack()
 	. = ..()
 	if(rustiness <= 0)
 		return
 	decrease_uses()
 
-/obj/item/sword/reforged/shitty/on_hit_reaction()
+/obj/item/melee/sword/reforged/shitty/on_hit_reaction()
 	. = ..()
 	if(!.)
 		return
@@ -151,13 +151,13 @@
 		return
 	decrease_uses()
 
-/obj/item/sword/reforged/shitty/proc/decrease_uses(mob/user)
+/obj/item/melee/sword/reforged/shitty/proc/decrease_uses(mob/user)
 	if(rustiness == 0)
 		no_uses(user)
 		return
 	rustiness--
 
-/obj/item/sword/reforged/shitty/proc/no_uses(mob/user)
+/obj/item/melee/sword/reforged/shitty/proc/no_uses(mob/user)
 	if(broken == TRUE)
 		return
 	to_chat(user, span_warning("[src]'s blade shatters! It was a cheap felinid imitation! WHAT A PIECE OF SHIT!"))
