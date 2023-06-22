@@ -118,7 +118,7 @@
 	if(isfloorturf(T) && T.overfloor_placed) // pop the tile if present
 		floorturf = T
 		if(floorturf.floor_tile)
-			new floorturf.floor_tile(T)
+			new SSwardrobe.provide(floorturf.floor_tile, floorturf)
 		floorturf.make_plating(TRUE)
 
 	if(direction) // direction is specified

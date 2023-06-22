@@ -278,7 +278,7 @@
 	if(!isplatingturf(victim) && !istype(victim, /turf/open/floor/engine/cult) && isfloorturf(victim) && prob(15))
 		var/turf/open/floor/floor = victim
 		if(floor.overfloor_placed && floor.floor_tile)
-			new floor.floor_tile(floor)
+			new SSwardrobe.provide(floor.floor_tile, floor)
 		floor.broken = 0
 		floor.burnt = 0
 		floor.make_plating(TRUE)

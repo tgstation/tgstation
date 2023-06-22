@@ -173,7 +173,7 @@
 /turf/open/floor/proc/spawn_tile()
 	if(!has_tile())
 		return null
-	return new floor_tile(src)
+	return SSwardrobe.provide(floor_tile, src)
 
 /turf/open/floor/singularity_pull(S, current_size)
 	..()

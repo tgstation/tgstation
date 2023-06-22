@@ -183,13 +183,15 @@ SUBSYSTEM_DEF(wardrobe)
 	one_go_master++
 
 /// Canonizes a typepath if and only if initial(typepath.to_read) is truthy
-#define CANNONIZE_IF_VAR(typepath, type_to_make, amount, to_read) \
+#define CANNONIZE_IF_VAR_TYPEPATH(typepath, type_to_make, amount, to_read) \
 	do { \
 		var##typepath/remembered = type_to_make; \
 		if(initial(remembered.##to_read)) { \
 			canonize_type(type_to_make, amount); \
 		} \
 	} while(FALSE)
+
+#define CANNONIZE_IF_VAR(typepath, type_to_make, amount, to_read) CANNONIZE_IF_VAR_TYPEPATH(typepath, typepath, amount, to_read)
 
 /datum/controller/subsystem/wardrobe/proc/add_queue_item(queued_type, amount)
 	var/amount_held = order_list[queued_type] || 0
@@ -411,10 +413,21 @@ SUBSYSTEM_DEF(wardrobe)
 		CHECK_TICK
 	// I want to be prepared for explosions
 	var/turf/closed/wall/read_from = /turf/closed/wall
-	CANNONIZE_IF_VAR(/obj/item/stack, initial(read_from.sheet_type), 400, preload)
+	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/stack, initial(read_from.sheet_type), 400, preload)
 	read_from = /turf/closed/wall/r_wall
-	CANNONIZE_IF_VAR(/obj/item/stack, initial(read_from.sheet_type), 200, preload)
-	CANNONIZE_IF_VAR(/obj/item/stack, /obj/item/stack/rods, 200, preload)
+	CANNONIZE_IF_VAR_TYPEPATH(/obj/item/stack, initial(read_from.sheet_type), 200, preload)
+	CANNONIZE_IF_VAR(/obj/item/stack, 200, preload)
+
+/datum/controller/subsystem/wardrobe/proc/load_girders()
+	for(var/obj/structure/girder/frame as anything in subtypesof(/obj/structure/girder))
+		if(!initial(frame.preload))
+			continue
+		// 5 of each type, just in case someone makes these
+		canonize_type(frame, 5)
+		CHECK_TICK
+	// I want to be ready for exploisions and the singulo ya feel me?
+	CANNONIZE_IF_VAR(/obj/structure/girder, 200, preload)
+	CANNONIZE_IF_VAR(/obj/structure/girder/reinforced, 200, preload)
 
 /datum/controller/subsystem/wardrobe/proc/load_shards()
 	for(var/obj/item/shard/secret_sauce as anything in subtypesof(/obj/item/shard))
@@ -424,10 +437,9 @@ SUBSYSTEM_DEF(wardrobe)
 		canonize_type(secret_sauce, 5)
 		CHECK_TICK
 	// I want to be ready for exploisions and massive window shattering
-	CANNONIZE_IF_VAR(/obj/item/shard, /obj/item/shard, 200, preload)
+	CANNONIZE_IF_VAR(/obj/item/shard, 200, preload)
 
 /datum/controller/subsystem/wardrobe/proc/load_abstract()
 	// We make and delete a LOT of these all at once (explosions, shuttles, etc)
 	// It's worth caching them, and they have low side effects so it's safe too
 	canonize_type(/obj/effect/abstract/z_holder, 300)
-

@@ -128,10 +128,10 @@
 /obj/structure/falsewall/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
-			new girder_type(loc)
+			SSwardrobe.provide(girder_type, loc)
 		if(mineral_amount)
 			for(var/i in 1 to mineral_amount)
-				new mineral(loc)
+				SSwardrobe.provide(girder_type, loc)
 	qdel(src)
 
 /obj/structure/falsewall/get_dumping_location()

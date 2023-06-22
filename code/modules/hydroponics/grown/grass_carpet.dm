@@ -37,7 +37,7 @@
 			continue
 		grassAmt += 1 + round(G.seed.potency * tile_coefficient)
 		qdel(G)
-	new stacktype(user.drop_location(), grassAmt)
+	SSwardrobe.provide(stacktype, user.drop_location, grassAmt)
 	qdel(src)
 
 //Fairygrass
