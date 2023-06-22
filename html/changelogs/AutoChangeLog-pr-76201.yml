@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fix runtimes from Bileworms targeting mechas (or other objects people are hiding in)"
