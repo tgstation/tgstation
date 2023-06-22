@@ -283,7 +283,6 @@
 	painting_metadata.md5 = md5(lowertext(image_data))
 	generated_icon = new(png_filename)
 	icon_generated = TRUE
-	SSdemo.embed_resource(generated_icon)
 	update_appearance()
 
 /obj/item/canvas/proc/get_data_string()

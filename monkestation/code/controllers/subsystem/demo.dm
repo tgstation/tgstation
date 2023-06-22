@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(demo)
 	if(!istext(path))
 		path = "tmp/rsc_[ckey("\ref[res]")]_[rand(0, 100000)]"
 		fcopy(res, path)
-		//do_del = TRUE
+		do_del = TRUE
 	var/size = length(file(path))
 	last_embedded_size += size
 	log_world("Embedding \ref[res] [res] from [path] ([size] bytes)")
