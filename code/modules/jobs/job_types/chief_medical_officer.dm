@@ -76,7 +76,7 @@
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = list(
 		/obj/item/gun/syringe,
-		/obj/item/stamp/cmo,
+		/obj/item/stamp/head/cmo,
 		)
 	skillchips = list(/obj/item/skillchip/entrails_reader)
 

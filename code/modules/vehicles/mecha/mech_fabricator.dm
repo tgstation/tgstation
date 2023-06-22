@@ -92,7 +92,7 @@
 	//maximum stocking amount (default 300000, 600000 at T4)
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		T += matter_bin.tier
-	rmat.set_local_size((200000 + (T * 50000)))
+	rmat.set_local_size(((100*SHEET_MATERIAL_AMOUNT) + (T * (25*SHEET_MATERIAL_AMOUNT))))
 
 	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
 	T = 1.15
@@ -102,8 +102,8 @@
 
 	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		T += manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		T += servo.tier
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
 	// Adjust the build time of any item currently being built.

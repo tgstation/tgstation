@@ -281,7 +281,7 @@
 /obj/item/mecha_parts/mecha_equipment/rcd/action(mob/source, atom/target, list/modifiers)
 	if(!isturf(target) && !istype(target, /obj/machinery/door/airlock))
 		target = get_turf(target)
-	if(!action_checks(target) || get_dist(chassis, target)>3 || istype(target, /turf/open/space/transit))
+	if(!action_checks(target) || !(target in view(3, chassis)) || istype(target, /turf/open/space/transit))
 		return
 	playsound(chassis, 'sound/machines/click.ogg', 50, TRUE)
 

@@ -20,7 +20,6 @@
 		to_chat(usr, span_danger("Invalid URL. Please use a URL from one of the following sites: [replacetext(CONFIG_GET(string/request_internet_allowed), "\\", "")]"), confidential = TRUE)
 		return
 
-	request_url = shell_url_scrub(request_url)
 	log_internet_request("[src.key]/([src.name]): [request_url]")
 	if(usr.client)
 		if(usr.client.prefs.muted & MUTE_INTERNET_REQUEST)

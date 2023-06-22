@@ -98,7 +98,7 @@
 	initialize_actionspeed()
 	update_movespeed(TRUE)
 	become_hearing_sensitive()
-	log_mob_tag("CREATED: [key_name(src)] \[[type]\]")
+	log_mob_tag("TAG: [tag] CREATED: [key_name(src)] \[[type]\]")
 
 /**
  * Generate the tag for this mob
@@ -108,6 +108,17 @@
 /mob/GenerateTag()
 	. = ..()
 	tag = "mob_[next_mob_id++]"
+
+/mob/serialize_list(list/options, list/semvers)
+	. = ..()
+
+	.["tag"] = tag
+	.["name"] = name
+	.["ckey"] = ckey
+	.["key"] = key
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
+	return .
 
 /**
  * set every hud image in the given category active so other people with the given hud can see it.
@@ -206,32 +217,37 @@
  */
 /mob/proc/show_message(msg, type, alt_msg, alt_type, avoid_highlighting = FALSE)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 	if(!client)
-		return
+		return FALSE
 
 	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
+	// Return TRUE if we sent the original msg, otherwise return FALSE
+	. = TRUE
 	if(type)
 		if(type & MSG_VISUAL && is_blind())//Vision related
 			if(!alt_msg)
-				return
+				return FALSE
 			else
 				msg = alt_msg
 				type = alt_type
+				. = FALSE
 
 		if(type & MSG_AUDIBLE && !can_hear())//Hearing related
 			if(!alt_msg)
-				return
+				return FALSE
 			else
 				msg = alt_msg
 				type = alt_type
+				. = FALSE
 				if(type & MSG_VISUAL && is_blind())
-					return
+					return FALSE
 	// voice muffling
 	if(stat == UNCONSCIOUS || stat == HARD_CRIT)
 		if(type & MSG_AUDIBLE) //audio
 			to_chat(src, "<I>... You can almost hear something ...</I>")
-		return
+		return FALSE
 	to_chat(src, msg, avoid_highlighting = avoid_highlighting)
+	return .
 
 /**
  * Generate a visible message from this atom
@@ -766,6 +782,9 @@
 		to_chat(usr, span_boldnotice("You must be dead to use this!"))
 		return
 
+	if(!check_respawn_delay())
+		return
+
 	usr.log_message("used the respawn button.", LOG_GAME)
 
 	to_chat(usr, span_boldnotice("Please roleplay correctly!"))
@@ -787,6 +806,24 @@
 
 	M.key = key
 
+/mob/proc/check_respawn_delay(override_delay = 0)
+	if(!override_delay && !CONFIG_GET(number/respawn_delay))
+		return TRUE
+
+	var/death_time = world.time - client.player_details.time_of_death
+
+	var/required_delay = override_delay
+	if(!required_delay)
+		required_delay = CONFIG_GET(number/respawn_delay)
+
+	if(death_time < required_delay)
+		if(!check_rights_for(usr.client, R_ADMIN))
+			to_chat(usr, "You have been dead for [DisplayTimeText(death_time, 1)].")
+			to_chat(usr, span_warning("You must wait [DisplayTimeText(required_delay, 1)] to respawn!"))
+			return FALSE
+		if(tgui_alert(usr, "You have been dead for [DisplayTimeText(death_time, 1)] out of required [DisplayTimeText(required_delay, 1)]. Do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
+			return FALSE
+	return TRUE
 
 /**
  * Sometimes helps if the user is stuck in another perspective or camera
@@ -818,7 +855,7 @@
  */
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
-		var/t1 = text("window=[href_list["mach_close"]]")
+		var/t1 = "window=[href_list["mach_close"]]"
 		unset_machine()
 		src << browse(null, t1)
 
@@ -1099,7 +1136,7 @@
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
 
-	log_mob_tag("RENAMED: [key_name(src)]")
+	log_mob_tag("TAG: [tag] RENAMED: [key_name(src)]")
 
 	return TRUE
 
@@ -1198,6 +1235,10 @@
 /mob/proc/can_write(obj/item/writing_instrument)
 	if(!istype(writing_instrument))
 		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+		return FALSE
+
+	if(HAS_TRAIT(src, TRAIT_MIMING) && !istype(writing_instrument, /obj/item/toy/crayon/mime))
+		to_chat(src, span_warning("Your vow of silence is preventing you from talking with text."))
 		return FALSE
 
 	if(!is_literate())

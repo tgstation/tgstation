@@ -134,7 +134,7 @@
 	name = "bronze medal"
 	desc = "A bronze medal."
 	icon_state = "bronze"
-	custom_materials = list(/datum/material/iron=1000)
+	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FIRE_PROOF
 	var/medaltype = "medal" //Sprite used for medalbox
 	var/commended = FALSE
@@ -203,7 +203,7 @@
 	desc = "A silver medal."
 	icon_state = "silver"
 	medaltype = "medal-silver"
-	custom_materials = list(/datum/material/silver=1000)
+	custom_materials = list(/datum/material/silver=HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/accessory/medal/silver/valor
 	name = "medal of valor"
@@ -226,7 +226,7 @@
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
 	medaltype = "medal-gold"
-	custom_materials = list(/datum/material/gold=1000)
+	custom_materials = list(/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/accessory/medal/med_medal
 	name = "exemplary performance medal"
@@ -253,7 +253,7 @@
 	icon_state = "plasma"
 	medaltype = "medal-plasma"
 	armor_type = /datum/armor/medal_plasma
-	custom_materials = list(/datum/material/plasma=1000)
+	custom_materials = list(/datum/material/plasma=HALF_SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/medal_plasma
 	fire = -10
@@ -266,7 +266,7 @@
 	return exposed_temperature > 300
 
 /obj/item/clothing/accessory/medal/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	atmos_spawn_air("plasma=20;TEMP=[exposed_temperature]")
+	atmos_spawn_air("[GAS_PLASMA]=20;[TURF_TEMPERATURE(exposed_temperature)]")
 	visible_message(span_danger("\The [src] bursts into flame!"), span_userdanger("Your [src] bursts into flame!"))
 	qdel(src)
 
@@ -482,11 +482,11 @@
 
 /obj/item/clothing/accessory/allergy_dogtag/on_uniform_equip(obj/item/clothing/under/U, user)
 	. = ..()
-	RegisterSignal(U,COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(U,COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /obj/item/clothing/accessory/allergy_dogtag/on_uniform_dropped(obj/item/clothing/under/U, user)
 	. = ..()
-	UnregisterSignal(U,COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(U,COMSIG_ATOM_EXAMINE)
 
 ///What happens when we examine the uniform
 /obj/item/clothing/accessory/allergy_dogtag/proc/on_examine(datum/source, mob/user, list/examine_list)

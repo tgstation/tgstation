@@ -407,7 +407,8 @@
 	try_to_activate_door(user)
 
 /obj/machinery/door/window/try_to_activate_door(mob/user, access_bypass = FALSE)
-	if (..())
+	. = ..()
+	if(.)
 		autoclose = FALSE
 
 /obj/machinery/door/window/unrestricted_side(mob/opener)

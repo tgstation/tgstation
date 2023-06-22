@@ -60,7 +60,7 @@
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
 	RefreshParts()
-	wires = new /datum/wires/emitter(src)
+	set_wires(new /datum/wires/emitter(src))
 	if(welded)
 		if(!anchored)
 			set_anchored(TRUE)
@@ -94,8 +94,8 @@
 	maximum_fire_delay = max_fire_delay
 	minimum_fire_delay = min_fire_delay
 	fire_delay = fire_shoot_delay
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		power_usage -= 50 * manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		power_usage -= 50 * servo.tier
 	update_mode_power_usage(ACTIVE_POWER_USE, power_usage)
 
 /obj/machinery/power/emitter/examine(mob/user)
@@ -265,7 +265,7 @@
 		return TRUE
 
 	if(welded)
-		if(!item.tool_start_check(user, amount=0))
+		if(!item.tool_start_check(user, amount=1))
 			return TRUE
 		user.visible_message(span_notice("[user.name] starts to cut the [name] free from the floor."), \
 			span_notice("You start to cut [src] free from the floor..."), \
@@ -281,7 +281,7 @@
 	if(!anchored)
 		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
 		return TRUE
-	if(!item.tool_start_check(user, amount=0))
+	if(!item.tool_start_check(user, amount=1))
 		return TRUE
 	user.visible_message(span_notice("[user.name] starts to weld the [name] to the floor."), \
 		span_notice("You start to weld [src] to the floor..."), \

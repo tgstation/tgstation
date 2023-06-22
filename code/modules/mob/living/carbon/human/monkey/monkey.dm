@@ -65,6 +65,8 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 
 	if(!GLOB.the_one_and_only_punpun && mapload)
 		GLOB.the_one_and_only_punpun = src
+	// 1 Pun Pun should exist
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 	fully_replace_character_name(real_name, name_to_use)
 

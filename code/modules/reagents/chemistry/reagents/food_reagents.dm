@@ -60,11 +60,8 @@
 	var/brute_heal = 1
 	var/burn_heal = 0
 
-/datum/reagent/consumable/nutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.2))
+/datum/reagent/consumable/nutriment/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(round(volume * 0.2))
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(SPT_PROB(30, seconds_per_tick))
@@ -160,6 +157,23 @@
 	M.adjust_nutrition(-delayed_satiety_drain)
 	return ..()
 
+/datum/reagent/consumable/nutriment/mineral
+	name = "Mineral Slurry"
+	description = "Minerals pounded into a paste, nutritious only if you too are made of rocks."
+	color = COLOR_WEBSAFE_DARK_GRAY
+	chemical_flags = NONE
+	brute_heal = 0
+	burn_heal = 0
+
+/datum/reagent/consumable/nutriment/mineral/on_mob_life(mob/living/carbon/eater, delta_time, times_fired)
+	current_cycle++
+	if (HAS_TRAIT(eater, TRAIT_ROCK_EATER) && !HAS_TRAIT(eater, TRAIT_NOHUNGER) && ishuman(eater))
+		var/mob/living/carbon/human/golem_eater = eater
+		golem_eater.adjust_nutrition(nutriment_factor * REM * delta_time)
+	if(length(reagent_removal_skip_list))
+		return
+	holder.remove_reagent(type, metabolization_rate * delta_time)
+
 /datum/reagent/consumable/cooking_oil
 	name = "Cooking Oil"
 	description = "A variety of cooking oil derived from fat or plants. Used in food preparation and frying."
@@ -171,7 +185,7 @@
 	penetrates_skin = NONE
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	default_container = /obj/item/reagent_containers/condiment/quality_oil
+	default_container = /obj/item/reagent_containers/condiment/cooking_oil
 
 /datum/reagent/consumable/cooking_oil/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -233,12 +247,9 @@
 	default_container = /obj/item/reagent_containers/condiment/sugar
 
 // Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
-/datum/reagent/consumable/sugar/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_weedlevel(rand(1,2))
-	mytray.adjust_pestlevel(rand(1,2))
+/datum/reagent/consumable/sugar/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_weedlevel(rand(1, 2))
+	mytray.adjust_pestlevel(rand(1, 2))
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You go into hyperglycaemic shock! Lay off the twinkies!"))
@@ -258,12 +269,9 @@
 	taste_description = "watery milk"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	// Compost for EVERYTHING
-/datum/reagent/consumable/virus_food/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 0.5))
+// Compost for EVERYTHING
+/datum/reagent/consumable/virus_food/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(-round(volume * 0.5))
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
@@ -522,6 +530,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "slime"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/cooking_oil
 
 /datum/reagent/consumable/cornoil/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
@@ -683,16 +692,14 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/honey
 
-	// On the other hand, honey has been known to carry pollen with it rarely. Can be used to take in a lot of plant qualities all at once, or harm the plant.
-/datum/reagent/consumable/honey/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
+// On the other hand, honey has been known to carry pollen with it rarely. Can be used to take in a lot of plant qualities all at once, or harm the plant.
+/datum/reagent/consumable/honey/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	if(!isnull(mytray.myseed) && prob(20))
+		mytray.pollinate(range = 1)
 		return
 
-	if(myseed && prob(20))
-		mytray.pollinate(1)
-	else
-		mytray.adjust_weedlevel(rand(1,2))
-		mytray.adjust_pestlevel(rand(1,2))
+	mytray.adjust_weedlevel(rand(1, 2))
+	mytray.adjust_pestlevel(rand(1, 2))
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
@@ -796,10 +803,10 @@
 /datum/reagent/consumable/tinlux/proc/add_reagent_light(mob/living/living_holder)
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = living_holder.mob_light(2)
 	LAZYSET(mobs_affected, living_holder, mob_light_obj)
-	RegisterSignal(living_holder, COMSIG_PARENT_QDELETING, PROC_REF(on_living_holder_deletion))
+	RegisterSignal(living_holder, COMSIG_QDELETING, PROC_REF(on_living_holder_deletion))
 
 /datum/reagent/consumable/tinlux/proc/remove_reagent_light(mob/living/living_holder)
-	UnregisterSignal(living_holder, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(living_holder, COMSIG_QDELETING)
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = LAZYACCESS(mobs_affected, living_holder)
 	LAZYREMOVE(mobs_affected, living_holder)
 	if(mob_light_obj)

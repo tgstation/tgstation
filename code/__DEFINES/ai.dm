@@ -16,14 +16,16 @@
 
 ///Does this task require movement from the AI before it can be performed?
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
+///Does this require the current_movement_target to be adjacent and in reach?
+#define AI_BEHAVIOR_REQUIRE_REACH (1<<1)
 ///Does this task let you perform the action while you move closer? (Things like moving and shooting)
-#define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
+#define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<2)
 ///Does finishing this task not null the current movement target?
-#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<2)
+#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<3)
 ///Does finishing this task make the AI stop moving towards the target?
-#define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH (1<<3)
+#define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH (1<<4)
 ///Does this behavior NOT block planning?
-#define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<4)
+#define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<5)
 
 ///AI flags
 /// Don't move if being pulled
@@ -236,6 +238,23 @@
 
 ///How long have we spent with no target?
 #define BB_TARGETLESS_TIME "BB_targetless_time"
+
+/// Key that holds a nearby vent that looks like it's a good place to hide
+#define BB_ENTRY_VENT_TARGET "BB_entry_vent_target"
+/// Key that holds a vent that we want to exit out of (when we're already in a pipenet)
+#define BB_EXIT_VENT_TARGET "BB_exit_vent_target"
+/// Do we plan on going inside a vent? Boolean.
+#define BB_CURRENTLY_TARGETTING_VENT "BB_currently_targetting_vent"
+/// How long should we wait before we try and enter a vent again?
+#define BB_VENTCRAWL_COOLDOWN "BB_ventcrawl_cooldown"
+/// The least amount of time (in seconds) we take to go through the vents.
+#define BB_LOWER_VENT_TIME_LIMIT "BB_lower_vent_time_limit"
+/// The most amount of time (in seconds) we take to go through the vents.
+#define BB_UPPER_VENT_TIME_LIMIT "BB_upper_vent_time_limit"
+/// How much time (in seconds) do we take until we completely go bust on vent pathing?
+#define BB_TIME_TO_GIVE_UP_ON_VENT_PATHING "BB_seconds_until_we_give_up_on_vent_pathing"
+/// The timer ID of the timer that makes us give up on vent pathing.
+#define BB_GIVE_UP_ON_VENT_PATHING_TIMER_ID "BB_give_up_on_vent_pathing_timer_id"
 
 /// Is there something that scared us into being stationary? If so, hold the reference here
 #define BB_STATIONARY_CAUSE "BB_thing_that_made_us_stationary"

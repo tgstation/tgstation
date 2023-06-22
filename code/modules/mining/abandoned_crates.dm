@@ -4,6 +4,7 @@
 	name = "abandoned crate"
 	desc = "What could be inside?"
 	icon_state = "securecrate"
+	base_icon_state = "securecrate"
 	integrity_failure = 0 //no breaking open the crate
 	var/code = null
 	var/lastattempt = null
@@ -124,7 +125,7 @@
 		return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/open(mob/living/user, force = FALSE)
+/obj/structure/closet/crate/secure/loot/after_open(mob/living/user, force)
 	. = ..()
 	if(qdel_on_open)
 		qdel(src)

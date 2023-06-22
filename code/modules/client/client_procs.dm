@@ -529,9 +529,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/Del()
 	if(!gc_destroyed)
+		gc_destroyed = world.time
+		if (!QDELING(src))
+			stack_trace("Client does not purport to be QDELING, this is going to cause bugs in other places!")
+
 		// Yes this is the same as what's found in qdel(). Yes it does need to be here
 		// Get off my back
-		SEND_SIGNAL(src, COMSIG_PARENT_QDELETING, TRUE)
+		SEND_SIGNAL(src, COMSIG_QDELETING, TRUE)
 		Destroy() //Clean up signals and timers.
 	return ..()
 
@@ -983,6 +987,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		add_verb(src, /client/proc/self_notes)
 	if(CONFIG_GET(flag/use_exp_tracking))
 		add_verb(src, /client/proc/self_playtime)
+	if(!CONFIG_GET(flag/forbid_preferences_export))
+		add_verb(src, /client/proc/export_preferences)
 
 
 #undef UPLOAD_LIMIT
@@ -1078,18 +1084,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					movement_keys[key] = WEST
 				if("South")
 					movement_keys[key] = SOUTH
-				if(SAY_CHANNEL)
-					var/say = tgui_say_create_open_command(SAY_CHANNEL)
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[say]")
-				if(RADIO_CHANNEL)
-					var/radio = tgui_say_create_open_command(RADIO_CHANNEL)
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[radio]")
-				if(ME_CHANNEL)
-					var/me = tgui_say_create_open_command(ME_CHANNEL)
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[me]")
-				if(OOC_CHANNEL)
-					var/ooc = tgui_say_create_open_command(OOC_CHANNEL)
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[ooc]")
 				if(ADMIN_CHANNEL)
 					if(holder)
 						var/asay = tgui_say_create_open_command(ADMIN_CHANNEL)

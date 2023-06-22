@@ -1,6 +1,7 @@
 /obj/item/gun/ballistic/rifle
 	name = "Bolt Rifle"
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
+	icon = 'icons/obj/weapons/guns/mosinnagant.dmi'
 	icon_state = "moistnugget"
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "moistnugget"
@@ -31,12 +32,6 @@
 		return FALSE
 	return ..()
 
-/obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
-	if (!bolt_locked && !istype(A, /obj/item/stack/sheet/cloth))
-		balloon_alert(user, "[bolt_wording] is closed!")
-		return
-	return ..()
-
 /obj/item/gun/ballistic/rifle/examine(mob/user)
 	. = ..()
 	. += "The bolt is [bolt_locked ? "open" : "closed"]."
@@ -61,8 +56,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	can_bayonet = TRUE
-	knife_x_offset = 27
-	knife_y_offset = 13
+	knife_x_offset = 37
+	knife_y_offset = 14
 	can_be_sawn_off = TRUE
 	var/jamming_chance = 20
 	var/unjam_chance = 10
@@ -100,19 +95,20 @@
 	return ..()
 
 /obj/item/gun/ballistic/rifle/boltaction/attackby(obj/item/item, mob/user, params)
-	. = ..()
-	if(!can_jam)
-		balloon_alert(user, "can't jam!")
-		return
-
-	if(!bolt_locked)
+	if(!bolt_locked && !istype(item, /obj/item/knife))
 		balloon_alert(user, "bolt closed!")
 		return
 
-	if(istype(item, /obj/item/gun_maintenance_supplies) && do_after(user, 10 SECONDS, target = src))
-		user.visible_message(span_notice("[user] finishes maintenance of [src]."))
-		jamming_chance = initial(jamming_chance)
-		qdel(item)
+	. = ..()
+
+	if(istype(item, /obj/item/gun_maintenance_supplies))
+		if(!can_jam)
+			balloon_alert(user, "can't jam!")
+			return
+		if(do_after(user, 10 SECONDS, target = src))
+			user.visible_message(span_notice("[user] finishes maintaining [src]."))
+			jamming_chance = initial(jamming_chance)
+			qdel(item)
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = FALSE
@@ -123,6 +119,7 @@
 /obj/item/gun/ballistic/rifle/boltaction/harpoon
 	name = "ballistic harpoon gun"
 	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors. Because it's ironic."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "speargun"
 	inhand_icon_state = "speargun"
 	worn_icon_state = "speargun"
@@ -164,6 +161,7 @@
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	name = "pipegun"
 	desc = "An excellent weapon for flushing out tunnel rats and enemy assistants, but its rifling leaves much to be desired."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "musket"
 	inhand_icon_state = "musket"
 	worn_icon_state = "musket"
@@ -178,7 +176,6 @@
 	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	alternative_fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	can_modify_ammo = TRUE
-	can_misfire = FALSE
 	can_bayonet = TRUE
 	knife_y_offset = 11
 	can_be_sawn_off = FALSE
@@ -257,6 +254,7 @@
 	desc = "A boltaction anti-materiel rifle, utilizing .50 BMG cartridges. While technically outdated in modern arms markets, it still works exceptionally well as \
 		an anti-personnel rifle. In particular, the employment of modern armored MODsuits utilizing advanced armor plating has given this weapon a new home on the battlefield. \
 		It is also able to be suppressed....somehow."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "sniper"
 	weapon_weight = WEAPON_HEAVY
 	inhand_icon_state = "sniper"

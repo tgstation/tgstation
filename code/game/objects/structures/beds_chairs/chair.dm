@@ -9,7 +9,7 @@
 	resistance_flags = NONE
 	max_integrity = 250
 	integrity_failure = 0.1
-	custom_materials = list(/datum/material/iron = 2000)
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	layer = OBJ_LAYER
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 1
@@ -44,7 +44,7 @@
 		else
 			for(var/i in custom_materials)
 				var/datum/material/M = i
-				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+				new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
 	..()
 
 /obj/structure/chair/attack_paw(mob/user, list/modifiers)
@@ -247,7 +247,7 @@
 
 /obj/structure/chair/office/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	if(has_gravity())
+	if(!forced && CHECK_MOVE_LOOP_FLAGS(src, MOVEMENT_LOOP_OUTSIDE_CONTROL) && has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 
 /obj/structure/chair/office/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
@@ -326,7 +326,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
-	custom_materials = list(/datum/material/iron = 2000)
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
@@ -379,7 +379,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 
 
-/obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message(span_danger("[owner] fends off [attack_text] with [src]!"))
 		return TRUE
@@ -511,7 +511,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	desc = "No matter how much you squirm, it'll still be uncomfortable."
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
-	custom_materials = list(/datum/material/plastic = 2000)
+	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	buildstacktype = /obj/item/stack/sheet/plastic
 	buildstackamount = 2
 	item_chair = /obj/item/chair/plastic
@@ -544,7 +544,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 7
 	throw_range = 5 //Lighter Weight --> Flies Farther.
-	custom_materials = list(/datum/material/plastic = 2000)
+	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	break_chance = 25
 	origin_type = /obj/structure/chair/plastic
 

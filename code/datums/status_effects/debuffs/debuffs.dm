@@ -672,7 +672,7 @@
 		owner.gib() //fuck you in particular
 		return
 	var/mob/living/carbon/human/H = owner
-	H.something_horrible(kill_either_way)
+	INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, something_horrible), kill_either_way)
 
 /atom/movable/screen/alert/status_effect/dna_melt
 	name = "Genetic Breakdown"

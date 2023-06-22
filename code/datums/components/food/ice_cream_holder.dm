@@ -54,12 +54,12 @@
 	src.y_offset = y_offset
 	src.sweetener = sweetener
 
-	RegisterSignal(owner, COMSIG_ITEM_ATTACK_OBJ, PROC_REF(on_item_attack_obj))
+	RegisterSignal(owner, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(on_item_attack_obj))
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	if(change_name)
 		RegisterSignal(owner, COMSIG_ATOM_UPDATE_NAME, PROC_REF(on_update_name))
 	if(!change_desc)
-		RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(on_examine_more))
+		RegisterSignal(owner, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
 	else
 		RegisterSignal(owner, COMSIG_ATOM_UPDATE_DESC, PROC_REF(on_update_desc))
 

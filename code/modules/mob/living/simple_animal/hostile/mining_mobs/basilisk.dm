@@ -65,7 +65,7 @@
 	if(..()) //we have a target
 		var/atom/target_from = GET_TARGETS_FROM(src)
 		if(isliving(target) && !target.Adjacent(target_from) && ranged_cooldown <= world.time)//No more being shot at point blank or spammed with RNG beams
-			OpenFire(target)
+			INVOKE_ASYNC(src, PROC_REF(OpenFire), target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
@@ -76,6 +76,8 @@
 			adjustBruteLoss(140)
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(110)
+
+	return TRUE
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/AttackingTarget()
 	. = ..()
@@ -215,4 +217,4 @@
 			L.apply_status_effect(/datum/status_effect/freon/watcher)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril
-	fromtendril = TRUE
+	from_spawner = TRUE

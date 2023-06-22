@@ -121,7 +121,12 @@
 		ui.open()
 
 /obj/machinery/rnd/production/ui_static_data(mob/user)
-	var/list/data = list()
+	var/list/data
+	if(isnull(materials.mat_container))
+		data = list()
+	else
+		data = materials.mat_container.ui_static_data()
+
 	var/list/designs = list()
 
 	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
@@ -201,14 +206,14 @@
 		var/total_storage = 0
 
 		for(var/datum/stock_part/matter_bin/bin in component_parts)
-			total_storage += bin.tier * 75000
+			total_storage += bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
 
 		materials.set_local_size(total_storage)
 
 	var/total_rating = 1.2
 
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		total_rating -= manipulator.tier * 0.1
+	for(var/datum/stock_part/servo/servo in component_parts)
+		total_rating -= servo.tier * 0.1
 
 	efficiency_coeff = max(total_rating, 0)
 
@@ -349,7 +354,7 @@
 	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
 
 	var/list/matlist = list()
-	matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT * count
+	matlist[eject_sheet] = SHEET_MATERIAL_AMOUNT * count
 
 	materials.silo_log(src, "ejected", -count, "sheets", matlist)
 

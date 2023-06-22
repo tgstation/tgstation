@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 23
+#define DB_MINOR_VERSION 24
 
 
 //! ## Timing subsystem
@@ -159,6 +159,7 @@
 #define INIT_ORDER_ECONOMY 40
 #define INIT_ORDER_OUTPUTS 35
 #define INIT_ORDER_RESTAURANT 34
+#define INIT_ORDER_TTS 33
 #define INIT_ORDER_ATOMS 30
 #define INIT_ORDER_LANGUAGE 25
 #define INIT_ORDER_MACHINES 20
@@ -221,6 +222,7 @@
 #define FIRE_PRIORITY_STATPANEL 390
 #define FIRE_PRIORITY_CHAT 400
 #define FIRE_PRIORITY_RUNECHAT 410
+#define FIRE_PRIORITY_TTS 425
 #define FIRE_PRIORITY_MOUSE_ENTERED 450
 #define FIRE_PRIORITY_OVERLAYS 500
 #define FIRE_PRIORITY_EXPLOSIONS 666
@@ -233,7 +235,6 @@
 
 // SS runlevels
 
-#define RUNLEVEL_INIT 0
 #define RUNLEVEL_LOBBY 1
 #define RUNLEVEL_SETUP 2
 #define RUNLEVEL_GAME 4

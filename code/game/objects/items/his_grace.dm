@@ -149,6 +149,7 @@
 	gender = MALE
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
+	notify_ghosts("[user] has awoken His Grace!", source = src, action = NOTIFY_ORBIT, header = "All Hail His Grace!")
 	playsound(user, 'sound/effects/pope_entry.ogg', 100)
 	update_appearance()
 	move_gracefully()

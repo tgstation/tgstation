@@ -120,7 +120,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nboard00"
 	custom_materials = list(
-		/datum/material/wood = MINERAL_MATERIAL_AMOUNT,
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT,
 	)
 	resistance_flags = FLAMMABLE
 	result_path = /obj/structure/noticeboard

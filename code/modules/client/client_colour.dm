@@ -188,6 +188,9 @@
 /datum/client_colour/glass_colour/nightmare
 	colour = list(255,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, -130,0,0,0) //every color is either red or black
 
+/datum/client_colour/malfunction
+	colour = list(/*R*/ 0,0,0,0, /*G*/ 0,175,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/0,-130,0,0) // Matrix colors
+
 /datum/client_colour/monochrome
 	colour = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	priority = PRIORITY_HIGH //we can't see colors anyway!

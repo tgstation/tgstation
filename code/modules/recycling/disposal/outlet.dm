@@ -1,12 +1,16 @@
-//how fast disposal machinery is ejecting things (does not effect range)
+//how fast disposal machinery is ejecting things and how far it goes
 /// The slowest setting for disposal eject speed
 #define EJECT_SPEED_SLOW 1
+#define EJECT_RANGE_SLOW 2
 /// The default setting for disposal eject speed
 #define EJECT_SPEED_MED 2
+#define EJECT_RANGE_MED 4
 /// The fast setting for disposal eject speed
 #define EJECT_SPEED_FAST 4
-/// The fastest setting for disposal eject speed
+#define EJECT_RANGE_FAST 6
+/// The fastest, emag exclusive setting for disposal eject speed
 #define EJECT_SPEED_YEET 6
+#define EJECT_RANGE_YEET 10
 
 // the disposal outlet machine
 /obj/structure/disposaloutlet
@@ -21,9 +25,9 @@
 	var/obj/structure/disposalpipe/trunk/trunk // the attached pipe trunk
 	var/obj/structure/disposalconstruct/stored
 	var/start_eject = 0
-	var/eject_range = 2
+	var/eject_range = EJECT_RANGE_SLOW
 	/// how fast we're spitting fir- atoms
-	var/eject_speed = EJECT_SPEED_MED
+	var/eject_speed = EJECT_SPEED_SLOW
 
 /obj/structure/disposaloutlet/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
@@ -74,7 +78,7 @@
 
 /obj/structure/disposaloutlet/welder_act(mob/living/user, obj/item/I)
 	..()
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=1))
 		return TRUE
 
 	playsound(src, 'sound/items/welder2.ogg', 100, TRUE)
@@ -101,19 +105,21 @@
 
 /obj/structure/disposaloutlet/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
-	to_chat(user, span_notice("You adjust the ejection force on \the [src]."))
-	switch(eject_speed)
-		if(EJECT_SPEED_SLOW)
-			eject_speed = EJECT_SPEED_MED
-		if(EJECT_SPEED_MED)
-			eject_speed = EJECT_SPEED_FAST
-		if(EJECT_SPEED_FAST)
-			if(obj_flags & EMAGGED)
-				eject_speed = EJECT_SPEED_YEET
+//if emagged it cant change the speed setting off max
+	if(obj_flags & EMAGGED)
+		to_chat(user, span_notice("The LED display flashes an error!"))
+	else		
+		to_chat(user, span_notice("You adjust the ejection force on \the [src]."))
+		switch(eject_speed)
+			if(EJECT_SPEED_SLOW)
+				eject_speed = EJECT_SPEED_MED
+				eject_range = EJECT_RANGE_MED
+			if(EJECT_SPEED_MED)
+				eject_speed = EJECT_SPEED_FAST
+				eject_range = EJECT_RANGE_FAST
 			else
 				eject_speed = EJECT_SPEED_SLOW
-		if(EJECT_SPEED_YEET)
-			eject_speed = EJECT_SPEED_SLOW
+				eject_range = EJECT_RANGE_SLOW
 	return TRUE
 
 /obj/structure/disposaloutlet/emag_act(mob/user, obj/item/card/emag/E)
@@ -122,8 +128,14 @@
 		return
 	to_chat(user, span_notice("You silently disable the sanity checking on \the [src]'s ejection force."))
 	obj_flags |= EMAGGED
+	eject_speed = EJECT_SPEED_YEET
+	eject_range = EJECT_RANGE_YEET
 
 #undef EJECT_SPEED_SLOW
 #undef EJECT_SPEED_MED
 #undef EJECT_SPEED_FAST
 #undef EJECT_SPEED_YEET
+#undef EJECT_RANGE_SLOW
+#undef EJECT_RANGE_MED
+#undef EJECT_RANGE_FAST
+#undef EJECT_RANGE_YEET

@@ -5,3 +5,6 @@ Pillow==9.3.0
 # changelogs
 PyYaml==5.4
 beautifulsoup4==4.9.3
+
+# ezdb
+mysql-connector-python==8.0.33

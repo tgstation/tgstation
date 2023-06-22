@@ -241,7 +241,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		if (!mc_started)
 			mc_started = TRUE
 			if (!current_runlevel)
-				SetRunLevel(1)
+				SetRunLevel(1) // Intentionally not using the defines here because the MC doesn't care about them
 			// Loop.
 			Master.StartProcessing(0)
 
@@ -347,12 +347,11 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 /datum/controller/master/proc/SetRunLevel(new_runlevel)
 	var/old_runlevel = current_runlevel
-	if(isnull(old_runlevel))
-		old_runlevel = "NULL"
 
-	testing("MC: Runlevel changed from [old_runlevel] to [new_runlevel]")
+	testing("MC: Runlevel changed from [isnull(old_runlevel) ? "NULL" : old_runlevel] to [new_runlevel]")
 	current_runlevel = log(2, new_runlevel) + 1
 	if(current_runlevel < 1)
+		current_runlevel = old_runlevel
 		CRASH("Attempted to set invalid runlevel: [new_runlevel]")
 
 // Starts the mc, and sticks around to restart it if the loop ever ends.

@@ -12,7 +12,7 @@
 	inhand_icon_state = "electronic"
 
 	steel_sheet_cost = 2
-	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT, /datum/material/plastic=SMALL_MATERIAL_AMOUNT)
 	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	icon_state_menu = "menu"
@@ -43,6 +43,7 @@
 		/obj/item/toy/crayon,
 		/obj/item/lipstick,
 		/obj/item/flashlight/pen,
+		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/clothing/mask/cigarette,
 	)
 

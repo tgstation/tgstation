@@ -26,7 +26,7 @@
 	throw_speed = 3
 	drop_sound = 'sound/items/handling/multitool_drop.ogg'
 	pickup_sound = 'sound/items/handling/multitool_pickup.ogg'
-	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
 	custom_premium_price = PAYCHECK_COMMAND * 3
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
@@ -131,7 +131,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
 	belt_icon_state = "multitool_alien"
-	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT)
 	toolspeed = 0.1
 
 /obj/item/multitool/cyborg

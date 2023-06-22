@@ -141,6 +141,12 @@
 	icon_state = "backpack-medical"
 	inhand_icon_state = "medicalpack"
 
+/obj/item/storage/backpack/coroner
+	name = "coroner backpack"
+	desc = "It's a backpack especially designed for use in an undead environment."
+	icon_state = "backpack-coroner"
+	inhand_icon_state = "coronerpack"
+
 /obj/item/storage/backpack/security
 	name = "security backpack"
 	desc = "It's a very robust backpack."
@@ -315,6 +321,12 @@
 	icon_state = "satchel-chemistry"
 	inhand_icon_state = "satchel-chem"
 
+/obj/item/storage/backpack/satchel/coroner
+	name = "coroner satchel"
+	desc = "A satchel used to carry whatever's left of human bodies."
+	icon_state = "satchel-coroner"
+	inhand_icon_state = "satchel-coroner"
+
 /obj/item/storage/backpack/satchel/gen
 	name = "geneticist satchel"
 	desc = "A sterile satchel with geneticist colours."
@@ -421,6 +433,12 @@
 /obj/item/storage/backpack/duffelbag/med/surgery
 	name = "surgical duffel bag"
 	desc = "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
+
+/obj/item/storage/backpack/duffelbag/coroner
+	name = "coroner duffel bag"
+	desc = "A large duffel bag for holding large amounts of organs at once."
+	icon_state = "duffel-coroner"
+	inhand_icon_state = "duffel-coroner"
 
 /obj/item/storage/backpack/duffelbag/explorer
 	name = "explorer duffel bag"
@@ -571,19 +589,20 @@
 	inhand_icon_state = "duffel-syndiemed"
 
 /obj/item/storage/backpack/duffelbag/syndie/surgery/PopulateContents()
-	new /obj/item/scalpel(src)
-	new /obj/item/hemostat(src)
-	new /obj/item/retractor(src)
-	new /obj/item/circular_saw(src)
-	new /obj/item/bonesetter(src)
-	new /obj/item/surgicaldrill(src)
-	new /obj/item/cautery(src)
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/cautery/advanced(src)
 	new /obj/item/surgical_drapes(src)
+	new /obj/item/reagent_containers/medigel/sterilizine(src)
+	new /obj/item/surgicaldrill(src)
+	new /obj/item/bonesetter(src)
+	new /obj/item/blood_filter(src)
+	new /obj/item/stack/medical/bone_gel(src)
+	new /obj/item/stack/sticky_tape/surgical(src)
+	new /obj/item/roller(src)
 	new /obj/item/clothing/suit/jacket/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
-	new /obj/item/blood_filter(src)
-	new /obj/item/stack/medical/bone_gel(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo
 	name = "ammunition duffel bag"

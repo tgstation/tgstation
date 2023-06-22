@@ -53,7 +53,7 @@
 //role flags (special status of roles like detection immune)
 ///to all forms of detection, shows themselves as an assistant.
 #define ROLE_UNDETECTABLE (1<<0)
-///has the ability to kill at night and thus, blocks the game from ending with other teams alive.
+///has the ability to theoretically kill someone singlehandedly, blocks their team from losing against another teams.
 #define ROLE_CAN_KILL (1<<1)
 ///can only be one in a randomly generated game
 #define ROLE_UNIQUE (1<<2)

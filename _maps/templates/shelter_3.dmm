@@ -35,7 +35,9 @@
 /turf/open/floor/pod/dark,
 /area/misc/survivalpod)
 "h" = (
-/obj/machinery/vending/boozeomat,
+/obj/machinery/vending/boozeomat/all_access{
+	onstation = 0
+	},
 /turf/open/floor/pod/dark,
 /area/misc/survivalpod)
 "i" = (
@@ -68,10 +70,8 @@
 /turf/open/floor/pod/dark,
 /area/misc/survivalpod)
 "m" = (
-/obj/structure/closet/secure_closet/bar{
-	req_one_access = list("bar","mining")
-	},
 /obj/machinery/light/directional/north,
+/obj/structure/closet/secure_closet/bar/all_access,
 /turf/open/floor/pod/dark,
 /area/misc/survivalpod)
 "n" = (
@@ -146,7 +146,9 @@
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "z" = (
-/obj/machinery/vending/cigarette/beach,
+/obj/machinery/vending/cigarette{
+	onstation = 0
+	},
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "A" = (
@@ -194,15 +196,21 @@
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "G" = (
-/obj/structure/urinal/directional/north,
+/obj/structure/toilet{
+	dir = 4
+	},
 /turf/open/floor/pod/light,
 /area/misc/survivalpod)
 "H" = (
+/obj/structure/sink/directional/east,
+/obj/structure/mirror/directional/west,
 /turf/open/floor/pod/light,
 /area/misc/survivalpod)
 "I" = (
 /obj/structure/sink/directional/west,
 /obj/machinery/light/small/directional/east,
+/obj/structure/urinal/directional/north,
+/obj/structure/mirror/directional/east,
 /turf/open/floor/pod/light,
 /area/misc/survivalpod)
 "J" = (
@@ -218,7 +226,10 @@
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "L" = (
-/obj/effect/spawner/random/vending/snackvend,
+/obj/machinery/vending/snack/blue{
+	req_access = null;
+	onstation = 0
+	},
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "M" = (
@@ -226,10 +237,15 @@
 /turf/open/floor/carpet/black,
 /area/misc/survivalpod)
 "N" = (
-/obj/structure/toilet{
-	dir = 8
+/obj/structure/curtain{
+	alpha = 240;
+	color = "#454545";
+	icon_state = "bathroom-closed";
+	open = 0
 	},
+/obj/item/soap/deluxe,
 /obj/machinery/light/small/directional/east,
+/obj/machinery/shower/directional/south,
 /turf/open/floor/pod/light,
 /area/misc/survivalpod)
 "O" = (
@@ -315,7 +331,7 @@ D
 F
 K
 y
-c
+C
 "}
 (6,1,1) = {"
 d
@@ -337,10 +353,10 @@ q
 t
 x
 y
-c
-c
-c
-c
+D
+F
+K
+y
 c
 "}
 (8,1,1) = {"
@@ -351,9 +367,9 @@ t
 x
 y
 c
-G
-H
-H
+c
+c
+c
 Q
 "}
 (9,1,1) = {"
@@ -365,8 +381,8 @@ y
 y
 E
 H
-c
 E
+G
 c
 "}
 (10,1,1) = {"
@@ -380,7 +396,7 @@ c
 I
 c
 N
-P
+c
 "}
 (11,1,1) = {"
 a

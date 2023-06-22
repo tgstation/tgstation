@@ -256,6 +256,7 @@
 		/obj/item/holosign_creator,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/spray,
 	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/janitor
@@ -311,6 +312,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
@@ -330,12 +332,12 @@
 	icon_state = "hood_medical"
 	armor_type = /datum/armor/winterhood_medical
 
-// Chief Medical Officer
 /datum/armor/winterhood_medical
 	bio = 40
 	fire = 10
 	acid = 20
 
+// Chief Medical Officer
 /obj/item/clothing/suit/hooded/wintercoat/medical/cmo
 	name = "chief medical officer's winter coat"
 	desc = "A winter coat in a vibrant shade of blue with a small silver caduceus instead of a plastic zipper tab. The normal liner is replaced with an exceptionally thick, soft layer of fur."
@@ -375,6 +377,22 @@
 /obj/item/clothing/head/hooded/winterhood/medical/chemistry
 	desc = "A white winter coat hood."
 	icon_state = "hood_chemistry"
+
+// Coroner
+/obj/item/clothing/suit/hooded/wintercoat/medical/coroner
+	name = "coroner winter coat"
+	desc = "A winter coat made with acid resistant polymers, used when the cold dead bodies are too much."
+	icon_state = "coatcoroner"
+	inhand_icon_state = null
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/coroner
+
+/obj/item/clothing/suit/hooded/wintercoat/medical/coroner/Initialize(mapload)
+	. = ..()
+	allowed += /obj/item/autopsy_scanner
+
+/obj/item/clothing/head/hooded/winterhood/medical/coroner
+	desc = "A white winter coat hood."
+	icon_state = "hood_coroner"
 
 // Virologist
 /obj/item/clothing/suit/hooded/wintercoat/medical/viro
@@ -417,6 +435,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
@@ -504,7 +523,6 @@
 	)
 	armor_type = /datum/armor/wintercoat_engineering
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
-	species_exception = list(/datum/species/golem/uranium)
 
 /datum/armor/wintercoat_engineering
 	fire = 20

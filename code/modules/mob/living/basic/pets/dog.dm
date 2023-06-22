@@ -541,6 +541,9 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /mob/living/basic/pet/dog/corgi/ian/Initialize(mapload)
 	. = ..()
+	// Ensure Ian exists
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
+
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn
 	Read_Memory()
@@ -845,7 +848,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "skeletonmeat"
-	custom_materials = list(/datum/material/bone = MINERAL_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 4)
 	force = 3
 	throwforce = 5
 	attack_verb_continuous = list("attacks", "bashes", "batters", "bludgeons", "whacks")

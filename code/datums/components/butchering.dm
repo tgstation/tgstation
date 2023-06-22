@@ -89,7 +89,7 @@
 		var/obj/item/bodypart/slit_throat = H.get_bodypart(BODY_ZONE_HEAD)
 		if(slit_throat)
 			var/datum/wound/slash/critical/screaming_through_a_slit_throat = new
-			screaming_through_a_slit_throat.apply_wound(slit_throat)
+			screaming_through_a_slit_throat.apply_wound(slit_throat, wound_source = "throat slit")
 		H.apply_status_effect(/datum/status_effect/neck_slice)
 
 /**

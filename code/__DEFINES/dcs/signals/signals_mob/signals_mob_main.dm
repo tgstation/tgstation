@@ -82,9 +82,9 @@
 #define COMSIG_MOB_SEE_INVIS_CHANGE "mob_see_invis_change"
 
 
-///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
+///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 #define COMSIG_MOB_APPLY_DAMAGE "mob_apply_damage"
-///from /mob/living/proc/apply_damage(), works like above but after the damage is actually inflicted: (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
+///from /mob/living/proc/apply_damage(), works like above but after the damage is actually inflicted: (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 #define COMSIG_MOB_AFTER_APPLY_DAMAGE "mob_after_apply_damage"
 ///from base of /mob/living/attack_alien(): (user)
 #define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
@@ -173,6 +173,8 @@
 #define COMSIG_MOB_AUTOMUTE_CHECK "client_automute_check" // The check is performed by the client.
 	/// Prevents the automute system checking this client for repeated messages.
 	#define WAIVE_AUTOMUTE_CHECK (1<<0)
+///From base of /turf/closed/mineral/proc/gets_drilled(): (turf/closed/mineral/rock, give_exp)
+#define COMSIG_MOB_MINED "mob_mined"
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"

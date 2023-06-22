@@ -31,8 +31,10 @@
 	///Cooldown timer between pings.
 	COOLDOWN_DECLARE(ping_cooldown)
 
-/datum/computer_file/program/chatclient/New()
-	username = "DefaultUser[rand(100, 999)]"
+/datum/computer_file/program/chatclient/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+	. = ..()
+	if(!username)
+		username = "DefaultUser[rand(100, 999)]"
 
 /datum/computer_file/program/chatclient/Destroy()
 	for(var/datum/ntnet_conversation/discussion as anything in conversations)
@@ -176,7 +178,7 @@
 /datum/computer_file/program/chatclient/process_tick(seconds_per_tick)
 	. = ..()
 	var/datum/ntnet_conversation/channel = SSmodular_computers.get_chat_channel_by_id(active_channel)
-	if(program_state != PROGRAM_STATE_KILLED)
+	if(src in computer.idle_threads)
 		ui_header = "ntnrc_idle.gif"
 		if(channel)
 			// Remember the last message. If there is no message in the channel remember null.
@@ -198,7 +200,7 @@
 			channel.offline_clients.Remove(src)
 			channel.active_clients.Add(src)
 
-/datum/computer_file/program/chatclient/kill_program(forced = FALSE)
+/datum/computer_file/program/chatclient/kill_program()
 	for(var/datum/ntnet_conversation/channel as anything in SSmodular_computers.chat_channels)
 		channel.go_offline(src)
 	active_channel = null
@@ -236,7 +238,8 @@
 				authed = TRUE
 			clients.Add(list(list(
 				"name" = channel_client.username,
-				"status" = channel_client.program_state,
+				"online" = (channel_client == channel_client.computer.active_program),
+				"away" = (channel_client in channel_client.computer.idle_threads),
 				"muted" = (channel_client in channel.muted_clients),
 				"operator" = (channel.channel_operator == channel_client),
 				"ref" = REF(channel_client),
