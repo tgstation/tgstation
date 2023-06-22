@@ -322,7 +322,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 					ignored_types += /obj/machinery/door/firedoor
 					ignored_types += /obj/machinery/door/poddoor
 				else if(rcd_results["mode"] == RCD_FURNISHING && ispath(furnish_type, /obj/structure/table))
-					//filter for tables, needs machinery added!!!!!!!!!!
+					//filter for tables, it so now you can fix those tables without having to go manual!
 					ignore_mobs = rcd_results["mode"] == RCD_AIRLOCK
 					ignored_types += /obj/machinery/door/window
 					ignored_types += /obj/machinery/door/firedoor
