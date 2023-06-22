@@ -72,10 +72,10 @@
 	var/input_starting_pressure = air1.return_pressure()
 	var/output_starting_pressure = air2.return_pressure()
 
-	if((input_starting_pressure < 0.01) || ((output_starting_pressure > 9000)) && !overclocked)
+	if((input_starting_pressure < VOLUME_PUMP_LEAK_AMOUNT) || ((output_starting_pressure > VOLUME_PUMP_MAX_OUTPUT_PRESSURE)) && !overclocked)
 		return
 
-	if(overclocked && (output_starting_pressure-input_starting_pressure > 1000))//Overclocked pumps can only force gas a certain amount.
+	if(overclocked && (output_starting_pressure-input_starting_pressure > VOLUME_PUMP_OVERPRESSURE_ALLOWANCE))//Overclocked pumps can only force gas a certain amount.
 		return
 
 
