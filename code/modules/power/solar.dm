@@ -130,8 +130,8 @@
 				S.give_glass(machine_stat & BROKEN)
 		else
 			playsound(src, SFX_SHATTER, 70, TRUE)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
+			SSwardrobe.provide_type(/obj/item/shard, loc)
+			SSwardrobe.provide_type(/obj/item/shard, loc)
 	qdel(src)
 
 /obj/machinery/power/solar/update_overlays()
@@ -297,8 +297,8 @@
 /obj/item/solar_assembly/proc/give_glass(device_broken)
 	var/atom/Tsec = drop_location()
 	if(device_broken)
-		new /obj/item/shard(Tsec)
-		new /obj/item/shard(Tsec)
+		SSwardrobe.provide_type(/obj/item/shard, Tsec)
+		SSwardrobe.provide_type(/obj/item/shard, Tsec)
 	else if(glass_type)
 		new glass_type(Tsec, 2)
 	glass_type = null
@@ -528,7 +528,7 @@
 			if (src.machine_stat & BROKEN)
 				to_chat(user, span_notice("The broken glass falls out."))
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
-				new /obj/item/shard( src.loc )
+				SSwardrobe.provide_type(/obj/item/shard, loc)
 				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
 					C.forceMove(drop_location())

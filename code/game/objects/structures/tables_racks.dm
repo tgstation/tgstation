@@ -437,7 +437,7 @@
 
 	new frame(loc)
 
-	var/obj/item/shard/shard = new glass_shard_type(loc)
+	var/obj/item/shard/shard = SSwardrobe.provide_type(glass_shard_type, loc)
 	shard.throw_impact(victim)
 
 	victim.Paralyze(100)

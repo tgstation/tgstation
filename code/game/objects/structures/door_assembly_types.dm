@@ -275,15 +275,15 @@
 			var/material_count = FLOOR(custom_materials[material_datum] / SHEET_MATERIAL_AMOUNT, 1)
 			if(!disassembled)
 				material_count = rand(FLOOR(material_count/2, 1), material_count)
-			new material_datum.sheet_type(T, material_count)
+			SSwardrobe.provide_type(material_datum.sheet_type, T, SET_STACK_AMOUNT(material_count))
 		if(glass)
 			if(disassembled)
 				if(heat_proof_finished)
-					new /obj/item/stack/sheet/rglass(T)
+					SSwardrobe.provide_type(/obj/item/stack/sheet/rglass, T)
 				else
-					new /obj/item/stack/sheet/glass(T)
+					SSwardrobe.provide_type(/obj/item/stack/sheet/glass, T)
 			else
-				new /obj/item/shard(T)
+				SSwardrobe.provide_type(/obj/item/shard, T)
 	qdel(src)
 
 /obj/structure/door_assembly/door_assembly_material/finish_door()

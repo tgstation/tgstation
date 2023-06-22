@@ -337,11 +337,11 @@
 		if(glass)
 			if(disassembled)
 				if(heat_proof_finished)
-					new /obj/item/stack/sheet/rglass(T)
+					SSwardrobe.provide_type(/obj/item/stack/sheet/rglass, T)
 				else
-					new /obj/item/stack/sheet/glass(T)
+					SSwardrobe.provide_type(/obj/item/stack/sheet/glass, T)
 			else
-				new /obj/item/shard(T)
+				SSwardrobe.provide_type(/obj/item/shard, T)
 		if(mineral)
 			var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 			new mineral_path(T, 2)

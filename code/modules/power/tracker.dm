@@ -146,8 +146,8 @@
 				S.give_glass(machine_stat & BROKEN)
 		else
 			playsound(src, SFX_SHATTER, 70, TRUE)
-			new /obj/item/shard(src.loc)
-			new /obj/item/shard(src.loc)
+			SSwardrobe.provide_type(/obj/item/shard, loc)
+			SSwardrobe.provide_type(/obj/item/shard, loc)
 	qdel(src)
 
 // Tracker Electronic

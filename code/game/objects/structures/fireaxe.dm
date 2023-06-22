@@ -111,8 +111,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 		update_appearance()
 		broken = TRUE
 		playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
-		new /obj/item/shard(loc)
-		new /obj/item/shard(loc)
+		SSwardrobe.provide_type(/obj/item/shard, loc)
+		SSwardrobe.provide_type(/obj/item/shard, loc)
 
 /obj/structure/fireaxecabinet/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

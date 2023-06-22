@@ -715,7 +715,7 @@
 					if(3) // glass candy
 						crit_rebate = 50
 						for(var/i in 1 to num_shards)
-							var/obj/item/shard/shard = new /obj/item/shard(get_turf(C))
+							var/obj/item/shard/shard = SSwardrobe.provide_type(/obj/item/shard, get_turf(C))
 							shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=1, pain_chance=5)
 							shard.updateEmbedding()
 							C.hitby(shard, skipcatch = TRUE, hitpush = FALSE)

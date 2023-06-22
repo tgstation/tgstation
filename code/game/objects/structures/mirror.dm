@@ -95,7 +95,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!disassembled)
-			new /obj/item/shard(loc)
+			SSwardrobe.provide_type(/obj/item/shard, loc)
 		else
 			new /obj/item/wallframe/mirror(loc)
 	qdel(src)

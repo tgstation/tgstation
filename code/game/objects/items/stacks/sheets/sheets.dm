@@ -52,7 +52,7 @@
 	var/list/shards = list()
 	for(var/datum/material/mat in custom_materials)
 		if(mat.shard_type)
-			var/obj/item/new_shard = new mat.shard_type(user.loc)
+			var/obj/item/new_shard = SSwardrobe.provide_type(mat.shard_type, user.loc)
 			new_shard.add_fingerprint(user)
 			shards += "\a [new_shard.name]"
 	if(!shards.len)

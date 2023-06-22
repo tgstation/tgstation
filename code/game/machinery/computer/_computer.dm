@@ -114,8 +114,8 @@
 					to_chat(user, span_notice("The broken glass falls out."))
 				else
 					playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
-				new /obj/item/shard(drop_location())
-				new /obj/item/shard(drop_location())
+				SSwardrobe.provide_type(/obj/item/shard, drop_location())
+				SSwardrobe.provide_type(/obj/item/shard, drop_location())
 				A.state = 3
 				A.icon_state = "3"
 			else
