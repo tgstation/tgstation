@@ -105,8 +105,6 @@
 	var/width = movable_icon.Width() || world.icon_size
 	var/height = movable_icon.Height() || world.icon_size
 
-	to_chat(world, "MHM")
-
 	var/atom/movable/submerge_overlay/vis_overlay = generated_visual_overlays["[width]x[height]"]
 
 	if(!vis_overlay) //create the overlay if not already done.
