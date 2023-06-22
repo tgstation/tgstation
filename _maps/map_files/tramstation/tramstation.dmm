@@ -16943,7 +16943,6 @@
 /obj/item/storage/toolbox/syndicate,
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/tool,
-/obj/effect/spawner/random/exotic/antag_gear_weak,
 /obj/effect/spawner/random/mod,
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet{
