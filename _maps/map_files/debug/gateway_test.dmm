@@ -11,10 +11,35 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/misc/testroom)
+"f" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron,
+/area/misc/testroom)
+"g" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron,
+/area/misc/testroom)
 "h" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/iron,
+/area/misc/testroom)
+"l" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/computer/communications{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/misc/testroom)
+"m" = (
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "n" = (
@@ -36,6 +61,12 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/misc/testroom)
+"u" = (
+/obj/effect/turf_decal/bot_white,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/turf/open/floor/iron/dark,
+/area/misc/testroom)
 "v" = (
 /obj/machinery/gateway/centerstation,
 /turf/open/floor/iron/dark,
@@ -43,13 +74,12 @@
 "y" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/poster/official/corporate_perks_vacation/directional/east,
 /turf/open/floor/iron/dark,
 /area/misc/testroom)
-"A" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/landmark/start,
+"z" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/blobstart,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "B" = (
@@ -66,13 +96,23 @@
 	dir = 6
 	},
 /obj/structure/sign/warning/secure_area/directional/south,
-/obj/effect/landmark/blobstart,
+/obj/effect/landmark/latejoin,
+/obj/effect/landmark/observer_start,
+/obj/effect/landmark/start,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "E" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Gateway Chamber"
 	},
+/turf/open/floor/iron,
+/area/misc/testroom)
+"G" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/card/id/advanced/gold/captains_spare,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "H" = (
@@ -86,9 +126,23 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "K" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
+/obj/structure/closet/crate/preopen,
+/obj/item/stack/sheet/rglass{
+	amount = 50
 	},
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/rods/fifty,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/item/toy/plush/lizard_plushie/space/green{
+	name = "Travels-The-Stars";
+	desc = "The greatest gateway explorer ever created."
+	},
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/item/storage/toolbox/emergency,
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "M" = (
@@ -96,13 +150,19 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/keycard_auth/directional/west{
+	pixel_y = 7
+	},
+/obj/machinery/keycard_auth/directional/west{
+	pixel_y = -7
+	},
 /turf/open/floor/iron,
 /area/misc/testroom)
 "O" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/effect/landmark/observer_start,
+/obj/machinery/vending/wallmed/directional/west,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "P" = (
@@ -110,13 +170,20 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/landmark/latejoin,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "R" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/table,
+/obj/item/paper/pamphlet/gateway{
+	desc = "The Iris and You: How Not To Smash Against Steel At The End of the Event Horizon"
+	},
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "W" = (
@@ -153,9 +220,9 @@ H
 a
 K
 M
-h
+g
 P
-A
+h
 O
 a
 H
@@ -165,8 +232,8 @@ H
 a
 R
 I
-B
-B
+l
+G
 B
 D
 a
@@ -199,12 +266,12 @@ H
 (7,1,1) = {"
 H
 a
-c
+u
 v
 c
 d
 C
-t
+z
 r
 H
 "}
@@ -215,8 +282,8 @@ q
 c
 n
 y
-C
-t
+m
+f
 r
 H
 "}
