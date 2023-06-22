@@ -325,6 +325,7 @@
 	revived_critter.name = name
 	revived_critter.lazarus_revive(user, injector.malfunctioning)
 	injector.expende(revived_critter, user)
+	qdel(src)
 	return LAZARUS_INJECTOR_USED
 
 /obj/item/food/deadmouse/attackby(obj/item/attacking_item, mob/user, params)
