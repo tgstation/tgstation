@@ -821,12 +821,10 @@
 			if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
 				H.update_appearance()
-				apply_chemicals(user)
 				return 1
 			H.update_appearance()
 		if(reagent_source) // If the source wasn't composted and destroyed
 			reagent_source.update_appearance()
-		apply_chemicals(user)
 		return 1
 
 	else if(istype(O, /obj/item/seeds) && !istype(O, /obj/item/seeds/sample))
