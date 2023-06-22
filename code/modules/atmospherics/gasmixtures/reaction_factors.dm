@@ -66,11 +66,11 @@
 
 /datum/gas_reaction/nitrous_decomp/init_factors()
 	factor = list(
-		/datum/gas/nitrous_oxide = "Nitrous Oxide is consumed at 1 reaction rate. Minimum of [MINIMUM_MOLE_COUNT * 2] to occur.", //okay this one isn't made into a define yet.
-		/datum/gas/oxygen = "Oxygen is formed at 0.5 reaction rate",
-		/datum/gas/nitrogen = "Nitrogen is formed at 1 reaction rate",
-		"Temperature" = "Higher temperature increases the reaction rate. Can only happen between [N2O_DECOMPOSITION_MIN_TEMPERATURE] - [N2O_DECOMPOSITION_MAX_TEMPERATURE] kelvin.",
-		"Energy" = "[N2O_DECOMPOSITION_ENERGY] joules of energy is released per reaction rate",
+		/datum/gas/nitrous_oxide = "Nitrous Oxide is decomposed at a rate that scales negatively with the distance between the temperature and average of the minimum and maximum temperature of the reaction. Minimum of [MINIMUM_MOLE_COUNT * 2] to occur.", //okay this one isn't made into a define yet.
+		/datum/gas/oxygen = "Oxygen is formed at 0.5 moles per mole of nitrous oxide decomposed.",
+		/datum/gas/nitrogen = "Nitrogen is formed at 1 mole per mole of nitrous oxide decomposed.",
+		"Temperature" = "The decomposition rate scales with the product of the distances between temperature and minimum and maximum temperature. Can only happen between [N2O_DECOMPOSITION_MIN_TEMPERATURE] - [N2O_DECOMPOSITION_MAX_TEMPERATURE] kelvin.",
+		"Energy" = "[N2O_DECOMPOSITION_ENERGY] joules of energy is released per mole of nitrous oxide decomposed.",
 	)
 
 /datum/gas_reaction/bzformation/init_factors()
