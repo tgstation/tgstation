@@ -163,7 +163,7 @@
 
 /obj/item/ammo_casing/shotgun/breacher
 	name = "breaching slug"
-	desc = "A 12 gauge anti-material slug. Great for breaching airlocks and windows with minimal shots."
+	desc = "A 12 gauge anti-material slug. Great for breaching airlocks and windows, quickly and efficiently."
 	icon_state = "breacher"
 	projectile_type = /obj/projectile/bullet/shotgun_breaching
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)

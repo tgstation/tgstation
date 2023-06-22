@@ -136,5 +136,5 @@
 
 /obj/structure/guncase/wt550
 	name = "WT-550 gun locker"
-	desc = "A locker that holds WT-550 rifles"
+	desc = "A locker that holds WT-550 rifles."
 	case_type = "wt550"

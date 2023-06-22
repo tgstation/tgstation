@@ -295,7 +295,7 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel/breacherslug
 	name = "breaching shotgun"
 	desc = "A normal double-barrel shotgun that has been rechambered to fit breaching shells. Useful in breaching airlocks and windows, not much else."
-	sawn_desc = "A sawn-off breaching shotgun, Making for a more compact configuration while still having the same capability as before"
+	sawn_desc = "A sawn-off breaching shotgun, making for a more compact configuration while still having the same capability as before."
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual/breacherslug
 
 /obj/item/gun/ballistic/shotgun/hook
