@@ -15,7 +15,7 @@
 	if(!isabductor(user))
 		balloon_alert(user, "it won't budge!")
 		return
-	..()
+	return ..()
 
 /obj/structure/sign/poster/abductor/random
 	name = "random abductor poster"

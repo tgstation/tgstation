@@ -707,7 +707,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			"Scalpel" = image(icon = 'icons/obj/abductor.dmi', icon_state = "scalpel"),
 			"Saw" = image(icon = 'icons/obj/abductor.dmi', icon_state = "saw"),
 			"Bonesetter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bonesetter"),
-			"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter")
+			"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter"),
 		)
 		active_toolset = TOOLSET_MEDICAL
 		if(user)

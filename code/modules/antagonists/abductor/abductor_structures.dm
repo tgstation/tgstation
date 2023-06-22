@@ -75,7 +75,7 @@
 	can_buckle = TRUE
 	buckle_lying = 90
 	/// Amount to inject per second
-	var/inject_am = 0.5
+	var/inject_amount = 0.5
 
 	var/static/list/injected_reagents = list(/datum/reagent/medicine/cordiolis_hepatico)
 
@@ -97,12 +97,13 @@
 	for(var/mob/living/carbon/C in get_turf(src))
 		. = TRUE
 		for(var/chemical in injected_reagents)
-			if(C.reagents.get_reagent_amount(chemical) < inject_am * seconds_per_tick)
-				C.reagents.add_reagent(chemical, inject_am * seconds_per_tick)
+			if(C.reagents.get_reagent_amount(chemical) < inject_amount * seconds_per_tick)
+				C.reagents.add_reagent(chemical, inject_amount * seconds_per_tick)
+	return .
 
 /obj/structure/table/optable/abductor/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	return ..()
 
 /obj/structure/closet/abductor
 	name = "alien locker"

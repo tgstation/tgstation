@@ -27,12 +27,15 @@
 		/obj/item/abductor,
 		/obj/item/melee/baton,
 		/obj/item/gun/energy,
-		/obj/item/restraints/handcuffs
-		)
+		/obj/item/restraints/handcuffs,
+	)
+	/// What operation mode is our vest in?
 	var/mode = VEST_STEALTH
+	/// Do we have a disguise active?
 	var/stealth_active = FALSE
-	/// Cooldown in seconds
+	/// Cooldown in seconds for the combat mode activation stimulant.
 	var/combat_cooldown = 20
+	/// The visual of our suit's disguise.
 	var/datum/icon_snapshot/disguise
 
 /datum/armor/abductor_combat
@@ -75,8 +78,8 @@
 			set_armor(/datum/armor/abductor_vest)
 			icon_state = "vest_stealth"
 	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_worn_oversuit()
+		var/mob/living/carbon/human/human_target = loc
+		human_target.update_worn_oversuit()
 	update_item_action_buttons()
 
 /obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
@@ -153,4 +156,4 @@
 		if(C.vest == src)
 			C.vest = null
 			break
-	. = ..()
+	return ..()
