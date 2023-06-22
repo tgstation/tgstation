@@ -373,7 +373,12 @@
 		ui.open()
 
 /obj/machinery/mecha_part_fabricator/ui_static_data(mob/user)
-	var/list/data = list()
+	var/list/data
+	if(isnull(rmat.mat_container))
+		data = list()
+	else
+		data = rmat.mat_container.ui_static_data()
+
 	var/list/designs = list()
 
 	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)

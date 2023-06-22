@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Section, Stack, Icon } from '../components';
 import { Window } from '../layouts';
@@ -70,7 +69,7 @@ export const ExosuitFabricator = (props, context) => {
 };
 
 const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
+  const { act } = useBackend<ExosuitFabricatorData>(context);
   const { design, available } = props;
 
   const canPrint = !Object.entries(design.cost).some(
