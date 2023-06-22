@@ -49,17 +49,6 @@
 			final_return += level.z_value
 	return final_return
 
-#define GET_TURF_BELOW(turf) ((!turf || !length(SSmapping.multiz_levels) || !SSmapping.multiz_levels[turf.z][Z_LEVEL_DOWN]) ? null : get_step(turf, DOWN))
-#define GET_TURF_ABOVE(turf) ((!turf || !length(SSmapping.multiz_levels) || !SSmapping.multiz_levels[turf.z][Z_LEVEL_UP]) ? null : get_step(turf, UP))
-
-/// Attempt to get the turf below the provided one according to Z traits
-/datum/controller/subsystem/mapping/proc/get_turf_below(turf/T)
-	return GET_TURF_BELOW(T)
-
-/// Attempt to get the turf above the provided one according to Z traits
-/datum/controller/subsystem/mapping/proc/get_turf_above(turf/T)
-	return GET_TURF_ABOVE(T)
-
 /// Prefer not to use this one too often
 /datum/controller/subsystem/mapping/proc/get_station_center()
 	var/station_z = levels_by_trait(ZTRAIT_STATION)[1]
