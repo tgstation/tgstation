@@ -919,22 +919,35 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/is_planetary()
 	return config.planetary
 
-/// For debug purposes, will add every single away mission known to God and man.
-/datum/controller/subsystem/mapping/proc/load_all_away_missions()
+/// For debug purposes, will add every single away mission present in a given directory.
+/// You can optionally pass in a string directory to load from instead of the default.
+/datum/controller/subsystem/mapping/proc/load_all_away_missions(map_directory)
+	if(!map_directory)
+		map_directory = "_maps/RandomZLevels/"
 	var/confirmation_alert_result = null
+	var/new_wait = 0 // default to always zeroing out the wait time for away missions to be unlocked due to the unit-testery nature of this map
+
 	if(IsAdminAdvancedProcCall())
 		if(!check_rights(R_DEBUG))
 			return
-		var/confirmation_string = "This will load every single away mission in the _maps/RandomZLevels directory. This might cause a bit of lag that can only be cleared on a world restart. Are you sure you want to do this?"
+		var/confirmation_string = "This will load every single away mission in the [map_directory] directory. This might cause a bit of lag that can only be cleared on a world restart. Are you sure you want to do this?"
 		confirmation_alert_result = tgui_alert(usr, confirmation_string, "DEBUG ONLY!!!", list("Yes", "Cancel"))
 		if(confirmation_alert_result != "Yes")
 			return
 
-	CONFIG_SET(number/gateway_delay, 0) // this isn't the playground anymore, you decided to hit "Yes" on the debug-only proc
-	var/map_directory = "_maps/RandomZLevels"
+		var/current_wait_time = CONFIG_GET(number/gateway_delay)
+		switch(tgui_alert(usr, "Do you want to zero out the cooldown for access to these maps? Currently [DisplayTimeText(current_wait_time)]", "OH FUCK!!!", list("Yes", "No", "Cancel")))
+			if("No")
+				new_wait = current_wait_time
+			if("Cancel")
+				return
+
 	var/list/all_away_missions = generate_map_list_from_directory(map_directory)
 	for(var/entry in all_away_missions)
 		load_new_z_level(entry, entry, secret = FALSE) // entry in both fields so we know if something failed to load since it'll log the full file name of what was loaded.
+
+	for(var/datum/gateway_destination/away_datum in GLOB.gateway_destinations)
+		away_datum.wait = new_wait
 
 	if(!isnull(confirmation_alert_result))
 		message_admins("[key_name_admin(usr)] has loaded every single away mission in the _maps/RandomZLevels directory.")
