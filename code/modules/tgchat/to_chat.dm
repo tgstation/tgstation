@@ -39,8 +39,7 @@
 	var/message_html = message_to_html(message)
 
 	if(!confidential)
-		var/scraped = message["html"]
-		SSdemo.write_chat(target, scraped)
+		SSdemo.write_chat(target, message)
 
 	if(islist(target))
 		for(var/_target in target)
