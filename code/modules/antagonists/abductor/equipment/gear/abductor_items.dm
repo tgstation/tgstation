@@ -48,7 +48,7 @@
 		icon_state = "gizmo_scan"
 	to_chat(user, span_notice("You switch the device to [mode == GIZMO_SCAN? "SCAN": "MARK"] MODE"))
 
-/obj/item/abductor/gizmo/attack(mob/living/M, mob/user)
+/obj/item/abductor/gizmo/attack(mob/living/target, mob/user)
 	if(!ScientistCheck(user))
 		return
 	if(!console)
@@ -57,9 +57,9 @@
 
 	switch(mode)
 		if(GIZMO_SCAN)
-			scan(M, user)
+			scan(target, user)
 		if(GIZMO_MARK)
-			mark(M, user)
+			mark(target, user)
 
 
 /obj/item/abductor/gizmo/afterattack(atom/target, mob/living/user, flag, params)
@@ -118,10 +118,10 @@
 	icon_state = "silencer"
 	inhand_icon_state = "gizmo"
 
-/obj/item/abductor/silencer/attack(mob/living/M, mob/user)
+/obj/item/abductor/silencer/attack(mob/living/target, mob/user)
 	if(!AbductorCheck(user))
 		return
-	radio_off(M, user)
+	radio_off(target, user)
 
 /obj/item/abductor/silencer/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
@@ -139,15 +139,15 @@
 
 	var/turf/targloc = get_turf(target)
 
-	var/mob/living/carbon/human/M
-	for(M in view(2,targloc))
-		if(M == user)
+	var/mob/living/carbon/human/human_target
+	for(human_target in view(2,targloc))
+		if(human_target == user)
 			continue
-		to_chat(user, span_notice("You silence [M]'s radio devices."))
-		radio_off_mob(M)
+		to_chat(user, span_notice("You silence [human_target]'s radio devices."))
+		radio_off_mob(human_target)
 
-/obj/item/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/M)
-	var/list/all_items = M.get_all_contents()
+/obj/item/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/target)
+	var/list/all_items = target.get_all_contents()
 
 	for(var/obj/item/radio/radio in all_items)
 		radio.set_listening(FALSE)
@@ -188,20 +188,20 @@
 
 /obj/item/abductor/mind_device/proc/mind_control(atom/target, mob/living/user)
 	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		var/obj/item/organ/internal/heart/gland/G = C.get_organ_slot("heart")
-		if(!istype(G))
+		var/mob/living/carbon/carbon_target = target
+		var/obj/item/organ/internal/heart/gland/target_gland = carbon_target.get_organ_slot("heart")
+		if(!istype(target_gland))
 			to_chat(user, span_warning("Your target does not have an experimental gland!"))
 			return
-		if(!G.mind_control_uses)
+		if(!target_gland.mind_control_uses)
 			to_chat(user, span_warning("Your target's gland is spent!"))
 			return
-		if(G.active_mind_control)
+		if(target_gland.active_mind_control)
 			to_chat(user, span_warning("Your target is already under a mind-controlling influence!"))
 			return
 
 		var/command = tgui_input_text(user, "Enter the command for your target to follow.\
-											Uses Left: [G.mind_control_uses], Duration: [DisplayTimeText(G.mind_control_duration)]", "Enter command")
+											Uses Left: [target_gland.mind_control_uses], Duration: [DisplayTimeText(target_gland.mind_control_duration)]", "Enter command")
 
 		if(!command)
 			return
@@ -209,33 +209,33 @@
 		if(QDELETED(user) || user.get_active_held_item() != src || loc != user)
 			return
 
-		if(QDELETED(G))
+		if(QDELETED(target_gland))
 			return
 
-		if(C.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+		if(carbon_target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 			user.balloon_alert(user, "foiled!")
 			to_chat(user, span_warning("Your target seems to have some sort of mental blockage, preventing the message from being sent! It seems you've been foiled."))
 			return
 
-		G.mind_control(command, user)
+		target_gland.mind_control(command, user)
 		to_chat(user, span_notice("You send the command to your target."))
 
 /obj/item/abductor/mind_device/proc/mind_message(atom/target, mob/living/user)
 	if(isliving(target))
-		var/mob/living/L = target
-		if(L.stat == DEAD)
+		var/mob/living/living_target = target
+		if(living_target.stat == DEAD)
 			to_chat(user, span_warning("Your target is dead!"))
 			return
 		var/message = tgui_input_text(user, "Message to send to your target's brain", "Enter message")
 		if(!message)
 			return
-		if(QDELETED(L) || L.stat == DEAD)
+		if(QDELETED(living_target) || living_target.stat == DEAD)
 			return
 
-		L.balloon_alert(L, "you hear a voice")
-		to_chat(L, span_hear("You hear a voice in your head saying: </span><span class='abductor'>[message]"))
+		living_target.balloon_alert(living_target, "you hear a voice")
+		to_chat(living_target, span_hear("You hear a voice in your head saying: </span><span class='abductor'>[message]"))
 		to_chat(user, span_notice("You send the message to your target."))
-		log_directed_talk(user, L, message, LOG_SAY, "abductor whisper")
+		log_directed_talk(user, living_target, message, LOG_SAY, "abductor whisper")
 
 
 /obj/item/firing_pin/abductor
@@ -399,67 +399,67 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	. = ..()
 	toggle(user)
 
-/obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/L,mob/living/user)
+/obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/target, mob/living/user)
 	playsound(src, on_stun_sound, 50, TRUE, -1)
-	if(L.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
-		if(L.can_block_magic(MAGIC_RESISTANCE_MIND))
+	if(target.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
+		if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
 			to_chat(user, span_warning("The specimen has some kind of mental protection that is interfering with the sleep inducement! It seems you've been foiled."))
-			L.visible_message(span_danger("[user] tried to induced sleep in [L] with [src], but is unsuccessful!"), \
+			target.visible_message(span_danger("[user] tried to induced sleep in [target] with [src], but is unsuccessful!"), \
 			span_userdanger("You feel a strange wave of heavy drowsiness wash over you!"))
-			L.adjust_drowsiness(4 SECONDS)
+			target.adjust_drowsiness(4 SECONDS)
 			return
-		L.visible_message(span_danger("[user] induces sleep in [L] with [src]!"), \
+		target.visible_message(span_danger("[user] induces sleep in [target] with [src]!"), \
 		span_userdanger("You suddenly feel very drowsy!"))
-		L.Sleeping(sleep_time)
-		log_combat(user, L, "put to sleep")
+		target.Sleeping(sleep_time)
+		log_combat(user, target, "put to sleep")
 	else
-		if(L.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+		if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 			to_chat(user, span_warning("The specimen has some kind of mental protection that is completely blocking our sleep inducement methods! It seems you've been foiled."))
-			L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src], but is unsuccessful!"), \
+			target.visible_message(span_danger("[user] tried to induce sleep in [target] with [src], but is unsuccessful!"), \
 			span_userdanger("Any sense of drowsiness is quickly diminished!"))
 			return
-		L.adjust_drowsiness(2 SECONDS)
+		target.adjust_drowsiness(2 SECONDS)
 		to_chat(user, span_warning("Sleep inducement works fully only on stunned specimens! "))
-		L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src]!"), \
+		target.visible_message(span_danger("[user] tried to induce sleep in [target] with [src]!"), \
 							span_userdanger("You suddenly feel drowsy!"))
 
-/obj/item/melee/baton/abductor/proc/CuffAttack(mob/living/L,mob/living/user)
-	if(!iscarbon(L))
+/obj/item/melee/baton/abductor/proc/CuffAttack(mob/living/victim, mob/living/user)
+	if(!iscarbon(victim))
 		return
-	var/mob/living/carbon/C = L
-	if(!C.handcuffed)
-		if(C.canBeHandcuffed())
+	var/mob/living/carbon/carbon_victim = victim
+	if(!carbon_victim.handcuffed)
+		if(carbon_victim.canBeHandcuffed())
 			playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
-			C.visible_message(span_danger("[user] begins restraining [C] with [src]!"), \
+			carbon_victim.visible_message(span_danger("[user] begins restraining [carbon_victim] with [src]!"), \
 									span_userdanger("[user] begins shaping an energy field around your hands!"))
-			if(do_after(user, time_to_cuff, C) && C.canBeHandcuffed())
-				if(!C.handcuffed)
-					C.set_handcuffed(new /obj/item/restraints/handcuffs/energy/used(C))
-					C.update_handcuffed()
-					to_chat(user, span_notice("You restrain [C]."))
-					log_combat(user, C, "handcuffed")
+			if(do_after(user, time_to_cuff, carbon_victim) && carbon_victim.canBeHandcuffed())
+				if(!carbon_victim.handcuffed)
+					carbon_victim.set_handcuffed(new /obj/item/restraints/handcuffs/energy/used(carbon_victim))
+					carbon_victim.update_handcuffed()
+					to_chat(user, span_notice("You restrain [carbon_victim]."))
+					log_combat(user, carbon_victim, "handcuffed")
 			else
-				to_chat(user, span_warning("You fail to restrain [C]."))
+				to_chat(user, span_warning("You fail to restrain [carbon_victim]."))
 		else
-			to_chat(user, span_warning("[C] doesn't have two hands..."))
+			to_chat(user, span_warning("[carbon_victim] doesn't have two hands..."))
 
-/obj/item/melee/baton/abductor/proc/ProbeAttack(mob/living/L,mob/living/user)
-	L.visible_message(span_danger("[user] probes [L] with [src]!"), \
+/obj/item/melee/baton/abductor/proc/ProbeAttack(mob/living/victim, mob/living/user)
+	victim.visible_message(span_danger("[user] probes [victim] with [src]!"), \
 						span_userdanger("[user] probes you!"))
 
 	var/species = span_warning("Unknown species")
 	var/helptext = span_warning("Species unsuitable for experiments.")
 
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		species = span_notice("[H.dna.species.name]")
-		if(L.mind && L.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(ishuman(victim))
+		var/mob/living/carbon/human/human_victim = victim
+		species = span_notice("[human_victim.dna.species.name]")
+		if(human_victim.mind && human_victim.mind.has_antag_datum(/datum/antagonist/changeling))
 			species = span_warning("Changeling lifeform")
-		var/obj/item/organ/internal/heart/gland/temp = locate() in H.organs
+		var/obj/item/organ/internal/heart/gland/temp = locate() in human_victim.organs
 		if(temp)
 			helptext = span_warning("Experimental gland detected!")
 		else
-			if (L.get_organ_slot(ORGAN_SLOT_HEART))
+			if (human_victim.get_organ_slot(ORGAN_SLOT_HEART))
 				helptext = span_notice("Subject suitable for experiments.")
 			else
 				helptext = span_warning("Subject unsuitable for experiments.")
@@ -483,9 +483,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/restraints/handcuffs/energy/used/dropped(mob/user)
 	user.visible_message(span_danger("[user]'s [name] breaks in a discharge of energy!"), \
 							span_userdanger("[user]'s [name] breaks in a discharge of energy!"))
-	var/datum/effect_system/spark_spread/S = new
-	S.set_up(4,0,user.loc)
-	S.start()
+	var/datum/effect_system/spark_spread/sparks = new
+	sparks.set_up(4,0,user.loc)
+	sparks.start()
 	. = ..()
 
 /obj/item/melee/baton/abductor/examine(mob/user)
