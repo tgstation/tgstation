@@ -688,7 +688,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/abductor/alien_omnitool/proc/set_toolset(mob/user)
 	if(active_toolset == TOOLSET_MEDICAL)
-		tool_list =	list("Crowbar" = image(icon = 'icons/obj/abductor.dmi', icon_state = "crowbar"),
+		tool_list = list(
+			"Crowbar" = image(icon = 'icons/obj/abductor.dmi', icon_state = "crowbar"),
 			"Multitool" = image(icon = 'icons/obj/abductor.dmi', icon_state = "multitool"),
 			"Screwdriver" = image(icon = 'icons/obj/abductor.dmi', icon_state = "screwdriver_a"),
 			"Wirecutters" = image(icon = 'icons/obj/abductor.dmi', icon_state = "cutters"),
