@@ -950,5 +950,5 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		away_datum.wait = new_wait
 
 	if(!isnull(confirmation_alert_result))
-		message_admins("[key_name_admin(usr)] has loaded every single away mission in the _maps/RandomZLevels directory.")
-		log_game("[key_name(usr)] has loaded every single away mission in the _maps/RandomZLevels directory.")
+		message_admins("[key_name_admin(usr)] has loaded every single away mission in the [map_directory] directory.")
+		log_game("[key_name(usr)] has loaded every single away mission in the [map_directory] directory.")
