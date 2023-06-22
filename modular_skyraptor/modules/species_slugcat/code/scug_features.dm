@@ -73,12 +73,12 @@
 
 //== TAIL
 /datum/preference/choiced/slugcat_tail
-	savefile_key = "feature_slugcat_tail" //avoid fuckery
+	savefile_key = "feature_slugcat_tail"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_external_organ = /obj/item/organ/external/tail/slugcat
 	main_feature_name = "Tail"
-	should_generate_icons = TRUE
+	should_generate_icons = FALSE
 
 /datum/preference/choiced/slugcat_tail/init_possible_values()
 	return assoc_to_keys_features(GLOB.tails_list_slugcat)

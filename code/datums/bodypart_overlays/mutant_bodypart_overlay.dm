@@ -1,7 +1,7 @@
 ///Variant of bodypart_overlay meant to work synchronously with external organs. Gets imprinted upon Insert in on_species_gain
 /datum/bodypart_overlay/mutant
-	///Sprite datum we use to draw on the bodypart.  SKYRAPTOR EDIT: Starting out Blank to avoid runtimes and fuckery
-	var/datum/sprite_accessory/sprite_datum = /datum/sprite_accessory/blank
+	///Sprite datum we use to draw on the bodypart.  SKYRAPTOR EDIT: setting to new blank() because space station 13 is fucking pain
+	var/datum/sprite_accessory/sprite_datum = new /datum/sprite_accessory/blank()
 
 	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_mothwings_firemoth_ADJ'. 'mothwings' would then be feature_key
 	var/feature_key = ""

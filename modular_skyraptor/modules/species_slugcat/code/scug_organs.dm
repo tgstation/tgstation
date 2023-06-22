@@ -49,7 +49,7 @@
 	name = "slugcat tail"
 	desc = "A soft and weighty tail that feels more like one of those chiropractic pillows than a regular tail."
 
-	preference = "feature_slugcat_tail" //this is SPECIFICALLY to make prefs play nice
+	preference = "feature_slugcat_tail"
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/slugcat
 

@@ -20,6 +20,20 @@ GLOBAL_LIST_EMPTY(snouts_list_slugcat)
 	name = "Standard"
 	icon_state = "standard"
 
+/datum/mutant_newdnafeature/slugcat_snout
+	name = "Slugcat Snout DNA"
+	id = "snout_scug"
+
+/datum/mutant_newdnafeature/slugcat_snout/gen_unique_features(var/features, var/L)
+	if(features[id])
+		L[DNA_SNOUT_BLOCK] = construct_block(GLOB.snouts_list_slugcat.Find(features[id]), GLOB.snouts_list_slugcat.len)
+	return ..()
+
+/datum/mutant_newdnafeature/slugcat_snout/update_appear(var/datum/dna/dna, var/features)
+	if(dna.features[id])
+		dna.features[id] = GLOB.snouts_list_slugcat[deconstruct_block(get_uni_feature_block(features, DNA_SNOUT_BLOCK), GLOB.snouts_list_slugcat.len)]
+	return ..()
+
 
 
 // == SECTION 2: BODYMARKINGS TESTING ==
@@ -66,12 +80,12 @@ GLOBAL_LIST_EMPTY(bodymarks_list_slugcat)
 	name = "Slugcat Body Pattern DNA"
 	id = "bodymarks_scug"
 
-/datum/mutant_newdnafeature/akula_bodymark/gen_unique_features(var/features, var/L)
+/datum/mutant_newdnafeature/slugcat_bodymark/gen_unique_features(var/features, var/L)
 	if(features[id])
 		L[DNA_LIZARD_MARKINGS_BLOCK] = construct_block(GLOB.bodymarks_list_slugcat.Find(features[id]), GLOB.bodymarks_list_slugcat.len)
 	return ..()
 
-/datum/mutant_newdnafeature/akula_bodymark/update_appear(var/datum/dna/dna, var/features)
+/datum/mutant_newdnafeature/slugcat_bodymark/update_appear(var/datum/dna/dna, var/features)
 	if(dna.features[id])
 		dna.features[id] = GLOB.bodymarks_list_slugcat[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_MARKINGS_BLOCK), GLOB.bodymarks_list_slugcat.len)]
 		dna.features["body_markings"] = GLOB.bodymarks_list_slugcat[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_MARKINGS_BLOCK), GLOB.bodymarks_list_slugcat.len)]
@@ -121,6 +135,25 @@ GLOBAL_LIST_EMPTY(horns_list_slugcat)
 	name = "Fluffy"
 	icon_state = "fluffy"
 
+/datum/sprite_accessory/horns/slugcat/short
+	name = "Short"
+	icon_state = "short"
+
+/datum/mutant_newdnafeature/slugcat_horns
+	name = "Slugcat Horns DNA"
+	id = "horns_scug"
+
+/datum/mutant_newdnafeature/slugcat_horns/gen_unique_features(var/features, var/L)
+	if(features[id])
+		L[DNA_HORNS_BLOCK] = construct_block(GLOB.horns_list_slugcat.Find(features[id]), GLOB.horns_list_slugcat.len)
+	return ..()
+
+/datum/mutant_newdnafeature/slugcat_horns/update_appear(var/datum/dna/dna, var/features)
+	if(dna.features[id])
+		dna.features[id] = GLOB.horns_list_slugcat[deconstruct_block(get_uni_feature_block(features, DNA_HORNS_BLOCK), GLOB.horns_list_slugcat.len)]
+	return ..()
+
+
 
 
 // == SECTION 4: TAILS ==
@@ -138,6 +171,24 @@ GLOBAL_LIST_EMPTY(tails_list_slugcat)
 /datum/sprite_accessory/tails/slugcat
 	icon = 'modular_skyraptor/modules/species_slugcat/icons/slugcat_tails.dmi'
 
+/datum/sprite_accessory/tails/slugcat/none
+	name = "None"
+	icon_state = "none"
+
 /datum/sprite_accessory/tails/slugcat/standard
 	name = "Standard"
 	icon_state = "std"
+
+/datum/mutant_newdnafeature/slugcat_tail
+	name = "Slugcat Tails DNA"
+	id = "tail_scug"
+
+/datum/mutant_newdnafeature/slugcat_tail/gen_unique_features(var/features, var/L)
+	if(features[id])
+		L[DNA_LIZARD_TAIL_BLOCK] = construct_block(GLOB.tails_list_slugcat.Find(features[id]), GLOB.tails_list_slugcat.len)
+	return ..()
+
+/datum/mutant_newdnafeature/slugcat_tail/update_appear(var/datum/dna/dna, var/features)
+	if(dna.features[id])
+		dna.features[id] = GLOB.tails_list_slugcat[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_TAIL_BLOCK), GLOB.tails_list_slugcat.len)]
+	return ..()
