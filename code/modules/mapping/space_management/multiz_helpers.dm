@@ -28,10 +28,10 @@
 		return (dir | get_dir(us, them))
 
 /turf/proc/above()
-	return get_step_multiz(src, UP)
+	return SSmapping.get_turf_above(src)
 
 /turf/proc/below()
-	return get_step_multiz(src, DOWN)
+	return SSmapping.get_turf_below(src)
 
 /proc/get_lowest_turf(atom/ref)
 	var/turf/us = get_turf(ref)
