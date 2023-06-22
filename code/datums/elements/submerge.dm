@@ -321,7 +321,7 @@
 /atom/movable/immerse_overlay/Initialize(mapload, datum/element/immerse/element)
 	. = ..()
 	verbs.Cut() //"Cargo cultttttt" or something. Either way, they're better off without verbs.
-	element.RegisterSignal(src, COMSIG_QDELETING, TYPE_PROC_REF(/datum/element/immerse, clear_overlay_refs))
+	element?.RegisterSignal(src, COMSIG_QDELETING, TYPE_PROC_REF(/datum/element/immerse, clear_overlay_refs))
 
 /atom/movable/immerse_overlay/proc/adjust_living_overlay_offset(mob/living/source)
 	pixel_x = extra_width
