@@ -3943,6 +3943,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/random/structure/table_or_rack,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "arI" = (
@@ -6970,10 +6971,10 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
 "aQw" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plastic,
-/area/station/engineering/break_room)
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/trash/grime,
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "aQx" = (
 /obj/effect/landmark/start/chaplain,
 /turf/open/floor/iron/dark,
@@ -9506,6 +9507,8 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/food_or_drink/snack/lizard,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/pushbroom,
+/obj/effect/spawner/random/trash/janitor_supplies,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "bMv" = (
@@ -11581,9 +11584,9 @@
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "cxG" = (
-/obj/structure/rack,
-/obj/effect/spawner/random/maintenance/eight,
+/obj/effect/spawner/random/trash/grime,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/trash/box,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "cxV" = (
@@ -12630,8 +12633,9 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "cRr" = (
-/obj/effect/spawner/random/engineering/atmospherics_portable,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "cRs" = (
@@ -17099,12 +17103,11 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
 "eAN" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
+/obj/structure/table/glass,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "eAU" = (
@@ -17375,10 +17378,13 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningdock/oresilo)
 "eFI" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/machinery/fax{
+	fax_name = "Engineering Lobby";
+	name = "Engineering Lobby Fax Machine"
 	},
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
@@ -22645,10 +22651,6 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
-/obj/machinery/fax{
-	fax_name = "Engineering Lobby";
-	name = "Engineering Lobby Fax Machine"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -23520,11 +23522,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "gZE" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
+/obj/structure/table/glass,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "gZP" = (
@@ -24073,8 +24074,9 @@
 	},
 /area/station/service/kitchen)
 "hkW" = (
-/obj/effect/spawner/random/trash/grime,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "hlh" = (
@@ -25221,9 +25223,11 @@
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "hJN" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/item/radio/intercom/directional/west,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/structure/table/glass,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "hKj" = (
@@ -32514,6 +32518,11 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"ksp" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "ksq" = (
 /obj/effect/mapping_helpers/airlock/access/all/service/general,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
@@ -36101,6 +36110,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/trash/garbage,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/maintenance/eight,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "lFk" = (
@@ -40953,6 +40963,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
+"nvt" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "nvu" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Power Access Hatch"
@@ -46005,13 +46022,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "psA" = (
-/obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/turf/open/floor/plastic,
-/area/station/engineering/break_room)
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "psB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
@@ -52458,8 +52472,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "rEN" = (
-/obj/effect/spawner/random/trash/bucket,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "rEQ" = (
@@ -53895,10 +53909,11 @@
 /turf/closed/wall/rock,
 /area/station/engineering/supermatter/room)
 "sjj" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plastic,
-/area/station/engineering/break_room)
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "sjm" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -56272,10 +56287,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "sVF" = (
-/obj/effect/spawner/random/trash/janitor_supplies,
-/obj/effect/spawner/random/structure/table_or_rack,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/pushbroom,
+/obj/effect/spawner/random/trash/bucket,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "sVG" = (
@@ -59330,8 +59343,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "tYF" = (
-/obj/effect/spawner/random/trash/box,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "tYK" = (
@@ -64637,11 +64651,10 @@
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "vNu" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
+/obj/structure/filingcabinet/chestdrawer/wheeled,
 /turf/open/floor/plastic,
 /area/station/engineering/break_room)
 "vNv" = (
@@ -105557,7 +105570,7 @@ qjU
 aaa
 ulV
 eFI
-sjj
+rsz
 rsz
 pjQ
 akQ
@@ -105813,8 +105826,8 @@ rji
 qjU
 aaa
 ulV
-psA
-aQw
+cgR
+rsz
 rsz
 tXf
 vyu
@@ -109178,11 +109191,11 @@ aaa
 aaa
 aaa
 qWU
-hkW
+cxG
 iVs
 iVs
-iVs
-iVs
+sjj
+sjj
 iVs
 xKc
 qWU
@@ -109440,7 +109453,7 @@ svG
 sms
 rEN
 tYF
-sVF
+iVs
 ucn
 qWU
 vPw
@@ -109694,8 +109707,8 @@ aaa
 qWU
 who
 iVs
-iVs
-iVs
+aQw
+psA
 hkW
 iVs
 iVs
@@ -109953,7 +109966,7 @@ hEl
 sTx
 bMg
 cRr
-cxG
+cRr
 diU
 nOG
 clW
@@ -110209,9 +110222,9 @@ mwK
 vUx
 iVs
 iVs
+ksp
 iVs
-iVs
-iVs
+sVF
 jYl
 rCd
 sJW
@@ -110725,7 +110738,7 @@ xci
 xci
 xci
 xci
-xci
+nvt
 eLV
 qWU
 pts
