@@ -1,0 +1,5 @@
+author: "Cheshify"
+delete-after: True
+changes:
+  - bugfix: "Virology disposals now route directly to space, rather than sending their nasty tubes to cargo."
+  - bugfix: "A single maintenance spawner was removed from a wall by plumbing."

@@ -116,7 +116,7 @@ GLOBAL_VAR(station_nuke_source)
 				if(!weapon.tool_start_check(user, amount = 1))
 					return TRUE
 				to_chat(user, span_notice("You start cutting [src]'s inner plate..."))
-				if(weapon.use_tool(src, user, 8 SECONDS, volume=100, amount=1))
+				if(weapon.use_tool(src, user, 8 SECONDS, volume=100))
 					to_chat(user, span_notice("You cut [src]'s inner plate."))
 					deconstruction_state = NUKESTATE_WELDED
 					update_appearance()
@@ -461,6 +461,12 @@ GLOBAL_VAR(station_nuke_source)
 
 	countdown.start()
 	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+	notify_ghosts(
+		"A nuclear device has been armed in [get_area_name(src)]!",
+		source = src,
+		header = "Nuke Armed",
+		action = NOTIFY_ORBIT,
+	)
 	update_appearance()
 
 /// Disarms the nuke, reverting all pinpointers and the security level

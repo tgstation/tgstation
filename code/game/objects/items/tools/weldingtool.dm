@@ -1,5 +1,5 @@
 /// How many seconds between each fuel depletion tick ("use" proc)
-#define WELDER_FUEL_BURN_INTERVAL 26
+#define WELDER_FUEL_BURN_INTERVAL 5
 /obj/item/weldingtool
 	name = "welding tool"
 	desc = "A standard edition welder provided by Nanotrasen."
@@ -325,7 +325,7 @@
 			to_chat(user, span_warning("You need one rod to start building a flamethrower!"))
 
 /obj/item/weldingtool/ignition_effect(atom/ignitable_atom, mob/user)
-	if(use_tool(ignitable_atom, user, 0, amount=1))
+	if(use_tool(ignitable_atom, user, 0))
 		return span_notice("[user] casually lights [ignitable_atom] with [src], what a badass.")
 	else
 		return ""
