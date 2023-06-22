@@ -2862,14 +2862,6 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
-"jQ" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/misc/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/research)
 "jR" = (
 /obj/structure/closet/emcloset,
 /obj/item/clothing/mask/breath,
@@ -5429,7 +5421,7 @@
 "qK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45air"="Air Supply")
+	atmos_chambers = list("uo45air"="Air  Supply")
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
@@ -6120,7 +6112,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45mix"="Mix Chamber");
+	atmos_chambers = list("uo45mix"="Mix  Chamber");
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
@@ -6868,7 +6860,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45n2"="Nitrogen Supply");
+	atmos_chambers = list("uo45n2"="Nitrogen  Supply");
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
@@ -6897,7 +6889,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45o2"="Oxygen Supply");
+	atmos_chambers = list("uo45o2"="Oxygen  Supply");
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
@@ -6913,25 +6905,20 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "us" = (
-/obj/structure/closet/firecloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "ut" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "uu" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden{
-	dir = 10
-	},
 /obj/structure/table/reinforced,
 /obj/item/wrench,
 /obj/effect/turf_decal/stripes/line{
@@ -6964,7 +6951,7 @@
 "uA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/computer/atmos_control/fixed{
-	atmos_chambers = list("uo45air"="Air Supply","uo45mix"="Mix Chamber","uo45n2"="Nitrogen Supply","uo45o2"="Oxygen Supply");
+	atmos_chambers = list("uo45air"="Air  Supply","uo45mix"="Mix  Chamber","uo45n2"="Nitrogen  Supply","uo45o2"="Oxygen  Supply");
 	dir = 4;
 	name = "Chamber Atmospherics Monitoring"
 	},
@@ -7043,14 +7030,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "uL" = (
-/obj/machinery/atmospherics/components/binary/valve,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "uM" = (
-/obj/machinery/atmospherics/components/binary/valve,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -7191,28 +7178,22 @@
 /turf/open/floor/engine/o2,
 /area/awaymission/undergroundoutpost45/engineering)
 "vh" = (
-/obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "vi" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "vj" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "vk" = (
@@ -8005,6 +7986,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/mining)
 "xY" = (
@@ -8406,14 +8388,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
-"Dq" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/misc/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/crew_quarters)
 "Dz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -8564,7 +8538,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/undergroundoutpost45/central)
 "Ga" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
 /turf/open/misc/asteroid{
@@ -8822,14 +8796,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/undergroundoutpost45/gateway)
-"Mk" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/misc/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/gateway)
 "Mu" = (
 /obj/machinery/door/window/right/directional/south{
 	name = "Bar Door";
@@ -8846,7 +8812,7 @@
 	name = "Cave Floor";
 	temperature = 363.9
 	},
-/area/awaymission/undergroundoutpost45/crew_quarters)
+/area/awaymission/undergroundoutpost45/caves)
 "MA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/misc/asteroid{
@@ -8862,15 +8828,7 @@
 	name = "Cave Floor";
 	temperature = 363.9
 	},
-/area/awaymission/undergroundoutpost45/mining)
-"MW" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/misc/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/central)
+/area/awaymission/undergroundoutpost45/caves)
 "Nd" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/directional/west,
@@ -8953,14 +8911,6 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/central)
-"Oh" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/misc/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/gateway)
 "Oq" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/bed{
@@ -9111,7 +9061,7 @@
 	name = "Cave Floor";
 	temperature = 363.9
 	},
-/area/awaymission/undergroundoutpost45/crew_quarters)
+/area/awaymission/undergroundoutpost45/caves)
 "RC" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/all_access,
@@ -9165,14 +9115,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/gateway)
-"Sf" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/misc/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/research)
 "Sh" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
@@ -9239,14 +9181,6 @@
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/awaymission/undergroundoutpost45/crew_quarters)
-"UG" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/misc/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
-	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "UH" = (
 /obj/structure/alien/weeds,
@@ -9461,7 +9395,7 @@
 	name = "Cave Floor";
 	temperature = 363.9
 	},
-/area/awaymission/undergroundoutpost45/mining)
+/area/awaymission/undergroundoutpost45/caves)
 "ZD" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/core,
@@ -31483,7 +31417,7 @@ kF
 lx
 gw
 gv
-Oh
+Zs
 zq
 zq
 zq
@@ -32762,12 +32696,12 @@ zq
 zq
 zq
 zq
-Mk
+RA
 gw
 yR
 lA
 gw
-Oh
+Zs
 zq
 zq
 zq
@@ -36354,7 +36288,7 @@ ad
 ad
 ad
 zq
-jQ
+MC
 zq
 zq
 zq
@@ -36617,7 +36551,7 @@ zq
 zq
 zq
 zq
-Sf
+RA
 gz
 IX
 lN
@@ -40723,7 +40657,7 @@ zq
 zq
 zq
 zq
-Dq
+MC
 zq
 zq
 zq
@@ -45363,7 +45297,7 @@ zq
 zq
 zq
 zq
-Dq
+MC
 zq
 zq
 zq
@@ -46142,7 +46076,7 @@ gg
 BI
 sH
 gg
-UG
+Zs
 zq
 zq
 zq
@@ -46636,7 +46570,7 @@ zq
 zq
 zq
 zq
-MW
+MC
 zq
 zq
 zq
@@ -46882,7 +46816,7 @@ ad
 ah
 ah
 ah
-MW
+MC
 zq
 zq
 zq
