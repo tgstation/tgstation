@@ -942,13 +942,21 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			if("Cancel")
 				return
 
+	else
+		log_mapping("Attempting to load all away missions for unit testing...")
+
 	var/list/all_away_missions = generate_map_list_from_directory(map_directory)
 	for(var/entry in all_away_missions)
 		load_new_z_level(entry, entry, secret = FALSE) // entry in both fields so we know if something failed to load since it'll log the full file name of what was loaded.
 
 	for(var/datum/gateway_destination/away_datum in GLOB.gateway_destinations)
 		away_datum.wait = new_wait
+		log_mapping("Now loading [away_datum.name]...")
 
-	if(!isnull(confirmation_alert_result))
-		message_admins("[key_name_admin(usr)] has loaded every single away mission in the [map_directory] directory.")
-		log_game("[key_name(usr)] has loaded every single away mission in the [map_directory] directory.")
+	if(isnull(confirmation_alert_result))
+		log_mapping("All away missions have been loaded.")
+		return
+
+	message_admins("[key_name_admin(usr)] has loaded every single away mission in the [map_directory] directory.")
+	log_game("[key_name(usr)] has loaded every single away mission in the [map_directory] directory.")
+
