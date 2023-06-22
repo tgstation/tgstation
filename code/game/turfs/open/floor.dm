@@ -325,7 +325,7 @@
 					balloon_alert(user, "there's already a windoor!")
 					return FALSE
 				for(var/obj/machinery/door/door in src)
-					if(istype(door, /obj/machinery/door/window))
+					if(!istype(door, /obj/machinery/door/airlock))
 						continue
 					balloon_alert(user, "there's already a door!")
 					return FALSE
