@@ -41,5 +41,3 @@ SUBSYSTEM_DEF(chat)
 	var/client/client = CLIENT_FROM_VAR(target)
 	if(client)
 		LAZYADD(payload_by_client[client], list(message))
-	var/scraped = message["html"]
-	SSdemo.write_chat(target, scraped)
