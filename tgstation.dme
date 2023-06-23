@@ -5338,6 +5338,7 @@
 #include "modular_skyraptor\modules\aesthetics\digiclothes\ported_feet.dm"
 #include "modular_skyraptor\modules\aesthetics\digiclothes\ported_head.dm"
 #include "modular_skyraptor\modules\aesthetics\digiclothes\ported_mask.dm"
+#include "modular_skyraptor\modules\aesthetics\digiclothes\ported_mod.dm"
 #include "modular_skyraptor\modules\aesthetics\digiclothes\ported_suit.dm"
 #include "modular_skyraptor\modules\aesthetics\digiclothes\ported_under.dm"
 #include "modular_skyraptor\modules\aesthetics\inherited_skyrat\abductor\abductor.dm"
