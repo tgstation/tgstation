@@ -14,7 +14,6 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_NOBLOOD,
-		TRAIT_NO_DEBRAIN_OVERLAY,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
@@ -25,9 +24,7 @@
 	mutantstomach = /obj/item/organ/internal/stomach/bone/plasmaman
 	mutantappendix = null
 	mutantheart = null
-	burnmod = 1.5
 	heatmod = 1.5
-	brutemod = 1.5
 	payday_modifier = 0.75
 	breathid = GAS_PLASMA
 	disliked_food = FRUIT | CLOTH

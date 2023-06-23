@@ -91,8 +91,18 @@
 /obj/machinery/harvester/proc/start_harvest()
 	if(!occupant || !iscarbon(occupant))
 		return
-	var/mob/living/carbon/C = occupant
-	operation_order = reverseList(C.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
+
+	var/mob/living/carbon/carbon_occupant = occupant
+
+	if(carbon_occupant.stat < UNCONSCIOUS)
+		notify_ghosts(
+			"[occupant] is about to be ground up by a malfunctioning organ harvester!",
+			source = src,
+			header = "Gruesome!",
+			action = NOTIFY_ORBIT,
+		)
+
+	operation_order = reverseList(carbon_occupant.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	warming_up = TRUE
 	harvesting = TRUE
 	visible_message(span_notice("The [name] begins warming up!"))

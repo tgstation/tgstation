@@ -941,7 +941,7 @@
 	robot.equip_module_to_slot(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
 	robot.equip_module_to_slot(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
 	robot.place_on_head(new /obj/item/clothing/head/beret/highlander(robot)) //THE ONLY PART MORE IMPORTANT THAN THE SWORD IS THE HAT
-	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
 
 // ------------------------------------------ Storages

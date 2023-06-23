@@ -395,10 +395,6 @@
 /obj/structure/sign/warning/gas_mask/directional/north,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
-"me" = (
-/obj/effect/overlay/palmtree_r,
-/turf/open/misc/beach/sand,
-/area/ruin/powered/beach)
 "mh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -801,7 +797,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "Cb" = (
-/obj/effect/overlay/coconut,
+/obj/structure/flora/coconuts,
 /obj/machinery/light/directional/north,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
@@ -1142,7 +1138,7 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "Ou" = (
-/obj/effect/overlay/palmtree_l,
+/obj/structure/flora/tree/palm,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "OE" = (
@@ -1183,7 +1179,7 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "Qx" = (
-/obj/effect/overlay/coconut,
+/obj/structure/flora/coconuts,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "QF" = (
@@ -1952,7 +1948,7 @@ Bp
 wL
 MZ
 dj
-me
+Ou
 aE
 VI
 sl

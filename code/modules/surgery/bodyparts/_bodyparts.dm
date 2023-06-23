@@ -88,10 +88,15 @@
 	///Gradually increases while burning when at full damage, destroys the limb when at 100
 	var/cremation_progress = 0
 
+	//Multiplicative damage modifiers
+	/// Brute damage gets multiplied by this on receive_damage()
+	var/brute_modifier = 1
+	/// Burn damage gets multiplied by this on receive_damage()
+	var/burn_modifier = 1
 	// Damage reduction variables for damage handled on the limb level. Handled after worn armor.
-	///Amount subtracted from brute damage inflicted on the limb.
+	/// Amount subtracted from brute damage inflicted on the limb.
 	var/brute_reduction = 0
-	///Amount subtracted from burn damage inflicted on the limb.
+	/// Amount subtracted from burn damage inflicted on the limb.
 	var/burn_reduction = 0
 
 	//Coloring and proper item icon update
@@ -105,6 +110,10 @@
 	var/px_x = 0
 	var/px_y = 0
 
+	/**
+	 * A copy of the original owner's species datum species_traits list (very hacky)
+	 * It sucks that we have to do this, but due to MUTCOLORS and others, we have to. For now.
+	 */
 	var/species_flags_list = list()
 	///the type of damage overlay (if any) to use when this bodypart is bruised/burned.
 	var/dmg_overlay_type = "human"
@@ -437,8 +446,8 @@
 		return FALSE
 
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
-	brute = round(max(brute * dmg_multi, 0),DAMAGE_PRECISION)
-	burn = round(max(burn * dmg_multi, 0),DAMAGE_PRECISION)
+	brute = round(max(brute * dmg_multi * brute_modifier, 0), DAMAGE_PRECISION)
+	burn = round(max(burn * dmg_multi * burn_modifier, 0), DAMAGE_PRECISION)
 	brute = max(0, brute - brute_reduction)
 	burn = max(0, burn - burn_reduction)
 
@@ -786,7 +795,7 @@
 	// No, xenos don't actually use bodyparts. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
 	var/datum/species/owner_species = human_owner.dna.species
-	species_flags_list = owner_species.species_traits
+	species_flags_list = owner_species.species_traits.Copy()
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
 
 	if(owner_species.use_skintones)
@@ -906,8 +915,9 @@
 				. += aux_em_block
 		//EMISSIVE CODE END
 
-	//Ok so legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
-	if((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG))
+	//No need to handle leg layering if dropped, we only face south anyways
+	if(!dropped && ((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG)))
+		//Legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
 		var/obj/item/bodypart/leg/leg_source = src
 		for(var/image/limb_image in .)
 			//remove the old, unmasked image
