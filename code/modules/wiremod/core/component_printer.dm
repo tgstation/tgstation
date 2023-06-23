@@ -334,10 +334,6 @@
 		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
 	)
 
-/obj/machinery/module_duplicator/Destroy()
-	materials = null
-	return ..()
-
 /obj/machinery/module_duplicator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

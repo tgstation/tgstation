@@ -55,10 +55,6 @@
 	RefreshParts()
 	update_icon(UPDATE_OVERLAYS)
 
-/obj/machinery/rnd/production/Destroy()
-	materials = null
-	return..()
-
 /obj/machinery/rnd/production/connect_techweb(datum/techweb/new_techweb)
 	if(stored_research)
 		UnregisterSignal(stored_research, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
