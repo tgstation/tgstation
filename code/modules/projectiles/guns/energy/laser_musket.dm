@@ -7,10 +7,10 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket)
 	slot_flags = ITEM_SLOT_BACK
 	obj_flags = UNIQUE_RENAME
-	var/is_charging = FALSE
 	can_bayonet = TRUE
 	knife_x_offset = 22
 	knife_y_offset = 11
+	var/is_charging = FALSE
 
 /obj/item/gun/energy/laser/musket/attack_self(mob/living/user as mob)
 	var/obj/item/stock_parts/cell/charging_cell = get_cell()
