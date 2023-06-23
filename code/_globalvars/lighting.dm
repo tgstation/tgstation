@@ -34,6 +34,8 @@ GLOBAL_LIST_INIT_TYPED(light_types, /datum/light_template, generate_light_types(
 	var/color = ""
 	/// The light angle we use
 	var/angle = 360
+	/// The type to spawn off create()
+	var/spawn_type = /obj
 	/// Do not load this template if its type matches the ignore type
 	/// This lets us do subtypes more nicely
 	var/ignore_type = /datum/light_template
@@ -42,23 +44,16 @@ GLOBAL_LIST_INIT_TYPED(light_types, /datum/light_template, generate_light_types(
 	. = ..()
 	id = replacetext("[type]", "/", "-")
 
-/// Links a light template to an atom, making the atom match the template
-/datum/light_template/proc/mirror_onto(atom/light_holder)
-	light_holder.set_light(range, power, color, l_angle = angle)
-	light_holder.icon = icon
-	light_holder.icon_state = icon_state
-	RegisterSignal(light_holder, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(block_changes))
-	RegisterSignal(light_holder, COMSIG_ATOM_LIGHT_TEMPLATE_MIRRORED, PROC_REF(new_template_chosen))
-	light_holder.cut_overlays(light_holder.managed_overlays)
-	light_holder.managed_overlays = list()
+/// Create an atom with our light details
+/datum/light_template/proc/create(atom/location, direction)
+	var/atom/lad = new spawn_type(location)
+	var/old_light_flags = lad.light_flags
+	lad.light_flags &= ~LIGHT_FROZEN
+	lad.set_light(range, power, color, TRUE, angle)
+	lad.setDir(direction)
 
-/datum/light_template/proc/block_changes(datum/source)
-	SIGNAL_HANDLER
-	return COMSIG_ATOM_NO_UPDATE_NAME|COMSIG_ATOM_NO_UPDATE_DESC|COMSIG_ATOM_NO_UPDATE_ICON
-
-/datum/light_template/proc/new_template_chosen(datum/source)
-	SIGNAL_HANDLER
-	UnregisterSignal(source, list(COMSIG_ATOM_UPDATE_APPEARANCE, COMSIG_ATOM_LIGHT_TEMPLATE_MIRRORED))
+	lad.light_flags = old_light_flags
+	return lad
 
 /// Template that reads info off a light subtype
 /datum/light_template/read_light
@@ -75,6 +70,7 @@ GLOBAL_LIST_INIT_TYPED(light_types, /datum/light_template, generate_light_types(
 	power = initial(path_to_read.bulb_power)
 	color = initial(path_to_read.bulb_colour)
 	angle = initial(path_to_read.light_angle)
+	spawn_type = path_to_read
 
 /datum/light_template/read_light/standard_bar
 	name = "Light Bar"

@@ -65,7 +65,7 @@
 
 	update()
 	if(GLOB.light_debug_enabled)
-		debug()
+		source_atom.debug()
 
 /datum/light_source/Destroy(force)
 	remove_lum()
