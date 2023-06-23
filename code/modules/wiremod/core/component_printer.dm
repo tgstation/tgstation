@@ -491,7 +491,7 @@
 
 /obj/machinery/module_duplicator/ui_static_data(mob/user)
 	var/list/data
-	if(isnull(rmat.mat_container))
+	if(isnull(materials.mat_container))
 		data = list()
 	else
 		data = materials.mat_container.ui_static_data()
