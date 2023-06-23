@@ -3961,6 +3961,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/floor3/aft)
+"aXy" = (
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer2{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/side,
+/area/station/engineering/atmos)
 "aXC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7532,6 +7540,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "bNR" = (
@@ -28695,6 +28704,13 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/floor2/starboard/fore)
+"hHf" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 10
+	},
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/iron/white,
+/area/station/science/ordnance/storage)
 "hHi" = (
 /obj/machinery/camera/autoname/directional/west,
 /obj/structure/closet/crate/science{
@@ -50735,6 +50751,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/dark/side,
 /area/station/engineering/atmos)
 "noN" = (
@@ -51217,6 +51234,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/dark/side,
 /area/station/engineering/atmos)
 "nuR" = (
@@ -130084,7 +130102,7 @@ ukR
 ttl
 xCw
 cDv
-noM
+aXy
 iAU
 iAU
 iAU
@@ -130341,7 +130359,7 @@ kGg
 jpy
 xeO
 cTB
-noM
+aXy
 pno
 pno
 pno
@@ -315376,7 +315394,7 @@ iAe
 kDN
 bkU
 bJi
-aWw
+hHf
 blj
 twR
 nPE

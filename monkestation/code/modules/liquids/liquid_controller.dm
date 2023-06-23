@@ -37,7 +37,9 @@ SUBSYSTEM_DEF(liquids)
 
 	if(length(unvalidated_oceans))
 		for(var/turf/open/floor/plating/ocean/unvalidated_turf in unvalidated_oceans)
-			unvalidated_turf.assume_self()
+			if(MC_TICK_CHECK)
+				return
+			unvalidated_turf.assume_self()	
 
 	if(!length(temperature_queue))
 		for(var/g in active_groups)

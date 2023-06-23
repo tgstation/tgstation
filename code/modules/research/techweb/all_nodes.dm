@@ -96,6 +96,7 @@
 		"sec_38",
 		"sec_beanbag_slug",
 		"sec_dart",
+		"buckshot_shell",
 		"sec_Islug",
 		"sec_rshot",
 		"servingtray",
@@ -226,6 +227,7 @@
 		"boxcutter",
 		"cable_coil",
 		"cable_coil",
+		"industrial_coil",
 		"crowbar",
 		"cultivator",
 		"decal_painter",
@@ -1108,6 +1110,7 @@
 		"mech_mousetrap_mortar",
 		"mech_punching_face",
 		"clown_firing_pin",
+		"borg_upgrade_cringe",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

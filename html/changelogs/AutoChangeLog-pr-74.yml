@@ -1,0 +1,12 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - rscadd: "Added SMES units to the emitter lines of engines, late-join engineers rejoice!"
+  - rscdel: "Removes un-necessary filters on the SM"
+  - rscdel: "Removes the hotwired SMES that wasnt even wired into the powergrid, and was wired into itself in kilostation"
+  - qol: "Adds white indicators to guide players a _tiny_ bit towards where its intended to place the tesla controllers and grounders"
+  - bugfix: "Cleans up some left-over pipes in the sinngulo/tesla maps"
+  - bugfix: "Cleans up some duplicate wires on all random engines that had them"
+  - spellcheck: "replaced \"supermatter engine room\" on the doors of singularity/tesla setups across all maps"
+  - spellcheck: "fixed external airlocks having \"Departure shuttle airlock\" as their names on kilo tesla / singulo setups"
+  - spellcheck: "fixed external airlocks having \"Solar maintnance\" as their names on meta tesla / singulo setups"

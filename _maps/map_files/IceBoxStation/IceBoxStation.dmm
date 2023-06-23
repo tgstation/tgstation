@@ -2551,6 +2551,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/large,
 /area/station/engineering/atmos/storage/gas)
 "aRX" = (
@@ -8149,6 +8150,7 @@
 "cAB" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/west,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/science/ordnance)
 "cAC" = (
@@ -15291,6 +15293,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"ePq" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/iron,
+/area/station/science/ordnance)
 "ePr" = (
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/hos)
@@ -38633,6 +38640,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -45360,6 +45368,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/violet/visible/layer1,
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
 "oAM" = (
@@ -73723,6 +73732,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/violet/visible/layer1{
 	dir = 9
 	},
+/obj/machinery/portable_atmospherics/canister/freon,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)
 "xKY" = (
@@ -187965,7 +187975,7 @@ jlj
 tUo
 aQn
 hFb
-vqv
+ePq
 wQi
 wQi
 uIf

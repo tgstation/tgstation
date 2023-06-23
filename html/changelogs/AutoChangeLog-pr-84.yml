@@ -1,0 +1,5 @@
+author: "WonderPsycho"
+delete-after: True
+changes:
+  - rscadd: "Added BZ canisters to both Ordnance storage and Atmos Desk storage."
+  - rscadd: "Added two freon canisters to Ice Box's barely used storage room."
