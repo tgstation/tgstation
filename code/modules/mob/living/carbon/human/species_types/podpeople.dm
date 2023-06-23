@@ -5,7 +5,6 @@
 	id = SPECIES_PODPERSON
 	species_traits = list(
 		MUTCOLORS,
-		EYECOLOR,
 	)
 	inherent_traits = list(
 		TRAIT_PLANT_SAFE,

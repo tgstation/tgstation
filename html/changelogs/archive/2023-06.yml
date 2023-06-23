@@ -783,3 +783,25 @@
   - rscadd: '...unless you get to do it while screaming ''IT LIVES!'' via Revival
       surgery. Screw conventional medicine and science, you know the true way to bring
       back the dead!'
+2023-06-23:
+  Cheshify:
+  - bugfix: Virology disposals now route directly to space, rather than sending their
+      nasty tubes to cargo.
+  - bugfix: A single maintenance spawner was removed from a wall by plumbing.
+  LemonInTheDark:
+  - bugfix: Dehardcodes some stuff with tram windows, they'll be easier to map with
+      now
+  - refactor: Border objects can now smooth with each other. I'm sure something cool
+      will come of this
+  Melbert:
+  - bugfix: Fix a runtime involving Bilingual Curators
+  - qol: Bilinguals get a message on spawn reporting which language they've learned,
+      or a message reporting they have learned no language if they're already fluent
+      in all possible ones.
+  TheVekter:
+  - rscadd: Adds a shark plush, obtainable from Cargo for a nominal fee.
+  - rscdel: Removed plush cucumber by popular request. Cucumber has been replaced
+      by the shark plushie in arcade machines.
+  YehnBeep:
+  - bugfix: Science department hallways now have unrestricted one-way exits on Delta,
+      Birdshot, and Icebox, to make these maps consistent with the others.
