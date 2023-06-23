@@ -232,7 +232,7 @@
 
 	return ..()
 
-/obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist)
+/obj/machinery/rnd/production/proc/do_print(path, amount)
 	for(var/i in 1 to amount)
 		new path(get_turf(src))
 
@@ -324,10 +324,7 @@
 
 	//consume materials
 	materials.mat_container.use_materials(design.materials, print_quantity * coefficient)
-	var/list/efficient_mats = list()
-	for(var/material in design.materials)
-		efficient_mats[material] = design.materials[material] * print_quantity * coefficient
-	materials.silo_log(src, "built", -print_quantity, "[design.name]", efficient_mats)
+	materials.silo_log(src, "built", -print_quantity, "[design.name]", design.materials)
 	for(var/reagent in design.reagents_list)
 		reagents.remove_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient)
 	//produce item
@@ -336,7 +333,7 @@
 		flick(production_animation, src)
 	var/time_coefficient = design.lathe_time_factor * efficiency_coeff
 	addtimer(CALLBACK(src, PROC_REF(reset_busy)), (30 * time_coefficient * print_quantity) ** 0.5)
-	addtimer(CALLBACK(src, PROC_REF(do_print), design.build_path, print_quantity, efficient_mats), (32 * time_coefficient * print_quantity) ** 0.8)
+	addtimer(CALLBACK(src, PROC_REF(do_print), design.build_path, print_quantity), (32 * time_coefficient * print_quantity) ** 0.8)
 	update_static_data_for_all_viewers()
 
 	return TRUE

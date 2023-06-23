@@ -176,12 +176,21 @@
 		if (!(design.build_type & COMPONENT_PRINTER))
 			continue
 
-		var/icon_size = spritesheet.icon_size_id(design.id)
+		var/list/cost = list()
+		for(var/i in design.materials)
+			var/datum/material/mat = i
 
+			var/design_cost = OPTIMAL_COST(design.materials[i] * efficiency_coeff)
+			if(istype(mat))
+				cost[mat.name] = design_cost
+			else
+				cost[i] = design_cost
+
+		var/icon_size = spritesheet.icon_size_id(design.id)
 		designs[researched_design_id] = list(
 			"name" = design.name,
 			"desc" = design.desc,
-			"cost" = get_material_cost_data(design.materials, efficiency_coeff),
+			"cost" = cost,
 			"id" = researched_design_id,
 			"categories" = design.category,
 			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
@@ -481,19 +490,34 @@
 	return data
 
 /obj/machinery/module_duplicator/ui_static_data(mob/user)
-	var/list/data = list()
+	var/list/data
+	if(isnull(rmat.mat_container))
+		data = list()
+	else
+		data = materials.mat_container.ui_static_data()
 
 	var/list/designs = list()
 
 	var/index = 1
 
 	var/efficiency_coeff = calculate_efficiency()
-
 	for (var/list/design as anything in scanned_designs)
+
+		var/list/cost = list()
+		var/list/materials = design["materials"]
+		for(var/i in materials)
+			var/datum/material/mat = i
+
+			var/design_cost = OPTIMAL_COST(materials[i] * efficiency_coeff)
+			if(istype(mat))
+				cost[mat.name] = design_cost
+			else
+				cost[i] = design_cost
+
 		designs["[index]"] = list(
 			"name" = design["name"],
 			"desc" = design["desc"],
-			"cost" = get_material_cost_data(design["materials"], efficiency_coeff),
+			"cost" = cost,
 			"id" = "[index]",
 			"icon" = "integrated_circuit",
 			"categories" = list("/Saved Circuits"),
@@ -513,11 +537,3 @@
 	if(..())
 		return TRUE
 	return default_deconstruction_screwdriver(user, "module-fab-o", "module-fab-idle", tool)
-
-/obj/machinery/module_duplicator/proc/get_material_cost_data(list/materials, efficiency_coeff)
-	var/list/data = list()
-
-	for (var/datum/material/material_type as anything in materials)
-		data[initial(material_type.name)] = materials[material_type] * efficiency_coeff
-
-	return data

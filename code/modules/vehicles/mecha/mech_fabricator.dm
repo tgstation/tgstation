@@ -174,34 +174,6 @@
 	process_queue = FALSE
 
 /**
- * Calculates resource/material costs for printing an item based on the machine's resource coefficient.
- *
- * Returns a list of k,v resources with their amounts.
- * * D - Design datum to calculate the modified resource cost of.
- */
-/obj/machinery/mecha_part_fabricator/proc/get_resources_w_coeff(datum/design/D)
-	var/list/resources = list()
-	for(var/R in D.materials)
-		var/datum/material/M = R
-		resources[M] = get_resource_cost_w_coeff(D, M)
-	return resources
-
-/**
- * Checks if the Exofab has enough resources to print a given item.
- *
- * Returns FALSE if the design has no reagents used in its construction (?) or if there are insufficient resources.
- * Returns TRUE if there are sufficient resources to print the item.
- * * D - Design datum to calculate the modified resource cost of.
- */
-/obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
-	if(length(D.reagents_list)) // No reagents storage - no reagent designs.
-		return FALSE
-	var/datum/component/material_container/materials = rmat.mat_container
-	if(materials.has_materials(get_resources_w_coeff(D)))
-		return TRUE
-	return FALSE
-
-/**
  * Attempts to build the next item in the build queue.
  *
  * Returns FALSE if either there are no more parts to build or the next part is not buildable.
@@ -228,7 +200,7 @@
  * * verbose - Whether the machine should use say() procs. Set to FALSE to disable the machine saying reasons for failure to build.
  */
 /obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D, verbose = TRUE)
-	if(!D)
+	if(!D || length(D.reagents_list))
 		return FALSE
 
 	var/datum/component/material_container/materials = rmat.mat_container
@@ -240,14 +212,12 @@
 		if(verbose)
 			say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
-	if(!check_resources(D))
+	if(!materials.has_materials(D.materials, component_coeff))
 		if(verbose)
 			say("Not enough resources. Processing stopped.")
 		return FALSE
 
-	build_materials = get_resources_w_coeff(D)
-
-	materials.use_materials(build_materials)
+	materials.use_materials(D.materials, component_coeff)
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(initial(D.construction_time))
 	build_start = world.time
@@ -340,17 +310,6 @@
 	return TRUE
 
 /**
- * Calculates the coefficient-modified resource cost of a single material component of a design's recipe.
- *
- * Returns coefficient-modified resource cost for the given material component.
- * * D - Design datum to pull the resource cost from.
- * * resource - Material datum reference to the resource to calculate the cost of.
- * * roundto - Rounding value for round() proc
- */
-/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, datum/material/resource, roundto = 1)
-	return round(D.materials[resource]*component_coeff, roundto)
-
-/**
  * Calculates the coefficient-modified build time of a design.
  *
  * Returns coefficient-modified build time of a given design.
@@ -386,12 +345,17 @@
 
 	for(var/datum/design/design in cached_designs)
 		var/cost = list()
+		var/list/materials = design["materials"]
+		for(var/i in materials)
+			var/datum/material/mat = i
 
-		for(var/datum/material/material in design.materials)
-			cost[material.name] = get_resource_cost_w_coeff(design, material)
+			var/design_cost = OPTIMAL_COST(materials[i] * component_coeff)
+			if(istype(mat))
+				cost[mat.name] = design_cost
+			else
+				cost[i] = design_cost
 
 		var/icon_size = spritesheet.icon_size_id(design.id)
-
 		designs[design.id] = list(
 			"name" = design.name,
 			"desc" = design.get_description(),
