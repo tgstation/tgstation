@@ -2445,6 +2445,10 @@
 	},
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
+"dtb" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/iron/dark,
+/area/station/commons/vacant_room)
 "dtE" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/starboard/aft)
@@ -6609,6 +6613,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
+"jeZ" = (
+/obj/structure/table/wood,
+/turf/open/floor/iron/dark,
+/area/station/commons/vacant_room)
 "jfo" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Medbay Lobby"
@@ -7384,6 +7392,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/genetics)
+"kgA" = (
+/obj/structure/table/wood,
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/station/commons/vacant_room)
 "kgC" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Atmospherics Tank - N2O"
@@ -9034,6 +9047,10 @@
 /obj/item/kirbyplants/dead,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
+"mHp" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/iron/dark,
+/area/station/commons/vacant_room)
 "mHN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -12503,6 +12520,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
+"rQX" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/commons/vacant_room)
 "rRP" = (
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
 /obj/structure/weightmachine/weightlifter,
@@ -12921,6 +12945,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
+"svS" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/iron/dark,
+/area/station/commons/vacant_room)
 "sws" = (
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -14483,6 +14511,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
+"uFU" = (
+/obj/machinery/photocopier,
+/obj/structure/table/wood,
+/turf/open/floor/iron/dark,
+/area/station/commons/vacant_room)
 "uGg" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/nitrogen_input{
 	dir = 1
@@ -34862,9 +34895,9 @@ bFq
 uzZ
 oDX
 pyU
+dtb
 mue
-mue
-mue
+uFU
 nGD
 qbR
 qbR
@@ -35119,9 +35152,9 @@ pyU
 dMY
 pyU
 pyU
-mue
+mHp
 sJd
-mue
+jeZ
 nGD
 qbR
 pHV
@@ -35633,9 +35666,9 @@ pyU
 sBx
 oDX
 pyU
-mue
-mue
-mue
+rQX
+kgA
+svS
 nGD
 qbR
 pHV
