@@ -117,7 +117,7 @@
 		cleaning_duration = (cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_duration_modifier_offset, 1))
 
 	//do the cleaning
-	user.balloon_alert_to_viewers("starts to clean [target]...")
+	user.balloon_alert_to_viewers("cleaning [target]...")
 	if(do_after(user, cleaning_duration, target = target))
 		user.balloon_alert_to_viewers("cleaned")
 		if(clean_target)
