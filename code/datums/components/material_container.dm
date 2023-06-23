@@ -153,26 +153,56 @@
 	//don't attack the machine
 	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
 		return
+	//can't allow abstract, hologram items
+	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
+		return
+	//untouchable
+	if(held_item.resistance_flags & INDESTRUCTIBLE)
+		return
 	//user defined conditions
 	if(precondition && !precondition.Invoke(user))
 		return
 
-	//loop through all contents inside this atom and salvage their material as well but in reverse so we don't delete parents before processing their children
+	//get all contents of this item reccursively
 	var/list/contents = held_item.get_all_contents_type(/obj/item)
+	//anything that isn't a stack cannot be split so find out if we have enough space, we don't want to consume half the contents of an object & leave it in a broken state
+	if(!isstack(held_item))
+		var/total_amount = 0
+		for(var/obj/item/weapon in contents)
+			total_amount += get_item_material_amount(weapon, breakdown_flags)
+		if(!has_space(total_amount))
+			to_chat(user, span_warning("[parent] doesn't have enough space for [held_item] [contents.len > 1 ? "And it's contents" : ""]!"))
+			return
+
+	/**
+	 * to reduce chat spams we group all messages and print them after everything is over
+	 * usefull when we are trying to insert all stock parts of an RPED into the autolathe for example
+	 */
+	var/list/inserts = list()
+	var/list/errors = list()
+
+	//loop through all contents inside this atom and salvage their material as well but in reverse so we don't delete parents before processing their children
 	for(var/i = length(contents); i >= 1 ; i--)
 		var/obj/item/target = contents[i]
 
-		//not a solid sub type
-		if(target.item_flags & ABSTRACT)
+		//not a solid subtype or an hologram
+		if((target.item_flags & ABSTRACT) || (target.flags_1 & HOLOGRAM_1))
 			if(target == active_held) //was this the original item in the players hand? put it back because we coudn't salvage it
 				user.put_in_active_hand(target)
 			continue
-		//item is either not real, not allowed for redemption, not in the allowed types
-		if((target.flags_1 & HOLOGRAM_1) || (target.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target, allowed_item_typecache)))
+
+		//item is either not allowed for redemption, not in the allowed types
+		if((target.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target, allowed_item_typecache)))
 			if(!(mat_container_flags & MATCONTAINER_SILENT))
 				to_chat(user, span_warning("[parent] won't accept [target]!"))
 			if(target == active_held) //was this the original item in the players hand? put it back because we coudn't salvage it
 				user.put_in_active_hand(target)
+			continue
+
+		//untouchable, move it out the way, code copied from recycler
+		if(target.resistance_flags & INDESTRUCTIBLE)
+			if(!isturf(target.loc) && !isliving(target.loc))
+				target.forceMove(get_turf(parent))
 			continue
 
 		//if stack, check if we want to read precise amount of sheets to insert
@@ -201,9 +231,11 @@
 			return
 
 		//insert the item
+		var/item_name = target.name
 		var/inserted = insert_item(target, breakdown_flags = mat_container_flags)
 		if(inserted > 0)
 			. += inserted
+			var/message = null
 
 			//stack was either split by the container(!QDELETED(target) means the container only consumed a part of it) or by the player, put whats left back of the original stack back in players hand
 			if((!QDELETED(target) || was_stack_split))
@@ -217,16 +249,27 @@
 				//was this the original item in the players hand? put what's left back in the player's hand
 				if(!isnull(original_item))
 					user.put_in_active_hand(original_item)
+					message = "Only [inserted] amount of [item_name] was consumed by [parent]."
 
-			to_chat(user, span_notice("You insert a material total of [inserted] into [parent]."))
+			//collect all messages to print later
+			if(!message)
+				message = "[item_name] worth [inserted] material was consumed by [parent]."
+			if(inserts[message])
+				inserts[message] += 1
+			else
+				inserts[message] = 1
 		else
-			//decode the error & print it
 			var/error_msg
 			if(inserted == -2)
-				error_msg = "[parent] has insufficient space to accept the [target]"
+				error_msg = "[parent] has insufficient space to accept [target]"
 			else
 				error_msg = "[target] has insufficient materials to be accepted by [parent]"
-			to_chat(user, span_warning(error_msg))
+
+			//collect all messages to print later
+			if(errors[error_msg])
+				errors[error_msg] += 1
+			else
+				errors[error_msg] = 1
 
 			//player split the stack by the requested amount but even that split amount could not be salvaged. merge it back with the original
 			if(!isnull(item_stack) && was_stack_split)
@@ -237,6 +280,18 @@
 			//was this the original item in the players hand? put it back because we coudn't salvage it
 			if(!isnull(original_item))
 				user.put_in_active_hand(original_item)
+
+	//print successfull inserts
+	for(var/success_msg in inserts)
+		var/count = inserts[success_msg]
+		for(var/i in 1 to count)
+			to_chat(user, span_notice(success_msg))
+
+	//print errors last
+	for(var/error_msg in errors)
+		var/count = errors[error_msg]
+		for(var/i in 1 to count)
+			to_chat(user, span_warning(error_msg))
 
 /**
  * Splits a stack. we don't use /obj/item/stack/proc/split_stack because Byond complains that should only be called asynchronously.
@@ -536,6 +591,11 @@
 	if(!istype(mat))
 		mat = GET_MATERIAL_REF(mat)
 	return materials[mat]
+
+/datum/component/material_container/ui_static_data(mob/user)
+	var/list/data = list()
+	data["SHEET_MATERIAL_AMOUNT"] = SHEET_MATERIAL_AMOUNT
+	return data
 
 /// List format is list(material_name = list(amount = ..., ref = ..., etc.))
 /datum/component/material_container/ui_data(mob/user)

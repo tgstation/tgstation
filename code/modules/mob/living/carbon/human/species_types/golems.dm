@@ -6,7 +6,6 @@
 		NO_DNA_COPY,
 		NOTRANSSTING,
 		NO_UNDERWEAR,
-		NOEYEHOLES,
 		NOAUGMENTS,
 	)
 	inherent_traits = list(
