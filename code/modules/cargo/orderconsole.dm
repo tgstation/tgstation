@@ -376,13 +376,13 @@
 						var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 						cargo.adjust_money(price - order.pack.get_cost()) //Cargo gets the handling fee
 
-					sleep(2 SECONDS)
+					sleep(3 SECONDS)
 					var/obj/effect/oshan_launch_point/cargo/picked_point = pick(GLOB.cargo_launch_points)
 					var/turf/open/spawning_turf = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
 					var/obj/structure/closet/crate/new_atom = order.generate(spawning_turf)
 					SSshuttle.shopping_list -= order
 					var/distance = get_dist(spawning_turf, picked_point)
-					new_atom.throw_at(picked_point, distance + 4, 4)
+					new_atom.throw_at(picked_point, distance + 4, 2)
 
 			. = TRUE
 		if("loan")

@@ -17,8 +17,8 @@
 				audible_message(span_notice("[src] lets out a screech, it doesn't seem to be able to handle the load."))
 				break
 			use_power(active_power_usage)
-			O.throw_at(target, get_dist(src, target) + 4, 4)
-			addtimer(CALLBACK(O, TYPE_PROC_REF(/atom/movable, attempt_map_sell)), 1.5 SECONDS)
+			O.throw_at(target, get_dist(src, target) + 4, power)
+			addtimer(CALLBACK(O, TYPE_PROC_REF(/atom/movable, attempt_map_sell)), 4 SECONDS / power)
 	flick("mass_driver1", src)
 
 /atom/movable/proc/attempt_map_sell()
@@ -77,7 +77,7 @@
 			moved_atom.forceMove(new_crate)
 			contents_self -= moved_atom
 
-		new_crate.throw_at(picked_point, get_dist(edge_turf, picked_point) + 4, 4)
+		new_crate.throw_at(picked_point, get_dist(edge_turf, picked_point) + 4, 2)
 
 	for(var/atom/movable/thing in deletors)
 		if(!QDELETED(thing))
