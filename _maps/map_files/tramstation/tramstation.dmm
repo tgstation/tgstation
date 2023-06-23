@@ -5545,11 +5545,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
-"aGL" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/turf/open/openspace,
-/area/station/asteroid)
 "aGM" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -13018,12 +13013,11 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/machinery/door/airlock/external/glass{
-	name = "The Noise's Jam-Tastic radical listening Post";
-	desc = "Theodore Was Here."
-	},
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/access/all/service/theatre,
+/obj/machinery/door/airlock/external/glass{
+	name = "The Noise's Jam-Tastic Radical Listening Post"
+	},
 /turf/open/ballpit,
 /area/ruin/powered/clownplanet)
 "dbu" = (
@@ -48695,7 +48689,6 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "qqX" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -50498,7 +50491,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
@@ -55405,8 +55397,6 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "sKF" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -160701,7 +160691,7 @@ agc
 yiM
 agg
 age
-aGL
+age
 afv
 aaa
 aaa
