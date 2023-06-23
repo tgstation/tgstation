@@ -185,7 +185,10 @@
 			use_power(power)
 			flick("limbgrower_fill", src)
 			icon_state = "limbgrower_idleon"
-			selected_category = params["active_tab"]
+			var/temp_category = params["active_tab"]
+			if( ! (temp_category in categories) )
+				return FALSE //seriously come on
+			selected_category = temp_category
 			addtimer(CALLBACK(src, PROC_REF(build_item), consumed_reagents_list), production_speed * production_coefficient)
 			return TRUE
 
