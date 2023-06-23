@@ -1,0 +1,4 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - qol: "pill press' max volume for bottles are 50, as the volume of bottles itself."
