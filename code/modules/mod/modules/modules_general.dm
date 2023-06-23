@@ -676,10 +676,15 @@
 		COMSIG_ATOM_INITIALIZED_ON = PROC_REF(on_atom_initialized_on),
 	)
 	var/datum/component/connect_loc_behalf/connector
+	var/datum/component/material_container/container
 
 /obj/item/mod/module/recycler/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/material_container, accepted_mats, 50 * SHEET_MATERIAL_AMOUNT, MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, _after_retrieve=CALLBACK(src, PROC_REF(attempt_insert_storage)))
+	container = AddComponent(/datum/component/material_container, accepted_mats, 50 * SHEET_MATERIAL_AMOUNT, MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, _after_retrieve=CALLBACK(src, PROC_REF(attempt_insert_storage)))
+
+/obj/item/mod/module/recycler/Destroy()
+	container = null
+	return ..()
 
 /obj/item/mod/module/recycler/on_activation()
 	. = ..()
@@ -720,7 +725,6 @@
 		insert_trash(new_atom)
 
 /obj/item/mod/module/recycler/proc/insert_trash(obj/item/item)
-	var/datum/component/material_container/container = GetComponent(/datum/component/material_container)
 	var/retrieved = container.insert_item(item, multiplier = efficiency, breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
 	if(retrieved == MATERIAL_INSERT_ITEM_NO_MATS) //even if it doesn't have any material to give, trash is trash.
 		qdel(item)
@@ -737,7 +741,6 @@
 	dispense(target)
 
 /obj/item/mod/module/recycler/proc/dispense(atom/target)
-	var/datum/component/material_container/container = GetComponent(/datum/component/material_container)
 	if(container.retrieve_all(target))
 		balloon_alert(mod.wearer, "material dispensed")
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
@@ -765,7 +768,6 @@
 	var/required_amount = SHEET_MATERIAL_AMOUNT*12.5
 
 /obj/item/mod/module/recycler/donk/dispense(atom/target)
-	var/datum/component/material_container/container = GetComponent(/datum/component/material_container)
 	if(!container.use_amount_mat(required_amount, /datum/material/iron))
 		balloon_alert(mod.wearer, "not enough material")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)

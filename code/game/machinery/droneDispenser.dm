@@ -48,13 +48,19 @@
 	var/break_message = "lets out a tinny alarm before falling dark."
 	var/break_sound = 'sound/machines/warning-buzzer.ogg'
 
+	var/datum/component/material_container/materials
+
 /obj/machinery/drone_dispenser/Initialize(mapload)
 	. = ..()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_DRONE_DISPENSER, allowed_items=/obj/item/stack)
+	materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_DRONE_DISPENSER, allowed_items=/obj/item/stack)
 	materials.insert_amount_mat(starting_amount)
 	materials.precise_insertion = TRUE
 	using_materials = list(/datum/material/iron = iron_cost, /datum/material/glass = glass_cost)
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
+
+/obj/machinery/drone_dispenser/Destroy()
+	materials = null
+	return ..()
 
 /obj/machinery/drone_dispenser/preloaded
 	starting_amount = 5000
@@ -144,7 +150,6 @@
 	if((machine_stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(!materials.has_materials(using_materials))
 		return // We require more minerals
 
@@ -212,7 +217,6 @@
 
 /obj/machinery/drone_dispenser/attackby(obj/item/I, mob/living/user)
 	if(I.tool_behaviour == TOOL_CROWBAR)
-		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		materials.retrieve_all()
 		I.play_tool_sound(src)
 		to_chat(user, span_notice("You retrieve the materials from [src]."))
