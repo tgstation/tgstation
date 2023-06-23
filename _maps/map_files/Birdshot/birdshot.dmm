@@ -59054,7 +59054,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "uMN" = (
@@ -68315,7 +68315,7 @@
 	name = "Crematorium"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /turf/open/floor/iron/textured_half{
 	dir = 8
 	},
