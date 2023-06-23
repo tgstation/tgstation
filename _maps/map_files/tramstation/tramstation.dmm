@@ -6422,8 +6422,6 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/contraband/permabrig_weapon,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/random/structure/table_or_rack,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
@@ -14527,8 +14525,6 @@
 "dGL" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/dim/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "dHf" = (
@@ -14655,11 +14651,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
-"dJl" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/misc/asteroid,
-/area/station/asteroid)
 "dJp" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -16628,15 +16619,6 @@
 "euC" = (
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
-"euF" = (
-/obj/effect/spawner/random/structure/barricade,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/poddoor/shutters{
-	id = "warehouse2"
-	},
-/turf/open/floor/iron,
-/area/station/maintenance/disposal/incinerator)
 "euI" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
@@ -31285,8 +31267,6 @@
 "jYl" = (
 /obj/effect/spawner/random/trash/grime,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "jYn" = (
@@ -34737,8 +34717,6 @@
 /area/station/engineering/main)
 "lgZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
@@ -38449,13 +38427,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "mCL" = (
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Atmospherics Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
-/obj/effect/mapping_helpers/airlock/abandoned,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/lesser)
 "mCQ" = (
@@ -39998,11 +39974,6 @@
 "nim" = (
 /turf/open/floor/iron/white,
 /area/ruin/powered/clownplanet)
-"nio" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/starboard/lesser)
 "niG" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
@@ -46530,8 +46501,6 @@
 /area/station/engineering/main)
 "pCH" = (
 /obj/item/clothing/under/rank/nanotrasen_consultant/hubert,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "pCL" = (
@@ -57053,13 +57022,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
-"tnp" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light/dim/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/station/maintenance/disposal/incinerator)
 "tnq" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/carbon_input{
 	dir = 8
@@ -63830,10 +63792,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "vCb" = (
-/obj/effect/spawner/random/trash/graffiti,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "vCl" = (
@@ -67815,12 +67775,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
-"xci" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/station/maintenance/disposal/incinerator)
 "xcj" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Prison Wing"
@@ -109834,8 +109788,8 @@ lBx
 azJ
 azJ
 diU
-xci
-euF
+iVs
+vpc
 tFe
 wlM
 xWc
@@ -110341,14 +110295,14 @@ abM
 abM
 abM
 pCH
-nio
+mwK
 dGL
 aNL
 arP
 pzT
 mWr
 pqB
-tnp
+ucn
 qWU
 iQZ
 vde
@@ -110597,13 +110551,13 @@ abM
 abM
 abM
 abM
-dJl
+abM
 mCL
 amH
-xci
-xci
-xci
-xci
+iVs
+iVs
+iVs
+iVs
 lgZ
 vCb
 qWU
