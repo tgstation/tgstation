@@ -30190,9 +30190,7 @@
 	},
 /area/station/command/gateway)
 "hOP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/structure/cable,
-/obj/structure/sign/delamination_counter/directional/east,
+/obj/machinery/incident_display/delam/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "hOR" = (
@@ -42069,11 +42067,11 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "kWD" = (
-/obj/structure/fireaxecabinet/directional/north,
 /obj/machinery/keycard_auth/directional/north{
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "kWM" = (
@@ -71153,6 +71151,7 @@
 /obj/item/stock_parts/cell/high,
 /obj/machinery/cell_charger,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/fireaxecabinet/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "sAa" = (
@@ -73878,6 +73877,16 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor2/aft)
+"tjV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/incident_display/delam/directional/north,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "tkb" = (
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/structure/cable,
@@ -92700,6 +92709,7 @@
 "yhO" = (
 /obj/machinery/suit_storage_unit/engine,
 /obj/structure/window/spawner/directional/east,
+/obj/machinery/incident_display/delam/directional/south,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
@@ -138347,7 +138357,7 @@ oqA
 bNR
 klY
 klY
-hOP
+klY
 nHv
 cAf
 klY
@@ -138598,7 +138608,7 @@ oIy
 bIW
 oIy
 oIy
-pso
+tjV
 xgW
 xgW
 pUf
@@ -139126,7 +139136,7 @@ uyD
 uyD
 fws
 wOm
-xgW
+unW
 dEc
 dEc
 dEc
@@ -139383,7 +139393,7 @@ jjt
 mVf
 mVF
 wOm
-unW
+hOP
 dEc
 mSe
 uov
