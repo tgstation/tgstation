@@ -66,6 +66,7 @@
 		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/t_ray,
+		/obj/item/mod/module/quick_carry,
 	)
 
 /obj/item/mod/control/pre_equipped/advanced
