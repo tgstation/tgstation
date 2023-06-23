@@ -154,10 +154,9 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	if(!check_rights_for(usr.client, R_DEBUG))
 		return
 	var/atom/movable/parent = loc
-	var/old_light_flags = parent.light_flags
 	parent.light_flags &= ~LIGHT_FROZEN
 	loc.set_light(l_on = !loc.light_on)
-	parent.light_flags = old_light_flags
+	parent.light_flags |= LIGHT_FROZEN
 
 /atom/movable/screen/light_button/toggle/proc/on_changed()
 	SIGNAL_HANDLER
@@ -249,7 +248,6 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 		return
 
 	var/atom/parent = loc
-	var/old_light_flags = parent.light_flags
 	parent.light_flags &= ~LIGHT_FROZEN
 	switch(action)
 		if("set_on")
@@ -279,7 +277,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 		if("isolate")
 			isolate_light(parent)
 
-	parent.light_flags = old_light_flags
+	parent.light_flags |= LIGHT_FROZEN
 	return TRUE
 
 /// Hides all the lights around a source temporarially, for the sake of figuring out how bad a light bleeds
@@ -300,10 +298,9 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 
 	// Now that we have all the lights (and a bit more), let's get rid of em
 	for(var/atom/light_source as anything in sources)
-		var/old_light_flags = light_source.light_flags
 		light_source.light_flags &= ~LIGHT_FROZEN
 		light_source.set_light(l_on = FALSE)
-		light_source.light_flags = old_light_flags
+		parent.light_flags |= LIGHT_FROZEN
 
 	// Now we sleep until the lighting system has processed them
 	var/current_tick = SSlighting.times_fired
@@ -319,10 +316,9 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 
 /proc/repopulate_lights(list/atom/sources)
 	for(var/atom/light_source as anything in sources)
-		var/old_light_flags = light_source.light_flags
 		light_source.light_flags &= ~LIGHT_FROZEN
 		light_source.set_light(l_on = TRUE)
-		light_source.light_flags = old_light_flags
+		parent.light_flags |= LIGHT_FROZEN
 
 /atom/movable/screen/light_button/move
 	name = "Move Light"
