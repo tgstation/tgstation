@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - rscadd: "Baseballs can now be crafted with 3 leather."
