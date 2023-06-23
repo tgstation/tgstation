@@ -99,6 +99,8 @@
 
 	if(preference_source)
 		apply_pref_name(/datum/preference/name/ai, preference_source)
+		our_AI.apply_pref_hologram_display(preference_source)
+		our_AI.set_core_display_icon(null, preference_source)
 
 	qdel(src)
 

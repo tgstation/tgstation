@@ -1631,3 +1631,20 @@ GLOBAL_LIST_EMPTY(intento_players)
 #undef TIME_TO_BEGIN
 #undef TIME_PER_DEMO_STEP
 #undef TIME_TO_RESET_ICON
+
+/*
+ * Runic Scepter
+ */
+/obj/item/toy/foam_runic_scepter
+	name = "foam scepter"
+	desc = "A foam replica of the scepters Wizards us on Vendormancy Soccer."
+	icon_state = "vendor_staff"
+	inhand_icon_state = "vendor_staff"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
+	slot_flags = ITEM_SLOT_BACK
+	attack_verb_continuous = list("smacks", "clubs", "wacks", "vendors")
+	attack_verb_simple = list("smack", "club", "wacks", "vendor")
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FLAMMABLE

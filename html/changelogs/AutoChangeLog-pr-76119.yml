@@ -1,0 +1,4 @@
+author: "Improvedname"
+delete-after: True
+changes:
+  - balance: "Weakens summoned stickmen to be 1 or 2 hit"
