@@ -14525,7 +14525,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "dGL" = (
-/obj/effect/spawner/random/trash/bin,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/dim/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -60095,6 +60094,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"urz" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/trash/bin,
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "urA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible,
 /turf/open/floor/iron,
@@ -109054,7 +109058,7 @@ aaa
 aaa
 qWU
 kxp
-iVs
+urz
 iVs
 eJM
 eJM
