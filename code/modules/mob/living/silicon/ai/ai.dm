@@ -284,16 +284,7 @@
 
 /// Apply an emote to all AI status displays on the station
 /mob/living/silicon/ai/proc/apply_emote_display(emote)
-	var/turf/ai_turf = get_turf(loc)
-
 	for(var/obj/machinery/status_display/ai/ai_display as anything in GLOB.ai_status_displays)
-		var/turf/display_turf = get_turf(ai_display)
-
-		// - Station AIs can change every display on the station Z.
-		// - Ghost role AIs (or AIs on the mining base?) can only affect their Z
-		if(!is_valid_z_level(ai_turf, display_turf))
-			continue
-
 		ai_display.emotion = emote
 		ai_display.update()
 
