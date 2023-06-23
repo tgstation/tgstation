@@ -568,6 +568,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VOIDSTORM_IMMUNE "voidstorm_immune"
 #define TRAIT_WEATHER_IMMUNE "weather_immune" //Immune to ALL weather effects.
 
+
 //non-mob traits
 /// Used for limb-based paralysis, where replacing the limb will fix it.
 #define TRAIT_PARALYSIS "paralysis"
@@ -592,6 +593,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Climbable trait, given and taken by the climbable element when added or removed. Exists to be easily checked via HAS_TRAIT().
 #define TRAIT_CLIMBABLE "trait_climbable"
+
+/// Given to the turf hosting movables with the keep_above_floor element
+#define TRAIT_TURF_EFFECTS_STOPPED "turf_effects_stopped"
+/// Given to movables that should ignore turf slowdown & co.
+#define TRAIT_IGNORE_TURF_EFFECTS "ignore_turf_effects"
 
 /// Used by the honkspam element to avoid spamming the sound. Amusing considering its name.
 #define TRAIT_HONKSPAMMING "trait_honkspamming"

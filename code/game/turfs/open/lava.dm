@@ -136,10 +136,12 @@
 	. = ..()
 	if(isliving(gone))
 		var/mob/living/leaving_mob = gone
-		if(!islava(leaving_mob.loc))
-			REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-		if(!leaving_mob.on_fire)
-			leaving_mob.update_fire()
+		REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+
+/turf/open/lava/Destroy()
+	for(var/mob/living/leaving_mob in contents)
+		REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+	return ..()
 
 /turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
@@ -251,6 +253,9 @@
 /turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)
 	if(burn_target.movement_type & (FLYING|FLOATING)) //you're flying over it.
 		return LAVA_BE_IGNORING
+
+	if(HAS_TRAIT_(src, TRAIT_TURF_NOT_TOUCHED) && !HAS_TRAIT(burn_target, TRAIT_TOUCH_TURF_ANYWAY))
+		return LAVA_BE_PROCESSING
 
 	if(isobj(burn_target))
 		if(burn_target.throwing) // to avoid gulag prisoners easily escaping, throwing only works for objects.

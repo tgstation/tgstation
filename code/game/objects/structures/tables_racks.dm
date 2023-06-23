@@ -49,6 +49,8 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/keep_above_floor)
+	ADD_TRAIT(src, TRAIT_TOUCH_TURF_ANYWAY, INNATE_TRAIT)
 	register_context()
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)

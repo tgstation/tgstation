@@ -5,6 +5,12 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(on_nobreath_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOMETABOLISM), PROC_REF(on_nometabolism_trait_gain))
 
+
+	RegisterSignal(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_PERMANENTLY_ONFIRE),
+		SIGNAL_REMOVETRAIT(TRAIT_PERMANENTLY_ONFIRE),
+	), PROC_REF(update_permanently_on_fire))
+
 /**
  * On gain of TRAIT_NOBREATH
  *
@@ -44,3 +50,8 @@
 		mind?.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
 
 	reagents.end_metabolization(keep_liverless = TRUE)
+
+///On gain of TRAIT_PERMANENTLY_ONFIRE, update the visuals if not on fire
+/mob/living/carbon/proc/update_permanently_on_fire(datum/source)
+	if(!leaving_mob.on_fire)
+		leaving_mob.update_fire()
