@@ -62,6 +62,10 @@
 		update_menu_tech()
 	return ..()
 
+/obj/machinery/mecha_part_fabricator/Destroy()
+	rmat = NULL
+	return ..()
+
 /obj/machinery/mecha_part_fabricator/proc/connect_techweb(datum/techweb/new_techweb)
 	if(stored_research)
 		UnregisterSignal(stored_research, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
