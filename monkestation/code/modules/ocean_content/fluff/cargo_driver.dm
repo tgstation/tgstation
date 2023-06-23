@@ -62,7 +62,7 @@
 	SSshuttle.centcom_message = msg
 
 	var/list/deletors = list()
-	for(var/atom/movable/listed_atom in ex.exported_atoms)
+	for(var/atom/movable/listed_atom in ex.exported_atoms_source)
 		if(listed_atom in contents_self)
 			deletors += listed_atom
 			contents_self -= listed_atom
