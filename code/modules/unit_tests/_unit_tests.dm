@@ -139,6 +139,7 @@
 #include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
 #include "inhands.dm"
+#include "jetpack_on_off.dm"
 #include "json_savefile_importing.dm"
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
