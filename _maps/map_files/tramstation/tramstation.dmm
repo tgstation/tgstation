@@ -8022,9 +8022,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Command - Bridge North"
 	},
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "bsW" = (
@@ -16512,9 +16510,7 @@
 "etQ" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/light/directional/south,
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom/holding)
 "euC" = (
@@ -19739,9 +19735,7 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 1
 	},
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
 "fGZ" = (
@@ -29189,9 +29183,7 @@
 	name = "Shipment Delivery Chute Activator";
 	pixel_x = -11
 	},
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "jpC" = (
@@ -36317,9 +36309,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "lQE" = (
@@ -42193,9 +42183,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "nXh" = (
@@ -45213,9 +45201,7 @@
 "piT" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/commons/vacant_room)
 "piX" = (
@@ -45527,9 +45513,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
 "pnF" = (
@@ -51841,9 +51825,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "rBb" = (
@@ -57120,9 +57102,7 @@
 	dir = 1;
 	req_access = list("syndicate")
 	},
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark/small,
 /area/station/commons/vacant_room)
 "tsV" = (
@@ -61628,9 +61608,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron,
 /area/station/security/office)
 "uSV" = (

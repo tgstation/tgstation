@@ -15087,9 +15087,7 @@
 	dir = 5
 	},
 /obj/structure/sign/departments/science/alt/directional/east,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "dKs" = (
@@ -20744,9 +20742,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "ffP" = (
@@ -25816,9 +25812,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "gtG" = (
@@ -40565,9 +40559,7 @@
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
 "kbT" = (
@@ -44544,9 +44536,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "lcF" = (
@@ -55223,9 +55213,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "nPQ" = (
@@ -85519,9 +85507,7 @@
 	pixel_x = 32
 	},
 /obj/item/kirbyplants/random,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "vuG" = (

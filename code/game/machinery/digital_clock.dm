@@ -154,3 +154,5 @@
 	return_overlays += hour_tenth_overlay
 
 	return return_overlays
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/digital_clock, 28)

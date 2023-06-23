@@ -13547,9 +13547,7 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "fdH" = (
@@ -41360,9 +41358,7 @@
 "oUB" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/start/hangover,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "oUE" = (
@@ -52719,9 +52715,7 @@
 /area/station/command/heads_quarters/qm)
 "sXE" = (
 /obj/structure/cable,
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/wood,
 /area/station/service/library)
 "sXF" = (
@@ -59824,9 +59818,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "vxJ" = (
@@ -62987,9 +62979,7 @@
 	},
 /area/station/engineering/atmos/pumproom)
 "wDH" = (
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/wood,
 /area/station/service/library)
 "wEf" = (
@@ -64040,9 +64030,7 @@
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "wYo" = (

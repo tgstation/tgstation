@@ -7877,9 +7877,7 @@
 "bSE" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/fore)
 "bSH" = (
@@ -9161,9 +9159,7 @@
 /obj/structure/chair/sofa/right/brown{
 	dir = 1
 	},
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/carpet,
 /area/station/medical/psychology)
 "ciW" = (
@@ -9374,9 +9370,7 @@
 /area/station/service/kitchen/abandoned)
 "clP" = (
 /obj/machinery/chem_master,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/textured_large,
 /area/station/medical/chemistry)
 "clT" = (
@@ -26901,9 +26895,7 @@
 	dir = 8
 	},
 /obj/machinery/recharge_station,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "gVw" = (
@@ -28475,9 +28467,7 @@
 /area/station/hallway/secondary/exit)
 "hpz" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "hpF" = (
@@ -30896,9 +30886,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "hYN" = (
@@ -34989,9 +34977,7 @@
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/light/cold/no_nightlight/directional/north,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "jcN" = (
@@ -46334,9 +46320,7 @@
 "lZS" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/fore)
 "map" = (
@@ -53114,9 +53098,7 @@
 /area/station/service/chapel)
 "nGm" = (
 /obj/structure/cable/multilayer/multiz,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/floor3/fore)
 "nGx" = (
@@ -54168,9 +54150,7 @@
 "nTJ" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "nTO" = (
@@ -64708,9 +64688,7 @@
 /obj/machinery/recharger,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/item/multitool,
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "qGV" = (
@@ -66320,9 +66298,7 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/official/random/directional/south,
-/obj/machinery/digital_clock{
-	pixel_y = -28
-	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/wood,
 /area/station/service/bar/atrium)
 "rdV" = (
@@ -69409,9 +69385,7 @@
 "rYq" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor3/fore)
 "rYw" = (
@@ -71211,9 +71185,7 @@
 /obj/item/stock_parts/cell/high,
 /obj/machinery/cell_charger,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "sAa" = (
@@ -75423,9 +75395,7 @@
 "tEh" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor4/aft)
 "tEi" = (
@@ -79407,9 +79377,7 @@
 /area/station/maintenance/floor1/port)
 "uKt" = (
 /obj/structure/cable/multilayer/multiz,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/floor1/fore)
 "uKz" = (
@@ -91734,9 +91702,7 @@
 	dir = 4
 	},
 /obj/structure/chair/sofa/bench/left,
-/obj/machinery/digital_clock{
-	pixel_y = 28
-	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "xSb" = (
