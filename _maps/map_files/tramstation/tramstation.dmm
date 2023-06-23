@@ -16405,7 +16405,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "epF" = (
@@ -27915,7 +27914,7 @@
 "iOC" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external/glass{
-	name = "The Noise's Jam-Tastic radical listening Post"
+	name = "The Noise's Jam-Tastic Radical Listening Post"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -32542,14 +32541,12 @@
 "kyz" = (
 /obj/machinery/light_switch/directional/west{
 	pixel_x = -25;
-	pixel_y = -6
+	pixel_y = 10
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 1
 	},
-/obj/machinery/power/apc/auto_name/directional/west{
-	pixel_y = 8
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -33875,9 +33872,8 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "kTO" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
 /obj/structure/cable,
+/obj/structure/lattice/catwalk,
 /turf/open/openspace,
 /area/station/asteroid)
 "kTT" = (
@@ -35951,7 +35947,6 @@
 /area/station/commons/dorms)
 "lFM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -62342,8 +62337,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "vcS" = (
@@ -68923,7 +68916,7 @@
 	req_access = "theatre"
 	},
 /obj/machinery/door/poddoor/shutters{
-	name = "Power and stolen shoe storage";
+	name = "Power and Stolen Shoe Sstorage";
 	id = "clownbunker"
 	},
 /turf/open/floor/iron/herringbone,
@@ -158899,7 +158892,7 @@ aaS
 yiM
 qFZ
 nvB
-afH
+yiM
 afy
 afP
 nJq
@@ -160707,7 +160700,7 @@ afy
 agc
 yiM
 agg
-aGL
+age
 aGL
 afv
 aaa
@@ -162506,7 +162499,7 @@ afy
 agc
 qas
 agg
-aGL
+age
 afv
 abW
 aaa
@@ -174328,8 +174321,8 @@ afy
 agc
 izU
 agg
-aGL
-aGL
+age
+age
 afv
 aaa
 abM
@@ -176127,8 +176120,8 @@ afy
 agc
 mZJ
 agg
-aGL
-aGL
+age
+age
 afv
 aaa
 aaa
