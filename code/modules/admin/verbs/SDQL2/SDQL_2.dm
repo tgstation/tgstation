@@ -201,7 +201,6 @@
 		message_admins(span_danger("ERROR: Non-admin [key_name(usr)] attempted to execute a SDQL query!"))
 		usr.log_message("non-admin attempted to execute a SDQL query!", LOG_ADMIN)
 		return FALSE
-	query_text as message
 	var/query_text = input("Run SDQL2 query:", "SDQL2", null) as message|null
 	if (!length(query_text))
 		return
