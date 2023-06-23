@@ -97,6 +97,7 @@
 		"sec_beanbag_slug",
 		"sec_dart",
 		"buckshot_shell",
+		"shotgun_slug",
 		"sec_Islug",
 		"sec_rshot",
 		"servingtray",
