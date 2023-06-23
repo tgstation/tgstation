@@ -12721,9 +12721,6 @@
 /obj/structure/sign/warning/secure_area{
 	pixel_x = 32
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
@@ -59452,6 +59449,12 @@
 	dir = 6
 	},
 /area/station/service/chapel)
+"ubQ" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/glass/reinforced,
+/area/station/engineering/break_room)
 "ubR" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -104634,7 +104637,7 @@ poy
 cBS
 idZ
 ifk
-qkG
+ubQ
 dgE
 rif
 rQT
