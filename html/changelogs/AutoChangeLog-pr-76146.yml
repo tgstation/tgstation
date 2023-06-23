@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed Godwoken Syndrome VoG commands triggering the spam filter"

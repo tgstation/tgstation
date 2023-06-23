@@ -3,7 +3,6 @@
 	plural_form = "Mothmen"
 	id = SPECIES_MOTH
 	species_traits = list(
-		LIPS,
 		HAS_MARKINGS,
 	)
 	inherent_traits = list(
