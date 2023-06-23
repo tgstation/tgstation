@@ -1632,7 +1632,6 @@ GLOBAL_LIST_EMPTY(intento_players)
 #undef TIME_PER_DEMO_STEP
 #undef TIME_TO_RESET_ICON
 
-
 /*
  * Runic Scepter
  */
