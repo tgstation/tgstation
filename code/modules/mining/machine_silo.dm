@@ -38,7 +38,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		GLOB.ore_silo_default = src
 
 /obj/machinery/ore_silo/Destroy()
-	materials = null
 	if (GLOB.ore_silo_default == src)
 		GLOB.ore_silo_default = null
 
@@ -48,6 +47,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	ore_connected_machines = null
 
 	materials.retrieve_all()
+	materials = null
 
 	return ..()
 
