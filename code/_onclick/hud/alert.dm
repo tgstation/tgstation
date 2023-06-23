@@ -372,6 +372,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/give/highfive
 	additional_desc_text = "Click this alert to slap it."
+	/// Tracks active "to slow"ing so we can't spam click
+	var/too_slowing_this_guy = FALSE
 
 /atom/movable/screen/alert/give/highfive/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
 	return "a high-five"
@@ -381,6 +383,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	RegisterSignal(offer.owner, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(check_fake_out))
 
 /atom/movable/screen/alert/give/highfive/handle_transfer()
+	if(too_slowing_this_guy)
+		return
+
 	var/mob/living/carbon/taker = owner
 	var/mob/living/offerer = offer.owner
 	var/obj/item/receiving = offer.offered_item
@@ -398,6 +403,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		qdel(src)
 		return
 
+	too_slowing_this_guy = TRUE
 	offerer.visible_message(span_notice("[rube] rushes in to high-five [offerer], but-"), span_nicegreen("[rube] falls for your trick just as planned, lunging for a high-five that no longer exists! Classic!"), ignored_mobs=rube)
 	to_chat(rube, span_nicegreen("You go in for [offerer]'s high-five, but-"))
 	addtimer(CALLBACK(src, PROC_REF(too_slow_p2), offerer, rube), 0.5 SECONDS)
