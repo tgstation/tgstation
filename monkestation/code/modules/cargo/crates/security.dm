@@ -28,3 +28,10 @@
 		/obj/item/ammo_box/magazine/wt550m9/wtic = 2,
 	)
 	crate_name = "wt-550 ammo crate"
+
+/datum/supply_pack/security/armory/combatknives
+	name = "Combat Knives Crate"
+	desc = "Three combat knives guaranteed to fit snugly inide any Nanotrasen standard boot. Warranty void if you stab your own ankle."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/item/knife/combat = 3)
+	crate_name = "combat knife crate"
