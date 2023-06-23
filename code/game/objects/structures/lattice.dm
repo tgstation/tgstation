@@ -95,7 +95,7 @@
 
 /obj/structure/lattice/catwalk/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/keep_above_floor)
+	AddElement(/datum/element/disable_turf_effects, list(TRAIT_TURF_NO_SLOWDOWN, TRAIT_LAVA_STOPPED))
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
 	return span_notice("The supporting rods look like they could be <b>cut</b>.")
