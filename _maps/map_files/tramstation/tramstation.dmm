@@ -7704,7 +7704,6 @@
 /area/station/medical/medbay/central)
 "bhG" = (
 /obj/machinery/door/airlock/bananium,
-/obj/effect/mapping_helpers/airlock/access/all/service/theatre,
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/ruin/powered/clownplanet)
 "bia" = (
@@ -55946,7 +55945,6 @@
 /turf/open/floor/wood/large,
 /area/station/service/library)
 "sUu" = (
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mine/shrapnel/capspawn{
 	name = "Ultra Hilarious Land Mine";
 	desc = "The joke is that you die, Honk.";
@@ -55955,6 +55953,7 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "The Noise's Jam-Tastic Radical Listening Post"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/theatre,
 /turf/open/indestructible/permalube,
 /area/ruin/powered/clownplanet)
 "sUC" = (

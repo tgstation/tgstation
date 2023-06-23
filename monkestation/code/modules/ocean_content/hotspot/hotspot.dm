@@ -36,6 +36,8 @@
 /datum/hotspot/proc/move_center(turf/destination, force = FALSE)
 	if(!can_drift && !force)
 		return
+	if(!destination)
+		return
 	///we check if we touch the worlds edge, or hit a turf we deem as a blacklist ie unbreakable trench edge walls
 	if(is_edge_or_blacklist(destination))
 		drift_direction = turn(drift_direction, 180)

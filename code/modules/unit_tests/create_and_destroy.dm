@@ -37,6 +37,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		/obj/effect/spawner/random_bar,
 		///this instant starts a timer, and if its being instantly deleted it can cause issues
 		/obj/machinery/atm,
+		/datum/hotspot,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
