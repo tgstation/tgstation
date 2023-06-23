@@ -1,4 +1,0 @@
-author: "cnleth"
-delete-after: True
-changes:
-  - bugfix: "Rockets can no longer embed in people and cause blunt wounds instead of piercing"
