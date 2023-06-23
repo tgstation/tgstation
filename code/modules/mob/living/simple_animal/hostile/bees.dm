@@ -182,8 +182,8 @@
 /mob/living/simple_animal/hostile/bee/proc/assign_reagent(datum/reagent/R)
 	if(istype(R))
 		var/static/list/injection_range = list(1, 5)
-		//clear the old since this one is going to have some new value
-		RemoveElement(/datum/element/venomous, beegent.type, injection_range)
+		if(beegent) //clear the old since this one is going to have some new value
+			RemoveElement(/datum/element/venomous, beegent.type, injection_range)
 		beegent = R
 		name = "[initial(name)] ([R.name])"
 		real_name = name
