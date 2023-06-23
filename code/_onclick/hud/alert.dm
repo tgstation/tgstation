@@ -427,7 +427,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/give/highfive/proc/check_fake_out(mob/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	var/mob/living/offerer = offer.owner
 	if(QDELETED(offer.offered_item))
 		examine_list += "[span_warning("[source]'s arm appears tensed up, as if [source.p_they()] plan on pulling it back suddenly...")]\n"
 
