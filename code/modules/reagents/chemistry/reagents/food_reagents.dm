@@ -787,14 +787,13 @@
 	ph = 11.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	//Lazy list of mobs affected by the luminosity of this reagent.
-	var/list/mobs_affected
+	var/static/list/mobs_affected
 
-/datum/reagent/consumable/tinlux/expose_mob(mob/living/exposed_mob)
-	. = ..()
-	add_reagent_light(exposed_mob)
+/datum/reagent/consumable/tinlux/on_mob_metabolize(mob/living/metabolizer)
+	add_reagent_light(metabolizer)
 
-/datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/M)
-	remove_reagent_light(M)
+/datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/metabolizer)
+	remove_reagent_light(metabolizer)
 
 /datum/reagent/consumable/tinlux/proc/on_living_holder_deletion(mob/living/source)
 	SIGNAL_HANDLER
