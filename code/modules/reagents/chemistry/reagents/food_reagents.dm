@@ -786,6 +786,7 @@
 	taste_description = "tingling mushroom"
 	ph = 11.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	penetrates_skin = ALL
 	//Lazy list of mobs affected by the luminosity of this reagent.
 	var/static/list/mobs_affected
 
