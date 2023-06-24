@@ -294,6 +294,7 @@
 		return FALSE
 	//Were all out
 	if(!Use(user))
+		//This balloon alert is a little redundant, but I want to avoid a new player "yeah i know the light is empty" moment
 		user.balloon_alert(user, "light replacer empty!")
 		return FALSE
 
