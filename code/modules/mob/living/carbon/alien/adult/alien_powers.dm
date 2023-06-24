@@ -200,7 +200,9 @@ Doesn't work on other aliens/AI.*/
 	desc = "Drench an object in acid, destroying it over time."
 	button_icon_state = "alien_acid"
 	plasma_cost = 200
+	/// The acid power for the aliens acid corrosion, will ignore mobs
 	var/corrosion_acid_power = 200
+	/// The acid volume for the aliens acid corrosion, will ignore mobs
 	var/corrosion_acid_volume = 1000
 
 /datum/action/cooldown/alien/acid/corrosion/set_click_ability(mob/on_who)
