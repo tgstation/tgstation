@@ -65,7 +65,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/get_snowflake_data()
 	var/list/data = list("snowflake_id" = MECHA_SNOWFLAKE_ID_OREBOX_MANAGER)
-	data["cargo"] = length(ore_box?.contents)
+	data["cargo"] = length(chassis.ore_box?.contents)
 	return data
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/ui_act(action, list/params)
