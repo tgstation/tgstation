@@ -51,6 +51,10 @@
 	///Used to set custom starting reagent purity for synthetic and natural food. Ignored when set to null.
 	var/starting_reagent_purity = null
 
+/obj/item/food/New(loc, _starting_reagent_purity, ...)
+	starting_reagent_purity = _starting_reagent_purity
+	return ..()
+
 /obj/item/food/Initialize(mapload)
 	. = ..()
 	if(food_reagents)
@@ -68,14 +72,13 @@
 	make_decompose(mapload)
 	make_bakeable()
 	make_microwaveable()
-	if(!starting_reagent_purity)
-		adjust_reagent_purity()
 	ADD_TRAIT(src, FISHING_BAIT_TRAIT, INNATE_TRAIT)
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/make_edible()
 	AddComponent(/datum/component/edible,\
 		initial_reagents = food_reagents,\
+		reagent_purity = starting_reagent_purity,\
 		food_flags = food_flags,\
 		foodtypes = foodtypes,\
 		volume = max_volume,\
@@ -119,29 +122,3 @@
 /obj/item/food/proc/make_decompose(mapload)
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time, stink_particles = decomposition_particles)
-
-///Adjusts reagent purity
-/obj/item/food/proc/adjust_reagent_purity()
-	if(!starting_reagent_purity || !reagents.reagent_list.len)
-		return
-	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
-		reagent.purity = starting_reagent_purity
-
-/// TODO: Replace with complexity buff
-/obj/item/food/proc/get_quality()
-	if(!reagents.reagent_list.len)
-		return FOOD_QUALITY_NORMAL // No reagents equal to normal quality
-
-	var/average_purity = reagents.get_average_purity()
-	var/purity_above_base = clamp((average_purity - 0.5) * 2, 0, 1)
-	var/quality_min = FOOD_QUALITY_NORMAL
-	var/quality_max = FOOD_QUALITY_TOP
-	var/quality = round(LERP(quality_min, quality_max, purity_above_base))
-	return quality
-
-/// TODO: DEBUG, REMOVE
-/obj/item/food/examine(mob/user)
-	. = ..()
-	. += span_notice("Reagent purities:")
-	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
-		. += span_notice("- [reagent.name] [reagent.volume]u: [round(reagent.purity * 100)]% pure")

@@ -43,6 +43,7 @@ Behavior that's still missing from this component that original food items had t
 
 /datum/component/edible/Initialize(
 	list/initial_reagents,
+	reagent_purity = 0.5,
 	food_flags = NONE,
 	foodtypes = NONE,
 	volume = 50,
@@ -70,7 +71,7 @@ Behavior that's still missing from this component that original food items had t
 	src.tastes = string_assoc_list(tastes)
 	src.check_liked = check_liked
 
-	setup_initial_reagents(initial_reagents)
+	setup_initial_reagents(initial_reagents, reagent_purity)
 
 /datum/component/edible/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
@@ -193,7 +194,7 @@ Behavior that's still missing from this component that original food items had t
 	return ..()
 
 /// Sets up the initial reagents of the food.
-/datum/component/edible/proc/setup_initial_reagents(list/reagents)
+/datum/component/edible/proc/setup_initial_reagents(list/reagents, reagent_purity)
 	var/atom/owner = parent
 	if(owner.reagents)
 		owner.reagents.maximum_volume = volume
@@ -203,28 +204,30 @@ Behavior that's still missing from this component that original food items had t
 	for(var/rid in reagents)
 		var/amount = reagents[rid]
 		if(length(tastes) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
-			owner.reagents.add_reagent(rid, amount, tastes.Copy())
+			owner.reagents.add_reagent(rid, amount, tastes.Copy(), added_purity = reagent_purity)
 		else
-			owner.reagents.add_reagent(rid, amount)
+			owner.reagents.add_reagent(rid, amount, added_purity = reagent_purity)
 
 /datum/component/edible/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
+
+	var/atom/owner = parent
 
 	if(foodtypes)
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
 		examine_list += span_notice("It is [lowertext(english_list(types))].")
 
-	if(istype(parent, /obj/item/food))
-		var/obj/item/food/food = parent
-		var/quality = get_preceived_food_quality(user, food)
-		if(quality > 0)
-			var/quality_label = GLOB.food_quality_description[quality]
-			examine_list += span_green("You find this meal [quality_label].")
-		else if (quality == 0)
-			examine_list += span_notice("You find this meal edible.")
-		else
-			examine_list += span_warning("You find this meal inedible.")
-		var/purity = food.reagents.get_average_purity()
+	var/quality = get_preceived_food_quality(user)
+	if(quality > 0)
+		var/quality_label = GLOB.food_quality_description[quality]
+		examine_list += span_green("You find this meal [quality_label].")
+	else if (quality == 0)
+		examine_list += span_notice("You find this meal edible.")
+	else
+		examine_list += span_warning("You find this meal inedible.")
+
+	if(owner.reagents.total_volume > 0)
+		var/purity = owner.reagents.get_average_purity()
 		switch(purity)
 			if(0 to 0.2)
 				examine_list += span_warning("The ingredients are terrible.")
@@ -236,22 +239,26 @@ Behavior that's still missing from this component that original food items had t
 				examine_list += span_green("The ingredients are organic.")
 			if(0.8 to 1)
 				examine_list += span_green("The ingredients are finest.")
-
+		// TODO: DEBUG, REMOVE WHEN DONE
+		examine_list += span_notice("Reagent purities:")
+		for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
+			examine_list += span_notice("- [reagent.name] [reagent.volume]u: [round(reagent.purity * 100)]% pure")
+		// /TODO: DEBUG, REMOVE WHEN DONE
 
 	var/datum/mind/mind = user.mind
-	if(mind && HAS_TRAIT_FROM(parent, TRAIT_FOOD_CHEF_MADE, REF(mind)))
-		examine_list += span_green("[parent] was made by you!")
+	if(mind && HAS_TRAIT_FROM(owner, TRAIT_FOOD_CHEF_MADE, REF(mind)))
+		examine_list += span_green("[owner] was made by you!")
 
 	if(!(food_flags & FOOD_IN_CONTAINER))
 		switch(bitecount)
 			if(0)
 				// pass
 			if(1)
-				examine_list += span_notice("[parent] was bitten by someone!")
+				examine_list += span_notice("[owner] was bitten by someone!")
 			if(2, 3)
-				examine_list += span_notice("[parent] was bitten [bitecount] times!")
+				examine_list += span_notice("[owner] was bitten [bitecount] times!")
 			else
-				examine_list += span_notice("[parent] was bitten multiple times!")
+				examine_list += span_notice("[owner] was bitten multiple times!")
 
 /datum/component/edible/proc/UseFromHand(obj/item/source, mob/living/M, mob/living/user)
 	SIGNAL_HANDLER
@@ -552,11 +559,25 @@ Behavior that's still missing from this component that original food items had t
 		if(food.venue_value >= FOOD_PRICE_EXOTIC)
 			H.add_mob_memory(/datum/memory/good_food, food = parent)
 
-/// Get food quality adjusted according to species diet
-/datum/component/edible/proc/get_preceived_food_quality(mob/living/carbon/human/eater, obj/item/food/food)
-	var/food_quality = food.get_quality()
+/// TODO: Replace with complexity buff
+/datum/component/edible/proc/get_quality()
+	var/atom/owner = parent
 
-	if(HAS_TRAIT(food, TRAIT_FOOD_SILVER)) // it's not real food
+	if(!owner.reagents.reagent_list.len)
+		return FOOD_QUALITY_NORMAL // No reagents equal to normal quality
+
+	var/average_purity = owner.reagents.get_average_purity()
+	var/purity_above_base = clamp((average_purity - 0.5) * 2, 0, 1)
+	var/quality_min = FOOD_QUALITY_NORMAL
+	var/quality_max = FOOD_QUALITY_TOP
+	var/quality = round(LERP(quality_min, quality_max, purity_above_base))
+	return quality
+
+/// Get food quality adjusted according to species diet
+/datum/component/edible/proc/get_preceived_food_quality(mob/living/carbon/human/eater)
+	var/food_quality = get_quality()
+
+	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
 		food_quality += isjellyperson(eater) ? 2 : -4
 
 	food_quality += TOXIC_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.dna.species.toxic_food)
@@ -594,7 +615,6 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/UseByAnimal(datum/source, mob/user)
 
 	SIGNAL_HANDLER
-
 
 	var/atom/owner = parent
 
