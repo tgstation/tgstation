@@ -50,15 +50,11 @@
 	pull_force = MOVE_FORCE_EXTREMELY_STRONG
 
 	ai_controller = /datum/ai_controller/basic_controller/statue
-	/// Loot this mob drops on death.
-	var/loot
 	/// Stores the creator in here if it has one.
 	var/mob/living/creator = null
 
 /mob/living/basic/statue/Initialize(mapload, mob/living/creator)
 	. = ..()
-	if(LAZYLEN(loot))
-		AddElement(/datum/element/death_drops, loot)
 	AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_MOVEMENT | NO_OBSERVED_ATTACKS)
 	ADD_TRAIT(src, TRAIT_UNOBSERVANT, INNATE_TRAIT)
 

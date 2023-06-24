@@ -192,7 +192,9 @@
 		real_name = name
 		//clear the old since this one is going to have some new value
 		RemoveElement(/datum/element/venomous)
-		var/static/list/injection_range = list(1, 5)
+		var/static/list/injection_range
+		if(!injection_range)
+			injection_range = string_numbers_list(list(1, 5))
 		AddElement(/datum/element/venomous, beegent.type, injection_range)
 		generate_bee_visuals()
 

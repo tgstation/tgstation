@@ -31,7 +31,8 @@
 
 /mob/living/basic/fire_shark/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, list(/obj/effect/gibspawner/human))
+	var/static/list/death_loot = list(/obj/effect/gibspawner/human)
+	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/death_gases, /datum/gas/plasma, 40)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/venomous, /datum/reagent/phlogiston, 2)
