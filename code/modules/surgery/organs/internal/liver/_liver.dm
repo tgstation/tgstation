@@ -129,8 +129,10 @@
 	var/mob/living/carbon/liver_owner = owner
 	if(!istype(liver_owner))
 		return
-	//If your liver is failing or you lack a metabolism then we use the liverless version of metabolize
-	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM))
+
+	//If your liver is failing, then we use the liverless version of metabolize
+	//We don't check for TRAIT_NOMETABOLISM here because we do want a functional liver if somehow we have one inserted
+	if(organ_flags & ORGAN_FAILING)
 		liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
 		return
 
