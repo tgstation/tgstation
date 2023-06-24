@@ -383,13 +383,13 @@
 		return
 	/// SKYRAPTOR EDIT BEGIN
 	if(greyscale_config_worn_bodytypes && greyscale_config_last_bodtype)
-		to_chat(world, "Trying to apply bodytype-specific setup [greyscale_config_last_bodtype]")
+		//to_chat(world, "Trying to apply bodytype-specific setup [greyscale_config_last_bodtype]")
 		if(greyscale_config_worn_bodytypes[greyscale_config_last_bodtype])
 			greyscale_config_worn = greyscale_config_worn_bodytypes[greyscale_config_last_bodtype]
 			worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors) //hacky but we roll with it
-			to_chat(world, "Found a match [greyscale_config_worn_bodytypes[greyscale_config_last_bodtype]]")
+			//to_chat(world, "Found a match [greyscale_config_worn_bodytypes[greyscale_config_last_bodtype]]")
 		else
-			to_chat(world, "Failed to find matching bodytype-specific greyscale!")
+			//to_chat(world, "Failed to find matching bodytype-specific greyscale!")
 			worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors)
 	else if(greyscale_config_worn) /// SKYRAPTOR EDIT END
 		worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors)
