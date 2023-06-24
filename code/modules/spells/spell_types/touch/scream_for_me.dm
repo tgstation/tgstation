@@ -8,7 +8,7 @@
 
 	school = SCHOOL_SANGUINE
 	invocation_type = INVOCATION_SHOUT
-	cooldown_time = 60 SECONDS
+	cooldown_time = 40 SECONDS
 	cooldown_reduction_per_rank = 10 SECONDS
 
 	invocation = "SCREAM FOR ME!!"
