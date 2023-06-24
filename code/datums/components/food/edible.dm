@@ -538,9 +538,6 @@ Behavior that's still missing from this component that original food items had t
 		H.add_mood_event("toxic_food", /datum/mood_event/disgusting_food)
 		return
 
-	if(!istype(parent, /obj/item/food))
-		return
-	var/obj/item/food/food = parent
 	var/food_quality = get_preceived_food_quality(H, parent)
 	if(food_quality <= 0)
 		to_chat(H,span_notice("That didn't taste very good..."))
@@ -548,7 +545,7 @@ Behavior that's still missing from this component that original food items had t
 		H.add_mood_event("gross_food", /datum/mood_event/gross_food)
 	else
 		food_quality = min(food_quality, FOOD_QUALITY_TOP)
-		var/timeout_mod = food.reagents.get_average_purity() * 2 // 100% at average purity 50%
+		var/timeout_mod = parent.reagents.get_average_purity() * 2 // 100% at average purity 50%
 		var/event = GLOB.food_quality_events[food_quality]
 		H.add_mood_event("quality_food", event, timeout_mod)
 		H.adjust_disgust(-5 + -2 * food_quality * fraction)
@@ -556,6 +553,8 @@ Behavior that's still missing from this component that original food items had t
 		var/quality_label = GLOB.food_quality_description[food_quality]
 		to_chat(H,span_notice("That's \an [quality_label] meal."))
 
+	if(istype(parent, /obj/item/food))
+		var/obj/item/food/food = parent
 		if(food.venue_value >= FOOD_PRICE_EXOTIC)
 			H.add_mob_memory(/datum/memory/good_food, food = parent)
 
