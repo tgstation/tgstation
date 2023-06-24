@@ -4,9 +4,9 @@
 	plural_form = "Lizardfolk"
 	id = SPECIES_LIZARD
 	inherent_traits = list(
+		TRAIT_MUTANT_COLORS,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TACKLING_TAILED_DEFENDER,
-		TRAIT_MUTANT_COLORS,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutant_bodyparts = list("body_markings" = "None", "legs" = "Normal Legs")
@@ -137,9 +137,8 @@ Lizard subspecies: ASHWALKERS
 	mutantlungs = /obj/item/organ/internal/lungs/lavaland
 	mutantbrain = /obj/item/organ/internal/brain/primitive
 	inherent_traits = list(
-		//TRAIT_LITERATE,
-		TRAIT_VIRUSIMMUNE,
 		TRAIT_MUTANT_COLORS,
+		TRAIT_VIRUSIMMUNE,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash
 	digitigrade_customization = DIGITIGRADE_FORCED

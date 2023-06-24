@@ -2,9 +2,9 @@
 	name = "Snailperson"
 	id = SPECIES_SNAIL
 	inherent_traits = list(
-		TRAIT_NO_SLIP_ALL,
-		TRAIT_NO_UNDERWEAR,
 		TRAIT_MUTANT_COLORS,
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_SLIP_ALL,
 	)
 
 	coldmod = 0.5 //snails only come out when its cold and wet
