@@ -300,7 +300,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	for(var/atom/light_source as anything in sources)
 		light_source.light_flags &= ~LIGHT_FROZEN
 		light_source.set_light(l_on = FALSE)
-		parent.light_flags |= LIGHT_FROZEN
+		light_source.light_flags |= LIGHT_FROZEN
 
 	// Now we sleep until the lighting system has processed them
 	var/current_tick = SSlighting.times_fired
@@ -318,7 +318,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	for(var/atom/light_source as anything in sources)
 		light_source.light_flags &= ~LIGHT_FROZEN
 		light_source.set_light(l_on = TRUE)
-		parent.light_flags |= LIGHT_FROZEN
+		light_source.light_flags |= LIGHT_FROZEN
 
 /atom/movable/screen/light_button/move
 	name = "Move Light"
