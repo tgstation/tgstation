@@ -25,7 +25,11 @@
 		var/list/types = bitfield_to_list(drink_type, FOOD_FLAGS)
 		. += span_notice("It is [lowertext(english_list(types))].")
 
-// all this copypaste from the edible component is quite deplorable, why the fuck does this not use the edible component?
+/**
+ * Checks if the mob actually liked drinking this cup.
+ *
+ * This is a bunch of copypaste from the edible component, consider reworking this to use it!
+ */
 /obj/item/reagent_containers/cup/proc/checkLiked(fraction, mob/eater)
 	if(last_check_time + 5 SECONDS > world.time)
 		return FALSE

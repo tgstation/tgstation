@@ -15,7 +15,8 @@
 	payday_modifier = 0.75
 	ass_image = 'icons/ass/asscat.png'
 	family_heirlooms = list(/obj/item/toy/cattoy)
-	var/original_felinid = TRUE //set to false for felinids created by mass-purrbation
+	/// When false, this is a felinid created by mass-purrbation
+	var/original_felinid = TRUE
 
 // Prevents felinids from taking toxin damage from carpotoxin
 /datum/species/human/felinid/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
