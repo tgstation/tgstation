@@ -81,7 +81,8 @@
 	if (deployable)
 		var/obj/item/parent_gear = parent
 		var/mob/living/carbon/human/wearer = parent_gear.loc
-		wearer.dropItemToGround(deployable, force = TRUE, silent = TRUE)
+		if (istype(wearer))
+			wearer.dropItemToGround(deployable, force = TRUE, silent = TRUE)
 	QDEL_NULL(deployable)
 	QDEL_NULL(toggle_action)
 	QDEL_NULL(on_created)
