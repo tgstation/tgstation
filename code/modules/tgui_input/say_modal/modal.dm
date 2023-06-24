@@ -55,6 +55,11 @@
 	);
 
 
+/**
+ * Centers the tgui-say window on the main window.
+ * Arguments: id - the id of the window to set the position of
+ * This code borrowed lovingly from itsmeow on Bee
+ */
 /client/proc/center_window(id, window_width, window_height)
 	//Center the window on the main window
 	var/mainwindow_data = params2list(winget(src, "mainwindow", "pos;outer-size;size;inner-size;is-maximized"))
@@ -91,6 +96,7 @@
  * as soon as the window sends the "ready" message.
  */
 /datum/tgui_say/proc/load()
+	set waitfor = FALSE
 	window_open = FALSE
 	client.center_window("tgui_say", 231, 30)
 	winshow(client, "tgui_say", FALSE)
