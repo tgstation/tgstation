@@ -64,7 +64,7 @@
 				defibber.emote("scream")
 
 				changeling.visible_message(
-					span_bolddanger("[changeling] awakens suddenly, snatching [defib] out of [defibber]'s hands and ripping [defibber.p_their()] arms off!"),
+					span_bolddanger("[changeling] awakens suddenly, snatching [defib] out of [defibber]'s hands while ripping off [removed_arms >= 2 ? "" : "one of "][defibber.p_their()] arms!"),
 					vision_distance = COMBAT_MESSAGE_RANGE,
 					ignored_mobs = list(changeling, defibber),
 				)
