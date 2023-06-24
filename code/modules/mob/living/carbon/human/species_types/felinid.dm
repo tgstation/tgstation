@@ -128,7 +128,7 @@
 /datum/species/human/felinid/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
 	human_for_preview.hairstyle = "Hime Cut"
 	human_for_preview.hair_color = "#ffcccc" // pink
-	human_for_preview.update_body_parts()
+	human_for_preview.update_body_parts(update_limb_data = TRUE)
 
 	var/obj/item/organ/internal/ears/cat/cat_ears = human_for_preview.get_organ_by_type(/obj/item/organ/internal/ears/cat)
 	if (cat_ears)

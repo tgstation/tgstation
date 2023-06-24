@@ -16,7 +16,7 @@
 /datum/species/human/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.hairstyle = "Business Hair"
 	human.hair_color = "#bb9966" // brown
-	human.update_body_parts()
+	human.update_body_parts(update_limb_data = TRUE)
 
 /datum/species/human/randomize_features(mob/living/carbon/human/human_mob)
 	human_mob.skin_tone = random_skin_tone()

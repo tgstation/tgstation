@@ -609,12 +609,12 @@
 		. += "-[facial_hairstyle]"
 		. += "-[override_hair_color || fixed_hair_color || facial_hair_color]"
 		. += "-[facial_hair_alpha]"
-		if(facial_hair_gradient_style)
-			. += "-[facial_hair_gradient_style]"
-			. += "-[facial_hair_gradient_color]"
+		if(gradient_styles?[GRADIENT_FACIAL_HAIR_KEY])
+			. += "-[gradient_styles[GRADIENT_FACIAL_HAIR_KEY]]"
+			. += "-[gradient_colors[GRADIENT_FACIAL_HAIR_KEY]]"
 
-	if(show_missing_eyes)
-		. += "-SHOW_MISSING_EYES"
+	if(show_eyeless)
+		. += "-SHOW_EYELESS"
 	if(show_debrained)
 		. += "-SHOW_DEBRAINED"
 		return .
@@ -625,16 +625,16 @@
 		. += "-[hair_style]"
 		. += "-[override_hair_color || fixed_hair_color || hair_color]"
 		. += "-[hair_alpha]"
-		if(hair_gradient_style)
-			. += "-[hair_gradient_style]"
-			. += "-[hair_gradient_color]"
+		if(gradient_styles?[GRADIENT_HAIR_KEY])
+			. += "-[gradient_styles[GRADIENT_HAIR_KEY]]"
+			. += "-[gradient_colors[GRADIENT_HAIR_KEY]]"
 
 	return .
 
 /obj/item/bodypart/head/generate_husk_key()
 	. = ..()
-	if(show_missing_eyes)
-		. += "-SHOW_MISSING_EYES"
+	if(show_eyeless)
+		. += "-SHOW_EYELESS"
 	if(show_debrained)
 		. += "-SHOW_DEBRAINED"
 	return .

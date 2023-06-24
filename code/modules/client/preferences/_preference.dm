@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	if (!isnull(relevant_mutant_bodypart) || !isnull(relevant_species_trait) || !isnull(relevant_external_organ))
+	if (!isnull(relevant_mutant_bodypart) || !isnull(relevant_species_trait) || !isnull(relevant_external_organ) || !isnull(relevant_head_flag))
 		var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 
 		var/datum/species/species = new species_type
