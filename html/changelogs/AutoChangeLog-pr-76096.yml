@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed hard delete with Kinetic Crusher causing the projectile function to brick"

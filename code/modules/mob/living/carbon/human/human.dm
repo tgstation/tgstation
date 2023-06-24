@@ -483,7 +483,10 @@
 			return FALSE
 
 		visible_message(span_notice("[src] performs CPR on [target.name]!"), span_notice("You perform CPR on [target.name]."))
-		add_mood_event("saved_life", /datum/mood_event/saved_life)
+		if(HAS_TRAIT(src, TRAIT_MORBID))
+			add_mood_event("morbid_saved_life", /datum/mood_event/morbid_saved_life)
+		else
+			add_mood_event("saved_life", /datum/mood_event/saved_life)
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))
@@ -917,6 +920,12 @@
 		return
 
 	return ..()
+
+/mob/living/carbon/human/reagent_check(datum/reagent/chem, seconds_per_tick, times_fired)
+	. = ..()
+	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
+		return
+	return dna.species.handle_chemical(chem, src, seconds_per_tick, times_fired)
 
 /mob/living/carbon/human/updatehealth()
 	. = ..()
