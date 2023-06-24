@@ -27,7 +27,7 @@
 
 // all this copypaste from the edible component is quite deplorable, why the fuck does this not use the edible component?
 /obj/item/reagent_containers/cup/proc/checkLiked(fraction, mob/eater)
-	if(last_check_time + 50 > world.time)
+	if(last_check_time + 5 SECONDS > world.time)
 		return FALSE
 	if(!ishuman(eater))
 		return FALSE
