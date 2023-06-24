@@ -10,6 +10,7 @@
 	invocation_type = INVOCATION_SHOUT
 	cooldown_time = 40 SECONDS
 	cooldown_reduction_per_rank = 10 SECONDS
+	spell_max_level = 3 //max is 10 seconds.
 
 	invocation = "SCREAM FOR ME!!"
 
