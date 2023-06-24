@@ -52,7 +52,7 @@
 
 
 		var/datum/biome/selected_biome
-		if(height <= 0.4) //If height is less than 0.4, we generate biomes based on the heat and humidity of the area.
+		if(height <= 0.8) //If height is less than 0.4, we generate biomes based on the heat and humidity of the area.
 			var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[drift_x]", "[drift_y]"))
 			var/heat = text2num(rustg_noise_get_at_coordinates("[heat_seed]", "[drift_x]", "[drift_y]"))
 			var/heat_level //Type of heat zone we're in LOW-MEDIUM-HIGH
@@ -94,28 +94,28 @@
 	///2D list of all biomes based on heat and humidity combos.
 	var/list/possible_biomes = list(
 	BIOME_LOW_HEAT = list(
-		BIOME_LOW_HUMIDITY = /datum/biome/ocean_sand,
-		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/ocean_sand_flora,
-		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/ocean_sand_flora,
-		BIOME_HIGH_HUMIDITY = /datum/biome/ocean_sand
+		BIOME_LOW_HUMIDITY = /datum/biome/ocean_sand/above,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/ocean_sand_flora/above,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/ocean_sand_flora/above,
+		BIOME_HIGH_HUMIDITY = /datum/biome/ocean_sand/above
 		),
 	BIOME_LOWMEDIUM_HEAT = list(
-		BIOME_LOW_HUMIDITY = /datum/biome/ocean_rocklight,
-		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/ocean_sand,
-		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/ocean_redsand,
-		BIOME_HIGH_HUMIDITY = /datum/biome/ocean_sand_flora
+		BIOME_LOW_HUMIDITY = /datum/biome/ocean_rocklight/above,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/ocean_sand/above,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/ocean_redsand/above,
+		BIOME_HIGH_HUMIDITY = /datum/biome/ocean_sand_flora/above
 		),
 	BIOME_HIGHMEDIUM_HEAT = list(
-		BIOME_LOW_HUMIDITY = /datum/biome/ocean_rockmed,
-		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/ocean_sand,
-		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/ocean_redsand,
-		BIOME_HIGH_HUMIDITY =/datum/biome/ocean_redsand
+		BIOME_LOW_HUMIDITY = /datum/biome/ocean_rockmed/above,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/ocean_sand/above,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/ocean_redsand/above,
+		BIOME_HIGH_HUMIDITY =/datum/biome/ocean_redsand/above
 		),
 	BIOME_HIGH_HEAT = list(
-		BIOME_LOW_HUMIDITY = /datum/biome/ocean_rockheavy,
-		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/ocean_sand,
-		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/ocean_redsand,
-		BIOME_HIGH_HUMIDITY = /datum/biome/ocean_redsand
+		BIOME_LOW_HUMIDITY = /datum/biome/ocean_rockheavy/above,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/ocean_sand/above,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/ocean_redsand/above,
+		BIOME_HIGH_HUMIDITY = /datum/biome/ocean_redsand/above
 		)
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
@@ -136,10 +136,6 @@
 
 		var/drift_x = (gen_turf.x + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)) / perlin_zoom
 		var/drift_y = (gen_turf.y + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)) / perlin_zoom
-
-		var/height = text2num(rustg_noise_get_at_coordinates("[height_seed]", "[drift_x]", "[drift_y]"))
-
-
 		var/datum/biome/selected_biome
 
 		var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[drift_x]", "[drift_y]"))

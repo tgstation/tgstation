@@ -88,18 +88,12 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	///are we captured, this is easier than having to run checks on turfs for vents
 	var/captured = FALSE
 
-/turf/open/floor/plating/ocean/dark
-	has_starlight = FALSE
 	var/rand_variants = 0
 	var/rand_chance = 30
 
-/turf/open/floor/plating/ocean/dark/Initialize()
-	. = ..()
-	if(rand_variants && prob(rand_chance))
-		var/random = rand(1,rand_variants)
-		icon_state = "[base_icon_state][random]"
-		base_icon_state = "[base_icon_state][random]"
 
+/turf/open/floor/plating/ocean/dark
+	has_starlight = FALSE
 
 /turf/open/floor/plating/ocean/Initialize()
 	. = ..()
@@ -112,6 +106,12 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	light_color = static_overlay.color
 	SSliquids.unvalidated_oceans |= src
 	SSliquids.ocean_turfs |= src
+
+	if(rand_variants && prob(rand_chance))
+		var/random = rand(1,rand_variants)
+		icon_state = "[base_icon_state][random]"
+		base_icon_state = "[base_icon_state][random]"
+
 
 /turf/open/floor/plating/ocean/Destroy()
 	. = ..()
@@ -441,6 +441,10 @@ GLOBAL_LIST_INIT(the_lever, list())
 	//map_generator = /datum/map_generator/ocean_generator
 	map_generator = /datum/map_generator/cave_generator/trench
 
+
+/area/ocean/generated_above
+	map_generator = /datum/map_generator/ocean_generator
+
 /turf/open/floor/plating/ocean/pit
 	name = "pit"
 
@@ -455,3 +459,54 @@ GLOBAL_LIST_INIT(the_lever, list())
 	. = ..()
 	var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
 	arrived.forceMove(turf)
+
+
+
+/turf/closed/mineral/random/ocean/above
+	baseturfs = /turf/open/floor/plating/ocean/rock
+	turf_type = /turf/open/floor/plating/ocean/rock
+	color = "#58606b"
+
+/turf/closed/mineral/random/high_chance/ocean/above
+	baseturfs = /turf/open/floor/plating/ocean/rock
+	turf_type = /turf/open/floor/plating/ocean/rock
+	color = "#58606b"
+
+/turf/closed/mineral/random/low_chance/ocean/above
+	baseturfs = /turf/open/floor/plating/ocean/rock
+	turf_type = /turf/open/floor/plating/ocean/rock
+	color = "#58606b"
+
+/turf/closed/mineral/random/stationside/ocean/above
+	baseturfs = /turf/open/floor/plating/ocean/rock
+	turf_type = /turf/open/floor/plating/ocean/rock
+	color = "#58606b"
+
+/turf/open/floor/plating/ocean/ironsand
+	baseturfs = /turf/open/floor/plating/ocean/dark/ironsand
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "ironsand1"
+	base_icon_state = "ironsand"
+	rand_variants = 15
+	rand_chance = 100
+
+/turf/open/floor/plating/ocean/rock
+	name = "rock"
+	baseturfs = /turf/open/floor/plating/ocean/dark/rock
+	icon = 'monkestation/icons/turf/seafloor.dmi'
+	icon_state = "seafloor"
+	base_icon_state = "seafloor"
+	rand_variants = 0
+
+/turf/open/floor/plating/ocean/rock/warm
+	ocean_temp = T20C + 30
+
+/turf/open/floor/plating/ocean/rock/medium
+	icon_state = "seafloor_med"
+	base_icon_state = "seafloor_med"
+	baseturfs = /turf/open/floor/plating/ocean/rock/medium
+
+/turf/open/floor/plating/ocean/rock/heavy
+	icon_state = "seafloor_heavy"
+	base_icon_state = "seafloor_heavy"
+	baseturfs = /turf/open/floor/plating/ocean/rock/heavy
