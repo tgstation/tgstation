@@ -3141,6 +3141,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"doE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/very_dim/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "doH" = (
 /turf/open/floor/grass,
 /area/station/science/genetics)
@@ -6099,6 +6105,10 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/iron,
 /area/mine/storage/public)
+"gyp" = (
+/obj/machinery/light/very_dim/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "gyq" = (
 /obj/machinery/duct/industrial/waste,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6608,6 +6618,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"gXs" = (
+/obj/machinery/duct/industrial/waste,
+/obj/machinery/light/very_dim/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "gXL" = (
 /obj/structure/closet/wardrobe/black,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -9541,6 +9556,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"kff" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/very_dim/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "kfL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -12252,6 +12273,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"niw" = (
+/obj/machinery/light/very_dim/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "niB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -13812,6 +13837,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"oQv" = (
+/obj/machinery/duct/industrial/waste,
+/obj/machinery/light/very_dim/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "oQJ" = (
 /obj/structure/window/spawner/directional/south,
 /obj/machinery/atmospherics/components/trinary/filter/atmos/co2{
@@ -14326,6 +14356,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
+"pzS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/very_dim/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "pAj" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -15326,6 +15362,13 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/open/floor/plating/ocean,
 /area/ocean/generated_above)
+"qGq" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/costume,
+/obj/item/clothing/mask/balaclava,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron/sepia,
+/area/station/commons/fitness/recreation)
 "qGs" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -15582,6 +15625,12 @@
 	},
 /turf/open/floor/engine,
 /area/station/maintenance/port/central)
+"qTf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/very_dim/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "qTi" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/scientist,
@@ -15645,6 +15694,16 @@
 "qYQ" = (
 /turf/closed/wall/r_wall,
 /area/ocean/generated_above)
+"qYU" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/spawner/random/bureaucracy/briefcase{
+	spawn_loot_count = 2;
+	spawn_loot_split = 1
+	},
+/obj/machinery/light/very_dim/directional/east,
+/turf/open/floor/iron/sepia,
+/area/station/commons/fitness/recreation)
 "qZc" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/vending/wardrobe/chem_wardrobe,
@@ -18040,6 +18099,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/emergency/starboard)
+"tJY" = (
+/obj/machinery/light/very_dim/directional/south,
+/turf/open/floor/iron/sepia,
+/area/station/commons/fitness/recreation)
 "tKh" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -18136,6 +18199,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
+"tML" = (
+/obj/machinery/duct/industrial/waste,
+/obj/machinery/light/very_dim/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "tMP" = (
 /obj/structure/window/spawner/directional/south,
 /obj/machinery/airalarm/directional/east,
@@ -20434,6 +20502,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
+"woA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/very_dim/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "woE" = (
 /obj/machinery/light/directional/east,
 /obj/structure/disposalpipe/segment{
@@ -21402,11 +21476,11 @@
 /obj/machinery/door/airlock/security{
 	name = "Armory"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/security/hos,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "xur" = (
@@ -37263,7 +37337,7 @@ gau
 vwP
 ffP
 pHV
-ffP
+gyp
 nZE
 cda
 jLV
@@ -38558,7 +38632,7 @@ qbR
 qbR
 lhq
 qbR
-qbR
+kff
 tKO
 qbR
 qbR
@@ -39055,7 +39129,7 @@ ffP
 ffP
 ffP
 ffP
-ffP
+niw
 ffP
 ffP
 ffP
@@ -39066,7 +39140,7 @@ pHV
 nDl
 kBt
 nDl
-nDl
+oQv
 nDl
 nDl
 nDl
@@ -39577,14 +39651,14 @@ ffP
 uGB
 qbR
 qMC
-nDl
+gXs
 xwm
 auY
 uCB
 vqB
 auY
 auY
-uCB
+qGq
 vqB
 xwm
 oyj
@@ -39842,7 +39916,7 @@ oas
 oas
 oas
 oas
-oas
+tJY
 xwm
 pQj
 dgB
@@ -40609,7 +40683,7 @@ nDl
 xwm
 auY
 uCB
-vqB
+qYU
 auY
 auY
 uCB
@@ -44202,7 +44276,7 @@ nLV
 nLV
 qbR
 pHV
-nDl
+gXs
 pkw
 pkw
 orx
@@ -58360,7 +58434,7 @@ nDl
 kBt
 nDl
 sfL
-nDl
+tML
 nDl
 nDl
 nDl
@@ -60163,7 +60237,7 @@ gmC
 tYA
 qbR
 qbR
-qbR
+pzS
 qbR
 qbR
 qbR
@@ -60392,7 +60466,7 @@ rVh
 dZT
 nHL
 pGv
-qbR
+woA
 irE
 nDl
 nDl
@@ -60404,7 +60478,7 @@ nDl
 nDl
 nDl
 bZV
-qbR
+doE
 pGv
 mxq
 mxq
@@ -60440,7 +60514,7 @@ liL
 aCd
 lkZ
 lkZ
-lkZ
+qTf
 lkZ
 lkZ
 lkZ
