@@ -92,11 +92,12 @@ const SnowflakeOrebox = (props: { module: MechaUtility }, context) => {
   return (
     <>
       {cargo && <Box>Cargo</Box>}
+      {cargo &&
       <Box style={{ 'margin-left': '1rem' }}>
         <div
           key={props.module.ref}
           className="UtilityModulePane__SnowflakeEjector__entry">
-          <UtilityName name={item.name} />
+          <UtilityName name={'Ore Box'} />
           <Button
             onClick={() =>
               act('equip_act', {
@@ -108,6 +109,7 @@ const SnowflakeOrebox = (props: { module: MechaUtility }, context) => {
           </Button>
         </div>
       </Box>
+      }
     </>
   );
 };

@@ -776,7 +776,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MIND_TEMPORARILY_GONE "temporarily_gone"
 
 /// Trait given to mechs that can have orebox functionality on movement
-#define TRAIT_OREBOX_FUNCTIONAL "orebox_mecha"
+#define TRAIT_OREBOX_FUNCTIONAL "orebox_functional"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
