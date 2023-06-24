@@ -230,15 +230,15 @@ Behavior that's still missing from this component that original food items had t
 		var/purity = owner.reagents.get_average_purity()
 		switch(purity)
 			if(0 to 0.2)
-				examine_list += span_warning("The ingredients are terrible.")
+				examine_list += span_warning("It is made of terrible ingredients...")
 			if(0.2 to 0.4)
-				examine_list += span_warning("The ingredients are synthetic.")
+				examine_list += span_warning("It is made of synthetic ingredients.")
 			if(0.4 to 0.6)
-				examine_list += span_notice("The ingredients are mediocore.")
+				examine_list += span_notice("It is made of average ingredients.")
 			if(0.6 to 0.8)
-				examine_list += span_green("The ingredients are organic.")
+				examine_list += span_green("It is made of organic ingredients!")
 			if(0.8 to 1)
-				examine_list += span_green("The ingredients are finest.")
+				examine_list += span_green("It is made of finest ingredients!")
 		// TODO: DEBUG, REMOVE WHEN DONE
 		examine_list += span_notice("Reagent purities:")
 		for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
@@ -559,23 +559,17 @@ Behavior that's still missing from this component that original food items had t
 		if(food.venue_value >= FOOD_PRICE_EXOTIC)
 			H.add_mob_memory(/datum/memory/good_food, food = parent)
 
-/// TODO: Replace with complexity buff
-/datum/component/edible/proc/get_quality()
-	var/atom/owner = parent
+/// Get the complexity of the crafted food
+/datum/component/edible/proc/get_recipe_complexity()
+	if(!HAS_TRAIT(parent, TRAIT_FOOD_CHEF_MADE) || !istype(parent, /obj/item/food))
+		return 0 // Non-crafted food has no complexity
 
-	if(!owner.reagents.reagent_list.len)
-		return FOOD_QUALITY_NORMAL // No reagents equal to normal quality
+	var/obj/item/food/food = parent
+	return food.crafting_recipe_complexity
 
-	var/average_purity = owner.reagents.get_average_purity()
-	var/purity_above_base = clamp((average_purity - 0.5) * 2, 0, 1)
-	var/quality_min = FOOD_QUALITY_NORMAL
-	var/quality_max = FOOD_QUALITY_TOP
-	var/quality = round(LERP(quality_min, quality_max, purity_above_base))
-	return quality
-
-/// Get food quality adjusted according to species diet
+/// Get food quality adjusted according to eater's preferences
 /datum/component/edible/proc/get_preceived_food_quality(mob/living/carbon/human/eater)
-	var/food_quality = get_quality()
+	var/food_quality = get_recipe_complexity()
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
 		food_quality += isjellyperson(eater) ? 2 : -4

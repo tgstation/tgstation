@@ -142,6 +142,7 @@ type Data = {
   material_occurences: Material[];
   foodtypes: string[];
   nutriments: number;
+  complexity: number;
 };
 
 export const PersonalCrafting = (props, context) => {
@@ -828,14 +829,19 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
                   }
                 />
               )}
+              {item.complexity !== undefined && (
+                <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
+                  Complexity: {item.complexity}
+                </Box>
+              )}
               {item.nutriments > 0 && (
                 <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
                   Nutrition: {item.nutriments}
-                  <Divider />
                 </Box>
               )}
               {item.foodtypes?.length > 0 && (
                 <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
+                  <Divider />
                   {item.foodtypes.map((foodtype) => (
                     <FoodtypeContent
                       key={item.ref}

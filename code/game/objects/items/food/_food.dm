@@ -50,6 +50,8 @@
 	var/decomposition_particles = /particles/stink
 	///Used to set custom starting reagent purity for synthetic and natural food. Ignored when set to null.
 	var/starting_reagent_purity = null
+	///How exquisite the meal is. Applicable to crafted food, increasing its quality.
+	var/crafting_recipe_complexity = 0
 
 /obj/item/food/New(loc, _starting_reagent_purity, ...)
 	starting_reagent_purity = _starting_reagent_purity
