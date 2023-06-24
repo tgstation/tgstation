@@ -438,7 +438,8 @@ GLOBAL_LIST_INIT(the_lever, list())
 
 /area/ocean/generated
 	base_lighting_alpha = 0
-	map_generator = /datum/map_generator/ocean_generator
+	//map_generator = /datum/map_generator/ocean_generator
+	map_generator = /datum/map_generator/cave_generator/trench
 
 /turf/open/floor/plating/ocean/pit
 	name = "pit"
