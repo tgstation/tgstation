@@ -54,6 +54,36 @@
 			inline_js = file("tgui/public/tgui-say.bundle.js"),
 	);
 
+
+/client/proc/center_window(id, window_width, window_height)
+	//Center the window on the main window
+	var/mainwindow_data = params2list(winget(src, "mainwindow", "pos;outer-size;size;inner-size;is-maximized"))
+	var/mainwindow_pos = splittext(mainwindow_data["pos"], ",")
+	var/mainwindow_size = splittext(mainwindow_data["size"], "x")
+	var/mainwindow_innersize = splittext(mainwindow_data["inner-size"], "x")
+	var/mainwindow_outersize = splittext(mainwindow_data["outer-size"], "x")
+
+	var/maximized = (mainwindow_data["is-maximized"] == "true")
+
+	if(!maximized)
+		//If the window is anchored (for example win+right), is-maximized is false but pos is no longer reliable
+		//In that case, compare inner-size and size to guess if it's actually anchored
+		maximized = text2num(mainwindow_size[1]) != text2num(mainwindow_innersize[1])\
+			|| abs(text2num(mainwindow_size[2]) - text2num(mainwindow_innersize[2])) > 30
+
+	var/target_x
+	var/target_y
+
+	// If the window is maximized or anchored, pos is the last position when the window was free-floating
+	if(maximized)
+		target_x = text2num(mainwindow_outersize[1])/2-window_width/2
+		target_y = text2num(mainwindow_outersize[2])/2-window_height/2
+	else
+		target_x = text2num(mainwindow_pos[1])+text2num(mainwindow_outersize[1])/2-window_width/2
+		target_y = text2num(mainwindow_pos[2])+text2num(mainwindow_outersize[2])/2-window_height/2
+
+	winset(src, id, "pos=[target_x],[target_y]")
+
 /**
  * Ensures nothing funny is going on window load.
  * Minimizes the window, sets max length, closes all
@@ -62,6 +92,7 @@
  */
 /datum/tgui_say/proc/load()
 	window_open = FALSE
+	client.center_window("tgui_say", 231, 30)
 	winshow(client, "tgui_say", FALSE)
 	window.send_message("props", list(
 		lightMode = client.prefs?.read_preference(/datum/preference/toggle/tgui_say_light_mode),
