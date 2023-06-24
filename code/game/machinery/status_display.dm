@@ -463,29 +463,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	name = "\improper AI display"
 	desc = "A small screen which the AI can use to present itself."
 	current_mode = SD_PICTURE
-
-	var/emotion = AI_EMOTION_BLANK
-
-	/// A mapping between AI_EMOTION_* string constants, which also double as user readable descriptions, and the name of the iconfile.
-	var/static/list/emotion_map = list(
-		AI_EMOTION_BLANK = AI_DISPLAY_DONT_GLOW,
-		AI_EMOTION_VERY_HAPPY = "ai_veryhappy",
-		AI_EMOTION_HAPPY = "ai_happy",
-		AI_EMOTION_NEUTRAL = "ai_neutral",
-		AI_EMOTION_UNSURE = "ai_unsure",
-		AI_EMOTION_CONFUSED = "ai_confused",
-		AI_EMOTION_SAD = "ai_sad",
-		AI_EMOTION_BSOD = "ai_bsod",
-		AI_EMOTION_PROBLEMS = "ai_trollface",
-		AI_EMOTION_AWESOME = "ai_awesome",
-		AI_EMOTION_DORFY = "ai_urist",
-		AI_EMOTION_THINKING = "ai_thinking",
-		AI_EMOTION_FACEPALM = "ai_facepalm",
-		AI_EMOTION_FRIEND_COMPUTER = "ai_friend",
-		AI_EMOTION_BLUE_GLOW = "ai_sal",
-		AI_EMOTION_RED_GLOW = "ai_hal",
-	)
-
+	var/emotion = AI_DISPLAY_DONT_GLOW
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 
@@ -501,8 +479,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 	if(!isAI(user))
 		return
 	var/list/choices = list()
-	for(var/emotion_const in emotion_map)
-		var/icon_state = emotion_map[emotion_const]
+	for(var/emotion_const in GLOB.ai_status_display_emotes)
+		var/icon_state = GLOB.ai_status_display_emotes[emotion_const]
 		choices[emotion_const] = image(icon = 'icons/obj/status_display.dmi', icon_state = icon_state)
 
 	var/emotion_result = show_radial_menu(user, src, choices, tooltips = TRUE)
@@ -517,7 +495,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 		update_appearance()
 		return PROCESS_KILL
 
-	set_picture(emotion_map[emotion])
+	set_picture(GLOB.ai_status_display_emotes[emotion])
 	return PROCESS_KILL
 
 /obj/item/circuit_component/status_display

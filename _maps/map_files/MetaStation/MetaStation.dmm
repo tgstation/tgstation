@@ -1416,6 +1416,8 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/rods/fifty,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/item/wallframe/digital_clock,
+/obj/item/wallframe/digital_clock,
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "aCE" = (
@@ -9565,11 +9567,6 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "dHg" = (
-/obj/structure/sign/map/right{
-	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
-	icon_state = "map-right-MS";
-	pixel_y = 32
-	},
 /obj/machinery/computer/atmos_alert,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -9762,10 +9759,10 @@
 "dKL" = (
 /obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/poster/official/random/directional/north,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -13541,6 +13538,13 @@
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
+"fdu" = (
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/digital_clock/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/command/bridge)
 "fdH" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 4
@@ -22913,7 +22917,6 @@
 	name = "Engineering Security Doors"
 	},
 /obj/effect/turf_decal/caution/stand_clear,
-/obj/structure/sign/delamination_counter/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "iug" = (
@@ -29219,15 +29222,11 @@
 /turf/open/floor/iron,
 /area/station/command/teleporter)
 "kCq" = (
-/obj/structure/sign/map/left{
-	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
-	icon_state = "map-left-MS";
-	pixel_y = 32
-	},
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/modular_computer/preset/engineering,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "kCr" = (
@@ -33669,7 +33668,6 @@
 	dir = 4;
 	name = "Gas to Chamber"
 	},
-/obj/structure/sign/delamination_counter/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "mkO" = (
@@ -34268,10 +34266,10 @@
 	},
 /obj/item/wrench,
 /obj/item/multitool,
-/obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/incident_display/delam/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "mwj" = (
@@ -41347,9 +41345,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "oUB" = (
-/obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/start/hangover,
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "oUE" = (
@@ -52706,6 +52704,7 @@
 /area/station/command/heads_quarters/qm)
 "sXE" = (
 /obj/structure/cable,
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/wood,
 /area/station/service/library)
 "sXF" = (
@@ -57723,6 +57722,12 @@
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"uJL" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/incident_display/delam/directional/south,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "uKa" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 6
@@ -59808,6 +59813,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "vxJ" = (
@@ -62967,6 +62973,10 @@
 	dir = 1
 	},
 /area/station/engineering/atmos/pumproom)
+"wDH" = (
+/obj/machinery/digital_clock/directional/north,
+/turf/open/floor/wood,
+/area/station/service/library)
 "wEf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
 	dir = 1
@@ -64015,6 +64025,7 @@
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "wYo" = (
@@ -66956,6 +66967,7 @@
 "ybl" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ybn" = (
@@ -87988,7 +88000,7 @@ mjr
 nxz
 ueD
 sVY
-mjr
+wDH
 rSx
 pEH
 pEH
@@ -96197,7 +96209,7 @@ tqI
 gkD
 nXm
 wNh
-veO
+fdu
 duI
 duI
 duI
@@ -110318,7 +110330,7 @@ fec
 rHn
 fJP
 tYc
-mdk
+uJL
 fJy
 bDW
 bDW
