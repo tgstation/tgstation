@@ -63,12 +63,12 @@
 /// Registers COMSIG_MOB_REAGENT_CHECK from owner
 /obj/item/organ/internal/liver/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
-	RegisterSignal(organ_owner, COMSIG_MOB_REAGENT_CHECK, PROC_REF(handle_chemical))
+	RegisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_CHEMICAL, PROC_REF(handle_chemical))
 
 /// Unregisters COMSIG_MOB_REAGENT_CHECK from owner
 /obj/item/organ/internal/liver/on_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
-	UnregisterSignal(organ_owner, COMSIG_MOB_REAGENT_CHECK)
+	UnregisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_CHEMICAL)
 
 /**
  * This proc can be overriden by liver subtypes so they can handle certain chemicals in special ways.
