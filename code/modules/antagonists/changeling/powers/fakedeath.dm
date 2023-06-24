@@ -26,7 +26,7 @@
 
 /// Used to enable fakedeath and register relevant signals / start timers
 /datum/action/changeling/fakedeath/proc/enable_fakedeath(mob/living/changeling)
-	if(revive_ready)
+	if(revive_ready || HAS_TRAIT_FROM(changeling, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
 		return
 
 	changeling.fakedeath(CHANGELING_TRAIT)
