@@ -10,15 +10,15 @@
 	overlay_icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/lights/icons/lighting_overlay.dmi'
 	brightness = 6.5
 	fire_brightness = 8
-	fire_colour = "#FF0000"
+	fire_colour = "#ff5555"
 	bulb_colour = LIGHT_COLOR_FAINT_BLUE
 	bulb_power = 1.15
 	nightshift_light_color = LIGHT_COLOR_FAINT_BLUE // we don't have dynamic nightshift like Skrat so this has to suffice
 	//god y'all why did you have to make so much of that shit nonmodular
-	bulb_low_power_colour = "#FF6600"
+	bulb_low_power_colour = "#ff9955"
 	bulb_low_power_brightness_mul = 0.75
 	bulb_low_power_pow_min = 0.75
-	bulb_emergency_colour = "#0066FF"
+	bulb_emergency_colour = "#5599ff"
 	bulb_major_emergency_brightness_mul = 1.1
 	power_consumption_rate = 5.62
 	var/maploaded = FALSE //So we don't have a lot of stress on startup.
@@ -135,7 +135,6 @@
 
 //completely overriding this is ill-advised but here we are
 /obj/machinery/light/update_icon_state()
-	. = ..()
 	switch(status) // set icon_states
 		if(LIGHT_OK)
 			var/area/local_area =get_room_area(src)
