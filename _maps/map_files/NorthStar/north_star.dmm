@@ -53702,7 +53702,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "nOj" = (
-/obj/vehicle/sealed/mecha/ripley@SUBTYPES,
+/obj/vehicle/sealed/mecha/working/ripley/cargo,
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 4
 	},
