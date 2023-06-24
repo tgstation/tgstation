@@ -63,19 +63,8 @@ jobs:
           tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -Werror
       - name: Run Tests
         run: |
-          sudo mkdir /cores
-          sudo chmod 777 /cores
-          sudo bash -c 'echo "/cores/%e.%p.%t" > /proc/sys/kernel/core_pattern'
-          ulimit -c unlimited
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ inputs.map }}
-      - name: Catch Faults
-        uses: actions/upload-artifact@v3
-        if: ${{ failure() }}  # Run only if something went wrong
-        with:
-          name: cores
-          path: /cores
-
       - name: Upload screenshot tests
         if: always()
         uses: actions/upload-artifact@v3
