@@ -317,7 +317,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	if (!isnull(relevant_mutant_bodypart) \
+	if ( \
+		!isnull(relevant_mutant_bodypart) \
 		|| !isnull(relevant_inherent_trait) \
 		|| !isnull(relevant_external_organ) \
 		|| !isnull(relevant_head_flag) \
