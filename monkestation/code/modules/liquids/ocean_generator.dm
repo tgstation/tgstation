@@ -124,7 +124,6 @@
 
 /datum/map_generator/cave_generator/trench/generate_terrain(list/turfs)
 
-	var/height_seed = rand(0, 50000)
 	var/humidity_seed = rand(0, 50000)
 	var/heat_seed = rand(0, 50000)
 

@@ -58,9 +58,6 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	. = ..()
 	ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 
-/turf/open/openspace/ocean/Initialize()
-	. = ..()
-
 /turf/open/floor/plating/ocean
 	plane = FLOOR_PLANE
 	layer = TURF_LAYER
@@ -78,6 +75,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	planetary_atmos = TRUE
 	initial_gas_mix = OSHAN_DEFAULT_ATMOS
 	light_power = 0.75
+
 	var/static/obj/effect/abstract/ocean_overlay/static_overlay
 	var/static/list/ocean_reagents = list(/datum/reagent/water = 100)
 	var/ocean_temp = T20C
@@ -90,7 +88,6 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 
 	var/rand_variants = 0
 	var/rand_chance = 30
-
 
 /turf/open/floor/plating/ocean/dark
 	has_starlight = FALSE
@@ -112,6 +109,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 		icon_state = "[base_icon_state][random]"
 		base_icon_state = "[base_icon_state][random]"
 
+	update_starlight()
 
 /turf/open/floor/plating/ocean/Destroy()
 	. = ..()
