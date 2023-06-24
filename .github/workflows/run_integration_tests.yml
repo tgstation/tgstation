@@ -66,7 +66,7 @@ jobs:
         run: |
           ulimit -c unlimited
           source $HOME/BYOND/byond/bin/byondsetup
-          sudo bash tools/ci/run_server.sh ${{ inputs.map }}
+          bash tools/ci/run_server.sh ${{ inputs.map }}
           sudo chmod -R +rwx /cores/*
       - name: Capture Seg Faults
         if: always()
