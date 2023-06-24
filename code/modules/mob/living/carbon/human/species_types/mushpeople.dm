@@ -66,4 +66,4 @@
 
 /datum/species/mush/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	forced_colour = FALSE
-	. = ..()
+	return ..()
