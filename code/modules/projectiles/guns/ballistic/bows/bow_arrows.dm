@@ -14,7 +14,7 @@
 
 /obj/item/ammo_casing/caseless/arrow/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/element/envenomable_casing)
+	AddElement(/datum/element/envenomable_casing)
 
 ///base arrow projectile
 /obj/projectile/bullet/reusable/arrow

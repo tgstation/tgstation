@@ -107,6 +107,9 @@
 	/// Pulls out model paths for DMM
 	var/static/regex/model_path = new(@'(\/[^\{]*?(?:\{.*?\})?)(?:,|$)', "g")
 
+	/// If we are currently loading this map
+	var/loading = FALSE
+
 	#ifdef TESTING
 	var/turfsSkipped = 0
 	#endif
@@ -249,9 +252,13 @@
 
 #define MAPLOADING_CHECK_TICK \
 	if(TICK_CHECK) { \
-		SSatoms.map_loader_stop(REF(src)); \
-		stoplag(); \
-		SSatoms.map_loader_begin(REF(src)); \
+		if(loading) { \
+			SSatoms.map_loader_stop(REF(src)); \
+			stoplag(); \
+			SSatoms.map_loader_begin(REF(src)); \
+		} else { \
+			stoplag(); \
+		} \
 	}
 
 // Do not call except via load() above.
@@ -259,6 +266,7 @@
 	PRIVATE_PROC(TRUE)
 	// Tell ss atoms that we're doing maploading
 	// We'll have to account for this in the following tick_checks so it doesn't overflow
+	loading = TRUE
 	SSatoms.map_loader_begin(REF(src))
 
 	// Loading used to be done in this proc
@@ -273,6 +281,7 @@
 
 	// And we are done lads, call it off
 	SSatoms.map_loader_stop(REF(src))
+	loading = FALSE
 
 	if(new_z)
 		for(var/z_index in bounds[MAP_MINZ] to bounds[MAP_MAXZ])

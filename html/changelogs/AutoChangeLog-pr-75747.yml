@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: " material container[and hence autolathe] now won't touch the content's of abstract/hologram item's like the tentacle gun"
-  - bugfix: "material container[and hence autolathe] consuming indestructible items"
-  - bugfix: "material container[and hence autolathe] cosuming half the content's of an object and leaving out the rest if there isn't space producing broken behaviour in those item's"
-  - qol: "material container[and hence autolathe] display's the item name consumed and it's material worth to let player's fully know the content's of the item being recycled"
