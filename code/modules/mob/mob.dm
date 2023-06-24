@@ -180,7 +180,7 @@
 			hud_list[hud] = list()
 
 		else
-			var/image/I = image('icons/mob/huds/hud.dmi', src, "")
+			var/image/I = image('modular_skyraptor/modules/aesthetics/ui_greenened/hud/hud.dmi', src, "") //SKYRAPTOR EDIT: UGH WHY ISN'T THIS MODULAR Y'ALL
 			I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 			hud_list[hud] = I
 		set_hud_image_active(hud, update_huds = FALSE) //by default everything is active. but dont add it to huds to keep control.

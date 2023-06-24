@@ -8,6 +8,8 @@
 	base_icon_state = "doorctrl"
 	skin = ""
 	icon_state = "doorctrl"
+	light_color = "#FFFF00"
+
 	var/skin_raptsys = "doorctrl"
 	///The light mask used in the icon file for emissive layer
 	var/light_mask = "button-light-mask"
@@ -69,6 +71,7 @@
 	skin_raptsys = "launcher"
 	light_mask = "launch-light-mask"
 	skin = ""
+	light_color = "#FFFF00"
 
 /obj/machinery/button/ignition
 	base_icon_state = "launcher"
@@ -76,6 +79,7 @@
 	skin_raptsys = "launcher"
 	light_mask = "launch-light-mask"
 	skin = ""
+	light_color = "#FFFF00"
 
 /obj/machinery/button/flasher
 	base_icon_state = "launcher"
@@ -83,6 +87,7 @@
 	skin_raptsys = "launcher"
 	light_mask = "launch-light-mask"
 	skin = ""
+	light_color = "#FFFF00"
 
 /obj/machinery/button/curtain
 	base_icon_state = "launcher"
@@ -90,6 +95,7 @@
 	skin_raptsys = "launcher"
 	light_mask = "launch-light-mask"
 	skin = ""
+	light_color = "#FFFF00"
 
 /obj/machinery/button/crematorium
 	base_icon_state = "launcher"
@@ -97,3 +103,28 @@
 	skin_raptsys = "launcher"
 	light_mask = "launch-light-mask"
 	skin = ""
+	light_color = "#FFFF00"
+
+
+
+/// GIMMICK MAP BUTTONS (SCREAM)
+/obj/machinery/button/elevator
+	base_icon_state = "tramctrl"
+	icon_state = "tramctrl"
+	skin_raptsys = "tramctrl"
+	light_mask = "tram-light-mask"
+	skin = ""
+	light_color = "#FFFF00"
+
+/obj/machinery/button/tram
+	base_icon_state = "tramctrl"
+	icon_state = "tramctrl"
+	skin_raptsys = "tramctrl"
+	light_mask = "tram-light-mask"
+	skin = ""
+	light_color = "#FFFF00"
+
+/obj/machinery/elevator_control_panel
+	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/buttons/icons/buttons.dmi'
+	icon_state = "elevpanel_fixed"
+	base_icon_state = "elevpanel"

@@ -5374,6 +5374,8 @@
 #include "modular_skyraptor\modules\aesthetics\inherited_skyrat\windows\code\windows.dm"
 #include "modular_skyraptor\modules\aesthetics\oldnewsurgery\oldnewsurgery.dm"
 #include "modular_skyraptor\modules\aesthetics\shiptest_chemcontainers\shipchems.dm"
+#include "modular_skyraptor\modules\aesthetics\ui_greenened\hud_greened.dm"
+#include "modular_skyraptor\modules\aesthetics\ui_greenened\lobby_colors.dm"
 #include "modular_skyraptor\modules\icspawning\code\cards_ids.dm"
 #include "modular_skyraptor\modules\icspawning\code\observer.dm"
 #include "modular_skyraptor\modules\icspawning\code\spell.dm"
