@@ -25,9 +25,8 @@
 	e_cost = 120
 
 /obj/item/ammo_casing/energy/laser/musket
-	projectile_type = /obj/projectile/beam/laser
+	projectile_type = /obj/projectile/beam/laser/musket
 	e_cost = 1000
-	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/projectile/beam/practice

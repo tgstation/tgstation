@@ -55,6 +55,14 @@
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
 
+/obj/projectile/beam/laser/musket
+	name = "low-power laser"
+	icon_state = "laser_musket"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
+	damage = 20
+	stamina = 30
+	light_color = COLOR_STRONG_VIOLET
+
 /obj/projectile/beam/weak
 	damage = 15
 
