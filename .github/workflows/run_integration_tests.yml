@@ -67,10 +67,13 @@ jobs:
           ulimit -c unlimited
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ inputs.map }}
-      - uses: actions/upload-artifact@master # capture all crashes as build artifacts
+      - name: Capture Seg Faults
+        if: always()
+        uses: actions/upload-artifact@v3
         with:
-          name: crashes
+          name: coredump_${{ inputs.map }}
           path: /cores
+          retention-days: 1
       - name: Upload screenshot tests
         if: always()
         uses: actions/upload-artifact@v3
