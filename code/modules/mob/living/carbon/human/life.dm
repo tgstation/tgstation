@@ -31,7 +31,7 @@
 	if(!IS_IN_STASIS(src))
 		if(stat != DEAD)
 			//handle active mutations
-			for(var/datum/mutation/human/human_mutation in dna.mutations)
+			for(var/datum/mutation/human/human_mutation as anything in dna.mutations)
 				human_mutation.on_life(seconds_per_tick, times_fired)
 			//heart attack stuff
 			handle_heart(seconds_per_tick, times_fired)

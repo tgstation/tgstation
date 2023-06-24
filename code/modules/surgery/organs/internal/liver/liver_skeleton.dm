@@ -1,3 +1,8 @@
+/**
+ * Bone liver
+ * Gives the owner liverless metabolism, makes them vulnerable to bone hurting juice and
+ * makes milk heal them through meme magic.
+ **/
 /obj/item/organ/internal/liver/bone
 	name = "mass of bones"
 	desc = "You have no idea what this strange ball of bones does."
