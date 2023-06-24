@@ -11,7 +11,17 @@
 
 /obj/machinery/sheetifier/Initialize(mapload)
 	. = ..()
-	materials = AddComponent(/datum/component/material_container, list(/datum/material/meat, /datum/material/hauntium), SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_SHEETIFIER, typesof(/datum/material/meat) + /datum/material/hauntium, list(/obj/item/food/meat, /obj/item/photo), null, CALLBACK(src, PROC_REF(CanInsertMaterials)), CALLBACK(src, PROC_REF(AfterInsertMaterials)))
+	materials = AddComponent( \
+		/datum/component/material_container, \
+		list(/datum/material/meat, /datum/material/hauntium), \
+		SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, \
+		MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_SHEETIFIER, \
+		typesof(/datum/material/meat) + /datum/material/hauntium, list(/obj/item/food/meat, /obj/item/photo), \
+		container_signals = list(
+			COMSIG_MATCONTAINER_PRE_USER_INSERT = TYPE_PROC_REF(/obj/machinery/sheetifier, CanInsertMaterials),
+			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/sheetifier, AfterInsertMaterials)
+		) \
+	)
 
 /obj/machinery/sheetifier/Destroy()
 	materials = null
@@ -28,10 +38,12 @@
 	icon_state = "base_machine[busy_processing ? "_processing" : ""]"
 	return ..()
 
-/obj/machinery/sheetifier/proc/CanInsertMaterials()
-	return !busy_processing
+/obj/machinery/sheetifier/proc/CanInsertMaterials(obj/machinery/machine, held_item, user)
+	SIGNAL_HANDLER
 
-/obj/machinery/sheetifier/proc/AfterInsertMaterials(item_inserted, id_inserted, amount_inserted)
+	return busy_processing ? MATCONTAINER_BLOCK_INSERT : TRUE
+
+/obj/machinery/sheetifier/proc/AfterInsertMaterials(obj/machinery/machine, item_inserted, id_inserted, amount_inserted, container)
 	busy_processing = TRUE
 	update_appearance()
 	var/datum/material/last_inserted_material = id_inserted

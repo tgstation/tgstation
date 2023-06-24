@@ -139,16 +139,9 @@
 
 		max_multiplier = INFINITY
 		coefficient = build_efficiency(design.build_path)
-		for(var/i in design.materials)
-			var/datum/material/mat = i
-
-			var/design_cost = OPTIMAL_COST(design.materials[i] * coefficient)
-			if(istype(mat))
-				cost[mat.name] = design_cost
-			else
-				cost[i] = design_cost
-
-			max_multiplier = min(max_multiplier, 50, round(materials.mat_container.get_material_amount(i) / design_cost))
+		for(var/datum/material/mat in design.materials)
+			cost[mat.name] = OPTIMAL_COST(design.materials[mat] * coefficient)
+			max_multiplier = min(max_multiplier, 50, round(materials.mat_container.get_material_amount(mat) / cost[mat.name]))
 
 		var/icon_size = spritesheet.icon_size_id(design.id)
 		designs[design.id] = list(
@@ -283,7 +276,7 @@
 	var/coefficient = build_efficiency(design.build_path)
 
 	//check if sufficient materials/reagents are available
-	if(!materials.mat_container.has_materials(design.materials, print_quantity * coefficient))
+	if(!materials.mat_container.has_materials(design.materials, coefficient, print_quantity))
 		say("Not enough materials to complete prototype[print_quantity > 1? "s" : ""].")
 		return FALSE
 	for(var/reagent in design.reagents_list)
@@ -323,7 +316,7 @@
 		borg.cell.use(SILICON_LATHE_TAX)
 
 	//consume materials
-	materials.mat_container.use_materials(design.materials, print_quantity * coefficient)
+	materials.mat_container.use_materials(design.materials, coefficient, print_quantity)
 	materials.silo_log(src, "built", -print_quantity, "[design.name]", design.materials)
 	for(var/reagent in design.reagents_list)
 		reagents.remove_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient)

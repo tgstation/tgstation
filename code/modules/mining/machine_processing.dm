@@ -254,7 +254,7 @@
 		on = FALSE
 		return
 
-	materials.use_materials(alloy.materials, amount)
+	materials.use_materials(alloy.materials, multiplier = amount)
 
 	generate_mineral(alloy.build_path)
 

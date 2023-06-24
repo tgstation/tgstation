@@ -25,8 +25,15 @@
 	var/datum/component/material_container/materials
 
 /obj/machinery/autolathe/Initialize(mapload)
-	materials = AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, TYPE_PROC_REF(/obj/machinery/autolathe, AfterMaterialInsert)))
+	materials = AddComponent( \
+		/datum/component/material_container, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
+		0, \
+		MATCONTAINER_EXAMINE, \
+		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/autolathe, AfterMaterialInsert)) \
+	)
 	. = ..()
+
 	set_wires(new /datum/wires/autolathe(src))
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe] = new /datum/techweb/autounlocking/autolathe
@@ -158,30 +165,28 @@
 		var/list/custom_materials = list() // These will apply their material effect, should usually only be one.
 		for(var/mat in being_built.materials)
 			var/datum/material/used_material = mat
-			var/amount_needed = OPTIMAL_COST(being_built.materials[mat] * coeff)
 
+			var/amount_needed = being_built.materials[mat]
 			if(istext(used_material)) // This means its a category
 				var/list/list_to_show = list()
-
+				//list all materials in said category
 				for(var/i in SSmaterials.materials_by_category[used_material])
 					if(materials.materials[i] > 0)
 						list_to_show += i
-
+				//ask user to pick specific material from list
 				used_material = tgui_input_list(
 					usr,
 					"Choose [used_material]",
 					"Custom Material",
 					sort_list(list_to_show, GLOBAL_PROC_REF(cmp_typepaths_asc))
 				)
-
 				if(isnull(used_material))
-					// Didn't pick any material, so you can't build shit either.
 					return
-
+				//the item composition will be made of these materials
 				custom_materials[used_material] += amount_needed
-
 			materials_used[used_material] = amount_needed
-		if(!materials.has_materials(materials_used, multiplier))
+
+		if(!materials.has_materials(materials_used, coeff, multiplier))
 			to_chat(usr, span_alert("Not enough materials for this operation."))
 			return FALSE
 
@@ -189,11 +194,11 @@
 		var/total_amount = 0
 		for(var/material in being_built.materials)
 			total_amount += being_built.materials[material]
-		var/power = max(active_power_usage, (total_amount) * multiplier/5) // Change this to use all materials
+		var/power = max(active_power_usage, (total_amount) * multiplier / 5) // Change this to use all materials
 		use_power(power)
 
 		//use materials
-		materials.use_materials(materials_used, multiplier)
+		materials.use_materials(materials_used, coeff, multiplier)
 		busy = TRUE
 		to_chat(usr, span_notice("You print [multiplier] item(s) from the [src]"))
 		update_static_data_for_all_viewers()
@@ -277,8 +282,10 @@
 
 	return SECONDARY_ATTACK_CALL_NORMAL
 
-/obj/machinery/autolathe/proc/AfterMaterialInsert(obj/item/item_inserted, id_inserted, amount_inserted)
-	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
+/obj/machinery/autolathe/proc/AfterMaterialInsert(obj/machinery/machine, obj/item/item_inserted, last_inserted_id, amount_inserted, container)
+	SIGNAL_HANDLER
+
+	if(ispath(item_inserted, /obj/item/stack/ore/bluespace_crystal))
 		use_power(SHEET_MATERIAL_AMOUNT / 10)
 	else if(item_inserted.has_material_type(/datum/material/glass))
 		flick("autolathe_r", src)//plays glass insertion animation by default otherwise

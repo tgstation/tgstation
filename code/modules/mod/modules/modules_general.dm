@@ -680,7 +680,12 @@
 
 /obj/item/mod/module/recycler/Initialize(mapload)
 	. = ..()
-	container = AddComponent(/datum/component/material_container, accepted_mats, 50 * SHEET_MATERIAL_AMOUNT, MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, _after_retrieve=CALLBACK(src, PROC_REF(attempt_insert_storage)))
+	container = AddComponent( \
+		/datum/component/material_container, \
+		accepted_mats, 50 * SHEET_MATERIAL_AMOUNT, \
+		MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, \
+		container_signals = list(COMSIG_MATCONTAINER_SHEETS_RETRIVED = TYPE_PROC_REF(/obj/item/mod/module/recycler, InsertSheets)) \
+	)
 
 /obj/item/mod/module/recycler/Destroy()
 	container = null
@@ -709,12 +714,14 @@
 
 /obj/item/mod/module/recycler/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
 	SIGNAL_HANDLER
+
 	if(!is_type_in_list(arrived, allowed_item_types))
 		return
 	insert_trash(arrived)
 
 /obj/item/mod/module/recycler/proc/on_atom_initialized_on(atom/loc, atom/new_atom)
 	SIGNAL_HANDLER
+
 	if(!is_type_in_list(new_atom, allowed_item_types))
 		return
 	//Give the new atom the time to fully initialize and maybe live if the wearer moves away.
@@ -747,6 +754,11 @@
 		return
 	balloon_alert(mod.wearer, "not enough material")
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+
+/obj/item/mod/module/recycler/proc/InsertSheets(obj/item/recycler, obj/item/stack/sheets)
+	SIGNAL_HANDLER
+
+	attempt_insert_storage(sheets)
 
 /obj/item/mod/module/recycler/proc/attempt_insert_storage(obj/item/to_drop)
 	if(!isturf(to_drop.loc) && !to_drop.loc.atom_storage?.attempt_insert(to_drop, mod.wearer, override = TRUE))

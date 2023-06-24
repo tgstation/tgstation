@@ -222,7 +222,6 @@
 	build_finish = world.time + get_construction_time_w_coeff(initial(D.construction_time))
 	build_start = world.time
 	desc = "It's building \a [D.name]."
-
 	rmat.silo_log(src, "built", -1, "[D.name]", build_materials)
 
 	return TRUE
@@ -346,14 +345,8 @@
 	for(var/datum/design/design in cached_designs)
 		var/cost = list()
 		var/list/materials = design["materials"]
-		for(var/i in materials)
-			var/datum/material/mat = i
-
-			var/design_cost = OPTIMAL_COST(materials[i] * component_coeff)
-			if(istype(mat))
-				cost[mat.name] = design_cost
-			else
-				cost[i] = design_cost
+		for(var/datum/material/mat in materials)
+			cost[mat.name] = OPTIMAL_COST(materials[mat] * component_coeff)
 
 		var/icon_size = spritesheet.icon_size_id(design.id)
 		designs[design.id] = list(
