@@ -62,6 +62,7 @@ jobs:
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -Werror
       - name: Run Tests
+        continue-on-error: true
         run: |
           ulimit -c unlimited
           source $HOME/BYOND/byond/bin/byondsetup

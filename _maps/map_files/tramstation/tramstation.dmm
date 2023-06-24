@@ -12199,10 +12199,10 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "cMf" = (
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/airlock/bananium{
 	name = "Honkroom"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/theatre,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/powered/clownplanet)
 "cMD" = (
@@ -68848,7 +68848,6 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/library/lounge)
 "xAc" = (
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
