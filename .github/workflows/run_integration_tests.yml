@@ -62,19 +62,20 @@ jobs:
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -Werror
       - name: Run Tests
-        continue-on-error: true
         run: |
-          ulimit -c unlimited
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ inputs.map }}
-          sudo chmod -R +rwx /cores/*
-      - name: Capture Seg Faults
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: coredump_${{ inputs.map }}
-          path: /cores
-          retention-days: 1
+      - name: CI
+        on: [push]
+        jobs:
+          build:
+            runs-on: ubuntu-latest
+            steps:
+            - uses: actions/checkout@v3
+            - name: Setup tmate session
+              if: $
+              uses: mxschmitt/action-tmate@v3
+
       - name: Upload screenshot tests
         if: always()
         uses: actions/upload-artifact@v3
