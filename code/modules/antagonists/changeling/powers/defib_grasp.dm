@@ -9,7 +9,7 @@
 
 /datum/action/changeling/defib_grasp/on_purchase(mob/user, is_respec)
 	. = ..()
-	RegisterSignal(user, COMSIG_DEFIBRILLATOR_PRE_HELP_ZAP, PROC_REF(on_defibbed)/*, overridde = is_respec*/)
+	RegisterSignal(user, COMSIG_DEFIBRILLATOR_PRE_HELP_ZAP, PROC_REF(on_defibbed))
 
 /datum/action/changeling/defib_grasp/proc/on_defibbed(mob/living/carbon/source, mob/living/defibber, obj/item/shockpaddles/defib)
 	SIGNAL_HANDLER
@@ -25,7 +25,7 @@
 
 	changeling.fully_heal(HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS)
 	changeling.cure_fakedeath(CHANGELING_TRAIT) // rips us out of revival stasis (if we're in it)
-	changeling.buckled?.unbuckle_mob(changeling)
+	changeling.buckled?.unbuckle_mob(changeling) // get us off of stasis beds please
 	changeling.set_resting(FALSE)
 	changeling.adjust_jitter(20 SECONDS)
 	changeling.emote("scream")
@@ -38,35 +38,40 @@
 	defib.shock_pulling(30, changeling)
 
 /datum/action/changeling/defib_grasp/proc/remove_arms(mob/living/carbon/changeling, mob/living/defibber, obj/item/shockpaddles/defib)
-	if(iscarbon(defibber))
-		var/removed_arms = 0
-		var/mob/living/carbon/carbon_defibber = defibber
-		for(var/obj/item/bodypart/arm/limb in carbon_defibber.bodyparts)
-			if(limb.dismember(silent = FALSE))
-				removed_arms++
-				qdel(limb)
 
-		if(removed_arms)
-			// OH GOOD HEAVENS
-			defibber.adjust_jitter(3 MINUTES)
-			defibber.adjust_dizzy(1 MINUTES)
-			defibber.adjust_stutter(1 MINUTES)
-			defibber.adjust_eye_blur(10 SECONDS)
-			defibber.emote("scream")
+	if(iscyborg(defibber))
+		if(defibber.flash_act(affect_silicon = TRUE))
+			to_chat(defibber, span_userdanger("[changeling] awakens suddenly, overloading your sensors!"))
+			// run default visible message regardless, no overt indication of the cyborg being overloaded to watchers
 
-			changeling.visible_message(
-				span_bolddanger("[changeling] awakens suddenly, snatching [defib] out of [defibber]'s hands and ripping [defibber.p_their()] arms off!"),
-				vision_distance = COMBAT_MESSAGE_RANGE,
-				ignored_mobs = list(changeling, defibber),
-			)
-			to_chat(changeling, span_changeling("The power of [defib] course through us, reviving us from our stasis! \
-				With this newfound energy, we snap [removed_arms >= 2 ? "" : "one of "][defibber]'s arms off!"))
-			to_chat(defibber, span_userdanger("[changeling] awakens suddenly, snapping [removed_arms >= 2 ? "" : "one of "]your arms off!"))
-			return
+	else
+		defibber.Stun(4 SECONDS) // stuck defibbing
 
-	if(iscyborg(defibber) && defibber.flash_act(affect_silicon = TRUE))
-		to_chat(defibber, span_userdanger("[changeling] awakens suddenly, overloading your sensors!"))
-		// run default visible message, no overt indication of the cyborg being overloaded to watchers
+		if(iscarbon(defibber))
+			var/removed_arms = 0
+			var/mob/living/carbon/carbon_defibber = defibber
+			for(var/obj/item/bodypart/arm/limb in carbon_defibber.bodyparts)
+				if(limb.dismember(silent = FALSE))
+					removed_arms++
+					qdel(limb)
+
+			if(removed_arms)
+				// OH GOOD HEAVENS
+				defibber.adjust_jitter(3 MINUTES)
+				defibber.adjust_dizzy(1 MINUTES)
+				defibber.adjust_stutter(1 MINUTES)
+				defibber.adjust_eye_blur(10 SECONDS)
+				defibber.emote("scream")
+
+				changeling.visible_message(
+					span_bolddanger("[changeling] awakens suddenly, snatching [defib] out of [defibber]'s hands and ripping [defibber.p_their()] arms off!"),
+					vision_distance = COMBAT_MESSAGE_RANGE,
+					ignored_mobs = list(changeling, defibber),
+				)
+				to_chat(changeling, span_changeling("The power of [defib] course through us, reviving us from our stasis! \
+					With this newfound energy, we snap [removed_arms >= 2 ? "" : "one of "][defibber]'s arms off!"))
+				to_chat(defibber, span_userdanger("[changeling] awakens suddenly, snapping [removed_arms >= 2 ? "" : "one of "]your arms off!"))
+				return // no default message if we got an arm
 
 	changeling.visible_message(
 		span_bolddanger("[changeling] awakens suddenly!"),
