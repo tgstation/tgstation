@@ -324,6 +324,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
  * * receiving - The item being given by the offerer
  */
 /atom/movable/screen/alert/give/proc/setup(mob/living/carbon/taker, datum/status_effect/offering/offer)
+	src.offer = offer
+
 	var/mob/living/offerer = offer.owner
 	var/obj/item/receiving = offer.offered_item
 	var/receiving_name = get_receiving_name(taker, offerer, receiving)
@@ -332,7 +334,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "template"
 	cut_overlays()
 	add_overlay(receiving)
-	src.offer = offer
 
 /**
  * Called right before `setup()`, to do any sort of logic to change the name of
@@ -428,7 +429,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	SIGNAL_HANDLER
 
 	if(QDELETED(offer.offered_item))
-		examine_list += "[span_warning("[source]'s arm appears tensed up, as if [source.p_they()] plan on pulling it back suddenly...")]\n"
+		examine_list += span_warning("[source]'s arm appears tensed up, as if [source.p_they()] plan on pulling it back suddenly...")
 
 /atom/movable/screen/alert/give/hand/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
 	additional_desc_text = "Click this alert to take it and let [offerer.p_them()] pull you around!"
