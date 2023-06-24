@@ -670,11 +670,11 @@ generate/load female uniform sprites matching all previously decided variables
 		file2use = !isinhands ? (worn_icon ? worn_icon : default_icon_file) : default_icon_file
 
 	/// SKYRAPTOR ADDITION BEGIN
-	if(!isnull(supported_bodytypes) && !isinhands)
+	if(!isnull(supported_bodytypes) && !isinhands && !isnull(bodytype_icon_files) && isnull(greyscale_config_worn))
 		to_chat(world, "SKYRAPTOR TESTING: found bodytype_icon_files on [name] being equipped")
 		for(var/bodytype_key in supported_bodytypes)
 			to_chat(world, "SKYRAPTOR TESTING: testing [bodytype_key] on provided bodytype: [bodytype]")
-			if(bodytype & bodytype_key)
+			if(bodytype & bodytype_key && "[bodytype_key]" in bodytype_icon_files)
 				to_chat(world, "FOUND A MATCH!")
 				file2use = bodytype_icon_files["[bodytype_key]"]
 	/// SKYRAPTOR ADDITION END
