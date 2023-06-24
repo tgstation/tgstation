@@ -190,9 +190,12 @@
 	return ..()
 
 /obj/item/lightreplacer/attack_self(mob/user)
+	var/replaced_a_light = FALSE
 	for(var/obj/machinery/light/target in user.loc)
-		replace_light(target, user)
-	user.balloon_alert(user, "[uses] lights, [bulb_shards]/[BULB_SHARDS_REQUIRED] fragments")
+		if(replace_light(target, user))
+			replaced_a_light = TRUE
+	if(!replaced_a_light) //So we dont spam balloon alerts
+		user.balloon_alert(user, "[uses] lights, [bulb_shards]/[BULB_SHARDS_REQUIRED] fragments")
 
 /**
  * attempts to fix lights, flood lights & lights on a turf
@@ -294,7 +297,7 @@
 		return FALSE
 	//Were all out
 	if(!Use(user))
-		//This balloon alert is a little redundant, but I want to avoid a new player "yeah i know the light is empty" moment
+		//This balloon alert text is a little redundant, but I want to avoid a new player "yeah i know the light is empty" moment
 		user.balloon_alert(user, "light replacer empty!")
 		return FALSE
 
