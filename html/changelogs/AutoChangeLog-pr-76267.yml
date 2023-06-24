@@ -1,0 +1,5 @@
+author: "Seven"
+delete-after: True
+changes:
+  - bugfix: "toys, stamps, and spacecash no longer has a missing texture when put into suit storage"
+  - qol: "stamps are now allowed suit storage items in the hop, qm, and cargo wintercoats"
