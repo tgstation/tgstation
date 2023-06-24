@@ -1,0 +1,5 @@
+author: "Tattle"
+delete-after: True
+changes:
+  - admin: "build mode help text is in an examine block"
+  - admin: "adv build mode and fill now have item previews"

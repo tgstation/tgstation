@@ -140,9 +140,7 @@
 	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
-	//it's ok to not typecheck, humans are the only ones that deal with wounds
-	var/mob/living/carbon/human/human_victim = victim
-	no_bleeding = HAS_TRAIT(human_victim, TRAIT_NOBLOOD)
+	no_bleeding = HAS_TRAIT(victim, TRAIT_NOBLOOD)
 	update_descriptions()
 	limb.update_wounds()
 	if(status_effect_type)
