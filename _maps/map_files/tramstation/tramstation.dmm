@@ -16512,7 +16512,7 @@
 "etQ" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/light/directional/south,
-/obj/structure/sign/clock/directional/south,
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom/holding)
 "euC" = (
@@ -19737,7 +19737,7 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 1
 	},
-/obj/structure/sign/clock/directional/south,
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
 "fGZ" = (
@@ -29180,12 +29180,12 @@
 /area/station/hallway/secondary/service)
 "jpw" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/structure/sign/clock/directional/south,
 /obj/machinery/conveyor_switch/oneway{
 	id = "engineeringchute";
 	name = "Shipment Delivery Chute Activator";
 	pixel_x = -11
 	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "jpC" = (
@@ -36307,6 +36307,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "lQE" = (
@@ -42179,7 +42180,6 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/glass,
 /obj/item/reagent_containers/dropper,
-/obj/structure/sign/clock/directional/north,
 /obj/item/reagent_containers/cup/beaker/large{
 	pixel_x = 6;
 	pixel_y = 4
@@ -42187,6 +42187,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "nXh" = (
@@ -45208,6 +45209,7 @@
 "piT" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/commons/vacant_room)
 "piX" = (
@@ -45513,13 +45515,13 @@
 	},
 /area/station/service/kitchen)
 "pnz" = (
-/obj/structure/sign/clock/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
 "pnF" = (
@@ -51826,6 +51828,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "rBb" = (
@@ -55060,7 +55063,6 @@
 	name = "Custom Channel";
 	pixel_x = 0
 	},
-/obj/structure/sign/clock/directional/south,
 /turf/open/floor/iron/dark/small,
 /area/station/commons/vacant_room)
 "sJx" = (
@@ -57111,6 +57113,7 @@
 	dir = 1;
 	req_access = list("syndicate")
 	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark/small,
 /area/station/commons/vacant_room)
 "tsV" = (
@@ -61613,10 +61616,10 @@
 /area/station/commons/vacant_room/office)
 "uSU" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
-/obj/structure/sign/clock/directional/south,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron,
 /area/station/security/office)
 "uSV" = (
