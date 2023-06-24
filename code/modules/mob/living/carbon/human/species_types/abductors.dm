@@ -2,15 +2,13 @@
 	name = "Abductor"
 	id = SPECIES_ABDUCTOR
 	sexes = FALSE
-	species_traits = list(
-		NO_UNDERWEAR,
-	)
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_NOBLOOD,
 		TRAIT_CHUNKYFINGERS_IGNORE_BATON,
+		TRAIT_NO_UNDERWEAR,
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/abductor
 	mutantstomach = null

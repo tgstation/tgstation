@@ -2,8 +2,19 @@
 /mob/living/carbon/register_init_signals()
 	. = ..()
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(on_nobreath_trait_gain))
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOMETABOLISM), PROC_REF(on_nometabolism_trait_gain))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_AGENDER), PROC_REF(on_nobreath_trait_gain))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(on_agender_trait_gain))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_LIVERLESS_METABOLISM), PROC_REF(on_liverless_metabolism_trait_gain))
+
+/**
+ * On gain of TRAIT_AGENDER
+ *
+ * This will make the mob get it's gender set to PLURAL.
+ */
+/mob/living/carbon/proc/on_agender_trait_gain(datum/source)
+	SIGNAL_HANDLER
+
+	gender = PLURAL
 
 /**
  * On gain of TRAIT_NOBREATH
@@ -34,11 +45,11 @@
 	clear_mood_event("smell")
 	clear_mood_event("suffocation")
 /**
- * On gain of TRAIT_NOMETABOLISM
+ * On gain of TRAIT_LIVERLESS_METABOLISM
  *
  * This will clear all moods related to addictions and stop metabolization.
  */
-/mob/living/carbon/proc/on_nometabolism_trait_gain(datum/source)
+/mob/living/carbon/proc/on_liverless_metabolism_trait_gain(datum/source)
 	SIGNAL_HANDLER
 	for(var/addiction_type in subtypesof(/datum/addiction))
 		mind?.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!

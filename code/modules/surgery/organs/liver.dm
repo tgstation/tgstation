@@ -100,8 +100,10 @@
 
 	if(!istype(liver_owner))
 		return
-	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM)) //If your liver is failing or you lack a metabolism then we use the liverless version of metabolize
-		liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose=TRUE, liverless=TRUE)
+
+	//If your liver is failing or you have liverless metabolism then we use the liverless version of metabolize
+	if((organ_flags & ORGAN_FAILING) || HAS_TRAIT(liver_owner, TRAIT_LIVERLESS_METABOLISM))
+		liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
 		return
 
 	var/obj/belly = liver_owner.get_organ_slot(ORGAN_SLOT_STOMACH)
@@ -133,7 +135,7 @@
 
 
 /obj/item/organ/internal/liver/handle_failing_organs(seconds_per_tick)
-	if(HAS_TRAIT(owner, TRAIT_STABLELIVER) || HAS_TRAIT(owner, TRAIT_NOMETABOLISM))
+	if(HAS_TRAIT(owner, TRAIT_STABLELIVER) || HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM))
 		return
 	return ..()
 

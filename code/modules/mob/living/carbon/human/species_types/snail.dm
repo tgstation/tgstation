@@ -1,12 +1,10 @@
 /datum/species/snail
 	name = "Snailperson"
 	id = SPECIES_SNAIL
-	species_traits = list(
-		MUTCOLORS,
-		NO_UNDERWEAR,
-	)
 	inherent_traits = list(
 		TRAIT_NO_SLIP_ALL,
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_MUTANT_COLORS,
 	)
 
 	coldmod = 0.5 //snails only come out when its cold and wet

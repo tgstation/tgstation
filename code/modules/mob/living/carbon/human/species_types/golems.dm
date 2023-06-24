@@ -2,12 +2,6 @@
 /datum/species/golem
 	name = "Golem"
 	id = SPECIES_GOLEM
-	species_traits = list(
-		NO_DNA_COPY,
-		NOTRANSSTING,
-		NO_UNDERWEAR,
-		NOAUGMENTS,
-	)
 	inherent_traits = list(
 		TRAIT_GENELESS,
 		TRAIT_LAVA_IMMUNE,
@@ -17,6 +11,10 @@
 		TRAIT_NOFIRE,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_AUGMENTS,
 	)
 	mutantheart = null
 	mutantlungs = null

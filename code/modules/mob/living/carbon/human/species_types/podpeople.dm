@@ -3,11 +3,9 @@
 	name = "\improper Podperson"
 	plural_form = "Podpeople"
 	id = SPECIES_PODPERSON
-	species_traits = list(
-		MUTCOLORS,
-	)
 	inherent_traits = list(
 		TRAIT_PLANT_SAFE,
+		TRAIT_MUTANT_COLORS,
 	)
 	external_organs = list(
 		/obj/item/organ/external/pod_hair = "None",
