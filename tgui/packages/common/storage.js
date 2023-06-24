@@ -48,15 +48,15 @@ class MemoryBackend {
   }
 
   get(key) {
-    return this.store[key + this.get_noconfig(getPrefCodebaseKey())];
+    return this.store[key + this.getGlobalSlot(getPrefCodebaseKey())];
   }
 
   set(key, value) {
-    this.store[key + this.get_noconfig(getPrefCodebaseKey())] = value;
+    this.store[key + this.getGlobalSlot(getPrefCodebaseKey())] = value;
   }
 
   remove(key) {
-    this.store[key + this.get_noconfig(getPrefCodebaseKey())] = undefined;
+    this.store[key + this.getGlobalSlot(getPrefCodebaseKey())] = undefined;
   }
 
   clear() {
@@ -64,15 +64,15 @@ class MemoryBackend {
   }
 
   // these are 98% identical to things above
-  get_noconfig(key) {
+  getGlobalSlot(key) {
     return this.store[key];
   }
 
-  set_noconfig(key, value) {
+  setGlobalSlot(key, value) {
     this.store[key] = value;
   }
 
-  remove_noconfig(key) {
+  removeGlobalSlot(key) {
     this.store[key] = undefined;
   }
 }
@@ -80,12 +80,46 @@ class MemoryBackend {
 class LocalStorageBackend {
   constructor() {
     this.impl = IMPL_LOCAL_STORAGE;
+    setInterval(this.clearUnusedDomains, 3600000);
+  }
+
+  clearUnusedDomains() {
+    const usedSpace = localStorage.usedSpace;
+    const limit = localStorage.limit;
+    if (usedSpace > 0.9 * limit) {
+      this.cleanUnusedDomains();
+    }
+  }
+
+  cleanUnusedDomains() {
+    const sortedDomains = Object.entries(localStorage)
+      .filter((item) => item[0].endsWith('_lastAccessed'))
+      .sort((a, b) => b[1] - a[1]);
+
+    let usedSpace = localStorage.usedSpace;
+
+    while (usedSpace > 0.9 * limit) {
+      const [domain, lastAccessed] = sortedDomains.pop();
+      if (domain.indexOf(this.getGlobalSlot(getPrefCodebaseKey())) === -1) {
+        this.removeDomain(domain.replace('_lastAccessed', ''));
+        usedSpace = localStorage.usedSpace;
+      }
+    }
+  }
+
+  removeDomain(domain) {
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith(domain)) {
+        localStorage.removeItem(key);
+      }
+    });
   }
 
   get(key) {
     const value = localStorage.getItem(
-      key + this.get_noconfig(getPrefCodebaseKey())
+      key + this.getGlobalSlot(getPrefCodebaseKey())
     );
+    localStorage.setItem(`${key}_lastAccessed`, Date.now());
     if (typeof value === 'string') {
       return JSON.parse(value);
     }
@@ -93,13 +127,15 @@ class LocalStorageBackend {
 
   set(key, value) {
     localStorage.setItem(
-      key + this.get_noconfig(getPrefCodebaseKey()),
+      key + this.getGlobalSlot(getPrefCodebaseKey()),
       JSON.stringify(value)
     );
+    localStorage.setItem(`${key}_lastAccessed`, Date.now());
   }
 
   remove(key) {
-    localStorage.removeItem(key + this.get_noconfig(getPrefCodebaseKey()));
+    localStorage.removeItem(key + this.getGlobalSlot(getPrefCodebaseKey()));
+    localStorage.removeItem(`${key}_lastAccessed`);
   }
 
   clear() {
@@ -107,18 +143,18 @@ class LocalStorageBackend {
   }
 
   // these are 98% identical to things above
-  get_noconfig(key) {
+  getGlobalSlot(key) {
     const value = localStorage.getItem(key);
     if (typeof value === 'string') {
       return JSON.parse(value);
     }
   }
 
-  set_noconfig(key, value) {
+  setGlobalSlot(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
-  remove_noconfig(key) {
+  removeGlobalSlot(key) {
     localStorage.removeItem(key);
   }
 }
@@ -154,7 +190,7 @@ class IndexedDbBackend {
   async get(key) {
     const store = await this.getStore(READ_ONLY);
     return new Promise((resolve, reject) => {
-      const req = store.get(key + this.get_noconfig(getPrefCodebaseKey()));
+      const req = store.get(key + this.getGlobalSlot(getPrefCodebaseKey()));
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => reject(req.error);
     });
@@ -170,13 +206,13 @@ class IndexedDbBackend {
     }
     // NOTE: We deliberately make this operation transactionless
     const store = await this.getStore(READ_WRITE);
-    store.put(value, key + this.get_noconfig(getPrefCodebaseKey()));
+    store.put(value, key + this.getGlobalSlot(getPrefCodebaseKey()));
   }
 
   async remove(key) {
     // NOTE: We deliberately make this operation transactionless
     const store = await this.getStore(READ_WRITE);
-    store.delete(key + this.get_noconfig(getPrefCodebaseKey()));
+    store.delete(key + this.getGlobalSlot(getPrefCodebaseKey()));
   }
 
   async clear() {
@@ -186,7 +222,7 @@ class IndexedDbBackend {
   }
 
   // these are 98% identical to things above
-  async get_noconfig(key) {
+  async getGlobalSlot(key) {
     const store = await this.getStore(READ_ONLY);
     return new Promise((resolve, reject) => {
       const req = store.get(key);
@@ -195,7 +231,7 @@ class IndexedDbBackend {
     });
   }
 
-  async set_noconfig(key, value) {
+  async setGlobalSlot(key, value) {
     if (value === null) {
       value = undefined;
     }
@@ -204,7 +240,7 @@ class IndexedDbBackend {
     store.put(value, key);
   }
 
-  async remove_noconfig(key) {
+  async removeGlobalSlot(key) {
     // NOTE: We deliberately make this operation transactionless
     const store = await this.getStore(READ_WRITE);
     store.delete(key);
@@ -253,20 +289,20 @@ class StorageProxy {
   }
 
   // these are identical to things above, but with config key.
-  // this is why it is named `_noconfig`, not as camelCase, because it's 98% identical.
-  async get_noconfig(key) {
+  // this is why it is named `GlobalSlot` as camelCase, because it's 98% identical.
+  async getGlobalSlot(key) {
     const backend = await this.backendPromise;
-    return backend.get_noconfig(key);
+    return backend.getGlobalSlot(key);
   }
 
-  async set_noconfig(key, value) {
+  async setGlobalSlot(key, value) {
     const backend = await this.backendPromise;
-    return backend.set_noconfig(key, value);
+    return backend.setGlobalSlot(key, value);
   }
 
-  async remove_noconfig(key) {
+  async removeGlobalSlot(key) {
     const backend = await this.backendPromise;
-    return backend.remove_noconfig(key);
+    return backend.removeGlobalSlot(key);
   }
 }
 

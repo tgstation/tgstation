@@ -50,7 +50,7 @@ export const telemetryMiddleware = (store) => {
         }
         // Load telemetry
         if (!telemetry) {
-          telemetry = (await storage.get_noconfig('telemetry')) || {};
+          telemetry = (await storage.getGlobalSlot('telemetry')) || {};
           if (!telemetry.connections) {
             telemetry.connections = [];
           }
@@ -71,7 +71,7 @@ export const telemetryMiddleware = (store) => {
         // Save telemetry
         if (telemetryMutated) {
           logger.debug('saving telemetry to storage', telemetry);
-          storage.set_noconfig('telemetry', telemetry);
+          storage.setGlobalSlot('telemetry', telemetry);
         }
         // Continue deferred telemetry requests
         if (wasRequestedWithPayload) {

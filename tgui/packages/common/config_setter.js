@@ -23,11 +23,11 @@ export const getPrefConfigKey = () => {
 
 export const setPrefConfigKey = (value) => {
   sessionStorage.setItem(getPrefCodebaseKey(), value);
-  storage.set_noconfig(getPrefCodebaseKey(), value);
+  storage.setGlobalSlot(getPrefCodebaseKey(), value);
 };
 
 export const setupConfigKey = async () => {
-  let thing = await storage.get_noconfig(getPrefCodebaseKey());
+  let thing = await storage.getGlobalSlot(getPrefCodebaseKey());
   if (thing === undefined) {
     thing = '';
   }
