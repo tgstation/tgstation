@@ -64,7 +64,7 @@
 		if("selecttarget")
 			var/selected_new_ref = params["ref"]
 			if(selected_new_ref in trackable_object_refs())
-				selected = params["ref"]
+				selected = selected_new_ref
 			return TRUE
 
 		if("scan")
