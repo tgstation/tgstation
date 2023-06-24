@@ -5870,7 +5870,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7813,10 +7812,6 @@
 /obj/machinery/bci_implanter,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/mechbay)
-"iCP" = (
-/obj/structure/cable,
-/turf/open/floor/wood,
-/area/station/service/bar/backroom)
 "iDn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/assistant,
@@ -9663,7 +9658,6 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "kBN" = (
@@ -10417,8 +10411,6 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "luy" = (
@@ -10839,7 +10831,6 @@
 /obj/machinery/door/airlock{
 	name = "Hydroponics Backroom"
 	},
-/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/hydroponics)
 "lUz" = (
@@ -17896,7 +17887,6 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "udc" = (
@@ -35327,7 +35317,7 @@ luk
 kBz
 ucV
 lUn
-iCP
+mAn
 rrX
 iKG
 xJM
