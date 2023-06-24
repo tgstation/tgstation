@@ -1,6 +1,6 @@
-import { useBackend } from '../../backend';
-import { Box, Button, ProgressBar, Section, Tooltip } from '../../components';
-import { OperatorData, MechaUtility } from './data';
+import { useBackend } from "../../backend";
+import { Box, Button, ProgressBar, Section, Tooltip } from "../../components";
+import { OperatorData, MechaUtility } from "./data";
 
 const UtilityName = (props: { name: string }) => {
   const { name } = props;
@@ -24,22 +24,22 @@ const Equipment = (props: EquipmentProps, context) => {
       <UtilityName name={module.name} />
       <Button
         className="UtilityModulePane__Equipment__button"
-        content={(module.activated ? 'En' : 'Dis') + 'abled'}
+        content={(module.activated ? "En" : "Dis") + "abled"}
         onClick={() =>
-          act('equip_act', {
+          act("equip_act", {
             ref: module.ref,
-            gear_action: 'toggle',
+            gear_action: "toggle",
           })
         }
         selected={module.activated}
       />
       <Button
         className="UtilityModulePane__Equipment__button"
-        content={'Detach'}
+        content={"Detach"}
         onClick={() =>
-          act('equip_act', {
+          act("equip_act", {
             ref: module.ref,
-            gear_action: 'detach',
+            gear_action: "detach",
           })
         }
       />
@@ -51,10 +51,10 @@ export const UtilityModulesPane = (props, context) => {
   const { data } = useBackend<OperatorData>(context);
   const { mech_equipment } = data;
   return (
-    <Box style={{ 'height': '16rem' }}>
+    <Box style={{ height: "16rem" }}>
       <Section scrollable fill>
         <div>
-          {mech_equipment['utility'].map((module, i) => {
+          {mech_equipment["utility"].map((module, i) => {
             return module.snowflake.snowflake_id ? (
               <Snowflake module={module} />
             ) : (
@@ -67,14 +67,14 @@ export const UtilityModulesPane = (props, context) => {
   );
 };
 
-const MECHA_SNOWFLAKE_ID_EJECTOR = 'ejector_snowflake';
-const MECHA_SNOWFLAKE_ID_EXTINGUISHER = 'extinguisher_snowflake';
-const MECHA_SNOWFLAKE_ID_OREBOX_MANAGER = 'orebox_manager_snowflake';
+const MECHA_SNOWFLAKE_ID_EJECTOR = "ejector_snowflake";
+const MECHA_SNOWFLAKE_ID_EXTINGUISHER = "extinguisher_snowflake";
+const MECHA_SNOWFLAKE_ID_OREBOX_MANAGER = "orebox_manager_snowflake";
 
 // Handles all the snowflake buttons and whatever
 const Snowflake = (props: { module: MechaUtility }, context) => {
   const { snowflake } = props.module;
-  switch (snowflake['snowflake_id']) {
+  switch (snowflake["snowflake_id"]) {
     case MECHA_SNOWFLAKE_ID_EJECTOR:
       return <SnowflakeEjector module={props.module} />;
     case MECHA_SNOWFLAKE_ID_EXTINGUISHER:
@@ -92,24 +92,26 @@ const SnowflakeOrebox = (props: { module: MechaUtility }, context) => {
   return (
     <>
       {cargo && <Box>Cargo</Box>}
-      {cargo &&
-        <Box style={{ 'margin-left': '1rem' }}>
+      {cargo && (
+        <Box style={{ "margin-left": "1rem" }}>
           <div
             key={props.module.ref}
-            className="UtilityModulePane__SnowflakeEjector__entry">
-            <UtilityName name={'Ore Box'} />
+            className="UtilityModulePane__SnowflakeEjector__entry"
+          >
+            <UtilityName name={"Ore Box"} />
             <Button
               onClick={() =>
-                act('equip_act', {
+                act("equip_act", {
                   ref: props.module.ref,
-                  gear_action: 'dump',
+                  gear_action: "dump",
                 })
-              }>
-              {'Dump contents'}
+              }
+            >
+              {"Dump contents"}
             </Button>
           </div>
         </Box>
-      }
+      )}
     </>
   );
 };
@@ -120,21 +122,23 @@ const SnowflakeEjector = (props: { module: MechaUtility }, context) => {
   return (
     <>
       {cargo && cargo.length > 0 && <Box>Cargo</Box>}
-      <Box style={{ 'margin-left': '1rem' }}>
+      <Box style={{ "margin-left": "1rem" }}>
         {cargo.map((item) => (
           <div
             key={props.module.ref}
-            className="UtilityModulePane__SnowflakeEjector__entry">
+            className="UtilityModulePane__SnowflakeEjector__entry"
+          >
             <UtilityName name={item.name} />
             <Button
               onClick={() =>
-                act('equip_act', {
+                act("equip_act", {
                   ref: props.module.ref,
                   cargoref: item.ref,
-                  gear_action: 'eject',
+                  gear_action: "eject",
                 })
-              }>
-              {'Eject'}
+              }
+            >
+              {"Eject"}
             </Button>
           </div>
         ))}
@@ -150,52 +154,53 @@ const SnowflakeExtinguisher = (props: { module: MechaUtility }, context) => {
       <ProgressBar
         value={props.module.snowflake.reagents}
         minValue={0}
-        maxValue={props.module.snowflake.total_reagents}>
+        maxValue={props.module.snowflake.total_reagents}
+      >
         {props.module.snowflake.reagents}
       </ProgressBar>
       <Button
-        tooltip={'ACTIVATE'}
-        color={'red'}
+        tooltip={"ACTIVATE"}
+        color={"red"}
         disabled={
           props.module.snowflake.reagents < props.module.snowflake.minimum_requ
             ? 1
             : 0
         }
-        icon={'fire-extinguisher'}
+        icon={"fire-extinguisher"}
         onClick={() =>
-          act('equip_act', {
+          act("equip_act", {
             ref: props.module.ref,
-            gear_action: 'activate',
+            gear_action: "activate",
           })
         }
       />
       <Button
-        tooltip={'REFILL'}
-        icon={'fill'}
+        tooltip={"REFILL"}
+        icon={"fill"}
         onClick={() =>
-          act('equip_act', {
+          act("equip_act", {
             ref: props.module.ref,
-            gear_action: 'refill',
+            gear_action: "refill",
           })
         }
       />
       <Button
-        tooltip={'REPAIR'}
-        icon={'wrench'}
+        tooltip={"REPAIR"}
+        icon={"wrench"}
         onClick={() =>
-          act('equip_act', {
+          act("equip_act", {
             ref: props.module.ref,
-            gear_action: 'repair',
+            gear_action: "repair",
           })
         }
       />
       <Button
-        tooltip={'DETACH'}
-        icon={'arrow-down'}
+        tooltip={"DETACH"}
+        icon={"arrow-down"}
         onClick={() =>
-          act('equip_act', {
+          act("equip_act", {
             ref: props.module.ref,
-            gear_action: 'detach',
+            gear_action: "detach",
           })
         }
       />
