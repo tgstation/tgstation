@@ -80,7 +80,7 @@
 			add_uses(GLASS_SHEET_USES)
 			user.balloon_alert(user, "glass inserted")
 		else
-			user.balloon_alert("need [LIGHTBULB_COST] glass sheets!")
+			user.balloon_alert(user, "need [LIGHTBULB_COST] glass sheets!")
 		return TRUE
 
 	if(insert.type == /obj/item/shard) //we don't want to insert plasma, titanium or other types of shards
@@ -146,9 +146,9 @@
 
 		if(!replaced_something)
 			if(uses == max_uses)
-				user.balloon_alert("full!")
+				user.balloon_alert(user, "full!")
 			else
-				user.balloon_alert("nothing usable in [storage_to_empty]!")
+				user.balloon_alert(user, "nothing usable in [storage_to_empty]!")
 			return TRUE
 
 		user.balloon_alert(user, "lights inserted")
