@@ -709,6 +709,7 @@
 
 /obj/item/mod/module/recycler/proc/on_wearer_moved(datum/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
+
 	for(var/obj/item/item in mod.wearer.loc)
 		if(!is_type_in_list(item, allowed_item_types))
 			return
