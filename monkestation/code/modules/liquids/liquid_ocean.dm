@@ -109,7 +109,6 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 		icon_state = "[base_icon_state][random]"
 		base_icon_state = "[base_icon_state][random]"
 
-	update_starlight()
 
 /turf/open/floor/plating/ocean/Destroy()
 	. = ..()
