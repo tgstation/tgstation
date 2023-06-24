@@ -41,7 +41,7 @@
 				male += D.name
 				female += D.name
 	if(add_blank)
-		L["None"] = new /datum/sprite_accessory/blank
+		L[SPRITE_ACCESSORY_NONE] = new /datum/sprite_accessory/blank
 
 	return L
 
@@ -62,7 +62,7 @@
 	 * Currently only used by mutantparts so don't worry about hair and stuff.
 	 * This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
 	 */
-	var/color_src = MUTCOLORS
+	var/color_src = MUTANT_COLOR
 	/// Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
 	var/hasinner = FALSE
 	/// Is this part locked from roundstart selection? Used for parts that apply effects.
@@ -1767,7 +1767,7 @@
 	name = "Cat"
 	icon = 'icons/mob/species/human/cat_features.dmi'
 	icon_state = "default"
-	color_src = HAIR
+	color_src = HAIR_COLOR
 
 /datum/sprite_accessory/tails/monkey
 	name = "Monkey"
@@ -1879,14 +1879,14 @@
 	name = "Cat"
 	icon_state = "cat"
 	hasinner = TRUE
-	color_src = HAIR
+	color_src = HAIR_COLOR
 
 /datum/sprite_accessory/ears/fox
 	icon = 'icons/mob/species/human/fox_features.dmi'
 	name = "Fox"
 	icon_state = "fox"
 	hasinner = TRUE
-	color_src = HAIR
+	color_src = HAIR_COLOR
 	locked = TRUE
 
 /datum/sprite_accessory/wings/none
@@ -2105,7 +2105,7 @@
 
 /datum/sprite_accessory/caps
 	icon = 'icons/mob/species/mush_cap.dmi'
-	color_src = HAIR
+	color_src = HAIR_COLOR
 	em_block = TRUE
 
 /datum/sprite_accessory/caps/round

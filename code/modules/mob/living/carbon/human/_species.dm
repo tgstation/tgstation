@@ -32,6 +32,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/hair_color
 	///The alpha used by the hair. 255 is completely solid, 0 is invisible.
 	var/hair_alpha = 255
+	///The alpha used by the facial hair. 255 is completely solid, 0 is invisible.
+	var/facial_hair_alpha = 255
 
 	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
 	var/examine_limb_id
@@ -179,9 +181,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///List of results you get from knife-butchering. null means you cant butcher it. Associated by resulting type - value of amount
 	var/list/knife_butcher_results
-
-	///List of visual overlays created by handle_body()
-	var/list/body_vis_overlays = list()
 
 	/// Should we preload this species's organs?
 	var/preload = TRUE
@@ -413,6 +412,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/species_organs = mutant_organs + external_organs
 	for(var/organ_path in species_organs)
 		var/obj/item/organ/current_organ = organ_holder.get_organ_by_type(organ_path)
+		if(ispath(organ_path, /obj/item/organ/external) && !should_external_organ_apply_to(organ_path, organ_holder))
+			if(!isnull(current_organ) && replace_current)
+				// if we have an organ here and we're replacing organs, remove it
+				current_organ.Remove(organ_holder)
+				QDEL_NULL(current_organ)
+			continue
+
 		if(!current_organ || replace_current)
 			var/obj/item/organ/replacement = SSwardrobe.provide_type(organ_path)
 			// If there's an existing mutant organ, we're technically replacing it.
@@ -476,6 +482,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(ishuman(C))
 		var/mob/living/carbon/human/human = C
 		for(var/obj/item/organ/external/organ_path as anything in external_organs)
+			if(!should_external_organ_apply_to(organ_path, human))
+				continue
+
 			//Load a persons preferences from DNA
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(human, special=TRUE, drop_if_replaced=FALSE)
@@ -600,53 +609,25 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return handle_mutant_bodyparts(species_human)
 	var/list/standing = list()
 
-	var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
-
-	if(noggin && !(HAS_TRAIT(species_human, TRAIT_HUSK)))
-		// lipstick
-		if(species_human.lip_style && (LIPS in species_traits))
-			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "lips_[species_human.lip_style]", -BODY_LAYER)
-			lip_overlay.color = species_human.lip_color
-			noggin.worn_face_offset?.apply_offset(lip_overlay)
-			lip_overlay.pixel_y += height_offset
-			standing += lip_overlay
-
-		// eyes
-		if(!(NOEYESPRITES in species_traits))
+	if(!HAS_TRAIT(species_human, TRAIT_HUSK))
+		var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
+		if(noggin?.head_flags & HEAD_EYESPRITES)
+			// eyes (missing eye sprites get handled by the head itself, but sadly we have to do this stupid shit here, for now)
 			var/obj/item/organ/internal/eyes/eye_organ = species_human.get_organ_slot(ORGAN_SLOT_EYES)
-			var/mutable_appearance/no_eyeslay
-			var/add_pixel_x = 0
-			var/add_pixel_y = 0
-			//cut any possible vis overlays
-			if(body_vis_overlays.len)
-				SSvis_overlays.remove_vis_overlay(species_human, body_vis_overlays)
-			var/list/feature_offset = noggin.worn_face_offset?.get_offset()
-			if(feature_offset)
-				add_pixel_x = feature_offset["x"]
-				add_pixel_y = feature_offset["y"]
-			add_pixel_y += height_offset
-
 			if(eye_organ)
 				eye_organ.refresh(call_update = FALSE)
 				for(var/mutable_appearance/eye_overlay in eye_organ.generate_body_overlay(species_human))
 					eye_overlay.pixel_y += height_offset
 					standing += eye_overlay
-			else if (!(NOEYEHOLES in species_traits))
-				no_eyeslay = mutable_appearance('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER)
-				no_eyeslay.pixel_x += add_pixel_x
-				no_eyeslay.pixel_y += add_pixel_y
-				standing += no_eyeslay
 
-	// organic body markings
-	if(HAS_MARKINGS in species_traits)
-		var/obj/item/bodypart/chest/chest = species_human.get_bodypart(BODY_ZONE_CHEST)
-		var/obj/item/bodypart/arm/right/right_arm = species_human.get_bodypart(BODY_ZONE_R_ARM)
-		var/obj/item/bodypart/arm/left/left_arm = species_human.get_bodypart(BODY_ZONE_L_ARM)
-		var/obj/item/bodypart/leg/right/right_leg = species_human.get_bodypart(BODY_ZONE_R_LEG)
-		var/obj/item/bodypart/leg/left/left_leg = species_human.get_bodypart(BODY_ZONE_L_LEG)
-		var/datum/sprite_accessory/markings = GLOB.moth_markings_list[species_human.dna.features["moth_markings"]]
-
-		if(!HAS_TRAIT(species_human, TRAIT_HUSK))
+		// organic body markings (oh my god this is terrible please rework this to be done on the limbs themselves i beg you)
+		if(HAS_MARKINGS in species_traits)
+			var/obj/item/bodypart/chest/chest = species_human.get_bodypart(BODY_ZONE_CHEST)
+			var/obj/item/bodypart/arm/right/right_arm = species_human.get_bodypart(BODY_ZONE_R_ARM)
+			var/obj/item/bodypart/arm/left/left_arm = species_human.get_bodypart(BODY_ZONE_L_ARM)
+			var/obj/item/bodypart/leg/right/right_leg = species_human.get_bodypart(BODY_ZONE_R_LEG)
+			var/obj/item/bodypart/leg/left/left_leg = species_human.get_bodypart(BODY_ZONE_L_LEG)
+			var/datum/sprite_accessory/markings = GLOB.moth_markings_list[species_human.dna.features["moth_markings"]]
 			if(noggin && (IS_ORGANIC_LIMB(noggin)))
 				var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
 				markings_head_overlay.pixel_y += height_offset
@@ -779,21 +760,21 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(!(HAS_TRAIT(source, TRAIT_HUSK)))
 				if(!forced_colour)
 					switch(accessory.color_src)
-						if(MUTCOLORS)
+						if(MUTANT_COLOR)
 							if(fixed_mut_color)
 								accessory_overlay.color = fixed_mut_color
 							else
 								accessory_overlay.color = source.dna.features["mcolor"]
-						if(HAIR)
+						if(HAIR_COLOR)
 							if(hair_color == "mutcolor")
 								accessory_overlay.color = source.dna.features["mcolor"]
 							else if(hair_color == "fixedmutcolor")
 								accessory_overlay.color = fixed_mut_color
 							else
 								accessory_overlay.color = source.hair_color
-						if(FACEHAIR)
+						if(FACIAL_HAIR_COLOR)
 							accessory_overlay.color = source.facial_hair_color
-						if(EYECOLOR)
+						if(EYE_COLOR)
 							accessory_overlay.color = source.eye_color_left
 				else
 					accessory_overlay.color = forced_colour
@@ -1088,7 +1069,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		source.domutcheck()
 
 	if(time_since_irradiated > RAD_MOB_HAIRLOSS && SPT_PROB(RAD_MOB_HAIRLOSS_PROB, seconds_per_tick))
-		if(!(source.hairstyle == "Bald") && (HAIR in species_traits))
+		var/obj/item/bodypart/head/head = source.get_bodypart(BODY_ZONE_HEAD)
+		if(!(source.hairstyle == "Bald") && (head?.head_flags & HEAD_HAIR|HEAD_FACIAL_HAIR))
 			to_chat(source, span_danger("Your hair starts to fall out in clumps..."))
 			addtimer(CALLBACK(src, PROC_REF(go_bald), source), 5 SECONDS)
 
@@ -1804,7 +1786,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if ( \
 			(preference.relevant_mutant_bodypart in mutant_bodyparts) \
 			|| (preference.relevant_species_trait in species_traits) \
-			|| (preference.relevant_external_organ in external_organs)
+			|| (preference.relevant_external_organ in external_organs) \
+			|| (preference.relevant_head_flag && check_head_flags(preference.relevant_head_flag)) \
 		)
 			features += preference.savefile_key
 
@@ -2321,3 +2304,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Creates body parts for the target completely from scratch based on the species
 /datum/species/proc/create_fresh_body(mob/living/carbon/target)
 	target.create_bodyparts(bodypart_overrides)
+
+/**
+ * Checks if the species has a head with these head flags, by default.
+ * Admittedly, this is a very weird and seemingly redundant proc, but it
+ * gets used by some preferences (such as hair style) to determine whether
+ * or not they are accessible.
+ **/
+/datum/species/proc/check_head_flags(check_flags = NONE)
+	var/obj/item/bodypart/head/fake_head = bodypart_overrides[BODY_ZONE_HEAD]
+	return (initial(fake_head.head_flags) & check_flags)

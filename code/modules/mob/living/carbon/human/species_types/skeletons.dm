@@ -6,7 +6,6 @@
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
 	species_traits = list(
 		NOTRANSSTING,
-		NOEYESPRITES,
 		NO_DNA_COPY,
 		NO_UNDERWEAR,
 	)
@@ -28,7 +27,6 @@
 		TRAIT_TOXIMMUNE,
 		TRAIT_XENO_IMMUNE,
 		TRAIT_NOBLOOD,
-		TRAIT_NO_DEBRAIN_OVERLAY,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/internal/tongue/bone

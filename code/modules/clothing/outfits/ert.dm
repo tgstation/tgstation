@@ -181,7 +181,7 @@
 	name = "Inquisition Commander"
 
 	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
-	r_hand = /obj/item/nullrod/scythe/talking/chainsword
+	r_hand = /obj/item/nullrod/vibro/talking/chainsword
 	backpack_contents = list(
 		/obj/item/storage/box/survival = 1,
 	)

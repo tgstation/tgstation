@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "The walls adjacent to the Infiltrator docking port will no longer bend diagonally into walls."
