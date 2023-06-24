@@ -1,0 +1,4 @@
+# In this PR, the working mecha subtype was removed.
+
+/obj/vehicle/sealed/mecha/ripley/@SUBTYPES : /obj/vehicle/sealed/mecha/ripley@SUBTYPES
+/obj/vehicle/sealed/mecha/clarke/@SUBTYPES : /obj/vehicle/sealed/mecha/clarke/@SUBTYPES

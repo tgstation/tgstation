@@ -18,13 +18,13 @@
 	///How much base damage this clamp does
 	var/clamp_damage = 20
 	///Var for the chassis we are attached to, needed to access ripley contents and such
-	var/obj/vehicle/sealed/mecha/working/ripley/cargo_holder
+	var/obj/vehicle/sealed/mecha/ripley/cargo_holder
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/mecha/hydraulic.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/mecha)
 	. = ..()
-	if(istype(mecha, /obj/vehicle/sealed/mecha/working/ripley))
+	if(istype(mecha, /obj/vehicle/sealed/mecha/ripley))
 		cargo_holder = mecha
 	ADD_TRAIT(mecha, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
 
@@ -342,7 +342,7 @@
 	mech_flags = EXOSUIT_MODULE_RIPLEY
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/vehicle/sealed/mecha/working/ripley/M, attach_right = FALSE, mob/user)
-	if(M.type != /obj/vehicle/sealed/mecha/working/ripley)
+	if(M.type != /obj/vehicle/sealed/mecha/ripley)
 		to_chat(user, span_warning("This conversion kit can only be applied to APLU MK-I models."))
 		return FALSE
 	if(LAZYLEN(M.cargo))
@@ -360,7 +360,7 @@
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/vehicle/sealed/mecha/markone, attach_right = FALSE)
-	var/obj/vehicle/sealed/mecha/working/ripley/mk2/marktwo = new (get_turf(markone),1)
+	var/obj/vehicle/sealed/mecha/ripley/mk2/marktwo = new (get_turf(markone),1)
 	if(!marktwo)
 		return
 	QDEL_NULL(marktwo.cell)

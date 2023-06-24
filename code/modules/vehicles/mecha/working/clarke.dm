@@ -1,5 +1,5 @@
 ///Lavaproof, fireproof, fast mech with low armor and higher energy consumption, cannot strafe and has an internal ore box.
-/obj/vehicle/sealed/mecha/working/clarke
+/obj/vehicle/sealed/mecha/clarke
 	desc = "Combining man and machine for a better, stronger engineer. Can even resist lava!"
 	name = "\improper Clarke"
 	icon_state = "clarke"
@@ -39,16 +39,16 @@
 	fire = 100
 	acid = 100
 
-/obj/vehicle/sealed/mecha/working/clarke/Initialize(mapload)
+/obj/vehicle/sealed/mecha/clarke/Initialize(mapload)
 	. = ..()
 	ore_box = new(src)
 
-/obj/vehicle/sealed/mecha/working/clarke/atom_destruction()
+/obj/vehicle/sealed/mecha/clarke/atom_destruction()
 	if(ore_box)
 		INVOKE_ASYNC(box, TYPE_PROC_REF(/obj/structure/ore_box, dump_box_contents))
 	return ..()
 
-/obj/vehicle/sealed/mecha/working/clarke/generate_actions()
+/obj/vehicle/sealed/mecha/clarke/generate_actions()
 	. = ..()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_search_ruins)
 
