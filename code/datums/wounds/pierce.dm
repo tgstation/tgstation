@@ -60,26 +60,26 @@
 		return BLOOD_FLOW_DECREASING
 	return BLOOD_FLOW_STEADY
 
-/datum/wound/pierce/handle_process(delta_time, times_fired)
+/datum/wound/pierce/handle_process(seconds_per_tick, times_fired)
 	set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
 	if(!no_bleeding)
 		if(victim.bodytemperature < (BODYTEMP_NORMAL - 10))
-			adjust_blood_flow(-0.1 * delta_time)
-			if(DT_PROB(2.5, delta_time))
+			adjust_blood_flow(-0.1 * seconds_per_tick)
+			if(SPT_PROB(2.5, seconds_per_tick))
 				to_chat(victim, span_notice("You feel the [lowertext(name)] in your [limb.plaintext_zone] firming up from the cold!"))
 
 		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
-			adjust_blood_flow(0.25 * delta_time) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
+			adjust_blood_flow(0.25 * seconds_per_tick) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	if(limb.current_gauze)
-		adjust_blood_flow(-limb.current_gauze.absorption_rate * gauzed_clot_rate * delta_time)
-		limb.current_gauze.absorption_capacity -= limb.current_gauze.absorption_rate * delta_time
+		adjust_blood_flow(-limb.current_gauze.absorption_rate * gauzed_clot_rate * seconds_per_tick)
+		limb.current_gauze.absorption_capacity -= limb.current_gauze.absorption_rate * seconds_per_tick
 
 	if(blood_flow <= 0)
 		qdel(src)
 
-/datum/wound/pierce/on_stasis(delta_time, times_fired)
+/datum/wound/pierce/on_stasis(seconds_per_tick, times_fired)
 	. = ..()
 	if(blood_flow <= 0)
 		qdel(src)

@@ -130,7 +130,7 @@
 	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_hand_hit))
 	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_hand_hit))
 	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, PROC_REF(on_hand_dropped))
-	RegisterSignal(attached_hand, COMSIG_PARENT_QDELETING, PROC_REF(on_hand_deleted))
+	RegisterSignal(attached_hand, COMSIG_QDELETING, PROC_REF(on_hand_deleted))
 
 	// We can high five with our touch hand. It casts the spell on people. Radical
 	attached_hand.AddElement(/datum/element/high_fiver)
@@ -144,7 +144,7 @@
 		COMSIG_ITEM_AFTERATTACK,
 		COMSIG_ITEM_AFTERATTACK_SECONDARY,
 		COMSIG_ITEM_DROPPED,
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 		COMSIG_ITEM_OFFER_TAKEN,
 	))
 
@@ -273,7 +273,7 @@
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /**
- * Signal proc for [COMSIG_PARENT_QDELETING] from our attached hand.
+ * Signal proc for [COMSIG_QDELETING] from our attached hand.
  *
  * If our hand is deleted for a reason unrelated to our spell,
  * unlink it (clear refs) and revert the cooldown
@@ -330,7 +330,7 @@
 	icon = 'icons/obj/weapons/hand.dmi'
 	lefthand_file = 'icons/mob/inhands/items/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
-	icon_state = "latexballon"
+	icon_state = "latexballoon"
 	inhand_icon_state = null
 	item_flags = NEEDS_PERMIT | ABSTRACT | HAND_ITEM
 	w_class = WEIGHT_CLASS_HUGE

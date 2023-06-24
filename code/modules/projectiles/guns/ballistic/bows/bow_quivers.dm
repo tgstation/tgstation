@@ -1,0 +1,35 @@
+
+/obj/item/storage/bag/quiver
+	name = "quiver"
+	desc = "Holds arrows for your bow. Good, because while pocketing arrows is possible, it surely can't be pleasant."
+	icon = 'icons/obj/weapons/guns/bows/quivers.dmi'
+	icon_state = "quiver"
+	inhand_icon_state = null
+	worn_icon_state = "harpoon_quiver"
+	/// type of arrow the quivel should hold
+	var/arrow_path = /obj/item/ammo_casing/caseless/arrow
+
+/obj/item/storage/bag/quiver/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
+	atom_storage.max_slots = 40
+	atom_storage.max_total_storage = 100
+	atom_storage.set_holdable(list(
+		/obj/item/ammo_casing/caseless/arrow,
+	))
+
+/obj/item/storage/bag/quiver/PopulateContents()
+	. = ..()
+	for(var/i in 1 to 10)
+		new arrow_path(src)
+
+/obj/item/storage/bag/quiver/despawning
+	arrow_path = /obj/item/ammo_casing/caseless/arrow/despawning
+
+/obj/item/storage/bag/quiver/holy
+	name = "divine quiver"
+	desc = "Holds arrows for your divine bow, where they wait to find their target."
+	icon_state = "holyquiver"
+	inhand_icon_state = "holyquiver"
+	worn_icon_state = "holyquiver"
+	arrow_path = /obj/item/ammo_casing/caseless/arrow/holy

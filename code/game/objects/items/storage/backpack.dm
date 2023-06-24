@@ -141,6 +141,12 @@
 	icon_state = "backpack-medical"
 	inhand_icon_state = "medicalpack"
 
+/obj/item/storage/backpack/coroner
+	name = "coroner backpack"
+	desc = "It's a backpack especially designed for use in an undead environment."
+	icon_state = "backpack-coroner"
+	inhand_icon_state = "coronerpack"
+
 /obj/item/storage/backpack/security
 	name = "security backpack"
 	desc = "It's a very robust backpack."
@@ -233,6 +239,41 @@
 	. = ..()
 	atom_storage.max_total_storage = 26
 
+// MEAT MEAT MEAT MEAT MEAT
+
+/obj/item/storage/backpack/meat
+	name = "\improper MEAT"
+	desc = "MEAT MEAT MEAT MEAT MEAT MEAT"
+	icon_state = "meatmeatmeat"
+	inhand_icon_state = "meatmeatmeat"
+	force = 15
+	throwforce = 15
+	attack_verb_continuous = list("MEATS", "MEAT MEATS")
+	attack_verb_simple = list("MEAT", "MEAT MEAT")
+	///Sounds used in the squeak component
+	var/list/meat_sounds = list('sound/effects/blobattack.ogg' = 1)
+	///Reagents added to the edible component, ingested when you EAT the MEAT
+	var/list/meat_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+	)
+	///The food types of the edible component
+	var/foodtypes = MEAT | RAW
+	///How our MEAT tastes. It tastes like MEAT
+	var/list/tastes = list("MEAT" = 1)
+	///Eating verbs when consuming the MEAT
+	var/list/eatverbs = list("MEAT", "absorb", "gnaw", "consume")
+
+/obj/item/storage/backpack/meat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/edible,\
+		initial_reagents = meat_reagents,\
+		foodtypes = foodtypes,\
+		tastes = tastes,\
+		eatverbs = eatverbs,\
+	)
+	AddComponent(/datum/component/squeak, meat_sounds)
+
 /*
  * Satchel Types
  */
@@ -279,6 +320,12 @@
 	desc = "A sterile satchel with chemist colours."
 	icon_state = "satchel-chemistry"
 	inhand_icon_state = "satchel-chem"
+
+/obj/item/storage/backpack/satchel/coroner
+	name = "coroner satchel"
+	desc = "A satchel used to carry whatever's left of human bodies."
+	icon_state = "satchel-coroner"
+	inhand_icon_state = "satchel-coroner"
 
 /obj/item/storage/backpack/satchel/gen
 	name = "geneticist satchel"
@@ -330,12 +377,12 @@
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
-	var/datum/supply_pack/costumes_toys/randomised/contraband/C = new
-	for(var/i in 1 to 2)
-		var/ctype = pick(C.contains)
-		new ctype(src)
+	var/datum/supply_pack/imports/contraband/smuggled_goods = new
+	for(var/items in 1 to 2)
+		var/smuggled_goods_type = pick(smuggled_goods.contains)
+		new smuggled_goods_type(src)
 
-	qdel(C)
+	qdel(smuggled_goods)
 
 /obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
 	new /obj/item/stack/tile/iron/base(src)
@@ -386,6 +433,12 @@
 /obj/item/storage/backpack/duffelbag/med/surgery
 	name = "surgical duffel bag"
 	desc = "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
+
+/obj/item/storage/backpack/duffelbag/coroner
+	name = "coroner duffel bag"
+	desc = "A large duffel bag for holding large amounts of organs at once."
+	icon_state = "duffel-coroner"
+	inhand_icon_state = "duffel-coroner"
 
 /obj/item/storage/backpack/duffelbag/explorer
 	name = "explorer duffel bag"
@@ -536,19 +589,20 @@
 	inhand_icon_state = "duffel-syndiemed"
 
 /obj/item/storage/backpack/duffelbag/syndie/surgery/PopulateContents()
-	new /obj/item/scalpel(src)
-	new /obj/item/hemostat(src)
-	new /obj/item/retractor(src)
-	new /obj/item/circular_saw(src)
-	new /obj/item/bonesetter(src)
-	new /obj/item/surgicaldrill(src)
-	new /obj/item/cautery(src)
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/cautery/advanced(src)
 	new /obj/item/surgical_drapes(src)
+	new /obj/item/reagent_containers/medigel/sterilizine(src)
+	new /obj/item/surgicaldrill(src)
+	new /obj/item/bonesetter(src)
+	new /obj/item/blood_filter(src)
+	new /obj/item/stack/medical/bone_gel(src)
+	new /obj/item/stack/sticky_tape/surgical(src)
+	new /obj/item/roller(src)
 	new /obj/item/clothing/suit/jacket/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
-	new /obj/item/blood_filter(src)
-	new /obj/item/stack/medical/bone_gel(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo
 	name = "ammunition duffel bag"

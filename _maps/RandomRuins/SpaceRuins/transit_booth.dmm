@@ -24,6 +24,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
 	},
+/obj/structure/sign/poster/official/high_class_martini/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/transit_booth)
 "e" = (
@@ -31,9 +32,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)
 "f" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/mass_driver{
 	id = "south"
 	},
@@ -87,9 +86,6 @@
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
-	pixel_y = 35
-	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)
 "o" = (
@@ -100,6 +96,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/transit_booth)
 "p" = (
@@ -138,8 +135,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)
 "t" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 2
 	},
 /obj/structure/rack,
@@ -209,9 +205,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/transit_booth)
 "D" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/mass_driver{
 	dir = 8;
 	id = "west"
@@ -235,7 +229,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/transit_booth)
 "F" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	layer = 2.9
 	},
 /obj/structure/rack,
@@ -253,7 +247,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)
 "G" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	layer = 2.9
 	},
 /obj/machinery/mass_driver{
@@ -376,8 +370,7 @@
 	pixel_x = 5;
 	pixel_y = -2
 	},
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/siding/dark_red{
@@ -416,7 +409,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/transit_booth)
 "V" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	layer = 2.9
 	},
 /obj/structure/rack,
@@ -435,8 +428,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)
 "W" = (
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/directional/west{
 	layer = 2.9
 	},
 /obj/machinery/mass_driver{
@@ -464,9 +456,6 @@
 "Y" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
-	},
-/obj/structure/sign/poster/official/high_class_martini{
-	pixel_y = -28
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)

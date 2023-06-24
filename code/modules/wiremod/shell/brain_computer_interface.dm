@@ -183,7 +183,7 @@
 	user_port.set_output(owner)
 	user = WEAKREF(owner)
 
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
 
@@ -194,7 +194,7 @@
 	user = null
 
 	UnregisterSignal(owner, list(
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_PROCESS_BORGCHARGER_OCCUPANT,
 		COMSIG_LIVING_ELECTROCUTE_ACT,
 	))
@@ -274,7 +274,7 @@
 		to_chat(owner, span_info("[circuit_component.parent]'s [cell.name] has <b>[cell.percent()]%</b> charge left."))
 		to_chat(owner, span_info("You can recharge it by using a cyborg recharging station."))
 
-/datum/action/innate/bci_charge_action/process(delta_time)
+/datum/action/innate/bci_charge_action/process(seconds_per_tick)
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /datum/action/innate/bci_charge_action/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
@@ -292,7 +292,7 @@
 	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the door is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 
 	var/busy = FALSE
 	var/busy_icon_state
@@ -525,5 +525,5 @@
 	build_path = /obj/machinery/bci_implanter
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 2,
-		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/servo = 1,
 	)

@@ -102,10 +102,11 @@
 	extended_desc = theme.extended_desc
 	slowdown_inactive = theme.slowdown_inactive
 	slowdown_active = theme.slowdown_active
+	activation_step_time = theme.activation_step_time
 	complexity_max = theme.complexity_max
 	ui_theme = theme.ui_theme
 	charge_drain = theme.charge_drain
-	wires = new /datum/wires/mod(src)
+	set_wires(new /datum/wires/mod(src))
 	if(length(req_access))
 		locked = TRUE
 	new_core?.install(src)
@@ -132,7 +133,7 @@
 		part.siemens_coefficient = theme.siemens_coefficient
 	for(var/obj/item/part as anything in mod_parts)
 		RegisterSignal(part, COMSIG_ATOM_DESTRUCTION, PROC_REF(on_part_destruction))
-		RegisterSignal(part, COMSIG_PARENT_QDELETING, PROC_REF(on_part_deletion))
+		RegisterSignal(part, COMSIG_QDELETING, PROC_REF(on_part_deletion))
 	set_mod_skin(new_skin || theme.default_skin)
 	update_speed()
 	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
@@ -221,7 +222,7 @@
 	. = ..()
 	. += "<i>[extended_desc]</i>"
 
-/obj/item/mod/control/process(delta_time)
+/obj/item/mod/control/process(seconds_per_tick)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
 	if(!get_charge() && active && !activating)
@@ -230,12 +231,12 @@
 	var/malfunctioning_charge_drain = 0
 	if(malfunctioning)
 		malfunctioning_charge_drain = rand(1,20)
-	subtract_charge((charge_drain + malfunctioning_charge_drain)*delta_time)
+	subtract_charge((charge_drain + malfunctioning_charge_drain)*seconds_per_tick)
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
-		if(malfunctioning && module.active && DT_PROB(5, delta_time))
+		if(malfunctioning && module.active && SPT_PROB(5, seconds_per_tick))
 			module.on_deactivation(display_message = TRUE)
-		module.on_process(delta_time)
+		module.on_process(seconds_per_tick)
 
 /obj/item/mod/control/equipped(mob/user, slot)
 	..()

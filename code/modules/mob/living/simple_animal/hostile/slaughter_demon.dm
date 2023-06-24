@@ -235,6 +235,8 @@
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
 
+	return TRUE
+
 /mob/living/simple_animal/hostile/imp/slaughter/engine_demon
 	name = "engine demon"
 	faction = list(FACTION_HELL, FACTION_NEUTRAL)

@@ -3,5 +3,5 @@
 
 
 ///Determines what behaviors should the controller try processing; if this returns SUBTREE_RETURN_FINISH_PLANNING then the controller won't go through the other subtrees should multiple exist in controller.planning_subtrees
-/datum/ai_planning_subtree/proc/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/proc/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	return

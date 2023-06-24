@@ -41,7 +41,7 @@
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/goliath/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	handle_preattack()
 
@@ -159,7 +159,7 @@
 	var/turf/last_location
 	var/tentacle_recheck_cooldown = 100
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.) // dead
 		return
@@ -178,7 +178,7 @@
 				cached_tentacle_turfs -= t
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
-	fromtendril = TRUE
+	from_spawner = TRUE
 
 //tentacles
 /obj/effect/temp_visual/goliath_tentacle
@@ -212,7 +212,7 @@
 			new /obj/effect/temp_visual/goliath_tentacle(T, spawner)
 
 /obj/effect/temp_visual/goliath_tentacle/proc/tripanim()
-	icon_state = "Goliath_tentacle_wiggle"
+	icon_state = "goliath_tentacle_wiggle"
 	deltimer(timerid)
 	timerid = addtimer(CALLBACK(src, PROC_REF(trip)), 3, TIMER_STOPPABLE)
 
@@ -232,9 +232,9 @@
 		timerid = addtimer(CALLBACK(src, PROC_REF(retract)), 10, TIMER_STOPPABLE)
 
 /obj/effect/temp_visual/goliath_tentacle/proc/retract()
-	icon_state = "Goliath_tentacle_retract"
+	icon_state = "goliath_tentacle_retract"
 	deltimer(timerid)
-	timerid = QDEL_IN(src, 7)
+	timerid = QDEL_IN_STOPPABLE(src, 7)
 
 /obj/item/saddle
 	name = "saddle"

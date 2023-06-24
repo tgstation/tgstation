@@ -85,7 +85,10 @@
 				D.aiDisabledIdScanner = !D.aiDisabledIdScanner
 			if(specialfunctions & BOLTS)
 				if(!D.wires.is_cut(WIRE_BOLTS) && D.hasPower())
-					D.locked = !D.locked
+					if(D.locked)
+						D.unlock()
+					else
+						D.lock()
 					D.update_appearance()
 			if(specialfunctions & SHOCK)
 				if(D.secondsElectrified)
@@ -113,14 +116,16 @@
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 
-	sleep(1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(activate_stage2)), 1 SECONDS)
 
+/obj/item/assembly/control/massdriver/proc/activate_stage2()
 	for(var/obj/machinery/mass_driver/M in GLOB.machines)
 		if(M.id == src.id)
 			M.drive()
 
-	sleep(6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(activate_stage3)), 6 SECONDS)
 
+/obj/item/assembly/control/massdriver/proc/activate_stage3()
 	for(var/obj/machinery/door/poddoor/M in GLOB.airlocks)
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
@@ -142,9 +147,7 @@
 
 	for(var/obj/machinery/igniter/M in GLOB.machines)
 		if(M.id == src.id)
-			M.use_power(50)
-			M.on = !M.on
-			M.icon_state = "igniter[M.on]"
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/igniter, toggle))
 
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 30)
 

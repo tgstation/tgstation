@@ -112,7 +112,7 @@
 			span_userdanger("You step on [parent]!")
 		)
 
-	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
+	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND, attacking_item = parent)
 
 	if(!(flags & CALTROP_NOSTUN)) // Won't set off the paralysis.
 		H.Paralyze(paralyze_duration)

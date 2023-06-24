@@ -70,7 +70,7 @@
 	//if it's always hooked in it'll override admin choices
 	RegisterSignal(overflow_control, COMSIG_CREATED_ROUND_EVENT, PROC_REF(on_created_round_event))
 	disarm_nuke()
-	overflow_control.runEvent()
+	overflow_control.run_event(event_cause = "a beer nuke")
 
 /// signal sent from overflow control when it fires an event
 /obj/machinery/nuclearbomb/beer/proc/on_created_round_event(datum/round_event_control/source_event_control, datum/round_event/scrubber_overflow/every_vent/created_event)

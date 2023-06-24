@@ -28,6 +28,8 @@
 	var/last_effect = 0
 	/// Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flags.
 	var/force_teleport = FALSE
+	//does this portal create spark effect when teleporting?
+	var/sparkless = FALSE
 
 /obj/effect/portal/anom
 	name = "wormhole"
@@ -115,7 +117,7 @@
 	if(!force && (!ismecha(M) && !isprojectile(M) && M.anchored && !allow_anchored))
 		return
 	var/no_effect = FALSE
-	if(last_effect == world.time)
+	if(last_effect == world.time || sparkless)
 		no_effect = TRUE
 	else
 		last_effect = world.time

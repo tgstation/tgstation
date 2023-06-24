@@ -16,7 +16,7 @@
 	if(is_ctf_target(target) && blocked == FALSE)
 		if(iscarbon(target))
 			var/mob/living/carbon/target_mob = target
-			target_mob.adjustBruteLoss(150, 0)
+			target_mob.apply_damage(150)
 		return BULLET_ACT_HIT
 
 /obj/item/ammo_box/magazine/recharge/ctf

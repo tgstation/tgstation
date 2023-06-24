@@ -28,9 +28,9 @@
 	ph = 7
 	liver_damage = 0
 
-/datum/reagent/impurity/methanol/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+/datum/reagent/impurity/methanol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
-	eyes?.apply_organ_damage(0.5 * REM * delta_time, required_organtype = affected_organtype)
+	eyes?.apply_organ_damage(0.5 * REM * seconds_per_tick, required_organtype = affected_organtype)
 	return ..()
 
 //Chloral Hydrate - Impure Version
@@ -42,8 +42,8 @@
 	ph = 7
 	liver_damage = 0
 
-/datum/reagent/impurity/chloralax/on_mob_life(mob/living/carbon/owner, delta_time)
-	owner.adjustToxLoss(1 * REM * delta_time, FALSE, required_biotype = affected_biotype)
+/datum/reagent/impurity/chloralax/on_mob_life(mob/living/carbon/owner, seconds_per_tick)
+	owner.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	..()
 
 
@@ -57,13 +57,13 @@
 	liver_damage = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-/datum/reagent/impurity/rosenol/on_mob_life(mob/living/carbon/owner, delta_time)
+/datum/reagent/impurity/rosenol/on_mob_life(mob/living/carbon/owner, seconds_per_tick)
 	var/obj/item/organ/internal/tongue/tongue = owner.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
 		return ..()
-	if(DT_PROB(4.0, delta_time))
+	if(SPT_PROB(4.0, seconds_per_tick))
 		owner.manual_emote("clicks with [owner.p_their()] tongue.")
 		owner.say("Noice.", forced = /datum/reagent/impurity/rosenol)
-	if(DT_PROB(2.0, delta_time))
+	if(SPT_PROB(2.0, seconds_per_tick))
 		owner.say(pick("Ah! That was a mistake!", "Horrible.", "Watch out everybody, the potato is really hot.", "When I was six I ate a bag of plums.", "And if there is one thing I can't stand it's tomatoes.", "And if there is one thing I love it's tomatoes.", "We had a captain who was so strict, you weren't allowed to breathe in their station.", "The unrobust ones just used to keel over and die, you'd hear them going down behind you."), forced = /datum/reagent/impurity/rosenol)
 	..()

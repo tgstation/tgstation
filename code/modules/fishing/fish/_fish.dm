@@ -147,13 +147,13 @@
 	if(isnull(last_feeding)) //Fish start fed.
 		last_feeding = world.time
 	RegisterSignal(aquarium, COMSIG_ATOM_EXITED, PROC_REF(aquarium_exited))
-	RegisterSignal(aquarium, COMSIG_PARENT_ATTACKBY, PROC_REF(attack_reaction))
+	RegisterSignal(aquarium, COMSIG_ATOM_ATTACKBY, PROC_REF(attack_reaction))
 
 /obj/item/fish/proc/aquarium_exited(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 	if(src != gone)
 		return
-	UnregisterSignal(source,list(COMSIG_ATOM_EXITED,COMSIG_PARENT_ATTACKBY))
+	UnregisterSignal(source,list(COMSIG_ATOM_EXITED,COMSIG_ATOM_ATTACKBY))
 
 /// Our aquarium is hit with stuff
 /obj/item/fish/proc/attack_reaction(datum/source, obj/item/thing, mob/user, params)
@@ -194,11 +194,11 @@
 	else
 		stop_flopping()
 
-/obj/item/fish/process(delta_time)
+/obj/item/fish/process(seconds_per_tick)
 	if(in_stasis || status != FISH_ALIVE)
 		return
 
-	process_health(delta_time)
+	process_health(seconds_per_tick)
 	if(ready_to_reproduce())
 		try_to_reproduce()
 
@@ -242,7 +242,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/fish/proc/process_health(delta_time)
+/obj/item/fish/proc/process_health(seconds_per_tick)
 	var/health_change_per_second = 0
 	if(!proper_environment())
 		health_change_per_second -= 3 //Dying here
@@ -250,7 +250,7 @@
 		health_change_per_second -= 0.5 //Starving
 	else
 		health_change_per_second += 0.5 //Slowly healing
-	adjust_health(health + health_change_per_second * delta_time)
+	adjust_health(health + health_change_per_second * seconds_per_tick)
 
 /obj/item/fish/proc/adjust_health(amt)
 	health = clamp(amt, 0, initial(health))

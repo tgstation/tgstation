@@ -10,7 +10,6 @@
 	)
 
 	coldmod = 0.5 //snails only come out when its cold and wet
-	burnmod = 2
 	speedmod = 6
 	siemens_coeff = 2 //snails are mostly water
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP
@@ -29,12 +28,12 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/snail
 	)
 
-/datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
 	. = ..()
 	if(istype(chem,/datum/reagent/consumable/salt))
-		H.adjustFireLoss(2 * REM * delta_time)
+		H.adjustFireLoss(2 * REM * seconds_per_tick)
 		playsound(H, 'sound/weapons/sear.ogg', 30, TRUE)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return TRUE
 
 /datum/species/snail/on_species_gain(mob/living/carbon/new_snailperson, datum/species/old_species, pref_load)

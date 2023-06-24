@@ -316,7 +316,7 @@
 		var/delay = 2
 		var/datum/move_loop/loop = SSmove_manager.move_towards(resin, target, delay, timeout = delay * 5, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(resin_stop_check))
-		RegisterSignal(loop, COMSIG_PARENT_QDELETING, PROC_REF(resin_landed))
+		RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(resin_landed))
 		return
 
 	if(nozzle_mode == RESIN_FOAM)
@@ -453,7 +453,7 @@
 	if(ismob(loc))
 		to_chat(loc, span_notice("[src] turns off."))
 
-/obj/item/reagent_containers/chemtank/process(delta_time)
+/obj/item/reagent_containers/chemtank/process(seconds_per_tick)
 	if(!ishuman(loc))
 		turn_off()
 		return
@@ -465,7 +465,7 @@
 		turn_off()
 		return
 
-	var/inj_am = injection_amount * delta_time
+	var/inj_am = injection_amount * seconds_per_tick
 	var/used_amount = inj_am / usage_ratio
 	reagents.trans_to(user, used_amount, multiplier=usage_ratio, methods = INJECT)
 	update_appearance()

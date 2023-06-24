@@ -20,44 +20,32 @@
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
 
-/obj/item/organ/internal/brain/psyker/on_life(delta_time, times_fired)
+/obj/item/organ/internal/brain/psyker/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	var/obj/item/bodypart/head/psyker/psyker_head = owner.get_bodypart(zone)
 	if(istype(psyker_head))
 		return
-	if(!DT_PROB(2, delta_time))
+	if(!SPT_PROB(2, seconds_per_tick))
 		return
 	to_chat(owner, span_userdanger("Your head hurts... It can't fit your brain!"))
-	owner.adjust_disgust(33 * delta_time)
-	apply_organ_damage(5 * delta_time, 199)
+	owner.adjust_disgust(33 * seconds_per_tick)
+	apply_organ_damage(5 * seconds_per_tick, 199)
 
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
+	head_flags = HEAD_LIPS|HEAD_EYEHOLES|HEAD_DEBRAIN
 
 /obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, abort)
 	. = ..()
 	if(!.)
 		return
 	new_head_owner.become_blind(limb_id)
-	if(!new_head_owner.dna?.species)
-		return
-
-	new_head_owner.dna.species.species_traits |= NOEYESPRITES //MAKE VISUALS TIED TO BODYPARTS ARGHH
-	new_head_owner.update_body()
 
 /obj/item/bodypart/head/psyker/drop_limb(special, dismembered)
 	owner.cure_blind(limb_id)
-	if(!owner.dna?.species)
-		return ..()
-
-	if(initial(owner.dna.species.species_traits) & NOEYESPRITES)
-		return ..()
-
-	owner.dna.species.species_traits &= ~NOEYESPRITES
-	owner.update_body()
 	return ..()
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
@@ -306,7 +294,7 @@
 	game_plane_master_controller.remove_filter("psychic_blur")
 	game_plane_master_controller.remove_filter("psychic_wave")
 
-/datum/status_effect/psychic_projection/tick(delta_time, times_fired)
+/datum/status_effect/psychic_projection/tick(seconds_per_tick, times_fired)
 	var/obj/item/gun/held_gun = owner?.is_holding_item_of_type(/obj/item/gun)
 	if(!held_gun)
 		return

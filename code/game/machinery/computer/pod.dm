@@ -22,7 +22,7 @@
 			connected = M
 			break
 
-/obj/machinery/computer/pod/process(delta_time)
+/obj/machinery/computer/pod/process(seconds_per_tick)
 	if(COOLDOWN_FINISHED(src, massdriver_countdown))
 		timing = FALSE
 		// alarm() sleeps, so we want to end processing first and can't rely on return PROCESS_KILL

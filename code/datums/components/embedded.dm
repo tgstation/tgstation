@@ -86,7 +86,7 @@
 
 	limb._embed_object(weapon) // on the inside... on the inside...
 	weapon.forceMove(victim)
-	RegisterSignals(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), PROC_REF(weaponDeleted))
+	RegisterSignals(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(weaponDeleted))
 	victim.visible_message(span_danger("[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] [victim]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] your [limb.plaintext_zone]!"))
 
 	var/damage = weapon.throwforce
@@ -108,7 +108,7 @@
 		victim.clear_alert(ALERT_EMBEDDED_OBJECT)
 		victim.clear_mood_event("embedded")
 	if(weapon)
-		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	weapon = null
 	limb = null
 	return ..()
@@ -117,13 +117,13 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(jostleCheck))
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_RIP, PROC_REF(ripOut))
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_REMOVAL, PROC_REF(safeRemove))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(checkTweeze))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(checkTweeze))
 	RegisterSignal(parent, COMSIG_MAGIC_RECALL, PROC_REF(magic_pull))
 
 /datum/component/embedded/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_PARENT_ATTACKBY, COMSIG_MAGIC_RECALL))
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_ATOM_ATTACKBY, COMSIG_MAGIC_RECALL))
 
-/datum/component/embedded/process(delta_time)
+/datum/component/embedded/process(seconds_per_tick)
 	var/mob/living/carbon/victim = parent
 
 	if(!victim || !limb) // in case the victim and/or their limbs exploded (say, due to a sticky bomb)
@@ -135,7 +135,7 @@
 		return
 
 	var/damage = weapon.w_class * pain_mult
-	var/pain_chance_current = DT_PROB_RATE(pain_chance / 100, delta_time) * 100
+	var/pain_chance_current = SPT_PROB_RATE(pain_chance / 100, seconds_per_tick) * 100
 	if(pain_stam_pct && HAS_TRAIT_FROM(victim, TRAIT_INCAPACITATED, STAMINA)) //if it's a less-lethal embed, give them a break if they're already stamcritted
 		pain_chance_current *= 0.2
 		damage *= 0.5
@@ -147,7 +147,7 @@
 		victim.adjustStaminaLoss(pain_stam_pct * damage)
 		to_chat(victim, span_userdanger("[weapon] embedded in your [limb.plaintext_zone] hurts!"))
 
-	var/fall_chance_current = DT_PROB_RATE(fall_chance / 100, delta_time) * 100
+	var/fall_chance_current = SPT_PROB_RATE(fall_chance / 100, seconds_per_tick) * 100
 	if(victim.body_position == LYING_DOWN)
 		fall_chance_current *= 0.2
 
@@ -221,10 +221,10 @@
 
 	var/mob/living/carbon/victim = parent
 	limb._unembed_object(weapon)
-	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING)) // have to do it here otherwise we trigger weaponDeleted()
+	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING)) // have to do it here otherwise we trigger weaponDeleted()
 
 	if(!weapon.unembedded()) // if it hasn't deleted itself due to drop del
-		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 		if(to_hands)
 			INVOKE_ASYNC(to_hands, TYPE_PROC_REF(/mob, put_in_hands), weapon)
 		else

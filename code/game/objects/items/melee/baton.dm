@@ -27,6 +27,8 @@
 	var/clumsy_knockdown_time = 18 SECONDS
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
 	var/stamina_damage = 55
+	/// Chance of causing force_say() when stunning a human mob
+	var/force_say_chance = 33
 	/// Can we stun cyborgs?
 	var/affect_cyborg = FALSE
 	/// The path of the default sound to play when we stun something.
@@ -125,7 +127,7 @@
 
 	if(!chunky_finger_usable && ishuman(user))
 		var/mob/living/carbon/human/potential_chunky_finger_human = user
-		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src))
+		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src) && !HAS_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON) && (user.mind && !HAS_TRAIT(user.mind, TRAIT_CHUNKYFINGERS_IGNORE_BATON)))
 			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
 			return BATON_ATTACK_DONE
 
@@ -197,6 +199,10 @@
 		target.Paralyze((isnull(stun_override) ? stun_time_cyborg : stun_override) * (trait_check ? 0.1 : 1))
 		additional_effects_cyborg(target, user)
 	else
+		if(ishuman(target))
+			var/mob/living/carbon/human/human_target = target
+			if(prob(force_say_chance))
+				human_target.force_say()
 		target.apply_damage(stamina_damage, STAMINA)
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
@@ -264,13 +270,17 @@
 		else
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 	else
+		//straight up always force say for clumsy humans
+		if(ishuman(user))
+			var/mob/living/carbon/human/human_user = user
+			human_user.force_say()
 		user.Knockdown(clumsy_knockdown_time)
 		user.apply_damage(stamina_damage, STAMINA)
 		additional_effects_non_cyborg(user, user) // user is the target here
 		if(on_stun_sound)
 			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 
-	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
+	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
 
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
 	if(stun_animation)
@@ -312,13 +322,15 @@
 
 /obj/item/melee/baton/telescopic/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = active_force, \
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
 		clumsy_check = FALSE, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
-		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
+		attack_verb_simple_on = list("smack", "strike", "crack", "beat"), \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
@@ -351,8 +363,9 @@
 
 	src.active = active
 	inhand_icon_state = active ? on_inhand_icon_state : null // When inactive, there is no inhand icon_state.
-	balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(user ? user : src, on_sound, 50, TRUE)
+	if(user)
+		balloon_alert(user, active ? "extended" : "collapsed")
+	playsound(src, on_sound, 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/melee/baton/telescopic/contractor_baton
@@ -368,6 +381,7 @@
 	item_flags = NONE
 	force = 5
 	cooldown = 2.5 SECONDS
+	force_say_chance = 80 //very high force say chance because it's funny
 	stamina_damage = 85
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
@@ -382,7 +396,7 @@
 
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.set_jitter_if_lower(40 SECONDS)
-	target.adjust_stutter(40 SECONDS)
+	target.set_stutter_if_lower(40 SECONDS)
 
 /obj/item/melee/baton/security
 	name = "stun baton"
@@ -398,6 +412,7 @@
 	attack_verb_simple = list("beat")
 	armor_type = /datum/armor/baton_security
 	throwforce = 7
+	force_say_chance = 50
 	stamina_damage = 60
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
@@ -426,7 +441,7 @@
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
-	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, PROC_REF(convert))
+	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(convert))
 	update_appearance()
 
 /obj/item/melee/baton/security/get_cell()
@@ -444,7 +459,7 @@
 /obj/item/melee/baton/security/Destroy()
 	if(cell)
 		QDEL_NULL(cell)
-	UnregisterSignal(src, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(src, COMSIG_ATOM_ATTACKBY)
 	return ..()
 
 /obj/item/melee/baton/security/proc/convert(datum/source, obj/item/item, mob/user)
@@ -715,7 +730,7 @@
 	cell_hit_cost = 2000
 	throw_stun_chance = 99  //Have you prayed today?
 	convertible = FALSE
-	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*5, /datum/material/gold = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/melee/baton/security/boomerang/Initialize(mapload)
 	. = ..()

@@ -123,14 +123,14 @@
 	for(var/obj/item/mod/module/module as anything in mod.modules)
 		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, PROC_REF(on_module_triggered))
 	timestop = new /obj/effect/timestop/channelled(get_turf(mod.wearer), 2, INFINITY, list(mod.wearer))
-	RegisterSignal(timestop, COMSIG_PARENT_QDELETING, PROC_REF(unblock_suit_activation))
+	RegisterSignal(timestop, COMSIG_QDELETING, PROC_REF(unblock_suit_activation))
 
 ///Unregisters the modsuit deactivation blocking signal, after timestop functionality finishes.
 /obj/item/mod/module/timestopper/proc/unblock_suit_activation(datum/source)
 	SIGNAL_HANDLER
 	for(var/obj/item/mod/module/module as anything in mod.modules)
 		UnregisterSignal(module, COMSIG_MODULE_TRIGGERED)
-	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(source, COMSIG_QDELETING)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	timestop = null
 
@@ -363,7 +363,7 @@
 		mob_underlay.icon_state = "frame[RPpos]"
 		underlays += mob_underlay
 
-/obj/structure/chrono_field/process(delta_time)
+/obj/structure/chrono_field/process(seconds_per_tick)
 	if(!captured)
 		qdel(src)
 		return
@@ -387,14 +387,14 @@
 		update_appearance()
 		if(tem)
 			if(tem.field_check(src))
-				timetokill -= delta_time
+				timetokill -= seconds_per_tick
 			else
 				tem = null
 				return
 		else if(!attached)
-			timetokill -= delta_time
+			timetokill -= seconds_per_tick
 		else
-			timetokill += delta_time
+			timetokill += seconds_per_tick
 
 
 /obj/structure/chrono_field/bullet_act(obj/projectile/projectile)

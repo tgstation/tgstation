@@ -59,7 +59,7 @@
 	beating = FALSE
 	update_appearance()
 
-/obj/item/organ/internal/heart/on_life(delta_time, times_fired)
+/obj/item/organ/internal/heart/on_life(seconds_per_tick, times_fired)
 	..()
 
 	// If the owner doesn't need a heart, we don't need to do anything with it.
@@ -150,7 +150,7 @@
 	accursed.adjustFireLoss(-heal_burn)
 	accursed.adjustOxyLoss(-heal_oxy)
 
-/obj/item/organ/internal/heart/cursed/on_life(delta_time, times_fired)
+/obj/item/organ/internal/heart/cursed/on_life(seconds_per_tick, times_fired)
 	if(!owner.client || !ishuman(owner)) // Let's be fair, if you're not here to pump, you're not here to suffer.
 		last_pump = world.time
 		return
@@ -247,7 +247,7 @@
 						span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
 		addtimer(CALLBACK(src, PROC_REF(Restart)), 10 SECONDS)
 
-/obj/item/organ/internal/heart/cybernetic/on_life(delta_time, times_fired)
+/obj/item/organ/internal/heart/cybernetic/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
 		used_dose()
@@ -267,7 +267,7 @@
 	/// The cooldown until the next time this heart can give the host an adrenaline boost.
 	COOLDOWN_DECLARE(adrenaline_cooldown)
 
-/obj/item/organ/internal/heart/freedom/on_life(delta_time, times_fired)
+/obj/item/organ/internal/heart/freedom/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(owner.health < 5 && COOLDOWN_FINISHED(src, adrenaline_cooldown))
 		COOLDOWN_START(src, adrenaline_cooldown, rand(25 SECONDS, 1 MINUTES))
@@ -303,10 +303,10 @@
 		return
 	RegisterSignal(heart_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 	RegisterSignal(heart_owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_owner_fully_heal))
-	RegisterSignal(heart_owner, COMSIG_PARENT_QDELETING, PROC_REF(owner_deleted))
+	RegisterSignal(heart_owner, COMSIG_QDELETING, PROC_REF(owner_deleted))
 
 /obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/heart_owner, special = FALSE)
-	UnregisterSignal(heart_owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(heart_owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_QDELETING))
 	REMOVE_TRAIT(heart_owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(heart_owner)
 	QDEL_NULL(current_crystal)
@@ -366,7 +366,7 @@
 	crystalize_timer_id = addtimer(CALLBACK(src, PROC_REF(crystalize), victim), CRYSTALIZE_PRE_WAIT_TIME, TIMER_STOPPABLE)
 
 	RegisterSignal(victim, COMSIG_HUMAN_DISARM_HIT, PROC_REF(reset_crystalizing))
-	RegisterSignal(victim, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine), override = TRUE)
+	RegisterSignal(victim, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine), override = TRUE)
 	RegisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 
 ///Ran when disarmed, prevents the ethereal from reviving
@@ -399,7 +399,7 @@
 ///Stop the crystalization process, unregistering any signals and resetting any variables.
 /obj/item/organ/internal/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, succesful = FALSE)
 	UnregisterSignal(ethereal, COMSIG_HUMAN_DISARM_HIT)
-	UnregisterSignal(ethereal, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(ethereal, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(ethereal, COMSIG_MOB_APPLY_DAMAGE)
 
 	crystalization_process_damage = 0 //Reset damage taken during crystalization

@@ -89,11 +89,6 @@
 		if(ispath(sheet_module.source, /datum/robot_energy_storage))
 			sheet_module.source = get_or_create_estorage(sheet_module.source)
 
-		if(istype(sheet_module, /obj/item/stack/sheet/rglass/cyborg))
-			var/obj/item/stack/sheet/rglass/cyborg/rglass_module = sheet_module
-			if(ispath(rglass_module.glasource, /datum/robot_energy_storage))
-				rglass_module.glasource = get_or_create_estorage(rglass_module.glasource)
-
 		if(istype(sheet_module.source))
 			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
 			sheet_module.is_cyborg = TRUE
@@ -145,6 +140,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	for(var/datum/robot_energy_storage/storage_datum in storages)
+		if(storage_datum.renewable == FALSE)
+			continue
 		storage_datum.energy = min(storage_datum.max_energy, storage_datum.energy + coeff * storage_datum.recharge_rate)
 
 	for(var/obj/item/module in get_usable_modules())
@@ -162,6 +159,44 @@
 				gun.recharge_newshot() //try to reload a new shot.
 
 	cyborg.toner = cyborg.tonermax
+
+/**
+ * Refills consumables that require materials, rather than being given for free.
+ *
+ * Pulls from the charger's silo connection, or fails otherwise.
+ */
+/obj/item/robot_model/proc/restock_consumable()
+	if(!robot)
+		return //This means the model hasn't been chosen yet, and avoids a runtime. Anyway, there's nothing to restock yet.
+	var/obj/machinery/recharge_station/charger = robot.loc
+	if(!istype(charger))
+		return
+
+	var/datum/component/material_container/mat_container = charger.materials.mat_container
+	if(!mat_container || charger.materials.on_hold())
+		charger.sendmats = FALSE
+		return
+
+	for(var/datum/robot_energy_storage/material/storage_datum in storages)
+		if(storage_datum.renewable == TRUE) //Skipping renewables, already handled in respawn_consumable()
+			continue
+		if(storage_datum.max_energy == storage_datum.energy) //Skipping full
+			continue
+		var/restock_divisor = 8 - charger.repairs //Piggybacking here to avoid part checks every cycle. Repair tiers are 0 through 3, so this value will be 8 through 5. Lower means quicker restocking.
+
+		var/to_stock = min(storage_datum.max_energy / restock_divisor, storage_datum.max_energy - storage_datum.energy, mat_container.get_material_amount(storage_datum.mat_type))
+		if(!to_stock) //Nothing for us in the silo
+			continue
+
+		storage_datum.energy += mat_container.use_amount_mat(to_stock, storage_datum.mat_type)
+		charger.balloon_alert(robot, "+ [to_stock]u [initial(storage_datum.mat_type.name)]")
+		charger.materials.silo_log(charger, "resupplied", -1, "units", list(GET_MATERIAL_REF(storage_datum.mat_type) = to_stock))
+		playsound(charger, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
+		return
+	charger.balloon_alert(robot, "restock process complete")
+	charger.sendmats = FALSE
+
+
 
 /obj/item/robot_model/proc/get_or_create_estorage(storage_type)
 	return (locate(storage_type) in storages) || new storage_type(src)
@@ -284,7 +319,7 @@
 		/obj/item/stamp/clown,
 		/obj/item/bikehorn,
 		/obj/item/bikehorn/airhorn,
-		/obj/item/paint/anycolor,
+		/obj/item/paint/anycolor/cyborg,
 		/obj/item/soap/nanotrasen/cyborg,
 		/obj/item/pneumatic_cannon/pie/selfcharge/cyborg,
 		/obj/item/razor, //killbait material
@@ -333,7 +368,7 @@
 		/obj/item/electroadaptive_pseudocircuit,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
-		/obj/item/stack/sheet/rglass/cyborg,
+		/obj/item/borg/apparatus/sheet_manipulator,
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
 		/obj/item/stack/cable_coil,
@@ -749,24 +784,26 @@
 	name = "Service"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
+		/obj/item/reagent_containers/borghypo/borgshaker,
+		/obj/item/borg/apparatus/beaker/service,
 		/obj/item/reagent_containers/cup/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
 		/obj/item/reagent_containers/condiment/enzyme,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/rsf,
+		/obj/item/storage/bag/tray,
 		/obj/item/pen,
 		/obj/item/toy/crayon/spraycan/borg,
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
-		/obj/item/rsf,
 		/obj/item/instrument/guitar,
 		/obj/item/instrument/piano_synth,
-		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
-		/obj/item/storage/bag/tray,
-		/obj/item/reagent_containers/borghypo/borgshaker,
 		/obj/item/borg/lollipop,
 		/obj/item/stack/pipe_cleaner_coil/cyborg,
-		/obj/item/borg/apparatus/beaker/service,
 		/obj/item/chisel,
+		/obj/item/reagent_containers/cup/rag,
+		/obj/item/storage/bag/money,
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(
@@ -862,7 +899,7 @@
 		/obj/item/multitool/cyborg,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
-		/obj/item/stack/sheet/rglass/cyborg,
+		/obj/item/borg/apparatus/sheet_manipulator,
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
 		/obj/item/dest_tagger/borg,
@@ -904,7 +941,7 @@
 	robot.equip_module_to_slot(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
 	robot.equip_module_to_slot(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
 	robot.place_on_head(new /obj/item/clothing/head/beret/highlander(robot)) //THE ONLY PART MORE IMPORTANT THAN THE SWORD IS THE HAT
-	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
 
 // ------------------------------------------ Storages
@@ -913,13 +950,15 @@
 	var/max_energy = 30000
 	var/recharge_rate = 1000
 	var/energy
+	///Whether this resource should refill from the aether inside a charging station.
+	var/renewable = TRUE
 
 /datum/robot_energy_storage/New(obj/item/robot_model/model)
 	energy = max_energy
 	if(model)
 		model.storages |= src
 		RegisterSignal(model.robot, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
-		RegisterSignal(model, COMSIG_PARENT_QDELETING, PROC_REF(unregister_from_model))
+		RegisterSignal(model, COMSIG_QDELETING, PROC_REF(unregister_from_model))
 
 /datum/robot_energy_storage/proc/unregister_from_model(obj/item/robot_model/model)
 	SIGNAL_HANDLER
@@ -943,11 +982,23 @@
 /datum/robot_energy_storage/proc/add_charge(amount)
 	energy = min(energy + amount, max_energy)
 
-/datum/robot_energy_storage/iron
-	name = "Iron Synthesizer"
+/datum/robot_energy_storage/material
+	name = "generic material storage"
+	renewable = FALSE
+	///The type of materials we should pull when restocking
+	var/datum/material/mat_type
 
-/datum/robot_energy_storage/glass
+/datum/robot_energy_storage/material/New(obj/item/robot_model/model)
+	max_energy = 60 * SHEET_MATERIAL_AMOUNT
+	return ..()
+
+/datum/robot_energy_storage/material/iron
+	name = "Iron Synthesizer"
+	mat_type = /datum/material/iron
+
+/datum/robot_energy_storage/material/glass
 	name = "Glass Synthesizer"
+	mat_type = /datum/material/glass
 
 /datum/robot_energy_storage/wire
 	max_energy = 50

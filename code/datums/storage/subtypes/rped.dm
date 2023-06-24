@@ -29,8 +29,6 @@
 	 */
 	var/static/list/allowed_bluespace_types = list(
 		/obj/item/stack/ore/bluespace_crystal,
-		/obj/item/stack/ore/bluespace_crystal/refined,
-		/obj/item/stack/ore/bluespace_crystal/artificial,
 		/obj/item/stack/sheet/bluespace_crystal,
 	)
 
@@ -58,9 +56,9 @@
 		//we try to count & limit how much the user can insert of each type to prevent them from using it as an normal storage medium
 		for(var/obj/item/stack/stack_content in resolve_location.contents)
 			//is user trying to insert any of these listed bluespace stuff
-			if(is_type_in_list(to_insert,allowed_bluespace_types))
+			if(is_type_in_list(to_insert, allowed_bluespace_types))
 				//if yes count total bluespace stuff is the RPED and then compare the total amount to the value the user is trying to insert
-				if(is_type_in_list(stack_content,allowed_bluespace_types))
+				if(is_type_in_list(stack_content, allowed_bluespace_types))
 					present_amount += stack_content.amount
 			//count other normal stack stuff
 			else if(istype(to_insert,stack_content.type))

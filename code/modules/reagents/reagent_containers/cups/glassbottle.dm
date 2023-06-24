@@ -25,6 +25,8 @@
 	age_restricted = TRUE // wrryy can't set an init value to see if drink_type contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/bottle_knockdown_duration = BOTTLE_KNOCKDOWN_DEFAULT_DURATION
+	tool_behaviour = TOOL_ROLLINGPIN // Used to knock out the Chef.
+	toolspeed = 1.3 //it's a little awkward to use, but it's a cylinder alright.
 
 /obj/item/reagent_containers/cup/glass/bottle/small
 	name = "small glass bottle"
@@ -214,11 +216,13 @@
 /obj/item/reagent_containers/cup/glass/bottle/beer/light
 	name = "Carp Lite"
 	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
+	icon_state = "litebeer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
 
 /obj/item/reagent_containers/cup/glass/bottle/rootbeer
 	name = "Two-Time root beer"
 	desc = "A popular, old-fashioned brand of root beer, known for its extremely sugary formula. Might make you want a nap afterwards."
+	icon_state = "twotime"
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/rootbeer = 30)
 	drink_type = SUGAR | JUNKFOOD
@@ -522,6 +526,14 @@
 	custom_price = PAYCHECK_CREW
 	icon_state = "applejack_bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/applejack = 100)
+	drink_type = FRUIT
+
+/obj/item/reagent_containers/cup/glass/bottle/wine_voltaic
+	name = "Voltaic Yellow Wine"
+	desc = "Electrically infused wine! Recharges ethereals, safe for consumption."
+	custom_price = PAYCHECK_CREW
+	icon_state = "wine_voltaic_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/wine_voltaic = 100)
 	drink_type = FRUIT
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne

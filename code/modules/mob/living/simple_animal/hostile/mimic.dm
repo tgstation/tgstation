@@ -117,10 +117,10 @@ GLOBAL_LIST_INIT(animatable_blacklist, list(/obj/structure/table, /obj/structure
 		overlay_googly_eyes = FALSE
 	CopyObject(copy, creator, destroy_original)
 
-/mob/living/simple_animal/hostile/mimic/copy/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/mimic/copy/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	if(idledamage && !target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
-		adjustBruteLoss(0.5 * delta_time)
+		adjustBruteLoss(0.5 * seconds_per_tick)
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
 		death()
 

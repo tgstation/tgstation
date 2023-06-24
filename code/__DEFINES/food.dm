@@ -18,6 +18,7 @@
 #define ORANGES (1<<17)
 #define BUGS (1<<18)
 #define GORE (1<<19)
+#define STONE (1<<20)
 
 DEFINE_BITFIELD(foodtypes, list(
 	"MEAT" = MEAT,
@@ -40,6 +41,7 @@ DEFINE_BITFIELD(foodtypes, list(
 	"ORANGES" = ORANGES,
 	"BUGS" = BUGS,
 	"GORE" = GORE,
+	"STONE" = STONE,
 ))
 
 /// A list of food type names, in order of their flags
@@ -64,6 +66,7 @@ DEFINE_BITFIELD(foodtypes, list(
 	"ORANGES", \
 	"BUGS", \
 	"GORE", \
+	"STONE", \
 )
 
 /// IC meaning (more or less) for food flags
@@ -88,6 +91,7 @@ DEFINE_BITFIELD(foodtypes, list(
 	"Oranges", \
 	"Bugs", \
 	"Gore", \
+	"Rocks", \
 )
 
 #define DRINK_NICE 1
@@ -176,6 +180,14 @@ DEFINE_BITFIELD(food_flags, list(
 #define ICE_CREAM_SCOOP_OFFSET 4
 
 #define BLACKBOX_LOG_FOOD_MADE(food) SSblackbox.record_feedback("tally", "food_made", 1, food)
+
+/// Point water boils at
+#define WATER_BOILING_POINT (T0C + 100)
+/// Point at which soups begin to burn at
+#define SOUP_BURN_TEMP 540
+
+/// Serving size of soup. Plus or minus five units.
+#define SOUP_SERVING_SIZE 25
 
 // Venues for the barbots.
 #define VENUE_RESTAURANT "Restaurant Venue"

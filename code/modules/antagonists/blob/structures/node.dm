@@ -11,7 +11,6 @@
 	pulse_range = BLOB_NODE_PULSE_RANGE
 	expand_range = BLOB_NODE_EXPAND_RANGE
 	resistance_flags = LAVA_PROOF
-	max_spores = BLOB_NODE_MAX_SPORES
 	ignore_syncmesh_share = TRUE
 
 
@@ -53,8 +52,7 @@
 		overmind.node_blobs -= src
 	return ..()
 
-/obj/structure/blob/special/node/process(delta_time)
+/obj/structure/blob/special/node/process(seconds_per_tick)
 	if(overmind)
 		pulse_area(overmind, claim_range, pulse_range, expand_range)
-		reinforce_area(delta_time)
-		produce_spores()
+		reinforce_area(seconds_per_tick)

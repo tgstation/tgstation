@@ -64,6 +64,8 @@
 	return FALSE
 
 #define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2 //increase to make surgery slower but fail less, and decrease to make surgery faster but fail more
+///Modifier given to surgery speed for dissected bodies.
+#define SURGERY_DISSECTION_MODIFIER 1.2
 
 /datum/surgery_step/proc/initiate(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
@@ -82,6 +84,9 @@
 
 	if(tool)
 		speed_mod = tool.toolspeed
+
+	if(HAS_TRAIT(target, TRAIT_DISSECTED))
+		speed_mod /= SURGERY_DISSECTION_MODIFIER
 
 	var/implement_speed_mod = 1
 	if(implement_type) //this means it isn't a require hand or any item step.
@@ -242,4 +247,5 @@
 		if(prob(30) && !mechanical_surgery)
 			target.emote("scream")
 
+#undef SURGERY_DISSECTION_MODIFIER
 #undef SURGERY_SLOWDOWN_CAP_MULTIPLIER

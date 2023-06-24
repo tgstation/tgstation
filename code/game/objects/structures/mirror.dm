@@ -3,6 +3,7 @@
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
+	movement_type = FLOATING
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 200
@@ -10,10 +11,14 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
-/obj/structure/mirror/Initialize(mapload)
+/obj/structure/mirror/broken
+	icon_state = "mirror_broke"
+
+/obj/structure/mirror/broken/Initialize(mapload)
 	. = ..()
-	if(icon_state == "mirror_broke" && !broken)
-		atom_break(null, mapload)
+	atom_break(null, mapload)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/structure/mirror/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -103,7 +108,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	if(!broken)
 		return TRUE
 
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=1))
 		return TRUE
 
 	balloon_alert(user, "repairing...")
@@ -128,8 +133,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
 	custom_materials = list(
-		/datum/material/glass = MINERAL_MATERIAL_AMOUNT,
-		/datum/material/silver = MINERAL_MATERIAL_AMOUNT,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
 	)
 	result_path = /obj/structure/mirror
 	pixel_shift = 28

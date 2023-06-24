@@ -44,7 +44,7 @@
 
 	virus_suspectibility = 1
 	growth_rate = VAT_GROWTH_RATE
-	resulting_atoms = list(/mob/living/simple_animal/chicken = 1)
+	resulting_atoms = list(/mob/living/basic/chicken = 1)
 
 /datum/micro_organism/cell_line/cow
 	desc = "Bovine stem cells"
@@ -419,7 +419,7 @@
 	suppressive_reagents = list(/datum/reagent/toxin/plantbgone = -8)
 
 	virus_suspectibility = 1
-	resulting_atoms = list(/mob/living/simple_animal/hostile/tree = 1)
+	resulting_atoms = list(/mob/living/basic/tree = 1)
 
 /datum/micro_organism/cell_line/vat_beast
 	desc = "Hypergenic xenocytes"
@@ -504,7 +504,7 @@
 		/datum/reagent/plantnutriment/robustharvestnutriment = 1)
 
 	suppressive_reagents = list(
-		/datum/reagent/consumable/clownstears = -8,
+		/datum/reagent/consumable/nutriment/soup/clown_tears = -8,
 		/datum/reagent/toxin/plantbgone = -4,
 		/datum/reagent/consumable/ethanol/silencer = -3,
 		/datum/reagent/consumable/nothing = -2,
@@ -529,7 +529,7 @@
 		/datum/reagent/consumable/space_cola = 1)
 
 	suppressive_reagents = list(
-		/datum/reagent/consumable/clownstears = -8,
+		/datum/reagent/consumable/nutriment/soup/clown_tears = -8,
 		/datum/reagent/consumable/mintextract = -6,
 		/datum/reagent/consumable/ethanol/silencer = -3,
 		/datum/reagent/consumable/ethanol/fernet = -3,
@@ -553,7 +553,7 @@
 		/datum/reagent/nitrous_oxide = 2)
 
 	suppressive_reagents = list(
-		/datum/reagent/consumable/clownstears = -8,
+		/datum/reagent/consumable/nutriment/soup/clown_tears = -8,
 		/datum/reagent/consumable/ethanol/beepsky_smash = -3,
 		/datum/reagent/consumable/ethanol/silencer = -3,
 		/datum/reagent/toxin/mutetoxin = -3,
@@ -663,6 +663,28 @@
 	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
 		return
 	QDEL_NULL(vat.biological_sample)
+
+/datum/micro_organism/cell_line/butterfly
+	desc = "Papilionoidea cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+	)
+	supplementary_reagents = list(
+		/datum/reagent/consumable/honey = 4,
+		/datum/reagent/consumable/korta_nectar = 3,
+		/datum/reagent/consumable/applejuice = 2,
+		/datum/reagent/water = 1,
+		/datum/reagent/consumable/sugar = 1,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/toxin/pestkiller = -3,
+		/datum/reagent/toxin/carpotoxin = -2,
+		/datum/reagent/toxin = -2,
+	)
+
+	virus_suspectibility = 0
+	resulting_atoms = list(/mob/living/basic/butterfly = 3)
 
 /datum/micro_organism/cell_line/leaper
 	desc = "atypical amphibian cells"

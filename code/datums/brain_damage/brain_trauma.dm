@@ -24,7 +24,7 @@
 	return ..()
 
 //Called on life ticks
-/datum/brain_trauma/proc/on_life(delta_time, times_fired)
+/datum/brain_trauma/proc/on_life(seconds_per_tick, times_fired)
 	return
 
 //Called on death

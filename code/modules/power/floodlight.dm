@@ -117,13 +117,6 @@
 		else //A minute of silence for all the accidentally broken light tubes.
 			balloon_alert(user, "light tube is broken!")
 			return
-	if(istype(O, /obj/item/lightreplacer))
-		var/obj/item/lightreplacer/L = O
-		if(state == FLOODLIGHT_NEEDS_LIGHTS && L.can_use(user))
-			L.Use(user)
-			new /obj/machinery/power/floodlight(loc)
-			qdel(src)
-			return
 	..()
 
 /obj/machinery/power/floodlight
@@ -147,7 +140,27 @@
 
 /obj/machinery/power/floodlight/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_OBJ_PAINTED, TYPE_PROC_REF(/obj/machinery/power/floodlight, on_color_change))  //update light color when color changes
 	register_context()
+
+/obj/machinery/power/floodlight/proc/on_color_change(obj/machinery/power/flood_light, mob/user, obj/item/toy/crayon/spraycan/spraycan, is_dark_color)
+	SIGNAL_HANDLER
+	if(!spraycan.actually_paints)
+		return
+
+	if(setting > FLOODLIGHT_OFF)
+		update_light_state()
+
+/obj/machinery/power/floodlight/Destroy()
+	UnregisterSignal(src, COMSIG_OBJ_PAINTED)
+	. = ..()
+
+/// change light color during operation
+/obj/machinery/power/floodlight/proc/update_light_state()
+	var/light_color =  NONSENSICAL_VALUE
+	if(!isnull(color))
+		light_color = color
+	set_light(light_setting_list[setting], light_power, light_color)
 
 /obj/machinery/power/floodlight/add_context(
 	atom/source,
@@ -201,11 +214,12 @@
 /obj/machinery/power/floodlight/proc/change_setting(newval, mob/user)
 	if((newval < FLOODLIGHT_OFF) || (newval > light_setting_list.len))
 		return
+
 	setting = newval
 	active_power_usage = light_setting_list[setting] * light_power_coefficient
 	if(!avail(active_power_usage) && setting > FLOODLIGHT_OFF)
 		return change_setting(setting - 1)
-	set_light(light_setting_list[setting], light_power)
+	update_light_state()
 	var/setting_text = ""
 	if(setting > FLOODLIGHT_OFF)
 		icon_state = "[initial(icon_state)]_on"

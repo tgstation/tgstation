@@ -67,7 +67,6 @@
 	floor_tile = /obj/item/stack/tile/catwalk_tile/iron
 	catwalk_type = "iron"
 
-
 /turf/open/floor/catwalk_floor/iron_white
 	name = "white plated catwalk floor"
 	icon_state = "whiteiron_above"
@@ -92,8 +91,28 @@
 	floor_tile = /obj/item/stack/tile/catwalk_tile/titanium
 	catwalk_type = "titanium"
 
+
 /turf/open/floor/catwalk_floor/iron_smooth //the original green type
 	name = "smooth plated catwalk floor"
 	icon_state = "smoothiron_above"
 	floor_tile = /obj/item/stack/tile/catwalk_tile/iron_smooth
 	catwalk_type = "smoothiron"
+
+//Airless variants of the above
+/turf/open/floor/catwalk_floor/iron/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/catwalk_floor/iron_white/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/catwalk_floor/iron_dark/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/catwalk_floor/flat_white/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/catwalk_floor/titanium/Airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/catwalk_floor/iron_smooth/airless
+	initial_gas_mix = AIRLESS_ATMOS

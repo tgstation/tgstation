@@ -124,7 +124,7 @@
 	gain_text = span_warning("You have a constant feeling of drowsiness...")
 	lose_text = span_notice("You feel awake and aware again.")
 
-/datum/brain_trauma/severe/narcolepsy/on_life(delta_time, times_fired)
+/datum/brain_trauma/severe/narcolepsy/on_life(seconds_per_tick, times_fired)
 	if(owner.IsSleeping())
 		return
 
@@ -135,11 +135,11 @@
 	if(drowsy)
 		sleep_chance += 3
 
-	if(DT_PROB(0.5 * sleep_chance, delta_time))
+	if(SPT_PROB(0.5 * sleep_chance, seconds_per_tick))
 		to_chat(owner, span_warning("You fall asleep."))
 		owner.Sleeping(6 SECONDS)
 
-	else if(!drowsy && DT_PROB(sleep_chance, delta_time))
+	else if(!drowsy && SPT_PROB(sleep_chance, seconds_per_tick))
 		to_chat(owner, span_warning("You feel tired..."))
 		owner.adjust_drowsiness(20 SECONDS)
 
@@ -158,14 +158,14 @@
 	else
 		to_chat(owner, span_notice("You feel safe, as long as you have people around you."))
 
-/datum/brain_trauma/severe/monophobia/on_life(delta_time, times_fired)
+/datum/brain_trauma/severe/monophobia/on_life(seconds_per_tick, times_fired)
 	..()
 	if(check_alone())
 		stress = min(stress + 0.5, 100)
-		if(stress > 10 && DT_PROB(2.5, delta_time))
+		if(stress > 10 && SPT_PROB(2.5, seconds_per_tick))
 			stress_reaction()
 	else
-		stress = max(stress - (2 * delta_time), 0)
+		stress = max(stress - (2 * seconds_per_tick), 0)
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
 	var/check_radius = 7
@@ -266,9 +266,9 @@
 	..()
 	owner.remove_status_effect(/datum/status_effect/trance)
 
-/datum/brain_trauma/severe/hypnotic_stupor/on_life(delta_time, times_fired)
+/datum/brain_trauma/severe/hypnotic_stupor/on_life(seconds_per_tick, times_fired)
 	..()
-	if(DT_PROB(0.5, delta_time) && !owner.has_status_effect(/datum/status_effect/trance))
+	if(SPT_PROB(0.5, seconds_per_tick) && !owner.has_status_effect(/datum/status_effect/trance))
 		owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)
 
 /datum/brain_trauma/severe/hypnotic_trigger

@@ -102,7 +102,7 @@
 	hud.add_atom_to_hud(gland_owner)
 	update_gland_hud()
 
-/obj/item/organ/internal/heart/gland/on_life(delta_time, times_fired)
+/obj/item/organ/internal/heart/gland/on_life(seconds_per_tick, times_fired)
 	if(!beating)
 		// alien glands are immune to stopping.
 		beating = TRUE

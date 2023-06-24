@@ -381,7 +381,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/give/highfive/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
 	. = ..()
-	RegisterSignal(offerer, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(check_fake_out))
+	RegisterSignal(offerer, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(check_fake_out))
 
 
 /atom/movable/screen/alert/give/highfive/handle_transfer()
@@ -535,7 +535,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	if(antag.cult_team.blood_target)
 		if(!get_turf(antag.cult_team.blood_target))
-			antag.cult_team.blood_target = null
+			antag.cult_team.unset_blood_target()
 		else
 			blood_target = antag.cult_team.blood_target
 	if(Cviewer?.seeking && Cviewer.master)

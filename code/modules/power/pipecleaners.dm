@@ -88,18 +88,12 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		stored = new/obj/item/stack/pipe_cleaner_coil(null, 1, null, null, null)
 
-	if(param_color)
-		color = GLOB.cable_colors[param_color]
-		pipecleaner_color = param_color
-
-	if(!color)
-		var/list/pipe_cleaner_colors = GLOB.cable_colors
-		var/random_color = pick(pipe_cleaner_colors)
-		color = pipe_cleaner_colors[random_color]
-		pipecleaner_color = random_color
-
-	update_appearance()
+	if(!param_color)
+		param_color = "white"
+	color = GLOB.cable_colors[param_color]
+	pipecleaner_color = param_color
 	stored?.set_pipecleaner_color(pipecleaner_color)
+	update_appearance()
 
 	if(isturf(loc))
 		var/turf/turf_loc = loc
@@ -202,14 +196,14 @@ By design, d1 is the smallest direction and d2 is the highest
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	mats_per_unit = list(/datum/material/iron=10, /datum/material/glass=5)
+	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines", "flogs")
 	attack_verb_simple = list("whip", "lash", "discipline", "flog")
 	singular_name = "pipe cleaner piece"
 	full_w_class = WEIGHT_CLASS_SMALL
-	grind_results = list("copper" = 2) //2 copper per pipe_cleaner in the coil
+	grind_results = list(/datum/reagent/copper = 2) //2 copper per pipe_cleaner in the coil
 	usesound = 'sound/items/deconstruct.ogg'
 	cost = 1
 	source = /datum/robot_energy_storage/pipe_cleaner
@@ -260,7 +254,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/pipe_cleaner_coil/Initialize(mapload, new_amount = null, list/mat_override=null, mat_amt=1, param_color = null)
 	. = ..()
 
-	AddElement(/datum/element/update_icon_updates_onmob, slot_flags)
+	AddElement(/datum/element/update_icon_updates_onmob)
 	if(param_color)
 		set_pipecleaner_color(param_color)
 	if(!color)

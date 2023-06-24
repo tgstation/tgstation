@@ -8,10 +8,10 @@
 	///used to keep ethereals from spam draining power sources
 	var/drain_time = 0
 
-/obj/item/organ/internal/stomach/ethereal/on_life(delta_time, times_fired)
+/obj/item/organ/internal/stomach/ethereal/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	adjust_charge(-ETHEREAL_CHARGE_FACTOR * delta_time)
-	handle_charge(owner, delta_time, times_fired)
+	adjust_charge(-ETHEREAL_CHARGE_FACTOR * seconds_per_tick)
+	handle_charge(owner, seconds_per_tick, times_fired)
 
 /obj/item/organ/internal/stomach/ethereal/on_insert(mob/living/carbon/stomach_owner)
 	. = ..()
@@ -43,7 +43,7 @@
 /obj/item/organ/internal/stomach/ethereal/proc/adjust_charge(amount)
 	crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)
 
-/obj/item/organ/internal/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, delta_time, times_fired)
+/obj/item/organ/internal/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, seconds_per_tick, times_fired)
 	switch(crystal_charge)
 		if(-INFINITY to ETHEREAL_CHARGE_NONE)
 			carbon.add_mood_event("charge", /datum/mood_event/decharged)
@@ -54,7 +54,7 @@
 			carbon.add_mood_event("charge", /datum/mood_event/decharged)
 			carbon.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/lowcell/ethereal, 3)
 			if(carbon.health > 10.5)
-				carbon.apply_damage(0.325 * delta_time, TOX, null, null, carbon)
+				carbon.apply_damage(0.325 * seconds_per_tick, TOX, null, null, carbon)
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
 			carbon.add_mood_event("charge", /datum/mood_event/lowpower)
 			carbon.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/lowcell/ethereal, 2)
@@ -67,8 +67,8 @@
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
 			carbon.add_mood_event("charge", /datum/mood_event/supercharged)
 			carbon.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 2)
-			carbon.apply_damage(0.325 * delta_time, TOX, null, null, carbon)
-			if(DT_PROB(5, delta_time)) // 5% each seacond for ethereals to explosively release excess energy if it reaches dangerous levels
+			carbon.apply_damage(0.325 * seconds_per_tick, TOX, null, null, carbon)
+			if(SPT_PROB(5, seconds_per_tick)) // 5% each seacond for ethereals to explosively release excess energy if it reaches dangerous levels
 				discharge_process(carbon)
 		else
 			owner.clear_mood_event("charge")

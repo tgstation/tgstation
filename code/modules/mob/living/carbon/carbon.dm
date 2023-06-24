@@ -4,9 +4,6 @@
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	register_context()
 
-	// Carbons cannot taste anything without a tongue; the tongue organ removes this on Insert
-	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
-
 	GLOB.carbon_list += src
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_PRESHOVE = PROC_REF(disarm_precollide),
@@ -581,7 +578,7 @@
 			set_invis_see(min(glasses.invis_view, see_invisible))
 		if(!isnull(glasses.lighting_cutoff))
 			lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
-		if(!isnull(glasses.color_cutoffs))
+		if(length(glasses.color_cutoffs))
 			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, glasses.color_cutoffs)
 
 
@@ -985,12 +982,24 @@
 			if(ARM_LEFT)
 				l_arm_index_next += 2
 				bodypart_instance.held_index = l_arm_index_next //1, 3, 5, 7...
-				hand_bodyparts += bodypart_instance
+				on_added_hand(bodypart_instance, l_arm_index_next)
 			if(ARM_RIGHT)
 				r_arm_index_next += 2
 				bodypart_instance.held_index = r_arm_index_next //2, 4, 6, 8...
-				hand_bodyparts += bodypart_instance
+				on_added_hand(bodypart_instance, r_arm_index_next)
 
+/// Called when a new hand is added
+/mob/living/carbon/proc/on_added_hand(obj/item/bodypart/arm/new_hand, hand_index)
+	if(hand_index > hand_bodyparts.len)
+		hand_bodyparts.len = hand_index
+	hand_bodyparts[hand_index] = new_hand
+	RegisterSignals(new_hand, list(COMSIG_QDELETING, COMSIG_BODYPART_REMOVED), PROC_REF(on_lost_hand))
+
+/// Cleans up references to an arm when it is dismembered or deleted
+/mob/living/carbon/proc/on_lost_hand(obj/item/bodypart/arm/lost_hand)
+	SIGNAL_HANDLER
+	hand_bodyparts[lost_hand.held_index] = null
+	UnregisterSignal(lost_hand, list(COMSIG_QDELETING, COMSIG_BODYPART_REMOVED))
 
 ///Proc to hook behavior on bodypart additions. Do not directly call. You're looking for [/obj/item/bodypart/proc/try_attach_limb()].
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
@@ -1354,6 +1363,32 @@
 	to_chat(src, span_danger("You shove [target.name] into [name]!"))
 	log_combat(shover, target, "shoved", addition = "into [name]")
 	return COMSIG_CARBON_SHOVE_HANDLED
+
+/**
+ * This proc is used to determine whether or not the mob can handle touching an acid affected object.
+ */
+/mob/living/carbon/proc/can_touch_acid(atom/acided_atom, acid_power, acid_volume)
+	// So people can take their own clothes off
+	if((acided_atom == src) || (acided_atom.loc == src))
+		return TRUE
+	if((acid_power * acid_volume) < ACID_LEVEL_HANDBURN)
+		return TRUE
+	if(gloves?.resistance_flags & (UNACIDABLE | ACID_PROOF))
+		return TRUE
+	return FALSE
+
+/**
+ * This proc is used to determine whether or not the mob can handle touching a burning object.
+ */
+/mob/living/carbon/proc/can_touch_burning(atom/burning_atom, acid_power, acid_volume)
+	// So people can take their own clothes off
+	if((burning_atom == src) || (burning_atom.loc == src))
+		return TRUE
+	if(HAS_TRAIT(src, TRAIT_RESISTHEAT) || HAS_TRAIT(src, TRAIT_RESISTHEATHANDS))
+		return TRUE
+	if(gloves?.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE)
+		return TRUE
+	return FALSE
 
 /**
  * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.

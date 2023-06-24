@@ -10,7 +10,7 @@
 	icon_state = "infuser"
 	base_icon_state = "infuser"
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the door is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 	circuit = /obj/item/circuitboard/machine/dna_infuser
 	/// maximum tier this will infuse
 	var/max_tier_allowed = DNA_MUTANT_TIER_ONE
@@ -153,7 +153,7 @@
 		if(old_organ)
 			if((old_organ.type != new_organ) && (old_organ.status != ORGAN_ROBOTIC))
 				continue // Old organ can be mutated!
-		else if(isexternalorgan(new_organ))
+		else if(ispath(new_organ, /obj/item/organ/external))
 			continue // External organ can be grown!
 		// Internal organ is either missing, or is non-organic.
 		potential_new_organs -= new_organ
@@ -237,8 +237,8 @@
 
 // mostly good for dead mobs that turn into items like dead mice (smack to add).
 /obj/machinery/dna_infuser/proc/add_infusion_item(obj/item/target, mob/user)
-	// if the machine is closed, already has a infusion target, or the target is not valid then no adding.
-	if(!state_open || !is_valid_infusion(target, user))
+	// if the machine already has a infusion target, or the target is not valid then no adding.
+	if(!is_valid_infusion(target, user))
 		return
 	if(!user.transferItemToLoc(target, src))
 		to_chat(user, span_warning("[target] is stuck to your hand!"))
@@ -248,7 +248,7 @@
 // mostly good for dead mobs like corpses (drag to add).
 /obj/machinery/dna_infuser/MouseDrop_T(atom/movable/target, mob/user)
 	// if the machine is closed, already has a infusion target, or the target is not valid then no mouse drop.
-	if(!state_open || !is_valid_infusion(target, user))
+	if(!is_valid_infusion(target, user))
 		return
 	infusing_from = target
 	infusing_from.forceMove(src)

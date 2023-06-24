@@ -7,7 +7,7 @@
 /turf/open/floor/plating,
 /area/centcom/ctf)
 "bp" = (
-/obj/item/ctf/red,
+/obj/item/ctf_flag/red,
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "bM" = (
@@ -269,7 +269,7 @@
 /turf/open/floor/circuit,
 /area/centcom/ctf)
 "AJ" = (
-/obj/machinery/capture_the_flag/blue,
+/obj/machinery/ctf/spawner/blue,
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "AL" = (
@@ -359,7 +359,7 @@
 /turf/open/floor/circuit/green/off,
 /area/centcom/ctf)
 "Gn" = (
-/obj/item/ctf/blue,
+/obj/item/ctf_flag/blue,
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "GW" = (
@@ -535,7 +535,7 @@
 /turf/open/floor/circuit/red,
 /area/centcom/ctf)
 "Th" = (
-/obj/machinery/capture_the_flag/red,
+/obj/machinery/ctf/spawner/red,
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
 "TB" = (

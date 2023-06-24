@@ -176,6 +176,24 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = HARD_CRIT
 
+/datum/emote/living/gasp_shock
+	key = "gaspshock"
+	key_third_person = "gaspsshock"
+	message = "gasps in shock!"
+	message_mime = "gasps in silent shock!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	stat_allowed = SOFT_CRIT
+
+/datum/emote/living/gasp_shock/get_sound(mob/living/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	if(human_user.dna.species.id == SPECIES_HUMAN && !HAS_TRAIT(human_user, TRAIT_MIMING))
+		if(human_user.gender == FEMALE)
+			return pick('sound/voice/human/gasp_female1.ogg', 'sound/voice/human/gasp_female2.ogg', 'sound/voice/human/gasp_female3.ogg')
+		else
+			return pick('sound/voice/human/gasp_male1.ogg', 'sound/voice/human/gasp_male2.ogg')
+
 /datum/emote/living/giggle
 	key = "giggle"
 	key_third_person = "giggles"
@@ -211,6 +229,16 @@
 	key_third_person = "jumps"
 	message = "jumps!"
 	hands_use_check = TRUE
+
+/datum/emote/living/jump/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return FALSE
+	animate(user, pixel_y = user.pixel_y + 4, time = 0.1 SECONDS)
+	animate(pixel_y = user.pixel_y - 4, time = 0.1 SECONDS)
+
+/datum/emote/living/jump/get_sound(mob/living/user)
+	return 'sound/weapons/thudswoosh.ogg'
 
 /datum/emote/living/kiss
 	key = "kiss"
@@ -321,6 +349,18 @@
 	key_third_person = "shiver"
 	message = "shivers."
 
+#define SHIVER_LOOP_DURATION (1 SECONDS)
+/datum/emote/living/shiver/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return FALSE
+	animate(user, pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+	for(var/i in 1 to SHIVER_LOOP_DURATION / (0.2 SECONDS)) //desired total duration divided by the iteration duration to give the necessary iteration count
+		animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
+		animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+	animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
+#undef SHIVER_LOOP_DURATION
+
 /datum/emote/living/sigh
 	key = "sigh"
 	key_third_person = "sighs"
@@ -399,6 +439,16 @@
 	key_third_person = "sways"
 	message = "sways around dizzily."
 
+/datum/emote/living/sway/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return FALSE
+	animate(user, pixel_x = user.pixel_x + 2, time = 0.5 SECONDS)
+	for(var/i in 1 to 2)
+		animate(pixel_x = user.pixel_x - 4, time = 1.0 SECONDS)
+		animate(pixel_x = user.pixel_x + 4, time = 1.0 SECONDS)
+	animate(pixel_x = user.pixel_x - 2, time = 0.5 SECONDS)
+
 /datum/emote/living/tilt
 	key = "tilt"
 	key_third_person = "tilts"
@@ -409,14 +459,43 @@
 	key_third_person = "trembles"
 	message = "trembles in fear!"
 
+#define TREMBLE_LOOP_DURATION (4.4 SECONDS)
+/datum/emote/living/tremble/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return FALSE
+	animate(user, pixel_x = user.pixel_x + 2, time = 0.2 SECONDS)
+	for(var/i in 1 to TREMBLE_LOOP_DURATION / (0.4 SECONDS)) //desired total duration divided by the iteration duration to give the necessary iteration count
+		animate(pixel_x = user.pixel_x - 2, time = 0.2 SECONDS)
+		animate(pixel_x = user.pixel_x + 2, time = 0.2 SECONDS)
+	animate(pixel_x = user.pixel_x - 2, time = 0.2 SECONDS)
+#undef TREMBLE_LOOP_DURATION
+
 /datum/emote/living/twitch
 	key = "twitch"
 	key_third_person = "twitches"
 	message = "twitches violently."
 
+/datum/emote/living/twitch/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return FALSE
+	animate(user, pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
+	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+	animate(time = 0.1 SECONDS)
+	animate(pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
+	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
+
 /datum/emote/living/twitch_s
 	key = "twitch_s"
 	message = "twitches."
+
+/datum/emote/living/twitch_s/run_emote(mob/living/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return FALSE
+	animate(user, pixel_x = user.pixel_x - 1, time = 0.1 SECONDS)
+	animate(pixel_x = user.pixel_x + 1, time = 0.1 SECONDS)
 
 /datum/emote/living/wave
 	key = "wave"
@@ -436,9 +515,9 @@
 	message = "smiles weakly."
 
 /// The base chance for your yawn to propagate to someone else if they're on the same tile as you
-#define YAWN_PROPAGATE_CHANCE_BASE 60
+#define YAWN_PROPAGATE_CHANCE_BASE 40
 /// The base chance for your yawn to propagate to someone else if they're on the same tile as you
-#define YAWN_PROPAGATE_CHANCE_DECAY 10
+#define YAWN_PROPAGATE_CHANCE_DECAY 8
 
 /datum/emote/living/yawn
 	key = "yawn"
@@ -446,11 +525,11 @@
 	message = "yawns."
 	message_mime = "acts out an exaggerated silent yawn."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	cooldown = 3 SECONDS
+	cooldown = 5 SECONDS
 
 /datum/emote/living/yawn/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(!. || !isliving(user))
+	if(!isliving(user))
 		return
 
 	if(!TIMER_COOLDOWN_CHECK(user, COOLDOWN_YAWN_PROPAGATION))
@@ -463,7 +542,7 @@
 	var/propagation_distance = user.client ? 5 : 2 // mindless mobs are less able to spread yawns
 
 	for(var/mob/living/iter_living in view(user, propagation_distance))
-		if(IS_DEAD_OR_INCAP(iter_living) || TIMER_COOLDOWN_CHECK(user, COOLDOWN_YAWN_PROPAGATION))
+		if(IS_DEAD_OR_INCAP(iter_living) || TIMER_COOLDOWN_CHECK(iter_living, COOLDOWN_YAWN_PROPAGATION))
 			continue
 
 		var/dist_between = get_dist(user, iter_living)

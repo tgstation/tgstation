@@ -48,8 +48,8 @@
 	nation.generate_nation_objectives(dangerous, department_target)
 
 	//convert current members of the department
-	for(var/mob/living/carbon/human/possible_separatist as anything in GLOB.human_list)
-		if(!possible_separatist.mind)
+	for(var/mob/living/possible_separatist in GLOB.player_list)
+		if(isnull(possible_separatist.mind))
 			continue
 		var/datum/mind/separatist_mind = possible_separatist.mind
 		if(!(separatist_mind.assigned_role.title in jobs_to_revolt))

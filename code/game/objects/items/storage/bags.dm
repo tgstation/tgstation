@@ -236,7 +236,7 @@
 		/obj/item/food/grown,
 		/obj/item/graft,
 		/obj/item/grown,
-		/obj/item/reagent_containers/honeycomb,
+		/obj/item/food/honeycomb,
 		/obj/item/seeds,
 		))
 ////////
@@ -328,8 +328,8 @@
 	atom_storage.set_holdable(list(
 		/obj/item/book,
 		/obj/item/spellbook,
-		/obj/item/storage/book,
-		))
+		/obj/item/poster,
+	))
 
 /*
  * Trays - Agouri
@@ -346,7 +346,7 @@
 	throw_range = 5
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=3000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 0.6
 
 /obj/item/storage/bag/tray/Initialize(mapload)
@@ -446,6 +446,7 @@
 		/obj/item/reagent_containers/cup/glass/waterbottle,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
@@ -476,6 +477,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/reagent_containers/syringe,
 		))
@@ -505,6 +507,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/slime_extract,
 		/obj/item/swab,
@@ -542,6 +545,7 @@
 /obj/item/storage/bag/harpoon_quiver
 	name = "harpoon quiver"
 	desc = "A quiver for holding harpoons."
+	icon = 'icons/obj/weapons/guns/bows/quivers.dmi'
 	icon_state = "quiver"
 	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"

@@ -313,14 +313,15 @@ GLOBAL_VAR(basketball_game)
  */
 /datum/basketball_controller/proc/check_signups()
 	for(var/bad_key in GLOB.basketball_bad_signup)
-		if(GLOB.directory[bad_key]) //they have reconnected if we can search their key and get a client
+		var/client/signup_client = GLOB.directory[bad_key]
+		if(signup_client) //they have reconnected if we can search their key and get a client
 			GLOB.basketball_bad_signup -= bad_key
-			GLOB.basketball_signup += bad_key
+			GLOB.basketball_signup[bad_key] = TRUE
 	for(var/key in GLOB.basketball_signup)
 		var/client/signup_client = GLOB.directory[key]
 		if(!signup_client) //vice versa but in a variable we use later
 			GLOB.basketball_signup -= key
-			GLOB.basketball_bad_signup += key
+			GLOB.basketball_bad_signup[key] = TRUE
 			continue
 		if(!isobserver(signup_client.mob))
 			//they are back to playing the game, remove them from the signups
@@ -341,6 +342,7 @@ GLOBAL_VAR(basketball_game)
 	return GLOB.always_state
 
 /datum/basketball_controller/ui_interact(mob/user, datum/tgui/ui)
+	check_signups()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "BasketballPanel")
@@ -378,11 +380,12 @@ GLOBAL_VAR(basketball_game)
 
 	switch(action)
 		if("basketball_signup")
-			if(GLOB.basketball_signup[ghost_client.ckey])
-				GLOB.basketball_signup -= ghost_client.ckey // double check this works?
+			if(GLOB.basketball_signup[ghost_client.ckey] || GLOB.basketball_bad_signup[ghost_client.ckey])
+				GLOB.basketball_signup -= ghost_client.ckey
+				GLOB.basketball_bad_signup -= ghost_client.ckey
 				to_chat(ghost_client, span_notice("You unregister from basketball."))
 			else
-				GLOB.basketball_signup[ghost_client.ckey] = ghost_client
+				GLOB.basketball_signup[ghost_client.ckey] = TRUE
 				to_chat(ghost_client, span_notice("You sign up for basketball."))
 
 			check_signups()

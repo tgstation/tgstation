@@ -1,12 +1,12 @@
 /obj/item/reagent_containers/cup
-	name = "glass"
+	name = "open container"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	reagent_flags = OPENCONTAINER | DUNKABLE
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
-
+	icon_state = "bottle"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 
@@ -203,6 +203,16 @@
 		set_custom_materials(list(GET_MATERIAL_REF(/datum/material/glass) = 5))//sets it to glass so, later on, it gets picked up by the glass catch (hope it doesn't 'break' things lol)
 	return ..()
 
+/// Callback for [datum/component/takes_reagent_appearance] to inherent style footypes
+/obj/item/reagent_containers/cup/proc/on_cup_change(datum/glass_style/has_foodtype/style)
+	if(!istype(style))
+		return
+	drink_type = style.drink_type
+
+/// Callback for [datum/component/takes_reagent_appearance] to reset to no foodtypes
+/obj/item/reagent_containers/cup/proc/on_cup_reset()
+	drink_type = NONE
+
 /obj/item/reagent_containers/cup/beaker
 	name = "beaker"
 	desc = "A beaker. It can hold up to 50 units."
@@ -212,7 +222,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	worn_icon_state = "beaker"
-	custom_materials = list(/datum/material/glass=500)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*5)
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
 
 /obj/item/reagent_containers/cup/beaker/Initialize(mapload)
@@ -232,7 +242,7 @@
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units."
 	icon_state = "beakerlarge"
-	custom_materials = list(/datum/material/glass=2500)
+	custom_materials = list(/datum/material/glass= SHEET_MATERIAL_AMOUNT*1.25)
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
@@ -242,7 +252,7 @@
 	name = "x-large beaker"
 	desc = "An extra-large beaker. Can hold up to 120 units."
 	icon_state = "beakerwhite"
-	custom_materials = list(/datum/material/glass=2500, /datum/material/plastic=3000)
+	custom_materials = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plastic=SHEET_MATERIAL_AMOUNT * 1.5)
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
@@ -252,7 +262,7 @@
 	name = "metamaterial beaker"
 	desc = "A large beaker. Can hold up to 180 units."
 	icon_state = "beakergold"
-	custom_materials = list(/datum/material/glass=2500, /datum/material/plastic=3000, /datum/material/gold=1000, /datum/material/titanium=1000)
+	custom_materials = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plastic=SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium=HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 180
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,180)
@@ -263,7 +273,7 @@
 	desc = "A cryostasis beaker that allows for chemical storage without \
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
-	custom_materials = list(/datum/material/iron=3000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 1.5)
 	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
@@ -274,7 +284,7 @@
 		and Element Cuban combined with the Compound Pete. Can hold up to \
 		300 units."
 	icon_state = "beakerbluespace"
-	custom_materials = list(/datum/material/glass = 5000, /datum/material/plasma = 3000, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
+	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/plasma =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
@@ -342,7 +352,7 @@
 	greyscale_config_worn = /datum/greyscale_config/buckets_worn
 	greyscale_config_inhand_left = /datum/greyscale_config/buckets_inhands_left
 	greyscale_config_inhand_right = /datum/greyscale_config/buckets_inhands_right
-	custom_materials = list(/datum/material/iron=200)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 2)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,70)
@@ -381,9 +391,9 @@
 	greyscale_config_worn = null
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
-	armor_type = /datum/armor/bucket_wooden
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 	resistance_flags = FLAMMABLE
+	armor_type = /datum/armor/bucket_wooden
 
 /datum/armor/bucket_wooden
 	melee = 10
@@ -445,7 +455,8 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
 	volume = 100
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	var/obj/item/grinded
@@ -534,3 +545,15 @@
 	volume = 240
 	icon_state = "coffeepot_bluespace"
 	fill_icon_thresholds = list(0)
+
+///Test tubes created by chem master and pandemic and placed in racks
+/obj/item/reagent_containers/cup/tube
+	name = "tube"
+	desc = "A small test tube."
+	icon_state = "test_tube"
+	fill_icon_state = "tube"
+	inhand_icon_state = "atoxinbottle"
+	worn_icon_state = "beaker"
+	possible_transfer_amounts = list(5, 10, 15, 30)
+	volume = 30
+	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)

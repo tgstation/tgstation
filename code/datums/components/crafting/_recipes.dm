@@ -1,6 +1,10 @@
 /datum/crafting_recipe
-	///in-game display name
+	/// in-game display name
+	/// Optional, if not set uses result name
 	var/name
+	/// description displayed in game
+	/// Optional, if not set uses result desc
+	var/desc
 	///type paths of items consumed associated with how many are needed
 	var/list/reqs = list()
 	///type paths of items explicitly not allowed as an ingredient
@@ -41,6 +45,21 @@
 /datum/crafting_recipe/New()
 	if(!(result in reqs))
 		blacklist += result
+	// These should be excluded from all crafting recipies
+	blacklist += list(
+		/obj/item/cautery/augment,
+		/obj/item/circular_saw/augment,
+		/obj/item/crowbar/cyborg,
+		/obj/item/hemostat/augment,
+		/obj/item/multitool/cyborg,
+		/obj/item/retractor/augment,
+		/obj/item/scalpel/augment,
+		/obj/item/screwdriver/cyborg,
+		/obj/item/surgicaldrill/augment,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/wrench/cyborg,
+	)
 	if(tool_behaviors)
 		tool_behaviors = string_list(tool_behaviors)
 	if(tool_paths)
@@ -77,3 +96,7 @@
 	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
 		return TRUE
 	return FALSE
+
+/// Additional UI data to be passed to the crafting UI for this recipe
+/datum/crafting_recipe/proc/crafting_ui_data()
+	return list()

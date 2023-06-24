@@ -98,7 +98,7 @@
 		item_parent.name = initial(item_parent.name)
 	else if(style.name)
 		// style
-		item_parent.name = style.name
+		style.set_name(item_parent)
 		return COMSIG_ATOM_NO_UPDATE_NAME
 
 	return NONE
@@ -120,7 +120,7 @@
 		item_parent.desc = initial(item_parent.desc)
 	else if(style.desc)
 		// style
-		item_parent.desc = style.desc
+		style.set_desc(item_parent)
 		return COMSIG_ATOM_NO_UPDATE_DESC
 
 	return NONE
@@ -139,8 +139,7 @@
 		item_parent.icon_state = icon_state_pre_change
 	else if(style.icon && style.icon_state)
 		// style
-		item_parent.icon = style.icon
-		item_parent.icon_state = style.icon_state
+		style.set_appearance(item_parent)
 		on_icon_changed?.InvokeAsync(style)
 		return COMSIG_ATOM_NO_UPDATE_ICON_STATE
 

@@ -87,6 +87,8 @@
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
+#define VV_HK_SPIN_ANIMATION "atom_spin"
+#define VV_HK_STOP_ALL_ANIMATIONS "stop_animations"
 #define VV_HK_MODIFY_GREYSCALE "modify_greyscale"
 #define VV_HK_ADD_REAGENT "addreagent"
 #define VV_HK_SHOW_HIDDENPRINTS "show_hiddenprints"
@@ -157,3 +159,8 @@
 #define VV_HK_TO_OUTFIT_EDITOR "outfit_editor"
 
 #define VV_HK_WEAKREF_RESOLVE "weakref_resolve"
+
+// Flags for debug_variable() that do little things to what we end up rendering
+
+/// ALWAYS render a reduced list, useful for fuckoff big datums that need to be condensed for the sake of client load
+#define VV_ALWAYS_CONTRACT_LIST (1<<0)

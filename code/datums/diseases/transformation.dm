@@ -30,23 +30,23 @@
 	return D
 
 
-/datum/disease/transformation/stage_act(delta_time, times_fired)
+/datum/disease/transformation/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(1)
-			if (length(stage1) && DT_PROB(stage_prob, delta_time))
+			if (length(stage1) && SPT_PROB(stage_prob, seconds_per_tick))
 				to_chat(affected_mob, pick(stage1))
 		if(2)
-			if (length(stage2) && DT_PROB(stage_prob, delta_time))
+			if (length(stage2) && SPT_PROB(stage_prob, seconds_per_tick))
 				to_chat(affected_mob, pick(stage2))
 		if(3)
-			if (length(stage3) && DT_PROB(stage_prob * 2, delta_time))
+			if (length(stage3) && SPT_PROB(stage_prob * 2, seconds_per_tick))
 				to_chat(affected_mob, pick(stage3))
 		if(4)
-			if (length(stage4) && DT_PROB(stage_prob * 2, delta_time))
+			if (length(stage4) && SPT_PROB(stage_prob * 2, seconds_per_tick))
 				to_chat(affected_mob, pick(stage4))
 		if(5)
 			do_disease_transformation(affected_mob)
@@ -130,21 +130,21 @@
 /datum/disease/transformation/jungle_flu/do_disease_transformation(mob/living/carbon/affected_mob)
 	affected_mob.monkeyize()
 
-/datum/disease/transformation/jungle_flu/stage_act(delta_time, times_fired)
+/datum/disease/transformation/jungle_flu/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(2)
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_notice("Your [pick("arm", "back", "elbow", "head", "leg")] itches."))
 		if(3)
-			if(DT_PROB(2, delta_time))
+			if(SPT_PROB(2, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.adjust_confusion(10 SECONDS)
 		if(4)
-			if(DT_PROB(1.5, delta_time))
+			if(SPT_PROB(1.5, seconds_per_tick))
 				affected_mob.say(pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."), forced = "jungle fever")
 
 /datum/disease/transformation/robot
@@ -171,20 +171,20 @@
 	bantype = JOB_CYBORG
 
 
-/datum/disease/transformation/robot/stage_act(delta_time, times_fired)
+/datum/disease/transformation/robot/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(3)
-			if (DT_PROB(4, delta_time))
+			if (SPT_PROB(4, seconds_per_tick))
 				affected_mob.say(pick("beep, beep!", "Beep, boop", "Boop...bop"), forced = "robotic transformation")
-			if (DT_PROB(2, delta_time))
+			if (SPT_PROB(2, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.Unconscious(40)
 		if(4)
-			if (DT_PROB(10, delta_time))
+			if (SPT_PROB(10, seconds_per_tick))
 				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "I wwwaaannntt tttoo dddiiieeee...", "kkkiiiill mmme"), forced = "robotic transformation")
 
 
@@ -215,18 +215,18 @@
 	bantype = ROLE_ALIEN
 
 
-/datum/disease/transformation/xeno/stage_act(delta_time, times_fired)
+/datum/disease/transformation/xeno/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(3)
-			if(DT_PROB(2, delta_time))
+			if(SPT_PROB(2, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.Unconscious(40)
 		if(4)
-			if(DT_PROB(10, delta_time))
+			if(SPT_PROB(10, seconds_per_tick))
 				affected_mob.say(pick("Going to... devour you...", "Hsssshhhhh!", "You look delicious."), forced = "xenomorph transformation")
 
 
@@ -247,7 +247,7 @@
 	new_form = /mob/living/simple_animal/slime
 
 
-/datum/disease/transformation/slime/stage_act(delta_time, times_fired)
+/datum/disease/transformation/slime/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
@@ -287,16 +287,16 @@
 	new_form = /mob/living/basic/pet/dog/corgi
 
 
-/datum/disease/transformation/corgi/stage_act(delta_time, times_fired)
+/datum/disease/transformation/corgi/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 	switch(stage)
 		if(3)
-			if (DT_PROB(4, delta_time))
+			if (SPT_PROB(4, seconds_per_tick))
 				affected_mob.say(pick("Woof!", "YAP"), forced = "corgi transformation")
 		if(4)
-			if (DT_PROB(10, delta_time))
+			if (SPT_PROB(10, seconds_per_tick))
 				affected_mob.say(pick("AUUUUUU", "Bark!"), forced = "corgi transformation")
 
 
@@ -340,28 +340,28 @@
 	new_form = /mob/living/simple_animal/pet/gondola
 
 
-/datum/disease/transformation/gondola/stage_act(delta_time, times_fired)
+/datum/disease/transformation/gondola/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(2)
-			if(DT_PROB(2.5, delta_time))
+			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("smile")
-			if(DT_PROB(10, delta_time))
+			if(SPT_PROB(10, seconds_per_tick))
 				affected_mob.reagents.add_reagent_list(list(/datum/reagent/pax = 5))
 		if(3)
-			if(DT_PROB(2.5, delta_time))
+			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("smile")
-			if(DT_PROB(10, delta_time))
+			if(SPT_PROB(10, seconds_per_tick))
 				affected_mob.reagents.add_reagent_list(list(/datum/reagent/pax = 5))
 		if(4)
-			if(DT_PROB(2.5, delta_time))
+			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("smile")
-			if(DT_PROB(10, delta_time))
+			if(SPT_PROB(10, seconds_per_tick))
 				affected_mob.reagents.add_reagent_list(list(/datum/reagent/pax = 5))
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				var/obj/item/held_item = affected_mob.get_active_held_item()
 				if(held_item)
 					to_chat(affected_mob, span_danger("You let go of what you were holding."))

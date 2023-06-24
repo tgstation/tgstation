@@ -16,14 +16,16 @@
 
 ///Does this task require movement from the AI before it can be performed?
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
+///Does this require the current_movement_target to be adjacent and in reach?
+#define AI_BEHAVIOR_REQUIRE_REACH (1<<1)
 ///Does this task let you perform the action while you move closer? (Things like moving and shooting)
-#define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
+#define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<2)
 ///Does finishing this task not null the current movement target?
-#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<2)
+#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<3)
 ///Does finishing this task make the AI stop moving towards the target?
-#define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH (1<<3)
+#define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH (1<<4)
 ///Does this behavior NOT block planning?
-#define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<4)
+#define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<5)
 
 ///AI flags
 /// Don't move if being pulled
@@ -125,13 +127,19 @@
 #define BB_VENDING_BUSY_TILTING "BB_vending_busy_tilting"
 #define BB_VENDING_LAST_HIT_SUCCESFUL "BB_vending_last_hit_succesful"
 
-///Robot customer AI controller blackboard keys
+//Robot customer AI controller blackboard keys
+/// Corresponds to the customer's order.
+/// This can be a an item typepath or an instance of a custom order datum
 #define BB_CUSTOMER_CURRENT_ORDER "BB_customer_current_order"
 #define BB_CUSTOMER_MY_SEAT "BB_customer_my_seat"
 #define BB_CUSTOMER_PATIENCE "BB_customer_patience"
+/// A reference to a customer data datum, containing stuff like saylines and food desires
 #define BB_CUSTOMER_CUSTOMERINFO "BB_customer_customerinfo"
+/// Whether we're busy eating something already
 #define BB_CUSTOMER_EATING "BB_customer_eating"
+/// A reference to the venue being attended
 #define BB_CUSTOMER_ATTENDING_VENUE "BB_customer_attending_avenue"
+/// Whether we're leaving the venue entirely, either happily or forced out
 #define BB_CUSTOMER_LEAVING "BB_customer_leaving"
 #define BB_CUSTOMER_CURRENT_TARGET "BB_customer_current_target"
 /// Robot customer has said their can't find seat line at least once. Used to rate limit how often they'll complain after the first time.
@@ -220,6 +228,8 @@
 #define BB_TARGETTING_DATUM "targetting_datum"
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
+///Blackboard key for a whitelist typecache of "things we can target while trying to move"
+#define BB_OBSTACLE_TARGETTING_WHITELIST "BB_targetting_whitelist"
 
 ///Targetting keys for something to run away from, if you need to store this separately from current target
 #define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
@@ -228,6 +238,34 @@
 
 ///How long have we spent with no target?
 #define BB_TARGETLESS_TIME "BB_targetless_time"
+
+/// Key that holds a nearby vent that looks like it's a good place to hide
+#define BB_ENTRY_VENT_TARGET "BB_entry_vent_target"
+/// Key that holds a vent that we want to exit out of (when we're already in a pipenet)
+#define BB_EXIT_VENT_TARGET "BB_exit_vent_target"
+/// Do we plan on going inside a vent? Boolean.
+#define BB_CURRENTLY_TARGETTING_VENT "BB_currently_targetting_vent"
+/// How long should we wait before we try and enter a vent again?
+#define BB_VENTCRAWL_COOLDOWN "BB_ventcrawl_cooldown"
+/// The least amount of time (in seconds) we take to go through the vents.
+#define BB_LOWER_VENT_TIME_LIMIT "BB_lower_vent_time_limit"
+/// The most amount of time (in seconds) we take to go through the vents.
+#define BB_UPPER_VENT_TIME_LIMIT "BB_upper_vent_time_limit"
+/// How much time (in seconds) do we take until we completely go bust on vent pathing?
+#define BB_TIME_TO_GIVE_UP_ON_VENT_PATHING "BB_seconds_until_we_give_up_on_vent_pathing"
+/// The timer ID of the timer that makes us give up on vent pathing.
+#define BB_GIVE_UP_ON_VENT_PATHING_TIMER_ID "BB_give_up_on_vent_pathing_timer_id"
+
+/// Is there something that scared us into being stationary? If so, hold the reference here
+#define BB_STATIONARY_CAUSE "BB_thing_that_made_us_stationary"
+///How long should we remain stationary for?
+#define BB_STATIONARY_SECONDS "BB_stationary_time_in_seconds"
+///Should we move towards the target that triggered us to be stationary?
+#define BB_STATIONARY_MOVE_TO_TARGET "BB_stationary_move_to_target"
+/// What targets will trigger us to be stationary? Must be a list.
+#define BB_STATIONARY_TARGETS "BB_stationary_targets"
+/// How often can we get spooked by a target?
+#define BB_STATIONARY_COOLDOWN "BB_stationary_cooldown"
 
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
@@ -267,3 +305,7 @@
 // Fugu AI keys
 /// Key where we store the inflating ability
 #define BB_FUGU_INFLATE "BB_fugu_inflate"
+
+//Festivus AI keys
+/// Key where we store the charging apc ability
+#define BB_FESTIVE_APC "BB_festive_apc"

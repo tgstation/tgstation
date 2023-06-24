@@ -29,11 +29,11 @@
 /datum/component/obeys_commands/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_BEFRIENDED, PROC_REF(add_friend))
 	RegisterSignal(parent, COMSIG_LIVING_UNFRIENDED, PROC_REF(remove_friend))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(display_menu))
 
 /datum/component/obeys_commands/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_LIVING_BEFRIENDED, COMSIG_LIVING_UNFRIENDED, COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT))
+	UnregisterSignal(parent, list(COMSIG_LIVING_BEFRIENDED, COMSIG_LIVING_UNFRIENDED, COMSIG_ATOM_EXAMINE, COMSIG_CLICK_ALT))
 
 /// Add someone to our friends list
 /datum/component/obeys_commands/proc/add_friend(datum/source, mob/living/new_friend)
@@ -57,10 +57,7 @@
 
 	if (IS_DEAD_OR_INCAP(source))
 		return
-	if (!source.ai_controller)
-		return
-	var/list/friends_list = source.ai_controller.blackboard[BB_FRIENDS_LIST]
-	if (!friends_list || !friends_list[WEAKREF(user)])
+	if (!(user in source.ai_controller?.blackboard[BB_FRIENDS_LIST]))
 		return
 	examine_list += span_notice("[source.p_they(capitalized = TRUE)] seem[source.p_s()] happy to see you!")
 
@@ -71,10 +68,7 @@
 	var/mob/living/living_parent = parent
 	if (IS_DEAD_OR_INCAP(living_parent))
 		return
-	if (!living_parent.ai_controller)
-		return
-	var/list/friends_list = living_parent.ai_controller.blackboard[BB_FRIENDS_LIST]
-	if (!friends_list || !friends_list[WEAKREF(clicker)])
+	if (!(clicker in living_parent.ai_controller?.blackboard[BB_FRIENDS_LIST]))
 		return // Not our friend, can't boss us around
 
 	INVOKE_ASYNC(src, PROC_REF(display_radial_menu), clicker)
@@ -89,7 +83,7 @@
 			continue
 		radial_options += choice
 
-	var/pick = show_radial_menu(clicker, clicker, radial_options, require_near = TRUE, tooltips = TRUE)
+	var/pick = show_radial_menu(clicker, clicker, radial_options, tooltips = TRUE)
 	if (!pick)
 		return
 	var/datum/pet_command/picked_command = available_commands[pick]

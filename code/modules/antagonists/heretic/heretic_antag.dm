@@ -58,6 +58,7 @@
 		PATH_ASH = "white",
 		PATH_VOID = "blue",
 		PATH_BLADE = "label", // my favorite color is label
+		PATH_COSMIC = "purple",
 	)
 	var/static/list/path_to_rune_color = list(
 		PATH_START = COLOR_LIME,
@@ -65,7 +66,8 @@
 		PATH_FLESH = COLOR_SOFT_RED,
 		PATH_ASH = COLOR_VIVID_RED,
 		PATH_VOID = COLOR_CYAN,
-		PATH_BLADE = COLOR_SILVER
+		PATH_BLADE = COLOR_SILVER,
+		PATH_COSMIC = COLOR_PURPLE,
 	)
 
 /datum/antagonist/heretic/Destroy()
@@ -352,16 +354,14 @@
 
 	GLOB.reality_smash_track.rework_network()
 
-/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], when we get fullhealed / ahealed,
-/// all of our organs are "deleted" and regenerated (cause it's a full heal)
-/// which unfortunately means we lose our living heart.
-/// So, we'll give them some lee-way and give them back the living heart afterwards
-/// (Maybe put this behind only admin_revives only? Not sure.)
-/datum/antagonist/heretic/proc/after_fully_healed(mob/living/source, admin_revive)
+/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL],
+/// Gives the heretic aliving heart on aheal or organ refresh
+/datum/antagonist/heretic/proc/after_fully_healed(mob/living/source, heal_flags)
 	SIGNAL_HANDLER
 
-	var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
-	heart_knowledge.on_research(source)
+	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ADMIN))
+		var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
+		heart_knowledge.on_research(source, src)
 
 /// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to reward cultists for sacrificing a heretic
 /datum/antagonist/heretic/proc/on_cult_sacrificed(mob/living/source, list/invokers)
@@ -407,7 +407,7 @@
 	target_image.overlays = target.overlays
 
 	LAZYSET(sac_targets, target, target_image)
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_target_deleted))
+	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
 
 /**
  * Removes [target] from the heretic's sacrifice list.
@@ -418,11 +418,11 @@
 		return FALSE
 
 	LAZYREMOVE(sac_targets, target)
-	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(target, COMSIG_QDELETING)
 	return TRUE
 
 /**
- * Signal proc for [COMSIG_PARENT_QDELETING] registered on sac targets
+ * Signal proc for [COMSIG_QDELETING] registered on sac targets
  * if sacrifice targets are deleted (gibbed, dusted, whatever), free their slot and reference
  */
 /datum/antagonist/heretic/proc/on_target_deleted(mob/living/carbon/human/source)

@@ -5,7 +5,7 @@
 	icon_state = "sleeper"
 	base_icon_state = "sleeper"
 	density = FALSE
-	obj_flags = NO_BUILD
+	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
 
@@ -70,8 +70,8 @@
 	min_health = initial(min_health) * matterbin_rating
 
 	available_chems.Cut()
-	for(var/datum/stock_part/manipulator/manipulators in component_parts)
-		for(var/i in 1 to manipulators.tier)
+	for(var/datum/stock_part/servo/servos in component_parts)
+		for(var/i in 1 to servos.tier)
 			available_chems |= possible_chems[i]
 
 	reset_chem_buttons()

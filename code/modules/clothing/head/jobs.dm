@@ -411,6 +411,11 @@
 	icon_state = "surgicalcapcmo"
 	desc = "The CMO's medical surgery cap to prevent their hair from entering the insides of the patient!"
 
+/obj/item/clothing/head/utility/surgerycap/black
+	name = "black surgery cap"
+	icon_state = "surgicalcapblack"
+	desc = "A black medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+
 //Engineering
 /obj/item/clothing/head/beret/engi
 	name = "engineering beret"
@@ -458,7 +463,7 @@
 
 /obj/item/clothing/head/beret/highlander/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
 //CentCom
 /obj/item/clothing/head/beret/centcom_formal

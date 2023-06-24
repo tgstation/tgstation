@@ -106,7 +106,7 @@
 
 /datum/event_admin_setup/input_number
 	///Text shown when admins are queried about what number to set.
-	var/input_text = ""
+	var/input_text = "Unset text"
 	///The value the number will be set to by default
 	var/default_value
 	///The highest value setable by the admin.
@@ -159,3 +159,23 @@
 			chosen = FALSE
 		else
 			return ADMIN_CANCEL_EVENT
+
+/datum/event_admin_setup/multiple_choice
+	///Text shown to the admin when queried about which options they want to pick.
+	var/input_text = "Unset Text"
+	///The minimum number of choices an admin must make for this event.
+	var/min_choices = 1
+	///The maximum number of choices that the admin can make for this event.
+	var/max_choices = 50
+	///List of choices returned by this setup to the event.
+	var/list/choices = list()
+
+/datum/event_admin_setup/multiple_choice/proc/get_options()
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("Unimplemented get_options() on [event_control]'s admin setup.")
+
+/datum/event_admin_setup/multiple_choice/prompt_admins()
+	var/list/options = get_options()
+	choices = tgui_input_checkboxes(usr, input_text, event_control.name, options, min_choices, max_choices)
+	if(isnull(choices))
+		return ADMIN_CANCEL_EVENT

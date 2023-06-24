@@ -229,3 +229,11 @@
 	)
 	result = /obj/item/food/pie/shepherds_pie
 	category = CAT_PIE
+
+/datum/crafting_recipe/food/asdfpie
+	name = "Pie-flavored pie"
+	reqs = list(
+		/obj/item/food/pie/plain = 2,
+	)
+	result = /obj/item/food/pie/asdfpie
+	category = CAT_PIE

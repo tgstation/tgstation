@@ -25,7 +25,7 @@
 /area/template_noop)
 "f" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/closet,
 /obj/effect/spawner/random/mod/maint,
 /obj/effect/spawner/random/maintenance/three,

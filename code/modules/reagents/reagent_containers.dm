@@ -4,12 +4,12 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = null
 	w_class = WEIGHT_CLASS_TINY
-	/// The maximum amount of reagents per transfer that will be moved out of this reagent container
+	/// The maximum amount of reagents per transfer that will be moved out of this reagent container.
 	var/amount_per_transfer_from_this = 5
+	/// Does this container allow changing transfer amounts at all, the container can still have only one possible transfer value in possible_transfer_amounts at some point even if this is true
+	var/has_variable_transfer_amount = TRUE
 	/// The different possible amounts of reagent to transfer out of the container
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
-	/// Where we are in the possible transfer amount list.
-	var/amount_list_position = 1
 	/// The maximum amount of reagents this container can hold
 	var/volume = 30
 	/// Reagent flags, a few examples being if the container is open or not, if its transparent, if you can inject stuff in and out of the container, and so on
@@ -22,9 +22,18 @@
 	var/disease_amount = 20
 	/// If the reagents inside of this container will splash out when the container tries to splash onto someone or something
 	var/spillable = FALSE
-	/// The different thresholds at which the reagent fill overlay will change
+	/**
+	 * The different thresholds at which the reagent fill overlay will change. See reagentfillings.dmi.
+	 *
+	 * Should be a list of integers which correspond to a reagent unit threshold.
+	 * If null, no automatic fill overlays are generated.
+	 *
+	 * For example, list(0) will mean it will gain a the overlay with any reagents present. This overlay is "overlayname0".
+	 * list(0, 10) whill have two overlay options, for 0-10 units ("overlayname0") and 10+ units ("overlayname10").
+	 */
 	var/list/fill_icon_thresholds = null
 	/// The optional custom name for the reagent fill icon_state prefix
+	/// If not set, uses the current icon state.
 	var/fill_icon_state = null
 	/// The icon file to take fill icon appearances from
 	var/fill_icon = 'icons/obj/reagentfillings.dmi'
@@ -38,20 +47,20 @@
 		var/datum/disease/F = new spawned_disease()
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent(/datum/reagent/blood, disease_amount, data)
-
 	add_initial_reagents()
 
 /obj/item/reagent_containers/examine()
 	. = ..()
-	if(possible_transfer_amounts.len > 1)
-		. += span_notice("Left-click or right-click in-hand to increase or decrease its transfer amount.")
-	else if(possible_transfer_amounts.len)
-		. += span_notice("Left-click or right-click in-hand to view its transfer amount.")
+	if(has_variable_transfer_amount)
+		if(possible_transfer_amounts.len > 1)
+			. += span_notice("Left-click or right-click in-hand to increase or decrease its transfer amount.")
+		else if(possible_transfer_amounts.len)
+			. += span_notice("Left-click or right-click in-hand to view its transfer amount.")
 
 /obj/item/reagent_containers/create_reagents(max_vol, flags)
 	. = ..()
 	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
+	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
 
 /obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, params)
 	if (!user.combat_mode)
@@ -60,7 +69,7 @@
 
 /obj/item/reagent_containers/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_QDELETING))
 	return NONE
 
 /obj/item/reagent_containers/proc/add_initial_reagents()
@@ -68,10 +77,12 @@
 		reagents.add_reagent_list(list_reagents)
 
 /obj/item/reagent_containers/attack_self(mob/user)
-	change_transfer_amount(user, FORWARD)
+	if(has_variable_transfer_amount)
+		change_transfer_amount(user, FORWARD)
 
 /obj/item/reagent_containers/attack_self_secondary(mob/user)
-	change_transfer_amount(user, BACKWARD)
+	if(has_variable_transfer_amount)
+		change_transfer_amount(user, BACKWARD)
 
 /obj/item/reagent_containers/proc/mode_change_message(mob/user)
 	return
@@ -80,14 +91,15 @@
 	var/list_len = length(possible_transfer_amounts)
 	if(!list_len)
 		return
+	var/index = possible_transfer_amounts.Find(amount_per_transfer_from_this) || 1
 	switch(direction)
 		if(FORWARD)
-			amount_list_position = (amount_list_position % list_len) + 1
+			index = (index % list_len) + 1
 		if(BACKWARD)
-			amount_list_position = (amount_list_position - 1) || list_len
+			index = (index - 1) || list_len
 		else
 			CRASH("change_transfer_amount() called with invalid direction value")
-	amount_per_transfer_from_this = possible_transfer_amounts[amount_list_position]
+	amount_per_transfer_from_this = possible_transfer_amounts[index]
 	balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
 	mode_change_message(user)
 
@@ -255,13 +267,13 @@
 	if(!reagents.total_volume)
 		return
 
-	var/fill_name = fill_icon_state? fill_icon_state : icon_state
+	var/fill_name = fill_icon_state ? fill_icon_state : icon_state
 	var/mutable_appearance/filling = mutable_appearance(fill_icon, "[fill_name][fill_icon_thresholds[1]]")
 
 	var/percent = round((reagents.total_volume / volume) * 100)
 	for(var/i in 1 to fill_icon_thresholds.len)
 		var/threshold = fill_icon_thresholds[i]
-		var/threshold_end = (i == fill_icon_thresholds.len)? INFINITY : fill_icon_thresholds[i+1]
+		var/threshold_end = (i == fill_icon_thresholds.len) ? INFINITY : fill_icon_thresholds[i+1]
 		if(threshold <= percent && percent < threshold_end)
 			filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
 

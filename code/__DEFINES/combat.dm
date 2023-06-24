@@ -67,11 +67,26 @@
 #define EFFECT_PARALYZE "paralyze"
 #define EFFECT_IMMOBILIZE "immobilize"
 //Bitflags defining which status effects could be or are inflicted on a mob
+/// If set, this mob can be stunned.
 #define CANSTUN (1<<0)
+/// If set, this mob can be knocked down (or stamcrit)
 #define CANKNOCKDOWN (1<<1)
+/// If set, this mob can be knocked unconscious via status effect.
+/// NOTE, does not mean immune to sleep. Unconscious and sleep are two different things.
+/// NOTE, does not relate to the unconscious stat either. Only the status effect.
 #define CANUNCONSCIOUS (1<<2)
+/// If set, this mob can be grabbed or pushed when bumped into
 #define CANPUSH (1<<3)
+/// Mob godmode. Prevents most statuses and damage from being taken, but is more often than not a crapshoot. Use with caution.
 #define GODMODE (1<<4)
+
+DEFINE_BITFIELD(status_flags, list(
+	"CAN STUN" = CANSTUN,
+	"CAN KNOCKDOWN" = CANKNOCKDOWN,
+	"CAN UNCONSCIOUS" = CANUNCONSCIOUS,
+	"CAN PUSH" = CANPUSH,
+	"GOD MODE" = GODMODE,
+))
 
 //Health Defines
 #define HEALTH_THRESHOLD_CRIT 0
@@ -328,3 +343,13 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BATON_ATTACK_DONE 2
 /// The baton attack is still going. baton_effect() is called.
 #define BATON_ATTACKING 3
+
+// Defines for combo attack component
+/// LMB Attack
+#define LEFT_ATTACK "Left Attack"
+/// RMB Attack
+#define RIGHT_ATTACK "Right Attack"
+/// Steps for the combo
+#define COMBO_STEPS "steps"
+/// The proc the combo calls
+#define COMBO_PROC "proc"

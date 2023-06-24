@@ -69,12 +69,12 @@
 		return
 	queue += purchase
 
-/obj/machinery/ltsrbt/process(delta_time)
+/obj/machinery/ltsrbt/process(seconds_per_tick)
 	if(machine_stat & NOPOWER)
 		return
 
 	if(recharge_cooldown > 0)
-		recharge_cooldown -= delta_time
+		recharge_cooldown -= seconds_per_tick
 		return
 
 	var/turf/T = get_turf(src)

@@ -42,6 +42,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isfloorturf(A) (istype(A, /turf/open/floor))
 
+#define ismiscturf(A) (istype(A, /turf/open/misc))
+
 #define isclosedturf(A) (istype(A, /turf/closed))
 
 #define isindestructiblewall(A) (istype(A, /turf/closed/indestructible))
@@ -265,7 +267,7 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/book,
 	/obj/item/spellbook,
-	/obj/item/storage/book)))
+)))
 
 // Jobs
 #define is_job(job_type)  (istype(job_type, /datum/job))
