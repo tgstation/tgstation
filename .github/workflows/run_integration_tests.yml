@@ -64,8 +64,7 @@ jobs:
       - name: Run Tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
-          echo "logged=${bash tools/ci/run_server.sh ${{ inputs.map }}}" >> $GITHUB_OUTPUT
-          echo outputs.logged[@-4]
+          bash tools/ci/run_server.sh ${{ inputs.map }}
       - name: Upload screenshot tests
         if: always()
         uses: actions/upload-artifact@v3
