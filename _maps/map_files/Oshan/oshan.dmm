@@ -7170,6 +7170,15 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
+"hzz" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/obj/machinery/light/very_dim/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/science/lobby)
 "hzR" = (
 /obj/machinery/telecomms/hub/preset,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -61508,7 +61517,7 @@ pGv
 pGv
 pGv
 pGv
-rZn
+hzz
 wCy
 tuY
 tSE
