@@ -45,7 +45,7 @@
 
 /obj/vehicle/sealed/mecha/clarke/atom_destruction()
 	if(ore_box)
-		INVOKE_ASYNC(box, TYPE_PROC_REF(/obj/structure/ore_box, dump_box_contents))
+		INVOKE_ASYNC(ore_box, TYPE_PROC_REF(/obj/structure/ore_box, dump_box_contents))
 	return ..()
 
 /obj/vehicle/sealed/mecha/clarke/generate_actions()
@@ -63,6 +63,22 @@
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
 
+/obj/item/mecha_parts/mecha_equipment/orebox_manager/get_snowflake_data()
+	var/list/data = list("snowflake_id" = MECHA_SNOWFLAKE_ID_OREBOX_MANAGER)
+	data["cargo"] = length(ore_box?.contents)
+	return data
+
+/obj/item/mecha_parts/mecha_equipment/orebox_manager/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return TRUE
+	if(action == "dump")
+		if(!chassis.ore_box)
+			return FALSE
+		chassis.ore_box.dump_box_contents()
+		log_message("Dumped [chassis.ore_box].", LOG_MECHA)
+		return TRUE
+
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/attach(obj/vehicle/sealed/mecha/mecha, attach_right = FALSE)
 	. = ..()
 	ADD_TRAIT(mecha, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
@@ -70,12 +86,6 @@
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/detach()
 	REMOVE_TRAIT(chassis, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
 	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/orebox_manager/ui_act(action, list/params)
-	. = ..()
-	if(action == "toggle")
-		chassis.ore_box?.dump_box_contents()
-		activated = TRUE
 
 #define SEARCH_COOLDOWN (1 MINUTES)
 

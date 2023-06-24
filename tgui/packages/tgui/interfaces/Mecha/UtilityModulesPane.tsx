@@ -69,6 +69,7 @@ export const UtilityModulesPane = (props, context) => {
 
 const MECHA_SNOWFLAKE_ID_EJECTOR = 'ejector_snowflake';
 const MECHA_SNOWFLAKE_ID_EXTINGUISHER = 'extinguisher_snowflake';
+const MECHA_SNOWFLAKE_ID_OREBOX_MANAGER = 'orebox_manager_snowflake';
 
 // Handles all the snowflake buttons and whatever
 const Snowflake = (props: { module: MechaUtility }, context) => {
@@ -78,9 +79,37 @@ const Snowflake = (props: { module: MechaUtility }, context) => {
       return <SnowflakeEjector module={props.module} />;
     case MECHA_SNOWFLAKE_ID_EXTINGUISHER:
       return <SnowflakeExtinguisher module={props.module} />;
+    case MECHA_SNOWFLAKE_ID_OREBOX_MANAGER:
+      return <SnowflakeOrebox module={props.module} />;
     default:
       return null;
   }
+};
+
+const SnowflakeOrebox = (props: { module: MechaUtility }, context) => {
+  const { act, data } = useBackend<OperatorData>(context);
+  const { cargo } = props.module.snowflake;
+  return (
+    <>
+      {cargo && <Box>Cargo</Box>}
+      <Box style={{ 'margin-left': '1rem' }}>
+        <div
+          key={props.module.ref}
+          className="UtilityModulePane__SnowflakeEjector__entry">
+          <UtilityName name={item.name} />
+          <Button
+            onClick={() =>
+              act('equip_act', {
+                ref: props.module.ref,
+                gear_action: 'dump',
+              })
+            }>
+            {'Dump contents'}
+          </Button>
+        </div>
+      </Box>
+    </>
+  );
 };
 
 const SnowflakeEjector = (props: { module: MechaUtility }, context) => {
