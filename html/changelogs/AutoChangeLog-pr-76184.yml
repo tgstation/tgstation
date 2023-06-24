@@ -1,0 +1,4 @@
+author: "ChungusGamer666"
+delete-after: True
+changes:
+  - refactor: "Mutant livers can now handle chemicals in special ways. Currently, only plasmaman, skeleton and golem livers do it. Every other species is the same."
