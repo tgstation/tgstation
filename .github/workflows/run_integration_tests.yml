@@ -69,8 +69,8 @@ jobs:
           ulimit -c unlimited
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh ${{ inputs.map }}
-
-       - uses: actions/upload-artifact@v3
+      - name: Catch Faults
+        uses: actions/upload-artifact@v3
         if: ${{ failure() }}  # Run only if something went wrong
         with:
           name: cores
