@@ -1,0 +1,6 @@
+author: "Pickle-Coding"
+delete-after: True
+changes:
+  - bugfix: "Fix atoms not applying proper armour penetration logic."
+  - bugfix: "Fix silenced living armour penetration not using proper armour penetration logic."
+  - code_imp: "Added macro for calculating armour penetration."
