@@ -1640,6 +1640,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 	name = "foam scepter"
 	desc = "A foam replica of the scepters Wizards us on Vendormancy Soccer."
 	icon_state = "vendor_staff"
+	worn_icon_state = "vendor_staff" //For the back
 	inhand_icon_state = "vendor_staff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
