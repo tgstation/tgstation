@@ -3,7 +3,7 @@
 	desc = "We fall into a stasis, allowing us to regenerate and trick our enemies. Costs 15 chemicals."
 	button_icon_state = "fake_death"
 	chemical_cost = 15
-	dna_cost = 0
+	dna_cost = CHANGELING_POWER_INNATE
 	req_dna = 1
 	req_stat = DEAD
 	ignores_fakedeath = TRUE
@@ -24,6 +24,16 @@
 
 	return TRUE
 
+/// Used to enable fakedeath and register relevant signals / start timers
+/datum/action/changeling/fakedeath/proc/enable_fakedeath(mob/living/changeling)
+	if(revive_ready)
+		return
+
+	changeling.fakedeath(CHANGELING_TRAIT)
+	addtimer(CALLBACK(src, PROC_REF(ready_to_regenerate), changeling), fakedeath_duration, TIMER_UNIQUE)
+	RegisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA), PROC_REF(fakedeath_reset))
+
+/// Sets [revive_ready] to FALSE and updates the button icons.
 /datum/action/changeling/fakedeath/proc/disable_revive(mob/living/changeling)
 	if(!revive_ready)
 		return
@@ -33,6 +43,7 @@
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 	UnregisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA))
 
+/// Sets [revive_ready] to TRUE and updates the button icons.
 /datum/action/changeling/fakedeath/proc/enable_revive(mob/living/changeling)
 	if(revive_ready)
 		return
@@ -41,14 +52,7 @@
 	revive_ready = TRUE
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
-/datum/action/changeling/fakedeath/proc/enable_fakedeath(mob/living/changeling)
-	if(revive_ready)
-		return
-
-	changeling.fakedeath(CHANGELING_TRAIT)
-	addtimer(CALLBACK(src, PROC_REF(ready_to_regenerate), changeling), fakedeath_duration, TIMER_UNIQUE)
-	RegisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA), PROC_REF(fakedeath_reset))
-
+/// Signal proc to stop the revival process if the changeling exits their stasis early.
 /datum/action/changeling/fakedeath/proc/fakedeath_reset(datum/source)
 	SIGNAL_HANDLER
 
@@ -89,7 +93,7 @@
 		return
 
 	var/datum/antagonist/changeling/ling = user.mind?.has_antag_datum(/datum/antagonist/changeling)
-	if(QDELETED(ling) || !(src in ling.innate_powers))
+	if(QDELETED(ling) || !(src in ling.innate_powers + ling.purchased_powers)) // checking both innate and purchased for full coverage
 		return
 	if(!HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
 		return
