@@ -42,7 +42,7 @@
 	var/head_flags = HEAD_ALL_FEATURES
 
 	/// Hair style
-	var/hair_style = "Bald"
+	var/hairstyle = "Bald"
 	/// Hair colour and style
 	var/hair_color = "#000000"
 	/// Hair alpha
@@ -231,21 +231,6 @@
 			. += no_eyes
 
 	return
-
-/mob/living/proc/set_haircolor(hex_string, override)
-	return
-
-///Set the haircolor of a human. Override instead sets the override value, it will not be changed away from the override value until override is set to null.
-/mob/living/carbon/human/set_haircolor(hex_string, override)
-	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
-	if(!my_head)
-		return
-
-	if(override)
-		my_head.override_hair_color = hex_string
-	else
-		hair_color = hex_string
-	update_body_parts()
 
 /obj/item/bodypart/head/talk_into(mob/holder, message, channel, spans, datum/language/language, list/message_mods)
 	var/mob/headholder = holder

@@ -404,7 +404,7 @@
 	///Transfer existing hair properties to the new human.
 	if(!special && ishuman(new_head_owner))
 		var/mob/living/carbon/human/sexy_chad = new_head_owner
-		sexy_chad.hairstyle = hair_style
+		sexy_chad.hairstyle = hairstyle
 		sexy_chad.hair_color = hair_color
 		sexy_chad.facial_hairstyle = facial_hairstyle
 		sexy_chad.facial_hair_color = facial_hair_color

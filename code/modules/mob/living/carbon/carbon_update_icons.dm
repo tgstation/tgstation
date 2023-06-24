@@ -622,21 +622,13 @@
 	if(hair_hidden)
 		. += "-HAIR_HIDDEN"
 	else
-		. += "-[hair_style]"
+		. += "-[hairstyle]"
 		. += "-[override_hair_color || fixed_hair_color || hair_color]"
 		. += "-[hair_alpha]"
 		if(gradient_styles?[GRADIENT_HAIR_KEY])
 			. += "-[gradient_styles[GRADIENT_HAIR_KEY]]"
 			. += "-[gradient_colors[GRADIENT_HAIR_KEY]]"
 
-	return .
-
-/obj/item/bodypart/head/generate_husk_key()
-	. = ..()
-	if(show_eyeless)
-		. += "-SHOW_EYELESS"
-	if(show_debrained)
-		. += "-SHOW_DEBRAINED"
 	return .
 
 GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
