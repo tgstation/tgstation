@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - image: "Delam and tram flipsigns have been replaced with information displays"
-  - bugfix: "Tram hit count is centrally managed instead of independently on each sign, so they won't get out of sync"
