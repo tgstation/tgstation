@@ -71,7 +71,7 @@
 /obj/item/lightreplacer/attackby(obj/item/insert, mob/user, params)
 	. = ..()
 	if(uses >= max_uses)
-		user.balloon_alert(user, "full!")
+		user.balloon_alert(user, "already full!")
 		return TRUE
 
 	if(istype(insert, /obj/item/stack/sheet/glass))
@@ -85,7 +85,7 @@
 
 	if(insert.type == /obj/item/shard) //we don't want to insert plasma, titanium or other types of shards
 		if(!user.temporarilyRemoveItemFromInventory(insert))
-			user.balloon_alert(user, "[insert] is stuck in your hand!")
+			user.balloon_alert(user, "stuck in your hand!")
 			return TRUE
 		if(!add_shard(user)) //add_shard will display a message if it created a bulb from the shard so only display message when that does not happen
 			user.balloon_alert(user, "shard inserted")
@@ -96,7 +96,7 @@
 		var/obj/item/light/light_to_insert = insert
 		//remove from player's hand
 		if(!user.temporarilyRemoveItemFromInventory(light_to_insert))
-			user.balloon_alert(user, "[insert] is stuck in your hand!")
+			user.balloon_alert(user, "stuck in your hand!")
 			return TRUE
 
 		//insert light. display message only if adding a shard did not create a new bulb else the messages will conflict
@@ -146,7 +146,7 @@
 
 		if(!replaced_something)
 			if(uses == max_uses)
-				user.balloon_alert(user, "full!")
+				user.balloon_alert(user, "already full!")
 			else
 				user.balloon_alert(user, "nothing usable in [storage_to_empty]!")
 			return TRUE
