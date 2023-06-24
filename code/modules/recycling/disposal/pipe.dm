@@ -171,7 +171,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			if(spawn_pipe)
-				if(!stored) // Don't have something? Make one now
+				if(isnull(stored)) // Don't have something? Make one now
 					stored = new /obj/structure/disposalconstruct(src, null, SOUTH, FALSE, src)
 				stored.forceMove(loc)
 				transfer_fingerprints_to(stored)
