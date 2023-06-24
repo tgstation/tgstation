@@ -338,7 +338,10 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define HUNTER_PACK_BOUNTY "Bounty Fugitive Hunters"
 #define HUNTER_PACK_PSYKER "Psyker Fugitive Hunters"
 
+/// Changeling abilities with DNA cost = this are innately given to all changelings
 #define CHANGELING_POWER_INNATE -1
+/// Changeling abilities with DNA cost = this are not obtainable by changelings - either used for secret unlockable or abstract abilities
 #define CHANGELING_POWER_UNOBTAINABLE -2
-/// The number of recent spoken lines to gain on absorbing a mob
+
+/// For changelings, this is how many recent say lines are retained when absorbing a mob
 #define LING_ABSORB_RECENT_SPEECH 8
