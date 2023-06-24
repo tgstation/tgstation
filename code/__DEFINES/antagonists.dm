@@ -337,3 +337,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define HUNTER_PACK_RUSSIAN "Russian Fugitive Hunters"
 #define HUNTER_PACK_BOUNTY "Bounty Fugitive Hunters"
 #define HUNTER_PACK_PSYKER "Psyker Fugitive Hunters"
+
+#define CHANGELING_POWER_INNATE -1
+#define CHANGELING_POWER_UNOBTAINABLE -2
+/// The number of recent spoken lines to gain on absorbing a mob
+#define LING_ABSORB_RECENT_SPEECH 8
