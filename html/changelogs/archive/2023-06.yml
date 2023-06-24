@@ -805,3 +805,32 @@
   YehnBeep:
   - bugfix: Science department hallways now have unrestricted one-way exits on Delta,
       Birdshot, and Icebox, to make these maps consistent with the others.
+2023-06-24:
+  Guillaume Prata:
+  - rscadd: 'New Wizard spell branch: Vendormacy! Summon runic vending machines with
+      your Vending Scepter, force push them on your enemies to squish them or blow
+      them up while they are busy buying from the machines.'
+  Hatterhat:
+  - rscadd: Baseballs can now be crafted with 3 leather.
+  Helg2:
+  - qol: pill press' max volume for bottles are 50, as the volume of bottles itself.
+  Improvedname:
+  - balance: Weakens summoned stickmen to be 1 or 2 hit
+  LT3:
+  - image: Delam and tram flipsigns have been replaced with information displays
+  - bugfix: Tram hit count is centrally managed instead of independently on each sign,
+      so they won't get out of sync
+  Melbert:
+  - bugfix: The Syndicate Assault Cyborg can autofire their LMG
+  SyncIt21:
+  - code_imp: makes sure cargo computer doesn't use `usr` var inside `ui_act()` which
+      could cause undefined behaviour
+  Wallem:
+  - image: Tweaks cardboard sheet sprite
+  YehnBeep:
+  - qol: Instrument delivery beacons now fit in pockets.
+  necromanceranne:
+  - bugfix: Arm implants properly handle EMPs depending on whether it is robotic or
+      organic. No longer can you EMP an organic organ!
+  timothymtorres:
+  - qol: Add UI preference menus for AI hologram and status displays
