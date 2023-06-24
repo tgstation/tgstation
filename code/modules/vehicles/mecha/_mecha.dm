@@ -131,7 +131,7 @@
 	///flat equipment for iteration
 	var/list/flat_equipment
 
-	///Handles an internal ore box for working mechs
+	///Handles an internal ore box for mining mechs
 	var/obj/structure/ore_box/ore_box
 
 	///Whether our steps are silent due to no gravity
