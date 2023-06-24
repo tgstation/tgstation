@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "The colossus's finale attack is now 100x more lethal, because it was firing 100x fewer projectiles than intended"

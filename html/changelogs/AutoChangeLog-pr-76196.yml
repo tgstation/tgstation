@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fix shooting guns without a magazine loaded making no fire sound effect"

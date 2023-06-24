@@ -36,28 +36,16 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
+	head_flags = HEAD_LIPS|HEAD_EYEHOLES|HEAD_DEBRAIN
 
 /obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, abort)
 	. = ..()
 	if(!.)
 		return
 	new_head_owner.become_blind(limb_id)
-	if(!new_head_owner.dna?.species)
-		return
-
-	new_head_owner.dna.species.species_traits |= NOEYESPRITES //MAKE VISUALS TIED TO BODYPARTS ARGHH
-	new_head_owner.update_body()
 
 /obj/item/bodypart/head/psyker/drop_limb(special, dismembered)
 	owner.cure_blind(limb_id)
-	if(!owner.dna?.species)
-		return ..()
-
-	if(initial(owner.dna.species.species_traits) & NOEYESPRITES)
-		return ..()
-
-	owner.dna.species.species_traits &= ~NOEYESPRITES
-	owner.update_body()
 	return ..()
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
