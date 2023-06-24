@@ -1,4 +1,4 @@
-
+GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 /area/ocean
 	name = "Ocean"
 
@@ -23,6 +23,10 @@
 
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_AREA_SPACE
+
+/area/ocean/Initialize(mapload)
+	. = ..()
+	GLOB.initalized_ocean_areas += src
 
 /area/ocean/dark
 	base_lighting_alpha = 0
