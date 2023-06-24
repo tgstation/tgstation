@@ -588,13 +588,13 @@ Behavior that's still missing from this component that original food items had t
 
 /// Get the number of matching food types in provided bitfields
 /datum/component/edible/proc/count_matching_foodtypes(bitfield_one, bitfield_two)
-    var/count = 0
-    var/matching_bits = bitfield_one & bitfield_two
-    while (matching_bits > 0)
-        if (matching_bits & 1)
-            count++
-        matching_bits >>= 1
-    return count
+	var/count = 0
+	var/matching_bits = bitfield_one & bitfield_two
+	while (matching_bits > 0)
+		if (matching_bits & 1)
+			count++
+		matching_bits >>= 1
+	return count
 
 ///Delete the item when it is fully eaten
 /datum/component/edible/proc/On_Consume(mob/living/eater, mob/living/feeder)
