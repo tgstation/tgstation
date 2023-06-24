@@ -11,22 +11,7 @@
 	knife_x_offset = 22
 	knife_y_offset = 11
 	var/is_charging = FALSE
-/*
-/obj/item/gun/energy/laser/musket/attack_self(mob/living/user as mob)
-	var/obj/item/stock_parts/cell/charging_cell = get_cell()
-	if(charging_cell.charge < charging_cell.maxcharge)
-		if(is_charging == FALSE)
-			is_charging = TRUE
-			playsound(src, 'sound/weapons/laser_crank.ogg', 40)
-		balloon_alert(user, "charging...")
-		if(do_after(user, 2 SECONDS, src, interaction_key = DOAFTER_SOURCE_CHARGE_MUSKET))
-			charging_cell.give(500)
-			update_appearance()
-			is_charging = FALSE
-			balloon_alert(user, "charged")
-	else
-		balloon_alert(user, "already charged!")
-*/
+
 /obj/item/gun/energy/laser/musket/attack_self(mob/living/user as mob)
 	var/obj/item/stock_parts/cell/charging_cell = get_cell()
 	if(charging_cell.charge >= charging_cell.maxcharge)
