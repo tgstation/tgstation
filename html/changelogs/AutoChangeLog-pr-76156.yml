@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Wizarditis Improved. Those infected will now randomly cast one of the following (weakened) spells at max stage: Teleport, Disable Tech, Mutate, Knock, Forcewall, Blink, Smoke, Spacetime Distortion, Timestop, Repulse, Blind, Lightning Bolt, or Swap"
+  - rscadd: "A source of antimagic will prevent Wizarditis's ill effects, but won't cure you."
