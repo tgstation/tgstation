@@ -15362,6 +15362,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"eMG" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/machinery/digital_clock/directional/north,
+/turf/open/floor/iron,
+/area/station/security/prison/mess)
 "eMH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/assistant,
@@ -24855,6 +24865,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "hVo" = (
@@ -29673,6 +29684,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "jyz" = (
@@ -49733,6 +49745,7 @@
 "pNV" = (
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/light/directional/south,
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen/diner)
 "pNY" = (
@@ -55079,6 +55092,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "rzS" = (
 /obj/structure/sign/departments/chemistry/pharmacy/directional/west,
+/obj/machinery/digital_clock/directional/south,
 /turf/open/openspace,
 /area/station/medical/medbay/lobby)
 "rAr" = (
@@ -68277,6 +68291,7 @@
 /area/mine/storage)
 "vPh" = (
 /obj/machinery/light/directional/north,
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "vPi" = (
@@ -71204,6 +71219,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 5
 	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison/rec)
 "wJd" = (
@@ -74115,6 +74131,7 @@
 "xCv" = (
 /obj/machinery/computer/security,
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "xCz" = (
@@ -103501,7 +103518,7 @@ ldH
 ldH
 ldH
 ldH
-fTb
+eMG
 iKw
 iZs
 sOT

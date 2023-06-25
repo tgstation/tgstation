@@ -5,12 +5,12 @@
 
 /obj/item/organ/internal/liver
 	name = "liver"
+	desc = "Pairing suggestion: chianti and fava beans."
 	icon_state = "liver"
 	visual = FALSE
 	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LIVER
-	desc = "Pairing suggestion: chianti and fava beans."
 
 	maxHealth = STANDARD_ORGAN_THRESHOLD
 	healing_factor = STANDARD_ORGAN_HEALING
@@ -33,6 +33,7 @@
 	// If the liver handles foods like a clown, it honks like a bike horn
 	// Don't think about it too much.
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_COMEDY_METABOLISM), PROC_REF(on_add_comedy_metabolism))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_COMEDY_METABOLISM), PROC_REF(on_remove_comedy_metabolism))
 
 /* Signal handler for the liver gaining the TRAIT_COMEDY_METABOLISM trait
  *
@@ -50,30 +51,59 @@
 	// Would that make the clown more or less likely to honk it
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
 
+/* Signal handler for the liver losing the TRAIT_COMEDY_METABOLISM trait
+ *
+ * Basically just removes squeak component
+ */
+/obj/item/organ/internal/liver/proc/on_remove_comedy_metabolism()
+	SIGNAL_HANDLER
+
+	qdel(GetComponent(/datum/component/squeak))
+
+/// Registers COMSIG_MOB_REAGENT_CHECK from owner
+/obj/item/organ/internal/liver/on_insert(mob/living/carbon/organ_owner, special)
+	. = ..()
+	RegisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_CHEMICAL, PROC_REF(handle_chemical))
+
+/// Unregisters COMSIG_MOB_REAGENT_CHECK from owner
+/obj/item/organ/internal/liver/on_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	UnregisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_CHEMICAL)
+
+/**
+ * This proc can be overriden by liver subtypes so they can handle certain chemicals in special ways.
+ * Return null to continue running the normal on_mob_life() for that reagent.
+ * Return COMSIG_MOB_STOP_REAGENT_CHECK to not run the normal metabolism effects.
+ *
+ * NOTE: If you return COMSIG_MOB_STOP_REAGENT_CHECK, that reagent will not be removed like normal! You must handle it manually.
+ **/
+/obj/item/organ/internal/liver/proc/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
+
 /obj/item/organ/internal/liver/examine(mob/user)
 	. = ..()
 
 	if(HAS_TRAIT(user, TRAIT_ENTRAILS_READER) || (user.mind && HAS_TRAIT(user.mind, TRAIT_ENTRAILS_READER)) || isobserver(user))
 		if(HAS_TRAIT(src, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-			. += "Fatty deposits and sprinkle residue, imply that this is the liver of someone in <em>security</em>."
+			. += span_info("Fatty deposits and sprinkle residue, imply that this is the liver of someone in <em>security</em>.")
 		if(HAS_TRAIT(src, TRAIT_CULINARY_METABOLISM))
-			. += "The high iron content and slight smell of garlic, implies that this is the liver of a <em>cook</em>."
+			. += span_info("The high iron content and slight smell of garlic, implies that this is the liver of a <em>cook</em>.")
 		if(HAS_TRAIT(src, TRAIT_COMEDY_METABOLISM))
-			. += "A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, implies that this is the liver of a <em>clown</em>."
+			. += span_info("A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, implies that this is the liver of a <em>clown</em>.")
 		if(HAS_TRAIT(src, TRAIT_MEDICAL_METABOLISM))
-			. += "Marks of stress and a faint whiff of medicinal alcohol, imply that this is the liver of a <em>medical worker</em>."
+			. += span_info("Marks of stress and a faint whiff of medicinal alcohol, imply that this is the liver of a <em>medical worker</em>.")
 		if(HAS_TRAIT(src, TRAIT_ENGINEER_METABOLISM))
-			. += "Signs of radiation exposure and space adaption, implies that this is the liver of an <em>engineer</em>."
+			. += span_info("Signs of radiation exposure and space adaption, implies that this is the liver of an <em>engineer</em>.")
 		if(HAS_TRAIT(src, TRAIT_BALLMER_SCIENTIST))
-			. += "Strange glowing residues, sprinklings of congealed solid plasma, and what seem to be tumors indicate this is the radiated liver of a <em>scientist</em>."
+			. += span_info("Strange glowing residues, sprinklings of congealed solid plasma, and what seem to be tumors indicate this is the radiated liver of a <em>scientist</em>.")
 		if(HAS_TRAIT(src, TRAIT_MAINTENANCE_METABOLISM))
-			. += "A half-digested rat's tail (somehow), disgusting sludge, and the faint smell of Grey Bull imply this is what remains of an <em>assistant</em>'s liver."
+			. += span_info("A half-digested rat's tail (somehow), disgusting sludge, and the faint smell of Grey Bull imply this is what remains of an <em>assistant</em>'s liver.")
 
 		// royal trumps pretender royal
 		if(HAS_TRAIT(src, TRAIT_ROYAL_METABOLISM))
-			. += "A rich diet of luxury food, suppleness from soft beds, implies that this is the liver of a <em>head of staff</em>."
+			. += span_info("A rich diet of luxury food, suppleness from soft beds, implies that this is the liver of a <em>head of staff</em>.")
 		else if(HAS_TRAIT(src, TRAIT_PRETENDER_ROYAL_METABOLISM))
-			. += "A diet of imitation caviar, and signs of insomnia, implies that this is the liver of <em>someone who wants to be a head of staff</em>."
+			. += span_info("A diet of imitation caviar, and signs of insomnia, implies that this is the liver of <em>someone who wants to be a head of staff</em>.")
 
 /obj/item/organ/internal/liver/before_organ_replacement(obj/item/organ/replacement)
 	. = ..()
@@ -95,13 +125,15 @@
 #define HAS_PAINFUL_TOXIN 2
 
 /obj/item/organ/internal/liver/on_life(seconds_per_tick, times_fired)
-	var/mob/living/carbon/liver_owner = owner
 	. = ..() //perform general on_life()
-
+	var/mob/living/carbon/liver_owner = owner
 	if(!istype(liver_owner))
 		return
-	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM)) //If your liver is failing or you lack a metabolism then we use the liverless version of metabolize
-		liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose=TRUE, liverless=TRUE)
+
+	//If your liver is failing, then we use the liverless version of metabolize
+	//We don't check for TRAIT_NOMETABOLISM here because we do want a functional liver if somehow we have one inserted
+	if(organ_flags & ORGAN_FAILING)
+		liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
 		return
 
 	var/obj/belly = liver_owner.get_organ_slot(ORGAN_SLOT_STOMACH)
@@ -123,7 +155,7 @@
 			if(provide_pain_message != HAS_PAINFUL_TOXIN)
 				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
-	liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose=TRUE)
+	liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose = TRUE)
 
 	if(liver_damage)
 		apply_organ_damage(min(liver_damage * seconds_per_tick , MAX_TOXIN_LIVER_DAMAGE * seconds_per_tick))
@@ -205,24 +237,18 @@
 /obj/item/organ/internal/liver/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantliver
 
-/obj/item/organ/internal/liver/plasmaman
-	name = "reagent processing crystal"
-	icon_state = "liver-p"
-	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
-	status = ORGAN_MINERAL
-
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/internal/liver/alien
 	name = "alien liver" // doesnt matter for actual aliens because they dont take toxin damage
-	icon_state = "liver-x" // Same sprite as fly-person liver.
 	desc = "A liver that used to belong to a killer alien, who knows what it used to eat."
+	icon_state = "liver-x" // Same sprite as fly-person liver.
 	liver_resistance = 0.333 * LIVER_DEFAULT_TOX_RESISTANCE // -66%
 	toxTolerance = 15 // complete toxin immunity like xenos have would be too powerful
 
 /obj/item/organ/internal/liver/cybernetic
 	name = "basic cybernetic liver"
-	icon_state = "liver-c"
 	desc = "A very basic device designed to mimic the functions of a human liver. Handles toxins slightly worse than an organic liver."
+	icon_state = "liver-c"
 	organ_flags = ORGAN_SYNTHETIC
 	toxTolerance = 2
 	liver_resistance = 0.9 * LIVER_DEFAULT_TOX_RESISTANCE // -10%
@@ -231,8 +257,8 @@
 
 /obj/item/organ/internal/liver/cybernetic/tier2
 	name = "cybernetic liver"
-	icon_state = "liver-c-u"
 	desc = "An electronic device designed to mimic the functions of a human liver. Handles toxins slightly better than an organic liver."
+	icon_state = "liver-c-u"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 5 //can shrug off up to 5u of toxins
 	liver_resistance = 1.2 * LIVER_DEFAULT_TOX_RESISTANCE // +20%
@@ -240,8 +266,8 @@
 
 /obj/item/organ/internal/liver/cybernetic/tier3
 	name = "upgraded cybernetic liver"
-	icon_state = "liver-c-u2"
 	desc = "An upgraded version of the cybernetic liver, designed to improve further upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
+	icon_state = "liver-c-u2"
 	alcohol_tolerance = 0.001
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 10 //can shrug off up to 10u of toxins
