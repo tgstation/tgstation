@@ -1123,9 +1123,8 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/item/gun/ballistic/rocketlauncher{
-	desc = "A reusable rocket propelled grenade launcher. The words \"Syndicate this way\" and an arrow have been written near the barrel. A sticker near the cheek rest reads, \"FOR DISPLAY PURPOSES ONLY\"";
-	pinless = 1
+/obj/item/gun/ballistic/rocketlauncher/unrestricted{
+	desc = "A reusable rocket propelled grenade launcher. The words \"Syndicate this way\" and an arrow have been written near the barrel. A sticker near the cheek rest reads, \"FOR DISPLAY PURPOSES ONLY\""
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape/luxury)
