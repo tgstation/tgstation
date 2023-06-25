@@ -8,7 +8,7 @@
 	if (!..(preferences))
 		return FALSE
 
-	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = GLOB.species_list[initial(species_type.id)]
 	return !(TRAIT_FIXED_MUTANT_COLORS in species.inherent_traits)
 

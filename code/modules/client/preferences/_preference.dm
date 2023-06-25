@@ -323,9 +323,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		|| !isnull(relevant_external_organ) \
 		|| !isnull(relevant_head_flag) \
 	)
-		var/species_type = preferences.read_preference(/datum/preference/choiced/species)
-
-		var/datum/species/species = new species_type
+		var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
+		var/datum/species/species = GLOB.species_list[initial(species_type.id)]
 		if (!(savefile_key in species.get_features()))
 			return FALSE
 

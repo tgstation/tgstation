@@ -45,11 +45,9 @@
 	target.log_mob_tag("TAG: [target.tag] RENAMED: [key_name(target)]")
 
 /datum/preference/name/real_name/create_informed_default_value(datum/preferences/preferences)
-	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	var/gender = preferences.read_preference(/datum/preference/choiced/gender)
-
-	var/datum/species/species = new species_type
-
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = GLOB.species_list[initial(species_type.id)]
 	return species.random_name(gender, unique = TRUE)
 
 /datum/preference/name/real_name/deserialize(input, datum/preferences/preferences)
