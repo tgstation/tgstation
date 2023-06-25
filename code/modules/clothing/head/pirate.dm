@@ -48,8 +48,11 @@
 /obj/item/clothing/head/costume/pirate/bandana
 	name = "pirate bandana"
 	desc = "Yarr."
-	icon_state = "bandana"
+	icon_state = "bandana1"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/costume/pirate/bandana/Initialize(mapload)
+	icon_state = "bandana[pick(1,2)]"
 
 /obj/item/clothing/head/costume/pirate/bandana/armored
 	armor_type = /datum/armor/bandana_armored
