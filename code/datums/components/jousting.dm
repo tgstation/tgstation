@@ -42,9 +42,23 @@
 	src.max_tile_charge = max_tile_charge
 	src.min_tile_charge = min_tile_charge
 
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_attack))
+
+/datum/component/jousting/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, list(
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_ITEM_DROPPED,
+		COMSIG_ITEM_ATTACK,
+	))
+
+/datum/component/jousting/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	examine_list += span_notice("[parent] can be used to joust while buckled to a vehicle, to deal knockdown and additional damage.")
 
 ///Called when a mob equips the spear, registers them as the holder and checks their signals for moving.
 /datum/component/jousting/proc/on_equip(datum/source, mob/user, slot)
