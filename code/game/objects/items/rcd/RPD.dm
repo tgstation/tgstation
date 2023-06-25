@@ -506,7 +506,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				// Connect to our new connections
 				for(var/obj/machinery/atmospherics/connected_device in target_smart_pipe.nodes)
 					connected_device.atmos_init()
-					connected_device.add_member(src)
+					connected_device.add_member(target_smart_pipe)
 				SSair.add_to_rebuild_queue(target_smart_pipe)
 			// Finally, update our internal state - update_pipe_icon also updates dir and connections
 			target_smart_pipe.update_pipe_icon()
