@@ -9,6 +9,9 @@
 #define DESTROY_MODE (1<<2)
 #define REPROGRAM_MODE (1<<3)
 
+///Sound to make when we use the item to build/destroy something
+#define RPD_USE_SOUND 'sound/items/deconstruct.ogg'
+
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 	"Pipes" = list(
 		new /datum/pipe_info/pipe("Pipe", /obj/machinery/atmospherics/pipe/smart, TRUE),
@@ -280,7 +283,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide..."))
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
-	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, TRUE)
+	playsound(get_turf(user), RPD_USE_SOUND, 50, TRUE)
 	return BRUTELOSS
 
 /obj/item/pipe_dispenser/ui_assets(mob/user)
@@ -440,7 +443,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter) || istype(attack_target, /obj/structure/disposalpipe/broken))
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 		if(do_after(user, destroy_speed, target = attack_target))
-			activate()
+			playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
 			qdel(attack_target)
 		return
 
@@ -481,7 +484,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			if (ISSTUB(new_init_dir))
 				balloon_alert(user, "no one directional pipes allowed!")
 				return
-			S.set_init_directions(new_init_dir)
+			target_smart_pipe.set_init_directions(new_init_dir)
 			// We're now reconfigured.
 			// We can never disconnect from existing connections, but we can connect to previously unconnected directions, and should immediately do so
 			var/newly_permitted_connections = new_init_dir & ~current_init_dir
@@ -504,7 +507,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					O.add_member(src)
 				SSair.add_to_rebuild_queue(target_smart_pipe)
 			// Finally, update our internal state - update_pipe_icon also updates dir and connections
-			S.update_pipe_icon()
+			target_smart_pipe.update_pipe_icon()
 			user.visible_message(span_notice("[user] reprograms the \the [target_smart_pipe]."),span_notice("You reprogram \the [target_smart_pipe]."))
 			return
 		// If this is an unplaced smart pipe, try to reprogram it
@@ -522,7 +525,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if (recipe.type == /datum/pipe_info/meter)
 					if(do_after(user, atmos_build_speed, target = attack_target))
-						activate()
+						playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
 						var/obj/item/pipe_meter/new_meter = new /obj/item/pipe_meter(get_turf(attack_target))
 						new_meter.setAttachLayer(piping_layer)
 						if(mode & WRENCH_MODE)
@@ -535,7 +538,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))//double check to stop cheaters (and to not waste time waiting for something that can't be placed)
 							balloon_alert(user, "cant build on this layer!")
 							return ..()
-						activate()
+						playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
 						var/obj/machinery/atmospherics/path = queued_p_type
 						var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
 						var/obj/item/pipe/pipe_type = new pipe_item_type(
@@ -574,7 +577,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						qdel(new_disposals_segment)
 						return
 
-					activate()
+					playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
 
 					new_disposals_segment.add_fingerprint(usr)
 					new_disposals_segment.update_appearance()
@@ -597,7 +600,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, transit_build_speed, target = attack_target))
-					activate()
+					playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
 					if(queued_p_type == /obj/structure/c_transit_tube_pod)
 						var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(attack_target)
 						pod.add_fingerprint(usr)
@@ -619,8 +622,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			else
 				return ..()
 
-/obj/item/pipe_dispenser/proc/activate()
-	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 
 ///Changes the piping layer when the mousewheel is scrolled up or down.
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source_mob, atom/A, delta_x, delta_y, params)
@@ -639,14 +640,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	SStgui.update_uis(src)
 	to_chat(source_mob, span_notice("You set the layer to [piping_layer]."))
 
-#undef ATMOS_CATEGORY
-#undef DISPOSALS_CATEGORY
-#undef TRANSIT_CATEGORY
-
-#undef BUILD_MODE
-#undef DESTROY_MODE
-#undef WRENCH_MODE
-#undef REPROGRAM_MODE
 
 /obj/item/rpd_upgrade
 	name = "RPD advanced design disk"
@@ -659,3 +652,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/rpd_upgrade/unwrench
 	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
 	upgrade_flags = RPD_UPGRADE_UNWRENCH
+
+#undef ATMOS_CATEGORY
+#undef DISPOSALS_CATEGORY
+#undef TRANSIT_CATEGORY
+
+#undef BUILD_MODE
+#undef DESTROY_MODE
+#undef WRENCH_MODE
+#undef REPROGRAM_MODE
+
+#undef RPD_USE_SOUND
