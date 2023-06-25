@@ -10,7 +10,10 @@
 
 /datum/action/item_action/zipper/proc/on_zip_change(datum/source, new_zip)
 	SIGNAL_HANDLER
-	var/zip = new_zip ? "Un-Zip" : "Zip"
-	name = "[zip] Duffel"
-	desc = "[zip] the equipped duffelbag so you can root around in it"
+	if(new_zip)
+		name = "Unzip" 
+		desc = "Unzip your equipped duffelbag so you can access its contents."
+	else
+		name = "Zip"
+		desc = "Zip your equipped duffelbag so you can move around faster."
 	build_all_button_icons(UPDATE_BUTTON_NAME)
