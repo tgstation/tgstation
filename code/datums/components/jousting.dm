@@ -63,7 +63,7 @@
 /datum/component/jousting/proc/on_equip(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(mob_move))
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(mob_move), TRUE)
 	current_holder = user
 
 /datum/component/jousting/proc/on_drop(datum/source, mob/user)
