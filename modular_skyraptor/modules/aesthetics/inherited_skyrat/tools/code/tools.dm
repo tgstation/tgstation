@@ -57,14 +57,16 @@
 /obj/item/screwdriver
 	var/static/list/screwdriver_colors_rapt = list("#AAFF00", "#FF6600", "#6600FF", "#0066FF", "#FFFF00", "#FF0000")
 
-/obj/item/screwdriver
+/obj/item/screwdriver/Initialize(mapload)
+	. = ..()
 	if(random_color)
 		set_greyscale(colors = list(pick(screwdriver_colors_rapt)))
 
 /obj/item/wirecutters
 	var/static/list/wirecutter_colors_rapt = list("#AAFF00", "#FF6600", "#6600FF", "#0066FF", "#FFFF00", "#FF0000")
 
-/obj/item/wirecutters
+/obj/item/wirecutters/Initialize(mapload)
+	. = ..()
 	if(random_color)
 		set_greyscale(colors = list(pick(wirecutter_colors_rapt)))
 
