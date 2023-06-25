@@ -129,7 +129,13 @@
 
 	log_message("made a vocal announcement with the following message: [message].", LOG_GAME)
 	log_talk(message, LOG_SAY, tag="VOX Announcement")
-	minor_announce(capitalize(message), "[name] announces:", sound_override = TRUE)
+
+	var/list/players = list()
+	for(var/mob/player_mob in GLOB.player_list)
+		var/turf/T = get_turf(player_mob)
+		if(T.z == z_level)
+			players += player_mob
+	minor_announce(capitalize(message), "[name] announces:", players = players, sound_override = TRUE)
 
 	for(var/word in words)
 		play_vox_word(word, src.z, null)
