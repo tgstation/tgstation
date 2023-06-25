@@ -92,6 +92,7 @@
 /datum/action/innate/cult/mastervote
 	name = "Assert Leadership"
 	button_icon_state = "cultvote"
+	// So you can use it while your hands are cuffed or you are bucked
 	// If you want to assert your leadership while handcuffed to a chair, be my guest
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_CONSCIOUS
 
