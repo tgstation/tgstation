@@ -33,7 +33,7 @@
 	SIGNAL_HANDLER
 
 	//updates our gender to be whatever our DNA wants it to be
-	gender = dna?.deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), 3) || pick(MALE, FEMALE)
+	gender = deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), 3) || pick(MALE, FEMALE)
 
 /**
  * On gain of TRAIT_NOBREATH

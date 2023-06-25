@@ -493,7 +493,7 @@
 			apply_pref_name(/datum/preference/name/backup_human, player_client)
 		if(CONFIG_GET(flag/force_random_names))
 			var/gender = player_client.prefs.read_preference(/datum/preference/choiced/gender)
-			var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
+			var/datum/species/species_type = player_client.prefs.read_preference(/datum/preference/choiced/species)
 			var/datum/species/species = GLOB.species_list[initial(species_type.id)]
 			real_name = species.random_name(gender, TRUE)
 	dna.update_dna_identity()
@@ -517,7 +517,7 @@
 			if(!player_client)
 				return // Disconnected while checking the appearance ban.
 
-			var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
+			var/datum/species/species_type = player_client.prefs.read_preference(/datum/preference/choiced/species)
 			var/datum/species/species = GLOB.species_list[initial(species_type.id)]
 			organic_name = species.random_name(player_client.prefs.read_preference(/datum/preference/choiced/gender), TRUE)
 		else
