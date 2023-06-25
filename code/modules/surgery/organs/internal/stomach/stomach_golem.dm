@@ -39,9 +39,10 @@
 
 /// Slow down based on how full you are
 /obj/item/organ/internal/stomach/golem/handle_hunger(mob/living/carbon/human/human, delta_time, times_fired)
+	// the effects are all negative, so just don't run them if you have the trait
+	. = ..()
 	if(HAS_TRAIT(human, TRAIT_NOHUNGER))
 		return
-	. = ..()
 	var/hunger = (NUTRITION_LEVEL_HUNGRY - human.nutrition) / NUTRITION_LEVEL_HUNGRY // starving = 1, satisfied = 0
 	if(hunger > 0)
 		var/slowdown = LERP(min_hunger_slowdown, max_hunger_slowdown, hunger)

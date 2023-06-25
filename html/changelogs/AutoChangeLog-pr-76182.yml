@@ -1,0 +1,5 @@
+author: "winterboekje"
+delete-after: True
+changes:
+  - sound: "Adds unique sounds to library barcode scanner"
+  - image: "Removes soul from library"
