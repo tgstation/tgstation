@@ -54,10 +54,8 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 				fullid += key
 			else
 				if (!istext(value) && !isnum(value))
-					#ifdef UNIT_TESTS
-					if(islist(value))
+					if(PERFORM_ALL_TESTS(dcs_check_list_arguments) && islist(value))
 						LAZYOR(arguments_that_are_lists_by_element[eletype], list(value))
-					#endif
 					value = REF(value)
 				named_arguments[key] = value
 			continue
@@ -65,10 +63,8 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 		if (isnum(key))
 			fullid += "[key]"
 		else
-			#ifdef UNIT_TESTS
-			if(islist(key))
+			if(PERFORM_ALL_TESTS(dcs_check_list_arguments) && islist(key))
 				LAZYOR(arguments_that_are_lists_by_element[eletype], list(key))
-			#endif
 			fullid += REF(key)
 
 	if(length(named_arguments))

@@ -6,7 +6,7 @@
 /datum/unit_test/dcs_check_list_arguments
 	/**
 	 * This unit test requires every (tangible) atom to have been created at least once
-	 * so its search can be most accurate. That's why it's run after create_and_destroy.
+	 * so its search is more accurate. That's why it's run after create_and_destroy.
 	 */
 	priority = TEST_AFTER_CREATE_AND_DESTROY
 
@@ -18,28 +18,28 @@
 	var/list/processed_lists_by_element = list()
 
 	//looping through every element type in the list, in turn looping through all the lists within the nested list.
-	for(var/datum/element/ele_type as anything in SSdcs.arguments_that_are_lists_by_element)
-		if(initial(ele_type.element_flags) & ELEMENT_NO_LIST_UNIT_TEST) // nope
+	for(var/datum/element/element_type as anything in SSdcs.arguments_that_are_lists_by_element)
+		if(initial(element_type.element_flags) & ELEMENT_NO_LIST_UNIT_TEST) // nope
 			continue
-		var/list/ele_type_superlist = list()
-		processed_lists_by_element[ele_type] = ele_type_superlist
+		var/list/element_type_superlist = list()
+		processed_lists_by_element[element_type] = element_type_superlist
 
-		var/list/superlist = SSdcs.arguments_that_are_lists_by_element[ele_type]
-		var/dont_sort = initial(ele_type.element_flags) & ELEMENT_DONT_SORT_LIST_ARGS
+		var/list/superlist = SSdcs.arguments_that_are_lists_by_element[element_type]
+		var/dont_sort = initial(element_type.element_flags) & ELEMENT_DONT_SORT_LIST_ARGS
 
 		for(var/list/list_arg as anything in superlist)
 			var/list/sorted = list_arg
 			if(!dont_sort)
 				sorted = sortTim(list_arg.Copy(), GLOBAL_PROC_REF(cmp_embed_text_asc))
 
-			ele_type_superlist[sorted] = list_arg
+			element_type_superlist[sorted] = list_arg
 
 	// Now, let's start comparing these lists.
-	for(var/ele_type in processed_lists_by_element)
+	for(var/element_type in processed_lists_by_element)
 		//after we're done  comparing one list to everything else, we add it to this list
 		//as well as any identical list.
 		var/list/to_ignore = list()
-		var/list/superlist = processed_lists_by_element[ele_type]
+		var/list/superlist = processed_lists_by_element[element_type]
 		for(var/list/current as anything in superlist)
 			to_ignore[current] = TRUE
 			var/list/bad_lists
@@ -54,5 +54,5 @@
 			if(bad_lists)
 				//report the original list that wasn't sorted. It should be easier to find.
 				var/list/unsorted_list = superlist[current]
-				TEST_FAIL("found [length(bad_lists)] identical lists as argument for element [ele_type]. List: [json_encode(unsorted_list)].\n\
-				Make sure it's a cached list, or use one of the string_list proc. Also, use the ELEMENT_DONT_SORT_LIST_ARGS flag if the key position of your lists matters.")
+				TEST_FAIL("found [length(bad_lists)] identical lists as argument for element [element_type]. List: [json_encode(unsorted_list)].\n\
+					Make sure it's a cached list, or use one of the string_list proc. Also, use the ELEMENT_DONT_SORT_LIST_ARGS flag if the key position of your lists matters.")
