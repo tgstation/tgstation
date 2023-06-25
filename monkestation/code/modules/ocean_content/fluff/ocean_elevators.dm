@@ -44,11 +44,13 @@ GLOBAL_LIST_INIT(sea_elevator_list_trench, list())
 	if(trenched)
 		GLOB.sea_elevator_list_trench -= src
 		returned_turf = get_turf(locate(x, y, SSmapping.levels_by_trait(ZTRAIT_STATION)[1]))
-		linked_elevator = locate(/obj/machinery/ocean_elevator) in returned_turf.contents
+		if(returned_turf)
+			linked_elevator = locate(/obj/machinery/ocean_elevator) in returned_turf.contents
 	else
 		GLOB.sea_elevator_list_station -= src
 		returned_turf = get_turf(locate(x, y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1]))
-		linked_elevator = locate(/obj/machinery/ocean_elevator) in returned_turf.contents
+		if(returned_turf)
+			linked_elevator = locate(/obj/machinery/ocean_elevator) in returned_turf.contents
 	if(linked_elevator)
 		qdel(linked_elevator)
 
