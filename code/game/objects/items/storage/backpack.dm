@@ -398,11 +398,89 @@
 	desc = "A large duffel bag for holding extra things."
 	icon_state = "duffel"
 	inhand_icon_state = "duffel"
-	slowdown = 1
+	actions_types = list(/datum/action/item_action/zipper)
+	/// If this bag is zipped (contents hidden) up or not
+	/// Starts enabled so people need to figure it out to use the thing
+	var/zipped_up = TRUE
 
 /obj/item/storage/backpack/duffelbag/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 30
+	set_zipper(TRUE)
+
+/obj/item/storage/backpack/duffelbag/update_desc(updates)
+	. = ..()
+	var/zip_text = zipped_up ? "It's zipped up, can't get in it!" : "It's unzipped, and harder to move in."
+	desc = "A large duffel bag for holding extra things.<br>[zip_text]"
+
+/obj/item/storage/backpack/duffelbag/attack_self(mob/user, modifiers)
+	if(zipped_up)
+		return attack_hand(user, modifiers)
+	else
+		return attack_hand_secondary(user, modifiers)
+
+/obj/item/storage/backpack/duffelbag/attack_self_secondary(mob/user, modifiers)
+	attack_self(user, modifiers)
+	return ..()
+
+// If we're zipped, click to unzip
+/obj/item/storage/backpack/duffelbag/attack_hand(mob/user, list/modifiers)
+	if(loc != user)
+		// Hacky, but please don't be cringe yeah?
+		atom_storage.silent = TRUE
+		. = ..()
+		atom_storage.silent = FALSE
+		return
+	if(!zipped_up)
+		return ..()
+
+	balloon_alert(user, "Unzipping...")
+	playsound(src, 'sound/items/un_zip.ogg', 100, FALSE)
+	var/datum/callback/can_unzip = CALLBACK(src, PROC_REF(zipper_matches), TRUE)
+	if(!do_after(user, 2.1 SECONDS, src, extra_checks = can_unzip))
+		return
+	balloon_alert(user, "Unzipped!")
+	set_zipper(FALSE)
+	return TRUE
+
+// Vis versa
+/obj/item/storage/backpack/duffelbag/attack_hand_secondary(mob/user, list/modifiers)
+	if(zipped_up)
+		if(loc != user)
+			return ..()
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	balloon_alert(user, "Zipping...")
+	playsound(src, 'sound/items/zip_up.ogg', 100, FALSE)
+	var/datum/callback/can_zip = CALLBACK(src, PROC_REF(zipper_matches), FALSE)
+	if(!do_after(user, 0.5 SECONDS, src, extra_checks = can_zip))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	balloon_alert(user, "Zipped!")
+	set_zipper(TRUE)
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+/// Checks to see if the zipper matches the passed in state
+/// Returns true if so, false otherwise
+/obj/item/storage/backpack/duffelbag/proc/zipper_matches(matching_value)
+	return zipped_up == matching_value
+
+/obj/item/storage/backpack/duffelbag/proc/set_zipper(new_zip)
+	zipped_up = new_zip
+	SEND_SIGNAL(src, COMSIG_DUFFEL_ZIP_CHANGE, new_zip)
+	if(zipped_up)
+		slowdown = 0
+		atom_storage.locked = TRUE
+		atom_storage.display_contents = FALSE
+		atom_storage.close_all()
+	else
+		slowdown = 1
+		atom_storage.locked = FALSE
+		atom_storage.display_contents = TRUE
+
+	if(isliving(loc))
+		var/mob/living/wearer = loc
+		wearer.update_equipment_speed_mods()
+	update_appearance()
 
 /obj/item/storage/backpack/duffelbag/cursed
 	name = "living duffel bag"
