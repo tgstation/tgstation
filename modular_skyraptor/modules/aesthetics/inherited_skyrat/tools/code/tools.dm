@@ -55,15 +55,23 @@
 	righthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_righthand.dmi'
 
 /obj/item/screwdriver
-	screwdriver_colors = list("#AAFF00", "#FF6600", "#6600FF", "#0066FF", "#FFFF00", "#FF0000")
+	var/static/list/screwdriver_colors_rapt = list("#AAFF00", "#FF6600", "#6600FF", "#0066FF", "#FFFF00", "#FF0000")
+
+/obj/item/screwdriver
+	if(random_color)
+		set_greyscale(colors = list(pick(screwdriver_colors_rapt)))
 
 /obj/item/wirecutters
-	wirecutter_colors = list("#AAFF00", "#FF6600", "#6600FF", "#0066FF", "#FFFF00", "#FF0000")
+	var/static/list/wirecutter_colors_rapt = list("#AAFF00", "#FF6600", "#6600FF", "#0066FF", "#FFFF00", "#FF0000")
+
+/obj/item/wirecutters
+	if(random_color)
+		set_greyscale(colors = list(pick(wirecutter_colors_rapt)))
 
 
 
 /datum/greyscale_config/screwdriver
-	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
+	icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
 
 /datum/greyscale_config/wirecutters
-	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
+	icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
