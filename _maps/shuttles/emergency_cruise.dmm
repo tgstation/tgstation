@@ -149,6 +149,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/item/storage/belt/utility/full/powertools,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "en" = (
