@@ -624,6 +624,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	SIGNAL_HANDLER
 	if(source.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
 		return
+	if(source.get_active_held_item() != src)
+		return
 
 	if(delta_y < 0)
 		piping_layer = min(PIPING_LAYER_MAX, piping_layer + 1)
