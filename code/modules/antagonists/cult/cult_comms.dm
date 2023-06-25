@@ -7,7 +7,20 @@
 
 	buttontooltipstyle = "cult"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
+	/// If the cult action does not require hands to be performed
+	var/does_not_need_hands = FALSE
+	/// If the cult action can be performed while immobile
+	var/does_not_need_mobility = FALSE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
+
+/datum/action/innate/cult/New()
+	..()
+	// If we dont need hands, remove the check from check_flags
+	if(does_not_need_hands == TRUE)
+		check_flags = check_flags & ~AB_CHECK_HANDS_BLOCKED
+	// If we dont need to be mobile, remove the check from check_flags
+	if(does_not_need_mobility == TRUE)
+		check_flags = check_flags & ~AB_CHECK_IMMOBILE
 
 /datum/action/innate/cult/IsAvailable(feedback = FALSE)
 	if(!IS_CULTIST(owner))
@@ -18,6 +31,9 @@
 	name = "Communion"
 	desc = "Whispered words that all cultists can hear.<br><b>Warning:</b>Nearby non-cultists can still hear you."
 	button_icon_state = "cult_comms"
+	// Unholy words dont require hands
+	does_not_need_hands = TRUE
+	does_not_need_mobility = TRUE
 
 /datum/action/innate/cult/comm/IsAvailable(feedback = FALSE)
 	if(isshade(owner) && IS_CULTIST(owner))
@@ -90,6 +106,9 @@
 /datum/action/innate/cult/mastervote
 	name = "Assert Leadership"
 	button_icon_state = "cultvote"
+	// If you want to assert your leadership while handcuffed to a chair, be my guest
+	does_not_need_hands = TRUE
+	does_not_need_mobility = TRUE
 
 /datum/action/innate/cult/mastervote/IsAvailable(feedback = FALSE)
 	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
