@@ -129,7 +129,7 @@
 
 	log_message("made a vocal announcement with the following message: [message].", LOG_GAME)
 	log_talk(message, LOG_SAY, tag="VOX Announcement")
-	say(";[message]", forced = "VOX Announcement")
+	radio.talk_into(src, "[message]")
 
 	for(var/word in words)
 		play_vox_word(word, src.z, null)
