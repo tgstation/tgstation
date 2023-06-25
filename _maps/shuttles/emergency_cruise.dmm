@@ -550,10 +550,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
-"mB" = (
-/obj/item/bedsheet/patriot,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/escape/brig)
 "mG" = (
 /obj/machinery/computer/communications,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
@@ -1132,6 +1128,10 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
+"AC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/plastic,
+/area/shuttle/escape)
 "AQ" = (
 /obj/structure/railing,
 /turf/open/floor/lowered/iron/pool,
@@ -1245,7 +1245,6 @@
 	dir = 8;
 	pixel_y = 16
 	},
-/obj/item/bedsheet/patriot,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "CR" = (
@@ -1310,6 +1309,7 @@
 "Ed" = (
 /obj/structure/bed/double/pod,
 /obj/item/bedsheet/patriot/double,
+/obj/item/pillow/clown,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Eg" = (
@@ -1555,10 +1555,6 @@
 	pixel_y = -60
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/shuttle/escape)
-"IP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
-/turf/open/floor/plastic,
 /area/shuttle/escape)
 "IQ" = (
 /obj/machinery/porta_turret/syndicate/energy/raven{
@@ -2621,7 +2617,7 @@ Vm
 Jm
 lJ
 lJ
-IP
+AC
 TI
 qI
 yn
@@ -2847,7 +2843,7 @@ iP
 HW
 BT
 CK
-mB
+rX
 fA
 TI
 TI
