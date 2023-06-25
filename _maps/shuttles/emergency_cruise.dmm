@@ -2066,9 +2066,12 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Vi" = (
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /obj/effect/station_crash/devastating,
-/obj/effect/turf_decal/trimline/dark_blue/line,
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Vk" = (
 /obj/structure/chair/comfy/shuttle,
@@ -2293,7 +2296,7 @@ kd
 en
 en
 uV
-Nj
+Vi
 uB
 BB
 uV
@@ -2747,7 +2750,7 @@ kd
 Tw
 mG
 zm
-Vi
+Gs
 mu
 FS
 HA
