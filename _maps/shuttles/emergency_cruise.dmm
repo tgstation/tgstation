@@ -879,7 +879,9 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "vD" = (
-/obj/machinery/pool_pump,
+/obj/machinery/pool_pump{
+	pixel_y = 15
+	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "vI" = (
@@ -2277,8 +2279,8 @@ Nj
 uB
 BB
 uV
-en
-en
+uV
+uV
 uV
 uV
 en
@@ -2740,7 +2742,7 @@ UF
 Iu
 Iu
 Iu
-vD
+xf
 xf
 OJ
 ni
@@ -2786,7 +2788,7 @@ UF
 Iu
 Iu
 AQ
-xf
+vD
 xf
 OJ
 OJ
@@ -3151,8 +3153,8 @@ aJ
 ES
 MX
 uV
-en
-en
+uV
+uV
 uV
 uV
 en
