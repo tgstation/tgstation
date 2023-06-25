@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "glass bottles with reagents can be used for crafting, empty glass bottles will be used as tools(e.g. empty glass bottle as rolling pin)"
-  - bugfix: "glass bottle with welding fuel can be used for crafting improvised shotgun shells"
