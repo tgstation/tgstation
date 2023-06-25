@@ -36,6 +36,10 @@
 /obj/structure/rack,
 /turf/open/floor/iron,
 /area/mine/production)
+"bM" = (
+/obj/machinery/shower/directional/east,
+/turf/open/floor/iron/freezer,
+/area/station/security/prison/shower)
 "cJ" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
@@ -190,6 +194,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
+"jH" = (
+/obj/machinery/ocean_elevator{
+	elevator_id = "prison";
+	trenched = 1;
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/security/prison/visit)
 "jU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/ocean/dark,
@@ -264,6 +276,14 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
+"mt" = (
+/obj/machinery/ocean_elevator{
+	elevator_id = "mineshaft";
+	trenched = 1;
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/mine/production)
 "nf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
@@ -320,6 +340,14 @@
 /obj/structure/fans/tiny/forcefield,
 /turf/open/floor/engine,
 /area/mine/production)
+"pr" = (
+/obj/machinery/ocean_elevator{
+	elevator_id = "prison";
+	trenched = 1;
+	dir = 2
+	},
+/turf/open/floor/engine,
+/area/station/security/prison/visit)
 "pt" = (
 /obj/item/toy/basketball,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -395,6 +423,10 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/mine/production)
+"ta" = (
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/iron,
+/area/station/security/prison/mess)
 "tn" = (
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
@@ -408,6 +440,14 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/security/prison/work)
+"vd" = (
+/obj/machinery/camera/autoname/directional/east,
+/obj/effect/landmark/start/prisoner,
+/obj/structure/toilet{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer,
+/area/station/security/prison/shower)
 "vi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold/supply,
@@ -434,6 +474,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
+"wi" = (
+/obj/machinery/shower/directional/south,
+/turf/open/floor/iron/freezer,
+/area/station/security/prison/shower)
 "wn" = (
 /obj/machinery/plate_press,
 /obj/machinery/light/directional/east,
@@ -507,7 +551,8 @@
 "yV" = (
 /obj/machinery/ocean_elevator{
 	elevator_id = "prison";
-	trenched = 1
+	trenched = 1;
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/security/prison/visit)
@@ -531,6 +576,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
+"Ak" = (
+/obj/machinery/ocean_elevator{
+	elevator_id = "mineshaft";
+	trenched = 1;
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/mine/production)
 "Av" = (
 /turf/open/floor/iron/white,
 /area/station/security/prison/rec)
@@ -551,6 +604,7 @@
 /area/station/security/prison)
 "Bo" = (
 /obj/machinery/camera/autoname/directional/east,
+/obj/machinery/shower/directional/west,
 /turf/open/floor/iron/freezer,
 /area/station/security/prison/shower)
 "By" = (
@@ -563,6 +617,10 @@
 "BF" = (
 /turf/open/floor/iron/dark,
 /area/station/security/prison/rec)
+"Cl" = (
+/obj/machinery/shower/directional/north,
+/turf/open/floor/iron/freezer,
+/area/station/security/prison/shower)
 "Cw" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -666,6 +724,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/work)
+"Ge" = (
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/iron,
+/area/station/security/prison/work)
 "Gj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -731,6 +793,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/turf/open/floor/iron/dark,
+/area/station/security/prison/garden)
+"Iv" = (
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "IB" = (
@@ -849,7 +915,8 @@
 	},
 /obj/machinery/ocean_elevator{
 	elevator_id = "prison";
-	trenched = 1
+	trenched = 1;
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/station/security/prison/visit)
@@ -872,6 +939,7 @@
 /area/ocean/dark)
 "Ql" = (
 /obj/machinery/camera/autoname/directional/north,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "Qx" = (
@@ -881,7 +949,8 @@
 	},
 /obj/machinery/ocean_elevator{
 	elevator_id = "mineshaft";
-	trenched = 1
+	trenched = 1;
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/mine/production)
@@ -909,6 +978,10 @@
 /obj/machinery/hydroponics,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
+"RP" = (
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/iron/white,
+/area/station/security/prison/rec)
 "SB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -931,6 +1004,10 @@
 "TA" = (
 /turf/open/floor/iron,
 /area/station/security/prison)
+"Ud" = (
+/obj/machinery/shower/directional/west,
+/turf/open/floor/iron/freezer,
+/area/station/security/prison/shower)
 "Uq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -24092,7 +24169,7 @@ qu
 qu
 wF
 wF
-hX
+Ge
 hX
 bd
 bd
@@ -24362,7 +24439,7 @@ HW
 Np
 rA
 Vu
-oy
+Iv
 xg
 QO
 HW
@@ -24548,7 +24625,7 @@ CN
 CN
 Jq
 Qx
-GU
+Ak
 nW
 nW
 nW
@@ -24805,7 +24882,7 @@ CN
 CN
 Jq
 GU
-GU
+mt
 nW
 nW
 nW
@@ -27188,7 +27265,7 @@ kd
 IB
 Tn
 Tn
-Av
+RP
 Av
 BF
 hL
@@ -27433,7 +27510,7 @@ Zo
 vC
 pu
 nP
-ry
+ta
 Pw
 OX
 xC
@@ -28462,7 +28539,7 @@ By
 VN
 HO
 Zl
-Bo
+vd
 HO
 HO
 HO
@@ -28976,10 +29053,10 @@ lH
 NA
 HO
 ED
+bM
+bM
 ED
-ED
-ED
-ED
+Cl
 HO
 no
 jk
@@ -29232,11 +29309,11 @@ CA
 GN
 NA
 HO
+wi
 ED
 ED
 ED
-ED
-ED
+Cl
 HO
 no
 jk
@@ -29489,11 +29566,11 @@ CA
 lH
 NA
 HO
+wi
 ED
 ED
 ED
-ED
-ED
+Cl
 HO
 no
 jk
@@ -29746,11 +29823,11 @@ yk
 vi
 hr
 HO
-ED
-ED
+wi
+Ud
 Bo
-ED
-ED
+Ud
+Cl
 HO
 no
 jk
@@ -31285,8 +31362,8 @@ qu
 qu
 qu
 CA
-yV
-yV
+pr
+jH
 eZ
 CA
 qu

@@ -10,8 +10,8 @@ GLOBAL_LIST_INIT(sea_elevator_list_trench, list())
 	name = "ocean elevator"
 	desc = "an elevator used to move things up and down the ocean floors."
 
-	//icon = ''
-	//icon_state = "elevator"
+	icon = 'monkestation/icons/obj/machines/sea_elevator.dmi'
+	icon_state = "elevator_up_station"
 	anchored = TRUE
 
 	max_integrity = 7500 /// holy fuck these things are strong they could survive a nuke
@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(sea_elevator_list_trench, list())
 		GLOB.sea_elevator_list_trench[elevator_id] += src
 	else
 		GLOB.sea_elevator_list_station[elevator_id] += src
-
+	update_appearance()
 
 /obj/machinery/ocean_elevator/Destroy()
 	. = ..()
@@ -54,6 +54,16 @@ GLOBAL_LIST_INIT(sea_elevator_list_trench, list())
 	if(linked_elevator)
 		qdel(linked_elevator)
 
+/obj/machinery/ocean_elevator/update_icon_state()
+	. = ..()
+	var/added_string = "station"
+	if(trenched)
+		added_string = "trench"
+	if(elevator_up)
+		icon_state = "elevator_up_[added_string]"
+	else
+		icon_state = "elevator_down_[added_string]"
+
 ///these two are seperate procs for snowflake effects
 /obj/machinery/ocean_elevator/proc/going_down()
 	elevator_up = FALSE
@@ -65,6 +75,7 @@ GLOBAL_LIST_INIT(sea_elevator_list_trench, list())
 			continue
 		var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
 		listed_atom.forceMove(turf)
+	update_appearance()
 
 /obj/machinery/ocean_elevator/proc/going_up()
 	elevator_up = TRUE
@@ -76,6 +87,7 @@ GLOBAL_LIST_INIT(sea_elevator_list_trench, list())
 			continue
 		var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_STATION)[1])
 		listed_atom.forceMove(turf)
+	update_appearance()
 
 /obj/machinery/button/sea_elevator
 	name = "sea elevator button control"
