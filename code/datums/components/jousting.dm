@@ -70,7 +70,7 @@
 	SIGNAL_HANDLER
 
 	reset_charge()
-	UnregisterSignal(current_holder, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	current_holder = null
 
 ///Performs the actual attack, handling damage/knockdown depending on how far you've jousted.
