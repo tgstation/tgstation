@@ -130,14 +130,9 @@
 	if(!istype(liver_owner))
 		return
 
-<<<<<<< HEAD:code/modules/surgery/organs/liver.dm
-	//If your liver is failing or you have liverless metabolism then we use the liverless version of metabolize
-	if((organ_flags & ORGAN_FAILING) || HAS_TRAIT(liver_owner, TRAIT_LIVERLESS_METABOLISM))
-=======
 	//If your liver is failing, then we use the liverless version of metabolize
 	//We don't check for TRAIT_NOMETABOLISM here because we do want a functional liver if somehow we have one inserted
 	if(organ_flags & ORGAN_FAILING)
->>>>>>> master:code/modules/surgery/organs/internal/liver/_liver.dm
 		liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
 		return
 
