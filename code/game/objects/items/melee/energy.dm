@@ -247,7 +247,7 @@
 	/// Whether this saber has been multitooled.
 	var/hacked = FALSE
 	var/hacked_color
-	var/datum/component/jouusting/jousting_component
+	var/datum/component/jousting/jousting_component
 
 /obj/item/melee/energy/sword/saber/on_transform(obj/item/source, mob/user, active)
 	. = ..()
