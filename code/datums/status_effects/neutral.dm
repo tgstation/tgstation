@@ -539,8 +539,9 @@
 	remove_on_fullheal = TRUE
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
 
-/datum/status_effect/tinlux_light/on_creation(mob/living/new_owner, duration = 2 SECONDS)
-	src.duration = duration
+/datum/status_effect/tinlux_light/on_creation(mob/living/new_owner, duration)
+	if(duration)
+		src.duration = duration
 	return ..()
 
 /datum/status_effect/tinlux_light/on_apply()
