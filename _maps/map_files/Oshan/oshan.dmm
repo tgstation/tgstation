@@ -7551,6 +7551,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
+"hsV" = (
+/obj/structure/railing,
+/turf/open/floor/grass,
+/area/station/service/hydroponics/upper)
 "hti" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -7852,6 +7856,10 @@
 	},
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
+"hNC" = (
+/obj/structure/railing,
+/turf/open/misc/dirt,
+/area/station/service/hydroponics/upper)
 "hNS" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
@@ -8689,6 +8697,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"iIX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/dirt,
+/area/station/service/hydroponics/upper)
 "iJb" = (
 /obj/effect/turf_decal/stripes{
 	dir = 9
@@ -10729,6 +10744,9 @@
 "kFH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/misc/dirt,
 /area/station/service/hydroponics/upper)
 "kFQ" = (
@@ -12470,6 +12488,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/structure/railing,
 /turf/open/misc/dirt,
 /area/station/service/hydroponics/upper)
 "mvs" = (
@@ -12897,6 +12916,9 @@
 "mTs" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/misc/dirt,
 /area/station/service/hydroponics/upper)
 "mUi" = (
@@ -18030,6 +18052,12 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
+"skl" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/railing,
+/turf/open/misc/dirt,
+/area/station/service/hydroponics/upper)
 "sks" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
@@ -42999,7 +43027,7 @@ csW
 csW
 syi
 cYd
-dJB
+hsV
 dyu
 lhV
 vbD
@@ -43256,7 +43284,7 @@ csW
 csW
 eig
 dJB
-dJB
+hsV
 hld
 vbD
 xrV
@@ -43513,10 +43541,10 @@ csW
 csW
 syi
 qEb
-dJB
+hsV
 kqQ
 kFH
-kqQ
+iIX
 kqQ
 eqZ
 djv
@@ -43771,7 +43799,7 @@ csW
 syi
 syi
 mTs
-kFH
+skl
 lhV
 dJB
 hmD
@@ -44285,7 +44313,7 @@ qxW
 csW
 eig
 dyu
-dyu
+hNC
 dJB
 dJB
 hmD
@@ -44542,7 +44570,7 @@ qxW
 csW
 syi
 clC
-dyu
+hNC
 dJB
 cYd
 hmD

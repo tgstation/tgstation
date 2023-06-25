@@ -146,5 +146,5 @@
 	SIGNAL_HANDLER
 	if(!istype(bumpee))
 		return
-	if(bumpee.force_moving?.allow_climbing)
+	if(bumpee.force_moving?.allow_climbing || bumpee.m_intent == MOVE_INTENT_SPRINT)
 		do_climb(source, bumpee)
