@@ -550,6 +550,10 @@
 	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
+"mB" = (
+/obj/item/bedsheet/patriot,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape/brig)
 "mG" = (
 /obj/machinery/computer/communications,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
@@ -644,6 +648,7 @@
 /area/shuttle/escape)
 "pk" = (
 /obj/machinery/stasis,
+/obj/item/bedsheet/patriot,
 /turf/open/floor/iron/white/textured_corner{
 	dir = 1
 	},
@@ -988,6 +993,7 @@
 /area/shuttle/escape/brig)
 "wZ" = (
 /obj/machinery/stasis,
+/obj/item/bedsheet/patriot,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
@@ -1239,6 +1245,7 @@
 	dir = 8;
 	pixel_y = 16
 	},
+/obj/item/bedsheet/patriot,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "CR" = (
@@ -1339,6 +1346,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
 /turf/open/floor/iron/stairs{
 	dir = 8
 	},
@@ -1548,6 +1556,10 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
+"IP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/plastic,
+/area/shuttle/escape)
 "IQ" = (
 /obj/machinery/porta_turret/syndicate/energy/raven{
 	dir = 9
@@ -1621,6 +1633,7 @@
 "Ki" = (
 /obj/machinery/stasis,
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/bedsheet/patriot,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
@@ -1871,6 +1884,7 @@
 /area/shuttle/escape)
 "Qu" = (
 /obj/structure/bed/roller,
+/obj/item/bedsheet/patriot,
 /turf/open/floor/plastic,
 /area/shuttle/escape)
 "Qz" = (
@@ -1890,6 +1904,7 @@
 /obj/machinery/defibrillator_mount/loaded{
 	pixel_y = -30
 	},
+/obj/item/bedsheet/patriot,
 /turf/open/floor/iron/white/textured_corner{
 	dir = 1
 	},
@@ -2606,7 +2621,7 @@ Vm
 Jm
 lJ
 lJ
-TI
+IP
 TI
 qI
 yn
@@ -2832,7 +2847,7 @@ iP
 HW
 BT
 CK
-rX
+mB
 fA
 TI
 TI
