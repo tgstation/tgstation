@@ -433,12 +433,12 @@
 	if(!zipped_up)
 		return ..()
 
-	balloon_alert(user, "Unzipping...")
+	balloon_alert(user, "znzipping...")
 	playsound(src, 'sound/items/un_zip.ogg', 100, FALSE)
 	var/datum/callback/can_unzip = CALLBACK(src, PROC_REF(zipper_matches), TRUE)
 	if(!do_after(user, 2.1 SECONDS, src, extra_checks = can_unzip))
 		return
-	balloon_alert(user, "Unzipped!")
+	balloon_alert(user, "znzipped!")
 	set_zipper(FALSE)
 	return TRUE
 
@@ -449,12 +449,12 @@
 			return ..()
 		return SECONDARY_ATTACK_CALL_NORMAL
 
-	balloon_alert(user, "Zipping...")
+	balloon_alert(user, "zipping...")
 	playsound(src, 'sound/items/zip_up.ogg', 100, FALSE)
 	var/datum/callback/can_zip = CALLBACK(src, PROC_REF(zipper_matches), FALSE)
 	if(!do_after(user, 0.5 SECONDS, src, extra_checks = can_zip))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	balloon_alert(user, "Zipped!")
+	balloon_alert(user, "zipped!")
 	set_zipper(TRUE)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
