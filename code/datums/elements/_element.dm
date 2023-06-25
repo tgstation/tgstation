@@ -18,11 +18,6 @@
 	  * This is infinity so you must explicitly set this
 	  */
 	var/argument_hash_start_idx = INFINITY
-	/**
-	  * A list of indexes that shouldn't be sorted when passed through the dcs_check_list_arguments unit test
-	  * Useful for those lists in which positions of keys matter a lot.
-	  */
-	var/list/argument_hash_no_sort_indexes
 
 /// Activates the functionality defined by the element on the given target datum
 /datum/element/proc/Attach(datum/target)
@@ -68,6 +63,8 @@
  */
 /datum/proc/_RemoveElement(list/arguments)
 	var/datum/element/ele = SSdcs.GetElement(arguments, FALSE)
+	if(!ele)
+		return
 	if(ele.element_flags & ELEMENT_COMPLEX_DETACH)
 		arguments[1] = src
 		ele.Detach(arglist(arguments))

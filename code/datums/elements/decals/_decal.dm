@@ -1,5 +1,5 @@
 /datum/element/decal
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_DONT_SORT_LIST_ARGS
 	argument_hash_start_idx = 2
 	/// Whether this decal can be cleaned.
 	var/cleanable
@@ -30,7 +30,7 @@
 
 	var/list/resulting_decals_params = list() // param lists
 	for(var/datum/element/decal/rotating as anything in old_decals)
-		resulting_decals_params += rotating.get_rotated_parameters(old_dir,new_dir)
+		resulting_decals_params += list(rotating.get_rotated_parameters(old_dir,new_dir))
 
 	//Instead we could generate ids and only remove duplicates to save on churn on four-corners symmetry ?
 	for(var/datum/element/decal/decal in old_decals)

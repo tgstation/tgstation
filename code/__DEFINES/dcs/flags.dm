@@ -22,6 +22,11 @@
 /// Causes all detach arguments to be passed to detach instead of only being used to identify the element
 /// When this is used your Detach proc should have the same signature as your Attach proc
 #define ELEMENT_COMPLEX_DETACH (1 << 2)
+/**
+ * Stops lists used as arguments for the element from being sorted by the dcs_check_list_arguments unit test.
+ * For when changing the position of the keys is undesiderable, like for color matrices.
+ */
+#define ELEMENT_DONT_SORT_LIST_ARGS (1<<3)
 
 // How multiple components of the exact same type are handled in the same datum
 /// old component is deleted (default)

@@ -5,6 +5,20 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 
 	var/list/elements_by_type = list()
 
+#ifdef UNIT_TESTS
+	/**
+	 * An assoc list of bespoke element types and lists that have been used as arguments.
+	 *
+	 * e.g. list(
+	 *	/datum/element/first = list(list(A), list(B)),
+	 *	/datum/element/second = list(list(C), list(D)),
+	 * )
+	 *
+	 * Used by the dcs_check_list_arguments unit test. Doesn't exist under normal compile options.
+	 */
+	var/list/arguments_that_are_lists_by_element = list()
+#endif
+
 /datum/controller/subsystem/processing/dcs/Recover()
 	_listen_lookup = SSdcs._listen_lookup
 
@@ -33,7 +47,6 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 	var/datum/element/eletype = arguments[1]
 	var/list/fullid = list("[eletype]")
 	var/list/named_arguments = list()
-
 	for(var/i in initial(eletype.argument_hash_start_idx) to length(arguments))
 		var/key = arguments[i]
 
@@ -43,14 +56,21 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 				fullid += key
 			else
 				if (!istext(value) && !isnum(value))
+					#ifdef UNIT_TESTS
+					if(islist(value))
+						LAZYOR(arguments_that_are_lists_by_element[eletype], list(value))
+					#endif
 					value = REF(value)
 				named_arguments[key] = value
-
 			continue
 
 		if (isnum(key))
 			fullid += "[key]"
 		else
+			#ifdef UNIT_TESTS
+			if(islist(key))
+				LAZYOR(arguments_that_are_lists_by_element[eletype], list(key))
+			#endif
 			fullid += REF(key)
 
 	if(length(named_arguments))
