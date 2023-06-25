@@ -760,6 +760,10 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
+"sU" = (
+/obj/machinery/vending/toyliberationstation,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
 "sW" = (
 /obj/machinery/power/shuttle_engine/huge,
 /turf/open/floor/plating/airless,
@@ -1355,12 +1359,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Fx" = (
-/obj/machinery/door/airlock/survival_pod/glass{
-	name = "VIP Section";
-	hackProof = 1;
-	safe = 0
-	},
 /obj/effect/mapping_helpers/airlock/access/all/admin,
+/obj/machinery/door/airlock/vault,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "FR" = (
@@ -1583,10 +1583,6 @@
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
-/area/shuttle/escape)
-"Kv" = (
-/obj/machinery/vending/toyliberationstation,
-/turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "KB" = (
 /obj/structure/chair/comfy/shuttle{
@@ -1820,6 +1816,13 @@
 /obj/structure/bed/roller,
 /turf/open/floor/plastic,
 /area/shuttle/escape)
+"Qz" = (
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 4
+	},
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
 "QG" = (
 /obj/structure/lattice/catwalk/mining,
 /turf/template_noop,
@@ -1984,7 +1987,7 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/projectile/bullet/rocket/heap,
+/obj/item/ammo_casing/caseless/rocket/heap,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape/luxury)
 "Uo" = (
@@ -2007,13 +2010,6 @@
 	dir = 6
 	},
 /turf/open/floor/lowered/iron/pool,
-/area/shuttle/escape)
-"UU" = (
-/obj/effect/turf_decal/trimline/purple/line{
-	dir = 4
-	},
-/obj/machinery/vending/boozeomat,
-/turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "UX" = (
 /obj/machinery/door/window/survival_pod{
@@ -2577,7 +2573,7 @@ qd
 KB
 hH
 nN
-UU
+Qz
 rX
 KD
 AB
@@ -3109,7 +3105,7 @@ yc
 uV
 qE
 uV
-Kv
+sU
 xf
 iQ
 Rz
