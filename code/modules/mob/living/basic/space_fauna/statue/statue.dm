@@ -169,7 +169,7 @@
 	melee_damage_upper = 65
 	faction = list("statue","mining")
 
-/mob/liing/basic/status/frosty/Initialize(mapload)
+/mob/living/basic/statue/frosty/Initialize(mapload)
 	. = ..()
 	var/static/list/death_loot = list(/obj/item/dnainjector/geladikinesis)
 	AddElement(/datum/element/death_drops, death_loot)
