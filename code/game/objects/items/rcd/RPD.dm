@@ -242,7 +242,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/examine(mob/user)
 	. = ..()
-	. += span_notice("You can scroll your <b>mouse wheel<b/> to change the piping layer.")
+	. += span_notice("You can scroll your <b>mouse wheel</b> to change the piping layer.")
 	. += span_notice("You can <b>right click</b> a pipe to set the RPD to its color and layer.")
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
