@@ -466,6 +466,9 @@
 		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
+	if(!isatom(the_target)) // no
+		. = FALSE
+		CRASH("Invalid target: [the_target]")
 	if(see_invisible < the_target.invisibility)
 		return FALSE
 	if(ismob(the_target))
