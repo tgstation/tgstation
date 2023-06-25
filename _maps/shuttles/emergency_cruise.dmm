@@ -285,6 +285,10 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
+"ie" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape/luxury)
 "if" = (
 /obj/machinery/airalarm/directional/south,
 /obj/structure/sink/directional/north,
@@ -373,6 +377,10 @@
 /obj/item/stack/sheet/mineral/coal/ten,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/shuttle/escape)
+"jG" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/open/floor/iron/vaporwave,
+/area/shuttle/escape/luxury)
 "jK" = (
 /obj/effect/turf_decal/trimline/red/line,
 /turf/open/floor/iron/dark/textured,
@@ -2510,7 +2518,7 @@ RO
 En
 SZ
 YZ
-Aq
+jG
 sk
 Pb
 sk
@@ -2884,7 +2892,7 @@ sk
 sk
 sk
 Bf
-YZ
+ie
 lk
 Al
 Jk
