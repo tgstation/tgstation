@@ -48566,6 +48566,10 @@
 	network = list("ss13","Security")
 	},
 /obj/machinery/computer/records/security,
+/obj/item/food/spaghetti/security{
+	pixel_y = 17;
+	pixel_x = -5
+	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
 "qjA" = (
