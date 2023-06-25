@@ -1,3 +1,5 @@
+#define MOVEMENT_RESET_COOLDOWN_TIME (0.3 SECONDS)
+
 /**
  * ##jousting
  *
@@ -12,8 +14,6 @@
 	///How many tiles we've charged up thus far
 	var/current_tile_charge = 0
 
-	///How much time we have to move before the timer resets.
-	var/movement_reset_tolerance
 	///How much of an increase in damage is achieved every tile moved during jousting.
 	var/mounted_damage_boost_per_tile
 	///The boosted chances of a knockdown occuring while jousting.
@@ -26,7 +26,6 @@
 	var/min_tile_charge
 
 /datum/component/jousting/Initialize(
-	movement_reset_tolerance = 0.3 SECONDS,
 	mounted_damage_boost_per_tile = 2,
 	mounted_knockdown_chance_per_tile = 20,
 	mounted_knockdown_time = 2 SECONDS,
@@ -35,7 +34,6 @@
 )
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	src.movement_reset_tolerance = movement_reset_tolerance
 	src.mounted_damage_boost_per_tile = mounted_damage_boost_per_tile
 	src.mounted_knockdown_chance_per_tile = mounted_knockdown_chance_per_tile
 	src.mounted_knockdown_time = mounted_knockdown_time
@@ -114,7 +112,7 @@
 		current_direction = dir
 	if(current_tile_charge < max_tile_charge)
 		current_tile_charge++
-	addtimer(CALLBACK(src, PROC_REF(reset_charge)), movement_reset_tolerance, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(reset_charge)), MOVEMENT_RESET_COOLDOWN_TIME, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /**
  * reset charge
