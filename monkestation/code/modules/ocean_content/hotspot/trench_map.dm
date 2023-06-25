@@ -34,7 +34,7 @@
 			hotspots += {"<div class='hotspot' style='bottom: [listed_spot.center.y * 2]px; left: [listed_spot.center.x * 2]px; width: [listed_spot.radius * 4 + 2]px; height: [listed_spot.radius * 4 + 2]px; margin-left: -[listed_spot.radius * 2]px; margin-bottom: -[listed_spot.radius * 2]px;'></div>"}
 		else
 			hotspots += {"<div class='hotspot_locked' style='bottom: [listed_spot.center.y * 2]px; left: [listed_spot.center.x * 2]px; width: [listed_spot.radius * 4 + 2]px; height: [listed_spot.radius * 4 + 2]px; margin-left: -[listed_spot.radius * 2]px; margin-bottom: -[listed_spot.radius * 2]px;'></div>"}
-
+	///using html because idk how to transport a generated icon into tgui. so this is the best i could come up with.
 	finished_map = {"
 			<!doctype html>
 				<html>
@@ -46,17 +46,8 @@
 						body {
 							background: black;
 							color: white;
-							font-family: 'Consolas', 'Ubuntu Mono', monospace;
+							font-family: Verdana, Geneva, Tahoma, sans-serif;
 						}
-						* {
-							border-sizing: border-box;
-							image-rendering: -moz-crisp-edges;
-							image-rendering: -o-crisp-edges;
-							image-rendering: -webkit-optimize-contrast;
-							image-rendering: crisp-edges;
-							image-rendering: pixelated;
-							-ms-interpolation-mode:nearest-neighbor;
-							}
 						#map {
 							position: relative;
 							height: 600px;
@@ -96,7 +87,7 @@
 						.solid { background-color: [colors["solid"]]; }
 						.station { background-color: [colors["station"]]; }
 						.other { background-color: [colors["other"]]; }
-						.vent_unlocked { background-color: rgb(255, 120, 120);
+						.vent_unlocked { background-color: rgb(255, 120, 120); }
 						.vent_locked { background-color: rgb(202, 78, 214); }
 					</style>
 
