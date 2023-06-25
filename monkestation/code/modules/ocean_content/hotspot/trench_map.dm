@@ -50,8 +50,8 @@
 						}
 						#map {
 							position: relative;
-							height: 600px;
-							width: 600px;
+							height: 510px;
+							width: 510px;
 							overflow: hidden;
 							margin: 0 auto;
 						}
@@ -94,7 +94,7 @@
 				</head>
 				<body>
 					<div id='map'>
-						<img src="trenchmap.png" height="600">
+						<img src="trenchmap.png" height="510">
 						[hotspots.Join("")]
 					</div>
 					<div class='key'>
@@ -114,7 +114,7 @@
 	if (!finished_map || !map)
 		return
 	shower << browse_rsc(map, "trenchmap.png")
-	shower << browse(finished_map, "window=trench_map;size=650x700;title=Trench Map")
+	shower << browse(finished_map, "window=trench_map;size=560x610;title=Trench Map")
 
 /obj/item/sea_map
 	name = "Trench Map"
