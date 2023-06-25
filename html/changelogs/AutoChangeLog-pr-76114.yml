@@ -1,4 +1,0 @@
-author: "ChungusGamer666"
-delete-after: True
-changes:
-  - bugfix: "Exotic blood types no longer persist through species change if the new species does not have an exotic blood type"

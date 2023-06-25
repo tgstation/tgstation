@@ -120,6 +120,26 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	. = ..()
 	. += GLOB.xeno_recipes
 
+/obj/item/stack/sheet/animalhide/carp
+	name = "carp scales"
+	desc = "The scaly skin of a space carp. It looks quite beatiful when detached from the foul creature who once wore it."
+	singular_name = "carp scale"
+	icon_state = "sheet-carp"
+	inhand_icon_state = null
+	merge_type = /obj/item/stack/sheet/animalhide/carp
+
+GLOBAL_LIST_INIT(carp_recipes, list ( \
+	new/datum/stack_recipe("carp costume", /obj/item/clothing/suit/hooded/carp_costume, 4, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("carp mask", /obj/item/clothing/mask/gas/carp, 1, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("carpskin chair", /obj/structure/chair/comfy/carp, 2, check_density = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("carpskin suit", /obj/item/clothing/under/suit/carpskin, 3, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("carpskin fedora", /obj/item/clothing/head/fedora/carpskin, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	))
+
+/obj/item/stack/sheet/animalhide/carp/get_main_recipes()
+	. = ..()
+	. += GLOB.carp_recipes
+
 //don't see anywhere else to put these, maybe together they could be used to make the xenos suit?
 /obj/item/stack/sheet/xenochitin
 	name = "alien chitin"
@@ -142,38 +162,6 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "weed_extract"
 
-/obj/item/stack/sheet/hairlesshide
-	name = "hairless hide"
-	desc = "This hide was stripped of its hair, but still needs washing and tanning."
-	singular_name = "hairless hide piece"
-	icon_state = "sheet-hairlesshide"
-	inhand_icon_state = null
-	merge_type = /obj/item/stack/sheet/hairlesshide
-
-/obj/item/stack/sheet/wethide
-	name = "wet hide"
-	desc = "This hide has been cleaned but still needs to be dried."
-	singular_name = "wet hide piece"
-	icon_state = "sheet-wetleather"
-	inhand_icon_state = null
-	merge_type = /obj/item/stack/sheet/wethide
-	/// Reduced when exposed to high temperatures
-	var/wetness = 30
-	/// Kelvin to start drying
-	var/drying_threshold_temperature = 500
-
-/obj/item/stack/sheet/wethide/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
-	. = ..()
-	AddElement(/datum/element/dryable, /obj/item/stack/sheet/leather)
-	AddElement(/datum/element/atmos_sensitive, mapload)
-	AddComponent(/datum/component/grillable, /obj/item/stack/sheet/leather, rand(1 SECONDS, 3 SECONDS), TRUE)
-
-/obj/item/stack/sheet/wethide/burn()
-	visible_message(span_notice("[src] burns up, leaving a sheet of leather behind!"))
-	new /obj/item/stack/sheet/leather(loc) // only one sheet remains to incentivise not burning your wethide to dry it
-	qdel(src)
-
-
 /*
  * Leather SHeet
  */
@@ -189,6 +177,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1, check_density = FALSE, category = CAT_CONTAINERS), \
 	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2, check_density = FALSE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("basketball", /obj/item/toy/basketball, 20, check_density = FALSE, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("baseball", /obj/item/toy/beach_ball/baseball, 3, check_density = FALSE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("saddle", /obj/item/saddle, 5, check_density = FALSE, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2, check_density = FALSE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("cowboy boots", /obj/item/clothing/shoes/cowboy, 2, check_density = FALSE, category = CAT_CLOTHING), \
@@ -287,22 +276,59 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
 		if(do_after(user, 50, target = src))
-			to_chat(user, span_notice("You cut the hair from this [src.singular_name]."))
-			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), 1)
-			use(1)
+			to_chat(user, span_notice("You cut the hair from [src.name]."))
+			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), amount)
+			use(amount)
 	else
 		return ..()
 
+/obj/item/stack/sheet/animalhide/examine(mob/user)
+	. = ..()
+	. += span_notice("You can remove the hair with any sharp object.")
 
 //Step two - washing..... it's actually in washing machine code.
 
+/obj/item/stack/sheet/hairlesshide
+	name = "hairless hide"
+	desc = "This hide was stripped of its hair, but still needs washing and tanning."
+	singular_name = "hairless hide piece"
+	icon_state = "sheet-hairlesshide"
+	inhand_icon_state = null
+	merge_type = /obj/item/stack/sheet/hairlesshide
+
+/obj/item/stack/sheet/hairlesshide/examine(mob/user)
+	. = ..()
+	. += span_notice("You can clean it up by washing in the water.")
+
 //Step three - drying
 /obj/item/stack/sheet/wethide
+	name = "wet hide"
+	desc = "This hide has been cleaned but still needs to be dried."
+	singular_name = "wet hide piece"
+	icon_state = "sheet-wetleather"
+	inhand_icon_state = null
+	merge_type = /obj/item/stack/sheet/wethide
+	/// Reduced when exposed to high temperatures
+	var/wetness = 30
+	/// Kelvin to start drying
+	var/drying_threshold_temperature = 500
 
-/obj/item/stack/sheet/wethide/Initialize(mapload)
+/obj/item/stack/sheet/wethide/examine(mob/user)
 	. = ..()
+	. += span_notice("You can dry it up to make leather.")
+
+/obj/item/stack/sheet/wethide/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive, mapload)
+	AddElement(/datum/element/dryable, /obj/item/stack/sheet/leather)
 	AddElement(/datum/element/microwavable, /obj/item/stack/sheet/leather)
+	AddComponent(/datum/component/grillable, /obj/item/stack/sheet/leather, rand(1 SECONDS, 3 SECONDS), TRUE)
 	AddComponent(/datum/component/bakeable, /obj/item/stack/sheet/leather, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
+
+/obj/item/stack/sheet/wethide/burn()
+	visible_message(span_notice("[src] burns up, leaving a sheet of leather behind!"))
+	new /obj/item/stack/sheet/leather(loc) // only one sheet remains to incentivise not burning your wethide to dry it
+	qdel(src)
 
 /obj/item/stack/sheet/wethide/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > drying_threshold_temperature)
@@ -313,23 +339,3 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 		new /obj/item/stack/sheet/leather(drop_location(), 1)
 		wetness = initial(wetness)
 		use(1)
-
-/obj/item/stack/sheet/animalhide/carp
-	name = "carp scales"
-	desc = "The scaly skin of a space carp. It looks quite beatiful when detached from the foul creature who once wore it."
-	singular_name = "carp scale"
-	icon_state = "sheet-carp"
-	inhand_icon_state = null
-	merge_type = /obj/item/stack/sheet/animalhide/carp
-
-GLOBAL_LIST_INIT(carp_recipes, list ( \
-	new/datum/stack_recipe("carp costume", /obj/item/clothing/suit/hooded/carp_costume, 4, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("carp mask", /obj/item/clothing/mask/gas/carp, 1, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("carpskin chair", /obj/structure/chair/comfy/carp, 2, check_density = FALSE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("carpskin suit", /obj/item/clothing/under/suit/carpskin, 3, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("carpskin fedora", /obj/item/clothing/head/fedora/carpskin, 2, check_density = FALSE, category = CAT_CLOTHING), \
-	))
-
-/obj/item/stack/sheet/animalhide/carp/get_main_recipes()
-	. = ..()
-	. += GLOB.carp_recipes

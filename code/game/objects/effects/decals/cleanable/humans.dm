@@ -73,8 +73,10 @@
 	layer = ABOVE_WINDOW_LAYER
 	plane = GAME_PLANE
 	vis_flags = VIS_INHERIT_PLANE
-	turf_loc_check = FALSE
 	alpha = 180
+
+/obj/effect/decal/cleanable/blood/splatter/over_window/NeverShouldHaveComeHere(turf/here_turf)
+	return isgroundlessturf(here_turf)
 
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
@@ -103,7 +105,6 @@
 	plane = GAME_PLANE
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
-	turf_loc_check = FALSE
 
 	dryname = "rotting gibs"
 	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
@@ -169,7 +170,7 @@
 
 /obj/effect/decal/cleanable/blood/gibs/proc/spread_movement_effects(datum/move_loop/has_target/source)
 	SIGNAL_HANDLER
-	if(isclosedturf(loc) || (isgroundlessturf(loc) && !SSmapping.get_turf_below(loc)))
+	if(NeverShouldHaveComeHere(loc))
 		return
 	new /obj/effect/decal/cleanable/blood/splatter(loc, streak_diseases)
 

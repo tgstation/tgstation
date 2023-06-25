@@ -224,6 +224,9 @@
 ///called when getting the item's exact ratio for cargo's profit, without selling the item.
 #define COMSIG_ITEM_SPLIT_PROFIT_DRY "item_split_profits_dry"
 
+/// Called on component/uplink/OnAttackBy(..)
+#define COMSIG_ITEM_ATTEMPT_TC_REIMBURSE "item_attempt_tc_reimburse"
+
 // /obj/item/clothing signals
 
 ///from [/mob/living/carbon/human/Move]: ()

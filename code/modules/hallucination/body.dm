@@ -99,7 +99,7 @@
 
 /datum/hallucination/body/staticguy/queue_cleanup()
 	RegisterSignal(hallucinator, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	del_timerid = QDEL_IN(src, rand(2 MINUTES, 3 MINUTES))
+	del_timerid = QDEL_IN_STOPPABLE(src, rand(2 MINUTES, 3 MINUTES))
 	return TRUE
 
 /// Signal proc for [COMSIG_MOVABLE_MOVED] - if we move out of view of the hallucination, it disappears, how spooky
@@ -110,7 +110,7 @@
 	if(shown_body.loc == hallucinator.loc)
 		animate(shown_body, alpha = 0, time = 0.5 SECONDS)
 		deltimer(del_timerid)
-		del_timerid = QDEL_IN(src, 0.6 SECONDS)
+		del_timerid = QDEL_IN_STOPPABLE(src, 0.6 SECONDS)
 		return
 
 	// Staying in view will do nothing
