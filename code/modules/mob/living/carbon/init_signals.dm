@@ -2,12 +2,17 @@
 /mob/living/carbon/register_init_signals()
 	. = ..()
 
+	//Traits that register add and remove
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_AGENDER), PROC_REF(on_agender_trait_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AGENDER), PROC_REF(on_agender_trait_loss))
+
+	//Traits that register add only
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(on_nobreath_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_LIVERLESS_METABOLISM), PROC_REF(on_liverless_metabolism_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_VIRUSIMMUNE), PROC_REF(on_virusimmune_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_TOXIMMUNE), PROC_REF(on_toximmune_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GENELESS), PROC_REF(on_geneless_trait_gain))
+
 
 /**
  * On gain of TRAIT_AGENDER
@@ -18,6 +23,17 @@
 	SIGNAL_HANDLER
 
 	gender = PLURAL
+
+/**
+ * On removal of TRAIT_AGENDER
+ *
+ * This will make the mob get it's gender set to whatever the DNA says it should be.
+ */
+/mob/living/carbon/proc/on_agender_trait_loss(datum/source)
+	SIGNAL_HANDLER
+
+	//updates our gender to be whatever our DNA wants it to be
+	gender = dna?.deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), 3) || pick(MALE, FEMALE)
 
 /**
  * On gain of TRAIT_NOBREATH
