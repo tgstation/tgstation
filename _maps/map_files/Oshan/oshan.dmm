@@ -2240,7 +2240,10 @@
 "cqw" = (
 /obj/machinery/newscaster/directional/north,
 /obj/structure/dresser,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "cqL" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -2981,7 +2984,10 @@
 /obj/machinery/airalarm/directional/south,
 /obj/item/clothing/mask/cigarette/pipe,
 /obj/item/clothing/mask/fakemoustache,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "dik" = (
 /obj/effect/turf_decal/stripes,
@@ -3171,7 +3177,10 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/theatre,
 /obj/structure/cable,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "dpI" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -4772,7 +4781,10 @@
 	pixel_y = 12
 	},
 /obj/item/toy/dummy,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "eYH" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
@@ -5010,7 +5022,10 @@
 "fos" = (
 /obj/effect/decal/cleanable/confetti,
 /obj/machinery/vending/autodrobe,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "foG" = (
 /obj/machinery/light/directional/north,
@@ -5097,7 +5112,10 @@
 "frv" = (
 /obj/effect/decal/cleanable/confetti,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "fso" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
@@ -9381,7 +9399,10 @@
 "jPs" = (
 /obj/effect/decal/cleanable/confetti,
 /obj/effect/landmark/start/clown,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "jPB" = (
 /obj/structure/cable,
@@ -9493,6 +9514,10 @@
 "jWt" = (
 /obj/machinery/ocean_elevator{
 	elevator_id = "mineshaft"
+	},
+/obj/machinery/button/sea_elevator{
+	pixel_y = -32;
+	id = "mineshaft"
 	},
 /turf/open/floor/elevator_shaft{
 	dir = 8
@@ -9990,7 +10015,10 @@
 "kAE" = (
 /obj/machinery/duct/industrial/waste,
 /obj/structure/cable,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "kBt" = (
 /obj/machinery/door/airlock/public/glass{
@@ -10093,7 +10121,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "kGz" = (
 /obj/effect/landmark/start/chaplain,
@@ -10497,6 +10528,10 @@
 /obj/machinery/ocean_elevator{
 	elevator_id = "prison"
 	},
+/obj/machinery/button/sea_elevator{
+	pixel_y = 32;
+	id = "prison"
+	},
 /turf/open/floor/elevator_shaft,
 /area/station/security/office)
 "ldI" = (
@@ -10893,7 +10928,10 @@
 /turf/open/floor/carpet/neon/simple/black/nodots,
 /area/station/command/bridge)
 "lyY" = (
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "lzc" = (
 /turf/closed/wall,
@@ -10989,7 +11027,10 @@
 /obj/item/clothing/mask/animal/pig,
 /obj/item/bikehorn,
 /obj/machinery/light/directional/south,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "lIE" = (
 /obj/effect/spawner/random/entertainment/arcade,
@@ -11165,7 +11206,10 @@
 "lRV" = (
 /obj/structure/bed/dogbed,
 /mob/living/basic/chicken/clown,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "lSj" = (
 /obj/machinery/conveyor/auto{
@@ -11202,7 +11246,10 @@
 /area/station/commons/vacant_room/office)
 "lSK" = (
 /obj/machinery/light/directional/east,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "lSZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -12095,7 +12142,10 @@
 /area/station/commons/vacant_room/office)
 "mVu" = (
 /obj/effect/landmark/start/clown,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "mVL" = (
 /obj/structure/cable,
@@ -13403,7 +13453,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "omI" = (
 /obj/effect/decal/cleanable/ash,
@@ -14901,7 +14954,10 @@
 /area/station/science/robotics/mechbay)
 "qdd" = (
 /obj/machinery/duct/industrial/waste,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "qdG" = (
 /obj/machinery/duct/industrial/waste,
@@ -18054,7 +18110,10 @@
 /area/station/medical/surgery/theatre)
 "tBV" = (
 /obj/structure/cable,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "tCc" = (
 /obj/effect/mapping_helpers/airlock/access/all/medical/virology,
@@ -18744,7 +18803,10 @@
 /obj/structure/closet/crate/wooden/toy,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "unc" = (
 /obj/structure/table,
@@ -21235,7 +21297,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/eighties/red,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
 /area/station/service/theater)
 "xaz" = (
 /obj/effect/landmark/start/atmospheric_technician,

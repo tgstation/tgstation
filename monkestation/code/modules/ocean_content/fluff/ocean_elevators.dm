@@ -2,6 +2,9 @@
 /// Why we have them detached? we use a single image as the ocean overlay and this can't be used with plane cube
 /// as we need to provide an offset atom which can't be done with a single one
 
+///this is an array that sorts elevators by id and if they are up or down
+GLOBAL_LIST_INIT(sea_elevator_list_station, list())
+GLOBAL_LIST_INIT(sea_elevator_list_trench, list())
 
 /obj/machinery/ocean_elevator
 	name = "ocean elevator"
@@ -13,8 +16,6 @@
 
 	max_integrity = 7500 /// holy fuck these things are strong they could survive a nuke
 
-	///this is an array that sorts elevators by id and if they are up or down
-	var/static/list/elevator_list = list()
 	///the id to use for sorting and activation
 	var/elevator_id = "generic"
 	///elevator state for trench up means blocked, and for station level down means fall
@@ -25,10 +26,77 @@
 
 /obj/machinery/ocean_elevator/Initialize(mapload)
 	. = ..()
-	var/second_tag = "Station"
+	if(!GLOB.sea_elevator_list_station[elevator_id])
+		GLOB.sea_elevator_list_station[elevator_id] = list()
+	if(!GLOB.sea_elevator_list_trench[elevator_id])
+		GLOB.sea_elevator_list_trench[elevator_id] = list()
+
 	if(trenched)
-		second_tag = "Trench"
-	elevator_list[elevator_id][second_tag] += src
+		GLOB.sea_elevator_list_trench[elevator_id] += src
+	else
+		GLOB.sea_elevator_list_station[elevator_id] += src
+
+
+/obj/machinery/ocean_elevator/Destroy()
+	. = ..()
+	var/obj/machinery/ocean_elevator/linked_elevator
+	var/turf/returned_turf
+	if(trenched)
+		GLOB.sea_elevator_list_trench -= src
+		returned_turf = get_turf(locate(x, y, SSmapping.levels_by_trait(ZTRAIT_STATION)[1]))
+		linked_elevator = locate(/obj/machinery/ocean_elevator) in returned_turf.contents
+	else
+		GLOB.sea_elevator_list_station -= src
+		returned_turf = get_turf(locate(x, y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1]))
+		linked_elevator = locate(/obj/machinery/ocean_elevator) in returned_turf.contents
+	if(linked_elevator)
+		qdel(linked_elevator)
+
+///these two are seperate procs for snowflake effects
+/obj/machinery/ocean_elevator/proc/going_down()
+	elevator_up = FALSE
+	if(trenched)
+		return
+	var/turf/parent_turf = get_turf(src)
+	for(var/atom/movable/listed_atom in parent_turf)
+		if(listed_atom.anchored)
+			continue
+		var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
+		listed_atom.forceMove(turf)
+
+/obj/machinery/ocean_elevator/proc/going_up()
+	elevator_up = TRUE
+	if(!trenched)
+		return
+	var/turf/parent_turf = get_turf(src)
+	for(var/atom/movable/listed_atom in parent_turf)
+		if(listed_atom.anchored)
+			continue
+		var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_STATION)[1])
+		listed_atom.forceMove(turf)
+
+/obj/machinery/button/sea_elevator
+	name = "sea elevator button control"
+	desc = "a button to control the state of the sea elevators"
+
+/obj/machinery/button/sea_elevator/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(!length(GLOB.sea_elevator_list_station[id]))
+		return
+	///we only need to iterate over the station levels as we just loacte the one below it to mirror
+	for(var/obj/machinery/ocean_elevator/listed_elevator as anything in GLOB.sea_elevator_list_station[id])
+		if(!istype(listed_elevator)) /// your not suppose to be here
+			return
+		var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
+		var/obj/machinery/ocean_elevator/paired_elevator = locate(/obj/machinery/ocean_elevator) in turf.contents
+		if(!paired_elevator)
+			return
+		if(listed_elevator.elevator_up)
+			listed_elevator.going_down()
+			paired_elevator.going_down()
+		else
+			listed_elevator.going_up()
+			paired_elevator.going_up()
 
 /turf/open/floor/elevator_shaft
 	name = "elevator shaft"
@@ -37,10 +105,14 @@
 	icon = 'goon/icons/turf/floors.dmi'
 	icon_state = "moon_shaft"
 
+	overfloor_placed = FALSE
+
 
 /turf/open/floor/elevator_shaft/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	var/obj/machinery/ocean_elevator/located_elevator = locate(/obj/machinery/ocean_elevator) in CONTENTS_CHANGE_ID
+	if(arrived.anchored)
+		return
+	var/obj/machinery/ocean_elevator/located_elevator = locate(/obj/machinery/ocean_elevator) in contents
 
 	if(!located_elevator || !located_elevator?.elevator_up)
 		var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])

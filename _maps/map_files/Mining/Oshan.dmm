@@ -506,7 +506,8 @@
 /area/station/security/prison)
 "yV" = (
 /obj/machinery/ocean_elevator{
-	elevator_id = "prison"
+	elevator_id = "prison";
+	trenched = 1
 	},
 /turf/open/floor/engine,
 /area/station/security/prison/visit)
@@ -694,7 +695,8 @@
 /area/station/security/prison/visit)
 "GU" = (
 /obj/machinery/ocean_elevator{
-	elevator_id = "mineshaft"
+	elevator_id = "mineshaft";
+	trenched = 1
 	},
 /turf/open/floor/engine,
 /area/mine/production)
@@ -840,6 +842,17 @@
 /obj/structure/rack,
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
+"OK" = (
+/obj/machinery/button/sea_elevator{
+	pixel_y = 32;
+	id = "prison"
+	},
+/obj/machinery/ocean_elevator{
+	elevator_id = "prison";
+	trenched = 1
+	},
+/turf/open/floor/engine,
+/area/station/security/prison/visit)
 "OX" = (
 /obj/structure/chair/stool,
 /turf/open/floor/iron/white,
@@ -861,6 +874,17 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
+"Qx" = (
+/obj/machinery/button/sea_elevator{
+	pixel_y = 32;
+	id = "mineshaft"
+	},
+/obj/machinery/ocean_elevator{
+	elevator_id = "mineshaft";
+	trenched = 1
+	},
+/turf/open/floor/engine,
+/area/mine/production)
 "QE" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
@@ -24523,7 +24547,7 @@ CN
 CN
 CN
 Jq
-GU
+Qx
 GU
 nW
 nW
@@ -31004,7 +31028,7 @@ qu
 qu
 qu
 CA
-yV
+OK
 yV
 eZ
 CA
