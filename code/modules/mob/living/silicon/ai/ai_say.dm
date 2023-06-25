@@ -133,7 +133,7 @@
 	var/list/players = list()
 	for(var/mob/player_mob in GLOB.player_list)
 		var/turf/T = get_turf(player_mob)
-		if(T.z == z_level)
+		if(T.z == src.z)
 			players += player_mob
 	minor_announce(capitalize(message), "[name] announces:", players = players, sound_override = TRUE)
 
