@@ -4,6 +4,7 @@
 		The body must still be able to sustain life."
 	requires_bodypart_type = NONE
 	possible_locs = list(BODY_ZONE_HEAD)
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_MORBID_CURIOSITY
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
