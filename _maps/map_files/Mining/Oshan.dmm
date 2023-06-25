@@ -505,6 +505,9 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "yV" = (
+/obj/machinery/ocean_elevator{
+	elevator_id = "prison"
+	},
 /turf/open/floor/engine,
 /area/station/security/prison/visit)
 "zc" = (
@@ -689,6 +692,12 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/plating,
 /area/station/security/prison/visit)
+"GU" = (
+/obj/machinery/ocean_elevator{
+	elevator_id = "mineshaft"
+	},
+/turf/open/floor/engine,
+/area/mine/production)
 "Hc" = (
 /obj/machinery/door/airlock{
 	name = "Prison Showers"
@@ -24514,8 +24523,8 @@ CN
 CN
 CN
 Jq
-Hg
-Hg
+GU
+GU
 nW
 nW
 nW
@@ -24771,8 +24780,8 @@ CN
 CN
 CN
 Jq
-Hg
-Hg
+GU
+GU
 nW
 nW
 nW
@@ -30997,7 +31006,7 @@ qu
 CA
 yV
 yV
-yV
+eZ
 CA
 CA
 VN
@@ -31254,7 +31263,7 @@ qu
 CA
 yV
 yV
-yV
+eZ
 CA
 qu
 qu

@@ -3419,10 +3419,12 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "dDy" = (
-/obj/effect/turf_decal/stripes{
+/obj/machinery/ocean_elevator{
+	elevator_id = "prison"
+	},
+/turf/open/floor/elevator_shaft{
 	dir = 8
 	},
-/turf/open/floor/engine,
 /area/station/security/office)
 "dDX" = (
 /obj/structure/cable,
@@ -5010,6 +5012,10 @@
 /obj/machinery/vending/autodrobe,
 /turf/open/floor/eighties/red,
 /area/station/service/theater)
+"foG" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/storage/emergency/port)
 "foJ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -5739,6 +5745,14 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"gbv" = (
+/obj/machinery/ocean_elevator{
+	elevator_id = "mineshaft"
+	},
+/turf/open/floor/elevator_shaft{
+	dir = 1
+	},
+/area/station/cargo/miningoffice)
 "gbP" = (
 /obj/machinery/light/directional/east,
 /obj/structure/disposalpipe/segment{
@@ -6277,6 +6291,7 @@
 "gEe" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/all/service/general,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/commons/storage/emergency/port)
 "gEh" = (
@@ -9475,6 +9490,14 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/station/command/heads_quarters/captain/private)
+"jWt" = (
+/obj/machinery/ocean_elevator{
+	elevator_id = "mineshaft"
+	},
+/turf/open/floor/elevator_shaft{
+	dir = 8
+	},
+/area/station/cargo/miningoffice)
 "jXk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -10359,6 +10382,10 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"kWk" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/security/office)
 "kXk" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -10466,6 +10493,12 @@
 /obj/effect/turf_decal/trimline/brown/warning,
 /turf/open/floor/iron,
 /area/station/medical/medbay/central)
+"ldm" = (
+/obj/machinery/ocean_elevator{
+	elevator_id = "prison"
+	},
+/turf/open/floor/elevator_shaft,
+/area/station/security/office)
 "ldI" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/machinery/light/directional/north,
@@ -10499,6 +10532,10 @@
 /obj/machinery/duct/industrial/waste,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"lfb" = (
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/bar/backroom)
 "lfy" = (
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/machinery/door/airlock/maintenance,
@@ -10866,6 +10903,11 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
+"lzQ" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/commons/storage/emergency/port)
 "lAe" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Storage Room"
@@ -14613,6 +14655,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/genetics)
+"pLt" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/commons/storage/emergency/port)
 "pLF" = (
 /obj/effect/spawner/structure/window,
 /obj/structure/cable,
@@ -15816,6 +15862,14 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/security/office)
+"rfw" = (
+/obj/machinery/ocean_elevator{
+	elevator_id = "prison"
+	},
+/turf/open/floor/elevator_shaft{
+	dir = 4
+	},
+/area/station/security/office)
 "rgo" = (
 /obj/structure/cable,
 /obj/structure/closet/secure_closet/security/sec,
@@ -15957,6 +16011,14 @@
 "rou" = (
 /turf/closed/wall/r_wall,
 /area/station/medical/surgery/aft)
+"row" = (
+/obj/machinery/ocean_elevator{
+	elevator_id = "mineshaft"
+	},
+/turf/open/floor/elevator_shaft{
+	dir = 4
+	},
+/area/station/cargo/miningoffice)
 "rox" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -17783,6 +17845,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"tnM" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/commons/storage/emergency/port)
 "toa" = (
 /obj/item/bikehorn/rubberducky/plasticducky,
 /turf/open/floor/plating/ocean,
@@ -18549,6 +18615,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"uev" = (
+/obj/structure/table,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "uez" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron,
@@ -19526,6 +19597,7 @@
 /area/station/service/hydroponics)
 "vmB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
 "vnw" = (
@@ -20086,6 +20158,14 @@
 /obj/item/storage/box/disks_nanite,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
+"vRb" = (
+/obj/machinery/ocean_elevator{
+	elevator_id = "prison"
+	},
+/turf/open/floor/elevator_shaft{
+	dir = 1
+	},
+/area/station/security/office)
 "vRp" = (
 /obj/machinery/shower/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -21830,6 +21910,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"xMS" = (
+/obj/machinery/ocean_elevator{
+	elevator_id = "mineshaft"
+	},
+/turf/open/floor/elevator_shaft,
+/area/station/cargo/miningoffice)
 "xNe" = (
 /obj/structure/cable,
 /obj/machinery/duct/industrial/waste,
@@ -21944,6 +22030,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/storage/emergency/port)
 "xUd" = (
@@ -33001,7 +33088,7 @@ meJ
 meJ
 kpD
 kpD
-hLd
+foG
 hLd
 hLd
 hLd
@@ -34290,7 +34377,7 @@ nVV
 nVV
 fad
 hLd
-hLd
+tnM
 oRY
 oWO
 oWO
@@ -34546,11 +34633,11 @@ xUa
 hLd
 hLd
 hLd
-hLd
-hLd
+lzQ
+pLt
 gEe
-mAn
-mAn
+lfb
+lfb
 ucs
 uHa
 bVo
@@ -34807,7 +34894,7 @@ vrw
 vrw
 vrw
 gpo
-mAn
+lfb
 ucs
 kbi
 toS
@@ -35064,7 +35151,7 @@ nTV
 jnW
 vrw
 ksO
-mAn
+lfb
 npn
 fpq
 toS
@@ -35321,7 +35408,7 @@ dwb
 nzU
 vrw
 ovf
-mAn
+lfb
 npn
 uHa
 nNw
@@ -35835,7 +35922,7 @@ dwb
 nzU
 vrw
 gTM
-mAn
+lfb
 bAX
 toS
 toS
@@ -45605,7 +45692,7 @@ mIK
 liB
 rSO
 bdy
-bdy
+uev
 qRY
 meJ
 meJ
@@ -45861,8 +45948,8 @@ dGk
 jzj
 itp
 itp
-dGk
-dGk
+xMS
+jWt
 qRY
 meJ
 meJ
@@ -46118,8 +46205,8 @@ dGk
 jzj
 itp
 itp
-dGk
-dGk
+gbv
+row
 qRY
 meJ
 meJ
@@ -51059,7 +51146,7 @@ jwg
 ajQ
 vih
 vih
-vih
+kWk
 ajQ
 ajQ
 meJ
@@ -52342,9 +52429,9 @@ vLh
 vLh
 lVR
 ajQ
+ldm
 dDy
-dDy
-dDy
+vih
 xvQ
 ajQ
 ajQ
@@ -52599,9 +52686,9 @@ vLh
 vLh
 lVR
 ajQ
-hmh
-hmh
-hmh
+vRb
+rfw
+kWk
 ajQ
 ajQ
 meJ
