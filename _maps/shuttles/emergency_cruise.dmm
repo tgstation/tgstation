@@ -123,6 +123,10 @@
 "dS" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/chair/sofa/right,
+/obj/item/bedsheet/patriot{
+	pixel_y = 3;
+	pixel_x = 6
+	},
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/brig)
 "dV" = (
@@ -292,6 +296,8 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/structure/bed/pod,
+/obj/item/bedsheet/patriot,
+/obj/item/pillow/clown,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "iN" = (
@@ -982,6 +988,7 @@
 /area/shuttle/escape)
 "xi" = (
 /obj/structure/chair/sofa/middle,
+/obj/item/pillow/clown,
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/brig)
 "xj" = (
@@ -1151,6 +1158,7 @@
 /obj/structure/chair/sofa/left{
 	dir = 8
 	},
+/obj/item/pillow/clown,
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/brig)
 "BW" = (
@@ -1818,6 +1826,7 @@
 /obj/item/clothing/suit/space/freedom,
 /obj/item/clothing/head/helmet/space/freedom,
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/bedsheet/patriot,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Qu" = (
