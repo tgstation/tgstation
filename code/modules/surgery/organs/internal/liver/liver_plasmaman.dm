@@ -7,11 +7,12 @@
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
 	icon_state = "liver-p"
 	status = ORGAN_MINERAL
+	organ_traits = list(TRAIT_PLASMA_LOVER_METABOLISM)
 
 /obj/item/organ/internal/liver/bone/plasmaman/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
 	. = ..()
 	//parent returned COMSIG_MOB_STOP_REAGENT_CHECK or we are failing
-	if(. || (organ_flags & ORGAN_FAILING))
+	if((. & COMSIG_MOB_STOP_REAGENT_CHECK) || (organ_flags & ORGAN_FAILING))
 		return
 	// plasmamen use plasma to reform their bones or whatever
 	if(istype(chem, /datum/reagent/toxin/plasma) || istype(chem, /datum/reagent/toxin/hot_ice))
