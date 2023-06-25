@@ -18,7 +18,7 @@
 
 /obj/item/ammo_box/magazine/internal/bow/holy
 	name = "divine bowstring"
-	ammo_type = /obj/item/ammo_casing/caseless/arrow/holy
+	ammo_type = /obj/item/ammo_casing/arrow/holy
 
 /obj/item/gun/ballistic/bow/divine/Initialize(mapload)
 	. = ..()
