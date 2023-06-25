@@ -491,7 +491,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/wood/tile,
+/turf/open/floor/noslip,
 /area/shuttle/escape)
 "lA" = (
 /obj/machinery/door/airlock/hatch,
@@ -882,7 +882,7 @@
 /obj/machinery/pool_pump{
 	pixel_y = 15
 	},
-/turf/open/floor/wood/tile,
+/turf/open/floor/noslip,
 /area/shuttle/escape)
 "vI" = (
 /obj/structure/table,
@@ -1085,7 +1085,7 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "Al" = (
-/turf/open/floor/wood/parquet,
+/turf/open/floor/noslip,
 /area/shuttle/escape)
 "Aq" = (
 /obj/item/kirbyplants/photosynthetic,
@@ -1521,12 +1521,12 @@
 /obj/structure/sign/poster/contraband/donut_corp{
 	pixel_y = 32
 	},
-/turf/open/floor/wood/tile,
+/turf/open/floor/noslip,
 /area/shuttle/escape)
 "Jk" = (
 /obj/item/storage/box/fireworks/dangerous,
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/wood/tile,
+/turf/open/floor/noslip,
 /area/shuttle/escape)
 "Jm" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell,
@@ -1745,6 +1745,10 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape)
+"NN" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/noslip,
 /area/shuttle/escape)
 "Od" = (
 /obj/item/knife/kitchen,
@@ -2556,9 +2560,9 @@ sk
 kn
 YZ
 IX
-xf
-nU
-xf
+Al
+NN
+Al
 xf
 xf
 xf
@@ -2650,7 +2654,7 @@ UF
 Iu
 Iu
 AQ
-xf
+Al
 xf
 OJ
 OJ
@@ -2696,7 +2700,7 @@ UF
 Iu
 VL
 Iu
-xf
+Al
 xf
 OJ
 ni
@@ -2742,7 +2746,7 @@ UF
 Iu
 Iu
 Iu
-xf
+Al
 xf
 OJ
 ni
@@ -2834,7 +2838,7 @@ UF
 mS
 mS
 UN
-xf
+Al
 xf
 xf
 xf
@@ -2878,9 +2882,9 @@ sk
 Bf
 YZ
 lk
-nU
+NN
 Jk
-xf
+Al
 xf
 xf
 xf
