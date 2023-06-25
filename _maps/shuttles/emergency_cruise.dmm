@@ -2203,6 +2203,7 @@
 /obj/machinery/door/window/left/directional/north{
 	name = "shower"
 	},
+/obj/structure/drain,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Yv" = (
