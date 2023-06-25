@@ -175,10 +175,10 @@
 /area/shuttle/escape)
 "eI" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/effect/turf_decal/trimline/red/line,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/food/burger/rat,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "eM" = (
@@ -191,8 +191,6 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "eN" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/structure/toilet/secret{
 	dir = 1
 	},
@@ -200,6 +198,7 @@
 	name = "restroom"
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "fr" = (
@@ -282,11 +281,11 @@
 /area/shuttle/escape)
 "if" = (
 /obj/machinery/airalarm/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/structure/sink/directional/north,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 10
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "iI" = (
@@ -788,7 +787,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "tB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "tF" = (
@@ -879,10 +878,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "vD" = (
-/obj/machinery/pool_pump{
-	pixel_y = 15
-	},
-/turf/open/floor/noslip,
+/obj/machinery/nuclearbomb/beer,
+/turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "vI" = (
 /obj/structure/table,
@@ -1159,7 +1156,7 @@
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Cn" = (
@@ -1221,7 +1218,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Di" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "Dn" = (
@@ -1324,6 +1321,12 @@
 	name = "Doctor Patches"
 	},
 /turf/open/floor/plastic,
+/area/shuttle/escape)
+"EM" = (
+/obj/machinery/pool_pump{
+	pixel_y = 15
+	},
+/turf/open/floor/noslip,
 /area/shuttle/escape)
 "ES" = (
 /obj/structure/rack,
@@ -1586,6 +1589,10 @@
 	dir = 4
 	},
 /area/shuttle/escape)
+"Kx" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/noslip,
+/area/shuttle/escape)
 "KB" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
@@ -1641,6 +1648,7 @@
 /obj/effect/turf_decal/trimline/blue/corner,
 /obj/structure/sign/departments/medbay/alt/directional/east,
 /obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "LM" = (
@@ -1745,10 +1753,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/shuttle/escape)
-"NN" = (
-/obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/noslip,
 /area/shuttle/escape)
 "Od" = (
 /obj/item/knife/kitchen,
@@ -2172,7 +2176,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Yv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape/brig)
 "YA" = (
@@ -2358,8 +2362,8 @@ cf
 cf
 cf
 cf
-tB
-tB
+cf
+cf
 tB
 cf
 cf
@@ -2405,7 +2409,7 @@ ri
 ri
 nT
 Cj
-cf
+tB
 LA
 IG
 IG
@@ -2561,7 +2565,7 @@ kn
 YZ
 IX
 Al
-NN
+Kx
 Al
 xf
 xf
@@ -2792,7 +2796,7 @@ UF
 Iu
 Iu
 AQ
-vD
+EM
 xf
 OJ
 OJ
@@ -2882,7 +2886,7 @@ sk
 Bf
 YZ
 lk
-NN
+Kx
 Jk
 Al
 xf
@@ -3073,7 +3077,7 @@ xf
 tF
 xT
 xf
-xf
+vD
 uV
 uV
 kd
