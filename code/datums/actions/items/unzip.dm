@@ -1,6 +1,6 @@
 /datum/action/item_action/zipper
-	name = "Un-Zip Duffel"
-	desc = "Un-Zip the equipped duffelbag so you can root around in it"
+	name = "Unzip Duffel"
+	desc = "Unzip your equipped duffelbag so you can access its contents."
 
 /datum/action/item_action/zipper/New(Target)
 	. = ..()
