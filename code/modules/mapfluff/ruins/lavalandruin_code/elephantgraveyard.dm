@@ -73,7 +73,7 @@
 	if(prob(10))
 		new /obj/item/stack/ore/iron(src, 1)
 		new /obj/item/stack/ore/glass(src, 1)
-		new /obj/effect/decal/remains/human/grave(src, 1)
+		new /obj/effect/decal/remains/human(src, 1)
 	else
 		new /obj/item/stack/sheet/bone(src, 1)
 
@@ -166,7 +166,7 @@
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
-	new /obj/effect/decal/remains/human/grave(src)
+	new /obj/effect/decal/remains/human(src)
 	switch(rand(1,8))
 		if(1)
 			new /obj/item/coin/gold(src)
@@ -277,9 +277,6 @@
 	..()
 	new /obj/effect/decal/cleanable/blood/gibs/old(src)
 	new /obj/item/book/granter/crafting_recipe/boneyard_notes(src)
-
-/obj/effect/decal/remains/human/grave
-	turf_loc_check = FALSE
 
 //***Fluff items for lore/intrigue
 /obj/item/paper/crumpled/muddy/fluff/elephant_graveyard

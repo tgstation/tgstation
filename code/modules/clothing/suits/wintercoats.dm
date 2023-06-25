@@ -209,6 +209,7 @@
 	armor_type = /datum/armor/wintercoat_hop
 	allowed = list(
 		/obj/item/melee/baton/telescopic,
+		/obj/item/stamp,
 	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hop
 
@@ -588,7 +589,10 @@
 	icon_state = "coatcargo"
 	inhand_icon_state = "coatcargo"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/cargo
-	allowed = list(/obj/item/storage/bag/mail)
+	allowed = list(
+		/obj/item/storage/bag/mail,
+		/obj/item/stamp,
+	)
 
 /obj/item/clothing/head/hooded/winterhood/cargo
 	desc = "A grey hood for a winter coat."

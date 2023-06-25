@@ -1,0 +1,5 @@
+author: "IndieanaJones"
+delete-after: True
+changes:
+  - balance: "Xenos have been rebalanced, removing their hardstuns on their disarm and neurotoxin, along with a slew of other changes. Xenos have received buffs to their more unique abilities in return."
+  - bugfix: "Fixed simplemobs ignoring xenomorph's melee damage values when being attacked by them."
