@@ -154,6 +154,7 @@
 	dir = 4
 	},
 /obj/item/storage/belt/utility/full/powertools,
+/obj/machinery/keycard_auth/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "en" = (
@@ -206,6 +207,20 @@
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/condiment/milk,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/meat/crab,
+/obj/item/food/meat/crab,
+/obj/item/food/meat/cutlet/bear,
+/obj/item/food/meat/cutlet/chicken,
+/obj/item/food/meat/cutlet/penguin,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab/bear,
+/obj/item/food/meat/slab/corgi,
+/obj/item/food/meat/slab/corgi,
+/obj/item/food/meat/slab/corgi,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/shuttle/escape)
 "ft" = (
@@ -1143,6 +1158,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
+/obj/machinery/keycard_auth/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Bv" = (
@@ -1784,6 +1800,8 @@
 "Od" = (
 /obj/item/knife/kitchen,
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/food/bread/plain,
+/obj/item/food/bread/plain,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/shuttle/escape)
 "Oh" = (
