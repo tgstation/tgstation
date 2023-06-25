@@ -124,3 +124,5 @@
 /datum/component/jousting/proc/reset_charge()
 	current_direction = initial(current_direction)
 	current_tile_charge = initial(current_tile_charge)
+
+#undef MOVEMENT_RESET_COOLDOWN_TIME
