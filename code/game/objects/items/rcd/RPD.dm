@@ -269,6 +269,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(target.pipe_color && target.piping_layer)
 		paint_color = GLOB.pipe_color_name[target.pipe_color]
 		piping_layer = target.piping_layer
+		balloon_alert(user, "color/layer copied")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pipe_dispenser/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
