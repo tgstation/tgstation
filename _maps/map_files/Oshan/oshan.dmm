@@ -986,6 +986,16 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"bai" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	name = "Prison Lockdown Shutters";
+	id = "prisonshutters"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/security/brig)
 "bak" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/table/wood,
@@ -2219,7 +2229,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/delivery_chute{
-	dir = 1;
+	dir = 4;
 	name = "Prisoner Transfer"
 	},
 /turf/open/floor/iron,
@@ -17011,7 +17021,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/delivery_chute{
-	dir = 1;
+	dir = 8;
 	name = "Prisoner Transfer"
 	},
 /turf/open/floor/iron,
@@ -17824,12 +17834,11 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/lawoffice)
 "tlb" = (
-/obj/effect/turf_decal/tile/dark_red/fourcorners,
 /obj/structure/cable,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/station/security/brig)
 "tln" = (
 /obj/machinery/air_sensor/mix_tank,
@@ -46831,7 +46840,7 @@ nRt
 mXo
 jKv
 cpi
-wPn
+bai
 tlb
 fye
 jCj
@@ -47859,7 +47868,7 @@ oxS
 xLV
 daV
 slX
-wPn
+bai
 tlb
 cGD
 fbW
