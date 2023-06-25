@@ -101,10 +101,10 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "dg" = (
-/obj/machinery/vending/boozeomat,
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 8
 	},
+/obj/machinery/vending/liberationstation,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "dD" = (
@@ -290,6 +290,10 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
+"iB" = (
+/obj/machinery/vending/toyliberationstation,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
 "iI" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -908,6 +912,10 @@
 /obj/effect/turf_decal/trimline/dark_blue/warning{
 	dir = 9
 	},
+/obj/machinery/door/poddoor/preopen{
+	id = "escape_cockpit_blast";
+	name = "Cockpit Blast Door"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "wf" = (
@@ -924,6 +932,13 @@
 "wK" = (
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
+"wP" = (
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 4
+	},
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
 "wT" = (
 /obj/item/reagent_containers/cup/beaker/cryoxadone{
 	pixel_x = -6;
@@ -1443,6 +1458,10 @@
 /obj/effect/turf_decal/trimline/dark_blue/warning{
 	dir = 5
 	},
+/obj/machinery/door/poddoor/preopen{
+	id = "escape_cockpit_blast";
+	name = "Cockpit Blast Door"
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "HT" = (
@@ -1515,6 +1534,14 @@
 	pixel_y = 32
 	},
 /turf/open/floor/wood/tile,
+/area/shuttle/escape)
+"Ja" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/door/poddoor/preopen{
+	id = "escape_cockpit_windows";
+	name = "Cockpit Blast Door"
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "Jk" = (
 /obj/item/storage/box/fireworks/dangerous,
@@ -1607,6 +1634,7 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
 	},
+/obj/machinery/vending/toyliberationstation,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Lf" = (
@@ -1841,9 +1869,33 @@
 /area/shuttle/escape)
 "Sq" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/food/burger/superbite,
+/obj/item/food/burger/superbite{
+	layer = 4
+	},
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 4
+	},
+/obj/machinery/button/door{
+	id = "escape_cockpit_blast";
+	name = "Cockpit Airlock Blast Doors";
+	pixel_y = -3;
+	req_access = list("command");
+	pixel_x = -6
+	},
+/obj/machinery/button/door{
+	id = "escape_cockpit_windows";
+	name = "Cockpit Window Blast Doors";
+	pixel_x = -6;
+	req_access = list("command");
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_y = 2;
+	pixel_x = 11
+	},
+/obj/item/food/pie/applepie{
+	pixel_y = 7;
+	pixel_x = -7
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
@@ -2392,8 +2444,8 @@ kd
 (6,1,1) = {"
 kd
 kd
-en
-en
+Ja
+Ja
 uV
 uV
 rX
@@ -2438,7 +2490,7 @@ uV
 (7,1,1) = {"
 IQ
 uV
-en
+Ja
 xU
 FR
 yH
@@ -2528,12 +2580,12 @@ xj
 xj
 "}
 (9,1,1) = {"
-en
+Ja
 qd
 KB
 hH
 nN
-nN
+wP
 rX
 KD
 AB
@@ -2574,7 +2626,7 @@ xj
 xj
 "}
 (10,1,1) = {"
-en
+Ja
 dg
 PU
 OU
@@ -2620,7 +2672,7 @@ uV
 uV
 "}
 (11,1,1) = {"
-en
+Ja
 vq
 tx
 Gs
@@ -2666,7 +2718,7 @@ uV
 kd
 "}
 (12,1,1) = {"
-en
+Ja
 mG
 zm
 Vi
@@ -2712,7 +2764,7 @@ uV
 kd
 "}
 (13,1,1) = {"
-en
+Ja
 Sq
 ys
 bp
@@ -2758,7 +2810,7 @@ uV
 uV
 "}
 (14,1,1) = {"
-en
+Ja
 oZ
 Ho
 Xo
@@ -2852,7 +2904,7 @@ xj
 (16,1,1) = {"
 gH
 uV
-en
+Ja
 co
 uX
 qr
@@ -2898,8 +2950,8 @@ xj
 (17,1,1) = {"
 kd
 kd
-en
-en
+Ja
+Ja
 uV
 uV
 rX
@@ -3065,7 +3117,7 @@ yc
 uV
 qE
 uV
-xf
+iB
 xf
 iQ
 Rz
