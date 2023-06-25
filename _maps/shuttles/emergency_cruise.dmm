@@ -273,6 +273,12 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
+"hr" = (
+/obj/machinery/pool_pump{
+	pixel_y = 15
+	},
+/turf/open/floor/noslip,
+/area/shuttle/escape)
 "hH" = (
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 5
@@ -878,8 +884,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "vD" = (
-/obj/machinery/nuclearbomb/beer,
-/turf/open/floor/wood/tile,
+/turf/open/floor/noslip,
 /area/shuttle/escape)
 "vI" = (
 /obj/structure/table,
@@ -1082,6 +1087,7 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "Al" = (
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Aq" = (
@@ -1098,6 +1104,10 @@
 "AQ" = (
 /obj/structure/railing,
 /turf/open/floor/lowered/iron/pool,
+/area/shuttle/escape)
+"AX" = (
+/obj/machinery/nuclearbomb/beer,
+/turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "Bf" = (
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -1322,12 +1332,6 @@
 	},
 /turf/open/floor/plastic,
 /area/shuttle/escape)
-"EM" = (
-/obj/machinery/pool_pump{
-	pixel_y = 15
-	},
-/turf/open/floor/noslip,
-/area/shuttle/escape)
 "ES" = (
 /obj/structure/rack,
 /obj/item/bodybag/environmental/nanotrasen,
@@ -1364,8 +1368,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Fx" = (
-/obj/effect/mapping_helpers/airlock/access/all/admin,
 /obj/machinery/door/airlock/vault,
+/obj/effect/mapping_helpers/airlock/access/all/admin/thunderdome,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "FR" = (
@@ -1588,10 +1592,6 @@
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
-/area/shuttle/escape)
-"Kx" = (
-/obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/noslip,
 /area/shuttle/escape)
 "KB" = (
 /obj/structure/chair/comfy/shuttle{
@@ -2564,9 +2564,9 @@ sk
 kn
 YZ
 IX
+vD
 Al
-Kx
-Al
+vD
 xf
 xf
 xf
@@ -2612,7 +2612,7 @@ UF
 ZL
 ZL
 qy
-Al
+vD
 xf
 xf
 xf
@@ -2658,7 +2658,7 @@ UF
 Iu
 Iu
 AQ
-Al
+vD
 xf
 OJ
 OJ
@@ -2704,7 +2704,7 @@ UF
 Iu
 VL
 Iu
-Al
+vD
 xf
 OJ
 ni
@@ -2750,7 +2750,7 @@ UF
 Iu
 Iu
 Iu
-Al
+vD
 xf
 OJ
 ni
@@ -2796,7 +2796,7 @@ UF
 Iu
 Iu
 AQ
-EM
+hr
 xf
 OJ
 OJ
@@ -2842,7 +2842,7 @@ UF
 mS
 mS
 UN
-Al
+vD
 xf
 xf
 xf
@@ -2886,9 +2886,9 @@ sk
 Bf
 YZ
 lk
-Kx
-Jk
 Al
+Jk
+vD
 xf
 xf
 xf
@@ -3077,7 +3077,7 @@ xf
 tF
 xT
 xf
-vD
+AX
 uV
 uV
 kd
