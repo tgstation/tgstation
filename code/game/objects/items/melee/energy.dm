@@ -252,7 +252,7 @@
 /obj/item/melee/energy/sword/saber/on_transform(obj/item/source, mob/user, active)
 	. = ..()
 	if(active)
-		jousting_component = AddComponent(/datum/component/jousting)
+		jousting_component = AddComponent(/datum/component/jousting, mounted_damage_boost_per_tile = 1, mounted_knockdown_chance_per_tile = 10)
 	else
 		QDEL_NULL(jousting_component)
 

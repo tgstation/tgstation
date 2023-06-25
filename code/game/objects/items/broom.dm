@@ -20,7 +20,7 @@
 
 /obj/item/pushbroom/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/jousting)
+	AddComponent(/datum/component/jousting, mounted_damage_boost_per_tile = 0.5)
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 8, \
 		force_wielded = 12, \

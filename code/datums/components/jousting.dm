@@ -29,7 +29,7 @@
 	movement_reset_tolerance = 0.3 SECONDS,
 	mounted_damage_boost_per_tile = 2,
 	mounted_knockdown_chance_per_tile = 20,
-	mounted_knockdown_time = 20,
+	mounted_knockdown_time = 2 SECONDS,
 	max_tile_charge = 5,
 	min_tile_charge = 2,
 )
