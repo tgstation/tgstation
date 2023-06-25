@@ -2393,6 +2393,10 @@
 	icon_state = "clown_carpet"
 	},
 /area/station/service/theater)
+"cqy" = (
+/obj/machinery/rnd/production/protolathe/department/engineering,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "cqL" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
@@ -2846,6 +2850,10 @@
 /obj/structure/table/wood,
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/station/service/bar)
+"cNS" = (
+/obj/machinery/rnd/production/protolathe/department/security,
+/turf/open/floor/iron,
+/area/station/security/office)
 "cNV" = (
 /obj/structure/cable,
 /obj/structure/table,
@@ -13738,6 +13746,13 @@
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"nLj" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/rnd/production/protolathe/department/engineering,
+/turf/open/floor/iron,
+/area/station/engineering/atmos/office)
 "nLm" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
@@ -51769,7 +51784,7 @@ qqG
 lkZ
 ajQ
 sID
-sID
+cNS
 cNV
 oED
 oBp
@@ -58415,7 +58430,7 @@ fQG
 cTJ
 ojM
 vaw
-wyn
+nLj
 crk
 vaw
 wyn
@@ -63818,7 +63833,7 @@ fGy
 fGy
 nTi
 ezr
-ijr
+cqy
 iNY
 wrI
 bJi
