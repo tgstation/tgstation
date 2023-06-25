@@ -92,7 +92,7 @@ const SnowflakeOrebox = (props: { module: MechaUtility }, context) => {
   return (
     <>
       {cargo && <Box>Cargo</Box>}
-      {cargo &&
+      {cargo && (
         <Box style={{ 'margin-left': '1rem' }}>
           <div
             key={props.module.ref}
@@ -109,7 +109,7 @@ const SnowflakeOrebox = (props: { module: MechaUtility }, context) => {
             </Button>
           </div>
         </Box>
-      }
+      )}
     </>
   );
 };
