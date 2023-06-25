@@ -410,8 +410,7 @@
 
 /obj/item/storage/backpack/duffelbag/update_desc(updates)
 	. = ..()
-	var/zip_text = zipped_up ? "It's zipped up, can't get in it!" : "It's unzipped, and harder to move in."
-	desc = "A large duffel bag for holding extra things.<br>[zip_text]"
+	desc = "[initial(desc)]<br>[zipped_up ? "It's zipped up, can't get in it!" : "It's unzipped, and harder to move in."]"
 
 /obj/item/storage/backpack/duffelbag/attack_self(mob/user, modifiers)
 	if(zipped_up)
@@ -818,7 +817,7 @@
 
 /obj/item/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
-	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
+	desc = "A duffel bag containing everything a crewmember needs to support a shaft miner in the field."
 	icon_state = "duffel-explorer"
 	inhand_icon_state = "duffel-explorer"
 
