@@ -30,11 +30,9 @@ have ways of interacting with a specific mob and control it.
 	idle_behavior = /datum/idle_behavior/idle_monkey
 
 /datum/ai_controller/monkey/New(atom/new_pawn)
-	var/static/list/control_examine
-	if(!control_examine)
-		control_examine =string_assoc_list(list(
-			ORGAN_SLOT_EYES = span_monkey("eyes have a primal look in them."),
-		))
+	var/static/list/control_examine = list(
+		ORGAN_SLOT_EYES = span_monkey("eyes have a primal look in them."),
+	)
 	AddElement(/datum/element/ai_control_examine, control_examine)
 	return ..()
 
