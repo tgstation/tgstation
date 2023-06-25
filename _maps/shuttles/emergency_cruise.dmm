@@ -107,17 +107,6 @@
 /obj/machinery/vending/liberationstation,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
-"dD" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/effect/turf_decal/trimline/red/corner{
-	dir = 1;
-	pixel_y = -16
-	},
-/turf/open/floor/iron/dark/textured,
-/area/shuttle/escape/brig)
 "dN" = (
 /obj/machinery/grill,
 /turf/open/floor/iron/kitchen/diagonal,
@@ -764,12 +753,12 @@
 /area/shuttle/escape)
 "sx" = (
 /obj/effect/turf_decal/trimline/red/corner{
-	dir = 8;
-	pixel_y = 16
-	},
-/obj/effect/turf_decal/trimline/red/corner{
 	dir = 1;
 	pixel_y = -16
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8;
+	pixel_y = 16
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
@@ -1954,6 +1943,7 @@
 /obj/structure/toilet/secret{
 	dir = 8
 	},
+/obj/item/food/burger/tofu,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Tw" = (
@@ -2917,7 +2907,7 @@ qr
 rX
 jT
 sx
-dD
+ac
 Oh
 iP
 qw
