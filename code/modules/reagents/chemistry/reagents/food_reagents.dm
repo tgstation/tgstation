@@ -785,33 +785,33 @@
 	color = "#b5a213"
 	taste_description = "tingling mushroom"
 	ph = 11.2
+	metabolization_rate = REAGENTS_METABOLISM/2 //doubled when the mob starts to metabolize it.
+	self_consuming = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	penetrates_skin = ALL
-	//Lazy list of mobs affected by the luminosity of this reagent.
-	var/static/list/mobs_affected
 
-/datum/reagent/consumable/tinlux/on_mob_metabolize(mob/living/metabolizer)
-	add_reagent_light(metabolizer)
+/datum/reagent/consumable/tinlux/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+	. = ..()
+	if(!exposed_mob.reagents) // they won't process the reagent, but still benefit from its effects for a duration.
+		var/amount = round(reac_volume * clamp(1 - touch_protection, 0, 1))
+		var/duration = (amount / metabolization_rate) * SSmobs.wait
+		if(duration > 1 SECONDS)
+			exposed_mob.adjust_timed_status_effect(/datum/status_effect/tinlux_light, duration)
 
-/datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/metabolizer)
-	remove_reagent_light(metabolizer)
+/datum/reagent/consumable/tinlux/on_mob_add(mob/living/living_mob)
+	. = ..()
+	living_mob.apply_status_effect(/datum/status_effect/tinlux_light) //infinite duration
 
-/datum/reagent/consumable/tinlux/proc/on_living_holder_deletion(mob/living/source)
-	SIGNAL_HANDLER
-	remove_reagent_light(source)
+/datum/reagent/consumable/tinlux/on_mob_metabolize(mob/living/living_mob)
+	nutriment_factor = initial(nutriment_factor)
+	metabolization_rate *= 2
 
-/datum/reagent/consumable/tinlux/proc/add_reagent_light(mob/living/living_holder)
-	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = living_holder.mob_light(2)
-	LAZYSET(mobs_affected, living_holder, mob_light_obj)
-	RegisterSignal(living_holder, COMSIG_QDELETING, PROC_REF(on_living_holder_deletion))
+/datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/living_mob)
+	nutriment_factor = 0
+	metabolization_rate /= 2
 
-/datum/reagent/consumable/tinlux/proc/remove_reagent_light(mob/living/living_holder)
-	UnregisterSignal(living_holder, COMSIG_QDELETING)
-	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = LAZYACCESS(mobs_affected, living_holder)
-	LAZYREMOVE(mobs_affected, living_holder)
-	if(mob_light_obj)
-		qdel(mob_light_obj)
-
+/datum/reagent/consumable/tinlux/on_mob_delete(mob/living/living_mob)
+	. = ..()
+	living_mob.remove_status_effect(/datum/status_effect/tinlux_light)
 
 /datum/reagent/consumable/vitfro
 	name = "Vitrium Froth"
