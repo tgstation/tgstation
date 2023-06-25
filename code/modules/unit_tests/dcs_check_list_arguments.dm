@@ -19,6 +19,8 @@
 
 	//looping through every element type in the list, in turn looping through all the lists within the nested list.
 	for(var/datum/element/ele_type as anything in SSdcs.arguments_that_are_lists_by_element)
+		if(initial(eletype.element_flags) & ELEMENT_NO_LIST_UNIT_TEST) // nope
+			continue
 		var/list/ele_type_superlist = list()
 		processed_lists_by_element[ele_type] = ele_type_superlist
 

@@ -27,6 +27,8 @@
  * For when changing the position of the keys is undesiderable, like for color matrices.
  */
 #define ELEMENT_DONT_SORT_LIST_ARGS (1<<3)
+/// Elements with this flag will be ignored by the test (I would rather put some faith than have contributors stringify connect loc lists).
+#define ELEMENT_NO_LIST_UNIT_TEST (1<<4)
 
 // How multiple components of the exact same type are handled in the same datum
 /// old component is deleted (default)
