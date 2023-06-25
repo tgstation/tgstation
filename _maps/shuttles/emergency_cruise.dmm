@@ -290,10 +290,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
-"iB" = (
-/obj/machinery/vending/toyliberationstation,
-/turf/open/floor/wood/tile,
-/area/shuttle/escape)
 "iI" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -932,13 +928,6 @@
 "wK" = (
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
-"wP" = (
-/obj/effect/turf_decal/trimline/purple/line{
-	dir = 4
-	},
-/obj/machinery/vending/boozeomat,
-/turf/open/floor/iron/showroomfloor,
-/area/shuttle/escape)
 "wT" = (
 /obj/item/reagent_containers/cup/beaker/cryoxadone{
 	pixel_x = -6;
@@ -1034,6 +1023,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 4
 	},
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "yH" = (
@@ -1350,6 +1340,10 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
+"Fl" = (
+/obj/machinery/vending/toyliberationstation,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
 "Fp" = (
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/machinery/door/airlock/security/glass{
@@ -1535,14 +1529,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
-"Ja" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/door/poddoor/preopen{
-	id = "escape_cockpit_windows";
-	name = "Cockpit Blast Door"
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "Jk" = (
 /obj/item/storage/box/fireworks/dangerous,
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -1623,6 +1609,14 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
+"KG" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/door/poddoor/preopen{
+	id = "escape_cockpit_windows";
+	name = "Cockpit Blast Door"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "KH" = (
 /obj/effect/turf_decal/trimline/dark_blue/corner,
 /turf/open/floor/iron/dark/textured_large,
@@ -1825,10 +1819,20 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
+"Pt" = (
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 4
+	},
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
 "PU" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 8
 	},
+/obj/item/clothing/suit/space/freedom,
+/obj/item/clothing/head/helmet/space/freedom,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Qu" = (
@@ -2444,8 +2448,8 @@ kd
 (6,1,1) = {"
 kd
 kd
-Ja
-Ja
+KG
+KG
 uV
 uV
 rX
@@ -2490,7 +2494,7 @@ uV
 (7,1,1) = {"
 IQ
 uV
-Ja
+KG
 xU
 FR
 yH
@@ -2580,12 +2584,12 @@ xj
 xj
 "}
 (9,1,1) = {"
-Ja
+KG
 qd
 KB
 hH
 nN
-wP
+Pt
 rX
 KD
 AB
@@ -2626,7 +2630,7 @@ xj
 xj
 "}
 (10,1,1) = {"
-Ja
+KG
 dg
 PU
 OU
@@ -2672,7 +2676,7 @@ uV
 uV
 "}
 (11,1,1) = {"
-Ja
+KG
 vq
 tx
 Gs
@@ -2718,7 +2722,7 @@ uV
 kd
 "}
 (12,1,1) = {"
-Ja
+KG
 mG
 zm
 Vi
@@ -2764,7 +2768,7 @@ uV
 kd
 "}
 (13,1,1) = {"
-Ja
+KG
 Sq
 ys
 bp
@@ -2810,7 +2814,7 @@ uV
 uV
 "}
 (14,1,1) = {"
-Ja
+KG
 oZ
 Ho
 Xo
@@ -2904,7 +2908,7 @@ xj
 (16,1,1) = {"
 gH
 uV
-Ja
+KG
 co
 uX
 qr
@@ -2950,8 +2954,8 @@ xj
 (17,1,1) = {"
 kd
 kd
-Ja
-Ja
+KG
+KG
 uV
 uV
 rX
@@ -3117,7 +3121,7 @@ yc
 uV
 qE
 uV
-iB
+Fl
 xf
 iQ
 Rz
