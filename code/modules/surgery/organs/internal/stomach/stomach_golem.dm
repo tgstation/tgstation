@@ -17,10 +17,7 @@
 	RegisterSignal(owner, COMSIG_CARBON_ATTEMPT_EAT, PROC_REF(try_eating))
 	if(!ishuman(organ_owner))
 		return
-	setup_physiology(organ_owner)
-
-/// Physiology doesn't exist yet if this is added on initialisation of a golem, so we need to wait until it does
-/obj/item/organ/internal/stomach/golem/proc/setup_physiology(mob/living/carbon/human/human_owner)
+	var/mob/living/carbon/human/human_owner = organ_owner
 	human_owner.physiology?.hunger_mod *= hunger_mod
 
 /obj/item/organ/internal/stomach/golem/on_remove(mob/living/carbon/organ_owner, special)
@@ -51,9 +48,10 @@
 
 /// Slow down based on how full you are
 /obj/item/organ/internal/stomach/golem/handle_hunger(mob/living/carbon/human/human, delta_time, times_fired)
+	// the effects are all negative, so just don't run them if you have the trait
+	. = ..()
 	if(HAS_TRAIT(human, TRAIT_NOHUNGER))
 		return
-	. = ..()
 	var/hunger = (NUTRITION_LEVEL_HUNGRY - human.nutrition) / NUTRITION_LEVEL_HUNGRY // starving = 1, satisfied = 0
 	if(hunger > 0)
 		var/slowdown = LERP(min_hunger_slowdown, max_hunger_slowdown, hunger)
