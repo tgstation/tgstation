@@ -16,7 +16,7 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 	 *
 	 * Used by the dcs_check_list_arguments unit test. Doesn't exist under normal compile options.
 	 */
-	var/list/arguments_that_are_lists_by_element = list()
+	UNLINT(var/list/arguments_that_are_lists_by_element = list())
 #endif
 
 /datum/controller/subsystem/processing/dcs/Recover()
