@@ -37,7 +37,8 @@
 	if(!check_biotype_path(bane_applier, target))
 		return
 	var/atom/movable/atom_owner = bane_weapon
-	if(SEND_SIGNAL(atom_owner, COMSIG_OBJECT_PRE_BANING, target) & COMPONENT_CANCEL_BANING)
+	var/bane_cancel_check = SEND_SIGNAL(atom_owner, COMSIG_OBJECT_PRE_BANING, bane_weapon, bane_applier, target)
+	if(bane_cancel_check && COMPONENT_CANCEL_BANING)
 		return
 	return TRUE
 
