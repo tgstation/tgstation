@@ -574,6 +574,10 @@
 /obj/item/food/burger/mcguffin,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/shuttle/escape)
+"nE" = (
+/obj/structure/window/reinforced/survival_pod,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape)
 "nN" = (
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 4
@@ -1283,6 +1287,11 @@
 	dir = 1
 	},
 /area/shuttle/escape)
+"Ed" = (
+/obj/structure/bed/double/pod,
+/obj/item/bedsheet/patriot/double,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape)
 "Eg" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -1755,8 +1764,20 @@
 /turf/open/floor/iron/vaporwave,
 /area/shuttle/escape/luxury)
 "NH" = (
-/obj/structure/chair/comfy/teal{
-	dir = 8
+/obj/structure/table/wood/fancy,
+/obj/item/flashlight/flare/candle/infinite{
+	desc = "A synthetic candle that won't melt down.";
+	name = "crimson red candle";
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/food/burger/cheese{
+	pixel_x = -10;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = 10;
+	pixel_y = -4
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
@@ -3052,9 +3073,9 @@ kd
 kd
 kd
 en
-EC
-kE
-Kc
+Ed
+Bl
+nE
 cf
 cf
 cf
