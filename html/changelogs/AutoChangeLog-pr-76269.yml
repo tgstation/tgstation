@@ -1,6 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes:
-  - rscadd: "Adds a variant of the external organ manipulation surgery for robotic body parts, similar to the robotic version of the internal organ manipulation surgery. It uses the same procedure as non-head/torso prosthetic organ manipulation."
-  - rscadd: "In layman's terms, augged people can get frills, antennae, wings, tails, etc. attached to them now."
-  - qol: "The suitability of crowbars in the \"manipulate organs\" and \"manipulate features\" steps has been boosted from 55% to 100%, but only for the robotic versions of those steps. Their suitability remains 55% for organic organ manipulation."
