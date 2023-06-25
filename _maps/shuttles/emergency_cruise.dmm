@@ -834,6 +834,7 @@
 /obj/item/wrench/medical,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/screwdriver/nuke,
 /turf/open/floor/plastic,
 /area/shuttle/escape)
 "uB" = (
@@ -1263,9 +1264,7 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "Ds" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
 	},
