@@ -309,29 +309,31 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		"mode" = mode,
 	)
 
-	var/list/recipes
+	//currently selected category (atmos, disposal or transit)
+	var/list/selected_major_category
 	switch(category)
 		if(ATMOS_CATEGORY)
-			recipes = GLOB.atmos_pipe_recipes
+			selected_major_category = GLOB.atmos_pipe_recipes
 		if(DISPOSALS_CATEGORY)
-			recipes = GLOB.disposal_pipe_recipes
+			selected_major_category = GLOB.disposal_pipe_recipes
 		if(TRANSIT_CATEGORY)
-			recipes = GLOB.transit_tube_recipes
-	for(var/c in recipes)
-		var/list/cat = recipes[c]
-		var/list/r = list()
-		for(var/i in 1 to cat.len)
-			var/datum/pipe_info/info = cat[i]
+			selected_major_category = GLOB.transit_tube_recipes
+	//selected subcategory (e.g. pipes/binary/devices/heat exchange for atmos)
+	for(var/subcategory in selected_major_category)
+		var/list/subcategory_recipes = selected_major_category[subcategory]
+		var/list/available_recipe = list()
+		for(var/i in 1 to subcategory_recipes.len)
+			var/datum/pipe_info/info = subcategory_recipes[i]
 
-			r += list(list(
+			available_recipe += list(list(
 				"pipe_name" = info.name,
 				"pipe_index" = i,
 				"previews" = info.get_preview(p_dir, info == recipe)
 			))
 			if(info == recipe)
-				data["selected_category"] = c
+				data["selected_category"] = subcategory
 
-		data["categories"] += list(list("cat_name" = c, "recipes" = r))
+		data["categories"] += list(list("cat_name" = subcategory, "recipes" = available_recipe))
 
 	var/list/init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)
 	for(var/direction in GLOB.cardinals)
@@ -377,8 +379,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			p_flipped = text2num(params["flipped"])
 			playeffect = FALSE
 		if("mode")
-			var/n = text2num(params["mode"])
-			mode ^= n
+			var/selected_mode = text2num(params["mode"])
+			mode ^= selected_mode
 		if("init_dir_setting")
 			var/target_dir = p_init_dir ^ text2dir(params["dir_flag"])
 			// Refuse to create a smart pipe that can only connect in one direction (it would act weirdly and lack an icon)
@@ -394,12 +396,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
 	return TRUE
 
-/obj/item/pipe_dispenser/pre_attack(atom/A, mob/user, params)
-	if(!ISADVANCEDTOOLUSER(user) || istype(A, /turf/open/space/transit))
+/obj/item/pipe_dispenser/pre_attack(atom/atom_to_attack, mob/user, params)
+	if(!ISADVANCEDTOOLUSER(user) || istype(atom_to_attack, /turf/open/space/transit))
 		return ..()
 
-	if(istype(A, /obj/item/rpd_upgrade))
-		var/obj/item/rpd_upgrade/rpd_up = A
+	if(istype(atom_to_attack, /obj/item/rpd_upgrade))
+		var/obj/item/rpd_upgrade/rpd_up = atom_to_attack
 
 		//already installed
 		if(rpd_up.upgrade_flags & upgrade_flags)
@@ -412,7 +414,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		qdel(rpd_up)
 		return TRUE
 
-	var/atom/attack_target = A
+	var/atom/attack_target = atom_to_attack
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_p_type = recipe.id
@@ -444,34 +446,34 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	if(mode & REPROGRAM_MODE)
 		// If this is a placed smart pipe, try to reprogram it
-		var/obj/machinery/atmospherics/pipe/smart/S = attack_target
-		if(istype(S))
-			if (S.dir == ALL_CARDINALS)
+		var/obj/machinery/atmospherics/pipe/smart/target_smart_pipe = attack_target
+		if(istype(target_smart_pipe))
+			if (target_smart_pipe.dir == ALL_CARDINALS)
 				balloon_alert(user, "has no unconnected directions!")
 				return
-			var/old_init_dir = S.get_init_directions()
+			var/old_init_dir = target_smart_pipe.get_init_directions()
 			if (old_init_dir == p_init_dir)
 				balloon_alert(user, "already configured!")
 				return
 			// Check for differences in unconnected directions
-			var/target_differences = (p_init_dir ^ old_init_dir) & ~S.connections
+			var/target_differences = (p_init_dir ^ old_init_dir) & ~target_smart_pipe.connections
 			if (!target_differences)
 				balloon_alert(user, "already configured for its directions!")
 				return
 
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-			if(!do_after(user, reprogram_speed, target = S))
+			if(!do_after(user, reprogram_speed, target = target_smart_pipe))
 				return
 
 			// Something else could have changed the target's state while we were waiting in do_after
 			// Most of the edge cases don't matter, but atmos components being able to have live connections not described by initializable directions sounds like a headache at best and an exploit at worst
 
 			// Double check to make sure that nothing has changed. If anything we were about to change was connected during do_after, abort
-			if (target_differences & S.connections)
+			if (target_differences & target_smart_pipe.connections)
 				balloon_alert(user, "cant configure for its direction!")
 				return
 			// Grab the current initializable directions, which may differ from old_init_dir if someone else was working on the same pipe at the same time
-			var/current_init_dir = S.get_init_directions()
+			var/current_init_dir = target_smart_pipe.get_init_directions()
 			// Access p_init_dir directly. The RPD can change target layer and initializable directions (though not pipe type or dir) while working to dispense and connect a component,
 			// and have it reflected in the final result. Reprogramming should be similarly consistent.
 			var/new_init_dir = (current_init_dir & ~target_differences) | (p_init_dir & target_differences)
@@ -486,31 +488,31 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			if(newly_permitted_connections)
 				// We're allowed to connect in new directions. Recompute our nodes
 				// Disconnect from everything that is currently connected
-				for (var/i in 1 to S.device_type)
+				for (var/i in 1 to target_smart_pipe.device_type)
 					// This is basically pipe.nullifyNode, but using it here would create a pitfall for others attempting to
 					// copy and paste disconnection code for other components. Welcome to the atmospherics subsystem
-					var/obj/machinery/atmospherics/node = S.nodes[i]
+					var/obj/machinery/atmospherics/node = target_smart_pipe.nodes[i]
 					if (!node)
 						continue
-					node.disconnect(S)
-					S.nodes[i] = null
+					node.disconnect(target_smart_pipe)
+					target_smart_pipe.nodes[i] = null
 				// Get our new connections
-				S.atmos_init()
+				target_smart_pipe.atmos_init()
 				// Connect to our new connections
-				for (var/obj/machinery/atmospherics/O in S.nodes)
+				for (var/obj/machinery/atmospherics/O in target_smart_pipe.nodes)
 					O.atmos_init()
 					O.add_member(src)
-				SSair.add_to_rebuild_queue(S)
+				SSair.add_to_rebuild_queue(target_smart_pipe)
 			// Finally, update our internal state - update_pipe_icon also updates dir and connections
 			S.update_pipe_icon()
-			user.visible_message(span_notice("[user] reprograms the \the [S]."),span_notice("You reprogram \the [S]."))
+			user.visible_message(span_notice("[user] reprograms the \the [target_smart_pipe]."),span_notice("You reprogram \the [target_smart_pipe]."))
 			return
 		// If this is an unplaced smart pipe, try to reprogram it
-		var/obj/item/pipe/quaternary/I = attack_target
-		if(istype(I) && ispath(I.pipe_type, /obj/machinery/atmospherics/pipe/smart))
+		var/obj/item/pipe/quaternary/target_unsecured_pipe = attack_target
+		if(istype(target_unsecured_pipe) && ispath(target_unsecured_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
 			// An unplaced pipe never has any existing connections, so just directly assign the new configuration
-			I.p_init_dir = p_init_dir
-			I.update()
+			target_unsecured_pipe.p_init_dir = p_init_dir
+			target_unsecured_pipe.update()
 
 	if(mode & BUILD_MODE)
 		switch(category) //if we've gotten this var, the target is valid
@@ -521,10 +523,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if (recipe.type == /datum/pipe_info/meter)
 					if(do_after(user, atmos_build_speed, target = attack_target))
 						activate()
-						var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(attack_target))
-						PM.setAttachLayer(piping_layer)
+						var/obj/item/pipe_meter/new_meter = new /obj/item/pipe_meter(get_turf(attack_target))
+						new_meter.setAttachLayer(piping_layer)
 						if(mode & WRENCH_MODE)
-							PM.wrench_act(user, src)
+							new_meter.wrench_act(user, src)
 				else
 					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
 						balloon_alert(user, "cant build on this layer!")
@@ -545,8 +547,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 							ispath(queued_p_type, /obj/machinery/atmospherics/pipe/smart) ? p_init_dir : null,
 						)
 						if(queued_p_flipped && istype(pipe_type, /obj/item/pipe/trinary/flippable))
-							var/obj/item/pipe/trinary/flippable/F = pipe_type
-							F.flipped = queued_p_flipped
+							var/obj/item/pipe/trinary/flippable/new_flippable_pipe = pipe_type
+							new_flippable_pipe.flipped = queued_p_flipped
 
 						pipe_type.update()
 						pipe_type.add_fingerprint(usr)
@@ -565,19 +567,19 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					return
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, disposal_build_speed, target = attack_target))
-					var/obj/structure/disposalconstruct/C = new (attack_target, queued_p_type, queued_p_dir, queued_p_flipped)
+					var/obj/structure/disposalconstruct/new_disposals_segment = new (attack_target, queued_p_type, queued_p_dir, queued_p_flipped)
 
-					if(!C.can_place())
+					if(!new_disposals_segment.can_place())
 						balloon_alert(user, "not enough room!")
-						qdel(C)
+						qdel(new_disposals_segment)
 						return
 
 					activate()
 
-					C.add_fingerprint(usr)
-					C.update_appearance()
+					new_disposals_segment.add_fingerprint(usr)
+					new_disposals_segment.update_appearance()
 					if(mode & WRENCH_MODE)
-						C.wrench_act(user, src)
+						new_disposals_segment.wrench_act(user, src)
 					return
 
 			if(TRANSIT_CATEGORY) //Making transit tubes
@@ -620,21 +622,22 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 
-/obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
+///Changes the piping layer when the mousewheel is scrolled up or down.
+/obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source_mob, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
-	if(source.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+	if(source_mob.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
 		return
-	if(source.get_active_held_item() != src)
+	if(source_mob.get_active_held_item() != src)
 		return
 
 	if(delta_y < 0)
 		piping_layer = min(PIPING_LAYER_MAX, piping_layer + 1)
 	else if(delta_y > 0)
 		piping_layer = max(PIPING_LAYER_MIN, piping_layer - 1)
-	else
+	else //mice with side-scrolling wheels are apparently a thing and fuck this up
 		return
 	SStgui.update_uis(src)
-	to_chat(source, span_notice("You set the layer to [piping_layer]."))
+	to_chat(source_mob, span_notice("You set the layer to [piping_layer]."))
 
 #undef ATMOS_CATEGORY
 #undef DISPOSALS_CATEGORY
