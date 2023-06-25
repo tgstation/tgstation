@@ -5,7 +5,6 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 
 	var/list/elements_by_type = list()
 
-#ifdef UNIT_TESTS
 	/**
 	 * An assoc list of bespoke element types and lists that have been used as arguments.
 	 *
@@ -14,10 +13,9 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 	 *	/datum/element/second = list(list(C), list(D)),
 	 * )
 	 *
-	 * Used by the dcs_check_list_arguments unit test. Doesn't exist under normal compile options.
+	 * Used by the dcs_check_list_arguments unit test.
 	 */
-	UNLINT(var/list/arguments_that_are_lists_by_element = list())
-#endif
+	var/list/arguments_that_are_lists_by_element = list()
 
 /datum/controller/subsystem/processing/dcs/Recover()
 	_listen_lookup = SSdcs._listen_lookup
