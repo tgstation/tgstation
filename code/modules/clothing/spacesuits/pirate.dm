@@ -18,10 +18,7 @@
 	acid = 75
 
 /obj/item/clothing/head/helmet/space/pirate/bandana
-	icon_state = "spacebandana1"
-
-/obj/item/clothing/head/helmet/space/pirate/bandana/Initialize(mapload)
-	icon_state = "spacebandana[pick(1,2)]"
+	icon_state = "spacebandana"
 
 /obj/item/clothing/suit/space/pirate
 	name = "modified EVA suit"
