@@ -247,6 +247,14 @@
 	/// Whether this saber has been multitooled.
 	var/hacked = FALSE
 	var/hacked_color
+	var/datum/component/jouusting/jousting_component
+
+/obj/item/melee/energy/sword/saber/on_transform(obj/item/source, mob/user, active)
+	. = ..()
+	if(active)
+		jousting_component = AddComponent(/datum/component/jousting)
+	else
+		QDEL_NULL(jousting_component)
 
 /obj/item/melee/energy/sword/saber/Initialize(mapload)
 	. = ..()
