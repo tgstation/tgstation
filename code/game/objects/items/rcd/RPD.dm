@@ -242,8 +242,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/examine(mob/user)
 	. = ..()
-	. += "You can scroll your mouse wheel to change the piping layer."
-	. += "You can right click a pipe to set the RPD to its color and layer."
+	. += span_notice("You can scroll your <b>mouse wheel<b/> to change the piping layer.")
+	. += span_notice("You can <b>right click</b> a pipe to set the RPD to its color and layer.")
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
 	. = ..()
@@ -414,6 +414,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		//install & delete upgrade
 		upgrade_flags |= rpd_up.upgrade_flags
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		balloon_alert(user, "upgrade installed")
 		qdel(rpd_up)
 		return TRUE
 
@@ -451,16 +452,16 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		// If this is a placed smart pipe, try to reprogram it
 		var/obj/machinery/atmospherics/pipe/smart/target_smart_pipe = attack_target
 		if(istype(target_smart_pipe))
-			if (target_smart_pipe.dir == ALL_CARDINALS)
+			if(target_smart_pipe.dir == ALL_CARDINALS)
 				balloon_alert(user, "has no unconnected directions!")
 				return
 			var/old_init_dir = target_smart_pipe.get_init_directions()
-			if (old_init_dir == p_init_dir)
+			if(old_init_dir == p_init_dir)
 				balloon_alert(user, "already configured!")
 				return
 			// Check for differences in unconnected directions
 			var/target_differences = (p_init_dir ^ old_init_dir) & ~target_smart_pipe.connections
-			if (!target_differences)
+			if(!target_differences)
 				balloon_alert(user, "already configured for its directions!")
 				return
 
@@ -472,8 +473,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			// Most of the edge cases don't matter, but atmos components being able to have live connections not described by initializable directions sounds like a headache at best and an exploit at worst
 
 			// Double check to make sure that nothing has changed. If anything we were about to change was connected during do_after, abort
-			if (target_differences & target_smart_pipe.connections)
-				balloon_alert(user, "cant configure for its direction!")
+			if(target_differences & target_smart_pipe.connections)
+				balloon_alert(user, "can't configure for its direction!")
 				return
 			// Grab the current initializable directions, which may differ from old_init_dir if someone else was working on the same pipe at the same time
 			var/current_init_dir = target_smart_pipe.get_init_directions()
@@ -481,7 +482,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			// and have it reflected in the final result. Reprogramming should be similarly consistent.
 			var/new_init_dir = (current_init_dir & ~target_differences) | (p_init_dir & target_differences)
 			// Don't make a smart pipe with only one connection
-			if (ISSTUB(new_init_dir))
+			if(ISSTUB(new_init_dir))
 				balloon_alert(user, "no one directional pipes allowed!")
 				return
 			target_smart_pipe.set_init_directions(new_init_dir)
@@ -491,24 +492,24 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			if(newly_permitted_connections)
 				// We're allowed to connect in new directions. Recompute our nodes
 				// Disconnect from everything that is currently connected
-				for (var/i in 1 to target_smart_pipe.device_type)
+				for(var/i in 1 to target_smart_pipe.device_type)
 					// This is basically pipe.nullifyNode, but using it here would create a pitfall for others attempting to
 					// copy and paste disconnection code for other components. Welcome to the atmospherics subsystem
 					var/obj/machinery/atmospherics/node = target_smart_pipe.nodes[i]
-					if (!node)
+					if(!node)
 						continue
 					node.disconnect(target_smart_pipe)
 					target_smart_pipe.nodes[i] = null
 				// Get our new connections
 				target_smart_pipe.atmos_init()
 				// Connect to our new connections
-				for (var/obj/machinery/atmospherics/O in target_smart_pipe.nodes)
-					O.atmos_init()
-					O.add_member(src)
+				for(var/obj/machinery/atmospherics/connected_device in target_smart_pipe.nodes)
+					connected_device.atmos_init()
+					connected_device.add_member(src)
 				SSair.add_to_rebuild_queue(target_smart_pipe)
 			// Finally, update our internal state - update_pipe_icon also updates dir and connections
 			target_smart_pipe.update_pipe_icon()
-			user.visible_message(span_notice("[user] reprograms the \the [target_smart_pipe]."),span_notice("You reprogram \the [target_smart_pipe]."))
+			user.visible_message(span_notice("[user] reprograms \the [target_smart_pipe]."), span_notice("You reprogram \the [target_smart_pipe]."))
 			return
 		// If this is an unplaced smart pipe, try to reprogram it
 		var/obj/item/pipe/quaternary/target_unsecured_pipe = attack_target
@@ -532,11 +533,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 							new_meter.wrench_act(user, src)
 				else
 					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
-						balloon_alert(user, "cant build on this layer!")
+						balloon_alert(user, "can't build on this layer!")
 						return ..()
 					if(do_after(user, atmos_build_speed, target = attack_target))
 						if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))//double check to stop cheaters (and to not waste time waiting for something that can't be placed)
-							balloon_alert(user, "cant build on this layer!")
+							balloon_alert(user, "can't build on this layer!")
 							return ..()
 						playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
 						var/obj/machinery/atmospherics/path = queued_p_type
