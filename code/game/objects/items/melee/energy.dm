@@ -247,17 +247,10 @@
 	/// Whether this saber has been multitooled.
 	var/hacked = FALSE
 	var/hacked_color
-	var/datum/component/jousting/jousting_component
-
-/obj/item/melee/energy/sword/saber/on_transform(obj/item/source, mob/user, active)
-	. = ..()
-	if(active)
-		jousting_component = AddComponent(/datum/component/jousting, mounted_damage_boost_per_tile = 1, mounted_knockdown_chance_per_tile = 10)
-	else
-		QDEL_NULL(jousting_component)
 
 /obj/item/melee/energy/sword/saber/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/jousting, damage_boost_per_tile = 1, knockdown_chance_per_tile = 10)
 	if(!sword_color_icon && LAZYLEN(possible_sword_colors))
 		sword_color_icon = pick(possible_sword_colors)
 
