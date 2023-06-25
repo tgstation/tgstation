@@ -10,12 +10,24 @@ SUBSYSTEM_DEF(hotspots)
 	var/list/generated_hotspots = list()
 	///the amount of groups we want to create. TODO defer hotspot generation until after roundstart to change this value for wackier rounds
 	var/hotspots_to_generate = 43
+	///the map_start map icon
+	var/icon/map
+	///the map icon with all the hotspots rendered ontop
+	var/icon/finished_map
+	///colors used in generating the map
+	var/list/colors = list(
+		"empty" = rgb(0, 0, 50),
+		"solid" = rgb(0, 0, 255),
+		"station" = rgb(0, 255, 149),
+		"other" = rgb(73, 160, 194))
 
 /datum/controller/subsystem/hotspots/Initialize()
 	if(!length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
 		can_fire = FALSE // We dont want excess firing
 		return SS_INIT_NO_NEED
 	generate_hotspots()
+	generate_map()
+	generate_finalized_map()
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/hotspots/fire()
@@ -26,6 +38,7 @@ SUBSYSTEM_DEF(hotspots)
 		if(generated_hotspot.drift_count >= generated_hotspot.drift_speed)
 			generated_hotspot.drift_count = 0
 			generated_hotspot.move_center(get_step(generated_hotspot.center.return_turf(), generated_hotspot.drift_direction))
+			generate_finalized_map()
 
 /datum/controller/subsystem/hotspots/proc/generate_hotspots()
 	var/datum/hotspot/new_hotspot

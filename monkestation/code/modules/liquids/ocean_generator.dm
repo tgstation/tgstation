@@ -86,6 +86,7 @@
 /datum/map_generator/cave_generator/trench
 	name = "Trench Generator"
 	closed_turf_types =  list(/turf/closed/mineral/random/ocean = 1)
+	weighted_closed_turf_types = list(/turf/closed/mineral/random/ocean = 1)
 
 	feature_spawn_list = null
 	mob_spawn_list = null

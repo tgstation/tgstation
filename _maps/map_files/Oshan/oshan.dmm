@@ -3418,6 +3418,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"dDy" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/security/office)
 "dDX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -52336,9 +52342,9 @@ vLh
 vLh
 lVR
 ajQ
-vih
-vih
-vih
+dDy
+dDy
+dDy
 xvQ
 ajQ
 ajQ
@@ -52593,9 +52599,9 @@ vLh
 vLh
 lVR
 ajQ
-vih
-vih
-vih
+hmh
+hmh
+hmh
 ajQ
 ajQ
 meJ
