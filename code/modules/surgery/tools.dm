@@ -580,28 +580,24 @@
 	name = "twisted retractor"
 	desc = "Helps reveal secrets that would rather stay buried."
 	icon_state = "cruelretractor"
-	inhand_icon_state = "cruelretractor"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
 
 /obj/item/hemostat/cruel
 	name = "cruel hemostat"
 	desc = "Clamping bleeders, but not so good at fixing breathers."
 	icon_state = "cruelhemostat"
-	inhand_icon_state = "cruelhemostat"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
 
 /obj/item/cautery/cruel
 	name = "savage cautery"
 	desc = "Chalk this one up as another successful vivisection."
 	icon_state = "cruelcautery"
-	inhand_icon_state = "cruelcautery"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
 
 /obj/item/scalpel/cruel
 	name = "hungry scalpel"
 	desc = "I remember every time I hold you. My born companion..."
 	icon_state = "cruelscalpel"
-	inhand_icon_state = "cruelscalpel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
 
 /obj/item/scalpel/cruel/Initialize(mapload)
