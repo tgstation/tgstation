@@ -272,7 +272,6 @@
 /obj/machinery/door/airlock/medical/glass{
 	name = "Escape Shuttle Infirmary"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
 "hH" = (
@@ -420,7 +419,6 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Board Room"
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/sign/flag/nanotrasen/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
@@ -1178,7 +1176,6 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Board Room"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "CA" = (
@@ -1340,16 +1337,11 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
-"Fl" = (
-/obj/machinery/vending/toyliberationstation,
-/turf/open/floor/wood/tile,
-/area/shuttle/escape)
 "Fp" = (
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Brig"
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark/smooth_large,
@@ -1592,6 +1584,10 @@
 	dir = 4
 	},
 /area/shuttle/escape)
+"Kv" = (
+/obj/machinery/vending/toyliberationstation,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
 "KB" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
@@ -1609,14 +1605,6 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
-"KG" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/door/poddoor/preopen{
-	id = "escape_cockpit_windows";
-	name = "Cockpit Blast Door"
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "KH" = (
 /obj/effect/turf_decal/trimline/dark_blue/corner,
 /turf/open/floor/iron/dark/textured_large,
@@ -1819,13 +1807,6 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
-"Pt" = (
-/obj/effect/turf_decal/trimline/purple/line{
-	dir = 4
-	},
-/obj/machinery/vending/boozeomat,
-/turf/open/floor/iron/showroomfloor,
-/area/shuttle/escape)
 "PU" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 8
@@ -1955,13 +1936,13 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Tw" = (
-/obj/machinery/firealarm/directional/south,
-/obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/corner{
-	dir = 4
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/door/poddoor/preopen{
+	id = "escape_cockpit_windows";
+	name = "Cockpit Blast Door"
 	},
-/turf/open/floor/iron/dark/textured,
-/area/shuttle/escape/brig)
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "TA" = (
 /obj/item/phone{
 	pixel_x = 1;
@@ -2026,6 +2007,13 @@
 	dir = 6
 	},
 /turf/open/floor/lowered/iron/pool,
+/area/shuttle/escape)
+"UU" = (
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 4
+	},
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "UX" = (
 /obj/machinery/door/window/survival_pod{
@@ -2448,8 +2436,8 @@ kd
 (6,1,1) = {"
 kd
 kd
-KG
-KG
+Tw
+Tw
 uV
 uV
 rX
@@ -2494,7 +2482,7 @@ uV
 (7,1,1) = {"
 IQ
 uV
-KG
+Tw
 xU
 FR
 yH
@@ -2584,12 +2572,12 @@ xj
 xj
 "}
 (9,1,1) = {"
-KG
+Tw
 qd
 KB
 hH
 nN
-Pt
+UU
 rX
 KD
 AB
@@ -2630,13 +2618,13 @@ xj
 xj
 "}
 (10,1,1) = {"
-KG
+Tw
 dg
 PU
 OU
 Ep
-uV
-rX
+Sp
+Vm
 jT
 AB
 vI
@@ -2644,7 +2632,7 @@ nZ
 SK
 MZ
 jW
-Tw
+Hs
 rX
 DJ
 lJ
@@ -2676,7 +2664,7 @@ uV
 uV
 "}
 (11,1,1) = {"
-KG
+Tw
 vq
 tx
 Gs
@@ -2722,7 +2710,7 @@ uV
 kd
 "}
 (12,1,1) = {"
-KG
+Tw
 mG
 zm
 Vi
@@ -2768,13 +2756,13 @@ uV
 kd
 "}
 (13,1,1) = {"
-KG
+Tw
 Sq
 ys
 bp
 jO
-uV
-rX
+Sp
+Vm
 re
 wf
 jW
@@ -2814,7 +2802,7 @@ uV
 uV
 "}
 (14,1,1) = {"
-KG
+Tw
 oZ
 Ho
 Xo
@@ -2908,7 +2896,7 @@ xj
 (16,1,1) = {"
 gH
 uV
-KG
+Tw
 co
 uX
 qr
@@ -2954,8 +2942,8 @@ xj
 (17,1,1) = {"
 kd
 kd
-KG
-KG
+Tw
+Tw
 uV
 uV
 rX
@@ -3121,7 +3109,7 @@ yc
 uV
 qE
 uV
-Fl
+Kv
 xf
 iQ
 Rz
