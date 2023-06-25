@@ -67,6 +67,7 @@ GLOBAL_LIST_INIT(sea_elevator_list_trench, list())
 ///these two are seperate procs for snowflake effects
 /obj/machinery/ocean_elevator/proc/going_down()
 	elevator_up = FALSE
+	update_appearance()
 	if(trenched)
 		return
 	var/turf/parent_turf = get_turf(src)
@@ -75,10 +76,10 @@ GLOBAL_LIST_INIT(sea_elevator_list_trench, list())
 			continue
 		var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_MINING)[1])
 		listed_atom.forceMove(turf)
-	update_appearance()
 
 /obj/machinery/ocean_elevator/proc/going_up()
 	elevator_up = TRUE
+	update_appearance()
 	if(!trenched)
 		return
 	var/turf/parent_turf = get_turf(src)
@@ -87,7 +88,6 @@ GLOBAL_LIST_INIT(sea_elevator_list_trench, list())
 			continue
 		var/turf/turf = locate(src.x, src.y, SSmapping.levels_by_trait(ZTRAIT_STATION)[1])
 		listed_atom.forceMove(turf)
-	update_appearance()
 
 /obj/machinery/button/sea_elevator
 	name = "sea elevator button control"
