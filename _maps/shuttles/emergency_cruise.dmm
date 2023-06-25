@@ -853,6 +853,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "uC" = (
@@ -1361,6 +1362,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "Fp" = (
