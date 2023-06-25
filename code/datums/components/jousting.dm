@@ -1,3 +1,4 @@
+///Amount of time each timer has, used to reset the jousting back, indicating that the person has stopped moving.
 #define MOVEMENT_RESET_COOLDOWN_TIME (0.3 SECONDS)
 
 /**
