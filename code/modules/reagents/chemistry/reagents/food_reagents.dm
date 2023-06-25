@@ -55,7 +55,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_DEAD_PROCESS
 
 	var/brute_heal = 1
 	var/burn_heal = 0
@@ -785,9 +785,8 @@
 	color = "#b5a213"
 	taste_description = "tingling mushroom"
 	ph = 11.2
-	metabolization_rate = REAGENTS_METABOLISM/2 //doubled when the mob starts to metabolize it.
 	self_consuming = TRUE
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_DEAD_PROCESS
 
 /datum/reagent/consumable/tinlux/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
@@ -800,14 +799,6 @@
 /datum/reagent/consumable/tinlux/on_mob_add(mob/living/living_mob)
 	. = ..()
 	living_mob.apply_status_effect(/datum/status_effect/tinlux_light) //infinite duration
-
-/datum/reagent/consumable/tinlux/on_mob_metabolize(mob/living/living_mob)
-	nutriment_factor = initial(nutriment_factor)
-	metabolization_rate *= 2
-
-/datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/living_mob)
-	nutriment_factor = 0
-	metabolization_rate /= 2
 
 /datum/reagent/consumable/tinlux/on_mob_delete(mob/living/living_mob)
 	. = ..()
