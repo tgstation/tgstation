@@ -86,7 +86,7 @@
 	SIGNAL_HANDLER
 	var/atom/movable/charger = source.moving
 	UnregisterSignal(charger, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED))
-	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
+	SEND_SIGNAL(charger, COMSIG_FINISHED_CHARGE)
 	actively_moving = FALSE
 	charging -= charger
 
@@ -290,8 +290,8 @@
 	name = "spear charge"
 	desc = "Charge forward and impale any victim with your spear."
 	button_icon_state = "spear_charge"
-	charge_distance = 7
-	charge_delay = 1 SECONDS
+	charge_distance = 4
+	charge_delay = 2 SECONDS
 	destroy_objects = FALSE
 	charge_damage = 10
 	var/distance
@@ -300,17 +300,20 @@
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/Activate(atom/target_atom)
 	starting_tile = get_turf(target_atom)
 	. = ..()
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear/on_moved(atom/source)
+	return
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear/charge_end(datum/move_loop/source)
+	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/charger = owner
 		charger.apply_damage(60, STAMINA)
 		charger.Immobilize(1 SECONDS)
 
-/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear/on_moved(atom/source)
-	return
-
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_bump(atom/movable/source, atom/target)
+	QDEL_NULL(new_loop)
 	if(isliving(target))
-		QDEL_NULL(new_loop)
 		distance = get_dist(starting_tile, get_turf(source))
 		charge_damage += distance * 10 //we determine the total damage based on how far we have charged
 		hit_target(source, target, charge_damage)
