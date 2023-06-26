@@ -133,7 +133,7 @@
 /// Smothers the victim while the do_after succeeds and the victim is laying down or being strangled
 /obj/item/pillow/proc/smothering(mob/living/carbon/user, mob/living/carbon/victim)
 	while(victim)
-		if(victim.body_position == FALSE && user.grab_state <= GRAB_NECK)
+		if(victim.body_position == FALSE && user.grab_state >= GRAB_AGGRESSIVE)
 			break
 		if(!do_after(user, 1 SECONDS, victim))
 			break
