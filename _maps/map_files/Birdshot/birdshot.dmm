@@ -3167,7 +3167,7 @@
 /area/station/engineering/atmospherics_engine)
 "bsR" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "btv" = (
@@ -3222,10 +3222,6 @@
 "buy" = (
 /turf/open/floor/iron/small,
 /area/station/engineering/atmospherics_engine)
-"buz" = (
-/obj/effect/landmark/navigate_destination,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/dock)
 "buA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9607,12 +9603,6 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine/atmos)
-"dTu" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/meter,
-/turf/open/floor/plating,
-/area/station/engineering/atmos)
 "dTI" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -17634,7 +17624,7 @@
 	name = "Crematorium"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/textured_half{
 	dir = 8
 	},
@@ -23864,7 +23854,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "iVx" = (
@@ -83877,7 +83867,7 @@ ieu
 eQi
 fbq
 dxP
-dTu
+qPn
 eoY
 xae
 xae
@@ -112514,7 +112504,7 @@ aSM
 asb
 msJ
 msJ
-buz
+msJ
 msJ
 nTt
 svs
