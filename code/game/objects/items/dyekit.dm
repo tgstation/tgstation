@@ -41,7 +41,6 @@
 	to_chat(user, span_notice("You start applying the hair dye..."))
 	if(!do_after(user, 3 SECONDS, target))
 		return
-	var/gradient_key = beard_or_hair == "Hair" ? GRADIENT_HAIR_KEY : GRADIENT_FACIAL_HAIR_KEY
 	if(beard_or_hair == "Hair")
 		human_target.set_hair_gradient(new_grad_style, new_grad_color, update = TRUE)
 	else
