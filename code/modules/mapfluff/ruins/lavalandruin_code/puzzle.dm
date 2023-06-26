@@ -223,8 +223,9 @@
 		puzzle_small.pixel_y = 7
 		add_overlay(puzzle_small)
 
-/obj/structure/puzzle_element/update_icon(updates=ALL) // to prevent update_appearance calls from cutting the overlays
-	return
+/obj/structure/puzzle_element/update_icon(updates=ALL) // to prevent update_appearance calls from cutting the overlays and not adding them back
+	. = ..()
+	set_puzzle_icon()
 
 /obj/structure/puzzle_element/Destroy()
 	if(source)
