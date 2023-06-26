@@ -249,6 +249,7 @@
 
 	/// Width of each character, including kerning gap afterwards.
 	/// We don't use rich text or anything fancy, so we can bake these values.
+	/// TinyUnicode 12pt converted using Lummox's dmifontsplus (https://www.byond.com/developer/LummoxJR/DmiFontsPlus)
 	var/static/list/char_widths = list(
 		//   ! " # $ % & ' ( ) * + , - . /
 		1, 1, 3, 5, 4, 3, 5, 1, 2, 2, 3, 3, 2, 3, 1, 3,
@@ -258,10 +259,10 @@
 		7, 4, 4, 3, 4, 3, 3, 4, 4, 3, 4, 4, 3, 5, 4, 4,
 		// P Q R S T U V W X Y Z [ \ ] ^ _
 		4, 4, 4, 4, 3, 4, 4, 5, 4, 4, 3, 2, 3, 2, 3, 5,
-		// ` a b c d e f g h i j k l m n o // TODO
-		3, 5, 5, 5, 5, 4, 4, 5, 5, 2, 4, 5, 4, 6, 5, 5,
-		// p q r s t u v w x y z { | } ~ // TODO
-		5, 5, 5, 5, 4, 5, 4, 6, 4, 4, 4, 3, 2, 3, 4,
+		// ` a b c d e f g h i j k l m n o
+		2, 4, 4, 3, 4, 4, 3, 4, 4, 1, 2, 4, 1, 5, 4, 4,
+		// p q r s t u v w x y z { | } ~
+		4, 4, 3, 4, 3, 4, 4, 5, 3, 4, 4, 3, 1, 3, 5,
 	)
 
 /obj/effect/overlay/status_display_text/Initialize(mapload, yoffset, line, text_color, header_text_color, xoffset = 0)
