@@ -777,14 +777,12 @@
 		'sound/weapons/cablecuff.ogg' = 1,
 	)
 
-/obj/item/toy/plush/greek_cucumber
-	name = "greek cucumber"
-	desc = "A plushie depicting a large cucumber with eyes, it seems that according to the manufacturer of the toy, the human race will look like in the future."
-	icon_state = "cucumber"
-	inhand_icon_state = null
-	attack_verb_continuous = list("squishes", "creaks", "crunches")
-	attack_verb_simple = list("squish", "creak", "crunch")
-	squeak_override = list(
-		'sound/effects/slosh.ogg' = 1,
-		'sound/effects/splat.ogg' = 2
-	)
+/obj/item/toy/plush/shark
+	name = "shark plushie"
+	desc = "A plushie depicting a somewhat cartoonish shark. The tag calls it a 'hákarl', noting that it was made by an obscure furniture manufacturer in old Scandinavia. Popular with cute girls who wear striped knee-high socks."
+	lefthand_file = 'icons/mob/inhands/items/plushes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/plushes_righthand.dmi'
+	icon_state = "blahaj"
+	inhand_icon_state = "blahaj"
+	attack_verb_continuous = list("gnaws", "gnashes", "chews")
+	attack_verb_simple = list("gnaw", "gnash", "chew")

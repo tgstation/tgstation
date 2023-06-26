@@ -20,6 +20,9 @@
 /datum/computer_file/program/nt_pay/ui_act(action, list/params, datum/tgui/ui)
 	switch(action)
 		if("Transaction")
+			if(IS_DEPARTMENTAL_ACCOUNT(current_user))
+				return to_chat(usr, span_notice("The app is unable to withdraw from that card."))
+
 			token = params["token"]
 			money_to_send = params["amount"]
 			var/datum/bank_account/recipient

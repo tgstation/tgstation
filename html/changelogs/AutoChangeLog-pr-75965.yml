@@ -1,5 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - bugfix: "Deconstructing a papercutter will now spit out its internals if present."
-  - qol: "Papercutters now have contextual tips"

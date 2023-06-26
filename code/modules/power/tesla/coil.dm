@@ -37,7 +37,7 @@
 
 /obj/machinery/power/energy_accumulator/tesla_coil/Initialize(mapload)
 	. = ..()
-	wires = new /datum/wires/tesla_coil(src)
+	set_wires(new /datum/wires/tesla_coil(src))
 
 /obj/machinery/power/energy_accumulator/tesla_coil/cable_layer_change_checks(mob/living/user, obj/item/tool)
 	if(anchored)
