@@ -72,6 +72,9 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 /datum/pre_round_store/proc/attempt_buy(list/params)
 	var/id = params["path"]
 	var/datum/store_item/attempted_item = text2path(id)
+	if(!istype(attempted_item, /datum/store_item))
+		message_admins("[usr] attempted an href exploit.")
+		return
 	bought_item = new attempted_item
 
 /datum/pre_round_store/proc/finalize_purchase_spawn(mob/new_player_mob, mob/new_player_mob_living)
