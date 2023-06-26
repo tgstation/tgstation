@@ -705,7 +705,7 @@
 	name = "moth plushie"
 	desc = "A plushie depicting an adorable mothperson. It's a huggable bug!"
 	icon_state = "moffplush"
-	inhand_icon_state = "moffplush"
+	inhand_icon_state = null
 	attack_verb_continuous = list("flutters", "flaps")
 	attack_verb_simple = list("flutter", "flap")
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
@@ -757,12 +757,8 @@
 /obj/item/toy/plush/moth/proc/update_brightness()
 	if(on)
 		icon_state = "[initial(icon_state)]_on"
-		if(!isnull(inhand_icon_state))
-			inhand_icon_state = "[initial(inhand_icon_state)]_on"
 	else
 		icon_state = initial(icon_state)
-		if(!isnull(inhand_icon_state))
-			inhand_icon_state = initial(inhand_icon_state)
 
 
 /obj/item/toy/plush/moth/proc/toggle_light()
