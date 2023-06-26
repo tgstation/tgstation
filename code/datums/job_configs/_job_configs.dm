@@ -22,7 +22,7 @@
 		qdel(test_occupation)
 
 /// Simply gets the value of the config type for a given job. There can be overrides for special instances on subtypes.
-/datum/job_config_type/proc/get_compile_time_value(datum/job/occupation)
+/datum/job_config_type/proc/get_current_value(datum/job/occupation)
 	return occupation.vars[datum_var_name]
 
 /// Validate the value of the config type for a given job. There can be overrides for special instances on subtypes.

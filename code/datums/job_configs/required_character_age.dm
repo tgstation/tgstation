@@ -3,7 +3,7 @@
 	name = JOB_CONFIG_REQUIRED_CHARACTER_AGE
 	datum_var_name = "required_character_age"
 
-/datum/job_config_type/required_character_age/get_compile_time_value(datum/job/occupation)
+/datum/job_config_type/required_character_age/get_current_value(datum/job/occupation)
 	. = ..()
 
 	if(isnum(.))

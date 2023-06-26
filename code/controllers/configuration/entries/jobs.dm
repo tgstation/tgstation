@@ -135,7 +135,7 @@
 			var/config_read_value = job_config[job_key][config_datum_key]
 			if(!config_datum.validate_value(config_read_value))
 				working_list += list(
-					"# [config_datum_key]" = config_datum.get_compile_time_value(occupation), // note that this doesn't make a real comment, it just creates a string mismatch.
+					"# [config_datum_key]" = config_datum.get_current_value(occupation), // note that this doesn't make a real comment, it just creates a string mismatch.
 				)
 			else
 				working_list += list(
@@ -158,7 +158,7 @@
 		// This is to ensure that the server operator is knows that they override codebase defaults when they remove the comment.
 		// Having comments mean that we allow server operators to defer to codebase standards when they deem acceptable. They must uncomment to override the codebase default.
 		returnable_list += list(
-			"# [config_datum_key]" = config_datum.get_compile_time_value(new_occupation),
+			"# [config_datum_key]" = config_datum.get_current_value(new_occupation),
 		)
 
 	return returnable_list
@@ -171,7 +171,7 @@
 	for(var/config_datum_key in datums_to_read)
 		var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 		returnable_list += list(
-			"# [config_datum_key]" = config_datum.get_compile_time_value(new_occupation),
+			"# [config_datum_key]" = config_datum.get_current_value(new_occupation),
 		)
 
 	return returnable_list
