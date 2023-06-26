@@ -202,7 +202,8 @@
 		new_character.client.init_verbs() // re-initialize character specific verbs
 
 	// Handles mind based languages going to the new body (and visa versa)
-	old_current.swap_mind_languages(current)
+	if(old_current && current)
+		old_current.swap_mind_languages(current)
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFERRED, old_current)
 	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO)
