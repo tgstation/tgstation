@@ -31,6 +31,8 @@
 	var/force_unwielded = 10
 	/// How much damage to do wielded
 	var/force_wielded = 18
+	///Do we need two hands to wield it
+	var/need_two_hand = FALSE
 
 /datum/armor/item_spear
 	fire = 50
@@ -47,6 +49,7 @@
 		effectiveness = 70, \
 	)
 	AddComponent(/datum/component/two_handed, \
+		require_twohands = need_two_hand, \
 		force_unwielded = force_unwielded, \
 		force_wielded = force_wielded, \
 		icon_wielded = "[icon_prefix]1", \
@@ -234,3 +237,17 @@
 	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 20)
 	force_unwielded = 10
 	force_wielded = 18
+
+/obj/item/spear/pillow
+	name = "pillow spear"
+	desc = "A spear with a pillow for a tip, used for harmless jousting and spearfighting. Wielder of this are able to charge."
+	icon_state = "spearglass0"
+	base_icon_state = "spearglass0"
+	damtype = STAMINA
+	force_unwielded = 15
+	force_wielded = 15
+	need_two_hand = TRUE
+	actions_types = list(/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge)
+	icon_prefix = "spearpillow"
+	hitsound = 'sound/items/pillow_hit2.ogg'
+	attack_verb_simple = list("poke")

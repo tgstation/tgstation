@@ -20,6 +20,8 @@
 	var/actively_moving = FALSE
 	/// List of charging mobs
 	var/list/charging = list()
+	///Move loop for charging
+	var/datum/move_loop/new_loop
 
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
 	StartCooldown(360 SECONDS, 360 SECONDS)
@@ -58,7 +60,7 @@
 
 	var/time_to_hit = min(get_dist(charger, target), charge_distance) * charge_speed
 
-	var/datum/move_loop/new_loop = SSmove_manager.home_onto(charger, target, delay = charge_speed, timeout = time_to_hit, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	new_loop = SSmove_manager.home_onto(charger, target, delay = charge_speed, timeout = time_to_hit, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	if(!new_loop)
 		return
 	RegisterSignal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
@@ -283,3 +285,53 @@
 	for(var/i in 0 to 4)
 		hallucination_charge(target_atom, 2, 8, 2, 2, FALSE)
 		do_charge(owner, target_atom, charge_delay, charge_past)
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge
+	name = "spear charge"
+	desc = "Charge forward and impale any victim with your spear."
+	button_icon_state = "spear_charge"
+	charge_distance = 7
+	charge_delay = 1 SECONDS
+	destroy_objects = FALSE
+	charge_damage = 10
+	var/distance
+	var/turf/starting_tile
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/Activate(atom/target_atom)
+	starting_tile = get_turf(target_atom)
+	charger.say("You're going to die you littls bastard!")
+	. = ..()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/charger = owner
+		charger.apply_damage(60, STAMINA)
+		charger.Immobilize(1 SECONDS)
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear/on_moved(atom/source)
+	return
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_bump(atom/movable/source, atom/target)
+	if(isliving(target))
+		QDEL_NULL(new_loop)
+		distance = get_dist(starting_tile, get_turf(source))
+		charge_damage += distance * 10 //we determine the total damage based on how far we have charged
+		hit_target(source, target, charge_damage)
+		charge_damage = 10
+		return
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/hit_target(atom/movable/source, atom/target, damage_dealt)
+	var/mob/living/living_source
+	if(isliving(source))
+		living_source = source
+
+	if(!isliving(target))
+		if(!target.density || target.CanPass(source, get_dir(target, source)))
+			return
+		source.visible_message(span_danger("[source] smashes into [target]!"))
+		if(!living_source)
+			return
+		living_source.Stun(6, ignore_canstun = TRUE)
+		return
+	var/mob/living/victim = target
+	victim.apply_damage(damage_dealt, STAMINA)
+	return
+

@@ -180,4 +180,3 @@
 	desc = "Daww look at that little mime!"
 	icon_state = "pillow_6_t"
 	variation = 6
-
