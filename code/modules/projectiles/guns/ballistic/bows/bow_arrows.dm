@@ -15,7 +15,7 @@
 
 /obj/item/ammo_casing/arrow/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/element/envenomable_casing)
+	AddElement(/datum/element/envenomable_casing)
 	AddElement(/datum/element/caseless, reusable)
 
 ///base arrow projectile
