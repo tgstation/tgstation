@@ -389,7 +389,7 @@
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 14
 	burn_modifier = 1.25
-	speed_modifier = 0.75 //slow and steady
+	speed_modifier = 0.75 //big big fungus
 
 /obj/item/bodypart/leg/right/mushroom
 	limb_id = SPECIES_MUSHROOM
@@ -397,7 +397,7 @@
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 14
 	burn_modifier = 1.25
-	speed_modifier = 0.75 //slow and steady
+	speed_modifier = 0.75 //big big fungus
 
 //GOLEM
 /obj/item/bodypart/head/golem
