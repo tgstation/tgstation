@@ -95,6 +95,8 @@
 	//limb is out and about, it can't really be considered an implant
 	bodypart_flags &= ~BODYPART_IMPLANTED
 	owner.remove_bodypart(src)
+	if(speed_modifier)
+		owner.update_bodypart_speed_modifier()
 
 	for(var/datum/wound/wound as anything in wounds)
 		wound.remove_wound(TRUE)
@@ -334,6 +336,8 @@
 			if(hand)
 				hand.update_appearance()
 		new_limb_owner.update_worn_gloves()
+	if(speed_modifier)
+		new_limb_owner.update_bodypart_speed_modifier()
 
 	if(special) //non conventional limb attachment
 		for(var/datum/surgery/attach_surgery as anything in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
