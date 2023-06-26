@@ -1178,7 +1178,7 @@
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	slowdown_inactive = 0.0
 	slowdown_active = -0.5
-	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced, /obj/item/mod/module/organ_thrower, /obj/item/mod/module/defibrillator/combat, /obj/item/mod/module/tether)
+	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced, /obj/item/mod/module/organ_thrower)
 	allowed_suit_storage = list(
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/dropper,
