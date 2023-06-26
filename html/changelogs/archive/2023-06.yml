@@ -783,3 +783,115 @@
   - rscadd: '...unless you get to do it while screaming ''IT LIVES!'' via Revival
       surgery. Screw conventional medicine and science, you know the true way to bring
       back the dead!'
+2023-06-23:
+  Cheshify:
+  - bugfix: Virology disposals now route directly to space, rather than sending their
+      nasty tubes to cargo.
+  - bugfix: A single maintenance spawner was removed from a wall by plumbing.
+  LemonInTheDark:
+  - bugfix: Dehardcodes some stuff with tram windows, they'll be easier to map with
+      now
+  - refactor: Border objects can now smooth with each other. I'm sure something cool
+      will come of this
+  Melbert:
+  - bugfix: Fix a runtime involving Bilingual Curators
+  - qol: Bilinguals get a message on spawn reporting which language they've learned,
+      or a message reporting they have learned no language if they're already fluent
+      in all possible ones.
+  TheVekter:
+  - rscadd: Adds a shark plush, obtainable from Cargo for a nominal fee.
+  - rscdel: Removed plush cucumber by popular request. Cucumber has been replaced
+      by the shark plushie in arcade machines.
+  YehnBeep:
+  - bugfix: Science department hallways now have unrestricted one-way exits on Delta,
+      Birdshot, and Icebox, to make these maps consistent with the others.
+2023-06-24:
+  Guillaume Prata:
+  - rscadd: 'New Wizard spell branch: Vendormacy! Summon runic vending machines with
+      your Vending Scepter, force push them on your enemies to squish them or blow
+      them up while they are busy buying from the machines.'
+  Hatterhat:
+  - rscadd: Baseballs can now be crafted with 3 leather.
+  Helg2:
+  - qol: pill press' max volume for bottles are 50, as the volume of bottles itself.
+  Improvedname:
+  - balance: Weakens summoned stickmen to be 1 or 2 hit
+  LT3:
+  - image: Delam and tram flipsigns have been replaced with information displays
+  - bugfix: Tram hit count is centrally managed instead of independently on each sign,
+      so they won't get out of sync
+  Melbert:
+  - bugfix: The Syndicate Assault Cyborg can autofire their LMG
+  SyncIt21:
+  - code_imp: makes sure cargo computer doesn't use `usr` var inside `ui_act()` which
+      could cause undefined behaviour
+  Wallem:
+  - image: Tweaks cardboard sheet sprite
+  YehnBeep:
+  - qol: Instrument delivery beacons now fit in pockets.
+  necromanceranne:
+  - bugfix: Arm implants properly handle EMPs depending on whether it is robotic or
+      organic. No longer can you EMP an organic organ!
+  timothymtorres:
+  - qol: Add UI preference menus for AI hologram and status displays
+2023-06-25:
+  ATHATH:
+  - rscadd: Adds a variant of the external organ manipulation surgery for robotic
+      body parts, similar to the robotic version of the internal organ manipulation
+      surgery. It uses the same procedure as non-head/torso prosthetic organ manipulation.
+  - rscadd: In layman's terms, augged people can get frills, antennae, wings, tails,
+      etc. attached to them now.
+  - qol: The suitability of crowbars in the "manipulate organs" and "manipulate features"
+      steps has been boosted from 55% to 100%, but only for the robotic versions of
+      those steps. Their suitability remains 55% for organic organ manipulation.
+  ChungusGamer666:
+  - refactor: Mutant livers can now handle chemicals in special ways. Currently, only
+      plasmaman, skeleton and golem livers do it. Every other species is the same.
+  Ghommie:
+  - bugfix: arrows can now be actually coated with reagents.
+  - admin: The Debug and Admin MODsuits now take a lot less time to (de)activate.
+      2 and 0.5 seconds respectively, compared to the default of 10s.
+  Melbert:
+  - rscadd: 'Wizarditis Improved. Those infected will now randomly cast one of the
+      following (weakened) spells at max stage: Teleport, Disable Tech, Mutate, Knock,
+      Forcewall, Blink, Smoke, Spacetime Distortion, Timestop, Repulse, Blind, Lightning
+      Bolt, or Swap'
+  - rscadd: A source of antimagic will prevent Wizarditis's ill effects, but won't
+      cure you.
+  Pickle-Coding:
+  - bugfix: Fix atoms not applying proper armour penetration logic.
+  - bugfix: Fix silenced living armour penetration not using proper armour penetration
+      logic.
+  - code_imp: Added macro for calculating armour penetration.
+  Seven:
+  - balance: Acid on a turf no longer immediately applies acid to its contents
+  - bugfix: Acid applied on a tile will no longer damage pipes below that tile
+  - bugfix: Xeno's corrosive acid no longer instakills mobs
+  - bugfix: Xenos can now touch acid
+  - bugfix: toys, stamps, and spacecash no longer has a missing texture when put into
+      suit storage
+  - qol: stamps are now allowed suit storage items in the hop, qm, and cargo wintercoats
+  SyncIt21:
+  - bugfix: glass bottles with reagents can be used for crafting, empty glass bottles
+      will be used as tools(e.g. empty glass bottle as rolling pin)
+  - bugfix: glass bottle with welding fuel can be used for crafting improvised shotgun
+      shells
+  - bugfix: bubble gum crate actually looks correct
+  - bugfix: fixes balloon alert runtime when spider webs are destroyed.
+  Tattle:
+  - admin: build mode help text is in an examine block
+  - admin: adv build mode and fill now have item previews
+  Wallem:
+  - image: Resprites plumbing machines
+  Youtubeboy139:
+  - image: Added new Space Beer sprite
+  - image: Added new Carp Lite sprite
+  - image: Added new Ale Bottle sprite
+  - image: Added new Two-Time Root Beer sprite
+  carlarctg:
+  - rscadd: Adds digital clocks, can be found in all the stations' hallways! Most
+      noticeably in bars or the bridge. They can also be lathed.
+  kinneb:
+  - image: Resprited the Limb Grower
+  norsvenska:
+  - rscadd: Christmas now has special station prefixes.

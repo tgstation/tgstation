@@ -216,11 +216,13 @@
 /obj/item/reagent_containers/cup/glass/bottle/beer/light
 	name = "Carp Lite"
 	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
+	icon_state = "litebeer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
 
 /obj/item/reagent_containers/cup/glass/bottle/rootbeer
 	name = "Two-Time root beer"
 	desc = "A popular, old-fashioned brand of root beer, known for its extremely sugary formula. Might make you want a nap afterwards."
+	icon_state = "twotime"
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/rootbeer = 30)
 	drink_type = SUGAR | JUNKFOOD
