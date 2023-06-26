@@ -107,7 +107,7 @@
 	name = "Butterdog"
 	reqs = list(
 		/obj/item/food/bun = 1,
-		/obj/item/food/butterslice = 1,
+		/obj/item/food/butter = 1,
 		)
 	result = /obj/item/food/butterdog
 	category = CAT_BREAD
