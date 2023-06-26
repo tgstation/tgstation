@@ -1164,8 +1164,8 @@
 	desc = "A corpse-snatching and rapid-retrieval modsuit, resulting from a lucrative tech exchange between Interdyne Pharmaceutics and Cybersun Industries."
 	extended_desc = "While Waffle Co. and Azik Interstellar provide the means, Donk Co., Tiger Cooperative, Animal Rights Consortium and \
 		Gorlex Marauders willing or easly bribable brawn, S.E.L.F. and MI13 information, the clear syndicate tech providers would be Interdyne and Cybersun, \
-		their combined knowledge in technologies rivaled by only most enigmatic of aliens, and certainly not by any Nanostrasen scientist. \
-		This modsuit model is one of rare fruits created by their joint operations, mashing scrapped designs with super soldier enhancements. \
+		their combined knowledge in technologies rivaled by only most enigmatic of aliens, and certainly not by any Nanotrasen scientist. \
+		This model is one of rare fruits created by their joint operations, mashing scrapped designs with super soldier enhancements. \
 		Already light, when powered on, this modsuits injects the wearer seemlessly with muscle-enhancing supplements, while adding piston strenght \
 		to their legs. Combination of these mechanisms is very energy draining - but results in next to no speed reduction for the wearer.\
 		Over the years, many a rich person, including Nanostrasen officials with premium subscriptions, had their life or genes rescued thanks to \
