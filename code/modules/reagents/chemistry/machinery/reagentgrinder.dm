@@ -1,4 +1,4 @@
-#define MILK_TO_BUTTER_COEFF 15
+#define MILK_TO_BUTTER_COEFF 25
 
 /obj/machinery/reagentgrinder
 	name = "\improper All-In-One Grinder"
