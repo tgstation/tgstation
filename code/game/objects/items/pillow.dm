@@ -125,6 +125,7 @@
 	var/datum/component/two_handed/two_handed = GetComponent(/datum/component/two_handed)
 	if(two_handed)
 		AddComponent(/datum/component/two_handed, force_unwielded = two_handed.force_unwielded + 5, force_wielded = two_handed.force_wielded + 10)
+		force += 5
 	else
 		force += 5
 	update_appearance()
