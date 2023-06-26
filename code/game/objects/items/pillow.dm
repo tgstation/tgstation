@@ -135,8 +135,8 @@
 	bricked = TRUE
 	var/datum/component/two_handed/two_handed = GetComponent(/datum/component/two_handed)
 	if(two_handed)
-		two_handed.force_wielded += 5
 		two_handed.force_unwielded += 5
+		two_handed.force_wielded += 10
 		force = two_handed.force_unwielded
 	else
 		force += 5
