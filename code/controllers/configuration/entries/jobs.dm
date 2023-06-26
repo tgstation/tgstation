@@ -1,6 +1,6 @@
 // This file pretty much just handles all of the interactions between jobconfig.toml and the codebase. This is started by work originating in SSconfig, so I'm okay with it being here.
 
-/// Initializes all of the config singletons for each job config type and adds it to the `job_config_datum_singletons` var list.
+/// Returns an associated list of all of the job config types that we have in the codebase.
 /datum/controller/subsystem/job/proc/generate_config_singletons()
 	var/returnable_list = list()
 	for(var/datum/job_config_type/config_datum as anything in subtypesof(/datum/job_config_type))
