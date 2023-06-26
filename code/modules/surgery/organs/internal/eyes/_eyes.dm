@@ -151,7 +151,7 @@
 	eye_color_left = initial(eye_color_left)
 	eye_color_right = initial(eye_color_right)
 
-/obj/item/organ/internal/eyes/apply_organ_damage(damage_amount, maximum, required_organ_flag)
+/obj/item/organ/internal/eyes/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
 	. = ..()
 	if(!owner)
 		return
