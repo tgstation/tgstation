@@ -405,7 +405,7 @@
 
 /obj/item/storage/backpack/duffelbag/update_desc(updates)
 	. = ..()
-	desc = "[initial(desc)]<br>[zipped_up ? "It's zipped up, can't get in it!" : "It's unzipped, and harder to move in."]"
+	desc = "[initial(desc)]<br>[zipped_up ? "It's zipped up, preventing you from accessing its contents." : "It's unzipped, and harder to move in."]"
 
 /obj/item/storage/backpack/duffelbag/attack_self(mob/user, modifiers)
 	if(zipped_up)
@@ -428,12 +428,12 @@
 	if(!zipped_up)
 		return ..()
 
-	balloon_alert(user, "znzipping...")
+	balloon_alert(user, "unzipping...")
 	playsound(src, 'sound/items/un_zip.ogg', 100, FALSE)
 	var/datum/callback/can_unzip = CALLBACK(src, PROC_REF(zipper_matches), TRUE)
 	if(!do_after(user, 2.1 SECONDS, src, extra_checks = can_unzip))
 		return
-	balloon_alert(user, "znzipped!")
+	balloon_alert(user, "unzipped")
 	set_zipper(FALSE)
 	return TRUE
 
@@ -449,7 +449,7 @@
 	var/datum/callback/can_zip = CALLBACK(src, PROC_REF(zipper_matches), FALSE)
 	if(!do_after(user, 0.5 SECONDS, src, extra_checks = can_zip))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	balloon_alert(user, "zipped!")
+	balloon_alert(user, "zipped")
 	set_zipper(TRUE)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
