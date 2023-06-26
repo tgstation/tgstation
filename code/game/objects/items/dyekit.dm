@@ -43,7 +43,7 @@
 		return
 	var/gradient_key = beard_or_hair == "Hair" ? GRADIENT_HAIR_KEY : GRADIENT_FACIAL_HAIR_KEY
 	if(beard_or_hair == "Hair")
-		human_target.set_hair_gradient(new_grad_style, new_color, update = TRUE)
+		human_target.set_hair_gradient(new_grad_style, new_grad_color, update = TRUE)
 	else
-		human_target.set_facial_hair_gradient(new_grad_style, new_color, update = TRUE)
+		human_target.set_facial_hair_gradient(new_grad_style, new_grad_color, update = TRUE)
 	playsound(src, 'sound/effects/spray.ogg', 10, vary = TRUE)
