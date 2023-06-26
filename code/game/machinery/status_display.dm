@@ -129,14 +129,14 @@
  * * message - the new message text.
  * Returns new /obj/effect/overlay/status_display_text or null if unchanged.
  */
-/obj/machinery/status_display/proc/update_message(obj/effect/overlay/status_display_text/overlay, line_y, message, x_offset)
+/obj/machinery/status_display/proc/update_message(obj/effect/overlay/status_display_text/overlay, line_y, message, x_offset, line_pair)
 	if(overlay && message == overlay.message)
 		return null
 
 	if(overlay)
 		qdel(overlay)
 
-	var/obj/effect/overlay/status_display_text/new_status_display_text = new(src, line_y, message, text_color, header_text_color, x_offset)
+	var/obj/effect/overlay/status_display_text/new_status_display_text = new(src, line_y, message, text_color, header_text_color, x_offset, line_pair)
 	// Draw our object visually "in front" of this display, taking advantage of sidemap
 	new_status_display_text.pixel_y = -32
 	new_status_display_text.pixel_z = 32
@@ -172,13 +172,18 @@
 			if(current_picture == AI_DISPLAY_DONT_GLOW) // If the thing's off, don't display the emissive yeah?
 				return .
 		else
+			var/line1_metric
+			var/line2_metric
 			var/line_pair
-			var/display_font = new STATUS_DISPLAY_FONT_DATUM()
-			// line_pair =
-			var/overlay = update_message(message1_overlay, LINE1_Y, message1, LINE1_X)
+			var/datum/font/display_font = new STATUS_DISPLAY_FONT_DATUM()
+			line1_metric = display_font.get_metrics(message1)
+			line2_metric = display_font.get_metrics(message2)
+			line_pair = (line1_metric > line2_metric ? line1_metric : line2_metric)
+
+			var/overlay = update_message(message1_overlay, LINE1_Y, message1, LINE1_X, line_pair)
 			if(overlay)
 				message1_overlay = overlay
-			overlay = update_message(message2_overlay, LINE2_Y, message2, LINE2_X)
+			overlay = update_message(message2_overlay, LINE2_Y, message2, LINE2_X, line_pair)
 			if(overlay)
 				message2_overlay = overlay
 
@@ -253,7 +258,7 @@
 	// If the line is short enough to not marquee, and it matches this, it's a header.
 	var/static/regex/header_regex = regex("^-.*-$")
 
-/obj/effect/overlay/status_display_text/Initialize(mapload, yoffset, line, text_color, header_text_color, xoffset = 0)
+/obj/effect/overlay/status_display_text/Initialize(mapload, yoffset, line, text_color, header_text_color, xoffset = 0, line_pair)
 	. = ..()
 
 	maptext_y = yoffset
@@ -279,7 +284,7 @@
 		add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "outline")))
 
 		// Scroll.
-		var/time = looping_marquee_width * SCROLL_RATE
+		var/time = line_pair * SCROLL_RATE
 		animate(src, maptext_x = -looping_marquee_width, time = time, loop = -1)
 		animate(maptext_x = 0, time = 0)
 	else
