@@ -261,7 +261,7 @@
 	desc = "Golems somehow measure external light levels and detect nearby ore using this sensitive mineral lattice."
 	color = COLOR_GOLEM_GRAY
 	visual = FALSE
-	status = ORGAN_MINERAL
+	organ_flags = ORGAN_MINERAL
 	color_cutoffs = list(10, 15, 5)
 	actions_types = list(/datum/action/cooldown/golem_ore_sight)
 
@@ -284,8 +284,7 @@
 	name = "robotic eyes"
 	icon_state = "cybernetic_eyeballs"
 	desc = "Your vision is augmented."
-	status = ORGAN_ROBOTIC
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 
 /obj/item/organ/internal/eyes/robotic/emp_act(severity)
 	. = ..()
