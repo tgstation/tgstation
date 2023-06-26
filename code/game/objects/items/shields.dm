@@ -330,4 +330,17 @@
 	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
+/obj/item/shield/pillow
+	name = "pillow shield"
+	desc = "A large and tough pillow designed to use in a pillow fight."
+	block_chance = 10
+	max_integrity = 10
+
+/obj/item/shield/pillow/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
+	if(damage_type == STAMINA && istype(hitby, /obj/item/pillow))
+		final_block_chance = 100
+		owner.apply_damage(20, STAMINA)
+	. = ..()
+
+
 #undef BATON_BASH_COOLDOWN

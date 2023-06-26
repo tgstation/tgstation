@@ -299,7 +299,6 @@
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/Activate(atom/target_atom)
 	starting_tile = get_turf(target_atom)
-	charger.say("You're going to die you littls bastard!")
 	. = ..()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/charger = owner
