@@ -42,7 +42,7 @@
 	bob.fully_replace_character_name(null, "Alice")
 	bob.set_haircolor(COLOR_LIGHT_BROWN, update = FALSE)
 	bob.set_hairstyle("Short Hair", update = FALSE)
-	bob.set_facial_haircolor(COLOR_LIGHT_PINK, update = FALSE)
+	bob.set_facial_haircolor(COLOR_LIGHT_BROWN, update = FALSE)
 	bob.set_facial_hairstyle("Beard (Full)", update = TRUE)
 
 	var/obj/item/bodypart/head/alices_head = alice.get_bodypart(BODY_ZONE_HEAD)
