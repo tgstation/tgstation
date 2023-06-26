@@ -190,7 +190,7 @@
 	return ..()
 
 /obj/item/lightreplacer/attack_self(mob/user)
-	var/on_a_light = FALSE
+	var/on_a_light = FALSE //For if we are on the same tile as a light when we do this
 	for(var/obj/machinery/light/target in user.loc)
 		replace_light(target, user)
 		on_a_light = TRUE
