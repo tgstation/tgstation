@@ -2,7 +2,7 @@
 	name = "\improper Plasmaman"
 	plural_form = "Plasmamen"
 	id = SPECIES_PLASMAMAN
-	sexes = 0
+	sexes = FALSE
 	meat = /obj/item/stack/sheet/mineral/plasma
 	species_traits = list(
 		NOTRANSSTING,
