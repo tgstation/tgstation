@@ -1,9 +1,10 @@
 // Status display
 // (formerly Countdown timer display)
 
-#define MAX_STATIC_WIDTH 25
+#define MAX_STATIC_WIDTH 22
 #define FONT_STYLE "12pt 'TinyUnicode'"
 #define SCROLL_RATE (0.04 SECONDS) // time per pixel
+#define SCROLL_PADDING 2 // how many pixels we chop to make a smooth loop
 #define LINE1_X 1
 #define LINE2_X 1
 #define LINE1_Y -4
@@ -247,40 +248,23 @@
 	// If the line is short enough to not marquee, and it matches this, it's a header.
 	var/static/regex/header_regex = regex("^-.*-$")
 
-	/// Width of each character, including kerning gap afterwards.
-	/// We don't use rich text or anything fancy, so we can bake these values.
-	/// TinyUnicode 12pt converted using Lummox's dmifontsplus (https://www.byond.com/developer/LummoxJR/DmiFontsPlus)
-	var/static/list/char_widths = list(
-		//   ! " # $ % & ' ( ) * + , - . /
-		1, 1, 3, 5, 4, 3, 5, 1, 2, 2, 3, 3, 2, 3, 1, 3,
-		// 0 1 2 3 4 5 6 7 8 9 : ; < = > ?
-		4, 2, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 2, 4, 2, 4,
-		// @ A B C D E F G H I J K L M N O
-		7, 4, 4, 3, 4, 3, 3, 4, 4, 3, 4, 4, 3, 5, 4, 4,
-		// P Q R S T U V W X Y Z [ \ ] ^ _
-		4, 4, 4, 4, 3, 4, 4, 5, 4, 4, 3, 2, 3, 2, 3, 5,
-		// ` a b c d e f g h i j k l m n o
-		2, 4, 4, 3, 4, 4, 3, 4, 4, 1, 2, 4, 1, 5, 4, 4,
-		// p q r s t u v w x y z { | } ~
-		4, 4, 3, 4, 3, 4, 4, 5, 3, 4, 4, 3, 1, 3, 5,
-	)
-
 /obj/effect/overlay/status_display_text/Initialize(mapload, yoffset, line, text_color, header_text_color, xoffset = 0)
 	. = ..()
 
 	maptext_y = yoffset
 	message = line
 
-	var/line_width = measure_width(line)
+	var/datum/font/display_font = new /datum/font/tiny_unicode/size_12pt()
+	var/line_width = display_font.get_metrics(line)
 
 	if(line_width > MAX_STATIC_WIDTH)
 		// Marquee text
-		var/marquee_message = "[line]  -  [line]  -  [line]"
+		var/marquee_message = "[line]   [line]   [line]"
 
 		// Width of full content. Must of these is never revealed unless the user inputted a single character.
-		var/full_marquee_width = measure_width(marquee_message)
+		var/full_marquee_width = display_font.get_metrics("[marquee_message]   ")
 		// We loop after only this much has passed.
-		var/looping_marquee_width = measure_width("[line]  -  ")
+		var/looping_marquee_width = (display_font.get_metrics("[line]   ]") - 2)
 
 		maptext = generate_text(marquee_message, center = FALSE, text_color = text_color)
 		maptext_width = full_marquee_width
@@ -298,27 +282,6 @@
 		var/color = header_regex.Find(line) ? header_text_color : text_color
 		maptext = generate_text(line, center = TRUE, text_color = color)
 		maptext_x = xoffset //Defaults to 0, this would be centered unless overided
-
-/**
- * A hyper-streamlined version of MeasureText that doesn't support different fonts, rich formatting, or multiline.
- * But it also doesn't require a client.
- *
- * Returns the width in pixels
- *
- * Arguments:
- * * text - the text to measure
- */
-/obj/effect/overlay/status_display_text/proc/measure_width(text)
-	var/width = 0
-	for(var/text_idx in 1 to length(text))
-		var/ascii = text2ascii(text, text_idx)
-		if(!(ascii in 0x20 to 0x7E))
-			// So we can't possibly runtime, even though the input should be in range already.
-			width += 3
-			continue
-		width += char_widths[ascii - 0x1F]
-
-	return width
 
 /**
  * Generate the actual maptext.
