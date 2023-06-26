@@ -107,6 +107,13 @@
 /obj/machinery/vending/liberationstation,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
+"dC" = (
+/obj/effect/turf_decal/trimline/red/line,
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape/brig)
 "dN" = (
 /obj/machinery/grill,
 /turf/open/floor/iron/kitchen/diagonal,
@@ -139,7 +146,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "dY" = (
-/obj/machinery/porta_turret/syndicate/energy/raven{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 6
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -173,6 +180,10 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/food/burger/rat,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = -7;
+	pixel_y = 13
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "eM" = (
@@ -270,7 +281,7 @@
 /turf/open/floor/iron/white/textured_edge,
 /area/shuttle/escape)
 "gH" = (
-/obj/machinery/porta_turret/syndicate/energy/raven{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -285,6 +296,7 @@
 /obj/machinery/pool_pump{
 	pixel_y = 15
 	},
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "hH" = (
@@ -293,6 +305,11 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
+"hZ" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/machinery/suit_storage_unit/security,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape/brig)
 "ie" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/closed/wall/mineral/plastitanium,
@@ -747,7 +764,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape/brig)
 "si" = (
-/obj/machinery/porta_turret/syndicate/energy/raven{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 10
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -1031,6 +1048,7 @@
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 1
 	},
+/obj/item/reagent_containers/cup/soda_cans/dr_gibb,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "yc" = (
@@ -1057,6 +1075,13 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/food/burger/superbite{
+	layer = 4
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_y = 2;
+	pixel_x = 11
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "yH" = (
@@ -1071,6 +1096,12 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
+"yT" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/machinery/suit_storage_unit/security,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape/brig)
 "za" = (
 /obj/structure/table,
 /obj/item/storage/box/handcuffs{
@@ -1166,7 +1197,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Bv" = (
-/obj/machinery/porta_turret/syndicate/energy/raven{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 4
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -1557,7 +1588,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "IQ" = (
-/obj/machinery/porta_turret/syndicate/energy/raven{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 9
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -1624,6 +1655,16 @@
 "Kd" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape/brig)
+"Kg" = (
+/obj/effect/turf_decal/trimline/red/line,
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 4
+	},
+/obj/structure/sign/poster/contraband/clown{
+	pixel_y = -30
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Ki" = (
@@ -1868,6 +1909,17 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
+"PT" = (
+/obj/structure/table/wood/fancy,
+/obj/item/flashlight/flare/candle/infinite{
+	desc = "A synthetic candle that won't melt down.";
+	name = "crimson red candle";
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/food/burger/spell,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape)
 "PU" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 8
@@ -1911,9 +1963,9 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "RO" = (
-/turf/open/floor/iron/white/textured_edge{
-	dir = 8
-	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/storage/cans/sixsoda,
+/turf/open/floor/noslip,
 /area/shuttle/escape)
 "So" = (
 /obj/item/storage/cans/sixbeer,
@@ -1925,9 +1977,6 @@
 /area/shuttle/escape)
 "Sq" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/food/burger/superbite{
-	layer = 4
-	},
 /obj/effect/turf_decal/trimline/dark_blue/line{
 	dir = 4
 	},
@@ -1945,14 +1994,11 @@
 	req_access = list("command");
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/cup/glass/bottle/beer{
-	pixel_y = 2;
-	pixel_x = 11
-	},
 /obj/item/food/pie/applepie{
 	pixel_y = 7;
-	pixel_x = -7
+	pixel_x = 9
 	},
+/obj/item/reagent_containers/cup/soda_cans/dr_gibb,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Sx" = (
@@ -2005,6 +2051,10 @@
 	dir = 8
 	},
 /obj/item/food/burger/tofu,
+/obj/item/reagent_containers/cup/soda_cans/thirteenloko{
+	pixel_x = 11;
+	pixel_y = 13
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Tw" = (
@@ -2175,7 +2225,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Wq" = (
-/obj/machinery/porta_turret/syndicate/energy/raven{
+/obj/machinery/porta_turret/centcom_shuttle{
 	dir = 8
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -2201,6 +2251,7 @@
 /area/shuttle/escape)
 "WT" = (
 /obj/effect/turf_decal/trimline/red/corner,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Xo" = (
@@ -2228,6 +2279,10 @@
 /obj/item/book/manual/wiki/detective,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/food/burger/crazy,
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = -7;
+	pixel_y = 13
+	},
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/brig)
 "Yr" = (
@@ -2274,6 +2329,15 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
+"ZP" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
+/turf/open/floor/iron/white/textured_edge{
+	dir = 8
+	},
+/area/shuttle/escape)
 
 (1,1,1) = {"
 kd
@@ -2286,7 +2350,7 @@ kd
 kd
 Wq
 lA
-uV
+Wq
 CR
 Wq
 kd
@@ -2421,7 +2485,7 @@ kd
 kd
 en
 EC
-kE
+PT
 Kc
 cf
 cf
@@ -2570,9 +2634,9 @@ eN
 rX
 rs
 iT
-Ds
+ZP
 ED
-RO
+Ds
 En
 SZ
 YZ
@@ -2704,7 +2768,7 @@ nZ
 SK
 MZ
 jW
-Hs
+Kg
 rX
 DJ
 lJ
@@ -2881,8 +2945,8 @@ Xo
 Uo
 KZ
 rX
-KD
-AB
+yT
+dC
 ac
 AB
 iP
@@ -2908,7 +2972,7 @@ UF
 mS
 mS
 UN
-vD
+RO
 xf
 xf
 xf
@@ -2927,8 +2991,8 @@ Ng
 IL
 eb
 rX
-jT
-AB
+hZ
+dC
 ac
 nZ
 UX
@@ -2954,7 +3018,7 @@ ie
 lk
 Al
 Jk
-vD
+RO
 xf
 xf
 xf
@@ -2973,7 +3037,7 @@ co
 uX
 qr
 rX
-jT
+hZ
 sx
 ac
 Oh
@@ -3252,7 +3316,7 @@ kd
 kd
 Bv
 aY
-uV
+Bv
 oz
 Bv
 kd
