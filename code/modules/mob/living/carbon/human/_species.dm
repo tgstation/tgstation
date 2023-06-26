@@ -74,7 +74,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
-	///Internal organs that are unique to this race, like a tail. list(typepath of organ 1, typepath of organ 2s)
+	///Internal organs that are unique to this race, like a tail. list(typepath of organ 1, typepath of organ 2)
 	var/list/mutant_organs = list()
 	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
 	var/list/external_organs = list()
