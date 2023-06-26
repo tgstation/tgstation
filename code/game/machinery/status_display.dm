@@ -2,10 +2,12 @@
 // (formerly Countdown timer display)
 
 #define MAX_STATIC_WIDTH 25
-#define FONT_STYLE "5pt 'Small Fonts'"
+#define FONT_STYLE "12pt 'TinyUnicode'"
 #define SCROLL_RATE (0.04 SECONDS) // time per pixel
-#define LINE1_Y -8
-#define LINE2_Y -15
+#define LINE1_X 1
+#define LINE2_X 1
+#define LINE1_Y -4
+#define LINE2_Y -11
 /// Status display which can show images and scrolling text.
 /obj/machinery/status_display
 	name = "status display"
@@ -167,10 +169,10 @@
 			if(current_picture == AI_DISPLAY_DONT_GLOW) // If the thing's off, don't display the emissive yeah?
 				return .
 		else
-			var/overlay = update_message(message1_overlay, LINE1_Y, message1)
+			var/overlay = update_message(message1_overlay, LINE1_Y, message1, LINE1_X)
 			if(overlay)
 				message1_overlay = overlay
-			overlay = update_message(message2_overlay, LINE2_Y, message2)
+			overlay = update_message(message2_overlay, LINE2_Y, message2, LINE2_X)
 			if(overlay)
 				message2_overlay = overlay
 
@@ -249,16 +251,16 @@
 	/// We don't use rich text or anything fancy, so we can bake these values.
 	var/static/list/char_widths = list(
 		//   ! " # $ % & ' ( ) * + , - . /
-		1, 2, 3, 5, 4, 5, 5, 2, 3, 3, 3, 4, 2, 3, 2, 3,
+		1, 1, 3, 5, 4, 3, 5, 1, 2, 2, 3, 3, 2, 3, 1, 3,
 		// 0 1 2 3 4 5 6 7 8 9 : ; < = > ?
-		4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 3, 3, 3, 3,
+		4, 2, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 2, 4, 2, 4,
 		// @ A B C D E F G H I J K L M N O
-		7, 5, 5, 5, 5, 4, 4, 5, 5, 2, 4, 5, 4, 6, 5, 5,
+		7, 4, 4, 3, 4, 3, 3, 4, 4, 3, 4, 4, 3, 5, 4, 4,
 		// P Q R S T U V W X Y Z [ \ ] ^ _
-		5, 5, 5, 5, 4, 5, 4, 6, 4, 4, 4, 3, 3, 3, 4, 4,
-		// ` a b c d e f g h i j k l m n o
+		4, 4, 4, 4, 3, 4, 4, 5, 4, 4, 3, 2, 3, 2, 3, 5,
+		// ` a b c d e f g h i j k l m n o // TODO
 		3, 5, 5, 5, 5, 4, 4, 5, 5, 2, 4, 5, 4, 6, 5, 5,
-		// p q r s t u v w x y z { | } ~
+		// p q r s t u v w x y z { | } ~ // TODO
 		5, 5, 5, 5, 4, 5, 4, 6, 4, 4, 4, 3, 2, 3, 4,
 	)
 
