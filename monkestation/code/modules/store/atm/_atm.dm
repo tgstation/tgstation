@@ -148,7 +148,7 @@
 
 	if(!withdraw_amount)
 		return
-	withdrawn_amount = clamp(withdrawn_amount, 0, current_balance)
+	withdraw_amount = clamp(withdraw_amount, 0, current_balance)
 	if(!living_user.client.prefs.adjust_metacoins(living_user.client.ckey, -withdraw_amount, donator_multipler = FALSE))
 		return
 
