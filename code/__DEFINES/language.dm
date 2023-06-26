@@ -4,10 +4,21 @@
 #define LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD 8
 
 // LANGUAGE SOURCE DEFINES
-#define LANGUAGE_ALL "all" // For use in full removal only.
-#define LANGUAGE_ATOM "atom"
-#define LANGUAGE_MIND "mind"
+/// For use in full removal only.
+#define LANGUAGE_ALL "all"
 
+// Generic language sources.
+/// Language is linked to the movable directly.
+#define LANGUAGE_ATOM "atom"
+/// Language is linked to the mob's mind.
+/// If a mind transfer happens, language follows.
+#define LANGUAGE_MIND "mind"
+/// Language is linked to the mob's species.
+/// If a species change happens, language goes away.
+#define LANGUAGE_SPECIES "species"
+
+// More specific language sources.
+// Only ever goes away when dismissed directly.
 #define LANGUAGE_ABSORB "absorb"
 #define LANGUAGE_APHASIA "aphasia"
 #define LANGUAGE_CTF "ctf"
@@ -24,3 +35,9 @@
 #define LANGUAGE_VOICECHANGE "voicechange"
 #define LANGUAGE_RADIOKEY "radiokey"
 #define LANGUAGE_BABEL "babel"
+
+// Language flags. Used in granting and removing languages.
+/// This language can be spoken.
+#define SPOKEN_LANGUAGE (1<<0)
+/// This language can be understood.
+#define UNDERSTOOD_LANGUAGE (1<<1)

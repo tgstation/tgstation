@@ -65,7 +65,6 @@
 	///If this mind's master is another mob (i.e. adamantine golems). Weakref of a /living.
 	var/datum/weakref/enslaved_to
 
-	var/datum/language_holder/language_holder
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
 	/// has this mind ever been an AI
@@ -118,7 +117,6 @@
 	QDEL_LIST(memories)
 	QDEL_NULL(memory_panel)
 	QDEL_LIST(antag_datums)
-	QDEL_NULL(language_holder)
 	set_current(null)
 	return ..()
 
@@ -166,18 +164,6 @@
 	SIGNAL_HANDLER
 	set_current(null)
 
-/datum/mind/proc/get_language_holder()
-	if(!language_holder)
-		if(iscarbon(current))
-			var/mob/living/carbon/talker = current
-			// AHH WHY DO MINDS ALSO HAVE LANGUAGE HOLDERS WHAT'S THE POINT OF THE "MIND" LANGUAGE SOURCE IF WE STORE IT TWICE ANYWAYS
-			var/type_to_use = talker.dna?.species?.species_language_holder || talker.language_holder?.type || /datum/language_holder
-			language_holder = new type_to_use(src)
-		else
-			language_holder = new(src)
-
-	return language_holder
-
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
 	set_original_character(null)
 	if(current) // remove ourself from our old body's mind variable
@@ -214,7 +200,10 @@
 	if(new_character.client)
 		LAZYCLEARLIST(new_character.client.recent_examines)
 		new_character.client.init_verbs() // re-initialize character specific verbs
-	current.update_atom_languages()
+
+	// Handles mind based languages going to the new body (and visa versa)
+	old_current.swap_mind_languages(current)
+
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFERRED, old_current)
 	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO)
 

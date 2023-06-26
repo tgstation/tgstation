@@ -123,7 +123,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			summoner.faction += "[REF(src)]"
 	remove_all_languages(LANGUAGE_MASTER)
 	copy_languages(to_who, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
-	update_atom_languages()
 	RegisterSignal(to_who, COMSIG_MOVABLE_MOVED, PROC_REF(check_distance))
 	RegisterSignal(to_who, COMSIG_QDELETING, PROC_REF(on_summoner_deletion))
 	RegisterSignal(to_who, COMSIG_LIVING_DEATH, PROC_REF(on_summoner_death))

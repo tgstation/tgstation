@@ -39,7 +39,7 @@
 		M.visible_message(span_danger("[user] beats [M] over the head with [src]!"), span_userdanger("[user] beats you over the head with [src]!"), span_hear("You hear smacking."))
 	else
 		M.visible_message(span_notice("[user] teaches [M] by beating [M.p_them()] over the head with [src]!"), span_boldnotice("As [user] hits you with [src], [flavour_text]."), span_hear("You hear smacking."))
-		M.grant_language(language, TRUE, TRUE, LANGUAGE_MIND)
+		M.grant_language(language, source = LANGUAGE_MIND)
 		use_charge(user)
 
 /obj/item/language_manual/proc/use_charge(mob/user)

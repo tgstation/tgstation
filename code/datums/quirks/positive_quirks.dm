@@ -242,7 +242,7 @@
 	if(!length(possible_languages))
 		return
 	extra_language = pick(possible_languages)
-	quirk_holder.grant_language(extra_language, understood = TRUE, spoken = TRUE, source = LANGUAGE_QUIRK)
+	quirk_holder.grant_language(extra_language, language_flags = ALL, source = LANGUAGE_QUIRK)
 
 /datum/quirk/bilingual/post_add()
 	if(extra_language)
