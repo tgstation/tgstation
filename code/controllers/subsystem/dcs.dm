@@ -6,11 +6,13 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 	var/list/elements_by_type = list()
 
 	/**
-	 * An assoc list of bespoke element types and lists that have been used as arguments.
+	 * A nested assoc list of bespoke element types as key, and a superlist of all instances of lists
+	 * that have been used as arguments, with their contents sorted alpha-numerically, as assoc value.
+	 * Within the super list, the sorted lists are key, while the original unsorted lists are values.
 	 *
 	 * e.g. list(
-	 *	/datum/element/first = list(list(A), list(B)),
-	 *	/datum/element/second = list(list(C), list(D)),
+	 *	/datum/element/first = list(list(A, B, C) = list(B, A, C), list(A, B) = list(A, B)),
+	 *	/datum/element/second = list(list(B, C) = list(C, B), list(D) = list(D)),
 	 * )
 	 *
 	 * Used by the dcs_check_list_arguments unit test.
@@ -55,7 +57,7 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 			else
 				if (!istext(value) && !isnum(value))
 					if(PERFORM_ALL_TESTS(dcs_check_list_arguments) && islist(value))
-						LAZYOR(arguments_that_are_lists_by_element[eletype], list(value))
+						add_to_arguments_that_are_lists(value, eletype)
 					value = REF(value)
 				named_arguments[key] = value
 			continue
@@ -64,7 +66,7 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 			fullid += "[key]"
 		else
 			if(PERFORM_ALL_TESTS(dcs_check_list_arguments) && islist(key))
-				LAZYOR(arguments_that_are_lists_by_element[eletype], list(key))
+				add_to_arguments_that_are_lists(key, eletype)
 			fullid += REF(key)
 
 	if(length(named_arguments))
@@ -72,3 +74,20 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 		fullid += named_arguments
 
 	return list2params(fullid)
+
+/**
+ * Offloading the first half of the dcs_check_list_arguments here, which is populating the superlist
+ * with sublists that will be later compared with each other by the dcs_check_list_arguments unit test.
+ */
+/datum/controller/subsystem/processing/dcs/proc/add_to_arguments_that_are_lists(list/argument, datum/element/element_type)
+	if(initial(element_type.element_flags) & ELEMENT_NO_LIST_UNIT_TEST)
+		return
+	var/list/element_type_superlist = arguments_that_are_lists_by_element[element_type]
+	if(!element_type_superlist)
+		arguments_that_are_lists_by_element[element_type] = element_type_superlist = list()
+
+	var/list/sorted_argument = argument
+	if(!(initial(element_type.element_flags) & ELEMENT_DONT_SORT_LIST_ARGS))
+		sorted_argument = sortTim(argument.Copy(), GLOBAL_PROC_REF(cmp_embed_text_asc))
+
+	element_type_superlist[sorted_argument] = argument
