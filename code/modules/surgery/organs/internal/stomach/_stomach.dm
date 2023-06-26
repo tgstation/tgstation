@@ -3,6 +3,7 @@
 
 /obj/item/organ/internal/stomach
 	name = "stomach"
+	desc = "Onaka ga suite imasu."
 	icon_state = "stomach"
 	visual = FALSE
 	w_class = WEIGHT_CLASS_SMALL
@@ -10,7 +11,6 @@
 	slot = ORGAN_SLOT_STOMACH
 	attack_verb_continuous = list("gores", "squishes", "slaps", "digests")
 	attack_verb_simple = list("gore", "squish", "slap", "digest")
-	desc = "Onaka ga suite imasu."
 
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY * 1.15 // ~13 minutes, the stomach is one of the first organs to die
@@ -29,6 +29,9 @@
 
 	///The rate that the stomach will transfer reagents to the body
 	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.025
+
+	/// Multiplier for hunger rate
+	var/hunger_modifier = 1
 
 	var/operated = FALSE //whether the stomach's been repaired with surgery and can be fixed again or not
 
@@ -154,6 +157,7 @@
 			if(SPT_PROB(round(-human.satiety/77), seconds_per_tick))
 				human.set_jitter_if_lower(10 SECONDS)
 			hunger_rate = 3 * HUNGER_FACTOR
+		hunger_rate *= hunger_modifier
 		hunger_rate *= human.physiology.hunger_mod
 		human.adjust_nutrition(-hunger_rate * seconds_per_tick)
 
@@ -268,21 +272,23 @@
 	return ..()
 
 /obj/item/organ/internal/stomach/bone
+	name = "mass of bones"
 	desc = "You have no idea what this strange ball of bones does."
+	icon_state = "stomach-bone"
 	metabolism_efficiency = 0.025 //very bad
 	organ_traits = list(TRAIT_NOHUNGER)
 
 /obj/item/organ/internal/stomach/bone/plasmaman
 	name = "digestive crystal"
-	icon_state = "stomach-p"
-	organ_traits = list()
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
+	icon_state = "stomach-p"
 	metabolism_efficiency = 0.06
+	organ_traits = null
 
 /obj/item/organ/internal/stomach/cybernetic
 	name = "basic cybernetic stomach"
-	icon_state = "stomach-c"
 	desc = "A basic device designed to mimic the functions of a human stomach"
+	icon_state = "stomach-c"
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
@@ -290,8 +296,8 @@
 
 /obj/item/organ/internal/stomach/cybernetic/tier2
 	name = "cybernetic stomach"
-	icon_state = "stomach-c-u"
 	desc = "An electronic device designed to mimic the functions of a human stomach. Handles disgusting food a bit better."
+	icon_state = "stomach-c-u"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 2
 	emp_vulnerability = 40
@@ -299,8 +305,8 @@
 
 /obj/item/organ/internal/stomach/cybernetic/tier3
 	name = "upgraded cybernetic stomach"
-	icon_state = "stomach-c-u2"
 	desc = "An upgraded version of the cybernetic stomach, designed to improve further upon organic stomachs. Handles disgusting food very well."
+	icon_state = "stomach-c-u2"
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 3
 	emp_vulnerability = 20
