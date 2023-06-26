@@ -139,8 +139,8 @@
 	if (!..(preferences))
 		return FALSE
 
-	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = GLOB.species_list[initial(species_type.id)]
+	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = new species_type
 	return !(TRAIT_NO_UNDERWEAR in species.inherent_traits)
 
 /datum/preference/choiced/underwear/compile_constant_data()
