@@ -7,6 +7,17 @@
 	lefthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_lefthand.dmi'
 	righthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_righthand.dmi'
 
+/obj/item/crowbar/red
+	greyscale_config = /datum/greyscale_config/crowbar
+	greyscale_config_belt = /datum/greyscale_config/crowbar_belt_overlay
+	greyscale_config_inhand_left = /datum/greyscale_config/crowbar_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/crowbar_inhand_right
+	var/static/list/crowbar_colors = list("#AAFF00", "#FF6600", "#6600FF", "#0066FF", "#FFFF00", "#FF0000")
+
+/obj/item/crowbar/red/Initialize(mapload)
+	. = ..()
+	set_greyscale(colors = list(pick(wirecutter_colors_rapt)))
+
 /obj/item/crowbar/power/syndicate	//Because we have a clearly different color JOL than upstream, this needs to be specifically different now
 	inhand_icon_state = "jaws_syndie"
 
@@ -83,3 +94,25 @@
 
 /datum/greyscale_config/wirecutters
 	icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
+
+
+
+/datum/greyscale_config/crowbar
+	name = "Crowbar"
+	icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wirecutters.json'
+
+/datum/greyscale_config/crowbar_belt_overlay
+	name = "Crowbar Belt Worn Icon"
+	icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_onbelt.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wirecutters.json'
+
+/datum/greyscale_config/crowbar_inhand_left
+	name = "Held Crowbar, Left"
+	icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wirecutter_worn.json'
+
+/datum/greyscale_config/crowbar_inhand_right
+	name = "Held Crowbar, Right"
+	icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wirecutter_worn.json'
