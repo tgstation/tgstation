@@ -605,6 +605,15 @@
 /obj/item/food/burger/mcguffin,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/shuttle/escape)
+"nx" = (
+/obj/machinery/porta_turret/syndicate{
+	faction = list("neutral","silicon","turret");
+	gender = "female";
+	req_access = list("security");
+	dir = 4
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
 "nE" = (
 /obj/structure/window/reinforced/survival_pod,
 /turf/open/floor/iron/dark/textured_large,
@@ -742,6 +751,7 @@
 /area/shuttle/escape)
 "rs" = (
 /obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /turf/open/floor/iron/white/textured_corner,
 /area/shuttle/escape)
 "rw" = (
@@ -1197,8 +1207,11 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Bv" = (
-/obj/machinery/porta_turret/centcom_shuttle{
-	dir = 4
+/obj/machinery/porta_turret/syndicate{
+	faction = list("neutral","silicon","turret");
+	gender = "female";
+	req_access = list("security");
+	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
@@ -1316,7 +1329,6 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "Ds" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
 	},
@@ -1367,6 +1379,15 @@
 "Ep" = (
 /obj/structure/fireaxecabinet/directional/south,
 /turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"Et" = (
+/obj/machinery/porta_turret/syndicate{
+	faction = list("neutral","silicon","turret");
+	gender = "female";
+	req_access = list("security");
+	dir = 10
+	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "EC" = (
 /obj/structure/chair/comfy/teal,
@@ -1733,6 +1754,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
+"LH" = (
+/obj/machinery/porta_turret/syndicate{
+	faction = list("neutral","silicon","turret");
+	gender = "female";
+	req_access = list("security");
+	dir = 1
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
 "LM" = (
 /obj/machinery/shuttle_manipulator{
 	desc = "A holographic display of the cruise shuttle we're on right now.";
@@ -1877,6 +1907,15 @@
 "OJ" = (
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/escape)
+"OK" = (
+/obj/machinery/porta_turret/syndicate{
+	faction = list("neutral","silicon","turret");
+	gender = "female";
+	req_access = list("security");
+	dir = 6
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape)
 "OQ" = (
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/brig)
@@ -1928,6 +1967,10 @@
 /obj/item/clothing/head/helmet/space/freedom,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/bedsheet/patriot,
+/obj/item/station_charter{
+	name = "The Declaration of Independence";
+	desc = "The fundamental document establishing the United States as a nation, adopted on July 4, 1776. What the fuck is it doing here?"
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Qu" = (
@@ -2225,8 +2268,11 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Wq" = (
-/obj/machinery/porta_turret/centcom_shuttle{
-	dir = 8
+/obj/machinery/porta_turret/syndicate{
+	faction = list("neutral","silicon","turret");
+	gender = "female";
+	req_access = list("security");
+	dir = 9
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
@@ -2253,6 +2299,15 @@
 /obj/effect/turf_decal/trimline/red/corner,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape)
+"Xd" = (
+/obj/machinery/porta_turret/syndicate{
+	faction = list("neutral","silicon","turret");
+	gender = "female";
+	req_access = list("security");
+	dir = 8
+	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "Xo" = (
 /obj/effect/turf_decal/trimline/yellow/line{
@@ -2350,9 +2405,9 @@ kd
 kd
 Wq
 lA
-Wq
+Xd
 CR
-Wq
+Et
 kd
 kd
 kd
@@ -2368,9 +2423,9 @@ kd
 kd
 Wq
 lA
-uV
+Xd
 jt
-Wq
+Et
 kd
 kd
 kd
@@ -2426,7 +2481,7 @@ en
 en
 en
 uV
-si
+Et
 kd
 kd
 kd
@@ -2529,7 +2584,7 @@ kd
 kd
 kd
 kd
-uV
+LH
 cf
 WT
 dV
@@ -2616,7 +2671,7 @@ uV
 uV
 "}
 (7,1,1) = {"
-IQ
+Wq
 uV
 Tw
 xU
@@ -3030,7 +3085,7 @@ xj
 xj
 "}
 (16,1,1) = {"
-gH
+Bv
 uV
 Tw
 co
@@ -3127,7 +3182,7 @@ kd
 kd
 kd
 kd
-uV
+LH
 cf
 Ij
 nb
@@ -3300,7 +3355,7 @@ en
 en
 en
 uV
-dY
+OK
 kd
 kd
 kd
@@ -3316,9 +3371,9 @@ kd
 kd
 Bv
 aY
-Bv
+nx
 oz
-Bv
+OK
 kd
 kd
 kd
@@ -3334,9 +3389,9 @@ kd
 kd
 Bv
 aY
-uV
+nx
 oz
-Bv
+OK
 kd
 kd
 kd
