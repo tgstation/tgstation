@@ -174,16 +174,19 @@
 
 /**
  * adds an supply pack to the checkout cart
- * * params - an list with id of the supply pack to add to the cart as its only element
+ * * user - the mobe doing this order
+ * * id - the type of pack to order
+ * * amount - the amount to order. You may not order more then 10 things at once
  */
-/obj/machinery/computer/cargo/proc/add_item(mob/user, params)
+/obj/machinery/computer/cargo/proc/add_item(mob/user, id, amount = 1)
 	if(is_express)
 		return
-	var/id = params["id"]
 	id = text2path(id) || id
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 	if(!istype(pack))
-		CRASH("Unknown supply pack id given by order console ui. ID: [params["id"]]")
+		CRASH("Unknown supply pack id given by order console ui. ID: [id]")
+	if(amount > 50 || amount < 1) // Holy shit fuck off
+		CRASH("Invalid amount passed into add_item")
 	if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.drop_pod_only || (pack.special && !pack.special_enabled))
 		return
 
@@ -228,7 +231,6 @@
 		say("ERROR: Small crates may only be purchased by private accounts.")
 		return
 
-	var/amount = params["amount"]
 	for(var/count in 1 to amount)
 		var/obj/item/coupon/applied_coupon
 		for(var/obj/item/coupon/coupon_check in loaded_coupons)
@@ -254,10 +256,9 @@
 
 /**
  * removes an item from the checkout cart
- * * params - an list with the id of the cart item to remove as its only element
+ * * id - the id of the cart item to remove
  */
-/obj/machinery/computer/cargo/proc/remove_item(params)
-	var/id = text2num(params["id"])
+/obj/machinery/computer/cargo/proc/remove_item(id)
 	for(var/datum/supply_order/order in SSshuttle.shopping_list)
 		if(order.id != id)
 			continue
@@ -348,12 +349,12 @@
 				ui.user.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
 		if("add")
-			return add_item(ui.user, params)
+			return add_item(ui.user, params["id"])
 		if("add_by_name")
 			var/supply_pack_id = name_to_id(params["order_name"])
 			if(!supply_pack_id)
 				return
-			return add_item(ui.user, list("id" = supply_pack_id, "amount" = 1))
+			return add_item(ui.user, supply_pack_id)
 		if("remove")
 			var/order_name = params["order_name"]
 			//try removing atleast one item with the specified name. An order may not be removed if it was from the department
@@ -362,7 +363,7 @@
 			for(var/datum/supply_order/order in shopping_cart)
 				if(order.pack.name != order_name)
 					continue
-				if(remove_item(list("id" = order.id)))
+				if(remove_item(order.id))
 					return TRUE
 
 			return TRUE
@@ -373,23 +374,25 @@
 			var/list/shopping_cart = SSshuttle.shopping_list.Copy() //we operate on the list copy else we would get runtimes when removing & iterating over the same SSshuttle.shopping_list
 			for(var/datum/supply_order/order in shopping_cart) //find corresponding order id for the order name
 				if(order.pack.name == order_name)
-					remove_item(list("id" = "[order.id]"))
+					remove_item(order.id)
 
 			//now add the new amount stuff
 			var/amount = text2num(params["amount"])
 			if(amount == 0)
 				return TRUE
+			if(amount > 50)
+				return
 			var/supply_pack_id = name_to_id(order_name) //map order name to supply pack id for adding
 			if(!supply_pack_id)
 				return
-			return add_item(ui.user, list("id" = supply_pack_id, "amount" = amount))
+			return add_item(ui.user, supply_pack_id, amount)
 		if("clear")
 			//create copy of list else we will get runtimes when iterating & removing items on the same list SSshuttle.shopping_list
 			var/list/shopping_cart = SSshuttle.shopping_list.Copy()
 			for(var/datum/supply_order/cancelled_order in shopping_cart)
 				if(cancelled_order.department_destination || !cancelled_order.can_be_cancelled)
 					continue //don't cancel other department's orders or orders that can't be cancelled
-				remove_item(list("id" = "[cancelled_order.id]")) //remove & properly refund any coupons attached with this order
+				remove_item(cancelled_order.id) //remove & properly refund any coupons attached with this order
 		if("approve")
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.request_list)
