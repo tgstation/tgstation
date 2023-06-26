@@ -18,6 +18,7 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 	 * Used by the dcs_check_list_arguments unit test.
 	 */
 	var/list/arguments_that_are_lists_by_element = list()
+	var/list/sorted_arguments_that_are_lists = list()
 
 /datum/controller/subsystem/processing/dcs/Recover()
 	_listen_lookup = SSdcs._listen_lookup
@@ -88,6 +89,8 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 
 	var/list/sorted_argument = argument
 	if(!(initial(element_type.element_flags) & ELEMENT_DONT_SORT_LIST_ARGS))
-		sorted_argument = sortTim(argument.Copy(), GLOBAL_PROC_REF(cmp_embed_text_asc))
+		sorted_argument = sorted_arguments_that_are_lists[argument]
+		if(!sorted_argument)
+			sorted_arguments_that_are_lists[argument] = sorted_argument = sortTim(argument.Copy(), GLOBAL_PROC_REF(cmp_embed_text_asc))
 
 	element_type_superlist[sorted_argument] = argument
