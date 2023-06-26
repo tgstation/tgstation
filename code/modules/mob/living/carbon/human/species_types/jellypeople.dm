@@ -10,6 +10,7 @@
 	name = "\improper Jellyperson"
 	plural_form = "Jellypeople"
 	id = SPECIES_JELLYPERSON
+	examine_limb_id = SPECIES_JELLYPERSON
 	species_traits = list(
 		MUTCOLORS,
 	)
