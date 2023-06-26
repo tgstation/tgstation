@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// What languages this species can understand and say.
 	/// Use a [language holder datum][/datum/language_holder] typepath in this var.
 	/// Should never be null.
-	var/datum/language_holder/species_language_holder = /datum/language_holder
+	var/datum/language_holder/species_language_holder = /datum/language_holder/human_basic
 	/**
 	  * Visible CURRENT bodyparts that are unique to a species.
 	  * DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK

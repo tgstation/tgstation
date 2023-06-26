@@ -15,6 +15,7 @@
 #define LANGUAGE_MIND "mind"
 /// Language is linked to the mob's species.
 /// If a species change happens, language goes away.
+/// If applied to a non-human (no species) atom, this is effectively the same as [LANGUAGE_ATOM].
 #define LANGUAGE_SPECIES "species"
 
 // More specific language sources.
