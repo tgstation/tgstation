@@ -1175,7 +1175,7 @@
 	if(!istype(owner))
 		return
 	for(var/obj/item/bodypart/limb as anything in owner.bodyparts)
-		if(!IS_ORGANIC_LIMB(limb))
+		if(IS_ROBOTIC_LIMB(limb))
 			cybernetics_level++
 	for(var/obj/item/organ/organ as anything in owner.organs)
 		if(IS_ROBOTIC_ORGAN(organ) && !(organ.organ_flags & ORGAN_HIDDEN))
@@ -1201,13 +1201,13 @@
 
 /datum/quirk/body_purist/proc/on_limb_gain(datum/source, obj/item/bodypart/new_limb, special)
 	SIGNAL_HANDLER
-	if(!IS_ORGANIC_LIMB(new_limb))
+	if(IS_ROBOTIC_LIMB(new_limb))
 		cybernetics_level++
 		update_mood()
 
 /datum/quirk/body_purist/proc/on_limb_lose(datum/source, obj/item/bodypart/old_limb, special)
 	SIGNAL_HANDLER
-	if(!IS_ORGANIC_LIMB(old_limb))
+	if(IS_ROBOTIC_LIMB(old_limb))
 		cybernetics_level--
 		update_mood()
 
