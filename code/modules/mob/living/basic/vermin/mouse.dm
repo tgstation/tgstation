@@ -296,9 +296,9 @@
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/consumable/liquidgibs = 5)
 	decomp_req_handle = TRUE
 	ant_attracting = FALSE
+	decomp_type = /obj/item/food/deadmouse/moldy
 	var/body_color = "gray"
 	var/critter_type = /mob/living/basic/mouse
-	decomp_type = /obj/item/food/deadmouse/moldy
 
 /obj/item/food/deadmouse/Initialize(mapload, mob/living/basic/mouse/dead_critter)
 	. = ..()
@@ -324,7 +324,7 @@
 	var/mob/living/basic/mouse/revived_critter = new critter_type (drop_location(), FALSE, body_color)
 	revived_critter.name = name
 	revived_critter.lazarus_revive(user, injector.malfunctioning)
-	injector.expende(revived_critter, user)
+	injector.expend(revived_critter, user)
 	qdel(src)
 	return LAZARUS_INJECTOR_USED
 

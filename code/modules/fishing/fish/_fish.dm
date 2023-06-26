@@ -230,7 +230,7 @@
 		balloon_alert(user, "it's not dead!")
 		return
 	set_status(FISH_ALIVE)
-	injector.expende(src, user)
+	injector.expend(src, user)
 	return LAZARUS_INJECTOR_USED
 
 /obj/item/fish/proc/get_aquarium_animation()

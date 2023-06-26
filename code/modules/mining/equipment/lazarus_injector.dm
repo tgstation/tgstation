@@ -45,9 +45,9 @@
 		return
 
 	target_animal.lazarus_revive(user, malfunctioning)
-	expende(target_animal, user)
+	expend(target_animal, user)
 
-/obj/item/lazarus_injector/proc/expende(atom/revived_target, mob/user)
+/obj/item/lazarus_injector/proc/expend(atom/revived_target, mob/user)
 	user.visible_message(span_notice("[user] injects [revived_target] with [src], reviving it."))
 	SSblackbox.record_feedback("tally", "lazarus_injector", 1, revived_target.type)
 	loaded = FALSE

@@ -407,7 +407,7 @@
 	if(beegent)
 		revived_bee.assign_reagent(beegent)
 	revived_bee.lazarus_revive(user, injector.malfunctioning)
-	injector.expende(revived_bee, user)
+	injector.expend(revived_bee, user)
 	qdel(src)
 	return LAZARUS_INJECTOR_USED
 
