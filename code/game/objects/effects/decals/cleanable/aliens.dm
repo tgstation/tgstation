@@ -51,7 +51,7 @@
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/spread_movement_effects(datum/move_loop/has_target/source)
 	SIGNAL_HANDLER
-	if(isclosedturf(loc) || (isgroundlessturf(loc) && !SSmapping.get_turf_below(loc)))
+	if(NeverShouldHaveComeHere(loc))
 		return
 	new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc)
 
