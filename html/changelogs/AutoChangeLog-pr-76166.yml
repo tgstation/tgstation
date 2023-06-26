@@ -1,0 +1,4 @@
+author: "Momo8289"
+delete-after: True
+changes:
+  - bugfix: "Items that shouldn't have been stacking should no longer stack."
