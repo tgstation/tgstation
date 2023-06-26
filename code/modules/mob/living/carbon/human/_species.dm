@@ -129,6 +129,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/death_sound
 	///Sounds to override barefeet walking
 	var/list/special_step_sounds
+	///Special sound for grabbing
+	var/grab_sound
 	/// A path to an outfit that is important for species life e.g. plasmaman outfit
 	var/datum/outfit/outfit_important_for_life
 

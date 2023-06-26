@@ -314,8 +314,12 @@
 
 	if(!supress_message)
 		var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
-		if(ismob(src) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
-			sound_to_play = null
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.dna.species.grab_sound)
+				sound_to_play = H.dna.species.grab_sound
+			if(HAS_TRAIT(H, TRAIT_STRONG_GRABBER))
+				sound_to_play = null
 		playsound(src.loc, sound_to_play, 50, TRUE, -1)
 	update_pull_hud_icon()
 
