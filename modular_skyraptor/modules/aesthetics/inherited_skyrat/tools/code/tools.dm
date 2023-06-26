@@ -3,8 +3,7 @@
 
 /obj/item/crowbar
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
-
-/obj/item/crowbar/power
+	belt_icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_onbelt.dmi'
 	lefthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_lefthand.dmi'
 	righthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_righthand.dmi'
 
@@ -19,6 +18,7 @@
 
 /obj/item/wrench
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
+	belt_icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_onbelt.dmi'
 
 /obj/item/wrench/caravan
 	icon = 'icons/obj/tools.dmi'
@@ -27,6 +27,7 @@
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
 	lefthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_lefthand.dmi'
 	righthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_righthand.dmi'
+	belt_icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_onbelt.dmi'
 
 /obj/item/construction/plumbing //This icon override NEEDS to be here for the subtypes
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
@@ -50,6 +51,11 @@
 	righthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_righthand.dmi'
 
 /obj/item/construction/rld
+	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
+	lefthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_lefthand.dmi'
+	righthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_righthand.dmi'
+
+/obj/item/construction/rtd
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
 	lefthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_lefthand.dmi'
 	righthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_righthand.dmi'

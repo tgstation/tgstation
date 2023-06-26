@@ -21,6 +21,9 @@
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	///Icon file for right inhand overlays
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	
+	/// SKYRAPTOR ADDITION: belt icon file
+	var/belt_icon_file = 'icons/obj/clothing/belt_overlays.dmi'
 
 	///Icon file for mob worn overlays.
 	var/icon/worn_icon
@@ -834,7 +837,7 @@
 	var/icon_state_to_use = belt_icon_state || icon_state
 	if(greyscale_config_belt && greyscale_colors)
 		return mutable_appearance(SSgreyscale.GetColoredIconByType(greyscale_config_belt, greyscale_colors), icon_state_to_use)
-	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state_to_use)
+	return mutable_appearance(belt_icon_file, icon_state_to_use) ///SKYRAPTOR EDIT: modularized belt icons
 
 /obj/item/proc/update_slot_icon()
 	if(!ismob(loc))

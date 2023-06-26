@@ -135,15 +135,16 @@
 
 //completely overriding this is ill-advised but here we are
 /obj/machinery/light/update_icon_state()
+	var/return_valu = ..()
 	switch(status) // set icon_states
 		if(LIGHT_OK)
-			var/area/local_area =get_room_area(src)
+			var/area/local_area = get_room_area(src)
 			if((local_area?.fire))
 				icon_state = "[base_state]_fire"
-			else if(major_emergency)
-				icon_state = "[base_state]_emergency"
 			else if(low_power_mode)
 				icon_state = "[base_state]_lpower"
+			else if(major_emergency)
+				icon_state = "[base_state]_emergency"
 			else
 				icon_state = "[base_state]"
 		if(LIGHT_EMPTY)
@@ -152,7 +153,7 @@
 			icon_state = "[base_state]-burned"
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
-	return ..()
+	return return_valu
 
 #undef NIGHTSHIFT_LIGHT_MODIFIER
 #undef NIGHTSHIFT_COLOR_MODIFIER
