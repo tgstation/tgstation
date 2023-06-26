@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 		we don't need to send a team to your station to resolve the situation do we?"
 	arrival_announcement = "This is the tax conflict resolution team, prepare for your assets to be liquidated and be charged with tax fraud, \
 		if you fail to pay your taxes in time."
-	possible_answers = list("You know, I was just about to pay that. \ Thanks for the reminder!","I don't care WHO the IRS sends, \ I'm not paying for my taxes!")
+	possible_answers = list("You know, I was just about to pay that. Thanks for the reminder!","I don't care WHO the IRS sends, I'm not paying for my taxes!")
 
 	response_received = "Payment received, We salute you for being law-abiding tax-paying citizens"
 	response_too_late = "Too late, A team has already been sent out resolve this matter directly."
