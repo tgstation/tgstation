@@ -39,7 +39,6 @@
 
 	var/mob/living/carbon/human/bob = allocate(/mob/living/carbon/human/consistent)
 	bob.fully_replace_character_name(null, "Bob")
-	bob.fully_replace_character_name(null, "Alice")
 	bob.set_haircolor(COLOR_LIGHT_BROWN, update = FALSE)
 	bob.set_hairstyle("Short Hair", update = FALSE)
 	bob.set_facial_haircolor(COLOR_LIGHT_BROWN, update = FALSE)

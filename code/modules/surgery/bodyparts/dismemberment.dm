@@ -233,6 +233,8 @@
 /obj/item/bodypart/chest/drop_limb(special)
 	if(special)
 		return ..()
+	//if this is not a special drop, this is a mistake
+	return FALSE
 
 /obj/item/bodypart/arm/drop_limb(special)
 	var/mob/living/carbon/arm_owner = owner
@@ -374,7 +376,7 @@
 
 /obj/item/bodypart/head/try_attach_limb(mob/living/carbon/new_head_owner, special = FALSE)
 	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
-	var/real_name = src.real_name
+	var/old_real_name = src.real_name
 
 	. = ..()
 
@@ -390,9 +392,9 @@
 	if(eyes)
 		eyes = null
 
-	if(real_name)
-		new_head_owner.real_name = real_name
-	real_name = ""
+	if(old_real_name)
+		new_head_owner.real_name = old_real_name
+	real_name = new_head_owner.real_name
 
 	//Handle dental implants
 	for(var/obj/item/reagent_containers/pill/pill in src)
