@@ -52,7 +52,7 @@
 	. = ..()
 	if(!istype(victim))
 		return
-	if(victim.wear_mask || !victim.get_bodypart(BODY_ZONE_HEAD))
+	if(victim.is_mouth_covered() || !victim.get_bodypart(BODY_ZONE_HEAD))
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_notice("You can't bring yourself to harm [victim]"))
