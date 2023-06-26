@@ -48,7 +48,7 @@
 	///Is there a sprite difference between male and female?
 	var/is_dimorphic = FALSE
 	///The actual color a limb is drawn as, set by /proc/update_limb()
-	VAR_PRIVATE/draw_color //NEVER. EVER. EDIT THIS VALUE OUTSIDE OF UPDATE_LIMB. I WILL FIND YOU. It ruins the limb icon pipeline.
+	var/draw_color //NEVER. EVER. EDIT THIS VALUE OUTSIDE OF UPDATE_LIMB. I WILL FIND YOU. It ruins the limb icon pipeline.
 
 	/// BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
 	var/body_zone
