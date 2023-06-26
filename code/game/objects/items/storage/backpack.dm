@@ -22,10 +22,10 @@
 	slot_flags = ITEM_SLOT_BACK //ERROOOOO
 	resistance_flags = NONE
 	max_integrity = 300
+	storage_type = /datum/storage/backpack
 
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
-	create_storage(max_slots = 21, max_total_storage = 21)
 	AddElement(/datum/element/attack_equip)
 
 /*
@@ -57,16 +57,11 @@
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
 	armor_type = /datum/armor/backpack_holding
+	storage_type = /datum/storage/bag_of_holding
 
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50
-
-/obj/item/storage/backpack/holding/Initialize(mapload)
-	. = ..()
-
-	create_storage(max_specific_storage = WEIGHT_CLASS_GIGANTIC, max_total_storage = 35, max_slots = 30, storage_type = /datum/storage/bag_of_holding)
-	atom_storage.allow_big_nesting = TRUE
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide."))
@@ -399,13 +394,13 @@
 	icon_state = "duffel"
 	inhand_icon_state = "duffel"
 	actions_types = list(/datum/action/item_action/zipper)
+	storage_type = /datum/storage/duffel
 	/// If this bag is zipped (contents hidden) up or not
 	/// Starts enabled so people need to figure it out to use the thing
 	var/zipped_up = TRUE
 
 /obj/item/storage/backpack/duffelbag/Initialize(mapload)
 	. = ..()
-	atom_storage.max_total_storage = 30
 	set_zipper(TRUE)
 
 /obj/item/storage/backpack/duffelbag/update_desc(updates)
@@ -428,7 +423,7 @@
 		// Hacky, but please don't be cringe yeah?
 		atom_storage.silent = TRUE
 		. = ..()
-		atom_storage.silent = FALSE
+		atom_storage.silent = initial(atom_storage.silent)
 		return
 	if(!zipped_up)
 		return ..()
@@ -631,12 +626,8 @@
 	desc = "A large duffel bag for holding extra tactical supplies."
 	icon_state = "duffel-syndie"
 	inhand_icon_state = "duffel-syndieammo"
-	slowdown = 0
+	storage_type = /datum/storage/duffel/syndicate
 	resistance_flags = FIRE_PROOF
-
-/obj/item/storage/backpack/duffelbag/syndie/Initialize(mapload)
-	. = ..()
-	atom_storage.silent = TRUE
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman
 	desc = "A large duffel bag for holding extra things. There is a Nanotrasen logo on the back."
@@ -791,10 +782,8 @@
 	new /obj/item/grenade/syndieminibomb(src)
 
 // For ClownOps.
-/obj/item/storage/backpack/duffelbag/clown/syndie/Initialize(mapload)
-	. = ..()
-	slowdown = 0
-	atom_storage.silent = TRUE
+/obj/item/storage/backpack/duffelbag/clown/syndie
+	storage_type = /datum/storage/duffel/syndicate
 
 /obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
 	new /obj/item/modular_computer/pda/clown(src)
@@ -813,7 +802,6 @@
 /obj/item/storage/backpack/duffelbag/cops
 	name = "police bag"
 	desc = "A large duffel bag for holding extra police gear."
-	slowdown = 0
 
 /obj/item/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
