@@ -28,7 +28,7 @@
 /// Helper to figure out if a limb is organic
 #define IS_ORGANIC_LIMB(limb) (limb.bodytype & BODYTYPE_ORGANIC)
 /// Helper to figure out if a limb is robotic
-#define IS_ROBOTIC_LIMB(limb) (limb.bodytype & BODYTYPE_ORGANIC)
+#define IS_ROBOTIC_LIMB(limb) (limb.bodytype & BODYTYPE_ROBOTIC)
 
 // Flags for the bodypart_flags var on /obj/item/bodypart
 /// Bodypart cannot be dismembered or amputated
