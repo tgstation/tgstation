@@ -40,11 +40,9 @@
 	. = ..()
 	if(!iscarbon(target_mob))
 		return
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
+	if(bricked || HAS_TRAIT(src, TRAIT_WIELDED))
 		user.apply_damage(5, STAMINA) // when hitting with such force we should prolly be getting tired too
 		hit_sound = 'sound/items/pillow_hit2.ogg'
-	else if(bricked)
-		hit_sound = 'sound/items/pillow_hit2.ogg' //always the hard hit sound when bricked
 	else
 		hit_sound = 'sound/items/pillow_hit.ogg'
 	last_fighter = user
