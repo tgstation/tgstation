@@ -1,5 +1,4 @@
 // Status display
-// (formerly Countdown timer display)
 
 #define MAX_STATIC_WIDTH 22
 #define FONT_STYLE "12pt 'TinyUnicode'"
@@ -269,12 +268,12 @@
 
 	if(line_width > MAX_STATIC_WIDTH)
 		// Marquee text
-		var/marquee_message = "[line]   [line]   [line]"
+		var/marquee_message = "[line]    [line]    [line]"
 
 		// Width of full content. Must of these is never revealed unless the user inputted a single character.
-		var/full_marquee_width = display_font.get_metrics("[marquee_message]   ")
+		var/full_marquee_width = display_font.get_metrics("[marquee_message]    ")
 		// We loop after only this much has passed.
-		var/looping_marquee_width = (display_font.get_metrics("[line]   ]") - 2)
+		var/looping_marquee_width = (display_font.get_metrics("[line]    ]") - SCROLL_PADDING)
 
 		maptext = generate_text(marquee_message, center = FALSE, text_color = text_color)
 		maptext_width = full_marquee_width
@@ -285,8 +284,8 @@
 
 		// Scroll.
 		var/time = line_pair * SCROLL_RATE
-		animate(src, maptext_x = -looping_marquee_width, time = time, loop = -1)
-		animate(maptext_x = 0, time = 0)
+		animate(src, maptext_x = (-looping_marquee_width) + MAX_STATIC_WIDTH, time = time, loop = -1)
+		animate(maptext_x = MAX_STATIC_WIDTH, time = 0)
 	else
 		// Centered text
 		var/color = header_regex.Find(line) ? header_text_color : text_color
@@ -297,11 +296,11 @@
  * Generate the actual maptext.
  * Arguments:
  * * text - the text to display
- * * center - center the text if TRUE, otherwise left-align
+ * * center - center the text if TRUE, otherwise right-align (the direction the text is coming from)
  * * text_color - the text color
  */
 /obj/effect/overlay/status_display_text/proc/generate_text(text, center, text_color)
-	return {"<div style="color:[text_color];font:[FONT_STYLE][center ? ";text-align:center" : ""]" valign="top">[text]</div>"}
+	return {"<div style="color:[text_color];font:[FONT_STYLE][center ? ";text-align:center" : "text-align:right"]" valign="top">[text]</div>"}
 
 /// Evac display which shows shuttle timer or message set by Command.
 /obj/machinery/status_display/evac
