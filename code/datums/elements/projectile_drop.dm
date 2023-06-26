@@ -9,7 +9,7 @@
 	if(!isprojectile(target))
 		return ELEMENT_INCOMPATIBLE
 	src.drop_type = drop_type
-	RegisterSignal(target, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT), PROC_REF(spawn_drop))
+	RegisterSignals(target, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT), PROC_REF(spawn_drop))
 
 /datum/element/projectile_drop/proc/spawn_drop(obj/projectile/source)
 	SIGNAL_HANDLER
