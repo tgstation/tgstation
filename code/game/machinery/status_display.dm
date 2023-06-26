@@ -6,9 +6,11 @@
 #define SCROLL_RATE (0.04 SECONDS) // time per pixel
 #define SCROLL_PADDING 2 // how many pixels we chop to make a smooth loop
 #define LINE1_X 1
-#define LINE2_X 1
 #define LINE1_Y -4
+#define LINE2_X 1
 #define LINE2_Y -11
+#define STATUS_DISPLAY_FONT_DATUM /datum/font/tiny_unicode/size_12pt
+
 /// Status display which can show images and scrolling text.
 /obj/machinery/status_display
 	name = "status display"
@@ -152,7 +154,7 @@
 		return
 	set_light(1.5, 0.7, LIGHT_COLOR_BLUE) // blue light
 
-/obj/machinery/status_display/update_overlays()
+/obj/machinery/status_display/update_overlays(updates)
 	. = ..()
 
 	if(machine_stat & (NOPOWER|BROKEN))
@@ -170,6 +172,9 @@
 			if(current_picture == AI_DISPLAY_DONT_GLOW) // If the thing's off, don't display the emissive yeah?
 				return .
 		else
+			var/line_pair
+			var/display_font = new STATUS_DISPLAY_FONT_DATUM()
+			// line_pair =
 			var/overlay = update_message(message1_overlay, LINE1_Y, message1, LINE1_X)
 			if(overlay)
 				message1_overlay = overlay
@@ -254,7 +259,7 @@
 	maptext_y = yoffset
 	message = line
 
-	var/datum/font/display_font = new /datum/font/tiny_unicode/size_12pt()
+	var/datum/font/display_font = new STATUS_DISPLAY_FONT_DATUM()
 	var/line_width = display_font.get_metrics(line)
 
 	if(line_width > MAX_STATIC_WIDTH)
@@ -542,5 +547,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 #undef MAX_STATIC_WIDTH
 #undef FONT_STYLE
 #undef SCROLL_RATE
+#undef LINE1_X
 #undef LINE1_Y
+#undef LINE2_X
 #undef LINE2_Y
+#undef STATUS_DISPLAY_FONT_DATUM
