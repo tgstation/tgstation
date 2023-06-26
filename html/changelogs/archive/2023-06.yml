@@ -895,3 +895,18 @@
   - image: Resprited the Limb Grower
   norsvenska:
   - rscadd: Christmas now has special station prefixes.
+2023-06-26:
+  Funnytoilet:
+  - qol: Allows you to craft plastitanium shards.
+  Ghommie:
+  - bugfix: Fixes the lights from Tinea Luxor being stackable to the point of crashing
+      the game for others.
+  IndieanaJones:
+  - balance: Xenos have been rebalanced, removing their hardstuns on their disarm
+      and neurotoxin, along with a slew of other changes. Xenos have received buffs
+      to their more unique abilities in return.
+  - bugfix: Fixed simplemobs ignoring xenomorph's melee damage values when being attacked
+      by them.
+  winterboekje:
+  - sound: Adds unique sounds to library barcode scanner
+  - image: Removes soul from library
