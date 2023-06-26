@@ -16,7 +16,7 @@
 
 /obj/item/crowbar/red/Initialize(mapload)
 	. = ..()
-	set_greyscale(colors = list(pick(wirecutter_colors_rapt)))
+	set_greyscale(colors = list(pick(crowbar_colors)))
 
 /obj/item/crowbar/power/syndicate	//Because we have a clearly different color JOL than upstream, this needs to be specifically different now
 	inhand_icon_state = "jaws_syndie"
