@@ -41,7 +41,10 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "bt" = (
-/turf/open/floor/mineral/titanium/white,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "bE" = (
 /mob/living/simple_animal/bot/secbot{
@@ -92,10 +95,13 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "cY" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/iron/dark/side,
 /area/shuttle/escape/luxury)
 "cZ" = (
 /obj/item/toy/plush/lizard_plushie/green{
@@ -110,10 +116,12 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "de" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/corner{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/luxury)
 "dg" = (
 /obj/effect/turf_decal/trimline/dark_blue/line{
@@ -178,6 +186,18 @@
 /obj/item/storage/belt/utility/full/powertools,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
+"ek" = (
+/obj/item/storage/medkit/regular{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/reagent_containers/cup/glass/mug/britcup{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape/luxury)
 "en" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
@@ -315,6 +335,11 @@
 /obj/structure/bed/roller,
 /obj/item/bedsheet/patriot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/item/toy/plush/lizard_plushie{
+	color = "#52B4E9";
+	desc = "For when everything's going wrong and you just need a friend.";
+	name = "Calms-The-Panic"
+	},
 /turf/open/floor/plastic,
 /area/shuttle/escape)
 "hr" = (
@@ -365,10 +390,8 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "iO" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "iP" = (
 /obj/structure/cable,
@@ -432,7 +455,7 @@
 /area/shuttle/escape)
 "jG" = (
 /obj/machinery/vending/boozeomat/all_access,
-/turf/open/floor/mineral/titanium/white,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "jK" = (
 /obj/effect/turf_decal/trimline/red/line,
@@ -478,7 +501,7 @@
 /obj/structure/sign/poster/contraband/clown{
 	pixel_y = 35
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "kc" = (
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
@@ -497,13 +520,13 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "kp" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 1
 	},
-/turf/open/floor/mineral/titanium/tiled/white,
+/turf/open/floor/iron/dark/corner,
 /area/shuttle/escape/luxury)
 "ku" = (
 /obj/machinery/door/window/brigdoor{
@@ -714,8 +737,32 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "pz" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/titanium/tiled/white,
+/obj/structure{
+	density = 1;
+	icon = 'icons/obj/machines/shuttle_manipulator.dmi';
+	icon_state = "hologram_on";
+	layer = 2.8;
+	light_color = "#2cb2e8";
+	light_range = 2;
+	max_integrity = 7500;
+	mouse_opacity = 0;
+	name = "holographic projection";
+	pixel_x = -32;
+	pixel_y = 17
+	},
+/obj/structure{
+	desc = "This is the shuttle we're on. It's amazing what Nanotrasen can do once they actually put more than ten seconds of effort into their projects.";
+	icon = 'icons/obj/machines/shuttle_manipulator.dmi';
+	icon_state = "hologram_whiteship";
+	layer = 4;
+	light_color = "#2cb2e8";
+	light_range = 7;
+	max_integrity = 75000;
+	name = "Cruise Shuttle Hologram";
+	pixel_x = -32;
+	pixel_y = 27
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "qd" = (
 /obj/machinery/computer/warrant,
@@ -790,10 +837,11 @@
 /turf/open/floor/iron/white/textured_corner,
 /area/shuttle/escape)
 "rw" = (
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "rx" = (
 /obj/structure/table,
@@ -815,7 +863,8 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "sk" = (
-/turf/open/floor/mineral/plastitanium/red,
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "so" = (
 /obj/item/food/donkpocket/warm{
@@ -859,15 +908,12 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "sZ" = (
-/obj/item/storage/fancy/donut_box{
-	pixel_y = -7
-	},
-/obj/item/food/donut/plain{
-	pixel_x = 5;
-	pixel_y = 10
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 1
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/mineral/titanium/white,
+/obj/item/food/burger/fish,
+/turf/open/floor/iron/dark/corner,
 /area/shuttle/escape/luxury)
 "tx" = (
 /obj/structure/chair/comfy/shuttle{
@@ -937,20 +983,19 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "uC" = (
-/obj/item/storage/book/bible/booze{
-	pixel_x = -3;
-	pixel_y = 4
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/turf/open/floor/iron/dark/corner{
+	dir = 1
 	},
-/obj/item/taperecorder{
-	pixel_x = 15;
-	pixel_y = 4
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
 "uF" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/titanium/white,
+/obj/machinery/shuttle_manipulator{
+	desc = "A holographic display of the cruise shuttle we're on right now.";
+	layer = 2.7;
+	max_integrity = 99999;
+	name = "shuttle holographic display"
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "uQ" = (
 /obj/machinery/atm,
@@ -993,16 +1038,21 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "vL" = (
-/obj/item/toy/figure{
-	desc = "A model spaceship, it looks like those used back in the day when travelling to Orion!";
-	icon_state = "ship";
-	name = "Orion Settler Ship figure";
-	pixel_y = -5;
-	toysay = "Oxygen offline. Weapons charging. All systems nominal.";
-	toysound = 'sound/mecha/nominal.ogg'
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/mineral/titanium/tiled/white,
+/obj/item/taperecorder{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/item/phone{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
 /area/shuttle/escape/luxury)
 "vM" = (
 /obj/effect/turf_decal/trimline/dark_blue/warning{
@@ -1086,10 +1136,15 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "xB" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
-/obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
 /area/shuttle/escape/luxury)
 "xT" = (
 /mob/living/simple_animal/drone/snowflake/bardrone,
@@ -1202,7 +1257,7 @@
 /area/shuttle/escape)
 "Aq" = (
 /obj/item/kirbyplants/photosynthetic,
-/turf/open/floor/mineral/titanium/tiled/white,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "AB" = (
 /obj/effect/turf_decal/trimline/red/line,
@@ -1231,7 +1286,7 @@
 /obj/item/gun/ballistic/rocketlauncher/unrestricted{
 	desc = "A reusable rocket propelled grenade launcher. The words \"Syndicate this way\" and an arrow have been written near the barrel. A sticker near the cheek rest reads, \"FOR DISPLAY PURPOSES ONLY\""
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "Bl" = (
 /obj/structure/chair/comfy/teal{
@@ -1287,15 +1342,11 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Cn" = (
-/obj/item/camera_film{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
 	},
-/obj/item/camera{
-	pixel_y = 3
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "Cw" = (
 /obj/machinery/vending/snack/orange,
@@ -1414,9 +1465,12 @@
 	},
 /area/shuttle/escape)
 "Eo" = (
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/food/burger/fivealarm,
-/turf/open/floor/mineral/plastitanium/red,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
 /area/shuttle/escape/luxury)
 "Ep" = (
 /obj/structure/fireaxecabinet/directional/south,
@@ -1525,16 +1579,13 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Gv" = (
-/obj/item/reagent_containers/cup/glass/mug/britcup{
-	pixel_x = 8;
-	pixel_y = -1
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
 	},
-/obj/item/storage/medkit/regular{
-	pixel_x = -9;
-	pixel_y = 3
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
 	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/iron/checker,
 /area/shuttle/escape/luxury)
 "GD" = (
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -1581,7 +1632,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Ht" = (
-/turf/open/floor/mineral/titanium/tiled/white,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
 /area/shuttle/escape/luxury)
 "HA" = (
 /obj/effect/turf_decal/trimline/dark_blue/warning{
@@ -1594,7 +1648,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "HF" = (
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "HT" = (
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -1605,7 +1659,7 @@
 /obj/item/clothing/accessory/medal/gold,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "HW" = (
 /obj/structure/chair/sofa/corner,
@@ -1693,7 +1747,7 @@
 	name = "seraph mech exhibit"
 	},
 /obj/machinery/light/directional/east,
-/turf/open/floor/mineral/titanium/tiled/white,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "JO" = (
 /obj/item/storage/fancy/coffee_cart_rack{
@@ -1812,13 +1866,12 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "LM" = (
-/obj/machinery/shuttle_manipulator{
-	desc = "A holographic display of the cruise shuttle we're on right now.";
-	layer = 2.7;
-	max_integrity = 99999;
-	name = "shuttle holographic display"
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
 	},
-/turf/open/floor/mineral/titanium/white,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/food/burger/rib,
+/turf/open/floor/iron/checker,
 /area/shuttle/escape/luxury)
 "Me" = (
 /obj/structure/chair/comfy/teal{
@@ -1843,9 +1896,12 @@
 	},
 /area/shuttle/escape)
 "MI" = (
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/food/burger/fish,
-/turf/open/floor/mineral/plastitanium/red,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
 /area/shuttle/escape/luxury)
 "MR" = (
 /obj/structure/sink/directional/south,
@@ -1882,31 +1938,14 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Nv" = (
-/obj/item/clothing/mask/cigarette/robust{
-	pixel_x = -4;
-	pixel_y = 15
-	},
-/obj/item/clothing/mask/cigarette/robust{
-	pixel_x = 3;
-	pixel_y = 7
-	},
-/obj/item/clothing/mask/cigarette/robust{
-	pixel_x = 7;
-	pixel_y = 12
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_robust{
-	pixel_x = -13;
-	pixel_y = 2
-	},
-/obj/item/lighter/greyscale{
-	pixel_x = 6;
-	pixel_y = -10
-	},
-/obj/item/cigbutt{
-	pixel_x = -8
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 4
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/mineral/plastitanium/red,
+/obj/item/food/burger/fivealarm,
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
 /area/shuttle/escape/luxury)
 "NH" = (
 /obj/structure/table/wood/fancy,
@@ -1981,7 +2020,7 @@
 	name = "marauder mech exhibit"
 	},
 /obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium/white,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "Pg" = (
 /obj/machinery/door/airlock{
@@ -2051,6 +2090,11 @@
 	dir = 1
 	},
 /area/shuttle/escape)
+"Rk" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/food/burger/baseball,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape/luxury)
 "Rz" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -2160,12 +2204,10 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "TA" = (
-/obj/item/phone{
-	pixel_x = 1;
-	pixel_y = 3
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
 	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "TD" = (
 /obj/effect/turf_decal/stripes/line,
@@ -2204,7 +2246,7 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/item/ammo_casing/caseless/rocket/heap,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "Uo" = (
 /obj/effect/turf_decal/trimline/yellow/line{
@@ -2252,8 +2294,15 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Vk" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/titanium/blue,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/food/donut/plain{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/storage/fancy/donut_box{
+	pixel_y = -7
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "Vm" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -2269,32 +2318,10 @@
 /turf/open/floor/lowered/iron/pool,
 /area/shuttle/escape)
 "VO" = (
-/obj/structure{
-	density = 1;
-	icon = 'icons/obj/machines/shuttle_manipulator.dmi';
-	icon_state = "hologram_on";
-	layer = 2.8;
-	light_color = "#2cb2e8";
-	light_range = 2;
-	max_integrity = 7500;
-	mouse_opacity = 0;
-	name = "holographic projection";
-	pixel_x = -32;
-	pixel_y = 17
-	},
-/obj/structure{
-	desc = "This is the shuttle we're on. It's amazing what Nanotrasen can do once they actually put more than ten seconds of effort into their projects.";
-	icon = 'icons/obj/machines/shuttle_manipulator.dmi';
-	icon_state = "hologram_whiteship";
-	layer = 4;
-	light_color = "#2cb2e8";
-	light_range = 7;
-	max_integrity = 75000;
-	name = "Cruise Shuttle Hologram";
-	pixel_x = -32;
-	pixel_y = 27
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/food/burger/clown,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "VV" = (
 /obj/machinery/vending/coffee,
@@ -2375,10 +2402,12 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Xw" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
 	},
-/turf/open/floor/mineral/titanium/white,
+/turf/open/floor/iron/dark/side{
+	dir = 5
+	},
 /area/shuttle/escape/luxury)
 "Yh" = (
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -2414,7 +2443,15 @@
 /area/shuttle/escape)
 "YI" = (
 /obj/machinery/vending/liberationstation,
-/turf/open/floor/mineral/titanium/tiled/white,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape/luxury)
+"YN" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 10
+	},
 /area/shuttle/escape/luxury)
 "YZ" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -2748,7 +2785,7 @@ YZ
 jG
 HF
 Pb
-sk
+HF
 Aq
 HT
 YZ
@@ -2792,10 +2829,10 @@ qI
 yn
 YZ
 jX
-bt
-HF
-sk
-Ht
+kp
+iO
+iO
+iO
 kn
 YZ
 IX
@@ -2840,9 +2877,9 @@ YZ
 bt
 cY
 Xw
-de
-Ht
-sk
+iO
+iO
+HF
 UF
 ZL
 ZL
@@ -2887,7 +2924,7 @@ Vk
 sZ
 xB
 MI
-iO
+de
 sk
 UF
 Iu
@@ -2930,7 +2967,7 @@ qI
 Yr
 YZ
 uF
-uC
+iO
 LM
 Cn
 iO
@@ -2976,7 +3013,7 @@ Zs
 GD
 YZ
 pz
-TA
+iO
 VO
 Gv
 iO
@@ -3021,12 +3058,12 @@ TI
 TI
 YA
 YZ
-pz
+Rk
 Nv
 vL
 Eo
-iO
-sk
+uC
+ek
 UF
 Iu
 Iu
@@ -3067,12 +3104,12 @@ TI
 TI
 gr
 YZ
-Ht
+TA
 rw
-kp
-rw
+iO
+YN
 Ht
-sk
+HF
 UF
 mS
 mS
@@ -3113,11 +3150,11 @@ TI
 TI
 mv
 YZ
-Ht
-sk
-Ht
-sk
-Ht
+HF
+iO
+iO
+iO
+uC
 Bf
 ie
 lk
@@ -3160,9 +3197,9 @@ pk
 Rb
 YZ
 YI
-sk
+HF
 Js
-sk
+HF
 Aq
 Ul
 YZ
