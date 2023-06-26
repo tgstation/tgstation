@@ -242,7 +242,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return
 	if(maximum < damage)
 		return
-	if(!(organ_flags & required_organ_flag))
+	if(required_organ_flag && !(organ_flags & required_organ_flag))
 		return
 	damage = clamp(damage + damage_amount, 0, maximum)
 	var/mess = check_damage_thresholds(owner)

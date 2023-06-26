@@ -120,7 +120,7 @@
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(!affected_organ || (status_flags & GODMODE))
 		return
-	if(!(affected_organ.organ_flags & required_organ_flag))
+	if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
 		return
 	affected_organ.apply_organ_damage(amount, maximum)
 
@@ -137,7 +137,7 @@
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(!affected_organ || (status_flags & GODMODE))
 		return
-	if(!(affected_organ.organ_flags & required_organ_flag))
+	if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
 		return
 	if(affected_organ.damage == amount)
 		return
