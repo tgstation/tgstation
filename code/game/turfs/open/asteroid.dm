@@ -47,8 +47,6 @@
 	var/proper_name = name
 	. = ..()
 	name = proper_name
-	if(has_floor_variance && prob(floor_variance))
-		icon_state = "[base_icon_state][rand(0,12)]"
 
 /// Drops itemstack when dug and changes icon
 /turf/open/misc/asteroid/proc/getDug()
@@ -65,6 +63,15 @@
 		return TRUE
 	if(user)
 		to_chat(user, span_warning("Looks like someone has dug here already!"))
+
+///Refills the previously dug tile
+/turf/open/misc/asteroid/proc/refill_dug()
+	dug = FALSE
+	broken = FALSE
+	icon_state = base_icon_state
+	if(has_floor_variance && prob(floor_variance))
+		icon_state = "[base_icon_state][rand(0,12)]"
+	update_appearance()
 
 /turf/open/misc/asteroid/burn_tile()
 	return
@@ -140,6 +147,11 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/basalt/Destroy()
 	GLOB.dug_up_basalt -= src
 	return ..()
+
+/turf/open/misc/asteroid/basalt/refill_dug()
+	. = ..()
+	GLOB.dug_up_basalt -= src
+	set_basalt_light(src)
 
 /turf/open/misc/asteroid/basalt/lava //lava underneath
 	baseturfs = /turf/open/lava/smooth
