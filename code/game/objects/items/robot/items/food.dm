@@ -157,7 +157,7 @@
 	projectile_type = /obj/projectile/bullet/gumball
 	click_cooldown_override = 2
 
-/obj/item/ammo_casing/gumball/Initialize()
+/obj/item/ammo_casing/gumball/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/caseless)
 
