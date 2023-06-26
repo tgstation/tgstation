@@ -21,7 +21,7 @@
 	 * Total damage this organ has sustained.
 	 * Should only ever be modified by apply_organ_damage!
 	 */
-	VAR_PRIVATE/damage = 0
+	var/damage = 0
 	/// Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
 	var/healing_factor = 0 //fraction of maxhealth healed per on_life(), set to 0 for generic organs
 	var/decay_factor = 0 //same as above but when without a living owner, set to 0 for generic organs
@@ -213,7 +213,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	. += span_notice("It should be inserted in the [parse_zone(zone)].")
 
 	if(organ_flags & ORGAN_FAILING)
-		if(status == ORGAN_ROBOTIC)
+		if(IS_ROBOTIC_ORGAN(src))
 			. += span_warning("[src] seems to be broken.")
 			return
 		. += span_warning("[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.")

@@ -507,7 +507,7 @@
 		amount_cured++
 	return amount_cured
 
-/obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum, required_organ_flag)
 	. = ..()
 	if(!owner)
 		return
