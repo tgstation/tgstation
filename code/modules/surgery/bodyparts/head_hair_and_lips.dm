@@ -236,7 +236,10 @@
 	return
 
 /mob/living/carbon/human/clean_lips()
-	return update_lips(null, null)
+	if(!lip_style)
+		return FALSE
+	update_lips(null, null, update = TRUE)
+	return TRUE
 
 /**
  * Set the hair style of a human.

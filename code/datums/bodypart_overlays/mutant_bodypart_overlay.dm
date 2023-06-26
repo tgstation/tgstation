@@ -107,10 +107,13 @@
 		if(ORGAN_COLOR_INHERIT)
 			draw_color = ownerlimb.draw_color
 		if(ORGAN_COLOR_HAIR)
-			if(!ishuman(ownerlimb.owner))
+			//Not a head, so we can't inherit hair color
+			if(!istype(ownerlimb, /obj/item/bodypart/head))
+				//Default to limb color... stupid.
+				draw_color = ownerlimb.draw_color
 				return
-			var/mob/living/carbon/human/human_owner = ownerlimb.owner
-			draw_color = human_owner.hair_color
+			var/obj/item/bodypart/head/my_head = ownerlimb
+			draw_color = my_head.hair_color
 
 	return TRUE
 
