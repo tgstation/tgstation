@@ -318,7 +318,7 @@
 	target.update()
 	//clean up
 	qdel(old_light)
-	user.balloon_alert(user, "light replaced!")
+	user.balloon_alert(user, "light replaced")
 
 	return TRUE
 
