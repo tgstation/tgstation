@@ -57,7 +57,10 @@
 #define TEST_LONGER 10
 /// This must be the one of last tests to run due to the inherent nature of the test iterating every single tangible atom in the game and qdeleting all of them (while taking long sleeps to make sure the garbage collector fires properly) taking a large amount of time.
 #define TEST_CREATE_AND_DESTROY 9001
-/// For tests that rely on create and destroy having iterated through every (tangible) atom so they don't have to do something similar.
+/**
+ * For tests that rely on create and destroy having iterated through every (tangible) atom so they don't have to do something similar.
+ * Keep in mind tho that create and destroy will absolutely break the test platform, anything that relies on its shape cannot come after it.
+ */
 #define TEST_AFTER_CREATE_AND_DESTROY INFINITY
 
 /// Change color to red on ANSI terminal output, if enabled with -DANSICOLORS.

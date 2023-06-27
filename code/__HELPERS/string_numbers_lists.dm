@@ -14,6 +14,6 @@ GLOBAL_LIST_EMPTY(string_numbers_lists)
 	. = GLOB.string_numbers_lists[string_id]
 
 	if(.)
-		return
+		return .
 
 	return GLOB.string_numbers_lists[string_id] = values
