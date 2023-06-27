@@ -129,7 +129,7 @@
 	* ageusia from having a non-tasting tongue.
 	*/
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
-	apply_tongue_traits()
+	apply_tongue_effects()
 
 /obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
 	. = ..()
@@ -144,10 +144,10 @@
 	. = ..()
 	if(!owner)
 		return
-	apply_tongue_traits()
+	apply_tongue_effects()
 
 /// Applies effects to our owner based on how damaged our tongue is
-/obj/item/organ/internal/tongue/proc/apply_tongue_traits()
+/obj/item/organ/internal/tongue/proc/apply_tongue_effects()
 	if(sense_of_taste)
 		//tongues can't taste food when they are failing
 		if(organ_flags & ORGAN_FAILING)
