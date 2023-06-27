@@ -76,3 +76,15 @@
 		message = replacetext(message, "l", "w")
 	speech_args[SPEECH_MESSAGE] = message
 
+/datum/quirk/dwarfism
+	name = "Dwarfism"
+	desc = "Your cells take up less space than others', giving you a smaller appearance. You also find it easier to climb tables. Rock and Stone!"
+	value = 9
+	icon = FA_ICON_CHEVRON_CIRCLE_DOWN
+
+/datum/quirk/dwarfism/add()
+	. = ..()
+	if (ishuman(quirk_holder))
+		var/mob/living/carbon/human/godzuki = quirk_holder
+		if(godzuki.dna)
+			godzuki.dna.add_mutation(/datum/mutation/human/dwarfism)

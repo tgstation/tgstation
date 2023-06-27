@@ -5279,6 +5279,7 @@
 #include "monkestation\code\datums\diseases\advance\symptoms\clockwork.dm"
 #include "monkestation\code\datums\keybinding\carbon.dm"
 #include "monkestation\code\datums\keybinding\living.dm"
+#include "monkestation\code\datums\quirks\neutral_quirks.dm"
 #include "monkestation\code\datums\quirks\positive_quirks.dm"
 #include "monkestation\code\datums\station_traits\neutral_traits.dm"
 #include "monkestation\code\datums\status_effects\disorient.dm"
