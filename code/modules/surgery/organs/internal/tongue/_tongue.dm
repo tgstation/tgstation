@@ -129,7 +129,7 @@
 	* ageusia from having a non-tasting tongue.
 	*/
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
-	apply_damaged_tongue_effects()
+	apply_tongue_effects()
 
 /obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
 	. = ..()
@@ -144,10 +144,10 @@
 	. = ..()
 	if(!owner)
 		return
-	apply_damaged_tongue_effects()
+	apply_tongue_effects()
 
 /// Applies effects to our owner based on how damaged our tongue is
-/obj/item/organ/internal/tongue/proc/apply_damaged_tongue_effects()
+/obj/item/organ/internal/tongue/proc/apply_tongue_effects()
 	if(sense_of_taste)
 		//tongues can't taste food when they are failing
 		if(organ_flags & ORGAN_FAILING)
@@ -157,10 +157,10 @@
 	else
 		//tongues can't taste food when they lack a sense of taste
 		ADD_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
-	if(!(organ_flags & ORGAN_FAILING))
-		ADD_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
-	else
+	if(organ_flags & ORGAN_FAILING)
 		REMOVE_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
+	else
+		ADD_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
 
 /obj/item/organ/internal/tongue/could_speak_language(datum/language/language_path)
 	return (language_path in languages_possible)
