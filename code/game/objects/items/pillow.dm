@@ -130,7 +130,9 @@
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillow_suit"
 	armor_type = /datum/armor/suit_pillow_suit
+	actions_types = list(/datum/action/item_action/pillow_fortify)
 	var/obj/item/pillow/unstoppably_plushed
+	var/hunkered = FALSE
 
 /datum/armor/suit_pillow_suit
 	melee = 5
@@ -140,6 +142,18 @@
 	. = ..()
 	unstoppably_plushed = new(src)
 	AddComponent(/datum/component/bumpattack, proxy_weapon = unstoppably_plushed, valid_inventory_slot = ITEM_SLOT_OCLOTHING)
+
+/obj/item/clothing/suit/pillow_suit/proc/fortify(mob/living/user)
+	hunkered = TRUE
+	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
+	user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
+	user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
+
+/obj/item/clothing/suit/pillow_suit/proc/end_fortify(mob/living/user)
+	hunkered = FALSE
+	clothing_flags = null
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
+	user.visible_message(span_alert("[user.name] loosen up and goes into relax stance!"))
 
 /obj/item/clothing/suit/pillow_suit/Destroy()
 	. = ..()
