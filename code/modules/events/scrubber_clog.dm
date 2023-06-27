@@ -183,7 +183,7 @@
 /datum/round_event/scrubber_clog/critical/get_mob()
 	var/static/list/mob_list = list(
 		/mob/living/basic/carp,
-		/mob/living/simple_animal/hostile/bee/toxin,
+		/mob/living/basic/bee/toxin,
 		/mob/living/basic/cockroach/glockroach,
 	)
 	return pick(mob_list)
