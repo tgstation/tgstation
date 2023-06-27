@@ -115,14 +115,17 @@
 	for AI shift, ctrl, and alt clicking.
 */
 
-/mob/living/silicon/ai/CtrlShiftClickOn(atom/A)
-	A.AICtrlShiftClick(src)
-/mob/living/silicon/ai/ShiftClickOn(atom/A)
-	A.AIShiftClick(src)
-/mob/living/silicon/ai/CtrlClickOn(atom/A)
-	A.AICtrlClick(src)
-/mob/living/silicon/ai/AltClickOn(atom/A)
-	A.AIAltClick(src)
+/mob/living/silicon/ai/CtrlShiftClickOn(atom/target)
+	target.AICtrlShiftClick(src)
+
+/mob/living/silicon/ai/ShiftClickOn(atom/target)
+	target.AIShiftClick(src)
+
+/mob/living/silicon/ai/CtrlClickOn(atom/target)
+	target.AICtrlClick(src)
+
+/mob/living/silicon/ai/AltClickOn(atom/target)
+	target.AIAltClick(src)
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;
@@ -176,6 +179,8 @@
 /obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
 	if(can_use(usr, 1))
 		toggle_breaker(usr)
+
+
 
 /* AI Turrets */
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets

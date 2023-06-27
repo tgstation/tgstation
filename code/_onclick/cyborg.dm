@@ -116,7 +116,6 @@
 	else
 		..()
 
-
 /atom/proc/BorgShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
 	ShiftClick(user)
 
