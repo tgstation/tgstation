@@ -206,7 +206,7 @@
 
 	var/obj/effect/rune/target_rune = target
 	if(target_rune.log_when_erased)
-		user.log_message("erased [target_rune.cultist_name] rune using a chaplain revolver", LOG_GAME)
+		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/gun/ballistic/revolver/chaplain/suicide_act(mob/living/user)

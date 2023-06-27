@@ -39,7 +39,7 @@
 
 	var/obj/effect/rune/target_rune = target
 	if(target_rune.log_when_erased)
-		user.log_message("erased [target_rune.cultist_name] rune using a divine bow", LOG_GAME)
+		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/gun/ballistic/bow/divine/with_quiver/Initialize(mapload)
