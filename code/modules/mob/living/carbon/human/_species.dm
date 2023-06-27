@@ -457,7 +457,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	C.mob_biotypes = inherent_biotypes
 	C.mob_respiration_type = inherent_respiration_type
 
-	if(old_species?.type != type)
+	if(old_species.type != type)
 		replace_body(C, src)
 
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
@@ -470,7 +470,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.dna.blood_type = exotic_bloodtype
 	//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
 	//(why the fuck is blood type not tied to a fucking DNA block?)
-	else if(old_species?.exotic_bloodtype && !exotic_bloodtype)
+	else if(old_species.exotic_bloodtype && !exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
 
 	if(ishuman(C))
