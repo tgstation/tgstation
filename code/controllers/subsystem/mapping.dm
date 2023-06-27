@@ -896,7 +896,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/z_level = connected
 	if(isturf(z_level))
 		z_level = connected.z
-	return z_level_to_stack[connected]
+	return z_level_to_stack[z_level]
 
 /datum/controller/subsystem/mapping/proc/lazy_load_template(template_key, force = FALSE)
 	RETURN_TYPE(/datum/turf_reservation)
