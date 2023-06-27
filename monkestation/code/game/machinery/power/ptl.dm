@@ -6,6 +6,8 @@
 	icon = 'goon/icons/obj/pt_laser.dmi'
 	icon_state = "ptl"
 
+	max_integrity = 10000
+
 	density = TRUE
 	anchored = TRUE
 

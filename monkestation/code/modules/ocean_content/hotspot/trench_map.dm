@@ -118,8 +118,8 @@
 
 /obj/item/sea_map
 	name = "Trench Map"
-	icon = 'monkestation/icons/obj/ranching.dmi'
-	icon_state = "chicken_book"
+	icon = 'icons/obj/contractor_tablet.dmi'
+	icon_state = "tablet"
 
 /obj/item/sea_map/attack_self(mob/user, modifiers)
 	. = ..()
