@@ -126,7 +126,7 @@
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/zombie,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/zombie,
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/zombie/infectious,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie/infectious
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie/infectious,
 	)
 
 
