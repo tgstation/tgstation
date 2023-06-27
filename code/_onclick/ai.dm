@@ -203,13 +203,6 @@
 	update_appearance()
 	update()
 
-
-	lighting = APC_CHANNEL_OFF
-	equipment = APC_CHANNEL_OFF
-	environ = APC_CHANNEL_OFF
-	update_appearance()
-	update()
-
 /// Toggle APC lighting settings
 /obj/machinery/power/apc/AIShiftClick(mob/living/silicon/ai/user)
 	if(!can_use(user, 1))
