@@ -21044,6 +21044,10 @@
 	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
+"gjO" = (
+/obj/machinery/digital_clock,
+/turf/closed/wall,
+/area/station/medical/treatment_center)
 "gjP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/left/directional/east{
@@ -22229,6 +22233,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "gGb" = (
@@ -27497,6 +27502,7 @@
 "iLD" = (
 /obj/machinery/chem_mass_spec,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "iLP" = (
@@ -44466,6 +44472,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"oTk" = (
+/obj/machinery/digital_clock,
+/turf/closed/wall/r_wall,
+/area/station/command/bridge)
 "oTl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50670,6 +50680,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "rfQ" = (
@@ -155886,7 +155897,7 @@ aQO
 aQO
 aQO
 aQO
-aQO
+oTk
 aQO
 aQO
 aQO
@@ -169535,7 +169546,7 @@ iTt
 itk
 jtr
 jtr
-jtr
+gjO
 xSZ
 xqB
 xSZ

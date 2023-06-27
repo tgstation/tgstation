@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - bugfix: "hardcore random now gives you a species specific name"
