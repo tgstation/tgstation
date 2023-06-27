@@ -162,10 +162,11 @@
 
 	if(charge < MINIMUM_POWER)
 		firing = FALSE
+		output_level = 0
 		destroy_lasers()
 
 	if(charge > MINIMUM_POWER && firing)
-		var/charge_used = max(clamp((charge * 0.2) + MINIMUM_POWER, 0, charge), MINIMUM_POWER)
+		output_level = max(clamp((charge * 0.2) + MINIMUM_POWER, 0, charge), MINIMUM_POWER)
 		if(!length(laser_effects))
 			setup_lasers()
 		if(length(blocked_objects))
@@ -180,9 +181,9 @@
 					laser_effects += new_beam
 				qdel(listed_atom)
 		else
-			sell_power(charge_used)
+			sell_power(output_level)
 
-		charge -= charge_used
+		charge -= output_level
 
 	if(last_disp != return_charge() || last_chrg != inputting || last_fire != firing)
 		update_appearance()

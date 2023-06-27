@@ -154,10 +154,10 @@
 	for(var/mob/listed_mob in range(9, calculation_point))
 		if((event_flags & WEAK_QUAKE))
 			to_chat(listed_mob, span_notice("The ground shakes softly beneath you."))
-			shake_camera(listed_mob, 4, 4)
+			shake_camera(listed_mob, 2, 2)
 		if(event_flags & QUAKE)
 			to_chat(listed_mob, span_danger("The ground shakes violently beneath you."))
-			shake_camera(listed_mob, 5, 16)
+			shake_camera(listed_mob, 4, 4)
 			if(isliving(listed_mob))
 				var/mob/living/listed_living = listed_mob
 				listed_living.adjustBruteLoss(5)

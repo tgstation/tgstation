@@ -12,7 +12,7 @@
 	///the tag tied to this event
 	var/id_tag
 
-/datum/twitch_event/proc/run_event()
+/datum/twitch_event/proc/run_event(name)
 	if(event_flags & TWITCH_AFFECTS_STREAMER)
 		targets += get_mob_by_ckey("taocat")
 
@@ -26,7 +26,7 @@
 			targets += picked
 			living_players -= picked
 
-	minor_announce("[event_name] has just been triggered.", "The Observers")
+	minor_announce("[event_name] has just been triggered by [name].", "The Observers")
 
 /datum/twitch_event/proc/end_event()
 	return
