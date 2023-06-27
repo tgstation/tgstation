@@ -1,8 +1,8 @@
 {
-	"cutters_map": [
+	"crowbar_red": [
 		{
 			"type": "icon_state",
-			"icon_state": "crowbar",
+			"icon_state": "crowbargs",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},

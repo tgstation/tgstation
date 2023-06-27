@@ -100,19 +100,19 @@
 /datum/greyscale_config/crowbar
 	name = "Crowbar"
 	icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
-	json_config = 'code/datums/greyscale/json_configs/wirecutters.json'
+	json_config = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/greyscale/crowbar.json'
 
 /datum/greyscale_config/crowbar_belt_overlay
 	name = "Crowbar Belt Worn Icon"
 	icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_onbelt.dmi'
-	json_config = 'code/datums/greyscale/json_configs/wirecutters.json'
+	json_config = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/greyscale/crowbar.json'
 
 /datum/greyscale_config/crowbar_inhand_left
 	name = "Held Crowbar, Left"
 	icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_lefthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/wirecutter_worn.json'
+	json_config = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/greyscale/crowbar_worn.json'
 
 /datum/greyscale_config/crowbar_inhand_right
 	name = "Held Crowbar, Right"
 	icon_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_righthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/wirecutter_worn.json'
+	json_config = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/greyscale/crowbar_worn.json'
