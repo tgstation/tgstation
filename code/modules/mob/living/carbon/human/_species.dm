@@ -457,7 +457,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	C.mob_biotypes = inherent_biotypes
 	C.mob_respiration_type = inherent_respiration_type
 
-	if(old_species.type != type)
+	if(old_species?.type != type)
 		replace_body(C, src)
 
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
@@ -470,7 +470,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.dna.blood_type = exotic_bloodtype
 	//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
 	//(why the fuck is blood type not tied to a fucking DNA block?)
-	else if(old_species.exotic_bloodtype && !exotic_bloodtype)
+	else if(old_species?.exotic_bloodtype && !exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
 
 	if(ishuman(C))
@@ -508,8 +508,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
-	if(C.dna.species.exotic_bloodtype)
-		C.dna.blood_type = random_blood_type()
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 	for(var/obj/item/organ/external/organ in C.organs)
@@ -1011,7 +1009,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		chem.overdosed = TRUE
 		chem.overdose_start(affected)
 		affected.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
-	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, affected, seconds_per_tick, times_fired)
+	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, seconds_per_tick, times_fired)
 
 /datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
 	return 1 //This is not a boolean, it's the multiplier for the damage that the user takes from the item. The force of the item is multiplied by this value

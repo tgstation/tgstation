@@ -2,7 +2,7 @@
 	// 2spooky
 	name = "Spooky Scary Skeleton"
 	id = SPECIES_SKELETON
-	sexes = 0
+	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
 	species_traits = list(
 		NOTRANSSTING,
