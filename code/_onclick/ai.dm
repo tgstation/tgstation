@@ -175,12 +175,72 @@
 	toggle_emergency(usr)
 	add_hiddenprint(usr)
 
-/* APC */
-/obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
-	if(can_use(usr, 1))
-		toggle_breaker(usr)
+/////////////
+/*   APC   */
+/////////////
+
+/// Toggle APC power settings
+/obj/machinery/power/apc/AICtrlClick()
+	if(!can_use(usr, 1))
+		return
+
+	toggle_breaker(usr)
+
+/// Toggle APC environment settings (atmos)
+/obj/machinery/power/apc/AICtrlShiftClick()
+	if(!can_use(usr, 1))
+		return
+
+	if(!is_operational || failure_timer)
+		return
+
+	add_hiddenprint(user)
+	environ = environ ? APC_CHANNEL_OFF : APC_CHANNEL_ON
+	user.log_message("turned [environ ? "on" : "off"] the [src] environment settings", LOG_GAME)
+	update_appearance()
+	update()
 
 
+	lighting = APC_CHANNEL_OFF
+	equipment = APC_CHANNEL_OFF
+	environ = APC_CHANNEL_OFF
+	update_appearance()
+	update()
+
+/// Toggle APC lighting settings
+/obj/machinery/power/apc/AIShiftClick()
+	if(!can_use(usr, 1))
+		return
+
+	if(!is_operational || failure_timer)
+		return
+
+	add_hiddenprint(user)
+	lighting = lighting ? APC_CHANNEL_OFF : APC_CHANNEL_ON
+	user.log_message("turned [lighting ? "on" : "off"] the [src] lighting settings", LOG_GAME)
+	update_appearance()
+	update()
+
+/// Toggle APC equipment settings
+/obj/machinery/power/apc/AIAltClick()
+	if(!can_use(usr, 1))
+		return
+
+	if(!is_operational || failure_timer)
+		return
+
+	add_hiddenprint(user)
+	equipment = equipment ? APC_CHANNEL_OFF : APC_CHANNEL_ON
+	user.log_message("turned [equipment ? "on" : "off"] the [src] equipment settings", LOG_GAME)
+	update_appearance()
+	update()
+
+/obj/machinery/power/apc/attack_ai_secondary(mob/living/silicon/user, list/modifiers)
+	if(!can_use(usr, 1))
+		return
+
+	togglelock(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /* AI Turrets */
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
