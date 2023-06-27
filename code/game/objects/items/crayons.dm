@@ -200,7 +200,7 @@
 
 /obj/item/toy/crayon/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
-	user.add_atom_colour(paint_color)
+	user.add_atom_colour(paint_color, ADMIN_COLOUR_PRIORITY)
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/Initialize(mapload)
@@ -283,13 +283,6 @@
 	if(!ui)
 		ui = new(user, src, "Crayon", name)
 		ui.open()
-
-/obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(!has_cap || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
-	is_capped = !is_capped
-	balloon_alert(user, is_capped ? "capped" : "cap removed")
-	update_appearance()
 
 /obj/item/toy/crayon/proc/staticDrawables()
 	. = list()
@@ -901,6 +894,13 @@
 		balloon_alert(user, "can't match those colours!")
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+/obj/item/toy/crayon/spraycan/AltClick(mob/user)
+	if(!has_cap || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+		return
+	is_capped = !is_capped
+	balloon_alert(user, is_capped ? "capped" : "cap removed")
+	update_appearance()
 
 /obj/item/toy/crayon/spraycan/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	return is_capped
