@@ -145,20 +145,21 @@
 	var/datum/language_holder/holder_A = dummy_A.get_language_holder()
 	var/datum/language_holder/holder_B = dummy_B.get_language_holder()
 
-	// Dummy A started with 2 languages, and now should end up with 1.
-	// A lizard (2 languages) is swapping into a human (1 language).
-	TEST_ASSERT(length(holder_A.spoken_languages) == 1, \
-		"Dummy A should only speak one language - Common! Instead, it knew the following: [print_language_list(holder_A.spoken_languages)]")
+	// Dummy A is a lizard: starts with 2 languages
+	// B's mind enters A, so it should gain pirate speak = 3 total languagse
+	TEST_ASSERT_EQUAL(length(holder_A.spoken_languages), 3, \
+		"Dummy A should only speak Common, Draconic, and Pirate! Instead, it knew the following: [print_language_list(holder_A.spoken_languages)]")
 
-	TEST_ASSERT(length(holder_A.understood_languages) == 1, \
-		"Dummy A should only understand one language - Common! Instead, it knew the following: [print_language_list(holder_A.understood_languages)]")
+	TEST_ASSERT_EQUAL(length(holder_A.understood_languages), 3, \
+		"Dummy A should only understand Common, Draconic, and Pirate! Instead, it knew the following: [print_language_list(holder_A.understood_languages)]")
 
-	// Dummy B should know 3 languages. Common, Draconic (mindswapped into a lizard), and Pirate (was bound to mind).
-	TEST_ASSERT(length(holder_B.spoken_languages) == 3, \
-		"Dummy B should speak three languages - Common, Draconic, and Pirate! Instead, it knew the following: [print_language_list(holder_B.spoken_languages)]")
+	// Dummy B is a human: starts with 1 language
+	// A's mind enter's B, A knows nothing outside of species languages (which do not carry over), So 1 total language
+	TEST_ASSERT_EQUAL(length(holder_B.spoken_languages), 1, \
+		"Dummy B should only speak 1 language - Common! Instead, it knew the following: [print_language_list(holder_B.spoken_languages)]")
 
-	TEST_ASSERT(length(holder_B.understood_languages) == 3, \
-		"Dummy B should understand three languages - Common, Draconic, and Pirate! Instead, it knew the following: [print_language_list(holder_B.understood_languages)]")
+	TEST_ASSERT_EQUAL(length(holder_B.understood_languages), 1, \
+		"Dummy B should only understand 1 language - Common! Instead, it knew the following: [print_language_list(holder_B.understood_languages)]")
 
 /// Tests that the book of bable, and by extension grant_all_languages, works as intended
 /datum/unit_test/book_of_babel
