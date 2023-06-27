@@ -167,9 +167,9 @@
 	if(!loc)
 		STOP_PROCESSING(SSfastprocess, src)
 		qdel(src)
-	if(!chassis || !ismecha(loc))
-		return
 	if(scanning_time > world.time)
+		return
+	if(!chassis || !ismecha(loc))
 		return
 	if(!LAZYLEN(chassis.occupants))
 		return
