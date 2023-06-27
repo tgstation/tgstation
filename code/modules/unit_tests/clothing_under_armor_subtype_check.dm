@@ -5,4 +5,4 @@
 
 /datum/unit_test/clothing_under_armor_subtype_check/Run()
 	for(var/obj/item/clothing/under/jumpsuit as anything in typesof(/obj/item/clothing/under))
-		TEST_ASSERT(ispath(initial(UNLINT(jumpsuit.armor_type))), /datum/armor/clothing_under), "[jumpsuit] does not use clothing_under as its armor!")
+		TEST_ASSERT(ispath(initial(UNLINT(jumpsuit.armor_type)), /datum/armor/clothing_under), "[jumpsuit] does not use clothing_under as its armor!")
