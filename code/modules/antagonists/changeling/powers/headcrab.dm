@@ -44,7 +44,6 @@
 	for(var/obj/item/organ/I in organs)
 		I.forceMove(crab)
 
-	stored_mind.transfer_to(crab)
-	crab.key = stored_mind.key
+	stored_mind.transfer_to(crab, force_key_move = TRUE)
 	spawn_location.transfer_observers_to(crab)
 	to_chat(crab, span_warning("You burst out of the remains of your former body in a shower of gore!"))
