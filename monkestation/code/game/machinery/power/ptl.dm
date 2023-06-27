@@ -235,7 +235,21 @@
 
 ///this is called every time something enters our beams
 /obj/machinery/power/transmission_laser/proc/atom_entered_beam(obj/effect/transmission_beam/triggered, atom/movable/arrived)
-	return
+	var/mw_power = charge * 0.000001
+	if(mw_power < 25)
+		if(isliving(arrived))
+			var/mob/living/arrived_living = arrived
+			arrived_living.adjustFireLoss(-mw_power * 15)
+	else
+		if(mw_power < 50)
+			if(isliving(arrived))
+				var/mob/living/arrived_living = arrived
+				arrived_living.gib(FALSE)
+		else
+			if(isliving(arrived))
+				var/mob/living/arrived_living = arrived
+				explosion(arrived_living, 3, 2, 2)
+				arrived_living.gib(FALSE)
 
 
 /obj/effect/transmission_beam
