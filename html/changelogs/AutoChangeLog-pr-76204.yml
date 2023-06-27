@@ -1,5 +1,0 @@
-author: "ChungusGamer666"
-delete-after: True
-changes:
-  - refactor: "Liking/disliking food is now handled by the tongue organ, not the species. Also, having a failing tongue means you can't taste food properly!"
-  - rscadd: "You can read peoples' tongues now, if you have the entrail reading skillchip."
