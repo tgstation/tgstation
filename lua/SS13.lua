@@ -80,7 +80,7 @@ function SS13.register_signal(datum, signal, func, make_easy_clear_function)
 		}
 	end
 	if signal == "parent_qdeleting" then --We want to make sure that the cleanup function is the very last signal handler called.
-		local comp_lookup = datum.vars.comp_lookup
+		local comp_lookup = datum.vars._listen_lookup
 		if comp_lookup then
 			local lookup_for_signal = comp_lookup.entries.parent_qdeleting
 			if lookup_for_signal and not SS13.istype(lookup_for_signal, "/datum") then
