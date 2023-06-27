@@ -29,6 +29,10 @@
 	COOLDOWN_DECLARE(stomp_cd)
 
 
+/obj/machinery/power/stomper/Initialize(mapload)
+	. = ..()
+	installed_cell = new(src)
+
 /obj/machinery/power/stomper/should_have_node()
 	return anchored
 
