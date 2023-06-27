@@ -259,6 +259,8 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 			'monkestation/sound/effects/water_wade4.ogg'
 			))
 		playsound(T, sound_to_play, 50, 0)
+	if(!AM.has_status_effect(/datum/status_effect/ocean_affected))
+		AM.apply_status_effect(/datum/status_effect/ocean_affected)
 
 	SEND_SIGNAL(AM, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WASH)
 

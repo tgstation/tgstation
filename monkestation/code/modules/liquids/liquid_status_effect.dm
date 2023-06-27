@@ -35,3 +35,20 @@
 /datum/movespeed_modifier/liquids
 	variable = TRUE
 	blacklisted_movetypes = FLOATING
+
+
+/datum/status_effect/ocean_affected
+	id = "oceanaffected"
+	alert_type = null
+	duration = -1
+
+/datum/status_effect/ocean_affected/tick()
+	var/turf/ocean_turf = get_turf(owner)
+	if(!istype(ocean_turf, /turf/open/floor/plating/ocean))
+		qdel(src)
+
+	if(ishuman(owner))
+		var/mob/living/carbon/human/arrived = owner
+		if(!arrived.wear_suit?.clothing_flags & STOPSPRESSUREDAMAGE)
+			arrived.emote("cough")
+			arrived.adjustOxyLoss(-5)
