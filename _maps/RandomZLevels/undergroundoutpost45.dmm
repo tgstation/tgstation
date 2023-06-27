@@ -5511,19 +5511,16 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/layer_manifold/general/visible,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "uu" = (
 /obj/structure/table/reinforced,
 /obj/item/wrench,
 /obj/effect/turf_decal/stripes/line{
-	dir = 5
+	dir = 1
 	},
 /turf/open/floor/plating,
-/area/awaymission/undergroundoutpost45/research)
-"uv" = (
-/turf/closed/mineral/random/labormineral,
 /area/awaymission/undergroundoutpost45/research)
 "uy" = (
 /obj/structure/closet,
@@ -5614,12 +5611,6 @@
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "uL" = (
-/turf/open/floor/plating,
-/area/awaymission/undergroundoutpost45/research)
-"uM" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "uN" = (
@@ -5744,14 +5735,6 @@
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "vi" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/tank/air,
-/turf/open/floor/plating,
-/area/awaymission/undergroundoutpost45/research)
-"vj" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
 /obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
@@ -6060,6 +6043,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/mining)
+"wt" = (
+/obj/machinery/atmospherics/components/tank/air,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/undergroundoutpost45/research)
 "wv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6850,6 +6840,10 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
+"Ec" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/awaymission/undergroundoutpost45/research)
 "Ed" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -7452,7 +7446,14 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
 "Pi" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/general/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general,
+/turf/open/floor/plating,
+/area/awaymission/undergroundoutpost45/research)
+"Pw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "PB" = (
@@ -7544,6 +7545,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)
+"QL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/awaymission/undergroundoutpost45/research)
 "QX" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
@@ -7630,6 +7637,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
+"Sa" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general,
+/turf/open/floor/plating,
+/area/awaymission/undergroundoutpost45/research)
 "Sb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7806,6 +7818,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
+"Wa" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general,
+/turf/open/floor/plating,
+/area/awaymission/undergroundoutpost45/research)
 "Wd" = (
 /obj/structure/alien/resin/wall,
 /obj/structure/alien/weeds,
@@ -32621,7 +32640,7 @@ gx
 gy
 gy
 gy
-ad
+gy
 ad
 ad
 ad
@@ -32876,9 +32895,9 @@ tg
 gx
 us
 uK
+wt
 vh
 gy
-ad
 ad
 ad
 ad
@@ -33134,8 +33153,8 @@ tL
 ut
 Pi
 vi
-gx
-ad
+Ec
+gy
 ad
 ad
 ad
@@ -33389,10 +33408,10 @@ gz
 nt
 gy
 uu
-uM
-vj
-gx
-ad
+Pi
+vi
+Sa
+gy
 ad
 ad
 ad
@@ -33645,11 +33664,11 @@ rz
 gz
 tS
 gx
+QL
+Wa
+Wa
+Pw
 gy
-gy
-gx
-gy
-ad
 ad
 ad
 ad
@@ -33902,11 +33921,11 @@ Ea
 gz
 tP
 gx
-uv
-ad
-ad
-ad
-ad
+gy
+gy
+gy
+gy
+gy
 ad
 ad
 ad
