@@ -14,7 +14,7 @@
 
 /// Prepares a text to be used for maptext using a pixel font. Cleaner but less size choices.
 /// Small size. (ie: whisper runechat) Use only size pt, multiples of 12: 12pt 24pt 48pt etc. - Not for use with px sizing
-#define MAPTEXT_TINYUNICODE(text) {"<span style='font-family: \"TinyUnicode\"'>[##text]</span>"}
+#define MAPTEXT_TINY_UNICODE(text) {"<span style='font-family: \"TinyUnicode\"'>[##text]</span>"}
 
 /// Macro from Lummox used to get height from a MeasureText proc.
 /// resolves the MeasureText() return value once, then resolves the height, then sets return_var to that.
