@@ -21,7 +21,6 @@
 	mutantheart = null
 	mutantlungs = null
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
-	liked_food = STONE
 	damage_modifier = 10 //golem is stronk
 	payday_modifier = 0.75
 	siemens_coeff = 0

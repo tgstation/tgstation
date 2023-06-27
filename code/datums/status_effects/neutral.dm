@@ -417,7 +417,7 @@
 		return
 	stable_message = FALSE
 
-	
+
 	//Increment cycle
 	current_cycle++ //needs to be done here because phase 2 can early return
 
@@ -531,3 +531,22 @@
 #undef EIGENSTASIUM_PHASE_2_END
 #undef EIGENSTASIUM_PHASE_3_START
 #undef EIGENSTASIUM_PHASE_3_END
+
+///Makes the mob luminescent for the duration of the effect.
+/datum/status_effect/tinlux_light
+	id = "tinea_luxor_light"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	remove_on_fullheal = TRUE
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+
+/datum/status_effect/tinlux_light/on_creation(mob/living/new_owner, duration)
+	if(duration)
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/tinlux_light/on_apply()
+	mob_light_obj = owner.mob_light(2)
+	return TRUE
+
+/datum/status_effect/tinlux_light/on_remove()
+	QDEL_NULL(mob_light_obj)
