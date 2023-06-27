@@ -549,7 +549,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "cL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
+	dir = 8
 	},
 /obj/machinery/button/door/directional/south{
 	id = "awaydorm1";
@@ -603,6 +603,7 @@
 	name = "Dorm 1"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/central)
 "dc" = (
@@ -963,10 +964,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/awaymission/undergroundoutpost45/central)
-"er" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/carpet,
 /area/awaymission/undergroundoutpost45/central)
 "et" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -40069,9 +40066,9 @@ aD
 bZ
 aC
 Bq
-er
+fB
 db
-zJ
+IV
 IV
 dW
 PB
