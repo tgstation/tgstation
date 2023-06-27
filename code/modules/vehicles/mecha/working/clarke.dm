@@ -82,7 +82,7 @@
 		return TRUE
 	if(action == "dump")
 		var/obj/structure/ore_box/cached_ore_box = chassis.ore_box
-		if(isnull(cached_ore_box)
+		if(isnull(cached_ore_box))
 			return FALSE
 		cached_ore_box.dump_box_contents()
 		log_message("Dumped [cached_ore_box].", LOG_MECHA)
