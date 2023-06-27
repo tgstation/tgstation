@@ -146,6 +146,7 @@
 		return
 	apply_damaged_tongue_effects()
 
+/// Applies effects to our owner based on how damaged our tongue is
 /obj/item/organ/internal/tongue/proc/apply_damaged_tongue_effects()
 	if(sense_of_taste)
 		//tongues can't taste food when they are failing
