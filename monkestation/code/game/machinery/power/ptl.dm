@@ -58,6 +58,11 @@
 	terminal.master = src
 	update_appearance()
 
+/obj/machinery/power/transmission_laser/Destroy()
+	. = ..()
+	if(length(laser_effects))
+		destroy_lasers()
+	blocked_objects = null
 /obj/machinery/power/transmission_laser/proc/get_back_turf()
 	//this is weird as i believe byond sets the bottom left corner as the source corner like
 	// x-x-x
@@ -168,6 +173,11 @@
 			if(prob(max((abs(output_level) * 0.1) / 500 KW, 1))) ///increased by a single % per 500 KW
 				listed_atom.visible_message(span_danger("[listed_atom] is melted away by the [src]!"))
 				blocked_objects -= listed_atom
+				if(isclosedturf(listed_atom))
+					var/obj/effect/transmission_beam/new_beam = new(listed_atom)
+					new_beam.host = src
+					new_beam.dir = dir
+					laser_effects += new_beam
 				qdel(listed_atom)
 		else
 			sell_power(charge_used)
@@ -222,7 +232,7 @@
 		var/obj/effect/transmission_beam/new_beam = new(last_step)
 		new_beam.host = src
 		new_beam.dir = dir
-		laser_effects += src
+		laser_effects += new_beam
 
 		last_step = get_step(last_step, dir)
 
