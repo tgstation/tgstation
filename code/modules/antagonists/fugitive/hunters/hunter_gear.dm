@@ -37,6 +37,7 @@
 	name = "shuttle console"
 	shuttleId = "huntership"
 	possible_destinations = "huntership_home;huntership_custom;whiteship_home;syndicate_nw"
+	req_access = list(ACCESS_HUNTER)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter
 	name = "shuttle navigation computer"

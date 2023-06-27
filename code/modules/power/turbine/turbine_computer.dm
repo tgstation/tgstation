@@ -61,17 +61,14 @@
 	data["active"] = main_control.active
 	data["rpm"] = main_control.rpm ? main_control.rpm : 0
 	data["power"] = main_control.produced_energy ? main_control.produced_energy : 0
-	data["temp"] = main_control.input_turf?.air.temperature
+	data["temp"] = main_control.compressor.input_turf?.air.temperature
 	data["integrity"] = main_control.get_turbine_integrity()
 	data["parts_linked"] = main_control.all_parts_connected
 	data["parts_ready"] = main_control.all_parts_ready()
 
 	data["max_rpm"] = main_control.max_allowed_rpm
 	data["max_temperature"] = main_control.max_allowed_temperature
-
-	data["can_turn_off"] = main_control.rpm < 1000
-
-	data["regulator"] = main_control.intake_regulator
+	data["regulator"] = QDELETED(main_control.compressor) ? 0 : main_control.compressor.intake_regulator
 
 	return data
 
@@ -96,5 +93,6 @@
 			var/obj/machinery/power/turbine/core_rotor/main_control = turbine_core?.resolve()
 			if(intake_size == null || !main_control)
 				return
-			main_control.intake_regulator = clamp(intake_size, 0.01, 1)
+			if(!QDELETED(main_control.compressor))
+				main_control.compressor.intake_regulator = clamp(intake_size, 0.01, 1)
 			. = TRUE

@@ -246,6 +246,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 		log_combat(user, target_mob, "attacked", src)
 
+/obj/item/book/bible/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+	return !istype(storage_holder, /obj/item/book/bible)
+
 /obj/item/book/bible/afterattack(atom/bible_smacked, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!proximity_flag)

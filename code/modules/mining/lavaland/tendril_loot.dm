@@ -505,7 +505,7 @@
 	cure_curse_of_babel(user) // removes tower of babel if we have it
 	user.grant_all_languages(source=LANGUAGE_BABEL)
 	user.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_ALL)
-	ADD_TRAIT(user, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT) // this makes you immune to babel effects
+	ADD_TRAIT(user.mind, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT) // this makes you immune to babel effects
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 
@@ -737,7 +737,7 @@
 	. = ..()
 	end_berserk(user)
 
-/obj/item/clothing/head/hooded/berserker/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/head/hooded/berserker/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(berserk_active)
 		return
 	var/berserk_value = damage * DAMAGE_TO_CHARGE_SCALE
@@ -891,18 +891,18 @@
 	name = "Scan Target"
 	desc = "Contact may or may not be close."
 
-/obj/item/organ/internal/cyberimp/arm/katana
-	name = "dark shard"
-	desc = "An eerie metal shard surrounded by dark energies."
+/obj/item/organ/internal/cyberimp/arm/shard
+	name = "dark spoon shard"
+	desc = "An eerie metal shard surrounded by dark energies...of soup drinking. You probably don't think you should have been able to find this."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "cursed_katana_organ"
 	status = ORGAN_ORGANIC
 	organ_flags = ORGAN_FROZEN|ORGAN_UNREMOVABLE
-	items_to_create = list(/obj/item/cursed_katana)
+	items_to_create = list(/obj/item/kitchen/spoon)
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
 
-/obj/item/organ/internal/cyberimp/arm/katana/attack_self(mob/user, modifiers)
+/obj/item/organ/internal/cyberimp/arm/shard/attack_self(mob/user, modifiers)
 	. = ..()
 	to_chat(user, span_userdanger("The mass goes up your arm and goes inside it!"))
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
@@ -912,10 +912,13 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/internal/cyberimp/arm/katana/screwdriver_act(mob/living/user, obj/item/screwtool)
+/obj/item/organ/internal/cyberimp/arm/shard/screwdriver_act(mob/living/user, obj/item/screwtool)
 	return
 
-/obj/item/organ/internal/cyberimp/arm/katana/Retract()
+/obj/item/organ/internal/cyberimp/arm/shard/katana
+	items_to_create = list(/obj/item/cursed_katana)
+
+/obj/item/organ/internal/cyberimp/arm/shard/katana/Retract()
 	var/obj/item/cursed_katana/katana = active_item
 	if(!katana || katana.shattered)
 		return FALSE
@@ -992,7 +995,7 @@
 			user.changeNext_move(CLICK_CD_RAPID)
 	return ..()
 
-/obj/item/cursed_katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/cursed_katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()

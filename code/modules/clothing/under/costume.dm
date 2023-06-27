@@ -90,7 +90,7 @@
 
 /obj/item/clothing/under/costume/kilt/highlander/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
 /obj/item/clothing/under/costume/gladiator
 	name = "gladiator uniform"
@@ -258,6 +258,7 @@
 	bio = 10
 	fire = 30
 	acid = 30
+	wound = 5
 
 /obj/item/clothing/under/costume/buttondown
 	gender = PLURAL

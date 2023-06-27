@@ -67,7 +67,7 @@
 	is_dimorphic = FALSE
 	wound_resistance = -10
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
-	acceptable_bodytype = BODYTYPE_HUMANOID
+	acceptable_bodytype = BODYTYPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
 
 /obj/item/bodypart/chest/alien
@@ -332,6 +332,7 @@
 	desc = "This item shouldn't exist. Talk about breaking a leg. Badum-Tss!"
 	attack_verb_continuous = list("kicks", "stomps")
 	attack_verb_simple = list("kick", "stomp")
+	bodytype = BODYTYPE_HUMANOID | BODYTYPE_MONKEY | BODYTYPE_ORGANIC
 	max_damage = 50
 	body_damage_coeff = 0.75
 	can_be_disabled = TRUE

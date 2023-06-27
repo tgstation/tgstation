@@ -54,6 +54,7 @@
 	materials.insert_amount_mat(starting_amount)
 	materials.precise_insertion = TRUE
 	using_materials = list(/datum/material/iron = iron_cost, /datum/material/glass = glass_cost)
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 /obj/machinery/drone_dispenser/preloaded
 	starting_amount = 5000
@@ -228,7 +229,7 @@
 			span_notice("[user] begins patching up [src] with [I]."),
 			span_notice("You begin restoring the damage to [src]..."))
 
-		if(!I.use_tool(src, user, 40, volume=50, amount=1))
+		if(!I.use_tool(src, user, 40, volume=50))
 			return
 
 		user.visible_message(

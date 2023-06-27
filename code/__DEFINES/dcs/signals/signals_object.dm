@@ -9,8 +9,9 @@
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"
 ///from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 #define COMSIG_OBJ_HIDE "obj_hide"
-/// from /obj/item/toy/crayon/spraycan/afterattack: (color_is_dark)
+/// from /obj/item/toy/crayon/spraycan/afterattack: (user, spraycan, color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
+	#define DONT_USE_SPRAYCAN_CHARGES (1<<0)
 
 // /obj/machinery signals
 
@@ -133,7 +134,7 @@
 
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
-///from base of obj/item/hit_reaction(): (list/args)
+///from base of obj/item/hit_reaction(): (owner, hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"
 	#define COMPONENT_HIT_REACTION_BLOCK (1<<0)
 ///from base of item/sharpener/attackby(): (amount, max)
@@ -223,6 +224,9 @@
 ///called when getting the item's exact ratio for cargo's profit, without selling the item.
 #define COMSIG_ITEM_SPLIT_PROFIT_DRY "item_split_profits_dry"
 
+/// Called on component/uplink/OnAttackBy(..)
+#define COMSIG_ITEM_ATTEMPT_TC_REIMBURSE "item_attempt_tc_reimburse"
+
 // /obj/item/clothing signals
 
 ///from [/mob/living/carbon/human/Move]: ()
@@ -287,8 +291,10 @@
 ///called in /obj/item/gun/fire_gun (user, target, flag, params)
 #define COMSIG_GUN_TRY_FIRE "gun_try_fire"
 	#define COMPONENT_CANCEL_GUN_FIRE (1<<0)
-///called in /obj/item/gun/process_fire (src, target, params, zone_override)
+///called in /obj/item/gun/process_fire (src, target, params, zone_override, bonus_spread_values)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
+	#define MIN_BONUS_SPREAD_INDEX 1
+	#define MAX_BONUS_SPREAD_INDEX 2
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GUN_FIRED "gun_fired"
 ///called in /obj/item/gun/process_chamber (src)
@@ -387,8 +393,8 @@
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 //from base of obj/item/attack_self_secondary(): (/mob)
 #define COMSIG_ITEM_ATTACK_SELF_SECONDARY "item_attack_self_secondary"
-///from base of obj/item/attack_atom(): (/obj, /mob)
-#define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"
+///from base of obj/item/attack_atom(): (/atom, /mob)
+#define COMSIG_ITEM_ATTACK_ATOM "item_attack_atom"
 ///from base of obj/item/pre_attack(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_PRE_ATTACK "item_pre_attack"
 /// From base of [/obj/item/proc/pre_attack_secondary()]: (atom/target, mob/user, params)
@@ -427,3 +433,6 @@
 
 /// from /obj/machinery/mineral/ore_redemption/pickup_item when it successfully picks something up
 #define COMSIG_ORM_COLLECTED_ORE "orm_collected_ore"
+
+/// from /obj/plunger_act when an object is being plungered
+#define COMSIG_PLUNGER_ACT "plunger_act"

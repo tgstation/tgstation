@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	return FALSE
 
 /mob/living/carbon/alien/adult/check_breath(datum/gas_mixture/breath)
-	if(breath?.total_moles() > 0 && !HAS_TRAIT(src, TRAIT_ALIEN_SNEAK))
+	if(breath?.total_moles() > 0 && !HAS_TRAIT(src, TRAIT_SNEAK))
 		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, FALSE, -5)
 	return ..()
 
@@ -150,4 +150,8 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 			span_userdanger("[lucky_winner] devours you!"))
 	log_combat(src, lucky_winner, "devoured")
 	melting_pot.consume_thing(lucky_winner)
+	return TRUE
+
+// Aliens can touch acid
+/mob/living/carbon/alien/can_touch_acid(atom/acided_atom, acid_power, acid_volume)
 	return TRUE

@@ -269,7 +269,7 @@
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
 	desc = "Made by Nerd. Co."
-	icon_state = "glasses"
+	icon_state = "glasses_regular"
 	inhand_icon_state = "glasses"
 	clothing_traits = list(TRAIT_NEARSIGHTED_CORRECTED)
 
@@ -305,7 +305,7 @@
 		return
 	if(!I.tool_start_check(user, amount=1))
 		return
-	if(I.use_tool(src, user, 10, volume=30, amount=1))
+	if(I.use_tool(src, user, 10, volume=30))
 		user.visible_message(span_notice("[user] welds [src] back together."),\
 					span_notice("You weld [src] back together."))
 		repair()
@@ -323,19 +323,19 @@
 /obj/item/clothing/glasses/regular/jamjar
 	name = "jamjar glasses"
 	desc = "Also known as Virginity Protectors."
-	icon_state = "jamjar_glasses"
-	inhand_icon_state = "jamjar_glasses"
+	icon_state = "glasses_jamjar"
+	inhand_icon_state = "glasses_jamjar"
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "prescription glasses"
 	desc = "Made by Uncool. Co."
-	icon_state = "hipster_glasses"
+	icon_state = "glasses_hipster"
 	inhand_icon_state = null
 
 /obj/item/clothing/glasses/regular/circle
 	name = "circle glasses"
 	desc = "Why would you wear something so controversial yet so brave?"
-	icon_state = "circle_glasses"
+	icon_state = "glasses_circle"
 	inhand_icon_state = null
 
 //Here lies green glasses, so ugly they died. RIP
@@ -636,7 +636,7 @@
 /obj/item/clothing/glasses/regular/kim
 	name = "binoclard lenses"
 	desc = "Shows you know how to sew a lapel and center a back vent."
-	icon_state = "binoclard_lenses"
+	icon_state = "glasses_binoclard"
 	inhand_icon_state = null
 
 /obj/item/clothing/glasses/salesman

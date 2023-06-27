@@ -36,6 +36,14 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define MOVEMENT_LOOP_IGNORE_GLIDE (1<<2)
 ///Should we not update our movables dir on move?
 #define MOVEMENT_LOOP_NO_DIR_UPDATE (1<<3)
+///Is the loop moving the movable outside its control, like it's an external force? e.g. footsteps won't play if enabled.
+#define MOVEMENT_LOOP_OUTSIDE_CONTROL (1<<4)
+
+/**
+ * Returns a bitfield containing flags both present in `flags` arg and the `processing_move_loop_flags` move_packet variable.
+ * Has no use outside of procs called within the movement proc chain.
+ */
+#define CHECK_MOVE_LOOP_FLAGS(movable, flags) (movable.move_packet ? (movable.move_packet.processing_move_loop_flags & flags) : NONE)
 
 //Index defines for movement bucket data packets
 #define MOVEMENT_BUCKET_TIME 1

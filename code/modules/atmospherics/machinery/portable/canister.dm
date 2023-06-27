@@ -5,28 +5,28 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /proc/init_gas_id_to_canister()
 	return sort_list(list(
-		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
-		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
-		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-		"plasma" = /obj/machinery/portable_atmospherics/canister/plasma,
-		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-		"nitrium" = /obj/machinery/portable_atmospherics/canister/nitrium,
-		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
-		"air" = /obj/machinery/portable_atmospherics/canister/air,
-		"water_vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
-		"tritium" = /obj/machinery/portable_atmospherics/canister/tritium,
-		"hyper-noblium" = /obj/machinery/portable_atmospherics/canister/nob,
-		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
+		GAS_N2 = /obj/machinery/portable_atmospherics/canister/nitrogen,
+		GAS_O2 = /obj/machinery/portable_atmospherics/canister/oxygen,
+		GAS_CO2 = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+		GAS_PLASMA = /obj/machinery/portable_atmospherics/canister/plasma,
+		GAS_N2O = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+		GAS_NITRIUM = /obj/machinery/portable_atmospherics/canister/nitrium,
+		GAS_BZ = /obj/machinery/portable_atmospherics/canister/bz,
+		GAS_AIR = /obj/machinery/portable_atmospherics/canister/air,
+		GAS_WATER_VAPOR = /obj/machinery/portable_atmospherics/canister/water_vapor,
+		GAS_TRITIUM = /obj/machinery/portable_atmospherics/canister/tritium,
+		GAS_HYPER_NOBLIUM = /obj/machinery/portable_atmospherics/canister/nob,
+		GAS_PLUOXIUM = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
-		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
-		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
-		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen,
-		"healium" = /obj/machinery/portable_atmospherics/canister/healium,
-		"proto_nitrate" = /obj/machinery/portable_atmospherics/canister/proto_nitrate,
-		"zauker" = /obj/machinery/portable_atmospherics/canister/zauker,
-		"helium" = /obj/machinery/portable_atmospherics/canister/helium,
-		"antinoblium" = /obj/machinery/portable_atmospherics/canister/antinoblium,
-		"halon" = /obj/machinery/portable_atmospherics/canister/halon
+		GAS_MIASMA = /obj/machinery/portable_atmospherics/canister/miasma,
+		GAS_FREON = /obj/machinery/portable_atmospherics/canister/freon,
+		GAS_HYDROGEN = /obj/machinery/portable_atmospherics/canister/hydrogen,
+		GAS_HEALIUM = /obj/machinery/portable_atmospherics/canister/healium,
+		GAS_PROTO_NITRATE = /obj/machinery/portable_atmospherics/canister/proto_nitrate,
+		GAS_ZAUKER = /obj/machinery/portable_atmospherics/canister/zauker,
+		GAS_HELIUM = /obj/machinery/portable_atmospherics/canister/helium,
+		GAS_ANTINOBLIUM = /obj/machinery/portable_atmospherics/canister/antinoblium,
+		GAS_HALON = /obj/machinery/portable_atmospherics/canister/halon
 	))
 
 /obj/machinery/portable_atmospherics/canister
@@ -476,7 +476,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/welder_act_secondary(mob/living/user, obj/item/I)
 	. = ..()
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=1))
 		return TRUE
 	var/pressure = air_contents.return_pressure()
 	if(pressure > 300)
@@ -497,7 +497,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		return TRUE
 	if(machine_stat & BROKEN)
 		return TRUE
-	if(!tool.tool_start_check(user, amount=0))
+	if(!tool.tool_start_check(user, amount=1))
 		return TRUE
 	to_chat(user, span_notice("You begin repairing cracks in [src]..."))
 	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
@@ -798,8 +798,30 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
 			usr.investigate_log("turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
 			. = TRUE
+		if("recolor")
+			select_colors()
+			. = TRUE
 
 	update_appearance()
+
+/obj/machinery/portable_atmospherics/canister/proc/select_colors()
+	var/atom/fake_atom = src
+	var/list/allowed_configs = list()
+	var/config = initial(fake_atom.greyscale_config)
+	if(!config)
+		return
+	allowed_configs += "[config]"
+
+	var/datum/greyscale_modify_menu/menu = new(
+		src, usr, allowed_configs, CALLBACK(src, PROC_REF(recolor)),
+		starting_icon_state=initial(fake_atom.icon_state),
+		starting_config=initial(fake_atom.greyscale_config),
+		starting_colors=initial(fake_atom.greyscale_colors)
+	)
+	menu.ui_interact(usr)
+
+/obj/machinery/portable_atmospherics/canister/proc/recolor(datum/greyscale_modify_menu/menu)
+	set_greyscale(menu.split_colors)
 
 /obj/machinery/portable_atmospherics/canister/unregister_holding()
 	valve_open = FALSE

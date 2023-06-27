@@ -54,7 +54,7 @@
 		if("Golem")
 			outfit = /datum/outfit/consumed_golem
 		if("Operative")
-			outfit = /datum/outfit/syndicatecommandocorpse
+			outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
 		if("Shadow")
 			outfit = /datum/outfit/consumed_shadowperson
 	. = ..()
@@ -239,7 +239,7 @@
 		dame.physique = FEMALE
 		dame.update_body()
 	if(prob(30))
-		back = /obj/item/nullrod/scythe/talking
+		back = /obj/item/nullrod/vibro/talking
 	else
 		back = /obj/item/shield/buckler
 		belt = /obj/item/nullrod/claymore

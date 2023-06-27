@@ -90,7 +90,7 @@
 		var/total_storage = 0
 
 		for(var/datum/stock_part/matter_bin/bin in component_parts)
-			total_storage += bin.tier * 75000
+			total_storage += bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
 
 		materials.set_local_size(total_storage)
 
@@ -343,7 +343,7 @@
 		var/total_storage = 0
 
 		for(var/datum/stock_part/matter_bin/bin in component_parts)
-			total_storage += bin.tier * 75000
+			total_storage += bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
 
 		materials.set_local_size(total_storage)
 

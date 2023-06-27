@@ -18,13 +18,13 @@
 	initial_language_holder = /datum/language_holder/spider
 	basic_mob_flags = FLAMMABLE_MOB | DEL_ON_DEATH
 	mob_size = MOB_SIZE_TINY
+	var/menu_description = "Normal spiderling."
 
 	unique_name = TRUE
-	gold_core_spawnable = HOSTILE_SPAWN // because of what we grow into!
 
 	// we have _some_ bite
-	melee_damage_lower = 2
-	melee_damage_upper = 4
+	melee_damage_lower = 1
+	melee_damage_upper = 2
 
 	health = 5 // very low.
 	maxHealth = 5
@@ -61,7 +61,7 @@
 	// it's A-OKAY for grow_as to be null for the purposes of this component since we override that behavior anyhow.
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
-		growth_time = 10 MINUTES,\
+		growth_time = 1 MINUTES,\
 		growth_path = grow_as,\
 		growth_probability = 25,\
 		lower_growth_value = 1,\
@@ -124,7 +124,7 @@
 		if(prob(3))
 			grow_as = pick(/mob/living/basic/giant_spider/tarantula, /mob/living/basic/giant_spider/viper, /mob/living/basic/giant_spider/midwife)
 		else
-			grow_as = pick(/mob/living/basic/giant_spider, /mob/living/basic/giant_spider/hunter, /mob/living/basic/giant_spider/nurse)
+			grow_as = pick(/mob/living/basic/giant_spider, /mob/living/basic/giant_spider/ambush, /mob/living/basic/giant_spider/hunter, /mob/living/basic/giant_spider/scout, /mob/living/basic/giant_spider/nurse, /mob/living/basic/giant_spider/tangle)
 
 	var/mob/living/basic/giant_spider/grown = change_mob_type(grow_as, get_turf(src), initial(grow_as.name))
 	ADD_TRAIT(grown, TRAIT_WAS_EVOLVED, REF(src))

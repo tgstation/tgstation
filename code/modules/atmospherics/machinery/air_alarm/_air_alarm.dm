@@ -1,3 +1,5 @@
+#define AIRALARM_WARNING_COOLDOWN (10 SECONDS)
+
 /obj/machinery/airalarm
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
@@ -57,13 +59,22 @@
 	/// Used for air alarm helper called tlv_no_ckecks to remove alarm thresholds.
 	var/tlv_no_checks = FALSE
 
+
+	///Warning message spoken by air alarms
+	var/warning_message = null
+
+	//Stops the air alarm from talking about their atmos problems.
+	var/speaker_enabled = TRUE
+
+	///Cooldown on sending warning messages
+	COOLDOWN_DECLARE(warning_cooldown)
+
 	/// Used for connecting air alarm to a remote tile/zone via air sensor instead of the tile/zone of the air alarm
 	var/obj/machinery/air_sensor/connected_sensor
 	/// Used to link air alarm to air sensor via map helpers
 	var/air_sensor_chamber_id = ""
 	/// Whether it is possible to link/unlink this air alarm from a sensor
 	var/allow_link_change = TRUE
-
 
 GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
@@ -74,7 +85,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
-	wires = new /datum/wires/airalarm(src)
+	set_wires(new /datum/wires/airalarm(src))
 	if(ndir)
 		setDir(ndir)
 
@@ -114,12 +125,25 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	GLOB.air_alarms += src
 	update_appearance()
 
+/obj/machinery/airalarm/process()
+	if(!COOLDOWN_FINISHED(src, warning_cooldown))
+		return
+
+	speak(warning_message)
+	COOLDOWN_START(src, warning_cooldown, AIRALARM_WARNING_COOLDOWN)
+
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
 		my_area = null
 	QDEL_NULL(wires)
 	QDEL_NULL(alarm_manager)
 	GLOB.air_alarms -= src
+	return ..()
+
+/obj/machinery/airalarm/power_change()
+	var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
+	var/datum/gas_mixture/environment = our_turf.return_air()
+	check_danger(our_turf, environment, environment.temperature)
 	return ..()
 
 /obj/machinery/airalarm/on_enter_area(datum/source, area/area_to_register)
@@ -464,11 +488,11 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	var/color
 	if(danger_level == AIR_ALARM_ALERT_HAZARD)
-		color = "#DA0205" // red
+		color = "#FF0022" // red
 	else if(danger_level == AIR_ALARM_ALERT_WARNING || my_area.active_alarms[ALARM_ATMOS])
-		color = "#EC8B2F" // yellow
+		color = "#FFAA00" // yellow
 	else
-		color = "#03A728" // green
+		color = "#00FFCC" // teal
 
 	set_light(1.5, 1, color)
 
@@ -483,7 +507,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				icon_state = "alarm_b1"
 		return ..()
 
-	icon_state = "alarmp"
+	icon_state = isnull(connected_sensor) ? "alarmp" : "alarmp_remote"
 	return ..()
 
 /obj/machinery/airalarm/update_overlays()
@@ -526,8 +550,36 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	if(danger_level)
 		alarm_manager.send_alarm(ALARM_ATMOS)
+		if(pressure <= WARNING_LOW_PRESSURE && temp <= BODYTEMP_COLD_WARNING_1+10)
+			warning_message = "Danger! Low pressure and temperature detected."
+			return
+		if(pressure <= WARNING_LOW_PRESSURE && temp >= BODYTEMP_HEAT_WARNING_1-27)
+			warning_message = "Danger! Low pressure and high temperature detected."
+			return
+		if(pressure >= WARNING_HIGH_PRESSURE && temp >= BODYTEMP_HEAT_WARNING_1-27)
+			warning_message = "Danger! High pressure and temperature detected."
+			return
+		if(pressure >= WARNING_HIGH_PRESSURE && temp <= BODYTEMP_COLD_WARNING_1+10)
+			warning_message = "Danger! High pressure and low temperature detected."
+			return
+		if(pressure <= WARNING_LOW_PRESSURE)
+			warning_message = "Danger! Low pressure detected."
+			return
+		if(pressure >= WARNING_HIGH_PRESSURE)
+			warning_message = "Danger! High pressure detected."
+			return
+		if(temp <= BODYTEMP_COLD_WARNING_1+10)
+			warning_message = "Danger! Low temperature detected."
+			return
+		if(temp >= BODYTEMP_HEAT_WARNING_1-27)
+			warning_message = "Danger! High temperature detected."
+			return
+		else
+			warning_message = null
+
 	else
 		alarm_manager.clear_alarm(ALARM_ATMOS)
+		warning_message = null
 
 	if(old_danger != danger_level)
 		update_appearance()
@@ -544,7 +596,17 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	selected_mode.apply(my_area)
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
+
+/obj/machinery/airalarm/proc/speak(warning_message)
+	if(machine_stat & (BROKEN|NOPOWER))
+		return
+	if(!speaker_enabled)
+		return
+	if(!warning_message)
+		return
+
+	say(warning_message)
 
 /// Used for unlocked air alarm helper, which unlocks the air alarm.
 /obj/machinery/airalarm/proc/unlock()
@@ -592,7 +654,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 ///Used for air alarm link helper, which connects air alarm to a sensor with corresponding chamber_id
 /obj/machinery/airalarm/proc/setup_chamber_link()
-	var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[CHAMBER_SENSOR_FROM_ID(air_sensor_chamber_id)]
+	var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[GLOB.map_loaded_sensors[air_sensor_chamber_id]]
 	if(isnull(sensor))
 		log_mapping("[src] at [AREACOORD(src)] tried to connect to a sensor, but no sensor with chamber_id:[air_sensor_chamber_id] found!")
 		return
@@ -601,17 +663,29 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 ///Used to connect air alarm with a sensor
 /obj/machinery/airalarm/proc/connect_sensor(obj/machinery/air_sensor/sensor)
 	if(!isnull(connected_sensor))
-		UnregisterSignal(connected_sensor, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(connected_sensor, COMSIG_QDELETING)
 	connected_sensor = sensor
-	RegisterSignal(connected_sensor, COMSIG_PARENT_QDELETING, PROC_REF(disconnect_sensor))
+	RegisterSignal(connected_sensor, COMSIG_QDELETING, PROC_REF(disconnect_sensor))
 	my_area = get_area(connected_sensor)
+
+	var/turf/our_turf = get_turf(connected_sensor)
+	var/datum/gas_mixture/environment = our_turf.return_air()
+	check_danger(our_turf, environment, environment.temperature)
+
+	update_appearance()
 	update_name()
-	check_danger()
 
 ///Used to reset the air alarm to default configuration after disconnecting from air sensor
 /obj/machinery/airalarm/proc/disconnect_sensor()
-	UnregisterSignal(connected_sensor, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(connected_sensor, COMSIG_QDELETING)
 	connected_sensor = null
 	my_area = get_area(src)
+
+	var/turf/our_turf = get_turf(src)
+	var/datum/gas_mixture/environment = our_turf.return_air()
+	check_danger(our_turf, environment, environment.temperature)
+
+	update_appearance()
 	update_name()
-	check_danger()
+
+#undef AIRALARM_WARNING_COOLDOWN

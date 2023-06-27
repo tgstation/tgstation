@@ -4,6 +4,8 @@ export const ANTAG2COLOR = {
   'Biohazards': 'brown',
   'CentCom': 'teal',
   'Emergency Response Team': 'teal',
+  'Escaped Fugitives': 'orange',
+  'Bounty Hunters': 'yellow',
 } as const;
 
 export const THREAT = {

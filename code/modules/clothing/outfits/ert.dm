@@ -181,7 +181,7 @@
 	name = "Inquisition Commander"
 
 	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
-	r_hand = /obj/item/nullrod/scythe/talking/chainsword
+	r_hand = /obj/item/nullrod/vibro/talking/chainsword
 	backpack_contents = list(
 		/obj/item/storage/box/survival = 1,
 	)
@@ -284,7 +284,7 @@
 	..()
 	if(visualsOnly)
 		return
-	ADD_TRAIT(H, TRAIT_NAIVE, INNATE_TRAIT)
+	ADD_TRAIT(H.mind, TRAIT_NAIVE, INNATE_TRAIT)
 	H.dna.add_mutation(/datum/mutation/human/clumsy)
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
 		M.mutadone_proof = TRUE

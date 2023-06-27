@@ -15,7 +15,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -43,7 +43,7 @@
 	pixel_y = 3
 	},
 /obj/effect/spawner/random/entertainment/deck,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -91,7 +91,7 @@
 /obj/structure/rack,
 /obj/structure/window/spawner/directional/west,
 /obj/item/storage/crayons,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -103,7 +103,7 @@
 	pixel_x = 4
 	},
 /obj/item/modular_computer/laptop/preset/civilian,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)

@@ -9,15 +9,12 @@
  * Book Binder
  */
 
-#define DEFAULT_UPLOAD_CATAGORY "Fiction"
-#define DEFAULT_SEARCH_CATAGORY "Any"
+GLOBAL_VAR_INIT(library_table_modified, 0)
 
-///How many books should we load per page?
-#define BOOKS_PER_PAGE 18
-///How many checkout records should we load per page?
-#define CHECKOUTS_PER_PAGE 17
-///How many inventory items should we load per page?
-#define INVENTORY_PER_PAGE 19
+/// Increments every time WE update the library db table, causes all existing consoles to repull when they next check
+/proc/library_updated()
+	GLOB.library_table_modified = (GLOB.library_table_modified + 1) % (SHORT_REAL_LIMIT - 1)
+
 /*
  * Library Public Computer
  */
@@ -28,8 +25,9 @@
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 	desc = "Checked out books MUST be returned on time."
-	// This fixes consoles to be ON the tables, rather than their keyboards floating a bit
-	pixel_y = 8
+	anchored_tabletop_offset = 8
+	///The current book id we're searching for
+	var/book_id = null
 	///The current title we're searching for
 	var/title = ""
 	///The category we're searching for
@@ -74,6 +72,7 @@
 	data["category"] = category
 	data["author"] = author
 	data["title"] = title
+	data["book_id"] = book_id
 	data["page_count"] = page_count + 1 //Increase these by one so it looks like we're not indexing at 0
 	data["our_page"] = search_page + 1
 	data["pages"] = page_content
@@ -86,6 +85,12 @@
 	if(.)
 		return
 	switch(action)
+		if("set_search_id")
+			var/newid = text2num(params["id"])
+			if(newid != book_id)
+				params_changed = TRUE
+			book_id = newid
+			return TRUE
 		if("set_search_title")
 			var/newtitle = params["title"]
 			if(newtitle != title)
@@ -185,7 +190,7 @@
 	return TRUE
 
 /obj/machinery/computer/libraryconsole/proc/hash_search_info()
-	return "[title]-[author]-[category]-[search_page]-[page_count]"
+	return "[GLOB.library_table_modified]-[book_id]-[title]-[author]-[category]-[search_page]-[page_count]"
 
 /obj/machinery/computer/libraryconsole/proc/update_page_contents()
 	if(sending_request) //Final defense against nerds spamming db requests
@@ -199,9 +204,10 @@
 			AND author LIKE CONCAT('%',:author,'%')
 			AND title LIKE CONCAT('%',:title,'%')
 			AND (:category = 'Any' OR category = :category)
+			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
 		ORDER BY id DESC
 		LIMIT :skip, :take
-	"}, list("author" = author, "title" = title, "category" = category, "skip" = BOOKS_PER_PAGE * search_page, "take" = BOOKS_PER_PAGE))
+	"}, list("author" = author, "title" = title, "book_id" = book_id, "category" = category, "skip" = BOOKS_PER_PAGE * search_page, "take" = BOOKS_PER_PAGE))
 
 	var/query_succeeded = query_library_list_books.Execute()
 	sending_request = FALSE
@@ -226,7 +232,8 @@
 			AND author LIKE CONCAT('%',:author,'%')
 			AND title LIKE CONCAT('%',:title,'%')
 			AND (:category = 'Any' OR category = :category)
-	"}, list("author" = author, "title" = title, "category" = category))
+			[book_id ? "AND id LIKE CONCAT('%', :book_id, '%')" : ""]
+	"}, list("author" = author, "title" = title, "book_id" = book_id, "category" = category))
 
 	if(!query_library_count_books.warn_execute())
 		qdel(query_library_count_books)
@@ -286,8 +293,6 @@
 	var/screen_state = LIBRARY_INVENTORY
 	///Should we show the buttons required for changing screens?
 	var/show_dropdown = TRUE
-	///The name of the book being checked out
-	var/datum/book_info/buffer_book
 	///List of checked out books, /datum/borrowbook
 	var/list/checkouts = list()
 	///The current max amount of checkout pages allowed
@@ -302,8 +307,6 @@
 	var/inventory_page = 0
 	///Should we load our inventory from the bookselves in our area?
 	var/dynamic_inv_load = FALSE
-	///Toggled if some bit of code wants to override hashing and allow for page updates
-	var/ignore_hash = FALSE
 	///Book scanner that will be used when uploading books to the Archive
 	var/datum/weakref/scanner
 	///Our cooldown on using the printer
@@ -316,6 +319,25 @@
 	if(mapload)
 		dynamic_inv_load = TRUE //Only load in stuff if we were placed during mapload
 
+/obj/machinery/computer/libraryconsole/bookmanagement/ui_static_data(mob/user)
+	var/list/data = list()
+	data["inventory"] = list()
+	var/inventory_len = length(inventory)
+	if(inventory_len)
+		for(var/id in ((INVENTORY_PER_PAGE * inventory_page) + 1) to min(INVENTORY_PER_PAGE * (inventory_page + 1), inventory_len))
+			var/book_ref = inventory[id]
+			var/datum/book_info/info = inventory[book_ref]
+			data["inventory"] += list(list(
+				"id" = id,
+				"ref" = book_ref,
+				"title" = info.get_title(),
+				"author" = info.get_author(),
+			))
+	data["has_inventory"] = !!inventory_len
+	data["inventory_page"] = inventory_page + 1
+	data["inventory_page_count"] = inventory_page_count + 1
+	return data
+
 /obj/machinery/computer/libraryconsole/bookmanagement/ui_data(mob/user)
 	var/list/data = list()
 	data["can_db_request"] = can_db_request()
@@ -327,23 +349,6 @@
 		load_nearby_books()
 
 	switch(screen_state)
-		if(LIBRARY_INVENTORY)
-			data["inventory"] = list()
-			var/inventory_len = length(inventory)
-			if(inventory_len)
-				for(var/id in ((INVENTORY_PER_PAGE * inventory_page) + 1) to min(INVENTORY_PER_PAGE * (inventory_page + 1), inventory_len))
-					var/book_ref = inventory[id]
-					var/datum/book_info/info = inventory[book_ref]
-					data["inventory"] += list(list(
-						"id" = id,
-						"ref" = book_ref,
-						"title" = info.get_title(),
-						"author" = info.get_author(),
-					))
-			data["has_inventory"] = !!inventory_len
-			data["inventory_page"] = inventory_page + 1
-			data["inventory_page_count"] = inventory_page_count + 1
-
 		if(LIBRARY_CHECKOUT)
 			data["checkouts"] = list()
 			var/checkout_len = length(checkouts)
@@ -360,9 +365,8 @@
 						"overdue" = (timedue <= 0),
 						"due_in_minutes" = timedue,
 						"title" = loan.book_data.get_title(),
-						"author" = loan.book_data.get_author()
+						"author" = loan.book_data.get_author(),
 					))
-			data["checking_out"] = buffer_book?.get_title()
 			data["has_checkout"] = !!checkout_len
 			data["checkout_page"] = checkout_page + 1
 			data["checkout_page_count"] = checkout_page_count + 1
@@ -443,14 +447,22 @@
 			inventory_update()
 			return TRUE
 		if("checkout")
+			var/list/available = list()
+			for(var/id in inventory)
+				var/datum/book_info/book_infos = inventory[id]
+				available[book_infos.title] = book_infos
+			var/book_name = params["book_name"]
+			if(QDELETED(src) || !book_name)
+				return
+			var/datum/book_info/book_info = available[book_name]
+			if(!istype(book_info))
+				return
 			var/datum/borrowbook/loan = new /datum/borrowbook
-			var/datum/book_info/book_data = buffer_book?.return_copy() || new /datum/book_info
 
-			book_data.set_title(params["book_name"])
 			var/loan_to = copytext(sanitize(params["loaned_to"]), 1, MAX_NAME_LEN)
 			var/checkoutperiod = max(params["checkout_time"], 1)
 
-			loan.book_data = book_data.return_copy()
+			loan.book_data = book_info.return_copy()
 			loan.loanedto = loan_to
 			loan.checkout = world.time
 			loan.duedate = world.time + (checkoutperiod MINUTES)
@@ -531,50 +543,21 @@
 			set_screen_state(MIN_LIBRARY)
 			return TRUE
 
-/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/W, mob/user, params)
-	if(!istype(W, /obj/item/barcodescanner))
+/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon, mob/user, params)
+	if(!istype(weapon, /obj/item/barcodescanner))
 		return ..()
-	var/obj/item/barcodescanner/scanner = W
-	scanner.computer_ref = WEAKREF(src)
-	to_chat(user, span_notice("[scanner]'s associated machine has been set to [src]."))
-	audible_message(span_hear("[src] lets out a low, short blip."))
-
-	if(!scanner.book_data)
+	var/obj/item/barcodescanner/scanner = weapon
+	if(scanner.computer_ref?.resolve() == src)
+		balloon_alert(user, "already connected!")
 		return
-
-	var/datum/book_info/scanner_book = scanner.book_data.return_copy()
-	switch(scanner.mode)
-		if(1)
-			buffer_book = scanner_book
-			to_chat(user, span_notice("[scanner]'s screen flashes: 'Book title stored in computer buffer.'"))
-		if(2)
-			for(var/checkout_ref in checkouts)
-				var/datum/borrowbook/maybe_ours = checkouts[checkout_ref]
-				if(!scanner_book.compare(maybe_ours.book_data))
-					continue
-				checkouts -= checkout_ref
-				checkout_update()
-				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book has been checked in.'"))
-				return
-
-			to_chat(user, span_notice("[scanner]'s screen flashes: 'No active check-out record found for current title.'"))
-		if(3)
-			inventory[ref(scanner_book)] = scanner_book
-			inventory_update()
-			to_chat(user, span_notice("[scanner]'s screen flashes: 'Title added to general inventory.'"))
+	scanner.computer_ref = WEAKREF(src)
+	balloon_alert(user, "scanner connected")
+	audible_message(span_hear("[src] lets out a low, short blip."))
 
 /obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
 	if(!density)
 		return
 	obj_flags |= EMAGGED
-
-/obj/machinery/computer/libraryconsole/bookmanagement/has_anything_changed()
-	if(..())
-		return TRUE
-	if(!ignore_hash)
-		return FALSE
-	ignore_hash = FALSE
-	return TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/set_screen_state(new_state)
 	screen_state = clamp(new_state, MIN_LIBRARY, MAX_LIBRARY)
@@ -632,8 +615,8 @@
 		return
 	usr.log_message(msg, LOG_GAME)
 	qdel(query_library_upload)
+	library_updated()
 	say("Upload Complete. Uploaded title will be available for printing in a moment")
-	ignore_hash = TRUE
 	update_db_info()
 
 /// Call this proc to attempt a print. It will return false if the print failed, true otherwise, longside some ux
@@ -843,11 +826,6 @@
 
 	qdel(draw_from)
 
-#undef BOOKS_PER_PAGE
-#undef CHECKOUTS_PER_PAGE
-#undef DEFAULT_SEARCH_CATAGORY
-#undef DEFAULT_UPLOAD_CATAGORY
-#undef INVENTORY_PER_PAGE
 #undef LIBRARY_ARCHIVE
 #undef LIBRARY_CHECKOUT
 #undef LIBRARY_INVENTORY

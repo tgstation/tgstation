@@ -43,7 +43,7 @@
 		return
 
 	if(extra_check_callback)
-		if(!extra_check_callback.Invoke(user, target))
+		if(!extra_check_callback.Invoke(user, target, source))
 			return
 	on_hit_callback.Invoke(source, user, target, user.zone_selected)
 	return COMPONENT_AFTERATTACK_PROCESSED_ITEM

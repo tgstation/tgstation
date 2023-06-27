@@ -395,6 +395,7 @@
 	name = "blue surgery cap"
 	icon_state = "surgicalcap"
 	desc = "A blue medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+	flags_inv = HIDEHAIR //Cover your head doctor!
 
 /obj/item/clothing/head/utility/surgerycap/purple
 	name = "burgundy surgery cap"
@@ -463,7 +464,7 @@
 
 /obj/item/clothing/head/beret/highlander/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
 //CentCom
 /obj/item/clothing/head/beret/centcom_formal

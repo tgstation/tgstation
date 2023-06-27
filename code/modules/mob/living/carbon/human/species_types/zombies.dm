@@ -36,9 +36,6 @@
 	mutantliver = null
 	mutantlungs = null
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
-	disliked_food = NONE
-	liked_food = GROSS | MEAT | RAW | GORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | ERT_SPAWN
 	bodytemp_normal = T0C // They have no natural body heat, the environment regulates body temp
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // Take damage at fire temp
@@ -52,6 +49,8 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/zombie,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie
 	)
+
+	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
 /datum/species/zombie/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
@@ -88,8 +87,8 @@
 	name = "Infectious Zombie"
 	id = SPECIES_ZOMBIE_INFECTIOUS
 	examine_limb_id = SPECIES_ZOMBIE
-	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 1.6
+	damage_modifier = 20 // 120 damage to KO a zombie, which kills it
 	mutanteyes = /obj/item/organ/internal/eyes/zombie
 	mutantbrain = /obj/item/organ/internal/brain/zombie
 	mutanttongue = /obj/item/organ/internal/tongue/zombie
@@ -120,13 +119,13 @@
 		TRAIT_STABLELIVER, // Not necessary but for consistency with above
 	)
 
-/datum/species/zombie/infectious/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/zombie/infectious/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species)
 	. = ..()
-	C.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie)
+	new_zombie.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie)
 
-/datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+/datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/was_zombie, datum/species/new_species, pref_load)
 	. = ..()
-	qdel(C.GetComponent(/datum/component/mutant_hands))
+	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
