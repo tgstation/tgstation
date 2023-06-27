@@ -30454,6 +30454,7 @@
 "ljp" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/light/small/directional/south,
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "lju" = (
@@ -31814,6 +31815,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron,
 /area/station/security/tram)
 "lJA" = (
@@ -35056,6 +35058,7 @@
 /area/station/hallway/secondary/entry)
 "mPv" = (
 /obj/item/kirbyplants/random/fullysynthetic,
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "mPx" = (
