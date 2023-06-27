@@ -87,6 +87,23 @@
 	if(random_color)
 		set_greyscale(colors = list(pick(wirecutter_colors_rapt)))
 
+/obj/item/fireaxe
+	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools.dmi'
+	lefthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_lefthand.dmi'
+	righthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/tools/tools_righthand.dmi'
+
+/*
+ * Bespoke Cinder-Swimmer fireaxe, a hidden goodie.
+ */
+/obj/item/fireaxe/cinderaxe
+	icon_state = "cinderaxe0"
+	base_icon_state = "cinderaxe"
+	name = "rugged fireaxe"
+	desc = "An old Terran fireaxe, worn but well maintained, with a faint smell of copper and ozone about it.  It feels strangely reassuring in your hands, as if it could solve any problem you faced."
+	tool_behaviour = TOOL_CROWBAR
+	toolspeed = 1
+	usesound = 'sound/items/crowbar.ogg'
+
 
 
 /datum/greyscale_config/screwdriver

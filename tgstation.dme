@@ -5374,6 +5374,7 @@
 #include "modular_skyraptor\modules\aesthetics\inherited_skyrat\windows\code\windows.dm"
 #include "modular_skyraptor\modules\aesthetics\moremospherics\altered_machines.dm"
 #include "modular_skyraptor\modules\aesthetics\moremospherics\more_colors.dm"
+#include "modular_skyraptor\modules\aesthetics\moremospherics\pipes.dm"
 #include "modular_skyraptor\modules\aesthetics\oldnewsurgery\oldnewsurgery.dm"
 #include "modular_skyraptor\modules\aesthetics\shiptest_chemcontainers\shipchems.dm"
 #include "modular_skyraptor\modules\aesthetics\ui_greenened\hud_greened.dm"
