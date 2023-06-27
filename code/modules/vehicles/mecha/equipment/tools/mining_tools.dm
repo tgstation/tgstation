@@ -167,10 +167,11 @@
 	if(!loc)
 		STOP_PROCESSING(SSfastprocess, src)
 		qdel(src)
-	if(!ismecha(loc))
+	if(!chassis || !ismecha(loc))
 		return
-	var/obj/vehicle/sealed/mecha/mecha = loc
-	if(!LAZYLEN(mecha.occupants))
+	if(scanning_time > world.time)
+		return
+	if(!LAZYLEN(chassis.occupants))
 		return
 	scanning_time = world.time + equip_cooldown
 	mineral_scan_pulse(get_turf(src))
