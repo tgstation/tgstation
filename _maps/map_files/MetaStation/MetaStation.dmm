@@ -3344,6 +3344,9 @@
 /area/station/maintenance/port/fore)
 "bkM" = (
 /obj/machinery/light/small/directional/south,
+/obj/machinery/atmospherics/components/unary/thermomachine{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "bkO" = (
@@ -7090,7 +7093,10 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "cKm" = (
-/obj/structure/training_machine,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "cKn" = (
@@ -18122,6 +18128,7 @@
 /area/station/command/bridge)
 "gNC" = (
 /obj/machinery/light/small/directional/north,
+/obj/effect/artifact_spawner,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "gND" = (
@@ -22854,7 +22861,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "itn" = (
-/obj/effect/decal/cleanable/oil,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 6
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "itp" = (
@@ -47609,7 +47618,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "rkT" = (
-/obj/item/target/syndicate,
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "rla" = (
@@ -49010,6 +49019,9 @@
 /area/station/science/xenobiology)
 "rKB" = (
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/atmospherics/components/unary/artifact_heatingpad{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "rKG" = (
@@ -58684,7 +58696,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
 "vdx" = (
-/obj/machinery/rnd/experimentor,
+/obj/machinery/artifact_xray,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "vdJ" = (
@@ -101880,7 +101892,7 @@ tUn
 hKV
 wXF
 uDS
-vdx
+jSk
 sIW
 bRb
 cKm
@@ -102136,10 +102148,10 @@ jgK
 tUn
 dQT
 wXF
+vdx
 jSk
-itn
 sIW
-jSk
+itn
 rkT
 tAg
 yfa

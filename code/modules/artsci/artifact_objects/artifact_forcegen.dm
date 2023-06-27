@@ -36,7 +36,7 @@
 	shield_iconstate = pick("shieldsparkles","empdisable","shield2","shield-old","shield-red","shield-green","shield-yellow")
 	activation_sound = pick('sound/mecha/mech_shield_drop.ogg')
 	deactivation_sound = pick('sound/mecha/mech_shield_raise.ogg','sound/magic/forcewall.ogg')
-	shield_time = rand(20,90) SECONDS
+	shield_time = rand(10,40) SECONDS
 	radius = rand(1,3)
 	cooldown_time = shield_time / 3
 	potency += radius * 3 + shield_time / 30
@@ -59,11 +59,11 @@
 
 /*/datum/component/artifact/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(Destroyed))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(Destroyed))
 
 /datum/component/artifact/UnregisterFromParent()
 	 . = ..()
-	 UnregisterSignal(parent, COMSIG_PARENT_QDELETING)*/
+	 UnregisterSignal(parent, COMSIG_QDELETING)*/
 /datum/component/artifact/forcegen/effect_deactivate()
 	holder.anchored = FALSE
 	for(var/obj/field in projected_forcefields)

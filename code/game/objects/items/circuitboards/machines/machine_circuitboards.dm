@@ -1499,6 +1499,15 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/artifact_xray
 	req_components = list(/obj/item/stock_parts/capacitor = 1, /datum/stock_part/scanning_module = 1, /obj/item/stock_parts/micro_laser = 1)
+
+/obj/item/circuitboard/machine/artifactheater
+	name = "Artifact Heating Pad"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	req_components = list(
+		/datum/stock_part/matter_bin = 2,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stack/sheet/glass = 1)
+
 /obj/item/circuitboard/machine/navbeacon
 	name = "Bot Navigational Beacon"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE

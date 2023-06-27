@@ -637,6 +637,8 @@
 	design_ids = list(
 		"anomaly_neutralizer",
 		"reactive_armour",
+		"artifact_heater",
+		"artifact_xray",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 

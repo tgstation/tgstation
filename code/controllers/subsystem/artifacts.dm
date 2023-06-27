@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(artifacts)
 
 	flags = SS_NO_FIRE | SS_NO_INIT
 
-	///instances of object artifacts
+	///Currently existing artifacts with a component (key = obj artifact, value = component artifact)
 	var/list/artifacts = list()
 	var/list/datum/component/artifact/artifact_types = list()
 	var/list/artifact_type_names = list()

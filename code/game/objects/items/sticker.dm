@@ -81,12 +81,12 @@
 		RegisterSignal(signal_turf, COMSIG_TURF_EXPOSE, PROC_REF(on_turf_expose))
 	RegisterSignal(attached, COMSIG_LIVING_IGNITED, PROC_REF(on_ignite))
 	RegisterSignal(attached, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(peel))
-	RegisterSignal(attached, COMSIG_PARENT_QDELETING, PROC_REF(on_attached_qdel))
+	RegisterSignal(attached, COMSIG_QDELETING, PROC_REF(on_attached_qdel))
 
 //Unregisters signals from the object it is attached to
 /obj/item/sticker/proc/unregister_signals(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(attached, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_IGNITED, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(attached, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_IGNITED, COMSIG_QDELETING))
 	if(signal_turf)
 		UnregisterSignal(signal_turf, COMSIG_TURF_EXPOSE)
 		signal_turf = null
@@ -113,7 +113,7 @@
 	peel()
 	qdel(src)
 
-/// Signal handler for COMSIG_PARENT_QDELETING, deletes this sticker if the attached object is deleted
+/// Signal handler for COMSIG_QDELETING, deletes this sticker if the attached object is deleted
 /obj/item/sticker/proc/on_attached_qdel(datum/source)
 	SIGNAL_HANDLER
 	peel()

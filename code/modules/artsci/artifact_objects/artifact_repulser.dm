@@ -37,6 +37,7 @@
 	SIGNAL_HANDLER
 	if(!active || !COOLDOWN_FINISHED(src,cooldown))
 		return
+	holder.visible_message(span_warning("[holder] emits a pulse of energy, throwing things [attract ? "towards it!" : "away from it!"]"))
 	var/owner_turf = get_turf(holder)
 	var/real_cooldown_time = cooldown_time
 	if(isnull(thrown))

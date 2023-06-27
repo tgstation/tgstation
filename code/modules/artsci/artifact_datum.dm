@@ -44,7 +44,7 @@
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 	holder = parent
-	SSartifacts.artifacts += holder
+	SSartifacts.artifacts[holder] = src
 
 	if(forced_origin)
 		valid_origins = list(forced_origin)
@@ -91,18 +91,19 @@
 		trigger.amount = max(trigger.base_amount,trigger.base_amount + (trigger.max_amount - trigger.base_amount) * (potency/100))
 
 /datum/component/artifact/RegisterWithParent()
-	RegisterSignals(parent, list(COMSIG_ATOM_DESTRUCTION, COMSIG_PARENT_QDELETING), PROC_REF(Artifact_Destroyed))
+	RegisterSignals(parent, list(COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING), PROC_REF(Artifact_Destroyed))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(Touched))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attack_by))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attack_by))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ROBOT, PROC_REF(robot_attack))
 	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(emp_act))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(ex_act))
 	RegisterSignal(parent, COMSIG_STICKER_STICKED, PROC_REF(on_analysis))
 	RegisterSignal(parent, COMSIG_STICKER_UNSTICKED, PROC_REF(deanalyze))
 
 /datum/component/artifact/UnregisterFromParent()
 	SSartifacts.artifacts -= parent
-	UnregisterSignal(parent, list(COMSIG_ITEM_PICKUP,COMSIG_ATOM_ATTACK_HAND,COMSIG_ATOM_DESTRUCTION,COMSIG_PARENT_EXAMINE,COMSIG_ATOM_EMP_ACT,COMSIG_ATOM_EX_ACT,COMSIG_STICKER_STICKED,COMSIG_STICKER_UNSTICKED))
+	UnregisterSignal(parent, list(COMSIG_ITEM_PICKUP,COMSIG_ATOM_ATTACK_HAND,COMSIG_ATOM_DESTRUCTION,COMSIG_ATOM_EXAMINE,COMSIG_ATOM_EMP_ACT,COMSIG_ATOM_EX_ACT,COMSIG_STICKER_STICKED,COMSIG_STICKER_UNSTICKED))
 
 /datum/component/artifact/proc/Activate(silent=FALSE)
 	if(active) //dont activate activated objects
@@ -190,6 +191,12 @@
 		return
 	if(LAZYLEN(artifact_origin.touch_descriptors))
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), user, span_notice("<i>[pick(artifact_origin.touch_descriptors)]</i>")), 0.5 SECONDS)
+
+/datum/component/artifact/proc/robot_attack(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+	if(!user.Adjacent(holder))
+		return
+	Stimulate(STIMULUS_SILICON_TOUCH)
 
 //doesnt work
 /*/datum/artifact/proc/Irradiating(atom/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
