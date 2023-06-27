@@ -200,6 +200,10 @@ Doesn't work on other aliens/AI.*/
 	desc = "Drench an object in acid, destroying it over time."
 	button_icon_state = "alien_acid"
 	plasma_cost = 200
+	/// The acid power for the aliens acid corrosion, will ignore mobs
+	var/corrosion_acid_power = 200
+	/// The acid volume for the aliens acid corrosion, will ignore mobs
+	var/corrosion_acid_volume = 1000
 
 /datum/action/cooldown/alien/acid/corrosion/set_click_ability(mob/on_who)
 	. = ..()
@@ -228,7 +232,9 @@ Doesn't work on other aliens/AI.*/
 	return ..()
 
 /datum/action/cooldown/alien/acid/corrosion/Activate(atom/target)
-	if(!target.acid_act(200, 1000))
+	if(isturf(target))
+		target.AddComponent(/datum/component/acid, corrosion_acid_power, corrosion_acid_volume, GLOB.acid_overlay, /particles/acid, turf_acid_ignores_mobs = TRUE)
+	else if(!target.acid_act(corrosion_acid_power, corrosion_acid_volume))
 		to_chat(owner, span_noticealien("You cannot dissolve this object."))
 		return FALSE
 
@@ -240,7 +246,7 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/alien/acid/neurotoxin
 	name = "Spit Neurotoxin"
-	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
+	desc = "Spits neurotoxin at someone, dealing large amounts of stamina damage."
 	button_icon_state = "alien_neurotoxin_0"
 	plasma_cost = 50
 
@@ -345,6 +351,7 @@ Doesn't work on other aliens/AI.*/
 	button_icon_state = "alien_sneak"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
+	sneak_alpha = 25
 
 /datum/action/cooldown/alien/regurgitate
 	name = "Regurgitate"

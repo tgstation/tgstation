@@ -3,11 +3,11 @@
 	/// This variable is responsible for the rating of the components themselves. Literally tiers of components, where 1 is standard, 4 is bluespace.
 	var/rating = null
 
-/datum/buildmode_mode/tweakcomps/show_help(client/target_client)
-	to_chat(target_client, span_notice("***********************************************************\n\
-		Right Mouse Button on buildmode button = Choose the rating of the components.\n\
-		Left Mouse Button on machinery = Sets the chosen rating of the components on the machinery.\n\
-		***********************************************************"))
+/datum/buildmode_mode/tweakcomps/show_help(client/builder)
+	to_chat(builder, span_purple(examine_block(
+		"[span_bold("Choose the rating of the components")] -> Right Mouse Button on buildmode button\n\
+		[span_bold("Sets the chosen rating of the components on the machinery")] -> Left Mouse Button on machinery"))
+	)
 
 /datum/buildmode_mode/tweakcomps/change_settings(client/target_client)
 	var/rating_to_choose = input(target_client, "Enter number of rating", "Number", "1")

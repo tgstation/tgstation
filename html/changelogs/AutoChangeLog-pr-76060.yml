@@ -1,4 +1,0 @@
-author: "ChungusGamer666"
-delete-after: True
-changes:
-  - refactor: "Species brute and burn damage modifiers are now handled by bodyparts, instead of being universal. Go ham at the surgical bay."

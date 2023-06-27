@@ -477,6 +477,9 @@
 			limb_snip_candidate.dismember()
 		user.visible_message(span_danger("[src] violently slams shut, amputating [patient]'s [candidate_name]."), span_notice("You amputate [patient]'s [candidate_name] with [src]."))
 
+	if(HAS_TRAIT(user, TRAIT_MORBID)) //Freak
+		user.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
+
 /obj/item/shears/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/timer = 1 SECONDS
