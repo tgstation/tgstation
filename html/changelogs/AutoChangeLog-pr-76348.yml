@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "sliding puzzles can no longer have their icons erased by the hand labeler"
