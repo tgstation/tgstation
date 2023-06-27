@@ -101,7 +101,7 @@ const SnowflakeOrebox = (props: { module: MechaUtility }, context) => {
             })
           }
           disabled={!cargo}>
-          {'Dump contents'}
+          {cargo ? 'Dump contents' : 'Empty'}
         </Button>
       </div>
     </Box>
