@@ -140,7 +140,7 @@
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
-/obj/item/organ/internal/tongue/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
+/obj/item/organ/internal/tongue/apply_organ_damage(damage_amount, maximum, required_organtype)
 	. = ..()
 	if(!owner)
 		return
