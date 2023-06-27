@@ -464,6 +464,7 @@
 "cm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/gateway)
 "cn" = (
@@ -889,6 +890,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/gateway)
 "ef" = (
@@ -2151,9 +2153,6 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/gateway)
 "iR" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /obj/structure/table,
 /obj/item/paper/pamphlet/gateway,
 /obj/effect/decal/cleanable/dirt,
@@ -2333,6 +2332,7 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "jI" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/gateway)
 "jJ" = (
@@ -3045,6 +3045,7 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "mc" = (
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron{
 	dir = 8
 	},
@@ -3260,6 +3261,7 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -3421,6 +3423,7 @@
 "nl" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -4032,6 +4035,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -4178,6 +4182,7 @@
 	name = "Server Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/away/maintenance,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/awaymission/undergroundoutpost45/research)
 "pJ" = (
@@ -4312,10 +4317,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general{
 	dir = 10
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/telecomms,
 /area/awaymission/undergroundoutpost45/research)
 "qk" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/awaymission/undergroundoutpost45/research)
 "ql" = (
@@ -4398,6 +4405,9 @@
 "qH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
 "qI" = (
@@ -4636,9 +4646,6 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/mapping_helpers/apc/full_charge,
 /obj/effect/mapping_helpers/apc/cell_10k,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
@@ -4891,6 +4898,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "rZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -6436,6 +6444,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/mining)
+"yq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/awaymission/undergroundoutpost45/gateway)
 "yN" = (
 /obj/structure/chair/office/light{
 	dir = 1;
@@ -6963,6 +6978,7 @@
 	desc = "A warning sign which reads 'SERVER ROOM'.";
 	name = "SERVER ROOM"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "GI" = (
@@ -7220,7 +7236,7 @@
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Lo" = (
-/obj/machinery/atmospherics/components/unary/passive_vent{
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 4
 	},
 /turf/open/misc/asteroid{
@@ -7701,7 +7717,7 @@
 /area/awaymission/undergroundoutpost45/caves)
 "Tu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
+	dir = 8
 	},
 /obj/structure/sign/warning/secure_area/directional/south,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
@@ -7962,6 +7978,10 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
+"XU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/awaymission/undergroundoutpost45/gateway)
 "Yb" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -27736,10 +27756,10 @@ Su
 iu
 iP
 cA
-cA
+Qb
 ed
-cA
-cA
+Qb
+Qb
 cm
 mC
 gL
@@ -28250,11 +28270,11 @@ gJ
 it
 iR
 jk
-jI
+yq
 gv
 gK
 Ji
-cA
+Qb
 mE
 gK
 ad
@@ -28511,7 +28531,7 @@ gv
 gv
 kA
 cA
-mb
+XU
 mF
 gv
 ad
@@ -28768,7 +28788,7 @@ gK
 Rx
 kB
 lt
-mb
+XU
 mG
 gw
 zq
