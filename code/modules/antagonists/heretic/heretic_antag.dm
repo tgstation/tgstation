@@ -762,3 +762,4 @@
 
 /datum/antagonist/heretic/roundend_report_footer()
 	var/message = "<br><b>This heretics sacrifice targets were:</b> [sac_targets]<br>"
+	return message
