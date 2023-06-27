@@ -57,9 +57,9 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_notice("You can't bring yourself to harm [victim]"))
 		return
-	if(victim.body_position || user.grab_state >= GRAB_AGGRESSIVE)
+	if((victim.body_position == LYING_DOWN) || ((user.grab_state >= GRAB_AGGRESSIVE) && (user.pulling == victim)))
 		user.visible_message("[user] starts to smother [victim]", span_notice("You begin smothering [victim]"), vision_distance = COMBAT_MESSAGE_RANGE)
-		smothering(user, victim)
+		INVOKE_ASYNC(src, PROC_REF(smothering), user, victim)
 
 /obj/item/pillow/attackby(obj/item/attacking_item, mob/user, params)
 	if(!bricked && istype(attacking_item, /obj/item/stack/sheet/mineral/sandstone))
@@ -125,15 +125,13 @@
 	var/datum/component/two_handed/two_handed = GetComponent(/datum/component/two_handed)
 	if(two_handed)
 		AddComponent(/datum/component/two_handed, force_unwielded = two_handed.force_unwielded + 5, force_wielded = two_handed.force_wielded + 10)
-		force += 5
-	else
-		force += 5
+	force += 5
 	update_appearance()
 
 /// Smothers the victim while the do_after succeeds and the victim is laying down or being strangled
 /obj/item/pillow/proc/smothering(mob/living/carbon/user, mob/living/carbon/victim)
 	while(victim)
-		if(victim.body_position == FALSE && user.grab_state >= GRAB_AGGRESSIVE)
+		if((victim.body_position != LYING_DOWN) && ((user.grab_state < GRAB_AGGRESSIVE) || (user.pulling != victim)))
 			break
 		if(!do_after(user, 1 SECONDS, victim))
 			break
