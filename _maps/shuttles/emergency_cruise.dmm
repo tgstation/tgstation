@@ -2003,6 +2003,12 @@
 /obj/item/food/bread/plain,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/shuttle/escape)
+"Of" = (
+/mob/living/simple_animal/crab/coffee{
+	desc = "It's Coffee, the party crab!"
+	},
+/turf/open/floor/eighties,
+/area/shuttle/escape/luxury)
 "Oh" = (
 /obj/structure/railing{
 	dir = 1
@@ -2900,7 +2906,7 @@ YZ
 jX
 uC
 BP
-uC
+Of
 EL
 kn
 ho
