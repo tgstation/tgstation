@@ -531,11 +531,11 @@
 /turf/open/floor/carpet,
 /area/awaymission/undergroundoutpost45/central)
 "cJ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
 /obj/structure/bed,
 /obj/item/bedsheet,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/carpet,
 /area/awaymission/undergroundoutpost45/central)
 "cK" = (
@@ -586,6 +586,7 @@
 	name = "Dorm 2"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/central)
 "da" = (
@@ -1410,6 +1411,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
+"gf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/awaymission/undergroundoutpost45/central)
 "gg" = (
 /turf/closed/wall/r_wall/rust,
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3328,7 +3335,6 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "mX" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/chair/wood{
 	dir = 1
 	},
@@ -3338,10 +3344,14 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "mY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "nb" = (
@@ -3350,6 +3360,9 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
 	},
 /turf/open/floor/carpet,
 /area/awaymission/undergroundoutpost45/crew_quarters)
@@ -3522,6 +3535,8 @@
 	id_tag = "awaydorm5";
 	name = "Dorm 5"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "nC" = (
@@ -3529,6 +3544,8 @@
 	id_tag = "awaydorm7";
 	name = "Dorm 7"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "nD" = (
@@ -3622,7 +3639,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -4417,7 +4433,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "qK" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45air"="Air    Supply")
+	atmos_chambers = list("uo45air"="Air        Supply")
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
@@ -4949,7 +4965,7 @@
 "sp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45mix"="Mix    Chamber");
+	atmos_chambers = list("uo45mix"="Mix        Chamber");
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
@@ -5206,10 +5222,12 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "tv" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 1
 	},
 /turf/open/floor/iron/white/corner{
 	dir = 1
@@ -5217,13 +5235,15 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "tw" = (
 /obj/machinery/light/small/directional/south,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2{
+	dir = 1
 	},
 /turf/open/floor/iron/white/corner{
 	dir = 1
@@ -5394,10 +5414,6 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)
-"uc" = (
-/obj/machinery/meter,
-/turf/closed/wall/r_wall,
-/area/awaymission/undergroundoutpost45/engineering)
 "ue" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -5424,14 +5440,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
-"ui" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
-/area/awaymission/undergroundoutpost45/engineering)
 "uj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
@@ -5452,7 +5460,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "un" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45n2"="Nitrogen    Supply");
+	atmos_chambers = list("uo45n2"="Nitrogen        Supply");
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
@@ -5477,7 +5485,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "uq" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45o2"="Oxygen    Supply");
+	atmos_chambers = list("uo45o2"="Oxygen        Supply");
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
@@ -5529,7 +5537,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "uA" = (
 /obj/machinery/computer/atmos_control/fixed{
-	atmos_chambers = list("uo45air"="Air    Supply","uo45mix"="Mix    Chamber","uo45n2"="Nitrogen    Supply","uo45o2"="Oxygen    Supply");
+	atmos_chambers = list("uo45air"="Air        Supply","uo45mix"="Mix        Chamber","uo45n2"="Nitrogen        Supply","uo45o2"="Oxygen        Supply");
 	dir = 4;
 	name = "Chamber Atmospherics Monitoring"
 	},
@@ -6978,7 +6986,6 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "HM" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/bed{
 	dir = 4
 	},
@@ -7445,7 +7452,7 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
 "Pi" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/layer_manifold/general/visible,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/research)
 "PB" = (
@@ -7852,13 +7859,13 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/research)
 "WQ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/structure/bed{
 	dir = 4
 	},
 /obj/item/bedsheet{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/carpet,
@@ -38224,10 +38231,10 @@ aC
 al
 aC
 Qs
-er
+fB
 cZ
-WR
-WR
+gf
+gf
 zJ
 zJ
 zJ
@@ -38484,7 +38491,7 @@ aU
 cJ
 ae
 aF
-zJ
+IV
 dS
 ek
 ez
@@ -38741,7 +38748,7 @@ ae
 ae
 ae
 aS
-zJ
+IV
 dT
 el
 el
@@ -46230,7 +46237,7 @@ rh
 rY
 Yf
 tv
-uc
+ln
 uA
 uU
 vs
@@ -46487,7 +46494,7 @@ ri
 Qw
 Yf
 tw
-uc
+ln
 rj
 uV
 rj
@@ -48543,7 +48550,7 @@ rp
 sh
 tG
 tC
-ui
+qN
 ln
 va
 Rn
