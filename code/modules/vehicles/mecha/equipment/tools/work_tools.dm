@@ -22,13 +22,13 @@
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/mecha/hydraulic.ogg'
 
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/mecha)
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/new_mecha)
 	. = ..()
-	if(istype(mecha, /obj/vehicle/sealed/mecha/ripley))
-		cargo_holder = mecha
-	ADD_TRAIT(mecha, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
+	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley))
+		cargo_holder = chassis
+	ADD_TRAIT(chassis, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
 
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/detach(atom/moveto = null)
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/detach(atom/moveto)
 	REMOVE_TRAIT(chassis, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
 	cargo_holder = null
 	return ..()

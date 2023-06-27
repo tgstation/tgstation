@@ -63,6 +63,14 @@
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
 
+/obj/item/mecha_parts/mecha_equipment/orebox_manager/attach(obj/vehicle/sealed/mecha/mecha, attach_right = FALSE)
+	. = ..()
+	ADD_TRAIT(chassis, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
+
+/obj/item/mecha_parts/mecha_equipment/orebox_manager/detach(atom/moveto)
+	REMOVE_TRAIT(chassis, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
+	return ..()
+
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/get_snowflake_data()
 	var/list/data = list("snowflake_id" = MECHA_SNOWFLAKE_ID_OREBOX_MANAGER)
 	data["cargo"] = length(chassis.ore_box?.contents)
@@ -79,14 +87,6 @@
 		cached_ore_box.dump_box_contents()
 		log_message("Dumped [cached_ore_box].", LOG_MECHA)
 		return TRUE
-
-/obj/item/mecha_parts/mecha_equipment/orebox_manager/attach(obj/vehicle/sealed/mecha/mecha, attach_right = FALSE)
-	. = ..()
-	ADD_TRAIT(mecha, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
-
-/obj/item/mecha_parts/mecha_equipment/orebox_manager/detach()
-	REMOVE_TRAIT(chassis, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
-	return ..()
 
 #define SEARCH_COOLDOWN (1 MINUTES)
 
