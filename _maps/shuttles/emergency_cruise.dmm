@@ -50,6 +50,19 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
+"bF" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/reagent_containers/cup/glass/mug/britcup{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/turf/open/floor/eighties,
+/area/shuttle/escape/luxury)
 "bJ" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/trimline/dark_blue/line{
@@ -93,6 +106,10 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "cY" = (
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/retaliate/clown,
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "cZ" = (
@@ -275,6 +292,11 @@
 	dir = 1
 	},
 /area/shuttle/escape)
+"fy" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/noslip,
+/area/shuttle/escape)
 "fA" = (
 /obj/machinery/vending/wallmed/directional/north,
 /obj/structure/sink/directional/south,
@@ -292,6 +314,10 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
+"fD" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/ballpit,
+/area/shuttle/escape/luxury)
 "fI" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/wood,
@@ -330,6 +356,10 @@
 	},
 /turf/open/floor/plastic,
 /area/shuttle/escape)
+"ho" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/escape/luxury)
 "hr" = (
 /obj/machinery/pool_pump{
 	pixel_y = 15;
@@ -378,9 +408,11 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "iO" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8
+/obj/structure/chair/plastic{
+	dir = 4;
+	pixel_x = 5
 	},
+/obj/item/toy/balloon,
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "iP" = (
@@ -516,12 +548,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
 "kp" = (
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
-/obj/structure/sign/flag/nanotrasen/directional/north,
-/obj/machinery/door/airlock/command/glass{
-	name = "Honk-E-Clown's Mafia Free Playland and Casino"
-	},
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "ku" = (
 /obj/machinery/door/window/brigdoor{
@@ -563,6 +590,11 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
+"ld" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/ballpit,
+/area/shuttle/escape/luxury)
 "lk" = (
 /obj/item/food/donut/apple{
 	pixel_x = -5;
@@ -591,10 +623,6 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
-"lI" = (
-/obj/item/toy/balloon,
-/turf/open/floor/eighties,
-/area/shuttle/escape/luxury)
 "lJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/plastic,
@@ -608,6 +636,11 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
+"mc" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/machinery/roulette,
+/turf/open/floor/plastic,
+/area/shuttle/escape/luxury)
 "mu" = (
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
@@ -736,11 +769,9 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "pz" = (
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/effect/spawner/random/food_or_drink/pizzaparty{
-	name = "pizza party spawner"
-	},
-/turf/open/floor/plastic,
+/obj/effect/decal/cleanable/confetti,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/ballpit,
 /area/shuttle/escape/luxury)
 "qd" = (
 /obj/machinery/computer/warrant,
@@ -783,10 +814,6 @@
 	},
 /turf/open/floor/lowered/iron/pool,
 /area/shuttle/escape)
-"qB" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/ballpit,
-/area/shuttle/escape/luxury)
 "qE" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -797,9 +824,8 @@
 "qI" = (
 /turf/open/floor/iron/white/textured_edge,
 /area/shuttle/escape)
-"qJ" = (
+"qY" = (
 /obj/effect/decal/cleanable/confetti,
-/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/ballpit,
 /area/shuttle/escape/luxury)
 "re" = (
@@ -824,9 +850,9 @@
 /turf/open/floor/iron/white/textured_corner,
 /area/shuttle/escape)
 "rw" = (
-/obj/effect/decal/cleanable/confetti,
-/turf/open/floor/plastic,
-/area/shuttle/escape/luxury)
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/noslip,
+/area/shuttle/escape)
 "rx" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -837,6 +863,18 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
+"rO" = (
+/obj/effect/decal/cleanable/plastic,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/mob/living/simple_animal/hostile/retaliate/clown{
+	health = 300;
+	name = "Honk-E-Clown";
+	desc = "This clown looks pretty tough, better stay on his good side...";
+	limb_destroyer = 1
+	},
+/turf/open/ballpit,
+/area/shuttle/escape/luxury)
 "rX" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape/brig)
@@ -847,7 +885,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "sk" = (
-/obj/effect/decal/cleanable/confetti,
 /turf/open/ballpit,
 /area/shuttle/escape/luxury)
 "so" = (
@@ -892,10 +929,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "sZ" = (
-/obj/structure/chair/plastic{
-	pixel_y = -3
-	},
-/turf/open/floor/eighties,
+/obj/effect/decal/cleanable/confetti,
+/turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "tx" = (
 /obj/structure/chair/comfy/shuttle{
@@ -965,10 +1000,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "uC" = (
-/obj/effect/decal/cleanable/plastic,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/ballpit,
+/turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "uF" = (
 /obj/machinery/chem_dispenser/drinks,
@@ -1112,6 +1144,10 @@
 	pixel_x = -5
 	},
 /obj/structure/table/wood/poker,
+/obj/item/storage/box/party_poppers{
+	pixel_y = 2;
+	pixel_x = 7
+	},
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "xT" = (
@@ -1211,11 +1247,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
-"Ad" = (
-/obj/effect/decal/cleanable/confetti,
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/ballpit,
-/area/shuttle/escape/luxury)
 "Af" = (
 /obj/structure/lattice/catwalk/mining,
 /obj/machinery/atmospherics/components/unary/passive_vent{
@@ -1229,7 +1260,10 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Aq" = (
-/obj/item/kirbyplants/photosynthetic,
+/obj/structure/sign/poster/party_game{
+	pixel_x = 32;
+	pixel_y = 3
+	},
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "AB" = (
@@ -1292,6 +1326,10 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
+"BP" = (
+/obj/item/toy/balloon,
+/turf/open/floor/eighties,
+/area/shuttle/escape/luxury)
 "BT" = (
 /obj/machinery/light/directional/east,
 /obj/structure/chair/sofa/left{
@@ -1323,11 +1361,6 @@
 	},
 /obj/structure/table/wood/poker,
 /turf/open/floor/eighties,
-/area/shuttle/escape/luxury)
-"Cp" = (
-/obj/effect/decal/cleanable/confetti,
-/obj/machinery/roulette,
-/turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "Cw" = (
 /obj/machinery/vending/snack/orange,
@@ -1451,6 +1484,11 @@
 	pixel_x = 7
 	},
 /obj/structure/table/wood/poker,
+/obj/item/clothing/mask/whistle/minigame,
+/obj/item/storage/box/tail_pin{
+	pixel_x = -6;
+	pixel_y = 10
+	},
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "Ep" = (
@@ -1497,6 +1535,12 @@
 	},
 /turf/open/floor/plastic,
 /area/shuttle/escape)
+"EL" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/eighties,
+/area/shuttle/escape/luxury)
 "ES" = (
 /obj/structure/rack,
 /obj/item/bodybag/environmental/nanotrasen,
@@ -1554,6 +1598,13 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/showroomfloor,
+/area/shuttle/escape)
+"Gn" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/noslip,
 /area/shuttle/escape)
 "Gs" = (
 /obj/effect/turf_decal/trimline/dark_blue/line,
@@ -1614,7 +1665,8 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Ht" = (
-/turf/open/ballpit,
+/mob/living/simple_animal/hostile/retaliate/clown,
+/turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "HA" = (
 /obj/effect/turf_decal/trimline/dark_blue/warning{
@@ -1627,16 +1679,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "HF" = (
-/obj/effect/decal/cleanable/confetti,
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/reagent_containers/cup/glass/mug/britcup{
-	pixel_x = 8;
-	pixel_y = -1
-	},
-/obj/item/storage/medkit/regular{
-	pixel_x = -4;
-	pixel_y = 3
-	},
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "HT" = (
@@ -1675,9 +1718,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
-"It" = (
-/turf/open/floor/plastic,
-/area/shuttle/escape/luxury)
 "Iu" = (
 /turf/open/floor/lowered/iron/pool,
 /area/shuttle/escape)
@@ -1863,6 +1903,7 @@
 	pixel_x = 18
 	},
 /obj/structure/table/wood/poker,
+/obj/item/food/burger/clown,
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "Me" = (
@@ -1932,12 +1973,11 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Nv" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
+/obj/structure/chair/plastic{
+	pixel_y = -3
 	},
-/turf/open/floor/noslip,
-/area/shuttle/escape)
+/turf/open/floor/eighties,
+/area/shuttle/escape/luxury)
 "NH" = (
 /obj/structure/table/wood/fancy,
 /obj/item/flashlight/flare/candle/infinite{
@@ -2026,12 +2066,6 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
-"PE" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/turf/open/floor/eighties,
-/area/shuttle/escape/luxury)
 "PT" = (
 /obj/structure/table/wood/fancy,
 /obj/item/flashlight/flare/candle/infinite{
@@ -2060,6 +2094,14 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
+"Qp" = (
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/structure/sign/flag/nanotrasen/directional/north,
+/obj/machinery/door/airlock/command/glass{
+	name = "Honk-E-Clown's Mafia Free Playland and Casino"
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/escape/luxury)
 "Qu" = (
 /obj/structure/bed/roller,
 /obj/item/bedsheet/patriot,
@@ -2072,22 +2114,10 @@
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
-"QD" = (
-/obj/structure/chair/plastic{
-	dir = 4;
-	pixel_x = 5
-	},
-/obj/item/toy/balloon,
-/turf/open/floor/eighties,
-/area/shuttle/escape/luxury)
 "QG" = (
 /obj/structure/lattice/catwalk/mining,
 /turf/template_noop,
 /area/shuttle/escape)
-"QY" = (
-/obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/eighties,
-/area/shuttle/escape/luxury)
 "Rb" = (
 /obj/machinery/stasis,
 /obj/machinery/light/directional/south,
@@ -2100,8 +2130,11 @@
 	},
 /area/shuttle/escape)
 "Rk" = (
-/obj/structure/disposalpipe/segment,
-/turf/closed/wall/mineral/plastitanium,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/spawner/random/food_or_drink/pizzaparty{
+	name = "pizza party spawner"
+	},
+/turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "Rz" = (
 /obj/machinery/light/directional/east,
@@ -2259,10 +2292,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/shuttle/escape)
-"Uy" = (
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/noslip,
 /area/shuttle/escape)
 "UF" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -2496,11 +2525,6 @@
 "YZ" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape/luxury)
-"Zl" = (
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/noslip,
-/area/shuttle/escape)
 "Zs" = (
 /turf/open/floor/iron/white/textured,
 /area/shuttle/escape)
@@ -2828,10 +2852,10 @@ En
 SZ
 YZ
 jG
-rw
+sZ
 Pb
-It
-Aq
+kp
+kp
 HT
 YZ
 Ik
@@ -2874,16 +2898,16 @@ qI
 yn
 YZ
 jX
-cY
-lI
-cY
-PE
+uC
+BP
+uC
+EL
 kn
-Rk
+ho
 IX
-Uy
-Zl
-Nv
+rw
+fy
+Gn
 xf
 xf
 xf
@@ -2920,11 +2944,11 @@ qI
 Yr
 YZ
 bt
-cY
+uC
 Xw
-QD
 iO
-QY
+cY
+HF
 UF
 ZL
 ZL
@@ -2966,11 +2990,11 @@ qI
 Yr
 YZ
 Vk
-sZ
+Nv
 xB
 MI
 de
-Ad
+ld
 UF
 Iu
 Iu
@@ -3012,11 +3036,11 @@ qI
 Yr
 YZ
 uF
-sZ
+Nv
 LM
 Cn
-qB
-Ht
+fD
+sk
 UF
 Iu
 VL
@@ -3057,12 +3081,12 @@ TI
 Zs
 GD
 YZ
-pz
-sZ
+Rk
+Nv
 VO
 Gv
-qJ
-sk
+pz
+qY
 UF
 Iu
 Iu
@@ -3103,11 +3127,11 @@ TI
 TI
 YA
 YZ
-pz
-sZ
+Rk
+Nv
 vL
 Eo
-uC
+rO
 ek
 UF
 Iu
@@ -3150,11 +3174,11 @@ TI
 gr
 YZ
 TA
-cY
+uC
 YN
 YN
-cY
-HF
+Ht
+bF
 UF
 mS
 mS
@@ -3195,11 +3219,11 @@ TI
 TI
 mv
 YZ
-Cp
-cY
-cY
-cY
-cY
+mc
+uC
+Ht
+uC
+uC
 Bf
 ie
 lk
@@ -3242,9 +3266,9 @@ pk
 Rb
 YZ
 YI
-rw
+sZ
 Js
-It
+kp
 Aq
 Ul
 YZ
@@ -3290,7 +3314,7 @@ YZ
 YZ
 Cy
 YZ
-kp
+Qp
 YZ
 YZ
 YZ
