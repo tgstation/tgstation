@@ -291,7 +291,8 @@
 	desc = "Charge forward and impale any victim with your spear."
 	button_icon_state = "spear_charge"
 	charge_distance = 4
-	charge_delay = 2 SECONDS
+	shake_duration = 3 SECONDS
+	charge_delay = 3 SECONDS
 	destroy_objects = FALSE
 	charge_damage = 10
 	var/distance
@@ -301,18 +302,18 @@
 	starting_tile = get_turf(target_atom)
 	. = ..()
 
-/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear/on_moved(atom/source)
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_moved(atom/source)
 	return
 
-/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear/charge_end(datum/move_loop/source)
-	. = ..()
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/charge_end(datum/move_loop/source)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/charger = owner
 		charger.apply_damage(60, STAMINA)
 		charger.Immobilize(1 SECONDS)
+	. = ..()
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_bump(atom/movable/source, atom/target)
-	QDEL_NULL(new_loop)
+	qdel(new_loop)
 	if(isliving(target))
 		distance = get_dist(starting_tile, get_turf(source))
 		charge_damage += distance * 10 //we determine the total damage based on how far we have charged
@@ -322,18 +323,14 @@
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/hit_target(atom/movable/source, atom/target, damage_dealt)
 	var/mob/living/living_source
-	if(isliving(source))
-		living_source = source
-
-	if(!isliving(target))
-		if(!target.density || target.CanPass(source, get_dir(target, source)))
-			return
-		source.visible_message(span_danger("[source] smashes into [target]!"))
-		if(!living_source)
-			return
-		living_source.Stun(6, ignore_canstun = TRUE)
-		return
 	var/mob/living/victim = target
+	if(!isliving(source))
+		return
+	if(!isliving(target) || iscyborg(target))
+		return
+	victim = target
+	living_source = source
 	victim.apply_damage(damage_dealt, STAMINA)
+	living_source.visible_message(span_boldwarning("[living_source] smashes into [target] at a quick speed!"))
 	return
 
