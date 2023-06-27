@@ -10,7 +10,7 @@
 			else //Smart spread
 				spread = round(1 - 0.5) * distro
 		thrown_proj = throw_proj(target, targloc, user, params, spread, fired_from)
-		if(!thrown_proj)
+		if(isnull(thrown_proj))
 			return FALSE
 	else
 		if(isnull(loaded_projectile))
@@ -66,7 +66,7 @@
 /obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
 	var/turf/curloc = get_turf(fired_from)
 	if (!istype(targloc) || !istype(curloc) || !loaded_projectile)
-		return
+		return null
 
 	var/firing_dir
 	if(loaded_projectile.firer)

@@ -180,6 +180,7 @@
 	damage = 10
 
 /obj/projectile/bullet/gumball/proc/handle_drop(datum/source, obj/item/food/gumball/gumball)
+	SIGNAL_HANDLER
 	gumball.color = color
 
 /obj/item/ammo_casing/lollipop //NEEDS RANDOMIZED COLOR LOGIC.
@@ -225,6 +226,7 @@
 	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
 
 /obj/projectile/bullet/lollipop/proc/handle_drop(datum/source, obj/item/food/lollipop/lollipop)
+	SIGNAL_HANDLER
 	lollipop.change_head_color(head_color)
 
 #undef DISPENSE_LOLLIPOP_MODE

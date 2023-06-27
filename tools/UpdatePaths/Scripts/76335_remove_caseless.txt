@@ -1,0 +1,3 @@
+#replaced by elements
+
+/obj/projectile/caseless/@SUBTYPES : /obj/projectile/@SUBTYPES{@OLD}
