@@ -1,8 +1,0 @@
-author: "LovliestPlant"
-delete-after: True
-changes:
-  - qol: "[Birdshot] Adds layer adapters to gas tank output hookups in atmospherics"
-  - qol: "[Birdshot] Adds additional navigation verb landmarks"
-  - bugfix: "[Birdshot] Fixes entrances to some departments from maints not requiring department access"
-  - bugfix: "[Birdshot] Converts the guard locker in perma to a normal security officer's locker"
-  - bugfix: "[Birdshot] Adds an exterior outlet vent for the incinerator"

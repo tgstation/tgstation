@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "The lavaproof tracks cyborg upgrade now protects against liquid plasma, the Icebox equivalent of lava."
