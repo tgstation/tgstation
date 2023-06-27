@@ -434,6 +434,7 @@
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
+	var/shaken = FALSE
 
 /obj/item/reagent_containers/cup/glass/shaker/Initialize(mapload)
 	. = ..()
@@ -441,6 +442,11 @@
 		name = "\improper Nanotrasen 20th Anniversary Shaker"
 		desc += " It has an emblazoned Nanotrasen logo on it."
 		icon_state = "shaker_n"
+
+/obj/item/reagent_container/cup/shaker/attack_self()
+    shaken = TRUE
+    addtimer(VARSET_CALLBACK(src, shaken, FALSE), 2 SECONDS)
+    reagents.handle_reactions()
 
 /obj/item/reagent_containers/cup/glass/flask
 	name = "flask"
