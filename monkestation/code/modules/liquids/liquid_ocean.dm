@@ -270,7 +270,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	SIGNAL_HANDLER
 	var/turf/direction_turf = source
 
-	if(istype(direction_turf, /turf/open/floor/plating/ocean))
+	if(istype(direction_turf, /turf/open/floor/plating/ocean) || istype(direction_turf, /turf/closed/mineral/random/ocean))
 		return
 
 	open_turfs.Add(get_dir(src, direction_turf))
