@@ -207,7 +207,6 @@
 	var/obj/effect/rune/target_rune = target
 	if(target_rune.log_when_erased)
 		user.log_message("erased [target_rune.cultist_name] rune using a chaplain revolver", LOG_GAME)
-		message_admins("[ADMIN_LOOKUPFLW(user)] erased a [target_rune.cultist_name] rune with a chaplain revolver.")
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/gun/ballistic/revolver/chaplain/suicide_act(mob/living/user)
@@ -220,7 +219,7 @@
 
 /obj/item/gun/ballistic/revolver/chaplain/attackby(obj/item/possibly_ammo, mob/user, params)
 	if (isammocasing(possibly_ammo) || istype(possibly_ammo, /obj/item/ammo_box))
-		to_chat(user, span_warning("To reload manually? Sacrilege."))
+		user.balloon_alert(user, "no manual reloads!")
 		return
 
 	return ..()
@@ -269,7 +268,7 @@
 
 /obj/projectile/bullet/c38/holy/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
-	var/roll_them_bones = pick(rand(1,38))
+	var/roll_them_bones = rand(1,38)
 	if(roll_them_bones == 1 && isliving(target))
 		playsound(target, 'sound/machines/synth_yes.ogg', 50, TRUE)
 		playsound(target, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 40, TRUE)
