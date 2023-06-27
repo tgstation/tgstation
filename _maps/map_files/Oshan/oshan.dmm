@@ -7067,6 +7067,11 @@
 /area/station/maintenance/department/electrical)
 "gVj" = (
 /obj/structure/rack,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "gVR" = (
@@ -21692,6 +21697,15 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/storage/emergency/starboard)
+"vYU" = (
+/obj/structure/table,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/obj/item/sea_map,
+/turf/open/floor/carpet/neon/simple/orange/nodots,
+/area/station/cargo/miningoffice)
 "vZL" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
@@ -43622,7 +43636,7 @@ itp
 itp
 sZV
 fZG
-fZG
+vYU
 pEa
 sYn
 mIK

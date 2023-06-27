@@ -45,6 +45,14 @@
 		update_appearance()
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/power/vent/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!do_after(user, 5 SECONDS, src))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	to_chat(user, "You dissassemble the [src].")
+	disassemble()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/power/vent/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(istype(W, /obj/item/stack/cable_coil))
