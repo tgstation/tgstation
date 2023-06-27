@@ -174,11 +174,6 @@
 			if(prob(max((abs(output_level) * 0.1) / 500 KW, 1))) ///increased by a single % per 500 KW
 				listed_atom.visible_message(span_danger("[listed_atom] is melted away by the [src]!"))
 				blocked_objects -= listed_atom
-				if(isclosedturf(listed_atom))
-					var/obj/effect/transmission_beam/new_beam = new(listed_atom)
-					new_beam.host = src
-					new_beam.dir = dir
-					laser_effects += new_beam
 				qdel(listed_atom)
 		else
 			sell_power(output_level)
@@ -225,11 +220,6 @@
 	///this is why we set the range we did
 	var/turf/last_step = get_step(get_front_turf(), dir)
 	for(var/num = 1 to range + 1)
-		if(isclosedturf(last_step))
-			blocked_objects += last_step
-			last_step = get_step(last_step, dir)
-			continue
-
 		var/obj/effect/transmission_beam/new_beam = new(last_step)
 		new_beam.host = src
 		new_beam.dir = dir
