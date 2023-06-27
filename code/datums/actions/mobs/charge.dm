@@ -322,15 +322,13 @@
 		return
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/hit_target(atom/movable/source, atom/target, damage_dealt)
-	var/mob/living/living_source
-	var/mob/living/victim = target
-	if(!isliving(source))
-		return
-	if(!isliving(target) || iscyborg(target))
+	var/mob/living/living_source = source
+	var/mob/living/victim
+	if(iscyborg(target))
 		return
 	victim = target
-	living_source = source
 	victim.apply_damage(damage_dealt, STAMINA)
+	playsound(victim, 'sound/items/pillow_hit2.ogg', 100)
 	living_source.visible_message(span_boldwarning("[living_source] smashes into [target] at a quick speed!"))
 	return
 
