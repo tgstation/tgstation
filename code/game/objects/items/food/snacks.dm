@@ -16,6 +16,7 @@
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = 2
 
 /obj/item/food/candy/bronx
 	name = "\improper South Bronx Paradise bar"
@@ -69,6 +70,7 @@
 	tastes = list("dried meat" = 1)
 	w_class = WEIGHT_CLASS_SMALL
 	foodtypes = JUNKFOOD | MEAT | SUGAR
+	crafting_complexity = 1
 
 /obj/item/food/sosjerky/healthy
 	name = "homemade beef jerky"
@@ -129,6 +131,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	custom_price = PAYCHECK_CREW * 0.7
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 1
 
 /obj/item/food/no_raisin/healthy
 	name = "homemade raisins"
@@ -423,6 +426,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	junkiness = 5 //Homemade or not, sunflower seets are always kinda junky
 	foodtypes = JUNKFOOD | NUTS
 	trash_type = /obj/item/trash/semki/healthy
+	crafting_complexity = 1
 
 /obj/item/food/cornchips
 	name = "\improper Boritos corn chips"

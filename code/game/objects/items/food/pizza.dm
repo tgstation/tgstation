@@ -13,6 +13,7 @@
 	foodtypes = GRAIN | DAIRY | VEGETABLES
 	venue_value = FOOD_PRICE_CHEAP
 	burns_in_oven = TRUE
+	crafting_complexity = 3
 	/// type is spawned 6 at a time and replaces this pizza when processed by cutting tool
 	var/obj/item/food/pizzaslice/slice_type
 	///What label pizza boxes use if this pizza spawns in them.
@@ -22,6 +23,7 @@
 	foodtypes = GRAIN | DAIRY | VEGETABLES | RAW
 	burns_in_oven = FALSE
 	slice_type = null
+	crafting_complexity = 2
 
 /obj/item/food/pizza/raw/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
@@ -39,6 +41,7 @@
 	foodtypes = GRAIN | DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	decomp_type = /obj/item/food/pizzaslice/moldy
+	crafting_complexity = 3
 
 /obj/item/food/pizzaslice/make_processable()
 	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE, screentip_verb = "Flatten")

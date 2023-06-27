@@ -24,7 +24,7 @@
 	if(ispath(result, /obj/item/food))
 		var/obj/item/food/item = result
 		data["foodtypes"] = bitfield_to_list(initial(item.foodtypes), FOOD_FLAGS)
-		data["complexity"] = initial(item.crafting_recipe_complexity)
+		data["complexity"] = initial(item.crafting_complexity)
 	data["nutriments"] = total_nutriment_factor
 
 	return data

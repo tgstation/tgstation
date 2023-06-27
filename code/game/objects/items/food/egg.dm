@@ -11,6 +11,7 @@
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = 2
 
 /// Counter for number of chicks hatched by throwing eggs, minecraft style. Chicks will not emerge from thrown eggs if this value exceeds the MAX_CHICKENS define.
 GLOBAL_VAR_INIT(chicks_from_eggs, 0)
@@ -200,6 +201,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	foodtypes = MEAT | FRIED | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
+	crafting_complexity = 1
 
 /obj/item/food/rawegg
 	name = "raw egg"
@@ -232,6 +234,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	w_class = WEIGHT_CLASS_SMALL
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/boiledegg/rotten
+	crafting_complexity = 1
 
 /obj/item/food/eggsausage
 	name = "egg with sausage"
@@ -242,6 +245,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	foodtypes = MEAT | FRIED | BREAKFAST
 	tastes = list("egg" = 4, "meat" = 4)
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = 3
 
 /obj/item/food/boiledegg/rotten
 	food_reagents = list(/datum/reagent/consumable/eggrot = 10)
@@ -263,6 +267,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("egg" = 1, "cheese" = 1)
 	foodtypes = MEAT | BREAKFAST | DAIRY
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = 2
 
 /obj/item/food/omelette/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/kitchen/fork))
@@ -296,6 +301,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
 	foodtypes = MEAT | BREAKFAST | GRAIN
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = 3
 
 /obj/item/food/eggwrap
 	name = "egg wrap"
@@ -310,6 +316,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("egg" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = 3
 
 /obj/item/food/chawanmushi
 	name = "chawanmushi"
@@ -323,3 +330,4 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	)
 	tastes = list("custard" = 1)
 	foodtypes = MEAT | VEGETABLES
+	crafting_complexity = 3

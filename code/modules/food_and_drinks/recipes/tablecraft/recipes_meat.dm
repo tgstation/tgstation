@@ -146,7 +146,7 @@
 	reqs = list(
 		/obj/item/food/bun = 1,
 		/obj/item/food/butter = 1,
-		/obj/item/food/meat/cutlet = 1
+		/obj/item/food/sausage = 1
 	)
 	result = /obj/item/food/pigblanket
 	category = CAT_MEAT

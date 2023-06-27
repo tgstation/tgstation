@@ -142,7 +142,7 @@
 	category = CAT_CAKE
 
 /datum/crafting_recipe/food/bscccake
-	name = "blackberry and strawberry chocolate cake"
+	name = "strawberry chocolate cake"
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
 		/obj/item/food/chocolatebar = 2,

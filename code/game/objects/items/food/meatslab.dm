@@ -329,6 +329,7 @@
 	)
 	tastes = list("bacon" = 1)
 	foodtypes = RAW | MEAT
+	crafting_complexity = 1
 
 /obj/item/food/meat/rawbacon/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/bacon, rand(25 SECONDS, 45 SECONDS), TRUE, TRUE)
@@ -345,6 +346,7 @@
 	tastes = list("bacon" = 1)
 	foodtypes = MEAT | BREAKFAST
 	burns_on_grill = TRUE
+	crafting_complexity = 1
 
 /obj/item/food/meat/slab/gondola
 	name = "gondola meat"
@@ -407,6 +409,7 @@
 	tastes = list("crab" = 1)
 	foodtypes = SEAFOOD
 	burns_on_grill = TRUE
+	crafting_complexity = 1
 
 /obj/item/food/meat/slab/chicken
 	name = "chicken meat"
@@ -454,6 +457,7 @@
 	foodtypes = MEAT
 	tastes = list("meat" = 1)
 	burns_on_grill = TRUE
+	crafting_complexity = 1
 
 /obj/item/food/meat/steak/Initialize(mapload)
 	. = ..()
@@ -669,6 +673,7 @@
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
 	burns_on_grill = TRUE
+	crafting_complexity = 1
 
 /obj/item/food/meat/cutlet/Initialize(mapload)
 	. = ..()

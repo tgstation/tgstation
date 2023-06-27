@@ -7,6 +7,7 @@
 	)
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = 2
 
 // Why are you putting cooked spaghetti in your pockets?
 /obj/item/food/spaghetti/make_microwaveable()
@@ -22,6 +23,7 @@
 	desc = "Now that's a nic'e pasta!"
 	icon_state = "spaghetti"
 	tastes = list("pasta" = 1)
+	crafting_complexity = 1
 
 /obj/item/food/spaghetti/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/spaghetti/boiledspaghetti, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)

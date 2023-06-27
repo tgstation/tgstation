@@ -10,6 +10,7 @@
 	foodtypes = VEGETABLES
 	eatverbs = list("devour", "nibble", "gnaw", "gobble", "chomp") //who the fuck gnaws and devours on a salad
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = 2
 
 /obj/item/food/salad/aesirsalad
 	name = "\improper Aesir salad"
@@ -123,6 +124,7 @@
 	tastes = list("rice" = 1, "cheese" = 1)
 	foodtypes = GRAIN | DAIRY
 	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = 3
 
 /obj/item/food/salad/eggbowl
 	name = "egg bowl"
@@ -135,6 +137,7 @@
 	)
 	tastes = list("rice" = 1, "egg" = 1)
 	foodtypes = GRAIN | MEAT //EGG = MEAT -NinjaNomNom 2017
+	crafting_complexity = 4
 
 /obj/item/food/salad/edensalad
 	name = "\improper Salad of Eden"
@@ -158,6 +161,7 @@
 	)
 	tastes = list("building heat" = 2, "savory meat and vegtables" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
+	crafting_complexity = 3
 
 /obj/item/reagent_containers/cup/bowl
 	name = "bowl"

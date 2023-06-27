@@ -220,6 +220,7 @@
 /datum/crafting_recipe/food/rollingpin/pizza_sheet
 	reqs = list(/obj/item/food/pizzaslice/margherita = 1)
 	result = /obj/item/stack/sheet/pizza
+	category = CAT_PIZZA
 
 // Tools: Knife
 
@@ -420,7 +421,7 @@
 /datum/crafting_recipe/food/grill/grilled_cheese_sandwich
 	reqs = list(/obj/item/food/sandwich/cheese = 1)
 	result = /obj/item/food/sandwich/cheese/grilled
-	category = CAT_BREAD
+	category = CAT_SANDWICH
 
 /datum/crafting_recipe/food/grill/moonfish
 	reqs = list(/obj/item/food/cheese/firm_cheese_slice = 1)
@@ -468,6 +469,11 @@
 		"Add chocolate",
 		"Bake until ready"
 	)
+
+/datum/crafting_recipe/food/grill/hard_taco_shell
+	reqs = list(/obj/item/food/tortilla = 1)
+	result = /obj/item/food/hard_taco_shell
+	category = CAT_MEXICAN
 
 // Machinery: Grinder
 /datum/crafting_recipe/food/grinder
@@ -602,7 +608,7 @@
 /datum/crafting_recipe/food/processor/tortilla
 	reqs = list(/obj/item/food/grown/corn = 1)
 	result = /obj/item/food/tortilla
-	category = CAT_BREAD
+	category = CAT_MEXICAN
 
 /datum/crafting_recipe/food/processor/tempeh
 	reqs = list(/obj/item/food/tempehstarter = 1)

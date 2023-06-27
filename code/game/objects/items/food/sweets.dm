@@ -12,6 +12,7 @@
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = 1
 
 /obj/item/food/candy_corn/prison
 	name = "desiccated candy corn"
@@ -34,6 +35,7 @@
 	tastes = list("apple" = 2, "caramel" = 3)
 	foodtypes = JUNKFOOD | FRUIT | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 1
 
 /obj/item/food/mint
 	name = "mint"
@@ -59,7 +61,7 @@
 	foodtypes = JUNKFOOD | SUGAR | BUGS
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
-
+	crafting_complexity = 1
 
 // Chocolates
 /obj/item/food/chocolatebar
@@ -75,6 +77,7 @@
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = 1
 
 /obj/item/food/chococoin
 	name = "chocolate coin"
@@ -89,6 +92,7 @@
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 1
 
 /obj/item/food/fudgedice
 	name = "fudge dice"
@@ -104,6 +108,7 @@
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 2
 
 /obj/item/food/chocoorange
 	name = "chocolate orange"
@@ -141,6 +146,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("chocolate" = 1, "chewy caramel" = 1)
+	crafting_complexity = 2
 
 /obj/item/food/bonbon/chocolate_truffle
 	name = "chocolate truffle"
@@ -161,6 +167,7 @@
 	)
 	tastes = list("chocolate" = 1, "peanuts" = 1)
 	foodtypes = DAIRY | SUGAR | JUNKFOOD | NUTS
+	crafting_complexity = 1
 
 /obj/item/food/bonbon/peanut_butter_cup
 	name = "peanut butter cup"
@@ -172,7 +179,7 @@
 	)
 	tastes = list("chocolate" = 1, "peanut butter" = 1)
 	foodtypes = DAIRY | SUGAR | JUNKFOOD | NUTS
-
+	crafting_complexity = 1
 
 // Gum
 /obj/item/food/bubblegum
@@ -333,6 +340,7 @@
 	foodtypes = JUNKFOOD | SUGAR | BUGS
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
+	crafting_complexity = 1
 
 /obj/item/food/spiderlollipop/Initialize(mapload)
 	. = ..()

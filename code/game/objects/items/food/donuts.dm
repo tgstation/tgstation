@@ -10,6 +10,7 @@
 	foodtypes = JUNKFOOD | GRAIN | FRIED | SUGAR | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 2
 	var/decorated_icon = "donut_homer"
 	var/is_decorated = FALSE
 	var/extra_reagent = null

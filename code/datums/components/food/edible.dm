@@ -565,7 +565,7 @@ Behavior that's still missing from this component that original food items had t
 		return 0 // Non-crafted food has no complexity
 
 	var/obj/item/food/food = parent
-	return food.crafting_recipe_complexity
+	return food.crafting_complexity
 
 /// Get food quality adjusted according to eater's preferences
 /datum/component/edible/proc/get_preceived_food_quality(mob/living/carbon/human/eater)

@@ -12,6 +12,7 @@
 	foodtypes = GRAIN | VEGETABLES
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 3
 
 /obj/item/food/sandwich/cheese
 	name = "cheese sandwich"
@@ -24,6 +25,7 @@
 	tastes = list("bread" = 1, "cheese" = 1)
 	foodtypes = GRAIN | DAIRY
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = 2
 
 /obj/item/food/sandwich/cheese/make_grillable()
 	if(burns_on_grill)
@@ -42,6 +44,7 @@
 	)
 	tastes = list("toast" = 2, "cheese" = 3, "butter" = 1)
 	burns_on_grill = TRUE
+	crafting_complexity = 3
 
 /obj/item/food/sandwich/jelly
 	name = "jelly sandwich"
@@ -81,6 +84,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	slot_flags = ITEM_SLOT_MASK
+	crafting_complexity = 2
 
 /obj/item/food/butteredtoast
 	name = "buttered toast"
@@ -96,6 +100,7 @@
 	foodtypes = GRAIN | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 2
 
 /obj/item/food/jelliedtoast
 	name = "jellied toast"
@@ -107,6 +112,7 @@
 	foodtypes = GRAIN | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 2
 
 /obj/item/food/jelliedtoast/cherry
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cherryjelly = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
@@ -129,6 +135,7 @@
 	foodtypes = GRAIN
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 2
 
 /obj/item/food/hotdog
 	name = "hotdog"
@@ -146,6 +153,7 @@
 	foodtypes = GRAIN | MEAT //Ketchup is not a vegetable
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = 4
 
 // Used for unit tests, do not delete
 /obj/item/food/hotdog/debug
@@ -167,6 +175,7 @@
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = 5
 
 /obj/item/food/sandwich/blt
 	name = "\improper BLT"

@@ -8,6 +8,7 @@
 	tastes = list("pie" = 1)
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = 2
 	/// type is spawned 5 at a time and replaces this pie when processed by cutting tool
 	var/obj/item/food/pieslice/slice_type
 	/// so that the yield can change if it isnt 5
@@ -24,6 +25,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("pie" = 1, "uncertainty" = 1)
 	foodtypes = GRAIN | VEGETABLES
+	crafting_complexity = 2
 
 /obj/item/food/pie/plain
 	name = "plain pie"

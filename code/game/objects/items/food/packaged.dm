@@ -47,6 +47,7 @@
 	)
 	tastes = list("beans" = 1)
 	foodtypes = VEGETABLES
+	crafting_complexity = 1
 
 /obj/item/food/canned/peaches
 	name = "canned peaches"
@@ -102,6 +103,7 @@
 	)
 	tastes = list("dog food" = 5, "狗肉" = 3)
 	foodtypes = MEAT | GROSS
+	crafting_complexity = 1
 
 /obj/item/food/canned/envirochow/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(!check_buffability(user))
