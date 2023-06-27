@@ -73,10 +73,11 @@
 	if(.)
 		return TRUE
 	if(action == "dump")
-		if(!chassis.ore_box)
+		var/obj/structure/ore_box/cached_ore_box = chassis.ore_box
+		if(isnull(cached_ore_box)
 			return FALSE
-		chassis.ore_box.dump_box_contents()
-		log_message("Dumped [chassis.ore_box].", LOG_MECHA)
+		cached_ore_box.dump_box_contents()
+		log_message("Dumped [cached_ore_box].", LOG_MECHA)
 		return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/attach(obj/vehicle/sealed/mecha/mecha, attach_right = FALSE)
