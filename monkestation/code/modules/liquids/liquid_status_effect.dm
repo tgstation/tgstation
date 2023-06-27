@@ -50,4 +50,4 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/arrived = owner
 		if(is_species(owner, /datum/species/ipc) && !(arrived.wear_suit?.clothing_flags & STOPSPRESSUREDAMAGE))
-			arrived.adjustFireLoss(-5)
+			arrived.adjustFireLoss(5)
