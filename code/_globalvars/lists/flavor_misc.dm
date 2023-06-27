@@ -122,68 +122,6 @@ GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list(
 ))
 //stores the ghost forms that support hair and other such things
 
-GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
-	":thinking:",
-	"Alien",
-	"Angel",
-	"Banned",
-	"Bliss",
-	"Blue",
-	"Clown",
-	"Database",
-	"Dorf",
-	"Firewall",
-	"Fuzzy",
-	"Gentoo",
-	"Glitchman",
-	"Gondola",
-	"Goon",
-	"Hades",
-	"HAL 9000",
-	"Heartline",
-	"Helios",
-	"House",
-	"Inverted",
-	"Matrix",
-	"Monochrome",
-	"Murica",
-	"Nanotrasen",
-	"Not Malf",
-	"Portrait",
-	"President",
-	"Rainbow",
-	"Random",
-	"Red October",
-	"Red",
-	"Static",
-	"Syndicat Meow",
-	"Text",
-	"Too Deep",
-	"Triumvirate-M",
-	"Triumvirate",
-	"Weird",
-)))
-
-/// A form of resolve_ai_icon that is guaranteed to never sleep.
-/// Not always accurate, but always synchronous.
-/proc/resolve_ai_icon_sync(input)
-	SHOULD_NOT_SLEEP(TRUE)
-
-	if(!input || !(input in GLOB.ai_core_display_screens))
-		return "ai"
-	else
-		if(input == "Random")
-			input = pick(GLOB.ai_core_display_screens - "Random")
-		return "ai-[lowertext(input)]"
-
-/proc/resolve_ai_icon(input)
-	if (input == "Portrait")
-		var/datum/portrait_picker/tgui = new(usr)//create the datum
-		tgui.ui_interact(usr)//datum has a tgui component, here we open the window
-		return "ai-portrait" //just take this until they decide
-
-	return resolve_ai_icon_sync(input)
-
 GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 	SEC_DEPT_ENGINEERING,
 	SEC_DEPT_MEDICAL,

@@ -497,6 +497,7 @@
 	. = ..()
 	if(.)//cant add
 		return TRUE
+
 	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
 		brain.zone = BODY_ZONE_CHEST
@@ -505,11 +506,10 @@
 	if(head)
 		owner.visible_message(span_warning("[owner]'s head splatters with a sickening crunch!"), ignored_mobs = list(owner))
 		new /obj/effect/gibspawner/generic(get_turf(owner), owner)
-		head.dismember(BRUTE)
+		head.dismember(dam_type = BRUTE, silent = TRUE)
 		head.drop_organs()
 		qdel(head)
-		owner.regenerate_icons()
-	RegisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, PROC_REF(abortattachment))
+	RegisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, PROC_REF(abort_attachment))
 
 /datum/mutation/human/headless/on_losing()
 	. = ..()
@@ -517,7 +517,7 @@
 		return TRUE
 	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain) //so this doesn't instantly kill you. we could delete the brain, but it lets people cure brain issues they /really/ shouldn't be
-		brain.zone = BODY_ZONE_HEAD
+		brain.zone = initial(brain.zone)
 	UnregisterSignal(owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB)
 	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD)
 	if(!successful)
@@ -528,8 +528,7 @@
 	owner.visible_message(span_warning("[owner]'s head returns with a sickening crunch!"), span_warning("Your head regrows with a sickening crack! Ouch."))
 	new /obj/effect/gibspawner/generic(get_turf(owner), owner)
 
-
-/datum/mutation/human/headless/proc/abortattachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
+/datum/mutation/human/headless/proc/abort_attachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back
 	SIGNAL_HANDLER
 
 	if(istype(new_limb, /obj/item/bodypart/head))

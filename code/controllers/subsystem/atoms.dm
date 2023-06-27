@@ -175,7 +175,9 @@ SUBSYSTEM_DEF(atoms)
 	initialized = state
 
 /datum/controller/subsystem/atoms/proc/clear_tracked_initalize(source)
-	for(var/i in length(initialized_state) to 1)
+	if(!length(initialized_state))
+		return
+	for(var/i in length(initialized_state) to 1 step -1)
 		if(initialized_state[i][1] == source)
 			initialized_state.Cut(i, i+1)
 			break

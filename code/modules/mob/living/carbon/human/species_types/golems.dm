@@ -6,7 +6,6 @@
 		NO_DNA_COPY,
 		NOTRANSSTING,
 		NO_UNDERWEAR,
-		NOEYEHOLES,
 		NOAUGMENTS,
 	)
 	inherent_traits = list(
@@ -22,7 +21,6 @@
 	mutantheart = null
 	mutantlungs = null
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
-	liked_food = STONE
 	damage_modifier = 10 //golem is stronk
 	payday_modifier = 0.75
 	siemens_coeff = 0
@@ -40,6 +38,7 @@
 	mutantbrain = /obj/item/organ/internal/brain/golem
 	mutanttongue = /obj/item/organ/internal/tongue/golem
 	mutantstomach = /obj/item/organ/internal/stomach/golem
+	mutantliver = /obj/item/organ/internal/liver/golem
 	mutantappendix = /obj/item/organ/internal/appendix/golem
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem,
@@ -95,10 +94,3 @@
 	))
 
 	return to_add
-
-/// Remove nutrient value from non-mineral food, wish this was on an organ and not species but such is life
-/datum/species/golem/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
-	if(istype(chem, /datum/reagent/consumable) && !istype(chem, /datum/reagent/consumable/nutriment/mineral))
-		var/datum/reagent/consumable/yummy_chem = chem
-		yummy_chem.nutriment_factor = 0
-	return ..()
