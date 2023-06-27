@@ -27,6 +27,7 @@ RUN pip install Flask &&\
 	pip install llvmlite --ignore-installed &&\
 	pip install torch torchaudio --extra-index-url https://download.pytorch.org/whl/cu118 &&\
 	pip install TTS &&\
+	pip install pydub &&\
 	pip cache purge
 
 COPY . /root
