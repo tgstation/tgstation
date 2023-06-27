@@ -37,7 +37,6 @@
 	cached_designs = list()
 	materials = AddComponent(
 		/datum/component/remote_materials, \
-		"lathe", \
 		mapload, \
 		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
 	)

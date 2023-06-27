@@ -26,7 +26,6 @@
 
 	materials = AddComponent( \
 		/datum/component/remote_materials, \
-		"component_printer", \
 		mapload, \
 		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
 	)
@@ -328,7 +327,6 @@
 
 	materials = AddComponent( \
 		/datum/component/remote_materials, \
-		"module_duplicator", \
 		mapload, \
 		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
 	)

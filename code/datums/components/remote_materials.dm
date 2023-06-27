@@ -12,17 +12,15 @@ handles linking back and forth.
 	// 3. silo is null, materials is null
 	var/obj/machinery/ore_silo/silo
 	var/datum/component/material_container/mat_container
-	var/category
 	var/allow_standalone
 	var/local_size = INFINITY
 	///Flags used when converting inserted materials into their component materials.
 	var/mat_container_flags = NONE
 
-/datum/component/remote_materials/Initialize(category, mapload, allow_standalone = TRUE, force_connect = FALSE, mat_container_flags=NONE)
+/datum/component/remote_materials/Initialize(mapload, allow_standalone = TRUE, force_connect = FALSE, mat_container_flags = NONE)
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.category = category
 	src.allow_standalone = allow_standalone
 	src.mat_container_flags = mat_container_flags
 
@@ -46,6 +44,7 @@ handles linking back and forth.
 /datum/component/remote_materials/Destroy()
 	if (silo)
 		silo.ore_connected_machines -= src
+		silo.holds -= src
 		silo.updateUsrDialog()
 		silo = null
 		mat_container = null
@@ -150,7 +149,7 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/on_hold()
 	if(!check_z_level())
 		return FALSE
-	return silo.holds["[get_area(parent)]/[category]"]
+	return silo.holds[src]
 
 /datum/component/remote_materials/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats)
 	if (silo)
