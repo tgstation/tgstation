@@ -550,12 +550,13 @@
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack/satchel/leather
 	l_pocket = /obj/item/switchblade
-	r_pocket = /obj/item/storage/box/handcuffs
+	r_pocket = /obj/item/reagent_containers/hypospray/medipen/salacid
 	belt = /obj/item/storage/belt/holster/energy/thermal
 	backpack_contents = list(
 			/obj/item/storage/box/survival = 1,
 			/obj/item/storage/medkit/emergency = 1,
 			/obj/item/crowbar = 1,
+			/obj/item/restraints/handcuffs = 1,
 	)
 
 /datum/outfit/centcom/militia/general
