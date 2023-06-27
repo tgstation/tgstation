@@ -326,6 +326,8 @@
 	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special)
 	moveToNullspace()
 	set_owner(new_limb_owner)
+	if(check_for_frankenstein(new_limb_owner))
+		bodypart_flags |= BODYPART_IMPLANTED
 	new_limb_owner.add_bodypart(src)
 	if(held_index)
 		new_limb_owner.on_added_hand(src, held_index)

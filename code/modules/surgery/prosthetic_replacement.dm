@@ -96,8 +96,6 @@
 	if(isbodypart(tool) && user.temporarilyRemoveItemFromInventory(tool))
 		var/obj/item/bodypart/bodypart_to_attach = tool
 		bodypart_to_attach.try_attach_limb(target)
-		if(bodypart_to_attach.check_for_frankenstein(target))
-			bodypart_to_attach.bodypart_flags |= BODYPART_IMPLANTED
 		if(organ_rejection_dam)
 			target.adjustToxLoss(organ_rejection_dam)
 		display_results(
