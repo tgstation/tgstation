@@ -8,7 +8,7 @@
 	ears = /obj/item/radio/headset/syndicate
 	glasses = /obj/item/clothing/glasses/eyepatch
 	head = /obj/item/clothing/head/costume/pirate/bandana/armored
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	shoes = /obj/item/clothing/shoes/pirate/armored
 
 /datum/outfit/pirate/post_equip(mob/living/carbon/human/equipped)
 	equipped.faction |= FACTION_PIRATE
