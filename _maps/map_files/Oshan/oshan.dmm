@@ -3031,11 +3031,11 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
 /obj/machinery/door/poddoor/preopen{
 	id = "ceprivacy";
 	name = "Privacy Shutter"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "cYK" = (
@@ -4260,7 +4260,7 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "eiI" = (
@@ -4602,6 +4602,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/engine,
 /area/station/engineering/main)
 "ezn" = (
@@ -6567,11 +6568,11 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Toilet"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
 /obj/machinery/door/poddoor/preopen{
 	id = "ceprivacy";
 	name = "Privacy Shutter"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/auxiliary)
 "gwK" = (
@@ -6891,6 +6892,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
+"gKD" = (
+/obj/machinery/light/no_nightlight/directional/north,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "gLN" = (
 /turf/closed/wall,
 /area/station/service/janitor)
@@ -8276,11 +8281,11 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct/industrial/waste,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ilm" = (
@@ -9545,6 +9550,9 @@
 	dir = 8
 	},
 /obj/machinery/camera/autoname/directional/east,
+/obj/machinery/computer/department_orders/security{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/security/office)
 "jwg" = (
@@ -10477,6 +10485,7 @@
 	id = "ceprivacy";
 	name = "Privacy Shutter"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/engine,
 /area/station/engineering/main)
 "ksz" = (
@@ -12992,8 +13001,8 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Power Monitoring"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "mYP" = (
@@ -14923,6 +14932,10 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
+"oSz" = (
+/obj/machinery/light_switch/directional/north,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "oSQ" = (
 /obj/effect/turf_decal/tile/dark_red/fourcorners,
 /obj/structure/bed,
@@ -16768,7 +16781,7 @@
 "qTf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/very_dim/directional/east,
+/obj/machinery/light/no_nightlight/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "qTi" = (
@@ -17280,6 +17293,15 @@
 /obj/machinery/shower/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
+"rvJ" = (
+/obj/effect/turf_decal/stripes{
+	dir = 10
+	},
+/obj/machinery/power/transmission_laser{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/engineering/main)
 "rvQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -17531,7 +17553,7 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Power Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "rId" = (
@@ -17854,7 +17876,7 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "rZA" = (
@@ -19212,6 +19234,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"tzU" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "tAI" = (
 /obj/structure/railing{
 	dir = 1
@@ -20125,6 +20154,9 @@
 /area/station/commons/fitness/recreation/entertainment)
 "uwN" = (
 /obj/machinery/light/directional/south,
+/obj/machinery/computer/department_orders/engineering{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "uwZ" = (
@@ -21245,7 +21277,7 @@
 	id = "ceprivacy";
 	name = "Privacy Shutter"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "vGq" = (
@@ -23291,6 +23323,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/engine,
 /area/station/engineering/main)
 "xJM" = (
@@ -23606,7 +23639,7 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
 "yaW" = (
-/obj/machinery/suit_storage_unit/medical,
+/obj/machinery/computer/department_orders/medical,
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "yba" = (
@@ -23632,6 +23665,7 @@
 	id = "ceprivacy";
 	name = "Privacy Shutter"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/engine,
 /area/station/engineering/main)
 "ybT" = (
@@ -64113,9 +64147,9 @@ smp
 nTU
 qSp
 aiO
-fGy
-fGy
-fGy
+eXS
+eXS
+eXS
 eiF
 myD
 eXS
@@ -64370,7 +64404,7 @@ pnW
 pnW
 qSp
 fGy
-fGy
+eXS
 fGy
 fGy
 qSp
@@ -64627,7 +64661,7 @@ fCD
 fCD
 qSp
 fGy
-fGy
+eXS
 fGy
 fGy
 qSp
@@ -64883,8 +64917,8 @@ lwb
 fCD
 fCD
 qSp
-fGy
-fGy
+gKD
+eXS
 fGy
 fGy
 qSp
@@ -65141,7 +65175,7 @@ fCD
 fCD
 cYD
 fGy
-fGy
+eXS
 fGy
 fGy
 qSp
@@ -65397,8 +65431,8 @@ lwb
 fCD
 fCD
 qSp
-fGy
-fGy
+oSz
+tzU
 fGy
 gzq
 qSp
@@ -65656,7 +65690,7 @@ fCD
 qSp
 las
 mMh
-moi
+rvJ
 fGy
 qSp
 gnj
