@@ -1,9 +1,13 @@
+/// For clean results on map, use only sizing pt, multiples of 12: 12pt 24pt 48pt etc. - Not for use with px sizing
+/// Can be used in TGUI etc, px sizing is pt / 0.75. 12pt = 16px, 24pt = 32px etc.
+
 /// Base font
 /datum/font/tiny_unicode
 	name = "TinyUnicode"
 	font_family = 'interface/fonts/TinyUnicode.ttf'
 
 /// For icon overlays
+/// TinyUnicode 12pt metrics generated using Lummox's dmifontsplus (https://www.byond.com/developer/LummoxJR/DmiFontsPlus)
 /datum/font/tiny_unicode/size_12pt
 	name = "TinyUnicode 12pt"
 	height = 13

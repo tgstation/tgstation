@@ -1,9 +1,13 @@
+/// For clean results on map, use only sizing pt, multiples of 6: 6pt 12pt 18pt 24pt etc. - Not for use with px sizing
+/// Can be used in TGUI etc, px sizing is pt / 0.75. 6pt = 8px, 12pt = 16px etc.
+
 /// Base font
 /datum/font/grand9k
 	name = "Grand9K Pixel"
 	font_family = 'interface/fonts/Grand9K_Pixel.ttf'
 
 /// For icon overlays
+/// Grand9K 6pt metrics generated using Lummox's dmifontsplus (https://www.byond.com/developer/LummoxJR/DmiFontsPlus)
 /datum/font/grand9k/size_6pt
 	name = "Grand9K Pixel 6pt"
 	height = 12
