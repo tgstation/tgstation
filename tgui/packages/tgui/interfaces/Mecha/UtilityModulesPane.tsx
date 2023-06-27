@@ -90,27 +90,21 @@ const SnowflakeOrebox = (props: { module: MechaUtility }, context) => {
   const { act, data } = useBackend<OperatorData>(context);
   const { cargo } = props.module.snowflake;
   return (
-    <>
-      {cargo && <Box>Cargo</Box>}
-      {cargo && (
-        <Box style={{ 'margin-left': '1rem' }}>
-          <div
-            key={props.module.ref}
-            className="UtilityModulePane__SnowflakeEjector__entry">
-            <UtilityName name={'Ore Box'} />
-            <Button
-              onClick={() =>
-                act('equip_act', {
-                  ref: props.module.ref,
-                  gear_action: 'dump',
-                })
-              }>
-              {'Dump contents'}
-            </Button>
-          </div>
-        </Box>
-      )}
-    </>
+    <Box>
+      <div className="UtilityModulePane__SnowflakeEjector__entry">
+        <UtilityName name={'Ore Box'} />
+        <Button
+          onClick={() =>
+            act('equip_act', {
+              ref: props.module.ref,
+              gear_action: 'dump',
+            })
+          }
+          disabled={!cargo}>
+          {'Dump contents'}
+        </Button>
+      </div>
+    </Box>
   );
 };
 
