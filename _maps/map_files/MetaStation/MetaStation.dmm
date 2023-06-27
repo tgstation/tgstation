@@ -13538,13 +13538,6 @@
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
-"fdu" = (
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 8
-	},
-/obj/machinery/digital_clock/directional/south,
-/turf/open/floor/iron/dark,
-/area/station/command/bridge)
 "fdH" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 4
@@ -21563,7 +21556,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "hXK" = (
-/obj/item/radio/intercom/directional/south,
 /obj/structure/rack,
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
@@ -21571,6 +21563,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "hXQ" = (
@@ -96209,7 +96202,7 @@ tqI
 gkD
 nXm
 wNh
-fdu
+veO
 duI
 duI
 duI

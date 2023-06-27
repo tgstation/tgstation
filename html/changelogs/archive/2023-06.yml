@@ -895,3 +895,46 @@
   - image: Resprited the Limb Grower
   norsvenska:
   - rscadd: Christmas now has special station prefixes.
+2023-06-26:
+  Funnytoilet:
+  - qol: Allows you to craft plastitanium shards.
+  Ghommie:
+  - bugfix: Fixes the lights from Tinea Luxor being stackable to the point of crashing
+      the game for others.
+  IndieanaJones:
+  - balance: Xenos have been rebalanced, removing their hardstuns on their disarm
+      and neurotoxin, along with a slew of other changes. Xenos have received buffs
+      to their more unique abilities in return.
+  - bugfix: Fixed simplemobs ignoring xenomorph's melee damage values when being attacked
+      by them.
+  winterboekje:
+  - sound: Adds unique sounds to library barcode scanner
+  - image: Removes soul from library
+2023-06-27:
+  ChungusGamer666:
+  - refactor: Liking/disliking food is now handled by the tongue organ, not the species.
+      Also, having a failing tongue means you can't taste food properly!
+  - rscadd: You can read peoples' tongues now, if you have the entrail reading skillchip.
+  GPeckman:
+  - bugfix: The lavaproof tracks cyborg upgrade now protects against liquid plasma,
+      the Icebox equivalent of lava.
+  LovliestPlant:
+  - qol: '[Birdshot] Adds layer adapters to gas tank output hookups in atmospherics'
+  - qol: '[Birdshot] Adds additional navigation verb landmarks'
+  - bugfix: '[Birdshot] Fixes entrances to some departments from maints not requiring
+      department access'
+  - bugfix: '[Birdshot] Converts the guard locker in perma to a normal security officer''s
+      locker'
+  - bugfix: '[Birdshot] Adds an exterior outlet vent for the incinerator'
+  Momo8289:
+  - bugfix: Items that shouldn't have been stacking should no longer stack.
+  ReinaCoder:
+  - image: the mosin and prime nagants' mob sprites have been updated
+  TheVekter:
+  - bugfix: Added the missing medical laptop to the morgue on Northstar.
+  axietheaxolotl / viro:
+  - image: resprited surgery tables, and stasis beds
+  cnleth:
+  - bugfix: Symbols display correctly when sending messages via mind link
+  the-og-gear:
+  - sound: One (1) new space ambience track has been added. Good luck and godspeed.
