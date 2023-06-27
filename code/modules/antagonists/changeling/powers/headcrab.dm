@@ -37,7 +37,6 @@
 		user.investigate_log("has been gibbed by headslug burst.", INVESTIGATE_DEATHS)
 	user.gib()
 	. = TRUE
-	// So that the headslug does not get blown up, this is ugly
 	addtimer(CALLBACK(src, PROC_REF(spawn_headcrab), stored_mind, user_turf, organs), 1 SECONDS)
 
 /datum/action/changeling/headcrab/proc/spawn_headcrab(datum/mind/stored_mind, turf/spawn_location, list/organs)
