@@ -134,9 +134,8 @@
 
 /turf/open/lava/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(isliving(gone))
-		var/mob/living/leaving_mob = gone
-		REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+	if(isliving(gone) && !islava(gone.loc))
+		REMOVE_TRAIT(gone, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
 
 /turf/open/lava/Destroy()
 	for(var/mob/living/leaving_mob in contents)
