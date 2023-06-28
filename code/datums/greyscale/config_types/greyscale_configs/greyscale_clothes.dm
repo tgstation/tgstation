@@ -294,60 +294,54 @@
 	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/slacks.json'
 
-/datum/greyscale_config/slacks_worn
+/datum/greyscale_config/slacks/worn
 	name = "Slacks (Worn)"
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
-	json_config = 'code/datums/greyscale/json_configs/slacks_worn.json'
 
 /datum/greyscale_config/shorts
 	name = "Shorts"
 	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/shorts.json'
 
-/datum/greyscale_config/shorts_worn
+/datum/greyscale_config/shorts/worn
 	name = "Shorts (Worn)"
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
-	json_config = 'code/datums/greyscale/json_configs/shorts_worn.json'
 
 /datum/greyscale_config/jeans
 	name = "Jeans"
 	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jeans.json'
 
-/datum/greyscale_config/jeans_worn
+/datum/greyscale_config/jeans/worn
 	name = "Jeans (Worn)"
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jeans_worn.json'
 
 /datum/greyscale_config/jeanshorts
 	name = "Jean Shorts"
 	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jeanshorts.json'
 
-/datum/greyscale_config/jeanshorts_worn
+/datum/greyscale_config/jeanshorts/worn
 	name = "Jean Shorts (Worn)"
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jeanshorts_worn.json'
 
 /datum/greyscale_config/buttondown_slacks
 	name = "Buttondown with Slacks"
 	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/buttondown_slacks.json'
 
-/datum/greyscale_config/buttondown_slacks_worn
+/datum/greyscale_config/buttondown_slacks/worn
 	name = "Buttondown with Slacks (Worn)"
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buttondown_slacks_worn.json'
 
 /datum/greyscale_config/buttondown_shorts
 	name = "Buttondown with Shorts"
 	icon_file = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/buttondown_shorts.json'
 
-/datum/greyscale_config/buttondown_shorts_worn
+/datum/greyscale_config/buttondown_shorts/worn
 	name = "Buttondown with Shorts (Worn)"
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buttondown_shorts_worn.json'
 
 //
 // SUITS
