@@ -19,6 +19,7 @@
 
 	hair_color = "mutcolor"
 	hair_alpha = 150
+	mutanttongue = /obj/item/organ/internal/tongue/jelly //making new organs is hard ok?
 	mutantlungs = /obj/item/organ/internal/lungs/oozeling
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimeooze
@@ -26,7 +27,7 @@
 	burnmod = 0.6 // = 3/5x generic burn damage
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
-	inherent_factions = list(FACTION_SLIME)
+	inherent_factions = list(FACTION_SLIME) //an oozeling wont be eaten by their brethren
 	species_language_holder = /datum/language_holder/oozeling
 	ass_image = 'icons/ass/assslime.png'
 	//swimming_component = /datum/component/swimming/dissolve
