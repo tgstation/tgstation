@@ -50,8 +50,7 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	if(give_turf_traits)
-		give_turf_traits = string_list(give_turf_traits)
+	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY)
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
 
@@ -356,7 +355,6 @@
 	canSmoothWith = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
-	give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY)
 	var/list/attached_items = list()
 
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
