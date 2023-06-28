@@ -274,7 +274,7 @@
 	desc = "Makes a generic prize vendor."
 	build_path = /obj/machinery/prize_vendor
 
-/obj/item/circuitboard/machine/plushies
+/obj/item/circuitboard/machine/prize_vendor/plushies
 	name = "Plush Prize Vendor"
 	desc = "Makes a plush prize vendor."
 	build_path = /obj/machinery/prize_vendor/plushies
