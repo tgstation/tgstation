@@ -519,7 +519,7 @@
 	result = /datum/reagent/consumable/flour
 
 /datum/crafting_recipe/food/grinder/butter
-	reqs = list(/datum/reagent/consumable/milk = 25)
+	reqs = list(/datum/reagent/consumable/milk = MILK_TO_BUTTER_COEFF)
 	result = /obj/item/food/butter
 	steps = list("Put into grinder and mix")
 
