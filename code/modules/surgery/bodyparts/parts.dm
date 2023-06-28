@@ -49,12 +49,6 @@
 	QDEL_NULL(worn_neck_offset)
 	return ..()
 
-/obj/item/bodypart/chest/drop_organs(mob/user, violent_removal)
-	if(cavity_item)
-		cavity_item.forceMove(drop_location())
-		cavity_item = null
-	return ..()
-
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
 	icon_static = 'icons/mob/species/monkey/bodyparts.dmi'

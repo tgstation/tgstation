@@ -246,6 +246,9 @@
 
 	return ..()
 
+/obj/item/bodypart/drop_location()
+	return (owner ? owner.drop_location() : ..())
+
 /obj/item/bodypart/forceMove(atom/destination) //Please. Never forcemove a limb if its's actually in use. This is only for borgs.
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
@@ -393,30 +396,6 @@
 		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, TRUE, -1)
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3)
-
-//empties the bodypart from its organs and other things inside it
-/obj/item/bodypart/proc/drop_organs(mob/user, violent_removal)
-	SHOULD_CALL_PARENT(TRUE)
-
-	var/atom/drop_loc = drop_location()
-	if(IS_ORGANIC_LIMB(src))
-		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
-	seep_gauze(9999) // destroy any existing gauze if any exists
-	if(owner)
-		for(var/obj/item/organ/organ as anything in organs)
-			organ.Remove(owner)
-			organ.forceMove(drop_loc)
-	else
-		for(var/obj/item/organ/organ as anything in organs)
-			organ.remove_from_limb(src)
-			organ.forceMove(drop_loc)
-	for(var/obj/item/item_in_bodypart in src)
-		item_in_bodypart.forceMove(drop_loc)
-
-	if(owner)
-		owner.update_body_parts()
-	else
-		update_icon_dropped()
 
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life(seconds_per_tick, times_fired)

@@ -1,4 +1,3 @@
-
 /obj/item/bodypart/proc/can_dismember(obj/item/item)
 	if(bodypart_flags & BODYPART_UNREMOVABLE)
 		return FALSE
@@ -50,7 +49,41 @@
 	return TRUE
 
 /obj/item/bodypart/chest/dismember()
+	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
+		return FALSE
+	if(owner.status_flags & GODMODE)
+		return FALSE
+	if(HAS_TRAIT(limb_owner, TRAIT_NODISMEMBER))
+		return FALSE
 	return drop_organs(violent_removal = TRUE)
+
+///empties the bodypart from its organs and other things inside it
+/obj/item/bodypart/proc/drop_organs(mob/user, violent_removal)
+	SHOULD_CALL_PARENT(TRUE)
+
+	var/atom/drop_loc = drop_location()
+	if(IS_ORGANIC_LIMB(src))
+		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
+	seep_gauze(9999) // destroy any existing gauze if any exists
+	if(owner)
+		for(var/obj/item/organ/organ as anything in organs)
+			organ.Remove(owner)
+			organ.forceMove(drop_loc)
+	else
+		for(var/obj/item/organ/organ as anything in organs)
+			organ.remove_from_limb(src)
+			organ.forceMove(drop_loc)
+	for(var/obj/item/item_in_bodypart in src)
+		item_in_bodypart.forceMove(drop_loc)
+
+	if(owner)
+		owner.update_body_parts()
+	else
+		update_icon_dropped()
+
+/obj/item/bodypart/chest/drop_organs(mob/user, violent_removal)
+	. = ..()
+	cavity_item = null
 
 ///limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
 /obj/item/bodypart/proc/drop_limb(special, dismembered)
