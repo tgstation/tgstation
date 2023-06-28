@@ -6,7 +6,7 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOMETABOLISM), PROC_REF(on_nometabolism_trait_gain))
 
 
-	RegisterSignal(src, list(
+	RegisterSignals(src, list(
 		SIGNAL_ADDTRAIT(TRAIT_PERMANENTLY_ONFIRE),
 		SIGNAL_REMOVETRAIT(TRAIT_PERMANENTLY_ONFIRE),
 	), PROC_REF(update_permanently_on_fire))
