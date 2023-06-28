@@ -313,7 +313,7 @@
 	if(bodytype & BODYTYPE_ALIEN)
 		debrain_icon = 'icons/mob/species/alien/bodyparts.dmi'
 		debrain_icon_state = "debrained_alien"
-	else if(bodytype & BODYTYPE_LARVA_PLACEHOLDER)
+	else if(bodytype & BODYTYPE_LARVA)
 		debrain_icon = 'icons/mob/species/alien/bodyparts.dmi'
 		debrain_icon_state = "debrained_larva"
 	else if(bodytype & BODYTYPE_GOLEM)
@@ -386,9 +386,10 @@
 	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
-	bodypart_flags = BODYPART_UNREMOVABLE
-	max_damage = 500
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	bodypart_flags = BODYPART_UNREMOVABLE
+	burn_modifier = 2
+	max_damage = 500
 
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -399,6 +400,7 @@
 	should_draw_greyscale = FALSE
 	px_x = 0
 	px_y = 0
+	bodytype = BODYTYPE_LARVA | BODYTYPE_ORGANIC
 	bodypart_flags = BODYPART_UNREMOVABLE
+	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 	max_damage = 50
-	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC

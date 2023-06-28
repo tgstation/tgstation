@@ -13,9 +13,11 @@
 	grind_results = null
 	wound_resistance = 10
 	bodypart_trait_source = CHEST_TRAIT
-	///The bodytype(s) allowed to attach to this chest.
+
+	/// The bodytype(s) allowed to attach to this chest.
 	var/acceptable_bodytype = BODYTYPE_HUMANOID
 
+	/// Item inserted in the cavity of this chest, if any.
 	var/obj/item/cavity_item
 
 	/// Offset to apply to equipment worn as a uniform
@@ -70,11 +72,12 @@
 	icon_state = "alien_chest"
 	limb_id = BODYPART_ID_ALIEN
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
+	acceptable_bodytype = BODYTYPE_HUMANOID
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_flags = BODYPART_UNREMOVABLE
+	burn_modifier = 2
 	max_damage = 500
-	acceptable_bodytype = BODYTYPE_HUMANOID
 
 /obj/item/bodypart/chest/larva
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -83,10 +86,11 @@
 	limb_id = BODYPART_ID_LARVA
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	bodytype = BODYTYPE_LARVA | BODYTYPE_ORGANIC
+	acceptable_bodytype = BODYTYPE_LARVA
 	bodypart_flags = BODYPART_UNREMOVABLE
+	burn_modifier = 2
 	max_damage = 50
-	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
-	acceptable_bodytype = BODYTYPE_LARVA_PLACEHOLDER
 
 /// Parent Type for arms, should not appear in game.
 /obj/item/bodypart/arm
@@ -214,6 +218,7 @@
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
 	can_be_disabled = FALSE
+	burn_modifier = 2
 	max_damage = 100
 	should_draw_greyscale = FALSE
 
@@ -317,6 +322,7 @@
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
 	can_be_disabled = FALSE
+	burn_modifier = 2
 	max_damage = 100
 	should_draw_greyscale = FALSE
 
@@ -433,6 +439,7 @@
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
 	can_be_disabled = FALSE
+	burn_modifier = 2
 	max_damage = 100
 	should_draw_greyscale = FALSE
 
@@ -527,6 +534,7 @@
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
 	can_be_disabled = FALSE
+	burn_modifier = 2
 	max_damage = 100
 	should_draw_greyscale = FALSE
 

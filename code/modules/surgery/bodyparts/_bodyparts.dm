@@ -439,9 +439,6 @@
 	if(!brute && !burn)
 		return FALSE
 
-	if(bodytype & (BODYTYPE_ALIEN|BODYTYPE_LARVA_PLACEHOLDER)) //aliens take double burn //nothing can burn with so much snowflake code around
-		burn *= 2
-
 	/*
 	// START WOUND HANDLING
 	*/

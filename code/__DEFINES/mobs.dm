@@ -85,7 +85,7 @@
 ///The limb is snouted.
 #define BODYTYPE_SNOUTED (1<<5)
 ///A placeholder bodytype for xeno larva, so their limbs cannot be attached to anything.
-#define BODYTYPE_LARVA_PLACEHOLDER (1<<6)
+#define BODYTYPE_LARVA (1<<6)
 ///The limb is from a xenomorph.
 #define BODYTYPE_ALIEN (1<<7)
 ///The limb is from a golem
