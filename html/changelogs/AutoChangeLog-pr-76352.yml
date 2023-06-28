@@ -1,0 +1,4 @@
+author: "Funnytoilet"
+delete-after: True
+changes:
+  - bugfix: "Plasmamen can now get HMS"
