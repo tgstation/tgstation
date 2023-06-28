@@ -185,7 +185,7 @@
 			//Some externals have multiple layers for background, foreground and between
 			for(var/external_layer in overlay.all_layers)
 				if(overlay.layers & external_layer)
-					. += overlay.get_overlay(external_layer, src)
+					. += overlay.get_overlays(external_layer, src)
 
 	return .
 

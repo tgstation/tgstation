@@ -70,7 +70,7 @@
 /datum/bodypart_overlay/mutant/ears/get_global_feature_list()
 	return GLOB.ears_list
 
-/datum/bodypart_overlay/mutant/ears/color_image(image/overlay, layer, obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/ears/get_overlays(layer, obj/item/bodypart/limb)
 	. = ..()
 	//fucking lovely, we have to deal with the inners
 	if(sprite_datum.hasinner)
@@ -84,8 +84,7 @@
 		var/finished_icon_state = icon_state_builder.Join("_")
 
 		var/mutable_appearance/inner_appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = layer)
-		inner_appearance.appearance_flags |= RESET_COLOR
-		overlay.overlays += inner_appearance
+		. += inner_appearance
 
 /datum/bodypart_overlay/mutant/ears/generate_icon_cache()
 	. = ..()

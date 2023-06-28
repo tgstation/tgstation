@@ -9,11 +9,14 @@
 	///Key of the icon states of all the sprite_datums for easy caching
 	var/cache_key = ""
 
-///Wrapper for getting the proper image, colored and everything
-/datum/bodypart_overlay/proc/get_overlay(layer, obj/item/bodypart/limb)
+///Wrapper for getting the proper overlays, colored and everything
+/datum/bodypart_overlay/proc/get_overlays(layer, obj/item/bodypart/limb)
+	RETURN_TYPE(/list)
+	. = list()
 	layer = bitflag_to_layer(layer)
-	. = get_image(layer, limb)
-	color_image(., layer, limb)
+	var/image/primary_image = get_image(layer, limb)
+	color_image(primary_image, layer, limb)
+	return .
 
 ///Generate the image. Needs to be overriden
 /datum/bodypart_overlay/proc/get_image(layer, obj/item/bodypart/limb)
