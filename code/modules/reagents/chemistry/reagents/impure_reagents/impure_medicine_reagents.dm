@@ -382,7 +382,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/obj/item/organ/lungs/lungs = organ
 	apply_lung_levels(lungs)
 
-/datum/reagent/inverse/healing/convermol/proc/apply_lung_levels(obj/item/organ/internal/lungs/lungs)
+/datum/reagent/inverse/healing/convermol/proc/apply_lung_levels(obj/item/organ/lungs/lungs)
 	cached_heat_level_1 = lungs.heat_level_1_threshold
 	cached_heat_level_2 = lungs.heat_level_2_threshold
 	cached_heat_level_3 = lungs.heat_level_3_threshold
@@ -405,7 +405,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/obj/item/organ/lungs/lungs = organ
 	restore_lung_levels(lungs)
 
-/datum/reagent/inverse/healing/convermol/proc/restore_lung_levels(obj/item/organ/internal/lungs/lungs)
+/datum/reagent/inverse/healing/convermol/proc/restore_lung_levels(obj/item/organ/lungs/lungs)
 	lungs.heat_level_1_threshold = cached_heat_level_1
 	lungs.heat_level_2_threshold = cached_heat_level_2
 	lungs.heat_level_3_threshold = cached_heat_level_3

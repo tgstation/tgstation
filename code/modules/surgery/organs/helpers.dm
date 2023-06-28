@@ -43,7 +43,7 @@
 	. = organs_slot[slot]
 
 /// Checks if the organ should reasonably apply to the target
-/proc/should_organ_apply_to(obj/item/organ/external/organpath, mob/living/carbon/target)
+/proc/should_organ_apply_to(obj/item/organ/organpath, mob/living/carbon/target)
 	if(isnull(organpath) || isnull(target))
 		stack_trace("passed a null path or mob to 'should_organ_apply_to'")
 		return FALSE

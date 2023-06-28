@@ -209,7 +209,7 @@
 	human_holder.eye_color_right = human_holder.eye_color_left
 	UnregisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN)
 
-/datum/quirk/heterochromatic/proc/check_eye_removal(datum/source, obj/item/organ/internal/eyes/removed)
+/datum/quirk/heterochromatic/proc/check_eye_removal(datum/source, obj/item/organ/eyes/removed)
 	SIGNAL_HANDLER
 
 	if(!istype(removed))

@@ -30,9 +30,9 @@ GLOBAL_LIST_INIT(bioscrambler_parts_blacklist, typecacheof(list(
 /// Blacklist of organs which should not appear when bioscrambled.
 /// Either will look terrible outside of intended host, give you magical powers, are irreversible, or kill you
 GLOBAL_LIST_INIT(bioscrambler_organs_blacklist, typecacheof(list (
-	/obj/item/organ/external/pod_hair,
-	/obj/item/organ/external/spines,
-	/obj/item/organ/external/wings/functional,
+	/obj/item/organ/pod_hair,
+	/obj/item/organ/spines,
+	/obj/item/organ/wings/functional,
 	/obj/item/organ/alien,
 	/obj/item/organ/brain,
 	/obj/item/organ/body_egg,

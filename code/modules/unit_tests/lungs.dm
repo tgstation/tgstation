@@ -70,7 +70,7 @@
 /// Comprehensive unit test for [/obj/item/organ/lungs/proc/check_breath()]
 /// If "expect_failure" is set to TRUE, the test ensures the given Human suffocated.
 /// A "test_name" string is required to contextualize test logs. Describe the gas you're testing.
-/datum/unit_test/lungs/proc/lungs_test_check_breath(test_name, mob/living/carbon/human/lab_rat, obj/item/organ/internal/lungs/test_lungs, datum/gas_mixture/test_mix, expect_failure = FALSE)
+/datum/unit_test/lungs/proc/lungs_test_check_breath(test_name, mob/living/carbon/human/lab_rat, obj/item/organ/lungs/test_lungs, datum/gas_mixture/test_mix, expect_failure = FALSE)
 	// Setup a small volume of gas which represents one "breath" from test_mix.
 	var/datum/gas_mixture/test_breath
 
@@ -155,14 +155,14 @@
 		TEST_ASSERT(molar_cmp_equals(GET_MOLES(test_breath, /datum/gas/carbon_dioxide), expected_co2), TEST_CHECK_BREATH_MESSAGE(test_lungs, "should convert Plasma into an equivalent volume of CO2."))
 
 /// Tests minimum gas alerts by comparing gas pressure.
-/datum/unit_test/lungs/proc/lungs_test_alert_min(mob/living/carbon/human/lab_rat, obj/item/organ/internal/lungs/test_lungs, alert_name, min_pressure, pressure)
+/datum/unit_test/lungs/proc/lungs_test_alert_min(mob/living/carbon/human/lab_rat, obj/item/organ/lungs/test_lungs, alert_name, min_pressure, pressure)
 	var/alert_thrown = lab_rat.has_alert(alert_name)
 	var/pressure_safe = (pressure >= min_pressure) || (min_pressure == 0)
 	TEST_ASSERT(!pressure_safe && alert_thrown || pressure_safe, TEST_ALERT_THROW_MESSAGE(test_lungs, alert_name))
 	TEST_ASSERT(pressure_safe && !alert_thrown || !pressure_safe, TEST_ALERT_INHIBIT_MESSAGE(test_lungs, alert_name))
 
 /// Tests maximum gas alerts by comparing gas pressure.
-/datum/unit_test/lungs/proc/lungs_test_alert_max(mob/living/carbon/human/lab_rat, obj/item/organ/internal/lungs/test_lungs, alert_name, max_pressure, pressure)
+/datum/unit_test/lungs/proc/lungs_test_alert_max(mob/living/carbon/human/lab_rat, obj/item/organ/lungs/test_lungs, alert_name, max_pressure, pressure)
 	var/alert_thrown = lab_rat.has_alert(alert_name)
 	var/pressure_safe = (pressure <= max_pressure) || (max_pressure == 0)
 	TEST_ASSERT(!pressure_safe && alert_thrown || pressure_safe, TEST_ALERT_THROW_MESSAGE(test_lungs, alert_name))

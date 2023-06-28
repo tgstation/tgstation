@@ -82,13 +82,13 @@
 	implant.removed(owner)
 	qdel(implant)
 
-/obj/item/organ/heart/gland/heal/proc/reject_cyberimp(obj/item/organ/internal/cyberimp/implant)
+/obj/item/organ/heart/gland/heal/proc/reject_cyberimp(obj/item/organ/cyberimp/implant)
 	owner.visible_message(span_warning("[owner] vomits up his [implant.name]!"), span_userdanger("You suddenly vomit up your [implant.name]!"))
 	owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
 	implant.Remove(owner)
 	implant.forceMove(owner.drop_location())
 
-/obj/item/organ/heart/gland/heal/proc/replace_appendix(obj/item/organ/internal/appendix/appendix)
+/obj/item/organ/heart/gland/heal/proc/replace_appendix(obj/item/organ/appendix/appendix)
 	if(appendix)
 		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
 		appendix.Remove(owner)
@@ -103,7 +103,7 @@
 	var/obj/item/organ/appendix/new_appendix = new appendix_type()
 	new_appendix.Insert(owner)
 
-/obj/item/organ/heart/gland/heal/proc/replace_liver(obj/item/organ/internal/liver/liver)
+/obj/item/organ/heart/gland/heal/proc/replace_liver(obj/item/organ/liver/liver)
 	if(liver)
 		owner.visible_message(span_warning("[owner] vomits up his [liver.name]!"), span_userdanger("You suddenly vomit up your [liver.name]!"))
 		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
@@ -118,7 +118,7 @@
 	var/obj/item/organ/liver/new_liver = new liver_type()
 	new_liver.Insert(owner)
 
-/obj/item/organ/heart/gland/heal/proc/replace_lungs(obj/item/organ/internal/lungs/lungs)
+/obj/item/organ/heart/gland/heal/proc/replace_lungs(obj/item/organ/lungs/lungs)
 	if(lungs)
 		owner.visible_message(span_warning("[owner] vomits up his [lungs.name]!"), span_userdanger("You suddenly vomit up your [lungs.name]!"))
 		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
@@ -133,7 +133,7 @@
 	var/obj/item/organ/lungs/new_lungs = new lung_type()
 	new_lungs.Insert(owner)
 
-/obj/item/organ/heart/gland/heal/proc/replace_stomach(obj/item/organ/internal/stomach/stomach)
+/obj/item/organ/heart/gland/heal/proc/replace_stomach(obj/item/organ/stomach/stomach)
 	if(stomach)
 		owner.visible_message(span_warning("[owner] vomits up his [stomach.name]!"), span_userdanger("You suddenly vomit up your [stomach.name]!"))
 		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
@@ -148,7 +148,7 @@
 	var/obj/item/organ/stomach/new_stomach = new stomach_type()
 	new_stomach.Insert(owner)
 
-/obj/item/organ/heart/gland/heal/proc/replace_eyes(obj/item/organ/internal/eyes/eyes)
+/obj/item/organ/heart/gland/heal/proc/replace_eyes(obj/item/organ/eyes/eyes)
 	if(eyes)
 		owner.visible_message(span_warning("[owner]'s [eyes.name] fall out of their sockets!"), span_userdanger("Your [eyes.name] fall out of their sockets!"))
 		playsound(owner, 'sound/effects/splat.ogg', 50, TRUE)

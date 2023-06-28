@@ -110,7 +110,7 @@
 	AddComponent(/datum/component/traitor_objective_register, target, fail_signals = list(COMSIG_QDELETING))
 	return TRUE
 
-/datum/traitor_objective/target_player/eyesnatching/proc/check_eye_removal(datum/source, obj/item/organ/internal/eyes/removed)
+/datum/traitor_objective/target_player/eyesnatching/proc/check_eye_removal(datum/source, obj/item/organ/eyes/removed)
 	SIGNAL_HANDLER
 
 	if(!istype(removed))
@@ -217,7 +217,7 @@
 	if(used)
 		. += span_notice("It has been used up.")
 
-/obj/item/eyesnatcher/proc/eyeballs_exist(obj/item/organ/internal/eyes/eyeballies, obj/item/bodypart/head/head, mob/living/carbon/human/target)
+/obj/item/eyesnatcher/proc/eyeballs_exist(obj/item/organ/eyes/eyeballies, obj/item/bodypart/head/head, mob/living/carbon/human/target)
 	if(!eyeballies || QDELETED(eyeballies))
 		return FALSE
 	if(!head || QDELETED(head))
