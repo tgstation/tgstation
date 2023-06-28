@@ -1,0 +1,4 @@
+author: "chemistrymain2"
+delete-after: True
+changes:
+  - balance: "Syndicate simplemob fire-rate raised to one shot per second."
