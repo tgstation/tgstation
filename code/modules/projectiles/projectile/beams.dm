@@ -89,6 +89,7 @@
 	damage = 0
 	damage_type = STAMINA
 	stamina = 45
+	paralyze_timer = 5 SECONDS
 	armor_flag = ENERGY
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0

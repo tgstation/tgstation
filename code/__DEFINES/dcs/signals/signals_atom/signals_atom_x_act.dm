@@ -38,3 +38,4 @@
 #define COMSIG_ATOM_SECONDARY_TOOL_ACT(tooltype) "tool_secondary_act_[tooltype]"
 	// We have the same returns here as COMSIG_ATOM_TOOL_ACT
 	// #define COMPONENT_BLOCK_TOOL_ATTACK (1<<0)
+#define COMSIG_ATOM_DOOR_OPEN "atom_door_open"

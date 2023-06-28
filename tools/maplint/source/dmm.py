@@ -108,7 +108,7 @@ class DMMParser:
             return None
 
         var_edit_match = REGEX_VAR_EDIT.match(line)
-        self.expect(var_edit_match is not None, "Var edits ended too early, expected a newline in between.")
+        self.expect(var_edit_match is not None, f"Var edits ended too early, expected a newline in between. Line:{line}")
 
         return (var_edit_match.group("name"), self.parse_constant(var_edit_match.group("definition")))
 

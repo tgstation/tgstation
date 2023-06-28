@@ -45,17 +45,24 @@
 		update_appearance()
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/power/vent/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!do_after(user, 5 SECONDS, src))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	to_chat(user, "You dissassemble the [src].")
+	disassemble()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/power/vent/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/turf/turf = get_turf(src)
 		turf.attackby(W)
 
-/obj/machinery/power/vent/update_desc(updates)
+/obj/machinery/power/vent/examine(mob/user)
 	. = ..()
-	desc = "A piece of machinery that converts magmatic activity to electricity"
-	desc += "Current Output: [display_power(last_generation)]"
-	desc += "Lifetime Output: [display_power(total_generation)]"
+	. += "Current Output: [display_power(last_generation)]"
+	. += "Lifetime Output: [display_power(total_generation)]"
 
 /obj/machinery/power/vent/update_icon_state()
 	. = ..()

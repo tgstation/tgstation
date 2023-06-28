@@ -90,6 +90,8 @@
 
 /obj/effect/spawner/random_engines/Initialize(mapload)
 	..()
+	if(!mapload)
+		return INITIALIZE_HINT_QDEL
 	if(!length(SSmapping.random_engine_templates))
 		message_admins("Room spawner created with no templates available. This shouldn't happen.")
 		return INITIALIZE_HINT_QDEL
@@ -143,6 +145,9 @@
 
 /obj/effect/spawner/random_bar/Initialize(mapload)
 	..()
+	if(!mapload)
+		return INITIALIZE_HINT_QDEL
+
 	if(!length(SSmapping.random_engine_templates))
 		message_admins("Room spawner created with no templates available. This shouldn't happen.")
 		return INITIALIZE_HINT_QDEL

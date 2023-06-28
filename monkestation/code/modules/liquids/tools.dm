@@ -63,9 +63,9 @@
 			listed_ocean.ocean_reagents = list()
 			listed_ocean.ocean_reagents[chosen_reagent] = 100
 			listed_ocean.static_overlay.mix_colors(listed_ocean.ocean_reagents)
-			if(istype(listed_ocean.loc, /area/ocean))
-				var/area/listed_area = listed_ocean.loc
-				listed_area.base_lighting_color = listed_ocean.static_overlay.color
+			for(var/area/ocean/ocean_types in GLOB.initalized_ocean_areas)
+				ocean_types.base_lighting_color = listed_ocean.static_overlay.color
+				ocean_types.update_base_lighting()
 			rebuilt = TRUE
 		listed_ocean.light_color = listed_ocean.static_overlay.color
 		listed_ocean.light_range = 0

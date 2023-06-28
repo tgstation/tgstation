@@ -52,10 +52,10 @@ SUBSYSTEM_DEF(twitch)
 			for(var/datum/twitch_event/listed_event as anything in running_events)
 				if(listed_event.type == chosen_one.type)
 					running_events[listed_event] = running_events[listed_event] + chosen_one.event_duration
-					minor_announce("[listed_event.event_name] has just been extended.", "The Observers")
+					minor_announce("[listed_event.event_name] has just been extended by [incoming[4]].", "The Observers")
 					return
 
-			chosen_one.run_event()
+			chosen_one.run_event(incoming[4])
 			running_events[chosen_one] = world.time + chosen_one.event_duration
 
 /datum/controller/subsystem/twitch/proc/run_deferred()

@@ -4,7 +4,7 @@
 	event_flags = TWITCH_AFFECTS_ALL
 	id_tag = "skinny-5"
 
-/datum/twitch_event/skinny/run_event()
+/datum/twitch_event/skinny/run_event(name)
 	. = ..()
 	for(var/mob/living/target in targets)
 		target.apply_displacement_icon(/obj/effect/distortion/skinny)

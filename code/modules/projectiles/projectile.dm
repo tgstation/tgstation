@@ -201,6 +201,8 @@
 	var/can_hit_turfs = FALSE
 	/// If this projectile has been parried before
 	var/parried = FALSE
+	///how long we paralyze for as this is a disorient
+	var/paralyze_timer = 0
 
 /obj/projectile/Initialize(mapload)
 	. = ..()

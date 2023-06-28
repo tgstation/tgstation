@@ -951,6 +951,7 @@
 	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1.5))
 	mytray.adjust_waterlevel(-round(chems.get_reagent_amount(type) * 0.5))
 	mytray.adjust_weedlevel(-rand(1,3))
+	myseed.adjust_lifespan(-round(chems.get_reagent_amount(type) * 0.2))
 	// White Phosphorous + water -> phosphoric acid. That's not a good thing really.
 
 
@@ -1688,6 +1689,7 @@
 	if(chems.has_reagent(src.type, 1))
 		mytray.yieldmod = 1
 		mytray.mutmod = 1
+		myseed.adjust_lifespan(round(chems.get_reagent_amount(type) * 0.15))
 
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"

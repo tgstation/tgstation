@@ -697,6 +697,7 @@
 			mytray.adjust_weedlevel(rand(1,2))
 			mytray.adjust_pestlevel(rand(1,2))
 			myseed.adjust_maturation(rand(1,2))
+			myseed.adjust_lifespan(rand(1,2))
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)

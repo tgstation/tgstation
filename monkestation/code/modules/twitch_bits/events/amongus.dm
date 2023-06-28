@@ -11,7 +11,7 @@
 	id_tag = "amongus-ook10"
 
 
-/datum/twitch_event/amongus/run_event()
+/datum/twitch_event/amongus/run_event(name)
 	. = ..()
 	for(var/mob/living/target in targets)
 		target.apply_displacement_icon(/obj/effect/distortion/large/amogus)
