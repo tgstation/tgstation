@@ -1144,7 +1144,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		if(fexists(savefile_path))
 			fdel(savefile_path)
 		return new /savefile(savefile_path)
-	catch(exception/error)
+	catch(var/exception/error)
 		// if we failed to create a dummy once, try again; maybe someone slept somewhere they shouldnt have
 		if(from_failure) // this *is* the retry, something fucked up
 			CRASH("get_dummy_savefile failed to create a dummy savefile: '[error]'")
