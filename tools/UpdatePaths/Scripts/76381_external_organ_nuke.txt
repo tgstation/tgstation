@@ -1,0 +1,4 @@
+#comment Cleans up manual tram window alignment, made redundant by {} which added automatic alignment on init/dir change
+
+/obj/item/organ/internal/@SUBTYPES : /obj/item/organ/@SUBTYPES{@OLD}
+/obj/item/organ/external/@SUBTYPES : /obj/item/organ/@SUBTYPES{@OLD}

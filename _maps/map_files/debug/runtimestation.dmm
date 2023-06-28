@@ -2480,13 +2480,13 @@
 /area/station/science)
 "XN" = (
 /obj/structure/table,
-/obj/item/organ/internal/cyberimp/bci{
+/obj/item/organ/cyberimp/bci{
 	pixel_y = 5
 	},
-/obj/item/organ/internal/cyberimp/bci{
+/obj/item/organ/cyberimp/bci{
 	pixel_y = 5
 	},
-/obj/item/organ/internal/cyberimp/bci{
+/obj/item/organ/cyberimp/bci{
 	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,

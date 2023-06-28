@@ -136,7 +136,7 @@
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "kT" = (
-/obj/item/organ/internal/body_egg/alien_embryo,
+/obj/item/organ/body_egg/alien_embryo,
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "lh" = (
@@ -334,7 +334,7 @@
 /area/centcom/basketball)
 "Bd" = (
 /obj/structure/alien/weeds,
-/obj/item/organ/internal/body_egg/alien_embryo,
+/obj/item/organ/body_egg/alien_embryo,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "Cv" = (

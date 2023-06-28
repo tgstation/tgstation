@@ -467,7 +467,7 @@
 	pixel_y = 4
 	},
 /obj/item/bodypart/chest,
-/obj/item/organ/internal/heart,
+/obj/item/organ/heart,
 /obj/item/multitool,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered)
