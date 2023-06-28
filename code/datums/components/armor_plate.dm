@@ -93,7 +93,7 @@
 	for(var/i in 1 to amount)
 		new upgrade_item(get_turf(parent))
 
-/datum/component/armor_plate/proc/apply_ripley_overlays(obj/vehicle/sealed/mecha/ripley/ripley, list/overlays)
+/datum/component/armor_plate/proc/apply_ripley_overlays(obj/vehicle/sealed/mecha/ripley/source, list/overlays)
 	SIGNAL_HANDLER
 
 	if(!amount)
@@ -101,6 +101,6 @@
 	var/overlay_string = "ripley-g"
 	if(amount >= 3)
 		overlay_string += "-full"
-	if(!LAZYLEN(mecha.occupants))
+	if(!LAZYLEN(source.occupants))
 		overlay_string += "-open"
 	overlays += overlay_string
