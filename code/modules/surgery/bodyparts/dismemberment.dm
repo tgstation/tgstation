@@ -158,7 +158,7 @@
 		var/datum/wound/loss/dismembering = new
 		return dismembering.apply_dismember(src, wounding_type)
 
-/obj/item/organ/internal/brain/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
+/obj/item/organ/internal/brain/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
 	. = ..()
 	head.brain = src
 	if(brainmob)
@@ -167,15 +167,15 @@
 		brainmob.set_stat(DEAD)
 		brainmob = null
 
-/obj/item/organ/internal/eyes/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
+/obj/item/organ/internal/eyes/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
 	. = ..()
 	head.eyes = src
 
-/obj/item/organ/internal/ears/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
+/obj/item/organ/internal/ears/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
 	. = ..()
 	head.ears = src
 
-/obj/item/organ/internal/tongue/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
+/obj/item/organ/internal/tongue/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
 	. = ..()
 	head.tongue = src
 
@@ -243,6 +243,8 @@
 
 	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
 	if(old_limb)
+		// We have to do this stupid goofy loop because guess what fucker,
+		//the limb might drop in nullspace therefore the organs get deleted (ugh)
 		if(keep_old_organs)
 			for(var/obj/item/organ/organ as anything in old_limb.organs)
 				organ.transfer_to_limb(src, special = TRUE)
