@@ -142,7 +142,7 @@ const HealthAnalyzer = (props, context) => {
   } = props;
   return (
     <Section>
-      {(!!show_vitals && (
+      {show_vitals ? (
         <>
           <Section title="Health">
             <ProgressBar
@@ -210,7 +210,7 @@ const HealthAnalyzer = (props, context) => {
             </Stack.Item>
           </Stack>
         </>
-      )) || (
+      ) : (
         <Section>
           {'Health Analyzer Vitals Readout Disabled In Settings'}
         </Section>
@@ -248,7 +248,7 @@ const StatusReadout = (props, context) => {
           </Stack.Item>
           <Stack.Item grow>
             <Section title="Operation Number">
-              {active ? statusid || '0' : '???'}
+              {active ? statusid : '???'}
             </Section>
           </Stack.Item>
         </Stack>
