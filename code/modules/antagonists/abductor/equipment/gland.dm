@@ -1,4 +1,4 @@
-/obj/item/organ/internal/heart/gland
+/obj/item/organ/heart/gland
 	name = "fleshy mass"
 	desc = "A nausea-inducing hunk of twisting flesh and metal."
 	icon = 'icons/obj/abductor.dmi'
@@ -24,27 +24,27 @@
 	var/mind_control_duration = 1800
 	var/active_mind_control = FALSE
 
-/obj/item/organ/internal/heart/gland/Initialize(mapload)
+/obj/item/organ/heart/gland/Initialize(mapload)
 	. = ..()
 	icon_state = pick(list("health", "spider", "slime", "emp", "species", "egg", "vent", "mindshock", "viral"))
 
-/obj/item/organ/internal/heart/gland/examine(mob/user)
+/obj/item/organ/heart/gland/examine(mob/user)
 	. = ..()
 	if((user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)) || isobserver(user))
 		. += span_notice("It is \a [abductor_hint]")
 
-/obj/item/organ/internal/heart/gland/proc/ownerCheck()
+/obj/item/organ/heart/gland/proc/ownerCheck()
 	if(ishuman(owner))
 		return TRUE
 	if(!human_only && iscarbon(owner))
 		return TRUE
 	return FALSE
 
-/obj/item/organ/internal/heart/gland/proc/Start()
+/obj/item/organ/heart/gland/proc/Start()
 	active = 1
 	COOLDOWN_START(src, activation_cooldown, rand(cooldown_low, cooldown_high))
 
-/obj/item/organ/internal/heart/gland/proc/update_gland_hud()
+/obj/item/organ/heart/gland/proc/update_gland_hud()
 	if(!owner)
 		return
 	var/image/holder = owner.hud_list[GLAND_HUD]
@@ -57,7 +57,7 @@
 	else
 		holder.icon_state = "hudgland_spent"
 
-/obj/item/organ/internal/heart/gland/proc/mind_control(command, mob/living/user)
+/obj/item/organ/heart/gland/proc/mind_control(command, mob/living/user)
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
 		return FALSE
 	mind_control_uses--
@@ -73,7 +73,7 @@
 	addtimer(CALLBACK(src, PROC_REF(clear_mind_control)), mind_control_duration)
 	return TRUE
 
-/obj/item/organ/internal/heart/gland/proc/clear_mind_control()
+/obj/item/organ/heart/gland/proc/clear_mind_control()
 	if(!ownerCheck() || !active_mind_control)
 		return FALSE
 	owner.balloon_alert(owner, "compulsion forgotten")
@@ -82,7 +82,7 @@
 	active_mind_control = FALSE
 	return TRUE
 
-/obj/item/organ/internal/heart/gland/Remove(mob/living/carbon/gland_owner, special = FALSE)
+/obj/item/organ/heart/gland/Remove(mob/living/carbon/gland_owner, special = FALSE)
 	. = ..()
 	active = FALSE
 	if(initial(uses) == 1)
@@ -91,7 +91,7 @@
 	hud.remove_atom_from_hud(gland_owner)
 	clear_mind_control()
 
-/obj/item/organ/internal/heart/gland/Insert(mob/living/carbon/gland_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/heart/gland/Insert(mob/living/carbon/gland_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -102,7 +102,7 @@
 	hud.add_atom_to_hud(gland_owner)
 	update_gland_hud()
 
-/obj/item/organ/internal/heart/gland/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/heart/gland/on_life(seconds_per_tick, times_fired)
 	if(!beating)
 		// alien glands are immune to stopping.
 		beating = TRUE
@@ -118,5 +118,5 @@
 	if(!uses)
 		active = FALSE
 
-/obj/item/organ/internal/heart/gland/proc/activate()
+/obj/item/organ/heart/gland/proc/activate()
 	return

@@ -158,7 +158,7 @@
 		var/datum/wound/loss/dismembering = new
 		return dismembering.apply_dismember(src, wounding_type)
 
-/obj/item/organ/internal/brain/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
+/obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
 	. = ..()
 	head.brain = src
 	if(brainmob)
@@ -167,15 +167,15 @@
 		brainmob.set_stat(DEAD)
 		brainmob = null
 
-/obj/item/organ/internal/eyes/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
+/obj/item/organ/eyes/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
 	. = ..()
 	head.eyes = src
 
-/obj/item/organ/internal/ears/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
+/obj/item/organ/ears/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
 	. = ..()
 	head.ears = src
 
-/obj/item/organ/internal/tongue/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
+/obj/item/organ/tongue/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
 	. = ..()
 	head.tongue = src
 

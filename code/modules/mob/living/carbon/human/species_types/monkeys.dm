@@ -5,10 +5,10 @@
 	id = SPECIES_MONKEY
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
 	cosmetic_organs = list(
-		/obj/item/organ/external/tail/monkey = "Monkey"
+		/obj/item/organ/tail/monkey = "Monkey"
 	)
-	mutanttongue = /obj/item/organ/internal/tongue/monkey
-	mutantbrain = /obj/item/organ/internal/brain/primate
+	mutanttongue = /obj/item/organ/tongue/monkey
+	mutantbrain = /obj/item/organ/brain/primate
 	skinned_type = /obj/item/stack/sheet/animalhide/monkey
 	meat = /obj/item/food/meat/slab/monkey
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
@@ -195,7 +195,7 @@
 
 	return to_add
 
-/obj/item/organ/internal/brain/primate //Ook Ook
+/obj/item/organ/brain/primate //Ook Ook
 	name = "Primate Brain"
 	desc = "This wad of meat is small, but has enlaged occipital lobes for spotting bananas."
 	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy or advanced tool usage.
@@ -215,7 +215,7 @@
 	if(!.)
 		return
 
-	var/obj/item/organ/internal/brain/primate/monkey_brain = target
+	var/obj/item/organ/brain/primate/monkey_brain = target
 	if(monkey_brain.tripping)
 		monkey_brain.tripping = FALSE
 		background_icon_state = "bg_default"
@@ -227,15 +227,15 @@
 	build_all_button_icons()
 
 
-/obj/item/organ/internal/brain/primate/on_insert(mob/living/carbon/primate)
+/obj/item/organ/brain/primate/on_insert(mob/living/carbon/primate)
 	. = ..()
 	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
 
-/obj/item/organ/internal/brain/primate/on_remove(mob/living/carbon/primate)
+/obj/item/organ/brain/primate/on_remove(mob/living/carbon/primate)
 	. = ..()
 	UnregisterSignal(primate, COMSIG_MOVABLE_CROSS)
 
-/obj/item/organ/internal/brain/primate/proc/on_crossed(datum/source, atom/movable/crossed)
+/obj/item/organ/brain/primate/proc/on_crossed(datum/source, atom/movable/crossed)
 	SIGNAL_HANDLER
 	if(!tripping)
 		return
@@ -248,7 +248,7 @@
 		return
 	in_the_way_mob.knockOver(owner)
 
-/obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
+/obj/item/organ/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
 	return owner.get_bodypart(BODY_ZONE_HEAD)
 
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE

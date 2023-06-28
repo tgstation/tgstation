@@ -80,7 +80,7 @@
 	pill.attack(pill_user, pill_user)
 
 	// Set the metabolism efficiency to 1.0 so it transfers all reagents to the body in one go.
-	var/obj/item/organ/internal/stomach/pill_belly = pill_user.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/pill_belly = pill_user.get_organ_slot(ORGAN_SLOT_STOMACH)
 	pill_belly.metabolism_efficiency = 1
 
 	pill_user.Life()

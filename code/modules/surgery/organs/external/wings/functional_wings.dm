@@ -7,7 +7,7 @@
 
 /datum/action/innate/flight/Activate()
 	var/mob/living/carbon/human/human = owner
-	var/obj/item/organ/external/wings/functional/wings = human.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	var/obj/item/organ/wings/functional/wings = human.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(wings && wings.can_fly(human))
 		wings.toggle_flight(human)
 		if(!(human.movement_type & FLYING))
@@ -17,7 +17,7 @@
 			human.set_resting(FALSE, TRUE)
 
 ///The true wings that you can use to fly and shit (you cant actually shit with them)
-/obj/item/organ/external/wings/functional
+/obj/item/organ/wings/functional
 	///The flight action object
 	var/datum/action/innate/flight/fly
 
@@ -26,13 +26,13 @@
 	///Are our wings open or closed?
 	var/wings_open = FALSE
 
-/obj/item/organ/external/wings/functional/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/wings/functional/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
 	if(. && isnull(fly))
 		fly = new
 		fly.Grant(receiver)
 
-/obj/item/organ/external/wings/functional/Remove(mob/living/carbon/organ_owner, special, moving)
+/obj/item/organ/wings/functional/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
 
 	fly.Remove(organ_owner)
@@ -40,13 +40,13 @@
 	if(wings_open)
 		toggle_flight(organ_owner)
 
-/obj/item/organ/external/wings/functional/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/wings/functional/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
 	handle_flight(owner)
 
 ///Called on_life(). Handle flight code and check if we're still flying
-/obj/item/organ/external/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
+/obj/item/organ/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
 	if(human.movement_type & ~FLYING)
 		return FALSE
 	if(!can_fly(human))
@@ -56,7 +56,7 @@
 
 
 ///Check if we're still eligible for flight (wings covered, atmosphere too thin, etc)
-/obj/item/organ/external/wings/functional/proc/can_fly(mob/living/carbon/human/human)
+/obj/item/organ/wings/functional/proc/can_fly(mob/living/carbon/human/human)
 	if(human.stat || human.body_position == LYING_DOWN)
 		return FALSE
 	//Jumpsuits have tail holes, so it makes sense they have wing holes too
@@ -75,7 +75,7 @@
 		return TRUE
 
 ///Slipping but in the air?
-/obj/item/organ/external/wings/functional/proc/fly_slip(mob/living/carbon/human/human)
+/obj/item/organ/wings/functional/proc/fly_slip(mob/living/carbon/human/human)
 	var/obj/buckled_obj
 	if(human.buckled)
 		buckled_obj = human.buckled
@@ -98,7 +98,7 @@
 	return TRUE
 
 ///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
-/obj/item/organ/external/wings/functional/proc/toggle_flight(mob/living/carbon/human/human)
+/obj/item/organ/wings/functional/proc/toggle_flight(mob/living/carbon/human/human)
 	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
 		human.physiology.stun_mod *= 2
 		human.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), SPECIES_FLIGHT_TRAIT)
@@ -112,13 +112,13 @@
 	human.update_body_parts()
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
-/obj/item/organ/external/wings/functional/proc/open_wings()
+/obj/item/organ/wings/functional/proc/open_wings()
 	var/datum/bodypart_overlay/mutant/wings/functional/overlay = bodypart_overlay
 	overlay.open_wings()
 	wings_open = TRUE
 
 ///close our wings
-/obj/item/organ/external/wings/functional/proc/close_wings()
+/obj/item/organ/wings/functional/proc/close_wings()
 	var/datum/bodypart_overlay/mutant/wings/functional/overlay = bodypart_overlay
 	wings_open = FALSE
 	overlay.close_wings()
@@ -157,7 +157,7 @@
 	. += wings_open ? "open" : "closed"
 
 ///angel wings, which relate to humans. comes with holiness.
-/obj/item/organ/external/wings/functional/angel
+/obj/item/organ/wings/functional/angel
 	name = "angel wings"
 	desc = "Holier-than-thou attitude not included."
 	sprite_accessory_override = /datum/sprite_accessory/wings_open/angel
@@ -165,37 +165,37 @@
 	organ_traits = list(TRAIT_HOLY)
 
 ///dragon wings, which relate to lizards.
-/obj/item/organ/external/wings/functional/dragon
+/obj/item/organ/wings/functional/dragon
 	name = "dragon wings"
 	desc = "Hey, HEY- NOT lizard wings. Dragon wings. Mighty dragon wings."
 	sprite_accessory_override = /datum/sprite_accessory/wings/dragon
 
 ///robotic wings, which relate to androids.
-/obj/item/organ/external/wings/functional/robotic
+/obj/item/organ/wings/functional/robotic
 	name = "robotic wings"
 	desc = "Using microscopic hover-engines, or \"microwings,\" as they're known in the trade, these tiny devices are able to lift a few grams at a time. Gathering enough of them, and you can lift impressively large things."
 	sprite_accessory_override = /datum/sprite_accessory/wings/robotic
 
 ///skeletal wings, which relate to skeletal races.
-/obj/item/organ/external/wings/functional/skeleton
+/obj/item/organ/wings/functional/skeleton
 	name = "skeletal wings"
 	desc = "Powered by pure edgy-teenager-notebook-scribblings. Just kidding. But seriously, how do these keep you flying?!"
 	sprite_accessory_override = /datum/sprite_accessory/wings/skeleton
 
 ///mothra wings, which relate to moths.
-/obj/item/organ/external/wings/functional/moth/mothra
+/obj/item/organ/wings/functional/moth/mothra
 	name = "mothra wings"
 	desc = "Fly like the mighty mothra of legend once did."
 	sprite_accessory_override = /datum/sprite_accessory/wings/mothra
 
 ///megamoth wings, which relate to moths as an alternate choice. they're both pretty cool.
-/obj/item/organ/external/wings/functional/moth/megamoth
+/obj/item/organ/wings/functional/moth/megamoth
 	name = "megamoth wings"
 	desc = "Don't get murderous."
 	sprite_accessory_override = /datum/sprite_accessory/wings/megamoth
 
 ///fly wings, which relate to flies.
-/obj/item/organ/external/wings/functional/fly
+/obj/item/organ/wings/functional/fly
 	name = "fly wings"
 	desc = "Fly as a fly."
 	sprite_accessory_override = /datum/sprite_accessory/wings/fly

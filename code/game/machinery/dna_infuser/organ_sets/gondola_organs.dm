@@ -16,7 +16,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	bonus_traits = list(TRAIT_RESISTHEAT, TRAIT_RESISTCOLD, TRAIT_NOBREATH, TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE)
 
 /// makes you a pacifist and turns most mobs neutral towards you
-/obj/item/organ/internal/heart/gondola
+/obj/item/organ/heart/gondola
 	name = "mutated gondola-heart"
 	desc = "Gondola DNA infused into what was once a normal heart."
 
@@ -28,12 +28,12 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	///keeps track of whether the reciever actually gained factions
 	var/list/factions_to_remove = list()
 
-/obj/item/organ/internal/heart/gondola/Initialize(mapload)
+/obj/item/organ/heart/gondola/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/gondola)
 	AddElement(/datum/element/noticable_organ, "radiate%PRONOUN_S an aura of serenity.")
 
-/obj/item/organ/internal/heart/gondola/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/heart/gondola/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
 	if(!(FACTION_HOSTILE in receiver.faction))
 		factions_to_remove += FACTION_HOSTILE
@@ -41,7 +41,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 		factions_to_remove += FACTION_MINING
 	receiver.faction |= list(FACTION_HOSTILE, FACTION_MINING)
 
-/obj/item/organ/internal/heart/gondola/Remove(mob/living/carbon/heartless, special)
+/obj/item/organ/heart/gondola/Remove(mob/living/carbon/heartless, special)
 	. = ..()
 	for(var/faction in factions_to_remove)
 		heartless.faction -= faction
@@ -49,7 +49,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	factions_to_remove = list()
 
 /// Zen (tounge): You can no longer speak, but get a powerful positive moodlet
-/obj/item/organ/internal/tongue/gondola
+/obj/item/organ/tongue/gondola
 	name = "mutated gondola-tongue"
 	desc = "Gondola DNA infused into what was once a normal tongue."
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
@@ -58,21 +58,21 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	greyscale_colors = GONDOLA_COLORS
 	organ_traits = list(TRAIT_MUTE)
 
-/obj/item/organ/internal/tongue/gondola/Initialize(mapload)
+/obj/item/organ/tongue/gondola/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "mouth is permanently affixed into a relaxed smile.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/gondola)
 
-/obj/item/organ/internal/tongue/gondola/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
+/obj/item/organ/tongue/gondola/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
 	. = ..()
 	tongue_owner.add_mood_event("gondola_zen", /datum/mood_event/gondola_serenity)
 
-/obj/item/organ/internal/tongue/gondola/Remove(mob/living/carbon/tongue_owner, special)
+/obj/item/organ/tongue/gondola/Remove(mob/living/carbon/tongue_owner, special)
 	tongue_owner.clear_mood_event("gondola_zen")
 	return ..()
 
 /// Loving arms: your hands become unable to hold much of anything but your hugs now infuse the subject with pax.
-/obj/item/organ/internal/liver/gondola
+/obj/item/organ/liver/gondola
 	name = "mutated gondola-liver"
 	desc = "Gondola DNA infused into what was once a normal liver."
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
@@ -82,14 +82,14 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	/// instance of the martial art granted on insertion
 	var/datum/martial_art/hugs_of_the_gondola/pax_hugs
 
-/obj/item/organ/internal/liver/gondola/Initialize(mapload)
+/obj/item/organ/liver/gondola/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/gondola)
 	AddElement(/datum/element/noticable_organ, "left arm has small needles breaching the skin all over it.", BODY_ZONE_L_ARM)
 	AddElement(/datum/element/noticable_organ, "right arm has small needles breaching the skin all over it.", BODY_ZONE_R_ARM)
 	pax_hugs = new
 
-/obj/item/organ/internal/liver/gondola/Insert(mob/living/carbon/liver_owner, special, drop_if_replaced)
+/obj/item/organ/liver/gondola/Insert(mob/living/carbon/liver_owner, special, drop_if_replaced)
 	. = ..()
 	var/has_left = liver_owner.has_left_hand(check_disabled = FALSE)
 	var/has_right = liver_owner.has_right_hand(check_disabled = FALSE)
@@ -104,20 +104,20 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	RegisterSignal(liver_owner, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(on_owner_equipping_item))
 	RegisterSignal(liver_owner, COMSIG_LIVING_TRY_PULL, PROC_REF(on_owner_try_pull))
 
-/obj/item/organ/internal/liver/gondola/Remove(mob/living/carbon/liver_owner, special)
+/obj/item/organ/liver/gondola/Remove(mob/living/carbon/liver_owner, special)
 	. = ..()
 	pax_hugs.remove(liver_owner)
 	UnregisterSignal(liver_owner, list(COMSIG_HUMAN_EQUIPPING_ITEM, COMSIG_LIVING_TRY_PULL))
 
 /// signal sent when prompting if an item can be equipped
-/obj/item/organ/internal/liver/gondola/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/equip_target, slot)
+/obj/item/organ/liver/gondola/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/equip_target, slot)
 	SIGNAL_HANDLER
 	if(equip_target.w_class > WEIGHT_CLASS_TINY)
 		equip_target.balloon_alert(owner, "too weak to hold this!")
 		return COMPONENT_BLOCK_EQUIP
 
 /// signal sent when owner tries to pull an item
-/obj/item/organ/internal/liver/gondola/proc/on_owner_try_pull(mob/living/carbon/owner, atom/movable/target, force)
+/obj/item/organ/liver/gondola/proc/on_owner_try_pull(mob/living/carbon/owner, atom/movable/target, force)
 	SIGNAL_HANDLER
 	if(isliving(target))
 		var/mob/living/living_target = target

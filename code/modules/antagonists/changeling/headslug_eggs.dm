@@ -1,7 +1,7 @@
 #define EGG_INCUBATION_TIME (4 MINUTES)
 
 /// The actual organ that the changeling headslug implants into a dead host.
-/obj/item/organ/internal/body_egg/changeling_egg
+/obj/item/organ/body_egg/changeling_egg
 	name = "changeling egg"
 	desc = "Twitching and disgusting."
 	/// The mind of the original changeling that gave forth to the headslug mob.
@@ -9,14 +9,14 @@
 	/// Tracks how long the egg has been growing.
 	var/time = 0
 
-/obj/item/organ/internal/body_egg/changeling_egg/egg_process(seconds_per_tick, times_fired)
+/obj/item/organ/body_egg/changeling_egg/egg_process(seconds_per_tick, times_fired)
 	// Changeling eggs grow in dead people
 	time += seconds_per_tick * 10
 	if(time >= EGG_INCUBATION_TIME)
 		pop()
 
 /// Once the egg is fully grown, we gib the host and spawn a monkey (with the changeling's player controlling it). Very descriptive proc name.
-/obj/item/organ/internal/body_egg/changeling_egg/proc/pop()
+/obj/item/organ/body_egg/changeling_egg/proc/pop()
 	var/mob/living/carbon/human/spawned_monkey = new(owner)
 	spawned_monkey.set_species(/datum/species/monkey)
 

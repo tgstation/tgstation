@@ -15,8 +15,8 @@
 	inherent_factions = list(FACTION_FAITHLESS)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 
-	mutantbrain = /obj/item/organ/internal/brain/shadow
-	mutanteyes = /obj/item/organ/internal/eyes/shadow
+	mutantbrain = /obj/item/organ/brain/shadow
+	mutanteyes = /obj/item/organ/eyes/shadow
 	mutantheart = null
 	mutantlungs = null
 
@@ -86,12 +86,12 @@
 	return to_add
 
 /// the key to some of their powers
-/obj/item/organ/internal/brain/shadow
+/obj/item/organ/brain/shadow
 	name = "shadowling tumor"
 	desc = "Something that was once a brain, before being remolded by a shadowling. It has adapted to the dark, irreversibly."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
 
-/obj/item/organ/internal/brain/shadow/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/brain/shadow/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	var/turf/owner_turf = owner.loc
 	if(!isturf(owner_turf))
@@ -103,7 +103,7 @@
 	else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
 		owner.heal_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 
-/obj/item/organ/internal/eyes/shadow
+/obj/item/organ/eyes/shadow
 	name = "burning red eyes"
 	desc = "Even without their shadowy owner, looking at these eyes gives you a sense of dread."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'

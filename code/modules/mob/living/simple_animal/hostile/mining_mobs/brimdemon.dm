@@ -32,7 +32,7 @@
 	butcher_results = list(
 		/obj/item/food/meat/slab = 2,
 		/obj/effect/decal/cleanable/brimdust = 1,
-		/obj/item/organ/internal/monster_core/brimdust_sac = 1,
+		/obj/item/organ/monster_core/brimdust_sac = 1,
 	)
 	loot = list()
 	robust_searching = TRUE

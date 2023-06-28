@@ -142,7 +142,7 @@
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/costume/lizard
 	time = 1 SECONDS
-	reqs = list(/obj/item/organ/external/tail/lizard = 1)
+	reqs = list(/obj/item/organ/tail/lizard = 1)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/lizardhat_alternate
@@ -157,8 +157,8 @@
 	result = /obj/item/clothing/head/costume/kitty/genuine
 	time = 1 SECONDS
 	reqs = list(
-		/obj/item/organ/external/tail/cat = 1,
-		/obj/item/organ/internal/ears/cat = 1,
+		/obj/item/organ/tail/cat = 1,
+		/obj/item/organ/ears/cat = 1,
 	)
 	category = CAT_CLOTHING
 
@@ -317,7 +317,7 @@
 	)
 
 	category = CAT_CLOTHING
-	
+
 /datum/crafting_recipe/atmospherics_gas_mask
 	name = "atmospherics gas mask"
 	result = /obj/item/clothing/mask/gas/atmos
@@ -327,7 +327,7 @@
 		/obj/item/stack/sheet/mineral/metal_hydrogen = 1,
 		/obj/item/stack/sheet/mineral/zaukerite = 1,
 	)
-	
+
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/paper_hat

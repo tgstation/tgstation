@@ -305,7 +305,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/human_check = TRUE
 
 /datum/objective/protect/check_completion()
-	var/obj/item/organ/internal/brain/brain_target
+	var/obj/item/organ/brain/brain_target
 	if(human_check)
 		brain_target = target.current?.get_organ_slot(ORGAN_SLOT_BRAIN)
 	//Protect will always suceed when someone suicides

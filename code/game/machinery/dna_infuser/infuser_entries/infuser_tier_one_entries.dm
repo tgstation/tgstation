@@ -19,10 +19,10 @@
 		/mob/living/simple_animal/hostile/asteroid/goliath,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/brain/goliath,
-		/obj/item/organ/internal/eyes/night_vision/goliath,
-		/obj/item/organ/internal/heart/goliath,
-		/obj/item/organ/internal/lungs/lavaland/goliath,
+		/obj/item/organ/brain/goliath,
+		/obj/item/organ/eyes/night_vision/goliath,
+		/obj/item/organ/heart/goliath,
+		/obj/item/organ/lungs/lavaland/goliath,
 	)
 	infusion_desc = "armored tendril-like"
 	tier = DNA_MUTANT_TIER_ONE
@@ -43,10 +43,10 @@
 		/mob/living/basic/carp,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/brain/carp,
-		/obj/item/organ/internal/heart/carp,
-		/obj/item/organ/internal/lungs/carp,
-		/obj/item/organ/internal/tongue/carp,
+		/obj/item/organ/brain/carp,
+		/obj/item/organ/heart/carp,
+		/obj/item/organ/lungs/carp,
+		/obj/item/organ/tongue/carp,
 	)
 	infusion_desc = "nomadic"
 	tier = DNA_MUTANT_TIER_ONE
@@ -67,10 +67,10 @@
 		/obj/item/food/deadmouse,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/eyes/night_vision/rat,
-		/obj/item/organ/internal/heart/rat,
-		/obj/item/organ/internal/stomach/rat,
-		/obj/item/organ/internal/tongue/rat,
+		/obj/item/organ/eyes/night_vision/rat,
+		/obj/item/organ/heart/rat,
+		/obj/item/organ/stomach/rat,
+		/obj/item/organ/tongue/rat,
 	)
 	infusion_desc = "skittish"
 	tier = DNA_MUTANT_TIER_ONE

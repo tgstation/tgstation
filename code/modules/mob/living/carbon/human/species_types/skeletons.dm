@@ -28,13 +28,13 @@
 		TRAIT_NOBLOOD,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutanttongue = /obj/item/organ/internal/tongue/bone
-	mutantstomach = /obj/item/organ/internal/stomach/bone
+	mutanttongue = /obj/item/organ/tongue/bone
+	mutantstomach = /obj/item/organ/stomach/bone
 	mutantappendix = null
 	mutantheart = null
-	mutantliver = /obj/item/organ/internal/liver/bone
+	mutantliver = /obj/item/organ/liver/bone
 	mutantlungs = null
-	wing_types = list(/obj/item/organ/external/wings/functional/skeleton)
+	wing_types = list(/obj/item/organ/wings/functional/skeleton)
 	//They can technically be in an ERT
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	species_cookie = /obj/item/reagent_containers/condiment/milk

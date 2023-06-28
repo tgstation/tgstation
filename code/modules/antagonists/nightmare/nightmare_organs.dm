@@ -4,7 +4,7 @@
 #define HEART_SPECIAL_SHADOWIFY 2
 
 
-/obj/item/organ/internal/brain/shadow/nightmare
+/obj/item/organ/brain/shadow/nightmare
 	name = "tumorous mass"
 	desc = "A fleshy growth that was dug out of the skull of a Nightmare."
 	icon = 'icons/obj/medical/organs/organs.dmi'
@@ -14,7 +14,7 @@
 	///Our associated terrorize spell, for antagonist nightmares
 	var/datum/action/cooldown/spell/pointed/terrorize/terrorize_spell
 
-/obj/item/organ/internal/brain/shadow/nightmare/on_insert(mob/living/carbon/brain_owner)
+/obj/item/organ/brain/shadow/nightmare/on_insert(mob/living/carbon/brain_owner)
 	. = ..()
 	if(brain_owner.dna.species.id != SPECIES_NIGHTMARE)
 		brain_owner.set_species(/datum/species/shadow/nightmare)
@@ -27,12 +27,12 @@
 		terrorize_spell = new(src)
 		terrorize_spell.Grant(brain_owner)
 
-/obj/item/organ/internal/brain/shadow/nightmare/on_remove(mob/living/carbon/brain_owner)
+/obj/item/organ/brain/shadow/nightmare/on_remove(mob/living/carbon/brain_owner)
 	. = ..()
 	QDEL_NULL(our_jaunt)
 	QDEL_NULL(terrorize_spell)
 
-/obj/item/organ/internal/heart/nightmare
+/obj/item/organ/heart/nightmare
 	name = "heart of darkness"
 	desc = "An alien organ that twists and writhes when exposed to light."
 	icon = 'icons/obj/medical/organs/organs.dmi'
@@ -45,11 +45,11 @@
 	/// The armblade granted to the host of this heart.
 	var/obj/item/light_eater/blade
 
-/obj/item/organ/internal/heart/nightmare/Initialize(mapload)
+/obj/item/organ/heart/nightmare/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
 	return ..()
 
-/obj/item/organ/internal/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
+/obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
 	user.visible_message(
@@ -65,23 +65,23 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/internal/heart/nightmare/on_insert(mob/living/carbon/heart_owner, special)
+/obj/item/organ/heart/nightmare/on_insert(mob/living/carbon/heart_owner, special)
 	. = ..()
 	if(special != HEART_SPECIAL_SHADOWIFY)
 		blade = new/obj/item/light_eater
 		heart_owner.put_in_hands(blade)
 
-/obj/item/organ/internal/heart/nightmare/on_remove(mob/living/carbon/heart_owner, special)
+/obj/item/organ/heart/nightmare/on_remove(mob/living/carbon/heart_owner, special)
 	. = ..()
 	respawn_progress = 0
 	if(blade && special != HEART_SPECIAL_SHADOWIFY)
 		heart_owner.visible_message(span_warning("\The [blade] disintegrates!"))
 		QDEL_NULL(blade)
 
-/obj/item/organ/internal/heart/nightmare/Stop()
+/obj/item/organ/heart/nightmare/Stop()
 	return 0
 
-/obj/item/organ/internal/heart/nightmare/on_death(seconds_per_tick, times_fired)
+/obj/item/organ/heart/nightmare/on_death(seconds_per_tick, times_fired)
 	if(!owner)
 		return
 	var/turf/T = get_turf(owner)
@@ -105,7 +105,7 @@
 	playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 	respawn_progress = 0
 
-/obj/item/organ/internal/heart/nightmare/get_availability(datum/species/owner_species, mob/living/owner_mob)
+/obj/item/organ/heart/nightmare/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	if(isnightmare(owner_mob))
 		return TRUE
 	return ..()

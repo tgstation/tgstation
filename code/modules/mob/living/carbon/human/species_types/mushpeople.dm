@@ -22,8 +22,8 @@
 
 	heatmod = 1.5
 
-	mutanttongue = /obj/item/organ/internal/tongue/mush
-	mutanteyes = /obj/item/organ/internal/eyes/night_vision/mushroom
+	mutanttongue = /obj/item/organ/tongue/mush
+	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
 	mutantlungs = null
 	mutant_bodyparts = list(
 		"caps" = "Round",

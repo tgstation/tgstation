@@ -1,4 +1,4 @@
-/obj/item/organ/internal/ears
+/obj/item/organ/ears
 	name = "ears"
 	icon_state = "ears"
 	desc = "There are three parts to the ear. Inner, middle and outer. Only one of these parts should be normally visible."
@@ -28,7 +28,7 @@
 	// Multiplier for both long term and short term ear damage
 	var/damage_multiplier = 1
 
-/obj/item/organ/internal/ears/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/ears/on_life(seconds_per_tick, times_fired)
 	// only inform when things got worse, needs to happen before we heal
 	if((damage > low_threshold && prev_damage < low_threshold) || (damage > high_threshold && prev_damage < high_threshold))
 		to_chat(owner, span_warning("The ringing in your ears grows louder, blocking out any external noises for a moment."))
@@ -51,7 +51,7 @@
 	else
 		REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
 
-/obj/item/organ/internal/ears/proc/adjustEarDamage(ddmg, ddeaf)
+/obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
 	if(owner.status_flags & GODMODE)
 		return
 	set_organ_damage(max(damage + (ddmg*damage_multiplier), 0))
@@ -91,10 +91,10 @@
 	. = ..()
 	. += "[sprite_datum.hasinner]"
 
-/obj/item/organ/internal/ears/invincible
+/obj/item/organ/ears/invincible
 	damage_multiplier = 0
 
-/obj/item/organ/internal/ears/cat
+/obj/item/organ/ears/cat
 	name = "cat ears"
 	icon = 'icons/obj/clothing/head/costume.dmi'
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
@@ -105,36 +105,36 @@
 	dna_block = DNA_EARS_BLOCK
 	bodypart_overlay = /datum/bodypart_overlay/mutant/ears
 
-/obj/item/organ/internal/ears/penguin
+/obj/item/organ/ears/penguin
 	name = "penguin ears"
 	desc = "The source of a penguin's happy feet."
 
-/obj/item/organ/internal/ears/penguin/on_insert(mob/living/carbon/human/ear_owner)
+/obj/item/organ/ears/penguin/on_insert(mob/living/carbon/human/ear_owner)
 	. = ..()
 	if(istype(ear_owner))
 		to_chat(ear_owner, span_notice("You suddenly feel like you've lost your balance."))
 		ear_owner.AddElement(/datum/element/waddling)
 
-/obj/item/organ/internal/ears/penguin/on_remove(mob/living/carbon/human/ear_owner)
+/obj/item/organ/ears/penguin/on_remove(mob/living/carbon/human/ear_owner)
 	. = ..()
 	if(istype(ear_owner))
 		to_chat(ear_owner, span_notice("Your sense of balance comes back to you."))
 		ear_owner.RemoveElement(/datum/element/waddling)
 
-/obj/item/organ/internal/ears/cybernetic
+/obj/item/organ/ears/cybernetic
 	name = "cybernetic ears"
 	icon_state = "ears-c"
 	desc = "A basic cybernetic organ designed to mimic the operation of ears."
 	damage_multiplier = 0.9
 	organ_flags = ORGAN_SYNTHETIC
 
-/obj/item/organ/internal/ears/cybernetic/emp_act(severity)
+/obj/item/organ/ears/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	apply_organ_damage(40/severity)
 
-/obj/item/organ/internal/ears/cybernetic/upgraded
+/obj/item/organ/ears/cybernetic/upgraded
 	name = "upgraded cybernetic ears"
 	icon_state = "ears-c-u"
 	desc = "An advanced cybernetic ear, surpassing the performance of organic ears."

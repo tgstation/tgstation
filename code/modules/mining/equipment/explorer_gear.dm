@@ -121,7 +121,7 @@
 		/obj/item/flashlight,
 		/obj/item/knife/combat/bone,
 		/obj/item/knife/combat/survival,
-		/obj/item/organ/internal/monster_core,
+		/obj/item/organ/monster_core,
 		/obj/item/pickaxe,
 		/obj/item/spear,
 		/obj/item/tank/internals,

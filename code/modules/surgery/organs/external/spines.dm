@@ -1,5 +1,5 @@
 ///A lizards spines (those things on their back), but also including tail spines (gasp)
-/obj/item/organ/external/spines
+/obj/item/organ/spines
 	name = "lizard spines"
 	desc = "Not an actual spine, obviously."
 	icon_state = "spines"
@@ -16,14 +16,14 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/spines
 
 	///A two-way reference between the tail and the spines because of wagging sprites. Bruh.
-	var/obj/item/organ/external/tail/lizard/paired_tail
+	var/obj/item/organ/tail/lizard/paired_tail
 
-/obj/item/organ/external/spines/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/spines/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
 	if(.)
-		paired_tail = locate(/obj/item/organ/external/tail/lizard) in receiver.organs //We want specifically a lizard tail, so we don't use the slot.
+		paired_tail = locate(/obj/item/organ/tail/lizard) in receiver.organs //We want specifically a lizard tail, so we don't use the slot.
 
-/obj/item/organ/external/spines/Remove(mob/living/carbon/organ_owner, special, moving)
+/obj/item/organ/spines/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
 	if(paired_tail)
 		paired_tail.paired_spines = null

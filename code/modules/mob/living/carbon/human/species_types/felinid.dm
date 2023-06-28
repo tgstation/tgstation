@@ -3,14 +3,14 @@
 	name = "Felinid"
 	id = SPECIES_FELINE
 	examine_limb_id = SPECIES_HUMAN
-	mutanttongue = /obj/item/organ/internal/tongue/cat
-	mutantears = /obj/item/organ/internal/ears/cat // Yes we need to set it here and on cosmetic_organs. Ass.
+	mutanttongue = /obj/item/organ/tongue/cat
+	mutantears = /obj/item/organ/ears/cat // Yes we need to set it here and on cosmetic_organs. Ass.
 	mutant_bodyparts = list(
 		"wings" = "None",
 	)
 	cosmetic_organs = list(
-		/obj/item/organ/internal/ears/cat = "Cat",
-		/obj/item/organ/external/tail/cat = "Cat",
+		/obj/item/organ/ears/cat = "Cat",
+		/obj/item/organ/tail/cat = "Cat",
 	)
 	inherent_traits = list(TRAIT_CAN_USE_FLIGHT_POTION, TRAIT_HATED_BY_DOGS)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
@@ -47,7 +47,7 @@
 /proc/purrbation_toggle(mob/living/carbon/human/target_human, silent = FALSE)
 	if(!ishuman(target_human))
 		return
-	if(!istype(target_human.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/internal/ears/cat))
+	if(!istype(target_human.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/ears/cat))
 		purrbation_apply(target_human, silent = silent)
 		. = TRUE
 	else
@@ -62,11 +62,11 @@
 		var/datum/species/human/felinid/cat_species = soon_to_be_felinid.dna.species
 		cat_species.original_felinid = FALSE
 	else
-		var/obj/item/organ/internal/ears/cat/kitty_ears = new
-		var/obj/item/organ/external/tail/cat/kitty_tail = new
+		var/obj/item/organ/ears/cat/kitty_ears = new
+		var/obj/item/organ/tail/cat/kitty_tail = new
 
 		// This removes the spines if they exist
-		var/obj/item/organ/external/spines/current_spines = soon_to_be_felinid.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
+		var/obj/item/organ/spines/current_spines = soon_to_be_felinid.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
 		if(current_spines)
 			current_spines.Remove(soon_to_be_felinid, special = TRUE)
 			qdel(current_spines)
@@ -91,22 +91,22 @@
 		var/datum/species/target_species = purrbated_human.dna.species
 
 		// From the previous check we know they're not a felinid, therefore removing cat ears and tail is safe
-		var/obj/item/organ/external/tail/old_tail = purrbated_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
-		if(istype(old_tail, /obj/item/organ/external/tail/cat))
+		var/obj/item/organ/tail/old_tail = purrbated_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+		if(istype(old_tail, /obj/item/organ/tail/cat))
 			old_tail.Remove(purrbated_human, special = TRUE)
 			qdel(old_tail)
 			// Locate does not work on assoc lists, so we do it by hand
 			for(var/external_organ in target_species.cosmetic_organs)
-				if(ispath(external_organ, /obj/item/organ/external/tail))
-					var/obj/item/organ/external/tail/new_tail = new external_organ()
+				if(ispath(external_organ, /obj/item/organ/tail))
+					var/obj/item/organ/tail/new_tail = new external_organ()
 					new_tail.Insert(purrbated_human, special = TRUE, drop_if_replaced = FALSE)
 				// Don't forget the spines we removed earlier
-				else if(ispath(external_organ, /obj/item/organ/external/spines))
-					var/obj/item/organ/external/spines/new_spines = new external_organ()
+				else if(ispath(external_organ, /obj/item/organ/spines))
+					var/obj/item/organ/spines/new_spines = new external_organ()
 					new_spines.Insert(purrbated_human, special = TRUE, drop_if_replaced = FALSE)
 
-		var/obj/item/organ/internal/ears/old_ears = purrbated_human.get_organ_slot(ORGAN_SLOT_EARS)
-		if(istype(old_ears, /obj/item/organ/internal/ears/cat))
+		var/obj/item/organ/ears/old_ears = purrbated_human.get_organ_slot(ORGAN_SLOT_EARS)
+		if(istype(old_ears, /obj/item/organ/ears/cat))
 			var/obj/item/organ/new_ears = new target_species.mutantears()
 			new_ears.Insert(purrbated_human, special = TRUE, drop_if_replaced = FALSE)
 	if(!silent)

@@ -11,10 +11,10 @@
 		"wings" = "None",
 	)
 	use_skintones = TRUE
-	mutantbrain = /obj/item/organ/internal/brain/dullahan
-	mutanteyes = /obj/item/organ/internal/eyes/dullahan
-	mutanttongue = /obj/item/organ/internal/tongue/dullahan
-	mutantears = /obj/item/organ/internal/ears/dullahan
+	mutantbrain = /obj/item/organ/brain/dullahan
+	mutanteyes = /obj/item/organ/eyes/dullahan
+	mutanttongue = /obj/item/organ/tongue/dullahan
+	mutantears = /obj/item/organ/ears/dullahan
 	mutantstomach = null
 	mutantlungs = null
 	examine_limb_id = SPECIES_HUMAN
@@ -49,7 +49,7 @@
 			head.speech_span = null // so we don't look roboty when talking through it
 
 			// We want to give the head some boring old eyes just so it doesn't look too jank on the head sprite.
-			head.eyes = new /obj/item/organ/internal/eyes(head)
+			head.eyes = new /obj/item/organ/eyes(head)
 			head.eyes.eye_color_left = human.eye_color_left
 			head.eyes.eye_color_right = human.eye_color_right
 			human.update_body()
@@ -93,7 +93,7 @@
 		human.gib() // Yeah so giving them a head on their body is really not a good idea, so their original head will remain but uh, good luck fixing it after that.
 
 /datum/species/dullahan/proc/update_vision_perspective(mob/living/carbon/human/human)
-	var/obj/item/organ/internal/eyes/eyes = human.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = human.get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
 		human.update_tint()
 		if(eyes.tint)
@@ -104,7 +104,7 @@
 			prevent_perspective_change = TRUE
 
 /datum/species/dullahan/on_owner_login(mob/living/carbon/human/owner)
-	var/obj/item/organ/internal/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
 	if(owner_first_client_connection_handled)
 		if(!eyes.tint)
 			owner.reset_perspective(my_head, TRUE)
@@ -160,15 +160,15 @@
 
 	return to_add
 
-/obj/item/organ/internal/brain/dullahan
+/obj/item/organ/brain/dullahan
 	decoy_override = TRUE
 	organ_flags = NONE
 
-/obj/item/organ/internal/tongue/dullahan
+/obj/item/organ/tongue/dullahan
 	zone = "abstract"
 	modifies_speech = TRUE
 
-/obj/item/organ/internal/tongue/dullahan/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/dullahan/handle_speech(datum/source, list/speech_args)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
 		if(isdullahan(human))
@@ -178,10 +178,10 @@
 				head.say(speech_args[SPEECH_MESSAGE], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], message_range = speech_args[SPEECH_RANGE])
 	speech_args[SPEECH_MESSAGE] = ""
 
-/obj/item/organ/internal/ears/dullahan
+/obj/item/organ/ears/dullahan
 	zone = "abstract"
 
-/obj/item/organ/internal/eyes/dullahan
+/obj/item/organ/eyes/dullahan
 	name = "head vision"
 	desc = "An abstraction."
 	actions_types = list(/datum/action/item_action/organ_action/dullahan)
@@ -194,7 +194,7 @@
 
 /datum/action/item_action/organ_action/dullahan/Trigger(trigger_flags)
 	. = ..()
-	var/obj/item/organ/internal/eyes/dullahan/dullahan_eyes = target
+	var/obj/item/organ/eyes/dullahan/dullahan_eyes = target
 	dullahan_eyes.tint = dullahan_eyes.tint ? NONE : INFINITY
 
 	if(ishuman(owner))

@@ -22,7 +22,7 @@
 	if(combat_mode)
 		send_applicable_messages(HUMAN_COMBAT_MODE_SUICIDE_MESSAGE)
 	else
-		var/obj/item/organ/internal/brain/userbrain = get_organ_by_type(/obj/item/organ/internal/brain)
+		var/obj/item/organ/brain/userbrain = get_organ_by_type(/obj/item/organ/brain)
 		if(userbrain?.damage >= 75)
 			send_applicable_messages(HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE)
 		else

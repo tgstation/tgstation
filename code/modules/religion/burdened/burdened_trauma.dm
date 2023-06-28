@@ -126,12 +126,12 @@
 	if(special) //aheals
 		return
 
-	if(istype(new_organ, /obj/item/organ/internal/eyes))
-		var/obj/item/organ/internal/eyes/new_eyes = new_organ
+	if(istype(new_organ, /obj/item/organ/eyes))
+		var/obj/item/organ/eyes/new_eyes = new_organ
 		if(new_eyes.tint < TINT_BLIND) //unless you added unworking eyes (flashlight eyes), this is removing burden
 			update_burden(FALSE)
 		return
-	else if(istype(new_organ, /obj/item/organ/internal/appendix))
+	else if(istype(new_organ, /obj/item/organ/appendix))
 		return
 
 	update_burden(increase = FALSE)//working organ
@@ -170,8 +170,8 @@
 
 	if(!(old_organ.slot in critical_slots))
 		return FALSE
-	else if(istype(old_organ, /obj/item/organ/internal/eyes))
-		var/obj/item/organ/internal/eyes/old_eyes = old_organ
+	else if(istype(old_organ, /obj/item/organ/eyes))
+		var/obj/item/organ/eyes/old_eyes = old_organ
 		if(old_eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
 			return TRUE
 		return FALSE

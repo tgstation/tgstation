@@ -169,7 +169,7 @@
 	var/mob/living/carbon/human/lich = new(parent_turf)
 	ADD_TRAIT(lich, TRAIT_NO_SOUL, LICH_TRAIT)
 
-	var/obj/item/organ/internal/brain/new_lich_brain = lich.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/new_lich_brain = lich.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(new_lich_brain) // Prevent MMI cheese
 		new_lich_brain.organ_flags &= ~ORGAN_VITAL
 		new_lich_brain.decoy_override = TRUE
@@ -201,7 +201,7 @@
 			var/mob/living/carbon/carbon_body = corpse
 			for(var/obj/item/organ/to_drop as anything in carbon_body.organs)
 				// Skip the brain - it can disappear, we don't need it anymore
-				if(istype(to_drop, /obj/item/organ/internal/brain))
+				if(istype(to_drop, /obj/item/organ/brain))
 					continue
 
 				// For the rest, drop all the organs onto the floor (for style)

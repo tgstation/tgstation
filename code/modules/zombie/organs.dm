@@ -1,4 +1,4 @@
-/obj/item/organ/internal/zombie_infection
+/obj/item/organ/zombie_infection
 	name = "festering ooze"
 	desc = "A black web of pus and viscera."
 	zone = BODY_ZONE_HEAD
@@ -13,23 +13,23 @@
 	var/revive_time_max = 700
 	var/timer_id
 
-/obj/item/organ/internal/zombie_infection/Initialize(mapload)
+/obj/item/organ/zombie_infection/Initialize(mapload)
 	. = ..()
 	if(iscarbon(loc))
 		Insert(loc)
 	GLOB.zombie_infection_list += src
 
-/obj/item/organ/internal/zombie_infection/Destroy()
+/obj/item/organ/zombie_infection/Destroy()
 	GLOB.zombie_infection_list -= src
 	. = ..()
 
-/obj/item/organ/internal/zombie_infection/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/zombie_infection/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(!.)
 		return .
 	START_PROCESSING(SSobj, src)
 
-/obj/item/organ/internal/zombie_infection/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/zombie_infection/Remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	if(iszombie(M) && old_species && !special && !QDELETED(src))
@@ -37,12 +37,12 @@
 	if(timer_id)
 		deltimer(timer_id)
 
-/obj/item/organ/internal/zombie_infection/on_find(mob/living/finder)
+/obj/item/organ/zombie_infection/on_find(mob/living/finder)
 	to_chat(finder, "<span class='warning'>Inside the head is a disgusting black \
 		web of pus and viscera, bound tightly around the brain like some \
 		biological harness.</span>")
 
-/obj/item/organ/internal/zombie_infection/process(seconds_per_tick, times_fired)
+/obj/item/organ/zombie_infection/process(seconds_per_tick, times_fired)
 	if(!owner)
 		return
 	if(!(src in owner.organs))
@@ -53,7 +53,7 @@
 		owner.adjustToxLoss(0.5 * seconds_per_tick)
 		if (SPT_PROB(5, seconds_per_tick))
 			to_chat(owner, span_danger("You feel sick..."))
-	if(timer_id || HAS_TRAIT(owner, TRAIT_SUICIDED) || !owner.get_organ_by_type(/obj/item/organ/internal/brain))
+	if(timer_id || HAS_TRAIT(owner, TRAIT_SUICIDED) || !owner.get_organ_by_type(/obj/item/organ/brain))
 		return
 	if(owner.stat != DEAD && !converts_living)
 		return
@@ -65,7 +65,7 @@
 	var/flags = TIMER_STOPPABLE
 	timer_id = addtimer(CALLBACK(src, PROC_REF(zombify), owner), revive_time, flags)
 
-/obj/item/organ/internal/zombie_infection/proc/zombify(mob/living/carbon/target)
+/obj/item/organ/zombie_infection/proc/zombify(mob/living/carbon/target)
 	timer_id = null
 
 	if(!converts_living && owner.stat != DEAD)
@@ -87,5 +87,5 @@
 	target.do_jitter_animation(living_transformation_time)
 	target.Stun(living_transformation_time)
 
-/obj/item/organ/internal/zombie_infection/nodamage
+/obj/item/organ/zombie_infection/nodamage
 	causes_damage = FALSE

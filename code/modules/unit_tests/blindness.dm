@@ -105,7 +105,7 @@
 
 /datum/unit_test/eye_damage/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
-	var/obj/item/organ/internal/eyes/eyes = dummy.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = dummy.get_organ_slot(ORGAN_SLOT_EYES)
 	TEST_ASSERT_NOTNULL(eyes, "Eye damage unit test spawned a dummy without eyes!")
 
 	// Test blindness due to eye damage

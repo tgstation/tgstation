@@ -1,4 +1,4 @@
-/obj/item/organ/internal/cyberimp/bci
+/obj/item/organ/cyberimp/bci
 	name = "brain-computer interface"
 	desc = "An implant that can be placed in a user's head to control circuits using their brain."
 	icon = 'icons/obj/wiremod.dmi'
@@ -7,7 +7,7 @@
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/organ/internal/cyberimp/bci/Initialize(mapload)
+/obj/item/organ/cyberimp/bci/Initialize(mapload)
 	. = ..()
 
 	var/obj/item/integrated_circuit/circuit = new(src)
@@ -17,12 +17,12 @@
 		new /obj/item/circuit_component/bci_core,
 	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
 
-/obj/item/organ/internal/cyberimp/bci/on_insert(mob/living/carbon/receiver)
+/obj/item/organ/cyberimp/bci/on_insert(mob/living/carbon/receiver)
 	. = ..()
 	// Organs are put in nullspace, but this breaks circuit interactions
 	forceMove(receiver)
 
-/obj/item/organ/internal/cyberimp/bci/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
+/obj/item/organ/cyberimp/bci/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	if (owner)
 		// Otherwise say_dead will be called.
 		// It's intentional that a circuit for a dead person does not speak from the shell.
@@ -36,7 +36,7 @@
 /obj/item/circuit_component/equipment_action/bci
 	display_name = "BCI Action"
 	desc = "Represents an action the user can take when implanted with the brain-computer interface."
-	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
+	required_shells = list(/obj/item/organ/cyberimp/bci)
 
 	/// A reference to the action button itself
 	var/datum/action/innate/bci_action/bci_action
@@ -47,7 +47,7 @@
 
 /obj/item/circuit_component/equipment_action/bci/register_shell(atom/movable/shell)
 	. = ..()
-	var/obj/item/organ/internal/cyberimp/bci/bci = shell
+	var/obj/item/organ/cyberimp/bci/bci = shell
 	if(istype(bci))
 		bci_action = new(src)
 		update_action()
@@ -55,7 +55,7 @@
 		bci.actions += list(bci_action)
 
 /obj/item/circuit_component/equipment_action/bci/unregister_shell(atom/movable/shell)
-	var/obj/item/organ/internal/cyberimp/bci/bci = shell
+	var/obj/item/organ/cyberimp/bci/bci = shell
 	if(istype(bci))
 		bci.actions -= bci_action
 		QDEL_NULL(bci_action)
@@ -106,7 +106,7 @@
 
 	var/datum/weakref/user
 
-	var/obj/item/organ/internal/cyberimp/bci/bci
+	var/obj/item/organ/cyberimp/bci/bci
 
 /obj/item/circuit_component/bci_core/populate_ports()
 
@@ -298,7 +298,7 @@
 	var/busy_icon_state
 	var/locked = FALSE
 
-	var/obj/item/organ/internal/cyberimp/bci/bci_to_implant
+	var/obj/item/organ/cyberimp/bci/bci_to_implant
 
 	COOLDOWN_DECLARE(message_cooldown)
 
@@ -373,13 +373,13 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/bci_implanter/attackby(obj/item/weapon, mob/user, params)
-	var/obj/item/organ/internal/cyberimp/bci/new_bci = weapon
+	var/obj/item/organ/cyberimp/bci/new_bci = weapon
 	if (istype(new_bci))
 		if (!(locate(/obj/item/integrated_circuit) in new_bci))
 			balloon_alert(user, "bci has no circuit!")
 			return
 
-		var/obj/item/organ/internal/cyberimp/bci/previous_bci_to_implant = bci_to_implant
+		var/obj/item/organ/cyberimp/bci/previous_bci_to_implant = bci_to_implant
 
 		user.transferItemToLoc(weapon, src)
 		bci_to_implant = weapon
@@ -436,7 +436,7 @@
 
 	playsound(loc, 'sound/machines/ping.ogg', 30, FALSE)
 
-	var/obj/item/organ/internal/cyberimp/bci/bci_organ = carbon_occupant.get_organ_by_type(/obj/item/organ/internal/cyberimp/bci)
+	var/obj/item/organ/cyberimp/bci/bci_organ = carbon_occupant.get_organ_by_type(/obj/item/organ/cyberimp/bci)
 
 	if (bci_organ)
 		bci_organ.Remove(carbon_occupant)
@@ -468,7 +468,7 @@
 
 	var/mob/living/carbon/carbon_occupant = occupant
 	if (istype(occupant))
-		var/obj/item/organ/internal/cyberimp/bci/bci_organ = carbon_occupant.get_organ_by_type(/obj/item/organ/internal/cyberimp/bci)
+		var/obj/item/organ/cyberimp/bci/bci_organ = carbon_occupant.get_organ_by_type(/obj/item/organ/cyberimp/bci)
 		if (isnull(bci_organ) && isnull(bci_to_implant))
 			say("No brain-computer interface inserted, and occupant does not have one. Insert a BCI to implant one.")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)

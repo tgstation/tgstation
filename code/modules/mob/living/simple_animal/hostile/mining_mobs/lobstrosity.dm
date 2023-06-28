@@ -32,7 +32,7 @@
 	butcher_results = list(
 		/obj/item/food/meat/crab = 2,
 		/obj/item/stack/sheet/bone = 2,
-		/obj/item/organ/internal/monster_core/rush_gland = 1,
+		/obj/item/organ/monster_core/rush_gland = 1,
 	)
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW

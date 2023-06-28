@@ -67,14 +67,14 @@
 	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/salad)
 
 /datum/quirk/vegetarian/add(client/client_source)
-	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
 		return
 	tongue.liked_foodtypes &= ~MEAT
 	tongue.disliked_foodtypes |= MEAT
 
 /datum/quirk/vegetarian/remove()
-	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
 		return
 	tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
@@ -102,13 +102,13 @@
 	mail_goodies = list(/obj/item/food/pizzaslice/pineapple)
 
 /datum/quirk/pineapple_liker/add(client/client_source)
-	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
 		return
 	tongue.liked_foodtypes |= PINEAPPLE
 
 /datum/quirk/pineapple_liker/remove()
-	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
 		return
 	tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
@@ -130,13 +130,13 @@
 	)
 
 /datum/quirk/pineapple_hater/add(client/client_source)
-	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
 		return
 	tongue.disliked_foodtypes |= PINEAPPLE
 
 /datum/quirk/pineapple_hater/remove()
-	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
 		return
 	tongue.disliked_foodtypes = initial(tongue.disliked_foodtypes)
@@ -152,7 +152,7 @@
 	mail_goodies = list(/obj/item/food/urinalcake, /obj/item/food/badrecipe) // Mhhhmmm yummy
 
 /datum/quirk/deviant_tastes/add(client/client_source)
-	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
 		return
 	var/liked_foodtypes = tongue.liked_foodtypes
@@ -160,7 +160,7 @@
 	tongue.disliked_foodtypes = liked_foodtypes
 
 /datum/quirk/deviant_tastes/remove()
-	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
 		return
 	tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
@@ -192,7 +192,7 @@
 	human_holder.eye_color_heterochromatic = TRUE
 	human_holder.eye_color_right = color
 
-	var/obj/item/organ/internal/eyes/eyes_of_the_holder = quirk_holder.get_organ_by_type(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/eyes/eyes_of_the_holder = quirk_holder.get_organ_by_type(/obj/item/organ/eyes)
 	if(!eyes_of_the_holder)
 		return
 
@@ -387,7 +387,7 @@
 	var/gaming_withdrawal_timer = TIMER_ID_NULL
 
 /datum/quirk/gamer/add(client/client_source)
-	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(tongue)
 		// Gamer diet
 		tongue.liked_foodtypes = JUNKFOOD
@@ -400,7 +400,7 @@
 	gaming_withdrawal_timer = addtimer(CALLBACK(src, PROC_REF(enter_withdrawal)), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
 
 /datum/quirk/gamer/remove()
-	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(tongue)
 		tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
 	UnregisterSignal(quirk_holder, COMSIG_MOB_WON_VIDEOGAME)
