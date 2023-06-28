@@ -66,23 +66,23 @@
 		var/obj/item/stack/sheet/mineral/sandstone/brick = attacking_item
 		balloon_alert(user, "inserting brick...")
 		if(!do_after(user, 2 SECONDS, src))
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+			return
 		if(!brick.use(1))
 			balloon_alert(user, "not enough bricks!")
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+			return
 		balloon_alert(user, "bricked!")
 		become_bricked()
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return
 	if(istype(attacking_item, /obj/item/clothing/neck/pillow_tag))
 		if(!pillow_trophy)
 			user.transferItemToLoc(attacking_item, src)
 			pillow_trophy = attacking_item
 			balloon_alert(user, "honor reclaimed!")
 			update_appearance()
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+			return
 		else
 			balloon_alert(user, "tag is intact.")
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+			return
 	return ..()
 
 /obj/item/pillow/examine(mob/user)
