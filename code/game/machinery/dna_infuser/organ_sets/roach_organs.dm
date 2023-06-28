@@ -7,6 +7,7 @@
 	bio = 90
 
 /datum/status_effect/organ_set_bonus/roach
+	id = "organ_set_bonus_roach"
 	organs_needed = 4
 	bonus_activate_text = span_notice("Roach DNA is deeply infused with you! \
 		You feel increasingly resistant to explosives, radiation, and viral agents.")
