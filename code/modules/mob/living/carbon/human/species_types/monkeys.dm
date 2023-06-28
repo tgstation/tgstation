@@ -3,9 +3,8 @@
 /datum/species/monkey
 	name = "Monkey"
 	id = SPECIES_MONKEY
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
 	cosmetic_organs = list(
-		/obj/item/organ/tail/monkey = "Monkey"
+		/obj/item/organ/tail/monkey = "Monkey",
 	)
 	mutanttongue = /obj/item/organ/tongue/monkey
 	mutantbrain = /obj/item/organ/brain/primate
