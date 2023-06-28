@@ -1881,7 +1881,7 @@
 /area/centcom/central_command_areas/holding)
 "TS" = (
 /obj/structure/rack,
-/obj/item/nullrod/scythe/vibro{
+/obj/item/nullrod/vibro{
 	damtype = "stamina";
 	force = 30;
 	pixel_x = 5;
