@@ -70,7 +70,7 @@
 			tool.cut_overlays()
 			tool = tool.contents[1]
 		if(istype(tool) && user.temporarilyRemoveItemFromInventory(tool))
-			if(!tool.replace_limb(target))
+			if(!tool.replace_limb(target, keep_old_organs = TRUE))
 				display_results(
 					user,
 					target,

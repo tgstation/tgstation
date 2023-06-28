@@ -237,9 +237,10 @@
 	return ..()
 
 ///Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails.
-/obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner, special)
+/obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner, special = FALSE, keep_old_organs = FALSE)
 	if(!istype(limb_owner))
 		return
+
 	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
 	if(old_limb)
 		old_limb.drop_limb(special = TRUE)
@@ -247,7 +248,7 @@
 	. = try_attach_limb(limb_owner, special)
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
 		old_limb.try_attach_limb(limb_owner, special = TRUE)
-	else
+	else if(keep_old_organs)
 		for(var/obj/item/organ/organ as anything in old_limb.organs)
 			organ.Insert(limb_owner, special = TRUE)
 
