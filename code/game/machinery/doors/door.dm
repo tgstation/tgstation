@@ -394,6 +394,7 @@
 	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
+	SEND_SIGNAL(src, COMSIG_ATOM_DOOR_OPEN)
 	return TRUE
 
 /// Private proc that runs a series of checks to see if we should forcibly open the door. Returns TRUE if we should open the door, FALSE otherwise. Implemented in child types.

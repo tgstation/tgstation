@@ -36,6 +36,8 @@
 /datum/hotspot/proc/move_center(turf/destination, force = FALSE)
 	if(!can_drift && !force)
 		return
+	if(!destination)
+		return
 	///we check if we touch the worlds edge, or hit a turf we deem as a blacklist ie unbreakable trench edge walls
 	if(is_edge_or_blacklist(destination))
 		drift_direction = turn(drift_direction, 180)
@@ -44,7 +46,7 @@
 	center.relocate(destination.x, destination.y, destination.z)
 
 	///if we are end of round or pre round no point in checking vents or dousing rods. As latter there will never be any and former doesn't matter as rounds over.
-	if(!SSticker.current_state != GAME_STATE_PLAYING)
+	if(SSticker.current_state != GAME_STATE_PLAYING)
 		return
 	///we need to recalculate vents
 	vent_count = 0
@@ -71,6 +73,7 @@
 			continue
 		step(located_rod, drift_direction)
 
+	after_move_effect()
 
 /datum/hotspot/proc/is_edge_or_blacklist(turf/destination)
 	///we want hotspots to always stay on the station z-level
@@ -106,3 +109,91 @@
 
 	//calculates heat very badly using this graph as a base https://www.desmos.com/calculator/kyxrzpdzuf
 	return max(total_heat - (total_heat * (heat_diminish * distance)), 0)
+
+
+
+#define WEAK_QUAKE 1
+#define QUAKE 2
+#define WEAK_FIRE 4
+#define FIRE_EVENT 8
+#define WEAK_EXPLOSION 16
+#define EXPLOSION 32
+
+#define SUBCALL_HEATCOST 8000
+
+/datum/hotspot/proc/after_move_effect(subcalls = 1, subcall_heat)
+	var/turf/center_turf = center.return_turf()
+	if(!center_turf)//how?
+		return
+	///we run all events of a snigle turf inside the hotspots area, this allows stuff like flashes and fires to happen from the inside if a centers turf is outside
+	var/turf/calculation_point = locate(center_turf.x + (rand(-radius, radius) * 0.5), center_turf.y + (rand(-radius, radius) * 0.5), SSmapping.levels_by_trait(ZTRAIT_STATION)[1])
+	///now we calculate heat
+	var/heat = subcall_heat ? subcall_heat : SShotspots.return_heat(calculation_point)
+	///event flags
+	var/event_flags
+
+	///we need to somehow convert a value into a list of flags we are gonna do this via a switch statement
+	switch(heat)
+		///QUAKES
+		if(200 to 899)
+			event_flags = WEAK_QUAKE
+		if(900 to 1799)
+			event_flags = QUAKE
+		///FIRES
+		if(1800 to 2799)
+			event_flags = QUAKE | WEAK_FIRE
+		if(2800 to 4399)
+			event_flags = QUAKE | FIRE_EVENT
+		///EXPLOSIONS
+		if(4400 to 5499)
+			event_flags = QUAKE | FIRE_EVENT | WEAK_EXPLOSION
+		if(5500 to INFINITY)
+			event_flags = QUAKE | FIRE_EVENT | EXPLOSION
+
+	///quakes are camera shakes so we scan for mobs in range
+	for(var/mob/listed_mob in range(9, calculation_point))
+		if((event_flags & WEAK_QUAKE))
+			to_chat(listed_mob, span_notice("The ground shakes softly beneath you."))
+			shake_camera(listed_mob, 2, 2)
+		if(event_flags & QUAKE)
+			to_chat(listed_mob, span_danger("The ground shakes violently beneath you."))
+			shake_camera(listed_mob, 4, 4)
+			if(isliving(listed_mob))
+				var/mob/living/listed_living = listed_mob
+				listed_living.adjustBruteLoss(5)
+				if(iscarbon(listed_mob))
+					var/mob/living/carbon/carbon_mob = listed_mob
+					carbon_mob.stamina.adjust(-30)
+
+	if(!istype(calculation_point, /turf/open/floor/plating/ocean))
+		if(event_flags & WEAK_FIRE)
+			explosion(calculation_point, 0,  0, 0, 3, 0, adminlog = FALSE)
+		if(event_flags & FIRE_EVENT)
+			explosion(calculation_point, 0,  0, 0, 7, 0, adminlog = FALSE)
+
+	if(event_flags & WEAK_EXPLOSION)
+		explosion(calculation_point, 0,  0, 4, 0, 0, adminlog = FALSE)
+	if(event_flags & EXPLOSION)
+		explosion(calculation_point, 0, 2, 2, 0, 0, adminlog = FALSE)
+
+	var/area_name_string = get_area_name(calculation_point)
+	var/message
+	if(heat > SUBCALL_HEATCOST * subcalls)
+		message = "Big Hotspot event triggered at [AREACOORD(calculation_point)] in [area_name_string] with a heat value of [heat]"
+		spawn(3 SECONDS)
+			after_move_effect(subcalls++, heat - ((SUBCALL_HEATCOST + 500) * subcalls))
+	else
+		message = "Small Hotspot event triggered at [AREACOORD(calculation_point)] in [area_name_string] with a heat value of [heat]"
+
+	if((istype(calculation_point.loc, /area/station) && heat > 4500) || heat > SUBCALL_HEATCOST * subcalls)
+		message_admins(message)
+	log_admin(message)
+
+#undef SUBCALL_HEATCOST
+
+#undef WEAK_QUAKE
+#undef QUAKE
+#undef WEAK_FIRE
+#undef FIRE_EVENT
+#undef WEAK_EXPLOSION
+#undef EXPLOSION

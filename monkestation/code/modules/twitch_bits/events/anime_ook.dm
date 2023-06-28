@@ -4,7 +4,7 @@
 	event_flags = TWITCH_AFFECTS_STREAMER
 	id_tag = "anime-ook"
 
-/datum/twitch_event/anime_ook/run_event()
+/datum/twitch_event/anime_ook/run_event(name)
 	. = ..()
 
 	for(var/target in targets)

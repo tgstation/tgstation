@@ -10,7 +10,7 @@
 	event_flags = TWITCH_AFFECTS_RANDOM
 	id_tag = "chucklenuts-random"
 
-/datum/twitch_event/chucklenuts/run_event()
+/datum/twitch_event/chucklenuts/run_event(name)
 	. = ..()
 	for(var/target in targets)
 		var/mob/living/ook = target

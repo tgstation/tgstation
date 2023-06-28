@@ -22,6 +22,8 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 
 /datum/antag_token_holder/New(client/creator)
 	. = ..()
+	if(!creator)
+		return
 	owner = creator
 
 	var/datum/preferences/owners_prefs = creator.prefs
