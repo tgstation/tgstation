@@ -337,10 +337,12 @@
 	inhand_icon_state = "pillow_shield"
 	block_chance = 10
 	max_integrity = 10
-	throw_range = 8
+	throw_range = 7
+	throw_speed = 1
 	force = 10
 	damtype = STAMINA
-	var/list/counter = list(/obj/item/spear/pillow, /obj/item/shield/pillow, /obj/item/pillow)
+	w_class = WEIGHT_CLASS_NORMAL
+	var/list/countered_object = list(/obj/item/spear/pillow, /obj/item/shield/pillow, /obj/item/pillow)
 
 /obj/item/shield/pillow/Initialize(mapload)
 	. = ..()
@@ -357,19 +359,20 @@
 /obj/item/shield/pillow/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/caught = hit_atom.hitby(src, skipcatch = FALSE, hitpush = FALSE, throwingdatum = throwingdatum)
-	if(!isliving(hit_atom) && !caught)//if they are a living creature and they didn't catch it
+	if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught)//if they are a living creature and they didn't catch it
+		new /obj/effect/temp_visual/pillow_hit(hit_atom)
 		return
-	else if(iscyborg(hit_atom))//machines dont get tired waltuh
-		return
-	new /obj/effect/temp_visual/pillow_hit(hit_atom)
+
 
 /obj/item/shield/pillow/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
+	///Pillow shield gain bonus blocking for pillow weaponry and bonus blocking for wielding
 	if(damage_type == STAMINA)
-		if(hitby in counter)
-			final_block_chance = 80
+		if((hitby in countered_object) && HAS_TRAIT(src, TRAIT_WIELDED))
+			final_block_chance += 40
+			final_block_chance += 30
 		else
 			final_block_chance = 10
-		owner.apply_damage(20, STAMINA)
+		owner.apply_damage(20, STAMINA)//block at your own risk
 	. = ..()
 
 
