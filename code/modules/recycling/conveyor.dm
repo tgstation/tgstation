@@ -39,9 +39,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor/Initialize(mapload)
 	. = ..()
-	var/static/list/give_turf_traits
-	if(!give_turf_traits)
-		give_turf_traits = string_list(list(TRAIT_TURF_IGNORE_SLOWDOWN))
+	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN)
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 
 /obj/machinery/conveyor/examine(mob/user)
