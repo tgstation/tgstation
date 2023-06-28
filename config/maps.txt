@@ -50,3 +50,9 @@ endmap
 
 map multiz_debug
 endmap
+
+map shiptest
+endmap
+
+map oshan
+endmap

@@ -508,7 +508,7 @@
 	greyscale_config = /datum/greyscale_config/plush_lizard
 	attack_verb_continuous = list("claws", "hisses", "tail slaps")
 	attack_verb_simple = list("claw", "hiss", "tail slap")
-	squeak_override = list('sound/weapons/slash.ogg' = 1)
+	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
 
 /obj/item/toy/plush/lizard_plushie/Initialize(mapload)
 	. = ..()
@@ -537,7 +537,7 @@
 	// space lizards can't hit people with their tail, it's stuck in their suit
 	attack_verb_continuous = list("claws", "hisses", "bops")
 	attack_verb_simple = list("claw", "hiss", "bops")
-	squeak_override = list('sound/weapons/slash.ogg' = 1)
+	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
