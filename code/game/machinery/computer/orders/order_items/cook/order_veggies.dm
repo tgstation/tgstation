@@ -75,6 +75,10 @@
 	name = "Cocoa"
 	item_path = /obj/item/food/grown/cocoapod
 
+/datum/orderable_item/veggies/korta_nut
+	name = "Korta Nut"
+	item_path = /obj/item/seeds/korta_nut
+
 /datum/orderable_item/veggies/herbs
 	name = "Bundle of Herbs"
 	item_path = /obj/item/food/grown/herbs
