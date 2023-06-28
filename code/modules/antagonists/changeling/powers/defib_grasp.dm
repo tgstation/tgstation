@@ -7,6 +7,9 @@
 	needs_button = FALSE
 	dna_cost = 0
 
+	/// Flags to pass to fully heal when we get zapped
+	var/heal_flags = HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS
+
 /datum/action/changeling/defib_grasp/on_purchase(mob/user, is_respec)
 	. = ..()
 	RegisterSignal(user, COMSIG_DEFIBRILLATOR_PRE_HELP_ZAP, PROC_REF(on_defibbed))
@@ -23,7 +26,11 @@
 /datum/action/changeling/defib_grasp/proc/execute_defib(mob/living/carbon/changeling, mob/living/defibber, obj/item/shockpaddles/defib)
 	remove_arms(changeling, defibber, defib)
 
-	changeling.fully_heal(HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS)
+	if(changeling.stat == DEAD)
+		changeling.revive(heal_flags)
+	else
+		changeling.fully_heal(heal_flags)
+
 	changeling.cure_fakedeath(CHANGELING_TRAIT) // rips us out of revival stasis (if we're in it)
 	changeling.buckled?.unbuckle_mob(changeling) // get us off of stasis beds please
 	changeling.set_resting(FALSE)
