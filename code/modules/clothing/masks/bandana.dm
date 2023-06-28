@@ -14,9 +14,8 @@
 	icon_state = "bandana"
 	icon_state_preview = "bandana_cloth"
 	inhand_icon_state = "greyscale_bandana"
-	worn_icon_state = "bandana_worn"
 	greyscale_config = /datum/greyscale_config/bandana
-	greyscale_config_worn = /datum/greyscale_config/bandana_worn
+	greyscale_config_worn = /datum/greyscale_config/bandana/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/bandana_inhands_left
 	greyscale_config_inhand_right = /datum/greyscale_config/bandana_inhands_right
 	greyscale_colors = "#2e2e2e"
@@ -51,8 +50,8 @@
 		else if(!user.is_holding(src))
 			to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
 			return
-		
-		
+
+
 		if(slot_flags & ITEM_SLOT_MASK)
 			undyeable = TRUE
 			slot_flags = ITEM_SLOT_NECK
@@ -129,8 +128,8 @@
 	desc = "A fine bandana with nanotech lining and a stripe across."
 	icon_state = "bandstriped"
 	worn_icon_state = "bandstriped_worn"
-	greyscale_config = /datum/greyscale_config/bandstriped
-	greyscale_config_worn = /datum/greyscale_config/bandstriped_worn
+	greyscale_config = /datum/greyscale_config/bandana/striped
+	greyscale_config_worn = /datum/greyscale_config/bandana/striped/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/bandana_striped_inhands_left
 	greyscale_config_inhand_right = /datum/greyscale_config/bandana_striped_inhands_right
 	greyscale_colors = "#2e2e2e#C6C6C6"
@@ -183,8 +182,8 @@
 	desc = "A fine bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
 	worn_icon_state = "bandskull_worn"
-	greyscale_config = /datum/greyscale_config/bandskull
-	greyscale_config_worn = /datum/greyscale_config/bandskull_worn
+	greyscale_config = /datum/greyscale_config/bandana/skull
+	greyscale_config_worn = /datum/greyscale_config/bandana/skull/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/bandana_skull_inhands_left
 	greyscale_config_inhand_right = /datum/greyscale_config/bandana_skull_inhands_right
 	greyscale_colors = "#2e2e2e#C6C6C6"
