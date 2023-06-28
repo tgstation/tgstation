@@ -26,7 +26,9 @@
 	burnmod = 0.6 // = 3/5x generic burn damage
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
+	inherent_factions = list(FACTION_SLIME)
 	species_language_holder = /datum/language_holder/oozeling
+	ass_image = 'icons/ass/assslime.png'
 	//swimming_component = /datum/component/swimming/dissolve
 	toxic_food = NONE
 	disliked_food = NONE
