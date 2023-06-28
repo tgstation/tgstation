@@ -32,7 +32,6 @@
 		if(isorgan(object_to_check))
 			found_organ = object_to_check
 			found_organ.organ_flags ^= ORGAN_FROZEN
-
 		else if(iscarbon(object_to_check))
 			var/mob/living/carbon/mob_to_check = object_to_check
 			for(var/organ in mob_to_check.organs)

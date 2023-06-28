@@ -164,7 +164,7 @@
 		to_chat(liver_owner, span_warning("You feel a dull pain in your abdomen."))
 
 
-/obj/item/organ/internal/liver/handle_failing_organs(seconds_per_tick)
+/obj/item/organ/internal/liver/handle_failing_organ(seconds_per_tick)
 	if(HAS_TRAIT(owner, TRAIT_STABLELIVER) || HAS_TRAIT(owner, TRAIT_NOMETABOLISM))
 		return
 	return ..()

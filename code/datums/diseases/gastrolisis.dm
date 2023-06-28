@@ -36,7 +36,7 @@
 				if(isopenturf(OT))
 					OT.MakeSlippery(TURF_WET_LUBE, 100)
 		if(4)
-			var/obj/item/organ/internal/eyes/eyes = locate(/obj/item/organ/internal/eyes/snail) in affected_mob.organs
+			var/obj/item/organ/internal/eyes/eyes = affected_mob.get_organ_by_type(/obj/item/organ/internal/eyes/snail)
 			if(!eyes && SPT_PROB(2.5, seconds_per_tick))
 				var/obj/item/organ/internal/eyes/snail/new_eyes = new()
 				new_eyes.Insert(affected_mob, drop_if_replaced = TRUE)

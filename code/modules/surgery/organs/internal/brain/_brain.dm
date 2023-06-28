@@ -29,7 +29,7 @@
 	/// Two variables necessary for calculating whether we get a brain trauma or not
 	var/damage_delta = 0
 
-
+	/// Brain trauma datums that are currently affecting this brain.
 	var/list/datum/brain_trauma/traumas = list()
 
 	/// List of skillchip items, their location should be this brain.
@@ -89,18 +89,17 @@
 	brain_owner.update_body_parts()
 
 /obj/item/organ/internal/brain/on_insert(mob/living/carbon/organ_owner, special)
+	. = ..()
 	// Are we inserting into a new mob from a head?
 	// If yes, we want to quickly steal the brainmob from the head before we do anything else.
 	// This is usually stuff like reattaching dismembered/amputated heads.
-	if(istype(loc, /obj/item/bodypart/head))
+	if(istype(ownerlimb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/brain_holder = loc
 		if(brain_holder.brainmob)
 			brainmob = brain_holder.brainmob
 			brain_holder.brainmob = null
 			brainmob.container = null
 			brainmob.forceMove(src)
-
-	return ..()
 
 /obj/item/organ/internal/brain/Remove(mob/living/carbon/brain_owner, special = 0, no_id_transfer = FALSE)
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.

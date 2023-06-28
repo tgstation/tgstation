@@ -163,11 +163,12 @@
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/hand_item/self_grasp])
 	var/obj/item/hand_item/self_grasp/grasped_by
 
-	///A list of all the external organs we've got stored to draw horns, wings and stuff with (special because we are actually in the limbs unlike normal organs :/ )
-	///If someone ever comes around to making all organs exist in the bodyparts, you can just remove this and use a typed loop
-	var/list/obj/item/organ/external/external_organs = list()
+	/**
+	 * A list of all the organs we've got stored to draw horns, wings and stuff with
+	 */
+	var/list/obj/item/organ/organs
 	///A list of all bodypart overlays to draw
-	var/list/bodypart_overlays = list()
+	var/list/bodypart_overlays
 
 	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
 	var/attack_type = BRUTE
@@ -219,19 +220,17 @@
 		stack_trace("[type] qdeleted with [length(wounds)] uncleared wounds")
 		wounds.Cut()
 
-	if(length(external_organs))
-		for(var/obj/item/organ/external/external_organ as anything in external_organs)
-			external_organs -= external_organ
-			qdel(external_organ) // It handles removing its references to this limb on its own.
-
-		external_organs = list()
+	for(var/obj/item/organ/organ as anything in organs)
+		qdel(organ) // It handles removing its references to this limb on its own.
+	if(length(organs))
+		stack_trace("[type] qdeleted with [length(organs)] uncleared organs")
+		organs.Cut()
 	QDEL_LIST_ASSOC_VAL(feature_offsets)
 
 	return ..()
 
 /obj/item/bodypart/forceMove(atom/destination) //Please. Never forcemove a limb if its's actually in use. This is only for borgs.
 	SHOULD_CALL_PARENT(TRUE)
-
 	. = ..()
 	if(isturf(destination))
 		update_icon_dropped()
@@ -365,15 +364,15 @@
 		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message(span_warning("[user] begins to cut open [src]."),\
 			span_notice("You begin to cut open [src]..."))
-		if(do_after(user, 54, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			drop_organs(user, TRUE)
-	else
-		return ..()
+		return
+	return ..()
 
 /obj/item/bodypart/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	SHOULD_CALL_PARENT(TRUE)
 
-	..()
+	. = ..()
 	if(IS_ORGANIC_LIMB(src))
 		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, TRUE, -1)
 	pixel_x = rand(-3, 3)
@@ -387,30 +386,21 @@
 	if(IS_ORGANIC_LIMB(src))
 		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	seep_gauze(9999) // destroy any existing gauze if any exists
-	for(var/obj/item/organ/bodypart_organ in get_organs())
-		bodypart_organ.transfer_to_limb(src, owner)
-	for(var/obj/item/organ/external/external in external_organs)
-		external.remove_from_limb()
-		external.forceMove(drop_loc)
+	if(owner)
+		for(var/obj/item/organ/organ as anything in organs)
+			organ.Remove(owner)
+			organ.forceMove(drop_loc)
+	else
+		for(var/obj/item/organ/organ as anything in organs)
+			organ.remove_from_limb(src)
+			organ.forceMove(drop_loc)
 	for(var/obj/item/item_in_bodypart in src)
 		item_in_bodypart.forceMove(drop_loc)
 
-	update_icon_dropped()
-
-///since organs aren't actually stored in the bodypart themselves while attached to a person, we have to query the owner for what we should have
-/obj/item/bodypart/proc/get_organs()
-	SHOULD_CALL_PARENT(TRUE)
-	RETURN_TYPE(/list)
-
 	if(!owner)
-		return FALSE
-
-	var/list/bodypart_organs
-	for(var/obj/item/organ/organ_check as anything in owner.organs) //internal organs inside the dismembered limb are dropped.
-		if(check_zone(organ_check.zone) == body_zone)
-			LAZYADD(bodypart_organs, organ_check) // this way if we don't have any, it'll just return null
-
-	return bodypart_organs
+		update_icon_dropped()
+	else
+		owner.update_body_parts()
 
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life(seconds_per_tick, times_fired)
@@ -940,12 +930,12 @@
 
 ///Add a bodypart overlay and call the appropriate update procs
 /obj/item/bodypart/proc/add_bodypart_overlay(datum/bodypart_overlay/overlay)
-	bodypart_overlays += overlay
+	LAZYADD(bodypart_overlays, overlay)
 	overlay.added_to_limb(src)
 
 ///Remove a bodypart overlay and call the appropriate update procs
 /obj/item/bodypart/proc/remove_bodypart_overlay(datum/bodypart_overlay/overlay)
-	bodypart_overlays -= overlay
+	LAZYREMOVE(bodypart_overlays, overlay)
 	overlay.removed_from_limb(src)
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)

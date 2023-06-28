@@ -170,8 +170,8 @@
 			to_chat(user, span_warning("There is no room for [target_organ] in [target]'s [parse_zone(target_zone)]!"))
 			return SURGERY_STEP_FAIL
 		var/obj/item/organ/meatslab = tool
-		if(!meatslab.useable)
-			to_chat(user, span_warning("[target_organ] seems to have been chewed on, you can't use this!"))
+		if(!(meatslab.organ_flags & ORGAN_DESTROYED))
+			to_chat(user, span_warning("[target_organ] is destroyed and cannot be used!"))
 			return SURGERY_STEP_FAIL
 
 		if(!can_use_organ(user, meatslab))

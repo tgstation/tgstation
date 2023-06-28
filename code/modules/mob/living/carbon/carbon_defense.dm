@@ -369,13 +369,6 @@
 		show_message(span_userdanger("The blob attacks!"))
 		adjustBruteLoss(10)
 
-/mob/living/carbon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_CONTENTS)
-		return
-	for(var/obj/item/organ/organ as anything in organs)
-		organ.emp_act(severity)
-
 ///Adds to the parent by also adding functionality to propagate shocks through pulling and doing some fluff effects.
 /mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	. = ..()

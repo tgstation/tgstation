@@ -12,8 +12,6 @@
 
 	///The overlay datum that actually draws stuff on the limb
 	var/datum/bodypart_overlay/mutant/bodypart_overlay
-	///Reference to the limb we're inside of
-	var/obj/item/bodypart/ownerlimb
 	///If not null, overrides the appearance with this sprite accessory datum
 	var/sprite_accessory_override
 
@@ -30,10 +28,11 @@
 	///Which flags does a 'modification tool' need to have to restyle us, if it all possible (located in code/_DEFINES/mobs)
 	var/restyle_flags = NONE
 
-/**mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
-* For _mob_sprite we make a distinction between "Round Snout" and "round". Round Snout is the name of the sprite datum, while "round" would be part of the sprite
-* I'm sorry
-*/
+/**
+ * mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
+ * For _mob_sprite we make a distinction between "Round Snout" and "round". Round Snout is the name of the sprite datum, while "round" would be part of the sprite
+ * I'm sorry
+ */
 /obj/item/organ/external/Initialize(mapload, accessory_type)
 	. = ..()
 
@@ -55,14 +54,6 @@
 	if(restyle_flags)
 		RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
 
-/obj/item/organ/external/Destroy()
-	if(owner)
-		Remove(owner, special=TRUE)
-	else if(ownerlimb)
-		remove_from_limb()
-
-	return ..()
-
 /obj/item/organ/external/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	if(!should_external_organ_apply_to(type, receiver))
 		stack_trace("adding a [type] to a [receiver.type] when it shouldn't be!")
@@ -82,49 +73,25 @@
 		bodypart_overlay.set_appearance_from_name(receiver.dna.features[bodypart_overlay.feature_key])
 		bodypart_overlay.imprint_on_next_insertion = FALSE
 
-	ownerlimb = limb
-	add_to_limb(ownerlimb)
-
 	if(external_bodytypes)
 		limb.synchronize_bodytypes(receiver)
 
 	receiver.update_body_parts()
 
-/obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special, moving)
+/obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special = FALSE, moving = FALSE)
 	. = ..()
+	if(!moving && use_mob_sprite_as_obj_sprite) //so we're being taken out and dropped
+		update_appearance(UPDATE_OVERLAYS)
 
-	if(ownerlimb)
-		remove_from_limb()
-		if(!moving && use_mob_sprite_as_obj_sprite) //so we're being taken out and dropped
-			update_appearance(UPDATE_OVERLAYS)
+	organ_owner.update_body_parts()
 
-	if(organ_owner)
-		organ_owner.update_body_parts()
+/obj/item/organ/external/add_to_limb(obj/item/bodypart/bodypart, special = FALSE)
+	. = ..()
+	bodypart.add_bodypart_overlay(bodypart_overlay)
+	bodypart.synchronize_bodytypes(ownerlimb.owner)
 
-///Transfers the organ to the limb, and to the limb's owner, if it has one.
-/obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
-	if(owner)
-		Remove(owner, moving = TRUE)
-	else if(ownerlimb)
-		remove_from_limb()
-
-	if(bodypart_owner)
-		Insert(bodypart_owner, TRUE)
-	else
-		add_to_limb(bodypart)
-
-/obj/item/organ/external/add_to_limb(obj/item/bodypart/bodypart)
-	bodypart.external_organs += src
-	ownerlimb = bodypart
-	ownerlimb.add_bodypart_overlay(bodypart_overlay)
-	return ..()
-
-/obj/item/organ/external/remove_from_limb()
-	ownerlimb.external_organs -= src
+/obj/item/organ/external/remove_from_limb(obj/item/bodypart/bodypart, special = FALSE)
 	ownerlimb.remove_bodypart_overlay(bodypart_overlay)
-	if(ownerlimb.owner && external_bodytypes)
-		ownerlimb.synchronize_bodytypes(ownerlimb.owner)
-	ownerlimb = null
 	return ..()
 
 /proc/should_external_organ_apply_to(obj/item/organ/external/organpath, mob/living/carbon/target)

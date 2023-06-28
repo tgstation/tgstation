@@ -1,10 +1,10 @@
 /mob/living/brain
-	var/obj/item/mmi/container = null
-	var/emp_damage = 0//Handles a type of MMI damage
-	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
 	see_invisible = SEE_INVISIBLE_LIVING
 	speech_span = SPAN_ROBOT
+	var/obj/item/mmi/container = null
+	var/emp_damage = 0//Handles a type of MMI damage
+	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 
 /mob/living/brain/Initialize(mapload)
 	. = ..()
@@ -16,7 +16,6 @@
 		forceMove(OB)
 	if(!container?.mecha) //Unless inside a mecha, brains are rather helpless.
 		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
-
 
 /mob/living/brain/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	var/obj/item/organ/internal/brain/brain_loc = loc
