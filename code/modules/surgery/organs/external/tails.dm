@@ -111,7 +111,9 @@
 ///Monkey tail bodypart overlay
 /datum/bodypart_overlay/mutant/tail/monkey
 	feature_key = "tail_monkey"
+	sprite_datum = /datum/sprite_accessory/tails/monkey/monkey
 	color_source = NONE
+	imprint_on_next_insertion = FALSE // DO NOT. I WILL KILL YOU.
 
 /datum/bodypart_overlay/mutant/tail/monkey/get_global_feature_list()
 	return GLOB.tails_list_monkey
