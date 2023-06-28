@@ -834,10 +834,7 @@
 	taste_description = "pure electricity"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/liquidelectricity/enriched
-	name = "Enriched Liquid Electricity"
-
-/datum/reagent/consumable/liquidelectricity/enriched/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
+/datum/reagent/consumable/liquidelectricity/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	. = ..()
 	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
 		return
@@ -847,7 +844,7 @@
 	if(istype(stomach))
 		stomach.adjust_charge(reac_volume * 30)
 
-/datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+/datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(isethereal(M))
 		M.blood_volume += 1 * seconds_per_tick
 	else if(SPT_PROB(10, seconds_per_tick)) //lmao at the newbs who eat energy bars
