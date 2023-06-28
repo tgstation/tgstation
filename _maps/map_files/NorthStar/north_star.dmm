@@ -57867,6 +57867,9 @@
 /area/station/hallway/secondary/entry)
 "pke" = (
 /obj/structure/dresser,
+/obj/item/food/spaghetti/security{
+	pixel_y = 15
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "pkm" = (
