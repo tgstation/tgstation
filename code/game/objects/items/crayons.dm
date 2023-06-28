@@ -219,9 +219,9 @@
 	refill()
 
 /obj/item/toy/crayon/proc/after_eat(mob/user)
+	use_charges(user, 5, FALSE)
 	if(check_empty(user)) //Prevents division by zero
 		return
-	use_charges(user, 5, FALSE)
 
 /obj/item/toy/crayon/set_painting_tool_color(chosen_color)
 	. = ..()
@@ -559,7 +559,7 @@
 /obj/item/toy/crayon/red
 	name = "red crayon"
 	icon_state = "crayonred"
-	paint_color = "#DA0000"
+	paint_color = COLOR_CRAYON_RED
 	crayon_color = "red"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5, /datum/reagent/colorful_reagent/powder/red/crayon = 1.5)
 	dye_color = DYE_RED
@@ -567,7 +567,7 @@
 /obj/item/toy/crayon/orange
 	name = "orange crayon"
 	icon_state = "crayonorange"
-	paint_color = "#FF9300"
+	paint_color = COLOR_CRAYON_ORANGE
 	crayon_color = "orange"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5, /datum/reagent/colorful_reagent/powder/orange/crayon = 1.5)
 	dye_color = DYE_ORANGE
@@ -575,7 +575,7 @@
 /obj/item/toy/crayon/yellow
 	name = "yellow crayon"
 	icon_state = "crayonyellow"
-	paint_color = "#FFF200"
+	paint_color = COLOR_CRAYON_YELLOW
 	crayon_color = "yellow"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5, /datum/reagent/colorful_reagent/powder/yellow/crayon = 1.5)
 	dye_color = DYE_YELLOW
@@ -583,7 +583,7 @@
 /obj/item/toy/crayon/green
 	name = "green crayon"
 	icon_state = "crayongreen"
-	paint_color = "#A8E61D"
+	paint_color = COLOR_CRAYON_GREEN
 	crayon_color = "green"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5, /datum/reagent/colorful_reagent/powder/green/crayon = 1.5)
 	dye_color = DYE_GREEN
@@ -591,7 +591,7 @@
 /obj/item/toy/crayon/blue
 	name = "blue crayon"
 	icon_state = "crayonblue"
-	paint_color = "#00B7EF"
+	paint_color = COLOR_CRAYON_BLUE
 	crayon_color = "blue"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5, /datum/reagent/colorful_reagent/powder/blue/crayon = 1.5)
 	dye_color = DYE_BLUE
@@ -599,7 +599,7 @@
 /obj/item/toy/crayon/purple
 	name = "purple crayon"
 	icon_state = "crayonpurple"
-	paint_color = "#DA00FF"
+	paint_color = COLOR_CRAYON_PURPLE
 	crayon_color = "purple"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5, /datum/reagent/colorful_reagent/powder/purple/crayon = 1.5)
 	dye_color = DYE_PURPLE
@@ -607,7 +607,7 @@
 /obj/item/toy/crayon/black
 	name = "black crayon"
 	icon_state = "crayonblack"
-	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
+	paint_color = COLOR_CRAYON_BLACK
 	crayon_color = "black"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5, /datum/reagent/colorful_reagent/powder/black/crayon = 1.5)
 	dye_color = DYE_BLACK
@@ -615,7 +615,7 @@
 /obj/item/toy/crayon/white
 	name = "white crayon"
 	icon_state = "crayonwhite"
-	paint_color = "#FFFFFF"
+	paint_color = COLOR_WHITE
 	crayon_color = "white"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5,  /datum/reagent/colorful_reagent/powder/white/crayon = 1.5)
 	dye_color = DYE_WHITE
@@ -624,7 +624,7 @@
 	name = "mime crayon"
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
-	paint_color = "#FFFFFF"
+	paint_color = COLOR_WHITE
 	crayon_color = "mime"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5, /datum/reagent/colorful_reagent/powder/invisible = 1.5)
 	charges = INFINITE_CHARGES
@@ -633,7 +633,7 @@
 /obj/item/toy/crayon/rainbow
 	name = "rainbow crayon"
 	icon_state = "crayonrainbow"
-	paint_color = "#FFF000"
+	paint_color = COLOR_CRAYON_RAINBOW
 	crayon_color = "rainbow"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5, /datum/reagent/colorful_reagent = 1.5)
 	drawtype = RANDOM_ANY // just the default starter.
