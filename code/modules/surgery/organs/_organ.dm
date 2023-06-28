@@ -75,6 +75,12 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+/// Don't go kaboom if inside a bodypart, that wouldn't be good
+/obj/item/organ/ex_act(severity, target)
+	if(istype(loc, /obj/item/bodypart))
+		return
+	return
+
 /*
  * Insert the organ into the select mob.
  *
