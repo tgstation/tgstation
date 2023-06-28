@@ -79,7 +79,6 @@
 
 /datum/bodypart_overlay/mutant/wings/moth/New()
 	. = ..()
-
 	burn_datum = fetch_sprite_datum(burn_datum)
 
 /datum/bodypart_overlay/mutant/wings/moth/get_global_feature_list()

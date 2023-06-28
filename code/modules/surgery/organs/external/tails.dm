@@ -38,7 +38,6 @@
 		wag(FALSE)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_ORGAN_WAG_TAIL)
-
 	if(type in organ_owner.dna.species.cosmetic_organs)
 		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
 		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
@@ -73,14 +72,14 @@
 	feature_key = "tail_monkey"
 	var/wagging = FALSE
 
-/datum/bodypart_overlay/mutant/tail/get_base_icon_state()
-	return (wagging ? "wagging_" : "") + sprite_datum.icon_state //add the wagging tag if we be wagging
-
 /datum/bodypart_overlay/mutant/tail/get_global_feature_list()
 	return GLOB.tails_list
 
+/datum/bodypart_overlay/mutant/tail/get_base_icon_state()
+	return (wagging ? "wagging_" : "") + sprite_datum.icon_state //add the wagging tag if we be wagging
+
 /datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
+	if(human.wear_suit?.flags_inv & HIDEJUMPSUIT)
 		return FALSE
 	return TRUE
 
@@ -101,12 +100,21 @@
 	return GLOB.tails_list_human
 
 /obj/item/organ/tail/monkey
+	name = "monkey tail"
+	desc = "A severed monkey tail. Animal cruelty is a serious crime, you know."
+	preference = "feature_monkey_tail"
+
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/monkey
+
+	dna_block = DNA_MONKEY_TAIL_BLOCK
 
 ///Monkey tail bodypart overlay
 /datum/bodypart_overlay/mutant/tail/monkey
-	color_source = NONE
 	feature_key = "tail_monkey"
+	color_source = NONE
+
+/datum/bodypart_overlay/mutant/tail/monkey/get_global_feature_list()
+	return GLOB.tails_list_monkey
 
 /obj/item/organ/tail/lizard
 	name = "lizard tail"
@@ -134,14 +142,12 @@
 
 /obj/item/organ/tail/lizard/start_wag()
 	. = ..()
-
 	if(paired_spines)
 		var/datum/bodypart_overlay/mutant/spines/accessory = paired_spines.bodypart_overlay
 		accessory.wagging = TRUE
 
 /obj/item/organ/tail/lizard/stop_wag()
 	. = ..()
-
 	if(paired_spines)
 		var/datum/bodypart_overlay/mutant/spines/accessory = paired_spines.bodypart_overlay
 		accessory.wagging = FALSE

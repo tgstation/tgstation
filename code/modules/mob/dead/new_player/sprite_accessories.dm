@@ -1769,7 +1769,7 @@
 	icon_state = "default"
 	color_src = HAIR_COLOR
 
-/datum/sprite_accessory/tails/monkey
+/datum/sprite_accessory/tails/monkey/monkey
 	name = "Monkey"
 	icon = 'icons/mob/species/monkey/monkey_tail.dmi'
 	icon_state = "monkey"

@@ -61,6 +61,8 @@
 /proc/random_features()
 	if(!GLOB.tails_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails, GLOB.tails_list, add_blank = TRUE)
+	if(!GLOB.tails_list_monkey.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, GLOB.tails_list_monkey, add_blank = TRUE)
 	if(!GLOB.tails_list_human.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human, add_blank = TRUE)
 	if(!GLOB.tails_list_lizard.len)
@@ -96,6 +98,7 @@
 		"mcolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]",
 		"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)],
 		"tail_cat" = "Cat",
+		"tail_monkey" = "Monkey",
 		"tail_lizard" = "Smooth",
 		"wings" = "None",
 		"snout" = pick(GLOB.snouts_list),
@@ -109,7 +112,6 @@
 		"moth_wings" = pick(GLOB.moth_wings_list),
 		"moth_antennae" = pick(GLOB.moth_antennae_list),
 		"moth_markings" = pick(GLOB.moth_markings_list),
-		"tail_monkey" = "Monkey",
 		"pod_hair" = pick(GLOB.pod_hair_list),
 	))
 

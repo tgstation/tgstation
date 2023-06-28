@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	///The type of mutant race the player is if applicable (i.e. potato-man)
 	var/datum/species/species = new /datum/species/human
 	///first value is mutant color
-	var/list/features = list("FFF")
+	var/list/features = list()
 	///Stores the hashed values of the person's non-human features
 	var/unique_features
 	///Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
@@ -192,7 +192,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /datum/dna/proc/generate_unique_features()
 	. = ""
 	var/list/L = new /list(DNA_FEATURE_BLOCKS)
-
 	if(features["mcolor"])
 		L[DNA_MUTANT_COLOR_BLOCK] = sanitize_hexcolor(features["mcolor"], include_crunch = FALSE)
 	if(features["ethcolor"])
@@ -201,6 +200,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		L[DNA_LIZARD_MARKINGS_BLOCK] = construct_block(GLOB.body_markings_list.Find(features["body_markings"]), GLOB.body_markings_list.len)
 	if(features["tail_cat"])
 		L[DNA_TAIL_BLOCK] = construct_block(GLOB.tails_list_human.Find(features["tail_cat"]), GLOB.tails_list_human.len)
+	if(features["tail_monkey"])
+		L[DNA_MONKEY_TAIL_BLOCK] = construct_block(GLOB.tails_list_monkey.Find(features["tail_monkey"]), GLOB.tails_list_monkey.len)
 	if(features["tail_lizard"])
 		L[DNA_LIZARD_TAIL_BLOCK] = construct_block(GLOB.tails_list_lizard.Find(features["tail_lizard"]), GLOB.tails_list_lizard.len)
 	if(features["snout"])

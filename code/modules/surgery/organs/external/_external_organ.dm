@@ -163,7 +163,6 @@
 
 /datum/bodypart_overlay/mutant/antennae/New()
 	. = ..()
-
 	burn_datum = fetch_sprite_datum(burn_datum) //turn the path into the singleton instance
 
 /datum/bodypart_overlay/mutant/antennae/get_global_feature_list()
