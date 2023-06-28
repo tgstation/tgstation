@@ -161,7 +161,7 @@
 	//how much the armor of the mech is modified by
 	var/datum/armor/armor_mod
 
-/obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/M, attach_right)
+/obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
 	chassis.set_armor(chassis.get_armor().add_other_armor(armor_mod))
 
@@ -213,10 +213,10 @@
 	chassis?.cut_overlay(droid_overlay)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+/obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right = FALSE)
 	. = ..()
 	droid_overlay = new(src.icon, icon_state = "repair_droid")
-	M.add_overlay(droid_overlay)
+	new_mecha.add_overlay(droid_overlay)
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/detach()
 	chassis.cut_overlay(droid_overlay)
@@ -385,17 +385,12 @@
 			return FALSE
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/thrusters/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	M.active_thrusters = src //Enable by default
+/obj/item/mecha_parts/mecha_equipment/thrusters/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right = FALSE)
+	new_mecha.active_thrusters = src //Enable by default
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/thrusters/detach()
-	if(chassis?.active_thrusters == src)
-		chassis.active_thrusters = null
-	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/thrusters/Destroy()
-	if(chassis?.active_thrusters == src)
+/obj/item/mecha_parts/mecha_equipment/thrusters/detach(atom/moveto)
+	if(chassis.active_thrusters == src)
 		chassis.active_thrusters = null
 	return ..()
 

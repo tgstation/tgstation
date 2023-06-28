@@ -895,3 +895,91 @@
   - image: Resprited the Limb Grower
   norsvenska:
   - rscadd: Christmas now has special station prefixes.
+2023-06-26:
+  Funnytoilet:
+  - qol: Allows you to craft plastitanium shards.
+  Ghommie:
+  - bugfix: Fixes the lights from Tinea Luxor being stackable to the point of crashing
+      the game for others.
+  IndieanaJones:
+  - balance: Xenos have been rebalanced, removing their hardstuns on their disarm
+      and neurotoxin, along with a slew of other changes. Xenos have received buffs
+      to their more unique abilities in return.
+  - bugfix: Fixed simplemobs ignoring xenomorph's melee damage values when being attacked
+      by them.
+  winterboekje:
+  - sound: Adds unique sounds to library barcode scanner
+  - image: Removes soul from library
+2023-06-27:
+  ChungusGamer666:
+  - refactor: Liking/disliking food is now handled by the tongue organ, not the species.
+      Also, having a failing tongue means you can't taste food properly!
+  - rscadd: You can read peoples' tongues now, if you have the entrail reading skillchip.
+  GPeckman:
+  - bugfix: The lavaproof tracks cyborg upgrade now protects against liquid plasma,
+      the Icebox equivalent of lava.
+  LovliestPlant:
+  - qol: '[Birdshot] Adds layer adapters to gas tank output hookups in atmospherics'
+  - qol: '[Birdshot] Adds additional navigation verb landmarks'
+  - bugfix: '[Birdshot] Fixes entrances to some departments from maints not requiring
+      department access'
+  - bugfix: '[Birdshot] Converts the guard locker in perma to a normal security officer''s
+      locker'
+  - bugfix: '[Birdshot] Adds an exterior outlet vent for the incinerator'
+  Momo8289:
+  - bugfix: Items that shouldn't have been stacking should no longer stack.
+  ReinaCoder:
+  - image: the mosin and prime nagants' mob sprites have been updated
+  TheVekter:
+  - bugfix: Added the missing medical laptop to the morgue on Northstar.
+  axietheaxolotl / viro:
+  - image: resprited surgery tables, and stasis beds
+  cnleth:
+  - bugfix: Symbols display correctly when sending messages via mind link
+  the-og-gear:
+  - sound: One (1) new space ambience track has been added. Good luck and godspeed.
+2023-06-28:
+  ChungusGamer666:
+  - bugfix: Plasma will now heal plasmamen properly
+  Ghommie:
+  - rscadd: You can now revive dead fishes, bees and (mindless) mice with a lazarus
+      injector.
+  - balance: Tom, the mouse, no longer counts toward the mice population cap.
+  Hatterhat:
+  - balance: The Regal Condor's base spread has been reduced to 0, like damn near
+      every other gun that exists.
+  LT3:
+  - refactor: Refactored maptext (those floating words)
+  - bugfix: Fixed special chat bubbles for yelling, clown, redtext, greentext
+  - bugfix: Fixed alignment of status display text
+  - code_imp: Status displays now synchronize their message lines when scrolling
+  - bugfix: MetaStation's bridge incident counter and clock no longer overlap
+  - bugfix: Deltastation's missing incident counter has been found. Does that count
+      as an incident?
+  - qol: Tramstation bridge and medbay now have a clock where the tram hit counter
+      used to be
+  Melbert:
+  - bugfix: You can once again "too slow" someone with a high five
+  Momo8289:
+  - bugfix: Had to destroy a lot more of em, but the value of iron coins are now back
+      to normal
+  SapphicOverload:
+  - bugfix: fixed hostile mobs trying to attack supermatter discharge bolts
+  Seven:
+  - qol: Mops, some cleaning items, and light replacers now use balloon alerts
+  - rscadd: Surgical caps now actually hide your hair
+  Time-Green:
+  - bugfix: hardcore random now gives you a species specific name
+  Youtubeboy139:
+  - rscadd: Added new Pirate Boots
+  - image: Added new Pirate Bandana sprites
+  - image: Added new Pirate Hat sprites
+  - image: Added new Pirate Uniform sprites
+  - image: Added new Sailor Uniform sprites
+  - image: Added new Pirate Coat sprites
+  - image: Added new Pirate EVA gear sprites
+  - image: Added new Cutlass sprites
+  - image: Added new Energy Cutlass sprites
+  - image: Added new `hgpirate` suit and hat sprites
+  vinylspiders:
+  - bugfix: sliding puzzles can no longer have their icons erased by the hand labeler
