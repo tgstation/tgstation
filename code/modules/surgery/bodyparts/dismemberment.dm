@@ -237,7 +237,7 @@
 	return ..()
 
 /// Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails
-/obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner, special = FALSE, keep_old_organs = FALSE)
+/obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner, special = FALSE, keep_old_organs = TRUE)
 	if(!istype(limb_owner))
 		return
 
@@ -250,6 +250,7 @@
 		old_limb.try_attach_limb(limb_owner, special = TRUE) //always true, this limb is being replaced even if the new one isn't
 	else if(keep_old_organs)
 		for(var/obj/item/organ/organ as anything in old_limb.organs)
+			organ.remove_from_limb(old_limb, special = TRUE)
 			organ.Insert(limb_owner, special = TRUE)
 
 ///Checks if a limb qualifies as a BODYPART_IMPLANTED
@@ -411,7 +412,7 @@
 		scaries.generate(limb, phantom_loss)
 
 		//Copied from /datum/species/proc/on_species_gain()
-		for(var/obj/item/organ/organ_path as anything in dna.species.external_organs)
+		for(var/obj/item/organ/organ_path as anything in dna.species.cosmetic_organs)
 			//Load a persons preferences from DNA
 			var/zone = initial(organ_path.zone)
 			if(zone != limb_zone)
