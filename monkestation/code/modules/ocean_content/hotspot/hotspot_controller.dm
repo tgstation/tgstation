@@ -103,6 +103,7 @@ SUBSYSTEM_DEF(hotspots)
 ///we calculate the drift direction using [angle2dir] and [arctan], which is less than perfect
 ///if this stops working in the future its because we broke one of those procs.
 /datum/controller/subsystem/hotspots/proc/stomp(turf/stomped)
+	. = 0
 	for(var/datum/hotspot/listed_hotspot in generated_hotspots)
 		if(!listed_hotspot.get_tile_heat(stomped))
 			continue

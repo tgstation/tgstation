@@ -59,11 +59,10 @@
 		var/turf/turf = get_turf(src)
 		turf.attackby(W)
 
-/obj/machinery/power/vent/update_desc(updates)
+/obj/machinery/power/vent/examine(mob/user)
 	. = ..()
-	desc = "A piece of machinery that converts magmatic activity to electricity"
-	desc += "Current Output: [display_power(last_generation)]"
-	desc += "Lifetime Output: [display_power(total_generation)]"
+	. += "Current Output: [display_power(last_generation)]"
+	. += "Lifetime Output: [display_power(total_generation)]"
 
 /obj/machinery/power/vent/update_icon_state()
 	. = ..()
