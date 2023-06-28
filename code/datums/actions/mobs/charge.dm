@@ -290,7 +290,7 @@
 	name = "spear charge"
 	desc = "Charge forward and impale any victim with your spear."
 	button_icon_state = "spear_charge"
-	charge_distance = 4
+	charge_distance = 6
 	shake_duration = 3 SECONDS
 	charge_delay = 3 SECONDS
 	destroy_objects = FALSE
@@ -301,14 +301,23 @@
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/Activate(atom/target_atom)
 	starting_tile = get_turf(target_atom)
+	if(isliving(owner))
+		var/mob/living/source = owner
+		var/stamina_source = source.getStaminaLoss()
+		if(stamina_source >= 60)//prevent cases where we go into stamcrit mid/end of charge and causes runtime mess
+			return
 	. = ..()
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_moved(atom/source)
+	return
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/charge_end(datum/move_loop/source)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/charger = owner
 		charger.apply_damage(60, STAMINA)
 		charger.Immobilize(1 SECONDS)
+	. = ..()
 
-/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_moved(atom/source)
-	return
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_bump(atom/movable/source, atom/target)
 	qdel(new_loop)
