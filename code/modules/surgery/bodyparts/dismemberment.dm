@@ -243,11 +243,11 @@
 
 	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
 	if(old_limb)
-		old_limb.drop_limb(special = TRUE)
+		old_limb.drop_limb(special = TRUE) //always true, this limb is being replaced even if the new one isn't
 
 	. = try_attach_limb(limb_owner, special)
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
-		old_limb.try_attach_limb(limb_owner, special = TRUE)
+		old_limb.try_attach_limb(limb_owner, special = TRUE) //always true, this limb is being replaced even if the new one isn't
 	else if(keep_old_organs)
 		for(var/obj/item/organ/organ as anything in old_limb.organs)
 			organ.Insert(limb_owner, special = TRUE)
