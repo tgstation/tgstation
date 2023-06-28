@@ -49,8 +49,11 @@
 		return FALSE
 
 	var/datum/bodypart_overlay/mutant/bodypart_overlay = initial(organpath.bodypart_overlay)
+	if(isnull(bodypart_overlay))
+		return TRUE
+
 	var/feature_key = initial(bodypart_overlay.feature_key)
-	if(isnull(feature_key) || isnull(bodypart_overlay))
+	if(isnull(feature_key))
 		return TRUE
 
 	if(target.dna.features[feature_key] != SPRITE_ACCESSORY_NONE)

@@ -31,8 +31,8 @@
 		fish.toxpwr = 0
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
+	. = ..()
 	randomize_cosmetic_organs(human_mob)
-	return ..()
 
 /proc/mass_purrbation()
 	for(var/mob in GLOB.human_list)
@@ -115,7 +115,7 @@
 /datum/species/human/felinid/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
 	human_for_preview.hairstyle = "Hime Cut"
 	human_for_preview.hair_color = "#ffcccc" // pink
-	human_for_preview.update_body()
+	human_for_preview.update_body(is_creating = TRUE)
 
 /datum/species/human/felinid/get_species_description()
 	return "Felinids are one of the many types of bespoke genetic \
