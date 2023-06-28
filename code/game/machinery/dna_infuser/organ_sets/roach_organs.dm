@@ -12,19 +12,23 @@
 		You feel increasingly resistant to explosives, radiation, and viral agents.")
 	bonus_deactivate_text = span_notice("You are no longer majority roach, \
 		and you feel much more vulnerable to nuclear apocalypses.")
-
+	// - Immunity to nuke gibs
+	// - Nukes come with radiation (not actually but yknow)
+	bonus_traits = list(TRAIT_NUKEIMMUNE, TRAIT_RADIMMUNE, TRAIT_VIRUS_RESISTANCE)
 	/// Armor type attached to the owner's physiology
 	var/datum/armor/given_armor = /datum/armor/roach_internal_armor
+
+	var/old_biotypes = NONE
 
 /datum/status_effect/organ_set_bonus/roach/enable_bonus()
 	. = ..()
 	if(!ishuman(owner))
 		return
+	old_biotypes = human_owner.mob_biotypes
+
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.armor = human_owner.physiology.armor.add_other_armor(given_armor)
-	ADD_TRAIT(owner, TRAIT_NUKEIMMUNE, id) // Immunity to nuke gibs
-	ADD_TRAIT(owner, TRAIT_RADIMMUNE, id) // Nukes come with radiation (not actually but yknow)
-	ADD_TRAIT(owner, TRAIT_VIRUS_RESISTANCE, id) // Viral resistance
+	human_owner.mob_biotypes |= MOB_BUG
 
 /datum/status_effect/organ_set_bonus/roach/disable_bonus()
 	. = ..()
@@ -32,10 +36,7 @@
 		return
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.armor = human_owner.physiology.armor.subtract_other_armor(given_armor)
-	REMOVE_TRAIT(owner, TRAIT_NUKEIMMUNE, id)
-	REMOVE_TRAIT(owner, TRAIT_RADIMMUNE, id)
-	REMOVE_TRAIT(owner, TRAIT_VIRUS_RESISTANCE, id)
-
+	human_owner.mob_biotypes = old_biotypes
 
 /// Roach heart:
 /// Reduces damage taken from brute attacks from behind,
