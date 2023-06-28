@@ -4,14 +4,14 @@
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
-	///The mob that owns this organ.
-	var/mob/living/carbon/owner = null
-	///Reference to the limb we're inside of
-	var/obj/item/bodypart/ownerlimb = null
+	/// The mob that owns this organ.
+	var/mob/living/carbon/owner
+	/// Reference to the limb we're inside of
+	var/obj/item/bodypart/ownerlimb
 	var/status = ORGAN_ORGANIC
-	///The body zone this organ is supposed to inhabit.
+	/// The body zone this organ is supposed to inhabit.
 	var/zone = BODY_ZONE_CHEST
-	///The organ slot this organ is supposed to inhabit. This should be unique by type. (Lungs, Appendix, Stomach, etc)
+	/// The organ slot this organ is supposed to inhabit. This should be unique by type. (Lungs, Appendix, Stomach, etc)
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break organs_slot list!
 	var/organ_flags = ORGAN_EDIBLE
@@ -19,13 +19,16 @@
 	/// Total damage this organ has sustained
 	/// Should only ever be modified by apply_organ_damage
 	var/damage = 0
-	///Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
+	/// Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
 	var/healing_factor = 0 //fraction of maxhealth healed per on_life(), set to 0 for generic organs
 	var/decay_factor = 0 //same as above but when without a living owner, set to 0 for generic organs
 	var/high_threshold = STANDARD_ORGAN_THRESHOLD * 0.45 //when severe organ damage occurs
 	var/low_threshold = STANDARD_ORGAN_THRESHOLD * 0.1 //when minor organ damage occurs
 	var/severe_cooldown //cooldown for severe effects, used for synthetic organ emp effects.
-	///Organ variables for determining what we alert the owner with when they pass/clear the damage thresholds
+	/// Time the organ has failed for so far in deciseconds
+	var/failure_time = 0
+
+	// Organ variables for determining what we alert the owner with when they pass/clear the damage thresholds
 	var/prev_damage = 0
 	var/low_threshold_passed
 	var/high_threshold_passed
@@ -34,12 +37,12 @@
 	var/high_threshold_cleared
 	var/low_threshold_cleared
 
+	/// Reagents for when the organ is edible
 	var/list/food_reagents = list(/datum/reagent/consumable/nutriment = 5)
-	///The size of the reagent container
+	/// The size of the reagent container
 	var/reagent_vol = 10
 
-	var/failure_time = 0
-	/// Do we effect the appearance of our mob. Used to save time in preference code
+	/// Do we effect the appearance of our mob - Used to save time in preference code
 	var/visual = FALSE
 	/// Whether or not we process inside of the body
 	var/process_life = TRUE
@@ -118,7 +121,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	add_to_limb(limb, special)
 
 	// We only want this set *once*
-	if(bodypart_overlay.imprint_on_next_insertion)
+	if(bodypart_overlay?.imprint_on_next_insertion)
 		bodypart_overlay.set_appearance_from_name(receiver.dna.features[bodypart_overlay.feature_key])
 		bodypart_overlay.imprint_on_next_insertion = FALSE
 
@@ -163,7 +166,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * * organ_owner - the mob who owns our organ, that we're removing the organ from.
  * * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
-/obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE, moving = FALSE)
+/obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	organ_owner.organs -= src
@@ -174,7 +177,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	remove_from_limb(ownerlimb, special) //organs should NEVER be present inside a body without an associated limb
 
 	// Apply or reset unique side-effects. Return value does not matter.
-	on_remove(organ_owner, special, moving)
+	on_remove(organ_owner, special)
 
 	return TRUE
 
@@ -183,7 +186,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * Removes Traits, Actions, and Status Effects on the mob in which the organ was impanted.
  * Override this proc to create unique side-effects for removing your organ. Must be called by overrides.
  */
-/obj/item/organ/proc/on_remove(mob/living/carbon/organ_owner, special = FALSE, moving = FALSE)
+/obj/item/organ/proc/on_remove(mob/living/carbon/organ_owner, special = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	for(var/trait in organ_traits)
@@ -207,12 +210,12 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
 
-	//we're being taken out and dropped
-	if(!moving && use_mob_sprite_as_obj_sprite)
-		update_appearance()
-
 	if(visual)
 		organ_owner.update_body_parts()
+
+	//we're being taken out and dropped
+	if(use_mob_sprite_as_obj_sprite)
+		update_appearance()
 
 /// Transfers the organ to the limb, and to the limb's owner, if there is one
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner, special = FALSE)

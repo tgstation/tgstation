@@ -30,16 +30,18 @@
 	if(!use_mob_sprite_as_obj_sprite)
 		return
 
-	//Build the mob sprite and use it as our overlay
+	// Build the mob sprite and use it as our overlay
 	for(var/external_layer in bodypart_overlay.all_layers)
 		if(bodypart_overlay.layers & external_layer)
 			. += bodypart_overlay.get_overlay(external_layer, ownerlimb)
 
-/// Initializes visual elements of a limb
+/// Initializes visual elements of an organ
 /obj/item/organ/proc/initialize_visuals(accessory_type)
 	if(restyle_flags)
 		RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
 
+	if(!bodypart_overlay)
+		return
 	accessory_type = accessory_type ? accessory_type : sprite_accessory_override
 	var/update_appearance = TRUE
 	if(accessory_type)

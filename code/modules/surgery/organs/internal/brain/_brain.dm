@@ -2,7 +2,6 @@
 	name = "brain"
 	desc = "A piece of juicy meat found in a person's head."
 	icon_state = "brain"
-	visual = TRUE
 	throw_speed = 3
 	throw_range = 5
 	layer = ABOVE_MOB_LAYER
@@ -40,11 +39,21 @@
 	var/max_skillchip_slots = 5
 
 /obj/item/organ/internal/brain/Insert(mob/living/carbon/brain_owner, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
+	var/obj/item/bodypart/head/brain_holder = ownerlimb
 	. = ..()
 	if(!.)
 		return
 
 	name = initial(name)
+
+	// Are we inserting into a new mob from a head?
+	// If yes, we want to quickly steal the brainmob from the head before we do anything else.
+	// This is usually stuff like reattaching dismembered/amputated heads.
+	if(istype(brain_holder) && brain_holder.brainmob)
+		brainmob = brain_holder.brainmob
+		brain_holder.brainmob = null
+		brainmob.container = null
+		brainmob.forceMove(src)
 
 	// Special check for if you're trapped in a body you can't control because it's owned by a ling.
 	if(brain_owner?.mind?.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)
@@ -85,23 +94,7 @@
 		trauma.owner = brain_owner
 		trauma.on_gain()
 
-	//Update the body's icon so it doesnt appear debrained anymore
-	brain_owner.update_body_parts()
-
-/obj/item/organ/internal/brain/on_insert(mob/living/carbon/organ_owner, special)
-	. = ..()
-	// Are we inserting into a new mob from a head?
-	// If yes, we want to quickly steal the brainmob from the head before we do anything else.
-	// This is usually stuff like reattaching dismembered/amputated heads.
-	if(istype(ownerlimb, /obj/item/bodypart/head))
-		var/obj/item/bodypart/head/brain_holder = loc
-		if(brain_holder.brainmob)
-			brainmob = brain_holder.brainmob
-			brain_holder.brainmob = null
-			brainmob.container = null
-			brainmob.forceMove(src)
-
-/obj/item/organ/internal/brain/Remove(mob/living/carbon/brain_owner, special = 0, no_id_transfer = FALSE)
+/obj/item/organ/internal/brain/Remove(mob/living/carbon/brain_owner, special = FALSE, no_id_transfer = FALSE)
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
 	if(!QDELETED(brain_owner) && length(skillchips))
 		if(!special)
@@ -113,14 +106,12 @@
 
 	. = ..()
 
-	for(var/X in traumas)
-		var/datum/brain_trauma/BT = X
-		BT.on_lose(TRUE)
-		BT.owner = null
+	for(var/datum/brain_trauma/brain_trauma as anything in traumas)
+		brain_trauma.on_lose(TRUE)
+		brain_trauma.owner = null
 
 	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
 		transfer_identity(brain_owner)
-	brain_owner.update_body_parts()
 	brain_owner.clear_mood_event("brain_damage")
 
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
