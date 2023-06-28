@@ -229,6 +229,7 @@
 	if(owner)
 		owner.remove_bodypart(src)
 		set_owner(null)
+
 	for(var/wound in wounds)
 		qdel(wound) // wounds is a lazylist, and each wound removes itself from it on deletion.
 	if(length(wounds))
@@ -240,6 +241,7 @@
 	if(length(organs))
 		stack_trace("[type] qdeleted with [length(organs)] uncleared organs")
 		organs.Cut()
+
 	QDEL_LIST_ASSOC_VAL(feature_offsets)
 
 	return ..()

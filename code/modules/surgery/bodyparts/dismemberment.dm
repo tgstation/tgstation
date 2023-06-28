@@ -218,7 +218,7 @@
 			owner.dropItemToGround(owner.shoes, TRUE)
 	return ..()
 
-/obj/item/bodypart/head/drop_limb(special)
+/obj/item/bodypart/head/drop_limb(special, dismembered)
 	if(!special)
 		//Drop all worn head items
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
@@ -243,15 +243,17 @@
 
 	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
 	if(old_limb)
+		if(keep_old_organs)
+			for(var/obj/item/organ/organ as anything in old_limb.organs)
+				organ.transfer_to_limb(src, special = TRUE)
 		old_limb.drop_limb(special = TRUE) //always true, this limb is being replaced even if the new one isn't
 
 	. = try_attach_limb(limb_owner, special)
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
+		if(keep_old_organs)
+			for(var/obj/item/organ/organ as anything in organs)
+				organ.transfer_to_limb(old_limb, special = TRUE)
 		old_limb.try_attach_limb(limb_owner, special = TRUE) //always true, this limb is being replaced even if the new one isn't
-	else if(keep_old_organs)
-		for(var/obj/item/organ/organ as anything in old_limb.organs)
-			organ.remove_from_limb(old_limb, special = TRUE)
-			organ.Insert(limb_owner, special = TRUE)
 
 ///Checks if a limb qualifies as a BODYPART_IMPLANTED
 /obj/item/bodypart/proc/check_for_frankenstein(mob/living/carbon/human/monster)
