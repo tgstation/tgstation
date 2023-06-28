@@ -97,8 +97,14 @@
 	/// The voice that this movable makes when speaking
 	var/voice
 
+	/// The pitch adjustment that this movable uses when speaking.
+	var/pitch = 0
+
 	/// The filter to apply to the voice when processing the TTS audio message.
 	var/voice_filter = ""
+
+	/// Set to anything other than "" to activate the silicon voice effect for TTS messages.
+	var/tts_silicon_voice_effect = ""
 
 	/// Value used to increment ex_act() if reactionary_explosions is on
 	/// How much we as a source block explosions by

@@ -224,6 +224,9 @@
 ///called when getting the item's exact ratio for cargo's profit, without selling the item.
 #define COMSIG_ITEM_SPLIT_PROFIT_DRY "item_split_profits_dry"
 
+/// Called on component/uplink/OnAttackBy(..)
+#define COMSIG_ITEM_ATTEMPT_TC_REIMBURSE "item_attempt_tc_reimburse"
+
 // /obj/item/clothing signals
 
 ///from [/mob/living/carbon/human/Move]: ()
@@ -353,7 +356,10 @@
 #define COMSIG_ITEM_EMBEDDING_UPDATE "item_embedding_update"
 
 ///sent to targets during the process_hit proc of projectiles
-#define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
+#define COMSIG_FIRE_CASING "fire_casing"
+
+///sent to the projectile after an item is spawned by the projectile_drop element: (new_casing)
+#define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
 
 // /obj/vehicle/sealed/car/vim signals
 

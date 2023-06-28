@@ -102,6 +102,10 @@
 /// generally called before temporary non-parallel animate()s on the atom (animation_duration)
 #define COMSIG_ATOM_TEMPORARY_ANIMATION_START "atom_temp_animate_start"
 
+/// called on [/obj/item/lazarus_injector/afterattack] : (injector, user)
+#define COMSIG_ATOM_ON_LAZARUS_INJECTOR "atom_on_lazarus_injector"
+	#define LAZARUS_INJECTOR_USED (1<<0) //Early return.
+
 /// from internal loop in /atom/proc/propagate_radiation_pulse: (atom/pulse_source)
 #define COMSIG_ATOM_PROPAGATE_RAD_PULSE "atom_propagate_radiation_pulse"
 /// from cosmetic items to restyle certain mobs, objects or organs: (atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)

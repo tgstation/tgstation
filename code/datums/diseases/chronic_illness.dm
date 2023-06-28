@@ -4,6 +4,7 @@
 	spread_text = "Unspread Illness"
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	disease_flags = CHRONIC
+	infectable_biotypes = MOB_ORGANIC | MOB_MINERAL | MOB_ROBOTIC
 	process_dead = TRUE
 	stage_prob = 0.25
 	cure_text = "Sansufentanyl"

@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "cable layers 1 & 3 can now be used by machine's like emitters, smes, tesla coil & turbine."
+  - bugfix: "terminals(smes & apc) can operate on different cable layers by installing them with right click"

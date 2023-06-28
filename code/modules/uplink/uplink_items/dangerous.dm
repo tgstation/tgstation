@@ -89,6 +89,7 @@
 	surplus = 0
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	restricted = TRUE
+	refundable = TRUE
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
