@@ -1113,7 +1113,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "gC" = (
-/obj/vehicle/sealed/mecha/working/ripley/mining,
+/obj/vehicle/sealed/mecha/ripley/mining,
 /turf/open/floor/iron/recharge_floor,
 /area/awaymission/caves/bmp_asteroid)
 "gF" = (

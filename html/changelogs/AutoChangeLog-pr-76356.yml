@@ -1,7 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - refactor: "Refactored maptext (those floating words)"
-  - bugfix: "Fixed special chat bubbles for yelling, clown, redtext, greentext"
-  - bugfix: "Fixed alignment of status display text"
-  - code_imp: "Status displays now synchronize their message lines when scrolling"

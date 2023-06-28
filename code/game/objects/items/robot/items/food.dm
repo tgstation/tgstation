@@ -86,12 +86,12 @@
 		return FALSE
 	candy--
 
-	var/obj/item/ammo_casing/caseless/lollipop/lollipop
+	var/obj/item/ammo_casing/lollipop/lollipop
 	var/mob/living/silicon/robot/robot_user = user
 	if(istype(robot_user) && robot_user.emagged)
-		lollipop = new /obj/item/ammo_casing/caseless/lollipop/harmful(src)
+		lollipop = new /obj/item/ammo_casing/lollipop/harmful(src)
 	else
-		lollipop = new /obj/item/ammo_casing/caseless/lollipop(src)
+		lollipop = new /obj/item/ammo_casing/lollipop(src)
 
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	lollipop.fire_casing(target, user, params, 0, 0, null, 0, src)
@@ -104,12 +104,12 @@
 		to_chat(user, span_warning("Not enough gumballs left!"))
 		return FALSE
 	candy--
-	var/obj/item/ammo_casing/caseless/gumball/gumball
+	var/obj/item/ammo_casing/gumball/gumball
 	var/mob/living/silicon/robot/robot_user = user
 	if(istype(robot_user) && robot_user.emagged)
-		gumball = new /obj/item/ammo_casing/caseless/gumball/harmful(src)
+		gumball = new /obj/item/ammo_casing/gumball/harmful(src)
 	else
-		gumball = new /obj/item/ammo_casing/caseless/gumball(src)
+		gumball = new /obj/item/ammo_casing/gumball(src)
 
 	gumball.loaded_projectile.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, TRUE)
@@ -151,52 +151,60 @@
 			to_chat(user, span_notice("Module is now dispensing lollipops."))
 	..()
 
-/obj/item/ammo_casing/caseless/gumball
+/obj/item/ammo_casing/gumball
 	name = "Gumball"
 	desc = "Why are you seeing this?!"
-	projectile_type = /obj/projectile/bullet/reusable/gumball
+	projectile_type = /obj/projectile/bullet/gumball
 	click_cooldown_override = 2
 
-/obj/item/ammo_casing/caseless/gumball/harmful
-	projectile_type = /obj/projectile/bullet/reusable/gumball/harmful
+/obj/item/ammo_casing/gumball/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
 
-/obj/projectile/bullet/reusable/gumball
+/obj/item/ammo_casing/gumball/harmful
+	projectile_type = /obj/projectile/bullet/gumball/harmful
+
+/obj/projectile/bullet/gumball
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
-	ammo_type = /obj/item/food/gumball
 	damage = 0
 	speed = 0.5
 
-/obj/projectile/bullet/reusable/gumball/harmful
+/obj/projectile/bullet/gumball/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/projectile_drop, /obj/item/food/gumball)
+	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
+
+/obj/projectile/bullet/gumball/harmful
 	damage = 10
 
-/obj/projectile/bullet/reusable/gumball/handle_drop()
-	if(!dropped)
-		var/turf/turf = get_turf(src)
-		var/obj/item/food/gumball/gumball = new ammo_type(turf)
-		gumball.color = color
-		dropped = TRUE
+/obj/projectile/bullet/gumball/proc/handle_drop(datum/source, obj/item/food/gumball/gumball)
+	SIGNAL_HANDLER
+	gumball.color = color
 
-/obj/item/ammo_casing/caseless/lollipop //NEEDS RANDOMIZED COLOR LOGIC.
+/obj/item/ammo_casing/lollipop //NEEDS RANDOMIZED COLOR LOGIC.
 	name = "Lollipop"
 	desc = "Why are you seeing this?!"
-	projectile_type = /obj/projectile/bullet/reusable/lollipop
+	projectile_type = /obj/projectile/bullet/lollipop
 	click_cooldown_override = 2
 
-/obj/item/ammo_casing/caseless/lollipop/harmful
-	projectile_type = /obj/projectile/bullet/reusable/lollipop/harmful
+/obj/item/ammo_casing/lollipop/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
 
-/obj/projectile/bullet/reusable/lollipop
+/obj/item/ammo_casing/lollipop/harmful
+	projectile_type = /obj/projectile/bullet/lollipop/harmful
+
+/obj/projectile/bullet/lollipop
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
-	ammo_type = /obj/item/food/lollipop/cyborg
 	damage = 0
 	speed = 0.5
-	var/color2 = rgb(0, 0, 0)
+	var/head_color
 
-/obj/projectile/bullet/reusable/lollipop/harmful
+/obj/projectile/bullet/lollipop/harmful
 	embedding = list(
 		embed_chance = 35,
 		fall_chance = 2,
@@ -209,20 +217,17 @@
 	damage = 10
 	embed_falloff_tile = 0
 
-/obj/projectile/bullet/reusable/lollipop/Initialize(mapload)
-	var/obj/item/food/lollipop/lollipop = new ammo_type(src)
-	color2 = lollipop.head_color
+/obj/projectile/bullet/lollipop/Initialize(mapload)
+	. = ..()
 	var/mutable_appearance/head = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', "lollipop_2")
-	head.color = color2
+	head.color = head_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	add_overlay(head)
-	return ..()
+	AddElement(/datum/element/projectile_drop, /obj/item/food/lollipop/cyborg)
+	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
 
-/obj/projectile/bullet/reusable/lollipop/handle_drop()
-	if(!dropped)
-		var/turf/turf = get_turf(src)
-		var/obj/item/food/lollipop/lollipop = new ammo_type(turf)
-		lollipop.change_head_color(color2)
-		dropped = TRUE
+/obj/projectile/bullet/lollipop/proc/handle_drop(datum/source, obj/item/food/lollipop/lollipop)
+	SIGNAL_HANDLER
+	lollipop.change_head_color(head_color)
 
 #undef DISPENSE_LOLLIPOP_MODE
 #undef THROW_LOLLIPOP_MODE
