@@ -19,7 +19,6 @@
 
 	hair_color = "mutcolor"
 	hair_alpha = 150
-	mutanttongue = /obj/item/organ/internal/tongue/jelly //making new organs is hard ok?
 	mutantlungs = /obj/item/organ/internal/lungs/oozeling
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimeooze
