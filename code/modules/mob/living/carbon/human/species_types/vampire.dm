@@ -16,7 +16,9 @@
 		TRAIT_NOHUNGER,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutant_bodyparts = list("wings" = "None")
+	mutant_bodyparts = list(
+		"wings" = "None",
+	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	exotic_bloodtype = "U"
 	blood_deficiency_drain_rate = BLOOD_DEFICIENCY_MODIFIER // vampires already passively lose blood, so this just makes them lose it slightly more quickly when they have blood deficiency.

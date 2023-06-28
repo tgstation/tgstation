@@ -11,8 +11,13 @@
 		TRAIT_ANTENNAE,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
-	mutant_bodyparts = list("moth_markings" = "None")
-	external_organs = list(/obj/item/organ/external/wings/moth = "Plain", /obj/item/organ/external/antennae = "Plain")
+	mutant_bodyparts = list(
+		"moth_markings" = "None",
+	)
+	cosmetic_organs = list(
+		/obj/item/organ/external/wings/moth = "Plain",
+		/obj/item/organ/external/antennae = "Plain",
+	)
 	meat = /obj/item/food/meat/slab/human/mutant/moth
 	mutanttongue = /obj/item/organ/internal/tongue/moth
 	mutanteyes = /obj/item/organ/internal/eyes/moth
@@ -60,10 +65,9 @@
 		return 10 //flyswatters deal 10x damage to moths
 	return 1
 
-
 /datum/species/moth/randomize_features(mob/living/carbon/human/human_mob)
 	human_mob.dna.features["moth_markings"] = pick(GLOB.moth_markings_list)
-	randomize_external_organs(human_mob)
+	randomize_cosmetic_organs(human_mob)
 
 /datum/species/moth/get_scream_sound(mob/living/carbon/human/human)
 	return 'sound/voice/moth/scream_moth.ogg'

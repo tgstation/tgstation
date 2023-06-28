@@ -2,7 +2,6 @@
 	name = "Mushroomperson"
 	plural_form = "Mushroompeople"
 	id = SPECIES_MUSHROOM
-	mutant_bodyparts = list("caps" = "Round")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	fixed_mut_color = "#DBBF92"
@@ -26,6 +25,9 @@
 	mutanttongue = /obj/item/organ/internal/tongue/mush
 	mutanteyes = /obj/item/organ/internal/eyes/night_vision/mushroom
 	mutantlungs = null
+	mutant_bodyparts = list(
+		"caps" = "Round",
+	)
 	use_skintones = FALSE
 	species_language_holder = /datum/language_holder/mushroom
 

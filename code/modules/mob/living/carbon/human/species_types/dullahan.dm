@@ -7,7 +7,9 @@
 		TRAIT_NOHUNGER,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutant_bodyparts = list("wings" = "None")
+	mutant_bodyparts = list(
+		"wings" = "None",
+	)
 	use_skintones = TRUE
 	mutantbrain = /obj/item/organ/internal/brain/dullahan
 	mutanteyes = /obj/item/organ/internal/eyes/dullahan

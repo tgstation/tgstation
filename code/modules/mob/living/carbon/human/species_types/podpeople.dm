@@ -9,7 +9,7 @@
 	inherent_traits = list(
 		TRAIT_PLANT_SAFE,
 	)
-	external_organs = list(
+	cosmetic_organs = list(
 		/obj/item/organ/external/pod_hair = "None",
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
@@ -102,4 +102,4 @@
 	return to_add
 
 /datum/species/pod/randomize_features(mob/living/carbon/human_mob)
-	randomize_external_organs(human_mob)
+	randomize_cosmetic_organs(human_mob)

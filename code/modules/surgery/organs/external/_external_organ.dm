@@ -1,3 +1,6 @@
+/obj/item/organ/external
+	visual = TRUE
+
 /// The horns of a lizard!
 /obj/item/organ/external/horns
 	name = "horns"

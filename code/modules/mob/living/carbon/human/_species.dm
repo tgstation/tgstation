@@ -74,10 +74,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
-	///Internal organs that are unique to this race, like a tail. list(typepath of organ 1, typepath of organ 2s)
+	///Internal organs that are unique to this race, like a tail. list(typepath of organ 1, typepath of organ 2)
 	var/list/mutant_organs = list()
-	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
-	var/list/external_organs = list()
+	///List of cosmetic organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout").
+	var/list/cosmetic_organs = list()
 	///Replaces default brain with a different organ
 	var/obj/item/organ/internal/brain/mutantbrain = /obj/item/organ/internal/brain
 	///Replaces default heart with a different organ
@@ -141,15 +141,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi
 	var/fire_overlay = "human"
 
-	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
+	/// Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
 	var/list/species_traits = list()
-	///Generic traits tied to having the species.
+	/// Generic traits tied to having the species.
 	var/list/inherent_traits = list()
 	/// List of biotypes the mob belongs to. Used by diseases.
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	/// The type of respiration the mob is capable of doing. Used by adjustOxyLoss.
 	var/inherent_respiration_type = RESPIRATION_OXYGEN
-	///List of factions the mob gain upon gaining this species.
+	/// List of factions the mob gain upon gaining this species.
 	var/list/inherent_factions
 
 	///What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]
@@ -323,7 +323,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/regenerate_organs(mob/living/carbon/organ_holder, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	//what should be put in if there is no mutantorgan (brains handled separately)
-	var/list/organ_slots = list(
+	var/static/list/organ_slots = list(
 		ORGAN_SLOT_BRAIN,
 		ORGAN_SLOT_HEART,
 		ORGAN_SLOT_LUNGS,
@@ -394,20 +394,26 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				current_organ.Remove(organ_holder)
 				QDEL_NULL(current_organ)
 
-	for(var/obj/item/organ/external/external_organ in organ_holder.organs)
-		// External organ checking. We need to check the external organs owned by the carbon itself,
+	for(var/obj/item/organ/cosmetic_organ as anything in organ_holder.organs)
+		// Not a cosmetic organ, don't fuck with it
+		if(!cosmetic_organ.visual)
+			continue
+		// Already dealt with this organ
+		if(cosmetic_organ.slot in organ_slots)
+			continue
+		// Cosmetic organ checking. We need to check the cosmetic organs owned by the carbon itself,
 		// because we want to also remove ones not shared by its species.
 		// This should be done even if species was not changed.
-		if(external_organ in external_organs)
-			continue // Don't remove external organs this species is supposed to have.
+		if(cosmetic_organ.type in cosmetic_organs)
+			continue // Don't remove cosmetic organs this species is supposed to have.
 
-		external_organ.Remove(organ_holder)
-		QDEL_NULL(external_organ)
+		cosmetic_organ.Remove(organ_holder)
+		QDEL_NULL(cosmetic_organ)
 
-	var/list/species_organs = mutant_organs + external_organs
+	var/list/species_organs = mutant_organs + cosmetic_organs
 	for(var/organ_path in species_organs)
 		var/obj/item/organ/current_organ = organ_holder.get_organ_by_type(organ_path)
-		if(ispath(organ_path, /obj/item/organ/external) && !should_external_organ_apply_to(organ_path, organ_holder))
+		if(!should_organ_apply_to(organ_path, organ_holder))
 			if(!isnull(current_organ) && replace_current)
 				// if we have an organ here and we're replacing organs, remove it
 				current_organ.Remove(organ_holder)
@@ -475,13 +481,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/human = C
-		for(var/obj/item/organ/external/organ_path as anything in external_organs)
-			if(!should_external_organ_apply_to(organ_path, human))
+		for(var/obj/item/organ/organ_path as anything in cosmetic_organs)
+			if(!should_organ_apply_to(organ_path, human))
 				continue
 
-			//Load a persons preferences from DNA
-			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
-			new_organ.Insert(human, special=TRUE, drop_if_replaced=FALSE)
+			// Loads a persons preferences from DNA
+			var/obj/item/organ/new_organ = SSwardrobe.provide_type(organ_path)
+			new_organ.Insert(human, special = TRUE, drop_if_replaced = FALSE)
 
 	if(length(inherent_traits))
 		C.add_traits(inherent_traits, SPECIES_TRAIT)
@@ -510,9 +516,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
-	for(var/obj/item/organ/external/organ in C.organs)
-		organ.Remove(C)
-		qdel(organ)
 
 	//If their inert mutation is not the same, swap it out
 	if((inert_mutation != new_species.inert_mutation) && LAZYLEN(C.dna.mutation_index) && (inert_mutation in C.dna.mutation_index))
@@ -807,8 +810,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_mob.update_body()
 
 ///Proc that will randomize all the external organs (i.e. horns, frills, tails etc.) of a species' associated mob
-/datum/species/proc/randomize_external_organs(mob/living/carbon/human/human_mob)
-	for(var/obj/item/organ/external/organ_path as anything in external_organs)
+/datum/species/proc/randomize_cosmetic_organs(mob/living/carbon/human/human_mob)
+	for(var/obj/item/organ/external/organ_path as anything in cosmetic_organs)
 		var/obj/item/organ/external/randomized_organ = human_mob.get_organ_by_type(organ_path)
 		if(randomized_organ)
 			var/datum/bodypart_overlay/mutant/overlay = randomized_organ.bodypart_overlay
@@ -1765,12 +1768,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if ( \
 			(preference.relevant_mutant_bodypart in mutant_bodyparts) \
 			|| (preference.relevant_species_trait in species_traits) \
-			|| (preference.relevant_external_organ in external_organs) \
+			|| (preference.relevant_external_organ in cosmetic_organs) \
 			|| (preference.relevant_head_flag && check_head_flags(preference.relevant_head_flag)) \
 		)
 			features += preference.savefile_key
 
-	for (var/obj/item/organ/external/organ_type as anything in external_organs)
+	for (var/obj/item/organ/external/organ_type as anything in cosmetic_organs)
 		var/preference = initial(organ_type.preference)
 		if (!isnull(preference))
 			features += preference
@@ -1791,7 +1794,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/get_types_to_preload()
 	var/list/to_store = list()
 	to_store += mutant_organs
-	for(var/obj/item/organ/external/horny as anything in external_organs)
+	for(var/obj/item/organ/external/horny as anything in cosmetic_organs)
 		to_store += horny //Haha get it?
 
 	//Don't preload brains, cause reuse becomes a horrible headache
@@ -2277,7 +2280,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/bodypart/new_part
 		if(path)
 			new_part = new path()
-			new_part.replace_limb(target, TRUE)
+			new_part.replace_limb(target, special = TRUE, keep_old_organs = TRUE)
 			new_part.update_limb(is_creating = TRUE)
 		qdel(old_part)
 

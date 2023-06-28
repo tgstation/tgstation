@@ -3,10 +3,13 @@
 	name = "Felinid"
 	id = SPECIES_FELINE
 	examine_limb_id = SPECIES_HUMAN
-	mutant_bodyparts = list("ears" = "Cat", "wings" = "None")
 	mutanttongue = /obj/item/organ/internal/tongue/cat
 	mutantears = /obj/item/organ/internal/ears/cat
-	external_organs = list(
+	mutant_bodyparts = list(
+		"ears" = "Cat",
+		"wings" = "None",
+	)
+	cosmetic_organs = list(
 		/obj/item/organ/external/tail/cat = "Cat",
 	)
 	inherent_traits = list(TRAIT_CAN_USE_FLIGHT_POTION, TRAIT_HATED_BY_DOGS)
@@ -42,7 +45,7 @@
 	return ..()
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
-	randomize_external_organs(human_mob)
+	randomize_cosmetic_organs(human_mob)
 	return ..()
 
 /proc/mass_purrbation()
@@ -107,7 +110,7 @@
 			old_tail.Remove(purrbated_human, special = TRUE)
 			qdel(old_tail)
 			// Locate does not work on assoc lists, so we do it by hand
-			for(var/external_organ in target_species.external_organs)
+			for(var/external_organ in target_species.cosmetic_organs)
 				if(ispath(external_organ, /obj/item/organ/external/tail))
 					var/obj/item/organ/external/tail/new_tail = new external_organ()
 					new_tail.Insert(purrbated_human, special = TRUE, drop_if_replaced = FALSE)
