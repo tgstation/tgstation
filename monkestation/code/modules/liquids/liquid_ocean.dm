@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 /turf/open/floor/plating/ocean/proc/process_turf()
 	for(var/direction in open_turfs)
 		var/turf/directional_turf = get_step(src, direction)
-		if(isspaceturf(directional_turf))
+		if(isspaceturf(directional_turf) || istype(directional_turf, /turf/open/floor/plating/ocean))
 			RegisterSignal(directional_turf, COMSIG_TURF_DESTROY, PROC_REF(add_turf_direction))
 			open_turfs -= direction
 			if(!open_turfs.len)
