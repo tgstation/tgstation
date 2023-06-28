@@ -84,7 +84,8 @@
 	return TRUE
 
 /obj/item/organ/tail/cat
-	name = "tail"
+	name = "cat tail"
+	desc = "A severed cat tail. It doesn't seem to come from an actual cat..."
 	preference = "feature_human_tail"
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/cat
