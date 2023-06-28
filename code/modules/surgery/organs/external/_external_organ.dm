@@ -10,6 +10,7 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_HORNS
 
+	visual = TRUE
 	preference = "feature_lizard_horns"
 	dna_block = DNA_HORNS_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_ENAMEL

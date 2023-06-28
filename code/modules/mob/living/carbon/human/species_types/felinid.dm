@@ -4,12 +4,12 @@
 	id = SPECIES_FELINE
 	examine_limb_id = SPECIES_HUMAN
 	mutanttongue = /obj/item/organ/internal/tongue/cat
-	mutantears = /obj/item/organ/internal/ears/cat
+	mutantears = /obj/item/organ/internal/ears/cat // Yes we need to set it here and on cosmetic_organs. Ass.
 	mutant_bodyparts = list(
-		"ears" = "Cat",
 		"wings" = "None",
 	)
 	cosmetic_organs = list(
+		/obj/item/organ/internal/ears/cat = "Cat",
 		/obj/item/organ/external/tail/cat = "Cat",
 	)
 	inherent_traits = list(TRAIT_CAN_USE_FLIGHT_POTION, TRAIT_HATED_BY_DOGS)

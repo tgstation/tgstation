@@ -57,6 +57,19 @@
 	set_organ_damage(max(damage + (ddmg*damage_multiplier), 0))
 	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
 
+/datum/bodypart_overlay/mutant/ears
+	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
+	color_source = ORGAN_COLOR_HAIR
+	feature_key = "ears"
+
+/datum/bodypart_overlay/mutant/ears/can_draw_on_bodypart(mob/living/carbon/human/human)
+	if(!(human.head?.flags_inv & HIDEEARS))
+		return TRUE
+	return FALSE
+
+/datum/bodypart_overlay/mutant/ears/get_global_feature_list()
+	return GLOB.ears_list
+
 /obj/item/organ/internal/ears/invincible
 	damage_multiplier = 0
 
@@ -65,23 +78,11 @@
 	icon = 'icons/obj/clothing/head/costume.dmi'
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "kitty"
-	visual = TRUE
 	damage_multiplier = 2
 
-/obj/item/organ/internal/ears/cat/on_insert(mob/living/carbon/human/ear_owner)
-	. = ..()
-	if(istype(ear_owner) && ear_owner.dna)
-		color = ear_owner.hair_color
-		ear_owner.dna.features["ears"] = ear_owner.dna.species.mutant_bodyparts["ears"] = "Cat"
-		ear_owner.dna.update_uf_block(DNA_EARS_BLOCK)
-		ear_owner.update_body()
-
-/obj/item/organ/internal/ears/cat/on_remove(mob/living/carbon/human/ear_owner)
-	. = ..()
-	if(istype(ear_owner) && ear_owner.dna)
-		color = ear_owner.hair_color
-		ear_owner.dna.species.mutant_bodyparts -= "ears"
-		ear_owner.update_body()
+	visual = TRUE
+	dna_block = DNA_EARS_BLOCK
+	bodypart_overlay = /datum/bodypart_overlay/mutant/ears
 
 /obj/item/organ/internal/ears/penguin
 	name = "penguin ears"
@@ -106,14 +107,14 @@
 	damage_multiplier = 0.9
 	organ_flags = ORGAN_SYNTHETIC
 
-/obj/item/organ/internal/ears/cybernetic/upgraded
-	name = "upgraded cybernetic ears"
-	icon_state = "ears-c-u"
-	desc = "An advanced cybernetic ear, surpassing the performance of organic ears."
-	damage_multiplier = 0.5
-
 /obj/item/organ/internal/ears/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	apply_organ_damage(40/severity)
+
+/obj/item/organ/internal/ears/cybernetic/upgraded
+	name = "upgraded cybernetic ears"
+	icon_state = "ears-c-u"
+	desc = "An advanced cybernetic ear, surpassing the performance of organic ears."
+	damage_multiplier = 0.5

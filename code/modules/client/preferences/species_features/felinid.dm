@@ -3,7 +3,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	can_randomize = FALSE
-	relevant_external_organ = /obj/item/organ/external/tail/cat
+	relevant_cosmetic_organ = /obj/item/organ/external/tail/cat
 
 /datum/preference/choiced/tail_human/init_possible_values()
 	return assoc_to_keys_features(GLOB.tails_list_human)
@@ -20,7 +20,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	can_randomize = FALSE
-	relevant_mutant_bodypart = "ears"
+	relevant_cosmetic_organ = /obj/item/organ/internal/ears/cat
 
 /datum/preference/choiced/ears/init_possible_values()
 	return assoc_to_keys_features(GLOB.ears_list)
