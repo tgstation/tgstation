@@ -685,9 +685,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * forced_colour - The forced color of an accessory. Leave null to use mutant color.
  */
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/source, forced_colour)
-	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
-	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
-	var/list/standing = list()
 
 	source.remove_overlay(BODY_BEHIND_LAYER)
 	source.remove_overlay(BODY_ADJ_LAYER)
@@ -696,19 +693,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!mutant_bodyparts || HAS_TRAIT(source, TRAIT_INVISIBLE_MAN))
 		return
 
-	var/obj/item/bodypart/head/noggin = source.get_bodypart(BODY_ZONE_HEAD)
-
-
-	if(mutant_bodyparts["ears"])
-		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || !IS_ORGANIC_LIMB(noggin))
-			bodyparts_to_add -= "ears"
-
-	if(!bodyparts_to_add)
-		return
-
+	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
+	var/list/relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+	var/list/standing = list()
 	var/g = (source.physique == FEMALE) ? "f" : "m"
 
-	for(var/layer in relevent_layers)
+	for(var/layer in relevant_layers)
 		var/layertext = mutant_bodyparts_layertext(layer)
 
 		for(var/bodypart in bodyparts_to_add)

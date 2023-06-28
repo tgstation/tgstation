@@ -242,20 +242,25 @@
 		return
 
 	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
+	var/list/fucking_organs
 	if(old_limb)
 		// We have to do this stupid goofy loop because guess what fucker,
-		//the limb might drop in nullspace therefore the organs get deleted (ugh)
+		// the old limb might drop in nullspace therefore the organs get deleted (ugh)
 		if(keep_old_organs)
+			fucking_organs = list()
 			for(var/obj/item/organ/organ as anything in old_limb.organs)
-				organ.transfer_to_limb(src, special = TRUE)
+				organ.Remove(limb_owner, special = TRUE)
+				organ.forceMove(src)
+				fucking_organs += organ
 		old_limb.drop_limb(special = TRUE) //always true, this limb is being replaced even if the new one isn't
 
 	. = try_attach_limb(limb_owner, special)
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
-		if(keep_old_organs)
-			for(var/obj/item/organ/organ as anything in organs)
-				organ.transfer_to_limb(old_limb, special = TRUE)
 		old_limb.try_attach_limb(limb_owner, special = TRUE) //always true, this limb is being replaced even if the new one isn't
+	//god this is ass
+	if(keep_old_organs)
+		for(var/obj/item/organ/organ as anything in fucking_organs)
+			organ.Insert(limb_owner, special = TRUE)
 
 ///Checks if a limb qualifies as a BODYPART_IMPLANTED
 /obj/item/bodypart/proc/check_for_frankenstein(mob/living/carbon/human/monster)
