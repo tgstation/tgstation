@@ -61,6 +61,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /obj/item/organ/Initialize(mapload, accessory_type)
 	. = ..()
+	// If you give restyle_flags to an organ without a bodypart overlay, I will physically harm you
+	if(restyle_flags)
+		RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
@@ -70,8 +73,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(process_death)
 		START_PROCESSING(SSobj, src)
 	// Sets up visual elements of the organ
-	if(visual)
-		initialize_visuals(accessory_type)
+	initialize_visuals(accessory_type)
 
 /obj/item/organ/Destroy(force)
 	if(owner)

@@ -37,11 +37,10 @@
 
 /// Initializes visual elements of an organ
 /obj/item/organ/proc/initialize_visuals(accessory_type)
-	if(restyle_flags)
-		RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
-
 	if(!bodypart_overlay)
 		return
+	bodypart_overlay = new bodypart_overlay()
+
 	accessory_type = accessory_type ? accessory_type : sprite_accessory_override
 	var/update_appearance = TRUE
 	if(accessory_type)
