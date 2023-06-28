@@ -99,10 +99,16 @@
 	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
 	var/stabilize = FALSE
+	var/thrust_callback
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
+	thrust_callback = CALLBACK(src, PROC_REF(allow_thrust))
 	configure_jetpack(stabilize)
+
+/obj/item/mod/module/jetpack/Destroy()
+	thrust_callback = null
+	return ..()
 
 /**
  * configures/re-configures the jetpack component
@@ -118,7 +124,7 @@
 		src.stabilize, \
 		COMSIG_MODULE_TRIGGERED, \
 		COMSIG_MODULE_DEACTIVATED, \
-		CALLBACK(src, PROC_REF(allow_thrust)), \
+		thrust_callback, \
 		/datum/effect_system/trail_follow/ion/grav_allowed \
 	)
 

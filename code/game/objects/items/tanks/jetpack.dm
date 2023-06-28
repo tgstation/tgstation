@@ -12,11 +12,17 @@
 	var/on = FALSE
 	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
 	var/stabilize = FALSE
+	var/thrust_callback
 
 /obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_SUITSTORE)
+	thrust_callback = CALLBACK(src, PROC_REF(allow_thrust), 0.01)
 	configure_jetpack(stabilize)
+
+/obj/item/tank/jetpack/Destroy()
+	thrust_callback = null
+	return ..()
 
 /**
  * configures/re-configures the jetpack component
@@ -32,7 +38,7 @@
 		src.stabilize, \
 		COMSIG_JETPACK_ACTIVATED, \
 		COMSIG_JETPACK_DEACTIVATED, \
-		CALLBACK(src, PROC_REF(allow_thrust), 0.01), \
+		thrust_callback, \
 		/datum/effect_system/trail_follow/ion \
 	)
 
