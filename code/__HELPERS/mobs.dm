@@ -70,7 +70,7 @@
 	if(!GLOB.horns_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, GLOB.horns_list)
 	if(!GLOB.ears_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, GLOB.horns_list)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, GLOB.ears_list)
 	if(!GLOB.frills_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, GLOB.frills_list)
 	if(!GLOB.spines_list.len)

@@ -3,8 +3,11 @@
 	icon = 'icons/obj/clothing/head/costume.dmi'
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "kitty"
-	visual = TRUE
 	damage_multiplier = 2
+
+	visual = TRUE
+	dna_block = DNA_EARS_BLOCK
+	bodypart_overlay = /datum/bodypart_overlay/mutant/ears
 
 /obj/item/organ/ears/fox/on_insert(mob/living/carbon/human/ear_owner)
 	. = ..()
