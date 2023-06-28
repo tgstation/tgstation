@@ -31,7 +31,7 @@
 	if(!ishuman(owner) || QDELETED(owner))
 		return
 	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology.armor = human_owner.physiology.armor.remove_other_armor(given_armor)
+	human_owner.physiology.armor = human_owner.physiology.armor.subtract_other_armor(given_armor)
 	REMOVE_TRAIT(owner, TRAIT_NUKEIMMUNE, id)
 	REMOVE_TRAIT(owner, TRAIT_RADIMMUNE, id)
 	REMOVE_TRAIT(owner, TRAIT_VIRUS_RESISTANCE, id)

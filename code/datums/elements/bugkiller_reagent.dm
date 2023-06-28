@@ -1,5 +1,6 @@
 /// Simple element to be applied to reagents
-/// When those reagents are exposed to mobs with the bug biotype, causes toxins damgae
+/// When those reagents are exposed to mobs with the bug biotype, causes toxins damage
+/// If this delivers the killing blow on a non-humanoid mob, it applies a special status effect that does a funny animation
 /datum/element/bugkiller_reagent
 
 /datum/element/bugkiller_reagent/Attach(datum/target)
@@ -29,7 +30,7 @@
 		return
 
 	var/damage = min(round(0.4 * reac_volume * (1 - touch_protection), 0.1), 10)
-	if(exposed_mob.health <= damage)
+	if(!(exposed_mob.mob_biotypes & MOB_HUMANOID) && exposed_mob.health <= damage)
 		exposed_mob.apply_status_effect(/datum/status_effect/bugkiller_death)
 		return
 
@@ -62,7 +63,7 @@
 	if(isbasicmob(owner))
 		var/mob/living/basic/basic_owner = owner
 		basic_owner.basic_mob_flags &= ~DEL_ON_DEATH
-		basic_owner.flip_on_death = TRUE
+		basic_owner.basic_mob_flags |= FLIP_ON_DEATH
 
 	if(isanimal(owner))
 		var/mob/living/simple_animal/simple_owner = owner

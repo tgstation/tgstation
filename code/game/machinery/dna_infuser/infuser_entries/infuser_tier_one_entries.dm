@@ -83,7 +83,7 @@
 		will not cause you to become incapable of leaving your bed. These creatures are incredibly resilient to many things \
 		humans weak to, and we can use that! Who wouldn't like to survive a nuclear blast? \
 		NOTE: Squished roaches will not work for the infuser, if that wasn't obvious. Try spraying them with some pestkiller from botany!"
-	threshold_desc = "you will no longer be gibbed by explosions, and gain incredible resistance to viruses."
+	threshold_desc = "you will no longer be gibbed by explosions, and gain incredible resistance to viruses and radiation."
 	qualities = list(
 		"resilience to attacks from behind",
 		"healthier organs",
@@ -91,6 +91,7 @@
 		"the ability to survive a nuclear apocalypse",
 		"harder to pick yourself up from falling over",
 		"avoid toxins at all costs",
+		"always down to find a snack",
 	)
 	input_obj_or_mob = list(
 		/mob/living/basic/cockroach,
