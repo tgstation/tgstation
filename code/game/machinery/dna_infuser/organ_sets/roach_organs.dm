@@ -109,7 +109,7 @@
 	if(!defense_timerid)
 		human_owner.physiology.brute_mod /= 2
 		human_owner.visible_message(span_warning("[human_owner]'s back hardens against the blow!"))
-		playsound(human_owner, 'sound/effects/constructform.ogg', 25)
+		playsound(human_owner, 'sound/effects/constructform.ogg', 25, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
 	defense_timerid = addtimer(CALLBACK(src, PROC_REF(reset_damage), owner), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
