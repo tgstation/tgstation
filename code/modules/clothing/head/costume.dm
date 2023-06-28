@@ -137,7 +137,7 @@
 	icon_state = "fancy_hat"
 	greyscale_colors = "#E3C937#782A81"
 	greyscale_config = /datum/greyscale_config/fancy_hat
-	greyscale_config_worn = /datum/greyscale_config/fancy_hat_worn
+	greyscale_config_worn = /datum/greyscale_config/fancy_hat/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/football_helmet
@@ -145,7 +145,7 @@
 	icon_state = "football_helmet"
 	greyscale_colors = "#D74722"
 	greyscale_config = /datum/greyscale_config/football_helmet
-	greyscale_config_worn = /datum/greyscale_config/football_helmet_worn
+	greyscale_config_worn = /datum/greyscale_config/football_helmet/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/tv_head

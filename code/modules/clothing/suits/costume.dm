@@ -533,7 +533,7 @@
 	icon_state = "football_armor"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	greyscale_config = /datum/greyscale_config/football_armor
-	greyscale_config_worn = /datum/greyscale_config/football_armor_worn
+	greyscale_config_worn = /datum/greyscale_config/football_armor/worn
 	greyscale_colors = "#D74722"
 	flags_1 = IS_PLAYER_COLORABLE_1
 

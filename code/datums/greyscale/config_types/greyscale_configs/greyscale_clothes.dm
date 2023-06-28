@@ -541,50 +541,45 @@
 	icon_file = 'icons/obj/clothing/head/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/football_helmet.json'
 
-/datum/greyscale_config/football_helmet_worn
+/datum/greyscale_config/football_helmet/worn
 	name = "Football Helmet (Worn)"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
-	json_config = 'code/datums/greyscale/json_configs/football_helmet_worn.json'
 
 /datum/greyscale_config/football_suit
 	name = "Football Suit"
 	icon_file = 'icons/obj/clothing/under/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/football_suit.json'
 
-/datum/greyscale_config/football_suit_worn
+/datum/greyscale_config/football_suit/worn
 	name = "Football Suit (Worn)"
 	icon_file = 'icons/mob/clothing/under/costume.dmi'
-	json_config = 'code/datums/greyscale/json_configs/football_suit_worn.json'
 
 /datum/greyscale_config/football_armor
 	name = "Football Armor"
 	icon_file = 'icons/obj/clothing/suits/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/football_armor.json'
 
-/datum/greyscale_config/football_armor_worn
+/datum/greyscale_config/football_armor/worn
 	name = "Football Armor (Worn)"
 	icon_file = 'icons/mob/clothing/suits/costume.dmi'
-	json_config = 'code/datums/greyscale/json_configs/football_armor_worn.json'
 
 /datum/greyscale_config/fancy_hat
 	name = "Fancy Hat"
 	icon_file = 'icons/obj/clothing/head/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/fancy_hat.json'
 
-/datum/greyscale_config/fancy_hat_worn
+/datum/greyscale_config/fancy_hat/worn
 	name = "Fancy Hat (Worn)"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
-	json_config = 'code/datums/greyscale/json_configs/fancy_hat_worn.json'
 
 /datum/greyscale_config/fancy_coat
 	name = "Fancy Coat"
 	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
 	json_config = 'code/datums/greyscale/json_configs/fancy_coat.json'
 
-/datum/greyscale_config/fancy_coat_worn
+/datum/greyscale_config/fancy_coat/worn
 	name = "Fancy Coat (Worn)"
 	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
-	json_config = 'code/datums/greyscale/json_configs/fancy_coat_worn.json'
 
 /datum/greyscale_config/hawaiian_shirt
 	name = "Hawaiian Overshirt"
@@ -600,7 +595,6 @@
 	icon_file = 'icons/obj/clothing/head/wizard.dmi'
 	json_config = 'code/datums/greyscale/json_configs/witch_hat.json'
 
-/datum/greyscale_config/witch_hat_worn
+/datum/greyscale_config/witch_hat/worn
 	name = "Witch Hat (Worn)"
 	icon_file = 'icons/mob/clothing/head/wizard.dmi'
-	json_config = 'code/datums/greyscale/json_configs/witch_hat_worn.json'
