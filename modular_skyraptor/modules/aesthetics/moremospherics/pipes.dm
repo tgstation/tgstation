@@ -18,6 +18,7 @@
 
 /obj/machinery/atmospherics/pipe/color_adapter
 	icon = 'modular_skyraptor/modules/aesthetics/moremospherics/icons/pipes/color_adapter.dmi'
+	manifold_icon = 'modular_skyraptor/modules/aesthetics/moremospherics/icons/pipes/manifold.dmi'
 
 
 

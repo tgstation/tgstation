@@ -50,3 +50,39 @@
 
 /datum/greyscale_config/meter
 	icon_file = 'modular_skyraptor/modules/aesthetics/moremospherics/icons/pipes/meter.dmi'
+
+
+
+/obj/machinery/atmospherics/components/unary/thermomachine
+	icon = 'modular_skyraptor/modules/aesthetics/moremospherics/icons/thermomachine.dmi'
+	greyscale_colors = "#AAFF00"
+
+/obj/machinery/atmospherics/components/unary/thermomachine/update_icon_state()
+	var/returnval = ..()
+	var/colors_to_use = ""
+	switch(target_temperature)
+		if(BODYTEMP_HEAT_WARNING_3 to INFINITY)
+			colors_to_use = "#FF0000"
+		if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
+			colors_to_use = "#FF6600"
+		if(BODYTEMP_HEAT_WARNING_1 to BODYTEMP_HEAT_WARNING_2)
+			colors_to_use = "#FFFF00"
+		if(BODYTEMP_COLD_WARNING_1 to BODYTEMP_HEAT_WARNING_1)
+			colors_to_use = "#AAFF00"
+		if(BODYTEMP_COLD_WARNING_2 to BODYTEMP_COLD_WARNING_1)
+			colors_to_use = "#00FF66"
+		if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
+			colors_to_use = "#0066FF"
+		else
+			colors_to_use = "#6600FF"
+
+	if(greyscale_colors != colors_to_use)
+		set_greyscale(colors=colors_to_use)
+
+	return returnval
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom
+	greyscale_colors = "#00FF66"
+
+/datum/greyscale_config/thermomachine
+	icon_file = 'modular_skyraptor/modules/aesthetics/moremospherics/icons/thermomachine.dmi'
