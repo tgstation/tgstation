@@ -80,13 +80,13 @@
 			carbon.add_mood_event("charge", /datum/mood_event/overcharged)
 			carbon.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 1)
 			carbon.apply_damage(0.2, TOX, null, null, carbon)
-			carbon.blood_volume = min(carbon.blood_volume + (BLOOD_REGEN_FACTOR * 1.5 * seconds_per_tick), BLOOD_VOLUME_NORMAL) //slightly better than a human, at the cost of toxic damage
+			carbon.blood_volume = min(carbon.blood_volume + (BLOOD_REGEN_FACTOR * 1.6 * seconds_per_tick), BLOOD_VOLUME_NORMAL) //slightly better than a human, at the cost of toxic damage
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
 			carbon.clear_alert("ethereal_charge")
 			carbon.add_mood_event("charge", /datum/mood_event/supercharged)
 			carbon.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 2)
 			carbon.apply_damage(0.325 * seconds_per_tick, TOX, null, null, carbon)
-			carbon.blood_volume = min(carbon.blood_volume + (BLOOD_REGEN_FACTOR * 2.3 * seconds_per_tick), BLOOD_VOLUME_NORMAL) //significantly better than a human, at the cost of high toxin damage and unsustainability due to discharge
+			carbon.blood_volume = min(carbon.blood_volume + (BLOOD_REGEN_FACTOR * 2.6 * seconds_per_tick), BLOOD_VOLUME_NORMAL) //significantly better than a human, at the cost of high toxin damage and unsustainability due to discharge
 			if(SPT_PROB(5, seconds_per_tick)) // 5% each seacond for ethereals to explosively release excess energy if it reaches dangerous levels
 				discharge_process(carbon)
 		else
