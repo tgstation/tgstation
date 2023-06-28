@@ -16,6 +16,7 @@
 	layer = bitflag_to_layer(layer)
 	var/image/primary_image = get_image(layer, limb)
 	color_image(primary_image, layer, limb)
+	. += primary_image
 	return .
 
 ///Generate the image. Needs to be overriden
