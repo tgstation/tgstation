@@ -21,6 +21,26 @@
 	item_path = /obj/item/reagent_containers/condiment/cornmeal
 	cost_per_order = 30
 
+/datum/orderable_item/reagents/milk
+	name = "Milk"
+	item_path = /obj/item/reagent_containers/condiment/milk
+	cost_per_order = 30
+
+/datum/orderable_item/reagents/soymilk
+	name = "Soy Milk"
+	item_path = /obj/item/reagent_containers/condiment/soymilk
+	cost_per_order = 30
+
+/datum/orderable_item/reagents/cream
+	name = "Cream"
+	item_path = /obj/item/reagent_containers/cup/glass/bottle/juice/cream
+	cost_per_order = 40
+
+/datum/orderable_item/reagents/yoghurt
+	name = "Yoghurt"
+	item_path = /obj/item/reagent_containers/condiment/yoghurt
+	cost_per_order = 40
+
 /datum/orderable_item/reagents/enzyme
 	name = "Universal Enzyme"
 	item_path = /obj/item/reagent_containers/condiment/enzyme
