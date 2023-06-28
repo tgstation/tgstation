@@ -45,10 +45,10 @@
 
 /obj/item/food/muffin/moffin/examine(mob/user)
 	. = ..()
-	if(!ishuman(user))
+	if(!isliving(user))
 		return
-	var/mob/living/carbon/human/moffin_observer = user
-	if(moffin_observer.dna.species.liked_food & CLOTH)
+	var/mob/living/moffin_observer = user
+	if(moffin_observer.get_liked_foodtypes() & CLOTH)
 		. += span_nicegreen("Ooh! It's even got bits of clothes on it! Yummy!")
 	else
 		. += span_warning("You're not too sure what's on top though...")

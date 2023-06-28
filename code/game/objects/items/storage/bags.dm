@@ -556,11 +556,11 @@
 	atom_storage.max_slots = 40
 	atom_storage.max_total_storage = 100
 	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/caseless/harpoon
+		/obj/item/ammo_casing/harpoon
 		))
 
 /obj/item/storage/bag/harpoon_quiver/PopulateContents()
 	for(var/i in 1 to 40)
-		new /obj/item/ammo_casing/caseless/harpoon(src)
+		new /obj/item/ammo_casing/harpoon(src)
 
 #undef ORE_BAG_BALOON_COOLDOWN

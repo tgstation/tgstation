@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fix a runtime involving Bilingual Curators"
-  - qol: "Bilinguals get a message on spawn reporting which language they've learned, or a message reporting they have learned no language if they're already fluent in all possible ones."
