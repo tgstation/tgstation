@@ -31943,7 +31943,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "kqy" = (
-/obj/vehicle/sealed/mecha/working/ripley/cargo,
+/obj/vehicle/sealed/mecha/ripley/cargo,
 /obj/machinery/requests_console/directional/north{
 	department = "Cargo Bay";
 	name = "Cargo Bay Requests Console"
