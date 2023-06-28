@@ -7629,15 +7629,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"bkh" = (
-/obj/structure/window/reinforced/spawner/directional/west{
-	pixel_y = 2
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "blg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/tram/filled/line{
@@ -8582,12 +8573,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
-"bDj" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 9
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "bDk" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
@@ -9412,15 +9397,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"bPZ" = (
-/obj/machinery/camera/motion{
-	c_tag = "Secure - AI Upper External South";
-	dir = 9;
-	network = list("aicore")
-	},
-/obj/structure/lattice,
-/turf/open/space/openspace,
-/area/space/nearstation)
 "bQt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -22868,12 +22844,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/glass,
 /area/station/cargo/sorting)
-"gSr" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 10
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "gSF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -33444,11 +33414,6 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
-"kRi" = (
-/obj/machinery/telecomms/relay/preset/station,
-/obj/effect/turf_decal/box,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "kRm" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters"
@@ -39937,14 +39902,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
-"njt" = (
-/obj/machinery/light/small/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north{
-	pixel_y = 2
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "njv" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -43843,19 +43800,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"oFJ" = (
-/obj/machinery/door/airlock/hatch{
-	name = "MiniSat Telecomms Relay Access"
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "oGj" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -45445,12 +45389,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/hallway/primary/tram/left)
-"pmn" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 6
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "pmq" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
@@ -48317,16 +48255,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
-"qmq" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "qmH" = (
 /obj/structure/closet/secure_closet/quartermaster,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -66462,6 +66390,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
+"wBR" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "wBV" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance)
@@ -67621,15 +67553,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/r_wall,
 /area/station/medical/virology)
-"xbk" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "xbp" = (
 /obj/machinery/computer/shuttle/labor,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -68621,16 +68544,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
-"xxD" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 5
-	},
-/obj/machinery/camera/motion/directional/north{
-	c_tag = "Secure - Upper Station Comms Relay";
-	network = list("aicore")
-	},
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
 "xxW" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
@@ -184017,11 +183930,11 @@ jhd
 jhd
 jhd
 rxw
-rxw
-rxw
-rxw
-rxw
-rxw
+wBR
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -184274,11 +184187,11 @@ gFf
 gFf
 jhd
 jhd
-avE
-jhd
-jhd
-jhd
 rxw
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -184530,12 +184443,12 @@ eXb
 uqS
 gFf
 gFf
-gFf
-gFf
-gFf
-gFf
 jhd
 rxw
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -184787,12 +184700,12 @@ pnT
 uqS
 uqS
 gFf
-bDj
-xbk
-gSr
-gFf
 jhd
 rxw
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -185043,13 +184956,13 @@ rsZ
 vOD
 cmo
 uqS
-oFJ
-qmq
-kRi
-njt
 gFf
-bPZ
+jhd
 rxw
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -185301,12 +185214,12 @@ dNi
 uqS
 uqS
 gFf
-xxD
-bkh
-pmn
-gFf
 jhd
 rxw
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -185558,12 +185471,12 @@ cSe
 uqS
 gFf
 gFf
-gFf
-gFf
-gFf
-gFf
 jhd
 rxw
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -185816,11 +185729,11 @@ gFf
 gFf
 jhd
 jhd
-avE
-jhd
-jhd
-jhd
 rxw
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
@@ -186074,10 +185987,10 @@ jhd
 jhd
 rxw
 rxw
-rxw
-rxw
-rxw
-rxw
+jhd
+jhd
+jhd
+jhd
 jhd
 jhd
 jhd
