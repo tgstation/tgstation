@@ -9,6 +9,7 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
 	organ_flags = ORGAN_VITAL
+	visual = TRUE
 	attack_verb_continuous = list("attacks", "slaps", "whacks")
 	attack_verb_simple = list("attack", "slap", "whack")
 
