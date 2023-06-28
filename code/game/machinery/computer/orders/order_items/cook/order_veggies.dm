@@ -13,13 +13,18 @@
 	name = "Carrot"
 	item_path = /obj/item/food/grown/carrot
 
+/datum/orderable_item/veggies/chili
+	name = "Chili"
+	item_path = /obj/item/food/grown/chili	
+
 /datum/orderable_item/veggies/eggplant
 	name = "Eggplant"
 	item_path = /obj/item/food/grown/eggplant
 
+// cringe
 /datum/orderable_item/veggies/mushroom
 	name = "Plump Helmet"
-	desc = "Plumus Hellmus: Plump, soft and s-so inviting~"
+	desc = "Plumus Hellmus: Plump, soft and s-so inviting~" 
 	item_path = /obj/item/food/grown/mushroom/plumphelmet
 
 /datum/orderable_item/veggies/cabbage
@@ -41,6 +46,10 @@
 /datum/orderable_item/veggies/watermelon
 	name = "Watermelon"
 	item_path = /obj/item/food/grown/watermelon
+
+/datum/orderable_item/veggies/banana
+	name = "Banana"
+	item_path = /obj/item/food/grown/banana	
 
 /datum/orderable_item/veggies/corn
 	name = "Corn"
@@ -71,6 +80,10 @@
 	item_path = /obj/item/food/grown/herbs
 	cost_per_order = 5
 
+/datum/orderable_item/veggies/berries
+	name = "Bunch of Berries"
+	item_path = /obj/item/food/grown/berries
+
 /datum/orderable_item/veggies/bell_pepper
 	name = "Bell Pepper"
 	item_path = /obj/item/food/grown/bell_pepper
@@ -78,7 +91,6 @@
 /datum/orderable_item/veggies/cucumbers
 	name = "Cucumber"
 	item_path = /obj/item/food/grown/cucumber
-	cost_per_order = 10
 
 /datum/orderable_item/veggies/pickles
 	name = "Jar of pickles"
