@@ -424,15 +424,13 @@
 
 ///Makes sure that the owner's bodytype flags match the flags of all of it's parts.
 /obj/item/bodypart/proc/synchronize_bodytypes(mob/living/carbon/carbon_owner)
-	if(!carbon_owner?.dna?.species) //carbon_owner and dna can somehow be null during garbage collection, at which point we don't care anyway.
-		return
 	var/all_limb_flags
 	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
 		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
 			all_limb_flags = all_limb_flags | ext_organ.external_bodytypes
 		all_limb_flags = all_limb_flags | limb.bodytype
 
-	carbon_owner.dna.species.bodytype = all_limb_flags
+	carbon_owner.bodytype = all_limb_flags
 
 /mob/living/carbon/proc/regenerate_limbs(list/excluded_zones = list())
 	SEND_SIGNAL(src, COMSIG_CARBON_REGENERATE_LIMBS, excluded_zones)

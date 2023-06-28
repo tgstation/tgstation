@@ -7,7 +7,7 @@
 	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
 	/// type of arrow the quivel should hold
-	var/arrow_path = /obj/item/ammo_casing/caseless/arrow
+	var/arrow_path = /obj/item/ammo_casing/arrow
 
 /obj/item/storage/bag/quiver/Initialize(mapload)
 	. = ..()
@@ -15,7 +15,7 @@
 	atom_storage.max_slots = 40
 	atom_storage.max_total_storage = 100
 	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/caseless/arrow,
+		/obj/item/ammo_casing/arrow,
 	))
 
 /obj/item/storage/bag/quiver/PopulateContents()
@@ -24,7 +24,7 @@
 		new arrow_path(src)
 
 /obj/item/storage/bag/quiver/despawning
-	arrow_path = /obj/item/ammo_casing/caseless/arrow/despawning
+	arrow_path = /obj/item/ammo_casing/arrow/despawning
 
 /obj/item/storage/bag/quiver/holy
 	name = "divine quiver"
@@ -32,4 +32,4 @@
 	icon_state = "holyquiver"
 	inhand_icon_state = "holyquiver"
 	worn_icon_state = "holyquiver"
-	arrow_path = /obj/item/ammo_casing/caseless/arrow/holy
+	arrow_path = /obj/item/ammo_casing/arrow/holy
