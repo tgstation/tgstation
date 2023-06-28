@@ -292,12 +292,12 @@
 	theme = /datum/mod_theme/interdyne
 	applied_cell = /obj/item/stock_parts/cell/super
 	applied_modules = list(
-		/obj/item/mod/module/storage/syndicate,
+		/obj/item/mod/module/defibrillator/combat,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/health_analyzer,
 		/obj/item/mod/module/injector,
 		/obj/item/mod/module/surgical_processor/preloaded,
-		/obj/item/mod/module/defibrillator/combat,
+		/obj/item/mod/module/storage/syndicate,
 		/obj/item/mod/module/tether
 	)
 
