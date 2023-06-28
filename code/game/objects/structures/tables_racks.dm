@@ -23,6 +23,12 @@
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	layer = TABLE_LAYER
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	max_integrity = 100
+	integrity_failure = 0.33
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_TABLES
+	canSmoothWith = SMOOTH_GROUP_TABLES
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/glass_shard_type = /obj/item/shard
@@ -30,13 +36,8 @@
 	var/busy = FALSE
 	var/buildstackamount = 1
 	var/framestackamount = 2
-	var/deconstruction_ready = 1
-	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
-	max_integrity = 100
-	integrity_failure = 0.33
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_TABLES
-	canSmoothWith = SMOOTH_GROUP_TABLES
+	var/deconstruction_ready = TRUE
+	var/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN)
 
 /obj/structure/table/Initialize(mapload, _buildstack)
 	. = ..()
@@ -49,8 +50,9 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	AddElement(/datum/element/keep_above_floor)
-	ADD_TRAIT(src, TRAIT_TOUCH_TURF_ANYWAY, INNATE_TRAIT)
+	if(give_turf_traits)
+		give_turf_traits = string_list(give_turf_traits)
+	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -354,6 +356,7 @@
 	canSmoothWith = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
+	give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY)
 	var/list/attached_items = list()
 
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
@@ -590,7 +593,7 @@
 	icon = 'icons/obj/smooth_structures/reinforced_table.dmi'
 	icon_state = "reinforced_table-0"
 	base_icon_state = "reinforced_table"
-	deconstruction_ready = 0
+	deconstruction_ready = FALSE
 	buildstack = /obj/item/stack/sheet/plasteel
 	max_integrity = 200
 	integrity_failure = 0.25

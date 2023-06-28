@@ -35,13 +35,16 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	))
 
 /datum/component/chasm/Initialize(turf/target)
-	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(Entered))
+	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_stopped))
+	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_no_longer_stopped))
 	target_turf = target
-	START_PROCESSING(SSobj, src) // process on create, in case stuff is still there
+	if(!HAS_TRAIT(parent, TRAIT_CHASM_STOPPED))
+		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(entered))
+		RegisterSignal(parent, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(initialized_on))
+		drop_stuff()
 	src.parent.AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_CHASM)
 
 /datum/component/chasm/UnregisterFromParent()
-	STOP_PROCESSING(SSobj, src)
 	remove_storage()
 
 /**
@@ -58,33 +61,33 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		chasm_storage += ref
 	GLOB.chasm_storage = chasm_storage
 
-/datum/component/chasm/proc/Entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/datum/component/chasm/proc/entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
-
-	START_PROCESSING(SSobj, src)
 	drop_stuff(arrived)
 
-/datum/component/chasm/process()
-	if (!drop_stuff())
-		STOP_PROCESSING(SSobj, src)
+/datum/component/chasm/proc/initialized_on(datum/source, atom/movable/movable, mapload)
+	SIGNAL_HANDLER
+	addtimer(CALLBACK(src, PROC_REF(drop_if_still_here), movable), 1) //give it the time to finish initializing at least.
 
-/datum/component/chasm/proc/is_safe()
-	//if anything matching this typecache is found in the chasm, we don't drop things
-	var/static/list/chasm_safeties_typecache = typecacheof(list(/obj/structure/lattice, /obj/structure/lattice/catwalk, /obj/structure/stone_tile))
+/datum/component/chasm/proc/drop_if_still_here(atom/movable/movable)
+	if(movable.loc == parent)
+		drop_stuff(movable)
 
-	var/atom/parent = src.parent
-	var/list/found_safeties = typecache_filter_list(parent.contents, chasm_safeties_typecache)
-	for(var/obj/structure/stone_tile/S in found_safeties)
-		if(S.fallen)
-			LAZYREMOVE(found_safeties, S)
-	return LAZYLEN(found_safeties)
+/datum/component/chasm/proc/on_chasm_stopped(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_INITIALIZED_ON))
+
+/datum/component/chasm/proc/on_chasm_no_longer_stopped(datum/source)
+	SIGNAL_HANDLER
+	RegisterSignal(source, COMSIG_ATOM_ENTERED, PROC_REF(entered))
+	RegisterSignal(parent, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(initialized_on))
+	drop_stuff()
 
 /datum/component/chasm/proc/drop_stuff(dropped_thing)
-	if (is_safe())
+	if (HAS_TRAIT(parent, TRAIT_CHASM_STOPPED))
 		return FALSE
-
-	var/atom/parent = src.parent
-	var/to_check = dropped_thing ? list(dropped_thing) : parent.contents
+	var/atom/atom_parent = parent
+	var/to_check = dropped_thing ? list(dropped_thing) : atom_parent.contents
 	for (var/thing in to_check)
 		if (droppable(thing))
 			. = TRUE

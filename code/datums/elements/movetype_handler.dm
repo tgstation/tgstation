@@ -53,7 +53,6 @@
 	source.movement_type |= flag
 	if(!(old_state & (FLOATING|FLYING)) && (source.movement_type & (FLOATING|FLYING)) && !paused_floating_anim_atoms[source] && !HAS_TRAIT(source, TRAIT_NO_FLOATING_ANIM))
 		DO_FLOATING_ANIM(source)
-		ADD_TRAIT(source, TRAIT_IGNORE_TURF_EFFECTS, ELEMENT_TRAIT(src))
 	SEND_SIGNAL(source, COMSIG_MOVETYPE_FLAG_ENABLED, flag, old_state)
 
 /// Called when a movement type trait is removed from the movable. Disables the relative bitflag if it wasn't there in the compile-time bitfield.
@@ -66,7 +65,6 @@
 	source.movement_type &= ~flag
 	if((old_state & (FLOATING|FLYING)) && !(source.movement_type & (FLOATING|FLYING)))
 		STOP_FLOATING_ANIM(source)
-		REMOVE_TRAIT(source, TRAIT_IGNORE_TURF_EFFECTS, ELEMENT_TRAIT(src))
 		var/turf/pitfall = source.loc //Things that don't fly fall in open space.
 		if(istype(pitfall))
 			pitfall.zFall(source)

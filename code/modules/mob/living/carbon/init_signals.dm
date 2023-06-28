@@ -53,5 +53,6 @@
 
 ///On gain of TRAIT_PERMANENTLY_ONFIRE, update the visuals if not on fire
 /mob/living/carbon/proc/update_permanently_on_fire(datum/source)
-	if(!leaving_mob.on_fire)
-		leaving_mob.update_fire()
+	SIGNAL_HANDLER
+	if(!on_fire)
+		update_fire()
