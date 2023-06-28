@@ -4299,11 +4299,11 @@
 /area/station/science/server)
 "eiF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/cable/industrial,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "eiI" = (
@@ -12464,7 +12464,6 @@
 /obj/effect/turf_decal/stripes{
 	dir = 10
 	},
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/main)
 "moG" = (
@@ -12676,7 +12675,7 @@
 /area/station/service/chapel)
 "myD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
+/obj/structure/cable/industrial,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "mzT" = (
@@ -19397,7 +19396,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/cable/industrial,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "tAI" = (
@@ -19997,7 +19996,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/industrial,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ucs" = (
@@ -22128,7 +22127,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "wky" = (
-/obj/structure/cable,
+/obj/structure/cable/industrial,
 /turf/open/floor/iron/stairs,
 /area/station/engineering/main)
 "wkK" = (
@@ -23622,8 +23621,8 @@
 /turf/open/floor/elevator_shaft,
 /area/station/cargo/miningoffice)
 "xNe" = (
-/obj/structure/cable,
 /obj/machinery/duct/industrial/waste,
+/obj/structure/cable/industrial,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "xOE" = (
@@ -64354,18 +64353,18 @@ smp
 nTU
 qSp
 aiO
-eXS
-eXS
-eXS
+oDZ
+oDZ
+oDZ
 eiF
 myD
-eXS
-eXS
-eXS
-eXS
+oDZ
+oDZ
+oDZ
+oDZ
 xNe
-eXS
-fGy
+oDZ
+oDZ
 nTi
 gwK
 gwK
@@ -64611,7 +64610,7 @@ pnW
 pnW
 qSp
 fGy
-eXS
+oDZ
 fGy
 fGy
 qSp
@@ -64621,8 +64620,8 @@ lEN
 tdW
 fGy
 brV
-eXS
 fGy
+oDZ
 qMZ
 gVj
 goK
@@ -64868,7 +64867,7 @@ fCD
 fCD
 qSp
 fGy
-eXS
+oDZ
 fGy
 fGy
 qSp
@@ -64878,8 +64877,8 @@ nTi
 nTi
 gNF
 brV
-eXS
 fGy
+oDZ
 gzq
 gzq
 fGy
@@ -65125,7 +65124,7 @@ fCD
 fCD
 qSp
 gKD
-eXS
+oDZ
 fGy
 fGy
 qSp
@@ -65136,7 +65135,7 @@ lxK
 mMh
 eAH
 moi
-fGy
+oDZ
 fGy
 gzq
 fGy
@@ -65382,7 +65381,7 @@ fCD
 fCD
 cYD
 fGy
-eXS
+oDZ
 fGy
 fGy
 qSp
@@ -65392,11 +65391,11 @@ aNi
 aNi
 aNi
 hxd
-kKE
-eXS
-eXS
-eXS
-eXS
+hZm
+oDZ
+oDZ
+oDZ
+oDZ
 wky
 ubW
 ghz
