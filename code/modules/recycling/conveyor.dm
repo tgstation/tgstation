@@ -37,6 +37,10 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	//Direction -> if we have a conveyor belt in that direction
 	var/list/neighbors
 
+/obj/machinery/conveyor/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_CONVEYOR_PRIORITY)
+
 /obj/machinery/conveyor/examine(mob/user)
 	. = ..()
 	if(inverted)

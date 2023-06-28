@@ -43,6 +43,7 @@
 	if(_buildstack)
 		buildstack = _buildstack
 	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(table_carbon),
