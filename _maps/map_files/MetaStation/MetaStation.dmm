@@ -3620,28 +3620,6 @@
 /obj/structure/closet,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/aft)
-"bor" = (
-/obj/structure/table/wood/fancy/orange,
-/obj/item/gps{
-	gpstag = "QM0";
-	pixel_x = 10;
-	pixel_y = 12
-	},
-/obj/machinery/status_display/supply{
-	pixel_x = 32
-	},
-/obj/item/storage/wallet{
-	pixel_x = -3;
-	pixel_y = 10
-	},
-/obj/item/ammo_casing/caseless/rocket{
-	desc = "Your grandpappy brought this home after the war. You're pretty sure it's a dud.";
-	name = "Dud Rocket";
-	pixel_x = -4;
-	pixel_y = -7
-	},
-/turf/open/floor/carpet/red,
-/area/station/command/heads_quarters/qm)
 "boD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -21555,17 +21533,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
-"hXK" = (
-/obj/structure/rack,
-/obj/item/assembly/signaler,
-/obj/item/assembly/signaler,
-/obj/item/assembly/timer,
-/obj/effect/turf_decal/tile/blue/half/contrasted{
-	dir = 1
-	},
-/obj/machinery/digital_clock/directional/south,
-/turf/open/floor/iron/dark,
-/area/station/command/bridge)
 "hXQ" = (
 /obj/machinery/vending/cola/red,
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -23284,6 +23251,17 @@
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
+"iAj" = (
+/obj/structure/rack,
+/obj/item/assembly/signaler,
+/obj/item/assembly/signaler,
+/obj/item/assembly/timer,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/digital_clock/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/command/bridge)
 "iAk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -24051,6 +24029,28 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"iNk" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/gps{
+	gpstag = "QM0";
+	pixel_x = 10;
+	pixel_y = 12
+	},
+/obj/machinery/status_display/supply{
+	pixel_x = 32
+	},
+/obj/item/storage/wallet{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/item/ammo_casing/rocket{
+	desc = "Your grandpappy brought this home after the war. You're pretty sure it's a dud.";
+	name = "Dud Rocket";
+	pixel_x = -4;
+	pixel_y = -7
+	},
+/turf/open/floor/carpet/red,
+/area/station/command/heads_quarters/qm)
 "iNo" = (
 /obj/structure/filingcabinet/filingcabinet,
 /obj/machinery/camera/directional/south{
@@ -85915,7 +85915,7 @@ mmR
 nyk
 qIK
 hKq
-bor
+iNk
 iLV
 mQR
 lud
@@ -95688,7 +95688,7 @@ dUj
 qVc
 wNh
 veO
-hXK
+iAj
 duI
 duI
 wtX
