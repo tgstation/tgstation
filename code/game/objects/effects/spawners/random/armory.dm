@@ -84,9 +84,9 @@
 	name = "riot helmet spawner"
 	icon_state = "riot_helmet"
 	loot = list(
-		/obj/item/clothing/head/helmet/alt,
-		/obj/item/clothing/head/helmet/alt,
-		/obj/item/clothing/head/helmet/alt,
+		/obj/item/clothing/head/helmet/toggleable/riot,
+		/obj/item/clothing/head/helmet/toggleable/riot,
+		/obj/item/clothing/head/helmet/toggleable/riot,
 	)
 
 /obj/effect/spawner/random/armory/bulletproof_armor
