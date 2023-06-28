@@ -5519,6 +5519,7 @@
 #include "monkestation\code\modules\ocean_content\hotspot\center.dm"
 #include "monkestation\code\modules\ocean_content\hotspot\hotspot.dm"
 #include "monkestation\code\modules\ocean_content\hotspot\hotspot_controller.dm"
+#include "monkestation\code\modules\ocean_content\hotspot\hotspot_verbs.dm"
 #include "monkestation\code\modules\ocean_content\hotspot\trench_map.dm"
 #include "monkestation\code\modules\ocean_content\hotspot_machines\dousing_rod.dm"
 #include "monkestation\code\modules\ocean_content\hotspot_machines\hotspot_vents.dm"

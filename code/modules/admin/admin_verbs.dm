@@ -120,6 +120,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/mass_add_metacoins,
 	/client/proc/mass_zombie_cure,
 	/client/proc/mass_zombie_infection,
+	/client/proc/move_hotspots,
 	/client/proc/object_say,
 	/client/proc/polymorph_all,
 	/client/proc/remove_liquid,

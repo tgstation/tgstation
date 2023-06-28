@@ -1152,6 +1152,7 @@
 				addtimer(CALLBACK(cyclelinkedairlock, PROC_REF(close)), BYPASS_DOOR_CHECKS)
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
+	SEND_SIGNAL(src, COMSIG_ATOM_DOOR_OPEN) /// this is different because we need one that covers all doors
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
 	sleep(0.1 SECONDS)

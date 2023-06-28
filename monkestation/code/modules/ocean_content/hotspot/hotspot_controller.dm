@@ -131,3 +131,11 @@ SUBSYSTEM_DEF(hotspots)
 			return_value += (listed_hotspot.get_tile_heat(source) / listed_hotspot.vent_count) * (2 - (1 / (listed_hotspot.vent_count - 1)))
 	var/hotspot_amount = length(retrieve_hotspot_list(source))
 	return ((hotspot_amount > 1) ? (return_value * (1+ (hotspot_amount / 2.3))) : return_value)
+
+///this is a debug tool item to move all hotspots to me
+/datum/controller/subsystem/hotspots/proc/move_all_hotspots(client/source)
+	if(!source.mob)
+		return
+	var/turf/turf = get_turf(source.mob)
+	for(var/datum/hotspot/listed as anything in generated_hotspots)
+		listed.move_center(turf, TRUE)

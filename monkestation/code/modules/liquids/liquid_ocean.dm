@@ -153,6 +153,9 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 				RegisterSignal(directional_turf, COMSIG_TURF_DESTROY, PROC_REF(add_turf_direction), TRUE)
 				continue
 			else if(!(directional_turf in atmos_adjacent_turfs))
+				var/obj/machinery/door/found_door = locate(/obj/machinery/door) in directional_turf
+				if(found_door)
+					RegisterSignal(found_door, COMSIG_ATOM_DOOR_OPEN, TYPE_PROC_REF(/turf/open/floor/plating/ocean, door_opened))
 				RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, PROC_REF(add_turf_direction_non_closed), TRUE)
 				continue
 			else
@@ -161,6 +164,15 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	if(open_turfs.len)
 		SSliquids.active_ocean_turfs |= src
 	SSliquids.unvalidated_oceans -= src
+
+/turf/open/floor/plating/ocean/proc/door_opened(datum/source)
+	SIGNAL_HANDLER
+
+	var/obj/machinery/door/found_door = source
+	var/turf/turf = get_turf(found_door)
+
+	if(turf.can_atmos_pass())
+		turf.add_liquid_list(ocean_reagents, FALSE, ocean_temp)
 
 /turf/open/floor/plating/ocean/proc/process_turf()
 	for(var/direction in open_turfs)
