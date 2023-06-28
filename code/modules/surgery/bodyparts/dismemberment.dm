@@ -236,7 +236,7 @@
 	name = "[owner.real_name]'s head"
 	return ..()
 
-///Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails.
+/// Try to attach this bodypart to a mob, while replacing one if it exists, does nothing if it fails
 /obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner, special = FALSE, keep_old_organs = FALSE)
 	if(!istype(limb_owner))
 		return
@@ -376,7 +376,7 @@
 	new_head_owner.update_body()
 	new_head_owner.update_damage_overlays()
 
-///Makes sure that the owner's bodytype flags match the flags of all of it's parts.
+/// Makes sure that the owner's bodytype flags match the flags of all of it's parts.
 /obj/item/bodypart/proc/synchronize_bodytypes(mob/living/carbon/carbon_owner)
 	if(!carbon_owner?.dna?.species) //carbon_owner and dna can somehow be null during garbage collection, at which point we don't care anyway.
 		return

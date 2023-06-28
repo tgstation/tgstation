@@ -234,7 +234,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(bodypart_overlay)
 		bodypart.add_bodypart_overlay(bodypart_overlay)
 	if(external_bodytypes)
-		bodypart.synchronize_bodytypes(receiver)
+		bodypart.synchronize_bodytypes(bodypart.owner)
 
 /// Removes the organ from the limb
 /obj/item/organ/proc/remove_from_limb(obj/item/bodypart/bodypart, special = FALSE)

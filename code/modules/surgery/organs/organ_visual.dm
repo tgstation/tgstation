@@ -1,7 +1,7 @@
 /**
  * System for drawing organs with overlays.
  * These overlays are drawn directly on the bodypart, attached to a person or not.
- * Works in tandem with the /datum/sprite_accessory datum and /datum/bodypart_overlay/mutant datum to generate sprites.
+ * Works in tandem with the /datum/sprite_accessory and /datum/bodypart_overlay/mutant datums to generate sprites.
  */
 /obj/item/organ
 	/// The overlay datum that actually draws stuff on the limb
