@@ -111,7 +111,6 @@
 /datum/greyscale_config/bandana/striped/worn
 	name = "Striped Bandana (Worn)"
 	icon_file = 'icons/mob/clothing/mask.dmi'
-	json_config = 'code/datums/greyscale/json_configs/bandstriped_worn.json'
 
 /datum/greyscale_config/bandana_striped_inhands_left
 	name = "Striped Bandana (Held, Left)"
@@ -196,37 +195,37 @@
 	icon_file = 'icons/obj/clothing/under/color.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit.json'
 
-/datum/greyscale_config/jumpsuit_worn
+/datum/greyscale_config/jumpsuit/worn
 	name = "Jumpsuit (Worn)"
 	icon_file = 'icons/mob/clothing/under/color.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jumpsuit_worn.json'
+	json_config = 'code/datums/greyscale/json_configs/jumpsuit_worn.json' //Needs separate config for toggle states
 
-/datum/greyscale_config/jumpsuit_inhand_left
+/datum/greyscale_config/jumpsuit/inhand_left
 	name = "Jumpsuit (Held, Left)"
 	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_inhand.json'
 
-/datum/greyscale_config/jumpsuit_inhand_right
+/datum/greyscale_config/jumpsuit/inhand_right
 	name = "Jumpsuit (Held, Right)"
 	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_inhand.json'
 
-/datum/greyscale_config/jumpsuit_prison
+/datum/greyscale_config/jumpsuit/prison
 	name = "Prison Jumpsuit"
 	icon_file = 'icons/obj/clothing/under/color.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison.json'
 
-/datum/greyscale_config/jumpsuit_prison_worn
+/datum/greyscale_config/jumpsuit/prison/worn
 	name = "Prison Jumpsuit (Worn)"
 	icon_file = 'icons/mob/clothing/under/color.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_worn.json'
+	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_worn.json' //Needs separate config for toggle states
 
-/datum/greyscale_config/jumpsuit_prison_inhand_left
+/datum/greyscale_config/jumpsuit/prison/inhand_left
 	name = "Prison Jumpsuit (Held, Left)"
 	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
 
-/datum/greyscale_config/jumpsuit_prison_inhand_right
+/datum/greyscale_config/jumpsuit/prison/inhand_right
 	name = "Prison Jumpsuit (Held, Right)"
 	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
@@ -236,7 +235,7 @@
 	icon_file = 'icons/obj/clothing/under/ethereal.dmi'
 	json_config = 'code/datums/greyscale/json_configs/eth_tunic.json'
 
-/datum/greyscale_config/eth_tunic_worn
+/datum/greyscale_config/eth_tunic/worn
 	name = "Ethereal Tunic (Worn)"
 	icon_file = 'icons/mob/clothing/under/ethereal.dmi'
 	json_config = 'code/datums/greyscale/json_configs/eth_tunic_worn.json'
@@ -503,7 +502,7 @@
 	icon_file = 'icons/obj/clothing/accessories.dmi'
 	json_config = 'code/datums/greyscale/json_configs/waistcoat.json'
 
-/datum/greyscale_config/waistcoat_worn
+/datum/greyscale_config/waistcoat/worn
 	name = "Waistcoat (Worn)"
 	icon_file = 'icons/mob/clothing/accessories.dmi'
 
