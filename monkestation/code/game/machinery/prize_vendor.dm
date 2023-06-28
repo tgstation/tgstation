@@ -14,7 +14,7 @@
 	density = TRUE
 
 	///What subtypes of things can we dispense
-	var/dispense_type
+	var/dispense_type = /obj/item/circuitboard/machine/prize_vendor
 	///If set then given things will be picked from this instead of subtypes of dispense_type, must be a list
 	var/list/dispense_list_override
 	///List of overlay images for the screen, generated on the first init of the subtype
