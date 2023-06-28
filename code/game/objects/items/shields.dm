@@ -333,8 +333,8 @@
 /obj/item/shield/pillow
 	name = "pillow shield"
 	desc = "A large and tough pillow designed to use in a pillow fight."
-	icon_state = "buckler"
-	inhand_icon_state = "buckler"
+	icon_state = "pillow_shield"
+	inhand_icon_state = "pillow_shield"
 	block_chance = 10
 	max_integrity = 10
 	throw_range = 8

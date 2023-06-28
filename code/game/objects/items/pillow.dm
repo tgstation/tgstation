@@ -43,6 +43,7 @@
 	else
 		hit_sound = 'sound/items/pillow_hit.ogg'
 	last_fighter = user
+	new /obj/effect/temp_visual/pillow_hit(target_mob.loc)
 	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
 
 /obj/item/pillow/attack_secondary(mob/living/carbon/victim, mob/living/user, params)

@@ -295,22 +295,20 @@
 	charge_delay = 3 SECONDS
 	destroy_objects = FALSE
 	charge_damage = 10
+	charge_past = 0
 	var/distance
 	var/turf/starting_tile
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/Activate(atom/target_atom)
 	starting_tile = get_turf(target_atom)
 	. = ..()
-
-/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_moved(atom/source)
-	return
-
-/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/charge_end(datum/move_loop/source)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/charger = owner
 		charger.apply_damage(60, STAMINA)
 		charger.Immobilize(1 SECONDS)
-	. = ..()
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_moved(atom/source)
+	return
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_bump(atom/movable/source, atom/target)
 	qdel(new_loop)
@@ -328,6 +326,7 @@
 		return
 	victim = target
 	victim.apply_damage(damage_dealt, STAMINA)
+	new /obj/effect/temp_visual/pillow_hit(victim.loc)
 	playsound(victim, 'sound/items/pillow_hit2.ogg', 100)
 	living_source.visible_message(span_boldwarning("[living_source] smashes into [target] at a quick speed!"))
 	return

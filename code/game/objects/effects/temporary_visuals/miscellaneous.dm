@@ -397,6 +397,11 @@
 /obj/effect/temp_visual/impact_effect/neurotoxin
 	icon_state = "impact_neurotoxin"
 
+/obj/effect/temp_visual/pillow_hit
+	name = "feathers"
+	icon_state = "pillow_hit_effect"
+	duration = 10
+
 /obj/effect/temp_visual/heart
 	name = "heart"
 	icon = 'icons/mob/simple/animal.dmi'
