@@ -62,10 +62,10 @@
 	bodypart_overlay.set_appearance_from_name(feature_list[deconstruct_block(get_uni_feature_block(features, dna_block), feature_list.len)])
 
 /**
- * If you need to change an external_organ for simple one-offs, use this.
+ * If you need to change an organ's visuals for simple one-offs, use this.
  * Pass the accessory type : /datum/accessory/something
  */
-/obj/item/organ/external/proc/simple_change_sprite(accessory_type)
+/obj/item/organ/proc/simple_change_sprite(accessory_type)
 	var/datum/sprite_accessory/typed_accessory = accessory_type //we only take types for maintainability
 
 	bodypart_overlay.set_appearance(typed_accessory)
