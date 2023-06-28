@@ -88,7 +88,7 @@
 	QDEL_NULL(on_created)
 	QDEL_NULL(on_deployed)
 	QDEL_NULL(on_removed)
-	. = ..()
+	return ..()
 
 /// Toggle deployable when the UI button is clicked
 /datum/component/toggle_attached_clothing/proc/on_toggle_pressed(obj/item/source, mob/user, datum/action)
