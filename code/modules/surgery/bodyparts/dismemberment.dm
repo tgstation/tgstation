@@ -382,8 +382,8 @@
 		return
 	var/all_limb_flags
 	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
-		for(var/obj/item/organ/external/ext_organ in limb.organs)
-			all_limb_flags = all_limb_flags | ext_organ.external_bodytypes
+		for(var/obj/item/organ/organ as anything in limb.organs)
+			all_limb_flags = all_limb_flags | organ.external_bodytypes
 		all_limb_flags = all_limb_flags | limb.bodytype
 
 	carbon_owner.dna.species.bodytype = all_limb_flags

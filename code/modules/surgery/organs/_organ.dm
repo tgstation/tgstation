@@ -39,10 +39,12 @@
 	var/reagent_vol = 10
 
 	var/failure_time = 0
-	///Do we effect the appearance of our mob. Used to save time in preference code
-	var/visual = TRUE
+	/// Do we effect the appearance of our mob. Used to save time in preference code
+	var/visual = FALSE
+	/// Whether or not we process inside of the body
+	var/process_life = TRUE
 	/// Whether or not we process outside of the body
-	var/process_death = FALSE
+	var/process_death = TRUE
 	/// Traits that are given to the holder of the organ. If you want an effect that changes this, don't add directly to this. Use the add_organ_trait() proc
 	var/list/organ_traits
 	/// Status Effects that are given to the holder of the organ.
@@ -54,7 +56,7 @@
 // any nonhumans created in that time would experience the same effect.
 INITIALIZE_IMMEDIATE(/obj/item/organ)
 
-/obj/item/organ/Initialize(mapload)
+/obj/item/organ/Initialize(mapload, accessory_type)
 	. = ..()
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
@@ -64,6 +66,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)))
 	if(process_death)
 		START_PROCESSING(SSobj, src)
+	// Sets up visual elements of the organ
+	if(visual)
+		initialize_visuals(accessory_type)
 
 /obj/item/organ/Destroy(force)
 	if(owner)
@@ -112,6 +117,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	owner = receiver
 	add_to_limb(limb, special)
 
+	// We only want this set *once*
+	if(bodypart_overlay.imprint_on_next_insertion)
+		bodypart_overlay.set_appearance_from_name(receiver.dna.features[bodypart_overlay.feature_key])
+		bodypart_overlay.imprint_on_next_insertion = FALSE
+
 	// organs_slot must ALWAYS be ordered in the same way as organ_process_order
 	// Otherwise life processing breaks down
 	sortTim(owner.organs_slot, GLOBAL_PROC_REF(cmp_organ_slot_asc))
@@ -144,13 +154,16 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_GAIN_ORGAN, src, special)
 
+	if(visual)
+		owner.update_body_parts()
+
 /*
  * Remove the organ from the select mob.
  *
  * * organ_owner - the mob who owns our organ, that we're removing the organ from.
  * * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
-/obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE, moving = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	organ_owner.organs -= src
@@ -161,7 +174,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	remove_from_limb(ownerlimb, special) //organs should NEVER be present inside a body without an associated limb
 
 	// Apply or reset unique side-effects. Return value does not matter.
-	on_remove(organ_owner, special)
+	on_remove(organ_owner, special, moving)
 
 	return TRUE
 
@@ -170,7 +183,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * Removes Traits, Actions, and Status Effects on the mob in which the organ was impanted.
  * Override this proc to create unique side-effects for removing your organ. Must be called by overrides.
  */
-/obj/item/organ/proc/on_remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/proc/on_remove(mob/living/carbon/organ_owner, special = FALSE, moving = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
 	for(var/trait in organ_traits)
@@ -194,6 +207,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
 
+	//we're being taken out and dropped
+	if(!moving && use_mob_sprite_as_obj_sprite)
+		update_appearance()
+
+	if(visual)
+		organ_owner.update_body_parts()
+
 /// Transfers the organ to the limb, and to the limb's owner, if there is one
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner, special = FALSE)
 	if(owner)
@@ -211,11 +231,20 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	forceMove(bodypart)
 	LAZYADD(bodypart.organs, src)
 	ownerlimb = bodypart
+	if(bodypart_overlay)
+		bodypart.add_bodypart_overlay(bodypart_overlay)
+	if(external_bodytypes)
+		bodypart.synchronize_bodytypes(receiver)
 
 /// Removes the organ from the limb
 /obj/item/organ/proc/remove_from_limb(obj/item/bodypart/bodypart, special = FALSE)
+	moveToNullspace()
 	LAZYREMOVE(bodypart.organs, src)
 	ownerlimb = null
+	if(bodypart_overlay)
+		bodypart.remove_bodypart_overlay(bodypart_overlay)
+	if(bodypart.owner && external_bodytypes)
+		bodypart.synchronize_bodytypes(bodypart.owner)
 
 /// Add a Trait to an organ that it will give its owner.
 /obj/item/organ/proc/add_organ_trait(trait)
@@ -272,6 +301,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * So that's 900 calls to this proc every life process. Please don't be dumb
  */
 /obj/item/organ/proc/on_life(seconds_per_tick, times_fired)
+	if(!process_life)
+		return
 	if(organ_flags & ORGAN_FAILING)
 		handle_failing_organ(seconds_per_tick)
 		return

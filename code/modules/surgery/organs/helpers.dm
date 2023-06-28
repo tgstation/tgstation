@@ -42,3 +42,17 @@
 /mob/living/carbon/get_organ_slot(slot)
 	. = organs_slot[slot]
 
+/// Checks if the organ should reasonably apply to the target
+/proc/should_organ_apply_to(obj/item/organ/external/organpath, mob/living/carbon/target)
+	if(isnull(organpath) || isnull(target))
+		stack_trace("passed a null path or mob to 'should_organ_apply_to'")
+		return FALSE
+
+	var/datum/bodypart_overlay/mutant/bodypart_overlay = initial(organpath.bodypart_overlay)
+	var/feature_key = initial(bodypart_overlay.feature_key)
+	if(isnull(feature_key) || isnull(bodypart_overlay))
+		return TRUE
+
+	if(target.dna.features[feature_key] != SPRITE_ACCESSORY_NONE)
+		return TRUE
+	return FALSE
