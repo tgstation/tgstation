@@ -1,6 +1,6 @@
 //Categories used for the order console
-#define CATEGORY_FRUITS_VEGGIES "Veggies"
-#define CATEGORY_MILK_EGGS "Milk & Eggs"
+#define CATEGORY_FRUITS_VEGGIES "Fruits & Veggies"
+#define CATEGORY_MILK_EGGS "Miscellaneous & Imports"
 #define CATEGORY_SAUCES_REAGENTS "Reagents"
 
 #define CATEGORY_GOLEM "Golem"
