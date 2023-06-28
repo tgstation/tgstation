@@ -29551,6 +29551,9 @@
 /area/station/medical/treatment_center)
 "jDt" = (
 /obj/machinery/pdapainter/security,
+/obj/item/food/spaghetti/security{
+	pixel_y = 10
+	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hos)
 "jDG" = (
