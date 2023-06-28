@@ -24,7 +24,7 @@
  * * check_on_move - Callback we call each time we attempt a move, we expect it to retun true if the move is ok, false otherwise. It expects an arg, TRUE if fuel should be consumed, FALSE othewise
  * * effect_type - Type of trail_follow to spawn
  */
-/datum/component/jetpack/Initialize(activation_signal, deactivation_signal, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
+/datum/component/jetpack/Initialize(stabilize, activation_signal, deactivation_signal, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -35,15 +35,43 @@
 	if(deactivation_signal)
 		RegisterSignal(parent, deactivation_signal, PROC_REF(deactivate))
 
+	src.stabilize = stabilize
 	src.check_on_move = check_on_move
 	src.activation_signal = activation_signal
 	src.deactivation_signal = deactivation_signal
 	src.effect_type = effect_type
 
+/datum/component/jetpack/InheritComponent(datum/component/component, original, stabilize, activation_signal, deactivation_signal, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
+	UnregisterSignal(parent, src.activation_signal)
+	if(src.deactivation_signal)
+		UnregisterSignal(parent, src.deactivation_signal)
+	RegisterSignal(parent, activation_signal, PROC_REF(activate))
+	if(deactivation_signal)
+		RegisterSignal(parent, deactivation_signal, PROC_REF(deactivate))
+
+	src.stabilize = stabilize
+	src.check_on_move = check_on_move
+	src.activation_signal = activation_signal
+	src.deactivation_signal = deactivation_signal
+	src.effect_type = effect_type
+
+	if(trail && trail.effect_type != effect_type)
+		setup_trail(trail.holder)
+
 /datum/component/jetpack/Destroy()
-	QDEL_NULL(trail)
+	if(trail)
+		QDEL_NULL(trail)
 	QDEL_NULL(check_on_move)
 	return ..()
+
+/datum/component/jetpack/proc/setup_trail(mob/user)
+	if(trail)
+		QDEL_NULL(trail)
+
+	trail = new effect_type
+	trail.auto_process = FALSE
+	trail.set_up(user)
+	trail.start()
 
 /datum/component/jetpack/proc/activate(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -57,10 +85,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT, PROC_REF(block_starting_visuals))
 	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT, PROC_REF(ignore_ending_block))
 
-	trail = new effect_type
-	trail.auto_process = FALSE
-	trail.set_up(user)
-	trail.start()
+	setup_trail(user)
 
 /datum/component/jetpack/proc/deactivate(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -71,7 +96,8 @@
 	UnregisterSignal(user, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT)
 	UnregisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT)
 
-	QDEL_NULL(trail)
+	if(trail)
+		QDEL_NULL(trail)
 
 /datum/component/jetpack/proc/move_react(mob/user)
 	SIGNAL_HANDLER

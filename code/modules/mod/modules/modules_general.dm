@@ -98,16 +98,29 @@
 	overlay_state_active = "module_jetpack_on"
 	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
-	/// the jet pack component
-	var/datum/component/jetpack/pack
+	var/stabilize = FALSE
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
-	pack = AddComponent(/datum/component/jetpack, COMSIG_MODULE_TRIGGERED, COMSIG_MODULE_DEACTIVATED, CALLBACK(src, PROC_REF(allow_thrust)), /datum/effect_system/trail_follow/ion/grav_allowed)
+	configure_jetpack(stabilize)
 
-/obj/item/mod/module/jetpack/Destroy()
-	pack = null
-	. = ..()
+/**
+ * configures/re-configures the jetpack component
+ *
+ * Arguments
+ * stabilize - Should this jetpack be stabalized
+ */
+/obj/item/mod/module/jetpack/proc/configure_jetpack(stabilize)
+	src.stabilize = stabilize
+
+	AddComponent( \
+		/datum/component/jetpack, \
+		src.stabilize, \
+		COMSIG_MODULE_TRIGGERED, \
+		COMSIG_MODULE_DEACTIVATED, \
+		CALLBACK(src, PROC_REF(allow_thrust)), \
+		/datum/effect_system/trail_follow/ion/grav_allowed \
+	)
 
 /obj/item/mod/module/jetpack/on_activation()
 	. = ..()
@@ -123,12 +136,12 @@
 
 /obj/item/mod/module/jetpack/get_configuration()
 	. = ..()
-	.["stabilizers"] = add_ui_configuration("Stabilizers", "bool", pack.stabilize)
+	.["stabilizers"] = add_ui_configuration("Stabilizers", "bool", stabilize)
 
 /obj/item/mod/module/jetpack/configure_edit(key, value)
 	switch(key)
 		if("stabilizers")
-			pack.stabilize = (text2num(value))
+			configure_jetpack(text2num(value))
 
 /obj/item/mod/module/jetpack/proc/allow_thrust(use_fuel = TRUE)
 	if(!use_fuel)

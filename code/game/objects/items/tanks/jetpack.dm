@@ -11,17 +11,30 @@
 	var/gas_type = /datum/gas/oxygen
 	var/on = FALSE
 	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
-	/// The jet pack component
-	var/datum/component/jetpack/pack
+	var/stabilize = FALSE
 
 /obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_SUITSTORE)
-	pack = AddComponent(/datum/component/jetpack, COMSIG_JETPACK_ACTIVATED, COMSIG_JETPACK_DEACTIVATED, CALLBACK(src, PROC_REF(allow_thrust), 0.01), /datum/effect_system/trail_follow/ion)
+	configure_jetpack(stabilize)
 
-/obj/item/tank/jetpack/Destroy()
-	pack = null
-	. = ..()
+/**
+ * configures/re-configures the jetpack component
+ *
+ * Arguments
+ * stabilize - Should this jetpack be stabalized
+ */
+/obj/item/tank/jetpack/proc/configure_jetpack(stabilize)
+	src.stabilize = stabilize
+
+	AddComponent( \
+		/datum/component/jetpack, \
+		src.stabilize, \
+		COMSIG_JETPACK_ACTIVATED, \
+		COMSIG_JETPACK_DEACTIVATED, \
+		CALLBACK(src, PROC_REF(allow_thrust), 0.01), \
+		/datum/effect_system/trail_follow/ion \
+	)
 
 /obj/item/tank/jetpack/item_action_slot_check(slot)
 	if(slot & slot_flags)
@@ -48,8 +61,8 @@
 		cycle(user)
 	else if(istype(action, /datum/action/item_action/jetpack_stabilization))
 		if(on)
-			pack.stabilize = !pack.stabilize
-			to_chat(user, span_notice("You turn the jetpack stabilization [pack.stabilize ? "on" : "off"]."))
+			configure_jetpack(!stabilize)
+			to_chat(user, span_notice("You turn the jetpack stabilization [stabilize ? "on" : "off"]."))
 	else
 		toggle_internals(user)
 
@@ -85,7 +98,6 @@
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
 	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED, user)
 	on = FALSE
-	pack.stabilize = FALSE
 	update_icon(UPDATE_ICON_STATE)
 	if(user)
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)

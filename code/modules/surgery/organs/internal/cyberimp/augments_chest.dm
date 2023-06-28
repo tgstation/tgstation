@@ -131,7 +131,14 @@
 
 /obj/item/organ/internal/cyberimp/chest/thrusters/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/jetpack, COMSIG_THRUSTER_ACTIVATED, COMSIG_THRUSTER_DEACTIVATED, CALLBACK(src, PROC_REF(allow_thrust), 0.01), /datum/effect_system/trail_follow/ion)
+	AddComponent( \
+		/datum/component/jetpack, \
+		FALSE, \
+		COMSIG_THRUSTER_ACTIVATED, \
+		COMSIG_THRUSTER_DEACTIVATED, \
+		CALLBACK(src, PROC_REF(allow_thrust), 0.01), \
+		/datum/effect_system/trail_follow/ion \
+	)
 
 /obj/item/organ/internal/cyberimp/chest/thrusters/Remove(mob/living/carbon/thruster_owner, special = 0)
 	if(on)
