@@ -340,10 +340,19 @@
 	throw_range = 8
 	force = 10
 	damtype = STAMINA
+	var/list/counter = list(/obj/item/spear/pillow, /obj/item/shield/pillow, /obj/item/pillow)
 
 /obj/item/shield/pillow/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/boomerang, throw_range, TRUE)
+	AddComponent(/datum/component/two_handed, \
+		force_unwielded = force, \
+		force_wielded = force, \
+	)
+
+/obj/item/shield/pillow/attack(mob/living/target_mob, mob/living/user, params)
+	. = ..()
+	new /obj/effect/temp_visual/pillow_hit(target_mob)
 
 /obj/item/shield/pillow/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -352,10 +361,14 @@
 		return
 	else if(iscyborg(hit_atom))//machines dont get tired waltuh
 		return
+	new /obj/effect/temp_visual/pillow_hit(hit_atom)
 
 /obj/item/shield/pillow/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
-	if(damage_type == STAMINA && istype(hitby, /obj/item/pillow))
-		final_block_chance = 100
+	if(damage_type == STAMINA)
+		if(hitby in counter)
+			final_block_chance = 80
+		else
+			final_block_chance = 10
 		owner.apply_damage(20, STAMINA)
 	. = ..()
 

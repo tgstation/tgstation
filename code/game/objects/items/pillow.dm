@@ -1,3 +1,4 @@
+#define FORTIFY_FILTER "ANGRY_GLOW"
 //Pillow and pillow related items
 /obj/item/pillow
 	name = "pillow"
@@ -134,6 +135,7 @@
 	actions_types = list(/datum/action/item_action/pillow_fortify)
 	var/obj/item/pillow/unstoppably_plushed
 	var/hunkered = FALSE
+	var/outline_colour = "#eb0c07"
 
 /datum/armor/suit_pillow_suit
 	melee = 5
@@ -144,18 +146,33 @@
 	unstoppably_plushed = new(src)
 	AddComponent(/datum/component/bumpattack, proxy_weapon = unstoppably_plushed, valid_inventory_slot = ITEM_SLOT_OCLOTHING)
 
+/obj/item/clothing/suit/pillow_suit/dropped(mob/living/user)
+	. = ..()
+	if(hunkered)
+		end_fortify(user)
+
+
 /obj/item/clothing/suit/pillow_suit/proc/fortify(mob/living/user)
 	hunkered = TRUE
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	unstoppably_plushed.force += 10
 	user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
 	user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
+	START_PROCESSING(SSobj, src)
+	user.add_filter(FORTIFY_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
+	var/filter = user.get_filter(FORTIFY_FILTER)
+	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
+	animate(alpha = 0, time = 0.5 SECONDS)
 
 /obj/item/clothing/suit/pillow_suit/proc/end_fortify(mob/living/user)
 	hunkered = FALSE
 	clothing_flags = null
 	unstoppably_plushed -= 10
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
+	STOP_PROCESSING(SSobj, src)
+	var/filter = user.get_filter(FORTIFY_FILTER)
+	animate(filter)
+	user.remove_filter(FORTIFY_FILTER)
 	user.visible_message(span_alert("[user.name] loosen up and goes into relax stance!"))
 
 /obj/item/clothing/suit/pillow_suit/Destroy()
@@ -197,3 +214,5 @@
 	desc = "Daww look at that little mime!"
 	icon_state = "pillow_6_t"
 	variation = 6
+
+#undef FORTIFY_FILTER

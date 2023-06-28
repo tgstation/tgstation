@@ -335,7 +335,7 @@
 		return
 	victim = target
 	victim.apply_damage(damage_dealt, STAMINA)
-	new /obj/effect/temp_visual/pillow_hit(victim.loc)
+	new /obj/effect/temp_visual/pillow_hit(victim)
 	playsound(victim, 'sound/items/pillow_hit2.ogg', 100)
 	living_source.visible_message(span_boldwarning("[living_source] smashes into [target] at a quick speed!"))
 	return

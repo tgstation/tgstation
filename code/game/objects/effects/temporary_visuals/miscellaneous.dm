@@ -400,7 +400,7 @@
 /obj/effect/temp_visual/pillow_hit
 	name = "feathers"
 	icon_state = "pillow_hit_effect"
-	duration = 10
+	duration = 15
 
 /obj/effect/temp_visual/heart
 	name = "heart"
