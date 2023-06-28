@@ -38,10 +38,11 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_stopped))
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_no_longer_stopped))
 	target_turf = target
-	if(!HAS_TRAIT(parent, TRAIT_CHASM_STOPPED))
-		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(entered))
-		RegisterSignal(parent, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(initialized_on))
-		drop_stuff()
+	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(entered))
+	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(exited))
+	RegisterSignal(parent, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(initialized_on))
+	//allow catwalks to give the turf the CHASM_STOPPED trait before dropping stuff
+	addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
 	src.parent.AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_CHASM)
 
 /datum/component/chasm/UnregisterFromParent()
@@ -63,45 +64,61 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 
 /datum/component/chasm/proc/entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
-	drop_stuff(arrived)
+	addtimer(CALLBACK(src, PROC_REF(try_drop), arrived), 0)
+
+/datum/component/chasm/proc/exited(datum/source, atom/movable/exited)
+	SIGNAL_HANDLER
+	UnregisterSignal(exited, list(COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_LIVING_SET_BUCKLED, COMSIG_MOVABLE_THROW_LANDED))
 
 /datum/component/chasm/proc/initialized_on(datum/source, atom/movable/movable, mapload)
 	SIGNAL_HANDLER
-	addtimer(CALLBACK(src, PROC_REF(drop_if_still_here), movable), 1) //give it the time to finish initializing at least.
+	addtimer(CALLBACK(src, PROC_REF(try_drop), movable), 0) //give it the time to finish initializing at least.
 
-/datum/component/chasm/proc/drop_if_still_here(atom/movable/movable)
+/datum/component/chasm/proc/try_drop(atom/movable/movable)
+	SIGNAL_HANDLER
 	if(movable.loc == parent)
 		drop_stuff(movable)
 
 /datum/component/chasm/proc/on_chasm_stopped(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_INITIALIZED_ON))
+	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED, COMSIG_ATOM_INITIALIZED_ON))
+	for(var/atom/movable/movable as anything in source)
+		UnregisterSignal(movable, list(COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_LIVING_SET_BUCKLED, COMSIG_MOVABLE_THROW_LANDED))
 
 /datum/component/chasm/proc/on_chasm_no_longer_stopped(datum/source)
 	SIGNAL_HANDLER
-	RegisterSignal(source, COMSIG_ATOM_ENTERED, PROC_REF(entered))
+	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(entered))
+	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(exited))
 	RegisterSignal(parent, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(initialized_on))
-	drop_stuff()
+	addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
+
+#define CHASM_NOT_DROPPING 0
+#define CHASM_DROPPING 1
+///Doesn't drop the movable, but registers a few signals to try again if the conditions change.
+#define CHASM_REGISTER_SIGNALS 2
 
 /datum/component/chasm/proc/drop_stuff(dropped_thing)
-	if (HAS_TRAIT(parent, TRAIT_CHASM_STOPPED))
-		return FALSE
+	if(HAS_TRAIT(parent, TRAIT_CHASM_STOPPED))
+		return
 	var/atom/atom_parent = parent
 	var/to_check = dropped_thing ? list(dropped_thing) : atom_parent.contents
-	for (var/thing in to_check)
-		if (droppable(thing))
-			. = TRUE
-			INVOKE_ASYNC(src, PROC_REF(drop), thing)
+	for (var/atom/movable/thing as anything in to_check)
+		var/dropping = droppable(thing)
+		switch(dropping)
+			if(CHASM_DROPPING)
+				INVOKE_ASYNC(src, PROC_REF(drop), thing)
+			if(CHASM_REGISTER_SIGNALS)
+				RegisterSignals(thing, list(COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_LIVING_SET_BUCKLED, COMSIG_MOVABLE_THROW_LANDED), PROC_REF(try_drop), TRUE)
 
 /datum/component/chasm/proc/droppable(atom/movable/dropped_thing)
 	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)
 	// avoid an infinite loop, but allow falling a large distance
 	if(falling_atoms[falling_ref] && falling_atoms[falling_ref] > 30)
-		return FALSE
-	if(!isliving(dropped_thing) && !isobj(dropped_thing))
-		return FALSE
-	if(is_type_in_typecache(dropped_thing, forbidden_types) || dropped_thing.throwing || (dropped_thing.movement_type & (FLOATING|FLYING)))
-		return FALSE
+		return CHASM_NOT_DROPPING
+	if(is_type_in_typecache(dropped_thing, forbidden_types) || (!isliving(dropped_thing) && !isobj(dropped_thing)))
+		return CHASM_NOT_DROPPING
+	if(dropped_thing.throwing || (dropped_thing.movement_type & (FLOATING|FLYING)))
+		return CHASM_REGISTER_SIGNALS
 
 	//Flies right over the chasm
 	if(ismob(dropped_thing))
@@ -109,7 +126,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		if(M.buckled) //middle statement to prevent infinite loops just in case!
 			var/mob/buckled_to = M.buckled
 			if((!ismob(M.buckled) || (buckled_to.buckled != M)) && !droppable(M.buckled))
-				return FALSE
+				return CHASM_REGISTER_SIGNALS
 		if(ishuman(dropped_thing))
 			var/mob/living/carbon/human/victim = dropped_thing
 			if(istype(victim.belt, /obj/item/wormhole_jaunter))
@@ -118,8 +135,12 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 				var/fall_into_chasm = jaunter.chasm_react(victim)
 				if(!fall_into_chasm)
 					chasm.visible_message(span_boldwarning("[victim] falls into the [chasm]!")) //To freak out any bystanders
-				return fall_into_chasm
-	return TRUE
+				return fall_into_chasm ? CHASM_DROPPING : CHASM_NOT_DROPPING
+	return CHASM_DROPPING
+
+#undef CHASM_NOT_DROPPING
+#undef CHASM_DROPPING
+#undef CHASM_REGISTER_SIGNALS
 
 /datum/component/chasm/proc/drop(atom/movable/dropped_thing)
 	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)
