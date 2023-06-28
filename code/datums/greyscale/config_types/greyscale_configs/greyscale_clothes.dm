@@ -58,30 +58,27 @@
 	icon_file = 'icons/obj/clothing/head/beanie.dmi'
 	json_config = 'code/datums/greyscale/json_configs/beanie.json'
 
-/datum/greyscale_config/beanie_worn
+/datum/greyscale_config/beanie/worn
 	name = "Worn Beanie"
 	icon_file = 'icons/mob/clothing/head/beanie.dmi'
-	json_config = 'code/datums/greyscale/json_configs/beanie_worn.json'
 
 /datum/greyscale_config/festive_hat
 	name = "Festive Hat"
 	icon_file = 'icons/obj/clothing/head/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/festive_hat.json'
 
-/datum/greyscale_config/festive_hat_worn
+/datum/greyscale_config/festive_hat/worn
 	name = "Festive Hat Worn"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
-	json_config = 'code/datums/greyscale/json_configs/festive_hat.json'
 
 /datum/greyscale_config/party_hat
 	name = "Party Hat"
 	icon_file = 'icons/obj/clothing/head/costume.dmi'
 	json_config = 'code/datums/greyscale/json_configs/party_hat.json'
 
-/datum/greyscale_config/party_hat_worn
+/datum/greyscale_config/party_hat/worn
 	name = "Party Hat Worn"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
-	json_config = 'code/datums/greyscale/json_configs/party_hat.json'
 
 //
 // MASKS

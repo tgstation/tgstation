@@ -326,4 +326,4 @@
 	name = "festive paper hat"
 	icon_state = "xmashat_grey"
 	greyscale_config = /datum/greyscale_config/festive_hat
-	greyscale_config_worn = /datum/greyscale_config/festive_hat_worn
+	greyscale_config_worn = /datum/greyscale_config/festive_hat/worn
