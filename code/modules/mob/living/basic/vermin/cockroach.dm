@@ -6,6 +6,7 @@
 	density = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	mob_size = MOB_SIZE_TINY
+	held_w_class = WEIGHT_CLASS_TINY
 	health = 1
 	maxHealth = 1
 	speed = 1.25

@@ -69,7 +69,7 @@ const TIER2TIERDATA: TierData[] = [
 ];
 
 export const InfuserBook = (props, context) => {
-  const { data } = useBackend<DnaInfuserData>(context);
+  const { data, act } = useBackend<DnaInfuserData>(context);
   const { entries } = data;
 
   const [bookPosition, setBookPosition] = useLocalState<BookPosition>(
@@ -87,7 +87,11 @@ export const InfuserBook = (props, context) => {
   let currentEntry = paginatedEntries[chapter][pageInChapter];
 
   const switchChapter = (newChapter) => {
+    if (chapter === newChapter) {
+      return;
+    }
     setBookPosition({ chapter: newChapter, pageInChapter: 0 });
+    act('play_flip_sound'); // just so we can play a sound fx on page turn
   };
 
   const setPage = (newPage) => {
@@ -112,6 +116,7 @@ export const InfuserBook = (props, context) => {
       newBookPosition.pageInChapter = newPage;
     }
     setBookPosition(newBookPosition);
+    act('play_flip_sound'); // just so we can play a sound fx on page turn
   };
 
   const tabs = [
