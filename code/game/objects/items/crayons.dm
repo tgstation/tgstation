@@ -268,7 +268,6 @@
 	if(charges == INFINITE_CHARGES)
 		return FALSE
 	if(!charges_left)
-		balloon_alert(user, "empty!")
 		if(self_contained)
 			qdel(src)
 		return TRUE
