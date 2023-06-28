@@ -2,7 +2,7 @@
 	// 2spooky
 	name = "Spooky Scary Skeleton"
 	id = SPECIES_SKELETON
-	sexes = 0
+	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
 	species_traits = list(
 		NOTRANSSTING,
@@ -34,8 +34,6 @@
 	mutantheart = null
 	mutantliver = /obj/item/organ/internal/liver/bone
 	mutantlungs = null
-	disliked_food = NONE
-	liked_food = GROSS | MEAT | RAW | GORE
 	wing_types = list(/obj/item/organ/external/wings/functional/skeleton)
 	//They can technically be in an ERT
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
