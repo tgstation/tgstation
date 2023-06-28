@@ -211,10 +211,17 @@
 	drawtype = pick(all_drawables)
 
 	AddElement(/datum/element/venue_price, FOOD_PRICE_EXOTIC)
+	if(edible)
+		AddComponent(/datum/component/edible, bite_consumption = (charges / 5), after_eat = CALLBACK(src, PROC_REF(after_eat)))
 	if(can_change_colour)
 		AddComponent(/datum/component/palette, AVAILABLE_SPRAYCAN_SPACE, paint_color)
 
 	refill()
+
+/obj/item/toy/crayon/proc/after_eat(mob/user)
+	if(check_empty(user)) //Prevents division by zero
+		return
+	use_charges(user, 5, FALSE)
 
 /obj/item/toy/crayon/set_painting_tool_color(chosen_color)
 	. = ..()
@@ -540,25 +547,6 @@
 		return
 
 	use_on(target, user, params)
-
-/obj/item/toy/crayon/attack(mob/target, mob/user)
-	if(!edible || (target != user))
-		return ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/crayon_eater = target
-		var/covered = ""
-		if(crayon_eater.is_mouth_covered(ITEM_SLOT_HEAD))
-			covered = "headgear"
-		else if(crayon_eater.is_mouth_covered(ITEM_SLOT_MASK))
-			covered = "mask"
-		if(covered)
-			balloon_alert(user, "remove your [covered]!")
-			return
-	to_chat(user, span_notice("You take a bite of the [src.name]. Delicious!"))
-	var/eaten = use_charges(user, 5, FALSE)
-	if(check_empty(user)) //Prevents division by zero
-		return
-	reagents.trans_to(target, eaten, volume_multiplier, transfered_by = user, methods = INGEST)
 
 /obj/item/toy/crayon/get_writing_implement_details()
 	return list(
