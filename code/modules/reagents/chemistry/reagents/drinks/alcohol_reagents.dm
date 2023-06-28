@@ -2007,11 +2007,13 @@
 	AddElement(/datum/element/bugkiller_reagent)
 
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	. = ..()
-	if(drinker.mob_biotypes & MOB_BUG)
-		drinker.adjustToxLoss(1 * REAGENTS_EFFECT_MULTIPLIER * seconds_per_tick)
-		if(SPT_PROB(2, seconds_per_tick))
-			drinker.emote("scream")
+	// Does some damage to bug biotypes
+	var/did_damage = drinker.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = MOB_BUG)
+	// Random chance of causing a screm if we did some damage
+	if(did_damage && SPT_PROB(2, seconds_per_tick))
+		drinker.emote("scream")
+
+	return ..() || did_damage
 
 /datum/reagent/consumable/ethanol/applejack
 	name = "Applejack"
