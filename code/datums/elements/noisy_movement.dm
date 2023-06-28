@@ -1,10 +1,10 @@
 /datum/element/noisy_movement
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	var/movement_sound = 'sound/effects/roll.ogg'
-	var/volume = 100
+	var/movement_sound
+	var/volume
 
-/datum/element/noisy_movement/Attach(datum/target, movement_sound, volume)
+/datum/element/noisy_movement/Attach(datum/target, movement_sound = 'sound/effects/roll.ogg', volume = 100)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
