@@ -25,6 +25,7 @@
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
+	burnmod = 0.6 // = 3/5x generic burn damage
 	species_language_holder = /datum/language_holder/oozeling
 	//swimming_component = /datum/component/swimming/dissolve
 	toxic_food = NONE
