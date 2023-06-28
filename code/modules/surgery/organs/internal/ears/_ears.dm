@@ -73,6 +73,7 @@
 /datum/bodypart_overlay/mutant/ears/get_overlays(layer, obj/item/bodypart/limb)
 	. = ..()
 	//fucking lovely, we have to deal with the inners
+	layer = bitflag_to_layer(layer)
 	if(sprite_datum.hasinner)
 		var/gender = (limb?.limb_gender == FEMALE) ? "f" : "m"
 		var/list/icon_state_builder = list()
