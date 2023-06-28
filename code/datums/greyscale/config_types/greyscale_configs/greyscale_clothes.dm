@@ -352,70 +352,64 @@
 	icon_file = 'icons/obj/clothing/suits/ctf.dmi'
 	json_config = 'code/datums/greyscale/json_configs/ctf_standard.json'
 
-/datum/greyscale_config/ctf_standard_worn
+/datum/greyscale_config/ctf_standard/worn
 	name = "Worn CTF Standard Vest (Worn)"
 	icon_file = 'icons/mob/clothing/suits/ctf.dmi'
-	json_config = 'code/datums/greyscale/json_configs/ctf_standard_worn.json'
 
 /datum/greyscale_config/ctf_light
 	name = "CTF Light Vest"
 	icon_file = 'icons/obj/clothing/suits/ctf.dmi'
 	json_config = 'code/datums/greyscale/json_configs/ctf_light.json'
 
-/datum/greyscale_config/ctf_light_worn
+/datum/greyscale_config/ctf_light/worn
 	name = "CTF Light Vest (Worn)"
 	icon_file = 'icons/mob/clothing/suits/ctf.dmi'
-	json_config = 'code/datums/greyscale/json_configs/ctf_light_worn.json'
 
 /datum/greyscale_config/mothcoat
 	name = "Moth Coat"
 	icon_file = 'icons/obj/clothing/suits/moth.dmi'
 	json_config = 'code/datums/greyscale/json_configs/moth_coat.json'
 
-/datum/greyscale_config/mothcoat_worn
+/datum/greyscale_config/mothcoat/worn
 	name = "Moth Coat (Worn)"
 	icon_file = 'icons/mob/clothing/suits/moth.dmi'
-	json_config = 'code/datums/greyscale/json_configs/moth_coat_worn.json'
 
 /datum/greyscale_config/mothcoat_winter
 	name = "Moth Winter Coat"
 	icon_file = 'icons/obj/clothing/suits/moth.dmi'
 	json_config = 'code/datums/greyscale/json_configs/moth_coat_winter.json'
 
-/datum/greyscale_config/mothcoat_winter_worn
+/datum/greyscale_config/mothcoat_winter/worn
 	name = "Moth Winter Coat (Worn)"
 	icon_file = 'icons/mob/clothing/suits/moth.dmi'
-	json_config = 'code/datums/greyscale/json_configs/moth_coat_winter_worn.json'
 
 /datum/greyscale_config/eth_raincoat
 	name = "Ethereal Raincoat"
 	icon_file = 'icons/obj/clothing/suits/ethereal.dmi'
 	json_config = 'code/datums/greyscale/json_configs/eth_raincoat.json'
 
-/datum/greyscale_config/eth_raincoat_worn
+/datum/greyscale_config/eth_raincoat/worn
 	name = "Ethereal Raincoat (Worn)"
 	icon_file = 'icons/mob/clothing/suits/ethereal.dmi'
-	json_config = 'code/datums/greyscale/json_configs/eth_raincoat_worn.json'
+	json_config = 'code/datums/greyscale/json_configs/eth_raincoat_worn.json' //Needs separate config for toggle states
 
 /datum/greyscale_config/sweater
 	name = "Sweater"
 	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sweater.json'
 
-/datum/greyscale_config/sweater_worn
+/datum/greyscale_config/sweater/worn
 	name = "Sweater (Worn)"
 	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
-	json_config = 'code/datums/greyscale/json_configs/sweater_worn.json'
 
 /datum/greyscale_config/jacket_oversized
 	name = "Oversized Jacket"
 	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jacket_oversized.json'
 
-/datum/greyscale_config/jacket_oversized_worn
+/datum/greyscale_config/jacket_oversized/worn
 	name = "Oversized Jacket (Worn)"
 	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
-	json_config = 'code/datums/greyscale/json_configs/jacket_oversized_worn.json'
 
 //
 // SHOES

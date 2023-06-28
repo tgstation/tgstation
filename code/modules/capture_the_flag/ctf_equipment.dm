@@ -201,7 +201,7 @@
 	armor_type = /datum/armor/none
 	allowed = null
 	greyscale_config = /datum/greyscale_config/ctf_standard
-	greyscale_config_worn = /datum/greyscale_config/ctf_standard_worn
+	greyscale_config_worn = /datum/greyscale_config/ctf_standard/worn
 	greyscale_colors = "#ffffff"
 
 	///Icon state to be fed into the shielded component
@@ -227,7 +227,7 @@
 	desc = "Lightweight vest for playing capture the flag."
 	icon_state = "light"
 	greyscale_config = /datum/greyscale_config/ctf_light
-	greyscale_config_worn = /datum/greyscale_config/ctf_light_worn
+	greyscale_config_worn = /datum/greyscale_config/ctf_light/worn
 	slowdown = -0.25
 
 	max_charges = 30

@@ -14,7 +14,7 @@
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	greyscale_config = /datum/greyscale_config/sweater
-	greyscale_config_worn = /datum/greyscale_config/sweater_worn
+	greyscale_config_worn = /datum/greyscale_config/sweater/worn
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -23,7 +23,7 @@
 	desc = "An oversized jacket."
 	icon_state = "jacket_oversized"
 	greyscale_config = /datum/greyscale_config/jacket_oversized
-	greyscale_config_worn = /datum/greyscale_config/jacket_oversized_worn
+	greyscale_config_worn = /datum/greyscale_config/jacket_oversized/worn
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
