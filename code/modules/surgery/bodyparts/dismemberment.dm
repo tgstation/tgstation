@@ -53,7 +53,7 @@
 		return FALSE
 	if(owner.status_flags & GODMODE)
 		return FALSE
-	if(HAS_TRAIT(limb_owner, TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		return FALSE
 	return drop_organs(violent_removal = TRUE)
 
