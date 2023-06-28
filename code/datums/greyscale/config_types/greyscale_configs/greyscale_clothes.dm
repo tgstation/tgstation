@@ -497,7 +497,6 @@
 /datum/greyscale_config/suspenders/worn
 	name = "Worn Suspenders"
 	icon_file = 'icons/mob/clothing/suits/utility.dmi'
-	json_config = 'code/datums/greyscale/json_configs/suspenders_worn.json'
 
 /datum/greyscale_config/waistcoat
 	name = "Waistcoat"
@@ -507,7 +506,6 @@
 /datum/greyscale_config/waistcoat_worn
 	name = "Worn Waistcoat"
 	icon_file = 'icons/mob/clothing/accessories.dmi'
-	json_config = 'code/datums/greyscale/json_configs/waistcoat_worn.json'
 
 //
 // SUIT + HEAD
@@ -615,7 +613,7 @@
 	json_config = 'code/datums/greyscale/json_configs/hawaiian_shirt.json'
 
 /datum/greyscale_config/hawaiian_shirt/worn
-	name = "Hawaiian Overshirt"
+	name = "Worn Hawaiian Overshirt"
 	icon_file = 'icons/mob/clothing/suits/costume.dmi'
 
 /datum/greyscale_config/witch_hat
