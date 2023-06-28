@@ -256,40 +256,37 @@
 	icon_file = 'icons/obj/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/plaidskirt.json'
 
-/datum/greyscale_config/plaidskirt_worn
+/datum/greyscale_config/plaidskirt/worn
 	name = "Plaid Skirt (Worn)"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
-	json_config = 'code/datums/greyscale/json_configs/plaidskirt_worn.json'
+	json_config = 'code/datums/greyscale/json_configs/plaidskirt_worn.json' //Needs separate config for toggle states
 
 /datum/greyscale_config/turtleskirt
 	name = "Skirtleneck"
 	icon_file = 'icons/obj/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/turtleskirt.json'
 
-/datum/greyscale_config/turtleskirt_worn
+/datum/greyscale_config/turtleskirt/worn
 	name = "Skirtleneck (Worn)"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
-	json_config = 'code/datums/greyscale/json_configs/turtleskirt_worn.json'
 
 /datum/greyscale_config/tango
 	name = "Tango Dress"
 	icon_file = 'icons/obj/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/tango.json'
 
-/datum/greyscale_config/tango_worn
+/datum/greyscale_config/tango/worn
 	name = "Tango Dress (Worn)"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
-	json_config = 'code/datums/greyscale/json_configs/tango_worn.json'
 
 /datum/greyscale_config/sundress
 	name = "Sundress"
 	icon_file = 'icons/obj/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/sundress.json'
 
-/datum/greyscale_config/sundress_worn
+/datum/greyscale_config/sundress/worn
 	name = "Sundress (Worn)"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
-	json_config = 'code/datums/greyscale/json_configs/sundress_worn.json'
 
 // SHIRTS, PANTS AND SHORTS
 /datum/greyscale_config/slacks
