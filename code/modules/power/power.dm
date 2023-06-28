@@ -55,7 +55,7 @@
 			. += span_warning("It's disconnected from the [lowertext(GLOB.cable_layer_to_name["[cable_layer]"])].")
 		. += span_notice("It's power line can be changed with a [EXAMINE_HINT("multitool")].")
 
-//does the required checks to see if this machinery layer can be changed
+///does the required checks to see if this machinery layer can be changed
 /obj/machinery/power/proc/cable_layer_change_checks(mob/living/user, obj/item/tool)
 	return can_change_cable_layer
 
