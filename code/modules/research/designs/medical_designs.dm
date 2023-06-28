@@ -836,7 +836,11 @@
 	id = "cybernetic_ears_translation"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 40
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*5, /datum/material/silver = SMALL_MATERIAL_AMOUNT*5)
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT*5
+	)
 	build_path = /obj/item/organ/internal/ears/cybernetic/translation
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_2
@@ -849,7 +853,11 @@
 	id = "cybernetic_ears_whisper"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 40
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*5, /datum/material/silver = SMALL_MATERIAL_AMOUNT*5)
+	materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/silver = SMALL_MATERIAL_AMOUNT*5
+	)
 	build_path = /obj/item/organ/internal/ears/cybernetic/whisper
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_2

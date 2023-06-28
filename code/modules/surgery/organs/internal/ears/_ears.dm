@@ -111,7 +111,9 @@
 	icon_state = "ears-c-u"
 	desc = "Allows the user to understand one of several commonly spoken languages. Grants no ability to speak these languages."
 	damage_multiplier = 0.5
+	/// List of languages that can be chosen as the translated language. Populated when atom is created
 	var/list/language_list = list()
+	/// The currently selected language. Defaults to common
 	var/datum/language/chosen_language = /datum/language/common
 
 /obj/item/organ/internal/ears/cybernetic/translation/Initialize(mapload)
