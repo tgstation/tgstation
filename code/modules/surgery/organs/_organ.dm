@@ -218,7 +218,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(use_mob_sprite_as_obj_sprite)
 		update_appearance()
 
-/// Transfers the organ to the limb, and to the limb's owner, if there is one
+/// Transfers the organ to the limb, and to the limb's owner, if there is one - Currently only used by dismemberment
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner, special = FALSE)
 	if(owner)
 		Remove(owner, special)

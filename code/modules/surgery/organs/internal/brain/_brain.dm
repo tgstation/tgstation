@@ -112,34 +112,35 @@
 		brain_trauma.owner = null
 
 	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
-		transfer_identity(brain_owner)
+		transfer_identity(brain_owner, silent = special)
 	brain_owner.clear_mood_event("brain_damage")
 
-/obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
-	name = "[L.name]'s [initial(name)]"
+/obj/item/organ/internal/brain/proc/transfer_identity(mob/living/brainiac, silent = FALSE)
+	name = "[brainiac.name]'s [initial(name)]"
 	if(brainmob || decoy_override)
 		return
-	if(!L.mind)
+	if(!brainiac.mind)
 		return
 	brainmob = new(src)
-	brainmob.name = L.real_name
-	brainmob.real_name = L.real_name
-	brainmob.timeofdeath = L.timeofdeath
+	brainmob.name = brainiac.real_name
+	brainmob.real_name = brainiac.real_name
+	brainmob.timeofdeath = brainiac.timeofdeath
 
 	if(suicided)
 		ADD_TRAIT(brainmob, TRAIT_SUICIDED, REF(src))
 
-	if(L.has_dna())
-		var/mob/living/carbon/C = L
+	if(brainiac.has_dna())
+		var/mob/living/carbon/carbon_brainiac = brainiac
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
-		C.dna.copy_dna(brainmob.stored_dna)
+		carbon_brainiac.dna.copy_dna(brainmob.stored_dna)
 		// Hack, fucked dna needs to follow the brain to prevent memes, so we need to copy over the trait sources and shit
-		for(var/source in GET_TRAIT_SOURCES(L, TRAIT_BADDNA))
+		for(var/source in GET_TRAIT_SOURCES(carbon_brainiac, TRAIT_BADDNA))
 			ADD_TRAIT(brainmob, TRAIT_BADDNA, source)
-	if(L.mind && L.mind.current)
-		L.mind.transfer_to(brainmob)
-	to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
+	if(brainiac.mind && brainiac.mind.current)
+		brainiac.mind.transfer_to(brainmob)
+	if(!silent)
+		to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
 
 /obj/item/organ/internal/brain/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
