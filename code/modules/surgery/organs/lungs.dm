@@ -809,7 +809,7 @@
 	desc = "A large organelle designed to store oxygen and other important gasses."
 
 	safe_plasma_max = 0 //We breathe this to gain POWER.
-	safe_oxygen_min = 4 //We don't need much oxygen to subsist.
+	safe_oxygen_min = 2 //We don't need much oxygen to subsist.
 
 /obj/item/organ/internal/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather_slime)
 	. = ..()
