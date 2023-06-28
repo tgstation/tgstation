@@ -151,40 +151,27 @@
 	icon_file = 'icons/obj/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/ties.json'
 
-/datum/greyscale_config/ties_worn
+/datum/greyscale_config/ties/worn
 	name = "Worn Ties"
 	icon_file = 'icons/mob/clothing/neck.dmi'
-	json_config = 'code/datums/greyscale/json_configs/ties_worn.json'
 
 /datum/greyscale_config/scarf
 	name = "Scarf"
 	icon_file = 'icons/obj/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/scarf.json'
 
-/datum/greyscale_config/scarf_worn
+/datum/greyscale_config/scarf/worn
 	name = "Worn Scarf"
 	icon_file = 'icons/mob/clothing/neck.dmi'
-	json_config = 'code/datums/greyscale/json_configs/scarf_worn.json'
-
-/datum/greyscale_config/large_scarf
-	name = "Large Scarf"
-	icon_file = 'icons/obj/clothing/neck.dmi'
-	json_config = 'code/datums/greyscale/json_configs/large_scarf.json'
-
-/datum/greyscale_config/large_scarf_worn
-	name = "Worn Large Scarf"
-	icon_file = 'icons/mob/clothing/neck.dmi'
-	json_config = 'code/datums/greyscale/json_configs/large_scarf_worn.json'
 
 /datum/greyscale_config/infinity_scarf
 	name = "Infinity Scarf"
 	icon_file = 'icons/obj/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/infinity_scarf.json'
 
-/datum/greyscale_config/infinity_scarf_worn
+/datum/greyscale_config/infinity_scarf/worn
 	name = "Worn Infinity Scarf"
 	icon_file = 'icons/mob/clothing/neck.dmi'
-	json_config = 'code/datums/greyscale/json_configs/infinity_scarf_worn.json'
 
 //
 // GLOVES
