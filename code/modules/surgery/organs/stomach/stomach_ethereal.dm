@@ -111,10 +111,4 @@
 		adjust_charge(ETHEREAL_CHARGE_FULL - crystal_charge)
 		carbon.visible_message(span_danger("[carbon] violently discharges energy!"), span_warning("You violently discharge energy!"))
 
-		if(prob(10)) //chance of developing heart disease to dissuade overcharging oneself
-			var/datum/disease/D = new /datum/disease/heart_failure
-			carbon.ForceContractDisease(D)
-			to_chat(carbon, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
-			carbon.playsound_local(carbon, 'sound/effects/singlebeat.ogg', 100, 0)
-
 		carbon.Paralyze(100)
