@@ -282,7 +282,7 @@
 	return TRUE
 
 ///Attach src to target mob if able, returns FALSE if it fails to.
-/obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_limb_owner, special)
+/obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_limb_owner, special = FALSE)
 	if(!can_attach_limb(new_limb_owner, special))
 		return FALSE
 
@@ -308,6 +308,7 @@
 				break
 
 	for(var/obj/item/organ/organ as anything in organs)
+		organ.remove_from_limb(src) //fucking ass
 		organ.Insert(new_limb_owner, special)
 
 	for(var/datum/wound/wound as anything in wounds)
