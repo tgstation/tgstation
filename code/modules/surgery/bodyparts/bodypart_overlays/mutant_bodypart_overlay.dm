@@ -51,7 +51,9 @@
 	var/list/icon_state_builder = list()
 	icon_state_builder += sprite_datum.gender_specific ? gender : "m" //Male is default because sprite accessories are so ancient they predate the concept of not hardcoding gender
 	icon_state_builder += feature_key
-	icon_state_builder += get_base_icon_state()
+	var/base_icon_state = get_base_icon_state() //MONKEYS. GOD DAMN MONKEYS.
+	if(base_icon_state)
+		icon_state_builder += base_icon_state
 	icon_state_builder += mutant_bodyparts_layertext(layer)
 
 	var/finished_icon_state = icon_state_builder.Join("_")

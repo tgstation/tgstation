@@ -114,6 +114,9 @@
 	feature_key = "tail_monkey"
 	color_source = NONE
 
+/datum/bodypart_overlay/mutant/tail/monkey/get_base_icon_state() // WE DON'T HAVE ONE MOTHERFUCKER
+	return
+
 /datum/bodypart_overlay/mutant/tail/monkey/get_global_feature_list()
 	return GLOB.tails_list_monkey
 
@@ -126,7 +129,7 @@
 
 	wag_flags = WAG_ABLE
 	dna_block = DNA_LIZARD_TAIL_BLOCK
-	///A reference to the paired_spines, since for some fucking reason tail spines are tied to the spines themselves.
+	/// A reference to the paired_spines, since for some fucking reason tail spines are tied to the spines themselves.
 	var/obj/item/organ/spines/paired_spines
 
 /obj/item/organ/tail/lizard/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
