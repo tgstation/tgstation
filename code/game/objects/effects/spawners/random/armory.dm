@@ -33,6 +33,15 @@
 		/obj/item/shield/riot,
 	)
 
+/obj/effect/spawner/random/armory/rubbershot
+	name = "rubbershot spawner"
+	icon_state = "rubbershot"
+	loot = list(
+		/obj/item/storage/box/rubbershot,
+		/obj/item/storage/box/rubbershot,
+		/obj/item/storage/box/rubbershot,
+	)
+
 // Weapons
 /obj/effect/spawner/random/armory/disablers
 	name = "disabler spawner"
