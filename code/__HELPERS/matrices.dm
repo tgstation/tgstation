@@ -68,15 +68,14 @@
 		//doesn't have an object argument because this is "Stacking" with the animate call above
 		//3 billion% intentional
 
+/// Similar to shake but more spasm-y and jerk-y
 /atom/proc/spasm_animation(loops = -1)
-	var/matrix/M1 = matrix(transform)
-	var/matrix/M2 = matrix(transform)
-	var/matrix/M3 = matrix(transform)
-	var/matrix/M4 = matrix(transform)
-	M1.Translate(-1, 0)
-	M2.Translate(0, 1)
-	M3.Translate(1, 0)
-	M4.Translate(0, -1)
+	var/list/transforms = list(
+		matrix(transform).Translate(-1, 0),
+		matrix(transform).Translate(0, 1),
+		matrix(transform).Translate(1, 0),
+		matrix(transform).Translate(0, -1),
+	)
 
 	animate(src, transform = transforms[1], time = 0.2, loop = loops)
 	animate(transform = transforms[2], time = 0.1)

@@ -24,7 +24,7 @@
 	. = ..()
 	if(!ishuman(owner))
 		return
-	old_biotypes = human_owner.mob_biotypes
+	old_biotypes = owner.mob_biotypes
 
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.armor = human_owner.physiology.armor.add_other_armor(given_armor)
