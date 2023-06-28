@@ -170,7 +170,7 @@
 	if(!ishuman(organ_owner) || QDELETED(organ_owner))
 		return
 
-	var/mob/living/carbon/human/human_owner = owner
+	var/mob/living/carbon/human/human_owner = organ_owner
 	human_owner.physiology.tox_mod /= 2
 
 /// Roach appendix:

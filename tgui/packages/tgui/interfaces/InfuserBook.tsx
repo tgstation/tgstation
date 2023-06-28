@@ -28,7 +28,7 @@ type TierData = {
   name: string;
 };
 
-const PAGE_HEIGHT = '235px';
+const PAGE_HEIGHT = 30;
 
 const TIER2TIERDATA: TierData[] = [
   {
@@ -127,7 +127,7 @@ export const InfuserBook = (props, context) => {
   const restrictedNext = chapter === 3 && pageInChapter === 0;
 
   return (
-    <Window title="DNA Infusion Manual" width={620} height={375}>
+    <Window title="DNA Infusion Manual" width={620} height={500}>
       <Window.Content>
         <Stack vertical>
           <Stack.Item mb={-1}>
@@ -215,7 +215,7 @@ export const InfuserInstructions = (props, context) => {
           <br />
           3. Have someone activate the machine externally.
           <br />
-          <Box inline color="white">
+          <Box mt="10px" inline color="white">
             And you&apos;re done! Note that the infusion source will be
             obliterated in the process.
           </Box>

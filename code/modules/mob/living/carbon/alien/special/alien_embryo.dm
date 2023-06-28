@@ -64,9 +64,12 @@
 	stage++
 	if(stage < 6)
 		INVOKE_ASYNC(src, PROC_REF(RefreshInfectionImage))
-		var/slowdown = HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE) ? 2 : 1 // spaceacillin doubles the time it takes to grow
-		if(owner.has_status_effect(/datum/status_effect/nest_sustenance))
-			slowdown *= 0.80 //egg gestates 20% faster if you're trapped in a nest
+		var/slowdown = 1
+		if(!isnull(owner)) // it gestates out of bodies.
+			if(HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
+				slowdown *= 2 // spaceacillin doubles the time it takes to grow
+			if(owner.has_status_effect(/datum/status_effect/nest_sustenance))
+				slowdown *= 0.80 //egg gestates 20% faster if you're trapped in a nest
 
 		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
 
