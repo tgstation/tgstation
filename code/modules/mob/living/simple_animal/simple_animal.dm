@@ -466,6 +466,9 @@
 		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
+	if(!isatom(the_target)) // no
+		stack_trace("Invalid target in CanAttack(): [the_target]")
+		return FALSE
 	if(see_invisible < the_target.invisibility)
 		return FALSE
 	if(ismob(the_target))

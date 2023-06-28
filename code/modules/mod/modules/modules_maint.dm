@@ -352,6 +352,6 @@
 	overlay_state_active = "module_donk_safe_recycler"
 	complexity = 1
 	efficiency = 1
-	allowed_item_types = list(/obj/item/ammo_casing/caseless/foam_dart)
+	allowed_item_types = list(/obj/item/ammo_casing/foam_dart)
 	ammobox_type = /obj/item/ammo_box/foambox/mini
 	required_amount = SMALL_MATERIAL_AMOUNT*2.5

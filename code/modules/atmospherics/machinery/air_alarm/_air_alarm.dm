@@ -654,7 +654,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 
 ///Used for air alarm link helper, which connects air alarm to a sensor with corresponding chamber_id
 /obj/machinery/airalarm/proc/setup_chamber_link()
-	var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[CHAMBER_SENSOR_FROM_ID(air_sensor_chamber_id)]
+	var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[GLOB.map_loaded_sensors[air_sensor_chamber_id]]
 	if(isnull(sensor))
 		log_mapping("[src] at [AREACOORD(src)] tried to connect to a sensor, but no sensor with chamber_id:[air_sensor_chamber_id] found!")
 		return

@@ -5,8 +5,6 @@
 	id = SPECIES_LIZARD
 	species_traits = list(
 		MUTCOLORS,
-		EYECOLOR,
-		LIPS,
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -30,8 +28,6 @@
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
-	disliked_food = GRAIN | DAIRY | CLOTH | GROSS
-	liked_food = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	inert_mutation = /datum/mutation/human/firebreath
 	death_sound = 'sound/voice/lizard/deathsound.ogg'
 	wing_types = list(/obj/item/organ/external/wings/functional/dragon)
@@ -142,8 +138,6 @@ Lizard subspecies: ASHWALKERS
 	mutantbrain = /obj/item/organ/internal/brain/primitive
 	species_traits = list(
 		MUTCOLORS,
-		EYECOLOR,
-		LIPS,
 	)
 	inherent_traits = list(
 		//TRAIT_LITERATE,

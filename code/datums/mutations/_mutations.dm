@@ -1,5 +1,4 @@
 /datum/mutation
-
 	var/name
 
 /datum/mutation/human
