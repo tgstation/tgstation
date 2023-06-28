@@ -24,7 +24,7 @@
 // cringe
 /datum/orderable_item/veggies/mushroom
 	name = "Plump Helmet"
-	desc = "Plumus Hellmus: Plump, soft and s-so inviting~" 
+	desc = "Plumus Hellmus: Plump, soft and s-so inviting~"
 	item_path = /obj/item/food/grown/mushroom/plumphelmet
 
 /datum/orderable_item/veggies/cabbage
