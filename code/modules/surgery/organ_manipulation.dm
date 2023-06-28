@@ -8,7 +8,7 @@
 		/datum/surgery_step/saw,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
-		/datum/surgery_step/manipulate_organs/internal,
+		/datum/surgery_step/manipulate_organs,
 		/datum/surgery_step/close,
 	)
 
@@ -19,25 +19,7 @@
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
-		/datum/surgery_step/manipulate_organs/internal,
-		/datum/surgery_step/close,
-	)
-
-/datum/surgery/organ_manipulation/external
-	name = "Feature manipulation"
-	possible_locs = list(
-		BODY_ZONE_CHEST,
-		BODY_ZONE_HEAD,
-		BODY_ZONE_PRECISE_GROIN,
-		BODY_ZONE_L_ARM,
-		BODY_ZONE_R_ARM,
-		BODY_ZONE_L_LEG,
-		BODY_ZONE_R_LEG,
-	)
-	steps = list(
-		/datum/surgery_step/incise,
-		/datum/surgery_step/retract_skin,
-		/datum/surgery_step/manipulate_organs/external,
+		/datum/surgery_step/manipulate_organs,
 		/datum/surgery_step/close,
 	)
 
@@ -64,7 +46,7 @@
 		/datum/surgery_step/open_hatch,
 		/datum/surgery_step/mechanic_unwrench,
 		/datum/surgery_step/prepare_electronics,
-		/datum/surgery_step/manipulate_organs/internal/mechanic,
+		/datum/surgery_step/manipulate_organs/mechanic,
 		/datum/surgery_step/mechanic_wrench,
 		/datum/surgery_step/mechanic_close,
 	)
@@ -106,25 +88,6 @@
 		/datum/surgery_step/open_hatch,
 		/datum/surgery_step/prepare_electronics,
 		/datum/surgery_step/manipulate_organs/internal/mechanic,
-		/datum/surgery_step/mechanic_close,
-	)
-
-/datum/surgery/organ_manipulation/mechanic/external
-	name = "Prosthetic feature manipulation"
-	possible_locs = list(
-		BODY_ZONE_CHEST,
-		BODY_ZONE_HEAD,
-		BODY_ZONE_PRECISE_GROIN,
-		BODY_ZONE_L_ARM,
-		BODY_ZONE_R_ARM,
-		BODY_ZONE_L_LEG,
-		BODY_ZONE_R_LEG,
-	)
-	steps = list( //not shorter than soft prosthetic manip because I dunno what steps could be cut here
-		/datum/surgery_step/mechanic_open,
-		/datum/surgery_step/open_hatch,
-		/datum/surgery_step/prepare_electronics,
-		/datum/surgery_step/manipulate_organs/external/mechanic,
 		/datum/surgery_step/mechanic_close,
 	)
 
@@ -174,9 +137,6 @@
 			to_chat(user, span_warning("[target_organ] is destroyed and cannot be used!"))
 			return SURGERY_STEP_FAIL
 
-		if(!can_use_organ(user, meatslab))
-			return SURGERY_STEP_FAIL
-
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
 		display_results(
@@ -191,11 +151,7 @@
 
 	else if(implement_type in implements_extract)
 		current_type = "extract"
-		var/list/unfiltered_organs = target.get_organs_for_zone(target_zone)
-		var/list/organs = list()
-		for(var/organ in unfiltered_organs)
-			if(can_use_organ(user, organ))
-				organs.Add(organ)
+		var/list/organs = target.get_organs_for_zone(target_zone)
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
 		if(!length(organs))
@@ -278,34 +234,12 @@
 			)
 	return ..()
 
-///You can never use this MUHAHAHAHAHAHAH (because its the byond version of abstract)
-/datum/surgery_step/manipulate_organs/proc/can_use_organ(mob/user, obj/item/organ/organ)
-	return FALSE
-
-///Surgery step for internal organs, like hearts and brains
-/datum/surgery_step/manipulate_organs/internal
+///Surgery step for organs
+/datum/surgery_step/manipulate_organs
 	time = 6.4 SECONDS
 	name = "manipulate organs (hemostat/organ)"
 
-///only operate on internal organs
-/datum/surgery_step/manipulate_organs/internal/can_use_organ(mob/user, obj/item/organ/organ)
-	return isinternalorgan(organ)
-
 ///prosthetic surgery gives full effectiveness to crowbars (and hemostats)
-/datum/surgery_step/manipulate_organs/internal/mechanic
+/datum/surgery_step/manipulate_organs/mechanic
 	implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 100, /obj/item/kitchen/fork = 35)
 	name = "manipulate prosthetic organs (hemostat or crowbar/organ)"
-
-///Surgery step for external organs/features, like tails, frills, wings etc
-/datum/surgery_step/manipulate_organs/external
-	time = 3.2 SECONDS
-	name = "manipulate features (hemostat/feature)"
-
-///Only operate on external organs
-/datum/surgery_step/manipulate_organs/external/can_use_organ(mob/user, obj/item/organ/organ)
-	return isexternalorgan(organ)
-
-///prosthetic surgery gives full effectiveness to crowbars (and hemostats)
-/datum/surgery_step/manipulate_organs/external/mechanic
-	implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 100, /obj/item/kitchen/fork = 35)
-	name = "manipulate prosthetic features (hemostat or crowbar/feature)"

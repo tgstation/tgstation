@@ -6,11 +6,13 @@
 
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
+	process_life = FALSE
+	process_death = FALSE
 
-	bodypart_overlay = /datum/bodypart_overlay/mutant/tail
-
+	visual = TRUE
 	dna_block = DNA_TAIL_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail
 
 	///Does this tail have a wagging sprite, and is it currently wagging?
 	var/wag_flags = NONE

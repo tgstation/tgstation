@@ -1,8 +1,8 @@
 /obj/item/organ/internal/eyes
-	name = BODY_ZONE_PRECISE_EYES
-	icon_state = "eyes"
+	name = "eyes"
 	desc = "I see you!"
-	visual = TRUE
+	icon_state = "eyes"
+
 	zone = BODY_ZONE_PRECISE_EYES
 	slot = ORGAN_SLOT_EYES
 	gender = PLURAL
@@ -19,6 +19,8 @@
 	now_fixed = "<span class='info'>Color and shapes are once again perceivable.</span>"
 	high_threshold_cleared = "<span class='info'>Your vision functions passably once more.</span>"
 	low_threshold_cleared = "<span class='info'>Your vision is cleared of any ailment.</span>"
+
+	visual = TRUE
 
 	/// Sight flags this eye pair imparts on its user.
 	var/sight_flags = NONE

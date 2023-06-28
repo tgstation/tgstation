@@ -6,12 +6,13 @@
 
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_SPINES
+	process_life = FALSE
+	process_death = FALSE
 
+	visual = TRUE
 	preference = "feature_lizard_spines"
-
 	dna_block = DNA_SPINES_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
-
 	bodypart_overlay = /datum/bodypart_overlay/mutant/spines
 
 	///A two-way reference between the tail and the spines because of wagging sprites. Bruh.
