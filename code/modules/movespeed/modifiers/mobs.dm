@@ -68,8 +68,9 @@
 	var/mod = CONFIG_GET(number/movedelay/run_delay)
 	multiplicative_slowdown = isnum(mod)? mod : initial(multiplicative_slowdown)
 
-///Keep in mind, mobs with the TRAIT_IGNORE_TURF_EFFECTS (including flying or floating) don't have this slowdown.
 /datum/movespeed_modifier/turf_slowdown
+	movetypes = GROUND
+	blacklisted_movetypes = (FLYING|FLOATING)
 	variable = TRUE
 
 /datum/movespeed_modifier/bulky_drag
