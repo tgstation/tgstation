@@ -431,8 +431,8 @@
 		return FALSE
 
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
-	brute = round(max(brute * dmg_multi * brute_modifier * wound_damage_multiplier, 0), DAMAGE_PRECISION)
-	burn = round(max(burn * dmg_multi * burn_modifier * wound_damage_multiplier, 0), DAMAGE_PRECISION)
+	brute = round(max(brute * brute_modifier * wound_damage_multiplier * dmg_multi, 0), DAMAGE_PRECISION)
+	burn = round(max(burn * burn_modifier * wound_damage_multiplier * dmg_multi, 0), DAMAGE_PRECISION)
 	brute = max(0, brute - brute_reduction)
 	burn = max(0, burn - burn_reduction)
 
