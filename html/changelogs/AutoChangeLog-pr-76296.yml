@@ -1,0 +1,4 @@
+author: "ChungusGamer666"
+delete-after: True
+changes:
+  - bugfix: "Clarke ore box now has a less confusing dump contents button."

@@ -119,7 +119,7 @@
 	else
 		target_area = tgui_input_list(cast_on, "Chose an area to teleport to.", "Teleport", GLOB.teleportlocs)
 
-	if(QDELETED(src) || QDELETED(cast_on) || !can_cast_spell())
+	if(QDELETED(src) || QDELETED(cast_on) || (owner && !can_cast_spell()))
 		return . | SPELL_CANCEL_CAST
 	if(!target_area || isnull(GLOB.teleportlocs[target_area]))
 		return . | SPELL_CANCEL_CAST
@@ -132,7 +132,7 @@
 		living_cast_on.buckled?.unbuckle_mob(cast_on, force = TRUE)
 	return ..()
 
-/datum/action/cooldown/spell/teleport/area_teleport/invocation()
+/datum/action/cooldown/spell/teleport/area_teleport/invocation(mob/living/invoker)
 	var/area/last_chosen_area = GLOB.teleportlocs[last_chosen_area_name]
 
 	if(!invocation_says_area || isnull(last_chosen_area))
@@ -140,6 +140,6 @@
 
 	switch(invocation_type)
 		if(INVOCATION_SHOUT)
-			owner.say("[invocation], [uppertext(last_chosen_area.name)]!", forced = "spell ([src])")
+			invoker.say("[invocation], [uppertext(last_chosen_area.name)]!", forced = "spell ([src])")
 		if(INVOCATION_WHISPER)
-			owner.whisper("[invocation], [uppertext(last_chosen_area.name)].", forced = "spell ([src])")
+			invoker.whisper("[invocation], [uppertext(last_chosen_area.name)].", forced = "spell ([src])")

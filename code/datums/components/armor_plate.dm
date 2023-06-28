@@ -22,14 +22,14 @@
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_ATOM_DESTRUCTION, PROC_REF(on_atom_destruction))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
-	if(istype(parent, /obj/vehicle/sealed/mecha/working/ripley))
+	if(istype(parent, /obj/vehicle/sealed/mecha/ripley))
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_ripley_overlays))
 
 /datum/component/armor_plate/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 	UnregisterSignal(parent, COMSIG_ATOM_DESTRUCTION)
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
-	if(istype(parent, /obj/vehicle/sealed/mecha/working/ripley))
+	if(istype(parent, /obj/vehicle/sealed/mecha/ripley))
 		UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
@@ -78,7 +78,7 @@
 		improvements += lowertext(rating)
 	var/improvements_text = english_list(improvements)
 	to_chat(user, span_info("You strengthen [atom_parent], improving [atom_parent.p_their()] resistance against [improvements_text]."))
-	if(istype(atom_parent, /obj/vehicle/sealed/mecha/working/ripley))
+	if(istype(atom_parent, /obj/vehicle/sealed/mecha/ripley))
 		atom_parent.update_appearance()
 	SEND_SIGNAL(atom_parent, COMSIG_ARMOR_PLATED, amount, max_amount)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -93,7 +93,7 @@
 	for(var/i in 1 to amount)
 		new upgrade_item(get_turf(parent))
 
-/datum/component/armor_plate/proc/apply_ripley_overlays(obj/vehicle/sealed/mecha/mech, list/overlays)
+/datum/component/armor_plate/proc/apply_ripley_overlays(obj/vehicle/sealed/mecha/ripley/ripley, list/overlays)
 	SIGNAL_HANDLER
 
 	if(!amount)

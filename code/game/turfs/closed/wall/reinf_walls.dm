@@ -74,7 +74,7 @@
 
 		if(COVER)
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=0))
+				if(!W.tool_start_check(user, amount=2))
 					return
 				to_chat(user, span_notice("You begin slicing through the metal cover..."))
 				if(W.use_tool(src, user, 60, volume=100))
@@ -107,7 +107,7 @@
 				return TRUE
 
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=0))
+				if(!W.tool_start_check(user, amount=2))
 					return
 				to_chat(user, span_notice("You begin welding the metal cover back to the frame..."))
 				if(W.use_tool(src, user, 60, volume=100))
@@ -141,7 +141,7 @@
 
 		if(SUPPORT_RODS)
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=0))
+				if(!W.tool_start_check(user, amount=2))
 					return
 				to_chat(user, span_notice("You begin slicing through the support rods..."))
 				if(W.use_tool(src, user, 100, volume=100))

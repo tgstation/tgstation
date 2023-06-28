@@ -16,8 +16,11 @@
 	var/dpdir = NONE // bitmask of pipe directions
 	var/initialize_dirs = NONE // bitflags of pipe directions added on init, see \code\_DEFINES\pipe_construction.dm
 	var/flip_type // If set, the pipe is flippable and becomes this type when flipped
+	/// The pipe used to create us, if it exists
+	/// (I like it when c4 carries over)
 	var/obj/structure/disposalconstruct/stored
-
+	/// Should we create a pipe on destroy?
+	var/spawn_pipe = TRUE
 
 /datum/armor/structure_disposalpipe
 	melee = 25
@@ -34,8 +37,6 @@
 		setDir(make_from.dir)
 		make_from.forceMove(src)
 		stored = make_from
-	else
-		stored = new /obj/structure/disposalconstruct(src, null , SOUTH , FALSE , src)
 
 	if(ISDIAGONALDIR(dir)) // Bent pipes already have all the dirs set
 		initialize_dirs = NONE
@@ -56,7 +57,8 @@
 		turf_loc.add_blueprints_preround(src)
 
 /obj/structure/disposalpipe/Destroy()
-	qdel(stored)
+	spawn_pipe = FALSE
+	QDEL_NULL(stored)
 	return ..()
 
 /**
@@ -72,10 +74,11 @@
 			continue
 		holdplease.active = FALSE
 		expel(holdplease, get_turf(src), 0)
-	stored = null //The qdel is handled in expel()
+	stored = null // It gets dumped out in expel()
 
 /obj/structure/disposalpipe/handle_atom_del(atom/A)
 	if(A == stored && !QDELETED(src))
+		spawn_pipe = FALSE
 		stored = null
 		deconstruct(FALSE) //pipe has broken.
 
@@ -150,7 +153,7 @@
 	if(!can_be_deconstructed(user))
 		return TRUE
 
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=1))
 		return TRUE
 
 	to_chat(user, span_notice("You start slicing [src]..."))
@@ -167,11 +170,14 @@
 /obj/structure/disposalpipe/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
-			if(stored)
+			if(spawn_pipe)
+				if(isnull(stored)) // Don't have something? Make one now
+					stored = new /obj/structure/disposalconstruct(src, null, SOUTH, FALSE, src)
 				stored.forceMove(loc)
 				transfer_fingerprints_to(stored)
 				stored.setDir(dir)
 				stored = null
+				spawn_pipe = FALSE
 		else
 			var/turf/T = get_turf(src)
 			for(var/D in GLOB.cardinals)
@@ -310,6 +316,7 @@
 	initialize_dirs = DISP_DIR_NONE
 	// broken pipes always have dpdir=0 so they're not found as 'real' pipes
 	// i.e. will be treated as an empty turf
+	spawn_pipe = FALSE
 
 /obj/structure/disposalpipe/broken/deconstruct()
 	qdel(src)
