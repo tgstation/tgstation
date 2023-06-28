@@ -30,20 +30,6 @@
 		var/datum/reagent/toxin/carpotoxin/fish = chem
 		fish.toxpwr = 0
 
-/datum/species/human/felinid/on_species_gain(mob/living/carbon/carbon_being, datum/species/old_species, pref_load)
-	if(ishuman(carbon_being))
-		var/mob/living/carbon/human/target_human = carbon_being
-		if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
-			target_human.dna.features["tail_cat"] = "Cat"
-			if(target_human.dna.features["ears"] == "None")
-				target_human.dna.features["ears"] = "Cat"
-		if(target_human.dna.features["ears"] == "Cat")
-			var/obj/item/organ/internal/ears/cat/ears = new
-			ears.Insert(target_human, drop_if_replaced = FALSE)
-		else
-			mutantears = /obj/item/organ/internal/ears
-	return ..()
-
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
 	randomize_cosmetic_organs(human_mob)
 	return ..()
@@ -129,12 +115,7 @@
 /datum/species/human/felinid/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
 	human_for_preview.hairstyle = "Hime Cut"
 	human_for_preview.hair_color = "#ffcccc" // pink
-	human_for_preview.update_body_parts()
-
-	var/obj/item/organ/internal/ears/cat/cat_ears = human_for_preview.get_organ_by_type(/obj/item/organ/internal/ears/cat)
-	if (cat_ears)
-		cat_ears.color = human_for_preview.hair_color
-		human_for_preview.update_body()
+	human_for_preview.update_body()
 
 /datum/species/human/felinid/get_species_description()
 	return "Felinids are one of the many types of bespoke genetic \
