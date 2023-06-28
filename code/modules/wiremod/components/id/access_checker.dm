@@ -16,10 +16,6 @@
 		"id-card" = "access",
 	)
 
-/obj/item/circuit_component/compare/access/Initialize(mapload)
-	. = ..()
-	gen_access()
-
 /obj/item/circuit_component/compare/access/get_ui_notices()
 	. = ..()
 	. += create_ui_notice("When \"Check Any\" is true, returns true if \"Access To Check\" contains ANY value in \"Required Access\".", "orange", "info")
@@ -62,7 +58,7 @@
 
 /obj/item/circuit_component/compare/access/ui_perform_action(mob/user, action)
 	if(length(required_accesses.connected_ports))
-		balloon_alert(user, "Disconnect port before manually configuring!")
+		balloon_alert(user, "disconnect port before manually configuring!")
 		return
 	interact(user)
 

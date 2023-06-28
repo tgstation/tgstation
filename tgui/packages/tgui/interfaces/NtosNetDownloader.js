@@ -35,7 +35,7 @@ export const NtosNetDownloader = (props, context) => {
       filter((program) => program.category === selectedCategory),
     // This filters the list to only contain verified programs
     !emagged &&
-      PC_device_theme === 'ntos' &&
+      PC_device_theme !== 'syndicate' &&
       filter((program) => program.verifiedsource === 1),
     // This sorts all programs in the lists by name and compatibility
     sortBy(
@@ -47,7 +47,7 @@ export const NtosNetDownloader = (props, context) => {
     ? disk_size - toFixed(disk_used + downloadcompletion)
     : disk_size - disk_used;
   return (
-    <NtosWindow theme={PC_device_theme} width={600} height={600}>
+    <NtosWindow width={600} height={600}>
       <NtosWindow.Content scrollable>
         {!!error && (
           <NoticeBox>
@@ -197,7 +197,7 @@ const Program = (props, context) => {
       <Box mt={1} italic color="label">
         {program.fileinfo}
       </Box>
-      {!program.verifiedsource && PC_device_theme === 'ntos' && (
+      {!program.verifiedsource && PC_device_theme !== 'syndicate' && (
         <NoticeBox mt={1} mb={0} danger fontSize="12px">
           Unverified source. Please note that Nanotrasen does not recommend
           download and usage of software from non-official servers.

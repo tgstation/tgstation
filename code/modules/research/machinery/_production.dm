@@ -121,7 +121,12 @@
 		ui.open()
 
 /obj/machinery/rnd/production/ui_static_data(mob/user)
-	var/list/data = list()
+	var/list/data
+	if(isnull(materials.mat_container))
+		data = list()
+	else
+		data = materials.mat_container.ui_static_data()
+
 	var/list/designs = list()
 
 	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
@@ -200,15 +205,15 @@
 	if(materials)
 		var/total_storage = 0
 
-		for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
-			total_storage += bin.rating * 75000
+		for(var/datum/stock_part/matter_bin/bin in component_parts)
+			total_storage += bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
 
 		materials.set_local_size(total_storage)
 
 	var/total_rating = 1.2
 
-	for(var/obj/item/stock_parts/manipulator/manipulator in component_parts)
-		total_rating -= manipulator.rating * 0.1
+	for(var/datum/stock_part/servo/servo in component_parts)
+		total_rating -= servo.tier * 0.1
 
 	efficiency_coeff = max(total_rating, 0)
 
@@ -218,11 +223,7 @@
 
 	return ..()
 
-/obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist, notify_admins)
-	if(notify_admins)
-		usr.investigate_log("built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at \a [src]([type]).")
-
+/obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist)
 	for(var/i in 1 to amount)
 		new path(get_turf(src))
 
@@ -335,7 +336,7 @@
 	var/time_coefficient = design.lathe_time_factor * efficiency_coeff
 
 	addtimer(CALLBACK(src, PROC_REF(reset_busy)), (30 * time_coefficient * print_quantity) ** 0.5)
-	addtimer(CALLBACK(src, PROC_REF(do_print), design.build_path, print_quantity, efficient_mats, design.dangerous_construction), (32 * time_coefficient * print_quantity) ** 0.8)
+	addtimer(CALLBACK(src, PROC_REF(do_print), design.build_path, print_quantity, efficient_mats), (32 * time_coefficient * print_quantity) ** 0.8)
 
 	return TRUE
 
@@ -353,7 +354,7 @@
 	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
 
 	var/list/matlist = list()
-	matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
+	matlist[eject_sheet] = SHEET_MATERIAL_AMOUNT * count
 
 	materials.silo_log(src, "ejected", -count, "sheets", matlist)
 

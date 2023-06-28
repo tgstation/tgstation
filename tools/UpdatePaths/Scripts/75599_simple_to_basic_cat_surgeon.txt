@@ -1,0 +1,1 @@
+/mob/living/simple_animal/hostile/cat_butcherer : /mob/living/basic/cat_butcherer{@OLD}

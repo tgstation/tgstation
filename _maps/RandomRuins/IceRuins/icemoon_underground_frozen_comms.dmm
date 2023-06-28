@@ -227,7 +227,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "CH" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
 	},
@@ -277,7 +277,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "GQ" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/grille,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
@@ -425,8 +425,8 @@
 	},
 /area/ruin/powered/shuttle)
 "Zd" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/grille,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)

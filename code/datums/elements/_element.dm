@@ -9,7 +9,7 @@
 	var/element_flags = NONE
 	/**
 	  * The index of the first attach argument to consider for duplicate elements
-	  * 
+	  *
 	  * All arguments from this index onwards (1 based) are hashed into the key to determine
 	  * if this is a new unique element or one already exists
 	  *
@@ -26,7 +26,7 @@
 		return ELEMENT_INCOMPATIBLE
 	SEND_SIGNAL(target, COMSIG_ELEMENT_ATTACH, src)
 	if(element_flags & ELEMENT_DETACH_ON_HOST_DESTROY)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(OnTargetDelete), override = TRUE)
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(OnTargetDelete), override = TRUE)
 
 /datum/element/proc/OnTargetDelete(datum/source, force)
 	SIGNAL_HANDLER
@@ -38,7 +38,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	SEND_SIGNAL(source, COMSIG_ELEMENT_DETACH, src)
-	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(source, COMSIG_QDELETING)
 
 /datum/element/Destroy(force)
 	if(!force)
@@ -55,7 +55,7 @@
 	var/datum/element/ele = SSdcs.GetElement(arguments)
 	arguments[1] = src
 	if(ele.Attach(arglist(arguments)) == ELEMENT_INCOMPATIBLE)
-		CRASH("Incompatible [arguments[1]] assigned to a [type]! args: [json_encode(args)]")
+		CRASH("Incompatible element [ele.type] was assigned to a [type]! args: [json_encode(args)]")
 
 /**
  * Finds the singleton for the element type given and detaches it from src

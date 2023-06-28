@@ -25,7 +25,7 @@
 	icon_state = "wedding_dress"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS
-	flags_cover = HIDESHOES
+	flags_inv = HIDESHOES
 
 /obj/item/clothing/under/dress/redeveninggown
 	name = "red evening gown"

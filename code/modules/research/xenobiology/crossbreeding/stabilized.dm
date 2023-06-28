@@ -12,7 +12,6 @@ Stabilized extracts:
 	effect = "stabilized"
 	icon_state = "stabilized"
 	var/datum/status_effect/linked_effect
-	var/mob/living/owner
 
 /obj/item/slimecross/stabilized/Initialize(mapload)
 	. = ..()
@@ -23,44 +22,38 @@ Stabilized extracts:
 	qdel(linked_effect)
 	return ..()
 
+/// Returns the mob that is currently holding us if we are either in their inventory or a backpack analogue.
+/// Returns null if it's in an invalid location, so that we can check explicitly for null later.
+/obj/item/slimecross/stabilized/proc/get_held_mob()
+	if(isnull(loc))
+		return null
+	if(isliving(loc))
+		return loc
+	// Snowflake check for modsuit backpacks, which should be valid but are 3 rather than 2 steps from the owner
+	if(istype(loc, /obj/item/mod/module/storage))
+		var/obj/item/mod/module/storage/mod_backpack = loc
+		var/mob/living/modsuit_wearer = mod_backpack.mod?.wearer
+		return modsuit_wearer ? modsuit_wearer : null
+	var/nested_loc = loc.loc
+	if (isliving(nested_loc))
+		return nested_loc
+	return null
+
 /obj/item/slimecross/stabilized/process()
-	var/humanfound = null
-	if(ishuman(loc))
-		humanfound = loc
-	if(ishuman(loc.loc)) //Check if in backpack.
-		humanfound = (loc.loc)
-	for(var/atom/storage_loc as anything in get_storage_locs(src))
-		if(ishuman(storage_loc))
-			humanfound = storage_loc
-			break
-		if(ishuman(storage_loc.loc))
-			humanfound = storage_loc.loc
-			break
-		for(var/atom/storage_loc_storage_loc as anything in get_storage_locs(storage_loc))
-			if(ishuman(storage_loc_storage_loc))
-				humanfound = storage_loc_storage_loc
-				break
-	for(var/atom/loc_storage_loc as anything in get_storage_locs(loc))
-		if(ishuman(loc_storage_loc))
-			humanfound = loc_storage_loc
-			break
-	if(!humanfound)
+	var/mob/living/holder = get_held_mob()
+	if(isnull(holder))
 		return
-	var/mob/living/carbon/human/H = humanfound
 	var/effectpath = /datum/status_effect/stabilized
 	var/static/list/effects = subtypesof(/datum/status_effect/stabilized)
-	for(var/X in effects)
-		var/datum/status_effect/stabilized/S = X
-		if(initial(S.colour) == colour)
-			effectpath = S
-			break
-	if(!H.has_status_effect(effectpath))
-		var/datum/status_effect/stabilized/S = H.apply_status_effect(effectpath)
-		owner = H
-		S.linked_extract = src
-		STOP_PROCESSING(SSobj,src)
-
-
+	for(var/datum/status_effect/stabilized/effect as anything in effects)
+		if(initial(effect.colour) != colour)
+			continue
+		effectpath = effect
+		break
+	if (holder.has_status_effect(effectpath))
+		return
+	holder.apply_status_effect(effectpath, src)
+	STOP_PROCESSING(SSobj,src)
 
 //Colors and subtypes:
 /obj/item/slimecross/stabilized/grey
@@ -137,11 +130,12 @@ Stabilized extracts:
 /obj/item/slimecross/stabilized/gold/proc/generate_mobtype()
 	var/static/list/mob_spawn_pets = list()
 	if(!length(mob_spawn_pets))
-		for(var/T in typesof(/mob/living/simple_animal))
-			var/mob/living/simple_animal/SA = T
-			switch(initial(SA.gold_core_spawnable))
-				if(FRIENDLY_SPAWN)
-					mob_spawn_pets += T
+		for(var/mob/living/simple_animal/animal as anything in subtypesof(/mob/living/simple_animal))
+			if(initial(animal.gold_core_spawnable) == FRIENDLY_SPAWN)
+				mob_spawn_pets += animal
+		for(var/mob/living/basic/basicanimal as anything in subtypesof(/mob/living/basic))
+			if(initial(basicanimal.gold_core_spawnable) == FRIENDLY_SPAWN)
+				mob_spawn_pets += basicanimal
 	mob_type = pick(mob_spawn_pets)
 
 /obj/item/slimecross/stabilized/gold/Initialize(mapload)
@@ -152,7 +146,7 @@ Stabilized extracts:
 	var/choice = tgui_input_list(user, "Which do you want to reset?", "Familiar Adjustment", sort_list(list("Familiar Location", "Familiar Species", "Familiar Sentience", "Familiar Name")))
 	if(isnull(choice))
 		return
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.can_perform_action(src))
 		return
 	if(isliving(user))
 		var/mob/living/L = user

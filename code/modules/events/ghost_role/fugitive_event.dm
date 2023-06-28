@@ -1,3 +1,5 @@
+#define TEAM_BACKSTORY_SIZE 4
+
 /datum/round_event_control/fugitives
 	name = "Spawn Fugitives"
 	typepath = /datum/round_event/ghost_role/fugitives
@@ -6,6 +8,7 @@
 	earliest_start = 30 MINUTES //deadchat sink, lets not even consider it early on.
 	category = EVENT_CATEGORY_INVASION
 	description = "Fugitives will hide on the station, followed by hunters."
+	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event/ghost_role/fugitives
 	minimum_required = 1
@@ -13,33 +16,28 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/fugitives/spawn_role()
-	var/list/possible_spawns = list()//Some xeno spawns are in some spots that will instantly kill the refugees, like atmos
-	for(var/turf/X in GLOB.xeno_spawn)
-		if(istype(X.loc, /area/station/maintenance))
-			possible_spawns += X
-	if(!possible_spawns.len)
-		message_admins("No valid spawn locations found, aborting...")
+	var/turf/landing_turf = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
+	if(isnull(landing_turf))
 		return MAP_ERROR
-	var/turf/landing_turf = pick(possible_spawns)
 	var/list/possible_backstories = list()
 	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
-	if(candidates.len >= 1) //solo refugees
-		if(prob(30))
-			possible_backstories.Add("waldo") //less common as it comes with magicks and is kind of immershun shattering
-		else //For accurate deadchat feedback
-			minimum_required = 4
-	if(candidates.len >= 4)//group refugees
-		possible_backstories.Add("prisoner", "cultist", "synth")
-	if(!possible_backstories.len)
+
+	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
+
+	if(length(candidates) < TEAM_BACKSTORY_SIZE || prob(30 - (length(candidates) * 2))) //Solo backstories are always considered if a larger backstory cannot be filled out. Otherwise, it's a rare chance that gets rarer if more people sign up.
+		possible_backstories += list(FUGITIVE_BACKSTORY_WALDO, FUGITIVE_BACKSTORY_INVISIBLE) //less common as it comes with magicks and is kind of immershun shattering
+
+	if(length(candidates) >= TEAM_BACKSTORY_SIZE)//group refugees
+		possible_backstories += list(FUGITIVE_BACKSTORY_PRISONER, FUGITIVE_BACKSTORY_CULTIST, FUGITIVE_BACKSTORY_SYNTH)
 
 	var/backstory = pick(possible_backstories)
 	var/member_size = 3
 	var/leader
 	switch(backstory)
-		if("synth")
+		if(FUGITIVE_BACKSTORY_SYNTH)
 			leader = pick_n_take(candidates)
-		if("waldo")
+		if(FUGITIVE_BACKSTORY_WALDO, FUGITIVE_BACKSTORY_INVISIBLE)
 			member_size = 0 //solo refugees have no leader so the member_size gets bumped to one a bit later
 	var/list/members = list()
 	var/list/spawned_mobs = list()
@@ -55,10 +53,16 @@
 	if(!isnull(leader))
 		gear_fugitive_leader(leader, landing_turf, backstory)
 
-//after spawning
+	//after spawning
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE)
 	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
-	addtimer(CALLBACK(src, PROC_REF(spawn_hunters)), 10 MINUTES)
+	var/hunter_backstory = pick(
+		HUNTER_PACK_COPS,
+		HUNTER_PACK_RUSSIAN,
+		HUNTER_PACK_BOUNTY,
+		HUNTER_PACK_PSYKER,
+	)
+	addtimer(CALLBACK(src, PROC_REF(spawn_hunters), hunter_backstory), 10 MINUTES)
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
 
@@ -74,14 +78,16 @@
 	fugitiveantag.greet(backstory)
 
 	switch(backstory)
-		if("prisoner")
+		if(FUGITIVE_BACKSTORY_PRISONER)
 			S.equipOutfit(/datum/outfit/prisoner)
-		if("cultist")
+		if(FUGITIVE_BACKSTORY_CULTIST)
 			S.equipOutfit(/datum/outfit/yalp_cultist)
-		if("waldo")
+		if(FUGITIVE_BACKSTORY_WALDO)
 			S.equipOutfit(/datum/outfit/waldo)
-		if("synth")
+		if(FUGITIVE_BACKSTORY_SYNTH)
 			S.equipOutfit(/datum/outfit/synthetic)
+		if(FUGITIVE_BACKSTORY_INVISIBLE)
+			S.equipOutfit(/datum/outfit/invisible_man)
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Fugitive by an event.")
 	S.log_message("was spawned as a Fugitive by an event.", LOG_GAME)
 	spawned_mobs += S
@@ -98,21 +104,40 @@
 	new /obj/item/autosurgeon(landing_turf)
 
 //security team gets called in after 10 minutes of prep to find the refugees
-/datum/round_event/ghost_role/fugitives/proc/spawn_hunters()
-	var/backstory = pick("space cop", "russian", "bounty hunter")
-	var/datum/map_template/shuttle/ship
-	if(backstory == "space cop")
-		ship = new /datum/map_template/shuttle/hunter/space_cop
-	else if (backstory == "russian")
-		ship = new /datum/map_template/shuttle/hunter/russian
-	else
-		ship = new /datum/map_template/shuttle/hunter/bounty
+/datum/round_event/ghost_role/fugitives/proc/spawn_hunters(backstory)
+	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for a group of [backstory]?", ROLE_FUGITIVE_HUNTER)
+	shuffle_inplace(candidates)
+
+	var/datum/map_template/shuttle/hunter/ship
+	switch(backstory)
+		if(HUNTER_PACK_COPS)
+			ship = new /datum/map_template/shuttle/hunter/space_cop
+		if(HUNTER_PACK_RUSSIAN)
+			ship = new /datum/map_template/shuttle/hunter/russian
+		if(HUNTER_PACK_BOUNTY)
+			ship = new /datum/map_template/shuttle/hunter/bounty
+		if(HUNTER_PACK_PSYKER)
+			ship = new /datum/map_template/shuttle/hunter/psyker
+
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value
-	var/turf/T = locate(x,y,z)
-	if(!T)
+	var/turf/placement_turf = locate(x,y,z)
+	if(!placement_turf)
 		CRASH("Fugitive Hunters (Created from fugitive event) found no turf to load in")
-	if(!ship.load(T))
+	if(!ship.load(placement_turf))
 		CRASH("Loading [backstory] ship failed!")
+
+	for(var/turf/shuttle_turf in ship.get_affected_turfs(placement_turf))
+		for(var/obj/effect/mob_spawn/ghost_role/human/fugitive/spawner in shuttle_turf)
+			if(length(candidates))
+				var/mob/our_candidate = candidates[1]
+				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
+				candidates -= our_candidate
+				notify_ghosts("[spawner.prompt_name] has awoken: [spawned_mob]!", source = spawned_mob, action = NOTIFY_ORBIT, header="Come look!")
+			else
+				notify_ghosts("[spawner.prompt_name] spawner has been created!", source = spawner, action = NOTIFY_ORBIT, header="Spawn Here!")
+
 	priority_announce("Unidentified ship detected near the station.")
+
+#undef TEAM_BACKSTORY_SIZE

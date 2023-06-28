@@ -1,6 +1,3 @@
-#define VENUE_RESTAURANT "Restaurant Venue"
-#define VENUE_BAR "Bar Venue"
-
 ///Represents the abstract concept of a food venue in the code.
 /datum/venue
 	///Name of the venue, also used for the icon state of any radials it can be selected in
@@ -34,7 +31,7 @@
 	///Seats linked to this venue, assoc list of key holosign of seat position, and value of robot assigned to it, if any.
 	var/list/linked_seats = list()
 
-/datum/venue/process(delta_time)
+/datum/venue/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, visit_cooldown))
 		return
 	COOLDOWN_START(src, visit_cooldown, rand(min_time_between_visitor, max_time_between_visitor))
@@ -68,17 +65,25 @@
 
 /datum/venue/proc/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/order = pick_weight(customer_data.orderable_objects[venue_type])
+	var/list/order_args // Only for custom orders - arguments passed into New
 	var/image/food_image
 	var/food_line
 
+	if(ispath(order, /datum/reagent))
+		// This is pain
+		var/datum/reagent/reagent_order = order
+		order_args = list("reagent_type" = reagent_order)
+		order = initial(reagent_order.restaurant_order)
+
 	if(ispath(order, /datum/custom_order)) // generate the special order
-		var/datum/custom_order/custom_order = new order(src)
+		var/datum/custom_order/custom_order = new order(arglist(order_args || list()))
 		food_image = custom_order.get_order_appearance(src)
 		food_line = custom_order.get_order_line(src)
 		order = custom_order.dispense_order()
 	else
 		food_image = get_food_appearance(order)
 		food_line = order_food_line(order)
+
 	customer_pawn.say(food_line)
 
 	// common code for the food thoughts appearance
@@ -109,7 +114,26 @@
 
 ///Effects for when a customer receives their order at this venue
 /datum/venue/proc/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
-	SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn, order_item)
+	SHOULD_CALL_PARENT(TRUE)
+
+	// This is an item typepath, a reagent typepath, or a custom order datum instance.
+	var/order = customer_pawn.ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
+
+	. = SEND_SIGNAL(order_item, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn)
+
+	for(var/datum/reagent/reagent as anything in order_item.reagents?.reagent_list)
+		// Our order can be a reagent within the item we're receiving
+		if(reagent.type == order)
+			. |= SEND_SIGNAL(reagent, COMSIG_REAGENT_SOLD_TO_CUSTOMER, customer_pawn, order_item)
+			break
+
+	// Order can be a /datum/custom_order instance
+	if(istype(order, /datum/custom_order))
+		var/datum/custom_order/special_order = order
+		. |= special_order.handle_get_order(customer_pawn, order_item)
+
+	if(. & TRANSACTION_SUCCESS)
+		customers_served++
 
 ///Toggles whether the venue is open or not
 /datum/venue/proc/toggle_open()
@@ -129,7 +153,7 @@
 	restaurant_portal.update_icon()
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/simple_animal/robot_customer as anything in current_visitors)
-		robot_customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING] = TRUE //LEAVEEEEEE
+		robot_customer.ai_controller.set_blackboard_key(BB_CUSTOMER_LEAVING, TRUE) //LEAVEEEEEE
 
 /obj/machinery/restaurant_portal
 	name = "restaurant portal"

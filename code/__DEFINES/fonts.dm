@@ -12,13 +12,13 @@
 /// Font used when signing on paper.
 #define SIGNATURE_FONT "Segoe Script"
 
-//pda fonts
-#define MONO "Monospaced"
-#define VT "VT323"
-#define ORBITRON "Orbitron"
-#define SHARE "Share Tech Mono"
-
-GLOBAL_LIST_INIT(pda_styles, sort_list(list(MONO, VT, ORBITRON, SHARE)))
-
 /// Emoji icon set
 #define EMOJI_SET 'icons/ui_icons/emoji/emoji.dmi'
+
+// Font metrics bitfield
+/// Include leading A width and trailing C width in GetWidth() or in DrawText()
+#define INCLUDE_AC (1<<0)
+
+DEFINE_BITFIELD(font_flags, list(
+	"INCLUDE_AC" = INCLUDE_AC,
+))

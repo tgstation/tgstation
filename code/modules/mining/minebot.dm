@@ -11,7 +11,7 @@
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
 	mouse_opacity = MOUSE_OPACITY_ICON
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 	combat_mode = TRUE
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -64,6 +64,7 @@
 	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/Destroy()
+	QDEL_NULL(stored_gun)
 	for (var/datum/action/innate/minedrone/action in actions)
 		qdel(action)
 	return ..()
@@ -207,12 +208,16 @@
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
 	if(user.sight & SEE_TURFS)
 		user.clear_sight(SEE_TURFS)
-		user.lighting_alpha = initial(user.lighting_alpha)
+		user.lighting_cutoff_red += 5
+		user.lighting_cutoff_green += 15
+		user.lighting_cutoff_blue += 5
 	else
 		user.add_sight(SEE_TURFS)
-		user.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+		user.lighting_cutoff_red -= 5
+		user.lighting_cutoff_green -= 15
+		user.lighting_cutoff_blue -= 5
 
-	user.sync_lighting_plane_alpha()
+	user.sync_lighting_plane_cutoff()
 
 	to_chat(user, span_notice("You toggle your meson vision [(user.sight & SEE_TURFS) ? "on" : "off"]."))
 

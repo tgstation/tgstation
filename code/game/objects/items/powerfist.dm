@@ -9,6 +9,7 @@
 /obj/item/melee/powerfist
 	name = "power-fist"
 	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
+	icon = 'icons/obj/device_syndie.dmi'
 	icon_state = "powerfist"
 	inhand_icon_state = "powerfist"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -20,7 +21,7 @@
 	throwforce = 10
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 40)
+	armor_type = /datum/armor/melee_powerfist
 	resistance_flags = FIRE_PROOF
 	/// Delay between attacks
 	var/click_delay = 0.15 SECONDS
@@ -31,6 +32,21 @@
 	/// Tank used for the gauntlet's piston-ram.
 	var/obj/item/tank/internals/tank
 
+/datum/armor/melee_powerfist
+	fire = 100
+	acid = 40
+
+/obj/item/melee/powerfist/proc/pressure_setting_to_text(fist_pressure_setting)
+	switch(fist_pressure_setting)
+		if(LOW_PRESSURE)
+			return "low"
+		if(MID_PRESSURE)
+			return "medium"
+		if(HIGH_PRESSURE)
+			return "high"
+		else
+			CRASH("Invalid pressure setting: [fist_pressure_setting]!")
+
 /obj/item/melee/powerfist/examine(mob/user)
 	. = ..()
 	if(!in_range(user, src))
@@ -38,14 +54,14 @@
 		return
 	if(tank)
 		. += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it.")
-		. += span_notice("Can be removed with a screwdriver.")
+		. += span_notice("Can be removed with a <b>screwdriver</b>.")
 
-	. += span_notice("Use a wrench to change the valve strength. Current strength at [fist_pressure_setting].")
+	. += span_notice("Use a <b>wrench</b> to change the valve strength. Current strength is at <b>[pressure_setting_to_text(fist_pressure_setting)]</b> level.")
 
 /obj/item/melee/powerfist/wrench_act(mob/living/user, obj/item/tool)
 	fist_pressure_setting = fist_pressure_setting >= HIGH_PRESSURE ? LOW_PRESSURE : fist_pressure_setting + 1
 	tool.play_tool_sound(src)
-	balloon_alert(user, "piston strength set to [fist_pressure_setting]")
+	balloon_alert(user, "piston strength set to [pressure_setting_to_text(fist_pressure_setting)]")
 	return TRUE
 
 /obj/item/melee/powerfist/screwdriver_act(mob/living/user, obj/item/tool)

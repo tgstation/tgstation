@@ -12,7 +12,6 @@
 	emote_see = list("shakes their head.", "shivers.")
 	speak_chance = 1
 	turns_per_move = 5
-	see_in_dark = 6
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -35,9 +34,6 @@
 	has_collar_resting_icon_state = TRUE
 	can_be_held = TRUE
 	held_state = "cat2"
-	///only for attacking rats
-	melee_damage_upper = 6
-	melee_damage_lower = 4
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -129,7 +125,7 @@
 	Read_Memory()
 	. = ..()
 
-/mob/living/simple_animal/pet/cat/runtime/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/pet/cat/runtime/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
 		Deploy_The_Cats()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
@@ -205,17 +201,17 @@
 		icon_state = "[icon_living]"
 
 
-/mob/living/simple_animal/pet/cat/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/pet/cat/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	if(!stat && !buckled && !client)
-		if(DT_PROB(0.5, delta_time))
+		if(SPT_PROB(0.5, seconds_per_tick))
 			manual_emote(pick("stretches out for a belly rub.", "wags [p_their()] tail.", "lies down."))
 			set_resting(TRUE)
-		else if(DT_PROB(0.5, delta_time))
+		else if(SPT_PROB(0.5, seconds_per_tick))
 			manual_emote(pick("sits down.", "crouches on [p_their()] hind legs.", "looks alert."))
 			set_resting(TRUE)
 			icon_state = "[icon_living]_sit"
 			cut_overlays() // No collar support in sitting state
-		else if(DT_PROB(0.5, delta_time))
+		else if(SPT_PROB(0.5, seconds_per_tick))
 			if (resting)
 				manual_emote(pick("gets up and meows.", "walks around.", "stops resting."))
 				set_resting(FALSE)
@@ -224,7 +220,7 @@
 
 	//MICE! RATS! OH MY!
 	if((src.loc) && isturf(src.loc))
-		if(!stat && !resting && !buckled)
+		if(!stat && !buckled)
 			//Targeting anything in the rat faction nearby
 			for(var/mob/living/M in view(1,src))
 				if(!M.stat && Adjacent(M))
@@ -244,8 +240,6 @@
 							movement_target = null
 							stop_automated_movement = 0
 							break
-						//Rat scratching, or anything else that could be in the rat faction
-						M.attack_animal(src)
 			for(var/obj/item/toy/cattoy/T in view(1,src))
 				if (T.cooldown < (world.time - 400))
 					manual_emote("bats \the [T] around with \his paw!")
@@ -319,12 +313,12 @@
 		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name
 
-/mob/living/simple_animal/pet/cat/cak/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/pet/cat/cak/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	..()
 	if(stat)
 		return
 	if(health < maxHealth)
-		adjustBruteLoss(-4 * delta_time) //Fast life regen
+		adjustBruteLoss(-4 * seconds_per_tick) //Fast life regen
 	for(var/obj/item/food/donut/D in range(1, src)) //Frosts nearby donuts!
 		if(!D.is_decorated)
 			D.decorate_donut()

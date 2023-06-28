@@ -8,7 +8,7 @@
 
 /datum/uplink_item/bundles_tc/c20r
 	name = "C-20r bundle"
-	desc = "Old Faithful: The classic C-20r, bundled with two magazines and a (surplus) suppressor at discount price."
+	desc = "Old Faithful: The classic C-20r, bundled with two magazines and a suppressor at discount price."
 	item = /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
 	cost = 14 // normally 16
 	purchasable_from = UPLINK_NUKE_OPS
@@ -31,10 +31,10 @@
 /datum/uplink_item/bundles_tc/sniper
 	name = "Sniper bundle"
 	desc = "Elegant and refined: Contains a collapsed sniper rifle in an expensive carrying case, \
-			two soporific knockout magazines, a free surplus suppressor, and a sharp-looking tactical turtleneck suit. \
+			two .50 BMG disruptor magazines, a free suppressor, and a sharp-looking tactical turtleneck suit. \
 			We'll throw in a free red tie if you order NOW."
 	item = /obj/item/storage/briefcase/sniperbundle
-	cost = 20 // normally 26
+	cost = 20 // normally 27, the suit and office supplies are free!
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/bundles_tc/firestarter
@@ -44,6 +44,16 @@
 			Order NOW and comrade Boris will throw in an extra tracksuit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/firestarter
 	cost = 30
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/bundles_tc/induction_kit
+	name = "Syndicate Induction Kit"
+	desc = "Met a fellow syndicate agent on the station? Kept some TC in reserve just in case? Or are you communicating with one via the Syndicate channel? \
+			Get this kit and you'll be able to induct them into your operative team via a special implant. \
+			Additionally, it contains an assortment of useful gear for new operatives, including a space suit, an Ansem pistol, two spare magazines, and more! \
+			*NOT* for usage with Reinforcements, and does not brainwash the target!"
+	item = /obj/item/storage/box/syndie_kit/induction_kit
+	cost = 10
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/rawketlawnchair
@@ -144,9 +154,10 @@
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/sniper
-	name = "Sniper Rifle"
-	desc = "Ranged fury, Syndicate style. Guaranteed to cause shock and awe or your TC back!"
-	item = /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
+	name = "Anti-Materiel Sniper Rifle"
+	desc = "An outdated, but still extremely powerful anti-material sniper rifle. Fires .50 BMG cartridges from a 6 round magazine. \
+			Can be fitted with a suppressor. If anyone asks how that even works, tell them it's Nanotrasen's fault."
+	item = /obj/item/gun/ballistic/rifle/sniper_rifle/syndicate
 	cost = 16
 	surplus = 25
 	purchasable_from = UPLINK_NUKE_OPS
@@ -297,32 +308,49 @@
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/sniper
-	cost = 4
+	cost = 3
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/ammo/sniper/basic
-	name = ".50 Magazine"
+	name = ".50 BMG Magazine"
 	desc = "An additional standard 6-round magazine for use with .50 sniper rifles."
 	item = /obj/item/ammo_box/magazine/sniper_rounds
 
+/datum/uplink_item/ammo/sniper/surplusbox
+	name = ".50 BMG Surplus Magazine Box"
+	desc = "A box full of surplus .50 BMG magazines. Not as good as high quality magazines, \
+			usually lacking the penetrative power and impact, but good enough to keep the gun firing. \
+			Useful for arming a squad."
+	cost = 7 //1 TC per magazine
+	item = /obj/item/storage/box/syndie_kit/surplus
+
 /datum/uplink_item/ammo/sniper/penetrator
-	name = ".50 Penetrator Magazine"
-	desc = "A 5-round magazine of penetrator ammo designed for use with .50 sniper rifles. \
+	name = ".50 BMG Penetrator Magazine"
+	desc = "A 6-round magazine of penetrator ammo designed for use with .50 sniper rifles. \
 			Can pierce walls and multiple enemies."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/penetrator
-	cost = 5
+	cost = 4
 
-/datum/uplink_item/ammo/sniper/soporific
-	name = ".50 Soporific Magazine"
-	desc = "A 3-round magazine of soporific ammo designed for use with .50 sniper rifles. Put your enemies to sleep today!"
-	item = /obj/item/ammo_box/magazine/sniper_rounds/soporific
-	cost = 6
+/datum/uplink_item/ammo/sniper/incendiary
+	name = ".50 BMG Incendiary Magazine"
+	desc = "A 6-round magazine of incendiary ammo. \
+			Sets your enemies ablaze, along with everyone else next to them!"
+	item = /obj/item/ammo_box/magazine/sniper_rounds/incendiary
+	cost = 4
+
+/datum/uplink_item/ammo/sniper/disruptor
+	name = ".50 BMG Disruptor Magazine"
+	desc = "A 6-round magazine of disruptor ammo designed for use with .50 sniper rifles. \
+			Put your enemies and their alarm clock to sleep today!"
+	item = /obj/item/ammo_box/magazine/sniper_rounds/disruptor
+	cost = 4
 
 /datum/uplink_item/ammo/sniper/marksman
-	name = ".50 Marksman Magazine"
-	desc = "A 5-round magazine of marksman ammo designed for use with .50 sniper rifles. Blast your enemies with instant shots!"
+	name = ".50 BMG Marksman Magazine"
+	desc = "A 6-round magazine of marksman ammo designed for use with .50 sniper rifles. \
+			Blast your enemies with instant shots! Just watch out for the rebound..."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
-	cost = 5
+	cost = 4
 
 /datum/uplink_item/ammo/carbine
 	name = "5.56mm Toploader Magazine"
@@ -384,14 +412,14 @@
 /datum/uplink_item/ammo/rocket/basic
 	name = "84mm HE Rocket"
 	desc = "A low-yield anti-personnel HE rocket. Gonna take you out in style!"
-	item = /obj/item/ammo_casing/caseless/rocket
+	item = /obj/item/ammo_casing/rocket
 	cost = 4
 
 /datum/uplink_item/ammo/rocket/heap
 	name = "84mm HEAP Rocket"
 	desc = "A high-yield HEAP rocket; extremely effective against literally everything and anything near that thing that doesn't exist anymore. \
 			Strike fear into the hearts of your enemies."
-	item = /obj/item/ammo_casing/caseless/rocket/heap
+	item = /obj/item/ammo_casing/rocket/heap
 	cost = 6
 
 /datum/uplink_item/ammo/surplus_smg
@@ -497,6 +525,15 @@
 	surplus = 35
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
+/datum/uplink_item/explosives/pinata
+	name = "Weapons Grade Pinata Kit"
+	desc = "A pinata filled with both candy and explosives as well as two belts to carry them on, crack it open and see what you get!"
+	item = /obj/item/storage/box/syndie_kit/pinata
+	purchasable_from = UPLINK_CLOWN_OPS
+	limited_stock = 1
+	cost = 12 //This is effectively the clown ops version of the grenadier belt where you should on average get 8 explosives if you use a weapon with exactly 10 force.
+	surplus = 0
+
 //Support and Mechs
 /datum/uplink_category/support
 	name = "Support and Exosuits"
@@ -514,6 +551,7 @@
 	cost = 20
 	purchasable_from = UPLINK_CLOWN_OPS
 	restricted = TRUE
+	refundable = TRUE
 
 /datum/uplink_item/support/reinforcement
 	name = "Reinforcements"
@@ -521,16 +559,15 @@
 		They'll come equipped with a mere surplus SMG, so arming them is recommended."
 	item = /obj/item/antag_spawner/nuke_ops
 	cost = 25
-	refundable = TRUE
 	purchasable_from = UPLINK_NUKE_OPS
 	restricted = TRUE
+	refundable = TRUE
 
 /datum/uplink_item/support/reinforcement/assault_borg
 	name = "Syndicate Assault Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel. \
 			Comes equipped with a self-resupplying LMG, a grenade launcher, energy sword, emag, pinpointer, flash and crowbar."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/assault
-	refundable = TRUE
 	cost = 65
 	restricted = TRUE
 
@@ -540,7 +577,6 @@
 			It comes equipped with a nanite hypospray, a medical beamgun, combat defibrillator, full surgical kit including an energy saw, an emag, pinpointer and flash. \
 			Thanks to its organ storage bag, it can perform surgery as well as any humanoid."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/medical
-	refundable = TRUE
 	cost = 35
 	restricted = TRUE
 
@@ -550,7 +586,6 @@
 			Aside from regular Engineering equipment, it comes with a special destination tagger that lets it traverse disposals networks. \
 			Its chameleon projector lets it disguise itself as a Nanotrasen cyborg, on top it has thermal vision and a pinpointer."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
-	refundable = TRUE
 	cost = 35
 	restricted = TRUE
 
@@ -810,3 +845,4 @@
 	item = /obj/item/keycard/syndicate_fridge
 	cost = 5
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+

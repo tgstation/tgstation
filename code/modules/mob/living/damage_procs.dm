@@ -14,7 +14,7 @@
  *
  * Returns TRUE if damage applied
  */
-/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null)
+/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (!forced && hit_percent <= 0))
@@ -33,6 +33,7 @@
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			adjustStaminaLoss(damage_amount, forced = forced)
+	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone)
 	return TRUE
 
 ///like [apply_damage][/mob/living/proc/apply_damage] except it always uses the damage procs
@@ -104,10 +105,7 @@
 			Immobilize(effect * hit_percent)
 		if(EFFECT_UNCONSCIOUS)
 			Unconscious(effect * hit_percent)
-		if(EFFECT_EYE_BLUR)
-			blur_eyes(effect * hit_percent)
-		if(EFFECT_DROWSY)
-			adjust_drowsyness(effect * hit_percent)
+
 	return TRUE
 
 /**
@@ -122,8 +120,8 @@
 		unconscious = 0,
 		slur = 0 SECONDS, // Speech impediment, not technically an effect
 		stutter = 0 SECONDS, // Ditto
-		eyeblur = 0,
-		drowsy = 0,
+		eyeblur = 0 SECONDS,
+		drowsy = 0 SECONDS,
 		blocked = 0, // This one's not an effect, don't be confused - it's block chance
 		stamina = 0, // This one's a damage type, and not an effect
 		jitter = 0 SECONDS,
@@ -144,15 +142,15 @@
 		apply_effect(paralyze, EFFECT_PARALYZE, blocked)
 	if(immobilize)
 		apply_effect(immobilize, EFFECT_IMMOBILIZE, blocked)
-	if(eyeblur)
-		apply_effect(eyeblur, EFFECT_EYE_BLUR, blocked)
-	if(drowsy)
-		apply_effect(drowsy, EFFECT_DROWSY, blocked)
 
 	if(stamina)
 		apply_damage(stamina, STAMINA, null, blocked)
 
-	if(jitter && (status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
+	if(drowsy)
+		adjust_drowsiness(drowsy)
+	if(eyeblur)
+		adjust_eye_blur(eyeblur)
+	if(jitter && !check_stun_immunity(CANSTUN))
 		adjust_jitter(jitter)
 	if(slur)
 		adjust_slurring(slur)
@@ -184,22 +182,36 @@
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
-	if(!forced && (status_flags & GODMODE))
-		return
-	if(required_biotype && !(mob_biotypes & required_biotype))
-		return
+/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type = ALL)
+	if(!forced)
+		if(status_flags & GODMODE)
+			return
+
+		var/obj/item/organ/internal/lungs/affected_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+		if(isnull(affected_lungs))
+			if(!(mob_respiration_type & required_respiration_type))  // if the mob has no lungs, use mob_respiration_type
+				return
+		else
+			if(!(affected_lungs.respiration_type & required_respiration_type)) // otherwise use the lungs' respiration_type
+				return
 	. = oxyloss
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 
 
-/mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
-	if(!forced && (status_flags & GODMODE))
-		return
-	if(required_biotype && !(mob_biotypes & required_biotype))
-		return
+/mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype, required_respiration_type = ALL)
+	if(!forced)
+		if(status_flags & GODMODE)
+			return
+
+		var/obj/item/organ/internal/lungs/affected_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+		if(isnull(affected_lungs))
+			if(!(mob_respiration_type & required_respiration_type))
+				return
+		else
+			if(!(affected_lungs.respiration_type & required_respiration_type))
+				return
 	. = oxyloss
 	oxyloss = amount
 	if(updating_health)
@@ -212,7 +224,7 @@
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	if(required_biotype && !(mob_biotypes & required_biotype))
+	if(!forced && !(mob_biotypes & required_biotype))
 		return
 	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
@@ -222,7 +234,7 @@
 /mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	if(required_biotype && !(mob_biotypes & required_biotype))
+	if(!forced && !(mob_biotypes & required_biotype))
 		return
 	toxloss = amount
 	if(updating_health)
@@ -273,7 +285,7 @@
 /mob/living/proc/setOrganLoss(slot, amount, maximum, required_organtype)
 	return
 
-/mob/living/proc/getOrganLoss(slot)
+/mob/living/proc/get_organ_loss(slot)
 	return
 
 /mob/living/proc/getStaminaLoss()
@@ -286,7 +298,7 @@
 		return
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
 	if(updating_stamina)
-		update_stamina()
+		updatehealth()
 	return
 
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
@@ -294,7 +306,7 @@
 		return FALSE
 	staminaloss = amount
 	if(updating_stamina)
-		update_stamina()
+		updatehealth()
 
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.
@@ -320,7 +332,6 @@
 	adjustStaminaLoss(-stamina, FALSE)
 	if(updating_health)
 		updatehealth()
-		update_stamina()
 
 /// damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_bodytype)
@@ -329,7 +340,6 @@
 	adjustStaminaLoss(stamina, FALSE)
 	if(updating_health)
 		updatehealth()
-		update_stamina()
 
 ///heal up to amount damage, in a given order
 /mob/living/proc/heal_ordered_damage(amount, list/damage_types)

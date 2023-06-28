@@ -36,6 +36,7 @@
 	if(!proximity_flag)
 		return
 	do_knockback(target, user, get_dir(source, target))
+	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 /// triggered after a hostile simplemob attacks something
 /datum/element/knockback/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)

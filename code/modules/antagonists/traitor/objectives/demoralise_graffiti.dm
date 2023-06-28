@@ -7,6 +7,10 @@
 		People seeing or slipping on your graffiti grants progress towards success."
 
 	progression_minimum = 0 MINUTES
+	progression_maximum = 30 MINUTES
+	progression_reward = list(4 MINUTES, 8 MINUTES)
+	telecrystal_reward = list(0, 1)
+
 	duplicate_type = /datum/traitor_objective/demoralise/graffiti
 	/// Have we given out a spray can yet?
 	var/obtained_spray = FALSE
@@ -33,7 +37,7 @@
 			user.put_in_hands(spray)
 			spray.balloon_alert(user, "the spraycan materializes in your hand")
 
-			RegisterSignal(spray, COMSIG_PARENT_QDELETING, PROC_REF(on_spray_destroyed))
+			RegisterSignal(spray, COMSIG_QDELETING, PROC_REF(on_spray_destroyed))
 			RegisterSignal(spray, COMSIG_TRAITOR_GRAFFITI_DRAWN, PROC_REF(on_rune_complete))
 
 /**
@@ -59,9 +63,9 @@
 /datum/traitor_objective/demoralise/graffiti/proc/on_rune_complete(atom/spray, obj/effect/decal/cleanable/traitor_rune/drawn_rune)
 	SIGNAL_HANDLER
 	rune = drawn_rune
-	UnregisterSignal(spray, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(spray, COMSIG_QDELETING)
 	UnregisterSignal(spray, COMSIG_TRAITOR_GRAFFITI_DRAWN)
-	RegisterSignal(drawn_rune, COMSIG_PARENT_QDELETING, PROC_REF(on_rune_destroyed))
+	RegisterSignal(drawn_rune, COMSIG_QDELETING, PROC_REF(on_rune_destroyed))
 	RegisterSignal(drawn_rune, COMSIG_DEMORALISING_EVENT, PROC_REF(on_mood_event))
 	RegisterSignal(drawn_rune, COMSIG_TRAITOR_GRAFFITI_SLIPPED, PROC_REF(on_mood_event))
 
@@ -77,7 +81,7 @@
 
 /datum/traitor_objective/demoralise/graffiti/ungenerate_objective()
 	if (rune)
-		UnregisterSignal(rune, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(rune, COMSIG_QDELETING)
 		UnregisterSignal(rune, COMSIG_DEMORALISING_EVENT)
 		UnregisterSignal(rune, COMSIG_TRAITOR_GRAFFITI_SLIPPED)
 		rune = null
@@ -111,6 +115,8 @@
 	if (drawing_rune)
 		user.balloon_alert(user, "already busy!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	. |= AFTERATTACK_PROCESSED_ITEM
 
 	if (!proximity || !check_allowed_items(target) || !isliving(user))
 		return
@@ -303,6 +309,7 @@
 
 	return ..()
 
-#undef RUNE_STAGE_OUTLINE
 #undef RUNE_STAGE_COLOURED
 #undef RUNE_STAGE_COMPLETE
+#undef RUNE_STAGE_OUTLINE
+#undef RUNE_STAGE_REMOVABLE

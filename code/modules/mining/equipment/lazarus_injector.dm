@@ -27,35 +27,30 @@
 
 /obj/item/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(!loaded || !(isliving(target) && proximity_flag) )
-		return
-	if(!isanimal(target))
-		to_chat(user, span_info("[src] is only effective on lesser beings."))
+	if(!loaded || !proximity_flag)
 		return
 
-	var/mob/living/simple_animal/target_animal = target
-	if(target_animal.sentience_type != revive_type)
-		to_chat(user, span_info("[src] does not work on this sort of creature."))
+	if(SEND_SIGNAL(target, COMSIG_ATOM_ON_LAZARUS_INJECTOR, src, user) & LAZARUS_INJECTOR_USED)
+		return
+
+	if(!isliving(target))
+		return
+
+	var/mob/living/target_animal = target
+	if(!target_animal.compare_sentience_type(revive_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
+		balloon_alert(user, "invalid creature!")
 		return
 	if(target_animal.stat != DEAD)
-		to_chat(user, span_info("[src] is only effective on the dead."))
+		balloon_alert(user, "it's not dead!")
 		return
 
-	target_animal.faction = list("neutral")
-	target_animal.revive(HEAL_ALL)
-	if(ishostile(target))
-		var/mob/living/simple_animal/hostile/target_hostile = target_animal
-		if(malfunctioning)
-			target_hostile.faction |= list("lazarus", "[REF(user)]")
-			target_hostile.robust_searching = TRUE
-			target_hostile.friends += user
-			target_hostile.attack_same = TRUE
-			user.log_message("has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector.", LOG_GAME)
-		else
-			target_hostile.attack_same = FALSE
+	target_animal.lazarus_revive(user, malfunctioning)
+	expend(target_animal, user)
+
+/obj/item/lazarus_injector/proc/expend(atom/revived_target, mob/user)
+	user.visible_message(span_notice("[user] injects [revived_target] with [src], reviving it."))
+	SSblackbox.record_feedback("tally", "lazarus_injector", 1, revived_target.type)
 	loaded = FALSE
-	user.visible_message(span_notice("[user] injects [target_animal] with [src], reviving it."))
-	SSblackbox.record_feedback("tally", "lazarus_injector", 1, target_animal.type)
 	playsound(src,'sound/effects/refill.ogg',50,TRUE)
 	icon_state = "lazarus_empty"
 

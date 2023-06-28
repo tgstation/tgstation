@@ -91,14 +91,14 @@
 	var/M = 0
 	var/L = 0
 	var/S = 0
-	for(var/obj/item/stock_parts/capacitor/Cap in component_parts)
-		C += ((Cap.rating - 1) * 0.1)
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		C += ((capacitor.tier - 1) * 0.1)
 	power_saver = 1 - C
-	for(var/obj/item/stock_parts/manipulator/Manip in component_parts)
-		M += ((Manip.rating - 1) * PART_CASH_OFFSET_AMOUNT)
+	for(var/datum/stock_part/servo/servo in component_parts)
+		M += ((servo.tier - 1) * PART_CASH_OFFSET_AMOUNT)
 	positive_cash_offset = M
-	for(var/obj/item/stock_parts/micro_laser/Laser in component_parts)
-		L += ((Laser.rating - 1) * PART_CASH_OFFSET_AMOUNT)
+	for(var/datum/stock_part/micro_laser/Laser in component_parts)
+		L += ((Laser.tier - 1) * PART_CASH_OFFSET_AMOUNT)
 	negative_cash_offset = L
 	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
 		S += ((scanning_module.tier - 1) * 0.25)
@@ -245,7 +245,9 @@
 	var/gauss_major = 0
 	var/gauss_minor = 0
 	var/gauss_real = 0
-	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z)) //NO MORE DISCS IN WINDOWS
+
+	var/turf/my_turf = get_turf(src)
+	var/list/turfs = TURF_NEIGHBORS(my_turf) //NO MORE DISCS IN WINDOWS
 	while(length(turfs))
 		var/turf/T = pick_n_take(turfs)
 		if(T.is_blocked_turf(TRUE))
@@ -253,6 +255,7 @@
 		else
 			dropturf = T
 			break
+
 	if (!dropturf)
 		dropturf = drop_location()
 	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset) //This is the randomized profit value that this experiment has to surpass to unlock a tech.
@@ -265,7 +268,7 @@
 	if((gauss_real >= gauss_major)) //Major Success.
 		if(SSresearch.techweb_nodes_experimental.len > 0)
 			say("Experiment concluded with major success. New technology node discovered on technology disc.")
-			new /obj/item/disk/tech_disk/major(dropturf,1)
+			new /obj/item/disk/design_disk/bepis/remove_tech(dropturf,1)
 			return
 		say("Expended all available experimental technology nodes. Resorting to minor rewards.")
 	if(gauss_real >= gauss_minor) //Minor Success.
@@ -275,10 +278,18 @@
 		return
 	if(gauss_real <= -1) //Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
-		new /mob/living/simple_animal/deer(dropturf, 1)
+		new /mob/living/basic/deer(dropturf, 1)
 		use_power(MACHINE_OVERLOAD * power_saver) //To prevent gambling at low cost and also prevent spamming for infinite deer.
 		return
 	//Minor Failure
 	error_cause = pick("attempted to sell grey products to American dominated market.","attempted to sell gray products to British dominated market.","placed wild assumption that PDAs would go out of style.","simulated product #76 damaged brand reputation mortally.","simulated business model resembled 'pyramid scheme' by 98.7%.","product accidently granted override access to all station doors.")
 	say("Experiment concluded with zero product viability. Cause of error: [error_cause]")
 	return
+
+
+#undef MACHINE_OPERATION
+#undef MACHINE_OVERLOAD
+#undef MAJOR_THRESHOLD
+#undef MINOR_THRESHOLD
+#undef STANDARD_DEVIATION
+#undef PART_CASH_OFFSET_AMOUNT

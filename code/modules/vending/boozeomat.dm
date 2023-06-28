@@ -12,6 +12,7 @@
 			"products" = list(
 				/obj/item/reagent_containers/cup/glass/bottle/curacao = 5,
 				/obj/item/reagent_containers/cup/glass/bottle/applejack = 5,
+				/obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5,
 				/obj/item/reagent_containers/cup/glass/bottle/tequila = 5,
 				/obj/item/reagent_containers/cup/glass/bottle/rum = 5,
 				/obj/item/reagent_containers/cup/glass/bottle/cognac = 5,
@@ -91,6 +92,7 @@
 /obj/machinery/vending/boozeomat/syndicate_access
 	req_access = list(ACCESS_SYNDICATE)
 	age_restrictions = FALSE
+	initial_language_holder = /datum/language_holder/syndicate
 
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"

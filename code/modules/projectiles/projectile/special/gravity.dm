@@ -5,7 +5,6 @@
 	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
-	nodamage = TRUE
 	color = "#33CCFF"
 	var/turf/T
 	var/power = 4
@@ -40,7 +39,6 @@
 	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
-	nodamage = TRUE
 	color = "#FF6600"
 	var/turf/T
 	var/power = 4
@@ -74,7 +72,6 @@
 	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
-	nodamage = TRUE
 	color = "#101010"
 	var/turf/T
 	var/power = 4
@@ -90,7 +87,7 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src|| (firer && A == src.firer) || A.anchored || thrown_items[A])
+		if(A == src || (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
 		if(ismob(A))
 			var/mob/M = A

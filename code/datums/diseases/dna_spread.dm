@@ -14,7 +14,7 @@
 	severity = DISEASE_SEVERITY_MEDIUM
 
 
-/datum/disease/dnaspread/stage_act(delta_time, times_fired)
+/datum/disease/dnaspread/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
@@ -37,15 +37,15 @@
 
 	switch(stage)
 		if(2, 3) //Pretend to be a cold and give time to spread.
-			if(DT_PROB(4, delta_time))
+			if(SPT_PROB(4, seconds_per_tick))
 				affected_mob.emote("sneeze")
-			if(DT_PROB(4, delta_time))
+			if(SPT_PROB(4, seconds_per_tick))
 				affected_mob.emote("cough")
-			if(DT_PROB(0.5, delta_time))
+			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your muscles ache."))
 				if(prob(20))
 					affected_mob.take_bodypart_damage(1, updating_health = FALSE)
-			if(DT_PROB(0.5, delta_time))
+			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your stomach hurts."))
 				if(prob(20))
 					affected_mob.adjustToxLoss(2, FALSE)

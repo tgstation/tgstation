@@ -33,7 +33,9 @@
 	name = "Machinery Pinpoint Stock Parts Scanning Experiment"
 	description = "Base experiment for scanning machinery with specific parts"
 	exp_tag = "Scan"
-	///Which stock part are we looking for in the machine
+	///Which stock part are we looking for in the machine.
+	///We use obj instead of datum here, as some stock parts aren't datumised, and in datumised ones
+	///we can just look for the physical_object_reference to match up the requirement.
 	var/obj/item/stock_parts/required_stock_part = /obj/item/stock_parts
 
 /datum/experiment/scanning/points/machinery_pinpoint_scan/check_progress()

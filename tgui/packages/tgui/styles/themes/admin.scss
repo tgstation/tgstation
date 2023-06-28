@@ -28,4 +28,11 @@
   .Layout__content {
     background-image: url('../../assets/bg-admin.svg');
   }
+
+  .candystripe:nth-child(odd) {
+    background-color: rgba(12, 49, 71, 0.25);
+  }
+  .candystripe:nth-child(even) {
+    background-color: rgba(33, 114, 206, 0.25);
+  }
 }

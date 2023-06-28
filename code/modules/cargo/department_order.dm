@@ -24,6 +24,9 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 
 /obj/machinery/computer/department_orders/Initialize(mapload, obj/item/circuitboard/board)
 	. = ..()
+	// All maps should have ONLY ONE of each order console roundstart
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
+
 	if(mapload) //check for mapping errors
 		for(var/delivery_area_type in department_delivery_areas)
 			if(GLOB.areas_by_type[delivery_area_type])
@@ -191,6 +194,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	name = "security order console"
 	circuit = /obj/item/circuitboard/computer/security_orders
 	department_delivery_areas = list(
+		/area/station/security/office,
 		/area/station/security/brig,
 		/area/station/security/brig/upper,
 	)

@@ -35,6 +35,7 @@ GLOBAL_PROTECT(href_token)
 	var/datum/particle_editor/particle_test
 	var/datum/colorblind_tester/color_test = new
 	var/datum/plane_master_debug/plane_debug
+	var/obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/library_manager
 
 	/// Whether or not the user tried to connect, but was blocked by 2FA
 	var/blocked_by_2fa = FALSE
@@ -114,6 +115,7 @@ GLOBAL_PROTECT(href_token)
 		disassociate()
 		add_verb(client, /client/proc/readmin)
 		client.disable_combo_hud()
+		client.update_special_keybinds()
 
 /datum/admins/proc/associate(client/client)
 	if(IsAdminAdvancedProcCall())
@@ -154,6 +156,7 @@ GLOBAL_PROTECT(href_token)
 	owner.add_admin_verbs()
 	remove_verb(owner, /client/proc/readmin)
 	owner.init_verbs() //re-initialize the verb list
+	owner.update_special_keybinds()
 	GLOB.admins |= client
 
 	try_give_profiling()

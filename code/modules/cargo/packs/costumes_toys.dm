@@ -31,51 +31,6 @@
 	crate_name = "collectable hats crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/costumes_toys/randomised/contraband
-	name = "Contraband Crate"
-	desc = "Psst.. bud... want some contraband? I can get you a poster, some nice cigs, dank, even some \
-		sponsored items...you know, the good stuff. Just keep it away from the cops, kay?"
-	contraband = TRUE
-	cost = CARGO_CRATE_VALUE * 6
-	num_contained = 7
-	contains = list(/obj/item/poster/random_contraband = 2,
-					/obj/item/food/grown/cannabis,
-					/obj/item/food/grown/cannabis/rainbow,
-					/obj/item/food/grown/cannabis/white,
-					/obj/item/storage/box/fireworks/dangerous,
-					/obj/item/storage/pill_bottle/zoom,
-					/obj/item/storage/pill_bottle/happy,
-					/obj/item/storage/pill_bottle/lsd,
-					/obj/item/storage/pill_bottle/aranesp,
-					/obj/item/storage/pill_bottle/stimulant,
-					/obj/item/toy/cards/deck/syndicate,
-					/obj/item/reagent_containers/cup/glass/bottle/absinthe,
-					/obj/item/clothing/under/syndicate/tacticool,
-					/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
-					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
-					/obj/item/clothing/mask/gas/syndicate,
-					/obj/item/clothing/neck/necklace/dope,
-					/obj/item/vending_refill/donksoft,
-				)
-	crate_name = "crate"
-
-/datum/supply_pack/costumes_toys/foamforce
-	name = "Foam Force Crate"
-	desc = "Break out the big guns with eight Foam Force shotguns!"
-	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/gun/ballistic/shotgun/toy = 8)
-	crate_name = "foam force crate"
-
-/datum/supply_pack/costumes_toys/foamforce/bonus
-	name = "Foam Force Pistols Crate"
-	desc = "Psst.. hey bud... remember those old foam force pistols that got discontinued for being too cool? \
-		Well I got two of those right here with your name on em. I'll even throw in a spare mag for each, waddya say?"
-	contraband = TRUE
-	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/obj/item/gun/ballistic/automatic/pistol/toy = 2,
-					/obj/item/ammo_box/magazine/toy/pistol = 2)
-	crate_name = "foam force crate"
-
 /datum/supply_pack/costumes_toys/formalwear
 	name = "Formalwear Crate"
 	desc = "You're gonna like the way you look, I guaranteed it. Contains an asston of fancy clothing."
@@ -265,22 +220,6 @@
 	)
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/costumes_toys/mafia
-	name = "Cosa Nostra Starter Pack"
-	desc = "This crate contains everything you need to set up your own ethnicity-based racketeering operation."
-	cost = CARGO_CRATE_VALUE * 4
-	contains = list()
-	contraband = TRUE
-
-/datum/supply_pack/costumes_toys/mafia/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to 4)
-		new /obj/effect/spawner/random/clothing/mafia_outfit(C)
-		new /obj/item/virgin_mary(C)
-		if(prob(30)) //Not all mafioso have mustaches, some people also find this item annoying.
-			new /obj/item/clothing/mask/fakemoustache/italian(C)
-	if(prob(10)) //A little extra sugar every now and then to shake things up.
-		new /obj/item/switchblade(C)
-
 /datum/supply_pack/costumes_toys/randomised/tcg
 	name = "Big-Ass Booster Pack Pack"
 	desc = "A bumper load of NT TCG Booster Packs of varying series. Collect them all!"
@@ -293,3 +232,27 @@
 	for(var/i in 1 to 10)
 		cardpacktype = pick(subtypesof(/obj/item/cardpack))
 		new cardpacktype(C)
+
+/datum/supply_pack/costumes_toys/stickers
+	name = "Sticker Pack Crate"
+	desc = "This crate contains a random assortment of stickers."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list()
+
+/datum/supply_pack/costumes_toys/stickers/fill(obj/structure/closet/crate/crate)
+	for(var/i in 1 to rand(1,2))
+		new /obj/item/storage/box/stickers(crate)
+	if(prob(30)) // a pair of googly eyes because funny
+		new /obj/item/storage/box/stickers/googly(crate)
+
+/datum/supply_pack/costumes_toys/pinata
+	name = "Corgi Pinata Kit"
+	desc = "This crate contains a pinata full of candy, a blindfold and a bat for smashing it."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(
+		/obj/item/pinata,
+		/obj/item/melee/baseball_bat,
+		/obj/item/clothing/glasses/blindfold,
+	)
+	crate_name = "corgi pinata kit"
+	crate_type = /obj/structure/closet/crate/wooden

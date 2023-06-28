@@ -27,6 +27,8 @@
 
 	var/beauty_value
 	switch(story_value)
+		if(STORY_VALUE_KEY)
+			beauty_value = 0 // what is this
 		if(STORY_VALUE_SHIT)
 			beauty_value = rand(-50, 50) //Ugly or mediocre at best
 		if(STORY_VALUE_NONE)
@@ -62,13 +64,13 @@
 	return ..() //call this after since we null out the parent
 
 /datum/component/engraved/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	//supporting component transfer means putting these here instead of initialize
 	SSpersistence.wall_engravings += src
 	ADD_TRAIT(parent, TRAIT_NOT_ENGRAVABLE, TRAIT_GENERIC)
 
 /datum/component/engraved/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 	//supporting component transfer means putting these here instead of destroy
 	SSpersistence.wall_engravings -= src
 	REMOVE_TRAIT(parent, TRAIT_NOT_ENGRAVABLE, TRAIT_GENERIC)
@@ -91,4 +93,3 @@
 	saved_data["story_value"] = story_value
 
 	return list(saved_data)
-

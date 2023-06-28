@@ -1,0 +1,3 @@
+=/obj/machinery/door/firedoor:
+  banned_neighbors:
+    - =/obj/machinery/door/firedoor

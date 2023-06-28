@@ -1,0 +1,3 @@
+# renames a genturfs because the old names sucked
+
+/turf/open/genturf/alternative : /turf/open/genturf/blue

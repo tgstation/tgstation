@@ -305,6 +305,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 	fdel(json_file)
 	WRITE_FILE(json_file, payload)
 
+#undef PAINTINGS_DATA_FORMAT_VERSION
 #undef PATRONAGE_OK_FRAME
 #undef PATRONAGE_NICE_FRAME
 #undef PATRONAGE_GREAT_FRAME

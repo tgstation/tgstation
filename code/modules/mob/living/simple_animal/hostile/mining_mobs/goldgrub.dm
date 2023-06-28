@@ -2,12 +2,14 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
 	desc = "A worm that grows fat from eating everything in its sight. Seems to enjoy precious metals and other shiny things, hence the name."
-	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
-	icon_state = "Goldgrub"
-	icon_living = "Goldgrub"
-	icon_aggro = "Goldgrub_alert"
-	icon_dead = "Goldgrub_dead"
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
+	icon_state = "goldgrub"
+	icon_living = "goldgrub"
+	icon_aggro = "goldgrub_alert"
+	icon_dead = "goldgrub_dead"
 	icon_gib = "syndicate_gib"
+	pixel_x = -12
+	base_pixel_x = -12
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	vision_range = 2
 	aggro_vision_range = 9
@@ -133,8 +135,11 @@
 		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/projectile/P)
-	visible_message(span_danger("The [P.name] is repelled by [name]'s girth!"))
-	return BULLET_ACT_BLOCK
+	if(stat == DEAD)
+		return BULLET_ACT_FORCE_PIERCE
+	else
+		visible_message(span_danger("The [P.name] is repelled by [name]'s girth!"))
+		return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	vision_range = 9

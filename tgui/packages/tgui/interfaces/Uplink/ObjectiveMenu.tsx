@@ -365,8 +365,8 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
     handleAbort,
     canAbort,
     originalProgression,
-    grow,
     hideTcRep,
+    grow,
     finalObjective,
     ...rest
   } = props;
@@ -422,15 +422,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
         </Box>
       </Flex.Item>
       <Flex.Item grow={grow} basis="content">
-        <Box
-          style={{
-            'border-bottom': hideTcRep
-              ? '2px solid rgba(0, 0, 0, 0.5)'
-              : undefined,
-          }}
-          className="UplinkObjective__Content"
-          height="100%"
-          mb={hideTcRep ? 2 : 0}>
+        <Box className="UplinkObjective__Content" height="100%">
           <Box>{description}</Box>
           {!hideTcRep && (
             <Box mt={1}>
@@ -447,9 +439,9 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
         </Box>
       </Flex.Item>
       <Flex.Item>
-        {!hideTcRep && (
-          <Box className="UplinkObjective__Footer">
-            <Stack vertical>
+        <Box className="UplinkObjective__Footer">
+          <Stack vertical>
+            {!hideTcRep && (
               <Stack.Item>
                 <Stack align="center" justify="center">
                   <Box
@@ -547,12 +539,12 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                   </Box>
                 ) : null}
               </Stack.Item>
-              {!!uiButtons && !objectiveFinished && (
-                <Stack.Item>{uiButtons}</Stack.Item>
-              )}
-            </Stack>
-          </Box>
-        )}
+            )}
+            {!!uiButtons && !objectiveFinished && (
+              <Stack.Item>{uiButtons}</Stack.Item>
+            )}
+          </Stack>
+        </Box>
       </Flex.Item>
     </Flex>
   );

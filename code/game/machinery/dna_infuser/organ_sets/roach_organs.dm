@@ -2,50 +2,36 @@
 // Yeah i'm lazy and we don't use any of the other color slots
 #define ROACH_COLORS ROACH_ORGAN_COLOR + ROACH_ORGAN_COLOR + ROACH_ORGAN_COLOR
 
+/datum/armor/roach_internal_armor
+	bomb = 100
+	bio = 90
+
 /datum/status_effect/organ_set_bonus/roach
 	organs_needed = 4
 	bonus_activate_text = span_notice("Roach DNA is deeply infused with you! \
 		You feel increasingly resistant to explosives, radiation, and viral agents.")
-	bonus_deactivate_text = span_notice("You are no longer majority roach, and you feel vulnerable to nuclear apocalypses.")
+	bonus_deactivate_text = span_notice("You are no longer majority roach, \
+		and you feel much more vulnerable to nuclear apocalypses.")
 
-	/// The stats given out to roach enabled mobs
-	var/static/list/given_armor_stats = list(
-		MELEE = 0,
-		BULLET = 0,
-		LASER = 0,
-		ENERGY = 0,
-		BOMB = 100, // Prevents gibbing from explosions (you'll stil die though)
-		BIO = 90, // Some resistance to bio events
-		FIRE = 0,
-		ACID = 0,
-	)
-	/// And the actual armor datum from the stats above
-	var/datum/armor/given_armor
-
-/datum/status_effect/organ_set_bonus/roach/on_creation(mob/living/new_owner, ...)
-	. = ..()
-	given_armor = getArmor(arglist(given_armor_stats))
-
-/datum/status_effect/organ_set_bonus/roach/Destroy()
-	given_armor = null // I don't even know if these can stop GC
-	return ..()
+	/// Armor type attached to the owner's physiology
+	var/datum/armor/given_armor = /datum/armor/roach_internal_armor
 
 /datum/status_effect/organ_set_bonus/roach/enable_bonus()
 	. = ..()
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology.armor.attachArmor(given_armor) // Gives armor from above
+	human_owner.physiology.armor = human_owner.physiology.armor.add_other_armor(given_armor)
 	ADD_TRAIT(owner, TRAIT_NUKEIMMUNE, id) // Immunity to nuke gibs
 	ADD_TRAIT(owner, TRAIT_RADIMMUNE, id) // Nukes come with radiation (not actually but yknow)
 	ADD_TRAIT(owner, TRAIT_VIRUS_RESISTANCE, id) // Viral resistance
 
 /datum/status_effect/organ_set_bonus/roach/disable_bonus()
 	. = ..()
-	if(!ishuman(owner))
+	if(!ishuman(owner) || QDELETED(owner))
 		return
 	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology?.armor.detachArmor(given_armor)
+	human_owner.physiology.armor = human_owner.physiology.armor.remove_other_armor(given_armor)
 	REMOVE_TRAIT(owner, TRAIT_NUKEIMMUNE, id)
 	REMOVE_TRAIT(owner, TRAIT_RADIMMUNE, id)
 	REMOVE_TRAIT(owner, TRAIT_VIRUS_RESISTANCE, id)
@@ -64,6 +50,7 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = ROACH_COLORS
 
+	/// Timer ID for resetting the damage resistance applied from attacks from behind
 	var/defense_timerid
 
 /obj/item/organ/internal/heart/roach/Initialize(mapload)
@@ -71,23 +58,27 @@
 	AddElement(/datum/element/noticable_organ, "has hardened, somewhat translucent skin.")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/roach)
 
-/obj/item/organ/internal/heart/roach/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
+/obj/item/organ/internal/heart/roach/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
-	if(!.)
-		return
-	if(!ishuman(owner))
+	if(!ishuman(organ_owner))
 		return
 
-	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(modify_damage))
+	var/mob/living/carbon/human/human_owner = organ_owner
+
+	RegisterSignal(human_owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(modify_damage))
 	// 3x as long knockdowns
-	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.knockdown_mod *= 3
 
-/obj/item/organ/internal/heart/roach/Remove(mob/living/carbon/heartless, special)
-	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology?.knockdown_mod /= 3
+/obj/item/organ/internal/heart/roach/on_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	if(!ishuman(organ_owner) || QDELETED(organ_owner))
+		return
+
+	var/mob/living/carbon/human/human_owner = organ_owner
+
+	UnregisterSignal(human_owner, COMSIG_MOB_APPLY_DAMAGE)
+	human_owner.physiology.knockdown_mod /= 3
+
 	if(defense_timerid)
 		reset_damage(owner)
 	return ..()
@@ -118,21 +109,25 @@
 		human_owner.physiology.brute_mod /= 2
 		human_owner.visible_message(span_warning("[human_owner]'s back hardens against the blow!"))
 		playsound(human_owner, 'sound/effects/constructform.ogg', 25)
+
 	defense_timerid = addtimer(CALLBACK(src, PROC_REF(reset_damage), owner), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/item/organ/internal/heart/roach/proc/reset_damage(mob/living/carbon/human/human_owner)
-	human_owner.physiology?.brute_mod *= 2
 	defense_timerid = null
-
+	if(!QDELETED(human_owner))
+		human_owner.physiology.brute_mod *= 2
+		human_owner.visible_message(span_warning("[human_owner]'s back softens again."))
 
 /// Roach stomach:
 /// Makes disgust a non-issue, very slightly worse at passing off reagents
+/// Also makes you more hungry
 /obj/item/organ/internal/stomach/roach
 	name = "mutated roach-stomach"
 	desc = "Roach DNA infused into what was once a normal stomach."
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 32 // Demolishes any disgust we have
 	metabolism_efficiency = 0.033 // Slightly worse at transferring reagents
+	hunger_modifier = 3
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "stomach"
@@ -161,18 +156,21 @@
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/roach)
 
-/obj/item/organ/internal/liver/roach/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
+/obj/item/organ/internal/liver/roach/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
-	if(!. || !ishuman(owner))
+	if(!ishuman(organ_owner))
 		return
 
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.tox_mod *= 2
 
-/obj/item/organ/internal/liver/roach/Remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/liver/roach/on_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	if(!ishuman(organ_owner) || QDELETED(organ_owner))
+		return
+
 	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology?.tox_mod /= 2
-	return ..()
+	human_owner.physiology.tox_mod /= 2
 
 /// Roach appendix:
 /// No appendicitus! weee!

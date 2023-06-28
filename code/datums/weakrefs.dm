@@ -87,7 +87,7 @@
  * adding it to an atom's contents or vis_contents, giving it a key (if it's a mob), attaching it to an atom (if it's an image),
  * or assigning it to a datum or list referenced somewhere other than a temporary value.
  *
- * Unless you're resolving a weakref to a datum in a COMSIG_PARENT_QDELETING signal handler registered on that very same datum,
+ * Unless you're resolving a weakref to a datum in a COMSIG_QDELETING signal handler registered on that very same datum,
  * just use resolve instead.
  */
 /datum/weakref/proc/hard_resolve()

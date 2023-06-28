@@ -63,7 +63,7 @@
 	if(id_card)
 		gps_name = id_card.registered_name
 	AddComponent(/datum/component/gps/kheiral_cuffs, "*[gps_name]'s Kheiral Link")
-	balloon_alert(user, "GPS activated")
+	balloon_alert(user, "gps activated")
 	ADD_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 	gps_enabled = TRUE
 
@@ -73,7 +73,7 @@
 		return
 	if(on_wrist && far_from_home)
 		return
-	balloon_alert(user, "GPS de-activated")
+	balloon_alert(user, "gps de-activated")
 	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
 	gps_enabled = FALSE
 

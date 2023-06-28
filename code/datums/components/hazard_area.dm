@@ -88,9 +88,9 @@
  * If the created area already exists in the blacklist or whitelist it simply returns,
  * however if it isn't we check for an overwritten area and if non-hazardous setup the area to
  * allow the parent.
- * If there isnt an overwritten area it assumes it to be non-hazardous, abuse it and you will weep -ZephyrTFA
+ * If there aren't any overwritten area's it assumes it to be non-hazardous, abuse it and you will weep -ZephyrTFA
  */
-/datum/component/hazard_area/proc/on_area_creation(datum/source, area/created, area/overwritten, mob/creator)
+/datum/component/hazard_area/proc/on_area_creation(datum/source, area/created, list/area/overwritten, mob/creator)
 	SIGNAL_HANDLER
 
 	if(created.type in area_whitelist)
@@ -99,10 +99,11 @@
 	if(created.type in area_blacklist)
 		return // in blacklist, expanding a blacklisted area doesnt magically give you permission to enter
 
-	if(overwritten)
-		if(check_area_hazardous(overwritten.type))
-			return // Overwrote a hazardous area, still hazardous fool
-		area_created -= overwritten // While its not guaranteed to be in the area_created list it's a good idea to ensure we dont have handing refs
+	if(length(overwritten))
+		for(var/area/overwritten_area in overwritten)
+			if(check_area_hazardous(overwritten_area.type))
+				return // Overwrote a hazardous area, still hazardous fool
+			area_created -= overwritten_area // While its not guaranteed to be in the area_created list it's a good idea to ensure we dont have handing refs
 		area_created += created // Congrats, you are now allowed in this area
 		return
 

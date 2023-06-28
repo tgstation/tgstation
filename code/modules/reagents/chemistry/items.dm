@@ -43,7 +43,7 @@
 
 /obj/item/ph_booklet/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	var/mob/living/user = usr
-	if(!isliving(user))
+	if(!isliving(user) || !Adjacent(user))
 		return
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
@@ -81,6 +81,7 @@
 /obj/item/ph_paper/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!is_reagent_container(target))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	var/obj/item/reagent_containers/cont = target
 	if(used == TRUE)
 		to_chat(user, span_warning("[src] has already been used!"))
@@ -116,28 +117,29 @@
 	. = ..()
 	if(!is_reagent_container(target))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	var/obj/item/reagent_containers/cont = target
 	if(LAZYLEN(cont.reagents.reagent_list) == null)
 		return
 	var/list/out_message = list()
 	to_chat(user, "<i>The chemistry meter beeps and displays:</i>")
 	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Current temperature: [round(cont.reagents.chem_temp, 0.1)]K Total pH: [round(cont.reagents.ph, 0.01)]\n"
-	out_message += "Chemicals found in the beaker:</b>\n"
+	out_message += "Chemicals found in [target.name]:</b>\n"
 	if(cont.reagents.is_reacting)
 		out_message += "[span_warning("A reaction appears to be occuring currently.")]<span class='notice'>\n"
 	for(var/datum/reagent/reagent in cont.reagents.reagent_list)
 		if(reagent.purity < reagent.inverse_chem_val && reagent.inverse_chem) //If the reagent is impure
 			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
-			out_message += "[span_warning("Inverted reagent detected: ")]<span class='notice'><b>[round(reagent.volume, 0.01)]u of [inverse_reagent.name]</b>, <b>Purity:</b> [round(1 - reagent.purity, 0.01)*100]%, [(scanmode?"[(inverse_reagent.overdose_threshold?"<b>Overdose:</b> [inverse_reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(inverse_reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
+			out_message += "[span_warning("Inverted reagent detected: ")]<span class='notice'><b>[round(reagent.volume, 0.01)]u of [inverse_reagent.name]</b>, <b>Purity:</b> [round(1 - reagent.purity, 0.000001)*100]%, [(scanmode?"[(inverse_reagent.overdose_threshold?"<b>Overdose:</b> [inverse_reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(inverse_reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
 		else
-			out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.01)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
+			out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.000001)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
 		if(scanmode)
 			out_message += "<b>Analysis:</b> [reagent.description]\n"
 	to_chat(user, "[out_message.Join()]</span>")
 	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays detected vol: [round(cont.volume, 0.01)] detected pH:[round(cont.reagents.ph, 0.1)]."
 
 /obj/item/burner
-	name = "Alcohol burner"
+	name = "burner"
 	desc = "A small table size burner used for heating up beakers."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "burner"
@@ -188,17 +190,21 @@
 /obj/item/burner/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(lit)
+		. |= AFTERATTACK_PROCESSED_ITEM
 		if(is_reagent_container(target))
 			var/obj/item/reagent_containers/container = target
 			container.reagents.expose_temperature(get_temperature())
 			to_chat(user, span_notice("You heat up the [src]."))
 			playsound(user.loc, 'sound/chemistry/heatdam.ogg', 50, TRUE)
-			return
+			return .
 	else if(isitem(target))
 		var/obj/item/item = target
 		if(item.heat > 1000)
+			. |= AFTERATTACK_PROCESSED_ITEM
 			set_lit(TRUE)
 			user.visible_message(span_notice("[user] lights up the [src]."))
+
+	return .
 
 /obj/item/burner/update_icon_state()
 	. = ..()
@@ -225,6 +231,7 @@
 	update_icon()
 
 /obj/item/burner/extinguish()
+	. = ..()
 	set_lit(FALSE)
 
 /obj/item/burner/attack_self(mob/living/user)
@@ -265,12 +272,10 @@
 	return lit * heat
 
 /obj/item/burner/oil
-	name = "Oil burner"
 	reagent_type = /datum/reagent/fuel/oil
 	grind_results = list(/datum/reagent/fuel/oil = 5, /datum/reagent/silicon = 10)
 
 /obj/item/burner/fuel
-	name = "Fuel burner"
 	reagent_type = /datum/reagent/fuel
 	grind_results = list(/datum/reagent/fuel = 5, /datum/reagent/silicon = 10)
 
@@ -291,12 +296,14 @@
 
 /obj/item/thermometer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(target.reagents)
 		if(!user.transferItemToLoc(src, target))
-			return
+			return .
 		attached_to_reagents = target.reagents
 		to_chat(user, span_notice("You add the [src] to the [target]."))
 		ui_interact(usr, null)
+	return .
 
 /obj/item/thermometer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -336,3 +343,6 @@
 
 /obj/item/thermometer/pen
 	color = "#888888"
+
+#undef DETAILED_CHEM_OUTPUT
+#undef SHORTENED_CHEM_OUTPUT

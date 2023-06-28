@@ -50,6 +50,8 @@
 	/// Is it clean canvas or was there something painted on it at some point, used to decide when to show wip splotch overlay
 	var/used = FALSE
 	var/finalized = FALSE //Blocks edits
+	/// Whether a grid should be shown in the UI if the canvas is editable and the viewer is holding a painting tool.
+	var/show_grid = TRUE
 	var/icon_generated = FALSE
 	var/icon/generated_icon
 	///boolean that blocks persistence from saving it. enabled from printing copies, because we do not want to save copies.
@@ -70,10 +72,7 @@
 	 */
 	var/pixels_per_unit = 24
 
-	pixel_x = 11
-	pixel_y = 10
-	base_pixel_x = 11
-	base_pixel_y = 10
+	SET_BASE_PIXEL(11, 10)
 
 	custom_price = PAYCHECK_CREW
 
@@ -86,6 +85,7 @@
 	painting_metadata.creation_round_id = GLOB.round_id
 	painting_metadata.width = width
 	painting_metadata.height = height
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 
 /obj/item/canvas/proc/reset_grid()
 	grid = new/list(width,height)
@@ -130,12 +130,13 @@
 	.["finalized"] = finalized
 	.["editable"] = !finalized //Ideally you should be able to draw moustaches on existing paintings in the gallery but that's not implemented yet
 	.["show_plaque"] = istype(loc,/obj/structure/sign/painting)
-	var/obj/item/painting_implement = user.get_active_held_item()
-	.["paint_tool_color"] = get_paint_tool_color(painting_implement)
-	// Clearing additional data so that it doesn't linger around if the painting tool is dropped.
+	.["show_grid"] = show_grid
 	.["paint_tool_palette"] = null
+	var/obj/item/painting_implement = user.get_active_held_item()
 	if(!painting_implement)
+		.["paint_tool_color"] = null
 		return
+	.["paint_tool_color"] = get_paint_tool_color(painting_implement)
 	SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA, .)
 
 /obj/item/canvas/examine(mob/user)
@@ -172,6 +173,29 @@
 		if("select_color")
 			var/obj/item/painting_implement = user.get_active_held_item()
 			painting_implement?.set_painting_tool_color(params["selected_color"])
+			. = TRUE
+		if("select_color_from_coords")
+			var/obj/item/painting_implement = user.get_active_held_item()
+			if(!painting_implement)
+				return FALSE
+			var/x = text2num(params["px"])
+			var/y = text2num(params["py"])
+			painting_implement.set_painting_tool_color(grid[x][y])
+			. = TRUE
+		if("change_palette")
+			var/obj/item/painting_implement = user.get_active_held_item()
+			if(!painting_implement)
+				return FALSE
+			//I'd have this done inside the signal, but that'd have to be asynced,
+			//while we want the UI to be updated after the color is chosen, not before.
+			var/chosen_color = input(user, "Pick new color", painting_implement, params["old_color"]) as color|null
+			if(!chosen_color || IS_DEAD_OR_INCAP(user) || !user.is_holding(painting_implement))
+				return FALSE
+			SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_PALETTE_COLOR_CHANGED, chosen_color, params["color_index"])
+			. = TRUE
+		if("toggle_grid")
+			. = TRUE
+			show_grid = !show_grid
 		if("finalize")
 			. = TRUE
 			finalize(user)
@@ -182,13 +206,17 @@
 /obj/item/canvas/proc/finalize(mob/user)
 	if(painting_metadata.loaded_from_json || finalized)
 		return
-	finalized = TRUE
+	if(!try_rename(user))
+		return
+
 	painting_metadata.creator_ckey = user.ckey
 	painting_metadata.creator_name = user.real_name
 	painting_metadata.creation_date = time2text(world.realtime)
 	painting_metadata.creation_round_id = GLOB.round_id
 	generate_proper_overlay()
-	try_rename(user)
+	finalized = TRUE
+
+	SStgui.update_uis(src)
 
 /obj/item/canvas/proc/patron(mob/user)
 	if(!finalized || !isliving(user))
@@ -210,7 +238,7 @@
 		return
 	var/sniped_amount = painting_metadata.credit_value
 	var/offer_amount = tgui_input_number(user, "How much do you want to offer?", "Patronage Amount", (painting_metadata.credit_value + 1), account.account_balance, painting_metadata.credit_value)
-	if(!offer_amount || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!offer_amount || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(sniped_amount != painting_metadata.credit_value)
 		return
@@ -325,25 +353,27 @@
 
 /obj/item/canvas/proc/try_rename(mob/user)
 	if(painting_metadata.loaded_from_json) // No renaming old paintings
-		return
+		return TRUE
 	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece")
-	if(new_name != painting_metadata.title && new_name && user.canUseTopic(src, be_close = TRUE))
+	if(isnull(new_name))
+		return FALSE
+	if(new_name != painting_metadata.title && user.can_perform_action(src))
 		painting_metadata.title = new_name
-	var/sign_choice = tgui_alert(user, "Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes", "No"))
-	if(sign_choice != "Yes")
-		painting_metadata.creator_name = "Anonymous"
-	SStgui.update_uis(src)
+	switch(tgui_alert(user, "Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes", "No", "Cancel")))
+		if("Yes")
+			return TRUE
+		if("No")
+			painting_metadata.creator_name = "Anonymous"
+			return TRUE
 
+	return FALSE
 
 /obj/item/canvas/nineteen_nineteen
 	name = "canvas (19x19)"
 	icon_state = "19x19"
 	width = 19
 	height = 19
-	pixel_x = 7
-	pixel_y = 7
-	base_pixel_x = 7
-	base_pixel_y = 7
+	SET_BASE_PIXEL(7, 7)
 	framed_offset_x = 7
 	framed_offset_y = 7
 
@@ -352,10 +382,7 @@
 	icon_state = "23x19"
 	width = 23
 	height = 19
-	pixel_x = 5
-	pixel_y = 7
-	base_pixel_x = 5
-	base_pixel_y = 7
+	SET_BASE_PIXEL(5, 7)
 	framed_offset_x = 5
 	framed_offset_y = 7
 
@@ -364,10 +391,7 @@
 	icon_state = "23x23"
 	width = 23
 	height = 23
-	pixel_x = 5
-	pixel_y = 5
-	base_pixel_x = 5
-	base_pixel_y = 5
+	SET_BASE_PIXEL(5, 5)
 	framed_offset_x = 5
 	framed_offset_y = 5
 
@@ -377,10 +401,7 @@
 	icon_state = "24x24"
 	width = 24
 	height = 24
-	pixel_x = 4
-	pixel_y = 4
-	base_pixel_x = 4
-	base_pixel_y = 4
+	SET_BASE_PIXEL(4, 4)
 	framed_offset_x = 4
 	framed_offset_y = 4
 
@@ -390,10 +411,7 @@
 	icon_state = "24x24" //The vending spritesheet needs the icons to be 32x32. We'll set the actual icon on Initialize.
 	width = 36
 	height = 24
-	pixel_x = -4
-	pixel_y = 4
-	base_pixel_x = -4
-	base_pixel_y = 4
+	SET_BASE_PIXEL(-4, 4)
 	framed_offset_x = 14
 	framed_offset_y = 4
 	pixels_per_unit = 20
@@ -413,10 +431,7 @@
 	icon_state = "24x24" //Ditto
 	width = 45
 	height = 27
-	pixel_x = -8
-	pixel_y = 2
-	base_pixel_x = -8
-	base_pixel_y = 2
+	SET_BASE_PIXEL(-8, 2)
 	framed_offset_x = 9
 	framed_offset_y = 4
 	pixels_per_unit = 18
@@ -434,7 +449,8 @@
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/signs.dmi'
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting
@@ -446,7 +462,8 @@
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-empty"
 	base_icon_state = "frame"
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE
 	///Canvas we're currently displaying.
 	var/obj/item/canvas/current_canvas
@@ -476,7 +493,8 @@
 	if(!current_canvas && istype(I, /obj/item/canvas))
 		frame_canvas(user,I)
 	else if(current_canvas && current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title) && istype(I,/obj/item/pen))
-		try_rename(user)
+		if(try_rename(user))
+			SStgui.update_uis(src)
 	else
 		return ..()
 
@@ -522,8 +540,11 @@
 	return FALSE
 
 /obj/structure/sign/painting/proc/try_rename(mob/user)
-	if(current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title))
-		current_canvas.try_rename(user)
+	if(current_canvas.painting_metadata.title != initial(current_canvas.painting_metadata.title))
+		return
+	if(!current_canvas.try_rename(user))
+		return
+	SStgui.update_uis(current_canvas)
 
 /obj/structure/sign/painting/update_icon_state(updates=ALL)
 	. = ..()
@@ -622,7 +643,7 @@
 /obj/item/wallframe/painting/large
 	name = "large painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories. Make sure you have enough space to mount this one to the wall."
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 	icon_state = "frame-large-empty"
 	result_path = /obj/structure/sign/painting/large
 	pixel_shift = 0 //See [/obj/structure/sign/painting/large/proc/finalize_size]
@@ -649,7 +670,7 @@
 
 /obj/structure/sign/painting/large
 	icon = 'icons/obj/art/artstuff_64x64.dmi'
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 	accepted_canvas_types = list(
 		/obj/item/canvas/thirtysix_twentyfour,
 		/obj/item/canvas/fortyfive_twentyseven,

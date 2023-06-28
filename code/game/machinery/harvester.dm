@@ -25,8 +25,8 @@
 	. = ..()
 	interval = 0
 	var/max_time = 40
-	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
-		max_time -= L.rating
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		max_time -= micro_laser.tier
 	interval = max(max_time,1)
 
 /obj/machinery/harvester/update_icon_state()
@@ -42,7 +42,7 @@
 	icon_state = base_icon_state
 	return ..()
 
-/obj/machinery/harvester/open_machine(drop = TRUE)
+/obj/machinery/harvester/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(panel_open)
 		return
 	. = ..()
@@ -91,8 +91,18 @@
 /obj/machinery/harvester/proc/start_harvest()
 	if(!occupant || !iscarbon(occupant))
 		return
-	var/mob/living/carbon/C = occupant
-	operation_order = reverseList(C.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
+
+	var/mob/living/carbon/carbon_occupant = occupant
+
+	if(carbon_occupant.stat < UNCONSCIOUS)
+		notify_ghosts(
+			"[occupant] is about to be ground up by a malfunctioning organ harvester!",
+			source = src,
+			header = "Gruesome!",
+			action = NOTIFY_ORBIT,
+		)
+
+	operation_order = reverseList(carbon_occupant.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
 	warming_up = TRUE
 	harvesting = TRUE
 	visible_message(span_notice("The [name] begins warming up!"))
@@ -104,11 +114,12 @@
 	warming_up = FALSE
 	update_appearance()
 	if(!harvesting || state_open || !powered() || !occupant || !iscarbon(occupant))
+		end_harvesting(success = FALSE)
 		return
 	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
 	var/mob/living/carbon/C = occupant
 	if(!LAZYLEN(operation_order)) //The list is empty, so we're done here
-		end_harvesting()
+		end_harvesting(success = TRUE)
 		return
 	var/turf/target
 	for(var/adir in list(EAST,NORTH,SOUTH,WEST))
@@ -135,12 +146,16 @@
 	use_power(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)
 
-/obj/machinery/harvester/proc/end_harvesting()
+/obj/machinery/harvester/proc/end_harvesting(success = TRUE)
 	warming_up = FALSE
 	harvesting = FALSE
 	open_machine()
-	say("Subject has been successfully harvested.")
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
+	if (!success)
+		say("Protocol interrupted. Aborting harvest.")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+	else
+		say("Subject has been successfully harvested.")
+		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 
 /obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/I)
 	. = TRUE
@@ -187,6 +202,7 @@
 /obj/machinery/harvester/Exited(atom/movable/gone, direction)
 	if (!state_open && gone == occupant)
 		container_resist_act(gone)
+	return ..()
 
 /obj/machinery/harvester/relaymove(mob/living/user, direction)
 	if (!state_open)

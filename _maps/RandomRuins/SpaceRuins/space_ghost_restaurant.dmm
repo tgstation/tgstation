@@ -1,0 +1,639 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bx" = (
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/space_ghost_restaurant)
+"bY" = (
+/obj/structure/mannequin/wood,
+/obj/machinery/light/broken/directional/east,
+/obj/structure/sign/clock/directional/north,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"cS" = (
+/obj/effect/decal/cleanable/food/flour,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/space_ghost_restaurant)
+"dm" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/template_noop,
+/area/space/nearstation)
+"dB" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/ruin/space/space_ghost_restaurant)
+"dI" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/plating,
+/area/ruin/space/space_ghost_restaurant)
+"eb" = (
+/obj/item/shard,
+/turf/template_noop,
+/area/template_noop)
+"en" = (
+/obj/machinery/power/smes/magical{
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
+	name = "power storage unit"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/space_ghost_restaurant)
+"eV" = (
+/obj/structure/lattice,
+/obj/item/stack/cable_coil/cut,
+/turf/template_noop,
+/area/space/nearstation)
+"eW" = (
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/plating/airless,
+/area/ruin/space/space_ghost_restaurant)
+"gg" = (
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"gS" = (
+/obj/item/food/mashed_potatoes,
+/obj/structure/lattice,
+/obj/item/clothing/head/costume/scarecrow_hat,
+/turf/template_noop,
+/area/space/nearstation)
+"hp" = (
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/template_noop)
+"iF" = (
+/obj/item/stack/sheet/iron,
+/turf/template_noop,
+/area/template_noop)
+"jd" = (
+/obj/item/stack/sheet/iron,
+/turf/open/floor/plating/airless,
+/area/ruin/space/space_ghost_restaurant)
+"kf" = (
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"kM" = (
+/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"kX" = (
+/obj/structure/bed,
+/obj/item/bedsheet/yellow,
+/obj/item/clothing/mask/balaclava,
+/turf/open/floor/carpet/donk,
+/area/ruin/space/space_ghost_restaurant)
+"lb" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"mu" = (
+/obj/structure/lattice,
+/obj/effect/mob_spawn/corpse/human/assistant{
+	mob_name = "Henry Fresh"
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"nT" = (
+/obj/effect/decal/cleanable/food/flour,
+/obj/structure/mannequin/wood,
+/obj/machinery/light/broken/directional/west,
+/obj/structure/sign/calendar/directional/north,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"pT" = (
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/carpet/donk,
+/area/ruin/space/space_ghost_restaurant)
+"qZ" = (
+/obj/item/bodypart/leg/right/robot/surplus,
+/obj/item/clothing/head/chaplain/clownmitre,
+/turf/open/floor/plating/airless,
+/area/ruin/space/space_ghost_restaurant)
+"vh" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/space_ghost_restaurant)
+"vs" = (
+/obj/effect/decal/cleanable/robot_debris,
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/space_ghost_restaurant)
+"wF" = (
+/obj/effect/decal/cleanable/food/flour,
+/obj/item/kitchen/spoon/plastic,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"xA" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external/ruin,
+/turf/open/floor/plating,
+/area/ruin/space/space_ghost_restaurant)
+"xZ" = (
+/obj/structure/table/wood/fancy/red,
+/obj/effect/spawner/random/food_or_drink/three_course_meal,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"yt" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/plating,
+/area/ruin/space/space_ghost_restaurant)
+"AT" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/space_ghost_restaurant)
+"Bv" = (
+/obj/structure/broken_flooring/singular/directional/south,
+/turf/template_noop,
+/area/template_noop)
+"BA" = (
+/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"Ck" = (
+/turf/closed/wall,
+/area/ruin/space/space_ghost_restaurant)
+"Dt" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external/ruin,
+/turf/open/floor/plating,
+/area/ruin/space/space_ghost_restaurant)
+"Dz" = (
+/obj/structure/lattice,
+/obj/structure/frame/machine,
+/obj/item/shard,
+/turf/template_noop,
+/area/space/nearstation)
+"Ea" = (
+/turf/template_noop,
+/area/template_noop)
+"EW" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/showroomfloor/airless,
+/area/ruin/space/space_ghost_restaurant)
+"Hc" = (
+/obj/structure/lattice,
+/obj/structure/broken_flooring/singular/directional/south,
+/turf/template_noop,
+/area/space/nearstation)
+"Hx" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating,
+/area/ruin/space/space_ghost_restaurant)
+"Im" = (
+/obj/structure/lattice,
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/template_noop,
+/area/space/nearstation)
+"Ix" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"IE" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/carpet/donk,
+/area/ruin/space/space_ghost_restaurant)
+"IH" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/space_ghost_restaurant)
+"IY" = (
+/obj/structure/lattice,
+/obj/item/stack/tile/iron/cafeteria,
+/turf/template_noop,
+/area/space/nearstation)
+"Jo" = (
+/obj/item/bodypart/leg/left/robot/surplus,
+/obj/item/stack/tile/iron/cafeteria,
+/turf/open/floor/plating/airless,
+/area/ruin/space/space_ghost_restaurant)
+"JC" = (
+/obj/item/chair,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"Km" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/clothing/head/costume/papersack/smiley,
+/obj/item/clothing/head/costume/crown,
+/obj/structure/sign/flag/nanotrasen/directional/east,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"KX" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/space_ghost_restaurant)
+"LA" = (
+/obj/effect/decal/cleanable/food/flour,
+/turf/open/floor/plating/airless,
+/area/ruin/space/space_ghost_restaurant)
+"My" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
+/area/ruin/space/space_ghost_restaurant)
+"Ng" = (
+/obj/item/stack/tile/iron/showroomfloor,
+/turf/template_noop,
+/area/template_noop)
+"Ns" = (
+/obj/item/chair,
+/obj/item/clothing/head/utility/surgerycap,
+/obj/structure/sink/kitchen/directional/south,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"NK" = (
+/obj/effect/decal/cleanable/ants,
+/turf/open/floor/plating,
+/area/ruin/space/space_ghost_restaurant)
+"NN" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/space/space_ghost_restaurant)
+"Oj" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/carpet/donk,
+/area/ruin/space/space_ghost_restaurant)
+"Py" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/clothing/head/wizard/santa,
+/obj/structure/sign/flag/nanotrasen/directional/west,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"Qi" = (
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"QQ" = (
+/obj/structure/toilet,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/space_ghost_restaurant)
+"Rm" = (
+/obj/item/circuitboard/machine/restaurant_portal,
+/turf/template_noop,
+/area/template_noop)
+"RI" = (
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"Sj" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/circuitboard/machine/restaurant_portal,
+/obj/item/stack/sheet/iron,
+/turf/open/floor/plating/airless,
+/area/ruin/space/space_ghost_restaurant)
+"WY" = (
+/obj/effect/mob_spawn/corpse/human/assistant{
+	mob_name = "Aron Blue"
+	},
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"Xc" = (
+/obj/effect/decal/cleanable/robot_debris/down,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+"Xn" = (
+/obj/structure/bed,
+/obj/item/bedsheet/yellow,
+/turf/open/floor/carpet/donk,
+/area/ruin/space/space_ghost_restaurant)
+"ZS" = (
+/obj/structure/frame/computer{
+	dir = 4
+	},
+/obj/item/shard,
+/obj/item/disk/holodisk/ruin/ghost_restaurant,
+/turf/open/floor/iron/cafeteria/airless,
+/area/ruin/space/space_ghost_restaurant)
+
+(1,1,1) = {"
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+"}
+(2,1,1) = {"
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ng
+Ea
+Ea
+Ea
+"}
+(3,1,1) = {"
+Ea
+dm
+dm
+dm
+dm
+dm
+Ea
+Ea
+Ea
+dm
+dm
+dm
+hp
+dm
+dm
+Ea
+Ea
+Ea
+Ea
+Ea
+"}
+(4,1,1) = {"
+Ea
+dm
+Ea
+Ea
+Ix
+Ea
+Ea
+Ea
+Ea
+Ea
+Ix
+Ea
+Ea
+Im
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+"}
+(5,1,1) = {"
+Ea
+Ix
+Ea
+Ck
+Ck
+Ck
+Ck
+Ck
+Ck
+Ck
+Ck
+NN
+LA
+IY
+jd
+Ix
+dm
+Ea
+Ea
+Ea
+"}
+(6,1,1) = {"
+Ea
+Ck
+Ck
+Ck
+My
+dB
+en
+Ck
+nT
+Py
+ZS
+qZ
+cS
+Sj
+eb
+mu
+dm
+Ea
+Ea
+Ng
+"}
+(7,1,1) = {"
+Ea
+Dt
+Hx
+xA
+NK
+Hx
+dI
+yt
+gg
+Xc
+JC
+BA
+EW
+bx
+Rm
+iF
+Ea
+Ea
+Ea
+Ea
+"}
+(8,1,1) = {"
+Ea
+Ck
+Ck
+Ck
+Ck
+Ck
+Ck
+Ck
+Ns
+RI
+kf
+Qi
+gS
+Dz
+Ix
+hp
+Ea
+hp
+Ea
+Ea
+"}
+(9,1,1) = {"
+Ea
+Ix
+Ck
+QQ
+IH
+Oj
+pT
+IE
+kf
+wF
+WY
+Jo
+vs
+vh
+kM
+Ea
+Ea
+Ea
+Ea
+Ea
+"}
+(10,1,1) = {"
+Ea
+dm
+Ck
+Ck
+Ck
+kX
+Xn
+Ck
+bY
+Km
+xZ
+lb
+Ix
+AT
+Ea
+Ea
+Bv
+Ea
+Ea
+Ea
+"}
+(11,1,1) = {"
+Ea
+dm
+Ea
+Ea
+Ck
+Ck
+Ck
+Ck
+Ck
+Ck
+eW
+IY
+KX
+bx
+KX
+eV
+hp
+Ea
+Ea
+Ea
+"}
+(12,1,1) = {"
+Ea
+dm
+Ea
+Ea
+Ix
+Ea
+Ea
+Ea
+Ea
+Ea
+Ix
+Ea
+Ea
+Ea
+Hc
+Ea
+Ea
+Ea
+Ea
+Ea
+"}
+(13,1,1) = {"
+Ea
+dm
+dm
+dm
+dm
+dm
+Ea
+Ea
+Ea
+dm
+dm
+dm
+Ea
+dm
+Ix
+dm
+Ea
+Ea
+Ea
+Ea
+"}
+(14,1,1) = {"
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ng
+"}
+(15,1,1) = {"
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+Ea
+"}

@@ -15,12 +15,16 @@
 	melee_damage_upper = 10
 	attack_sound = 'sound/weapons/punch1.ogg'
 	combat_mode = TRUE
-	faction = list("stickman")
+	faction = list(FACTION_STICKMAN)
 	unsuitable_atmos_damage = 7.5
 	unsuitable_cold_damage = 7.5
 	unsuitable_heat_damage = 7.5
 
 	ai_controller = /datum/ai_controller/basic_controller/stickman
+
+/mob/living/basic/stickman/lesser
+	maxHealth = 25
+	health = 25
 
 /mob/living/basic/stickman/Initialize(mapload)
 	. = ..()

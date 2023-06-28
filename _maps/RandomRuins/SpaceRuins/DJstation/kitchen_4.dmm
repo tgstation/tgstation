@@ -34,7 +34,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/djstation)
 "h" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "i" = (
@@ -47,7 +47,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/djstation)
 "k" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/all_access,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "r" = (
@@ -55,11 +55,11 @@
 /turf/closed/wall,
 /area/ruin/space/djstation)
 "z" = (
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/iron/white,
 /area/ruin/space/djstation)
 "A" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/all_access,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "F" = (
@@ -100,7 +100,9 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/djstation)
 "Q" = (
-/obj/structure/closet/secure_closet/freezer/kitchen/mining,
+/obj/structure/closet/secure_closet/freezer/kitchen/mining{
+	req_access = null
+	},
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "R" = (

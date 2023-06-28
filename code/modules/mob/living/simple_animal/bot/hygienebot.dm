@@ -127,8 +127,15 @@
 				if(target.loc == loc && isturf(target.loc)) //LADIES AND GENTLEMAN WE GOTEM PREPARE TO DUMP
 					start_washing()
 					if(mad)
-						speak("Well about fucking time you degenerate.", "Fucking finally.", "Thank god, you finally stopped.")
-						playsound(loc, 'sound/effects/hygienebot_angry.ogg', 60, 1)
+						var/static/list/messagevoice = list(
+							"Fucking finally." = 'sound/voice/hygienebot/finally.ogg',
+							"Thank god, you finally stopped." = 'sound/voice/hygienebot/thankgod.ogg',
+							"Well about fucking time you degenerate." = 'sound/voice/hygienebot/degenerate.ogg',
+						)
+						var/message = pick(messagevoice)
+						speak(message)
+						playsound(loc, messagevoice[message], 50)
+						playsound(loc, 'sound/effects/hygienebot_angry.ogg', 60, 1) //i think it should still make robot noises too
 						mad = FALSE
 					mode = BOT_SHOWERSTANCE
 				else
@@ -139,8 +146,19 @@
 						return
 					SSmove_manager.move_to(src, target, 0, currentspeed)
 					if(mad && prob(min(frustration * 2, 60)))
+						var/static/list/messagevoice = list(
+							"Either you stop running or I will fucking drag you out of an airlock." = 'sound/voice/hygienebot/dragyouout.ogg',
+							"Get back here you foul smelling fucker." = 'sound/voice/hygienebot/foulsmelling.ogg',
+							"I just want to fucking clean you you troglodyte." = 'sound/voice/hygienebot/troglodyte.ogg',
+							"If you don't come back here I'll put a green cloud around you cunt." = 'sound/voice/hygienebot/greencloud.ogg',
+							"Just fucking let me clean you you arsehole!" = 'sound/voice/hygienebot/letmeclean.ogg',
+							"STOP RUNNING OR I WILL CUT YOUR ARTERIES!" = 'sound/voice/hygienebot/cutarteries.ogg',
+							"STOP. RUNNING." = 'sound/voice/hygienebot/stoprunning.ogg',
+						)
+						var/message = pick(messagevoice)
+						speak(message)
+						playsound(loc, messagevoice[message], 50)
 						playsound(loc, 'sound/effects/hygienebot_angry.ogg', 60, 1)
-						speak(pick("Get back here you foul smelling fucker.", "STOP RUNNING OR I WILL CUT YOUR ARTERIES!", "Just fucking let me clean you you arsehole!", "STOP. RUNNING.", "Either you stop running or I will fucking drag you out of an airlock.", "I just want to fucking clean you you troglodyte.", "If you don't come back here I'll put a green cloud around you cunt."))
 					if((get_dist(src, target)) >= olddist)
 						frustration++
 					else
@@ -151,6 +169,7 @@
 		if(BOT_SHOWERSTANCE)
 			if(check_purity(target))
 				speak("Enjoy your clean and tidy day!")
+				playsound(loc, 'sound/voice/hygienebot/cleanandtidy.ogg', 50)
 				playsound(loc, 'sound/effects/hygienebot_happy.ogg', 60, 1)
 				back_to_idle()
 				return
@@ -190,6 +209,7 @@
 			target = H
 			oldtarget_name = H.name
 			speak("Unhygienic client found. Please stand still so I can clean you.")
+			playsound(loc, 'sound/voice/hygienebot/unhygienicclient.ogg', 50)
 			playsound(loc, 'sound/effects/hygienebot_happy.ogg', 60, 1)
 			visible_message("<b>[src]</b> points at [H.name]!")
 			mode = BOT_HUNT

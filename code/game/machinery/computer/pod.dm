@@ -22,7 +22,7 @@
 			connected = M
 			break
 
-/obj/machinery/computer/pod/process(delta_time)
+/obj/machinery/computer/pod/process(seconds_per_tick)
 	if(COOLDOWN_FINISHED(src, massdriver_countdown))
 		timing = FALSE
 		// alarm() sleeps, so we want to end processing first and can't rely on return PROCESS_KILL
@@ -141,7 +141,7 @@
 	name = "\improper Mass Driver Controller"
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
-	icon_keyboard = null
+	icon_screen = null
 	density = FALSE
 
 /obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver

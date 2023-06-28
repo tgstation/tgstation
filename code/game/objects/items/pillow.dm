@@ -49,7 +49,7 @@
 	. = ..()
 	if(!istype(victim))
 		return
-	if(victim.wear_mask || !user.get_bodypart(BODY_ZONE_HEAD))
+	if(victim.wear_mask || !victim.get_bodypart(BODY_ZONE_HEAD))
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_notice("You can't bring yourself to harm [victim]"))
@@ -91,14 +91,14 @@
 	if(!pillow_trophy)
 		balloon_alert(user, "no tag!")
 		return
-	balloon_alert(user, span_notice("removing tag..."))
+	balloon_alert(user, "removing tag...")
 	if(!do_after(user, 2 SECONDS, src))
 		return
 	if(last_fighter)
 		pillow_trophy.desc = "a pillow tag taken from [last_fighter] after a gruesome pillow fight."
 	user.put_in_hands(pillow_trophy)
 	pillow_trophy = null
-	balloon_alert(user, span_notice("tag removed"))
+	balloon_alert(user, "tag removed")
 	playsound(user,'sound/items/poster_ripped.ogg', 50)
 	update_appearance()
 
@@ -129,8 +129,12 @@
 	icon = 'icons/obj/pillow.dmi'
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillow_suit"
-	armor = list(MELEE = 5, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 75) //fluffy amor
+	armor_type = /datum/armor/suit_pillow_suit
 	var/obj/item/pillow/unstoppably_plushed
+
+/datum/armor/suit_pillow_suit
+	melee = 5
+	acid = 75
 
 /obj/item/clothing/suit/pillow_suit/Initialize(mapload)
 	. = ..()
@@ -150,7 +154,11 @@
 	icon_state = "pillowcase_hat"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
-	armor = list(MELEE = 5, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 75) //fluffy amor
+	armor_type = /datum/armor/head_pillow_hood
+
+/datum/armor/head_pillow_hood
+	melee = 5
+	acid = 75
 
 /obj/item/clothing/neck/pillow_tag
 	name = "pillow tag"

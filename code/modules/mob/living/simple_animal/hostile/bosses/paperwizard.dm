@@ -4,11 +4,11 @@
 	desc = "A wizard with a taste for the arts."
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	boss_abilities = list(/datum/action/boss/wizard_summon_minions, /datum/action/boss/wizard_mimic)
-	faction = list("hostile","stickman")
+	faction = list(FACTION_HOSTILE,FACTION_STICKMAN)
 	del_on_death = TRUE
 	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "paperwizard"
-	ranged = 1
+	ranged = TRUE
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	minimum_distance = 3
 	retreat_distance = 3
@@ -21,9 +21,12 @@
 	projectiletype = /obj/projectile/temp
 	projectilesound = 'sound/weapons/emitter.ogg'
 	attack_sound = 'sound/hallucinations/growl1.ogg'
+	footstep_type = FOOTSTEP_MOB_SHOE
 	var/list/copies = list()
 
-	footstep_type = FOOTSTEP_MOB_SHOE
+/mob/living/simple_animal/hostile/boss/paper_wizard/Initialize(mapload)
+	. = ..()
+	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/wizard/paper)
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/Destroy()
 	QDEL_LIST(copies)
@@ -68,14 +71,14 @@
 	for(var/i in 1 to summon_amount)
 		var/atom/chosen_minion = pick_n_take(minions)
 		chosen_minion = new chosen_minion(get_step(boss, pick_n_take(directions)))
-		RegisterSignals(chosen_minion, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
+		RegisterSignals(chosen_minion, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
 		summoned_minions++
 
 /// Called when a minion is qdeleted or dies, removes it from our minion list
 /datum/action/boss/wizard_summon_minions/proc/lost_minion(mob/source)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	summoned_minions--
 
 //Mimic Ability

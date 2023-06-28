@@ -5,8 +5,8 @@
 	alert_type = null
 	tick_interval = 2 SECONDS
 	remove_on_fullheal = TRUE
-	/// Can this hallucination apply to silicons?
-	var/affects_silicons = FALSE
+	/// Biotypes which cannot hallucinate.
+	var/barred_biotypes = NO_HALLUCINATION_BIOTYPES
 	/// The lower range of when the next hallucination will trigger after one occurs.
 	var/lower_tick_interval = 10 SECONDS
 	/// The upper range of when the next hallucination will trigger after one occurs.
@@ -14,19 +14,13 @@
 	/// The cooldown for when the next hallucination can occur
 	COOLDOWN_DECLARE(hallucination_cooldown)
 
-/datum/status_effect/hallucination/on_creation(
-	mob/living/new_owner,
-	duration,
-	affects_silicons = FALSE,
-)
-
+/datum/status_effect/hallucination/on_creation(mob/living/new_owner, duration)
 	if(isnum(duration))
 		src.duration = duration
-	src.affects_silicons = affects_silicons
 	return ..()
 
 /datum/status_effect/hallucination/on_apply()
-	if(!affects_silicons && issilicon(owner))
+	if(owner.mob_biotypes & barred_biotypes)
 		return FALSE
 
 	RegisterSignal(owner, COMSIG_LIVING_HEALTHSCAN,  PROC_REF(on_health_scan))
@@ -74,7 +68,7 @@
 	source.cause_hallucination(/datum/hallucination/shock, "hallucinated shock from [bumped]",)
 	return STOP_BUMP
 
-/datum/status_effect/hallucination/tick(delta_time, times_fired)
+/datum/status_effect/hallucination/tick(seconds_per_tick, times_fired)
 	if(owner.stat == DEAD)
 		return
 	if(!COOLDOWN_FINISHED(src, hallucination_cooldown))
@@ -100,7 +94,7 @@
 /datum/status_effect/hallucination/sanity/refresh(...)
 	update_intervals()
 
-/datum/status_effect/hallucination/sanity/tick(delta_time, times_fired)
+/datum/status_effect/hallucination/sanity/tick(seconds_per_tick, times_fired)
 	// Using psicodine / happiness / whatever to become fearless will stop sanity based hallucinations
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return

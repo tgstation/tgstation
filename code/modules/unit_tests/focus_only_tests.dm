@@ -6,6 +6,9 @@
 /// and you will only test the check for invalid overlays in appearance building.
 /datum/unit_test/focus_only
 
+/// Checks that every created emissive has a valid icon_state
+/datum/unit_test/focus_only/invalid_emissives
+
 /// Checks that every overlay passed into build_appearance_list exists in the icon
 /datum/unit_test/focus_only/invalid_overlays
 
@@ -20,3 +23,15 @@
 
 /// Checks that smoothing_groups and canSmoothWith are properly sorted in /atom/Initialize
 /datum/unit_test/focus_only/sorted_smoothing_groups
+
+/// Checks that floor tiles are properly mapped to broken/burnt
+/datum/unit_test/focus_only/valid_turf_states
+
+/// Checks that nightvision eyes have a full set of color lists
+/datum/unit_test/focus_only/nightvision_color_cutoffs
+
+/// Checks that no light shares a tile/pixel offsets with another
+/datum/unit_test/focus_only/stacked_lights
+
+/// Checks for bad icon / icon state setups in cooking crafting menu
+/datum/unit_test/focus_only/bad_cooking_crafting_icons

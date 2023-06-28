@@ -1,0 +1,22 @@
+{
+	"witch_hat": [
+		{
+			"type": "icon_state",
+			"icon_state": "witch_hat_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "witch_hat_bow",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "witch_hat_charm",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

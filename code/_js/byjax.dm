@@ -13,7 +13,7 @@ function replaceContent() {
 		}
 	}
 	var parent = document.getElementById(id);
-	if(typeof(parent)!=='undefined' && parent!=null){
+	if(typeof(parent) !== 'undefined' && parent != null){
 		parent.innerHTML = content?content:'';
 	}
 	if(callback && window\[callback\]){

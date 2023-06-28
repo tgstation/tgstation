@@ -5,6 +5,8 @@
 	var/account_holder = "Rusty Venture"
 	///How many credits are currently held in the bank account.
 	var/account_balance = 0
+	///How many mining points (shaft miner credits) is held in the bank account, used for mining vendors.
+	var/mining_points = 0
 	///If there are things effecting how much income a player will get, it's reflected here 1 is standard for humans.
 	var/payday_modifier
 	///The job datum of the account owner.
@@ -130,12 +132,12 @@
 		var/reason_to = "Transfer: From [from.account_holder]"
 		var/reason_from = "Transfer: To [account_holder]"
 
-		if(istype(from, /datum/bank_account/department))
+		if(IS_DEPARTMENTAL_ACCOUNT(from))
 			reason_to = "Nanotrasen: Salary"
 			reason_from = ""
 
 		if(transfer_reason)
-			reason_to = istype(src, /datum/bank_account/department) ? "" : transfer_reason
+			reason_to = IS_DEPARTMENTAL_ACCOUNT(src) ? "" : transfer_reason
 			reason_from = transfer_reason
 
 		adjust_money(amount, reason_to)
@@ -266,7 +268,7 @@
 	department_id = dep_id
 	account_balance = budget
 	account_holder = SSeconomy.department_accounts[dep_id]
-	SSeconomy.generated_accounts += src
+	SSeconomy.departmental_accounts += src
 
 /datum/bank_account/remote // Bank account not belonging to the local station
 	add_to_accounts = FALSE

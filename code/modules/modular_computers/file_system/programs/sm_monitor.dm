@@ -22,7 +22,7 @@
 	refresh()
 
 /// Apparently destroy calls this [/datum/computer_file/Destroy]. Here just to clean our references.
-/datum/computer_file/program/supermatter_monitor/kill_program(forced = FALSE)
+/datum/computer_file/program/supermatter_monitor/kill_program()
 	for(var/supermatter in supermatters)
 		clear_supermatter(supermatter)
 	return ..()
@@ -31,7 +31,7 @@
 /datum/computer_file/program/supermatter_monitor/proc/refresh()
 	for(var/supermatter in supermatters)
 		clear_supermatter(supermatter)
-	var/turf/user_turf = get_turf(ui_host())
+	var/turf/user_turf = get_turf(computer.ui_host())
 	if(!user_turf)
 		return
 	for(var/obj/machinery/power/supermatter_crystal/sm in GLOB.machines)
@@ -39,7 +39,7 @@
 		if (!sm.include_in_cims || !isturf(sm.loc) || !(is_station_level(sm.z) || is_mining_level(sm.z) || sm.z == user_turf.z))
 			continue
 		supermatters += sm
-		RegisterSignal(sm, COMSIG_PARENT_QDELETING, PROC_REF(clear_supermatter))
+		RegisterSignal(sm, COMSIG_QDELETING, PROC_REF(clear_supermatter))
 
 /datum/computer_file/program/supermatter_monitor/ui_static_data(mob/user)
 	var/list/data = list()
@@ -47,18 +47,14 @@
 	return data
 
 /datum/computer_file/program/supermatter_monitor/ui_data(mob/user)
-	var/list/data = get_header_data()
+	var/list/data = list()
 	data["sm_data"] = list()
 	for (var/obj/machinery/power/supermatter_crystal/sm as anything in supermatters)
 		data["sm_data"] += list(sm.sm_ui_data())
 	data["focus_uid"] = focused_supermatter?.uid
 	return data
 
-/datum/computer_file/program/supermatter_monitor/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-
+/datum/computer_file/program/supermatter_monitor/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("PRG_refresh")
 			refresh()
@@ -86,7 +82,7 @@
 	supermatters -= sm
 	if(focused_supermatter == sm)
 		unfocus_supermatter()
-	UnregisterSignal(sm, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(sm, COMSIG_QDELETING)
 
 /datum/computer_file/program/supermatter_monitor/proc/focus_supermatter(obj/machinery/power/supermatter_crystal/sm)
 	if(sm == focused_supermatter)
@@ -107,7 +103,7 @@
 	for(var/obj/machinery/power/supermatter_crystal/S in supermatters)
 		. = max(., S.get_status())
 
-/datum/computer_file/program/supermatter_monitor/process_tick(delta_time)
+/datum/computer_file/program/supermatter_monitor/process_tick(seconds_per_tick)
 	..()
 	var/new_status = get_status()
 	if(last_status != new_status)

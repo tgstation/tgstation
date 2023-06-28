@@ -27,7 +27,7 @@
 	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
 	body_parts_covered = NONE
 	clothing_flags = MASKINTERNALS | BLOCKS_SPEECH
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/muzzle_breath
 	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
 
 /obj/item/clothing/mask/muzzle/tape
@@ -48,6 +48,9 @@
 	///The ammount of damage dealt when the tape piece is ripped off of someone.
 	var/stripping_damage = 0
 
+/datum/armor/muzzle_breath
+	bio = 100
+
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
 	. = ..()
 	. += "[span_notice("Use it on someone while not in combat mode to tape their mouth closed!")]"
@@ -59,13 +62,13 @@
 	playsound(user, 'sound/items/duct_tape_rip.ogg', 50, TRUE)
 	if(harmful_strip)
 		user.apply_damage(stripping_damage, BRUTE, BODY_ZONE_HEAD)
-		user.emote("scream")
+		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 		to_chat(user, span_userdanger("You feel a massive pain as hundreds of tiny spikes tear free from your face!"))
 
 /obj/item/clothing/mask/muzzle/tape/attack(mob/living/carbon/victim, mob/living/carbon/attacker, params)
 	if(attacker.combat_mode)
 		return ..()
-	if(victim.is_mouth_covered(head_only = TRUE))
+	if(victim.is_mouth_covered(ITEM_SLOT_HEAD))
 		to_chat(attacker, span_notice("[victim]'s mouth is covered."))
 		return
 	if(!mob_can_equip(victim, ITEM_SLOT_MASK))

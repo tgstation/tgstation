@@ -122,68 +122,6 @@ GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list(
 ))
 //stores the ghost forms that support hair and other such things
 
-GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
-	":thinking:",
-	"Alien",
-	"Angel",
-	"Banned",
-	"Bliss",
-	"Blue",
-	"Clown",
-	"Database",
-	"Dorf",
-	"Firewall",
-	"Fuzzy",
-	"Gentoo",
-	"Glitchman",
-	"Gondola",
-	"Goon",
-	"Hades",
-	"HAL 9000",
-	"Heartline",
-	"Helios",
-	"House",
-	"Inverted",
-	"Matrix",
-	"Monochrome",
-	"Murica",
-	"Nanotrasen",
-	"Not Malf",
-	"Portrait",
-	"President",
-	"Rainbow",
-	"Random",
-	"Red October",
-	"Red",
-	"Static",
-	"Syndicat Meow",
-	"Text",
-	"Too Deep",
-	"Triumvirate-M",
-	"Triumvirate",
-	"Weird",
-)))
-
-/// A form of resolve_ai_icon that is guaranteed to never sleep.
-/// Not always accurate, but always synchronous.
-/proc/resolve_ai_icon_sync(input)
-	SHOULD_NOT_SLEEP(TRUE)
-
-	if(!input || !(input in GLOB.ai_core_display_screens))
-		return "ai"
-	else
-		if(input == "Random")
-			input = pick(GLOB.ai_core_display_screens - "Random")
-		return "ai-[lowertext(input)]"
-
-/proc/resolve_ai_icon(input)
-	if (input == "Portrait")
-		var/datum/portrait_picker/tgui = new(usr)//create the datum
-		tgui.ui_interact(usr)//datum has a tgui component, here we open the window
-		return "ai-portrait" //just take this until they decide
-
-	return resolve_ai_icon_sync(input)
-
 GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 	SEC_DEPT_ENGINEERING,
 	SEC_DEPT_MEDICAL,
@@ -191,30 +129,6 @@ GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 	SEC_DEPT_SCIENCE,
 	SEC_DEPT_SUPPLY,
 )))
-
-/// Types of Crimes Prisoners will have on their record roundstart.
-/// (They also can choose Random, which picks from these options... randomly!)
-GLOBAL_LIST_INIT(prisoner_crimes, list(
-	"Abhorrent Criminal Negligence" = "Incompetently risked numerous lives.",
-	"Attempted Development of Cloning" = "Attempted illegal research in the cloning sphere. Cloning, cloning construction, and cloning-related R&D was outlawed in 2560.",
-	"Attempted Murder" = "Attempted to maliciously kill someone.",
-	"Biological Terrorism" = "Created and or released a lethal biological agent/lifeform.",
-	"Classified" = "Consult Legal.",
-	"Corporate Espionage" = "Conducted espionage against Nanotrasen for commercial purposes.",
-	"Counterfeiting" = "Engaged in widespread fraud.",
-	"Enemy of the Corporation" = "Acted as, or knowingly aided, an enemy of Nanotrasen.",
-	"Grand Sabotage" = "Engaged in malicious destructive actions, seriously threatening Nanotrasen employees and or infrastructure.",
-	"Grand Theft" = "Stole items of high value or sensitive nature.",
-	"Identity Theft of High-Ranking Figure" = "Impersonated a high-ranking figure.",
-	"Kidnapping" = "Planned and executed a kidnapping.",
-	"Medical Malpractice" = "Engaged in organ harvesting, limb theft, or other malicious medical procedures.",
-	"Murder" = "Maliciously killed someone.",
-	"Mutiny" = "Attempted to overthrow/subvert Chain of Command.",
-	"Other" = "Consult Legal.",
-	"Tampering of Artificial Intelligence" = "Uploaded malicious, negligent, or otherwise blacklisted directives to an Artificial Intelligence.",
-	"Tax Evasion" = "Outstanding amount of tax evasion.",
-	"Worship of Blacklisted Deities" = "Practiced worship of blacklisted deities.",
-))
 
 	//Backpacks
 #define DBACKPACK "Department Backpack"
@@ -248,8 +162,8 @@ GLOBAL_LIST_INIT(backpacklist, list(
 GLOBAL_LIST_EMPTY(female_clothing_icons)
 
 GLOBAL_LIST_INIT(scarySounds, list(
-	'sound/effects/clownstep1.ogg',
-	'sound/effects/clownstep2.ogg',
+	'sound/effects/footstep/clownstep1.ogg',
+	'sound/effects/footstep/clownstep2.ogg',
 	'sound/effects/glassbr1.ogg',
 	'sound/effects/glassbr2.ogg',
 	'sound/effects/glassbr3.ogg',

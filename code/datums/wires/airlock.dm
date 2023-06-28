@@ -1,8 +1,3 @@
-#define AI_WIRE_NORMAL 0
-#define AI_WIRE_DISABLED 1
-#define AI_WIRE_HACKED 2
-#define AI_WIRE_DISABLED_HACKED -1
-
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
 	proper_name = "Generic Airlock"
@@ -206,7 +201,7 @@
 		if(WIRE_TIMING) // Cut to disable auto-close, mend to re-enable.
 			A.autoclose = mend
 			if(A.autoclose && !A.density)
-				A.close()
+				INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/machinery/door/airlock, close))
 		if(WIRE_LIGHT) // Cut to disable lights, mend to re-enable.
 			A.lights = mend
 			A.update_appearance()

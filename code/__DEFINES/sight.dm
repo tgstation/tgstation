@@ -28,8 +28,7 @@
 #define VISOR_FLASHPROTECT (1<<0)
 #define VISOR_TINT (1<<1)
 #define VISOR_VISIONFLAGS (1<<2) //all following flags only matter for glasses
-#define VISOR_DARKNESSVIEW (1<<3)
-#define VISOR_INVISVIEW (1<<4)
+#define VISOR_INVISVIEW (1<<3)
 
 // BYOND internal values for the sight flags
 // See [https://www.byond.com/docs/ref/#/mob/var/sight]
@@ -55,6 +54,6 @@
 /// NOTE: this does not function with the SIDE_MAP map format. So we can't. :(
 //#define SEE_BLACKNESS (1<<10)
 
-/// Bitfield of sight flags that show things "inside" the blackness plane
-/// We've gotta alpha it down if we get this, cause otherwise the sight flag won't work
-#define BLACKNESS_CUTTING (SEE_MOBS|SEE_OBJS|SEE_TURFS|SEE_TURFS|SEE_TURFS)
+/// Bitfield of sight flags that show THINGS but no lighting
+/// Since lighting is an underlay on turfs, this is everything but that
+#define SEE_AVOID_TURF_BLACKNESS (SEE_MOBS|SEE_OBJS)

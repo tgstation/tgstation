@@ -64,9 +64,8 @@
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			if(prob(80))
-				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
-					ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-					ReplaceWithLattice()
+				if (!ispath(baseturf_at_depth(2), /turf/open/floor))
+					attempt_lattice_replacement()
 				else
 					ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 			else if(prob(50))
@@ -77,6 +76,8 @@
 			if(prob(50))
 				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
+	return TRUE
+
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
@@ -85,7 +86,7 @@
 				new floor_tile(src)
 				make_plating(TRUE)
 		else if(prob(30))
-			ReplaceWithLattice()
+			attempt_lattice_replacement()
 
 /turf/open/floor/engine/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

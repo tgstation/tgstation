@@ -4,7 +4,7 @@
  * fusion_process() handles all the main fusion reaction logic and consequences (lightning, radiation, particles) from an active fusion reaction.
  */
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/process(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/process(seconds_per_tick)
 	/*
 	 *Pre-checks
 	 */
@@ -22,14 +22,14 @@
 	// Run the reaction if it is either live or being started
 	if (start_power || power_level)
 		play_ambience()
-		fusion_process(delta_time)
+		fusion_process(seconds_per_tick)
 		// Note that we process damage/healing even if the fusion process aborts.
 		// Running out of fuel won't save you if your moderator and coolant are exploding on their own.
 		check_spill()
-		process_damageheal(delta_time)
+		process_damageheal(seconds_per_tick)
 		check_alert()
 	if (start_power)
-		remove_waste(delta_time)
+		remove_waste(seconds_per_tick)
 	update_pipenets()
 
 	check_deconstructable()
@@ -38,15 +38,15 @@
  * Called by process()
  * Contains the main fusion calculations and checks, for more informations check the comments along the code.
  */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/fusion_process(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/fusion_process(seconds_per_tick)
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again! Again but with machine!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //7 reworks
 
 	if (check_power_use())
 		if (start_cooling)
-			inject_from_side_components(delta_time)
-			process_internal_cooling(delta_time)
+			inject_from_side_components(seconds_per_tick)
+			process_internal_cooling(seconds_per_tick)
 	else
 		// No power forces bad settings
 		magnetic_constrictor = 100
@@ -55,9 +55,9 @@
 		fuel_injection_rate = 20
 		moderator_injection_rate = 50
 		waste_remove = FALSE
-		iron_content += 0.02 * power_level * delta_time
+		iron_content += 0.02 * power_level * seconds_per_tick
 
-	update_temperature_status(delta_time)
+	update_temperature_status(seconds_per_tick)
 
 	//Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
@@ -215,13 +215,13 @@
 
 	// Phew. Lets calculate what this means in practice.
 	var/fuel_consumption_rate = clamp(fuel_injection_rate * 0.01 * 5 * power_level, 0.05, 30)
-	var/consumption_amount = fuel_consumption_rate * delta_time
+	var/consumption_amount = fuel_consumption_rate * seconds_per_tick
 	var/production_amount
 	switch(power_level)
 		if(3,4)
-			production_amount = clamp(heat_output * 5e-4, 0, fuel_consumption_rate) * delta_time
+			production_amount = clamp(heat_output * 5e-4, 0, fuel_consumption_rate) * seconds_per_tick
 		else
-			production_amount = clamp(heat_output / 10 ** (power_level+1), 0, fuel_consumption_rate) * delta_time
+			production_amount = clamp(heat_output / 10 ** (power_level+1), 0, fuel_consumption_rate) * seconds_per_tick
 
 	// antinob production is special, and uses its own calculations from how stale the fusion mix is (via byproduct ratio and fresh fuel rate)
 	var/dirty_production_rate = scaled_fuel_list[scaled_fuel_list[3]] / fuel_injection_rate
@@ -229,18 +229,18 @@
 	// Run the effects of our selected fuel recipe
 
 	var/datum/gas_mixture/internal_output = new
-	moderator_fuel_process(delta_time, production_amount, consumption_amount, internal_output, moderator_list, selected_fuel, fuel_list)
+	moderator_fuel_process(seconds_per_tick, production_amount, consumption_amount, internal_output, moderator_list, selected_fuel, fuel_list)
 
 	// Run the common effects, committing changes where applicable
 
 	// This is repetition, but is here as a placeholder for what will need to be done to allow concurrently running multiple recipes
 	var/common_production_amount = production_amount * selected_fuel.gas_production_multiplier
-	moderator_common_process(delta_time, common_production_amount, internal_output, moderator_list, dirty_production_rate, heat_output, radiation_modifier)
+	moderator_common_process(seconds_per_tick, common_production_amount, internal_output, moderator_list, dirty_production_rate, heat_output, radiation_modifier)
 
 /**
  * Perform recipe specific actions. Fuel consumption and recipe based gas production happens here.
  */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/moderator_fuel_process(delta_time, production_amount, consumption_amount, datum/gas_mixture/internal_output, moderator_list, datum/hfr_fuel/fuel, fuel_list)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/moderator_fuel_process(seconds_per_tick, production_amount, consumption_amount, datum/gas_mixture/internal_output, moderator_list, datum/hfr_fuel/fuel, fuel_list)
 	// Adjust fusion consumption/production based on this recipe's characteristics
 	var/fuel_consumption = consumption_amount * 0.85 * selected_fuel.fuel_consumption_multiplier
 	var/scaled_production = production_amount * selected_fuel.gas_production_multiplier
@@ -283,7 +283,7 @@
  * - Temperature modifiers, radiation modifiers, and the application of each
  * - Committing staged output, performing filtering, and making !FUN! emissions
  */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/moderator_common_process(delta_time, scaled_production, datum/gas_mixture/internal_output, moderator_list, dirty_production_rate, heat_output, radiation_modifier)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/moderator_common_process(seconds_per_tick, scaled_production, datum/gas_mixture/internal_output, moderator_list, dirty_production_rate, heat_output, radiation_modifier)
 	switch(power_level)
 		if(1)
 			if(moderator_list[/datum/gas/plasma] > 100)
@@ -325,7 +325,7 @@
 				internal_output.assert_gases(/datum/gas/healium, /datum/gas/proto_nitrate)
 				internal_output.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 1.5
 				internal_output.gases[/datum/gas/healium][MOLES] += scaled_production * 1.5
-				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * delta_time)
+				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * seconds_per_tick)
 
 		if(5)
 			if(moderator_list[/datum/gas/plasma] > 15)
@@ -345,15 +345,15 @@
 			if(moderator_list[/datum/gas/bz] > 100)
 				internal_output.assert_gases(/datum/gas/healium, /datum/gas/freon)
 				internal_output.gases[/datum/gas/healium][MOLES] += scaled_production
-				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * delta_time)
+				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * seconds_per_tick)
 				internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 1.15
 			if(moderator_list[/datum/gas/healium] > 100)
 				if(critical_threshold_proximity > 400)
-					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * delta_time ), 0)
+					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * seconds_per_tick ), 0)
 					moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
 			if(moderator_internal.temperature < 1e7 || (moderator_list[/datum/gas/plasma] > 100 && moderator_list[/datum/gas/bz] > 50))
 				internal_output.assert_gases(/datum/gas/antinoblium)
-				internal_output.gases[/datum/gas/antinoblium][MOLES] += dirty_production_rate * 0.9 / 0.065 * delta_time
+				internal_output.gases[/datum/gas/antinoblium][MOLES] += dirty_production_rate * 0.9 / 0.065 * seconds_per_tick
 		if(6)
 			internal_output.assert_gases(/datum/gas/antinoblium)
 			if(moderator_list[/datum/gas/plasma] > 30)
@@ -368,20 +368,20 @@
 				radiation *= 2
 				heat_output *= 2.25
 			if(moderator_list[/datum/gas/bz])
-				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * delta_time)
-				internal_output.gases[/datum/gas/antinoblium][MOLES] += clamp(dirty_production_rate / 0.045, 0, 10) * delta_time
+				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * seconds_per_tick)
+				internal_output.gases[/datum/gas/antinoblium][MOLES] += clamp(dirty_production_rate / 0.045, 0, 10) * seconds_per_tick
 			if(moderator_list[/datum/gas/healium] > 100)
 				if(critical_threshold_proximity > 400)
-					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * delta_time ), 0)
+					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * seconds_per_tick ), 0)
 					moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
-			internal_fusion.gases[/datum/gas/antinoblium][MOLES] += dirty_production_rate * 0.01 / 0.095 * delta_time
+			internal_fusion.gases[/datum/gas/antinoblium][MOLES] += dirty_production_rate * 0.01 / 0.095 * seconds_per_tick
 
 	//Modifies the internal_fusion temperature with the amount of heat output
 	var/temperature_modifier = selected_fuel.temperature_change_multiplier
 	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE * temperature_modifier)
 		internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,FUSION_MAXIMUM_TEMPERATURE * temperature_modifier)
 	else
-		internal_fusion.temperature -= heat_limiter_modifier * 0.01 * delta_time
+		internal_fusion.temperature -= heat_limiter_modifier * 0.01 * seconds_per_tick
 
 	//heat up and output what's in the internal_output into the linked_output port
 	if(internal_output.total_moles() > 0)
@@ -391,7 +391,7 @@
 			internal_output.temperature = internal_fusion.temperature * METALLIC_VOID_CONDUCTIVITY
 		linked_output.airs[1].merge(internal_output)
 
-	evaporate_moderator(delta_time)
+	evaporate_moderator(seconds_per_tick)
 
 	check_nuclear_particles(moderator_list)
 
@@ -401,23 +401,23 @@
 	if(moderator_list[/datum/gas/oxygen] > 150)
 		if(iron_content > 0)
 			var/max_iron_removable = IRON_OXYGEN_HEAL_PER_SECOND
-			var/iron_removed = min(max_iron_removable * delta_time, iron_content)
+			var/iron_removed = min(max_iron_removable * seconds_per_tick, iron_content)
 			iron_content -= iron_removed
 			moderator_internal.gases[/datum/gas/oxygen][MOLES] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
 
-	check_gravity_pulse(delta_time)
+	check_gravity_pulse(seconds_per_tick)
 
 	radiation_pulse(src, max_range = 6, threshold = 0.3)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/evaporate_moderator(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/evaporate_moderator(seconds_per_tick)
 	// Don't evaporate if the reaction is dead
 	if (!power_level)
 		return
 	// All gases in the moderator slowly burn away over time, whether used for production or not
 	if(moderator_internal.total_moles() > 0)
-		moderator_internal.remove(moderator_internal.total_moles() * (1 - (1 - 0.0005 * power_level) ** delta_time))
+		moderator_internal.remove(moderator_internal.total_moles() * (1 - (1 - 0.0005 * power_level) ** seconds_per_tick))
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_damageheal(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_damageheal(seconds_per_tick)
 	// Archive current health for damage cap purposes
 	critical_threshold_proximity_archived = critical_threshold_proximity
 
@@ -427,38 +427,38 @@
 	// If we're operating at an extreme power level, take increasing damage for the amount of fusion mass over a low threshold
 	if(power_level >= HYPERTORUS_OVERFULL_MIN_POWER_LEVEL)
 		var/overfull_damage_taken = HYPERTORUS_OVERFULL_MOLAR_SLOPE * internal_fusion.total_moles() + HYPERTORUS_OVERFULL_TEMPERATURE_SLOPE * coolant_temperature + HYPERTORUS_OVERFULL_CONSTANT
-		critical_threshold_proximity = max(critical_threshold_proximity + max(overfull_damage_taken * delta_time, 0), 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + max(overfull_damage_taken * seconds_per_tick, 0), 0)
 		warning_damage_flags |= HYPERTORUS_FLAG_HIGH_POWER_DAMAGE
 
 	// If we're running on a thin fusion mix, heal up
 	if(internal_fusion.total_moles() < HYPERTORUS_SUBCRITICAL_MOLES && power_level <= 5)
 		var/subcritical_heal_restore = (internal_fusion.total_moles() - HYPERTORUS_SUBCRITICAL_MOLES) / HYPERTORUS_SUBCRITICAL_SCALE
-		critical_threshold_proximity = max(critical_threshold_proximity + min(subcritical_heal_restore * delta_time, 0), 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + min(subcritical_heal_restore * seconds_per_tick, 0), 0)
 
 	// If coolant is sufficiently cold, heal up
 	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < HYPERTORUS_COLD_COOLANT_THRESHOLD) && power_level <= 4)
 		var/cold_coolant_heal_restore = log(10, max(coolant_temperature, 1) * HYPERTORUS_COLD_COOLANT_SCALE) - (HYPERTORUS_COLD_COOLANT_MAX_RESTORE * 2)
-		critical_threshold_proximity = max(critical_threshold_proximity + min(cold_coolant_heal_restore * delta_time, 0), 0)
+		critical_threshold_proximity = max(critical_threshold_proximity + min(cold_coolant_heal_restore * seconds_per_tick, 0), 0)
 
-	critical_threshold_proximity += max(iron_content - HYPERTORUS_MAX_SAFE_IRON, 0) * delta_time
+	critical_threshold_proximity += max(iron_content - HYPERTORUS_MAX_SAFE_IRON, 0) * seconds_per_tick
 	if(iron_content - HYPERTORUS_MAX_SAFE_IRON > 0)
 		warning_damage_flags |= HYPERTORUS_FLAG_IRON_CONTENT_DAMAGE
 
 	// Apply damage cap
-	critical_threshold_proximity = min(critical_threshold_proximity_archived + (delta_time * DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
+	critical_threshold_proximity = min(critical_threshold_proximity_archived + (seconds_per_tick * DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
 
 	// If we have a preposterous amount of mass in the fusion mix, things get bad extremely fast
 	if(internal_fusion.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES)
 		var/hypercritical_damage_taken = max((internal_fusion.total_moles() - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
-		critical_threshold_proximity = max(critical_threshold_proximity + min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MAX_DAMAGE), 0) * delta_time
+		critical_threshold_proximity = max(critical_threshold_proximity + min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MAX_DAMAGE), 0) * seconds_per_tick
 		warning_damage_flags |= HYPERTORUS_FLAG_HIGH_FUEL_MIX_MOLE
 
 	// High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen
 	if(power_level > 4 && prob(IRON_CHANCE_PER_FUSION_LEVEL * power_level))//at power level 6 is 100%
-		iron_content += IRON_ACCUMULATED_PER_SECOND * delta_time
+		iron_content += IRON_ACCUMULATED_PER_SECOND * seconds_per_tick
 		warning_damage_flags |= HYPERTORUS_FLAG_IRON_CONTENT_INCREASE
 	if(iron_content > 0 && power_level <= 4 && prob(25 / (power_level + 1)))
-		iron_content = max(iron_content - 0.01 * delta_time, 0)
+		iron_content = max(iron_content - 0.01 * seconds_per_tick, 0)
 	iron_content = clamp(iron_content, 0, 1)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_nuclear_particles(moderator_list)
@@ -497,8 +497,8 @@
 	for(var/i in 1 to zap_number)
 		supermatter_zap(src, 5, power_level * 300, flags, zap_cutoff = cutoff, power_level = src.power_level * 1000, zap_icon = zaps_aspect)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_gravity_pulse(delta_time)
-	if(DT_PROB(100 - critical_threshold_proximity / 15, delta_time))
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_gravity_pulse(seconds_per_tick)
+	if(SPT_PROB(100 - critical_threshold_proximity / 15, seconds_per_tick))
 		return
 	var/grav_range = round(log(2.5, critical_threshold_proximity))
 	for(var/mob/alive_mob in GLOB.alive_mob_list)
@@ -506,13 +506,13 @@
 			continue
 		step_towards(alive_mob, loc)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/remove_waste(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/remove_waste(seconds_per_tick)
 	//Gases can be removed from the moderator internal by using the interface.
 	if(!waste_remove)
 		return
 	var/filtering_amount = moderator_scrubbing.len
 	for(var/gas in moderator_internal.gases & moderator_scrubbing)
-		var/datum/gas_mixture/removed = moderator_internal.remove_specific(gas, (moderator_filtering_rate / filtering_amount) * delta_time)
+		var/datum/gas_mixture/removed = moderator_internal.remove_specific(gas, (moderator_filtering_rate / filtering_amount) * seconds_per_tick)
 		if(removed)
 			linked_output.airs[1].merge(removed)
 
@@ -520,16 +520,16 @@
 		var/datum/gas_mixture/internal_remove
 		for(var/gas_id in selected_fuel.primary_products)
 			if(internal_fusion.gases[gas_id][MOLES] > 0)
-				internal_remove = internal_fusion.remove_specific(gas_id, internal_fusion.gases[gas_id][MOLES] * (1 - (1 - 0.25) ** delta_time))
+				internal_remove = internal_fusion.remove_specific(gas_id, internal_fusion.gases[gas_id][MOLES] * (1 - (1 - 0.25) ** seconds_per_tick))
 				linked_output.airs[1].merge(internal_remove)
 	internal_fusion.garbage_collect()
 	moderator_internal.garbage_collect()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_internal_cooling(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_internal_cooling(seconds_per_tick)
 	if(moderator_internal.total_moles() > 0 && internal_fusion.total_moles() > 0)
 		//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
 		var/fusion_temperature_delta = internal_fusion.temperature - moderator_internal.temperature
-		var/fusion_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** delta_time) * fusion_temperature_delta * (internal_fusion.heat_capacity() * moderator_internal.heat_capacity() / (internal_fusion.heat_capacity() + moderator_internal.heat_capacity()))
+		var/fusion_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** seconds_per_tick) * fusion_temperature_delta * (internal_fusion.heat_capacity() * moderator_internal.heat_capacity() / (internal_fusion.heat_capacity() + moderator_internal.heat_capacity()))
 		internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion.heat_capacity(), TCMB)
 		moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal.heat_capacity(), TCMB)
 
@@ -540,24 +540,24 @@
 	//Cooling of the moderator gases with the cooling loop in and out the core
 	if(moderator_internal.total_moles() > 0)
 		var/coolant_temperature_delta = cooling_remove.temperature - moderator_internal.temperature
-		var/cooling_heat_amount = (1 - (1 - HIGH_EFFICIENCY_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_remove.heat_capacity() * moderator_internal.heat_capacity() / (cooling_remove.heat_capacity() + moderator_internal.heat_capacity()))
+		var/cooling_heat_amount = (1 - (1 - HIGH_EFFICIENCY_CONDUCTIVITY) ** seconds_per_tick) * coolant_temperature_delta * (cooling_remove.heat_capacity() * moderator_internal.heat_capacity() / (cooling_remove.heat_capacity() + moderator_internal.heat_capacity()))
 		cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
 		moderator_internal.temperature = max(moderator_internal.temperature + cooling_heat_amount / moderator_internal.heat_capacity(), TCMB)
 
 	else if(internal_fusion.total_moles() > 0)
 		var/coolant_temperature_delta = cooling_remove.temperature - internal_fusion.temperature
-		var/cooling_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal_fusion.heat_capacity() / (cooling_remove.heat_capacity() + internal_fusion.heat_capacity()))
+		var/cooling_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** seconds_per_tick) * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal_fusion.heat_capacity() / (cooling_remove.heat_capacity() + internal_fusion.heat_capacity()))
 		cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
 		internal_fusion.temperature = max(internal_fusion.temperature + cooling_heat_amount / internal_fusion.heat_capacity(), TCMB)
 	cooling_port.merge(cooling_remove)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/inject_from_side_components(delta_time)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/inject_from_side_components(seconds_per_tick)
 	update_pipenets()
 
 	//Check and stores the gases from the moderator input in the moderator internal gasmix
 	var/datum/gas_mixture/moderator_port = linked_moderator.airs[1]
 	if(start_moderator && moderator_port.total_moles())
-		moderator_internal.merge(moderator_port.remove(moderator_injection_rate * delta_time))
+		moderator_internal.merge(moderator_port.remove(moderator_injection_rate * seconds_per_tick))
 		linked_moderator.update_parents()
 
 	//Check if the fuels are present and move them inside the fuel internal gasmix
@@ -567,7 +567,7 @@
 	var/datum/gas_mixture/fuel_port = linked_input.airs[1]
 	for(var/gas_type in selected_fuel.requirements)
 		internal_fusion.assert_gas(gas_type)
-		internal_fusion.merge(fuel_port.remove_specific(gas_type, fuel_injection_rate * delta_time / length(selected_fuel.requirements)))
+		internal_fusion.merge(fuel_port.remove_specific(gas_type, fuel_injection_rate * seconds_per_tick / length(selected_fuel.requirements)))
 		linked_input.update_parents()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_deconstructable()

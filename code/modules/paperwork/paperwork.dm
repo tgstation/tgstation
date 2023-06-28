@@ -113,11 +113,11 @@
 //HEAD OF STAFF DOCUMENTS
 
 /obj/item/paperwork/cargo
-	stamp_requested = /obj/item/stamp/qm
+	stamp_requested = /obj/item/stamp/head/qm
 	stamp_job = /datum/job/quartermaster
 	stamp_icon = "paper_stamp-qm"
 
-/obj/item/paperwork/cargo/Initialize()
+/obj/item/paperwork/cargo/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" The papers are a mess of shipping order paperwork. There's no rhyme or reason to how these documents are sorted at all.")
@@ -126,11 +126,11 @@
 	detailed_desc += span_info(" Despite how disorganized the documents are, they're all appropriately filled in. You should probably stamp this.")
 
 /obj/item/paperwork/security
-	stamp_requested = /obj/item/stamp/hos
+	stamp_requested = /obj/item/stamp/head/hos
 	stamp_job = /datum/job/head_of_security
 	stamp_icon = "paper_stamp-hos"
 
-/obj/item/paperwork/security/Initialize()
+/obj/item/paperwork/security/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" The stack of documents are related to a civil case being processed by a neighboring installation.")
@@ -139,11 +139,11 @@
 	detailed_desc += span_info(" What a bunch of crap, the security team were clearly just doing what they had to. You should probably stamp this.")
 
 /obj/item/paperwork/service
-	stamp_requested = /obj/item/stamp/hop
+	stamp_requested = /obj/item/stamp/head/hop
 	stamp_job = /datum/job/head_of_personnel
 	stamp_icon = "paper_stamp-hop"
 
-/obj/item/paperwork/service/Initialize()
+/obj/item/paperwork/service/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" You begin scanning over the document. This is a standard Nanotrasen NT-435Z3 form used for requests to Central Command.")
@@ -152,11 +152,11 @@
 	detailed_desc += span_info(" A MAXIMUM priority request like this is nothing to balk at. You should probably stamp this.")
 
 /obj/item/paperwork/medical
-	stamp_requested = /obj/item/stamp/cmo
+	stamp_requested = /obj/item/stamp/head/cmo
 	stamp_job = /datum/job/chief_medical_officer
 	stamp_icon = "paper_stamp-cmo"
 
-/obj/item/paperwork/medical/Initialize()
+/obj/item/paperwork/medical/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" The stack of documents appear to be a medical report from a nearby station, detailing the autopsy of an unknown xenofauna.")
@@ -166,11 +166,11 @@
 
 
 /obj/item/paperwork/engineering
-	stamp_requested = /obj/item/stamp/ce
+	stamp_requested = /obj/item/stamp/head/ce
 	stamp_job = /datum/job/chief_engineer
 	stamp_icon = "paper_stamp-ce"
 
-/obj/item/paperwork/engineering/Initialize()
+/obj/item/paperwork/engineering/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" These papers are a power output report from a neighboring station. It details the power output and other engineering data regarding the station during a typical shift.")
@@ -179,11 +179,11 @@
 	detailed_desc += span_info(" Damn, that's impressive stuff. You should probably stamp this.")
 
 /obj/item/paperwork/research
-	stamp_requested = /obj/item/stamp/rd
+	stamp_requested = /obj/item/stamp/head/rd
 	stamp_job = /datum/job/research_director
 	stamp_icon = "paper_stamp-rd"
 
-/obj/item/paperwork/research/Initialize()
+/obj/item/paperwork/research/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" The documents detail the results of a standard ordnance test that occured on a nearby station.")
@@ -192,11 +192,11 @@
 	detailed_desc += span_info(" Regardless, they're still perfectly usable test results. You should probably stamp this.")
 
 /obj/item/paperwork/captain
-	stamp_requested = /obj/item/stamp/captain
+	stamp_requested = /obj/item/stamp/head/captain
 	stamp_job = /datum/job/captain
 	stamp_icon = "paper_stamp-cap"
 
-/obj/item/paperwork/captain/Initialize()
+/obj/item/paperwork/captain/Initialize(mapload)
 	. = ..()
 
 	detailed_desc += span_info(" The documents are an unsigned correspondence from the captain's desk of a nearby station.")

@@ -1,7 +1,7 @@
 //Presets for item actions
 /datum/action/item_action
 	name = "Item Action"
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 	button_icon_state = null
 
 /datum/action/item_action/New(Target)

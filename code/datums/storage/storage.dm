@@ -43,6 +43,8 @@
 	var/allow_quick_empty = FALSE
 	/// the mode for collection when allow_quick_gather is enabled
 	var/collection_mode = COLLECT_ONE
+	/// If we support smartly removing/inserting things from ourselves
+	var/supports_smart_equip = TRUE
 
 	/// shows what we can hold in examine text
 	var/can_hold_description
@@ -83,6 +85,9 @@
 
 	var/datum/weakref/modeswitch_action_ref
 
+	/// If true shows the contents of the storage in open_storage
+	var/display_contents = TRUE
+
 /datum/storage/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
 	boxes = new(null, src)
 	closer = new(null, src)
@@ -116,14 +121,14 @@
 	RegisterSignal(resolve_parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(on_mousedropped_onto))
 
 	RegisterSignal(resolve_parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
-	RegisterSignal(resolve_parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(resolve_parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(resolve_parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(on_preattack))
 	RegisterSignal(resolve_parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstruct))
 
 	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(mass_empty))
 
 	RegisterSignals(resolve_parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_ATTACK_HAND_SECONDARY), PROC_REF(open_storage_on_signal))
-	RegisterSignal(resolve_parent, COMSIG_PARENT_ATTACKBY_SECONDARY, PROC_REF(open_storage_attackby_secondary))
+	RegisterSignal(resolve_parent, COMSIG_ATOM_ATTACKBY_SECONDARY, PROC_REF(open_storage_attackby_secondary))
 
 	RegisterSignal(resolve_location, COMSIG_ATOM_ENTERED, PROC_REF(handle_enter))
 	RegisterSignal(resolve_location, COMSIG_ATOM_EXITED, PROC_REF(handle_exit))
@@ -472,6 +477,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /**
  * Attempts to remove an item from the storage
+ * Ignores removal do_afters. Only use this if you're doing it as part of a dumping action
  *
  * @param obj/item/thing the object we're removing
  * @param atom/newLoc where we're placing the item
@@ -530,6 +536,20 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		thing.pixel_x = thing.base_pixel_x + rand(-8, 8)
 		thing.pixel_y = thing.base_pixel_y + rand(-8, 8)
 
+
+/**
+ * Allows a mob to attempt to remove a single item from the storage
+ * Allows for hooks into things like removal delays
+ *
+ * @param mob/removing the mob doing the removing
+ * @param obj/item/thing the object we're removing
+ * @param atom/newLoc where we're placing the item
+ * @param silent if TRUE, we won't play any exit sounds
+ */
+/datum/storage/proc/remove_single(mob/removing, obj/item/thing, atom/newLoc, silent = FALSE)
+	if(!attempt_remove(thing, newLoc, silent))
+		return FALSE
+	return TRUE
 
 /**
  * Removes only a specific type of item from our storage
@@ -654,12 +674,13 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!resolve_parent)
 		return
 
-	var/list/turf_things = thing.loc.contents.Copy()
+	var/atom/holder = thing.loc
+	var/list/pick_up = holder.contents.Copy()
 
 	if(collection_mode == COLLECT_SAME)
-		turf_things = typecache_filter_list(turf_things, typecacheof(thing.type))
+		pick_up = typecache_filter_list(pick_up, typecacheof(thing.type))
 
-	var/amount = length(turf_things)
+	var/amount = length(pick_up)
 	if(!amount)
 		resolve_parent.balloon_alert(user, "nothing to pick up!")
 		return
@@ -667,10 +688,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/datum/progressbar/progress = new(user, amount, thing.loc)
 	var/list/rejections = list()
 
-	while(do_after(user, 1 SECONDS, resolve_parent, NONE, FALSE, CALLBACK(src, PROC_REF(handle_mass_pickup), user, turf_things, thing.loc, rejections, progress)))
+	while(do_after(user, 1 SECONDS, resolve_parent, NONE, FALSE, CALLBACK(src, PROC_REF(handle_mass_pickup), user, pick_up.Copy(), thing.loc, rejections, progress)))
 		stoplag(1)
 
 	progress.end_progress()
+	// If nothing was actually removed, don't send the pickup message
+	var/list/current_contents = holder.contents.Copy()
+	if(length(pick_up | current_contents) == length(current_contents))
+		return
 	resolve_parent.balloon_alert(user, "picked up")
 
 /// Signal handler for whenever we drag the storage somewhere.
@@ -733,7 +758,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			if(to_dump.loc != resolve_location)
 				continue
 			dest_object.atom_storage.attempt_insert(to_dump, user)
-
+		resolve_parent.update_appearance()
+		SEND_SIGNAL(src, COMSIG_STORAGE_DUMP_POST_TRANSFER, dest_object, user)
 		return
 
 	var/atom/dump_loc = dest_object.get_dumping_location()
@@ -779,13 +805,13 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	if(!thing.attackby_storage_insert(src, resolve_parent, user))
-		return FALSE
+		return
 
 	if(iscyborg(user))
-		return TRUE
+		return COMPONENT_NO_AFTERATTACK
 
 	attempt_insert(thing, user)
-	return TRUE
+	return COMPONENT_NO_AFTERATTACK
 
 /// Signal handler for whenever we're attacked by a mob.
 /datum/storage/proc/on_attack(datum/source, mob/user)
@@ -799,7 +825,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(user.active_storage == src && resolve_parent.loc == user)
 		user.active_storage.hide_contents(user)
 		hide_contents(user)
-		return TRUE
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(ishuman(user))
 		var/mob/living/carbon/human/hum = user
 		if(hum.l_store == resolve_parent && !hum.get_active_held_item())
@@ -813,7 +839,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(resolve_parent.loc == user)
 		INVOKE_ASYNC(src, PROC_REF(open_storage), user)
-		return TRUE
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Generates the numbers on an item in storage to show stacking.
 /datum/storage/proc/process_numerical_display()
@@ -948,30 +974,33 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			resolve_parent.balloon_alert(to_show, "locked!")
 		return FALSE
 
-	if(!quickdraw || to_show.get_active_held_item())
-		show_contents(to_show)
+	// If we're quickdrawing boys
+	if(quickdraw && !to_show.get_active_held_item())
+		var/obj/item/to_remove = locate() in resolve_location
+		if(!to_remove)
+			return TRUE
 
-		if(animated)
-			animate_parent()
-
-		if(rustle_sound)
-			playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
-
+		remove_single(to_show, to_remove)
+		INVOKE_ASYNC(src, PROC_REF(put_in_hands_async), to_show, to_remove)
+		if(!silent)
+			to_show.visible_message(
+				span_warning("[to_show] draws [to_remove] from [resolve_parent]!"),
+				span_notice("You draw [to_remove] from [resolve_parent]."),
+			)
 		return TRUE
 
-	var/obj/item/to_remove = locate() in resolve_location
+	// If nothing else, then we want to open the thing, so do that
+	if(!show_contents(to_show))
+		return FALSE
 
-	if(!to_remove)
-		return TRUE
+	if(animated)
+		animate_parent()
 
-	attempt_remove(to_remove)
-
-	INVOKE_ASYNC(src, PROC_REF(put_in_hands_async), to_show, to_remove)
-
-	if(!silent)
-		to_show.visible_message(span_warning("[to_show] draws [to_remove] from [resolve_parent]!"), span_notice("You draw [to_remove] from [resolve_parent]."))
+	if(rustle_sound)
+		playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
 
 	return TRUE
+
 
 /// Async version of putting something into a mobs hand.
 /datum/storage/proc/put_in_hands_async(mob/toshow, obj/item/toremove)
@@ -1016,14 +1045,20 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * Show our storage to a mob.
  *
  * @param mob/toshow the mob to show the storage to
+ *
+ * @returns FALSE if the show failed, TRUE otherwise
  */
 /datum/storage/proc/show_contents(mob/toshow)
 	var/obj/item/resolve_location = real_location?.resolve()
 	if(!resolve_location)
-		return
+		return FALSE
 
 	if(!toshow.client)
-		return
+		return FALSE
+
+	// You can only inspect hidden contents if you're an observer
+	if(!isobserver(toshow) && !display_contents)
+		return FALSE
 
 	if(toshow.active_storage != src && (toshow.stat == CONSCIOUS))
 		for(var/obj/item/thing in resolve_location)
@@ -1046,6 +1081,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	toshow.client.screen |= boxes
 	toshow.client.screen |= closer
 	toshow.client.screen |= resolve_location.contents
+	return TRUE
 
 /**
  * Hide our storage from a mob.

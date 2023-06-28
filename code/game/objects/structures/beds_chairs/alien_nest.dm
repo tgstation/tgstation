@@ -9,8 +9,8 @@
 	max_integrity = 120
 	can_be_unanchored = FALSE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_ALIEN_NEST)
-	canSmoothWith = list(SMOOTH_GROUP_ALIEN_NEST)
+	smoothing_groups = SMOOTH_GROUP_ALIEN_NEST
+	canSmoothWith = SMOOTH_GROUP_ALIEN_NEST
 	buildstacktype = null
 	flags_1 = NODECONSTRUCT_1
 	bolts = FALSE
@@ -21,7 +21,7 @@
 		for(var/buck in buckled_mobs) //breaking a nest releases all the buckled mobs, because the nest isn't holding them down anymore
 			var/mob/living/M = buck
 
-			if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+			if(user.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
 				unbuckle_mob(M)
 				add_fingerprint(user)
 				return
@@ -52,9 +52,9 @@
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled )
 		return
 
-	if(M.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(M.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
 		return
-	if(!user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(!user.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
 		return
 
 	if(has_buckled_mobs())

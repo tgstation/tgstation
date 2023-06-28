@@ -3,9 +3,11 @@
 	icon_state = "ice_2"
 	damage = 0
 	damage_type = BURN
-	nodamage = FALSE
 	armor_flag = ENERGY
 	var/temperature = -50 // reduce the body temperature by 50 points
+
+/obj/projectile/temp/is_hostile_projectile()
+	return temperature != 0 // our damage is done by cooling or heating (casting to boolean here)
 
 /obj/projectile/temp/on_hit(atom/target, blocked = 0)
 	. = ..()

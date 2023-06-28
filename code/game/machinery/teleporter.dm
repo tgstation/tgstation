@@ -26,8 +26,8 @@
 /obj/machinery/teleport/hub/RefreshParts()
 	. = ..()
 	var/A = 0
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		A += M.rating
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		A += matter_bin.tier
 	accuracy = A
 
 /obj/machinery/teleport/hub/examine(mob/user)
@@ -122,8 +122,8 @@
 /obj/machinery/teleport/station/RefreshParts()
 	. = ..()
 	var/E
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		E += C.rating
+	for(var/datum/stock_part/capacitor/C in component_parts)
+		E += C.tier
 	efficiency = E - 1
 
 /obj/machinery/teleport/station/examine(mob/user)

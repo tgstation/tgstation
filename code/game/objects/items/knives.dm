@@ -16,15 +16,19 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 6
-	custom_materials = list(/datum/material/iron=12000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
+	armor_type = /datum/armor/item_knife
 	var/bayonet = FALSE //Can this be attached to a gun?
 	wound_bonus = 5
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
+
+/datum/armor/item_knife
+	fire = 50
+	acid = 50
 
 /obj/item/knife/Initialize(mapload)
 	. = ..()
@@ -90,7 +94,7 @@
 	flags_1 = CONDUCT_1
 	force = 15
 	throwforce = 10
-	custom_materials = list(/datum/material/iron=18000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)
 	attack_verb_continuous = list("slices", "dices", "chops", "cubes", "minces", "juliennes", "chiffonades", "batonnets")
 	attack_verb_simple = list("slice", "dice", "chop", "cube", "mince", "julienne", "chiffonade", "batonnet")
 	w_class = WEIGHT_CLASS_NORMAL
@@ -144,6 +148,10 @@
 	throwforce = 15
 	custom_materials = null
 
+/obj/item/knife/combat/bone/Initialize(mapload)
+	flags_1 &= ~CONDUCT_1
+	return ..()
+
 /obj/item/knife/combat/cyborg
 	name = "cyborg knife"
 	icon = 'icons/obj/items_cyborg.dmi'
@@ -162,8 +170,12 @@
 	throwforce = 12
 	attack_verb_continuous = list("shanks", "shivs")
 	attack_verb_simple = list("shank", "shiv")
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
-	custom_materials = list(/datum/material/glass=400)
+	armor_type = /datum/armor/none
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
+
+/obj/item/knife/shiv/Initialize(mapload)
+	flags_1 &= ~CONDUCT_1
+	return ..()
 
 /obj/item/knife/shiv/plasma
 	name = "plasma shiv"
@@ -172,8 +184,17 @@
 	desc = "A makeshift plasma glass shiv."
 	force = 9
 	throwforce = 13
-	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
-	custom_materials = list(/datum/material/glass=400, /datum/material/plasma=200)
+	armor_type = /datum/armor/shiv_plasma
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT *4, /datum/material/plasma=SMALL_MATERIAL_AMOUNT * 2)
+
+/datum/armor/shiv_plasma
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 25
+	fire = 50
+	acid = 50
 
 /obj/item/knife/shiv/titanium
 	name = "titanium shiv"
@@ -183,8 +204,17 @@
 	throwforce = 14
 	throw_range = 7
 	wound_bonus = 10
-	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
-	custom_materials = list(/datum/material/glass=400, /datum/material/titanium=200)
+	armor_type = /datum/armor/shiv_titanium
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4, /datum/material/titanium=SMALL_MATERIAL_AMOUNT * 2)
+
+/datum/armor/shiv_titanium
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 25
+	fire = 50
+	acid = 50
 
 /obj/item/knife/shiv/plastitanium
 	name = "plastitanium shiv"
@@ -197,8 +227,17 @@
 	throw_range = 8
 	wound_bonus = 10
 	bare_wound_bonus = 20
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 0, FIRE = 75, ACID = 75)
-	custom_materials = list(/datum/material/glass=400, /datum/material/alloy/plastitanium=200)
+	armor_type = /datum/armor/shiv_plastitanium
+	custom_materials = list(/datum/material/glass= SMALL_MATERIAL_AMOUNT * 4, /datum/material/alloy/plastitanium= SMALL_MATERIAL_AMOUNT * 2)
+
+/datum/armor/shiv_plastitanium
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 50
+	fire = 75
+	acid = 75
 
 /obj/item/knife/shiv/carrot
 	name = "carrot shiv"

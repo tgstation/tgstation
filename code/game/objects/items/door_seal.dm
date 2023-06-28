@@ -1,7 +1,7 @@
 /obj/item/door_seal
 	name = "pneumatic airlock seal"
 	desc = "A brace used to seal and reinforce an airlock. Useful for making areas inaccessible to those without opposable thumbs."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "pneumatic_seal"
 	inhand_icon_state = "pneumatic_seal"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -13,7 +13,7 @@
 	throw_speed = 2
 	throw_range = 1
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron=5000,/datum/material/plasma=500)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/plasma= SMALL_MATERIAL_AMOUNT * 5)
 	/// how long the seal takes to place on the door
 	var/seal_time = 3 SECONDS
 	/// how long it takes to remove the seal from a door

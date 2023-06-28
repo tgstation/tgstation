@@ -62,7 +62,7 @@
 				var/datum/gas_mixture/immutable/planetary/mix = new
 				mix.parse_string_immutable(initial_gas_mix)
 				SSair.planetary[initial_gas_mix] = mix
-	. = ..()
+	return ..()
 
 /turf/open/Destroy()
 	if(active_hotspot)
@@ -130,9 +130,9 @@
 	if(to_be_destroyed && exposed_temperature >= max_fire_temperature_sustained)
 		max_fire_temperature_sustained = min(exposed_temperature, max_fire_temperature_sustained + heat_capacity / 4) //Ramp up to 100% yeah?
 	if(to_be_destroyed && !changing_turf)
-		burn()
+		burn_turf()
 
-/turf/proc/burn()
+/turf/proc/burn_turf()
 	burn_tile()
 	var/chance_of_deletion
 	if (heat_capacity) //beware of division by zero
@@ -483,7 +483,7 @@
 
 		var/list/giver_gases = mix.gases
 		for(var/giver_id in giver_gases)
-			ASSERT_GAS(giver_id, shared_mix)
+			ASSERT_GAS_IN_LIST(giver_id, shared_gases)
 			shared_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
 	if(!imumutable_in_group)
@@ -655,8 +655,9 @@ Then we space some of our heat, and think about if we should stop conducting.
 		return FALSE
 	return ..()
 
-/turf/proc/radiate_to_spess() //Radiate excess tile heat to space
-	if(temperature <= T0C) //Considering 0 degC as te break even point for radiation in and out
+/// Radiate excess tile heat to space.
+/turf/proc/radiate_to_spess()
+	if(temperature <= T0C) // Considering 0 degC as the break even point for radiation in and out.
 		return
 	// Because we keep losing energy, makes more sense for us to be the T2 here.
 	var/delta_temperature = temperature_archived - TCMB //hardcoded space temperature
@@ -677,3 +678,6 @@ Then we space some of our heat, and think about if we should stop conducting.
 	var/heat = conduction_coefficient * CALCULATE_CONDUCTION_ENERGY(delta_temperature, heat_capacity, sharer.heat_capacity)
 	temperature += heat / heat_capacity //The higher your own heat cap the less heat you get from this arrangement
 	sharer.temperature -= heat / sharer.heat_capacity
+
+#undef LAST_SHARE_CHECK
+#undef PLANET_SHARE_CHECK

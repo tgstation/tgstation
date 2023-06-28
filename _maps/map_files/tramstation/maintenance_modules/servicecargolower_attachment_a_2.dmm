@@ -1,0 +1,226 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"e" = (
+/turf/template_noop,
+/area/template_noop)
+"g" = (
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"n" = (
+/turf/open/space/basic,
+/area/station/asteroid)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"G" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"L" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/greater)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/entertainment/coin,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"X" = (
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/cardboard,
+/obj/effect/spawner/random/maintenance/five,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+e
+e
+e
+e
+e
+e
+"}
+(2,1,1) = {"
+a
+X
+n
+a
+a
+a
+a
+a
+L
+Q
+e
+"}
+(3,1,1) = {"
+X
+X
+n
+n
+X
+X
+X
+X
+G
+C
+e
+"}
+(4,1,1) = {"
+X
+n
+n
+n
+n
+n
+n
+X
+G
+W
+e
+"}
+(5,1,1) = {"
+n
+n
+n
+n
+n
+n
+X
+X
+G
+Z
+e
+"}
+(6,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+a
+L
+e
+e
+"}
+(7,1,1) = {"
+a
+n
+n
+n
+n
+X
+X
+a
+a
+e
+e
+"}
+(8,1,1) = {"
+n
+n
+n
+n
+X
+L
+L
+L
+L
+e
+e
+"}
+(9,1,1) = {"
+n
+n
+n
+n
+n
+L
+M
+M
+M
+e
+e
+"}
+(10,1,1) = {"
+X
+n
+n
+n
+X
+L
+y
+y
+y
+e
+e
+"}
+(11,1,1) = {"
+a
+n
+n
+n
+a
+L
+d
+C
+C
+g
+e
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+L
+e
+e
+e
+e
+e
+"}

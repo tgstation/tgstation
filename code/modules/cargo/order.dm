@@ -39,6 +39,7 @@
 
 /datum/supply_order
 	var/id
+	var/cost_type
 	var/orderer
 	var/orderer_rank
 	var/orderer_ckey
@@ -53,6 +54,8 @@
 	var/obj/item/coupon/applied_coupon
 	///Boolean on whether the manifest can fail or not.
 	var/manifest_can_fail = TRUE
+	///Boolean on whether the manifest can be cancelled through cargo consoles.
+	var/can_be_cancelled = TRUE
 
 /datum/supply_order/New(
 	datum/supply_pack/pack,
@@ -65,8 +68,11 @@
 	coupon,
 	charge_on_purchase = TRUE,
 	manifest_can_fail = TRUE,
+	cost_type = "cr",
+	can_be_cancelled = TRUE,
 )
 	id = SSshuttle.order_number++
+	src.cost_type = cost_type
 	src.pack = pack
 	src.orderer = orderer
 	src.orderer_rank = orderer_rank
@@ -77,6 +83,16 @@
 	src.applied_coupon = coupon
 	src.charge_on_purchase = charge_on_purchase
 	src.manifest_can_fail = manifest_can_fail
+	src.can_be_cancelled = can_be_cancelled
+
+//returns the total cost of this order. Its not the total price paid by cargo but the total value of this order
+/datum/supply_order/proc/get_final_cost()
+	var/cost = pack.get_cost()
+	if(applied_coupon) //apply discount price
+		cost -= (cost * applied_coupon.discount_pct_off)
+	if(!isnull(paying_account)) //privately purchased means 1.1x the cost
+		cost *= 1.1
+	return cost
 
 /datum/supply_order/proc/generateRequisition(turf/T)
 	var/obj/item/paper/requisition_paper = new(T)
@@ -116,13 +132,18 @@
 		manifest_text += "Item: [packname]<br/>"
 	manifest_text += "Contents: <br/>"
 	manifest_text += "<ul>"
+	var/container_contents = list() // Associative list with the format (item_name = nº of occurences, ...)
 	for(var/atom/movable/AM in container.contents - manifest_paper)
-		if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS))
-			if(prob(50))
-				manifest_text += "<li>[AM.name]</li>"
-			else
-				continue
-		manifest_text += "<li>[AM.name]</li>"
+		container_contents[AM.name]++
+	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS))
+		for(var/i = 1 to rand(1, round(container.contents.len * 0.5))) // Remove anywhere from one to half of the items
+			var/missing_item = pick(container_contents)
+			container_contents[missing_item]--
+			if(container_contents[missing_item] == 0) // To avoid 0s and negative values on the manifest
+				container_contents -= missing_item
+
+	for(var/item in container_contents)
+		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : "s"]</li>"
 	manifest_text += "</ul>"
 	manifest_text += "<h4>Stamp below to confirm receipt of goods:</h4>"
 

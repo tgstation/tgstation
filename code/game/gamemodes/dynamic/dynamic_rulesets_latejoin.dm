@@ -68,7 +68,7 @@
 		JOB_CYBORG,
 	)
 	required_candidates = 1
-	weight = 7
+	weight = 11
 	cost = 5
 	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	repeatable = TRUE
@@ -111,7 +111,7 @@
 	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
-	weight = 2
+	weight = 1
 	delay = 1 MINUTES // Prevents rule start while head is offstation.
 	cost = 10
 	requirements = list(101,101,70,40,30,20,20,20,20,20)
@@ -195,7 +195,7 @@
 		JOB_CYBORG,
 	)
 	required_candidates = 1
-	weight = 4
+	weight = 8
 	cost = 6
 	requirements = list(101,101,50,10,10,10,10,10,10,10)
 	repeatable = TRUE
@@ -215,4 +215,36 @@
 	// Limit it to four missed passive gain cycles (4 points).
 	new_heretic.knowledge_points = min(new_heretic.knowledge_points, 5)
 
+	return TRUE
+
+/// Ruleset for latejoin changelings
+/datum/dynamic_ruleset/latejoin/stowaway_changeling
+	name = "Stowaway Changeling"
+	antag_datum = /datum/antagonist/changeling
+	antag_flag = ROLE_STOWAWAY_CHANGELING
+	antag_flag_override = ROLE_CHANGELING
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
+	required_candidates = 1
+	weight = 2
+	cost = 12
+	requirements = list(101,101,60,50,40,20,20,10,10,10)
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/latejoin/stowaway_changeling/execute()
+	var/mob/picked_mob = pick(candidates)
+	assigned += picked_mob.mind
+	picked_mob.mind.special_role = antag_flag
+	picked_mob.mind.add_antag_datum(antag_datum)
 	return TRUE

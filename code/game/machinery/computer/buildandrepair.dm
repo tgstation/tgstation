@@ -1,5 +1,6 @@
 /obj/structure/frame/computer
 	name = "computer frame"
+	desc = "A frame for constructing your own computer. Or console. Whichever name you prefer."
 	icon_state = "0"
 	state = 0
 
@@ -19,7 +20,7 @@
 					state = 1
 				return
 			if(P.tool_behaviour == TOOL_WELDER)
-				if(!P.tool_start_check(user, amount=0))
+				if(!P.tool_start_check(user, amount=1))
 					return
 
 				to_chat(user, span_notice("You start deconstructing the frame..."))
@@ -157,7 +158,7 @@
 						new_computer.component_parts += movable_part
 
 					new_computer.RefreshParts()
-					new_computer.on_construction()
+					new_computer.on_construction(user)
 
 				qdel(src)
 				return

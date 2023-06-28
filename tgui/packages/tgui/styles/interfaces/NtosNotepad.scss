@@ -1,0 +1,46 @@
+@use 'sass:color';
+@use '../base';
+@use '../colors';
+@use '../functions';
+
+$background-color: base.$color-bg !default;
+
+.NtosNotepad__layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.NtosNotepad__AboutDialog__logo {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  font-family: Consolas, monospace;
+  font-size: base.em(26px);
+}
+
+.NtosNotepad__AboutDialog__text {
+  display: flex;
+  flex-direction: column;
+  font-size: base.em(12px);
+}
+
+.NtosNotepad__textarea {
+  background-color: base.$color-bg-section;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.NtosNotepad__StatusBar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+}
+
+.NtosNotepad__StatusBar__entry {
+  display: block;
+  border-left: 1px solid base.$color-bg-section;
+  padding-left: 1rem;
+  padding-right: 0.2rem;
+}

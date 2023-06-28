@@ -1,5 +1,4 @@
 //Stores several modifiers in a way that isn't cleared by changing species
-
 /datum/physiology
 	var/brute_mod = 1 // % of brute damage taken from all sources
 	var/burn_mod = 1 // % of burn damage taken from all sources

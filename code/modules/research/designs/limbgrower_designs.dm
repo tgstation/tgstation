@@ -162,7 +162,7 @@
 	id = "plasmamanliver"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/toxin/plasma = 20)
-	build_path = /obj/item/organ/internal/liver/plasmaman
+	build_path = /obj/item/organ/internal/liver/bone/plasmaman
 	category = list(SPECIES_PLASMAMAN)
 
 /datum/design/plasmaman_stomach
@@ -212,7 +212,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 75)
 	build_path = /obj/item/melee/synthetic_arm_blade
-	category = list(RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_EMAGGED)
+	category = list(RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_HACKED)
 
 /// Design disks and designs - for adding limbs and organs to the limbgrower.
 /obj/item/disk/design_disk/limbs
@@ -224,7 +224,6 @@
 
 /obj/item/disk/design_disk/limbs/Initialize(mapload)
 	. = ..()
-	max_blueprints = limb_designs.len
 	for(var/design in limb_designs)
 		var/datum/design/new_design = design
 		blueprints += new new_design
@@ -234,7 +233,7 @@
 	desc = "Contains designs for various limbs."
 	id = "limbdesign_parent"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/disk/design_disk/limbs
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL

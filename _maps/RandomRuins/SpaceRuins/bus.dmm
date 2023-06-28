@@ -18,20 +18,28 @@
 /area/ruin/space)
 "an" = (
 /obj/structure/fluff/bus/passable/seat,
-/obj/item/food/meatball,
+/obj/item/toy/plush/pkplush{
+	pixel_z = 17
+	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
 	},
 /area/ruin/space)
 "ao" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/airless{
-	icon_state = "bus"
+/obj/machinery/telecomms/server{
+	pixel_z = 12;
+	layer = 2.91;
+	name = "tgsv3";
+	desc = "It's, uh... pending an upgrade."
 	},
+/turf/closed/mineral/ash_rock,
 /area/ruin/space)
 "ap" = (
 /obj/structure/fluff/bus/passable/seat{
 	pixel_y = 15
+	},
+/obj/item/toy/plush/lizard_plushie/green{
+	pixel_z = 17
 	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
@@ -39,15 +47,25 @@
 /area/ruin/space)
 "aq" = (
 /obj/structure/fluff/bus/passable/seat,
-/obj/item/food/meatball,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/head/helmet/knight{
+	pixel_z = 16
+	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
 	},
 /area/ruin/space)
 "ar" = (
 /obj/structure/fluff/bus/passable/seat,
-/obj/item/food/grown/cherry_bomb,
+/obj/item/grown/novaflower{
+	offset_at_init = 0;
+	pixel_z = 24;
+	pixel_y = 1
+	},
+/obj/item/food/grown/watermelon{
+	offset_at_init = 0;
+	pixel_z = 17
+	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
 	},
@@ -55,7 +73,18 @@
 "as" = (
 /obj/structure/fluff/bus/passable/seat/driver,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/food/grown/citrus/orange,
+/obj/item/toy/plush/moth{
+	pixel_z = 26;
+	pixel_y = 2
+	},
+/obj/item/food/grown/citrus/orange{
+	offset_at_init = 0;
+	pixel_z = 18;
+	pixel_y = 1
+	},
+/obj/item/toy/talking/ai{
+	pixel_z = 16
+	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
 	},
@@ -117,7 +146,14 @@
 "aU" = (
 /obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/food/meatball,
+/obj/item/bodypart/arm/right{
+	pixel_z = 25;
+	pixel_y = 1;
+	pixel_x = -4
+	},
+/obj/item/food/meat/slab/penguin{
+	pixel_z = 13
+	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
 	},
@@ -132,28 +168,40 @@
 "aW" = (
 /obj/structure/fluff/bus/passable/seat/driver,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/banhammer{
+	pixel_z = 22
+	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
 	},
 /area/ruin/space)
 "aZ" = (
 /obj/structure/fluff/bus/passable,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/food/meatball,
+/obj/structure/sacrificealtar,
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
 	},
 /area/ruin/space)
 "ba" = (
-/obj/structure/fluff/bus/passable,
-/obj/item/banhammer,
+/obj/structure/fluff/bus/passable/seat,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/food/grown/tomato{
+	offset_at_init = 0;
+	pixel_z = 23;
+	pixel_y = 2
+	},
+/obj/item/food/donut/plain{
+	pixel_z = 15;
+	pixel_y = 1;
+	pixel_x = 1
+	},
+/obj/effect/decal/cleanable/ants{
+	pixel_z = 8;
+	pixel_x = 9
+	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
 	},
-/area/ruin/space)
-"dI" = (
-/obj/item/food/meatball,
-/turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "iE" = (
 /obj/structure/table,
@@ -217,7 +265,7 @@
 /area/ruin/space)
 "Ds" = (
 /obj/item/stack/rods/fifty,
-/obj/item/stock_parts/manipulator/femto,
+/obj/item/stock_parts/servo/femto,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "ER" = (
@@ -227,7 +275,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "ET" = (
-/mob/living/simple_animal/hostile/lizard,
+/mob/living/basic/lizard,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "Fo" = (
@@ -238,6 +286,22 @@
 	icon_state = "small"
 	},
 /turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"FZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/toy/plush/awakenedplushie{
+	pixel_z = 26;
+	pixel_y = 1
+	},
+/obj/machinery/telecomms/server{
+	pixel_z = 12;
+	layer = 2.91;
+	name = "tgsv3";
+	desc = "It's, uh... pending an upgrade."
+	},
+/turf/open/floor/iron/dark/airless{
+	icon_state = "bus"
+	},
 /area/ruin/space)
 "Gf" = (
 /obj/effect/decal/remains/human,
@@ -317,7 +381,15 @@
 "XA" = (
 /obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/toy/plush/awakenedplushie,
+/obj/item/toy/singlecard{
+	pixel_z = 24;
+	pixel_y = 1;
+	pixel_x = 0
+	},
+/obj/item/food/grown/potato{
+	offset_at_init = 0;
+	pixel_z = 15
+	},
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
 	},
@@ -379,10 +451,10 @@ ab
 yY
 Bw
 yY
-dI
+yY
 Ne
-aU
-az
+am
+aZ
 ER
 yY
 yY
@@ -402,7 +474,7 @@ yY
 yY
 Ne
 am
-aZ
+ax
 Xj
 yY
 yY
@@ -422,7 +494,7 @@ Bw
 yY
 Ne
 aV
-ba
+az
 IQ
 yY
 yY
@@ -436,12 +508,12 @@ ab
 Gt
 yY
 Ne
-am
+FZ
 ax
 ER
 yY
 Ne
-aU
+am
 az
 KK
 yY
@@ -496,7 +568,7 @@ ab
 ab
 yY
 Ne
-ao
+ba
 aA
 KK
 uO
@@ -576,7 +648,7 @@ ab
 Ds
 yY
 Ne
-am
+aU
 aD
 KK
 yY
@@ -601,7 +673,7 @@ aE
 ud
 yY
 yY
-dI
+yY
 yY
 aa
 aa
@@ -697,7 +769,7 @@ ab
 ab
 ab
 ab
-ab
+ao
 yY
 yY
 yY

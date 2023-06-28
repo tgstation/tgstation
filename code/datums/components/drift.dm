@@ -19,7 +19,7 @@
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
 
-	var/flags = NONE
+	var/flags = MOVEMENT_LOOP_OUTSIDE_CONTROL
 	if(instant)
 		flags |= MOVEMENT_LOOP_START_FAST
 	var/atom/movable/movable_parent = parent
@@ -32,7 +32,7 @@
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_STOP, PROC_REF(drifting_stop))
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(before_move))
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(after_move))
-	RegisterSignal(drifting_loop, COMSIG_PARENT_QDELETING, PROC_REF(loop_death))
+	RegisterSignal(drifting_loop, COMSIG_QDELETING, PROC_REF(loop_death))
 	RegisterSignal(movable_parent, COMSIG_MOVABLE_NEWTONIAN_MOVE, PROC_REF(newtonian_impulse))
 	if(drifting_loop.running)
 		drifting_start(drifting_loop) // There's a good chance it'll autostart, gotta catch that
@@ -108,9 +108,9 @@
 	old_dir = movable_parent.dir
 	delayed = FALSE
 
-/datum/component/drift/proc/after_move(datum/source, succeeded, visual_delay)
+/datum/component/drift/proc/after_move(datum/source, result, visual_delay)
 	SIGNAL_HANDLER
-	if(!succeeded)
+	if(result == MOVELOOP_FAILURE)
 		qdel(src)
 		return
 
@@ -127,6 +127,7 @@
 /datum/component/drift/proc/loop_death(datum/source)
 	SIGNAL_HANDLER
 	drifting_loop = null
+	UnregisterSignal(parent, COMSIG_MOVABLE_NEWTONIAN_MOVE) // We won't block a component from replacing us anymore
 
 /datum/component/drift/proc/handle_move(datum/source, old_loc)
 	SIGNAL_HANDLER

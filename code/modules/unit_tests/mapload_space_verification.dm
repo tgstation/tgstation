@@ -5,11 +5,8 @@
 	priority = TEST_LONGER
 
 /datum/unit_test/mapload_space_verification/Run()
-	// Get the datum associated with our currently running map.
-	var/datum/map_config/current_map = SSmapping.config
-
 	// Is our current map a planetary station (NO space turfs allowed)? If so, check for ANY space turfs.
-	if(current_map.planetary)
+	if(SSmapping.is_planetary())
 		validate_planetary_map()
 		return
 

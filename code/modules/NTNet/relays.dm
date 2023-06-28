@@ -1,3 +1,14 @@
+GLOBAL_LIST_EMPTY(ntnet_relays)
+
+///Checks whether NTNet is available by ensuring at least one relay exists and is operational.
+/proc/find_functional_ntnet_relay()
+	// Check all relays. If we have at least one working relay, ntos is up.
+	for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
+		if(!relays.is_operational)
+			continue
+		return TRUE
+	return FALSE
+
 // Relays don't handle any actual communication. Global NTNet datum does that, relays only tell the datum if it should or shouldn't work.
 /obj/machinery/ntnet_relay
 	name = "NTNet Quantum Relay"
@@ -34,7 +45,6 @@
 	else if(!dos_failure && !(machine_stat & (NOPOWER|BROKEN|MAINT))) //Turned on
 		set_is_operational(TRUE)
 
-
 ///Proc called to change the value of the `dos_failure` variable and append behavior related to its change.
 /obj/machinery/ntnet_relay/proc/set_dos_failure(new_value)
 	if(new_value == dos_failure)
@@ -47,7 +57,6 @@
 	else //Failure started
 		set_is_operational(FALSE)
 
-
 /obj/machinery/ntnet_relay/on_set_machine_stat(old_value)
 	if(old_value & (NOPOWER|BROKEN|MAINT))
 		if(relay_enabled && !dos_failure && !(machine_stat & (NOPOWER|BROKEN|MAINT))) //From off to on.
@@ -55,30 +64,29 @@
 	else if(machine_stat & (NOPOWER|BROKEN|MAINT)) //From on to off.
 		set_is_operational(FALSE)
 
-
 /obj/machinery/ntnet_relay/update_icon_state()
 	icon_state = "bus[is_operational ? null : "_off"]"
 	return ..()
 
-/obj/machinery/ntnet_relay/process(delta_time)
+/obj/machinery/ntnet_relay/process(seconds_per_tick)
 	update_use_power(is_operational ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 
 	update_appearance()
 
 	if(dos_overload > 0)
-		dos_overload = max(0, dos_overload - dos_dissipate * delta_time)
+		dos_overload = max(0, dos_overload - dos_dissipate * seconds_per_tick)
 
 	// If DoS traffic exceeded capacity, crash.
 	if((dos_overload > dos_capacity) && !dos_failure)
 		set_dos_failure(TRUE)
 		update_appearance()
-		SSnetworks.add_log("Quantum relay switched from normal operation mode to overload recovery mode.")
+		SSmodular_computers.add_log("Quantum relay switched from normal operation mode to overload recovery mode.")
 	// If the DoS buffer reaches 0 again, restart.
 	if((dos_overload == 0) && dos_failure)
 		set_dos_failure(FALSE)
 		update_appearance()
-		SSnetworks.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
-	..()
+		SSmodular_computers.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
+	return ..()
 
 /obj/machinery/ntnet_relay/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -103,11 +111,11 @@
 			dos_overload = 0
 			set_dos_failure(FALSE)
 			update_appearance()
-			SSnetworks.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
+			SSmodular_computers.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
 			return TRUE
 		if("toggle")
 			set_relay_enabled(!relay_enabled)
-			SSnetworks.add_log("Quantum relay manually [relay_enabled ? "enabled" : "disabled"].")
+			SSmodular_computers.add_log("Quantum relay manually [relay_enabled ? "enabled" : "disabled"].")
 			update_appearance()
 			return TRUE
 
@@ -115,13 +123,13 @@
 	uid = gl_uid++
 	component_parts = list()
 
-	SSmodular_computers.ntnet_relays.Add(src)
-	SSnetworks.add_log("New quantum relay activated. Current amount of linked relays: [SSmodular_computers.ntnet_relays.len]")
+	GLOB.ntnet_relays += src
+	SSmodular_computers.add_log("New quantum relay activated. Current amount of linked relays: [GLOB.ntnet_relays.len]")
 	return ..()
 
 /obj/machinery/ntnet_relay/Destroy()
-	SSmodular_computers.ntnet_relays.Remove(src)
-	SSnetworks.add_log("Quantum relay connection severed. Current amount of linked relays: [SSmodular_computers.ntnet_relays.len]")
+	GLOB.ntnet_relays -= src
+	SSmodular_computers.add_log("Quantum relay connection severed. Current amount of linked relays: [GLOB.ntnet_relays.len]")
 
 	for(var/datum/computer_file/program/ntnet_dos/D in dos_sources)
 		D.target = null

@@ -14,6 +14,7 @@ Slimecrossing Potions
 /obj/item/slimepotion/extract_cloner/afterattack(obj/item/target, mob/user , proximity)
 	if(!proximity)
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(is_reagent_container(target))
 		return ..(target, user, proximity)
 	if(istype(target, /obj/item/slimecross))
@@ -59,7 +60,7 @@ Slimecrossing Potions
 		to_chat(user, span_notice("You feed [peace_target] [src]!"))
 	else
 		to_chat(user, span_warning("You drink [src]!"))
-	if(isanimal(peace_target))
+	if(isanimal_or_basicmob(peace_target))
 		ADD_TRAIT(peace_target, TRAIT_PACIFISM, MAGIC_TRAIT)
 	else if(iscarbon(peace_target))
 		var/mob/living/carbon/peaceful_carbon = peace_target
@@ -116,12 +117,13 @@ Slimecrossing Potions
 	if(!istype(C))
 		to_chat(user, span_warning("The potion can only be used on clothing!"))
 		return
+	. |= AFTERATTACK_PROCESSED_ITEM
 	if(istype(C, /obj/item/clothing/suit/space))
 		to_chat(user, span_warning("The [C] is already pressure-resistant!"))
-		return ..()
+		return . | ..()
 	if(C.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && C.clothing_flags & STOPSPRESSUREDAMAGE)
 		to_chat(user, span_warning("The [C] is already pressure-resistant!"))
-		return ..()
+		return . | ..()
 	to_chat(user, span_notice("You slather the blue gunk over the [C], making it airtight."))
 	C.name = "pressure-resistant [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -132,6 +134,7 @@ Slimecrossing Potions
 	uses--
 	if(!uses)
 		qdel(src)
+	return .
 
 //Enhancer potion - Charged Cerulean
 /obj/item/slimepotion/enhancer/max
@@ -159,6 +162,7 @@ Slimecrossing Potions
 	if(!istype(C))
 		to_chat(user, span_warning("You can't coat this with lavaproofing fluid!"))
 		return ..()
+	. |= AFTERATTACK_PROCESSED_ITEM
 	to_chat(user, span_notice("You slather the red gunk over the [C], making it lavaproof."))
 	C.name = "lavaproof [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -170,6 +174,7 @@ Slimecrossing Potions
 	uses--
 	if(!uses)
 		qdel(src)
+	return .
 
 //Revival potion - Charged Grey
 /obj/item/slimepotion/slime_reviver

@@ -41,7 +41,7 @@
 				male += D.name
 				female += D.name
 	if(add_blank)
-		L["None"] = new /datum/sprite_accessory/blank
+		L[SPRITE_ACCESSORY_NONE] = new /datum/sprite_accessory/blank
 
 	return L
 
@@ -62,7 +62,7 @@
 	 * Currently only used by mutantparts so don't worry about hair and stuff.
 	 * This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
 	 */
-	var/color_src = MUTCOLORS
+	var/color_src = MUTANT_COLOR
 	/// Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
 	var/hasinner = FALSE
 	/// Is this part locked from roundstart selection? Used for parts that apply effects.
@@ -103,6 +103,10 @@
 	name = "Afro (Large)"
 	icon_state = "hair_bigafro"
 
+/datum/sprite_accessory/hair/allthefuzz
+	name = "All The Fuzz"
+	icon_state = "hair_allthefuzz"
+
 /datum/sprite_accessory/hair/antenna
 	name = "Ahoge"
 	icon_state = "hair_antenna"
@@ -128,7 +132,7 @@
 	icon_state = "hair_bedheadv3"
 
 /datum/sprite_accessory/hair/bedheadv4
-	name = "BedHead 4X"
+	name = "Bedhead 4x"
 	icon_state = "hair_bedheadv4"
 
 /datum/sprite_accessory/hair/bedheadlong
@@ -139,8 +143,8 @@
 	name = "Floorlength Bedhead"
 	icon_state = "hair_floorlength_bedhead"
 
-/datum/sprite_accessory/hair/BadlyCut
-	name = "Marginally shorter yet Long Bedhead"
+/datum/sprite_accessory/hair/badlycut
+	name = "Shorter Long Bedhead"
 	icon_state = "hair_verybadlycut"
 
 /datum/sprite_accessory/hair/beehive
@@ -254,6 +258,10 @@
 /datum/sprite_accessory/hair/buzz
 	name = "Buzzcut"
 	icon_state = "hair_buzzcut"
+
+/datum/sprite_accessory/hair/chinbob
+	name = "Chin-Length Bob Cut"
+	icon_state = "hair_chinbob"
 
 /datum/sprite_accessory/hair/comet
 	name = "Comet"
@@ -526,6 +534,10 @@
 /datum/sprite_accessory/hair/over_eye
 	name = "Over Eye"
 	icon_state = "hair_shortovereye"
+
+/datum/sprite_accessory/hair/hair_overeyetwo
+	name = "Over Eye 2"
+	icon_state = "hair_overeyetwo"
 
 /datum/sprite_accessory/hair/oxton
 	name = "Oxton"
@@ -806,6 +818,10 @@
 /datum/sprite_accessory/hair/wisp
 	name = "Wisp"
 	icon_state = "hair_wisp"
+
+/datum/sprite_accessory/hair/ziegler
+	name = "Ziegler"
+	icon_state = "hair_ziegler"
 
 /*
 /////////////////////////////////////
@@ -1587,6 +1603,10 @@
 	name = "Knee-high (White)"
 	icon_state = "white_knee"
 
+/datum/sprite_accessory/socks/fishnet_knee
+	name = "Knee-high (Fishnet)"
+	icon_state = "fishnet_knee"
+
 /datum/sprite_accessory/socks/black_norm
 	name = "Normal (Black)"
 	icon_state = "black_norm"
@@ -1639,6 +1659,10 @@
 	name = "Stockings (Yellow)"
 	icon_state = "stockings_yellow"
 
+/datum/sprite_accessory/socks/stockings_fishnet
+	name = "Stockings (Fishnet)"
+	icon_state = "fishnet_full"
+
 /datum/sprite_accessory/socks/ace_thigh
 	name = "Thigh-high (Ace)"
 	icon_state = "ace_thigh"
@@ -1682,6 +1706,10 @@
 /datum/sprite_accessory/socks/white_thigh
 	name = "Thigh-high (White)"
 	icon_state = "white_thigh"
+
+/datum/sprite_accessory/socks/fishnet_thigh
+	name = "Thigh-high (Fishnet)"
+	icon_state = "fishnet_thigh"
 
 /datum/sprite_accessory/socks/thocks
 	name = "Thocks"
@@ -1738,8 +1766,8 @@
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon = 'icons/mob/species/human/cat_features.dmi'
-	icon_state = "cat"
-	color_src = HAIR
+	icon_state = "default"
+	color_src = HAIR_COLOR
 
 /datum/sprite_accessory/tails/monkey
 	name = "Monkey"
@@ -1851,14 +1879,14 @@
 	name = "Cat"
 	icon_state = "cat"
 	hasinner = TRUE
-	color_src = HAIR
+	color_src = HAIR_COLOR
 
 /datum/sprite_accessory/ears/fox
 	icon = 'icons/mob/species/human/fox_features.dmi'
 	name = "Fox"
 	icon_state = "fox"
 	hasinner = TRUE
-	color_src = HAIR
+	color_src = HAIR_COLOR
 	locked = TRUE
 
 /datum/sprite_accessory/wings/none
@@ -2077,7 +2105,7 @@
 
 /datum/sprite_accessory/caps
 	icon = 'icons/mob/species/mush_cap.dmi'
-	color_src = HAIR
+	color_src = HAIR_COLOR
 	em_block = TRUE
 
 /datum/sprite_accessory/caps/round

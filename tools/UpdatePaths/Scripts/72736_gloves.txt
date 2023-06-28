@@ -1,0 +1,10 @@
+/obj/item/clothing/gloves/color/captain : /obj/item/clothing/gloves/captain{@OLD}
+/obj/item/clothing/gloves/color/chief_engineer : /obj/item/clothing/gloves/chief_engineer{@OLD}
+/obj/item/clothing/gloves/color/latex : /obj/item/clothing/gloves/latex{@OLD}
+/obj/item/clothing/gloves/color/latex/nitrile : /obj/item/clothing/gloves/latex/nitrile{@OLD}
+/obj/item/clothing/head/utility/hardhat/weldhat : /obj/item/clothing/head/utility/hardhat/welding{@OLD}
+/obj/item/clothing/head/utility/hardhat/weldhat/orange : /obj/item/clothing/head/utility/hardhat/welding/orange{@OLD}
+/obj/item/clothing/head/utility/hardhat/weldhat/white : /obj/item/clothing/head/utility/hardhat/welding/white{@OLD}
+/obj/item/clothing/head/utility/hardhat/weldhat/dblue : /obj/item/clothing/head/utility/hardhat/welding/dblue{@OLD}
+/obj/item/clothing/head/utility/hardhat/atmos : /obj/item/clothing/head/utility/hardhat/welding/atmos{@OLD}
+/obj/item/clothing/gloves/color/latex/engineering : /obj/item/clothing/gloves/tinkerer{@OLD}

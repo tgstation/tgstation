@@ -24,14 +24,12 @@
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/powered/aesthetic)
 "h" = (
-/obj/effect/overlay/palmtree_r,
+/obj/structure/flora/tree/palm,
 /turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav/powered/aesthetic)
 "i" = (
 /obj/effect/spawner/random/structure/musician/piano/random_piano,
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "j" = (
@@ -60,22 +58,14 @@
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "o" = (
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/iron/vaporwave,
-/area/ruin/space/has_grav/powered/aesthetic)
-"p" = (
-/obj/effect/overlay/palmtree_l,
-/turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav/powered/aesthetic)
 "q" = (
 /turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav/powered/aesthetic)
 "r" = (
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "s" = (
@@ -90,14 +80,14 @@
 /turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav/powered/aesthetic)
 "u" = (
-/turf/open/floor/holofloor/beach/coast_t,
+/turf/open/floor/holofloor/beach/coast,
 /area/ruin/space/has_grav/powered/aesthetic)
 "v" = (
 /obj/item/statuebust,
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "w" = (
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "x" = (
@@ -107,7 +97,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "y" = (
-/turf/open/floor/holofloor/beach/coast_b,
+/turf/open/floor/holofloor/beach/water,
 /area/ruin/space/has_grav/powered/aesthetic)
 "z" = (
 /obj/structure/fans/tiny,
@@ -166,7 +156,7 @@
 	},
 /area/ruin/space)
 "H" = (
-/obj/effect/overlay/palmtree_l,
+/obj/structure/flora/tree/palm,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "I" = (
@@ -191,10 +181,6 @@
 /turf/open/floor/iron/airless{
 	icon_state = "stairs-r"
 	},
-/area/ruin/space)
-"M" = (
-/obj/effect/overlay/palmtree_r,
-/turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "O" = (
 /obj/structure/chair/comfy/black{
@@ -437,7 +423,7 @@ o
 o
 f
 G
-M
+H
 d
 d
 "}
@@ -447,9 +433,9 @@ a
 d
 d
 g
-p
+h
 t
-p
+h
 u
 y
 g

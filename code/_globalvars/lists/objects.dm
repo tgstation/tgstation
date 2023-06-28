@@ -25,8 +25,19 @@ GLOBAL_LIST_INIT(chemical_name_list, init_chemical_name_list())
 GLOBAL_LIST(chemical_reactions_results_lookup_list) //List of all reactions with their associated product and result ids. Used for reaction lookups
 GLOBAL_LIST(fake_reagent_blacklist) //List of all reagents that are parent types used to define a bunch of children - but aren't used themselves as anything.
 GLOBAL_LIST_EMPTY(tech_list) //list of all /datum/tech datums indexed by id.
-GLOBAL_LIST_EMPTY(surgeries_list) //list of all surgeries by name, associated with their path.
-GLOBAL_LIST_EMPTY(crafting_recipes) //list of all table craft recipes
+GLOBAL_LIST_INIT(surgeries_list, init_surgeries()) //list of all surgeries by name, associated with their path.
+
+/// Global list of all non-cooking related crafting recipes.
+GLOBAL_LIST_EMPTY(crafting_recipes)
+/// This is a global list of typepaths, these typepaths are atoms or reagents that are associated with crafting recipes.
+/// This includes stuff like recipe components and results.
+GLOBAL_LIST_EMPTY(crafting_recipes_atoms)
+/// Global list of all cooking related crafting recipes.
+GLOBAL_LIST_EMPTY(cooking_recipes)
+/// This is a global list of typepaths, these typepaths are atoms or reagents that are associated with cooking recipes.
+/// This includes stuff like recipe components and results.
+GLOBAL_LIST_EMPTY(cooking_recipes_atoms)
+
 GLOBAL_LIST_EMPTY(rcd_list) //list of Rapid Construction Devices.
 GLOBAL_LIST_EMPTY(intercoms_list) //list of wallmounted intercom radios.
 GLOBAL_LIST_EMPTY(apcs_list) //list of all Area Power Controller machines, separate from machines for powernet speeeeeeed.
@@ -54,6 +65,3 @@ GLOBAL_LIST_EMPTY(alert_consoles) // Station alert consoles, /obj/machinery/comp
 
 GLOBAL_LIST_EMPTY(roundstart_station_borgcharger_areas) // List of area names of roundstart station cyborg rechargers, for the low charge/no charge cyborg screen alert tooltips.
 GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas) // List of area names of roundstart station mech rechargers, for the low charge/no charge mech screen alert tooltips.
-
-///List of all types of '/obj/machinery/mining_ltsrbt'
-GLOBAL_LIST_EMPTY(mining_ltsrbt)

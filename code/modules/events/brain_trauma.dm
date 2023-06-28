@@ -4,6 +4,8 @@
 	weight = 25
 	category = EVENT_CATEGORY_HEALTH
 	description = "A crewmember gains a random trauma."
+	min_wizard_trigger_potency = 2
+	max_wizard_trigger_potency = 6
 
 /datum/round_event/brain_trauma
 	fakeable = FALSE
@@ -14,7 +16,7 @@
 			continue
 		if(H.stat == DEAD) // What are you doing in this list
 			continue
-		if(!H.getorgan(/obj/item/organ/internal/brain)) // If only I had a brain
+		if(!H.get_organ_by_type(/obj/item/organ/internal/brain)) // If only I had a brain
 			continue
 		if(!(H.mind.assigned_role.job_flags & JOB_CREW_MEMBER)) //please stop giving my centcom admin gimmicks full body paralysis
 			continue

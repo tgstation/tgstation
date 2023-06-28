@@ -1,6 +1,6 @@
 
 /// If drones are blacklisted from certain sensitive machines
-GLOBAL_VAR_INIT(drone_machine_blacklist_enabled, TRUE)
+GLOBAL_VAR_INIT(drone_machine_blacklist_enabled, FALSE)
 
 #define DRONE_HANDS_LAYER 1
 #define DRONE_HEAD_LAYER 2

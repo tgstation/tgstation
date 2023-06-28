@@ -5,15 +5,18 @@
 	desc = "A large, pulsating yellow mass."
 	max_integrity = BLOB_NODE_MAX_HP
 	health_regen = BLOB_NODE_HP_REGEN
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 65, ACID = 90)
+	armor_type = /datum/armor/special_node
 	point_return = BLOB_REFUND_NODE_COST
 	claim_range = BLOB_NODE_CLAIM_RANGE
 	pulse_range = BLOB_NODE_PULSE_RANGE
 	expand_range = BLOB_NODE_EXPAND_RANGE
 	resistance_flags = LAVA_PROOF
-	max_spores = BLOB_NODE_MAX_SPORES
 	ignore_syncmesh_share = TRUE
 
+
+/datum/armor/special_node
+	fire = 65
+	acid = 90
 
 /obj/structure/blob/special/node/Initialize(mapload)
 	GLOB.blob_nodes += src
@@ -49,8 +52,7 @@
 		overmind.node_blobs -= src
 	return ..()
 
-/obj/structure/blob/special/node/process(delta_time)
+/obj/structure/blob/special/node/process(seconds_per_tick)
 	if(overmind)
 		pulse_area(overmind, claim_range, pulse_range, expand_range)
-		reinforce_area(delta_time)
-		produce_spores()
+		reinforce_area(seconds_per_tick)

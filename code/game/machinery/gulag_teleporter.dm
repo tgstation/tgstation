@@ -14,7 +14,7 @@ The console is located at computer/gulag_teleporter.dm
 	base_icon_state = "implantchair"
 	state_open = FALSE
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the door is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	circuit = /obj/item/circuitboard/machine/gulag_teleporter
 	var/locked = FALSE
@@ -95,15 +95,22 @@ The console is located at computer/gulag_teleporter.dm
 	open_machine()
 
 /obj/machinery/gulag_teleporter/container_resist_act(mob/living/user)
+	var/resist_time = breakout_time
 	if(!locked)
-		open_machine()
-		return
+		if(!HAS_TRAIT(user, TRAIT_RESTRAINED))
+			open_machine()
+			return
+		resist_time *= 0.5
+
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
-		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
-		span_hear("You hear a metallic creaking from [src]."))
-	if(do_after(user,(breakout_time), target = src))
+	user.visible_message(
+		span_notice("You see [user] kicking against the door of [src]!"),
+		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(resist_time)].)"),
+		span_hear("You hear a metallic creaking from [src]."),
+	)
+
+	if(do_after(user, resist_time, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
 		locked = FALSE
@@ -144,7 +151,7 @@ The console is located at computer/gulag_teleporter.dm
 				else
 					W.forceMove(src)
 
-/obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/data/record/R)
+/obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/record/crew/target)
 	if(!ishuman(occupant))
 		return
 	strip_occupant()
@@ -158,8 +165,8 @@ The console is located at computer/gulag_teleporter.dm
 		prisoner.equip_to_appropriate_slot(new shoes_type, qdel_on_fail = TRUE)
 	if(id)
 		prisoner.equip_to_appropriate_slot(id, qdel_on_fail = TRUE)
-	if(R)
-		R.fields["criminal"] = "Incarcerated"
+	if(target)
+		target.wanted_status = WANTED_PRISONER
 
 	use_power(active_power_usage)
 
@@ -169,7 +176,7 @@ The console is located at computer/gulag_teleporter.dm
 	req_components = list(
 		/obj/item/stack/ore/bluespace_crystal = 2,
 		/datum/stock_part/scanning_module = 1,
-		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/servo = 1,
 	)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
