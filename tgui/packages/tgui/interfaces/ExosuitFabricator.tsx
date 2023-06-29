@@ -103,7 +103,9 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('build', { designs: [design.id], now: true })}>
+          onClick={() =>
+            canPrint && act('build', { designs: [design.id], now: true })
+          }>
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}

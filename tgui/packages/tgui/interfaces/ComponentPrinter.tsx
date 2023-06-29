@@ -57,7 +57,7 @@ export const ComponentPrinter = (props, context) => {
 };
 
 const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
-  const { act, data } = useBackend<ComponentPrinterData>(context);
+  const { act } = useBackend<ComponentPrinterData>(context);
   const { design, available } = props;
 
   const canPrint = !Object.entries(design.cost).some(
@@ -90,7 +90,9 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('print', { designId: design.id, amount: 1 })}>
+          onClick={() =>
+            canPrint && act('print', { designId: design.id, amount: 1 })
+          }>
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}

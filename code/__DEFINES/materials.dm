@@ -28,21 +28,6 @@
 ///if the user won't receive a warning when attacking the container with an unallowed item.
 #define MATCONTAINER_SILENT (1<<3)
 
-//Material Container Signals
-/// Called from datum/component/material_container/proc/can_hold_material() : (mat)
-#define COMSIG_MATCONTAINER_MAT_CHECK "matcontainer_mat_check"
-	#define MATCONTAINER_ALLOW_MAT (1<<0)
-/// Called from datum/component/material_container/proc/user_insert() : (held_item, user)
-#define COMSIG_MATCONTAINER_PRE_USER_INSERT "matcontainer_pre_user_insert"
-	#define MATCONTAINER_BLOCK_INSERT (1<<1)
-/// Called from datum/component/material_container/proc/insert_item() : (target, last_inserted_id, material_amount, container)
-#define COMSIG_MATCONTAINER_ITEM_CONSUMED "matcontainer_item_consumed"
-/// Called from datum/component/material_container/proc/retrieve_sheets() : (sheets)
-#define COMSIG_MATCONTAINER_SHEETS_RETRIVED "matcontainer_sheets_retrived"
-/// Called From datum/component/material_container/proc/use_materials() : (mats, coefficient, multiplier, amount_consumed)
-#define COMSIG_MATCONTAINER_MATS_USED "matcontainer_mats_used"
-
-
 // The following flags are for decomposing alloys. Should be expanded upon and diversified once someone gets around to reworking recycling.
 /// Can reduce an alloy into its component materials.
 #define BREAKDOWN_ALLOYS (1<<4)

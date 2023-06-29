@@ -144,7 +144,7 @@ type AutolatheRecipeProps = {
 };
 
 const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
-  const { act, data } = useBackend<AutolatheData>(context);
+  const { act } = useBackend<AutolatheData>(context);
   const { design, availableMaterials } = props;
 
   const canPrint = !Object.entries(design.cost).some(
@@ -178,7 +178,9 @@ const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('make', { id: design.id, multiplier: 1 })}>
+          onClick={() =>
+            canPrint && act('make', { id: design.id, multiplier: 1 })
+          }>
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}

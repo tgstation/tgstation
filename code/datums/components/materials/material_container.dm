@@ -22,6 +22,8 @@
 	var/precise_insertion = FALSE
 	/// The material container flags. See __DEFINES/materials.dm.
 	var/mat_container_flags
+	/// Signals that are registered with this contained
+	var/list/registered_signals
 
 /// Sets up the proper signals and fills the list of materials with the appropriate references.
 /datum/component/material_container/Initialize(
@@ -553,7 +555,6 @@
 	var/amount_removed = 0
 	for(var/i in mats)
 		amount_removed += use_amount_mat(OPTIMAL_COST(mats[i] * coefficient) * multiplier, i)
-	SEND_SIGNAL(src, COMSIG_MATCONTAINER_MATS_USED, mats, coefficient, multiplier, amount_removed)
 
 	return amount_removed
 //============================================================================================

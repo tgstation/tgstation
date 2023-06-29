@@ -136,10 +136,10 @@
 
 	if(action == "make")
 		if(disabled)
-			to_chat(usr, span_alert("The autolathe wires are disabled."))
+			say("The autolathe wires are disabled.")
 			return
 		if(busy)
-			to_chat(usr, span_alert("The autolathe is busy. Please wait for completion of previous operation."))
+			say("The autolathe is busy. Please wait for completion of previous operation.")
 			return
 
 		var/design_id = params["id"]
