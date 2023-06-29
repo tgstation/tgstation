@@ -397,7 +397,7 @@
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 14
 	burn_modifier = 1.25
-	speed_modifier = 0.75 //big big fungus
+	speed_modifier = 0.75 //big fungus big fungus
 
 //GOLEM
 /obj/item/bodypart/head/golem
