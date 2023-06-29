@@ -62,6 +62,8 @@
 	var/list/embedded_objects = list()
 	/// are we a hand? if so, which one!
 	var/held_index = 0
+	/// A speed modifier we apply to the owner when attached, if any. Positive numbers make it move slower, negative numbers make it move faster.
+	var/speed_modifier = 0
 
 	// Limb disabling variables
 	///Controls if the limb is disabled. TRUE means it is disabled (similar to being removed, but still present for the sake of targeted interactions).
@@ -110,7 +112,6 @@
 	var/px_x = 0
 	var/px_y = 0
 
-	var/species_flags_list = list()
 	///the type of damage overlay (if any) to use when this bodypart is bruised/burned.
 	var/dmg_overlay_type = "human"
 	/// If we're bleeding, which icon are we displaying on this part
@@ -766,10 +767,10 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(IS_ORGANIC_LIMB(src))
-		if(HAS_TRAIT(owner, TRAIT_HUSK))
+		if(owner && HAS_TRAIT(owner, TRAIT_HUSK))
 			dmg_overlay_type = "" //no damage overlay shown when husked
 			is_husked = TRUE
-		else if(HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))
+		else if(owner && HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))
 			dmg_overlay_type = "" //no damage overlay shown when invisible since the wounds themselves are invisible.
 			is_invisible = TRUE
 		else
@@ -791,7 +792,6 @@
 	// No, xenos don't actually use bodyparts. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
 	var/datum/species/owner_species = human_owner.dna.species
-	species_flags_list = owner_species.species_traits
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
 
 	if(owner_species.use_skintones)
@@ -799,7 +799,7 @@
 	else
 		skin_tone = ""
 
-	if(((MUTCOLORS in owner_species.species_traits) || (DYNCOLORS in owner_species.species_traits))) //Ethereal code. Motherfuckers.
+	if(HAS_TRAIT(owner, TRAIT_MUTANT_COLORS))
 		if(owner_species.fixed_mut_color)
 			species_color = owner_species.fixed_mut_color
 		else
@@ -911,8 +911,9 @@
 				. += aux_em_block
 		//EMISSIVE CODE END
 
-	//Ok so legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
-	if((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG))
+	//No need to handle leg layering if dropped, we only face south anyways
+	if(!dropped && ((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG)))
+		//Legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
 		var/obj/item/bodypart/leg/leg_source = src
 		for(var/image/limb_image in .)
 			//remove the old, unmasked image

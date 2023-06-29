@@ -26,7 +26,7 @@
 	savefile_key = "eye_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_species_trait = EYECOLOR
+	relevant_head_flag = HEAD_EYECOLOR
 
 /datum/preference/color/eye_color/apply_to_human(mob/living/carbon/human/target, value)
 	var/hetero = target.eye_color_heterochromatic
@@ -59,7 +59,7 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Facial hair"
 	should_generate_icons = TRUE
-	relevant_species_trait = FACEHAIR
+	relevant_head_flag = HEAD_FACIAL_HAIR
 
 /datum/preference/choiced/facial_hairstyle/init_possible_values()
 	return generate_possible_values_for_sprite_accessories_on_head(GLOB.facial_hairstyles_list)
@@ -79,25 +79,22 @@
 	savefile_key = "facial_hair_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	relevant_species_trait = FACEHAIR
+	relevant_head_flag = HEAD_FACIAL_HAIR
 
 /datum/preference/color/facial_hair_color/apply_to_human(mob/living/carbon/human/target, value)
-	target.facial_hair_color = value
-	target.update_body_parts()
+	target.set_facial_haircolor(value, update = TRUE)
 
 /datum/preference/choiced/facial_hair_gradient
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "facial_hair_gradient"
-	relevant_species_trait = FACEHAIR
+	relevant_head_flag = HEAD_FACIAL_HAIR
 
 /datum/preference/choiced/facial_hair_gradient/init_possible_values()
 	return assoc_to_keys_features(GLOB.facial_hair_gradients_list)
 
 /datum/preference/choiced/facial_hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
-	LAZYSETLEN(target.grad_style, GRADIENTS_LEN)
-	target.grad_style[GRADIENT_FACIAL_HAIR_KEY] = value
-	target.update_body_parts()
+	target.set_facial_hair_gradient(new_style = value, update = TRUE)
 
 /datum/preference/choiced/facial_hair_gradient/create_default_value()
 	return "None"
@@ -106,12 +103,10 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "facial_hair_gradient_color"
-	relevant_species_trait = FACEHAIR
+	relevant_head_flag = HEAD_FACIAL_HAIR
 
 /datum/preference/color/facial_hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
-	LAZYSETLEN(target.grad_color, GRADIENTS_LEN)
-	target.grad_color[GRADIENT_FACIAL_HAIR_KEY] = value
-	target.update_body_parts()
+	target.set_facial_hair_gradient(new_color = value, update = TRUE)
 
 /datum/preference/color/facial_hair_gradient/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
@@ -122,10 +117,10 @@
 	savefile_key = "hair_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
-	relevant_species_trait = HAIR
+	relevant_head_flag = HEAD_HAIR
 
 /datum/preference/color/hair_color/apply_to_human(mob/living/carbon/human/target, value)
-	target.hair_color = value
+	target.set_haircolor(value, update = TRUE)
 
 /datum/preference/choiced/hairstyle
 	savefile_key = "hairstyle_name"
@@ -133,13 +128,13 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Hairstyle"
 	should_generate_icons = TRUE
-	relevant_species_trait = HAIR
+	relevant_head_flag = HEAD_HAIR
 
 /datum/preference/choiced/hairstyle/init_possible_values()
 	return generate_possible_values_for_sprite_accessories_on_head(GLOB.hairstyles_list)
 
 /datum/preference/choiced/hairstyle/apply_to_human(mob/living/carbon/human/target, value)
-	target.hairstyle = value
+	target.set_hairstyle(value, update = TRUE)
 
 /datum/preference/choiced/hairstyle/compile_constant_data()
 	var/list/data = ..()
@@ -152,15 +147,13 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "hair_gradient"
-	relevant_species_trait = HAIR
+	relevant_head_flag = HEAD_HAIR
 
 /datum/preference/choiced/hair_gradient/init_possible_values()
 	return assoc_to_keys_features(GLOB.hair_gradients_list)
 
 /datum/preference/choiced/hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
-	LAZYSETLEN(target.grad_style, GRADIENTS_LEN)
-	target.grad_style[GRADIENT_HAIR_KEY] = value
-	target.update_body_parts()
+	target.set_hair_gradient(new_style = value, update = TRUE)
 
 /datum/preference/choiced/hair_gradient/create_default_value()
 	return "None"
@@ -169,12 +162,10 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "hair_gradient_color"
-	relevant_species_trait = HAIR
+	relevant_head_flag = HEAD_HAIR
 
 /datum/preference/color/hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
-	LAZYSETLEN(target.grad_color, GRADIENTS_LEN)
-	target.grad_color[GRADIENT_HAIR_KEY] = value
-	target.update_body_parts()
+	target.set_hair_gradient(new_color = value, update = TRUE)
 
 /datum/preference/color/hair_gradient/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

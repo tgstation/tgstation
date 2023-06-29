@@ -5,7 +5,7 @@
 	priority = PREFERENCE_PRIORITY_NAME_MODIFICATIONS //this will be overwritten by names otherwise
 	main_feature_name = "Vampire status"
 	should_generate_icons = TRUE
-	relevant_species_trait = BLOOD_CLANS
+	relevant_inherent_trait = TRAIT_BLOOD_CLANS
 
 /datum/preference/choiced/vampire_status/create_default_value()
 	return "Inoculated" //eh, have em try out the mechanic first
@@ -22,9 +22,6 @@
 GLOBAL_LIST_EMPTY(vampire_houses)
 
 /datum/preference/choiced/vampire_status/apply_to_human(mob/living/carbon/human/target, value)
-	if (!(relevant_species_trait in target.dna?.species.species_traits))
-		return
-
 	if(value != "Inoculated")
 		return
 

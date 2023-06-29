@@ -279,7 +279,7 @@
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "NG" = (
-/obj/vehicle/sealed/mecha/working/ripley,
+/obj/vehicle/sealed/mecha/ripley,
 /turf/open/floor/iron/recharge_floor/Airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Oh" = (
