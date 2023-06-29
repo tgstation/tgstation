@@ -136,6 +136,7 @@
 		FALSE, \
 		COMSIG_THRUSTER_ACTIVATED, \
 		COMSIG_THRUSTER_DEACTIVATED, \
+		THRUSTER_ACTIVATION_FAILED, \
 		CALLBACK(src, PROC_REF(allow_thrust), 0.01), \
 		/datum/effect_system/trail_follow/ion \
 	)
@@ -161,7 +162,7 @@
 		if(!silent)
 			to_chat(owner, span_warning("Your thrusters set seems to be broken!"))
 		return
-	if(SEND_SIGNAL(src, COMSIG_THRUSTER_ACTIVATED, owner) & JETPACK_COMPONENT_ACTIVATION_FAILED)
+	if(SEND_SIGNAL(src, COMSIG_THRUSTER_ACTIVATED, owner) & THRUSTER_ACTIVATION_FAILED)
 		return
 
 	on = TRUE

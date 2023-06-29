@@ -38,6 +38,7 @@
 		src.stabilize, \
 		COMSIG_JETPACK_ACTIVATED, \
 		COMSIG_JETPACK_DEACTIVATED, \
+		JETPACK_ACTIVATION_FAILED, \
 		thrust_callback, \
 		/datum/effect_system/trail_follow/ion \
 	)
@@ -93,7 +94,7 @@
 	icon_state = "[initial(icon_state)][on ? "-on" : ""]"
 
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
-	if(SEND_SIGNAL(src, COMSIG_JETPACK_ACTIVATED, user) & JETPACK_COMPONENT_ACTIVATION_FAILED)
+	if(SEND_SIGNAL(src, COMSIG_JETPACK_ACTIVATED, user) & JETPACK_ACTIVATION_FAILED)
 		return FALSE
 	on = TRUE
 	update_icon(UPDATE_ICON_STATE)

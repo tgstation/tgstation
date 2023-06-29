@@ -124,6 +124,7 @@
 		src.stabilize, \
 		COMSIG_MODULE_TRIGGERED, \
 		COMSIG_MODULE_DEACTIVATED, \
+		MOD_ABORT_USE, \
 		thrust_callback, \
 		/datum/effect_system/trail_follow/ion/grav_allowed \
 	)

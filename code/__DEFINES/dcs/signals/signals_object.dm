@@ -305,10 +305,9 @@
 // Jetpack things
 // Please kill me
 
-//called in datum/component/jetpack/proc/activate() : (source, user)
-#define JETPACK_COMPONENT_ACTIVATION_FAILED (1<<0)
 //called in /obj/item/tank/jetpack/proc/turn_on() : ()
 #define COMSIG_JETPACK_ACTIVATED "jetpack_activated"
+	#define JETPACK_ACTIVATION_FAILED (1<<0)
 //called in /obj/item/tank/jetpack/proc/turn_off() : ()
 #define COMSIG_JETPACK_DEACTIVATED "jetpack_deactivated"
 

@@ -11,6 +11,8 @@
 	var/activation_signal
 	/// The signal we listen for as a de-activation
 	var/deactivation_signal
+	/// The return flag our parent expects for a failed activation
+	var/return_flag
 	/// The effect system for the jet pack trail
 	var/datum/effect_system/trail_follow/trail
 	/// The typepath to instansiate our trail as, when we need it
@@ -21,10 +23,11 @@
  * * stabilize - If we should drift when we finish moving, or sit stable in space]
  * * activation_signal - Signal we activate on
  * * deactivation_signal - Signal we deactivate on
+ * * return_flag - Flag to return if activation fails
  * * check_on_move - Callback we call each time we attempt a move, we expect it to retun true if the move is ok, false otherwise. It expects an arg, TRUE if fuel should be consumed, FALSE othewise
  * * effect_type - Type of trail_follow to spawn
  */
-/datum/component/jetpack/Initialize(stabilize, activation_signal, deactivation_signal, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
+/datum/component/jetpack/Initialize(stabilize, activation_signal, deactivation_signal, return_flag, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -39,9 +42,10 @@
 	src.check_on_move = check_on_move
 	src.activation_signal = activation_signal
 	src.deactivation_signal = deactivation_signal
+	src.return_flag = return_flag
 	src.effect_type = effect_type
 
-/datum/component/jetpack/InheritComponent(datum/component/component, original, stabilize, activation_signal, deactivation_signal, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
+/datum/component/jetpack/InheritComponent(datum/component/component, original, stabilize, activation_signal, deactivation_signal, return_flag, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
 	UnregisterSignal(parent, src.activation_signal)
 	if(src.deactivation_signal)
 		UnregisterSignal(parent, src.deactivation_signal)
@@ -53,6 +57,7 @@
 	src.check_on_move = check_on_move
 	src.activation_signal = activation_signal
 	src.deactivation_signal = deactivation_signal
+	src.return_flag = return_flag
 	src.effect_type = effect_type
 
 	if(trail && trail.effect_type != effect_type)
@@ -77,7 +82,7 @@
 	SIGNAL_HANDLER
 
 	if(!check_on_move.Invoke(TRUE))
-		return JETPACK_COMPONENT_ACTIVATION_FAILED
+		return return_flag
 
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(move_react))
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move_react))
