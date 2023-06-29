@@ -125,11 +125,11 @@
 	invoke_msg = "... a blazing star is born!"
 	favor_cost = 2000
 	///arrow to enchant
-	var/obj/item/ammo_casing/caseless/arrow/holy/enchant_target
+	var/obj/item/ammo_casing/arrow/holy/enchant_target
 
 /datum/religion_rites/blazing_star/perform_rite(mob/living/user, atom/religious_tool)
-	for(var/obj/item/ammo_casing/caseless/arrow/holy/can_enchant in get_turf(religious_tool))
-		if(istype(can_enchant, /obj/item/ammo_casing/caseless/arrow/holy/blazing))
+	for(var/obj/item/ammo_casing/arrow/holy/can_enchant in get_turf(religious_tool))
+		if(istype(can_enchant, /obj/item/ammo_casing/arrow/holy/blazing))
 			continue
 		enchant_target = can_enchant
 		return ..()
@@ -138,7 +138,7 @@
 
 /datum/religion_rites/blazing_star/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
-	var/obj/item/ammo_casing/caseless/arrow/holy/enchanting = enchant_target
+	var/obj/item/ammo_casing/arrow/holy/enchanting = enchant_target
 	var/turf/tool_turf = get_turf(religious_tool)
 	enchant_target = null
 	if(QDELETED(enchanting) || !(tool_turf == enchanting.loc)) //check if the arrow is still there
@@ -146,6 +146,6 @@
 		return FALSE
 	enchanting.visible_message(span_notice("[enchant_target] is blessed by holy fire!"))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
-	new /obj/item/ammo_casing/caseless/arrow/holy/blazing(tool_turf)
+	new /obj/item/ammo_casing/arrow/holy/blazing(tool_turf)
 	qdel(enchanting)
 	return TRUE

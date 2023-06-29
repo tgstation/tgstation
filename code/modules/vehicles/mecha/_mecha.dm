@@ -131,6 +131,9 @@
 	///flat equipment for iteration
 	var/list/flat_equipment
 
+	///Handles an internal ore box for mining mechs
+	var/obj/structure/ore_box/ore_box
+
 	///Whether our steps are silent due to no gravity
 	var/step_silent = FALSE
 	///Sound played when the mech moves
@@ -218,7 +221,7 @@
 	if(enclosed)
 		internal_tank = new (src)
 		RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE , PROC_REF(disconnect_air))
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(play_stepsound))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 
 	spark_system = new
@@ -284,6 +287,8 @@
 
 	STOP_PROCESSING(SSobj, src)
 	LAZYCLEARLIST(flat_equipment)
+
+	QDEL_NULL(ore_box)
 
 	QDEL_NULL(cell)
 	QDEL_NULL(scanmod)

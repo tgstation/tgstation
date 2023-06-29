@@ -1,0 +1,3 @@
+#replaced by elements
+
+/obj/item/ammo_casing/caseless/@SUBTYPES : /obj/item/ammo_casing/@SUBTYPES{@OLD}

@@ -101,9 +101,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// will show the feature as selectable.
 	var/relevant_mutant_bodypart = null
 
-	/// If the selected species has this in its /datum/species/species_traits,
+	/// If the selected species has this in its /datum/species/inherent_traits,
 	/// will show the feature as selectable.
-	var/relevant_species_trait = null
+	var/relevant_inherent_trait = null
 
 	/// If the selected species has this in its /datum/species/var/external_organs,
 	/// will show the feature as selectable.
@@ -317,7 +317,12 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	if (!isnull(relevant_mutant_bodypart) || !isnull(relevant_species_trait) || !isnull(relevant_external_organ))
+	if ( \
+		!isnull(relevant_mutant_bodypart) \
+		|| !isnull(relevant_inherent_trait) \
+		|| !isnull(relevant_external_organ) \
+		|| !isnull(relevant_head_flag) \
+	)
 		var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 
 		var/datum/species/species = new species_type

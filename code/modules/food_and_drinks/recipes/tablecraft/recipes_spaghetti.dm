@@ -64,7 +64,7 @@
 	name = "Butter Noodles"
 	reqs = list(
 		/obj/item/food/spaghetti/boiledspaghetti = 1,
-		/obj/item/food/butter = 1
+		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/spaghetti/butternoodles
 	category = CAT_SPAGHETTI
