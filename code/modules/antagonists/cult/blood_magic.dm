@@ -373,8 +373,7 @@
 		qdel(src)
 		return
 	log_combat(user, M, "used a cult spell on", source.name, "")
-	M.lastattacker = user.real_name
-	M.lastattackerckey = user.ckey
+	UPDATE_LAST_ATTACKER(M, user)
 
 /obj/item/melee/blood_magic/afterattack(atom/target, mob/living/carbon/user, proximity)
 	. = ..()

@@ -379,8 +379,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	if(go_to_afterattack && weapon.attack_wrapper(smacked, attacker))
 		return ATTACK_SWING_CANCEL
 
-	smacked.lastattacker = attacker.real_name
-	smacked.lastattackerckey = attacker.ckey
+	UPDATE_LAST_ATTACKER(smacked, attacker)
 
 	if(attacker == smacked && attacker.client)
 		attacker.client.give_award(/datum/award/achievement/misc/selfouch, attacker)
@@ -437,14 +436,18 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /datum/attack_style/unarmed/check_pacifism(mob/living/attacker, obj/item/weapon)
 	return FALSE
 
+/// Important to ntoe for unarmed attacks:
+/// If the attacker's a carbon, the weapon is the bodypart being used to strike with.
+/// But if the attacker is a simplemob, it will be null.
 /datum/attack_style/unarmed/execute_attack(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	ASSERT(isnull(weapon) || istype(weapon, /obj/item/bodypart))
 	return ..()
 
 /datum/attack_style/unarmed/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	SHOULD_CALL_PARENT(FALSE)
-	CRASH("No unarmed interaction for [type]!")
+	CRASH("No unarmed interaction for [type]! You must implement this.")
 
+/// Unarmed subtypes allow an override effect to be passed down.
 /datum/attack_style/unarmed/attack_effect_animation(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affecting, override_effect)
 	var/selected_effect = override_effect || attack_effect
 	if(selected_effect)

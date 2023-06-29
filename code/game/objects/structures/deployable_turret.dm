@@ -263,8 +263,7 @@
 	O.attacked_by(src, user)
 
 /obj/item/gun_control/attack(mob/living/M, mob/living/user)
-	M.lastattacker = user.real_name
-	M.lastattackerckey = user.ckey
+	UPDATE_LAST_ATTACKER(M, user)
 	M.attacked_by(src, user)
 	add_fingerprint(user)
 

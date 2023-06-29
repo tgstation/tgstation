@@ -176,8 +176,7 @@
 	else if(attacking_item.hitsound)
 		playsound(user, attacking_item.hitsound, attacking_item.get_clamped_volume(), TRUE, extrarange = attacking_item.stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
 
-	lastattacker = user.real_name
-	lastattackerckey = user.ckey
+	UPDATE_LAST_ATTACKER(src, user)
 
 	if(attacking_item.force && user == src && client)
 		client.give_award(/datum/award/achievement/misc/selfouch, user)

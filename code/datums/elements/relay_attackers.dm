@@ -26,7 +26,7 @@
 
 /datum/element/relay_attackers/proc/on_attacked_by(atom/target, mob/living/attacker, obj/item/weapon, obj/item/bodypart/hit_limb, damage, damage_type, armor_block)
 	SIGNAL_HANDLER
-	relay_attacker(target, attacker, damage_type == STAMINA ? ATTACKER_STAMINA_ATTACK : NONE) // melbert todo : relay shoving?
+	relay_attacker(target, attacker, damage_type == STAMINA ? ATTACKER_STAMINA_ATTACK : NONE)
 
 /datum/element/relay_attackers/proc/on_shoved(atom/target, mob/living/attacker)
 	SIGNAL_HANDLER

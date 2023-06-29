@@ -170,8 +170,7 @@
 	if(on_stun_sound)
 		playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 	if(user)
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
+		UPDATE_LAST_ATTACKER(target, user)
 		target.LAssailant = WEAKREF(user)
 		if(log_stun_attack)
 			log_combat(user, target, "stun attacked", src)

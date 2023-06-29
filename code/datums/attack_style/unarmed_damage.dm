@@ -94,8 +94,7 @@
 	)
 	to_chat(attacker, span_danger("You [default_attack_verb] [smacked]!"))
 
-	smacked.lastattacker = attacker.real_name
-	smacked.lastattackerckey = attacker.ckey
+	UPDATE_LAST_ATTACKER(smacked, attacker)
 
 	// A damage packet is created to pass onto [actually_apply_damage].
 	// This allows for subtypes to overide certain facets of the outgoing damage if they prefer.

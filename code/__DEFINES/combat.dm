@@ -397,3 +397,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define COMBO_STEPS "steps"
 /// The proc the combo calls
 #define COMBO_PROC "proc"
+
+/// Helper to update last attacker vars
+#define UPDATE_LAST_ATTACKER(defender, attacker) \
+	defender.lastattacker = attacker.real_name; \
+	defender.lastattackerckey = attacker.ckey;

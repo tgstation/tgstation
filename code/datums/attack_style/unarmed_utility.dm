@@ -65,6 +65,7 @@
 
 	// At this point a shove is going to happen
 	SEND_SIGNAL(smacked, COMSIG_LIVING_DISARM_HIT, attacker, attacker.zone_selected)
+	UPDATE_LAST_ATTACKER(smacked, attacker)
 
 	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
 	if(pre_sig_return & DISARM_ACT_AS_SOLID)
