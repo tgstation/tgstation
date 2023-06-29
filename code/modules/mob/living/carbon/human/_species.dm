@@ -23,8 +23,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
 	var/sexes = TRUE
-	///A bitfield of "bodytypes", updated by /obj/item/bodypart/proc/synchronize_bodytypes()
-	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 
 	///The maximum number of bodyparts this species can have.
 	var/max_bodypart_count = 6
@@ -141,9 +139,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi
 	var/fire_overlay = "human"
 
-	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
-	var/list/species_traits = list()
-	///Generic traits tied to having the species.
+	/// Generic traits tied to having the species.
 	var/list/inherent_traits = list()
 	/// List of biotypes the mob belongs to. Used by diseases.
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -447,10 +443,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/on_species_gain(mob/living/carbon/human/C, datum/species/old_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
-
-	if(AGENDER in species_traits)
-		C.gender = PLURAL
-
+	// Drop the items the new species can't wear
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
 
@@ -508,8 +501,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
-	if(C.dna.species.exotic_bloodtype)
-		C.dna.blood_type = random_blood_type()
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 	for(var/obj/item/organ/external/organ in C.organs)
@@ -602,7 +593,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					standing += eye_overlay
 
 		// organic body markings (oh my god this is terrible please rework this to be done on the limbs themselves i beg you)
-		if(HAS_MARKINGS in species_traits)
+		if(HAS_TRAIT(species_human, TRAIT_HAS_MARKINGS))
 			var/obj/item/bodypart/chest/chest = species_human.get_bodypart(BODY_ZONE_CHEST)
 			var/obj/item/bodypart/arm/right/right_arm = species_human.get_bodypart(BODY_ZONE_R_ARM)
 			var/obj/item/bodypart/arm/left/left_arm = species_human.get_bodypart(BODY_ZONE_L_ARM)
@@ -638,7 +629,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				standing += markings_l_leg_overlay
 
 	//Underwear, Undershirts & Socks
-	if(!(NO_UNDERWEAR in species_traits))
+	if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
 		if(species_human.underwear)
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
@@ -663,7 +654,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				working_shirt.pixel_y += height_offset
 				standing += working_shirt
 
-		if(species_human.socks && species_human.num_legs >= 2 && !(src.bodytype & BODYTYPE_DIGITIGRADE))
+		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodytype & BODYTYPE_DIGITIGRADE))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[species_human.socks]
 			if(socks)
 				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
@@ -876,7 +867,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_FEET)
 			if(H.num_legs < 2)
 				return FALSE
-			if((bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
+			if((H.bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
 				if(!(I.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
@@ -1011,7 +1002,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		chem.overdosed = TRUE
 		chem.overdose_start(affected)
 		affected.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
-	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, affected, seconds_per_tick, times_fired)
+	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, seconds_per_tick, times_fired)
 
 /datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
 	return 1 //This is not a boolean, it's the multiplier for the damage that the user takes from the item. The force of the item is multiplied by this value
@@ -1334,7 +1325,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					human.update_worn_undersuit()
 
 	/// Triggers force say events
-	if(weapon.force > 10 || weapon.force >= 5 && prob(33))
+	if(weapon.force > 10 || (weapon.force >= 5 && prob(33)))
 		human.force_say(user)
 
 	return TRUE
@@ -1766,7 +1757,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		if ( \
 			(preference.relevant_mutant_bodypart in mutant_bodyparts) \
-			|| (preference.relevant_species_trait in species_traits) \
+			|| (preference.relevant_inherent_trait in inherent_traits) \
 			|| (preference.relevant_external_organ in external_organs) \
 			|| (preference.relevant_head_flag && check_head_flags(preference.relevant_head_flag)) \
 		)
