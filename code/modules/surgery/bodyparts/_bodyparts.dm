@@ -207,11 +207,10 @@
 
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
 	if(can_be_disabled)
 		RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS), PROC_REF(on_paralysis_trait_gain))
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS), PROC_REF(on_paralysis_trait_loss))
-
-	RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
 
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null

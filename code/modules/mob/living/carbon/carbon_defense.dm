@@ -127,7 +127,7 @@
 	var/message_verb_simple = length(I.attack_verb_simple) ? "[pick(I.attack_verb_simple)]" : "attack"
 
 	var/extra_wound_details = ""
-	if(I.damtype == BRUTE && hit_bodypart.can_dismember())
+	if(I.damtype == BRUTE && hit_bodypart.can_dismember(I))
 		var/mangled_state = hit_bodypart.get_mangled_state()
 		var/bio_state = hit_bodypart.biological_state
 		if((mangled_state & BODYPART_MANGLED_FLESH) && (mangled_state & BODYPART_MANGLED_BONE))

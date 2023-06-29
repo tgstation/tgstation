@@ -12,8 +12,8 @@
 	already_scarred = TRUE // We manually assign scars for dismembers through endround missing limbs and aheals
 
 /// Our special proc for our special dismembering, the wounding type only matters for what text we have
-/datum/wound/loss/proc/apply_dismember(obj/item/bodypart/dismembered_part, wounding_type=WOUND_SLASH, outright = FALSE, attack_direction)
-	if(!istype(dismembered_part) || !dismembered_part.owner || !(dismembered_part.body_zone in viable_zones) || isalien(dismembered_part.owner) || !dismembered_part.can_dismember())
+/datum/wound/loss/proc/apply_dismember(obj/item/bodypart/dismembered_part, wounding_type = WOUND_SLASH, outright = FALSE, attack_direction, damage_source)
+	if(!istype(dismembered_part) || !dismembered_part.owner || !(dismembered_part.body_zone in viable_zones) || isalien(dismembered_part.owner) || !dismembered_part.can_dismember(damage_source))
 		qdel(src)
 		return
 

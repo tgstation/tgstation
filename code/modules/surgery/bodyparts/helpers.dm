@@ -133,12 +133,15 @@
 				continue
 			return TRUE
 
-//Helper for quickly creating a new limb - used by augment code in species.dm spec_attacked_by
-//
-// FUCK YOU AUGMENT CODE - With love, Kapu
+// Helper for quickly creating a new, compatible limb
 /mob/living/carbon/proc/newBodyPart(zone)
 	var/path = dna.species.bodypart_overrides[zone]
+	// we are not supposed to have that zone
+	if(!path)
+		return
 	var/obj/item/bodypart/new_bodypart = new path()
+	if(new_bodypart)
+		new_bodypart.update_limb(is_creating = TRUE)
 	return new_bodypart
 
 /mob/living/carbon/alien/larva/newBodyPart(zone)
@@ -148,7 +151,9 @@
 			new_bodypart = new /obj/item/bodypart/head/larva()
 		if(BODY_ZONE_CHEST)
 			new_bodypart = new /obj/item/bodypart/chest/larva()
-	. = new_bodypart
+	if(new_bodypart)
+		new_bodypart.update_limb(is_creating = TRUE)
+	return new_bodypart
 
 /mob/living/carbon/alien/adult/newBodyPart(zone)
 	var/obj/item/bodypart/new_bodypart
@@ -167,8 +172,7 @@
 			new_bodypart = new /obj/item/bodypart/chest/alien()
 	if(new_bodypart)
 		new_bodypart.update_limb(is_creating = TRUE)
-
-
+	return new_bodypart
 
 /proc/skintone2hex(skin_tone)
 	. = 0

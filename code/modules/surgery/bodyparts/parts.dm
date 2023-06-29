@@ -35,11 +35,6 @@
 	/// Offset to apply to equipment worn on the neck
 	var/datum/worn_feature_offset/worn_neck_offset
 
-/obj/item/bodypart/chest/can_dismember(obj/item/item)
-	if(owner.stat < HARD_CRIT || !organs)
-		return FALSE
-	return ..()
-
 /obj/item/bodypart/chest/Destroy()
 	QDEL_NULL(cavity_item)
 	QDEL_NULL(worn_uniform_offset)

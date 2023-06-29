@@ -1,10 +1,20 @@
-/obj/item/bodypart/proc/can_dismember(obj/item/item)
+/obj/item/bodypart/proc/can_dismember(damage_source)
 	if(bodypart_flags & BODYPART_UNREMOVABLE)
 		return FALSE
 	return TRUE
 
-///Remove target limb from it's owner, with side effects.
-/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE)
+/obj/item/bodypart/chest/can_dismember(damage_source)
+	if(owner.stat < HARD_CRIT || !organs)
+		return FALSE
+	return ..()
+
+/obj/item/bodypart/head/can_dismember(damage_source)
+	if(owner.stat < HARD_CRIT)
+		return FALSE
+	return ..()
+
+/// Remove target limb from it's owner, with side effects.
+/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent = TRUE)
 	if(!owner || (bodypart_flags & BODYPART_UNREMOVABLE))
 		return FALSE
 	var/mob/living/carbon/limb_owner = owner
@@ -14,7 +24,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/affecting = limb_owner.get_bodypart(BODY_ZONE_CHEST)
-	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50), wound_bonus=CANT_WOUND) //Damage the chest based on limb's existing damage
+	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50), wound_bonus = CANT_WOUND) //Damage the chest based on limb's existing damage
 	if(!silent)
 		limb_owner.visible_message(span_danger("<B>[limb_owner]'s [name] is violently dismembered!</B>"))
 	INVOKE_ASYNC(limb_owner, TYPE_PROC_REF(/mob, emote), "scream")
@@ -135,17 +145,17 @@
 	phantom_owner.update_body()
 	phantom_owner.update_body_parts()
 
-	if(!drop_loc) // drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
-		qdel(src)
-		return
-
-	if(bodypart_flags & BODYPART_PSEUDOPART)
-		drop_organs(phantom_owner) //Psuedoparts shouldn't have organs, but just in case
-		qdel(src)
-		return
-
-	forceMove(drop_loc)
 	SEND_SIGNAL(phantom_owner, COMSIG_CARBON_POST_REMOVE_LIMB, src, dismembered)
+	// drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
+	if(!drop_loc)
+		qdel(src)
+		return
+	// pseudoparts should always be qdel'd, they're not real
+	if(bodypart_flags & BODYPART_PSEUDOPART)
+		drop_organs(phantom_owner) //pseudoparts shouldn't have organs, but just in case they do, we drop them
+		qdel(src)
+		return
+	forceMove(drop_loc)
 
 /**
  * get_mangled_state() is relevant for flesh and bone bodyparts, and returns whether this bodypart has mangled skin, mangled bone, or both (or neither i guess)
@@ -157,11 +167,10 @@
  */
 /obj/item/bodypart/proc/get_mangled_state()
 	. = BODYPART_MANGLED_NONE
-
 	for(var/datum/wound/iter_wound as anything in wounds)
-		if((iter_wound.wound_flags & MANGLES_BONE))
+		if(iter_wound.wound_flags & MANGLES_BONE)
 			. |= BODYPART_MANGLED_BONE
-		if((iter_wound.wound_flags & MANGLES_FLESH))
+		if(iter_wound.wound_flags & MANGLES_FLESH)
 			. |= BODYPART_MANGLED_FLESH
 
 /**
@@ -254,19 +263,20 @@
 
 /obj/item/bodypart/head/drop_limb(special, dismembered)
 	if(!special)
-		//Drop all worn head items
+		// Drop all worn head items
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			owner.dropItemToGround(head_item, force = TRUE)
 
 	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay flushed emoji
 
-	//Handle dental implants
+	// Handle dental implants
 	for(var/datum/action/item_action/hands_free/activate_pill/pill_action in owner.actions)
 		pill_action.Remove(owner)
 		var/obj/pill = pill_action.target
 		if(pill)
 			pill.forceMove(src)
 
+	// Update the name of the head to reflect the owner's real name
 	name = "[owner.real_name]'s head"
 	return ..()
 
@@ -296,7 +306,7 @@
 		for(var/obj/item/organ/organ as anything in fucking_organs)
 			organ.Insert(limb_owner, special = TRUE)
 
-///Checks if a limb qualifies as a BODYPART_IMPLANTED
+/// Checks if a limb qualifies as a BODYPART_IMPLANTED
 /obj/item/bodypart/proc/check_for_frankenstein(mob/living/carbon/human/monster)
 	if(!istype(monster))
 		return FALSE
@@ -309,14 +319,15 @@
 /obj/item/bodypart/proc/can_attach_limb(mob/living/carbon/new_limb_owner, special)
 	if(SEND_SIGNAL(new_limb_owner, COMSIG_ATTEMPT_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
 		return FALSE
-
-	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
-	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !special)
-		return FALSE
+	if(!special)
+		var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
+		if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype))
+			return FALSE
 	return TRUE
 
-///Attach src to target mob if able, returns FALSE if it fails to.
+/// Attach src to target mob if able, returns FALSE if it fails to.
 /obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_limb_owner, special = FALSE)
+	SHOULD_NOT_SLEEP(TRUE)
 	if(!can_attach_limb(new_limb_owner, special))
 		return FALSE
 
@@ -374,9 +385,7 @@
 /obj/item/bodypart/head/try_attach_limb(mob/living/carbon/new_head_owner, special = FALSE)
 	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
 	var/old_real_name = src.real_name
-
 	. = ..()
-
 	if(!.)
 		return
 
@@ -426,7 +435,8 @@
 
 	carbon_owner.bodytype = all_limb_flags
 
-/mob/living/carbon/proc/regenerate_limbs(list/excluded_zones = list())
+/// Regenerates all missing limbs, except the ones in excluded_zones
+/mob/living/carbon/proc/regenerate_limbs(list/excluded_zones)
 	SEND_SIGNAL(src, COMSIG_CARBON_REGENERATE_LIMBS, excluded_zones)
 	var/list/zone_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	if(length(excluded_zones))
@@ -434,10 +444,12 @@
 	for(var/limb_zone in zone_list)
 		regenerate_limb(limb_zone)
 
+/// Regenerates a specfic limb, if it's missing.
 /mob/living/carbon/proc/regenerate_limb(limb_zone)
 	var/obj/item/bodypart/limb
 	if(get_bodypart(limb_zone))
 		return FALSE
+
 	limb = newBodyPart(limb_zone, 0, 0)
 	if(limb)
 		if(!limb.try_attach_limb(src, special = TRUE))
@@ -459,3 +471,4 @@
 
 		update_body_parts()
 		return TRUE
+	return FALSE

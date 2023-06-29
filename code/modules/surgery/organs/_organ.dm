@@ -99,6 +99,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  */
 /obj/item/organ/proc/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 
 	if(!iscarbon(receiver) || (owner == receiver))
 		return FALSE
@@ -169,6 +170,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  */
 /obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 
 	organ_owner.organs -= src
 	if(organ_owner.organs_slot[slot] == src)

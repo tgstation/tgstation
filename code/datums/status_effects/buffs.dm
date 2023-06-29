@@ -246,50 +246,40 @@
 			deathTick += 1
 		else
 			consume_owner()
-	else
-		if(iscarbon(owner))
-			var/mob/living/carbon/itemUser = owner
-			var/obj/item/heldItem = itemUser.get_item_for_held_index(hand)
-			if(heldItem == null || heldItem.type != /obj/item/rod_of_asclepius) //Checks to make sure the rod is still in their hand
-				var/obj/item/rod_of_asclepius/newRod = new(itemUser.loc)
-				newRod.activated()
-				if(!itemUser.has_hand_for_held_index(hand))
-					//If user does not have the corresponding hand anymore, give them one and return the rod to their hand
-					if(((hand % 2) == 0))
-						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_R_ARM, FALSE, FALSE)
-						if(L.try_attach_limb(itemUser))
-							L.update_limb(is_creating = TRUE)
-							itemUser.update_body_parts()
-							itemUser.put_in_hand(newRod, hand, forced = TRUE)
-						else
-							qdel(L)
-							consume_owner() //we can't regrow, abort abort
-							return
-					else
-						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_L_ARM, FALSE, FALSE)
-						if(L.try_attach_limb(itemUser))
-							L.update_limb(is_creating = TRUE)
-							itemUser.update_body_parts()
-							itemUser.put_in_hand(newRod, hand, forced = TRUE)
-						else
-							qdel(L)
-							consume_owner() //see above comment
-							return
-					to_chat(itemUser, span_notice("Your arm suddenly grows back with the Rod of Asclepius still attached!"))
-				else
-					//Otherwise get rid of whatever else is in their hand and return the rod to said hand
-					itemUser.put_in_hand(newRod, hand, forced = TRUE)
-					to_chat(itemUser, span_notice("The Rod of Asclepius suddenly grows back out of your arm!"))
-			//Because a servant of medicines stops at nothing to help others, lets keep them on their toes and give them an additional boost.
-			if(itemUser.health < itemUser.maxHealth)
-				new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
-			itemUser.adjustBruteLoss(-1.5)
-			itemUser.adjustFireLoss(-1.5)
-			itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
-			itemUser.adjustOxyLoss(-1.5, forced = TRUE)
-			itemUser.adjustStaminaLoss(-1.5)
-			itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5)
-			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
+		return
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/itemUser = owner
+	var/obj/item/heldItem = itemUser.get_item_for_held_index(hand)
+	if(heldItem == null || heldItem.type != /obj/item/rod_of_asclepius) //Checks to make sure the rod is still in their hand
+		var/obj/item/rod_of_asclepius/newRod = new(itemUser.loc)
+		newRod.activated()
+		if(!itemUser.has_hand_for_held_index(hand))
+			// If user does not have the corresponding hand anymore, give them one and return the rod to their hand
+			var/obj/item/bodypart/new_limb = itemUser.newBodyPart(!(hand % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
+			if(new_limb.try_attach_limb(itemUser))
+				new_limb.update_limb(is_creating = TRUE)
+				itemUser.update_body_parts()
+				itemUser.put_in_hand(newRod, hand, forced = TRUE)
+			else
+				qdel(new_limb)
+				consume_owner() //we can't regrow, abort abort
+				return
+			to_chat(itemUser, span_notice("Your arm suddenly grows back with the Rod of Asclepius still attached!"))
+		else
+			//Otherwise get rid of whatever else is in their hand and return the rod to said hand
+			itemUser.put_in_hand(newRod, hand, forced = TRUE)
+			to_chat(itemUser, span_notice("The Rod of Asclepius suddenly grows back out of your arm!"))
+	//Because a servant of medicines stops at nothing to help others, lets keep them on their toes and give them an additional boost.
+	if(itemUser.health < itemUser.maxHealth)
+		new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
+	itemUser.adjustBruteLoss(-1.5)
+	itemUser.adjustFireLoss(-1.5)
+	itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
+	itemUser.adjustOxyLoss(-1.5, forced = TRUE)
+	itemUser.adjustCloneLoss(-0.5) //Because apparently clone damage is the bastion of all health
+	itemUser.adjustStaminaLoss(-1.5)
+	itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5)
 
 /datum/status_effect/hippocratic_oath/proc/consume_owner()
 	owner.visible_message(span_notice("[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty."))
@@ -302,7 +292,6 @@
 	new /obj/item/rod_of_asclepius(owner.loc)
 	owner.investigate_log("has been consumed by the Rod of Asclepius.", INVESTIGATE_DEATHS)
 	qdel(owner)
-
 
 /datum/status_effect/good_music
 	id = "Good Music"
