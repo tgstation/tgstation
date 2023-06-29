@@ -238,7 +238,6 @@
 /datum/greyscale_config/eth_tunic/worn
 	name = "Ethereal Tunic (Worn)"
 	icon_file = 'icons/mob/clothing/under/ethereal.dmi'
-	json_config = 'code/datums/greyscale/json_configs/eth_tunic_worn.json'
 
 /datum/greyscale_config/trek
 	name = "Trek Uniform"
