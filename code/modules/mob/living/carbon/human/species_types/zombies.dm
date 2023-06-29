@@ -36,9 +36,6 @@
 	mutantliver = null
 	mutantlungs = null
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
-	disliked_food = NONE
-	liked_food = GROSS | MEAT | RAW | GORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | ERT_SPAWN
 	bodytemp_normal = T0C // They have no natural body heat, the environment regulates body temp
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // Take damage at fire temp
@@ -52,6 +49,8 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/zombie,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie
 	)
+
+	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
 /datum/species/zombie/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick, times_fired)

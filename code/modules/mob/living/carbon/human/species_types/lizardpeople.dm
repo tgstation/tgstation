@@ -28,8 +28,6 @@
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
-	disliked_food = GRAIN | DAIRY | CLOTH | GROSS
-	liked_food = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	inert_mutation = /datum/mutation/human/firebreath
 	death_sound = 'sound/voice/lizard/deathsound.ogg'
 	wing_types = list(/obj/item/organ/external/wings/functional/dragon)
@@ -144,6 +142,7 @@ Lizard subspecies: ASHWALKERS
 	inherent_traits = list(
 		//TRAIT_LITERATE,
 		TRAIT_VIRUSIMMUNE,
+		TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash
 	digitigrade_customization = DIGITIGRADE_FORCED

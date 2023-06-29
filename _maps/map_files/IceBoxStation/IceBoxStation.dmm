@@ -12309,13 +12309,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"dMu" = (
-/obj/machinery/door/airlock/research{
-	name = "Communications Server"
-	},
-/obj/effect/turf_decal/tile/purple/fourcorners,
-/turf/open/floor/iron,
-/area/mine/living_quarters)
 "dMv" = (
 /obj/item/clothing/gloves/color/rainbow,
 /obj/item/clothing/head/soft/rainbow,
@@ -24995,10 +24988,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
 /area/station/security/prison/rec)
-"hYA" = (
-/obj/machinery/telecomms/relay/preset/mining,
-/turf/open/floor/circuit,
-/area/mine/living_quarters)
 "hYC" = (
 /obj/structure/closet/athletic_mixed,
 /obj/effect/landmark/start/hangover/closet,
@@ -28235,10 +28224,9 @@
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "iYA" = (
-/obj/machinery/telecomms/relay/preset/mining,
-/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/circuit/green,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/mine/mechbay)
 "iYG" = (
 /obj/structure/cable,
@@ -34636,9 +34624,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"kYA" = (
-/turf/open/floor/circuit,
-/area/mine/living_quarters)
 "kYF" = (
 /obj/structure/light_construct/directional/west,
 /mob/living/simple_animal/hostile/retaliate/goose/vomit,
@@ -34906,12 +34891,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "lcY" = (
-/obj/machinery/door/window{
-	dir = 1;
-	name = "Station Communications Relay"
-	},
 /obj/structure/sign/poster/official/random/directional/west,
-/turf/open/floor/circuit/green,
+/turf/open/floor/iron/dark,
 /area/mine/mechbay)
 "ldi" = (
 /obj/structure/table,
@@ -153195,10 +153176,10 @@ iDt
 lwR
 tUK
 tUK
-lwR
+igm
 scw
-scw
-scw
+iDt
+iDt
 scw
 scw
 gjq
@@ -153453,9 +153434,9 @@ sJH
 ngj
 orS
 igm
-lwR
-lwR
-lwR
+scw
+iDt
+iDt
 scw
 gjq
 gjq
@@ -153709,10 +153690,10 @@ gpU
 oaG
 nSs
 xuB
-dMu
-kYA
-hYA
-lwR
+igm
+scw
+scw
+scw
 gjq
 gjq
 gjq
@@ -153970,8 +153951,8 @@ sJH
 riL
 riL
 sJH
-lwR
-lwR
+sJH
+sJH
 scw
 scw
 scw

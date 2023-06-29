@@ -1,7 +1,7 @@
-/obj/item/ammo_casing/caseless/foam_dart
+/obj/item/ammo_casing/foam_dart
 	name = "foam dart"
 	desc = "It's Donk or Don't! Ages 8 and up."
-	projectile_type = /obj/projectile/bullet/reusable/foam_dart
+	projectile_type = /obj/projectile/bullet/foam_dart
 	caliber = CALIBER_FOAM
 	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "foamdart"
@@ -10,7 +10,11 @@
 	harmful = FALSE
 	var/modified = FALSE
 
-/obj/item/ammo_casing/caseless/foam_dart/update_icon_state()
+/obj/item/ammo_casing/foam_dart/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless, TRUE)
+
+/obj/item/ammo_casing/foam_dart/update_icon_state()
 	. = ..()
 	if(modified)
 		icon_state = "[base_icon_state]_empty"
@@ -19,12 +23,12 @@
 	icon_state = "[base_icon_state]"
 	loaded_projectile?.icon_state = "[loaded_projectile.base_icon_state]"
 
-/obj/item/ammo_casing/caseless/foam_dart/update_desc()
+/obj/item/ammo_casing/foam_dart/update_desc()
 	. = ..()
 	desc = "It's Donk or Don't! [modified ? "... Although, this one doesn't look too safe." : "Ages 8 and up."]"
 
-/obj/item/ammo_casing/caseless/foam_dart/attackby(obj/item/A, mob/user, params)
-	var/obj/projectile/bullet/reusable/foam_dart/FD = loaded_projectile
+/obj/item/ammo_casing/foam_dart/attackby(obj/item/A, mob/user, params)
+	var/obj/projectile/bullet/foam_dart/FD = loaded_projectile
 	if (A.tool_behaviour == TOOL_SCREWDRIVER && !modified)
 		modified = TRUE
 		FD.modified = TRUE
@@ -47,18 +51,18 @@
 	else
 		return ..()
 
-/obj/item/ammo_casing/caseless/foam_dart/attack_self(mob/living/user)
-	var/obj/projectile/bullet/reusable/foam_dart/FD = loaded_projectile
+/obj/item/ammo_casing/foam_dart/attack_self(mob/living/user)
+	var/obj/projectile/bullet/foam_dart/FD = loaded_projectile
 	if(FD.pen)
 		FD.damage = initial(FD.damage)
 		user.put_in_hands(FD.pen)
 		to_chat(user, span_notice("You remove [FD.pen] from [src]."))
 		FD.pen = null
 
-/obj/item/ammo_casing/caseless/foam_dart/riot
+/obj/item/ammo_casing/foam_dart/riot
 	name = "riot foam dart"
 	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
-	projectile_type = /obj/projectile/bullet/reusable/foam_dart/riot
+	projectile_type = /obj/projectile/bullet/foam_dart/riot
 	icon_state = "foamdart_riot"
 	base_icon_state = "foamdart_riot"
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT* 1.125)
