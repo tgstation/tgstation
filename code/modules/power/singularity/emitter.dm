@@ -11,6 +11,7 @@
 	circuit = /obj/item/circuitboard/machine/emitter
 
 	use_power = NO_POWER_USE
+	can_change_cable_layer = TRUE
 
 	/// The icon state used by the emitter when it's on.
 	var/icon_state_on = "emitter_+a"
@@ -75,6 +76,12 @@
 /obj/machinery/power/emitter/welded/Initialize(mapload)
 	welded = TRUE
 	. = ..()
+
+/obj/machinery/power/emitter/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	if(welded)
+		balloon_alert(user, "unweld first!")
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/emitter/set_anchored(anchorvalue)
 	. = ..()
