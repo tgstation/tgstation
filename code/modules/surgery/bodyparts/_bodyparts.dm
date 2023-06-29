@@ -125,11 +125,6 @@
 	var/px_x = 0
 	var/px_y = 0
 
-	/**
-	 * A copy of the original owner's species datum species_traits list (very hacky)
-	 * It sucks that we have to do this, but due to MUTCOLORS and others, we have to. For now.
-	 */
-	var/species_flags_list = list()
 	///the type of damage overlay (if any) to use when this bodypart is bruised/burned.
 	var/dmg_overlay_type = "human"
 	/// If we're bleeding, which icon are we displaying on this part

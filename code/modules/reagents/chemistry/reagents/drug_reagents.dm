@@ -118,9 +118,8 @@
 		if(!istype(affected_mob.dna.species, /datum/species/human/krokodil_addict))
 			to_chat(affected_mob, span_userdanger("Your skin falls off easily!"))
 			var/mob/living/carbon/human/affected_human = affected_mob
-			affected_human.facial_hairstyle = "Shaved"
-			affected_human.hairstyle = "Bald"
-			affected_human.update_body_parts() // makes you loose hair as well
+			affected_human.set_facial_hairstyle("Shaved", update = FALSE)
+			affected_human.set_hairstyle("Bald", update = FALSE)
 			affected_mob.set_species(/datum/species/human/krokodil_addict)
 			affected_mob.adjustBruteLoss(50 * REM, FALSE, required_bodytype = affected_bodytype) // holy shit your skin just FELL THE FUCK OFF
 	..()
@@ -711,16 +710,12 @@
 			return
 		if(invisible_man.undergoing_liver_failure())
 			return
-		if(HAS_TRAIT(invisible_man, TRAIT_NOMETABOLISM))
+		if(HAS_TRAIT(invisible_man, TRAIT_LIVERLESS_METABOLISM))
 			return
 	if(invisible_man.has_status_effect(/datum/status_effect/grouped/stasis))
 		return
 
-	invisible_man.add_traits(list(TRAIT_INVISIBLE_MAN, TRAIT_HIDE_EXTERNAL_ORGANS), name)
-
-	var/datum/dna/druggy_dna = invisible_man.has_dna()
-	if(druggy_dna?.species)
-		druggy_dna.species.species_traits += NOBLOODOVERLAY
+	invisible_man.add_traits(list(TRAIT_INVISIBLE_MAN, TRAIT_HIDE_EXTERNAL_ORGANS, TRAIT_NO_BLOOD_OVERLAY), type)
 
 	invisible_man.update_body()
 	invisible_man.remove_from_all_data_huds()
@@ -728,15 +723,11 @@
 
 /datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/carbon/invisible_man)
 	. = ..()
-	if(HAS_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN))
+	if(HAS_TRAIT_FROM(invisible_man, TRAIT_INVISIBLE_MAN, type))
 		invisible_man.add_to_all_human_data_huds() //Is this safe, what do you think, Floyd?
-		invisible_man.remove_traits(list(TRAIT_INVISIBLE_MAN, TRAIT_HIDE_EXTERNAL_ORGANS), name)
+		invisible_man.remove_traits(list(TRAIT_INVISIBLE_MAN, TRAIT_HIDE_EXTERNAL_ORGANS, TRAIT_NO_BLOOD_OVERLAY), type)
 
 		to_chat(invisible_man, span_notice("As you sober up, opacity once again returns to your body meats."))
-
-		var/datum/dna/druggy_dna = invisible_man.has_dna()
-		if(druggy_dna?.species)
-			druggy_dna.species.species_traits -= NOBLOODOVERLAY
 
 	invisible_man.update_body()
 	invisible_man.sound_environment_override = NONE

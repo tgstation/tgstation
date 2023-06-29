@@ -224,17 +224,46 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents plasmamen from self-igniting if only their helmet is missing
 #define TRAIT_NOSELFIGNITION_HEAD_ONLY "no_selfignition_head_only"
 #define TRAIT_NOGUNS "no_guns"
-///This carbon doesn't get hungry
-#define TRAIT_NOHUNGER "no_hunger"
-///This carbon doesn't bleed
-#define TRAIT_NOBLOOD "noblood"
-///This carbon doesn't show an overlay when they have no brain
+/// Species with this trait are genderless
+#define TRAIT_AGENDER "agender"
+/// Species with this trait have a blood clan mechanic
+#define TRAIT_BLOOD_CLANS "blood_clans"
+/// Species with this trait have markings (this SUCKS, remove this later in favor of bodypart overlays)
+#define TRAIT_HAS_MARKINGS "has_markings"
+/// Species with this trait have mutant colors
+#define TRAIT_MUTANT_COLORS "mutcolors"
+/// Species with this trait have mutant colors that cannot be chosen by the player
+#define TRAIT_FIXED_MUTANT_COLORS "fixed_mutcolors"
+/// Humans with this trait won't get bloody hands, nor bloody feet
+#define TRAIT_NO_BLOOD_OVERLAY "no_blood_overlay"
+/// Humans with this trait cannot have underwear
+#define TRAIT_NO_UNDERWEAR "no_underwear"
+/// This carbon doesn't show an overlay when they have no brain
 #define TRAIT_NO_DEBRAIN_OVERLAY "no_debrain_overlay"
-#define TRAIT_NOMETABOLISM "no_metabolism"
-// Use when you want a mob to be able to metabolize plasma temporarily (e.g. plasma fixation disease symptom)
-#define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
+/// Humans with this trait cannot get augmentation surgery
+#define TRAIT_NO_AUGMENTS "no_augments"
+/// This carbon doesn't get hungry
+#define TRAIT_NOHUNGER "no_hunger"
+/// This carbon doesn't bleed
+#define TRAIT_NOBLOOD "noblood"
+/// This just means that the carbon will always have functional liverless metabolism
+#define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
+/// Humans with this trait cannot be turned into zombies
+#define TRAIT_NO_ZOMBIFY "no_zombify"
+/// Humans with this trait cannot be affected by changeling transformation stings
+#define TRAIT_NO_TRANSFORMATION_STING "no_transformation_sting"
+/// Carbons with this trait can't have their DNA copied by diseases nor changelings
+#define TRAIT_NO_DNA_COPY "no_dna_copy"
+/// Carbons with this trait can eat blood to regenerate their own blood volume, instead of injecting it
+#define TRAIT_DRINKS_BLOOD "drinks_blood"
+/// Mob is immune to clone (cellular) damage
 #define TRAIT_NOCLONELOSS "no_cloneloss"
+/// Mob is immune to toxin damage
 #define TRAIT_TOXIMMUNE "toxin_immune"
+/// Mob is immune to oxygen damage, does not need to breathe
+#define TRAIT_NOBREATH "no_breath"
+/// Use when you want a mob to be able to metabolize plasma temporarily (e.g. plasma fixation disease symptom)
+#define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
 #define TRAIT_EASYDISMEMBER "easy_dismember"
 #define TRAIT_LIMBATTACHMENT "limb_attach"
 #define TRAIT_NOLIMBDISABLE "no_limb_disable"
@@ -248,7 +277,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
 #define TRAIT_FASTMED "fast_med_use"
-#define TRAIT_NOBREATH "no_breath"
 #define TRAIT_ANTIMAGIC "anti_magic"
 #define TRAIT_HOLY "holy"
 /// This allows a person who has antimagic to cast spells without getting blocked

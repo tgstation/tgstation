@@ -5,13 +5,11 @@
 	icon_state = "abductor"
 	inhand_icon_state = "bl_suit"
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
-	armor_type = /datum/armor/under_abductor
+	armor_type = /datum/armor/clothing_under/abductor
 	can_adjust = FALSE
 
-/datum/armor/under_abductor
+/datum/armor/clothing_under/abductor
 	bomb = 10
-	bio = 10
-	wound = 5
 
 //AGENT VEST
 /obj/item/clothing/suit/armor/abductor/vest

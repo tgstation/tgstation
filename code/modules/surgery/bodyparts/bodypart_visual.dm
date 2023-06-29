@@ -46,7 +46,6 @@
 	// No, xenos don't actually use bodyparts. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
 	var/datum/species/owner_species = human_owner.dna.species
-	species_flags_list = owner_species.species_traits.Copy()
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
 
 	if(owner_species.use_skintones)
@@ -54,7 +53,7 @@
 	else
 		skin_tone = ""
 
-	if(((MUTCOLORS in owner_species.species_traits) || (DYNCOLORS in owner_species.species_traits))) //Ethereal code. Motherfuckers.
+	if(HAS_TRAIT(owner, TRAIT_MUTANT_COLORS))
 		if(owner_species.fixed_mut_color)
 			species_color = owner_species.fixed_mut_color
 		else
@@ -64,7 +63,7 @@
 
 	draw_color = variable_color
 	if(should_draw_greyscale) //Should the limb be colored?
-		draw_color ||= (species_color) || (skin_tone && skintone2hex(skin_tone))
+		draw_color ||= species_color || (skin_tone ? skintone2hex(skin_tone) : null)
 
 	recolor_mutant_overlays()
 	return TRUE

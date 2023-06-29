@@ -42,10 +42,10 @@
 	. = ..()
 	if(!.)
 		return
-	new_head_owner.become_blind(limb_id)
+	new_head_owner.become_blind(bodypart_trait_source)
 
 /obj/item/bodypart/head/psyker/drop_limb(special, dismembered)
-	owner.cure_blind(limb_id)
+	owner.cure_blind(bodypart_trait_source)
 	return ..()
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()

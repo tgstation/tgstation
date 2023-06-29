@@ -375,7 +375,7 @@
 	name = "Korta brittle slab"
 	reqs = list(
 		/obj/item/food/grown/korta_nut = 2,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 1,
 		/datum/reagent/consumable/korta_nectar = 5,
 		/datum/reagent/consumable/sugar = 5,
 		/datum/reagent/consumable/salt = 2

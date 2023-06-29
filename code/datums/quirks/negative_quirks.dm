@@ -865,7 +865,7 @@
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/junkie/process(seconds_per_tick)
-	if(HAS_TRAIT(quirk_holder, TRAIT_NOMETABOLISM))
+	if(HAS_TRAIT(quirk_holder, TRAIT_LIVERLESS_METABOLISM))
 		return
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(world.time > next_process)
