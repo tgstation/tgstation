@@ -575,7 +575,7 @@
 	if(!istype(patient) || user.incapacitated())
 		return
 
-	var/list/render
+	var/list/render = list()
 	for(var/datum/disease/disease as anything in patient.diseases)
 		if(!(disease.visibility_flags & HIDDEN_SCANNER))
 			render += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b>\n\
