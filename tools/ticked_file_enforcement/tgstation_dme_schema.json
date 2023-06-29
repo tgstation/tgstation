@@ -1,5 +1,6 @@
 {
 	"file": "tgstation.dme",
+	"scannable_directory": "code/**/*.dm",
 	"forbidden_includes": [
 		"code/modules/tgs/**/*.dm",
 		"code/modules/unit_tests/[!_]*.dm"

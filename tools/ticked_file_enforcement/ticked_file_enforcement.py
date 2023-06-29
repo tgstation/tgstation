@@ -4,15 +4,15 @@ import glob
 import sys
 import json
 
-FORBID_INCLUDE = []
 
 schema = json.load(sys.stdin)
 file_reference = schema["file"]
-raw_forbid_include = schema["forbidden_includes"]
+scannable_directory = schema["scannable_directory"]
+FORBIDDEN_INCLUDES = schema["forbidden_includes"]
 
-if raw_forbid_include is not None:
-    for forbidable_category in raw_forbid_include:
-        FORBID_INCLUDE.append(repr(forbidable_category))
+if FORBIDDEN_INCLUDES is None:
+    print("No forbidden includes were provided")
+    sys.exit(1)
 
 reading = False
 lines = []
@@ -41,14 +41,14 @@ offset = total - len(lines)
 print(f"{offset} lines were ignored in output")
 fail_no_include = False
 
-for code_file in glob.glob("code/**/*.dm", recursive=True):
+for code_file in glob.glob(scannable_directory, recursive=True):
     dm_path = code_file.replace('/', '\\')
 
     included = f"#include \"{dm_path}\"" in lines
     forbid_include = False
 
-    for forbid in FORBID_INCLUDE:
-        if not fnmatch.fnmatch(code_file, forbid):
+    for forbidable in FORBIDDEN_INCLUDES:
+        if not fnmatch.fnmatch(code_file, forbidable):
             continue
 
         forbid_include = True
