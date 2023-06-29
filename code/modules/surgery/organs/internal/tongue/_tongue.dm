@@ -124,17 +124,14 @@
 		return
 	if(modifies_speech)
 		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-	if(!(organ_flags & ORGAN_FAILING))
-		ADD_TRAIT(tongue_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
+	tongue_owner.voice_filter = voice_filter
 	/* This could be slightly simpler, by making the removal of the
 	* NO_TONGUE_TRAIT conditional on the tongue's `sense_of_taste`, but
 	* then you can distinguish between ageusia from no tongue, and
 	* ageusia from having a non-tasting tongue.
 	*/
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
-	if(!sense_of_taste || (organ_flags & ORGAN_FAILING))
-		ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
-	tongue_owner.voice_filter = voice_filter
+	apply_tongue_effects()
 
 /obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
 	. = ..()
@@ -150,17 +147,23 @@
 	. = ..()
 	if(!owner)
 		return
-	//tongues can't taste food when they are failing
+	apply_tongue_effects()
+
+/// Applies effects to our owner based on how damaged our tongue is
+/obj/item/organ/internal/tongue/proc/apply_tongue_effects()
 	if(sense_of_taste)
 		//tongues can't taste food when they are failing
 		if(organ_flags & ORGAN_FAILING)
 			ADD_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 		else
 			REMOVE_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
-	if(organ_flags & ORGAN_FAILING)
-		ADD_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
 	else
+		//tongues can't taste food when they lack a sense of taste
+		ADD_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
+	if(organ_flags & ORGAN_FAILING)
 		REMOVE_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
+	else
+		ADD_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
 
 /obj/item/organ/internal/tongue/could_speak_language(datum/language/language_path)
 	return (language_path in languages_possible)
