@@ -14,7 +14,7 @@
 	var/speaker = preferences.read_preference(/datum/preference/choiced/voice)
 	var/pitch = preferences.read_preference(/datum/preference/numeric/tts_voice_pitch)
 	COOLDOWN_START(src, tts_test_cooldown, 0.5 SECONDS)
-	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), user.client, "Hello, this is my voice.", speaker = speaker, pitch = pitch, local = TRUE)
+	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), user.client, "I used to be a space man like you, then I took a golden bolt in the knee.", speaker = speaker, pitch = pitch, local = TRUE)
 	return TRUE
 
 /datum/preference_middleware/tts/proc/play_voice_robot(list/params, mob/user)
