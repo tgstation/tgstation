@@ -1,4 +1,5 @@
 /datum/hud/new_player
+	inventory_shown = TRUE
 
 /datum/hud/new_player/New(mob/owner)
 	..()
@@ -14,7 +15,10 @@
 		var/atom/movable/screen/lobby/lobbyscreen = new button_type()
 		lobbyscreen.SlowInit()
 		lobbyscreen.hud = src
-		static_inventory += lobbyscreen
+		if(istype(lobbyscreen, /atom/movable/screen/lobby/button/collapse))
+			static_inventory += lobbyscreen
+		else
+			toggleable_inventory += lobbyscreen
 		if(istype(lobbyscreen, /atom/movable/screen/lobby/button))
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
 			lobby_button.owner = REF(owner)
@@ -359,3 +363,22 @@
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
 	new_player.handle_player_polling()
+
+/atom/movable/screen/lobby/button/collapse
+	name = "Collapse Lobby Menu"
+	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+	icon_state = "collapse"
+	base_icon_state = "collapse"
+	screen_loc = "TOP,CENTER:+110"
+
+/atom/movable/screen/lobby/button/collapse/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	var/mob/dead/new_player/new_player = hud.mymob
+	if(new_player.hud_used.inventory_shown)
+		new_player.hud_used.inventory_shown = FALSE
+		new_player.client.screen -= new_player.hud_used.toggleable_inventory
+	else
+		new_player.hud_used.inventory_shown = TRUE
+		new_player.client.screen += new_player.hud_used.toggleable_inventory
