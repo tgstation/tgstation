@@ -201,7 +201,7 @@
 	desc = "A basic electronic device designed to mimic the functions of an organic human heart."
 	icon_state = "heart-c-on"
 	base_icon_state = "heart-c"
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.75 //This also hits defib timer, so a bit higher than its less important counterparts
 
 	var/dose_available = FALSE
@@ -241,7 +241,7 @@
 		owner.losebreath += 10
 		COOLDOWN_START(src, severe_cooldown, 20 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 		Stop()
 		owner.visible_message(span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"), \
 						span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
@@ -263,7 +263,7 @@
 /obj/item/organ/internal/heart/freedom
 	name = "heart of freedom"
 	desc = "This heart pumps with the passion to give... something freedom."
-	organ_flags = ORGAN_SYNTHETIC  //the power of freedom prevents heart attacks
+	organ_flags = ORGAN_ROBOTIC  //the power of freedom prevents heart attacks
 	/// The cooldown until the next time this heart can give the host an adrenaline boost.
 	COOLDOWN_DECLARE(adrenaline_cooldown)
 

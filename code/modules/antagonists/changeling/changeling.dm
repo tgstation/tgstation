@@ -482,7 +482,7 @@
 		if(verbose)
 			to_chat(user, span_warning("We already have this DNA in storage!"))
 		return FALSE
-	if(NO_DNA_COPY in target.dna.species?.species_traits)
+	if(HAS_TRAIT(target, TRAIT_NO_DNA_COPY))
 		if(verbose)
 			to_chat(user, span_warning("[target] is not compatible with our biology."))
 		return FALSE
@@ -768,8 +768,7 @@
 	chosen_dna.transfer_identity(user, TRUE)
 
 	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
-		if(IS_ORGANIC_LIMB(limb))
-			limb.update_limb(is_creating = TRUE)
+		limb.update_limb(is_creating = TRUE)
 
 	user.updateappearance(mutcolor_update = TRUE)
 	user.domutcheck()
