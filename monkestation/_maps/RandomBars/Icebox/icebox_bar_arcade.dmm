@@ -237,6 +237,7 @@
 	},
 /obj/machinery/requests_console/auto_name/directional/east,
 /obj/structure/table/wood,
+/obj/item/mod/module/springlock,
 /obj/item/stack/arcadeticket{
 	amount = 5
 	},
