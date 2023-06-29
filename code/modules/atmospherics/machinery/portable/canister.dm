@@ -476,7 +476,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/welder_act_secondary(mob/living/user, obj/item/I)
 	. = ..()
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=1))
 		return TRUE
 	var/pressure = air_contents.return_pressure()
 	if(pressure > 300)
@@ -497,7 +497,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		return TRUE
 	if(machine_stat & BROKEN)
 		return TRUE
-	if(!tool.tool_start_check(user, amount=0))
+	if(!tool.tool_start_check(user, amount=1))
 		return TRUE
 	to_chat(user, span_notice("You begin repairing cracks in [src]..."))
 	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
@@ -798,8 +798,30 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
 			usr.investigate_log("turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
 			. = TRUE
+		if("recolor")
+			select_colors()
+			. = TRUE
 
 	update_appearance()
+
+/obj/machinery/portable_atmospherics/canister/proc/select_colors()
+	var/atom/fake_atom = src
+	var/list/allowed_configs = list()
+	var/config = initial(fake_atom.greyscale_config)
+	if(!config)
+		return
+	allowed_configs += "[config]"
+
+	var/datum/greyscale_modify_menu/menu = new(
+		src, usr, allowed_configs, CALLBACK(src, PROC_REF(recolor)),
+		starting_icon_state=initial(fake_atom.icon_state),
+		starting_config=initial(fake_atom.greyscale_config),
+		starting_colors=initial(fake_atom.greyscale_colors)
+	)
+	menu.ui_interact(usr)
+
+/obj/machinery/portable_atmospherics/canister/proc/recolor(datum/greyscale_modify_menu/menu)
+	set_greyscale(menu.split_colors)
 
 /obj/machinery/portable_atmospherics/canister/unregister_holding()
 	valve_open = FALSE

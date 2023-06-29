@@ -51,6 +51,9 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
+	if(istype(W, /obj/item/lightreplacer))
+		var/obj/item/lightreplacer/lightreplacer = W
+		lightreplacer.attackby(src, user)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if (get_amount() < 1 || CC.get_amount() < 5)
@@ -240,7 +243,8 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	. += GLOB.titaniumglass_recipes
 
 GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
-	new/datum/stack_recipe("plastitanium window", /obj/structure/window/reinforced/plasma/plastitanium/unanchored, 2, time = 0, on_solid_ground = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS) \
+	new/datum/stack_recipe("plastitanium window", /obj/structure/window/reinforced/plasma/plastitanium/unanchored, 2, time = 0, on_solid_ground = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("plastitanium glass shard", /obj/item/shard/plastitanium, time = 60, on_solid_ground = TRUE, category = CAT_MISC) \
 	))
 
 /obj/item/stack/sheet/plastitaniumglass

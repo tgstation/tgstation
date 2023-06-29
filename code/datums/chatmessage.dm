@@ -13,7 +13,7 @@
 /// Approximate height in pixels of an 'average' line, used for height decay
 #define CHAT_MESSAGE_APPROX_LHEIGHT 11
 /// Max width of chat message in pixels
-#define CHAT_MESSAGE_WIDTH 96
+#define CHAT_MESSAGE_WIDTH 112
 /// The dimensions of the chat message icons
 #define CHAT_MESSAGE_ICON_SIZE 9
 
@@ -114,7 +114,7 @@
 
 	// Register client who owns this message
 	owned_by = owner.client
-	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_qdel))
+	RegisterSignal(owned_by, COMSIG_QDELETING, PROC_REF(on_parent_qdel))
 
 	// Remove spans in the message from things like the recorder
 	var/static/regex/span_check = new(@"<\/?span[^>]*>", "gi")
@@ -145,6 +145,10 @@
 	if (!ismob(target))
 		extra_classes |= "small"
 
+	// Why are you yelling?
+	if(copytext_char(text, -2) == "!!")
+		extra_classes |= SPAN_YELL
+
 	var/list/prefixes
 
 	// Append radio icon if from a virtual speaker
@@ -171,7 +175,7 @@
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
 
 	// Approximate text height
-	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[owner.say_emphasis(text)]</span>"
+	var/complete_text = "<span style='color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[owner.say_emphasis(text)]</span></span>"
 
 	var/mheight
 	WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH), mheight)

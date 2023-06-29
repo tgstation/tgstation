@@ -69,9 +69,10 @@ SUBSYSTEM_DEF(job)
 
 	/// This is just the message we prepen and put into all of the config files to ensure documentation. We use this in more than one place, so let's put it in the SS to make life a bit easier.
 	var/config_documentation = "## This is the configuration file for the job system.\n## This will only be enabled when the config flag LOAD_JOBS_FROM_TXT is enabled.\n\
-	## We use a system of keys here that directly correlate to the job, just to ensure they don't desync if we choose to change the name of a job.\n## You are able to change (as of now) four different variables in this file.\n\
+	## We use a system of keys here that directly correlate to the job, just to ensure they don't desync if we choose to change the name of a job.\n## You are able to change (as of now) five different variables in this file.\n\
 	## Total Positions are how many job slots you get in a shift, Spawn Positions are how many you get that load in at spawn. If you set this to -1, it is unrestricted.\n## Playtime Requirements is in minutes, and the job will unlock when a player reaches that amount of time.\n\
-	## However, that can be superseded by Required Account Age, which is a time in days that you need to have had an account on the server for.\n## As time goes on, more config options may be added to this file.\n\
+	## However, that can be superseded by Required Account Age, which is a time in days that you need to have had an account on the server for.\n\
+	## Also there is a required character age in years. It prevents player from joining as this job, if their character's age as is lower than required. Zero = turned off for this job.\n## As time goes on, more config options may be added to this file.\n\
 	## You can use the admin verb 'Generate Job Configuration' in-game to auto-regenerate this config as a downloadable file without having to manually edit this file if we add more jobs or more things you can edit here.\n\
 	## It will always respect prior-existing values in the config, but will appropriately add more fields when they generate.\n## It's strongly advised you create your own version of this file rather than use the one provisioned on the codebase.\n\n\
 	## The game will not read any line that is commented out with a '#', as to allow you to defer to codebase defaults.\n## If you want to override the codebase values, add the value and then uncomment that line by removing the # from the job key's name.\n\
@@ -608,6 +609,7 @@ SUBSYSTEM_DEF(job)
 #define SPAWN_POSITIONS "Spawn Positions"
 #define PLAYTIME_REQUIREMENTS "Playtime Requirements"
 #define REQUIRED_ACCOUNT_AGE "Required Account Age"
+#define REQUIRED_CHARACTER_AGE "Required Character Age"
 
 /// Called in jobs subsystem initialize if LOAD_JOBS_FROM_TXT config flag is set: reads jobconfig.toml (or if in legacy mode, jobs.txt) to set all of the datum's values to what the server operator wants.
 /datum/controller/subsystem/job/proc/load_jobs_from_config()
@@ -628,6 +630,7 @@ SUBSYSTEM_DEF(job)
 			var/starting_positions = job_config[job_key][SPAWN_POSITIONS]
 			var/playtime_requirements = job_config[job_key][PLAYTIME_REQUIREMENTS]
 			var/required_account_age = job_config[job_key][REQUIRED_ACCOUNT_AGE]
+			var/required_character_age = job_config[job_key][REQUIRED_CHARACTER_AGE]
 
 			if(default_positions || default_positions == 0) // We need to account for jobs that were intentionally turned off via config too.
 				occupation.total_positions = default_positions
@@ -637,6 +640,8 @@ SUBSYSTEM_DEF(job)
 				occupation.exp_requirements = playtime_requirements
 			if(required_account_age || required_account_age == 0)
 				occupation.minimal_player_age = required_account_age
+			if(required_character_age || required_character_age == 0)
+				occupation.required_character_age = required_character_age
 
 		return
 
@@ -702,6 +707,7 @@ SUBSYSTEM_DEF(job)
 					"# [SPAWN_POSITIONS]" = -1,
 					"# [PLAYTIME_REQUIREMENTS]" = occupation.exp_requirements,
 					"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
+					"# [REQUIRED_CHARACTER_AGE]" = occupation.required_character_age,
 				)
 				continue
 			// Generate new config from codebase defaults.
@@ -710,6 +716,7 @@ SUBSYSTEM_DEF(job)
 				"# [SPAWN_POSITIONS]" = occupation.spawn_positions,
 				"# [PLAYTIME_REQUIREMENTS]" = occupation.exp_requirements,
 				"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
+				"# [REQUIRED_CHARACTER_AGE]" = occupation.required_character_age,
 			)
 		if(!export_toml(user, file_data))
 			return FALSE
@@ -735,6 +742,7 @@ SUBSYSTEM_DEF(job)
 			var/starting_positions = job_config[job_key][SPAWN_POSITIONS]
 			var/playtime_requirements = job_config[job_key][PLAYTIME_REQUIREMENTS]
 			var/required_account_age = job_config[job_key][REQUIRED_ACCOUNT_AGE]
+			var/required_character_age = job_config[job_key][REQUIRED_CHARACTER_AGE]
 
 			if(file_data["[job_key]"]) // Sanity, let's just make sure we don't overwrite anything or add any dupe keys. We also unit test for this, but eh, you never know sometimes.
 				stack_trace("We were about to over-write a job key that already exists in file_data while generating a new jobconfig.toml! This should not happen! Verify you do not have any duplicate job keys in your codebase!")
@@ -774,6 +782,14 @@ SUBSYSTEM_DEF(job)
 				file_data["[job_key]"] += list(
 					"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
 				)
+			if(required_character_age) // Same pattern as above.
+				file_data["[job_key]"] += list(
+					REQUIRED_CHARACTER_AGE = required_character_age,
+				)
+			else
+				file_data["[job_key]"] += list(
+					"# [REQUIRED_CHARACTER_AGE]" = occupation.required_character_age,
+				)
 			continue
 		else
 			to_chat(user, span_notice("New job [job_name] (using key [job_key]) detected! Adding to jobconfig.toml using default codebase values..."))
@@ -783,6 +799,7 @@ SUBSYSTEM_DEF(job)
 				"# [SPAWN_POSITIONS]" = occupation.spawn_positions,
 				"# [PLAYTIME_REQUIREMENTS]" = occupation.exp_requirements,
 				"# [REQUIRED_ACCOUNT_AGE]" = occupation.minimal_player_age,
+				"# [REQUIRED_CHARACTER_AGE]" = occupation.required_character_age,
 			)
 
 	if(!export_toml(user, file_data))
@@ -801,6 +818,7 @@ SUBSYSTEM_DEF(job)
 #undef SPAWN_POSITIONS
 #undef PLAYTIME_REQUIREMENTS
 #undef REQUIRED_ACCOUNT_AGE
+#undef REQUIRED_CHARACTER_AGE
 
 /datum/controller/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job as anything in joinable_occupations)
@@ -1088,6 +1106,11 @@ SUBSYSTEM_DEF(job)
 	if(is_banned_from(player.ckey, possible_job.title))
 		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_BANNED, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_BANNED
+		
+	// Check for character age
+	if(possible_job.required_character_age > player.client.prefs.read_preference(/datum/preference/numeric/age) && possible_job.required_character_age != null)
+		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_AGE)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		return JOB_UNAVAILABLE_AGE
 
 	// Need to recheck the player exists after is_banned_from since it can query the DB which may sleep.
 	if(QDELETED(player))

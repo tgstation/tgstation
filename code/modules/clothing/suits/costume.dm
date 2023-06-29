@@ -42,7 +42,7 @@
 	icon_state = "hgpirate"
 	inhand_icon_state = null
 
-/obj/item/clothing/suit/costume/pirate/armored
+/obj/item/clothing/suit/costume/pirate/captain/armored
 	armor_type = /datum/armor/pirate_armored
 	strip_delay = 40
 	equip_delay_other = 20
@@ -519,8 +519,12 @@
 /obj/item/clothing/suit/costume/hawaiian
 	name = "hawaiian overshirt"
 	desc = "A cool shirt for chilling on the beach."
-	icon_state = "hawaiian_blue"
+	icon_state = "hawaiian_shirt"
 	inhand_icon_state = null
+	greyscale_config = /datum/greyscale_config/hawaiian_shirt
+	greyscale_config_worn = /datum/greyscale_config/hawaiian_shirt/worn
+	greyscale_colors = "#313B82#CCCFF0"
+	flags_1 = IS_PLAYER_COLORABLE_1
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/costume/football_armor

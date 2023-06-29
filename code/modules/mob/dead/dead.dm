@@ -23,7 +23,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		add_verb(src, /mob/dead/proc/server_hop)
 	set_focus(src)
 	become_hearing_sensitive()
-	log_mob_tag("CREATED: [key_name(src)] \[[src.type]\]")
+	log_mob_tag("TAG: [tag] CREATED: [key_name(src)] \[[src.type]\]")
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dead/canUseStorage()

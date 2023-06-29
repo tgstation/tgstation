@@ -270,7 +270,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			spawned -= holo_atom
 			continue
 
-		RegisterSignal(holo_atom, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_holo_lists))
+		RegisterSignal(holo_atom, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
 		holo_atom.flags_1 |= HOLOGRAM_1
 
 		if(isholoeffect(holo_atom))//activates holo effects and transfers them from the spawned list into the effects list
@@ -280,10 +280,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			var/atom/holo_effect_product = holo_effect.activate(src)//change name
 			if(istype(holo_effect_product))
 				spawned += holo_effect_product // we want mobs or objects spawned via holoeffects to be tracked as objects
-				RegisterSignal(holo_effect_product, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_holo_lists))
+				RegisterSignal(holo_effect_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
 			if(islist(holo_effect_product))
 				for(var/atom/atom_product as anything in holo_effect_product)
-					RegisterSignal(atom_product, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_holo_lists))
+					RegisterSignal(atom_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
 			continue
 
 		if(isobj(holo_atom))
@@ -310,7 +310,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	spawned -= holo_atom
 	if(!holo_atom)
 		return
-	UnregisterSignal(holo_atom, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(holo_atom, COMSIG_QDELETING)
 	var/turf/target_turf = get_turf(holo_atom)
 	for(var/atom/movable/atom_contents as anything in holo_atom) //make sure that things inside of a holoitem are moved outside before destroying it
 		atom_contents.forceMove(target_turf)
@@ -329,7 +329,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 /obj/machinery/computer/holodeck/proc/remove_from_holo_lists(datum/to_remove, _forced)
 	SIGNAL_HANDLER
 	spawned -= to_remove
-	UnregisterSignal(to_remove, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(to_remove, COMSIG_QDELETING)
 
 /obj/machinery/computer/holodeck/process(seconds_per_tick)
 	if(damaged && SPT_PROB(5, seconds_per_tick))

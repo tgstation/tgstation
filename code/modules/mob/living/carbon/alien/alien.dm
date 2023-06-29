@@ -19,7 +19,10 @@
 	// default_harm_style = /datum/attack_style/unarmed/generic_damage/mob_attack/xeno // Handled by limbs, here for posterity
 	default_disarm_style = /datum/attack_style/unarmed/disarm/xeno
 
+	///Whether or not the alien is leaping. Only used by hunters.
 	var/leaping = FALSE
+	///The speed this alien should move at.
+	var/alien_speed = 0
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = TRUE
 
@@ -36,6 +39,8 @@
 	add_traits(list(TRAIT_NEVER_WOUNDED, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 
 	. = ..()
+	if(alien_speed)
+		update_alien_speed()
 
 /mob/living/carbon/alien/create_internal_organs()
 	organs += new /obj/item/organ/internal/brain/alien
@@ -69,9 +74,6 @@
 					apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
 	else
 		clear_alert(ALERT_XENO_FIRE)
-
-/mob/living/carbon/alien/reagent_check(datum/reagent/R, seconds_per_tick, times_fired) //can metabolize all reagents
-	return FALSE
 
 /mob/living/carbon/alien/getTrail()
 	if(getBruteLoss() < 200)
@@ -144,3 +146,6 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/on_standing_up()
 	. = ..()
 	update_icons()
+
+/mob/living/carbon/alien/proc/update_alien_speed()
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/alien_speed, multiplicative_slowdown = alien_speed)

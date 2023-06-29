@@ -260,6 +260,9 @@
 
 /datum/config_entry/flag/norespawn
 
+/datum/config_entry/number/respawn_delay
+	default = 0
+
 /datum/config_entry/flag/usewhitelist
 
 /datum/config_entry/flag/use_age_restriction_for_jobs //Do jobs use account age restrictions? --requires database
@@ -622,6 +625,12 @@
 /datum/config_entry/flag/reopen_roundstart_suicide_roles_command_report
 
 /datum/config_entry/flag/auto_profile
+
+/datum/config_entry/number/drift_dump_threshold
+	default = 4 SECONDS
+
+/datum/config_entry/number/drift_profile_delay
+	default = 15 SECONDS
 
 /datum/config_entry/string/centcom_ban_db // URL for the CentCom Galactic Ban DB API
 

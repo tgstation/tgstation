@@ -16,11 +16,11 @@
 		return ELEMENT_INCOMPATIBLE
 	src.amount_allowed = amount_allowed
 	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine_before_dip))
 
 /datum/element/envenomable_casing/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ITEM_AFTERATTACK, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(target, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ATOM_EXAMINE))
 
 ///signal called on the parent attacking an item
 /datum/element/envenomable_casing/proc/on_afterattack(obj/item/ammo_casing/casing, atom/target, mob/user, proximity_flag, click_parameters)
@@ -39,19 +39,21 @@
 		return
 	var/amount_applied = min(venom_applied.volume, amount_allowed)
 
-	casing.loaded_projectile.AddComponent(/datum/element/venomous, venom_applied.type, amount_applied)
+	casing.loaded_projectile.AddElement(/datum/element/venomous, venom_applied.type, amount_applied)
 	to_chat(user, span_notice("You coat [casing] in [venom_applied]."))
 	venom_container.reagents.remove_reagent(venom_applied.type, amount_applied)
 	///stops further poison application
 	UnregisterSignal(casing, COMSIG_ITEM_AFTERATTACK)
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine_after_dip), override = TRUE)
 
-///signal called on parent being examined
-/datum/element/envenomable_casing/proc/on_examine(obj/item/ammo_casing/casing, mob/user, list/examine_list)
+///signal called on parent being examined while not coated
+/datum/element/envenomable_casing/proc/on_examine_before_dip(obj/item/ammo_casing/casing, mob/user, list/examine_list)
 	SIGNAL_HANDLER
+	examine_list += span_notice("You can dip it in a chemical to deliver a poisonous kick.")
 
-	if(!casing.loaded_projectile)
-		return
-	if(casing.loaded_projectile.GetComponent(/datum/element/venomous))
-		examine_list += span_warning("It's coated in some kind of chemical...")
-	else
-		examine_list += span_notice("You can dip it in a chemical to deliver a poisonous kick.")
+///ditto, but after it's been coated
+/datum/element/envenomable_casing/proc/on_examine_after_dip(obj/item/ammo_casing/casing, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	examine_list += span_warning("It's coated in some kind of chemical...")
+
+

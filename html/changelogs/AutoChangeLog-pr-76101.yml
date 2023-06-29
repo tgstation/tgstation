@@ -1,0 +1,11 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - rscadd: "The abductor equipment vendor now offers a hacking/medical hypertool, at a price of 2 research points."
+  - rscadd: "The abductor equipment vendor now sells decorative abductor posters, at a price of 1 research point."
+  - rscadd: "The abductor equipment vendor now sells a cow, at the price of 1 research point."
+  - bugfix: "Fixes a runtime when trying to probe non-human mobs."
+  - image: "Some abductorized versions of existing wall posters and an alien hypertool."
+  - code_imp: "The abductor shop listings now use lists of items, rather than single build paths."
+  - code_imp: "The abductor_gear.dm file has been split up into a few different files."
+  - code_imp: "Posters can now be hung on indestructible walls."

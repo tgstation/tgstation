@@ -34,7 +34,6 @@
 	volume = 200
 	possible_transfer_amounts = list(20, 50, 100, 200)
 	amount_per_transfer_from_this = 50
-	amount_list_position = 2
 	reagent_flags = REFILLABLE | DRAINABLE
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5)
 	w_class = WEIGHT_CLASS_BULKY
@@ -49,7 +48,7 @@
 /obj/item/reagent_containers/cup/soup_pot/Initialize(mapload, vol)
 	. = ..()
 	RegisterSignal(reagents, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_cleared))
-	RegisterSignal(src, COMSIG_PARENT_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
+	RegisterSignal(src, COMSIG_ATOM_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
 	register_context()
 
 /obj/item/reagent_containers/cup/soup_pot/add_context(atom/source, list/context, obj/item/held_item, mob/user)

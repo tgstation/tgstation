@@ -142,6 +142,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			say_dead(original_message)
 			return
 
+	if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN))
+		message_mods[WHISPER_MODE] = MODE_WHISPER
+
 	if(client && SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && !forced && src == usr)
 		if(!COOLDOWN_FINISHED(client, say_slowmode))
 			to_chat(src, span_warning("Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\""))
@@ -179,6 +182,18 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		else
 			log_talk(message, LOG_SAY, forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
+#ifdef UNIT_TESTS
+	// Saves a ref() to our arglist specifically.
+	// We do this because we need to check that COMSIG_MOB_SAY is getting EXACTLY this list.
+	last_say_args_ref = REF(args)
+#endif
+
+	if(!HAS_TRAIT(src, TRAIT_SIGN_LANG)) // if using sign language skip sending the say signal
+		// Make sure the arglist is passed exactly - don't pass a copy of it. Say signal handlers will modify some of the parameters.
+		var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
+		if(sigreturn & COMPONENT_UPPERCASE_SPEECH)
+			message = uppertext(message)
+
 	var/list/message_data = treat_message(message) // unfortunately we still need this
 	message = message_data["message"]
 	var/tts_message = message_data["tts_message"]
@@ -194,21 +209,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		var/randomnote = pick("\u2669", "\u266A", "\u266B")
 		message = "[randomnote] [message] [randomnote]"
 		spans |= SPAN_SINGING
-
-	#ifdef UNIT_TESTS
-	// Saves a ref() to our arglist specifically.
-	// We do this because we need to check that COMSIG_MOB_SAY is getting EXACTLY this list.
-	last_say_args_ref = REF(args)
-	#endif
-
-	if(!HAS_TRAIT(src, TRAIT_SIGN_LANG)) // if using sign language skip sending the say signal
-		// Make sure the arglist is passed exactly - don't pass a copy of it. Say signal handlers will modify some of the parameters.
-		var/last_message = message
-		var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
-		if(last_message != message)
-			tts_message = message
-		if(sigreturn & COMPONENT_UPPERCASE_SPEECH)
-			message = uppertext(message)
 
 
 	if(!message)
@@ -474,6 +474,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	while(length_regex.Find(tts_message))
 		var/replacement = tts_message[length_regex.index]+tts_message[length_regex.index]+tts_message[length_regex.index]
 		tts_message = replacetext(tts_message, length_regex.match, replacement, length_regex.index)
+
+	// removes repeated consonants at the start of a word: ex: sss
+	var/static/regex/word_start_regex = regex(@"\b([^aeiou\L])\1", "gi")
+	while(word_start_regex.Find(tts_message))
+		var/replacement = tts_message[word_start_regex.index]
+		tts_message = replacetext(tts_message, word_start_regex.match, replacement, word_start_regex.index)
 
 	return list("message" = message, "tts_message" = tts_message, "tts_filter" = tts_filter)
 
