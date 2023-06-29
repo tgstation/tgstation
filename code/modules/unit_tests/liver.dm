@@ -25,7 +25,7 @@
 	var/expected_healed_amount = DAMAGE_AMOUNT - (2.5 * REM * (SSmobs.wait / 10)) // = seconds_per_tick
 	// Milk also heals brute on its own, so we may be more healed than expected
 	TEST_ASSERT(damaged_parts[1].brute_dam >= expected_healed_amount,
-		"Milk did not heal the expected amount of damage (expected [expected_healed_amount] got [damaged_parts[1].brute_dam])")
+		"Milk did not heal the expected amount of damage (expected at least [expected_healed_amount], got [damaged_parts[1].brute_dam])")
 
 #undef DAMAGE_AMOUNT
 
