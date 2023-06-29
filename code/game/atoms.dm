@@ -2102,9 +2102,9 @@
 					extra_lines++
 
 				if(extra_lines)
-					extra_context = "<br><span class='small'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
-					//first extra line pushes atom name line up 9px, subsequent lines push it up 8px, this offsets that and keeps the first line in the same place
-					active_hud.screentip_text.maptext_y = -2 + (extra_lines - 1) * -8
+					extra_context = "<br><span style='font-size: 6pt'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+					//first extra line pushes atom name line up 8px, subsequent lines push it up 10px, this offsets that and keeps the first line in the same place
+					active_hud.screentip_text.maptext_y = -1 + (extra_lines - 1) * -10
 
 	if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
 		active_hud.screentip_text.maptext = ""
