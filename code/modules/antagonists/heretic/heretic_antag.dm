@@ -761,5 +761,6 @@
 	r_hand = /obj/item/melee/touch_attack/mansus_fist
 
 /datum/antagonist/heretic/roundend_report_footer()
-	var/message = "<br><b>This heretics sacrifice targets were:</b> [sac_targets]<br>"
+	var/roundend_targets = jointext(sac_targets, ", ")
+	var/message = "<br><b>This heretics sacrifice targets were:</b> [roundend_targets]<br>"
 	return message
