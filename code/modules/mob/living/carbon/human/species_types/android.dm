@@ -1,6 +1,7 @@
 /datum/species/android
 	name = "Android"
 	id = SPECIES_ANDROID
+	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -42,7 +43,6 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot/android,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/android,
 	)
-	examine_limb_id = SPECIES_HUMAN
 
 /datum/species/android/on_species_gain(mob/living/carbon/C)
 	. = ..()

@@ -40,9 +40,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			return TRUE //no tele-grooming
 		if(HAS_TRAIT(hairdresser, TRAIT_SHAVED))
 			to_chat(hairdresser, span_notice("If only growing back facial hair were that easy for you..."))
-		hairdresser.facial_hairstyle = new_style
+			return TRUE
+		hairdresser.set_facial_hairstyle(new_style, update = TRUE)
 	else
-		hairdresser.facial_hairstyle = "Shaved"
+		hairdresser.set_facial_hairstyle("Shaved", update = TRUE)
 
 	//handle normal hair
 	var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
@@ -52,10 +53,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		return TRUE //no tele-grooming
 	if(HAS_TRAIT(hairdresser, TRAIT_BALD))
 		to_chat(hairdresser, span_notice("If only growing back hair were that easy for you..."))
+		return TRUE
 
-	hairdresser.hairstyle = new_style
-
-	hairdresser.update_body_parts()
+	hairdresser.set_hairstyle(new_style, update = TRUE)
 
 /obj/structure/mirror/examine_status(mob/user)
 	if(broken)
@@ -226,9 +226,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			amazed_human.update_mutations_overlay() // no hulk lizard
 
 		if("gender")
-			if(!(amazed_human.gender in list("male", "female"))) //blame the patriarchy
+			if(!(amazed_human.gender in list(MALE, FEMALE))) //blame the patriarchy
 				return TRUE
-			if(amazed_human.gender == "male")
+			if(amazed_human.gender == MALE)
 				if(tgui_alert(amazed_human, "Become a Witch?", "Confirmation", list("Yes", "No")) == "Yes")
 					if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 						return TRUE
@@ -237,7 +237,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 					to_chat(amazed_human, span_notice("Man, you feel like a woman!"))
 				else
 					return TRUE
-
 			else
 				if(tgui_alert(amazed_human, "Become a Warlock?", "Confirmation", list("Yes", "No")) == "Yes")
 					if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
@@ -262,12 +261,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 				if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 					return TRUE
 				if(new_hair_color)
-					amazed_human.hair_color = sanitize_hexcolor(new_hair_color)
+					amazed_human.set_haircolor(sanitize_hexcolor(new_hair_color), update = FALSE)
 					amazed_human.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
-				if(amazed_human.gender == "male")
+				if(amazed_human.gender == MALE)
 					var/new_face_color = input(amazed_human, "Choose your facial hair color", "Hair Color", amazed_human.facial_hair_color) as color|null
 					if(new_face_color)
-						amazed_human.facial_hair_color = sanitize_hexcolor(new_face_color)
+						amazed_human.set_facial_haircolor(sanitize_hexcolor(new_face_color), update = FALSE)
 						amazed_human.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
 				amazed_human.update_body_parts()
 

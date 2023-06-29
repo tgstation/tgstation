@@ -118,9 +118,8 @@
 		if(!istype(affected_mob.dna.species, /datum/species/human/krokodil_addict))
 			to_chat(affected_mob, span_userdanger("Your skin falls off easily!"))
 			var/mob/living/carbon/human/affected_human = affected_mob
-			affected_human.facial_hairstyle = "Shaved"
-			affected_human.hairstyle = "Bald"
-			affected_human.update_body_parts() // makes you loose hair as well
+			affected_human.set_facial_hairstyle("Shaved", update = FALSE)
+			affected_human.set_hairstyle("Bald", update = FALSE)
 			affected_mob.set_species(/datum/species/human/krokodil_addict)
 			affected_mob.adjustBruteLoss(50 * REM, FALSE, required_bodytype = affected_bodytype) // holy shit your skin just FELL THE FUCK OFF
 	..()
