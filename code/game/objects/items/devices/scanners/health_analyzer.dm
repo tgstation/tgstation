@@ -587,7 +587,7 @@
 		playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
 		to_chat(user, span_notice("The patient has no diseases."))
 	else
-		to_chat(user, span_notice(render))
+		to_chat(user, span_notice(render.Join("")))
 
 #undef SCANMODE_HEALTH
 #undef SCANMODE_WOUND
