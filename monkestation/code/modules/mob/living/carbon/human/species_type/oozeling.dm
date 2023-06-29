@@ -201,3 +201,49 @@
 		M.heal_bodypart_damage(5*REM)
 		. = 1
 	..()
+
+/datum/species/oozeling/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "Plasma Respiration",
+			SPECIES_PERK_DESC = "[plural_form] can breathe plasma, and restore blood by doing so.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "tint",
+			SPECIES_PERK_NAME = initial(exotic_blood.name),
+			SPECIES_PERK_DESC = "[name] blood is [initial(exotic_blood.name)], which can make recieving medical treatment harder.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "Anaerobic Lineage",
+			SPECIES_PERK_DESC = "[plural_form] don't require much oxygen to live."
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "skull",
+			SPECIES_PERK_NAME = "Self-Consumption",
+			SPECIES_PERK_DESC = "Once hungry enough, [plural_form] will begin to consume their own blood and limbs.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "tint",
+			SPECIES_PERK_NAME = "Liquid Being",
+			SPECIES_PERK_DESC = "[plural_form] will melt away when in contact with water.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "briefcase-medical",
+			SPECIES_PERK_NAME = "Oozeling Biology",
+			SPECIES_PERK_DESC = "[plural_form] take specialized medical knowledge to be \
+				treated. Do not expect speedy revival, if you are lucky enough to get \
+				one at all.",
+		),
+	)
+
+	return to_add
