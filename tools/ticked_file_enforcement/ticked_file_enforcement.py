@@ -7,7 +7,7 @@ import json
 FORBID_INCLUDE = []
 
 schema = json.load(sys.stdin)
-file = schema["file"]
+file_reference = schema["file"]
 raw_forbid_include = schema["forbidden_includes"]
 
 if raw_forbid_include is not None:
@@ -18,19 +18,24 @@ reading = False
 lines = []
 total = 0
 
-for line in file:
-    total += 1
-    line = line.strip()
+with open(file_reference, 'r') as file:
+    for line in file:
+        total += 1
+        line = line.strip()
 
-    if line == "// BEGIN_INCLUDE":
-        reading = True
-        continue
-    elif line == "// END_INCLUDE":
-        break
-    elif not reading:
-        continue
+        if line == "// BEGIN_INCLUDE":
+            reading = True
+            continue
+        elif line == "// END_INCLUDE":
+            break
+        elif not reading:
+            continue
 
-    lines.append(line)
+        lines.append(line)
+
+if lines == []:
+    print("No lines were read from the file")
+    sys.exit(1)
 
 offset = total - len(lines)
 print(f"{offset} lines were ignored in output")
@@ -94,5 +99,5 @@ sorted_lines = sorted(lines, key = functools.cmp_to_key(compare_lines))
 for (index, line) in enumerate(lines):
     if sorted_lines[index] != line:
         print(f"The include at line {index + offset} is out of order ({line}, expected {sorted_lines[index]})")
-        print(f"::error file={file},line={index+offset},title=Ticked File Enforcement::The include at line {index + offset} is out of order ({line}, expected {sorted_lines[index]})")
+        print(f"::error file={file_reference},line={index+offset},title=Ticked File Enforcement::The include at line {index + offset} is out of order ({line}, expected {sorted_lines[index]})")
         sys.exit(1)
