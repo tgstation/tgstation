@@ -195,10 +195,10 @@
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
 
-/obj/item/bodypart/chest/robot/handle_atom_del(atom/chest_atom)
-	if(chest_atom == cell)
+/obj/item/bodypart/chest/robot/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
-	return ..()
 
 /obj/item/bodypart/chest/robot/Destroy()
 	QDEL_NULL(cell)
@@ -322,12 +322,12 @@
 
 #undef EMP_GLITCH
 
-/obj/item/bodypart/head/robot/handle_atom_del(atom/head_atom)
-	if(head_atom == flash1)
+/obj/item/bodypart/head/robot/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == flash1)
 		flash1 = null
-	if(head_atom == flash2)
+	if(gone == flash2)
 		flash2 = null
-	return ..()
 
 /obj/item/bodypart/head/robot/Destroy()
 	QDEL_NULL(flash1)
