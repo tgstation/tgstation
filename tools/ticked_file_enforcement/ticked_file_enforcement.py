@@ -58,10 +58,6 @@ with open(file_reference, 'r') as file:
 
         lines.append(line)
 
-if lines == []:
-    print("No lines were read from the file")
-    sys.exit(1)
-
 offset = total - len(lines)
 print(blue(f"Ticked File Enforcement: {offset} lines were ignored in output for [{file_reference}]."))
 fail_no_include = False
