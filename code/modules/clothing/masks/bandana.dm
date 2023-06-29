@@ -127,7 +127,6 @@
 	name = "striped bandana"
 	desc = "A fine bandana with nanotech lining and a stripe across."
 	icon_state = "bandstriped"
-	worn_icon_state = "bandstriped_worn"
 	greyscale_config = /datum/greyscale_config/bandana/striped
 	greyscale_config_worn = /datum/greyscale_config/bandana/striped/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/bandana/striped/inhands_left
@@ -181,7 +180,6 @@
 	name = "skull bandana"
 	desc = "A fine bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
-	worn_icon_state = "bandskull_worn"
 	greyscale_config = /datum/greyscale_config/bandana/skull
 	greyscale_config_worn = /datum/greyscale_config/bandana/skull/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/bandana/skull/inhands_left
