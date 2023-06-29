@@ -87,6 +87,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		message = CompileText(newhead, user, rank)
 	else if(message_type == "ARRIVALS_BROKEN")
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
+	else if(message_type == "CRYOSTORAGE") ///SKYRAPTOR ADDITION
+		message = "[user][rank ? ", [rank]" : ""] has been moved to cryo storage."
 
 	broadcast(message, channels)
 
