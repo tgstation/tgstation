@@ -232,6 +232,22 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	else
 		add_to_limb(bodypart, special)
 
+/// Changes the body zone of an organ, handling removal from one limb and insertion to the other
+/obj/item/organ/proc/set_zone(new_zone = BODY_ZONE_CHEST, special = FALSE)
+	if(zone == new_zone)
+		return
+	var/obj/item/bodypart/new_bodypart
+	if(owner)
+		new_bodypart = owner.get_bodypart(new_zone)
+		// Not valid, fuck you
+		if(!new_bodypart)
+			return FALSE
+	else if(ownerlimb)
+		remove_from_limb(ownerlimb, special)
+	zone = new_zone
+	if(new_bodypart)
+		add_to_limb(new_bodypart, special)
+
 /// Adds the organ to a limb
 /obj/item/organ/proc/add_to_limb(obj/item/bodypart/bodypart, special = FALSE)
 	forceMove(bodypart)
