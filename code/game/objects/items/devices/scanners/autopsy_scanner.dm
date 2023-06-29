@@ -36,7 +36,7 @@
 		autopsy_information += "Wounds found:<br>"
 		for(var/datum/wound/wound as anything in bodyparts.wounds)
 			if(wound.wound_source)
-				autopsy_information += "<b>[wounds.name]</b> - Caused by <i>[wound.wound_source]</i><br>"
+				autopsy_information += "<b>[wound.name]</b> - Caused by <i>[wound.wound_source]</i><br>"
 
 	autopsy_information += "<center>Organ Data</center>"
 	for(var/obj/item/organ/organs as anything in scanned.organs)

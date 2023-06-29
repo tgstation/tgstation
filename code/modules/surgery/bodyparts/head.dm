@@ -13,7 +13,7 @@
 	px_x = 0
 	px_y = -8
 	wound_resistance = 5
-	disabled_wound_penalty = 25
+	maxdamage_wound_penalty = 25
 	scars_covered_by_clothes = FALSE
 	grind_results = null
 	is_dimorphic = TRUE
