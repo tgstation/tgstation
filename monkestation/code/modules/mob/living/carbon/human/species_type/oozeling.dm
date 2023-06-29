@@ -213,6 +213,12 @@
 			SPECIES_PERK_DESC = "[plural_form] can breathe plasma, and restore blood by doing so.",
 		),
 		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "burn",
+			SPECIES_PERK_NAME = "incombustible",
+			SPECIES_PERK_DESC = "[plural_form] cannot be set aflame.",
+		),
+		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
 			SPECIES_PERK_NAME = initial(exotic_blood.name),
