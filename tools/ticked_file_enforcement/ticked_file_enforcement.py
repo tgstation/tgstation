@@ -2,21 +2,24 @@ import fnmatch
 import functools
 import glob
 import sys
+import json
+
+FORBID_INCLUDE = []
+
+schema = json.load(sys.stdin)
+file = schema["file"]
+raw_forbid_include = schema["forbidden_includes"]
+
+if raw_forbid_include is not None:
+    for forbidable_category in raw_forbid_include:
+        FORBID_INCLUDE.append(repr(forbidable_category))
 
 reading = False
-
-FORBID_INCLUDE = [
-    # Included by _unit_test.dm
-    r'code/modules/unit_tests/[!_]*.dm',
-
-    # Included by tgs/includes.dm
-    r'code/modules/tgs/**/*.dm',
-]
-
 lines = []
 total = 0
-for line in sys.stdin:
-    total+=1
+
+for line in file:
+    total += 1
     line = line.strip()
 
     if line == "// BEGIN_INCLUDE":
@@ -47,7 +50,7 @@ for code_file in glob.glob("code/**/*.dm", recursive=True):
 
         if included:
             print(f"{dm_path} should not be included")
-            print(f"::error file={code_file},line=1,title=DME Validator::File should not be included")
+            print(f"::error file={code_file},line=1,title=Ticked File Enforcement::File should not be included")
             fail_no_include = True
 
     if forbid_include:
@@ -55,7 +58,7 @@ for code_file in glob.glob("code/**/*.dm", recursive=True):
 
     if not included:
         print(f"{dm_path} is not included")
-        print(f"::error file={code_file},line=1,title=DME Validator::File is not included")
+        print(f"::error file={code_file},line=1,title=Ticked File Enforcement::File is not included")
         fail_no_include = True
 
 if fail_no_include:
@@ -91,5 +94,5 @@ sorted_lines = sorted(lines, key = functools.cmp_to_key(compare_lines))
 for (index, line) in enumerate(lines):
     if sorted_lines[index] != line:
         print(f"The include at line {index + offset} is out of order ({line}, expected {sorted_lines[index]})")
-        print(f"::error file=tgstation.dme,line={index+offset},title=DME Validator::The include at line {index + offset} is out of order ({line}, expected {sorted_lines[index]})")
+        print(f"::error file={file},line={index+offset},title=Ticked File Enforcement::The include at line {index + offset} is out of order ({line}, expected {sorted_lines[index]})")
         sys.exit(1)
