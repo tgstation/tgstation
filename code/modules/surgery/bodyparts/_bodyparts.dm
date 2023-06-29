@@ -6,7 +6,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/mob/species/human/bodyparts.dmi'
 	icon_state = "" //Leave this blank! Bodyparts are built using overlays
-	/// The icon for Organic limbs using greyscale
+	/// The icon for limbs using greyscale
 	VAR_PROTECTED/icon_greyscale = DEFAULT_BODYPART_ICON_ORGANIC
 	/// The icon for non-greyscale limbs
 	VAR_PROTECTED/icon_static = 'icons/mob/species/human/bodyparts.dmi'
@@ -14,10 +14,11 @@
 	VAR_PROTECTED/icon_husk = 'icons/mob/species/human/bodyparts.dmi'
 	/// The icon for invisible limbs
 	VAR_PROTECTED/icon_invisible = 'icons/mob/species/human/bodyparts.dmi'
-	/// The type of husk for building an iconstate
-	var/husk_type = "humanoid"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
-	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/consumable/liquidgibs = 5) // robotic bodyparts and chests/heads cannot be ground
+	grind_results = list(
+		/datum/reagent/bone_dust = 10,
+		/datum/reagent/consumable/liquidgibs = 5,
+	) // robotic bodyparts and chests/heads cannot be ground
 
 	/**
 	 * The mob that currently "owns" this limb
@@ -34,38 +35,40 @@
 	 * This currently has absolutely no meaning for robotic limbs.
 	 */
 	var/biological_state = BIO_FLESH_BONE
-	///A bitfield of bodytypes for clothing, surgery, and misc information
+	/// A bitfield of bodytypes for clothing, surgery, and misc information
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
-	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
+	/// Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
 	var/change_exempt_flags = NONE
-	///Random flags that describe this bodypart
+	/// Random flags that describe this bodypart, such as BODYPART_UNREMOVABLE
 	var/bodypart_flags = NONE
 
-	///Whether the bodypart (and the owner) is husked.
-	var/is_husked = FALSE
-	///Whether the bodypart (and the owner) is invisible through invisibleman trait.
-	var/is_invisible = FALSE
-	///The ID of a species used to generate the icon. Needs to match the icon_state portion in the limbs file!
-	var/limb_id = SPECIES_HUMAN
-	//Defines what sprite the limb should use if it is also sexually dimorphic.
-	var/limb_gender = "m"
-	///Is there a sprite difference between male and female?
-	var/is_dimorphic = FALSE
-	///The actual color a limb is drawn as, set by /proc/update_limb()
-	var/draw_color //NEVER. EVER. EDIT THIS VALUE OUTSIDE OF UPDATE_LIMB. I WILL FIND YOU. It ruins the limb icon pipeline.
-
-	/// BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
+	/// BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc - used for def_zone
 	var/body_zone
 	/// The body zone of this part in english ("chest", "left arm", etc) without the species attached to it
 	var/plaintext_zone
-	var/aux_zone // used for hands
+	/// Auxiliary zone, used for rendering only and doesn't actually exist as an object
+	var/aux_zone
+	/// Layer of the auxiliary zone image, if any
 	var/aux_layer
-	/// bitflag used to check which clothes cover this bodypart
+	/// Bitflag used to check which clothes cover this bodypart
 	var/body_part
-	/// List of obj/item's embedded inside us. Managed by embedded components, do not modify directly
-	var/list/embedded_objects = list()
-	/// are we a hand? if so, which one!
+	/// Are we a hand? if so, which one!
 	var/held_index = 0
+
+	/// The type of husk for building an icon state when husked
+	var/husk_type = "humanoid"
+	/// Whether the bodypart (and the owner) is husked.
+	var/is_husked = FALSE
+	/// Whether the bodypart (and the owner) is invisible through invisibleman trait.
+	var/is_invisible = FALSE
+	/// The ID of a species used to generate the icon. Needs to match the icon_state portion in the limbs file!
+	var/limb_id = SPECIES_HUMAN
+	/// Defines what sprite the limb should use if it is also sexually dimorphic.
+	var/limb_gender = "m"
+	/// Is there a sprite difference between male and female?
+	var/is_dimorphic = FALSE
+	/// The actual color a limb is drawn as, set by /proc/update_limb()
+	var/draw_color //NEVER. EVER. EDIT THIS VALUE OUTSIDE OF UPDATE_LIMB. I WILL FIND YOU. It ruins the limb icon pipeline.
 
 	// Limb disabling variables
 	/**
@@ -87,17 +90,17 @@
 	var/can_be_disabled = FALSE
 
 	// Damage state variables
-	/// A mutiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
-	var/body_damage_coeff = 1
-	/// Used in determining overlays for limb damage states. As the mob receives more burn/brute damage, their limbs update to reflect.
-	var/brutestate = 0
-	var/burnstate = 0
 	/// The current amount of brute damage the limb has
 	var/brute_dam = 0
 	/// The current amount of burn damage the limb has
 	var/burn_dam = 0
 	/// The maximum brute OR burn damage a bodypart can take. Once we hit this cap, no more damage of either type!
 	var/max_damage = 0
+	/// A mutiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
+	var/body_damage_coeff = 1
+	// Used in determining overlays for limb damage states. As the mob receives more burn/brute damage, their limbs update to reflect that.
+	var/brutestate = 0
+	var/burnstate = 0
 
 	/// Gradually increases while burning when at full damage, destroys the limb when at 100
 	var/cremation_progress = 0
@@ -115,17 +118,19 @@
 	var/burn_reduction = 0
 
 	// Coloring and proper item icon update
+	/// Skin tone, if we are compatible with those
 	var/skin_tone = ""
+	/// Species based coloring, if we don't use skin tonies
 	var/species_color = ""
-	/// Whether or not to use icon_greyscale instead of icon_static
-	var/should_draw_greyscale = TRUE
 	/// An "override" color that can be applied to ANY limb, greyscale or not.
 	var/variable_color = ""
+	/// Whether or not to use icon_greyscale instead of icon_static
+	var/should_draw_greyscale = TRUE
 
 	var/px_x = 0
 	var/px_y = 0
 
-	///the type of damage overlay (if any) to use when this bodypart is bruised/burned.
+	/// The type of damage overlay (if any) to use when this bodypart is bruised/burned.
 	var/dmg_overlay_type = "human"
 	/// If we're bleeding, which icon are we displaying on this part
 	var/bleed_overlay_icon
@@ -139,7 +144,7 @@
 	var/medium_burn_msg = "blistered"
 	var/heavy_burn_msg = "peeling away"
 
-	// Damage messages used by examine(). the desc that is most common accross all bodyparts gets shown
+	/// Damage messages used by examine(). the desc that is most common accross all bodyparts gets shown
 	var/list/damage_examines = list(
 		BRUTE = DEFAULT_BRUTE_EXAMINE_TEXT,
 		BURN = DEFAULT_BURN_EXAMINE_TEXT,
@@ -149,16 +154,14 @@
 	// Wounds related variables
 	/// The wounds currently afflicting this body part
 	var/list/wounds
-
 	/// The scars currently afflicting this body part
 	var/list/scars
-	/// Our current stored wound damage multiplier
+	/// Our current cached wound damage multiplier, multiplies both brute and burn damage
 	var/wound_damage_multiplier = 1
-
 	/// This number is subtracted from all wound rolls on this bodypart, higher numbers mean more defense, negative means easier to wound
 	var/wound_resistance = 0
 	/// When this bodypart hits max damage, this number is added to all wound rolls. Obviously only relevant for bodyparts that have damage caps.
-	var/disabled_wound_penalty = 15
+	var/maxdamage_wound_penalty = 15
 
 	/// A hat won't cover your face, but a shirt covering your chest will cover your... you know, chest
 	var/scars_covered_by_clothes = TRUE
@@ -173,21 +176,23 @@
 	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/hand_item/self_grasp])
 	var/obj/item/hand_item/self_grasp/grasped_by
 
-	/**
-	 * A list of all the organs we've got stored to draw horns, wings and stuff with
-	 */
+	/// List of obj/item's embedded inside us. Managed by embedded components, do not modify directly
+	var/list/embedded_objects = list()
+
+	/// A list of all the organs we've got stored inside us
 	var/list/obj/item/organ/organs
-	///A list of all bodypart overlays to draw
-	var/list/bodypart_overlays
+	/// A list of all bodypart overlays to draw
+	var/list/datum/bodypart_overlay/bodypart_overlays
 
 	/// Type of an attack from this limb does. Arms will do punches, Legs for kicks, and head for bites. (TO ADD: tactical chestbumps)
 	var/attack_type = BRUTE
-	/// the verb used for an unarmed attack when using this limb, such as arm.unarmed_attack_verb = punch
+	/// the verb used for an unarmed attack when using this limb, such as arm.unarmed_attack_verb = "punch"
 	var/unarmed_attack_verb = "bump"
 	/// what visual effect is used when this limb is used to strike someone.
 	var/unarmed_attack_effect = ATTACK_EFFECT_PUNCH
 	/// Sounds when this bodypart is used in an umarmed attack
 	var/sound/unarmed_attack_sound = 'sound/weapons/punch1.ogg'
+	/// Sounds when this bodypart misses an unarmed attack
 	var/sound/unarmed_miss_sound = 'sound/weapons/punchmiss.ogg'
 	/// Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
 	var/unarmed_damage_low = 1

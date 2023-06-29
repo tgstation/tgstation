@@ -165,7 +165,7 @@
 
 	var/part_mod = -wound_resistance
 	if(get_damage() >= max_damage)
-		part_mod += disabled_wound_penalty
+		part_mod += maxdamage_wound_penalty
 
 	injury_mod += part_mod
 
