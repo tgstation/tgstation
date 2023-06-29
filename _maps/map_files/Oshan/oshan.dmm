@@ -1587,7 +1587,7 @@
 "bvn" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/wood/glass,
-/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
 /turf/open/floor/iron/kitchen,
 /area/station/service/bar)
 "bvx" = (
@@ -2754,7 +2754,7 @@
 /obj/machinery/door/airlock{
 	name = "Kitchen"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
 /turf/open/floor/stone,
 /area/station/service/kitchen)
 "cCg" = (
@@ -2993,6 +2993,7 @@
 /obj/item/holosign_creator/robot_seat/bar,
 /obj/structure/table/wood,
 /obj/machinery/light_switch/directional/south,
+/obj/item/clothing/head/hats/tophat,
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/station/service/bar)
 "cNS" = (
@@ -3616,6 +3617,12 @@
 /obj/structure/displaycase/labcage,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
+"dpc" = (
+/obj/machinery/vending/boozeomat,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/carpet/neon/simple/green/nodots,
+/area/station/service/bar)
 "dpj" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/engine,
@@ -3661,8 +3668,13 @@
 /area/station/engineering/main)
 "dqA" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer{
-	dir = 2
+/obj/machinery/reagentgrinder{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/rag,
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = -6
 	},
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/station/service/bar)
@@ -7320,10 +7332,10 @@
 /obj/machinery/door/airlock{
 	name = "Kitchen"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
 /turf/open/floor/stone,
 /area/station/service/kitchen)
 "gPj" = (
@@ -9537,9 +9549,10 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "iXT" = (
-/obj/machinery/smartfridge/drinks{
-	icon_state = "boozeomat"
+/obj/machinery/disposal/bin{
+	name = "Jim Norton's Quebecois Coffee disposal unit"
 	},
+/obj/structure/disposalpipe/trunk,
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/station/service/bar)
 "iXX" = (
@@ -9792,6 +9805,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
+"jih" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/carpet/neon/simple/green/nodots,
+/area/station/service/bar)
 "jim" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_atmos{
@@ -10603,12 +10621,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
-"jSP" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/turf/open/floor/carpet/neon/simple/green/nodots,
-/area/station/service/bar)
 "jUd" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
 	dir = 1
@@ -14072,6 +14084,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/stairs,
 /area/station/service/chapel)
+"nos" = (
+/obj/machinery/vending/boozeomat,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/carpet/neon/simple/green/nodots,
+/area/station/service/bar)
 "noF" = (
 /turf/open/floor/carpet,
 /area/station/medical/medbay/central)
@@ -15046,12 +15064,6 @@
 "ohh" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/camera/autoname/directional/south,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/machinery/disposal/bin{
-	name = "Jim Norton's Quebecois Coffee disposal unit"
-	},
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/station/service/bar)
@@ -20392,7 +20404,7 @@
 /area/station/maintenance/port/central)
 "tDO" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 9
 	},
 /turf/open/floor/carpet/neon/simple/green/nodots,
 /area/station/service/bar)
@@ -21383,10 +21395,10 @@
 /area/station/command/heads_quarters/qm)
 "uBe" = (
 /obj/machinery/door/airlock/wood/glass,
-/obj/effect/mapping_helpers/airlock/access/all/service/bar,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
 /turf/open/floor/iron/kitchen,
 /area/station/service/bar)
 "uBI" = (
@@ -41084,7 +41096,7 @@ oyT
 oyT
 lzc
 iXT
-ceV
+jih
 tDO
 cLP
 lzc
@@ -41342,7 +41354,7 @@ apm
 lzc
 bFn
 ceV
-jSP
+ojS
 ohh
 lzc
 lZP
@@ -41596,12 +41608,12 @@ uRy
 wRT
 sSh
 apm
-xIK
+nos
 ojS
 hWe
 rgY
 ojS
-xIK
+dpc
 lZP
 apm
 kmY
