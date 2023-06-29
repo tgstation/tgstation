@@ -62,6 +62,8 @@
 	var/list/embedded_objects = list()
 	/// are we a hand? if so, which one!
 	var/held_index = 0
+	/// A speed modifier we apply to the owner when attached, if any. Positive numbers make it move slower, negative numbers make it move faster.
+	var/speed_modifier = 0
 
 	// Limb disabling variables
 	///Whether it is possible for the limb to be disabled whatsoever. TRUE means that it is possible.
@@ -765,10 +767,10 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(IS_ORGANIC_LIMB(src))
-		if(HAS_TRAIT(owner, TRAIT_HUSK))
+		if(owner && HAS_TRAIT(owner, TRAIT_HUSK))
 			dmg_overlay_type = "" //no damage overlay shown when husked
 			is_husked = TRUE
-		else if(HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))
+		else if(owner && HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))
 			dmg_overlay_type = "" //no damage overlay shown when invisible since the wounds themselves are invisible.
 			is_invisible = TRUE
 		else

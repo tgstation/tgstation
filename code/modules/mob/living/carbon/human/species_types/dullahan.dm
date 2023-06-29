@@ -1,6 +1,7 @@
 /datum/species/dullahan
 	name = "Dullahan"
 	id = SPECIES_DULLAHAN
+	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
@@ -14,7 +15,6 @@
 	mutantears = /obj/item/organ/internal/ears/dullahan
 	mutantstomach = null
 	mutantlungs = null
-	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 

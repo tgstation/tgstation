@@ -1,0 +1,4 @@
+author: "ChungusGamer666"
+delete-after: True
+changes:
+  - bugfix: "Healthy tongues will no longer randomly start slurring"

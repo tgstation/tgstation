@@ -2059,14 +2059,12 @@
 	if(SPT_PROB(10, seconds_per_tick) && istype(metabolizer))
 		metabolizer.age += 1
 		if(metabolizer.age > 70)
-			metabolizer.facial_hair_color = "#cccccc"
-			metabolizer.hair_color = "#cccccc"
-			metabolizer.update_body_parts()
+			metabolizer.set_facial_haircolor("#cccccc", update = FALSE)
+			metabolizer.set_haircolor("#cccccc", update = TRUE)
 			if(metabolizer.age > 100)
 				metabolizer.become_nearsighted(type)
 				if(metabolizer.gender == MALE)
-					metabolizer.facial_hairstyle = "Beard (Very Long)"
-					metabolizer.update_body_parts()
+					metabolizer.set_facial_hairstyle("Beard (Very Long)", update = TRUE)
 
 				if(metabolizer.age > 969) //Best not let people get older than this or i might incur G-ds wrath
 					metabolizer.visible_message(span_notice("[metabolizer] becomes older than any man should be.. and crumbles into dust!"))

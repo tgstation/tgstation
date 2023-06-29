@@ -124,9 +124,8 @@
 		to_chat(purrbated_human, span_boldnotice("You are no longer a cat."))
 
 /datum/species/human/felinid/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
-	human_for_preview.hairstyle = "Hime Cut"
-	human_for_preview.hair_color = "#ffcccc" // pink
-	human_for_preview.update_body_parts()
+	human_for_preview.set_haircolor("#ffcccc", update = FALSE) // pink
+	human_for_preview.set_hairstyle("Hime Cut", update = TRUE)
 
 	var/obj/item/organ/internal/ears/cat/cat_ears = human_for_preview.get_organ_by_type(/obj/item/organ/internal/ears/cat)
 	if (cat_ears)
