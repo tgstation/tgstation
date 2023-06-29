@@ -762,5 +762,5 @@
 
 /datum/antagonist/heretic/roundend_report_footer()
 	var/roundend_targets = jointext(sac_targets, ", ")
-	var/message = "<br><b>This heretics sacrifice targets were:</b> [roundend_targets]<br>"
+	var/message = "<br><b>The heretics sacrifice targets were:</b> [roundend_targets]<br>"
 	return message
