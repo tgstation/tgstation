@@ -1567,7 +1567,7 @@
 	. = ..()
 	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_human) || (reac_volume < 0.5))
 		return
-	exposed_human.set_facial_haircolor("#9922ff", update = TRUE)
+	exposed_human.set_facial_haircolor("#9922ff", update = FALSE)
 	exposed_human.set_haircolor(color, update = TRUE)
 	exposed_human.update_body_parts()
 
