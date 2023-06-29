@@ -34,7 +34,7 @@ def post_error(string):
 for excluded_file in excluded_files:
     trimmed_file_name = excluded_file[:-3]
     full_file_path = scannable_directory.replace('*', trimmed_file_name)
-    if not os.path.isfile(excluded_file):
+    if not os.path.isfile(full_file_path):
         post_error(f"Excluded file {full_file_path} does not exist, please remove it!")
         sys.exit(1)
 
