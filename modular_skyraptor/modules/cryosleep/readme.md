@@ -10,7 +10,7 @@ Adds cryopods for leaving the round whilst freeing your job slots and avoiding a
 
 ### TG Proc Changes:
 
-N/A
+- ADDITION: /code/game/machinery/announcement_system.dm > /obj/machinery/announcement_system/proc/announce()
 
 ### Defines:
 

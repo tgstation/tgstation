@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	// circuit = /obj/item/circuitboard/cryopodcontrol
 	density = FALSE
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE
-	req_one_access = list(ACCESS_HEADS, ACCESS_ARMORY) // Heads of staff or the warden can go here to claim recover items from their department that people went were cryodormed with.
+	req_one_access = list(ACCESS_COMMAND, ACCESS_ARMORY) // Heads of staff or the warden can go here to claim recover items from their department that people went were cryodormed with.
 	var/mode = null
 
 	/// Used for logging people entering cryosleep and important items they are carrying.
@@ -81,7 +81,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		var/mob/living/living_user = user
 		var/obj/item/card/id/id = living_user.get_idcard()
 		if(id)
-			if((ACCESS_HEADS in id.access) || (ACCESS_ARMORY in id.access))
+			if((ACCESS_COMMAND in id.access) || (ACCESS_ARMORY in id.access))
 				item_retrieval_allowed = TRUE
 	data["item_retrieval_allowed"] = item_retrieval_allowed
 
@@ -206,7 +206,8 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 		despawn_occupant()
 
-/obj/machinery/cryopod/proc/handle_objectives()
+/// Almost all the code here is currently N/A, so it's been removed to avoid compile errors
+/*/obj/machinery/cryopod/proc/handle_objectives()
 	var/mob/living/mob_occupant = occupant
 	// Update any existing objectives involving this mob.
 	for(var/datum/objective/objective in GLOB.objectives)
@@ -257,7 +258,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 						update_objective.update_explanation_text()
 						to_chat(objective.owner.current, "<BR>[span_userdanger("You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!")]")
 						update_objective.owner.announce_objectives()
-				qdel(objective)
+				qdel(objective)*/
 
 /obj/machinery/cryopod/proc/should_preserve_item(obj/item/item)
 	for(var/datum/objective_item/steal/possible_item in GLOB.possible_items)
@@ -283,18 +284,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	else
 		crew_member["job"] = "N/A"
 
-	// Delete them from datacore.
 	var/announce_rank = null
-	for(var/datum/data/record/medical_record as anything in GLOB.data_core.medical)
-		if(medical_record.fields["name"] == mob_occupant.real_name)
-			qdel(medical_record)
-	for(var/datum/data/record/security_record as anything in GLOB.data_core.security)
-		if(security_record.fields["name"] == mob_occupant.real_name)
-			qdel(security_record)
-	for(var/datum/data/record/general_record as anything in GLOB.data_core.general)
-		if(general_record.fields["name"] == mob_occupant.real_name)
-			announce_rank = general_record.fields["rank"]
-			qdel(general_record)
 
 	var/obj/machinery/computer/cryopod/control_computer = control_computer_weakref?.resolve()
 	if(!control_computer)
@@ -320,7 +310,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 			control_computer.frozen_item += item_content
 		else mob_occupant.transferItemToLoc(item_content, drop_location(), force = TRUE, silent = TRUE)
 
-	handle_objectives()
+	//handle_objectives()
 	QDEL_NULL(occupant)
 	open_machine()
 	name = initial(name)
