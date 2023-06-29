@@ -1,0 +1,6 @@
+{
+	"file": "code/modules/unit_tests/_unit_tests.dm",
+	"scannable_directory": "code/modules/unit_tests/*.dm",
+	"subdirectories": false,
+	"forbidden_includes": []
+}

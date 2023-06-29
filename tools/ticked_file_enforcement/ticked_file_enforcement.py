@@ -3,11 +3,14 @@ import functools
 import glob
 import sys
 import json
+import os
 
 
 schema = json.load(sys.stdin)
 file_reference = schema["file"]
+file_reference_basename = os.path.basename(file_reference)
 scannable_directory = schema["scannable_directory"]
+subdirectories = schema["subdirectories"]
 FORBIDDEN_INCLUDES = schema["forbidden_includes"]
 
 if FORBIDDEN_INCLUDES is None:
@@ -42,11 +45,16 @@ print(f"{offset} lines were ignored in output")
 fail_no_include = False
 
 for code_file in glob.glob(scannable_directory, recursive=True):
-    dm_path = code_file.replace('/', '\\')
+    dm_path = ""
+
+    if subdirectories is True:
+        dm_path = code_file.replace('/', '\\')
+    else:
+        dm_path = os.path.basename(code_file)
 
     included = f"#include \"{dm_path}\"" in lines
-    forbid_include = False
 
+    forbid_include = False
     for forbidable in FORBIDDEN_INCLUDES:
         if not fnmatch.fnmatch(code_file, forbidable):
             continue
@@ -62,6 +70,8 @@ for code_file in glob.glob(scannable_directory, recursive=True):
         continue
 
     if not included:
+        if(dm_path == file_reference_basename): # for things like unit tests where the file that includes everything is in the same directory
+            continue
         print(f"{dm_path} is not included")
         print(f"::error file={code_file},line=1,title=Ticked File Enforcement::File is not included")
         fail_no_include = True
