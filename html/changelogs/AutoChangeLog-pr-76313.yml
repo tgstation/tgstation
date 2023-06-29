@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - balance: "Duffelbags will now only make you slow while they are unzipped. As a tradeoff, you now need to stand still and zip/unzip them to access their contents/not move real slow."
