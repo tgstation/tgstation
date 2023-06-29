@@ -29,12 +29,19 @@
 	if(!(exposed_mob.mob_biotypes & MOB_BUG))
 		return
 
-	var/damage = min(round(0.4 * reac_volume * (1 - touch_protection), 0.1), 10)
+	// capping damage so splashing a beaker on a moth is not an instant crit
+	var/damage = min(round(0.4 * reac_volume * (1 - touch_protection), 0.1), 12)
+	if(damage < 1)
+		return
+
 	if(!(exposed_mob.mob_biotypes & MOB_HUMANOID) && exposed_mob.health <= damage)
+		// no-ops if they are already in the process of dying
 		exposed_mob.apply_status_effect(/datum/status_effect/bugkiller_death)
 		return
 
-	exposed_mob.apply_damage(damage, TOX)
+	if(exposed_mob.apply_damage(damage, TOX) && damage >= 6)
+		// yes i know it's not burn damage. the burning is on the inside.
+		to_chat(exposed_mob, span_danger("You feel a burning sensation."))
 
 /// If bugkiller delivers a lethal dosage, applies this effect which does a funny animation THEN kills 'em
 /// Also makes it so simplemobs / basicmobs no longer delete when they die (if they do)
@@ -52,8 +59,10 @@
 /datum/status_effect/bugkiller_death/on_apply()
 	if(owner.stat == DEAD)
 		return FALSE
-	owner.spasm_animation(spasm_loops)
 	playsound(owner, 'sound/voice/human/malescream_1.ogg', 25, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 5)
+	to_chat(owner, span_userdanger("The world begins to go dark..."))
+	owner.spasm_animation(spasm_loops)
+	owner.adjust_eye_blur(duration)
 	return TRUE
 
 /datum/status_effect/bugkiller_death/on_remove()
@@ -74,6 +83,6 @@
 	owner.death()
 
 /atom/movable/screen/alert/status_effect/bugkiller_death
-	name = "Overwhelming Bugkiller"
-	desc = "You don't feel so good."
+	name = "Overwhelming Toxicity"
+	desc = "Don't go into the light!"
 	icon_state = "paralysis"

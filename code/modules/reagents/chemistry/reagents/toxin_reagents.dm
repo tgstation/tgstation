@@ -406,8 +406,7 @@
 	AddElement(/datum/element/bugkiller_reagent)
 
 /datum/reagent/toxin/pestkiller/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	// Does a bonus 3x damage to bugs
-	. = affected_mob.adjustToxLoss(3 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = MOB_BUG)
+	. = affected_mob.adjustToxLoss(2 * toxpwr * REM * seconds_per_tick, updating_health = FALSE, required_biotype = MOB_BUG)
 	return ..() || .
 
 //Pest Spray
