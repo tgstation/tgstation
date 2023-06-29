@@ -270,6 +270,8 @@
 	if(!charges_left)
 		if(self_contained)
 			qdel(src)
+		else
+			balloon_alert(user, "empty!")
 		return TRUE
 	if(charges_left < amount && requires_full)
 		balloon_alert(user, "not enough left!")
