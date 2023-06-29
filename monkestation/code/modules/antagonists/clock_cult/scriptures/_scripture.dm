@@ -36,6 +36,8 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	var/invocation_chant_timer = null
 	/// Sound to play on finish
 	var/sound/recital_sound = null
+	/// If set then how much of a reduction in invocation time should the TRAIT_FASTER_SLAB_INVOKE give, multiplicative
+	var/fast_invoke_mult
 
 /datum/scripture/New()
 	. = ..()
@@ -82,7 +84,10 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		return
 
 	var/steps = length(invocation_text)
-	var/time_between_say = invocation_time / (steps + 1)
+	var/true_invocation_time = invocation_time
+	if(fast_invoke_mult && HAS_TRAIT(invoker, TRAIT_FASTER_SLAB_INVOKE))
+		true_invocation_time = invocation_time * fast_invoke_mult
+	var/time_between_say = true_invocation_time / (steps + 1)
 
 	if(invocation_chant_timer)
 		deltimer(invocation_chant_timer)
@@ -178,7 +183,10 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	recital()
 
-	if(do_after(invoking_mob, invocation_time, target = invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob)))
+	var/true_invocation_time = invocation_time
+	if(fast_invoke_mult && HAS_TRAIT(invoker, TRAIT_FASTER_SLAB_INVOKE))
+		true_invocation_time = invocation_time * fast_invoke_mult
+	if(do_after(invoking_mob, true_invocation_time, target = invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob)))
 		invoke()
 
 		to_chat(invoking_mob, span_brass("You invoke <b>[name]</b>."))
