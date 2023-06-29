@@ -55,37 +55,44 @@
  */
 /datum/attack_style/unarmed/disarm/xeno
 	attack_effect = ATTACK_EFFECT_DISARM
-	successful_hit_sound = null
+	successful_hit_sound = null // Snowflaked
 
 /datum/attack_style/unarmed/disarm/xeno/disarm_target(mob/living/attacker, mob/living/smacked, shove_verb)
 	if(iscyborg(smacked))
-		var/mob/living/silicon/robot/robot_hit = smacked
-		var/obj/item/borg_module = robot_hit.get_active_held_item()
-		if(borg_module)
-			robot_hit.uneq_active()
-			robot_hit.visible_message(
-				span_danger("[attacker] disarmed [robot_hit]!"),
-				span_userdanger("[attacker] has disabled [robot_hit]'s active module!"),
-				vision_distance = COMBAT_MESSAGE_RANGE,
-				ignored_mobs = attacker,
-			)
-			to_chat(attacker, span_danger("You disable [robot_hit]'s active module!"))
-			log_combat(attacker, robot_hit, "disarmed", addition = "[borg_module ? " removing [borg_module]" : ""]")
-			playsound(smacked, 'sound/weapons/slash.ogg', 30, TRUE, -1)
-		else
-			robot_hit.Stun(4 SECONDS)
-			step_away(robot_hit, attacker, 15)
-			log_combat(attacker, robot_hit, "pushed")
-			robot_hit.visible_message(
-				span_danger("[attacker] forces back [robot_hit]!"),
-				span_userdanger("[attacker] forces back [robot_hit]!"),
-				vision_distance = COMBAT_MESSAGE_RANGE,
-				ignored_mobs = attacker,
-			)
-			to_chat(attacker, span_danger("You force [robot_hit] back!"))
-			playsound(robot_hit, 'sound/weapons/pierce.ogg', 30, TRUE, -1)
-		return ATTACK_SWING_HIT
+		disarm_cyborg(attacker, smacked)
+	else
+		mega_shove_guy(attacker, smacked)
+	return ATTACK_SWING_HIT
 
+/datum/attack_style/unarmed/disarm/xeno/proc/disarm_cyborg(mob/living/attacker, mob/living/silicon/robot/smacked)
+	var/mob/living/silicon/robot/robot_hit = smacked
+	var/obj/item/borg_module = robot_hit.get_active_held_item()
+	if(borg_module)
+		smacked.uneq_active()
+		smacked.visible_message(
+			span_danger("[attacker] disarmed [smacked]!"),
+			span_userdanger("[attacker] has disabled [smacked]'s active module!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = attacker,
+		)
+		to_chat(attacker, span_danger("You disable [smacked]'s active module!"))
+		log_combat(attacker, smacked, "disarmed", addition = "[borg_module ? " removing [borg_module]" : ""]")
+		playsound(smacked, 'sound/weapons/slash.ogg', 30, TRUE, -1)
+
+	else
+		smacked.Stun(4 SECONDS)
+		step_away(smacked, attacker, 15)
+		log_combat(attacker, smacked, "pushed")
+		smacked.visible_message(
+			span_danger("[attacker] forces back [smacked]!"),
+			span_userdanger("[attacker] forces back [smacked]!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = attacker,
+		)
+		to_chat(attacker, span_danger("You force [smacked] back!"))
+		playsound(smacked, 'sound/weapons/pierce.ogg', 30, TRUE, -1)
+
+/datum/attack_style/unarmed/disarm/xeno/proc/mega_shove_guy(mob/living/attacker, mob/living/smacked)
 	var/obj/item/weapon = smacked.get_active_held_item()
 	if(weapon && smacked.dropItemToGround(weapon))
 		smacked.visible_message(
@@ -97,45 +104,30 @@
 		to_chat(attacker, span_danger("You disarm [smacked]!"))
 		playsound(smacked, 'sound/weapons/slash.ogg', 30, TRUE, -1)
 		log_combat(attacker, smacked, "disarmed", addition = " dropping [weapon]")
+		return
 
-	else
-		smacked.Paralyze(10 SECONDS)
+	if(HAS_TRAIT(smacked, TRAIT_INCAPACITATED))
+		smacked.Paralyze(5 SECONDS)
+		playsound(smacked, 'sound/weapons/punch3.ogg', 25, TRUE, -1)
 		smacked.visible_message(
-			span_danger("[attacker] tackles [smacked] down!"),
-			span_userdanger("[attacker] tackles you down!"),
-			span_hear("You hear aggressive shuffling followed by a loud thud!"),
+			span_danger("[attacker] slams [smacked] into the floor!"),
+			span_userdanger("[attacker] slams you into the ground!"),
+			span_hear("You hear something slam loudly onto the floor!"),
 			ignored_mobs = attacker,
 		)
-		to_chat(attacker, span_danger("You tackle [smacked] down!"))
-		playsound(smacked, 'sound/weapons/pierce.ogg', 30, TRUE, -1)
-		log_combat(attacker, smacked, "tackled")
-	return ATTACK_SWING_HIT
+		to_chat(attacker, span_danger("You slam [src] into the floor beneath you!"))
+		log_combat(attacker, smacked, "slammed into the ground")
+		return
 
-/*
-	new xeno disarm just dropped
-
-	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand if there is one. If there's no item, shove the target. If the target is incapacitated, slam them into the ground to stun them.
-		var/obj/item/I = get_active_held_item()
-		if(I && dropItemToGround(I))
-			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
-			visible_message(span_danger("[user] disarms [src]!"), \
-							span_userdanger("[user] disarms you!"), span_hear("You hear aggressive shuffling!"), null, user)
-			to_chat(user, span_danger("You disarm [src]!"))
-		else if(!HAS_TRAIT(src, TRAIT_INCAPACITATED))
-			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
-			var/shovetarget = get_edge_target_turf(user, get_dir(user, get_step_away(src, user)))
-			adjustStaminaLoss(35)
-			throw_at(shovetarget, 4, 2, user, force = MOVE_FORCE_OVERPOWERING)
-			log_combat(user, src, "shoved")
-			visible_message("<span class='danger'>[user] tackles [src] down!</span>", \
-							"<span class='userdanger'>[user] shoves you with great force!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", null, user)
-			to_chat(user, "<span class='danger'>You shove [src] with great force!</span>")
-		else
-			Paralyze(5 SECONDS)
-			playsound(loc, 'sound/weapons/punch3.ogg', 25, TRUE, -1)
-			visible_message("<span class='danger'>[user] slams [src] into the floor!</span>", \
-							"<span class='userdanger'>[user] slams you into the ground!</span>", "<span class='hear'>You hear something slam loudly onto the floor!</span>", null, user)
-			to_chat(user, "<span class='danger'>You slam [src] into the floor beneath you!</span>")
-			log_combat(user, src, "slammed into the ground")
-		return TRUE
-/*
+	playsound(smacked, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
+	var/turf/shovetarget = get_edge_target_turf(user, get_dir(user, get_step_away(src, user)))
+	smacked.apply_damage(35, STAMINA)
+	smacked.throw_at(shovetarget, 4, 2, user, force = MOVE_FORCE_OVERPOWERING)
+	smacked.visible_message(
+		span_danger("[attacker] tackles [smacked] down!"),
+		span_userdanger("[attacker] shoves you with great force!"),
+		span_hear("You hear aggressive shuffling followed by a loud thud!"),
+		ignored_mobs = attacker,
+	)
+	to_chat(attacker, span_danger("You shove [smacked] with great force!"))
+	log_combat(attacker, smacked, "shoved (xeno)")
