@@ -29,7 +29,6 @@
 /obj/item/clothing/mask/bandana/adjustmask(mob/living/user)
 	. = ..()
 	if(mask_adjusted)
-		worn_icon_state += "_up"
 		undyeable = TRUE
 	else
 		inhand_icon_state = initial(inhand_icon_state)
