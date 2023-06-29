@@ -125,23 +125,19 @@
 #define HAS_PAINFUL_TOXIN 2
 
 /obj/item/organ/internal/liver/on_life(seconds_per_tick, times_fired)
-	. = ..() //perform general on_life()
-	var/mob/living/carbon/liver_owner = owner
-	if(!istype(liver_owner))
-		return
-
+	. = ..()
 	//If your liver is failing, then we use the liverless version of metabolize
 	//We don't check for TRAIT_NOMETABOLISM here because we do want a functional liver if somehow we have one inserted
 	if(organ_flags & ORGAN_FAILING)
-		liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
+		owner.reagents.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
 		return
 
-	var/obj/belly = liver_owner.get_organ_slot(ORGAN_SLOT_STOMACH)
-	var/list/cached_reagents = liver_owner.reagents.reagent_list
+	var/obj/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/list/cached_reagents = owner.reagents.reagent_list
 	var/liver_damage = 0
 	var/provide_pain_message = HAS_NO_TOXIN
 
-	if(filterToxins && !HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
+	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
 			if(status != toxin.affected_organtype) //this particular toxin does not affect this type of organ
 				continue
@@ -155,17 +151,17 @@
 			if(provide_pain_message != HAS_PAINFUL_TOXIN)
 				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
-	liver_owner.reagents.metabolize(liver_owner, seconds_per_tick, times_fired, can_overdose = TRUE)
+	owner.reagents.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE)
 
 	if(liver_damage)
 		apply_organ_damage(min(liver_damage * seconds_per_tick , MAX_TOXIN_LIVER_DAMAGE * seconds_per_tick))
 
 	if(provide_pain_message && damage > 10 && SPT_PROB(damage/6, seconds_per_tick)) //the higher the damage the higher the probability
-		to_chat(liver_owner, span_warning("You feel a dull pain in your abdomen."))
+		to_chat(owner, span_warning("You feel a dull pain in your abdomen."))
 
 
 /obj/item/organ/internal/liver/handle_failing_organs(seconds_per_tick)
-	if(HAS_TRAIT(owner, TRAIT_STABLELIVER) || HAS_TRAIT(owner, TRAIT_NOMETABOLISM))
+	if(HAS_TRAIT(owner, TRAIT_STABLELIVER) || HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM))
 		return
 	return ..()
 
