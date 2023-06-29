@@ -576,7 +576,6 @@
 
 	uniform = /obj/item/clothing/under/color/black
 	suit = /obj/item/clothing/suit/hooded/cultrobes/alt
-	head = /obj/item/clothing/head/hooded/cult_hoodie/alt
 	shoes = /obj/item/clothing/shoes/cult/alt
 	r_hand = /obj/item/melee/blood_magic/stun
 
