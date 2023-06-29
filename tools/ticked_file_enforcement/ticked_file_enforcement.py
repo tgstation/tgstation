@@ -31,10 +31,6 @@ subdirectories = schema["subdirectories"]
 excluded_files = schema["excluded_files"]
 FORBIDDEN_INCLUDES = schema["forbidden_includes"]
 
-if FORBIDDEN_INCLUDES is None:
-    print("No forbidden includes were provided")
-    sys.exit(1)
-
 reading = False
 lines = []
 total = 0
