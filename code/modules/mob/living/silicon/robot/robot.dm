@@ -303,8 +303,9 @@
 
 
 /mob/living/silicon/robot/proc/after_tip_over(mob/user)
-	if(hat)
+	if(hat && !HAS_TRAIT(hat, TRAIT_NODROP))
 		hat.forceMove(drop_location())
+
 	unbuckle_all_mobs()
 
 ///For any special cases for robots after being righted.
@@ -523,11 +524,6 @@
 	lamp_enabled = TRUE
 	lampButton?.update_appearance()
 	update_icons()
-
-/mob/living/silicon/robot/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == cell)
-		cell = null
 
 /mob/living/silicon/robot/proc/deconstruct()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
@@ -758,11 +754,14 @@
 	*Drones and pAIs might do this, after all.
 */
 /mob/living/silicon/robot/Exited(atom/movable/gone, direction)
-	if(hat && hat == gone)
+	. = ..()
+	if(hat == gone)
 		hat = null
 		if(!QDELETED(src)) //Don't update icons if we are deleted.
 			update_icons()
-	return ..()
+
+	if(gone == cell)
+		cell = null
 
 ///Use this to add upgrades to robots. It'll register signals for when the upgrade is moved or deleted, if not single use.
 /mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade, mob/user)
