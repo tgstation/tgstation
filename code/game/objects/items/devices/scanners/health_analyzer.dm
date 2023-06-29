@@ -575,19 +575,19 @@
 	if(!istype(patient) || user.incapacitated())
 		return
 
-	var/render_list = ""
+	var/list/render
 	for(var/datum/disease/disease as anything in patient.diseases)
 		if(!(disease.visibility_flags & HIDDEN_SCANNER))
-			render_list += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b>\n\
+			render += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b>\n\
 			<div class='ml-2'>Name: [disease.name].\nType: [disease.spread_text].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
 			</span>"
 
-	if(render_list == "")
+	if(!length(render))
 		// Only emit the cheerful scanner message if this scan came from a scanner
 		playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
 		to_chat(user, span_notice("The patient has no diseases."))
 	else
-		to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
+		to_chat(user, span_notice(render))
 
 #undef SCANMODE_HEALTH
 #undef SCANMODE_WOUND
