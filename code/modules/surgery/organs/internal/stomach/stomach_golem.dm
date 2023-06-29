@@ -3,7 +3,7 @@
 	icon_state = "stomach-p"
 	desc = "A rocklike organ which grinds and processes nutrition from minerals."
 	color = COLOR_GOLEM_GRAY
-	status = ORGAN_MINERAL
+	organ_flags = ORGAN_MINERAL
 	organ_traits = list(TRAIT_ROCK_EATER)
 	hunger_modifier = 10 // golems burn fuel quickly
 	/// How slow are you when the "hungry" icon appears?
