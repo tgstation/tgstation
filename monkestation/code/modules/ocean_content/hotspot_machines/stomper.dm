@@ -29,13 +29,17 @@
 	COOLDOWN_DECLARE(stomp_cd)
 
 
+/obj/machinery/power/stomper/Initialize(mapload)
+	. = ..()
+	installed_cell = new(src)
+
 /obj/machinery/power/stomper/should_have_node()
 	return anchored
 
 /obj/machinery/power/stomper/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	opened = !opened
-	to_chat(user, "You [opened ? "Open" : "Close"] the access panel on the [src].")
+	to_chat(user, span_notice("You [opened ? "Open" : "Close"] the access panel on the [src]."))
 	toggle_power(FALSE)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -67,15 +71,15 @@
 	if(!opened || !installed_cell)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	installed_cell.forceMove(get_turf(src))
+	installed_cell = null
 	to_chat(user, span_notice("You remove the [installed_cell] from the [src]."))
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/stomper/attacked_by(obj/item/attacking_item, mob/living/user)
-	. = ..()
 	if(!opened || installed_cell)
-		return
+		return ..()
 	if(!istype(attacking_item, /obj/item/stock_parts/cell))
-		return
+		return ..()
 	attacking_item.forceMove(src)
 	installed_cell = attacking_item
 
@@ -117,7 +121,7 @@
 		playsound(src, 'goon/sounds/impact_sounds/Metal_Hit_Heavy_1.ogg', 100, 1)
 
 	for(var/datum/hotspot/listed_hotspot as anything in SShotspots.retrieve_hotspot_list(source_turf))
-		if(BOUNDS_DIST(src, listed_hotspot.center.return_turf()) != 0)
+		if(BOUNDS_DIST(src, listed_hotspot.center.return_turf()) > 1)///giving a 1 tile leeway on stomps
 			continue
 		say("Hotspot Pinned")
 	playsound(src, 'goon/sounds/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1)

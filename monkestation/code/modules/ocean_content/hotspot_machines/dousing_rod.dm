@@ -66,9 +66,12 @@
 
 	if(centered)
 		say("Directly centered with one or more hotspots.")
-	else if(closest_hotspot)
-		var/dir_string = dir2text(closest_hotspot.drift_direction)
-		say("Estimated Position is:[max((last_distance - rand(1,3)), 1)]M [dir_string]")
+	else if(closest_hotspot && last_distance != INFINITY)
+		if(last_distance < 4)
+			say("Estimated Position is: X:[closest_hotspot.center.x], Y:[closest_hotspot.center.y]")
+		else
+			var/dir_string = dir2text(closest_hotspot.drift_direction)
+			say("Estimated Position is:[max((last_distance - rand(1,3)), 1)]M [dir_string]")
 	else
 		say("ERROR: No hotspots in readable range.")
 

@@ -62,6 +62,8 @@
 	var/bio_boosted = FALSE
 	///precent of the way to self sustaining
 	var/sustaining_precent = 0
+	///do we let self sustaining increase plant stats overtime?
+	var/self_growing = FALSE
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	create_reagents(40)
@@ -87,6 +89,10 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/hydroponics/AltClick(mob/user)
+	. = ..()
+	self_growing = !self_growing
+	to_chat(user, span_notice("You flick a switch turning the Self Sustaining Growth Dampeners: [self_growing ? "Off" : "On"]"))
 /obj/machinery/hydroponics/add_context(
 	atom/source,
 	list/context,
@@ -245,6 +251,13 @@
 			needs_update = TRUE
 			growth += 3
 
+		if(self_sustaining && self_growing)
+			if(myseed.potency < 50)
+				myseed.adjust_potency(2)
+			if(myseed.yield < 5)
+				myseed.adjust_yield(1)
+			if(myseed.lifespan < 70)
+				myseed.adjust_lifespan(2)
 
 /**
  * Nutrients
@@ -336,7 +349,6 @@
 				adjustHealth(-1 / rating)
 				if(myseed.yield >=3)
 					myseed.adjust_yield(-rand(1,2)) //Weeds choke out the plant's ability to bear more fruit.
-					myseed.set_yield(min((myseed.yield), WEED_HARDY_YIELD_MIN, MAX_PLANT_YIELD))
 
 /**
  * Health & Age
@@ -604,7 +616,8 @@
 	. += span_info("Nutrient: [round(reagents.total_volume)]/[maxnutri].")
 	if(self_sustaining)
 		. += span_info("The tray's self-sustenance is active, protecting it from species mutations, weeds, and pests.")
-
+	if(self_growing)
+		. += span_info("The tray's self sustaining growth dampeners are off.")
 	if(weedlevel >= 5)
 		. += span_warning("It's filled with weeds!")
 	if(pestlevel >= 5)
