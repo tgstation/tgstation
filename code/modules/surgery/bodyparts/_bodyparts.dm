@@ -54,6 +54,8 @@
 	var/body_part
 	/// Are we a hand? if so, which one!
 	var/held_index = 0
+	/// A speed modifier we apply to the owner when attached, if any. Positive numbers make it move slower, negative numbers make it move faster.
+	var/speed_modifier = 0
 
 	/// The type of husk for building an icon state when husked
 	var/husk_type = "humanoid"

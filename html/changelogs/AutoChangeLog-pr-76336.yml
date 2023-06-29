@@ -1,0 +1,4 @@
+author: "ChungusGamer666"
+delete-after: True
+changes:
+  - refactor: "Species speed is now stored in bodyparts. Leg transplants from slower species will make you slower."
