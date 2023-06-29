@@ -36,7 +36,7 @@
 	chambered.forceMove(drop_location())
 	magazine.get_round(keep = FALSE)
 
-	var/obj/item/ammo_casing/caseless/arrow/our_arrow = chambered
+	var/obj/item/ammo_casing/arrow/our_arrow = chambered
 	user.put_in_hands(our_arrow)
 
 	drawn = FALSE
@@ -104,7 +104,7 @@
 
 /obj/item/ammo_box/magazine/internal/bow
 	name = "bowstring"
-	ammo_type = /obj/item/ammo_casing/caseless/arrow
+	ammo_type = /obj/item/ammo_casing/arrow
 	max_ammo = 1
 	start_empty = TRUE
 	caliber = CALIBER_ARROW

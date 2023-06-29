@@ -281,11 +281,11 @@
 			var/missing_organs = list()
 			if(!humantarget.get_organ_slot(ORGAN_SLOT_BRAIN))
 				missing_organs += "brain"
-			if(!HAS_TRAIT(humantarget, TRAIT_NOBLOOD) && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
+			if(!(TRAIT_NOBLOOD in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
 				missing_organs += "heart"
 			if(!(TRAIT_NOBREATH in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_LUNGS))
 				missing_organs += "lungs"
-			if(!(TRAIT_NOMETABOLISM in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_LIVER))
+			if(!(TRAIT_LIVERLESS_METABOLISM in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_LIVER))
 				missing_organs += "liver"
 			if(the_dudes_species.mutantstomach && !humantarget.get_organ_slot(ORGAN_SLOT_STOMACH))
 				missing_organs += "stomach"

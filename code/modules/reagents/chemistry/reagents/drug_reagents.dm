@@ -711,16 +711,12 @@
 			return
 		if(invisible_man.undergoing_liver_failure())
 			return
-		if(HAS_TRAIT(invisible_man, TRAIT_NOMETABOLISM))
+		if(HAS_TRAIT(invisible_man, TRAIT_LIVERLESS_METABOLISM))
 			return
 	if(invisible_man.has_status_effect(/datum/status_effect/grouped/stasis))
 		return
 
-	invisible_man.add_traits(list(TRAIT_INVISIBLE_MAN, TRAIT_HIDE_EXTERNAL_ORGANS), name)
-
-	var/datum/dna/druggy_dna = invisible_man.has_dna()
-	if(druggy_dna?.species)
-		druggy_dna.species.species_traits += NOBLOODOVERLAY
+	invisible_man.add_traits(list(TRAIT_INVISIBLE_MAN, TRAIT_HIDE_EXTERNAL_ORGANS, TRAIT_NO_BLOOD_OVERLAY), type)
 
 	invisible_man.update_body()
 	invisible_man.remove_from_all_data_huds()
@@ -728,15 +724,11 @@
 
 /datum/reagent/drug/saturnx/on_mob_end_metabolize(mob/living/carbon/invisible_man)
 	. = ..()
-	if(HAS_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN))
+	if(HAS_TRAIT_FROM(invisible_man, TRAIT_INVISIBLE_MAN, type))
 		invisible_man.add_to_all_human_data_huds() //Is this safe, what do you think, Floyd?
-		invisible_man.remove_traits(list(TRAIT_INVISIBLE_MAN, TRAIT_HIDE_EXTERNAL_ORGANS), name)
+		invisible_man.remove_traits(list(TRAIT_INVISIBLE_MAN, TRAIT_HIDE_EXTERNAL_ORGANS, TRAIT_NO_BLOOD_OVERLAY), type)
 
 		to_chat(invisible_man, span_notice("As you sober up, opacity once again returns to your body meats."))
-
-		var/datum/dna/druggy_dna = invisible_man.has_dna()
-		if(druggy_dna?.species)
-			druggy_dna.species.species_traits -= NOBLOODOVERLAY
 
 	invisible_man.update_body()
 	invisible_man.sound_environment_override = NONE

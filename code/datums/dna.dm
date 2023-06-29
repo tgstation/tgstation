@@ -165,6 +165,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	. = ""
 	var/list/L = new /list(DNA_UNI_IDENTITY_BLOCKS)
 
+	//ignores TRAIT_AGENDER so that a "real" gender can be stored in the DNA if later use is needed
 	switch(holder.gender)
 		if(MALE)
 			L[DNA_GENDER_BLOCK] = construct_block(G_MALE, 3)
@@ -566,6 +567,11 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 //proc used to update the mob's appearance after its dna UI has been changed
 /mob/living/carbon/proc/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)
 	if(!has_dna())
+		return
+
+	//Always plural gender if agender
+	if(HAS_TRAIT(src, TRAIT_AGENDER))
+		gender = PLURAL
 		return
 
 	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), 3))

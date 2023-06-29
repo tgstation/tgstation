@@ -72,6 +72,7 @@
 
 /datum/orderable_item/mining/conscription_kit
 	item_path = /obj/item/storage/backpack/duffelbag/mining_conscript
+	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 	cost_per_order = 1500
 
 /datum/orderable_item/mining/capsule

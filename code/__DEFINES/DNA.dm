@@ -62,25 +62,6 @@
 #define DNA_MUTATION_BLOCKS 8
 #define DNA_UNIQUE_ENZYMES_LEN 32
 
-// species_traits list on /datum/species, please avoid adding more and use inherent_traits instead where possible
-#define MUTCOLORS 1
-#define NOTRANSSTING 2
-#define NOZOMBIE 3
-#define NO_UNDERWEAR 4
-#define NO_DNA_COPY 5
-#define DRINKSBLOOD 6
-/// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define DYNCOLORS 7
-#define AGENDER 8
-///If we have a limb-specific overlay sprite
-#define HAS_MARKINGS 9
-/// Do not draw blood overlay
-#define NOBLOODOVERLAY 10
-///No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png
-#define NOAUGMENTS 11
-///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
-#define BLOOD_CLANS 12
-
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
 #define ORGAN_SLOT_APPENDIX "appendix"

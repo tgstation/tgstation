@@ -425,4 +425,8 @@
 	default = 4
 	min_val = 1
 
+/datum/config_entry/str_list/tts_voice_blacklist
+
+/datum/config_entry/flag/tts_allow_player_voice_disabling
+
 /datum/config_entry/flag/give_tutorials_without_db
