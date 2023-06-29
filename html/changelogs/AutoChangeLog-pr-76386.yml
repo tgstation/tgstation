@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed snatcherprods potentially giving held objects a one-way ticket to nullspace if thrown at someone by something that's not a mob."
