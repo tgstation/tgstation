@@ -8,13 +8,11 @@
 	fixed_mut_color = "#DBBF92"
 	hair_color = "#FF4B19" //cap color, spot color uses eye color
 
-	species_traits = list(
-		MUTCOLORS,
-		NO_UNDERWEAR,
-	)
 	inherent_traits = list(
+		TRAIT_MUTANT_COLORS,
 		TRAIT_NOBREATH,
 		TRAIT_NOFLASH,
+		TRAIT_NO_UNDERWEAR,
 	)
 	inherent_factions = list(FACTION_MUSHROOM)
 	speedmod = 1.5 //faster than golems but not by much

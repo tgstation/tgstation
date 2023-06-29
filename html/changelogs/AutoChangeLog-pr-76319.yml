@@ -1,0 +1,5 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - bugfix: "fixed RPD switching layers on mousescroll when not in active hand"
+  - qol: "installing an RPD wrench upgrade & reprogramming a pipe via RMB produces a balloon alert"

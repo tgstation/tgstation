@@ -8,13 +8,11 @@
 	name = "Vampire"
 	id = SPECIES_VAMPIRE
 	examine_limb_id = SPECIES_HUMAN
-	species_traits = list(
-		DRINKSBLOOD,
-		BLOOD_CLANS,
-	)
 	inherent_traits = list(
+		TRAIT_BLOOD_CLANS,
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
+		TRAIT_DRINKS_BLOOD,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")
