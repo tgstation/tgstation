@@ -9,7 +9,7 @@
 	id = SPECIES_VAMPIRE
 	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
-		TRAIT_SKIN_TONES,
+		TRAIT_SKINTONES,
 		TRAIT_BLOOD_CLANS,
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
