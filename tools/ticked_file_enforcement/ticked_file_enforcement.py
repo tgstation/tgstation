@@ -1,9 +1,10 @@
+import codecs
 import fnmatch
 import functools
 import glob
-import sys
 import json
 import os
+import sys
 
 # simple way to check if we're running on github actions, or on a local machine
 on_github = os.getenv("GITHUB_ACTIONS") == "true"
@@ -27,6 +28,7 @@ file_reference = schema["file"]
 file_reference_basename = os.path.basename(file_reference)
 scannable_directory = schema["scannable_directory"]
 subdirectories = schema["subdirectories"]
+excluded_files = schema["excluded_files"]
 FORBIDDEN_INCLUDES = schema["forbidden_includes"]
 
 if FORBIDDEN_INCLUDES is None:
@@ -85,8 +87,12 @@ for code_file in glob.glob(scannable_directory, recursive=True):
         continue
 
     if not included:
-        if(dm_path == file_reference_basename): # for things like unit tests where the file that includes everything is in the same directory
+        if(dm_path == file_reference_basename):
             continue
+
+        if(dm_path in excluded_files):
+            continue
+
         post_error(f"[{file_reference}] Missing include for {dm_path}.")
         fail_no_include = True
 
