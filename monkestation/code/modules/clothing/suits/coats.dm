@@ -170,6 +170,7 @@
 /obj/item/clothing/suit/armor/secduster/engineering
 	name = "engineering security duster"
 	icon_state = "cowboy_sec_engi"
+	desc = "Duster? I hardly know 'er!"
 	masktype = /obj/item/clothing/mask/breath/sec_bandana/engineering
 
 /obj/item/clothing/suit/armor/secduster/cargo
