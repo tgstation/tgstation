@@ -122,9 +122,8 @@
 	else
 		ethereal_light.set_light_on(FALSE)
 		fixed_mut_color = rgb(128,128,128)
-	ethereal.hair_color = current_color
-	ethereal.facial_hair_color = current_color
-	ethereal.update_body()
+	ethereal.set_facial_haircolor(current_color, update = FALSE)
+	ethereal.set_haircolor(current_color, update = TRUE)
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity)
 	SIGNAL_HANDLER

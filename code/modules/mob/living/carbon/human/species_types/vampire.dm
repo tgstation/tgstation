@@ -7,6 +7,7 @@
 /datum/species/vampire
 	name = "Vampire"
 	id = SPECIES_VAMPIRE
+	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_BLOOD_CLANS,
 		TRAIT_NOBREATH,
@@ -23,7 +24,6 @@
 	mutanttongue = /obj/item/organ/internal/tongue/vampire
 	mutantstomach = null
 	mutantlungs = null
-	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
