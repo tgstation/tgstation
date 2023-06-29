@@ -5,6 +5,22 @@ import sys
 import json
 import os
 
+# simple way to check if we're running on github actions, or on a local machine
+on_github = os.getenv("GITHUB_ACTIONS") == "true"
+
+def green(text):
+    return "\033[32m" + str(text) + "\033[0m"
+
+def red(text):
+    return "\033[31m" + str(text) + "\033[0m"
+
+def blue(text):
+    return "\033[34m" + str(text) + "\033[0m"
+
+def post_error(string):
+    print(red("Ticked File Enforcement: " + string))
+    if on_github:
+        print(f"::error file={file_reference},line=1,title=Ticked File Enforcement::{string}")
 
 schema = json.load(sys.stdin)
 file_reference = schema["file"]
@@ -41,7 +57,7 @@ if lines == []:
     sys.exit(1)
 
 offset = total - len(lines)
-print(f"{offset} lines were ignored in output")
+print(blue(f"Ticked File Enforcement: {offset} lines were ignored in output for {file_reference}."))
 fail_no_include = False
 
 for code_file in glob.glob(scannable_directory, recursive=True):
@@ -62,8 +78,7 @@ for code_file in glob.glob(scannable_directory, recursive=True):
         forbid_include = True
 
         if included:
-            print(f"{dm_path} should not be included")
-            print(f"::error file={code_file},line=1,title=Ticked File Enforcement::File should not be included")
+            post_error(f"[{file_reference}] {dm_path} should NOT be included.")
             fail_no_include = True
 
     if forbid_include:
@@ -72,8 +87,7 @@ for code_file in glob.glob(scannable_directory, recursive=True):
     if not included:
         if(dm_path == file_reference_basename): # for things like unit tests where the file that includes everything is in the same directory
             continue
-        print(f"{dm_path} is not included")
-        print(f"::error file={code_file},line=1,title=Ticked File Enforcement::File is not included")
+        post_error(f"[{file_reference}] Missing include for {dm_path}.")
         fail_no_include = True
 
 if fail_no_include:
@@ -108,6 +122,7 @@ def compare_lines(a, b):
 sorted_lines = sorted(lines, key = functools.cmp_to_key(compare_lines))
 for (index, line) in enumerate(lines):
     if sorted_lines[index] != line:
-        print(f"The include at line {index + offset} is out of order ({line}, expected {sorted_lines[index]})")
-        print(f"::error file={file_reference},line={index+offset},title=Ticked File Enforcement::The include at line {index + offset} is out of order ({line}, expected {sorted_lines[index]})")
+        post_error(f"[{file_reference}] The include at line {index + offset} is out of order ({line}, expected {sorted_lines[index]})")
         sys.exit(1)
+
+print(green(f"Ticked File Enforcement: [{file_reference}] All includes are in order!"))
