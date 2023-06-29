@@ -355,6 +355,7 @@
 /obj/item/shield/pillow/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
 	new /obj/effect/temp_visual/pillow_hit(target_mob)
+	playsound(target_mob, 'sound/items/pillow_hit2.ogg', 80)
 
 /obj/item/shield/pillow/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()

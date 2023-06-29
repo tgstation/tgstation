@@ -167,7 +167,7 @@
 /obj/item/clothing/suit/pillow_suit/proc/end_fortify(mob/living/user)
 	hunkered = FALSE
 	clothing_flags = null
-	unstoppably_plushed -= 10
+	unstoppably_plushed.force -= 10
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
 	STOP_PROCESSING(SSobj, src)
 	var/filter = user.get_filter(FORTIFY_FILTER)
