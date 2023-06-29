@@ -33,6 +33,9 @@ SUBSYSTEM_DEF(mapping)
 	/// List of z level (as number) -> plane offset of that z level
 	/// Used to maintain the plane cube
 	var/list/z_level_to_plane_offset = list()
+	/// List of z level (as number) -> list of all z levels vertically connected to ours
+	/// Useful for fast grouping lookups and such
+	var/list/z_level_to_stack = list()
 	/// List of z level (as number) -> The lowest plane offset in that z stack
 	var/list/z_level_to_lowest_plane_offset = list()
 	// This pair allows for easy conversion between an offset plane, and its true representation
@@ -773,8 +776,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// We are guarenteed that we'll always grow bottom up
 	// Suck it jannies
 	z_level_to_plane_offset.len += 1
-	z_level_to_lowest_plane_offset += 1
+	z_level_to_lowest_plane_offset.len += 1
 	gravity_by_z_level.len += 1
+	z_level_to_stack.len += 1
+	// Bare minimum we have ourselves
+	z_level_to_stack[z_value] = list(z_value)
 	// 0's the default value, we'll update it later if required
 	z_level_to_plane_offset[z_value] = 0
 	z_level_to_lowest_plane_offset[z_value] = 0
@@ -812,9 +818,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/current_level = -1
 	var/current_z = update_with.z_value
 	var/list/datum/space_level/levels_checked = list()
+	var/list/new_stack = list()
 	do
 		current_level += 1
 		current_z += below_offset
+		new_stack += current_z
 		z_level_to_plane_offset[current_z] = current_level
 		var/datum/space_level/next_level = z_list[current_z]
 		below_offset = next_level.traits[ZTRAIT_DOWN]
@@ -824,6 +832,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	/// Updates the lowest offset value
 	for(var/datum/space_level/level_to_update in levels_checked)
 		z_level_to_lowest_plane_offset[level_to_update.z_value] = current_level
+		z_level_to_stack[level_to_update.z_value] = new_stack
 
 	// This can be affected by offsets, so we need to update it
 	// PAIN
@@ -881,6 +890,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				true_to_offset_planes[string_real] = list()
 
 			true_to_offset_planes[string_real] |= offset_plane
+
+/// Takes a turf or a z level, and returns a list of all the z levels that are connected to it
+/datum/controller/subsystem/mapping/proc/get_connected_levels(turf/connected)
+	var/z_level = connected
+	if(isturf(z_level))
+		z_level = connected.z
+	return z_level_to_stack[z_level]
 
 /datum/controller/subsystem/mapping/proc/lazy_load_template(template_key, force = FALSE)
 	RETURN_TYPE(/datum/turf_reservation)

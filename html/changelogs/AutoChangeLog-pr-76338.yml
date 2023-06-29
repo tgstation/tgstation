@@ -1,0 +1,7 @@
+author: "DATA-xPUNGED"
+delete-after: True
+changes:
+  - rscadd: "Added butter slices, which you can make by cutting butter into 3."
+  - qol: "Recipes that once required butter now only require a slice of it. With the exception of the butter on a stick, of course."
+  - balance: "Butter now requires 25 milk to mix and has 3 times as much nutriment."
+  - image: "Resprited butter and butter on a stick using bluespace technology, managing to compress more butter into a smaller space"

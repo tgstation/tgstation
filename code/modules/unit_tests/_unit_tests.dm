@@ -104,6 +104,7 @@
 #include "chat_filter.dm"
 #include "circuit_component_category.dm"
 #include "closets.dm"
+#include "clothing_under_armor_subtype_check.dm"
 #include "combat.dm"
 #include "component_tests.dm"
 #include "confusion.dm"

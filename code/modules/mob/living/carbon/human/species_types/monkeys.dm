@@ -3,7 +3,6 @@
 /datum/species/monkey
 	name = "Monkey"
 	id = SPECIES_MONKEY
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
 	external_organs = list(
 		/obj/item/organ/external/tail/monkey = "Monkey"
 	)
