@@ -205,7 +205,7 @@
 
 /// Toggle APC lighting settings
 /obj/machinery/power/apc/AIShiftClick(mob/living/silicon/ai/user)
-	if(!can_use(user, 1))
+	if(!can_use(user, loud = TRUE))
 		return
 
 	if(!is_operational || failure_timer)
