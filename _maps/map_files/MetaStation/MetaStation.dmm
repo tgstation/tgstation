@@ -37794,7 +37794,10 @@
 "nEL" = (
 /obj/structure/table/wood,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/item/paper_bin,
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 4
+	},
 /obj/item/pen,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -64060,7 +64063,10 @@
 	pixel_x = -6;
 	req_access = list("hop")
 	},
-/obj/item/paper_bin/carbon,
+/obj/item/paper_bin/carbon{
+	pixel_x = -2;
+	pixel_y = 4
+	},
 /obj/item/stamp/head/hop{
 	pixel_x = -4;
 	pixel_y = 4
