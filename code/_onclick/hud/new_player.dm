@@ -102,6 +102,7 @@
 
 ///Prefs menu
 /atom/movable/screen/lobby/button/character_setup
+	name = "View Character Setup"
 	screen_loc = "TOP:-70,CENTER:-54"
 	icon = 'icons/hud/lobby/character_setup.dmi'
 	icon_state = "character_setup"
@@ -119,6 +120,7 @@
 
 ///Button that appears before the game has started
 /atom/movable/screen/lobby/button/ready
+	name = "Toggle Readiness"
 	screen_loc = "TOP:-8,CENTER:-65"
 	icon = 'icons/hud/lobby/ready.dmi'
 	icon_state = "not_ready"
@@ -164,6 +166,7 @@
 
 ///Shown when the game has started
 /atom/movable/screen/lobby/button/join
+	name = "Join Game"
 	screen_loc = "TOP:-13,CENTER:-58"
 	icon = 'icons/hud/lobby/join.dmi'
 	icon_state = "" //Default to not visible
@@ -234,6 +237,7 @@
 	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(show_join_button))
 
 /atom/movable/screen/lobby/button/observe
+	name = "Observe"
 	screen_loc = "TOP:-40,CENTER:-54"
 	icon = 'icons/hud/lobby/observe.dmi'
 	icon_state = "observe_disabled"
@@ -261,6 +265,7 @@
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
 
 /atom/movable/screen/lobby/button/settings
+	name = "View Game Preferences"
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "settings"
 	base_icon_state = "settings"
@@ -277,13 +282,14 @@
 	preferences.ui_interact(usr)
 
 /atom/movable/screen/lobby/button/changelog_button
+	name = "View Changelog"
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "changelog"
 	base_icon_state = "changelog"
 	screen_loc ="TOP:-122,CENTER:+58"
 
-
 /atom/movable/screen/lobby/button/crew_manifest
+	name = "View Crew Manifest"
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "crew_manifest"
 	base_icon_state = "crew_manifest"
@@ -301,6 +307,7 @@
 	usr.client?.changelog()
 
 /atom/movable/screen/lobby/button/poll
+	name = "View Available Polls"
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "poll"
 	base_icon_state = "poll"
@@ -366,7 +373,7 @@
 
 /atom/movable/screen/lobby/button/collapse
 	name = "Collapse Lobby Menu"
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+	icon = 'icons/hud/lobby/collapse_expand.dmi'
 	icon_state = "collapse"
 	base_icon_state = "collapse"
 	screen_loc = "TOP,CENTER:+110"
@@ -379,6 +386,10 @@
 	if(new_player.hud_used.inventory_shown)
 		new_player.hud_used.inventory_shown = FALSE
 		new_player.client.screen -= new_player.hud_used.toggleable_inventory
+		base_icon_state = "expand"
 	else
 		new_player.hud_used.inventory_shown = TRUE
 		new_player.client.screen += new_player.hud_used.toggleable_inventory
+		base_icon_state = "collapse"
+	name = "[new_player.hud_used.inventory_shown ? "Collapse" : "Expand"] Lobby Menu"
+	update_appearance(UPDATE_ICON)
