@@ -108,9 +108,9 @@
 	TEST_ASSERT(mrbones.has_status_effect(/datum/status_effect/drugginess), "Plasmaman did not get druggy status after consuming gunpowder")
 	TEST_ASSERT(mrbones.has_status_effect(/datum/status_effect/hallucination), "Plasmaman did not get hallucinating status after consuming gunpowder")
 
-#undef DAMAGE_AMOUNT
-#undef SECONDS_PER_TICK
-
 /datum/unit_test/liver/plasmaman/Destroy()
 	SSmobs.ignite()
 	return ..()
+
+#undef DAMAGE_AMOUNT
+#undef SECONDS_PER_TICK
