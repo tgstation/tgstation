@@ -1033,3 +1033,44 @@
   tf-4:
   - bugfix: Brand intelligence can no longer affect off-station vendors in some specific
       circumstances.
+2023-06-30:
+  Chadley:
+  - bugfix: fixes the EHMS injector's do_after()
+  - code_imp: Improves the code for the disease scan proc (thank you fikou)
+  ChungusGamer666:
+  - refactor: Head rendering code has been updated significantly... Again. Please
+      report any issues with hair, facial hair, lipstick and such.
+  - refactor: Species speed is now stored in bodyparts. Leg transplants from slower
+      species will make you slower.
+  - bugfix: Healthy tongues will no longer randomly start slurring
+  - refactor: A significant species refactor happened, report any issues on the github.
+  DATA-xPUNGED:
+  - rscadd: Added butter slices, which you can make by cutting butter into 3.
+  - qol: Recipes that once required butter now only require a slice of it. With the
+      exception of the butter on a stick, of course.
+  - balance: Butter now requires 25 milk to mix and has 3 times as much nutriment.
+  - image: Resprited butter and butter on a stick using bluespace technology, managing
+      to compress more butter into a smaller space
+  Ghommie:
+  - bugfix: Fixed snatcherprods potentially giving held objects a one-way ticket to
+      nullspace if thrown at someone by something that's not a mob.
+  LemonInTheDark:
+  - balance: Duffelbags will now only make you slow while they are unzipped. As a
+      tradeoff, you now need to stand still and zip/unzip them to access their contents/not
+      move real slow.
+  Melbert:
+  - bugfix: Fix Debug verb "Spawn full crew"
+  - bugfix: Fix everyone being vampires
+  Sealed101:
+  - bugfix: fixed RPD switching layers on mousescroll when not in active hand
+  - qol: installing an RPD wrench upgrade & reprogramming a pipe via RMB produces
+      a balloon alert
+  Seven:
+  - bugfix: Fixes changelings not being put into their headslug when using last resort
+  - bugfix: Fixes changeling headslugs not putting their eggs into dead bodies
+  Singul0:
+  - bugfix: Names for Interdyne pirates are now less bizzare
+  Youtubeboy139:
+  - image: Added new Police Whistle sprites
+  oranges:
+  - balance: Ashlizards can no longer use the shuttle console to go on station

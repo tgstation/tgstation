@@ -1,5 +1,0 @@
-author: "Chadley"
-delete-after: True
-changes:
-  - bugfix: "fixes the EHMS injector's do_after()"
-  - code_imp: "Improves the code for the disease scan proc (thank you fikou)"
