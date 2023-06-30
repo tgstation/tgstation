@@ -5380,5 +5380,9 @@
 #include "modular_skyraptor\modules\icspawning\code\standard.dm"
 #include "modular_skyraptor\modules\newemotes\newemotes_memes.dm"
 #include "modular_skyraptor\modules\newemotes\newemotes_normal.dm"
+#include "modular_skyraptor\modules\transfer_timer\code\autotransfer.dm"
+#include "modular_skyraptor\modules\transfer_timer\code\autotransfer_config.dm"
+#include "modular_skyraptor\modules\transfer_timer\code\shuttle.dm"
+#include "modular_skyraptor\modules\transfer_timer\code\transfer_vote.dm"
 // END_INCLUDE
 

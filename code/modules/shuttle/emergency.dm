@@ -327,7 +327,8 @@
 
 	. = ..()
 
-/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, area/signal_origin, reason, red_alert, set_coefficient=null)
+/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, area/signal_origin, reason, red_alert, set_coefficient=null, silent=FALSE) /// SKYRAPTOR ADDITION: silent mode for autotransfer
+	to_chat(world, "SKYRAPTOR DEBUG: shuttle requested")
 	if(!isnum(set_coefficient))
 		var/security_num = SSsecurity_level.get_current_level_as_number()
 		switch(security_num)
@@ -338,13 +339,16 @@
 			else
 				set_coefficient = 0.5
 	var/call_time = SSshuttle.emergency_call_time * set_coefficient * engine_coeff
+	to_chat(world, "SKYRAPTOR DEBUG: call time should be [call_time]")
 	switch(mode)
 		// The shuttle can not normally be called while "recalling", so
 		// if this proc is called, it's via admin fiat
 		if(SHUTTLE_RECALL, SHUTTLE_IDLE, SHUTTLE_CALL)
 			mode = SHUTTLE_CALL
 			setTimer(call_time)
+			to_chat(world, "SKYRAPTOR DEBUG: timer was set")
 		else
+			to_chat(world, "SKYRAPTOR DEBUG: timer not set, something's fucked up!")
 			return
 
 	SSshuttle.emergencyCallAmount++
@@ -354,7 +358,8 @@
 	else
 		SSshuttle.emergency_last_call_loc = null
 
-	priority_announce("The emergency shuttle has been called. [red_alert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergency_last_call_loc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ][SSshuttle.admin_emergency_no_recall ? "\n\nWarning: Shuttle recall subroutines disabled; Recall not possible." : ""]", null, ANNOUNCER_SHUTTLECALLED, "Priority")
+	if(!silent) /// SKYRAPTOR ADDITION: silent mode
+		priority_announce("The emergency shuttle has been called. [red_alert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergency_last_call_loc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ][SSshuttle.admin_emergency_no_recall ? "\n\nWarning: Shuttle recall subroutines disabled; Recall not possible." : ""]", null, ANNOUNCER_SHUTTLECALLED, "Priority")
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)
@@ -510,6 +515,7 @@
 				launch_status = ENDGAME_LAUNCHED
 				setTimer(SSshuttle.emergency_escape_time * engine_coeff)
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
+				//bolt_all_doors() /// SKYRAPTOR ADDITION - SOON(TM)
 				INVOKE_ASYNC(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, poll_hearts))
 				SSmapping.mapvote() //If no map vote has been run yet, start one.
 
@@ -555,6 +561,7 @@
 						supervisor.", "SYSTEM ERROR:", alert=TRUE)
 
 				dock_id(destination_dock)
+				//unbolt_all_doors() /// SKYRAPTOR ADDITION - SOON(TM)
 				mode = SHUTTLE_ENDGAME
 				timer = 0
 
