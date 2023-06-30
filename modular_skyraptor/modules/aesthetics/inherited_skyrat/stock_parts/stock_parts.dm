@@ -2,7 +2,7 @@
 /obj/item/stock_parts/capacitor
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/stock_parts/stock_parts.dmi'
 
-/obj/item/stock_parts/manipulator
+/obj/item/stock_parts/servo
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/stock_parts/stock_parts.dmi'
 
 /obj/item/stock_parts/micro_laser
@@ -22,7 +22,7 @@
 /obj/item/stock_parts/scanning_module/adv
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/stock_parts/stock_parts.dmi'
 
-/obj/item/stock_parts/manipulator/nano
+/obj/item/stock_parts/servo/nano
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/stock_parts/stock_parts.dmi'
 
 /obj/item/stock_parts/micro_laser/high
@@ -39,7 +39,7 @@
 /obj/item/stock_parts/scanning_module/phasic
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/stock_parts/stock_parts.dmi'
 
-/obj/item/stock_parts/manipulator/pico
+/obj/item/stock_parts/servo/pico
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/stock_parts/stock_parts.dmi'
 
 /obj/item/stock_parts/micro_laser/ultra
@@ -56,7 +56,7 @@
 /obj/item/stock_parts/scanning_module/triphasic
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/stock_parts/stock_parts.dmi'
 
-/obj/item/stock_parts/manipulator/femto
+/obj/item/stock_parts/servo/femto
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/stock_parts/stock_parts.dmi'
 
 /obj/item/stock_parts/micro_laser/quadultra

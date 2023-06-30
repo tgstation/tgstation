@@ -34,3 +34,5 @@
 
 /obj/item/extinguisher
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/extinguisher/icons/extinguisher.dmi'
+	lefthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/extinguisher/icons/extinguisher_left.dmi'
+	righthand_file = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/extinguisher/icons/extinguisher_right.dmi'
