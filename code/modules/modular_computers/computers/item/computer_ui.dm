@@ -19,7 +19,7 @@
 			active_ui = new(user, src, "NtosMain")
 		return active_ui.open()
 
-	for (var/datum/tgui/window as anything in SStgui.open_uis_by_src[REF(src)])
+	for (var/datum/tgui/window as anything in open_uis)
 		if(active_program)
 			window.interface = active_program.tgui_id
 			window.title = active_program.filedesc
