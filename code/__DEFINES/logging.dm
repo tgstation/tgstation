@@ -95,6 +95,7 @@
 #define LOG_CATEGORY_MANIFEST "manifest"
 #define LOG_CATEGORY_MECHA "mecha"
 #define LOG_CATEGORY_PAPER "paper"
+#define LOG_CATEGORY_QDEL "qdel"
 #define LOG_CATEGORY_RUNTIME "runtime"
 #define LOG_CATEGORY_SHUTTLE "shuttle"
 #define LOG_CATEGORY_SILICON "silicon"
@@ -104,9 +105,9 @@
 #define LOG_CATEGORY_SUSPICIOUS_LOGIN "supicious-login"
 #define LOG_CATEGORY_TARGET_ZONE_SWITCH "target-zone-switch"
 #define LOG_CATEGORY_TELECOMMS "telecomms"
+#define LOG_CATEGORY_TGUI "tgui"
 #define LOG_CATEGORY_TOOL "tool"
 #define LOG_CATEGORY_VIRUS "virus"
-#define LOG_CATEGORY_QDEL "qdel"
 
 // Admin categories
 #define LOG_CATEGORY_ADMIN "admin"
@@ -126,7 +127,6 @@
 #define LOG_CATEGORY_DEBUG_MAPPING "debug-mapping"
 #define LOG_CATEGORY_DEBUG_MOBTAG "debug-mobtag"
 #define LOG_CATEGORY_DEBUG_SQL "debug-sql"
-#define LOG_CATEGORY_DEBUG_TGUI "debug-tgui"
 
 // Compatibility categories, for when stuff is changed and you need existing functionality to work
 #define LOG_CATEGORY_COMPAT_GAME "game-compat"
