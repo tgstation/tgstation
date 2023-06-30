@@ -1,4 +1,5 @@
 #define FORTIFY_FILTER "ANGRY_GLOW"
+
 //Pillow and pillow related items
 /obj/item/pillow
 	name = "pillow"
@@ -156,7 +157,7 @@
 
 /obj/item/clothing/suit/pillow_suit/proc/fortify(mob/living/user)
 	hunkered = TRUE
-	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
+	clothing_flags |= BLOCKS_SHOVE_KNOCKDOWN
 	unstoppably_plushed.force += 10
 	user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
 	user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
@@ -167,13 +168,13 @@
 
 /obj/item/clothing/suit/pillow_suit/proc/end_fortify(mob/living/user)
 	hunkered = FALSE
-	clothing_flags = null
+	clothing_flags &= ~BLOCKS_SHOVE_KNOCKDOWN
 	unstoppably_plushed.force -= 10
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
 	var/filter = user.get_filter(FORTIFY_FILTER)
 	animate(filter)
 	user.remove_filter(FORTIFY_FILTER)
-	user.visible_message(span_alert("[user.name] loosen up and goes into relax stance!"))
+	user.visible_message(span_alert("[user] loosens up and relaxes a bit."))
 
 /obj/item/clothing/suit/pillow_suit/Destroy()
 	. = ..()

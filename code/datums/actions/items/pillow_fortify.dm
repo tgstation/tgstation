@@ -7,12 +7,13 @@
 	overlay_icon_state = "bg_demon_border"
 
 /datum/action/item_action/pillow_fortify/Trigger(trigger_flags)
-	if(istype(target, /obj/item/clothing/suit/pillow_suit))
-		var/obj/item/clothing/suit/pillow_suit/crazy_armor = target
-		if(crazy_armor.hunkered)
-			crazy_armor.end_fortify(owner)
-			return
-		if(!crazy_armor.hunkered)
-			crazy_armor.fortify(owner)
-			return
-	return ..()
+	. = ..()
+	if(!.)
+		return
+	if(!istype(target, /obj/item/clothing/suit/pillow_suit))
+		return
+	var/obj/item/clothing/suit/pillow_suit/crazy_armor = target
+	if(crazy_armor.hunkered)
+		crazy_armor.end_fortify(owner)
+	else
+		crazy_armor.fortify(owner)

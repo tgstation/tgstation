@@ -307,7 +307,7 @@
 		if(stamina_source >= 60)//prevent cases where we go into stamcrit mid/end of charge and causes runtime mess
 			owner.balloon_alert(owner, "too tired!")
 			return
-	. = ..()
+	return ..()
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_moved(atom/source)
 	return
@@ -317,7 +317,7 @@
 		var/mob/living/carbon/human/charger = owner
 		charger.apply_damage(60, STAMINA)
 		charger.Immobilize(1 SECONDS)
-	. = ..()
+	return ..()
 
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_bump(atom/movable/source, atom/target)
