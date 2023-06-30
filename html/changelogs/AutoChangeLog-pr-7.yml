@@ -1,0 +1,10 @@
+author: "CliffracerX"
+delete-after: True
+changes:
+  - image: "airlock lights now consistent"
+  - image: "fixed extinguisher inhands"
+  - image: "green main menu, HUDs, and cyborg view"
+  - image: "unfucked gimmick map buttons"
+  - image: "stock parts (including cells) fit better"
+  - image: "lots more tools fit now"
+  - image: "ruggedized atmos devices"
