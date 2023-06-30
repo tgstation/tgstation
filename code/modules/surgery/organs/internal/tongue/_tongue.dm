@@ -7,6 +7,7 @@
 	slot = ORGAN_SLOT_TONGUE
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
+	voice_filter = ""
 	/**
 	 * A cached list of paths of all the languages this tongue is capable of speaking
 	 *
@@ -123,16 +124,14 @@
 		return
 	if(modifies_speech)
 		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-	if(!(organ_flags & ORGAN_FAILING))
-		ADD_TRAIT(tongue_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
+	tongue_owner.voice_filter = voice_filter
 	/* This could be slightly simpler, by making the removal of the
 	* NO_TONGUE_TRAIT conditional on the tongue's `sense_of_taste`, but
 	* then you can distinguish between ageusia from no tongue, and
 	* ageusia from having a non-tasting tongue.
 	*/
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
-	if(!sense_of_taste || (organ_flags & ORGAN_FAILING))
-		ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
+	apply_tongue_effects()
 
 /obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
 	. = ..()
@@ -142,22 +141,29 @@
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+	tongue_owner.voice_filter = initial(tongue_owner.voice_filter)
 
-/obj/item/organ/internal/tongue/apply_organ_damage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/tongue/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
 	. = ..()
 	if(!owner)
 		return
-	//tongues can't taste food when they are failing
+	apply_tongue_effects()
+
+/// Applies effects to our owner based on how damaged our tongue is
+/obj/item/organ/internal/tongue/proc/apply_tongue_effects()
 	if(sense_of_taste)
 		//tongues can't taste food when they are failing
 		if(organ_flags & ORGAN_FAILING)
 			ADD_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 		else
 			REMOVE_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
-	if(organ_flags & ORGAN_FAILING)
-		ADD_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
 	else
+		//tongues can't taste food when they lack a sense of taste
+		ADD_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
+	if(organ_flags & ORGAN_FAILING)
 		REMOVE_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
+	else
+		ADD_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
 
 /obj/item/organ/internal/tongue/could_speak_language(datum/language/language_path)
 	return (language_path in languages_possible)
@@ -461,14 +467,14 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/robot
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
-	status = ORGAN_ROBOTIC
-	organ_flags = NONE
+	organ_flags = ORGAN_ROBOTIC
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb_continuous = list("beeps", "boops")
 	attack_verb_simple = list("beep", "boop")
 	modifies_speech = TRUE
 	taste_sensitivity = 25 // not as good as an organic tongue
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 /obj/item/organ/internal/tongue/robot/can_speak_language(language)
 	return TRUE // THE MAGIC OF ELECTRONICS
@@ -481,6 +487,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	desc = "A minutely toothed, chitious ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."
 	color = "#96DB00" // TODO proper sprite, rather than recoloured pink tongue
 	modifies_speech = TRUE
+	voice_filter = "atempo=0.5" // makes them talk really slow
 
 /obj/item/organ/internal/tongue/snail/modify_speech(datum/source, list/speech_args)
 	var/new_message
@@ -567,7 +574,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	name = "golem tongue"
 	desc = "This silicate plate doesn't seem particularly mobile, but golems use it to form sounds."
 	color = COLOR_WEBSAFE_DARK_GRAY
-	status = ORGAN_MINERAL
+	organ_flags = ORGAN_MINERAL
 	say_mod = "rumbles"
 	sense_of_taste = FALSE
 	liked_foodtypes = STONE

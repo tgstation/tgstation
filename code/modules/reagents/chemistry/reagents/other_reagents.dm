@@ -39,7 +39,7 @@
 
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
-		if(exposed_carbon.get_blood_id() == type && ((methods & INJECT) || ((methods & INGEST) && exposed_carbon.dna && exposed_carbon.dna.species && (DRINKSBLOOD in exposed_carbon.dna.species.species_traits))))
+		if(exposed_carbon.get_blood_id() == type && ((methods & INJECT) || ((methods & INGEST) && HAS_TRAIT(exposed_carbon, TRAIT_DRINKS_BLOOD))))
 			if(!data || !(data["blood_type"] in get_safe_blood(exposed_carbon.dna.blood_type)))
 				exposed_carbon.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
@@ -483,7 +483,7 @@
 	if(ishuman(exposed_mob))
 		if(methods & (PATCH|VAPOR))
 			var/mob/living/carbon/human/exposed_human = exposed_mob
-			if(exposed_human.dna.species.id == SPECIES_HUMAN)
+			if(exposed_human.dna.species.use_skintones)
 				switch(exposed_human.skin_tone)
 					if("african1")
 						exposed_human.skin_tone = "african2"
@@ -505,10 +505,11 @@
 						exposed_human.skin_tone = pick("caucasian3", "latino")
 					if("caucasian1")
 						exposed_human.skin_tone = "caucasian2"
-					if ("albino")
+					if("albino")
 						exposed_human.skin_tone = "caucasian1"
 
-			if(MUTCOLORS in exposed_human.dna.species.species_traits) //take current alien color and darken it slightly
+			//take current alien color and darken it slightly
+			if(HAS_TRAIT(exposed_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(exposed_human, TRAIT_FIXED_MUTANT_COLORS))
 				var/newcolor = ""
 				var/string = exposed_human.dna.features["mcolor"]
 				var/len = length(string)
@@ -545,17 +546,18 @@
 
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/affected_human = affected_mob
-		if(!HAS_TRAIT(affected_human, TRAIT_BALD))
-			affected_human.hairstyle = "Spiky"
-		affected_human.facial_hairstyle = "Shaved"
-		affected_human.facial_hair_color = "#000000"
-		affected_human.hair_color = "#000000"
 		var/obj/item/bodypart/head/head = affected_human.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
 			head.head_flags |= HEAD_HAIR //No hair? No problem!
+		if(!HAS_TRAIT(affected_human, TRAIT_SHAVED))
+			affected_human.set_facial_hairstyle("Shaved", update = FALSE)
+		affected_human.set_facial_haircolor("#000000", update = FALSE)
+		if(!HAS_TRAIT(affected_human, TRAIT_BALD))
+			affected_human.set_hairstyle("Spiky", update = FALSE)
+		affected_human.set_haircolor("#000000", update = FALSE)
 		if(affected_human.dna.species.use_skintones)
 			affected_human.skin_tone = "orange"
-		else if(MUTCOLORS in affected_human.dna.species.species_traits) //Aliens with custom colors simply get turned orange
+		else if(HAS_TRAIT(affected_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(affected_human, TRAIT_FIXED_MUTANT_COLORS)) //Aliens with custom colors simply get turned orange
 			affected_human.dna.features["mcolor"] = "#ff8800"
 		affected_human.update_body(is_creating = TRUE)
 		if(SPT_PROB(3.5, seconds_per_tick))
@@ -2061,8 +2063,8 @@
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	exposed_human.hair_color = pick(potential_colors)
-	exposed_human.facial_hair_color = pick(potential_colors)
+	exposed_human.set_facial_haircolor(pick(potential_colors), update = FALSE)
+	exposed_human.set_haircolor(pick(potential_colors), update = TRUE)
 	exposed_human.update_body_parts()
 
 /datum/reagent/barbers_aid
@@ -2083,9 +2085,8 @@
 	var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hairstyles_list)
 	var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hairstyles_list)
 	to_chat(exposed_human, span_notice("Hair starts sprouting from your scalp."))
-	exposed_human.hairstyle = picked_hair
-	exposed_human.facial_hairstyle = picked_beard
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_hairstyle(picked_beard, update = FALSE)
+	exposed_human.set_hairstyle(picked_hair, update = TRUE)
 
 /datum/reagent/concentrated_barbers_aid
 	name = "Concentrated Barber's Aid"
@@ -2103,9 +2104,8 @@
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	to_chat(exposed_human, span_notice("Your hair starts growing at an incredible speed!"))
-	exposed_human.hairstyle = "Very Long Hair"
-	exposed_human.facial_hairstyle = "Beard (Very Long)"
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_hairstyle("Beard (Very Long)", update = FALSE)
+	exposed_human.set_hairstyle("Very Long Hair", update = TRUE)
 
 /datum/reagent/concentrated_barbers_aid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -2143,9 +2143,8 @@
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	to_chat(exposed_human, span_danger("Your hair is falling out in clumps!"))
-	exposed_human.hairstyle = "Bald"
-	exposed_human.facial_hairstyle = "Shaved"
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_hairstyle("Shaved", update = FALSE)
+	exposed_human.set_hairstyle("Bald", update = TRUE)
 
 /datum/reagent/saltpetre
 	name = "Saltpetre"
