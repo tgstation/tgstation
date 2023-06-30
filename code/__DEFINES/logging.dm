@@ -105,7 +105,6 @@
 #define LOG_CATEGORY_SUSPICIOUS_LOGIN "supicious-login"
 #define LOG_CATEGORY_TARGET_ZONE_SWITCH "target-zone-switch"
 #define LOG_CATEGORY_TELECOMMS "telecomms"
-#define LOG_CATEGORY_TGUI "tgui"
 #define LOG_CATEGORY_TOOL "tool"
 #define LOG_CATEGORY_VIRUS "virus"
 
@@ -121,7 +120,6 @@
 // Debug categories
 #define LOG_CATEGORY_DEBUG "debug"
 #define LOG_CATEGORY_DEBUG_ASSET "debug-asset"
-#define LOG_CATEGORY_DEBUG_HREF "debug-href"
 #define LOG_CATEGORY_DEBUG_JOB "debug-job"
 #define LOG_CATEGORY_DEBUG_LUA "debug-lua"
 #define LOG_CATEGORY_DEBUG_MAPPING "debug-mapping"
@@ -144,6 +142,10 @@
 #define LOG_CATEGORY_GAME_TRAITOR "game-traitor"
 #define LOG_CATEGORY_GAME_VOTE "game-vote"
 #define LOG_CATEGORY_GAME_WHISPER "game-whisper"
+
+// HREF categories
+#define LOG_CATEGORY_HREF "href"
+#define LOG_CATEGORY_HREF_TGUI "href-tgui"
 
 // Uplink categories
 #define LOG_CATEGORY_UPLINK "uplink"
