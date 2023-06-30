@@ -22,7 +22,7 @@
 
 	var/credit = tgui_alert(usr, "Display who rquested the song? (Will show character name, NOTE if on the title screen it'll show CKEY instead)", "Credit Yourself?", list("No", "Yes", "Cancel"))
 
-	if(credit == "Cancel" || credit == NULL)
+	if(credit == "Cancel" || credit == null)
 		return
 	else if (credit == "Yes")
 		credit = "[usr.name] requested this track."
