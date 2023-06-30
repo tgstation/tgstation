@@ -22,7 +22,7 @@
 
 /obj/machinery/atmospherics/pipe/bridge_pipe/update_overlays()
 	. = ..()
-	var/mutable_appearance/center = mutable_appearance('icons/obj/atmospherics/pipes/bridge_pipe.dmi', "bridge_center")
+	var/mutable_appearance/center = mutable_appearance(icon, "bridge_center") //SKYRAPTOR EDIT: WHY THE *HELL* DIDN'T THIS JUST USE THE BASE ICON??  WHY HARDCODE IT????
 	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
 	. += center
 

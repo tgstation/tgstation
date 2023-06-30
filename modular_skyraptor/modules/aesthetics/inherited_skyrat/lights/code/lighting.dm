@@ -9,16 +9,17 @@
 	icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/lights/icons/lighting.dmi'
 	overlay_icon = 'modular_skyraptor/modules/aesthetics/inherited_skyrat/lights/icons/lighting_overlay.dmi'
 	brightness = 6.5
-	fire_brightness = 4.5
-	fire_colour = "#D47F9B"
+	fire_brightness = 8
+	fire_colour = "#ff5555"
 	bulb_colour = LIGHT_COLOR_FAINT_BLUE
 	bulb_power = 1.15
-	nightshift_light_color = null // Let the dynamic night shift color code handle this.
-	bulb_low_power_colour = "#FF6600"
-	bulb_low_power_brightness_mul = 0.4
-	bulb_low_power_pow_min = 0.4
-	bulb_emergency_colour = "#FF0000"
-	bulb_major_emergency_brightness_mul = 0.7
+	nightshift_light_color = LIGHT_COLOR_FAINT_BLUE // we don't have dynamic nightshift like Skrat so this has to suffice
+	//god y'all why did you have to make so much of that shit nonmodular
+	bulb_low_power_colour = "#ff9955"
+	bulb_low_power_brightness_mul = 0.75
+	bulb_low_power_pow_min = 0.75
+	bulb_emergency_colour = "#5599ff"
+	bulb_major_emergency_brightness_mul = 1.1
 	power_consumption_rate = 5.62
 	var/maploaded = FALSE //So we don't have a lot of stress on startup.
 	var/turning_on = FALSE //More stress stuff.
@@ -130,6 +131,29 @@
 		balloon_alert(user, "ballast repaired!")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	return ..()
+
+
+//completely overriding this is ill-advised but here we are
+/obj/machinery/light/update_icon_state()
+	var/return_valu = ..()
+	switch(status) // set icon_states
+		if(LIGHT_OK)
+			var/area/local_area = get_room_area(src)
+			if((local_area?.fire))
+				icon_state = "[base_state]_fire"
+			else if(low_power_mode)
+				icon_state = "[base_state]_lpower"
+			else if(major_emergency)
+				icon_state = "[base_state]_emergency"
+			else
+				icon_state = "[base_state]"
+		if(LIGHT_EMPTY)
+			icon_state = "[base_state]-empty"
+		if(LIGHT_BURNED)
+			icon_state = "[base_state]-burned"
+		if(LIGHT_BROKEN)
+			icon_state = "[base_state]-broken"
+	return return_valu
 
 #undef NIGHTSHIFT_LIGHT_MODIFIER
 #undef NIGHTSHIFT_COLOR_MODIFIER

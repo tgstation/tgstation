@@ -1,0 +1,15 @@
+{
+	"crowbar_red": [
+		{
+			"type": "icon_state",
+			"icon_state": "crowbargs",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "crowbargs_body",
+			"blend_mode": "overlay"
+		}
+	]
+}

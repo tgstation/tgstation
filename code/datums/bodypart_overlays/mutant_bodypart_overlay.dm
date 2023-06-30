@@ -1,7 +1,7 @@
 ///Variant of bodypart_overlay meant to work synchronously with external organs. Gets imprinted upon Insert in on_species_gain
 /datum/bodypart_overlay/mutant
-	///Sprite datum we use to draw on the bodypart
-	var/datum/sprite_accessory/sprite_datum
+	///Sprite datum we use to draw on the bodypart.  SKYRAPTOR EDIT: setting to new blank() because space station 13 is fucking pain
+	var/datum/sprite_accessory/sprite_datum = new /datum/sprite_accessory/blank()
 
 	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_mothwings_firemoth_ADJ'. 'mothwings' would then be feature_key
 	var/feature_key = ""
@@ -40,7 +40,11 @@
 
 ///Return the BASE icon state of the sprite datum (so not the gender, layer, feature_key)
 /datum/bodypart_overlay/mutant/proc/get_base_icon_state()
-	return sprite_datum.icon_state
+	if(sprite_datum)
+		return sprite_datum.icon_state
+	else
+		world.log << "SKYRAPTOR WARNING: Tried to initialize a bodypart overlay with a missing sprite datum!"
+		return "none"
 
 ///Get the image we need to draw on the person. Called from get_overlay() which is called from _bodyparts.dm. Limb can be null
 /datum/bodypart_overlay/mutant/get_image(image_layer, obj/item/bodypart/limb)
