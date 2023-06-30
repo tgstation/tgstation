@@ -365,11 +365,13 @@
 /obj/item/shield/pillow/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
 	///Pillow shield gain bonus blocking for pillow weaponry and bonus blocking for wielding
 	if(damage_type == STAMINA)
-		if((hitby in countered_object) && HAS_TRAIT(src, TRAIT_WIELDED))
-			final_block_chance += 70
-		else
-			final_block_chance = 10
-		owner.apply_damage(20, STAMINA)//block at your own risk
+		if((hitby in countered_object))
+			final_block_chance += 40
+		if(HAS_TRAIT(src, TRAIT_WIELDED))
+			final_block_chance += 30
+	else
+		final_block_chance = 10
+	owner.apply_damage(20, STAMINA)//block at your own risk
 	return ..()
 
 
