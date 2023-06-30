@@ -232,7 +232,7 @@
 	update()
 
 /obj/machinery/power/apc/attack_ai_secondary(mob/living/silicon/user, list/modifiers)
-	if(!can_use(user, 1))
+	if(!can_use(user, loud = TRUE))
 		return
 
 	togglelock(user)
