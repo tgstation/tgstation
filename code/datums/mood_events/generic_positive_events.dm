@@ -364,7 +364,7 @@
 	description = "Swish! Nothing but net."
 	mood_change = 2
 	timeout = 5 MINUTES
-	
+
 /datum/mood_event/basketball_dunk
 	description = "Slam dunk! Boom, shakalaka!"
 	mood_change = 2

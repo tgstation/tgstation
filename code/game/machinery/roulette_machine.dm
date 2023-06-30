@@ -58,7 +58,7 @@
 /obj/machinery/roulette/Initialize(mapload)
 	. = ..()
 	jackpot_loop = new(src, FALSE)
-	wires = new /datum/wires/roulette(src)
+	set_wires(new /datum/wires/roulette(src))
 
 /obj/machinery/roulette/Destroy()
 	QDEL_NULL(jackpot_loop)
@@ -139,7 +139,7 @@
 			return FALSE
 
 		if(my_card)
-			if(istype(player_card, /obj/item/card/id/departmental_budget)) // Are they using a department ID
+			if(IS_DEPARTMENTAL_CARD(player_card)) // Are they using a department ID
 				say("You cannot gamble with the department budget!")
 				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 				return FALSE

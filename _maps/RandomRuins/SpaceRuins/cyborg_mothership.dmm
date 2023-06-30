@@ -7,7 +7,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "d" = (
-/obj/effect/decal/remains/human/grave,
+/obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "e" = (
