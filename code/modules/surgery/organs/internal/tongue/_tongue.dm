@@ -143,7 +143,7 @@
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	tongue_owner.voice_filter = initial(tongue_owner.voice_filter)
 
-/obj/item/organ/internal/tongue/apply_organ_damage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/tongue/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
 	. = ..()
 	if(!owner)
 		return
@@ -467,8 +467,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/robot
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
-	status = ORGAN_ROBOTIC
-	organ_flags = NONE
+	organ_flags = ORGAN_ROBOTIC
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb_continuous = list("beeps", "boops")
@@ -575,7 +574,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	name = "golem tongue"
 	desc = "This silicate plate doesn't seem particularly mobile, but golems use it to form sounds."
 	color = COLOR_WEBSAFE_DARK_GRAY
-	status = ORGAN_MINERAL
+	organ_flags = ORGAN_MINERAL
 	say_mod = "rumbles"
 	sense_of_taste = FALSE
 	liked_foodtypes = STONE
