@@ -64,13 +64,10 @@
 	light_color = COLOR_STRONG_VIOLET
 	weak_against_armour = TRUE
 
-
 /obj/projectile/beam/laser/musket/prime
 	name = "mid-power laser"
-	icon_state = "laser_musket"
 	damage = 30
 	stamina = 45
-	light_color = COLOR_DARK_PURPLE
 	weak_against_armour = FALSE
 
 /obj/projectile/beam/weak
