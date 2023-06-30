@@ -565,3 +565,4 @@
 	id = /obj/item/card/id/advanced/centcom/ert/militia/general
 	head = /obj/item/clothing/head/beret/militia
 	l_hand = /obj/item/megaphone
+	suit_store = /obj/item/gun/energy/laser/musket/prime

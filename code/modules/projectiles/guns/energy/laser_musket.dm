@@ -30,3 +30,11 @@
 /obj/item/gun/energy/laser/musket/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_wielded=10)
+
+/obj/item/gun/energy/laser/musket/prime
+	name = "heroic laser musket"
+	desc = "A well engineering handcharged laser weapon, it's capacitors hum with potential."
+	icon_state = "musket_prime"
+	inhand_icon_state = "musket_prime"
+	worn_icon_state = "las_musket_prime"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/prime)
