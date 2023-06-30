@@ -23,6 +23,8 @@
 	if(reagents.total_volume && rename_with_volume)
 		name += " ([reagents.total_volume]u)"
 
+	AddComponent(/datum/component/germ_sensitive, mapload)
+
 /obj/item/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!canconsume(M, user))
 		return FALSE
@@ -48,7 +50,8 @@
 /obj/item/reagent_containers/pill/proc/on_consumption(mob/M, mob/user)
 	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), M, span_notice("[pick(strings(REDPILL_FILE, "redpill_questions"))]")), 50)
-
+	if(apply_type == INGEST)
+		SEND_SIGNAL(src, COMSIG_PILL_CONSUMED, eater = M, feeder = user)
 	if(reagents.total_volume)
 		reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = apply_type)
 	qdel(src)

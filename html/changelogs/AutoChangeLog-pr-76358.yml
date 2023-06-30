@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - qol: "Add hotkeys to APCs for AIs and borgs. Toggle environmental (ctrl + shift), toggle lighting (shift), toggle equipment (alt), and toggle breaker (ctrl)."
+  - qol: "Remove APC UI popup when using RMB to toggle the lock."
