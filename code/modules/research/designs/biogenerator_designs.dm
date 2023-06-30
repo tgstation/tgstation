@@ -58,14 +58,6 @@
 	make_reagent = /datum/reagent/consumable/flour
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
-/datum/design/rice
-	name = "Rice"
-	id = "rice"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass = 0.6)
-	make_reagent = /datum/reagent/consumable/rice
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
-
 /datum/design/sugar
 	name = "Sugar"
 	id = "sugar"
