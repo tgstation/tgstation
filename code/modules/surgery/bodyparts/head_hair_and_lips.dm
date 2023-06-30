@@ -380,19 +380,15 @@
  * Set the facial hair gradient color of a human.
  * Update calls update_body_parts().
  **/
-/mob/living/proc/set_facial_hair_gradient(new_color, update = TRUE)
+/mob/living/proc/set_facial_hair_gradient_color(new_color, update = TRUE)
 	return
 
-/mob/living/carbon/human/set_facial_hair_gradient(new_color, update = TRUE)
+/mob/living/carbon/human/set_facial_hair_gradient_color(new_color, update = TRUE)
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 
-	LAZYSETLEN(grad_style, GRADIENTS_LEN)
-	grad_style[GRADIENT_FACIAL_HAIR_KEY] = new_style
 	LAZYSETLEN(grad_color, GRADIENTS_LEN)
 	grad_color[GRADIENT_FACIAL_HAIR_KEY] = new_color
 	if(my_head)
-		LAZYSETLEN(my_head.gradient_styles, GRADIENTS_LEN)
-		my_head.gradient_styles[GRADIENT_FACIAL_HAIR_KEY] = new_style
 		LAZYSETLEN(my_head.gradient_colors, GRADIENTS_LEN)
 		my_head.gradient_colors[GRADIENT_FACIAL_HAIR_KEY] = new_color
 
