@@ -96611,9 +96611,6 @@
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "yiD" = (
-/obj/effect/turf_decal/trimline/neutral/mid_joiner{
-	dir = 4
-	},
 /obj/machinery/duct,
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
