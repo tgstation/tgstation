@@ -216,7 +216,6 @@
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 	messenger_ability = new
-	messenger_ability.Grant(src)
 	GLOB.pai_list += src
 	make_laws()
 	for(var/law in laws.inherent)
