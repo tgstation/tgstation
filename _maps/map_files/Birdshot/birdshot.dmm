@@ -64178,6 +64178,10 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
+/obj/item/storage/wallet/random{
+	pixel_x = -7;
+	pixel_y = 1
+	},
 /obj/item/assembly/flash/handheld{
 	pixel_x = -6;
 	pixel_y = 5

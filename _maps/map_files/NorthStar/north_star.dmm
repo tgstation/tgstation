@@ -22604,6 +22604,10 @@
 /area/station/ai_monitored/command/storage/eva)
 "fQG" = (
 /obj/structure/table/wood,
+/obj/item/storage/backpack/satchel/leather/withwallet{
+	pixel_y = 6;
+	pixel_x = -2
+	},
 /obj/item/paper/fluff/ids_for_dummies,
 /obj/machinery/light/small/directional/north,
 /obj/machinery/newscaster/directional/north,
