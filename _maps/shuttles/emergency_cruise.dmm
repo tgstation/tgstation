@@ -205,6 +205,10 @@
 /area/shuttle/escape/luxury)
 "en" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "shuttlewindow";
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ey" = (
@@ -527,6 +531,14 @@
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
+"kc" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "shuttlewindow";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "kd" = (
 /turf/template_noop,
 /area/template_noop)
@@ -2176,6 +2188,13 @@
 	pixel_x = 9
 	},
 /obj/item/reagent_containers/cup/soda_cans/dr_gibb,
+/obj/machinery/button/door{
+	id = "shuttlewindow";
+	name = "General Admission emergency shutters";
+	pixel_y = -3;
+	req_access = list("command");
+	pixel_x = 7
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "Sx" = (
@@ -3382,7 +3401,7 @@ kd
 kd
 kd
 kd
-en
+kc
 Ed
 Bl
 nE
@@ -3428,8 +3447,8 @@ kd
 kd
 kd
 kd
-en
-en
+kc
+kc
 NH
 uV
 yc
@@ -3440,10 +3459,10 @@ Cw
 ca
 uV
 uV
-en
-en
-en
-en
+kc
+kc
+kc
+kc
 uV
 uV
 EC
@@ -3475,8 +3494,8 @@ kd
 kd
 kd
 kd
-en
-en
+kc
+kc
 uV
 aJ
 ES
@@ -3492,9 +3511,9 @@ QG
 QG
 QG
 gH
-en
-en
-en
+kc
+kc
+kc
 uV
 aJ
 ES
@@ -3504,10 +3523,10 @@ uV
 uV
 uV
 uV
-en
-en
-en
-en
+kc
+kc
+kc
+kc
 uV
 OK
 kd
