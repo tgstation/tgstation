@@ -184,7 +184,7 @@
 
 /// Toggle APC power settings
 /obj/machinery/power/apc/AICtrlClick(mob/living/silicon/ai/user)
-	if(!can_use(user, 1))
+	if(!can_use(user, loud = TRUE))
 		return
 
 	toggle_breaker(user)
