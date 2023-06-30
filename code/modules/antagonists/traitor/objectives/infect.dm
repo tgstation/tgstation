@@ -13,7 +13,7 @@
 	progression_reward = list(8 MINUTES, 14 MINUTES)
 	telecrystal_reward = 1
 
-	duplicate_type = /datum/traitor_objective/target_player
+	duplicate_type = /datum/traitor_objective/target_player/infect
 
 	/// if TRUE, can only target heads of staff
 	/// if FALSE, CANNOT target heads of staff
@@ -160,18 +160,6 @@
 	var/used = FALSE
 
 /obj/item/reagent_containers/hypospray/medipen/manifoldinjector/attack(mob/living/affected_mob, mob/living/carbon/human/user)
-<<<<<<< HEAD
-	if(used == 0)
-		to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
-		if(do_after(user, 1.5 SECONDS))
-			var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
-			affected_mob.ForceContractDisease(hms)
-			used = 1
-			inject(affected_mob, user)
-			SEND_SIGNAL(src, COMSIG_AFTER_INJECT, user, affected_mob)
-	else
-		inject(affected_mob, user)
-=======
 	if(used)
 		return ..()
 	to_chat(affected_mob, span_warning("You feel someone try to inject you with something."))
@@ -185,4 +173,3 @@
 	used = TRUE
 	inject(affected_mob, user)
 	SEND_SIGNAL(src, COMSIG_EHMS_INJECTOR_INJECTED, user, affected_mob)
->>>>>>> master
