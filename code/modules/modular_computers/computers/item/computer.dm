@@ -698,7 +698,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			return
 
 	// Inserting a pAI
-	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai && insert_pai(user, attacking_item))
+	if(istype(attacking_item, /obj/item/pai_card) && insert_pai(user, attacking_item))
 		return
 
 	if(istype(attacking_item, /obj/item/stock_parts/cell))
@@ -816,19 +816,23 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	GLOB.TabletMessengers -= src
 
 /obj/item/modular_computer/proc/insert_pai(mob/user, obj/item/pai_card/card)
+	if(inserted_pai)
+		return FALSE
 	if(!user.transferItemToLoc(card, src))
-		return
+		return FALSE
 	inserted_pai = card
 	balloon_alert(user, "inserted pai")
 	inserted_pai.pai.messenger_ability.owner_pda = src
 	update_appearance(UPDATE_ICON)
+	return TRUE
 
 /obj/item/modular_computer/proc/remove_pai(mob/user)
 	if(!inserted_pai)
-		return
+		return FALSE
 	inserted_pai.pai.messenger_ability.owner_pda = null
 	if(user)
 		user.put_in_hands(inserted_pai)
 		balloon_alert(user, "removed pAI")
 	else
 		inserted_pai.forceMove(drop_location())
+	return TRUE
