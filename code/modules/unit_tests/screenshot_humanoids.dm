@@ -6,7 +6,7 @@
 	var/mob/living/carbon/human/lizard = allocate(/mob/living/carbon/human/dummy/consistent)
 	lizard.dna.features["mcolor"] = "#099"
 	lizard.dna.features["tail_lizard"] = "Light Tiger"
-	lizard.dna.features["snout"] = "Sharp + Light"
+	lizard.dna.features["snout_lizard"] = "Sharp + Light"
 	lizard.dna.features["horns"] = "Simple"
 	lizard.dna.features["frills"] = "Aquatic"
 	lizard.dna.features["legs"] = "Normal Legs"
@@ -17,7 +17,7 @@
 	// let me have this
 	var/mob/living/carbon/human/moth = allocate(/mob/living/carbon/human/dummy/consistent)
 	moth.dna.features["moth_antennae"] = "Firewatch"
-	moth.dna.features["moth_markings"] = "None"
+	moth.dna.features["bodymarks_lizard"] = "None"
 	moth.dna.features["moth_wings"] = "Firewatch"
 	moth.set_species(/datum/species/moth)
 	moth.equipOutfit(/datum/outfit/job/cmo, visualsOnly = TRUE)

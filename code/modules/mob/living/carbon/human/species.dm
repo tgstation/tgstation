@@ -751,12 +751,25 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			switch(bodypart)
 				if("ears")
 					accessory = GLOB.ears_list[source.dna.features["ears"]]
-				if("body_markings")
-					accessory = GLOB.body_markings_list[source.dna.features["body_markings"]]
+					//source_id = "standard ears: [bodypart]"
+				if("bodymarks_lizard")
+					accessory = GLOB.bodymarks_list_lizard[source.dna.features["bodymarks_lizard"]]
+					//source_id = "standard bodymarks: [bodypart]"
 				if("legs")
 					accessory = GLOB.legs_list[source.dna.features["legs"]]
+					//source_id = "standard legs: [bodypart]"
 				if("caps")
 					accessory = GLOB.caps_list[source.dna.features["caps"]]
+					//source_id = "standard caps: [bodypart]"
+			/// SKYRAPTOR EDIT BEGIN: modular_chargen
+			//Custom mutant bodyparts go brrr
+			for(var/spath in subtypesof(/datum/mutant_newmutantpart))
+				var/datum/mutant_newmutantpart/S = new spath()
+				var/accessory_tmp = S.get_accessory(bodypart, source.dna.features)
+				if(accessory_tmp != FALSE)
+					accessory = accessory_tmp
+					//source_id = "modularized: [bodypart]"
+			//SKYRAPTOR EDIT END: modular_chargen
 
 			if(!accessory || accessory.icon_state == "none")
 				continue
@@ -915,7 +928,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(H.num_legs < 2)
 				return FALSE
 			if((bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
-				if(!(I.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)))
+				if(!(I.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)) && !(BODYTYPE_DIGITIGRADE in I.supported_bodytypes)) //SKYRAPTOR EDIT
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
 					return FALSE

@@ -39,6 +39,7 @@
 
 	var/eye_color_left = "" //set to a hex code to override a mob's left eye color
 	var/eye_color_right = "" //set to a hex code to override a mob's right eye color
+	var/eye_icon_file = 'icons/mob/species/human/human_face.dmi' //SKYRAPTOR EDIT: modularize displayed eyes into their own files
 	var/eye_icon_state = "eyes"
 	var/old_eye_color_left = "fff"
 	var/old_eye_color_right = "fff"
@@ -123,8 +124,8 @@
 	if(isnull(eye_icon_state))
 		return list()
 
-	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
-	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/species/human/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
+	var/mutable_appearance/eye_left = mutable_appearance(eye_icon_file, "[eye_icon_state]_l", -BODY_LAYER) //SKYRAPTOR EDITS: Eyes modularized into their own files, maintain backwards compat
+	var/mutable_appearance/eye_right = mutable_appearance(eye_icon_file, "[eye_icon_state]_r", -BODY_LAYER)
 	var/list/overlays = list(eye_left, eye_right)
 
 	if(EYECOLOR in parent.dna?.species.species_traits)
