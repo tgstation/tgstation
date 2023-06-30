@@ -160,7 +160,12 @@
 	else if(cable_overlay)
 		cut_overlay(cable_overlay, TRUE)
 		cable_overlay = null
-
+	
+	worn_icon_state = "[initial(worn_icon_state)][tank_two ? "l" : ""][tank_one ? "r" : ""]"
+	if(ishuman(loc)) //worn
+		var/mob/living/carbon/human/human = loc
+		human.update_worn_back()
+	
 	if(!attached_device)
 		return
 
