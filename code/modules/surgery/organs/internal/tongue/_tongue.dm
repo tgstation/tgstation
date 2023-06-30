@@ -306,6 +306,8 @@
 		return // the statue ended up getting destroyed while in nullspace?
 
 	var/mob/living/carbon/carbon_owner = owner
+	RegisterSignal(carbon_owner, COMSIG_MOVABLE_MOVED)
+
 	to_chat(carbon_owner, span_userdanger("Your existence as a living creature snaps as your statue form crumbles!"))
 	carbon_owner.forceMove(get_turf(statue))
 	carbon_owner.dust(just_ash = TRUE, drop_items = TRUE)
@@ -326,16 +328,17 @@
 	statue.max_integrity = 100 // statues already have 100 max integrity, so this is a safety net
 	statue.set_armor(/datum/armor/obj_structure/silverscale_statue_armor)
 	statue.flags_ricochet |= RICOCHET_SHINY
-	RegisterSignal(statue, list(COMSIG_OBJ_DECONSTRUCT, COMSIG_ATOM_DESTRUCTION), PROC_REF(statue_destroyed))
+	RegisterSignals(statue, list(COMSIG_OBJ_DECONSTRUCT, COMSIG_ATOM_DESTRUCTION), PROC_REF(statue_destroyed))
 	RegisterSignal(statue, COMSIG_QDELETING, PROC_REF(statue_deleted))
 
 /// Cleans up the reference to the statue and unregisters signals
 /datum/action/cooldown/turn_to_statue/proc/clean_up_statue()
-	UnregisterSignal(statue, list(COMSIG_OBJ_DECONSTRUCT, COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING))
 	if(QDELETED(statue))
 		statue = null
-	else
-		QDEL_NULL(statue)
+		return
+
+	UnregisterSignal(statue, list(COMSIG_OBJ_DECONSTRUCT, COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING))
+	QDEL_NULL(statue)
 
 /datum/armor/obj_structure/silverscale_statue_armor
 	melee = 50
