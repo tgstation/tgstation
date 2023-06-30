@@ -61,3 +61,19 @@
 /datum/action/innate/pai/light/Trigger(trigger_flags)
 	..()
 	pai_owner.toggle_integrated_light()
+
+/datum/action/innate/pai/messenger
+	name = "Interact with PDA"
+	button_icon_state = "pda"
+	background_icon_state = "bg_tech"
+	overlay_icon_state = "bg_tech_border"
+
+	///The PDA we're inserted into.
+	var/obj/item/modular_computer/pda/owner_pda
+
+/datum/action/innate/pai/messenger/Trigger(trigger_flags)
+	. = ..()
+	if(!owner_pda)
+		owner.balloon_alert(owner, "not in a pda!")
+		return
+	owner_pda.interact(owner)

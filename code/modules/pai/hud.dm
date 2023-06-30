@@ -115,18 +115,6 @@
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.checklaws()
 
-/atom/movable/screen/pai/modpc
-	name = "Messenger"
-	icon_state = "pda_send"
-	required_software = "Digital Messenger"
-	var/mob/living/silicon/pai/pAI
-
-/atom/movable/screen/pai/modpc/Click()
-	. = ..()
-	if(!.) // this works for some reason.
-		return
-	pAI.modularInterface?.interact(pAI)
-
 /atom/movable/screen/pai/internal_gps
 	name = "Internal GPS"
 	icon_state = "internal_gps"
@@ -150,7 +138,7 @@
 	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	pAI.camera.toggle_camera_mode(usr)
+	pAI.aicamera.toggle_camera_mode(usr)
 
 /atom/movable/screen/pai/image_view
 	name = "View Images"
@@ -161,7 +149,7 @@
 	if(!..())
 		return
 	var/mob/living/silicon/pai/pAI = usr
-	pAI.camera.viewpictures(usr)
+	pAI.aicamera.viewpictures(usr)
 
 /atom/movable/screen/pai/radio
 	name = "radio"
@@ -177,7 +165,6 @@
 /datum/hud/pai/New(mob/living/silicon/pai/owner)
 	..()
 	var/atom/movable/screen/using
-	var/mob/living/silicon/pai/mypai = mymob
 
 // Software menu
 	using = new /atom/movable/screen/pai/software
@@ -233,14 +220,6 @@
 	using = new /atom/movable/screen/pai/state_laws()
 	using.screen_loc = ui_pai_state_laws
 	static_inventory += using
-
-// Modular Interface
-	using = new /atom/movable/screen/pai/modpc()
-	using.screen_loc = ui_pai_mod_int
-	static_inventory += using
-	mypai.pda_button = using
-	var/atom/movable/screen/pai/modpc/tablet_button = using
-	tablet_button.pAI = mypai
 
 // Internal GPS
 	using = new /atom/movable/screen/pai/internal_gps()

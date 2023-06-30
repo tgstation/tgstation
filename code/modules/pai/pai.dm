@@ -29,6 +29,9 @@
 	radio = /obj/item/radio/headset/silicon/pai
 	worn_slot_flags = ITEM_SLOT_HEAD
 
+	///The innate ability to use people's ModPCs
+	var/datum/action/innate/pai/messenger/messenger_ability
+
 	/// If someone has enabled/disabled the pAIs ability to holo
 	var/can_holo = TRUE
 	/// Whether this pAI can recieve radio messages
@@ -79,8 +82,6 @@
 	var/obj/machinery/newscaster/pai/newscaster
 	/// PDA
 	var/atom/movable/screen/ai/modpc/pda_button
-	/// Photography module
-	var/obj/item/camera/siliconcam/pai_camera/camera
 	/// Remote signaler
 	var/obj/item/assembly/signaler/internal/signaler
 
@@ -89,7 +90,6 @@
 	var/static/list/available_software = list(
 		"Atmospheric Sensor" = 5,
 		"Crew Manifest" = 5,
-		"Digital Messenger" = 5,
 		"Photography Module" = 5,
 		"Encryption Slot" = 10,
 		"Music Synthesizer" = 10,
@@ -153,7 +153,6 @@
 
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(atmos_analyzer)
-	QDEL_NULL(camera)
 	QDEL_NULL(hacking_cable)
 	QDEL_NULL(host_scan)
 	QDEL_NULL(instrument)
@@ -199,7 +198,7 @@
 			card.update_appearance()
 	if(deleting_atom == atmos_analyzer)
 		atmos_analyzer = null
-	if(deleting_atom == camera)
+	if(deleting_atom == aicamera)
 		camera = null
 	if(deleting_atom == host_scan)
 		host_scan = null
@@ -216,6 +215,8 @@
 /mob/living/silicon/pai/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
+	messenger_ability = new
+	messenger_ability.Grant(src)
 	GLOB.pai_list += src
 	make_laws()
 	for(var/law in laws.inherent)

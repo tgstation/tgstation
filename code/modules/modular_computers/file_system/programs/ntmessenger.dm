@@ -375,19 +375,22 @@
 	message_data["photo"] = signal.data["photo"]
 	messages += list(message_data)
 
-	var/mob/living/L = null
+	var/list/mob/living/receievers = list()
+	if(computer.inserted_pai)
+		receievers += computer.inserted_pai.pai
 	if(computer.loc && isliving(computer.loc))
-		L = computer.loc
-	//Maybe they are a pAI!
-	else
-		L = get(computer, /mob/living/silicon)
+		receievers += computer.loc
 
-	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
+	for(var/mob/living/messaged_mob as anything in receievers)
+		if(messaged_mob.stat >= UNCONSCIOUS)
+			continue
+		if(!messaged_mob.is_literate())
+			continue
 		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Reply</a>)"
 		var/hrefstart
 		var/hrefend
-		if (isAI(L))
-			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
+		if (isAI(messaged_mob))
+			hrefstart = "<a href='?src=[REF(messaged_mob)];track=[html_encode(signal.data["name"])]'>"
 			hrefend = "</a>"
 
 		if(signal.data["automated"])
@@ -396,9 +399,8 @@
 		var/inbound_message = signal.format_message()
 		inbound_message = emoji_parse(inbound_message)
 
-		if(L.is_literate())
-			var/photo_message = message_data["photo"] ? " (<a href='byond://?src=[REF(signal.logged)];photo=1'>Photo</a>)" : ""
-			to_chat(L, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message][photo_message] [reply]"))
+		var/photo_message = message_data["photo"] ? " (<a href='byond://?src=[REF(signal.logged)];photo=1'>Photo</a>)" : ""
+		to_chat(messaged_mob, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message][photo_message] [reply]"))
 
 	if (ringer_status)
 		computer.ring(ringtone)

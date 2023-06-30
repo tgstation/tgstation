@@ -205,10 +205,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return TRUE
 
 	if(istype(inserted_pai)) // Remove pAI
-		user.put_in_hands(inserted_pai)
-		balloon_alert(user, "removed pAI")
-		inserted_pai = null
-		update_appearance(UPDATE_ICON)
+		remove_pai(user)
 		return TRUE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
@@ -417,6 +414,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			human_wearer.sec_hud_set_ID()
 	if(inserted_pai == gone)
 		inserted_pai = null
+		update_appearance(UPDATE_ICON)
 	if(inserted_disk == gone)
 		inserted_disk = null
 		update_appearance(UPDATE_ICON)
@@ -700,12 +698,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			return
 
 	// Inserting a pAI
-	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		inserted_pai = attacking_item
-		balloon_alert(user, "inserted pai")
-		update_appearance(UPDATE_ICON)
+	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai && insert_pai(user, attacking_item))
 		return
 
 	if(istype(attacking_item, /obj/item/stock_parts/cell))
@@ -771,7 +764,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	internal_cell?.forceMove(drop_location())
 	computer_id_slot?.forceMove(drop_location())
 	inserted_disk?.forceMove(drop_location())
-	inserted_pai?.forceMove(drop_location())
+	remove_pai()
 	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
 	user.balloon_alert(user, "disassembled")
 	relay_qdel()
@@ -821,3 +814,21 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/proc/Remove_Messenger()
 	GLOB.TabletMessengers -= src
+
+/obj/item/modular_computer/proc/insert_pai(mob/user, obj/item/pai_card/card)
+	if(!user.transferItemToLoc(card, src))
+		return
+	inserted_pai = card
+	balloon_alert(user, "inserted pai")
+	inserted_pai.pai.messenger_ability.owner_pda = src
+	update_appearance(UPDATE_ICON)
+
+/obj/item/modular_computer/proc/remove_pai(mob/user)
+	if(!inserted_pai)
+		return
+	inserted_pai.pai.messenger_ability.owner_pda = null
+	if(user)
+		user.put_in_hands(inserted_pai)
+		balloon_alert(user, "removed pAI")
+	else
+		inserted_pai.forceMove(drop_location())

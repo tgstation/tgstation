@@ -127,7 +127,7 @@
 	set_density(TRUE)
 	if(istype(card.loc, /obj/item/modular_computer))
 		var/obj/item/modular_computer/pc = card.loc
-		pc.inserted_pai = null
+		pc.remove_pai()
 		pc.visible_message(span_notice("[src] ejects itself from [pc]!"))
 	if(isliving(card.loc))
 		var/mob/living/living_holder = card.loc
