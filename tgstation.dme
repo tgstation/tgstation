@@ -4634,6 +4634,7 @@
 #include "code\modules\projectiles\guns\energy\kinetic_accelerator.dm"
 #include "code\modules\projectiles\guns\energy\laser.dm"
 #include "code\modules\projectiles\guns\energy\laser_gatling.dm"
+#include "code\modules\projectiles\guns\energy\laser_musket.dm"
 #include "code\modules\projectiles\guns\energy\mounted.dm"
 #include "code\modules\projectiles\guns\energy\pulse.dm"
 #include "code\modules\projectiles\guns\energy\recharge.dm"
