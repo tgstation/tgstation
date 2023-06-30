@@ -79,6 +79,7 @@
 /datum/sprite_accessory/blank
 	name = "None"
 	icon_state = "None"
+	icon = 'icons/mob/species/human/human_face.dmi' //forcing this as a fallback
 
 //////////////////////
 // Hair Definitions //

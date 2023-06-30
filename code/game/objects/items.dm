@@ -39,6 +39,26 @@
 	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_belt
 
+	/// SKYRAPTOR ADDITION BEGIN
+	// A list to take the place of GREYSCALE_CONFIG_WORN used for alternate bodytypes (e.g, Digitigrade)
+	// Use bodytype IDs as the keys to a greyscale config for the alternate version.
+	// For instance, greyscale_config_worn_bodytypes[BODYTYPE_DIGITIGRADE] = /datum/greyscale_config/trek/worn_digi
+	// If you include multiple variants, make sure to include the default value of the worn config as BODYTYPE_HUMANOID.
+	// This helps avoid Fuckery(tm) with dyes, changelings, chameleons, etc.
+	var/list/greyscale_config_worn_bodytypes
+	/// Used with the above to help switch between greyscale configs cleanly and avoid Fuckery(tm).
+	var/greyscale_config_last_bodtype
+
+	/// Used with both greyscales and eventually icon_state variants to allow MOAR BODYTYPES
+	// this needs to contain a list of supported numerical IDs and be ordered in TOP PRIORITY to BOTTOM PRIORITY (e.g, DigiFemme > Digi > Femme > Normal)
+	var/list/supported_bodytypes
+	/// Used to pick alternative worn_icon files
+	// See above; sort by TOP PRIORITY to BOTTOM PRIORITY with the bodytypes as keys (DIGI | FEMME > DIGI > FEMME > HUMANOID)
+	// !!KEYS IN THIS SHOULD BE IDENTICAL TO SUPPORTED_BODYTYPES!!
+	var/list/bodytype_icon_files
+
+	/// SKYRAPTOR EDIT END
+
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
 		IF YOU ADD MORE ICON CRAP TO THIS
@@ -361,7 +381,17 @@
 	. = ..()
 	if(!greyscale_colors)
 		return
-	if(greyscale_config_worn)
+	/// SKYRAPTOR EDIT BEGIN
+	if(greyscale_config_worn_bodytypes && greyscale_config_last_bodtype)
+		//to_chat(world, "Trying to apply bodytype-specific setup [greyscale_config_last_bodtype]")
+		if(greyscale_config_worn_bodytypes[greyscale_config_last_bodtype])
+			greyscale_config_worn = greyscale_config_worn_bodytypes[greyscale_config_last_bodtype]
+			worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors) //hacky but we roll with it
+			//to_chat(world, "Found a match [greyscale_config_worn_bodytypes[greyscale_config_last_bodtype]]")
+		else
+			//to_chat(world, "Failed to find matching bodytype-specific greyscale!")
+			worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors)
+	else if(greyscale_config_worn) /// SKYRAPTOR EDIT END
 		worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors)
 	if(greyscale_config_inhand_left)
 		lefthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_left, greyscale_colors)
@@ -664,6 +694,15 @@
  * polling ghosts while it's just being equipped as a visual preview for a dummy.
  */
 /obj/item/proc/visual_equipped(mob/user, slot, initial = FALSE)
+	/// SKYRAPTOR ADDITION BEGIN
+	if(ishuman(user))
+		var/mob/living/carbon/human/userH = user
+		var/N
+		for(N in supported_bodytypes)
+			if(userH.dna.species.bodytype & N)
+				greyscale_config_last_bodtype = "[N]"
+		update_greyscale()
+	/// SKYRAPTOR EDIT END
 	return
 
 /**

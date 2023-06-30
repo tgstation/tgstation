@@ -211,6 +211,18 @@
 			return
 
 		update_item(picked_item)
+		if(isitem(target)) /// SKYRAPTOR ADDITION: this is a little ugly but it should bring chameleons into functionality with alt-bodytype greyscales
+			var/obj/item/item_target = target
+			if(initial(picked_item.greyscale_config_worn_bodytypes) && initial(picked_item.greyscale_colors))
+				if(ishuman(user))
+					var/mob/living/carbon/human/H = user
+					var/N
+					var/altbody
+					for(N in picked_item.supported_bodytypes)
+						if(H.dna.species.bodytype & N)
+							altbody = picked_item.greyscale_config_worn_bodytypes["[N]"]
+					if(altbody)
+						item_target.worn_icon = SSgreyscale.GetColoredIconByType(initial(altbody), initial(picked_item.greyscale_colors)) /// SKYRAPTOR EDIT END
 		var/obj/item/thing = target
 		thing.update_slot_icon()
 	build_all_button_icons()

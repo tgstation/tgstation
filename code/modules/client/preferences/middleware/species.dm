@@ -15,14 +15,19 @@
 	var/list/to_insert = list()
 
 	for (var/species_id in get_selectable_species())
+		world.log << "SKYRAPTOR ALERT: creating spritesheet for species middleware.  SPECIES ID: [species_id]"
 		var/datum/species/species_type = GLOB.species_list[species_id]
 
 		var/mob/living/carbon/human/dummy/consistent/dummy = new
+		world.log << "SKYRAPTOR ALERT: Just setup dummy"
 		dummy.set_species(species_type)
+		world.log << "SKYRAPTOR ALERT: Dummy species set"
 		dummy.equipOutfit(/datum/outfit/job/assistant/consistent, visualsOnly = TRUE)
+		world.log << "SKYRAPTOR ALERT: Dummy outfit set"
 		dummy.dna.species.prepare_human_for_preview(dummy)
 
 		var/icon/dummy_icon = getFlatIcon(dummy)
+		world.log << "SKYRAPTOR ALERT: Dummy icon generated, sending to CSS"
 		dummy_icon.Scale(64, 64)
 		dummy_icon.Crop(15, 64, 15 + 31, 64 - 31)
 		dummy_icon.Scale(64, 64)

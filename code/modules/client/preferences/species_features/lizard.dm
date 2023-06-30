@@ -32,22 +32,22 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Body markings"
 	should_generate_icons = TRUE
-	relevant_mutant_bodypart = "body_markings"
+	relevant_mutant_bodypart = "bodymarks_lizard"
 
 /datum/preference/choiced/lizard_body_markings/init_possible_values()
 	var/list/values = list()
 
 	var/icon/lizard = icon('icons/mob/species/lizard/bodyparts.dmi', "lizard_chest_m")
 
-	for (var/name in GLOB.body_markings_list)
-		var/datum/sprite_accessory/sprite_accessory = GLOB.body_markings_list[name]
+	for (var/name in GLOB.bodymarks_list_lizard)
+		var/datum/sprite_accessory/sprite_accessory = GLOB.bodymarks_list_lizard[name]
 
 		var/icon/final_icon = icon(lizard)
 
 		if (sprite_accessory.icon_state != "none")
 			var/icon/body_markings_icon = icon(
 				'icons/mob/species/lizard/lizard_misc.dmi',
-				"m_body_markings_[sprite_accessory.icon_state]_ADJ",
+				"m_bodymarks_lizard_[sprite_accessory.icon_state]_ADJ",
 			)
 
 			final_icon.Blend(body_markings_icon, ICON_OVERLAY)
@@ -62,7 +62,7 @@
 	return values
 
 /datum/preference/choiced/lizard_body_markings/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["body_markings"] = value
+	target.dna.features["bodymarks_lizard"] = value
 
 /datum/preference/choiced/lizard_frills
 	savefile_key = "feature_lizard_frills"
@@ -72,10 +72,10 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/lizard_frills/init_possible_values()
-	return generate_lizard_side_shots(GLOB.frills_list, "frills")
+	return generate_lizard_side_shots(GLOB.frills_list_lizard, "frills_lizard")
 
 /datum/preference/choiced/lizard_frills/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["frills"] = value
+	target.dna.features["frills_lizard"] = value
 
 /datum/preference/choiced/lizard_horns
 	savefile_key = "feature_lizard_horns"
@@ -85,10 +85,10 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/lizard_horns/init_possible_values()
-	return generate_lizard_side_shots(GLOB.horns_list, "horns")
+	return generate_lizard_side_shots(GLOB.horns_list_lizard, "horns_lizard")
 
 /datum/preference/choiced/lizard_horns/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["horns"] = value
+	target.dna.features["horns_lizard"] = value
 
 /datum/preference/choiced/lizard_legs
 	savefile_key = "feature_lizard_legs"
@@ -110,10 +110,10 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/lizard_snout/init_possible_values()
-	return generate_lizard_side_shots(GLOB.snouts_list, "snout", include_snout = FALSE)
+	return generate_lizard_side_shots(GLOB.snouts_list_lizard, "snout_lizard", include_snout = FALSE)
 
 /datum/preference/choiced/lizard_snout/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["snout"] = value
+	target.dna.features["snout_lizard"] = value
 
 /datum/preference/choiced/lizard_spines
 	savefile_key = "feature_lizard_spines"

@@ -728,13 +728,13 @@
 				"mcolor" = "#A02720",
 				"tail_lizard" = "Dark Tiger",
 				"tail_human" = "None",
-				"snout" = "Sharp",
+				"snout_lizard" = "Sharp",
 				"horns" = "Curled",
 				"ears" = "None",
 				"wings" = "None",
 				"frills" = "None",
 				"spines" = "Long",
-				"body_markings" = "Dark Tiger Body",
+				"bodymarks_lizard" = "Dark Tiger Body",
 				"legs" = DIGITIGRADE_LEGS,
 			)
 			consumer.eye_color_left = "#FEE5A3"
