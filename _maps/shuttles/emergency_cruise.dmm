@@ -527,14 +527,6 @@
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
-"kc" = (
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
-/obj/machinery/door/airlock/command/glass{
-	name = "Honk-E-Clown's Mafia Free Playland and Casino"
-	},
-/obj/structure/sign/flag/nanotrasen/directional/north,
-/turf/open/floor/iron/dark/textured_large,
-/area/shuttle/escape/luxury)
 "kd" = (
 /turf/template_noop,
 /area/template_noop)
@@ -1368,7 +1360,7 @@
 /area/shuttle/escape)
 "Cy" = (
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Honk-E-Clown's Mafia Free Playland and Casino"
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -2103,7 +2095,7 @@
 "Qp" = (
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /obj/structure/sign/flag/nanotrasen/directional/north,
-/obj/machinery/door/airlock/command/glass{
+/obj/machinery/door/airlock/command{
 	name = "Honk-E-Clown's Mafia Free Playland and Casino"
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -2814,7 +2806,7 @@ YZ
 YZ
 Cy
 YZ
-kc
+Qp
 YZ
 YZ
 YZ
