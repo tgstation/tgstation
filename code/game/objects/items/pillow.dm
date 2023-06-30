@@ -134,7 +134,9 @@
 	armor_type = /datum/armor/suit_pillow_suit
 	actions_types = list(/datum/action/item_action/pillow_fortify)
 	var/obj/item/pillow/unstoppably_plushed
+	///Are we in juggernaut mode or not
 	var/hunkered = FALSE
+	///Aura color for juggernaut mode
 	var/outline_colour = "#eb0c07"
 
 /datum/armor/suit_pillow_suit
@@ -158,7 +160,6 @@
 	unstoppably_plushed.force += 10
 	user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
 	user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
-	START_PROCESSING(SSobj, src)
 	user.add_filter(FORTIFY_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
 	var/filter = user.get_filter(FORTIFY_FILTER)
 	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
@@ -169,7 +170,6 @@
 	clothing_flags = null
 	unstoppably_plushed.force -= 10
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
-	STOP_PROCESSING(SSobj, src)
 	var/filter = user.get_filter(FORTIFY_FILTER)
 	animate(filter)
 	user.remove_filter(FORTIFY_FILTER)

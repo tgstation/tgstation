@@ -296,7 +296,7 @@
 	destroy_objects = FALSE
 	charge_damage = 10
 	charge_past = 0
-	var/distance
+	var/distance = 0
 	var/turf/starting_tile
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/Activate(atom/target_atom)
@@ -305,6 +305,7 @@
 		var/mob/living/source = owner
 		var/stamina_source = source.getStaminaLoss()
 		if(stamina_source >= 60)//prevent cases where we go into stamcrit mid/end of charge and causes runtime mess
+			owner.balloon_alert(owner, "too tired!")
 			return
 	. = ..()
 
@@ -325,15 +326,12 @@
 		distance = get_dist(starting_tile, get_turf(source))
 		charge_damage += distance * 10 //we determine the total damage based on how far we have charged
 		hit_target(source, target, charge_damage)
-		charge_damage = 10
+		charge_damage = 10 //reset the damage again so it does not build up forever
 		return
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/hit_target(atom/movable/source, atom/target, damage_dealt)
 	var/mob/living/living_source = source
-	var/mob/living/victim
-	if(iscyborg(target))
-		return
-	victim = target
+	var/mob/living/victim = target
 	victim.apply_damage(damage_dealt, STAMINA)
 	new /obj/effect/temp_visual/pillow_hit(victim)
 	playsound(victim, 'sound/items/pillow_hit2.ogg', 100)
