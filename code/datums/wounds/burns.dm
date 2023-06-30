@@ -41,9 +41,12 @@
 		return
 
 	if(victim.reagents)
+	for(var/datum/reagent/reagent in victim.reagents.reagent_list)
+		if(reagent.chemical_flags & REAGENT_AFFECTS_WOUNDS)
+		reagent.on_burn_wound_processing()
 		if(victim.reagents.has_reagent(/datum/reagent/medicine/spaceacillin))
 			sanitization += 0.9
-		if(victim.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine/))
+		if(victim.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine))
 			sanitization += 0.9
 		if(victim.reagents.has_reagent(/datum/reagent/medicine/mine_salve))
 			sanitization += 0.3
@@ -253,8 +256,8 @@
 	if(sanitization > 0)
 		infestation = max(infestation - (0.1 * WOUND_BURN_SANITIZATION_RATE * seconds_per_tick), 0)
 
-/datum/wound/burn/on_synthflesh(amount)
-	flesh_healing += amount * 0.5 // 20u patch will heal 10 flesh standard
+/datum/wound/burn/on_synthflesh(reac_volume)
+	flesh_healing += reac_volume * 0.5 // 20u patch will heal 10 flesh standard
 
 // we don't even care about first degree burns, straight to second
 /datum/wound/burn/moderate

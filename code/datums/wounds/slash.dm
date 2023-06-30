@@ -203,9 +203,9 @@
 	. = ..()
 	adjust_blood_flow(-0.03 * power) // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
-/datum/wound/slash/on_synthflesh(power)
+/datum/wound/slash/on_synthflesh(reac_volume)
 	. = ..()
-	adjust_blood_flow(-0.075 * power) // 20u * 0.075 = -1.5 blood flow, pretty good for how little effort it is
+	adjust_blood_flow(-0.075 * reac_volume) // 20u * 0.075 = -1.5 blood flow, pretty good for how little effort it is
 
 /// If someone's putting a laser gun up to our cut to cauterize it
 /datum/wound/slash/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
