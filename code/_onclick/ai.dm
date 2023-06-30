@@ -191,7 +191,7 @@
 
 /// Toggle APC environment settings (atmos)
 /obj/machinery/power/apc/AICtrlShiftClick(mob/living/silicon/ai/user)
-	if(!can_use(user, 1))
+	if(!can_use(user, loud = TRUE))
 		return
 
 	if(!is_operational || failure_timer)
