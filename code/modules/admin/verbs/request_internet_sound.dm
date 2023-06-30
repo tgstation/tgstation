@@ -20,7 +20,7 @@
 		to_chat(usr, span_danger("Invalid URL. Please use a URL from one of the following sites: [replacetext(CONFIG_GET(string/request_internet_allowed), "\\", "")]"), confidential = TRUE)
 		return
 
-	var/credit = tgui_alert(usr, "Display who rquested the song? (Will show character name, NOTE if on the title screen it'll show CKEY instead)", "Credit Yourself?", list("Yes", "No", "Cancel"))
+	var/credit = tgui_alert(usr, "Display who rquested the song? (Will show character name, NOTE if on the title screen it'll show CKEY instead)", "Credit Yourself?", list("No", "Yes", "Cancel"))
 
 	if(credit == "Cancel" || credit == NULL)
 		return
