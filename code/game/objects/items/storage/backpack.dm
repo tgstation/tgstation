@@ -396,12 +396,12 @@
 	actions_types = list(/datum/action/item_action/zipper)
 	storage_type = /datum/storage/duffel
 	/// If this bag is zipped (contents hidden) up or not
-	/// Starts enabled so people need to figure it out to use the thing
-	var/zipped_up = TRUE
+	/// Starts disabled to ensure we can insert into it when filling up bags and shit
+	var/zipped_up = FALSE
 
 /obj/item/storage/backpack/duffelbag/Initialize(mapload)
 	. = ..()
-	set_zipper(TRUE)
+	set_zipper(FALSE)
 
 /obj/item/storage/backpack/duffelbag/update_desc(updates)
 	. = ..()
