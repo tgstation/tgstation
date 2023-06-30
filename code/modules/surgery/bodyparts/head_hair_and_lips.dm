@@ -351,7 +351,7 @@
 		// so no head? tough luck
 		my_head?.override_hair_color = hex_string
 	else
-		hair_color = hex_string
+		facial_hair_color = hex_string
 		my_head?.facial_hair_color = hex_string
 
 	if(update)
