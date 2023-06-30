@@ -199,7 +199,7 @@
 	if(deleting_atom == atmos_analyzer)
 		atmos_analyzer = null
 	if(deleting_atom == aicamera)
-		camera = null
+		aicamera = null
 	if(deleting_atom == host_scan)
 		host_scan = null
 	if(deleting_atom == internal_gps)
