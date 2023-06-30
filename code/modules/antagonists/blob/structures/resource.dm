@@ -6,7 +6,13 @@
 	max_integrity = BLOB_RESOURCE_MAX_HP
 	point_return = BLOB_REFUND_RESOURCE_COST
 	resistance_flags = LAVA_PROOF
+	armor_type = /datum/armor/special_resource
 	var/resource_delay = 0
+
+/datum/armor/special_resource
+	fire = 80
+	acid = 70
+	laser = 25
 
 /obj/structure/blob/special/resource/scannerreport()
 	return "Gradually supplies the blob with resources, increasing the rate of expansion."
