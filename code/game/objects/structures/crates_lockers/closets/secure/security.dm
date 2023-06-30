@@ -34,7 +34,7 @@
 	new /obj/item/computer_disk/command/hop(src)
 	new /obj/item/radio/headset/heads/hop(src)
 	new /obj/item/storage/box/ids(src)
-	new /obj/item/storage/box/ids(src)
+	new /obj/item/storage/box/silver_ids(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/gun/energy/e_gun(src)
