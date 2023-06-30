@@ -601,8 +601,42 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_description = "chalky wheat"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
 	default_container = /obj/item/reagent_containers/condiment/flour
+
+/datum/reagent/consumable/flour/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	. = ..()
+	var/mob/living/carbon/carbies = exposed_mob
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return
+	for(var/i in carbies.all_wounds)
+		var/datum/wound/iter_wound = i
+		iter_wound.on_flour(reac_volume, carbies)
+
+/datum/wound/proc/on_flour(reac_volume, mob/living/carbon/carbies)
+	return
+
+/datum/wound/pierce/on_flour(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.015 * reac_volume) // 30u of a flour sack * 0.015 = -0.45~ blood flow, prettay good
+	to_chat(carbies, span_notice("The flour seeps into [src], painfully drying it up and absorbing some of the blood."))
+	// When some nerd adds infection for wounds, make this increase the infection
+	return
+
+/datum/wound/slash/on_flour(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.04 * reac_volume) // 30u of a flour sack * 0.04 = -1.25~ blood flow, pretty good!
+	to_chat(carbies, span_notice("The flour seeps into [src], painfully drying some it up and absorbing a little blood."))
+	// When some nerd adds infection for wounds, make this increase the infection
+	return
+
+/datum/wound/burn/on_flour(reac_volume)
+	to_chat(carbies, span_notice("The flour seeps into [src], spiking you with intense pain! That probably wasn't a good idea..."))
+	return
+
+/datum/reagent/consumable/flour/on_burn_wound_processing(/datum/wound/burn/burn_wound)
+	burn_wound.sanitization -= 0.3
+	if(prob(5))
+		burn_wound.victim.to_chat("Your flour-covered [burn_wound] stings heavily.[burn_wound.infestation ? " At least the oozing pus is sticking to it?" : ""]")
+		burn_wound.limb.receive_damage(burn = 0.5, wound_bonus = CANT_WOUND)
 
 /datum/reagent/consumable/flour/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -669,6 +703,42 @@
 	description = "A slippery solution."
 	color = "#DBCE95"
 	taste_description = "slime"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_AFFECTS_WOUNDS
+
+// Starch has similar absorbing properties to flour (Stronger here because it's rarer)
+/datum/reagent/consumable/corn_starch/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	. = ..()
+	var/mob/living/carbon/carbies = exposed_mob
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return
+	for(var/i in carbies.all_wounds)
+		var/datum/wound/iter_wound = i
+		iter_wound.on_starch(reac_volume, carbies)
+
+/datum/wound/proc/on_starch(reac_volume, mob/living/carbon/carbies)
+	return
+
+/datum/wound/pierce/on_starch(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.03 * reac_volume)
+	to_chat(carbies, span_notice("The slimey starch seeps into [src], painfully drying it up and absorbing some of the blood."))
+	// When some nerd adds infection for wounds, make this increase the infection
+	return
+
+/datum/wound/slash/on_starch(reac_volume, mob/living/carbon/carbies)
+	adjust_blood_flow(-0.06 * reac_volume)
+	to_chat(carbies, span_notice("The slimey starch seeps into [src], painfully drying some it up and absorbing a little blood."))
+	// When some nerd adds infection for wounds, make this increase the infection
+	return
+
+/datum/wound/burn/on_starch(reac_volume, mob/living/carbon/carbies)
+	to_chat(carbies, span_notice("The slimey starch seeps into [src], spiking you with intense pain! That probably wasn't a good idea..."))
+	return
+
+/datum/reagent/consumable/corn_starch/on_burn_wound_processing(/datum/wound/burn/burn_wound)
+	burn_wound.sanitization -= 0.1
+	if(prob(5))
+		burn_wound.victim.to_chat("Your starch-covered [burn_wound] stings heavily.[burn_wound.infestation ? " At least the oozing pus is sticking to it?" : ""]")
+		burn_wound.limb.receive_damage(burn = 0.5, wound_bonus = CANT_WOUND)
 
 /datum/reagent/consumable/corn_syrup
 	name = "Corn Syrup"

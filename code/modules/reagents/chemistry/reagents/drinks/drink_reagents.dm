@@ -281,9 +281,42 @@
 	affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick)
 	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
 		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+	var/to_chatted = FALSE
+	for(var/i in affected_mob.all_wounds)
+		var/datum/wound/iter_wound = i
+		if(SPT_PROB(10, seconds_per_tick))
+			to_chatted = TRUE
+			iter_wound.tea_life_process(affected_mob, to_chatted)
 	affected_mob.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	..()
 	. = TRUE
+
+// Different handling, different name
+// Second param is so that the carbies isn't spammed with messages
+/datum/wound/proc/tea_life_process(mob/living/carbon/carbies, to_chatted)
+	return
+
+/datum/wound/pierce/tea_life_process(mob/living/carbon/carbies, to_chatted)
+	adjust_blood_flow(-0.08) // A tad strong, but 10% chance to trigger
+	if(to_chatted)
+		to_chat(carbies, span_notice("A calm, relaxed feeling suffuses you, looks like that tea did some good for you after all. Your [src] feels a little healthier."))
+	return
+
+/datum/wound/slash/tea_life_process(mob/living/carbon/carbies, to_chatted)
+	adjust_blood_flow(-0.15) // A bit strong, but 10% chance to trigger
+	if(to_chatted)
+		to_chat(carbies, span_notice("A calm, relaxed feeling suffuses you, looks like that tea did some good for you after all. Your [src] feels a little healthier."))
+	// When some nerd adds infection for wounds, make this increase the infection
+	return
+
+// There's a designated burn process, but I felt this would be better for consistency with the rest of the reagent's procs
+/datum/wound/burn/tea_life_process(mob/living/carbon/carbies, to_chatted)
+	// Sanitizes and heals, but with a limit
+	sanitization = (sanitization > 0.2) ? sanitization : sanitization + 0.1
+	flesh_healing = (flesh_healing > 0.1) ? flesh_healing : flesh_healing + 0.1
+	if(to_chatted)
+		to_chat(carbies, span_notice("A calm, relaxed feeling suffuses you, looks like that tea did some good for you after all. Your [src] feels a little healthier."))
+	return
 
 /datum/reagent/consumable/lemonade
 	name = "Lemonade"
@@ -629,6 +662,18 @@
 	taste_description = "ice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/cup/glass/ice
+
+// Ice freezes wounds (temporarily), reducing their effects in the short-term but crippling recovery.
+/datum/reagent/consumable/ice/expose_mob(mob/living/exposed_mob, methods, reac_volume)
+	. = ..()
+	var/mob/living/carbon/carbies = exposed_mob
+	if(!(methods & (PATCH|TOUCH|VAPOR)))
+		return
+	for(var/i in carbies.all_wounds)
+		var/datum/wound/iter_wound = i
+		ADD_TRAIT(iter_wound, TRAIT_WOUND_ON_ICE, REAGENT_TRAIT)
+		to_chat(exposed_mob, span_notice("[iter_wound] frosts over!"))
+		addtimer(CALLBACK(iter_wound, TYPE_PROC_REF(/datum/wound, remove_trait)), 2 MINUTES)
 
 /datum/reagent/consumable/ice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
