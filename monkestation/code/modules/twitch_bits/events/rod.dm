@@ -9,4 +9,5 @@
 	. = ..()
 
 	for(var/target in targets) //send a rod at the turf of all targets, not making it target them directly because thats just death
+		var/turf/target_turf = get_turf(target)
 		new /obj/effect/immovablerod(spaceDebrisStartLoc(pick(GLOB.cardinals), target_turf.z), target)
