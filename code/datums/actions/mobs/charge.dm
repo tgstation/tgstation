@@ -296,7 +296,7 @@
 	destroy_objects = FALSE
 	charge_damage = 10
 	charge_past = 0
-	var/distance
+	var/distance = 0
 	var/turf/starting_tile
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/Activate(atom/target_atom)
@@ -306,7 +306,7 @@
 		var/stamina_source = source.getStaminaLoss()
 		if(stamina_source >= 60)//prevent cases where we go into stamcrit mid/end of charge and causes runtime mess
 			return
-	. = ..()
+	return ..()
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_moved(atom/source)
 	return
@@ -316,7 +316,7 @@
 		var/mob/living/carbon/human/charger = owner
 		charger.apply_damage(60, STAMINA)
 		charger.Immobilize(1 SECONDS)
-	. = ..()
+	return ..()
 
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_bump(atom/movable/source, atom/target)
@@ -326,7 +326,6 @@
 		charge_damage += distance * 10 //we determine the total damage based on how far we have charged
 		hit_target(source, target, charge_damage)
 		charge_damage = 10
-		return
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/hit_target(atom/movable/source, atom/target, damage_dealt)
 	var/mob/living/living_source = source

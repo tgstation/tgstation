@@ -374,7 +374,7 @@
 		else
 			final_block_chance = 10
 		owner.apply_damage(20, STAMINA)//block at your own risk
-	. = ..()
+	return ..()
 
 
 #undef BATON_BASH_COOLDOWN
