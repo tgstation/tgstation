@@ -61,6 +61,7 @@
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
+	item_flags = CRUEL_IMPLEMENT //maybe they want to use it in surgery
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/knife/bloodletter
