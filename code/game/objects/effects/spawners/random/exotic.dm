@@ -87,5 +87,5 @@
 	icon_state = "ripley"
 	loot = list(
 		/obj/structure/mecha_wreckage/ripley = 3,
-		/obj/vehicle/sealed/mecha/working/ripley/mining = 1,
+		/obj/vehicle/sealed/mecha/ripley/mining = 1,
 	)

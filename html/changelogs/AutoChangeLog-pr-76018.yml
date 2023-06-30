@@ -1,0 +1,8 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - rscadd: "Food and pills have a 10% chance to infect with one of three new diseases on consumption when left for more than 5 seconds on the floor. You can wash it to avoid disease. ChemMaster and Pill Press are added to the list of elevated structures (Considered as tables for pills). Made harvest spawn on top of hydrotrays to stay protected from germs."
+  - rscadd: "Added three new advanced diseases: Gastritium, Carpellosis, Nebula Nausea with static cures obtained by digesting dirty food."
+  - bugfix: "Food no longer decomposes on Hydrotrays, Grilles, Bonfires and all dense kitchen machinery"
+  - code_imp: "Decomposition now uses `germ_sensitive` component and follows 5 second rule too."
+  - qol: "Crafted food items spawns on nearby tables (except the one behind you) instead of dropping on floor when hands are full."

@@ -118,8 +118,7 @@
 		"spans" = spans,
 		"mods" = message_mods
 	)
-	var/turf/T = get_turf(source)
-	levels = list(T.z)
+	levels = SSmapping.get_connected_levels(get_turf(source))
 
 /datum/signal/subspace/vocal/copy()
 	var/datum/signal/subspace/vocal/copy = new(source, frequency, virt, language)

@@ -422,10 +422,10 @@
 //Used for new human mobs created by cloning/goleming/podding
 /mob/living/carbon/human/proc/set_cloned_appearance()
 	if(gender == MALE)
-		facial_hairstyle = "Full Beard"
+		set_facial_hairstyle("Full Beard", update = FALSE)
 	else
-		facial_hairstyle = "Shaved"
-	hairstyle = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+		set_facial_hairstyle("Shaved", update = FALSE)
+	set_hairstyle(pick("Bedhead", "Bedhead 2", "Bedhead 3"), update = FALSE)
 	underwear = "Nude"
 	update_body(is_creating = TRUE)
 
@@ -535,30 +535,6 @@
 
 	return TRUE
 
-/**
- * Used to update the makeup on a human and apply/remove lipstick traits, then store/unstore them on the head object in case it gets severed
- */
-/mob/living/carbon/human/proc/update_lips(new_style, new_colour, apply_trait)
-	lip_style = new_style
-	lip_color = new_colour
-	update_body()
-
-	var/obj/item/bodypart/head/hopefully_a_head = get_bodypart(BODY_ZONE_HEAD)
-	REMOVE_TRAITS_IN(src, LIPSTICK_TRAIT)
-	hopefully_a_head?.stored_lipstick_trait = null
-
-	if(new_style && apply_trait)
-		ADD_TRAIT(src, apply_trait, LIPSTICK_TRAIT)
-		hopefully_a_head?.stored_lipstick_trait = apply_trait
-
-/**
- * A wrapper for [mob/living/carbon/human/proc/update_lips] that tells us if there were lip styles to change
- */
-/mob/living/carbon/human/proc/clean_lips()
-	if(isnull(lip_style) && lip_color == initial(lip_color))
-		return FALSE
-	update_lips(null)
-	return TRUE
 
 /**
  * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
@@ -920,6 +896,12 @@
 		return
 
 	return ..()
+
+/mob/living/carbon/human/reagent_check(datum/reagent/chem, seconds_per_tick, times_fired)
+	. = ..()
+	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
+		return
+	return dna.species.handle_chemical(chem, src, seconds_per_tick, times_fired)
 
 /mob/living/carbon/human/updatehealth()
 	. = ..()

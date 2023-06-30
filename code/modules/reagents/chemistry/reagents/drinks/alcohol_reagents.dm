@@ -1376,7 +1376,7 @@
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	drinker.set_drugginess(100 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_dizzy(4 SECONDS * REM * seconds_per_tick)
-	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, required_organtype = affected_organtype)
+	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, required_organ_flag = affected_organ_flags)
 	if(SPT_PROB(10, seconds_per_tick))
 		drinker.adjustStaminaLoss(10, required_biotype = affected_biotype)
 		drinker.drop_all_held_items()
@@ -1387,7 +1387,7 @@
 			ADD_TRAIT(drinker, paralyzed_limb, type)
 			drinker.adjustStaminaLoss(10, required_biotype = affected_biotype)
 		if(current_cycle > 30)
-			drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, required_organtype = affected_organtype)
+			drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 			if(current_cycle > 50 && SPT_PROB(7.5, seconds_per_tick))
 				if(!drinker.undergoing_cardiac_arrest() && drinker.can_heartattack())
 					drinker.set_heartattack(TRUE)
@@ -2062,14 +2062,12 @@
 	if(SPT_PROB(10, seconds_per_tick) && istype(metabolizer))
 		metabolizer.age += 1
 		if(metabolizer.age > 70)
-			metabolizer.facial_hair_color = "#cccccc"
-			metabolizer.hair_color = "#cccccc"
-			metabolizer.update_body_parts()
+			metabolizer.set_facial_haircolor("#cccccc", update = FALSE)
+			metabolizer.set_haircolor("#cccccc", update = TRUE)
 			if(metabolizer.age > 100)
 				metabolizer.become_nearsighted(type)
 				if(metabolizer.gender == MALE)
-					metabolizer.facial_hairstyle = "Beard (Very Long)"
-					metabolizer.update_body_parts()
+					metabolizer.set_facial_hairstyle("Beard (Very Long)", update = TRUE)
 
 				if(metabolizer.age > 969) //Best not let people get older than this or i might incur G-ds wrath
 					metabolizer.visible_message(span_notice("[metabolizer] becomes older than any man should be.. and crumbles into dust!"))

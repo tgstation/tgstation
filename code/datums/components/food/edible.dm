@@ -498,39 +498,27 @@ Behavior that's still missing from this component that original food items had t
 	return TRUE
 
 ///Check foodtypes to see if we should send a moodlet
-/datum/component/edible/proc/checkLiked(fraction, mob/M)
+/datum/component/edible/proc/checkLiked(fraction, mob/eater)
 	if(last_check_time + 50 > world.time)
 		return FALSE
-	if(!ishuman(M))
+	if(!ishuman(eater))
 		return FALSE
-	var/mob/living/carbon/human/H = M
-
+	var/mob/living/carbon/human/gourmand = eater
 	//Bruh this breakfast thing is cringe and shouldve been handled separately from food-types, remove this in the future (Actually, just kill foodtypes in general)
 	if((foodtypes & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
-		H.add_mood_event("breakfast", /datum/mood_event/breakfast)
+		gourmand.add_mood_event("breakfast", /datum/mood_event/breakfast)
 	last_check_time = world.time
-
-	if(HAS_TRAIT(H, TRAIT_AGEUSIA))
-		if(foodtypes & H.dna.species.toxic_food)
-			to_chat(H, span_warning("You don't feel so good..."))
-			H.adjust_disgust(25 + 30 * fraction)
-		return // Don't care about the later checks if user has ageusia
 
 	var/food_taste_reaction
 
-	if(check_liked) //Callback handling; use this as an override for special food like donuts
-		food_taste_reaction = check_liked.Invoke(fraction, H)
-
-	if(!food_taste_reaction)
-		if(foodtypes & H.dna.species.toxic_food)
-			food_taste_reaction = FOOD_TOXIC
-		else if(foodtypes & H.dna.species.disliked_food)
-			food_taste_reaction = FOOD_DISLIKED
-		else if(foodtypes & H.dna.species.liked_food)
-			food_taste_reaction = FOOD_LIKED
-
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER) && !isjellyperson(H)) // it's not real food
 		food_taste_reaction = FOOD_TOXIC
+
+	if(check_liked) //Callback handling; use this as an override for special food like donuts
+		food_taste_reaction = check_liked.Invoke(fraction, gourmand)
+
+	if(!food_taste_reaction)
+		food_taste_reaction = gourmand.get_food_taste_reaction(parent, foodtypes)
 
 	if(food_taste_reaction == FOOD_TOXIC)
 		to_chat(H,span_warning("What the hell was that thing?!"))
