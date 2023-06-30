@@ -15,7 +15,7 @@
 		var/atom/movable/screen/lobby/lobbyscreen = new button_type()
 		lobbyscreen.SlowInit()
 		lobbyscreen.hud = src
-		if(istype(lobbyscreen, /atom/movable/screen/lobby/button/collapse))
+		if(lobbyscreen.always_shown)
 			static_inventory += lobbyscreen
 		else
 			toggleable_inventory += lobbyscreen
@@ -27,6 +27,8 @@
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_BUTTON_LAYER
 	screen_loc = "TOP,CENTER"
+	///Whether this HUD element is toggleable or not (show/hide)
+	var/always_shown = FALSE
 
 /// Run sleeping actions after initialize
 /atom/movable/screen/lobby/proc/SlowInit()
@@ -377,6 +379,7 @@
 	icon_state = "collapse"
 	base_icon_state = "collapse"
 	screen_loc = "TOP,CENTER:+110"
+	always_shown = TRUE
 
 /atom/movable/screen/lobby/button/collapse/Click(location, control, params)
 	. = ..()
