@@ -143,3 +143,8 @@ GLOBAL_LIST_INIT(prisoner_crimes, init_prisoner_crimes())
 	name = "Mass Murder"
 	desc = "Maliciously planned and executed the slaughter of many people."
 	tattoos = 6
+
+/datum/prisoner_crime/jaywalker
+	name = "Jaywalker"
+	desc = "Jaywalked across shuttle landing zones and through space."
+	tattoos = 0
