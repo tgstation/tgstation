@@ -167,7 +167,7 @@
 	set_current(null)
 
 /datum/mind/proc/get_language_holder()
-	if(!language_holder)
+	if(isnull(language_holder))
 		if(iscarbon(current))
 			var/mob/living/carbon/talker = current
 			// AHH WHY DO MINDS ALSO HAVE LANGUAGE HOLDERS WHAT'S THE POINT OF THE "MIND" LANGUAGE SOURCE IF WE STORE IT TWICE ANYWAYS
