@@ -42,8 +42,3 @@
 	name = "Mime Bar"
 	room_id = "icebox_mime"
 	mappath = "monkestation/_maps/RandomBars/Icebox/mime_bar.dmm"
-
-/datum/map_template/random_room/random_bar/icebox_base/wizbar
-	name = "Wizard Bar"
-	room_id = "icebox_wizard"
-	mappath = "monkestation/_maps/RandomBars/Icebox/wizbar.dmm"
