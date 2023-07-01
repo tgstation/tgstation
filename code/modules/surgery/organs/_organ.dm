@@ -240,6 +240,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE) //use for damaging effects
 	if(!damage_amount) //Micro-optimization.
 		return
+	maximum = clamp(maximum, 0, maxHealth) // the logical max is, our max
 	if(maximum < damage)
 		return
 	if(required_organ_flag && !(organ_flags & required_organ_flag))
