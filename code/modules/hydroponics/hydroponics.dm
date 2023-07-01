@@ -988,8 +988,8 @@
 		return
 
 	else if(istype(O, /obj/item/storage/bag/plants))
-		attack_hand(user)
-		for(var/obj/item/food/grown/G in locate(user.x,user.y,user.z))
+		var/list/harvest = myseed.harvest(user)
+		for(var/obj/item/food/grown/G in harvest)
 			O.atom_storage?.attempt_insert(G, user, TRUE)
 		return
 
