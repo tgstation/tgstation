@@ -11225,6 +11225,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "cIn" = (
