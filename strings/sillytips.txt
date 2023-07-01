@@ -1,3 +1,4 @@
+As an Engineer, the Supermatter shard is an extremely dangerous piece of equipment: touching it will disintegrate you. So will talking to it with telepathy.
 As the Captain, you can use a whetstone to sharpen your fancy fountain pen for extra robustness.
 As the Lawyer, you are the last bastion of roleplay-focused jobs. Even the curator got a whip to go fight people with, that sellout!
 Ask and you shall receive.
@@ -36,4 +37,3 @@ To defeat the slaughter demon, shoot at it until it dies.
 When a round ends nearly everything about it is lost forever, leave your salt behind with it.
 You can win a pulse rifle from the arcade machine. Honest.
 Your sprite represents your hitbox, so that afro makes you easier to kill. The sacrifices we make for style.
-As an Engineer, the Supermatter shard is an extremely dangerous piece of equipment: touching it will disintegrate you. So will talking to it with telepathy.
