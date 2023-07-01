@@ -45,9 +45,6 @@
 	foodtypes = JUNKFOOD | GRAIN
 	custom_price = PAYCHECK_LOWER * 0.8
 
-/obj/item/food/vendor_snacks/rice_crackers/MakeLeaveTrash()
-	AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
-
 /obj/item/trash/vendor_trash/rice_crackers
 	name = "empty rice crackers bag"
 	desc = "You never did find out what flavor that was supposed to be, did you?"
@@ -134,9 +131,6 @@
 	tastes = list("vanilla" = 1, "cotton" = 1, "chocolate" = 1)
 	foodtypes = VEGETABLES | SUGAR
 	custom_price = PAYCHECK_LOWER
-
-/obj/item/food/vendor_snacks/mothmallow/MakeLeaveTrash()
-	AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
 
 /obj/item/trash/vendor_trash/mothmallow
 	name = "empty mothmallow bag"
@@ -247,9 +241,6 @@
 	tastes = list("savouriness" = 1, "sweetness" = 1)
 	foodtypes = SUGAR | VEGETABLES
 	custom_price = PAYCHECK_LOWER * 1.6 //Tizirian imports are a bit more expensive overall
-
-/obj/item/food/vendor_snacks/lizard_bag/MakeLeaveTrash()
-	AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
 
 /obj/item/food/vendor_snacks/lizard_bag/moon_jerky
 	name = "moonfish jerky"
