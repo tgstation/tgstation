@@ -7,11 +7,11 @@
 	if(weak_against_armour && our_armor >= 0)
 		our_armor *= ARMOR_WEAKENED_MULTIPLIER
 	if(silent)
-		return max(0, our_armor - armour_penetration)
+		return max(0, PENETRATE_ARMOUR(our_armor, armour_penetration))
 
 	//the if "armor" check is because this is used for everything on /living, including humans
 	if(armour_penetration)
-		our_armor = max(0, our_armor - armour_penetration)
+		our_armor = max(PENETRATE_ARMOUR(our_armor, armour_penetration), 0)
 		if(penetrated_text)
 			to_chat(src, span_userdanger("[penetrated_text]"))
 		else

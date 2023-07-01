@@ -41,11 +41,11 @@
 	src.snap_time_weak = snap_time_weak
 	src.snap_time_strong = snap_time_strong
 
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ITEM_ATTACK , PROC_REF(try_cuffsnap_target))
 
 /datum/element/cuffsnapping/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK, COMSIG_ATOM_EXAMINE))
 
 	return ..()
 
@@ -67,6 +67,9 @@
 
 /datum/element/cuffsnapping/proc/try_cuffsnap_target(obj/item/cutter, mob/living/carbon/target, mob/cutter_user, params)
 	SIGNAL_HANDLER
+
+	if(!istype(target)) //we aren't the kind of mob that can even have cuffs, so we skip.
+		return
 
 	if(!target.handcuffed)
 		return

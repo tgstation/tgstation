@@ -19,10 +19,10 @@
 	src.old_body_ref = WEAKREF(old_body)
 
 /datum/component/temporary_body/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_destroy))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_destroy))
 
 /datum/component/temporary_body/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(parent, COMSIG_QDELETING)
 
 /**
  * Sends the mind of the temporary body back into their previous host

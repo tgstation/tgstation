@@ -4,7 +4,6 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cablerelay-on"
 	cable_layer = CABLE_LAYER_1|CABLE_LAYER_2|CABLE_LAYER_3
-	machinery_layer = null
 
 /obj/structure/cable/multilayer/multiz/get_cable_connections(powernetless_only)
 	. = ..()

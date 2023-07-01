@@ -31,6 +31,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 0
+	worn_icon_state = "nothing"
 
 /*
  * Balloons
@@ -128,19 +129,19 @@
 	var/random_color = TRUE
 
 /obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ammo_casing/caseless/foam_dart) && ismonkey(user))
+	if(istype(I, /obj/item/ammo_casing/foam_dart) && ismonkey(user))
 		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()
 
 /obj/item/toy/balloon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(ismonkey(throwingdatum.thrower) && istype(AM, /obj/item/ammo_casing/caseless/foam_dart))
+	if(ismonkey(throwingdatum.thrower) && istype(AM, /obj/item/ammo_casing/foam_dart))
 		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()
 
 /obj/item/toy/balloon/bullet_act(obj/projectile/P)
-	if((istype(P,/obj/projectile/bullet/p50) || istype(P,/obj/projectile/bullet/reusable/foam_dart)) && ismonkey(P.firer))
+	if((istype(P,/obj/projectile/bullet/p50) || istype(P,/obj/projectile/bullet/foam_dart)) && ismonkey(P.firer))
 		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()
@@ -409,7 +410,8 @@
 
 /obj/item/toy/sword/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		throw_speed_on = throw_speed, \
 		hitsound_on = hitsound, \
 		clumsy_check = FALSE, \
@@ -432,8 +434,11 @@
  */
 /obj/item/toy/sword/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
-	balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
-	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
+
+	if(user)
+		balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
+
+	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
 	update_appearance(UPDATE_ICON)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
@@ -464,9 +469,7 @@
 
 /obj/item/toy/sword/update_icon_state()
 	. = ..()
-	var/datum/component/transforming/transforming_comp = GetComponent(/datum/component/transforming)
-	var/active = transforming_comp?.active
-	var/last_part = active ? "_on[saber_color ? "_[saber_color]" : null]" : null
+	var/last_part = HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "_on[saber_color ? "_[saber_color]" : null]" : null
 	icon_state = "[initial(icon_state)][last_part]"
 	inhand_icon_state = "[initial(inhand_icon_state)][last_part]"
 
@@ -1629,3 +1632,21 @@ GLOBAL_LIST_EMPTY(intento_players)
 #undef TIME_TO_BEGIN
 #undef TIME_PER_DEMO_STEP
 #undef TIME_TO_RESET_ICON
+
+/*
+ * Runic Scepter
+ */
+/obj/item/toy/foam_runic_scepter
+	name = "foam scepter"
+	desc = "A foam replica of the scepters Wizards us on Vendormancy Soccer."
+	icon_state = "vendor_staff"
+	worn_icon_state = "vendor_staff" //For the back
+	inhand_icon_state = "vendor_staff"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
+	slot_flags = ITEM_SLOT_BACK
+	attack_verb_continuous = list("smacks", "clubs", "wacks", "vendors")
+	attack_verb_simple = list("smack", "club", "wacks", "vendor")
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FLAMMABLE

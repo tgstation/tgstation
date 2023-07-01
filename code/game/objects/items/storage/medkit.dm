@@ -329,12 +329,27 @@
 	inhand_icon_state = "coronerkit"
 	var/max_slots = 6
 	var/max_total_storage = 6
+	var/max_object_size = WEIGHT_CLASS_SMALL //so it cannot fit an autopsy scanner
 
 /obj/item/storage/medkit/coroner/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL //lowering this so it can't hold the autopsy scanner
+	atom_storage.max_specific_storage = max_object_size
 	atom_storage.max_slots = max_slots
 	atom_storage.max_total_storage = max_total_storage
+	atom_storage.set_holdable(list(
+		/obj/item/reagent_containers,
+		/obj/item/bodybag,
+		/obj/item/folder/white,
+		/obj/item/toy/crayon,
+		/obj/item/pen,
+		/obj/item/paper,
+		/obj/item/surgical_drapes,
+		/obj/item/scalpel,
+		/obj/item/retractor,
+		/obj/item/hemostat,
+		/obj/item/cautery,
+		/obj/item/autopsy_scanner,
+	))
 
 /obj/item/storage/medkit/coroner/PopulateContents()
 	if(empty)
@@ -354,8 +369,9 @@
 	icon = 'icons/obj/storage/medkit.dmi'
 	icon_state = "coronerkit"
 	inhand_icon_state = "coronerkit"
-	max_slots = 12
+	max_slots = 14
 	max_total_storage = 24
+	max_object_size = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/medkit/coroner/large/PopulateContents()
 	if(empty)
@@ -368,6 +384,11 @@
 		/obj/item/bodybag = 2,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/folder/white = 1,//for storing autopsy reports from the scanner
+		/obj/item/surgical_drapes = 1,
+		/obj/item/scalpel/cruel = 1,
+		/obj/item/retractor/cruel = 1,
+		/obj/item/hemostat/cruel = 1,
+		/obj/item/cautery/cruel = 1,
 	)
 	generate_items_inside(items_inside,src)
 
