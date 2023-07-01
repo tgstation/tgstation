@@ -109,15 +109,15 @@ GLOBAL_LIST_INIT(prisoner_crimes, init_prisoner_crimes())
 	desc = "Planned and executed a kidnapping."
 	tattoos = 1
 
-/datum/prisoner_crime/malpractice
-	name = "Medical Malpractice"
-	desc = "Engaged in organ harvesting, limb theft, or other malicious medical procedures."
-	tattoos = 2
-	
 /datum/prisoner_crime/mass_murder
 	name = "Mass Murder"
 	desc = "Maliciously planned and executed the slaughter of many people."
 	tattoos = 6
+
+/datum/prisoner_crime/malpractice
+	name = "Medical Malpractice"
+	desc = "Engaged in organ harvesting, limb theft, or other malicious medical procedures."
+	tattoos = 2
 
 /datum/prisoner_crime/murder
 	name = "Murder"
