@@ -3034,6 +3034,7 @@
 #include "code\modules\cgen_modular\datum_spritecats.dm"
 #include "code\modules\cgen_modular\lizard_newcats.dm"
 #include "code\modules\cgen_modular\lizard_neworgans.dm"
+#include "code\modules\cgen_modular\monkey_tailfix.dm"
 #include "code\modules\chatter\chatter.dm"
 #include "code\modules\client\client_colour.dm"
 #include "code\modules\client\client_defines.dm"
