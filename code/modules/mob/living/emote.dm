@@ -654,7 +654,12 @@
 		return FALSE
 
 	if(!params)
-		emote_type = get_custom_emote_type_from_user()
+		var/user_emote_type = get_custom_emote_type_from_user()
+
+		if(!user_emote_type)
+			return FALSE
+
+		emote_type = user_emote_type
 	else if(type_override)
 		emote_type = type_override
 
