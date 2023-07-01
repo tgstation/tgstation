@@ -20,9 +20,9 @@
 		to_chat(usr, span_danger("Invalid URL. Please use a URL from one of the following sites: [replacetext(CONFIG_GET(string/request_internet_allowed), "\\", "")]"), confidential = TRUE)
 		return
 
-	var/credit = tgui_alert(usr, "Display who rquested the song? (Will show character name, NOTE if on the title screen it'll show CKEY instead)", "Credit Yourself?", list("No", "Yes", "Cancel"))
+	var/credit = tgui_alert(usr, "Credit yourself for requesting this song? (will show up as [usr.name])", "Credit Yourself?", list("No", "Yes", "Cancel"))
 
-	if(credit == "Cancel" || credit == null)
+	if(credit == "Cancel" || isnull(credit))
 		return
 	else if (credit == "Yes")
 		credit = "[usr.name] requested this track."
