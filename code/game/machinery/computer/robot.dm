@@ -93,13 +93,13 @@
 				if(can_control(usr, R) && !..())
 					if(isAI(usr))
 						if(R.ai_lockdown && R.lockcharge)
-							src.lock_unlock_borg(R)
 							R.ai_lockdown = FALSE
+							src.lock_unlock_borg(R)
 						else if(!R.ai_lockdown && R.lockcharge)
 							to_chat(usr, span_danger("Cyborg locked by an user with superior permissions."))
 						else if(!R.lockcharge)
-							src.lock_unlock_borg(R)
 							R.ai_lockdown = TRUE
+							src.lock_unlock_borg(R)
 					else
 						if(isnull( locked_down_borg)&& !R.lockcharge) //If there is no borg locked down by the console yet
 							src.lock_unlock_borg(R, src.loc.loc.name)
@@ -109,8 +109,8 @@
 							src.lock_unlock_borg(R)
 							locked_down_borg = null
 						else if(R.lockcharge&&R.ai_lockdown)
-							src.lock_unlock_borg(R)
 							R.ai_lockdown = FALSE
+							src.lock_unlock_borg(R)
 						else
 							to_chat(usr, span_danger("You can lock down only one cyborg at a time."))
 			else
