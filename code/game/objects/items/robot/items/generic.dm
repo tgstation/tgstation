@@ -18,9 +18,14 @@
 	var/stamina_damage = 60 //Same as normal batong
 	/// Cost to use the stun arm
 	var/charge_cost = 200
-	attack_speed = 50
+	var/cooldown_check = 0
+	/// cooldown between attacks
+	var/cooldown = 4 SECONDS // same as baton
 
 /obj/item/borg/stun/attack(mob/living/attacked_mob, mob/living/user)
+	if(cooldown_check > world.time)
+		to_chat(user, span_warning("The arm is still recharging!"))
+		return
 	if(ishuman(attacked_mob))
 		var/mob/living/carbon/human/human = attacked_mob
 		if(human.check_shields(src, 0, "[attacked_mob]'s [name]", MELEE_ATTACK))
@@ -45,7 +50,7 @@
 					span_userdanger("[user] prods you with [src]!"))
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
-
+	cooldown_check = world.time + cooldown
 	log_combat(user, attacked_mob, "stunned", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 
 /obj/item/borg/cyborghug
