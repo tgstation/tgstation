@@ -78,15 +78,11 @@
 	icon_state = "giftbag0"
 	inhand_icon_state = "giftbag"
 	w_class = WEIGHT_CLASS_BULKY
+	storage_type = /datum/storage/backpack/santabag
 
 /obj/item/storage/backpack/santabag/Initialize(mapload)
 	. = ..()
 	regenerate_presents()
-
-/obj/item/storage/backpack/santabag/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 60
 
 /obj/item/storage/backpack/santabag/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit..."))
@@ -395,6 +391,8 @@
 	inhand_icon_state = "duffel"
 	actions_types = list(/datum/action/item_action/zipper)
 	storage_type = /datum/storage/duffel
+	// How much to slow you down if your bag isn't zipped up
+	var/zip_slowdown = 1
 	/// If this bag is zipped (contents hidden) up or not
 	/// Starts disabled to ensure we can insert into it when filling up bags and shit
 	var/zipped_up = FALSE
@@ -462,12 +460,12 @@
 	zipped_up = new_zip
 	SEND_SIGNAL(src, COMSIG_DUFFEL_ZIP_CHANGE, new_zip)
 	if(zipped_up)
-		slowdown = 0
+		slowdown = initial(slowdown)
 		atom_storage.locked = TRUE
 		atom_storage.display_contents = FALSE
 		atom_storage.close_all()
 	else
-		slowdown = 1
+		slowdown = zip_slowdown
 		atom_storage.locked = FALSE
 		atom_storage.display_contents = TRUE
 
@@ -483,7 +481,7 @@
 		then it might have negative effects on the bag..."
 	icon_state = "duffel-curse"
 	inhand_icon_state = "duffel-curse"
-	slowdown = 2
+	zip_slowdown = 2
 	max_integrity = 100
 
 /obj/item/storage/backpack/duffelbag/cursed/Initialize(mapload)
