@@ -161,7 +161,7 @@
 	//how much the armor of the mech is modified by
 	var/datum/armor/armor_mod
 
-/obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/M, attach_right)
+/obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
 	chassis.set_armor(chassis.get_armor().add_other_armor(armor_mod))
 
@@ -213,10 +213,10 @@
 	chassis?.cut_overlay(droid_overlay)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+/obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right = FALSE)
 	. = ..()
 	droid_overlay = new(src.icon, icon_state = "repair_droid")
-	M.add_overlay(droid_overlay)
+	new_mecha.add_overlay(droid_overlay)
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/detach()
 	chassis.cut_overlay(droid_overlay)
@@ -273,19 +273,20 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator
 	name = "plasma engine"
-	desc = "An exosuit module that generates power using solid plasma as fuel. Pollutes the environment."
+	desc = "An exosuit module that generates power using solid plasma as fuel."
 	icon_state = "tesla"
 	range = MECHA_MELEE
 	equipment_slot = MECHA_POWER
 	activated = FALSE
-	var/coeff = 100
-	var/obj/item/stack/sheet/fuel
-	var/max_fuel = 150000
-	/// Fuel used per second while idle, not generating
-	var/fuelrate_idle = 12.5
-	/// Fuel used per second while actively generating
-	var/fuelrate_active = 100
-	/// Energy recharged per second
+	///Type of fuel the generator is using. Is set in generator_init() to add the starting amount of fuel
+	var/obj/item/stack/sheet/fuel = null
+	///Fuel used per second while idle, not generating, in units
+	var/fuelrate_idle = 0.00625 * SHEET_MATERIAL_AMOUNT
+	///Fuel used per second while actively generating, in units
+	var/fuelrate_active = 0.05 * SHEET_MATERIAL_AMOUNT
+	///Maximum fuel capacity of the generator, in units
+	var/max_fuel = 75 * SHEET_MATERIAL_AMOUNT
+	///Energy recharged per second
 	var/rechargerate = 10
 
 /obj/item/mecha_parts/mecha_equipment/generator/Initialize(mapload)
@@ -295,9 +296,6 @@
 /obj/item/mecha_parts/mecha_equipment/generator/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
-	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 0)
 
 /obj/item/mecha_parts/mecha_equipment/generator/detach()
 	STOP_PROCESSING(SSobj, src)
@@ -314,37 +312,20 @@
 	. = ..()
 	if(action == "toggle")
 		if(activated)
-			to_chat(usr, "[icon2html(src, usr)][span_warning("Power generation enabled.")]")
+			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Power generation enabled.")]")
 			START_PROCESSING(SSobj, src)
 			log_message("Activated.", LOG_MECHA)
 		else
-			to_chat(usr, "[icon2html(src, usr)][span_warning("Power generation disabled.")]")
+			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Power generation disabled.")]")
 			STOP_PROCESSING(SSobj, src)
 			log_message("Deactivated.", LOG_MECHA)
 		return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon, mob/user, params)
+/obj/item/mecha_parts/mecha_equipment/generator/attackby(obj/item/weapon, mob/user, params)
 	. = ..()
+	if(!istype(weapon, fuel))
+		return FALSE
 	load_fuel(weapon, user)
-
-/obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(obj/item/stack/sheet/P, mob/user)
-	if(P.type == fuel.type && P.amount > 0)
-		var/to_load = max(max_fuel - fuel.amount*SHEET_MATERIAL_AMOUNT,0)
-		if(to_load)
-			var/units = min(max(round(to_load / SHEET_MATERIAL_AMOUNT),1),P.amount)
-			fuel.amount += units
-			P.use(units)
-			to_chat(user, "[icon2html(src, user)][span_notice("[units] unit\s of [fuel] successfully loaded.")]")
-			return units
-		else
-			to_chat(user, "[icon2html(src, user)][span_notice("Unit is full.")]")
-			return 0
-	else
-		to_chat(user, "[icon2html(src, user)][span_warning("[fuel] traces in target minimal! [P] cannot be used as fuel.")]")
-		return
-
-/obj/item/mecha_parts/mecha_equipment/generator/attackby(weapon,mob/user, params)
-	load_fuel(weapon)
 
 /obj/item/mecha_parts/mecha_equipment/generator/process(seconds_per_tick)
 	if(!chassis)
@@ -355,17 +336,38 @@
 		log_message("Deactivated - no fuel.", LOG_MECHA)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Fuel reserves depleted.")]")
 		return PROCESS_KILL
-	var/cur_charge = chassis.get_charge()
-	if(isnull(cur_charge))
+	var/current_charge = chassis.get_charge()
+	if(isnull(current_charge))
 		activated = FALSE
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("No power cell detected.")]")
 		log_message("Deactivated.", LOG_MECHA)
 		return PROCESS_KILL
-	var/use_fuel = fuelrate_idle
-	if(cur_charge < chassis.cell.maxcharge)
-		use_fuel = fuelrate_active
+	//how much fuel are we using per tick
+	var/fuel_usage_rate = fuelrate_idle
+	if(current_charge < chassis.cell.maxcharge)
+		fuel_usage_rate = fuelrate_active
 		chassis.give_power(rechargerate * seconds_per_tick)
-	fuel.amount -= min(seconds_per_tick * use_fuel / SHEET_MATERIAL_AMOUNT, fuel.amount)
+	fuel.amount -= min(seconds_per_tick * fuel_usage_rate / SHEET_MATERIAL_AMOUNT, fuel.amount)
+
+///Try to insert more fuel into the generator
+/obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(obj/item/stack/sheet/inserted_fuel, mob/user)
+	if(inserted_fuel.amount == 0) //if we somehow have a sheet of 0 fuel
+		to_chat(user, "[icon2html(src, user)][span_warning("[fuel] traces in target minimal! [inserted_fuel] cannot be used as fuel.")]")
+		return
+	//how much fuel is needed to fill the generator to its max capacity, in units
+	var/units_to_load = max(max_fuel - fuel.amount * SHEET_MATERIAL_AMOUNT, 0)
+	if(!units_to_load)
+		to_chat(user, "[icon2html(src, user)][span_notice("Unit is full.")]")
+		return
+	//how much new fuel are we inserting, in sheets
+	var/fuel_to_load = min(max(round(units_to_load / SHEET_MATERIAL_AMOUNT), 1), inserted_fuel.amount)
+	fuel.amount += fuel_to_load
+	inserted_fuel.use(fuel_to_load)
+	to_chat(user, "[icon2html(src, user)][span_notice("[fuel_to_load] unit\s of [fuel] successfully loaded.")]")
+
+///Introduces the actual fuel type to be used, as well as the starting amount of said fuel
+/obj/item/mecha_parts/mecha_equipment/generator/proc/generator_init()
+	fuel = new /obj/item/stack/sheet/mineral/plasma(src, 0)
 
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
 
@@ -383,17 +385,12 @@
 			return FALSE
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/thrusters/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	M.active_thrusters = src //Enable by default
+/obj/item/mecha_parts/mecha_equipment/thrusters/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right = FALSE)
+	new_mecha.active_thrusters = src //Enable by default
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/thrusters/detach()
-	if(chassis?.active_thrusters == src)
-		chassis.active_thrusters = null
-	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/thrusters/Destroy()
-	if(chassis?.active_thrusters == src)
+/obj/item/mecha_parts/mecha_equipment/thrusters/detach(atom/moveto)
+	if(chassis.active_thrusters == src)
 		chassis.active_thrusters = null
 	return ..()
 

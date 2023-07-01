@@ -30,11 +30,22 @@
 	var/datum/callback/precondition
 	/// A callback invoked after materials are inserted into this container
 	var/datum/callback/after_insert
+	/// A callback invoked after sheets are retrieve from this container
+	var/datum/callback/after_retrieve
 	/// The material container flags. See __DEFINES/materials.dm.
 	var/mat_container_flags
 
 /// Sets up the proper signals and fills the list of materials with the appropriate references.
-/datum/component/material_container/Initialize(list/init_mats, max_amt = 0, _mat_container_flags=NONE, list/allowed_mats=init_mats, list/allowed_items, datum/callback/_insertion_check, datum/callback/_precondition, datum/callback/_after_insert)
+/datum/component/material_container/Initialize(list/init_mats,
+			max_amt = 0,
+			_mat_container_flags=NONE,
+			list/allowed_mats=init_mats,
+			list/allowed_items,
+			datum/callback/_insertion_check,
+			datum/callback/_precondition,
+			datum/callback/_after_insert,
+			datum/callback/_after_retrieve)
+
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -52,6 +63,7 @@
 	insertion_check = _insertion_check
 	precondition = _precondition
 	after_insert = _after_insert
+	after_retrieve = _after_retrieve
 
 	for(var/mat in init_mats) //Make the assoc list material reference -> amount
 		var/mat_ref = GET_MATERIAL_REF(mat)
@@ -79,6 +91,8 @@
 		QDEL_NULL(precondition)
 	if(after_insert)
 		QDEL_NULL(after_insert)
+	if(after_retrieve)
+		QDEL_NULL(after_retrieve)
 	return ..()
 
 
@@ -86,9 +100,9 @@
 	. = ..()
 
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 
 /datum/component/material_container/vv_edit_var(var_name, var_value)
@@ -96,14 +110,14 @@
 	. = ..()
 	if(var_name == NAMEOF(src, mat_container_flags) && parent)
 		if(!(old_flags & MATCONTAINER_EXAMINE) && mat_container_flags & MATCONTAINER_EXAMINE)
-			RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+			RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 		else if(old_flags & MATCONTAINER_EXAMINE && !(mat_container_flags & MATCONTAINER_EXAMINE))
-			UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+			UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
 		if(old_flags & MATCONTAINER_NO_INSERT && !(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 		else if(!(old_flags & MATCONTAINER_NO_INSERT) && mat_container_flags & MATCONTAINER_NO_INSERT)
-			UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+			UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 
 
 /datum/component/material_container/proc/on_examine(datum/source, mob/user, list/examine_texts)
@@ -139,26 +153,56 @@
 	//don't attack the machine
 	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
 		return
+	//can't allow abstract, hologram items
+	if((held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
+		return
+	//untouchable
+	if(held_item.resistance_flags & INDESTRUCTIBLE)
+		return
 	//user defined conditions
 	if(precondition && !precondition.Invoke(user))
 		return
 
-	//loop through all contents inside this atom and salvage their material as well but in reverse so we don't delete parents before processing their children
+	//get all contents of this item reccursively
 	var/list/contents = held_item.get_all_contents_type(/obj/item)
+	//anything that isn't a stack cannot be split so find out if we have enough space, we don't want to consume half the contents of an object & leave it in a broken state
+	if(!isstack(held_item))
+		var/total_amount = 0
+		for(var/obj/item/weapon in contents)
+			total_amount += get_item_material_amount(weapon, breakdown_flags)
+		if(!has_space(total_amount))
+			to_chat(user, span_warning("[parent] doesn't have enough space for [held_item] [contents.len > 1 ? "And it's contents" : ""]!"))
+			return
+
+	/**
+	 * to reduce chat spams we group all messages and print them after everything is over
+	 * usefull when we are trying to insert all stock parts of an RPED into the autolathe for example
+	 */
+	var/list/inserts = list()
+	var/list/errors = list()
+
+	//loop through all contents inside this atom and salvage their material as well but in reverse so we don't delete parents before processing their children
 	for(var/i = length(contents); i >= 1 ; i--)
 		var/obj/item/target = contents[i]
 
-		//not a solid sub type
-		if(target.item_flags & ABSTRACT)
+		//not a solid subtype or an hologram
+		if((target.item_flags & ABSTRACT) || (target.flags_1 & HOLOGRAM_1))
 			if(target == active_held) //was this the original item in the players hand? put it back because we coudn't salvage it
 				user.put_in_active_hand(target)
 			continue
-		//item is either not real, not allowed for redemption, not in the allowed types
-		if((target.flags_1 & HOLOGRAM_1) || (target.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target, allowed_item_typecache)))
+
+		//item is either not allowed for redemption, not in the allowed types
+		if((target.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target, allowed_item_typecache)))
 			if(!(mat_container_flags & MATCONTAINER_SILENT))
 				to_chat(user, span_warning("[parent] won't accept [target]!"))
 			if(target == active_held) //was this the original item in the players hand? put it back because we coudn't salvage it
 				user.put_in_active_hand(target)
+			continue
+
+		//untouchable, move it out the way, code copied from recycler
+		if(target.resistance_flags & INDESTRUCTIBLE)
+			if(!isturf(target.loc) && !isliving(target.loc))
+				target.forceMove(get_turf(parent))
 			continue
 
 		//if stack, check if we want to read precise amount of sheets to insert
@@ -187,9 +231,11 @@
 			return
 
 		//insert the item
+		var/item_name = target.name
 		var/inserted = insert_item(target, breakdown_flags = mat_container_flags)
 		if(inserted > 0)
 			. += inserted
+			var/message = null
 
 			//stack was either split by the container(!QDELETED(target) means the container only consumed a part of it) or by the player, put whats left back of the original stack back in players hand
 			if((!QDELETED(target) || was_stack_split))
@@ -203,16 +249,27 @@
 				//was this the original item in the players hand? put what's left back in the player's hand
 				if(!isnull(original_item))
 					user.put_in_active_hand(original_item)
+					message = "Only [inserted] amount of [item_name] was consumed by [parent]."
 
-			to_chat(user, span_notice("You insert a material total of [inserted] into [parent]."))
+			//collect all messages to print later
+			if(!message)
+				message = "[item_name] worth [inserted] material was consumed by [parent]."
+			if(inserts[message])
+				inserts[message] += 1
+			else
+				inserts[message] = 1
 		else
-			//decode the error & print it
 			var/error_msg
 			if(inserted == -2)
-				error_msg = "[parent] has insufficient space to accept the [target]"
+				error_msg = "[parent] has insufficient space to accept [target]"
 			else
 				error_msg = "[target] has insufficient materials to be accepted by [parent]"
-			to_chat(user, span_warning(error_msg))
+
+			//collect all messages to print later
+			if(errors[error_msg])
+				errors[error_msg] += 1
+			else
+				errors[error_msg] = 1
 
 			//player split the stack by the requested amount but even that split amount could not be salvaged. merge it back with the original
 			if(!isnull(item_stack) && was_stack_split)
@@ -223,6 +280,18 @@
 			//was this the original item in the players hand? put it back because we coudn't salvage it
 			if(!isnull(original_item))
 				user.put_in_active_hand(original_item)
+
+	//print successfull inserts
+	for(var/success_msg in inserts)
+		var/count = inserts[success_msg]
+		for(var/i in 1 to count)
+			to_chat(user, span_notice(success_msg))
+
+	//print errors last
+	for(var/error_msg in errors)
+		var/count = errors[error_msg]
+		for(var/i in 1 to count)
+			to_chat(user, span_warning(error_msg))
 
 /**
  * Splits a stack. we don't use /obj/item/stack/proc/split_stack because Byond complains that should only be called asynchronously.
@@ -240,40 +309,40 @@
 /// Proc specifically for inserting items, returns the amount of materials entered.
 /datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, breakdown_flags = mat_container_flags)
 	if(QDELETED(weapon))
-		return -1
+		return MATERIAL_INSERT_ITEM_NO_MATS
 	multiplier = CEILING(multiplier, 0.01)
 
 	var/obj/item/target = weapon
 
 	var/material_amount = get_item_material_amount(target, breakdown_flags) * multiplier
 	if(!material_amount)
-		return -1
+		return MATERIAL_INSERT_ITEM_NO_MATS
 	var/obj/item/stack/item_stack
 	if(isstack(weapon) && !has_space(material_amount)) //not enugh space split and feed as many sheets possible
 		item_stack = weapon
 		var/space_left = max_amount - total_amount
 		if(!space_left)
-			return -2
+			return MATERIAL_INSERT_ITEM_NO_SPACE
 		var/material_per_sheet = material_amount / item_stack.amount
 		var/sheets_to_insert = round(space_left / material_per_sheet)
 		if(!sheets_to_insert)
-			return -2
+			return MATERIAL_INSERT_ITEM_NO_SPACE
 		target = split_stack(item_stack, sheets_to_insert)
 		material_amount = get_item_material_amount(target, breakdown_flags) * multiplier
 	if(!has_space(material_amount))
-		return -2
+		return MATERIAL_INSERT_ITEM_NO_SPACE
 
 	last_inserted_id = insert_item_materials(target, multiplier, breakdown_flags)
 	if(!isnull(last_inserted_id))
 		if(after_insert)
-			after_insert.Invoke(target, last_inserted_id, material_amount)
+			after_insert.Invoke(target, last_inserted_id, material_amount, src)
 		qdel(target) //item gone
 		return material_amount
 	else if(!isnull(item_stack) && item_stack != target) //insertion failed, merge the split stack back into the original
 		var/obj/item/stack/inserting_stack = target
 		item_stack.add(inserting_stack.amount)
 		qdel(inserting_stack)
-	return 0
+	return MATERIAL_INSERT_ITEM_FAILURE
 
 /**
  * Inserts the relevant materials from an item into this material container.
@@ -406,8 +475,8 @@
 	return total_amount_save - total_amount
 
 /// For spawning mineral sheets at a specific location. Used by machines to output sheets.
-/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/M, atom/target = null)
-	if(!M.sheet_type)
+/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/material, atom/target = null)
+	if(!material.sheet_type)
 		return 0 //Add greyscale sheet handling here later
 	if(sheet_amt <= 0)
 		return 0
@@ -415,18 +484,20 @@
 	if(!target)
 		var/atom/parent_atom = parent
 		target = parent_atom.drop_location()
-	if(materials[M] < (sheet_amt * SHEET_MATERIAL_AMOUNT))
-		sheet_amt = round(materials[M] / SHEET_MATERIAL_AMOUNT)
+	if(materials[material] < (sheet_amt * SHEET_MATERIAL_AMOUNT))
+		sheet_amt = round(materials[material] / SHEET_MATERIAL_AMOUNT)
 	var/count = 0
 	while(sheet_amt > MAX_STACK_SIZE)
-		new M.sheet_type(target, MAX_STACK_SIZE, null, list((M) = SHEET_MATERIAL_AMOUNT))
+		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, MAX_STACK_SIZE, null, list((material) = SHEET_MATERIAL_AMOUNT))
+		after_retrieve?.Invoke(new_sheets)
 		count += MAX_STACK_SIZE
-		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, M)
+		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)
 		sheet_amt -= MAX_STACK_SIZE
 	if(sheet_amt >= 1)
-		new M.sheet_type(target, sheet_amt, null, list((M) = SHEET_MATERIAL_AMOUNT))
+		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, sheet_amt, null, list((material) = SHEET_MATERIAL_AMOUNT))
+		after_retrieve?.Invoke(new_sheets)
 		count += sheet_amt
-		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, M)
+		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)
 	return count
 
 
@@ -520,6 +591,11 @@
 	if(!istype(mat))
 		mat = GET_MATERIAL_REF(mat)
 	return materials[mat]
+
+/datum/component/material_container/ui_static_data(mob/user)
+	var/list/data = list()
+	data["SHEET_MATERIAL_AMOUNT"] = SHEET_MATERIAL_AMOUNT
+	return data
 
 /// List format is list(material_name = list(amount = ..., ref = ..., etc.))
 /datum/component/material_container/ui_data(mob/user)

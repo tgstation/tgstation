@@ -102,7 +102,7 @@
 					/obj/item/reagent_containers/blood/o_minus,
 					/obj/item/storage/pill_bottle/mining,
 					/obj/item/reagent_containers/pill/neurine,
-					/obj/item/stack/medical/bone_gel/four = 2,
+					/obj/item/stack/medical/bone_gel = 2,
 					/obj/item/vending_refill/medical,
 					/obj/item/vending_refill/drugs,
 				)
@@ -112,6 +112,7 @@
 	for(var/i in 1 to 10)
 		var/item = pick(contains)
 		new item(C)
+
 /datum/supply_pack/medical/experimentalmedicine
 	name = "Experimental Medicine Crate"
 	desc = "A crate containing the medication required for living with Hereditary Manifold Sickness, Sansufentanyl."

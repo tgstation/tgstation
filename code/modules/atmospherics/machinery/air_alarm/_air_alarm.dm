@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
-	wires = new /datum/wires/airalarm(src)
+	set_wires(new /datum/wires/airalarm(src))
 	if(ndir)
 		setDir(ndir)
 
@@ -654,7 +654,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 
 ///Used for air alarm link helper, which connects air alarm to a sensor with corresponding chamber_id
 /obj/machinery/airalarm/proc/setup_chamber_link()
-	var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[CHAMBER_SENSOR_FROM_ID(air_sensor_chamber_id)]
+	var/obj/machinery/air_sensor/sensor = GLOB.objects_by_id_tag[GLOB.map_loaded_sensors[air_sensor_chamber_id]]
 	if(isnull(sensor))
 		log_mapping("[src] at [AREACOORD(src)] tried to connect to a sensor, but no sensor with chamber_id:[air_sensor_chamber_id] found!")
 		return
@@ -663,9 +663,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 ///Used to connect air alarm with a sensor
 /obj/machinery/airalarm/proc/connect_sensor(obj/machinery/air_sensor/sensor)
 	if(!isnull(connected_sensor))
-		UnregisterSignal(connected_sensor, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(connected_sensor, COMSIG_QDELETING)
 	connected_sensor = sensor
-	RegisterSignal(connected_sensor, COMSIG_PARENT_QDELETING, PROC_REF(disconnect_sensor))
+	RegisterSignal(connected_sensor, COMSIG_QDELETING, PROC_REF(disconnect_sensor))
 	my_area = get_area(connected_sensor)
 
 	var/turf/our_turf = get_turf(connected_sensor)
@@ -677,7 +677,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 
 ///Used to reset the air alarm to default configuration after disconnecting from air sensor
 /obj/machinery/airalarm/proc/disconnect_sensor()
-	UnregisterSignal(connected_sensor, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(connected_sensor, COMSIG_QDELETING)
 	connected_sensor = null
 	my_area = get_area(src)
 

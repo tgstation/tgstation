@@ -88,7 +88,7 @@
 		patient.balloon_alert(user, "no [parse_zone(user.zone_selected)]!")
 		return FALSE
 	if(!IS_ORGANIC_LIMB(affecting)) //Limb must be organic to be healed - RR
-		patient.balloon_alert(user, "it's mechanical!")
+		patient.balloon_alert(user, "it's not organic!")
 		return FALSE
 	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
 		user.visible_message(
@@ -379,7 +379,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 
-	amount = 1
+	amount = 5
 	self_delay = 20
 	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/carbon = 10)
 	novariants = TRUE
@@ -412,8 +412,8 @@
 	use(1)
 	return BRUTELOSS
 
-/obj/item/stack/medical/bone_gel/four
-	amount = 4
+/obj/item/stack/medical/bone_gel/one
+	amount = 1
 
 /obj/item/stack/medical/poultice
 	name = "mourning poultices"

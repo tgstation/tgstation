@@ -48,7 +48,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.add_blocked_language(/datum/language/common)
 	if(ishumanbasic(human_holder))
-		human_holder.grant_language(/datum/language/uncommon)
+		human_holder.grant_language(/datum/language/uncommon, understood = TRUE, spoken =  TRUE, source =  LANGUAGE_QUIRK)
 
 /datum/quirk/foreigner/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -67,26 +67,18 @@
 	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/salad)
 
 /datum/quirk/vegetarian/add(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
-	species.liked_food &= ~MEAT
-	species.disliked_food |= MEAT
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
-
-/datum/quirk/vegetarian/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
-	SIGNAL_HANDLER
-	new_species.liked_food &= ~MEAT
-	new_species.disliked_food |= MEAT
+	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		return
+	tongue.liked_foodtypes &= ~MEAT
+	tongue.disliked_foodtypes |= MEAT
 
 /datum/quirk/vegetarian/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-
-	var/datum/species/species = human_holder.dna.species
-	if(initial(species.liked_food) & MEAT)
-		species.liked_food |= MEAT
-	if(!(initial(species.disliked_food) & MEAT))
-		species.disliked_food &= ~MEAT
-	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
+	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		return
+	tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
+	tongue.disliked_foodtypes = initial(tongue.disliked_foodtypes)
 
 /datum/quirk/snob
 	name = "Snob"
@@ -110,20 +102,16 @@
 	mail_goodies = list(/obj/item/food/pizzaslice/pineapple)
 
 /datum/quirk/pineapple_liker/add(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
-	species.liked_food |= PINEAPPLE
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
-
-/datum/quirk/pineapple_liker/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
-	SIGNAL_HANDLER
-	new_species.liked_food |= PINEAPPLE
+	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		return
+	tongue.liked_foodtypes |= PINEAPPLE
 
 /datum/quirk/pineapple_liker/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
-	species.liked_food &= ~PINEAPPLE
-	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
+	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		return
+	tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
 
 /datum/quirk/pineapple_hater
 	name = "Ananas Aversion"
@@ -142,20 +130,16 @@
 	)
 
 /datum/quirk/pineapple_hater/add(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
-	species.disliked_food |= PINEAPPLE
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
-
-/datum/quirk/pineapple_hater/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
-	SIGNAL_HANDLER
-	new_species.disliked_food |= PINEAPPLE
+	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		return
+	tongue.disliked_foodtypes |= PINEAPPLE
 
 /datum/quirk/pineapple_hater/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
-	species.disliked_food &= ~PINEAPPLE
-	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
+	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		return
+	tongue.disliked_foodtypes = initial(tongue.disliked_foodtypes)
 
 /datum/quirk/deviant_tastes
 	name = "Deviant Tastes"
@@ -168,25 +152,19 @@
 	mail_goodies = list(/obj/item/food/urinalcake, /obj/item/food/badrecipe) // Mhhhmmm yummy
 
 /datum/quirk/deviant_tastes/add(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
-	var/liked = species.liked_food
-	species.liked_food = species.disliked_food
-	species.disliked_food = liked
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
-
-/datum/quirk/deviant_tastes/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
-	SIGNAL_HANDLER
-	var/liked = new_species.liked_food
-	new_species.liked_food = new_species.disliked_food
-	new_species.disliked_food = liked
+	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		return
+	var/liked_foodtypes = tongue.liked_foodtypes
+	tongue.liked_foodtypes = tongue.disliked_foodtypes
+	tongue.disliked_foodtypes = liked_foodtypes
 
 /datum/quirk/deviant_tastes/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
-	species.liked_food = initial(species.liked_food)
-	species.disliked_food = initial(species.disliked_food)
-	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
+	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		return
+	tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
+	tongue.disliked_foodtypes = initial(tongue.disliked_foodtypes)
 
 /datum/quirk/heterochromatic
 	name = "Heterochromatic"
@@ -313,15 +291,13 @@
 /datum/quirk/item_quirk/bald/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	old_hair = human_holder.hairstyle
-	human_holder.hairstyle = "Bald"
-	human_holder.update_body_parts()
+	human_holder.set_hairstyle("Bald", update = TRUE)
 	RegisterSignal(human_holder, COMSIG_CARBON_EQUIP_HAT, PROC_REF(equip_hat))
 	RegisterSignal(human_holder, COMSIG_CARBON_UNEQUIP_HAT, PROC_REF(unequip_hat))
 
 /datum/quirk/item_quirk/bald/add_unique(client/client_source)
 	var/obj/item/clothing/head/wig/natural/baldie_wig = new(get_turf(quirk_holder))
-
-	if (old_hair == "Bald")
+	if(old_hair == "Bald")
 		baldie_wig.hairstyle = pick(GLOB.hairstyles_list - "Bald")
 	else
 		baldie_wig.hairstyle = old_hair
@@ -409,31 +385,25 @@
 	var/gaming_withdrawal_timer = TIMER_ID_NULL
 
 /datum/quirk/gamer/add(client/client_source)
-	// Gamer diet
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
-	species.liked_food = JUNKFOOD
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
-	RegisterSignal(human_holder, COMSIG_MOB_WON_VIDEOGAME, PROC_REF(won_game))
-	RegisterSignal(human_holder, COMSIG_MOB_LOST_VIDEOGAME, PROC_REF(lost_game))
-	RegisterSignal(human_holder, COMSIG_MOB_PLAYED_VIDEOGAME, PROC_REF(gamed))
-
-/datum/quirk/gamer/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
-	SIGNAL_HANDLER
-	new_species.liked_food = JUNKFOOD
-
-/datum/quirk/gamer/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/species/species = human_holder.dna.species
-	species.liked_food = initial(species.liked_food)
-	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
-	UnregisterSignal(human_holder, COMSIG_MOB_WON_VIDEOGAME)
-	UnregisterSignal(human_holder, COMSIG_MOB_LOST_VIDEOGAME)
-	UnregisterSignal(human_holder, COMSIG_MOB_PLAYED_VIDEOGAME)
+	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(tongue)
+		// Gamer diet
+		tongue.liked_foodtypes = JUNKFOOD
+	RegisterSignal(quirk_holder, COMSIG_MOB_WON_VIDEOGAME, PROC_REF(won_game))
+	RegisterSignal(quirk_holder, COMSIG_MOB_LOST_VIDEOGAME, PROC_REF(lost_game))
+	RegisterSignal(quirk_holder, COMSIG_MOB_PLAYED_VIDEOGAME, PROC_REF(gamed))
 
 /datum/quirk/gamer/add_unique(client/client_source)
 	// The gamer starts off quelled
 	gaming_withdrawal_timer = addtimer(CALLBACK(src, PROC_REF(enter_withdrawal)), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
+
+/datum/quirk/gamer/remove()
+	var/obj/item/organ/internal/tongue/tongue = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(tongue)
+		tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
+	UnregisterSignal(quirk_holder, COMSIG_MOB_WON_VIDEOGAME)
+	UnregisterSignal(quirk_holder, COMSIG_MOB_LOST_VIDEOGAME)
+	UnregisterSignal(quirk_holder, COMSIG_MOB_PLAYED_VIDEOGAME)
 
 /**
  * Gamer won a game

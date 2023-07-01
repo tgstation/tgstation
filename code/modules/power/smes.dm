@@ -21,6 +21,7 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/smes
+	can_change_cable_layer = TRUE
 
 	var/capacity = 5e6 // maximum charge
 	var/charge = 0 // actual charge
@@ -79,6 +80,12 @@
 /obj/machinery/power/smes/should_have_node()
 	return TRUE
 
+/obj/machinery/power/smes/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	if(!QDELETED(terminal))
+		balloon_alert(user, "cut the terminal first!")
+		return FALSE
+	return TRUE
+
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
 	//opening using screwdriver
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
@@ -127,6 +134,13 @@
 			to_chat(user, span_warning("You need more wires!"))
 			return
 
+		var/terminal_cable_layer = CABLE_LAYER_1
+		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
+			if(isnull(choice))
+				return
+			terminal_cable_layer = GLOB.cable_name_to_layer[choice]
+
 		to_chat(user, span_notice("You start building the power terminal..."))
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
@@ -143,7 +157,7 @@
 					span_notice("You build the power terminal."))
 
 				//build the terminal and link it to the network
-				make_terminal(T)
+				make_terminal(T, terminal_cable_layer)
 				terminal.connect_to_network()
 				connect_to_network()
 		return
@@ -191,8 +205,9 @@
 
 // create a terminal object pointing towards the SMES
 // wires will attach to this
-/obj/machinery/power/smes/proc/make_terminal(turf/T)
+/obj/machinery/power/smes/proc/make_terminal(turf/T, terminal_cable_layer)
 	terminal = new/obj/machinery/power/terminal(T)
+	terminal.cable_layer = terminal_cable_layer
 	terminal.setDir(get_dir(T,src))
 	terminal.master = src
 	set_machine_stat(machine_stat & ~BROKEN)

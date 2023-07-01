@@ -97,8 +97,14 @@
 	/// The voice that this movable makes when speaking
 	var/voice
 
+	/// The pitch adjustment that this movable uses when speaking.
+	var/pitch = 0
+
 	/// The filter to apply to the voice when processing the TTS audio message.
 	var/voice_filter = ""
+
+	/// Set to anything other than "" to activate the silicon voice effect for TTS messages.
+	var/tts_silicon_voice_effect = ""
 
 	/// Value used to increment ex_act() if reactionary_explosions is on
 	/// How much we as a source block explosions by
@@ -930,15 +936,6 @@
 					if(!length(recursive_contents[channel]))
 						SSspatial_grid.add_grid_awareness(location, channel)
 			recursive_contents[channel] |= arrived.important_recursive_contents[channel]
-
-/**
- * Returns a bitfield containing flags both present in `flags` arg and the `processing_move_loop_flags` move_packet variable.
- * Has no use outside of procs called within the movement proc chain.
- */
-/atom/movable/proc/check_move_loop_flags(flags)
-	if(!move_packet)
-		return NONE
-	return flags & move_packet.processing_move_loop_flags
 
 ///allows this movable to hear and adds itself to the important_recursive_contents list of itself and every movable loc its in
 /atom/movable/proc/become_hearing_sensitive(trait_source = TRAIT_GENERIC)

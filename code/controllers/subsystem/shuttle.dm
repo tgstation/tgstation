@@ -198,8 +198,8 @@ SUBSYSTEM_DEF(shuttle)
 		if(!thing)
 			mobile_docking_ports.Remove(thing)
 			continue
-		var/obj/docking_port/mobile/P = thing
-		P.check()
+		var/obj/docking_port/mobile/port = thing
+		port.check()
 	for(var/thing in transit_docking_ports)
 		var/obj/docking_port/stationary/transit/T = thing
 		if(!T.owner)
@@ -650,7 +650,7 @@ SUBSYSTEM_DEF(shuttle)
 	// Proposals use 2 extra hidden tiles of space, from the cordons that surround them
 	transit_utilized += (proposal.width + 2) * (proposal.height + 2)
 	M.assigned_transit = new_transit_dock
-	RegisterSignal(proposal, COMSIG_PARENT_QDELETING, PROC_REF(transit_space_clearing))
+	RegisterSignal(proposal, COMSIG_QDELETING, PROC_REF(transit_space_clearing))
 
 	return new_transit_dock
 

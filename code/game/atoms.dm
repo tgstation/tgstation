@@ -245,7 +245,7 @@
 	flags_1 |= INITIALIZED_1
 
 	if(loc)
-		SEND_SIGNAL(loc, COMSIG_ATOM_INITIALIZED_ON, src) /// Sends a signal that the new atom `src`, has been created at `loc`
+		SEND_SIGNAL(loc, COMSIG_ATOM_INITIALIZED_ON, src, mapload) /// Sends a signal that the new atom `src`, has been created at `loc`
 
 	SET_PLANE_IMPLICIT(src, plane)
 
@@ -623,6 +623,10 @@
 /atom/proc/HasProximity(atom/movable/proximity_check_mob as mob|obj)
 	return
 
+/// Sets the wire datum of an atom
+/atom/proc/set_wires(datum/wires/new_wires)
+	wires = new_wires
+
 /**
  * React to an EMP of the given severity
  *
@@ -704,7 +708,7 @@
  * Default behaviour is to get the name and icon of the object and it's reagents where
  * the [TRANSPARENT] flag is set on the reagents holder
  *
- * Produces a signal [COMSIG_PARENT_EXAMINE]
+ * Produces a signal [COMSIG_ATOM_EXAMINE]
  */
 /atom/proc/examine(mob/user)
 	var/examine_string = get_examine_string(user, thats = TRUE)
@@ -726,7 +730,7 @@
 
 	if(reagents)
 		var/user_sees_reagents = user.can_see_reagents()
-		var/reagent_sigreturn = SEND_SIGNAL(src, COMSIG_PARENT_REAGENT_EXAMINE, user, ., user_sees_reagents)
+		var/reagent_sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_EXAMINE, user, ., user_sees_reagents)
 		if(!(reagent_sigreturn & STOP_GENERIC_REAGENT_EXAMINE))
 			if(reagents.flags & TRANSPARENT)
 				if(reagents.total_volume > 0)
@@ -746,7 +750,7 @@
 				else
 					. += span_danger("It's empty.")
 
-	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
 
 /**
  * Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_WINDOW (default 1 second)
@@ -754,14 +758,14 @@
  * This is where you can put extra information on something that may be superfluous or not important in critical gameplay
  * moments, while allowing people to manually double-examine to take a closer look
  *
- * Produces a signal [COMSIG_PARENT_EXAMINE_MORE]
+ * Produces a signal [COMSIG_ATOM_EXAMINE_MORE]
  */
 /atom/proc/examine_more(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
 
 	. = list()
-	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE_MORE, user, .)
 
 /**
  * Updates the appearence of the icon
@@ -1143,6 +1147,8 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 	SEND_SIGNAL(src, COMSIG_ATOM_POST_DIR_CHANGE, dir, newdir)
+	if(smoothing_flags & SMOOTH_BORDER_OBJECT)
+		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /**
  * Called when the atom log's in or out
@@ -2029,7 +2035,7 @@
 		active_hud.screentip_text.maptext = ""
 		return
 
-	active_hud.screentip_text.maptext_y = 0
+	active_hud.screentip_text.maptext_y = 7 // 7px lines us up with the action buttons top left corner
 	var/lmb_rmb_line = ""
 	var/ctrl_lmb_ctrl_rmb_line = ""
 	var/alt_lmb_alt_rmb_line = ""
@@ -2096,15 +2102,15 @@
 					extra_lines++
 
 				if(extra_lines)
-					extra_context = "<br><span style='font-size: 7px'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
-					//first extra line pushes atom name line up 10px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
-					active_hud.screentip_text.maptext_y = -10 + (extra_lines - 1) * -9
+					extra_context = "<br><span style='font-size: 6pt'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+					//first extra line pushes atom name line up 8px, subsequent lines push it up 10px, this offsets that and keeps the first line in the same place
+					active_hud.screentip_text.maptext_y = -1 + (extra_lines - 1) * -10
 
 	if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
 		active_hud.screentip_text.maptext = ""
 	else
 		//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
-		active_hud.screentip_text.maptext = "<span class='maptext' style='text-align: center; font-size: 32px; color: [active_hud.screentip_color]'>[name][extra_context]</span>"
+		active_hud.screentip_text.maptext = "<span class='maptext' style='text-align: center; font-size: 12pt; color: [active_hud.screentip_color]'>[name][extra_context]</span>"
 
 /// Gets a merger datum representing the connected blob of objects in the allowed_types argument
 /atom/proc/GetMergeGroup(id, list/allowed_types)

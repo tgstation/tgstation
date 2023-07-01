@@ -41,7 +41,6 @@ https://freesound.org/people/dj997/sounds/493747/
 
 standard_stamp.ogg is adapted from tom_woysky's "Stamp.wav" https://freesound.org/people/tom_woysky/sounds/348316/
 
-
 rattling_keys.ogg and rattling_keys_attack.ogg is adapted from Desibloke's "Keys rattling [Key rattle]" https://freesound.org/people/Desibloke/sounds/523671/
 
 chainsaw_loop.ogg is adapted from Audionautics "Chainsaw Idle Loops", which is licensed under CC Attribution 3.0
@@ -60,7 +59,14 @@ https://freesound.org/people/ScottFerguson1/sounds/132846/
 parry.ogg is taken from loudernoises "Sword Clash" which is licensed under CC Attributions 0, which is mixed with a genhit.ogg
 https://freesound.org/people/loudernoises/sounds/334169/
 
+earth_rumble.ogg is adapted from uagadugu's "Cracking Earthquake (cracking soil, cracking stone)" (CC 0)
+https://freesound.org/people/uagadugu/sounds/222521/
 
+earth_rumble_distant1, earth_rumble_distant2, earth_rumble_distant3, and earth_rumble_distant4 are adapted from metrostock99's "EARTHQUAKE OR DISTANT SPACE SHUTTLE RUMBLE.WAV" (CC 0)
+https://freesound.org/people/metrostock99/sounds/203281/
+
+metal_creak.ogg is adapted from BloodPixelHero's "Metal door creak" under CC Attribution 4.0 
+https://freesound.org/people/BloodPixelHero/sounds/585323/
 
 revolutionary_tide.ogg is adapted from several audio samples:
 
@@ -72,3 +78,6 @@ https://freesound.org/people/vmgraw/sounds/235610/
 
 vmgraw's "Distant Whistle" (CC 0)
 https://freesound.org/people/giddster/sounds/414480/
+
+zip_up.ogg and un_zip.ogg adapted from aboxinghelena's Zip.wav (CC 4)
+https://freesound.org/people/aboxinghelena/sounds/401139/

@@ -8,15 +8,15 @@
 //from SSatoms InitAtom - Only if the  atom was not deleted or failed initialization
 #define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE "atom_init_success"
 ///from base of atom/examine(): (/mob, list/examine_text)
-#define COMSIG_PARENT_EXAMINE "atom_examine"
+#define COMSIG_ATOM_EXAMINE "atom_examine"
 ///from base of atom/get_examine_name(): (/mob, list/overrides)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"
 ///from base of atom/examine(): (/mob, list/examine_text, can_see_inside)
-#define COMSIG_PARENT_REAGENT_EXAMINE "atom_reagent_examine"
+#define COMSIG_ATOM_REAGENT_EXAMINE "atom_reagent_examine"
 	/// Stop the generic reagent examine text
 	#define STOP_GENERIC_REAGENT_EXAMINE (1<<0)
 ///from base of atom/examine_more(): (/mob)
-#define COMSIG_PARENT_EXAMINE_MORE "atom_examine_more"
+#define COMSIG_ATOM_EXAMINE_MORE "atom_examine_more"
 	//Positions for overrides list
 	#define EXAMINE_POSITION_ARTICLE (1<<0)
 	#define EXAMINE_POSITION_BEFORE (1<<1)
@@ -50,6 +50,8 @@
 #define COMSIG_ATOM_UPDATED_ICON "atom_updated_icon"
 ///from base of [/atom/proc/smooth_icon]: ()
 #define COMSIG_ATOM_SMOOTHED_ICON "atom_smoothed_icon"
+///from [/datum/controller/subsystem/processing/dcs/proc/rotate_decals]: (list/datum/element/decal/rotating)
+#define COMSIG_ATOM_DECALS_ROTATING "atom_decals_rotating"
 ///from base of atom/Entered(): (atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 #define COMSIG_ATOM_ENTERED "atom_entered"
 ///from base of atom/movable/Moved(): (atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -100,6 +102,10 @@
 /// generally called before temporary non-parallel animate()s on the atom (animation_duration)
 #define COMSIG_ATOM_TEMPORARY_ANIMATION_START "atom_temp_animate_start"
 
+/// called on [/obj/item/lazarus_injector/afterattack] : (injector, user)
+#define COMSIG_ATOM_ON_LAZARUS_INJECTOR "atom_on_lazarus_injector"
+	#define LAZARUS_INJECTOR_USED (1<<0) //Early return.
+
 /// from internal loop in /atom/proc/propagate_radiation_pulse: (atom/pulse_source)
 #define COMSIG_ATOM_PROPAGATE_RAD_PULSE "atom_propagate_radiation_pulse"
 /// from cosmetic items to restyle certain mobs, objects or organs: (atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
@@ -108,3 +114,10 @@
 #define COMSIG_ATOM_TIMESTOP_FREEZE "atom_timestop_freeze"
 /// when the timestop ability effect ends on the atom: (datum/proximity_monitor/advanced/timestop)
 #define COMSIG_ATOM_TIMESTOP_UNFREEZE "atom_timestop_unfreeze"
+
+/// when atom falls onto the floor and become exposed to germs: (datum/component/germ_exposure)
+#define COMSIG_ATOM_GERM_EXPOSED "atom_germ_exposed"
+/// when atom is picked up from the floor or moved to an elevated structure: (datum/component/germ_exposure)
+#define COMSIG_ATOM_GERM_UNEXPOSED "atom_germ_unexposed"
+/// when atom is washed
+#define COMSIG_ATOM_WASHED "atom_washed"

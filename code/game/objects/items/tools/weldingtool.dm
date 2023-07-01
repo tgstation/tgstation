@@ -1,5 +1,5 @@
 /// How many seconds between each fuel depletion tick ("use" proc)
-#define WELDER_FUEL_BURN_INTERVAL 26
+#define WELDER_FUEL_BURN_INTERVAL 5
 /obj/item/weldingtool
 	name = "welding tool"
 	desc = "A standard edition welder provided by Nanotrasen."
@@ -140,7 +140,7 @@
 
 	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
 
-	if(affecting && !IS_ORGANIC_LIMB(affecting) && !user.combat_mode)
+	if(affecting && IS_ROBOTIC_LIMB(affecting) && !user.combat_mode)
 		if(src.use_tool(attacked_humanoid, user, 0, volume=50, amount=1))
 			if(user == attacked_humanoid)
 				user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid]'s [affecting.name]."),
@@ -325,7 +325,7 @@
 			to_chat(user, span_warning("You need one rod to start building a flamethrower!"))
 
 /obj/item/weldingtool/ignition_effect(atom/ignitable_atom, mob/user)
-	if(use_tool(ignitable_atom, user, 0, amount=1))
+	if(use_tool(ignitable_atom, user, 0))
 		return span_notice("[user] casually lights [ignitable_atom] with [src], what a badass.")
 	else
 		return ""

@@ -1,8 +1,0 @@
-author: "JohnFulpWillard, tatax"
-delete-after: True
-changes:
-  - qol: "[Mafia] Players are now sent back to their in-game character's bodies when they finish a game."
-  - image: "[Mafia] Mafia now has a new sprite for the main action button in-game."
-  - bugfix: "[Mafia] Chaplains can now use their ability."
-  - bugfix: "[Mafia] The game no longer ends in a Draw if Town or Changelings win."
-  - bugfix: "[Mafia] The role list now properly shows roles once."

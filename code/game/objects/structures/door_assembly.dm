@@ -60,7 +60,7 @@
 		created_name = t
 
 	else if((W.tool_behaviour == TOOL_WELDER) && (mineral || glass || !anchored ))
-		if(!W.tool_start_check(user, amount=0))
+		if(!W.tool_start_check(user, amount=1))
 			return
 
 		if(mineral)

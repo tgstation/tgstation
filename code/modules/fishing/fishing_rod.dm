@@ -140,7 +140,7 @@
 	var/datum/beam/fishing_line/fishing_line_beam = new(user, target, icon_state = "fishing_line", beam_color = beam_color, override_target_pixel_y = target_py)
 	fishing_line_beam.lefthand = user.get_held_index_of_item(src) % 2 == 1
 	RegisterSignal(fishing_line_beam, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
-	RegisterSignal(fishing_line_beam, COMSIG_PARENT_QDELETING, PROC_REF(clear_line))
+	RegisterSignal(fishing_line_beam, COMSIG_QDELETING, PROC_REF(clear_line))
 	fishing_lines += fishing_line_beam
 	INVOKE_ASYNC(fishing_line_beam, TYPE_PROC_REF(/datum/beam/, Start))
 	user.update_held_items()

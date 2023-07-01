@@ -276,8 +276,7 @@
 
 /datum/antagonist/rev/head/proc/make_assistant_icon(hairstyle)
 	var/mob/living/carbon/human/dummy/consistent/assistant = new
-	assistant.hairstyle = hairstyle
-	assistant.update_body_parts()
+	assistant.set_hairstyle(hairstyle, update = TRUE)
 
 	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
 	assistant_icon.ChangeOpacity(0.5)
@@ -450,16 +449,16 @@
 		if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < round(heads.len - ((8 - sec.len) / 3)))
 			var/list/datum/mind/non_heads = members - head_revolutionaries
 			var/list/datum/mind/promotable = list()
-			var/list/datum/mind/nonhuman_promotable = list()
+			var/list/datum/mind/monkey_promotable = list()
 			for(var/datum/mind/khrushchev in non_heads)
 				if(khrushchev.current && !khrushchev.current.incapacitated() && !HAS_TRAIT(khrushchev.current, TRAIT_RESTRAINED) && khrushchev.current.client)
 					if((ROLE_REV_HEAD in khrushchev.current.client.prefs.be_special) || (ROLE_PROVOCATEUR in khrushchev.current.client.prefs.be_special))
-						if(ishuman(khrushchev.current))
+						if(!ismonkey(khrushchev.current))
 							promotable += khrushchev
 						else
-							nonhuman_promotable += khrushchev
-			if(!promotable.len && nonhuman_promotable.len) //if only nonhuman revolutionaries remain, promote one of them to the leadership.
-				promotable = nonhuman_promotable
+							monkey_promotable += khrushchev
+			if(!promotable.len && monkey_promotable.len) //if only monkey revolutionaries remain, promote one of them to the leadership.
+				promotable = monkey_promotable
 			if(promotable.len)
 				var/datum/mind/new_leader = pick(promotable)
 				var/datum/antagonist/rev/rev = new_leader.has_antag_datum(/datum/antagonist/rev)
@@ -563,7 +562,7 @@
 			player.med_hud_set_status()
 
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
-		if(!(job.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))
+		if(!(job.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
 			continue
 		job.allow_bureaucratic_error = FALSE
 		job.total_positions = 0
