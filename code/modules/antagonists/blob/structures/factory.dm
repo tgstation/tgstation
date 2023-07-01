@@ -7,7 +7,7 @@
 	health_regen = BLOB_FACTORY_HP_REGEN
 	point_return = BLOB_REFUND_FACTORY_COST
 	resistance_flags = LAVA_PROOF
-	armor_type = /datum/armor/special_factory
+	armor_type = /datum/armor/structure_blob/factory
 	///How many spores this factory can have.
 	var/max_spores = BLOB_FACTORY_MAX_SPORES
 	///The list of spores
@@ -19,9 +19,7 @@
 	///Used in blob/powers.dm, checks if it's already trying to spawn a blobbernaut to prevent issues.
 	var/is_creating_blobbernaut = FALSE
 
-/datum/armor/special_factory
-	fire = 80
-	acid = 70
+/datum/armor/structure_blob/factory
 	laser = 25
 
 /obj/structure/blob/special/factory/scannerreport()
