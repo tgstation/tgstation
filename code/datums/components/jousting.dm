@@ -69,7 +69,7 @@
 	if(active)
 		INVOKE_ASYNC(src, PROC_REF(on_equip), user)
 	else
-		INVOKE_ASYNC(src, PROC_REF(on_equip), user)
+		INVOKE_ASYNC(src, PROC_REF(on_drop), user)
 
 ///Called when a mob equips the spear, registers them as the holder and checks their signals for moving.
 /datum/component/jousting/proc/on_equip(datum/source, mob/user, slot)
