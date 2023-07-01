@@ -659,7 +659,12 @@
 
 /obj/item/storage/crayons/Initialize(mapload)
 	. = ..()
-	create_storage(canhold = list(/obj/item/toy/crayon))
+	atom_storage.set_holdable(list(/obj/item/toy/crayon),
+		list(
+			/obj/item/toy/crayon/spraycan,
+			/obj/item/toy/crayon/mime,
+			/obj/item/toy/crayon/rainbow,
+		))
 
 /obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)
@@ -675,22 +680,6 @@
 	. = ..()
 	for(var/obj/item/toy/crayon/crayon in contents)
 		. += mutable_appearance('icons/obj/art/crayons.dmi', crayon.crayon_color)
-
-/obj/item/storage/crayons/attackby(obj/item/attacked_by, mob/user, params)
-	if(!istype(attacked_by, /obj/item/toy/crayon))
-		return ..()
-	if(istype(attacked_by, /obj/item/toy/crayon/spraycan))
-		balloon_alert(user, "not a crayon!")
-		return
-	var/obj/item/toy/crayon/crayon = attacked_by
-	switch(crayon.crayon_color)
-		if("mime")
-			balloon_alert(user, "crayon doesn't belong!")
-			return
-		if("rainbow")
-			balloon_alert(user, "crayon is too powerful!")
-			return
-	return ..()
 
 /obj/item/storage/crayons/attack_self(mob/user)
 	. = ..()
