@@ -8,7 +8,10 @@
 	req_stat = DEAD
 	ignores_fakedeath = TRUE
 
+	/// How long it takes for revival to ready upon entering stasis.
+	/// The changelin can opt to stay in fakedeath for longer, though.
 	var/fakedeath_duration = 40 SECONDS
+	/// If TRUE, we're ready to revive and can click the button to heal.
 	var/revive_ready = FALSE
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.

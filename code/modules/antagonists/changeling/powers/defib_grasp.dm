@@ -14,6 +14,7 @@
 	. = ..()
 	RegisterSignal(user, COMSIG_DEFIBRILLATOR_PRE_HELP_ZAP, PROC_REF(on_defibbed))
 
+/// Signal proc for [COMSIG_DEFIBRILLATOR_PRE_HELP_ZAP].
 /datum/action/changeling/defib_grasp/proc/on_defibbed(mob/living/carbon/source, mob/living/defibber, obj/item/shockpaddles/defib)
 	SIGNAL_HANDLER
 
@@ -23,6 +24,7 @@
 	INVOKE_ASYNC(src, PROC_REF(execute_defib), source, defibber, defib)
 	return COMPONENT_DEFIB_STOP
 
+/// Executes the defib action, causing the changeling to fully heal and get up.
 /datum/action/changeling/defib_grasp/proc/execute_defib(mob/living/carbon/changeling, mob/living/defibber, obj/item/shockpaddles/defib)
 	remove_arms(changeling, defibber, defib)
 
@@ -44,6 +46,8 @@
 	playsound(defib, 'sound/machines/defib_success.ogg', 50, FALSE) // I guess
 	defib.shock_pulling(30, changeling)
 
+/// Removes the arms of the defibber if they're a carbon, and stuns them for a bit.
+/// If they're a cyborg, they'll just get stunned instead.
 /datum/action/changeling/defib_grasp/proc/remove_arms(mob/living/carbon/changeling, mob/living/defibber, obj/item/shockpaddles/defib)
 
 	if(iscyborg(defibber))
