@@ -97,7 +97,7 @@
 	if(user.mind && HAS_TRAIT(user.mind, TRAIT_CANNOT_OPEN_PRESENTS))
 		var/turf/floor = get_turf(src)
 		var/obj/item/thing = new /obj/item/a_gift/anything(floor)
-		if(!atom_storage.attempt_insert(thing, user, override = TRUE))
+		if(!atom_storage.attempt_insert(thing, user, override = TRUE, force = STORAGE_SOFT_LOCKED))
 			qdel(thing)
 
 
@@ -394,18 +394,20 @@
 	// How much to slow you down if your bag isn't zipped up
 	var/zip_slowdown = 1
 	/// If this bag is zipped (contents hidden) up or not
-	/// Starts disabled to ensure we can insert into it when filling up bags and shit
-	var/zipped_up = FALSE
+	/// Starts enabled so you're forced to interact with it to "get" it
+	var/zipped_up = TRUE
 
 /obj/item/storage/backpack/duffelbag/Initialize(mapload)
 	. = ..()
-	set_zipper(FALSE)
+	set_zipper(TRUE)
 
 /obj/item/storage/backpack/duffelbag/update_desc(updates)
 	. = ..()
 	desc = "[initial(desc)]<br>[zipped_up ? "It's zipped up, preventing you from accessing its contents." : "It's unzipped, and harder to move in."]"
 
 /obj/item/storage/backpack/duffelbag/attack_self(mob/user, modifiers)
+	if(loc != user) // God fuck TK
+		return ..()
 	if(zipped_up)
 		return attack_hand(user, modifiers)
 	else
@@ -437,9 +439,9 @@
 
 // Vis versa
 /obj/item/storage/backpack/duffelbag/attack_hand_secondary(mob/user, list/modifiers)
+	if(loc != user)
+		return ..()
 	if(zipped_up)
-		if(loc != user)
-			return ..()
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	balloon_alert(user, "zipping...")
@@ -461,12 +463,12 @@
 	SEND_SIGNAL(src, COMSIG_DUFFEL_ZIP_CHANGE, new_zip)
 	if(zipped_up)
 		slowdown = initial(slowdown)
-		atom_storage.locked = TRUE
+		atom_storage.locked = STORAGE_SOFT_LOCKED
 		atom_storage.display_contents = FALSE
 		atom_storage.close_all()
 	else
 		slowdown = zip_slowdown
-		atom_storage.locked = FALSE
+		atom_storage.locked = STORAGE_NOT_LOCKED
 		atom_storage.display_contents = TRUE
 
 	if(isliving(loc))
