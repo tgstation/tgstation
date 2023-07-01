@@ -1,7 +1,5 @@
 //prevents the altering of disease symptoms
 /datum/chemical_reaction/mix_virus/preserve_virus
-	name = "Preserve Virus"
-	id = "preservevirus"
 	required_reagents = list(/datum/reagent/cryostylane = 1)
 	required_catalysts = list(/datum/reagent/blood = 1)
 
@@ -15,8 +13,6 @@
 
 //prevents the disease from spreading via symptoms
 /datum/chemical_reaction/mix_virus/falter_virus
-	name = "Falter Virus"
-	id = "faltervirus"
 	required_reagents = list(/datum/reagent/medicine/spaceacillin = 1)
 	required_catalysts = list(/datum/reagent/blood = 1)
 

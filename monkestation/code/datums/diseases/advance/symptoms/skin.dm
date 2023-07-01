@@ -61,7 +61,7 @@ BONUS
 		if(5)
 			if(all_disease)
 				for(var/datum/disease/variable55 in victim.diseases)
-					if((variable55.spread_flags & DISEASE_SPREAD_SPECIAL) || (variable55.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
+					if((variable55.spread_flags & DISEASE_SPREAD_SPECIAL) || (variable55.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS) || (variable55.spread_flags & DISEASE_SPREAD_FALTERED))
 						continue
 					if(variable55 == advanced_disease)
 						continue

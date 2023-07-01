@@ -185,6 +185,7 @@
 	A.properties = properties.Copy()
 	A.id = id
 	A.mutable = mutable
+	A.faltered = faltered
 	A.oldres = oldres
 	//this is a new disease starting over at stage 1, so processing is not copied
 	return A
@@ -265,7 +266,10 @@
 		else
 			visibility_flags &= ~HIDDEN_SCANNER
 
-		if(properties["transmittable"] >= 11)
+		if(faltered)
+			spread_flags = DISEASE_SPREAD_FALTERED
+			spread_text = "Intentional Injection"
+		else if(properties["transmittable"] >= 11)
 			set_spread(DISEASE_SPREAD_AIRBORNE)
 		else if(properties["transmittable"] >= 7)
 			set_spread(DISEASE_SPREAD_CONTACT_SKIN)
@@ -285,29 +289,25 @@
 
 // Assign the spread type and give it the correct description.
 /datum/disease/advance/proc/set_spread(spread_id)
-	if(faltered)
-		spread_flags = DISEASE_SPREAD_FALTERED
-		spread_text = "Intentional Injection"
-	else
-		switch(spread_id)
-			if(DISEASE_SPREAD_NON_CONTAGIOUS)
-				spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
-				spread_text = "None"
-			if(DISEASE_SPREAD_SPECIAL)
-				spread_flags = DISEASE_SPREAD_SPECIAL
-				spread_text = "None"
-			if(DISEASE_SPREAD_BLOOD)
-				spread_flags = DISEASE_SPREAD_BLOOD
-				spread_text = "Blood"
-			if(DISEASE_SPREAD_CONTACT_FLUIDS)
-				spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS
-				spread_text = "Fluids"
-			if(DISEASE_SPREAD_CONTACT_SKIN)
-				spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
-				spread_text = "Skin contact"
-			if(DISEASE_SPREAD_AIRBORNE)
-				spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE
-				spread_text = "Respiration"
+	switch(spread_id)
+		if(DISEASE_SPREAD_NON_CONTAGIOUS)
+			spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
+			spread_text = "None"
+		if(DISEASE_SPREAD_SPECIAL)
+			spread_flags = DISEASE_SPREAD_SPECIAL
+			spread_text = "None"
+		if(DISEASE_SPREAD_BLOOD)
+			spread_flags = DISEASE_SPREAD_BLOOD
+			spread_text = "Blood"
+		if(DISEASE_SPREAD_CONTACT_FLUIDS)
+			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS
+			spread_text = "Fluids"
+		if(DISEASE_SPREAD_CONTACT_SKIN)
+			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
+			spread_text = "Skin contact"
+		if(DISEASE_SPREAD_AIRBORNE)
+			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE
+			spread_text = "Respiration"
 
 /datum/disease/advance/proc/set_severity(level_sev)
 
