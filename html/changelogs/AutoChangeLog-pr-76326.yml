@@ -1,0 +1,4 @@
+author: "Seven"
+delete-after: True
+changes:
+  - bugfix: "Cult communion and assert leadership can be used while your hands are blocked or you are immobile"

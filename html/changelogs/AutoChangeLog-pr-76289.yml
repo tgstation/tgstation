@@ -1,6 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "MetaStation's bridge incident counter and clock no longer overlap"
-  - bugfix: "Deltastation's missing incident counter has been found. Does that count as an incident?"
-  - qol: "Tramstation bridge and medbay now have a clock where the tram hit counter used to be"

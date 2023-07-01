@@ -28,11 +28,13 @@
 	limb_id = SPECIES_SNAIL
 	unarmed_damage_high = 0.5
 	burn_modifier = 2
+	speed_modifier = 3 //disgustingly slow
 
 /obj/item/bodypart/leg/right/snail
 	limb_id = SPECIES_SNAIL
 	unarmed_damage_high = 0.5
 	burn_modifier = 2
+	speed_modifier = 3 //disgustingly slow
 
 ///ABDUCTOR
 /obj/item/bodypart/head/abductor
@@ -193,6 +195,16 @@
 /obj/item/bodypart/leg/right/zombie
 	limb_id = SPECIES_ZOMBIE
 	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/leg/left/zombie/infectious
+	limb_id = SPECIES_ZOMBIE
+	should_draw_greyscale = FALSE
+	speed_modifier = 0.8 //braaaaains
+
+/obj/item/bodypart/leg/right/zombie/infectious
+	limb_id = SPECIES_ZOMBIE
+	should_draw_greyscale = FALSE
+	speed_modifier = 0.8 //braaaaains
 
 ///PODPEOPLE
 /obj/item/bodypart/head/pod
@@ -377,6 +389,7 @@
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 14
 	burn_modifier = 1.25
+	speed_modifier = 0.75 //big big fungus
 
 /obj/item/bodypart/leg/right/mushroom
 	limb_id = SPECIES_MUSHROOM
@@ -384,6 +397,7 @@
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 14
 	burn_modifier = 1.25
+	speed_modifier = 0.75 //big fungus big fungus
 
 //GOLEM
 /obj/item/bodypart/head/golem

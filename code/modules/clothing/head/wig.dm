@@ -110,7 +110,7 @@
 /obj/item/clothing/head/wig/natural/visual_equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
-		if (color != user.hair_color) // only update if necessary
+		if(color != user.hair_color) // only update if necessary
 			add_atom_colour(user.hair_color, FIXED_COLOUR_PRIORITY)
 			update_appearance()
 		user.update_worn_head()

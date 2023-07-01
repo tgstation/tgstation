@@ -16,6 +16,8 @@
 	var/list/cant_hold
 	/// if set, these items will be the exception to the max size of object that can fit.
 	var/list/exception_hold
+	/// if exception_hold is set, how many exception items can we hold at any one time?
+	var/exception_max = INFINITE
 	/// if set can only contain stuff with this single trait present.
 	var/list/can_hold_trait
 
@@ -331,10 +333,15 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if((to_insert == resolve_parent) || (to_insert == real_location))
 		return FALSE
 
-	if(to_insert.w_class > max_specific_storage && !is_type_in_typecache(to_insert, exception_hold))
-		if(messages && user)
-			to_chat(user, span_warning("\The [to_insert] is too big for \the [resolve_parent]!"))
-		return FALSE
+	if(to_insert.w_class > max_specific_storage)
+		if(!is_type_in_typecache(to_insert, exception_hold))
+			if(messages && user)
+				to_chat(user, span_warning("\The [to_insert] is too big for \the [resolve_parent]!"))
+			return FALSE
+		if(exception_max != INFINITE && exception_max <= exception_count())
+			if(messages && user)
+				to_chat(user, span_warning("Too many large items already in \the [resolve_parent], can't fit \the [to_insert]!"))
+			return FALSE
 
 	if(resolve_location.contents.len >= max_slots)
 		if(messages && user && !silent_for_user)
@@ -382,6 +389,15 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			return FALSE
 
 	return TRUE
+
+/// Returns a count of how many items held due to exception_hold we have
+/datum/storage/proc/exception_count()
+	var/obj/item/storage = real_location?.resolve()
+	var/count = 0
+	for(var/obj/item/thing in storage)
+		if(thing.w_class > max_specific_storage && is_type_in_typecache(thing, exception_hold))
+			count += 1
+	return count
 
 /**
  * Attempts to insert an item into the storage

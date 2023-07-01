@@ -42,10 +42,10 @@
 	. = ..()
 	if(!.)
 		return
-	new_head_owner.become_blind(limb_id)
+	new_head_owner.become_blind(bodypart_trait_source)
 
 /obj/item/bodypart/head/psyker/drop_limb(special, dismembered)
-	owner.cure_blind(limb_id)
+	owner.cure_blind(bodypart_trait_source)
 	return ..()
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
@@ -126,13 +126,14 @@
 /obj/item/gun/ballistic/revolver/chaplain
 	name = "chaplain's revolver"
 	desc = "Holy smokes."
-	icon_state = "chaplain"
+	icon_state = "lucky"
 	force = 10
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev77
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/revchap
 	obj_flags = UNIQUE_RENAME
 	custom_materials = null
 	actions_types = list(/datum/action/item_action/pray_refill)
+	projectile_damage_multiplier = 0.72 //it's exactly 18 force for normal bullets
 	/// Needs burden level nine to refill.
 	var/needs_burden = TRUE
 	/// List of all possible names and descriptions.
@@ -169,13 +170,32 @@
 		"Daredevil" = "Hey now, you won't be reckless with this, will you?",
 		"Lacytanga" = "Rules are written by the strong.",
 		"A10" = "The fist of God. Keep away from the terrible.",
+		"Lucky" = "Ain't that a kick in the head?",
 	)
 
 /obj/item/gun/ballistic/revolver/chaplain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	AddComponent(/datum/component/effect_remover, \
+		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
+		success_forcesay = "BEGONE FOUL MAGIKS!!", \
+		tip_text = "Clear rune", \
+		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
+		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
+	)
+	AddElement(/datum/element/bane, target_type = /mob/living/simple_animal/revenant, damage_multiplier = 0, added_damage = 25)
 	name = pick(possible_names)
 	desc = possible_names[name]
+
+/obj/item/gun/ballistic/revolver/chaplain/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(!istype(target, /obj/effect/rune))
+		return
+
+	var/obj/effect/rune/target_rune = target
+	if(target_rune.log_when_erased)
+		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/gun/ballistic/revolver/chaplain/suicide_act(mob/living/user)
 	. = ..()
@@ -184,6 +204,13 @@
 
 /obj/item/gun/ballistic/revolver/chaplain/attack_self(mob/living/user)
 	pray_refill(user)
+
+/obj/item/gun/ballistic/revolver/chaplain/attackby(obj/item/possibly_ammo, mob/user, params)
+	if (isammocasing(possibly_ammo) || istype(possibly_ammo, /obj/item/ammo_box))
+		user.balloon_alert(user, "no manual reloads!")
+		return
+
+	return ..()
 
 /obj/item/gun/ballistic/revolver/chaplain/proc/pray_refill(mob/living/carbon/human/user)
 	if(DOING_INTERACTION_WITH_TARGET(user, src) || !istype(user))
@@ -205,28 +232,35 @@
 	name = "Refill"
 	desc = "Perform a prayer, to refill your weapon."
 
-/obj/item/ammo_box/magazine/internal/cylinder/rev77
+/obj/item/ammo_box/magazine/internal/cylinder/revchap
 	name = "chaplain revolver cylinder"
-	ammo_type = /obj/item/ammo_casing/c77
-	caliber = CALIBER_77
+	ammo_type = /obj/item/ammo_casing/c38/holy
+	caliber = CALIBER_38
 	max_ammo = 5
 
-/obj/item/ammo_casing/c77
-	name = ".77 bullet casing"
-	desc = "A .77 bullet casing."
-	caliber = CALIBER_77
-	projectile_type = /obj/projectile/bullet/c77
+/obj/item/ammo_casing/c38/holy
+	name = "lucky .38 bullet casing"
+	desc = "A lucky .38 bullet casing. You feel lucky just holding it."
+	caliber = CALIBER_38
+	projectile_type = /obj/projectile/bullet/c38/holy
 	custom_materials = null
 
-/obj/projectile/bullet/c77
-	name = ".77 bullet"
-	damage = 18
+/obj/projectile/bullet/c38/holy
+	name = "lucky .38 bullet"
 	ricochets_max = 2
 	ricochet_chance = 50
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
 	wound_bonus = -10
 	embedding = null
+
+/obj/projectile/bullet/c38/holy/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	var/roll_them_bones = rand(1,38)
+	if(roll_them_bones == 1 && isliving(target))
+		playsound(target, 'sound/machines/synth_yes.ogg', 50, TRUE)
+		playsound(target, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 40, TRUE)
+		new /obj/effect/temp_visual/crit(get_turf(target))
 
 /datum/action/cooldown/spell/pointed/psychic_projection
 	name = "Psychic Projection"
