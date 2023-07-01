@@ -79,9 +79,9 @@
 /datum/infuser_entry/roach
 	name = "Roach"
 	infuse_mob_name = "cockroach"
-	desc = "It seems as if you're a fan of ancient literate by your interest in this. Assuredly, merging cockroach DNA into your genome \
-		will not cause you to become incapable of leaving your bed. These creatures are incredibly resilient to many things \
-		humans weak to, and we can use that! Who wouldn't like to survive a nuclear blast? \
+	desc = "It seems as if you're a fan of ancient literature by your interest in this. Assuredly, merging cockroach DNA into your genome \
+		will not cause you to become incapable of leaving your bed. These creatures are incredibly resilient against many things \
+		humans are weak to, and we can use that! Who wouldn't like to survive a nuclear blast? \
 		NOTE: Squished roaches will not work for the infuser, if that wasn't obvious. Try spraying them with some pestkiller from botany!"
 	threshold_desc = "you will no longer be gibbed by explosions, and gain incredible resistance to viruses and radiation."
 	qualities = list(
