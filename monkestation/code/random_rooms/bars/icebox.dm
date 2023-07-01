@@ -42,3 +42,4 @@
 	name = "Mime Bar"
 	room_id = "icebox_mime"
 	mappath = "monkestation/_maps/RandomBars/Icebox/mime_bar.dmm"
+	weight = 1
