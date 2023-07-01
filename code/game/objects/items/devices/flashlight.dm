@@ -132,7 +132,6 @@
 					else
 						render_list += "<span class='notice ml-1'>Trippy!</span>\n"
 
-					//M.visible_message(span_notice("[M] directs [src] to [M.p_their()] eyes."), span_notice("You wave the light in front of your eyes."))
 				else
 					user.visible_message(span_warning("[user] directs [src] to [M]'s eyes."), ignored_mobs = user)
 					render_list += span_info("You direct [src] to [M]'s eyes:\n")
