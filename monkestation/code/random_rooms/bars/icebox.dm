@@ -8,6 +8,16 @@
 	weight = 8
 	station_name = "Ice Box Station"
 
+/datum/map_template/random_room/random_bar/icebox_base/Magbar
+	name = "Magbar"
+	room_id = "Magbar"
+	mappath = "monkestation/_maps/RandomBars/Icebox/Magbar.dmm"
+
+/datum/map_template/random_room/random_bar/icebox_base/green_bar_disco
+	name = "green_bar_disco"
+	room_id = "green_bar_disco"
+	mappath = "monkestation/_maps/RandomBars/Icebox/green_bar_disco.dmm"
+
 /datum/map_template/random_room/random_bar/icebox_base/maid_cafe
 	name = "Maid Cafe"
 	room_id = "icebox_maid"
@@ -43,3 +53,4 @@
 	room_id = "icebox_mime"
 	mappath = "monkestation/_maps/RandomBars/Icebox/mime_bar.dmm"
 	weight = 1
+
