@@ -163,3 +163,52 @@
 								'monkestation/sound/misc/jones/jones1.ogg',
 								'monkestation/sound/misc/jones/jones2.ogg',
 								'monkestation/sound/misc/jones/jones3.ogg')
+
+/obj/item/clothing/head/nanner_crown
+	name = "Banana Crown"
+	desc = "Looks like someone stuck bananas on this crown's spikes. It doesn't look half bad..."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "nanner_crown"
+	armor_type = /datum/armor/nanner_crown
+	resistance_flags = FIRE_PROOF
+
+/datum/armor/nanner_crown
+	melee = 15
+	energy = 10
+	fire = 100
+	acid = 50
+	wound = 5
+
+/obj/item/clothing/head/nanner_crown/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/slippery, 80)
+
+// Sec cowboy hats
+
+/obj/item/clothing/head/helmet/hat/cowboy
+	name = "bulletproof cowboy hat"
+	desc = "A bulletproof cowboy hat that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	worn_icon = 'monkestation/icons/mob/head.dmi'
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	icon_state = "cowboy_hat_default"
+	// I DUNNO LOL // armor = list("melee" = 15, "bullet" = 60, "laser" = 10, "energy" = 15, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50, "stamina" = 30)
+	can_flashlight = TRUE
+	dog_fashion = null
+
+//for if we ever decide to try departmental sec
+/obj/item/clothing/head/helmet/hat/cowboy/medical
+	name = "bulletproof medical cowboy hat"
+	icon_state = "cowboy_hat_medical"
+
+/obj/item/clothing/head/helmet/hat/cowboy/engineering
+	name = "bulletproof engineering cowboy hat"
+	icon_state = "cowboy_hat_engi"
+
+/obj/item/clothing/head/helmet/hat/cowboy/cargo
+	name = "bulletproof cargo cowboy hat"
+	icon_state = "cowboy_hat_cargo"
+
+/obj/item/clothing/head/helmet/hat/cowboy/science
+	name = "bulletproof science cowboy hat"
+	icon_state = "cowboy_hat_science"

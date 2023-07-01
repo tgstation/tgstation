@@ -99,6 +99,9 @@
 	/// Will not automatically apply to the turf below you, you need to apply /datum/element/block_explosives in conjunction with this
 	var/explosion_block = 0
 
+	///can we grab this object?
+	var/cant_grab = FALSE
+
 /mutable_appearance/emissive_blocker
 
 /mutable_appearance/emissive_blocker/New()
@@ -223,15 +226,22 @@
 		vis_contents.Cut()
 
 /atom/movable/proc/update_emissive_block()
-	if(!blocks_emissive)
-		return
-	else if (blocks_emissive == EMISSIVE_BLOCK_GENERIC)
+	// This one is incredible.
+	// `if (x) else { /* code */ }` is surprisingly fast, and it's faster than a switch, which is seemingly not a jump table.
+	// From what I can tell, a switch case checks every single branch individually, although sane, is slow in a hot proc like this.
+	// So, we make the most common `blocks_emissive` value, EMISSIVE_BLOCK_GENERIC, 0, getting to the fast else branch quickly.
+	// If it fails, then we can check over every value it can be (here, EMISSIVE_BLOCK_UNIQUE is the only one that matters).
+	// This saves several hundred milliseconds of init time.
+	if (blocks_emissive)
+		if (blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
+			if(!em_block && !QDELETED(src))
+				render_target = ref(src)
+				em_block = new(src, render_target)
+			return em_block
+		// Implied else if (blocks_emissive == EMISSIVE_BLOCK_NONE) -> return
+	// EMISSIVE_BLOCK_GENERIC == 0
+	else
 		return fast_emissive_blocker(src)
-	else if(blocks_emissive == EMISSIVE_BLOCK_UNIQUE)
-		if(!em_block && !QDELETED(src))
-			render_target = ref(src)
-			em_block = new(src, render_target)
-		return em_block
 
 /// Generates a space underlay for a turf
 /// This provides proper lighting support alongside just looking nice
@@ -460,6 +470,9 @@
 	if(QDELETED(pulled_atom))
 		return FALSE
 	if(!(pulled_atom.can_be_pulled(src, state, force)))
+		return FALSE
+
+	if(cant_grab)
 		return FALSE
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.

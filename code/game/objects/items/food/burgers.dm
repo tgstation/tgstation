@@ -508,7 +508,7 @@
 		/datum/reagent/consumable/nutriment = 5,
 		/datum/reagent/consumable/nutriment/protein = 5,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
-		/datum/reagent/consumable/liquidelectricity/enriched = 6,
+		/datum/reagent/consumable/liquidelectricity = 6,
 	)
 	tastes = list("bun" = 2, "pure electricity" = 4)
 	foodtypes = GRAIN | TOXIC

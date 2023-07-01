@@ -1052,7 +1052,7 @@
 		/datum/reagent/consumable/nutriment/soup/electrons = 30,
 		// Jupiter cups obviously contain a fair amount of LE naturally,
 		// but to make it "worthwhile" for Ethereals to eat we add a bit extra
-		/datum/reagent/consumable/liquidelectricity/enriched = 10,
+		/datum/reagent/consumable/liquidelectricity = 10,
 	)
 	percentage_of_nutriment_converted = 0.10
 
