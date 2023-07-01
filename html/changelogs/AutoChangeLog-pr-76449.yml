@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - balance: "Adds a build time to window types which didn't have ones before."

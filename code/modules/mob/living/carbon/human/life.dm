@@ -28,22 +28,20 @@
 
 	//Body temperature stability and damage
 	dna.species.handle_body_temperature(src, seconds_per_tick, times_fired)
-
 	if(!IS_IN_STASIS(src))
-		if(.) //not dead
-
-			for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
-				HM.on_life(seconds_per_tick, times_fired)
-
 		if(stat != DEAD)
+			//handle active mutations
+			for(var/datum/mutation/human/human_mutation as anything in dna.mutations)
+				human_mutation.on_life(seconds_per_tick, times_fired)
 			//heart attack stuff
 			handle_heart(seconds_per_tick, times_fired)
+			//handles liver failure effects, if we lack a liver
 			handle_liver(seconds_per_tick, times_fired)
 
-		dna.species.spec_life(src, seconds_per_tick, times_fired) // for mutantraces
+		// for special species interactions
+		dna.species.spec_life(src, seconds_per_tick, times_fired)
 	else
-		for(var/i in all_wounds)
-			var/datum/wound/iter_wound = i
+		for(var/datum/wound/iter_wound as anything in all_wounds)
 			iter_wound.on_stasis(seconds_per_tick, times_fired)
 
 	//Update our name based on whether our face is obscured/disfigured

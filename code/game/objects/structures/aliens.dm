@@ -339,6 +339,7 @@
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
+	/// Ref to the hugger within.
 	var/obj/item/clothing/mask/facehugger/child
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
@@ -432,6 +433,11 @@
 					if(CanHug(M))
 						child.Leap(M)
 						break
+
+/obj/structure/alien/egg/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == child)
+		child = null
 
 /obj/structure/alien/egg/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 500

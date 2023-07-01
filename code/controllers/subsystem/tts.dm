@@ -25,6 +25,8 @@ SUBSYSTEM_DEF(tts)
 
 	/// Whether TTS is enabled or not
 	var/tts_enabled = FALSE
+	/// Whether the TTS engine supports pitch adjustment or not.
+	var/pitch_enabled = FALSE
 
 	/// TTS messages won't play if requests took longer than this duration of time.
 	var/message_timeout = 7 SECONDS
@@ -44,7 +46,7 @@ SUBSYSTEM_DEF(tts)
 	return ..()
 
 /datum/controller/subsystem/tts/stat_entry(msg)
-	msg = "Active:[length(in_process_http_messages)]|Standby:[length(queued_http_messages.L)]|Avg:[average_tts_messages_time]"
+	msg = "Active:[length(in_process_http_messages)]|Standby:[length(queued_http_messages?.L)]|Avg:[average_tts_messages_time]"
 	return ..()
 
 /proc/cmp_word_length_asc(datum/tts_request/a, datum/tts_request/b)
@@ -65,6 +67,25 @@ SUBSYSTEM_DEF(tts)
 		return FALSE
 	available_speakers = json_decode(response.body)
 	tts_enabled = TRUE
+	if(CONFIG_GET(str_list/tts_voice_blacklist))
+		var/list/blacklisted_voices = CONFIG_GET(str_list/tts_voice_blacklist)
+		log_config("Processing the TTS voice blacklist.")
+		for(var/voice in blacklisted_voices)
+			if(available_speakers.Find(voice))
+				log_config("Removed speaker [voice] from the TTS voice pool per config.")
+				available_speakers.Remove(voice)
+	var/datum/http_request/request_pitch = new()
+	var/list/headers_pitch = list()
+	headers_pitch["Authorization"] = CONFIG_GET(string/tts_http_token)
+	request_pitch.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/pitch-available", "", headers_pitch)
+	request_pitch.begin_async()
+	UNTIL(request_pitch.is_complete())
+	pitch_enabled = TRUE
+	var/datum/http_response/response_pitch = request_pitch.into_response()
+	if(response_pitch.errored || response_pitch.status_code != 200)
+		if(response_pitch.errored)
+			stack_trace(response.error)
+		pitch_enabled = FALSE
 	rustg_file_write(json_encode(available_speakers), "data/cached_tts_voices.json")
 	rustg_file_write("rustg HTTP requests can't write to folders that don't exist, so we need to make it exist.", "tmp/tts/init.txt")
 	return TRUE
@@ -237,7 +258,7 @@ SUBSYSTEM_DEF(tts)
 
 #undef TTS_ARBRITRARY_DELAY
 
-/datum/controller/subsystem/tts/proc/queue_tts_message(datum/target, message, datum/language/language, speaker, filter, list/listeners, local = FALSE, message_range = 7, volume_offset = 0)
+/datum/controller/subsystem/tts/proc/queue_tts_message(datum/target, message, datum/language/language, speaker, filter, list/listeners, local = FALSE, message_range = 7, volume_offset = 0, pitch = 0, silicon = "")
 	if(!tts_enabled)
 		return
 
@@ -253,7 +274,7 @@ SUBSYSTEM_DEF(tts)
 
 	var/shell_scrubbed_input = tts_speech_filter(message)
 	shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 300)
-	var/identifier = "[sha1(speaker + filter + shell_scrubbed_input)].[world.time]"
+	var/identifier = "[sha1(speaker + filter + num2text(pitch) + num2text(silicon) + shell_scrubbed_input)].[world.time]"
 	if(!(speaker in available_speakers))
 		return
 
@@ -264,9 +285,9 @@ SUBSYSTEM_DEF(tts)
 	var/datum/http_request/request_blips = new()
 	var/file_name = "tmp/tts/[identifier].ogg"
 	var/file_name_blips = "tmp/tts/[identifier]_blips.ogg"
-	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
-	request_blips.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-blips?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name_blips)
-	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, request_blips, shell_scrubbed_input, target, local, language, message_range, volume_offset, listeners)
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]&pitch=[pitch]&silicon=[silicon]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
+	request_blips.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-blips?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]&pitch=[pitch]&silicon=[silicon]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name_blips)
+	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, request_blips, shell_scrubbed_input, target, local, language, message_range, volume_offset, listeners, pitch, silicon)
 	var/list/player_queued_tts_messages = queued_tts_messages[target]
 	if(!player_queued_tts_messages)
 		player_queued_tts_messages = list()
@@ -316,9 +337,13 @@ SUBSYSTEM_DEF(tts)
 	var/timed_out = FALSE
 	/// Does this use blips during local generation or not?
 	var/use_blips = FALSE
+	/// What's the pitch adjustment?
+	var/pitch = 0
+	/// Are we using the silicon vocal effect on this?
+	var/silicon = ""
 
 
-/datum/tts_request/New(identifier, datum/http_request/request, datum/http_request/request_blips, message, target, local, datum/language/language, message_range, volume_offset, list/listeners)
+/datum/tts_request/New(identifier, datum/http_request/request, datum/http_request/request_blips, message, target, local, datum/language/language, message_range, volume_offset, list/listeners, pitch)
 	. = ..()
 	src.identifier = identifier
 	src.request = request
@@ -330,6 +355,7 @@ SUBSYSTEM_DEF(tts)
 	src.message_range = message_range
 	src.volume_offset = volume_offset
 	src.listeners = listeners
+	src.pitch = pitch
 	start_time = world.time
 
 /datum/tts_request/proc/start_requests()

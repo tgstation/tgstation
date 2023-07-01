@@ -7,6 +7,7 @@
 	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
 	brute_modifier = 1.25 //ethereal are weak to brute damage
+	head_flags = HEAD_HAIR|HEAD_FACIAL_HAIR|HEAD_EYESPRITES|HEAD_EYEHOLES|HEAD_DEBRAIN
 
 /obj/item/bodypart/head/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()

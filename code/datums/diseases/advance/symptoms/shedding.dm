@@ -20,30 +20,33 @@
 	symptom_delay_min = 45
 	symptom_delay_max = 90
 
-/datum/symptom/shedding/Activate(datum/disease/advance/A)
+/datum/symptom/shedding/Activate(datum/disease/advance/disease)
 	. = ..()
 	if(!.)
 		return
 
-	var/mob/living/M = A.affected_mob
+	var/mob/living/affected_living = disease.affected_mob
 	if(prob(base_message_chance))
-		to_chat(M, span_warning("[pick("Your scalp itches.", "Your skin feels flaky.")]"))
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		switch(A.stage)
+		to_chat(affected_living, span_warning("[pick("Your scalp itches.", "Your skin feels flaky.")]"))
+	if(ishuman(affected_living))
+		var/mob/living/carbon/human/affected_human = affected_living
+		switch(disease.stage)
 			if(3, 4)
-				if(!(H.hairstyle == "Bald") && !(H.hairstyle == "Balding Hair"))
-					to_chat(H, span_warning("Your hair starts to fall out in clumps..."))
-					addtimer(CALLBACK(src, PROC_REF(Shed), H, FALSE), 50)
+				if((affected_human.hairstyle == "Bald") && (affected_human.hairstyle != "Balding Hair"))
+					to_chat(affected_human, span_warning("Your hair starts to fall out in clumps..."))
+					addtimer(CALLBACK(src, PROC_REF(baldify), affected_human, FALSE), 5 SECONDS)
 			if(5)
-				if(!(H.facial_hairstyle == "Shaved") || !(H.hairstyle == "Bald"))
-					to_chat(H, span_warning("Your hair starts to fall out in clumps..."))
-					addtimer(CALLBACK(src, PROC_REF(Shed), H, TRUE), 50)
+				if((affected_human.facial_hairstyle != "Shaved") || (affected_human.hairstyle != "Bald"))
+					if(affected_human.hairstyle == "Balding Hair")
+						to_chat(affected_human, span_warning("The little hair you have left starts to fall out in clumps..."))
+					else
+						to_chat(affected_human, span_warning("Your hair starts to fall out in clumps..."))
+					addtimer(CALLBACK(src, PROC_REF(baldify), affected_human, TRUE), 3 SECONDS)
 
-/datum/symptom/shedding/proc/Shed(mob/living/carbon/human/H, fullbald)
-	if(fullbald)
-		H.facial_hairstyle = "Shaved"
-		H.hairstyle = "Bald"
+/datum/symptom/shedding/proc/baldify(mob/living/carbon/human/baldie, fully_bald)
+	if(fully_bald)
+		baldie.set_facial_hairstyle("Shaved", update = FALSE)
+		baldie.set_hairstyle("Bald", update = FALSE)
 	else
-		H.hairstyle = "Balding Hair"
-	H.update_body_parts()
+		baldie.set_hairstyle("Balding Hair", update = FALSE)
+	baldie.update_body_parts()
