@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - balance: "Increased blob tiles' resistance to lasers to compensate for the recent buff to laser damage."
