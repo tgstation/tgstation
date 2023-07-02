@@ -341,5 +341,6 @@
 		user.flash_act(1)
 		user.take_bodypart_damage(15)
 	explosion(src, light_impact_range = 1)
+	qdel(src)
 
 #undef STOMACH_METABOLISM_CONSTANT
