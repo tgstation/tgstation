@@ -95,6 +95,7 @@
 		return
 	icon_state = base_icon_state
 
+///Updates the button's status: TRUE to enable interaction with the button, FALSE to disable
 /atom/movable/screen/lobby/button/proc/set_button_status(status)
 	if(status == enabled)
 		return FALSE
@@ -266,14 +267,18 @@
 	set_button_status(TRUE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
 
-/atom/movable/screen/lobby/button/settings
-	name = "View Game Preferences"
+//Subtype the bottom buttons away so the collapse/expand shutter goes behind them
+/atom/movable/screen/lobby/button/bottom
+	layer = LOBBY_BOTTOM_BUTTON_LAYER
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+
+/atom/movable/screen/lobby/button/bottom/settings
+	name = "View Game Preferences"
 	icon_state = "settings"
 	base_icon_state = "settings"
 	screen_loc = "TOP:-122,CENTER:+30"
 
-/atom/movable/screen/lobby/button/settings/Click(location, control, params)
+/atom/movable/screen/lobby/button/bottom/settings/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
@@ -283,41 +288,38 @@
 	preferences.update_static_data(usr)
 	preferences.ui_interact(usr)
 
-/atom/movable/screen/lobby/button/changelog_button
+/atom/movable/screen/lobby/button/bottom/changelog_button
 	name = "View Changelog"
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "changelog"
 	base_icon_state = "changelog"
 	screen_loc ="TOP:-122,CENTER:+58"
 
-/atom/movable/screen/lobby/button/crew_manifest
+/atom/movable/screen/lobby/button/bottom/changelog_button/Click(location, control, params)
+	. = ..()
+	usr.client?.changelog()
+
+/atom/movable/screen/lobby/button/bottom/crew_manifest
 	name = "View Crew Manifest"
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "crew_manifest"
 	base_icon_state = "crew_manifest"
 	screen_loc = "TOP:-122,CENTER:+2"
 
-/atom/movable/screen/lobby/button/crew_manifest/Click(location, control, params)
+/atom/movable/screen/lobby/button/bottom/crew_manifest/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
 	new_player.ViewManifest()
 
-/atom/movable/screen/lobby/button/changelog_button/Click(location, control, params)
-	. = ..()
-	usr.client?.changelog()
-
-/atom/movable/screen/lobby/button/poll
+/atom/movable/screen/lobby/button/bottom/poll
 	name = "View Available Polls"
-	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "poll"
 	base_icon_state = "poll"
 	screen_loc = "TOP:-122,CENTER:-26"
-
+	///Whether the button should have a New Poll notification overlay
 	var/new_poll = FALSE
 
-/atom/movable/screen/lobby/button/poll/SlowInit(mapload)
+/atom/movable/screen/lobby/button/bottom/poll/SlowInit(mapload)
 	. = ..()
 	if(!usr)
 		return
@@ -361,12 +363,12 @@
 		set_button_status(FALSE)
 		return
 
-/atom/movable/screen/lobby/button/poll/update_overlays()
+/atom/movable/screen/lobby/button/bottom/poll/update_overlays()
 	. = ..()
 	if(new_poll)
 		. += mutable_appearance('icons/hud/lobby/poll_overlay.dmi', "new_poll")
 
-/atom/movable/screen/lobby/button/poll/Click(location, control, params)
+/atom/movable/screen/lobby/button/bottom/poll/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
@@ -386,13 +388,56 @@
 	if(!.)
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
-	if(new_player.hud_used.inventory_shown)
-		new_player.hud_used.inventory_shown = FALSE
-		new_player.client.screen -= new_player.hud_used.toggleable_inventory
-		base_icon_state = "expand"
-	else
-		new_player.hud_used.inventory_shown = TRUE
-		new_player.client.screen += new_player.hud_used.toggleable_inventory
-		base_icon_state = "collapse"
+	base_icon_state = new_player.hud_used.inventory_shown ? "expand" : "collapse"
 	name = "[new_player.hud_used.inventory_shown ? "Collapse" : "Expand"] Lobby Menu"
-	update_appearance(UPDATE_ICON)
+	set_button_status(FALSE)
+	var/atom/movable/screen/lobby/shutter/menu_shutter = locate(/atom/movable/screen/lobby/shutter) in hud.static_inventory
+	addtimer(CALLBACK(src, PROC_REF(set_button_status), TRUE), 3.5 SECONDS) //re-enable clicking the button when the animation finishes
+	menu_shutter.toggle_menu_animation(new_player, src)
+
+/atom/movable/screen/lobby/shutter
+	icon = 'icons/hud/lobby/shutter.dmi'
+	icon_state = "shutter"
+	base_icon_state = "shutter"
+	screen_loc = "TOP,CENTER:-73"
+	layer = LOBBY_SHUTTER_LAYER
+	always_shown = TRUE
+	var/matrix/shutter_matrix
+
+/atom/movable/screen/lobby/shutter/SlowInit()
+	. = ..()
+	//screen_loc is initialized right above the main UI(the big three buttons), so we use
+	//matrix transform to shift it up to be off-screen
+	shutter_matrix = matrix()
+	shutter_matrix.Translate(x = 0, y = 203)
+	transform = shutter_matrix
+
+/**
+ * Lowers and raises the shutter, covering the menu to disable/enable it.
+ * Also takes away or brings back the bottom buttons.
+*/
+/atom/movable/screen/lobby/shutter/proc/toggle_menu_animation(mob/dead/new_player/new_player, atom/movable/screen/lobby/button/collapse/collapse_button)
+	//if(!new_player.hud_used.inventory_shown) //if the bottom buttons are collapsed, re-introduce them to the HUD
+		//animate the bottom buttons sliding down here
+
+	//bring down the shutter. also set up a timer to toggle the main UI after we finish bringing down the shutter
+	addtimer(CALLBACK(src, PROC_REF(toggle_menu), new_player), 1.5 SECONDS)
+	animate(src, transform = matrix(), time = 1.5 SECONDS, easing = CUBIC_EASING|EASE_OUT)
+
+	//wait a little bit before bringing the shutter up
+	animate(transform = matrix(), time = 0.5 SECONDS)
+
+	//if((new_player.hud_used.inventory_shown)) //if the bottom buttons are present, take them off-screen with the shutter
+		//animate the bottom buttons sliding up here
+
+	//pull the shutter back off-screen.
+	shutter_matrix = matrix()
+	animate(transform = shutter_matrix.Translate(x = 0, y = 203), time = 1.5 SECONDS, easing = CUBIC_EASING|EASE_IN)
+
+///Disables/enables menu buttons on the client's screen
+/atom/movable/screen/lobby/shutter/proc/toggle_menu(mob/dead/new_player/new_player)
+	if(new_player.hud_used.inventory_shown)
+		new_player.client.screen -= new_player.hud_used.toggleable_inventory
+	else
+		new_player.client.screen += new_player.hud_used.toggleable_inventory
+	new_player.hud_used.inventory_shown = !new_player.hud_used.inventory_shown

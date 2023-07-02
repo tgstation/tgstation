@@ -269,9 +269,14 @@
 /// Layer for tutorial instructions
 #define TUTORIAL_INSTRUCTIONS_LAYER 5
 
-
+///Layer for lobby menu background image
 #define LOBBY_BACKGROUND_LAYER 3
+///Layer for lobby menu main buttons (Join/Ready, Observe, Charater Prefs)
 #define LOBBY_BUTTON_LAYER 4
+///Layer for lobby menu shutter, which covers up the menu to collapse/expand it
+#define LOBBY_SHUTTER_LAYER 5
+///Layer for lobby menu buttons that are hanging away from and lower than the main panel
+#define LOBBY_BOTTOM_BUTTON_LAYER 6
 
 ///cinematics are "below" the splash screen
 #define CINEMATIC_LAYER -1
