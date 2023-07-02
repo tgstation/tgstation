@@ -40,7 +40,7 @@
 #define DNA_UNI_IDENTITY_BLOCKS 7
 
 /// This number needs to equal the total number of DNA blocks
-#define DNA_FEATURE_BLOCKS 15
+#define DNA_FEATURE_BLOCKS 23 /// SKYRAPTOR EDIT: 23, up from 15
 
 #define DNA_MUTANT_COLOR_BLOCK 1
 #define DNA_ETHEREAL_COLOR_BLOCK 2
@@ -57,6 +57,18 @@
 #define DNA_MOTH_MARKINGS_BLOCK 13
 #define DNA_MUSHROOM_CAPS_BLOCK 14
 #define DNA_POD_HAIR_BLOCK 15
+
+/// SKYRAPTOR ADDITION: Tri-Colors for Species Customization
+#define DNA_TRICOL_A1_BLOCK 16
+#define DNA_TRICOL_A2_BLOCK 17
+#define DNA_TRICOL_A3_BLOCK 18
+#define DNA_TRICOL_B1_BLOCK 19
+#define DNA_TRICOL_B2_BLOCK 20
+#define DNA_TRICOL_B3_BLOCK 21
+// Frills and Horns colors for further customization
+#define DNA_FRILLS_COLOR_BLOCK 22
+#define DNA_HORNS_COLOR_BLOCK 23
+/// SKYRAPTOR ADDITION END
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
