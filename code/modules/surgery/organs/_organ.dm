@@ -198,6 +198,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
+/**
+ * Proc that gets called when the organ is surgically removed by someone, can be used for special effects
+ * Currently only used so surplus organs can explode when surgically removed.
+ */
+/obj/item/organ/proc/on_surgical_removal(mob/living/user)
+	return
+
 /obj/item/organ/process(seconds_per_tick, times_fired)
 	return
 

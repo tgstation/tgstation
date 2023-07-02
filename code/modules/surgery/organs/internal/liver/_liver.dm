@@ -295,6 +295,16 @@
 	liver_resistance = 0.75 * LIVER_DEFAULT_TOX_RESISTANCE // -25%
 	emp_vulnerability = 100
 
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/liver/cybernetic/surplus/on_surgical_removal(mob/living/user)
+	if(organ_flags & (ORGAN_FAILING|ORGAN_EMP))
+		return
+	audible_message("[src] explodes into tiny pieces!")
+	if(user)
+		user.flash_act(1)
+		user.take_bodypart_damage(15)
+	explosion(src, light_impact_range = 1)
+
 #undef HAS_SILENT_TOXIN
 #undef HAS_NO_TOXIN
 #undef HAS_PAINFUL_TOXIN

@@ -864,6 +864,16 @@
 	maxHealth = 0.35 * STANDARD_ORGAN_THRESHOLD
 	emp_vulnerability = 100
 
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/lungs/cybernetic/surplus/on_surgical_removal(mob/living/user)
+	if(organ_flags & (ORGAN_FAILING|ORGAN_EMP))
+		return
+	audible_message("[src] explodes into tiny pieces!")
+	if(user)
+		user.flash_act(1)
+		user.take_bodypart_damage(15)
+	explosion(src, light_impact_range = 1)
+
 /obj/item/organ/internal/lungs/lavaland
 	name = "blackened frilled lungs" // blackened from necropolis exposure
 	desc = "Exposure to the necropolis has mutated these lungs to breathe the air of Indecipheres, the lava-covered moon."
