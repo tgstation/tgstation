@@ -13,11 +13,13 @@
 	progression_reward = list(8 MINUTES, 14 MINUTES)
 	telecrystal_reward = 1
 
-	var/heads_of_staff = FALSE
-
 	duplicate_type = /datum/traitor_objective/target_player/infect
 
-	var/obj/item/reagent_containers/hypospray/medipen/manifoldinjector/ehms
+	/// if TRUE, can only target heads of staff
+	/// if FALSE, CANNOT target heads of staff
+	var/heads_of_staff = FALSE
+	/// if TRUE, the injector item has been bestowed upon the player
+	var/injector_given = FALSE
 
 /datum/traitor_objective/target_player/infect/supported_configuration_changes()
 	. = ..()
@@ -31,7 +33,7 @@
 
 /datum/traitor_objective/target_player/infect/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
-	if(!ehms)
+	if(!injector_given)
 		buttons += add_ui_button("", "Pressing this will materialize a EHMS autoinjector into your hand, which you must inject into the target to succeed.", "syringe", "summon_pen")
 	return buttons
 
@@ -39,9 +41,10 @@
 	. = ..()
 	switch(action)
 		if("summon_pen")
-			if(ehms)
+			if(injector_given)
 				return
-			ehms = new(user.drop_location())
+			injector_given = TRUE
+			var/obj/item/reagent_containers/hypospray/medipen/manifoldinjector/ehms = new(user.drop_location())
 			user.put_in_hands(ehms)
 			ehms.balloon_alert(user, "the injector materializes in your hand")
 			RegisterSignal(ehms, COMSIG_EHMS_INJECTOR_INJECTED, PROC_REF(on_injected))

@@ -244,11 +244,9 @@
 	item_chair = null
 	icon_state = "officechair_dark"
 
-
-/obj/structure/chair/office/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/structure/chair/office/Initialize(mapload)
 	. = ..()
-	if(!forced && CHECK_MOVE_LOOP_FLAGS(src, MOVEMENT_LOOP_OUTSIDE_CONTROL) && has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
+	AddElement(/datum/element/noisy_movement)
 
 /obj/structure/chair/office/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
@@ -459,6 +457,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	item_chair = null
 	var/turns = 0
 
+/obj/structure/chair/bronze/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/noisy_movement, 'sound/machines/clockcult/integration_cog_install.ogg', 50)
+
 /obj/structure/chair/bronze/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
@@ -469,11 +471,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	turns++
 	if(turns >= 8)
 		STOP_PROCESSING(SSfastprocess, src)
-
-/obj/structure/chair/bronze/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(has_gravity())
-		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 
 /obj/structure/chair/bronze/AltClick(mob/user)
 	turns = 0
