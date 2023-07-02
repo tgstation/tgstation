@@ -41,13 +41,15 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	return STRINGIFY_PDA_TARGET(messenger.saved_identification, messenger.saved_job)
 
 /datum/pda_chat
-	/// Refs to the other user
-	var/users = null
-	/// A list of messages, formatted as {"ref":string,"msg":string,"everyone":bool}
+	/// Refs to the other user(s)
+	var/users = list()
+	/// A list of messages in this chatroom
 	var/list/messages = list()
+	/// The message the user may have drafted for this chat
+	var/msg_draft = null
 
-/datum/pda_chat/proc/add(user, msg, everyone = FALSE)
-	messages += list(list("ref" = user, "msg" = msg, "everyone" = everyone))
+/datum/pda_chat/proc/add(list/data)
+	messages += list(data)
 
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
@@ -65,40 +67,40 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	program_icon = "comment-alt"
 	alert_able = TRUE
 
-	/// The current ringtone (displayed in the chat when a message is received).
-	var/ringtone = MESSENGER_RINGTONE_DEFAULT
-	/// Whether or not the ringtone is currently on.
-	var/ringer_status = TRUE
-	/// Whether or not we're sending and receiving messages.
-	var/sending_and_receiving = TRUE
+	/// Whether the user is invisible to the message list.
+	var/invisible = FALSE
+	// Whether or not this device is currently hidden from the message monitor.
+	var/monitor_hidden = FALSE
 	/// great wisdom from PDA.dm - "no spamming" (prevents people from spamming the same message over and over)
 	var/last_text
 	/// even more wisdom from PDA.dm - "no everyone spamming" (prevents people from spamming the same message over and over)
 	var/last_text_everyone
-	/// Scanned photo for sending purposes.
-	var/datum/picture/saved_image
-	/// The messages currently saved in the app.
-	var/list/datum/pda_msg/messages = list()
-	/// Associative list of unread messages - Format: msgr_ref -> number of unreads
-	var/list/datum/pda_msg/unread_messages = list()
-	/// Whether the user is invisible to the message list.
-	var/invisible = FALSE
-	/// Whose chatlogs we currently have open. If we are in the contacts list, this is null.
-	var/datum/pda_msg/viewing_messages_of = null
-	// Whether or not this device is currently hidden from the message monitor.
-	var/monitor_hidden = FALSE
-	// Whether or not we're sorting by job.
-	var/sort_by_job = TRUE
-	// Whether or not we're sending (or trying to send) a virus.
-	var/sending_virus = FALSE
-
-	/// The path for the current loaded image in rsc
-	var/photo_path
-
 	/// Whether or not we're in a mime PDA.
 	var/mime_mode = FALSE
 	/// Whether this app can send messages to all.
 	var/spam_mode = FALSE
+
+
+	var/list/datum/pda_chat/stored_chats = list()
+	/// Associative list of unread messages - Format: msgr_ref -> number of unreads
+	var/list/datum/pda_chat/unread_chats = list()
+	/// Whose chatlogs we currently have open. If we are in the contacts list, this is null.
+	var/datum/pda_chat/viewing_messages_of = null
+
+	/// The current ringtone (displayed in the chat when a message is received).
+	var/ringtone = MESSENGER_RINGTONE_DEFAULT
+	/// Whether or not the ringtone is currently on.
+	var/ringer_status = TRUE
+	// Whether or not we're sorting by job.
+	var/sort_by_job = TRUE
+	/// Whether or not we're sending and receiving messages.
+	var/sending_and_receiving = TRUE
+	/// Scanned photo for sending purposes.
+	var/datum/picture/saved_image
+	/// The path for the current loaded image in rsc
+	var/photo_path
+	// Whether or not we're sending (or trying to send) a virus.
+	var/sending_virus = FALSE
 
 /datum/computer_file/program/messenger/on_install()
 	. = ..()
@@ -325,7 +327,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	last_text_everyone = world.time
 
 ///Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
-/datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/datum/computer_file/program/messenger/targets, message, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
+/datum/computer_file/program/messenger/proc/send_message(mob/living/user, datum/pda_chat/chat, message, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
 	if(!user.can_perform_action(computer))
 		return
 
@@ -465,9 +467,10 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	messages += list(message_data)
 
 	var/mob/living/L = null
-	if(computer.loc && isliving(computer.loc))
+	//Check our immediate loc
+	if(isliving(computer.loc))
 		L = computer.loc
-	//Maybe they are a pAI!
+	//Maybe they are a silicon!
 	else
 		L = get(computer, /mob/living/silicon)
 

@@ -27,6 +27,10 @@ type NtMessenger = {
   ref: string;
 };
 
+type NtChat = {
+  messages:
+};
+
 type NtMessengers = Record<string, NtMessenger>;
 
 type NtosMessengerData = {
