@@ -67,10 +67,7 @@
 		return
 
 	if(length(usr.client.active_challenges))
-		for(var/datum/challenge/listed as anything in usr.client.active_challenges)
-			if(isnull(listed))
-				usr.client.active_challenges -= listed
-				continue
+		for(var/listed as anything in usr.client.active_challenges)
 			if(listed == path)
 				usr.client.active_challenges -= listed
 				return
