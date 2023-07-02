@@ -79,6 +79,8 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	var/accessory = null
 	var/list/dep_trim = null
 	var/destination = null
+	var/suit = null //monkestation edit: add departmental sec outfits
+	var/head = null //monkestation edit: add departmental sec outfits
 
 	switch(department)
 		if(SEC_DEPT_SUPPLY)
@@ -86,21 +88,29 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			dep_trim = /datum/id_trim/job/security_officer/supply
 			destination = /area/station/security/checkpoint/supply
 			accessory = /obj/item/clothing/accessory/armband/cargo
+			suit = /obj/item/clothing/suit/armor/secduster/cargo //monkestation edit: add departmental sec outfits
+			head = /obj/item/clothing/head/helmet/hat/cowboy/cargo//monkestation edit: add departmental sec outfits
 		if(SEC_DEPT_ENGINEERING)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/engi
 			dep_trim = /datum/id_trim/job/security_officer/engineering
 			destination = /area/station/security/checkpoint/engineering
 			accessory = /obj/item/clothing/accessory/armband/engine
+			suit = /obj/item/clothing/suit/armor/secduster/engineering //monkestation edit: add departmental sec outfits
+			head = /obj/item/clothing/head/helmet/hat/cowboy/engineering //monkestation edit: add departmental sec outfits
 		if(SEC_DEPT_MEDICAL)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/med
 			dep_trim = /datum/id_trim/job/security_officer/medical
 			destination = /area/station/security/checkpoint/medical
 			accessory = /obj/item/clothing/accessory/armband/medblue
+			suit = /obj/item/clothing/suit/armor/secduster/medical //monkestation edit: add departmental sec outfits
+			head = /obj/item/clothing/head/helmet/hat/cowboy/medical //monkestation edit: add departmental sec outfits
 		if(SEC_DEPT_SCIENCE)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/sci
 			dep_trim = /datum/id_trim/job/security_officer/science
 			destination = /area/station/security/checkpoint/science
 			accessory = /obj/item/clothing/accessory/armband/science
+			suit = /obj/item/clothing/suit/armor/secduster/science//monkestation edit: add departmental sec outfits
+			head = /obj/item/clothing/head/helmet/hat/cowboy/science//monkestation edit: add departmental sec outfits
 
 	if(accessory)
 		var/obj/item/clothing/under/worn_under = spawning.w_uniform
@@ -110,6 +120,19 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		if(spawning.ears)
 			qdel(spawning.ears)
 		spawning.equip_to_slot_or_del(new ears(spawning),ITEM_SLOT_EARS)
+
+	//monkestation edit start: add dept sec outfits
+	if(suit)
+		for(var/obj/item/gun/energy/disabler/stored in spawning.contents)
+			if(spawning.wear_suit)
+				qdel(spawning.wear_suit)
+			spawning.equip_to_slot_or_del(new suit(spawning),ITEM_SLOT_OCLOTHING)
+			spawning.equip_to_slot_or_del(stored,ITEM_SLOT_SUITSTORE)
+	if(head)
+		if(spawning.head)
+			qdel(spawning.head)
+		spawning.equip_to_slot_or_del(new head(spawning),ITEM_SLOT_HEAD)
+	//monkestation edit end
 
 	// If there's a departmental sec trim to apply to the card, overwrite.
 	if(dep_trim)
@@ -197,7 +220,8 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 	id_trim = /datum/id_trim/job/security_officer
 	uniform = /obj/item/clothing/under/rank/security/officer
-	suit = /obj/item/clothing/suit/armor/vest/alt/sec
+	head = /obj/item/clothing/head/helmet/hat/cowboy //monkestation edit: cowboy sec
+	suit = /obj/item/clothing/suit/armor/secduster //monkestation edit: cowboy sec
 	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(
 		/obj/item/evidencebag = 1,
@@ -205,7 +229,6 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	belt = /obj/item/modular_computer/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/helmet/sec
 	shoes = /obj/item/clothing/shoes/jackboots/sec
 	l_pocket = /obj/item/restraints/handcuffs
 	r_pocket = /obj/item/assembly/flash/handheld

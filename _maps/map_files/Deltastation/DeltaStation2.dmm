@@ -26941,6 +26941,9 @@
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 10
 	},
+/obj/item/food/spaghetti/security{
+	pixel_y = 15
+	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hos)
 "gxX" = (
@@ -65362,6 +65365,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel)
+"pXY" = (
+/obj/machinery/door/firedoor/heavy,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/station/science/ordnance/storage)
 "pYh" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
@@ -86818,6 +86831,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "vnu" = (
@@ -87541,6 +87555,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -87845,6 +87860,10 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/station/medical/treatment_center)
+"vyM" = (
+/mob/living/carbon/human/species/monkey/dukeman,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "vyO" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
@@ -131620,7 +131639,7 @@ wtb
 bKw
 qgo
 vvy
-sBE
+pXY
 tsZ
 sBE
 hkU
@@ -152605,7 +152624,7 @@ cVV
 itW
 nJg
 jHw
-vxr
+vyM
 jMs
 iOc
 fwL

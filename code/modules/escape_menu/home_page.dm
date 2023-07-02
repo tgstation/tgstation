@@ -30,11 +30,20 @@
 	)
 
 	page_holder.give_screen_object(
+		new /atom/movable/screen/escape_menu/home_button(
+			null,
+			src,
+			"Open Map",
+			/* offset = */ 3,
+			CALLBACK(src, PROC_REF(open_map)),
+		)
+	)
+	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button/admin_help(
 			null,
 			src,
 			"Admin Help",
-			/* offset = */ 3,
+			/* offset = */ 4,
 		)
 	)
 
@@ -43,7 +52,7 @@
 			null,
 			src,
 			"Leave Body",
-			/* offset = */ 4,
+			/* offset = */ 5,
 			CALLBACK(src, PROC_REF(open_leave_body)),
 		)
 	)
@@ -53,6 +62,26 @@
 
 /datum/escape_menu/proc/start_redeem()
 	client?.redeem_code()
+
+/datum/escape_menu/proc/open_map()
+	var/redirect = ""
+	switch(SSmapping.config.map_name)
+		if("Ice Box Station")
+			redirect = "IceBoxStation"
+		if("Oshan Station")
+			redirect = "Oshan"
+		if("Kilo Station")
+			redirect = "KiloStation"
+		if("MetaStation")
+			redirect = "MetaStation"
+		if("NorthStar")
+			redirect = "NorthStar"
+		if("Delta Station")
+			redirect = "DeltaStation"
+		if("Tramstation")
+			redirect = "TramStation"
+	if(client)
+		client << link("https://monkestation.com/map/Monke/[redirect]/")
 
 /datum/escape_menu/proc/home_open_settings()
 	client?.prefs.ui_interact(client?.mob)

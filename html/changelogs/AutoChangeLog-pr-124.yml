@@ -1,0 +1,11 @@
+author: "Camriod"
+delete-after: True
+changes:
+  - rscadd: "Oozelings now take 3/5 burn damage"
+  - rscadd: "Added a plural form of Oozeling for the Oozeling description"
+  - rscadd: "Added a proper Oozeling description"
+  - rscadd: "Oozelings now don't suffer bleed from wounding"
+  - rscadd: "Slimes are now friendly to Oozelings"
+  - rscadd: "An assigned ass png for ass scanning"
+  - rscadd: "Oozelings now only need 4 mols of oxygen to breath"
+  - rscadd: "Proper listed positive and negative Oozeling perks on the species list"
