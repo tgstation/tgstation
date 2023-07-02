@@ -83,7 +83,6 @@
 	desc = "A bottle of tea brought to you in a convenient plastic bottle."
 	icon = 'monkestation/icons/obj/food/imported_quick_foods.dmi'
 	icon_state = "tea_bottle"
-	inhand_icon_state = "bottle"
 	list_reagents = list(/datum/reagent/consumable/tea = 40)
 	cap_icon_state = "bottle_cap_tea"
 	flip_chance = 5 //I fucking dare you
