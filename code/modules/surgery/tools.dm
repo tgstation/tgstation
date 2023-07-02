@@ -477,7 +477,7 @@
 			limb_snip_candidate.dismember()
 		user.visible_message(span_danger("[src] violently slams shut, amputating [patient]'s [candidate_name]."), span_notice("You amputate [patient]'s [candidate_name] with [src]."))
 
-	if(HAS_TRAIT(user, TRAIT_MORBID)) //Freak
+	if(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID)) //Freak
 		user.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
 
 /obj/item/shears/suicide_act(mob/living/carbon/user)
@@ -563,3 +563,43 @@
 			var/chem_name = params["reagent"]
 			var/chem_id = get_chem_id(chem_name)
 			whitelist -= chem_id
+
+/*
+ * Cruel Surgery Tools
+ *
+ * This variety of tool has the CRUEL_IMPLEMENT flag.
+ *
+ * Bonuses if the surgery is being done by a morbid user and it is of their interest.
+ *
+ * Morbid users are interested in; dissections, autospies, revival surgery, plastic surgery, organ/feature manipulations, amputations
+ *
+ * Otherwise, normal tool.
+ */
+
+/obj/item/retractor/cruel
+	name = "twisted retractor"
+	desc = "Helps reveal secrets that would rather stay buried."
+	icon_state = "cruelretractor"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/hemostat/cruel
+	name = "cruel hemostat"
+	desc = "Clamping bleeders, but not so good at fixing breathers."
+	icon_state = "cruelhemostat"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/cautery/cruel
+	name = "savage cautery"
+	desc = "Chalk this one up as another successful vivisection."
+	icon_state = "cruelcautery"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/scalpel/cruel
+	name = "hungry scalpel"
+	desc = "I remember every time I hold you. My born companion..."
+	icon_state = "cruelscalpel"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/scalpel/cruel/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bane, mob_biotypes = MOB_UNDEAD, damage_multiplier = 1) //Just in case one of the tennants get uppity

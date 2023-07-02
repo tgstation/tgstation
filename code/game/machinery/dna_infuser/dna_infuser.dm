@@ -152,7 +152,7 @@
 	for(var/obj/item/organ/new_organ as anything in infusing_into.output_organs)
 		var/obj/item/organ/old_organ = target.get_organ_slot(initial(new_organ.slot))
 		if(old_organ)
-			if((old_organ.type != new_organ) && (old_organ.status != ORGAN_ROBOTIC))
+			if((old_organ.type != new_organ) && !IS_ROBOTIC_ORGAN(old_organ))
 				continue // Old organ can be mutated!
 		else if(ispath(new_organ, /obj/item/organ/external))
 			continue // External organ can be grown!
