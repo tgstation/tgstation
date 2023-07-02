@@ -5,7 +5,7 @@ import { resolveAsset } from '../assets';
 
 export const StoreManager = (props, context) => {
   const { act, data } = useBackend(context);
-  const { loadout_tabs, total_coins } = data;
+  const { loadout_tabs, total_coins, owned_items } = data;
 
   const [selectedTabName, setSelectedTab] = useSharedState(
     context,
@@ -89,9 +89,21 @@ export const StoreManager = (props, context) => {
                               />
                             </Stack.Item>
                             <Stack.Item>
+                              <Button
+                                fluid
+                                content="Job Restricted"
+                                disabled={!item.job_restricted}
+                                tooltip={item.job_restricted}
+                              />
+                            </Stack.Item>
+                            <Stack.Item>
                               <Button.Confirm
                                 content="Purchase"
                                 minWidth="49%"
+                                disabled={
+                                  item.item_path in owned_items ||
+                                  total_coins < item.cost
+                                }
                                 onClick={() =>
                                   act('select_item', {
                                     path: item.path,
