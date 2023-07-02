@@ -16,7 +16,7 @@
 #define MATERIAL_INIT_BESPOKE (1<<1)
 
 /// Makes sure only integer values are used when consuming, removing & checking for mats
-#define OPTIMAL_COST(cost)(max(1, round((cost))))
+#define OPTIMAL_COST(cost)(max(1, CEILING((cost), 1)))
 
 //Material Container Flags.
 ///If the container shows the amount of contained materials on examine.

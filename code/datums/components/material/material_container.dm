@@ -446,10 +446,7 @@
  */
 /datum/component/material_container/proc/get_material_amount(datum/material/mat)
 	if(!istype(mat))
-		if(ispath(mat))
-			mat = GET_MATERIAL_REF(mat)
-		else
-			return 0 //we don't deal with category materials
+		mat = GET_MATERIAL_REF(mat)
 	return materials[mat]
 
 /**

@@ -178,9 +178,7 @@ const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() =>
-            canPrint && act('make', { id: design.id, multiplier: 1 })
-          }>
+          onClick={() => act('make', { id: design.id, multiplier: 1 })}>
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}

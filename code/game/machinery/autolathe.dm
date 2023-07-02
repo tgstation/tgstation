@@ -104,7 +104,7 @@
 			else
 				cost[i] = design_cost
 
-			max_multiplier = min(max_multiplier, 50, round(materials.get_material_amount(i) / design_cost))
+			max_multiplier = min(max_multiplier, 50, round((istype(mat) ? materials.get_material_amount(i) : 0) / design_cost))
 
 		//create & send ui data
 		var/icon_size = spritesheet.icon_size_id(design.id)
@@ -187,8 +187,8 @@
 			materials_used[used_material] = amount_needed
 
 		if(!materials.has_materials(materials_used, coeff, multiplier))
-			to_chat(usr, span_alert("Not enough materials for this operation."))
-			return FALSE
+			say("Not enough materials for this operation!.")
+			return
 
 		//use power
 		var/total_amount = 0
