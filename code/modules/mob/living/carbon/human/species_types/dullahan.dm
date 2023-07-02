@@ -1,7 +1,7 @@
 /datum/species/dullahan
 	name = "Dullahan"
 	id = SPECIES_DULLAHAN
-	species_traits = list()
+	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
@@ -15,7 +15,6 @@
 	mutantears = /obj/item/organ/internal/ears/dullahan
 	mutantstomach = null
 	mutantlungs = null
-	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
@@ -71,6 +70,7 @@
 	human.reset_perspective(human)
 
 /datum/species/dullahan/spec_life(mob/living/carbon/human/human, seconds_per_tick, times_fired)
+	. = ..()
 	if(QDELETED(my_head))
 		my_head = null
 		human.investigate_log("has been gibbed by the loss of [human.p_their()] head.", INVESTIGATE_DEATHS)
@@ -159,7 +159,7 @@
 
 /obj/item/organ/internal/brain/dullahan
 	decoy_override = TRUE
-	organ_flags = NONE
+	organ_flags = ORGAN_ORGANIC //not vital
 
 /obj/item/organ/internal/tongue/dullahan
 	zone = "abstract"

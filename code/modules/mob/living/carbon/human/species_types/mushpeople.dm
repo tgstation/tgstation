@@ -8,16 +8,13 @@
 	fixed_mut_color = "#DBBF92"
 	hair_color = "#FF4B19" //cap color, spot color uses eye color
 
-	species_traits = list(
-		MUTCOLORS,
-		NO_UNDERWEAR,
-	)
 	inherent_traits = list(
+		TRAIT_MUTANT_COLORS,
 		TRAIT_NOBREATH,
 		TRAIT_NOFLASH,
+		TRAIT_NO_UNDERWEAR,
 	)
 	inherent_factions = list(FACTION_MUSHROOM)
-	speedmod = 1.5 //faster than golems but not by much
 
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING
 
@@ -57,13 +54,13 @@
 	mush.remove(C)
 	QDEL_NULL(mush)
 
-/datum/species/mush/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
+/datum/species/mush/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
+	. = ..()
+	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
+		return
 	if(chem.type == /datum/reagent/toxin/plantbgone/weedkiller)
-		H.adjustToxLoss(3 * REM * seconds_per_tick)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
-		return TRUE
-	return ..()
+		affected.adjustToxLoss(3 * REM * seconds_per_tick)
 
 /datum/species/mush/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	forced_colour = FALSE
-	..()
+	return ..()

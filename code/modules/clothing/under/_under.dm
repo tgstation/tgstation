@@ -129,7 +129,7 @@
 
 	if((supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION) && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
+		if(H.bodytype & BODYTYPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE
 		H.update_worn_undersuit()
 

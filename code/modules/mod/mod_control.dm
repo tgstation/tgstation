@@ -102,6 +102,7 @@
 	extended_desc = theme.extended_desc
 	slowdown_inactive = theme.slowdown_inactive
 	slowdown_active = theme.slowdown_active
+	activation_step_time = theme.activation_step_time
 	complexity_max = theme.complexity_max
 	ui_theme = theme.ui_theme
 	charge_drain = theme.charge_drain
@@ -422,6 +423,7 @@
 		set_wearer(user)
 
 /obj/item/mod/control/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	. = ..()
 	quick_activation()
 
 /obj/item/mod/control/doStrip(mob/stripper, mob/owner)

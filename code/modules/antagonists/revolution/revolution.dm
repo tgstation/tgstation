@@ -276,8 +276,7 @@
 
 /datum/antagonist/rev/head/proc/make_assistant_icon(hairstyle)
 	var/mob/living/carbon/human/dummy/consistent/assistant = new
-	assistant.hairstyle = hairstyle
-	assistant.update_body_parts()
+	assistant.set_hairstyle(hairstyle, update = TRUE)
 
 	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
 	assistant_icon.ChangeOpacity(0.5)
@@ -398,7 +397,7 @@
 			"left pocket" = ITEM_SLOT_LPOCKET,
 			"right pocket" = ITEM_SLOT_RPOCKET
 		)
-		var/where = C.equip_in_one_of_slots(T, slots)
+		var/where = C.equip_in_one_of_slots(T, slots, indirect_action = TRUE)
 		if (!where)
 			to_chat(C, "The Syndicate were unfortunately unable to get you a flash.")
 		else

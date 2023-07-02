@@ -25,3 +25,4 @@
 		if(BARCODE_SCANNER_INVENTORY)
 			scan_mode = BARCODE_SCANNER_CHECKIN
 			user.balloon_alert(user, "check-in mode")
+	playsound(loc, 'sound/items/click.ogg', 20, TRUE)

@@ -23,4 +23,38 @@
 /datum/preference/choiced/voice/apply_to_human(mob/living/carbon/human/target, value)
 	if(SStts.tts_enabled && !(value in SStts.available_speakers))
 		value = pick(SStts.available_speakers) // As a failsafe
-	target.voice = value
+	if(!CONFIG_GET(flag/tts_allow_player_voice_disabling) || !target.client?.prefs.read_preference(/datum/preference/toggle/tts_voice_disable))
+		target.voice = value
+
+/datum/preference/numeric/tts_voice_pitch
+	savefile_identifier = PREFERENCE_CHARACTER
+	savefile_key = "tts_voice_pitch"
+	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+	minimum = -12
+	maximum = 12
+
+/datum/preference/numeric/tts_voice_pitch/is_accessible(datum/preferences/preferences)
+	if(!SStts.tts_enabled || !SStts.pitch_enabled)
+		return FALSE
+	return ..()
+
+/datum/preference/numeric/tts_voice_pitch/create_default_value()
+	return 0
+
+/datum/preference/numeric/tts_voice_pitch/apply_to_human(mob/living/carbon/human/target, value)
+	if(SStts.tts_enabled && SStts.pitch_enabled)
+		target.pitch = value
+
+/datum/preference/toggle/tts_voice_disable
+	savefile_identifier = PREFERENCE_CHARACTER
+	savefile_key = "tts_voice_disable"
+	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+	default_value = FALSE
+
+/datum/preference/toggle/tts_voice_disable/apply_to_human(mob/living/carbon/human/target, value)
+	return TRUE
+
+/datum/preference/toggle/tts_voice_disable/is_accessible(datum/preferences/preferences)
+	if(!SStts.tts_enabled || !CONFIG_GET(flag/tts_allow_player_voice_disabling))
+		return FALSE
+	return ..()

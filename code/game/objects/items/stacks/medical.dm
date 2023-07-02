@@ -88,7 +88,7 @@
 		patient.balloon_alert(user, "no [parse_zone(user.zone_selected)]!")
 		return FALSE
 	if(!IS_ORGANIC_LIMB(affecting)) //Limb must be organic to be healed - RR
-		patient.balloon_alert(user, "it's mechanical!")
+		patient.balloon_alert(user, "it's not organic!")
 		return FALSE
 	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
 		user.visible_message(

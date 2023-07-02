@@ -58,12 +58,6 @@
 #define RESPIRATION_OXYGEN (1 << 0)
 #define RESPIRATION_N2 (1 << 1)
 #define RESPIRATION_PLASMA (1 << 2)
-
-//Organ defines for carbon mobs
-#define ORGAN_ORGANIC 1
-#define ORGAN_ROBOTIC 2
-#define ORGAN_MINERAL 3 // Used for the plasmaman liver
-
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/species/human/bodyparts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
@@ -600,6 +594,26 @@
 #define AI_EMOTION_BLUE_GLOW "Blue Glow"
 #define AI_EMOTION_RED_GLOW "Red Glow"
 
+///Defines for AI hologram preferences
+#define AI_HOLOGRAM_BEAR "Bear"
+#define AI_HOLOGRAM_CARP "Carp"
+#define AI_HOLOGRAM_CAT "Cat"
+#define AI_HOLOGRAM_CAT_2 "Cat Alternate"
+#define AI_HOLOGRAM_CHICKEN "Chicken"
+#define AI_HOLOGRAM_CORGI "Corgi"
+#define AI_HOLOGRAM_COW "Cow"
+#define AI_HOLOGRAM_CRAB "Crab"
+#define AI_HOLOGRAM_DEFAULT "Default"
+#define AI_HOLOGRAM_FACE "Floating Face"
+#define AI_HOLOGRAM_FOX "Fox"
+#define AI_HOLOGRAM_GOAT "Goat"
+#define AI_HOLOGRAM_NARSIE "Narsie"
+#define AI_HOLOGRAM_PARROT "Parrot"
+#define AI_HOLOGRAM_PUG "Pug"
+#define AI_HOLOGRAM_RATVAR "Ratvar"
+#define AI_HOLOGRAM_SPIDER "Spider"
+#define AI_HOLOGRAM_XENO "Xeno Queen"
+
 /// Icon state to use for ai displays that just turns them off
 #define AI_DISPLAY_DONT_GLOW "ai_off"
 /// Throw modes, defines whether or not to turn off throw mode after
@@ -823,6 +837,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define VOMIT_TOXIC 1
 /// The mob will vomit a purple color
 #define VOMIT_PURPLE 2
+/// The mob will vomit a nebula color
+#define VOMIT_NEBULA 3
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1
