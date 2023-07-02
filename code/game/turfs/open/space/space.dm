@@ -261,6 +261,12 @@
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 
+/turf/open/space/openspace/Destroy()
+	. = ..()
+	// Signals persist through destory, GO HOME
+	var/turf/below = SSmapping.get_turf_below(src)
+	UnregisterSignal(below, COMSIG_TURF_CHANGE)
+
 /turf/open/space/openspace/zAirIn()
 	return TRUE
 
