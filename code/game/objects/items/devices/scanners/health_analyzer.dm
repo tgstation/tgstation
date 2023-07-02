@@ -287,7 +287,7 @@
 				missing_organs += "lungs"
 			if(!(TRAIT_LIVERLESS_METABOLISM in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_LIVER))
 				missing_organs += "liver"
-			if(the_dudes_species.mutantstomach && !humantarget.get_organ_slot(ORGAN_SLOT_STOMACH))
+			if(!(TRAIT_NOHUNGER in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_STOMACH))
 				missing_organs += "stomach"
 			if(the_dudes_species.mutanttongue && !humantarget.get_organ_slot(ORGAN_SLOT_TONGUE))
 				missing_organs += "tongue"
