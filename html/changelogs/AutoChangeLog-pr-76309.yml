@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - rscdel: "Removed language encryption keys from cargo, s bad for species talking among each other, a thing we want them to do"

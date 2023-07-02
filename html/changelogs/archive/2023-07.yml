@@ -52,3 +52,66 @@
   - qol: Add hotkeys to APCs for AIs and borgs. Toggle environmental (ctrl + shift),
       toggle lighting (shift), toggle equipment (alt), and toggle breaker (ctrl).
   - qol: Remove APC UI popup when using RMB to toggle the lock.
+2023-07-02:
+  ChungusGamer666:
+  - bugfix: Hair and facial hair gradients work again now
+  - bugfix: Facial hair colors apply properly again
+  - bugfix: Admin spawned characters will get hair color preferences applied properly
+  Ghommie:
+  - bugfix: Fixed the office chair being silent. My bad.
+  JohnFulpWillard:
+  - balance: Jousting now works on anything you're buckled to, not just Cyborgs.
+  - balance: Brooms, Pitchforks, the Captain's Sabre, and Energy swords can now be
+      used for jousting.
+  - balance: Spears need to travel a longer distance to joust now.
+  - balance: Jousting's knockdown and damage now only gets stronger after you've traveled
+      the minimum tiles needed to joust.
+  - balance: Silicon now only know Common, Uncommon and Robotic languages.
+  JupiterJaeden:
+  - qol: people now lie down when buckled to surgery tables, and you no longer need
+      cuffs to buckle someone to a surgery table
+  LemonInTheDark:
+  - bugfix: Fixes some fuck with duffelbags, them not holding enough + issues with
+      spawning gear in them (job shit and all)
+  - rscdel: Removed language encryption keys from cargo, s bad for species talking
+      among each other, a thing we want them to do
+  LovliestPlant:
+  - rscadd: Stethoscopes may be used on the chest, groin, or extremities to assess
+      organ damage, blood level, and/or suffocation damage depending on the targeted
+      area.
+  - rscadd: Shining flashlights into the mouth or eyes of other players will additionally
+      assess brain health, suffocation damage, and/or blood level depending on the
+      targeted area.
+  - balance: Halves the duration of the flash effect from shining lights into players'
+      eyes (2s -> 1s). Use combat mode to get the full duration.
+  Melbert:
+  - qol: Sivlerscale Tongue action is now a cooldown action, making it significantly
+      easier to use
+  - balance: Buffed the silverscale statue every so slightly, it now has innate armor
+      and can reflect lasers shot at it. But it also requires you not by lying down
+      to activate.
+  - bugfix: Fix organ damage being uncapped
+  Pickle-Coding:
+  - bugfix: Fix hypernoblium formation gas reaction rate sanity clamping not accounting
+      for the reduction factor.
+  - bugfix: Fix N2O formation gas reaction rate clamping clamping for incorrect consumption
+      rates.
+  - bugfix: Fix BZ formation reaction rate sanity clamping not accounting for N2O
+      decomposition factor.
+  - spellcheck: Improves gas monitor reaction information RP.
+  Sealed101:
+  - bugfix: fixed shotguns not clearing their "mag" correctly
+  - bugfix: fixed basalt turfs remaining visually dug up when refilled by an ash storm
+  - bugfix: fixed ash storm ending sounds looping after the storm is over
+  - bugfix: mechs are now snow storm immune
+  - bugfix: jaunt spells protect from weather when jaunting
+  Seven:
+  - bugfix: Cult communion and assert leadership can be used while your hands are
+      blocked or you are immobile
+  Vekter:
+  - balance: Adds a build time to window types which didn't have ones before.
+  - bugfix: Fixed the ORM not granting mining points if you added ore by hand instead
+      of dumping it on the floor.
+  carshalash:
+  - balance: We are now using space Monsanto brand rice/wheat seeds. Nutriment of
+      both grains has been changed to 12% from 4%

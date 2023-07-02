@@ -1,6 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - bugfix: "Fix hypernoblium formation gas reaction rate sanity clamping not accounting for the reduction factor."
-  - bugfix: "Fix N2O formation gas reaction rate clamping clamping for incorrect consumption rates."
-  - bugfix: "Fix BZ formation reaction rate sanity clamping not accounting for N2O decomposition factor."

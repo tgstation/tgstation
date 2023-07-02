@@ -1,7 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - bugfix: "fixed basalt turfs remaining visually dug up when refilled by an ash storm"
-  - bugfix: "fixed ash storm ending sounds looping after the storm is over"
-  - bugfix: "mechs are now snow storm immune"
-  - bugfix: "jaunt spells protect from weather when jaunting"
