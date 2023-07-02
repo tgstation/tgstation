@@ -36,7 +36,6 @@
 				"path" = created.type
 			)
 		)
-		qdel(listed)
 	var/list/paths = list()
 	for(var/listed as anything in owner.active_challenges)
 		if(isnull(listed))
@@ -72,7 +71,7 @@
 			if(isnull(listed))
 				usr.client.active_challenges -= listed
 				continue
-			if(listed.type == path)
+			if(listed == path)
 				usr.client.active_challenges -= listed
 				return
 
