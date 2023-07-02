@@ -21,7 +21,7 @@
 	limb_id = SPECIES_ETHEREAL
 	is_dimorphic = FALSE
 	dmg_overlay_type = null
-	brute_modifier = 1.25 //ethereal are weak to brute damage
+	brute_modifier = 1.25 //ethereal are weak to brute damages
 
 /obj/item/bodypart/chest/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()
