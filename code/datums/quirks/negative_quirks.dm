@@ -629,7 +629,7 @@
 	desc = "An accident caused you to lose one of your organs. Because of this, you now have a surplus prosthetic!"
 	icon = "lungs"
 	value = -3
-	medical_record_text = "During physical examination, patient was found to have a prosthetic organ."
+	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic organ."
 	hardcore_value = 3
 	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/storage/organbox)
