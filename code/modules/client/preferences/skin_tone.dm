@@ -2,7 +2,7 @@
 	savefile_key = "skin_tone"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_inherent_trait = TRAIT_SKINTONES
+	relevant_inherent_trait = TRAIT_USES_SKINTONES
 
 /datum/preference/choiced/skin_tone/init_possible_values()
 	return GLOB.skin_tones

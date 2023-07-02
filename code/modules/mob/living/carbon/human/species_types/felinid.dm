@@ -10,9 +10,9 @@
 		/obj/item/organ/external/tail/cat = "Cat",
 	)
 	inherent_traits = list(
-		TRAIT_SKINTONES,
-		TRAIT_CAN_USE_FLIGHT_POTION, 
+		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_HATED_BY_DOGS,
+		TRAIT_USES_SKINTONES,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/felinid

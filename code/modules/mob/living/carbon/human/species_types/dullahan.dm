@@ -3,9 +3,9 @@
 	id = SPECIES_DULLAHAN
 	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
-		TRAIT_SKINTONES,
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
+		TRAIT_USES_SKINTONES,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")

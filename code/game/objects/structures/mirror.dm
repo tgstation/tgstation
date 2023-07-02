@@ -200,7 +200,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 			var/datum/species/newrace = selectable_races[racechoice]
 			amazed_human.set_species(newrace, icon_update = FALSE)
-			if(HAS_TRAIT(amazed_human, TRAIT_SKINTONES))
+			if(HAS_TRAIT(amazed_human, TRAIT_USES_SKINTONES))
 				var/new_s_tone = tgui_input_list(user, "Choose your skin tone", "Race change", GLOB.skin_tones)
 				if(new_s_tone)
 					amazed_human.skin_tone = new_s_tone
