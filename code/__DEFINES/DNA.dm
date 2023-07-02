@@ -102,6 +102,10 @@
 /// Similar to NOEYESPRITES but only excludes the eyeless overlay
 #define NOEYEHOLES 19
 
+/// SKYRAPTOR ADDITIONS: tricolor alpha and beta tags
+#define USE_TRICOLOR_ALPHA 600
+#define USE_TRICOLOR_BETA 601
+
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
 #define ORGAN_SLOT_APPENDIX "appendix"
