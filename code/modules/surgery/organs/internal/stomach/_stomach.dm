@@ -323,8 +323,8 @@
 	metabolism_efficiency = 0.1
 
 /obj/item/organ/internal/stomach/cybernetic/surplus
-	name = "surplus cybernetic stomach"
-	desc = "A terribly inefficient mockery of a human stomach, comparable to a plastic bag filled with acid. \
+	name = "surplus prosthetic stomach"
+	desc = "A mechanical plastic oval that utilizes sulfuric acid instead of stomach acid. \
 		Very fragile, with painfully slow metabolism.\
 		Offers no protection against EMPs."
 	icon_state = "stomach-c-s"

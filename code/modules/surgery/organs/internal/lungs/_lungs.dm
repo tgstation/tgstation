@@ -857,7 +857,7 @@
 	cold_level_3_threshold = 100
 
 /obj/item/organ/internal/lungs/cybernetic/surplus
-	name = "surplus cybernetic lungs"
+	name = "surplus prosthetic lungs"
 	desc = "Two fragile sacks of air that only barely mimic the function of human lungs. \
 		Offer no protection against EMPs."
 	icon_state = "lungs-c-s"

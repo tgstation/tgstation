@@ -283,8 +283,8 @@
 	emp_vulnerability = 20
 
 /obj/item/organ/internal/liver/cybernetic/surplus
-	name = "surplus cybernetic liver"
-	desc = "A very cheap cybernetic liver, mass produced for low-functioning alcoholics and looks more like a water filter than \
+	name = "surplus prosthetic liver"
+	desc = "A very cheap prosthetic liver, mass produced for low-functioning alcoholics and looks more like a water filter than \
 		an actual liver. \
 		Very fragile, absolutely terrible at filtering toxins and substantially weak to alcohol. \
 		Offers no protection against EMPs."

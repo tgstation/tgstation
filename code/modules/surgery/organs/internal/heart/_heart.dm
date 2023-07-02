@@ -261,7 +261,7 @@
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
 
 /obj/item/organ/internal/heart/cybernetic/surplus
-	name = "surplus cybernetic heart"
+	name = "surplus prosthetic heart"
 	desc = "A fragile mockery of a human heart that resembles a water pump more than an actual heart. \
 		Offers no protection against EMPs."
 	icon_state = "heart-c-s-on"
