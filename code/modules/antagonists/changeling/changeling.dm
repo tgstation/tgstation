@@ -229,11 +229,11 @@
 
 /*
  * Instantiate all the default actions of a ling (transform, dna sting, absorb, etc)
- * Any Changeling action with `dna_cost == 0` will be added here automatically
+ * Any Changeling action with dna_cost = CHANGELING_POWER_INNATE will be added here automatically
  */
 /datum/antagonist/changeling/proc/create_innate_actions()
 	for(var/datum/action/changeling/path as anything in all_powers)
-		if(initial(path.dna_cost) != 0)
+		if(initial(path.dna_cost) != CHANGELING_POWER_INNATE)
 			continue
 
 		var/datum/action/changeling/innate_ability = new path()
