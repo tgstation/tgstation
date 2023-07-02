@@ -551,7 +551,7 @@
 	back = /obj/item/storage/backpack/satchel/leather
 	l_pocket = /obj/item/switchblade
 	r_pocket = /obj/item/reagent_containers/hypospray/medipen/salacid
-	belt = /obj/item/storage/belt/holster/energy/thermal
+	ears = /obj/item/radio/headset
 	backpack_contents = list(
 			/obj/item/storage/box/survival = 1,
 			/obj/item/storage/medkit/emergency = 1,
