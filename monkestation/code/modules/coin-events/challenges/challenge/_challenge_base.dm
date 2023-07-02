@@ -15,12 +15,15 @@
 	var/difficulty = "Easy"
 	///do we need to process?
 	var/processes = FALSE
+	///the current mob we are in
+	var/mob/current_mob
 
 /datum/challenge/New(client/creator)
 	. = ..()
 	if(!creator)
 		return
 	host = creator
+	current_mob = host.mob
 
 ///we just use the client to try and apply this as its easier to track mobs
 /datum/challenge/proc/on_apply()

@@ -429,9 +429,6 @@ SUBSYSTEM_DEF(ticker)
 			if(new_player_mob.client.readied_store.bought_item)
 				new_player_mob.client.readied_store.finalize_purchase_spawn(new_player_mob, new_player_living)
 
-		if(new_player_mob.client && length(new_player_mob.client?.active_challenges))
-			SSchallenges.apply_challenges(new_player_mob.client)
-
 		CHECK_TICK
 
 	if(captainless)
@@ -480,6 +477,8 @@ SUBSYSTEM_DEF(ticker)
 				S.Fade(TRUE)
 				living.client.init_verbs()
 			livings += living
+			if(living.client && length(living.client?.active_challenges))
+				SSchallenges.apply_challenges(living.client)
 	if(livings.len)
 		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 30, TIMER_CLIENT_TIME)
 
