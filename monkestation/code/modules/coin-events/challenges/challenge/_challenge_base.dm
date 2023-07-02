@@ -1,5 +1,6 @@
 /client
 	var/list/active_challenges = list()
+	var/list/applied_challenges = list()
 
 /datum/challenge
 	///the challenge name
@@ -17,9 +18,9 @@
 
 /datum/challenge/New(client/creator)
 	. = ..()
-	host = creator
 	if(!creator)
-		qdel(src)
+		return
+	host = creator
 
 ///we just use the client to try and apply this as its easier to track mobs
 /datum/challenge/proc/on_apply()

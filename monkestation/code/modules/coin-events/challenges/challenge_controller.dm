@@ -19,3 +19,9 @@ SUBSYSTEM_DEF(challenges)
 		listed.on_process()
 
 /datum/controller/subsystem/challenges/proc/apply_challenges(client/owner)
+	for(var/datum/challenge/listed as anything in owner.active_challenges)
+		var/datum/challenge/new_challenge = new listed(owner)
+		if(new_challenge.processes)
+			processing_challenges += processing_challenges
+		new_challenge.on_apply()
+		owner.applied_challenges += new_challenge

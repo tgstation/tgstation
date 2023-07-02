@@ -11,7 +11,6 @@
 
 /datum/challenge_selector/Destroy(force, ...)
 	owner = null
-	QDEL_NULL(owner.challenge_menu)
 	return ..()
 
 /datum/challenge_selector/ui_state(mob/user)
@@ -39,11 +38,11 @@
 		)
 		qdel(listed)
 	var/list/paths = list()
-	for(var/datum/challenge/listed as anything in owner.active_challenges)
+	for(var/listed as anything in owner.active_challenges)
 		if(isnull(listed))
 			owner.active_challenges -= listed
 			continue
-		paths += listed.type
+		paths += listed
 
 	data["challenges"] = buyables
 	data["selected_challenges"] = paths
@@ -78,4 +77,4 @@
 				return
 
 	var/datum/challenge/challenge = text2path(id)
-	usr.client.active_challenges += new challenge
+	usr.client.active_challenges += challenge

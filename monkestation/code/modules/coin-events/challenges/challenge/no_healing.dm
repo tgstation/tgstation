@@ -5,6 +5,8 @@
 
 /datum/challenge/no_heals/New()
 	. = ..()
+	if(!host)
+		return
 	RegisterSignal(host.mob, COMSIG_MIND_TRANSFERRED, PROC_REF(on_transfer))
 
 /datum/challenge/no_heals/on_apply()

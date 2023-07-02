@@ -5385,6 +5385,7 @@
 #include "monkestation\code\modules\code_redemption\admin_proc.dm"
 #include "monkestation\code\modules\code_redemption\code_generator.dm"
 #include "monkestation\code\modules\code_redemption\code_redeemer.dm"
+#include "monkestation\code\modules\coin-events\challenges\challenge_controller.dm"
 #include "monkestation\code\modules\coin-events\challenges\challenge_selector.dm"
 #include "monkestation\code\modules\coin-events\challenges\challenge\_challenge_base.dm"
 #include "monkestation\code\modules\coin-events\challenges\challenge\no_healing.dm"
