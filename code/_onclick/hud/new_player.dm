@@ -271,6 +271,12 @@
 /atom/movable/screen/lobby/button/bottom
 	layer = LOBBY_BOTTOM_BUTTON_LAYER
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
+	always_shown = TRUE
+	var/matrix/button_matrix = matrix()
+
+/atom/movable/screen/lobby/button/bottom/SlowInit()
+	. = ..()
+	transform = button_matrix
 
 /atom/movable/screen/lobby/button/bottom/settings
 	name = "View Game Preferences"
@@ -402,13 +408,16 @@
 	screen_loc = "TOP,CENTER:-73"
 	layer = LOBBY_SHUTTER_LAYER
 	always_shown = TRUE
-	var/matrix/shutter_matrix
+	///List of bottom buttons on the UI; these are animated such as they appear to attach to the shutter
+	///when it moves
+	var/list/bottom_buttons = list()
+	var/matrix/shutter_matrix = matrix()
 
 /atom/movable/screen/lobby/shutter/SlowInit()
 	. = ..()
 	//screen_loc is initialized right above the main UI(the big three buttons), so we use
 	//matrix transform to shift it up to be off-screen
-	shutter_matrix = matrix()
+	//shutter_matrix = matrix()
 	shutter_matrix.Translate(x = 0, y = 203)
 	transform = shutter_matrix
 
@@ -417,8 +426,22 @@
  * Also takes away or brings back the bottom buttons.
 */
 /atom/movable/screen/lobby/shutter/proc/toggle_menu_animation(mob/dead/new_player/new_player, atom/movable/screen/lobby/button/collapse/collapse_button)
-	//if(!new_player.hud_used.inventory_shown) //if the bottom buttons are collapsed, re-introduce them to the HUD
-		//animate the bottom buttons sliding down here
+	//build a list of bottom buttons if it's empty
+	if(!length(bottom_buttons))
+		for(var/atom/movable/screen/lobby/lobbyscreen as anything in new_player.hud_used.static_inventory)
+			if(istype(lobbyscreen, /atom/movable/screen/lobby/button/bottom))
+				bottom_buttons += lobbyscreen
+
+
+	//if the bottom buttons are collapsed, re-introduce them to the HUD
+	if(!new_player.hud_used.inventory_shown)
+		for(var/atom/movable/screen/lobby/button/bottom/button_to_scroll_down in bottom_buttons)
+			animate(button_to_scroll_down, transform = button_to_scroll_down.button_matrix.Translate(x = 0, y = -203), time = 1.5 SECONDS, easing = CUBIC_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
+			if(istype(button_to_scroll_down, /atom/movable/screen/lobby/button/bottom/poll)) //don't activate the poll button unless a poll is up
+				var/atom/movable/screen/lobby/button/bottom/poll/poll_button = button_to_scroll_down
+				if(!poll_button.new_poll)
+					continue
+			button_to_scroll_down.set_button_status(TRUE)
 
 	//bring down the shutter. also set up a timer to toggle the main UI after we finish bringing down the shutter
 	addtimer(CALLBACK(src, PROC_REF(toggle_menu), new_player), 1.5 SECONDS)
@@ -427,10 +450,18 @@
 	//wait a little bit before bringing the shutter up
 	animate(transform = matrix(), time = 0.5 SECONDS)
 
-	//if((new_player.hud_used.inventory_shown)) //if the bottom buttons are present, take them off-screen with the shutter
-		//animate the bottom buttons sliding up here
+	//if the bottom buttons are present, take them off-screen with the shutter
+	if(new_player.hud_used.inventory_shown)
+		for(var/atom/movable/screen/lobby/button/bottom/button_to_scroll_up in bottom_buttons)
+			button_to_scroll_up.button_matrix = matrix()
+			animate(button_to_scroll_up, transform = button_to_scroll_up.button_matrix.Translate(x = 0, y = 203), time = 1.5 SECONDS, easing = CUBIC_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+			if(istype(button_to_scroll_up, /atom/movable/screen/lobby/button/bottom/poll)) //don't activate the poll button unless a poll is up
+				var/atom/movable/screen/lobby/button/bottom/poll/poll_button = button_to_scroll_up
+				if(!poll_button.new_poll)
+					continue
+			button_to_scroll_up.set_button_status(FALSE)
 
-	//pull the shutter back off-screen.
+	//pull the shutter back off-screen
 	shutter_matrix = matrix()
 	animate(transform = shutter_matrix.Translate(x = 0, y = 203), time = 1.5 SECONDS, easing = CUBIC_EASING|EASE_IN)
 
