@@ -304,7 +304,7 @@
 				//create the paper from the SSshuttle.shopping_list
 				if(length(SSshuttle.shopping_list))
 					var/obj/item/paper/requisition_paper = new(get_turf(src))
-					requisition_paper.name = "requisition form [station_time_timestamp()]"
+					requisition_paper.name = "requisition form - [station_time_timestamp()]"
 					var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 					requisition_text += "<hr/>"
 					requisition_text += "Time of Order: [station_time_timestamp()]<br/><br/>"
