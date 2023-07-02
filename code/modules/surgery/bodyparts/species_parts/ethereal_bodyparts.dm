@@ -99,3 +99,4 @@
 /obj/item/bodypart/head/ethereal/lustrous
 	icon_state = "lustrous_head"
 	limb_id = SPECIES_ETHEREAL_LUSTROUS
+	head_flags = NONE
