@@ -691,7 +691,7 @@
 	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, all your organs have been replaced with surplus prosthetics."
 	icon = "robot"
 	value = -6
-	medical_record_text = "During physical examination, patient was found to have all prosthetic organs."
+	medical_record_text = "During physical examination, patient was found to have numerous low-quality prosthetic organs."
 	hardcore_value = 6
 	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/storage/organbox)
