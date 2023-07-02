@@ -242,12 +242,6 @@
 	examine_limb_id = SPECIES_ETHEREAL
 	mutantbrain = /obj/item/organ/internal/brain/lustrous
 	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
-	species_traits = list(
-		DYNCOLORS,
-		AGENDER,
-		NO_UNDERWEAR,
-		NOEYESPRITES,
-	)
 	inherent_traits = list(
 		TRAIT_BALD,
 		TRAIT_TENACIOUS,
