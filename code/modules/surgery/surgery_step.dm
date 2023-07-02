@@ -231,7 +231,7 @@
 		return FALSE
 	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
 		return FALSE
-	if(surgery.surgery_flags != SURGERY_MORBID_CURIOSITY)
+	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY))
 		return FALSE
 	return TRUE
 
