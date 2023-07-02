@@ -26,6 +26,8 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	var/starting_filter_type = /obj/item/gas_filter
 	///Does the mask have an FOV?
 	var/has_fov = TRUE
+	///Cigarette in the mask
+	var/obj/item/clothing/mask/cigarette/cig
 
 /datum/armor/mask_gas
 	bio = 100
@@ -54,6 +56,32 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		. += "<span class='notice'>The filters can be removed by right-clicking with an empty hand on [src].</span>"
 
 /obj/item/clothing/mask/gas/attackby(obj/item/tool, mob/user)
+	if(istype(tool, /obj/item/clothing/mask/cigarette))
+		var/valid_wearer = istype(src.loc, /mob)
+		if(!valid_wearer)
+			user.visible_message(
+				span_warning("You have to be wearing the mask to do that")
+			)
+		if(max_filters <= 0 || cig)
+			user.visible_message(
+				span_warning("There's nowhere for that to fit")
+			)
+			return ..()
+		if(has_filter)
+			user.visible_message(
+				span_warning("You can't fit that in while there are filters in the mask")
+			)
+			return ..()
+
+		if(!user.transferItemToLoc(tool, src.loc))
+			return ..()
+		cig = tool
+		if(valid_wearer)
+			cig.equipped(src.loc, ITEM_SLOT_MASK)
+		return TRUE
+
+	if(cig)
+		return cig.attackby(tool, user)
 	if(!istype(tool, /obj/item/gas_filter))
 		return ..()
 	if(LAZYLEN(gas_filters) >= max_filters)
@@ -64,7 +92,18 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	has_filter = TRUE
 	return TRUE
 
+/obj/item/clothing/mask/gas/equipped(mob/M, slot)
+	. = ..()
+	if(cig)
+		cig.equipped(M, slot)
+
+
+
 /obj/item/clothing/mask/gas/attack_hand_secondary(mob/user, list/modifiers)
+	if(cig)
+		user.put_in_hands(cig)
+		cig = null
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!has_filter || !max_filters)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	for(var/i in 1 to max_filters)

@@ -321,9 +321,23 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 	var/to_smoke = smoke_all ? (reagents.total_volume * (dragtime / smoketime)) : REAGENTS_METABOLISM
 	var/mob/living/carbon/smoker = loc
-	if(!istype(smoker) || src != smoker.wear_mask)
+	// These checks are a bit messy but at least they're fairly readable
+	// Check if the smoker is a mob
+	if(!istype(smoker))
 		reagents.remove_any(to_smoke)
 		return
+	// Check if the smoker is actually wearing the cig
+	if(src != smoker.wear_mask)
+		// If they're not, check if the mask is a gas mask
+		if(istype(smoker.wear_mask, /obj/item/clothing/mask/gas))
+			// If it is, check if the cig is being held by that gas mask
+			var/obj/item/clothing/mask/gas/mask = smoker.wear_mask
+			if(src != mask.cig)
+				reagents.remove_any(to_smoke)
+				return
+		else
+			reagents.remove_any(to_smoke)
+			return
 
 	reagents.expose(smoker, INGEST, min(to_smoke / reagents.total_volume, 1))
 	var/obj/item/organ/internal/lungs/lungs = smoker.get_organ_slot(ORGAN_SLOT_LUNGS)
