@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "You can now correctly Tend Wounds on most non-human animals."
+  - rscadd: "You can now Remove Implants from non-human animals, just in case Ian swallowed a macrobomb."
