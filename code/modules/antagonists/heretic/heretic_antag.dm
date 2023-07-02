@@ -448,7 +448,7 @@
 	parts += printplayer(owner)
 	parts += "<b>Sacrifices Made:</b> [total_sacrifices]"
 	var/roundend_targets = jointext(sac_targets, ", ")
-	var/targets = "The heretics targets were [sac_targets]"
+	var/targets = "The heretics targets were [roundend_targets]"
 	parts += targets
 	if(length(objectives))
 		var/count = 1
