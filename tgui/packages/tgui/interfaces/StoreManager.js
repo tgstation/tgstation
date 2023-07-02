@@ -1,6 +1,7 @@
 import { useBackend, useSharedState } from '../backend';
 import { Box, Button, Section, Stack, Dropdown } from '../components';
 import { Window } from '../layouts';
+import { resolveAsset } from '../assets';
 
 export const StoreManager = (props, context) => {
   const { act, data } = useBackend(context);
@@ -47,26 +48,64 @@ export const StoreManager = (props, context) => {
             <Stack fill>
               <Stack.Item grow>
                 {selectedTab && selectedTab.contents ? (
-                  <Section title={selectedTab.title} fill scrollable>
-                    <Stack grow vertical>
+                  <Section
+                    title={selectedTab.title}
+                    fill
+                    scrollable
+                    align="center">
+                    <Stack
+                      direction="row"
+                      textAlign="center"
+                      align="center"
+                      wrap>
                       {selectedTab.contents.map((item) => (
-                        <Stack.Item key={item.name}>
-                          <Stack fontSize="15px">
-                            <Stack.Item grow align="left">
-                              {item.name} {item.cost}
-                              <Stack.Item>
-                                <Button.Checkbox
-                                  content="Select"
-                                  fluid
-                                  onClick={() =>
-                                    act('select_item', {
-                                      path: item.path,
-                                    })
-                                  }
-                                />
-                              </Stack.Item>
+                        <Stack.Item
+                          class="thisissettostopwiththebullshit"
+                          key={item.name}
+                          minWidth="50%"
+                          wrap
+                          backgroundColor="rgba(52, 204, 235, 0.3)"
+                          style={{
+                            border: '2px double silver',
+                            'border-radius': '5px',
+                          }}>
+                          <Stack.Item>
+                            <Stack.Item>
+                              <Box
+                                as="img"
+                                src={resolveAsset(item.icon)}
+                                height="192px"
+                                style={{
+                                  '-ms-interpolation-mode': 'nearest-neighbor',
+                                  'image-rendering': 'pixelated',
+                                }}
+                              />
                             </Stack.Item>
-                          </Stack>
+                            <Stack.Item>
+                              <Button
+                                fluid
+                                content={item.name}
+                                tooltip={item.desc}
+                              />
+                            </Stack.Item>
+                            <Stack.Item>
+                              <Button.Confirm
+                                content="Purchase"
+                                minWidth="49%"
+                                onClick={() =>
+                                  act('select_item', {
+                                    path: item.path,
+                                  })
+                                }
+                              />
+                              <Button
+                                icon="fa-solid fa-coins"
+                                content={item.cost}
+                                minWidth="49%"
+                                tooltip="This is the cost of the item."
+                              />
+                            </Stack.Item>
+                          </Stack.Item>
                         </Stack.Item>
                       ))}
                     </Stack>
