@@ -1,6 +1,0 @@
-author: "ChungusGamer666"
-delete-after: True
-changes:
-  - bugfix: "Hair and facial hair gradients work again now"
-  - bugfix: "Facial hair colors apply properly again"
-  - bugfix: "Admin spawned characters will get hair color preferences applied properly"

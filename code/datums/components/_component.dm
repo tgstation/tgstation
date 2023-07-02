@@ -317,6 +317,17 @@
 	if(QDELING(src))
 		CRASH("Attempted to add a new component of type \[[component_type]\] to a qdeleting parent of type \[[type]\]!")
 
+	var/datum/component/new_component
+
+	if(!ispath(component_type, /datum/component))
+		if(!istype(component_type, /datum/component))
+			CRASH("Attempted to instantiate \[[component_type]\] as a component added to parent of type \[[type]\]!")
+		else
+			new_component = component_type
+			component_type = new_component.type
+	else if(component_type == /datum/component)
+		CRASH("[component_type] attempted instantiation!")
+
 	var/dupe_mode = initial(component_type.dupe_mode)
 	var/dupe_type = initial(component_type.dupe_type)
 	var/uses_sources = (dupe_mode == COMPONENT_DUPE_SOURCES)
@@ -326,14 +337,6 @@
 		CRASH("Attempted to add a normal component of type '[component_type]' to '[type]' with a source!")
 
 	var/datum/component/old_component
-	var/datum/component/new_component
-
-	if(ispath(component_type))
-		if(component_type == /datum/component)
-			CRASH("[component_type] attempted instantiation!")
-	else
-		new_component = component_type
-		component_type = new_component.type
 
 	raw_args[1] = src
 	if(dupe_mode != COMPONENT_DUPE_ALLOWED && dupe_mode != COMPONENT_DUPE_SELECTIVE)
