@@ -26,7 +26,7 @@
 
 	fill_crate(surplus_crate, possible_items)
 
-	podspawn(list(
+	podspawn(list( // unlike other chests, lets give them the chest with STYLE
 		"target" = get_turf(user),
 		"style" = STYLE_SYNDICATE,
 		"spawn" = surplus_crate,
