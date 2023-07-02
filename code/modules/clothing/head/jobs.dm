@@ -18,6 +18,7 @@
 	/// Allowed time between movements
 	COOLDOWN_DECLARE(move_cooldown)
 
+/// Admin variant of the chef hat where every mouse pilot input will always be transferred to the wearer
 /obj/item/clothing/head/utility/chefhat/i_am_assuming_direct_control
 	desc = "The commander in chef's head wear. Upon closer inspection, there seem to be dozens of tiny levers, buttons, dials, and screens inside of this hat. What the hell...?"
 	mouse_control_probability = 100
@@ -64,14 +65,21 @@
 /obj/item/clothing/head/utility/chefhat/proc/on_mouse_moving(mob/living/source, atom/moved_to)
 	SIGNAL_HANDLER
 	if (!prob(mouse_control_probability) || !COOLDOWN_FINISHED(src, move_cooldown))
-		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Didn't roll well enough or on cooldown
+
 	var/mob/living/carbon/wearer = loc
 	if(!wearer || wearer.incapacitated(IGNORE_RESTRAINTS))
-		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
-	var/moved_diagonal = ISDIAGONALDIR(get_dir(wearer, moved_to))
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Not worn or can't move
+
+	var/move_direction = get_dir(wearer, moved_to)
+	if(!wearer.Process_Spacemove(move_direction))
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Currently drifting in space
+	if(!has_gravity() || !isturf(wearer.loc))
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Not in a location where we can move
+
 	step_towards(wearer, moved_to)
 	var/move_delay = wearer.cached_multiplicative_slowdown
-	if (moved_diagonal)
+	if (ISDIAGONALDIR(move_direction))
 		move_delay *= sqrt(2)
 	COOLDOWN_START(src, move_cooldown, move_delay)
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
