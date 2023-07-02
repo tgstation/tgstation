@@ -822,8 +822,17 @@
 	icon_state = "lungs-c"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
-
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
+
+/obj/item/organ/internal/lungs/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		owner.losebreath += 20
+		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
+	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
 /obj/item/organ/internal/lungs/cybernetic/tier2
 	name = "cybernetic lungs"
@@ -847,16 +856,13 @@
 	cold_level_2_threshold = 140
 	cold_level_3_threshold = 100
 
-/obj/item/organ/internal/lungs/cybernetic/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
-		owner.losebreath += 20
-		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
-	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
-
+/obj/item/organ/internal/lungs/cybernetic/surplus
+	name = "surplus cybernetic lungs"
+	desc = "Two fragile sacs of air that only barely mimick the function of human lungs. \
+			Offer no protection against EMPs."
+	icon_state = "lungs-c-s"
+	maxHealth = 0.35 * STANDARD_ORGAN_THRESHOLD
+	emp_vulnerability = 100
 
 /obj/item/organ/internal/lungs/lavaland
 	name = "blackened frilled lungs" // blackened from necropolis exposure

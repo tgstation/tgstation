@@ -563,7 +563,7 @@
 
 /datum/quirk/prosthetic_limb
 	name = "Prosthetic Limb"
-	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a random prosthetic!"
+	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a surplus prosthetic!"
 	icon = "tg-prosthetic-leg"
 	value = -3
 	medical_record_text = "During physical examination, patient was found to have a prosthetic limb."
@@ -605,12 +605,13 @@
 
 /datum/quirk/quadruple_amputee
 	name = "Quadruple Amputee"
-	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, all your limbs have been taken from you."
+	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, all your limbs have been replaced with surplus prosthetics."
 	icon = "tg-prosthetic-full"
 	value = -6
 	medical_record_text = "During physical examination, patient was found to have all prosthetic limbs."
 	hardcore_value = 6
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
+	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
 
 /datum/quirk/quadruple_amputee/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -620,8 +621,108 @@
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/surplus, special = TRUE)
 
 /datum/quirk/quadruple_amputee/post_add()
-	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
-	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
+	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
+	Additionally, you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
+
+/datum/quirk/prosthetic_organ
+	name = "Prosthetic Organ"
+	desc = "An accident caused you to lose one of your organs. Because of this, you now have a surplus prosthetic!"
+	icon = "lungs"
+	value = -3
+	medical_record_text = "During physical examination, patient was found to have a prosthetic organ."
+	hardcore_value = 3
+	quirk_flags = QUIRK_HUMAN_ONLY
+	mail_goodies = list(/obj/item/storage/organbox)
+	/// The slot to replace, in string form
+	var/slot_string = "organ"
+	/// The original organ from before the prosthetic was applied
+	var/obj/item/organ/old_organ
+
+/datum/quirk/prosthetic_organ/add_unique(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/static/list/organ_slots = list(
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_STOMACH,
+	)
+	var/list/possible_organ_slots = organ_slots.Copy()
+	if(HAS_TRAIT(human_holder, TRAIT_NOBLOOD))
+		possible_organ_slots -= ORGAN_SLOT_HEART
+	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH))
+		possible_organ_slots -= ORGAN_SLOT_LUNGS
+	if(HAS_TRAIT(human_holder, TRAIT_LIVERLESS_METABOLISM))
+		possible_organ_slots -= ORGAN_SLOT_LIVER
+	if(HAS_TRAIT(human_holder, TRAIT_NOHUNGER))
+		possible_organ_slots -= ORGAN_SLOT_STOMACH
+	if(!length(organ_slots)) //what the hell
+		return
+	var/organ_slot = pick(possible_organ_slots)
+	var/obj/item/organ/prosthetic
+	switch(organ_slot)
+		if(ORGAN_SLOT_HEART)
+			prosthetic = new /obj/item/organ/internal/heart/cybernetic/surplus
+			slot_string = "heart"
+		if(ORGAN_SLOT_LUNGS)
+			prosthetic = new /obj/item/organ/internal/lungs/cybernetic/surplus
+			slot_string = "lungs"
+		if(ORGAN_SLOT_LIVER)
+			prosthetic = new /obj/item/organ/internal/liver/cybernetic/surplus
+			slot_string = "liver"
+		if(ORGAN_SLOT_STOMACH)
+			prosthetic = new /obj/item/organ/internal/stomach/cybernetic/surplus
+			slot_string = "stomach"
+	old_organ = human_holder.get_organ_slot(organ_slot)
+	if(prosthetic.Insert(human_holder, special = TRUE, drop_if_replaced = TRUE))
+		old_organ.moveToNullspace()
+		STOP_PROCESSING(SSobj, old_organ)
+
+/datum/quirk/prosthetic_organ/post_add()
+	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus organ. It is fragile and will easily come apart under duress. \
+	Additionally, any EMP will make it stop working entirely."))
+
+/datum/quirk/prosthetic_organ/remove()
+	if(old_organ)
+		old_organ.Insert(quirk_holder, special = TRUE)
+	old_organ = null
+
+/datum/quirk/tin_man
+	name = "Tin Man"
+	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, all your organs have been replaced with surplus prosthetics."
+	icon = "robot"
+	value = -6
+	medical_record_text = "During physical examination, patient was found to have all prosthetic organs."
+	hardcore_value = 6
+	quirk_flags = QUIRK_HUMAN_ONLY
+	mail_goodies = list(/obj/item/storage/organbox)
+
+/datum/quirk/tin_man/add_unique(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/static/list/organ_slots = list(
+		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart/cybernetic/surplus,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs/cybernetic/surplus,
+		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver/cybernetic/surplus,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach/cybernetic/surplus,
+	)
+	var/list/possible_organ_slots = organ_slots.Copy()
+	if(HAS_TRAIT(human_holder, TRAIT_NOBLOOD))
+		possible_organ_slots -= ORGAN_SLOT_HEART
+	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH))
+		possible_organ_slots -= ORGAN_SLOT_LUNGS
+	if(HAS_TRAIT(human_holder, TRAIT_LIVERLESS_METABOLISM))
+		possible_organ_slots -= ORGAN_SLOT_LIVER
+	if(HAS_TRAIT(human_holder, TRAIT_NOHUNGER))
+		possible_organ_slots -= ORGAN_SLOT_STOMACH
+	if(!length(organ_slots)) //what the hell
+		return
+	for(var/organ_slot in possible_organ_slots)
+		var/organ_path = possible_organ_slots[organ_slot]
+		var/obj/item/organ/new_organ = new organ_path()
+		new_organ.Insert(human_holder, special = TRUE)
+
+/datum/quirk/tin_man/post_add()
+	to_chat(quirk_holder, span_boldannounce("All your organs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
+	Additionally, any EMP will make them stop working entirely."))
 
 /datum/quirk/pushover
 	name = "Pushover"
