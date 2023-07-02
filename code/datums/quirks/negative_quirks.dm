@@ -688,7 +688,7 @@
 
 /datum/quirk/tin_man
 	name = "Tin Man"
-	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, all your organs have been replaced with surplus prosthetics."
+	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, most of your organs have been replaced with surplus prosthetics."
 	icon = "robot"
 	value = -6
 	medical_record_text = "During physical examination, patient was found to have numerous low-quality prosthetic organs."
