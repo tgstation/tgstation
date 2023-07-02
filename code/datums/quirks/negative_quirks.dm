@@ -627,7 +627,7 @@
 /datum/quirk/prosthetic_organ
 	name = "Prosthetic Organ"
 	desc = "An accident caused you to lose one of your organs. Because of this, you now have a surplus prosthetic!"
-	icon = "lungs"
+	icon = FA_ICON_LUNGS
 	value = -3
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic organ."
 	hardcore_value = 3
@@ -689,7 +689,7 @@
 /datum/quirk/tin_man
 	name = "Tin Man"
 	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, most of your internal organs have been replaced with surplus prosthetics."
-	icon = "robot"
+	icon = FA_ICON_ROBOT
 	value = -6
 	medical_record_text = "During physical examination, patient was found to have numerous low-quality prosthetic internal organs."
 	hardcore_value = 6
