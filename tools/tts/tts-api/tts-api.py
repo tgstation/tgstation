@@ -26,7 +26,7 @@ def text_to_speech_handler(endpoint, voice, text, filter_complex, pitch, silicon
 	data_bytes = io.BytesIO()
 	final_audio = pydub.AudioSegment.empty()
 	for sentence in segmenter.segment(text):
-		response = requests.get(f"http://127.0.0.1:5003/" + endpoint, json={ 'text': sentence, 'voice': voice, 'pitch': pitch })
+		response = requests.get(f"http://tts-container:5003/" + endpoint, json={ 'text': sentence, 'voice': voice, 'pitch': pitch })
 		if response.status_code != 200:
 			abort(500)
 		sentence_audio = pydub.AudioSegment.from_file(io.BytesIO(response.content), "wav")
