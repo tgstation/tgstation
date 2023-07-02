@@ -284,7 +284,8 @@
 
 /obj/item/organ/internal/liver/cybernetic/surplus
 	name = "surplus cybernetic liver"
-	desc = "A very cheap cybernetic liver, mass produced for low-functioning alcoholics. \
+	desc = "A very cheap cybernetic liver, mass produced for low-functioning alcoholics and looks more like a water filter than \
+		an actual liver. \
 		Very fragile, absolutely terrible at filtering toxins and substantially weak to alcohol. \
 		Offers no protection against EMPs."
 	icon_state = "liver-c-s"
