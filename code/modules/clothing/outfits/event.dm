@@ -14,15 +14,15 @@
 
 	box = /obj/item/storage/box/survival/engineer
 
-/datum/outfit/santa/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/santa/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
-	H.fully_replace_character_name(H.real_name, "Santa Claus")
-	H.mind.set_assigned_role(SSjob.GetJobType(/datum/job/santa))
-	H.mind.special_role = ROLE_SANTA
+	user.fully_replace_character_name(user.real_name, "Santa Claus")
+	user.mind.set_assigned_role(SSjob.GetJobType(/datum/job/santa))
+	user.mind.special_role = ROLE_SANTA
 
-	H.hairstyle = "Long Hair 3"
-	H.facial_hairstyle = "Beard (Full)"
-	H.hair_color = "#FFFFFF"
-	H.facial_hair_color = "#FFFFFF"
-	H.update_body_parts()
+	user.hairstyle = "Long Hair 3"
+	user.facial_hairstyle = "Beard (Full)"
+	user.hair_color = "#FFFFFF"
+	user.facial_hair_color = "#FFFFFF"
+	user.update_body_parts(update_limb_data = TRUE)

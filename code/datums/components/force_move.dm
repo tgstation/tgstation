@@ -14,7 +14,7 @@
 	RegisterSignal(mob_parent, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure))
 	if(spin)
 		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(slip_spin))
-	RegisterSignal(loop, COMSIG_PARENT_QDELETING, PROC_REF(loop_ended))
+	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(loop_ended))
 
 /datum/component/force_move/proc/stop_move(datum/source)
 	SIGNAL_HANDLER

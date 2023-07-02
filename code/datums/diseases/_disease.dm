@@ -64,19 +64,18 @@
 
 ///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
-	var/slowdown = affected_mob.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
+	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 
 	if(has_cure())
 		if(disease_flags & CHRONIC && SPT_PROB(cure_chance, seconds_per_tick))
-			src.stage = 1
+			update_stage(1)
 			to_chat(affected_mob, span_notice("Your chronic illness is alleviated a little, though it can't be cured!"))
 			return
-		else
-			if(SPT_PROB(cure_chance, seconds_per_tick))
-				update_stage(max(stage - 1, 1))
-			if(disease_flags & CURABLE && SPT_PROB(cure_chance, seconds_per_tick))
-				cure()
-				return FALSE
+		if(SPT_PROB(cure_chance, seconds_per_tick))
+			update_stage(max(stage - 1, 1))
+		if(disease_flags & CURABLE && SPT_PROB(cure_chance, seconds_per_tick))
+			cure()
+			return FALSE
 	else if(SPT_PROB(stage_prob*slowdown, seconds_per_tick))
 		update_stage(min(stage + 1, max_stages))
 
@@ -87,7 +86,7 @@
 	stage = new_stage
 
 /datum/disease/proc/has_cure()
-	if(!(disease_flags & CURABLE | CHRONIC))
+	if(!(disease_flags & (CURABLE | CHRONIC)))
 		return FALSE
 
 	. = cures.len
@@ -105,7 +104,7 @@
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return
 
-	if(affected_mob.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
+	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
 		return
 
 	var/spread_range = 2

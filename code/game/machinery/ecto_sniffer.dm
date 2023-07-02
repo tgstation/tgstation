@@ -16,7 +16,7 @@
 
 /obj/machinery/ecto_sniffer/Initialize(mapload)
 	. = ..()
-	wires = new/datum/wires/ecto_sniffer(src)
+	set_wires(new/datum/wires/ecto_sniffer(src))
 
 /obj/machinery/ecto_sniffer/attack_ghost(mob/user)
 	. = ..()

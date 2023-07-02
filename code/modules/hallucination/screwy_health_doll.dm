@@ -29,7 +29,7 @@
 		return FALSE
 
 	add_fake_limb()
-	del_timer_id = QDEL_IN(src, duration)
+	del_timer_id = QDEL_IN_STOPPABLE(src, duration)
 	return TRUE
 
 /// Increments the severity of the damage seen on all the limbs we are already tracking.
@@ -51,7 +51,7 @@
 
 	var/obj/item/bodypart/picked = specific_limb || pick(human_mob.bodyparts)
 	if(!(picked in bodyparts))
-		RegisterSignals(picked, list(COMSIG_PARENT_QDELETING, COMSIG_BODYPART_REMOVED), PROC_REF(remove_bodypart))
+		RegisterSignals(picked, list(COMSIG_QDELETING, COMSIG_BODYPART_REMOVED), PROC_REF(remove_bodypart))
 		RegisterSignal(picked, COMSIG_BODYPART_UPDATING_HEALTH_HUD, PROC_REF(on_bodypart_hud_update))
 		RegisterSignal(picked, COMSIG_BODYPART_CHECKED_FOR_INJURY, PROC_REF(on_bodypart_checked))
 
@@ -62,7 +62,7 @@
 /datum/hallucination/fake_health_doll/proc/remove_bodypart(obj/item/bodypart/source)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_BODYPART_REMOVED, COMSIG_BODYPART_UPDATING_HEALTH_HUD, COMSIG_BODYPART_CHECKED_FOR_INJURY))
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_BODYPART_REMOVED, COMSIG_BODYPART_UPDATING_HEALTH_HUD, COMSIG_BODYPART_CHECKED_FOR_INJURY))
 	bodyparts -= source
 
 /// Whenever a bodypart we're tracking has their health hud updated, override it with our fake overlay

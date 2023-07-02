@@ -18,7 +18,7 @@
 			to_chat(user, span_warning("The limb is missing!"))
 			return
 		if(!IS_ORGANIC_LIMB(affecting))
-			to_chat(user, span_notice("Medicine won't work on a robotic limb!"))
+			to_chat(user, span_notice("Medicine won't work on an inorganic limb!"))
 			return
 	..()
 
@@ -44,3 +44,46 @@
 	desc = "Helps with brute and burn injuries. Slightly toxic."
 	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	icon_state = "bandaid_both"
+
+// Patch styles for chem master
+
+/obj/item/reagent_containers/pill/patch/style
+	icon_state = "bandaid_blank"
+/obj/item/reagent_containers/pill/patch/style/brute
+	icon_state = "bandaid_brute_2"
+/obj/item/reagent_containers/pill/patch/style/burn
+	icon_state = "bandaid_burn_2"
+/obj/item/reagent_containers/pill/patch/style/bruteburn
+	icon_state = "bandaid_both"
+/obj/item/reagent_containers/pill/patch/style/toxin
+	icon_state = "bandaid_toxin_2"
+/obj/item/reagent_containers/pill/patch/style/oxygen
+	icon_state = "bandaid_suffocation_2"
+/obj/item/reagent_containers/pill/patch/style/omni
+	icon_state = "bandaid_mix"
+/obj/item/reagent_containers/pill/patch/style/bruteplus
+	icon_state = "bandaid_brute"
+/obj/item/reagent_containers/pill/patch/style/burnplus
+	icon_state = "bandaid_burn"
+/obj/item/reagent_containers/pill/patch/style/toxinplus
+	icon_state = "bandaid_toxin"
+/obj/item/reagent_containers/pill/patch/style/oxygenplus
+	icon_state = "bandaid_suffocation"
+/obj/item/reagent_containers/pill/patch/style/monkey
+	icon_state = "bandaid_monke"
+/obj/item/reagent_containers/pill/patch/style/clown
+	icon_state = "bandaid_clown"
+/obj/item/reagent_containers/pill/patch/style/one
+	icon_state = "bandaid_1"
+/obj/item/reagent_containers/pill/patch/style/two
+	icon_state = "bandaid_2"
+/obj/item/reagent_containers/pill/patch/style/three
+	icon_state = "bandaid_3"
+/obj/item/reagent_containers/pill/patch/style/four
+	icon_state = "bandaid_4"
+/obj/item/reagent_containers/pill/patch/style/exclamation
+	icon_state = "bandaid_exclaimationpoint"
+/obj/item/reagent_containers/pill/patch/style/question
+	icon_state = "bandaid_questionmark"
+/obj/item/reagent_containers/pill/patch/style/colonthree
+	icon_state = "bandaid_colonthree"

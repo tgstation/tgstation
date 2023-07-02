@@ -99,10 +99,12 @@
 
 	if(preference_source)
 		apply_pref_name(/datum/preference/name/ai, preference_source)
+		our_AI.apply_pref_hologram_display(preference_source)
+		our_AI.set_core_display_icon(null, preference_source)
 
 	qdel(src)
 
-/mob/living/carbon/AIize(transfer_after = TRUE, client/preference_source)
+/mob/living/carbon/AIize(client/preference_source, transfer_after = TRUE)
 	if (notransform)
 		return
 	notransform = TRUE
@@ -114,7 +116,7 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
 
-/mob/living/carbon/human/AIize(transfer_after = TRUE, client/preference_source)
+/mob/living/carbon/human/AIize(client/preference_source, transfer_after = TRUE)
 	if (notransform)
 		return
 	for(var/t in bodyparts)
