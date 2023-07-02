@@ -859,7 +859,7 @@
 /obj/item/organ/internal/lungs/cybernetic/surplus
 	name = "surplus cybernetic lungs"
 	desc = "Two fragile sacs of air that only barely mimick the function of human lungs. \
-			Offer no protection against EMPs."
+		Offer no protection against EMPs."
 	icon_state = "lungs-c-s"
 	maxHealth = 0.35 * STANDARD_ORGAN_THRESHOLD
 	emp_vulnerability = 100

@@ -324,7 +324,9 @@
 
 /obj/item/organ/internal/stomach/cybernetic/surplus
 	name = "surplus cybernetic stomach"
-	desc = "A terribly ineffecient mockery of a human stomach. Offers no protection against EMPs."
+	desc = "A terribly inefficient mockery of a human stomach, comparable to a plastic bag filled with acid. \
+		Very fragile, with painfully slow metabolism.\
+		Offers no protection against EMPs."
 	icon_state = "stomach-c-s"
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.35
 	emp_vulnerability = 100

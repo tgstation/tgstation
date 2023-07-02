@@ -284,8 +284,8 @@
 
 /obj/item/organ/internal/liver/cybernetic/surplus
 	name = "surplus cybernetic liver"
-	desc = "A very cheap cybernetic liver, designed to be mass produced. \
-		It is very fragile and absolutely terrible at filtering toxins. \
+	desc = "A very cheap cybernetic liver, mass produced for low-functioning alcoholics. \
+		Very fragile, absolutely terrible at filtering toxins and substantially weak to alcohol. \
 		Offers no protection against EMPs."
 	icon_state = "liver-c-s"
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.35
