@@ -169,13 +169,12 @@
 /datum/reagent/water
 	name = "Water"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
-	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
+	color = "#00B8FF" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
 	evaporation_rate = 4 // water goes fast
 	var/cooling_temperature = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 	default_container = /obj/item/reagent_containers/cup/glass/waterbottle
-	turf_exposure = TRUE
 
 /datum/glass_style/shot_glass/water
 	required_drink_type = /datum/reagent/water
@@ -952,6 +951,7 @@
 	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1.5))
 	mytray.adjust_waterlevel(-round(chems.get_reagent_amount(type) * 0.5))
 	mytray.adjust_weedlevel(-rand(1,3))
+	myseed.adjust_lifespan(-round(chems.get_reagent_amount(type) * 0.2))
 	// White Phosphorous + water -> phosphoric acid. That's not a good thing really.
 
 
@@ -1689,6 +1689,7 @@
 	if(chems.has_reagent(src.type, 1))
 		mytray.yieldmod = 1
 		mytray.mutmod = 1
+		myseed.adjust_lifespan(round(chems.get_reagent_amount(type) * 0.15))
 
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"

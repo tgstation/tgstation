@@ -6,7 +6,7 @@
 
 #define DUCT_LAYER_DEFAULT THIRD_DUCT_LAYER
 
-#define MACHINE_REAGENT_TRANSFER 10 //the default max plumbing machinery transfers
+#define MACHINE_REAGENT_TRANSFER 250 //the default max plumbing machinery transfers
 
 /// List of plumbing layers as name => bitflag
 GLOBAL_LIST_INIT(plumbing_layers, list(

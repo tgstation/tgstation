@@ -167,13 +167,24 @@
 		return FALSE
 
 	mind.late_joiner = TRUE
-	var/atom/destination = mind.assigned_role.get_latejoin_spawn_point()
+	var/atom/destination
+	var/obj/effect/oshan_launch_point/player/picked_point
+
+	if(length(GLOB.oshan_launch_points))
+		picked_point = pick(GLOB.oshan_launch_points)
+		destination = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
+	else
+		destination = mind.assigned_role.get_latejoin_spawn_point()
+
 	if(!destination)
 		CRASH("Failed to find a latejoin spawn point.")
 	var/mob/living/character = create_character(destination)
 	if(!character)
 		CRASH("Failed to create a character for latejoin.")
 	transfer_character()
+
+	if(picked_point)
+		destination.JoinLaunchTowards(character, picked_point)
 
 	SSjob.EquipRank(character, job, character.client)
 	job.after_latejoin_spawn(character)

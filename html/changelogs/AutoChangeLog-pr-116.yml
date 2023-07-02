@@ -1,0 +1,6 @@
+author: "NanoCats"
+delete-after: True
+changes:
+  - rscadd: "Added a silly surprise to tram!"
+  - rscadd: "Ranching for Tram"
+  - qol: "Made tram more palatable via a lot of fixes and tweaks"

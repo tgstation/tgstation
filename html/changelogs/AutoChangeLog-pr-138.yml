@@ -1,0 +1,4 @@
+author: "KittyNoodle"
+delete-after: True
+changes:
+  - bugfix: "The limbgrower is no longer capable of summoning a singularity and/or crashing the server"
