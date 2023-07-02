@@ -84,6 +84,7 @@ export const StoreManager = (props, context) => {
                             <Stack.Item>
                               <Button
                                 fluid
+                                backgroundColor="transparent"
                                 content={item.name}
                                 tooltip={item.desc}
                               />
@@ -112,6 +113,7 @@ export const StoreManager = (props, context) => {
                               />
                               <Button
                                 icon="fa-solid fa-coins"
+                                backgroundColor="transparent"
                                 content={item.cost}
                                 minWidth="49%"
                                 tooltip="This is the cost of the item."
