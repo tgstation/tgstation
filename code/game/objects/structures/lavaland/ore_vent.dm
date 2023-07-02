@@ -20,7 +20,7 @@
 	var/static/list/lavaland_mobs = list(
 		/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
-		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/icewing,
+		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 		/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava,
 		/mob/living/simple_animal/hostile/asteroid/brimdemon,
 		/mob/living/basic/mining/bileworm
@@ -32,7 +32,7 @@
 	var/boulder_size = BOULDER_SIZE_SMALL
 
 	/// Reference to this ore vent's NODE drone, to track wave success.
-	var/obj/item/node = null //this path is a placeholder.
+	var/mob/living/basic/node_drone/node = null //this path is a placeholder.
 
 	/// Percent chance that this vent will produce an artifact as well.
 	// var/artifact_chance = 0
@@ -49,6 +49,7 @@
 	if(istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner))
 		///This is where we start spitting out mobs.
 		Shake(duration = 3 SECONDS)
+		node = new /mob/living/basic/node_drone(loc)
 		start_wave_defense()
 		//This vent is going to start generating ore automatically.
 
@@ -100,7 +101,7 @@
 	addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer)
 
 /obj/structure/ore_vent/proc/handle_wave_conclusion()
-	if(name == "change this") ///Can we check if any mobs are still alive?
+	if(node) ///Can we check if any mobs are still alive?
 		//This is where we'd send a signal to the ore vent to remove it's spawner component.
 		tapped = TRUE
 		SSore_generation.processed_vents += src

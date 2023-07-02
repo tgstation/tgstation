@@ -3979,6 +3979,7 @@
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_instrument.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_loot.dm"
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_vileworm.dm"
+#include "code\modules\mob\living\basic\lavaland\node_drone\node_drone.dm"
 #include "code\modules\mob\living\basic\pets\dog.dm"
 #include "code\modules\mob\living\basic\pets\pet.dm"
 #include "code\modules\mob\living\basic\ruin_defender\stickman.dm"
