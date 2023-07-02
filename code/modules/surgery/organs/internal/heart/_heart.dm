@@ -262,7 +262,7 @@
 
 /obj/item/organ/internal/heart/cybernetic/surplus
 	name = "surplus cybernetic heart"
-	desc = "A fraigle mockery of a human heart that is only more effective than having absolutely none. \
+	desc = "A fragile mockery of a human heart that resembles a water pump more than an actual heart. \
 			Offers no protection against EMPs."
 	icon_state = "heart-c-s-on"
 	base_icon_state = "heart-c-s"
