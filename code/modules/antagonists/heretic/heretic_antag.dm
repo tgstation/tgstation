@@ -760,7 +760,3 @@
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	r_hand = /obj/item/melee/touch_attack/mansus_fist
 
-/datum/antagonist/heretic/roundend_report_footer()
-	var/roundend_targets = jointext(sac_targets, ", ")
-	var/message = "<br><b>The heretics sacrifice targets were:</b> [roundend_targets]<br>"
-	return message
