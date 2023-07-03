@@ -1,7 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - bugfix: "Crayon suicide now properly colors you."
-  - bugfix: "You can't put spraycans in crayon box via opening it and putting directly in slot as intended, but balloon alerts for mime's and rainbow crayons are gone."
-  - qol: "\"empty\" balloon alert no longer appears on crayons."
-  - qol: "You can make crayon burgers now."
