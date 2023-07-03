@@ -938,7 +938,7 @@
 	icon = FA_ICON_WINE_BOTTLE
 	value = -4
 	gain_text = span_danger("You really need a drink.")
-	lose_text = span_notice("Alcohol doesn't seem too enticing anymore.")
+	lose_text = span_notice("Alcohol doesn't seem nearly as enticing anymore.")
 	medical_record_text = "Patient is an alcoholic."
 	reagent_type = /datum/reagent/consumable/ethanol
 	drug_container_type = /obj/item/reagent_containers/cup/glass/bottle/whiskey
