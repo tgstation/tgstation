@@ -48,6 +48,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 		my_head.add_bodypart_overlay(creampie)
 		RegisterSignal(my_head, COMSIG_BODYPART_REMOVED, PROC_REF(lost_head))
 		carbon_parent.add_mood_event("creampie", /datum/mood_event/creampie)
+		carbon_parent.update_body_parts()
 	else if(iscorgi(parent))
 		creamface = mutable_appearance('icons/effects/creampie.dmi', "creampie_corgi")
 	else if(isAI(parent))
@@ -77,6 +78,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	if(iscarbon(parent))
 		var/mob/living/carbon/carbon_parent = parent
 		carbon_parent.clear_mood_event("creampie")
+		carbon_parent.update_body_parts()
 
 ///Callback to remove pieface
 /datum/component/creamed/proc/clean_up(datum/source, clean_types)
