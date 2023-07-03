@@ -19,19 +19,17 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	create_storage(storage_type = /datum/storage/rped)
 
 // check to see if this rped have atleast one circuitboard
-/obj/item/storage/part_replacer/proc/has_an_circuitboard()
-	for(var/obj/item/circuitboard/machine/board in contents)
-		return TRUE
-	return FALSE
+/obj/item/storage/part_replacer/proc/has_an_circuitboard(board_type)
+	return !isnull((locate(board_type) in contents))
 
 /obj/item/storage/part_replacer/pre_attack(obj/attacked_object, mob/living/user, params)
-	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
+	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine) && !istype(attacked_object, /obj/structure/frame/computer))
 		return ..()
 
 	if(!user.Adjacent(attacked_object)) // no TK upgrading.
 		return ..()
 
-	if(ismachinery(attacked_object))
+	if(ismachinery(attacked_object) && !istype(attacked_object, /obj/machinery/computer))
 		var/obj/machinery/attacked_machinery = attacked_object
 
 		if(!attacked_machinery.component_parts)
@@ -42,20 +40,24 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		attacked_machinery.exchange_parts(user, src)
 		return TRUE
 
-	var/obj/structure/frame/machine/attacked_frame = attacked_object
-	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component.
-	if(attacked_frame.state == 1 || (!attacked_frame.components && !has_an_circuitboard()))
-		return TRUE
+	var/obj/structure/frame/attacked_frame = attacked_object
+	if(istype(attacked_frame, /obj/structure/frame/machine))
+		var/obj/structure/frame/machine/machine_frame = attacked_frame
+		if(attacked_frame.state == 1 || (!machine_frame.components && !has_an_circuitboard(/obj/item/circuitboard/machine)))
+			return TRUE
+	else
+		if(attacked_frame.state == 0 || (attacked_frame.state == 1 && !has_an_circuitboard(/obj/item/circuitboard/computer)))
+			return TRUE
 	attacked_frame.attackby(src, user)
 	if(works_from_distance)
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
 	return TRUE
 
 /obj/item/storage/part_replacer/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
-	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine))
+	if(!ismachinery(attacked_object) && !istype(attacked_object, /obj/structure/frame/machine) && !istype(attacked_object, /obj/structure/frame/computer))
 		return ..()
 
-	if(ismachinery(attacked_object))
+	if(ismachinery(attacked_object) && !istype(attacked_object, /obj/machinery/computer))
 		var/obj/machinery/attacked_machinery = attacked_object
 
 		if(!attacked_machinery.component_parts)
@@ -66,12 +68,14 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 			attacked_machinery.exchange_parts(user, src)
 		return
 
-	var/obj/structure/frame/machine/attacked_frame = attacked_object
-	if(!adjacent && !works_from_distance)
-		return
-	// no point attacking the frame with the rped if the frame doesn't have wiring or it doesn't have components & rped has no circuitboard to offer as an component.
-	if(attacked_frame.state == 1 || (!attacked_frame.components && !has_an_circuitboard()))
-		return
+	var/obj/structure/frame/attacked_frame = attacked_object
+	if(istype(attacked_frame, /obj/structure/frame/machine))
+		var/obj/structure/frame/machine/machine_frame = attacked_frame
+		if(attacked_frame.state == 1 || (!machine_frame.components && !has_an_circuitboard(/obj/item/circuitboard/machine)))
+			return TRUE
+	else
+		if(attacked_frame.state == 0 || (attacked_frame.state == 1 && !has_an_circuitboard(/obj/item/circuitboard/computer)))
+			return TRUE
 	attacked_frame.attackby(src, user)
 	if(works_from_distance)
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
