@@ -100,6 +100,20 @@
 	armor_type = /datum/armor/head_cowboy
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+/obj/item/clothing/head/cowboy/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/bullet_intercepting,\
+		active_slots = ITEM_SLOT_HEAD,\
+		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
+	)
+
+/// When we catch a bullet, fling away
+/obj/item/clothing/head/cowboy/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
+	victim.visible_message(span_warning("\The [bullet] sends [victim]'s [src] flying!"))
+	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
+	throw_at(get_edge_target_turf(loc, pick(GLOB.alldirs)), range = 3, speed = 3)
+
 /datum/armor/head_cowboy
 	melee = 5
 	bullet = 5
