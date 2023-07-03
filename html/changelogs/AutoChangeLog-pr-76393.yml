@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Adds the Roach infusion to the DNA infuser. Do you want to survive a nuclear apocalypse? Visit genetics today."
-  - rscadd: "Adds a way to kill Roaches without splatting them. Visit botany for a spray bottle of pestkiller."
-  - qol: "Infuser book is more book-like"
-  - bugfix: "DNA infuser correctly gives on-success feedback messages"
