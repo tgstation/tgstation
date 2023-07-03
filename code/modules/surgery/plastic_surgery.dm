@@ -28,7 +28,7 @@
 		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
 	)
-	display_pain(target, "You feel a something inserting just below the skin in your [parse_zone(target_zone)].")
+	display_pain(target, "You feel something inserting just below the skin in your [parse_zone(target_zone)].")
 
 //reshape_face
 /datum/surgery_step/reshape_face
