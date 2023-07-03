@@ -99,11 +99,14 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/head_cowboy
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	/// Chance that the hat will catch a bullet for you
+	var/deflect_chance = 2
 
 /obj/item/clothing/head/cowboy/Initialize(mapload)
 	. = ..()
 	AddComponent(\
 		/datum/component/bullet_intercepting,\
+		block_chance = deflect_chance,\
 		active_slots = ITEM_SLOT_HEAD,\
 		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
 	)
@@ -119,6 +122,10 @@
 	bullet = 5
 	laser = 5
 	energy = 15
+
+/// Bounty hunter's hat, very likely to intercept bullets
+/obj/item/clothing/head/cowboy/bounty
+	deflect_chance = 50
 
 /obj/item/clothing/head/cowboy/black
 	name = "desperado hat"
