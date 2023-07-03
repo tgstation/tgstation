@@ -213,7 +213,7 @@
 	pixel_x = -8
 	},
 /obj/item/disk/surgery/sleeper_protocol{
-	name = "Interdyne Sleeper Protocal Surgery Disk";
+	name = "Interdyne Sleeper Protocol Surgery Disk";
 	pixel_x = 1
 	},
 /obj/item/disk/surgery/forgottenship{
@@ -723,7 +723,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/light/small/blacklight/directional/south,
 /obj/item/reagent_containers/cup/beaker/meta/salbutamol{
-	list_reagents = list(/datum/reagent/medicine/c2/convermol = 180)
+	list_reagents = list(/datum/reagent/medicine/c2/convermol=180)
 	},
 /obj/item/wrench/medical,
 /turf/open/floor/iron/dark,

@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Lesser Form monkeys no longer maintain the name of the form you had prior to transformation."
