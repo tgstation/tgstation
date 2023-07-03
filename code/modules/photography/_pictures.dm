@@ -29,7 +29,7 @@
 		for(var/mob/seen as anything in dead_spotted)
 			dead_seen += WEAKREF(seen)
 	if(!isnull(real_names))
-		for(var/mob/seen as anything in real_names)
+		for(var/seen in real_names)
 			real_names_seen += seen
 	if(!isnull(image))
 		picture_image = image

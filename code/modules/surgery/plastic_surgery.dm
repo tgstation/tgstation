@@ -16,7 +16,7 @@
 		/obj/item/stack/sheet/plastic = 100,
 		/obj/item/food/meat/slab = 100,
 		/obj/item/stack/sheet/meat = 100)
-	time = 32
+	time = 3.2 SECONDS
 	preop_sound = 'sound/effects/blobattack.ogg'
 	success_sound = 'sound/effects/attackblob.ogg'
 	failure_sound = 'sound/effects/blobattack.ogg'
@@ -72,7 +72,7 @@
 			var/obj/item/offhand = user.get_inactive_held_item()
 			if(istype(offhand, /obj/item/photo))
 				var/obj/item/photo/disguises = offhand
-				for(var/mob/namelist as anything in disguises.picture.real_names_seen)
+				for(var/namelist in disguises.picture?.real_names_seen)
 					names += namelist
 			else
 				for(var/i in 1 to 10)

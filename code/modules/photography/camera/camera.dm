@@ -219,7 +219,7 @@
 	var/icon/get_icon = camera_get_icon(turfs, target_turf, psize_x, psize_y, clone_area, size_x, size_y, (size_x * 2 + 1), (size_y * 2 + 1))
 	qdel(clone_area)
 	get_icon.Blend("#000", ICON_UNDERLAY)
-	for(var/mob/living/carbon/human/person as anything in mobs)
+	for(var/mob/living/carbon/human/person in mobs)
 		if(person.is_face_visible())
 			real_names.Add("[person.real_name]")
 
