@@ -187,6 +187,17 @@
 /datum/bodypart_overlay/mutant/horns/get_global_feature_list()
 	return GLOB.horns_list
 
+/datum/bodypart_overlay/mutant/horns/inherit_color(obj/item/bodypart/ownerlimb, force) /// SKYRAPTOR ADDITION
+	. = ..()
+	if(isnull(ownerlimb))
+		return
+	var/mob/living/carbon/human/the_humie = ownerlimb.owner
+	if(!isnull(the_humie))
+		var/mut_color = the_humie.dna.features["horns_color"]
+		if(mut_color)
+			draw_color = mut_color
+			ownerlimb.update_overlays() /// SKYRAPTOR ADDITION END
+
 ///The frills of a lizard (like weird fin ears)
 /obj/item/organ/external/frills
 	name = "frills"
@@ -213,6 +224,17 @@
 
 /datum/bodypart_overlay/mutant/frills/get_global_feature_list()
 	return GLOB.frills_list
+
+/datum/bodypart_overlay/mutant/frills/inherit_color(obj/item/bodypart/ownerlimb, force) /// SKYRAPTOR ADDITION
+	. = ..()
+	if(isnull(ownerlimb))
+		return
+	var/mob/living/carbon/human/the_humie = ownerlimb.owner
+	if(!isnull(the_humie))
+		var/mut_color = the_humie.dna.features["frills_color"]
+		if(mut_color)
+			draw_color = mut_color
+			ownerlimb.update_overlays() /// SKYRAPTOR ADDITION END
 
 ///Guess what part of the lizard this is?
 /obj/item/organ/external/snout
