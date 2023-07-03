@@ -115,3 +115,45 @@
   carshalash:
   - balance: We are now using space Monsanto brand rice/wheat seeds. Nutriment of
       both grains has been changed to 12% from 4%
+2023-07-03:
+  Cheshify:
+  - bugfix: Frontier Militia only have one general now, and have headsets.
+  - balance: Frontier Militia no longer have energy pistols.
+  Helg2:
+  - bugfix: Crayon suicide now properly colors you.
+  - bugfix: You can't put spraycans in crayon box via opening it and putting directly
+      in slot as intended, but balloon alerts for mime's and rainbow crayons are gone.
+  - qol: '"empty" balloon alert no longer appears on crayons.'
+  - qol: You can make crayon burgers now.
+  - qol: Box with throwing weapons now can hold the items it spawns with. Incredible!
+  - admin: Boxex of materials, debugtools and stabilized extracts now 99 of total
+      storage because they are meant to be debug.
+  Jacquerel:
+  - bugfix: Placing a mouse inside your chef hat will once more allow it to pilot
+      you around.
+  - rscadd: A player-controlled mouse inside your chef hat can compel you to perform
+      complex actions, such as flipping and spinning. You will obey because the mouse
+      knows better than you do.
+  - bugfix: You can now correctly Tend Wounds on most non-human animals.
+  - rscadd: You can now Remove Implants from non-human animals, just in case Ian swallowed
+      a macrobomb.
+  - bugfix: Tom will now always be a brown rat, instead of a random colour, as intended.
+  - rscadd: Budget cuts can sometimes effect the station's supply of Emergency Bluespace
+      Shelters.
+  Melbert:
+  - bugfix: Fixes a runtime from people with aphasia trauma getting deleted
+  - rscadd: Added a new 0 cost passive changeling ability, the Defibrillator Grasp.
+  - rscadd: DNA sing is now no longer innate, but 0 cost, allowing changelings to
+      not take it if they don't plan on using it.
+  - rscadd: Adds the Roach infusion to the DNA infuser. Do you want to survive a nuclear
+      apocalypse? Visit genetics today.
+  - rscadd: Adds a way to kill Roaches without splatting them. Visit botany for a
+      spray bottle of pestkiller.
+  - qol: Infuser book is more book-like
+  - bugfix: DNA infuser correctly gives on-success feedback messages
+  Time-Green:
+  - bugfix: urinal cakes wont decay anymore
+  Vekter:
+  - balance: Increased blob tiles' resistance to lasers to compensate for the recent
+      buff to laser damage.
+  - spellcheck: Fixed a typo on the Interdyne shuttle.

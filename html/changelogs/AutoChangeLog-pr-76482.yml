@@ -1,5 +1,0 @@
-author: "Helg2"
-delete-after: True
-changes:
-  - qol: "Box with throwing weapons now can hold the items it spawns with. Incredible!"
-  - admin: "Boxex of materials, debugtools and stabilized extracts now 99 of total storage because they are meant to be debug."
