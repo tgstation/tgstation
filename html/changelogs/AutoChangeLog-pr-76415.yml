@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - qol: "The health analyzer will now be more clear about how to treat burn wounds, especially seriously infected ones."
