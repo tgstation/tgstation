@@ -629,7 +629,8 @@
 	desc = "An accident caused you to lose one of your organs. Because of this, you now have a surplus prosthetic!"
 	icon = FA_ICON_LUNGS
 	value = -3
-	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic organ."
+	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic organ. \
+		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
 	hardcore_value = 3
 	mail_goodies = list(/obj/item/storage/organbox)
 	/// The slot to replace, in string form
@@ -691,7 +692,8 @@
 	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, most of your internal organs have been replaced with surplus prosthetics."
 	icon = FA_ICON_ROBOT
 	value = -6
-	medical_record_text = "During physical examination, patient was found to have numerous low-quality prosthetic internal organs."
+	medical_record_text = "During physical examination, patient was found to have numerous low-quality prosthetic internal organs. \
+		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>""
 	hardcore_value = 6
 	mail_goodies = list(/obj/item/storage/organbox)
 
