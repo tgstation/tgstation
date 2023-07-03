@@ -983,13 +983,10 @@
 	if(hand_index > hand_bodyparts.len)
 		hand_bodyparts.len = hand_index
 	hand_bodyparts[hand_index] = new_hand
-	RegisterSignals(new_hand, list(COMSIG_QDELETING, COMSIG_BODYPART_REMOVED), PROC_REF(on_lost_hand))
 
-/// Cleans up references to an arm when it is dismembered or deleted
+/// Cleans up references to a hand when it is dismembered or deleted
 /mob/living/carbon/proc/on_lost_hand(obj/item/bodypart/arm/lost_hand)
-	SIGNAL_HANDLER
 	hand_bodyparts[lost_hand.held_index] = null
-	UnregisterSignal(lost_hand, list(COMSIG_QDELETING, COMSIG_BODYPART_REMOVED))
 
 ///Proc to hook behavior on bodypart additions. Do not directly call. You're looking for [/obj/item/bodypart/proc/try_attach_limb()].
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
@@ -1028,7 +1025,7 @@
 	var/final_modification = 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		final_modification += bodypart.speed_modifier
-	add_movespeed_modifier(/datum/movespeed_modifier/bodypart, final_modification)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bodypart, update = TRUE, multiplicative_slowdown = final_modification)
 
 /mob/living/carbon/proc/create_internal_organs()
 	for(var/obj/item/organ/internal/internal_organ in organs)

@@ -92,9 +92,15 @@
 	SEND_SIGNAL(owner, COMSIG_CARBON_REMOVE_LIMB, src, dismembered)
 	SEND_SIGNAL(src, COMSIG_BODYPART_REMOVED, owner, dismembered)
 	update_limb(dropping_limb = TRUE)
-	//limb is out and about, it can't really be considered an implant
-	bodypart_flags &= ~BODYPART_IMPLANTED
+	bodypart_flags &= ~BODYPART_IMPLANTED //limb is out and about, it can't really be considered an implant
 	owner.remove_bodypart(src)
+	if(held_index)
+		owner.on_lost_hand(src)
+		if(owner.hud_used)
+			var/atom/movable/screen/inventory/hand/hand = owner.hud_used.hand_slots["[held_index]"]
+			if(hand)
+				hand.update_appearance()
+		owner.update_worn_gloves()
 	if(speed_modifier)
 		owner.update_bodypart_speed_modifier()
 
@@ -125,7 +131,7 @@
 	if(!special)
 		if(phantom_owner.dna)
 			for(var/datum/mutation/human/mutation as anything in phantom_owner.dna.mutations) //some mutations require having specific limbs to be kept.
-				if(mutation.limb_req && mutation.limb_req == body_zone)
+				if(mutation.limb_req && (mutation.limb_req == body_zone))
 					to_chat(phantom_owner, span_warning("You feel your [mutation] deactivating from the loss of your [body_zone]!"))
 					phantom_owner.dna.force_lose(mutation)
 
