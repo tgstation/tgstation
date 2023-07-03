@@ -2,8 +2,9 @@ import { useBackend, useLocalState } from '../backend';
 import { createSearch } from 'common/string';
 import { Box, Button, Dimmer, Icon, Section, Stack, Input, TextArea } from '../components';
 import { NtosWindow } from '../layouts';
-import { Component, createRef, InfernoNode, RefObject, SFC } from 'inferno';
+import { Component, createRef, RefObject, SFC } from 'inferno';
 import { sanitizeText } from '../sanitize';
+import { BooleanLike } from 'common/react';
 
 import '../styles/interfaces/NtosMessenger.scss';
 
@@ -11,12 +12,12 @@ type NtMessage = {
   name: string;
   job: string;
   contents: string;
-  outgoing: boolean;
+  outgoing: BooleanLike;
   sender: string;
-  automated: boolean;
+  automated: BooleanLike;
   photo_path: string;
   photo: string;
-  everyone: boolean;
+  everyone: BooleanLike;
   targets: string[];
   target_details: string[];
 };
@@ -35,14 +36,14 @@ type NtMessengers = Record<string, NtMessenger>;
 
 type NtosMessengerData = {
   owner: string;
-  sort_by_job: boolean;
-  is_silicon: boolean;
-  ringer_status: boolean;
-  can_spam: boolean;
-  on_spam_cooldown: boolean;
-  virus_attach: boolean;
-  sending_virus: boolean;
-  sending_and_receiving: boolean;
+  sort_by_job: BooleanLike;
+  is_silicon: BooleanLike;
+  ringer_status: BooleanLike;
+  can_spam: BooleanLike;
+  on_spam_cooldown: BooleanLike;
+  virus_attach: BooleanLike;
+  sending_virus: BooleanLike;
+  sending_and_receiving: BooleanLike;
   viewing_messages_of: NtMessenger;
   photo: string;
   messages: NtMessage[];
@@ -51,24 +52,20 @@ type NtosMessengerData = {
 
 const NoIDDimmer = () => {
   return (
-    <Stack>
-      <Stack.Item>
-        <Dimmer>
-          <Stack align="baseline" vertical>
+    <Dimmer>
+      <Stack align="baseline" vertical>
+        <Stack.Item>
+          <Stack ml={-2}>
             <Stack.Item>
-              <Stack ml={-2}>
-                <Stack.Item>
-                  <Icon color="red" name="address-card" size={10} />
-                </Stack.Item>
-              </Stack>
-            </Stack.Item>
-            <Stack.Item fontSize="18px">
-              Please imprint an ID to continue.
+              <Icon color="red" name="address-card" size={10} />
             </Stack.Item>
           </Stack>
-        </Dimmer>
-      </Stack.Item>
-    </Stack>
+        </Stack.Item>
+        <Stack.Item fontSize="18px">
+          Please imprint an ID to continue.
+        </Stack.Item>
+      </Stack>
+    </Dimmer>
   );
 };
 
@@ -242,9 +239,9 @@ const ContactsScreen = (_props: any, context: any) => {
 };
 
 type ChatMessageProps = {
-  isSelf: boolean;
+  isSelf: BooleanLike;
   msg: string;
-  everyone?: boolean;
+  everyone?: BooleanLike;
   photoPath?: string;
 };
 
@@ -278,7 +275,7 @@ type ChatScreenProps = {
 
 type ChatScreenState = {
   msg: string;
-  canSend: boolean;
+  canSend: BooleanLike;
 };
 
 class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
@@ -298,7 +295,7 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     this.handleSendMessage = this.handleSendMessage.bind(this);
   }
 
-  componentDidMount(): void {
+  componentDidMount() {
     this.scrollToBottom();
   }
 
@@ -306,20 +303,20 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     prevProps: ChatScreenProps,
     _prevState: ChatScreenState,
     _snapshot: any
-  ): void {
+  ) {
     if (prevProps.msgs.length !== this.props.msgs.length) {
       this.scrollToBottom();
     }
   }
 
-  scrollToBottom(): void {
+  scrollToBottom() {
     const scroll = this.scrollRef.current;
     if (scroll !== null) {
       scroll.scrollTop = scroll.scrollHeight;
     }
   }
 
-  handleSendMessage(): void {
+  handleSendMessage() {
     if (this.state.msg === '') return;
     const { act } = useBackend<NtosMessengerData>(this.context);
     act('PDA_sendMessage', {
@@ -332,11 +329,11 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     setTimeout(() => this.setState({ canSend: true }), 1000);
   }
 
-  handleMessageInput(_: any, val: string): void {
+  handleMessageInput(_: any, val: string) {
     this.setState({ msg: val });
   }
 
-  render(): InfernoNode | undefined {
+  render() {
     const { act } = useBackend<NtosMessengerData>(this.context);
     const { recp, onReturn, msgs } = this.props;
     const { msg, canSend } = this.state;
@@ -375,7 +372,7 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
           </Section>
         </Stack.Item>
 
-        <Stack.Item grow={1}>
+        <Stack.Item>
           <Section
             scrollable
             fill
@@ -395,7 +392,7 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
         <Stack.Item>
           <Section>
             <Stack fill>
-              <Stack.Item grow={1}>
+              <Stack.Item>
                 <Input
                   placeholder={`Send message to ${recp.name}...`}
                   fluid
@@ -427,7 +424,7 @@ const SendToAllModal = (_: any, context: any) => {
   const { data, act } = useBackend<NtosMessengerData>(context);
   const { on_spam_cooldown } = data;
 
-  const [msg, setMsg] = useLocalState<string>(context, 'everyoneMessage', '');
+  const [msg, setMsg] = useLocalState(context, 'everyoneMessage', '');
 
   return (
     <>
