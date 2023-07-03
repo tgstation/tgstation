@@ -100,3 +100,6 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola
 	name = "Nuka Cola"
 	list_reagents = list(/datum/reagent/consumable/nuka_cola = 50)
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full
+	list_reagents = list(/datum/reagent/water = 25)
