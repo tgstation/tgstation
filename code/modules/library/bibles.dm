@@ -81,7 +81,22 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /obj/item/book/bible/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
+	AddComponent(\
+		/datum/component/bullet_intercepting,\
+		active_slots = ITEM_SLOT_SUITSTORE,\
+		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
+	)
 	carve_out()
+
+/// Destroy the bible when it's shot by a bullet
+/obj/item/book/bible/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
+	victim.add_mood_event("blessing", /datum/mood_event/blessing)
+	playsound(victim, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
+	victim.visible_message(span_warning("\The [src] takes \the [bullet] in [victim]'s place!"))
+	var/obj/structure/fluff/paper/stack/pages = new(get_turf(victim))
+	pages.dir = pick(GLOB.alldirs)
+	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
+	qdel(src)
 
 /obj/item/book/bible/examine(mob/user)
 	. = ..()
