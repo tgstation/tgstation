@@ -535,7 +535,7 @@
 	name = "Hemiplegic"
 	desc = "Half of your body doesn't work. Nothing will ever fix this."
 	icon = FA_ICON_CIRCLE_HALF_STROKE
-	value = -8 // slightly more bearable than paraplegic
+	value = -10 // slightly more bearable than paraplegic but not by much
 	gain_text = null // Handled by trauma.
 	lose_text = null
 	medical_record_text = "Patient has an untreatable impairment in motor function on half of their body."
