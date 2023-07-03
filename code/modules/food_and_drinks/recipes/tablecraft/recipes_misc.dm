@@ -30,7 +30,6 @@
 	)
 	result = /obj/item/food/chococoin
 	category = CAT_MISCFOOD
-	crafting_complexity = 2
 
 /datum/crafting_recipe/food/fudgedice
 	name = "Fudge dice"
@@ -49,7 +48,6 @@
 	)
 	result = /obj/item/food/chocoorange
 	category = CAT_MISCFOOD
-	crafting_complexity = 2
 
 /datum/crafting_recipe/food/cheesyfries
 	name = "Cheesy fries"

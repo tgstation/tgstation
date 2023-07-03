@@ -39,6 +39,7 @@
 		/datum/reagent/consumable/nutriment = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
+	crafting_complexity = 1
 
 /obj/item/food/spaghetti/boiledspaghetti/Initialize(mapload)
 	. = ..()
@@ -56,6 +57,7 @@
 	)
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtypes = GRAIN | VEGETABLES
+	crafting_complexity = 2
 
 /obj/item/food/spaghetti/pastatomato/soulful
 	name = "soul food"
@@ -84,6 +86,7 @@
 	)
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtypes = GRAIN | VEGETABLES
+	crafting_complexity = 2
 
 /obj/item/food/spaghetti/meatballspaghetti
 	name = "spaghetti and meatballs"
@@ -96,6 +99,7 @@
 	)
 	tastes = list("pasta" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = 2
 
 /obj/item/food/spaghetti/spesslaw
 	name = "spesslaw"
@@ -108,6 +112,7 @@
 	)
 	tastes = list("pasta" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = 2
 
 /obj/item/food/spaghetti/chowmein
 	name = "chow mein"
@@ -120,6 +125,7 @@
 	)
 	tastes = list("noodle" = 1, "meat" = 1, "fried vegetables" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
+	crafting_complexity = 3
 
 /obj/item/food/spaghetti/beefnoodle
 	name = "beef noodle"
@@ -134,6 +140,7 @@
 	)
 	tastes = list("noodles" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
+	crafting_complexity = 3
 
 /obj/item/food/spaghetti/butternoodles
 	name = "butter noodles"
@@ -145,6 +152,7 @@
 	)
 	tastes = list("noodles" = 1, "butter" = 1)
 	foodtypes = GRAIN | DAIRY
+	crafting_complexity = 2
 
 /obj/item/food/spaghetti/mac_n_cheese
 	name = "mac n' cheese"
@@ -156,3 +164,4 @@
 	)
 	tastes = list("cheese" = 1, "breadcrumbs" = 1, "pasta" = 1)
 	foodtypes = GRAIN | DAIRY
+	crafting_complexity = 4

@@ -511,7 +511,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/food_taste_reaction
 
-	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER) && !isjellyperson(H)) // it's not real food
+	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER) && !isjellyperson(gourmand)) // it's not real food
 		food_taste_reaction = FOOD_TOXIC
 
 	if(check_liked) //Callback handling; use this as an override for special food like donuts
@@ -521,31 +521,31 @@ Behavior that's still missing from this component that original food items had t
 		food_taste_reaction = gourmand.get_food_taste_reaction(parent, foodtypes)
 
 	if(food_taste_reaction == FOOD_TOXIC)
-		to_chat(H,span_warning("What the hell was that thing?!"))
-		H.adjust_disgust(25 + 30 * fraction)
-		H.add_mood_event("toxic_food", /datum/mood_event/disgusting_food)
+		to_chat(gourmand,span_warning("What the hell was that thing?!"))
+		gourmand.adjust_disgust(25 + 30 * fraction)
+		gourmand.add_mood_event("toxic_food", /datum/mood_event/disgusting_food)
 		return
 
-	var/food_quality = get_preceived_food_quality(H, parent)
+	var/food_quality = get_preceived_food_quality(gourmand, parent)
 	if(food_quality <= 0)
-		to_chat(H,span_notice("That didn't taste very good..."))
-		H.adjust_disgust(11 + 15 * fraction)
-		H.add_mood_event("gross_food", /datum/mood_event/gross_food)
+		to_chat(gourmand,span_notice("That didn't taste very good..."))
+		gourmand.adjust_disgust(11 + 15 * fraction)
+		gourmand.add_mood_event("gross_food", /datum/mood_event/gross_food)
 	else
 		food_quality = min(food_quality, FOOD_QUALITY_TOP)
 		var/atom/owner = parent
 		var/timeout_mod = owner.reagents.get_average_purity() * 2 // 100% at average purity 50%
 		var/event = GLOB.food_quality_events[food_quality]
-		H.add_mood_event("quality_food", event, timeout_mod)
-		H.adjust_disgust(-5 + -2 * food_quality * fraction)
+		gourmand.add_mood_event("quality_food", event, timeout_mod)
+		gourmand.adjust_disgust(-5 + -2 * food_quality * fraction)
 
 		var/quality_label = GLOB.food_quality_description[food_quality]
-		to_chat(H,span_notice("That's \an [quality_label] meal."))
+		to_chat(gourmand,span_notice("That's \an [quality_label] meal."))
 
 	if(istype(parent, /obj/item/food))
 		var/obj/item/food/food = parent
 		if(food.venue_value >= FOOD_PRICE_EXOTIC)
-			H.add_mob_memory(/datum/memory/good_food, food = parent)
+			gourmand.add_mob_memory(/datum/memory/good_food, food = parent)
 
 /// Get the complexity of the crafted food
 /datum/component/edible/proc/get_recipe_complexity()
@@ -562,9 +562,9 @@ Behavior that's still missing from this component that original food items had t
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
 		food_quality += isjellyperson(eater) ? 2 : -4
 
-	food_quality += TOXIC_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.dna.species.toxic_food)
-	food_quality += DISLIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.dna.species.disliked_food)
-	food_quality += LIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.dna.species.liked_food)
+	food_quality += TOXIC_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_toxic_foodtypes())
+	food_quality += DISLIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_disliked_foodtypes())
+	food_quality += LIKED_FOOD_QUALITY_CHANGE * count_matching_foodtypes(foodtypes, eater.get_liked_foodtypes())
 
 	return food_quality
 

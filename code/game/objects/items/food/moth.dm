@@ -243,6 +243,7 @@
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_NORMAL
 	burns_in_oven = TRUE
+	crafting_complexity = 1
 
 /obj/item/food/big_baked_rice/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
@@ -259,6 +260,7 @@
 	tastes = list("rice" = 1, "potato" = 1, "veggies" = 1)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 1
 
 /obj/item/food/oven_baked_corn
 	name = "oven-baked corn"
@@ -274,6 +276,7 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	burns_in_oven = TRUE
+	crafting_complexity = 1
 
 /obj/item/food/buttered_baked_corn
 	name = "buttered baked corn"
@@ -565,6 +568,7 @@
 	)
 	tastes = list("dough" = 1, "tomato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
+	crafting_complexity = 5
 
 /obj/item/food/raw_mothic_margherita/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_margherita, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -584,6 +588,7 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/mothic_margherita
 	boxtag = "Margherita alla Moffuchi"
+	crafting_complexity = 5
 
 /obj/item/food/pizzaslice/mothic_margherita
 	name = "mothic margherita slice"
@@ -592,6 +597,7 @@
 	icon_state = "margherita_slice"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
+	crafting_complexity = 5
 
 /obj/item/food/raw_mothic_firecracker
 	name = "raw mothic firecracker pizza"
@@ -607,6 +613,7 @@
 	)
 	tastes = list("dough" = 1, "chili" = 1, "corn" = 1, "cheese" = 1, "bbq sauce" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
+	crafting_complexity = 5
 
 /obj/item/food/raw_mothic_firecracker/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_firecracker, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -627,6 +634,7 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/mothic_firecracker
 	boxtag = "Vesuvian Firecracker"
+	crafting_complexity = 5
 
 /obj/item/food/pizzaslice/mothic_firecracker
 	name = "mothic firecracker slice"
@@ -635,6 +643,7 @@
 	icon_state = "firecracker_slice"
 	tastes = list("crust" = 1, "chili" = 1, "corn" = 1, "cheese" = 1, "bbq sauce" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
+	crafting_complexity = 5
 
 /obj/item/food/raw_mothic_five_cheese
 	name = "raw mothic five-cheese pizza"
@@ -649,6 +658,7 @@
 	)
 	tastes = list("dough" = 1, "cheese" = 1, "more cheese" = 1, "excessive amounts of cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
+	crafting_complexity = 5
 
 /obj/item/food/raw_mothic_five_cheese/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_five_cheese, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -668,6 +678,7 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/mothic_five_cheese
 	boxtag = "Cheeseplosion"
+	crafting_complexity = 5
 
 /obj/item/food/pizzaslice/mothic_five_cheese
 	name = "mothic five-cheese slice"
@@ -676,6 +687,7 @@
 	icon_state = "five_cheese_slice"
 	tastes = list("crust" = 1, "cheese" = 1, "more cheese" = 1, "excessive amounts of cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
+	crafting_complexity = 5
 
 /obj/item/food/raw_mothic_white_pie
 	name = "raw mothic white-pie pizza"
@@ -690,6 +702,7 @@
 	)
 	tastes = list("dough" = 1, "cheese" = 1, "herbs" = 1, "garlic" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
+	crafting_complexity = 5
 
 /obj/item/food/raw_mothic_white_pie/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_white_pie, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -709,6 +722,7 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/mothic_white_pie
 	boxtag = "Pane Bianco"
+	crafting_complexity = 5
 
 /obj/item/food/pizzaslice/mothic_white_pie
 	name = "mothic white-pie slice"
@@ -717,6 +731,7 @@
 	icon_state = "white_pie_slice"
 	tastes = list("crust" = 1, "cheese" = 1, "more cheese" = 1, "excessive amounts of cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
+	crafting_complexity = 5
 
 /obj/item/food/raw_mothic_pesto
 	name = "raw mothic pesto pizza"
@@ -731,6 +746,7 @@
 	)
 	tastes = list("dough" = 1, "pesto" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS | RAW
+	crafting_complexity = 5
 
 /obj/item/food/raw_mothic_pesto/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_pesto, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -750,6 +766,7 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS | RAW
 	slice_type = /obj/item/food/pizzaslice/mothic_pesto
 	boxtag = "Presto Pesto"
+	crafting_complexity = 5
 
 /obj/item/food/pizzaslice/mothic_pesto
 	name = "mothic pesto slice"
@@ -758,6 +775,7 @@
 	icon_state = "pesto_slice"
 	tastes = list("crust" = 1, "pesto" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS
+	crafting_complexity = 5
 
 /obj/item/food/raw_mothic_garlic
 	name = "raw mothic garlic pizzabread"
@@ -772,6 +790,7 @@
 	)
 	tastes = list("dough" = 1, "garlic" = 1, "butter" = 1)
 	foodtypes = GRAIN | VEGETABLES | RAW
+	crafting_complexity = 4
 
 /obj/item/food/raw_mothic_garlic/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mothic_garlic, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -791,6 +810,7 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS
 	slice_type = /obj/item/food/pizzaslice/mothic_garlic
 	boxtag = "Garlic Bread alla Moffuchi"
+	crafting_complexity = 4
 
 /obj/item/food/pizzaslice/mothic_garlic
 	name = "mothic garlic pizzabread slice"
@@ -799,6 +819,7 @@
 	icon_state = "garlic_slice"
 	tastes = list("dough" = 1, "garlic" = 1, "butter" = 1)
 	foodtypes = GRAIN | VEGETABLES
+	crafting_complexity = 4
 
 //Bread
 /obj/item/food/bread/corn
@@ -812,6 +833,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slice_type = /obj/item/food/breadslice/corn
 	yield = 6
+	crafting_complexity = 2
 
 /obj/item/food/breadslice/corn
 	name = "cornbread slice"
@@ -820,6 +842,7 @@
 	icon_state = "cornbread_slice"
 	foodtypes = GRAIN
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3)
+	crafting_complexity = 2
 
 //Sweets
 /obj/item/food/moth_cheese_cakes

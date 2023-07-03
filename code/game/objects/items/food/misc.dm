@@ -171,6 +171,7 @@
 	tastes = list("melon" = 1)
 	foodtypes = FRUIT
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 4
 
 /obj/item/food/melonkeg
 	name = "melon keg"
@@ -294,6 +295,7 @@
 	tastes = list("batter" = 3, "onion" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 1
 
 /obj/item/food/pineappleslice
 	name = "pineapple slice"
@@ -362,6 +364,7 @@
 	tastes = list("bell pepper" = 1, "char" = 1)
 	foodtypes = VEGETABLES
 	burns_in_oven = TRUE
+	crafting_complexity = 1
 
 /obj/item/food/pierogi
 	name = "pierogi"

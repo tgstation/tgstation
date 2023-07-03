@@ -14,7 +14,7 @@
 	foodtypes = GRAIN | SUGAR | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = 2
 
 /obj/item/food/muffin/berry
 	name = "berry muffin"
@@ -23,6 +23,7 @@
 	tastes = list("muffin" = 3, "berry" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR | BREAKFAST
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = 3
 
 /obj/item/food/muffin/booberry
 	name = "booberry muffin"
@@ -31,6 +32,7 @@
 	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 	tastes = list("muffin" = 3, "spookiness" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR | BREAKFAST
+	crafting_complexity = 4
 
 /obj/item/food/muffin/moffin
 	name = "moffin"
@@ -148,6 +150,7 @@
 	foodtypes = GRAIN | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 2
 
 /obj/item/food/fortunecookie/proc/get_fortune()
 	var/atom/drop_location = drop_location()
@@ -180,6 +183,7 @@
 	)
 	tastes = list("sweetness" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
+	crafting_complexity = 2
 
 /obj/item/food/cookie/sugar/Initialize(mapload)
 	. = ..()
@@ -211,6 +215,7 @@
 	)
 	tastes = list("cookie" = 2, "oat" = 1)
 	foodtypes = GRAIN
+	crafting_complexity = 3
 
 /obj/item/food/cookie/raisin
 	name = "raisin cookie"
@@ -222,6 +227,7 @@
 	)
 	tastes = list("cookie" = 1, "raisins" = 1)
 	foodtypes = GRAIN | FRUIT
+	crafting_complexity = 3
 
 /obj/item/food/poppypretzel
 	name = "poppy pretzel"
@@ -303,13 +309,14 @@
 	foodtypes = GRAIN | FRUIT | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = 3
 
 /obj/item/food/cherrycupcake/blue
 	name = "blue cherry cupcake"
 	desc = "Blue cherries inside a delicious cupcake."
 	icon_state = "bluecherrycupcake"
 	tastes = list("cake" = 3, "blue cherry" = 1)
+	crafting_complexity = 3
 
 /obj/item/food/honeybun
 	name = "honey bun"
@@ -410,6 +417,7 @@
 	)
 	tastes = list("raw brownie batter" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | BREAKFAST
+	crafting_complexity = 1
 
 /obj/item/food/raw_brownie_batter/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/brownie_sheet, rand(20 SECONDS, 30 SECONDS), TRUE, TRUE)
@@ -458,6 +466,7 @@
 	)
 	tastes = list("raw brownie batter" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | NUTS
+	crafting_complexity = 1
 
 /obj/item/food/peanut_butter_brownie_batter/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/peanut_butter_brownie_sheet, rand(20 SECONDS, 30 SECONDS), TRUE, TRUE)

@@ -19,6 +19,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 12)
 	tastes = list("leaves" = 1)
 	foodtypes = VEGETABLES | FRUIT
+	crafting_complexity = 3
 
 /obj/item/food/salad/herbsalad
 	name = "herb salad"
@@ -27,6 +28,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1, "apple" = 1)
 	foodtypes = VEGETABLES | FRUIT
+	crafting_complexity = 2
 
 /obj/item/food/salad/validsalad
 	name = "valid salad"
@@ -43,6 +45,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("fruit" = 1)
 	foodtypes = FRUIT
+	crafting_complexity = 3
 
 /obj/item/food/salad/jungle
 	name = "jungle salad"
@@ -51,6 +54,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 7)
 	tastes = list("fruit" = 1, "the jungle" = 1)
 	foodtypes = FRUIT
+	crafting_complexity = 3
 
 /obj/item/food/salad/citrusdelight
 	name = "citrus delight"
@@ -62,6 +66,7 @@
 	)
 	tastes = list("sourness" = 1, "leaves" = 1)
 	foodtypes = FRUIT | ORANGES
+	crafting_complexity = 3
 
 /obj/item/food/uncooked_rice
 	name = "uncooked rice"
@@ -87,6 +92,7 @@
 	)
 	tastes = list("rice" = 1)
 	foodtypes = GRAIN | BREAKFAST
+	crafting_complexity = 1
 
 /obj/item/food/salad/ricepudding
 	name = "rice pudding"
@@ -112,6 +118,7 @@
 	)
 	tastes = list("rice" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
+	crafting_complexity = 2
 
 /obj/item/food/salad/risotto
 	name = "risotto"
@@ -149,6 +156,7 @@
 	)
 	tastes = list("extreme bitterness" = 3, "hope" = 1)
 	foodtypes = VEGETABLES
+	crafting_complexity = 3
 
 /obj/item/food/salad/gumbo
 	name = "black eyed gumbo"
@@ -247,6 +255,7 @@
 	)
 	tastes = list("healthy greens" = 2, "olive dressing" = 1)
 	foodtypes = VEGETABLES
+	crafting_complexity = 3
 
 /obj/item/food/salad/greek_salad
 	name = "Greek salad"
@@ -258,6 +267,7 @@
 	)
 	tastes = list("healthy greens" = 2, "olive dressing" = 1, "feta cheese" = 1)
 	foodtypes = VEGETABLES | DAIRY
+	crafting_complexity = 4
 
 /obj/item/food/salad/caesar_salad
 	name = "Caesar salad"
@@ -269,6 +279,7 @@
 	)
 	tastes = list("healthy greens" = 2, "olive dressing" = 2, "feta cheese" = 2, "pita bread" = 1)
 	foodtypes = VEGETABLES | DAIRY | GRAIN
+	crafting_complexity = 4
 
 /obj/item/food/salad/spring_salad
 	name = "spring salad"
@@ -280,6 +291,7 @@
 	)
 	tastes = list("crisp greens" = 2, "olive dressing" = 2, "salt" = 1)
 	foodtypes = VEGETABLES
+	crafting_complexity = 3
 
 /obj/item/food/salad/potato_salad
 	name = "potato salad"
@@ -292,6 +304,7 @@
 	)
 	tastes = list("creamy potatoes" = 2, "eggs" = 2, "mayonnaise" = 1, "onions" = 1)
 	foodtypes = VEGETABLES | BREAKFAST
+	crafting_complexity = 3
 
 /obj/item/food/salad/spinach_fruit_salad
 	name = "spinach fruit salad"
@@ -303,6 +316,7 @@
 	)
 	tastes = list("spinach" = 2, "berries" = 2, "pineapple" = 2, "dressing" = 1)
 	foodtypes = VEGETABLES | FRUIT
+	crafting_complexity = 3
 
 /obj/item/food/salad/antipasto_salad
 	name = "antipasto salad"
@@ -315,3 +329,4 @@
 	)
 	tastes = list("lettuce" = 2, "salami" = 2, "mozzarella cheese" = 2, "tomatoes" = 2, "dressing" = 1)
 	foodtypes = VEGETABLES | DAIRY | MEAT
+	crafting_complexity = 4

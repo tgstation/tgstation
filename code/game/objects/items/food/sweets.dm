@@ -92,7 +92,7 @@
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 1
+	crafting_complexity = 2
 
 /obj/item/food/fudgedice
 	name = "fudge dice"
@@ -122,6 +122,7 @@
 	foodtypes = JUNKFOOD | SUGAR | ORANGES
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = 2
 
 /obj/item/food/bonbon
 	name = "bon bon"
