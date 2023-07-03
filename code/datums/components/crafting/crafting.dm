@@ -122,22 +122,18 @@
 			if(isstack(item))
 				var/obj/item/stack/stack = item
 				.["other"][item.type] += stack.amount
-			else if(item.tool_behaviour)
-				.["tool_behaviour"] += item.tool_behaviour
-				.["other"][item.type] += 1
-			else
-				if(is_reagent_container(item))
-					var/obj/item/reagent_containers/container = item
-					if(container.is_drainable())
-						for(var/datum/reagent/reagent in container.reagents.reagent_list)
-							.["other"][reagent.type] += reagent.volume
+			else if(is_reagent_container(item) && item.is_drainable() && length(item.reagents.reagent_list)) //some container that has some reagents inside it that can be drained
+				var/obj/item/reagent_containers/container = item
+				for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
+					.["other"][reagent.type] += reagent.volume
+			else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
+				if(item.tool_behaviour)
+					.["tool_behaviour"] += item.tool_behaviour
 				.["other"][item.type] += 1
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.["machinery"], object.type, object)
 		else if (isstructure(object))
 			LAZYADDASSOCLIST(.["structures"], object.type, object)
-
-
 
 /// Returns a boolean on whether the tool requirements of the input recipe are satisfied by the input source and surroundings.
 /datum/component/personal_crafting/proc/check_tools(atom/source, datum/crafting_recipe/recipe, list/surroundings)
@@ -487,14 +483,24 @@
 		get_asset_datum(/datum/asset/spritesheet/crafting),
 		get_asset_datum(/datum/asset/spritesheet/crafting/cooking),
 	)
-///
+
 /datum/component/personal_crafting/proc/build_crafting_data(datum/crafting_recipe/recipe)
 	var/list/data = list()
 	var/list/atoms = mode ? GLOB.cooking_recipes_atoms : GLOB.crafting_recipes_atoms
 
 	data["ref"] = "[REF(recipe)]"
 	var/atom/atom = recipe.result
-	data["result"] = atoms.Find(atom)
+
+	//load sprite sheets and select the correct one based on the mode
+	var/static/list/sprite_sheets
+	if(isnull(sprite_sheets))
+		sprite_sheets = ui_assets()
+	var/datum/asset/spritesheet/sheet = sprite_sheets[mode ? 2 : 1]
+
+	//infer icon size of this atom
+	var/atom_id = atoms.Find(atom)
+	var/icon_size = sheet.icon_size_id("a[atom_id]")
+	data["icon"] = "[icon_size] a[atom_id]"
 
 	var/recipe_data = recipe.crafting_ui_data()
 	for(var/new_data in recipe_data)

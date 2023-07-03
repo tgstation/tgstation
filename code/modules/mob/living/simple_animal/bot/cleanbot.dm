@@ -205,7 +205,7 @@
 		return
 
 	var/mob/living/carbon/stabbed_carbon = AM
-	if(!(stabbed_carbon.mind.assigned_role.title in stolen_valor))
+	if(stabbed_carbon.mind && !(stabbed_carbon.mind.assigned_role.title in stolen_valor))
 		stolen_valor += stabbed_carbon.mind.assigned_role.title
 		update_titles()
 

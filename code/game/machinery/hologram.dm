@@ -340,7 +340,9 @@ Possible to do for anyone motivated enough:
 				if(usr.loc == loc)
 					var/input = text2num(params["headcall"])
 					var/headcall = input == 1 ? TRUE : FALSE
-					new /datum/holocall(usr, src, callnames[result], headcall)
+					var/datum/holocall/holo_call = new(usr, src, callnames[result], headcall)
+					if(QDELETED(holo_call)) //can delete itself if the target pad was destroyed
+						return FALSE
 					calling = TRUE
 					return TRUE
 			else

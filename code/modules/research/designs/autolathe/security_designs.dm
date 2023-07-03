@@ -14,7 +14,7 @@
 	name = "Rubber Shot (Less Lethal)"
 	id = "rubber_shot"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/ammo_casing/shotgun/rubbershot
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -26,7 +26,7 @@
 	name = "Speed Loader (.38) (Lethal)"
 	id = "c38"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 20000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*10)
 	build_path = /obj/item/ammo_box/c38
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -38,7 +38,7 @@
 	name = "Universal Recorder"
 	id = "recorder"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 60, /datum/material/glass = 30)
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.6, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.3)
 	build_path = /obj/item/taperecorder/empty
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -50,7 +50,7 @@
 	name = "Universal Recorder Tape"
 	id = "tape"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.2, /datum/material/glass = 5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/tape/random
 	category = list(
 		RND_CATEGORY_INITIAL,
@@ -86,7 +86,7 @@
 	name = "Electropack"
 	id = "electropack"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 2500)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*2.5)
 	build_path = /obj/item/electropack
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -118,7 +118,7 @@
 	name = "Modular Receiver"
 	id = "receiver"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 15000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5)
 	build_path = /obj/item/weaponcrafting/receiver
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -130,7 +130,7 @@
 	name = "Shotgun Dart (Lethal)"
 	id = "shotgun_dart"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 4000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/ammo_casing/shotgun/dart
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -142,7 +142,7 @@
 	name = "Incendiary Slug (Lethal)"
 	id = "incendiary_slug"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 4000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/ammo_casing/shotgun/incendiary
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -155,7 +155,7 @@
 	id = "riot_dart"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT) //Discount for making individually - no box = less iron!
-	build_path = /obj/item/ammo_casing/caseless/foam_dart/riot
+	build_path = /obj/item/ammo_casing/foam_dart/riot
 	category = list(
 		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
@@ -166,7 +166,7 @@
 	name = "Foam Riot Dart Box (Nonlethal)"
 	id = "riot_darts"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 50000) //Comes with 40 darts
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*25) //Comes with 40 darts
 	build_path = /obj/item/ammo_box/foambox/riot
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -178,7 +178,7 @@
 	name = ".357 Casing (VERY Lethal)"
 	id = "a357"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 4000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/ammo_casing/a357
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -190,7 +190,7 @@
 	name = "7.62 Surplus Bullet Casing (VERY Lethal)"
 	id = "a762surplus"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 4000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/ammo_casing/a762/surplus
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -239,7 +239,7 @@
 	id = "telescreen_interrogation"
 	build_type = PROTOLATHE
 	materials = list(
-		/datum/material/iron = 10000,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 	)
 	build_path = /obj/item/wallframe/telescreen/interrogation
@@ -254,7 +254,7 @@
 	id = "telescreen_prison"
 	build_type = PROTOLATHE
 	materials = list(
-		/datum/material/iron = 10000,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*5,
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 	)
 	build_path = /obj/item/wallframe/telescreen/prison

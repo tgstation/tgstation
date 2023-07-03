@@ -207,6 +207,55 @@
 	// We've either added or removed TRAIT_NIGHT_VISION before calling this proc. Just refresh the eyes.
 	eyes.refresh()
 
+/datum/quirk/bilingual
+	name = "Bilingual"
+	desc = "Over the years you've picked up an extra language!"
+	icon = FA_ICON_GLOBE
+	value = 4
+	gain_text = span_notice("Some of the words of the people around you certainly aren't common. Good thing you studied for this.")
+	lose_text = span_notice("You seem to have forgotten your second language.")
+	medical_record_text = "Patient speaks multiple languages."
+	var/list/possible_languages = list(
+		/datum/language/aphasia,
+		/datum/language/beachbum,
+		/datum/language/calcic,
+		/datum/language/draconic,
+		/datum/language/moffic,
+		/datum/language/monkey,
+		/datum/language/mushroom,
+		/datum/language/nekomimetic,
+		/datum/language/piratespeak,
+		/datum/language/shadowtongue,
+		/datum/language/slime,
+		/datum/language/sylvan,
+		/datum/language/terrum,
+		/datum/language/voltaic,
+	)
+	var/datum/language/extra_language
+	mail_goodies = list(/obj/item/taperecorder, /obj/item/clothing/head/frenchberet, /obj/item/clothing/mask/fakemoustache/italian)
+
+/datum/quirk/bilingual/add(client/client_source)
+	//prevents yourself from learning a language you already have
+	for(var/datum/language/spoken as anything in possible_languages)
+		if(quirk_holder.has_language(spoken))
+			possible_languages -= spoken
+	if(!length(possible_languages))
+		return
+	extra_language = pick(possible_languages)
+	quirk_holder.grant_language(extra_language, understood = TRUE, spoken = TRUE, source = LANGUAGE_QUIRK)
+
+/datum/quirk/bilingual/post_add()
+	if(extra_language)
+		to_chat(quirk_holder, span_info("From your bilingualism, you are additionally fluent in [initial(extra_language.name)]."))
+	else
+		to_chat(quirk_holder, span_info("You are already fluent in all languages, making you far more than bilingual."))
+
+/datum/quirk/bilingual/remove()
+	if(!extra_language)
+		return
+
+	quirk_holder.remove_language(extra_language)
+
 /datum/quirk/item_quirk/poster_boy
 	name = "Poster Boy"
 	desc = "You have some great posters! Hang them up and make everyone have a great time."
@@ -267,7 +316,7 @@
 	lose_text = span_danger("You lose faith!")
 	medical_record_text = "Patient reports a belief in a higher power."
 	mail_goodies = list(
-		/obj/item/storage/book/bible/booze,
+		/obj/item/book/bible/booze,
 		/obj/item/reagent_containers/cup/glass/bottle/holywater,
 		/obj/item/bedsheet/chaplain,
 		/obj/item/toy/cards/deck/tarot,

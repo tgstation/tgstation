@@ -638,7 +638,12 @@
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the ID to continue!"))
 		return FALSE
-	var/new_bank_id = tgui_input_number(user, "Enter your account ID number", "Account Reclamation", 111111, 999999, 111111)
+	var/list/user_memories = user.mind.memories
+	var/datum/memory/key/account/user_key = user_memories[/datum/memory/key/account]
+	var/user_account = 11111
+	if(!isnull(user_key))
+		user_account = user_key.remembered_id
+	var/new_bank_id = tgui_input_number(user, "Enter the account ID to associate with this card.", "Link Bank Account", user_account, 999999, 111111)
 	if(!new_bank_id || QDELETED(user) || QDELETED(src) || issilicon(user) || !alt_click_can_use_id(user) || loc != user)
 		return FALSE
 	if(registered_account?.account_id == new_bank_id)
@@ -827,10 +832,10 @@
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
 	trim = /datum/id_trim/away/old/eng
 
-/obj/item/card/id/away/old/apc
-	name = "APC Access ID"
-	desc = "A special ID card that allows access to APC terminals."
-	trim = /datum/id_trim/away/old/apc
+/obj/item/card/id/away/old/equipment
+	name = "Engineering Equipment Access"
+	desc = "A special ID card that allows access to engineering equipment."
+	trim = /datum/id_trim/away/old/equipment
 
 /obj/item/card/id/away/old/robo
 	name = "Delta Station Roboticist's ID card"
@@ -1113,6 +1118,14 @@
 /obj/item/card/id/advanced/centcom/ert/clown
 	registered_name = JOB_ERT_CLOWN
 	trim = /datum/id_trim/centcom/ert/clown
+
+/obj/item/card/id/advanced/centcom/ert/militia
+	registered_name = "Frontier Militia"
+	trim = /datum/id_trim/centcom/ert/militia
+
+/obj/item/card/id/advanced/centcom/ert/militia/general
+	registered_name = "Frontier Militia General"
+	trim = /datum/id_trim/centcom/ert/militia/general
 
 /obj/item/card/id/advanced/black
 	name = "black identification card"

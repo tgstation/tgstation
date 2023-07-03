@@ -160,7 +160,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /// Tries to add loot to drone cargo while respecting space left
 /obj/item/exodrone/proc/try_transfer(obj/loot, delete_on_failure=TRUE)
-	if(space_left() > 1)
+	if(space_left())
 		loot.forceMove(src)
 		drone_log("Acquired [loot.name].")
 	else

@@ -12,19 +12,77 @@
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
 	equip_delay_other = 10
-
 	dog_fashion = /datum/dog_fashion/head/chef
-	///the chance that the movements of a mouse inside of this hat get relayed to the human wearing the hat
+	/// The chance that the movements of a mouse inside of this hat get relayed to the human wearing the hat
 	var/mouse_control_probability = 20
+	/// Allowed time between movements
+	COOLDOWN_DECLARE(move_cooldown)
 
-/obj/item/clothing/head/utility/chefhat/Initialize(mapload)
-	. = ..()
-
-	create_storage(storage_type = /datum/storage/pockets/chefhat)
-
+/// Admin variant of the chef hat where every mouse pilot input will always be transferred to the wearer
 /obj/item/clothing/head/utility/chefhat/i_am_assuming_direct_control
 	desc = "The commander in chef's head wear. Upon closer inspection, there seem to be dozens of tiny levers, buttons, dials, and screens inside of this hat. What the hell...?"
 	mouse_control_probability = 100
+
+/obj/item/clothing/head/utility/chefhat/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/pockets/chefhat)
+
+/obj/item/clothing/head/utility/chefhat/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	var/mob/living/basic/new_boss = get_mouse(arrived)
+	if(!new_boss)
+		return
+	RegisterSignal(new_boss, COMSIG_MOB_PRE_EMOTED, PROC_REF(on_mouse_emote))
+	RegisterSignal(new_boss, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_mouse_moving))
+	RegisterSignal(new_boss, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(on_mouse_moving))
+
+/obj/item/clothing/head/utility/chefhat/Exited(atom/movable/gone, direction)
+	. = ..()
+	var/mob/living/basic/old_boss = get_mouse(gone)
+	if(!old_boss)
+		return
+	UnregisterSignal(old_boss, list(COMSIG_MOB_PRE_EMOTED, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE))
+
+/// Returns a mob stored inside a mob container, if there is one
+/obj/item/clothing/head/utility/chefhat/proc/get_mouse(atom/possible_mouse)
+	if (!ispickedupmob(possible_mouse))
+		return
+	var/obj/item/clothing/head/mob_holder/mousey_holder = possible_mouse
+	return locate(/mob/living/basic) in mousey_holder.contents
+
+/// Relays emotes emoted by your boss to the hat wearer for full immersion
+/obj/item/clothing/head/utility/chefhat/proc/on_mouse_emote(mob/living/source, key, emote_message, type_override)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/wearer = loc
+	if(!wearer || wearer.incapacitated(IGNORE_RESTRAINTS))
+		return
+	if (!prob(mouse_control_probability))
+		return COMPONENT_CANT_EMOTE
+	INVOKE_ASYNC(wearer, TYPE_PROC_REF(/mob, emote), key, type_override, emote_message, FALSE)
+	return COMPONENT_CANT_EMOTE
+
+/// Relays movement made by the mouse in your hat to the wearer of the hat
+/obj/item/clothing/head/utility/chefhat/proc/on_mouse_moving(mob/living/source, atom/moved_to)
+	SIGNAL_HANDLER
+	if (!prob(mouse_control_probability) || !COOLDOWN_FINISHED(src, move_cooldown))
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Didn't roll well enough or on cooldown
+
+	var/mob/living/carbon/wearer = loc
+	if(!wearer || wearer.incapacitated(IGNORE_RESTRAINTS))
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Not worn or can't move
+
+	var/move_direction = get_dir(wearer, moved_to)
+	if(!wearer.Process_Spacemove(move_direction))
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Currently drifting in space
+	if(!has_gravity() || !isturf(wearer.loc))
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE // Not in a location where we can move
+
+	step_towards(wearer, moved_to)
+	var/move_delay = wearer.cached_multiplicative_slowdown
+	if (ISDIAGONALDIR(move_direction))
+		move_delay *= sqrt(2)
+	COOLDOWN_START(src, move_cooldown, move_delay)
+	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /obj/item/clothing/head/utility/chefhat/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is donning [src]! It looks like [user.p_theyre()] trying to become a chef."))
@@ -34,14 +92,6 @@
 	user.say("BOOORK!", forced = "chef hat suicide")
 	playsound(user, 'sound/machines/ding.ogg', 50, TRUE)
 	return FIRELOSS
-
-/obj/item/clothing/head/utility/chefhat/relaymove(mob/living/user, direction)
-	if(!ismouse(user) || !isliving(loc) || !prob(mouse_control_probability))
-		return
-	var/mob/living/L = loc
-	if(L.incapacitated(IGNORE_RESTRAINTS)) //just in case
-		return
-	step_towards(L, get_step(L, direction))
 
 //Captain
 /obj/item/clothing/head/hats/caphat
@@ -395,6 +445,7 @@
 	name = "blue surgery cap"
 	icon_state = "surgicalcap"
 	desc = "A blue medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+	flags_inv = HIDEHAIR //Cover your head doctor!
 
 /obj/item/clothing/head/utility/surgerycap/purple
 	name = "burgundy surgery cap"
@@ -463,7 +514,7 @@
 
 /obj/item/clothing/head/beret/highlander/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
 //CentCom
 /obj/item/clothing/head/beret/centcom_formal
@@ -492,3 +543,13 @@
 	fire = 100
 	acid = 90
 	wound = 10
+
+//Independant Militia
+/obj/item/clothing/head/beret/militia
+	name = "\improper Militia General's Beret"
+	desc = "A rallying cry for the inhabitants of the Spinward Sector, the heroes that wear this keep the horrors of the galaxy at bay. Call them, and they'll be there in a minute!"
+	icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_colors = "#43523d#a2abb0"
+	armor_type = /datum/armor/beret_sec

@@ -7,8 +7,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * It is first created when the first ghost signs up to play.
  */
 /datum/mafia_controller
-	///list of observers that should get game updates.
-	var/list/mafia_spectators = list()
 	///all roles in the game, dead or alive. check their game status if you only want living or dead.
 	var/list/datum/mafia_role/all_roles = list()
 	///all living roles in the game, removed on death.
@@ -107,9 +105,10 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 /datum/mafia_controller/Destroy(force, ...)
 	. = ..()
-	GLOB.mafia_game = null
+	if(GLOB.mafia_game == src)
+		GLOB.mafia_game = null
 	end_game()
-	qdel(map_deleter)
+	QDEL_NULL(map_deleter)
 
 /**
  * Triggers at beginning of the game when there is a confirmed list of valid, ready players.
@@ -152,7 +151,8 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			var/datum/mafia_role/new_role = new rtype(src)
 			all_roles += new_role
 			living_roles += new_role
-			current_setup_text += "[new_role.name] x[setup_list[new_role.type]]"
+		var/datum/mafia_role/role_type = rtype
+		current_setup_text += "[initial(role_type.name)] x[setup_list[role_type]]"
 	var/list/spawnpoints = landmarks.Copy()
 	for(var/datum/mafia_role/role as anything in all_roles)
 		role.assigned_landmark = pick_n_take(spawnpoints)
@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  */
 /datum/mafia_controller/proc/start_voting_phase()
 	phase = MAFIA_PHASE_VOTING
-	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(check_trial), TRUE), (VOTING_PERIOD_LENGTH / time_speedup),TIMER_STOPPABLE) //be verbose!
+	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(check_trial), TRUE), (VOTING_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE) //be verbose!
 	send_message("<b>Voting started! Vote for who you want to see on trial today.</b>")
 
 /**
@@ -276,7 +276,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	if(total_guilty_votes > total_innocent_votes) //strictly need majority guilty to lynch
 		send_message(span_red("<b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b>"))
 		on_trial.kill(src, lynch = TRUE)
-		addtimer(CALLBACK(src, PROC_REF(send_home), on_trial), (LYNCH_PERIOD_LENGTH / time_speedup))
+		next_phase_timer = addtimer(CALLBACK(src, PROC_REF(send_home), on_trial), (LYNCH_PERIOD_LENGTH / time_speedup), TIMER_STOPPABLE)
 	else
 		send_message(span_green("<b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b>"))
 		on_trial.body.forceMove(get_turf(on_trial.assigned_landmark))
@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	var/victory_message
 
-	if((living_mafia.len + living_town.len) <= 1)
+	if(living_mafia.len + living_town.len <= 0)
 		victory_message = "Draw!</span>" //this is in-case no neutrals won, but there's no town/mafia left.
 		for(var/datum/mafia_role/solo as anything in neutral_killers)
 			victory_message = "[uppertext(solo.name)] VICTORY!</span>"
@@ -369,7 +369,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * role: mafia_role datum to reward.
  */
 /datum/mafia_controller/proc/award_role(award, datum/mafia_role/rewarded)
-	var/client/role_client = GLOB.directory[rewarded.player_key]
+	var/client/role_client = GLOB.directory[rewarded.body.client]
 	role_client?.give_award(award, rewarded.body)
 
 /**
@@ -389,28 +389,17 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			roles.mafia_alert.update_text("[message]")
 		roles.reveal_role(src)
 	phase = MAFIA_PHASE_VICTORY_LAP
-	next_phase_timer = addtimer(CALLBACK(src, PROC_REF(end_game)), VICTORY_LAP_PERIOD_LENGTH)
+	next_phase_timer = QDEL_IN_STOPPABLE(src, VICTORY_LAP_PERIOD_LENGTH)
 
 /**
  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
  */
 /datum/mafia_controller/proc/end_game()
-	map_deleter.generate() //remove the map, it will be loaded at the start of the next one
 	QDEL_LIST(all_roles)
 	living_roles.Cut()
-	current_setup_text = null
-	custom_setup = list()
-	turn = 0
-	votes = list()
-
-	time_speedup = initial(time_speedup)
-
-	//map gen does not deal with landmarks
 	QDEL_LIST(landmarks)
 	QDEL_NULL(town_center_landmark)
-	phase = MAFIA_PHASE_SETUP
-
-	early_start = initial(early_start)
+	map_deleter.generate() //remove the map, it will be loaded at the start of the next onemap_deleter.generate() //remove the map, it will be loaded at the start of the next one
 
 /**
  * After the voting and judgement phases, the game goes to night shutting the windows and beginning night with a proc.
@@ -524,11 +513,11 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * vote_type: the vote type (getting how many day votes were for the role, or mafia night votes for the role)
  */
 /datum/mafia_controller/proc/get_vote_count(role,vote_type)
-	. = 0
-	for(var/v in votes[vote_type])
-		var/datum/mafia_role/votee = v
+	var/total_votes = 0
+	for(var/datum/mafia_role/votee as anything in votes[vote_type])
 		if(votes[vote_type][votee] == role)
-			. += votee.vote_power
+			total_votes += votee.vote_power
+	return total_votes
 
 /**
  * Returns whichever role got the most votes, in whatever vote (day vote, night kill vote)
@@ -600,7 +589,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			player_client.prefs.safe_transfer_prefs_to(H, is_antag = TRUE)
 		role.body = H
 		player_role_lookup[H] = role
-		H.key = role.player_key
+		role.put_player_in_body(player_client)
 		role.greet()
 
 /datum/mafia_controller/ui_static_data(mob/user)
@@ -634,9 +623,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			var/list/lobby_member = list()
 			lobby_member["name"] = key
 			lobby_member["status"] = (key in GLOB.mafia_bad_signup) ? "Disconnected" : "Ready"
-			lobby_member["spectating"] = "Ghost"
-			if(key in mafia_spectators)
-				lobby_member["spectating"] = "Spectator"
 			data["lobbydata"] += list(lobby_member)
 		return data
 
@@ -677,12 +663,14 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	if(usr.client?.holder)
 		switch(action)
 			if("new_game")
-				end_game()
+				if(phase == MAFIA_PHASE_SETUP)
+					return
 				basic_setup()
 			if("nuke")
-				end_game()
 				qdel(src)
 			if("next_phase")
+				if(phase == MAFIA_PHASE_SETUP)
+					return
 				var/datum/timedevent/timer = SStimer.timer_id_dict[next_phase_timer]
 				if(!timer.spent)
 					var/datum/callback/tc = timer.callBack
@@ -709,10 +697,14 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 				while(!done)
 					to_chat(usr, "You have a total player count of [assoc_value_sum(debug_setup)] in this setup.")
 					var/chosen_role_name = tgui_input_list(usr, "Select a role!", "Custom Setup Creation", rolelist_dict)
+					if(!chosen_role_name)
+						return
 					switch(chosen_role_name)
 						if("CANCEL")
+							done = TRUE
 							return
 						if("FINISH")
+							done = TRUE
 							break
 						else
 							var/found_path = rolelist_dict[chosen_role_name]
@@ -755,15 +747,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 				if(phase == MAFIA_PHASE_SETUP)
 					check_signups()
 					try_autostart()
-				return TRUE
-			if("mf_spectate")
-				var/client/C = ui.user.client
-				if(C.ckey in mafia_spectators)
-					to_chat(usr, span_notice("You will no longer get messages from the game."))
-					mafia_spectators -= C.ckey
-				else
-					to_chat(usr, span_notice("You will now get messages from the game."))
-					mafia_spectators += C.ckey
 				return TRUE
 			if("vote_to_start")
 				var/client/C = ui.user.client
@@ -1062,7 +1045,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	return ..()
 
 /atom/movable/screen/mafia_popup/proc/update_text(text)
-	maptext = MAPTEXT("<b style='color: [COLOR_RED]; text-align: center; font-size: 32px'> [text]</b>")
+	maptext = MAPTEXT("<span style='color: [COLOR_RED]; text-align: center; font-size: 24pt'> [text]</span>")
 	maptext_width = view_to_pixels(owner.body.client?.view_size.getView())[1]
 	owner.body.client?.screen += src
 	addtimer(CALLBACK(src, PROC_REF(null_text), owner.body.client), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)

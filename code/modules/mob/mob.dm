@@ -98,7 +98,7 @@
 	initialize_actionspeed()
 	update_movespeed(TRUE)
 	become_hearing_sensitive()
-	log_mob_tag("CREATED: [key_name(src)] \[[type]\]")
+	log_mob_tag("TAG: [tag] CREATED: [key_name(src)] \[[type]\]")
 
 /**
  * Generate the tag for this mob
@@ -108,6 +108,17 @@
 /mob/GenerateTag()
 	. = ..()
 	tag = "mob_[next_mob_id++]"
+
+/mob/serialize_list(list/options, list/semvers)
+	. = ..()
+
+	.["tag"] = tag
+	.["name"] = name
+	.["ckey"] = ckey
+	.["key"] = key
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
+	return .
 
 /**
  * set every hud image in the given category active so other people with the given hud can see it.
@@ -206,32 +217,37 @@
  */
 /mob/proc/show_message(msg, type, alt_msg, alt_type, avoid_highlighting = FALSE)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 	if(!client)
-		return
+		return FALSE
 
 	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
+	// Return TRUE if we sent the original msg, otherwise return FALSE
+	. = TRUE
 	if(type)
 		if(type & MSG_VISUAL && is_blind())//Vision related
 			if(!alt_msg)
-				return
+				return FALSE
 			else
 				msg = alt_msg
 				type = alt_type
+				. = FALSE
 
 		if(type & MSG_AUDIBLE && !can_hear())//Hearing related
 			if(!alt_msg)
-				return
+				return FALSE
 			else
 				msg = alt_msg
 				type = alt_type
+				. = FALSE
 				if(type & MSG_VISUAL && is_blind())
-					return
+					return FALSE
 	// voice muffling
 	if(stat == UNCONSCIOUS || stat == HARD_CRIT)
 		if(type & MSG_AUDIBLE) //audio
 			to_chat(src, "<I>... You can almost hear something ...</I>")
-		return
+		return FALSE
 	to_chat(src, msg, avoid_highlighting = avoid_highlighting)
+	return .
 
 /**
  * Generate a visible message from this atom
@@ -408,17 +424,19 @@
  * unset redraw_mob to prevent the mob icons from being redrawn at the end.
  *
  * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ *
+ * set indirect_action to allow insertions into "soft" locked objects, things that are easily opened by the owning mob
  */
-/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, initial = FALSE)
+/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, initial = FALSE, indirect_action = FALSE)
 	if(!istype(W) || QDELETED(W)) //This qdeleted is to prevent stupid behavior with things that qdel during init, like say stacks
 		return FALSE
-	if(!W.mob_can_equip(src, slot, disable_warning, bypass_equip_delay_self))
+	if(!W.mob_can_equip(src, slot, disable_warning, bypass_equip_delay_self, indirect_action = indirect_action))
 		if(qdel_on_fail)
 			qdel(W)
 		else if(!disable_warning)
 			to_chat(src, span_warning("You are unable to equip that!"))
 		return FALSE
-	equip_to_slot(W, slot, initial, redraw_mob) //This proc should not ever fail.
+	equip_to_slot(W, slot, initial, redraw_mob, indirect_action = indirect_action) //This proc should not ever fail.
 	return TRUE
 
 /**
@@ -429,7 +447,7 @@
  *
  *In most cases you will want to use equip_to_slot_if_possible()
  */
-/mob/proc/equip_to_slot(obj/item/W, slot)
+/mob/proc/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
 	return
 
 /**
@@ -440,9 +458,10 @@
  *
  * Also bypasses equip delay checks, since the mob isn't actually putting it on.
  * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ * set indirect_action to allow insertions into "soft" locked objects, things that are easily opened by the owning mob
  */
-/mob/proc/equip_to_slot_or_del(obj/item/W, slot, initial = FALSE)
-	return equip_to_slot_if_possible(W, slot, TRUE, TRUE, FALSE, TRUE, initial)
+/mob/proc/equip_to_slot_or_del(obj/item/W, slot, initial = FALSE, indirect_action = FALSE)
+	return equip_to_slot_if_possible(W, slot, TRUE, TRUE, FALSE, TRUE, initial, indirect_action)
 
 /**
  * Auto equip the passed in item the appropriate slot based on equipment priority
@@ -451,7 +470,7 @@
  *
  * returns 0 if it cannot, 1 if successful
  */
-/mob/proc/equip_to_appropriate_slot(obj/item/W, qdel_on_fail = FALSE)
+/mob/proc/equip_to_appropriate_slot(obj/item/W, qdel_on_fail = FALSE, indirect_action = FALSE)
 	if(!istype(W))
 		return FALSE
 	var/slot_priority = W.slot_equipment_priority
@@ -469,7 +488,7 @@
 		)
 
 	for(var/slot in slot_priority)
-		if(equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE, FALSE, FALSE)) //qdel_on_fail = FALSE; disable_warning = TRUE; redraw_mob = TRUE;
+		if(equip_to_slot_if_possible(W, slot, disable_warning = TRUE, redraw_mob = TRUE, indirect_action = indirect_action))
 			return TRUE
 
 	if(qdel_on_fail)
@@ -766,6 +785,9 @@
 		to_chat(usr, span_boldnotice("You must be dead to use this!"))
 		return
 
+	if(!check_respawn_delay())
+		return
+
 	usr.log_message("used the respawn button.", LOG_GAME)
 
 	to_chat(usr, span_boldnotice("Please roleplay correctly!"))
@@ -787,6 +809,24 @@
 
 	M.key = key
 
+/mob/proc/check_respawn_delay(override_delay = 0)
+	if(!override_delay && !CONFIG_GET(number/respawn_delay))
+		return TRUE
+
+	var/death_time = world.time - client.player_details.time_of_death
+
+	var/required_delay = override_delay
+	if(!required_delay)
+		required_delay = CONFIG_GET(number/respawn_delay)
+
+	if(death_time < required_delay)
+		if(!check_rights_for(usr.client, R_ADMIN))
+			to_chat(usr, "You have been dead for [DisplayTimeText(death_time, 1)].")
+			to_chat(usr, span_warning("You must wait [DisplayTimeText(required_delay, 1)] to respawn!"))
+			return FALSE
+		if(tgui_alert(usr, "You have been dead for [DisplayTimeText(death_time, 1)] out of required [DisplayTimeText(required_delay, 1)]. Do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
+			return FALSE
+	return TRUE
 
 /**
  * Sometimes helps if the user is stuck in another perspective or camera
@@ -818,7 +858,7 @@
  */
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
-		var/t1 = text("window=[href_list["mach_close"]]")
+		var/t1 = "window=[href_list["mach_close"]]"
 		unset_machine()
 		src << browse(null, t1)
 
@@ -1099,7 +1139,7 @@
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
 
-	log_mob_tag("RENAMED: [key_name(src)]")
+	log_mob_tag("TAG: [tag] RENAMED: [key_name(src)]")
 
 	return TRUE
 
@@ -1384,6 +1424,11 @@
 	. = stat
 	stat = new_stat
 	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat, .)
+
+/// Proc used for custom metabolization of reagents, if any
+/mob/proc/reagent_check(datum/reagent/chem, seconds_per_tick, times_fired)
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_MOB_REAGENT_CHECK, chem, seconds_per_tick, times_fired)
 
 /mob/vv_edit_var(var_name, var_value)
 	switch(var_name)

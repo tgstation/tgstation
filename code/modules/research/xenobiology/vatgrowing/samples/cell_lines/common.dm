@@ -44,7 +44,7 @@
 
 	virus_suspectibility = 1
 	growth_rate = VAT_GROWTH_RATE
-	resulting_atoms = list(/mob/living/simple_animal/chicken = 1)
+	resulting_atoms = list(/mob/living/basic/chicken = 1)
 
 /datum/micro_organism/cell_line/cow
 	desc = "Bovine stem cells"
@@ -663,6 +663,28 @@
 	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
 		return
 	QDEL_NULL(vat.biological_sample)
+
+/datum/micro_organism/cell_line/butterfly
+	desc = "Papilionoidea cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+	)
+	supplementary_reagents = list(
+		/datum/reagent/consumable/honey = 4,
+		/datum/reagent/consumable/korta_nectar = 3,
+		/datum/reagent/consumable/applejuice = 2,
+		/datum/reagent/water = 1,
+		/datum/reagent/consumable/sugar = 1,
+	)
+
+	suppressive_reagents = list(
+		/datum/reagent/toxin/pestkiller = -3,
+		/datum/reagent/toxin/carpotoxin = -2,
+		/datum/reagent/toxin = -2,
+	)
+
+	virus_suspectibility = 0
+	resulting_atoms = list(/mob/living/basic/butterfly = 3)
 
 /datum/micro_organism/cell_line/leaper
 	desc = "atypical amphibian cells"

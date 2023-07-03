@@ -97,7 +97,7 @@ LINEN BINS
 	RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
 	RegisterSignal(sleeper, COMSIG_MOVABLE_MOVED, PROC_REF(smooth_sheets))
 	RegisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(smooth_sheets))
-	RegisterSignal(sleeper, COMSIG_PARENT_QDELETING, PROC_REF(smooth_sheets))
+	RegisterSignal(sleeper, COMSIG_QDELETING, PROC_REF(smooth_sheets))
 
 /obj/item/bedsheet/proc/smooth_sheets(mob/living/sleeper)
 	SIGNAL_HANDLER
@@ -105,7 +105,7 @@ LINEN BINS
 	UnregisterSignal(src, COMSIG_ITEM_PICKUP)
 	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
-	UnregisterSignal(sleeper, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(sleeper, COMSIG_QDELETING)
 	balloon_alert(sleeper, "smoothed sheets")
 	layer = initial(layer)
 	SET_PLANE_IMPLICIT(src, initial(plane))
@@ -121,7 +121,7 @@ LINEN BINS
 	UnregisterSignal(src, COMSIG_ITEM_PICKUP)
 	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
-	UnregisterSignal(sleeper, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(sleeper, COMSIG_QDELETING)
 	signal_sleeper = null
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)

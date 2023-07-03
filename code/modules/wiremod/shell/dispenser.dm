@@ -33,7 +33,7 @@
 	stored_items += to_add
 	to_add.forceMove(src)
 	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, PROC_REF(handle_stored_item_moved))
-	RegisterSignal(to_add, COMSIG_PARENT_QDELETING, PROC_REF(handle_stored_item_deleted))
+	RegisterSignal(to_add, COMSIG_QDELETING, PROC_REF(handle_stored_item_deleted))
 	SEND_SIGNAL(src, COMSIG_DISPENSERBOT_ADD_ITEM, to_add)
 
 /obj/structure/dispenser_bot/proc/handle_stored_item_moved(obj/item/moving_item, atom/location)
@@ -48,7 +48,7 @@
 /obj/structure/dispenser_bot/proc/remove_item(obj/item/to_remove)
 	UnregisterSignal(to_remove, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 	))
 	to_remove.forceMove(drop_location())
 	stored_items -= to_remove
@@ -148,7 +148,7 @@
 /obj/item/circuit_component/dispenser_bot/proc/remove_vendor_component(obj/item/circuit_component/vendor_component/vendor_component)
 	SIGNAL_HANDLER
 	UnregisterSignal(vendor_component, list(
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 		COMSIG_CIRCUIT_COMPONENT_REMOVED,
 	))
 	if(!QDELING(vendor_component))
@@ -165,7 +165,7 @@
 			parent.add_component(vendor_component, user)
 			vendor_components += vendor_component
 			RegisterSignals(vendor_component, list(
-				COMSIG_PARENT_QDELETING,
+				COMSIG_QDELETING,
 				COMSIG_CIRCUIT_COMPONENT_REMOVED,
 			), PROC_REF(remove_vendor_component))
 

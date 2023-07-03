@@ -281,11 +281,11 @@
 			var/missing_organs = list()
 			if(!humantarget.get_organ_slot(ORGAN_SLOT_BRAIN))
 				missing_organs += "brain"
-			if(!HAS_TRAIT(humantarget, TRAIT_NOBLOOD) && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
+			if(!(TRAIT_NOBLOOD in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
 				missing_organs += "heart"
 			if(!(TRAIT_NOBREATH in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_LUNGS))
 				missing_organs += "lungs"
-			if(!(TRAIT_NOMETABOLISM in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_LIVER))
+			if(!(TRAIT_LIVERLESS_METABOLISM in the_dudes_species.inherent_traits) && !humantarget.get_organ_slot(ORGAN_SLOT_LIVER))
 				missing_organs += "liver"
 			if(the_dudes_species.mutantstomach && !humantarget.get_organ_slot(ORGAN_SLOT_STOMACH))
 				missing_organs += "stomach"
@@ -360,11 +360,10 @@
 			render_list += "</span>"
 
 	//Diseases
-	for(var/thing in target.diseases)
-		var/datum/disease/D = thing
-		if(!(D.visibility_flags & HIDDEN_SCANNER))
-			render_list += "<span class='alert ml-1'><b>Warning: [D.form] detected</b>\n\
-			<div class='ml-2'>Name: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</div>\
+	for(var/datum/disease/disease as anything in target.diseases)
+		if(!(disease.visibility_flags & HIDDEN_SCANNER))
+			render_list += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b>\n\
+			<div class='ml-2'>Name: [disease.name].\nType: [disease.spread_text].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
 			</span>" // divs do not need extra linebreak
 
 	// Blood Level
@@ -390,9 +389,9 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/carbontarget = target
 		var/cyberimp_detect
-		for(var/obj/item/organ/internal/cyberimp/CI in carbontarget.organs)
-			if(CI.status == ORGAN_ROBOTIC && !(CI.organ_flags & ORGAN_HIDDEN))
-				cyberimp_detect += "[!cyberimp_detect ? "[CI.get_examine_string(user)]" : ", [CI.get_examine_string(user)]"]"
+		for(var/obj/item/organ/internal/cyberimp/cyberimp in carbontarget.organs)
+			if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
+				cyberimp_detect += "[!cyberimp_detect ? "[cyberimp.get_examine_string(user)]" : ", [cyberimp.get_examine_string(user)]"]"
 		if(cyberimp_detect)
 			render_list += "<span class='notice ml-1'>Detected cybernetic modifications:</span>\n"
 			render_list += "<span class='notice ml-2'>[cyberimp_detect]</span>\n"
@@ -546,6 +545,49 @@
 		return
 
 	woundscan(user, patient, src)
+
+/obj/item/healthanalyzer/disease
+	name = "disease state analyzer"
+	icon_state = "adv_spectrometer"
+	desc = "A disease status analyzer to determine the state of an infection to encourage responsible medication consumption."
+
+/obj/item/healthanalyzer/disease/attack_self(mob/user)
+	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
+	var/list/encouragements = list("encourages you to take your medication", "briefly displays a spinning cartoon heart", "reasures you about your condition", \
+			"reminds you that everyone is doing their best", "displays a message wishing you well", "displays a message saying how proud it is that you're taking care of yourself", "formally absolves you of all your sins")
+	to_chat(user, span_notice("\The [src] makes a happy ping and [pick(encouragements)]!"))
+
+/obj/item/healthanalyzer/disease/attack(mob/living/carbon/patient, mob/living/carbon/human/user)
+	if(!user.can_read(src) || user.is_blind())
+		return
+
+	add_fingerprint(user)
+	user.visible_message(span_notice("[user] scans [patient] for diseases."), span_notice("You scan [patient] for diseases."))
+
+	if(!istype(user))
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		to_chat(user, span_notice("\The [src] makes a sad buzz and briefly displays a frowny face, indicating it can't scan [patient]."))
+		return
+
+	diseasescan(user, patient, src)
+//Checks the individual for any diseases that are visible to the scanner, and displays the diseases in the attacked to the attacker.
+/proc/diseasescan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/wound/scanner)
+	if(!istype(patient) || user.incapacitated())
+		return
+
+	var/list/render = list()
+	for(var/datum/disease/disease as anything in patient.diseases)
+		if(!(disease.visibility_flags & HIDDEN_SCANNER))
+			render += "<span class='alert ml-1'><b>Warning: [disease.form] detected</b>\n\
+			<div class='ml-2'>Name: [disease.name].\nType: [disease.spread_text].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [disease.cure_text]</div>\
+			</span>"
+
+	if(!length(render))
+		// Only emit the cheerful scanner message if this scan came from a scanner
+		playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
+		to_chat(user, span_notice("The patient has no diseases."))
+	else
+		to_chat(user, span_notice(render.Join("")))
 
 #undef SCANMODE_HEALTH
 #undef SCANMODE_WOUND

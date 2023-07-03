@@ -2,29 +2,39 @@
 /obj/item/bodypart/head/snail
 	limb_id = SPECIES_SNAIL
 	is_dimorphic = FALSE
+	burn_modifier = 2
+	head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/snail
 	limb_id = SPECIES_SNAIL
 	is_dimorphic = FALSE
+	burn_modifier = 2
 
 /obj/item/bodypart/arm/left/snail
 	limb_id = SPECIES_SNAIL
 	unarmed_attack_verb = "slap"
 	unarmed_attack_effect = ATTACK_EFFECT_DISARM
 	unarmed_damage_high = 0.5 //snails are soft and squishy
+	burn_modifier = 2
 
 /obj/item/bodypart/arm/right/snail
 	limb_id = SPECIES_SNAIL
 	unarmed_attack_verb = "slap"
 	unarmed_attack_effect = ATTACK_EFFECT_DISARM
 	unarmed_damage_high = 0.5
+	burn_modifier = 2
 
 /obj/item/bodypart/leg/left/snail
 	limb_id = SPECIES_SNAIL
 	unarmed_damage_high = 0.5
+	burn_modifier = 2
+	speed_modifier = 3 //disgustingly slow
+
 /obj/item/bodypart/leg/right/snail
 	limb_id = SPECIES_SNAIL
 	unarmed_damage_high = 0.5
+	burn_modifier = 2
+	speed_modifier = 3 //disgustingly slow
 
 ///ABDUCTOR
 /obj/item/bodypart/head/abductor
@@ -32,6 +42,7 @@
 	limb_id = SPECIES_ABDUCTOR
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = NONE
 
 /obj/item/bodypart/chest/abductor
 	biological_state = BIO_INORGANIC
@@ -67,38 +78,46 @@
 	limb_id = SPECIES_JELLYPERSON
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
+	burn_modifier = 0.5 // = 1/2x generic burn damage
+	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/jelly
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_JELLYPERSON
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
+	burn_modifier = 0.5 // = 1/2x generic burn damage
 
 /obj/item/bodypart/arm/left/jelly
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
+	burn_modifier = 0.5 // = 1/2x generic burn damage
 
 /obj/item/bodypart/arm/right/jelly
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
+	burn_modifier = 0.5 // = 1/2x generic burn damage
 
 /obj/item/bodypart/leg/left/jelly
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
+	burn_modifier = 0.5 // = 1/2x generic burn damage
 
 /obj/item/bodypart/leg/right/jelly
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_JELLYPERSON
 	dmg_overlay_type = null
+	burn_modifier = 0.5 // = 1/2x generic burn damage
 
 ///SLIME
 /obj/item/bodypart/head/slime
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_SLIMEPERSON
 	is_dimorphic = FALSE
+	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/slime
 	biological_state = BIO_INORGANIC
@@ -126,6 +145,7 @@
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_LUMINESCENT
 	is_dimorphic = TRUE
+	head_flags = HEAD_ALL_FEATURES
 
 /obj/item/bodypart/chest/luminescent
 	biological_state = BIO_INORGANIC
@@ -153,6 +173,7 @@
 	limb_id = SPECIES_ZOMBIE
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/zombie
 	limb_id = SPECIES_ZOMBIE
@@ -175,14 +196,27 @@
 	limb_id = SPECIES_ZOMBIE
 	should_draw_greyscale = FALSE
 
+/obj/item/bodypart/leg/left/zombie/infectious
+	limb_id = SPECIES_ZOMBIE
+	should_draw_greyscale = FALSE
+	speed_modifier = 0.8 //braaaaains
+
+/obj/item/bodypart/leg/right/zombie/infectious
+	limb_id = SPECIES_ZOMBIE
+	should_draw_greyscale = FALSE
+	speed_modifier = 0.8 //braaaaains
+
 ///PODPEOPLE
 /obj/item/bodypart/head/pod
 	limb_id = SPECIES_PODPERSON
 	is_dimorphic = TRUE
+	burn_modifier = 1.25
+	head_flags = HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_EYEHOLES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/pod
 	limb_id = SPECIES_PODPERSON
 	is_dimorphic = TRUE
+	burn_modifier = 1.25
 
 /obj/item/bodypart/arm/left/pod
 	limb_id = SPECIES_PODPERSON
@@ -190,6 +224,7 @@
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/weapons/slice.ogg'
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	burn_modifier = 1.25
 
 /obj/item/bodypart/arm/right/pod
 	limb_id = SPECIES_PODPERSON
@@ -197,18 +232,22 @@
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/weapons/slice.ogg'
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
+	burn_modifier = 1.25
 
 /obj/item/bodypart/leg/left/pod
 	limb_id = SPECIES_PODPERSON
+	burn_modifier = 1.25
 
 /obj/item/bodypart/leg/right/pod
 	limb_id = SPECIES_PODPERSON
+	burn_modifier = 1.25
 
 ///FLY
 /obj/item/bodypart/head/fly
 	limb_id = SPECIES_FLYPERSON
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	head_flags = HEAD_EYESPRITES|HEAD_EYEHOLES|HEAD_DEBRAIN
 
 /obj/item/bodypart/chest/fly
 	limb_id = SPECIES_FLYPERSON
@@ -237,32 +276,39 @@
 	limb_id = SPECIES_SHADOW
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	burn_modifier = 1.5
+	head_flags = NONE
 
 /obj/item/bodypart/chest/shadow
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_SHADOW
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
+	burn_modifier = 1.5
 
 /obj/item/bodypart/arm/left/shadow
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_SHADOW
 	should_draw_greyscale = FALSE
+	burn_modifier = 1.5
 
 /obj/item/bodypart/arm/right/shadow
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_SHADOW
 	should_draw_greyscale = FALSE
+	burn_modifier = 1.5
 
 /obj/item/bodypart/leg/left/shadow
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_SHADOW
 	should_draw_greyscale = FALSE
+	burn_modifier = 1.5
 
 /obj/item/bodypart/leg/right/shadow
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_SHADOW
 	should_draw_greyscale = FALSE
+	burn_modifier = 1.5
 
 /obj/item/bodypart/arm/left/shadow/nightmare
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
@@ -277,6 +323,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	head_flags = NONE
 
 /obj/item/bodypart/chest/skeleton
 	biological_state = BIO_BONE
@@ -313,36 +360,46 @@
 /obj/item/bodypart/head/mushroom
 	limb_id = SPECIES_MUSHROOM
 	is_dimorphic = TRUE
+	burn_modifier = 1.25
+	head_flags = NONE
 
 /obj/item/bodypart/chest/mushroom
 	limb_id = SPECIES_MUSHROOM
 	is_dimorphic = TRUE
 	bodypart_traits = list(TRAIT_NO_JUMPSUIT)
+	burn_modifier = 1.25
 
 /obj/item/bodypart/arm/left/mushroom
 	limb_id = SPECIES_MUSHROOM
 	unarmed_damage_low = 6
 	unarmed_damage_high = 14
 	unarmed_stun_threshold = 14
+	burn_modifier = 1.25
 
 /obj/item/bodypart/arm/right/mushroom
 	limb_id = SPECIES_MUSHROOM
 	unarmed_damage_low = 6
 	unarmed_damage_high = 14
 	unarmed_stun_threshold = 14
+	burn_modifier = 1.25
 
 /obj/item/bodypart/leg/left/mushroom
 	limb_id = SPECIES_MUSHROOM
 	unarmed_damage_low = 9
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 14
+	burn_modifier = 1.25
+	speed_modifier = 0.75 //big big fungus
 
 /obj/item/bodypart/leg/right/mushroom
 	limb_id = SPECIES_MUSHROOM
 	unarmed_damage_low = 9
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 14
+	burn_modifier = 1.25
+	speed_modifier = 0.75 //big fungus big fungus
 
+//GOLEM
 /obj/item/bodypart/head/golem
 	icon = 'icons/mob/species/golems.dmi'
 	icon_static = 'icons/mob/species/golems.dmi'
@@ -353,6 +410,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	head_flags = NONE
 
 /obj/item/bodypart/head/golem/Initialize(mapload)
 	worn_ears_offset = new(

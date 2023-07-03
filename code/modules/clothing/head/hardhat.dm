@@ -38,7 +38,7 @@
 
 /obj/item/clothing/head/utility/hardhat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/head/utility/hardhat/attack_self(mob/living/user)
 	toggle_helmet_light(user)

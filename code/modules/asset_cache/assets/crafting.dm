@@ -71,4 +71,4 @@
 	)
 
 	for(var/tool in tool_icons)
-		Insert(tool, tool_icons[tool])
+		Insert(replacetext(tool, " ", ""), tool_icons[tool])

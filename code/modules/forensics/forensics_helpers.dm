@@ -94,6 +94,9 @@
 		return TRUE //we bloodied the floor
 	return FALSE
 
+/turf/closed/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
+	return FALSE
+
 /mob/living/carbon/human/add_blood_DNA(list/blood_DNA_to_add, list/datum/disease/diseases)
 	if(wear_suit)
 		wear_suit.add_blood_DNA(blood_DNA_to_add)

@@ -215,13 +215,19 @@
 //Ruin of Crashed Ship
 
 /area/ruin/space/has_grav/crashedship/aft
-	name = "\improper Crashed Aft"
+	name = "\improper Crashed Ship's Aft"
 
 /area/ruin/space/has_grav/crashedship/midship
-	name = "\improper Crashed Midship"
+	name = "\improper Crashed Ship's Midship"
 
 /area/ruin/space/has_grav/crashedship/fore
-	name = "\improper Crashed Fore"
+	name = "\improper Crashed Ship's Fore"
+
+/area/ruin/space/has_grav/crashedship/big_asteroid
+	name = "\improper Asteroid"
+
+/area/ruin/space/has_grav/crashedship/small_asteroid
+	name = "\improper Asteroid"
 
 //Ruin of ancient Space Station (OldStation)
 
@@ -546,7 +552,7 @@
 
 /area/ruin/space/tcommsat_oldaisat // Since tcommsat was moved to /area/station/, this turf doesn't inhereit its properties anymore
 	name = "\improper Abandoned Satellite"
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
+	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen9.ogg', 'sound/ambience/ambitech.ogg',\
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
 
@@ -658,7 +664,7 @@
 	icon = 'icons/area/areas_ruins.dmi'
 	icon_state = "ruins"
 	requires_power = FALSE
-	ambientsounds = list('sound/ambience/ambigen13.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambinice.ogg')
+	ambientsounds = list('sound/ambience/ambigen12.ogg','sound/ambience/ambigen13.ogg','sound/ambience/ambinice.ogg')
 
 // the outlet
 /area/ruin/space/has_grav/the_outlet/storefront

@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	copy_languages(to_who, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
 	update_atom_languages()
 	RegisterSignal(to_who, COMSIG_MOVABLE_MOVED, PROC_REF(check_distance))
-	RegisterSignal(to_who, COMSIG_PARENT_QDELETING, PROC_REF(on_summoner_deletion))
+	RegisterSignal(to_who, COMSIG_QDELETING, PROC_REF(on_summoner_deletion))
 	RegisterSignal(to_who, COMSIG_LIVING_DEATH, PROC_REF(on_summoner_death))
 	RegisterSignal(to_who, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_summoner_health_update))
 	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(on_summoner_wabbajacked))
@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(is_deployed())
 		recall_effects()
 	forceMove(get_turf(src))
-	UnregisterSignal(summoner, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
+	UnregisterSignal(summoner, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 	if(different_person)
 		summoner.faction -= "[REF(src)]"
 		faction -= summoner.faction
@@ -434,25 +434,25 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 //HAND HANDLING
 
-/mob/living/simple_animal/hostile/guardian/equip_to_slot(obj/item/equipped_item, slot)
+/mob/living/simple_animal/hostile/guardian/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
 	if(!slot)
 		return FALSE
-	if(!istype(equipped_item))
+	if(!istype(equipping))
 		return FALSE
 
 	. = TRUE
-	var/index = get_held_index_of_item(equipped_item)
+	var/index = get_held_index_of_item(equipping)
 	if(index)
 		held_items[index] = null
 		update_held_items()
 
-	if(equipped_item.pulledby)
-		equipped_item.pulledby.stop_pulling()
+	if(equipping.pulledby)
+		equipping.pulledby.stop_pulling()
 
-	equipped_item.screen_loc = null // will get moved if inventory is visible
-	equipped_item.forceMove(src)
-	equipped_item.equipped(src, slot)
-	SET_PLANE_EXPLICIT(equipped_item, ABOVE_HUD_PLANE, src)
+	equipping.screen_loc = null // will get moved if inventory is visible
+	equipping.forceMove(src)
+	equipping.equipped(src, slot)
+	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
 
 /mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
 	if((. = guardian_overlays[cache_index]))

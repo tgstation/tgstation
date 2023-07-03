@@ -1,12 +1,9 @@
 /datum/species/android
 	name = "Android"
 	id = SPECIES_ANDROID
-	species_traits = list(
-		NO_DNA_COPY,
-		NOTRANSSTING,
-		NO_UNDERWEAR,
-	)
+	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
+		TRAIT_NO_UNDERWEAR,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_GENELESS,
 		TRAIT_LIMBATTACHMENT,
@@ -14,7 +11,7 @@
 		TRAIT_NOCLONELOSS,
 		TRAIT_NOFIRE,
 		TRAIT_NOHUNGER,
-		TRAIT_NOMETABOLISM,
+		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
@@ -23,7 +20,8 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_TOXIMMUNE,
 		TRAIT_NOBLOOD,
-		TRAIT_NO_DEBRAIN_OVERLAY,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_TRANSFORMATION_STING,
 	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
@@ -45,7 +43,6 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot/android,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/android,
 	)
-	examine_limb_id = SPECIES_HUMAN
 
 /datum/species/android/on_species_gain(mob/living/carbon/C)
 	. = ..()

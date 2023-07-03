@@ -156,7 +156,7 @@
 	reqs = list(
 		/obj/item/organ/internal/brain = 1,
 		/obj/item/organ/internal/heart = 1,
-		/obj/item/food/butter = 10,
+		/obj/item/food/butter = 4,
 		/obj/item/food/meat/slab = 5,
 		/datum/reagent/blood = 50,
 		/datum/reagent/teslium = 1 //To shock the whole thing into life
@@ -225,7 +225,7 @@
 	reqs = list(
 		/datum/reagent/consumable/milk = 10,
 		/datum/reagent/consumable/flour = 5,
-		/obj/item/food/butter = 1
+		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/bechamel_sauce
 	category = CAT_MISCFOOD
@@ -276,7 +276,7 @@
 	reqs = list(
 		/obj/item/food/grown/potato = 2,
 		/obj/item/food/grown/garlic = 1,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 1,
 	)
 	result = /obj/item/food/mashed_potatoes
 	category = CAT_MISCFOOD
@@ -345,7 +345,7 @@
 	name = "Buttered baked potato"
 	reqs = list(
 		/obj/item/food/baked_potato = 1,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 1,
 	)
 	result = /obj/item/food/buttered_baked_potato
 	category = CAT_MISCFOOD

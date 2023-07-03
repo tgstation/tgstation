@@ -33,9 +33,6 @@
 	///The account this console processes and displays. Independent from the account the shuttle processes.
 	var/cargo_account = ACCOUNT_CAR
 
-/datum/computer_file/program/budgetorders/proc/get_export_categories()
-	. = EXPORT_CARGO
-
 /datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, list/access, contraband)
 	if(issilicon(user)) //Borgs can't buy things.
 		return FALSE
@@ -169,7 +166,6 @@
 				computer.say(blockade_warning)
 				return
 			if(SSshuttle.supply.getDockedId() == docking_home)
-				SSshuttle.supply.export_categories = get_export_categories()
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				computer.say("The supply shuttle is departing.")
 				usr.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
@@ -222,7 +218,7 @@
 				if(!istype(id_card))
 					computer.say("No ID card detected.")
 					return
-				if(istype(id_card, /obj/item/card/id/departmental_budget))
+				if(IS_DEPARTMENTAL_CARD(id_card))
 					computer.say("[id_card] cannot be used to make purchases.")
 					return
 				account = id_card.registered_account

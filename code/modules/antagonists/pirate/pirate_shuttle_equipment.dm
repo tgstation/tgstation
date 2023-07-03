@@ -6,8 +6,11 @@
 	icon = 'icons/obj/machines/dominator.dmi'
 	icon_state = "dominator"
 	density = TRUE
+	/// Is the machine siphoning right now
 	var/active = FALSE
+	/// The amount of money stored in the machine
 	var/credits_stored = 0
+	/// The amount of money removed per tick
 	var/siphon_per_tick = 5
 
 /obj/machinery/shuttle_scrambler/Initialize(mapload)
@@ -17,10 +20,10 @@
 /obj/machinery/shuttle_scrambler/process()
 	if(active)
 		if(is_station_level(z))
-			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			if(D)
-				var/siphoned = min(D.account_balance,siphon_per_tick)
-				D.adjust_money(-siphoned)
+			var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			if(account)
+				var/siphoned = min(account.account_balance,siphon_per_tick)
+				account.adjust_money(-siphoned)
 				credits_stored += siphoned
 			interrupt_research()
 		else
@@ -28,6 +31,7 @@
 	else
 		STOP_PROCESSING(SSobj,src)
 
+///Turns on the siphoning, and its various side effects
 /obj/machinery/shuttle_scrambler/proc/toggle_on(mob/user)
 	SSshuttle.registerTradeBlockade(src)
 	AddComponent(/datum/component/gps, "Nautical Signal")
@@ -49,14 +53,15 @@
 	update_appearance()
 	send_notification()
 
-//interrupt_research
+/// Handles interrupting research
 /obj/machinery/shuttle_scrambler/proc/interrupt_research()
-	for(var/obj/machinery/rnd/server/S as anything in SSresearch.science_tech.techweb_servers)
-		if(S.machine_stat & (NOPOWER|BROKEN|EMPED))
+	for(var/obj/machinery/rnd/server/research_server as anything in SSresearch.science_tech.techweb_servers)
+		if(research_server.machine_stat & (NOPOWER|BROKEN|EMPED))
 			continue
-		S.emp_act(EMP_LIGHT)
-		new /obj/effect/temp_visual/emp(get_turf(S))
+		research_server.emp_act(EMP_LIGHT)
+		new /obj/effect/temp_visual/emp(get_turf(research_server))
 
+/// Handles expelling all the siphoned credits as holochips
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
 	if(credits_stored) // Prevents spamming empty holochips
 		new /obj/item/holochip(drop_location(), credits_stored)
@@ -65,9 +70,11 @@
 	else
 		to_chat(user,span_notice("There's nothing to withdraw."))
 
+/// Alerts the crew about the siphon
 /obj/machinery/shuttle_scrambler/proc/send_notification()
 	priority_announce("Data theft signal detected; source registered on local GPS units.")
 
+/// Switches off the siphon
 /obj/machinery/shuttle_scrambler/proc/toggle_off(mob/user)
 	SSshuttle.clearTradeBlockade(src)
 	active = FALSE
@@ -124,24 +131,25 @@
 		to_chat(user,span_warning("[src] is recharging."))
 		return
 	next_use = world.time + cooldown
-	var/atom/movable/AM = find_random_loot()
-	if(!AM)
+	var/atom/movable/found_loot = find_random_loot()
+	if(!found_loot)
 		say("No valuables located. Try again later.")
 	else
-		say("Located: [AM.name] at [get_area_name(AM)]")
+		say("Located: [found_loot.name] at [get_area_name(found_loot)]")
 
+/// Looks across the station for items that are pirate specific exports
 /obj/machinery/loot_locator/proc/find_random_loot()
 	if(!GLOB.exports_list.len)
 		setupExports()
 	var/list/possible_loot = list()
-	for(var/datum/export/pirate/E in GLOB.exports_list)
-		possible_loot += E
-	var/datum/export/pirate/P
-	var/atom/movable/AM
-	while(!AM && possible_loot.len)
-		P = pick_n_take(possible_loot)
-		AM = P.find_loot()
-	return AM
+	for(var/datum/export/pirate/possible_export in GLOB.exports_list)
+		possible_loot += possible_export
+	var/datum/export/pirate/selected_export
+	var/atom/movable/found_loot
+	while(!found_loot && possible_loot.len)
+		selected_export = pick_n_take(possible_loot)
+		found_loot = selected_export.find_loot()
+	return found_loot
 
 //Pad & Pad Terminal
 /obj/machinery/piratepad
@@ -250,57 +258,59 @@
 			stop_sending()
 			. = TRUE
 
+/// Calculates the predicted value of the items on the pirate pad
 /obj/machinery/computer/piratepad_control/proc/recalc()
 	if(sending)
 		return
 
 	status_report = "Predicted value: "
 	var/value = 0
-	var/datum/export_report/ex = new
+	var/datum/export_report/report = new
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
-		export_item_and_contents(AM, apply_elastic = FALSE, dry_run = TRUE, external_report = ex)
+		export_item_and_contents(AM, apply_elastic = FALSE, dry_run = TRUE, external_report = report)
 
-	for(var/datum/export/E in ex.total_amount)
-		status_report += E.total_printout(ex,notes = FALSE)
+	for(var/datum/export/exported_datum in report.total_amount)
+		status_report += exported_datum.total_printout(report,notes = FALSE)
 		status_report += " "
-		value += ex.total_value[E]
+		value += report.total_value[exported_datum]
 
 	if(!value)
 		status_report += "0"
 
+/// Deletes and sells the item
 /obj/machinery/computer/piratepad_control/proc/send()
 	if(!sending)
 		return
 
-	var/datum/export_report/ex = new
+	var/datum/export_report/report = new
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 
-	for(var/atom/movable/AM in get_turf(pad))
-		if(AM == pad)
+	for(var/atom/movable/item_on_pad in get_turf(pad))
+		if(item_on_pad == pad)
 			continue
-		export_item_and_contents(AM, EXPORT_PIRATE | EXPORT_CARGO | EXPORT_CONTRABAND | EXPORT_EMAG, apply_elastic = FALSE, delete_unsold = FALSE, external_report = ex)
+		export_item_and_contents(item_on_pad, apply_elastic = FALSE, delete_unsold = FALSE, external_report = report)
 
 	status_report = "Sold: "
 	var/value = 0
-	for(var/datum/export/E in ex.total_amount)
-		var/export_text = E.total_printout(ex,notes = FALSE) //Don't want nanotrasen messages, makes no sense here.
+	for(var/datum/export/exported_datum in report.total_amount)
+		var/export_text = exported_datum.total_printout(report,notes = FALSE) //Don't want nanotrasen messages, makes no sense here.
 		if(!export_text)
 			continue
 
 		status_report += export_text
 		status_report += " "
-		value += ex.total_value[E]
+		value += report.total_value[exported_datum]
 
 	if(!total_report)
-		total_report = ex
+		total_report = report
 	else
-		total_report.exported_atoms += ex.exported_atoms
-		for(var/datum/export/E in ex.total_amount)
-			total_report.total_amount[E] += ex.total_amount[E]
-			total_report.total_value[E] += ex.total_value[E]
+		total_report.exported_atoms += report.exported_atoms
+		for(var/datum/export/exported_datum in report.total_amount)
+			total_report.total_amount[exported_datum] += report.total_amount[exported_datum]
+			total_report.total_value[exported_datum] += report.total_value[exported_datum]
 		playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
 
 	points += value
@@ -313,6 +323,7 @@
 	pad.icon_state = pad.idle_state
 	sending = FALSE
 
+/// Prepares to sell the items on the pad
 /obj/machinery/computer/piratepad_control/proc/start_sending()
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 	if(!pad)
@@ -331,6 +342,7 @@
 	pad.icon_state = pad.warmup_state
 	sending_timer = addtimer(CALLBACK(src, PROC_REF(send)),warmup_time, TIMER_STOPPABLE)
 
+/// Finishes the sending state of the pad
 /obj/machinery/computer/piratepad_control/proc/stop_sending(custom_report)
 	if(!sending)
 		return
@@ -342,7 +354,7 @@
 	pad.icon_state = pad.idle_state
 	deltimer(sending_timer)
 
-//Attempts to find the thing on station
+/// Attempts to find the thing on station
 /datum/export/pirate/proc/find_loot()
 	return
 
@@ -359,13 +371,13 @@
 	if(head_mobs.len)
 		return pick(head_mobs)
 
-/datum/export/pirate/ransom/get_cost(atom/movable/AM)
-	var/mob/living/carbon/human/H = AM
-	if(H.stat != CONSCIOUS || !H.mind) //mint condition only
+/datum/export/pirate/ransom/get_cost(atom/movable/exported_item)
+	var/mob/living/carbon/human/ransomee = exported_item
+	if(ransomee.stat != CONSCIOUS || !ransomee.mind) //mint condition only
 		return 0
-	else if(FACTION_PIRATE in H.faction) //can't ransom your fellow pirates to CentCom!
+	else if(FACTION_PIRATE in ransomee.faction) //can't ransom your fellow pirates to CentCom!
 		return 0
-	else if(H.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+	else if(ransomee.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 		return 3000
 	else
 		return 1000
@@ -376,25 +388,25 @@
 	export_types = list(/mob/living/simple_animal/parrot)
 
 /datum/export/pirate/parrot/find_loot()
-	for(var/mob/living/simple_animal/parrot/P in GLOB.alive_mob_list)
-		var/turf/T = get_turf(P)
-		if(T && is_station_level(T.z))
-			return P
+	for(var/mob/living/simple_animal/parrot/current_parrot in GLOB.alive_mob_list)
+		var/turf/parrot_turf = get_turf(current_parrot)
+		if(parrot_turf && is_station_level(parrot_turf.z))
+			return current_parrot
 
 /datum/export/pirate/cash
 	cost = 1
 	unit_name = "bills"
 	export_types = list(/obj/item/stack/spacecash)
 
-/datum/export/pirate/cash/get_amount(obj/O)
-	var/obj/item/stack/spacecash/C = O
-	return ..() * C.amount * C.value
+/datum/export/pirate/cash/get_amount(obj/exported_item)
+	var/obj/item/stack/spacecash/cash = exported_item
+	return ..() * cash.amount * cash.value
 
 /datum/export/pirate/holochip
 	cost = 1
 	unit_name = "holochip"
 	export_types = list(/obj/item/holochip)
 
-/datum/export/pirate/holochip/get_cost(atom/movable/AM)
-	var/obj/item/holochip/H = AM
-	return H.credits
+/datum/export/pirate/holochip/get_cost(atom/movable/exported_item)
+	var/obj/item/holochip/chip = exported_item
+	return chip.credits

@@ -933,7 +933,10 @@
 					break
 				total_matching_catalysts++
 			if(cached_my_atom)
-				matching_container = reaction.required_container ? (cached_my_atom.type == reaction.required_container) : TRUE
+				if(reaction.required_container_accepts_subtypes)
+					matching_container = !reaction.required_container || istype(cached_my_atom, reaction.required_container)
+				else
+					matching_container = !reaction.required_container || cached_my_atom.type == reaction.required_container
 
 				if(isliving(cached_my_atom) && !reaction.mob_react) //Makes it so certain chemical reactions don't occur in mobs
 					matching_container = FALSE

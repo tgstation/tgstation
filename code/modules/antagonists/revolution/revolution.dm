@@ -78,6 +78,7 @@
 /datum/antagonist/rev/greet()
 	. = ..()
 	to_chat(owner, span_userdanger("Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!"))
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/revolutionary_tide.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.announce_objectives()
 
 /datum/antagonist/rev/create_team(datum/team/revolution/new_team)
@@ -275,8 +276,7 @@
 
 /datum/antagonist/rev/head/proc/make_assistant_icon(hairstyle)
 	var/mob/living/carbon/human/dummy/consistent/assistant = new
-	assistant.hairstyle = hairstyle
-	assistant.update_body_parts()
+	assistant.set_hairstyle(hairstyle, update = TRUE)
 
 	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
 	assistant_icon.ChangeOpacity(0.5)
@@ -397,7 +397,7 @@
 			"left pocket" = ITEM_SLOT_LPOCKET,
 			"right pocket" = ITEM_SLOT_RPOCKET
 		)
-		var/where = C.equip_in_one_of_slots(T, slots)
+		var/where = C.equip_in_one_of_slots(T, slots, indirect_action = TRUE)
 		if (!where)
 			to_chat(C, "The Syndicate were unfortunately unable to get you a flash.")
 		else
@@ -449,16 +449,16 @@
 		if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < round(heads.len - ((8 - sec.len) / 3)))
 			var/list/datum/mind/non_heads = members - head_revolutionaries
 			var/list/datum/mind/promotable = list()
-			var/list/datum/mind/nonhuman_promotable = list()
+			var/list/datum/mind/monkey_promotable = list()
 			for(var/datum/mind/khrushchev in non_heads)
 				if(khrushchev.current && !khrushchev.current.incapacitated() && !HAS_TRAIT(khrushchev.current, TRAIT_RESTRAINED) && khrushchev.current.client)
 					if((ROLE_REV_HEAD in khrushchev.current.client.prefs.be_special) || (ROLE_PROVOCATEUR in khrushchev.current.client.prefs.be_special))
-						if(ishuman(khrushchev.current))
+						if(!ismonkey(khrushchev.current))
 							promotable += khrushchev
 						else
-							nonhuman_promotable += khrushchev
-			if(!promotable.len && nonhuman_promotable.len) //if only nonhuman revolutionaries remain, promote one of them to the leadership.
-				promotable = nonhuman_promotable
+							monkey_promotable += khrushchev
+			if(!promotable.len && monkey_promotable.len) //if only monkey revolutionaries remain, promote one of them to the leadership.
+				promotable = monkey_promotable
 			if(promotable.len)
 				var/datum/mind/new_leader = pick(promotable)
 				var/datum/antagonist/rev/rev = new_leader.has_antag_datum(/datum/antagonist/rev)
@@ -559,10 +559,9 @@
 
 		if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))
-			player.med_hud_set_status()
 
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
-		if(!(job.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))
+		if(!(job.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
 			continue
 		job.allow_bureaucratic_error = FALSE
 		job.total_positions = 0
@@ -626,7 +625,6 @@
 	for (var/datum/mind/rev_head as anything in ex_headrevs)
 		if(!isnull(rev_head.current))
 			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
-			rev_head.current.med_hud_set_status()
 
 	for(var/datum/objective/mutiny/head_tracker in objectives)
 		var/mob/living/head_of_staff = head_tracker.target?.current

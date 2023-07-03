@@ -22,6 +22,10 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/stickman
 
+/mob/living/basic/stickman/lesser
+	maxHealth = 25
+	health = 25
+
 /mob/living/basic/stickman/Initialize(mapload)
 	. = ..()
 	new /obj/effect/temp_visual/paper_scatter(get_turf(src))

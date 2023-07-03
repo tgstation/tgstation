@@ -23,6 +23,8 @@
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	layer = TABLE_LAYER
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
+	///TRUE if the table can be climbed on and have living mobs placed on it normally, FALSE otherwise
+	var/climbable = TRUE
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/glass_shard_type = /obj/item/shard
@@ -42,7 +44,9 @@
 	. = ..()
 	if(_buildstack)
 		buildstack = _buildstack
-	AddElement(/datum/element/climbable)
+
+	if (climbable)
+		AddElement(/datum/element/climbable)
 
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(table_carbon),
@@ -97,7 +101,7 @@
 
 /obj/structure/table/attack_hand(mob/living/user, list/modifiers)
 	if(Adjacent(user) && user.pulling)
-		if(isliving(user.pulling))
+		if(isliving(user.pulling) && climbable)
 			var/mob/living/pushed_mob = user.pulling
 			if(pushed_mob.buckled)
 				to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
@@ -324,7 +328,7 @@
 		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
 	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-	log_combat(src, target, "shoved", "onto [src] (table)")
+	log_combat(shover, target, "shoved", "onto [src] (table)")
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /obj/structure/table/greyscale
@@ -354,6 +358,10 @@
 	icon_state = "rollingtable"
 	var/list/attached_items = list()
 
+/obj/structure/table/rolling/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/noisy_movement)
+
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	. = ..()
 	attached_items += I
@@ -377,10 +385,6 @@
 		if(!attached_movable.Move(loc))
 			RemoveItemFromTable(attached_movable, attached_movable.loc)
 
-/obj/structure/table/rolling/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 /*
  * Glass tables
  */
@@ -707,8 +711,8 @@
 	smoothing_groups = null
 	canSmoothWith = null
 	can_buckle = 1
-	buckle_lying = NO_BUCKLE_LYING
-	buckle_requires_restraints = TRUE
+	buckle_lying = 90
+	climbable = FALSE
 	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
@@ -720,6 +724,7 @@
 		if(computer)
 			computer.table = src
 			break
+
 	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(mark_patient))
 	RegisterSignal(loc, COMSIG_ATOM_EXITED, PROC_REF(unmark_patient))
 

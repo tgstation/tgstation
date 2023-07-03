@@ -65,7 +65,7 @@
 	/// How far away can you point?
 	var/teleport_range = 7
 	/// How long does it take to teleport?
-	var/teleport_time = 3 SECONDS
+	var/teleport_time = 2 SECONDS
 	/// How accurate are you?
 	var/teleport_vary = 2
 

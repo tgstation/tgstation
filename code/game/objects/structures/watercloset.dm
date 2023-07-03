@@ -248,6 +248,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		/datum/reagent/ammonia = 1,
 	)
 	foodtypes = TOXIC | GROSS
+	preserved_food = TRUE
 
 /obj/item/food/urinalcake/attack_self(mob/living/user)
 	user.visible_message(span_notice("[user] squishes [src]!"), span_notice("You squish [src]."), "<i>You hear a squish.</i>")
@@ -268,6 +269,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	worn_icon_state = "duck"
+	sound_file = 'sound/effects/quack.ogg'
 
 /obj/structure/sink
 	name = "sink"

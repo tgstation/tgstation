@@ -202,7 +202,7 @@
 		return FALSE
 
 	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount=0))
+		if(!W.tool_start_check(user, amount=1))
 			return FALSE
 
 		to_chat(user, span_notice("You begin fixing dents on the wall..."))
@@ -231,7 +231,7 @@
 
 /turf/closed/wall/proc/try_decon(obj/item/I, mob/user)
 	if(I.tool_behaviour == TOOL_WELDER)
-		if(!I.tool_start_check(user, amount=0))
+		if(!I.tool_start_check(user, amount=round(slicing_duration / 50)))
 			return FALSE
 
 		to_chat(user, span_notice("You begin slicing through the outer plating..."))
@@ -284,12 +284,8 @@
 	switch(passed_mode)
 		if(RCD_WALLFRAME)
 			var/obj/item/wallframe/new_wallmount = new the_rcd.wallframe_type(user.drop_location())
-			if(!try_wallmount(new_wallmount, user, src))
-				qdel(new_wallmount)
-				return FALSE
-			return TRUE
+			return try_wallmount(new_wallmount, user, src)
 		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct the wall."))
 			ScrapeAway()
 			return TRUE
 	return FALSE

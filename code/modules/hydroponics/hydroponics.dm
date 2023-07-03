@@ -1132,7 +1132,7 @@
  * Upon using strange reagent on a tray, it will spawn a killer tomato or killer tree at random.
  */
 /obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
-	var/list/livingplants = list(/mob/living/basic/tree, /mob/living/simple_animal/hostile/killertomato)
+	var/list/livingplants = list(/mob/living/basic/tree, /mob/living/basic/killer_tomato)
 	var/chosen = pick(livingplants)
 	var/mob/living/C = new chosen(get_turf(src))
 	C.faction = list(FACTION_PLANTS)

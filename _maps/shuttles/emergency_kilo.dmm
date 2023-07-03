@@ -630,9 +630,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/item/kirbyplants/organic/plant5,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/escape)
@@ -662,9 +660,7 @@
 /area/shuttle/escape/brig)
 "iA" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -833,9 +829,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "pp" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -878,18 +872,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
+/obj/item/kirbyplants/organic/applebush,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "si" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/item/kirbyplants/organic/plant22,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "sx" = (
@@ -1270,9 +1260,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "RT" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -1306,9 +1294,7 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "TT" = (
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
+/obj/item/kirbyplants/organic/applebush,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/mineral/titanium/tiled/white,

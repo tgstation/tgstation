@@ -20,6 +20,24 @@
 	for (var/obj/item/item in src)
 		item.item_flags |= IN_STORAGE
 
+/obj/item/storage/create_storage(
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+	numerical_stacking,
+	allow_quick_gather,
+	allow_quick_empty,
+	collection_mode,
+	attack_hand_interact,
+	list/canhold,
+	list/canthold,
+	storage_type,
+	)
+	if(!storage_type) // If no type was passed in, default to what we already have
+		storage_type = src.storage_type
+	return ..()
+
+
 /obj/item/storage/AllowDrop()
 	return FALSE
 

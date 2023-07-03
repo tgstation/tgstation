@@ -263,6 +263,10 @@
 	result = /obj/item/food/pastrybase
 	category = CAT_BREAD
 
+/datum/crafting_recipe/food/knife/butterslice
+	reqs = list(/obj/item/food/butter = 1)
+	result = /obj/item/food/butterslice
+
 /datum/crafting_recipe/food/knife/doughball
 	reqs = list(/obj/item/food/doughslice = 1)
 	result = /obj/item/food/bait/doughball
@@ -418,8 +422,8 @@
 	category = CAT_BREAD
 
 /datum/crafting_recipe/food/grill/grilled_cheese_sandwich
-	reqs = list(/obj/item/food/cheese_sandwich = 1)
-	result = /obj/item/food/grilled_cheese_sandwich
+	reqs = list(/obj/item/food/sandwich/cheese = 1)
+	result = /obj/item/food/sandwich/cheese/grilled
 	category = CAT_BREAD
 
 /datum/crafting_recipe/food/grill/moonfish
@@ -515,7 +519,7 @@
 	result = /datum/reagent/consumable/flour
 
 /datum/crafting_recipe/food/grinder/butter
-	reqs = list(/datum/reagent/consumable/milk = 15)
+	reqs = list(/datum/reagent/consumable/milk = MILK_TO_BUTTER_COEFF)
 	result = /obj/item/food/butter
 	steps = list("Put into grinder and mix")
 

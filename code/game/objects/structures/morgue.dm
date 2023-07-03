@@ -216,6 +216,13 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	beeper = !beeper
 	to_chat(user, span_notice("You turn the speaker function [beeper ? "on" : "off"]."))
 
+/obj/structure/bodycontainer/morgue/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	to_chat(user, span_warning("You overload [src]'s alert system."))
+	obj_flags |= EMAGGED
+	update_appearance(UPDATE_ICON)
+
 /obj/structure/bodycontainer/morgue/update_icon_state()
 	if(!connected || connected.loc != src) // Open or tray is gone.
 		icon_state = "morgue0"
@@ -230,9 +237,11 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		icon_state = "morgue3"
 		return ..()
 
-	for(var/mob/living/M in compiled)
-		var/mob/living/mob_occupant = get_mob_or_brainmob(M)
-		if(mob_occupant.client && !(HAS_TRAIT(mob_occupant, TRAIT_SUICIDED))&& !(HAS_TRAIT(mob_occupant, TRAIT_BADDNA)))
+	if(!(obj_flags & EMAGGED))
+		for(var/mob/living/occupant as anything in compiled)
+			var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
+			if(!mob_occupant.client || HAS_TRAIT(mob_occupant, TRAIT_SUICIDED) || HAS_TRAIT(mob_occupant, TRAIT_BADDNA))
+				continue
 			icon_state = "morgue4" // Revivable
 			if(mob_occupant.stat == DEAD && beeper && COOLDOWN_FINISHED(src, next_beep))
 				playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
@@ -328,7 +337,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			qdel(O)
 
 		if(!locate(/obj/effect/decal/cleanable/ash) in get_step(src, dir))//prevent pile-up
-			new/obj/effect/decal/cleanable/ash/crematorium(src)
+			new/obj/effect/decal/cleanable/ash(src)
 
 		sleep(3 SECONDS)
 

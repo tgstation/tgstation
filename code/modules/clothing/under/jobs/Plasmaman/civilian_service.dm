@@ -7,7 +7,7 @@
 	icon = 'icons/obj/clothing/under/plasmaman.dmi'
 	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	clothing_flags = PLASMAMAN_PREVENT_IGNITION
-	armor_type = /datum/armor/under_plasmaman
+	armor_type = /datum/armor/clothing_under/plasmaman
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = FALSE
 	strip_delay = 80
@@ -15,7 +15,7 @@
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
 
-/datum/armor/under_plasmaman
+/datum/armor/clothing_under/plasmaman
 	bio = 100
 	fire = 95
 	acid = 95
@@ -75,7 +75,7 @@
 
 /obj/item/clothing/under/plasmaman/enviroslacks
 	name = "enviroslacks"
-	desc = "The pet project of a particularly posh plasmaman, this custom suit was quickly appropriated by Nanotrasen for its detectives, lawyers, and bartenders alike."
+	desc = "The pet project of a particularly posh plasmaman, this custom suit was quickly appropriated by Nanotrasen for its lawyers, and bartenders alike."
 	icon_state = "enviroslacks"
 	inhand_icon_state = null
 
@@ -139,5 +139,5 @@
 			var/datum/effect_system/fluid_spread/foam/foam = new
 			var/datum/reagents/foamreagent = new /datum/reagents(15)
 			foamreagent.add_reagent(/datum/reagent/lube, 15)
-			foam.set_up(4, holder = src, location = loc, carry = foamreagent)
+			foam.set_up(4, holder = src, location = H.loc, carry = foamreagent)
 			foam.start() //Truly terrifying.

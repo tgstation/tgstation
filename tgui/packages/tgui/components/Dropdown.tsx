@@ -69,20 +69,16 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       Dropdown.currentOpenMenu?.getBoundingClientRect() ?? NULL_RECT,
   };
   menuContents: any;
-  handleClick: any;
   state: DropdownState = {
     open: false,
+    selected: this.props.selected,
   };
 
-  constructor() {
-    super();
-
-    this.handleClick = () => {
-      if (this.state.open) {
-        this.setOpen(false);
-      }
-    };
-  }
+  handleClick = () => {
+    if (this.state.open) {
+      this.setOpen(false);
+    }
+  };
 
   getDOMNode() {
     return findDOMfromVNode(this.$LI, true);
@@ -170,7 +166,10 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       return (
         <div
           key={value}
-          className="Dropdown__menuentry"
+          className={classes([
+            'Dropdown__menuentry',
+            this.state.selected === value && 'selected',
+          ])}
           onClick={() => {
             this.setSelected(value);
           }}>
@@ -251,27 +250,41 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
   }
 
   toPrevious(): void {
-    const selectedIndex = this.getSelectedIndex();
-
-    if (selectedIndex < 0) {
+    if (this.props.options.length < 1) {
       return;
     }
 
+    let selectedIndex = this.getSelectedIndex();
+    const startIndex = 0;
     const endIndex = this.props.options.length - 1;
-    const previousIndex = selectedIndex === 0 ? endIndex : selectedIndex - 1;
+
+    const hasSelected = selectedIndex >= 0;
+    if (!hasSelected) {
+      selectedIndex = startIndex;
+    }
+
+    const previousIndex =
+      selectedIndex === startIndex ? endIndex : selectedIndex - 1;
 
     this.setSelected(this.getOptionValue(this.props.options[previousIndex]));
   }
 
   toNext(): void {
-    const selectedIndex = this.getSelectedIndex();
-
-    if (selectedIndex < 0) {
+    if (this.props.options.length < 1) {
       return;
     }
 
+    let selectedIndex = this.getSelectedIndex();
+    const startIndex = 0;
     const endIndex = this.props.options.length - 1;
-    const nextIndex = selectedIndex === endIndex ? 0 : selectedIndex + 1;
+
+    const hasSelected = selectedIndex >= 0;
+    if (!hasSelected) {
+      selectedIndex = endIndex;
+    }
+
+    const nextIndex =
+      selectedIndex === endIndex ? startIndex : selectedIndex + 1;
 
     this.setSelected(this.getOptionValue(this.props.options[nextIndex]));
   }

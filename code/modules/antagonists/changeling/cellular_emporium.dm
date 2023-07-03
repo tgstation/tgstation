@@ -41,7 +41,7 @@
 
 		var/dna_cost = initial(ability_path.dna_cost)
 
-		if(dna_cost <= 0)
+		if(dna_cost < 0)
 			continue
 
 		var/list/ability_data = list()
@@ -57,7 +57,7 @@
 			can_purchase = FALSE
 		if(initial(ability_path.req_dna) > changeling.absorbed_count)
 			can_purchase = FALSE
-		if(dna_cost > genetic_points_remaining)
+		if(dna_cost > 0 && dna_cost > genetic_points_remaining)
 			can_purchase = FALSE
 
 		ability_data["can_purchase"] = can_purchase

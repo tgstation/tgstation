@@ -58,7 +58,14 @@
 		weighted_megafauna_spawn_list = GLOB.megafauna_spawn_list
 	megafauna_spawn_list = expand_weights(weighted_megafauna_spawn_list)
 	if(!weighted_flora_spawn_list)
-		weighted_flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2, /obj/structure/flora/ash/seraka = 2)
+		weighted_flora_spawn_list = list(
+			/obj/structure/flora/ash/leaf_shroom = 2,
+			/obj/structure/flora/ash/cap_shroom = 2,
+			/obj/structure/flora/ash/stem_shroom = 2,
+			/obj/structure/flora/ash/cacti = 1,
+			/obj/structure/flora/ash/tall_shroom = 2,
+			/obj/structure/flora/ash/seraka = 2,
+		)
 	flora_spawn_list = expand_weights(weighted_flora_spawn_list)
 	if(!weighted_feature_spawn_list)
 		weighted_feature_spawn_list = list(/obj/structure/geyser/random = 1)
