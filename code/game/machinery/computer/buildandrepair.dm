@@ -55,7 +55,7 @@
 					state = 0
 				return
 
-			if(istype(P, /obj/item/storage/part_replacer) && P.contents.len)
+			if(!circuit && istype(P, /obj/item/storage/part_replacer) && P.contents.len)
 				var/obj/item/storage/part_replacer/replacer = P
 				// map of circuitboard names to the board
 				var/list/circuit_boards = list()
@@ -84,19 +84,21 @@
 					attackby(replacer, user, params)
 					return
 
-			if(istype(P, /obj/item/circuitboard/computer) && !circuit)
+			if(!circuit && istype(P, /obj/item/circuitboard/computer))
 				install_board(P, user, TRUE)
 				return
 
-			else if(istype(P, /obj/item/circuitboard) && !circuit)
+			else if(!circuit && istype(P, /obj/item/circuitboard))
 				to_chat(user, span_warning("This frame does not accept circuit boards of this type!"))
 				return
+
 			if(P.tool_behaviour == TOOL_SCREWDRIVER && circuit)
 				P.play_tool_sound(src)
 				to_chat(user, span_notice("You screw [circuit] into place."))
 				state = 2
 				icon_state = "2"
 				return
+
 			if(P.tool_behaviour == TOOL_CROWBAR && circuit)
 				P.play_tool_sound(src)
 				to_chat(user, span_notice("You remove [circuit]."))

@@ -183,7 +183,7 @@
 					set_anchored(!anchored)
 				return
 
-			if(istype(P, /obj/item/storage/part_replacer) && P.contents.len)
+			if(!circuit && istype(P, /obj/item/storage/part_replacer) && P.contents.len)
 				var/obj/item/storage/part_replacer/replacer = P
 				// map of circuitboard names to the board
 				var/list/circuit_boards = list()
@@ -208,12 +208,12 @@
 					attackby(replacer, user, params)
 					return
 
-			if(istype(P, /obj/item/circuitboard/machine))
+			if(!circuit && istype(P, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/machine_board = P
 				install_board(machine_board, user, TRUE)
 				return
 
-			else if(istype(P, /obj/item/circuitboard))
+			else if(!circuit && istype(P, /obj/item/circuitboard))
 				to_chat(user, span_warning("This frame does not accept circuit boards of this type!"))
 				return
 
