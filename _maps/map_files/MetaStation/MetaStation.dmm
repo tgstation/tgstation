@@ -1011,11 +1011,13 @@
 "auw" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cabin7";
-	name = "Cabin 1"
+	name = "Cryogenics Cabin"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/iron/white/side{
+	dir = 4
+	},
 /area/station/commons/dorms)
 "auH" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -7685,9 +7687,13 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "cUP" = (
-/obj/effect/spawner/random/structure/closet_private,
-/obj/item/clothing/under/misc/assistantformal,
-/turf/open/floor/wood,
+/obj/structure/table/glass,
+/obj/item/storage/medkit/fire{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/storage/medkit/o2,
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/dorms)
 "cUX" = (
 /obj/structure/table/wood,
@@ -8480,13 +8486,11 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "dis" = (
-/obj/effect/landmark/generic_maintenance_landmark,
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/dorms)
 "diC" = (
 /obj/machinery/door/airlock/maintenance{
@@ -8773,11 +8777,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "dqs" = (
-/obj/structure/chair/wood{
-	dir = 4
-	},
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/wood,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/dorms)
 "dqx" = (
 /obj/structure/closet/emcloset,
@@ -24080,9 +24081,6 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "iNh" = (
-/obj/structure/sign/warning/cold_temp/directional/north{
-	name = "\improper CRYOGENICS"
-	},
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/dark/textured,
@@ -33584,10 +33582,11 @@
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hop)
 "mil" = (
-/obj/structure/table/wood,
 /obj/machinery/newscaster/directional/east,
-/obj/effect/spawner/random/bureaucracy/paper,
-/turf/open/floor/wood,
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/iron/white/textured_large,
 /area/station/commons/dorms)
 "min" = (
 /obj/effect/turf_decal/stripes/line{
@@ -49404,6 +49403,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"rPS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/computer/cryopod{
+	pixel_y = 24
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/station/commons/dorms)
 "rQd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -49678,19 +49685,13 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "rUo" = (
-/obj/structure/bed,
-/obj/item/bedsheet/dorms,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/button/door/directional/west{
-	id = "Cabin7";
-	name = "Cabin Bolt Control";
-	normaldoorcontrol = 1;
-	specialfunctions = 4
+/obj/machinery/cryopod{
+	dir = 4
 	},
-/obj/item/pillow/random,
-/turf/open/floor/wood,
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/dorms)
 "rUE" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -104719,7 +104720,7 @@ qXB
 wNp
 lEB
 lnc
-obw
+rPS
 rUo
 lqQ
 fzr
