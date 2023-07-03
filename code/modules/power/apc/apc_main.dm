@@ -175,7 +175,7 @@
 		name = "\improper [get_area_name(area, TRUE)] APC"
 
 	//Initialize its electronics
-	wires = new /datum/wires/apc(src)
+	set_wires(new /datum/wires/apc(src))
 	alarm_manager = new(src)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	// for apcs created during map load make them fully functional
@@ -207,7 +207,7 @@
 	GLOB.apcs_list -= src
 
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10, 0, 1000)
 	disconnect_from_area()
 	QDEL_NULL(alarm_manager)
 	if(occupier)
@@ -218,6 +218,7 @@
 		QDEL_NULL(cell)
 	if(terminal)
 		disconnect_terminal()
+
 	return ..()
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
@@ -263,6 +264,11 @@
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
 	if(machine_stat & BROKEN)
+		if(opened != APC_COVER_REMOVED)
+			. += "The cover is broken and can probably be <i>pried</i> off with enough force."
+			return
+		if(terminal && has_electronics)
+			. += "The cover is missing but can be replaced using a new frame."
 		return
 	if(opened)
 		if(has_electronics && terminal)

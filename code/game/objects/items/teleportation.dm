@@ -23,7 +23,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=400)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 4)
 	var/tracking_range = 20
 
 /obj/item/locator/ui_interact(mob/user, datum/tgui/ui)
@@ -110,7 +110,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=10000)
+	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 5)
 	armor_type = /datum/armor/item_hand_tele
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/active_portal_pairs
@@ -256,8 +256,8 @@
 	var/obj/effect/portal/portal1 = created[1]
 	var/obj/effect/portal/portal2 = created[2]
 
-	RegisterSignal(portal1, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
-	RegisterSignal(portal2, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
+	RegisterSignal(portal1, COMSIG_QDELETING, PROC_REF(on_portal_destroy))
+	RegisterSignal(portal2, COMSIG_QDELETING, PROC_REF(on_portal_destroy))
 
 	try_move_adjacent(portal1, user.dir)
 	active_portal_pairs[portal1] = portal2

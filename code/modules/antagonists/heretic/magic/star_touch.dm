@@ -20,6 +20,8 @@
 	hand_path = /obj/item/melee/touch_attack/star_touch
 	/// Stores the weakref for the Star Gazer after ascending
 	var/datum/weakref/star_gazer
+	/// If the heretic is ascended or not
+	var/ascended = FALSE
 
 /datum/action/cooldown/spell/touch/star_touch/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
@@ -43,7 +45,13 @@
 	return TRUE
 
 /datum/action/cooldown/spell/touch/star_touch/proc/get_turfs(mob/living/victim)
-	return list(get_turf(owner), get_step(owner, turn(owner.dir, 90)), get_step(owner, turn(owner.dir, 270)))
+	var/list/target_turfs = list(get_turf(owner))
+	var/range = ascended ? 2 : 1
+	var/list/directions = list(turn(owner.dir, 90), turn(owner.dir, 270))
+	for (var/direction as anything in directions)
+		for (var/i in 1 to range)
+			target_turfs += get_ranged_target_turf(owner, direction, i)
+	return target_turfs
 
 /// To set the star gazer
 /datum/action/cooldown/spell/touch/star_touch/proc/set_star_gazer(mob/living/basic/star_gazer/star_gazer_mob)
@@ -77,7 +85,7 @@
 /obj/item/melee/touch_attack/star_touch/proc/after_clear_rune(obj/effect/target, mob/living/user)
 	new /obj/effect/temp_visual/cosmic_rune_fade(get_turf(target))
 	var/datum/action/cooldown/spell/touch/star_touch/star_touch_spell = spell_which_made_us?.resolve()
-	star_touch_spell?.spell_feedback()
+	star_touch_spell?.spell_feedback(user)
 	remove_hand_with_no_refund(user)
 
 /obj/item/melee/touch_attack/star_touch/ignition_effect(atom/to_light, mob/user)
@@ -184,7 +192,7 @@
 	current_target = target
 	active = TRUE
 	current_beam = user.Beam(current_target, icon_state="cosmic_beam", time = 1 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/cosmic)
-	RegisterSignal(current_beam, COMSIG_PARENT_QDELETING, PROC_REF(beam_died))
+	RegisterSignal(current_beam, COMSIG_QDELETING, PROC_REF(beam_died))
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	if(current_target)

@@ -64,8 +64,6 @@
 
 /obj/vehicle/examine(mob/user)
 	. = ..()
-	if(resistance_flags & ON_FIRE)
-		. += span_warning("It's on fire!")
 	. += generate_integrity_message()
 
 /// Returns a readable string of the vehicle's health for examining. Overridden by subtypes who want to be more verbose with their health messages.
@@ -177,12 +175,12 @@
 /// To add a trailer to the vehicle in a manner that allows safe qdels
 /obj/vehicle/proc/add_trailer(obj/vehicle/added_vehicle)
 	trailer = added_vehicle
-	RegisterSignal(trailer, COMSIG_PARENT_QDELETING, PROC_REF(remove_trailer))
+	RegisterSignal(trailer, COMSIG_QDELETING, PROC_REF(remove_trailer))
 
 /// To remove a trailer from the vehicle in a manner that allows safe qdels
 /obj/vehicle/proc/remove_trailer()
 	SIGNAL_HANDLER
-	UnregisterSignal(trailer, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(trailer, COMSIG_QDELETING)
 	trailer = null
 
 /obj/vehicle/Move(newloc, dir)

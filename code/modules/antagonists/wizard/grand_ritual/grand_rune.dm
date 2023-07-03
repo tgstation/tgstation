@@ -181,7 +181,7 @@
 		return
 
 	var/datum/round_event_control/final_event = pick (possible_events)
-	final_event.runEvent()
+	final_event.run_event(event_cause = "a Grand Ritual Rune")
 	to_chat(user, span_notice("Your released magic afflicts the crew: [final_event.name]!"))
 
 /// Applies some local side effects to the area

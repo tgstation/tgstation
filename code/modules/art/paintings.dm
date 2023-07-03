@@ -50,6 +50,8 @@
 	/// Is it clean canvas or was there something painted on it at some point, used to decide when to show wip splotch overlay
 	var/used = FALSE
 	var/finalized = FALSE //Blocks edits
+	/// Whether a grid should be shown in the UI if the canvas is editable and the viewer is holding a painting tool.
+	var/show_grid = TRUE
 	var/icon_generated = FALSE
 	var/icon/generated_icon
 	///boolean that blocks persistence from saving it. enabled from printing copies, because we do not want to save copies.
@@ -128,12 +130,13 @@
 	.["finalized"] = finalized
 	.["editable"] = !finalized //Ideally you should be able to draw moustaches on existing paintings in the gallery but that's not implemented yet
 	.["show_plaque"] = istype(loc,/obj/structure/sign/painting)
-	var/obj/item/painting_implement = user.get_active_held_item()
-	.["paint_tool_color"] = get_paint_tool_color(painting_implement)
-	// Clearing additional data so that it doesn't linger around if the painting tool is dropped.
+	.["show_grid"] = show_grid
 	.["paint_tool_palette"] = null
+	var/obj/item/painting_implement = user.get_active_held_item()
 	if(!painting_implement)
+		.["paint_tool_color"] = null
 		return
+	.["paint_tool_color"] = get_paint_tool_color(painting_implement)
 	SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA, .)
 
 /obj/item/canvas/examine(mob/user)
@@ -170,6 +173,29 @@
 		if("select_color")
 			var/obj/item/painting_implement = user.get_active_held_item()
 			painting_implement?.set_painting_tool_color(params["selected_color"])
+			. = TRUE
+		if("select_color_from_coords")
+			var/obj/item/painting_implement = user.get_active_held_item()
+			if(!painting_implement)
+				return FALSE
+			var/x = text2num(params["px"])
+			var/y = text2num(params["py"])
+			painting_implement.set_painting_tool_color(grid[x][y])
+			. = TRUE
+		if("change_palette")
+			var/obj/item/painting_implement = user.get_active_held_item()
+			if(!painting_implement)
+				return FALSE
+			//I'd have this done inside the signal, but that'd have to be asynced,
+			//while we want the UI to be updated after the color is chosen, not before.
+			var/chosen_color = input(user, "Pick new color", painting_implement, params["old_color"]) as color|null
+			if(!chosen_color || IS_DEAD_OR_INCAP(user) || !user.is_holding(painting_implement))
+				return FALSE
+			SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_PALETTE_COLOR_CHANGED, chosen_color, params["color_index"])
+			. = TRUE
+		if("toggle_grid")
+			. = TRUE
+			show_grid = !show_grid
 		if("finalize")
 			. = TRUE
 			finalize(user)
@@ -423,7 +449,8 @@
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/signs.dmi'
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	flags_1 = NONE
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting
@@ -435,7 +462,8 @@
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-empty"
 	base_icon_state = "frame"
-	custom_materials = list(/datum/material/wood = 2000)
+	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE
 	///Canvas we're currently displaying.
 	var/obj/item/canvas/current_canvas
@@ -615,7 +643,7 @@
 /obj/item/wallframe/painting/large
 	name = "large painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories. Make sure you have enough space to mount this one to the wall."
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 	icon_state = "frame-large-empty"
 	result_path = /obj/structure/sign/painting/large
 	pixel_shift = 0 //See [/obj/structure/sign/painting/large/proc/finalize_size]
@@ -642,7 +670,7 @@
 
 /obj/structure/sign/painting/large
 	icon = 'icons/obj/art/artstuff_64x64.dmi'
-	custom_materials = list(/datum/material/wood = 4000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 	accepted_canvas_types = list(
 		/obj/item/canvas/thirtysix_twentyfour,
 		/obj/item/canvas/fortyfive_twentyseven,
@@ -650,6 +678,8 @@
 
 /obj/structure/sign/painting/large/Initialize(mapload)
 	. = ..()
+	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 	if(mapload)
 		finalize_size()
 

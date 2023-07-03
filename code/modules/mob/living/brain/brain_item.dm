@@ -9,7 +9,7 @@
 	plane = GAME_PLANE_UPPER
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
-	organ_flags = ORGAN_VITAL
+	organ_flags = ORGAN_ORGANIC | ORGAN_VITAL
 	attack_verb_continuous = list("attacks", "slaps", "whacks")
 	attack_verb_simple = list("attack", "slap", "whack")
 
@@ -133,7 +133,7 @@
 	brainmob = new(src)
 	brainmob.name = L.real_name
 	brainmob.real_name = L.real_name
-	brainmob.timeofhostdeath = L.timeofdeath
+	brainmob.timeofdeath = L.timeofdeath
 
 	if(suicided)
 		ADD_TRAIT(brainmob, TRAIT_SUICIDED, REF(src))
@@ -143,8 +143,9 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
-		if(HAS_TRAIT(L, TRAIT_BADDNA))
-			LAZYSET(brainmob.status_traits, TRAIT_BADDNA, L.status_traits[TRAIT_BADDNA])
+		// Hack, fucked dna needs to follow the brain to prevent memes, so we need to copy over the trait sources and shit
+		for(var/source in GET_TRAIT_SOURCES(L, TRAIT_BADDNA))
+			ADD_TRAIT(brainmob, TRAIT_BADDNA, source)
 	if(L.mind && L.mind.current)
 		L.mind.transfer_to(brainmob)
 	to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
@@ -373,6 +374,14 @@
 	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy
 
+/obj/item/organ/internal/brain/golem
+	name = "crystalline matrix"
+	desc = "This collection of sparkling gems somehow allows a golem to think."
+	icon_state = "adamantine_resonator"
+	color = COLOR_GOLEM_GRAY
+	organ_flags = ORGAN_MINERAL
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ROCK_METAMORPHIC)
+
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
 /obj/item/organ/internal/brain/proc/has_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
@@ -498,7 +507,7 @@
 		amount_cured++
 	return amount_cured
 
-/obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE)
 	. = ..()
 	if(!owner)
 		return

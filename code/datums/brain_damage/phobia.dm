@@ -138,88 +138,20 @@
 
 // Defined phobia types for badminry, not included in the RNG trauma pool to avoid diluting.
 
-/datum/brain_trauma/mild/phobia/spiders
-	phobia_type = "spiders"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/space
-	phobia_type = "space"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/security
-	phobia_type = "security"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/clowns
-	phobia_type = "clowns"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/greytide
-	phobia_type = "greytide"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/lizards
-	phobia_type = "lizards"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/skeletons
-	phobia_type = "skeletons"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/snakes
-	phobia_type = "snakes"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/robots
-	phobia_type = "robots"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/doctors
-	phobia_type = "doctors"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/authority
-	phobia_type = "authority"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/supernatural
-	phobia_type = "the supernatural"
-	random_gain = FALSE
-
 /datum/brain_trauma/mild/phobia/aliens
 	phobia_type = "aliens"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/strangers
-	phobia_type = "strangers"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/birds
-	phobia_type = "birds"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/falling
-	phobia_type = "falling"
 	random_gain = FALSE
 
 /datum/brain_trauma/mild/phobia/anime
 	phobia_type = "anime"
 	random_gain = FALSE
 
-/datum/brain_trauma/mild/phobia/conspiracies
-	phobia_type = "conspiracies"
+/datum/brain_trauma/mild/phobia/authority
+	phobia_type = "authority"
 	random_gain = FALSE
 
-/datum/brain_trauma/mild/phobia/insects
-	phobia_type = "insects"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/ocky_icky
-	phobia_type = "ocky icky"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/guns
-	phobia_type = "guns"
+/datum/brain_trauma/mild/phobia/birds
+	phobia_type = "birds"
 	random_gain = FALSE
 
 /datum/brain_trauma/mild/phobia/blood
@@ -230,3 +162,71 @@
 	if (GET_ATOM_BLOOD_DNA_LENGTH(checked))
 		return TRUE
 	return ..()
+
+/datum/brain_trauma/mild/phobia/clowns
+	phobia_type = "clowns"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/conspiracies
+	phobia_type = "conspiracies"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/doctors
+	phobia_type = "doctors"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/falling
+	phobia_type = "falling"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/greytide
+	phobia_type = "greytide"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/guns
+	phobia_type = "guns"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/insects
+	phobia_type = "insects"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/lizards
+	phobia_type = "lizards"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/ocky_icky
+	phobia_type = "ocky icky"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/robots
+	phobia_type = "robots"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/security
+	phobia_type = "security"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/skeletons
+	phobia_type = "skeletons"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/snakes
+	phobia_type = "snakes"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/space
+	phobia_type = "space"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/spiders
+	phobia_type = "spiders"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/strangers
+	phobia_type = "strangers"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/supernatural
+	phobia_type = "the supernatural"
+	random_gain = FALSE

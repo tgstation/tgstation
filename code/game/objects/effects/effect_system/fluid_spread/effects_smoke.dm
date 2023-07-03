@@ -330,7 +330,7 @@
 
 /// A variant of the base freezing smoke formerly used by the vent decontamination event.
 /datum/effect_system/fluid_spread/smoke/freezing/decon
-	temperature = 293.15
+	temperature = T20C
 	distcheck = FALSE
 	weldvents = FALSE
 

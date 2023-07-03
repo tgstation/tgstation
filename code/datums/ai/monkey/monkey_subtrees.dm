@@ -37,10 +37,9 @@
 		living_pawn.set_combat_mode(FALSE)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	var/datum/weakref/target_ref = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
-	var/mob/living/selected_enemy = target_ref?.resolve()
+	var/mob/living/selected_enemy = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
 
-	if(!selected_enemy)
+	if(QDELETED(selected_enemy))
 		living_pawn.set_combat_mode(FALSE)
 		return
 

@@ -64,6 +64,7 @@
 	payment_department = ACCOUNT_SRV
 	light_power = 0.7
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 	/// Is the machine active (No sales pitches if off)!
 	var/active = 1
@@ -164,10 +165,11 @@
 	  * Is this item on station or not
 	  *
 	  * if it doesn't originate from off-station during mapload, everything is free
+	  * if it's off-station during mapload, it's also safe from the brand intelligence event
 	  */
-	var/onstation = TRUE //if it doesn't originate from off-station during mapload, everything is free
-	///A variable to change on a per instance basis on the map that allows the instance to force cost and ID requirements
-	var/onstation_override = FALSE //change this on the object on the map to override the onstation check. DO NOT APPLY THIS GLOBALLY.
+	var/onstation = TRUE
+	///A variable to change on a per instance basis on the map that allows the instance to force cost and ID requirements. DO NOT APPLY THIS GLOBALLY.
+	var/onstation_override = FALSE
 
 	var/list/vending_machine_input = list()
 	///Display header on the input view
@@ -184,7 +186,6 @@
 
 	/// used for narcing on underages
 	var/obj/item/radio/sec_radio
-
 
 /**
  * Initialize the vending machine
@@ -206,7 +207,13 @@
 		circuit = null
 		build_inv = TRUE
 	. = ..()
-	wires = new /datum/wires/vending(src)
+	set_wires(new /datum/wires/vending(src))
+
+	if(SStts.tts_enabled)
+		var/static/vendor_voice_by_type = list()
+		if(!vendor_voice_by_type[type])
+			vendor_voice_by_type[type] = pick(SStts.available_speakers)
+		voice = vendor_voice_by_type[type]
 
 	if(build_inv) //non-constructable vending machine
 		build_inventories()
@@ -724,7 +731,7 @@
 							var/obj/item/bodypart/squish_part = i
 							if(IS_ORGANIC_LIMB(squish_part))
 								var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
-								squish_part.force_wound_upwards(type_wound)
+								squish_part.force_wound_upwards(type_wound, wound_source = "crushing by vending machine")
 							else
 								squish_part.receive_damage(brute=30)
 						C.visible_message(span_danger("[C]'s body is maimed underneath the mass of [src]!"), \
@@ -1433,7 +1440,7 @@
 	max_integrity = 700
 	max_loaded_items = 40
 	light_mask = "greed-light-mask"
-	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 5)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/machinery/vending/custom/greed/Initialize(mapload)
 	. = ..()

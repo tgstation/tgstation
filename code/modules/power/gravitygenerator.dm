@@ -36,6 +36,9 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /obj/machinery/gravity_generator/ex_act(severity, target)
 	if(severity >= EXPLODE_DEVASTATE) // Very sturdy.
 		set_broken()
+		return TRUE
+
+	return FALSE
 
 /obj/machinery/gravity_generator/blob_act(obj/structure/blob/B)
 	if(prob(20))
@@ -225,7 +228,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 					return
 			if(GRAV_NEEDS_WELDING)
 				if(weapon.tool_behaviour == TOOL_WELDER)
-					if(weapon.use_tool(src, user, 0, volume=50, amount=1))
+					if(weapon.use_tool(src, user, 0, volume=50))
 						to_chat(user, span_notice("You mend the damaged framework."))
 						broken_state++
 						update_appearance()

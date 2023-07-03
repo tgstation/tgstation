@@ -7,6 +7,10 @@
 	icon_state = "book"
 	worn_icon_state = "book"
 	w_class = WEIGHT_CLASS_SMALL
+	/// Helps determine the icon state of this item when it's used on self.
+	var/book_open = FALSE
+	/// id for timer
+	var/timer_id
 
 /obj/item/codex_cicatrix/Initialize(mapload)
 	. = ..()
@@ -33,7 +37,10 @@
 	if(.)
 		return
 
-	open_animation()
+	if(book_open)
+		close_animation()
+	else
+		open_animation()
 
 /obj/item/codex_cicatrix/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -48,18 +55,18 @@
 		heretic_datum.try_draw_rune(user, target, drawing_time = 12 SECONDS)
 		return TRUE
 
-/*
- * Plays a little animation that shows the book opening and closing.
- */
+/// Plays a little animation that shows the book opening and closing.
 /obj/item/codex_cicatrix/proc/open_animation()
 	icon_state = "[base_icon_state]_open"
 	flick("[base_icon_state]_opening", src)
+	book_open = TRUE
 
-	addtimer(CALLBACK(src, PROC_REF(close_animation)), 5 SECONDS)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(close_animation)), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
-/*
- * Plays a closing animation and resets the icon state.
- */
+/// Plays a closing animation and resets the icon state.
 /obj/item/codex_cicatrix/proc/close_animation()
 	icon_state = base_icon_state
 	flick("[base_icon_state]_closing", src)
+	book_open = FALSE
+
+	deltimer(timer_id)

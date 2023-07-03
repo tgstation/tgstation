@@ -110,10 +110,6 @@
 	//Check inventory slots
 	return (wear_id?.GetID() || belt?.GetID())
 
-/mob/living/carbon/human/reagent_check(datum/reagent/R, seconds_per_tick, times_fired)
-	return dna.species.handle_chemicals(R, src, seconds_per_tick, times_fired)
-	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
-
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
@@ -234,7 +230,7 @@
 	var/t_his = p_their()
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
-	if(key || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
+	if(key || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
@@ -258,6 +254,8 @@
 
 		if (preference.is_randomizable())
 			preference.apply_to_human(src, preference.create_random_value(preferences))
+
+	fully_replace_character_name(real_name, dna.species.random_name())
 
 /**
  * Setter for mob height
@@ -288,3 +286,33 @@
 		return HUMAN_HEIGHT_DWARF
 
 	return mob_height
+
+/**
+ * Makes a full copy of src and returns it.
+ * Attempts to copy as much as possible to be a close to the original.
+ * This includes job outfit (which handles skillchips), quirks, and mutations.
+ * We do not set a mind here, so this is purely the body.
+ * Args:
+ * location - The turf the human will be spawned on.
+ */
+/mob/living/carbon/human/proc/make_full_human_copy(turf/location, client/quirk_client)
+	RETURN_TYPE(/mob/living/carbon/human)
+
+	var/mob/living/carbon/human/clone = new(location)
+
+	clone.fully_replace_character_name(null, dna.real_name)
+	copy_clothing_prefs(clone)
+	clone.age = age
+	dna.transfer_identity(clone, transfer_SE = TRUE, transfer_species = TRUE)
+
+	clone.dress_up_as_job(SSjob.GetJob(job))
+
+	for(var/datum/quirk/original_quircks as anything in quirks)
+		clone.add_quirk(original_quircks.type, override_client = client)
+	for(var/datum/mutation/human/mutations in dna.mutations)
+		clone.dna.add_mutation(mutations)
+
+	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+	clone.domutcheck()
+
+	return clone

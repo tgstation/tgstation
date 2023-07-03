@@ -22,12 +22,12 @@
 #define CALIBER_357 ".357"
 /// The caliber used by the detective's revolver.
 #define CALIBER_38 ".38"
-/// The caliber used by the chaplain's revolver.
-#define CALIBER_77 ".77"
 /// The caliber used by the C-20r SMG, the tommygun, and the M1911 pistol.
 #define CALIBER_45 ".45"
-/// The caliber used by sniper rifles and the desert eagle.
-#define CALIBER_50 ".50"
+/// The caliber used by sniper rifles.
+#define CALIBER_50BMG ".50BMG"
+/// The caliber used by the desert eagle.
+#define CALIBER_50AE ".50AE"
 /// The caliber used by the gyrojet pistol.
 #define CALIBER_75 ".75"
 /// The caliber used by [one revolver variant][/obj/item/gun/ballistic/revolver/nagant].

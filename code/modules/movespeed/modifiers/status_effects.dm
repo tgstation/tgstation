@@ -31,3 +31,6 @@
 
 /datum/movespeed_modifier/status_effect/inflated
 	multiplicative_slowdown = 3.5
+
+/datum/movespeed_modifier/status_effect/light_speed
+	multiplicative_slowdown = -0.2 // lighting is pretty slow in BYOND

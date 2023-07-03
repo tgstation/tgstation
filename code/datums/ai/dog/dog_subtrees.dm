@@ -5,8 +5,7 @@
 	if(!SPT_PROB(10, seconds_per_tick))
 		return
 	controller.queue_behavior(/datum/ai_behavior/find_hated_dog_target, BB_DOG_HARASS_TARGET, BB_PET_TARGETTING_DATUM)
-	var/datum/weakref/weak_target = controller.blackboard[BB_DOG_HARASS_TARGET]
-	var/atom/harass_target = weak_target?.resolve()
+	var/atom/harass_target = controller.blackboard[BB_DOG_HARASS_TARGET]
 	if (isnull(harass_target))
 		return
 
@@ -29,11 +28,11 @@
 			continue
 
 		dog.audible_message(span_warning("[dog] growls at [iter_living], seemingly annoyed by [iter_living.p_their()] presence."), hearing_distance = COMBAT_MESSAGE_RANGE)
-		controller.blackboard[target_key] = WEAKREF(iter_living)
-		controller.blackboard[BB_DOG_HARASS_HARM] = FALSE
+		controller.set_blackboard_key(target_key, iter_living)
+		controller.set_blackboard_key(BB_DOG_HARASS_HARM, FALSE)
 		return TRUE
 
-	controller.blackboard[target_key] = null
+	controller.clear_blackboard_key(target_key)
 
 /datum/ai_behavior/find_hated_dog_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()

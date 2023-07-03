@@ -13,13 +13,12 @@
 	if(!targetting_datum)
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/current_target = weak_target?.resolve()
+	var/atom/current_target = controller.blackboard[target_key]
 	if (targetting_datum.can_attack(living_mob, current_target))
 		finish_action(controller, succeeded = FALSE)
 		return
 
-	controller.blackboard[target_key] = null
+	controller.clear_blackboard_key(target_key)
 	var/list/potential_targets = hearers(vision_range, controller.pawn) - living_mob //Remove self, so we don't suicide
 
 	for(var/HM in typecache_filter_list(range(vision_range, living_mob), hostile_machines)) //Can we see any hostile machines?
@@ -42,12 +41,12 @@
 		return
 
 	var/atom/target = pick_final_target(controller, filtered_targets)
-	controller.blackboard[target_key] = WEAKREF(target)
+	controller.set_blackboard_key(target_key, target)
 
 	var/atom/potential_hiding_location = targetting_datum.find_hidden_mobs(living_mob, target)
 
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
-		controller.blackboard[hiding_location_key] = WEAKREF(potential_hiding_location)
+		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
 
 	finish_action(controller, succeeded = TRUE)
 

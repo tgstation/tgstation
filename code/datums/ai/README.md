@@ -23,4 +23,4 @@ AI behaviors are the actions an AI can take. These can range from "Do an emote" 
 
 # Guides:
 
-[Making Your AI](./making_your_ai.md): Quickly runs through how to make an ai controller for anything with a step by step development of one.
+[Making Your AI](./learn_ai.md): Quickly runs through how to make an ai controller for anything with a step by step development of one.

@@ -109,7 +109,7 @@
 	update_appearance(~UPDATE_SMOOTHING)
 
 /turf/open/lava/ex_act(severity, target)
-	return
+	return FALSE
 
 /turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -128,6 +128,7 @@
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/lava/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
 	if(burn_stuff(arrived))
 		START_PROCESSING(SSobj, src)
 
@@ -342,7 +343,7 @@
 	name = "liquid plasma"
 	desc = "A flowing stream of chilled liquid plasma. You probably shouldn't get in."
 	icon_state = "liquidplasma"
-	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
+	initial_gas_mix = BURNING_COLD
 	baseturfs = /turf/open/lava/plasma
 
 	light_range = 3
@@ -387,7 +388,7 @@
 	for(var/obj/item/bodypart/burn_limb as anything in burn_human.bodyparts)
 		if(IS_ORGANIC_LIMB(burn_limb) && burn_limb.limb_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
 			plasma_parts += burn_limb
-		if(!IS_ORGANIC_LIMB(burn_limb))
+		if(IS_ROBOTIC_LIMB(burn_limb))
 			robo_parts += burn_limb
 
 	burn_human.adjustToxLoss(15, required_biotype = MOB_ORGANIC) // This is from plasma, so it should obey plasma biotype requirements
@@ -424,4 +425,9 @@
 /turf/open/lava/plasma/mafia
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	baseturfs = /turf/open/lava/plasma/mafia
+	slowdown = 0
+
+//basketball specific lava (normal atmos, no slowdown)
+/turf/open/lava/smooth/basketball
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	slowdown = 0

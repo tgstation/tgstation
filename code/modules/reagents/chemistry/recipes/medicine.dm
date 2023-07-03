@@ -46,11 +46,11 @@
 
 /datum/chemical_reaction/medicine/oculine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
-	explode_flash(equilibrium.reacted_vol/10, 10)
+	explode_flash(holder, equilibrium, round(equilibrium.reacted_vol / 10), 10)
 
 /datum/chemical_reaction/medicine/oculine/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
-	explode_flash(3, 30)
+	explode_flash(holder, equilibrium, 3, 30)
 
 
 /datum/chemical_reaction/medicine/inacusiate

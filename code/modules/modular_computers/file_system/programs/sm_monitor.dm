@@ -22,7 +22,7 @@
 	refresh()
 
 /// Apparently destroy calls this [/datum/computer_file/Destroy]. Here just to clean our references.
-/datum/computer_file/program/supermatter_monitor/kill_program(forced = FALSE)
+/datum/computer_file/program/supermatter_monitor/kill_program()
 	for(var/supermatter in supermatters)
 		clear_supermatter(supermatter)
 	return ..()
@@ -39,7 +39,7 @@
 		if (!sm.include_in_cims || !isturf(sm.loc) || !(is_station_level(sm.z) || is_mining_level(sm.z) || sm.z == user_turf.z))
 			continue
 		supermatters += sm
-		RegisterSignal(sm, COMSIG_PARENT_QDELETING, PROC_REF(clear_supermatter))
+		RegisterSignal(sm, COMSIG_QDELETING, PROC_REF(clear_supermatter))
 
 /datum/computer_file/program/supermatter_monitor/ui_static_data(mob/user)
 	var/list/data = list()
@@ -54,10 +54,7 @@
 	data["focus_uid"] = focused_supermatter?.uid
 	return data
 
-/datum/computer_file/program/supermatter_monitor/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/datum/computer_file/program/supermatter_monitor/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("PRG_refresh")
 			refresh()
@@ -85,7 +82,7 @@
 	supermatters -= sm
 	if(focused_supermatter == sm)
 		unfocus_supermatter()
-	UnregisterSignal(sm, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(sm, COMSIG_QDELETING)
 
 /datum/computer_file/program/supermatter_monitor/proc/focus_supermatter(obj/machinery/power/supermatter_crystal/sm)
 	if(sm == focused_supermatter)

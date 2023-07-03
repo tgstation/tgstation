@@ -38,7 +38,7 @@
 
 /obj/item/clothing/head/utility/hardhat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HEAD)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/head/utility/hardhat/attack_self(mob/living/user)
 	toggle_helmet_light(user)
@@ -86,7 +86,7 @@
 	inhand_icon_state = null
 	light_range = 5
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 3000, /datum/material/silver = 500)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT*5)
 	hat_type = "purple"
 
 /obj/item/clothing/head/utility/hardhat/white

@@ -8,8 +8,7 @@
 		controller.queue_behavior(/datum/ai_behavior/break_spine, BB_CUSTOMER_CURRENT_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	var/datum/weakref/seat_ref = controller.blackboard[BB_CUSTOMER_MY_SEAT]
-	var/obj/structure/holosign/robot_seat/seat_marker = seat_ref?.resolve()
+	var/obj/structure/holosign/robot_seat/seat_marker = controller.blackboard[BB_CUSTOMER_MY_SEAT]
 
 	if(!seat_marker) //We havn't got a seat yet! find one!
 		controller.queue_behavior(/datum/ai_behavior/find_seat)

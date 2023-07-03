@@ -91,10 +91,12 @@
 
 	SEND_SIGNAL(owner, COMSIG_CARBON_REMOVE_LIMB, src, dismembered)
 	SEND_SIGNAL(src, COMSIG_BODYPART_REMOVED, owner, dismembered)
-	update_limb(TRUE)
+	update_limb(dropping_limb = TRUE)
 	//limb is out and about, it can't really be considered an implant
 	bodypart_flags &= ~BODYPART_IMPLANTED
 	owner.remove_bodypart(src)
+	if(speed_modifier)
+		owner.update_bodypart_speed_modifier()
 
 	for(var/datum/wound/wound as anything in wounds)
 		wound.remove_wound(TRUE)
@@ -132,9 +134,6 @@
 			if(org_zone != body_zone)
 				continue
 			organ.transfer_to_limb(src, phantom_owner)
-
-	if(length(bodypart_traits))
-		phantom_owner.remove_traits(bodypart_traits, bodypart_trait_source)
 
 	update_icon_dropped()
 	synchronize_bodytypes(phantom_owner)
@@ -236,6 +235,8 @@
 /obj/item/bodypart/chest/drop_limb(special)
 	if(special)
 		return ..()
+	//if this is not a special drop, this is a mistake
+	return FALSE
 
 /obj/item/bodypart/arm/drop_limb(special)
 	var/mob/living/carbon/arm_owner = owner
@@ -248,7 +249,6 @@
 		// We only want to do this if the limb being removed is the active hand part.
 		// This catches situations where limbs are "hot-swapped" such as augmentations and roundstart prosthetics.
 		arm_owner.dropItemToGround(arm_owner.get_item_for_held_index(held_index), 1)
-		arm_owner.hand_bodyparts[held_index] = null
 	if(arm_owner.handcuffed)
 		arm_owner.handcuffed.forceMove(drop_location())
 		arm_owner.handcuffed.dropped(arm_owner)
@@ -327,18 +327,19 @@
 		return FALSE
 
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special)
+	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special)
 	moveToNullspace()
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
 	if(held_index)
-		if(held_index > new_limb_owner.hand_bodyparts.len)
-			new_limb_owner.hand_bodyparts.len = held_index
-		new_limb_owner.hand_bodyparts[held_index] = src
+		new_limb_owner.on_added_hand(src, held_index)
 		if(new_limb_owner.hud_used)
 			var/atom/movable/screen/inventory/hand/hand = new_limb_owner.hud_used.hand_slots["[held_index]"]
 			if(hand)
 				hand.update_appearance()
 		new_limb_owner.update_worn_gloves()
+	if(speed_modifier)
+		new_limb_owner.update_bodypart_speed_modifier()
 
 	if(special) //non conventional limb attachment
 		for(var/datum/surgery/attach_surgery as anything in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
@@ -355,7 +356,7 @@
 		// we have to remove the wound from the limb wound list first, so that we can reapply it fresh with the new person
 		// otherwise the wound thinks it's trying to replace an existing wound of the same type (itself) and fails/deletes itself
 		LAZYREMOVE(wounds, wound)
-		wound.apply_wound(src, TRUE)
+		wound.apply_wound(src, TRUE, wound_source = wound.wound_source)
 
 	for(var/datum/scar/scar as anything in scars)
 		if(scar in new_limb_owner.all_scars) // prevent double scars from happening for whatever reason
@@ -367,9 +368,6 @@
 	if(can_be_disabled)
 		update_disabled()
 
-	if(length(bodypart_traits))
-		owner.add_traits(bodypart_traits, bodypart_trait_source)
-
 	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
 	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
 	new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
@@ -380,9 +378,9 @@
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_POST_ATTACH_LIMB, src, special)
 	return TRUE
 
-/obj/item/bodypart/head/try_attach_limb(mob/living/carbon/new_head_owner, special = FALSE, abort = FALSE)
+/obj/item/bodypart/head/try_attach_limb(mob/living/carbon/new_head_owner, special = FALSE)
 	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
-	var/real_name = src.real_name
+	var/old_real_name = src.real_name
 
 	. = ..()
 
@@ -398,9 +396,9 @@
 	if(eyes)
 		eyes = null
 
-	if(real_name)
-		new_head_owner.real_name = real_name
-	real_name = ""
+	if(old_real_name)
+		new_head_owner.real_name = old_real_name
+	real_name = new_head_owner.real_name
 
 	//Handle dental implants
 	for(var/obj/item/reagent_containers/pill/pill in src)
@@ -412,17 +410,14 @@
 	///Transfer existing hair properties to the new human.
 	if(!special && ishuman(new_head_owner))
 		var/mob/living/carbon/human/sexy_chad = new_head_owner
-		sexy_chad.hairstyle = hair_style
+		sexy_chad.hairstyle = hairstyle
 		sexy_chad.hair_color = hair_color
-		sexy_chad.facial_hair_color = facial_hair_color
 		sexy_chad.facial_hairstyle = facial_hairstyle
-		if(hair_gradient_style || facial_hair_gradient_style)
-			LAZYSETLEN(sexy_chad.grad_style, GRADIENTS_LEN)
-			LAZYSETLEN(sexy_chad.grad_color, GRADIENTS_LEN)
-			sexy_chad.grad_style[GRADIENT_HAIR_KEY] =  hair_gradient_style
-			sexy_chad.grad_color[GRADIENT_HAIR_KEY] =  hair_gradient_color
-			sexy_chad.grad_style[GRADIENT_FACIAL_HAIR_KEY] = facial_hair_gradient_style
-			sexy_chad.grad_color[GRADIENT_FACIAL_HAIR_KEY] = facial_hair_gradient_color
+		sexy_chad.facial_hair_color = facial_hair_color
+		sexy_chad.grad_style = gradient_styles?.Copy()
+		sexy_chad.grad_color = gradient_colors?.Copy()
+		sexy_chad.lip_style = lip_style
+		sexy_chad.lip_color = lip_color
 
 	new_head_owner.updatehealth()
 	new_head_owner.update_body()
@@ -430,15 +425,13 @@
 
 ///Makes sure that the owner's bodytype flags match the flags of all of it's parts.
 /obj/item/bodypart/proc/synchronize_bodytypes(mob/living/carbon/carbon_owner)
-	if(!carbon_owner?.dna?.species) //carbon_owner and dna can somehow be null during garbage collection, at which point we don't care anyway.
-		return
 	var/all_limb_flags
 	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
 		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
 			all_limb_flags = all_limb_flags | ext_organ.external_bodytypes
 		all_limb_flags = all_limb_flags | limb.bodytype
 
-	carbon_owner.dna.species.bodytype = all_limb_flags
+	carbon_owner.bodytype = all_limb_flags
 
 /mob/living/carbon/proc/regenerate_limbs(list/excluded_zones = list())
 	SEND_SIGNAL(src, COMSIG_CARBON_REGENERATE_LIMBS, excluded_zones)

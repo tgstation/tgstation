@@ -87,11 +87,11 @@
 	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
 	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
 	user.visible_message(span_hierophant_warning("[user] fades out, leaving [user.p_their()] belongings behind!"))
-	for(var/obj/item/I in user)
-		if(I != src)
-			user.dropItemToGround(I)
-	for(var/turf/T in RANGE_TURFS(1, user))
-		new /obj/effect/temp_visual/hierophant/blast/visual(T, user, TRUE)
+	for(var/obj/item/user_item in user)
+		if(user_item != src)
+			user.dropItemToGround(user_item)
+	for(var/turf/blast_turf in RANGE_TURFS(1, user))
+		new /obj/effect/temp_visual/hierophant/blast/visual(blast_turf, user, TRUE)
 	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
 	qdel(user)
 
@@ -121,14 +121,15 @@
 			user.visible_message(span_hierophant_warning("[user] starts fiddling with [src]'s pommel..."), \
 			span_notice("You start detaching the hierophant beacon..."))
 			if(do_after(user, 50, target = user) && !beacon)
-				var/turf/T = get_turf(user)
-				playsound(T,'sound/magic/blind.ogg', 200, TRUE, -4)
-				new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
-				beacon = new/obj/effect/hierophant(T)
+				var/turf/user_turf = get_turf(user)
+				playsound(user_turf,'sound/magic/blind.ogg', 200, TRUE, -4)
+				new /obj/effect/temp_visual/hierophant/telegraph/teleport(user_turf, user)
+				beacon = new/obj/effect/hierophant(user_turf)
 				user.update_mob_action_buttons()
 				user.visible_message(span_hierophant_warning("[user] places a strange machine beneath [user.p_their()] feet!"), \
 				"[span_hierophant("You detach the hierophant beacon, allowing you to teleport yourself and any allies to it at any time!")]\n\
 				[span_notice("You can remove the beacon to place it again by striking it with the club.")]")
+				update_appearance(UPDATE_ICON_STATE)
 		else
 			to_chat(user, span_warning("You need to be on solid ground to detach the beacon!"))
 		return
@@ -146,20 +147,20 @@
 	user.update_mob_action_buttons()
 	user.visible_message(span_hierophant_warning("[user] starts to glow faintly..."))
 	beacon.icon_state = "hierophant_tele_on"
-	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE1 = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
-	var/obj/effect/temp_visual/hierophant/telegraph/edge/TE2 = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon.loc)
+	var/obj/effect/temp_visual/hierophant/telegraph/edge/user_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(user.loc)
+	var/obj/effect/temp_visual/hierophant/telegraph/edge/beacon_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon.loc)
 	if(do_after(user, 40, target = user) && user && beacon)
-		var/turf/T = get_turf(beacon)
+		var/turf/destination = get_turf(beacon)
 		var/turf/source = get_turf(user)
-		if(T.is_blocked_turf(TRUE))
+		if(destination.is_blocked_turf(TRUE))
 			teleporting = FALSE
 			to_chat(user, span_warning("The beacon is blocked by something, preventing teleportation!"))
 			user.update_mob_action_buttons()
 			beacon.icon_state = "hierophant_tele_off"
 			return
-		new /obj/effect/temp_visual/hierophant/telegraph(T, user)
+		new /obj/effect/temp_visual/hierophant/telegraph(destination, user)
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
-		playsound(T,'sound/magic/wand_teleport.ogg', 200, TRUE)
+		playsound(destination,'sound/magic/wand_teleport.ogg', 200, TRUE)
 		playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
 		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
@@ -168,27 +169,27 @@
 			if(beacon)
 				beacon.icon_state = "hierophant_tele_off"
 			return
-		if(T.is_blocked_turf(TRUE))
+		if(destination.is_blocked_turf(TRUE))
 			teleporting = FALSE
 			to_chat(user, span_warning("The beacon is blocked by something, preventing teleportation!"))
 			user.update_mob_action_buttons()
 			beacon.icon_state = "hierophant_tele_off"
 			return
 		user.log_message("teleported self from [AREACOORD(source)] to [beacon].", LOG_GAME)
-		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
+		new /obj/effect/temp_visual/hierophant/telegraph/teleport(destination, user)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
-		for(var/t in RANGE_TURFS(1, T))
-			new /obj/effect/temp_visual/hierophant/blast/visual(t, user, TRUE)
-		for(var/t in RANGE_TURFS(1, source))
-			new /obj/effect/temp_visual/hierophant/blast/visual(t, user, TRUE)
-		for(var/mob/living/L in range(1, source))
-			INVOKE_ASYNC(src, PROC_REF(teleport_mob), source, L, T, user)
+		for(var/turf_near_beacon in RANGE_TURFS(1, destination))
+			new /obj/effect/temp_visual/hierophant/blast/visual(turf_near_beacon, user, TRUE)
+		for(var/turf_near_source in RANGE_TURFS(1, source))
+			new /obj/effect/temp_visual/hierophant/blast/visual(turf_near_source, user, TRUE)
+		for(var/mob/living/mob_to_teleport in range(1, source))
+			INVOKE_ASYNC(src, PROC_REF(teleport_mob), source, mob_to_teleport, destination, user)
 		sleep(0.6 SECONDS) //at this point the blasts detonate
 		if(beacon)
 			beacon.icon_state = "hierophant_tele_off"
 	else
-		qdel(TE1)
-		qdel(TE2)
+		qdel(user_telegraph)
+		qdel(beacon_telegraph)
 	if(beacon)
 		beacon.icon_state = "hierophant_tele_off"
 	teleporting = FALSE
@@ -219,7 +220,7 @@
 	if(user != teleporting && success)
 		log_combat(user, teleporting, "teleported", null, "from [AREACOORD(source)]")
 
-/obj/item/hierophant_club/pickup(mob/living/user)
+/obj/item/hierophant_club/equipped(mob/user)
 	. = ..()
 	blink.Grant(user, src)
 	user.update_icons()
@@ -296,7 +297,7 @@
 	name = "H.E.C.K. helmet"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
+	desc = "Hostile Environment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
 	w_class = WEIGHT_CLASS_NORMAL
 	armor_type = /datum/armor/hooded_hostile_environment
@@ -629,6 +630,7 @@
 	force = 1
 	throwforce = 1
 	hitsound = 'sound/effects/ghost2.ogg'
+	block_sound = 'sound/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -700,7 +702,7 @@
 	user.visible_message(span_danger("[user] strikes with the force of [ghost_counter] vengeful spirits!"))
 	..()
 
-/obj/item/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	var/ghost_counter = ghost_check()
 	final_block_chance += clamp((ghost_counter * 5), 0, 75)
 	owner.visible_message(span_danger("[owner] is protected by a ring of [ghost_counter] ghosts!"))
@@ -844,8 +846,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
-	/// Whether the saw is open or not
-	var/is_open = FALSE
 	/// List of factions we deal bonus damage to
 	var/list/nemesis_factions = list(FACTION_MINING, FACTION_BOSS)
 	/// Amount of damage we deal to the above factions
@@ -861,7 +861,8 @@
 
 /obj/item/melee/cleaving_saw/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		transform_cooldown_time = (CLICK_CD_MELEE * 0.25), \
 		force_on = open_force, \
 		throwforce_on = open_throwforce, \
@@ -869,26 +870,28 @@
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
 		attack_verb_continuous_on = list("cleaves", "swipes", "slashes", "chops"), \
-		attack_verb_simple_on = list("cleave", "swipe", "slash", "chop"))
+		attack_verb_simple_on = list("cleave", "swipe", "slash", "chop"), \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/cleaving_saw/examine(mob/user)
 	. = ..()
-	. += span_notice("It is [is_open ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].")
+	. += span_notice("It is [HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].")
 	. += span_notice("Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.")
 	. += span_notice("Transforming it immediately after an attack causes the next attack to come out faster.")
 
 /obj/item/melee/cleaving_saw/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is [is_open ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] is [HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	attack_self(user)
 	return BRUTELOSS
 
 /obj/item/melee/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
 	. = ..()
-	if(!is_open)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
 /obj/item/melee/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
+	var/is_open = HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
 	if(!is_open || swiping || !target.density || get_turf(target) == get_turf(user))
 		if(!is_open)
 			faction_bonus_force = 0
@@ -939,11 +942,10 @@
 /obj/item/melee/cleaving_saw/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	is_open = active
 	user.changeNext_move(CLICK_CD_MELEE * 0.25)
-
-	balloon_alert(user, "[active ? "opened":"closed"] [src]")
-	playsound(user ? user : src, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (is_open * 30000))
+	if(user)
+		balloon_alert(user, "[active ? "opened" : "closed"] [src]")
+	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 //Legion: Staff of Storms

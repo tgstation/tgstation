@@ -26,6 +26,7 @@
 	pass_flags = PASSTABLE
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	light_power = 3
+	anchored_tabletop_offset = 6
 	var/wire_disabled = FALSE // is its internal wire cut?
 	var/operating = FALSE
 	/// How dirty is it?
@@ -50,11 +51,9 @@
 /obj/machinery/microwave/Initialize(mapload)
 	. = ..()
 
-	wires = new /datum/wires/microwave(src)
+	set_wires(new /datum/wires/microwave(src))
 	create_reagents(100)
 	soundloop = new(src, FALSE)
-	set_on_table()
-
 	update_appearance(UPDATE_ICON)
 
 /obj/machinery/microwave/Exited(atom/movable/gone, direction)
@@ -77,10 +76,6 @@
 	QDEL_NULL(wires)
 	QDEL_NULL(soundloop)
 	return ..()
-
-/obj/machinery/microwave/set_anchored(anchorvalue)
-	. = ..()
-	set_on_table()
 
 /obj/machinery/microwave/RefreshParts()
 	. = ..()
@@ -371,7 +366,11 @@
 	open()
 	playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 
-
+/**
+ * Begins the process of cooking the included ingredients.
+ *
+ * * cooker - The mob that initiated the cook cycle, can be null if no apparent mob triggered it (such as via emp)
+ */
 /obj/machinery/microwave/proc/cook(mob/cooker)
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
@@ -383,7 +382,7 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
-	if(HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
+	if(cooker && HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
 		muck()
 		return
 	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
@@ -417,10 +416,20 @@
 	s.set_up(2, 1, src)
 	s.start()
 
+/**
+ * The start of the cook loop
+ *
+ * * cooker - The mob that initiated the cook cycle, can be null if no apparent mob triggered it (such as via emp)
+ */
 /obj/machinery/microwave/proc/start(mob/cooker)
 	wzhzhzh()
 	loop(MICROWAVE_NORMAL, 10, cooker = cooker)
 
+/**
+ * The start of the cook loop, but can fail (result in a splat / dirty microwave)
+ *
+ * * cooker - The mob that initiated the cook cycle, can be null if no apparent mob triggered it (such as via emp)
+ */
 /obj/machinery/microwave/proc/start_can_fail(mob/cooker)
 	wzhzhzh()
 	loop(MICROWAVE_PRE, 4, cooker = cooker)
@@ -432,12 +441,20 @@
 	update_appearance()
 	loop(MICROWAVE_MUCK, 4)
 
+/**
+ * The actual cook loop started via [proc/start] or [proc/start_can_fail]
+ *
+ * * type - the type of cooking, determined via how this iteration of loop is called, and determines the result
+ * * time - how many loops are left, base case for recursion
+ * * wait - deciseconds between loops
+ * * cooker - The mob that initiated the cook cycle, can be null if no apparent mob triggered it (such as via emp)
+ */
 /obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * efficiency, 2), mob/cooker) // standard wait is 10
 	if((machine_stat & BROKEN) && type == MICROWAVE_PRE)
 		pre_fail()
 		return
 
-	if(!time || !length(ingredients))
+	if(time <= 0 || !length(ingredients))
 		switch(type)
 			if(MICROWAVE_NORMAL)
 				loop_finish(cooker)
@@ -456,9 +473,15 @@
 		pre_fail()
 		eject()
 
+/**
+ * Called when the loop is done successfully, no dirty mess or whatever
+ *
+ * * cooker - The mob that initiated the cook cycle, can be null if no apparent mob triggered it (such as via emp)
+ */
 /obj/machinery/microwave/proc/loop_finish(mob/cooker)
 	operating = FALSE
 
+	var/cursed_chef = cooker && HAS_TRAIT(cooker, TRAIT_CURSED)
 	var/metal_amount = 0
 	for(var/obj/item/cooked_item in ingredients)
 		var/sigreturn = cooked_item.microwave_act(src, cooker, randomize_pixel_offset = ingredients.len)
@@ -471,7 +494,7 @@
 
 		metal_amount += (cooked_item.custom_materials?[GET_MATERIAL_REF(/datum/material/iron)] || 0)
 
-	if(HAS_TRAIT(cooker, TRAIT_CURSED) && prob(5))
+	if(cursed_chef && prob(5))
 		spark()
 		broken = REALLY_BROKEN
 		explosion(src, light_impact_range = 2, flame_range = 1)
@@ -479,7 +502,7 @@
 	if(metal_amount)
 		spark()
 		broken = REALLY_BROKEN
-		if(HAS_TRAIT(cooker, TRAIT_CURSED) || prob(max(metal_amount / 2, 33))) // If we're unlucky and have metal, we're guaranteed to explode
+		if(cursed_chef || prob(max(metal_amount / 2, 33))) // If we're unlucky and have metal, we're guaranteed to explode
 			explosion(src, heavy_impact_range = 1, light_impact_range = 2)
 	else
 		dump_inventory_contents()
@@ -517,14 +540,6 @@
 /obj/machinery/microwave/proc/close()
 	open = FALSE
 	update_appearance()
-
-/// Go on top of a table if we're anchored & not varedited
-/obj/machinery/microwave/proc/set_on_table()
-	var/obj/structure/table/counter = locate(/obj/structure/table) in get_turf(src)
-	if(anchored && counter && !pixel_y)
-		pixel_y = 6
-	else if(!anchored)
-		pixel_y = initial(pixel_y)
 
 /// Type of microwave that automatically turns it self on erratically. Probably don't use this outside of the holodeck program "Microwave Paradise".
 /// You could also live your life with a microwave that will continously run in the background of everything while also not having any power draw. I think the former makes more sense.

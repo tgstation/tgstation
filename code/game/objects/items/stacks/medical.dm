@@ -2,6 +2,7 @@
 	name = "medical pack"
 	singular_name = "medical pack"
 	icon = 'icons/obj/medical/stack_medical.dmi'
+	worn_icon_state = "nothing"
 	amount = 6
 	max_amount = 6
 	w_class = WEIGHT_CLASS_TINY
@@ -87,7 +88,7 @@
 		patient.balloon_alert(user, "no [parse_zone(user.zone_selected)]!")
 		return FALSE
 	if(!IS_ORGANIC_LIMB(affecting)) //Limb must be organic to be healed - RR
-		patient.balloon_alert(user, "it's mechanical!")
+		patient.balloon_alert(user, "it's not organic!")
 		return FALSE
 	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
 		user.visible_message(
@@ -378,7 +379,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 
-	amount = 1
+	amount = 5
 	self_delay = 20
 	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/carbon = 10)
 	novariants = TRUE
@@ -401,9 +402,9 @@
 	for(var/i in patient.bodyparts)
 		var/obj/item/bodypart/bone = i
 		var/datum/wound/blunt/severe/oof_ouch = new
-		oof_ouch.apply_wound(bone)
+		oof_ouch.apply_wound(bone, wound_source = "bone gel")
 		var/datum/wound/blunt/critical/oof_OUCH = new
-		oof_OUCH.apply_wound(bone)
+		oof_OUCH.apply_wound(bone, wound_source = "bone gel")
 
 	for(var/i in patient.bodyparts)
 		var/obj/item/bodypart/bone = i
@@ -411,8 +412,8 @@
 	use(1)
 	return BRUTELOSS
 
-/obj/item/stack/medical/bone_gel/four
-	amount = 4
+/obj/item/stack/medical/bone_gel/one
+	amount = 1
 
 /obj/item/stack/medical/poultice
 	name = "mourning poultices"

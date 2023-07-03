@@ -267,7 +267,8 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/book,
 	/obj/item/spellbook,
-	/obj/item/storage/book)))
+	/obj/item/infuser_book,
+)))
 
 // Jobs
 #define is_job(job_type)  (istype(job_type, /datum/job))

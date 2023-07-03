@@ -164,7 +164,7 @@
 	source = init_source
 	data = init_data
 	var/turf/T = get_turf(source)
-	levels = list(T.z)
+	levels = SSmapping.get_connected_levels(T)
 	if(!("reject" in data))
 		data["reject"] = TRUE
 
@@ -197,10 +197,10 @@
 /datum/signal/subspace/messaging/rc/broadcast()
 	if (!logged)  // Like /pda, only if logged
 		return
-	var/rec_dpt = ckey(data["rec_dpt"])
-	for (var/obj/machinery/requests_console/Console in GLOB.allConsoles)
-		if(ckey(Console.department) == rec_dpt || (data["ore_update"] && Console.receive_ore_updates))
-			Console.createmessage(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
+	var/recipient_department = ckey(data["recipient_department"])
+	for (var/obj/machinery/requests_console/console in GLOB.req_console_all)
+		if(ckey(console.department) == recipient_department || (data["ore_update"] && console.receive_ore_updates))
+			console.create_message(data)
 
 // Log datums stored by the message server.
 /datum/data_tablet_msg

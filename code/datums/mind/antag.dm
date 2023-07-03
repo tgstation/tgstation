@@ -216,6 +216,9 @@
 	current.faction |= creator.faction
 	creator.faction |= current.faction
 
+	current.log_message("has been enslaved to [key_name(creator)].", LOG_GAME)
+	log_admin("[key_name(current)] has been enslaved to [key_name(creator)].")
+
 	if(creator.mind?.special_role)
 		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
 		to_chat(current, span_userdanger("Despite your creator's current allegiances, your true master remains [creator.real_name]. If their loyalties change, so do yours. This will never change unless your creator's body is destroyed."))

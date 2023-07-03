@@ -16,10 +16,10 @@
 
 /datum/martial_art/cqc/teach(mob/living/cqc_user, make_temporary)
 	. = ..()
-	RegisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(cqc_user, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 
 /datum/martial_art/cqc/on_remove(mob/living/cqc_user)
-	UnregisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(cqc_user, COMSIG_ATOM_ATTACKBY)
 	. = ..()
 
 ///Signal from getting attacked with an item, for a special interaction with touch spells
@@ -254,18 +254,7 @@
 
 /// Refreshes the valid areas from the cook's mapping config, adding areas in config to the list of possible areas.
 /datum/martial_art/cqc/under_siege/proc/refresh_valid_areas()
-	var/list/job_changes = SSmapping.config.job_changes
-
-	if(!length(job_changes))
-		return
-
-	var/list/cook_changes = job_changes[JOB_COOK]
-
-	if(!length(cook_changes))
-		return
-
-	var/list/additional_cqc_areas = cook_changes["additional_cqc_areas"]
-
+	var/list/additional_cqc_areas = CHECK_MAP_JOB_CHANGE(JOB_COOK, "additional_cqc_areas")
 	if(!additional_cqc_areas)
 		return
 

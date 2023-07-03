@@ -70,10 +70,16 @@
 #else
 #define TEST_OUTPUT_GREEN(text) (text)
 #endif
-
+/// Change color to yellow on ANSI terminal output, if enabled with -DANSICOLORS.
+#ifdef ANSICOLORS
+#define TEST_OUTPUT_YELLOW(text) "\x1B\x5B1;33m[text]\x1B\x5B0m"
+#else
+#define TEST_OUTPUT_YELLOW(text) (text)
+#endif
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
+// BEGIN_INCLUDE
 #include "ablative_hud.dm"
 #include "achievements.dm"
 #include "anchored_mobs.dm"
@@ -98,6 +104,7 @@
 #include "chat_filter.dm"
 #include "circuit_component_category.dm"
 #include "closets.dm"
+#include "clothing_under_armor_subtype_check.dm"
 #include "combat.dm"
 #include "component_tests.dm"
 #include "confusion.dm"
@@ -114,6 +121,7 @@
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"
 #include "emoting.dm"
+#include "explosion_action.dm"
 #include "focus_only_tests.dm"
 #include "font_awesome_icons.dm"
 #include "food_edibility_check.dm"
@@ -125,6 +133,7 @@
 #include "hallucination_icons.dm"
 #include "heretic_knowledge.dm"
 #include "heretic_rituals.dm"
+#include "high_five.dm"
 #include "holidays.dm"
 #include "human_through_recycler.dm"
 #include "hunger_curse.dm"
@@ -138,9 +147,11 @@
 #include "knockoff_component.dm"
 #include "lesserform.dm"
 #include "limbsanity.dm"
-#include "lungs.dm"
+#include "liver.dm"
 #include "load_map_security.dm"
+#include "lungs.dm"
 #include "machine_disassembly.dm"
+#include "map_landmarks.dm"
 #include "mapload_space_verification.dm"
 #include "mapping.dm"
 #include "mecha_damage.dm"
@@ -162,8 +173,8 @@
 #include "objectives.dm"
 #include "operating_table.dm"
 #include "orderable_items.dm"
-#include "organs.dm"
 #include "organ_set_bonus.dm"
+#include "organs.dm"
 #include "outfit_sanity.dm"
 #include "paintings.dm"
 #include "pills.dm"
@@ -176,12 +187,14 @@
 #include "quirks.dm"
 #include "range_return.dm"
 #include "rcd.dm"
+#include "reagent_container_defaults.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_mob_expose.dm"
 #include "reagent_mod_procs.dm"
 #include "reagent_names.dm"
 #include "reagent_recipe_collisions.dm"
 #include "reagent_transfer.dm"
+#include "required_map_items.dm"
 #include "resist.dm"
 #include "say.dm"
 #include "screenshot_antag_icons.dm"
@@ -190,8 +203,8 @@
 #include "screenshot_humanoids.dm"
 #include "screenshot_husk.dm"
 #include "screenshot_saturnx.dm"
-#include "security_officer_distribution.dm"
 #include "security_levels.dm"
+#include "security_officer_distribution.dm"
 #include "serving_tray.dm"
 #include "simple_animal_freeze.dm"
 #include "siunit.dm"
@@ -214,6 +227,7 @@
 #include "stomach.dm"
 #include "strange_reagent.dm"
 #include "strippable.dm"
+#include "stuns.dm"
 #include "subsystem_init.dm"
 #include "suit_storage_icons.dm"
 #include "surgeries.dm"
@@ -222,12 +236,15 @@
 #include "timer_sanity.dm"
 #include "trait_addition_and_removal.dm"
 #include "traitor.dm"
+#include "traitor_mail_content_check.dm"
+#include "turf_icons.dm"
 #include "tutorial_sanity.dm"
 #include "unit_test.dm"
 #include "verify_config_tags.dm"
 #include "verify_emoji_names.dm"
 #include "wizard_loadout.dm"
 #include "worn_icons.dm"
+// END_INCLUDE
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"
 #endif

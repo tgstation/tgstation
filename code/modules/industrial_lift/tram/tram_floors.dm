@@ -1,8 +1,15 @@
+/turf/open/floor/noslip/tram
+	name = "high-traction platform"
+	icon_state = "noslip_tram"
+	base_icon_state = "noslip_tram"
+	floor_tile = /obj/item/stack/tile/noslip/tram
+
 /turf/open/floor/noslip/tram_plate
 	name = "linear induction plate"
 	desc = "The linear induction plate that powers the tram."
 	icon_state = "tram_plate"
 	base_icon_state = "tram_plate"
+	floor_tile = /obj/item/stack/tile/noslip/tram_plate
 	slowdown = 0
 	flags_1 = NONE
 
@@ -15,9 +22,9 @@
 
 /turf/open/floor/noslip/tram_platform
 	name = "tram platform"
-	desc = "A sturdy looking tram platform."
 	icon_state = "tram_platform"
 	base_icon_state = "tram_platform"
+	floor_tile = /obj/item/stack/tile/noslip/tram_platform
 	slowdown = 0
 
 /turf/open/floor/noslip/tram_plate/broken_states()
@@ -84,5 +91,6 @@
 		return FALSE
 
 	// Finally the interesting part where they ACTUALLY get hit!
+	notify_ghosts("[future_tram_victim] has fallen in the path of an oncoming tram!", source = future_tram_victim, action = NOTIFY_ORBIT, header = "Electrifying!")
 	future_tram_victim.electrocute_act(15, src, 1)
 	return TRUE

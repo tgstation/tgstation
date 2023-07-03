@@ -42,8 +42,20 @@
 	outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
 
 /datum/outfit/syndicatecommandocorpse/lessenedgear
-	name = "Syndicate Commando Corpse"
+	name = "Syndicate Commando Corpse (Less Antag Gear)"
 	gloves = /obj/item/clothing/gloves/tackler
+	back = null
+	id = null
+	id_trim = null
+
+/obj/effect/mob_spawn/corpse/human/syndicatecommando/soft_suit
+	outfit = /datum/outfit/syndicatecommandocorpse/soft_suit
+
+/datum/outfit/syndicatecommandocorpse/soft_suit
+	name = "Syndicate Commando Corpse (Softsuit)"
+	suit = /obj/item/clothing/suit/space/syndicate/black
+	head = /obj/item/clothing/head/helmet/space/syndicate/black
+	gloves = /obj/item/clothing/gloves/color/black
 	back = null
 	id = null
 	id_trim = null

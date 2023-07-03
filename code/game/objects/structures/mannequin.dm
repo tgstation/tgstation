@@ -1,5 +1,6 @@
 #define MANNEQUIN_WOOD "wood"
 #define MANNEQUIN_PLASTIC "plastic"
+#define MANNEQUIN_SKELETON "skeleton"
 
 /// A mannequin! A structure that can display clothing on itself.
 /obj/structure/mannequin
@@ -42,15 +43,24 @@
 	)
 	/// Assoc list of all item slots (turned to strings) to the items they hold.
 	var/list/worn_items = list()
+	///List of all clothing items the mannequin should be spawning in with on Initialize.
+	var/list/obj/item/clothing/starting_items = list()
 
 /obj/structure/mannequin/Initialize(mapload)
 	. = ..()
 	for(var/slot_flag in slot_flags)
 		worn_items["[slot_flag]"] = null
+		for(var/obj/item/clothing/items as anything in starting_items)
+			if(initial(items.slot_flags) & slot_flag)
+				worn_items["[slot_flag]"] = new items(src)
+				starting_items -= items
+				break
+	if(starting_items.len)
+		CRASH("[src] had [starting_items.len] starting items fail to equip.")
 	if(!body_type)
 		body_type = pick(MALE, FEMALE)
 	if(!material)
-		material = pick("wood", "plastic")
+		material = pick(MANNEQUIN_WOOD, MANNEQUIN_PLASTIC)
 	icon_state = "mannequin_[material]_[body_type == FEMALE ? "female" : "male"]"
 	AddElement(/datum/element/strippable, GLOB.strippable_mannequin_items)
 	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
@@ -176,6 +186,16 @@
 /obj/structure/mannequin/plastic
 	material = MANNEQUIN_PLASTIC
 
+/obj/structure/mannequin/skeleton
+	name = "skeleton model"
+	desc = "Not to knock over."
+	material = MANNEQUIN_SKELETON
+	anchored = TRUE
+	starting_items = list(
+		/obj/item/clothing/glasses/eyepatch,
+		/obj/item/clothing/suit/costume/hawaiian,
+	)
+
 GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	/datum/strippable_item/mannequin_slot/head,
 	/datum/strippable_item/mannequin_slot/eyes,
@@ -274,3 +294,4 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 
 #undef MANNEQUIN_WOOD
 #undef MANNEQUIN_PLASTIC
+#undef MANNEQUIN_SKELETON

@@ -73,7 +73,7 @@
 	satchel = /obj/item/storage/backpack/satchel/science
 	duffelbag = /obj/item/storage/backpack/duffelbag/science
 
-	chameleon_extras = /obj/item/stamp/rd
+	chameleon_extras = /obj/item/stamp/head/rd
 	skillchips = list(/obj/item/skillchip/job/research_director)
 
 /datum/outfit/job/rd/mod

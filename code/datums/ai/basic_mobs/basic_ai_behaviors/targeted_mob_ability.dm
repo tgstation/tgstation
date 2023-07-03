@@ -5,12 +5,9 @@
 /datum/ai_behavior/targeted_mob_ability
 
 /datum/ai_behavior/targeted_mob_ability/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
-	var/datum/weakref/weak_ability = controller.blackboard[ability_key]
-	var/datum/action/cooldown/ability = weak_ability?.resolve()
-
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/mob/living/target = weak_target?.resolve()
-	if(!ability || QDELETED(target))
+	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
+	var/mob/living/target = controller.blackboard[target_key]
+	if(QDELETED(ability) || QDELETED(target))
 		finish_action(controller, FALSE, ability_key, target_key)
 		return
 	var/mob/pawn = controller.pawn
@@ -19,16 +16,15 @@
 
 /datum/ai_behavior/targeted_mob_ability/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
+	var/atom/target = controller.blackboard[target_key]
 	if (QDELETED(target))
-		controller.blackboard[target_key] = null
+		controller.clear_blackboard_key(target_key)
 		return
 	if (!isliving(target))
 		return
 	var/mob/living/living_target = target
 	if(living_target.stat >= UNCONSCIOUS)
-		controller.blackboard[target_key] = null
+		controller.clear_blackboard_key(target_key)
 
 /**
  * # Try Mob Ability and plan execute
@@ -38,7 +34,7 @@
 /datum/ai_behavior/targeted_mob_ability/and_plan_execute
 
 /datum/ai_behavior/targeted_mob_ability/and_plan_execute/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
-	controller.blackboard[BB_BASIC_MOB_EXECUTION_TARGET] = controller.blackboard[target_key]
+	controller.set_blackboard_key(BB_BASIC_MOB_EXECUTION_TARGET, controller.blackboard[target_key])
 	return ..()
 
 /**
@@ -49,4 +45,4 @@
 
 /datum/ai_behavior/targeted_mob_ability/and_clear_target/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()
-	controller.blackboard[target_key] = null
+	controller.clear_blackboard_key(target_key)

@@ -92,7 +92,7 @@
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,
 	), PROC_REF(consume_attack))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(consume_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(consume_attackby))
 
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(moved))
 	RegisterSignal(parent, COMSIG_ATOM_BUMPED, PROC_REF(consume))
@@ -130,7 +130,7 @@
 		COMSIG_ATOM_BULLET_ACT,
 		COMSIG_ATOM_BUMPED,
 		COMSIG_MOVABLE_PRE_MOVE,
-		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_ATTACKBY,
 	))
 
 /datum/component/singularity/process(seconds_per_tick)
@@ -386,9 +386,8 @@
 		return
 	var/mob/living/carbon/carbon_target = target
 	var/obj/item/bodypart/head = carbon_target.get_bodypart(BODY_ZONE_HEAD)
-	var/has_no_blood = HAS_TRAIT(carbon_target, TRAIT_NOBLOOD)
 	if(head)
-		if(has_no_blood)
+		if(HAS_TRAIT(carbon_target, TRAIT_NOBLOOD))
 			to_chat(carbon_target, span_notice("You get a headache."))
 			return
 		head.adjustBleedStacks(5)

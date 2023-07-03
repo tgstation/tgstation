@@ -178,7 +178,7 @@
 				cached_tentacle_turfs -= t
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
-	fromtendril = TRUE
+	from_spawner = TRUE
 
 //tentacles
 /obj/effect/temp_visual/goliath_tentacle
@@ -234,7 +234,7 @@
 /obj/effect/temp_visual/goliath_tentacle/proc/retract()
 	icon_state = "goliath_tentacle_retract"
 	deltimer(timerid)
-	timerid = QDEL_IN(src, 7)
+	timerid = QDEL_IN_STOPPABLE(src, 7)
 
 /obj/item/saddle
 	name = "saddle"

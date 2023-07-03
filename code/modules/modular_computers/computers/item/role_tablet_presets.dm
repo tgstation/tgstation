@@ -112,7 +112,6 @@
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/shipping,
-		/datum/computer_file/program/robocontrol,
 	)
 
 /**
@@ -139,7 +138,7 @@
 
 /obj/item/modular_computer/pda/warden
 	name = "warden PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#EA3232#0000CC#363636"
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
@@ -183,7 +182,7 @@
 
 /obj/item/modular_computer/pda/roboticist
 	name = "roboticist PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#484848#0099CC#D94927"
 	starting_programs = list(
 		/datum/computer_file/program/robocontrol,
@@ -191,7 +190,7 @@
 
 /obj/item/modular_computer/pda/geneticist
 	name = "geneticist PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#FAFAFA#000099#0097CA"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
@@ -212,6 +211,8 @@
 
 /obj/item/modular_computer/pda/medical/paramedic
 	name = "paramedic PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
+	greyscale_colors = "#28334D#000099#3F96CC"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/radar/lifeline,
@@ -219,7 +220,7 @@
 
 /obj/item/modular_computer/pda/viro
 	name = "virology PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#FAFAFA#355FAC#57C451"
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
@@ -230,6 +231,15 @@
 	name = "chemist PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#355FAC#EA6400"
+
+/obj/item/modular_computer/pda/coroner
+	name = "coroner PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#FAFAFA#000099#1f2026"
+	starting_programs = list(
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/crew_manifest,
+	)
 
 /**
  * Supply
@@ -307,8 +317,22 @@
 
 /obj/item/modular_computer/pda/clown/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slippery/clowning, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, PROC_REF(AfterSlip)), slot_whitelist = list(ITEM_SLOT_ID, ITEM_SLOT_BELT))
+	AddComponent(\
+		/datum/component/slippery,\
+		knockdown = 12 SECONDS,\
+		lube_flags = NO_SLIP_WHEN_WALKING,\
+		on_slip_callback = CALLBACK(src, PROC_REF(AfterSlip)),\
+		can_slip_callback = CALLBACK(src, PROC_REF(try_slip)),\
+		slot_whitelist = list(ITEM_SLOT_ID, ITEM_SLOT_BELT),\
+	)
 	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, PROC_REF(after_sitcom_laugh)))
+
+/// Return true if our wearer is in a position to slip someone
+/obj/item/modular_computer/pda/clown/proc/try_slip(mob/living/slipper, mob/living/slippee)
+	if(!istype(slipper.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/clown_shoes))
+		to_chat(slipper,span_warning("[src] failed to slip anyone. Perhaps I shouldn't have abandoned my legacy..."))
+		return FALSE
+	return TRUE
 
 /obj/item/modular_computer/pda/clown/update_overlays()
 	. = ..()
@@ -357,6 +381,16 @@
 	. = ..()
 	for(var/datum/computer_file/program/messenger/msg in stored_files)
 		msg.ringer_status = FALSE
+
+/obj/item/modular_computer/pda/psychologist
+	name = "psychologist PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#333333#000099#3F96CC"
+	starting_programs = list(
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/robocontrol,
+	)
 
 /**
  * No Department

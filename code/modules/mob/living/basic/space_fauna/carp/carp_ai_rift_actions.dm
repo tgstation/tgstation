@@ -12,14 +12,9 @@
 	if (!rift_behaviour)
 		CRASH("Forgot to specify rift behaviour for [src]")
 
-	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	var/mob/living/target = weak_target?.resolve()
-	if (!target)
-		return
-
-	var/datum/weakref/weak_action = controller.blackboard[BB_CARP_RIFT]
-	var/datum/action/cooldown/using_action = weak_action?.resolve()
-	if (isnull(using_action) || !using_action.IsAvailable())
+	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/datum/action/cooldown/using_action = controller.blackboard[BB_CARP_RIFT]
+	if (QDELETED(target) || QDELETED(using_action) || !using_action.IsAvailable())
 		return
 
 	controller.queue_behavior(rift_behaviour, BB_CARP_RIFT, BB_BASIC_MOB_CURRENT_TARGET)
@@ -53,20 +48,12 @@
 /datum/ai_behavior/make_carp_rift
 
 /datum/ai_behavior/make_carp_rift/setup(datum/ai_controller/controller, ability_key, target_key)
-	var/datum/weakref/weak_action = controller.blackboard[ability_key]
-	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability = weak_action?.resolve()
-	if (!ability)
-		return FALSE
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
-	return target
+	return controller.blackboard[ability_key] && controller.blackboard[target_key]
 
 /datum/ai_behavior/make_carp_rift/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
 	. = ..()
-	var/datum/weakref/weak_action = controller.blackboard[ability_key]
-	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability = weak_action?.resolve()
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
+	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability = controller.blackboard[ability_key]
+	var/atom/target = controller.blackboard[target_key]
 
 	if (!validate_target(controller, target, ability))
 		finish_action(controller, FALSE, ability_key, target_key)
@@ -187,9 +174,8 @@
 	var/minimum_distance = 2
 
 /datum/ai_planning_subtree/shortcut_to_target_through_carp_rift/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	var/mob/living/target = weak_target?.resolve()
-	if (isnull(target))
+	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if (QDELETED(target))
 		return
 
 	var/distance_to_target = get_dist(controller.pawn, target)

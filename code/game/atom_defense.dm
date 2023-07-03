@@ -73,7 +73,7 @@
 	if(damage_flag)
 		armor_protection = get_armor_rating(damage_flag)
 	if(armor_protection) //Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
-		armor_protection = clamp(armor_protection - armour_penetration, min(armor_protection, 0), 100)
+		armor_protection = clamp(PENETRATE_ARMOUR(armor_protection, armour_penetration), min(armor_protection, 0), 100)
 	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
 
 ///the sound played when the atom is damaged.
@@ -135,19 +135,3 @@
 /// A cut-out proc for [/atom/proc/bullet_act] so living mobs can have their own armor behavior checks without causing issues with needing their own on_hit call
 /atom/proc/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
 	return 0
-
-/**
- * Should be called when the atom is destroyed by fire
- * This proc is terrible. I do not know why it exists.
- * Please remove it at some point.
- */
-/atom/proc/burn()
-	return
-
-/**
- * Sends COMSIG_ATOM_EXTINGUISH signal which properly removes burning component.
- * Can be hooked onto for extra behavior.
- */
-/atom/proc/extinguish()
-	SHOULD_CALL_PARENT(TRUE)
-	return SEND_SIGNAL(src, COMSIG_ATOM_EXTINGUISH)

@@ -249,6 +249,7 @@
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
 #define ECHO_LAYER 7
+#define PARRY_LAYER 8
 
 #define FOV_EFFECT_LAYER 100
 

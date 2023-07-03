@@ -39,6 +39,7 @@
 	data["set_area"] = arena?.name
 	data["set_stakes"] = stakes_condition
 	data["possible_areas"] = get_possible_areas()
+	data["stakes_holy_match"] = STAKES_HOLY_MATCH
 
 	return data
 

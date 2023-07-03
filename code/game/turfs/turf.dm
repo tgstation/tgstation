@@ -6,6 +6,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	vis_flags = VIS_INHERIT_ID // Important for interaction with and visualization of openspace.
 	luminosity = 1
 
+	///what /mob/oranges_ear instance is already assigned to us as there should only ever be one.
+	///used for guaranteeing there is only one oranges_ear per turf when assigned, speeds up view() iteration
+	var/mob/oranges_ear/assigned_oranges_ear
+
 	/// Turf bitflags, see code/__DEFINES/flags.dm
 	var/turf_flags = NONE
 
@@ -208,7 +212,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
 /// It's possible because turfs are fucked, and if you have one in a list and it's replaced with another one, the list ref points to the new turf
 /// We do it because moving signals over was needlessly expensive, and bloated a very commonly used bit of code
-/turf/clear_signal_refs()
+/turf/_clear_signal_refs()
 	return
 
 /turf/attack_hand(mob/user, list/modifiers)
@@ -597,12 +601,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if((acidpwr <= 0) || (acid_volume <= 0))
 		return FALSE
 
-	AddComponent(/datum/component/acid, acidpwr, acid_volume)
-	for(var/obj/O in src)
-		if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-			continue
-
-		O.acid_act(acidpwr, acid_volume)
+	AddComponent(/datum/component/acid, acidpwr, acid_volume, GLOB.acid_overlay)
 
 	return . || TRUE
 
@@ -639,22 +638,26 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/AllowDrop()
 	return TRUE
 
-/turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge_ratio = 0.1)
+/turf/proc/add_vomit_floor(mob/living/M, vomit_type = VOMIT_TOXIC, purge_ratio = 0.1)
 
-	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
+	var/obj/effect/decal/cleanable/vomit/vomit
+	if (vomit_type == VOMIT_NEBULA)
+		vomit = new /obj/effect/decal/cleanable/vomit/nebula(src, M.get_static_viruses())
+	else
+		vomit = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
 
 	//if the vomit combined, apply toxicity and reagents to the old vomit
-	if (QDELETED(V))
-		V = locate() in src
-	if(!V)
+	if (QDELETED(vomit))
+		vomit = locate() in src
+	if(!vomit)
 		return
 	// Apply the proper icon set based on vomit type
-	if(toxvomit == VOMIT_PURPLE)
-		V.icon_state = "vomitpurp_[pick(1,4)]"
-	else if (toxvomit == VOMIT_TOXIC)
-		V.icon_state = "vomittox_[pick(1,4)]"
+	if(vomit_type == VOMIT_PURPLE)
+		vomit.icon_state = "vomitpurp_[pick(1,4)]"
+	else if (vomit_type == VOMIT_TOXIC)
+		vomit.icon_state = "vomittox_[pick(1,4)]"
 	if (purge_ratio && iscarbon(M))
-		clear_reagents_to_vomit_pool(M, V, purge_ratio)
+		clear_reagents_to_vomit_pool(M, vomit, purge_ratio)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
 	var/obj/item/organ/internal/stomach/belly = M.get_organ_slot(ORGAN_SLOT_STOMACH)

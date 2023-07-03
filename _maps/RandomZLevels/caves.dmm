@@ -1113,7 +1113,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "gC" = (
-/obj/vehicle/sealed/mecha/working/ripley/mining,
+/obj/vehicle/sealed/mecha/ripley/mining,
 /turf/open/floor/iron/recharge_floor,
 /area/awaymission/caves/bmp_asteroid)
 "gF" = (
@@ -1258,9 +1258,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "ki" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/paper/fluff/awaymissions/caves/shipment_receipt,
 /obj/item/organ/internal/eyes/robotic/thermals,
 /obj/item/gun/energy/laser/captain/scattershot,

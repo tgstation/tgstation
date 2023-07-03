@@ -267,3 +267,11 @@
 	cost = 5
 	suffix = "lavaland_surface_bileworm_nest.dmm"
 	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/lava_phonebooth
+	name = "Phonebooth"
+	id = "lava_phonebooth"
+	description = "A venture by nanotrasen to help popularize the use of holopads. This one somehow made its way here."
+	suffix = "lavaland_surface_phonebooth.dmm"
+	allow_duplicates = FALSE
+	cost = 5

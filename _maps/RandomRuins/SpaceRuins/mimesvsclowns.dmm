@@ -25,9 +25,7 @@
 /area/ruin)
 "hG" = (
 /obj/effect/mob_spawn/corpse/human/clown,
-/obj/structure/closet/secure_closet/freezer/fridge/open{
-	opened = 1
-	},
+/obj/structure/closet/secure_closet/freezer/fridge/preopen,
 /obj/item/food/burger/mime,
 /obj/item/food/burger/mime,
 /obj/item/food/pie/mimetart,
@@ -40,7 +38,7 @@
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "iP" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "lS" = (
@@ -48,7 +46,7 @@
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "mB" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin)
 "of" = (
@@ -61,9 +59,7 @@
 /area/ruin)
 "ox" = (
 /obj/machinery/light/small/broken/directional/east,
-/obj/structure/closet{
-	opened = 1
-	},
+/obj/structure/closet/preopen,
 /obj/item/clothing/mask/gas/mime,
 /obj/item/clothing/mask/gas/mime,
 /obj/item/clothing/under/rank/civilian/mime,
@@ -189,7 +185,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Ij" = (
@@ -240,7 +236,7 @@
 /obj/effect/mob_spawn/corpse/human/clown,
 /obj/item/ammo_casing/energy/c3dbullet,
 /obj/effect/decal/cleanable/blood/footprints,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin)
 "Mx" = (
@@ -270,7 +266,8 @@
 /area/ruin)
 "Vj" = (
 /obj/structure/grille,
-/obj/effect/spawner/structure/window/reinforced/damaged,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/mapping_helpers/damaged_window,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/template_noop,
 /area/ruin)
