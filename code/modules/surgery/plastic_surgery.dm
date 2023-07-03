@@ -14,14 +14,13 @@
 	name = "insert plastic (plastic)"
 	implements = list(
 		/obj/item/stack/sheet/plastic = 100,
-		/obj/item/food/meat/slab = 100,
 		/obj/item/stack/sheet/meat = 100)
 	time = 3.2 SECONDS
 	preop_sound = 'sound/effects/blobattack.ogg'
 	success_sound = 'sound/effects/attackblob.ogg'
 	failure_sound = 'sound/effects/blobattack.ogg'
 
-/datum/surgery_step/insert_plastic/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/insert_plastic/preop(mob/user, mob/living/target, target_zone, obj/item/stack/tool, datum/surgery/surgery)
 	display_results(
 		user,
 		target,
@@ -31,9 +30,9 @@
 	)
 	display_pain(target, "You feel something inserting just below the skin in your [parse_zone(target_zone)].")
 
-/datum/surgery_step/insert_plastic/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/insert_plastic/success(mob/user, mob/living/target, target_zone, obj/item/stack/tool, datum/surgery/surgery, default_display_results)
 	. = ..()
-	tool.Destroy()
+	tool.use(1)
 
 //reshape_face
 /datum/surgery_step/reshape_face
@@ -72,7 +71,7 @@
 			var/obj/item/offhand = user.get_inactive_held_item()
 			if(istype(offhand, /obj/item/photo))
 				var/obj/item/photo/disguises = offhand
-				for(var/namelist in disguises.picture?.real_names_seen)
+				for(var/namelist as anything in disguises.picture?.names_seen)
 					names += namelist
 			else
 				for(var/i in 1 to 10)
