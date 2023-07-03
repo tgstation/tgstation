@@ -270,15 +270,9 @@
 	emp_vulnerability = 100
 
 //surplus organs are so awful that they explode when removed, unless failing
-/obj/item/organ/internal/heart/cybernetic/surplus/on_surgical_removal(mob/living/user)
-	if(organ_flags & (ORGAN_FAILING|ORGAN_EMP))
-		return
-	audible_message("[src] explodes into tiny pieces!")
-	if(user)
-		user.flash_act(1)
-		user.take_bodypart_damage(15)
-	explosion(src, light_impact_range = 1)
-	qdel(src)
+/obj/item/organ/internal/heart/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_surgical_removal)
 
 /obj/item/organ/internal/heart/freedom
 	name = "heart of freedom"

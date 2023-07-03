@@ -203,7 +203,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * Currently only used so surplus organs can explode when surgically removed.
  */
 /obj/item/organ/proc/on_surgical_removal(mob/living/user)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_REMOVED, user)
 
 /obj/item/organ/process(seconds_per_tick, times_fired)
 	return
@@ -387,7 +388,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/get_status_text()
 	var/status = ""
 	if(owner.has_reagent(/datum/reagent/inverse/technetium))
-		status = "<font color='#E42426'> organ is [round((damage/maxHealth)*100, 1)]% damaged.</font>"
+		status = "<font color='#E42426'>[round((damage/maxHealth)*100, 1)]% damaged.</font>"
 	else if(organ_flags & ORGAN_FAILING)
 		status = "<font color='#cc3333'>Non-Functional</font>"
 	else if(damage > high_threshold)
