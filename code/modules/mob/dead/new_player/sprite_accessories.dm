@@ -76,6 +76,10 @@
 	/// Should this sprite block emissives?
 	var/em_block = FALSE
 
+/datum/sprite_accessory/proc/color_override(mob/living/carbon/human/target) /// SKYRAPTOR ADDITION: meant to be used with SPRITE_ACC_SCRIPTED_COLOR
+	world.log << "Sprite accessory had color_override called without an implementation!"
+	return COLOR_WHITE
+
 /datum/sprite_accessory/blank
 	name = "None"
 	icon_state = "None"
@@ -2304,7 +2308,30 @@
 
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
 	icon = 'icons/mob/species/moth/moth_markings.dmi'
-	color_src = null
+	color_src = SPRITE_ACC_SCRIPTED_COLOR /// SKYRAPTOR EDIT
+
+/// SKYRAPTOR ADDITION
+/datum/sprite_accessory/moth_markings/color_override(mob/living/carbon/human/target)
+	var/color_intended = COLOR_WHITE
+
+	var/tcol_1 = target.dna.features["tricolor-a1"]
+	var/tcol_2 = target.dna.features["tricolor-a2"]
+	var/tcol_3 = target.dna.features["tricolor-a3"]
+	if(tcol_1 && tcol_2 && tcol_3)
+		//this is beyond ugly but it works
+		var/r1 = hex2num(copytext(tcol_1, 2, 4)) / 255.0
+		var/g1 = hex2num(copytext(tcol_1, 4, 6)) / 255.0
+		var/b1 = hex2num(copytext(tcol_1, 6, 8)) / 255.0
+		var/r2 = hex2num(copytext(tcol_2, 2, 4)) / 255.0
+		var/g2 = hex2num(copytext(tcol_2, 4, 6)) / 255.0
+		var/b2 = hex2num(copytext(tcol_2, 6, 8)) / 255.0
+		var/r3 = hex2num(copytext(tcol_3, 2, 4)) / 255.0
+		var/g3 = hex2num(copytext(tcol_3, 4, 6)) / 255.0
+		var/b3 = hex2num(copytext(tcol_3, 6, 8)) / 255.0
+		color_intended = list(r1,g1,b1, r2,g2,b2, r3,g3,b3)
+
+	return color_intended
+/// SKYRAPTOR ADDITION END
 
 /datum/sprite_accessory/moth_markings/none
 	name = "None"

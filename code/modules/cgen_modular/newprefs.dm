@@ -7,15 +7,17 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_species_trait = USE_TRICOLOR_ALPHA
 
-/datum/preference/color/tricol_alpha/create_default_value()
+/datum/preference/tri_color/tricol_alpha/create_default_value()
 	return list(COLOR_RED, COLOR_GREEN, COLOR_BLUE)
 
-/datum/preference/color/tricol_alpha/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/tri_color/tricol_alpha/apply_to_human(mob/living/carbon/human/target, value)
+	//to_chat(world, "GWA: applying tricolor alpha ([value[1]],[value[2]],[value[3]])")
+	//world.log << "SCREAMING AS TRICOL ALPHA IS APPLIED MAYBE HOPEFULLY ([value[1]],[value[2]],[value[3]])"
 	target.dna.features["tricolor-a1"] = value[1]
 	target.dna.features["tricolor-a2"] = value[2]
 	target.dna.features["tricolor-a3"] = value[3]
 
-/datum/preference/color/tricol_alpha/is_valid(value)
+/datum/preference/tri_color/tricol_alpha/is_valid(value)
 	if (!..(value))
 		return FALSE
 
@@ -71,15 +73,17 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_species_trait = USE_TRICOLOR_BETA
 
-/datum/preference/color/tricol_beta/create_default_value()
+/datum/preference/tri_color/tricol_beta/create_default_value()
 	return list(COLOR_RED, COLOR_GREEN, COLOR_BLUE)
 
-/datum/preference/color/tricol_beta/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/tri_color/tricol_beta/apply_to_human(mob/living/carbon/human/target, value)
+	//to_chat(world, "GWA: applying tricolor beta ([value[1]],[value[2]],[value[3]])")
+	//world.log << "SCREAMING AS TRICOL BETA IS APPLIED MAYBE HOPEFULLY ([value[1]],[value[2]],[value[3]])"
 	target.dna.features["tricolor-b1"] = value[1]
 	target.dna.features["tricolor-b2"] = value[2]
 	target.dna.features["tricolor-b3"] = value[3]
 
-/datum/preference/color/tricol_beta/is_valid(value)
+/datum/preference/tri_color/tricol_beta/is_valid(value)
 	if (!..(value))
 		return FALSE
 
@@ -124,6 +128,72 @@
 /datum/mutant_newdnafeature/tricol_b3/update_appear(var/datum/dna/dna, var/features)
 	if(dna.features[id])
 		dna.features[id] = sanitize_hexcolor(get_uni_feature_block(features, DNA_TRICOL_B3_BLOCK))
+
+
+
+/// TRI-COLOR 3 oH GOD
+/// SECOND TRI-COLOR
+/datum/preference/tri_color/tricol_charlie
+	savefile_key = "feature_tricolor_charlie"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	relevant_species_trait = USE_TRICOLOR_CHARLIE
+
+/datum/preference/tri_color/tricol_charlie/create_default_value()
+	return list(COLOR_RED, COLOR_GREEN, COLOR_BLUE)
+
+/datum/preference/tri_color/tricol_charlie/apply_to_human(mob/living/carbon/human/target, value)
+	//to_chat(world, "GWA: applying tricolor charlie ([value[1]],[value[2]],[value[3]])")
+	//world.log << "SCREAMING AS TRICOL CHARLIE IS APPLIED MAYBE HOPEFULLY ([value[1]],[value[2]],[value[3]])"
+	target.dna.features["tricolor-c1"] = value[1]
+	target.dna.features["tricolor-c2"] = value[2]
+	target.dna.features["tricolor-c3"] = value[3]
+
+/datum/preference/tri_color/tricol_charlie/is_valid(value)
+	if (!..(value))
+		return FALSE
+
+	return TRUE
+
+
+/datum/mutant_newdnafeature/tricol_c1
+	name = "Tri-Color C.1"
+	id = "tricol-c1"
+
+/datum/mutant_newdnafeature/tricol_c1/gen_unique_features(var/features, var/L)
+	//world.log << "SKYRAPTOR_NEWPRFS: GENERATING TRICOL B1"
+	if(features[id])
+		L[DNA_TRICOL_C1_BLOCK] = sanitize_hexcolor(features[id], include_crunch = FALSE)
+
+/datum/mutant_newdnafeature/tricol_c1/update_appear(var/datum/dna/dna, var/features)
+	if(dna.features[id])
+		dna.features[id] = sanitize_hexcolor(get_uni_feature_block(features, DNA_TRICOL_C1_BLOCK))
+
+/datum/mutant_newdnafeature/tricol_c2
+	name = "Tri-Color C.2"
+	id = "tricol-c2"
+
+/datum/mutant_newdnafeature/tricol_c2/gen_unique_features(var/features, var/L)
+	//world.log << "SKYRAPTOR_NEWPRFS: GENERATING TRICOL B2"
+	if(features[id])
+		L[DNA_TRICOL_C2_BLOCK] = sanitize_hexcolor(features[id], include_crunch = FALSE)
+
+/datum/mutant_newdnafeature/tricol_c2/update_appear(var/datum/dna/dna, var/features)
+	if(dna.features[id])
+		dna.features[id] = sanitize_hexcolor(get_uni_feature_block(features, DNA_TRICOL_C2_BLOCK))
+
+/datum/mutant_newdnafeature/tricol_c3
+	name = "Tri-Color C.3"
+	id = "tricol-c3"
+
+/datum/mutant_newdnafeature/tricol_c3/gen_unique_features(var/features, var/L)
+	//world.log << "SKYRAPTOR_NEWPRFS: GENERATING TRICOL B3"
+	if(features[id])
+		L[DNA_TRICOL_C3_BLOCK] = sanitize_hexcolor(features[id], include_crunch = FALSE)
+
+/datum/mutant_newdnafeature/tricol_c3/update_appear(var/datum/dna/dna, var/features)
+	if(dna.features[id])
+		dna.features[id] = sanitize_hexcolor(get_uni_feature_block(features, DNA_TRICOL_C3_BLOCK))
 
 
 

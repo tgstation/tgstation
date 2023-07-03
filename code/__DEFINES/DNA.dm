@@ -40,7 +40,7 @@
 #define DNA_UNI_IDENTITY_BLOCKS 7
 
 /// This number needs to equal the total number of DNA blocks
-#define DNA_FEATURE_BLOCKS 23 /// SKYRAPTOR EDIT: 23, up from 15
+#define DNA_FEATURE_BLOCKS 26 /// SKYRAPTOR EDIT: 23, up from 15
 
 #define DNA_MUTANT_COLOR_BLOCK 1
 #define DNA_ETHEREAL_COLOR_BLOCK 2
@@ -65,9 +65,12 @@
 #define DNA_TRICOL_B1_BLOCK 19
 #define DNA_TRICOL_B2_BLOCK 20
 #define DNA_TRICOL_B3_BLOCK 21
+#define DNA_TRICOL_C1_BLOCK 22
+#define DNA_TRICOL_C2_BLOCK 23
+#define DNA_TRICOL_C3_BLOCK 24
 // Frills and Horns colors for further customization
-#define DNA_FRILLS_COLOR_BLOCK 22
-#define DNA_HORNS_COLOR_BLOCK 23
+#define DNA_FRILLS_COLOR_BLOCK 25
+#define DNA_HORNS_COLOR_BLOCK 26
 /// SKYRAPTOR ADDITION END
 
 #define DNA_SEQUENCE_LENGTH 4
@@ -105,6 +108,8 @@
 /// SKYRAPTOR ADDITIONS: tricolor alpha and beta tags
 #define USE_TRICOLOR_ALPHA 600
 #define USE_TRICOLOR_BETA 601
+#define USE_TRICOLOR_CHARLIE 602
+#define SPRITE_ACC_SCRIPTED_COLOR 690
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"

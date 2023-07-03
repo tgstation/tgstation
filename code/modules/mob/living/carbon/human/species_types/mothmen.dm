@@ -5,6 +5,9 @@
 	species_traits = list(
 		LIPS,
 		HAS_MARKINGS,
+		USE_TRICOLOR_ALPHA, /// SKYRAPTOR ADDITIONS
+		USE_TRICOLOR_BETA,
+		USE_TRICOLOR_CHARLIE,
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
