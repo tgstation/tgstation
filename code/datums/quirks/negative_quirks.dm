@@ -693,7 +693,7 @@
 	icon = FA_ICON_ROBOT
 	value = -6
 	medical_record_text = "During physical examination, patient was found to have numerous low-quality prosthetic internal organs. \
-		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>""
+		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
 	hardcore_value = 6
 	mail_goodies = list(/obj/item/storage/organbox)
 
