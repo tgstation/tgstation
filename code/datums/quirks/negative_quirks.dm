@@ -935,7 +935,7 @@
 /datum/quirk/item_quirk/junkie/alcoholic
 	name = "Alcoholic"
 	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
-	icon = FA_ICON_WINE_BOTTLE
+	icon = FA_ICON_WINE_GLASS
 	value = -4
 	gain_text = span_danger("You really need a drink.")
 	lose_text = span_notice("Alcohol doesn't seem nearly as enticing anymore.")
