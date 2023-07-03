@@ -102,4 +102,5 @@
 	list_reagents = list(/datum/reagent/consumable/nuka_cola = 50)
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full
+	desc  = "It's a glass of water. It seems half full. Or is it half empty? You're pretty sure it's full of shit."
 	list_reagents = list(/datum/reagent/water = 25)
