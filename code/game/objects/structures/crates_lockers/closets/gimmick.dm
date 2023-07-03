@@ -118,6 +118,7 @@
 	icon_welded = "welded_small"
 	max_mob_size = MOB_SIZE_SMALL
 	pass_flags = PASSTABLE
+	anchored_tabletop_offset = 3
 	anchored = 1
 	storage_capacity = 10
 
