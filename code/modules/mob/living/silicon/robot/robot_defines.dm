@@ -187,7 +187,7 @@
 	icon_state = "brobot"
 
 /mob/living/silicon/robot/model/syndicate
-	icon_state = "synd_sec"
+	icon_state = "arachne_syndie"
 	faction = list(ROLE_SYNDICATE)
 	bubble_icon = "syndibot"
 	req_access = list(ACCESS_SYNDICATE)
