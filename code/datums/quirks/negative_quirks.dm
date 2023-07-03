@@ -909,7 +909,6 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_robust,
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold,
 		/obj/item/storage/fancy/cigarettes/cigpack_carp)
-	mail_goodies += drug_container_type
 
 	return ..()
 
