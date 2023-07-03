@@ -94,15 +94,6 @@
 	update_limb(dropping_limb = TRUE)
 	bodypart_flags &= ~BODYPART_IMPLANTED //limb is out and about, it can't really be considered an implant
 	owner.remove_bodypart(src)
-	if(held_index)
-		owner.on_lost_hand(src)
-		if(owner.hud_used)
-			var/atom/movable/screen/inventory/hand/hand = owner.hud_used.hand_slots["[held_index]"]
-			if(hand)
-				hand.update_appearance()
-		owner.update_worn_gloves()
-	if(speed_modifier)
-		owner.update_bodypart_speed_modifier()
 
 	for(var/datum/wound/wound as anything in wounds)
 		wound.remove_wound(TRUE)
@@ -337,15 +328,6 @@
 	moveToNullspace()
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
-	if(held_index)
-		new_limb_owner.on_added_hand(src, held_index)
-		if(new_limb_owner.hud_used)
-			var/atom/movable/screen/inventory/hand/hand = new_limb_owner.hud_used.hand_slots["[held_index]"]
-			if(hand)
-				hand.update_appearance()
-		new_limb_owner.update_worn_gloves()
-	if(speed_modifier)
-		new_limb_owner.update_bodypart_speed_modifier()
 
 	if(special) //non conventional limb attachment
 		for(var/datum/surgery/attach_surgery as anything in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
