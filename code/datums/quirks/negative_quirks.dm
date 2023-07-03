@@ -672,7 +672,8 @@
 		if(ORGAN_SLOT_STOMACH)
 			prosthetic = new /obj/item/organ/internal/stomach/cybernetic/surplus
 			slot_string = "stomach"
-	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic [slot_string]."
+	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic [slot_string]. \
+	<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
 	old_organ = human_holder.get_organ_slot(organ_slot)
 	if(prosthetic.Insert(human_holder, special = TRUE, drop_if_replaced = TRUE))
 		old_organ.moveToNullspace()
@@ -692,7 +693,7 @@
 	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, most of your internal organs have been replaced with surplus prosthetics."
 	icon = FA_ICON_ROBOT
 	value = -6
-	medical_record_text = "During physical examination, patient was found to have numerous low-quality prosthetic internal organs. \
+	medical_record_text = "During physical examination, patient was found to have numerous low-budget prosthetic internal organs. \
 		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
 	hardcore_value = 6
 	mail_goodies = list(/obj/item/storage/organbox)
