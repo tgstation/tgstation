@@ -1055,12 +1055,6 @@
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
-"CG" = (
-/obj/effect/turf_decal/trimline/dark_blue,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/pirate)
 "CM" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 4
@@ -2185,8 +2179,8 @@ Rh
 RC
 LB
 zh
-gd
-CG
+hK
+WA
 Xr
 hK
 gY
@@ -2260,8 +2254,8 @@ Rh
 gl
 nA
 nE
-gd
-gd
+hK
+hK
 hK
 Uk
 hK
