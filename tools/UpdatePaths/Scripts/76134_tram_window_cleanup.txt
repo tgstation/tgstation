@@ -1,0 +1,5 @@
+#comment Cleans up manual tram window alignment, made redundant by {} which added automatic alignment on init/dir change
+
+/obj/structure/window/reinforced/tram/left/@SUBTYPES : /obj/structure/window/reinforced/tram/@SUBTYPES
+/obj/structure/window/reinforced/tram/mid/@SUBTYPES : /obj/structure/window/reinforced/tram/@SUBTYPES
+/obj/structure/window/reinforced/tram/right/@SUBTYPES : /obj/structure/window/reinforced/tram/@SUBTYPES

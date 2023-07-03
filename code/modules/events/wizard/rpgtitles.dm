@@ -42,7 +42,7 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 
 	//we must prepare for the mother of all strings
 	new_crewmember.maptext_height = max(new_crewmember.maptext_height, 32)
-	new_crewmember.maptext_width = max(new_crewmember.maptext_width, 80)
+	new_crewmember.maptext_width = max(new_crewmember.maptext_width, 112)
 	new_crewmember.maptext_x = -24 - new_crewmember.base_pixel_x
 	new_crewmember.maptext_y = -32
 

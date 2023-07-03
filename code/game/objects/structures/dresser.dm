@@ -30,9 +30,8 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/dressing_human = user
-
-	if(dressing_human.dna && dressing_human.dna.species && (NO_UNDERWEAR in dressing_human.dna.species.species_traits))
-		to_chat(user, span_warning("You are not capable of wearing underwear."))
+	if(HAS_TRAIT(dressing_human, TRAIT_NO_UNDERWEAR))
+		to_chat(dressing_human, span_warning("You are not capable of wearing underwear."))
 		return
 
 	var/choice = tgui_input_list(user, "Underwear, Undershirt, or Socks?", "Changing", list("Underwear","Underwear Color","Undershirt","Socks"))
@@ -57,7 +56,7 @@
 		if("Socks")
 			var/new_socks = tgui_input_list(user, "Select your socks", "Changing", GLOB.socks_list)
 			if(new_socks)
-				dressing_human.socks= new_socks
+				dressing_human.socks = new_socks
 
 	add_fingerprint(dressing_human)
 	dressing_human.update_body()
