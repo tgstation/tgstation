@@ -432,9 +432,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/dyespray{
-	pixel_y = 1
-	},
+/obj/item/dyespray,
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 10;
 	pixel_y = -5
