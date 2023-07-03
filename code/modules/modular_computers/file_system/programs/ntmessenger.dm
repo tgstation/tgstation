@@ -1,6 +1,9 @@
-GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger) // a list of all active and visible messengers
+#define RECIPIENT "recipient"
 
-///Registers an NTMessenger instance to the list of TabletMessengers.
+/// A list of all active and visible messengers
+GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger)
+
+/// Registers an NTMessenger instance to the list of TabletMessengers.
 /proc/add_messenger(datum/computer_file/program/messenger/msgr)
 	var/obj/item/modular_computer/messenger_device = msgr.computer
 	// a bunch of empty PDAs are normally allocated, we don't want that clutter
@@ -16,7 +19,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 
 	GLOB.TabletMessengers[msgr_ref] = msgr
 
-///Unregisters an NTMessenger instance from the TabletMessengers table.
+/// Unregisters an NTMessenger instance from the TabletMessengers table.
 /proc/remove_messenger(datum/computer_file/program/messenger/msgr)
 	if(!istype(msgr))
 		return
@@ -41,15 +44,29 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	return STRINGIFY_PDA_TARGET(messenger.saved_identification, messenger.saved_job)
 
 /datum/pda_chat
-	/// Refs to the other user(s)
-	var/users = list()
-	/// A list of messages in this chatroom
+	var/datum/weakref/recipient = null
 	var/list/messages = list()
-	/// The message the user may have drafted for this chat
-	var/msg_draft = null
+	var/visible_in_recents = FALSE
+	var/owner_deleted = FALSE
 
-/datum/pda_chat/proc/add(list/data)
-	messages += list(data)
+/datum/pda_chat/New(datum/computer_file/program/messenger/recp)
+	recipient = WEAKREF(recp)
+
+/datum/pda_chat/proc/add_msg(message, everyone)
+	messages += list(message)
+	if(!everyone && !visible_in_recents)
+		visible_in_recents = TRUE
+
+/// Returns this datum as an associative list, used for ui_data calls.
+/datum/pda_chat/proc/get_data()
+	var/list/data = list()
+	var/datum/computer_file/program/messenger/recp = recipient.resolve()
+	if(recp)
+		data["recipient_name"] = StringifyMessengerTarget(recp)
+	data["messages"] = messages
+	data["visible"] = visible_in_recents
+	data["owner_deleted"] = !isnull(recp)
+	return data
 
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
@@ -80,12 +97,12 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	/// Whether this app can send messages to all.
 	var/spam_mode = FALSE
 
-
-	var/list/datum/pda_chat/stored_chats = list()
-	/// Associative list of unread messages - Format: msgr_ref -> number of unreads
-	var/list/datum/pda_chat/unread_chats = list()
+	/// An asssociative list of chats we have started, format: chatref -> chatlist.
+	var/list/saved_chats = list()
+	/// Associative list of unread messages - Format: chatref -> number of unreads
+	var/list/unread_chats = list()
 	/// Whose chatlogs we currently have open. If we are in the contacts list, this is null.
-	var/datum/pda_chat/viewing_messages_of = null
+	var/viewing_messages_of = null
 
 	/// The current ringtone (displayed in the chat when a message is received).
 	var/ringtone = MESSENGER_RINGTONE_DEFAULT
@@ -192,11 +209,9 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 		if("PDA_clearMessages")
 			var/user_ref = params["ref"]
 			if(user_ref)
-				for(var/list/message in messages)
-					if((user_ref in message["targets"]) || message["sender"] == user_ref)
-						messages -= list(message)
+				saved_chats.Remove(user_ref)
 			else
-				messages = list()
+				saved_chats = list()
 			viewing_messages_of = null
 			return TRUE
 
@@ -206,16 +221,15 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 
 		if("PDA_sendEveryone")
 			if(!sending_and_receiving)
-				to_chat(usr, span_notice("ERROR: Device has sending disabled."))
-				return
+				to_chat(usr, span_notice("ERROR: This device has sending disabled."))
+				return FALSE
 
 			if(!spam_mode)
 				to_chat(usr, span_notice("ERROR: Device does not have mass-messaging perms."))
-				return
+				return FALSE
 
 			if(can_send_everyone_message())
-				to_chat(usr, span_warning("The subspace transmitter of your tablet is still cooling down!"))
-				return
+				return FALSE
 
 			send_message_to_all(usr, params["msg"])
 
@@ -223,14 +237,20 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 
 		if("PDA_sendMessage")
 			if(!sending_and_receiving)
-				to_chat(usr, span_notice("ERROR: Device has sending disabled."))
-				return TRUE
+				to_chat(usr, span_notice("ERROR: This device has sending disabled."))
+				return FALSE
 
 			var/target_ref = params["ref"]
 
+			if(!(target_ref in saved_chats))
+				return FALSE
+
+			var/target_chat = saved_chats[target_ref]
+			var/target_user = target_chat["other"]
+
 			if(!(target_ref in GLOB.TabletMessengers))
-				to_chat(usr, span_notice("ERROR: User no longer exists."))
-				return TRUE
+				to_chat(usr, span_notice("ERROR: Recipient no longer exists."))
+				return FALSE
 
 			var/datum/computer_file/program/messenger/target = GLOB.TabletMessengers[target_ref]
 			if(!istype(target))
@@ -280,7 +300,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 			"job" = computer.saved_job,
 			"ref" = REF(src)
 		) : null)
-
+	data["can_spam"] = spam_mode
 	data["is_silicon"] = issilicon(user)
 
 	return data
@@ -289,18 +309,15 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	var/list/data = list()
 
 	var/list/messengers = get_messengers()
-	// im very unhappy about this, but pda code has forced my hand
-	if(viewing_messages_of && !(viewing_messages_of in messengers))
-		viewing_messages_of = null
 
-	data["messages"] = messages
+	data["saved_chats"] = saved_chats
+	data["unreads"] = unread_chats
 	data["messengers"] = messengers
 	data["sort_by_job"] = sort_by_job
 	data["ringer_status"] = ringer_status
 	data["sending_and_receiving"] = sending_and_receiving
-	data["viewing_messages_of"] = viewing_messages_of ? messengers[viewing_messages_of] : null
+	data["open_chat"] = saved_chats[viewing_messages_of]
 	data["photo"] = photo_path
-	data["can_spam"] = spam_mode
 	data["on_spam_cooldown"] = can_send_everyone_message()
 
 	var/obj/item/computer_disk/virus/disk = computer.inserted_disk
@@ -313,25 +330,38 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 // MESSAGE HANDLING //
 //////////////////////
 
-///Brings up the quick reply prompt to send a message.
-/datum/computer_file/program/messenger/proc/quick_reply_prompt(mob/living/user, datum/computer_file/program/messenger/target)
+/// Brings up the quick reply prompt to send a message.
+/datum/computer_file/program/messenger/proc/quick_reply_prompt(mob/living/user, list/chat)
 	var/target_name = target.computer.saved_identification
 	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]", encode = FALSE)
 	send_message(user, list(target), input_message)
 
+/// Helper proc that sends a message to everyone
 /datum/computer_file/program/messenger/proc/send_message_to_all(mob/living/user, message)
-	var/list/targets = list()
+	var/list/chats = list()
+	var/list/messenger_targets = list()
 	for(var/mc in get_messengers())
 		targets += GLOB.TabletMessengers[mc]
+	for(var/chatref in saved_chats)
+		var/list/chat = saved_chats[chatref]
+		if(chat[RECIPIENT] in messenger_targets)
+			messenger_targets -= chat[RECIPIENT]
 	send_message(user, targets, message, everyone = TRUE)
 	last_text_everyone = world.time
 
-///Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
-/datum/computer_file/program/messenger/proc/send_message(mob/living/user, datum/pda_chat/chat, message, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
-	if(!user.can_perform_action(computer))
-		return
+/datum/computer_file/program/messenger/proc/create_chat(messenger_ref)
+	if(!(recipient in GLOB.TabletMessengers))
+		CRASH("tried to create a chat with a messenger that doesn't exist")
 
-	if(!length(targets))
+
+
+// TODO: this proc is way too large, refactor
+/// Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
+/datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/chat, message, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
+	if(!user.can_perform_action(computer))
+		return FALSE
+
+	if(!isnull(chat))
 		return FALSE
 
 	if(mime_mode)
@@ -363,7 +393,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 
 	// Send the signal
 	var/list/string_targets = list()
-	for (var/datum/computer_file/program/messenger/program in targets)
+	for (var/datum/computer_file/program/messenger/program in chat["other_members"])
 		var/obj/item/modular_computer/comp = program.computer
 		if (comp.saved_identification && comp.saved_job)  // != src is checked by the UI
 			string_targets += STRINGIFY_PDA_TARGET(comp.saved_identification, comp.saved_job)
