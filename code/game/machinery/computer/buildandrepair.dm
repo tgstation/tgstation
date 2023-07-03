@@ -74,7 +74,7 @@
 					if(!target_board)
 						return
 
-				if(install_board(target_board, user, FALSE) && P.contents.len)
+				if(install_board(target_board, user, FALSE))
 					replacer.play_rped_sound()
 					//automatically screw the board in as well, a perk of using the rped
 					to_chat(user, span_notice("You screw [circuit] into place."))
