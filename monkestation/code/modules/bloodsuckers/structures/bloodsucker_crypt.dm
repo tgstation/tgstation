@@ -275,6 +275,11 @@
 			return FALSE
 
 	var/disloyalty_requires = RequireDisloyalty(user, target)
+
+	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
+		balloon_alert(user, "its pointless to try and change their loyalties!")
+		return FALSE
+
 	if(disloyalty_requires == VASSALIZATION_BANNED)
 		balloon_alert(user, "can't be vassalized!")
 		return FALSE
@@ -396,8 +401,6 @@
 		balloon_alert(user, "target has no mind!")
 		return VASSALIZATION_BANNED
 
-	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
-		return VASSALIZATION_DISLOYAL
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = IS_BLOODSUCKER(user)
 	return bloodsuckerdatum.AmValidAntag(target)
 
