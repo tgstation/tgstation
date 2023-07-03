@@ -1,0 +1,5 @@
+author: "CliffracerX"
+delete-after: True
+changes:
+  - rscadd: "cryosleep module"
+  - code_imp: "cryosleep announce added to announcement_system"
