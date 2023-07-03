@@ -4,9 +4,31 @@
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/insert_plastic,
 		/datum/surgery_step/reshape_face,
 		/datum/surgery_step/close,
 	)
+
+//insert plastic
+/datum/surgery_step/insert_plastic
+	name = "insert plastic (plastic)"
+	implements = list(
+		/obj/item/stack/sheet/plastic = 100,
+		/obj/item/food/meat/slab = 100)
+	time = 32
+	preop_sound = 'sound/effects/blobattack.ogg'
+	success_sound = 'sound/effects/attackblob.ogg'
+	failure_sound = 'sound/effects/blobattack.ogg'
+
+/datum/surgery_step/insert_plastic/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	display_results(
+		user,
+		target,
+		span_notice("You begin to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]..."),
+		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
+		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
+	)
+	display_pain(target, "You feel a something inserting just below the skin in your [parse_zone(target_zone)].")
 
 //reshape_face
 /datum/surgery_step/reshape_face
@@ -42,8 +64,14 @@
 	else
 		var/list/names = list()
 		if(!isabductor(user))
-			for(var/i in 1 to 10)
-				names += target.dna.species.random_name(target.gender, TRUE)
+			var/obj/item/offhand = user.get_inactive_held_item()
+			if(istype(offhand, /obj/item/photo))
+				var/obj/item/photo/disguises = offhand
+				for(var/mob/namelist as anything in disguises.picture.real_names_seen)
+					names += namelist
+			else
+				for(var/i in 1 to 10)
+					names += target.dna.species.random_name(target.gender, TRUE)
 		else
 			for(var/_i in 1 to 9)
 				names += "Subject [target.gender == MALE ? "i" : "o"]-[pick("a", "b", "c", "d", "e")]-[rand(10000, 99999)]"

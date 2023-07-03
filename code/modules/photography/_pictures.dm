@@ -5,6 +5,7 @@
 	var/list/mobs_seen = list()
 	/// List of weakrefs pointing at dead mobs that appear in this photo
 	var/list/dead_seen = list()
+	var/list/real_names_seen = list()
 	var/caption
 	var/icon/picture_image
 	var/icon/picture_icon
@@ -16,7 +17,7 @@
 	///Was this image capable of seeing ghosts?
 	var/see_ghosts = CAMERA_NO_GHOSTS
 
-/datum/picture/New(name, desc, mobs_spotted, dead_spotted, image, icon, size_x, size_y, bp, caption_, autogenerate_icon, can_see_ghosts)
+/datum/picture/New(name, desc, mobs_spotted, dead_spotted, real_names, image, icon, size_x, size_y, bp, caption_, autogenerate_icon, can_see_ghosts)
 	if(!isnull(name))
 		picture_name = name
 	if(!isnull(desc))
@@ -27,6 +28,9 @@
 	if(!isnull(dead_spotted))
 		for(var/mob/seen as anything in dead_spotted)
 			dead_seen += WEAKREF(seen)
+	if(!isnull(real_names))
+		for(var/mob/seen as anything in real_names)
+			real_names_seen += seen
 	if(!isnull(image))
 		picture_image = image
 	if(!isnull(icon))

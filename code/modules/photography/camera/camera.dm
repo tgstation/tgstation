@@ -188,6 +188,7 @@
 	var/list/mobs = list()
 	var/blueprints = FALSE
 	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
+	var/list/real_names = list() //list of human names taken on picture
 
 	var/width = size_x * 2 + 1
 	var/height = size_y * 2 + 1
@@ -218,8 +219,11 @@
 	var/icon/get_icon = camera_get_icon(turfs, target_turf, psize_x, psize_y, clone_area, size_x, size_y, (size_x * 2 + 1), (size_y * 2 + 1))
 	qdel(clone_area)
 	get_icon.Blend("#000", ICON_UNDERLAY)
+	for(var/mob/living/carbon/human/person as anything in mobs)
+		if(person.is_face_visible())
+			real_names.Add("[person.real_name]")
 
-	var/datum/picture/picture = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
+	var/datum/picture/picture = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, real_names, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
 	after_picture(user, picture)
 	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user)
 	blending = FALSE
