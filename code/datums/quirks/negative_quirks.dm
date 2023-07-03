@@ -888,7 +888,7 @@
 	icon = FA_ICON_SMOKING
 	value = -4
 	gain_text = span_danger("You could really go for a smoke right about now.")
-	gain_text = span_notice("You don't feel hooked to nicotine anymore.")
+	lose_text = span_notice("You don't feel hooked to nicotine anymore.")
 	medical_record_text = "Patient is a current smoker."
 	reagent_type = /datum/reagent/drug/nicotine
 	accessory_type = /obj/item/lighter/greyscale
