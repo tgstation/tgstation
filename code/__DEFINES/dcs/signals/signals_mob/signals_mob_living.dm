@@ -10,7 +10,7 @@
 #define COMSIG_ORGAN_REMOVED "organ_removed"
 /// Called when an organ is being regenerated with a new copy in species regenerate_organs (obj/item/organ/replacement)
 #define COMSIG_ORGAN_BEING_REPLACED "organ_being_replaced"
-/// Called when an organ gets surgically removed (mob/living/user)
+/// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 #define COMSIG_ORGAN_SURGICALLY_REMOVED "organ_surgically_removed"
 /// Called when using the *wag emote
 #define COMSIG_ORGAN_WAG_TAIL "wag_tail"

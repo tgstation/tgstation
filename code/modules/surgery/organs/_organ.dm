@@ -202,9 +202,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * Proc that gets called when the organ is surgically removed by someone, can be used for special effects
  * Currently only used so surplus organs can explode when surgically removed.
  */
-/obj/item/organ/proc/on_surgical_removal(mob/living/user)
+/obj/item/organ/proc/on_surgical_removal(mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_REMOVED, user)
+	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_REMOVED, user, old_owner, target_zone, tool)
 
 /obj/item/organ/process(seconds_per_tick, times_fired)
 	return
@@ -228,6 +228,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return
 
 	if(damage > high_threshold)
+		if(IS_ROBOTIC_ORGAN(src))
+			. += span_warning("[src] seems to be malfunctioning.")
+			return
 		. += span_warning("[src] is starting to look discolored.")
 
 ///Used as callbacks by object pooling

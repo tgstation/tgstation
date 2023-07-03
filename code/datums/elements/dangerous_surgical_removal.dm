@@ -16,15 +16,14 @@
 	. = ..()
 	UnregisterSignal(source, COMSIG_ORGAN_SURGICALLY_REMOVED)
 
-/datum/element/dangerous_surgical_removal/proc/on_surgical_removal(obj/item/organ/source, mob/living/user)
+/datum/element/dangerous_surgical_removal/proc/on_surgical_removal(obj/item/organ/source, mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 	SIGNAL_HANDLER
 	if(source.organ_flags & (ORGAN_FAILING|ORGAN_EMP))
 		return
-	if(user)
+	if(user?.Adjacent(source))
 		source.audible_message("[source] explodes on [user]'s face!")
-		user.flash_act(1)
 		user.take_bodypart_damage(15)
 	else
 		source.audible_message("[source] explodes into tiny pieces!")
-	explosion(source, light_impact_range = 1)
+	explosion(source, light_impact_range = 1, explosion_cause = source)
 	qdel(source)
