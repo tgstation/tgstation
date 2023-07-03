@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - rscdel: "Plasma objects (statues, toilets, etc.) no longer explode when ignited. They just release plasma like everything else plasma. (This doesn't impact injecting plasma into cells or dipping cigars in plasma, those still explode.)"
