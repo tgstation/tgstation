@@ -400,7 +400,14 @@
 /obj/item/seeds/proc/adjust_potency(adjustamt)
 	if(potency == -1)
 		return
-	potency = clamp(potency + adjustamt, 0, MAX_PLANT_POTENCY)
+
+	var/max_potency = MAX_PLANT_YIELD
+	for(var/datum/plant_gene/trait/trait in genes)
+		if(trait.trait_flags & TRAIT_LIMIT_POTENCY)
+			max_potency = 100
+			break
+
+	potency = clamp(potency + adjustamt, 0, max_potency)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
 	if(C)
 		C.value = potency
