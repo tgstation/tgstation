@@ -644,7 +644,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/bodypart/leg/left/left_leg = species_human.get_bodypart(BODY_ZONE_L_LEG)
 		var/datum/sprite_accessory/markings = GLOB.moth_markings_list[species_human.dna.features["moth_markings"]]
 		var/marking_color = COLOR_WHITE /// SKYRAPTOR ADDITION
-		
+
 		/// SKYRAPTOR MAJOR ADDITION PT 1
 		if(markings != null)
 			if(markings.color_src == SPRITE_ACC_SCRIPTED_COLOR)
@@ -652,36 +652,36 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		/// END PT 1
 
 		if(!HAS_TRAIT(species_human, TRAIT_HUSK))
-			if(noggin && (IS_ORGANIC_LIMB(noggin)))
+			if(noggin && (IS_ORGANIC_LIMB(noggin)) && !isnull(markings))
 				var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
 				markings_head_overlay.pixel_y += height_offset
 				markings_head_overlay.color = marking_color /// ADDITION PT 2
 				standing += markings_head_overlay
 
-			if(chest && (IS_ORGANIC_LIMB(chest)))
+			if(chest && (IS_ORGANIC_LIMB(chest)) && !isnull(markings))
 				var/mutable_appearance/markings_chest_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_chest", -BODY_LAYER)
 				markings_chest_overlay.pixel_y += height_offset
 				markings_chest_overlay.color = marking_color /// ADDITION PT 3
 				standing += markings_chest_overlay
 
-			if(right_arm && (IS_ORGANIC_LIMB(right_arm)))
+			if(right_arm && (IS_ORGANIC_LIMB(right_arm)) && !isnull(markings))
 				var/mutable_appearance/markings_r_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_arm", -BODY_LAYER)
 				markings_r_arm_overlay.pixel_y += height_offset
 				markings_r_arm_overlay.color = marking_color /// ADDITION PT 4
 				standing += markings_r_arm_overlay
 
-			if(left_arm && (IS_ORGANIC_LIMB(left_arm)))
+			if(left_arm && (IS_ORGANIC_LIMB(left_arm)) && !isnull(markings))
 				var/mutable_appearance/markings_l_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_arm", -BODY_LAYER)
 				markings_l_arm_overlay.pixel_y += height_offset
 				markings_l_arm_overlay.color = marking_color /// ADDITION PT 5
 				standing += markings_l_arm_overlay
 
-			if(right_leg && (IS_ORGANIC_LIMB(right_leg)))
+			if(right_leg && (IS_ORGANIC_LIMB(right_leg)) && !isnull(markings))
 				var/mutable_appearance/markings_r_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_leg", -BODY_LAYER)
 				markings_r_leg_overlay.color = marking_color /// ADDITION PT 6
 				standing += markings_r_leg_overlay
 
-			if(left_leg && (IS_ORGANIC_LIMB(left_leg)))
+			if(left_leg && (IS_ORGANIC_LIMB(left_leg)) && !isnull(markings))
 				var/mutable_appearance/markings_l_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_leg", -BODY_LAYER)
 				markings_l_leg_overlay.color = marking_color /// ADDITION PT 7
 				standing += markings_l_leg_overlay
