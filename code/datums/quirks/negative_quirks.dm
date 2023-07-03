@@ -948,6 +948,7 @@
 		/obj/effect/spawner/random/food_or_drink/booze,
 		/obj/item/book/bible/booze,
 	)
+	/// Cached typepath of the owner's favorite alcohol reagent
 	var/datum/reagent/consumable/ethanol/favorite_alcohol
 
 /datum/quirk/item_quirk/junkie/alcoholic/New()
