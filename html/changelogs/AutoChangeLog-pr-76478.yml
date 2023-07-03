@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Horrid organics will no longer be made happy when mechanical chaplains fail to heal them with a bible."
