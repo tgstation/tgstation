@@ -14,7 +14,8 @@
 	name = "insert plastic (plastic)"
 	implements = list(
 		/obj/item/stack/sheet/plastic = 100,
-		/obj/item/food/meat/slab = 100)
+		/obj/item/food/meat/slab = 100,
+		/obj/item/stack/sheet/meat = 100)
 	time = 32
 	preop_sound = 'sound/effects/blobattack.ogg'
 	success_sound = 'sound/effects/attackblob.ogg'
@@ -29,6 +30,10 @@
 		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
 	)
 	display_pain(target, "You feel something inserting just below the skin in your [parse_zone(target_zone)].")
+
+/datum/surgery_step/insert_plastic/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+	. = ..()
+	tool.Destroy()
 
 //reshape_face
 /datum/surgery_step/reshape_face
