@@ -18,7 +18,6 @@
 	initial_language_holder = /datum/language_holder/spider
 	basic_mob_flags = FLAMMABLE_MOB | DEL_ON_DEATH
 	mob_size = MOB_SIZE_TINY
-	var/menu_description = "Normal spiderling."
 
 	unique_name = TRUE
 
