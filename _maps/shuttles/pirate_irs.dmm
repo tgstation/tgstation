@@ -1304,6 +1304,7 @@
 	dir = 5
 	},
 /obj/structure/table/reinforced,
+/obj/item/crowbar/red,
 /obj/item/multitool{
 	pixel_y = 3
 	},
