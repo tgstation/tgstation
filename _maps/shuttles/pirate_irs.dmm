@@ -1340,7 +1340,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/docking_port/stationary{
 	dwidth = 13;
-	height = 3;
+	height = 120;
 	shuttle_id = "pirate_home";
 	name = "Deep Space";
 	width = 26
