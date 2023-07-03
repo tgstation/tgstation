@@ -1,0 +1,4 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "Morbid (coroner's) tools now properly receive their speed boost in appropriate conditions"
