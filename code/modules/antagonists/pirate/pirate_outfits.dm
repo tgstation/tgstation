@@ -104,7 +104,7 @@
 
 /datum/outfit/pirate/irs
 	name = "IRS Agent Outfit"
-	id = /obj/item/card/id/advanced/
+	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/syndicom/irs
 	uniform = /obj/item/clothing/under/costume/buttondown/slacks
 	suit = /obj/item/clothing/suit/costume/irs
