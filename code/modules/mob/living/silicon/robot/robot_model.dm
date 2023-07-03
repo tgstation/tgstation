@@ -338,6 +338,10 @@
 	model_select_icon = "service"
 	cyborg_base_icon = "clown"
 	hat_offset = -2
+	borg_skins = list(
+		"EggBot" = list(SKIN_ICON_STATE = "clown"),
+		"Arachne" = list(SKIN_ICON_STATE = "arachne_clown", SKIN_LIGHT_KEY = "arachne_clown"),
+	)
 
 /obj/item/robot_model/clown/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	. = ..()
@@ -381,6 +385,10 @@
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
+	borg_skins = list(
+		"SpiderDroid" = list(SKIN_ICON_STATE = "engineer"),
+		"Arachne" = list(SKIN_ICON_STATE = "arachne_engi", SKIN_LIGHT_KEY = "arachne_engi"),
+	)
 
 /obj/item/robot_model/janitor
 	name = "Janitor"
@@ -408,6 +416,10 @@
 	cyborg_base_icon = "janitor"
 	model_select_icon = "janitor"
 	hat_offset = -5
+	borg_skins = list(
+		"WasherBot" = list(SKIN_ICON_STATE = "janitor"),
+		"Arachne" = list(SKIN_ICON_STATE = "arachne_jani", SKIN_LIGHT_KEY = "arachne_jani"),
+	)
 	/// Weakref to the wash toggle action we own
 	var/datum/weakref/wash_toggle_ref
 
@@ -679,6 +691,7 @@
 	borg_skins = list(
 		"Machinified Doctor" = list(SKIN_ICON_STATE = "medical"),
 		"Qualified Doctor" = list(SKIN_ICON_STATE = "qualified_doctor"),
+		"Arachne" = list(SKIN_ICON_STATE = "arachne_med", SKIN_LIGHT_KEY = "arachne_med"),
 	)
 
 /obj/item/robot_model/miner
@@ -739,6 +752,10 @@
 	model_select_icon = "standard"
 	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = -2
+	borg_skins = list(
+		"EggBot" = list(SKIN_ICON_STATE = "peace"),
+		"Arachne" = list(SKIN_ICON_STATE = "arachne_peacekeeper", SKIN_LIGHT_KEY = "arachne_peacekeeper"),
+	)
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
@@ -819,6 +836,8 @@
 		"Kent" = list(SKIN_ICON_STATE = "kent", SKIN_LIGHT_KEY = "medical", SKIN_HAT_OFFSET = 3),
 		"Tophat" = list(SKIN_ICON_STATE = "tophat", SKIN_LIGHT_KEY = NONE, SKIN_HAT_OFFSET = INFINITY),
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
+		"Arachne" = list(SKIN_ICON_STATE = "arachne_service", SKIN_LIGHT_KEY = "arachne_service"),
+
 	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
