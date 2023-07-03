@@ -1,0 +1,4 @@
+author: "Funnytoilet"
+delete-after: True
+changes:
+  - qol: "Matches command envirosuit helms' armor value with their hat counterparts."
