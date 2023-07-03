@@ -107,6 +107,18 @@
 	outfit = /datum/outfit/pirate/interdyne
 	rank = "Pharmacist"
 
+/obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/generate_pirate_name(spawn_gender)
+	var/first_name
+	switch(spawn_gender)
+		if(MALE)
+			first_name = pick(GLOB.first_names_male)
+		if(FEMALE)
+			first_name = pick(GLOB.first_names_female)
+		else
+			first_name = pick(GLOB.first_names)
+
+	return "[rank] [first_name]"
+
 /obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/senior
 	rank = "Pharmacist Director"
 	outfit = /datum/outfit/pirate/interdyne/captain

@@ -10,10 +10,11 @@
 	exotic_bloodtype = "LE"
 	siemens_coeff = 0.5 //They thrive on energy
 	payday_modifier = 0.75
-	species_traits = list(
-		DYNCOLORS,
-		AGENDER,
-		NO_UNDERWEAR,
+	inherent_traits = list(
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_MUTANT_COLORS,
+		TRAIT_FIXED_MUTANT_COLORS,
+		TRAIT_AGENDER,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_cookie = /obj/item/food/energybar
@@ -38,16 +39,16 @@
 	)
 
 	var/current_color
-	var/EMPeffect = FALSE
-	var/emageffect = FALSE
+	var/default_color
 	var/r1
 	var/g1
 	var/b1
 	var/static/r2 = 237
 	var/static/g2 = 164
 	var/static/b2 = 149
+	var/EMPeffect = FALSE
+	var/emageffect = FALSE
 	var/obj/effect/dummy/lighting_obj/ethereal_light
-	var/default_color
 
 /datum/species/ethereal/Destroy(force)
 	QDEL_NULL(ethereal_light)
@@ -121,9 +122,8 @@
 	else
 		ethereal_light.set_light_on(FALSE)
 		fixed_mut_color = rgb(128,128,128)
-	ethereal.hair_color = current_color
-	ethereal.facial_hair_color = current_color
-	ethereal.update_body()
+	ethereal.set_facial_haircolor(current_color, update = FALSE)
+	ethereal.set_haircolor(current_color, update = TRUE)
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity)
 	SIGNAL_HANDLER

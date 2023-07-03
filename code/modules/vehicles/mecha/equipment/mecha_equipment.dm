@@ -158,21 +158,21 @@
 /obj/item/mecha_parts/mecha_equipment/proc/special_attaching_interaction(attach_right = FALSE, obj/vehicle/sealed/mecha/mech, mob/user, checkonly = FALSE)
 	return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	LAZYADD(M.flat_equipment, src)
+/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right = FALSE)
+	LAZYADD(new_mecha.flat_equipment, src)
 	var/to_equip_slot = equipment_slot
 	if(equipment_slot == MECHA_WEAPON)
 		if(attach_right)
 			to_equip_slot = MECHA_R_ARM
 		else
 			to_equip_slot = MECHA_L_ARM
-	if(islist(M.equip_by_category[to_equip_slot]))
-		M.equip_by_category[to_equip_slot] += src
+	if(islist(new_mecha.equip_by_category[to_equip_slot]))
+		new_mecha.equip_by_category[to_equip_slot] += src
 	else
-		M.equip_by_category[to_equip_slot] = src
-	chassis = M
+		new_mecha.equip_by_category[to_equip_slot] = src
+	chassis = new_mecha
 	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_ATTACHED)
-	forceMove(M)
+	forceMove(new_mecha)
 	log_message("[src] initialized.", LOG_MECHA)
 
 /**
