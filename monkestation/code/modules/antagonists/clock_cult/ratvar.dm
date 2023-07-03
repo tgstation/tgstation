@@ -55,6 +55,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	send_to_playing_players(span_ratvar("The bluespace veil gives way to Ratvar, his light shall shine upon all mortals!"))
 	UnregisterSignal(src, COMSIG_ATOM_BSA_BEAM)
 	SSshuttle.registerHostileEnvironment(src)
+	addtimer(CALLBACK(src, GLOBAL_PROC_REF(clockcult_ending_start)), 5 SECONDS)
 
 	var/area/area = get_area(src)
 	if(area)
@@ -104,6 +105,38 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 #undef RATVAR_CONSUME_RANGE
 #undef RATVAR_GRAV_PULL
 #undef RATVAR_SINGULARITY_SIZE
+
+/proc/clockcult_ending_start()
+	SSsecurity_level.set_level(3)
+	priority_announce("Huge gravitational-energy spike detected emminating from a neutron star near your sector. Event has been determined to be survivable by 0% of life. \
+					   ESTIMATED TIME UNTIL ENERGY PULSE REACHES [GLOB.station_name]: 56 SECONDS. Godspeed crew, glory to Nanotrasen. -Admiral Telvig.", \
+					   "Central Command Anomolous Materials Division", 'sound/misc/airraid.ogg')
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clockcult_pre_ending)), 50 SECONDS)
+
+/proc/clockcult_pre_ending()
+	priority_announce("Station [GLOB.station_name] is in the wa#e %o[text2ratvar("YOU WILL SEE THE LIGHT")] action imminent. Glory[text2ratvar(" TO ENG'INE")].", \
+					  "Central Command Anomolous Materials Division", 'sound/machines/alarm.ogg')
+	for(var/mob/player_mob in GLOB.player_list)
+		if(player_mob.client)
+			player_mob.client.color = COLOR_WHITE
+			animate(player_mob.client, color = LIGHT_COLOR_CLOCKWORK, time = 135)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clockcult_final_ending)), 135)
+
+/proc/clockcult_final_ending()
+	SSshuttle.lockdown = TRUE
+	for(var/mob/lit_mob in GLOB.mob_list)
+		if(lit_mob.client)
+			lit_mob.client.color = LIGHT_COLOR_CLOCKWORK
+			animate(lit_mob.client, color=COLOR_WHITE, time = 5)
+			SEND_SOUND(lit_mob, sound(null))
+			SEND_SOUND(lit_mob, sound('sound/magic/fireball.ogg'))
+		if(!IS_CLOCK(lit_mob) && isliving(lit_mob))
+			var/mob/living/very_lit_mob = lit_mob
+			very_lit_mob.fire_stacks = INFINITY
+			very_lit_mob.ignite_mob()
+			very_lit_mob.emote("scream")
+	sleep(1.5 SECONDS)
+	SSticker.force_ending = TRUE
 
 //ratvar_act stuff
 

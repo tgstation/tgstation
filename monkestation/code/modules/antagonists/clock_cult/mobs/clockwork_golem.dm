@@ -8,14 +8,18 @@
 	prefix = "Clockwork"
 	special_names = null
 	examine_limb_id = SPECIES_GOLEM
-//	species_language_holder = /datum/language_holder/clockmob
 	armor = 50
 	speedmod = 0.5
+	///ref to our turf_healing component, used for deletion on_species_loss()
+	var/datum/component/turf_healing/mob_turf_healing
 
 /datum/species/golem/clockwork/on_species_gain(mob/living/carbon/our_mob, datum/species/old_species, pref_load)
 	. = ..()
 	ADD_TRAIT(our_mob, TRAIT_FASTER_SLAB_INVOKE, SPECIES_TRAIT)
+	mob_turf_healing = our_mob.AddComponent(/datum/component/turf_healing, healing_types = list(TOX = 1, BRUTE = 1, BURN = 1), \
+											healing_turfs = list(/turf/open/floor/bronze, /turf/open/indestructible/reebe_flooring))
 
 /datum/species/golem/clockwork/on_species_loss(mob/living/carbon/human/our_mob, datum/species/new_species, pref_load)
 	REMOVE_TRAIT(our_mob, TRAIT_FASTER_SLAB_INVOKE, SPECIES_TRAIT)
+	QDEL_NULL(mob_turf_healing)
 	. = ..()

@@ -20,6 +20,14 @@
 	var/give_slab = TRUE
 	///our overlay for after the assault begins
 	var/mutable_appearance/forbearance
+	///ref to our turf_healing component, used for deletion when deconverted
+	var/datum/component/turf_healing/owner_turf_healing
+	///used for holy water deconversion, slightly easier to have this here then on the team
+	var/static/list/servant_deconversion_phrases = list("spoken" = list("VG OHEAF!", "SBE GUR TYBEL-BS ENG'INE!", "Gur yvtug jvyy fuvar.", "Whfgv`pne fnir zr.", "Gur Nex zhfg abg snyy.",
+																		"Rzvarapr V pnyy gur`r!", "Lbh frr bayl qnexarff.", "Guv`f vf abg gur raq.", "Gv`px, Gbpx"),
+
+														"seizure" = list("Your failure shall not delay my freedom.", "The blind will see only darkness.",
+																		 "Then my ark will feed upon your vitality.", "Do not forget your servitude."))
 
 /datum/antagonist/clock_cultist/Destroy()
 	QDEL_NULL(communicate)
@@ -63,7 +71,8 @@
 		communicate.Grant(current)
 		recall.Grant(current)
 		RegisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED, PROC_REF(switch_recall_slab))
-		current.AddComponent(/datum/component/turf_healing, healing_types = list(TOX = 4), healing_turfs = list(/turf/open/floor/bronze, /turf/open/indestructible/reebe_flooring))
+		owner_turf_healing = current.AddComponent(/datum/component/turf_healing, healing_types = list(TOX = 4), \
+												  healing_turfs = list(/turf/open/floor/bronze, /turf/open/indestructible/reebe_flooring))
 		handle_clown_mutation(current, mob_override ? null : "The light of Rat'var allows you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		ADD_TRAIT(current, TRAIT_KNOW_ENGI_WIRES, CULT_TRAIT)
 	if(ishuman(current) && GLOB.clock_ark)
@@ -82,7 +91,7 @@
 		communicate.Remove(current)
 		recall.Remove(current)
 		UnregisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED)
-		current.TakeComponent(/datum/component/turf_healing)
+		QDEL_NULL(owner_turf_healing)
 		handle_clown_mutation(current, removing = FALSE)
 		ADD_TRAIT(current, TRAIT_KNOW_ENGI_WIRES, CULT_TRAIT)
 	if(forbearance)
@@ -228,3 +237,12 @@
 /datum/antagonist/clock_cultist/solo
 	name = "Clock Cultist (Solo)"
 	can_convert = FALSE
+
+//putting this here to avoid extra edits to the main file
+/datum/antagonist/cult
+	///used for holy water deconversion
+	var/static/list/cultist_deconversion_phrases = list("spoken" = list("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones",
+																		"R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"),
+
+														"seizure" = list("Your blood is your bond - you are nothing without it", "Do not forget your place",
+																		 "All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!"))

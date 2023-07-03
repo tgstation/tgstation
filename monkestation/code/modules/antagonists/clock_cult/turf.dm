@@ -233,7 +233,6 @@
 
 /obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
 	. = ..()
-	ratvar_act()
 	if(!mapload)
 		new /obj/effect/temp_visual/ratvar/floor/catwalk(loc)
 		new /obj/effect/temp_visual/ratvar/beam/catwalk(loc)
