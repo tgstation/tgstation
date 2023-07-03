@@ -268,7 +268,7 @@
 
 /datum/brain_trauma/mild/color_blindness
 	name = "Achromatopsia"
-	desc = "Patient's occipital lobe receives no color information from cone cells, rendering the patient colorblind."
+	desc = "Patient's occipital lobe receives no information from cone cells, rendering the patient completely colorblind."
 	scan_desc = "colorblindness"
 	gain_text = span_warning("The world around you seems to lose its color.")
 	lose_text = span_notice("The world feels bright and colorful again.")
