@@ -28,16 +28,16 @@
 	savefile_key = "sound_instruments"
 	savefile_identifier = PREFERENCE_PLAYER
 
-/datum/preference/toggle/sound_tts
+/datum/preference/choiced/sound_tts
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_tts"
 	savefile_identifier = PREFERENCE_PLAYER
 
-/datum/preference/toggle/sound_tts_blips
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_tts_blips"
-	savefile_identifier = PREFERENCE_PLAYER
-	default_value = FALSE
+/datum/preference/choiced/sound_tts/init_possible_values()
+	return list(TTS_SOUND_ENABLED, TTS_SOUND_BLIPS, TTS_SOUND_OFF)
+
+/datum/preference/choiced/sound_tts/create_default_value()
+	return TTS_SOUND_ENABLED
 
 /datum/preference/numeric/sound_tts_volume
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
