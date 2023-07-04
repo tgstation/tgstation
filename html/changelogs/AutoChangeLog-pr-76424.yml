@@ -1,4 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes:
-  - bugfix: "Tramstation lower Science is now less prone to cave-ins from their surrounding maintenance corridors."
