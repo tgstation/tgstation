@@ -383,10 +383,6 @@
 /obj/machinery/suit_storage_unit/security,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
-"ie" = (
-/obj/machinery/vending/boozeomat/all_access,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/escape/luxury)
 "if" = (
 /obj/machinery/airalarm/directional/south,
 /obj/structure/sink/directional/north,
@@ -1277,10 +1273,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
-"AC" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
-/turf/open/floor/plastic,
-/area/shuttle/escape)
 "AQ" = (
 /obj/structure/railing,
 /turf/open/floor/lowered/iron/pool,
@@ -1295,7 +1287,8 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/gun/ballistic/rocketlauncher/unrestricted{
-	desc = "A reusable rocket propelled grenade launcher. The words \"Syndicate this way\" and an arrow have been written near the barrel. A sticker near the cheek rest reads, \"FOR DISPLAY PURPOSES ONLY\""
+	name = "\improper Nanotrasen PML-9";
+	desc = "A reusable rocket propelled grenade launcher. The words \\"Syndicate this way\\" and an arrow have been written near the barrel. A sticker near the cheek rest reads, \\"FOR DISPLAY PURPOSES ONLY\\""
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
@@ -1517,7 +1510,6 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
 /turf/open/floor/iron/stairs{
 	dir = 8
 	},
@@ -1565,12 +1557,12 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "Fp" = (
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Brig"
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape/brig)
 "Fr" = (
@@ -1598,7 +1590,8 @@
 /area/shuttle/escape)
 "FS" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "Cockpit"
+	name = "Cockpit";
+	id_tag = "escape_cockpit_blast"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/showroomfloor,
@@ -2909,7 +2902,7 @@ Vm
 Jm
 lJ
 lJ
-AC
+TI
 TI
 qI
 yn
@@ -3242,7 +3235,7 @@ Ht
 uC
 uC
 Bf
-ie
+YZ
 lk
 Al
 Jk
