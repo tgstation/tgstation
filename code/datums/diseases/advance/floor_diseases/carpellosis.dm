@@ -8,7 +8,7 @@
 	agent = "Carp Ella"
 	cures = list(/datum/reagent/carpet)
 	viable_mobtypes = list(/mob/living/carbon/human)
-	required_organs = list(/obj/item/organ/internal/stomach)
+	required_organs = list(/obj/item/organ/stomach)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	severity = DISEASE_SEVERITY_MEDIUM
 	max_stages = 5

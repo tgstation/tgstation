@@ -219,7 +219,7 @@
 
 /datum/action/cooldown/turn_to_statue/New(Target)
 	. = ..()
-	if(!istype(Target, /obj/item/organ/internal/tongue/lizard/silver))
+	if(!istype(Target, /obj/item/organ/tongue/lizard/silver))
 		stack_trace("Non-silverscale tongue initialized a turn to statue action.")
 		qdel(src)
 		return
@@ -237,7 +237,7 @@
 
 	if(!isliving(owner))
 		return FALSE
-	var/obj/item/organ/internal/tongue/lizard/silver/tongue_target = target
+	var/obj/item/organ/tongue/lizard/silver/tongue_target = target
 	if(tongue_target.owner != owner)
 		return FALSE
 

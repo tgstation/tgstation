@@ -97,10 +97,10 @@
 		/mob/living/basic/cockroach,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/heart/roach,
-		/obj/item/organ/internal/stomach/roach,
-		/obj/item/organ/internal/liver/roach,
-		/obj/item/organ/internal/appendix/roach,
+		/obj/item/organ/heart/roach,
+		/obj/item/organ/stomach/roach,
+		/obj/item/organ/liver/roach,
+		/obj/item/organ/appendix/roach,
 	)
 	infusion_desc = "kafkaesque" // Gregor Samsa !!
 	tier = DNA_MUTANT_TIER_ONE

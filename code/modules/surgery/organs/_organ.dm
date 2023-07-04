@@ -320,7 +320,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /// Runs decay while outside of a body
 /obj/item/organ/proc/on_death(seconds_per_tick, times_fired)
-	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
+	if(organ_flags & (ORGAN_ROBOTIC | ORGAN_FROZEN))
 		return
 	apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
 
@@ -334,6 +334,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/on_life(seconds_per_tick, times_fired)
 	if(!process_life)
 		return
+
 	if(organ_flags & ORGAN_FAILING)
 		handle_failing_organ(seconds_per_tick)
 		return
@@ -341,7 +342,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(failure_time > 0)
 		failure_time--
 
-	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
+	if(organ_flags & ORGAN_EMP) //Synthetic organ has been emped, is now failing.
 		apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
 		return
 

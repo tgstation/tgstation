@@ -6,7 +6,7 @@
 	agent = "Atmobacter Polyri"
 	cures = list(/datum/reagent/firefighting_foam)
 	viable_mobtypes = list(/mob/living/carbon/human)
-	required_organs = list(/obj/item/organ/internal/stomach)
+	required_organs = list(/obj/item/organ/stomach)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	severity = DISEASE_SEVERITY_HARMFUL
 	max_stages = 5
