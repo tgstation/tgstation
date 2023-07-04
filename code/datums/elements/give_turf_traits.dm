@@ -63,11 +63,8 @@
 
 /datum/element/give_turf_traits/proc/pre_change_turf(turf/changed, path, list/new_baseturfs, flags, list/post_change_callbacks)
 	SIGNAL_HANDLER
-	var/list/occupiers = occupied_turfs[changed]
-	occupied_turfs -= changed
-	post_change_callbacks += CALLBACK(src, PROC_REF(reoccupy_turf), occupiers)
+	post_change_callbacks += CALLBACK(src, PROC_REF(reoccupy_turf))
 
-/datum/element/give_turf_traits/proc/reoccupy_turf(list/occupiers, turf/changed)
-	occupied_turfs[changed] = occupiers
+/datum/element/give_turf_traits/proc/reoccupy_turf(turf/changed)
 	for(var/trait in traits)
 		ADD_TRAIT(changed, trait, REF(src))
