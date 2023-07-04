@@ -119,6 +119,9 @@
 /obj/machinery/abductor/experiment/proc/experiment(mob/living/carbon/human/occupant, type, mob/user)
 	LAZYINITLIST(history)
 
+	if(!istype(occupant))
+		stack_trace("Abductor '[name]' called /proc/experiment with unexpected occupant ([occupant])")
+
 	if(!ishuman(occupant)) //We shouldn't be processing anything other than humans
 		return "Not a humanoid!"
 
