@@ -6,10 +6,11 @@
 
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
+
+	visual = TRUE
 	process_life = FALSE
 	process_death = FALSE
 
-	visual = TRUE
 	dna_block = DNA_TAIL_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail

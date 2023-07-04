@@ -6,10 +6,11 @@
 
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_HORNS
+
+	visual = TRUE
 	process_life = FALSE
 	process_death = FALSE
 
-	visual = TRUE
 	preference = "feature_lizard_horns"
 	dna_block = DNA_HORNS_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_ENAMEL
@@ -37,10 +38,11 @@
 
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_FRILLS
+
+	visual = TRUE
 	process_life = FALSE
 	process_death = FALSE
 
-	visual = TRUE
 	preference = "feature_lizard_frills"
 	dna_block = DNA_FRILLS_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
@@ -67,10 +69,11 @@
 
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_SNOUT
+
+	visual = TRUE
 	process_life = FALSE
 	process_death = FALSE
 
-	visual = TRUE
 	preference = "feature_lizard_snout"
 	external_bodytypes = BODYTYPE_SNOUTED
 	dna_block = DNA_SNOUT_BLOCK
@@ -98,10 +101,11 @@
 
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_ANTENNAE
+
+	visual = TRUE
 	process_life = FALSE
 	process_death = FALSE
 
-	visual = TRUE
 	preference = "feature_moth_antennae"
 	dna_block = DNA_MOTH_ANTENNAE_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
@@ -178,10 +182,11 @@
 
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_POD_HAIR
+
+	visual = TRUE
 	process_life = FALSE
 	process_death = FALSE
 
-	visual = TRUE
 	preference = "feature_pod_hair"
 	use_mob_sprite_as_obj_sprite = TRUE
 	dna_block = DNA_POD_HAIR_BLOCK

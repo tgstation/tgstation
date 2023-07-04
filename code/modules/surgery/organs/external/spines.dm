@@ -6,10 +6,11 @@
 
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_SPINES
+
+	visual = TRUE
 	process_life = FALSE
 	process_death = FALSE
 
-	visual = TRUE
 	preference = "feature_lizard_spines"
 	dna_block = DNA_SPINES_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
