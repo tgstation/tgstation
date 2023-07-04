@@ -115,14 +115,17 @@
 	for AI shift, ctrl, and alt clicking.
 */
 
-/mob/living/silicon/ai/CtrlShiftClickOn(atom/A)
-	A.AICtrlShiftClick(src)
-/mob/living/silicon/ai/ShiftClickOn(atom/A)
-	A.AIShiftClick(src)
-/mob/living/silicon/ai/CtrlClickOn(atom/A)
-	A.AICtrlClick(src)
-/mob/living/silicon/ai/AltClickOn(atom/A)
-	A.AIAltClick(src)
+/mob/living/silicon/ai/CtrlShiftClickOn(atom/target)
+	target.AICtrlShiftClick(src)
+
+/mob/living/silicon/ai/ShiftClickOn(atom/target)
+	target.AIShiftClick(src)
+
+/mob/living/silicon/ai/CtrlClickOn(atom/target)
+	target.AICtrlClick(src)
+
+/mob/living/silicon/ai/AltClickOn(atom/target)
+	target.AIAltClick(src)
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;
@@ -131,71 +134,129 @@
 /* Questions: Instead of an Emag check on every function, can we not add to airlocks onclick if emag return? */
 
 /* Atom Procs */
-/atom/proc/AICtrlClick()
+/atom/proc/AICtrlClick(mob/living/silicon/ai/user)
 	return
+
 /atom/proc/AIAltClick(mob/living/silicon/ai/user)
 	AltClick(user)
 	return
-/atom/proc/AIShiftClick()
+
+/atom/proc/AIShiftClick(mob/living/silicon/ai/user)
 	return
-/atom/proc/AICtrlShiftClick()
+
+/atom/proc/AICtrlShiftClick(mob/living/silicon/ai/user)
 	return
 
 /* Airlocks */
-/obj/machinery/door/airlock/AICtrlClick() // Bolts doors
+/obj/machinery/door/airlock/AICtrlClick(mob/living/silicon/ai/user) // Bolts doors
 	if(obj_flags & EMAGGED)
 		return
 
-	toggle_bolt(usr)
-	add_hiddenprint(usr)
+	toggle_bolt(user)
+	add_hiddenprint(user)
 
-/obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
+/obj/machinery/door/airlock/AIAltClick(mob/living/silicon/ai/user) // Eletrifies doors.
 	if(obj_flags & EMAGGED)
 		return
 
 	if(!secondsElectrified)
-		shock_perm(usr)
+		shock_perm(user)
 	else
-		shock_restore(usr)
+		shock_restore(user)
 
-/obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
+/obj/machinery/door/airlock/AIShiftClick(mob/living/silicon/ai/user)  // Opens and closes doors!
 	if(obj_flags & EMAGGED)
 		return
 
-	user_toggle_open(usr)
-	add_hiddenprint(usr)
+	user_toggle_open(user)
+	add_hiddenprint(user)
 
-/obj/machinery/door/airlock/AICtrlShiftClick()  // Sets/Unsets Emergency Access Override
+/obj/machinery/door/airlock/AICtrlShiftClick(mob/living/silicon/ai/user)  // Sets/Unsets Emergency Access Override
 	if(obj_flags & EMAGGED)
 		return
 
-	toggle_emergency(usr)
-	add_hiddenprint(usr)
+	toggle_emergency(user)
+	add_hiddenprint(user)
 
-/* APC */
-/obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
-	if(can_use(usr, 1))
-		toggle_breaker(usr)
+/////////////
+/*   APC   */
+/////////////
+
+/// Toggle APC power settings
+/obj/machinery/power/apc/AICtrlClick(mob/living/silicon/ai/user)
+	if(!can_use(user, loud = TRUE))
+		return
+
+	toggle_breaker(user)
+
+/// Toggle APC environment settings (atmos)
+/obj/machinery/power/apc/AICtrlShiftClick(mob/living/silicon/ai/user)
+	if(!can_use(user, loud = TRUE))
+		return
+
+	if(!is_operational || failure_timer)
+		return
+
+	add_hiddenprint(user)
+	environ = environ ? APC_CHANNEL_OFF : APC_CHANNEL_ON
+	user.log_message("turned [environ ? "on" : "off"] the [src] environment settings", LOG_GAME)
+	update_appearance()
+	update()
+
+/// Toggle APC lighting settings
+/obj/machinery/power/apc/AIShiftClick(mob/living/silicon/ai/user)
+	if(!can_use(user, loud = TRUE))
+		return
+
+	if(!is_operational || failure_timer)
+		return
+
+	add_hiddenprint(user)
+	lighting = lighting ? APC_CHANNEL_OFF : APC_CHANNEL_ON
+	user.log_message("turned [lighting ? "on" : "off"] the [src] lighting settings", LOG_GAME)
+	update_appearance()
+	update()
+
+/// Toggle APC equipment settings
+/obj/machinery/power/apc/AIAltClick(mob/living/silicon/ai/user)
+	if(!can_use(user, loud = TRUE))
+		return
+
+	if(!is_operational || failure_timer)
+		return
+
+	add_hiddenprint(user)
+	equipment = equipment ? APC_CHANNEL_OFF : APC_CHANNEL_ON
+	user.log_message("turned [equipment ? "on" : "off"] the [src] equipment settings", LOG_GAME)
+	update_appearance()
+	update()
+
+/obj/machinery/power/apc/attack_ai_secondary(mob/living/silicon/user, list/modifiers)
+	if(!can_use(user, loud = TRUE))
+		return
+
+	togglelock(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /* AI Turrets */
-/obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
+/obj/machinery/turretid/AIAltClick(mob/living/silicon/ai/user) //toggles lethal on turrets
 	if(ailock)
 		return
-	toggle_lethal(usr)
+	toggle_lethal(user)
 
-/obj/machinery/turretid/AICtrlClick() //turns off/on Turrets
+/obj/machinery/turretid/AICtrlClick(mob/living/silicon/ai/user) //turns off/on Turrets
 	if(ailock)
 		return
-	toggle_on(usr)
+	toggle_on(user)
 
 /* Holopads */
 /obj/machinery/holopad/AIAltClick(mob/living/silicon/ai/user)
 	hangup_all_calls()
-	add_hiddenprint(usr)
+	add_hiddenprint(user)
 
 //
 // Override TurfAdjacent for AltClicking
 //
 
-/mob/living/silicon/ai/TurfAdjacent(turf/T)
-	return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(T))
+/mob/living/silicon/ai/TurfAdjacent(turf/target_turf)
+	return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(target_turf))

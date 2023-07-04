@@ -164,18 +164,24 @@
 
 /obj/item/shovel/serrated
 	name = "serrated bone shovel"
-	desc = "A wicked tool that cleaves through dirt just as easily as it does flesh. The design was styled after ancient lavaland tribal designs."
+	desc = "A wicked tool that cleaves through dirt just as easily as it does flesh. The design was styled after ancient lavaland tribal designs. \
+		It seems less capable of harming inorganic creatures. Who knows why."
 	icon_state = "shovel_bone"
 	worn_icon_state = "shovel_serr"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
-	force = 15
+	force = 10
 	throwforce = 12
 	w_class = WEIGHT_CLASS_NORMAL
-	toolspeed = 0.7
+	toolspeed = 0.3
 	attack_verb_continuous = list("slashes", "impales", "stabs", "slices")
 	attack_verb_simple = list("slash", "impale", "stab", "slice")
 	sharpness = SHARP_EDGED
+	item_flags = CRUEL_IMPLEMENT
+
+/obj/item/shovel/serrated/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bane, mob_biotypes = MOB_ORGANIC, damage_multiplier = 1) //You may be horridly cursed now, but at least you kill the living a whole lot more easily!
 
 /obj/item/trench_tool
 	name = "entrenching tool"

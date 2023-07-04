@@ -1,0 +1,17 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - balance: "Reduced the complexity cost of a lot of MODules."
+  - balance: "Pathfinder 2 -> 1"
+  - balance: "Tether 3 -> 2"
+  - balance: "Temperature Regulator 2 -> 1"
+  - balance: "DNA lock 2 -> 1"
+  - balance: "Health analyzer 2 -> 1"
+  - balance: "Sonar 2 -> 1"
+  - balance: "Microwave beam 2 -> 1"
+  - balance: "Drill 2 -> 1"
+  - balance: "All visors (including NV and thermals) 2 -> 1"
+  - balance: "Circuit Adapter 2 -> 1"
+  - balance: "The Mining MODsuit has had its complexity increased to 13 and now starts with the eating apparatus module, with a total base complexity of 10/13 now."
+  - balance: "The Prototype MODsuit's active slowdown has been decreased from 1.5 (!) to 1."
+  - spellcheck: "Fixed a type on the energy net module."

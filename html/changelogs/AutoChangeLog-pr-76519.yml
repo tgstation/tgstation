@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "Traitorous Coroners can now purchase the Evil MMI and Brainwashing Surgery Chip."
+  - balance: "Traitorous Chief Engineers can now purchase the Deployable Sentry."

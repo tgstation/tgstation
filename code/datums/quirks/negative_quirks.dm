@@ -865,7 +865,7 @@
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/junkie/process(seconds_per_tick)
-	if(HAS_TRAIT(quirk_holder, TRAIT_NOMETABOLISM))
+	if(HAS_TRAIT(quirk_holder, TRAIT_LIVERLESS_METABOLISM))
 		return
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(world.time > next_process)
@@ -916,7 +916,7 @@
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
 	// smoker lungs have 25% less health and healing
 	var/obj/item/organ/internal/lungs/smoker_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if (smoker_lungs && !(smoker_lungs.organ_flags & ORGAN_SYNTHETIC)) // robotic lungs aren't affected
+	if(smoker_lungs && IS_ORGANIC_ORGAN(smoker_lungs)) // robotic lungs aren't affected
 		smoker_lungs.maxHealth = smoker_lungs.maxHealth * 0.75
 		smoker_lungs.healing_factor = smoker_lungs.healing_factor * 0.75
 
@@ -1175,10 +1175,10 @@
 	if(!istype(owner))
 		return
 	for(var/obj/item/bodypart/limb as anything in owner.bodyparts)
-		if(!IS_ORGANIC_LIMB(limb))
+		if(IS_ROBOTIC_LIMB(limb))
 			cybernetics_level++
 	for(var/obj/item/organ/organ as anything in owner.organs)
-		if((organ.organ_flags & ORGAN_SYNTHETIC || organ.status == ORGAN_ROBOTIC) && !(organ.organ_flags & ORGAN_HIDDEN))
+		if(IS_ROBOTIC_ORGAN(organ) && !(organ.organ_flags & ORGAN_HIDDEN))
 			cybernetics_level++
 	update_mood()
 
@@ -1189,25 +1189,25 @@
 
 /datum/quirk/body_purist/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER
-	if((new_organ.organ_flags & ORGAN_SYNTHETIC || new_organ.status == ORGAN_ROBOTIC) && !(new_organ.organ_flags & ORGAN_HIDDEN)) //why the fuck are there 2 of them
+	if(IS_ROBOTIC_ORGAN(new_organ) && !(new_organ.organ_flags & ORGAN_HIDDEN)) //why the fuck are there 2 of them
 		cybernetics_level++
 		update_mood()
 
 /datum/quirk/body_purist/proc/on_organ_lose(datum/source, obj/item/organ/old_organ, special)
 	SIGNAL_HANDLER
-	if((old_organ.organ_flags & ORGAN_SYNTHETIC || old_organ.status == ORGAN_ROBOTIC) && !(old_organ.organ_flags & ORGAN_HIDDEN))
+	if(IS_ROBOTIC_ORGAN(old_organ) && !(old_organ.organ_flags & ORGAN_HIDDEN))
 		cybernetics_level--
 		update_mood()
 
 /datum/quirk/body_purist/proc/on_limb_gain(datum/source, obj/item/bodypart/new_limb, special)
 	SIGNAL_HANDLER
-	if(!IS_ORGANIC_LIMB(new_limb))
+	if(IS_ROBOTIC_LIMB(new_limb))
 		cybernetics_level++
 		update_mood()
 
 /datum/quirk/body_purist/proc/on_limb_lose(datum/source, obj/item/bodypart/old_limb, special)
 	SIGNAL_HANDLER
-	if(!IS_ORGANIC_LIMB(old_limb))
+	if(IS_ROBOTIC_LIMB(old_limb))
 		cybernetics_level--
 		update_mood()
 
