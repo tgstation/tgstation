@@ -394,10 +394,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// Not a cosmetic organ, don't fuck with it
 		if(!cosmetic_organ.visual)
 			continue
-		// Already dealt with this organ
+		// Already dealt with this organ slot
 		if(cosmetic_organ.slot in organ_slots)
 			continue
-		// Cosmetic organ checking. We need to check the cosmetic organs owned by the carbon itself,
+		// Cosmetic organ checking - We need to check the cosmetic organs owned by the carbon itself,
 		// because we want to also remove ones not shared by its species.
 		// This should be done even if species was not changed.
 		if(cosmetic_organ.type in cosmetic_organs)
