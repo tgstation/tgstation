@@ -84,6 +84,7 @@
 	if(isturf(get_turf(loc)) && (basic_mob_flags & DEL_ON_DEATH || gibbed))
 		var/obj/item/food/spiderling/dead_spider = new(loc) // mmm yummy
 		dead_spider.name = name
+		dead_spider.icon_state = icon_dead
 
 	return ..()
 
