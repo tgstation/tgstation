@@ -1,4 +1,4 @@
-import { FeatureChoiced, FeatureChoicedServerData, FeatureDropdownInput, FeatureValueProps, FeatureNumeric, FeatureNumberInput, FeatureToggle, CheckboxInput } from '../base';
+import { FeatureChoiced, FeatureChoicedServerData, FeatureDropdownInput, FeatureValueProps, FeatureNumeric, FeatureNumberInput } from '../base';
 import { Stack, Button } from '../../../../../components';
 
 const FeatureTTSDropdownInput = (
