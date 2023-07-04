@@ -42,10 +42,3 @@ export const tts_voice_pitch: FeatureNumeric = {
   name: 'Voice Pitch Adjustment',
   component: FeatureNumberInput,
 };
-
-export const tts_voice_disable: FeatureToggle = {
-  name: 'Voice Disable Toggle',
-  description:
-    'Disables the TTS voice for this specific character when enabled.',
-  component: CheckboxInput,
-};
