@@ -130,7 +130,7 @@
 	var/list/datum/bounty/crumbs = list(random_bounty(pot_acc.account_job.bounty_types), // We want to offer 2 bounties from their appropriate job catagories
 										random_bounty(pot_acc.account_job.bounty_types), // and 1 guarenteed assistant bounty if the other 2 suck.
 										random_bounty(CIV_JOB_BASIC))
-	COOLDOWN_START(pot_acc, bounty_timer, 5 MINUTES)
+	COOLDOWN_START(pot_acc, bounty_timer, 1 MINUTES)
 	pot_acc.bounties = crumbs
 
 /obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(choice)

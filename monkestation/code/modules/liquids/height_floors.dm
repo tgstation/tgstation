@@ -30,16 +30,6 @@
 	icon = 'monkestation/icons/obj/items/tiles.dmi'
 	icon_state = "pool"
 
-/turf/open/floor/lowered/iron/pool
-	name = "pool floor"
-	floor_tile = /obj/item/stack/tile/lowered/iron/pool
-	icon = 'monkestation/icons/turf/pool_tile.dmi'
-	base_icon_state = "pool_tile"
-	icon_state = "pool_tile"
-	smoothing_flags = NONE
-	liquid_height = -30
-	turf_height = -30
-
 
 /turf/open/floor/iron/pool/rust_heretic_act()
 	return

@@ -89,7 +89,7 @@
 		COMSIG_ATOM_ATTACK_ROBOT_SECONDARY,
 	))
 
-/datum/component/redirect_attack_hand_from_turf/proc/on_attack_hand(turf/source, mob/user, list/modifiers)
+/datum/component/redirect_attack_hand_from_turf/proc/on_attack_hand(turf/source, mob/user)
 	SIGNAL_HANDLER
 	PRIVATE_PROC(TRUE)
 
@@ -97,7 +97,7 @@
 	if (!movable_parent.can_interact(user))
 		return NONE
 
-	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, UnarmedAttack), parent, proximity_flag = TRUE, modifiers = modifiers)
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, UnarmedAttack), parent, proximity_flag = TRUE)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

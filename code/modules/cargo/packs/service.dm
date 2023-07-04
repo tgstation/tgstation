@@ -20,7 +20,6 @@
 	name = "High-traction Floor Tiles"
 	desc = "Make slipping a thing of the past with thirty industrial-grade anti-slip floor tiles!"
 	cost = CARGO_CRATE_VALUE * 4
-	access_view = ACCESS_JANITOR
 	contains = list(/obj/item/stack/tile/noslip/thirty)
 	crate_name = "high-traction floor tiles crate"
 
@@ -30,7 +29,6 @@
 		Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, \
 		broom, spray cleaner, rag, and trash bag."
 	cost = CARGO_CRATE_VALUE * 2
-	access_view = ACCESS_JANITOR
 	contains = list(/obj/item/reagent_containers/cup/bucket = 3,
 					/obj/item/mop,
 					/obj/item/pushbroom,
@@ -42,7 +40,7 @@
 				)
 	crate_name = "janitorial supplies crate"
 
-/datum/supply_pack/service/janitor/janicart
+/datum/supply_pack/service/janitor/mopcart
 	name = "Janitorial Cart and Galoshes Crate"
 	desc = "The keystone to any successful janitor. As long as you have feet, this pair \
 		of galoshes will keep them firmly planted on the ground. Also contains a janitorial cart."

@@ -31,7 +31,15 @@
 
 /obj/item/organ/internal/stomach/ethereal/proc/charge(datum/source, amount, repairs)
 	SIGNAL_HANDLER
-	adjust_charge(amount / 3.5)
+	if(!repairs)
+		adjust_charge(amount / 3.5)
+		return
+	if(crystal_charge < ETHEREAL_CHARGE_FULL - amount / 3.5)
+		adjust_charge(amount / 3.5)
+		return
+	if(crystal_charge > ETHEREAL_CHARGE_OVERLOAD) //prevents reduction of charge of overcharged ethereals
+		return
+	adjust_charge(ETHEREAL_CHARGE_FULL - crystal_charge) //perfectly tops off an ethereal if the amount of power that would be applied would go into overcharge
 
 /obj/item/organ/internal/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
 	SIGNAL_HANDLER
@@ -47,27 +55,38 @@
 	switch(crystal_charge)
 		if(-INFINITY to ETHEREAL_CHARGE_NONE)
 			carbon.add_mood_event("charge", /datum/mood_event/decharged)
+			carbon.clear_alert("ethereal_overcharge")
 			carbon.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/emptycell/ethereal)
 			if(carbon.health > 50)
 				carbon.apply_damage(0.65, BURN, null, null, carbon)
 		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
+			carbon.clear_alert("ethereal_overcharge")
 			carbon.add_mood_event("charge", /datum/mood_event/decharged)
 			carbon.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/lowcell/ethereal, 3)
 			if(carbon.health > 10.5)
 				carbon.apply_damage(0.325 * seconds_per_tick, TOX, null, null, carbon)
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
+			carbon.clear_alert("ethereal_overcharge")
 			carbon.add_mood_event("charge", /datum/mood_event/lowpower)
 			carbon.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/lowcell/ethereal, 2)
+			carbon.blood_volume = min(carbon.blood_volume + (BLOOD_REGEN_FACTOR * 0.1 * seconds_per_tick), BLOOD_VOLUME_NORMAL) //worse than a starving human
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
+			carbon.clear_alert("ethereal_overcharge")
+			carbon.clear_alert("ethereal_charge")
 			carbon.add_mood_event("charge", /datum/mood_event/charged)
+			carbon.blood_volume = min(carbon.blood_volume + (BLOOD_REGEN_FACTOR * 0.9 * seconds_per_tick), BLOOD_VOLUME_NORMAL) //slightly worse than a human (optimal nutrition+satiety gives 1.25)
 		if(ETHEREAL_CHARGE_FULL to ETHEREAL_CHARGE_OVERLOAD)
+			carbon.clear_alert("ethereal_charge")
 			carbon.add_mood_event("charge", /datum/mood_event/overcharged)
 			carbon.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 1)
 			carbon.apply_damage(0.2, TOX, null, null, carbon)
+			carbon.blood_volume = min(carbon.blood_volume + (BLOOD_REGEN_FACTOR * 1.6 * seconds_per_tick), BLOOD_VOLUME_NORMAL) //slightly better than a human, at the cost of toxic damage
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
+			carbon.clear_alert("ethereal_charge")
 			carbon.add_mood_event("charge", /datum/mood_event/supercharged)
 			carbon.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 2)
 			carbon.apply_damage(0.325 * seconds_per_tick, TOX, null, null, carbon)
+			carbon.blood_volume = min(carbon.blood_volume + (BLOOD_REGEN_FACTOR * 2.6 * seconds_per_tick), BLOOD_VOLUME_NORMAL) //significantly better than a human, at the cost of high toxin damage and unsustainability due to discharge
 			if(SPT_PROB(5, seconds_per_tick)) // 5% each seacond for ethereals to explosively release excess energy if it reaches dangerous levels
 				discharge_process(carbon)
 		else
@@ -95,11 +114,5 @@
 		tesla_zap(carbon, 2, crystal_charge*2.5, ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES)
 		adjust_charge(ETHEREAL_CHARGE_FULL - crystal_charge)
 		carbon.visible_message(span_danger("[carbon] violently discharges energy!"), span_warning("You violently discharge energy!"))
-
-		if(prob(10)) //chance of developing heart disease to dissuade overcharging oneself
-			var/datum/disease/D = new /datum/disease/heart_failure
-			carbon.ForceContractDisease(D)
-			to_chat(carbon, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
-			carbon.playsound_local(carbon, 'sound/effects/singlebeat.ogg', 100, 0)
 
 		carbon.Paralyze(100)

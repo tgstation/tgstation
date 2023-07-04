@@ -29,6 +29,8 @@
 	/// Whether the rod can loop across other z-levels. The rod will still loop when the z-level is self-looping even if this is FALSE.
 	var/loopy_rod = FALSE
 
+	var/can_suplex = TRUE //monkestation edit: can this rod be suplexed
+
 /obj/effect/immovablerod/Initialize(mapload, atom/target_atom, atom/specific_target, force_looping = FALSE)
 	. = ..()
 	SSaugury.register_doom(src, 2000)
@@ -244,6 +246,12 @@
  * * strongman - the suplexer of the rod.
  */
 /obj/effect/immovablerod/proc/suplex_rod(mob/living/strongman)
+	if(!can_suplex) //monkestation edit
+		strongman.visible_message( //monkestation edit
+		span_boldwarning("[src] overpowers [strongman]!"), //monkestation edit
+		span_warning("You feel [src] overpowering you!") //monkestation edit
+		) //monkestation edit
+		return FALSE //monkestation edit
 	strongman.client?.give_award(/datum/award/achievement/misc/feat_of_strength, strongman)
 	strongman.visible_message(
 		span_boldwarning("[strongman] suplexes [src] into the ground!"),

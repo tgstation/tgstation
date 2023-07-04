@@ -52,6 +52,11 @@
 	// The parent call for Login() may do a bunch of stuff, like add verbs.
 	// Delaying the register_for_interview until the very end makes sure it can clean everything up
 	// and set the player's client up for interview.
+
+	///guh
+	if(client.ip_intel == "Disabled")
+		client.check_ip_intel()
+
 	if(client.interviewee)
 		register_for_interview()
 		return

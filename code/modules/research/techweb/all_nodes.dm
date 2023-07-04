@@ -96,6 +96,8 @@
 		"sec_38",
 		"sec_beanbag_slug",
 		"sec_dart",
+		"buckshot_shell",
+		"shotgun_slug",
 		"sec_Islug",
 		"sec_rshot",
 		"servingtray",
@@ -226,6 +228,7 @@
 		"boxcutter",
 		"cable_coil",
 		"cable_coil",
+		"industrial_coil",
 		"crowbar",
 		"cultivator",
 		"decal_painter",
@@ -400,9 +403,10 @@
 		"medipen_refiller",
 		"pandemic",
 		"soda_dispenser",
+		"extrapolator",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/dissection/human)
+	discount_experiments = list(/datum/experiment/dissection/human = 1000)
 
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"
@@ -423,8 +427,8 @@
 		"smoke_machine",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	required_experiments = list(/datum/experiment/dissection/nonhuman)
-	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 4000)
+	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 2000,
+								/datum/experiment/dissection/nonhuman = 2000)
 
 /datum/techweb_node/xenoorgan_biotech
 	id = "xenoorgan_bio"
@@ -1108,6 +1112,7 @@
 		"mech_mousetrap_mortar",
 		"mech_punching_face",
 		"clown_firing_pin",
+		"borg_upgrade_cringe",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1440,8 +1445,8 @@
 		"plantgenes",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
-	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
-	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 3000)
+	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 2000,
+								/datum/experiment/scanning/random/plants/wild = 2000)
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
@@ -1473,6 +1478,7 @@
 		"seclite",
 		"zipties",
 		"inspector",
+		"mag_autorifle",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
@@ -1513,8 +1519,8 @@
 		"pin_testing",
 		"tele_shield",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
-	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = 10000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = 5000)
 
 /datum/techweb_node/adv_weaponry
 	id = "adv_weaponry"
@@ -1525,6 +1531,7 @@
 		"pin_loyalty",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 2500)
 
 /datum/techweb_node/electric_weapons
 	id = "electronic_weapons"
@@ -1589,6 +1596,8 @@
 		"c38_hotshot",
 		"c38_iceblox",
 		"techshotshell",
+		"mag_autorifle_ap",
+		"mag_autorifle_ic",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1893,8 +1902,8 @@
 		"mech_ccw_armor",
 		"mech_proj_armor",
 	)
-	required_experiments = list(/datum/experiment/scanning/random/mecha_damage_scan)
-	discount_experiments = list(/datum/experiment/scanning/random/mecha_destroyed_scan = 5000)
+	discount_experiments = list(/datum/experiment/scanning/random/mecha_destroyed_scan = 5000,
+								/datum/experiment/scanning/random/mecha_damage_scan = 3000)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 
 /datum/techweb_node/mech_scattershot
@@ -2159,9 +2168,6 @@
 		"donksoft_refill",
 		"donksofttoyvendor",
 		"largecrossbow",
-		"mag_autorifle",
-		"mag_autorifle_ap",
-		"mag_autorifle_ic",
 		"rapidsyringe",
 		"suppressor",
 		"super_pointy_tape",

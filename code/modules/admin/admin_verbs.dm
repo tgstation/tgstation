@@ -105,6 +105,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/adjust_players_antag_tokens,
 	/client/proc/adjust_players_metacoins,
 	/client/proc/admin_change_sec_level,
+	/client/proc/change_ocean,
 	/client/proc/cinematic,
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_gib_self,
@@ -119,6 +120,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/mass_add_metacoins,
 	/client/proc/mass_zombie_cure,
 	/client/proc/mass_zombie_infection,
+	/client/proc/move_hotspots,
 	/client/proc/object_say,
 	/client/proc/polymorph_all,
 	/client/proc/remove_liquid,
@@ -131,6 +133,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/smite,
 	/client/proc/spawn_liquid,
 	/client/proc/summon_ert,
+	/client/proc/summon_twitch_event,
 	/client/proc/toggle_nuke,
 	/client/proc/toggle_random_events,
 	))
