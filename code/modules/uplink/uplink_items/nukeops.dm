@@ -667,6 +667,14 @@
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
+/datum/uplink_item/suits/syndi_intellicard
+	name = "Pre-Loaded Syndicate Intellicard"
+	desc = "A pre-loaded syndicate intellicard with a captured Nanotrasen AI, modified with the standard syndicate lawset. You can slot it into your modsuit for a conversational partner! It can additionally control the MODsuit's modules at will, and move your body around even if you're in critical condition or dead."
+	item = /obj/item/aicard/syndie/loaded
+	cost = 12
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	refundable = TRUE
+
 /datum/uplink_item/device_tools/assault_pod
 	name = "Assault Pod Targeting Device"
 	desc = "Use this to select the landing zone of your assault pod."

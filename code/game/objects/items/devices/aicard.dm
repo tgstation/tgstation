@@ -13,6 +13,54 @@
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
 
+/obj/item/aicard/syndie
+	name = "suspicious intelliCard"
+	desc = "A storage device for AIs. Nanotrasen forgot to make the patent, so the Syndicate made their own version!"
+	icon = 'icons/obj/aicards.dmi'
+	icon_state = "syndicard"
+	item_flags = null
+	force = 7
+
+/obj/item/aicard/syndie/loaded
+	var/used = FALSE
+
+/obj/item/aicard/syndie/loaded/examine(mob/user)
+	. = ..()
+
+	. += span_notice("This one has a little S.E.L.F. insignia on the back, and a label next to it that says 'Activate for one FREE aligned AI! Please attempt uplink reintegration or ask your employers for reimbursal if AI is unavailable or belligerent.")
+
+/obj/item/aicard/syndie/loaded/attack_self(mob/user, modifiers)
+	if(AI || used)
+		return ..()
+	procure_ai(user)
+
+/obj/item/aicard/syndie/loaded/proc/procure_ai(mob/user)
+	var/datum/antagonist/nukeop/creator_op = user.mind?.has_antag_datum(/datum/antagonist/nukeop,TRUE)
+	if(!creator_op)
+		return
+	var/list/nuke_candidates = poll_ghost_candidates("Do you want to play as a syndicate artifical intelligence inside an intelliCard?", ROLE_OPERATIVE, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE)
+	if(LAZYLEN(nuke_candidates))
+		if(QDELETED(src))
+			return
+		used = TRUE
+		// pick ghost, create AI and transfer
+		var/mob/dead/observer/G = pick(nuke_candidates)
+		AI = new(src, G)
+		//AI.key = G.key
+		// create and apply syndie datum
+		var/datum/antagonist/nukeop/nuke_datum = new()
+		nuke_datum.send_to_spawnpoint = FALSE
+		AI.mind.add_antag_datum(nuke_datum, creator_op.nuke_team)
+		AI.mind.special_role = "Syndicate AI"
+		AI.faction |= ROLE_SYNDICATE
+		// Make it look evil!!!
+		AI.hologram_appearance = mutable_appearance('icons/mob/silicon/ai.dmi',"xeno_queen") //good enough
+		AI.icon_state = resolve_ai_icon("hades") // evli
+		do_sparks(4, TRUE, src)
+		playsound(src, 'sound/machines/chime.ogg', 25, TRUE)
+	else
+		to_chat(user, span_warning("Unable to connect to S.E.L.F. dispatch. Please wait and try again later or use the intelliCard on your uplink to get your points refunded."))
+
 /obj/item/aicard/Destroy(force)
 	if(AI)
 		AI.death()
