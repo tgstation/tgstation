@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 		if(!spawning_order.pack.goody) //we handle goody crates below
 			var/obj/structure/closet/crate = spawning_order.generate(pick_n_take(empty_turfs))
-			crate.name = crate.name += " - #[spawning_order.id]"
+			crate.name += " - #[spawning_order.id]"
 
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[spawning_order.pack.get_cost()]", "[spawning_order.pack.name]"))
 
