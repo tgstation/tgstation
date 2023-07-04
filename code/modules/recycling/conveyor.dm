@@ -39,6 +39,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_CONVEYOR_PRIORITY)
 	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN)
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 
