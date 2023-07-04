@@ -872,7 +872,6 @@
 	pixel_y = 5
 	},
 /obj/item/storage/box{
-	illustration = "donk_kit";
 	name = "box of donkpockets"
 	},
 /obj/structure/cable,
@@ -1286,7 +1285,6 @@
 	pixel_y = 5
 	},
 /obj/item/storage/box{
-	illustration = "donk_kit";
 	name = "box of donkpockets"
 	},
 /obj/effect/decal/cleanable/dirt,
