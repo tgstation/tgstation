@@ -5709,11 +5709,11 @@
 #include "monkestation\code\modules\twitch_bits\events\skinny.dm"
 #include "monkestation\code\modules\uplink\uplink_items\job.dm"
 #include "monkestation\code\modules\vehicles\monkey_ball.dm"
+#include "monkestation\code\modules\vehicles\mecha\mecha_actions.dm"
 #include "monkestation\code\random_rooms\room_base.dm"
 #include "monkestation\code\random_rooms\bars\icebox.dm"
 #include "monkestation\code\random_rooms\engines\kilostation.dm"
 #include "monkestation\code\random_rooms\engines\metastation.dm"
 #include "monkestation\code\random_rooms\engines\tramstation.dm"
-#include "monkestation\code\modules\vehicles\mecha\mecha_actions.dm"
 #include "monkestation\code\modules\vehicles\mecha\equipment\tools\other_tools.dm"
 // END_INCLUDE
