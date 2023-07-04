@@ -103,7 +103,9 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	to_chat(owner, "Your request to play as [in_queue] has been approved.")
 
 	spend_token(in_queued_tier, queued_donor)
-	in_queue.antag_token(owner.mob.mind)
+	if(!owner.mob.mind)
+		owner.mob.mind_initialize()
+	in_queue.antag_token(owner.mob.mind, owner.mob)
 
 	qdel(in_queue)
 	in_queue = null

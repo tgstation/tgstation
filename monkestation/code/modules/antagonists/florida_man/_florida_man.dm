@@ -53,6 +53,11 @@
 	else
 		floridan.fully_replace_character_name(floridan.real_name, "Tony Brony")
 
-/datum/antagonist/florida_man/antag_token(datum/mind/hosts_mind)
+/datum/antagonist/florida_man/antag_token(datum/mind/hosts_mind, mob/spender)
 	. = ..()
-	hosts_mind.add_antag_datum(/datum/antagonist/florida_man)
+	if(isobserver(spender))
+		var/mob/living/carbon/human/newmob = spender.change_mob_type( /mob/living/carbon/human , null, null, TRUE )
+		newmob.equipOutfit(/datum/outfit/florida_man_three)
+		newmob.mind.add_antag_datum(/datum/antagonist/florida_man)
+	else
+		hosts_mind.add_antag_datum(/datum/antagonist/florida_man)

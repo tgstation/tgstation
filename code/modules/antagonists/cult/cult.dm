@@ -591,7 +591,7 @@
 #undef CULT_VICTORY
 #undef SUMMON_POSSIBILITIES
 
-/datum/antagonist/cult/antag_token(datum/mind/hosts_mind)
+/datum/antagonist/cult/antag_token(datum/mind/hosts_mind, mob/spender)
 	. = ..()
 	var/datum/antagonist/cult/new_cultist = new()
 	new_cultist.cult_team = get_team()
