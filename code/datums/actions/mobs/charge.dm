@@ -296,6 +296,7 @@
 	destroy_objects = FALSE
 	charge_damage = 10
 	charge_past = 0
+	shared_cooldown = FALSE
 	///How many tiles we travel, used in calculating damage
 	var/distance = 0
 	///We mark the tile the charge starts
@@ -303,18 +304,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/Activate(atom/target_atom)
 	starting_tile = get_turf(target_atom)
-	if(isliving(owner))
-		var/mob/living/source = owner
-		var/stamina_source = source.getStaminaLoss()
-		if(stamina_source >= 60)//prevent cases where we go into stamcrit mid/end of charge and causes runtime mess
-			owner.balloon_alert(owner, "too tired!")
-			return
 	return ..()
-
-/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/StartCooldown(override_cooldown_time, override_melee_cooldown_time)
-	if(!owner)//mob can lose the abilities mid charge
-		return
-	. = ..()
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_moved(atom/source)
 	return
