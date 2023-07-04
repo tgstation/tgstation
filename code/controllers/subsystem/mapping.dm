@@ -969,6 +969,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		away_datum.wait = new_wait
 		log_mapping("Now loading [away_datum.name]...")
 
+	validate_z_level_loading(all_away_missions)
+
 	if(isnull(confirmation_alert_result))
 		log_mapping("All away missions have been loaded. List of away missions paired to corresponding Z-Levels are as follows:")
 		log_mapping(gather_z_level_information())
@@ -977,8 +979,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	message_admins("[key_name_admin(usr)] has loaded every single away mission in the [map_directory] directory.")
 	log_game("[key_name(usr)] has loaded every single away mission in the [map_directory] directory.")
 
-	if(PERFORM_ALL_TESTS(focus_only/away_mission_z_levels))
-		validate_z_level_loading(all_away_missions)
 
 /// Lightweight proc that just checks to make sure that all of the expected z-levels were loaded. Split out for clarity from load_all_away_missions()
 /// Argument "checkable_levels" is just a list of the names (typically the filepaths) of the z-levels we were expected to load, which should correspond to the name on the space level datum.
