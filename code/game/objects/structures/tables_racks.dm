@@ -39,7 +39,6 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = TRUE
-	var/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN)
 
 /obj/structure/table/Initialize(mapload, _buildstack)
 	. = ..()

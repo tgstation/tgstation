@@ -20,7 +20,7 @@
 
 /obj/structure/lattice/Initialize(mapload)
 	. = ..()
-	if(give_turf_traits)
+	if(length(give_turf_traits))
 		give_turf_traits = string_list(give_turf_traits)
 		AddElement(/datum/element/give_turf_traits, give_turf_traits)
 

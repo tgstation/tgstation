@@ -2,7 +2,9 @@
 /datum/element/give_turf_traits
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
+	///A list of traits that are added to the turf while occupied.
 	var/list/traits
+	///The list of occupied turfs: Assoc value is a list of movables with this element that are occupying the turf.
 	var/list/occupied_turfs = list()
 
 /datum/element/give_turf_traits/Attach(atom/movable/target, list/traits)
@@ -31,6 +33,10 @@
 	if(isturf(source.loc))
 		add_to_occupied_turfs(source.loc, source)
 
+/**
+ * Registers the turf signals if it was previously unoccupied and adds it to the list of occupied turfs.
+ * Otherwise, it just adds the movable to the assoc value of lists occupying the turf.
+ */
 /datum/element/give_turf_traits/proc/add_to_occupied_turfs(turf/location, atom/movable/source)
 	if(occupied_turfs[location])
 		occupied_turfs[location] += source
@@ -46,6 +52,10 @@
 		for(var/mob/living/living in location)
 			living.update_turf_movespeed()
 
+/**
+ * Unregisters the turf signals if it's no longer unoccupied and removes it from the list of occupied turfs.
+ * Otherwise, it just removes the movable from the assoc value of lists occupying the turf.
+ */
 /datum/element/give_turf_traits/proc/remove_from_occupied_turfs(turf/location, atom/movable/source)
 	LAZYREMOVE(occupied_turfs[location], source)
 	if(occupied_turfs[location])
@@ -61,6 +71,7 @@
 		for(var/mob/living/living in location)
 			living.update_turf_movespeed()
 
+///Signals and components are carried over when the turf is changed, so they've to be readded post-change.
 /datum/element/give_turf_traits/proc/pre_change_turf(turf/changed, path, list/new_baseturfs, flags, list/post_change_callbacks)
 	SIGNAL_HANDLER
 	post_change_callbacks += CALLBACK(src, PROC_REF(reoccupy_turf))
