@@ -254,9 +254,10 @@
 	name = "surgical processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "spectrometer"
+	icon_state = "surgical_processor"
 	item_flags = NOBLUDGEON
 	var/list/loaded_surgeries = list()
+	var/downloaded = FALSE
 
 /obj/item/surgical_processor/Initialize(mapload)
 	. = ..()
@@ -304,7 +305,15 @@
 			var/obj/machinery/computer/operating/surgery_computer = design_holder
 			loaded_surgeries |= surgery_computer.advanced_surgeries
 		playsound(src, 'sound/machines/terminal_success.ogg', 25, TRUE)
+		downloaded = TRUE
+		update_appearance(UPDATE_OVERLAYS)
 	return TRUE
+
+/obj/item/surgical_processor/update_overlays()
+	. = ..()
+	if(downloaded)
+		. += mutable_appearance(src.icon, "+downloaded")
+		downloaded = FALSE
 
 /obj/item/surgical_processor/proc/check_surgery(mob/user, datum/surgery/surgery, mob/patient)
 	SIGNAL_HANDLER
