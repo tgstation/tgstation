@@ -296,3 +296,35 @@
 		/obj/item/storage/toolbox = 1,
 	)
 	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/laser_musket
+	name = "Laser Musket"
+	result = /obj/item/gun/energy/laser/musket
+	reqs = list(
+		/obj/item/weaponcrafting/stock = 1,
+		/obj/item/stack/cable_coil = 15,
+		/obj/item/stack/rods = 4,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/clothing/glasses/regular = 1,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 1,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 10 SECONDS
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/laser_musket_prime
+	name = "Heroic Laser Musket"
+	always_available = FALSE
+	result = /obj/item/gun/energy/laser/musket/prime
+	reqs = list(
+		/obj/item/gun/energy/laser/musket = 1,
+		/obj/item/stack/cable_coil = 15,
+		/obj/item/stack/sheet/mineral/silver = 5,
+		/obj/item/stock_parts/water_recycler = 1,
+		/datum/reagent/consumable/nuka_cola = 15,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	tool_paths = list(/obj/item/clothing/head/cowboy, /obj/item/clothing/shoes/cowboy)
+	time = 30 SECONDS //contemplate for a bit
+	category = CAT_WEAPON_RANGED

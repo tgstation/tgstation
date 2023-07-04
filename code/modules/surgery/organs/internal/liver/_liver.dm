@@ -98,6 +98,8 @@
 			. += span_info("Strange glowing residues, sprinklings of congealed solid plasma, and what seem to be tumors indicate this is the radiated liver of a <em>scientist</em>.")
 		if(HAS_TRAIT(src, TRAIT_MAINTENANCE_METABOLISM))
 			. += span_info("A half-digested rat's tail (somehow), disgusting sludge, and the faint smell of Grey Bull imply this is what remains of an <em>assistant</em>'s liver.")
+		if(HAS_TRAIT(src, TRAIT_CORONER_METABOLISM))
+			. += span_info("An aroma of pickles and sea water, along with being remarkably well-preserved, imply this is what remains of a <em>coroner</em>'s liver.")
 
 		// royal trumps pretender royal
 		if(HAS_TRAIT(src, TRAIT_ROYAL_METABOLISM))
@@ -127,8 +129,7 @@
 /obj/item/organ/internal/liver/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	//If your liver is failing, then we use the liverless version of metabolize
-	//We don't check for TRAIT_NOMETABOLISM here because we do want a functional liver if somehow we have one inserted
-	if(organ_flags & ORGAN_FAILING)
+	if((organ_flags & ORGAN_FAILING) || HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM))
 		owner.reagents.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
 		return
 
@@ -139,7 +140,7 @@
 
 	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
-			if(status != toxin.affected_organtype) //this particular toxin does not affect this type of organ
+			if(toxin.affected_organ_flags && !(organ_flags & toxin.affected_organ_flags)) //this particular toxin does not affect this type of organ
 				continue
 			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
 			if(belly)
@@ -245,7 +246,7 @@
 	name = "basic cybernetic liver"
 	desc = "A very basic device designed to mimic the functions of a human liver. Handles toxins slightly worse than an organic liver."
 	icon_state = "liver-c"
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 	toxTolerance = 2
 	liver_resistance = 0.9 * LIVER_DEFAULT_TOX_RESISTANCE // -10%
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
@@ -278,7 +279,7 @@
 		owner.adjustToxLoss(10)
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
 #undef HAS_SILENT_TOXIN
 #undef HAS_NO_TOXIN

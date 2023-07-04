@@ -5,6 +5,7 @@
 	damage_type = STAMINA
 	armor_flag = BIO
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/neurotoxin
+	armour_penetration = 50
 
 /obj/projectile/neurotoxin/on_hit(atom/target, blocked = FALSE)
 	if(isalien(target))

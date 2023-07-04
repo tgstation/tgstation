@@ -79,6 +79,11 @@
 	desc = "A luxury bar in a capsule. Bartender required and not included."
 	template_id = "shelter_charlie"
 
+/obj/item/survivalcapsule/bathroom
+	name = "emergency relief capsule"
+	desc = "Provides vital emergency support to employees who are caught short in the field."
+	template_id = "shelter_toilet"
+
 //Pod objects
 
 //Window
