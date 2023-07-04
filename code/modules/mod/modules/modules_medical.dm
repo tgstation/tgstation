@@ -8,7 +8,7 @@
 /obj/item/mod/module/health_analyzer
 	name = "MOD health analyzer module"
 	desc = "A module installed into the glove of the suit. This is a high-tech biological scanning suite, \
-		allowing the user indepth information on the vitals and injuries of others even at a distance, including even chemical scans, \
+		allowing the user indepth information on the vitals and injuries of others even at a distance, \
 		all with the flick of the wrist. Data is displayed in a convenient package on HUD in the helmet, \
 		but it's up to you to do something with it."
 	icon_state = "health"
