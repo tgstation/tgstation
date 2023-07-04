@@ -1,0 +1,9 @@
+author: "Archimus12"
+delete-after: True
+changes:
+  - rscadd: "Adds coloured large scarfs and winter coats to ClothesMate and black shoes to ChefDrobe"
+  - rscadd: "Adds latex gloves to SciDrobe, ChemDrobe and GeneDrobe and nitrile gloves to MediDrobe"
+  - rscadd: "Adds job headsets to GeneDrobe and RoboDrobe, ViroDrobe and ChemDrobe"
+  - rscadd: "Adds black wizard robes and black wizard hat to MagiVend"
+  - rscadd: "Adds grey backpack, grey satchel, leather satchel and grey duffel bag to CargoDrobe"
+  - rscadd: "Organises Drobes"

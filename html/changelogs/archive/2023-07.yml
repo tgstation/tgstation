@@ -157,3 +157,39 @@
   - balance: Increased blob tiles' resistance to lasers to compensate for the recent
       buff to laser damage.
   - spellcheck: Fixed a typo on the Interdyne shuttle.
+2023-07-04:
+  FlufflesTheDog:
+  - bugfix: Morbid (coroner's) tools now properly receive their speed boost in appropriate
+      conditions
+  Funnytoilet:
+  - qol: Matches command envirosuit helms' armor value with their hat counterparts.
+  GPeckman:
+  - qol: The health analyzer will now be more clear about how to treat burn wounds,
+      especially seriously infected ones.
+  Iamgoofball:
+  - bugfix: Fixes oversight with the voice disable config not working right for situations
+      in which a player re-enters their mob.
+  Jacquerel:
+  - bugfix: Horrid organics will no longer be made happy when mechanical chaplains
+      fail to heal them with a bible.
+  - bugfix: Lesser Form monkeys no longer maintain the name of the form you had prior
+      to transformation.
+  MMMiracles:
+  - bugfix: Tramstation lower Science is now less prone to cave-ins from their surrounding
+      maintenance corridors.
+  SyncIt21:
+  - code_imp: mat per unit values of materials now scale with material defines
+  Teleported-Bread:
+  - bugfix: Tips now mention telekenesis dusting you when used on the SM, not telepathy.
+  Vekter:
+  - rscdel: Plasma objects (statues, toilets, etc.) no longer explode when ignited.
+      They just release plasma like everything else plasma. (This doesn't impact injecting
+      plasma into cells or dipping cigars in plasma, those still explode.)
+  - bugfix: Removed nebula vomiting from the normal symptom pool. It should no longer
+      appear on regular viruses.
+  itseasytosee:
+  - spellcheck: You should see a lot less "you can not move while bucked too X" messages
+      where they don't make sense.
+  - admin: Added a petrify smite. Try it out on your least favorite player!
+  mc-oofert:
+  - rscadd: You can use cable on TTVs to make them wearable on the back

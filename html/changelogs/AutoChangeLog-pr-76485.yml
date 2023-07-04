@@ -1,0 +1,4 @@
+author: "Jolly"
+delete-after: True
+changes:
+  - bugfix: "[MetaStation] There is no longer a random nondescript \"item\" outside Xenobiology. No, it was NOT a Xenomorph."
