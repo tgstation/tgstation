@@ -73,7 +73,7 @@
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
 #define ORGAN_SLOT_EARS "ears"
-#define ORGAN_SLOT_EYES "eye_sight"
+#define ORGAN_SLOT_EYES "eyes"
 #define ORGAN_SLOT_HEART "heart"
 #define ORGAN_SLOT_HEART_AID "heartdrive"
 #define ORGAN_SLOT_HUD "eye_hud"
