@@ -319,7 +319,7 @@
 	resistance_flags = FIRE_PROOF|LAVA_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 2
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	allowed_suit_storage = list(
 		/obj/item/resonator,
@@ -1295,7 +1295,7 @@
 		post-void war era modular suit to ever be safely utilized by an operator. This ancient clunker is still functional, \
 		though it's missing several modern-day luxuries from updated Nakamura Engineering designs. \
 		Primarily, the suit's myoelectric suit layer is entirely non-existant, and the servos do very little to \
-		help distribute the weight evenly across the wearer's body, making it slow and bulky to move in. \
+		help distribute the weight evenly across the wearer's body when the suit is deactivated, making it slow and bulky to move in. \
 		The internal heads-up display is rendered in nearly unreadable cyan, as the visor suggests, \
 		leaving the user unable to see long distances. However, the way the helmet retracts is pretty cool."
 	default_skin = "prototype"
@@ -1304,8 +1304,8 @@
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
-	slowdown_inactive = 2
-	slowdown_active = 1.5
+	slowdown_inactive = 1.5
+	slowdown_active = 1
 	ui_theme = "hackerman"
 	inbuilt_modules = list(/obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype)
 	allowed_suit_storage = list(
