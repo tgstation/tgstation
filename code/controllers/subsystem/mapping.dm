@@ -970,9 +970,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		log_mapping("Now loading [away_datum.name]...")
 
 	if(isnull(confirmation_alert_result))
-		log_mapping("All away missions have been loaded.")
+		log_mapping("All away missions have been loaded. List of away missions paired to corresponding Z-Levels are as follows:")
+		log_mapping(gather_z_level_information())
 		return
 
 	message_admins("[key_name_admin(usr)] has loaded every single away mission in the [map_directory] directory.")
 	log_game("[key_name(usr)] has loaded every single away mission in the [map_directory] directory.")
+
 
