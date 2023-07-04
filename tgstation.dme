@@ -5359,6 +5359,7 @@
 #include "monkestation\code\modules\client\verbs.dm"
 #include "monkestation\code\modules\client\preferences\anime_implant.dm"
 #include "monkestation\code\modules\client\preferences\context_menu_requires_shift.dm"
+#include "monkestation\code\modules\client\preferences\face_cursor_combat_mode.dm"
 #include "monkestation\code\modules\client\preferences\interaction_mode.dm"
 #include "monkestation\code\modules\client\preferences\inventory.dm"
 #include "monkestation\code\modules\client\preferences\loadout_override_preference.dm"
