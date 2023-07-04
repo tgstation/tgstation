@@ -18,7 +18,7 @@
 	)
 	restricted_roles = list(JOB_AI, JOB_CYBORG)
 	required_candidates = 1
-	weight = 5
+	weight = 3
 	cost = 10
 	scaling_cost = 9
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
