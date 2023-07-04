@@ -5787,7 +5787,7 @@
 /area/awaymission/snowdin/post/engineering)
 "qX" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("snowdinmix"="Mix  Chamber");
+	atmos_chambers = list("snowdinmix"="Mix Chamber");
 	dir = 1
 	},
 /obj/effect/mapping_helpers/broken_floor,
@@ -5804,7 +5804,7 @@
 /area/awaymission/snowdin/post/engineering)
 "ra" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("snowdino2"="Oxygen  Supply");
+	atmos_chambers = list("snowdino2"="Oxygen Supply");
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -5812,7 +5812,7 @@
 /area/awaymission/snowdin/post/engineering)
 "rb" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("snowdinn2"="Nitrogen  Supply");
+	atmos_chambers = list("snowdinn2"="Nitrogen Supply");
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -11502,7 +11502,7 @@
 	name = "Turbine Gas Release"
 	},
 /obj/machinery/computer/atmos_control/fixed{
-	atmos_chambers = list("snowdinincin"="Incinerator  Chamber");
+	atmos_chambers = list("snowdinincin"="Incinerator Chamber");
 	dir = 1
 	},
 /obj/effect/mapping_helpers/broken_floor,
@@ -60073,7 +60073,7 @@ Ec
 Ec
 Ih
 GN
-WX
+ZZ
 GN
 Jp
 JE
