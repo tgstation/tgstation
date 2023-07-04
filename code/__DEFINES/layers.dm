@@ -269,6 +269,8 @@
 /// Layer for tutorial instructions
 #define TUTORIAL_INSTRUCTIONS_LAYER 5
 
+///Layer for lobby menu collapse button
+#define LOBBY_COLLAPSE_BUTTON_LAYER 2
 ///Layer for lobby menu background image
 #define LOBBY_BACKGROUND_LAYER 3
 ///Layer for lobby menu main buttons (Join/Ready, Observe, Charater Prefs)
