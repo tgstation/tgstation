@@ -296,7 +296,9 @@
 	destroy_objects = FALSE
 	charge_damage = 10
 	charge_past = 0
+	///How many tiles we travel, used in calculating damage
 	var/distance = 0
+	///We mark the tile the charge starts
 	var/turf/starting_tile
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/Activate(atom/target_atom)
@@ -310,7 +312,7 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/StartCooldown(override_cooldown_time, override_melee_cooldown_time)
-	if(!owner)
+	if(!owner)//mob can lose the abilities mid charge
 		return
 	. = ..()
 
