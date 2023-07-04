@@ -12,7 +12,7 @@
 	return FALSE
 
 /obj/item/abductor/proc/ScientistCheck(mob/user)
-	var/training =  HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_TRAINING)
+	var/training = HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_TRAINING)
 	var/sci_training = HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)
 
 	if(training && !sci_training)
