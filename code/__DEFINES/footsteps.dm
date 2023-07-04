@@ -18,6 +18,7 @@
 //misc footstep sounds
 #define FOOTSTEP_GENERIC_HEAVY "heavy"
 
+
 //footstep mob defines
 #define FOOTSTEP_MOB_CLAW "footstep_claw"
 #define FOOTSTEP_MOB_BAREFOOT "footstep_barefoot"
