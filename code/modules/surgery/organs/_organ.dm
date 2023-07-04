@@ -67,7 +67,7 @@
 // any nonhumans created in that time would experience the same effect.
 INITIALIZE_IMMEDIATE(/obj/item/organ)
 
-/obj/item/organ/Initialize(mapload, accessory_type)
+/obj/item/organ/Initialize(mapload)
 	. = ..()
 	// If you give restyle_flags to an organ without a bodypart overlay, I will physically harm you
 	if(restyle_flags)
@@ -81,7 +81,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(process_death)
 		START_PROCESSING(SSobj, src)
 	// Sets up visual elements of the organ
-	initialize_visuals(accessory_type)
+	initialize_visuals()
 
 /obj/item/organ/Destroy(force)
 	if(owner)

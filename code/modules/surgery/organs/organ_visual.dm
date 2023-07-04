@@ -36,15 +36,14 @@
 			. += bodypart_overlay.get_overlays(external_layer, ownerlimb)
 
 /// Initializes visual elements of an organ
-/obj/item/organ/proc/initialize_visuals(accessory_type)
+/obj/item/organ/proc/initialize_visuals()
 	if(!bodypart_overlay)
 		return
 	bodypart_overlay = new bodypart_overlay()
 
-	accessory_type = accessory_type ? accessory_type : sprite_accessory_override
 	var/update_appearance = TRUE
-	if(accessory_type)
-		bodypart_overlay.set_appearance(accessory_type)
+	if(sprite_accessory_override)
+		bodypart_overlay.set_appearance(sprite_accessory_override)
 		bodypart_overlay.imprint_on_next_insertion = FALSE
 	else if(loc) //we've been spawned into the world, and not in nullspace to be added to a limb (yes its fucking scuffed)
 		bodypart_overlay.randomize_appearance()
