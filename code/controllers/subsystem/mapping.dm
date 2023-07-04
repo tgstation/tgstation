@@ -940,6 +940,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/load_all_away_missions(map_directory)
 	if(!map_directory)
 		map_directory = "_maps/RandomZLevels/"
+	var/start_time = null // in case we're doing this at runtime, useful to know how much time we're spending loading all these away missions
 	var/confirmation_alert_result = null
 	var/new_wait = 0 // default to always zeroing out the wait time for away missions to be unlocked due to the unit-testery nature of this map
 
@@ -959,9 +960,14 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				return
 
 	else
-		log_mapping("Attempting to load all away missions for unit testing...")
+		start_time = REALTIMEOFDAY
+		var/beginning_message = "Loading all away missions..."
+		to_chat(world, span_boldannounce(beginning_message))
+		log_world(beginning_message)
+		log_mapping(beginning_message)
 
 	var/list/all_away_missions = generate_map_list_from_directory(map_directory)
+	var/number_of_away_missions = length(all_away_missions)
 	for(var/entry in all_away_missions)
 		load_new_z_level(entry, entry, secret = FALSE) // entry in both fields so we know if something failed to load since it'll log the full file name of what was loaded.
 
@@ -970,6 +976,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		log_mapping("Now loading [away_datum.name]...")
 
 	validate_z_level_loading(all_away_missions)
+
+	if(!isnull(start_time))
+		var/tracked_time = (REALTIMEOFDAY - start_time) / 10
+		var/finished_message = "Loaded [number_of_away_missions] away missions in [tracked_time] second[tracked_time == 1 ? "" : "s"]!"
+		to_chat(world, span_boldannounce(finished_message))
+		log_world(finished_message)
+		log_mapping(finished_message)
 
 	if(isnull(confirmation_alert_result))
 		log_mapping("All away missions have been loaded. List of away missions paired to corresponding Z-Levels are as follows:")
