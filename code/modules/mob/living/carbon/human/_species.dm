@@ -701,14 +701,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		for(var/bodypart in bodyparts_to_add)
 			var/datum/sprite_accessory/accessory
 			switch(bodypart)
-				if("ears")
-					accessory = GLOB.ears_list[source.dna.features["ears"]]
 				if("body_markings")
 					accessory = GLOB.body_markings_list[source.dna.features["body_markings"]]
-				if("legs")
-					accessory = GLOB.legs_list[source.dna.features["legs"]]
-				if("caps")
-					accessory = GLOB.caps_list[source.dna.features["caps"]]
 
 			if(!accessory || accessory.icon_state == "none")
 				continue

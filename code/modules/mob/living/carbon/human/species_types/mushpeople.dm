@@ -22,6 +22,9 @@
 	mutanttongue = /obj/item/organ/tongue/mush
 	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
 	mutantlungs = null
+	cosmetic_organs = list(
+		/obj/item/organ/mushroom_cap = "Round",
+	)
 	species_language_holder = /datum/language_holder/mushroom
 
 	bodypart_overrides = list(
