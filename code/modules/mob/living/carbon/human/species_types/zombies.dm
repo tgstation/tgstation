@@ -28,11 +28,13 @@
 		TRAIT_NOBLOOD,
 		TRAIT_SUCCUMB_OVERRIDE,
 	)
+
 	mutanttongue = /obj/item/organ/tongue/zombie
 	mutantstomach = null
 	mutantheart = null
 	mutantliver = null
 	mutantlungs = null
+
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | ERT_SPAWN
 	bodytemp_normal = T0C // They have no natural body heat, the environment regulates body temp

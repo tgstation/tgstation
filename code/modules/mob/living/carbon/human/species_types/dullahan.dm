@@ -8,15 +8,14 @@
 		TRAIT_USES_SKINTONES,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutant_bodyparts = list(
-		"wings" = "None",
-	)
+
 	mutantbrain = /obj/item/organ/brain/dullahan
 	mutanteyes = /obj/item/organ/eyes/dullahan
 	mutanttongue = /obj/item/organ/tongue/dullahan
 	mutantears = /obj/item/organ/ears/dullahan
 	mutantstomach = null
 	mutantlungs = null
+
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
