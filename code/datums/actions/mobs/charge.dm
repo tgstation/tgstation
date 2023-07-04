@@ -309,6 +309,11 @@
 			return
 	return ..()
 
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/StartCooldown(override_cooldown_time, override_melee_cooldown_time)
+	if(!owner)
+		return
+	. = ..()
+
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/on_moved(atom/source)
 	return
 
