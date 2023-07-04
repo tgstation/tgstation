@@ -1,4 +1,0 @@
-author: "Vekter"
-delete-after: True
-changes:
-  - bugfix: "Removed nebula vomiting from the normal symptom pool. It should no longer appear on regular viruses."
