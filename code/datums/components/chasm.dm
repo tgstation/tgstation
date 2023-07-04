@@ -34,15 +34,17 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 		/obj/effect/fishing_lure,
 	))
 
-/datum/component/chasm/Initialize(turf/target)
+/datum/component/chasm/Initialize(turf/target, mapload)
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_stopped))
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_no_longer_stopped))
 	target_turf = target
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(entered))
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(exited))
 	RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialized_on))
-	//allow catwalks to give the turf the CHASM_STOPPED trait before dropping stuff
-	addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
+	//allow catwalks to give the turf the CHASM_STOPPED trait before dropping stuff when the turf is changed.
+	//otherwise don't do anything because turfs and areas are initialized before movables.
+	if(!mapload)
+		addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
 	src.parent.AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_CHASM)
 
 /datum/component/chasm/UnregisterFromParent()
