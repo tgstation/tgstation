@@ -36417,7 +36417,6 @@
 /area/station/medical/treatment_center)
 "lTf" = (
 /obj/machinery/door/airlock{
-	id_tag = "commissarydoor";
 	name = "Barber Storage"
 	},
 /turf/open/floor/plating,
@@ -66336,7 +66335,6 @@
 /area/station/maintenance/disposal/incinerator)
 "wAY" = (
 /obj/machinery/door/airlock{
-	id_tag = "commissarydoor";
 	name = "Barber Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
