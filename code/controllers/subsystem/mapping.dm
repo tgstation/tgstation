@@ -977,4 +977,23 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	message_admins("[key_name_admin(usr)] has loaded every single away mission in the [map_directory] directory.")
 	log_game("[key_name(usr)] has loaded every single away mission in the [map_directory] directory.")
 
+	if(PERFORM_ALL_TESTS(focus_only/away_mission_z_levels))
+		validate_z_level_loading(all_away_missions)
+
+/// Lightweight proc that just checks to make sure that all of the expected z-levels were loaded. Split out for clarity from load_all_away_missions()
+/// Argument "checkable_levels" is just a list of the names (typically the filepaths) of the z-levels we were expected to load, which should correspond to the name on the space level datum.
+/datum/controller/subsystem/mapping/proc/validate_z_level_loading(list/checkable_levels)
+	for(var/z in 1 to max(world.maxz, length(z_list)))
+		var/datum/space_level/level = z_list[z]
+		if(isnull(level))
+			continue
+
+		var/level_name = level.name
+		if(level_name in checkable_levels)
+			checkable_levels -= level_name
+			continue
+
+	var/number_of_remaining_levels = length(checkable_levels)
+	if(number_of_remaining_levels > 0)
+		CRASH("The following [number_of_remaining_levels] away mission(s) were not loaded: [checkable_levels.Join("\n")]")
 

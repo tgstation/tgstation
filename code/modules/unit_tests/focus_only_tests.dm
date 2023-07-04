@@ -35,3 +35,6 @@
 
 /// Checks for bad icon / icon state setups in cooking crafting menu
 /datum/unit_test/focus_only/bad_cooking_crafting_icons
+
+/// Checks to make sure all away mission z-levels loaded as expected
+/datum/unit_test/focus_only/away_mission_z_levels
