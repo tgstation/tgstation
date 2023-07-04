@@ -189,6 +189,9 @@
 	SSjob.EquipRank(character, job, character.client)
 	job.after_latejoin_spawn(character)
 
+	if(character.client && length(character.client?.active_challenges))
+		SSchallenges.apply_challenges(character.client)
+
 	#define IS_NOT_CAPTAIN 0
 	#define IS_ACTING_CAPTAIN 1
 	#define IS_FULL_CAPTAIN 2

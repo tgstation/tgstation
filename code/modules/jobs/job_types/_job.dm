@@ -173,6 +173,7 @@
 		for(var/i in roundstart_experience)
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
+
 /datum/job/proc/announce_job(mob/living/joining_mob)
 	if(head_announce)
 		announce_head(joining_mob, head_announce)
@@ -200,7 +201,6 @@
 /mob/living/carbon/human/dress_up_as_job(datum/job/equipping, visual_only = FALSE, datum/preferences/used_pref)
 	dna.species.pre_equip_species_outfit(equipping, src, visual_only)
 	equip_outfit_and_loadout(equipping.outfit, used_pref, visual_only, equipping)
-
 
 /datum/job/proc/announce_head(mob/living/carbon/human/H, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(H && GLOB.announcement_systems.len)

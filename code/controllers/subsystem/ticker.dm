@@ -477,6 +477,8 @@ SUBSYSTEM_DEF(ticker)
 				S.Fade(TRUE)
 				living.client.init_verbs()
 			livings += living
+			if(living.client && length(living.client?.active_challenges))
+				SSchallenges.apply_challenges(living.client)
 	if(livings.len)
 		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 30, TIMER_CLIENT_TIME)
 

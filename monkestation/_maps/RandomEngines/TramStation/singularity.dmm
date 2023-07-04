@@ -12,7 +12,7 @@
 	dir = 1
 	},
 /obj/machinery/field/generator,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "cb" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -41,7 +41,7 @@
 "gW" = (
 /obj/structure/cable,
 /obj/structure/cable/layer1,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "hb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -58,7 +58,7 @@
 /obj/machinery/power/emitter{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "jH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
@@ -106,7 +106,7 @@
 /obj/machinery/power/emitter{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "oA" = (
 /obj/machinery/door/airlock/external,
@@ -130,7 +130,7 @@
 /area/station/engineering/supermatter/room)
 "qw" = (
 /obj/structure/cable/multilayer/connected,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "qx" = (
 /obj/structure/cable,
@@ -188,7 +188,7 @@
 /area/station/engineering/supermatter/room)
 "vK" = (
 /obj/effect/turf_decal/bot_red,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "vY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
@@ -207,7 +207,7 @@
 "wv" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/bot_white/right,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "wL" = (
 /obj/machinery/airalarm/directional/west,
@@ -229,7 +229,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "yN" = (
 /obj/effect/turf_decal/stripes/line{
@@ -285,7 +285,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "FU" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "Gn" = (
 /obj/machinery/light/directional/south,
@@ -350,7 +350,7 @@
 "Ou" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/bot_white/left,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "OY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
