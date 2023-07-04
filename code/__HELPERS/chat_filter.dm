@@ -2,6 +2,23 @@
 // This is sanity checked by unit tests.
 #define GET_MATCHED_GROUP(regex) (lowertext(regex.group[2] || regex.match))
 
+/// Checks a PDA message against the IC/Soft IC filter. Returns TRUE if the message should be sent.
+/// Notifies the user passed in arguments if the message matched either filter.
+/proc/check_pda_msg_against_filter(message, mob/user)
+	var/list/filter_result = CAN_BYPASS_FILTER(user) ? null : is_ic_filtered_for_pdas(message)
+	if (filter_result)
+		REPORT_CHAT_FILTER_TO_USER(user, filter_result)
+		return FALSE
+
+	var/list/soft_filter_result = CAN_BYPASS_FILTER(user) ? null : is_soft_ic_filtered_for_pdas(message)
+	if (soft_filter_result)
+		if(tgui_alert(user, "Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to send it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return FALSE
+		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[message]\"")
+		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[message]\"")
+
+	return TRUE
+
 /// Given a text, will return what word is on the IC filter, with the reason.
 /// Returns null if the message is OK.
 /proc/is_ic_filtered(message)

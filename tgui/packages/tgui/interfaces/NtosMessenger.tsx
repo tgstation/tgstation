@@ -29,7 +29,10 @@ type NtMessenger = {
 };
 
 type NtChat = {
-  messages:
+  recipient_name: string;
+  messages: NtMessage[];
+  visible: BooleanLike;
+  owner_deleted: BooleanLike;
 };
 
 type NtMessengers = Record<string, NtMessenger>;

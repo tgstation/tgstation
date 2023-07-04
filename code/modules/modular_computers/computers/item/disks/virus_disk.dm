@@ -53,7 +53,7 @@
 		return FALSE
 	user.show_message(span_notice("Success!"))
 	charges--
-	app.ringer_status = FALSE
+	app.alert_silenced = FALSE
 	app.ringtone = ""
 
 /**

@@ -499,14 +499,20 @@
 	loc.visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
 
 /obj/item/modular_computer/proc/ring(ringtone) // bring bring
+	var/sound = null
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
+	else if(device_theme == PDA_THEME_RETRO)
+		playsound(src, 'sound/machines/imrcv.ogg', 50) // don't vary
 	else
 		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 	audible_message("*[ringtone]*")
 
 /obj/item/modular_computer/proc/send_sound()
-	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+	if(device_theme == PDA_THEME_RETRO)
+		playsound(src, 'sound/machines/imsnd.ogg', 15)
+	else
+		playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
@@ -722,6 +728,12 @@
 			return
 		internal_cell = attacking_item
 		to_chat(user, span_notice("You plug \the [attacking_item] to \the [src]."))
+		return
+
+	if(istype(attacking_item, /obj/item/photo))
+		var/obj/item/photo/attacking_photo = attacking_item
+		if(store_file(new /datum/computer_file/picture(attacking_photo.picture)))
+			balloon_alert(user, "photo scanned")
 		return
 
 	// Check if any Applications need it

@@ -1,73 +1,3 @@
-#define RECIPIENT "recipient"
-
-/// A list of all active and visible messengers
-GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger)
-
-/// Registers an NTMessenger instance to the list of TabletMessengers.
-/proc/add_messenger(datum/computer_file/program/messenger/msgr)
-	var/obj/item/modular_computer/messenger_device = msgr.computer
-	// a bunch of empty PDAs are normally allocated, we don't want that clutter
-	if(!messenger_device.saved_identification || !messenger_device.saved_job)
-		return
-
-	if(!istype(msgr))
-		return
-
-	var/msgr_ref = REF(msgr)
-	if(msgr_ref in GLOB.TabletMessengers)
-		return
-
-	GLOB.TabletMessengers[msgr_ref] = msgr
-
-/// Unregisters an NTMessenger instance from the TabletMessengers table.
-/proc/remove_messenger(datum/computer_file/program/messenger/msgr)
-	if(!istype(msgr))
-		return
-
-	var/msgr_ref = REF(msgr)
-	if(!(msgr_ref in GLOB.TabletMessengers))
-		return
-
-	GLOB.TabletMessengers.Remove(msgr_ref)
-
-/proc/get_messengers_sorted(sort_by_job = FALSE)
-	var/sortmode
-	if(sort_by_job)
-		sortmode = GLOBAL_PROC_REF(cmp_pdajob_asc)
-	else
-		sortmode = GLOBAL_PROC_REF(cmp_pdaname_asc)
-
-	return sortTim(GLOB.TabletMessengers.Copy(), sortmode, associative = TRUE)
-
-// Why do we have this?
-/proc/StringifyMessengerTarget(obj/item/modular_computer/messenger)
-	return STRINGIFY_PDA_TARGET(messenger.saved_identification, messenger.saved_job)
-
-/datum/pda_chat
-	var/datum/weakref/recipient = null
-	var/list/messages = list()
-	var/visible_in_recents = FALSE
-	var/owner_deleted = FALSE
-
-/datum/pda_chat/New(datum/computer_file/program/messenger/recp)
-	recipient = WEAKREF(recp)
-
-/datum/pda_chat/proc/add_msg(message, everyone)
-	messages += list(message)
-	if(!everyone && !visible_in_recents)
-		visible_in_recents = TRUE
-
-/// Returns this datum as an associative list, used for ui_data calls.
-/datum/pda_chat/proc/get_data()
-	var/list/data = list()
-	var/datum/computer_file/program/messenger/recp = recipient.resolve()
-	if(recp)
-		data["recipient_name"] = StringifyMessengerTarget(recp)
-	data["messages"] = messages
-	data["visible"] = visible_in_recents
-	data["owner_deleted"] = !isnull(recp)
-	return data
-
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
 	filedesc = "Direct Messenger"
@@ -97,17 +27,15 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	/// Whether this app can send messages to all.
 	var/spam_mode = FALSE
 
-	/// An asssociative list of chats we have started, format: chatref -> chatlist.
-	var/list/saved_chats = list()
-	/// Associative list of unread messages - Format: chatref -> number of unreads
+	/// An asssociative list of chats we have started, format: chatref -> pda_chat.
+	var/list/datum/pda_chat/saved_chats = list()
+	/// Associative list of unread messages, format: chatref -> number of unreads
 	var/list/unread_chats = list()
 	/// Whose chatlogs we currently have open. If we are in the contacts list, this is null.
 	var/viewing_messages_of = null
 
 	/// The current ringtone (displayed in the chat when a message is received).
 	var/ringtone = MESSENGER_RINGTONE_DEFAULT
-	/// Whether or not the ringtone is currently on.
-	var/ringer_status = TRUE
 	// Whether or not we're sorting by job.
 	var/sort_by_job = TRUE
 	/// Whether or not we're sending and receiving messages.
@@ -194,8 +122,8 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 			ringtone = new_ringtone
 			return TRUE
 
-		if("PDA_ringer_status")
-			ringer_status = !ringer_status
+		if("PDA_toggleAlerts")
+			alert_silenced = !alert_silenced
 			return TRUE
 
 		if("PDA_sAndR")
@@ -231,44 +159,38 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 			if(can_send_everyone_message())
 				return FALSE
 
-			send_message_to_all(usr, params["msg"])
-
-			return TRUE
+			return send_message_to_all(usr, params["msg"])
 
 		if("PDA_sendMessage")
 			if(!sending_and_receiving)
 				to_chat(usr, span_notice("ERROR: This device has sending disabled."))
 				return FALSE
 
-			var/target_ref = params["ref"]
-
-			if(!(target_ref in saved_chats))
+			if(!(params["ref"] in saved_chats))
 				return FALSE
 
-			var/target_chat = saved_chats[target_ref]
-			var/target_user = target_chat["other"]
+			var/datum/pda_chat/target = saved_chats[params["ref"]]
 
-			if(!(target_ref in GLOB.TabletMessengers))
+			if(!(target.recipient.reference in GLOB.TabletMessengers))
 				to_chat(usr, span_notice("ERROR: Recipient no longer exists."))
 				return FALSE
 
-			var/datum/computer_file/program/messenger/target = GLOB.TabletMessengers[target_ref]
-			if(!istype(target))
-				return TRUE // we don't want tommy sending his messages to nullspace
+			var/datum/computer_file/program/messenger/target_msgr = target.recipient.resolve()
 
-			if(!target.sending_and_receiving && !sending_virus)
+			if(isnull(target_msgr)) // we don't want tommy sending his message to nullspace
+				return FALSE
+
+			if(!target_msgr.sending_and_receiving && !sending_virus)
 				to_chat(usr, span_notice("ERROR: Recipient has receiving disabled."))
-				return TRUE
+				return FALSE
 
 			if(sending_virus)
 				var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 				if(istype(disk))
 					disk.send_virus(computer, target, usr)
-					update_static_data(usr, ui)
 					return TRUE
 
-			send_message(usr, list(target), params["msg"])
-			return TRUE
+			return send_message(usr, list(target), params["msg"])
 
 		if("PDA_clearPhoto")
 			saved_image = null
@@ -314,7 +236,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	data["unreads"] = unread_chats
 	data["messengers"] = messengers
 	data["sort_by_job"] = sort_by_job
-	data["ringer_status"] = ringer_status
+	data["alert_silenced"] = alert_silenced
 	data["sending_and_receiving"] = sending_and_receiving
 	data["open_chat"] = saved_chats[viewing_messages_of]
 	data["photo"] = photo_path
@@ -331,37 +253,57 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 //////////////////////
 
 /// Brings up the quick reply prompt to send a message.
-/datum/computer_file/program/messenger/proc/quick_reply_prompt(mob/living/user, list/chat)
+/datum/computer_file/program/messenger/proc/quick_reply_prompt(mob/living/user, datum/pda_chat/chat)
+	var/datum/computer_file/program/messenger/target = chat.recipient.resolve()
+	if(isnull(target) || isnull(target.computer))
+		return
 	var/target_name = target.computer.saved_identification
 	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]", encode = FALSE)
 	send_message(user, list(target), input_message)
 
 /// Helper proc that sends a message to everyone
 /datum/computer_file/program/messenger/proc/send_message_to_all(mob/living/user, message)
-	var/list/chats = list()
-	var/list/messenger_targets = list()
+	var/list/datum/pda_chat/chats = list()
+	var/list/msgr_targets = list()
+
 	for(var/mc in get_messengers())
-		targets += GLOB.TabletMessengers[mc]
+		msgr_targets += mc
+
 	for(var/chatref in saved_chats)
-		var/list/chat = saved_chats[chatref]
-		if(chat[RECIPIENT] in messenger_targets)
-			messenger_targets -= chat[RECIPIENT]
-	send_message(user, targets, message, everyone = TRUE)
+		var/datum/pda_chat/chat = saved_chats[chatref]
+		if(chat.recipient.reference in msgr_targets) // if its in msgr_targets, it's valid
+			msgr_targets -= chat.recipient.reference
+			chats += chat
+
+	for(var/missing_msgr in msgr_targets)
+		var/datum/pda_chat/new_chat = create_chat(GLOB.TabletMessengers[missing_msgr])
+		chats += new_chat
+
+	send_message(user, chats, message, everyone = TRUE)
 	last_text_everyone = world.time
 
-/datum/computer_file/program/messenger/proc/create_chat(messenger_ref)
-	if(!(recipient in GLOB.TabletMessengers))
-		CRASH("tried to create a chat with a messenger that doesn't exist")
+/datum/computer_file/program/messenger/proc/create_chat(datum/computer_file/program/messenger/recipient)
+	if(!(REF(recipient) in GLOB.TabletMessengers))
+		CRASH("tried to create a chat with a messenger that isn't registered")
 
+	var/new_chat = new /datum/pda_chat(recipient)
+	saved_chats += new_chat
 
+	return new_chat
 
-// TODO: this proc is way too large, refactor
+/datum/computer_file/program/messenger/proc/find_chat_by_recp(recp_ref)
+	for(var/datum/pda_chat/chat as anything in saved_chats)
+		if(chat.recipient.reference == recp_ref)
+			return chat
+	return null
+
+// TODO: this proc is way too large and needs to be refactored
 /// Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
-/datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/chat, message, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
-	if(!user.can_perform_action(computer))
+/datum/computer_file/program/messenger/proc/send_message(mob/living/sender, list/datum/pda_chat/targets, message, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
+	if(!sender.can_perform_action(computer))
 		return FALSE
 
-	if(!isnull(chat))
+	if(!istype(targets) && !length(targets))
 		return FALSE
 
 	if(mime_mode)
@@ -373,54 +315,60 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	if(!message)
 		return FALSE
 
+	// check for jammers
 	var/turf/position = get_turf(computer)
 	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
 		var/turf/jammer_turf = get_turf(jammer)
 		if(position?.z == jammer_turf.z && (get_dist(position, jammer_turf) <= jammer.range))
+			to_chat(sender, span_notice("ERROR: Server communication failed."))
+			if(!alert_silenced)
+				playsound(src, 'sound/machines/terminal_error.ogg', 15, TRUE)
 			return FALSE
 
-	var/list/filter_result = CAN_BYPASS_FILTER(user) ? null : is_ic_filtered_for_pdas(message)
-	if (filter_result)
-		REPORT_CHAT_FILTER_TO_USER(user, filter_result)
+	// check message against filter
+	if(!check_pda_msg_against_filter(message, sender))
 		return FALSE
 
-	var/list/soft_filter_result = CAN_BYPASS_FILTER(user) ? null : is_soft_ic_filtered_for_pdas(message)
-	if (soft_filter_result)
-		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to send it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
-			return FALSE
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[message]\"")
-		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[message]\"")
-
-	// Send the signal
-	var/list/string_targets = list()
-	for (var/datum/computer_file/program/messenger/program in chat["other_members"])
-		var/obj/item/modular_computer/comp = program.computer
-		if (comp.saved_identification && comp.saved_job)  // != src is checked by the UI
-			string_targets += STRINGIFY_PDA_TARGET(comp.saved_identification, comp.saved_job)
-
-	if (!string_targets.len)
-		return FALSE
 	var/sent_prob = 1
-	if(ishuman(user))
-		var/mob/living/carbon/human/old_person = user
+	if(ishuman(sender))
+		var/mob/living/carbon/human/old_person = sender
 		sent_prob = old_person.age >= 30 ? 25 : sent_prob
 	if (prob(sent_prob))
-		message += " Sent from my PDA"
+		message += "\n Sent from my PDA"
+
+	var/datum/pda_msg/message_datum = new(message, saved_image, photo_path, everyone)
+
+	// our sender targets
+	var/list/datum/computer_file/program/messenger/target_msgrs = list()
+	// used for logging
+	var/list/stringified_targets = list()
+
+	// filter out invalid targets
+	for(var/datum/pda_chat/target_chat in targets.Copy())
+		var/datum/computer_file/program/messenger/msgr = target_chat.recipient.resolve()
+		if(isnull(msgr))
+			target_chat.owner_deleted = TRUE
+			targets -= target_chat
+			continue
+		if(!msgr.sending_and_receiving)
+			targets -= target_chat
+			continue
+		target_msgrs += msgr
+		stringified_targets += get_messenger_name(msgr.computer)
+
+	if(!length(target_msgrs))
+		return
 
 	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(
-		"name" = fake_name || computer.saved_identification,
-		"job" = fake_job || computer.saved_job,
-		"message" = message,
 		"ref" = REF(src),
-		"targets" = targets,
+		"message" = message_datum,
+		"targets" = target_msgrs,
 		"rigged" = rigged,
-		"photo" = saved_image,
-		"photo_path" = photo_path,
 		"automated" = FALSE,
-		"everyone" = everyone,
 	))
 	if(rigged) //Will skip the message server and go straight to the hub so it can't be cheesed by disabling the message server machine
-		signal.data["rigged_user"] = REF(user) // Used for bomb logging
+		signal.data["fakename"] = fake_name
+		signal.data["fakejob"] = fake_job
 		signal.server_type = /obj/machinery/telecomms/hub
 		signal.data["reject"] = FALSE // Do not refuse the message
 
@@ -428,73 +376,52 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 
 	// If it didn't reach, note that fact
 	if (!signal.data["done"])
-		to_chat(user, span_notice("ERROR: Server isn't responding."))
-		if(ringer_status)
+		to_chat(sender, span_notice("ERROR: Server is not responding."))
+		if(!alert_silenced)
 			playsound(src, 'sound/machines/terminal_error.ogg', 15, TRUE)
 		return FALSE
 
 	message = emoji_parse(message)//already sent- this just shows the sent emoji as one to the sender in the to_chat
-	signal.data["message"] = emoji_parse(signal.data["message"])
-
-	// produce references to our targets and send those to UI
-	var/list/target_refs = list()
-	for(var/datum/computer_file/program/messenger/target_computer in signal.data["targets"])
-		target_refs += REF(target_computer)
 
 	// Log it in our logs
 	var/list/message_data = list()
-	message_data["name"] = signal.data["name"]
-	message_data["job"] = signal.data["job"]
-	message_data["contents"] = signal.data["message"]
-	message_data["outgoing"] = TRUE
-	message_data["sender"] = signal.data["ref"]
-	message_data["photo_path"] = signal.data["photo_path"]
-	message_data["photo"] = signal.data["photo"]
-	message_data["targets"] = target_refs
-	message_data["target_details"] = signal.format_target()
-	message_data["everyone"] = everyone
+	for(var/datum/pda_chat/target_chat as anything in targets)
+		target_chat.add_msg(message_datum)
 
 	// Show it to ghosts
 	var/ghost_message = span_name("[message_data["name"]] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[signal.format_target()]")]: <span class='message'>[signal.format_message()]")
-	for(var/mob/player_mob in GLOB.player_list)
+	for(var/mob/player_mob as anything in GLOB.current_observers_list)
 		if(player_mob.client && !player_mob.client?.prefs)
 			stack_trace("[player_mob] ([player_mob.ckey]) had null prefs, which shouldn't be possible!")
 			continue
 
 		if(isobserver(player_mob) && (player_mob.client?.prefs.chat_toggles & CHAT_GHOSTPDA))
-			to_chat(player_mob, "[FOLLOW_LINK(player_mob, user)] [ghost_message]")
+			to_chat(player_mob, "[FOLLOW_LINK(player_mob, sender)] [ghost_message]")
 
 	// Log in the talk log
-	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [message_data["name"]] to [signal.format_target()]")
+	sender.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [message_data["name"]] to [signal.format_target()]")
 	if(rigged)
-		log_bomber(user, "sent a rigged PDA message (Name: [message_data["name"]]. Job: [message_data["job"]]) to [english_list(string_targets)] [!is_special_character(user) ? "(SENT BY NON-ANTAG)" : ""]")
-	to_chat(user, span_info("PDA message sent to [signal.format_target()]: [sanitize(html_decode(signal.format_message()))]"))
+		log_bomber(sender, "sent a rigged PDA message (Name: [message_data["name"]]. Job: [message_data["job"]]) to [english_list(stringified_targets)] [!is_special_character(sender) ? "(SENT BY NON-ANTAG)" : ""]")
+	to_chat(sender, span_info("PDA message sent to [signal.format_target()]: [sanitize(html_decode(signal.format_message()))]"))
 
-	if (ringer_status)
+	if (!alert_silenced)
 		computer.send_sound()
 
 	last_text = world.time
-	if (everyone)
-		message_data["name"] = "Everyone"
-		message_data["job"] = ""
 
-	messages += list(message_data)
 	saved_image = null
 	photo_path = null
 	return TRUE
 
 /datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/tablet_msg/signal)
-	var/list/message_data = list()
-	message_data["name"] = signal.data["name"]
-	message_data["job"] = signal.data["job"]
-	message_data["contents"] = signal.data["message"]
-	message_data["outgoing"] = FALSE
-	message_data["sender"] = signal.data["ref"]
-	message_data["automated"] = signal.data["automated"]
-	message_data["photo_path"] = signal.data["photo_path"]
-	message_data["photo"] = signal.data["photo"]
-	message_data["everyone"] = signal.data["everyone"]
-	messages += list(message_data)
+	var/datum/pda_msg/message = signal.data["message"]
+	var/datum/pda_chat/chat = null
+	if(!signal.data["rigged"])
+		message = message.copy()
+		chat = find_chat_by_recp(signal.data["ref"])
+		if(isnull(chat))
+			chat = create_chat()
+		chat.add_msg(message)
 
 	var/mob/living/L = null
 	//Check our immediate loc
@@ -505,11 +432,13 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 		L = get(computer, /mob/living/silicon)
 
 	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
-		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Reply</a>)"
+		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
+		// assuming that if the messenger sent us a message, then they must still exist
+		var/sender_name = signal.data["rigged"] ? STRINGIFY_PDA_TARGET(signal.data["fakename"], signal.data["fakejob"]) : get_messenger_name(chat.recipient.resolve())
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
-			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
+			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(sender_name)]'>"
 			hrefend = "</a>"
 
 		if(signal.data["automated"])
@@ -519,10 +448,10 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 		inbound_message = emoji_parse(inbound_message)
 
 		if(L.is_literate())
-			var/photo_message = message_data["photo"] ? " (<a href='byond://?src=[REF(signal.logged)];photo=1'>Photo</a>)" : ""
-			to_chat(L, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][STRINGIFY_PDA_TARGET(signal.data["name"], signal.data["job"])][hrefend], </b>[sanitize(html_decode(inbound_message))][photo_message] [reply]"))
+			var/photo_message = message.photo ? " (<a href='byond://?src=[REF(signal.logged)];photo=1'>Photo</a>)" : ""
+			to_chat(L, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][sender_name][hrefend], </b>[sanitize(html_decode(inbound_message))][photo_message] [reply]"))
 
-	if (ringer_status)
+	if (!alert_silenced)
 		computer.ring(ringtone)
 
 	SStgui.update_uis(computer)
@@ -532,17 +461,14 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	..()
 	if(QDELETED(src))
 		return
-	// send an activation message, open the messenger, kill whoever reads this nesting mess
-	if(!computer.enabled)
-		if(!computer.turn_on(usr, open_ui = FALSE))
-			return
-	if(computer.active_program != src)
-		if(!computer.open_program(usr, src, open_ui = FALSE))
-			return
+	// send an activation message and open the messenger
+	if(!((computer.enabled || computer.turn_on(usr, open_ui = FALSE)) &&
+		(computer.active_program == src || computer.open_program(usr, src, open_ui = FALSE))))
+		return
 	if(!href_list["close"] && usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
 		switch(href_list["choice"])
 			if("Message")
-				quick_reply_prompt(usr, locate(href_list["target"]))
+				quick_reply_prompt(usr, locate(href_list["target"]) in saved_chats)
 			if("mess_us_up")
 				if(!HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
 					var/obj/item/modular_computer/pda/comp = computer
