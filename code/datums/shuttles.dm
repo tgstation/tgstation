@@ -434,9 +434,13 @@
 /datum/map_template/shuttle/emergency/cruise
 	suffix = "cruise"
 	name = "The NTSS Independence"
-	description = "Ordinarily reserved for special functions and events, the Cruise Shuttle Independence can bring a summery cheer to your next station evacuation for a 'modest' fee!"
+	description = "Unparalleled Resilience, Unmatched Patriotism. Prepare to embark on a mission of extraordinary proportions with the NTSS Independence Evacuation Space Shuttle. \
+	Designed to offer a groundbreaking combination of power, resilience, and a symbol of classical American patriotism, this shuttle is the pinnacle of cutting-edge technology and unwavering determination. \
+	Proudly standing as one of Nanotrasen's most coveted and exclusive shuttles available to space station captains, the NTSS Independence is a testament to excellence and is primed to be your ultimate ally in times of crisis. \
+	With the NTSS Independence at your side, you can face any crisis head-on, knowing that the lives of your crew and survivors are in the hands of a vessel built on the principles of strength, bravery, and American ideals. \
+	Please note, In the face of a catastrophic event, the NTSS Independence shines as a true hero. Engineered to withstand extreme conditions, this shuttle fearlessly crashes into the space station, carving out a beachhead to facilitate the rescue and evacuation of survivors."
 	admin_notes = "This motherfucker is BIG. You might need to force dock it."
-	credit_cost = CARGO_CRATE_VALUE * 100
+	credit_cost = CARGO_CRATE_VALUE * 125
 
 /datum/map_template/shuttle/emergency/monkey
 	suffix = "nature"
