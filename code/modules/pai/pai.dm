@@ -10,6 +10,7 @@
 	hud_type = /datum/hud/pai
 	icon = 'icons/mob/silicon/pai.dmi'
 	icon_state = "repairbot"
+	initial_language_holder = /datum/language_holder/synthetic/pai
 	job = JOB_PERSONAL_AI
 	layer = LOW_MOB_LAYER
 	light_color = COLOR_PAI_GREEN
