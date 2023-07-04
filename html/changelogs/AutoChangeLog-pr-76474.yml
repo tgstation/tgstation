@@ -1,0 +1,5 @@
+author: "YehnBeep"
+delete-after: True
+changes:
+  - rscadd: "Prisoners can now be jaywalkers"
+  - qol: "reordered a crime so it appears on the choice list alphabetically."
