@@ -323,6 +323,7 @@
 							requisition_text += "- Reason Given: [reason]</br>"
 						requisition_text += "</br></br>"
 					requisition_paper.add_raw_text(requisition_text)
+					requisition_paper.color = "#9ef5ff"
 					requisition_paper.update_appearance()
 
 				ui.user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
