@@ -173,7 +173,7 @@
 		if(!silo_mats.mat_container)
 			balloon_alert(user, "no silo detected!")
 			return FALSE
-		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount))
+		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = QUARTER_SHEET_MATERIAL_AMOUNT), amount))
 			if(user)
 				balloon_alert(user, "not enough silo material!")
 			return FALSE
@@ -235,7 +235,7 @@
 			if(user)
 				balloon_alert(user, "silo on hold!")
 			return FALSE
-		. = silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount)
+		. = silo_mats.mat_container.has_materials(list(/datum/material/iron = QUARTER_SHEET_MATERIAL_AMOUNT), amount)
 	if(!. && user)
 		balloon_alert(user, "low ammo!")
 		if(has_ammobar)

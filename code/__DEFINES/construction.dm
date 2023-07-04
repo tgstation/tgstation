@@ -78,6 +78,9 @@
 #define SHEET_MATERIAL_AMOUNT 100
 ///The amount of materials you get from half a sheet. Used in standard object quantities. 50 units.
 #define HALF_SHEET_MATERIAL_AMOUNT (SHEET_MATERIAL_AMOUNT/2)
+///This is mostly to support RCDs, which uses increments of 1/4th a material sheet to define costs.
+// It could probably do with a rework. But for now, let's get it working again.
+#define QUARTER_SHEET_MATERIAL_AMOUNT (SHEET_MATERIAL_AMOUNT/4)
 ///The amount of materials used in the smallest of objects, like pens and screwdrivers. 10 units.
 #define SMALL_MATERIAL_AMOUNT (HALF_SHEET_MATERIAL_AMOUNT/5)
 ///The amount of material that goes into a coin, which determines the value of the coin.
