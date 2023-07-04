@@ -303,14 +303,17 @@
 	desc = "A space-worthy helmet specially designed for engineer plasmamen, the usual purple stripes being replaced by engineering's orange."
 	icon_state = "engineer_envirohelm"
 	inhand_icon_state = null
-	armor_type = /datum/armor/plasmaman_engineering
+	armor_type = /datum/armor/space_plasmaman/engineering_atmos
+
+/datum/armor/space_plasmaman/engineering_atmos
+	acid = 95
 
 /obj/item/clothing/head/helmet/space/plasmaman/atmospherics
 	name = "atmospherics plasma envirosuit helmet"
 	desc = "A space-worthy helmet specially designed for atmos technician plasmamen, the usual purple stripes being replaced by atmos' blue. Has improved thermal shielding."
 	icon_state = "atmos_envirohelm"
 	inhand_icon_state = null
-	armor_type = /datum/armor/plasmaman_atmospherics
+	armor_type = /datum/armor/space_plasmaman/engineering_atmos
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT // Same protection as the Atmospherics Hardhat
 
 /obj/item/clothing/head/helmet/space/plasmaman/chief_engineer
@@ -318,9 +321,8 @@
 	desc = "A special containment helmet designed for the Chief Engineer, the usual purple stripes being replaced by the chief's green. Has improved thermal shielding."
 	icon_state = "ce_envirohelm"
 	inhand_icon_state = null
-	armor_type = /datum/armor/plasmaman_chief_engineer
+	armor_type = /datum/armor/space_plasmaman/engineering_atmos
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT // Same protection as the Atmospherics Hardhat
-
 
 /obj/item/clothing/head/helmet/space/plasmaman/cargo
 	name = "cargo plasma envirosuit helmet"
@@ -388,19 +390,36 @@
 	desc = "A special containment helmet designed for the Head of Personnel. Embarrassingly enough, it looks way too much like the captain's design save for the red stripes."
 	icon_state = "hop_envirohelm"
 	inhand_icon_state = null
+	armor_type = /datum/armor/hats_hopcap/plasmaman
+
+/datum/armor/hats_hopcap/plasmaman
+	bio = 100
+	fire = 100
+	acid = 75
 
 /obj/item/clothing/head/helmet/space/plasmaman/captain
 	name = "captain's plasma envirosuit helmet"
 	desc = "A special containment helmet designed for the Captain. Embarrassingly enough, it looks way too much like the Head of Personnel's design save for the gold stripes. I mean, come on. Gold stripes can fix anything."
 	icon_state = "captain_envirohelm"
 	inhand_icon_state = null
-	armor_type = /datum/armor/plasmaman_captain
+	armor_type = /datum/armor/hats_caphat/plasmaman
+
+/datum/armor/hats_caphat/plasmaman
+	bio = 100
+	fire = 100
+	acid = 75
 
 /obj/item/clothing/head/helmet/space/plasmaman/centcom_commander
 	name = "CentCom commander plasma envirosuit helmet"
 	desc = "A special containment helmet designed for the Higher Central Command Staff. Not many of these exist, as CentCom does not usually employ plasmamen to higher staff positions due to their complications."
 	icon_state = "commander_envirohelm"
 	inhand_icon_state = null
+	armor_type = /datum/armor/hats_centhat/plasmaman
+
+/datum/armor/hats_centhat/plasmaman
+	bio = 100
+	fire = 100
+	acid = 75
 
 /obj/item/clothing/head/helmet/space/plasmaman/centcom_official
 	name = "CentCom official plasma envirosuit helmet"

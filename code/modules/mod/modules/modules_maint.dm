@@ -10,6 +10,11 @@
 	icon_state = "springlock"
 	complexity = 3 // it is inside every part of your suit, so
 	incompatible_modules = list(/obj/item/mod/module/springlock)
+	var/death_trap = TRUE
+
+/obj/item/mod/module/springlock/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	death_trap = !death_trap
 
 /obj/item/mod/module/springlock/on_install()
 	mod.activation_step_time *= 0.5
@@ -38,7 +43,10 @@
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
 	SIGNAL_HANDLER
 
-	balloon_alert(user, "springlocks aren't responding...?")
+	if(death_trap)
+		balloon_alert(user, "springlocks aren't responding...?")
+	else
+		balloon_alert(user, "you disable it just in time")
 	return MOD_CANCEL_ACTIVATE
 
 ///Delayed death proc of the suit after the wearer is exposed to reagents
@@ -344,6 +352,6 @@
 	overlay_state_active = "module_donk_safe_recycler"
 	complexity = 1
 	efficiency = 1
-	allowed_item_types = list(/obj/item/ammo_casing/caseless/foam_dart)
+	allowed_item_types = list(/obj/item/ammo_casing/foam_dart)
 	ammobox_type = /obj/item/ammo_box/foambox/mini
 	required_amount = SMALL_MATERIAL_AMOUNT*2.5
