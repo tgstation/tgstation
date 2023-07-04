@@ -5,8 +5,6 @@
 	grow_as = /mob/living/basic/giant_spider/guard
 	name = "guard spiderling"
 	desc = "Furry and brown, it looks defenseless. This one has sparkling red eyes."
-	icon_state = "guard_spiderling"
-	icon_dead = "guard_spiderling_dead"
 	menu_description = "Furry and brown, specializing in defense of the hive and other spides."
 
 	/// Will differentiate into the "ambush" giant spider.
