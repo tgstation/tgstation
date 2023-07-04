@@ -76,6 +76,17 @@
 	stock_max = 5
 	availability_prob = 50
 
+/datum/market_item/misc/kronkus_seed
+	name = "Kronkus Seeds"
+	desc = "An extremely illegal seed sample, used by criminals in the production of potent illicit substances."
+	item = /obj/item/seeds/kronkus
+
+	price_min = CARGO_CRATE_VALUE * 3
+	price_max = CARGO_CRATE_VALUE * 4
+	stock_min = 2
+	stock_max = 3
+	availability_prob = 100
+
 /datum/market_item/misc/smugglers_satchel
 	name = "Smuggler's Satchel"
 	desc = "This easily hidden satchel can become a versatile tool to anybody with the desire to keep certain items out of sight and out of mind."
