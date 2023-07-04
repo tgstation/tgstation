@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	target_turf = target
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(entered))
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(exited))
-	RegisterSignal(parent, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(initialized_on))
+	RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialized_on))
 	//allow catwalks to give the turf the CHASM_STOPPED trait before dropping stuff
 	addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
 	src.parent.AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_CHASM)
@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 
 /datum/component/chasm/proc/on_chasm_stopped(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED, COMSIG_ATOM_INITIALIZED_ON))
+	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 	for(var/atom/movable/movable as anything in source)
 		UnregisterSignal(movable, list(COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_LIVING_SET_BUCKLED, COMSIG_MOVABLE_THROW_LANDED))
 
@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	SIGNAL_HANDLER
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(entered))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(exited))
-	RegisterSignal(parent, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(initialized_on))
+	RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialized_on))
 	drop_stuff()
 
 #define CHASM_NOT_DROPPING 0
