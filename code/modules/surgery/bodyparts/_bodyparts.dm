@@ -884,6 +884,10 @@
 
 /obj/item/bodypart/emp_act(severity)
 	. = ..()
+	if(!(. & EMP_PROTECT_CONTENTS))
+		for(var/obj/item/organ/organ as anything in organs)
+			organ.emp_act(severity)
+
 	if(. & EMP_PROTECT_WIRES || !owner || !IS_ROBOTIC_LIMB(src))
 		return FALSE
 
