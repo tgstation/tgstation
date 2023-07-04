@@ -375,7 +375,7 @@
 
 /obj/item/organ/internal/tongue/abductor/examine(mob/examining_mob)
 	. = ..()
-	if(HAS_TRAIT(examining_mob, TRAIT_ABDUCTOR_TRAINING) || (examining_mob.mind && HAS_TRAIT(examining_mob.mind, TRAIT_ABDUCTOR_TRAINING)) || isobserver(examining_mob))
+	if(HAS_MIND_TRAIT(examining_mob, TRAIT_ABDUCTOR_TRAINING) || isobserver(examining_mob))
 		. += span_notice("It can be attuned to a different channel by using it inhand.")
 		if(!mothership)
 			. += span_notice("It is not attuned to a specific mothership.")
