@@ -19,17 +19,17 @@
 	. = ..()
 	create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
 	atom_storage.allow_big_nesting = TRUE
-	atom_storage.locked = TRUE
+	atom_storage.locked = STORAGE_FULLY_LOCKED
 
 /obj/item/mod/module/storage/on_install()
 	var/datum/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
 	modstorage.set_real_location(src)
-	atom_storage.locked = FALSE
+	atom_storage.locked = STORAGE_NOT_LOCKED
 	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
 	var/datum/storage/modstorage = mod.atom_storage
-	atom_storage.locked = TRUE
+	atom_storage.locked = STORAGE_FULLY_LOCKED
 	qdel(modstorage)
 	if(!deleting)
 		atom_storage.remove_all(get_turf(src))
@@ -361,7 +361,7 @@
 		ensuring they're comfortable; even if they're some that like it hot."
 	icon_state = "regulator"
 	module_type = MODULE_TOGGLE
-	complexity = 2
+	complexity = 1
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/thermal_regulator)
 	cooldown_time = 0.5 SECONDS
@@ -392,7 +392,7 @@
 		however, this incredibly sensitive module is shorted out by EMPs. Luckily, cloning has been outlawed."
 	icon_state = "dnalock"
 	module_type = MODULE_USABLE
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/dna_lock, /obj/item/mod/module/eradication_lock)
 	cooldown_time = 0.5 SECONDS

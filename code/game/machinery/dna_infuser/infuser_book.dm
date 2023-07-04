@@ -8,12 +8,22 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
+	drop_sound = 'sound/items/handling/book_drop.ogg'
+	pickup_sound = 'sound/items/handling/book_pickup.ogg'
 
 /obj/item/infuser_book/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "InfuserBook")
 		ui.open()
+		playsound(src, SFX_PAGE_TURN, 30, TRUE)
+
+/obj/item/infuser_book/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	if(action == "play_flip_sound")
+		playsound(src, SFX_PAGE_TURN, 30, TRUE)
 
 /obj/item/infuser_book/ui_static_data(mob/user)
 	var/list/data = list()
