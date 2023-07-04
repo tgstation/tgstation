@@ -91,7 +91,7 @@
 		var/starting_positions = text2num(parser.group[2])
 
 		// Playtime Requirements and Required Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
-		// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator is knows that they codebase defaults when they remove the comment.
+		// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator knows that they are overriding the codebase defaults when they remove the comment.
 		var/list/working_list = list(
 			"# [JOB_CONFIG_TOTAL_POSITIONS]" = default_positions,
 			"# [JOB_CONFIG_SPAWN_POSITIONS]" = starting_positions,
@@ -155,7 +155,7 @@
 	for(var/config_datum_key in job_config_datum_singletons)
 		var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
 		// Remember, every time we write the TOML from scratch, we want to have it commented out by default.
-		// This is to ensure that the server operator is knows that they override codebase defaults when they remove the comment.
+		// This is to ensure that the server operator knows that they are overriding codebase defaults when they remove the comment.
 		// Having comments mean that we allow server operators to defer to codebase standards when they deem acceptable. They must uncomment to override the codebase default.
 		returnable_list += list(
 			"# [config_datum_key]" = config_datum.get_current_value(new_occupation),
