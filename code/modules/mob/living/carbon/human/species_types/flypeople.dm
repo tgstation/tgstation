@@ -32,13 +32,6 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/fly,
 	)
 
-/datum/species/fly/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	if(chem.type == /datum/reagent/toxin/pestkiller)
-		affected.adjustToxLoss(3 * REM * seconds_per_tick)
-
 /datum/species/fly/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))
 		return 30 //Flyswatters deal 30x damage to flypeople.

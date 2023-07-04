@@ -164,17 +164,19 @@
 
 	if(!head || !eyeballies || target.is_eyes_covered())
 		return ..()
-
+	var/eye_snatch_enthusiasm = 5 SECONDS
+	if(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID))
+		eye_snatch_enthusiasm *= 0.7
 	user.do_attack_animation(target, used_item = src)
 	target.visible_message(
 		span_warning("[user] presses [src] against [target]'s skull!"),
 		span_userdanger("[user] presses [src] against your skull!"))
-	if(!do_after(user, 5 SECONDS, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
+	if(!do_after(user, eye_snatch_enthusiasm, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
 		return
 
 	to_chat(target, span_userdanger("You feel something forcing its way into your skull!"))
 	balloon_alert(user, "applying pressure...")
-	if(!do_after(user, 5 SECONDS, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
+	if(!do_after(user, eye_snatch_enthusiasm, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
 		return
 
 	var/datum/wound/blunt/severe/severe_wound_type = /datum/wound/blunt/severe
@@ -190,7 +192,7 @@
 	playsound(target, "sound/effects/wounds/crackandbleed.ogg", 100)
 	log_combat(user, target, "cracked the skull of (eye snatching)", src)
 
-	if(!do_after(user, 5 SECONDS, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
+	if(!do_after(user, eye_snatch_enthusiasm, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
 		return
 
 	if(!target.is_blind())

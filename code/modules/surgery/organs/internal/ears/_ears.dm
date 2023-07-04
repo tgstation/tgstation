@@ -54,8 +54,8 @@
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
 	if(owner.status_flags & GODMODE)
 		return
-	set_organ_damage(max(damage + (ddmg*damage_multiplier), 0))
-	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
+	set_organ_damage(clamp(damage + (ddmg * damage_multiplier), 0, maxHealth))
+	deaf = max(deaf + (ddeaf * damage_multiplier), 0)
 
 /datum/bodypart_overlay/mutant/ears
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
@@ -126,7 +126,7 @@
 	icon_state = "ears-c"
 	desc = "A basic cybernetic organ designed to mimic the operation of ears."
 	damage_multiplier = 0.9
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 
 /obj/item/organ/ears/cybernetic/emp_act(severity)
 	. = ..()

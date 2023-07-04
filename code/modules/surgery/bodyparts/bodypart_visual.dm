@@ -1,3 +1,8 @@
+/obj/item/bodypart
+	// States used in determining overlays for limb damage states. As the mob receives more burn/brute damage, their limbs update to reflect.
+	var/brutestate = 0
+	var/burnstate = 0
+
 /**
  * Updates a bodypart's brute/burn states for use by update_damage_overlays()
  * Returns TRUE if we need to update overlays. FALSE otherwise.

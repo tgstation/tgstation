@@ -74,6 +74,11 @@
 
 	// Limb disabling variables
 	/**
+	 * Whether it is possible for the limb to be disabled whatsoever. TRUE means that it is possible.
+	 * Defaults to FALSE, as only human limbs can be disabled, and only the appendages.
+	 */
+	var/can_be_disabled = FALSE
+	/**
 	 * Controls if the limb is disabled.
 	 * TRUE means it is disabled (similar to being removed, but still present for the sake of targeted interactions).
 	 */
@@ -85,13 +90,8 @@
 	 * Anything between is the percentage of damage against maximum limb damage needed to disable the limb.
 	 */
 	var/disabling_threshold_percentage = 0
-	/**
-	 * Whether it is possible for the limb to be disabled whatsoever. TRUE means that it is possible.
-	 * Defaults to FALSE, as only human limbs can be disabled, and only the appendages.
-	 */
-	var/can_be_disabled = FALSE
 
-	// Damage state variables
+	// Damage variables
 	/// The current amount of brute damage the limb has
 	var/brute_dam = 0
 	/// The current amount of burn damage the limb has
@@ -100,9 +100,6 @@
 	var/max_damage = 0
 	/// A mutiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
 	var/body_damage_coeff = 1
-	// Used in determining overlays for limb damage states. As the mob receives more burn/brute damage, their limbs update to reflect that.
-	var/brutestate = 0
-	var/burnstate = 0
 
 	/// Gradually increases while burning when at full damage, destroys the limb when at 100
 	var/cremation_progress = 0
@@ -632,6 +629,15 @@
 	SEND_SIGNAL(src, COMSIG_BODYPART_CHANGED_OWNER, new_owner, old_owner)
 	var/needs_update_disabled = FALSE //Only really relevant if there's an owner
 	if(old_owner)
+		if(held_index)
+			old_owner.on_lost_hand(src)
+			if(old_owner.hud_used)
+				var/atom/movable/screen/inventory/hand/hand = old_owner.hud_used.hand_slots["[held_index]"]
+				if(hand)
+					hand.update_appearance()
+			old_owner.update_worn_gloves()
+		if(speed_modifier)
+			old_owner.update_bodypart_speed_modifier()
 		if(length(bodypart_traits))
 			old_owner.remove_traits(bodypart_traits, bodypart_trait_source)
 		if(initial(can_be_disabled))
@@ -647,6 +653,15 @@
 				))
 		UnregisterSignal(old_owner, COMSIG_ATOM_RESTYLE)
 	if(owner)
+		if(held_index)
+			owner.on_added_hand(src, held_index)
+			if(owner.hud_used)
+				var/atom/movable/screen/inventory/hand/hand = owner.hud_used.hand_slots["[held_index]"]
+				if(hand)
+					hand.update_appearance()
+			owner.update_worn_gloves()
+		if(speed_modifier)
+			owner.update_bodypart_speed_modifier()
 		if(length(bodypart_traits))
 			owner.add_traits(bodypart_traits, bodypart_trait_source)
 		if(initial(can_be_disabled))
@@ -869,7 +884,7 @@
 
 /obj/item/bodypart/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_WIRES || !owner || !(bodytype & BODYTYPE_ROBOTIC))
+	if(. & EMP_PROTECT_WIRES || !owner || !IS_ROBOTIC_LIMB(src))
 		return FALSE
 
 	owner.visible_message(span_danger("[owner]'s [src.name] seems to malfunction!"))

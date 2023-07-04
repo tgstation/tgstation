@@ -332,7 +332,7 @@
 /obj/item/mod/module/energy_net
 	name = "MOD energy net module"
 	desc = "A custom-built net-thrower. While conventional implementations of this capturing device \
-		tilize monomolecular fibers or cutting razorwire, this uses hardlight technology to deploy a \
+		utilize monomolecular fibers or cutting razorwire, this uses hardlight technology to deploy a \
 		trapping field capable of immobilizing even the strongest opponents."
 	icon_state = "energy_net"
 	removable = FALSE

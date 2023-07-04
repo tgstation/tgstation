@@ -42,7 +42,7 @@
 	visual = FALSE
 	item_flags = NOBLUDGEON
 	slot = ORGAN_SLOT_MONSTER_CORE
-	organ_flags = NONE
+	organ_flags = ORGAN_ORGANIC
 	force = 0
 	/// Set to true if this organ has decayed into uselessness.
 	var/inert = FALSE

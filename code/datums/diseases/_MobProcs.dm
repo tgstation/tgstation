@@ -64,7 +64,7 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/infecting_human = src
 
-		if(infecting_human.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) && prob(75))
+		if(HAS_TRAIT(infecting_human, TRAIT_VIRUS_RESISTANCE) && prob(75))
 			return
 
 		switch(target_zone)
@@ -95,10 +95,8 @@
 		disease.try_infect(src)
 
 /mob/living/proc/AirborneContractDisease(datum/disease/disease, force_spread)
-	if(ishuman(src))
-		var/mob/living/carbon/human/infecting_human = src
-		if(infecting_human.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) && prob(75))
-			return
+	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
+		return
 
 	if(((disease.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob((50*disease.spreading_modifier) - 1))
 		ForceContractDisease(disease)

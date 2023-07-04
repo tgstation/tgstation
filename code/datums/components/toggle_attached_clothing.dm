@@ -78,11 +78,7 @@
 		create_deployable()
 
 /datum/component/toggle_attached_clothing/Destroy(force, silent)
-	if (deployable)
-		var/obj/item/parent_gear = parent
-		var/mob/living/carbon/human/wearer = parent_gear.loc
-		if (istype(wearer))
-			wearer.dropItemToGround(deployable, force = TRUE, silent = TRUE)
+	unequip_deployable()
 	QDEL_NULL(deployable)
 	QDEL_NULL(toggle_action)
 	QDEL_NULL(on_created)
@@ -191,7 +187,7 @@
 
 /// Removes our deployed equipment from the wearer
 /datum/component/toggle_attached_clothing/proc/remove_deployable()
-	deployable?.forceMove(parent)
+	unequip_deployable()
 	if (!currently_deployed)
 		return
 	currently_deployed = FALSE
@@ -205,3 +201,13 @@
 		parent_gear.worn_icon_state = parent_gear.icon_state
 	parent_gear.update_slot_icon()
 	parent_gear.update_item_action_buttons()
+
+/// Removes an equipped deployable atom upon its retraction or destruction
+/datum/component/toggle_attached_clothing/proc/unequip_deployable()
+	if (!deployable)
+		return
+	if (!ishuman(deployable.loc))
+		deployable.forceMove(parent)
+		return
+	var/mob/living/carbon/human/wearer = deployable.loc
+	wearer.transferItemToLoc(deployable, parent, force = TRUE, silent = TRUE)

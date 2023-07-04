@@ -5,12 +5,12 @@
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
+		TRAIT_USES_SKINTONES,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list(
 		"wings" = "None",
 	)
-	use_skintones = TRUE
 	mutantbrain = /obj/item/organ/brain/dullahan
 	mutanteyes = /obj/item/organ/eyes/dullahan
 	mutanttongue = /obj/item/organ/tongue/dullahan
@@ -161,7 +161,7 @@
 
 /obj/item/organ/brain/dullahan
 	decoy_override = TRUE
-	organ_flags = NONE
+	organ_flags = ORGAN_ORGANIC //not vital
 
 /obj/item/organ/tongue/dullahan
 	zone = "abstract"
