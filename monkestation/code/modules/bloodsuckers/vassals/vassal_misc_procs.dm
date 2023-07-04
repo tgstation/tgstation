@@ -18,6 +18,10 @@
 	var/returnIcon = ""
 	// Vassals and Bloodsuckers recognize eachother, while Monster Hunters can see Vassals.
 	if(!IS_BLOODSUCKER(viewer) && !IS_VASSAL(viewer) && !IS_MONSTERHUNTER(viewer))
+		if(master.bloodsucker_level >= 5)
+			returnString += "This [carbon_current.dna.species.name] bears the mark of <span class='boldwarning'>[master.return_full_name()]</span>"
+			returnIcon = "[icon2html('monkestation/icons/bloodsuckers/vampiric.dmi', world, "vassal_grey")]"
+			return returnIcon + returnString
 		return FALSE
 	// Am I Viewer's Vassal?
 	if(master.owner == viewer.mind)
