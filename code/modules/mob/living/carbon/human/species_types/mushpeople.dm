@@ -8,16 +8,13 @@
 	fixed_mut_color = "#DBBF92"
 	hair_color = "#FF4B19" //cap color, spot color uses eye color
 
-	species_traits = list(
-		MUTCOLORS,
-		NO_UNDERWEAR,
-	)
 	inherent_traits = list(
+		TRAIT_MUTANT_COLORS,
 		TRAIT_NOBREATH,
 		TRAIT_NOFLASH,
+		TRAIT_NO_UNDERWEAR,
 	)
 	inherent_factions = list(FACTION_MUSHROOM)
-	speedmod = 1.5 //faster than golems but not by much
 
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING
 
@@ -26,7 +23,6 @@
 	mutanttongue = /obj/item/organ/internal/tongue/mush
 	mutanteyes = /obj/item/organ/internal/eyes/night_vision/mushroom
 	mutantlungs = null
-	use_skintones = FALSE
 	species_language_holder = /datum/language_holder/mushroom
 
 	bodypart_overrides = list(

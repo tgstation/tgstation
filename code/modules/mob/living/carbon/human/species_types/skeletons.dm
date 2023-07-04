@@ -2,14 +2,10 @@
 	// 2spooky
 	name = "Spooky Scary Skeleton"
 	id = SPECIES_SKELETON
-	sexes = 0
+	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
-	species_traits = list(
-		NOTRANSSTING,
-		NO_DNA_COPY,
-		NO_UNDERWEAR,
-	)
 	inherent_traits = list(
+		TRAIT_NO_UNDERWEAR,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
@@ -26,6 +22,8 @@
 		TRAIT_TOXIMMUNE,
 		TRAIT_XENO_IMMUNE,
 		TRAIT_NOBLOOD,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_TRANSFORMATION_STING,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/internal/tongue/bone
@@ -34,8 +32,6 @@
 	mutantheart = null
 	mutantliver = /obj/item/organ/internal/liver/bone
 	mutantlungs = null
-	disliked_food = NONE
-	liked_food = GROSS | MEAT | RAW | GORE
 	wing_types = list(/obj/item/organ/external/wings/functional/skeleton)
 	//They can technically be in an ERT
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN

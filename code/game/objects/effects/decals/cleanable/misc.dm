@@ -174,6 +174,21 @@
 			reagents.trans_to(H, reagents.total_volume, transfered_by = user, methods = INGEST)
 			qdel(src)
 
+/obj/effect/decal/cleanable/vomit/nebula
+	name = "nebula vomit"
+	desc = "Gosh, how... beautiful."
+	icon_state = "vomitnebula_1"
+	random_icon_states = list("vomitnebula_1", "vomitnebula_2", "vomitnebula_3", "vomitnebula_4")
+	beauty = 10
+
+/obj/effect/decal/cleanable/vomit/nebula/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/effect/decal/cleanable/vomit/nebula/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, src, alpha = src.alpha)
+
 /obj/effect/decal/cleanable/vomit/old
 	name = "crusty dried vomit"
 	desc = "You try not to look at the chunks, and fail."
