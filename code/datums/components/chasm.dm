@@ -38,8 +38,8 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_stopped))
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_no_longer_stopped))
 	target_turf = target
-	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(entered))
-	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(exited))
+	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(entered))
+	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(exited))
 	RegisterSignal(parent, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(initialized_on))
 	//allow catwalks to give the turf the CHASM_STOPPED trait before dropping stuff
 	addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 
 /datum/component/chasm/proc/entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
-	addtimer(CALLBACK(src, PROC_REF(try_drop), arrived), 0)
+	drop_stuff()
 
 /datum/component/chasm/proc/exited(datum/source, atom/movable/exited)
 	SIGNAL_HANDLER
@@ -72,12 +72,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 
 /datum/component/chasm/proc/initialized_on(datum/source, atom/movable/movable, mapload)
 	SIGNAL_HANDLER
-	addtimer(CALLBACK(src, PROC_REF(try_drop), movable), 0) //give it the time to finish initializing at least.
-
-/datum/component/chasm/proc/try_drop(atom/movable/movable)
-	SIGNAL_HANDLER
-	if(movable.loc == parent)
-		drop_stuff(movable)
+	drop_stuff(movable)
 
 /datum/component/chasm/proc/on_chasm_stopped(datum/source)
 	SIGNAL_HANDLER
@@ -90,14 +85,14 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(entered))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(exited))
 	RegisterSignal(parent, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(initialized_on))
-	addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
+	drop_stuff()
 
 #define CHASM_NOT_DROPPING 0
 #define CHASM_DROPPING 1
 ///Doesn't drop the movable, but registers a few signals to try again if the conditions change.
 #define CHASM_REGISTER_SIGNALS 2
 
-/datum/component/chasm/proc/drop_stuff(dropped_thing)
+/datum/component/chasm/proc/drop_stuff(atom/movable/dropped_thing)
 	if(HAS_TRAIT(parent, TRAIT_CHASM_STOPPED))
 		return
 	var/atom/atom_parent = parent
@@ -108,7 +103,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 			if(CHASM_DROPPING)
 				INVOKE_ASYNC(src, PROC_REF(drop), thing)
 			if(CHASM_REGISTER_SIGNALS)
-				RegisterSignals(thing, list(COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_LIVING_SET_BUCKLED, COMSIG_MOVABLE_THROW_LANDED), PROC_REF(try_drop), TRUE)
+				RegisterSignals(thing, list(COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_LIVING_SET_BUCKLED, COMSIG_MOVABLE_THROW_LANDED), PROC_REF(drop_stuff), TRUE)
 
 /datum/component/chasm/proc/droppable(atom/movable/dropped_thing)
 	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)

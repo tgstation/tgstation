@@ -676,7 +676,7 @@
 	)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_obj_entered),
-		COMSIG_ATOM_INITIALIZED_ON = PROC_REF(on_atom_initialized_on),
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_atom_initialized_on),
 	)
 	var/datum/component/connect_loc_behalf/connector
 
