@@ -324,13 +324,13 @@
 		charge_damage += distance * 10 //we determine the total damage based on how far we have charged
 		hit_target(source, target, charge_damage)
 		charge_damage = 10 //reset the damage again so it does not build up forever
+		new /obj/effect/temp_visual/pillow_hit(target)
 		return
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/spear_charge/hit_target(atom/movable/source, atom/target, damage_dealt)
 	var/mob/living/living_source = source
 	var/mob/living/victim = target
 	victim.apply_damage(damage_dealt, STAMINA)
-	new /obj/effect/temp_visual/pillow_hit(victim)
 	playsound(victim, 'sound/items/pillow_hit2.ogg', 100)
 	living_source.visible_message(span_boldwarning("[living_source] smashes into [target] at a quick speed!"))
 	return
