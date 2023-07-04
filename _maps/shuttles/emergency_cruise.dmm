@@ -405,6 +405,7 @@
 	dir = 8
 	},
 /obj/machinery/status_display/evac/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "iO" = (
@@ -719,6 +720,7 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 4
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "nU" = (
@@ -733,6 +735,9 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "oo" = (
+/obj/effect/turf_decal/trimline/dark_blue/line{
+	dir = 4
+	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
@@ -970,6 +975,7 @@
 	dir = 1
 	},
 /obj/machinery/status_display/evac/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "uu" = (
@@ -1288,7 +1294,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/gun/ballistic/rocketlauncher/unrestricted{
 	name = "\improper Nanotrasen PML-9";
-	desc = "A reusable rocket propelled grenade launcher. The words \\"Syndicate this way\\" and an arrow have been written near the barrel. A sticker near the cheek rest reads, \\"FOR DISPLAY PURPOSES ONLY\\""
+	desc = "A reusable rocket propelled grenade launcher. The words 'Syndicate this way' and an arrow have been written near the barrel. A sticker near the cheek rest reads, 'FOR DISPLAY PURPOSES ONLY'"
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape/luxury)
@@ -1337,8 +1343,8 @@
 /area/shuttle/escape/brig)
 "BW" = (
 /obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark/textured_large,
-/area/shuttle/escape)
+/turf/open/floor/eighties,
+/area/shuttle/escape/luxury)
 "Cj" = (
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 4
@@ -2720,7 +2726,7 @@ cf
 cf
 cf
 cf
-BW
+cf
 cf
 cf
 cf
@@ -2771,7 +2777,7 @@ Xs
 cf
 KH
 zR
-zR
+oo
 zR
 CA
 cf
@@ -2954,7 +2960,7 @@ qI
 Yr
 YZ
 bt
-uC
+BW
 Xw
 iO
 cY
@@ -3410,7 +3416,7 @@ cf
 cf
 cf
 cf
-oo
+cf
 cf
 cf
 cf
