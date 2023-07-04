@@ -3,9 +3,9 @@
 	id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_USES_SKINTONES,
 	)
 	mutant_bodyparts = list("wings" = "None")
-	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	payday_modifier = 1

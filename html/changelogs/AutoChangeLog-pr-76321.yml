@@ -1,7 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - balance: "Jousting now works on anything you're buckled to, not just Cyborgs."
-  - balance: "Brooms, Pitchforks, the Captain's Sabre, and Energy swords can now be used for jousting."
-  - balance: "Spears need to travel a longer distance to joust now."
-  - balance: "Jousting's knockdown and damage now only gets stronger after you've traveled the minimum tiles needed to joust."

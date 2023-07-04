@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Sivlerscale Tongue action is now a cooldown action, making it significantly easier to use"
-  - balance: "Buffed the silverscale statue every so slightly, it now has innate armor and can reflect lasers shot at it. But it also requires you not by lying down to activate."

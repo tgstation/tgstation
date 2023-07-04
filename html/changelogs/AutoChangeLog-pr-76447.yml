@@ -1,4 +1,0 @@
-author: "Vekter"
-delete-after: True
-changes:
-  - bugfix: "Fixed the ORM not granting mining points if you added ore by hand instead of dumping it on the floor."
