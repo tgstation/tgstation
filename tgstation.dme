@@ -288,6 +288,7 @@
 #include "code\__DEFINES\dcs\signals\signals_light_eater.dm"
 #include "code\__DEFINES\dcs\signals\signals_medical.dm"
 #include "code\__DEFINES\dcs\signals\signals_mind.dm"
+#include "code\__DEFINES\dcs\signals\signals_mining.dm"
 #include "code\__DEFINES\dcs\signals\signals_mod.dm"
 #include "code\__DEFINES\dcs\signals\signals_moveloop.dm"
 #include "code\__DEFINES\dcs\signals\signals_movetype.dm"

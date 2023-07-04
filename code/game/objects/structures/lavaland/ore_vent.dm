@@ -90,13 +90,13 @@
 		max_spawned = 10,\
 		spawn_per_attempt = (1 + (boulder_size/5)),\
 		spawn_text = "emerges from the depths of",\
-		spawn_distance = 5,\
-		spawn_distance_exclude = 4)
-	var/wave_timer = 100 SECONDS
+		spawn_distance = 4,\
+		spawn_distance_exclude = 3)
+	var/wave_timer = 20 SECONDS
 	if(boulder_size == BOULDER_SIZE_MEDIUM)
-		wave_timer = 200 SECONDS
+		wave_timer = 40 SECONDS
 	else if(boulder_size == BOULDER_SIZE_LARGE)
-		wave_timer = 300 SECONDS
+		wave_timer = 60 SECONDS
 
 	addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer)
 
@@ -115,7 +115,7 @@
 			visible_message(span_danger("\the [src] crumbles as the mining attempt fails, and the ore vent is left damaged!"))
 		else
 			visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, but stays it's current size."))
-	SEND_SIGNAL(src, "please_make_a_signal_here")
+	SEND_SIGNAL(src, COMSIG_MINING_SPAWNER_STOP)
 
 /obj/structure/ore_vent/starter_resources
 	name = "active ore vent"
