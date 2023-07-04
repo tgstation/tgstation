@@ -54,7 +54,7 @@
 
 /obj/item/organ/internal/tongue/examine(mob/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_ENTRAILS_READER) || (user.mind && HAS_TRAIT(user.mind, TRAIT_ENTRAILS_READER)) || isobserver(user))
+	if(HAS_MIND_TRAIT(user, TRAIT_ENTRAILS_READER)|| isobserver(user))
 		if(liked_foodtypes)
 			. += span_info("This tongue has an affinity the taste of [english_list(bitfield_to_list(liked_foodtypes), FOOD_FLAGS_IC)].")
 		if(disliked_foodtypes)
