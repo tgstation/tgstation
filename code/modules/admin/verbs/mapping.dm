@@ -327,7 +327,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	var/list/messages = list()
 
 	var/list/z_list = SSmapping.z_list
-	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]<br><br>"
+	messages += "\n<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]\n"
 
 	var/list/linked_levels = list()
 	var/min_x = INFINITY
@@ -337,11 +337,11 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 
 	for(var/z in 1 to max(world.maxz, z_list.len))
 		if (z > z_list.len)
-			messages += "<b>[z]</b>: Unmanaged (out of bounds)<br>"
+			messages += "<b>[z]</b>: Unmanaged (out of bounds)"
 			continue
 		var/datum/space_level/level = z_list[z]
 		if (!level)
-			messages += "<b>[z]</b>: Unmanaged (null)<br>"
+			messages += "<b>[z]</b>: Unmanaged (null)"
 			continue
 		var/linkage
 		switch (level.linkage)
@@ -359,11 +359,11 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 			else
 				linkage = "unknown linkage '[level.linkage]'"
 
-		messages += "<b>[z]</b>: [level.name], [linkage], traits: [json_encode(level.traits)]<br>"
+		messages += "<b>[z]</b>: [level.name], [linkage], traits: [json_encode(level.traits)]"
 		if (level.z_value != z)
-			messages += "-- z_value is [level.z_value], should be [z]<br>"
+			messages += "-- z_value is [level.z_value], should be [z]"
 		if (level.name == initial(level.name))
-			messages += "-- name not set<br>"
+			messages += "-- name not set"
 		if (z > world.maxz)
 			messages += "-- exceeds max z"
 
@@ -380,7 +380,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 			messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
 		messages += "</table>"
 
-	return messages.Join("")
+	return messages.Join("\n")
 
 /client/proc/station_food_debug()
 	set name = "Count Station Food"
