@@ -26,15 +26,8 @@ export type Connection = {
   ref?: string;
 };
 
-export const Connections = (
-  props: {
-    connections: Connection[];
-    zLayer?: number | string | undefined;
-    lineWidth?: number | string | undefined;
-  },
-  context
-) => {
-  const { connections, zLayer = '-1', lineWidth = '2px' } = props;
+export const Connections = (props: { connections: Connection[] }, context) => {
+  const { connections } = props;
 
   const isColorClass = (str) => {
     if (typeof str === 'string') {
@@ -49,7 +42,7 @@ export const Connections = (
       style={{
         'position': 'absolute',
         'pointer-events': 'none',
-        'z-index': `${zLayer}`,
+        'z-index': -1,
       }}>
       {connections.map((val, index) => {
         const from = val.from;
@@ -88,7 +81,7 @@ export const Connections = (
             key={index}
             d={path}
             fill="transparent"
-            stroke-width={`${lineWidth}`}
+            stroke-width="2px"
           />
         );
       })}
