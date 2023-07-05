@@ -4,7 +4,7 @@
 /// Base font
 /datum/font/tiny_unicode
 	name = "TinyUnicode"
-	font_family = 'interface/_fonts/TinyUnicode.ttf'
+	font_family = 'interface/fonts/TinyUnicode.ttf'
 
 /// For icon overlays
 /// TinyUnicode 12pt metrics generated using Lummox's dmifontsplus (https://www.byond.com/developer/LummoxJR/DmiFontsPlus)
