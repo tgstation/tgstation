@@ -42,10 +42,10 @@
 	add_fingerprint(user)
 	//no scanning if its a husk or DNA-less Species
 	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
-		user.visible_message(span_warning("[user] is scanning [target]'s genetic makeup."))
+		user.visible_message(span_bolddanger("[user] is scanning [target]'s genetic makeup."))
 		if(!do_after(user, 3 SECONDS))
 			balloon_alert(user, "scan failed!")
-			user.visible_message(span_warning("[user] fails to scan [target]'s genetic makeup."))
+			user.visible_message(span_alert("[user] fails to scan [target]'s genetic makeup."))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		makeup_scan(target, user)
 		balloon_alert(user, "makeup scanned")
