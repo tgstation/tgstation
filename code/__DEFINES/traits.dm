@@ -214,9 +214,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESISTLOWPRESSURE "resist_low_pressure"
 /// This human is immune to the effects of being exploded. (ex_act)
 #define TRAIT_BOMBIMMUNE "bomb_immunity"
+/// Immune to being irradiated
 #define TRAIT_RADIMMUNE "rad_immunity"
-#define TRAIT_GENELESS "geneless"
+/// This mob won't get gibbed by nukes going off
+#define TRAIT_NUKEIMMUNE "nuke_immunity"
+/// Can't be given viruses
 #define TRAIT_VIRUSIMMUNE "virus_immunity"
+/// Reduces the chance viruses will spread to this mob, and if the mob has a virus, slows its advancement
+#define TRAIT_VIRUS_RESISTANCE "virus_resistance"
+#define TRAIT_GENELESS "geneless"
 #define TRAIT_PIERCEIMMUNE "pierce_immunity"
 #define TRAIT_NODISMEMBER "dismember_immunity"
 #define TRAIT_NOFIRE "nonflammable"
@@ -230,9 +236,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLOOD_CLANS "blood_clans"
 /// Species with this trait have markings (this SUCKS, remove this later in favor of bodypart overlays)
 #define TRAIT_HAS_MARKINGS "has_markings"
-/// Species with this trait have mutant colors
+/// Species with this trait use skin tones for coloration
+#define TRAIT_USES_SKINTONES "uses_skintones"
+/// Species with this trait use mutant colors for coloration
 #define TRAIT_MUTANT_COLORS "mutcolors"
-/// Species with this trait have mutant colors that cannot be chosen by the player
+/// Species with this trait have mutant colors that cannot be chosen by the player, nor altered ingame by external means
 #define TRAIT_FIXED_MUTANT_COLORS "fixed_mutcolors"
 /// Humans with this trait won't get bloody hands, nor bloody feet
 #define TRAIT_NO_BLOOD_OVERLAY "no_blood_overlay"
@@ -547,6 +555,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
 #define TRAIT_BALLMER_SCIENTIST "ballmer_scientist"
 #define TRAIT_MAINTENANCE_METABOLISM "maintenance_metabolism"
+#define TRAIT_CORONER_METABOLISM "coroner_metabolism"
 
 //LUNG TRAITS
 /// Lungs always breathe normally when in vacuum/space.

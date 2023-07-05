@@ -59,7 +59,7 @@
 		else
 			show_eyeless = FALSE
 
-	if(!is_creating)
+	if(!is_creating || !owner)
 		return
 
 	lip_style = human_head_owner.lip_style
@@ -104,18 +104,18 @@
 			//Overlay
 			facial_hair_overlay = image(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, image_dir)
 			facial_hair_overlay.alpha = facial_hair_alpha
-			//Gradients
-			var/facial_hair_gradient_style = LAZYACCESS(gradient_styles, GRADIENT_FACIAL_HAIR_KEY)
-			if(facial_hair_gradient_style)
-				var/facial_hair_gradient_color = LAZYACCESS(gradient_colors, GRADIENT_FACIAL_HAIR_KEY)
-				var/image/facial_hair_gradient_overlay = get_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, HAIR_LAYER, GLOB.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color)
-				. += facial_hair_gradient_overlay
 			//Emissive blocker
 			if(blocks_emissive)
 				facial_hair_overlay.overlays += emissive_blocker(facial_hair_overlay.icon, facial_hair_overlay.icon_state, location, alpha = facial_hair_alpha)
 			//Offsets
 			worn_face_offset?.apply_offset(facial_hair_overlay)
 			. += facial_hair_overlay
+			//Gradients
+			var/facial_hair_gradient_style = LAZYACCESS(gradient_styles, GRADIENT_FACIAL_HAIR_KEY)
+			if(facial_hair_gradient_style)
+				var/facial_hair_gradient_color = LAZYACCESS(gradient_colors, GRADIENT_FACIAL_HAIR_KEY)
+				var/image/facial_hair_gradient_overlay = get_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, GLOB.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color)
+				. += facial_hair_gradient_overlay
 
 	var/image/hair_overlay
 	if(!(show_debrained && (head_flags & HEAD_DEBRAIN)) && !hair_hidden && hairstyle && (head_flags & HEAD_HAIR))
@@ -124,18 +124,18 @@
 			//Overlay
 			hair_overlay = image(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, image_dir)
 			hair_overlay.alpha = hair_alpha
-			//Gradients
-			var/hair_gradient_style = LAZYACCESS(gradient_styles, GRADIENT_HAIR_KEY)
-			if(hair_gradient_style)
-				var/hair_gradient_color = LAZYACCESS(gradient_colors, GRADIENT_HAIR_KEY)
-				var/image/hair_gradient_overlay = get_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, HAIR_LAYER, GLOB.hair_gradients_list[hair_gradient_style], hair_gradient_color)
-				. += hair_gradient_overlay
 			//Emissive blocker
 			if(blocks_emissive)
 				hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, location, alpha = hair_alpha)
 			//Offsets
 			worn_face_offset?.apply_offset(hair_overlay)
 			. += hair_overlay
+			//Gradients
+			var/hair_gradient_style = LAZYACCESS(gradient_styles, GRADIENT_HAIR_KEY)
+			if(hair_gradient_style)
+				var/hair_gradient_color = LAZYACCESS(gradient_colors, GRADIENT_HAIR_KEY)
+				var/image/hair_gradient_overlay = get_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER, GLOB.hair_gradients_list[hair_gradient_style], hair_gradient_color)
+				. += hair_gradient_overlay
 
 	if(show_debrained && (head_flags & HEAD_DEBRAIN))
 		. += get_debrain_overlay(can_rotate = !dropped)
@@ -147,6 +147,9 @@
 	if(override_hair_color)
 		SET_OVERLAY_VALUE(facial_hair_overlay, color, override_hair_color)
 		SET_OVERLAY_VALUE(hair_overlay, color, override_hair_color)
+	else if(fixed_hair_color)
+		SET_OVERLAY_VALUE(facial_hair_overlay, color, fixed_hair_color)
+		SET_OVERLAY_VALUE(hair_overlay, color, fixed_hair_color)
 	else
 		SET_OVERLAY_VALUE(facial_hair_overlay, color, facial_hair_color)
 		SET_OVERLAY_VALUE(hair_overlay, color, hair_color)
@@ -197,7 +200,7 @@
 /obj/item/bodypart/head/proc/get_gradient_overlay(file, icon, layer, datum/sprite_accessory/gradient, grad_color)
 	RETURN_TYPE(/mutable_appearance)
 
-	var/mutable_appearance/gradient_overlay = mutable_appearance(layer = -layer)
+	var/mutable_appearance/gradient_overlay = mutable_appearance(layer = layer)
 	var/icon/temp = icon(gradient.icon, gradient.icon_state)
 	var/icon/temp_hair = icon(file, icon)
 	temp.Blend(temp_hair, ICON_ADD)
@@ -279,22 +282,42 @@
 		update_body_parts()
 
 /**
- * Set the hair gradient style and color of a human.
+ * Set the hair gradient style of a human.
  * Update calls update_body_parts().
  **/
-/mob/living/proc/set_hair_gradient(new_style, new_color, update = TRUE)
+/mob/living/proc/set_hair_gradient_style(new_style, update = TRUE)
 	return
 
-/mob/living/carbon/human/set_hair_gradient(new_style, new_color, update = TRUE)
+/mob/living/carbon/human/set_hair_gradient_style(new_style, update = TRUE)
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 
 	LAZYSETLEN(grad_style, GRADIENTS_LEN)
+	LAZYSETLEN(grad_color, GRADIENTS_LEN)
 	grad_style[GRADIENT_HAIR_KEY] = new_style
+	if(my_head)
+		LAZYSETLEN(my_head.gradient_styles, GRADIENTS_LEN)
+		LAZYSETLEN(my_head.gradient_colors, GRADIENTS_LEN)
+		my_head.gradient_styles[GRADIENT_HAIR_KEY] = new_style
+
+	if(update)
+		update_body_parts()
+
+/**
+ * Set the hair gradient color of a human.
+ * Update calls update_body_parts().
+ **/
+/mob/living/proc/set_hair_gradient_color(new_color, update = TRUE)
+	return
+
+/mob/living/carbon/human/set_hair_gradient_color(new_color, update = TRUE)
+	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
+
+
+	LAZYSETLEN(grad_style, GRADIENTS_LEN)
 	LAZYSETLEN(grad_color, GRADIENTS_LEN)
 	grad_color[GRADIENT_HAIR_KEY] = new_color
 	if(my_head)
 		LAZYSETLEN(my_head.gradient_styles, GRADIENTS_LEN)
-		my_head.gradient_styles[GRADIENT_HAIR_KEY] = new_style
 		LAZYSETLEN(my_head.gradient_colors, GRADIENTS_LEN)
 		my_head.gradient_colors[GRADIENT_HAIR_KEY] = new_color
 
@@ -332,29 +355,48 @@
 		// so no head? tough luck
 		my_head?.override_hair_color = hex_string
 	else
-		hair_color = hex_string
+		facial_hair_color = hex_string
 		my_head?.facial_hair_color = hex_string
 
 	if(update)
 		update_body_parts()
 
 /**
- * Set the facial hair gradient style and color of a human.
+ * Set the facial hair gradient style of a human.
  * Update calls update_body_parts().
  **/
-/mob/living/proc/set_facial_hair_gradient(new_style, new_color, update = TRUE)
+/mob/living/proc/set_facial_hair_gradient_style(new_style, update = TRUE)
 	return
 
-/mob/living/carbon/human/set_facial_hair_gradient(new_style, new_color, update = TRUE)
+/mob/living/carbon/human/set_facial_hair_gradient_style(new_style, update = TRUE)
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 
 	LAZYSETLEN(grad_style, GRADIENTS_LEN)
+	LAZYSETLEN(grad_color, GRADIENTS_LEN)
 	grad_style[GRADIENT_FACIAL_HAIR_KEY] = new_style
+	if(my_head)
+		LAZYSETLEN(my_head.gradient_styles, GRADIENTS_LEN)
+		LAZYSETLEN(my_head.gradient_colors, GRADIENTS_LEN)
+		my_head.gradient_styles[GRADIENT_FACIAL_HAIR_KEY] = new_style
+
+	if(update)
+		update_body_parts()
+
+/**
+ * Set the facial hair gradient color of a human.
+ * Update calls update_body_parts().
+ **/
+/mob/living/proc/set_facial_hair_gradient_color(new_color, update = TRUE)
+	return
+
+/mob/living/carbon/human/set_facial_hair_gradient_color(new_color, update = TRUE)
+	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
+
+	LAZYSETLEN(grad_style, GRADIENTS_LEN)
 	LAZYSETLEN(grad_color, GRADIENTS_LEN)
 	grad_color[GRADIENT_FACIAL_HAIR_KEY] = new_color
 	if(my_head)
 		LAZYSETLEN(my_head.gradient_styles, GRADIENTS_LEN)
-		my_head.gradient_styles[GRADIENT_FACIAL_HAIR_KEY] = new_style
 		LAZYSETLEN(my_head.gradient_colors, GRADIENTS_LEN)
 		my_head.gradient_colors[GRADIENT_FACIAL_HAIR_KEY] = new_color
 

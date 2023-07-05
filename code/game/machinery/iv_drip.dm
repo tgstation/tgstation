@@ -61,16 +61,12 @@
 	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 	register_context()
 	update_appearance(UPDATE_ICON)
+	AddElement(/datum/element/noisy_movement)
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null
 	QDEL_NULL(reagent_container)
 	return ..()
-
-/obj/machinery/iv_drip/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 
 /obj/machinery/iv_drip/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

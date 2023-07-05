@@ -52,6 +52,8 @@
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
 
+	add_overlay(image(icon = src.icon, icon_state = "spiderling_click_underlay", layer = BELOW_MOB_LAYER))
+
 	// the proc that handles passtable is nice but we should always be able to pass through table since we're so small so we can eschew adding that here
 	pass_flags |= PASSTABLE
 	add_traits(list(TRAIT_PASSTABLE, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_WEB_SURFER), INNATE_TRAIT)
@@ -84,6 +86,7 @@
 	if(isturf(get_turf(loc)) && (basic_mob_flags & DEL_ON_DEATH || gibbed))
 		var/obj/item/food/spiderling/dead_spider = new(loc) // mmm yummy
 		dead_spider.name = name
+		dead_spider.icon_state = icon_dead
 
 	return ..()
 
