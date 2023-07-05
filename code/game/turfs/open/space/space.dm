@@ -265,6 +265,7 @@
 
 /turf/open/space/openspace/Destroy()
 	// Signals persist through destroy, GO HOME
+	var/turf/below = SSmapping.get_turf_below(src)
 	if(below)
 		UnregisterSignal(below, COMSIG_TURF_CHANGE)
 	return ..()
