@@ -13172,10 +13172,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/atmospherics_engine)
-"eWG" = (
-/obj/item,
-/turf/open/space/basic,
-/area/space)
 "eWO" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -118602,7 +118598,7 @@ aaa
 aaa
 aaa
 aaa
-eWG
+aaa
 aaa
 aaa
 aaa
