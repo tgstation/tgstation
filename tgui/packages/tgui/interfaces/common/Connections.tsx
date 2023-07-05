@@ -29,8 +29,8 @@ export type Connection = {
 export const Connections = (
   props: {
     connections: Connection[];
-    zLayer?: string;
-    lineWidth?: string;
+    zLayer?: number | string | undefined;
+    lineWidth?: number | string | undefined;
   },
   context
 ) => {
@@ -49,7 +49,7 @@ export const Connections = (
       style={{
         'position': 'absolute',
         'pointer-events': 'none',
-        'z-index': { zLayer },
+        'z-index': `${zLayer}`,
       }}>
       {connections.map((val, index) => {
         const from = val.from;
@@ -88,7 +88,7 @@ export const Connections = (
             key={index}
             d={path}
             fill="transparent"
-            stroke-width={lineWidth}
+            stroke-width={`${lineWidth}`}
           />
         );
       })}
