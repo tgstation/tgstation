@@ -173,7 +173,7 @@
 /datum/reagent/consumable/pickle
 	name = "Pickle Juice"
 	description = "More accurately, this is the brine the pickle was floating in"
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "vinegar brine"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

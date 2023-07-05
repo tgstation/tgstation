@@ -675,7 +675,7 @@
 /datum/reagent/consumable/eggwhite
 	name = "Egg White"
 	description = "It's full of even more protein."
-	nutriment_factor = 1.5 * REAGENTS_METABOLISM
+	nutriment_factor = 1.5
 	color = "#fffdf7"
 	taste_description = "bland egg"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1099,7 +1099,7 @@
 	description = "Powdered milk for cheap coffee. How delightful."
 	taste_description = "milk"
 	color = "#efeff0"
-	nutriment_factor = 1.5 * REAGENTS_METABOLISM
+	nutriment_factor = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/creamer
 
