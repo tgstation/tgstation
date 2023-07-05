@@ -44,8 +44,6 @@
 		var/mob/living/L = the_target
 		if(faction_check(living_mob, L))
 			return FALSE
-		if(L.stat == DEAD && attack_corpses)
-			return TRUE
 		if((L.stat > stat_attack))
 			return FALSE
 		return TRUE

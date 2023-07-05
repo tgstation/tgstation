@@ -67,7 +67,7 @@
 
 
 /datum/targetting_datum/basic/mushroom
-	attack_corpses = TRUE
+	stat_attack = DEAD
 
 ///we only attacked another mushrooms
 /datum/targetting_datum/basic/mushroom/faction_check(mob/living/living_mob, mob/living/the_target)
