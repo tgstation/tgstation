@@ -29,8 +29,8 @@ export type Connection = {
 export const Connections = (
   props: {
     connections: Connection[];
-    zLayer?: any /* Any valid z index */;
-    lineWidth?: any /* Any valid width */;
+    zLayer?: unknown;
+    lineWidth?: unknown;
   },
   context
 ) => {
