@@ -67,33 +67,37 @@
 	message = "moans!"
 	message_mime = "appears to moan!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	can_message_change = TRUE
 
-/datum/emote/living/carbon/moan/run_emote(mob/user, params, type_override, intentional)
+/datum/emote/living/carbon/moan/can_run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	if(!intentional || !iscarbon(user) || isnull(user.client) || isnull(user.client.prefs))
-		return ..()
+		return TRUE
 
 	var/datum/preferences/cached_prefs = user.client.prefs
 	var/list/moan_keys = cached_prefs.key_bindings[key]
 	if(!length(moan_keys))
-		return ..()
+		return TRUE
 
 	var/list/resist_hotkeys = cached_prefs.key_bindings["resist"]
 	if(!length(resist_hotkeys))
-		return ..()
+		return TRUE
 
 	var/hotkey_matched = FALSE
 	for(var/moan_hotkey in moan_keys)
-		if(resist_hotkeys[moan_hotkey])
+		if(moan_hotkey in resist_hotkeys)
 			hotkey_matched = TRUE
 			break
 
 	if(!hotkey_matched)
-		return ..()
+		return TRUE
 
 	var/mob/living/carbon/carbon_user = user
-	to_chat(user, span_bolddanger("As you try to let out a moan while you resist, all that comes out of your mouth is blood! Your throat starts to implode in on itself, and then you feel a big rushing sensation of air..."))
+	to_chat(user, span_bolddanger("As you try to let out a moan while you resist, all that comes out of your mouth is blood! You feel extremely woozy, and then comes a rushing sensation of air..."))
 	carbon_user.gib(safe_gib = TRUE)
+	return FALSE
 
 /datum/emote/living/carbon/noogie
 	key = "noogie"
