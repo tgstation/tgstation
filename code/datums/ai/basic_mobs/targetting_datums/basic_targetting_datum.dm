@@ -17,6 +17,8 @@
 	var/check_factions_exactly = FALSE
 	/// Minimum status to attack living beings
 	var/stat_attack = CONSCIOUS
+	/// Do we attack corpses
+	var/attack_corpses = FALSE
 
 /datum/targetting_datum/basic/can_attack(mob/living/living_mob, atom/the_target)
 	if(isturf(the_target) || !the_target) // bail out on invalids
@@ -40,7 +42,11 @@
 
 	if(isliving(the_target)) //Targeting vs living mobs
 		var/mob/living/L = the_target
-		if(faction_check(living_mob, L)  || (L.stat > stat_attack))
+		if(faction_check(living_mob, L))
+			return FALSE
+		if(L.stat == DEAD && attack_corpses)
+			return TRUE
+		if((L.stat > stat_attack))
 			return FALSE
 		return TRUE
 
