@@ -95,7 +95,7 @@
 		return TRUE
 
 	var/mob/living/carbon/carbon_user = user
-	to_chat(user, span_suicide("As you try to let out a moan while you resist, all that comes out of your mouth is blood! You feel extremely woozy, and then comes a rushing sensation of air..."))
+	to_chat(user, span_userdanger("As you try to let out a moan while you resist, all that comes out of your mouth is blood! You feel extremely woozy, and then comes a rushing sensation of air..."))
 	carbon_user.gib(safe_gib = TRUE)
 	return FALSE
 
