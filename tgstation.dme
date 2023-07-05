@@ -1,7 +1,6 @@
 // DM Environment file for tgstation.dme.
 // All manual changes should be made outside the BEGIN_ and END_ blocks.
 // New source code should be placed in .dm files: choose File/New --> Code File.
-// interface\skin.dmf needs to be at the very end of the file.
 // BEGIN_INTERNALS
 // END_INTERNALS
 
@@ -4154,10 +4153,10 @@
 #include "code\modules\mob\living\carbon\human\inventory.dm"
 #include "code\modules\mob\living\carbon\human\life.dm"
 #include "code\modules\mob\living\carbon\human\login.dm"
+#include "code\modules\mob\living\carbon\human\monkey.dm"
 #include "code\modules\mob\living\carbon\human\physiology.dm"
 #include "code\modules\mob\living\carbon\human\status_procs.dm"
 #include "code\modules\mob\living\carbon\human\suicides.dm"
-#include "code\modules\mob\living\carbon\human\monkey\monkey.dm"
 #include "code\modules\mob\living\carbon\human\species_types\abductors.dm"
 #include "code\modules\mob\living\carbon\human\species_types\abominations.dm"
 #include "code\modules\mob\living\carbon\human\species_types\android.dm"
@@ -5382,6 +5381,7 @@
 #include "code\ze_genesis_call\genesis_call.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
+#include "interface\skin.dmf"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
 #include "interface\fonts\fonts_datum.dm"

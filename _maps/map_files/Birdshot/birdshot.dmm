@@ -26665,8 +26665,8 @@
 "jWb" = (
 /obj/machinery/light/cold/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/pdapainter/security,
 /obj/machinery/status_display/ai/directional/south,
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "jWd" = (
