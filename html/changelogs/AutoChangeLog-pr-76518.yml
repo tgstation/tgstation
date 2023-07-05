@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "A nuclear operative who is a slime will now correctly drop the disk upon death."
