@@ -44,7 +44,7 @@
 	/// List of unit tests that are skipped when running this map
 	var/list/skipped_tests
 
-	/// Boolean that tells SSmapping to load all away missions in the codebase. Defaults to false for ease.
+	/// Boolean that tells SSmapping to load all away missions in the codebase.
 	var/load_all_away_missions = FALSE
 
 /**
