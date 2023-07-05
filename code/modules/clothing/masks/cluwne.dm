@@ -5,6 +5,8 @@
 	has_fov = FALSE
 	icon_state = "cluwne"
 	inhand_icon_state = "cluwne"
+	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	item_flags = DROPDEL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	modifies_speech = TRUE
