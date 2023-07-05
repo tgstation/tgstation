@@ -68,7 +68,7 @@
 	message_mime = "appears to moan!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
-/datum/emote/living/carbon/moan/can_run_emote(mob/user, params, type_override, intentional)
+/datum/emote/living/carbon/moan/can_run_emote(mob/user, status_check, intentional)
 	. = ..()
 	if(!.)
 		return FALSE
