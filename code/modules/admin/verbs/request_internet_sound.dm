@@ -20,6 +20,15 @@
 		to_chat(usr, span_danger("Invalid URL. Please use a URL from one of the following sites: [replacetext(CONFIG_GET(string/request_internet_allowed), "\\", "")]"), confidential = TRUE)
 		return
 
+	var/credit = tgui_alert(usr, "Credit yourself for requesting this song? (will show up as [usr.name])", "Credit Yourself?", list("No", "Yes", "Cancel"))
+
+	if(credit == "Cancel" || isnull(credit))
+		return
+	else if (credit == "Yes")
+		credit = "[usr.name] requested this track."
+	else
+		credit = "Someone requested this track."
+
 	log_internet_request("[src.key]/([src.name]): [request_url]")
 	if(usr.client)
 		if(usr.client.prefs.muted & MUTE_INTERNET_REQUEST)
@@ -28,9 +37,9 @@
 		if(src.client.handle_spam_prevention(request_url,MUTE_INTERNET_REQUEST))
 			return
 
-	GLOB.requests.music_request(usr.client, request_url)
+	GLOB.requests.music_request(usr.client, request_url, credit)
 	to_chat(usr, span_info("You requested: \"[request_url]\" to be played."), confidential = TRUE)
-	request_url = span_adminnotice("<b><font color='cyan'>MUSIC REQUEST: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [span_linkify(request_url)] [ADMIN_PLAY_INTERNET(request_url)]")
+	request_url = span_adminnotice("<b><font color='cyan'>MUSIC REQUEST: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [span_linkify(request_url)] [ADMIN_PLAY_INTERNET(request_url, credit)]")
 	for(var/client/admin_client in GLOB.admins)
 		if(admin_client.prefs.chat_toggles & CHAT_PRAYER)
 			to_chat(admin_client, request_url, type = MESSAGE_TYPE_PRAYER, confidential = TRUE)
