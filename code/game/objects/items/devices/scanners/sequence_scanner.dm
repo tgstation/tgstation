@@ -43,7 +43,7 @@
 	//no scanning if its a husk or DNA-less Species
 	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
 		user.visible_message(span_bolddanger("[user] is scanning [target]'s genetic makeup."))
-		if(!do_after(user, 6 SECONDS))
+		if(!do_after(user, 3 SECONDS))
 			balloon_alert(user, "scan failed!")
 			user.visible_message(span_alert("[user] fails to scan [target]'s genetic makeup."))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
