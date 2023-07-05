@@ -137,10 +137,6 @@
 
 /obj/structure/closet/mini_fridge/grimy/PopulateContents()
 	. = ..()
-	new /obj/effect/spawner/random/food_or_drink/refreshing_beverage(src)
-	new /obj/effect/spawner/random/food_or_drink/refreshing_beverage(src)
-	if(prob(50))
-		new /obj/effect/spawner/random/food_or_drink/refreshing_beverage(src)
 	if(prob(40))
 		if(prob(50))
 			new /obj/item/food/pizzaslice/moldy/bacteria(src)
