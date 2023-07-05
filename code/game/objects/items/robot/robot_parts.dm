@@ -114,23 +114,21 @@
 /// Drops all included parts to the passed location
 /// This will also dissassemble the parts being dropped into components as well
 /obj/item/robot_suit/proc/drop_all_parts(atom/drop_to = drop_location())
-	if(l_leg)
-		l_leg.forceMove(drop_to)
-	if(r_leg)
-		r_leg.forceMove(drop_to)
+	l_leg?.forceMove(drop_to)
+	r_leg?.forceMove(drop_to)
+	l_arm?.forceMove(drop_to)
+	r_arm?.forceMove(drop_to)
+
 	if(chest)
-		chest.cell?.forceMove(drop_to)
 		chest.forceMove(drop_to)
 		new /obj/item/stack/cable_coil(drop_to, 1)
 		chest.wired = FALSE
-	if(l_arm)
-		l_arm.forceMove(drop_to)
-	if(r_arm)
-		r_arm.forceMove(drop_to)
+		chest.cell?.forceMove(drop_to)
+
 	if(head)
-		head.forceMove(drop_to)
 		head.flash1?.forceMove(drop_to)
 		head.flash2?.forceMove(drop_to)
+		head.forceMove(drop_to)
 
 /obj/item/robot_suit/proc/put_in_hand_or_drop(mob/living/user, obj/item/I) //normal put_in_hands() drops the item ontop of the player, this drops it at the suit's loc
 	if(!user.put_in_hands(I))
