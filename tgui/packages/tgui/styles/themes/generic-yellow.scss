@@ -1,45 +1,57 @@
-/**
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
- */
-
 @use 'sass:color';
 @use 'sass:meta';
 
-$nanotrasen: #384e68;
+$generic: #484455;
+$accent: #4f56a5;
+$accent-2: #ffbf00;
 
 @use '../colors.scss' with (
   $fg-map-keys: (),
   $bg-map-keys: (),
+  $primary: $accent,
 );
 @use '../base.scss' with (
-  $color-bg: color.scale($nanotrasen, $lightness: -45%),
+  $color-bg: color.scale($generic, $lightness: -45%),
+  $border-radius: 2px,
 );
 
-.theme-ntos {
+.theme-generic-yellow {
   // Components
   @include meta.load-css(
     '../components/Button.scss',
     $with: (
-      'color-default': $nanotrasen,
+      'color-default': $accent,
       'color-transparent-text': rgba(227, 240, 255, 0.75)
     )
   );
   @include meta.load-css(
+    '../components/ColorSelectBox.scss',
+    $with: ('color-default': color.scale($generic, $lightness: -20%))
+  );
+  @include meta.load-css(
     '../components/ProgressBar.scss',
     $with: (
-      'color-default-fill': $nanotrasen,
+      'color-default-fill': $accent,
       'background-color': rgba(0, 0, 0, 0.5)
     )
   );
   @include meta.load-css('../components/Section.scss');
+
+  @include meta.load-css(
+    '../components/Input.scss',
+    $with: ('border-color': #7b86ff)
+  );
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
     '../layouts/TitleBar.scss',
-    $with: ('background-color': color.scale($nanotrasen, $lightness: -25%))
+    $with: ('background-color': color.scale($generic, $lightness: -50%))
   );
   @include meta.load-css('../layouts/PopupWindow.scss');
+
+  .Layout__content {
+    background-image: url('../../assets/bg-nanotrasen.svg');
+  }
 }

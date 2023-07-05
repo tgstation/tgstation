@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { sendAct, useBackend, useLocalState } from '../../backend';
-import { Autofocus, Box, Button, Flex, LabeledList, Popper, Stack, TrackOutsideClicks } from '../../components';
+import { Box, Button, Flex, LabeledList, Popper, Stack, TrackOutsideClicks, FitText } from '../../components';
 import { createSetPreference, PreferencesMenuData, RandomSetting } from './data';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { RandomizationButton } from './RandomizationButton';
@@ -12,11 +12,11 @@ import { FeatureChoicedServerData, FeatureValueInput } from './preferences/featu
 import { filterMap, sortBy } from 'common/collections';
 import { useRandomToggleState } from './useRandomToggleState';
 
-const CLOTHING_CELL_SIZE = 48;
-const CLOTHING_SIDEBAR_ROWS = 9;
+const CLOTHING_CELL_SIZE = 64;
+const CLOTHING_SIDEBAR_ROWS = 10;
 
-const CLOTHING_SELECTION_CELL_SIZE = 48;
-const CLOTHING_SELECTION_WIDTH = 5.4;
+const CLOTHING_SELECTION_CELL_SIZE = 64;
+const CLOTHING_SELECTION_WIDTH = 6.3;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
 const CharacterControls = (props: {
@@ -106,54 +106,64 @@ const ChoicedSelection = (
     return <Box color="red">Provided catalog had no icons!</Box>;
   }
 
+  const use_small_supplemental =
+    supplementalFeature &&
+    (features[supplementalFeature].small_supplemental === true ||
+      features[supplementalFeature].small_supplemental === undefined);
   return (
     <Box
+      className="theme-generic-yellow"
       style={{
-        background: 'white',
-        padding: '5px',
-
         height: `${
           CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_MULTIPLIER
         }px`,
         width: `${CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_WIDTH}px`,
       }}>
-      <Stack vertical fill>
-        <Stack.Item>
-          <Stack fill>
-            {supplementalFeature && (
-              <Stack.Item>
-                <FeatureValueInput
-                  act={act}
-                  feature={features[supplementalFeature]}
-                  featureId={supplementalFeature}
-                  shrink
-                  value={supplementalValue}
-                />
+      <Box
+        className="PopupWindow"
+        style={{ 'padding': '5px' }}
+        width="100%"
+        height="100%">
+        <Stack vertical fill>
+          <Stack.Item>
+            <Stack fill>
+              {supplementalFeature && use_small_supplemental && (
+                <Stack.Item>
+                  <FeatureValueInput
+                    act={act}
+                    feature={features[supplementalFeature]}
+                    featureId={supplementalFeature}
+                    shrink
+                    value={supplementalValue}
+                  />
+                </Stack.Item>
+              )}
+
+              <Stack.Item grow>
+                <Box
+                  style={{
+                    'border-bottom': '1px solid #888',
+                    'font-weight': 'bold',
+                    'font-size': '14px',
+                    'text-align': 'center',
+                  }}>
+                  Select {props.name}
+                </Box>
               </Stack.Item>
-            )}
 
-            <Stack.Item grow>
-              <Box
-                style={{
-                  'border-bottom': '1px solid #888',
-                  'font-weight': 'bold',
-                  'font-size': '14px',
-                  'text-align': 'center',
-                }}>
-                Select {props.name.toLowerCase()}
-              </Box>
-            </Stack.Item>
+              <Stack.Item>
+                <Button color="red" onClick={props.onClose}>
+                  X
+                </Button>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
 
-            <Stack.Item>
-              <Button color="red" onClick={props.onClose}>
-                X
-              </Button>
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
-
-        <Stack.Item overflowX="hidden" overflowY="scroll">
-          <Autofocus>
+          <Stack.Item
+            overflowX="hidden"
+            overflowY="auto"
+            grow
+            className="section-background">
             <Flex wrap>
               {Object.entries(catalog.icons).map(([name, image], index) => {
                 return (
@@ -168,8 +178,6 @@ const ChoicedSelection = (
                         props.onSelect(name);
                       }}
                       selected={name === props.selected}
-                      tooltip={name}
-                      tooltipPosition="right"
                       style={{
                         height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
                         width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
@@ -180,15 +188,51 @@ const ChoicedSelection = (
                           image,
                           'centered-image',
                         ])}
+                        style={{
+                          transform:
+                            'translateX(-50%) translateY(-50%) scale(1.4)',
+                        }}
                       />
                     </Button>
+                    <Box textAlign="center">
+                      <FitText
+                        maxWidth={CLOTHING_SELECTION_CELL_SIZE}
+                        maxFontSize={12}>
+                        {name}
+                      </FitText>
+                    </Box>
                   </Flex.Item>
                 );
               })}
             </Flex>
-          </Autofocus>
-        </Stack.Item>
-      </Stack>
+          </Stack.Item>
+          {supplementalFeature && !use_small_supplemental && (
+            <>
+              <Stack.Item mt={0.25}>
+                <Box
+                  pb={0.25}
+                  style={{
+                    'border-bottom': '1px solid rgba(255, 255, 255, 0.1)',
+                    'font-weight': 'bold',
+                    'font-size': '14px',
+                    'text-align': 'center',
+                  }}>
+                  Select {features[supplementalFeature].name}
+                </Box>
+              </Stack.Item>
+              <Stack.Item shrink mt={0.5}>
+                <FeatureValueInput
+                  act={act}
+                  feature={features[supplementalFeature]}
+                  featureId={supplementalFeature}
+                  shrink
+                  value={supplementalValue}
+                />
+              </Stack.Item>
+            </>
+          )}
+        </Stack>
+      </Box>
     </Box>
   );
 };
