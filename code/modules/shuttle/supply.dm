@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /obj/docking_port/mobile/supply/proc/get_order_count(datum/supply_pack/ordering)
 	var/similar_count = 0
 	for(var/datum/supply_order/order as anything in (SSshuttle.shopping_list | SSshuttle.request_list))
-		if(order.pack == pack)
+		if(order.pack == ordering)
 			similar_count += 1
 
 	if(similar_count >= CARGO_MAX_ORDER)
