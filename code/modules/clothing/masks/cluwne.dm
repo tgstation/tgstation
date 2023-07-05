@@ -9,8 +9,6 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	modifies_speech = TRUE
 	w_class = WEIGHT_CLASS_SMALL
-	/// The voice change toggle.
-	var/voicechange = TRUE
 	/// Cooldown for playing the laugh reel
 	COOLDOWN_DECLARE(laugh_cooldown)
 
@@ -28,21 +26,17 @@
 /obj/item/clothing/mask/gas/cluwne/equipped(mob/user, slot) //when you put it on
 	if(!user.has_dna())
 		return ..()
-	var/mob/living/carbon/player = user
-	if((player.wear_mask == src) && (voicechange))
-		play_laugh()
-	return ..()
 
-/obj/item/clothing/mask/gas/cluwne/equipped(mob/user, slot)
+	var/mob/living/carbon/player = user
 	if(slot == ITEM_SLOT_MASK)
-		var/mob/living/carbon/player = user
-		player.dna.add_mutation(/datum/mutation/human/cluwne)
+		log_admin("[key_name(victim)] was made into a cluwne by [src]")
+		message_admins("[key_name(victim)] got cluwned by [src]")
+		to_chat(victim, span_userdanger("The masks straps suddenly tighten to your face! Your thoughts are erased by a horrible green light!"))
+		player.cluwne_transform_dna()
+
 	return ..()
 
 /obj/item/clothing/mask/gas/cluwne/handle_speech(datum/source, list/speech_args)
-	if(!voicechange)
-		return ..()
-
 	if(prob(5)) //the brain isn't fully gone yet...
 		speech_args[SPEECH_MESSAGE] = pick("AAAAAAA!!", "END MY SUFFERING", "I CANT TAKE THIS ANYMORE!!" ,"SOMEBODY STOP ME!!")
 		return SPEECH_MESSAGE
@@ -62,34 +56,3 @@
 		)
 
 	return SPEECH_MESSAGE
-
-/obj/item/clothing/mask/gas/cluwne/happy_cluwne
-	name = "Happy Cluwne Mask"
-	desc = "The mask of a poor cluwne that has been scrubbed of its curse by the Nanotrasen supernatural machinations division. Guaranteed to be 99% curse free and 99.9% not haunted."
-	flags_1 = MASKINTERNALS
-	item_flags = ABSTRACT
-	/// Is the mask cursed?
-	var/is_cursed = FALSE
-
-/obj/item/clothing/mask/gas/cluwne/happy_cluwne/attack_self(mob/user)
-	voicechange = !voicechange
-	to_chat(user, span_notice("You turn the voice box [voicechange ? "on" : "off"]!"))
-	if(voicechange)
-		play_laugh()
-
-/obj/item/clothing/mask/gas/cluwne/happy_cluwne/equipped(mob/user, slot)
-	if(!ishuman(user))
-		return ..()
-	var/mob/living/carbon/human/victim = user
-
-	if(slot == ITEM_SLOT_MASK && is_cursed)
-		log_admin("[key_name(victim)] was made into a cluwne by [src]")
-		message_admins("[key_name(victim)] got cluwned by [src]")
-		to_chat(victim, span_userdanger("The masks straps suddenly tighten to your face and your thoughts are erased by a horrible green light!"))
-		victim.dropItemToGround(src)
-		victim.cluwne_transform_dna()
-		qdel(src)
-		return
-
-	to_chat(victim, span_danger("...dneirf uoy ot gnoleb ton seod tahT"))
-	return ..()
