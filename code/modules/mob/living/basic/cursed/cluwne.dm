@@ -29,6 +29,10 @@
 	response_help_continuous = "bops"
 	response_help_simple = "bop"
 	speak_emote = list("sadly honks", "womp-womps")
+	verb_ask = "honks inquisitively"
+	verb_exclaim = "honks loudly"
+	verb_say = "honks"
+	verb_yell = "honks loudly"
 
 /mob/living/basic/cluwne/Initialize(mapload)
 	. = ..()
@@ -57,7 +61,9 @@
 	audible_message("[src] boops its last bop.")
 	desc += "\nIt seems to have run out of tricks. Goodnight sweet prince."
 
-/mob/living/basic/cluwne/say(message)
+/mob/living/basic/cluwne/say(message, bubble_type, list/spans)
+	spans = list(SPAN_CLOWN)
+
 	if(prob(5)) //the brain isn't fully gone yet...
 		message = pick("AAAAAAA!!", "END MY SUFFERING", "I CANT TAKE THIS ANYMORE!!" ,"SOMEBODY STOP ME!!")
 		return ..()

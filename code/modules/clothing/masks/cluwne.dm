@@ -11,19 +11,19 @@
 	w_class = WEIGHT_CLASS_SMALL
 	/// The voice change toggle.
 	var/voicechange = TRUE
-	/// The last time a sound was played.
-	var/last_sound = 0
-	/// The delay between sounds.
-	var/delay = 2 SECONDS
+	/// Cooldown for playing the laugh reel
+	COOLDOWN_DECLARE(laugh_cooldown)
 
 /obj/item/clothing/mask/gas/cluwne/Initialize(mapload)
 	.=..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
 /obj/item/clothing/mask/gas/cluwne/proc/play_laugh()
-	if(world.time - delay > last_sound)
-		playsound (src, pick('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg'), 30, 1)
-		last_sound = world.time
+	if(!COOLDOWN_FINISHED(src, laugh_cooldown))
+		return
+
+	COOLDOWN_START(src, laugh_cooldown, 5 SECONDS)
+	playsound (src, pick('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg'), 30, 1)
 
 /obj/item/clothing/mask/gas/cluwne/equipped(mob/user, slot) //when you put it on
 	if(!user.has_dna())
@@ -81,6 +81,7 @@
 	if(!ishuman(user))
 		return ..()
 	var/mob/living/carbon/human/victim = user
+
 	if(slot == ITEM_SLOT_MASK && is_cursed)
 		log_admin("[key_name(victim)] was made into a cluwne by [src]")
 		message_admins("[key_name(victim)] got cluwned by [src]")
@@ -88,5 +89,7 @@
 		victim.dropItemToGround(src)
 		victim.cluwne_transform_dna()
 		qdel(src)
+		return
+
 	to_chat(victim, span_danger("...dneirf uoy ot gnoleb ton seod tahT"))
 	return ..()
