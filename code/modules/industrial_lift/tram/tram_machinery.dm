@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE
 	light_color = COLOR_BLUE_LIGHT
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
 
@@ -61,10 +62,31 @@ GLOBAL_LIST_EMPTY(tram_doors)
 
 /obj/machinery/computer/tram_controls/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	if(!user.can_read(src, reading_check_flags = READING_CHECK_LITERACY))
+		try_illiterate_movement(user)
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TramControl", name)
 		ui.open()
+
+/// Traverse to a random location after some time
+/obj/machinery/computer/tram_controls/proc/try_illiterate_movement(mob/user)
+	var/datum/lift_master/tram/tram_lift = tram_ref?.resolve()
+	if (!tram_lift || tram_lift.travelling)
+		return
+	user.visible_message(span_notice("[user] starts mashing buttons at random!"))
+	if(!do_after(user, 5 SECONDS, target = src))
+		return
+	if (!tram_lift || tram_lift.travelling)
+		to_chat(user, span_warning("The screen displays a flashing error message, but you can't comprehend it."))
+		return // Broke or started moving during progress bar
+	var/list/all_destinations = GLOB.tram_landmarks[specific_lift_id] || list()
+	var/list/possible_destinations = all_destinations.Copy() - tram_lift.idle_platform
+	if (!length(possible_destinations))
+		to_chat(user, span_warning("The screen displays a flashing error message, but you can't comprehend it."))
+		return // No possible places to end up
+	try_send_tram(pick(possible_destinations))
 
 /obj/machinery/computer/tram_controls/ui_data(mob/user)
 	var/datum/lift_master/tram/tram_lift = tram_ref?.resolve()
