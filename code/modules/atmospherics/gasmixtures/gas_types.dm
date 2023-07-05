@@ -301,7 +301,7 @@
 	alpha = alph
 	plane_offset = offset
 
-/obj/effect/overlay/gas/Initialize(mapload, icon_state, alpha, offset)
+/obj/effect/overlay/gas/Initialize(mapload)
 	. = ..()
 	SET_PLANE_W_SCALAR(src, initial(plane), plane_offset)
 
