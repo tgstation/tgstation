@@ -39,7 +39,7 @@
 /datum/component/stove/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_attack_hand_secondary))
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ROBOT_SECONDARY, PROC_REFE(on_attack_robot_secondary))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ROBOT_SECONDARY, PROC_REF(on_attack_robot_secondary))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlay_update))
 	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstructed))
@@ -116,7 +116,7 @@
 
 	else if(real_parent.machine_stat & (BROKEN|NOPOWER))
 		real_parent.balloon_alert_to_viewers("no power!")
-		return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
+		return
 
 	else
 		turn_on()

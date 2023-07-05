@@ -89,7 +89,7 @@
 	. = ..()
 	toggle_mode()
 
-/obj/machinery/griddle/toggle_mode()
+/obj/machinery/griddle/proc/toggle_mode()
 	on = !on
 	if(on)
 		begin_processing()
