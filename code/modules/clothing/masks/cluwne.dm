@@ -16,13 +16,6 @@
 	.=..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
-/obj/item/clothing/mask/gas/cluwne/proc/play_laugh()
-	if(!COOLDOWN_FINISHED(src, laugh_cooldown))
-		return
-
-	COOLDOWN_START(src, laugh_cooldown, 5 SECONDS)
-	playsound (src, pick('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg'), 30, 1)
-
 /obj/item/clothing/mask/gas/cluwne/equipped(mob/user, slot) //when you put it on
 	if(!user.has_dna())
 		return ..()
@@ -56,3 +49,13 @@
 		)
 
 	return SPEECH_MESSAGE
+
+/**
+ * Handles playing the laugh reel
+ */
+/obj/item/clothing/mask/gas/cluwne/proc/play_laugh()
+	if(!COOLDOWN_FINISHED(src, laugh_cooldown))
+		return
+
+	COOLDOWN_START(src, laugh_cooldown, 5 SECONDS)
+	playsound (src, pick('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg'), 30, 1)
