@@ -3,4 +3,4 @@
 
 /datum/smite/cluwneify/effect(client/user, mob/living/target)
 	. = ..()
-	target.cluwne()
+	target.cluwne_transform_slow()

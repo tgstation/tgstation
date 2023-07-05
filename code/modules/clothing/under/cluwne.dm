@@ -13,7 +13,7 @@
 
 /obj/item/clothing/under/rank/civilian/cluwne/equipped(mob/living/carbon/user, slot)
 	if(!user.has_dna())
-		return
+		return ..()
 	if(slot == ITEM_SLOT_ICLOTHING)
 		var/mob/living/carbon/player = user
 		player.dna.add_mutation(/datum/mutation/human/cluwne)

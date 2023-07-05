@@ -14,7 +14,7 @@
 	/// The last time a sound was played.
 	var/last_sound = 0
 	/// The delay between sounds.
-	var/delay = 15
+	var/delay = 2 SECONDS
 
 /obj/item/clothing/mask/gas/cluwne/Initialize(mapload)
 	.=..()
@@ -45,19 +45,22 @@
 
 	if(prob(5)) //the brain isn't fully gone yet...
 		speech_args[SPEECH_MESSAGE] = pick("AAAAAAA!!", "END MY SUFFERING", "I CANT TAKE THIS ANYMORE!!" ,"SOMEBODY STOP ME!!")
-	else
-		if(prob(25))
-			play_laugh()
-		speech_args[SPEECH_MESSAGE] = pick(
-			"HEEEENKKKKKK!!", \
-			"HONK HONK HONK HONK!!",\
-			"HONK HONK!!",\
-			"HOOOOOONKKKK!!", \
-			"HOOOOINKKKKKKK!!", \
-			"HOINK HOINK HOINK HOINK!!", \
-			"HOINK HOINK!!", \
-			"HOOOOOOIIINKKKK!!"\
-			)
+		return SPEECH_MESSAGE
+
+	if(prob(25))
+		play_laugh()
+
+	speech_args[SPEECH_MESSAGE] = pick(
+		"HEEEENKKKKKK!!", \
+		"HONK HONK HONK HONK!!",\
+		"HONK HONK!!",\
+		"HOOOOOONKKKK!!", \
+		"HOOOOINKKKKKKK!!", \
+		"HOINK HOINK HOINK HOINK!!", \
+		"HOINK HOINK!!", \
+		"HOOOOOOIIINKKKK!!"\
+		)
+
 	return SPEECH_MESSAGE
 
 /obj/item/clothing/mask/gas/cluwne/happy_cluwne
@@ -76,14 +79,14 @@
 
 /obj/item/clothing/mask/gas/cluwne/happy_cluwne/equipped(mob/user, slot)
 	if(!ishuman(user))
-		return
+		return ..()
 	var/mob/living/carbon/human/victim = user
 	if(slot == ITEM_SLOT_MASK && is_cursed)
 		log_admin("[key_name(victim)] was made into a cluwne by [src]")
 		message_admins("[key_name(victim)] got cluwned by [src]")
 		to_chat(victim, span_userdanger("The masks straps suddenly tighten to your face and your thoughts are erased by a horrible green light!"))
 		victim.dropItemToGround(src)
-		victim.cluwneify()
+		victim.cluwne_transform_dna()
 		qdel(src)
 	to_chat(victim, span_danger("...dneirf uoy ot gnoleb ton seod tahT"))
 	return ..()

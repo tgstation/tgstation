@@ -37,7 +37,6 @@
 	name = newname
 	real_name = newname
 	AddElement(/datum/element/waddling)
-	RegisterSignal(src, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /mob/living/basic/cluwne/Destroy()
 	. = ..()
@@ -58,26 +57,26 @@
 	audible_message("[src] boops its last bop.")
 	desc += "\nIt seems to have run out of tricks. Goodnight sweet prince."
 
-/mob/living/basic/cluwne/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	speech_args[SPEECH_SPANS] |= SPAN_CLOWN
-
+/mob/living/basic/cluwne/say(message)
 	if(prob(5)) //the brain isn't fully gone yet...
-		speech_args[SPEECH_MESSAGE] = pick("AAAAAAA!!", "END MY SUFFERING", "I CANT TAKE THIS ANYMORE!!" ,"SOMEBODY STOP ME!!")
-	else
-		if(prob(25))
-			playsound(src, pick('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg'), 30, 2)
-		speech_args[SPEECH_MESSAGE] = pick(
-			"HEEEENKKKKKK!!", \
-			"HONK HONK HONK HONK!!",\
-			"HONK HONK!!",\
-			"HOOOOOONKKKK!!", \
-			"HOOOOINKKKKKKK!!", \
-			"HOINK HOINK HOINK HOINK!!", \
-			"HOINK HOINK!!", \
-			"HOOOOOOIIINKKKK!!"\
-			)
+		message = pick("AAAAAAA!!", "END MY SUFFERING", "I CANT TAKE THIS ANYMORE!!" ,"SOMEBODY STOP ME!!")
+		return ..()
+
+	if(prob(25))
+		playsound(src, pick('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg'), 30, 2)
+
+	message = pick(
+		"HEEEENKKKKKK!!", \
+		"HONK HONK HONK HONK!!",\
+		"HONK HONK!!",\
+		"HOOOOOONKKKK!!", \
+		"HOOOOINKKKKKKK!!", \
+		"HOINK HOINK HOINK HOINK!!", \
+		"HOINK HOINK!!", \
+		"HOOOOOOIIINKKKK!!"\
+		)
+
+	return ..()
 
 /mob/living/basic/cluwne/emote(act, m_type = 1, message, intentional = FALSE)
 	if(intentional)
