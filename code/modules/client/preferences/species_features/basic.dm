@@ -89,6 +89,7 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "facial_hair_gradient"
+	main_feature_name = "Facial hair Gradient"
 	relevant_species_trait = FACEHAIR
 	should_generate_icons = TRUE
 
@@ -186,6 +187,7 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "hair_gradient"
+	main_feature_name = "Hairstyle Gradient"
 	should_generate_icons = TRUE
 	relevant_species_trait = HAIR
 
