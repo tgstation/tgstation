@@ -3214,7 +3214,6 @@
 #include "code\modules\clothing\masks\boxing.dm"
 #include "code\modules\clothing\masks\breath.dm"
 #include "code\modules\clothing\masks\cluwne.dm"
-#include "code\modules\clothing\masks\cluwne2.dm"
 #include "code\modules\clothing\masks\costume.dm"
 #include "code\modules\clothing\masks\gas_filter.dm"
 #include "code\modules\clothing\masks\gasmask.dm"
