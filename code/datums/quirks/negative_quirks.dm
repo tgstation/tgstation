@@ -366,7 +366,7 @@
 /datum/quirk/light_drinker
 	name = "Light Drinker"
 	desc = "You just can't handle your drinks and get drunk very quickly."
-	icon = "cokctail"
+	icon = "cocktail"
 	value = -2
 	mob_trait = TRAIT_LIGHT_DRINKER
 	gain_text = span_notice("Just the thought of drinking alcohol makes your head spin.")
