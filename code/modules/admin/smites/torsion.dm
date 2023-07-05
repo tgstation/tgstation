@@ -14,7 +14,7 @@
 	. = ..()
 	playsound(get_turf(target), 'sound/effects/wounds/crack1.ogg', 100, TRUE, -1)
 	target.emote("scream")
-	to_chat(user, span_userdanger("You feel a horrible pain in your groin!"))
+	to_chat(target, span_userdanger("You feel a horrible pain in your groin!"))
 	if(devastative_gib)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), get_turf(target), 1), 1.5 SECONDS)
 	else
