@@ -195,7 +195,7 @@
 			var/datum/material/used_material = mat
 			var/amount_needed = being_built.materials[mat] * coeff * multiplier
 
-			if(istext(used_material)) // This means its a category
+			if(istext(used_material)) // This means it's a category
 				var/list/list_to_show = list()
 
 				for(var/i in SSmaterials.materials_by_category[used_material])

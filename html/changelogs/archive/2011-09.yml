@@ -66,7 +66,7 @@
       ways were not his own.
   - unknown: Added new ambient sound for space and the mines.
   - unknown: Examining an oxygen tank will now tell you if it is about to run out
-      of air. If it is, you will recieve a beep and a message, and if not, then you'll
+      of air. If it is, you will receive a beep and a message, and if not, then you'll
       just get the default "this is an oxygentank!" message.
   Microwave:
   - unknown: 'Nuka Cola re-added. '

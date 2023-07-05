@@ -359,6 +359,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	AddElement(/datum/element/frozen)
 	return TRUE
 
-///unfreezes this obj if its frozen
+///unfreezes this obj if it's frozen
 /obj/proc/unfreeze()
 	SEND_SIGNAL(src, COMSIG_OBJ_UNFREEZE)

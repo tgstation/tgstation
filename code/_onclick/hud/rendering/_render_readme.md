@@ -12,14 +12,14 @@ When you create an atom, this will always create an internal byond structure cal
 
 Finally, we arrive at clientside behavior, where we have two main clientside functions: GetMapIcons, and Render. GetMapIcons is repsonsible for actual rendering calculations on the clientside, such as "Group Icons and Set bounds", which performs clientside calculations for transform matrixes. Note that particles here are handled in a separate thread and are not diplayed in the clientside profiler. Render handles the actual drawing of the screen.
 
-For debugging rendering issues its reccomended you do two things:
+For debugging rendering issues it's reccomended you do two things:
 A) Talk to someone who has inside knowledge(like lummox) about it, most of this is undocumented and bugs often
 B) Use the undocumented debug printer which reads of data on icons rendering, this is very dense but can be useful in some cases. To use: Right click top tab -> Options & Messages -> Client -> Command -> Enter ".debug profile mapicons" and press Enter -> go to your Byond directory and find BYOND/cfg/mapicons.json . Yes this is one giant one-line json.
 
 ## Known internal snowflake
 The following is an incomplete list of pitfalls that come from byond snowflake that are known, this list is obviously incomplete.
 
-1. Transforms are very slow on clientside. This is not usually noticable, but if you start using large amounts of them it will grind you to a halt quickly, regardless of whether its on overlays or objs
+1. Transforms are very slow on clientside. This is not usually noticable, but if you start using large amounts of them it will grind you to a halt quickly, regardless of whether it's on overlays or objs
 2. The darkness plane. This is unused, as it doesn't work with our rendering format, so this section is purely academic. The darkness plane has specific variables it needs to render correctly, and these can be found in the plane masters file. it is composed internally of two parts, a black mask over the clients screen, and a non rendering mask that blocks all luminosity=0 turfs and their contents from rendering if the SEE_BLACKNESS flag is set properly. The blocker will always block rendering but the mask can be layered under other objects.
 3. render_target/source. Render_target/source will only copy certain rendering instructions, and these are only defined as "etc." in the byond reference. Known non copied appearance vars include: blend_mode, plane, layer, vis_contents, mouse_opacity...
 4. Large icons on the screen that peek over the edge will instead of only rendering partly like you would expect will instead stretch the screen while not adgusting the render buffer, which means that you can actively see as tiles and map objects are rendered. You can use this for an easy "offscreen" UI.

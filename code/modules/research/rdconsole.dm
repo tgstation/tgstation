@@ -238,7 +238,7 @@ Nothing else in the console has ID requirements.
 	)
 
 	// Build node cache...
-	// Note this looks a bit ugly but its to reduce the size of the JSON payload
+	// Note this looks a bit ugly but it's to reduce the size of the JSON payload
 	// by the greatest amount that we can, as larger JSON payloads result in
 	// hanging when the user opens the UI
 	var/node_cache = list()

@@ -20,7 +20,7 @@
 	var/ducting_layer = DUCT_LAYER_DEFAULT
 	///In-case we don't want the main machine to get the reagents, but perhaps whoever is buckled to it
 	var/recipient_reagents_holder
-	///How do we apply the new reagents to the receiver? Generally doesn't matter, but some stuff, like people, does care if its injected or whatevs
+	///How do we apply the new reagents to the receiver? Generally doesn't matter, but some stuff, like people, does care if it's injected or whatevs
 	var/methods
 	///What color is our demand connect?
 	var/demand_color = COLOR_RED
@@ -131,7 +131,7 @@
 	if(reagent)
 		reagents.trans_id_to(target.recipient_reagents_holder, reagent, amount)
 	else
-		reagents.trans_to(target.recipient_reagents_holder, amount, round_robin = TRUE, methods = methods)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
+		reagents.trans_to(target.recipient_reagents_holder, amount, round_robin = TRUE, methods = methods)//we deal with a lot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/parent_movable, list/overlays)

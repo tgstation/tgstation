@@ -293,7 +293,7 @@ no power level overlay is currently in the overlays list.
 
 	var/obj/machinery/field/generator/found_generator = null
 	var/steps = 0
-	if(!NSEW)//Make sure its ran right
+	if(!NSEW)//Make sure it's ran right
 		return FALSE
 	for(var/dist in 0 to 7) // checks out to 8 tiles away for another generator
 		current_turf = get_step(current_turf, NSEW)

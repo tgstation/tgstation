@@ -464,7 +464,7 @@
   carlarctg:
   - imageadd: Added inhands to the improvised shotgun.
   granpawalton:
-  - bugfix: you will no longer recieve "you feel fit again!" several times when you
+  - bugfix: you will no longer receive "you feel fit again!" several times when you
       become fat from ferveatium
   iprice:
   - bugfix: Occasional 'Already contains an APC!' error incorrectly generated.

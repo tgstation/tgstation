@@ -3,7 +3,7 @@
 	description = "Destroy the station by causing a supermatter cascade. Go to %AREA% to retrieve the destabilizing crystal \
 		and use it on the supermatter."
 
-	///area type the objective owner must be in to recieve the destabilizing crystal
+	///area type the objective owner must be in to receive the destabilizing crystal
 	var/area/dest_crystal_area_pickup
 	///checker on whether we have sent the crystal yet.
 	var/sent_crystal = FALSE

@@ -77,10 +77,10 @@
 /datum/centcom_podlauncher/proc/setup(user) //H can either be a client or a mob
 	if (istype(user,/client))
 		var/client/user_client = user
-		holder = user_client //if its a client, assign it to holder
+		holder = user_client //if it's a client, assign it to holder
 	else
 		var/mob/user_mob = user
-		holder = user_mob.client //if its a mob, assign the mob's client to holder
+		holder = user_mob.client //if it's a mob, assign the mob's client to holder
 	bay = locate(/area/centcom/central_command_areas/supplypod/loading/one) in GLOB.areas //Locate the default bay (one) from the centcom map
 	bayNumber = bay.loading_id //Used as quick reference to what bay we're taking items from
 	var/area/pod_storage_area = locate(/area/centcom/central_command_areas/supplypod/pod_storage) in GLOB.areas
@@ -165,7 +165,7 @@
 	data["effectStealth"] = temp_pod.effectStealth //If true, a target icon isn't displayed on the turf where the pod will land
 	data["effectQuiet"] = temp_pod.effectQuiet //The female sniper. If true, the pod makes no noise (including related explosions, opening sounds, etc)
 	data["effectMissile"] = temp_pod.effectMissile //If true, the pod deletes the second it lands. If you give it an explosion, it will act like a missile exploding as it hits the ground
-	data["effectCircle"] = temp_pod.effectCircle //If true, allows the pod to come in at any angle. Bit of a weird feature but whatever its here
+	data["effectCircle"] = temp_pod.effectCircle //If true, allows the pod to come in at any angle. Bit of a weird feature but whatever it's here
 	data["effectBurst"] = effectBurst //IOf true, launches five pods at once (with a very small delay between for added coolness), in a 3x3 area centered around the area
 	data["effectReverse"] = temp_pod.reversing //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
 	data["reverse_option_list"] = temp_pod.reverse_option_list
@@ -833,7 +833,7 @@
 	temp_pod.effectStealth = dataToLoad["effectStealth"]//If true, a target icon isn't displayed on the turf where the pod will land
 	temp_pod.effectQuiet = dataToLoad["effectQuiet"] //The female sniper. If true, the pod makes no noise (including related explosions, opening sounds, etc)
 	temp_pod.effectMissile = dataToLoad["effectMissile"] //If true, the pod deletes the second it lands. If you give it an explosion, it will act like a missile exploding as it hits the ground
-	temp_pod.effectCircle = dataToLoad["effectCircle"] //If true, allows the pod to come in at any angle. Bit of a weird feature but whatever its here
+	temp_pod.effectCircle = dataToLoad["effectCircle"] //If true, allows the pod to come in at any angle. Bit of a weird feature but whatever it's here
 	effectBurst = dataToLoad["effectBurst"] //IOf true, launches five pods at once (with a very small delay between for added coolness), in a 3x3 area centered around the area
 	temp_pod.reversing = dataToLoad["effectReverse"] //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
 	temp_pod.reverse_option_list = dataToLoad["reverse_option_list"]

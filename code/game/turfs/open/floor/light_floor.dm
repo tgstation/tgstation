@@ -9,7 +9,7 @@
 	light_range = 5
 	icon_state = "light_on-1"
 	floor_tile = /obj/item/stack/tile/light
-	///var to see if its on or off
+	///var to see if it's on or off
 	var/on = TRUE
 	///defines on top
 	var/state = LIGHTFLOOR_FINE

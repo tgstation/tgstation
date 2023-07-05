@@ -287,7 +287,7 @@ GLOBAL_LIST_INIT(huds, list(
 		if(hud_atoms_all_z_levels[moved_atom])
 			hud_atoms[old_turf.z] -= moved_atom
 
-			//this wont include moved_atom since its removed
+			//this wont include moved_atom since it's removed
 			remove_atom_from_all_huds(get_hud_users_for_z_level(old_turf.z), moved_atom)
 
 	if(new_turf)

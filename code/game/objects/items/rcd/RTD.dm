@@ -94,7 +94,7 @@
  * retrive the icon for this tile design based on its direction
  * for complex directions like NORTHSOUTH etc we create an seperated blended icon in the asset file for example floor-northsouth
  * so we check which icons we want to retrive based on its direction
- * for basic directions its rotated with CSS so there is no need for icon
+ * for basic directions it's rotated with CSS so there is no need for icon
  */
 /datum/tile_info/proc/get_icon_state()
 	var/prefix = ""
@@ -231,7 +231,7 @@
 		return TRUE
 
 	var/floor_designs = GLOB.floor_designs
-	if(!istype(floor, /turf/open/floor/plating)) //we infer what floor type it is if its not the usual plating
+	if(!istype(floor, /turf/open/floor/plating)) //we infer what floor type it is if it's not the usual plating
 		user.Beam(floor, icon_state = "light_beam", time = 5)
 		for(var/main_root in floor_designs)
 			for(var/sub_category in floor_designs[main_root])

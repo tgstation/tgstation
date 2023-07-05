@@ -6,10 +6,10 @@
 	targetmind = mind
 	if (istype(user,/client))
 		var/client/userClient = user
-		holder = userClient //if its a client, assign it to holder
+		holder = userClient //if it's a client, assign it to holder
 	else
 		var/mob/userMob = user
-		holder = userMob.client //if its a mob, assign the mob's client to holder
+		holder = userMob.client //if it's a mob, assign the mob's client to holder
 
 /datum/skill_panel/ui_state(mob/user)
 	return GLOB.admin_state

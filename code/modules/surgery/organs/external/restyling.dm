@@ -1,4 +1,4 @@
-//Contains a bunch of procs for different types, but in the end it just lets you restyle external_organs so thats why its here
+//Contains a bunch of procs for different types, but in the end it just lets you restyle external_organs so thats why it's here
 
 ///Helper proc to fetch a list of styles a player might want to restyle their features into during the round : returns list("Cabbage" = /datum/sprite_accessory/cabbage)
 /obj/item/organ/external/proc/get_valid_restyles()
@@ -41,7 +41,7 @@
 			target_organ = valid_features[1]
 		if(2 to INFINITY)
 			var/choose_options = list()
-			var/name_to_organ = list() //literally so I dont have to loop again after someones made their choice
+			var/name_to_organ = list() //literally so I dont have to loop again after someone made their choice
 			for(var/obj/item/organ/external/organ_choice as anything in valid_features)
 				choose_options[organ_choice.name] = image(organ_choice)
 				name_to_organ[organ_choice.name] = organ_choice

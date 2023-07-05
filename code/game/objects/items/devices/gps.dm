@@ -77,7 +77,7 @@
 	var/turf/T = get_turf(src)
 	if(T)
 		// I assume it's faster to color,tag and OR the turf in, rather
-		// then checking if its there
+		// then checking if it's there
 		T.color = RANDOM_COLOUR
 		T.maptext = MAPTEXT("[T.x],[T.y],[T.z]")
 		tagged |= T

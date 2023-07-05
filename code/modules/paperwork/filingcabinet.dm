@@ -144,7 +144,7 @@
  * Medical Record Cabinets
  */
 /obj/structure/filingcabinet/medical
-	///This var is so that its filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
+	///This var is so that it's filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
 	var/virgin = TRUE
 
 /obj/structure/filingcabinet/medical/proc/populate()
@@ -179,7 +179,7 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 
 /obj/structure/filingcabinet/employment
 	icon_state = "employmentcabinet"
-	///This var is so that its filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
+	///This var is so that it's filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
 	var/virgin = TRUE
 
 /obj/structure/filingcabinet/employment/Initialize(mapload)

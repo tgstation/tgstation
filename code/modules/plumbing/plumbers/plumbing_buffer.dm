@@ -64,7 +64,7 @@
 				var/obj/machinery/plumbing/buffer/neighbour = movable
 				if(neighbour.buffer_net != buffer_net)
 					neighbour.buffer_net?.destruct()
-					//we could put this on a proc, but its so simple I dont think its worth the overhead
+					//we could put this on a proc, but it's so simple I dont think it's worth the overhead
 					buffer_net.buffer_list += neighbour
 					neighbour.buffer_net = buffer_net
 					neighbour.attempt_connect() //technically this would runtime if you made about 200~ buffers

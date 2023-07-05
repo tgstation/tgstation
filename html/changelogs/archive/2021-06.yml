@@ -672,7 +672,7 @@
   Timberpoes:
   - bugfix: Fixed issue which made cooked steaks inedible. You should now be able
       to eat griddled steaks again.
-  - bugfix: Obsessed antags will now recieve a chat message stating the antag's policy
+  - bugfix: Obsessed antags will now receive a chat message stating the antag's policy
       flavour text, if any such policy exists in config.
   cacogen:
   - balance: Cannabis has more believable effects

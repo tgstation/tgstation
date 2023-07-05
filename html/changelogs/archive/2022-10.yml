@@ -469,7 +469,7 @@
   - bugfix: Marked a few more admin only chem dispenser boards to display their proper
       manipulator requirements
   Rhials:
-  - bugfix: Engineers now recieve welding helmets instead of errors when they order
+  - bugfix: Engineers now receive welding helmets instead of errors when they order
       an engineering supply pack.
   - bugfix: Welding helmet inhand sprites now properly update when you flip the visor.
   Shadyyy66:

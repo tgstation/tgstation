@@ -1,6 +1,6 @@
 ///divide the power in the cable net under parent by this to determine the shock damage
 #define ELECTRIC_BUCKLE_SHOCK_STRENGTH_DIVISOR 5000
-///it will not shock the mob buckled to parent if its required to use a cable to shock and the cable has less than this power availaible
+///it will not shock the mob buckled to parent if it's required to use a cable to shock and the cable has less than this power availaible
 #define ELECTRIC_BUCKLE_MINUMUM_POWERNET_STRENGTH 10
 
 
@@ -24,7 +24,7 @@
 	var/shock_loop_time = 5 SECONDS
 	///how much damage is done per shock iff usage_flags doesnt have SHOCK_REQUIREMENT_LIVE_CABLE
 	var/shock_damage = 50
-	///this signal was given as an argument to register for parent to emit, if its emitted to parent then shock_on_demand is called. var is so it can be unregistered
+	///this signal was given as an argument to register for parent to emit, if it's emitted to parent then shock_on_demand is called. var is so it can be unregistered
 	var/requested_signal_parent_emits = null
 
 /**

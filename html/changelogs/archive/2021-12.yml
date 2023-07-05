@@ -246,7 +246,7 @@
   - bugfix: Transit tube dispensers will no longer eat up immovable rods.
   SuperNovaa41:
   - bugfix: The maroon objective will no longer fail due to your target being borged.
-  - bugfix: Bardrones no longer recieve tools.
+  - bugfix: Bardrones no longer receive tools.
   tralezab:
   - bugfix: Department orders no longer bugs out and asks you to take the deliveries
       to central primary hallway

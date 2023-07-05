@@ -18,7 +18,7 @@
 /obj/item/paper/fluff/ruins/dangerous_research/beaches_journal_2
 	name = "Journal of Dreams-Of-Beaches - Day 33"
 	default_raw_text = "Something odd is going on. John has been blinded and muted for a time now but he's still moving around in that central chamber, drawing something. Elias, Smith, and Whitner seem to have some idea about what's going on and won't answer my questions.<BR>I'm going to sneak into the lab tonight to get a look at those drawings."
-	
+
 /obj/item/paper/fluff/ruins/dangerous_research/beaches_journal_3
 	name = "Journal of Dreams-Of-Beaches - Day 52"
 	default_raw_text = "Smith was in the chamber, gone in an instant.<BR> I don't know what happened to the doctor or Elias, I just heard flesh tearing and glass shattering.<BR> When my eyes opened, the room was painted in red and rust.<BR>Simes was there, but she just flashed away, all that was left was the gun.<BR>Armstrong grabbed me and we somehow made it out, boarded it up with the tables in the lobby.<BR>Took two of the suits, we'll send out a distress signal when we're out there."
@@ -33,7 +33,7 @@
 
 /obj/item/paper/fluff/ruins/dangerous_research/armstrong_memo_3
 	name = "Containment Memo - Safety"
-	default_raw_text = "<B>DO NOT:</B><BR>-Allow the subject out of their cell at any point without the HO's approval<BR>-Stay by the subject for extended periods of time. Dr Greyham and I have confirmed that long-term exposure can lead to headaches, anemia, and loss of sleep.<BR>-Forget to keep the patient's sedative supply constant. Ensure their IV drip (3:3:1 ratio of B Negative Blood, Saline, and Morphine) is topped up whenever they're not in a test.<BR><BR>Elias, the radio in the patient's room stays ON, and the toy stays in there. I know its not protocol but he starts crying if we remove them, and we all need to sleep."
+	default_raw_text = "<B>DO NOT:</B><BR>-Allow the subject out of their cell at any point without the HO's approval<BR>-Stay by the subject for extended periods of time. Dr Greyham and I have confirmed that long-term exposure can lead to headaches, anemia, and loss of sleep.<BR>-Forget to keep the patient's sedative supply constant. Ensure their IV drip (3:3:1 ratio of B Negative Blood, Saline, and Morphine) is topped up whenever they're not in a test.<BR><BR>Elias, the radio in the patient's room stays ON, and the toy stays in there. I know it's not protocol but he starts crying if we remove them, and we all need to sleep."
 /// Lore Terminals
 /obj/machinery/computer/terminal/dangerous_research/front_desk
 	upperinfo = "ISSUE REPORT - Officer Simes"

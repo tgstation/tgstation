@@ -227,7 +227,7 @@ GLOBAL_PROTECT(href_token)
 /// Returns whether or not the given client has a verified 2FA connection.
 /// The output is in the form of a list with the first index being whether or not the
 /// check was successful, the 2nd is the ID of the associated database entry
-/// if its a false result and if one can be found.
+/// if it's a false result and if one can be found.
 /datum/admins/proc/check_2fa(client/client)
 	if (bypass_2fa)
 		return VALID_2FA_CONNECTION

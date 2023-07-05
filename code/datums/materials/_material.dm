@@ -25,7 +25,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/starlight_color = COLOR_STARLIGHT
 	///Bitflags that influence how SSmaterials handles this material.
 	var/init_flags = MATERIAL_INIT_MAPLOAD
-	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
+	///Materials "Traits". it's a map of key = category | Value = Bool. Used to define what it can be used for
 	var/list/categories = list()
 	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets
 	var/sheet_type

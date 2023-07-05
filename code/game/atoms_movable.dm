@@ -932,7 +932,7 @@
 						SSspatial_grid.add_grid_awareness(location, channel)
 			recursive_contents[channel] |= arrived.important_recursive_contents[channel]
 
-///allows this movable to hear and adds itself to the important_recursive_contents list of itself and every movable loc its in
+///allows this movable to hear and adds itself to the important_recursive_contents list of itself and every movable loc it's in
 /atom/movable/proc/become_hearing_sensitive(trait_source = TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
 	if(!HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE))

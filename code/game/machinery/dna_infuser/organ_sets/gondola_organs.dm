@@ -25,7 +25,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GONDOLA_COLORS
 	organ_traits = list(TRAIT_PACIFISM)
-	///keeps track of whether the reciever actually gained factions
+	///keeps track of whether the receiver actually gained factions
 	var/list/factions_to_remove = list()
 
 /obj/item/organ/internal/heart/gondola/Initialize(mapload)

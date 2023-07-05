@@ -163,7 +163,7 @@
 			continue
 
 		//this turf search algorithm is the worst scaling part of this proc, scaling worse than view() for small-moderate ranges and > 50 length contents_to_return
-		//luckily its significantly faster than view for large ranges in large spaces and/or relatively few contents_to_return
+		//luckily it's significantly faster than view for large ranges in large spaces and/or relatively few contents_to_return
 		//i can do things that would scale better, but they would be slower for low volume searches which is the vast majority of the current workload
 		//maybe in the future a high volume algorithm would be worth it
 		var/turf/inbetween_turf = center_turf

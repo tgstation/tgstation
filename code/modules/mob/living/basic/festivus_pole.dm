@@ -112,7 +112,7 @@
 		if(!apc_target.cell)
 			return FALSE
 		var/obj/item/stock_parts/cell/apc_cell = apc_target.cell
-		if(apc_cell.charge == apc_cell.maxcharge) //if its full charge we no longer feed it
+		if(apc_cell.charge == apc_cell.maxcharge) //if it's full charge we no longer feed it
 			return FALSE
 
 	return can_see(source, dinner, radius)

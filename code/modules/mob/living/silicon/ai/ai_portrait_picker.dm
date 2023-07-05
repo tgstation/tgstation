@@ -18,10 +18,10 @@
 /datum/portrait_picker/New(user)//user can either be a client or a mob due to byondcode(tm)
 	if (istype(user, /client))
 		var/client/user_client = user
-		holder = user_client //if its a client, assign it to holder
+		holder = user_client //if it's a client, assign it to holder
 	else
 		var/mob/user_mob = user
-		holder = user_mob.client //if its a mob, assign the mob's client to holder
+		holder = user_mob.client //if it's a mob, assign the mob's client to holder
 
 /datum/portrait_picker/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

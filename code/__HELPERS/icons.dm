@@ -1200,7 +1200,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 	else if(istext(icon))
 		var/rsc_ref = fcopy_rsc(icon)
-		//if its the text path of an existing dmi file, the rsc reference returned by fcopy_rsc() will be stringifiable to a dmi path
+		//if it's the text path of an existing dmi file, the rsc reference returned by fcopy_rsc() will be stringifiable to a dmi path
 
 		var/rsc_ref_ref = text_ref(rsc_ref)
 		var/rsc_ref_string = "[locate(rsc_ref_ref)]"

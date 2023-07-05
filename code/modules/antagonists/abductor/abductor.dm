@@ -97,7 +97,7 @@
 	H.real_name = "[team.name] [sub_role]"
 	H.equipOutfit(outfit)
 
-	// We require that the template be loaded here, so call it in a blocking manner, if its already done loading, this won't block
+	// We require that the template be loaded here, so call it in a blocking manner, if it's already done loading, this won't block
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	//Teleport to ship
 	for(var/obj/effect/landmark/abductor/LM in GLOB.landmarks_list)

@@ -90,7 +90,7 @@
 	var/atom/original_object = parent
 	var/atom/grilled_result
 
-	if(isstack(parent)) //Check if its a sheet, for grilling multiple things in a stack
+	if(isstack(parent)) //Check if it's a sheet, for grilling multiple things in a stack
 		var/obj/item/stack/stack_parent = original_object
 		grilled_result = new cook_result(original_object.loc, stack_parent.amount)
 

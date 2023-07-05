@@ -63,7 +63,7 @@
 		return FALSE
 
 	// We've got no targets set, let's try to set some.
-	// If we recently failed to aquire targets, we will be unable to aquire any.
+	// If we recently failed to acquire targets, we will be unable to acquire any.
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		atoms += user
 		return TRUE

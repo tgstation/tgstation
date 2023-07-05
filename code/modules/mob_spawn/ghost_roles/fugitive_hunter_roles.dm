@@ -40,7 +40,7 @@
 	prompt_name = "a russian"
 	you_are_text = "Ay blyat. I am a Space-Russian smuggler!"
 	flavour_text = "We were mid-flight when our cargo was beamed off our ship! Must be on station somewhere? \
-		We must \"legally\" reaquire it by any means necessary - is our property, after all!"
+		We must \"legally\" reacquire it by any means necessary - is our property, after all!"
 	back_story = HUNTER_PACK_RUSSIAN
 	outfit = /datum/outfit/russian_hunter
 
@@ -92,7 +92,7 @@
 	prompt_name = "a psyker"
 	you_are_text = "Ahahaha! I am a Psyker Shikari!"
 	flavour_text = "Man, waking up from a gorenap always BLOWS. Finding dealers in this sector of space is always difficult, but \
-		we've recieved an offer that might set us up for life! Kidnap some fugitives and get FREE GORE!"
+		we've received an offer that might set us up for life! Kidnap some fugitives and get FREE GORE!"
 	back_story = HUNTER_PACK_PSYKER
 	outfit = /datum/outfit/psyker
 

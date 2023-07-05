@@ -86,7 +86,7 @@
 	SEND_SIGNAL(parent, COMSIG_ITEM_BAKED, baked_result)
 	qdel(parent)
 
-///Gives info about the items baking status so you can see if its almost done
+///Gives info about the items baking status so you can see if it's almost done
 /datum/component/bakeable/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 

@@ -1394,7 +1394,7 @@
 			break
 	if(!dispensed_item)
 		return FALSE
-	/// Charges the user if its not the owner
+	/// Charges the user if it's not the owner
 	if(!compartmentLoadAccessCheck(user))
 		if(!payee.has_money(dispensed_item.custom_price))
 			balloon_alert(user, "insufficient funds")

@@ -9,7 +9,7 @@
  * on subsystems running cool things like atmospherics or Life or SSInput or whatever.
  *
  * Without this subsystem, verbs are likely to cause overtime if the MC uses all of the time it has alloted for itself in the tick, and SendMaps
- * uses as much as its expected to, and an expensive verb ends up executing that tick. This is because the MC is completely blind to the cost of
+ * uses as much as it's expected to, and an expensive verb ends up executing that tick. This is because the MC is completely blind to the cost of
  * verbs, it can't account for it at all. The only chance for verbs to not cause overtime in a tick where the MC used as much of the tick
  * as it alloted itself and where SendMaps costed as much as it was expected to is if the verb(s) take less than TICK_BYOND_RESERVE percent of
  * the tick, which isnt much. Not to mention if SendMaps takes more than 30% of the tick and the MC forces itself to take at least 70% of the
@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(verb_manager)
 		return FALSE
 
 	//we want unit tests to be able to directly call verbs that attempt to queue, and since unit tests should test internal behavior, we want the queue
-	//to happen as if it was actually from player input if its called on a mob.
+	//to happen as if it was actually from player input if it's called on a mob.
 #ifdef UNIT_TESTS
 	if(QDELETED(usr) && ismob(incoming_callback.object))
 		incoming_callback.user = WEAKREF(incoming_callback.object)

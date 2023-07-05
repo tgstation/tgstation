@@ -209,7 +209,7 @@
 	description = "You meet an inhabitant of this site. Smelling horribly and clearly agitated about something."
 	no_tool_description = "You have no idea what it wants from you without a translator."
 	has_tool_description = "Your best translation is that it wants to share its hobby with you. "
-	success_log = "Recieved a gift from a stranger."
+	success_log = "Received a gift from a stranger."
 	delay_message = "Enduring..."
 	action_text = "Accept gift."
 	loot_type = /obj/item/cardpack/series_one

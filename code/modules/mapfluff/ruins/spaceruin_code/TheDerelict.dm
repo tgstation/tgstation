@@ -93,7 +93,7 @@
 
 ///Handles the doors closing
 /obj/machinery/computer/vaultcontroller/proc/cycle_close(obj/machinery/door/airlock/A)
-	A.safe = FALSE //Make sure its forced closed, always
+	A.safe = FALSE //Make sure it's forced closed, always
 	A.unbolt()
 	A.close()
 	A.bolt()
@@ -191,7 +191,7 @@
 		"\[00:01\] Every single day I spend on this station",
 		"\[00:07\] I become more and more certain that this was some kind of macabre punishment assignment",
 		"\[00:17\] I don't know what I did to deserve being consigned to this glued together ball of orbital wreckage",
-		"\[00:28\] But someones got it out for me",
+		"\[00:28\] But someone has it out for me",
 		"\[00:36\] On the station I may well be called 'Captain'",
 		"\[00:42\] But the title brings with it all the prestige and responsibility of some kind of fucking manchild kindergarten teacher",
 		"\[00:55\] To think Nanotrasen loves to call this hellhole:",

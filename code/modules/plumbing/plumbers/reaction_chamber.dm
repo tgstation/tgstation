@@ -72,7 +72,7 @@
 	var/list/data = list()
 
 	var/list/reagents_data = list()
-	for(var/datum/reagent/required_reagent as anything in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
+	for(var/datum/reagent/required_reagent as anything in required_reagents) //make a list where the key is text, because that looks a lot better in the ui than a typepath
 		var/list/reagent_data = list()
 		reagent_data["name"] = initial(required_reagent.name)
 		reagent_data["required_reagent"] = required_reagents[required_reagent]

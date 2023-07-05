@@ -102,7 +102,7 @@
 				if(mark_loc.item_flags & ABSTRACT)
 					break
 
-			// If its on someone, properly drop it
+			// If it's on someone, properly drop it
 			if(ismob(item_to_retrieve.loc))
 				var/mob/holding_mark = item_to_retrieve.loc
 

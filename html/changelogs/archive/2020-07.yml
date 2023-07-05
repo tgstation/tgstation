@@ -157,7 +157,7 @@
   - rscadd: Walking Mushrooms now have a new graftable gene, Occulary Mimicry.
   EdgeLordExe:
   - balance: Nitric acid is slightly better
-  - balance: Meat hook is now a 11tc cook traitor item. It can no longer be  aquired
+  - balance: Meat hook is now a 11tc cook traitor item. It can no longer be  acquired
       from necropolis chests. sorry miners!
   Fikou:
   - rscadd: servicelathe can now print airlock painters, decal painters and spraycans
@@ -614,7 +614,7 @@
   - bugfix: Icebox NE Maintenance has fewer unnecessary pipes and wires, as well as
       less space.
   - rscadd: The Civilian Bounty Pad and Console have been added to every map. Using
-      your ID on the console will allow you to aquire a civilian bounty, which can
+      your ID on the console will allow you to acquire a civilian bounty, which can
       be sent away for additional profit similar to cargo bounties.
   - rscadd: Midround, the widely unstable space market can occasionally briefly completely
       collapse, resulting in vendor prices skyrocketing for short periods of time.

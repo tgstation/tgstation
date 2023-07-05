@@ -769,7 +769,7 @@
 2021-04-26:
   ArcaneMusic, Jaw-sh, Tralezab:
   - rscadd: The mail system from Kiwistation has been ported.
-  - rscadd: Cargo will gradually recieve mail crates over time, which contains letters
+  - rscadd: Cargo will gradually receive mail crates over time, which contains letters
       and packages to and for the crew. Cargo should make an attempt to deliver people's
       mail.
   - rscadd: The International Spess Mail Legion has finally convinced the universe

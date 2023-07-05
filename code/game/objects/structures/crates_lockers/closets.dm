@@ -132,7 +132,7 @@
 	register_context()
 
 	if(opened)
-		opened = FALSE //nessassary because open() proc will early return if its true
+		opened = FALSE //nessassary because open() proc will early return if it's true
 		if(open(special_effects = FALSE)) //closets which are meant to be open by default dont need to be animated open
 			return
 	update_appearance()

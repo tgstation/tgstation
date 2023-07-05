@@ -42,7 +42,7 @@
       to health monitoring, the health status will be available on the AI's medical
       HUD. In Security mode, the role as printed on the crewmember's ID card will
       be displayed to the AI.
-  - rscadd: Any entity with a Security or Medical HUD active will recieve appropriate
+  - rscadd: Any entity with a Security or Medical HUD active will receive appropriate
       messages on that HUD.
   Ikarrus:
   - rscadd: "Server Operators: A new config option added to restrict command and security\

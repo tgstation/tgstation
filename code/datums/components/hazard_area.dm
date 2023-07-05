@@ -103,11 +103,11 @@
 		for(var/area/overwritten_area in overwritten)
 			if(check_area_hazardous(overwritten_area.type))
 				return // Overwrote a hazardous area, still hazardous fool
-			area_created -= overwritten_area // While its not guaranteed to be in the area_created list it's a good idea to ensure we dont have handing refs
+			area_created -= overwritten_area // While it's not guaranteed to be in the area_created list it's a good idea to ensure we dont have handing refs
 		area_created += created // Congrats, you are now allowed in this area
 		return
 
-	// No overwritten area, which means its a brand new area, for now we are going to be nice and assume its non-hazardous
+	// No overwritten area, which means it's a brand new area, for now we are going to be nice and assume it's non-hazardous
 	// If people abuse this in the future to put rooms right next to the station add an is_station_level check
 	area_created += created
 

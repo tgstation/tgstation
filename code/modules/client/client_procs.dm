@@ -961,7 +961,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 
 	//check if the server is overloaded and if it is then queue up the click for next tick
-	//yes having it call a wrapping proc on the subsystem is fucking stupid glad we agree unfortunately byond insists its reasonable
+	//yes having it call a wrapping proc on the subsystem is fucking stupid glad we agree unfortunately byond insists it's reasonable
 	if(!QDELETED(object) && TRY_QUEUE_VERB(VERB_CALLBACK(object, TYPE_PROC_REF(/atom, _Click), location, control, params), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSinput, control))
 		return
 

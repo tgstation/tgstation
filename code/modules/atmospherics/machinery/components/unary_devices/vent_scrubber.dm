@@ -394,7 +394,7 @@
 /**
  * Produces a mob based on the input given by scrubber clog event.
  *
- * Used by the scrubber clog random event to handle the spawning of mobs. The proc recieves the mob that will be spawned,
+ * Used by the scrubber clog random event to handle the spawning of mobs. The proc receives the mob that will be spawned,
  * and the event's current list of living mobs produced by the event so far. After checking if the vent is welded, the
  * new mob is created on the scrubber's turf, then added to the living_mobs list.
  *

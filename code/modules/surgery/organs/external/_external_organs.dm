@@ -44,7 +44,7 @@
 	if(accessory_type)
 		bodypart_overlay.set_appearance(accessory_type)
 		bodypart_overlay.imprint_on_next_insertion = FALSE
-	else if(loc) //we've been spawned into the world, and not in nullspace to be added to a limb (yes its fucking scuffed)
+	else if(loc) //we've been spawned into the world, and not in nullspace to be added to a limb (yes it's fucking scuffed)
 		bodypart_overlay.randomize_appearance()
 	else
 		update_overlays = FALSE

@@ -170,7 +170,7 @@
 		message = "an interesting thing to say"
 	return message
 /**
- * Extracts and cleans message of any extenstions at the begining of the message
+ * Extracts and cleans message of any extenstions at the beginning of the message
  * Inserts the info into the passed list, returns the cleaned message
  *
  * Result can be

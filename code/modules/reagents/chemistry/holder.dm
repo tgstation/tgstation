@@ -205,7 +205,7 @@
 		if(!adjusted_vol) //If we're inverse or FALSE cancel addition
 			return TRUE
 			/* We return true here because of #63301
-			The only cases where this will be false or 0 if its an inverse chem, an impure chem of 0 purity (highly unlikely if even possible), or if glob_reagent is null (which shouldn't happen at all as there's a check for that a few lines up),
+			The only cases where this will be false or 0 if it's an inverse chem, an impure chem of 0 purity (highly unlikely if even possible), or if glob_reagent is null (which shouldn't happen at all as there's a check for that a few lines up),
 			In the first two cases, we would want to return TRUE so trans_to and other similar methods actually delete the corresponding chemical from the original reagent holder.
 			*/
 		amount = adjusted_vol

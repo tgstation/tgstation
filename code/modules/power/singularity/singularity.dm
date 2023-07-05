@@ -35,7 +35,7 @@
 	var/dissipate_delay = 20
 	/// How much energy do we lose every dissipate_delay?
 	var/dissipate_strength = 1
-	/// How long its been (in seconds) since the last dissipation
+	/// How long it has been (in seconds) since the last dissipation
 	var/time_since_last_dissipiation = 0
 	///Prob for event each tick
 	var/event_chance = 10

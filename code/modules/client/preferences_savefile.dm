@@ -24,7 +24,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	initial() values if necessary.
 */
 /datum/preferences/proc/save_data_needs_update(list/save_data)
-	if(!save_data) // empty list, either savefile isnt loaded or its a new char
+	if(!save_data) // empty list, either savefile isnt loaded or it's a new char
 		return -1
 	if(save_data["version"] < SAVEFILE_VERSION_MIN)
 		return -2

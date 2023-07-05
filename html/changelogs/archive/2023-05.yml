@@ -198,7 +198,7 @@
   RealityOverseer:
   - bugfix: fixed unrefined ectoplasm anomaly cores not appearing as unrefined
   Rhials:
-  - qol: Observers now recieve an alert when a powersink is activated/about to explode.
+  - qol: Observers now receive an alert when a powersink is activated/about to explode.
   - qol: His Grace being awoken now alerts observers, to give you a headstart on your
       murderbone ghost ring.
   - qol: Ascension Rituals being completed will also alert observers, for basically

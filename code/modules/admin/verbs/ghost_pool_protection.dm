@@ -26,10 +26,10 @@
 /datum/ghost_pool_menu/New(user)//user can either be a client or a mob due to byondcode(tm)
 	if (istype(user, /client))
 		var/client/user_client = user
-		holder = user_client //if its a client, assign it to holder
+		holder = user_client //if it's a client, assign it to holder
 	else
 		var/mob/user_mob = user
-		holder = user_mob.client //if its a mob, assign the mob's client to holder
+		holder = user_mob.client //if it's a mob, assign the mob's client to holder
 	new_role_flags = GLOB.ghost_role_flags
 
 /datum/ghost_pool_menu/ui_state(mob/user)

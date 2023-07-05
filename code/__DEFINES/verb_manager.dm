@@ -2,9 +2,9 @@
  * verb queuing thresholds. remember that since verbs execute after SendMaps the player wont see the effects of the verbs on the game world
  * until SendMaps executes next tick, and then when that later update reaches them. thus most player input has a minimum latency of world.tick_lag + player ping.
  * however thats only for the visual effect of player input, when a verb processes the actual latency of game state changes or semantic latency is effectively 1/2 player ping,
- * unless that verb is queued for the next tick in which case its some number probably smaller than world.tick_lag.
+ * unless that verb is queued for the next tick in which case it's some number probably smaller than world.tick_lag.
  * so some verbs that represent player input are important enough that we only introduce semantic latency if we absolutely need to.
- * its for this reason why player clicks are handled in SSinput before even movement - semantic latency could cause someone to move out of range
+ * it's for this reason why player clicks are handled in SSinput before even movement - semantic latency could cause someone to move out of range
  * when the verb finally processes but it was in range if the verb had processed immediately and overtimed.
  */
 

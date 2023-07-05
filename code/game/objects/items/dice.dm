@@ -236,7 +236,7 @@
 	update_appearance()
 	result = manipulate_result(result)
 	if(special_faces.len == sides)
-		comment = ""  // its not a number
+		comment = ""  // it's not a number
 		result = special_faces[result]
 		if(!ISINTEGER(result))
 			comment = special_faces[result]  // should be a str now

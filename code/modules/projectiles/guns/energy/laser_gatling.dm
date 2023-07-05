@@ -53,7 +53,7 @@
 		..()
 
 /obj/item/minigunpack/attackby(obj/item/W, mob/user, params)
-	if(W == gun) //Don't need armed check, because if you have the gun assume its armed.
+	if(W == gun) //Don't need armed check, because if you have the gun assume it's armed.
 		user.dropItemToGround(gun, TRUE)
 	else
 		..()

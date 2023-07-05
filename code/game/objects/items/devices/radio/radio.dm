@@ -24,18 +24,18 @@
 	///the "default" radio frequency this radio is set to, listens and transmits to this frequency by default. wont work if the channel is encrypted
 	VAR_PRIVATE/frequency = FREQ_COMMON
 
-	/// Whether the radio will transmit dialogue it hears nearby into its radio channel.
+	/// Whether the radio will transmit dialogue it hears nearby into it's radio channel.
 	VAR_PRIVATE/broadcasting = FALSE
-	/// Whether the radio is currently receiving radio messages from its radio frequencies.
+	/// Whether the radio is currently receiving radio messages from it's radio frequencies.
 	VAR_PRIVATE/listening = TRUE
 
 	//the below three vars are used to track listening and broadcasting should they be forced off for whatever reason but "supposed" to be active
-	//eg player sets the radio to listening, but an emp or whatever turns it off, its still supposed to be activated but was forced off,
+	//eg player sets the radio to listening, but an emp or whatever turns it off, it's still supposed to be activated but was forced off,
 	//when it wears off it sets listening to should_be_listening
 
-	///used for tracking what broadcasting should be in the absence of things forcing it off, eg its set to broadcast but gets emp'd temporarily
+	///used for tracking what broadcasting should be in the absence of things forcing it off, eg it's set to broadcast but gets emp'd temporarily
 	var/should_be_broadcasting = FALSE
-	///used for tracking what listening should be in the absence of things forcing it off, eg its set to listen but gets emp'd temporarily
+	///used for tracking what listening should be in the absence of things forcing it off, eg it's set to listen but gets emp'd temporarily
 	var/should_be_listening = TRUE
 
 	/// Both the range around the radio in which mobs can hear what it receives and the range the radio can hear
@@ -385,7 +385,7 @@
 				return TRUE
 	return FALSE
 
-/obj/item/radio/proc/on_recieve_message()
+/obj/item/radio/proc/on_receive_message()
 	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
 
 /obj/item/radio/ui_state(mob/user)

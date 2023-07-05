@@ -86,7 +86,7 @@
 #define FACTION_CULT "cult"
 /// Define for the heretic faction applied to heretics and heretic mobs.
 #define FACTION_HERETIC "heretics"
-/// Mainly used by pirate simplemobs. However I placed them here instead, as its also used by players
+/// Mainly used by pirate simplemobs. However I placed them here instead, as it's also used by players
 #define FACTION_PIRATE "pirate"
 
 /// Generates a mob faction for the passed owner, used by stabilized pink extracts

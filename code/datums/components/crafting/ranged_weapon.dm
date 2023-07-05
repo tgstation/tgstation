@@ -19,8 +19,8 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/reciever
-	name = "Modular Rifle Reciever"
+/datum/crafting_recipe/receiver
+	name = "Modular Rifle Receiver"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_SAW)
 	result = /obj/item/weaponcrafting/receiver
 	reqs = list(

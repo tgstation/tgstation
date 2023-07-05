@@ -127,7 +127,7 @@
 /datum/memory/key/quirk_smoker/get_moods()
 	return list("[memorizer] [mood_verb] as they light another up.")
 
-/// Where our traitor uplink is, and what is its code
+/// Where our traitor uplink is, and what its code is
 /datum/memory/key/traitor_uplink
 	var/uplink_loc
 	var/uplink_code

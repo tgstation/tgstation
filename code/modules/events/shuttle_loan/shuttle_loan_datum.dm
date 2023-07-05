@@ -1,4 +1,4 @@
-/// One of the potential shuttle loans you might recieve.
+/// One of the potential shuttle loans you might receive.
 /datum/shuttle_loan_situation
 	/// Who sent the shuttle
 	var/sender = "Centcom"

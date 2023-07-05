@@ -234,7 +234,7 @@
 	 * Lay cable only if
 	 * - device is active
 	 * - the turf can hold cable
-	 * - there is no cable on the turf or there is cable on the turf but its not the same layer we are gonna put on the turf
+	 * - there is no cable on the turf or there is cable on the turf but it's not the same layer we are gonna put on the turf
 	 */
 	if(active && the_turf.can_have_cabling() && the_turf.can_lay_cable() && cable_allowed_here(the_turf))
 		var/obj/item/stack/cable_coil/coil = get_cable()

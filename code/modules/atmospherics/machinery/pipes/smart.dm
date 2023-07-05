@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 		while (ISSTUB(connections | bits_to_add) && (initialize_directions >> shift)!=0)
 			//lets see if this direction is eligable to be added
 			candidate = initialize_directions & (1 << shift)
-			//we dont want to add connections again else it creates wrong values & its also redundant[bitfield was already initialized with connections so we shoudnt append it again]
+			//we dont want to add connections again else it creates wrong values & it's also redundant[bitfield was already initialized with connections so we shoudnt append it again]
 			if(!(candidate & connections))
 				bits_to_add |= candidate
 			shift += 1

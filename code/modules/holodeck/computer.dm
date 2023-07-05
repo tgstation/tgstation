@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	if (program == map_id)
 		return
 
-	if (!is_operational)//load_program is called once with a timer (in toggle_power) we dont want this to load anything if its off
+	if (!is_operational)//load_program is called once with a timer (in toggle_power) we dont want this to load anything if it's off
 		map_id = offline_program
 		force = TRUE
 

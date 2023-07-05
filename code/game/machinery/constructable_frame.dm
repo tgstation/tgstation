@@ -204,7 +204,7 @@
 				//install board
 				if(install_board(target_board, user, FALSE))
 					replacer.play_rped_sound()
-					//attack this frame again with the rped so it can install stock parts since its now in state 3
+					//attack this frame again with the rped so it can install stock parts since it's now in state 3
 					attackby(replacer, user, params)
 					return
 
@@ -283,13 +283,13 @@
 						new_machine.set_anchored(anchored)
 
 						// Assign the circuit & parts & move them all at once into the machine
-						// no need to seperatly move circuit board as its already part of the components list
+						// no need to seperatly move circuit board as it's already part of the components list
 						new_machine.circuit = circuit
 						new_machine.component_parts = components
 						for (var/obj/new_part in components)
 							new_part.forceMove(new_machine)
 
-						//Inform machine that its finished & cleanup
+						//Inform machine that it's finished & cleanup
 						new_machine.RefreshParts()
 						new_machine.on_construction(user)
 						components = null

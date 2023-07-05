@@ -75,7 +75,7 @@
 	var/equip_sound
 	///Sound uses when picking the item up (into your hands)
 	var/pickup_sound
-	///Sound uses when dropping the item, or when its thrown.
+	///Sound uses when dropping the item, or when it's thrown.
 	var/drop_sound
 	///Whether or not we use stealthy audio levels for this item's attack sounds
 	var/stealthy_audio = FALSE
@@ -1527,7 +1527,7 @@
 	return FALSE
 
 /**
- * This proc calls at the begining of anytime an item is being equiped to a target by another mob.
+ * This proc calls at the beginning of anytime an item is being equiped to a target by another mob.
  * It handles initial messages, AFK stripping, and initial logging.
  */
 /obj/item/proc/item_start_equip(atom/target, obj/item/equipping, mob/user, show_visible_message = TRUE)

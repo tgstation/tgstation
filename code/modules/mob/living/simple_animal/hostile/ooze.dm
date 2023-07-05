@@ -121,7 +121,7 @@
 	QDEL_NULL(boost)
 	QDEL_NULL(consume)
 
-///If this mob gets resisted by something, its trying to escape consumption.
+///If this mob gets resisted by something, it's trying to escape consumption.
 /mob/living/simple_animal/hostile/ooze/gelatinous/container_resist_act(mob/living/user)
 	. = ..()
 	if(!do_after(user, 6 SECONDS)) //6 second struggle

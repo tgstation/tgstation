@@ -63,7 +63,7 @@
 	var/confirm = tgui_alert(usr, "Drop a brain?", "Confirm", list("Yes", "No","Cancel"))
 	if(confirm == "Cancel")
 		return
-	//Due to the delay here its easy for something to have happened to the mob
+	//Due to the delay here it's easy for something to have happened to the mob
 	if(!victim)
 		return
 

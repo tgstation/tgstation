@@ -683,7 +683,7 @@
 		var/turf/corpse_turf = get_turf(corpse)
 		if(corpse_turf && is_station_level(corpse_turf.z))
 			spawn_locs += corpse_turf
-	if(!spawn_locs.len || spawn_locs.len < need_extra_spawns_value) //look for any morgue trays, crematoriums, ect if there weren't alot of dead bodies on the station to pick from
+	if(!spawn_locs.len || spawn_locs.len < need_extra_spawns_value) //look for any morgue trays, crematoriums, ect if there weren't a lot of dead bodies on the station to pick from
 		for(var/obj/structure/bodycontainer/corpse_container in GLOB.bodycontainers)
 			var/turf/container_turf = get_turf(corpse_container)
 			if(container_turf && is_station_level(container_turf.z))

@@ -6,7 +6,7 @@
   - experiment: <b>Sacrifice Cult - Cult has received a massive overhaul to how it
       works, focusing more on cult magics and sacrificing unbelievers. The most important
       changes are:</b>
-  - tweak: Cult starts off with alot more cultists, 6 cultists below 30 players and
+  - tweak: Cult starts off with a lot more cultists, 6 cultists below 30 players and
       9 above. The HoP can no longer be a round start cultist but is still convertible.
   - tweak: Cultists start off with join, blood, self, and hell. These give the runes
       for the sacrifice and convert.
@@ -81,7 +81,7 @@
       times over the course of a simple work shift, Centcom will attempt to trace
       the signal origin and pinpoint its source for station authorities.
   Steelpoint:
-  - rscadd: "Thanks to Nanotrasen's Construction division, the brig has recieved a\
+  - rscadd: "Thanks to Nanotrasen's Construction division, the brig has received a\
       \ overhaul in its design, to increase ease of movement, including an addition\
       \ of a \"prisioner release room\" and a insanity ward.\n\t\t"
   - tweak: Furthing concerns among commentators, Nanotrasen has shipped out additional

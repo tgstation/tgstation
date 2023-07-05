@@ -577,7 +577,7 @@
       installed. In addition, they move very slightly slower and have their kinetic
       accelerator's cooldown increased by 1 second.
   NTnet circuit fix:
-  - bugfix: Now NTnet circuits can recieve sender adress properly.Also, now messages
+  - bugfix: Now NTnet circuits can receive sender address  properly.Also, now messages
       could be sended to multiple recepiens.
   Xhuis:
   - rscadd: Admins may now spawn a debug circuit printer that can always print circuits,

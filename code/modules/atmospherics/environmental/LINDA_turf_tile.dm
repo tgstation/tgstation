@@ -580,7 +580,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 		if(!(checked_turf in atmos_adjacent_turfs) && !(atmos_supeconductivity & direction))
 			. |= direction
 
-///These two procs are a bit of a web, I belive in you
+///These two procs are a bit of a web, I believe in you
 /turf/proc/neighbor_conduct_with_src(turf/open/other)
 	if(!other.blocks_air) //Solid but neighbor is open
 		other.temperature_share_open_to_solid(src)

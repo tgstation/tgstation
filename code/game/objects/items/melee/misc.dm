@@ -331,7 +331,7 @@
 	var/static/list/ovens
 	/// The beam that links to the oven we use
 	var/datum/beam/beam
-	/// Whether or stick is extended and can recieve sausage
+	/// Whether or stick is extended and can receive sausage
 	var/extended = FALSE
 
 /obj/item/melee/roastingstick/Initialize(mapload)

@@ -13,7 +13,7 @@
 
 /obj/item/paper/fluff/ruins/interdyne/note_3
 	name = "The third note"
-	default_raw_text = "Something strange came in the last delivery, as expected one of the crates contained a store of plasma for us to make use of. But there was some kind of fungus growing on the edge of some of it. Before anyone could take a sample Jacob touched it with his bare hands, he's been getting steadily worse for wear for about a day now. Whatever this stuff is, its not safe...but it could be something to distract the higher ups with."
+	default_raw_text = "Something strange came in the last delivery, as expected one of the crates contained a store of plasma for us to make use of. But there was some kind of fungus growing on the edge of some of it. Before anyone could take a sample Jacob touched it with his bare hands, he's been getting steadily worse for wear for about a day now. Whatever this stuff is, it's not safe...but it could be something to distract the higher ups with."
 
 /obj/item/paper/fluff/ruins/interdyne/note_4
 	name = "The fourth note"

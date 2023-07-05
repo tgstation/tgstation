@@ -551,7 +551,7 @@ GLOBAL_LIST_EMPTY(lifts)
 
 		if(consider_anything_past)
 			foreign_contents_in_loc.len -= consider_anything_past
-			//hey cool this works, neat. this takes from the opposite side of the list that youd expect but its easy so idc
+			//hey cool this works, neat. this takes from the opposite side of the list that youd expect but it's easy so idc
 			//also this means that if you use consider_anything_past then foreign mobs are less likely to be deleted than foreign objects
 			//because internally the contents list is 2 linked lists of obj contents - mob contents, thus mobs are always last in the order
 			//when you iterate it.

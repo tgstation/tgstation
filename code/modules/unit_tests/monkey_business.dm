@@ -5,7 +5,7 @@
  * are set to have a 100% chance of attempting to use something next to them each Life
  *
  * This test basically just checks to see if attack procs are working correctly,
- * but its also hilarious and fun to watch locally.
+ * but it's also hilarious and fun to watch locally.
  */
 /datum/unit_test/monkey_business
 	priority = TEST_LONGER

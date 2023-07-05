@@ -43,7 +43,7 @@
 	DoSearchVar(global_vars, "Native Global", search_time = starting_time)
 	log_reftracker("Finished searching native globals")
 
-	for(var/datum/thing in world) //atoms (don't beleive its lies)
+	for(var/datum/thing in world) //atoms (don't belve its lies)
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
 	log_reftracker("Finished searching atoms")
 

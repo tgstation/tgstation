@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	var/ship_template_id = "ERROR"
 	///the key to the json list of pirate names
 	var/ship_name_pool = "some_json_key"
-	///inbound message title the station recieves
+	///inbound message title the station receives
 	var/threat_title = "Pay away the Space Bugs"
 	///the contents of the message sent to the station.
 	///%SHIPNAME in the content will be replaced with the pirate ship's name

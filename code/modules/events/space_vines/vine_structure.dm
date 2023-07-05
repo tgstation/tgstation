@@ -193,7 +193,7 @@
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		mutation.additional_atmos_processes(src, air)
 	if(!can_spread && (exposed_temperature >= VINE_FREEZING_POINT || (trait_flags & SPACEVINE_COLD_RESISTANT)))
-		can_spread = TRUE // not returning here just in case its now a plasmafire and the kudzu should be deleted
+		can_spread = TRUE // not returning here just in case it's now a plasmafire and the kudzu should be deleted
 	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD && !(trait_flags & SPACEVINE_HEAT_RESISTANT))
 		qdel(src)
 	else if (exposed_temperature < VINE_FREEZING_POINT && !(trait_flags & SPACEVINE_COLD_RESISTANT))

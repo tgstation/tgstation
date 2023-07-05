@@ -94,7 +94,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/cells_on_x_axis = 0
 	var/cells_on_y_axis = 0
 
-	///empty spatial grid cell content lists are just a reference to this instead of a standalone list to save memory without needed to check if its null when iterating
+	///empty spatial grid cell content lists are just a reference to this instead of a standalone list to save memory without needed to check if it's null when iterating
 	var/list/dummy_list = list()
 
 	///list of all of /mob/oranges_ear instances we have pregenerated for view() iteration speedup
@@ -552,8 +552,8 @@ SUBSYSTEM_DEF(spatial_grid)
 	return FALSE
 
 /**
- * remove this movable from the grid by finding the grid cell its in and removing it from that.
- * if it cant infer a grid cell its located in (e.g. if its in nullspace but it can happen if the grid isnt expanded to a z level), search every grid cell.
+ * remove this movable from the grid by finding the grid cell it's in and removing it from that.
+ * if it cant infer a grid cell it's located in (e.g. if it's in nullspace but it can happen if the grid isnt expanded to a z level), search every grid cell.
  */
 /datum/controller/subsystem/spatial_grid/proc/force_remove_from_grid(atom/movable/to_remove)
 	if(!to_remove?.spatial_grid_key)

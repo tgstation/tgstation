@@ -171,7 +171,7 @@
 	poster_item_desc = initial(selected.poster_item_desc)
 	poster_item_icon_state = initial(selected.poster_item_icon_state)
 	ruined = initial(selected.ruined)
-	if(length(GLOB.holidays) && prob(30)) // its the holidays! lets get festive
+	if(length(GLOB.holidays) && prob(30)) // it's the holidays! lets get festive
 		apply_holiday()
 	update_appearance()
 
@@ -776,7 +776,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 	never_random = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
-//This is being hardcoded here to ensure we don't print directionals from the library management computer because they act wierd as a poster item
+//This is being hardcoded here to ensure we don't print directionals from the library management computer because they act wrd as a poster item
 /obj/structure/sign/poster/official/random/directional
 	printable = FALSE
 

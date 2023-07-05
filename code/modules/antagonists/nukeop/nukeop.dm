@@ -449,7 +449,7 @@
 			parts += "<span class='redtext big'>[syndicate_name] operatives have earned Darwin Award!</span>"
 			parts += "<B>[syndicate_name] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't do that!"
 		if(NUKE_RESULT_HIJACK_DISK)
-			parts += "<span class='greentext big'>Syndicate Miniscule Victory!</span>"
+			parts += "<span class='greentext big'>Syndicate Minuscule Victory!</span>"
 			parts += "<B>[syndicate_name] operatives failed to destroy [station_name()], but they managed to secure the disk and hijack the emergency shuttle, causing it to land on the syndicate base. Good job?</B>"
 		if(NUKE_RESULT_HIJACK_NO_DISK)
 			parts += "<span class='greentext big'>Syndicate Insignificant Victory!</span>"

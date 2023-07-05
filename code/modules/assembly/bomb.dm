@@ -81,7 +81,7 @@
 	if(QDELETED(src))
 		return
 	if(status)
-		bombtank.ignite() //if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
+		bombtank.ignite() //if it's not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
 	else
 		bombtank.release()
 

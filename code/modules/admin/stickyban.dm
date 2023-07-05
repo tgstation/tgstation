@@ -415,7 +415,7 @@
 			SSstickyban.Populatedbcache()
 		if (SSstickyban.dbcacheexpire)
 			. = SSstickyban.dbcache[ckey]
-			//reset the cache incase its a newer ban (but only if we didn't update the cache recently)
+			//reset the cache incase it's a newer ban (but only if we didn't update the cache recently)
 			if (!. && SSstickyban.dbcacheexpire != world.time+STICKYBAN_DB_CACHE_TIME)
 				SSstickyban.dbcacheexpire = 1
 				SSstickyban.Populatedbcache()

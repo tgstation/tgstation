@@ -54,7 +54,7 @@
 /datum/component/label/proc/OnAttackby(datum/source, obj/item/attacker, mob/user)
 	SIGNAL_HANDLER
 
-	// If the attacking object is not a hand labeler or its mode is 1 (has a label ready to apply), return.
+	// If the attacking object is not a hand labeler or it's mode is 1 (has a label ready to apply), return.
 	// The hand labeler should be off (mode is 0), in order to remove a label.
 	var/obj/item/hand_labeler/labeler = attacker
 	if(!istype(labeler) || labeler.mode)

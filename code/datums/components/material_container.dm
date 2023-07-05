@@ -360,7 +360,7 @@
 /datum/component/material_container/proc/has_space(amt = 0)
 	return (total_amount + amt) <= max_amount
 
-/// Checks if its possible to afford a certain amount of materials. Takes a dictionary of materials.
+/// Checks if it's possible to afford a certain amount of materials. Takes a dictionary of materials.
 /datum/component/material_container/proc/has_materials(list/mats, multiplier=1)
 	if(!mats || !mats.len)
 		return FALSE
@@ -371,7 +371,7 @@
 			if(ispath(req_mat)) //Is this an actual material, or is it a category?
 				req_mat = GET_MATERIAL_REF(req_mat) //Get the ref
 
-			else // Its a category. (For example MAT_CATEGORY_RIGID)
+			else // It's a category. (For example MAT_CATEGORY_RIGID)
 				if(!has_enough_of_category(req_mat, mats[x], multiplier)) //Do we have enough of this category?
 					return FALSE
 				else
@@ -386,7 +386,7 @@
 /datum/component/material_container/proc/get_categories(list/mats)
 	var/list/categories = list()
 	for(var/x in mats) //Loop through all required materials
-		if(!istext(x)) //This means its not a category
+		if(!istext(x)) //This means it's not a category
 			continue
 		categories += x
 	return categories

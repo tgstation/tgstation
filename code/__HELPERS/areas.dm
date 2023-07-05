@@ -160,7 +160,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			//unregister the stuff from its old area
 			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
 
-			//register the stuff to its new area. special exception for apc as its not registered to this signal
+			//register the stuff to its new area. special exception for apc as it's not registered to this signal
 			if(istype(stuff, /obj/machinery/power/apc))
 				var/obj/machinery/power/apc/area_apc = stuff
 				area_apc.assign_to_area()

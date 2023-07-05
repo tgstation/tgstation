@@ -503,7 +503,7 @@
 	SAY High five!
 	DELAY 20
 	NAME Henry Fresh
-	SAY Oh, new order. Its for, hah, *Funny Food*.
+	SAY Oh, new order. It's for, hah, *Funny Food*.
 	DELAY 20
 	NAME Aron Blue
 	SAY Easy!
@@ -544,7 +544,7 @@
 	SAY Wait.
 	DELAY 10
 	NAME Henry Fresh
-	SAY You know its called Baked Potato, right?
+	SAY You know it's called Baked Potato, right?
 	DELAY 10
 	SOUND sparks
 	DELAY 20
@@ -554,7 +554,7 @@
 	SOUND sparks
 	DELAY 10
 	NAME Henry Fresh
-	SAY Its back.
+	SAY It's back.
 	DELAY 20
 	NAME Henry Fresh
 	SAY Haha, it brought a raw potato.

@@ -193,7 +193,7 @@
 	if(default_deconstruction_crowbar(attack_item))
 		return
 
-	if(panel_open) //Can't insert objects when its screwed open
+	if(panel_open) //Can't insert objects when it's screwed open
 		return TRUE
 
 	if (istype(attack_item, /obj/item/reagent_containers/cup/coffeepot) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
@@ -498,7 +498,7 @@
 
 /*
  * impressa coffee maker
- * its supposed to be a premium line product, so its cargo-only, the board cant be therefore researched
+ * it's supposed to be a premium line product, so it's cargo-only, the board cant be therefore researched
  */
 
 /obj/machinery/coffeemaker/impressa
@@ -508,7 +508,7 @@
 	icon_state = "coffeemaker_impressa"
 	circuit = /obj/item/circuitboard/machine/coffeemaker/impressa
 	initial_cartridge = null //no cartridge, just coffee beans
-	brew_time = 15 SECONDS //industrial grade, its faster than the regular one
+	brew_time = 15 SECONDS //industrial grade, it's faster than the regular one
 	density = TRUE
 	pass_flags = PASSTABLE
 	/// Current amount of coffee beans stored

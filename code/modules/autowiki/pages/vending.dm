@@ -6,7 +6,7 @@
 
 	var/list/cached_products = list()
 
-	// `powered()` checks if its in a null loc to say it's not powered.
+	// `powered()` checks if it's in a null loc to say it's not powered.
 	// So we put it inside, something
 	var/obj/parent = new
 

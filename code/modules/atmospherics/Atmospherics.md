@@ -289,7 +289,7 @@ So, a new proc was added, `sleep_active_turf()`. It removes the active turf from
 
 You'd think this would cause issues with maintaining the shape of an excited group, however this isn't actually a priority, since `garbage_collect()` and the subsequent rebuild in `process_cell()` causes turfs that are actually active to reform, just as it always has. This has benefits, as it lessens the tendency of one group to cover a huge space, equalize all at once, and fuck with things.
 
-There's another issue here however, how do we deal with things that react to heat? A firelock shouldn't just open because the turf that the alarm is on went to sleep. Thus, atom_process, as I mentioned before, a list of atoms with requirements and things to do. It processes them until their requirements are not met, then it removes them from its list them.
+There's another issue here however, how do we deal with things that react to heat? A firelock shouldn't just open because the turf that the alarm is on went to sleep. Thus, atom_process, as I mentioned before, a list of atoms with requirements and things to do. It processes them until their requirements are not met, then it removes them from its list.
 
 There's one more major aspect of environmental atmos to cover, and while it's not the most misunderstood, it is the code with the worst set dressing.
 

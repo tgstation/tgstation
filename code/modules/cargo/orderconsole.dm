@@ -174,7 +174,7 @@
 
 /**
  * adds an supply pack to the checkout cart
- * * params - an list with id of the supply pack to add to the cart as its only element
+ * * params - an list with id of the supply pack to add to the cart as it's only element
  */
 /obj/machinery/computer/cargo/proc/add_item(params)
 	if(is_express)
