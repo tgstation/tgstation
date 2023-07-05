@@ -264,8 +264,7 @@
 	AddElement(/datum/element/turf_z_transparency)
 
 /turf/open/space/openspace/Destroy()
-	// Signals persist through destory, GO HOME
-	var/turf/below = SSmapping.get_turf_below(src)
+	// Signals persist through destroy, GO HOME
 	if(below)
 		UnregisterSignal(below, COMSIG_TURF_CHANGE)
 	return ..()
