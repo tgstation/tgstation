@@ -5,8 +5,6 @@
 	grow_as = /mob/living/basic/giant_spider/guard
 	name = "guard spiderling"
 	desc = "Furry and brown, it looks defenseless. This one has sparkling red eyes."
-	icon_state = "guard_spiderling"
-	icon_dead = "guard_spiderling_dead"
 
 	/// Will differentiate into the "ambush" giant spider.
 /mob/living/basic/spiderling/ambush
@@ -71,7 +69,7 @@
 	grow_as = /mob/living/basic/giant_spider/tarantula
 	name = "tarantula_spiderling"
 	desc = "Furry and black, it looks defenseless. This one has abyssal red eyes."
-	icon_state = "taratula_spiderling"
+	icon_state = "tarantula_spiderling"
 	icon_dead = "tarantula_spiderling_dead"
 	gold_core_spawnable = NO_SPAWN
 

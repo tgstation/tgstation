@@ -1,5 +1,0 @@
-author: "itseasytosee"
-delete-after: True
-changes:
-  - spellcheck: "You should see a lot less \"you can not move while bucked too X\" messages where they don't make sense."
-  - admin: "Added a petrify smite. Try it out on your least favorite player!"
