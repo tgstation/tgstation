@@ -65,7 +65,7 @@
 /// Remove weakrefs to atoms which have been killed or deleted without us picking it up somehow
 /datum/component/spawner/proc/validate_references()
 	for (var/datum/weakref/weak_thing as anything in spawned_things)
-		var/atom/previously_spawned = weak_thing.resolve()
+		var/atom/previously_spawned = weak_thing?.resolve()
 		if (!previously_spawned)
 			spawned_things -= weak_thing
 			continue

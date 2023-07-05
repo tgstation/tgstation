@@ -73,7 +73,7 @@
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message(span_warning("[src] digs its tentacles under [target]!"))
-		new /obj/effect/temp_visual/goliath_tentacle/original(tturf, src)
+		new /obj/effect/goliath_tentacle(tturf, src)
 		ranged_cooldown = world.time + ranged_cooldown_time
 		icon_state = icon_aggro
 		pre_attack = 0
@@ -173,68 +173,12 @@
 		for(var/t in cached_tentacle_turfs)
 			if(isopenturf(t))
 				if(prob(10))
-					new /obj/effect/temp_visual/goliath_tentacle(t, src)
+					new /obj/effect/goliath_tentacle(t)
 			else
 				cached_tentacle_turfs -= t
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
 	from_spawner = TRUE
-
-//tentacles
-/obj/effect/temp_visual/goliath_tentacle
-	name = "goliath tentacle"
-	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
-	icon_state = "goliath_tentacle_spawn"
-	layer = BELOW_MOB_LAYER
-	plane = GAME_PLANE
-	var/mob/living/spawner
-
-/obj/effect/temp_visual/goliath_tentacle/Initialize(mapload, mob/living/new_spawner)
-	. = ..()
-	for(var/obj/effect/temp_visual/goliath_tentacle/T in loc)
-		if(T != src)
-			return INITIALIZE_HINT_QDEL
-	if(!QDELETED(new_spawner))
-		spawner = new_spawner
-	if(ismineralturf(loc))
-		var/turf/closed/mineral/M = loc
-		M.gets_drilled()
-	deltimer(timerid)
-	timerid = addtimer(CALLBACK(src, PROC_REF(tripanim)), 7, TIMER_STOPPABLE)
-
-/obj/effect/temp_visual/goliath_tentacle/original/Initialize(mapload, new_spawner)
-	. = ..()
-	var/list/directions = GLOB.cardinals.Copy()
-	for(var/i in 1 to 3)
-		var/spawndir = pick_n_take(directions)
-		var/turf/T = get_step(src, spawndir)
-		if(T)
-			new /obj/effect/temp_visual/goliath_tentacle(T, spawner)
-
-/obj/effect/temp_visual/goliath_tentacle/proc/tripanim()
-	icon_state = "goliath_tentacle_wiggle"
-	deltimer(timerid)
-	timerid = addtimer(CALLBACK(src, PROC_REF(trip)), 3, TIMER_STOPPABLE)
-
-/obj/effect/temp_visual/goliath_tentacle/proc/trip()
-	var/latched = FALSE
-	for(var/mob/living/L in loc)
-		if((!QDELETED(spawner) && spawner.faction_check_mob(L)) || L.stat == DEAD)
-			continue
-		visible_message(span_danger("[src] grabs hold of [L]!"))
-		L.Stun(100)
-		L.adjustBruteLoss(rand(10,15))
-		latched = TRUE
-	if(!latched)
-		retract()
-	else
-		deltimer(timerid)
-		timerid = addtimer(CALLBACK(src, PROC_REF(retract)), 10, TIMER_STOPPABLE)
-
-/obj/effect/temp_visual/goliath_tentacle/proc/retract()
-	icon_state = "goliath_tentacle_retract"
-	deltimer(timerid)
-	timerid = QDEL_IN_STOPPABLE(src, 7)
 
 /obj/item/saddle
 	name = "saddle"
