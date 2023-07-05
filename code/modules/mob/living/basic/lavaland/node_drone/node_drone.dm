@@ -22,7 +22,7 @@
 	response_harm_continuous = "clangs"
 	response_harm_simple = "clang"
 
-	ai_controller = /datum/ai_controller/basic_controller/mouse
+	ai_controller = /datum/ai_controller/basic_controller/node_drone
 
 	/// Is the drone currently attached to a vent?
 	var/active_node = FALSE
@@ -44,8 +44,31 @@
 
 /mob/living/basic/node_drone/death(gibbed)
 	. = ..(TRUE)
-	say("I'm dead now!")
+	say("I'm dead, NOW!")
 	qdel(src)
 
 
+/// The node drone AI controller
+/datum/ai_controller/basic_controller/node_drone
+	blackboard = list(
+		BB_BASIC_MOB_FLEEING = FALSE, // Will flee when the vent lies undefended.
+		BB_CURRENT_HUNTING_TARGET = null, // Hunts for vents.
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(), // Use this to find vents to run away from
+	)
 
+	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		// Top priority is to look for and execute hunts for cheese even if someone is looking at us
+		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cheese,
+		// Next priority is see if anyone is looking at us
+		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
+		// Skedaddle
+		/datum/ai_planning_subtree/flee_target/mouse,
+		// Otherwise, look for and execute hunts for cabling
+		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables,
+	)
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/target_caught(mob/living/hunter, obj/structure/cable/hunted)
+	hunter.UnarmedAttack(hunted, TRUE)

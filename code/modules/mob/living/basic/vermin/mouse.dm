@@ -376,19 +376,13 @@
 /// Don't look for anything to run away from if you are distracted by being adjacent to cheese
 /datum/ai_planning_subtree/flee_target/mouse
 	flee_behaviour = /datum/ai_behavior/run_away_from_target/mouse
-
-/datum/ai_planning_subtree/flee_target/mouse
+	run_distance = 3 // Mostly exists in small tunnels, don't get ahead of yourself
 
 /datum/ai_planning_subtree/flee_target/mouse/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/atom/hunted_cheese = controller.blackboard[BB_CURRENT_HUNTING_TARGET]
 	if (!isnull(hunted_cheese))
 		return // We see some cheese, which is more important than our life
 	return ..()
-
-/datum/ai_planning_subtree/flee_target/mouse/select
-
-/datum/ai_behavior/run_away_from_target/mouse
-	run_distance = 3 // Mostly exists in small tunnels, don't get ahead of yourself
 
 /// AI controller for rats, slightly more complex than mice becuase they attack people
 /datum/ai_controller/basic_controller/mouse/rat
