@@ -384,12 +384,13 @@ export class PlaneMasterDebug extends Component {
       const connect = connectSources[ref];
       const source_plane = plane_info[connect.source_ref];
       const target_plane = plane_info[connect.target_ref];
-      connections.push({
+      const newConnection: Connection = {
         color: connect.connect_color,
         from: planeToPosition(source_plane, connect.source_index, false),
         to: planeToPosition(target_plane, connect.target_index, true),
         ref: ref,
-      });
+      };
+      connections.push(newConnection);
     }
 
     return (

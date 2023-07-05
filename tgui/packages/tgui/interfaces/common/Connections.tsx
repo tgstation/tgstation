@@ -18,10 +18,10 @@ export type Connection = {
   from: Position;
   // X, Y ending point
   to: Position;
-  // Color of the line
-  color: string;
-  // Type of line - Curvy or Straight / angled
-  style: ConnectionStyle;
+  // Color of the line, defaults to blue
+  color?: string;
+  // Type of line - Curvy or Straight / angled, defaults to curvy
+  style?: ConnectionStyle;
   // Optional: the ref of what element this connection is sourced
   ref?: string;
 };
