@@ -480,7 +480,7 @@
 /atom/movable/screen/lobby/shutter/proc/expand_bottom_buttons(mob/dead/new_player/new_player)
 	for(var/atom/movable/screen/lobby/button/bottom/button_to_scroll_down in bottom_buttons)
 		//the buttons are off-screen, so we sync them up to come down with the shutter
-		animate(button_to_scroll_down, transform = button_to_scroll_down.button_matrix.Translate(x = 0, y = -146), time = SHUTTER_MOVEMENT_DURATION, CUBIC_EASING = easing|EASE_OUT)
+		animate(button_to_scroll_down, transform = button_to_scroll_down.button_matrix.Translate(x = 0, y = -146), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
 		button_to_scroll_down.button_matrix = matrix()
 		if(istype(button_to_scroll_down, /atom/movable/screen/lobby/button/bottom/poll))
 			var/atom/movable/screen/lobby/button/bottom/poll/poll_button = button_to_scroll_down
