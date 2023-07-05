@@ -229,10 +229,10 @@
 /obj/machinery/status_display/proc/display_shuttle_status(obj/docking_port/mobile/shuttle)
 	if(!shuttle)
 		// the shuttle is missing - no processing
-		set_messages("shutl?","")
+		set_messages("shutl","not in service")
 		return PROCESS_KILL
 	else if(shuttle.timer)
-		var/line1 = "- [shuttle.getModeStr()] -"
+		var/line1 = "<<< [shuttle.getModeStr()]"
 		var/line2 = shuttle.getTimerStr()
 
 		set_messages(line1, line2)
@@ -387,8 +387,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	if(!SSshuttle.supply)
 		// Might be missing in our first update on initialize before shuttles
 		// have loaded. Cross our fingers that it will soon return.
-		line1 = "CARGO"
-		line2 = "shutl?"
+		line1 = "shutl"
+		line2 = "not in service"
 	else if(SSshuttle.supply.mode == SHUTTLE_IDLE)
 		if(is_station_level(SSshuttle.supply.z))
 			line1 = "CARGO"
@@ -397,7 +397,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 			line1 = ""
 			line2 = ""
 	else
-		line1 = "- [SSshuttle.supply.getModeStr()] -"
+		line1 = "<<< [SSshuttle.supply.getModeStr()]"
 		line2 = SSshuttle.supply.getTimerStr()
 	set_messages(line1, line2)
 

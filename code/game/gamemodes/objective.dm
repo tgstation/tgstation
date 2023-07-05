@@ -170,7 +170,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
 			for(var/obj/equipment_path as anything in special_equipment)
 				var/obj/equipment_object = new equipment_path
-				if(!receiver_current.equip_in_one_of_slots(equipment_object, slots))
+				if(!receiver_current.equip_in_one_of_slots(equipment_object, slots, indirect_action = TRUE))
 					LAZYINITLIST(receiver.failed_special_equipment)
 					receiver.failed_special_equipment += equipment_path
 					receiver.try_give_equipment_fallback()

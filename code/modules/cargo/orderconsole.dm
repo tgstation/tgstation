@@ -304,7 +304,7 @@
 				//create the paper from the SSshuttle.shopping_list
 				if(length(SSshuttle.shopping_list))
 					var/obj/item/paper/requisition_paper = new(get_turf(src))
-					requisition_paper.name = "requisition form"
+					requisition_paper.name = "requisition form - [station_time_timestamp()]"
 					var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 					requisition_text += "<hr/>"
 					requisition_text += "Time of Order: [station_time_timestamp()]<br/><br/>"
@@ -323,6 +323,7 @@
 							requisition_text += "- Reason Given: [reason]</br>"
 						requisition_text += "</br></br>"
 					requisition_paper.add_raw_text(requisition_text)
+					requisition_paper.color = "#9ef5ff"
 					requisition_paper.update_appearance()
 
 				ui.user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)

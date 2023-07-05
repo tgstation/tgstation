@@ -38,3 +38,6 @@
 
 /// Ensures openspace never spawns on the bottom of a z stack
 /datum/unit_test/focus_only/openspace_clear
+
+/// Checks to ensure that variables expected to exist in a job datum (for config reasons) actually exist
+/datum/unit_test/focus_only/missing_job_datum_variables

@@ -649,6 +649,15 @@
 	SEND_SIGNAL(src, COMSIG_BODYPART_CHANGED_OWNER, new_owner, old_owner)
 	var/needs_update_disabled = FALSE //Only really relevant if there's an owner
 	if(old_owner)
+		if(held_index)
+			old_owner.on_lost_hand(src)
+			if(old_owner.hud_used)
+				var/atom/movable/screen/inventory/hand/hand = old_owner.hud_used.hand_slots["[held_index]"]
+				if(hand)
+					hand.update_appearance()
+			old_owner.update_worn_gloves()
+		if(speed_modifier)
+			old_owner.update_bodypart_speed_modifier()
 		if(length(bodypart_traits))
 			old_owner.remove_traits(bodypart_traits, bodypart_trait_source)
 		if(initial(can_be_disabled))
@@ -664,6 +673,15 @@
 				))
 		UnregisterSignal(old_owner, COMSIG_ATOM_RESTYLE)
 	if(owner)
+		if(held_index)
+			owner.on_added_hand(src, held_index)
+			if(owner.hud_used)
+				var/atom/movable/screen/inventory/hand/hand = owner.hud_used.hand_slots["[held_index]"]
+				if(hand)
+					hand.update_appearance()
+			owner.update_worn_gloves()
+		if(speed_modifier)
+			owner.update_bodypart_speed_modifier()
 		if(length(bodypart_traits))
 			owner.add_traits(bodypart_traits, bodypart_trait_source)
 		if(initial(can_be_disabled))
@@ -781,7 +799,7 @@
 	if(variable_color)
 		draw_color = variable_color
 	else if(should_draw_greyscale)
-		draw_color = (species_color) || (skin_tone && skintone2hex(skin_tone))
+		draw_color = species_color || (skin_tone ? skintone2hex(skin_tone) : null)
 	else
 		draw_color = null
 
@@ -791,25 +809,24 @@
 	// There should technically to be an ishuman(owner) check here, but it is absent because no basetype carbons use bodyparts
 	// No, xenos don't actually use bodyparts. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
-	var/datum/species/owner_species = human_owner.dna.species
+
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
-
-	if(owner_species.use_skintones)
+	if(HAS_TRAIT(human_owner, TRAIT_USES_SKINTONES))
 		skin_tone = human_owner.skin_tone
-	else
+	else if(HAS_TRAIT(human_owner, TRAIT_MUTANT_COLORS))
 		skin_tone = ""
-
-	if(HAS_TRAIT(owner, TRAIT_MUTANT_COLORS))
+		var/datum/species/owner_species = human_owner.dna.species
 		if(owner_species.fixed_mut_color)
 			species_color = owner_species.fixed_mut_color
 		else
 			species_color = human_owner.dna.features["mcolor"]
 	else
-		species_color = null
+		skin_tone = ""
+		species_color = ""
 
 	draw_color = variable_color
 	if(should_draw_greyscale) //Should the limb be colored?
-		draw_color ||= (species_color) || (skin_tone && skintone2hex(skin_tone))
+		draw_color ||= species_color || (skin_tone ? skintone2hex(skin_tone) : null)
 
 	recolor_external_organs()
 	return TRUE
