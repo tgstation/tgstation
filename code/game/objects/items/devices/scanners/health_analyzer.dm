@@ -494,7 +494,7 @@
 #define AID_EMOTION_SAD "sad"
 
 /// Displays wounds with extended information on their status vs medscanners
-/proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/wound/scanner)
+/proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/simple/scanner)
 	if(!istype(patient) || user.incapacitated())
 		return
 
@@ -557,14 +557,14 @@
 	show_emotion(AID_EMOTION_ANGRY)
 
 /obj/item/healthanalyzer/simple/proc/violence(mob/user)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-		if(isliving(user))
-			var/mob/living/L = user
-			to_chat(L, span_warning("\The [src] makes a disappointed buzz and pricks your finger for being greedy. Ow!"))
-			flick(icon_state + "_pinprick", src)
-			L.adjustBruteLoss(4)
-			L.dropItemToGround(src)
-			show_emotion(AID_EMOTION_HAPPY)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+	if(isliving(user))
+		var/mob/living/L = user
+		to_chat(L, span_warning("\The [src] makes a disappointed buzz and pricks your finger for being greedy. Ow!"))
+		flick(icon_state + "_pinprick", src)
+		L.adjustBruteLoss(4)
+		L.dropItemToGround(src)
+		show_emotion(AID_EMOTION_HAPPY)
 
 /obj/item/healthanalyzer/simple/attack(mob/living/carbon/patient, mob/living/carbon/human/user)
 	if(!user.can_read(src) || user.is_blind())
@@ -616,30 +616,24 @@
 	desc = "Another of MeLo-Tech's dubiously useful medsci scanners, the disease analyzer is a pretty rare find these days - NT found out that giving their hospitals the lowest-common-denominator pandemic equipment resulted in too much financial loss of life to be profitable. There's rumours that the inbuilt AI is jealous of the first aid analyzer's success."
 	icon_state = "disease_aid"
 	mode = SCANNER_NO_MODE
-	// Cooldown for when the analyzer will allow you to ask it for encouragement. Don't get greedy!
-	var/next_encouragement
-	// The analyzer's current emotion. Affects the sprite overlays and if it's going to prick you for being greedy or not.
-	var/emotion = AID_EMOTION_NEUTRAL
-
-/obj/item/healthanalyzer/simple/disease/attack_self(mob/user)
-	if(next_encouragement < world.time)
-		playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
-		var/list/encouragements = list("encourages you to take your medication", "briefly displays a spinning cartoon heart", "reasures you about your condition", \
-				"reminds you that everyone is doing their best", "displays a message wishing you well", "displays a message saying how proud it is that you're taking care of yourself", "formally absolves you of all your sins")
+	encouragements = list("encourages you to take your medication", "briefly displays a spinning cartoon heart", "reasures you about your condition", \
+			"reminds you that everyone is doing their best", "displays a message wishing you well", "displays a message saying how proud it is that you're taking care of yourself", "formally absolves you of all your sins")
+	patience = 20 SECONDS
 
 /obj/item/healthanalyzer/simple/disease/greed_warning(mob/user)
 	to_chat(user, span_warning("\The [src] displays an eerily high-definition frowny face, chastizing you for asking it for too much encouragement."))
 	show_emotion(AID_EMOTION_ANGRY)
 
 /obj/item/healthanalyzer/simple/disease/violence(mob/user)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-		if(isliving(user))
-			var/mob/living/L = user
-			to_chat(L, span_warning("\The [src] makes a disappointed buzz and pricks your finger for being greedy. Ow!"))
-			flick(icon_state + "_pinprick", src)
-			L.adjustBruteLoss(4)
-			L.dropItemToGround(src)
-			show_emotion(AID_EMOTION_HAPPY)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+	if(isliving(user))
+		var/mob/living/L = user
+		to_chat(L, span_warning("\The [src] makes a disappointed buzz and pricks your finger for being greedy. Ow!"))
+		flick(icon_state + "_pinprick", src)
+		L.adjustBruteLoss(1)
+		L.reagents.add_reagent(/datum/reagent/toxin, rand(1, 3))
+		L.dropItemToGround(src)
+		show_emotion(AID_EMOTION_ANGRY)
 
 /obj/item/healthanalyzer/simple/disease/attack(mob/living/carbon/patient, mob/living/carbon/human/user)
 	if(!user.can_read(src) || user.is_blind())
@@ -673,12 +667,8 @@
 	if(emotion != AID_EMOTION_NEUTRAL)
 		addtimer(CALLBACK(src, PROC_REF(reset_emotions)), 4 SECONDS) // longer on purpose
 
-/obj/item/healthanalyzer/simple/disease/proc/reset_emotions()
-	emotion = AID_EMOTION_NEUTRAL
-	update_appearance(UPDATE_OVERLAYS)
-
 //Checks the individual for any diseases that are visible to the scanner, and displays the diseases in the attacked to the attacker.
-/proc/diseasescan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/wound/scanner)
+/proc/diseasescan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/simple/scanner)
 	if(!istype(patient) || user.incapacitated())
 		return
 
@@ -691,7 +681,6 @@
 
 	if(!length(render))
 		playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
-		to_chat(user, span_notice("The patient has no diseases."))
 		to_chat(user, span_notice("\The [scanner] makes a happy ping and briefly displays a smiley face with several exclamation points! It's really excited to report that [patient] has no diseases!"))
 		scanner.emotion = AID_EMOTION_HAPPY
 	else
