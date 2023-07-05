@@ -779,6 +779,37 @@ em {
   }
 }
 
+.honknosis {
+  color: #202020;
+  font-weight: bold;
+  font-size: 150%;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  animation: honkcolor 1500ms infinite;
+  animation-direction: alternate;
+}
+
+@keyframes honkcolor {
+  0% {
+    color: #d44343;
+  }
+
+  25% {
+    color: #ffb400;
+  }
+
+  50% {
+    color: #9ed450;
+  }
+
+  75% {
+    color: #4bb1df;
+  }
+
+  100% {
+    color: #9068d4;
+  }
+}
+
 .phobia {
   color: #dd0000;
   font-weight: bold;

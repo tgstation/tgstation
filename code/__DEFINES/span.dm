@@ -59,6 +59,7 @@
 #define span_holoparasite(str) ("<span class='holoparasite'>" + str + "</span>")
 #define span_boldholoparasite(str) ("<span class='holoparasite bold'>" + str + "</span>")
 #define span_hypnophrase(str) ("<span class='hypnophrase'>" + str + "</span>")
+#define span_honknosis(str) ("<span class='honknosis'>" + str + "</span>")
 #define span_icon(str) ("<span class='icon'>" + str + "</span>")
 #define span_info(str) ("<span class='info'>" + str + "</span>")
 #define span_infoplain(str) ("<span class='infoplain'>" + str + "</span>")

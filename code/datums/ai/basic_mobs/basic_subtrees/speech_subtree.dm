@@ -169,3 +169,9 @@
 	emote_hear = list("buzzes.", "clacks.")
 	emote_see = list("shakes their head.", "twitches their antennae.")
 	speak = list("BZZZZT!", "CHTCHTCHT!", "Bzzz", "ChtChtCht")
+
+/datum/ai_planning_subtree/random_speech/cluwne
+	speech_chance = 1
+	emote_hear = list("honks.")
+	emote_see = list("honks.")
+	speak = list("HONK! HONK! HONK! HONK!","AAAAAAAAAAAAAAAAAA!!", "HONK HENK HONK!!", "Honk Honk!", "HEEEEEEEEEEEEENK!!")
