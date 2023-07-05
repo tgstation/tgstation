@@ -48,3 +48,15 @@
 	icon = 'monkestation/icons/obj/plushes.dmi'
 	icon_state = "sammi"
 	squeak_override = list('monkestation/sound/voice/laugh/simian/monkey_laugh_1.ogg'=1)
+
+/obj/item/toy/plush/knightplush
+	name = "knight plush"
+	desc = "D'aww he's gonna save the world, yes he is!"
+	icon = 'monkestation/icons/obj/plushes.dmi'
+	icon_state = "knight"
+
+/obj/item/toy/plush/turnipplush
+	name = "turnip plush"
+	desc = "This bastard's about to commit tax evasion!"
+	icon = 'monkestation/icons/obj/plushes.dmi'
+	icon_state = "turnip"
