@@ -964,10 +964,14 @@
 
 /datum/quirk/item_quirk/junkie/alcoholic/post_add()
 	. = ..()
-	//ugh this sucks but cant use initial on lists
-	var/obj/item/reagent_containers/brandy_container = new drug_container_type()
-	favorite_alcohol = brandy_container.list_reagents[1]
-	qdel(brandy_container)
+	var/obj/item/reagent_containers/brandy_container = GLOB.alcohol_containers[drug_container_type]
+	if(!brandy_container)
+		stack_trace("Alcoholic quirk added while the GLOB.alcohol_containers is (somehow) not initialized!")
+		brandy_container = new drug_container_type()
+		favorite_alcohol = brandy_container.list_reagents[1]
+		qdel(brandy_container)
+	else
+		favorite_alcohol = brandy_container.list_reagents[1]
 
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_alcoholic, protagonist = quirk_holder, preferred_brandy = initial(favorite_alcohol.name))
 	// alcoholic livers have 25% less health and healing
