@@ -66,6 +66,7 @@
 		/datum/element/contextual_screentip_bare_hands, \
 		rmb_text = "Fold up", \
 	)
+	AddElement(/datum/element/noisy_movement)
 
 /obj/structure/bed/roller/examine(mob/user)
 	. = ..()
@@ -111,12 +112,6 @@
 	icon_state = "up"
 	//Push them up from the normal lying position
 	M.pixel_y = M.base_pixel_y
-
-/obj/structure/bed/roller/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
-
 
 /obj/structure/bed/roller/post_unbuckle_mob(mob/living/M)
 	set_density(FALSE)

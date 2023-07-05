@@ -1,0 +1,4 @@
+author: "SomeRandomOwl"
+delete-after: True
+changes:
+  - qol: "Request Internet Sound now has the option to credit the person who requested the Sound. Defaults to anonymous."
