@@ -42,7 +42,7 @@
 	icon_state = "hgpirate"
 	inhand_icon_state = null
 
-/obj/item/clothing/suit/costume/pirate/armored
+/obj/item/clothing/suit/costume/pirate/captain/armored
 	armor_type = /datum/armor/pirate_armored
 	strip_delay = 40
 	equip_delay_other = 20

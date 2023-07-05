@@ -112,6 +112,7 @@
 	for(var/i in 1 to 10)
 		var/item = pick(contains)
 		new item(C)
+
 /datum/supply_pack/medical/experimentalmedicine
 	name = "Experimental Medicine Crate"
 	desc = "A crate containing the medication required for living with Hereditary Manifold Sickness, Sansufentanyl."

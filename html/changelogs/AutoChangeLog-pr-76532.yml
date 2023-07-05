@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - image: "New directional sprites for spiderlings, with movement animations."
+  - bugfix: "Dead spiderlings will be the same colour as they were when they were alive."
+  - bugfix: "Tarantula spiderlings are no longer invisible,"
