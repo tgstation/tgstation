@@ -13,7 +13,6 @@
 	new /obj/item/pet_carrier(src)
 	new /obj/item/storage/bag/garment/captain(src)
 	new /obj/item/computer_disk/command/captain(src)
-	new /obj/item/storage/box/silver_ids(src)
 	new /obj/item/radio/headset/heads/captain/alt(src)
 	new /obj/item/radio/headset/heads/captain(src)
 	new /obj/item/storage/belt/sabre(src)
