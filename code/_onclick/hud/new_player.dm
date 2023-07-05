@@ -428,11 +428,11 @@
 	//wait for the shutter to come down
 	animate(src, transform = ce_button_matrix, time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
 	//then pull the button up with the shutter and leave it on the edge of the screen
-	animate(transform = ce_button_matrix.Translate(x = 0, y = 134), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
+	animate(transform = ce_button_matrix.Translate(x = 0, y = 134), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
 
 ///Extends the button back to its usual spot
 /atom/movable/screen/lobby/button/collapse/proc/expand_button()
-	animate(src, transform = ce_button_matrix.Translate(x = 0, y = -134), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
+	animate(src, transform = ce_button_matrix.Translate(x = 0, y = -134), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
 	ce_button_matrix = matrix()
 
 ///Disables/enables menu buttons on the client's screen
@@ -469,7 +469,7 @@
 		//wait for the shutter to come down
 		animate(button_to_scroll_up, transform = button_to_scroll_up.button_matrix, time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
 		//then pull the buttons up with the shutter
-		animate(transform = button_to_scroll_up.button_matrix.Translate(x = 0, y = 146), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
+		animate(transform = button_to_scroll_up.button_matrix.Translate(x = 0, y = 146), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
 		if(istype(button_to_scroll_up, /atom/movable/screen/lobby/button/bottom/poll))
 			var/atom/movable/screen/lobby/button/bottom/poll/poll_button = button_to_scroll_up
 			if(!poll_button.new_poll) //don't deactivate the poll button unless a poll is up (it's already inactive)
@@ -480,7 +480,7 @@
 /atom/movable/screen/lobby/shutter/proc/expand_bottom_buttons(mob/dead/new_player/new_player)
 	for(var/atom/movable/screen/lobby/button/bottom/button_to_scroll_down in bottom_buttons)
 		//the buttons are off-screen, so we sync them up to come down with the shutter
-		animate(button_to_scroll_down, transform = button_to_scroll_down.button_matrix.Translate(x = 0, y = -146), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
+		animate(button_to_scroll_down, transform = button_to_scroll_down.button_matrix.Translate(x = 0, y = -146), time = SHUTTER_MOVEMENT_DURATION, CUBIC_EASING = easing|EASE_OUT)
 		button_to_scroll_down.button_matrix = matrix()
 		if(istype(button_to_scroll_down, /atom/movable/screen/lobby/button/bottom/poll))
 			var/atom/movable/screen/lobby/button/bottom/poll/poll_button = button_to_scroll_down
@@ -491,14 +491,14 @@
 ///Sets up the shutter pulling down and up. It's the same animation for both collapsing and expanding the menu.
 /atom/movable/screen/lobby/shutter/proc/setup_shutter_animation()
 	//bring down the shutter
-	animate(src, transform = matrix(), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
+	animate(src, transform = matrix(), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
 
 	//wait a little bit before bringing the shutter up
 	animate(transform = matrix(), time = SHUTTER_WAIT_DURATION)
 
 	//pull the shutter back off-screen
 	shutter_matrix = matrix()
-	animate(transform = shutter_matrix.Translate(x = 0, y = 143), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
+	animate(transform = shutter_matrix.Translate(x = 0, y = 143), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
 
 #undef SHUTTER_MOVEMENT_DURATION
 #undef SHUTTER_WAIT_DURATION
