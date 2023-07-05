@@ -1,0 +1,4 @@
+author: "Vishenka0704"
+delete-after: True
+changes:
+  - bugfix: "Added a forgotten reason for not being allowed to work if the age is low."
