@@ -29,12 +29,12 @@ export type Connection = {
 export const Connections = (
   props: {
     connections: Connection[];
-    zLayer?: unknown;
-    lineWidth?: unknown;
+    zLayer?: string;
+    lineWidth?: string;
   },
   context
 ) => {
-  const { connections, zLayer = -1, lineWidth = '2px' } = props;
+  const { connections, zLayer = '-1', lineWidth = '2px' } = props;
 
   const isColorClass = (str) => {
     if (typeof str === 'string') {
