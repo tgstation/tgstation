@@ -29,18 +29,21 @@
 	owner.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/white(owner), ITEM_SLOT_GLOVES) // ditto
 
 /datum/mutation/human/cluwne/on_life()
-	if(!prob(15) || !owner.IsUnconscious())
+	if(owner.IsUnconscious())
 		return
-	owner.setOrganLoss(ORGAN_SLOT_BRAIN, 199)
+	if(prob(66))
+		owner.setOrganLoss(ORGAN_SLOT_BRAIN, 199)
 	switch(rand(1, 6))
 		if(1)
 			owner.say("HONK")
-		if(2 to 5)
+		if(2 to 4)
 			owner.emote("scream")
-		if(6)
+		if(5)
 			owner.Stun(1)
 			owner.Knockdown(20)
 			owner.do_jitter_animation(300)
+		if(6)
+			return
 
 /datum/mutation/human/cluwne/on_losing(mob/living/carbon/owner)
 	owner.adjust_fire_stacks(1)
@@ -54,8 +57,9 @@
  */
 /mob/living/carbon/proc/cluwne_transform_dna()
 	dna.add_mutation(/datum/mutation/human/cluwne)
-	emote("scream")
 	regenerate_icons()
-	visible_message(span_danger("[src]'s body glows green, the glow dissipating only to leave behind a cluwne formerly known as [src]!"), \
-					span_danger("Your brain feels like it's being torn apart, there is only the honkmother now."))
+	visible_message(span_danger("[src]'s body glows green, dissipating only to leave behind a cluwne monstrosity formerly known as [src]!"), \
+					span_honknosis("Your brain feels like it's being torn apart! There is only the <i>Honkmother</i> now."),\
+					span_danger("Hooooonk Hooonk henk henk. Honk?"),\
+					)
 	flash_act()
