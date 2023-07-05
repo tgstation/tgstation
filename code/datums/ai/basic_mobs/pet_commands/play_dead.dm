@@ -6,7 +6,7 @@
 	var/mob/living/basic/basic_pawn = controller.pawn
 	if(!istype(basic_pawn) || basic_pawn.stat) // Can't act dead if you're dead
 		return
-	basic_pawn.emote("deathgasp", intentional=FALSE)
+	basic_pawn.emote("deathgasp", intentional = EMOTE_EXECUTION_FORCED)
 	basic_pawn.look_dead()
 
 /datum/ai_behavior/play_dead/perform(seconds_per_tick, datum/ai_controller/controller)

@@ -15,4 +15,4 @@
 	. = ..()
 	if(.)
 		return
-	return user.mob.emote(emote_key, intentional=TRUE)
+	return user.mob.emote(emote_key, intentional = EMOTE_EXECUTION_USER_KEYBINDING)

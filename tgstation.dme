@@ -88,6 +88,7 @@
 #include "code\__DEFINES\dynamic.dm"
 #include "code\__DEFINES\economy.dm"
 #include "code\__DEFINES\electrified_buckle.dm"
+#include "code\__DEFINES\emotes.dm"
 #include "code\__DEFINES\events.dm"
 #include "code\__DEFINES\exosuit_fab.dm"
 #include "code\__DEFINES\experisci.dm"

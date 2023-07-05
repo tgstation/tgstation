@@ -78,11 +78,11 @@
  * * user - Person that is trying to send the emote.
  * * params - Parameters added after the emote.
  * * type_override - Override to the current emote_type.
- * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
+ * * intentional - Bitflag that ascertains if the emote was intentional by the user or forced by the game, see __DEFINES/emotes.dm. Defaults to the value that says "forced by the game"
  *
  * Returns TRUE if it was able to run the emote, FALSE otherwise.
  */
-/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
+/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = EMOTE_EXECUTION_FORCED)
 	. = TRUE
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
@@ -128,7 +128,7 @@
  *
  * Arguments:
  * * user - Person that is trying to send the emote.
- * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
+ * * intentional - Bitflag that ascertains if the emote was intentional by the user or forced by the game, see __DEFINES/emotes.dm. Defaults to the value that says "forced by the game"
  *
  * Returns FALSE if the cooldown is not over, TRUE if the cooldown is over.
  */
@@ -182,7 +182,7 @@
  * Arguments:
  * * user - Person that is trying to send the emote.
  * * msg - The string to modify.
- * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
+ * * intentional - Bitflag that ascertains if the emote was intentional by the user or forced by the game, see __DEFINES/emotes.dm. Defaults to the value that says "forced by the game"
  *
  * Returns the new message, or msg directly, if no change was needed.
  */
@@ -224,18 +224,18 @@
  * Arguments:
  * * user - Person that is trying to send the emote.
  * * status_check - Bool that says whether we should check their stat or not.
- * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
+ * * intentional - Bitflag that ascertains if the emote was intentional by the user or forced by the game, see __DEFINES/emotes.dm. Defaults to the value that says "forced by the game"
  *
  * Returns a bool about whether or not the user can run the emote.
  */
-/datum/emote/proc/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
+/datum/emote/proc/can_run_emote(mob/user, status_check = TRUE, intentional = EMOTE_EXECUTION_FORCED)
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
 		if(user.stat > stat_allowed)
-			if(!intentional)
+			if(intentional == EMOTE_EXECUTION_FORCED)
 				return FALSE
 			switch(user.stat)
 				if(SOFT_CRIT)
@@ -246,7 +246,7 @@
 					to_chat(user, span_warning("You cannot [key] while dead!"))
 			return FALSE
 		if(hands_use_check && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-			if(!intentional)
+			if(intentional == EMOTE_EXECUTION_FORCED)
 				return FALSE
 			to_chat(user, span_warning("You cannot use your hands to [key] right now!"))
 			return FALSE
@@ -261,11 +261,11 @@
  *
  * Arguments:
  * * user - Person that is doing the emote.
- * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
+ * * intentional - Bitflag that ascertains if the emote was intentional by the user or forced by the game, see __DEFINES/emotes.dm. Defaults to the value that says "forced by the game"
  *
  * Returns a bool about whether or not the user should play a sound when performing the emote.
  */
-/datum/emote/proc/should_play_sound(mob/user, intentional = FALSE)
+/datum/emote/proc/should_play_sound(mob/user, intentional = EMOTE_EXECUTION_FORCED)
 	if(emote_type & EMOTE_AUDIBLE && !muzzle_ignore)
 		if(user.is_muzzled())
 			return FALSE
@@ -278,7 +278,7 @@
 			if(!loud_mouth.get_organ_slot(ORGAN_SLOT_TONGUE))
 				return FALSE
 
-	if(only_forced_audio && intentional)
+	if(only_forced_audio && (intentional == EMOTE_EXECUTION_FORCED))
 		return FALSE
 	return TRUE
 

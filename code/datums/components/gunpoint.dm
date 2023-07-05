@@ -49,7 +49,7 @@
 	shooter.Immobilize(0.75 SECONDS / distance)
 	if(!HAS_TRAIT(target, TRAIT_NOFEAR_HOLDUPS))
 		target.Immobilize(0.75 SECONDS / distance)
-		target.emote("gaspshock", intentional = FALSE)
+		target.emote("gaspshock", intentional = EMOTE_EXECUTION_FORCED)
 		add_memory_in_range(target, 7, /datum/memory/held_at_gunpoint, protagonist = target, deuteragonist = shooter, antagonist = weapon)
 
 	shooter.apply_status_effect(/datum/status_effect/holdup, shooter)

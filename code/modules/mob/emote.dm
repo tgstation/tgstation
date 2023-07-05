@@ -12,7 +12,7 @@
 #define BEYBLADE_CONFUSION_LIMIT (40 SECONDS)
 
 //The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
+/mob/proc/emote(act, m_type = null, message = null, intentional = EMOTE_EXECUTION_FORCED, force_silence = FALSE)
 	var/param = message
 	var/custom_param = findchar(act, " ")
 	if(custom_param)
@@ -52,7 +52,7 @@
 		for(var/datum/emote/P in GLOB.emote_list[key])
 			if(P.key in keys)
 				continue
-			if(P.can_run_emote(user, status_check = FALSE , intentional = TRUE))
+			if(P.can_run_emote(user, status_check = FALSE , intentional = EMOTE_EXECUTION_USER_CHAT))
 				keys += P.key
 
 	keys = sort_list(keys)
@@ -77,7 +77,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!can_run_emote(user, intentional=intentional))
+	if(!can_run_emote(user, intentional = intentional))
 		return
 	if(isliving(user))
 		var/mob/living/flippy_mcgee = user
@@ -111,7 +111,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!can_run_emote(user, intentional=intentional))
+	if(!can_run_emote(user, intentional = intentional))
 		return
 	if(!iscarbon(user))
 		return

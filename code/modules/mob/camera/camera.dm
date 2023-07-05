@@ -40,7 +40,7 @@
 	z_move_flags |= ZMOVE_IGNORE_OBSTACLES  //cameras do not respect these FLOORS you speak so much of
 	return ..()
 
-/mob/camera/emote(act, m_type=1, message = null, intentional = FALSE, force_silence = FALSE)
+/mob/camera/emote(act, m_type=1, message = null, intentional = EMOTE_EXECUTION_FORCED, force_silence = FALSE)
 	if(has_emotes)
 		return ..()
 	return FALSE

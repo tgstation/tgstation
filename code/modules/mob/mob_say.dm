@@ -147,7 +147,11 @@
 ///Check if this message is an emote
 /mob/proc/check_emote(message, forced)
 	if(message[1] == "*")
-		emote(copytext(message, length(message[1]) + 1), intentional = !forced)
+		if(forced)
+			emote(copytext(message, length(message[1]) + 1), intentional = EMOTE_EXECUTION_FORCED)
+		else
+			emote(copytext(message, length(message[1]) + 1), intentional = EMOTE_EXECUTION_USER_CHAT)
+
 		return TRUE
 
 ///Check if the mob has a hivemind channel

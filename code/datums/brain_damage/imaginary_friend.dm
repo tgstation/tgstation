@@ -286,7 +286,7 @@
 	mob_type_allowed_typecache = /mob/camera/imaginary_friend
 
 // We have to create our own since we can only show emotes to ourselves and our owner
-/datum/emote/imaginary_friend/run_emote(mob/user, params, type_override, intentional = FALSE)
+/datum/emote/imaginary_friend/run_emote(mob/user, params, type_override, intentional = EMOTE_EXECUTION_FORCED)
 	user.log_talk(message, LOG_EMOTE)
 	if(!can_run_emote(user, FALSE, intentional))
 		return FALSE
@@ -336,7 +336,7 @@
 /datum/emote/imaginary_friend/custom/can_run_emote(mob/user, status_check, intentional)
 	return ..() && intentional
 
-/datum/emote/imaginary_friend/custom/run_emote(mob/user, params, type_override = null, intentional = FALSE)
+/datum/emote/imaginary_friend/custom/run_emote(mob/user, params, type_override = null, intentional = EMOTE_EXECUTION_FORCED)
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
 	if(is_banned_from(user.ckey, "Emote"))
