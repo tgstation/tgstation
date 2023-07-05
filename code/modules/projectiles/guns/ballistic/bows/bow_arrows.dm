@@ -4,6 +4,7 @@
 	desc = "Stabby Stabman!"
 	icon = 'icons/obj/weapons/guns/bows/arrows.dmi'
 	icon_state = "arrow"
+	base_icon_state = "arrow"
 	inhand_icon_state = "arrow"
 	projectile_type = /obj/projectile/bullet/arrow
 	flags_1 = NONE
@@ -18,17 +19,11 @@
 	AddElement(/datum/element/envenomable_casing)
 	AddElement(/datum/element/caseless, reusable)
 
-///base arrow projectile
-/obj/projectile/bullet/arrow
-	name = "arrow"
-	desc = "Ow! Get it out of me!"
-	icon = 'icons/obj/weapons/guns/bows/arrows.dmi'
-	icon_state = "arrow_projectile"
-	damage = 50
-	speed = 1
-	range = 25
+/obj/item/ammo_casing/arrow/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]"
 
-///*sigh* NON-REUSABLE base arrow projectile. In the future: let's componentize the reusable subtype, jesus
+///base arrow projectile
 /obj/projectile/bullet/arrow
 	name = "arrow"
 	desc = "Ow! Get it out of me!"
