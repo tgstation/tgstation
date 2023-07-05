@@ -29,9 +29,9 @@
 
 	var/mob/living/carbon/player = user
 	if(slot == ITEM_SLOT_MASK)
-		log_admin("[key_name(victim)] was made into a cluwne by [src]")
-		message_admins("[key_name(victim)] got cluwned by [src]")
-		to_chat(victim, span_userdanger("The masks straps suddenly tighten to your face! Your thoughts are erased by a horrible green light!"))
+		log_admin("[key_name(player)] was made into a cluwne by [src]")
+		message_admins("[key_name(player)] got cluwned by [src]")
+		to_chat(player, span_userdanger("The masks straps suddenly tighten to your face! Your thoughts are erased by a horrible green light!"))
 		player.cluwne_transform_dna()
 
 	return ..()

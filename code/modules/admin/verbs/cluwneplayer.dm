@@ -29,9 +29,7 @@
 
 	var/mob/living/basic/cluwne/newmob = new(get_turf(src))
 	player_mind.transfer_to(newmob)
-
-	if(key)  // afk
-		newmob.key = key
+	newmob.key = key
 
 	to_chat(player_mind, span_userdanger("<i>Honk honk!</i>"))
 	qdel(src)
