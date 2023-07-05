@@ -512,7 +512,7 @@
 	inhand_icon_state = "scythe0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	force = 17
+	force = 15
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
