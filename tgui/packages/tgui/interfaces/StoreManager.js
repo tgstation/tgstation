@@ -17,7 +17,7 @@ export const StoreManager = (props, context) => {
   });
 
   return (
-    <Window title="Store Manager" width={500} height={650}>
+    <Window title="Store Manager" width={500} height={650} theme="generic">
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>

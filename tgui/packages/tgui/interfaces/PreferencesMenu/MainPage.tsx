@@ -125,7 +125,7 @@ const ChoicedSelection = (
       features[supplementalFeature].small_supplemental === undefined);
   return (
     <Box
-      className="theme-generic-yellow"
+      className="theme-generic"
       style={{
         height: `${
           CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_MULTIPLIER

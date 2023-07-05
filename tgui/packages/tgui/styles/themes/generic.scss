@@ -3,6 +3,7 @@
 
 $generic: #484455;
 $accent: #4f56a5;
+$accent-2: #9660b9;
 
 @use '../colors.scss' with (
   $fg-map-keys: (),
@@ -20,7 +21,8 @@ $accent: #4f56a5;
     '../components/Button.scss',
     $with: (
       'color-default': $accent,
-      'color-transparent-text': rgba(227, 240, 255, 0.75)
+      'color-transparent-text': rgba(227, 240, 255, 0.75),
+      'color-selected': $accent-2
     )
   );
   @include meta.load-css(
