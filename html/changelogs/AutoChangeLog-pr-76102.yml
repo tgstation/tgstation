@@ -1,0 +1,6 @@
+author: "san7890"
+delete-after: True
+changes:
+  - server: "job_config.toml should now comply with reload-configuration verb, meaning you can hot-reload the configuration from disk and have it apply ingame automatically."
+  - config: "The documentation for setting Minimum Character Age on a per-Job basis has been altered to be more explicit."
+  - bugfix: "The Minimum Character Age configuration entry is now sanitized to ensure that it's within the codebase-defined ages, since there's no (legitimate) way to get a character outside of those ages anyways. Invalid values will log to the config log."
