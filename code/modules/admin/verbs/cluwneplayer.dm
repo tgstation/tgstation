@@ -14,7 +14,11 @@
 		return
 
 	to_chat(player_mind, span_danger("Your mind is being ripped apart like threads in fabric, everything you've ever known is gone."))
-	drop_all_held_items()
+	for(var/obj/item/content in src)
+		if(!dropItemToGround(content))
+			qdel(content)
+	regenerate_icons()
+
 	Paralyze(3 SECONDS)
 
 	sleep(3 SECONDS)
@@ -28,8 +32,10 @@
 		return
 
 	var/mob/living/basic/cluwne/newmob = new(get_turf(src))
-	player_mind.transfer_to(newmob)
-	newmob.key = key
+	if(player_mind)
+		player_mind.transfer_to(newmob)
+	else
+		newmob.key = key
 
 	to_chat(player_mind, span_userdanger("<i>Honk honk!</i>"))
 	qdel(src)
