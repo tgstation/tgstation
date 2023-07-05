@@ -41,7 +41,7 @@
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
-		/obj/item/healthanalyzer/wound = 1,
+		/obj/item/healthanalyzer/simple = 1,
 	)
 	generate_items_inside(items_inside,src)
 
@@ -54,7 +54,7 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/healthanalyzer/wound = 1,
+		/obj/item/healthanalyzer/simple = 1,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/suture/emergency = 1,
 		/obj/item/stack/medical/ointment = 1,
@@ -201,7 +201,7 @@
 		/obj/item/reagent_containers/syringe/syriniver = 3,
 		/obj/item/storage/pill_bottle/potassiodide = 1,
 		/obj/item/reagent_containers/hypospray/medipen/penacid = 1,
-		/obj/item/healthanalyzer/disease = 1,
+		/obj/item/healthanalyzer/simple/disease = 1,
 		)
 	generate_items_inside(items_inside,src)
 
@@ -245,7 +245,7 @@
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/probital = 1,
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
-		/obj/item/healthanalyzer/wound = 1,
+		/obj/item/healthanalyzer/simple = 1,
 		)
 	generate_items_inside(items_inside,src)
 

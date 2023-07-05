@@ -946,7 +946,7 @@
 	var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
 	quirk_holder.ForceContractDisease(hms)
 	give_item_to_holder(/obj/item/storage/pill_bottle/sansufentanyl, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK),flavour_text = "You've been provided with medication to help manage your condition. Take it regularly to avoid complications.")
-	give_item_to_holder(/obj/item/healthanalyzer/disease, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK))
+	give_item_to_holder(/obj/item/healthanalyzer/simple/disease, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK))
 
 /datum/quirk/unstable
 	name = "Unstable"

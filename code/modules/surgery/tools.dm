@@ -256,8 +256,10 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "surgical_processor"
 	item_flags = NOBLUDGEON
+	// List of surgeries downloaded into the device.
 	var/list/loaded_surgeries = list()
-	var/downloaded = FALSE
+	// If a surgery has been downloaded in. Will cause the display to have a noticeable effect - helps to realize you forgot to load anything in.
+	var/downloaded = TRUE
 
 /obj/item/surgical_processor/Initialize(mapload)
 	. = ..()
@@ -313,7 +315,6 @@
 	. = ..()
 	if(downloaded)
 		. += mutable_appearance(src.icon, "+downloaded")
-		downloaded = FALSE
 
 /obj/item/surgical_processor/proc/check_surgery(mob/user, datum/surgery/surgery, mob/patient)
 	SIGNAL_HANDLER
