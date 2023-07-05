@@ -143,10 +143,11 @@
 
 	data["requests"] = list()
 	for(var/datum/supply_order/order in SSshuttle.request_list)
-		amount_by_name[order.pack.name] += 1
+		var/datum/supply_pack/pack = order.pack
+		amount_by_name[pack.name] += 1
 		data["requests"] += list(list(
-			"object" = order.pack.name,
-			"cost" = order.pack.get_cost(),
+			"object" = pack.name,
+			"cost" = pack.get_cost(),
 			"orderer" = order.orderer,
 			"reason" = order.reason,
 			"id" = order.id
@@ -240,12 +241,8 @@
 		say("ERROR: Small crates may only be purchased by private accounts.")
 		return
 
-	var/similar_count = 0
-	for(var/datum/supply_order/order as anything in (SSshuttle.shopping_list | SSshuttle.request_list))
-		if(order.pack == pack)
-			similar_count += 1
-
-	if(similar_count >= CARGO_MAX_ORDER)
+	var/similar_count = SSshuttle.supply.get_order_count(pack)
+	if(similar_count == OVER_ORDER_LIMIT)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 		return

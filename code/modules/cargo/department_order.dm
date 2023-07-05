@@ -142,12 +142,8 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		if(GLOB.areas_by_type[delivery_area_type])
 			chosen_delivery_area = delivery_area_type
 			break
-	var/similar_count = 0
-	for(var/datum/supply_order/order as anything in (SSshuttle.shopping_list | SSshuttle.request_list))
-		if(order.pack == pack)
-			similar_count += 1
-
-	if(similar_count >= CARGO_MAX_ORDER)
+			
+	if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 		return
