@@ -40,7 +40,7 @@
 
 	if(isliving(the_target)) //Targeting vs living mobs
 		var/mob/living/L = the_target
-		if(faction_check(living_mob, L) || (L.stat > stat_attack))
+		if(faction_check(living_mob, L)  || (L.stat > stat_attack))
 			return FALSE
 		return TRUE
 
