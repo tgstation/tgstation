@@ -66,7 +66,7 @@
 	greyscale_colors = null
 	greyscale_config = null
 	worn_icon_state = "rollerskates"
-	slowdown = SHOES_SLOWDOWN+1
+	slowdown = SHOE_SPEED_SLOW
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
 	custom_premium_price = PAYCHECK_CREW * 5
 	custom_price = PAYCHECK_CREW * 5
@@ -79,7 +79,7 @@
 	greyscale_colors = null
 	greyscale_config = null
 	worn_icon_state = "skishoes"
-	slowdown = SHOES_SLOWDOWN+1
+	slowdown = SHOE_SPEED_SLOW
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	custom_premium_price = PAYCHECK_CREW * 1.6
 	custom_price = PAYCHECK_CREW * 1.6

@@ -5,7 +5,7 @@
 	inhand_icon_state = "clown_shoes"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	item_flags = DROPDEL
-	slowdown = SHOES_SLOWDOWN+1
+	slowdown = SHOE_SPEED_SLOW
 	/// Sad man
 	var/enabled_waddle = TRUE
 	/// List of possible sounds for the squeak component to use, allows for different clown shoe subtypes to have different sounds.
