@@ -10,7 +10,7 @@
 	attack_verb_simple = "bonk"
 	attack_vis_effect = ATTACK_EFFECT_KICK
 	blood_volume = BLOOD_VOLUME_NORMAL
-	faction = FACTION_CLOWN
+	faction = list(FACTION_CLOWN)
 	friendly_verb_continuous = "boops"
 	friendly_verb_simple = "boop"
 	gender = MALE
