@@ -112,7 +112,7 @@
 	if(!istype(target, /mob/living/basic/mushroom))
 		return
 	var/mob/living/basic/mushroom/victim = target
-	if(victim.stat != DEAD || victim.bruised)
+	if(victim.stat != DEAD)
 		return
 	if(victim.faint_ticker < 2)
 		victim.faint_ticker++
@@ -124,7 +124,7 @@
 /mob/living/basic/mushroom/proc/consume_mushroom(mob/living/basic/mushroom/consumed)
 	src.visible_message(span_warning("[src] devours [consumed]!"))
 	var/level_gain = (consumed.powerlevel - powerlevel)
-	if(level_gain >= 0 && !consumed.ckey)//Player shrooms can't level up to become robust gods.
+	if(level_gain >= 0 && !ckey && !consumed.bruised)//Player shrooms can't level up to become robust gods.
 		consumed.LevelUp(level_gain)
 	adjustBruteLoss(-consumed.maxHealth)
 	qdel(consumed)
