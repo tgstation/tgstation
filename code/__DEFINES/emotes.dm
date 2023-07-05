@@ -1,4 +1,4 @@
-// Bitflag defines used to ascertain the _why_ this emote is being executed to determine how intentional it was (either user-initiated or game-initiated)
+// Bitflag defines used to ascertain the _why_ this emote is being executed to determine what path we took if it was intentional (either user-initiated or game-initiated)
 /// This emote was forced by the game, default to this if it's not a user actually executing this emote.
 #define EMOTE_EXECUTION_FORCED NONE
 /// This emote was executed by the user via keybindings.

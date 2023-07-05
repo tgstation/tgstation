@@ -334,7 +334,10 @@
 	message = null
 
 /datum/emote/imaginary_friend/custom/can_run_emote(mob/user, status_check, intentional)
-	return ..() && intentional
+	if(intentional == EMOTE_EXECUTION_FORCED)
+		return FALSE
+
+	return ..()
 
 /datum/emote/imaginary_friend/custom/run_emote(mob/user, params, type_override = null, intentional = EMOTE_EXECUTION_FORCED)
 	if(!can_run_emote(user, TRUE, intentional))

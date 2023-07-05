@@ -23,7 +23,7 @@
 	var/list/key_emotes = GLOB.emote_list[act]
 
 	if(!length(key_emotes))
-		if(intentional && !force_silence)
+		if((intentional != EMOTE_EXECUTION_FORCED) && !force_silence)
 			to_chat(src, span_notice("'[act]' emote does not exist. Say *help for a list."))
 		return FALSE
 	var/silenced = FALSE
@@ -35,7 +35,7 @@
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, P, act, m_type, message, intentional)
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTED(P.key))
 			return TRUE
-	if(intentional && !silenced && !force_silence)
+	if((intentional != EMOTE_EXECUTION_FORCED) && !silenced && !force_silence)
 		to_chat(src, span_notice("Unusable emote '[act]'. Say *help for a list."))
 	return FALSE
 

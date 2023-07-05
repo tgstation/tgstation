@@ -73,7 +73,7 @@
 	if(!.)
 		return FALSE
 
-	if(!intentional || !iscarbon(user) || isnull(user.client) || isnull(user.client.prefs))
+	if(!(intentional & EMOTE_EXECUTION_USER_KEYBINDING) || !iscarbon(user) || isnull(user.client) || isnull(user.client.prefs))
 		return TRUE
 
 	var/datum/preferences/cached_prefs = user.client.prefs

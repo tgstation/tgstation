@@ -133,7 +133,7 @@
  * Returns FALSE if the cooldown is not over, TRUE if the cooldown is over.
  */
 /datum/emote/proc/check_cooldown(mob/user, intentional)
-	if(!intentional)
+	if(intentional == EMOTE_EXECUTION_FORCED)
 		return TRUE
 	if(user.emotes_used && user.emotes_used[src] + cooldown > world.time)
 		var/datum/emote/default_emote = /datum/emote
