@@ -279,20 +279,21 @@ Security HUDs! Basic mode shows only the job.
 		holder.icon_state = null
 		set_hud_image_inactive(i)
 
-	for(var/obj/item/implant/I in implants) //TOOOO DOOOO ADD THE OTHER IMPLANTS HERE
-		if(istype(I, /obj/item/implant/tracking))
-			holder = hud_list[IMPTRACK_HUD]
-			var/icon/IC = icon(icon, icon_state, dir)
-			holder.pixel_y = IC.Height() - world.icon_size
-			holder.icon_state = "hud_imp_tracking"
-			set_hud_image_active(IMPTRACK_HUD)
+	for(var/obj/item/implant/current_implant in implants) //TOOOO DOOOO ADD THE OTHER IMPLANTS HERE
+		switch(current_implant)
+			if(/obj/item/implant/tracking)
+				holder = hud_list[IMPTRACK_HUD]
+				var/icon/IC = icon(icon, icon_state, dir)
+				holder.pixel_y = IC.Height() - world.icon_size
+				holder.icon_state = "hud_imp_tracking"
+				set_hud_image_active(IMPTRACK_HUD)
 
-		else if(istype(I, /obj/item/implant/chem))
-			holder = hud_list[IMPCHEM_HUD]
-			var/icon/IC = icon(icon, icon_state, dir)
-			holder.pixel_y = IC.Height() - world.icon_size
-			holder.icon_state = "hud_imp_chem"
-			set_hud_image_active(IMPCHEM_HUD)
+			if(/obj/item/implant/chem)
+				holder = hud_list[IMPCHEM_HUD]
+				var/icon/IC = icon(icon, icon_state, dir)
+				holder.pixel_y = IC.Height() - world.icon_size
+				holder.icon_state = "hud_imp_chem"
+				set_hud_image_active(IMPCHEM_HUD)
 
 	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
 		holder = hud_list[IMPLOYAL_HUD]
