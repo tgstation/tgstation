@@ -44,7 +44,7 @@
 	savefile_key = "sound_tts_volume"
 	savefile_identifier = PREFERENCE_PLAYER
 
-	minimum = 1
+	minimum = 0
 	maximum = 100
 
 /datum/preference/numeric/sound_tts_volume/create_default_value()
