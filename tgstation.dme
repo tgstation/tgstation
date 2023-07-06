@@ -4013,6 +4013,7 @@
 #include "code\modules\mob\living\basic\lavaland\bileworm\bileworm_vileworm.dm"
 #include "code\modules\mob\living\basic\lavaland\goliath\goliath.dm"
 #include "code\modules\mob\living\basic\lavaland\goliath\goliath_actions.dm"
+#include "code\modules\mob\living\basic\lavaland\goliath\goliath_ai.dm"
 #include "code\modules\mob\living\basic\lavaland\goliath\tentacle.dm"
 #include "code\modules\mob\living\basic\pets\dog.dm"
 #include "code\modules\mob\living\basic\pets\pet.dm"

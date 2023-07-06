@@ -11,7 +11,7 @@
 	gender = MALE // Female ones are the bipedal elites
 	basic_mob_flags = IMMUNE_TO_FISTS
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	speed = 3
+	speed = 30 // These things are SO slow
 	maxHealth = 300
 	health = 300
 	friendly_verb_continuous = "wails at"
@@ -27,18 +27,31 @@
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
 
+	ai_controller = /datum/ai_controller/basic_controller/goliath
+
 	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
 	butcher_results = list(/obj/item/food/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
 	/// Icon state to use when tentacles are available
 	var/tentacle_warning_state = "goliath_preattack"
+	/// Can this kind of goliath be tamed?
+	var/tameable = TRUE
+	/// Has this particular goliath been tamed?
+	var/tamed = FALSE
+	/// Can someone ride us around like a horse?
+	var/saddled = FALSE
 	/// Slight cooldown to prevent double-dipping if we use both abilities at once
 	COOLDOWN_DECLARE(ability_animation_cooldown)
+	/// Things we want to eat off the floor (or a plate, we're not picky)
+	var/static/list/goliath_foods = list(/obj/item/food/grown/ash_flora, /obj/item/food/bait/worm)
 
 /mob/living/basic/mining/goliath/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_TENTACLE_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
+	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = goliath_foods)
+	if (tameable)
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 	var/datum/action/cooldown/goliath_tentacles/tentacles = new (src)
 	tentacles.Grant(src)
@@ -49,6 +62,8 @@
 
 	tentacles_ready()
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, goliath_foods)
+	ai_controller.set_blackboard_key(BB_GOLIATH_TENTACLES, tentacles)
 
 /// When we use an ability, activate some kind of visual tell
 /mob/living/basic/mining/goliath/proc/used_ability(mob/living/source, datum/action/cooldown/ability)
@@ -70,3 +85,7 @@
 	if (stat == DEAD)
 		return
 	icon_state = tentacle_warning_state
+
+/// Get ready for mounting
+/mob/living/basic/mining/goliath/proc/tamed()
+	tamed = TRUE

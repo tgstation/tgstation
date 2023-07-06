@@ -309,3 +309,6 @@
 //Festivus AI keys
 /// Key where we store the charging apc ability
 #define BB_FESTIVE_APC "BB_festive_apc"
+
+/// Key where we store the tentacleing ability
+#define BB_GOLIATH_TENTACLES "BB_goliath_tentacles"
