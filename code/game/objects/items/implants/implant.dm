@@ -66,9 +66,9 @@
 	for(var/X in target.implants)
 		var/obj/item/implant/other_implant = X
 
-		if(other_implant.implant_flags |= IMPLANT_TYPE_SECURITY)
+		if(other_implant.implant_flags & IMPLANT_TYPE_SECURITY)
 			security_implants++
-			if(security_implants > SECURITY_IMPLANT_CAP)
+			if(security_implants >= SECURITY_IMPLANT_CAP)
 				balloon_alert_to_viewers("too many security implants!", vision_distance = 3)
 				return FALSE
 

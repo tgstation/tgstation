@@ -11,7 +11,7 @@
 /obj/item/implant/beacon/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Robust Corp JMP-21 Fugitive Retrieval Implant<BR>
-				<b>Life:</b> Deactivates upon death but remains within the body.<BR>
+				<b>Life:</b> Deactivates upon death after ten minutes, but remains within the body.<BR>
 				<b>Important Notes: N/A</B><BR>
 				<HR>
 				<b>Implant Details: </b><BR>
@@ -26,3 +26,11 @@
 /obj/item/implant/beacon/Destroy()
 	GLOB.tracked_beacon_implants -= src
 	return ..()
+
+/obj/item/implanter/beacon
+	imp_type = /obj/item/implant/beacon
+
+/obj/item/implantcase/beacon
+	name = "implant case - 'Beacon'"
+	desc = "A glass case containing a beacon implant."
+	imp_type = /obj/item/implant/beacon
