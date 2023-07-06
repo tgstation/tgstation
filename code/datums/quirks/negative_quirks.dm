@@ -966,7 +966,7 @@
 /datum/quirk/item_quirk/junkie/alcoholic/post_add()
 	. = ..()
 	var/obj/item/reagent_containers/brandy_container = GLOB.alcohol_containers[drug_container_type]
-	if(!brandy_container)
+	if(isnull(brandy_container))
 		stack_trace("Alcoholic quirk added while the GLOB.alcohol_containers is (somehow) not initialized!")
 		brandy_container = new drug_container_type()
 		favorite_alcohol = brandy_container.list_reagents[1]
