@@ -18,3 +18,11 @@
 				<b>Function:</b> Acts as a teleportation beacon that can be tracked by any standard bluespace transponder.
 				Using this, you can teleport to whoever has this implant inside of them."}
 	return dat
+
+/obj/item/implant/beacon/Initialize(mapload)
+	. = ..()
+	GLOB.tracked_beacon_implants += src
+
+/obj/item/implant/beacon/Destroy()
+	GLOB.tracked_beacon_implants -= src
+	return ..()
