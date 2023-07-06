@@ -33,6 +33,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		//Astract types meant to scream bloody murder if spawned in raw
 		/obj/item/organ,
 		/obj/item/organ/wings,
+		/obj/item/organ/wings/functional,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)

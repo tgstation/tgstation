@@ -18,11 +18,9 @@
 
 ///The true wings that you can use to fly and shit (you cant actually shit with them)
 /obj/item/organ/wings/functional
+	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/functional
 	///The flight action object
 	var/datum/action/innate/flight/fly
-
-	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/functional
-
 	///Are our wings open or closed?
 	var/wings_open = FALSE
 
