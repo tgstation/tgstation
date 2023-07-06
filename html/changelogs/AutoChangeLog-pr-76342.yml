@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixes some species / mobs keeping an understanding of galcom despite not being intended to."

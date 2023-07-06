@@ -92,11 +92,8 @@
 	SEND_SIGNAL(owner, COMSIG_CARBON_REMOVE_LIMB, src, dismembered)
 	SEND_SIGNAL(src, COMSIG_BODYPART_REMOVED, owner, dismembered)
 	update_limb(dropping_limb = TRUE)
-	//limb is out and about, it can't really be considered an implant
-	bodypart_flags &= ~BODYPART_IMPLANTED
+	bodypart_flags &= ~BODYPART_IMPLANTED //limb is out and about, it can't really be considered an implant
 	owner.remove_bodypart(src)
-	if(speed_modifier)
-		owner.update_bodypart_speed_modifier()
 
 	for(var/datum/wound/wound as anything in wounds)
 		wound.remove_wound(TRUE)
@@ -125,7 +122,7 @@
 	if(!special)
 		if(phantom_owner.dna)
 			for(var/datum/mutation/human/mutation as anything in phantom_owner.dna.mutations) //some mutations require having specific limbs to be kept.
-				if(mutation.limb_req && mutation.limb_req == body_zone)
+				if(mutation.limb_req && (mutation.limb_req == body_zone))
 					to_chat(phantom_owner, span_warning("You feel your [mutation] deactivating from the loss of your [body_zone]!"))
 					phantom_owner.dna.force_lose(mutation)
 
@@ -136,7 +133,6 @@
 			organ.transfer_to_limb(src, phantom_owner)
 
 	update_icon_dropped()
-	synchronize_bodytypes(phantom_owner)
 	phantom_owner.update_health_hud() //update the healthdoll
 	phantom_owner.update_body()
 	phantom_owner.update_body_parts()
@@ -331,15 +327,6 @@
 	moveToNullspace()
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
-	if(held_index)
-		new_limb_owner.on_added_hand(src, held_index)
-		if(new_limb_owner.hud_used)
-			var/atom/movable/screen/inventory/hand/hand = new_limb_owner.hud_used.hand_slots["[held_index]"]
-			if(hand)
-				hand.update_appearance()
-		new_limb_owner.update_worn_gloves()
-	if(speed_modifier)
-		new_limb_owner.update_bodypart_speed_modifier()
 
 	if(special) //non conventional limb attachment
 		for(var/datum/surgery/attach_surgery as anything in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
@@ -371,7 +358,6 @@
 	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
 	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
 	new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
-	synchronize_bodytypes(new_limb_owner)
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()
 	new_limb_owner.update_damage_overlays()
@@ -422,16 +408,6 @@
 	new_head_owner.updatehealth()
 	new_head_owner.update_body()
 	new_head_owner.update_damage_overlays()
-
-///Makes sure that the owner's bodytype flags match the flags of all of it's parts.
-/obj/item/bodypart/proc/synchronize_bodytypes(mob/living/carbon/carbon_owner)
-	var/all_limb_flags
-	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
-		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
-			all_limb_flags = all_limb_flags | ext_organ.external_bodytypes
-		all_limb_flags = all_limb_flags | limb.bodytype
-
-	carbon_owner.bodytype = all_limb_flags
 
 /mob/living/carbon/proc/regenerate_limbs(list/excluded_zones = list())
 	SEND_SIGNAL(src, COMSIG_CARBON_REGENERATE_LIMBS, excluded_zones)

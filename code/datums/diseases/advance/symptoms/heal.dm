@@ -75,7 +75,7 @@
 		power = 2
 
 /datum/symptom/heal/starlight/proc/CanTileHealDirectional(turf/turf_to_check, direction)
-	if(direction == ZTRAIT_UP)
+	if(direction == UP)
 		turf_to_check = turf_to_check.above()
 		if(!turf_to_check)
 			return STARLIGHT_CANNOT_HEAL
@@ -86,7 +86,7 @@
 		// while space covers normal space and those caused by explosions,
 		// if there is a floor tile when checking above, that means
 		// a roof exists so the outdoors should only work downwards
-		if(isspaceturf(turf_to_check) || (area_to_check.outdoors && direction == ZTRAIT_DOWN))
+		if(isspaceturf(turf_to_check) || (area_to_check.outdoors && direction == DOWN))
 			if (levels_of_glass)
 				return STARLIGHT_CAN_HEAL_WITH_PENALTY // Glass gives a penalty.
 			return STARLIGHT_CAN_HEAL // No glass = can heal fully.
@@ -98,7 +98,7 @@
 		// Our turf is transparent OR openspace - we can check higher or lower z-levels
 		if(istransparentturf(turf_to_check) || istype(turf_to_check, /turf/open/openspace))
 			// Check above or below us
-			if(direction == ZTRAIT_UP)
+			if(direction == UP)
 				turf_to_check = turf_to_check.above()
 			else
 				turf_to_check = turf_to_check.below()
@@ -114,7 +114,7 @@
 			// Checking below, we assume that space is below us (as we're standing on station)
 			// Checking above, we check that the area is "outdoors" before assuming if it is space or not.
 			else
-				if(direction == ZTRAIT_DOWN || (direction == ZTRAIT_UP && area_to_check.outdoors))
+				if(direction == DOWN || (direction == UP && area_to_check.outdoors))
 					if (levels_of_glass)
 						return STARLIGHT_CAN_HEAL_WITH_PENALTY
 					return STARLIGHT_CAN_HEAL
@@ -122,12 +122,12 @@
 		return STARLIGHT_CANNOT_HEAL // Hit a non-space, Non-transparent turf - no healsies
 
 /datum/symptom/heal/starlight/proc/CanTileHeal(turf/original_turf, satisfied_with_penalty)
-	var/current_heal_level = CanTileHealDirectional(original_turf, ZTRAIT_DOWN)
+	var/current_heal_level = CanTileHealDirectional(original_turf, DOWN)
 	if(current_heal_level == STARLIGHT_CAN_HEAL)
 		return current_heal_level
 	if(current_heal_level && satisfied_with_penalty) // do not care if there is a healing penalty or no
 		return current_heal_level
-	var/heal_level_from_above = CanTileHealDirectional(original_turf, ZTRAIT_UP)
+	var/heal_level_from_above = CanTileHealDirectional(original_turf, UP)
 	if(heal_level_from_above > current_heal_level)
 		return heal_level_from_above
 	else

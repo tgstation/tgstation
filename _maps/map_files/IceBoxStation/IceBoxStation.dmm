@@ -42760,6 +42760,9 @@
 	},
 /obj/item/pen,
 /obj/item/stamp/head/hop,
+/obj/item/storage/wallet/random{
+	pixel_x = 9
+	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "nFk" = (

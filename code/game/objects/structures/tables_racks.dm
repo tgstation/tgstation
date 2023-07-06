@@ -44,6 +44,7 @@
 	. = ..()
 	if(_buildstack)
 		buildstack = _buildstack
+	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 
 	if (climbable)
 		AddElement(/datum/element/climbable)

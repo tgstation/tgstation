@@ -77,7 +77,7 @@
 
 /// Handles adding the chasm component to the turf (So stuff falls into it!)
 /turf/open/chasm/proc/apply_components()
-	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
+	AddComponent(/datum/component/chasm, GET_TURF_BELOW(src))
 
 // Chasms for Lavaland, with planetary atmos and lava glow
 /turf/open/chasm/lavaland
