@@ -51,8 +51,6 @@
 	var/holoform = FALSE
 	/// Installed software on the pAI
 	var/list/installed_software = list()
-	/// Toggles whether universal translator has been activated. Cannot be reversed
-	var/languages_granted = FALSE
 	/// Reference of the bound master
 	var/datum/weakref/master_ref
 	/// The master's name string
@@ -101,7 +99,6 @@
 		"Crew Monitor" = 35,
 		"Door Jack" = 35,
 		"Internal GPS" = 35,
-		"Universal Translator" = 35,
 	)
 	/// List of all possible chasises. TRUE means the pAI can be picked up in this chasis.
 	var/static/list/possible_chassis = list(
@@ -359,6 +356,7 @@
 	master_ref = WEAKREF(master)
 	master_name = master.real_name
 	master_dna = master.dna.unique_enzymes
+	copy_languages(master, source_override = LANGUAGE_PAI)
 	to_chat(src, span_boldannounce("You have been bound to a new master: [user.real_name]!"))
 	holochassis_ready = TRUE
 	return TRUE

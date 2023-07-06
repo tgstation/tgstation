@@ -18,7 +18,6 @@
 	data["available"] = available_software
 	data["directives"] = laws.supplied
 	data["emagged"] = emagged
-	data["languages"] = languages_granted
 	data["master_name"] = master_name
 	data["master_dna"] = master_dna
 	return data
@@ -86,10 +85,6 @@
 			return TRUE
 		if("Security HUD")
 			toggle_hud(PAI_TOGGLE_SECURITY_HUD)
-			return TRUE
-		if("Universal Translator")
-			grant_languages()
-			ui.send_full_update()
 			return TRUE
 	return FALSE
 
@@ -170,18 +165,6 @@
 		return FALSE
 	to_chat(src, span_boldannounce(("[holder]'s UE string: [holder.dna.unique_enzymes]")))
 	to_chat(src, span_notice("DNA [holder.dna.unique_enzymes == master_dna ? "matches" : "does not match"] our stored Master's DNA."))
-	return TRUE
-
-/**
- * Grant all languages to the current pAI.
- *
- * @returns {boolean} - TRUE if the languages were granted, FALSE otherwise.
- */
-/mob/living/silicon/pai/proc/grant_languages()
-	if(languages_granted)
-		return FALSE
-	grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)
-	languages_granted = TRUE
 	return TRUE
 
 /**

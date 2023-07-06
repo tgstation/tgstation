@@ -67,7 +67,6 @@ export const SOFTWARE_DESC = {
   'Remote Signaler': `A remote signalling device to transmit and receive
     codes.`,
   'Security HUD': `Allows you to view security records using an overlay HUD.`,
-  'Universal Translator': `Translation module for non-common languages.`,
 } as const;
 
 export enum PAI_TAB {

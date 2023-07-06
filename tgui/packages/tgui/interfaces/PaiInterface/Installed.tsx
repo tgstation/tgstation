@@ -144,15 +144,6 @@ const SoftwareButtons = (props, context) => {
           </Button>
         </>
       );
-    case 'Universal Translator':
-      return (
-        <Button
-          icon="download"
-          onClick={() => act(currentSelection)}
-          disabled={!!languages}>
-          {!languages ? 'Install' : 'Installed'}
-        </Button>
-      );
     default:
       return (
         <Button
