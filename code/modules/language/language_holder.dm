@@ -233,59 +233,6 @@ Key procs
 	get_selected_language()
 	to_holder.get_selected_language()
 
-/**
- * Swaps all mind related languages beteween the two language holders.
- */
-/datum/language_holder/proc/swap_mind_languages(datum/language_holder/swap_with)
-	// We congregate all languages we need to pass over first before doing anything
-	// Kinda nasty but I we gotta avoid keeping mind languages from the other guy due to order of operations
-	var/list/our_languages_giving_over = list()
-	var/list/our_blocked_giving_over = list()
-	for(var/language in understood_languages)
-		if(LANGUAGE_MIND in understood_languages[language])
-			our_languages_giving_over[language] |= UNDERSTOOD_LANGUAGE
-	for(var/language in spoken_languages)
-		if(LANGUAGE_MIND in spoken_languages[language])
-			our_languages_giving_over[language] |= SPOKEN_LANGUAGE
-	for(var/language in blocked_languages)
-		if(LANGUAGE_MIND in blocked_languages[language])
-			our_blocked_giving_over += language
-
-	var/list/their_languages_giving_over = list()
-	var/list/their_blocked_giving_over = list()
-	for(var/language in swap_with.understood_languages)
-		if(LANGUAGE_MIND in swap_with.understood_languages[language])
-			their_languages_giving_over[language] |= UNDERSTOOD_LANGUAGE
-	for(var/language in swap_with.spoken_languages)
-		if(LANGUAGE_MIND in swap_with.spoken_languages[language])
-			their_languages_giving_over[language] |= SPOKEN_LANGUAGE
-	for(var/language in swap_with.blocked_languages)
-		if(LANGUAGE_MIND in swap_with.blocked_languages[language])
-			their_blocked_giving_over += language
-
-	// Now everything's gathered up we can do the actual swap
-
-	// Us to them
-	for(var/language in our_languages_giving_over)
-		var/lang_flag = our_languages_giving_over[language]
-		remove_language(language, lang_flag, LANGUAGE_MIND)
-		swap_with.grant_language(language, lang_flag, LANGUAGE_MIND)
-	for(var/language in our_blocked_giving_over)
-		remove_blocked_language(language, LANGUAGE_MIND)
-		swap_with.add_blocked_language(language, LANGUAGE_MIND)
-
-	// Them to us
-	for(var/language in their_languages_giving_over)
-		var/lang_flag = their_languages_giving_over[language]
-		swap_with.remove_language(language, lang_flag, LANGUAGE_MIND)
-		grant_language(language, lang_flag, LANGUAGE_MIND)
-	for(var/language in their_blocked_giving_over)
-		swap_with.remove_blocked_language(language, LANGUAGE_MIND)
-		add_blocked_language(language, LANGUAGE_MIND)
-
-	get_selected_language()
-	swap_with.get_selected_language()
-
 GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 
 /proc/init_language_holder_prototypes()

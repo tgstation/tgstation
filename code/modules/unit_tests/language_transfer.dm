@@ -145,23 +145,29 @@
 	var/datum/language_holder/holder_A = dummy_A.get_language_holder()
 	var/datum/language_holder/holder_B = dummy_B.get_language_holder()
 
-	// Dummy A is a lizard: starts with 2 languages
-	// B's mind enters A, so it should gain pirate speak = 3 total languagse
+	// Holder A is a lizard: starts with 2 languages (common, draconic)
+	// Holder B is a human with a mind language: starts with 2 language (common, pirate)
+	// Swap occurs
+	// Holder A is a lizard with 2 languages, but should now also have pirate: 3 languages (common, draconic, pirate)
+	// Holder B is a human with just 1 language left over (common)
+
 	TEST_ASSERT_EQUAL(length(holder_A.spoken_languages), 3, \
-		"Dummy A should only speak Common, Draconic, and Pirate! Instead, it knew the following: [print_language_list(holder_A.spoken_languages)]")
+		"Holder A / Dummy A / Dummy B mind should speak Common, Draconic, and Pirate! \
+		Instead, it knew the following: [print_language_list(holder_A.spoken_languages)]")
 
 	TEST_ASSERT_EQUAL(length(holder_A.understood_languages), 3, \
-		"Dummy A should only understand Common, Draconic, and Pirate! Instead, it knew the following: [print_language_list(holder_A.understood_languages)]")
+		"Holder A / Dummy A / Dummy B mind should only understand Common, Draconic, and Pirate! \
+		Instead, it knew the following: [print_language_list(holder_A.understood_languages)]")
 
-	// Dummy B is a human: starts with 1 language
-	// A's mind enter's B, A knows nothing outside of species languages (which do not carry over), So 1 total language
 	TEST_ASSERT_EQUAL(length(holder_B.spoken_languages), 1, \
-		"Dummy B should only speak 1 language - Common! Instead, it knew the following: [print_language_list(holder_B.spoken_languages)]")
+		"Holder B / Dummy B / Dummy A mind should only speak 1 language - Common! \
+		Instead, it knew the following: [print_language_list(holder_B.spoken_languages)]")
 
 	TEST_ASSERT_EQUAL(length(holder_B.understood_languages), 1, \
-		"Dummy B should only understand 1 language - Common! Instead, it knew the following: [print_language_list(holder_B.understood_languages)]")
+		"Holder B / Dummy B / Dummy A mind only understand 1 language - Common! \
+		Instead, it knew the following: [print_language_list(holder_B.understood_languages)]")
 
-/// Tests that the book of bable, and by extension grant_all_languages, works as intended
+/// Tests that the book of babel, and by extension grant_all_languages, works as intended
 /datum/unit_test/book_of_babel
 
 /datum/unit_test/book_of_babel/Run()
