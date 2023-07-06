@@ -5,7 +5,6 @@
 	icon_living = "mushroom_color"
 	icon_dead = "mushroom_dead"
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
-	butcher_results = list(/obj/item/food/hugemushroomslice = 1)
 
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -15,6 +14,8 @@
 	response_harm_simple = "whack"
 
 	speed = 1
+	melee_damage_lower = 4
+	melee_damage_upper = 4
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
@@ -41,8 +42,8 @@
 
 /mob/living/basic/mushroom/Initialize(mapload)
 	. = ..()
-	melee_damage_lower = rand(4, 6)
-	melee_damage_upper = rand(11,21)
+	melee_damage_lower = rand(3, 5)
+	melee_damage_upper = rand(10,20)
 	maxHealth = rand(50,70)
 	cap_living = cap_living || mutable_appearance(icon, "mushroom_cap")
 	cap_dead = cap_dead || mutable_appearance(icon, "mushroom_cap_dead")
@@ -181,3 +182,11 @@
 	if(mush.force || user.combat_mode)
 		bruised = TRUE
 	return ..()
+
+/mob/living/basic/mushroom/harvest(mob/living/user)
+	var/counter
+	for(counter=0, counter <= powerlevel, counter++)
+		var/obj/item/food/hugemushroomslice/shroomslice = new /obj/item/food/hugemushroomslice(src.loc)
+		shroomslice.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, powerlevel)
+		shroomslice.reagents.add_reagent(/datum/reagent/medicine/omnizine, powerlevel)
+		shroomslice.reagents.add_reagent(/datum/reagent/medicine/synaptizine, powerlevel)
