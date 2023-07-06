@@ -1,6 +1,10 @@
 #define DEFAULT_DOOMSDAY_TIMER 4500
 #define DOOMSDAY_ANNOUNCE_INTERVAL 600
 
+#define VENDOR_TIPPING_USES 8
+#define MALF_VENDOR_TIPPING_TIME 0.5 SECONDS //within human reaction time
+#define MALF_VENDOR_TIPPING_CRIT_CHANCE 10 //percent
+
 GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/field/containment,
 		/obj/machinery/power/supermatter_crystal,
@@ -1014,6 +1018,156 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		if("name")
 			say_name = params["name"]
 
+/datum/ai_module/utility/remote_vendor_tilt
+	name = "Remote vendor tilting"
+	description = "Lets you remotely tip vendors over in any direction."
+	cost = 15
+	one_purchase = FALSE
+	power_type = /datum/action/innate/ai/ranged/remote_vendor_tilt
+	unlock_sound = 'sound/effects/bang.ogg'
+	unlock_text = "You gain the ability to remotely tip any vendor onto any adjacent tiles."
+
+/datum/action/innate/ai/ranged/remote_vendor_tilt
+	name = "Remotely tilt vendor"
+	desc = "Use to remotely tilt a vendor in any direction you desire."
+	button_icon_state = "vendor_tilt"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+	uses = VENDOR_TIPPING_USES
+	var/time_to_tilt = MALF_VENDOR_TIPPING_TIME
+	enable_text = span_notice("You prepare to wobble any vendors you see.")
+	disable_text = span_notice("You stop focusing on tipping vendors.")
+
+/datum/action/innate/ai/ranged/remote_vendor_tilt/New()
+	. = ..()
+	desc = "[desc] It has [uses] use\s remaining."
+
+/datum/action/innate/ai/ranged/remote_vendor_tilt/
+
+/datum/action/innate/ai/ranged/remote_vendor_tilt/do_ability(mob/living/caller, atom/clicked_on)
+
+	if (!istype(caller, /mob/living/silicon/ai))
+		return FALSE
+	var/mob/living/silicon/ai/ai_caller = caller
+
+	if(ai_caller.incapacitated())
+		unset_ranged_ability(caller)
+		return FALSE
+
+	if(!isvendor(clicked_on))
+		clicked_on.balloon_alert(ai_caller, "not a vendor!")
+		return FALSE
+
+	var/obj/machinery/vending/clicked_vendor = clicked_on
+
+	if (clicked_vendor.tilted)
+		clicked_vendor.balloon_alert(ai_caller, "already tilted!")
+		return FALSE
+
+	if (!clicked_vendor.tiltable)
+		clicked_vendor.balloon_alert(ai_caller, "cannot be tilted!")
+		return FALSE
+
+	if (!clicked_vendor.powered() || clicked_vendor.machine_stat & BROKEN)
+		clicked_vendor.balloon_alert(ai_caller, "no power!")
+		return FALSE
+
+	var/picked_dir_string = show_radial_menu(ai_caller, clicked_vendor, GLOB.all_radial_directions, custom_check = CALLBACK(src, PROC_REF(radial_check), caller, clicked_vendor))
+	if (picked_dir_string == null)
+		return FALSE
+	var/picked_dir
+	switch (picked_dir_string)
+		if ("NORTH")
+			picked_dir = NORTH
+		if ("NORTHEAST")
+			picked_dir = NORTHEAST
+		if ("EAST")
+			picked_dir = EAST
+		if ("SOUTHEAST")
+			picked_dir = SOUTHEAST
+		if ("SOUTH")
+			picked_dir = SOUTH
+		if ("SOUTHWEST")
+			picked_dir = SOUTHWEST
+		if ("WEST")
+			picked_dir = WEST
+		if ("NORTHWEST")
+			picked_dir = NORTHWEST
+		else
+			return FALSE
+
+	var/turf/target = get_step(clicked_vendor, picked_dir)
+	if (!ai_caller.can_see(target))
+		to_chat(ai_caller, span_warning("You can't see the target tile!"))
+		return FALSE
+
+	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target, time_to_tilt)
+	clicked_vendor.visible_message(span_warning("[clicked_vendor] starts falling over..."))
+	clicked_vendor.balloon_alert_to_viewers("falling over...")
+	addtimer(CALLBACK(src, PROC_REF(do_vendor_tilt), clicked_vendor, target), time_to_tilt)
+
+	adjust_uses(-1)
+	if(uses)
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+		build_all_button_icons()
+
+	unset_ranged_ability(caller, span_danger("Tilting..."))
+	return TRUE
+
+/datum/action/innate/ai/ranged/remote_vendor_tilt/proc/do_vendor_tilt(obj/machinery/vending/vendor, turf/target)
+	if (QDELETED(vendor))
+		return FALSE
+
+	if (vendor.tilted || !vendor.tiltable)
+		return FALSE
+
+	var/crit = (rand(1, 100) >= (100 - MALF_VENDOR_TIPPING_CRIT_CHANCE)) //mimicks vendor chances
+
+	vendor.tilt(target, crit)
+
+/// Used in our radial menu, state-checking proc after the radial menu sleeps
+/datum/action/innate/ai/ranged/remote_vendor_tilt/proc/radial_check(mob/living/silicon/ai/caller, obj/machinery/vending/clicked_vendor)
+	if (caller.incapacitated() || caller.stat == DEAD || QDELETED(caller))
+		return FALSE
+
+	if (QDELETED(clicked_vendor))
+		return FALSE
+
+	if (uses <= 0)
+		return FALSE
+
+	if (!caller.can_see(clicked_vendor))
+		to_chat(caller, span_warning("Lost sight of [clicked_vendor]!"))
+		return FALSE
+
+	return TRUE
+
+/*/datum/ai_module/upgrade/core_tilt
+	name = "Rolling Servos"
+	description = "Allows you to slowly roll around, crushing anything in your way with your bulk."
+	cost = 20
+	one_purchase = TRUE
+	power_type = /datum/action/innate/ai/core_tilt
+
+/datum/action/innate/ai/core_tilt
+	name = "Roll over"
+	button_icon_state = "voice_changer"
+	desc = "Allows you to roll over in the direction of your choosing, crushing anything in your way."
+	auto_use_uses = FALSE
+	COOLDOWN_DECLARE(ai_core_tilt)
+
+/datum/action/innate/ai/core_tilt/IsAvailable(feedback)
+	if (!COOLDOWN_FINISHED(ai_core_tilt))
+		return FALSE
+
+	return ..()
+
+/datum/action/innate/ai/core_tilt/Activate() */
+
+
 
 #undef DEFAULT_DOOMSDAY_TIMER
 #undef DOOMSDAY_ANNOUNCE_INTERVAL
+
+#undef VENDOR_TIPPING_USES
+#undef MALF_VENDOR_TIPPING_TIME
+#undef MALF_VENDOR_TIPPING_CRIT_CHANCE
