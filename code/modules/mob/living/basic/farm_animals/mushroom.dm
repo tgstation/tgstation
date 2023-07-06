@@ -114,12 +114,12 @@
 	var/mob/living/basic/mushroom/victim = target
 	if(victim.stat != DEAD)
 		return
-	if(victim.faint_ticker < 2)
-		victim.faint_ticker++
-		src.visible_message(span_notice("[src] chews a bit on [victim]."))
+	if(victim.faint_ticker >= 3)
+		consume_mushroom(victim)
 		return
 
-	consume_mushroom(victim)
+	victim.faint_ticker++
+	visible_message(span_notice("[src] chews a bit on [victim]."))
 
 /mob/living/basic/mushroom/proc/consume_mushroom(mob/living/basic/mushroom/consumed)
 	src.visible_message(span_warning("[src] devours [consumed]!"))
