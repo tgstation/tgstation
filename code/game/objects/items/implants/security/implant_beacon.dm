@@ -5,6 +5,9 @@
 	actions_types = null
 	implant_flags = IMPLANT_TYPE_SECURITY
 
+	///How long will the implant continue to function after death?
+	var/lifespan_postmortem = 10 MINUTES
+
 /obj/item/implant/beacon/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Robust Corp JMP-21 Fugitive Retrieval Implant<BR>

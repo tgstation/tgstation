@@ -4,10 +4,8 @@
 	actions_types = null
 	implant_flags = IMPLANT_TYPE_SECURITY
 
-	///for how many deciseconds after user death will the implant work?
+	///How long will the implant continue to function after death?
 	var/lifespan_postmortem = 10 MINUTES
-	///will people implanted with this act as teleporter beacons?
-	var/allow_teleport = TRUE
 
 /obj/item/implant/tracking/c38
 	name = "TRAC implant"
@@ -16,7 +14,6 @@
 	var/lifespan = 5 MINUTES
 	///The id of the timer that's qdeleting us
 	var/timerid
-	allow_teleport = FALSE
 
 /obj/item/implant/tracking/c38/implant(mob/living/target, mob/user, silent, force)
 	. = ..()
@@ -48,7 +45,6 @@
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Tracking Beacon<BR>
 				<b>Life:</b> 10 minutes after death of host.<BR>
-				<b>Important Notes:</b> Implant [allow_teleport ? "also works" : "does not work"] as a teleporter beacon.<BR>
 				<HR>
 				<b>Implant Details:</b> <BR>
 				<b>Function:</b> Continuously transmits low power signal. Useful for tracking.<BR>

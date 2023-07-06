@@ -279,7 +279,7 @@ Security HUDs! Basic mode shows only the job.
 		holder.icon_state = null
 		set_hud_image_inactive(i)
 
-	for(var/obj/item/implant/I in implants)
+	for(var/obj/item/implant/I in implants) //TOOOO DOOOO ADD THE OTHER IMPLANTS HERE
 		if(istype(I, /obj/item/implant/tracking))
 			holder = hud_list[IMPTRACK_HUD]
 			var/icon/IC = icon(icon, icon_state, dir)
