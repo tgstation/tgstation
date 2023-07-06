@@ -212,15 +212,18 @@
 
 	AddElement(/datum/element/venue_price, FOOD_PRICE_EXOTIC)
 	if(edible)
-		AddComponent(/datum/component/edible, bite_consumption = (charges / 5), after_eat = CALLBACK(src, PROC_REF(after_eat)))
+		if(charges == INFINITE_CHARGES)
+			AddComponent(/datum/component/edible, bite_consumption = 50 / (100 / 5), after_eat = CALLBACK(src, PROC_REF(after_eat)))
+		else
+			AddComponent(/datum/component/edible, bite_consumption = 45 / (charges / 5), after_eat = CALLBACK(src, PROC_REF(after_eat)))
 	if(can_change_colour)
 		AddComponent(/datum/component/palette, AVAILABLE_SPRAYCAN_SPACE, paint_color)
 
 	refill()
 
 /obj/item/toy/crayon/proc/after_eat(mob/user)
-	use_charges(user, 5, FALSE)
-	if(check_empty(user)) //Prevents division by zero
+	use_charges(user, 5, FALSE, TRUE)
+	if(check_empty(user, override_infinity = TRUE)) //Prevents division by zero
 		return
 
 /obj/item/toy/crayon/set_painting_tool_color(chosen_color)
@@ -248,9 +251,9 @@
 		var/amount = weight * units_per_weight
 		reagents.add_reagent(reagent, amount)
 
-/obj/item/toy/crayon/proc/use_charges(mob/user, amount = 1, requires_full = TRUE)
+/obj/item/toy/crayon/proc/use_charges(mob/user, amount = 1, requires_full = TRUE, override_infinity = FALSE)
 	// Returns number of charges actually used
-	if(charges == INFINITE_CHARGES)
+	if(charges == INFINITE_CHARGES && !override_infinity)
 		refill()
 		return TRUE
 	if(check_empty(user, amount, requires_full))
@@ -258,14 +261,14 @@
 	charges_left -= min(charges_left, amount)
 	return TRUE
 
-/obj/item/toy/crayon/proc/check_empty(mob/user, amount = 1, requires_full = TRUE)
+/obj/item/toy/crayon/proc/check_empty(mob/user, amount = 1, requires_full = TRUE, override_infinity = FALSE)
 	// When eating a crayon, check_empty() can be called twice producing
 	// two messages unless we check for being deleted first
 	if(QDELETED(src))
 		return TRUE
 
 	// INFINITE_CHARGES is unlimited charges
-	if(charges == INFINITE_CHARGES)
+	if(charges == INFINITE_CHARGES && !override_infinity)
 		return FALSE
 	if(!charges_left)
 		if(self_contained)
@@ -753,7 +756,7 @@
 	. = ..()
 	// If default crayon red colour, pick a more fun spraycan colour
 	if(!paint_color)
-		set_painting_tool_color(pick("#DA0000", "#FF9300", "#FFF200", "#A8E61D", "#00B7EF", "#DA00FF"))
+		set_painting_tool_color(pick(COLOR_CRAYON_RED, COLOR_CRAYON_ORANGE, COLOR_CRAYON_YELLOW, COLOR_CRAYON_GREEN, COLOR_CRAYON_BLUE, COLOR_CRAYON_PURPLE))
 	refill()
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)

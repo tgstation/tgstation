@@ -27,7 +27,7 @@
 	name = "orange gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "orange"
-	greyscale_colors = FF9300
+	greyscale_colors = COLOR_CRAYON_ORANGE
 
 /obj/item/clothing/gloves/color/red
 	name = "red gloves"
