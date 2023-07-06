@@ -983,7 +983,7 @@
 	var/obj/item/organ/internal/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(alcohol_liver && IS_ORGANIC_ORGAN(alcohol_liver)) // robotic livers aren't affected
 		alcohol_liver.maxHealth = alcohol_liver.maxHealth * 0.75
-		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.7)
+		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75
 
 /datum/quirk/item_quirk/junkie/alcoholic/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK)
