@@ -4,15 +4,13 @@ SUBSYSTEM_DEF(language)
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/language/Initialize()
-	for(var/L in subtypesof(/datum/language))
-		var/datum/language/language = L
+	for(var/datum/language/language as anything in subtypesof(/datum/language))
 		if(!initial(language.key))
 			continue
 
 		GLOB.all_languages += language
 
 		var/datum/language/instance = new language
-
 		GLOB.language_datum_instances[language] = instance
 
 	return SS_INIT_SUCCESS
