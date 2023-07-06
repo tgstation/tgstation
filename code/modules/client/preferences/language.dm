@@ -17,13 +17,14 @@
 
 	//we add uncommon as it's foreigner-only.
 	var/datum/language/uncommon/uncommon_language = /datum/language/uncommon
-	values[initial(uncommon_language.name)] = uncommon_language
+	values += initial(uncommon_language.name)
 
 	for(var/datum/language/language_type as anything in GLOB.roundstart_languages)
 		if(ispath(language_type, /datum/language/common))
 			continue
-		if(!values[initial(language_type.name)])
-			values[initial(language_type.name)] = language_type
+		if(initial(language_type.name) in values)
+			continue
+		values += initial(language_type.name)
 
 	return values
 
