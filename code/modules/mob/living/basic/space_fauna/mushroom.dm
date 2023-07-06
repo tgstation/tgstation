@@ -21,7 +21,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	faction = list(FACTION_MUSHROOM)
-	speak_emote = list("squeakes")
+	speak_emote = list("squeaks")
 	death_message = "fainted!"
 
 	ai_controller = /datum/ai_controller/basic_controller/mushroom
@@ -36,25 +36,26 @@
 	var/static/mutable_appearance/cap_living
 	///Where we store our cap icons so we dont generate them constantly to update our icon
 	var/static/mutable_appearance/cap_dead
-	///So you can't repeatedly revive it during a fight
+	///Cooldown that tracks how long its been since revival
 	COOLDOWN_DECLARE(recovery_cooldown)
 
 /mob/living/basic/mushroom/Initialize(mapload)
+	. = ..()
 	melee_damage_lower = rand(4, 6)
 	melee_damage_upper = rand(11,21)
 	maxHealth = rand(50,70)
 	cap_living = cap_living || mutable_appearance(icon, "mushroom_cap")
 	cap_dead = cap_dead || mutable_appearance(icon, "mushroom_cap_dead")
 	cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-	UpdateMushroomCap()
+	update_mushroomcap()
 	health = maxHealth
-	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_attacked_target))
 
 /datum/ai_controller/basic_controller/mushroom
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mushroom(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mushroom,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -103,11 +104,8 @@
 		recover(attack_target)
 		return TRUE
 
-/mob/living/basic/mushroom/melee_attack(atom/target, list/modifiers)
-	. = ..()
-
-	if(!.)
-		return
+/mob/living/basic/mushroom/proc/on_attacked_target(mob/living/basic/attacker, atom/target)
+	SIGNAL_HANDLER
 
 	if(!istype(target, /mob/living/basic/mushroom))
 		return
@@ -122,10 +120,10 @@
 	visible_message(span_notice("[src] chews a bit on [victim]."))
 
 /mob/living/basic/mushroom/proc/consume_mushroom(mob/living/basic/mushroom/consumed)
-	src.visible_message(span_warning("[src] devours [consumed]!"))
+	visible_message(span_warning("[src] devours [consumed]!"))
 	var/level_gain = (consumed.powerlevel - powerlevel)
 	if(level_gain >= 0 && !ckey && !consumed.bruised)//Player shrooms can't level up to become robust gods.
-		consumed.LevelUp(level_gain)
+		consumed.level_up(level_gain)
 	adjustBruteLoss(-consumed.maxHealth)
 	qdel(consumed)
 
@@ -135,24 +133,24 @@
 		return
 
 	icon_state = "mushroom_color"
-	UpdateMushroomCap()
+	update_mushroomcap()
 
 /mob/living/basic/mushroom/death(gibbed)
 	. = ..()
-	UpdateMushroomCap()
+	update_mushroomcap()
 
-/mob/living/basic/mushroom/proc/UpdateMushroomCap()
+/mob/living/basic/mushroom/proc/update_mushroomcap()
 	cut_overlays()
 	cap_living.color = cap_color
 	cap_dead.color = cap_color
-	if(health == 0)
+	if(stat == DEAD)
 		add_overlay(cap_dead)
 	else
 		add_overlay(cap_living)
 
 /mob/living/basic/mushroom/proc/recover(obj/item/mush_meal)
 	visible_message(span_notice("[src] eats [mush_meal]!"))
-	UpdateMushroomCap()
+	update_mushroomcap()
 	qdel(mush_meal)
 	if(!COOLDOWN_FINISHED(src, recovery_cooldown))
 		return
@@ -161,9 +159,9 @@
 		revive(HEAL_ALL)
 	else
 		adjustBruteLoss(-5)
-	COOLDOWN_START(src, recovery_cooldown, 300 SECONDS)
+	COOLDOWN_START(src, recovery_cooldown, 5 MINUTES)
 
-/mob/living/basic/mushroom/proc/LevelUp(level_gain)
+/mob/living/basic/mushroom/proc/level_up(level_gain)
 	adjustBruteLoss(-maxHealth) //They'll always heal, even if they don't gain a level
 	if(powerlevel > 9)
 		return
