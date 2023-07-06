@@ -10,6 +10,7 @@
 /obj/item/implant/tracking/c38
 	name = "TRAC implant"
 	desc = "A smaller tracking implant that supplies power for only a few minutes."
+	implant_flags = NONE
 	///How long before this implant self-deletes?
 	var/lifespan = 5 MINUTES
 	///The id of the timer that's qdeleting us
@@ -43,11 +44,11 @@
 
 /obj/item/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Tracking Beacon<BR>
+				<b>Name:</b> Robust Corp EYE-5 Convict Parole Implant<BR>
 				<b>Life:</b> 10 minutes after death of host.<BR>
 				<HR>
 				<b>Implant Details:</b> <BR>
-				<b>Function:</b> Continuously transmits low power signal. Useful for tracking.<BR>
+				<b>Function:</b> Continuously transmits low power signal. Can be tracked from a prisoner management console.<BR>
 				<b>Special Features:</b><BR>
 				<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
 				a malfunction occurs thereby securing safety of subject. The implant will melt and

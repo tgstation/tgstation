@@ -16,7 +16,7 @@
 				<HR>
 				<b>Implant Details: </b><BR>
 				<b>Function:</b> Acts as a teleportation beacon that can be tracked by any standard bluespace transponder.
-				Using this, you can teleport to whoever has this implant inside of them."}
+				Using this, you can teleport directly to whoever has this implant inside of them."}
 	return dat
 
 /obj/item/implant/beacon/Initialize(mapload)
