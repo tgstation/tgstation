@@ -61,8 +61,8 @@
 	audible_message("[src] boops its last bop.")
 	desc += "\nIt seems to have run out of tricks. Goodnight sweet prince."
 
-/mob/living/basic/cluwne/say(message, bubble_type, list/spans)
-	spans = list(SPAN_CLOWN)
+/mob/living/basic/cluwne/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
+	spans |= SPAN_CLOWN
 
 	if(prob(5)) //the brain isn't fully gone yet...
 		message = pick("AAAAAAA!!", "END MY SUFFERING", "I CANT TAKE THIS ANYMORE!!" ,"SOMEBODY STOP ME!!")
