@@ -399,27 +399,30 @@
 	if(!.)
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
-	base_icon_state = new_player.hud_used.inventory_shown ? "expand" : "collapse"
-	name = "[new_player.hud_used.inventory_shown ? "Collapse" : "Expand"] Lobby Menu"
+	//whether we are currently showing the menu to the client or not
+	var/inventory_status = hud.inventory_shown
+	base_icon_state = inventory_status ? "expand" : "collapse"
+	name = "[inventory_status ? "Collapse" : "Expand"] Lobby Menu"
 	set_button_status(FALSE)
 	//re-enable clicking the button when the shutter animation finishes
 	addtimer(CALLBACK(src, PROC_REF(set_button_status), TRUE), (2 * SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION))
 
+	//get the shutter object used by our hud
 	var/atom/movable/screen/lobby/shutter/menu_shutter = locate(/atom/movable/screen/lobby/shutter) in hud.static_inventory
 	//build a list of bottom buttons for the shutter if it's empty
 	if(!length(menu_shutter.bottom_buttons))
-		for(var/atom/movable/screen/lobby/button/bottom/lobbyscreen in new_player.hud_used.static_inventory)
+		for(var/atom/movable/screen/lobby/button/bottom/lobbyscreen in hud.static_inventory)
 			menu_shutter.bottom_buttons += lobbyscreen
 
 	addtimer(CALLBACK(src, PROC_REF(toggle_menu), new_player), SHUTTER_MOVEMENT_DURATION + 1) //ever so slightly after the shutter pulls down
 	//animate the shutter
 	menu_shutter.setup_shutter_animation()
 	//animate bottom buttons' movement
-	if(new_player.hud_used.inventory_shown)
-		menu_shutter.collapse_bottom_buttons(new_player)
+	if(inventory_status)
+		menu_shutter.collapse_bottom_buttons()
 		collapse_button()
 	else
-		menu_shutter.expand_bottom_buttons(new_player)
+		menu_shutter.expand_bottom_buttons()
 		expand_button()
 
 ///Moves the button to the top of the screen, leaving only the screen part in view
@@ -437,11 +440,11 @@
 
 ///Disables/enables menu buttons on the client's screen
 /atom/movable/screen/lobby/button/collapse/proc/toggle_menu(mob/dead/new_player/new_player)
-	if(new_player.hud_used.inventory_shown)
-		new_player.client.screen -= new_player.hud_used.toggleable_inventory
+	if(hud.inventory_shown)
+		new_player.client.screen -= hud.toggleable_inventory
 	else
-		new_player.client.screen += new_player.hud_used.toggleable_inventory
-	new_player.hud_used.inventory_shown = !new_player.hud_used.inventory_shown
+		new_player.client.screen += hud.toggleable_inventory
+	hud.inventory_shown = !hud.inventory_shown
 
 /atom/movable/screen/lobby/shutter
 	icon = 'icons/hud/lobby/shutter.dmi'
@@ -463,7 +466,7 @@
 	transform = shutter_matrix
 
 ///This animates moving the bottom buttons off-screen, disabling them
-/atom/movable/screen/lobby/shutter/proc/collapse_bottom_buttons(mob/dead/new_player/new_player)
+/atom/movable/screen/lobby/shutter/proc/collapse_bottom_buttons()
 	for(var/atom/movable/screen/lobby/button/bottom/button_to_scroll_up in bottom_buttons)
 		button_to_scroll_up.button_matrix = matrix()
 		//wait for the shutter to come down
@@ -477,7 +480,7 @@
 		button_to_scroll_up.set_button_status(FALSE)
 
 ///This animates moving the bottom buttons back into place, re-enabling them
-/atom/movable/screen/lobby/shutter/proc/expand_bottom_buttons(mob/dead/new_player/new_player)
+/atom/movable/screen/lobby/shutter/proc/expand_bottom_buttons()
 	for(var/atom/movable/screen/lobby/button/bottom/button_to_scroll_down in bottom_buttons)
 		//the buttons are off-screen, so we sync them up to come down with the shutter
 		animate(button_to_scroll_down, transform = button_to_scroll_down.button_matrix.Translate(x = 0, y = -146), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
