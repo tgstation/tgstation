@@ -30,6 +30,7 @@
 	. = ..()
 
 	GLOB.new_player_list += src
+	add_verb(src, /mob/dead/new_player/proc/reset_menu_hud)
 
 /mob/dead/new_player/Destroy()
 	GLOB.new_player_list -= src
@@ -343,3 +344,12 @@
 	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
 	add_verb(src, /mob/dead/new_player/proc/open_interview)
 	add_verb(client, /client/verb/fix_tgui_panel)
+
+/mob/dead/new_player/proc/reset_menu_hud()
+	set name = "Reset Lobby Menu HUD"
+	set category = "OOC"
+	var/mob/dead/new_player/new_player = usr
+	if(new_player?.client)
+		qdel(new_player.hud_used)
+		create_mob_hud()
+		hud_used.show_hud(hud_used.hud_version, new_player)
