@@ -114,10 +114,13 @@ Each type of gas is defined by defining a new subtype of /datum/gas. These datum
 ```DM
 var/datum/gas_mixture/air = new
 air.assert_gas(/datum/gas/oxygen)
-air.gases[/datum/gas/oxygen][MOLES] = 100
-world << air.gases[/datum/gas/oxygen][GAS_META][META_GAS_NAME] //outputs "Oxygen"
-world << air.gases.heat_capacity() //outputs 2000 (100 mol * 20 J/K/mol)
-air.gases[/datum/gas/oxygen][MOLES] -= 110
+var/list/oxygen = air.gases[/datum/gas/oxygen] //cache for sanic speed.
+oxygen[MOLES] = 100
+air.heat_capacity += 100 * oxygen[GAS_META][META_GAS_SPECIFIC_HEAT] //Adjust the gas_mixture's heat_capacity when manually modifying moles.
+world << oxygen[GAS_META][META_GAS_NAME] //outputs "Oxygen"
+world << air.heat_capacity //outputs 2000 (100 mol * 20 J/K/mol)
+air.gases[/datum/gas/oxygen][MOLES] -= 100
+air.heat_capacity -= 110 * oxygen[GAS_META][META_GAS_SPECIFIC_HEAT]
 air.garbage_collect() //oxygen is now removed from the gases list, since it was empty
 ```
 *Snippet 4.2: gas mixture usage examples*

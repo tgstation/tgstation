@@ -32,5 +32,6 @@
 	mix_to_spawn.add_gas(gas_type)
 	mix_to_spawn.gases[gas_type][MOLES] = amount_of_gas
 	mix_to_spawn.temperature = T20C
+	mix_to_spawn.heat_capacity = mix_to_spawn.calculate_heat_capacity()
 	var/turf/open/our_turf = get_turf(target)
 	our_turf.assume_air(mix_to_spawn)

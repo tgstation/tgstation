@@ -88,7 +88,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
-		if(QUANTIZE(cached_gases[id][MOLES]) <= 0)
+		var/list/gas_id = cached_gases[id]
+		var/moles = gas_id[MOLES]
+		if(moles < MOLAR_ACCURACY)
+			heat_capacity -= moles * gas_id[GAS_META][META_GAS_SPECIFIC_HEAT]
 			cached_gases -= id
 
 //PV = nRT
@@ -384,11 +387,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/temperature_delta = temperature_archived - sharer.temperature_archived
 	var/abs_temperature_delta = abs(temperature_delta)
 
-	var/old_self_heat_capacity = 0
-	var/old_sharer_heat_capacity = 0
-	if(abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		old_self_heat_capacity = heat_capacity
-		old_sharer_heat_capacity = sharer.heat_capacity
+	var/old_self_heat_capacity = heat_capacity
+	var/old_sharer_heat_capacity = sharer.heat_capacity
 
 	var/heat_capacity_self_to_sharer = 0 //heat capacity of the moles transferred from us to the sharer
 	var/heat_capacity_sharer_to_self = 0 //heat capacity of the moles transferred from the sharer to us
@@ -419,12 +419,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		else
 			delta = delta * sharer_coeff
 
-		if(abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-			var/gas_heat_capacity = delta * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
-			if(delta > 0)
-				heat_capacity_self_to_sharer += gas_heat_capacity
-			else
-				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative.
+		var/gas_heat_capacity = delta * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
+		if(delta > 0)
+			heat_capacity_self_to_sharer += gas_heat_capacity
+		else
+			heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative.
 
 		gas[MOLES] -= delta
 		sharergas[MOLES] += delta
