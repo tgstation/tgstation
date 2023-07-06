@@ -159,6 +159,7 @@
 	// (User itself, current loc, and user inventory)
 	if(clicked_on in DirectAccess())
 		if(clicked_with_what)
+			// melbert todo : lets you old-attack yourself
 			clicked_with_what.melee_attack_chain(src, clicked_on, params)
 
 		else
