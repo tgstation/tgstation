@@ -3,10 +3,8 @@
 	name = "\improper Lizardperson"
 	plural_form = "Lizardfolk"
 	id = SPECIES_LIZARD
-	species_traits = list(
-		MUTCOLORS,
-	)
 	inherent_traits = list(
+		TRAIT_MUTANT_COLORS,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
@@ -28,8 +26,6 @@
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
-	disliked_food = GRAIN | DAIRY | CLOTH | GROSS
-	liked_food = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	inert_mutation = /datum/mutation/human/firebreath
 	death_sound = 'sound/voice/lizard/deathsound.ogg'
 	wing_types = list(/obj/item/organ/external/wings/functional/dragon)
@@ -136,14 +132,13 @@ Lizard subspecies: ASHWALKERS
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = SPECIES_LIZARD_ASH
+	examine_limb_id = SPECIES_LIZARD
 	mutantlungs = /obj/item/organ/internal/lungs/lavaland
 	mutantbrain = /obj/item/organ/internal/brain/primitive
-	species_traits = list(
-		MUTCOLORS,
-	)
 	inherent_traits = list(
-		//TRAIT_LITERATE,
+		TRAIT_MUTANT_COLORS,
 		TRAIT_VIRUSIMMUNE,
+		TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash
 	digitigrade_customization = DIGITIGRADE_FORCED

@@ -87,7 +87,7 @@
 	// Grab a list of turfs below the ones we're going to destroy.
 	// If we're at the bottom layer, it will just tear up the flooring a bunch (exposing it to LAVA).
 	for(var/turf/turf_to_quake in turfs_to_shred)
-		underbelly += SSmapping.get_turf_below(turf_to_quake)
+		underbelly += GET_TURF_BELOW(turf_to_quake)
 
 /datum/round_event/earthquake/announce(fake)
 	priority_announce("Planetary monitoring systems indicate a devastating seismic event in the near future.", "Seismic Report")

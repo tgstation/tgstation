@@ -58,12 +58,6 @@
 #define RESPIRATION_OXYGEN (1 << 0)
 #define RESPIRATION_N2 (1 << 1)
 #define RESPIRATION_PLASMA (1 << 2)
-
-//Organ defines for carbon mobs
-#define ORGAN_ORGANIC 1
-#define ORGAN_ROBOTIC 2
-#define ORGAN_MINERAL 3 // Used for the plasmaman liver
-
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/species/human/bodyparts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
@@ -78,10 +72,10 @@
 #define BODYTYPE_ROBOTIC (1<<1)
 ///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
 #define BODYTYPE_HUMANOID (1<<2)
-///The limb is digitigrade.
-#define BODYTYPE_DIGITIGRADE (1<<3)
 ///The limb fits the monkey mold.
-#define BODYTYPE_MONKEY (1<<4)
+#define BODYTYPE_MONKEY (1<<3)
+///The limb is digitigrade.
+#define BODYTYPE_DIGITIGRADE (1<<4)
 ///The limb is snouted.
 #define BODYTYPE_SNOUTED (1<<5)
 ///A placeholder bodytype for xeno larva, so their limbs cannot be attached to anything.
@@ -573,10 +567,14 @@
 
 ///Squash flags. For squashable element
 
-///Whether or not the squashing requires the squashed mob to be lying down
+/// Squashing will not occur if the mob is not lying down (bodyposition is LYING_DOWN)
 #define SQUASHED_SHOULD_BE_DOWN (1<<0)
-///Whether or not to gib when the squashed mob is moved over
-#define SQUASHED_SHOULD_BE_GIBBED (1<<0)
+/// If present, outright gibs the squashed mob instead of just dealing damage
+#define SQUASHED_SHOULD_BE_GIBBED (1<<1)
+/// If squashing always passes if the mob is dead
+#define SQUASHED_ALWAYS_IF_DEAD (1<<2)
+/// Don't squash our mob if its not located in a turf
+#define SQUASHED_DONT_SQUASH_IN_CONTENTS (1<<3)
 
 /*
  * Defines for "AI emotions", allowing the AI to expression emotions
@@ -843,6 +841,8 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define VOMIT_TOXIC 1
 /// The mob will vomit a purple color
 #define VOMIT_PURPLE 2
+/// The mob will vomit a nebula color
+#define VOMIT_NEBULA 3
 
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1

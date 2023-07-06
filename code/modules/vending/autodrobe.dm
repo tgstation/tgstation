@@ -30,7 +30,7 @@
 				/obj/item/clothing/suit/costume/pirate = 1,
 				/obj/item/clothing/head/costume/pirate = 1,
 				/obj/item/clothing/head/costume/pirate/bandana = 1,
-				/obj/item/clothing/head/costume/pirate/bandana = 1,
+				/obj/item/clothing/shoes/pirate = 1,
 				/obj/item/clothing/under/costume/soviet = 1,
 				/obj/item/clothing/head/costume/ushanka = 1,
 				/obj/item/clothing/accessory/vest_sheriff =1,

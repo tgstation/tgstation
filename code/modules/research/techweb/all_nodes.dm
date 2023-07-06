@@ -1692,6 +1692,7 @@
 		"mod_defib",
 		"mod_threadripper",
 		"mod_surgicalprocessor",
+		"mod_statusreadout",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 

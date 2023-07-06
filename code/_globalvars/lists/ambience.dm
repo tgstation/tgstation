@@ -76,7 +76,9 @@ GLOBAL_LIST_INIT(mining_ambience,list(
 	'sound/ambience/ambiruin7.ogg',
 ))
 
-GLOBAL_LIST_INIT(medical_ambience,list('sound/ambience/ambinice.ogg'))
+GLOBAL_LIST_INIT(medical_ambience,list(
+	'sound/ambience/ambinice.ogg',
+))
 
 GLOBAL_LIST_INIT(virology_ambience,list(
 	'sound/ambience/ambiviro.ogg',
@@ -99,6 +101,8 @@ GLOBAL_LIST_INIT(space_ambience,list(
 	'sound/ambience/ambispace2.ogg',
 	'sound/ambience/ambispace3.ogg',
 	'sound/ambience/ambispace4.ogg',
+	'sound/ambience/ambispace5.ogg',
+	'sound/ambience/ambispace6.ogg',
 	'sound/ambience/title2.ogg',
 ))
 

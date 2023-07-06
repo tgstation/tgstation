@@ -6,6 +6,14 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DEATHCOMA), PROC_REF(on_deathcoma_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA), PROC_REF(on_deathcoma_trait_loss))
 
+	RegisterSignals(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_FAKEDEATH),
+		SIGNAL_REMOVETRAIT(TRAIT_FAKEDEATH),
+
+		SIGNAL_ADDTRAIT(TRAIT_DEFIB_BLACKLISTED),
+		SIGNAL_REMOVETRAIT(TRAIT_DEFIB_BLACKLISTED),
+	), PROC_REF(update_medhud_on_signal))
+
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), PROC_REF(on_immobilized_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_IMMOBILIZED), PROC_REF(on_immobilized_trait_loss))
 
@@ -66,7 +74,6 @@
 	if(stat <= UNCONSCIOUS)
 		update_stat()
 
-
 /// Called when [TRAIT_DEATHCOMA] is added to the mob.
 /mob/living/proc/on_deathcoma_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -77,6 +84,11 @@
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_DEATHCOMA)
 
+/// Updates medhud when recieving relevant signals.
+/mob/living/proc/update_medhud_on_signal(datum/source)
+	SIGNAL_HANDLER
+	med_hud_set_health()
+	med_hud_set_status()
 
 /// Called when [TRAIT_IMMOBILIZED] is added to the mob.
 /mob/living/proc/on_immobilized_trait_gain(datum/source)

@@ -116,49 +116,54 @@
  * * type The type of experiment to be performed
  * * user The mob starting the experiment
  */
-/obj/machinery/abductor/experiment/proc/experiment(mob/occupant, type, mob/user)
+/obj/machinery/abductor/experiment/proc/experiment(mob/living/carbon/human/occupant, type, mob/user)
 	LAZYINITLIST(history)
-	var/mob/living/carbon/human/H = occupant
+
+	if(!istype(occupant))
+		stack_trace("Abductor '[name]' called /proc/experiment with unexpected occupant ([occupant])")
+
+	if(!ishuman(occupant)) //We shouldn't be processing anything other than humans
+		return "Not a humanoid!"
 
 	var/datum/antagonist/abductor/user_abductor = user.mind.has_antag_datum(/datum/antagonist/abductor)
 	if(!user_abductor)
 		return "Authorization failure. Contact mothership immediately."
 
 	var/point_reward = 0
-	if(!H)
+	if(!occupant)
 		return "Invalid or missing specimen."
-	if(H in history)
+	if(occupant in history)
 		return "Specimen already in database."
-	if(H.stat == DEAD)
+	if(occupant.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
 		return "Specimen deceased."
-	var/obj/item/organ/internal/heart/gland/GlandTest = locate() in H.organs
+	var/obj/item/organ/internal/heart/gland/GlandTest = locate() in occupant.organs
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "No glands detected!"
-	if(H.mind != null && H.ckey != null)
+	if(occupant.mind != null && occupant.ckey != null)
 		LAZYINITLIST(abductee_minds)
-		LAZYADD(history, H)
-		LAZYADD(abductee_minds, H.mind)
+		LAZYADD(history, occupant)
+		LAZYADD(abductee_minds, occupant.mind)
 		say("Processing specimen...")
 		sleep(0.5 SECONDS)
 		switch(text2num(type))
 			if(1)
-				to_chat(H, span_warning("You feel violated."))
+				to_chat(occupant, span_warning("You feel violated."))
 			if(2)
-				to_chat(H, span_warning("You feel yourself being sliced apart and put back together."))
+				to_chat(occupant, span_warning("You feel yourself being sliced apart and put back together."))
 			if(3)
-				to_chat(H, span_warning("You feel intensely watched."))
+				to_chat(occupant, span_warning("You feel intensely watched."))
 		sleep(0.5 SECONDS)
-		user_abductor.team.abductees += H.mind
-		H.mind.add_antag_datum(/datum/antagonist/abductee)
+		user_abductor.team.abductees += occupant.mind
+		occupant.mind.add_antag_datum(/datum/antagonist/abductee)
 
-		for(var/obj/item/organ/internal/heart/gland/G in H.organs)
+		for(var/obj/item/organ/internal/heart/gland/G in occupant.organs)
 			G.Start()
 			point_reward++
 		if(point_reward > 0)
 			open_machine()
-			send_back(H)
+			send_back(occupant)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 			points += point_reward
 			credits += point_reward
@@ -169,7 +174,7 @@
 	else
 		say("Brain activity nonexistent - disposing sample...")
 		open_machine()
-		send_back(H)
+		send_back(occupant)
 		return "Specimen braindead - disposed."
 
 /**

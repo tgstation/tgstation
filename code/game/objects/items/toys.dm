@@ -31,6 +31,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 0
+	worn_icon_state = "nothing"
 
 /*
  * Balloons
@@ -128,19 +129,19 @@
 	var/random_color = TRUE
 
 /obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ammo_casing/caseless/foam_dart) && ismonkey(user))
+	if(istype(I, /obj/item/ammo_casing/foam_dart) && ismonkey(user))
 		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()
 
 /obj/item/toy/balloon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(ismonkey(throwingdatum.thrower) && istype(AM, /obj/item/ammo_casing/caseless/foam_dart))
+	if(ismonkey(throwingdatum.thrower) && istype(AM, /obj/item/ammo_casing/foam_dart))
 		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()
 
 /obj/item/toy/balloon/bullet_act(obj/projectile/P)
-	if((istype(P,/obj/projectile/bullet/p50) || istype(P,/obj/projectile/bullet/reusable/foam_dart)) && ismonkey(P.firer))
+	if((istype(P,/obj/projectile/bullet/p50) || istype(P,/obj/projectile/bullet/foam_dart)) && ismonkey(P.firer))
 		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()
@@ -1639,6 +1640,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 	name = "foam scepter"
 	desc = "A foam replica of the scepters Wizards us on Vendormancy Soccer."
 	icon_state = "vendor_staff"
+	worn_icon_state = "vendor_staff" //For the back
 	inhand_icon_state = "vendor_staff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
