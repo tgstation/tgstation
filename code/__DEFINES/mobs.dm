@@ -72,10 +72,10 @@
 #define BODYTYPE_ROBOTIC (1<<1)
 ///The limb fits the human mold. This is not meant to be literal, if the sprite "fits" on a human, it is "humanoid", regardless of origin.
 #define BODYTYPE_HUMANOID (1<<2)
-///The limb is digitigrade.
-#define BODYTYPE_DIGITIGRADE (1<<3)
 ///The limb fits the monkey mold.
-#define BODYTYPE_MONKEY (1<<4)
+#define BODYTYPE_MONKEY (1<<3)
+///The limb is digitigrade.
+#define BODYTYPE_DIGITIGRADE (1<<4)
 ///The limb is snouted.
 #define BODYTYPE_SNOUTED (1<<5)
 ///A placeholder bodytype for xeno larva, so their limbs cannot be attached to anything.

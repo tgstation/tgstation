@@ -26665,8 +26665,8 @@
 "jWb" = (
 /obj/machinery/light/cold/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/pdapainter/security,
 /obj/machinery/status_display/ai/directional/south,
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "jWd" = (
@@ -64177,6 +64177,10 @@
 /obj/machinery/recharger{
 	pixel_x = 5;
 	pixel_y = 3
+	},
+/obj/item/storage/wallet/random{
+	pixel_x = -7;
+	pixel_y = 1
 	},
 /obj/item/assembly/flash/handheld{
 	pixel_x = -6;

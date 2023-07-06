@@ -168,8 +168,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_GAIN_ORGAN, src, special)
 
+	if(external_bodytypes)
+		organ_owner.synchronize_bodytypes()
 	if(visual)
-		owner.update_body_parts()
+		organ_owner.update_body_parts()
 
 /*
  * Remove the organ from the select mob.
@@ -222,6 +224,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
 
+	if(external_bodytypes)
+		organ_owner.synchronize_bodytypes()
 	if(visual)
 		organ_owner.update_body_parts()
 
@@ -264,8 +268,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	ownerlimb = bodypart
 	if(bodypart_overlay)
 		bodypart.add_bodypart_overlay(bodypart_overlay)
-	if(external_bodytypes)
-		bodypart.synchronize_bodytypes(bodypart.owner)
 
 /// Removes the organ from the limb
 /obj/item/organ/proc/remove_from_limb(obj/item/bodypart/bodypart, special = FALSE)
@@ -274,8 +276,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	ownerlimb = null
 	if(bodypart_overlay)
 		bodypart.remove_bodypart_overlay(bodypart_overlay)
-	if(bodypart.owner && external_bodytypes)
-		bodypart.synchronize_bodytypes(bodypart.owner)
 
 /// Add a Trait to an organ that it will give its owner.
 /obj/item/organ/proc/add_organ_trait(trait)

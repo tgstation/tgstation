@@ -139,7 +139,6 @@
 					phantom_owner.dna.force_lose(mutation)
 
 	update_icon_dropped()
-	synchronize_bodytypes(phantom_owner)
 	phantom_owner.update_health_hud() //update the healthdoll
 	phantom_owner.update_body()
 	phantom_owner.update_body_parts()
@@ -367,7 +366,6 @@
 	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
 	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
 	new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
-	synchronize_bodytypes(new_limb_owner)
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()
 	new_limb_owner.update_damage_overlays()
@@ -416,16 +414,6 @@
 	new_head_owner.updatehealth()
 	new_head_owner.update_body()
 	new_head_owner.update_damage_overlays()
-
-/// Makes sure that the owner's bodytype flags match the flags of all of it's parts.
-/obj/item/bodypart/proc/synchronize_bodytypes(mob/living/carbon/carbon_owner)
-	var/all_limb_flags
-	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
-		for(var/obj/item/organ/organ as anything in limb.organs)
-			all_limb_flags = all_limb_flags | organ.external_bodytypes
-		all_limb_flags = all_limb_flags | limb.bodytype
-
-	carbon_owner.bodytype = all_limb_flags
 
 /// Regenerates all missing limbs, except the ones in excluded_zones
 /mob/living/carbon/proc/regenerate_limbs(list/excluded_zones)

@@ -17,7 +17,7 @@
 /obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "ai" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -27,7 +27,7 @@
 /obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "ak" = (
 /turf/closed/wall/mineral/plastitanium{
