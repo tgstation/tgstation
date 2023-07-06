@@ -1897,6 +1897,19 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
 
+/datum/design/module/statusreadout
+	name = "Status Readout Module"
+	id = "mod_statusreadout"
+	materials = list(
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2,
+	)
+	build_path = /obj/item/mod/module/status_readout
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
+	)
+
 /datum/design/module/patienttransport
 	name = "Patient Transport Module"
 	id = "mod_patienttransport"

@@ -164,7 +164,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 		scythe_empowerment(potential_empowerment)
 
-		if(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID)) //You feel good about yourself, pal?
+		if(HAS_MIND_TRAIT(user, TRAIT_MORBID)) //You feel good about yourself, pal?
 			user.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

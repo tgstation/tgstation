@@ -90,7 +90,7 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 			maptext_title += "[applicable_biotypes[iteration][1]] "
 
 	//mother of all strings...
-	new_crewmember.maptext = "<span class='maptext' style='text-align: center; vertical-align: top'><span style='color: [new_crewmember.chat_color || rgb(rand(100,255), rand(100,255), rand(100,255))]'>Level [rand(1, 100)] [maptext_title]</span></span>"
+	new_crewmember.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: center; vertical-align: top; -dm-text-outline: 1px #0005'><span style='color: [new_crewmember.chat_color || rgb(rand(100,255), rand(100,255), rand(100,255))]'>Level [rand(1, 100)] [maptext_title]</span></span>")
 
 	if(!(job.job_flags & JOB_CREW_MEMBER))
 		return

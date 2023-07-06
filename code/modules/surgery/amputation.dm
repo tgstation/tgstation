@@ -59,7 +59,7 @@
 	)
 	display_pain(target, "You can no longer feel your severed [parse_zone(target_zone)]!")
 
-	if(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID) && ishuman(user))
+	if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user))
 		var/mob/living/carbon/human/morbid_weirdo = user
 		morbid_weirdo.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
 
