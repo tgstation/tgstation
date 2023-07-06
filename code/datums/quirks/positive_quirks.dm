@@ -219,7 +219,11 @@
 
 /datum/quirk/bilingual/add_unique(client/client_source)
 	var/wanted_language = client_source?.prefs.read_preference(/datum/preference/choiced/language)
-	var/datum/language/language_type = GLOB.language_types_by_name[wanted_language]
+	var/datum/language/language_type
+	if(wanted_language == "Random")
+		language_type = pick(GLOB.roundstart_languages)
+	else
+		language_type = GLOB.language_types_by_name[wanted_language]
 	if(quirk_holder.has_language(language_type))
 		language_type = /datum/language/uncommon
 		if(quirk_holder.has_language(language_type))

@@ -15,6 +15,8 @@
 	if(!GLOB.roundstart_languages.len)
 		generate_selectable_species_and_languages()
 
+	values += "Random"
+
 	//we add uncommon as it's foreigner-only.
 	var/datum/language/uncommon/uncommon_language = /datum/language/uncommon
 	values += initial(uncommon_language.name)
