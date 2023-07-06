@@ -64,9 +64,9 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 /datum/pda_chat/New(datum/computer_file/program/messenger/recp)
 	recipient = WEAKREF(recp)
 
-/datum/pda_chat/proc/add_msg(datum/pda_msg/message)
+/datum/pda_chat/proc/add_msg(datum/pda_msg/message, show_in_recents = TRUE)
 	messages += message
-	if(!(message.everyone || visible_in_recents))
+	if(!visible_in_recents || show_in_recents)
 		visible_in_recents = TRUE
 	return message
 
@@ -87,15 +87,13 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	var/datum/picture/photo
 	var/photo_path
 	var/everyone
-	var/fake_identity
 
-/datum/pda_msg/New(msg, datum/picture/pic = null, path = null, to_everyone = FALSE, fakeidentity = null)
+/datum/pda_msg/New(msg, datum/picture/pic = null, path = null, to_everyone = FALSE)
 	message = msg
 	photo = pic
 	photo_path = path
 	everyone = to_everyone
-	fake_identity = fakeidentity
 
 /datum/pda_msg/copy()
-	var/datum/pda_msg/clone = new(message, photo, photo_path, everyone, fake_identity)
+	var/datum/pda_msg/clone = new(message, photo, photo_path, everyone)
 	return clone

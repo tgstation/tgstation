@@ -282,18 +282,23 @@
 	send_message(user, chats, message, everyone = TRUE)
 	last_text_everyone = world.time
 
-/datum/computer_file/program/messenger/proc/create_chat(datum/computer_file/program/messenger/recipient)
+/datum/computer_file/program/messenger/proc/create_chat(datum/computer_file/program/messenger/recipient, name)
 	if(!(REF(recipient) in GLOB.TabletMessengers))
 		CRASH("tried to create a chat with a messenger that isn't registered")
 
-	var/new_chat = new /datum/pda_chat(recipient)
+	var/datum/pda_chat/new_chat = new /datum/pda_chat(recipient)
+	// this is a chat with a "fake user" (automated or rigged message)
+	if(isnull(recipient) && istext(name))
+		new_chat.cached_name = name
 	saved_chats += new_chat
 
 	return new_chat
 
-/datum/computer_file/program/messenger/proc/find_chat_by_recp(recp_ref)
+/datum/computer_file/program/messenger/proc/find_chat_by_recp(recipient, fake_user = FALSE)
 	for(var/datum/pda_chat/chat as anything in saved_chats)
-		if(chat.recipient.reference == recp_ref)
+		if(fake_user && chat.cached_name == recipient)
+			return chat
+		else if(chat.recipient.reference == recipient)
 			return chat
 	return null
 
@@ -386,7 +391,7 @@
 	// Log it in our logs
 	var/list/message_data = list()
 	for(var/datum/pda_chat/target_chat as anything in targets)
-		target_chat.add_msg(message_datum)
+		target_chat.add_msg(message_datum, show_in_recents = FALSE)
 
 	// Show it to ghosts
 	var/ghost_message = span_name("[message_data["name"]] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[signal.format_target()]")]: <span class='message'>[signal.format_message()]")
@@ -416,11 +421,17 @@
 /datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/tablet_msg/signal)
 	var/datum/pda_msg/message = signal.data["message"]
 	var/datum/pda_chat/chat = null
-	if(!signal.data["rigged"])
+
+	var/is_rigged = signal.data["rigged"]
+	var/is_automated = signal.data["automated"]
+	var/is_fake_user = is_rigged || is_automated
+	var/fake_identity = is_fake_user ? STRINGIFY_PDA_TARGET(signal.data["fakename"], signal.data["fakejob"]) : null
+
+	if(!is_rigged)
 		message = message.copy()
-		chat = find_chat_by_recp(signal.data["ref"])
+		chat = find_chat_by_recp(is_automated ? fake_identity : signal.data["ref"], is_automated)
 		if(isnull(chat))
-			chat = create_chat()
+			chat = create_chat(is_automated ? null : signal.data["ref"], fake_identity)
 		chat.add_msg(message)
 
 	var/mob/living/L = null
@@ -431,10 +442,12 @@
 	else
 		L = get(computer, /mob/living/silicon)
 
-	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
+	var/should_ring = !alert_silenced || is_rigged
+
+	if(istype(L) && should_ring && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
 		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
-		// assuming that if the messenger sent us a message, then they must still exist
-		var/sender_name = signal.data["rigged"] ? STRINGIFY_PDA_TARGET(signal.data["fakename"], signal.data["fakejob"]) : get_messenger_name(chat.recipient.resolve())
+		// resolving w/o nullcheck here, assume the messenger exists if they sent a message
+		var/sender_name = is_fake_user ? signal.data["fakename"] : get_messenger_name(chat.recipient.resolve())
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
@@ -451,7 +464,7 @@
 			var/photo_message = message.photo ? " (<a href='byond://?src=[REF(signal.logged)];photo=1'>Photo</a>)" : ""
 			to_chat(L, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][sender_name][hrefend], </b>[sanitize(html_decode(inbound_message))][photo_message] [reply]"))
 
-	if (!alert_silenced)
+	if (should_ring)
 		computer.ring(ringtone)
 
 	SStgui.update_uis(computer)
