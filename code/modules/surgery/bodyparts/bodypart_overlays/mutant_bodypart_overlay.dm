@@ -33,9 +33,17 @@
 	var/list/feature_list = get_global_feature_list()
 	for(var/accessory in feature_list)
 		var/datum/sprite_accessory/accessory_datum = feature_list[accessory]
-		if(initial(accessory_datum.locked)) //locked is for stuff that shouldn't appear here
+		//locked is for stuff that shouldn't appear here
+		//nameless sprite accessories are not valid for mutant bodypart overlays
+		if(initial(accessory_datum.locked) || \
+			!initial(accessory_datum.name) || \
+			(initial(accessory_datum.name) == SPRITE_ACCESSORY_NONE))
 			continue
 		valid_restyles += accessory_datum
+	//no restyles? this is fucked
+	if(!valid_restyles)
+		CRASH("[type] had no available valid appearances on get_random_appearance()!")
+		return null
 	return pick(valid_restyles)
 
 ///Return the BASE icon state of the sprite datum (so not the gender, layer, feature_key)
@@ -91,7 +99,7 @@
 
 ///Return a dumb glob list for this specific feature (called from parse_sprite)
 /datum/bodypart_overlay/mutant/proc/get_global_feature_list()
-	CRASH("External organ has no feature list, it will render invisible")
+	CRASH("[type] has no feature list, it will render invisible")
 
 ///Give the organ its color. Force will override the existing one.
 /datum/bodypart_overlay/mutant/proc/inherit_color(obj/item/bodypart/ownerlimb, force)

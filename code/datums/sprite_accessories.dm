@@ -837,7 +837,7 @@
 	var/gradient_category = GRADIENT_APPLIES_TO_HAIR|GRADIENT_APPLIES_TO_FACIAL_HAIR
 
 /datum/sprite_accessory/gradient/none
-	name = "None"
+	name = SPRITE_ACCESSORY_NONE
 	icon_state = "none"
 
 /datum/sprite_accessory/gradient/fadeup
@@ -1723,7 +1723,7 @@
 	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
 
 /datum/sprite_accessory/body_markings/none
-	name = "None"
+	name = SPRITE_ACCESSORY_NONE
 	icon_state = "none"
 
 /datum/sprite_accessory/body_markings/dtiger
@@ -1844,7 +1844,7 @@
 	em_block = TRUE
 
 /datum/sprite_accessory/horns/none
-	name = "None"
+	name = SPRITE_ACCESSORY_NONE
 	icon_state = "none"
 
 /datum/sprite_accessory/horns/simple
@@ -1872,7 +1872,7 @@
 	em_block = TRUE
 
 /datum/sprite_accessory/ears/none
-	name = "None"
+	name = SPRITE_ACCESSORY_NONE
 	icon_state = "none"
 
 /datum/sprite_accessory/ears/cat
@@ -1890,7 +1890,7 @@
 	locked = TRUE
 
 /datum/sprite_accessory/wings/none
-	name = "None"
+	name = SPRITE_ACCESSORY_NONE
 	icon_state = "none"
 
 /datum/sprite_accessory/wings
@@ -2022,7 +2022,7 @@
 	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
 
 /datum/sprite_accessory/frills/none
-	name = "None"
+	name = SPRITE_ACCESSORY_NONE
 	icon_state = "none"
 
 /datum/sprite_accessory/frills/simple
@@ -2046,11 +2046,11 @@
 	em_block = TRUE
 
 /datum/sprite_accessory/spines/none
-	name = "None"
+	name = SPRITE_ACCESSORY_NONE
 	icon_state = "none"
 
 /datum/sprite_accessory/spines_animated/none
-	name = "None"
+	name = SPRITE_ACCESSORY_NONE
 	icon_state = "none"
 
 /datum/sprite_accessory/spines/short
@@ -2306,7 +2306,7 @@
 	color_src = null
 
 /datum/sprite_accessory/moth_markings/none
-	name = "None"
+	name = SPRITE_ACCESSORY_NONE
 	icon_state = "none"
 
 /datum/sprite_accessory/moth_markings/reddish
