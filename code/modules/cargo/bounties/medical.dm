@@ -35,7 +35,7 @@
 	wanted_types = list(
 		/obj/item/organ/internal/ears = TRUE,
 		/obj/item/organ/internal/ears/cybernetic = FALSE,
-		/obj/item/organ/internal/ears/cybernetic/translation = TRUE,
+		/obj/item/organ/internal/ears/cybernetic/upgraded = TRUE,
 		/obj/item/organ/internal/ears/cybernetic/whisper = TRUE,
 	)
 

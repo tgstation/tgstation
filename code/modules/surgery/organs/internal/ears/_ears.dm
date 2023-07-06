@@ -106,50 +106,11 @@
 	damage_multiplier = 0.9
 	organ_flags = ORGAN_SYNTHETIC
 
-/obj/item/organ/internal/ears/cybernetic/translation
-	name = "cybernetic translation ears"
+/obj/item/organ/internal/ears/cybernetic/upgraded
+	name = "upgraded cybernetic ears"
 	icon_state = "ears-c-u"
-	desc = "Allows the user to understand one of several commonly spoken languages. Grants no ability to speak these languages."
+	desc =  "An advanced cybernetic ear, surpassing the performance of organic ears."
 	damage_multiplier = 0.5
-	/// List of languages that can be chosen as the translated language. Populated when atom is created
-	var/list/language_list = list()
-	/// The currently selected language. Defaults to common
-	var/datum/language/chosen_language = /datum/language/common
-
-/obj/item/organ/internal/ears/cybernetic/translation/Initialize(mapload)
-	. = ..()
-	for (var/species_id in get_selectable_species())
-		var/datum/species/current_species = GLOB.species_list[species_id]
-		var/datum/language_holder/lang_holder = initial(current_species.species_language_holder)
-		var/datum/language_holder/lang_holder_obj = new lang_holder(src)
-
-		for(var/datum/language/lang as anything in lang_holder_obj.understood_languages)
-			if (!(lang in language_list))
-				language_list[initial(lang.name)] = lang
-
-/obj/item/organ/internal/ears/cybernetic/translation/examine(mob/user)
-	. = ..()
-	. += span_info("[src] are currently translating [initial(chosen_language.name)] speech. You can use a screwdriver to change the language.")
-
-/obj/item/organ/internal/ears/cybernetic/translation/screwdriver_act(mob/living/user, obj/item/screwtool)
-	. = ..()
-	if(.)
-		return TRUE
-
-	var/lang_name = tgui_input_list(user, "Select a language", "Language", language_list)
-
-	if(!isnull(lang_name))
-		chosen_language = language_list[lang_name]
-		to_chat(user, span_notice("You modify [src] to translate [initial(lang_name)] speech."))
-
-/obj/item/organ/internal/ears/cybernetic/translation/on_insert(mob/living/carbon/ear_owner)
-	. = ..()
-	ear_owner.grant_language(chosen_language, understood = TRUE, spoken = FALSE, source = LANGUAGE_CYBERNETIC)
-
-// Its a good thing you can't screwdriver organs after they've been 'installed' or there would be issues
-/obj/item/organ/internal/ears/cybernetic/translation/on_remove(mob/living/carbon/ear_owner)
-	. = ..()
-	ear_owner.remove_language(chosen_language, understood = TRUE, spoken = FALSE, source = LANGUAGE_CYBERNETIC)
 
 /obj/item/organ/internal/ears/cybernetic/whisper
 	name = "cybernetic listening ears"
