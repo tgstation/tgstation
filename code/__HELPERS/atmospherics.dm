@@ -171,3 +171,28 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 			return object
 
 	return null
+
+/**
+ * A simple helped proc that checks if the contents of a list of gases are within acceptable terms.
+ *
+ * Arguments:
+ * * gases: The list of gases which contents are being checked
+ * * gases to check: An associated list of gas types and acceptable boundaries in moles. e.g. /datum/gas/oxygen = list(16, 30)
+ * * * if the assoc list is null, then it'll be considered a safe gas and won't return FALSE.
+ * * extraneous_gas_limit: If a gas not in gases is found, this is the limit above which the proc will return FALSE.
+ */
+/proc/check_gases(list/gases, list/gases_to_check, extraneous_gas_limit = 0.1)
+	for(var/id in gases)
+		if(!(id in gases_to_check))
+			if(gases[id][MOLES] > extraneous_gas_limit)
+				return FALSE
+			continue
+		var/list/boundaries = gases_to_check[id]
+		if(boundaries && !ISINRANGE(gases[id][MOLES], boundaries[1], boundaries[2]))
+			return FALSE
+		gases_to_check -= id
+	///Now check that whatever gas wasn't present on the turf has a lower boundary of zero or none at all, otherwise return FALSE
+	for(var/id in gases_to_check)
+		if(!gases_to_check[id]?[1] > 0)
+			return FALSE
+	return TRUE

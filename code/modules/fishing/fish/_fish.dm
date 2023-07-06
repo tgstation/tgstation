@@ -359,10 +359,29 @@
 /obj/item/fish/proc/proper_environment()
 	var/obj/structure/aquarium/aquarium = loc
 	if(!istype(aquarium))
-		return FALSE
+		if(required_fluid_type != AQUARIUM_FLUID_AIR || !HAS_TRAIT(src, TRAIT_FISH_AMPHIBIOUS))
+			return FALSE
+		var/datum/gas_mixture/mixture = loc.return_air()
+		if(!mixture)
+			return FALSE
+		var/static/list/gases_to_check = list(
+			/datum/gas/oxygen = list(16, 100),
+			/datum/gas/nitrogen,
+			/datum/gas/carbon_dioxide = list(0, 10),
+			/datum/gas/water_vapor,
+		)
+		if(!check_gases(mixture.gases, gases_to_check))
+			return FALSE
+		if(!ISINRANGE(mixture.temperature, required_temperature_min, required_temperature_max))
+			return FALSE
+		var/pressure = mixture.return_pressure()
+		if((pressure <= 20) || (pressure >= 550))
+			return FALSE
+		return TRUE
 
 	if(!compatible_fluid_type(required_fluid_type, aquarium.fluid_type))
-		return FALSE
+		if(aquarium.fluid_type != AQUARIUM_FLUID_AIR || !HAS_TRAIT(src, TRAIT_FISH_AMPHIBIOUS))
+			return FALSE
 	if(!ISINRANGE(aquarium.fluid_temp, required_temperature_min, required_temperature_max))
 		return FALSE
 	return TRUE
@@ -566,12 +585,11 @@
 		probability_table[argkey] = chance_table
 	return pick_weight(probability_table[argkey])
 
-/proc/compatible_fluid_type(required_fluid_type, fluid_type)
-	switch(required_fluid_type)
-		if(AQUARIUM_FLUID_ANY)
-			return TRUE
+/proc/compatible_fluid_type(fish_fluid_type, fluid_type)
+	switch(fish_fluid_type)
+		if(AQUARIUM_FLUID_ANY_WATER)
+			return fluid_type != AQUARIUM_FLUID_AIR
 		if(AQUARIUM_FLUID_ANADROMOUS)
-			if(fluid_type != required_fluid_type)
-				return fluid_type == AQUARIUM_FLUID_SALTWATER || fluid_type == AQUARIUM_FLUID_FRESHWATER
+			return fluid_type == AQUARIUM_FLUID_SALTWATER || fluid_type == AQUARIUM_FLUID_FRESHWATER
 		else
-			return required_fluid_type == fluid_type
+			return fish_fluid_type == fluid_type

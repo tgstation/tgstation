@@ -372,7 +372,7 @@
 	sprite_height = 6
 	fish_ai_type = FISH_AI_ZIPPY
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
-	required_fluid_type = AQUARIUM_FLUID_ANY
+	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
 	health = 150
 	stable_population = 3
 	grind_results = list(/datum/reagent/bone_dust = 20)
@@ -397,7 +397,7 @@
 	available_in_random_cases = FALSE
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	fishing_difficulty_modifier = 5
-	required_fluid_type = AQUARIUM_FLUID_ANY
+	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
 	health = 300
 	stable_population = 2 //This means they can only crossbreed.
 	grind_results = list(/datum/reagent/bone_dust = 15, /datum/reagent/consumable/liquidgibs = 5)
@@ -408,7 +408,7 @@
 	average_size = 200
 	average_weight = 5000
 	death_text = "%SRC stops moving."
-	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
+	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
 
 /obj/item/fish/holo
 	name = "holographic goldfish"

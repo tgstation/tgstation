@@ -183,9 +183,10 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	ADD_TRAIT(fish, TRAIT_FISH_NO_MATING, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/revival
+	diff_traits_inheritability = 15
 	name = "Self-Revival"
 	catalog_description = "This fish shows a peculiar ability of reviving itself a minute or two after death."
-	diff_traits_inheritability = 15
+	guaranteed_inheritance_types = list(/obj/item/fish/boned, /obj/item/fish/mastodon)
 
 /datum/fish_trait/revival/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(check_status))
@@ -319,3 +320,14 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/lubed/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	return list(FISHING_MINIGAME_RULE_LUBED_FISH)
+
+/datum/fish_trait/amphibious
+	name = "Amphibious"
+	inheritability = 80
+	diff_traits_inheritability = 40
+	catalog_description = "This fish has developed a primitive adaptation to life on both land and water."
+
+/datum/fish_trait/amphibious/apply_to_fish(obj/item/fish/fish)
+	ADD_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS, FISH_TRAIT_DATUM)
+	if(fish.required_fluid_type == AQUARIUM_FLUID_AIR)
+		fish.required_fluid_type = AQUARIUM_FLUID_FRESHWATER

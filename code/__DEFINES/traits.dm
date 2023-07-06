@@ -825,6 +825,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_YUCKY_FISH "yucky_fish"
 #define TRAIT_FISH_TOXIN_IMMUNE "fish_toxin_immune"
 #define TRAIT_FISH_CROSSBREEDER "fish_crossbreeder"
+#define TRAIT_FISH_AMPHIBIOUS "fish_amphibious"
 ///Trait needed for the lubefish evolution
 #define TRAIT_FISH_FED_LUBE "fish_fed_lube"
 

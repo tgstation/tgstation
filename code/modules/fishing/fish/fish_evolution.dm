@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(fish_evolutions, init_fish_evolutions())
 	name = "???" //The resulting fish is not shown on the catalog.
 	probability = 40
 	new_fish_type = /obj/item/fish/mastodon
-	new_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
+	new_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
 	conditions_note = "The fish (and its mate) need to be unusually big in size and weight."
 
 /datum/fish_evolution/mastodon/check_conditions(obj/item/fish/source, obj/item/fish/mate, obj/structure/aquarium/aquarium)

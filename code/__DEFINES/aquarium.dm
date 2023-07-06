@@ -38,6 +38,6 @@
 #define AQUARIUM_FLUID_SULPHWATEVER "Sulfuric Water"
 #define AQUARIUM_FLUID_AIR "Air"
 #define AQUARIUM_FLUID_ANADROMOUS "Adaptive to both Freshwater and Saltwater"
-#define AQUARIUM_FLUID_ANY "Impervious to all fluids"
+#define AQUARIUM_FLUID_ANY_WATER "Adaptive to all kind of water"
 
 #define AQUARIUM_COMPANY "Aquatech Ltd."

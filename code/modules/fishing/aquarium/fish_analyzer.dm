@@ -6,8 +6,6 @@
 	base_icon_state = "fish_analyzer"
 	inhand_icon_state = "fish_analyzer"
 	worn_icon_state = "fish_analyzer"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	desc = "A fish-shaped scanner used to monitor fish's status and evolutionary traits."
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
