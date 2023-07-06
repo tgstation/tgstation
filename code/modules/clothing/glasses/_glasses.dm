@@ -693,7 +693,7 @@
 	stored_hallucination = 	user.cause_hallucination( \
 		/datum/hallucination/delusion/preset/mare, \
 		"[src]", \
-		duration = INFINITY, \
+		duration = null, \
 		affects_us = TRUE, \
 		affects_others = TRUE, \
 		skip_nearby = FALSE, \
