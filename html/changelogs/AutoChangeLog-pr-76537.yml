@@ -1,4 +1,0 @@
-author: "milktao"
-delete-after: True
-changes:
-  - bugfix: "fixed food preferences displaying incorrectly when examining tongues"

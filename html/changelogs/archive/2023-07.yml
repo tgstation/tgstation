@@ -261,3 +261,32 @@
       that it's within the codebase-defined ages, since there's no (legitimate) way
       to get a character outside of those ages anyways. Invalid values will log to
       the config log.
+2023-07-06:
+  ChungusGamer666:
+  - bugfix: Punpun has gotten properly fitting clothes for his little chimp body
+  - bugfix: Creampies no longer float above the heads of monkeys
+  DATA-xPUNGED:
+  - qol: Leather satchels and wallets have been issued to the offices of Head of Personnel
+      all across the sector. Studies suggest a fashion increase of 34%
+  Jacquerel:
+  - bugfix: A nuclear operative who is a slime will now correctly drop the disk upon
+      death.
+  - image: New directional sprites for spiderlings, with movement animations.
+  - bugfix: Dead spiderlings will be the same colour as they were when they were alive.
+  - bugfix: Tarantula spiderlings are no longer invisible,
+  - rscadd: People who cannot read can interact with the tram console to send it to
+      a random station.
+  NotDhu:
+  - bugfix: Replaced the security PDA painter in the CMO's office on Birdshot with
+      a medical PDA painter.
+  SomeRandomOwl:
+  - qol: Request Internet Sound now has the option to credit the person who requested
+      the Sound. Defaults to anonymous.
+  Vincent983:
+  - balance: Improved spacepol jumpsuit wound armor from 5 to 10
+  Vishenka0704:
+  - bugfix: Added a forgotten reason for not being allowed to work if the age is low.
+  Youtubeboy139:
+  - image: Added new Surgery Bed sprite
+  milktao:
+  - bugfix: fixed food preferences displaying incorrectly when examining tongues
