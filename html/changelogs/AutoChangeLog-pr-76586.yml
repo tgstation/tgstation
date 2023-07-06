@@ -1,0 +1,4 @@
+author: "norsvenska"
+delete-after: True
+changes:
+  - image: "Siding now uses the correct sprite on corners and endpieces."
