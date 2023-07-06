@@ -129,7 +129,7 @@
 /datum/reagent/consumable/ethanol/beer/green
 	name = "Green Beer"
 	description = "An alcoholic beverage brewed since ancient times on Old Earth. This variety is dyed a festive green."
-	color = "#A8E61D"
+	color = COLOR_CRAYON_GREEN
 	taste_description = "green piss water"
 	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
