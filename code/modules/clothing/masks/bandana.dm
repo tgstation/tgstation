@@ -28,7 +28,6 @@
 		return
 	if(slot_flags & ITEM_SLOT_NECK)
 		. += "Alt-click to untie it to wear as a mask!"
-		return
 	else
 		. += "Use in-hand to tie it up to wear as a hat!"
 		. += "Alt-click to tie it up to wear on your neck!"
