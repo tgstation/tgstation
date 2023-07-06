@@ -37,6 +37,7 @@
 	else
 		newmob.key = key
 
+	playsound(src, 'sound/items/party_horn.ogg', 50, 2)
 	to_chat(player_mind, span_userdanger("<i>Honk honk!</i>"))
 	qdel(src)
 
