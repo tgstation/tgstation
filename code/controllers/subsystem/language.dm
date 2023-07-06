@@ -9,6 +9,7 @@ SUBSYSTEM_DEF(language)
 			continue
 
 		GLOB.all_languages += language
+		GLOB.language_types_by_name[initial(language.name)] = language
 
 		var/datum/language/instance = new language
 		GLOB.language_datum_instances[language] = instance
