@@ -679,6 +679,31 @@
 	inhand_icon_state = "glasses"
 	glass_colour_type = /datum/client_colour/glass_colour/nightmare
 	forced_glass_color = TRUE
+	var/datum/hallucination/stored_hallucination
+
+/obj/item/clothing/glasses/nightmare_vision/Destroy()
+	if(stored_hallucination)
+		QDEL_NULL(stored_hallucination)
+	return ..()
+
+/obj/item/clothing/glasses/nightmare_vision/equipped(mob/living/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_EYES))
+		return
+	stored_hallucination = 	owner.cause_hallucination( \
+		/datum/hallucination/delusion/preset/mare, \
+		"[src]", \
+		duration = INFINITY, \
+		affects_us = TRUE, \
+		affects_others = TRUE, \
+		skip_nearby = FALSE, \
+		play_wabbajack = FALSE, \
+	)
+
+/obj/item/clothing/glasses/nightmare_vision/dropped(mob/living/user)
+	. = ..()
+	if(stored_hallucination)
+		QDEL_NULL(stored_hallucination)
 
 /obj/item/clothing/glasses/osi
 	name = "O.S.I. Sunglasses"
