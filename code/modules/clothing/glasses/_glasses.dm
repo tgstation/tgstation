@@ -679,6 +679,7 @@
 	inhand_icon_state = "glasses"
 	glass_colour_type = /datum/client_colour/glass_colour/nightmare
 	forced_glass_color = TRUE
+	/// Hallucination datum currently being used for seeing mares
 	var/datum/hallucination/stored_hallucination
 
 /obj/item/clothing/glasses/nightmare_vision/Destroy()
