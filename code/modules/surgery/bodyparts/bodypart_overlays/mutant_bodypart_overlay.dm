@@ -43,7 +43,6 @@
 	//no restyles? this is fucked
 	if(!valid_restyles)
 		CRASH("[type] had no available valid appearances on get_random_appearance()!")
-		return null
 	return pick(valid_restyles)
 
 ///Return the BASE icon state of the sprite datum (so not the gender, layer, feature_key)
