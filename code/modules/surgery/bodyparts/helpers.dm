@@ -178,8 +178,8 @@
 /mob/living/carbon/proc/synchronize_bodytypes()
 	var/all_limb_flags = NONE
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
-			all_limb_flags |= ext_organ.external_bodytypes
+		for(var/obj/item/organ/organ as anything in limb.organs)
+			all_limb_flags |= organ.external_bodytypes
 		all_limb_flags |= limb.bodytype
 
 	bodytype = all_limb_flags
