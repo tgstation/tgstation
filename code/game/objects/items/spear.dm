@@ -254,4 +254,4 @@
 	icon_prefix = "spearpillow"
 	hitsound = 'sound/items/pillow_hit2.ogg'
 	attack_verb_simple = list("poke")
-	slot_flag = null
+	slot_flags = null
