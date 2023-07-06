@@ -223,7 +223,9 @@
 
 /// Hallucination used by the nightmare vision goggles to turn everyone except you into mares
 /datum/hallucination/delusion/preset/mare
-	delusion_name = "Mare"
 	delusion_icon_file = 'icons/obj/clothing/masks.dmi'
 	delusion_icon_state = "horsehead"
+	delusion_name = "mare"
+	affects_us = FALSE
+	affects_others = TRUE
 	random_hallucination_weight = 0
