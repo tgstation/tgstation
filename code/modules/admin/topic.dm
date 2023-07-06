@@ -1762,9 +1762,15 @@
 		if(!check_rights(R_SOUND))
 			return
 
+		var/credit = href_list["credit"]
 		var/link_url = href_list["play_internet"]
 		if(!link_url)
 			return
 
-		web_sound(usr, link_url)
+		web_sound(usr, link_url, credit)
 
+	else if(href_list["debug_z_levels"])
+		if(!check_rights(R_DEBUG))
+			return
+
+		owner.debug_z_levels()

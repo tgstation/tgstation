@@ -4,7 +4,8 @@
 	dna?.species?.on_owner_login(src)
 
 	if(SStts.tts_enabled && !voice)
-		voice = pick(SStts.available_speakers)
+		if(!CONFIG_GET(flag/tts_allow_player_voice_disabling) || !client?.prefs.read_preference(/datum/preference/toggle/tts_voice_disable))
+			voice = pick(SStts.available_speakers)
 
 	if(!LAZYLEN(afk_thefts))
 		return

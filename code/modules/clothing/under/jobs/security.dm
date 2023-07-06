@@ -12,14 +12,13 @@
 /obj/item/clothing/under/rank/security
 	icon = 'icons/obj/clothing/under/security.dmi'
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
-	armor_type = /datum/armor/rank_security
+	armor_type = /datum/armor/clothing_under/rank_security
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/datum/armor/rank_security
+/datum/armor/clothing_under/rank_security
 	melee = 10
-	bio = 10
 	fire = 30
 	acid = 30
 	wound = 10
@@ -145,12 +144,11 @@
 	desc = "A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "rhos"
 	inhand_icon_state = "r_suit"
-	armor_type = /datum/armor/security_head_of_security
+	armor_type = /datum/armor/clothing_under/security_head_of_security
 	strip_delay = 60
 
-/datum/armor/security_head_of_security
+/datum/armor/clothing_under/security_head_of_security
 	melee = 10
-	bio = 10
 	fire = 50
 	acid = 50
 	wound = 10
@@ -221,12 +219,13 @@
 	icon_state = "spacepol"
 	inhand_icon_state = null
 	can_adjust = FALSE
-	armor_type = /datum/armor/sec_uniform_spacepol
+	armor_type = /datum/armor/clothing_under/sec_uniform_spacepol
 
-/datum/armor/sec_uniform_spacepol
+/datum/armor/clothing_under/sec_uniform_spacepol
 	fire = 10
 	acid = 10
 	melee = 10
+	wound = 10
 
 /obj/item/clothing/under/rank/prisoner
 	name = "prison jumpsuit"

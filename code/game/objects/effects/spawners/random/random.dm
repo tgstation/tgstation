@@ -97,7 +97,7 @@
 
 	if(radius >= 0)
 		for(var/turf/turf_in_view in view(radius, get_turf(src)))
-			if(isclosedturf(turf_in_view) || (isgroundlessturf(turf_in_view) && !SSmapping.get_turf_below(turf_in_view)))
+			if(isclosedturf(turf_in_view) || (isgroundlessturf(turf_in_view) && !GET_TURF_BELOW(turf_in_view)))
 				continue
 			scatter_locations += turf_in_view
 

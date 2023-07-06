@@ -89,7 +89,10 @@
 	update_appearance()
 
 /obj/item/storage/portable_chem_mixer/CtrlClick(mob/living/user)
-	atom_storage.locked = !atom_storage.locked
+	if(atom_storage.locked)
+		atom_storage.locked = STORAGE_NOT_LOCKED
+	else
+		atom_storage.locked = STORAGE_FULLY_LOCKED
 	if (!atom_storage.locked)
 		update_contents()
 	if (atom_storage.locked)

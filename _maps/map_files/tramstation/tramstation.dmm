@@ -4897,6 +4897,9 @@
 /area/station/hallway/secondary/exit)
 "aCO" = (
 /obj/structure/table/wood,
+/obj/item/storage/backpack/satchel/leather/withwallet{
+	pixel_y = 4
+	},
 /obj/item/hand_labeler,
 /obj/item/stack/package_wrap,
 /turf/open/floor/wood,

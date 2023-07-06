@@ -2,6 +2,7 @@
 /datum/surgery/amputation
 	name = "Amputation"
 	requires_bodypart_type = NONE
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_MORBID_CURIOSITY
 	possible_locs = list(
 		BODY_ZONE_R_ARM,
 		BODY_ZONE_L_ARM,
@@ -58,7 +59,7 @@
 	)
 	display_pain(target, "You can no longer feel your severed [parse_zone(target_zone)]!")
 
-	if(HAS_TRAIT(user, TRAIT_MORBID) && ishuman(user))
+	if(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID) && ishuman(user))
 		var/mob/living/carbon/human/morbid_weirdo = user
 		morbid_weirdo.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
 

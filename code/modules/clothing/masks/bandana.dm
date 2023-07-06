@@ -21,6 +21,17 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/bandana_inhands_right
 	greyscale_colors = "#2e2e2e"
 
+/obj/item/clothing/mask/bandana/examine(mob/user)
+	. = ..()
+	if(mask_adjusted)
+		. += "Use in-hand to untie it to wear as a mask!"
+		return
+	if(slot_flags & ITEM_SLOT_NECK)
+		. += "Alt-click to untie it to wear as a mask!"
+	else
+		. += "Use in-hand to tie it up to wear as a hat!"
+		. += "Alt-click to tie it up to wear on your neck!"
+
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	if(slot_flags & ITEM_SLOT_NECK)
 		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
@@ -51,8 +62,7 @@
 		else if(!user.is_holding(src))
 			to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
 			return
-		
-		
+
 		if(slot_flags & ITEM_SLOT_MASK)
 			undyeable = TRUE
 			slot_flags = ITEM_SLOT_NECK
