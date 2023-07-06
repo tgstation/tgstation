@@ -55,6 +55,8 @@
 #define IN_STORAGE (1<<11)
 /// Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
 #define SURGICAL_TOOL (1<<12)
+/// This object, when used for surgery, is a lot worse at the job if the target is alive rather than dead
+#define CRUEL_IMPLEMENT (1<<13)
 /// If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
 #define HAND_ITEM (1<<14)
 /// Makes the Examine proc not read out this item.

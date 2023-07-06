@@ -1120,6 +1120,14 @@
 	registered_name = JOB_ERT_CLOWN
 	trim = /datum/id_trim/centcom/ert/clown
 
+/obj/item/card/id/advanced/centcom/ert/militia
+	registered_name = "Frontier Militia"
+	trim = /datum/id_trim/centcom/ert/militia
+
+/obj/item/card/id/advanced/centcom/ert/militia/general
+	registered_name = "Frontier Militia General"
+	trim = /datum/id_trim/centcom/ert/militia/general
+
 /obj/item/card/id/advanced/black
 	name = "black identification card"
 	desc = "This card is telling you one thing and one thing alone. The person holding this card is an utter badass."

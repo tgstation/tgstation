@@ -44,7 +44,8 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	src.tame = tame
-	body_color = new_body_color
+	if(!isnull(new_body_color))
+		body_color = new_body_color
 	if(isnull(body_color))
 		body_color = pick("brown", "gray", "white")
 	held_state = "mouse_[body_color]" // not handled by variety element

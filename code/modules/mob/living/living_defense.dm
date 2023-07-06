@@ -432,6 +432,14 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 
+	for(var/datum/surgery/operations as anything in surgeries)
+		if(user.combat_mode)
+			break
+		if(IS_IN_INVALID_SURGICAL_POSITION(src, operations))
+			continue
+		if(operations.next_step(user, modifiers))
+			return TRUE
+
 	help_shake_act(user)
 	return FALSE
 

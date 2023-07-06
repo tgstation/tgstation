@@ -13172,10 +13172,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/atmospherics_engine)
-"eWG" = (
-/obj/item,
-/turf/open/space/basic,
-/area/space)
 "eWO" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -37792,13 +37788,13 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "nEL" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 4
 	},
 /obj/item/pen,
-/obj/structure/table/wood,
-/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "nEZ" = (
@@ -37889,10 +37885,14 @@
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "nHn" = (
-/obj/item/hand_labeler,
-/obj/item/stack/package_wrap,
 /obj/structure/table/wood,
 /obj/structure/cable,
+/obj/item/storage/backpack/satchel/leather/withwallet{
+	pixel_y = 4;
+	pixel_x = -1
+	},
+/obj/item/stack/package_wrap,
+/obj/item/hand_labeler,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "nHB" = (
@@ -64049,14 +64049,6 @@
 /obj/machinery/button/ticket_machine{
 	pixel_x = 32
 	},
-/obj/item/paper_bin/carbon{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/stamp/head/hop{
-	pixel_x = -4;
-	pixel_y = 4
-	},
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 6;
 	pixel_y = -34
@@ -64066,6 +64058,14 @@
 	name = "Privacy Shutters Control";
 	pixel_x = -6;
 	req_access = list("hop")
+	},
+/obj/item/paper_bin/carbon{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/stamp/head/hop{
+	pixel_x = -4;
+	pixel_y = 4
 	},
 /obj/machinery/button/door/directional/south{
 	id = "hopqueue";
@@ -118602,7 +118602,7 @@ aaa
 aaa
 aaa
 aaa
-eWG
+aaa
 aaa
 aaa
 aaa

@@ -158,6 +158,17 @@
 	return ..() || ((obj_flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
 
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, params)
+	for(var/datum/surgery/operations as anything in surgeries)
+		if(user.combat_mode)
+			break
+		if(IS_IN_INVALID_SURGICAL_POSITION(src, operations))
+			continue
+		if(!(operations.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src))
+			continue
+		var/list/modifiers = params2list(params)
+		if(operations.next_step(user, modifiers))
+			return TRUE
+
 	if(..())
 		return TRUE
 	if(attacking_item.force > 1)

@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "Guard spider web statues despawn as the ability comes back off cooldown."
+  - balance: "Spiderlings now only move at light speed if they're on webs, stay safe little guys."
+  - bugfix: "Spiders once again have random numbers after their names."

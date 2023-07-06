@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Scanning apps (Lifeline app) start with a scan"
-  - bugfix: "Fixes a potential exploit in radar apps"

@@ -67,10 +67,10 @@
 	var/border_turf = FALSE
 	var/list/turfs_to_check = RANGE_TURFS(1, src)
 	if(GET_LOWEST_STACK_OFFSET(z))
-		var/turf/above = SSmapping.get_turf_above(src)
+		var/turf/above = GET_TURF_ABOVE(src)
 		if(above)
 			turfs_to_check += RANGE_TURFS(1, above)
-		var/turf/below = SSmapping.get_turf_below(src)
+		var/turf/below = GET_TURF_BELOW(src)
 		if(below)
 			turfs_to_check += RANGE_TURFS(1, below)
 
@@ -92,10 +92,10 @@
 		// We have gone from a lava turf to a non lava turf, time to let them know
 		var/list/turfs_to_check = RANGE_TURFS(1, result)
 		if(GET_LOWEST_STACK_OFFSET(z))
-			var/turf/above = SSmapping.get_turf_above(result)
+			var/turf/above = GET_TURF_ABOVE(result)
 			if(above)
 				turfs_to_check += RANGE_TURFS(1, above)
-			var/turf/below = SSmapping.get_turf_below(result)
+			var/turf/below = GET_TURF_BELOW(result)
 			if(below)
 				turfs_to_check += RANGE_TURFS(1, below)
 		for(var/turf/open/lava/inform in turfs_to_check)
@@ -388,7 +388,7 @@
 	for(var/obj/item/bodypart/burn_limb as anything in burn_human.bodyparts)
 		if(IS_ORGANIC_LIMB(burn_limb) && burn_limb.limb_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
 			plasma_parts += burn_limb
-		if(!IS_ORGANIC_LIMB(burn_limb))
+		if(IS_ROBOTIC_LIMB(burn_limb))
 			robo_parts += burn_limb
 
 	burn_human.adjustToxLoss(15, required_biotype = MOB_ORGANIC) // This is from plasma, so it should obey plasma biotype requirements

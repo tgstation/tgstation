@@ -93,6 +93,10 @@
 	canSmoothWith = SMOOTH_GROUP_CATWALK
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 
+/obj/structure/lattice/catwalk/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
+
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
 	return span_notice("The supporting rods look like they could be <b>cut</b>.")
 

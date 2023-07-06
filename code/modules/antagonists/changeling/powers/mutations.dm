@@ -15,7 +15,7 @@
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
-	dna_cost = -1
+	dna_cost = CHANGELING_POWER_UNOBTAINABLE
 
 	var/silent = FALSE
 	var/weapon_type
@@ -88,7 +88,7 @@
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
-	dna_cost = -1
+	dna_cost = CHANGELING_POWER_UNOBTAINABLE
 
 	var/helmet_type = /obj/item
 	var/suit_type = /obj/item

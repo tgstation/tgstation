@@ -16,6 +16,8 @@
 	var/list/cant_hold
 	/// if set, these items will be the exception to the max size of object that can fit.
 	var/list/exception_hold
+	/// if exception_hold is set, how many exception items can we hold at any one time?
+	var/exception_max = INFINITE
 	/// if set can only contain stuff with this single trait present.
 	var/list/can_hold_trait
 
@@ -31,7 +33,7 @@
 	/// list of all the mobs currently viewing the contents
 	var/list/is_using = list()
 
-	var/locked = FALSE
+	var/locked = STORAGE_NOT_LOCKED
 	/// whether or not we should open when clicked
 	var/attack_hand_interact = TRUE
 	/// whether or not we allow storage objects of the same size inside
@@ -308,9 +310,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  *
  * @param obj/item/to_insert the item we're checking
  * @param messages if TRUE, will print out a message if the item is not valid
- * @param force bypass locked storage
+ * @param force bypass locked storage up to a certain level. See [code/__DEFINES/storage.dm]
  */
-/datum/storage/proc/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = FALSE)
+/datum/storage/proc/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = STORAGE_NOT_LOCKED)
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
@@ -325,16 +327,21 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!isitem(to_insert))
 		return FALSE
 
-	if(locked && !force)
+	if(locked > force)
 		return FALSE
 
 	if((to_insert == resolve_parent) || (to_insert == real_location))
 		return FALSE
 
-	if(to_insert.w_class > max_specific_storage && !is_type_in_typecache(to_insert, exception_hold))
-		if(messages && user)
-			to_chat(user, span_warning("\The [to_insert] is too big for \the [resolve_parent]!"))
-		return FALSE
+	if(to_insert.w_class > max_specific_storage)
+		if(!is_type_in_typecache(to_insert, exception_hold))
+			if(messages && user)
+				to_chat(user, span_warning("\The [to_insert] is too big for \the [resolve_parent]!"))
+			return FALSE
+		if(exception_max != INFINITE && exception_max <= exception_count())
+			if(messages && user)
+				to_chat(user, span_warning("Too many large items already in \the [resolve_parent], can't fit \the [to_insert]!"))
+			return FALSE
 
 	if(resolve_location.contents.len >= max_slots)
 		if(messages && user && !silent_for_user)
@@ -383,6 +390,15 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	return TRUE
 
+/// Returns a count of how many items held due to exception_hold we have
+/datum/storage/proc/exception_count()
+	var/obj/item/storage = real_location?.resolve()
+	var/count = 0
+	for(var/obj/item/thing in storage)
+		if(thing.w_class > max_specific_storage && is_type_in_typecache(thing, exception_hold))
+			count += 1
+	return count
+
 /**
  * Attempts to insert an item into the storage
  *
@@ -390,9 +406,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param obj/item/to_insert the item we're inserting
  * @param mob/user the user who is inserting the item
  * @param override see item_insertion_feedback()
- * @param force bypass locked storage
+ * @param force bypass locked storage up to a certain level. See [code/__DEFINES/storage.dm]
  */
-/datum/storage/proc/attempt_insert(obj/item/to_insert, mob/user, override = FALSE, force = FALSE)
+/datum/storage/proc/attempt_insert(obj/item/to_insert, mob/user, override = FALSE, force = STORAGE_NOT_LOCKED)
 	var/obj/item/resolve_location = real_location?.resolve()
 	if(!resolve_location)
 		return FALSE

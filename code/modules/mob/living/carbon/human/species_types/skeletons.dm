@@ -4,12 +4,8 @@
 	id = SPECIES_SKELETON
 	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
-	species_traits = list(
-		NOTRANSSTING,
-		NO_DNA_COPY,
-		NO_UNDERWEAR,
-	)
 	inherent_traits = list(
+		TRAIT_NO_UNDERWEAR,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
@@ -26,6 +22,8 @@
 		TRAIT_TOXIMMUNE,
 		TRAIT_XENO_IMMUNE,
 		TRAIT_NOBLOOD,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_TRANSFORMATION_STING,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/internal/tongue/bone
