@@ -37,9 +37,10 @@
 	if(isturf(loc))
 		qdel(src)
 
+// We don't want to have '-live' appended to the end of the icon_state for arrows
 /obj/item/ammo_casing/arrow/update_icon_state()
+	. = ..()
 	icon_state = "[initial(icon_state)]
-	return ..()
 
 /// holy arrows
 /obj/item/ammo_casing/arrow/holy
