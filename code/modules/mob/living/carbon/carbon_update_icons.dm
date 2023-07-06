@@ -580,6 +580,8 @@
 		if(!overlay.can_draw_on_bodypart(owner))
 			continue
 		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
+	if(top_offset)
+		. += "-[top_offset]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.get_mob_height()]"
@@ -592,6 +594,8 @@
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"
+	if(top_offset)
+		. += "-[top_offset]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.get_mob_height()]"
@@ -604,7 +608,7 @@
 		. += "-[lip_color]"
 
 	if(facial_hair_hidden)
-		. += "-FACIAL_HAIR_HIDDEN"
+		. += "-facial_hair_hidden"
 	else
 		. += "-[facial_hairstyle]"
 		. += "-[override_hair_color || fixed_hair_color || facial_hair_color]"
@@ -614,13 +618,13 @@
 			. += "-[gradient_colors[GRADIENT_FACIAL_HAIR_KEY]]"
 
 	if(show_eyeless)
-		. += "-SHOW_EYELESS"
+		. += "-show_eyeless"
 	if(show_debrained)
-		. += "-SHOW_DEBRAINED"
+		. += "-show_debrained"
 		return .
 
 	if(hair_hidden)
-		. += "-HAIR_HIDDEN"
+		. += "-hair_hidden"
 	else
 		. += "-[hairstyle]"
 		. += "-[override_hair_color || fixed_hair_color || hair_color]"
