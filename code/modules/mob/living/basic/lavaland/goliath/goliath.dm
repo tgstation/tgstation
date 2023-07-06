@@ -50,6 +50,7 @@
 	ADD_TRAIT(src, TRAIT_TENTACLE_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = goliath_foods)
+	AddComponent(/datum/component/shovel_hands)
 	if (tameable)
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(tamed)))
 

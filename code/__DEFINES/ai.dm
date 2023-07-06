@@ -312,3 +312,5 @@
 
 /// Key where we store the tentacleing ability
 #define BB_GOLIATH_TENTACLES "BB_goliath_tentacles"
+/// Key where goliath stores a hole it wants to get into
+#define BB_GOLIATH_HOLE_TARGET "BB_goliath_hole"
