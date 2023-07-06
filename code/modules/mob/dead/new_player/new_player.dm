@@ -62,8 +62,7 @@
 
 /mob/dead/new_player/get_status_tab_items()
 	. = ..()
-	var/game_state = SSticker.current_state
-	if(game_state < GAME_STATE_PLAYING) //only show this when the round hasn't started yet
+	if(!SSticker.HasRoundStarted()) //only show this when the round hasn't started yet
 		. += "Readiness status: [ready ? "Ready" : "Not Ready"]"
 
 //When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
