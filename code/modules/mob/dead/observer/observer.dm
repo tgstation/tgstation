@@ -906,6 +906,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (!isobserver(usr))
 		return
 
+	reset_perspective(null) // Reset again for sanity
+
 	var/mob/chosen_target = possible_destinations[target]
 
 	// During the break between opening the input menu and selecting our target, has this become an invalid option?
