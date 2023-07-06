@@ -9,7 +9,7 @@
 	var/list/containers = subtypesof(/obj/item/reagent_containers/cup/glass/bottle)
 	for(var/typepath in containers)
 		containers -= typepath
-		var/obj/item/reagent_containers/cup/glass/bottle/instance = new typepath()
+		var/obj/item/reagent_containers/cup/glass/bottle/instance = new typepath
 		if(!length(instance.list_reagents))
 			qdel(instance)
 			continue
