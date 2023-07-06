@@ -21,6 +21,8 @@
 	var/uses = -1
 	///our implant flags
 	var/implant_flags = NONE
+	///what icon state will we represent ourselves with on the hud?
+	var/hud_icon_state = null
 
 
 /obj/item/implant/proc/activate()

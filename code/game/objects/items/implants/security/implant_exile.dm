@@ -6,6 +6,7 @@
 	desc = "Prevents you from returning from away missions."
 	actions_types = null
 	implant_flags = IMPLANT_TYPE_SECURITY
+	hud_icon_state = "hud_imp_exile"
 
 /obj/item/implant/exile/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>

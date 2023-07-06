@@ -280,14 +280,14 @@ Security HUDs! Basic mode shows only the job.
 		set_hud_image_inactive(i)
 
 	var/security_slot = 1 //Which of the two security hud slots are we putting found security implants in?
-	for(var/obj/item/implant/current_implant in implants) //TOOOO DOOOO ADD THE OTHER IMPLANTS HERE
+	for(var/obj/item/implant/current_implant in implants)
 		if(current_implant.implant_flags & IMPLANT_TYPE_SECURITY)
 			switch(security_slot)
 				if(1)
 					holder = hud_list[IMPSEC_FIRST_HUD]
 					var/icon/IC = icon(icon, icon_state, dir)
 					holder.pixel_y = IC.Height() - world.icon_size
-					holder.icon_state = "hud_imp_tracking" //Declare this on the implant
+					holder.icon_state = current_implant.hud_icon_state
 					set_hud_image_active(IMPSEC_FIRST_HUD)
 					security_slot++
 
@@ -295,7 +295,7 @@ Security HUDs! Basic mode shows only the job.
 					holder = hud_list[IMPSEC_SECOND_HUD]
 					var/icon/IC = icon(icon, icon_state, dir)
 					holder.pixel_y = IC.Height() - world.icon_size
-					holder.icon_state = "hud_imp_chem" //Modify based on implant type
+					holder.icon_state = current_implant.hud_icon_state
 					set_hud_image_active(IMPSEC_SECOND_HUD)
 
 	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))

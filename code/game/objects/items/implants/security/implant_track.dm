@@ -3,6 +3,7 @@
 	desc = "Track with this."
 	actions_types = null
 	implant_flags = IMPLANT_TYPE_SECURITY
+	hud_icon_state = "hud_imp_tracking"
 
 	///How long will the implant continue to function after death?
 	var/lifespan_postmortem = 10 MINUTES
