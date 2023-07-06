@@ -164,7 +164,10 @@
 		balloon_alert(src, "no dna detected!")
 		return FALSE
 	to_chat(src, span_boldannounce(("[holder]'s UE string: [holder.dna.unique_enzymes]")))
-	to_chat(src, span_notice("DNA [holder.dna.unique_enzymes == master_dna ? "matches" : "does not match"] our stored Master's DNA."))
+	var/dna_matches = (holder.dna.unique_enzymes == master_dna)
+	to_chat(src, span_notice("DNA [dna_matches ? "matches" : "does not match"] our stored Master's DNA."))
+	if(dna_matches)
+		copy_languages(dna_matches, source_override = LANGUAGE_PAI)
 	return TRUE
 
 /**
