@@ -953,13 +953,15 @@
 	var/datum/reagent/consumable/ethanol/favorite_alcohol
 
 /datum/quirk/item_quirk/junkie/alcoholic/New()
-	drug_container_type = pick(/obj/item/reagent_containers/cup/glass/bottle/whiskey,
+	drug_container_type = pick(
+		/obj/item/reagent_containers/cup/glass/bottle/whiskey,
 		/obj/item/reagent_containers/cup/glass/bottle/vodka,
 		/obj/item/reagent_containers/cup/glass/bottle/ale,
 		/obj/item/reagent_containers/cup/glass/bottle/beer,
 		/obj/item/reagent_containers/cup/glass/bottle/hcider,
 		/obj/item/reagent_containers/cup/glass/bottle/wine,
-		/obj/item/reagent_containers/cup/glass/bottle/sake)
+		/obj/item/reagent_containers/cup/glass/bottle/sake,
+	)
 
 	return ..()
 
