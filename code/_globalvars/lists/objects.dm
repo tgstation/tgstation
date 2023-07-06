@@ -65,3 +65,6 @@ GLOBAL_LIST_EMPTY(alert_consoles) // Station alert consoles, /obj/machinery/comp
 
 GLOBAL_LIST_EMPTY(roundstart_station_borgcharger_areas) // List of area names of roundstart station cyborg rechargers, for the low charge/no charge cyborg screen alert tooltips.
 GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas) // List of area names of roundstart station mech rechargers, for the low charge/no charge mech screen alert tooltips.
+
+/// Associative list of alcoholic container typepath to instances, currently used by the alcoholic quirk
+GLOBAL_LIST_INIT(alcohol_containers, init_alcohol_containers())

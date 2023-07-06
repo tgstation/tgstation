@@ -911,6 +911,7 @@
 	icon = FA_ICON_SMOKING
 	value = -4
 	gain_text = span_danger("You could really go for a smoke right about now.")
+	lose_text = span_notice("You don't feel nearly as hooked to nicotine anymore.")
 	medical_record_text = "Patient is a current smoker."
 	reagent_type = /datum/reagent/drug/nicotine
 	accessory_type = /obj/item/lighter/greyscale
@@ -947,12 +948,80 @@
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/mask_item = human_holder.get_item_by_slot(ITEM_SLOT_MASK)
-	if (istype(mask_item, /obj/item/clothing/mask/cigarette))
+	if(istype(mask_item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/storage/fancy/cigarettes/cigarettes = drug_container_type
 		if(istype(mask_item, initial(cigarettes.spawn_type)))
 			quirk_holder.clear_mood_event("wrong_cigs")
-			return
-		quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
+		else
+			quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
+
+/datum/quirk/item_quirk/junkie/alcoholic
+	name = "Alcoholic"
+	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
+	icon = FA_ICON_WINE_GLASS
+	value = -4
+	gain_text = span_danger("You really need a drink.")
+	lose_text = span_notice("Alcohol doesn't seem nearly as enticing anymore.")
+	medical_record_text = "Patient is an alcoholic."
+	reagent_type = /datum/reagent/consumable/ethanol
+	drug_container_type = /obj/item/reagent_containers/cup/glass/bottle/whiskey
+	mob_trait = TRAIT_HEAVY_DRINKER
+	hardcore_value = 1
+	drug_flavour_text = "Make sure you get your favorite type of drink when you run out."
+	mail_goodies = list(
+		/obj/effect/spawner/random/food_or_drink/booze,
+		/obj/item/book/bible/booze,
+	)
+	/// Cached typepath of the owner's favorite alcohol reagent
+	var/datum/reagent/consumable/ethanol/favorite_alcohol
+
+/datum/quirk/item_quirk/junkie/alcoholic/New()
+	drug_container_type = pick(
+		/obj/item/reagent_containers/cup/glass/bottle/whiskey,
+		/obj/item/reagent_containers/cup/glass/bottle/vodka,
+		/obj/item/reagent_containers/cup/glass/bottle/ale,
+		/obj/item/reagent_containers/cup/glass/bottle/beer,
+		/obj/item/reagent_containers/cup/glass/bottle/hcider,
+		/obj/item/reagent_containers/cup/glass/bottle/wine,
+		/obj/item/reagent_containers/cup/glass/bottle/sake,
+	)
+
+	return ..()
+
+/datum/quirk/item_quirk/junkie/alcoholic/post_add()
+	. = ..()
+	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK, PROC_REF(check_brandy))
+
+	var/obj/item/reagent_containers/brandy_container = GLOB.alcohol_containers[drug_container_type]
+	if(isnull(brandy_container))
+		stack_trace("Alcoholic quirk added while the GLOB.alcohol_containers is (somehow) not initialized!")
+		brandy_container = new drug_container_type
+		favorite_alcohol = brandy_container.list_reagents[1]
+		qdel(brandy_container)
+	else
+		favorite_alcohol = brandy_container.list_reagents[1]
+
+	quirk_holder.add_mob_memory(/datum/memory/key/quirk_alcoholic, protagonist = quirk_holder, preferred_brandy = initial(favorite_alcohol.name))
+	// alcoholic livers have 25% less health and healing
+	var/obj/item/organ/internal/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(alcohol_liver && IS_ORGANIC_ORGAN(alcohol_liver)) // robotic livers aren't affected
+		alcohol_liver.maxHealth = alcohol_liver.maxHealth * 0.75
+		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75
+
+/datum/quirk/item_quirk/junkie/alcoholic/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK)
+
+/datum/quirk/item_quirk/junkie/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze)
+	SIGNAL_HANDLER
+
+	//we don't care if it is not alcohol
+	if(!istype(booze, /datum/reagent/consumable/ethanol))
+		return
+
+	if(istype(booze, favorite_alcohol))
+		quirk_holder.clear_mood_event("wrong_alcohol")
+	else
+		quirk_holder.add_mood_event("wrong_alcohol", /datum/mood_event/wrong_brandy)
 
 /datum/quirk/item_quirk/chronic_illness
 	name = "Chronic Illness"
