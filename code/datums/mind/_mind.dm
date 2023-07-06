@@ -180,20 +180,22 @@
 	if(new_character.mind) //disassociate any mind currently in our new body's mind variable
 		new_character.mind.set_current(null)
 
-	// Offload all mind languages from the old holder to a temp one
-	var/datum/language_holder/empty/temp_holder = new()
-	var/datum/language_holder/old_holder = current.get_language_holder()
-	var/datum/language_holder/new_holder = new_character.get_language_holder()
-	// Off load mind languages to the temp holder momentarily
-	new_holder.transfer_mind_languages(temp_holder)
-	// Transfer the old holder's mind languages to the new holder
-	old_holder.transfer_mind_languages(new_holder)
-	// And finally transfer the temp holder's mind languages back to the old holder
-	temp_holder.transfer_mind_languages(old_holder)
-
 	var/mob/living/old_current = current
 	if(current)
-		current.transfer_observers_to(new_character) //transfer anyone observing the old character to the new one
+		//transfer anyone observing the old character to the new one
+		current.transfer_observers_to(new_character)
+
+		// Offload all mind languages from the old holder to a temp one
+		var/datum/language_holder/empty/temp_holder = new()
+		var/datum/language_holder/old_holder = old_current.get_language_holder()
+		var/datum/language_holder/new_holder = new_character.get_language_holder()
+		// Off load mind languages to the temp holder momentarily
+		new_holder.transfer_mind_languages(temp_holder)
+		// Transfer the old holder's mind languages to the new holder
+		old_holder.transfer_mind_languages(new_holder)
+		// And finally transfer the temp holder's mind languages back to the old holder
+		temp_holder.transfer_mind_languages(old_holder)
+
 	set_current(new_character) //associate ourself with our new body
 	QDEL_NULL(antag_hud)
 	new_character.mind = src //and associate our new body with ourself
@@ -211,9 +213,6 @@
 	if(new_character.client)
 		LAZYCLEARLIST(new_character.client.recent_examines)
 		new_character.client.init_verbs() // re-initialize character specific verbs
-
-	old_current.get_language_holder().transfer_mind_languages(new_character)
-
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFERRED, old_current)
 	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO)

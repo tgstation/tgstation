@@ -1516,13 +1516,6 @@
 
 	return get_language_holder().copy_languages(from_holder, source_override)
 
-/// Swaps mind based languages between two mobs.
-/mob/proc/swap_mind_languages(mob/with_who)
-	var/datum/language_holder/ours = get_language_holder()
-	var/datum/language_holder/theirs = with_who.get_language_holder()
-
-	return ours.swap_mind_languages(theirs)
-
 /atom/movable/proc/set_active_language(language_path)
 	var/datum/language_holder/our_holder = get_language_holder()
 	our_holder.selected_language = language_path

@@ -230,8 +230,10 @@ Key procs
 			remove_blocked_language(language, LANGUAGE_MIND)
 			to_holder.add_blocked_language(language, LANGUAGE_MIND)
 
-	get_selected_language()
-	to_holder.get_selected_language()
+	if(owner)
+		get_selected_language()
+	if(to_holder.owner)
+		to_holder.get_selected_language()
 
 GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 
