@@ -1,0 +1,17 @@
+/obj/item/implant/beacon
+	name = "beacon implant"
+	desc = "Teleports things."
+	icon_state = "reagents" //change
+	actions_types = null
+	implant_flags = IMPLANT_TYPE_SECURITY
+
+/obj/item/implant/beacon/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Robust Corp JMP-21 Fugitive Retrieval Implant<BR>
+				<b>Life:</b> Deactivates upon death but remains within the body.<BR>
+				<b>Important Notes: N/A</B><BR>
+				<HR>
+				<b>Implant Details: </b><BR>
+				<b>Function:</b> Acts as a teleportation beacon that can be tracked by any standard bluespace transponder.
+				Using this, you can teleport to whoever has this implant inside of them."}
+	return dat

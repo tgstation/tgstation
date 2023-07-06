@@ -2,16 +2,18 @@
 	name = "tracking implant"
 	desc = "Track with this."
 	actions_types = null
+	implant_flags = IMPLANT_TYPE_SECURITY
 
 	///for how many deciseconds after user death will the implant work?
-	var/lifespan_postmortem = 6000
+	var/lifespan_postmortem = 10 MINUTES
 	///will people implanted with this act as teleporter beacons?
 	var/allow_teleport = TRUE
 
 /obj/item/implant/tracking/c38
 	name = "TRAC implant"
 	desc = "A smaller tracking implant that supplies power for only a few minutes."
-	var/lifespan = 3000 //how many deciseconds does the implant last?
+	///How long before this implant self-deletes?
+	var/lifespan = 5 MINUTES
 	///The id of the timer that's qdeleting us
 	var/timerid
 	allow_teleport = FALSE

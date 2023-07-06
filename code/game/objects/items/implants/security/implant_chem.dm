@@ -3,6 +3,7 @@
 	desc = "Injects things."
 	icon_state = "reagents"
 	actions_types = null
+	implant_flags = IMPLANT_TYPE_SECURITY
 
 /obj/item/implant/chem/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>

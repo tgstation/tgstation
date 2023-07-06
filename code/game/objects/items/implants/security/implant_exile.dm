@@ -5,6 +5,7 @@
 	name = "exile implant"
 	desc = "Prevents you from returning from away missions."
 	actions_types = null
+	implant_flags = IMPLANT_TYPE_SECURITY
 
 /obj/item/implant/exile/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>

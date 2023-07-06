@@ -19,6 +19,8 @@
 	var/allow_multiple = FALSE
 	///how many times this can do something, only relevant for implants with limited uses
 	var/uses = -1
+	///our implant flags
+	var/implant_flags = NONE
 
 
 /obj/item/implant/proc/activate()
