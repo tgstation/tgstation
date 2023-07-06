@@ -211,15 +211,12 @@
 	drawtype = pick(all_drawables)
 
 	AddElement(/datum/element/venue_price, FOOD_PRICE_EXOTIC)
-	if(edible)
-		if(charges == INFINITE_CHARGES)
-			AddComponent(/datum/component/edible, bite_consumption = 50 / (100 / 5), after_eat = CALLBACK(src, PROC_REF(after_eat)))
-		else
-			AddComponent(/datum/component/edible, bite_consumption = 45 / (charges / 5), after_eat = CALLBACK(src, PROC_REF(after_eat)))
 	if(can_change_colour)
 		AddComponent(/datum/component/palette, AVAILABLE_SPRAYCAN_SPACE, paint_color)
 
 	refill()
+	if(edible)
+		AddComponent(/datum/component/edible, bite_consumption = reagents.total_volume / (charges_left / 5), after_eat = CALLBACK(src, PROC_REF(after_eat)))
 
 /obj/item/toy/crayon/proc/after_eat(mob/user)
 	use_charges(user, 5, FALSE, TRUE)
