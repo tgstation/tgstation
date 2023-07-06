@@ -73,3 +73,8 @@
 			if (EMP_HEAVY)
 				visible_message(span_danger("[src] suddenly bursts apart!"))
 				apply_damage(maxHealth)
+
+/mob/living/simple_animal/begin_blocking(obj/item/blocker)
+	if(damage_coeff[STAMINA] <= 0)
+		return FALSE
+	return ..()

@@ -70,8 +70,11 @@
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
+/obj/item/energy/can_attack_with(mob/living/attacker)
+	return ..() && HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
+
 /obj/item/melee/energy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
-	if(!blade_active)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return -1
 	if(damage_type == LASER || damage_type == ENERGY)
 		return 0 // perfectly able to block energy shots.
@@ -375,13 +378,6 @@
 	if(right_clicking)
 		reverse_range(.)
 
-/datum/attack_style/melee_weapon/swing/esword/execute_attack(mob/living/attacker, obj/item/melee/energy/weapon, list/turf/affecting, atom/priority_target, right_clicking)
-	if(!HAS_TRAIT(weapon, TRAIT_TRANSFORM_ACTIVE))
-		attacker.balloon_alert(attacker, "activate your weapon!")
-		return FALSE
-
-	return ..()
-
 /datum/attack_style/melee_weapon/stab_out/esword
 	cd = CLICK_CD_MELEE * 1.25
 	slowdown = 0.75
@@ -389,10 +385,3 @@
 
 /datum/attack_style/melee_weapon/stab_out/esword/get_swing_description(has_alt_style)
 	return ..() + " It must be active to stab."
-
-/datum/attack_style/melee_weapon/stab_out/esword/execute_attack(mob/living/attacker, obj/item/melee/energy/weapon, list/turf/affecting, atom/priority_target, right_clicking)
-	if(!HAS_TRAIT(weapon, TRAIT_TRANSFORM_ACTIVE))
-		attacker.balloon_alert(attacker, "activate your weapon!")
-		return FALSE
-
-	return ..()

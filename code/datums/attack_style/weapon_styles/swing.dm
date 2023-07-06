@@ -42,18 +42,6 @@
 		reverse_range(swing_turfs)
 	return swing_turfs
 
-// Swing for weapons which require being wielded
-/datum/attack_style/melee_weapon/swing/requires_wield
-
-/datum/attack_style/melee_weapon/swing/requires_wield/get_swing_description(has_alt_style)
-	return ..() + " Must be wielded."
-
-/datum/attack_style/melee_weapon/swing/requires_wield/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
-	if(!HAS_TRAIT(weapon, TRAIT_WIELDED))
-		attacker.balloon_alert(attacker, "wield your weapon!")
-		return ATTACK_SWING_CANCEL
-	return ..()
-
 /datum/attack_style/melee_weapon/swing/wider_arc
 
 /datum/attack_style/melee_weapon/swing/wider_arc/get_swing_description(has_alt_style)

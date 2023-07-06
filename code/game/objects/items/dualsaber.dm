@@ -31,7 +31,7 @@
 	bare_wound_bonus = 20
 	demolition_mod = 1.5 //1.5x damage to objects, robots, etc.
 	item_flags = NO_BLOOD_ON_ITEM
-	attack_style = /datum/attack_style/melee_weapon/swing/requires_wield/desword
+	attack_style = /datum/attack_style/melee_weapon/swing/desword
 	weapon_sprite_angle = 45
 	blocking_ability = 1
 	can_block_flags = BLOCK_ALL_BUT_TACKLE
@@ -56,6 +56,9 @@
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
+
+/obj/item/dualsaber/can_attack_with(mob/living/attacker)
+	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/dualsaber/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
@@ -211,18 +214,18 @@
 		return ..()
 
 // Attack style for desword
-/datum/attack_style/melee_weapon/swing/requires_wield/desword
+/datum/attack_style/melee_weapon/swing/desword
 	cd = CLICK_CD_MELEE * 1.25
 	reverse_for_lefthand = FALSE
 	time_per_turf = 0.05 SECONDS
 
-/datum/attack_style/melee_weapon/swing/requires_wield/desword/get_swing_description(has_alt_style)
+/datum/attack_style/melee_weapon/swing/desword/get_swing_description(has_alt_style)
 	. = "Swings out to all adjacent tiles besides directly behind you. It must be active to swing."
 	if(!has_alt_style)
 		. += " Right-clicking will swing in the opposite direction, if no alternate style is set."
 	return .
 
-/datum/attack_style/melee_weapon/swing/requires_wield/desword/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
+/datum/attack_style/melee_weapon/swing/desword/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
 	var/list/turfs_in_order = list()
 	turfs_in_order |= get_turfs_and_adjacent_in_direction(attacker, turn(attack_direction, 90))
 	turfs_in_order |= get_step(attacker, attack_direction)
@@ -231,7 +234,7 @@
 		reverse_range(turfs_in_order)
 	return turfs_in_order
 
-/datum/attack_style/melee_weapon/swing/requires_wield/desword/execute_attack(mob/living/attacker, obj/item/dualsaber/weapon, list/turf/affecting, atom/priority_target, right_clicking)
+/datum/attack_style/melee_weapon/swing/desword/execute_attack(mob/living/attacker, obj/item/dualsaber/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	. = ..()
 	if(!istype(weapon))
 		return
@@ -241,7 +244,7 @@
 		INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item/dualsaber, jedi_spin), attacker)
 
 // melbert todo
-/datum/attack_style/melee_weapon/swing/requires_wield/desword/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
+/datum/attack_style/melee_weapon/swing/desword/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
 	if(length(affecting) < 3)
 		// Affecting will only get this small if we're in a super weird place like, say, in the corner of the map
 		return

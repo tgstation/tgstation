@@ -89,12 +89,12 @@
 
 /datum/status_effect/blocking/proc/set_blocking_item(obj/item/new_blocker)
 	blocking_with = new_blocker
-	RegisterSignals(blocking_with, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), PROC_REF(stop_blocking))
+	RegisterSignals(blocking_with, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), PROC_REF(stop_blocking))
 	linked_alert.update_appearance(UPDATE_DESC)
 
 /datum/status_effect/blocking/proc/clear_blocking_item()
 	UnregisterSignal(blocking_with, list(
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ITEM_EQUIPPED,
 	))
@@ -132,16 +132,20 @@
 	var/final_damage = defense_multiplier * damage
 	var/mob/living/attacker = GET_ASSAILANT(hitby)
 	if(attacker && HAS_TRAIT(attacker, TRAIT_HULK))
-		final_damage *= 1.2 // Hulk attacks are harder to stop
+		final_damage *= 1.25 // Hulk attacks are harder to stop
+	if(source.body_position == LYING_DOWN)
+		final_damage *= 1.25 // Harder to block while lying down
 	if(final_damage > 0)
-		source.apply_damage(final_damage, STAMINA, spread_damage = TRUE)
+		// If you fail to take the damage, no block allowed
+		if(!source.apply_damage(final_damage, STAMINA, spread_damage = TRUE))
+			return NONE
 
 	// Stamcrit = failed
-	if(source.incapacitated())
+	if(HAS_TRAIT(source, TRAIT_INCAPACITATED))
 		return NONE
 
 	// Stops all following effects of the attack.
-	if(blocking_with && !blocking_with.on_successful_block(source, hitby, damage, attack_text, attack_type, damage_type))
+	if(isnull(blocking_with) || !blocking_with.on_successful_block(source, hitby, damage, attack_text, attack_type, damage_type))
 		source.visible_message(
 			span_danger("[source] blocks [attack_text][blocking_with ? " with [blocking_with]" : ""]!"),
 			span_danger("You block [attack_text][blocking_with ? " with [blocking_with]" : ""]!"),

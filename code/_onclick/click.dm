@@ -322,7 +322,7 @@
 		// Handles swinging at the clicked atom
 		var/datum/attack_style/using_what_style = (right_clicking && clicked_with_what.alt_attack_style) || clicked_with_what.attack_style
 		// Surgical tools won't swing if we're clicking on a dude who's in the middle of surgery
-		else if(isliving(clicked_on) && (clicked_with_what.item_flags & SURGICAL_TOOL))
+		if(isliving(clicked_on) && (clicked_with_what.item_flags & SURGICAL_TOOL))
 			var/mob/living/living_clicked = clicked_on
 			if(length(living_clicked.surgeries) && living_clicked.body_position == LYING_DOWN)
 				using_what_style = null

@@ -22,6 +22,7 @@
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
 	armor_type = /datum/armor/item_crowbar
+	weapon_sprite_angle = 45
 	var/force_opens = FALSE
 
 /datum/armor/item_crowbar

@@ -5,14 +5,6 @@
 
 /datum/attack_style/unarmed/help/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	if(smacked.check_block(attacker, 0, "[attacker]'s touch", UNARMED_ATTACK))
-		smacked.visible_message(
-			span_warning("[smacked] blocks [attacker]'s touch!"),
-			span_userdanger("You block [attacker]'s touch!"),
-			span_hear("You hear a swoosh!"),
-			vision_distance = COMBAT_MESSAGE_RANGE,
-			ignored_mobs = attacker,
-		)
-		to_chat(attacker, span_warning("[smacked] blocks your touch!"))
 		return ATTACK_SWING_BLOCKED
 
 	// Todo : move this out and into its own style?

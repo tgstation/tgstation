@@ -1638,3 +1638,15 @@
 /obj/item/update_atom_colour()
 	. = ..()
 	update_slot_icon()
+
+/// Determines if the passed mob can attack with this item
+/obj/item/proc/can_attack_with(mob/living/attacker)
+	if(item_flags & NOBLUDGEON)
+		// not really an attack but just clicking on a dude
+		return TRUE
+
+	if(attacker.combat_mode && damtype != STAMINA && force && HAS_TRAIT(attacker, TRAIT_PACIFISM))
+		to_chat(attacker, span_warning("You don't want to harm other living beings!"))
+		return FALSE
+
+	return TRUE

@@ -332,13 +332,16 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/sprite_size_multiplier = 1
 
 /datum/attack_style/melee_weapon/check_pacifism(mob/living/attacker, obj/item/weapon)
-	return weapon.force > 0
+	return weapon.force > 0 && weapon.damtype != STAMINA
 
 /datum/attack_style/melee_weapon/proc/get_swing_description(has_alt_style)
 	return "Swings at one tile in the direction you are attacking."
 
 /datum/attack_style/melee_weapon/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
 	ASSERT(istype(weapon))
+	if(!weapon.can_attack_with(attacker))
+		return ATTACK_SWING_CANCEL
+
 	return ..()
 
 /// This is essentially the same as item melee attack chain, but with some guff not necessary for combat cut out.
@@ -376,7 +379,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			else
 				CRASH("attack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
-	if(go_to_afterattack && weapon.attack_wrapper(smacked, attacker))
+	if(go_to_afterattack && weapon.attack_wrapper(smacked, attacker) == ATTACK_NO_AFTERATTACK)
 		return ATTACK_SWING_CANCEL
 
 	UPDATE_LAST_ATTACKER(smacked, attacker)

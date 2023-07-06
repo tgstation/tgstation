@@ -1,3 +1,8 @@
+/datum/attack_style/melee_weapon/baton
+
+/datum/attack_style/melee_weapon/baton/check_pacifism(mob/living/attacker, obj/item/weapon)
+	return FALSE // Assume pacifism is fine, check it later in the chain depending on whether it's harmbatonning
+
 /obj/item/melee/baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
@@ -12,6 +17,7 @@
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
 	wound_bonus = 15
+	attack_style = /datum/attack_style/melee_weapon/baton
 
 	/// Whether this baton is active or not
 	var/active = TRUE
@@ -35,8 +41,6 @@
 	var/on_stun_sound = 'sound/effects/woodhit.ogg'
 	/// The volume of the above.
 	var/on_stun_volume = 75
-	/// Do we animate the "hit" when stunning something?
-	var/stun_animation = TRUE
 	/// Whether the stun attack is logged. Only relevant for abductor batons, which have different modes.
 	var/log_stun_attack = TRUE
 	/// Boolean on whether people with chunky fingers can use this baton.
@@ -68,6 +72,25 @@
 
 	register_item_context()
 
+/obj/item/melee/baton/can_attack_with(mob/living/attacker)
+	if(!chunky_finger_usable && ishuman(attacker))
+		var/mob/living/carbon/human/potential_chunky_finger_human = attacker
+		if(potential_chunky_finger_human.check_chunky_fingers() \
+			&& attacker.is_holding(src) \
+			&& !HAS_TRAIT(attacker, TRAIT_CHUNKYFINGERS_IGNORE_BATON) \
+			&& (attacker.mind && !HAS_TRAIT(attacker.mind, TRAIT_CHUNKYFINGERS_IGNORE_BATON)) \
+		)
+			balloon_alert(attacker, "fingers are too big!")
+			return FALSE
+
+	if(cooldown_check > world.time)
+		var/wait_desc = get_wait_description()
+		if (wait_desc)
+			to_chat(attacker, wait_desc)
+		return FALSE
+
+	return TRUE
+
 /**
  * Ok, think of baton attacks like a melee attack chain:
  *
@@ -86,14 +109,21 @@
  *
  * TL;DR: [/baton_attack()] -> [/finalize_baton_attack()] -> [/baton_effect()] -> [/set_batoned()]
  */
-/obj/item/melee/baton/attack(mob/living/target, mob/living/user, params)
-	add_fingerprint(user)
+/obj/item/melee/baton/attack(mob/living/target_mob, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	switch(baton_attack(target, user, modifiers))
+	var/harmbatonning = LAZYACCESS(modifiers, RIGHT_CLICK)
+	if(harmbatonning && ..())
+		return ATTACK_NO_AFTERATTACK // pacifism check
+
+	switch(baton_attack(target_mob, user, modifiers))
 		if(BATON_DO_NORMAL_ATTACK)
-			return ..()
+			return ATTACK_DEFAULT // default afterattack
+
 		if(BATON_ATTACKING)
-			finalize_baton_attack(target, user, modifiers)
+			finalize_baton_attack(target_mob, user, modifiers)
+			return ATTACK_SKIPPED // do our own thing
+
+	return ATTACK_NO_AFTERATTACK // ???
 
 /obj/item/melee/baton/add_item_context(datum/source, list/context, atom/target, mob/living/user)
 	if (isturf(target))
@@ -125,27 +155,12 @@
 	if(clumsy_check(user, target))
 		return BATON_ATTACK_DONE
 
-	if(!chunky_finger_usable && ishuman(user))
-		var/mob/living/carbon/human/potential_chunky_finger_human = user
-		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src) && !HAS_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON) && (user.mind && !HAS_TRAIT(user.mind, TRAIT_CHUNKYFINGERS_IGNORE_BATON)))
-			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
-			return BATON_ATTACK_DONE
-
 	if(!active || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return BATON_DO_NORMAL_ATTACK
-
-	if(cooldown_check > world.time)
-		var/wait_desc = get_wait_description()
-		if (wait_desc)
-			to_chat(user, wait_desc)
-		return BATON_ATTACK_DONE
 
 	if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user))) //no doublebaton abuse anon!
 		to_chat(user, span_danger("You fumble and miss [target]!"))
 		return BATON_ATTACK_DONE
-
-	if(stun_animation)
-		user.do_attack_animation(target)
 
 	var/list/desc
 
@@ -270,9 +285,6 @@
 	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
 
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
-	if(stun_animation)
-		user.do_attack_animation(user)
-	return
 
 /obj/item/conversion_kit
 	name = "conversion kit"
@@ -555,15 +567,13 @@
 	if(. != BATON_DO_NORMAL_ATTACK)
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(active && cooldown_check <= world.time && !check_parried(target, user))
-			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE)
+		if(active && cooldown_check <= world.time)
+			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE) // melbert todo : you can't harmbaton
+
 	else if(!user.combat_mode)
 		target.visible_message(span_warning("[user] prods [target] with [src]. Luckily it was off."), \
 			span_warning("[user] prods you with [src]. Luckily it was off."))
 		return BATON_ATTACK_DONE
-
-/obj/item/melee/baton/security/proc/check_parried()
-	return FALSE // melbert todo
 
 /obj/item/melee/baton/security/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
 	if(iscyborg(loc))

@@ -16,15 +16,7 @@
 
 	var/shove_verb = smacked.response_disarm_simple || "shove"
 
-	if(smacked.check_block(attacker, 0, "[attacker]'s [shove_verb]", MELEE_ATTACK))
-		smacked.visible_message(
-			span_warning("[smacked] blocks [attacker]'s [shove_verb]!"),
-			span_userdanger("You block [attacker]'s [shove_verb]!"),
-			span_hear("You hear a swoosh!"),
-			vision_distance = COMBAT_MESSAGE_RANGE,
-			ignored_mobs = attacker,
-		)
-		to_chat(attacker, span_warning("[smacked] blocks your [shove_verb]!"))
+	if(smacked.check_block(attacker, 30, "[attacker]'s [shove_verb]", MELEE_ATTACK)) // ~30 damage means you can block one shove with your bare hands.
 		return ATTACK_SWING_BLOCKED
 
 	if(attacker.move_force < smacked.move_resist)
@@ -172,15 +164,7 @@
 	miss_sound = null
 
 /datum/attack_style/unarmed/grab/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	if(smacked.check_block(attacker, 0, "[attacker]'s grab", UNARMED_ATTACK))
-		smacked.visible_message(
-			span_warning("[smacked] blocks [attacker]'s grab!"),
-			span_userdanger("You block [attacker]'s grab!"),
-			span_hear("You hear a swoosh!"),
-			vision_distance = COMBAT_MESSAGE_RANGE,
-			ignored_mobs = attacker,
-		)
-		to_chat(attacker, span_warning("[smacked] blocks your grab!"))
+	if(smacked.check_block(attacker, 30, "[attacker]'s grab", UNARMED_ATTACK)) // likewise, 30 damage = one grab
 		return ATTACK_SWING_BLOCKED
 
 	// Todo : move this out and into its own style?

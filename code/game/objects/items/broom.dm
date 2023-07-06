@@ -17,7 +17,7 @@
 	attack_verb_continuous = list("sweeps", "brushes off", "bludgeons", "whacks")
 	attack_verb_simple = list("sweep", "brush off", "bludgeon", "whack")
 	resistance_flags = FLAMMABLE
-	attack_style = /datum/attack_style/melee_weapon/swing/requires_wield
+	attack_style = /datum/attack_style/melee_weapon/swing // melbert todo: figure out what the heck to do about this? pacifists can't use brooms?
 
 /obj/item/pushbroom/Initialize(mapload)
 	. = ..()

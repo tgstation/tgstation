@@ -23,7 +23,7 @@
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -15
 	bare_wound_bonus = 20
-	attack_style = /datum/attack_style/melee_weapon/swing/requires_wield
+	attack_style = /datum/attack_style/melee_weapon/swing
 	weapon_sprite_angle = 90
 	/// How much damage to do unwielded
 	var/force_unwielded = 5
@@ -52,6 +52,9 @@
 /obj/item/fireaxe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
+
+/obj/item/fireaxe/can_attack_with(mob/living/attacker)
+	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/fireaxe/afterattack(atom/A, mob/user, proximity)
 	. = ..()

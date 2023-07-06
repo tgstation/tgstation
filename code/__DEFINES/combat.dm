@@ -359,6 +359,14 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// The baton attack is still going. baton_effect() is called.
 #define BATON_ATTACKING 3
 
+// Defines for attack_wrapper
+/// Continue with attack
+#define ATTACK_DEFAULT 0
+/// Don't continue with the attack, don't call afterattack
+#define ATTACK_NO_AFTERATTACK 1
+/// Don't continue with the attack but do call afterattack
+#define ATTACK_SKIPPED 2
+
 // Returns for attack style [finalize_attack]
 /// The swing hit some mob in the process
 #define ATTACK_SWING_HIT (1<<1)

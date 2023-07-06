@@ -294,7 +294,7 @@
 	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
 
 /obj/item/shield/energy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
-	if(enabled && (damage_type == ENERGY || damage_type == LASER))
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && (damage_type == ENERGY || damage_type == LASER))
 		return 0
 
 	return -1

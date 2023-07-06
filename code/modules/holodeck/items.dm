@@ -23,10 +23,8 @@
 
 /obj/item/melee/energy/sword/holographic/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
 	// only good at blocking other holo eswords
-	if(istype(hitby, type))
-		var/obj/item/melee/energy/sword/holographic/holosword = hitby
-		if(holosword.blade_active && blade_active)
-			return 0.5
+	if(istype(hitby, type) && HAS_TRAIT(hitby, TRAIT_TRANSFORM_ACTIVE) && HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return 0.5
 
 	return blocking_ability
 

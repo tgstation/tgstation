@@ -345,7 +345,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	affect_cyborg = is_stun_mode
 	log_stun_attack = is_stun_mode // other modes have their own log entries.
-	stun_animation = is_stun_or_sleep
 	on_stun_sound = is_stun_or_sleep ? 'sound/weapons/egloves.ogg' : null
 
 	to_chat(usr, span_notice("You switch the baton to [txt] mode."))
@@ -367,10 +366,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			icon_state = "wonderprodProbe"
 			inhand_icon_state = "wonderprodProbe"
 
-/obj/item/melee/baton/abductor/baton_attack(mob/target, mob/living/user, modifiers)
-	if(!AbductorCheck(user))
-		return BATON_ATTACK_DONE
-	return ..()
+/obj/item/melee/baton/abductor/can_attack_with(mob/living/attacker)
+	return AbductorCheck(attacker)
 
 /obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
 	switch (mode)

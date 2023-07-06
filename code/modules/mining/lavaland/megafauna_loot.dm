@@ -938,7 +938,7 @@
 
 	user.changeNext_move(CLICK_CD_MELEE * 0.25)
 
-	if(is_open)
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon/swing/cleaving_saw_open]
 	else
 		attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon/cleaving_saw_closed]

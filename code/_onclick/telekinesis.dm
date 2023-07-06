@@ -92,7 +92,7 @@
 	* If you click what you are holding, or attack_self(), do an attack_self_tk() on it.
 	* Deletes itself if it is ever not in your hand, or if you should have no access to TK.
 */
-/obj/item/tk_grab
+/obj/item/tk_grab // melbert todo : ugh, this
 	name = "Telekinetic Grab"
 	desc = "Magic"
 	icon = 'icons/obj/magic.dmi'//Needs sprites

@@ -13,7 +13,7 @@
 	throwforce = 15
 	throw_range = 1
 	throw_speed = 1
-	attack_style = /datum/attack_style/melee_weapon/swing/requires_wield
+	attack_style = /datum/attack_style/melee_weapon/swing
 	COOLDOWN_DECLARE(engine_sound_cooldown)
 
 /obj/item/v8_engine/Initialize(mapload)
@@ -28,6 +28,9 @@
 	Shake(duration = ENGINE_COOLDOWN)
 	to_chat(user, span_notice("Darn thing... it's too old to keep on without retrofitting it! Without modifications, it works like it's junk."))
 	COOLDOWN_START(src, engine_sound_cooldown, ENGINE_COOLDOWN)
+
+/obj/item/v8_engine/can_attack_with(mob/living/attacker)
+	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/v8_engine/examine_more(mob/user)
 	. = ..()
@@ -58,7 +61,7 @@
 	throw_range = 5
 	throw_speed = 1
 	hitsound = 'sound/items/car_engine_start.ogg'
-	attack_style = /datum/attack_style/melee_weapon/swing/requires_wield
+	attack_style = /datum/attack_style/melee_weapon/swing
 	/// The number of charges the house edge has accrued through 2-handed hits, to charge a more powerful charge attack.
 	var/fire_charges = 0
 	///Sound played when wielded.
@@ -71,6 +74,9 @@
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 22, attacksound = active_hitsound)
 	RegisterSignals(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
+
+/obj/item/house_edge/can_attack_with(mob/living/attacker)
+	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/house_edge/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

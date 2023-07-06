@@ -6,7 +6,7 @@
 	var/attack_type
 	/// The verb used for an unarmed attack when using this limb, "punch".
 	var/default_attack_verb = "bump"
-	/// For deaf people, when this punch misses / gets blocked, this is the phrase used
+	/// For deaf people, when this attack misses, this is the phrase used. Yeah pretty niche var.
 	var/deaf_miss_phrase = "a swoosh"
 	/// Flat added modifier to miss chance
 	var/miss_chance_modifier = 0
@@ -47,14 +47,6 @@
 	var/damage_type = attack_type || attacker.get_attack_type()
 
 	if(smacked.check_block(attacker, damage, "[attacker]'s [default_attack_verb]", UNARMED_ATTACK, attack_penetration_modifier, damage_type))
-		smacked.visible_message(
-			span_warning("[smacked] blocks [attacker]'s [attack_verb]!"),
-			span_userdanger("You block [attacker]'s [attack_verb]!"),
-			span_hear("You hear [deaf_miss_phrase]!"),
-			vision_distance = COMBAT_MESSAGE_RANGE,
-			ignored_mobs = attacker,
-		)
-		to_chat(attacker, span_warning("[smacked] blocks your [attack_verb]!"))
 		return ATTACK_SWING_BLOCKED
 
 	// Todo : move this out and into its own style?
@@ -206,7 +198,7 @@
 		smacked.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, packet.blocked)
 		. += "(knockdown attack, [DisplayTimeText(knockdown_duration)] duration)"
 
-/*
+/**
  * Mob attack unarmed style
  *
  * This style deals damage / uses verbs based on the mob's vars,

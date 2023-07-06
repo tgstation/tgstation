@@ -695,7 +695,7 @@ Striking a noncultist, however, will tear their flesh."}
 	attack_verb_simple = list("attack", "slice", "shred", "sunder", "lacerate", "cleave")
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_style = /datum/attack_style/melee_weapon/swing/requires_wield
+	attack_style = /datum/attack_style/melee_weapon/swing
 	block_sound = 'sound/weapons/parry.ogg'
 	var/datum/action/innate/cult/halberd/halberd_act
 

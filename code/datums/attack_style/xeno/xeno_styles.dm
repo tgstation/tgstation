@@ -120,9 +120,9 @@
 		return
 
 	playsound(smacked, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
-	var/turf/shovetarget = get_edge_target_turf(user, get_dir(user, get_step_away(src, user)))
+	var/turf/shovetarget = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(src, attacker)))
 	smacked.apply_damage(35, STAMINA)
-	smacked.throw_at(shovetarget, 4, 2, user, force = MOVE_FORCE_OVERPOWERING)
+	smacked.throw_at(shovetarget, 4, 2, attacker, force = MOVE_FORCE_OVERPOWERING)
 	smacked.visible_message(
 		span_danger("[attacker] tackles [smacked] down!"),
 		span_userdanger("[attacker] shoves you with great force!"),

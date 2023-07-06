@@ -56,6 +56,9 @@
 	)
 	update_appearance()
 
+/obj/item/spear/can_attack_with(mob/living/attacker)
+	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
+
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"
 	return ..()

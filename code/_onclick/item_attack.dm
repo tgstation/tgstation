@@ -11,6 +11,10 @@
 	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
 	if(tool_behaviour && (target.tool_act(user, src, tool_behaviour, is_right_clicking) & TOOL_ACT_MELEE_CHAIN_BLOCKING))
 		return TRUE
+
+	if(isliving(target) && !can_attack_with(user))
+		return TRUE
+
 	var/pre_attack_result
 	if (is_right_clicking)
 		switch (pre_attack_secondary(target, user, params))
@@ -166,7 +170,7 @@
 	// Block check is skipped if the user is attacking themselves.
 	if(user == src || !check_block(attacking_item, attacking_item.force, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
 		var/attack_result = attacking_item.attack_wrapper(src, user, params)
-		if(!isnull(attack_result)) // True or false means don't play the hitsound or do the attack animation. Null means go ahead. Todo, make these defines instead.
+		if(attack_result != ATTACK_DEFAULT) // True or false means don't play the hitsound or do the attack animation. Null means go ahead. Todo, make these defines instead.
 			return attack_result
 
 		attacked_by(attacking_item, user)
@@ -205,24 +209,31 @@
  * * params - Click params of this attack
  *
  * Returns:
- * * Returning TRUE cancel the attack chain
- * * Returning FALSE immediately continues attack chain, skipping the rest of the attack proc and going to afterattack.
+ * * Returning ATTACK_NO_AFTERATTACK cancel the attack chain
+ * * Returning ATTACK_SKIP_ATTACK immediately continues attack chain, skipping the rest of the attack proc and going to afterattack.
  * This means it'll skip the part in which the target takes damage from being clicked on.
- * * Returning NULL runs normal "target takes damage" part of the attack.
+ * * Returning ATTACK_DEFAULT runs normal "target takes damage" part of the attack.
  */
 /obj/item/proc/attack_wrapper(mob/living/target_mob, mob/living/user, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	if(user.is_holding(src))
+		// likely not necessary but just for thoroughness, I guess.
+		add_fingerprint(user)
+
 	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, params) | SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, src, user, params)
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return TRUE // end chain
+		return ATTACK_NO_AFTERATTACK // end chain
 	if(signal_return & COMPONENT_SKIP_ATTACK)
-		return FALSE // continue chain
+		return ATTACK_SKIPPED // continue chain
+	if(HAS_TRAIT(user, TRAIT_PACIFISM) && force && damtype != STAMINA)
+		return ATTACK_NO_AFTERATTACK // shouldn't happen, but it if does end chain
 	if(attack(target_mob, user, params))
-		return TRUE // end chain
+		return ATTACK_NO_AFTERATTACK // end chain
 	if(item_flags & NOBLUDGEON)
-		return FALSE // continue chain
-	return null // do nothing
+		return ATTACK_SKIPPED // continue chain
+
+	return ATTACK_DEFAULT // do nothing
 
 /**
  * The item is executing an attack on a living mob target
@@ -237,12 +248,7 @@
  */
 /obj/item/proc/attack(mob/living/target_mob, mob/living/user, params)
 	PROTECTED_PROC(TRUE)
-
-	if(damtype != STAMINA && force && HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to harm other living beings!"))
-		return TRUE // Cancel attack
-
-	return FALSE // Continue chain
+	return
 
 /// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking
 /obj/item/proc/attack_secondary(mob/living/victim, mob/living/user, params)

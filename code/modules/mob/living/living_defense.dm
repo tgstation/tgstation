@@ -402,7 +402,8 @@
  * Checks if this mob has some form of shield or blocking implement
  *
  * * hitby - the thing that is attacking us
- * * damage - how much it's doing
+ * * damage - how much it's doing.
+ * Does not always equate to hitby's force, sometimes it might be some relevant value - like blocking a stun = 100 damage.
  * * attack_text - the text of the attack, usually like "the baton" (so you can format feedback messages as "blocks the baton with their shield")
  * * attack_type - what type of attack is incoming
  * * armour_penetration - how much, if any, armor penetration the attack has. compared agaiinst armor penetration of the item doing the blocking.
@@ -472,7 +473,7 @@
 /mob/living/proc/begin_blocking(obj/item/blocker)
 	if(incapacitated(IGNORE_GRAB))
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_STUNIMMUNE))
+	if(HAS_TRAIT(src, TRAIT_STUNIMMUNE)) // also check for knockdown
 		return FALSE
 	if(usable_hands <= 0)
 		return FALSE
