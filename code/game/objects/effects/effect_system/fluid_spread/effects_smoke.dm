@@ -297,8 +297,8 @@
 		var/list/gases = air.gases
 		if(gases[/datum/gas/plasma])
 			air.assert_gas(/datum/gas/nitrogen)
-			gases[/datum/gas/nitrogen][MOLES] += gases[/datum/gas/plasma][MOLES]
-			gases[/datum/gas/plasma][MOLES] = 0
+			air.change_moles(/datum/gas/nitrogen, gases[/datum/gas/plasma][MOLES])
+			air.set_moles(/datum/gas/plasma, 0)
 			air.garbage_collect()
 
 		for(var/obj/effect/hotspot/fire in chilly)

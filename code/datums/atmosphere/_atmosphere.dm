@@ -57,6 +57,7 @@
 		gaslist[gastype][MOLES] -= gaslist[gastype][MOLES] * 0.1
 	gaslist[gastype][MOLES] = FLOOR(gaslist[gastype][MOLES], 0.1)
 	gasmix.garbage_collect()
+	gasmix.heat_capacity = gasmix.calculate_heat_capacity()
 
 	// Now finally lets make that string
 	var/list/gas_string_builder = list()

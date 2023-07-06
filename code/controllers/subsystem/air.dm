@@ -794,7 +794,9 @@ GLOBAL_LIST_EMPTY(colored_images)
 		if(!ispath(path))
 			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
 		ADD_GAS(path, gases)
-		gases[path][MOLES] = text2num(gas[id])
+		var/list/gas_path = gases[path]
+		gas_path[MOLES] = text2num(gas[id])
+		canonical_mix.heat_capacity += gas_path[MOLES] * gas_path[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 	if(istype(canonical_mix, /datum/gas_mixture/immutable))
 		return canonical_mix

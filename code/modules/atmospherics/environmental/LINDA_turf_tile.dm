@@ -334,7 +334,7 @@
 			// shares 4/5 of our difference in moles with the atmosphere
 			our_air.share(planetary_mix, 0.8, 0.8)
 			// temperature share with the atmosphere with an inflated heat capacity to simulate faster sharing with a large atmosphere
-			our_air.temperature_share(planetary_mix, OPEN_HEAT_TRANSFER_COEFFICIENT, planetary_mix.temperature_archived, planetary_mix.heat_capacity() * 5)
+			our_air.temperature_share(planetary_mix, OPEN_HEAT_TRANSFER_COEFFICIENT, planetary_mix.temperature_archived, planetary_mix.heat_capacity * 5)
 			planetary_mix.garbage_collect()
 			PLANET_SHARE_CHECK
 
@@ -477,7 +477,7 @@
 			break
 		//"borrowing" this code from merge(), I need to play with the temp portion. Lets expand it out
 		//temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
-		var/capacity = mix.heat_capacity()
+		var/capacity = mix.heat_capacity
 		energy += mix.temperature * capacity
 		heat_cap += capacity
 
@@ -486,8 +486,10 @@
 			ASSERT_GAS_IN_LIST(giver_id, shared_gases)
 			shared_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
+	shared_mix.heat_capacity = heat_cap
 	if(!imumutable_in_group)
 		shared_mix.temperature = energy / heat_cap
+		shared_mix.heat_capacity /= turflen
 		for(var/id in shared_gases)
 			shared_gases[id][MOLES] /= turflen
 		shared_mix.garbage_collect()
@@ -646,7 +648,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 /turf/open/consider_superconductivity(starting)
 	if(air.temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
 		return FALSE
-	if(air.heat_capacity() < M_CELL_WITH_RATIO) // Was: MOLES_CELLSTANDARD*0.1*0.05 Since there are no variables here we can make this a constant.
+	if(air.heat_capacity < M_CELL_WITH_RATIO) // Was: MOLES_CELLSTANDARD*0.1*0.05 Since there are no variables here we can make this a constant.
 		return FALSE
 	return ..()
 

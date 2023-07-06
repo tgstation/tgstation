@@ -44,6 +44,7 @@
 //used by space tiles
 /datum/gas_mixture/immutable/space
 	initial_temperature = TCMB
+	heat_capacity = HEAT_CAPACITY_VACUUM
 
 /datum/gas_mixture/immutable/space/heat_capacity()
 	return HEAT_CAPACITY_VACUUM
@@ -82,12 +83,17 @@
 		if(!ispath(path))
 			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
 		ADD_GAS(path, mix)
-		mix[path][MOLES] = text2num(gas[id])
-		mix[path][ARCHIVE] = mix[path][MOLES]
+		var/list/mix_path = mix[path]
+		var/mix_moles = text2num(gas[id])
+		mix_path[MOLES] = mix_moles
+		mix_path[ARCHIVE] = mix_moles
 
 	for(var/id in mix)
 		ADD_GAS(id, gases)
-		gases[id][MOLES] = mix[id][MOLES]
-		gases[id][ARCHIVE] = mix[id][MOLES]
-
-
+		var/list/mix_id = mix[id]
+		var/list/gas_id = gases[id]
+		gas_id[MOLES] = mix_id[MOLES]
+		gas_id[ARCHIVE] = mix_id[MOLES]
+		var/heat_capacity_change = mix_id[MOLES] * mix_id[GAS_META][META_GAS_SPECIFIC_HEAT]
+		heat_capacity += heat_capacity_change
+		heat_capacity_archived += heat_capacity_change
