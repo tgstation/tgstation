@@ -116,6 +116,8 @@
 /// Returns a list of trait sources for this trait. Only useful for wacko cases and internal futzing
 /// You should not be using this
 #define GET_TRAIT_SOURCES(target, trait) target._status_traits?[trait] || list()
+/// A simple helper for checking traits in a mob's mind
+#define HAS_MIND_TRAIT(target, trait) (HAS_TRAIT(target, trait) || (target.mind ? HAS_TRAIT(target.mind, trait) : FALSE))
 
 /*
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.

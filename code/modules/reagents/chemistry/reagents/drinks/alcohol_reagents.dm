@@ -1229,7 +1229,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
+	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
 		. = TRUE
@@ -1854,7 +1854,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
+	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
 		. = TRUE
