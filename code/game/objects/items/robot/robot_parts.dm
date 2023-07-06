@@ -24,7 +24,7 @@
 
 	/// Forced master AI of the cyborg
 	var/mob/living/silicon/ai/forced_ai
-	/// The name of the AI being forced, tracked separetly to above
+	/// The name of the AI being forced, tracked separately to above
 	/// so we can reference handle without worrying about making "AI got gibbed" detectors
 	var/forced_ai_name
 
