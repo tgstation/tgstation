@@ -136,6 +136,9 @@
 
 		if("PDA_clearMessages")
 			var/user_ref = params["ref"]
+			if(!(user_ref in saved_chats))
+				return FALSE
+
 			if(user_ref)
 				saved_chats.Remove(user_ref)
 			else
@@ -217,11 +220,6 @@
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
 	var/list/data = ..()
 
-	data["owner"] = ((REF(src) in GLOB.TabletMessengers) ? list(
-			"name" = computer.saved_identification,
-			"job" = computer.saved_job,
-			"ref" = REF(src)
-		) : null)
 	data["can_spam"] = spam_mode
 	data["is_silicon"] = issilicon(user)
 
@@ -230,15 +228,26 @@
 /datum/computer_file/program/messenger/ui_data(mob/user)
 	var/list/data = list()
 
+	var/list/chat_data = list()
+	for(var/chat_ref as anything in saved_chats)
+		var/datum/pda_chat/chat = saved_chats[chat_ref]
+		var/list/data = chat.get_data()
+		chat_data[chat_ref] = data
+
 	var/list/messengers = get_messengers()
 
-	data["saved_chats"] = saved_chats
+	data["owner"] = ((REF(src) in GLOB.TabletMessengers) ? list(
+			"name" = computer.saved_identification,
+			"job" = computer.saved_job,
+			"ref" = REF(src)
+		) : null)
+	data["saved_chats"] = chat_data
 	data["unreads"] = unread_chats
 	data["messengers"] = messengers
 	data["sort_by_job"] = sort_by_job
 	data["alert_silenced"] = alert_silenced
 	data["sending_and_receiving"] = sending_and_receiving
-	data["open_chat"] = saved_chats[viewing_messages_of]
+	data["open_chat"] = viewing_messages_of
 	data["photo"] = photo_path
 	data["on_spam_cooldown"] = can_send_everyone_message()
 

@@ -76,24 +76,41 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	var/datum/computer_file/program/messenger/recp = recipient.resolve()
 	if(recp)
 		cached_name = get_messenger_name(recp)
+
 	data["recipient_name"] = cached_name
+
+	var/list/messages_data = list()
+	for(var/datum/pda_msg/message in messages)
+		messages_data += list(message.get_data())
 	data["messages"] = messages
+
 	data["visible"] = visible_in_recents
 	data["owner_deleted"] = owner_deleted
+	data["can_reply"] = can_reply
+
 	return data
 
 /datum/pda_msg
 	var/message
+	var/outgoing
 	var/datum/picture/photo
 	var/photo_path
 	var/everyone
 
-/datum/pda_msg/New(msg, datum/picture/pic = null, path = null, to_everyone = FALSE)
+/datum/pda_msg/New(msg, out, datum/picture/pic = null, path = null, to_everyone = FALSE)
 	message = msg
+	outgoing = out
 	photo = pic
 	photo_path = path
 	everyone = to_everyone
 
-/datum/pda_msg/copy()
-	var/datum/pda_msg/clone = new(message, photo, photo_path, everyone)
-	return clone
+/datum/pda_msg/proc/copy()
+	return new /datum/pda_msg(message, outgoing, photo, photo_path, everyone)
+
+/datum/pda_msg/proc/get_data()
+	var/list/data = list()
+	data["message"] = message
+	data["outgoing"] = outgoing
+	data["photo_path"] = photo_path
+	data["everyone"] = everyone
+	return data

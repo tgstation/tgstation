@@ -9,17 +9,10 @@ import { BooleanLike } from 'common/react';
 import '../styles/interfaces/NtosMessenger.scss';
 
 type NtMessage = {
-  name: string;
-  job: string;
   contents: string;
   outgoing: BooleanLike;
-  sender: string;
-  automated: BooleanLike;
   photo_path: string;
-  photo: string;
   everyone: BooleanLike;
-  targets: string[];
-  target_details: string[];
 };
 
 type NtMessenger = {
@@ -33,24 +26,26 @@ type NtChat = {
   messages: NtMessage[];
   visible: BooleanLike;
   owner_deleted: BooleanLike;
+  can_reply: BooleanLike;
 };
 
 type NtMessengers = Record<string, NtMessenger>;
 
 type NtosMessengerData = {
-  owner: string;
-  sort_by_job: BooleanLike;
   is_silicon: BooleanLike;
-  ringer_status: BooleanLike;
   can_spam: BooleanLike;
+  owner: string;
+  saved_chats: NtChat[];
+  unreads: Record<string, number>;
+  messengers: NtMessengers;
+  sort_by_job: BooleanLike;
+  alert_silenced: BooleanLike;
+  sending_and_receiving: BooleanLike;
+  open_chat: string;
+  photo: string;
   on_spam_cooldown: BooleanLike;
   virus_attach: BooleanLike;
   sending_virus: BooleanLike;
-  sending_and_receiving: BooleanLike;
-  viewing_messages_of: NtMessenger;
-  photo: string;
-  messages: NtMessage[];
-  messengers: NtMessengers;
 };
 
 const NoIDDimmer = () => {
@@ -105,7 +100,7 @@ const ContactsScreen = (_props: any, context: any) => {
   const { act, data } = useBackend<NtosMessengerData>(context);
   const {
     owner,
-    ringer_status,
+    alert_silenced,
     sending_and_receiving,
     messengers,
     sort_by_job,
@@ -151,7 +146,7 @@ const ContactsScreen = (_props: any, context: any) => {
           <Box mt={2}>
             <Button
               icon="bell"
-              content={ringer_status ? 'Ringer: On' : 'Ringer: Off'}
+              content={alert_silenced ? 'Ringer: On' : 'Ringer: Off'}
               onClick={() => act('PDA_ringer_status')}
             />
             <Button
@@ -273,7 +268,7 @@ const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
 type ChatScreenProps = {
   onReturn: () => void;
   recp: NtMessenger;
-  msgs: NtMessage[];
+  chat: NtChat;
 };
 
 type ChatScreenState = {
