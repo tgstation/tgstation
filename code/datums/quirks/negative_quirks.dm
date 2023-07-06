@@ -967,6 +967,8 @@
 
 /datum/quirk/item_quirk/junkie/alcoholic/post_add()
 	. = ..()
+	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK, PROC_REF(check_brandy))
+
 	var/obj/item/reagent_containers/brandy_container = GLOB.alcohol_containers[drug_container_type]
 	if(isnull(brandy_container))
 		stack_trace("Alcoholic quirk added while the GLOB.alcohol_containers is (somehow) not initialized!")
@@ -981,8 +983,7 @@
 	var/obj/item/organ/internal/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(alcohol_liver && IS_ORGANIC_ORGAN(alcohol_liver)) // robotic livers aren't affected
 		alcohol_liver.maxHealth = alcohol_liver.maxHealth * 0.75
-		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75
-	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK, PROC_REF(check_brandy))
+		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.7)
 
 /datum/quirk/item_quirk/junkie/alcoholic/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK)
