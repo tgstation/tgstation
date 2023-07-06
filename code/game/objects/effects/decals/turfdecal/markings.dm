@@ -225,15 +225,6 @@
 /obj/effect/turf_decal/mining/survival
 	icon_state = "survival"
 
-// /// Automatically generates all subtypes for a siding with the given path.
-// #define SIDING_SUBTYPE_HELPER(path)
-// ##path/corner{
-// 	icon_state = "siding_corner";
-// }
-// ##path/end{
-// 	icon_state = "siding_end";
-// } this is broken. also there was a backslash at the end of each line, was throwing errors when commented out. just fyi, future coder
-
 /obj/effect/turf_decal/siding
 	icon_state = "siding_plain"
 
@@ -558,4 +549,3 @@
 /obj/effect/turf_decal/board_letter/h
 	icon_state = "board_h"
 
-//#undef SIDING_SUBTYPE_HELPER
