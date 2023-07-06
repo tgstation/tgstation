@@ -40,15 +40,7 @@
 	if (prob(default_contents_chance))
 		create_default_object()
 		return
-
-	var/list/chasm_stuff = find_chasm_contents()
-	if (!chasm_stuff.len)
-		create_default_object()
-		return
-
-	var/atom/movable/detritus = determine_detritus(chasm_stuff)
-	detritus.forceMove(get_turf(src))
-	qdel(src)
+	RegisterSignal(src, COMSIG_ATOM_FISHING_REWARD, PROC_REF(find_chasm_contents))
 
 /// Returns the chosen detritus from the given list of things to choose from
 /obj/item/chasm_detritus/proc/determine_detritus(list/chasm_stuff)
@@ -60,19 +52,21 @@
 	new contents_type(get_turf(src))
 	qdel(src)
 
-/// Returns a list of every object which is currently inside of a chasm.
-/obj/item/chasm_detritus/proc/find_chasm_contents()
+/// Returns an objected which is currently inside of a nearby chasm.
+/obj/item/chasm_detritus/proc/find_chasm_contents(datum/source, turf/fishing_spot)
+	SIGNAL_HANDLER
 	var/list/chasm_contents = list()
-	if (!GLOB.chasm_storage.len)
-		return chasm_contents
-
-	var/list/chasm_storage_resolved = recursive_list_resolve(GLOB.chasm_storage)
-	for (var/obj/storage as anything in chasm_storage_resolved)
+	for (var/obj/effect/abstract/chasm_storage/storage in range(5, fishing_spot))
 		for (var/thing as anything in storage.contents)
 			chasm_contents += thing
 
-	return chasm_contents
+	if (!chasm_contents.len)
+		create_default_object()
+		return
 
+	var/atom/movable/detritus = determine_detritus(chasm_contents)
+	detritus.forceMove(get_turf(src))
+	qdel(src)
 
 /// Variant of the chasm detritus that allows for an easier time at fishing out
 /// bodies, and sometimes less desireable monsters too.
@@ -82,26 +76,27 @@
 	var/chasm_storage_restricted_type = /obj
 
 
-/obj/item/chasm_detritus/restricted/find_chasm_contents()
+/obj/item/chasm_detritus/restricted/find_chasm_contents(datum/source, turf/fishing_spot)
 	var/list/chasm_contents = list()
-	if (!GLOB.chasm_storage.len)
-		return chasm_contents
-
-	var/list/chasm_storage_resolved = recursive_list_resolve(GLOB.chasm_storage)
-	for (var/obj/storage as anything in chasm_storage_resolved)
+	for (var/obj/effect/abstract/chasm_storage/storage in range(5, fishing_spot))
 		for (var/thing as anything in storage.contents)
 			if(!istype(thing, chasm_storage_restricted_type))
 				continue
-
 			chasm_contents += thing
 
-	return chasm_contents
+	if (!chasm_contents.len)
+		create_default_object()
+		return
+
+	var/atom/movable/detritus = determine_detritus(chasm_contents)
+	detritus.forceMove(get_turf(src))
+	qdel(src)
 
 /// Body detritus is selected in favor of bodies belonging to sentient mobs
-/// The first sentient body found in the list of contents is returned, otherwise 
+/// The first sentient body found in the list of contents is returned, otherwise
 /// if none are sentient choose randomly.
 /obj/item/chasm_detritus/restricted/bodies/determine_detritus(list/chasm_stuff)
-	for(var/mob/fallen_mob as anything in chasm_stuff)	
+	for(var/mob/fallen_mob as anything in chasm_stuff)
 		if(fallen_mob.mind)
 			return fallen_mob
 	return ..()

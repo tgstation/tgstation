@@ -269,41 +269,53 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		if(QDELETED(holo_atom))
 			spawned -= holo_atom
 			continue
-
-		RegisterSignal(holo_atom, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
-		holo_atom.flags_1 |= HOLOGRAM_1
-
-		if(isholoeffect(holo_atom))//activates holo effects and transfers them from the spawned list into the effects list
-			var/obj/effect/holodeck_effect/holo_effect = holo_atom
-			effects += holo_effect
-			spawned -= holo_effect
-			var/atom/holo_effect_product = holo_effect.activate(src)//change name
-			if(istype(holo_effect_product))
-				spawned += holo_effect_product // we want mobs or objects spawned via holoeffects to be tracked as objects
-				RegisterSignal(holo_effect_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
-			if(islist(holo_effect_product))
-				for(var/atom/atom_product as anything in holo_effect_product)
-					RegisterSignal(atom_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
-			continue
-
-		if(isobj(holo_atom))
-			var/obj/holo_object = holo_atom
-			holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
-			if(isstructure(holo_object))
-				holo_object.flags_1 |= NODECONSTRUCT_1
-				continue
-
-			if(ismachinery(holo_object))
-				var/obj/machinery/holo_machine = holo_object
-				holo_machine.flags_1 |= NODECONSTRUCT_1
-				holo_machine.power_change()
-
-				if(istype(holo_machine, /obj/machinery/button))
-					var/obj/machinery/button/holo_button = holo_machine
-					holo_button.setup_device()
-
+		finalize_spawned(holo_atom)
 	spawning_simulation = FALSE
+
+/obj/machinery/computer/holodeck/proc/finalize_spawned(atom/holo_atom)
+	RegisterSignal(holo_atom, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
+	holo_atom.flags_1 |= HOLOGRAM_1
+
+	if(isholoeffect(holo_atom))//activates holo effects and transfers them from the spawned list into the effects list
+		var/obj/effect/holodeck_effect/holo_effect = holo_atom
+		effects += holo_effect
+		spawned -= holo_effect
+		var/atom/holo_effect_product = holo_effect.activate(src)//change name
+		if(istype(holo_effect_product))
+			spawned += holo_effect_product // we want mobs or objects spawned via holoeffects to be tracked as objects
+			RegisterSignal(holo_effect_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
+		if(islist(holo_effect_product))
+			for(var/atom/atom_product as anything in holo_effect_product)
+				RegisterSignal(atom_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
+		return
+
+	if(isobj(holo_atom))
+		var/obj/holo_object = holo_atom
+		holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+		if(isstructure(holo_object))
+			holo_object.flags_1 |= NODECONSTRUCT_1
+			return
+
+		if(ismachinery(holo_object))
+			var/obj/machinery/holo_machine = holo_object
+			holo_machine.flags_1 |= NODECONSTRUCT_1
+			holo_machine.power_change()
+
+			if(istype(holo_machine, /obj/machinery/button))
+				var/obj/machinery/button/holo_button = holo_machine
+				holo_button.setup_device()
+
+/**
+ * A separate proc for objects that weren't loaded by the template nor spawned by holo effects
+ * yet need to be added to the list of spawned objects. (e.g. holographic fishes)
+ */
+/obj/machinery/computer/holodeck/proc/add_to_spawned(atom/holo_atom)
+	spawned |= holo_atom
+	if(!(obj_flags & EMAGGED) && isitem(holo_atom))
+		var/obj/item/to_be_nerfed = holo_atom
+		to_be_nerfed.damtype = STAMINA
+	finalize_spawned(holo_atom)
 
 ///this qdels holoitems that should no longer exist for whatever reason
 /obj/machinery/computer/holodeck/proc/derez(atom/movable/holo_atom, silent = TRUE, forced = FALSE)

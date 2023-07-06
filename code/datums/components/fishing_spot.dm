@@ -51,14 +51,6 @@
 /datum/component/fishing_spot/proc/start_fishing_challenge(obj/item/fishing_rod/rod, mob/user)
 	/// Roll what we caught based on modified table
 	var/result = fish_source.roll_reward(rod, user)
-	var/datum/fishing_challenge/challenge = new(parent, result, rod, user)
-	challenge.background = fish_source.background
-	challenge.difficulty = fish_source.calculate_difficulty(result, rod, user)
-	RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_COMPLETED, PROC_REF(fishing_completed))
+	var/datum/fishing_challenge/challenge = new(src, result, rod, user)
+	fish_source.pre_challenge_started(rod, user)
 	challenge.start(user)
-
-/datum/component/fishing_spot/proc/fishing_completed(datum/fishing_challenge/source, mob/user, success, perfect)
-	if(success)
-		var/obj/item/fish/caught = source.reward_path
-		user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
-		fish_source.dispense_reward(source.reward_path, user)

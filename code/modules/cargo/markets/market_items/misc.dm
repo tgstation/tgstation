@@ -95,6 +95,13 @@
 	stock_max = 3
 	availability_prob = 50
 
+/datum/market_item/misc/jawed_hook
+	name = "Jawed Fishing Hook"
+	desc = "The thing ya use if y'are strugglin' with fishes. Just rememeber to whoop yer rod before it's too late, 'cause this thing's gonna hurt them like an Arkansas toothpick."
+	price_min = CARGO_CRATE_VALUE * 0.75
+	price_max = CARGO_CRATE_VALUE * 2
+	stock_max = 3
+	availability_prob = 70
 
 /datum/market_item/misc/v8_engine
 	name = "Genuine V8 Engine (Perserved)"
@@ -104,3 +111,13 @@
 	price_max = CARGO_CRATE_VALUE * 6
 	stock_max = 1
 	availability_prob = 15
+
+/datum/market_item/misc/fish
+	name = "Fish"
+	desc = "Fish! Fresh fish! Fish you can cut, grind and even keep in aquarium if you want to! Get some before the next fight at my village breaks out!"
+	price_min = PAYCHECK_CREW * 0.5
+	price_max = PAYCHECK_CREW * 1.2
+	item = /obj/item/storage/fish_case/blackmarket
+	stock_min = 3
+	stock_max = 8
+	availability_prob = 90

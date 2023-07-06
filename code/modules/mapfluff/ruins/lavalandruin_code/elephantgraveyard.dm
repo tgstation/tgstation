@@ -90,6 +90,9 @@
 	.=..()
 	create_reagents(20)
 	reagents.add_reagent(dispensedreagent, 20)
+	//I'm pretty much aware that, because how oil wells and sinks work, attackby() won't work unless in combat mode.
+	//Thankfully, the user can cast the line from a distance.
+	AddComponent(/datum/component/fishing_spot, /datum/fish_source/oil_well)
 
 /obj/structure/sink/oil_well/attack_hand(mob/user, list/modifiers)
 	flick("puddle-oil-splash",src)

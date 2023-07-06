@@ -7,3 +7,7 @@
 	database_id = MEDAL_LEGENDARY_MINER
 	icon = "mining"
 
+/datum/award/achievement/skill/legendary_fisher
+	name = "Legendary fisher"
+	database_id = MEDAL_LEGENDARY_FISHER
+	icon = "baseskill" //wip
