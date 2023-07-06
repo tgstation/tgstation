@@ -283,10 +283,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/awaymission/undergroundoutpost45/central)
-"bd" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/awaymission/undergroundoutpost45/central)
 "bf" = (
 /obj/item/storage/belt/security,
 /obj/item/assembly/flash/handheld,
@@ -4440,7 +4436,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "qK" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45air"="Air        Supply")
+	atmos_chambers = list("uo45air"="Air Supply")
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
@@ -4970,7 +4966,7 @@
 "sp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45mix"="Mix        Chamber");
+	atmos_chambers = list("uo45mix"="Mix Chamber");
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
@@ -5465,7 +5461,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "un" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45n2"="Nitrogen        Supply");
+	atmos_chambers = list("uo45n2"="Nitrogen Supply");
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
@@ -5490,7 +5486,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "uq" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45o2"="Oxygen        Supply");
+	atmos_chambers = list("uo45o2"="Oxygen Supply");
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
@@ -5539,7 +5535,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "uA" = (
 /obj/machinery/computer/atmos_control/fixed{
-	atmos_chambers = list("uo45air"="Air        Supply","uo45mix"="Mix        Chamber","uo45n2"="Nitrogen        Supply","uo45o2"="Oxygen        Supply");
+	atmos_chambers = list("uo45air"="Air Supply","uo45mix"="Mix Chamber","uo45n2"="Nitrogen Supply","uo45o2"="Oxygen Supply");
 	dir = 4;
 	name = "Chamber Atmospherics Monitoring"
 	},
@@ -40840,7 +40836,7 @@ al
 bq
 dc
 aD
-bd
+aP
 dZ
 aS
 aP

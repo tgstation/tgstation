@@ -157,3 +157,136 @@
   - balance: Increased blob tiles' resistance to lasers to compensate for the recent
       buff to laser damage.
   - spellcheck: Fixed a typo on the Interdyne shuttle.
+2023-07-04:
+  FlufflesTheDog:
+  - bugfix: Morbid (coroner's) tools now properly receive their speed boost in appropriate
+      conditions
+  Funnytoilet:
+  - qol: Matches command envirosuit helms' armor value with their hat counterparts.
+  GPeckman:
+  - qol: The health analyzer will now be more clear about how to treat burn wounds,
+      especially seriously infected ones.
+  Iamgoofball:
+  - bugfix: Fixes oversight with the voice disable config not working right for situations
+      in which a player re-enters their mob.
+  Jacquerel:
+  - bugfix: Horrid organics will no longer be made happy when mechanical chaplains
+      fail to heal them with a bible.
+  - bugfix: Lesser Form monkeys no longer maintain the name of the form you had prior
+      to transformation.
+  MMMiracles:
+  - bugfix: Tramstation lower Science is now less prone to cave-ins from their surrounding
+      maintenance corridors.
+  SyncIt21:
+  - code_imp: mat per unit values of materials now scale with material defines
+  Teleported-Bread:
+  - bugfix: Tips now mention telekenesis dusting you when used on the SM, not telepathy.
+  Vekter:
+  - rscdel: Plasma objects (statues, toilets, etc.) no longer explode when ignited.
+      They just release plasma like everything else plasma. (This doesn't impact injecting
+      plasma into cells or dipping cigars in plasma, those still explode.)
+  - bugfix: Removed nebula vomiting from the normal symptom pool. It should no longer
+      appear on regular viruses.
+  itseasytosee:
+  - spellcheck: You should see a lot less "you can not move while bucked too X" messages
+      where they don't make sense.
+  - admin: Added a petrify smite. Try it out on your least favorite player!
+  mc-oofert:
+  - rscadd: You can use cable on TTVs to make them wearable on the back
+2023-07-05:
+  Archimus12:
+  - rscadd: Adds coloured large scarfs and winter coats to ClothesMate and black shoes
+      to ChefDrobe
+  - rscadd: Adds latex gloves to SciDrobe, ChemDrobe and GeneDrobe and nitrile gloves
+      to MediDrobe
+  - rscadd: Adds job headsets to GeneDrobe and RoboDrobe, ViroDrobe and ChemDrobe
+  - rscadd: Adds black wizard robes and black wizard hat to MagiVend
+  - rscadd: Adds grey backpack, grey satchel, leather satchel and grey duffel bag
+      to CargoDrobe
+  - rscadd: Organises Drobes
+  ChungusGamer666:
+  - bugfix: Bodyparts that should slow you down, will slow you down.
+  Ghommie:
+  - sound: Walking on conveyors, catwalks and tables no longer plays the footstep
+      sound of the turf. They have theirs.
+  Jacquerel:
+  - balance: Traitorous Coroners can now purchase the Evil MMI and Brainwashing Surgery
+      Chip.
+  - balance: Traitorous Chief Engineers can now purchase the Deployable Sentry.
+  Jolly:
+  - bugfix: '[MetaStation] There is no longer a random nondescript "item" outside
+      Xenobiology. No, it was NOT a Xenomorph.'
+  MTandi:
+  - bugfix: Plant bags now properly harvest items when you click on hydrotray with
+      it, and don't pick up anything except the harvest
+  - bugfix: Carpellosis gnashing checks owner's teeth availability instead of the
+      target's teeth
+  - bugfix: Patches don't have a message saying that they're dirty
+  Melbert:
+  - bugfix: Fixes some species / mobs keeping an understanding of galcom despite not
+      being intended to.
+  - qol: Prettied up the morgue of Deltastation
+  Momo8289:
+  - qol: Crates that come in the cargo shuttle now have the order ID in their name
+  - qol: Requisition forms are now blue, and named with the timestamp they were created
+      on
+  Time-Green:
+  - bugfix: abductors can get points again
+  YehnBeep:
+  - rscadd: Prisoners can now be jaywalkers
+  - qol: reordered a crime so it appears on the choice list alphabetically.
+  carlarctg:
+  - balance: Reduced the complexity cost of a lot of MODules.
+  - balance: Pathfinder 2 -> 1
+  - balance: Tether 3 -> 2
+  - balance: Temperature Regulator 2 -> 1
+  - balance: DNA lock 2 -> 1
+  - balance: Health analyzer 2 -> 1
+  - balance: Sonar 2 -> 1
+  - balance: Microwave beam 2 -> 1
+  - balance: Drill 2 -> 1
+  - balance: All visors (including NV and thermals) 2 -> 1
+  - balance: Circuit Adapter 2 -> 1
+  - balance: The Mining MODsuit has had its complexity increased to 13 and now starts
+      with the eating apparatus module, with a total base complexity of 10/13 now.
+  - balance: The Prototype MODsuit's active slowdown has been decreased from 1.5 (!)
+      to 1.
+  - spellcheck: Fixed a type on the energy net module.
+  san7890:
+  - server: job_config.toml should now comply with reload-configuration verb, meaning
+      you can hot-reload the configuration from disk and have it apply ingame automatically.
+  - config: The documentation for setting Minimum Character Age on a per-Job basis
+      has been altered to be more explicit.
+  - bugfix: The Minimum Character Age configuration entry is now sanitized to ensure
+      that it's within the codebase-defined ages, since there's no (legitimate) way
+      to get a character outside of those ages anyways. Invalid values will log to
+      the config log.
+2023-07-06:
+  ChungusGamer666:
+  - bugfix: Punpun has gotten properly fitting clothes for his little chimp body
+  - bugfix: Creampies no longer float above the heads of monkeys
+  DATA-xPUNGED:
+  - qol: Leather satchels and wallets have been issued to the offices of Head of Personnel
+      all across the sector. Studies suggest a fashion increase of 34%
+  Jacquerel:
+  - bugfix: A nuclear operative who is a slime will now correctly drop the disk upon
+      death.
+  - image: New directional sprites for spiderlings, with movement animations.
+  - bugfix: Dead spiderlings will be the same colour as they were when they were alive.
+  - bugfix: Tarantula spiderlings are no longer invisible,
+  - rscadd: People who cannot read can interact with the tram console to send it to
+      a random station.
+  NotDhu:
+  - bugfix: Replaced the security PDA painter in the CMO's office on Birdshot with
+      a medical PDA painter.
+  SomeRandomOwl:
+  - qol: Request Internet Sound now has the option to credit the person who requested
+      the Sound. Defaults to anonymous.
+  Vincent983:
+  - balance: Improved spacepol jumpsuit wound armor from 5 to 10
+  Vishenka0704:
+  - bugfix: Added a forgotten reason for not being allowed to work if the age is low.
+  Youtubeboy139:
+  - image: Added new Surgery Bed sprite
+  milktao:
+  - bugfix: fixed food preferences displaying incorrectly when examining tongues

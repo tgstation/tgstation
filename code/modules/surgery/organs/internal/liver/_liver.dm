@@ -129,8 +129,7 @@
 /obj/item/organ/internal/liver/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	//If your liver is failing, then we use the liverless version of metabolize
-	//We don't check for TRAIT_NOMETABOLISM here because we do want a functional liver if somehow we have one inserted
-	if(organ_flags & ORGAN_FAILING)
+	if((organ_flags & ORGAN_FAILING) || HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM))
 		owner.reagents.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
 		return
 
