@@ -690,7 +690,7 @@
 	. = ..()
 	if(!(slot & ITEM_SLOT_EYES))
 		return
-	stored_hallucination = 	owner.cause_hallucination( \
+	stored_hallucination = 	user.cause_hallucination( \
 		/datum/hallucination/delusion/preset/mare, \
 		"[src]", \
 		duration = INFINITY, \
