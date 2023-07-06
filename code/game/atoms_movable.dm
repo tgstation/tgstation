@@ -100,8 +100,14 @@
 	/// The voice that this movable makes when speaking
 	var/voice
 
+	/// The pitch adjustment that this movable uses when speaking.
+	var/pitch = 0
+
 	/// The filter to apply to the voice when processing the TTS audio message.
 	var/voice_filter = ""
+
+	/// Set to anything other than "" to activate the silicon voice effect for TTS messages.
+	var/tts_silicon_voice_effect = ""
 
 	/// Value used to increment ex_act() if reactionary_explosions is on
 	/// How much we as a source block explosions by
@@ -1442,9 +1448,13 @@
 * Unless you are doing something very specific, these are the ones you want to use.
 */
 
-/// Gets or creates the relevant language holder.
-/atom/movable/proc/get_language_holder()
+/// Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.
+/atom/movable/proc/get_language_holder(get_minds = TRUE)
 	RETURN_TYPE(/datum/language_holder)
+	if(QDELING(src))
+		CRASH("get_language_holder() called on a QDELing atom, \
+			this will try to re-instantiate the language holder that's about to be deleted, which is bad.")
+
 	if(!language_holder)
 		language_holder = new initial_language_holder(src)
 	return language_holder

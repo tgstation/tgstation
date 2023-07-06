@@ -1,0 +1,4 @@
+author: "atlasle"
+delete-after: True
+changes:
+  - sound: "A new ambient track will now play in space"

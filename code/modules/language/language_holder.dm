@@ -409,21 +409,11 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/common = list(LANGUAGE_SPECIES),
 		/datum/language/uncommon = list(LANGUAGE_SPECIES),
 		/datum/language/machine = list(LANGUAGE_SPECIES),
-		/datum/language/draconic = list(LANGUAGE_SPECIES),
-		/datum/language/moffic = list(LANGUAGE_SPECIES),
-		/datum/language/calcic = list(LANGUAGE_SPECIES),
-		/datum/language/voltaic = list(LANGUAGE_SPECIES),
-		/datum/language/nekomimetic = list(LANGUAGE_SPECIES),
 	)
 	spoken_languages = list(
 		/datum/language/common = list(LANGUAGE_SPECIES),
 		/datum/language/uncommon = list(LANGUAGE_SPECIES),
 		/datum/language/machine = list(LANGUAGE_SPECIES),
-		/datum/language/draconic = list(LANGUAGE_SPECIES),
-		/datum/language/moffic = list(LANGUAGE_SPECIES),
-		/datum/language/calcic = list(LANGUAGE_SPECIES),
-		/datum/language/voltaic = list(LANGUAGE_SPECIES),
-		/datum/language/nekomimetic = list(LANGUAGE_SPECIES),
 	)
 
 /datum/language_holder/moth

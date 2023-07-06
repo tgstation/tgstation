@@ -897,8 +897,7 @@
 	desc = "An eerie metal shard surrounded by dark energies...of soup drinking. You probably don't think you should have been able to find this."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "cursed_katana_organ"
-	status = ORGAN_ORGANIC
-	organ_flags = ORGAN_FROZEN|ORGAN_UNREMOVABLE
+	organ_flags = ORGAN_ORGANIC | ORGAN_FROZEN | ORGAN_UNREMOVABLE
 	items_to_create = list(/obj/item/kitchen/spoon)
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
