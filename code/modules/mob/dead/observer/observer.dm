@@ -922,6 +922,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		message_admins("[ADMIN_LOOKUPFLW(src)] attempted to observe someone in the lobby: [ADMIN_LOOKUPFLW(mob_eye)]. This should not be possible and has been blocked.")
 		return
 
+	if(!isnull(observetarget))
+		stack_trace("do_observe called on an observer ([src]) who was already observing something! (observing: [observetarget], new target: [mob_eye])")
+		message_admins("[ADMIN_LOOKUPFLW(src)] attempted to observe someone while already observing someone, \
+			this is a bug (and a past exploit) and should be investigated.")
+		return
+
 	//Istype so we filter out points of interest that are not mobs
 	if(client && mob_eye && istype(mob_eye))
 		client.set_eye(mob_eye)
