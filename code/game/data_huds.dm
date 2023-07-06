@@ -295,7 +295,7 @@ Security HUDs! Basic mode shows only the job.
 					holder = hud_list[IMPSEC_SECOND_HUD]
 					var/icon/IC = icon(icon, icon_state, dir)
 					holder.pixel_y = IC.Height() - world.icon_size
-					holder.pixel_x = holder.pixel_x + 2 //Adds an offset that mirrors the hud to the user's other side
+					holder.pixel_x = holder.pixel_x + 12 //Adds an offset that mirrors the hud to the user's other side.
 					holder.icon_state = current_implant.hud_icon_state
 					set_hud_image_active(IMPSEC_SECOND_HUD)
 
