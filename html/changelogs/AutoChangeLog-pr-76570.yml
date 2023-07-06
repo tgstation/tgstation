@@ -1,0 +1,5 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - refactor: "Mushrooms have been refactors, please report any bugs/unintended behavior"
+  - rscadd: "the mushroom basic mob can eat the mushroom plant to heal itself"
