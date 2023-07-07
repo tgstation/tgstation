@@ -460,11 +460,11 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	ASSERT(fexists(daemon), "Configured db_daemon doesn't exist")
 
 	var/list/result = world.shelleo("echo \"Starting ezdb daemon, do not close this window\" && [daemon]")
-	var/error_code = result[1]
-	if (!error_code)
+	var/result_code = result[1]
+	if (!result_code || result_code == 1)
 		return
 
-	stack_trace("Failed to start DB daemon: [error_code]\n[result[3]]")
+	stack_trace("Failed to start DB daemon: [result_code]\n[result[3]]")
 
 /datum/controller/subsystem/dbcore/proc/stop_db_daemon()
 	set waitfor = FALSE

@@ -75,3 +75,33 @@
 	infusion_desc = "skittish"
 	tier = DNA_MUTANT_TIER_ONE
 	status_effect_type = /datum/status_effect/organ_set_bonus/rat
+
+/datum/infuser_entry/roach
+	name = "Roach"
+	infuse_mob_name = "cockroach"
+	desc = "It seems as if you're a fan of ancient literature by your interest in this. Assuredly, merging cockroach DNA into your genome \
+		will not cause you to become incapable of leaving your bed. These creatures are incredibly resilient against many things \
+		humans are weak to, and we can use that! Who wouldn't like to survive a nuclear blast? \
+		NOTE: Squished roaches will not work for the infuser, if that wasn't obvious. Try spraying them with some pestkiller from botany!"
+	threshold_desc = "you will no longer be gibbed by explosions, and gain incredible resistance to viruses and radiation."
+	qualities = list(
+		"resilience to attacks from behind",
+		"healthier organs",
+		"get over disgust very quickly",
+		"the ability to survive a nuclear apocalypse",
+		"harder to pick yourself up from falling over",
+		"avoid toxins at all costs",
+		"always down to find a snack",
+	)
+	input_obj_or_mob = list(
+		/mob/living/basic/cockroach,
+	)
+	output_organs = list(
+		/obj/item/organ/internal/heart/roach,
+		/obj/item/organ/internal/stomach/roach,
+		/obj/item/organ/internal/liver/roach,
+		/obj/item/organ/internal/appendix/roach,
+	)
+	infusion_desc = "kafkaesque" // Gregor Samsa !!
+	tier = DNA_MUTANT_TIER_ONE
+	status_effect_type = /datum/status_effect/organ_set_bonus/roach

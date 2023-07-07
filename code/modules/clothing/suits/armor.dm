@@ -561,3 +561,23 @@
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dog_fashion = null
+
+/obj/item/clothing/suit/armor/militia
+	name = "station defender's coat"
+	desc = "A well worn uniform used by militia across the frontier, it's thick padding useful for cushioning blows."
+	icon_state = "militia"
+	inhand_icon_state = "b_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	armor_type = /datum/armor/coat_militia
+
+/datum/armor/coat_militia
+	melee = 40
+	bullet = 40
+	laser = 30
+	energy = 25
+	bomb = 50
+	fire = 40
+	acid = 50
+	wound = 30

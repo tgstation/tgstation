@@ -327,9 +327,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	reagents.expose(smoker, INGEST, min(to_smoke / reagents.total_volume, 1))
 	var/obj/item/organ/internal/lungs/lungs = smoker.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(lungs && !(lungs.organ_flags & ORGAN_SYNTHETIC))
+	if(lungs && IS_ORGANIC_ORGAN(lungs))
 		var/smoker_resistance = HAS_TRAIT(smoker, TRAIT_SMOKER) ? 0.5 : 1
-		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm*smoker_resistance)
+		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm * smoker_resistance)
 	if(!reagents.trans_to(smoker, to_smoke, methods = INGEST, ignore_stomach = TRUE))
 		reagents.remove_any(to_smoke)
 
@@ -723,7 +723,22 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!overlay_state)
 		overlay_state = pick(overlay_list)
+	AddComponent(\
+		/datum/component/bullet_intercepting,\
+		block_chance = 0.5,\
+		active_slots = ITEM_SLOT_SUITSTORE,\
+		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
+	)
 	update_appearance()
+
+/// Destroy the lighter when it's shot by a bullet
+/obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
+	victim.visible_message(span_warning("\The [bullet] shatters on [victim]'s lighter!"))
+	playsound(victim, get_sfx(SFX_RICOCHET), 100, TRUE)
+	new /obj/effect/decal/cleanable/oil(get_turf(src))
+	do_sparks(1, TRUE, src)
+	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
+	qdel(src)
 
 /obj/item/lighter/cyborg_unequip(mob/user)
 	if(!lit)

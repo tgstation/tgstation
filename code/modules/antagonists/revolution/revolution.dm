@@ -22,14 +22,13 @@
 	var/victory_message = "The revolution has overpowered the command staff! Viva la revolution! Execute any head of staff and security should you find them alive."
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
-	. = ..()
-	if(.)
-		if(new_owner.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-			return FALSE
-		if(new_owner.unconvertable)
-			return FALSE
-		if(new_owner.current && HAS_TRAIT(new_owner.current, TRAIT_MINDSHIELD))
-			return FALSE
+	if(new_owner.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		return FALSE
+	if(new_owner.unconvertable)
+		return FALSE
+	if(new_owner.current && HAS_TRAIT(new_owner.current, TRAIT_MINDSHIELD))
+		return FALSE
+	return ..()
 
 /datum/antagonist/rev/admin_add(datum/mind/new_owner, mob/admin)
 	// No revolution exists which means admin adding this will create a new revolution team
@@ -397,7 +396,7 @@
 			"left pocket" = ITEM_SLOT_LPOCKET,
 			"right pocket" = ITEM_SLOT_RPOCKET
 		)
-		var/where = C.equip_in_one_of_slots(T, slots)
+		var/where = C.equip_in_one_of_slots(T, slots, indirect_action = TRUE)
 		if (!where)
 			to_chat(C, "The Syndicate were unfortunately unable to get you a flash.")
 		else
@@ -559,7 +558,6 @@
 
 		if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))
-			player.med_hud_set_status()
 
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
 		if(!(job.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
@@ -626,7 +624,6 @@
 	for (var/datum/mind/rev_head as anything in ex_headrevs)
 		if(!isnull(rev_head.current))
 			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
-			rev_head.current.med_hud_set_status()
 
 	for(var/datum/objective/mutiny/head_tracker in objectives)
 		var/mob/living/head_of_staff = head_tracker.target?.current
