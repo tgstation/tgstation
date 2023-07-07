@@ -2,7 +2,7 @@
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel.  This is from a world where medical was olive and green, to soothe."
 	name = "mossmed jumpsuit"
 	icon_state = "mossmed"
-	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/med_under.dmi'
+	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/icons/med_under.dmi'
 
 /obj/item/clothing/under/rank/medical/doctor/mossmed/skirt
 	name = "mossmed jumpskirt"
@@ -15,7 +15,7 @@
 	desc = "It's a jumpsuit worn by those with the experience to be \"Chief Medical Officer\". It provides minor biological protection.  This is from a world where medical was olive and green, to soothe."
 	name = "chief mossmedical officer's jumpsuit"
 	icon_state = "cmo_mossmed"
-	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/med_under.dmi'
+	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/icons/med_under.dmi'
 
 /obj/item/clothing/under/rank/medical/chief_medical_officer/mossmed/skirt
 	name = "chief mossmedical officer's jumpskirt"
@@ -31,13 +31,13 @@
 	name = "mossmed labcoat"
 	desc = "More olive than the standard model."
 	icon_state = "labcoat_mossmed"
-	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/med_suits.dmi'
+	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/icons/med_suits.dmi'
 
 /obj/item/clothing/suit/toggle/labcoat/cmo/mossmed
 	name = "chief mossmedical officer's labcoat"
 	desc = "More chartreuse than the standard model."
 	icon_state = "labcoat_cmo_mossmed"
-	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/med_suits.dmi'
+	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/icons/med_suits.dmi'
 
 
 
@@ -46,13 +46,13 @@
 	name = "mossmed winter coat"
 	desc = "A soothing olive-green winter coat with dyed chartreuse cotton lining,."
 	icon_state = "coatmossmed"
-	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/med_suits.dmi'
+	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/icons/med_suits.dmi'
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/mossmed
 
 /obj/item/clothing/head/hooded/winterhood/medical/mossmed
 	desc = "An olive and green winter coat hood."
 	icon_state = "hood_mossmed"
-	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/med_head.dmi'
+	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/icons/med_head.dmi'
 
 
 
@@ -61,12 +61,12 @@
 	name = "chief mossmedical officer's winter coat"
 	desc = "A winter coat in a vibrant shade of chartreuse, with shiny golden zippers for the pockets & a giant gold cross on the back."
 	icon_state = "coatcmo"
-	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/med_suits.dmi'
+	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/icons/med_suits.dmi'
 
 /obj/item/clothing/head/hooded/winterhood/medical/cmo/mossmed
 	desc = "A chartreuse winter coat hood."
 	icon_state = "hood_cmo_mossmed"
-	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/med_head.dmi'
+	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/icons/med_head.dmi'
 
 
 
