@@ -4741,7 +4741,6 @@
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "bZL" = (
-/obj/machinery/light/directional/south,
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
@@ -5619,6 +5618,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/nitrous_output{
 	dir = 4
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/engine/n2o,
 /area/station/ai_monitored/turret_protected/ai)
 "csE" = (
@@ -7227,7 +7227,6 @@
 /obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
 	},
-/obj/machinery/light/directional/west,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "cZy" = (
@@ -8195,6 +8194,7 @@
 	name = "AI Core Shutter"
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/catwalk_floor,
 /area/station/ai_monitored/turret_protected/ai)
 "dty" = (
@@ -8729,8 +8729,8 @@
 	},
 /area/station/service/library)
 "dCC" = (
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "dCH" = (
@@ -9331,7 +9331,6 @@
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "dOZ" = (
-/obj/machinery/light/floor,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/layer3,
 /turf/open/floor/iron/dark,
@@ -9381,6 +9380,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/nitrous_output{
 	dir = 8
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/n2o,
 /area/station/ai_monitored/turret_protected/ai)
 "dQQ" = (
@@ -12587,7 +12587,6 @@
 	pixel_y = 2
 	},
 /obj/item/pen,
-/obj/machinery/light/directional/east,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
@@ -12995,6 +12994,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/turret_protected/ai)
 "fjK" = (
@@ -16830,6 +16830,7 @@
 "gzQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/south,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/command)
 "gzY" = (
@@ -17541,7 +17542,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "gLV" = (
-/obj/machinery/light/cold/directional/west,
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -17846,7 +17846,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "gRj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/floor,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/command)
@@ -26790,12 +26789,6 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/textured_large,
 /area/station/cargo/office)
-"jXd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/floor,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/smooth,
-/area/station/hallway/secondary/command)
 "jXe" = (
 /obj/machinery/holopad/secure,
 /turf/open/floor/iron/smooth,
@@ -26821,7 +26814,6 @@
 /area/station/hallway/primary/central/fore)
 "jXo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/floor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/command)
@@ -43442,10 +43434,6 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
-"pQh" = (
-/obj/item/kirbyplants/random,
-/turf/open/floor/iron/smooth,
-/area/station/hallway/secondary/command)
 "pQl" = (
 /obj/structure/fireplace,
 /obj/effect/turf_decal/siding/wood/end,
@@ -43803,7 +43791,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/hallway/abandoned_command)
 "pUJ" = (
-/obj/machinery/light/cold/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -97139,10 +97126,10 @@ fXj
 oub
 jxp
 jFt
-jXd
+fMx
 gyd
 gyd
-gRj
+pRz
 fMx
 gCr
 gHV
@@ -97396,10 +97383,10 @@ gbH
 gdE
 gfb
 jEc
-jXe
+gRj
 kwZ
 gDs
-pQh
+jXe
 gzQ
 gCT
 mks
