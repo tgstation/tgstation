@@ -92,46 +92,34 @@
 	for(var/i in 1 to 3)
 		new /obj/item/lipstick/random(src)
 
-/obj/item/clothing/accessory/allergy_dogtag
-	name = "Allergy dogtag"
-	desc = "Dogtag with a list of your allergies"
-	icon_state = "allergy"
-	minimize_when_attached = TRUE
-	attachment_slot = CHEST
+/obj/item/clothing/accessory/dogtag
 	/// What message is displayed when our dogtags / its clothes / its wearer is examined
 	var/display = "Nothing!"
 
-/obj/item/clothing/accessory/allergy_dogtag/Initialize(mapload, allergy_string)
-	. = ..()
-	if(allergy_string)
-		display = span_notice("The dogtag has a listing of allergies: [allergy_string]")
-	else
-		display = span_notice("The dogtags are all scratched up.")
-
-/obj/item/clothing/accessory/allergy_dogtag/examine(mob/user)
+/obj/item/clothing/accessory/dogtag/examine(mob/user)
 	. = ..()
 	. += display
 
 // Examining the clothes will display the examine message of the dogtag
-/obj/item/clothing/accessory/allergy_dogtag/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
+/obj/item/clothing/accessory/dogtag/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	. = ..()
 	RegisterSignal(attach_to, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
-/obj/item/clothing/accessory/allergy_dogtag/detach(obj/item/clothing/under/detach_from)
+/obj/item/clothing/accessory/dogtag/detach(obj/item/clothing/under/detach_from)
 	. = ..()
 	UnregisterSignal(detach_from, COMSIG_ATOM_EXAMINE)
 
 // Double examining the person wearing the clothes will display the examine message of the dogtag
-/obj/item/clothing/accessory/allergy_dogtag/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+/obj/item/clothing/accessory/dogtag/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	. = ..()
 	RegisterSignal(user, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine))
 
-/obj/item/clothing/accessory/allergy_dogtag/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+/obj/item/clothing/accessory/dogtag/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
 	. = ..()
 	UnregisterSignal(user, COMSIG_ATOM_EXAMINE_MORE)
 
 /// Adds the examine message to the clothes and mob.
-/obj/item/clothing/accessory/allergy_dogtag/proc/on_examine(datum/source, mob/user, list/examine_list)
+/obj/item/clothing/accessory/dogtag/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	// Only show the examine message if we're close (2 tiles)
@@ -139,6 +127,20 @@
 		return
 
 	examine_list += display
+
+/obj/item/clothing/accessory/allergy_dogtag
+	name = "Allergy dogtag"
+	desc = "A dogtag with a listing of allergies."
+	icon_state = "allergy"
+	minimize_when_attached = TRUE
+	attachment_slot = CHEST
+
+/obj/item/clothing/accessory/allergy_dogtag/Initialize(mapload, allergy_string)
+	. = ..()
+	if(allergy_string)
+		display = span_notice("The dogtag has a listing of allergies: [allergy_string]")
+	else
+		display = span_notice("The dogtags are all scratched up.")
 
 /// Reskins for the pride pin accessory, mapped by display name to icon state
 GLOBAL_LIST_INIT(pride_pin_reskins, list(

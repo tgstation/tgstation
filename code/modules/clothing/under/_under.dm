@@ -33,7 +33,7 @@
 	/// What is the active sensor mode of this udnersuit
 	var/sensor_mode = NO_SENSORS
 
-	// Accessory handling
+	// Accessory handling (Can be componentized eventually)
 	/// The max number of accessories we can have on this suit.
 	var/max_number_of_accessories = 5
 	/// A list of all accessories attached to us.
@@ -179,7 +179,6 @@
 // End suit sensor handling
 
 /obj/item/clothing/under/proc/attach_accessory(obj/item/clothing/accessory/accessory, mob/living/user, attach_message = TRUE)
-	. = FALSE
 	if(!istype(accessory))
 		return
 	if(length(attached_accessories) >= max_number_of_accessories)
@@ -194,12 +193,14 @@
 	if(!accessory.attach(src, user))
 		return
 
+	LAZYADD(attached_accessories, accessory)
+	accessory.forceMove(src)
 	if(user && attach_message)
 		balloon_alert(user, "accessory attached")
 
-	if(!accessory_overlay)
+	if(isnull(accessory_overlay))
 		create_accessory_overlay()
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 	return TRUE
 
@@ -219,24 +220,20 @@
 		accessory_overlay = null
 
 	removed.detach(src)
+	LAZYREMOVE(attached_accessories, removed)
 
-	if(!accessory_overlay && LAZYLEN(attached_accessories))
+	if(isnull(accessory_overlay) && LAZYLEN(attached_accessories))
 		create_accessory_overlay()
 
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
+/// Handles creating the worn overlay mutable appearance
+/// Only the first accessory attached is displayed (currently)
 /obj/item/clothing/under/proc/create_accessory_overlay()
 	var/obj/item/clothing/accessory/prime_accessory = attached_accessories[1]
-	var/accessory_color = prime_accessory.icon_state
-	accessory_overlay = mutable_appearance(prime_accessory.worn_icon, "[accessory_color]")
+	accessory_overlay = mutable_appearance(prime_accessory.worn_icon, prime_accessory.icon_state)
 	accessory_overlay.alpha = prime_accessory.alpha
 	accessory_overlay.color = prime_accessory.color
-
-/obj/item/clothing/under/handle_atom_del(atom/deleting_atom)
-	. = ..()
-	// If one of our accessories was deleted, handle it
-	if(deleting_atom in attached_accessories)
-		remove_accessory(deleting_atom)
 
 /obj/item/clothing/under/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -250,8 +247,7 @@
 		worn_accessory.forceMove(drop_location())
 
 /obj/item/clothing/under/atom_destruction(damage_flag)
-	if(LAZYLEN(attached_accessories))
-		dump_attachments()
+	dump_attachments()
 	return ..()
 
 /obj/item/clothing/under/Destroy()

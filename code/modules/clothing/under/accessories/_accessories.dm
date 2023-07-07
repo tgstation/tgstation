@@ -43,15 +43,10 @@
 
 	return TRUE
 
-/obj/item/clothing/accessory/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	. = ..()
-	if(istype(old_loc, /obj/item/clothing/under))
-		detach(old_loc)
-
 /**
  * Actually attach this accessory to the passed clothing article.
  *
- * TODO: this is half handled in under/attach_accessory and half handled here. Pick a side!
+ * The accessory is not yet within the clothing's loc at this point, this hapens after success.
  */
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	if(atom_storage)
@@ -59,18 +54,15 @@
 		attach_to.atom_storage.set_real_location(src)
 
 	var/num_other_accessories = LAZYLEN(attach_to.attached_accessories)
-	layer = FLOAT_LAYER + clamp(attach_to.max_number_of_accessories - num_other_accessories, 0, 10)
-	plane = FLOAT_PLANE
+	// layer = FLOAT_LAYER + clamp(attach_to.max_number_of_accessories - num_other_accessories, 0, 10)
+	// plane = FLOAT_PLANE
 
 	if(minimize_when_attached)
-		transform *= 0.5 //halve the size so it doesn't overpower the under
+		transform *= 0.75
 		pixel_x += 8
 		pixel_y -= (8 - (num_other_accessories * 2))
 
-	// attach_to.add_overlay(src)
 	attach_to.vis_contents |= src
-	LAZYADD(attach_to.attached_accessories, src)
-	forceMove(attach_to)
 
 	RegisterSignal(attach_to, COMSIG_ITEM_EQUIPPED, PROC_REF(on_uniform_equipped))
 	RegisterSignal(attach_to, COMSIG_ITEM_DROPPED, PROC_REF(on_uniform_dropped))
@@ -82,6 +74,11 @@
 
 	return TRUE
 
+/**
+ * Detach this accessory from the passed clothing article
+ *
+ * We may have exited the clothing's loc at this point
+ */
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/detach_from)
 	if(detach_from.atom_storage && IS_WEAKREF_OF(src, detach_from.atom_storage.real_location))
 		QDEL_NULL(detach_from.atom_storage)
@@ -92,17 +89,16 @@
 		on_uniform_dropped(detach_from, dropped_from)
 
 	if(minimize_when_attached)
-		transform *= 2
+		transform /= 0.75
 		pixel_x -= 8
 		pixel_y += (8 + LAZYLEN(detach_from.attached_accessories) * 2)
 
-	layer = initial(layer)
-	SET_PLANE_IMPLICIT(src, initial(plane))
-	// detach_from.cut_overlays()
+	// layer = initial(layer)
+	// SET_PLANE_IMPLICIT(src, initial(plane))
 	detach_from.vis_contents -= src
-	LAZYREMOVE(detach_from.attached_accessories, src)
 	return TRUE
 
+/// Signal proc for [COMSIG_ITEM_EQUIPPED] on the uniform we're pinned to
 /obj/item/clothing/accessory/proc/on_uniform_equipped(obj/item/clothing/under/source, mob/living/user, slot)
 	SIGNAL_HANDLER
 
@@ -111,18 +107,23 @@
 
 	accessory_equipped(source, user)
 
+/// Signal proc for [COMSIG_ITEM_DROPPED] on the uniform we're pinned to
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/source, mob/living/user)
 	SIGNAL_HANDLER
 
 	accessory_dropped(source, user)
 	user.update_clothing(ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
 
+/// Called when the uniform this accessory is pinned to is equipped in a valid slot
 /obj/item/clothing/accessory/proc/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	return
 
+/// Called when the uniform this accessory is pinned to is dropped
 /obj/item/clothing/accessory/proc/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
 	return
 
+/// Signal proc for [COMSIG_CLOTHING_UNDER_ADJUSTED] on the uniform we're pinned to
+/// Checks if we can no longer be attached to the uniform, and if so, drops us
 /obj/item/clothing/accessory/proc/on_uniform_adjusted(obj/item/clothing/under/source)
 	SIGNAL_HANDLER
 
@@ -134,12 +135,13 @@
 	source.visible_message(span_warning("[src] falls off of [source]!"))
 
 /obj/item/clothing/accessory/attack_self_secondary(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(user.can_perform_action(src, NEED_DEXTERITY))
 		above_suit = !above_suit
 		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
-		return
-
-	return ..()
+		return TRUE
 
 /obj/item/clothing/accessory/examine(mob/user)
 	. = ..()
