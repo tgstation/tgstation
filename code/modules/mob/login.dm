@@ -97,7 +97,6 @@
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
 
-	update_client_colour()
 	update_mouse_pointer()
 	if(client)
 		if(client.view_size)

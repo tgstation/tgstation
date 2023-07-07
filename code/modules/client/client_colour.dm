@@ -13,6 +13,9 @@
  * (e.g. wearing blue glasses under a yellow visor, even though the result is a little unsatured.)
  * As well as some support for animated colour transitions.
  *
+ * Refactored yet again to use hud render plates instead of the client's color.
+ * Using client.color is effectively retired and unsupported.
+ *
  * Define subtypes of this datum
  */
 /datum/client_colour
