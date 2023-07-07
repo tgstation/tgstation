@@ -74,7 +74,7 @@
 		unregister_antimagic_signals(equipper)
 		return
 
-	register_antimagic_signals(parent)
+	register_antimagic_signals(equipper)
 	if(!alert_caster_on_equip)
 		return
 
