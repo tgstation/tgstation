@@ -70,5 +70,5 @@
 	duration = 2 SECONDS
 	move_speed = 2
 	homing = FALSE
-	spawn_interval = 0.2 SECONDS
+	spawn_interval = 0.1 SECONDS
 	spawned_effect = /obj/effect/goliath_tentacle

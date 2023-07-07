@@ -47,6 +47,7 @@
 /mob/living/basic/mining/goliath/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_TENTACLE_IMMUNE, INNATE_TRAIT)
+	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = goliath_foods)
 	AddElement(/datum/element/move_cooldown, move_delay = 4 SECONDS)
@@ -58,8 +59,10 @@
 	tentacles.Grant(src)
 	var/datum/action/cooldown/tentacle_burst/melee_tentacles = new (src)
 	melee_tentacles.Grant(src)
+	AddComponent(/datum/component/revenge_ability, melee_tentacles, max_range = 1, target_self = TRUE)
 	var/datum/action/cooldown/tentacle_grasp/ranged_tentacles = new (src)
 	ranged_tentacles.Grant(src)
+	AddComponent(/datum/component/revenge_ability, ranged_tentacles, min_range = 2, max_range = 9)
 
 	tentacles_ready()
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
