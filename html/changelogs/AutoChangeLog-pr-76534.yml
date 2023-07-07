@@ -1,0 +1,9 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - bugfix: "Serrated bone shovels can be created with any kind of shovel now, not just a spade (???)"
+  - rscadd: "Serrated bone shovels can be used in place of circular saw in most surgeries."
+  - rscadd: "Added a duller (still deadly) variant of the serrated bone shovel as coroner mail."
+  - rscadd: "Autopsy scanners now act as advanced health analyzers on dead and seemingly-dead people."
+  - rscadd: "Increased the force, throwforce, and wound bonus of inert ritual knives and scythes."
+  - rscadd: "Coroner gloves can quickly apply medicine like nitrile gloves."
