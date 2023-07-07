@@ -49,22 +49,6 @@
 	add_memory_in_range(distinguished, 7, /datum/memory/received_medal, protagonist = distinguished, deuteragonist = attacher, medal_type = src, medal_text = input)
 	return ..()
 
-//Pinning medals on people
-/obj/item/clothing/accessory/medal/attack(mob/living/carbon/human/M, mob/living/user)
-	if(ishuman(M) && !user.combat_mode)
-
-		if(M.wear_suit)
-			if((M.wear_suit.flags_inv & HIDEJUMPSUIT)) //Check if the jumpsuit is covered
-				to_chat(user, span_warning("Medals can only be pinned on jumpsuits."))
-				return
-
-		if(M.w_uniform)
-
-		else
-			to_chat(user, span_warning("Medals can only be pinned on jumpsuits!"))
-	else
-		..()
-
 /obj/item/clothing/accessory/medal/conduct
 	name = "distinguished conduct medal"
 	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is the most basic award given by Nanotrasen. It is often awarded by a captain to a member of his crew."

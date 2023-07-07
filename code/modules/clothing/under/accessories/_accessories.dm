@@ -15,7 +15,7 @@
 	worn_icon = 'icons/mob/clothing/accessories.dmi'
 	icon_state = "plasma"
 	inhand_icon_state = "" //no inhands
-	slot_flags = 0
+	slot_flags = NONE
 	w_class = WEIGHT_CLASS_SMALL
 	/// Whether or not the accessory displays through suits and the like.
 	var/above_suit = TRUE
