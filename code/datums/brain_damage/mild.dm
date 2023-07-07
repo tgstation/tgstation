@@ -265,3 +265,18 @@
 			speak_dejavu += speech_args[SPEECH_MESSAGE]
 	else
 		speak_dejavu += speech_args[SPEECH_MESSAGE]
+
+/datum/brain_trauma/mild/color_blindness
+	name = "Achromatopsia"
+	desc = "Patient's occipital lobe is unable to recognize and interpret color, rendering the patient completely colorblind."
+	scan_desc = "colorblindness"
+	gain_text = span_warning("The world around you seems to lose its color.")
+	lose_text = span_notice("The world feels bright and colorful again.")
+
+/datum/brain_trauma/mild/color_blindness/on_gain()
+	owner.add_client_colour(/datum/client_colour/monochrome/colorblind)
+	return ..()
+
+/datum/brain_trauma/mild/color_blindness/on_lose(silent)
+	owner.remove_client_colour(/datum/client_colour/monochrome/colorblind)
+	return ..()
