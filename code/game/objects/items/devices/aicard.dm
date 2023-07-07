@@ -23,7 +23,7 @@
 
 /obj/item/computer_disk/syndie_ai_upgrade/pre_attack(atom/A, mob/living/user, params)
 	var/mob/living/silicon/ai/AI
-	if(isai(A))
+	if(isAI(A))
 		AI = A
 	else
 		AI = locate() in A
@@ -31,7 +31,8 @@
 		AI.interaction_range += 2
 		playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
 		to_chat(user, span_notice("You insert [src] into [AI]'s compartment, and it beeps as it processes the data."))
-		to_chat(AI, span_notice("You process [src], and find yourself able to manipulate electronics from up to [interaction_range] meters!"))
+		to_chat(AI, span_notice("You process [src], and find yourself able to manipulate electronics from up to [AI.interaction_range] meters!"))
+		qdel(src)
 	else
 		playsound(src,'sound/machines/buzz-sigh.ogg',50,FALSE)
 		to_chat(user, span_notice("Error! Incompatible object!"))
