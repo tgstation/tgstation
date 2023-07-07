@@ -18,9 +18,8 @@
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
 	for(var/button_type in buttons)
-		var/atom/movable/screen/lobby/lobbyscreen = new button_type()
+		var/atom/movable/screen/lobby/lobbyscreen = new button_type(our_hud = src)
 		lobbyscreen.SlowInit()
-		lobbyscreen.hud = src
 		static_inventory += lobbyscreen
 		if(!lobbyscreen.always_shown)
 			toggleable_elements += lobbyscreen
@@ -38,6 +37,11 @@
 	screen_loc = "TOP,CENTER"
 	///Whether this HUD element can be hidden from the client's screen or not
 	var/always_shown = FALSE
+
+/atom/movable/screen/lobby/New(loc, datum/hud/our_hud, ...)
+	if(our_hud)
+		hud = our_hud
+	return ..()
 
 /// Run sleeping actions after initialize
 /atom/movable/screen/lobby/proc/SlowInit()
@@ -284,12 +288,14 @@
 
 /atom/movable/screen/lobby/button/bottom/Initialize(mapload)
 	. = ..()
-	RegisterSignal(hud, COMSIG_HUD_LOBBY_COLLAPSED, PROC_REF(collapse_button))
-	RegisterSignal(hud, COMSIG_HUD_LOBBY_EXPANDED, PROC_REF(expand_button))
+	if(hud)
+		RegisterSignal(hud, COMSIG_HUD_LOBBY_COLLAPSED, PROC_REF(collapse_button))
+		RegisterSignal(hud, COMSIG_HUD_LOBBY_EXPANDED, PROC_REF(expand_button))
 
 /atom/movable/screen/lobby/button/bottom/Destroy()
-	UnregisterSignal(hud, list(COMSIG_HUD_LOBBY_COLLAPSED, COMSIG_HUD_LOBBY_EXPANDED))
 	. = ..()
+	if(hud)
+		UnregisterSignal(hud, list(COMSIG_HUD_LOBBY_COLLAPSED, COMSIG_HUD_LOBBY_EXPANDED))
 
 ///Animates moving the button off-screen, disabling it
 /atom/movable/screen/lobby/button/bottom/proc/collapse_button()
