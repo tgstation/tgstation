@@ -51,7 +51,8 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = goliath_foods)
 	AddElement(/datum/element/move_cooldown, move_delay = 4 SECONDS)
-	AddComponent(/datum/component/shovel_hands)
+	AddComponent(/datum/component/basic_mob_attack_telegraph)
+	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
