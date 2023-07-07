@@ -28,7 +28,7 @@
 /**
  * Can we be attached to the passed clothing article?
  */
-/obj/item/clothing/accessory/proc/can_attach_accessory(obj/item/clothing/attach_to, mob/living/user)
+/obj/item/clothing/accessory/proc/can_attach_accessory(obj/item/clothing/under/attach_to, mob/living/user)
 	if(!istype(attach_to))
 		CRASH("[type] - can_attach_accessory called with an invalid item to attach to. (got: [attach_to])")
 

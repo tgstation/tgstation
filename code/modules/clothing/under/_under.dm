@@ -176,8 +176,10 @@
 
 /mob/living/carbon/human/dummy/update_sensor_list()
 	return
+
 // End suit sensor handling
 
+/// Attach the passed accessory to the clothing item
 /obj/item/clothing/under/proc/attach_accessory(obj/item/clothing/accessory/accessory, mob/living/user, attach_message = TRUE)
 	if(!istype(accessory))
 		return
@@ -204,6 +206,7 @@
 	update_appearance()
 	return TRUE
 
+/// Removes (pops) the topmost accessory from the accessories list and puts it in the user's hands if supplied
 /obj/item/clothing/under/proc/pop_accessory(mob/living/user, attach_message = TRUE)
 	var/obj/item/clothing/accessory/popped_accessory = attached_accessories[1]
 	remove_accessory(popped_accessory)
@@ -215,6 +218,7 @@
 	if(attach_message)
 		popped_accessory.balloon_alert(user, "accessory removed")
 
+/// Removes the passed accesory from our accessories list
 /obj/item/clothing/under/proc/remove_accessory(obj/item/clothing/accessory/removed)
 	if(removed == attached_accessories[1])
 		accessory_overlay = null
@@ -241,10 +245,11 @@
 	if(gone in attached_accessories)
 		remove_accessory(gone)
 
-/obj/item/clothing/under/proc/dump_attachments()
+/// Helper to remove all attachments to the passed location
+/obj/item/clothing/under/proc/dump_attachments(atom/drop_to = drop_location())
 	for(var/obj/item/clothing/accessory/worn_accessory as anything in attached_accessories)
 		remove_accessory(worn_accessory)
-		worn_accessory.forceMove(drop_location())
+		worn_accessory.forceMove(drop_to)
 
 /obj/item/clothing/under/atom_destruction(damage_flag)
 	dump_attachments()
@@ -275,6 +280,7 @@
 		. += "It has [english_list(accessories)] attached."
 		. += "Alt-Right-Click to remove [attached_accessories[1]]."
 
+/// Helper to list out all accessories with an icon besides it, for use in examine
 /obj/item/clothing/under/proc/list_accessories_with_icon(mob/user)
 	var/list/all_accessories = list()
 	for(var/obj/item/clothing/accessory/attached as anything in attached_accessories)
@@ -287,14 +293,14 @@
 	set category = "Object"
 	set src in usr
 	var/mob/user_mob = usr
-	if(!try_toggle(user_mob))
+	if(!can_toggle_sensors(user_mob))
 		return
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
 	var/switchMode = tgui_input_list(user_mob, "Select a sensor mode", "Suit Sensors", modes, modes[sensor_mode + 1])
 	if(isnull(switchMode))
 		return
-	if(!try_toggle(user_mob))
+	if(!can_toggle_sensors(user_mob))
 		return
 
 	sensor_mode = modes.Find(switchMode) - 1
@@ -314,7 +320,8 @@
 		if(H.w_uniform == src)
 			H.update_suit_sensors()
 
-/obj/item/clothing/under/proc/try_toggle(mob/toggler)
+/// Checks if the toggler is allowed to toggle suit sensors currently
+/obj/item/clothing/under/proc/can_toggle_sensors(mob/toggler)
 	if(!can_use(toggler) || toggler.stat == DEAD) //make sure they didn't hold the window open.
 		return FALSE
 	if(get_dist(toggler, src) > 1)
@@ -379,6 +386,8 @@
 
 	update_appearance()
 
+/// Helper to toggle the jumpsuit style, if possible
+/// Returns the new state
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
 	switch(adjusted)
 		if(DIGITIGRADE_STYLE)
@@ -393,6 +402,7 @@
 	SEND_SIGNAL(src, COMSIG_CLOTHING_UNDER_ADJUSTED)
 	return adjusted
 
+/// Helper to reset to normal jumpsuit state
 /obj/item/clothing/under/proc/adjust_to_normal()
 	adjusted = NORMAL_STYLE
 	female_sprite_flags = initial(female_sprite_flags)
@@ -405,6 +415,7 @@
 			if(damage_by_parts[zone] > limb_integrity)
 				body_parts_covered &= body_zone2cover_flags(zone)
 
+/// Helper to adjust to alt jumpsuit state
 /obj/item/clothing/under/proc/adjust_to_alt()
 	adjusted = ALT_STYLE
 	if(!(female_sprite_flags & FEMALE_UNIFORM_TOP_ONLY))

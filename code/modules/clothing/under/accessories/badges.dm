@@ -29,7 +29,7 @@
 	desc = "A pin to show off your appreciation for clowns and clowning!"
 	icon_state = "clown_enjoyer_pin"
 
-/obj/item/clothing/accessory/clown_enjoyer_pin/can_attach_accessory(obj/item/clothing/attach_to, mob/living/user)
+/obj/item/clothing/accessory/clown_enjoyer_pin/can_attach_accessory(obj/item/clothing/under/attach_to, mob/living/user)
 	. = ..()
 	if(!.)
 		return
@@ -57,7 +57,7 @@
 	desc = "A pin to show off your appreciation for mimes and miming!"
 	icon_state = "mime_fan_pin"
 
-/obj/item/clothing/accessory/mime_fan_pin/can_attach_accessory(obj/item/clothing/attach_to, mob/living/user)
+/obj/item/clothing/accessory/mime_fan_pin/can_attach_accessory(obj/item/clothing/under/attach_to, mob/living/user)
 	. = ..()
 	if(!.)
 		return
@@ -88,6 +88,17 @@
 /obj/item/clothing/accessory/pocketprotector/Initialize(mapload)
 	. = ..()
 	create_storage(storage_type = /datum/storage/pockets/pocketprotector)
+
+/obj/item/clothing/accessory/pocketprotector/can_attach_accessory(obj/item/clothing/under/attach_to, mob/living/user)
+	. = ..()
+	if(!.)
+		return
+
+	if(!isnull(attach_to.atom_storage))
+		if(user)
+			attach_to.balloon_alert(user, "not compatible!")
+		return FALSE
+	return TRUE
 
 /obj/item/clothing/accessory/pocketprotector/full
 
