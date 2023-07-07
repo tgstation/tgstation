@@ -71,7 +71,7 @@
 
 /datum/element/immerse/proc/stop_immersion(turf/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, COMSIG_ATOM_EXITED))
+	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, COMSIG_ATOM_EXITED))
 	for(var/atom/movable/movable as anything in attached_turfs_and_movables[source])
 		remove_from_element(source, movable)
 	attached_turfs_and_movables -= source
