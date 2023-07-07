@@ -10,6 +10,27 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 	"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHWEST)
 ))
 
+/proc/get_dir_from_string(string)
+	switch (string)
+		if ("NORTH")
+			return NORTH
+		if ("NORTHEAST")
+			return NORTHEAST
+		if ("EAST")
+			return EAST
+		if ("SOUTHEAST")
+			return SOUTHEAST
+		if ("SOUTH")
+			return SOUTH
+		if ("SOUTHWEST")
+			return SOUTHWEST
+		if ("WEST")
+			return WEST
+		if ("NORTHWEST")
+			return NORTHWEST
+		else
+			return null
+
 /obj/structure/industrial_lift
 	name = "lift platform"
 	desc = "A lightweight lift platform. It moves up and down."

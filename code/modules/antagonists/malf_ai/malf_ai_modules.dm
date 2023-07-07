@@ -5,6 +5,12 @@
 #define MALF_VENDOR_TIPPING_TIME 0.5 SECONDS //within human reaction time
 #define MALF_VENDOR_TIPPING_CRIT_CHANCE 10 //percent
 
+#define MALF_AI_ROLL_TIME 0.5 SECONDS
+#define MALF_AI_ROLL_COOLDOWN 1 SECONDS + MALF_AI_ROLL_TIME
+#define MALF_AI_ROLL_DAMAGE 75
+#define MALF_AI_ROLL_CRIT_CHANCE 5 //percent
+#define MALF_AI_ROLL_MAX_DISTANCE 1 //anything further away than this, and the roll will fail
+
 GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/field/containment,
 		/obj/machinery/power/supermatter_crystal,
@@ -1045,7 +1051,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/action/innate/ai/ranged/remote_vendor_tilt/do_ability(mob/living/caller, atom/clicked_on)
 
-	if (!istype(caller, /mob/living/silicon/ai))
+	if (!isAI(caller))
 		return FALSE
 	var/mob/living/silicon/ai/ai_caller = caller
 
@@ -1074,26 +1080,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/picked_dir_string = show_radial_menu(ai_caller, clicked_vendor, GLOB.all_radial_directions, custom_check = CALLBACK(src, PROC_REF(radial_check), caller, clicked_vendor))
 	if (picked_dir_string == null)
 		return FALSE
-	var/picked_dir
-	switch (picked_dir_string)
-		if ("NORTH")
-			picked_dir = NORTH
-		if ("NORTHEAST")
-			picked_dir = NORTHEAST
-		if ("EAST")
-			picked_dir = EAST
-		if ("SOUTHEAST")
-			picked_dir = SOUTHEAST
-		if ("SOUTH")
-			picked_dir = SOUTH
-		if ("SOUTHWEST")
-			picked_dir = SOUTHWEST
-		if ("WEST")
-			picked_dir = WEST
-		if ("NORTHWEST")
-			picked_dir = NORTHWEST
-		else
-			return FALSE
+	var/picked_dir = get_dir_from_string(picked_dir_string)
 
 	var/turf/target = get_step(clicked_vendor, picked_dir)
 	if (!ai_caller.can_see(target))
@@ -1141,29 +1128,111 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 	return TRUE
 
-/*/datum/ai_module/upgrade/core_tilt
+/datum/ai_module/utility/core_tilt
 	name = "Rolling Servos"
 	description = "Allows you to slowly roll around, crushing anything in your way with your bulk."
 	cost = 20
-	one_purchase = TRUE
-	power_type = /datum/action/innate/ai/core_tilt
+	one_purchase = FALSE
+	power_type = /datum/action/innate/ai/ranged/core_tilt
+	unlock_sound = 'sound/effects/bang.ogg'
+	unlock_text = "You gain the ability to roll over and crush anything in your way."
 
-/datum/action/innate/ai/core_tilt
+/datum/action/innate/ai/ranged/core_tilt
 	name = "Roll over"
-	button_icon_state = "voice_changer"
+	button_icon_state = "roll_over"
 	desc = "Allows you to roll over in the direction of your choosing, crushing anything in your way."
 	auto_use_uses = FALSE
-	COOLDOWN_DECLARE(ai_core_tilt)
+	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+	uses = 20
+	COOLDOWN_DECLARE(time_til_next_tilt)
+	enable_text = span_notice("Your inner servos shift as you prepare to roll around. Click adjacent tiles to roll onto them!")
+	disable_text = span_notice("You disengage your rolling protocols.")
 
-/datum/action/innate/ai/core_tilt/IsAvailable(feedback)
-	if (!COOLDOWN_FINISHED(ai_core_tilt))
+/datum/action/innate/ai/ranged/core_tilt/New()
+	. = ..()
+	desc = "[desc] It has [uses] use\s remaining."
+
+/datum/action/innate/ai/ranged/core_tilt/do_ability(mob/living/caller, atom/clicked_on)
+
+	if (!COOLDOWN_FINISHED(src, time_til_next_tilt))
+		caller.balloon_alert(caller, "on cooldown!")
 		return FALSE
 
-	return ..()
+	if (!isAI(caller))
+		return FALSE
+	var/mob/living/silicon/ai/ai_caller = caller
 
-/datum/action/innate/ai/core_tilt/Activate() */
+	if (ai_caller.incapacitated())
+		return FALSE
 
+	var/turf/target = get_turf(clicked_on)
+	if (isnull(target))
+		return FALSE
 
+	if (target == ai_caller.loc)
+		target.balloon_alert(ai_caller, "can't roll on yourself!")
+		return FALSE
+
+	if (get_dist(ai_caller, target) > MALF_AI_ROLL_MAX_DISTANCE)
+		target.balloon_alert(ai_caller, "too far!")
+		return FALSE
+
+	var/picked_dir = get_dir(ai_caller, target)
+
+	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target, MALF_AI_ROLL_TIME)
+	//ai_caller.visible_message(span_danger("[ai_caller] starts rolling over menacingly!"))
+	ai_caller.balloon_alert_to_viewers("rolling...")
+	addtimer(CALLBACK(src, PROC_REF(do_roll_over), ai_caller, picked_dir), MALF_AI_ROLL_TIME)
+
+	adjust_uses(-1)
+	if(uses)
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+		build_all_button_icons()
+
+	COOLDOWN_START(src, time_til_next_tilt, MALF_AI_ROLL_COOLDOWN)
+
+/datum/action/innate/ai/ranged/core_tilt/proc/do_roll_over(mob/living/silicon/ai/ai_caller, picked_dir)
+	var/turf/target = get_step(ai_caller, picked_dir) // in case we moved we pass the dir not the target turf
+
+	if (isnull(target))
+		return
+
+	var/squish_damage = MALF_AI_ROLL_DAMAGE
+	var/paralyze_time = clamp(6 SECONDS, 0 SECONDS, (MALF_AI_ROLL_COOLDOWN * 0.9)) //the clamp prevents stunlocking as the max is always a little less than the cooldown between rolls
+
+	return ai_caller.fall_and_crush(target, squish_damage, (MALF_AI_ROLL_CRIT_CHANCE), null, paralyze_time, picked_dir, rotation = get_rotation_from_dir(picked_dir))
+
+/// Used in our radial menu, state-checking proc after the radial menu sleeps
+/datum/action/innate/ai/ranged/core_tilt/proc/radial_check(mob/living/silicon/ai/caller)
+	if (caller.incapacitated() || caller.stat == DEAD || QDELETED(caller))
+		return FALSE
+
+	if (uses <= 0)
+		return FALSE
+
+	return TRUE
+
+/datum/action/innate/ai/ranged/core_tilt/proc/get_rotation_from_dir(dir)
+	switch (dir)
+		if (NORTH)
+			return 270 // try our best to not return 180 since it works badly with animate
+		if (NORTHEAST)
+			return 90
+		if (EAST)
+			return 90
+		if (SOUTHEAST)
+			return 90
+		if (SOUTH)
+			return 90
+		if (SOUTHWEST)
+			return 270
+		if (WEST)
+			return 270
+		if (NORTHWEST)
+			return 270
+		else
+			stack_trace("non-standard dir entered")
+			return 0
 
 #undef DEFAULT_DOOMSDAY_TIMER
 #undef DOOMSDAY_ANNOUNCE_INTERVAL
@@ -1171,3 +1240,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 #undef VENDOR_TIPPING_USES
 #undef MALF_VENDOR_TIPPING_TIME
 #undef MALF_VENDOR_TIPPING_CRIT_CHANCE
+
+#undef MALF_AI_ROLL_COOLDOWN
+#undef MALF_AI_ROLL_TIME
+#undef MALF_AI_ROLL_DAMAGE
+#undef MALF_AI_ROLL_CRIT_CHANCE
+#undef MALF_AI_ROLL_MAX_DISTANCE

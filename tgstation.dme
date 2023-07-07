@@ -72,6 +72,7 @@
 #include "code\__DEFINES\construction.dm"
 #include "code\__DEFINES\cooldowns.dm"
 #include "code\__DEFINES\crafting.dm"
+#include "code\__DEFINES\crushing.dm"
 #include "code\__DEFINES\ctf.dm"
 #include "code\__DEFINES\cult.dm"
 #include "code\__DEFINES\database.dm"
