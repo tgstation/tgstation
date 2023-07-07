@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "Bilingual quirk now lets you choose your language between ones given to roundstart species."
+  - balance: "Foreigner and Bilingual are now mutually exclusive languages."
