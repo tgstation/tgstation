@@ -397,17 +397,9 @@
 	return TRUE
 
 /obj/item/bodypart/head/robot/drop_organs(mob/user, violent_removal)
-<<<<<<< HEAD
 	. = ..()
 	flash1 = null
 	flash2 = null
-=======
-	var/atom/drop_loc = drop_location()
-	flash1?.forceMove(drop_loc)
-	flash2?.forceMove(drop_loc)
-	return ..()
-
->>>>>>> master
 
 /obj/item/bodypart/arm/left/robot/surplus
 	name = "surplus prosthetic left arm"
