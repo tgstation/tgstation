@@ -211,8 +211,12 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
  */
 /datum/admin_help/New(msg_raw, client/C, is_bwoink, urgent = FALSE)
 	//clean the input msg
-	var/msg = sanitize(copytext_char(msg_raw, 1, MAX_MESSAGE_LEN))
-	if(!msg || !C || !C.mob)
+	var/msg = reject_bad_text(trim(msg_raw, MAX_MESSAGE_LEN), ascii_only = FALSE)
+	if(!C || !C.mob)
+		qdel(src)
+		return
+	if(!msg)
+		to_chat(C, type = MESSAGE_TYPE_SYSTEM, html = span_warning("Your adminhelp message contained invalid characters and was not sent. Please try again."))
 		qdel(src)
 		return
 
