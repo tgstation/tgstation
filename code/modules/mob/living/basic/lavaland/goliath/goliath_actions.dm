@@ -61,7 +61,7 @@
 
 /datum/action/cooldown/tentacle_grasp/Activate(atom/target)
 	. = ..()
-	new /obj/effect/temp_visual/effect_trail/burrowed_tentacle(get_turf(owner), target)
+	new /obj/effect/temp_visual/effect_trail/burrowed_tentacle(owner.loc, target)
 	return TRUE
 
 /// An invisible effect which chases a target, spawning tentacles every so often.

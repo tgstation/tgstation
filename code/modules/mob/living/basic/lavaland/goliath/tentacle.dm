@@ -17,6 +17,8 @@
 
 /obj/effect/goliath_tentacle/Initialize(mapload)
 	. = ..()
+	if (!isopenturf(loc) || isspaceturf(loc) || isopenspaceturf(loc))
+		return INITIALIZE_HINT_QDEL
 	for (var/obj/effect/goliath_tentacle/tentacle in loc)
 		if (tentacle != src)
 			return INITIALIZE_HINT_QDEL

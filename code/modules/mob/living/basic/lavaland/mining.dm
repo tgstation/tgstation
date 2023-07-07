@@ -5,6 +5,10 @@
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
+	// Pale purple, should be red enough to see stuff on lavaland
+	lighting_cutoff_red = 25
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 35
 	/// What crusher trophy this mob drops, if any
 	var/crusher_loot
 	/// What is the chance the mob drops it if all their health was taken by crusher attacks
