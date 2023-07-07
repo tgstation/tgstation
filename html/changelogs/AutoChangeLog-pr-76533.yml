@@ -1,0 +1,10 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - image: "Heavily reworks and resprites first aid analyzers. They now display if they're happy, sad, angry, or warning you! Also a 'pricking' animation."
+  - rscadd: "First aid analyzers are now found in all basic and specialized medkits. Toxin medkits get a new* disease analyzer. Miners get a miner-colored one in their box."
+  - balance: "Scanning yourself with a first aid analyzer will 'create a holo-image with treatment instructions next to your wounds', doubling the speed of treatment of scanned wounds!"
+  - sound: "Health analyzers and gene scanners now have a scanning sound, courtesy of CM."
+  - refactor: "Refactored some wound code to make treatment duration changes and changes in the description of wounds easier."
+  - bugfix: "Fixed a dummy parent feature of the health analyzer (Verbose mode) showing up, uselessly, on the disease and first aid subtypes."
+  - image: "Surgical processors and slime scanners have recieved a similar resprite."

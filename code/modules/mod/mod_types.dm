@@ -303,7 +303,7 @@
 	applied_modules = list(
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/noslip,
-		/obj/item/mod/module/status_readout,
+		/obj/item/mod/module/status_readout/ninja,
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/dispenser/ninja,
 		/obj/item/mod/module/dna_lock/reinforced,
