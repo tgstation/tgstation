@@ -4335,7 +4335,6 @@
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\brimdemon.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\curse_blob.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\goldgrub.dm"
-#include "code\modules\mob\living\simple_animal\hostile\mining_mobs\goliath.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\gutlunch.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\hivelord.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\ice_demon.dm"

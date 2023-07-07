@@ -16,7 +16,7 @@
 		"a tendril hand can easily dig through basalt and obliterate hostile fauna, but your glove-wearing days are behind you...",
 	)
 	input_obj_or_mob = list(
-		/mob/living/simple_animal/hostile/asteroid/goliath,
+		/mob/living/basic/mining/goliath,
 	)
 	output_organs = list(
 		/obj/item/organ/internal/brain/goliath,

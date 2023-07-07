@@ -1403,7 +1403,7 @@
 				/mob/living/basic/stickman/dog,
 				/mob/living/simple_animal/crab,
 				/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
-				/mob/living/simple_animal/hostile/asteroid/goliath/beast,
+				/mob/living/basic/mining/goliath,
 				/mob/living/simple_animal/hostile/bear,
 				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 				/mob/living/simple_animal/hostile/gorilla,

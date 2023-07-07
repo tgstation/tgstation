@@ -3,7 +3,7 @@
 	weighted_closed_turf_types = list(/turf/closed/mineral/random/volcanic = 1)
 
 	weighted_mob_spawn_list = list(
-		/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50,
+		/mob/living/basic/mining/goliath/random = 50,
 		/obj/structure/spawner/lavaland/goliath = 3,
 		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 40,
 		/obj/structure/spawner/lavaland = 2,

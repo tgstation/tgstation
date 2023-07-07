@@ -101,6 +101,28 @@
 	if (tentacles.cooldown_time > 1 SECONDS)
 		tentacles.cooldown_time -= 1 SECONDS
 
+/mob/living/basic/mining/goliath/attackby(obj/item/attacking_item, mob/living/user, params)
+	if (!istype(attacking_item, /obj/item/goliath_saddle))
+		return ..()
+	if (!tameable)
+		balloon_alert(user, "doesn't fit!")
+		return
+	if (saddled)
+		balloon_alert(user, "already saddled!")
+		return
+	if (!tamed)
+		balloon_alert(user, "too rowdy!")
+		return
+	balloon_alert(user, "affixing saddle...")
+	if (!do_after(user, delay = 5.5 SECONDS, target = src))
+		return
+	user.visible_message(span_notice("[user] mounts [attacking_item] to [src], [p_they()] are ready for riding!"))
+	qdel(attacking_item)
+	saddled = TRUE
+	buckle_lying = 0
+	add_overlay("goliath_saddled")
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath)
+
 /// When we use an ability, activate some kind of visual tell
 /mob/living/basic/mining/goliath/proc/used_ability(mob/living/source, datum/action/cooldown/ability)
 	SIGNAL_HANDLER
@@ -130,8 +152,9 @@
 /mob/living/basic/mining/goliath/random
 
 /mob/living/basic/mining/goliath/random/Initialize(mapload)
+	. = ..()
 	if(!prob(1))
-		return ..()
+		return
 	new /mob/living/basic/mining/goliath/ancient/immortal(loc)
 	return INITIALIZE_HINT_QDEL
 
@@ -184,3 +207,10 @@
 	LAZYCLEARLIST(tentacle_target_turfs)
 	for(var/turf/open/floor in orange(4, loc))
 		LAZYADD(tentacle_target_turfs, floor)
+
+/// Use this to ride a goliath
+/obj/item/goliath_saddle
+	name = "goliath saddle"
+	desc = "This rough saddle will give you a serviceable seat upon a goliath! Provided you can get one to stand still."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "goliath_saddle"
