@@ -195,10 +195,10 @@
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
 
-/obj/item/bodypart/chest/robot/handle_atom_del(atom/chest_atom)
-	if(chest_atom == cell)
+/obj/item/bodypart/chest/robot/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
-	return ..()
 
 /obj/item/bodypart/chest/robot/Destroy()
 	QDEL_NULL(cell)
@@ -246,8 +246,6 @@
 	screwtool.play_tool_sound(src)
 	to_chat(user, span_notice("Remove [cell] from [src]."))
 	cell.forceMove(drop_location())
-	cell = null
-
 
 /obj/item/bodypart/chest/robot/examine(mob/user)
 	. = ..()
@@ -267,11 +265,8 @@
 	if(wired)
 		new /obj/item/stack/cable_coil(drop_loc, 1)
 		wired = FALSE
-	if(cell)
-		cell.forceMove(drop_loc)
-		cell = null
-	..()
-
+	cell?.forceMove(drop_loc)
+	return ..()
 
 /obj/item/bodypart/head/robot
 	name = "cyborg head"
@@ -301,6 +296,8 @@
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
+	head_flags = HEAD_EYESPRITES
+
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
 
@@ -320,12 +317,12 @@
 
 #undef EMP_GLITCH
 
-/obj/item/bodypart/head/robot/handle_atom_del(atom/head_atom)
-	if(head_atom == flash1)
+/obj/item/bodypart/head/robot/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == flash1)
 		flash1 = null
-	if(head_atom == flash2)
+	if(gone == flash2)
 		flash2 = null
-	return ..()
 
 /obj/item/bodypart/head/robot/Destroy()
 	QDEL_NULL(flash1)
@@ -371,28 +368,17 @@
 	if(flash1 || flash2)
 		prytool.play_tool_sound(src)
 		to_chat(user, span_notice("You remove the flash from [src]."))
-		if(flash1)
-			flash1.forceMove(drop_location())
-			flash1 = null
-		if(flash2)
-			flash2.forceMove(drop_location())
-			flash2 = null
+		flash1?.forceMove(drop_location())
+		flash2?.forceMove(drop_location())
 	else
 		to_chat(user, span_warning("There is no flash to remove from [src]."))
 	return TRUE
 
-
 /obj/item/bodypart/head/robot/drop_organs(mob/user, violent_removal)
 	var/atom/drop_loc = drop_location()
-	if(flash1)
-		flash1.forceMove(drop_loc)
-		flash1 = null
-	if(flash2)
-		flash2.forceMove(drop_loc)
-		flash2 = null
-	..()
-
-
+	flash1?.forceMove(drop_loc)
+	flash2?.forceMove(drop_loc)
+	return ..()
 
 
 /obj/item/bodypart/arm/left/robot/surplus

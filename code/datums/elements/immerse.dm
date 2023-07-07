@@ -63,14 +63,14 @@
 		immerse_icon = fcopy_rsc(immerse_icon)
 		generated_immerse_icons["[icon]-[icon_state]-[mask_icon]"] = immerse_icon
 
-	RegisterSignals(target, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_INITIALIZED_ON), PROC_REF(on_init_or_entered))
+	RegisterSignals(target, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON), PROC_REF(on_init_or_entered))
 	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(on_atom_exited))
 	attached_turfs_and_movables += target
 	for(var/atom/movable/movable as anything in target)
 		on_init_or_entered(target, movable)
 
 /datum/element/immerse/Detach(turf/source)
-	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_INITIALIZED_ON, COMSIG_ATOM_EXITED))
+	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, COMSIG_ATOM_EXITED))
 	for(var/atom/movable/movable as anything in attached_turfs_and_movables[source])
 		remove_from_element(source, movable)
 	attached_turfs_and_movables -= source

@@ -21,7 +21,6 @@
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
 	reagents.flags |= OPENCONTAINER
 	preserved_food = FALSE
-	make_decompose()
 
 /obj/item/food/canned/attack_self(mob/user)
 	if(!is_drainable())
