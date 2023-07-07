@@ -95,7 +95,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
 		RENDER_PLANE_NON_GAME,
 	)
 
-/// Exists for convienience when referencing all game render plates
+/// Exists for convienience when testing colorblindness
 /atom/movable/plane_master_controller/colorblind
 	name = PLANE_MASTERS_COLORBLIND
 	controlled_planes = list(
