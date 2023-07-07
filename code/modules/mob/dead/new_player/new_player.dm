@@ -43,6 +43,12 @@
 /mob/dead/new_player/prepare_huds()
 	return
 
+/mob/dead/new_player/show_other_mob_action_buttons(mob/take_from)
+	return //new players are unobservable and they don't observe other mobs
+
+/mob/dead/new_player/hide_other_mob_action_buttons(mob/take_from)
+	return //new players are unobservable and they don't observe other mobs
+
 /mob/dead/new_player/Topic(href, href_list)
 	if (usr != src)
 		return
@@ -345,6 +351,7 @@
 	add_verb(src, /mob/dead/new_player/proc/open_interview)
 	add_verb(client, /client/verb/fix_tgui_panel)
 
+///Resets the Lobby Menu HUD, recreating and reassigning it to the new player
 /mob/dead/new_player/proc/reset_menu_hud()
 	set name = "Reset Lobby Menu HUD"
 	set category = "OOC"
