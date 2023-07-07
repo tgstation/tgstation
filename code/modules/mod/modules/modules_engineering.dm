@@ -34,7 +34,7 @@
 	/// T-ray scan range.
 	var/range = 4
 
-/obj/item/mod/module/t_ray/on_active_process(delta_time)
+/obj/item/mod/module/t_ray/on_active_process(seconds_per_tick)
 	t_ray_scan(mod.wearer, 0.8 SECONDS, range)
 
 ///Magnetic Stability - Gives the user a slowdown but makes them negate gravity and be immune to slips.
@@ -85,7 +85,7 @@
 		these are only capable of working in zero-gravity environments, a blessing to some Engineers."
 	icon_state = "tether"
 	module_type = MODULE_ACTIVE
-	complexity = 3
+	complexity = 2
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/tether)
 	cooldown_time = 1.5 SECONDS

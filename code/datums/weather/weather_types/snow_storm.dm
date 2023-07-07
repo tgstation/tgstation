@@ -39,7 +39,7 @@
 	if(isobserver(player))
 		return TRUE
 
-	if(HAS_TRAIT(player, TRAIT_DETECT_STORM))
+	if(HAS_MIND_TRAIT(player, TRAIT_DETECT_STORM))
 		return TRUE
 
 	if(istype(get_area(player), /area/mine))

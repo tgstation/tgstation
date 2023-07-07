@@ -12,9 +12,6 @@
 	program_icon = "network-wired"
 
 /datum/computer_file/program/ntnetmonitor/ui_act(action, list/params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
 	switch(action)
 		if("resetIDS")
 			SSmodular_computers.intrusion_detection_alarm = FALSE

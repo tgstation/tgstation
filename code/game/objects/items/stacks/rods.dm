@@ -1,11 +1,11 @@
 GLOBAL_LIST_INIT(rod_recipes, list ( \
-	new/datum/stack_recipe("grille", /obj/structure/grille, 2, time = 10, one_per_turf = TRUE, on_solid_ground = FALSE, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("grille", /obj/structure/grille, 2, time = 10, one_per_turf = TRUE, on_solid_ground = FALSE, check_density = FALSE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("table frame", /obj/structure/table_frame, 2, time = 10, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("scooter frame", /obj/item/scooter_frame, 10, time = 25, one_per_turf = FALSE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("linen bin", /obj/structure/bedsheetbin/empty, 2, time = 5, one_per_turf = FALSE, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("railing", /obj/structure/railing, 6, time = 3.6 SECONDS, window_checks = TRUE, category = CAT_STRUCTURE), \
-	new/datum/stack_recipe("tank holder", /obj/structure/tank_holder, 2, time = 5, one_per_turf = TRUE, on_solid_ground = FALSE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("ladder", /obj/structure/ladder/crafted, 15, time = 150, one_per_turf = TRUE, on_solid_ground = FALSE, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("railing", /obj/structure/railing, 6, time = 3.6 SECONDS, check_direction = TRUE, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("tank holder", /obj/structure/tank_holder, 2, time = 5, one_per_turf = TRUE, on_solid_ground = FALSE, check_density = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("ladder", /obj/structure/ladder/crafted, 15, time = 150, one_per_turf = TRUE, on_solid_ground = FALSE, check_density = FALSE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("catwalk floor tile", /obj/item/stack/tile/catwalk_tile, 1, 4, 20, category = CAT_TILES), \
 	new/datum/stack_recipe("stairs frame", /obj/structure/stairs_frame, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("white cane", /obj/item/cane/white, 3, time = 10, one_per_turf = FALSE, category = CAT_TOOLS), \
@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	throw_speed = 3
 	throw_range = 7
 	demolition_mod = 1.25
-	mats_per_unit = list(/datum/material/iron=1000)
+	mats_per_unit = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT)
 	max_amount = 50
 	attack_verb_continuous = list("hits", "bludgeons", "whacks")
 	attack_verb_simple = list("hit", "bludgeon", "whack")
@@ -32,8 +32,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	embedding = list(embed_chance = 50)
 	novariants = TRUE
 	matter_amount = 2
-	cost = 250
-	source = /datum/robot_energy_storage/iron
+	cost = HALF_SHEET_MATERIAL_AMOUNT
+	source = /datum/robot_energy_storage/material/iron
 	merge_type = /obj/item/stack/rods
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
@@ -122,7 +122,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	color = "#5286b9ff"
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_NORMAL
-	mats_per_unit = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
+	mats_per_unit = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma=SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium=SHEET_MATERIAL_AMOUNT)
 	max_amount = 30
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	merge_type = /obj/item/stack/rods/lava

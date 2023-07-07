@@ -35,9 +35,7 @@
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/space/has_grav)
 "j" = (
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
+/obj/structure/closet/crate/preopen,
 /obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/space/has_grav)
@@ -56,9 +54,8 @@
 	color = "#FFFF00";
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	color = "#FFFF00";
-	dir = 8
+/obj/structure/window/reinforced/spawner/directional/west{
+	color = "#FFFF00"
 	},
 /turf/open/floor/plating/airless{
 	color = "#FFFF00"
@@ -107,16 +104,14 @@
 /obj/structure/grille{
 	color = "#FFFF00"
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/spawner/directional/south{
 	color = "#FFFF00"
 	},
-/obj/structure/window/reinforced{
-	color = "#FFFF00";
-	dir = 4
+/obj/structure/window/reinforced/spawner/directional/east{
+	color = "#FFFF00"
 	},
-/obj/structure/window/reinforced{
-	color = "#FFFF00";
-	dir = 8
+/obj/structure/window/reinforced/spawner/directional/west{
+	color = "#FFFF00"
 	},
 /turf/open/floor/plating/airless{
 	color = "#FFFF00"

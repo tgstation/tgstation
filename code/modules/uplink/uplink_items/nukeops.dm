@@ -46,6 +46,16 @@
 	cost = 30
 	purchasable_from = UPLINK_NUKE_OPS
 
+/datum/uplink_item/bundles_tc/induction_kit
+	name = "Syndicate Induction Kit"
+	desc = "Met a fellow syndicate agent on the station? Kept some TC in reserve just in case? Or are you communicating with one via the Syndicate channel? \
+			Get this kit and you'll be able to induct them into your operative team via a special implant. \
+			Additionally, it contains an assortment of useful gear for new operatives, including a space suit, an Ansem pistol, two spare magazines, and more! \
+			*NOT* for usage with Reinforcements, and does not brainwash the target!"
+	item = /obj/item/storage/box/syndie_kit/induction_kit
+	cost = 10
+	purchasable_from = UPLINK_NUKE_OPS
+
 /datum/uplink_item/dangerous/rawketlawnchair
 	name = "84mm Rocket Propelled Grenade Launcher"
 	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
@@ -402,14 +412,14 @@
 /datum/uplink_item/ammo/rocket/basic
 	name = "84mm HE Rocket"
 	desc = "A low-yield anti-personnel HE rocket. Gonna take you out in style!"
-	item = /obj/item/ammo_casing/caseless/rocket
+	item = /obj/item/ammo_casing/rocket
 	cost = 4
 
 /datum/uplink_item/ammo/rocket/heap
 	name = "84mm HEAP Rocket"
 	desc = "A high-yield HEAP rocket; extremely effective against literally everything and anything near that thing that doesn't exist anymore. \
 			Strike fear into the hearts of your enemies."
-	item = /obj/item/ammo_casing/caseless/rocket/heap
+	item = /obj/item/ammo_casing/rocket/heap
 	cost = 6
 
 /datum/uplink_item/ammo/surplus_smg
@@ -541,6 +551,7 @@
 	cost = 20
 	purchasable_from = UPLINK_CLOWN_OPS
 	restricted = TRUE
+	refundable = TRUE
 
 /datum/uplink_item/support/reinforcement
 	name = "Reinforcements"
@@ -548,16 +559,15 @@
 		They'll come equipped with a mere surplus SMG, so arming them is recommended."
 	item = /obj/item/antag_spawner/nuke_ops
 	cost = 25
-	refundable = TRUE
 	purchasable_from = UPLINK_NUKE_OPS
 	restricted = TRUE
+	refundable = TRUE
 
 /datum/uplink_item/support/reinforcement/assault_borg
 	name = "Syndicate Assault Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel. \
 			Comes equipped with a self-resupplying LMG, a grenade launcher, energy sword, emag, pinpointer, flash and crowbar."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/assault
-	refundable = TRUE
 	cost = 65
 	restricted = TRUE
 
@@ -567,7 +577,6 @@
 			It comes equipped with a nanite hypospray, a medical beamgun, combat defibrillator, full surgical kit including an energy saw, an emag, pinpointer and flash. \
 			Thanks to its organ storage bag, it can perform surgery as well as any humanoid."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/medical
-	refundable = TRUE
 	cost = 35
 	restricted = TRUE
 
@@ -577,7 +586,6 @@
 			Aside from regular Engineering equipment, it comes with a special destination tagger that lets it traverse disposals networks. \
 			Its chameleon projector lets it disguise itself as a Nanotrasen cyborg, on top it has thermal vision and a pinpointer."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
-	refundable = TRUE
 	cost = 35
 	restricted = TRUE
 

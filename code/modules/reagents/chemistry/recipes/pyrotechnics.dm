@@ -294,7 +294,7 @@
 	var/range = created_volume/3
 	if(isatom(holder.my_atom))
 		var/atom/A = holder.my_atom
-		A.flash_lighting_fx(_range = (range + 2))
+		A.flash_lighting_fx(range = (range + 2))
 	for(var/mob/living/C in get_hearers_in_view(range, location))
 		if(C.flash_act(affect_silicon = TRUE))
 			if(get_dist(C, location) < 4)
@@ -314,7 +314,7 @@
 	var/range = created_volume/10
 	if(isatom(holder.my_atom))
 		var/atom/A = holder.my_atom
-		A.flash_lighting_fx(_range = (range + 2))
+		A.flash_lighting_fx(range = (range + 2))
 	for(var/mob/living/C in get_hearers_in_view(range, location))
 		if(C.flash_act(affect_silicon = TRUE))
 			if(get_dist(C, location) < 4)
@@ -395,7 +395,7 @@
 		return
 	var/turf/open/T = get_turf(holder.my_atom)
 	if(istype(T))
-		T.atmos_spawn_air("plasma=[created_volume];TEMP=1000")
+		T.atmos_spawn_air("[GAS_PLASMA]=[created_volume];[TURF_TEMPERATURE(1000)]")
 	holder.clear_reagents()
 	return
 
@@ -579,8 +579,8 @@
 	var/range = clamp(sqrt(created_volume*2), 1, 6)
 	//This first throws people away and then it explodes
 	goonchem_vortex(turfie, 1, range)
-	turfie.atmos_spawn_air("o2=[created_volume/2];TEMP=[575]")
-	turfie.atmos_spawn_air("n2=[created_volume/2];TEMP=[575]")
+	turfie.atmos_spawn_air("[GAS_O2]=[created_volume/2];[TURF_TEMPERATURE(575)]")
+	turfie.atmos_spawn_air("[GAS_N2]=[created_volume/2];[TURF_TEMPERATURE(575)]")
 	return ..()
 
 /datum/chemical_reaction/firefighting_foam

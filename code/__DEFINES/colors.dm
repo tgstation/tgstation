@@ -34,6 +34,7 @@
 
 #define COLOR_RED "#FF0000"
 #define COLOR_SYNDIE_RED "#F10303"
+#define COLOR_SYNDIE_RED_HEAD "#760500"
 #define COLOR_MOSTLY_PURE_RED "#FF3300"
 #define COLOR_DARK_RED "#A50824"
 #define COLOR_RED_LIGHT "#FF3333"
@@ -54,6 +55,7 @@
 #define COLOR_ASSISTANT_OLIVE "#828163"
 #define COLOR_VIBRANT_LIME "#00FF00"
 #define COLOR_SERVICE_LIME "#58C800"
+#define COLOR_JADE "#5EFB6E"
 #define COLOR_LIME "#32CD32"
 #define COLOR_DARK_LIME "#00aa00"
 #define COLOR_VERY_PALE_LIME_GREEN "#DDFFD3"
@@ -121,6 +123,7 @@
 #define COLOR_PALE_RED_GRAY "#D59998"
 #define COLOR_PALE_PURPLE_GRAY "#CBB1CA"
 #define COLOR_PURPLE_GRAY "#AE8CA8"
+#define COLOR_GOLEM_GRAY "#8E8C81"
 
 //Color defines used by the assembly detailer.
 #define COLOR_ASSEMBLY_BLACK "#545454"
@@ -138,6 +141,25 @@
 #define COLOR_ASSEMBLY_LBLUE "#5D99BE"
 #define COLOR_ASSEMBLY_BLUE "#38559E"
 #define COLOR_ASSEMBLY_PURPLE "#6F6192"
+
+//Colors for Bioluminescence plant traits.
+#define COLOR_BIOLUMINESCENCE_STANDARD "#C3E381"
+#define COLOR_BIOLUMINESCENCE_SHADOW "#AAD84B"
+#define COLOR_BIOLUMINESCENCE_YELLOW "#FFFF66"
+#define COLOR_BIOLUMINESCENCE_GREEN "#99FF99"
+#define COLOR_BIOLUMINESCENCE_BLUE "#6699FF"
+#define COLOR_BIOLUMINESCENCE_PURPLE "#D966FF"
+#define COLOR_BIOLUMINESCENCE_PINK "#FFB3DA"
+
+//Colors for crayons.
+#define COLOR_CRAYON_RED "#DA0000"
+#define COLOR_CRAYON_ORANGE "#FF9300"
+#define COLOR_CRAYON_YELLOW "#FFF200"
+#define COLOR_CRAYON_GREEN "#A8E61D"
+#define COLOR_CRAYON_BLUE "#00B7EF"
+#define COLOR_CRAYON_PURPLE "#DA00FF"
+#define COLOR_CRAYON_BLACK "#1C1C1C"
+#define COLOR_CRAYON_RAINBOW "#FFF000"
 
 ///Colors for grayscale tools
 #define COLOR_TOOL_BLUE "#1861d5"
@@ -176,6 +198,8 @@
  *
  * Important note: colors can end up significantly different from the basic html picture, especially when saturated
  */
+/// Bright light used by default in tubes and bulbs
+#define LIGHT_COLOR_DEFAULT "#f3fffa"
 /// Bright but quickly dissipating neon green. rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
 /// Vivid, slightly blue green. rgb(60, 240, 70)

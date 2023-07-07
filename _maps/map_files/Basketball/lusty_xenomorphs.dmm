@@ -66,7 +66,7 @@
 	dir = 4
 	},
 /obj/machinery/disposal/bin,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "eU" = (
@@ -168,8 +168,7 @@
 "lD" = (
 /obj/structure/alien/weeds,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 2
 	},
 /turf/open/floor/iron/white,
@@ -303,8 +302,7 @@
 "Ax" = (
 /obj/structure/alien/weeds,
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
@@ -369,7 +367,7 @@
 	dir = 8
 	},
 /obj/machinery/disposal/bin,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "DP" = (
@@ -455,10 +453,8 @@
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup,
 /obj/structure/alien/weeds,
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "Nt" = (
@@ -469,9 +465,7 @@
 /obj/machinery/button/door{
 	name = "Containment Control"
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -491,7 +485,7 @@
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "PU" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "PW" = (
@@ -510,9 +504,7 @@
 /obj/machinery/button/door{
 	name = "Containment Control"
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -534,7 +526,7 @@
 	},
 /obj/structure/alien/weeds,
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "Se" = (
@@ -557,10 +549,8 @@
 /obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
 /obj/structure/alien/weeds,
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "Vr" = (

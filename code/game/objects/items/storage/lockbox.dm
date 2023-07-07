@@ -30,7 +30,10 @@
 			balloon_alert(user, "broken!")
 			return
 		if(allowed(user))
-			atom_storage.locked = !locked
+			if(atom_storage.locked)
+				atom_storage.locked = STORAGE_NOT_LOCKED
+			else
+				atom_storage.locked = STORAGE_FULLY_LOCKED
 			locked = atom_storage.locked
 			if(locked)
 				icon_state = icon_locked
@@ -52,7 +55,7 @@
 /obj/item/storage/lockbox/emag_act(mob/user)
 	if(!broken)
 		broken = TRUE
-		atom_storage.locked = FALSE
+		atom_storage.locked = STORAGE_NOT_LOCKED
 		icon_state = src.icon_broken
 		if(user)
 			visible_message(span_warning("\The [src] is broken by [user] with an electromagnetic card!"))
@@ -116,11 +119,12 @@
 		. += span_notice("Alt-click to [open ? "close":"open"] it.")
 
 /obj/item/storage/lockbox/medal/AltClick(mob/user)
-	if(user.can_perform_action(src))
-		if(!atom_storage.locked)
-			open = (open ? FALSE : TRUE)
-			update_appearance()
-		..()
+	if(!user.can_perform_action(src))
+		return
+	if(!atom_storage.locked)
+		open = (open ? FALSE : TRUE)
+		update_appearance()
+	..()
 
 /obj/item/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/accessory/medal/gold/captain(src)
@@ -244,7 +248,10 @@
 		balloon_alert(user, "incorrect bank account!")
 		return
 
-	atom_storage.locked = !privacy_lock
+	if(privacy_lock)
+		atom_storage.locked = STORAGE_NOT_LOCKED
+	else
+		atom_storage.locked = STORAGE_FULLY_LOCKED
 	privacy_lock = atom_storage.locked
 	user.visible_message(span_notice("[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock."),
 					span_notice("You [privacy_lock ? "" : "un"]lock [src]'s privacy lock."))

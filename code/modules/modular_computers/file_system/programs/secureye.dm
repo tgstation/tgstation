@@ -83,7 +83,7 @@
 		)
 	return data
 
-/datum/computer_file/program/secureye/ui_static_data()
+/datum/computer_file/program/secureye/ui_static_data(mob/user)
 	var/list/data = list()
 	data["mapRef"] = cam_screen.assigned_map
 	var/list/cameras = get_available_cameras()
@@ -96,7 +96,7 @@
 
 	return data
 
-/datum/computer_file/program/secureye/ui_act(action, params)
+/datum/computer_file/program/secureye/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

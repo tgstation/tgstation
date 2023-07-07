@@ -38,7 +38,7 @@ excluded_files = [
     "code/modules/tgs/**/*.dm",
 ]
 
-define_regex = re.compile(r"#define\s?([A-Z0-9_]+)\(?(.+)\)?")
+define_regex = re.compile(r"^(\s+)?#define\s?([A-Z0-9_]+)\(?(.+)\)?")
 
 files_to_scan = []
 
@@ -67,7 +67,7 @@ for applicable_file in files_to_scan:
     with open(applicable_file, encoding="utf8") as file:
         file_contents = file.read()
         for define in define_regex.finditer(file_contents):
-            define_name = define.group(1)
+            define_name = define.group(2)
             if not re.search("#undef\s" + define_name, file_contents):
                 located_error_tuples.append((define_name, applicable_file))
 

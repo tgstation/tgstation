@@ -19,7 +19,7 @@
 	DL_source = null
 	return ..()
 
-/datum/computer_file/program/borg_monitor/kill_program(forced = FALSE)
+/datum/computer_file/program/borg_monitor/kill_program()
 	loglist = null //Not everything is saved if you close an app
 	DL_source = null
 	DL_progress = 0
@@ -40,7 +40,7 @@
 	borgo.logevent("File request by [username]: /var/logs/syslog")
 	return TRUE
 
-/datum/computer_file/program/borg_monitor/process_tick(delta_time)
+/datum/computer_file/program/borg_monitor/process_tick(seconds_per_tick)
 	if(!DL_source)
 		DL_progress = -1
 		return
@@ -62,8 +62,6 @@
 			loglist.Insert(1,"System log of unit [DL_source.name]")
 		DL_progress = -1
 		DL_source = null
-		for(var/datum/tgui/window in SStgui.open_uis_by_src[REF(src)])
-			window.send_full_update()
 		return
 
 	DL_progress += 25
@@ -101,17 +99,12 @@
 		)
 		data["cyborgs"] += list(cyborg_data)
 		data["DL_progress"] = DL_progress
-	return data
-
-/datum/computer_file/program/borg_monitor/ui_static_data(mob/user)
-	var/list/data = list()
+	
 	data["borglog"] = loglist
+	
 	return data
 
-/datum/computer_file/program/borg_monitor/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/datum/computer_file/program/borg_monitor/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("messagebot")
 			var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs

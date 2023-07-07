@@ -155,6 +155,8 @@
  * Other dispensers will scatter their contents within range.
  */
 /obj/structure/reagent_dispensers/proc/boom()
+	if(QDELETED(src))
+		return // little bit of sanity sauce before we wreck ourselves somehow
 	var/datum/reagent/fuel/volatiles = reagents.has_reagent(/datum/reagent/fuel)
 	var/fuel_amt = 0
 	if(istype(volatiles) && volatiles.volume >= 25)
@@ -170,7 +172,7 @@
 		visible_message(span_danger("\The [src] explodes!"))
 		// old code for reference:
 		// standard fuel tank = 1000 units = heavy_impact_range = 1, light_impact_range = 5, flame_range = 5
-		// big fuel tank = 5000 units = devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12
+		// big fuel tank =SHEET_MATERIAL_AMOUNT * 2.5 units = devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12
 		// It did not account for how much fuel was actually in the tank at all, just the size of the tank.
 		// I encourage others to better scale these numbers in the future.
 		// As it stands this is a minor nerf in exchange for an easy bombing technique working that has been broken for a while.
@@ -254,6 +256,7 @@
 
 /obj/structure/reagent_dispensers/fueltank/ex_act()
 	boom()
+	return TRUE
 
 /obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
 	boom()
@@ -263,14 +266,15 @@
 	if(ZAP_OBJ_DAMAGE & zap_flags)
 		boom()
 
-/obj/structure/reagent_dispensers/fueltank/bullet_act(obj/projectile/P)
-	. = ..()
-	if(QDELETED(src)) //wasn't deleted by the projectile's effects.
-		return
-
-	if(P.damage > 0 && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
-		log_bomber(P.firer, "detonated a", src, "via projectile")
+/obj/structure/reagent_dispensers/fueltank/bullet_act(obj/projectile/hitting_projectile)
+	if(hitting_projectile.damage > 0 && ((hitting_projectile.damage_type == BURN) || (hitting_projectile.damage_type == BRUTE)))
+		log_bomber(hitting_projectile.firer, "detonated a", src, "via projectile")
 		boom()
+		return hitting_projectile.on_hit(src, 0)
+
+	// we override parent like this because otherwise we won't actually properly log the fact that a projectile caused this welding tank to explode.
+	// if this sucks, feel free to change it, but make sure the damn thing will log. thanks.
+	return ..()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_WELDER)
@@ -298,7 +302,7 @@
 	name = "high capacity fuel tank"
 	desc = "A tank full of a high quantity of welding fuel. Keep away from open flames."
 	icon_state = "fuel_high"
-	tank_volume = 5000
+	tank_volume =SHEET_MATERIAL_AMOUNT * 2.5
 
 /// Wall mounted dispeners, like pepper spray or virus food. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
 /obj/structure/reagent_dispensers/wall

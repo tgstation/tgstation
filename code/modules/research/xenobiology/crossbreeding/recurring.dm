@@ -26,9 +26,9 @@ Recurring extracts:
 	src.forceMove(extract)
 	START_PROCESSING(SSobj,src)
 
-/obj/item/slimecross/recurring/process(delta_time)
+/obj/item/slimecross/recurring/process(seconds_per_tick)
 	if(cooldown > 0)
-		cooldown -= delta_time
+		cooldown -= seconds_per_tick
 	else if(extract.Uses < 10 && extract.Uses > 0)
 		extract.Uses++
 		cooldown = max_cooldown

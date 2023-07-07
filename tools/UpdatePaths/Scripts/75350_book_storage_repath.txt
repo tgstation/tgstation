@@ -1,0 +1,1 @@
+/obj/item/storage/book/@SUBTYPES : /obj/item/book/@SUBTYPES{@OLD}

@@ -22,14 +22,31 @@
 	var/victory_message = "The revolution has overpowered the command staff! Viva la revolution! Execute any head of staff and security should you find them alive."
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
-	. = ..()
-	if(.)
-		if(new_owner.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-			return FALSE
-		if(new_owner.unconvertable)
-			return FALSE
-		if(new_owner.current && HAS_TRAIT(new_owner.current, TRAIT_MINDSHIELD))
-			return FALSE
+	if(new_owner.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		return FALSE
+	if(new_owner.unconvertable)
+		return FALSE
+	if(new_owner.current && HAS_TRAIT(new_owner.current, TRAIT_MINDSHIELD))
+		return FALSE
+	return ..()
+
+/datum/antagonist/rev/admin_add(datum/mind/new_owner, mob/admin)
+	// No revolution exists which means admin adding this will create a new revolution team
+	// This causes problems because revolution teams (currently) require a dynamic datum to process its victory / defeat conditions
+	if(!(locate(/datum/team/revolution) in GLOB.antagonist_teams))
+		var/confirm = tgui_alert(admin, "Notice: Revolutions do not function 100% when created via traitor panel instead of dynamic. \
+			The leaders will be able to convert as normal, but the shuttle will not be blocked and there will be no announcements when either side wins. \
+			Are you sure?", "Be Wary", list("Yes", "No"))
+		if(QDELETED(src) || QDELETED(new_owner.current) || confirm != "Yes")
+			return
+
+	go_through_with_admin_add(new_owner, admin)
+
+/datum/antagonist/rev/proc/go_through_with_admin_add(datum/mind/new_owner, mob/admin)
+	new_owner.add_antag_datum(src)
+	message_admins("[key_name_admin(admin)] has rev'ed [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has rev'ed [key_name(new_owner)].")
+	to_chat(new_owner.current, span_userdanger("You are a member of the revolution!"))
 
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
@@ -60,6 +77,7 @@
 /datum/antagonist/rev/greet()
 	. = ..()
 	to_chat(owner, span_userdanger("Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!"))
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/revolutionary_tide.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.announce_objectives()
 
 /datum/antagonist/rev/create_team(datum/team/revolution/new_team)
@@ -110,7 +128,7 @@
 	message_admins("[key_name_admin(admin)] has head-rev'ed [O].")
 	log_admin("[key_name(admin)] has head-rev'ed [O].")
 
-/datum/antagonist/rev/head/admin_add(datum/mind/new_owner,mob/admin)
+/datum/antagonist/rev/head/go_through_with_admin_add(datum/mind/new_owner, mob/admin)
 	give_flash = TRUE
 	give_hud = TRUE
 	remove_clumsy = TRUE
@@ -187,30 +205,36 @@
 /datum/antagonist/rev/head/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
-	RegisterSignal(real_mob, COMSIG_MOB_FLASHED_CARBON, PROC_REF(on_flash))
+	RegisterSignal(real_mob, COMSIG_MOB_PRE_FLASHED_CARBON, PROC_REF(on_flash))
+	RegisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, PROC_REF(on_flash_success))
 
 /datum/antagonist/rev/head/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
-	UnregisterSignal(real_mob, COMSIG_MOB_FLASHED_CARBON)
+	UnregisterSignal(real_mob, list(COMSIG_MOB_PRE_FLASHED_CARBON, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON))
 
-/// Signal proc for [COMSIG_MOB_FLASHED_CARBON].
-/// The bread and butter of head revolutionary conversions.
+/// Signal proc for [COMSIG_MOB_PRE_FLASHED_CARBON].
+/// Flashes will always result in partial success even if it's from behind someone
 /datum/antagonist/rev/head/proc/on_flash(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
 	SIGNAL_HANDLER
 
 	// Always partial flash at the very least
-	. = (deviation == DEVIATION_FULL) ? DEVIATION_OVERRIDE_PARTIAL : NONE
+	return (deviation == DEVIATION_FULL) ? DEVIATION_OVERRIDE_PARTIAL : NONE
+
+/// Signal proc for [COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON].
+/// Bread and butter of revolution conversion, successfully flashing a carbon will make them a revolutionary
+/datum/antagonist/rev/head/proc/on_flash_success(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
+	SIGNAL_HANDLER
 
 	if(flashed.stat == DEAD)
-		return .
+		return
 	if(flashed.stat != CONSCIOUS)
 		to_chat(source, span_warning("[flashed.p_they(capitalized = TRUE)] must be conscious before you can convert [flashed.p_them()]!"))
-		return .
+		return
 
 	if(isnull(flashed.mind) || !GET_CLIENT(flashed))
 		to_chat(source, span_warning("[flashed]'s mind is so vacant that it is not susceptible to influence!"))
-		return .
+		return
 
 	var/holiday_meme_chance = check_holidays(APRIL_FOOLS) && prob(10)
 	if(add_revolutionary(flashed.mind, mute = !holiday_meme_chance)) // don't mute if we roll the meme holiday chance
@@ -219,8 +243,6 @@
 		flash.times_used-- // Flashes are less likely to burn out for headrevs, when used for conversion
 	else
 		to_chat(source, span_warning("[flashed] seems resistant to [flash]!"))
-
-	return .
 
 /// Used / called async from [proc/on_flash] to deliver a funny meme line
 /datum/antagonist/rev/head/proc/_async_holiday_meme_say(mob/living/carbon/flashed)
@@ -253,8 +275,7 @@
 
 /datum/antagonist/rev/head/proc/make_assistant_icon(hairstyle)
 	var/mob/living/carbon/human/dummy/consistent/assistant = new
-	assistant.hairstyle = hairstyle
-	assistant.update_body_parts()
+	assistant.set_hairstyle(hairstyle, update = TRUE)
 
 	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
 	assistant_icon.ChangeOpacity(0.5)
@@ -375,7 +396,7 @@
 			"left pocket" = ITEM_SLOT_LPOCKET,
 			"right pocket" = ITEM_SLOT_RPOCKET
 		)
-		var/where = C.equip_in_one_of_slots(T, slots)
+		var/where = C.equip_in_one_of_slots(T, slots, indirect_action = TRUE)
 		if (!where)
 			to_chat(C, "The Syndicate were unfortunately unable to get you a flash.")
 		else
@@ -384,7 +405,11 @@
 	if(give_hud)
 		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/S = new()
 		S.Insert(C)
-		to_chat(C, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
+		if(C.get_quirk(/datum/quirk/body_purist))
+			to_chat(C, "Being a body purist, you would never accept cybernetic implants. Upon hearing this, your employers signed you up for a special program, which... for \
+			some odd reason, you just can't remember... either way, the program must have worked, because you have gained the ability to keep track of who is mindshield-implanted, and therefore unable to be recruited.")
+		else
+			to_chat(C, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
 /datum/team/revolution
 	name = "\improper Revolution"
@@ -423,16 +448,16 @@
 		if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < round(heads.len - ((8 - sec.len) / 3)))
 			var/list/datum/mind/non_heads = members - head_revolutionaries
 			var/list/datum/mind/promotable = list()
-			var/list/datum/mind/nonhuman_promotable = list()
+			var/list/datum/mind/monkey_promotable = list()
 			for(var/datum/mind/khrushchev in non_heads)
 				if(khrushchev.current && !khrushchev.current.incapacitated() && !HAS_TRAIT(khrushchev.current, TRAIT_RESTRAINED) && khrushchev.current.client)
 					if((ROLE_REV_HEAD in khrushchev.current.client.prefs.be_special) || (ROLE_PROVOCATEUR in khrushchev.current.client.prefs.be_special))
-						if(ishuman(khrushchev.current))
+						if(!ismonkey(khrushchev.current))
 							promotable += khrushchev
 						else
-							nonhuman_promotable += khrushchev
-			if(!promotable.len && nonhuman_promotable.len) //if only nonhuman revolutionaries remain, promote one of them to the leadership.
-				promotable = nonhuman_promotable
+							monkey_promotable += khrushchev
+			if(!promotable.len && monkey_promotable.len) //if only monkey revolutionaries remain, promote one of them to the leadership.
+				promotable = monkey_promotable
 			if(promotable.len)
 				var/datum/mind/new_leader = pick(promotable)
 				var/datum/antagonist/rev/rev = new_leader.has_antag_datum(/datum/antagonist/rev)
@@ -533,10 +558,9 @@
 
 		if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))
-			player.med_hud_set_status()
 
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
-		if(!(job.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))
+		if(!(job.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
 			continue
 		job.allow_bureaucratic_error = FALSE
 		job.total_positions = 0
@@ -600,7 +624,6 @@
 	for (var/datum/mind/rev_head as anything in ex_headrevs)
 		if(!isnull(rev_head.current))
 			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
-			rev_head.current.med_hud_set_status()
 
 	for(var/datum/objective/mutiny/head_tracker in objectives)
 		var/mob/living/head_of_staff = head_tracker.target?.current

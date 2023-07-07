@@ -43,7 +43,7 @@
 				posters += poster_when_placed
 				RegisterSignal(poster_when_placed, COMSIG_DEMORALISING_EVENT, PROC_REF(on_mood_event))
 				RegisterSignal(poster_when_placed, COMSIG_POSTER_TRAP_SUCCEED, PROC_REF(on_triggered_trap))
-				RegisterSignal(poster_when_placed, COMSIG_PARENT_QDELETING, PROC_REF(on_poster_destroy))
+				RegisterSignal(poster_when_placed, COMSIG_QDELETING, PROC_REF(on_poster_destroy))
 
 			user.put_in_hands(posterbox)
 			posterbox.balloon_alert(user, "the box materializes in your hand")
@@ -53,7 +53,7 @@
 /datum/traitor_objective/demoralise/poster/ungenerate_objective()
 	for (var/poster in posters)
 		UnregisterSignal(poster, COMSIG_DEMORALISING_EVENT)
-		UnregisterSignal(poster, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(poster, COMSIG_QDELETING)
 	posters.Cut()
 	return ..()
 
@@ -88,7 +88,7 @@
 
 /obj/structure/sign/poster/traitor
 	poster_item_name = "seditious poster"
-	poster_item_desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its seditious themes are likely to demoralise NanoTrasen employees."
+	poster_item_desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its seditious themes are likely to demoralise Nanotrasen employees."
 	poster_item_icon_state = "rolled_traitor"
 	// This stops people hiding their sneaky posters behind signs
 	layer = CORGI_ASS_PIN_LAYER
@@ -122,8 +122,8 @@
 	random_basetype = /obj/structure/sign/poster/traitor
 
 /obj/structure/sign/poster/traitor/small_brain
-	name = "NanoTrasen Neural Statistics"
-	desc = "Statistics on this poster indicate that the brains of NanoTrasen employees are on average 20% smaller than the galactic standard."
+	name = "Nanotrasen Neural Statistics"
+	desc = "Statistics on this poster indicate that the brains of Nanotrasen employees are on average 20% smaller than the galactic standard."
 	icon_state = "traitor_small_brain"
 
 /obj/structure/sign/poster/traitor/lick_supermatter
@@ -148,7 +148,7 @@
 
 /obj/structure/sign/poster/traitor/low_pay
 	name = "All these hours, for what?"
-	desc = "This poster displays a comparison of NanoTrasen standard wages to common luxury items. If this is accurate, it takes upwards of 20,000 hours of work just to buy a simple bicycle."
+	desc = "This poster displays a comparison of Nanotrasen standard wages to common luxury items. If this is accurate, it takes upwards of 20,000 hours of work just to buy a simple bicycle."
 	icon_state = "traitor_cash"
 
 /obj/structure/sign/poster/traitor/look_up

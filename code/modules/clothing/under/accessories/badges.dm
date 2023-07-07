@@ -115,20 +115,20 @@
 // Examining the clothes will display the examine message of the dogtag
 /obj/item/clothing/accessory/allergy_dogtag/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	. = ..()
-	RegisterSignal(attach_to, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(attach_to, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /obj/item/clothing/accessory/allergy_dogtag/detach(obj/item/clothing/under/detach_from)
 	. = ..()
-	UnregisterSignal(detach_from, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(detach_from, COMSIG_ATOM_EXAMINE)
 
 // Double examining the person wearing the clothes will display the examine message of the dogtag
 /obj/item/clothing/accessory/allergy_dogtag/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	. = ..()
-	RegisterSignal(user, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(on_examine))
+	RegisterSignal(user, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine))
 
 /obj/item/clothing/accessory/allergy_dogtag/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
 	. = ..()
-	UnregisterSignal(user, COMSIG_PARENT_EXAMINE_MORE)
+	UnregisterSignal(user, COMSIG_ATOM_EXAMINE_MORE)
 
 /// Adds the examine message to the clothes and mob.
 /obj/item/clothing/accessory/allergy_dogtag/proc/on_examine(datum/source, mob/user, list/examine_list)

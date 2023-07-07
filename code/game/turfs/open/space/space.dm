@@ -71,10 +71,10 @@
 			SSair.add_to_active(src, TRUE)
 
 		if(SSmapping.max_plane_offset)
-			var/turf/T = SSmapping.get_turf_above(src)
+			var/turf/T = GET_TURF_ABOVE(src)
 			if(T)
 				T.multiz_turf_new(src, DOWN)
-			T = SSmapping.get_turf_below(src)
+			T = GET_TURF_BELOW(src)
 			if(T)
 				T.multiz_turf_new(src, UP)
 
@@ -296,7 +296,7 @@
 	return FALSE
 
 /turf/open/space/openspace/enable_starlight()
-	var/turf/below = SSmapping.get_turf_below(src)
+	var/turf/below = GET_TURF_BELOW(src)
 	// Override = TRUE beacuse we could have our starlight updated many times without a failure, which'd trigger this
 	RegisterSignal(below, COMSIG_TURF_CHANGE, PROC_REF(on_below_change), override = TRUE)
 	if(!isspaceturf(below))
@@ -308,7 +308,7 @@
 	if(.)
 		return
 	// If we're here, the starlight is not to be
-	var/turf/below = SSmapping.get_turf_below(src)
+	var/turf/below = GET_TURF_BELOW(src)
 	UnregisterSignal(below, COMSIG_TURF_CHANGE)
 
 /turf/open/space/openspace/proc/on_below_change(turf/source, path, list/new_baseturfs, flags, list/post_change_callbacks)

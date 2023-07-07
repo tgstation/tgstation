@@ -81,14 +81,14 @@
 /obj/item/organ/internal/heart/nightmare/Stop()
 	return 0
 
-/obj/item/organ/internal/heart/nightmare/on_death(delta_time, times_fired)
+/obj/item/organ/internal/heart/nightmare/on_death(seconds_per_tick, times_fired)
 	if(!owner)
 		return
 	var/turf/T = get_turf(owner)
 	if(istype(T))
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			respawn_progress += delta_time SECONDS
+			respawn_progress += seconds_per_tick SECONDS
 			playsound(owner, 'sound/effects/singlebeat.ogg', 40, TRUE)
 	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)
 		return

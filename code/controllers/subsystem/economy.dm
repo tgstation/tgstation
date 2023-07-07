@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(economy)
 										ACCOUNT_SRV = ACCOUNT_SRV_NAME,
 										ACCOUNT_CAR = ACCOUNT_CAR_NAME,
 										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
-	var/list/generated_accounts = list()
+	var/list/departmental_accounts = list()
 	/**
 	 * Enables extra money charges for things that normally would be free, such as sleepers/cryo/beepsky.
 	 * Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
@@ -82,7 +82,7 @@ SUBSYSTEM_DEF(economy)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/economy/Recover()
-	generated_accounts = SSeconomy.generated_accounts
+	departmental_accounts = SSeconomy.departmental_accounts
 	bank_accounts_by_id = SSeconomy.bank_accounts_by_id
 	dep_cards = SSeconomy.dep_cards
 
@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(economy)
 #define ECON_PRICE_UPDATE_STEP "econ_prc_stp"
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
-	var/delta_time = wait / (5 MINUTES)
+	var/seconds_per_tick = wait / (5 MINUTES)
 
 	if(!resumed)
 		temporary_total = 0
@@ -138,13 +138,13 @@ SUBSYSTEM_DEF(economy)
 			return
 
 	var/effective_mailcount = round(living_player_count()/(inflation_value - 0.5)) //More mail at low inflation, and vis versa.
-	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * delta_time)
+	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * seconds_per_tick)
 
 /**
  * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.
  */
 /datum/controller/subsystem/economy/proc/get_dep_account(dep_id)
-	for(var/datum/bank_account/department/D in generated_accounts)
+	for(var/datum/bank_account/department/D in departmental_accounts)
 		if(D.department_id == dep_id)
 			return D
 

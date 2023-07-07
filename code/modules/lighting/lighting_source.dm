@@ -398,7 +398,7 @@
 			continue
 		INSERT_CORNERS(corners, T)
 
-		var/turf/below = SSmapping.get_turf_below(T)
+		var/turf/below = GET_TURF_BELOW(T)
 		var/turf/previous = T
 		while(below)
 			// If we find a non transparent previous, end
@@ -412,15 +412,15 @@
 			INSERT_CORNERS(corners, below)
 			// ANNND then we add the one below it
 			previous = below
-			below = SSmapping.get_turf_below(below)
+			below = GET_TURF_BELOW(below)
 
-		var/turf/above = SSmapping.get_turf_above(T)
+		var/turf/above = GET_TURF_ABOVE(T)
 		while(above)
 			// If we find a non transparent turf, end
 			if(!istransparentturf(above) || IS_OPAQUE_TURF(above))
 				break
 			INSERT_CORNERS(corners, above)
-			above = SSmapping.get_turf_above(above)
+			above = GET_TURF_ABOVE(above)
 
 	source_turf.luminosity = oldlum
 	return corners
@@ -434,28 +434,20 @@
 
 	var/list/datum/lighting_corner/new_corners = (corners - src.effect_str)
 	LAZYINITLIST(src.effect_str)
-	var/list/effect_str = src.effect_str
-	if (needs_update == LIGHTING_VIS_UPDATE)
-		for (var/datum/lighting_corner/corner as anything in new_corners)
+	for (var/datum/lighting_corner/corner as anything in new_corners)
+		APPLY_CORNER(corner)
+		if (. != 0)
+			LAZYADD(corner.affecting, src)
+			effect_str[corner] = .
+	// New corners are a subset of corners. so if they're both the same length, there are NO old corners!
+	if(needs_update != LIGHTING_VIS_UPDATE && length(corners) != length(new_corners))
+		for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
 			APPLY_CORNER(corner)
 			if (. != 0)
-				LAZYADD(corner.affecting, src)
 				effect_str[corner] = .
-	else
-		for (var/datum/lighting_corner/corner as anything in new_corners)
-			APPLY_CORNER(corner)
-			if (. != 0)
-				LAZYADD(corner.affecting, src)
-				effect_str[corner] = .
-		// New corners are a subset of corners. so if they're both the same length, there are NO old corners!
-		if(length(corners) != length(new_corners))
-			for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
-				APPLY_CORNER(corner)
-				if (. != 0)
-					effect_str[corner] = .
-				else
-					LAZYREMOVE(corner.affecting, src)
-					effect_str -= corner
+			else
+				LAZYREMOVE(corner.affecting, src)
+				effect_str -= corner
 
 	var/list/datum/lighting_corner/gone_corners = effect_str - corners
 	for (var/datum/lighting_corner/corner as anything in gone_corners)

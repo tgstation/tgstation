@@ -48,7 +48,7 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/datum/component/fertile_egg/process(delta_time)
+/datum/component/fertile_egg/process(seconds_per_tick)
 	var/atom/parent_atom = parent
 
 	if(location_allowlist && !is_type_in_typecache(parent_atom.loc, location_allowlist))
@@ -57,7 +57,7 @@
 			qdel(src)
 		return
 
-	current_growth += rand(minimum_growth_rate, maximum_growth_rate) * delta_time
+	current_growth += rand(minimum_growth_rate, maximum_growth_rate) * seconds_per_tick
 	if(current_growth >= total_growth_required)
 		parent_atom.visible_message(span_notice("[parent] hatches with a quiet cracking sound."))
 		new embryo_type(get_turf(parent_atom))

@@ -13,11 +13,12 @@
 	///Required chemicals that must be present in the container but are not USED.
 	var/list/required_catalysts = new/list()
 
-	// Both of these variables are mostly going to be used with slime cores - but if you want to, you can use them for other things
-	/// the exact container path required for the reaction to happen
-	var/required_container
+	/// If required_container will check for the exact type, or will also accept subtypes
+	var/required_container_accepts_subtypes = FALSE
+	/// If required_container_accepts_subtypes is FALSE, the exact type of what container this reaction can take place in. Otherwise, what type including subtypes are acceptable.
+	var/atom/required_container
 	/// an integer required for the reaction to happen
-	var/required_other = 0
+	var/required_other = FALSE
 
 	///Determines if a chemical reaction can occur inside a mob
 	var/mob_react = TRUE
@@ -73,7 +74,14 @@
 /datum/chemical_reaction/proc/update_info()
 	return
 
+
 ///REACTION PROCS
+
+/**
+ * Checks if this reaction can occur. Only is ran if required_other is set to TRUE.
+ */
+/datum/chemical_reaction/proc/pre_reaction_other_checks(datum/reagents/holder)
+	return TRUE
 
 /**
  * Shit that happens on reaction

@@ -78,6 +78,8 @@
 #define SECHUD_UNKNOWN "hudunknown"
 #define SECHUD_CENTCOM "hudcentcom"
 #define SECHUD_SYNDICATE "hudsyndicate"
+#define SECHUD_SYNDICATE_INTERDYNE "hudsyndicateinterdyne"
+#define SECHUD_SYNDICATE_INTERDYNE_HEAD "hudsyndicateinterdynehead"
 
 #define SECHUD_ASSISTANT "hudassistant"
 #define SECHUD_ATMOSPHERIC_TECHNICIAN "hudatmospherictechnician"
@@ -91,6 +93,7 @@
 #define SECHUD_CHIEF_MEDICAL_OFFICER "hudchiefmedicalofficer"
 #define SECHUD_CLOWN "hudclown"
 #define SECHUD_COOK "hudcook"
+#define SECHUD_CORONER "hudcoroner"
 #define SECHUD_CURATOR "hudcurator"
 #define SECHUD_DETECTIVE "huddetective"
 #define SECHUD_GENETICIST "hudgeneticist"

@@ -111,8 +111,8 @@ Burning extracts:
 /obj/item/slimecross/burning/darkpurple/do_effect(mob/user)
 	user.visible_message(span_danger("[src] sublimates into a cloud of plasma!"))
 	var/turf/T = get_turf(user)
-	T.atmos_spawn_air("plasma=60")
-	..()
+	T.atmos_spawn_air("[GAS_PLASMA]=60")
+	return ..()
 
 /obj/item/slimecross/burning/darkblue
 	colour = "dark blue"
@@ -282,7 +282,7 @@ Burning extracts:
 	var/datum/action/cooldown/spell/shapeshift/slime_form/transform = new(user.mind || user)
 	transform.remove_on_restore = TRUE
 	transform.Grant(user)
-	transform.cast(user)
+	transform.Activate(user)
 	return ..()
 
 /obj/item/slimecross/burning/lightpink

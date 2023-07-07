@@ -72,7 +72,12 @@
 
 /obj/machinery/space_heater/Destroy()
 	SSair.stop_processing_machine(src)
+	QDEL_NULL(cell)
 	return..()
+
+/obj/machinery/space_heater/on_construction()
+	set_panel_open(TRUE)
+	cell = null
 
 /obj/machinery/space_heater/on_deconstruction()
 	if(cell)
@@ -274,16 +279,9 @@
 					settable_temperature_median + settable_temperature_range)
 		if("eject")
 			if(panel_open && cell)
-				cell.forceMove(drop_location())
+				usr.put_in_hands(cell)
 				cell = null
 				. = TRUE
-
-/obj/machinery/space_heater/constructed
-	cell = null
-
-/obj/machinery/space_heater/constructed/Initialize(mapload)
-	. = ..()
-	set_panel_open(TRUE)
 
 /obj/machinery/space_heater/proc/toggle_power(user)
 	on = !on
@@ -313,7 +311,7 @@
 	. = ..()
 	QDEL_NULL(beaker)
 
-/obj/machinery/space_heater/improvised_chem_heater/process(delta_time)
+/obj/machinery/space_heater/improvised_chem_heater/process(seconds_per_tick)
 	if(!on)
 		update_appearance()
 		return PROCESS_KILL
@@ -332,17 +330,17 @@
 		switch(set_mode)
 			if(HEATER_MODE_AUTO)
 				power_mod *= 0.5
-				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 				beaker.reagents.handle_reactions()
 			if(HEATER_MODE_HEAT)
 				if(target_temperature < beaker.reagents.chem_temp)
 					return
-				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			if(HEATER_MODE_COOL)
 				if(target_temperature > beaker.reagents.chem_temp)
 					return
-				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
-		var/required_energy = heating_power * delta_time * (power_mod * 4)
+				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+		var/required_energy = heating_power * seconds_per_tick * (power_mod * 4)
 		cell.use(required_energy / efficiency)
 		beaker.reagents.handle_reactions()
 	update_appearance()

@@ -76,14 +76,14 @@
 		var/decal = pick(/obj/effect/decal/cleanable/food/flour, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/oil)
 		new decal(pick_n_take(empty_shuttle_turfs))
 
-/datum/shuttle_loan_situation/department_resupply
+/datum/shuttle_loan_situation/syndiehijacking
 	sender = "CentCom Counterintelligence"
 	announcement_text = "The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache."
 	shuttle_transit_text = "Syndicate hijack team incoming."
 	logging_desc = "Syndicate boarding party"
 
-/datum/shuttle_loan_situation/department_resupply/spawn_items(list/spawn_list, list/empty_shuttle_turfs)
-	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/emergency/specialops]
+/datum/shuttle_loan_situation/syndiehijacking/spawn_items(list/spawn_list, list/empty_shuttle_turfs)
+	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/imports/specialops]
 	pack.generate(pick_n_take(empty_shuttle_turfs))
 
 	spawn_list.Add(/mob/living/basic/syndicate/ranged/infiltrator)
@@ -178,11 +178,11 @@
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/service/party]
 	pack.generate(pick_n_take(empty_shuttle_turfs))
 
-	spawn_list.Add(/mob/living/simple_animal/hostile/russian)
-	spawn_list.Add(/mob/living/simple_animal/hostile/russian/ranged) //drops a mateba
+	spawn_list.Add(/mob/living/basic/syndicate/russian)
+	spawn_list.Add(/mob/living/basic/syndicate/russian/ranged) //drops a mateba
 	spawn_list.Add(/mob/living/simple_animal/hostile/bear/russian)
 	if(prob(75))
-		spawn_list.Add(/mob/living/simple_animal/hostile/russian)
+		spawn_list.Add(/mob/living/basic/syndicate/russian)
 	if(prob(50))
 		spawn_list.Add(/mob/living/simple_animal/hostile/bear/russian)
 
@@ -193,7 +193,7 @@
 	logging_desc = "Shuttle full of spiders"
 
 /datum/shuttle_loan_situation/spider_gift/spawn_items(list/spawn_list, list/empty_shuttle_turfs)
-	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/emergency/specialops]
+	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/imports/specialops]
 	pack.generate(pick_n_take(empty_shuttle_turfs))
 
 	spawn_list.Add(/mob/living/basic/giant_spider)

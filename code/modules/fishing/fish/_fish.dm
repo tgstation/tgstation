@@ -105,6 +105,7 @@
 		AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, 1, 5, screentip_verb = "Cut")
 	AddComponent(/datum/component/aquarium_content, PROC_REF(get_aquarium_animation), list(COMSIG_FISH_STATUS_CHANGED,COMSIG_FISH_STIRRED))
 	RegisterSignal(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START, PROC_REF(on_temp_animation))
+	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
 
 	check_environment_after_movement()
 	if(status != FISH_DEAD)
@@ -147,13 +148,13 @@
 	if(isnull(last_feeding)) //Fish start fed.
 		last_feeding = world.time
 	RegisterSignal(aquarium, COMSIG_ATOM_EXITED, PROC_REF(aquarium_exited))
-	RegisterSignal(aquarium, COMSIG_PARENT_ATTACKBY, PROC_REF(attack_reaction))
+	RegisterSignal(aquarium, COMSIG_ATOM_ATTACKBY, PROC_REF(attack_reaction))
 
 /obj/item/fish/proc/aquarium_exited(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 	if(src != gone)
 		return
-	UnregisterSignal(source,list(COMSIG_ATOM_EXITED,COMSIG_PARENT_ATTACKBY))
+	UnregisterSignal(source,list(COMSIG_ATOM_EXITED,COMSIG_ATOM_ATTACKBY))
 
 /// Our aquarium is hit with stuff
 /obj/item/fish/proc/attack_reaction(datum/source, obj/item/thing, mob/user, params)
@@ -194,11 +195,11 @@
 	else
 		stop_flopping()
 
-/obj/item/fish/process(delta_time)
+/obj/item/fish/process(seconds_per_tick)
 	if(in_stasis || status != FISH_ALIVE)
 		return
 
-	process_health(delta_time)
+	process_health(seconds_per_tick)
 	if(ready_to_reproduce())
 		try_to_reproduce()
 
@@ -206,7 +207,8 @@
 	switch(new_status)
 		if(FISH_ALIVE)
 			status = FISH_ALIVE
-			health = initial(health) // this is admin option anyway
+			health = initial(health) // since the fishe has been revived
+			start_flopping()
 			START_PROCESSING(SSobj, src)
 		if(FISH_DEAD)
 			status = FISH_DEAD
@@ -218,6 +220,18 @@
 			else
 				visible_message(message)
 	SEND_SIGNAL(src, COMSIG_FISH_STATUS_CHANGED)
+
+/obj/item/fish/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)
+	SIGNAL_HANDLER
+	if(injector.revive_type != SENTIENCE_ORGANIC)
+		balloon_alert(user, "invalid creature!")
+		return
+	if(status != FISH_DEAD)
+		balloon_alert(user, "it's not dead!")
+		return
+	set_status(FISH_ALIVE)
+	injector.expend(src, user)
+	return LAZARUS_INJECTOR_USED
 
 /obj/item/fish/proc/get_aquarium_animation()
 	var/obj/structure/aquarium/aquarium = loc
@@ -242,7 +256,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/fish/proc/process_health(delta_time)
+/obj/item/fish/proc/process_health(seconds_per_tick)
 	var/health_change_per_second = 0
 	if(!proper_environment())
 		health_change_per_second -= 3 //Dying here
@@ -250,7 +264,7 @@
 		health_change_per_second -= 0.5 //Starving
 	else
 		health_change_per_second += 0.5 //Slowly healing
-	adjust_health(health + health_change_per_second * delta_time)
+	adjust_health(health + health_change_per_second * seconds_per_tick)
 
 /obj/item/fish/proc/adjust_health(amt)
 	health = clamp(amt, 0, initial(health))

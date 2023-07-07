@@ -59,7 +59,7 @@
 		"Welding Tool" = image(icon = 'icons/obj/tools.dmi', icon_state = "miniwelder"),
 		"Analyzer" = image(icon = 'icons/obj/device.dmi', icon_state = "analyzer"),
 		"Pickaxe" = image(icon = 'icons/obj/mining.dmi', icon_state = "minipick"),
-		"Shovel" = image(icon = 'icons/obj/mining.dmi', icon_state = "spade"),
+		"Shovel" = image(icon = 'icons/obj/mining.dmi', icon_state = "shovel"),
 		"Retractor" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "retractor"),
 		"Hemostat" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "hemostat"),
 		"Cautery" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "cautery"),

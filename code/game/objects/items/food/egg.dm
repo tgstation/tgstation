@@ -63,9 +63,19 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	var/turf/hit_turf = get_turf(hit_atom)
 	new /obj/effect/decal/cleanable/food/egg_smudge(hit_turf)
 	//Chicken code uses this MAX_CHICKENS variable, so I figured that I'd use it again here. Even this check and the check in chicken code both use the MAX_CHICKENS variable, they use independent counter variables and thus are independent of each other.
-	if(prob(chick_throw_prob) && GLOB.chicks_from_eggs < MAX_CHICKENS) //Roughly a 1/8 (12.5%) chance to make a chick, as in Minecraft. I decided not to include the chances for the creation of multiple chicks from the impact of one egg, since that'd probably require nested prob()s or something (and people might think that it was a bug, anyway).
-		new /mob/living/simple_animal/chick(hit_turf)
-		GLOB.chicks_from_eggs++
+	if(GLOB.chicks_from_eggs < MAX_CHICKENS) //Roughly a 1/8 (12.5%) chance to make a chick, as in Minecraft, with a 1/256 (~0.39%) chance to make four chicks instead.
+		var/chance = rand(0, 255)
+		switch(chance)
+			if(0 to 30)
+				new /mob/living/basic/chick(hit_turf)
+				GLOB.chicks_from_eggs++
+				visible_message(span_notice("A chick comes out of the cracked egg!"))
+			if(31)
+				var/spawned_chickens = min(4, MAX_CHICKENS - GLOB.chicks_from_eggs) // We don't want to go over the limit
+				visible_message(span_notice("[spawned_chickens] chicks come out of the egg! Jackpot!"))
+				for(var/i in 1 to spawned_chickens)
+					new /mob/living/basic/chick(hit_turf)
+					GLOB.chicks_from_eggs++
 
 	reagents.expose(hit_atom, TOUCH)
 	qdel(src)
@@ -161,7 +171,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	. = ..()
 
 	AddComponent(/datum/component/fertile_egg,\
-		embryo_type = /mob/living/simple_animal/chick,\
+		embryo_type = /mob/living/basic/chick,\
 		minimum_growth_rate = 1,\
 		maximum_growth_rate = 2,\
 		total_growth_required = 200,\

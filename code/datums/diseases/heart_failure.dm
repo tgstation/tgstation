@@ -23,7 +23,7 @@
 	return D
 
 
-/datum/disease/heart_failure/stage_act(delta_time, times_fired)
+/datum/disease/heart_failure/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
@@ -34,25 +34,25 @@
 
 	switch(stage)
 		if(1 to 2)
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_warning("You feel [pick("discomfort", "pressure", "a burning sensation", "pain")] in your chest."))
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_warning("You feel dizzy."))
 				affected_mob.adjust_confusion(6 SECONDS)
-			if(DT_PROB(1.5, delta_time))
+			if(SPT_PROB(1.5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("You feel [pick("full", "nauseated", "sweaty", "weak", "tired", "short of breath", "uneasy")]."))
 		if(3 to 4)
 			if(!sound)
 				affected_mob.playsound_local(affected_mob, 'sound/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 				sound = TRUE
-			if(DT_PROB(1.5, delta_time))
+			if(SPT_PROB(1.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a sharp pain in your chest!"))
 				if(prob(25))
 					affected_mob.vomit(95)
 				affected_mob.emote("cough")
 				affected_mob.Paralyze(40)
 				affected_mob.losebreath += 4
-			if(DT_PROB(1.5, delta_time))
+			if(SPT_PROB(1.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel very weak and dizzy..."))
 				affected_mob.adjust_confusion(8 SECONDS)
 				affected_mob.adjustStaminaLoss(40, FALSE)

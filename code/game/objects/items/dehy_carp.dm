@@ -16,7 +16,7 @@
 	add_fingerprint(user)
 	to_chat(user, span_notice("You pet [src]. You swear it looks up at you."))
 	owner = user
-	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(owner_deleted))
+	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(owner_deleted))
 
 /obj/item/toy/plush/carpplushie/dehy_carp/plop(obj/item/toy/plush/Daddy)
 	return FALSE
@@ -69,5 +69,5 @@
 /obj/item/toy/plush/carpplushie/dehy_carp/proc/owner_deleted(datum/source)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(owner, COMSIG_QDELETING)
 	owner = null

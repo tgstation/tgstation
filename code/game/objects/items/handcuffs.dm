@@ -7,6 +7,7 @@
  * 1. A special suicide
  * 2. If a restraint is handcuffing/legcuffing a carbon while being deleted, it will remove the handcuff/legcuff status.
 */
+
 /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
@@ -15,6 +16,11 @@
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
+
+// Zipties, cable cuffs, etc. Can be cut with wirecutters instantly.
+#define HANDCUFFS_TYPE_WEAK 0
+// Handcuffs... alien handcuffs. Can be cut through only by jaws of life.
+#define HANDCUFFS_TYPE_STRONG 1
 
 /**
  * # Handcuffs
@@ -38,7 +44,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=500)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5)
 	breakouttime = 1 MINUTES
 	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
@@ -46,6 +52,8 @@
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
 	var/trashtype = null
+	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
+	var/restraint_strength = HANDCUFFS_TYPE_STRONG
 
 /datum/armor/restraints_handcuffs
 	fire = 50
@@ -132,6 +140,7 @@
 	name = "fake handcuffs"
 	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 1 SECONDS
+	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /**
  * # Cable restraints
@@ -148,9 +157,10 @@
 	var/cable_color = CABLE_COLOR_RED
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.75)
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+	restraint_strength = HANDCUFFS_TYPE_WEAK
 
 /obj/item/restraints/handcuffs/cable/Initialize(mapload, new_color)
 	. = ..()
@@ -166,7 +176,7 @@
 	)
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
-	AddElement(/datum/element/update_icon_updates_onmob, (slot_flags|ITEM_SLOT_HANDCUFFED))
+	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDCUFFED)
 
 	if(new_color)
 		set_cable_color(new_color)

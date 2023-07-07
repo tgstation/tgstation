@@ -62,9 +62,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		to_chat(user, span_notice("You start attaching the pack to [A]..."))
 		if(do_after(user,50,target=A))
 			to_chat(user, span_notice("You attach the pack to [A] and activate it."))
-			if(loc == user && istype(user.back, /obj/item/storage/backpack))
-				var/obj/item/storage/backpack/B = user.back
-				B.atom_storage?.attempt_insert(src, user)
+			if(loc == user)
+				user.back?.atom_storage?.attempt_insert(src, user, force = STORAGE_SOFT_LOCKED)
 			uses_left--
 			if(uses_left <= 0)
 				user.transferItemToLoc(src, A, TRUE)

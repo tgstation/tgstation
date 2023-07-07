@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "af" = (
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/bed/dogbed,
 /obj/effect/turf_decal/siding/dark{
 	dir = 5
@@ -114,7 +114,7 @@
 /area/shuttle/escape)
 "dW" = (
 /obj/machinery/status_display/evac/directional/north,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/door/window/brigdoor/right,
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
@@ -148,7 +148,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/plasma_input{
 	dir = 4
 	},
@@ -170,9 +170,7 @@
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 4
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/structure/sign/warning/hot_temp/directional/west,
 /obj/item/reagent_containers/pill/maintenance,
 /turf/open/floor/iron/dark/textured_large,
@@ -181,14 +179,12 @@
 /obj/structure/table,
 /obj/machinery/coffeemaker,
 /obj/item/reagent_containers/cup/coffeepot/bluespace,
-/obj/structure/sign/poster/contraband/donut_corp{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/contraband/donut_corp/directional/north,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
 "gH" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/item/reagent_containers/cup/glass/trophy/gold_cup{
 	pixel_x = 16;
 	pixel_y = 2
@@ -209,9 +205,7 @@
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 8
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/item/clothing/head/cone,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
@@ -245,9 +239,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
 "js" = (
-/obj/structure/sign/poster/official/there_is_no_gas_giant{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/official/there_is_no_gas_giant/directional/west,
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape/engine)
@@ -265,7 +257,7 @@
 /area/shuttle/escape/engine)
 "jH" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
@@ -330,7 +322,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/etherealball,
 /turf/open/floor/eighties,
 /area/shuttle/escape)
@@ -451,7 +443,7 @@
 /area/shuttle/escape/engine)
 "vx" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/defibrillator/loaded,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/dark,
@@ -567,9 +559,7 @@
 /area/shuttle/escape/engine)
 "BB" = (
 /obj/structure/table,
-/obj/structure/sign/poster/contraband/moffuchis_pizza{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/moffuchis_pizza/directional/west,
 /obj/item/plate,
 /obj/item/plate{
 	pixel_y = 2
@@ -605,7 +595,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 8
 	},
@@ -745,9 +735,7 @@
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 4
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/structure/sign/warning/hot_temp/directional/west,
 /obj/item/clothing/mask/cigarette/rollie/cannabis,
 /turf/open/floor/iron/dark/textured_large,
@@ -784,9 +772,7 @@
 /area/shuttle/escape)
 "GK" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/sign/poster/official/help_others{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/help_others/directional/north,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
@@ -813,7 +799,7 @@
 /area/shuttle/escape/engine)
 "Hx" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/lazarus_injector,
 /obj/machinery/light/directional/south,
 /obj/item/healthanalyzer,
@@ -847,7 +833,7 @@
 /area/shuttle/escape)
 "Jw" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
@@ -901,7 +887,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "LJ" = (
-/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/item/clothing/accessory/medal/gold,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -909,7 +895,7 @@
 /area/shuttle/escape)
 "MC" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/machinery/light/directional/north,
 /obj/item/clothing/suit/apron/surgical,
@@ -933,9 +919,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/help_others{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/official/help_others/directional/south,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape)
@@ -961,7 +945,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape/engine)
 "OX" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
@@ -993,7 +977,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/engine)
 "Qj" = (
-/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/closet/emcloset,
 /obj/item/clothing/head/utility/hardhat,
 /obj/item/clothing/head/utility/hardhat,
@@ -1073,7 +1057,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "Vg" = (
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/rack,
 /obj/item/storage/medkit{
 	pixel_y = 10
@@ -1138,9 +1122,7 @@
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 8
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/item/clothing/accessory/clown_enjoyer_pin,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)

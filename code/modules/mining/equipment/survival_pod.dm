@@ -79,6 +79,11 @@
 	desc = "A luxury bar in a capsule. Bartender required and not included."
 	template_id = "shelter_charlie"
 
+/obj/item/survivalcapsule/bathroom
+	name = "emergency relief capsule"
+	desc = "Provides vital emergency support to employees who are caught short in the field."
+	template_id = "shelter_toilet"
+
 //Pod objects
 
 //Window
@@ -96,14 +101,7 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "pwindow"
 
-/obj/structure/window/reinforced/survival_pod/spawner/north
-	dir = NORTH
-
-/obj/structure/window/reinforced/survival_pod/spawner/east
-	dir = EAST
-
-/obj/structure/window/reinforced/survival_pod/spawner/west
-	dir = WEST
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawner, 0)
 
 //Door
 /obj/machinery/door/airlock/survival_pod

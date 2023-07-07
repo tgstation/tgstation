@@ -113,6 +113,7 @@ All ShuttleMove procs go here
 
 // Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE)
 	if(light)
 		update_light()
 	if(rotation)
@@ -247,11 +248,11 @@ All ShuttleMove procs go here
 /obj/machinery/navbeacon/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 
-	if(codes["patrol"])
+	if(codes[NAVBEACON_PATROL_MODE])
 		if(!GLOB.navbeacons["[z]"])
 			GLOB.navbeacons["[z]"] = list()
 		GLOB.navbeacons["[z]"] += src //Register with the patrol list!
-	if(codes["delivery"])
+	if(codes[NAVBEACON_DELIVERY_MODE])
 		GLOB.deliverybeacons += src
 		GLOB.deliverybeacontags += location
 

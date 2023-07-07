@@ -117,7 +117,7 @@
  * Gradually heals the heretic ([source]) on rust,
  * including baton knockdown and stamina damage.
  */
-/datum/heretic_knowledge/rust_regen/proc/on_life(mob/living/source, delta_time, times_fired)
+/datum/heretic_knowledge/rust_regen/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	var/turf/our_turf = get_turf(source)
@@ -134,7 +134,7 @@
 	source.AdjustAllImmobility(-0.5 SECONDS)
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
-		source.blood_volume += 2.5 * delta_time
+		source.blood_volume += 2.5 * seconds_per_tick
 
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
@@ -284,7 +284,7 @@
  *
  * Gradually heals the heretic ([source]) on rust.
  */
-/datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, delta_time, times_fired)
+/datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	var/turf/our_turf = get_turf(source)
@@ -335,8 +335,8 @@
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
-/datum/rust_spread/process(delta_time)
-	var/spread_amount = round(spread_per_sec * delta_time)
+/datum/rust_spread/process(seconds_per_tick)
+	var/spread_amount = round(spread_per_sec * seconds_per_tick)
 
 	if(length(edge_turfs) < spread_amount)
 		compile_turfs()

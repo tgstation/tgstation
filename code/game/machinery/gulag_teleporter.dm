@@ -14,7 +14,7 @@ The console is located at computer/gulag_teleporter.dm
 	base_icon_state = "implantchair"
 	state_open = FALSE
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the door is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	circuit = /obj/item/circuitboard/machine/gulag_teleporter
 	var/locked = FALSE
@@ -176,7 +176,7 @@ The console is located at computer/gulag_teleporter.dm
 	req_components = list(
 		/obj/item/stack/ore/bluespace_crystal = 2,
 		/datum/stock_part/scanning_module = 1,
-		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/servo = 1,
 	)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 

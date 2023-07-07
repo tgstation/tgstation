@@ -99,12 +99,34 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/head_cowboy
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	/// Chance that the hat will catch a bullet for you
+	var/deflect_chance = 2
+
+/obj/item/clothing/head/cowboy/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/bullet_intercepting,\
+		block_chance = deflect_chance,\
+		active_slots = ITEM_SLOT_HEAD,\
+		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
+	)
+
+/// When we catch a bullet, fling away
+/obj/item/clothing/head/cowboy/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
+	victim.visible_message(span_warning("\The [bullet] sends [victim]'s hat flying!"))
+	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
+	throw_at(get_edge_target_turf(loc, pick(GLOB.alldirs)), range = 3, speed = 3)
+	playsound(victim, get_sfx(SFX_RICOCHET), 100, TRUE)
 
 /datum/armor/head_cowboy
 	melee = 5
 	bullet = 5
 	laser = 5
 	energy = 15
+
+/// Bounty hunter's hat, very likely to intercept bullets
+/obj/item/clothing/head/cowboy/bounty
+	deflect_chance = 50
 
 /obj/item/clothing/head/cowboy/black
 	name = "desperado hat"
@@ -282,3 +304,10 @@
 	name = "red nightcap"
 	desc = "A red nightcap for all the sleepyheads and dozers out there."
 	icon_state = "sleep_red"
+
+/obj/item/clothing/head/costume/paper_hat
+	name = "paper hat"
+	desc = "A flimsy hat made of paper."
+	icon_state = "paper"
+	worn_icon_state = "paper"
+	dog_fashion = /datum/dog_fashion/head

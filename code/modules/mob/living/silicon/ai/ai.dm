@@ -36,7 +36,7 @@
 	var/aiRestorePowerRoutine = POWER_RESTORATION_OFF
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
-	var/icon/holo_icon //Default is assigned when AI is created.
+	var/mutable_appearance/hologram_appearance //Default is assigned when AI is created.
 	var/obj/controlled_equipment //A piece of equipment, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
@@ -157,20 +157,19 @@
 
 	create_modularInterface()
 
+	// /mob/living/silicon/ai/apply_prefs_job() uses these to set these procs at mapload
+	// this is used when a person is being inserted into an AI core during a round
 	if(client)
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_name), /datum/preference/name/ai, client)
+		INVOKE_ASYNC(src, PROC_REF(apply_pref_hologram_display), client)
 
 	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon))
-
-
-	holo_icon = getHologramIcon(icon('icons/mob/silicon/ai.dmi',"default"))
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
 	add_verb(src, /mob/living/silicon/ai/proc/show_laws_verb)
-
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
@@ -261,6 +260,33 @@
 	else
 		var/preferred_icon = input ? input : C.prefs.read_preference(/datum/preference/choiced/ai_core_display)
 		icon_state = resolve_ai_icon(preferred_icon)
+
+/// Apply an AI's hologram preference
+/mob/living/silicon/ai/proc/apply_pref_hologram_display(client/player_client)
+	if(player_client.prefs?.read_preference(/datum/preference/choiced/ai_hologram_display))
+		var/list/hologram_choice = player_client.prefs.read_preference(/datum/preference/choiced/ai_hologram_display)
+		if(hologram_choice == "Random")
+			hologram_choice = pick(GLOB.ai_hologram_icons)
+
+		hologram_appearance = mutable_appearance(GLOB.ai_hologram_icons[hologram_choice], GLOB.ai_hologram_icon_state[hologram_choice])
+
+	hologram_appearance ||= mutable_appearance(GLOB.ai_hologram_icons[AI_HOLOGRAM_DEFAULT], GLOB.ai_hologram_icon_state[AI_HOLOGRAM_DEFAULT])
+
+/// Apply an AI's emote display preference
+/mob/living/silicon/ai/proc/apply_pref_emote_display(client/player_client)
+	if(player_client.prefs?.read_preference(/datum/preference/choiced/ai_emote_display))
+		var/emote_choice = player_client.prefs.read_preference(/datum/preference/choiced/ai_emote_display)
+
+		if(emote_choice == "Random")
+			emote_choice = pick(GLOB.ai_status_display_emotes)
+
+		apply_emote_display(emote_choice)
+
+/// Apply an emote to all AI status displays on the station
+/mob/living/silicon/ai/proc/apply_emote_display(emote)
+	for(var/obj/machinery/status_display/ai/ai_display as anything in GLOB.ai_status_displays)
+		ai_display.emotion = emote
+		ai_display.update()
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
@@ -674,22 +700,17 @@
 						return
 					var/mutable_appearance/character_icon = personnel_list[input]
 					if(character_icon)
-						qdel(holo_icon)//Clear old icon so we're not storing it in memory.
 						character_icon.setDir(SOUTH)
-
-						var/icon/icon_for_holo = getFlatIcon(character_icon)
-						holo_icon = getHologramIcon(icon(icon_for_holo))
+						hologram_appearance = character_icon
 
 				if("My Character")
 					switch(tgui_alert(usr,"WARNING: Your AI hologram will take the appearance of your currently selected character ([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). Are you sure you want to proceed?", "Customize", list("Yes","No")))
 						if("Yes")
 							var/mob/living/carbon/human/dummy/ai_dummy = new
-							var/mutable_appearance/appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
-							var/icon/character_icon = getHologramIcon(getFlatIcon(appearance))
-							if(character_icon)
-								qdel(holo_icon)
+							var/mutable_appearance/dummy_appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
+							if(dummy_appearance)
 								qdel(ai_dummy)
-								holo_icon = character_icon
+								hologram_appearance = dummy_appearance
 						if("No")
 							return FALSE
 
@@ -715,16 +736,17 @@
 				return
 			if(isnull(icon_list[input]))
 				return
-			qdel(holo_icon)
+			var/working_state = ""
 			switch(input)
 				if("poly")
-					holo_icon = getHologramIcon(icon(icon_list[input],"parrot_fly"))
+					working_state = "parrot_fly"
 				if("chicken")
-					holo_icon = getHologramIcon(icon(icon_list[input],"chicken_brown"))
+					working_state = "chicken_brown"
 				if("spider")
-					holo_icon = getHologramIcon(icon(icon_list[input],"guard"))
+					working_state = "guard"
 				else
-					holo_icon = getHologramIcon(icon(icon_list[input], input))
+					working_state = input
+			hologram_appearance = mutable_appearance(icon_list[input], working_state)
 		else
 			var/list/icon_list = list(
 				"default" = 'icons/mob/silicon/ai.dmi',
@@ -739,12 +761,13 @@
 				return
 			if(isnull(icon_list[input]))
 				return
-			qdel(holo_icon)
+			var/working_state = ""
 			switch(input)
 				if("xeno queen")
-					holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
+					working_state = "alienq"
 				else
-					holo_icon = getHologramIcon(icon(icon_list[input], input))
+					working_state = input
+			hologram_appearance = mutable_appearance(icon_list[input], working_state)
 	return
 
 /datum/action/innate/core_return
@@ -786,7 +809,7 @@
 	for (var/datum/camerachunk/chunk as anything in eyeobj.visibleCameraChunks)
 		for (var/z_key in chunk.cameras)
 			for(var/obj/machinery/camera/camera as anything in chunk.cameras[z_key])
-				if (!camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
+				if(isnull(camera) || !camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
 					continue
 				visible |= camera
 
@@ -964,6 +987,11 @@
 
 	// I am so sorry
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
+
+/mob/living/silicon/ai/death(gibbed)
+	if(!isnull(deployed_shell))
+		disconnect_shell() // farewell my sweet prince; for a shell is nothing without an AI to control it
+	return ..()
 
 /mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()

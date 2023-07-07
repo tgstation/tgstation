@@ -90,7 +90,7 @@
 		else
 			RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, PROC_REF(on_quirk_holder_first_login))
 
-	RegisterSignal(quirk_holder, COMSIG_PARENT_QDELETING, PROC_REF(on_holder_qdeleting))
+	RegisterSignal(quirk_holder, COMSIG_QDELETING, PROC_REF(on_holder_qdeleting))
 
 	return TRUE
 
@@ -99,7 +99,7 @@
 	if(!quirk_holder)
 		CRASH("Attempted to remove quirk from the current holder when it has no current holder.")
 
-	UnregisterSignal(quirk_holder, list(COMSIG_MOB_LOGIN, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(quirk_holder, list(COMSIG_MOB_LOGIN, COMSIG_QDELETING))
 
 	quirk_holder.quirks -= src
 
@@ -173,7 +173,7 @@
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
-	var/where = human_holder.equip_in_one_of_slots(quirk_item, valid_slots, qdel_on_fail = FALSE) || default_location
+	var/where = human_holder.equip_in_one_of_slots(quirk_item, valid_slots, qdel_on_fail = FALSE, indirect_action = TRUE) || default_location
 
 	if(where == LOCATION_BACKPACK)
 		open_backpack = TRUE

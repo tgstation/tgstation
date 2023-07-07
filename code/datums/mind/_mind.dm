@@ -122,6 +122,25 @@
 	set_current(null)
 	return ..()
 
+/datum/mind/serialize_list(list/options, list/semvers)
+	. = ..()
+
+	.["key"] = key
+	.["name"] = name
+	.["ghostname"] = ghostname
+	.["memories"] = memories
+	.["martial_art"] = martial_art
+	.["antag_datums"] = antag_datums
+	.["holy_role"] = holy_role
+	.["special_role"] = special_role
+	.["assigned_role"] = assigned_role.title
+	.["current"] = current
+
+	var/mob/enslaved_to = src.enslaved_to?.resolve()
+	.["enslaved_to"] = enslaved_to
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
+	return .
 
 /datum/mind/vv_edit_var(var_name, var_value)
 	switch(var_name)
@@ -138,18 +157,25 @@
 	if(new_current && QDELETED(new_current))
 		CRASH("Tried to set a mind's current var to a qdeleted mob, what the fuck")
 	if(current)
-		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(src, COMSIG_QDELETING)
 	current = new_current
 	if(current)
-		RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(clear_current))
+		RegisterSignal(src, COMSIG_QDELETING, PROC_REF(clear_current))
 
 /datum/mind/proc/clear_current(datum/source)
 	SIGNAL_HANDLER
 	set_current(null)
 
 /datum/mind/proc/get_language_holder()
-	if(!language_holder)
-		language_holder = new (src)
+	if(isnull(language_holder))
+		if(iscarbon(current))
+			var/mob/living/carbon/talker = current
+			// AHH WHY DO MINDS ALSO HAVE LANGUAGE HOLDERS WHAT'S THE POINT OF THE "MIND" LANGUAGE SOURCE IF WE STORE IT TWICE ANYWAYS
+			var/type_to_use = talker.dna?.species?.species_language_holder || talker.language_holder?.type || /datum/language_holder
+			language_holder = new type_to_use(src)
+		else
+			language_holder = new(src)
+
 	return language_holder
 
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)

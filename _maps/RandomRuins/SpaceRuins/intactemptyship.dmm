@@ -24,9 +24,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/powered/authorship)
 "f" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},

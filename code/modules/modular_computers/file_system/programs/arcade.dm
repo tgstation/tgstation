@@ -94,11 +94,7 @@
 	return data
 
 /datum/computer_file/program/arcade/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
 	usr.played_game()
-
 	var/gamerSkillLevel = 0
 	var/gamerSkill = 0
 	if(usr?.mind)

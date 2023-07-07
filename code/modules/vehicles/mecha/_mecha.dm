@@ -131,6 +131,9 @@
 	///flat equipment for iteration
 	var/list/flat_equipment
 
+	///Handles an internal ore box for mining mechs
+	var/obj/structure/ore_box/ore_box
+
 	///Whether our steps are silent due to no gravity
 	var/step_silent = FALSE
 	///Sound played when the mech moves
@@ -218,7 +221,7 @@
 	if(enclosed)
 		internal_tank = new (src)
 		RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE , PROC_REF(disconnect_air))
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(play_stepsound))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 
 	spark_system = new
@@ -256,7 +259,7 @@
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT) //protects pilots from ashstorms.
+	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), ROUNDSTART_TRAIT) //stormy weather (keeps rainin' all the time)
 	for(var/key in equip_by_category)
 		if(key == MECHA_L_ARM || key == MECHA_R_ARM)
 			var/path = equip_by_category[key]
@@ -284,6 +287,8 @@
 
 	STOP_PROCESSING(SSobj, src)
 	LAZYCLEARLIST(flat_equipment)
+
+	QDEL_NULL(ore_box)
 
 	QDEL_NULL(cell)
 	QDEL_NULL(scanmod)
@@ -479,27 +484,27 @@
 	return examine_text
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
-/obj/vehicle/sealed/mecha/process(delta_time)
+/obj/vehicle/sealed/mecha/process(seconds_per_tick)
 	if(internal_damage)
 		if(internal_damage & MECHA_INT_FIRE)
-			if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && DT_PROB(2.5, delta_time))
+			if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && SPT_PROB(2.5, seconds_per_tick))
 				clear_internal_damage(MECHA_INT_FIRE)
 			if(internal_tank)
 				var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
 				if(int_tank_air.return_pressure() > internal_tank.maximum_pressure && !(internal_damage & MECHA_INT_TANK_BREACH))
 					set_internal_damage(MECHA_INT_TANK_BREACH)
 				if(int_tank_air && int_tank_air.return_volume() > 0) //heat the air_contents
-					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(5,7.5)*delta_time)
+					int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(5,7.5)*seconds_per_tick)
 			if(cabin_air && cabin_air.return_volume()>0)
-				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(5,7.5)*delta_time)
+				cabin_air.temperature = min(6000+T0C, cabin_air.return_temperature()+rand(5,7.5)*seconds_per_tick)
 				if(cabin_air.return_temperature() > max_temperature/2)
-					take_damage(delta_time*2/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
+					take_damage(seconds_per_tick*2/round(max_temperature/cabin_air.return_temperature(),0.1), BURN, 0, 0)
 
 
 		if(internal_damage & MECHA_INT_TANK_BREACH) //remove some air from internal tank
 			if(internal_tank)
 				var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
-				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(DT_PROB_RATE(0.05, delta_time))
+				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(SPT_PROB_RATE(0.05, seconds_per_tick))
 				if(loc)
 					loc.assume_air(leaked_gas)
 				else
@@ -508,13 +513,13 @@
 		if(internal_damage & MECHA_INT_SHORT_CIRCUIT)
 			if(get_charge())
 				spark_system.start()
-				cell.charge -= min(10 * delta_time, cell.charge)
-				cell.maxcharge -= min(10 * delta_time, cell.maxcharge)
+				cell.charge -= min(10 * seconds_per_tick, cell.charge)
+				cell.maxcharge -= min(10 * seconds_per_tick, cell.maxcharge)
 
 	if(!(internal_damage & MECHA_INT_TEMP_CONTROL))
 		if(cabin_air && cabin_air.return_volume() > 0)
 			var/delta = cabin_air.temperature - T20C
-			cabin_air.temperature -= clamp(round(delta / 8, 0.1), -5, 5) * delta_time
+			cabin_air.temperature -= clamp(round(delta / 8, 0.1), -5, 5) * seconds_per_tick
 
 	if(internal_tank)
 		var/datum/gas_mixture/tank_air = internal_tank.return_air()
@@ -584,7 +589,7 @@
 			checking = checking.loc
 
 	if(mecha_flags & LIGHTS_ON)
-		use_power(2*delta_time)
+		use_power(2*seconds_per_tick)
 
 //Diagnostic HUD updates
 	diag_hud_set_mechhealth()

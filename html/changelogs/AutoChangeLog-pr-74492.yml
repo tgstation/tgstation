@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Audits the placement of Generic events markers. Some departments which previously had none now have some, and maintenance largely no longer holds them."
-  - balance: "Anomalies from a supermatter delamination, radiation leaks, and suipermatter cascade portals are now placed in more commonly traversed and easy to identify areas. They will also now trigger in places like Icebox med and brig when they previously couldn't."

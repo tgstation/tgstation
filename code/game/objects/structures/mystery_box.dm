@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/ballistic/automatic/tommygun,
 	/obj/item/gun/ballistic/automatic/wt550,
 	/obj/item/gun/ballistic/rifle/sniper_rifle,
-	/obj/item/gun/ballistic/rifle/boltaction/brand_new,
+	/obj/item/gun/ballistic/rifle/boltaction,
 ))
 
 GLOBAL_LIST_INIT(mystery_box_extended, list(

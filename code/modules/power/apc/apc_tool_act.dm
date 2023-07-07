@@ -1,6 +1,19 @@
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 /obj/machinery/power/apc/crowbar_act(mob/user, obj/item/crowbar)
 	. = TRUE
+
+	//Prying off broken cover
+	if((opened == APC_COVER_CLOSED || opened == APC_COVER_OPENED) && (machine_stat & BROKEN))
+		crowbar.play_tool_sound(src)
+		balloon_alert(user, "prying...")
+		if(!crowbar.use_tool(src, user, 5 SECONDS))
+			return
+		opened = APC_COVER_REMOVED
+		balloon_alert(user, "cover removed")
+		update_appearance()
+		return
+
+	//Opening and closing cover
 	if((!opened && opened != APC_COVER_REMOVED) && !(machine_stat & BROKEN))
 		if(coverlocked && !(machine_stat & MAINT)) // locked...
 			balloon_alert(user, "cover is locked!")
@@ -20,6 +33,7 @@
 		update_appearance()
 		return
 
+	//Taking out the electronics
 	if(!opened || has_electronics != APC_ELECTRONICS_INSTALLED)
 		return
 	if(terminal)
@@ -101,14 +115,32 @@
 
 /obj/machinery/power/apc/welder_act(mob/living/user, obj/item/welder)
 	. = ..()
+
+	//repairing the cover
+	if((atom_integrity < max_integrity) && has_electronics)
+		if(opened == APC_COVER_REMOVED)
+			balloon_alert(user, "no cover to repair!")
+			return
+		if (machine_stat & BROKEN)
+			balloon_alert(user, "too damaged to repair!")
+			return
+		if(!welder.tool_start_check(user, amount=1))
+			return
+		balloon_alert(user, "repairing...")
+		if(welder.use_tool(src, user, 4 SECONDS, volume = 50))
+			update_integrity(min(atom_integrity += 50,max_integrity))
+			balloon_alert(user, "repaired")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	//disassembling the frame
 	if(!opened || has_electronics || terminal)
 		return
-	if(!welder.tool_start_check(user, amount=3))
+	if(!welder.tool_start_check(user, amount=1))
 		return
 	user.visible_message(span_notice("[user.name] welds [src]."), \
 						span_hear("You hear welding."))
 	balloon_alert(user, "welding the APC frame")
-	if(!welder.use_tool(src, user, 50, volume=50, amount=3))
+	if(!welder.use_tool(src, user, 50, volume=50))
 		return
 	if((machine_stat & BROKEN) || opened == APC_COVER_REMOVED)
 		new /obj/item/stack/sheet/iron(loc)
@@ -219,7 +251,5 @@
 			locked = !locked
 			balloon_alert(user, locked ? "locked" : "unlocked")
 			update_appearance()
-			if(!locked)
-				ui_interact(user)
 		else
 			balloon_alert(user, "access denied!")

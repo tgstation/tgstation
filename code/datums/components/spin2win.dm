@@ -42,11 +42,11 @@
 	return ..()
 
 /datum/component/spin2win/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 
 /datum/component/spin2win/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_ATTACK_SECONDARY))
+	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_ATTACK_SECONDARY))
 
 ///signal called on parent being examined
 /datum/component/spin2win/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -102,7 +102,7 @@
 	COOLDOWN_START(src, spin_cooldown, spin_cooldown_time)
 	spinning = FALSE
 
-/datum/component/spin2win/process(delta_time)
+/datum/component/spin2win/process(seconds_per_tick)
 	var/obj/item/spinning_item = parent
 	if(!isliving(spinning_item.loc))
 		stop_spinning()

@@ -97,7 +97,6 @@
 	///The nearest beacon's location
 	var/turf/nearest_beacon_loc
 
-	var/beacon_freq = FREQ_NAV_BEACON
 	///The type of data HUD the bot uses. Diagnostic by default.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	var/datum/atom_hud/data/bot_path/path_hud
@@ -754,7 +753,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(NB.location == next_destination) //Does the Beacon location text match the destination?
 			destination = new_destination //We now know the name of where we want to go.
 			patrol_target = NB.loc //Get its location and set it as the target.
-			next_destination = NB.codes["next_patrol"] //Also get the name of the next beacon in line.
+			next_destination = NB.codes[NAVBEACON_PATROL_NEXT] //Also get the name of the next beacon in line.
 			return TRUE
 
 /mob/living/simple_animal/bot/proc/find_nearest_beacon()
@@ -765,7 +764,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			if(dist>1 && dist<get_dist(src,nearest_beacon_loc))
 				nearest_beacon = NB.location
 				nearest_beacon_loc = NB.loc
-				next_destination = NB.codes["next_patrol"]
+				next_destination = NB.codes[NAVBEACON_PATROL_NEXT]
 			else
 				continue
 		else if(dist > 1) //Begin the search, save this one for comparison on the next loop.

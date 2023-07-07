@@ -10,7 +10,7 @@
 		The implant is stored in the module and needs to be injected in a human to function. \
 		Nakamura Engineering swears up and down there's airbrakes."
 	icon_state = "pathfinder"
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
 	/// The pathfinding implant.
@@ -110,8 +110,8 @@
 	var/datum/ai_controller/mod_ai = new /datum/ai_controller/mod(module.mod)
 	module.mod.ai_controller = mod_ai
 	mod_ai.set_movement_target(type, imp_in)
-	mod_ai.blackboard[BB_MOD_TARGET] = imp_in
-	mod_ai.blackboard[BB_MOD_IMPLANT] = src
+	mod_ai.set_blackboard_key(BB_MOD_TARGET, imp_in)
+	mod_ai.set_blackboard_key(BB_MOD_IMPLANT, src)
 	module.mod.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	module.mod.AddElement(/datum/element/movetype_handler)
 	ADD_TRAIT(module.mod, TRAIT_MOVE_FLYING, MOD_TRAIT)

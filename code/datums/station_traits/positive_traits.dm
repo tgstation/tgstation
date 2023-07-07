@@ -15,7 +15,7 @@
 	. = ..()
 	COOLDOWN_START(src, party_cooldown, rand(PARTY_COOLDOWN_LENGTH_MIN, PARTY_COOLDOWN_LENGTH_MAX))
 
-/datum/station_trait/lucky_winner/process(delta_time)
+/datum/station_trait/lucky_winner/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, party_cooldown))
 		return
 

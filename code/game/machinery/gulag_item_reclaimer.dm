@@ -2,17 +2,27 @@
 	name = "equipment reclaimer station"
 	desc = "Used to reclaim your items after you finish your sentence at the labor camp."
 	icon = 'icons/obj/terminals.dmi'
-	icon_state = "dorm_taken"
+	icon_state = "gulag_off"
 	req_access = list(ACCESS_BRIG) //REQACCESS TO ACCESS ALL STORED ITEMS
 	density = FALSE
 
 	var/list/stored_items = list()
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
+	///Icon of the current screen status
+	var/screen_icon = "gulag_on"
 
 /obj/machinery/gulag_item_reclaimer/handle_atom_del(atom/deleting_atom)
 	for(var/person in stored_items)
 		stored_items[person] -= deleting_atom
 	return ..()
+
+/obj/machinery/gulag_item_reclaimer/update_overlays()
+	. = ..()
+	if(machine_stat & (NOPOWER|BROKEN))
+		return
+
+	. += mutable_appearance(icon, screen_icon)
+	. += emissive_appearance(icon, screen_icon, src)
 
 /obj/machinery/gulag_item_reclaimer/Destroy()
 	for(var/i in contents)
@@ -27,6 +37,8 @@
 		return
 	req_access = list()
 	obj_flags |= EMAGGED
+	screen_icon = "emagged_general"
+	update_appearance()
 
 /obj/machinery/gulag_item_reclaimer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

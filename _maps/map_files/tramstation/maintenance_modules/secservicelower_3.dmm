@@ -262,7 +262,7 @@
 /area/station/maintenance/central/greater)
 "tZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner/north,
+/obj/structure/window/spawner/directional/north,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,

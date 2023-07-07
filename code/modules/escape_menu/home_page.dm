@@ -235,7 +235,7 @@
 
 	return TRUE
 
-/atom/movable/screen/escape_menu/home_button/admin_help/process(delta_time)
+/atom/movable/screen/escape_menu/home_button/admin_help/process(seconds_per_tick)
 	if (world.time - last_blink_time < blink_interval)
 		return
 

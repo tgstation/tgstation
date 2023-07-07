@@ -159,10 +159,7 @@
 			priority_announce("Warning. Tampering of meteor satellites puts the station at risk of exotic, deadly meteor collisions. Please intervene by checking your GPS devices for strange signals, and dismantling the tampered meteor shields.", "Strange Meteor Signal Warning")
 		if(EMAGGED_METEOR_SHIELD_THRESHOLD_FOUR)
 			say("Warning. Warning. Dark Matt-eor on course for station.")
-			var/datum/round_event_control/dark_matteor/dark_matteor_event = locate() in SSevents.control
-			if(!dark_matteor_event)
-				CRASH("meteor shields tried to spawn a dark matteor, but there was no dark matteor event in SSevents.control?")
-			INVOKE_ASYNC(dark_matteor_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+			force_event_async(/datum/round_event_control/dark_matteor, "an array of tampered meteor satellites")
 
 /obj/machinery/satellite/meteor_shield/proc/change_meteor_chance(mod)
 	// Update the weight of all meteor events

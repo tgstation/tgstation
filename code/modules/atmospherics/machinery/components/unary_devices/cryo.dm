@@ -1,7 +1,7 @@
 ///Max temperature allowed inside the cryotube, should break before reaching this heat
 #define MAX_TEMPERATURE 4000
 // Multiply factor is used with efficiency to multiply Tx quantity
-// Tx quantity is how much volume should be removed from the cell's beaker - multiplied by delta_time
+// Tx quantity is how much volume should be removed from the cell's beaker - multiplied by seconds_per_tick
 // Throttle Counter Max is how many calls of process() between ones that inject reagents.
 // These three defines control how fast and efficient cryo is
 #define CRYO_MULTIPLY_FACTOR 25
@@ -266,7 +266,7 @@
 		begin_processing()
 
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/process(delta_time)
+/obj/machinery/atmospherics/components/unary/cryo_cell/process(seconds_per_tick)
 	..()
 
 	if(!on)
@@ -307,7 +307,7 @@
 
 	if(air1.total_moles() > CRYO_MIN_GAS_MOLES)
 		if(beaker)
-			beaker.reagents.trans_to(occupant, (CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * delta_time, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
+			beaker.reagents.trans_to(occupant, (CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * seconds_per_tick, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
 			consume_gas = TRUE
 	return TRUE
 

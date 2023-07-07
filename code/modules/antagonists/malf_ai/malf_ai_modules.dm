@@ -261,6 +261,14 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		owner_AI.doomsday_device.start()
 		for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
 			P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
+
+		notify_ghosts(
+			"[owner_AI] has activated a Doomsday Device!",
+			source = owner_AI,
+			header = "DOOOOOOM!!!",
+			action = NOTIFY_ORBIT,
+		)
+
 		qdel(src)
 
 /obj/machinery/doomsday_device
@@ -315,7 +323,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		borg.lamp_doom = TRUE
 		borg.toggle_headlamp(FALSE, TRUE) //forces borg lamp to update
 
-
 /obj/machinery/doomsday_device/proc/seconds_remaining()
 	. = max(0, (round((detonation_timer - world.time) / 10)))
 
@@ -366,7 +373,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/action/innate/ai/lockdown
 	name = "Lockdown"
-	desc = "Closes, bolts, and depowers every airlock, firelock, and blast door on the station. After 90 seconds, they will reset themselves."
+	desc = "Closes, bolts, and electrifies every airlock, firelock, and blast door on the station. After 90 seconds, they will reset themselves."
 	button_icon_state = "lockdown"
 	uses = 1
 	/// Badmin / exploit abuse prevention.
@@ -693,7 +700,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	uses = 1
 
 /datum/action/innate/ai/break_air_alarms/Activate()
-	for(var/obj/machinery/airalarm/AA in GLOB.machines)
+	for(var/obj/machinery/airalarm/AA in GLOB.air_alarms)
 		if(!is_station_level(AA.z))
 			continue
 		AA.obj_flags |= EMAGGED

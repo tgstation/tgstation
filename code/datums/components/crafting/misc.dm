@@ -32,5 +32,5 @@
 		/obj/item/paper/paperslip = 1,
 		/obj/item/stack/sheet/plastic = 3,
 	)
-	tool_paths = list(/obj/item/stamp/captain)
+	tool_paths = list(/obj/item/stamp/head/captain)
 	category = CAT_MISC
