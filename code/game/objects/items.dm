@@ -1102,7 +1102,6 @@
 		M.client.screen -= src
 	layer = initial(layer)
 	SET_PLANE_IMPLICIT(src, initial(plane))
-	appearance_flags &= ~NO_CLIENT_COLOR
 	dropped(M, FALSE)
 	return ..()
 

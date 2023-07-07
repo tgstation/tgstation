@@ -80,7 +80,6 @@
 				observe.client.screen -= equipping
 	equipping.forceMove(src)
 	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
-	equipping.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
 
 	switch(slot)
