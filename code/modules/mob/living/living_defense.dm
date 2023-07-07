@@ -174,6 +174,10 @@
 		user.start_pulling(src, supress_message = supress_message)
 		return
 
+	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
+		to_chat(user, span_warning("[src] can't be grabbed more aggressively!"))
+		return FALSE
+
 	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to risk hurting [src]!"))
 		return FALSE
@@ -181,9 +185,6 @@
 
 //proc to upgrade a simple pull into a more aggressive grab.
 /mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
-	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
-		to_chat(user, span_warning("[src] can't be grabbed more aggressively!"))
-		return FALSE
 	if(user.grab_state >= user.max_grab)
 		return
 	user.changeNext_move(CLICK_CD_GRABBING)
