@@ -358,15 +358,19 @@
 
 ///A more thorough version of capitalize() that capitalizes each element of the text after a space character.
 /proc/capitalize_with_spaces(text)
+	if(!text)
+		return
+	text = trim_reduced(text)
 	var/return_text = ""
 	var/static/regex/identifiers_regex = regex("\\s+", "g")
-	var/static/regex/spaces_regex = regex("\\w+")
+	var/static/regex/spaces_regex = regex("\\w+", "g")
 	var/list/space_characters = splittext(text, spaces_regex)
 	var/list/split_text = splittext(text, identifiers_regex)
 	var/split_text_len = length(split_text)
 	for(var/index in 1 to split_text_len)
 		var/n_text = split_text[index]
-		return_text += uppertext(n_text[1]) + copytext(n_text, 1 + length(.))
+		var/first_letter = n_text[1]
+		return_text += uppertext(first_letter) + copytext(n_text, 1 + length(first_letter))
 		if(index != split_text_len)
 			return_text += space_characters[index]
 	return return_text
