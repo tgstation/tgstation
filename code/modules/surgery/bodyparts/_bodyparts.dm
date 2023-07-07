@@ -866,25 +866,27 @@
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/image/aux
 
+	// Handles invisibility (not alpha or actual invisibility but invisibility)
+	if(is_invisible)
+		limb.icon = icon_invisible
+		limb.icon_state = "invisible_[body_zone]"
+		. += limb
+		if(aux_zone) //Hand shit
+			aux = image(limb.icon, "invisible_[aux_zone]", -aux_layer, image_dir)
+			. += aux
 	// Handles making bodyparts look husked
-	if(is_husked)
+	else if(is_husked)
 		limb.icon = icon_husk
 		limb.icon_state = "[husk_type]_husk_[body_zone]"
 		icon_exists(limb.icon, limb.icon_state, scream = TRUE) //Prints a stack trace on the first failure of a given iconstate.
 		. += limb
 		if(aux_zone) //Hand shit
 			aux = image(limb.icon, "[husk_type]_husk_[aux_zone]", -aux_layer, image_dir)
+			icon_exists(aux.icon, aux.icon_state, scream = TRUE) //Prints a stack trace on the first failure of a given iconstate.
 			. += aux
 
-	// Handles invisibility (not alpha or actual invisibility but invisibility)
-	if(is_invisible)
-		limb.icon = icon_invisible
-		limb.icon_state = "invisible_[body_zone]"
-		. += limb
-		return .
-
 	// Normal non-husk handling
-	if(!is_husked)
+	if(!is_husked && !is_invisible)
 		// This is the MEAT of limb icon code
 		limb.icon = icon_greyscale
 		if(!should_draw_greyscale || !icon_greyscale)
@@ -939,7 +941,7 @@
 			. += leg_source.generate_masked_leg(limb_image, image_dir)
 
 	// Put bodypart_overlays on if not husked
-	if(!is_husked)
+	if(!is_husked && !is_invisible)
 		//Draw external organs like horns and frills
 		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 			if(!dropped && !overlay.can_draw_on_bodypart(owner)) //if you want different checks for dropped bodyparts, you can insert it here
