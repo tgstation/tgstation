@@ -249,7 +249,13 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 /datum/log_holder/proc/human_readable_timestamp(precision = 3)
 	var/start = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")
 	// now we grab the millis from the rustg timestamp
-	var/list/timestamp = splittext(unix_timestamp_string(), ".")
+	var/rustg_stamp = unix_timestamp_string()
+	var/list/timestamp = splittext(rustg_stamp, ".")
+#ifdef UNIT_TESTS
+	if(length(timestamp) != 2)
+		stack_trace("rustg returned illegally formatted string '[rustg_stamp]'")
+		return start
+#endif
 	var/millis = timestamp[2]
 	if(length(millis) > precision)
 		millis = copytext(millis, 1, precision + 1)
@@ -260,9 +266,6 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 /// the data list is optional and will be recursively json serialized.
 /datum/log_holder/proc/Log(category, message, list/data)
 	// This is Log because log is a byond internal proc
-	if(shutdown)
-		stack_trace("Performing logging after shutdown! This might not be functional in the future!")
-	// but for right now it's fine
 
 	// do not include the message because these go into the runtime log and we might be secret!
 	if(!istext(message))

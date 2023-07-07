@@ -227,7 +227,7 @@
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()
 	if(stat == DEAD)
-		if(HAS_TRAIT(user.mind, TRAIT_NAIVE))
+		if(HAS_MIND_TRAIT(user, TRAIT_NAIVE))
 			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be asleep.")
 		else
 			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be dead.")
@@ -466,6 +466,9 @@
 		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
+	if(!isatom(the_target)) // no
+		stack_trace("Invalid target in CanAttack(): [the_target]")
+		return FALSE
 	if(see_invisible < the_target.invisibility)
 		return FALSE
 	if(ismob(the_target))

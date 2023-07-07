@@ -327,9 +327,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	reagents.expose(smoker, INGEST, min(to_smoke / reagents.total_volume, 1))
 	var/obj/item/organ/internal/lungs/lungs = smoker.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(lungs && !(lungs.organ_flags & ORGAN_SYNTHETIC))
+	if(lungs && IS_ORGANIC_ORGAN(lungs))
 		var/smoker_resistance = HAS_TRAIT(smoker, TRAIT_SMOKER) ? 0.5 : 1
-		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm*smoker_resistance)
+		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm * smoker_resistance)
 	if(!reagents.trans_to(smoker, to_smoke, methods = INGEST, ignore_stomach = TRUE))
 		reagents.remove_any(to_smoke)
 

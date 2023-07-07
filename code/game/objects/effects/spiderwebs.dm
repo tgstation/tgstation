@@ -43,9 +43,9 @@
 		return
 	if(!HAS_TRAIT(user,TRAIT_WEB_WEAVER))
 		return
-	user.balloon_alert_to_viewers("weaving...")
+	loc.balloon_alert_to_viewers("weaving...")
 	if(!do_after(user, 2 SECONDS))
-		user.balloon_alert(user, "interrupted!")
+		loc.balloon_alert(user, "interrupted!")
 		return
 	qdel(src)
 	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
@@ -68,7 +68,7 @@
 		if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 			return TRUE
 		if(prob(50))
-			balloon_alert(mover, "stuck in web!")
+			loc.balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
@@ -100,7 +100,7 @@
 		if(mover.pulledby == allowed_mob)
 			return TRUE
 		if(prob(50))
-			balloon_alert(mover, "stuck in web!")
+			loc.balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
@@ -180,13 +180,13 @@
 		return
 	if(isspider(mover.pulledby))
 		return TRUE
-	balloon_alert(mover, "stuck in web!")
+	loc.balloon_alert(mover, "stuck in web!")
 	return FALSE
 
 /obj/structure/spider/spikes
 	name = "web spikes"
 	icon = 'icons/effects/effects.dmi'
-	desc = "hardened silk formed into small yet deadly spikes."
+	desc = "Silk hardened into small yet deadly spikes."
 	icon_state = "webspikes1"
 	max_integrity = 40
 
@@ -194,11 +194,15 @@
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
 
-/obj/structure/spider/carcass
-	name = "web carcass"
+/obj/structure/spider/effigy
+	name = "web effigy"
 	icon = 'icons/effects/effects.dmi'
-	desc = "hardened silk formed into small yet deadly spikes."
+	desc = "A giant spider! Fortunately, this one is just a statue of hardened webbing."
 	icon_state = "webcarcass"
 	max_integrity = 125
 	density = TRUE
 	anchored = FALSE
+
+/obj/structure/spider/effigy/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/temporary_atom, 1 MINUTES)

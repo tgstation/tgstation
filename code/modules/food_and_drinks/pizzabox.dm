@@ -395,14 +395,14 @@
 		if(pizza.type != pizza_preferences[nommer.ckey])
 			QDEL_NULL(pizza)
 		else
-			pizza.foodtypes = nommer.dna.species.liked_food //make sure it's our favourite
+			pizza.foodtypes = nommer.get_liked_foodtypes() //make sure it's our favourite
 			return
 
 	var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
 	pizza = new favourite_pizza_type
 	boxtag_set = FALSE
 	update_appearance() //update our boxtag to match our new pizza
-	pizza.foodtypes = nommer.dna.species.liked_food //it's our favorite!
+	pizza.foodtypes = nommer.get_liked_foodtypes() //it's our favorite!
 
 ///screentips for pizzaboxes
 /obj/item/pizzabox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
