@@ -63,17 +63,31 @@
 		immerse_icon = fcopy_rsc(immerse_icon)
 		generated_immerse_icons["[icon]-[icon_state]-[mask_icon]"] = immerse_icon
 
-	RegisterSignals(target, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON), PROC_REF(on_init_or_entered))
-	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(on_atom_exited))
-	attached_turfs_and_movables += target
-	for(var/atom/movable/movable as anything in target)
-		on_init_or_entered(target, movable)
+	RegisterSignals(target, SIGNAL_ADDTRAIT(TRAIT_IMMERSE_STOPPED), PROC_REF(stop_immersion))
+	RegisterSignals(target, SIGNAL_REMOVETRAIT(TRAIT_IMMERSE_STOPPED), PROC_REF(start_immersion))
 
-/datum/element/immerse/Detach(turf/source)
-	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, COMSIG_ATOM_EXITED))
+	if(!HAS_TRAIT(target, TRAIT_IMMERSE_STOPPED))
+		start_immersion(target)
+
+/datum/element/immerse/proc/stop_immersion(turf/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, COMSIG_ATOM_EXITED))
 	for(var/atom/movable/movable as anything in attached_turfs_and_movables[source])
 		remove_from_element(source, movable)
 	attached_turfs_and_movables -= source
+
+/datum/element/immerse/proc/start_immersion(turf/source)
+	SIGNAL_HANDLER
+	RegisterSignals(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON), PROC_REF(on_init_or_entered))
+	RegisterSignal(source, COMSIG_ATOM_EXITED, PROC_REF(on_atom_exited))
+	attached_turfs_and_movables += source
+	for(var/atom/movable/movable as anything in source)
+		on_init_or_entered(source, movable)
+
+/datum/element/immerse/Detach(turf/source)
+	UnregisterSignal(source, list(SIGNAL_ADDTRAIT(TRAIT_IMMERSE_STOPPED), SIGNAL_REMOVETRAIT(TRAIT_IMMERSE_STOPPED)))
+	if(!HAS_TRAIT(source, TRAIT_IMMERSE_STOPPED))
+		stop_immersion(source)
 	return ..()
 
 /datum/element/immerse/proc/on_init_or_entered(turf/source, atom/movable/movable)
