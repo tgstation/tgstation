@@ -144,13 +144,13 @@
 		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	if(!client_colours.len)
-		game_plane_master_controller.transition_filter("client_colour", anim_time, color_matrix_filter(), anim_easing)
-		addtimer(CALLBACK(src, PROC_REF(clear_client_colour)), anim_time)
+		game_plane_master_controller.transition_filter("client_colour", color_matrix_filter(), anim_time, anim_easing)
+		addtimer(CALLBACK(src, PROC_REF(clear_client_colour)))
 		return
 	MIX_CLIENT_COLOUR(var/anim_colour)
 	if(!length(game_plane_master_controller.get_filters("client_colour")))
 		game_plane_master_controller.add_filter("client_colour", 5, color_matrix_filter())
-	game_plane_master_controller.transition_filter("client_colour", anim_time, color_matrix_filter(anim_colour), anim_easing)
+	game_plane_master_controller.transition_filter("client_colour", color_matrix_filter(anim_colour), anim_time, anim_easing)
 
 ///Used to clear the client colour once the fade animation is done
 /mob/proc/clear_client_colour()
