@@ -7,6 +7,10 @@
 	maximum_survivable_temperature = INFINITY
 	/// Message to output if throwing damage is absorbed
 	var/throw_blocked_message = "bounces off"
+	/// What crusher trophy this mob drops, if any
+	var/crusher_loot
+	/// What is the chance the mob drops it if all their health was taken by crusher attacks
+	var/crusher_drop_chance = 25
 
 /mob/living/basic/mining/Initialize(mapload)
 	. = ..()
@@ -20,3 +24,10 @@
 		minimum_thrown_force = 20,\
 		throw_blocked_message = throw_blocked_message,\
 	)
+	if(crusher_loot)
+		AddElement(\
+			/datum/element/crusher_loot,\
+			trophy_type = crusher_loot,\
+			drop_mod = crusher_drop_chance,\
+			drop_immediately = basic_mob_flags & DEL_ON_DEATH\
+		)
