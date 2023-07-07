@@ -1,0 +1,4 @@
+author: "1393F"
+delete-after: True
+changes:
+  - bugfix: "The cursed katana shard you can get from tendril loot no longer falsely tells you you're not supposed to have it"
