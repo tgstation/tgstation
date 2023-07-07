@@ -13,8 +13,32 @@
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
 
+/obj/item/computer_disk/syndie_ai_upgrade
+	name = "AI interaction range upgrade"
+	desc = "A NT data chip containing information that a syndiCard AI can utilize to improve its wireless interfacing abilities. Simply slap it on top of an intelliCard, MODsuit, or AI core and watch it do its work! It's rumoured that there's something 'pretty awful' in it."
+	icon = 'icons/obj/nuke_tools.dmi'
+	icon_state = "something_awful"
+	max_capacity = 1000
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/computer_disk/syndie_ai_upgrade/pre_attack(atom/A, mob/living/user, params)
+	var/mob/living/silicon/ai/AI
+	if(isai(A))
+		AI = A
+	else
+		AI = locate() in A
+	if(AI && AI.interaction_range != INFINITY)
+		AI.interaction_range += 2
+		playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
+		to_chat(user, span_notice("You insert [src] into [AI]'s compartment, and it beeps as it processes the data."))
+		to_chat(AI, span_notice("You process [src], and find yourself able to manipulate electronics from up to [interaction_range] meters!"))
+	else
+		playsound(src,'sound/machines/buzz-sigh.ogg',50,FALSE)
+		to_chat(user, span_notice("Error! Incompatible object!"))
+		..()
+
 /obj/item/aicard/syndie
-	name = "suspicious intelliCard"
+	name = "syndiCard"
 	desc = "A storage device for AIs. Nanotrasen forgot to make the patent, so the Syndicate made their own version!"
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "syndicard"
@@ -44,9 +68,9 @@
 			return
 		used = TRUE
 		// pick ghost, create AI and transfer
-		var/mob/dead/observer/G = pick(nuke_candidates)
-		AI = new(src, G)
-		//AI.key = G.key
+		var/mob/dead/observer/ghos = pick(nuke_candidates)
+		AI = new /mob/living/silicon/ai/weak_syndie(src, ghos)
+		AI.key = ghos.key
 		// create and apply syndie datum
 		var/datum/antagonist/nukeop/nuke_datum = new()
 		nuke_datum.send_to_spawnpoint = FALSE

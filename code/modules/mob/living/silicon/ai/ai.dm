@@ -113,6 +113,14 @@
 	///whether AI is anchored or not, used for checks
 	var/is_anchored = TRUE
 
+/mob/living/silicon/ai/weak_syndie
+	radio = /obj/item/radio/headset/silicon/ai/evil
+	radio_enabled = TRUE
+	interaction_range = 0
+	sprint = 5
+	acceleration = 0.5
+	laws = /datum/ai_laws/syndicate_override
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
