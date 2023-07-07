@@ -36,4 +36,5 @@ GLOBAL_LIST_INIT(typecache_general_bad_hostile_attack_targets, typecacheof(list(
 GLOBAL_LIST_INIT(typecache_general_bad_things_to_easily_move, typecacheof(list(
 	/obj/machinery/portable_atmospherics/canister,
 	/obj/structure/reagent_dispensers,
+	/obj/machinery/power/supermatter_crystal,
 )))
