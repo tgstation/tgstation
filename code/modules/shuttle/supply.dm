@@ -263,5 +263,17 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	new /obj/structure/closet/crate/mail/economy(pick(empty_turfs))
 
+/// Takes a supply pack, returns the amount we currently have on order (or OVER_ORDER_LIMIT if we are over the hardcap on orders of this type)
+/obj/docking_port/mobile/supply/proc/get_order_count(datum/supply_pack/ordering)
+	var/similar_count = 0
+	for(var/datum/supply_order/order as anything in (SSshuttle.shopping_list | SSshuttle.request_list))
+		if(order.pack == ordering)
+			similar_count += 1
+
+	if(similar_count >= CARGO_MAX_ORDER)
+		return OVER_ORDER_LIMIT
+
+	return similar_count
+
 #undef GOODY_FREE_SHIPPING_MAX
 #undef CRATE_TAX

@@ -1769,3 +1769,8 @@
 
 		web_sound(usr, link_url, credit)
 
+	else if(href_list["debug_z_levels"])
+		if(!check_rights(R_DEBUG))
+			return
+
+		owner.debug_z_levels()

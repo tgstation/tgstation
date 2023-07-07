@@ -261,3 +261,79 @@
       that it's within the codebase-defined ages, since there's no (legitimate) way
       to get a character outside of those ages anyways. Invalid values will log to
       the config log.
+2023-07-06:
+  ChungusGamer666:
+  - bugfix: Punpun has gotten properly fitting clothes for his little chimp body
+  - bugfix: Creampies no longer float above the heads of monkeys
+  DATA-xPUNGED:
+  - qol: Leather satchels and wallets have been issued to the offices of Head of Personnel
+      all across the sector. Studies suggest a fashion increase of 34%
+  Jacquerel:
+  - bugfix: A nuclear operative who is a slime will now correctly drop the disk upon
+      death.
+  - image: New directional sprites for spiderlings, with movement animations.
+  - bugfix: Dead spiderlings will be the same colour as they were when they were alive.
+  - bugfix: Tarantula spiderlings are no longer invisible,
+  - rscadd: People who cannot read can interact with the tram console to send it to
+      a random station.
+  NotDhu:
+  - bugfix: Replaced the security PDA painter in the CMO's office on Birdshot with
+      a medical PDA painter.
+  SomeRandomOwl:
+  - qol: Request Internet Sound now has the option to credit the person who requested
+      the Sound. Defaults to anonymous.
+  Vincent983:
+  - balance: Improved spacepol jumpsuit wound armor from 5 to 10
+  Vishenka0704:
+  - bugfix: Added a forgotten reason for not being allowed to work if the age is low.
+  Youtubeboy139:
+  - image: Added new Surgery Bed sprite
+  milktao:
+  - bugfix: fixed food preferences displaying incorrectly when examining tongues
+2023-07-07:
+  Ben10Omintrix:
+  - refactor: Mushrooms have been refactors, please report any bugs/unintended behavior
+  - rscadd: the mushroom basic mob can eat the mushroom plant to heal itself
+  ChungusGamer666:
+  - rscadd: Added Alcoholic as a negative quirk.
+  - rscadd: Added Hemiplegic quirk.
+  Hatterhat:
+  - rscadd: A really old data disk with the MOD module designs for the status readout
+      was recovered, and has been haphazardly hotpatched into the research networks.
+  - rscadd: Also, the status readout module now plays a sound on death.
+  - qol: The MODsuit health analyzer's info tab health readout can now be disabled
+      in its settings.
+  Jacquerel:
+  - balance: Guard spider web statues despawn as the ability comes back off cooldown.
+  - balance: Spiderlings now only move at light speed if they're on webs, stay safe
+      little guys.
+  - bugfix: Spiders once again have random numbers after their names.
+  - bugfix: Mobs can once again emote (with sound) when they die.
+  - bugfix: Basic mobs will tell you whether they are alive if you examine them.
+  Jolly:
+  - image: The plastic spoon sprite has been nudged to appear more centered.
+  LT3:
+  - image: More maptext and font tweaks
+  - spellcheck: Context tooltips too small, too big... just right?
+  LemonInTheDark:
+  - bugfix: Gas, like plasma, will now properly display on multiz stations
+  Melbert:
+  - bugfix: Fixed EMPing a cybernetic heart not implanted in a body not applying effects
+      (stopping the heartbeat temporarily)
+  - bugfix: Fixed an exploit involving observers
+  - bugfix: Fix Tinea Luxor exposing not increasing light duration
+  OrionTheFox:
+  - qol: 'put instructions on toggling bandanas into their examines. If you didn''t
+      already know, it can be worn as more than a mask: use in-hand to wear as a hat,
+      and alt-click to wear it on your neck!'
+  YehnBeep:
+  - bugfix: Engineers can now print the non-eyewear T-Ray scanner from their department
+      lathe.
+  - qol: Scientists can also print this scanner.
+  atlasle:
+  - sound: A new ambient track will now play in space
+  mc-oofert:
+  - rscadd: rcd can make girders now
+  - bugfix: silicons can depower airlocks via their UI again
+  norsvenska:
+  - image: Siding now uses the correct sprite on corners and endpieces.
