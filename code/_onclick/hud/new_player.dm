@@ -31,7 +31,7 @@
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
-	layer = LOBBY_BUTTON_LAYER
+	layer = LOBBY_MENU_LAYER
 	screen_loc = "TOP,CENTER"
 	///Whether this HUD element can be hidden from the client's screen or not
 	var/always_shown = FALSE
@@ -41,7 +41,6 @@
 	return
 
 /atom/movable/screen/lobby/background
-	layer = LOBBY_BACKGROUND_LAYER
 	icon = 'icons/hud/lobby/background.dmi'
 	icon_state = "background"
 	screen_loc = "TOP,CENTER:-61"
@@ -396,7 +395,7 @@
 	icon = 'icons/hud/lobby/collapse_expand.dmi'
 	icon_state = "collapse"
 	base_icon_state = "collapse"
-	layer = LOBBY_COLLAPSE_BUTTON_LAYER
+	layer = LOBBY_BELOW_MENU_LAYER
 	screen_loc = "TOP:-82,CENTER:-54"
 	always_shown = TRUE
 	var/matrix/ce_button_matrix = matrix()
