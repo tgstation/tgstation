@@ -57,7 +57,10 @@ SUBSYSTEM_DEF(minor_mapping)
 		)
 	var/list/turfs = find_satchel_suitable_turfs()
 	///List of areas where satchels should not be placed.
-	var/list/blacklisted_area_types = list(/area/station/holodeck)
+	var/list/blacklisted_area_types = list(
+		/area/station/holodeck,
+		/area/station/engineering/supermatter
+		)
 
 	while(turfs.len && amount > 0)
 		var/turf/turf = pick_n_take(turfs)
