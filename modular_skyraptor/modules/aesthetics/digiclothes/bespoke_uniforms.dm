@@ -60,7 +60,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/medical/cmo/mossmed
 	name = "chief mossmedical officer's winter coat"
 	desc = "A winter coat in a vibrant shade of chartreuse, with shiny golden zippers for the pockets & a giant gold cross on the back."
-	icon_state = "coatcmo"
+	icon_state = "coatcmo_mossmed"
 	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/icons/med_suits.dmi'
 
 /obj/item/clothing/head/hooded/winterhood/medical/cmo/mossmed
