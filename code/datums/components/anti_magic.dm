@@ -9,9 +9,9 @@
 	var/inventory_flags
 	/// The callback invoked when we have been drained a antimagic charge
 	var/datum/callback/drain_antimagic
-	/// The allback invoked when twe have been depleted of all charges
+	/// The callback invoked when twe have been depleted of all charges
 	var/datum/callback/expiration
-	/// Whether we should, on equippment, alert the caster that this item can block any of their spells
+	/// Whether we should, on equipping, alert the caster that this item can block any of their spells
 	/// This changes between true and false on equip and drop, don't set it outright to something
 	var/alert_caster_on_equip = TRUE
 
