@@ -401,12 +401,12 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	var/mess = check_damage_thresholds(owner)
 	prev_damage = damage
 
-	if(damage >= maxHealth)
+	if(damage >= maxHealth || (organ_flags & ORGAN_DESTROYED))
 		organ_flags |= ORGAN_FAILING
 	else
 		organ_flags &= ~ORGAN_FAILING
 
-	if(mess && owner && owner.stat <= SOFT_CRIT)
+	if(mess && owner && (owner.stat <= SOFT_CRIT))
 		to_chat(owner, mess)
 
 /// Sets an organ's damage to the amount "damage_amount", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
