@@ -147,6 +147,7 @@
 #include "knockoff_component.dm"
 #include "lesserform.dm"
 #include "limbsanity.dm"
+#include "liver.dm"
 #include "load_map_security.dm"
 #include "lungs.dm"
 #include "machine_disassembly.dm"

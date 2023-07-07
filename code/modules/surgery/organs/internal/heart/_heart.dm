@@ -229,23 +229,25 @@
 
 /obj/item/organ/internal/heart/cybernetic/emp_act(severity)
 	. = ..()
-
-	// If the owner doesn't need a heart, we don't need to do anything with it.
-	if(!owner.needs_heart())
-		return
-
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+	// Some effects are byassed if our owner (should it exist) doesn't need a heart
+	var/owner_needs_us = owner?.needs_heart()
+
+	if(owner_needs_us && !COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
 		owner.set_dizzy_if_lower(20 SECONDS)
 		owner.losebreath += 10
 		COOLDOWN_START(src, severe_cooldown, 20 SECONDS)
+
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 		Stop()
-		owner.visible_message(span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"), \
-						span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
 		addtimer(CALLBACK(src, PROC_REF(Restart)), 10 SECONDS)
+		if(owner_needs_us)
+			owner.visible_message(
+				span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"),
+				span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"),
+			)
 
 /obj/item/organ/internal/heart/cybernetic/on_life(seconds_per_tick, times_fired)
 	. = ..()
@@ -454,6 +456,9 @@
 	var/crystal_heal_timer
 	///Is the crystal still being built? True by default, gets changed after a timer.
 	var/being_built = TRUE
+
+/obj/structure/ethereal_crystal/relaymove()
+	return
 
 /obj/structure/ethereal_crystal/Initialize(mapload, obj/item/organ/internal/heart/ethereal/ethereal_heart)
 	. = ..()

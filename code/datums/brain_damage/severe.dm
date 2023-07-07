@@ -33,8 +33,10 @@
 	..()
 
 /datum/brain_trauma/severe/aphasia/on_lose()
-	owner.remove_blocked_language(subtypesof(/datum/language/), LANGUAGE_APHASIA)
-	owner.remove_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
+	if(!QDELING(owner))
+		owner.remove_blocked_language(subtypesof(/datum/language/), LANGUAGE_APHASIA)
+		owner.remove_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
+
 	..()
 
 /datum/brain_trauma/severe/blindness
@@ -116,6 +118,16 @@
 	random_gain = FALSE
 	paralysis_type = "legs"
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
+
+/datum/brain_trauma/severe/paralysis/hemiplegic
+	random_gain = FALSE
+	resilience = TRAUMA_RESILIENCE_ABSOLUTE
+
+/datum/brain_trauma/severe/paralysis/hemiplegic/left
+	paralysis_type = "left"
+
+/datum/brain_trauma/severe/paralysis/hemiplegic/right
+	paralysis_type = "right"
 
 /datum/brain_trauma/severe/narcolepsy
 	name = "Narcolepsy"

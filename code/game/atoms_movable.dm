@@ -1447,6 +1447,10 @@
 
 /// Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.
 /atom/movable/proc/get_language_holder(get_minds = TRUE)
+	if(QDELING(src))
+		CRASH("get_language_holder() called on a QDELing atom, \
+			this will try to re-instantiate the language holder that's about to be deleted, which is bad.")
+
 	if(!language_holder)
 		language_holder = new initial_language_holder(src)
 	return language_holder

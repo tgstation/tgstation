@@ -324,18 +324,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
-/datum/design/tscanner
-	name = "T-Ray Scanner"
-	id = "tscanner"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*1.5)
-	build_path = /obj/item/t_scanner
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
 /datum/design/requests_console
 	name = "Requests Console Frame"
 	id = "requests_console"
