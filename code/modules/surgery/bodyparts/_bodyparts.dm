@@ -955,9 +955,9 @@
 
 /// Applies the current top_offset of the owner to a given list of overlays if necessary, and returns the modified list
 /obj/item/bodypart/proc/apply_top_offset(list/overlays)
-	var/top_offset = get_applicable_top_offset()
+	var/applied_top_offset = get_applicable_top_offset()
 	for(var/image/overlay in overlays)
-		overlay.pixel_y += owner.top_offset
+		overlay.pixel_y += applied_top_offset
 	return overlays
 
 /// Returns the top_offset we should apply to our overlays after get_limb_icon(), useless if we don't have an owner
