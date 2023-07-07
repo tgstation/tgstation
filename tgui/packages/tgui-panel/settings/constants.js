@@ -9,6 +9,11 @@ export const SETTINGS_TABS = [
     id: 'general',
     name: 'General',
   },
+
+  {
+    id: 'textHighlight',
+    name: 'Text Highlights',
+  },
   {
     id: 'chatPage',
     name: 'Chat Tabs',
@@ -30,3 +35,5 @@ export const FONTS = [
   'Courier New',
   'Lucida Console',
 ];
+
+export const MAX_HIGHLIGHT_SETTINGS = 10;

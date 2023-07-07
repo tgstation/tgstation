@@ -11,7 +11,7 @@ type Data = {
   has_id_slot: BooleanLike;
 };
 
-export const NtosShipping = () => {
+export const NtosShipping = (props, context) => {
   return (
     <NtosWindow width={450} height={350}>
       <NtosWindow.Content scrollable>

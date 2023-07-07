@@ -58,6 +58,9 @@
 // mob cooldowns
 #define COOLDOWN_YAWN_PROPAGATION "yawn_propagation_cooldown"
 
+// admin verb cooldowns
+#define COOLDOWN_INTERNET_SOUND "internet_sound"
+
 //Shared cooldowns for actions
 #define MOB_SHARED_COOLDOWN_1 (1<<0)
 #define MOB_SHARED_COOLDOWN_2 (1<<1)
@@ -94,6 +97,8 @@
 */
 
 #define COOLDOWN_DECLARE(cd_index) var/##cd_index = 0
+
+#define STATIC_COOLDOWN_DECLARE(cd_index) var/static/##cd_index = 0
 
 #define COOLDOWN_START(cd_source, cd_index, cd_time) (cd_source.cd_index = world.time + (cd_time))
 

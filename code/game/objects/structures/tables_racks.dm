@@ -22,6 +22,9 @@
 	anchored = TRUE
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	layer = TABLE_LAYER
+	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
+	///TRUE if the table can be climbed on and have living mobs placed on it normally, FALSE otherwise
+	var/climbable = TRUE
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/glass_shard_type = /obj/item/shard
@@ -30,18 +33,21 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = 1
-	custom_materials = list(/datum/material/iron = 2000)
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	max_integrity = 100
 	integrity_failure = 0.33
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = list(SMOOTH_GROUP_TABLES)
-	canSmoothWith = list(SMOOTH_GROUP_TABLES)
+	smoothing_groups = SMOOTH_GROUP_TABLES
+	canSmoothWith = SMOOTH_GROUP_TABLES
 
 /obj/structure/table/Initialize(mapload, _buildstack)
 	. = ..()
 	if(_buildstack)
 		buildstack = _buildstack
-	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+
+	if (climbable)
+		AddElement(/datum/element/climbable)
 
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(table_carbon),
@@ -96,7 +102,7 @@
 
 /obj/structure/table/attack_hand(mob/living/user, list/modifiers)
 	if(Adjacent(user) && user.pulling)
-		if(isliving(user.pulling))
+		if(isliving(user.pulling) && climbable)
 			var/mob/living/pushed_mob = user.pulling
 			if(pushed_mob.buckled)
 				to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
@@ -293,7 +299,7 @@
 		else
 			for(var/i in custom_materials)
 				var/datum/material/M = i
-				new M.sheet_type(T, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+				new M.sheet_type(T, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
 		if(!wrench_disassembly)
 			new frame(T)
 		else
@@ -323,7 +329,7 @@
 		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
 	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-	log_combat(src, target, "shoved", "onto [src] (table)")
+	log_combat(shover, target, "shoved", "onto [src] (table)")
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /obj/structure/table/greyscale
@@ -352,6 +358,10 @@
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
 	var/list/attached_items = list()
+
+/obj/structure/table/rolling/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/noisy_movement)
 
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	. = ..()
@@ -385,13 +395,17 @@
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table-0"
 	base_icon_state = "glass_table"
-	custom_materials = list(/datum/material/glass = 2000)
+	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/glass
-	smoothing_groups = list(SMOOTH_GROUP_GLASS_TABLES)
-	canSmoothWith = list(SMOOTH_GROUP_GLASS_TABLES)
+	smoothing_groups = SMOOTH_GROUP_GLASS_TABLES
+	canSmoothWith = SMOOTH_GROUP_GLASS_TABLES
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 100)
+	armor_type = /datum/armor/table_glass
+
+/datum/armor/table_glass
+	fire = 80
+	acid = 100
 
 /obj/structure/table/glass/Initialize(mapload)
 	. = ..()
@@ -457,7 +471,7 @@
 	icon = 'icons/obj/smooth_structures/plasmaglass_table.dmi'
 	icon_state = "plasmaglass_table-0"
 	base_icon_state = "plasmaglass_table"
-	custom_materials = list(/datum/material/alloy/plasmaglass = 2000)
+	custom_materials = list(/datum/material/alloy/plasmaglass =SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/plasmaglass
 	glass_shard_type = /obj/item/shard/plasma
 	max_integrity = 100
@@ -477,8 +491,8 @@
 	buildstack = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	smoothing_groups = list(SMOOTH_GROUP_WOOD_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES
-	canSmoothWith = list(SMOOTH_GROUP_WOOD_TABLES)
+	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
+	canSmoothWith = SMOOTH_GROUP_WOOD_TABLES
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
@@ -504,8 +518,8 @@
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
-	smoothing_groups = list(SMOOTH_GROUP_FANCY_WOOD_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES or SMOOTH_GROUP_WOOD_TABLES
-	canSmoothWith = list(SMOOTH_GROUP_FANCY_WOOD_TABLES)
+	smoothing_groups = SMOOTH_GROUP_FANCY_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES or SMOOTH_GROUP_WOOD_TABLES
+	canSmoothWith = SMOOTH_GROUP_FANCY_WOOD_TABLES
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
 /obj/structure/table/wood/fancy/Initialize(mapload)
@@ -583,7 +597,16 @@
 	buildstack = /obj/item/stack/sheet/plasteel
 	max_integrity = 200
 	integrity_failure = 0.25
-	armor = list(MELEE = 10, BULLET = 30, LASER = 30, ENERGY = 100, BOMB = 20, BIO = 0, FIRE = 80, ACID = 70)
+	armor_type = /datum/armor/table_reinforced
+
+/datum/armor/table_reinforced
+	melee = 10
+	bullet = 30
+	laser = 30
+	energy = 100
+	bomb = 20
+	fire = 80
+	acid = 70
 
 /obj/structure/table/reinforced/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -629,8 +652,8 @@
 	base_icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	buildstack = /obj/item/stack/sheet/bronze
-	smoothing_groups = list(SMOOTH_GROUP_BRONZE_TABLES) //Don't smooth with SMOOTH_GROUP_TABLES
-	canSmoothWith = list(SMOOTH_GROUP_BRONZE_TABLES)
+	smoothing_groups = SMOOTH_GROUP_BRONZE_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
+	canSmoothWith = SMOOTH_GROUP_BRONZE_TABLES
 
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
@@ -642,7 +665,7 @@
 	icon = 'icons/obj/smooth_structures/rglass_table.dmi'
 	icon_state = "rglass_table-0"
 	base_icon_state = "rglass_table"
-	custom_materials = list(/datum/material/glass = 2000, /datum/material/iron = 2000)
+	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/rglass
 	max_integrity = 150
 
@@ -652,16 +675,16 @@
 	icon = 'icons/obj/smooth_structures/rplasmaglass_table.dmi'
 	icon_state = "rplasmaglass_table-0"
 	base_icon_state = "rplasmaglass_table"
-	custom_materials = list(/datum/material/alloy/plasmaglass = 2000, /datum/material/iron = 2000)
+	custom_materials = list(/datum/material/alloy/plasmaglass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/plasmarglass
 
 /obj/structure/table/reinforced/titaniumglass
 	name = "titanium glass table"
 	desc = "A titanium reinforced glass table, with a fresh coat of NT white paint."
 	icon = 'icons/obj/smooth_structures/titaniumglass_table.dmi'
-	icon_state = "titaniumglass_table-o"
+	icon_state = "titaniumglass_table-0"
 	base_icon_state = "titaniumglass_table"
-	custom_materials = list(/datum/material/alloy/titaniumglass = 2000)
+	custom_materials = list(/datum/material/alloy/titaniumglass =SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/titaniumglass
 	max_integrity = 250
 
@@ -671,7 +694,7 @@
 	icon = 'icons/obj/smooth_structures/plastitaniumglass_table.dmi'
 	icon_state = "plastitaniumglass_table-0"
 	base_icon_state = "plastitaniumglass_table"
-	custom_materials = list(/datum/material/alloy/plastitaniumglass = 2000)
+	custom_materials = list(/datum/material/alloy/plastitaniumglass =SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/plastitaniumglass
 	max_integrity = 300
 
@@ -689,9 +712,9 @@
 	smoothing_groups = null
 	canSmoothWith = null
 	can_buckle = 1
-	buckle_lying = NO_BUCKLE_LYING
-	buckle_requires_restraints = TRUE
-	custom_materials = list(/datum/material/silver = 2000)
+	buckle_lying = 90
+	climbable = FALSE
+	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
@@ -702,6 +725,7 @@
 		if(computer)
 			computer.table = src
 			break
+
 	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(mark_patient))
 	RegisterSignal(loc, COMSIG_ATOM_EXITED, PROC_REF(unmark_patient))
 
@@ -760,7 +784,7 @@
 /obj/structure/rack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "rack"
 	layer = TABLE_LAYER
 	density = TRUE
@@ -842,11 +866,11 @@
 /obj/item/rack_parts
 	name = "rack parts"
 	desc = "Parts of a rack."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "rack_parts"
 	inhand_icon_state = "rack_parts"
 	flags_1 = CONDUCT_1
-	custom_materials = list(/datum/material/iron=2000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	var/building = FALSE
 
 /obj/item/rack_parts/attackby(obj/item/W, mob/user, params)
@@ -864,9 +888,10 @@
 	if(do_after(user, 50, target = user, progress=TRUE))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
-		var/obj/structure/rack/R = new /obj/structure/rack(user.loc)
+		var/obj/structure/rack/R = new /obj/structure/rack(get_turf(src))
 		user.visible_message("<span class='notice'>[user] assembles \a [R].\
 			</span>", span_notice("You assemble \a [R]."))
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE
+

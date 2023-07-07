@@ -449,3 +449,10 @@
 	starting_author = "Kryson"
 	starting_title = "Unethically Grown Organics"
 	page_link = "Guide_to_cytology"
+
+/obj/item/book/manual/wiki/tgc
+	name = "Tactical Game Cards - Player's Handbook"
+	icon_state = "tgcbook"
+	starting_author = "Nanotrasen Edu-tainment Division"
+	starting_title = "Tactical Game Cards - Player's Handbook"
+	page_link = "Tactical_Game_Cards"

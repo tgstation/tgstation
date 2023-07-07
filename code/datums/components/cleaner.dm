@@ -69,12 +69,14 @@
 	SIGNAL_HANDLER
 	if(!proximity_flag)
 		return
+	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
 	var/clean_target
 	if(pre_clean_callback)
 		clean_target = pre_clean_callback?.Invoke(source, target, user)
 		if(clean_target == DO_NOT_CLEAN)
-			return
+			return .
 	INVOKE_ASYNC(src, PROC_REF(clean), source, target, user, clean_target) //signal handlers can't have do_afters inside of them
+	return .
 
 /**
  * Cleans something using this cleaner.
@@ -88,22 +90,25 @@
  * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
  */
 /datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, clean_target = TRUE)
-	if(!HAS_TRAIT(target, TRAIT_CURRENTLY_CLEANING)) //add the trait and overlay
-		ADD_TRAIT(target, TRAIT_CURRENTLY_CLEANING, REF(src))
+	//make sure we don't attempt to clean something while it's already being cleaned
+	if(HAS_TRAIT(target, TRAIT_CURRENTLY_CLEANING))
+		return
 
-		// We need to update our planes on overlay changes
-		RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(cleaning_target_moved))
-		var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, GAME_PLANE)
-		var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
-		if(target.plane > low_bubble.plane) //check if the higher overlay is necessary
+	//add the trait and overlay
+	ADD_TRAIT(target, TRAIT_CURRENTLY_CLEANING, REF(src))
+	// We need to update our planes on overlay changes
+	RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(cleaning_target_moved))
+	var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, GAME_PLANE)
+	var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
+	if(target.plane > low_bubble.plane) //check if the higher overlay is necessary
+		target.add_overlay(high_bubble)
+	else if(target.plane == low_bubble.plane)
+		if(target.layer > low_bubble.layer)
 			target.add_overlay(high_bubble)
-		else if(target.plane == low_bubble.plane)
-			if(target.layer > low_bubble.layer)
-				target.add_overlay(high_bubble)
-			else
-				target.add_overlay(low_bubble)
-		else //(target.plane < low_bubble.plane)
+		else
 			target.add_overlay(low_bubble)
+	else //(target.plane < low_bubble.plane)
+		target.add_overlay(low_bubble)
 
 	//set the cleaning duration
 	var/cleaning_duration = base_cleaning_duration
@@ -112,9 +117,7 @@
 		cleaning_duration = (cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_duration_modifier_offset, 1))
 
 	//do the cleaning
-	user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
 	if(do_after(user, cleaning_duration, target = target))
-		user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
 		if(clean_target)
 			for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
 				user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
@@ -123,8 +126,6 @@
 		on_cleaned_callback?.Invoke(source, target, user)
 
 	//remove the cleaning overlay
-	var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, GAME_PLANE)
-	var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
 	target.cut_overlay(low_bubble)
 	target.cut_overlay(high_bubble)
 	UnregisterSignal(target, COMSIG_MOVABLE_Z_CHANGED)

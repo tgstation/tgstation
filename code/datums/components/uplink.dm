@@ -48,10 +48,11 @@
 	has_progression = FALSE,
 	datum/uplink_handler/uplink_handler_override,
 )
+
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(OnAttackBy))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(OnAttackBy))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(interact))
 	if(istype(parent, /obj/item/implant))
 		RegisterSignal(parent, COMSIG_IMPLANT_ACTIVATED, PROC_REF(implant_activation))
@@ -65,6 +66,8 @@
 		RegisterSignal(parent, COMSIG_RADIO_NEW_MESSAGE, PROC_REF(new_message))
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, PROC_REF(pen_rotation))
+	else if(istype(parent, /obj/item/uplink/replacement))
+		RegisterSignal(parent, COMSIG_MOVABLE_HEAR, PROC_REF(on_heard))
 
 	if(owner)
 		src.owner = owner
@@ -73,6 +76,7 @@
 			purchase_log = GLOB.uplink_purchase_logs_by_key[owner]
 		else
 			purchase_log = new(owner, src)
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	src.lockable = lockable
 	src.active = enabled
 	if(!uplink_handler_override)
@@ -85,6 +89,7 @@
 	else
 		uplink_handler = uplink_handler_override
 	RegisterSignal(uplink_handler, COMSIG_UPLINK_HANDLER_ON_UPDATE, PROC_REF(handle_uplink_handler_update))
+	RegisterSignal(uplink_handler, COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED, PROC_REF(handle_uplink_replaced))
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
@@ -95,6 +100,19 @@
 	SIGNAL_HANDLER
 	SStgui.update_uis(src)
 
+/// When a new uplink is made via the syndicate beacon it locks all lockable uplinks and destroys replacement uplinks
+/datum/component/uplink/proc/handle_uplink_replaced()
+	SIGNAL_HANDLER
+	if(lockable)
+		lock_uplink()
+	if(!istype(parent, /obj/item/uplink/replacement))
+		return
+	var/obj/item/uplink_item = parent
+	do_sparks(number = 3, cardinal_only = FALSE, source = uplink_item)
+	uplink_item.visible_message(span_warning("The [uplink_item] suddenly combusts!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	new /obj/effect/decal/cleanable/ash(get_turf(uplink_item))
+	qdel(uplink_item)
+
 /// Adds telecrystals to the uplink. It is bad practice to use this outside of the component itself.
 /datum/component/uplink/proc/add_telecrystals(telecrystals_added)
 	set_telecrystals(uplink_handler.telecrystals + telecrystals_added)
@@ -102,6 +120,7 @@
 /// Sets the telecrystals of the uplink. It is bad practice to use this outside of the component itself.
 /datum/component/uplink/proc/set_telecrystals(new_telecrystal_amount)
 	uplink_handler.telecrystals = new_telecrystal_amount
+	uplink_handler.on_update()
 
 /datum/component/uplink/InheritComponent(datum/component/uplink/uplink)
 	lockable |= uplink.lockable
@@ -127,6 +146,22 @@
 
 	if(istype(item, /obj/item/stack/telecrystal))
 		load_tc(user, item)
+
+	if(!istype(item))
+		return
+
+	SEND_SIGNAL(item, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, user, src)
+
+/datum/component/uplink/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(user != owner)
+		return
+	examine_list += span_warning("[parent] contains your hidden uplink\
+		[unlock_code ? ", the code to unlock it is [span_boldwarning(unlock_code)]" : null].")
+
+	if(failsafe_code)
+		examine_list += span_warning("The failsafe code is [span_boldwarning(failsafe_code)].")
 
 /datum/component/uplink/proc/interact(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -166,20 +201,34 @@
 
 	data["maximum_potential_objectives"] = uplink_handler.maximum_potential_objectives
 	if(uplink_handler.has_objectives)
+		var/list/primary_objectives = list()
+		for(var/datum/objective/task as anything in uplink_handler.primary_objectives)
+			var/list/task_data = list()
+			if(length(primary_objectives) > length(GLOB.phonetic_alphabet))
+				task_data["task_name"] = "DIRECTIVE [length(primary_objectives) + 1]" //The english alphabet is WEAK
+			else
+				task_data["task_name"] = "DIRECTIVE [uppertext(GLOB.phonetic_alphabet[length(primary_objectives) + 1])]"
+			task_data["task_text"] = task.explanation_text
+			primary_objectives += list(task_data)
+
 		var/list/potential_objectives = list()
 		for(var/index in 1 to uplink_handler.potential_objectives.len)
 			var/datum/traitor_objective/objective = uplink_handler.potential_objectives[index]
 			var/list/objective_data = objective.uplink_ui_data(user)
 			objective_data["id"] = index
 			potential_objectives += list(objective_data)
+
 		var/list/active_objectives = list()
 		for(var/index in 1 to uplink_handler.active_objectives.len)
 			var/datum/traitor_objective/objective = uplink_handler.active_objectives[index]
 			var/list/objective_data = objective.uplink_ui_data(user)
 			objective_data["id"] = index
 			active_objectives += list(objective_data)
+
+		data["primary_objectives"] = primary_objectives
 		data["potential_objectives"] = potential_objectives
 		data["active_objectives"] = active_objectives
+		data["completed_final_objective"] = uplink_handler.final_objective
 
 	var/list/stock_list = uplink_handler.item_stock.Copy()
 	var/list/extra_purchasable_stock = list()
@@ -204,11 +253,13 @@
 		))
 
 	var/list/remaining_stock = list()
-	for(var/datum/uplink_item/item as anything in stock_list)
-		remaining_stock[item.type] = stock_list[item]
+	for(var/item as anything in stock_list)
+		remaining_stock[item] = stock_list[item]
 	data["extra_purchasable"] = extra_purchasable
 	data["extra_purchasable_stock"] = extra_purchasable_stock
 	data["current_stock"] = remaining_stock
+	data["shop_locked"] = uplink_handler.shop_locked
+	data["purchased_items"] = length(uplink_handler.purchase_log?.purchase_log)
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)
@@ -249,9 +300,7 @@
 		if("lock")
 			if(!lockable)
 				return TRUE
-			active = FALSE
-			locked = TRUE
-			SStgui.close_uis(src)
+			lock_uplink()
 
 	if(!uplink_handler.has_objectives)
 		return TRUE
@@ -292,6 +341,12 @@
 		if("objective_abort")
 			uplink_handler.abort_objective(objective)
 	return TRUE
+
+/// Proc that locks uplinks
+/datum/component/uplink/proc/lock_uplink()
+	active = FALSE
+	locked = TRUE
+	SStgui.close_uis(src)
 
 // Implant signal responses
 /datum/component/uplink/proc/implant_activation()
@@ -359,7 +414,7 @@
 	if(ismob(master.loc))
 		interact(null, master.loc)
 
-/datum/component/uplink/proc/new_message(datum/source, user, message, channel)
+/datum/component/uplink/proc/new_message(datum/source, mob/living/user, message, channel)
 	SIGNAL_HANDLER
 
 	if(channel != RADIO_CHANNEL_UPLINK)
@@ -367,7 +422,7 @@
 
 	if(!findtext(lowertext(message), lowertext(unlock_code)))
 		if(failsafe_code && findtext(lowertext(message), lowertext(failsafe_code)))
-			failsafe()  // no point returning cannot radio, youre probably ded
+			failsafe(user)  // no point returning cannot radio, youre probably ded
 		return
 	locked = FALSE
 	interact(null, user)
@@ -405,15 +460,42 @@
 		unlock_note = "<B>Uplink Degrees:</B> [english_list(unlock_code)] ([P.name])."
 
 /datum/component/uplink/proc/generate_code()
-	if(istype(parent,/obj/item/modular_computer/pda))
-		return "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
-	else if(istype(parent,/obj/item/radio))
-		return pick(GLOB.phonetic_alphabet)
-	else if(istype(parent,/obj/item/pen))
-		var/list/L = list()
+	var/returnable_code = ""
+
+	if(istype(parent, /obj/item/modular_computer/pda))
+		returnable_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+
+	else if(istype(parent, /obj/item/radio))
+		returnable_code = pick(GLOB.phonetic_alphabet)
+
+	else if(istype(parent, /obj/item/pen))
+		returnable_code = list()
 		for(var/i in 1 to PEN_ROTATIONS)
-			L += rand(1, 360)
-		return L
+			returnable_code += rand(1, 360)
+
+	if(!unlock_code) // assume the unlock_code is our "base" code that we don't want to duplicate, and if we don't have an unlock code, immediately return out of it since there's nothing to compare to.
+		return returnable_code
+
+	// duplicate checking, re-run the proc if we get a dupe to prevent the failsafe explodey code being the same as the unlock code.
+	if(islist(returnable_code))
+		if(english_list(returnable_code) == english_list(unlock_code)) // we pass english_list to the user anyways and for later processing, so we can just compare the english_list of the two lists.
+			return generate_code()
+
+	else if(unlock_code == returnable_code)
+		return generate_code()
+
+	return returnable_code
+
+/// Proc that unlocks a locked replacement uplink when it hears the unlock code from their datum
+/datum/component/uplink/proc/on_heard(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
+	if(!locked)
+		return
+	if(!findtext(hearing_args[HEARING_RAW_MESSAGE], unlock_code))
+		return
+	var/atom/replacement_uplink = parent
+	locked = FALSE
+	replacement_uplink.balloon_alert_to_viewers("beep", vision_distance = COMBAT_MESSAGE_RANGE)
 
 /datum/component/uplink/proc/failsafe(mob/living/carbon/user)
 	if(!parent)
@@ -426,3 +508,5 @@
 
 	explosion(parent, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 	qdel(parent) //Alternatively could brick the uplink.
+
+#undef PEN_ROTATIONS

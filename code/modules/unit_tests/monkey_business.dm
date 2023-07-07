@@ -13,7 +13,6 @@
 	var/monkey_angry_nth = 5 // every nth monkey will be angry
 
 /datum/unit_test/monkey_business/Run()
-	var/start_runtimes = GLOB.total_runtimes
 	for(var/monkey_id in 1 to length(GLOB.the_station_areas))
 		var/mob/living/carbon/human/monkey = allocate(/mob/living/carbon/human/consistent, get_first_open_turf_in_area(GLOB.the_station_areas[monkey_id]))
 		monkey.set_species(/datum/species/monkey)
@@ -23,5 +22,5 @@
 			new /datum/ai_controller/monkey/angry(monkey)
 		else
 			new /datum/ai_controller/monkey(monkey)
-		monkey.ai_controller.blackboard[BB_MONKEY_TARGET_MONKEYS] = TRUE
+		monkey.ai_controller.set_blackboard_key(BB_MONKEY_TARGET_MONKEYS, TRUE)
 	sleep(monkey_timer)

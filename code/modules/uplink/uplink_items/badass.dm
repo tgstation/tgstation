@@ -12,8 +12,17 @@
 			Can blow the deepest of covers."
 	item = /obj/item/toy/balloon/syndicate
 	cost = 20
+	lock_other_purchases = TRUE
 	cant_discount = TRUE
 	illegal_tech = FALSE
+
+/datum/uplink_item/badass/balloon/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	. = ..()
+
+	if(!.)
+		return
+
+	notify_ghosts("[user] has purchased a BADASS Syndicate Balloon!", source = src, action = NOTIFY_ORBIT, header = "What are they THINKING?")
 
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
@@ -32,20 +41,17 @@
 	cost = 2
 	illegal_tech = FALSE
 
-// Low progression
-
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
 	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods \
 			and services at lucrative prices. The briefcase also feels a little heavier to hold; it has been \
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
 	item = /obj/item/storage/secure/briefcase/syndie
-	cost = 5
+	cost = 3
 	progression_minimum = 5 MINUTES
 	restricted = TRUE
 	illegal_tech = FALSE
 
-// Ultra high progression
 /datum/uplink_item/badass/costumes/clown
 	name = "Clown Costume"
 	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."
@@ -78,3 +84,9 @@
 	purchasable_from = ALL
 	progression_minimum = 110 MINUTES
 	item = /obj/item/storage/box/syndie_kit/centcom_costume
+
+/datum/uplink_item/badass/stickers
+	name = "Syndicate Sticker Pack"
+	desc = "Contains 8 random stickers precisely engineered to resemble suspicious objects, which may or may not be useful for fooling crew."
+	item = /obj/item/storage/box/syndie_kit/stickers
+	cost = 1

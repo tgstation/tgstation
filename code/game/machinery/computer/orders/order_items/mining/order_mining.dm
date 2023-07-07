@@ -2,8 +2,8 @@
 	category_index = CATEGORY_MINING
 
 /datum/orderable_item/mining/marker_beacon
-	item_path = /obj/item/stack/marker_beacon
-	cost_per_order = 10
+	item_path = /obj/item/stack/marker_beacon/ten
+	cost_per_order = 100
 
 /datum/orderable_item/mining/skeleton_key
 	item_path = /obj/item/skeleton_key
@@ -21,12 +21,6 @@
 	item_path = /obj/item/mod/control/pre_equipped/mining
 	desc = "A mining-themed MODsuit that works best when in a mining environment."
 	cost_per_order = 3000
-
-/datum/orderable_item/mining/mining_ltsrbt
-	item_path = /obj/item/circuitboard/machine/mining_ltsrbt
-	name = "Mining LTSRBT Board"
-	desc = "Tired of waiting on the Cargo shuttle? This item lets you bluespace mining orders directly to the station."
-	cost_per_order = 750
 
 /datum/orderable_item/mining/mining_belt
 	item_path = /obj/item/storage/belt/mining
@@ -78,11 +72,16 @@
 
 /datum/orderable_item/mining/conscription_kit
 	item_path = /obj/item/storage/backpack/duffelbag/mining_conscript
+	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 	cost_per_order = 1500
 
 /datum/orderable_item/mining/capsule
 	item_path = /obj/item/survivalcapsule
 	cost_per_order = 400
+
+/datum/orderable_item/mining/capsule/bathroom
+	item_path = /obj/item/survivalcapsule/bathroom
+	cost_per_order = 375
 
 /datum/orderable_item/mining/capsule_luxury
 	item_path = /obj/item/survivalcapsule/luxury
@@ -94,7 +93,7 @@
 
 /datum/orderable_item/mining/kheiralcuffs
 	item_path = /obj/item/kheiral_cuffs
-	cost_per_order = 2000
+	cost_per_order = 750
 
 /datum/orderable_item/mining/bhop
 	item_path = /obj/item/clothing/shoes/bhop
@@ -103,3 +102,7 @@
 /datum/orderable_item/mining/hiking_boots
 	item_path = /obj/item/clothing/shoes/winterboots/ice_boots
 	cost_per_order = 2500
+
+/datum/orderable_item/mining/style_meter
+	item_path = /obj/item/style_meter
+	cost_per_order = 1500

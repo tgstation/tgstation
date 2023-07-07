@@ -10,9 +10,10 @@ Doesn't work on other aliens/AI.*/
 	name = "Alien Power"
 	panel = "Alien"
 	background_icon_state = "bg_alien"
-	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
+	overlay_icon_state = "bg_alien_border"
+	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "spell_default"
-	check_flags = AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	melee_cooldown_time = 0 SECONDS
 
 	/// How much plasma this action uses.
@@ -199,6 +200,10 @@ Doesn't work on other aliens/AI.*/
 	desc = "Drench an object in acid, destroying it over time."
 	button_icon_state = "alien_acid"
 	plasma_cost = 200
+	/// The acid power for the aliens acid corrosion, will ignore mobs
+	var/corrosion_acid_power = 200
+	/// The acid volume for the aliens acid corrosion, will ignore mobs
+	var/corrosion_acid_volume = 1000
 
 /datum/action/cooldown/alien/acid/corrosion/set_click_ability(mob/on_who)
 	. = ..()
@@ -227,7 +232,9 @@ Doesn't work on other aliens/AI.*/
 	return ..()
 
 /datum/action/cooldown/alien/acid/corrosion/Activate(atom/target)
-	if(!target.acid_act(200, 1000))
+	if(isturf(target))
+		target.AddComponent(/datum/component/acid, corrosion_acid_power, corrosion_acid_volume, GLOB.acid_overlay, /particles/acid, turf_acid_ignores_mobs = TRUE)
+	else if(!target.acid_act(corrosion_acid_power, corrosion_acid_volume))
 		to_chat(owner, span_noticealien("You cannot dissolve this object."))
 		return FALSE
 
@@ -239,7 +246,7 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/alien/acid/neurotoxin
 	name = "Spit Neurotoxin"
-	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
+	desc = "Spits neurotoxin at someone, dealing large amounts of stamina damage."
 	button_icon_state = "alien_neurotoxin_0"
 	plasma_cost = 50
 
@@ -258,7 +265,7 @@ Doesn't work on other aliens/AI.*/
 	to_chat(on_who, span_notice("You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B>"))
 
 	button_icon_state = "alien_neurotoxin_1"
-	UpdateButtons()
+	build_all_button_icons()
 	on_who.update_icons()
 
 /datum/action/cooldown/alien/acid/neurotoxin/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
@@ -270,21 +277,16 @@ Doesn't work on other aliens/AI.*/
 		to_chat(on_who, span_notice("You empty your neurotoxin gland."))
 
 	button_icon_state = "alien_neurotoxin_0"
-	UpdateButtons()
+	build_all_button_icons()
 	on_who.update_icons()
 
+// We do this in InterceptClickOn() instead of Activate()
+// because we use the click parameters for aiming the projectile
+// (or something like that)
 /datum/action/cooldown/alien/acid/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
 	if(!.)
 		unset_click_ability(caller, refund_cooldown = FALSE)
-		return FALSE
-
-	// We do this in InterceptClickOn() instead of Activate()
-	// because we use the click parameters for aiming the projectile
-	// (or something like that)
-	var/turf/user_turf = caller.loc
-	var/turf/target_turf = get_step(caller, target.dir) // Get the tile infront of the move, based on their direction
-	if(!isturf(target_turf))
 		return FALSE
 
 	var/modifiers = params2list(params)
@@ -296,7 +298,7 @@ Doesn't work on other aliens/AI.*/
 	neurotoxin.preparePixelProjectile(target, caller, modifiers)
 	neurotoxin.firer = caller
 	neurotoxin.fire()
-	caller.newtonian_move(get_dir(target_turf, user_turf))
+	caller.newtonian_move(get_dir(target, caller))
 	return TRUE
 
 // Has to return TRUE, otherwise is skipped.
@@ -342,34 +344,14 @@ Doesn't work on other aliens/AI.*/
 	new choice_path(owner.loc)
 	return TRUE
 
-/datum/action/cooldown/alien/sneak
+/datum/action/cooldown/sneak/alien
 	name = "Sneak"
+	panel = "Alien"
 	desc = "Blend into the shadows to stalk your prey."
 	button_icon_state = "alien_sneak"
-	/// The alpha we go to when sneaking.
-	var/sneak_alpha = 75
-
-/datum/action/cooldown/alien/sneak/Remove(mob/living/remove_from)
-	if(HAS_TRAIT(remove_from, TRAIT_ALIEN_SNEAK))
-		remove_from.alpha = initial(remove_from.alpha)
-		REMOVE_TRAIT(remove_from, TRAIT_ALIEN_SNEAK, name)
-
-	return ..()
-
-/datum/action/cooldown/alien/sneak/Activate(atom/target)
-	if(HAS_TRAIT(owner, TRAIT_ALIEN_SNEAK))
-		// It's safest to go to the initial alpha of the mob.
-		// Otherwise we get permanent invisbility exploits.
-		owner.alpha = initial(owner.alpha)
-		to_chat(owner, span_noticealien("You reveal yourself!"))
-		REMOVE_TRAIT(owner, TRAIT_ALIEN_SNEAK, name)
-
-	else
-		owner.alpha = sneak_alpha
-		to_chat(owner, span_noticealien("You blend into the shadows..."))
-		ADD_TRAIT(owner, TRAIT_ALIEN_SNEAK, name)
-
-	return TRUE
+	background_icon_state = "bg_alien"
+	overlay_icon_state = "bg_alien_border"
+	sneak_alpha = 25
 
 /datum/action/cooldown/alien/regurgitate
 	name = "Regurgitate"
@@ -383,7 +365,7 @@ Doesn't work on other aliens/AI.*/
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/alien/adult/alieninated_owner = owner
-	var/obj/item/organ/internal/stomach/alien/melting_pot = alieninated_owner.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/alien/melting_pot = alieninated_owner.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!melting_pot)
 		owner.visible_message(span_clown("[src] gags, and spits up a bit of purple liquid. Ewwww."), \
 			span_alien("You feel a pain in your... chest? There's nothing there there's nothing there no no n-"))
@@ -400,20 +382,20 @@ Doesn't work on other aliens/AI.*/
 
 /// Gets the plasma level of this carbon's plasma vessel, or -1 if they don't have one
 /mob/living/carbon/proc/getPlasma()
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/internal/alien/plasmavessel/vessel = get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel)
 	if(!vessel)
 		return -1
 	return vessel.stored_plasma
 
 /// Adjusts the plasma level of the carbon's plasma vessel if they have one
 /mob/living/carbon/proc/adjustPlasma(amount)
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/internal/alien/plasmavessel/vessel = get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel)
 	if(!vessel)
 		return FALSE
 	vessel.stored_plasma = max(vessel.stored_plasma + amount,0)
 	vessel.stored_plasma = min(vessel.stored_plasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
 	for(var/datum/action/cooldown/alien/ability in actions)
-		ability.UpdateButtons()
+		ability.build_all_button_icons()
 	return TRUE
 
 /mob/living/carbon/alien/adjustPlasma(amount)

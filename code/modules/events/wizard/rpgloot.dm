@@ -5,6 +5,8 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 	description = "Every item in the world will have fantastical names."
+	min_wizard_trigger_potency = 4
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/wizard/rpgloot/start()
 	GLOB.rpgloot_controller = new /datum/rpgloot_controller
@@ -26,12 +28,16 @@
 	if(!proximity || !istype(target))
 		return
 
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	target.AddComponent(/datum/component/fantasy, upgrade_amount, null, null, can_backfire, TRUE)
 
 	uses -= 1
 	if(!uses)
 		visible_message(span_warning("[src] vanishes, its magic completely consumed from the fortification."))
 		qdel(src)
+
+	return .
 
 /obj/item/upgradescroll/unlimited
 	name = "unlimited foolproof item fortification scroll"
@@ -90,7 +96,7 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 			var/datum/storage/storage_component = storage_item.atom_storage
 			if(prob(upgrade_scroll_chance) && storage_item.contents.len < storage_component.max_slots && !storage_item.invisibility)
 				var/obj/item/upgradescroll/scroll = new(get_turf(storage_item))
-				storage_item.atom_storage?.attempt_insert(scroll, override = TRUE)
+				storage_item.atom_storage?.attempt_insert(scroll, override = TRUE, force = STORAGE_SOFT_LOCKED)
 				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
 				if(isturf(scroll.loc))
 					qdel(scroll)

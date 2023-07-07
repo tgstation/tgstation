@@ -69,7 +69,7 @@
 	return ..()
 
 /obj/effect/gibspawner/generic/animal
-	gib_mob_type = /mob/living/simple_animal/pet
+	gib_mob_type = /mob/living/basic/pet
 
 
 
@@ -81,7 +81,15 @@
 
 /obj/effect/gibspawner/human/Initialize(mapload)
 	if(!gibdirections.len)
-		gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST),list(SOUTH, SOUTHEAST, SOUTHWEST),list(WEST, NORTHWEST, SOUTHWEST),list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, GLOB.alldirs, list())
+		gibdirections = list(
+			list(NORTH, NORTHEAST, NORTHWEST),
+			list(SOUTH, SOUTHEAST, SOUTHWEST),
+			list(WEST, NORTHWEST, SOUTHWEST),
+			list(EAST, NORTHEAST, SOUTHEAST),
+			GLOB.alldirs,
+			GLOB.alldirs,
+			list(),
+		)
 	return ..()
 
 

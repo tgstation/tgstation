@@ -7,7 +7,9 @@
 	name = "Blood Crawl"
 	desc = "Allows you to phase in and out of existance via pools of blood."
 	background_icon_state = "bg_demon"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	overlay_icon_state = "bg_demon_border"
+
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "bloodcrawl"
 
 	spell_requirements = NONE
@@ -23,7 +25,7 @@
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/Grant(mob/grant_to)
 	. = ..()
-	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, PROC_REF(update_icon_on_signal))
+	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/Remove(mob/remove_from)
 	. = ..()
@@ -87,7 +89,7 @@
 		jaunter.notransform = FALSE
 		return FALSE
 
-	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_icon_on_signal))
+	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 	if(equip_blood_hands && iscarbon(jaunter))
 		jaunter.drop_all_held_items()
 		// Give them some bloody hands to prevent them from doing things
@@ -273,10 +275,10 @@
 	to_chat(jaunter, span_clown("[victim] joins your party! Your health is fully restored."))
 	consumed_mobs += victim
 	RegisterSignal(victim, COMSIG_MOB_STATCHANGE, PROC_REF(on_victim_statchange))
-	RegisterSignal(victim, COMSIG_PARENT_QDELETING, PROC_REF(on_victim_deleted))
+	RegisterSignal(victim, COMSIG_QDELETING, PROC_REF(on_victim_deleted))
 
 /**
- * Signal proc for COMSIG_LIVING_DEATH and COMSIG_PARENT_QDELETING
+ * Signal proc for COMSIG_LIVING_DEATH and COMSIG_QDELETING
  *
  * If our demon is deleted or destroyed, expel all of our consumed mobs
  */
@@ -287,7 +289,7 @@
 	for(var/mob/living/friend as anything in consumed_mobs)
 
 		// Unregister the signals first
-		UnregisterSignal(friend, list(COMSIG_MOB_STATCHANGE, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(friend, list(COMSIG_MOB_STATCHANGE, COMSIG_QDELETING))
 
 		friend.forceMove(release_turf)
 		// Heals them back to state one

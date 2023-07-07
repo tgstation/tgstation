@@ -47,7 +47,8 @@
 		qdel(src)
 
 	// Or, if we do have shots left, keep it going.
-	else if(--shots_left > 0)
+	else if(shots_left >= 0)
+		shots_left--
 		addtimer(CALLBACK(src, PROC_REF(fire_loop), source, shots_left, hits), rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 6))
 
 	// Otherwise, if we have no shots left, stop the hallucination.
@@ -112,7 +113,8 @@
 		return
 
 	hallucinator.playsound_local(source, SFX_SWING_HIT, 50, TRUE)
-	if(--hits_remaing <= 0)
+	hits_remaing--
+	if(hits_remaing <= 0)
 		qdel(src)
 
 	else
@@ -159,7 +161,8 @@
 		return
 
 	hallucinator.playsound_local(source, 'sound/items/timer.ogg', 25, FALSE)
-	if(--ticks_remaining <= 0)
+	ticks_remaining--
+	if(ticks_remaining <= 0)
 		qdel(src)
 
 	else

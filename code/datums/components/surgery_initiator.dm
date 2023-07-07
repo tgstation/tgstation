@@ -11,6 +11,9 @@
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	var/obj/item/surgery_tool = parent
+	surgery_tool.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
+
 /datum/component/surgery_initiator/Destroy(force, silent)
 	last_user_ref = null
 	surgery_target_ref = null
@@ -19,9 +22,10 @@
 
 /datum/component/surgery_initiator/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(initiate_surgery_moment))
+	RegisterSignal(parent, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(add_item_context))
 
 /datum/component/surgery_initiator/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_ATTACK)
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET)
 	unregister_signals()
 
 /datum/component/surgery_initiator/proc/unregister_signals()
@@ -57,7 +61,7 @@
 	var/list/available_surgeries = get_available_surgeries(user, target)
 
 	if(!length(available_surgeries))
-		if (target.body_position == LYING_DOWN)
+		if (target.body_position == LYING_DOWN || !(target.mobility_flags & MOBILITY_LIEDOWN))
 			target.balloon_alert(user, "no surgeries available!")
 		else
 			target.balloon_alert(user, "make them lie down!")
@@ -91,11 +95,11 @@
 				continue
 			if(surgery.requires_bodypart_type && !(affecting.bodytype & surgery.requires_bodypart_type))
 				continue
-			if((surgery.surgery_flags & SURGERY_REQUIRES_REAL_LIMB) && affecting.is_pseudopart)
+			if((surgery.surgery_flags & SURGERY_REQUIRES_REAL_LIMB) && (affecting.bodypart_flags & BODYPART_PSEUDOPART))
 				continue
 		else if(carbon_target && (surgery.surgery_flags & SURGERY_REQUIRE_LIMB)) //mob with no limb in surgery zone when we need a limb
 			continue
-		if((surgery.surgery_flags & SURGERY_REQUIRE_RESTING) && target.body_position != LYING_DOWN)
+		if(IS_IN_INVALID_SURGICAL_POSITION(target, surgery))
 			continue
 		if(!surgery.can_start(user, target))
 			continue
@@ -126,7 +130,6 @@
 	var/required_tool_type = TOOL_CAUTERY
 	var/obj/item/close_tool = user.get_inactive_held_item()
 	var/is_robotic = the_surgery.requires_bodypart_type == BODYTYPE_ROBOTIC
-
 	if(is_robotic)
 		required_tool_type = TOOL_SCREWDRIVER
 
@@ -204,7 +207,7 @@
 				return TRUE
 
 			var/atom/movable/screen/zone_sel/zone_selector = user.hud_used?.zone_select
-			zone_selector?.set_selected_zone(zone, user)
+			zone_selector?.set_selected_zone(zone, user, should_log = FALSE)
 
 			return TRUE
 		if ("start_surgery")
@@ -300,7 +303,7 @@
 		target.balloon_alert(user, "not the right type of limb!")
 		return
 
-	if ((surgery.surgery_flags & SURGERY_REQUIRE_RESTING) && target.body_position != LYING_DOWN)
+	if (IS_IN_INVALID_SURGICAL_POSITION(target, surgery))
 		target.balloon_alert(user, "patient is not lying down!")
 		return
 
@@ -334,3 +337,20 @@
 		return FALSE
 
 	return !get_location_accessible(target, user.zone_selected)
+
+/**
+ * Adds context sensitivy directly to the surgery initator file for screentips
+ * Arguments:
+ * * source - the surgery drapes, cloak, or bedsheet calling surgery initator
+ * * context - Preparing Surgery, the component has a lot of ballon alerts to deal with most contexts
+ * * target - the living target mob you are doing surgery on
+ * * user - refers to user who will see the screentip when the drapes are on a living target
+ */
+/datum/component/surgery_initiator/proc/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)
+	SIGNAL_HANDLER
+
+	if(!isliving(target))
+		return NONE
+
+	context[SCREENTIP_CONTEXT_LMB] = "Prepare Surgery"
+	return CONTEXTUAL_SCREENTIP_SET

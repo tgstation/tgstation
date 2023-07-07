@@ -11,22 +11,19 @@
 */
 /datum/action/innate/sign_language
 	name = "Sign Language"
-	icon_icon = 'icons/hud/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "sign_language"
 	desc = "Allows you to communicate via sign language."
 	owner_has_control = FALSE
 
-/datum/action/innate/sign_language/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force)
-	. = ..()
-	if(!. || !button)
-		return
-	if(HAS_TRAIT(owner, TRAIT_SIGN_LANG))
-		button.icon_state = "template_active"
-	else
-		button.icon_state = "template"
+/datum/action/innate/sign_language/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	return HAS_TRAIT(owner, TRAIT_SIGN_LANG)
 
 /datum/action/innate/sign_language/Grant(mob/living/carbon/grant_to)
-	..()
+	. = ..()
+	if(!owner)
+		return
+
 	if (HAS_TRAIT(grant_to, TRAIT_MUTE))
 		RegisterSignal(grant_to, SIGNAL_REMOVETRAIT(TRAIT_MUTE), PROC_REF(on_unmuted))
 		// Convenience. Mute Carbons can only speak with sign language.
@@ -38,7 +35,7 @@
 		show_action()
 
 /datum/action/innate/sign_language/Remove(mob/living/carbon/grant_to)
-	..()
+	. = ..()
 	UnregisterSignal(grant_to, list(
 		SIGNAL_ADDTRAIT(TRAIT_SIGN_LANG),
 		SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG),
@@ -60,8 +57,8 @@
 /// Shows the linked action to the owner Carbon.
 /datum/action/innate/sign_language/proc/show_action()
 	owner_has_control = TRUE
-	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SIGN_LANG), PROC_REF(update_icon_on_signal))
-	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG), PROC_REF(update_icon_on_signal))
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SIGN_LANG), PROC_REF(update_status_on_signal))
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG), PROC_REF(update_status_on_signal))
 	GiveAction(owner)
 
 /// Hides the linked action from the owner Carbon.

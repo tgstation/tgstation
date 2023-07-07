@@ -108,8 +108,8 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/move_ores()
-	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.flat_equipment && istype(chassis, /obj/vehicle/sealed/mecha/working/ripley))
-		var/obj/vehicle/sealed/mecha/working/ripley/R = chassis //we could assume that it's a ripley because it has a clamp, but that's ~unsafe~ and ~bad practice~
+	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley) && (locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.flat_equipment))
+		var/obj/vehicle/sealed/mecha/ripley/R = chassis //we could assume that it's a ripley because it has a clamp, but that's ~unsafe~ and ~bad practice~
 		R.collect_ore()
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/living/user)
@@ -121,7 +121,7 @@
 		if(LAZYLEN(target.butcher_results) || LAZYLEN(target.guaranteed_butcher_results))
 			SEND_SIGNAL(src, COMSIG_MECHA_DRILL_MOB, chassis, target)
 		else
-			investigate_log("has been gibbed by [src] (attached to [chassis]).", INVESTIGATE_DEATHS)
+			target.investigate_log("has been gibbed by [src] (attached to [chassis]).", INVESTIGATE_DEATHS)
 			target.gib()
 	else
 		//drill makes a hole
@@ -167,12 +167,14 @@
 	if(!loc)
 		STOP_PROCESSING(SSfastprocess, src)
 		qdel(src)
-	if(istype(loc, /obj/vehicle/sealed/mecha/working) && scanning_time <= world.time)
-		var/obj/vehicle/sealed/mecha/working/mecha = loc
-		if(!LAZYLEN(mecha.occupants))
-			return
-		scanning_time = world.time + equip_cooldown
-		mineral_scan_pulse(get_turf(src))
+	if(scanning_time > world.time)
+		return
+	if(!chassis || !ismecha(loc))
+		return
+	if(!LAZYLEN(chassis.occupants))
+		return
+	scanning_time = world.time + equip_cooldown
+	mineral_scan_pulse(get_turf(src))
 
 #undef DRILL_BASIC
 #undef DRILL_HARDENED

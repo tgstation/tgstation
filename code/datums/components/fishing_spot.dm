@@ -17,7 +17,7 @@
 			stack_trace("Invalid fishing spot configuration \"[configuration]\" passed down to fishing spot component.")
 			return COMPONENT_INCOMPATIBLE
 		fish_source = preset_configuration
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(handle_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
 
 
@@ -59,4 +59,6 @@
 
 /datum/component/fishing_spot/proc/fishing_completed(datum/fishing_challenge/source, mob/user, success, perfect)
 	if(success)
+		var/obj/item/fish/caught = source.reward_path
+		user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
 		fish_source.dispense_reward(source.reward_path, user)

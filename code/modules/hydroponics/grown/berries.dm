@@ -74,6 +74,7 @@
 	icon_state = "deathberrypile"
 	bite_consumption_mod = 3
 	foodtypes = FRUIT | TOXIC
+	juice_results = list(/datum/reagent/consumable/poisonberryjuice = 0)
 	tastes = list("death-berry" = 1)
 	distill_reagent = null
 	wine_power = 50

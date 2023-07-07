@@ -282,6 +282,8 @@
 /mob/living/silicon/robot/proc/activated(obj/item/item_module)
 	if(item_module in held_items)
 		return TRUE
+	if(item_module.loc in held_items) //Apparatus check
+		return TRUE
 	return FALSE
 
 /**
@@ -397,7 +399,7 @@
 		if(slot_num > 4) // not >3 otherwise cycling with just one item on module 3 wouldn't work
 			slot_num = 1 //Wrap around.
 
-/mob/living/silicon/robot/swap_hand()
+/mob/living/silicon/robot/perform_hand_swap()
 	cycle_modules()
 
 /mob/living/silicon/robot/can_hold_items(obj/item/I)

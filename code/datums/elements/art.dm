@@ -8,10 +8,10 @@
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 	impressiveness = impress
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/art/Detach(datum/target)
-	UnregisterSignal(target, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(target, COMSIG_ATOM_EXAMINE)
 	return ..()
 
 /datum/element/art/proc/apply_moodlet(atom/source, mob/living/user, impress)
@@ -47,10 +47,8 @@
 	if(!do_after(user, 2 SECONDS, target = source))
 		return
 	var/mult = 1
-	if(isobj(source))
-		var/obj/art_piece = source
-		mult = art_piece.get_integrity() / art_piece.max_integrity
-
+	if(source.uses_integrity)
+		mult = source.get_integrity() / source.max_integrity
 	apply_moodlet(source, user, impressiveness * mult)
 
 /datum/element/art/rev

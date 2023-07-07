@@ -37,14 +37,17 @@
  * this can be extended if you wish to add unique effects on level up for wizards.
  * - [delevel_spell][/datum/action/cooldown/spell/delevel_spell] is where the process of removing a spell level is handled.
  * this can be extended if you wish to undo unique effects on level up for wizards.
- * - [update_spell_name][/datum/action/cooldown/spell/update_spell_name] updates the prefix of the spell name based on its level.
+ * - [get_spell_title][/datum/action/cooldown/spell/get_spell_title] returns the prefix of the spell name based on its level,
+ * for use in updating the button name / spell name.
  */
 /datum/action/cooldown/spell
 	name = "Spell"
 	desc = "A wizard spell."
 	background_icon_state = "bg_spell"
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "spell_default"
+	overlay_icon_state = "bg_spell_border"
+	active_overlay_icon_state = "bg_spell_border_active_red"
 	check_flags = AB_CHECK_CONSCIOUS
 	panel = "Spells"
 	melee_cooldown_time = 0 SECONDS
@@ -62,6 +65,8 @@
 	var/invocation
 	/// What is shown in chat when the user casts the spell, only matters for INVOCATION_EMOTE
 	var/invocation_self_message
+	/// if true, doesn't garble the invocation sometimes with backticks
+	var/garbled_invocation_prob = 50
 	/// What type of invocation the spell is.
 	/// Can be "none", "whisper", "shout", "emote"
 	var/invocation_type = INVOCATION_NONE
@@ -95,16 +100,16 @@
 		return
 
 	// Register some signals so our button's icon stays up to date
-	if(spell_requirements & SPELL_REQUIRES_OFF_CENTCOM)
-		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_icon_on_signal))
+	if(spell_requirements & SPELL_REQUIRES_STATION)
+		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_status_on_signal))
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
-		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(update_icon_on_signal))
+		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(update_status_on_signal))
 	if(invocation_type == INVOCATION_EMOTE)
-		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), PROC_REF(update_icon_on_signal))
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), PROC_REF(update_status_on_signal))
 	if(invocation_type == INVOCATION_SHOUT || invocation_type == INVOCATION_WHISPER)
-		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_MUTE), SIGNAL_REMOVETRAIT(TRAIT_MUTE)), PROC_REF(update_icon_on_signal))
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_MUTE), SIGNAL_REMOVETRAIT(TRAIT_MUTE)), PROC_REF(update_status_on_signal))
 
-	RegisterSignals(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(update_icon_on_signal))
+	RegisterSignals(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(update_status_on_signal))
 	owner.client?.stat_panel.send_message("check_spells")
 
 /datum/action/cooldown/spell/Remove(mob/living/remove_from)
@@ -134,6 +139,8 @@
 
 // Where the cast chain starts
 /datum/action/cooldown/spell/PreActivate(atom/target)
+	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
+		return FALSE
 	if(!is_valid_target(target))
 		return FALSE
 
@@ -147,7 +154,8 @@
 
 	// Certain spells are not allowed on the centcom zlevel
 	var/turf/caster_turf = get_turf(owner)
-	if((spell_requirements & SPELL_REQUIRES_OFF_CENTCOM) && is_centcom_level(caster_turf.z))
+	// Spells which require being on the station
+	if((spell_requirements & SPELL_REQUIRES_STATION) && !is_station_level(caster_turf.z))
 		if(feedback)
 			to_chat(owner, span_warning("You can't cast [src] here!"))
 		return FALSE
@@ -156,7 +164,7 @@
 		// No point in feedback here, as mindless mobs aren't players
 		return FALSE
 
-	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !owner.mind?.miming)
+	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !HAS_TRAIT(owner, TRAIT_MIMING))
 		// In the future this can be moved out of spell checks exactly
 		if(feedback)
 			to_chat(owner, span_warning("You must dedicate yourself to silence first!"))
@@ -174,7 +182,7 @@
 			to_chat(owner, span_warning("[src] cannot be cast unless you are completely manifested in the material plane!"))
 		return FALSE
 
-	if(!try_invoke(feedback = feedback))
+	if(!try_invoke(owner, feedback = feedback))
 		return FALSE
 
 	if(ishuman(owner))
@@ -184,7 +192,7 @@
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
-			if(!(human_owner.head?.clothing_flags & CASTING_CLOTHES))
+			if(!(human_owner.head?.clothing_flags & CASTING_CLOTHES) && !(human_owner.glasses?.clothing_flags & CASTING_CLOTHES))
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
 				return FALSE
@@ -234,7 +242,7 @@
 	if(!(precast_result & SPELL_NO_FEEDBACK))
 		// We do invocation and sound effects here, before actual cast
 		// That way stuff like teleports or shape-shifts can be invoked before ocurring
-		spell_feedback()
+		spell_feedback(owner)
 
 	// Actually cast the spell. Main effects go here
 	cast(cast_on)
@@ -246,7 +254,7 @@
 	// And then proceed with the aftermath of the cast
 	// Final effects that happen after all the casting is done can go here
 	after_cast(cast_on)
-	UpdateButtons()
+	build_all_button_icons()
 
 	return TRUE
 
@@ -295,52 +303,57 @@
  */
 /datum/action/cooldown/spell/proc/after_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
-
-	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
-	if(!owner)
+	if(!owner) // Could have been destroyed by the effect of the spell
+		SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
 		return
 
-	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
-
-	// Sparks and smoke can only occur if there's an owner to source them from.
 	if(sparks_amt)
 		do_sparks(sparks_amt, FALSE, get_turf(owner))
-
 	if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
 		var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
 		smoke.set_up(smoke_amt, holder = owner, location = get_turf(owner))
 		smoke.start()
 
+	// Send signals last in case they delete the spell
+	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
+	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
+
 /// Provides feedback after a spell cast occurs, in the form of a cast sound and/or invocation
-/datum/action/cooldown/spell/proc/spell_feedback()
-	if(!owner)
+/datum/action/cooldown/spell/proc/spell_feedback(mob/living/invoker)
+	if(!invoker)
 		return
 
-	if(invocation_type != INVOCATION_NONE)
-		invocation()
-	if(sound)
-		playsound(get_turf(owner), sound, 50, TRUE)
+	///even INVOCATION_NONE should go through this because the signal might change that
+	invocation(invoker)
+	playsound(invoker, sound, 50, vary = TRUE)
 
 /// The invocation that accompanies the spell, called from spell_feedback() before cast().
-/datum/action/cooldown/spell/proc/invocation()
-	switch(invocation_type)
+/datum/action/cooldown/spell/proc/invocation(mob/living/invoker)
+	//lists can be sent by reference, a string would be sent by value
+	var/list/invocation_list = list(invocation, invocation_type, garbled_invocation_prob)
+	SEND_SIGNAL(invoker, COMSIG_MOB_PRE_INVOCATION, src, invocation_list)
+	var/used_invocation_message = invocation_list[INVOCATION_MESSAGE]
+	var/used_invocation_type = invocation_list[INVOCATION_TYPE]
+	var/used_invocation_garble_prob = invocation_list[INVOCATION_GARBLE_PROB]
+
+	switch(used_invocation_type)
 		if(INVOCATION_SHOUT)
-			if(prob(50))
-				owner.say(invocation, forced = "spell ([src])")
+			if(prob(used_invocation_garble_prob))
+				invoker.say(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
-				owner.say(replacetext(invocation," ","`"), forced = "spell ([src])")
+				invoker.say(used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_WHISPER)
-			if(prob(50))
-				owner.whisper(invocation, forced = "spell ([src])")
+			if(prob(used_invocation_garble_prob))
+				invoker.whisper(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
-				owner.whisper(replacetext(invocation," ","`"), forced = "spell ([src])")
+				invoker.whisper(used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_EMOTE)
-			owner.visible_message(invocation, invocation_self_message)
+			invoker.visible_message(used_invocation_message, invocation_self_message)
 
 /// Checks if the current OWNER of the spell is in a valid state to say the spell's invocation
-/datum/action/cooldown/spell/proc/try_invoke(feedback = TRUE)
+/datum/action/cooldown/spell/proc/try_invoke(mob/living/invoker, feedback = TRUE)
 	if(spell_requirements & SPELL_CASTABLE_WITHOUT_INVOCATION)
 		return TRUE
 
@@ -348,20 +361,25 @@
 		return TRUE
 
 	// If you want a spell usable by ghosts for some reason, it must be INVOCATION_NONE
-	if(!isliving(owner))
+	if(!istype(invoker))
 		if(feedback)
-			to_chat(owner, span_warning("You need to be living to invoke [src]!"))
+			to_chat(invoker, span_warning("You need to be living to invoke [src]!"))
 		return FALSE
 
-	var/mob/living/living_owner = owner
-	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE))
-		if(feedback)
-			to_chat(owner, span_warning("You can't position your hands correctly to invoke [src]!"))
+	var/invoke_sig_return = SEND_SIGNAL(invoker, COMSIG_MOB_TRY_INVOKE_SPELL, src, feedback)
+	if(invoke_sig_return & SPELL_INVOCATION_ALWAYS_SUCCEED)
+		return TRUE // skips all of the following checks
+	if(invoke_sig_return & SPELL_INVOCATION_FAIL)
 		return FALSE
 
-	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.can_speak())
+	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(invoker, TRAIT_EMOTEMUTE))
 		if(feedback)
-			to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
+			to_chat(invoker, span_warning("You can't position your hands correctly to invoke [src]!"))
+		return FALSE
+
+	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !invoker.can_speak())
+		if(feedback)
+			to_chat(invoker, span_warning("You can't get the words out to invoke [src]!"))
 		return FALSE
 
 	return TRUE
@@ -371,7 +389,7 @@
 /datum/action/cooldown/spell/proc/reset_spell_cooldown()
 	SEND_SIGNAL(src, COMSIG_SPELL_CAST_RESET)
 	next_use_time -= cooldown_time // Basically, ensures that the ability can be used now
-	UpdateButtons()
+	build_all_button_icons()
 
 /**
  * Levels the spell up a single level, reducing the cooldown.
@@ -388,7 +406,7 @@
 
 	spell_level++
 	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0.25 SECONDS) // 0 second CD starts to break things.
-	update_spell_name()
+	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
 
 /**
@@ -408,25 +426,25 @@
 	else
 		cooldown_time = max(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
 
-	update_spell_name()
+	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
 
-/**
- * Updates the spell's name based on its level.
- */
-/datum/action/cooldown/spell/proc/update_spell_name()
-	var/spell_title = ""
+/datum/action/cooldown/spell/update_button_name(atom/movable/screen/movable/action_button/button, force)
+	name = "[get_spell_title()][initial(name)]"
+	return ..()
+
+/// Gets the title of the spell based on its level.
+/datum/action/cooldown/spell/proc/get_spell_title()
 	switch(spell_level)
 		if(2)
-			spell_title = "Efficient "
+			return "Efficient "
 		if(3)
-			spell_title = "Quickened "
+			return "Quickened "
 		if(4)
-			spell_title = "Free "
+			return "Free "
 		if(5)
-			spell_title = "Instant "
+			return "Instant "
 		if(6)
-			spell_title = "Ludicrous "
+			return "Ludicrous "
 
-	name = "[spell_title][initial(name)]"
-	UpdateButtons()
+	return ""

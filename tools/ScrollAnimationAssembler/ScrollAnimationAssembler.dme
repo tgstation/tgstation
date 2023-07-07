@@ -1,0 +1,23 @@
+// DM Environment file for ScrollAnimationAssembler.dme.
+// All manual changes should be made outside the BEGIN_ and END_ blocks.
+// New source code should be placed in .dm files: choose File/New --> Code File.
+
+// BEGIN_INTERNALS
+// END_INTERNALS
+
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+#define FILE_DIR "backgrounds"
+#define FILE_DIR "foregrounds"
+#define FILE_DIR "masks"
+// END_FILE_DIR
+
+// BEGIN_PREFERENCES
+// END_PREFERENCES
+
+// BEGIN_INCLUDE
+#include "apply.dm"
+#include "assemble.dm"
+#include "create_scroll.dm"
+// END_INCLUDE
+

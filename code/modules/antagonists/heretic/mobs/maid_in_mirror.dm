@@ -14,12 +14,12 @@
 	health = 80
 	melee_damage_lower = 12
 	melee_damage_upper = 16
-	sight = SEE_MOBS | SEE_OBJS | SEE_TURFS | SEE_BLACKNESS
+	sight = SEE_MOBS | SEE_OBJS | SEE_TURFS
 	death_message = "shatters and vanishes, releasing a gust of cold air."
 	loot = list(
 		/obj/item/shard,
 		/obj/effect/decal/cleanable/ash,
-		/obj/item/clothing/suit/armor,
+		/obj/item/clothing/suit/armor/vest,
 		/obj/item/organ/internal/lungs,
 	)
 	actions_to_add = list(/datum/action/cooldown/spell/jaunt/mirror_walk)

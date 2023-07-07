@@ -115,7 +115,7 @@
 		updateDialog(usr) // make sure updates when complete
 
 /datum/song/Topic(href, href_list)
-	if(!usr.canUseTopic(parent, be_close = TRUE, no_dexterity = FALSE, no_tk = FALSE, need_hands = FALSE))
+	if(!usr.can_perform_action(parent, ALLOW_RESTING))
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return
@@ -130,7 +130,7 @@
 	else if(href_list["import"])
 		var/t = ""
 		do
-			t = html_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
+			t = html_encode(input(usr, "Please paste the entire song, formatted:", name, t) as message)
 			if(!in_range(parent, usr))
 				return
 

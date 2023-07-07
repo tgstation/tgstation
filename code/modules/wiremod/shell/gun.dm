@@ -26,7 +26,6 @@
 /obj/projectile/energy/wiremod_gun
 	name = "scanning beam"
 	icon_state = "energy"
-	nodamage = TRUE
 	damage = 0
 	range = 7
 

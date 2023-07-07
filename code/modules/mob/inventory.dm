@@ -140,7 +140,7 @@
 
 //Returns if a certain item can be equipped to a certain slot.
 // Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
-/mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
 	return FALSE
 
 /mob/proc/can_put_in_hand(I, hand_index)
@@ -202,7 +202,7 @@
 
 
 //Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
-//If both fail it drops it on the floor and returns FALSE.
+//If both fail it drops it on the floor (or nearby tables if germ sensitive) and returns FALSE.
 //This is probably the main one you need to know :)
 /mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, forced = FALSE, ignore_animation = TRUE)
 	if(QDELETED(I))
@@ -217,13 +217,13 @@
 			return FALSE
 
 		if (merge_stacks)
-			if (istype(active_stack) && active_stack.can_merge(item_stack))
+			if (istype(active_stack) && active_stack.can_merge(item_stack, inhand = TRUE))
 				if (item_stack.merge(active_stack))
 					to_chat(usr, span_notice("Your [active_stack.name] stack now contains [active_stack.get_amount()] [active_stack.singular_name]\s."))
 					return TRUE
 			else
 				var/obj/item/stack/inactive_stack = get_inactive_held_item()
-				if (istype(inactive_stack) && inactive_stack.can_merge(item_stack))
+				if (istype(inactive_stack) && inactive_stack.can_merge(item_stack, inhand = TRUE))
 					if (item_stack.merge(inactive_stack))
 						to_chat(usr, span_notice("Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s."))
 						return TRUE
@@ -240,9 +240,48 @@
 	if(del_on_fail)
 		qdel(I)
 		return FALSE
-	I.forceMove(drop_location())
+
+	// Failed to put in hands - drop the item
+	var/atom/location = drop_location()
+
+	// Try dropping on nearby tables if germ sensitive (except table behind you)
+	if(HAS_TRAIT(I, TRAIT_GERM_SENSITIVE))
+		var/list/dirs = list( // All dirs in clockwise order
+			NORTH,
+			NORTHEAST,
+			EAST,
+			SOUTHEAST,
+			SOUTH,
+			SOUTHWEST,
+			WEST,
+			NORTHWEST,
+		)
+		var/dir_count = dirs.len
+		var/facing_dir_index = dirs.Find(dir)
+		var/cw_index = facing_dir_index
+		var/ccw_index = facing_dir_index
+		var/list/turfs_ordered = list(get_step(src, dir))
+
+		// Build ordered list of turfs starting from the front facing
+		for(var/i in 1 to ROUND_UP(dir_count/2) - 1)
+			cw_index++
+			if(cw_index > dir_count)
+				cw_index = 1
+			turfs_ordered += get_step(src, dirs[cw_index]) // Add next tile on your right
+			ccw_index--
+			if(ccw_index <= 0)
+				ccw_index = dir_count
+			turfs_ordered += get_step(src, dirs[ccw_index])	// Add next tile on your left
+
+		// Check tables on these turfs
+		for(var/turf in turfs_ordered)
+			if(locate(/obj/structure/table) in turf)
+				location = turf
+				break
+
+	I.forceMove(location)
 	I.layer = initial(I.layer)
-	SET_PLANE_EXPLICIT(I, initial(I.plane), drop_location())
+	SET_PLANE_EXPLICIT(I, initial(I.plane), location)
 	I.dropped(src)
 	return FALSE
 
@@ -280,9 +319,15 @@
  * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
 */
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE, invdrop = TRUE)
+	if (isnull(I))
+		return TRUE
+
+	SEND_SIGNAL(src, COMSIG_MOB_DROPPING_ITEM)
 	. = doUnEquip(I, force, drop_location(), FALSE, invdrop = invdrop, silent = silent)
+
 	if(!. || !I) //ensure the item exists and that it was dropped properly.
 		return
+
 	if(!(I.item_flags & NO_PIXEL_RANDOM_DROP))
 		I.pixel_x = I.base_pixel_x + rand(-6, 6)
 		I.pixel_y = I.base_pixel_y + rand(-6, 6)
@@ -301,7 +346,7 @@
 //DO NOT CALL THIS PROC
 //use one of the above 3 helper procs
 //you may override it, but do not modify the args
-/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE) //Force overrides TRAIT_NODROP for things like wizarditis and admin undress.
+/mob/proc/doUnEquip(obj/item/I, force, atom/newloc, no_move, invdrop = TRUE, silent = FALSE) //Force overrides TRAIT_NODROP for things like wizarditis and admin undress.
 													//Use no_move if the item is just gonna be immediately moved afterward
 													//Invdrop is used to prevent stuff in pockets dropping. only set to false if it's going to immediately be replaced
 	PROTECTED_PROC(TRUE)
@@ -322,7 +367,7 @@
 		if(client)
 			client.screen -= I
 		I.layer = initial(I.layer)
-		SET_PLANE_EXPLICIT(I, initial(I.plane), drop_location())
+		SET_PLANE_EXPLICIT(I, initial(I.plane), newloc)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
 		if(!no_move && !(I.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
 			if (isnull(newloc))
@@ -466,7 +511,6 @@
 
 	if(hud_used)
 		hud_used.build_hand_slots()
-
 
 /mob/living/carbon/human/change_number_of_hands(amt)
 	var/old_limbs = held_items.len

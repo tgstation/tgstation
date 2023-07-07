@@ -3,8 +3,9 @@
 	desc = "A spell that extinguishes you drains nearby heathens engulfed in flames of their life force, \
 		healing you for each victim drained. Those in critical condition \
 		will have the last of their vitality drained, killing them."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "smoke"
 
 	school = SCHOOL_FORBIDDEN

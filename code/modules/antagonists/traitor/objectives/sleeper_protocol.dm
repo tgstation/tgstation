@@ -12,7 +12,7 @@
 	progression_minimum = 0 MINUTES
 
 	progression_reward = list(8 MINUTES, 15 MINUTES)
-	telecrystal_reward = 0
+	telecrystal_reward = 1
 
 	var/list/limited_to = list(
 		JOB_CHIEF_MEDICAL_OFFICER,
@@ -42,7 +42,7 @@
 			disk = new(user.drop_location())
 			user.put_in_hands(disk)
 			AddComponent(/datum/component/traitor_objective_register, disk, \
-				fail_signals = list(COMSIG_PARENT_QDELETING))
+				fail_signals = list(COMSIG_QDELETING))
 
 /datum/traitor_objective/sleeper_protocol/proc/on_surgery_success(datum/source, datum/surgery_step/step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	SIGNAL_HANDLER
@@ -88,7 +88,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
 		return FALSE
 	return TRUE
@@ -125,9 +125,8 @@
 	target.gain_trauma(new /datum/brain_trauma/mild/phobia/conspiracies(), TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/traitor_objective/sleeper_protocol/everybody //Much harder for non-med and non-robo
-
 	progression_minimum = 30 MINUTES
-	progression_reward = list(15 MINUTES, 20 MINUTES)
-	telecrystal_reward = list(2, 3)
+	progression_reward = list(8 MINUTES, 15 MINUTES)
+	telecrystal_reward = 1
 
 	inverted_limitation = TRUE

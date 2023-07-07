@@ -1,14 +1,17 @@
+import { useBackend, useLocalState } from '../backend';
+import { capitalizeAll } from 'common/string';
 import { BooleanLike, classes } from 'common/react';
 import { Window } from '../layouts';
-import { useBackend, useLocalState } from '../backend';
 import { Section, Tabs, Button, Stack, Box } from '../components';
 import { ColorItem, LayerSelect } from './RapidPipeDispenser';
-import { capitalizeAll } from 'common/string';
+import { SiloItem, MatterItem } from './RapidConstructionDevice';
 
 type Data = {
+  silo_upgraded: BooleanLike;
   layer_icon: string;
   categories: Category[];
   selected_category: string;
+  selected_recipe: string;
 };
 
 type Category = {
@@ -26,7 +29,7 @@ type Recipe = {
 
 const PlumbingTypeSection = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { categories = [], selected_category } = data;
+  const { categories = [], selected_category, selected_recipe } = data;
   const [categoryName, setCategoryName] = useLocalState(
     context,
     'categoryName',
@@ -54,48 +57,24 @@ const PlumbingTypeSection = (props, context) => {
           fluid
           ellipsis
           color="transparent"
-          selected={recipe.selected}
+          selected={recipe.name === selected_recipe}
           onClick={() =>
             act('recipe', {
               id: recipe.index,
             })
           }>
-          <Stack>
-            <Stack.Item>
-              <Box
-                className={classes(['plumbing-tgui32x32', recipe.icon])}
-                style={{
-                  transform: 'scale(1.5) translate(9%, 9.5%)',
-                }}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <span style={{ width: '7px' }} />
-            </Stack.Item>
-            <Stack.Item>
-              <Section verticalAlign="middle">
-                {capitalizeAll(recipe.name)}
-              </Section>
-            </Stack.Item>
-          </Stack>
+          <Box
+            inline
+            verticalAlign="middle"
+            mr="20px"
+            className={classes(['plumbing-tgui32x32', recipe.icon])}
+            style={{
+              transform: 'scale(1.5) translate(9.5%, 9.5%)',
+            }}
+          />
+          <span>{capitalizeAll(recipe.name)}</span>
         </Button>
       ))}
-    </Section>
-  );
-};
-
-const ColorSection = (props, context) => {
-  return (
-    <Section>
-      <ColorItem />
-    </Section>
-  );
-};
-
-const LayerSection = (props, context) => {
-  return (
-    <Section>
-      <LayerSelect />
     </Section>
   );
 };
@@ -104,46 +83,40 @@ const LayerIconSection = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { layer_icon } = data;
   return (
-    <Section
-      backgroundColor="green"
+    <Box
+      m={1}
+      className={classes(['plumbing-tgui32x32', layer_icon])}
       style={{
-        width: '50px',
-        height: '50px',
-      }}>
-      <Box
-        className={classes(['plumbing-tgui32x32', layer_icon])}
-        style={{
-          transform: 'scale(1.5) translate(9%, 9.5%)',
-        }}
-      />
-    </Section>
+        transform: 'scale(2)',
+      }}
+    />
   );
 };
 
 export const PlumbingService = (props, context) => {
+  const { data } = useBackend<Data>(context);
+  const { silo_upgraded } = data;
   return (
-    <Window width={450} height={575}>
+    <Window width={480} height={575}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <ColorSection />
+            <Section>
+              <Stack>
+                <Stack.Item>
+                  <ColorItem />
+                  <LayerSelect />
+                  <MatterItem />
+                  {!!silo_upgraded && <SiloItem />}
+                </Stack.Item>
+                <Stack.Item>
+                  <LayerIconSection />
+                </Stack.Item>
+              </Stack>
+            </Section>
           </Stack.Item>
           <Stack.Item grow>
-            <Stack fill>
-              <Stack.Item>
-                <Stack vertical fill>
-                  <Stack.Item>
-                    <LayerSection />
-                  </Stack.Item>
-                  <Stack.Item grow>
-                    <LayerIconSection />
-                  </Stack.Item>
-                </Stack>
-              </Stack.Item>
-              <Stack.Item grow>
-                <PlumbingTypeSection />
-              </Stack.Item>
-            </Stack>
+            <PlumbingTypeSection />
           </Stack.Item>
         </Stack>
       </Window.Content>

@@ -19,7 +19,7 @@
 	safe = FALSE
 	layer = BELOW_OPEN_DOOR_LAYER
 	closingLayer = CLOSED_FIREDOOR_LAYER
-	armor = list(MELEE = 10, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 0, FIRE = 95, ACID = 70)
+	armor_type = /datum/armor/door_firedoor
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 
 	COOLDOWN_DECLARE(activation_cooldown)
@@ -64,6 +64,15 @@
 	var/knock_sound = 'sound/effects/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glassbash.ogg'
 
+
+/datum/armor/door_firedoor
+	melee = 10
+	bullet = 30
+	laser = 20
+	energy = 20
+	bomb = 30
+	fire = 95
+	acid = 70
 
 /obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()
@@ -235,11 +244,12 @@
 
 		if(!checked_turf)
 			continue
-		if(isclosedturf(checked_turf))
+
+		RegisterSignal(checked_turf, COMSIG_TURF_CHANGE, PROC_REF(adjacent_change))
+		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, PROC_REF(process_results))
+		if(!isopenturf(checked_turf))
 			continue
 		process_results(checked_turf)
-		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, PROC_REF(process_results))
-
 
 /obj/machinery/door/firedoor/proc/unregister_adjacent_turfs(atom/old_loc)
 	if(!loc)
@@ -253,14 +263,23 @@
 		if(!checked_turf)
 			continue
 
+		UnregisterSignal(checked_turf, COMSIG_TURF_CHANGE)
 		UnregisterSignal(checked_turf, COMSIG_TURF_EXPOSE)
+
+// If a turf adjacent to us changes, recalc our affecting areas when it's done yeah?
+/obj/machinery/door/firedoor/proc/adjacent_change(turf/changed, path, list/new_baseturfs, flags, list/post_change_callbacks)
+	SIGNAL_HANDLER
+	post_change_callbacks += CALLBACK(src, PROC_REF(CalculateAffectingAreas))
 
 /obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
 	var/datum/gas_mixture/environment = checked_turf.return_air()
+	if(!environment)
+		stack_trace("We tried to check a gas_mixture that doesn't exist for its firetype, what are you DOING")
+		return
 
-	if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(environment.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		return FIRELOCK_ALARM_TYPE_HOT
-	if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+	if(environment.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
 		return FIRELOCK_ALARM_TYPE_COLD
 	return
 
@@ -499,7 +518,7 @@
 	return
 
 /obj/machinery/door/firedoor/try_to_weld_secondary(obj/item/weldingtool/W, mob/user)
-	if(!W.tool_start_check(user, amount=0))
+	if(!W.tool_start_check(user, amount=1))
 		return
 	user.visible_message(span_notice("[user] starts [welded ? "unwelding" : "welding"] [src]."), span_notice("You start welding [src]."))
 	if(W.use_tool(src, user, DEFAULT_STEP_TIME, volume=50))
@@ -524,7 +543,7 @@
 			return
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(handle_held_open_adjacency))
 		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(handle_held_open_adjacency))
-		RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(handle_held_open_adjacency))
+		RegisterSignal(user, COMSIG_QDELETING, PROC_REF(handle_held_open_adjacency))
 		handle_held_open_adjacency(user)
 	else
 		close()
@@ -551,7 +570,7 @@
 	correct_state()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
-	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(user, COMSIG_QDELETING)
 	if(user)
 		user.balloon_alert_to_viewers("released [src]", "released [src]")
 
@@ -840,7 +859,7 @@
 				user.visible_message(span_notice("[user] begins cutting apart [src]'s frame..."), \
 					span_notice("You begin slicing [src] apart..."))
 
-				if(attacking_object.use_tool(src, user, DEFAULT_STEP_TIME, volume=50, amount=1))
+				if(attacking_object.use_tool(src, user, DEFAULT_STEP_TIME, volume=50))
 					if(constructionStep != CONSTRUCTION_NO_CIRCUIT)
 						return
 					user.visible_message(span_notice("[user] cuts apart [src]!"), \
@@ -890,3 +909,4 @@
 #undef CONSTRUCTION_PANEL_OPEN
 #undef CONSTRUCTION_NO_CIRCUIT
 #undef REACTIVATION_DELAY
+#undef DEFAULT_STEP_TIME

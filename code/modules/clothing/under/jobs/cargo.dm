@@ -41,8 +41,12 @@
 	name = "shaft miner's jumpsuit"
 	icon_state = "miner"
 	inhand_icon_state = null
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 80, ACID = 0, WOUND = 10)
+	armor_type = /datum/armor/clothing_under/cargo_miner
 	resistance_flags = NONE
+
+/datum/armor/clothing_under/cargo_miner
+	fire = 80
+	wound = 10
 
 /obj/item/clothing/under/rank/cargo/miner/lavaland
 	desc = "A green uniform for operating in hazardous environments."

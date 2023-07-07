@@ -3,7 +3,7 @@
 	disable_damage = TRUE
 	disable_gas =  TRUE
 	disable_power_change = TRUE
-	disable_process = TRUE
+	disable_process = SM_PROCESS_DISABLED
 
 /// Normal SM designated as main engine.
 /obj/machinery/power/supermatter_crystal/engine
@@ -28,7 +28,7 @@
 	disable_damage = TRUE
 	disable_gas =  TRUE
 	disable_power_change = TRUE
-	disable_process = TRUE
+	disable_process = SM_PROCESS_DISABLED
 	moveable = FALSE
 	anchored = TRUE
 

@@ -10,7 +10,7 @@
 		The implant is stored in the module and needs to be injected in a human to function. \
 		Nakamura Engineering swears up and down there's airbrakes."
 	icon_state = "pathfinder"
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
 	/// The pathfinding implant.
@@ -109,9 +109,9 @@
 		return FALSE
 	var/datum/ai_controller/mod_ai = new /datum/ai_controller/mod(module.mod)
 	module.mod.ai_controller = mod_ai
-	mod_ai.set_movement_target(imp_in)
-	mod_ai.blackboard[BB_MOD_TARGET] = imp_in
-	mod_ai.blackboard[BB_MOD_IMPLANT] = src
+	mod_ai.set_movement_target(type, imp_in)
+	mod_ai.set_blackboard_key(BB_MOD_TARGET, imp_in)
+	mod_ai.set_blackboard_key(BB_MOD_IMPLANT, src)
 	module.mod.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	module.mod.AddElement(/datum/element/movetype_handler)
 	ADD_TRAIT(module.mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
@@ -146,7 +146,8 @@
 	desc = "Recall a MODsuit anyplace, anytime."
 	check_flags = AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_mod"
-	icon_icon = 'icons/mob/actions/actions_mod.dmi'
+	overlay_icon_state = "bg_mod_border"
+	button_icon = 'icons/mob/actions/actions_mod.dmi'
 	button_icon_state = "recall"
 	/// The cooldown for the recall.
 	COOLDOWN_DECLARE(recall_cooldown)

@@ -81,13 +81,13 @@
 // Status effect process. Handles adjusting its duration and ticks.
 // If you're adding processed effects, put them in [proc/tick]
 // instead of extending / overriding the process() proc.
-/datum/status_effect/process(delta_time, times_fired)
+/datum/status_effect/process(seconds_per_tick, times_fired)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(QDELETED(owner))
 		qdel(src)
 		return
 	if(tick_interval < world.time)
-		tick(delta_time, times_fired)
+		tick(seconds_per_tick, times_fired)
 		tick_interval = world.time + initial(tick_interval)
 	if(duration != -1 && duration < world.time)
 		qdel(src)
@@ -103,7 +103,7 @@
 	return null
 
 /// Called every tick from process().
-/datum/status_effect/proc/tick(delta_time, times_fired)
+/datum/status_effect/proc/tick(seconds_per_tick, times_fired)
 	return
 
 /// Called whenever the buff expires or is removed (qdeleted)
@@ -153,6 +153,18 @@
 
 	if(!heal_flag_necessary || (heal_flags & heal_flag_necessary))
 		qdel(src)
+
+/// Remove [seconds] of duration from the status effect, qdeling / ending if we eclipse the current world time.
+/datum/status_effect/proc/remove_duration(seconds)
+	if(duration == -1) // Infinite duration
+		return FALSE
+
+	duration -= seconds
+	if(duration <= world.time)
+		qdel(src)
+		return TRUE
+
+	return FALSE
 
 /// Alert base type for status effect alerts
 /atom/movable/screen/alert/status_effect

@@ -98,7 +98,8 @@
 		play_fake_sound(mech_source)
 		mech_dir = pick(GLOB.cardinals)
 
-	if(--steps_left <= 0)
+	steps_left--
+	if(steps_left <= 0)
 		qdel(src)
 
 	else
@@ -169,9 +170,8 @@
 		'sound/ambience/antag/bloodcult.ogg',
 		'sound/ambience/antag/clockcultalr.ogg',
 		'sound/ambience/antag/ecult_op.ogg',
-		'sound/ambience/antag/ling_aler.ogg',
+		'sound/ambience/antag/ling_alert.ogg',
 		'sound/ambience/antag/malf.ogg',
-		//'sound/ambience/antag/new_clock.ogg', // This one's much louder than the others, otherwise I would
 		'sound/ambience/antag/ops.ogg',
 		'sound/ambience/antag/tatoralert.ogg',
 	)

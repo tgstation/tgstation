@@ -10,6 +10,11 @@
 	icon_state = "springlock"
 	complexity = 3 // it is inside every part of your suit, so
 	incompatible_modules = list(/obj/item/mod/module/springlock)
+	var/death_trap = TRUE
+
+/obj/item/mod/module/springlock/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	death_trap = !death_trap
 
 /obj/item/mod/module/springlock/on_install()
 	mod.activation_step_time *= 0.5
@@ -38,7 +43,10 @@
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
 	SIGNAL_HANDLER
 
-	balloon_alert(user, "springlocks aren't responding...?")
+	if(death_trap)
+		balloon_alert(user, "springlocks aren't responding...?")
+	else
+		balloon_alert(user, "you disable it just in time")
 	return MOD_CANCEL_ACTIVATE
 
 ///Delayed death proc of the suit after the wearer is exposed to reagents
@@ -124,7 +132,7 @@
 	for(var/mutable_appearance/appearance as anything in .)
 		appearance.color = active ? rainbow_order[rave_number] : null
 
-/obj/item/mod/module/visor/rave/on_active_process(delta_time)
+/obj/item/mod/module/visor/rave/on_active_process(seconds_per_tick)
 	rave_number++
 	if(rave_number > length(rainbow_order))
 		rave_number = 1
@@ -231,7 +239,7 @@
 	if(prob(min(num_sheets_dispensed * 2, 30)))
 		if(crisp_paper in mod.wearer.held_items)
 			mod.wearer.dropItemToGround(crisp_paper, force = TRUE)
-		crisp_paper.balloon_alert(mod.wearer, "PC LOAD LETTER!")
+		crisp_paper.balloon_alert(mod.wearer, UNLINT("PC LOAD LETTER!"))
 		crisp_paper.visible_message(span_warning("[crisp_paper] bursts into flames, it's too crisp!"))
 		crisp_paper.fire_act(1000, 100)
 
@@ -287,7 +295,6 @@
 	playsound(src, 'sound/effects/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
-	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	check_upstairs() //todo at some point flip your screen around
 
@@ -303,7 +310,6 @@
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	step_count = 0
-	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
 	if(istype(current_turf))
@@ -312,7 +318,7 @@
 /obj/item/mod/module/atrocinator/proc/check_upstairs()
 	SIGNAL_HANDLER
 
-	if(you_fucked_up || mod.wearer.has_gravity() != NEGATIVE_GRAVITY)
+	if(you_fucked_up || mod.wearer.has_gravity() > NEGATIVE_GRAVITY)
 		return
 	var/turf/open/current_turf = get_turf(mod.wearer)
 	var/turf/open/openspace/turf_above = get_step_multiz(mod.wearer, UP)
@@ -336,3 +342,16 @@
 	QDEL_IN(mod.wearer, FLY_TIME)
 
 #undef FLY_TIME
+
+/obj/item/mod/module/recycler/donk/safe
+	name = "MOD foam dart recycler module"
+	desc = "A mod module that collects and repackages fired foam darts into half-sized ammo boxes. \
+		Activate on a nearby turf or storage to unload stored ammo boxes."
+	icon_state = "donk_safe_recycler"
+	overlay_state_inactive = "module_donk_safe_recycler"
+	overlay_state_active = "module_donk_safe_recycler"
+	complexity = 1
+	efficiency = 1
+	allowed_item_types = list(/obj/item/ammo_casing/foam_dart)
+	ammobox_type = /obj/item/ammo_box/foambox/mini
+	required_amount = SMALL_MATERIAL_AMOUNT*2.5

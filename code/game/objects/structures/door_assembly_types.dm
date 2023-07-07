@@ -272,7 +272,7 @@
 		var/turf/T = get_turf(src)
 		for(var/material in custom_materials)
 			var/datum/material/material_datum = material
-			var/material_count = FLOOR(custom_materials[material_datum] / MINERAL_MATERIAL_AMOUNT, 1)
+			var/material_count = FLOOR(custom_materials[material_datum] / SHEET_MATERIAL_AMOUNT, 1)
 			if(!disassembled)
 				material_count = rand(FLOOR(material_count/2, 1), material_count)
 			new material_datum.sheet_type(T, material_count)

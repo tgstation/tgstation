@@ -1,7 +1,7 @@
 ///used by cows
 /datum/ai_planning_subtree/tip_reaction
 
-/datum/ai_planning_subtree/tip_reaction/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/tip_reaction/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
 	var/tip_reacting = controller.blackboard[BB_BASIC_MOB_TIP_REACTING]
 	if(!tip_reacting)

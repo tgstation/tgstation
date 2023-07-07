@@ -1,10 +1,3 @@
-/// State when an interview has been approved
-#define INTERVIEW_APPROVED "interview_approved"
-/// State when an interview as been denied
-#define INTERVIEW_DENIED "interview_denied"
-/// State when an interview has had no action on it yet
-#define INTERVIEW_PENDING "interview_pending"
-
 /**
  * Represents a new-player interview form
  *
@@ -117,6 +110,8 @@
 		ui.open()
 
 /datum/interview/ui_state(mob/user)
+	if(check_rights_for(user.client, R_ADMIN))
+		return GLOB.always_state
 	return GLOB.new_player_state
 
 /datum/interview/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

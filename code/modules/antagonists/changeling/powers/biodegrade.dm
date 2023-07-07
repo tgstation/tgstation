@@ -10,7 +10,7 @@
 /datum/action/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
 	var/used = FALSE // only one form of shackles removed per use
 	if(!HAS_TRAIT(user, TRAIT_RESTRAINED) && !user.legcuffed && isopenturf(user.loc))
-		to_chat(user, span_warning("We are already free!"))
+		user.balloon_alert(user, "already free!")
 		return FALSE
 
 	if(user.handcuffed)
@@ -65,13 +65,13 @@
 
 /datum/action/changeling/biodegrade/proc/dissolve_handcuffs(mob/living/carbon/human/user, obj/O)
 	if(O && user.handcuffed == O)
-		user.visible_message(span_warning("[O] dissolve[O.gender==PLURAL?"":"s"] into a puddle of sizzling goop."))
+		user.visible_message(span_warning("[O] dissolve[O.gender == PLURAL?"":"s"] into a puddle of sizzling goop."))
 		new /obj/effect/decal/cleanable/greenglow(O.drop_location())
 		qdel(O)
 
 /datum/action/changeling/biodegrade/proc/dissolve_legcuffs(mob/living/carbon/human/user, obj/O)
 	if(O && user.legcuffed == O)
-		user.visible_message(span_warning("[O] dissolve[O.gender==PLURAL?"":"s"] into a puddle of sizzling goop."))
+		user.visible_message(span_warning("[O] dissolve[O.gender == PLURAL?"":"s"] into a puddle of sizzling goop."))
 		new /obj/effect/decal/cleanable/greenglow(O.drop_location())
 		qdel(O)
 

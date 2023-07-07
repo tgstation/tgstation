@@ -14,11 +14,9 @@
 	if(file_storing in stored_files)
 		return FALSE
 
-	SEND_SIGNAL(file_storing, COMSIG_MODULAR_COMPUTER_FILE_ADDING)
 	file_storing.computer = src
-	stored_files.Add(file_storing)
 	used_capacity += file_storing.size
-	SEND_SIGNAL(file_storing, COMSIG_MODULAR_COMPUTER_FILE_ADDED)
+	SEND_SIGNAL(file_storing, COMSIG_MODULAR_COMPUTER_FILE_STORE, src)
 	return TRUE
 
 /**
@@ -35,15 +33,12 @@
 		return FALSE
 	if(istype(file_removing, /datum/computer_file/program))
 		var/datum/computer_file/program/program_file = file_removing
-		if(program_file.program_state != PROGRAM_STATE_KILLED)
-			program_file.kill_program(TRUE)
-		if(program_file.program_state == PROGRAM_STATE_ACTIVE)
-			active_program = null
+		program_file.kill_program()
 
-	SEND_SIGNAL(file_removing, COMSIG_MODULAR_COMPUTER_FILE_DELETING)
 	stored_files.Remove(file_removing)
 	used_capacity -= file_removing.size
 	SEND_SIGNAL(file_removing, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
+	qdel(file_removing)
 	return TRUE
 
 /**
@@ -64,6 +59,8 @@
 	if(stored_files.len >= 999)
 		return FALSE
 	if((used_capacity + file.size) > max_capacity)
+		return FALSE
+	if(!file.can_store_file(src))
 		return FALSE
 
 	return TRUE

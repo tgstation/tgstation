@@ -25,11 +25,11 @@
 	// We're guarenteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
 	var/datum/callback/await = CALLBACK(GLOBAL_PROC, /proc/pathfinding_finished, path)
 	if(!SSpathfinder.pathfind(caller, end, max_distance, mintargetdist, id, simulated_only, exclude, skip_first, diagonal_safety, await))
-		return null
+		return list()
 
 	UNTIL(length(path))
-	if(length(path) == 1 && path[1] == null) // It's trash, just hand back null to make it easy
-		return null
+	if(length(path) == 1 && path[1] == null || (QDELETED(caller) || QDELETED(end))) // It's trash, just hand back null to make it easy
+		return list()
 	return path
 
 /// Uses funny pass by reference bullshit to take the path created by pathfinding, and insert it into a return list

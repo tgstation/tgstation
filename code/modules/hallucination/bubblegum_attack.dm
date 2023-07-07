@@ -37,8 +37,10 @@
 	if(hallucinator.client)
 
 		fake_broken_wall = image('icons/turf/floors.dmi', wall_source, "plating", layer = TURF_LAYER)
+		SET_PLANE_EXPLICIT(fake_broken_wall, FLOOR_PLANE, wall_source)
 		fake_broken_wall.override = TRUE
 		fake_rune = image('icons/effects/96x96.dmi', target_landing_image_turf, "landing", layer = ABOVE_OPEN_TURF_LAYER)
+		SET_PLANE_EXPLICIT(fake_rune, FLOOR_PLANE, wall_source)
 
 		hallucinator.client?.images |= fake_broken_wall
 		hallucinator.client?.images |= fake_rune

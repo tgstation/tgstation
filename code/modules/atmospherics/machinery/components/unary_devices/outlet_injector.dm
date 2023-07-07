@@ -17,9 +17,47 @@
 	///Rate of operation of the device
 	var/volume_rate = 50
 
+/obj/machinery/atmospherics/components/unary/outlet_injector/Initialize(mapload)
+	if(isnull(id_tag))
+		id_tag = assign_random_name()
+	. = ..()
+
+	var/static/list/tool_screentips = list(
+		TOOL_MULTITOOL = list(
+			SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
+		)
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
+	register_context()
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize transfer rate"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/examine(mob/user)
+	. = ..()
+	. += span_notice("You can link it with an air sensor using a multitool.")
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	. = ..()
+
+	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+		sensor.inlet_id = id_tag
+		multi_tool.buffer = null
+		balloon_alert(user, "input linked to sensor")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	balloon_alert(user, "saved in buffer")
+	multi_tool.buffer = src
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on
+		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_appearance()
 	return ..()

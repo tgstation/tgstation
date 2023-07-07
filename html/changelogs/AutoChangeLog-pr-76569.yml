@@ -1,0 +1,5 @@
+author: "YehnBeep"
+delete-after: True
+changes:
+  - bugfix: "Engineers can now print the non-eyewear T-Ray scanner from their department lathe."
+  - qol: "Scientists can also print this scanner."

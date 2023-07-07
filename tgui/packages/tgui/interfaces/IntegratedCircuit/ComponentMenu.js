@@ -1,4 +1,4 @@
-import { Section, Button, Dropdown, Stack, Input } from '../../components';
+import { Section, Button, Dropdown, Stack, Input, NoticeBox } from '../../components';
 import { Component } from 'inferno';
 import { shallowDiffers } from 'common/react';
 import { fetchRetry } from '../../http';
@@ -74,8 +74,8 @@ export class ComponentMenu extends Component {
         if (currentSearch !== '') {
           const result = val.name
             .toLowerCase()
-            .search(currentSearch.toLowerCase());
-          return result !== -1;
+            .includes(currentSearch.toLowerCase());
+          return result !== false;
         }
         return selectedTab === 'All' || selectedTab === val.category;
       }
@@ -87,7 +87,6 @@ export class ComponentMenu extends Component {
     // Limit the maximum amount of shown components to prevent a lagspike
     // when you open the menu
     shownComponents.length = currentLimit;
-
     return (
       <Section
         title="Component Menu"
@@ -133,6 +132,15 @@ export class ComponentMenu extends Component {
           </Stack.Item>
           <Stack.Item>
             <Stack vertical fill>
+              {trueLength === 0 && (
+                <Stack.Item mt={1} fontSize={1}>
+                  <NoticeBox info>
+                    You can hit this integrated circuit onto a component printer
+                    to link it so that you&apos;re able to remotely create and
+                    add components to this circuit.
+                  </NoticeBox>
+                </Stack.Item>
+              )}
               {shownComponents.map((val) => (
                 <Stack.Item
                   key={val.type}

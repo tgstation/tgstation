@@ -10,7 +10,6 @@
 	spawn_positions = 1
 	minimal_player_age = 7
 	supervisors = SUPERVISOR_CAPTAIN
-	selection_color = "#d7b088"
 	exp_required_type_department = EXP_TYPE_SUPPLY
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "QUARTERMASTER"
@@ -52,4 +51,4 @@
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_hand = /obj/item/clipboard
 
-	chameleon_extras = /obj/item/stamp/qm
+	chameleon_extras = /obj/item/stamp/head/qm

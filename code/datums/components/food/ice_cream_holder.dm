@@ -54,12 +54,12 @@
 	src.y_offset = y_offset
 	src.sweetener = sweetener
 
-	RegisterSignal(owner, COMSIG_ITEM_ATTACK_OBJ, PROC_REF(on_item_attack_obj))
+	RegisterSignal(owner, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(on_item_attack_obj))
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	if(change_name)
 		RegisterSignal(owner, COMSIG_ATOM_UPDATE_NAME, PROC_REF(on_update_name))
 	if(!change_desc)
-		RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(on_examine_more))
+		RegisterSignal(owner, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
 	else
 		RegisterSignal(owner, COMSIG_ATOM_UPDATE_DESC, PROC_REF(on_update_desc))
 
@@ -169,7 +169,7 @@
 	if(compare_list(our_scoops, icecream_order.wanted_flavors))
 		return COMPONENT_CORRECT_ORDER
 
-/datum/component/ice_cream_holder/proc/sell_ice_cream(obj/item/source, mob/living/simple_animal/robot_customer/sold_to, obj/item/container)
+/datum/component/ice_cream_holder/proc/sell_ice_cream(obj/item/source, mob/living/simple_animal/robot_customer/sold_to)
 	SIGNAL_HANDLER
 
 	//the price of ice cream scales with the number of scoops. Yummy.
@@ -282,7 +282,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 	icon_state = "icecream_mob"
 	desc = "filled with bright red ice cream. That's probably not strawberry..."
 	desc_prefix = "A suspicious $CONE_NAME"
-	reagent_type = /datum/reagent/liquidgibs
+	reagent_type = /datum/reagent/consumable/liquidgibs
 	hidden = TRUE
 
 /datum/ice_cream_flavour/custom

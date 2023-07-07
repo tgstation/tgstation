@@ -4,6 +4,7 @@
 	maxHealth = 250
 	health = 250
 	icon_state = "alienp"
+	alien_speed = 0.5
 
 /mob/living/carbon/alien/adult/royal/praetorian/Initialize(mapload)
 	real_name = name
@@ -17,10 +18,10 @@
 	return ..()
 
 /mob/living/carbon/alien/adult/royal/praetorian/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large
-	internal_organs += new /obj/item/organ/internal/alien/resinspinner
-	internal_organs += new /obj/item/organ/internal/alien/acid
-	internal_organs += new /obj/item/organ/internal/alien/neurotoxin
+	organs += new /obj/item/organ/internal/alien/plasmavessel/large
+	organs += new /obj/item/organ/internal/alien/resinspinner
+	organs += new /obj/item/organ/internal/alien/acid
+	organs += new /obj/item/organ/internal/alien/neurotoxin
 	return ..()
 
 /datum/action/cooldown/alien/evolve_to_queen
@@ -41,7 +42,7 @@
 		return FALSE
 
 	var/mob/living/carbon/alien/adult/royal/evolver = owner
-	var/obj/item/organ/internal/alien/hivenode/node = evolver.getorgan(/obj/item/organ/internal/alien/hivenode)
+	var/obj/item/organ/internal/alien/hivenode/node = evolver.get_organ_by_type(/obj/item/organ/internal/alien/hivenode)
 	if(!node || node.recent_queen_death)
 		return FALSE
 

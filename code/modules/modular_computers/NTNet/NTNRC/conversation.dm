@@ -34,13 +34,11 @@
 	if(id > MAX_CHANNELS)
 		qdel(src)
 		return
-	if(SSnetworks.station_network)
-		SSnetworks.station_network.chat_channels.Add(src)
+	SSmodular_computers.chat_channels.Add(src)
 	return ..()
 
 /datum/ntnet_conversation/Destroy()
-	if(SSnetworks.station_network)
-		SSnetworks.station_network.chat_channels.Remove(src)
+	SSmodular_computers.chat_channels.Remove(src)
 	for(var/datum/computer_file/program/chatclient/chatterbox as anything in (active_clients | offline_clients))
 		purge_client(chatterbox)
 	return ..()

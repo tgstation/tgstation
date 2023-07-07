@@ -1,14 +1,23 @@
 /obj/item/clothing/under/rank/rnd
 	icon = 'icons/obj/clothing/under/rnd.dmi'
 	worn_icon = 'icons/mob/clothing/under/rnd.dmi'
+	armor_type = /datum/armor/clothing_under/science
+
+/datum/armor/clothing_under/science
+	bio = 50
 
 /obj/item/clothing/under/rank/rnd/research_director
 	desc = "It's a suit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
 	name = "research director's vest suit"
 	icon_state = "director"
 	inhand_icon_state = "lb_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 10, FIRE = 0, ACID = 35)
+	armor_type = /datum/armor/clothing_under/rnd_research_director
 	can_adjust = FALSE
+
+/datum/armor/clothing_under/rnd_research_director
+	bomb = 10
+	bio = 50
+	acid = 35
 
 /obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
 	desc = "A Research Director jumpsuit belonging to the late and great Doctor Hilbert. The suit sensors have long since fizzled out from the stress of the Hilbert's Hotel."
@@ -66,7 +75,7 @@
 	name = "scientist's jumpsuit"
 	icon_state = "science"
 	inhand_icon_state = "w_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/clothing_under/science
 
 /obj/item/clothing/under/rank/rnd/scientist/skirt
 	name = "scientist's jumpskirt"
@@ -100,7 +109,6 @@
 	name = "geneticist's jumpsuit"
 	icon_state = "genetics"
 	inhand_icon_state = "w_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/rnd/geneticist/skirt
 	name = "geneticist's jumpskirt"

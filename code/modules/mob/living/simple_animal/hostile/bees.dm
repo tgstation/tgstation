@@ -34,7 +34,7 @@
 	response_harm_simple = "squash"
 	maxHealth = 10
 	health = 10
-	faction = list("hostile")
+	faction = list(FACTION_HOSTILE)
 	move_to_delay = 0
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -62,8 +62,7 @@
 
 /mob/living/simple_animal/hostile/bee/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 	generate_bee_visuals()
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/clickbox, x_offset = -2, y_offset = -2)
@@ -95,13 +94,7 @@
 		beehome = null
 	if((flags_1 & HOLOGRAM_1))
 		return ..()
-	var/obj/item/trash/bee/bee_to_eat = new(loc)
-	bee_to_eat.pixel_x = pixel_x
-	bee_to_eat.pixel_y = pixel_y
-	if(beegent)
-		bee_to_eat.beegent = beegent
-		bee_to_eat.reagents.add_reagent(beegent.type, 5)
-	bee_to_eat.update_appearance()
+	new /obj/item/trash/bee(loc, src)
 	beegent = null
 	return ..()
 
@@ -188,12 +181,12 @@
 
 /mob/living/simple_animal/hostile/bee/proc/assign_reagent(datum/reagent/R)
 	if(istype(R))
+		var/static/list/injection_range = list(1, 5)
+		if(beegent) //clear the old since this one is going to have some new value
+			RemoveElement(/datum/element/venomous, beegent.type, injection_range)
 		beegent = R
 		name = "[initial(name)] ([R.name])"
 		real_name = name
-		//clear the old since this one is going to have some new value
-		RemoveElement(/datum/element/venomous)
-		var/static/list/injection_range = list(1, 5)
 		AddElement(/datum/element/venomous, beegent.type, injection_range)
 		generate_bee_visuals()
 
@@ -378,11 +371,25 @@
 	icon = 'icons/mob/simple/bees.dmi'
 	icon_state = "bee_item"
 	var/datum/reagent/beegent
+	var/bee_type = /mob/living/simple_animal/hostile/bee
 
-/obj/item/trash/bee/Initialize(mapload)
+/obj/item/trash/bee/Initialize(mapload, mob/living/simple_animal/hostile/bee/dead_bee)
 	. = ..()
+	if(dead_bee)
+		pixel_x = dead_bee.pixel_x
+		pixel_y = dead_bee.pixel_y
+		bee_type = dead_bee.type
+		if(dead_bee.beegent)
+			beegent = dead_bee.beegent
+			reagents.add_reagent(beegent.type, 5)
+		update_appearance()
 	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
+
+/obj/item/trash/bee/Destroy()
+	beegent = null
+	return ..()
 
 /obj/item/trash/bee/update_overlays()
 	. = ..()
@@ -390,4 +397,28 @@
 	body_overlay.color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
 	. += body_overlay
 
+///Spawn a new bee from this trash item when hit by a lazarus injector and conditions are met.
+/obj/item/trash/bee/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)
+	SIGNAL_HANDLER
+	if(injector.revive_type != SENTIENCE_ORGANIC)
+		balloon_alert(user, "invalid creature!")
+		return
+	var/mob/living/simple_animal/hostile/bee/revived_bee = new bee_type (drop_location())
+	if(beegent)
+		revived_bee.assign_reagent(beegent)
+	revived_bee.lazarus_revive(user, injector.malfunctioning)
+	injector.expend(revived_bee, user)
+	qdel(src)
+	return LAZARUS_INJECTOR_USED
+
+
+#undef BEE_DEFAULT_COLOUR
 #undef BEE_FOODGROUPS
+#undef BEE_IDLE_GOHOME
+#undef BEE_IDLE_ROAMING
+#undef BEE_POLLINATE_PEST_CHANCE
+#undef BEE_POLLINATE_POTENCY_CHANCE
+#undef BEE_POLLINATE_YIELD_CHANCE
+#undef BEE_PROB_GOHOME
+#undef BEE_PROB_GOROAM
+#undef BEE_TRAY_RECENT_VISIT

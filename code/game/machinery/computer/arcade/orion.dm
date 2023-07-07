@@ -60,6 +60,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	name = "Kobayashi Maru control computer"
 	desc = "A test for cadets."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon_keyboard = null
+	icon_screen = null
 	icon_state = "control_boxp"
 	//kobatashi has a smaller list of events, so we copy from the global list and cut whatever isn't here
 	var/list/event_whitelist = list(
@@ -138,12 +140,6 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
 		gamer.mind?.adjust_experience(/datum/skill/gaming, 50) // cheevos make u better
-
-		if(!isnull(GLOB.data_core.general))
-			for(var/datum/data/record/insanity_records in GLOB.data_core.general)
-				if(insanity_records.fields["name"] == gamer.name)
-					insanity_records.fields["m_stat"] = "*Unstable*"
-					return
 
 /obj/machinery/computer/arcade/orion_trail/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -503,12 +499,11 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	newgame()
 	obj_flags |= EMAGGED
 
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion
+/mob/living/basic/syndicate/ranged/smg/orion
 	name = "spaceport security"
 	desc = "Premier corporate security forces for all spaceports found along the Orion Trail."
-	faction = list("orion")
+	faction = list(FACTION_ORION)
 	loot = list()
-	del_on_death = TRUE
 
 /obj/item/orion_ship
 	name = "model settler ship"
@@ -558,8 +553,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	var/datum/component/singularity/singularity = singularity_component.resolve()
 	singularity?.grav_pull = 1
 
-/obj/singularity/orion/process(delta_time)
-	if(DT_PROB(0.5, delta_time))
+/obj/singularity/orion/process(seconds_per_tick)
+	if(SPT_PROB(0.5, seconds_per_tick))
 		mezzer()
 
 #undef ORION_TRAIL_WINTURN

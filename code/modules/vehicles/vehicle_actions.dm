@@ -188,7 +188,7 @@
 
 /datum/action/vehicle
 	check_flags = AB_CHECK_HANDS_BLOCKED | AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS
-	icon_icon = 'icons/mob/actions/actions_vehicle.dmi'
+	button_icon = 'icons/mob/actions/actions_vehicle.dmi'
 	button_icon_state = "vehicle_eject"
 	var/obj/vehicle/vehicle_target
 
@@ -310,7 +310,7 @@
 /datum/action/vehicle/ridden/wheelchair/bell
 	name = "Bell Ring"
 	desc = "Ring the bell."
-	icon_icon = 'icons/obj/bureaucracy.dmi'
+	button_icon = 'icons/obj/bureaucracy.dmi'
 	button_icon_state = "desk_bell"
 	check_flags = AB_CHECK_CONSCIOUS
 	var/bell_cooldown
@@ -381,15 +381,15 @@
 		rider.Paralyze(50)
 		if(prob(15))
 			rider.visible_message(
-				span_userdanger("You smack against the board, hard."),
 				span_danger("[rider] misses the landing and falls on [rider.p_their()] face!)"),
+				span_userdanger("You smack against the board, hard."),
 			)
 			rider.emote("scream")
 			rider.adjustBruteLoss(10)  // thats gonna leave a mark
 			return
 		rider.visible_message(
-			span_userdanger("You fall flat onto the board!"),
 			span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"),
+			span_userdanger("You fall flat onto the board!"),
 		)
 		return
 
@@ -410,7 +410,7 @@
 
 /datum/action/vehicle/sealed/climb_out/vim
 	name = "Eject From Mech"
-	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_eject"
 
 /datum/action/vehicle/sealed/noise

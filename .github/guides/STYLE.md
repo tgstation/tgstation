@@ -211,6 +211,9 @@ While DM allows other ways of declaring variables, this one should be used for c
 ### Use descriptive and obvious names
 Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing, even if you think the variable's purpose is obvious.
 
+#### Any variable or argument that holds time and uses a unit of time other than decisecond must include the unit of time in the name.
+For example, a proc argument named `delta_time` that marks the seconds between fires could confuse somebody who assumes it stores deciseconds. Naming it `delta_time_seconds` makes this clearer, naming it `seconds_per_tick` makes its purpose even clearer.
+
 ### Don't use abbreviations
 Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", etc.
 
@@ -278,6 +281,26 @@ for (var/month in 1 to 12)
 
 // Bad, only use `i` for numeral loops
 for (var/i in reagents)
+```
+
+### Don't abuse the increment/decrement operators
+`x++` and `++x` both will increment x, but the former will return x *before* it was incremented, while the latter will return x *after* it was incremented. Great if you want to be clever, or if you were a C programmer in the 70s, but it hurts the readability of code to anyone who isn't familiar with this. The convenience is not nearly good enough to justify this burden.
+
+```dm
+// Bad
+world.log << "You now have [++apples] apples."
+
+// Good
+apples++
+// apples += 1 - Allowed
+world.log << "You now have [apples] apples."
+
+// Bad
+world.log << "[apples--] apples left, taking one."
+
+// Good
+world.log << "[apples] apples left, taking one."
+apples--
 ```
 
 ## Procs

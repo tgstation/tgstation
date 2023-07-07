@@ -7,7 +7,10 @@
 	random_sensor = FALSE
 	icon = 'icons/obj/clothing/under/captain.dmi'
 	worn_icon = 'icons/mob/clothing/under/captain.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0, WOUND = 15)
+	armor_type = /datum/armor/clothing_under/rank_captain
+
+/datum/armor/clothing_under/rank_captain
+	wound = 15
 
 /obj/item/clothing/under/rank/captain/skirt
 	name = "captain's jumpskirt"

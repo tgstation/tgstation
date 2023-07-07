@@ -1,13 +1,3 @@
-///Maximum settable pressure
-#define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 25)
-///Minimum settable pressure
-#define PUMP_MIN_PRESSURE (ONE_ATMOSPHERE / 10)
-///Defaul pressure, used in the UI to reset the settings
-#define PUMP_DEFAULT_PRESSURE (ONE_ATMOSPHERE)
-///What direction is the machine pumping (into pump/port or out to the tank/area)?
-#define PUMP_IN TRUE
-#define PUMP_OUT FALSE
-
 /obj/machinery/portable_atmospherics/pump
 	name = "portable air pump"
 	icon_state = "siphon"
@@ -89,7 +79,7 @@
 			on = FALSE
 			update_appearance()
 	else if(on && holding && direction == PUMP_OUT)
-		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+		user.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -135,14 +125,14 @@
 					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [ADMIN_VERBOSEJMP(src)]")
 					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [AREACOORD(src)]")
 			else if(on && direction == PUMP_OUT)
-				investigate_log("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+				usr.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("direction")
 			if(direction == PUMP_OUT)
 				direction = PUMP_IN
 			else
 				if(on && holding)
-					investigate_log("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
+					usr.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 				direction = PUMP_OUT
 			. = TRUE
 		if("pressure")
@@ -173,7 +163,7 @@
 			suppress_reactions = !suppress_reactions
 			SSair.start_processing_machine(src)
 			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
-			investigate_log("[key_name(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			usr.investigate_log("turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
 			. = TRUE
 	update_appearance()
 

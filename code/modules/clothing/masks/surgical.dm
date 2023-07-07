@@ -8,8 +8,11 @@
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE|HIDESNOUT
 	visor_flags_cover = MASKCOVERSMOUTH
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/mask_surgical
 	actions_types = list(/datum/action/item_action/adjust)
+
+/datum/armor/mask_surgical
+	bio = 100
 
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
 	adjustmask(user)

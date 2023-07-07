@@ -9,14 +9,15 @@ GLOBAL_LIST_EMPTY(station_levels_cache)
 GLOBAL_VAR(station_level_z_scratch)
 
 // Called a lot, somewhat slow, so has its own cache
-#define is_station_level(z) \
+#define is_station_level(z_level) \
 	( \
+		(z_level) && \
 		( \
 			/* The right hand side of this guarantees that we'll have the space to fill later on, while also not failing the condition */ \
-			(GLOB.station_levels_cache.len < (GLOB.station_level_z_scratch = z) && (GLOB.station_levels_cache.len = GLOB.station_level_z_scratch)) \
+			(GLOB.station_levels_cache.len < (GLOB.station_level_z_scratch = (z_level)) && (GLOB.station_levels_cache.len = GLOB.station_level_z_scratch)) \
 			|| isnull(GLOB.station_levels_cache[GLOB.station_level_z_scratch]) \
 		) \
-			? (GLOB.station_levels_cache[GLOB.station_level_z_scratch] = !!SSmapping.level_trait(z, ZTRAIT_STATION)) \
+			? (GLOB.station_levels_cache[GLOB.station_level_z_scratch] = !!SSmapping.level_trait(GLOB.station_level_z_scratch, ZTRAIT_STATION)) \
 			: GLOB.station_levels_cache[GLOB.station_level_z_scratch] \
 	)
 

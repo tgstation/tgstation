@@ -24,27 +24,27 @@
 		return
 	var/mob/living/carbon/human/human_target = target
 	var/beard_or_hair = tgui_alert(user, "What do you want to dye?", "Character Preference", list("Hair", "Facial Hair"))
-	if(!beard_or_hair || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE))
+	if(!beard_or_hair || !user.can_perform_action(src, NEED_DEXTERITY))
 		return
 
 	var/list/choices = beard_or_hair == "Hair" ? GLOB.hair_gradients_list : GLOB.facial_hair_gradients_list
 	var/new_grad_style = tgui_input_list(user, "Choose a color pattern", "Character Preference", choices)
 	if(isnull(new_grad_style))
 		return
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE))
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 
 	var/new_grad_color = input(user, "Choose a secondary hair color:", "Character Preference",human_target.grad_color) as color|null
-	if(!new_grad_color || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE) || !user.CanReach(target))
+	if(!new_grad_color || !user.can_perform_action(src, NEED_DEXTERITY) || !user.CanReach(target))
 		return
 
 	to_chat(user, span_notice("You start applying the hair dye..."))
 	if(!do_after(user, 3 SECONDS, target))
 		return
-	var/gradient_key = beard_or_hair == "Hair" ? GRADIENT_HAIR_KEY : GRADIENT_FACIAL_HAIR_KEY
-	LAZYSETLEN(human_target.grad_style, GRADIENTS_LEN)
-	LAZYSETLEN(human_target.grad_color, GRADIENTS_LEN)
-	human_target.grad_style[gradient_key] = new_grad_style
-	human_target.grad_color[gradient_key] = sanitize_hexcolor(new_grad_color)
-	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
-	human_target.update_body_parts()
+	if(beard_or_hair == "Hair")
+		human_target.set_hair_gradient_style(new_grad_style, update = FALSE)
+		human_target.set_hair_gradient_color(new_grad_color, update = TRUE)
+	else
+		human_target.set_facial_hair_gradient_style(new_grad_style, update = FALSE)
+		human_target.set_facial_hair_gradient_color(new_grad_color, update = TRUE)
+	playsound(src, 'sound/effects/spray.ogg', 10, vary = TRUE)

@@ -8,7 +8,7 @@
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "cameracase"
-	custom_materials = list(/datum/material/iron=400, /datum/material/glass=250)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 4, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 2.5)
 	result_path = /obj/structure/camera_assembly
 	wall_external = TRUE
 
@@ -35,17 +35,17 @@
 	//upgrade messages
 	var/has_upgrades
 	if(emp_module)
-		. += "It has electromagnetic interference shielding installed."
+		. += span_info("It has electromagnetic interference shielding installed.")
 		has_upgrades = TRUE
 	else if(state == STATE_WIRED)
 		. += span_info("It can be shielded against electromagnetic interference with some <b>plasma</b>.")
 	if(xray_module)
-		. += "It has an X-ray photodiode installed."
+		. += span_info("It has an X-ray photodiode installed.")
 		has_upgrades = TRUE
 	else if(state == STATE_WIRED)
 		. += span_info("It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.")
 	if(proxy_module)
-		. += "It has a proximity sensor installed."
+		. += span_info("It has a proximity sensor installed.")
 		has_upgrades = TRUE
 	else if(state == STATE_WIRED)
 		. += span_info("It can be upgraded with a <b>proximity sensor</b>.")
@@ -125,11 +125,11 @@
 	if(state != STATE_WRENCHED && state != STATE_WELDED)
 		return
 	. = TRUE
-	if(!tool.tool_start_check(user, amount=3))
+	if(!tool.tool_start_check(user, amount=1))
 		return
 	user.balloon_alert_to_viewers("[state == STATE_WELDED ? "un" : null]welding...")
 	audible_message(span_hear("You hear welding."))
-	if(!tool.use_tool(src, user, 2 SECONDS, amount=3, volume = 50))
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
 		user.balloon_alert_to_viewers("stopped [state == STATE_WELDED ? "un" : null]welding!")
 		return
 	state = ((state == STATE_WELDED) ? STATE_WRENCHED : STATE_WELDED)
@@ -203,7 +203,7 @@
 	var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
 	if(isnull(choice))
 		return
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	to_chat(user, span_notice("You remove [choice] from [src]."))
 	drop_upgrade(choice)

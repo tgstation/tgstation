@@ -12,7 +12,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	in_use = FALSE
 	return ..()
 
-/mob/living/carbon/human/dummy/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/carbon/human/dummy/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	return
 
 /mob/living/carbon/human/dummy/attach_rot(mapload)
@@ -26,14 +26,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/proc/harvest_organs()
 	for(var/slot in list(ORGAN_SLOT_BRAIN, ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_APPENDIX, \
 		ORGAN_SLOT_EYES, ORGAN_SLOT_EARS, ORGAN_SLOT_TONGUE, ORGAN_SLOT_LIVER, ORGAN_SLOT_STOMACH))
-		var/obj/item/organ/current_organ = getorganslot(slot) //Time to cache it lads
+		var/obj/item/organ/current_organ = get_organ_slot(slot) //Time to cache it lads
 		if(current_organ)
 			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
 			SSwardrobe.stash_object(current_organ)
 
 	var/datum/species/current_species = dna.species
 	for(var/organ_path in current_species.mutant_organs)
-		var/obj/item/organ/current_organ = getorgan(organ_path)
+		var/obj/item/organ/current_organ = get_organ_by_type(organ_path)
 		if(current_organ)
 			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
 			SSwardrobe.stash_object(current_organ)
@@ -82,23 +82,28 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/log_mob_tag(text)
 	return
 
+/// Takes in an accessory list and returns the first entry from that list, ensuring that we dont return SPRITE_ACCESSORY_NONE in the process.
+/proc/get_consistent_feature_entry(list/accessory_feature_list)
+	var/consistent_entry = (accessory_feature_list- SPRITE_ACCESSORY_NONE)[1]
+	ASSERT(!isnull(consistent_entry))
+	return consistent_entry
+
 /proc/create_consistent_human_dna(mob/living/carbon/human/target)
-	target.create_dna()
 	target.dna.initialize_dna(skip_index = TRUE)
-	target.dna.features["body_markings"] = "None"
-	target.dna.features["ears"] = "None"
-	target.dna.features["ethcolor"] = COLOR_WHITE
-	target.dna.features["frills"] = "None"
-	target.dna.features["horns"] = "None"
 	target.dna.features["mcolor"] = COLOR_VIBRANT_LIME
-	target.dna.features["moth_antennae"] = "Plain"
-	target.dna.features["moth_markings"] = "None"
-	target.dna.features["moth_wings"] = "Plain"
-	target.dna.features["snout"] = "Round"
-	target.dna.features["spines"] = "None"
-	target.dna.features["tail_cat"] = "None"
-	target.dna.features["tail_lizard"] = "Smooth"
-	target.dna.features["pod_hair"] = "Ivy"
+	target.dna.features["ethcolor"] = COLOR_WHITE
+	target.dna.features["body_markings"] = get_consistent_feature_entry(GLOB.body_markings_list)
+	target.dna.features["ears"] = get_consistent_feature_entry(GLOB.ears_list)
+	target.dna.features["frills"] = get_consistent_feature_entry(GLOB.frills_list)
+	target.dna.features["horns"] = get_consistent_feature_entry(GLOB.horns_list)
+	target.dna.features["moth_antennae"] = get_consistent_feature_entry(GLOB.moth_antennae_list)
+	target.dna.features["moth_markings"] = get_consistent_feature_entry(GLOB.moth_markings_list)
+	target.dna.features["moth_wings"] = get_consistent_feature_entry(GLOB.moth_wings_list)
+	target.dna.features["snout"] = get_consistent_feature_entry(GLOB.snouts_list)
+	target.dna.features["spines"] = get_consistent_feature_entry(GLOB.spines_list)
+	target.dna.features["tail_cat"] = get_consistent_feature_entry(GLOB.tails_list_human) // it's a lie
+	target.dna.features["tail_lizard"] = get_consistent_feature_entry(GLOB.tails_list_lizard)
+	target.dna.features["pod_hair"] = get_consistent_feature_entry(GLOB.pod_hair_list)
 
 /// Provides a dummy that is consistently bald, white, naked, etc.
 /mob/living/carbon/human/dummy/consistent
@@ -117,6 +122,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	..()
 	if(is_creating)
 		fully_replace_character_name(real_name, "John Doe")
+
+/mob/living/carbon/human/consistent/domutcheck()
+	return // We skipped adding any mutations so this runtimes
 
 //Inefficient pooling/caching way.
 GLOBAL_LIST_EMPTY(human_dummy_list)

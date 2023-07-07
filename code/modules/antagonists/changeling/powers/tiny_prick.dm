@@ -81,17 +81,17 @@
 	selected_dna = changeling.select_dna()
 	if(!selected_dna)
 		return
-	if(NOTRANSSTING in selected_dna.dna.species.species_traits)
-		to_chat(user, span_notice("That DNA is not compatible with changeling retrovirus!"))
+	if(HAS_TRAIT(user, TRAIT_NO_TRANSFORMATION_STING))
+		user.balloon_alert(user, "incompatible DNA!")
 		return
-	..()
+	return ..()
 
 /datum/action/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
 	. = ..()
 	if(!.)
 		return
-	if((HAS_TRAIT(target, TRAIT_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
-		to_chat(user, span_warning("Our sting appears ineffective against its DNA."))
+	if(!iscarbon(target) || HAS_TRAIT(target, TRAIT_HUSK) || HAS_TRAIT(target, TRAIT_NO_TRANSFORMATION_STING))
+		user.balloon_alert(user, "incompatible DNA!")
 		return FALSE
 	return TRUE
 
@@ -126,7 +126,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if((HAS_TRAIT(L, TRAIT_HUSK)) || !L.has_dna())
-			to_chat(user, span_warning("Our sting appears ineffective against its DNA."))
+			user.balloon_alert(user, "incompatible DNA!")
 			return FALSE
 	return TRUE
 
@@ -201,17 +201,23 @@
 	dna_cost = 1
 
 /datum/action/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
+	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
+	if(!eyes)
+		user.balloon_alert(user, "no eyes!")
+		return FALSE
+
 	log_combat(user, target, "stung", "blind sting")
 	to_chat(target, span_danger("Your eyes burn horrifically!"))
-	target.become_nearsighted(EYE_DAMAGE)
-	target.adjust_blindness(20)
-	target.blur_eyes(40)
+	eyes.apply_organ_damage(eyes.maxHealth * 0.8)
+	target.adjust_temp_blindness(40 SECONDS)
+	target.set_eye_blur_if_lower(80 SECONDS)
 	return TRUE
 
 /datum/action/changeling/sting/lsd
 	name = "Hallucination Sting"
-	desc = "We cause mass terror to our victim."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
+	desc = "We cause mass terror to our victim. Costs 10 chemicals."
+	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. \
+			The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
 	button_icon_state = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1

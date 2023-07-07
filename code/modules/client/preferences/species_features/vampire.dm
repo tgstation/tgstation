@@ -5,7 +5,7 @@
 	priority = PREFERENCE_PRIORITY_NAME_MODIFICATIONS //this will be overwritten by names otherwise
 	main_feature_name = "Vampire status"
 	should_generate_icons = TRUE
-	relevant_species_trait = BLOOD_CLANS
+	relevant_inherent_trait = TRAIT_BLOOD_CLANS
 
 /datum/preference/choiced/vampire_status/create_default_value()
 	return "Inoculated" //eh, have em try out the mechanic first
@@ -13,7 +13,7 @@
 /datum/preference/choiced/vampire_status/init_possible_values()
 	var/list/values = list()
 
-	values["Inoculated"] = icon('icons/obj/drinks.dmi', "bloodglass")
+	values["Inoculated"] = icon('icons/obj/drinks/drinks.dmi', "bloodglass")
 	values["Outcast"] = icon('icons/obj/medical/bloodpack.dmi', "generic_bloodpack")
 
 	return values
@@ -22,7 +22,7 @@
 GLOBAL_LIST_EMPTY(vampire_houses)
 
 /datum/preference/choiced/vampire_status/apply_to_human(mob/living/carbon/human/target, value)
-	if (!(relevant_species_trait in target.dna?.species.species_traits))
+	if(!HAS_TRAIT(target, TRAIT_BLOOD_CLANS))
 		return
 
 	if(value != "Inoculated")

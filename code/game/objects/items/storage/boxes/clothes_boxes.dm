@@ -7,7 +7,7 @@
 
 /obj/item/storage/box/gloves/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/clothing/gloves/color/latex(src)
+		new /obj/item/clothing/gloves/latex(src)
 
 /obj/item/storage/box/masks
 	name = "box of sterile masks"
@@ -26,6 +26,16 @@
 /obj/item/storage/box/rxglasses/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/glasses/regular(src)
+
+/obj/item/storage/box/tape_wizard
+	name = "Tape Wizard - Episode 23"
+	desc = "A box containing the costume used by legendary entertainment icon 'Super Tape Wizard'. It got a little stuck on its way out."
+
+/obj/item/storage/box/tape_wizard/PopulateContents()
+	new /obj/item/clothing/head/wizard/tape/fake(src)
+	new /obj/item/clothing/suit/wizrobe/tape/fake(src)
+	new /obj/item/staff/tape(src)
+	new /obj/item/stack/sticky_tape(src)
 
 /obj/item/storage/box/fakesyndiesuit
 	name = "boxed space suit and helmet"
@@ -118,6 +128,9 @@
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"
+	/// This item is used to generate a preview image for this set.
+	/// It could be any item, doesn't even necessarily need to be something in the kit
+	var/obj/item/typepath_for_preview = /obj/item/clothing/suit/chaplainsuit/armor/templar
 
 /obj/item/storage/box/holy/PopulateContents()
 	new /obj/item/clothing/head/helmet/chaplain(src)
@@ -125,6 +138,7 @@
 
 /obj/item/storage/box/holy/clock
 	name = "Forgotten kit"
+	typepath_for_preview = /obj/item/clothing/suit/chaplainsuit/armor/clock
 
 /obj/item/storage/box/holy/clock/PopulateContents()
 	new /obj/item/clothing/head/helmet/chaplain/clock(src)
@@ -132,6 +146,7 @@
 
 /obj/item/storage/box/holy/student
 	name = "Profane Scholar Kit"
+	typepath_for_preview = /obj/item/clothing/suit/chaplainsuit/armor/studentuni
 
 /obj/item/storage/box/holy/student/PopulateContents()
 	new /obj/item/clothing/suit/chaplainsuit/armor/studentuni(src)
@@ -139,6 +154,7 @@
 
 /obj/item/storage/box/holy/sentinel
 	name = "Stone Sentinel Kit"
+	typepath_for_preview = /obj/item/clothing/suit/chaplainsuit/armor/ancient
 
 /obj/item/storage/box/holy/sentinel/PopulateContents()
 	new /obj/item/clothing/suit/chaplainsuit/armor/ancient(src)
@@ -146,6 +162,7 @@
 
 /obj/item/storage/box/holy/witchhunter
 	name = "Witchhunter Kit"
+	typepath_for_preview = /obj/item/clothing/suit/chaplainsuit/armor/witchhunter
 
 /obj/item/storage/box/holy/witchhunter/PopulateContents()
 	new /obj/item/clothing/suit/chaplainsuit/armor/witchhunter(src)
@@ -153,6 +170,7 @@
 
 /obj/item/storage/box/holy/adept
 	name = "Divine Adept Kit"
+	typepath_for_preview = /obj/item/clothing/suit/chaplainsuit/armor/adept
 
 /obj/item/storage/box/holy/adept/PopulateContents()
 	new /obj/item/clothing/suit/chaplainsuit/armor/adept(src)
@@ -160,6 +178,7 @@
 
 /obj/item/storage/box/holy/follower
 	name = "Followers of the Chaplain Kit"
+	typepath_for_preview = /obj/item/clothing/suit/hooded/chaplain_hoodie/leader
 
 /obj/item/storage/box/holy/follower/PopulateContents()
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
@@ -168,3 +187,12 @@
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie/leader(src)
 
+/obj/item/storage/box/holy/divine_archer
+	name = "Divine Archer Kit"
+	typepath_for_preview = /obj/item/clothing/suit/hooded/chaplain_hoodie/divine_archer
+
+/obj/item/storage/box/holy/divine_archer/PopulateContents()
+	new /obj/item/clothing/under/rank/civilian/chaplain/divine_archer(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie/divine_archer(src)
+	new /obj/item/clothing/gloves/divine_archer(src)
+	new /obj/item/clothing/shoes/divine_archer(src)

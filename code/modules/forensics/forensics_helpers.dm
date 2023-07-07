@@ -76,6 +76,11 @@
 		forensics = new(src, blood_DNA = blood_DNA_to_add)
 	return TRUE
 
+/obj/item/add_blood_DNA(list/blood_DNA_to_add)
+	if(item_flags & NO_BLOOD_ON_ITEM)
+		return FALSE
+	return ..()
+
 /obj/item/clothing/gloves/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	transfer_blood = rand(2, 4)
 	return ..()
@@ -87,6 +92,9 @@
 	if(!QDELETED(blood_splatter))
 		blood_splatter.add_blood_DNA(blood_dna) //give blood info to the blood decal.
 		return TRUE //we bloodied the floor
+	return FALSE
+
+/turf/closed/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	return FALSE
 
 /mob/living/carbon/human/add_blood_DNA(list/blood_DNA_to_add, list/datum/disease/diseases)

@@ -12,23 +12,23 @@
 	severity = DISEASE_SEVERITY_MEDIUM
 
 
-/datum/disease/pierrot_throat/stage_act(delta_time, times_fired)
+/datum/disease/pierrot_throat/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(1)
-			if(DT_PROB(5, delta_time))
+			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a little silly."))
 		if(2)
-			if(DT_PROB(5, delta_time))
+			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You start seeing rainbows."))
 		if(3)
-			if(DT_PROB(5, delta_time))
+			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your thoughts are interrupted by a loud <b>HONK!</b>"))
 		if(4)
-			if(DT_PROB(2.5, delta_time))
+			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.say( pick( list("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk...") ) , forced = "pierrot's throat")
 
 

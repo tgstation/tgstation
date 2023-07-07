@@ -22,7 +22,7 @@ Reproductive extracts:
 
 /obj/item/slimecross/reproductive/Initialize(mapload)
 	. = ..()
-	create_storage(type = /datum/storage/extract_inventory)
+	create_storage(storage_type = /datum/storage/extract_inventory)
 
 /obj/item/slimecross/reproductive/attackby(obj/item/O, mob/user)
 	var/datum/storage/extract_inventory/slime_storage = atom_storage
@@ -50,7 +50,7 @@ Reproductive extracts:
 		return
 
 	else if(istype(O, /obj/item/food/monkeycube))
-		if(atom_storage?.attempt_insert(O, user, override = TRUE, force = TRUE))
+		if(atom_storage?.attempt_insert(O, user, override = TRUE, force = STORAGE_FULLY_LOCKED))
 			to_chat(user, span_notice("You feed 1 Monkey Cube to [src], and it pulses gently."))
 			slime_storage?.processCubes(user)
 			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)

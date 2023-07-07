@@ -3,7 +3,7 @@
 	set name = "Trigger Event"
 	set category = "Admin.Events"
 
-	if(!holder ||!check_rights(R_FUN))
+	if(!holder || !check_rights(R_FUN))
 		return
 
 	holder.forceEvent()
@@ -29,19 +29,47 @@
 	return GLOB.fun_state
 
 /datum/force_event/ui_static_data(mob/user)
+	var/static/list/category_to_icons
+	if(!category_to_icons)
+		category_to_icons = list(
+			EVENT_CATEGORY_AI = "robot",
+			EVENT_CATEGORY_ANOMALIES = "cloud-bolt",
+			EVENT_CATEGORY_BUREAUCRATIC = "print",
+			EVENT_CATEGORY_ENGINEERING = "wrench",
+			EVENT_CATEGORY_ENTITIES = "ghost",
+			EVENT_CATEGORY_FRIENDLY = "face-smile",
+			EVENT_CATEGORY_HEALTH = "brain",
+			EVENT_CATEGORY_HOLIDAY = "calendar",
+			EVENT_CATEGORY_INVASION = "user-group",
+			EVENT_CATEGORY_JANITORIAL = "bath",
+			EVENT_CATEGORY_SPACE = "meteor",
+			EVENT_CATEGORY_WIZARD = "hat-wizard",
+		)
 	var/list/data = list()
-	data["categories"] = list()
-	for(var/datum/round_event_control/event_control in SSevents.control)
-		if(!data["categories"][event_control.category])
-			data["categories"][event_control.category] = list(
+
+	var/list/categories_seen = list()
+	var/list/categories = list()
+
+	var/list/events = list()
+
+	for(var/datum/round_event_control/event_control as anything in SSevents.control)
+		//add category
+		if(!categories_seen[event_control.category])
+			categories_seen[event_control.category] = TRUE
+			UNTYPED_LIST_ADD(categories, list(
 				"name" = event_control.category,
-				"events" = list()
-			)
-		data["categories"][event_control.category]["events"] += list(list(
+				"icon" = category_to_icons[event_control.category],
+			))
+		//add event, with one value matching up the category
+		UNTYPED_LIST_ADD(events, list(
 			"name" = event_control.name,
 			"description" = event_control.description,
-			"type" = event_control.type
+			"type" = event_control.type,
+			"category" = event_control.category,
+			"has_customization" = !!length(event_control.admin_setup),
 		))
+	data["categories"] = categories
+	data["events"] = events
 	return data
 
 /datum/force_event/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -61,10 +89,12 @@
 			var/datum/round_event_control/event = locate(event_to_run_type) in SSevents.control
 			if(!event)
 				return
-			if(event.admin_setup(usr) == ADMIN_CANCEL_EVENT)
-				return
+			if(length(event.admin_setup))
+				for(var/datum/event_admin_setup/admin_setup_datum in event.admin_setup)
+					if(admin_setup_datum.prompt_admins() == ADMIN_CANCEL_EVENT)
+						return
 			var/always_announce_chance = 100
 			var/no_announce_chance = 0
-			event.runEvent(announce_chance_override = announce_event ? always_announce_chance : no_announce_chance, admin_forced = TRUE)
+			event.run_event(announce_chance_override = announce_event ? always_announce_chance : no_announce_chance, admin_forced = TRUE)
 			message_admins("[key_name_admin(usr)] has triggered an event. ([event.name])")
 			log_admin("[key_name(usr)] has triggered an event. ([event.name])")

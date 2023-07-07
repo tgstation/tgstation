@@ -439,3 +439,5 @@
 
 /obj/effect/decal/hammerandsickle/shuttleRotate(rotation)
 	setDir(angle2dir(rotation+dir2angle(dir))) // No parentcall, rest of the rotate code breaks the pixel offset.
+
+#undef LUXURY_MESSAGE_COOLDOWN

@@ -50,14 +50,14 @@
 	var/obj/structure/ladder/L
 
 	if (!down)
-		L = locate() in SSmapping.get_turf_below(T)
+		L = locate() in GET_TURF_BELOW(T)
 		if (L)
 			if(crafted == L.crafted)
 				down = L
 				L.up = src  // Don't waste effort looping the other way
 				L.update_appearance()
 	if (!up)
-		L = locate() in SSmapping.get_turf_above(T)
+		L = locate() in GET_TURF_ABOVE(T)
 		if (L)
 			if(crafted == L.crafted)
 				up = L
@@ -93,6 +93,9 @@
 		return
 	if(going_up ? !up : !down)
 		balloon_alert(user, "can't go any further [going_up ? "up" : "down"]")
+		return
+	if(user.buckled && user.buckled.anchored)
+		balloon_alert(user, "buckled to something anchored!")
 		return
 	if(travel_time)
 		INVOKE_ASYNC(src, PROC_REF(start_travelling), user, going_up)

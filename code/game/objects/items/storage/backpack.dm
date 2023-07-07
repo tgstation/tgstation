@@ -22,10 +22,10 @@
 	slot_flags = ITEM_SLOT_BACK //ERROOOOO
 	resistance_flags = NONE
 	max_integrity = 300
+	storage_type = /datum/storage/backpack
 
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
-	create_storage(max_slots = 21, max_total_storage = 21)
 	AddElement(/datum/element/attack_equip)
 
 /*
@@ -56,13 +56,12 @@
 	inhand_icon_state = "holdingpack"
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 60, ACID = 50)
+	armor_type = /datum/armor/backpack_holding
+	storage_type = /datum/storage/bag_of_holding
 
-/obj/item/storage/backpack/holding/Initialize(mapload)
-	. = ..()
-
-	create_storage(max_specific_storage = WEIGHT_CLASS_GIGANTIC, max_total_storage = 35, max_slots = 30, type = /datum/storage/bag_of_holding)
-	atom_storage.allow_big_nesting = TRUE
+/datum/armor/backpack_holding
+	fire = 60
+	acid = 50
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide."))
@@ -79,15 +78,11 @@
 	icon_state = "giftbag0"
 	inhand_icon_state = "giftbag"
 	w_class = WEIGHT_CLASS_BULKY
+	storage_type = /datum/storage/backpack/santabag
 
 /obj/item/storage/backpack/santabag/Initialize(mapload)
 	. = ..()
 	regenerate_presents()
-
-/obj/item/storage/backpack/santabag/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 60
 
 /obj/item/storage/backpack/santabag/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit..."))
@@ -102,7 +97,7 @@
 	if(user.mind && HAS_TRAIT(user.mind, TRAIT_CANNOT_OPEN_PRESENTS))
 		var/turf/floor = get_turf(src)
 		var/obj/item/thing = new /obj/item/a_gift/anything(floor)
-		if(!atom_storage.attempt_insert(thing, user, override = TRUE))
+		if(!atom_storage.attempt_insert(thing, user, override = TRUE, force = STORAGE_SOFT_LOCKED))
 			qdel(thing)
 
 
@@ -136,6 +131,12 @@
 	desc = "It's a backpack especially designed for use in a sterile environment."
 	icon_state = "backpack-medical"
 	inhand_icon_state = "medicalpack"
+
+/obj/item/storage/backpack/coroner
+	name = "coroner backpack"
+	desc = "It's a backpack especially designed for use in an undead environment."
+	icon_state = "backpack-coroner"
+	inhand_icon_state = "coronerpack"
 
 /obj/item/storage/backpack/security
 	name = "security backpack"
@@ -229,6 +230,41 @@
 	. = ..()
 	atom_storage.max_total_storage = 26
 
+// MEAT MEAT MEAT MEAT MEAT
+
+/obj/item/storage/backpack/meat
+	name = "\improper MEAT"
+	desc = "MEAT MEAT MEAT MEAT MEAT MEAT"
+	icon_state = "meatmeatmeat"
+	inhand_icon_state = "meatmeatmeat"
+	force = 15
+	throwforce = 15
+	attack_verb_continuous = list("MEATS", "MEAT MEATS")
+	attack_verb_simple = list("MEAT", "MEAT MEAT")
+	///Sounds used in the squeak component
+	var/list/meat_sounds = list('sound/effects/blobattack.ogg' = 1)
+	///Reagents added to the edible component, ingested when you EAT the MEAT
+	var/list/meat_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+	)
+	///The food types of the edible component
+	var/foodtypes = MEAT | RAW
+	///How our MEAT tastes. It tastes like MEAT
+	var/list/tastes = list("MEAT" = 1)
+	///Eating verbs when consuming the MEAT
+	var/list/eatverbs = list("MEAT", "absorb", "gnaw", "consume")
+
+/obj/item/storage/backpack/meat/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/edible,\
+		initial_reagents = meat_reagents,\
+		foodtypes = foodtypes,\
+		tastes = tastes,\
+		eatverbs = eatverbs,\
+	)
+	AddComponent(/datum/component/squeak, meat_sounds)
+
 /*
  * Satchel Types
  */
@@ -275,6 +311,12 @@
 	desc = "A sterile satchel with chemist colours."
 	icon_state = "satchel-chemistry"
 	inhand_icon_state = "satchel-chem"
+
+/obj/item/storage/backpack/satchel/coroner
+	name = "coroner satchel"
+	desc = "A satchel used to carry whatever's left of human bodies."
+	icon_state = "satchel-coroner"
+	inhand_icon_state = "satchel-coroner"
 
 /obj/item/storage/backpack/satchel/gen
 	name = "geneticist satchel"
@@ -326,12 +368,12 @@
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
-	var/datum/supply_pack/costumes_toys/randomised/contraband/C = new
-	for(var/i in 1 to 2)
-		var/ctype = pick(C.contains)
-		new ctype(src)
+	var/datum/supply_pack/imports/contraband/smuggled_goods = new
+	for(var/items in 1 to 2)
+		var/smuggled_goods_type = pick(smuggled_goods.contains)
+		new smuggled_goods_type(src)
 
-	qdel(C)
+	qdel(smuggled_goods)
 
 /obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
 	new /obj/item/stack/tile/iron/base(src)
@@ -347,11 +389,92 @@
 	desc = "A large duffel bag for holding extra things."
 	icon_state = "duffel"
 	inhand_icon_state = "duffel"
-	slowdown = 1
+	actions_types = list(/datum/action/item_action/zipper)
+	storage_type = /datum/storage/duffel
+	// How much to slow you down if your bag isn't zipped up
+	var/zip_slowdown = 1
+	/// If this bag is zipped (contents hidden) up or not
+	/// Starts enabled so you're forced to interact with it to "get" it
+	var/zipped_up = TRUE
 
 /obj/item/storage/backpack/duffelbag/Initialize(mapload)
 	. = ..()
-	atom_storage.max_total_storage = 30
+	set_zipper(TRUE)
+
+/obj/item/storage/backpack/duffelbag/update_desc(updates)
+	. = ..()
+	desc = "[initial(desc)]<br>[zipped_up ? "It's zipped up, preventing you from accessing its contents." : "It's unzipped, and harder to move in."]"
+
+/obj/item/storage/backpack/duffelbag/attack_self(mob/user, modifiers)
+	if(loc != user) // God fuck TK
+		return ..()
+	if(zipped_up)
+		return attack_hand(user, modifiers)
+	else
+		return attack_hand_secondary(user, modifiers)
+
+/obj/item/storage/backpack/duffelbag/attack_self_secondary(mob/user, modifiers)
+	attack_self(user, modifiers)
+	return ..()
+
+// If we're zipped, click to unzip
+/obj/item/storage/backpack/duffelbag/attack_hand(mob/user, list/modifiers)
+	if(loc != user)
+		// Hacky, but please don't be cringe yeah?
+		atom_storage.silent = TRUE
+		. = ..()
+		atom_storage.silent = initial(atom_storage.silent)
+		return
+	if(!zipped_up)
+		return ..()
+
+	balloon_alert(user, "unzipping...")
+	playsound(src, 'sound/items/un_zip.ogg', 100, FALSE)
+	var/datum/callback/can_unzip = CALLBACK(src, PROC_REF(zipper_matches), TRUE)
+	if(!do_after(user, 2.1 SECONDS, src, extra_checks = can_unzip))
+		return
+	balloon_alert(user, "unzipped")
+	set_zipper(FALSE)
+	return TRUE
+
+// Vis versa
+/obj/item/storage/backpack/duffelbag/attack_hand_secondary(mob/user, list/modifiers)
+	if(loc != user)
+		return ..()
+	if(zipped_up)
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	balloon_alert(user, "zipping...")
+	playsound(src, 'sound/items/zip_up.ogg', 100, FALSE)
+	var/datum/callback/can_zip = CALLBACK(src, PROC_REF(zipper_matches), FALSE)
+	if(!do_after(user, 0.5 SECONDS, src, extra_checks = can_zip))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	balloon_alert(user, "zipped")
+	set_zipper(TRUE)
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+/// Checks to see if the zipper matches the passed in state
+/// Returns true if so, false otherwise
+/obj/item/storage/backpack/duffelbag/proc/zipper_matches(matching_value)
+	return zipped_up == matching_value
+
+/obj/item/storage/backpack/duffelbag/proc/set_zipper(new_zip)
+	zipped_up = new_zip
+	SEND_SIGNAL(src, COMSIG_DUFFEL_ZIP_CHANGE, new_zip)
+	if(zipped_up)
+		slowdown = initial(slowdown)
+		atom_storage.locked = STORAGE_SOFT_LOCKED
+		atom_storage.display_contents = FALSE
+		atom_storage.close_all()
+	else
+		slowdown = zip_slowdown
+		atom_storage.locked = STORAGE_NOT_LOCKED
+		atom_storage.display_contents = TRUE
+
+	if(isliving(loc))
+		var/mob/living/wearer = loc
+		wearer.update_equipment_speed_mods()
+	update_appearance()
 
 /obj/item/storage/backpack/duffelbag/cursed
 	name = "living duffel bag"
@@ -360,8 +483,7 @@
 		then it might have negative effects on the bag..."
 	icon_state = "duffel-curse"
 	inhand_icon_state = "duffel-curse"
-	slowdown = 2
-	item_flags = DROPDEL
+	zip_slowdown = 2
 	max_integrity = 100
 
 /obj/item/storage/backpack/duffelbag/cursed/Initialize(mapload)
@@ -383,6 +505,12 @@
 /obj/item/storage/backpack/duffelbag/med/surgery
 	name = "surgical duffel bag"
 	desc = "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
+
+/obj/item/storage/backpack/duffelbag/coroner
+	name = "coroner duffel bag"
+	desc = "A large duffel bag for holding large amounts of organs at once."
+	icon_state = "duffel-coroner"
+	inhand_icon_state = "duffel-coroner"
 
 /obj/item/storage/backpack/duffelbag/explorer
 	name = "explorer duffel bag"
@@ -498,12 +626,8 @@
 	desc = "A large duffel bag for holding extra tactical supplies."
 	icon_state = "duffel-syndie"
 	inhand_icon_state = "duffel-syndieammo"
-	slowdown = 0
+	storage_type = /datum/storage/duffel/syndicate
 	resistance_flags = FIRE_PROOF
-
-/obj/item/storage/backpack/duffelbag/syndie/Initialize(mapload)
-	. = ..()
-	atom_storage.silent = TRUE
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman
 	desc = "A large duffel bag for holding extra things. There is a Nanotrasen logo on the back."
@@ -533,19 +657,20 @@
 	inhand_icon_state = "duffel-syndiemed"
 
 /obj/item/storage/backpack/duffelbag/syndie/surgery/PopulateContents()
-	new /obj/item/scalpel(src)
-	new /obj/item/hemostat(src)
-	new /obj/item/retractor(src)
-	new /obj/item/circular_saw(src)
-	new /obj/item/bonesetter(src)
-	new /obj/item/surgicaldrill(src)
-	new /obj/item/cautery(src)
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/cautery/advanced(src)
 	new /obj/item/surgical_drapes(src)
+	new /obj/item/reagent_containers/medigel/sterilizine(src)
+	new /obj/item/surgicaldrill(src)
+	new /obj/item/bonesetter(src)
+	new /obj/item/blood_filter(src)
+	new /obj/item/stack/medical/bone_gel(src)
+	new /obj/item/stack/sticky_tape/surgical(src)
+	new /obj/item/roller(src)
 	new /obj/item/clothing/suit/jacket/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
-	new /obj/item/blood_filter(src)
-	new /obj/item/stack/medical/bone_gel(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo
 	name = "ammunition duffel bag"
@@ -601,7 +726,7 @@
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/gun/ballistic/automatic/c20r(src)
-	new /obj/item/suppressor/specialoffer(src)
+	new /obj/item/suppressor(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle
 	desc = "A large duffel bag containing a Bulldog, some drums, and a pair of thermal imaging glasses."
@@ -657,10 +782,8 @@
 	new /obj/item/grenade/syndieminibomb(src)
 
 // For ClownOps.
-/obj/item/storage/backpack/duffelbag/clown/syndie/Initialize(mapload)
-	. = ..()
-	slowdown = 0
-	atom_storage.silent = TRUE
+/obj/item/storage/backpack/duffelbag/clown/syndie
+	storage_type = /datum/storage/duffel/syndicate
 
 /obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
 	new /obj/item/modular_computer/pda/clown(src)
@@ -679,11 +802,10 @@
 /obj/item/storage/backpack/duffelbag/cops
 	name = "police bag"
 	desc = "A large duffel bag for holding extra police gear."
-	slowdown = 0
 
 /obj/item/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
-	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
+	desc = "A duffel bag containing everything a crewmember needs to support a shaft miner in the field."
 	icon_state = "duffel-explorer"
 	inhand_icon_state = "duffel-explorer"
 

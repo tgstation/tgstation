@@ -22,7 +22,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
-/datum/component/spinny/process(delta_time)
+/datum/component/spinny/process(seconds_per_tick)
 	steps_left--
 	var/atom/spinny_boy = parent
 	if(!istype(spinny_boy) || steps_left <= 0)

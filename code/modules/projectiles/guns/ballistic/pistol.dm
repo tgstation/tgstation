@@ -81,6 +81,23 @@
 	icon_state = "deaglecamo"
 	inhand_icon_state = "deagleg"
 
+/obj/item/gun/ballistic/automatic/pistol/deagle/regal
+	name = "\improper Regal Condor"
+	desc = "Unlike the Desert Eagle, this weapon seems to utilize some kind of advanced internal stabilization system to significantly \
+		reduce felt recoil and increase overall accuracy, at the cost of using a smaller caliber. \
+		This does allow it to fire a very quick 2-round burst. Uses 10mm ammo."
+	icon_state = "reagle"
+	inhand_icon_state = "deagleg"
+	burst_size = 2
+	fire_delay = 1
+	projectile_damage_multiplier = 1.25
+	mag_type = /obj/item/ammo_box/magazine/r10mm
+	actions_types = list(/datum/action/item_action/toggle_firemode)
+	obj_flags = UNIQUE_RENAME // if you did the sidequest, you get the customization
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/regal/no_mag
+	spawnwithmagazine = FALSE
+
 /obj/item/gun/ballistic/automatic/pistol/aps
 	name = "\improper Stechkin APS machine pistol"
 	desc = "An old Soviet machine pistol. It fires quickly, but kicks like a mule. Uses 9mm ammo. Has a threaded barrel for suppressors."

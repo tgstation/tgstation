@@ -41,7 +41,7 @@
 
 		var/dna_cost = initial(ability_path.dna_cost)
 
-		if(dna_cost <= 0)
+		if(dna_cost < 0)
 			continue
 
 		var/list/ability_data = list()
@@ -57,7 +57,7 @@
 			can_purchase = FALSE
 		if(initial(ability_path.req_dna) > changeling.absorbed_count)
 			can_purchase = FALSE
-		if(dna_cost > genetic_points_remaining)
+		if(dna_cost > 0 && dna_cost > genetic_points_remaining)
 			can_purchase = FALSE
 
 		ability_data["can_purchase"] = can_purchase
@@ -87,9 +87,10 @@
 
 /datum/action/innate/cellular_emporium
 	name = "Cellular Emporium"
-	icon_icon = 'icons/obj/drinks.dmi'
+	button_icon = 'icons/obj/drinks/soda.dmi'
 	button_icon_state = "changelingsting"
 	background_icon_state = "bg_changeling"
+	overlay_icon_state = "bg_changeling_border"
 	/// The cell emporium we open.
 	var/datum/cellular_emporium/cellular_emporium
 

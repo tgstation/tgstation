@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Button, NoticeBox, Section, Stack } from 'tgui/components';
 import { DOOR_JACK, HOST_SCAN, PHOTO_MODE, SOFTWARE_DESC } from './constants';
-import { Data } from './types';
+import { PaiData } from './types';
 
 /**
  * Renders two sections: A section of buttons and
@@ -23,7 +23,7 @@ export const InstalledDisplay = (props, context) => {
 
 /** Iterates over installed software to render buttons. */
 const InstalledSoftware = (props, context) => {
-  const { data } = useBackend<Data>(context);
+  const { data } = useBackend<PaiData>(context);
   const { installed = [] } = data;
   const [currentSelection, setCurrentSelection] = useLocalState(
     context,
@@ -50,11 +50,7 @@ const InstalledSoftware = (props, context) => {
 
 /** Software info for buttons clicked. */
 const InstalledInfo = (props, context) => {
-  const [currentSelection, setCurrentSelection] = useLocalState(
-    context,
-    'software',
-    ''
-  );
+  const [currentSelection] = useLocalState(context, 'software', '');
   const title = !currentSelection ? 'Select a Program' : currentSelection;
 
   return (
@@ -76,13 +72,9 @@ const InstalledInfo = (props, context) => {
  * power toggle.
  */
 const SoftwareButtons = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+  const { act, data } = useBackend<PaiData>(context);
   const { door_jack, languages, master_name } = data;
-  const [currentSelection, setCurrentSelection] = useLocalState(
-    context,
-    'software',
-    ''
-  );
+  const [currentSelection] = useLocalState(context, 'software', '');
 
   switch (currentSelection) {
     case 'Door Jack':

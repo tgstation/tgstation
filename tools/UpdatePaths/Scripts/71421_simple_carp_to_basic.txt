@@ -1,0 +1,8 @@
+# transforms simple carp to the new basic carp
+# I'm not using {@subtypes} because the paths aren't exactly the same
+
+/mob/living/simple_animal/hostile/carp : /mob/living/basic/carp{@OLD}
+/mob/living/simple_animal/hostile/carp/lia : /mob/living/basic/carp/pet/lia{@OLD}
+/mob/living/simple_animal/hostile/carp/cayenne : /mob/living/basic/carp/pet/cayenne{@OLD}
+/mob/living/simple_animal/hostile/carp/megacarp : /mob/living/basic/carp/mega{@OLD}
+/mob/living/simple_animal/hostile/carp/ranged/@SUBTYPES : /mob/living/basic/carp/magic/@SUBTYPES{@OLD}

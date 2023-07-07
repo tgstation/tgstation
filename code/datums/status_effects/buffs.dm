@@ -22,9 +22,15 @@
 	return ..()
 
 /datum/status_effect/his_grace/on_apply()
-	owner.log_message("gained His Grace's stun immunity", LOG_ATTACK)
-	owner.add_stun_absorption("hisgrace", INFINITY, 3, null, "His Grace protects you from the stun!")
+	owner.add_stun_absorption(
+		source = id,
+		priority = 3,
+		self_message = span_boldwarning("His Grace protects you from the stun!"),
+	)
 	return ..()
+
+/datum/status_effect/his_grace/on_remove()
+	owner.remove_stun_absorption(id)
 
 /datum/status_effect/his_grace/tick()
 	bloodlust = 0
@@ -44,11 +50,6 @@
 	owner.adjustToxLoss(-grace_heal, TRUE, TRUE)
 	owner.adjustOxyLoss(-(grace_heal * 2))
 	owner.adjustCloneLoss(-grace_heal)
-
-/datum/status_effect/his_grace/on_remove()
-	owner.log_message("lost His Grace's stun immunity", LOG_ATTACK)
-	if(islist(owner.stun_absorption) && owner.stun_absorption["hisgrace"])
-		owner.stun_absorption -= "hisgrace"
 
 
 /datum/status_effect/wish_granters_gift //Fully revives after ten seconds.
@@ -112,34 +113,30 @@
 	icon_state = "blooddrunk"
 
 /datum/status_effect/blooddrunk/on_apply()
-	. = ..()
-	if(.)
-		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.physiology.brute_mod *= 0.1
-			H.physiology.burn_mod *= 0.1
-			H.physiology.tox_mod *= 0.1
-			H.physiology.oxy_mod *= 0.1
-			H.physiology.clone_mod *= 0.1
-			H.physiology.stamina_mod *= 0.1
-		owner.log_message("gained blood-drunk stun immunity", LOG_ATTACK)
-		owner.add_stun_absorption("blooddrunk", INFINITY, 4)
-		owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1, use_reverb = FALSE)
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.physiology.brute_mod *= 0.1
+		human_owner.physiology.burn_mod *= 0.1
+		human_owner.physiology.tox_mod *= 0.1
+		human_owner.physiology.oxy_mod *= 0.1
+		human_owner.physiology.clone_mod *= 0.1
+		human_owner.physiology.stamina_mod *= 0.1
+	owner.add_stun_absorption(source = id, priority = 4)
+	owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1, use_reverb = FALSE)
+	return TRUE
 
 /datum/status_effect/blooddrunk/on_remove()
 	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.brute_mod *= 10
-		H.physiology.burn_mod *= 10
-		H.physiology.tox_mod *= 10
-		H.physiology.oxy_mod *= 10
-		H.physiology.clone_mod *= 10
-		H.physiology.stamina_mod *= 10
-	owner.log_message("lost blood-drunk stun immunity", LOG_ATTACK)
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT);
-	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
-		owner.stun_absorption -= "blooddrunk"
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.physiology.brute_mod *= 10
+		human_owner.physiology.burn_mod *= 10
+		human_owner.physiology.tox_mod *= 10
+		human_owner.physiology.oxy_mod *= 10
+		human_owner.physiology.clone_mod *= 10
+		human_owner.physiology.stamina_mod *= 10
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
+	owner.remove_stun_absorption(id)
 
 //Used by changelings to rapidly heal
 //Heals 10 brute and oxygen damage every second, and 5 fire
@@ -157,6 +154,13 @@
 
 	RegisterSignal(owner, COMSIG_LIVING_IGNITED, PROC_REF(on_ignited))
 	RegisterSignal(owner, COMSIG_LIVING_EXTINGUISHED, PROC_REF(on_extinguished))
+
+/datum/status_effect/fleshmend/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	if(!. || !owner || !linked_alert)
+		return
+	if(owner.on_fire)
+		linked_alert.icon_state = "fleshmend_fire"
 
 /datum/status_effect/fleshmend/on_remove()
 	UnregisterSignal(owner, list(COMSIG_LIVING_IGNITED, COMSIG_LIVING_EXTINGUISHED))
@@ -254,6 +258,8 @@
 					if(((hand % 2) == 0))
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_R_ARM, FALSE, FALSE)
 						if(L.try_attach_limb(itemUser))
+							L.update_limb(is_creating = TRUE)
+							itemUser.update_body_parts()
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
@@ -262,6 +268,8 @@
 					else
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_L_ARM, FALSE, FALSE)
 						if(L.try_attach_limb(itemUser))
+							L.update_limb(is_creating = TRUE)
+							itemUser.update_body_parts()
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
@@ -278,7 +286,7 @@
 			itemUser.adjustBruteLoss(-1.5)
 			itemUser.adjustFireLoss(-1.5)
 			itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
-			itemUser.adjustOxyLoss(-1.5)
+			itemUser.adjustOxyLoss(-1.5, forced = TRUE)
 			itemUser.adjustStaminaLoss(-1.5)
 			itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5)
 			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
@@ -450,3 +458,28 @@
 /datum/status_effect/limited_buff/health_buff/maxed_out()
 	. = ..()
 	to_chat(owner, span_warning("You don't feel any healthier."))
+
+/datum/status_effect/nest_sustenance
+	id = "nest_sustenance"
+	duration = -1
+	tick_interval = 0.4 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/nest_sustenance
+
+/datum/status_effect/nest_sustenance/tick(seconds_per_tick, times_fired)
+	. = ..()
+
+	if(owner.stat == DEAD) //If the victim has died due to complications in the nest
+		qdel(src)
+		return
+
+	owner.adjustBruteLoss(-2 * seconds_per_tick, updating_health = FALSE)
+	owner.adjustFireLoss(-2 * seconds_per_tick, updating_health = FALSE)
+	owner.adjustOxyLoss(-4 * seconds_per_tick, updating_health = FALSE)
+	owner.adjustStaminaLoss(-4 * seconds_per_tick, updating_stamina = FALSE)
+	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
+
+
+/atom/movable/screen/alert/status_effect/nest_sustenance
+	name = "Nest Vitalization"
+	desc = "The resin seems to pulsate around you. It seems to be sustaining your vital functions. You feel ill..."
+	icon_state = "nest_life"

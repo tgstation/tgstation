@@ -3,9 +3,10 @@
 	desc = "Summon three silver blades which orbit you. \
 		While orbiting you, these blades will protect you from from attacks, but will be consumed on use. \
 		Additionally, you can click to fire the blades at a target, dealing damage and causing bleeding."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
-	button_icon_state = "furious_steel0"
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "furious_steel"
 	sound = 'sound/weapons/guillotine.ogg'
 
 	school = SCHOOL_FORBIDDEN
@@ -15,7 +16,6 @@
 
 	spell_requirements = NONE
 
-	base_icon_state = "furious_steel"
 	active_msg = "You summon forth three blades of furious silver."
 	deactive_msg = "You conceal the blades of furious silver."
 	cast_range = 20
@@ -63,12 +63,12 @@
 	// Delete existing
 	if(blade_effect)
 		stack_trace("[type] had an existing blade effect in on_activation. This might be an exploit, and should be investigated.")
-		UnregisterSignal(blade_effect, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(blade_effect, COMSIG_QDELETING)
 		QDEL_NULL(blade_effect)
 
 	var/mob/living/living_user = on_who
 	blade_effect = living_user.apply_status_effect(/datum/status_effect/protective_blades, null, projectile_amount, 25, 0.66 SECONDS)
-	RegisterSignal(blade_effect, COMSIG_PARENT_QDELETING, PROC_REF(on_status_effect_deleted))
+	RegisterSignal(blade_effect, COMSIG_QDELETING, PROC_REF(on_status_effect_deleted))
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/on_deactivation(mob/on_who, refund_cooldown = TRUE)
 	. = ..()

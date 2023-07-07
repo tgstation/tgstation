@@ -319,7 +319,10 @@ Versioning
 		return
 	if(!L || !L.key || !L.mind)
 		return
-	if(!L.suiciding && !first_death.len)
+
+	var/did_they_suicide = HAS_TRAIT_FROM(L, TRAIT_SUICIDED, REF(L)) // simple boolean, did they suicide (true) or not (false)
+
+	if(!did_they_suicide && !first_death.len)
 		first_death["name"] = "[(L.real_name == L.name) ? L.real_name : "[L.real_name] as [L.name]"]"
 		first_death["role"] = null
 		first_death["role"] = L.mind.assigned_role.title
@@ -343,7 +346,7 @@ Versioning
 		"lakey" = L.lastattackerckey,
 		"brute" = L.getBruteLoss(),
 		"fire" = L.getFireLoss(),
-		"brain" = L.getOrganLoss(ORGAN_SLOT_BRAIN) || BRAIN_DAMAGE_DEATH, //getOrganLoss returns null without a brain but a value is required for this column
+		"brain" = L.get_organ_loss(ORGAN_SLOT_BRAIN) || BRAIN_DAMAGE_DEATH, //get_organ_loss returns null without a brain but a value is required for this column
 		"oxy" = L.getOxyLoss(),
 		"tox" = L.getToxLoss(),
 		"clone" = L.getCloneLoss(),
@@ -352,7 +355,7 @@ Versioning
 		"y_coord" = L.y,
 		"z_coord" = L.z,
 		"last_words" = L.last_words,
-		"suicide" = L.suiciding,
+		"suicide" = did_they_suicide,
 		"map" = SSmapping.config.map_name,
 		"internet_address" = world.internet_address || "0",
 		"port" = "[world.port]",

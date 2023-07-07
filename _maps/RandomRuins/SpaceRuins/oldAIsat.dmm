@@ -31,15 +31,11 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "ai" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/template_noop,
 /area/template_noop)
 "aj" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "ak" = (
@@ -80,9 +76,7 @@
 /area/ruin/space/tcommsat_oldaisat)
 "at" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/template_noop,
 /area/template_noop)
 "au" = (
@@ -94,17 +88,13 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "aw" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "ax" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/template_noop,
 /area/template_noop)
 "ay" = (
@@ -149,14 +139,12 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "aH" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "aI" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "aJ" = (
@@ -164,17 +152,13 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "aK" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet,
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "aL" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/template_noop,
 /area/template_noop)
 "aM" = (
@@ -189,49 +173,35 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "aO" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
 "aP" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
 "aQ" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "aR" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/template_noop,
 /area/template_noop)
 "aS" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/template_noop,
 /area/template_noop)
 "aT" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/template_noop,
 /area/template_noop)
 "aU" = (
@@ -271,30 +241,22 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bb" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bc" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bd" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "be" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/item/electronics/airlock,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
@@ -356,34 +318,22 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bp" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bq" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/template_noop,
 /area/template_noop)
 "br" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
 "bs" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/template_noop,
 /area/template_noop)
 "bt" = (
@@ -408,16 +358,12 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "by" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
 "bz" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/shard{
 	icon_state = "medium"
 	},
@@ -446,28 +392,18 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bE" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bF" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
 "bG" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/stack/rods,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
@@ -479,15 +415,11 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bI" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bJ" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bK" = (
@@ -514,9 +446,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bO" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/shard{
 	icon_state = "medium"
 	},
@@ -541,7 +471,7 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/tcommsat_oldaisat)
 "bT" = (
@@ -562,10 +492,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bW" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bX" = (
@@ -625,24 +553,18 @@
 /turf/open/floor/plating,
 /area/ruin/space/tcommsat_oldaisat)
 "ci" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/stack/rods,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "cj" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/template_noop,
 /area/template_noop)
 "ck" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
@@ -671,17 +593,13 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "cp" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/template_noop,
 /area/template_noop)
 "cq" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "cr" = (
@@ -702,10 +620,8 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "cu" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "cv" = (

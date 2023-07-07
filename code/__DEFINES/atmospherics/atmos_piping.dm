@@ -15,8 +15,8 @@
 #define CARDINAL_TO_FULLPIPES(cardinals) (cardinals)
 #define CARDINAL_TO_SHORTPIPES(cardinals) ((cardinals) << 4)
 // A pipe is a stub if it only has zero or one permitted direction. For a regular pipe this is nonsensical, and there are no pipe sprites for this, so it is not allowed.
-#define ISSTUB(bits) !((bits) & (bits - 1))
-#define ISNOTSTUB(bits) ((bits) & (bits - 1))
+#define ISSTUB(bits) !((bits) & ((bits) - 1))
+#define ISNOTSTUB(bits) ((bits) & ((bits) - 1))
 //Atmos pipe limits
 /// (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_OUTPUT_PRESSURE 4500

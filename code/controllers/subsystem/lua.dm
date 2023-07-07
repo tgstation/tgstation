@@ -21,6 +21,10 @@ SUBSYSTEM_DEF(lua)
 	var/gc_guard
 
 /datum/controller/subsystem/lua/Initialize()
+	if(!CONFIG_GET(flag/auxtools_enabled))
+		warning("SSlua requires auxtools to be enabled to run.")
+		return SS_INIT_NO_NEED
+
 	try
 		// Initialize the auxtools library
 		AUXTOOLS_CHECK(AUXLUA)

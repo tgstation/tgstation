@@ -107,7 +107,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/obj/item/flashlight/lantern,
+/obj/item/flashlight/flare/torch,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "av" = (
@@ -152,7 +152,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/item/flashlight/lantern,
+/obj/item/flashlight/flare/torch,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "az" = (
@@ -397,7 +397,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/obj/item/flashlight/lantern,
+/obj/item/flashlight/flare/torch,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "bq" = (
@@ -436,7 +436,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/obj/item/flashlight/lantern,
+/obj/item/flashlight/flare/torch,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "bw" = (
@@ -451,7 +451,6 @@
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/sheet/mineral/wood,
-/obj/item/seeds/tower,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "bx" = (
@@ -468,9 +467,9 @@
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
-/obj/item/flashlight/lantern,
-/obj/item/flashlight/lantern,
-/obj/item/flashlight/lantern,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "bz" = (
@@ -677,16 +676,15 @@
 /area/lavaland/surface/outdoors)
 "eG" = (
 /obj/structure/closet/crate/radiation,
-/obj/item/flashlight/lantern,
-/obj/item/flashlight/lantern,
-/obj/item/flashlight/lantern,
-/obj/item/flashlight/flare,
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "gi" = (
@@ -743,7 +741,7 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
-/obj/item/flashlight/lantern,
+/obj/item/flashlight/flare/torch,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "mm" = (
@@ -768,6 +766,7 @@
 /obj/structure/stone_tile/surrounding/cracked{
 	dir = 1
 	},
+/obj/item/flashlight/lantern,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "mL" = (
@@ -920,9 +919,9 @@
 	dir = 8
 	},
 /obj/structure/closet/crate,
-/obj/item/flashlight/lantern,
-/obj/item/flashlight/lantern,
-/obj/item/flashlight/lantern,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
+/obj/item/flashlight/flare/torch,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "wB" = (
@@ -1048,14 +1047,6 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"Eb" = (
-/obj/item/seeds/glowshroom,
-/obj/item/seeds/glowshroom,
-/obj/structure/stone_tile/block{
-	dir = 4
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/ash_walkers)
 "Ee" = (
 /obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile{
@@ -1116,6 +1107,13 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
+/obj/structure/closet/crate/hydroponics,
+/obj/item/seeds/glowshroom,
+/obj/item/seeds/glowshroom,
+/obj/item/seeds/lavaland/porcini,
+/obj/item/seeds/lavaland/porcini,
+/obj/item/seeds/tower,
+/obj/item/seeds/tower,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "GW" = (
@@ -1166,9 +1164,9 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "Iy" = (
-/obj/item/flashlight/lantern,
 /obj/structure/stone_tile/center,
 /obj/effect/mapping_helpers/no_lava,
+/obj/item/flashlight/flare/torch,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "IS" = (
@@ -1458,7 +1456,7 @@ ah
 ak
 If
 MY
-Eb
+dP
 bj
 vw
 ak

@@ -1,9 +1,14 @@
 /// The max amount of options someone can have in a custom vote.
 #define MAX_CUSTOM_VOTE_OPTIONS 10
 
-/datum/vote/custom_vote
-	name = "Custom"
-	message = "Click here to start a custom vote."
+/datum/vote/custom_vote/single
+	name = "Custom Standard"
+	message = "Click here to start a custom vote (one selection per voter)"
+
+/datum/vote/custom_vote/multi
+	name = "Custom Multi"
+	message = "Click here to start a custom multi vote (multiple selections per voter)"
+	count_method = VOTE_COUNT_METHOD_MULTI
 
 // Custom votes ares always accessible.
 /datum/vote/custom_vote/is_accessible_vote()

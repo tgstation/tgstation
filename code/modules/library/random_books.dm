@@ -71,12 +71,22 @@
 /obj/structure/bookcase/random/fiction
 	name = "bookcase (Fiction)"
 	random_category = "Fiction"
+	///have we spawned the chuuni granter
+	var/static/chuuni_book_spawned = FALSE
+
+/obj/structure/bookcase/random/fiction/after_random_load()
+	if(!chuuni_book_spawned && is_station_level(z))
+		chuuni_book_spawned = TRUE
+		new /obj/item/book/granter/chuunibyou(src)
+
 /obj/structure/bookcase/random/nonfiction
 	name = "bookcase (Non-Fiction)"
 	random_category = "Non-fiction"
+
 /obj/structure/bookcase/random/religion
 	name = "bookcase (Religion)"
 	random_category = "Religion"
+
 /obj/structure/bookcase/random/adult
 	name = "bookcase (Adult)"
 	random_category = "Adult"

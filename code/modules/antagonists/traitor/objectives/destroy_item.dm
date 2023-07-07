@@ -2,10 +2,6 @@
 	name = "Steal %ITEM% and destroy it"
 	description = "Find %ITEM% and destroy it using any means necessary. We can't allow the crew to have %ITEM% as it conflicts with our interests."
 
-	progression_minimum = 20 MINUTES
-	progression_reward = 5 MINUTES
-	telecrystal_reward = 0
-
 	var/list/possible_items = list()
 	/// The current target item that we are stealing.
 	var/datum/objective_item/steal/target_item
@@ -23,9 +19,10 @@
 	telecrystal_reward = 1
 
 	possible_items = list(
-		/datum/objective_item/steal/low_risk/bartender_shotgun,
-		/datum/objective_item/steal/low_risk/fireaxe,
-		/datum/objective_item/steal/low_risk/nullrod,
+		/datum/objective_item/steal/traitor/bartender_shotgun,
+		/datum/objective_item/steal/traitor/fireaxe,
+		/datum/objective_item/steal/traitor/nullrod,
+		/datum/objective_item/steal/traitor/big_crowbar,
 	)
 
 /datum/traitor_objective/destroy_item/very_risky
@@ -38,22 +35,14 @@
 	)
 
 /datum/traitor_objective/destroy_item/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	var/datum/job/role = generating_for.assigned_role
 	for(var/datum/traitor_objective/destroy_item/objective as anything in possible_duplicates)
 		possible_items -= objective.target_item.type
 	while(length(possible_items))
 		var/datum/objective_item/steal/target = pick_n_take(possible_items)
 		target = new target()
-		if(!target.TargetExists())
+		if(!target.valid_objective_for(list(generating_for), require_owner = TRUE))
 			qdel(target)
 			continue
-		if(role.title in target.excludefromjob)
-			qdel(target)
-			continue
-		if(target.exists_on_map)
-			var/list/items = GLOB.steal_item_handler.objectives_by_path[target.targetitem]
-			if(!length(items))
-				continue
 		target_item = target
 		break
 	if(!target_item)
@@ -61,7 +50,7 @@
 	if(target_item.exists_on_map)
 		var/list/items = GLOB.steal_item_handler.objectives_by_path[target_item.targetitem]
 		for(var/obj/item/item as anything in items)
-			AddComponent(/datum/component/traitor_objective_register, item, succeed_signals = list(COMSIG_PARENT_QDELETING))
+			AddComponent(/datum/component/traitor_objective_register, item, succeed_signals = list(COMSIG_QDELETING))
 			tracked_items += item
 	if(length(target_item.special_equipment))
 		special_equipment = target_item.special_equipment
@@ -91,7 +80,7 @@
 /datum/traitor_objective/destroy_item/proc/on_item_pickup(datum/source, obj/item/item, slot)
 	SIGNAL_HANDLER
 	if(istype(item, target_item.targetitem) && !(item in tracked_items))
-		AddComponent(/datum/component/traitor_objective_register, item, succeed_signals = list(COMSIG_PARENT_QDELETING))
+		AddComponent(/datum/component/traitor_objective_register, item, succeed_signals = list(COMSIG_QDELETING))
 		tracked_items += item
 
 /datum/traitor_objective/destroy_item/ungenerate_objective()

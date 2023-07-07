@@ -67,7 +67,7 @@
 		return
 
 	current_target.set_stutter(40 SECONDS)
-	var/obj/item/organ/internal/ears/target_ears = current_target.getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/internal/ears/target_ears = current_target.get_organ_slot(ORGAN_SLOT_EARS)
 	if(target_ears && !HAS_TRAIT(current_target, TRAIT_DEAF))
 		target_ears.adjustEarDamage(0, 5) //far less damage than the H.O.N.K.
 	current_target.set_jitter_if_lower(100 SECONDS)

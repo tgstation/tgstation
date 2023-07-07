@@ -111,6 +111,8 @@
 	return TRUE
 
 /obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
+	. |= AFTERATTACK_PROCESSED_ITEM
+
 	if((!bomb && bombcheck) || !target || (get_dist(get_turf(target), get_turf(user)) <= 2))
 		return ..()
 
@@ -290,7 +292,6 @@
 	name = "blast wave"
 	icon_state = "blastwave"
 	damage = 0
-	nodamage = FALSE
 	armor_flag = BOMB // Doesn't actually have any functional purpose. But it makes sense.
 	movement_type = FLYING
 	projectile_phasing = ALL // just blows up the turfs lmao
@@ -312,6 +313,10 @@
 	src.reactionary = reactionary
 	return ..()
 
+// Though the projectile itself is not damaging its effects are
+/obj/projectile/blastwave/is_hostile_projectile()
+	return TRUE
+
 /obj/projectile/blastwave/Range()
 	. = ..()
 	if(QDELETED(src))
@@ -320,13 +325,7 @@
 	var/decrement = 1
 	var/atom/location = loc
 	if (reactionary)
-		if(location.density || !isturf(location))
-			decrement += location.explosion_block
-		for(var/obj/thing in location)
-			if (thing == src)
-				continue
-			var/the_block = thing.explosion_block
-			decrement += the_block == EXPLOSION_BLOCK_PROC ? thing.GetExplosionBlock() : the_block
+		decrement += location.explosive_resistance
 
 	range = max(range - decrement + 1, 0) // Already decremented by 1 in the parent. Exists so that if we pass through something with negative block it extends the range.
 	heavy_ex_range = max(heavy_ex_range - decrement, 0)

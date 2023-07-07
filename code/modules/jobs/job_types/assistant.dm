@@ -10,7 +10,6 @@ Assistant
 	total_positions = 5
 	spawn_positions = 5
 	supervisors = "absolutely everyone"
-	selection_color = "#dddddd"
 	exp_granted_type = EXP_TYPE_CREW
 	outfit = /datum/outfit/job/assistant
 	plasmaman_outfit = /datum/outfit/plasmaman
@@ -18,6 +17,8 @@ Assistant
 
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
+
+	liver_traits = list(TRAIT_MAINTENANCE_METABOLISM)
 
 	department_for_prefs = /datum/job_department/assistant
 

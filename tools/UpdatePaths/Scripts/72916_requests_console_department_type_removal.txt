@@ -1,0 +1,8 @@
+/obj/machinery/requests_console/@SUBTYPES{departmentType=0} : /obj/machinery/requests_console/@SUBTYPES{@OLD;departmentType=@SKIP}
+/obj/machinery/requests_console/@SUBTYPES{departmentType=1} : /obj/machinery/requests_console/@SUBTYPES{@OLD;departmentType=@SKIP;assistance_requestable=1}
+/obj/machinery/requests_console/@SUBTYPES{departmentType=2} : /obj/machinery/requests_console/@SUBTYPES{@OLD;departmentType=@SKIP;supplies_requestable=1}
+/obj/machinery/requests_console/@SUBTYPES{departmentType=4} : /obj/machinery/requests_console/@SUBTYPES{@OLD;departmentType=@SKIP;anon_tips_receiver=1}
+/obj/machinery/requests_console/@SUBTYPES{departmentType=3} : /obj/machinery/requests_console/@SUBTYPES{@OLD;departmentType=@SKIP;assistance_requestable=1;supplies_requestable=1}
+/obj/machinery/requests_console/@SUBTYPES{departmentType=5} : /obj/machinery/requests_console/@SUBTYPES{@OLD;departmentType=@SKIP;assistance_requestable=1;anon_tips_receiver=1}
+/obj/machinery/requests_console/@SUBTYPES{departmentType=6} : /obj/machinery/requests_console/@SUBTYPES{@OLD;departmentType=@SKIP;supplies_requestable=1;anon_tips_receiver=1}
+/obj/machinery/requests_console/@SUBTYPES{departmentType=7} : /obj/machinery/requests_console/@SUBTYPES{@OLD;departmentType=@SKIP;assistance_requestable=1;supplies_requestable=1;anon_tips_receiver=1}

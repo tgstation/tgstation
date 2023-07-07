@@ -79,6 +79,9 @@
 /area/shuttle/escape)
 "as" = (
 /obj/item/radio/intercom/directional/south,
+/obj/machinery/camera/autoname{
+	dir = 5
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "at" = (
@@ -105,7 +108,7 @@
 /area/shuttle/escape)
 "aA" = (
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aB" = (
 /obj/machinery/flasher/directional/north{
@@ -141,10 +144,10 @@
 /obj/machinery/flasher/directional/west{
 	id = "shuttle_flasher"
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aG" = (
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aH" = (
 /obj/machinery/door/airlock/public/glass{
@@ -158,13 +161,13 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aJ" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red/brig,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aK" = (
 /obj/structure/chair/comfy/shuttle,
@@ -196,18 +199,14 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aT" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aV" = (
@@ -264,9 +263,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bi" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -305,15 +302,39 @@
 /area/shuttle/escape)
 "br" = (
 /obj/machinery/light/small/directional/east,
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bs" = (
 /obj/machinery/light/small/directional/west,
+/obj/machinery/camera/autoname{
+	dir = 10
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ga" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"jA" = (
+/obj/machinery/camera/autoname{
+	dir = 5
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"oY" = (
+/obj/machinery/camera/autoname{
+	dir = 6
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"pW" = (
+/obj/machinery/camera/autoname{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "Dk" = (
 /obj/machinery/vending/wallmed/directional/north{
 	use_power = 0
@@ -361,7 +382,7 @@ ad
 ad
 aA
 aF
-aG
+pW
 ad
 bn
 ao
@@ -441,7 +462,7 @@ aT
 aT
 aT
 aT
-aC
+jA
 ad
 bc
 br
@@ -554,7 +575,7 @@ ad
 aE
 bl
 an
-an
+oY
 aR
 am
 am

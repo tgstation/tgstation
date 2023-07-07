@@ -173,7 +173,7 @@
 		return // blocked wield from item
 	wielded = TRUE
 	ADD_TRAIT(parent, TRAIT_WIELDED, REF(src))
-	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, PROC_REF(on_swap_hands))
+	RegisterSignal(user, COMSIG_MOB_SWAPPING_HANDS, PROC_REF(on_swapping_hands))
 	wield_callback?.Invoke(parent, user)
 
 	// update item stats and name
@@ -202,7 +202,7 @@
 	offhand_item.desc = "Your second grip on [parent_item]."
 	offhand_item.wielded = TRUE
 	RegisterSignal(offhand_item, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-	RegisterSignal(offhand_item, COMSIG_PARENT_QDELETING, PROC_REF(on_destroy))
+	RegisterSignal(offhand_item, COMSIG_QDELETING, PROC_REF(on_destroy))
 	user.put_in_inactive_hand(offhand_item)
 
 /**
@@ -219,7 +219,7 @@
 
 	// wield update status
 	wielded = FALSE
-	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
+	UnregisterSignal(user, COMSIG_MOB_SWAPPING_HANDS)
 	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
 	REMOVE_TRAIT(parent, TRAIT_WIELDED, REF(src))
 	unwield_callback?.Invoke(parent, user)
@@ -268,7 +268,7 @@
 
 	// Remove the object in the offhand
 	if(offhand_item)
-		UnregisterSignal(offhand_item, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(offhand_item, list(COMSIG_ITEM_DROPPED, COMSIG_QDELETING))
 		qdel(offhand_item)
 	// Clear any old refrence to an item that should be gone now
 	offhand_item = null
@@ -307,7 +307,7 @@
 /**
  * on_swap_hands Triggers on swapping hands, blocks swap if the other hand is busy
  */
-/datum/component/two_handed/proc/on_swap_hands(mob/user, obj/item/held_item)
+/datum/component/two_handed/proc/on_swapping_hands(mob/user, obj/item/held_item)
 	SIGNAL_HANDLER
 
 	if(!held_item)
@@ -345,6 +345,7 @@
  */
 /obj/item/offhand
 	name = "offhand"
+	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT

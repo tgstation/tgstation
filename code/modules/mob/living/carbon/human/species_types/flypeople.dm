@@ -2,19 +2,17 @@
 	name = "Flyperson"
 	plural_form = "Flypeople"
 	id = SPECIES_FLYPERSON
-	species_traits = list(HAS_FLESH, HAS_BONE, TRAIT_ANTENNAE)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TACKLING_FRAIL_ATTACKER,
+		TRAIT_ANTENNAE,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	meat = /obj/item/food/meat/slab/human/mutant/fly
 	mutanteyes = /obj/item/organ/internal/eyes/fly
-	liked_food = GROSS | GORE
-	disliked_food = NONE
-	toxic_food = NONE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/fly
+	wing_types = list(/obj/item/organ/external/wings/functional/fly)
 	payday_modifier = 0.75
 
 	mutanttongue = /obj/item/organ/internal/tongue/fly
@@ -33,13 +31,6 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/fly,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/fly,
 	)
-
-/datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
-	if(chem.type == /datum/reagent/toxin/pestkiller)
-		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
-		return TRUE
-	..()
 
 /datum/species/fly/check_species_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))

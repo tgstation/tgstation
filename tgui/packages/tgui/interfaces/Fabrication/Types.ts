@@ -21,9 +21,14 @@ export type Material = {
   ref: string;
 
   /**
-   * The amount of material; 2,000 units is one sheet.
+   * The amount of material; 100 units is one sheet.
    */
   amount: number;
+
+  /**
+   * Definition of how much units 1 sheet has.
+   */
+  SHEET_MATERIAL_AMOUNT: number;
 
   /**
    * The number of sheets.
@@ -83,6 +88,11 @@ export type Design = {
    * The amount of time, in seconds, that this design takes to print.
    */
   constructionTime: number;
+
+  /**
+   * The maximum number of items than can be printed
+   */
+  maxmult: number;
 };
 
 /**

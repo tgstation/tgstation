@@ -13,6 +13,7 @@ Replacement syntax example:
     /turf/open/floor/iron/warningline : /obj/effect/turf_decal {@OLD} , /obj/thing {icon_state = @OLD:name; name = "meme"}
     /turf/open/floor/iron/warningline{dir=2} : /obj/thing
     /obj/effect/landmark/start/virologist : @DELETE
+    /mob/living{resize = @ANY} : /mob/living{@OLD; resize = @SKIP}
 Syntax for subtypes also exist, to update a path's type but maintain subtypes:
     /obj/structure/closet/crate/@SUBTYPES : /obj/structure/new_box/@SUBTYPES {@OLD}
 New paths properties:
@@ -25,6 +26,7 @@ New paths properties:
 Old paths properties:
     Will be used as a filter.
     property = @UNSET - will apply the rule only if the property is not mapedited
+    property = @ANY - will apply the rule when the property is mapedited, regardless of its value.
 """
 
 default_map_directory = "../../_maps"
@@ -91,7 +93,9 @@ def update_path(dmm_data, replacement_string, verbose=False):
                 else:
                     return [match.group(0)]
             else:
-                if old_props[filter_prop] != old_path_props[filter_prop] or old_path_props[filter_prop] == "@UNSET":
+                if old_path_props[filter_prop] == "@ANY":
+                   continue
+                elif old_props[filter_prop] != old_path_props[filter_prop] or old_path_props[filter_prop] == "@UNSET":
                     return [match.group(0)] #does not match current filter, skip the change.
         if verbose:
             print("Found match : {0}".format(match.group(0)))
@@ -110,7 +114,8 @@ def update_path(dmm_data, replacement_string, verbose=False):
                 out = new_path
 
             out_props = dict()
-            for prop_name, prop_value in new_props.items():
+            for prop_name, prop_text in new_props.items():
+                prop_value = str(prop_text)
                 if prop_name == "@OLD":
                     out_props = dict(old_props)
                     continue
@@ -119,8 +124,7 @@ def update_path(dmm_data, replacement_string, verbose=False):
                     continue
                 if prop_value.startswith("@OLD"):
                     params = prop_value.split(":")
-                    if prop_name in old_props:
-                        out_props[prop_name] = old_props[params[1]] if len(params) > 1 else old_props[prop_name]
+                    out_props[prop_name] = old_props[params[1]] if len(params) > 1 else old_props[prop_name]
                     continue
                 out_props[prop_name] = prop_value
             if out_props:

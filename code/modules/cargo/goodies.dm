@@ -8,35 +8,35 @@
 	name = ".38 DumDum Speedloader"
 	desc = "Contains one speedloader of .38 DumDum ammunition, good for embedding in soft targets."
 	cost = PAYCHECK_CREW * 2
-	access_view = ACCESS_BRIG
+	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/ammo_box/c38/dumdum)
 
 /datum/supply_pack/goody/match38
 	name = ".38 Match Grade Speedloader"
 	desc = "Contains one speedloader of match grade .38 ammunition, perfect for showing off trickshots."
 	cost = PAYCHECK_CREW * 2
-	access_view = ACCESS_BRIG
+	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/ammo_box/c38/match)
 
 /datum/supply_pack/goody/rubber
 	name = ".38 Rubber Speedloader"
 	desc = "Contains one speedloader of bouncy rubber .38 ammunition, for when you want to bounce your shots off anything and everything."
 	cost = PAYCHECK_CREW * 1.5
-	access_view = ACCESS_BRIG
+	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/ammo_box/c38/match/bouncy)
 
 /datum/supply_pack/goody/mars_single
 	name = "Colt Detective Special Single-Pack"
 	desc = "The HoS took your gun and your badge? No problem! Just pay the absurd taxation fee and you too can be reunited with the lethal power of a .38!"
 	cost = PAYCHECK_CREW * 40 //they really mean a premium here
-	access_view = ACCESS_DETECTIVE
-	contains = list(/obj/item/gun/ballistic/revolver/detective)
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/gun/ballistic/revolver/c38/detective)
 
 /datum/supply_pack/goody/stingbang
 	name = "Stingbang Single-Pack"
 	desc = "Contains one \"stingbang\" grenade, perfect for playing meanhearted pranks."
 	cost = PAYCHECK_COMMAND * 2.5
-	access_view = ACCESS_BRIG
+	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/grenade/stingbang)
 
 /datum/supply_pack/goody/Survivalknives_single
@@ -52,26 +52,40 @@
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat, /obj/item/storage/belt/bandolier)
 
+/datum/supply_pack/goody/disabler_single
+	name = "Disabler Single-Pack"
+	desc = "Contains one disabler, the nonlethal workhorse of Nanotrasen security everywehere. Comes in a energy holster, just in case you happen to have an extra disabler."
+	cost = PAYCHECK_COMMAND * 3
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/storage/belt/holster/energy/disabler)
+
 /datum/supply_pack/goody/energy_single
 	name = "Energy Gun Single-Pack"
 	desc = "Contains one energy gun, capable of firing both nonlethal and lethal blasts of light."
 	cost = PAYCHECK_COMMAND * 12
-	access_view = ACCESS_ARMORY
+	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/e_gun)
+
+/datum/supply_pack/goody/laser_single
+	name = "Laser Gun Single-Pack"
+	desc = "Contains one laser gun, the lethal workhorse of Nanotrasen security everywehere."
+	cost = PAYCHECK_COMMAND * 6
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/gun/energy/laser)
 
 /datum/supply_pack/goody/hell_single
 	name = "Hellgun Kit Single-Pack"
 	desc = "Contains one hellgun degradation kit, an old pattern of laser gun infamous for its ability to horribly disfigure targets with burns. Technically violates the Space Geneva Convention when used on humanoids."
 	cost = PAYCHECK_CREW * 2
-	access_view = ACCESS_ARMORY
+	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/weaponcrafting/gunkit/hellgun)
 
 /datum/supply_pack/goody/thermal_single
 	name = "Thermal Pistol Holster Single-Pack"
 	desc = "Contains twinned thermal pistols in a holster, ready for use in the field."
 	cost = PAYCHECK_COMMAND * 15
-	access_view = ACCESS_ARMORY
-	contains = list(/obj/item/storage/belt/holster/thermal)
+	access_view = ACCESS_WEAPONS
+	contains = list(/obj/item/storage/belt/holster/energy/thermal)
 
 /datum/supply_pack/goody/sologamermitts
 	name = "Insulated Gloves Single-Pack"
@@ -133,6 +147,18 @@
 	cost = PAYCHECK_CREW * 4
 	contains = list(/obj/item/toy/plush/beeplushie)
 
+/datum/supply_pack/goody/blahaj
+	name = "Shark plushie"
+	desc = "A soft, warm companion for midday naps."
+	cost = PAYCHECK_CREW * 5
+	contains = list(/obj/item/toy/plush/shark)
+
+/datum/supply_pack/goody/dog_bone
+	name = "Jumbo Dog Bone"
+	desc = "The best dog bone money can have exported to a space station. A perfect gift for a dog."
+	cost = PAYCHECK_COMMAND * 4
+	contains = list(/obj/item/dog_bone)
+
 /datum/supply_pack/goody/dyespray
 	name = "Hair Dye Spray"
 	desc = "A cool spray to dye your hair with awesome colors!"
@@ -179,36 +205,6 @@
 	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
 	cost = PAYCHECK_CREW * 10
 	contains = list(/obj/item/construction/rld)
-
-/datum/supply_pack/goody/moth_encryption_key
-	name = "Moffic radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand moffic when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/moth)
-
-/datum/supply_pack/goody/lizard_encryption_key
-	name = "Draconic radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand draconic when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/tiziran)
-
-/datum/supply_pack/goody/plasmaman_encryption_key
-	name = "Calcic radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand calcic when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/plasmaman)
-
-/datum/supply_pack/goody/ethereal_encryption_key
-	name = "Voltaic radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand voltaic when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/ethereal)
-
-/datum/supply_pack/goody/felinid_encryption_key
-	name = "Felinid radio encryption key"
-	desc = "A hi-tech radio encryption key that allows the wearer to understand nekomimetic when the radio is worn."
-	cost = PAYCHECK_CREW * 12
-	contains = list(/obj/item/encryptionkey/felinid)
 
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing toolbox"
@@ -269,3 +265,5 @@
 	desc = "A standard-sized coffeepot, for use with a coffeemaker."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/reagent_containers/cup/coffeepot)
+
+

@@ -2,8 +2,8 @@
 	name = "Imaginary Friend"
 	desc = "Patient can see and hear an imaginary person."
 	scan_desc = "partial schizophrenia"
-	gain_text = "<span class='notice'>You feel in good company, for some reason.</span>"
-	lose_text = "<span class='warning'>You feel lonely again.</span>"
+	gain_text = span_notice("You feel in good company, for some reason.")
+	lose_text = span_warning("You feel lonely again.")
 	var/mob/camera/imaginary_friend/friend
 	var/friend_initialized = FALSE
 
@@ -16,7 +16,7 @@
 	make_friend()
 	get_ghost()
 
-/datum/brain_trauma/special/imaginary_friend/on_life(delta_time, times_fired)
+/datum/brain_trauma/special/imaginary_friend/on_life(seconds_per_tick, times_fired)
 	if(get_dist(owner, friend) > 9)
 		friend.recall()
 	if(!friend)
@@ -60,9 +60,7 @@
 	real_name = "imaginary friend"
 	move_on_shuttle = TRUE
 	desc = "A wonderful yet fake friend."
-	see_in_dark = 0
-	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-	sight = SEE_BLACKNESS
+	sight = NONE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	see_invisible = SEE_INVISIBLE_LIVING
 	invisibility = INVISIBILITY_MAXIMUM
@@ -193,7 +191,7 @@
 	owner.imaginary_group -= src
 	return ..()
 
-/mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
@@ -236,15 +234,15 @@
 			log_talk(message, LOG_SAY, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
 	var/quoted_message = say_quote(say_emphasis(message), spans, message_mods)
-	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[quoted_message]</span></span>"
-	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[quoted_message]</span></span>"
+	var/rendered = "[span_name("[name]")] [quoted_message]"
+	var/dead_rendered = "[span_name("[name] (Imaginary friend of [owner])")] [quoted_message]"
 
 	var/language = message_language || owner.language_holder.get_selected_language()
 	Hear(rendered, src, language, message, null, spans, message_mods) // We always hear what we say
 	var/group = owner.imaginary_group - src // The people in our group don't, so we have to exclude ourselves not to hear twice
 	for(var/mob/person in group)
 		if(eavesdrop_range && get_dist(src, person) > 1 + eavesdrop_range)
-			var/new_rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(say_emphasis(eavesdropped_message), spans, message_mods)]</span></span>"
+			var/new_rendered = "[span_name("[name]")] [say_quote(say_emphasis(eavesdropped_message), spans, message_mods)]"
 			person.Hear(new_rendered, src, language, eavesdropped_message, null, spans, message_mods)
 		else
 			person.Hear(rendered, src, language, message, null, spans, message_mods)
@@ -303,8 +301,8 @@
 		return TRUE
 
 	var/mob/camera/imaginary_friend/friend = user
-	var/dchatmsg = "<b>[friend] (Imaginary friend of [friend.owner])</b> [msg]"
-	message = "<span class='emote'><b>[user]</b> [msg]</span>"
+	var/dchatmsg = "[span_bold("[friend] (Imaginary friend of [friend.owner])")] [msg]"
+	message = "[span_name("[user]")] [msg]"
 
 	var/user_turf = get_turf(user)
 	if (user.client)
@@ -312,7 +310,7 @@
 			if(!ghost.client || isnewplayer(ghost))
 				continue
 			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
-				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
+				ghost.show_message("[FOLLOW_LINK(ghost, user)] [dchatmsg]")
 
 	for(var/mob/person in friend.owner.imaginary_group)
 		to_chat(person, message)
@@ -430,8 +428,9 @@
 /datum/action/innate/imaginary_join
 	name = "Join"
 	desc = "Join your owner, following them from inside their mind."
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	background_icon_state = "bg_revenant"
+	overlay_icon_state = "bg_revenant_border"
 	button_icon_state = "join"
 
 /datum/action/innate/imaginary_join/Activate()
@@ -441,8 +440,9 @@
 /datum/action/innate/imaginary_hide
 	name = "Hide"
 	desc = "Hide yourself from your owner's sight."
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	background_icon_state = "bg_revenant"
+	overlay_icon_state = "bg_revenant_border"
 	button_icon_state = "hide"
 
 /datum/action/innate/imaginary_hide/proc/update_status()
@@ -455,13 +455,32 @@
 		name = "Hide"
 		desc = "Hide yourself from your owner's sight."
 		button_icon_state = "hide"
-	UpdateButtons()
+	build_all_button_icons()
 
 /datum/action/innate/imaginary_hide/Activate()
-	var/mob/camera/imaginary_friend/I = owner
-	I.hidden = !I.hidden
-	I.Show()
-	update_status()
+	var/mob/camera/imaginary_friend/fake_friend = owner
+	fake_friend.hidden = !fake_friend.hidden
+	fake_friend.Show()
+	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
+
+/datum/action/innate/imaginary_hide/update_button_name(atom/movable/screen/movable/action_button/button, force)
+	var/mob/camera/imaginary_friend/fake_friend = owner
+	if(fake_friend.hidden)
+		name = "Show"
+		desc = "Become visible to your owner."
+	else
+		name = "Hide"
+		desc = "Hide yourself from your owner's sight."
+	return ..()
+
+/datum/action/innate/imaginary_hide/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
+	var/mob/camera/imaginary_friend/fake_friend = owner
+	if(fake_friend.hidden)
+		button_icon_state = "unhide"
+	else
+		button_icon_state = "hide"
+
+	return ..()
 
 //down here is the trapped mind
 //like imaginary friend but a lot less imagination and more like mind prison//
@@ -492,7 +511,7 @@
 	desc = "The previous host of this body."
 
 /mob/camera/imaginary_friend/trapped/greet()
-	to_chat(src, span_notice("<b>You have managed to hold on as a figment of the new host's imagination!</b>"))
+	to_chat(src, span_notice(span_bold("You have managed to hold on as a figment of the new host's imagination!")))
 	to_chat(src, span_notice("All hope is lost for you, but at least you may interact with your host. You do not have to be loyal to them."))
 	to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what the host cannot."))
 

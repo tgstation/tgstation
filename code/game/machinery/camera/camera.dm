@@ -1,7 +1,3 @@
-#define CAMERA_UPGRADE_XRAY (1<<0)
-#define CAMERA_UPGRADE_EMP_PROOF (1<<1)
-#define CAMERA_UPGRADE_MOTION (1<<2)
-
 /obj/machinery/camera
 	name = "security camera"
 	desc = "It's used to monitor rooms."
@@ -13,7 +9,7 @@
 	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 12
-	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, FIRE = 90, ACID = 50)
+	armor_type = /datum/armor/machinery_camera
 	max_integrity = 100
 	integrity_failure = 0.5
 	var/default_camera_icon = "camera" //the camera's base icon used by update_appearance - icon_state is primarily used for mapping display purposes.
@@ -53,6 +49,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
+
+/datum/armor/machinery_camera
+	melee = 50
+	bullet = 20
+	laser = 20
+	energy = 20
+	fire = 90
+	acid = 50
 
 /obj/machinery/camera/preset/ordnance //Bomb test site in space
 	name = "Hardened Bomb-Test Camera"
@@ -137,15 +141,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/examine(mob/user)
 	. = ..()
 	if(isEmpProof(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
-		. += "It has electromagnetic interference shielding installed."
+		. += span_info("It has electromagnetic interference shielding installed.")
 	else
 		. += span_info("It can be shielded against electromagnetic interference with some <b>plasma</b>.")
 	if(isXRay(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
-		. += "It has an X-ray photodiode installed."
+		. += span_info("It has an X-ray photodiode installed.")
 	else
 		. += span_info("It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.")
 	if(isMotion())
-		. += "It has a proximity sensor installed."
+		. += span_info("It has a proximity sensor installed.")
 	else
 		. += span_info("It can be upgraded with a <b>proximity sensor</b>.")
 
@@ -216,7 +220,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
 		return TRUE
-	panel_open = !panel_open
+	toggle_panel_open()
 	to_chat(user, span_notice("You screw the camera's panel [panel_open ? "open" : "closed"]."))
 	I.play_tool_sound(src)
 	update_appearance()
@@ -242,7 +246,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
 	if(isnull(choice))
 		return
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	to_chat(user, span_notice("You remove [choice] from [src]."))
 	if(choice == assembly.xray_module)
@@ -281,7 +285,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(!panel_open)
 		return
 
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=2))
 		return TRUE
 
 	to_chat(user, span_notice("You start to weld [src]..."))
@@ -364,7 +368,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			if (potential_viewer.client?.eye == src)
 				to_chat(potential_viewer, "[span_name("[user]")] holds \a [itemname] up to one of the cameras ...")
 				potential_viewer.log_talk(itemname, LOG_VICTIM, tag="Pressed to camera from [key_name(user)]", log_globally=FALSE)
-				potential_viewer << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
+				potential_viewer << browse("<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>", "window=[itemname]")
 		return
 
 	if(istype(attacking_item, /obj/item/paper))
@@ -532,8 +536,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/proc/can_see()
 	var/list/see = null
 	var/turf/pos = get_turf(src)
+	var/turf/directly_above = GET_TURF_ABOVE(pos)
 	var/check_lower = pos != get_lowest_turf(pos)
-	var/check_higher = pos != get_highest_turf(pos)
+	var/check_higher = directly_above && istransparentturf(directly_above) && (pos != get_highest_turf(pos))
 
 	if(isXRay())
 		see = range(view_range, pos)
@@ -541,23 +546,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		see = get_hear(view_range, pos)
 	if(check_lower || check_higher)
 		// Haha datum var access KILL ME
-		var/datum/controller/subsystem/mapping/local_mapping = SSmapping
 		for(var/turf/seen in see)
 			if(check_lower)
 				var/turf/visible = seen
 				while(visible && istransparentturf(visible))
-					var/turf/below = local_mapping.get_turf_below(visible)
+					var/turf/below = GET_TURF_BELOW(visible)
 					for(var/turf/adjacent in range(1, below))
 						see += adjacent
 						see += adjacent.contents
 					visible = below
 			if(check_higher)
-				var/turf/above = local_mapping.get_turf_above(seen)
+				var/turf/above = GET_TURF_ABOVE(seen)
 				while(above && istransparentturf(above))
 					for(var/turf/adjacent in range(1, above))
 						see += adjacent
 						see += adjacent.contents
-					above = local_mapping.get_turf_above(above)
+					above = GET_TURF_ABOVE(above)
 	return see
 
 /obj/machinery/camera/proc/Togglelight(on=0)
@@ -578,9 +582,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	user.set_invis_see(SEE_INVISIBLE_LIVING) //can't see ghosts through cameras
 	if(isXRay())
 		user.add_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		user.set_see_in_dark(max(user.see_in_dark, 8))
 	else
 		user.clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		user.sight = 0
-		user.set_see_in_dark(2)
 	return 1

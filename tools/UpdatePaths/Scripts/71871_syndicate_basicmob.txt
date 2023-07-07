@@ -1,0 +1,6 @@
+#comment Repaths simpleanimal syndicates to basicmob syndicates and deletes mecha pilots and civilians
+
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot : @DELETE
+/mob/living/simple_animal/hostile/syndicate/civilian : @DELETE
+/mob/living/simple_animal/hostile/syndicate/@SUBTYPES : /mob/living/basic/syndicate/@SUBTYPES{@OLD}
+/mob/living/simple_animal/hostile/viscerator : /mob/living/basic/viscerator{@OLD}

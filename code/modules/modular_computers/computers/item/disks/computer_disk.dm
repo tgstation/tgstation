@@ -17,8 +17,12 @@
 /obj/item/computer_disk/Initialize(mapload)
 	. = ..()
 	for(var/programs in starting_programs)
-		var/datum/computer_file/program/program_type = new programs
+		var/datum/computer_file/program_type = new programs
 		add_file(program_type)
+
+/obj/item/computer_disk/Destroy(force)
+	. = ..()
+	QDEL_LIST(stored_files)
 
 /**
  * add_file
@@ -29,6 +33,7 @@
 	if((file.size + used_capacity) > max_capacity)
 		return FALSE
 	stored_files.Add(file)
+	file.disk_host = src
 	used_capacity += file.size
 	return TRUE
 
@@ -42,6 +47,7 @@
 		return FALSE
 	stored_files.Remove(file)
 	used_capacity -= file.size
+	qdel(file)
 	return TRUE
 
 /obj/item/computer_disk/advanced

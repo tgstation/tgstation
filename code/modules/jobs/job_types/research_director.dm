@@ -10,7 +10,6 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = SUPERVISOR_CAPTAIN
-	selection_color = "#ffddff"
 	req_admin_notify = 1
 	minimal_player_age = 7
 	exp_required_type_department = EXP_TYPE_SCIENCE
@@ -74,7 +73,7 @@
 	satchel = /obj/item/storage/backpack/satchel/science
 	duffelbag = /obj/item/storage/backpack/duffelbag/science
 
-	chameleon_extras = /obj/item/stamp/rd
+	chameleon_extras = /obj/item/stamp/head/rd
 	skillchips = list(/obj/item/skillchip/job/research_director)
 
 /datum/outfit/job/rd/mod

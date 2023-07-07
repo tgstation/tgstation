@@ -3,8 +3,9 @@
 	desc = "Completely conceals your identity, but does not make you invisible.  Can be activated early to disable it. \
 		While cloaked, you move faster, but undergo actions much slower. \
 		Taking damage while cloaked may cause it to lift suddenly, causing negative effects. "
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "ninja_cloak"
 	sound = 'sound/effects/curse2.ogg'
 
@@ -22,11 +23,15 @@
 	var/datum/status_effect/shadow_cloak/active_cloak
 
 /datum/action/cooldown/spell/shadow_cloak/Remove(mob/living/remove_from)
-	uncloak_mob(remove_from, show_message = FALSE)
+	if(active_cloak)
+		uncloak_mob(remove_from, show_message = FALSE)
 	return ..()
 
 /datum/action/cooldown/spell/shadow_cloak/is_valid_target(atom/cast_on)
-	return isliving(cast_on) && !HAS_TRAIT(cast_on, TRAIT_HULK) // Hulks are not stealthy. Need not apply
+	if(HAS_TRAIT(cast_on, TRAIT_HULK)) // Hulks are not stealthy. Need not apply
+		cast_on.balloon_alert(cast_on, "cannot cast while hulk!")
+		return FALSE
+	return isliving(cast_on)
 
 /datum/action/cooldown/spell/shadow_cloak/before_cast(mob/living/cast_on)
 	. = ..()
@@ -68,12 +73,12 @@
 	)
 
 	active_cloak = cast_on.apply_status_effect(/datum/status_effect/shadow_cloak)
-	RegisterSignal(active_cloak, COMSIG_PARENT_QDELETING, PROC_REF(on_early_cloak_loss))
+	RegisterSignal(active_cloak, COMSIG_QDELETING, PROC_REF(on_early_cloak_loss))
 	RegisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 
 /datum/action/cooldown/spell/shadow_cloak/proc/uncloak_mob(mob/living/cast_on, show_message = TRUE)
 	if(!QDELETED(active_cloak))
-		UnregisterSignal(active_cloak, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(active_cloak, COMSIG_QDELETING)
 		qdel(active_cloak)
 	active_cloak = null
 
@@ -89,7 +94,7 @@
 	deltimer(uncloak_timer)
 	uncloak_timer = null
 
-/// Signal proc for [COMSIG_PARENT_QDELETING], if our cloak is deleted early, impart negative effects
+/// Signal proc for [COMSIG_QDELETING], if our cloak is deleted early, impart negative effects
 /datum/action/cooldown/spell/shadow_cloak/proc/on_early_cloak_loss(datum/status_effect/source)
 	SIGNAL_HANDLER
 
@@ -136,8 +141,7 @@
 	animate(cloak_image, alpha = 255, 0.2 SECONDS)
 	owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, id, cloak_image)
 	// Add the relevant traits and modifiers
-	ADD_TRAIT(owner, TRAIT_UNKNOWN, id)
-	ADD_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, id)
+	owner.add_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak)
 	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/shadow_cloak)
 	// Register signals to cause effects
@@ -153,8 +157,7 @@
 	owner.remove_alt_appearance(id)
 	QDEL_NULL(cloak_image)
 	// Remove traits and modifiers
-	REMOVE_TRAIT(owner, TRAIT_UNKNOWN, id)
-	REMOVE_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, id)
+	owner.remove_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/shadow_cloak)
 	// Clear signals

@@ -209,8 +209,8 @@
 		new /obj/item/restraints/handcuffs/alien(src)
 
 /obj/item/storage/box/rubbershot
-	name = "box of rubber shots"
-	desc = "A box full of rubber shots, designed for riot shotguns."
+	name = "box of shotgun shells (Less Lethal - Rubber Shot)"
+	desc = "A box full of rubber shot shotgun shells, designed for shotguns."
 	icon_state = "rubbershot_box"
 	illustration = null
 
@@ -219,8 +219,8 @@
 		new /obj/item/ammo_casing/shotgun/rubbershot(src)
 
 /obj/item/storage/box/lethalshot
-	name = "box of lethal shotgun shots"
-	desc = "A box full of lethal shots, designed for riot shotguns."
+	name = "box of shotgun shells (Lethal)"
+	desc = "A box full of lethal shotgun shells, designed for shotguns."
 	icon_state = "lethalshot_box"
 	illustration = null
 
@@ -229,8 +229,8 @@
 		new /obj/item/ammo_casing/shotgun/buckshot(src)
 
 /obj/item/storage/box/beanbag
-	name = "box of beanbags"
-	desc = "A box full of beanbag shells."
+	name = "box of shotgun shells (Less Lethal - Beanbag)"
+	desc = "A box full of beanbag shotgun shells, designed for shotguns."
 	icon_state = "beanbagshot_box"
 	illustration = null
 

@@ -3,7 +3,6 @@
 /datum/species/monkey
 	name = "Monkey"
 	id = SPECIES_MONKEY
-	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
 	external_organs = list(
 		/obj/item/organ/external/tail/monkey = "Monkey"
 	)
@@ -12,26 +11,17 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/monkey
 	meat = /obj/item/food/meat/slab/monkey
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
-	species_traits = list(
-		HAS_FLESH,
-		HAS_BONE,
-		NO_UNDERWEAR,
-		LIPS,
-		NOEYESPRITES,
-		NOBLOODOVERLAY,
-		NOTRANSSTING,
-		NOAUGMENTS,
-	)
 	inherent_traits = list(
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_BLOOD_OVERLAY,
 		TRAIT_GUN_NATURAL,
-		//TRAIT_LITERATE,
 		TRAIT_VENTCRAWLER_NUDE,
 		TRAIT_WEAK_SOUL,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_NO_AUGMENTS,
 	)
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
-	liked_food = MEAT | FRUIT | BUGS
-	disliked_food = CLOTH
 	sexes = FALSE
 	species_language_holder = /datum/language_holder/monkey
 
@@ -60,15 +50,12 @@
 /datum/species/monkey/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
 	H.pass_flags |= PASSTABLE
-	H.butcher_results = knife_butcher_results
 	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	H.dna.activate_mutation(/datum/mutation/human/race)
-
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.pass_flags = initial(C.pass_flags)
-	C.butcher_results = null
 	C.dna.remove_mutation(/datum/mutation/human/race)
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
@@ -212,14 +199,18 @@
 
 /datum/action/item_action/organ_action/toggle_trip
 	name = "Toggle Tripping"
-	icon_icon = 'icons/mob/actions/actions_changeling.dmi'
+	button_icon = 'icons/mob/actions/actions_changeling.dmi'
 	button_icon_state = "lesser_form"
 	background_icon_state = "bg_default_on"
+	overlay_icon_state = "bg_default_border"
 
 /datum/action/item_action/organ_action/toggle_trip/Trigger(trigger_flags)
 	. = ..()
+	if(!.)
+		return
+
 	var/obj/item/organ/internal/brain/primate/monkey_brain = target
-	if(monkey_brain.tripping == TRUE)
+	if(monkey_brain.tripping)
 		monkey_brain.tripping = FALSE
 		background_icon_state = "bg_default"
 		to_chat(monkey_brain.owner, span_notice("You will now avoid stumbling while colliding with people who are in combat mode."))
@@ -227,16 +218,16 @@
 		monkey_brain.tripping = TRUE
 		background_icon_state = "bg_default_on"
 		to_chat(monkey_brain.owner, span_notice("You will now stumble while while colliding with people who are in combat mode."))
-	UpdateButtons()
+	build_all_button_icons()
 
 
-/obj/item/organ/internal/brain/primate/Insert(mob/living/carbon/primate, special = FALSE, drop_if_replaced = FALSE, no_id_transfer = FALSE)
+/obj/item/organ/internal/brain/primate/on_insert(mob/living/carbon/primate)
 	. = ..()
 	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
 
-/obj/item/organ/internal/brain/primate/Remove(mob/living/carbon/primate, special = FALSE, no_id_transfer = FALSE)
+/obj/item/organ/internal/brain/primate/on_remove(mob/living/carbon/primate)
+	. = ..()
 	UnregisterSignal(primate, COMSIG_MOVABLE_CROSS)
-	return ..()
 
 /obj/item/organ/internal/brain/primate/proc/on_crossed(datum/source, atom/movable/crossed)
 	SIGNAL_HANDLER

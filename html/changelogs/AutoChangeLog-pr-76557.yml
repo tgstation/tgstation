@@ -1,0 +1,4 @@
+author: "Jolly"
+delete-after: True
+changes:
+  - image: "The plastic spoon sprite has been nudged to appear more centered."

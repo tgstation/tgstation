@@ -1,0 +1,38 @@
+#comment Repaths subtypes and some commonly used properties of apc to apc helpers. You really should change it if you have other apc's that this or else it might break everything.
+
+/obj/machinery/power/apc/unlocked : /obj/machinery/power/apc/auto_name{@OLD}, /obj/effect/mapping_helpers/apc/unlocked
+/obj/machinery/power/apc/syndicate : /obj/machinery/power/apc/auto_name{@OLD}, /obj/effect/mapping_helpers/apc/syndicate_access
+/obj/machinery/power/apc/away : /obj/machinery/power/apc/auto_name{@OLD}, /obj/effect/mapping_helpers/apc/away_general_access
+/obj/machinery/power/apc/highcap/five_k : /obj/machinery/power/apc/auto_name{@OLD}, /obj/effect/mapping_helpers/apc/cell_5k
+/obj/machinery/power/apc/highcap/five_k/directional/north : /obj/machinery/power/apc/auto_name/directional/north{@OLD}, /obj/effect/mapping_helpers/apc/cell_5k
+/obj/machinery/power/apc/highcap/five_k/directional/south : /obj/machinery/power/apc/auto_name/directional/south{@OLD}, /obj/effect/mapping_helpers/apc/cell_5k
+/obj/machinery/power/apc/highcap/five_k/directional/east : /obj/machinery/power/apc/auto_name/directional/east{@OLD}, /obj/effect/mapping_helpers/apc/cell_5k
+/obj/machinery/power/apc/highcap/five_k/directional/west : /obj/machinery/power/apc/auto_name/directional/west{@OLD}, /obj/effect/mapping_helpers/apc/cell_5k
+/obj/machinery/power/apc/highcap/ten_k : /obj/machinery/power/apc/auto_name{@OLD}, /obj/effect/mapping_helpers/apc/cell_10k
+/obj/machinery/power/apc/highcap/ten_k/directional/north : /obj/machinery/power/apc/auto_name/directional/north{@OLD}, /obj/effect/mapping_helpers/apc/cell_10k
+/obj/machinery/power/apc/highcap/ten_k/directional/south : /obj/machinery/power/apc/auto_name/directional/south{@OLD}, /obj/effect/mapping_helpers/apc/cell_10k
+/obj/machinery/power/apc/highcap/ten_k/directional/east : /obj/machinery/power/apc/auto_name/directional/east{@OLD}, /obj/effect/mapping_helpers/apc/cell_10k
+/obj/machinery/power/apc/highcap/ten_k/directional/west : /obj/machinery/power/apc/auto_name/directional/west{@OLD}, /obj/effect/mapping_helpers/apc/cell_10k
+/obj/machinery/power/apc/sm_apc : /obj/machinery/power/apc/auto_name{@OLD}, /obj/effect/mapping_helpers/apc/cell_10k
+/obj/machinery/power/apc/sm_apc/directional/north : /obj/machinery/power/apc/auto_name/directional/north{@OLD}, /obj/effect/mapping_helpers/apc/cell_10k
+/obj/machinery/power/apc/sm_apc/directional/south : /obj/machinery/power/apc/auto_name/directional/south{@OLD}, /obj/effect/mapping_helpers/apc/cell_10k
+/obj/machinery/power/apc/sm_apc/directional/east : /obj/machinery/power/apc/auto_name/directional/east{@OLD}, /obj/effect/mapping_helpers/apc/cell_10k
+/obj/machinery/power/apc/sm_apc/directional/west : /obj/machinery/power/apc/auto_name/directional/west{@OLD}, /obj/effect/mapping_helpers/apc/cell_10k
+/obj/machinery/power/apc/@SUBTYPES{pixel_y = 25} : /obj/machinery/power/apc/auto_name/directional/north{@OLD;pixel_y=@SKIP;dir=@SKIP}
+/obj/machinery/power/apc/@SUBTYPES{pixel_y = -25} : /obj/machinery/power/apc/auto_name/directional/south{@OLD;pixel_y=@SKIP;dir=@SKIP}
+/obj/machinery/power/apc/@SUBTYPES{pixel_x = 25} : /obj/machinery/power/apc/auto_name/directional/east{@OLD;pixel_x=@SKIP;dir=@SKIP}
+/obj/machinery/power/apc/@SUBTYPES{pixel_x = -25} : /obj/machinery/power/apc/auto_name/directional/west{@OLD;pixel_x=@SKIP;dir=@SKIP}
+/obj/machinery/power/apc/@SUBTYPES{name = "Worn Out APC"} : /obj/machinery/power/apc/worn_out{@OLD;name=@SKIP}
+/obj/machinery/power/apc/auto_name/directional/north : /obj/machinery/power/apc/auto_name/directional/north{@OLD;name=@SKIP}
+/obj/machinery/power/apc/auto_name/directional/south : /obj/machinery/power/apc/auto_name/directional/south{@OLD;name=@SKIP}
+/obj/machinery/power/apc/auto_name/directional/east : /obj/machinery/power/apc/auto_name/directional/east{@OLD;name=@SKIP}
+/obj/machinery/power/apc/auto_name/directional/west : /obj/machinery/power/apc/auto_name/directional/west{@OLD;name=@SKIP}
+/obj/machinery/power/apc/@SUBTYPES{aidisabled = 1} : @OLD{@OLD;aidisabled=@SKIP}, /obj/effect/mapping_helpers/apc/cut_AI_wire
+/obj/machinery/power/apc/@SUBTYPES{locked = 0} : @OLD{@OLD;locked=@SKIP}, /obj/effect/mapping_helpers/apc/unlocked
+/obj/machinery/power/apc/@SUBTYPES{req_access = list(ACCESS_AWAY_GENERAL)} : @OLD{@OLD;req_access=@SKIP}, /obj/effect/mapping_helpers/apc/away_general_access
+/obj/machinery/power/apc/@SUBTYPES{req_access = list(ACCESS_SYNDICATE)} : @OLD{@OLD;req_access=@SKIP}, /obj/effect/mapping_helpers/apc/syndicate_access
+/obj/machinery/power/apc/@SUBTYPES{req_access = list("syndicate")} : @OLD{@OLD;req_access=@SKIP}, /obj/effect/mapping_helpers/apc/syndicate_access
+/obj/machinery/power/apc/@SUBTYPES{cell_type = /obj/item/stock_parts/cell/upgraded/plus} : @OLD{@OLD;cell_type=@SKIP}, /obj/effect/mapping_helpers/apc/cell_5k
+/obj/machinery/power/apc/@SUBTYPES{cell_type = /obj/item/stock_parts/cell/high} : @OLD{@OLD;cell_type=@SKIP}, /obj/effect/mapping_helpers/apc/cell_10k
+/obj/machinery/power/apc/@SUBTYPES{start_charge = 100} : @OLD{@OLD;start_charge=@SKIP}, /obj/effect/mapping_helpers/apc/full_charge
+/obj/machinery/power/apc/@SUBTYPES{start_charge = 0} : @OLD{@OLD;start_charge=@SKIP}, /obj/effect/mapping_helpers/apc/no_charge

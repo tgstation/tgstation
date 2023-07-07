@@ -3,8 +3,8 @@
 	name = "\improper Lizardperson"
 	plural_form = "Lizardfolk"
 	id = SPECIES_LIZARD
-	species_traits = list(MUTCOLORS, EYECOLOR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
+		TRAIT_MUTANT_COLORS,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
@@ -26,8 +26,6 @@
 	meat = /obj/item/food/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
-	disliked_food = GRAIN | DAIRY | CLOTH | GROSS
-	liked_food = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	inert_mutation = /datum/mutation/human/firebreath
 	death_sound = 'sound/voice/lizard/deathsound.ogg'
 	wing_types = list(/obj/item/organ/external/wings/functional/dragon)
@@ -35,7 +33,7 @@
 	digitigrade_customization = DIGITIGRADE_OPTIONAL
 
 	// Lizards are coldblooded and can stand a greater temperature range than humans
-	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 20) // This puts lizards 10 above lavaland max heat for ash lizards.
+	bodytemp_heat_damage_limit = BODYTEMP_HEAT_LAVALAND_SAFE
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
 
 	ass_image = 'icons/ass/asslizard.png'
@@ -49,8 +47,20 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard,
 	)
 
+/datum/species/lizard/on_species_gain(mob/living/carbon/new_lizard, datum/species/old_species, pref_load)
+	. = ..()
+	if(ishuman(new_lizard))
+		update_mail_goodies(new_lizard)
+
+/datum/species/lizard/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
+	if(istype(quirk, /datum/quirk/blooddeficiency))
+		mail_goodies += list(
+			/obj/item/reagent_containers/blood/lizard
+		)
+	return ..()
+
 /// Lizards are cold blooded and do not stabilize body temperature naturally
-/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, delta_time, times_fired)
+/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
 	return
 
 /datum/species/lizard/random_name(gender,unique,lastname)
@@ -122,12 +132,13 @@ Lizard subspecies: ASHWALKERS
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = SPECIES_LIZARD_ASH
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAS_FLESH,HAS_BONE)
-	mutantlungs = /obj/item/organ/internal/lungs/ashwalker
+	examine_limb_id = SPECIES_LIZARD
+	mutantlungs = /obj/item/organ/internal/lungs/lavaland
 	mutantbrain = /obj/item/organ/internal/brain/primitive
 	inherent_traits = list(
-		//TRAIT_LITERATE,
+		TRAIT_MUTANT_COLORS,
 		TRAIT_VIRUSIMMUNE,
+		TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash
 	digitigrade_customization = DIGITIGRADE_FORCED
@@ -157,9 +168,10 @@ Lizard subspecies: SILVER SCALED
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_WINE_TASTER,
 	)
+	mutantlungs = null
+	damage_modifier = 10 //very light silvery scales soften blows
 	species_language_holder = /datum/language_holder/lizard/silver
 	mutanttongue = /obj/item/organ/internal/tongue/lizard/silver
-	armor = 10 //very light silvery scales soften blows
 	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
 	examine_limb_id = SPECIES_LIZARD
 	///stored mutcolor for when we turn back off of a silverscale.
@@ -169,22 +181,19 @@ Lizard subspecies: SILVER SCALED
 	///See above
 	var/old_eye_color_right
 
-/datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	var/mob/living/carbon/human/new_silverscale = C
-	old_mutcolor = C.dna.features["mcolor"]
+/datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/human/new_silverscale, datum/species/old_species, pref_load)
+	old_mutcolor = new_silverscale.dna.features["mcolor"]
 	old_eye_color_left = new_silverscale.eye_color_left
 	old_eye_color_right = new_silverscale.eye_color_right
 	new_silverscale.dna.features["mcolor"] = "#eeeeee"
 	new_silverscale.eye_color_left = "#0000a0"
 	new_silverscale.eye_color_right = "#0000a0"
-	..()
+	. = ..()
 	new_silverscale.add_filter("silver_glint", 2, list("type" = "outline", "color" = "#ffffff63", "size" = 2))
 
-/datum/species/lizard/silverscale/on_species_loss(mob/living/carbon/C)
-	var/mob/living/carbon/human/was_silverscale = C
+/datum/species/lizard/silverscale/on_species_loss(mob/living/carbon/human/was_silverscale, datum/species/new_species, pref_load)
 	was_silverscale.dna.features["mcolor"] = old_mutcolor
 	was_silverscale.eye_color_left = old_eye_color_left
 	was_silverscale.eye_color_right = old_eye_color_right
-
 	was_silverscale.remove_filter("silver_glint")
-	..()
+	return ..()

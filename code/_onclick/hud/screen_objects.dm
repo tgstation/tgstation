@@ -33,6 +33,9 @@
 	 */
 	var/del_on_map_removal = TRUE
 
+	/// If FALSE, this will not be cleared when calling /client/clear_screen()
+	var/clear_with_screen = TRUE
+
 /atom/movable/screen/Destroy()
 	master = null
 	hud = null
@@ -512,11 +515,13 @@
 							return BODY_ZONE_PRECISE_EYES
 				return BODY_ZONE_HEAD
 
-/atom/movable/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
+/atom/movable/screen/zone_sel/proc/set_selected_zone(choice, mob/user, should_log = TRUE)
 	if(user != hud?.mymob)
 		return
 
 	if(choice != hud.mymob.zone_selected)
+		if(should_log)
+			hud.mymob.log_manual_zone_selected_update("screen_hud", new_target = choice)
 		hud.mymob.zone_selected = choice
 		update_appearance()
 		SEND_SIGNAL(user, COMSIG_MOB_SELECTED_ZONE_SET, choice)
@@ -581,7 +586,7 @@
 
 /atom/movable/screen/healths/guardian
 	name = "summoner health"
-	icon = 'icons/mob/nonhuman-player/guardian.dmi'
+	icon = 'icons/hud/guardian.dmi'
 	icon_state = "base"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 

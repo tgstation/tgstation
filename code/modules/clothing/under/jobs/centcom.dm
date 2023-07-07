@@ -60,7 +60,13 @@
 	desc = "A dark colored uniform worn by CentCom's conscripted military forces."
 	icon_state = "military"
 	inhand_icon_state = "bl_suit"
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 50, ACID = 40)
+	armor_type = /datum/armor/clothing_under/centcom_military
+
+/datum/armor/clothing_under/centcom_military
+	melee = 10
+	fire = 50
+	acid = 40
+	wound = 10
 
 /obj/item/clothing/under/rank/centcom/military/eng
 	name = "tactical engineering uniform"

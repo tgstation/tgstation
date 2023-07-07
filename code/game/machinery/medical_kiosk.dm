@@ -125,7 +125,7 @@
 	return ..()
 
 /obj/machinery/medical_kiosk/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE))
+	if(!istype(user) || !user.can_perform_action(src))
 		return
 	if(!scanner_wand)
 		to_chat(user, span_warning("The scanner wand is currently removed from the machine."))
@@ -218,7 +218,7 @@
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
 			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
-	if(patient.has_dna()) //Blood levels Information
+	if(!HAS_TRAIT(patient, TRAIT_GENELESS) && !HAS_TRAIT(patient, TRAIT_NOBLOOD)) //Blood levels Information
 		if(patient.is_bleeding())
 			bleed_status = "Patient is currently bleeding!"
 		if(blood_percent <= 80)
@@ -229,7 +229,7 @@
 
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/clone_loss = patient.getCloneLoss()
-	var/brain_loss = patient.getOrganLoss(ORGAN_SLOT_BRAIN)
+	var/brain_loss = patient.get_organ_loss(ORGAN_SLOT_BRAIN)
 	var/brain_status = "Brain patterns normal."
 	if(LAZYLEN(patient.get_traumas()))
 		var/list/trauma_text = list()
@@ -260,7 +260,7 @@
 			chemical_list += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01)))
 			if(reagent.overdosed)
 				overdose_list += list(list("name" = reagent.name))
-	var/obj/item/organ/internal/stomach/belly = patient.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/belly = patient.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(belly?.reagents.reagent_list.len) //include the stomach contents if it exists
 		for(var/bile in belly.reagents.reagent_list)
 			var/datum/reagent/bit = bile
@@ -373,3 +373,9 @@
 			patient_ref = null
 			clearScans()
 			. = TRUE
+
+
+#undef KIOSK_SCANNING_GENERAL
+#undef KIOSK_SCANNING_NEURORAD
+#undef KIOSK_SCANNING_REAGENTS
+#undef KIOSK_SCANNING_SYMPTOMS

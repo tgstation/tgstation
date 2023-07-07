@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		return ELEMENT_INCOMPATIBLE
 
 	var/obj/target_obj = target
-	if(target_obj.obj_flags & FREEZE_PROOF)
+	if(target_obj.resistance_flags & FREEZE_PROOF)
 		return ELEMENT_INCOMPATIBLE
 
 	if(HAS_TRAIT(target_obj, TRAIT_FROZEN))
@@ -19,6 +19,13 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	target_obj.name = "frozen [target_obj.name]"
 	target_obj.add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)
 	target_obj.alpha -= 25
+
+	if (isinternalorgan(target))
+		var/obj/item/organ/internal/organ = target
+		organ.organ_flags |= ORGAN_FROZEN
+	else if (isbodypart(target))
+		for(var/obj/item/organ/internal/organ in target_obj.contents)
+			organ.organ_flags |= ORGAN_FROZEN
 
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(target, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(shatter_on_throw))
@@ -32,7 +39,15 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	obj_source.name = replacetext(obj_source.name, "frozen ", "")
 	obj_source.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, GLOB.freon_color_matrix)
 	obj_source.alpha += 25
-	. = ..()
+
+	if (isinternalorgan(source))
+		var/obj/item/organ/internal/organ = source
+		organ.organ_flags &= ~ORGAN_FROZEN
+	else if (isbodypart(source))
+		for(var/obj/item/organ/internal/organ in obj_source.contents)
+			organ.organ_flags &= ~ORGAN_FROZEN
+
+	return ..()
 
 ///signal handler for COMSIG_OBJ_UNFREEZE that forces us to detach from the target
 /datum/element/frozen/proc/on_unfreeze(datum/source)
@@ -44,7 +59,8 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	SIGNAL_HANDLER
 	var/obj/obj_target = target
 	obj_target.visible_message(span_danger("[obj_target] shatters into a million pieces!"))
-	qdel(obj_target)
+	obj_target.flags_1 |= NODECONSTRUCT_1	// disable item spawning
+	obj_target.deconstruct(FALSE)			// call pre-deletion specialized code -- internals release gas etc
 
 /// signal handler for COMSIG_MOVABLE_MOVED that unfreezes our target if it moves onto an open turf thats hotter than
 /// our melting temperature.

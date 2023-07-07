@@ -16,11 +16,6 @@
 	greyscale_config = /datum/greyscale_config/encryptionkey_basic
 	greyscale_colors = "#820a16#3758c4"
 
-/obj/item/encryptionkey/Initialize(mapload)
-	. = ..()
-	if(!channels.len && !translate_binary && !translated_language)
-		desc += " Has no special codes in it. You should probably tell a coder!"
-
 /obj/item/encryptionkey/examine(mob/user)
 	. = ..()
 	if(LAZYLEN(channels) || translate_binary)
@@ -32,6 +27,8 @@
 			examine_text_list += "[GLOB.channel_tokens[MODE_BINARY]] - [MODE_BINARY]"
 
 		. += span_notice("It can access the following channels; [jointext(examine_text_list, ", ")].")
+	else
+		. += span_warning("Has no special codes in it. You should probably tell a coder!")
 
 /obj/item/encryptionkey/syndicate
 	name = "syndicate encryption key"
@@ -195,43 +192,3 @@
 
 /obj/item/encryptionkey/secbot
 	channels = list(RADIO_CHANNEL_AI_PRIVATE = 1, RADIO_CHANNEL_SECURITY = 1)
-
-/obj/item/encryptionkey/moth
-	name = "\improper Moffic translation key"
-	desc = "An encryption key that automatically encodes moffic heard through the radio into common. The signal's a little fuzzy."
-	icon_state = "translation_cypherkey"
-	translated_language = /datum/language/moffic
-	greyscale_config = null
-	greyscale_colors = null
-
-/obj/item/encryptionkey/tiziran
-	name = "\improper Tiziran translation key"
-	desc = "An encryption key that automatically encodes draconic heard through the radio into common. The signal's not quite to scale."
-	icon_state = "translation_cypherkey"
-	translated_language = /datum/language/draconic
-	greyscale_config = null
-	greyscale_colors = null
-
-/obj/item/encryptionkey/plasmaman
-	name = "\improper Calcic translation key"
-	desc = "An encryption key that automatically encodes calcic heard through the radio into common. The signal lacks a bit of teeth."
-	icon_state = "translation_cypherkey"
-	translated_language = /datum/language/calcic
-	greyscale_config = null
-	greyscale_colors = null
-
-/obj/item/encryptionkey/ethereal
-	name = "\improper Ethereal translation key"
-	desc = "An encryption key that automatically encodes ethereal heard through the radio into common. The signal's overpowering."
-	icon_state = "translation_cypherkey"
-	translated_language = /datum/language/voltaic
-	greyscale_config = null
-	greyscale_colors = null
-
-/obj/item/encryptionkey/felinid
-	name = "\improper Felinid translation key"
-	desc = "An encryption key that automatically encodes nekomimetic heard through the radio into common. The signal's rather scratchy."
-	icon_state = "translation_cypherkey"
-	translated_language = /datum/language/nekomimetic
-	greyscale_config = null
-	greyscale_colors = null

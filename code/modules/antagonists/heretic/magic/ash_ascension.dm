@@ -2,8 +2,9 @@
 /datum/action/cooldown/spell/fire_sworn
 	name = "Oath of Flame"
 	desc = "For a minute, you will passively create a ring of fire around you."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "fire_ring"
 
 	school = SCHOOL_FORBIDDEN
@@ -43,7 +44,7 @@
 	src.ring_radius = radius
 	return ..()
 
-/datum/status_effect/fire_ring/tick(delta_time, times_fired)
+/datum/status_effect/fire_ring/tick(seconds_per_tick, times_fired)
 	if(QDELETED(owner) || owner.stat == DEAD)
 		qdel(src)
 		return
@@ -53,16 +54,17 @@
 
 	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, owner))
 		new /obj/effect/hotspot(nearby_turf)
-		nearby_turf.hotspot_expose(750, 25 * delta_time, 1)
+		nearby_turf.hotspot_expose(750, 25 * seconds_per_tick, 1)
 		for(var/mob/living/fried_living in nearby_turf.contents - owner)
-			fried_living.apply_damage(2.5 * delta_time, BURN)
+			fried_living.apply_damage(2.5 * seconds_per_tick, BURN)
 
 /// Creates one, large, expanding ring of fire around the caster, which does not follow them.
 /datum/action/cooldown/spell/fire_cascade
 	name = "Lesser Fire Cascade"
 	desc = "Heats the air around you."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "fire_ring"
 	sound = 'sound/items/welder.ogg'
 
@@ -99,8 +101,9 @@
 /datum/action/cooldown/spell/pointed/ash_beams
 	name = "Nightwatcher's Rite"
 	desc = "A powerful spell that releases five streams of eldritch fire towards the target."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "flames"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 

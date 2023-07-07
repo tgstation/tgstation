@@ -50,7 +50,10 @@ export const Interview = (props, context) => {
   };
 
   return (
-    <Window width={500} height={600} canClose={is_admin}>
+    <Window
+      width={500}
+      height={600}
+      canClose={is_admin || status === 'interview_approved'}>
       <Window.Content scrollable>
         {(!read_only && (
           <Section title="Welcome!">

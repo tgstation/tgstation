@@ -31,7 +31,7 @@
 #define CHAT_GHOSTWHISPER (1<<7)
 #define CHAT_GHOSTPDA (1<<8)
 #define CHAT_GHOSTRADIO (1<<9)
-#define CHAT_BANKCARD  (1<<10)
+#define CHAT_BANKCARD (1<<10)
 #define CHAT_GHOSTLAWS (1<<11)
 #define CHAT_LOGIN_LOGOUT (1<<12)
 
@@ -136,3 +136,6 @@
 #define PLAYTIME_HARDCORE_RANDOM 120 // 2 hours
 /// The time needed to unlock the gamer cloak in preferences
 #define PLAYTIME_VETERAN 300000 // 5,000 hours
+
+/// The key used for sprite accessories that should never actually be applied to the player.
+#define SPRITE_ACCESSORY_NONE "None"

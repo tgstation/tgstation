@@ -49,12 +49,8 @@
 /datum/action/cooldown/spell/touch/PreActivate(atom/target)
 	return Activate(target)
 
-/datum/action/cooldown/spell/touch/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)
-	. = ..()
-	if(!button)
-		return
-	if(attached_hand)
-		button.color = COLOR_GREEN
+/datum/action/cooldown/spell/touch/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	return !!attached_hand
 
 /datum/action/cooldown/spell/touch/set_statpanel_format()
 	. = ..()
@@ -125,6 +121,7 @@
 		reset_spell_cooldown()
 	else
 		StartCooldown()
+		build_all_button_icons()
 
 /// Registers all signal procs for the hand.
 /datum/action/cooldown/spell/touch/proc/register_hand_signals()
@@ -133,7 +130,11 @@
 	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_hand_hit))
 	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_hand_hit))
 	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, PROC_REF(on_hand_dropped))
-	RegisterSignal(attached_hand, COMSIG_PARENT_QDELETING, PROC_REF(on_hand_deleted))
+	RegisterSignal(attached_hand, COMSIG_QDELETING, PROC_REF(on_hand_deleted))
+
+	// We can high five with our touch hand. It casts the spell on people. Radical
+	attached_hand.AddElement(/datum/element/high_fiver)
+	RegisterSignal(attached_hand, COMSIG_ITEM_OFFER_TAKEN, PROC_REF(on_hand_taken))
 
 /// Unregisters all signal procs for the hand.
 /datum/action/cooldown/spell/touch/proc/unregister_hand_signals()
@@ -143,7 +144,8 @@
 		COMSIG_ITEM_AFTERATTACK,
 		COMSIG_ITEM_AFTERATTACK_SECONDARY,
 		COMSIG_ITEM_DROPPED,
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
+		COMSIG_ITEM_OFFER_TAKEN,
 	))
 
 // Touch spells don't go on cooldown OR give off an invocation until the hand is used itself.
@@ -221,7 +223,7 @@
 		return
 
 	log_combat(caster, victim, "cast the touch spell [name] on", hand)
-	spell_feedback()
+	spell_feedback(caster)
 	remove_hand(caster)
 
 /**
@@ -238,7 +240,7 @@
 		// Continue will remove the hand here and stop
 		if(SECONDARY_ATTACK_CONTINUE_CHAIN)
 			log_combat(caster, victim, "cast the touch spell [name] on", hand, "(secondary / alt cast)")
-			spell_feedback()
+			spell_feedback(caster)
 			remove_hand(caster)
 
 		// Call normal will call the normal cast proc
@@ -271,7 +273,7 @@
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /**
- * Signal proc for [COMSIG_PARENT_QDELETING] from our attached hand.
+ * Signal proc for [COMSIG_QDELETING] from our attached hand.
  *
  * If our hand is deleted for a reason unrelated to our spell,
  * unlink it (clear refs) and revert the cooldown
@@ -293,6 +295,20 @@
 	remove_hand(dropper, reset_cooldown_after = TRUE)
 
 /**
+ * Signal proc for [COMSIG_ITEM_OFFER_TAKEN] from our attached hand.
+ *
+ * Giving a high five with our hand makes it cast
+ */
+/datum/action/cooldown/spell/touch/proc/on_hand_taken(obj/item/source, mob/living/carbon/offerer, mob/living/carbon/taker)
+	SIGNAL_HANDLER
+
+	if(!can_hit_with_hand(taker, offerer))
+		return
+
+	INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, taker, offerer)
+	return COMPONENT_OFFER_INTERRUPT
+
+/**
  * Called whenever our spell is cast, but blocked by antimagic.
  */
 /datum/action/cooldown/spell/touch/proc/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
@@ -311,10 +327,10 @@
 /obj/item/melee/touch_attack
 	name = "\improper outstretched hand"
 	desc = "High Five?"
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/hand.dmi'
 	lefthand_file = 'icons/mob/inhands/items/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
-	icon_state = "latexballon"
+	icon_state = "latexballoon"
 	inhand_icon_state = null
 	item_flags = NEEDS_PERMIT | ABSTRACT | HAND_ITEM
 	w_class = WEIGHT_CLASS_HUGE

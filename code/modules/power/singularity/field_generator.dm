@@ -34,7 +34,7 @@ no power level overlay is currently in the overlays list.
 	max_integrity = 500
 	can_atmos_pass = ATMOS_PASS_YES
 	//100% immune to lasers and energy projectiles since it absorbs their energy.
-	armor = list(MELEE = 25, BULLET = 10, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 50, ACID = 70)
+	armor_type = /datum/armor/field_generator
 	///Amount of energy stored, used for visual overlays (over 9000?)
 	var/power_level = 0
 	///Current power mode of the machine, between FG_OFFLINE, FG_CHARGING, FG_ONLINE
@@ -52,6 +52,15 @@ no power level overlay is currently in the overlays list.
 	///Check for asynk cleanups for this and the connected gens
 	var/clean_up = FALSE
 
+/datum/armor/field_generator
+	melee = 25
+	bullet = 10
+	laser = 100
+	energy = 100
+	fire = 50
+	acid = 70
+	bomb = 100 //Explosive resistance only protects the turfs behind itself from the epicenter.
+
 /obj/machinery/field/generator/update_overlays()
 	. = ..()
 	if(warming_up)
@@ -63,6 +72,7 @@ no power level overlay is currently in the overlays list.
 
 
 /obj/machinery/field/generator/Initialize(mapload)
+	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
@@ -131,7 +141,7 @@ no power level overlay is currently in the overlays list.
 			to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
 
 		if(FG_SECURED)
-			if(!welder.tool_start_check(user, amount=0))
+			if(!welder.tool_start_check(user, amount=1))
 				return TRUE
 			user.visible_message(
 				span_notice("[user] starts to weld [src] to the floor."),
@@ -142,7 +152,7 @@ no power level overlay is currently in the overlays list.
 				to_chat(user, span_notice("You weld the field generator to the floor."))
 
 		if(FG_WELDED)
-			if(!welder.tool_start_check(user, amount=0))
+			if(!welder.tool_start_check(user, amount=1))
 				return TRUE
 			user.visible_message(
 				span_notice("[user] starts to cut [src] free from the floor."),
@@ -270,6 +280,7 @@ no power level overlay is currently in the overlays list.
 		turn_off()
 		return
 	move_resist = INFINITY
+	set_explosion_block(INFINITY)
 	can_atmos_pass = ATMOS_PASS_NO
 	air_update_turf(TRUE, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(setup_field), 1), 1)
@@ -347,6 +358,7 @@ no power level overlay is currently in the overlays list.
 	update_appearance()
 
 	move_resist = initial(move_resist)
+	set_explosion_block(0)
 
 /obj/machinery/field/generator/proc/shield_floor(create)
 	if(connected_gens.len < 2)

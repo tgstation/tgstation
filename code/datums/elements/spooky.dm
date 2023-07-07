@@ -38,8 +38,9 @@
 		C.set_jitter_if_lower(70 SECONDS)
 		C.set_stutter(40 SECONDS)
 		if((!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
-			C.adjustStaminaLoss(25) //boneless humanoids don't lose the will to live
+			C.adjustStaminaLoss(18) //boneless humanoids don't lose the will to live
 		to_chat(C, "<font color='red' size='4'><B>DOOT</B></font>")
+		to_chat(C, "<span class='robot'><font size='4'>You're feeling more bony.</font></span>")
 		INVOKE_ASYNC(src, PROC_REF(spectral_change), H)
 
 	else //the sound will spook monkeys.

@@ -13,6 +13,8 @@
 #define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"
 ///signal sent out by an atom upon onZImpact : (turf/impacted_turf, levels)
 #define COMSIG_ATOM_ON_Z_IMPACT "movable_on_z_impact"
+///Signal sent after an atom movable moves on shuttle.
+#define COMSIG_ATOM_AFTER_SHUTTLE_MOVE "movable_after_shuttle_move"
 ///called on a movable (NOT living) when it starts pulling (atom/movable/pulled, state, force)
 #define COMSIG_ATOM_START_PULL "movable_start_pull"
 ///called on /living when someone starts pulling (atom/movable/pulled, state, force)
@@ -34,8 +36,14 @@
 #define COMSIG_ATOM_RELAYMOVE "atom_relaymove"
 	///prevents the "you cannot move while buckled! message"
 	#define COMSIG_BLOCK_RELAYMOVE (1<<0)
+
+/// From base of atom/setDir(): (old_dir, new_dir). Called before the direction changes
+#define COMSIG_ATOM_PRE_DIR_CHANGE "mob_pre_face_atom"
+	#define COMPONENT_ATOM_BLOCK_DIR_CHANGE (1<<0)
 ///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"
+///from base of atom/setDir(): (old_dir, new_dir). Called after the direction changes.
+#define COMSIG_ATOM_POST_DIR_CHANGE "atom_dir_change"
 /// from /datum/component/singularity/proc/can_move(), as well as /obj/energy_ball/proc/can_move()
 /// if a callback returns `SINGULARITY_TRY_MOVE_BLOCK`, then the singularity will not move to that turf
 #define COMSIG_ATOM_SINGULARITY_TRY_MOVE "atom_singularity_try_move"

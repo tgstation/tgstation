@@ -43,6 +43,7 @@ You'll find links to the relevant reference entries at the heading of each entry
 - [Filters](#filters)
 - [Particles](#particles)
 - [Pixel offsets](#pixel-offsets)
+- [Map formats](#map-formats)
 - [Color](#color)
 - [Transform](#transform)
 - [Lighting](#lighting)
@@ -335,7 +336,7 @@ That said, there is some nuance here so I'ma get into that.
 - `SEE_BLACKNESS`: This relates heavily to [planes](#planes), essentially typically the "blackness" (that darkness that masks things that you can't see) 
 is rendered separately, out of our control as "users". 
 However, if the `SEE_BLACKNESS` flag is set, it will instead render on plane 0, the default BYOND plane.
-This allows us to capture it, and say, blur it, or redraw it elsewhere. Very very powerful, we always have this flag set.
+This allows us to capture it, and say, blur it, or redraw it elsewhere. This is in theory very powerful, but not possible with the 'side_map' [map format](https://www.byond.com/docs/ref/#/world/var/map_format) 
 
 ## BYOND Lighting
 
@@ -574,6 +575,107 @@ Fake offsets only effect visual position.
 
 This doesn't really matter for our current map format, but for anything that takes position into account when layering, like `side_map` or `isometric_map` 
 it matters a whole ton. It's kinda a hard idea to get across, but I hope you have at least some idea.
+
+## Map Formats
+- [Table of Contents](#table-of-contents)
+- [Reference Entry](https://www.byond.com/docs/ref/#/world/var/map_format)
+
+`/world/var/map_format` tells byond how to render things well, in the world.
+You can get away with thinking of it as rendering rules really.
+
+There are 4 types currently. Only 2 that are interesting to us, and one that's neat for historical purposes.
+Most of them involve changing how layering works, from the standard [layers](#layers) and [planes](#planes) method.
+There's a bit more detail here, not gonna go into it, stuff like [underlays](https://www.byond.com/docs/ref/#/atom/var/underlays) drawing under things. See [Understanding The Renderer](https://www.byond.com/docs/ref/#/{notes}/renderer)
+
+> There is very technically more nuance here. 
+> In default rendering modes, byond will conflict break by using the thing that is highest in the contents list of its location. Or lowest. Don't remember.
+
+### [`TOPDOWN_MAP`](https://www.byond.com/docs/ref/#/{notes}/topdown) 
+
+This is the default rendering format. What we used to use. It tells byond to render going off [plane](#planes) first, then [layer](#layers). There's a few edgecases involving big icons, but it's small peanuts.
+
+### [`SIDE_MAP`](https://www.byond.com/docs/ref/#/{notes}/side) (Check [the main page](https://www.byond.com/docs/ref/#/world/var/map_format) too!)
+
+Our current rendering format, used in preparation for moving more things to 3/4ths.
+
+This is essentially [isometric mode](#isometric_map), but it only works up and down.
+This does mean we get some very nice upsides, like being able to be both in front and behind an object without needing to do cursed splitting or modifying layers.
+It does come with some downsides, Mostly the flickering and debugging issues described above.
+
+The idea is the closer to the front of the screen something is, the higher its layering precedence is.
+
+`pixel_y` + `y` tell the engine where something "is".
+`/atom/var/bound_width`, `/atom/var/bound_height` and `/atom/var/bound_x/y` describe how big it is, which lets us in theory control what it tries to layer "against".
+I'm not bothering with reference links because they are entirely unrelated. 
+
+An issue that will crop up with this map format is needing to manage the "visual" (how/where it renders) and physical (where it is in game) aspects of position and size.
+Physical position tells the renderer how to layer things. Visual position and a combination of physical bounds (manually set) and visual bounds (inferred from other aspects of it. Sprite width/height, physical bounds, transforms, filters, etc) tell it what the sprite might be rendering OVER.
+
+Here's where things get really annoying for us. We cannot change physical bound outside of increments of 32.
+That's because we use [`LEGACY_MOVEMENT_MODE`](https://www.byond.com/docs/ref/#/world/var/movement_mode).
+This means we're almost always doomed to getting weird layering, cascading out from the source of the issue in a way that is quite hard to debug.
+
+Oh right I forgot to mention. Sorta touched on it with [Pixel offsets](#pixel-offsets).
+- `pixel_x/y` change something's position in physical space. So if you shoot this real high it'll layer as if it is where it appears to be,
+- `pixel_w/z` change something's VISUAL position. So you can LAYER as if you're at the bottom of the screen, but actually sit at the top.
+
+You can use the two of these in combination to shift something physically, but not visually. Often useful for making things layer right.
+Any change in position (`pixel_x/y`) will only come into effect after crossing `/world/var/icon_size` / 2 and will round to the nearest tile.
+
+What follows is a description, from lummox, of how physical conflicts are handled.
+
+From [this post](https://www.byond.com/forum/post/2656961#comment26050050)
+
+For the physical position, Y increases upward relative to the screen; view position has Y going downward. The topological order between two icons goes like this, in order:
+- 1) If the icons don't visually overlap, they don't care which goes first.
+- 2) If the icons do not overlap on the physical Y axis, whichever one is further back is drawn first.
+- 3) If one has a lower layer, it's drawn first.
+- 4) If one's "near" edge (physical Y) is closer to the top of the screen than the other, it gets drawn first.
+- 5) If one's center is left of the other, it's drawn first.
+- 6) If the two physical bounds are identical, whichever icon came first in the original array order is drawn first.
+- 7) All tiebreakers failed so the icons give up and don't care which goes first.
+
+It is worth stating clearly. Things will only "visually overlap" if they sit on the same [plane](#planes).
+This is NOT counting [relays](#render-targetsource)/[plane masters](#planes) (when a plane master is relayed onto something else, you can think of it like drawing the WHOLE PLANE MASTER)
+It's not like drawing everything on the plane master with effects applied. It's like drawing to a sheet, and then drawing with that sheet again.
+
+This also leads to issues, and means there are some effects that are entirely impossible to accomplish while using sidemap, without using horrible [image](#images) tricks.
+This is frustrating.
+
+One more thing. Big icons are fucked
+
+From the byond reference
+
+>If you use an icon wider than one tile, the "footprint" of the isometric icon (the actual map tiles it takes up) will always be a square. That is, if your normal tile size is 64 and you want to show a 128x128 icon, the icon is two tiles wide and so it will take up a 2×2-tile area on the map. The height of a big icon is irrelevant--any excess height beyond width/2 is used to show vertical features. To draw this icon properly, other tiles on that same ground will be moved behind it in the drawing order.
+> One important warning about using big icons in isometric mode is that you should only do this with dense atoms. If part of a big mob icon covers the same tile as a tall building for instance, the tall building is moved back and it could be partially covered by other turfs that are actually behind it. A mob walking onto a very large non-dense turf icon would experience similar irregularities. 
+
+These can cause very annoying flickering. In fact, MUCH of how rendering works causes flickering. This is because we don't decide on a pixel by pixel case, the engine groups sprites up into a sort of rendering stack, unable to split them up.
+
+This combined with us being unable to modify bounds means that if one bit of the view is conflicting. 
+If A wants to be above B and below C, but B wants to be below A and above C, we'll be unable to resolve the rendering properly, leading to flickering depending on other aspects of the layering.
+This can just sort of spread. Very hard to debug.
+
+### [`ISOMETRIC_MAP`](https://www.byond.com/docs/ref/#/{notes}/isometric) 
+	
+Isometric mode, renders everything well, isometrically, biased to the north east. This gives the possibility for fake 3d, assuming you get things drawn properly.
+It will render things in the foreground "last", after things in the background. This is the right way of thinking about it, it's not rendering things above or below, but in a layering order.
+
+This is interesting mostly in the context of understanding [side map](#side_map-check-the-main-page-too), but we did actually run an isometric station for april fools once.
+It was really cursed and flickered like crazy (which causes client lag). Fun as hell though.
+
+The mode essentially overrides the layer/plane layering discussed before, and inserts new rules. 
+I wish I knew what those rules EXACTLY are, but I'm betting they're similar to [side map's](#side_map-check-the-main-page-too), and lummy's actually told me those. 
+Yes this is all rather poorly documented.
+
+Similar to sidemap, we take physical position into account when deciding layering. In addition to its height positioning, we also account for width.
+So both `pixel_y` and `pixel_x` can effect layering. `pixel_z` handles strictly visual y, and `pixel_w` handles x. 
+
+This has similar big icon problems to [sidemap](#side_map-check-the-main-page-too).
+
+### [`TILED_ICON_MAP`](https://www.byond.com/docs/ref/#/{notes}/tiled-icons)
+
+Legacy support for how byond rendering used to work. It essentially locked icon sizes to `/world/var/icon_size`, so if you tried to add an icon state larger then that,
+it would be automatically broken down into smaller icon states, which you would need to manually display. Not something we need to care about
 
 ## Color
 - [Table of Contents](#table-of-contents)

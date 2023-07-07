@@ -23,7 +23,17 @@
 	allowed = list(/obj/item/melee/sickly_blade)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	// Slightly better than normal cult robes
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50,ENERGY = 50, BOMB = 35, BIO = 20, FIRE = 20, ACID = 20)
+	armor_type = /datum/armor/cultrobes_eldritch
+
+/datum/armor/cultrobes_eldritch
+	melee = 50
+	bullet = 50
+	laser = 50
+	energy = 50
+	bomb = 35
+	bio = 20
+	fire = 20
+	acid = 20
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/examine(mob/user)
 	. = ..()
@@ -46,7 +56,14 @@
 	flags_inv = NONE
 	flags_cover = NONE
 	item_flags = EXAMINE_SKIP
-	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/cult_hoodie_void
+
+/datum/armor/cult_hoodie_void
+	melee = 30
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 15
 
 /obj/item/clothing/head/hooded/cult_hoodie/void/Initialize(mapload)
 	. = ..()
@@ -63,13 +80,20 @@
 	flags_inv = NONE
 	body_parts_covered = CHEST|GROIN|ARMS
 	// slightly worse than normal cult robes
-	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, FIRE = 0, ACID = 0)
+	armor_type = /datum/armor/cultrobes_void
 	alternative_mode = TRUE
+
+/datum/armor/cultrobes_void
+	melee = 30
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 15
 
 /obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
 	. = ..()
 
-	create_storage(type = /datum/storage/pockets/void_cloak)
+	create_storage(storage_type = /datum/storage/pockets/void_cloak)
 
 /obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
 	. = ..()
@@ -85,26 +109,23 @@
 	// Let examiners know this works as a focus only if the hood is down
 	. += span_notice("Allows you to cast heretic spells while the hood is down.")
 
-/obj/item/clothing/suit/hooded/cultrobes/void/RemoveHood()
-	// This is before the hood actually goes down
-	// We only make it visible if the hood is being moved from up to down
-	if(hood_up)
-		make_visible()
-
+/obj/item/clothing/suit/hooded/cultrobes/void/on_hood_down(obj/item/clothing/head/hooded/hood)
+	make_visible()
 	return ..()
 
-/obj/item/clothing/suit/hooded/cultrobes/void/MakeHood()
+/obj/item/clothing/suit/hooded/cultrobes/void/can_create_hood()
 	if(!isliving(loc))
 		CRASH("[src] attempted to make a hood on a non-living thing: [loc]")
-
 	var/mob/living/wearer = loc
-	if(!IS_HERETIC_OR_MONSTER(wearer))
-		loc.balloon_alert(loc, "you can't get the hood up!")
-		return
+	if(IS_HERETIC_OR_MONSTER(wearer))
+		return TRUE
 
-	// When we make the hood, that means we're going invisible
+	loc.balloon_alert(loc, "can't get the hood up!")
+	return FALSE
+
+/obj/item/clothing/suit/hooded/cultrobes/void/on_hood_created(obj/item/clothing/head/hooded/hood)
+	. = ..()
 	make_invisible()
-	return ..()
 
 /// Makes our cloak "invisible". Not the wearer, the cloak itself.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()

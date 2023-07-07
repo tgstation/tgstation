@@ -9,7 +9,6 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = SUPERVISOR_CAPTAIN
-	selection_color = "#ffeeaa"
 	req_admin_notify = 1
 	minimal_player_age = 7
 	exp_requirements = 180
@@ -75,7 +74,7 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
 
 	box = /obj/item/storage/box/survival/engineer
-	chameleon_extras = /obj/item/stamp/ce
+	chameleon_extras = /obj/item/stamp/head/ce
 	skillchips = list(/obj/item/skillchip/job/engineer)
 	pda_slot = ITEM_SLOT_LPOCKET
 
