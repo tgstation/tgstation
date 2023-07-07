@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
-	attachment_slot = null
+	attachment_slot = NONE
 	greyscale_config = /datum/greyscale_config/waistcoat
 	greyscale_config_worn = /datum/greyscale_config/waistcoat_worn
 	greyscale_colors = "#414344"
@@ -21,7 +21,7 @@
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	inhand_icon_state = "vest_sheriff"
 	minimize_when_attached = TRUE
-	attachment_slot = null
+	attachment_slot = NONE
 
 /obj/item/clothing/accessory/maidcorset
 	name = "maid corset"
@@ -31,7 +31,7 @@
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
-	attachment_slot = null
+	attachment_slot = NONE
 
 /obj/item/clothing/accessory/maidapron
 	name = "maid apron"
@@ -41,4 +41,4 @@
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
-	attachment_slot = null
+	attachment_slot = NONE

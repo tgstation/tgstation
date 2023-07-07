@@ -22,6 +22,7 @@
 	/// TRUE if shown as a small icon in corner, FALSE if overlayed
 	var/minimize_when_attached = TRUE
 	/// What equipment slot the accessory attaches to.
+	/// If NONE, can always attach, while if supplied, can only attach if the clothing covers this slot.
 	var/attachment_slot = CHEST
 
 /**

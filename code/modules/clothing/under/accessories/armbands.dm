@@ -3,7 +3,7 @@
 	name = "red armband"
 	desc = "A fancy red armband!"
 	icon_state = "redband"
-	attachment_slot = null
+	attachment_slot = NONE
 
 /obj/item/clothing/accessory/armband/deputy
 	name = "security deputy armband"
