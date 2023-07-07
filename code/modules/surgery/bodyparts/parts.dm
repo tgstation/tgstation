@@ -344,6 +344,10 @@
 	/// Datum describing how to offset things worn on the foot of this leg, note that an x offset won't do anything here
 	var/datum/worn_feature_offset/worn_foot_offset
 
+// Legs never get the top offset applied!
+/obj/item/bodypart/leg/get_applicable_top_offset()
+	return 0
+
 /obj/item/bodypart/leg/Destroy()
 	QDEL_NULL(worn_foot_offset)
 	return ..()

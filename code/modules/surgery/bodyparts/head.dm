@@ -230,7 +230,7 @@
 			worn_face_offset?.apply_offset(no_eyes)
 			. += no_eyes
 
-	return
+	return .
 
 /obj/item/bodypart/head/talk_into(mob/holder, message, channel, spans, datum/language/language, list/message_mods)
 	var/mob/headholder = holder

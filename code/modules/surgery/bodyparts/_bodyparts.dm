@@ -845,7 +845,7 @@
 		img.pixel_y = px_y
 	add_overlay(standing)
 
-///Generates an /image for the limb to be used as an overlay
+/// Generates a list of images for the limb to be used as overlays
 /obj/item/bodypart/proc/get_limb_icon(dropped)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
@@ -938,7 +938,7 @@
 			//add two masked images based on the old one
 			. += leg_source.generate_masked_leg(limb_image, image_dir)
 
-	// And finally put bodypart_overlays on if not husked
+	// Put bodypart_overlays on if not husked
 	if(!is_husked)
 		//Draw external organs like horns and frills
 		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
@@ -951,12 +951,27 @@
 
 	return .
 
-///Add a bodypart overlay and call the appropriate update procs
+/// Applies the current top_offset of the owner to a given list of overlays if necessary, and returns the modified list
+/obj/item/bodypart/proc/apply_top_offset(list/overlays)
+	var/top_offset = get_applicable_top_offset()
+	for(var/image/overlay in overlays)
+		overlay.pixel_y += owner.top_offset
+	return overlays
+
+/// Returns the top_offset we should apply to our overlays in get_limb_icon()
+/obj/item/bodypart/proc/get_applicable_top_offset()
+	var/top_offset = 0
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		top_offset = human_owner.get_top_offset()
+	return top_offset
+
+/// Add a bodypart overlay and call the appropriate update procs
 /obj/item/bodypart/proc/add_bodypart_overlay(datum/bodypart_overlay/overlay)
 	bodypart_overlays += overlay
 	overlay.added_to_limb(src)
 
-///Remove a bodypart overlay and call the appropriate update procs
+/// Remove a bodypart overlay and call the appropriate update procs
 /obj/item/bodypart/proc/remove_bodypart_overlay(datum/bodypart_overlay/overlay)
 	bodypart_overlays -= overlay
 	overlay.removed_from_limb(src)
