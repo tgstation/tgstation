@@ -417,7 +417,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return FALSE
 
 	if(!can_speak())
-		if(HAS_TRAIT(src, TRAIT_MIMING))
+		if(HAS_MIND_TRAIT(src, TRAIT_MIMING))
 			to_chat(src, span_green("Your vow of silence prevents you from speaking!"))
 		else
 			to_chat(src, span_warning("You find yourself unable to speak!"))
@@ -426,7 +426,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	return TRUE
 
 /mob/living/can_speak(allow_mimes = FALSE)
-	if(!allow_mimes && HAS_TRAIT(src, TRAIT_MIMING))
+	if(!allow_mimes && HAS_MIND_TRAIT(src, TRAIT_MIMING))
 		return FALSE
 
 	if(HAS_TRAIT(src, TRAIT_MUTE))

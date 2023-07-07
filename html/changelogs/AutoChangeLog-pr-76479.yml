@@ -1,6 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - bugfix: "Plant bags now properly harvest items when you click on hydrotray with it, and don't pick up anything except the harvest"
-  - bugfix: "Carpellosis gnashing checks owner's teeth availability instead of the target's teeth"
-  - bugfix: "Patches don't have a message saying that they're dirty"
