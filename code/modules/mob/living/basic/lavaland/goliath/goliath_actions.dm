@@ -25,6 +25,9 @@
 		var/turf/adjacent_target = get_step(target, spawndir)
 		if(adjacent_target)
 			new /obj/effect/goliath_tentacle(adjacent_target)
+
+	if (isliving(target))
+		owner.visible_message(span_warning("[owner] digs its tentacles under [target]!"))
 	return TRUE
 
 /// Place grappling tentacles around you to grab attackers
@@ -45,6 +48,7 @@
 		var/turf/adjacent_target = get_step(target, dir)
 		if(adjacent_target)
 			new /obj/effect/goliath_tentacle(adjacent_target)
+	owner.visible_message(span_warning("[owner] unleashes tentacles from the ground around it!"))
 	return TRUE
 
 /// Summon a line of tentacles towards the target
@@ -62,6 +66,8 @@
 /datum/action/cooldown/tentacle_grasp/Activate(atom/target)
 	. = ..()
 	new /obj/effect/temp_visual/effect_trail/burrowed_tentacle(owner.loc, target)
+	if (isliving(target))
+		owner.visible_message(span_warning("[owner] reaches for [target] with its tentacles!"))
 	return TRUE
 
 /// An invisible effect which chases a target, spawning tentacles every so often.

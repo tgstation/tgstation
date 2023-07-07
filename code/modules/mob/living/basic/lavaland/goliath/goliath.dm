@@ -22,6 +22,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	attack_verb_continuous = "pulverizes"
 	attack_verb_simple = "pulverize"
+	throw_blocked_message = "does nothing to the tough hide of"
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
@@ -41,6 +42,8 @@
 	var/saddled = FALSE
 	/// Slight cooldown to prevent double-dipping if we use both abilities at once
 	COOLDOWN_DECLARE(ability_animation_cooldown)
+	/// Our base tentacles ability
+	var/datum/action/cooldown/goliath_tentacles/tentacles
 	/// Things we want to eat off the floor (or a plate, we're not picky)
 	var/static/list/goliath_foods = list(/obj/item/food/grown/ash_flora, /obj/item/food/bait/worm)
 
@@ -56,7 +59,7 @@
 	if (tameable)
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
-	var/datum/action/cooldown/goliath_tentacles/tentacles = new (src)
+	tentacles = new (src)
 	tentacles.Grant(src)
 	var/datum/action/cooldown/tentacle_burst/melee_tentacles = new (src)
 	melee_tentacles.Grant(src)
@@ -69,6 +72,34 @@
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, goliath_foods)
 	ai_controller.set_blackboard_key(BB_GOLIATH_TENTACLES, tentacles)
+
+/mob/living/basic/mining/goliath/Destroy()
+	QDEL_NULL(tentacles)
+	return ..()
+
+/mob/living/basic/mining/goliath/revive(full_heal_flags, excess_healing, force_grab_ghost)
+	. = ..()
+	if (!.)
+		return
+	move_force = initial(move_force)
+	move_resist = initial(move_resist)
+	pull_force = initial(pull_force)
+
+/mob/living/basic/mining/goliath/death(gibbed)
+	move_force = MOVE_FORCE_DEFAULT
+	move_resist = MOVE_RESIST_DEFAULT
+	pull_force = PULL_FORCE_DEFAULT
+	return ..()
+
+// Goliaths can summon tentacles more frequently as they take damage, scary.
+/mob/living/basic/mining/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+	. = ..()
+	if (!.)
+		return
+	if (damage <= 0)
+		return
+	if (tentacles.cooldown_time > 1 SECONDS)
+		tentacles.cooldown_time -= 1 SECONDS
 
 /// When we use an ability, activate some kind of visual tell
 /mob/living/basic/mining/goliath/proc/used_ability(mob/living/source, datum/action/cooldown/ability)
@@ -94,3 +125,62 @@
 /// Get ready for mounting
 /mob/living/basic/mining/goliath/proc/tamed()
 	tamed = TRUE
+
+/// Goliath which sometimes replaces itself with a rare variant
+/mob/living/basic/mining/goliath/random
+
+/mob/living/basic/mining/goliath/random/Initialize(mapload)
+	if(!prob(1))
+		return ..()
+	new /mob/living/basic/mining/goliath/ancient/immortal(loc)
+	return INITIALIZE_HINT_QDEL
+
+/// Legacy Goliath mob with different sprites, largely the same behaviour
+/mob/living/basic/mining/goliath/ancient
+	name = "ancient goliath"
+	desc = "A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions."
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
+	icon_state = "ancient_goliath"
+	icon_living = "ancient_goliath"
+	icon_dead = "ancient_goliath_dead"
+	tentacle_warning_state = "ancient_goliath_preattack"
+	tameable = FALSE
+
+/// Rare Goliath variant which occasionally replaces the normal mining mob, releases shitloads of tentacles
+/mob/living/basic/mining/goliath/ancient/immortal
+	name = "immortal goliath"
+	desc = "Goliaths are biologically immortal, and rare specimens have survived for centuries. \
+		This one is clearly ancient, and its tentacles constantly churn the earth around it."
+	maxHealth = 400
+	health = 400
+	crusher_drop_chance = 30 // Wow a whole 5% more likely, how generous
+	/// Don't re-check nearby turfs for this long
+	COOLDOWN_DECLARE(retarget_turfs_cooldown)
+	/// List of places we might spawn a tentacle, if we're alive
+	var/list/tentacle_target_turfs
+
+/mob/living/basic/mining/goliath/ancient/immortal/Life(seconds_per_tick, times_fired)
+	. = ..()
+	if (!. || !isturf(loc))
+		return
+	if (!LAZYLEN(tentacle_target_turfs) || COOLDOWN_FINISHED(src, retarget_turfs_cooldown))
+		cache_nearby_turfs()
+	for (var/turf/target_turf in tentacle_target_turfs)
+		if (target_turf.is_blocked_turf(exclude_mobs = TRUE))
+			tentacle_target_turfs -= target_turf
+			continue
+		if (prob(10))
+			new /obj/effect/goliath_tentacle(target_turf)
+
+/mob/living/basic/mining/goliath/ancient/immortal/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if (loc == old_loc || stat == DEAD || !isturf(loc))
+		return
+	cache_nearby_turfs()
+
+/// Store nearby turfs in our list so we can pop them out later
+/mob/living/basic/mining/goliath/ancient/immortal/proc/cache_nearby_turfs()
+	COOLDOWN_START(src, retarget_turfs_cooldown, 10 SECONDS)
+	LAZYCLEARLIST(tentacle_target_turfs)
+	for(var/turf/open/floor in orange(4, loc))
+		LAZYADD(tentacle_target_turfs, floor)
