@@ -200,8 +200,8 @@
 
 	if(isnull(accessory_overlay))
 		create_accessory_overlay()
-		update_appearance(UPDATE_ICON)
 
+	update_appearance()
 	return TRUE
 
 /obj/item/clothing/under/proc/pop_accessory(mob/living/user, attach_message = TRUE)
@@ -225,7 +225,7 @@
 	if(isnull(accessory_overlay) && LAZYLEN(attached_accessories))
 		create_accessory_overlay()
 
-	update_appearance(UPDATE_ICON)
+	update_appearance()
 
 /// Handles creating the worn overlay mutable appearance
 /// Only the first accessory attached is displayed (currently)

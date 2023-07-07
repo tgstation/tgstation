@@ -4,7 +4,8 @@
 	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
 	icon_state = "lawyerbadge"
 
-/obj/item/clothing/accessory/lawyers_badge/attack_self(mob/user)
+/obj/item/clothing/accessory/lawyers_badge/interact(mob/user)
+	. = ..()
 	if(prob(1))
 		user.say("The testimony contradicts the evidence!", forced = "attorney's badge")
 	user.visible_message(span_notice("[user] shows [user.p_their()] attorney's badge."), span_notice("You show your attorney's badge."))
@@ -19,15 +20,24 @@
 
 /obj/item/clothing/accessory/lawyers_badge/proc/table_slam(mob/living/source, obj/structure/table/the_table)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(handle_table_slam), source)
 
-/obj/item/clothing/accessory/lawyers_badge/proc/handle_table_slam(mob/living/user)
-	user.say("Objection!!", spans = list(SPAN_YELL), forced=TRUE)
+	ASYNC
+		source.say("Objection!!", spans = list(SPAN_YELL), forced = "[src]")
 
 /obj/item/clothing/accessory/clown_enjoyer_pin
 	name = "\improper Clown Pin"
 	desc = "A pin to show off your appreciation for clowns and clowning!"
 	icon_state = "clown_enjoyer_pin"
+
+/obj/item/clothing/accessory/clown_enjoyer_pin/can_attach_accessory(obj/item/clothing/attach_to, mob/living/user)
+	. = ..()
+	if(!.)
+		return
+	if(locate(/obj/item/clothing/accessory/mime_fan_pin) in attach_to.attached_accessories)
+		if(user)
+			attach_to.balloon_alert(user, "can't pick both sides!")
+		return FALSE
+	return TRUE
 
 /obj/item/clothing/accessory/clown_enjoyer_pin/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_CLOWN_ENJOYER))
@@ -37,8 +47,7 @@
 		human_equipper.fan_hud_set_fandom()
 
 /obj/item/clothing/accessory/clown_enjoyer_pin/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
-	if(HAS_TRAIT(user, TRAIT_CLOWN_ENJOYER))
-		user.clear_mood_event("clown_enjoyer_pin")
+	user.clear_mood_event("clown_enjoyer_pin")
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_equipper = user
 		human_equipper.fan_hud_set_fandom()
@@ -48,6 +57,16 @@
 	desc = "A pin to show off your appreciation for mimes and miming!"
 	icon_state = "mime_fan_pin"
 
+/obj/item/clothing/accessory/mime_fan_pin/can_attach_accessory(obj/item/clothing/attach_to, mob/living/user)
+	. = ..()
+	if(!.)
+		return
+	if(locate(/obj/item/clothing/accessory/clown_enjoyer_pin) in attach_to.attached_accessories)
+		if(user)
+			attach_to.balloon_alert(user, "can't pick both sides!")
+		return FALSE
+	return TRUE
+
 /obj/item/clothing/accessory/mime_fan_pin/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_MIME_FAN))
 		user.add_mood_event("mime_fan_pin", /datum/mood_event/mime_fan_pin)
@@ -56,8 +75,7 @@
 		human_equipper.fan_hud_set_fandom()
 
 /obj/item/clothing/accessory/mime_fan_pin/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
-	if(HAS_TRAIT(user, TRAIT_MIME_FAN))
-		user.clear_mood_event("mime_fan_pin")
+	user.clear_mood_event("mime_fan_pin")
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_equipper = user
 		human_equipper.fan_hud_set_fandom()
@@ -70,12 +88,6 @@
 /obj/item/clothing/accessory/pocketprotector/Initialize(mapload)
 	. = ..()
 	create_storage(storage_type = /datum/storage/pockets/pocketprotector)
-
-/obj/item/clothing/accessory/pocketprotector/detach(obj/item/clothing/under/detach_from)
-	. = ..()
-	var/drop_loc = drop_location()
-	for(var/atom/movable/held as anything in src)
-		held.forceMove(drop_loc)
 
 /obj/item/clothing/accessory/pocketprotector/full
 
@@ -128,14 +140,14 @@
 
 	examine_list += display
 
-/obj/item/clothing/accessory/allergy_dogtag
+/obj/item/clothing/accessory/dogtag/allergy
 	name = "Allergy dogtag"
 	desc = "A dogtag with a listing of allergies."
 	icon_state = "allergy"
 	minimize_when_attached = TRUE
 	attachment_slot = CHEST
 
-/obj/item/clothing/accessory/allergy_dogtag/Initialize(mapload, allergy_string)
+/obj/item/clothing/accessory/dogtag/allergy/Initialize(mapload, allergy_string)
 	. = ..()
 	if(allergy_string)
 		display = span_notice("The dogtag has a listing of allergies: [allergy_string]")

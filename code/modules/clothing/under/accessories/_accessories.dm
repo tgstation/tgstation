@@ -54,19 +54,19 @@
 		attach_to.atom_storage.set_real_location(src)
 
 	var/num_other_accessories = LAZYLEN(attach_to.attached_accessories)
-	// layer = FLOAT_LAYER + clamp(attach_to.max_number_of_accessories - num_other_accessories, 0, 10)
-	// plane = FLOAT_PLANE
+	layer = FLOAT_LAYER + clamp(attach_to.max_number_of_accessories - num_other_accessories, 0, 10)
+	plane = FLOAT_PLANE
 
 	if(minimize_when_attached)
 		transform *= 0.75
-		pixel_x += 8
-		pixel_y -= (8 - (num_other_accessories * 2))
-
-	attach_to.vis_contents |= src
+		// just randomize position
+		pixel_x = 0 + rand(4, -4)
+		pixel_y = 0 + rand(4, -4)
 
 	RegisterSignal(attach_to, COMSIG_ITEM_EQUIPPED, PROC_REF(on_uniform_equipped))
 	RegisterSignal(attach_to, COMSIG_ITEM_DROPPED, PROC_REF(on_uniform_dropped))
 	RegisterSignal(attach_to, COMSIG_CLOTHING_UNDER_ADJUSTED, PROC_REF(on_uniform_adjusted))
+	RegisterSignal(attach_to, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_uniform_update))
 
 	var/mob/equipped_to = attach_to.loc
 	if(istype(equipped_to))
@@ -80,10 +80,14 @@
  * We may have exited the clothing's loc at this point
  */
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/detach_from)
-	if(detach_from.atom_storage && IS_WEAKREF_OF(src, detach_from.atom_storage.real_location))
+	if(IS_WEAKREF_OF(src, detach_from.atom_storage?.real_location))
+		// Ensure void items do not stick around
+		atom_storage.close_all()
+		detach_from.atom_storage.close_all()
+		// And clean up the storage we made
 		QDEL_NULL(detach_from.atom_storage)
 
-	UnregisterSignal(detach_from, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_CLOTHING_UNDER_ADJUSTED))
+	UnregisterSignal(detach_from, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_CLOTHING_UNDER_ADJUSTED, COMSIG_ATOM_UPDATE_OVERLAYS))
 	var/mob/dropped_from = detach_from.loc
 	if(istype(dropped_from))
 		on_uniform_dropped(detach_from, dropped_from)
@@ -93,9 +97,8 @@
 		pixel_x -= 8
 		pixel_y += (8 + LAZYLEN(detach_from.attached_accessories) * 2)
 
-	// layer = initial(layer)
-	// SET_PLANE_IMPLICIT(src, initial(plane))
-	detach_from.vis_contents -= src
+	layer = initial(layer)
+	SET_PLANE_IMPLICIT(src, initial(plane))
 	return TRUE
 
 /// Signal proc for [COMSIG_ITEM_EQUIPPED] on the uniform we're pinned to
@@ -133,6 +136,12 @@
 	source.remove_accessory(src)
 	forceMove(source.drop_location())
 	source.visible_message(span_warning("[src] falls off of [source]!"))
+
+/// Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS] on the uniform we're pinned to to add our overlays to the inventory icon
+/obj/item/clothing/accessory/proc/on_uniform_update(obj/item/source, list/overlays)
+	SIGNAL_HANDLER
+
+	overlays |= src
 
 /obj/item/clothing/accessory/attack_self_secondary(mob/user)
 	. = ..()
