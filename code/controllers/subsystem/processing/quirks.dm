@@ -32,6 +32,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Social Anxiety", "Mute"),
 		list("Mute", "Soft-Spoken"),
 		list("Stormtrooper Aim", "Big Hands"),
+		list("Bilingual", "Foreigner"),
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()
