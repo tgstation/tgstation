@@ -129,22 +129,27 @@
  * on the client_colour datums it currently has.
  */
 /mob/proc/update_client_colour()
-	if(!client)
+	if(!hud_used)
 		return
-	client.color = ""
+	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	if(!client_colours.len)
+		game_plane_master_controller.remove_filter("client_colour")
 		return
-	MIX_CLIENT_COLOUR(client.color)
+	MIX_CLIENT_COLOUR(var/final_colour)
+	game_plane_master_controller.add_filter("client_colour", 5, color_matrix_filter(final_colour))
 
 ///Works similarly to 'update_client_colour', but animated.
-/mob/proc/animate_client_colour(anim_time = 20, anim_easing = 0)
-	if(!client)
+/mob/proc/animate_client_colour(anim_time = 20, anim_easing = NONE)
+	if(!hud_used)
 		return
+	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	if(!client_colours.len)
-		animate(client, color = "", time = anim_time, easing = anim_easing)
+		game_plane_master_controller.transition_filter("client_colour", anim_time, color_matrix_filter(), anim_easing)
 		return
 	MIX_CLIENT_COLOUR(var/anim_colour)
-	animate(client, color = anim_colour, time = anim_time, easing = anim_easing)
+	if(!length(game_plane_master_controller.get_filters("client_colour")))
+		game_plane_master_controller.add_filter("client_colour", 5, color_matrix_filter())
+	game_plane_master_controller.transition_filter("client_colour", anim_time, color_matrix_filter(anim_colour), anim_easing)
 
 #undef MIX_CLIENT_COLOUR
 
@@ -209,11 +214,11 @@
 
 /datum/client_colour/bloodlust
 	priority = PRIORITY_ABSOLUTE // Only anger.
-	colour = list(0,0,0,0,0,0,0,0,0,1,0,0) //pure red.
+	colour = list(0,0,0, 0,0,0, 0,0,0, 1,0,0) //pure red.
 	fade_out = 10
 
 /datum/client_colour/bloodlust/New(mob/_owner)
-	..()
+	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(update_colour), list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0), 10, SINE_EASING|EASE_OUT), 1)
 
 /datum/client_colour/rave

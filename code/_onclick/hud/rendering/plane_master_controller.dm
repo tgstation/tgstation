@@ -75,9 +75,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
 
 ///Resets the atom's color to null, and then sets it to the highest priority colour available
 /atom/movable/plane_master_controller/update_atom_colour()
+	. = ..()
 	for(var/atom/movable/screen/plane_master/pm_iterator as anything in get_planes())
 		pm_iterator.update_atom_colour()
-
 
 /// Exists for convienience when referencing all game render plates
 /atom/movable/plane_master_controller/game
