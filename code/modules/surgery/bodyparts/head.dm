@@ -153,36 +153,22 @@
 			. += span_info("[real_name]'s tongue has been removed.")
 
 /obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
-	var/atom/drop_loc = drop_location()
-	for(var/obj/item/head_item in src)
-		if(head_item == brain)
-			if(user)
-				user.visible_message(span_warning("[user] saws [src] open and pulls out a brain!"), span_notice("You saw [src] open and pull out a brain."))
-			if(brainmob)
-				brainmob.container = null
-				brainmob.forceMove(brain)
-				brain.brainmob = brainmob
-				brainmob = null
-			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
-				to_chat(user, span_warning("[brain] was damaged in the process!"))
-				brain.set_organ_damage(brain.maxHealth)
-			brain.forceMove(drop_loc)
-			brain = null
-			update_icon_dropped()
-		else
-			if(istype(head_item, /obj/item/reagent_containers/pill))
-				for(var/datum/action/item_action/hands_free/activate_pill/pill_action in head_item.actions)
-					qdel(pill_action)
-			else if(isorgan(head_item))
-				var/obj/item/organ/organ = head_item
-				if(organ.organ_flags & ORGAN_UNREMOVABLE)
-					continue
-			head_item.forceMove(drop_loc)
+	. = ..()
+	if(brain)
+		if(user)
+			user.visible_message(span_warning("[user] saws [src] open and pulls out a brain!"), span_notice("You saw [src] open and pull out a brain."))
+		if(brainmob)
+			brainmob.container = null
+			brainmob.forceMove(brain)
+			brain.brainmob = brainmob
+			brainmob = null
+		if(violent_removal && prob(80)) //ghetto surgery can damage the brain.
+			to_chat(user, span_warning("[brain] was damaged in the process!"))
+			brain.set_organ_damage(brain.maxHealth)
+		brain = null
 	eyes = null
 	ears = null
 	tongue = null
-	update_limb()
-	return ..()
 
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
