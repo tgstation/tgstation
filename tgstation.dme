@@ -1163,6 +1163,7 @@
 #include "code\datums\elements\ai_retaliate.dm"
 #include "code\datums\elements\ai_target_damagesource.dm"
 #include "code\datums\elements\animal_variety.dm"
+#include "code\datums\elements\area_based_status_effect.dm"
 #include "code\datums\elements\art.dm"
 #include "code\datums\elements\atmos_requirements.dm"
 #include "code\datums\elements\atmos_sensitive.dm"
