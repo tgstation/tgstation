@@ -29,4 +29,4 @@
 
 /obj/item/clothing/suit/hooded/explorer // it is deeply unfortunate that this can't just be made generic
 	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE)
-	bodytype_icon_files = list("4" = 'icons/mob/clothing/suits/utility.dmi', "8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/suits_digi.dmi')
+	bodytype_icon_files = list("4" = 'icons/mob/clothing/suits/utility.dmi', "8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/suit_digi.dmi')
