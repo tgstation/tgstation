@@ -288,8 +288,8 @@
 	RegisterSignal(hud, COMSIG_HUD_LOBBY_EXPANDED, PROC_REF(expand_button))
 
 /atom/movable/screen/lobby/button/bottom/Destroy()
-	. = ..()
 	UnregisterSignal(hud, list(COMSIG_HUD_LOBBY_COLLAPSED, COMSIG_HUD_LOBBY_EXPANDED))
+	. = ..()
 
 ///Animates moving the button off-screen, disabling it
 /atom/movable/screen/lobby/button/bottom/proc/collapse_button()
