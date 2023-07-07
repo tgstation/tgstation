@@ -79,7 +79,7 @@
 	var/mob/camera/ai_eye/eyeobj
 	var/sprint = 10
 	var/cooldown = 0
-	var/acceleration = 1
+	var/acceleration = TRUE
 
 	var/obj/structure/ai_core/deactivated/linked_core //For exosuit control
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
@@ -118,7 +118,6 @@
 	radio_enabled = TRUE
 	interaction_range = 0
 	sprint = 5
-	acceleration = 0.5
 	laws = /datum/ai_laws/syndicate_override
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
