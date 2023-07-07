@@ -89,6 +89,11 @@ export type QuirkInfo = {
   quirk_blacklist: string[][];
 };
 
+export type LoadoutInfo = {
+  user_is_donator: BooleanLike;
+  selected_loadout: string[];
+};
+
 export enum RandomSetting {
   AntagOnly = 1,
   Disabled = 2,
@@ -182,6 +187,7 @@ export type ServerData = {
     types: Record<string, Name>;
   };
   quirks: QuirkInfo;
+  loadout: LoadoutInfo;
   random: {
     randomizable: string[];
   };

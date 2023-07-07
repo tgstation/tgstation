@@ -363,11 +363,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /// A preview of a character for use in the preferences menu
 /atom/movable/screen/map_view/char_preview
 	name = "character_preview"
+	name = "default"
+	icon = 'monkestation/icons/hud/screen_gen64x32.dmi'
 
 	/// The body that is displayed
-	var/mob/living/carbon/human/dummy/body
+	var/mob/living/carbon/human/dummy/extra_tall/body
 	/// The preferences this refers to
 	var/datum/preferences/preferences
+	bound_height = 64
 
 /atom/movable/screen/map_view/char_preview/Initialize(mapload, datum/preferences/preferences)
 	. = ..()
@@ -393,7 +396,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	body = new
 
 	// Without this, it doesn't show up in the menu
-	body.appearance_flags &= ~KEEP_TOGETHER
+	body.appearance_flags &= ~TILE_BOUND
 
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()

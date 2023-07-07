@@ -5428,6 +5428,7 @@
 #include "monkestation\code\modules\liquids\ocean_generator.dm"
 #include "monkestation\code\modules\liquids\tools.dm"
 #include "monkestation\code\modules\loadouts\loadout_manager.dm"
+#include "monkestation\code\modules\loadouts\loadout_middleware.dm"
 #include "monkestation\code\modules\loadouts\loadout_outfit_helper.dm"
 #include "monkestation\code\modules\loadouts\donator\personal.dm"
 #include "monkestation\code\modules\loadouts\items\_loadout_datum.dm"
