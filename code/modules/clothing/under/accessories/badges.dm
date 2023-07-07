@@ -7,7 +7,7 @@
 /obj/item/clothing/accessory/lawyers_badge/interact(mob/user)
 	. = ..()
 	if(prob(1))
-		user.say("The testimony contradicts the evidence!", forced = "attorney's badge")
+		user.say("The testimony contradicts the evidence!", forced = "[src]")
 	user.visible_message(span_notice("[user] shows [user.p_their()] attorney's badge."), span_notice("You show your attorney's badge."))
 
 /obj/item/clothing/accessory/lawyers_badge/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
