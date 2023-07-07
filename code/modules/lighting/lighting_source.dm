@@ -398,7 +398,7 @@
 			continue
 		INSERT_CORNERS(corners, T)
 
-		var/turf/below = SSmapping.get_turf_below(T)
+		var/turf/below = GET_TURF_BELOW(T)
 		var/turf/previous = T
 		while(below)
 			// If we find a non transparent previous, end
@@ -412,15 +412,15 @@
 			INSERT_CORNERS(corners, below)
 			// ANNND then we add the one below it
 			previous = below
-			below = SSmapping.get_turf_below(below)
+			below = GET_TURF_BELOW(below)
 
-		var/turf/above = SSmapping.get_turf_above(T)
+		var/turf/above = GET_TURF_ABOVE(T)
 		while(above)
 			// If we find a non transparent turf, end
 			if(!istransparentturf(above) || IS_OPAQUE_TURF(above))
 				break
 			INSERT_CORNERS(corners, above)
-			above = SSmapping.get_turf_above(above)
+			above = GET_TURF_ABOVE(above)
 
 	source_turf.luminosity = oldlum
 	return corners

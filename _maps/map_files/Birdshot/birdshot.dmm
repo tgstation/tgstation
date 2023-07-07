@@ -22713,16 +22713,8 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/laser,
-/obj/item/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/airalarm/directional/west,
+/obj/effect/spawner/random/armory/laser_gun,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)
 "iAy" = (
@@ -23438,15 +23430,8 @@
 /obj/structure/closet/crate{
 	name = "Outdated Weaponry"
 	},
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_y = 6
-	},
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_y = 6
-	},
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_y = 6
-	},
+/obj/effect/spawner/random/armory/barrier_grenades,
+/obj/effect/spawner/random/armory/shotgun,
 /turf/open/floor/plating,
 /area/station/ai_monitored/security/armory)
 "iNL" = (
@@ -26665,8 +26650,8 @@
 "jWb" = (
 /obj/machinery/light/cold/directional/west,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/pdapainter/security,
 /obj/machinery/status_display/ai/directional/south,
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "jWd" = (
@@ -41671,16 +41656,8 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/gun/energy/disabler{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/disabler,
-/obj/item/gun/energy/disabler{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/item/radio/intercom/directional/west,
+/obj/effect/spawner/random/armory/disablers,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)
 "pox" = (
@@ -51144,24 +51121,10 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/obj/item/clothing/head/helmet/toggleable/riot{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/clothing/head/helmet/toggleable/riot{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/clothing/head/helmet/alt{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/clothing/head/helmet/alt{
-	pixel_x = -3;
-	pixel_y = -2
-	},
-/obj/item/gun/energy/e_gun/dragnet,
 /obj/machinery/light/cold/directional/south,
+/obj/effect/spawner/random/armory/riot_helmet,
+/obj/effect/spawner/random/armory/bulletproof_helmet,
+/obj/item/gun/energy/e_gun/dragnet,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)
 "skP" = (
@@ -54651,15 +54614,7 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/e_gun,
-/obj/item/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/effect/spawner/random/armory/e_gun,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)
 "trS" = (
@@ -58903,18 +58858,6 @@
 /obj/effect/turf_decal/siding/dark_red/corner{
 	dir = 8
 	},
-/obj/item/grenade/barrier{
-	pixel_x = 11;
-	pixel_y = 17
-	},
-/obj/item/grenade/barrier{
-	pixel_x = 2;
-	pixel_y = 11
-	},
-/obj/item/grenade/barrier{
-	pixel_x = 15;
-	pixel_y = 7
-	},
 /obj/machinery/light/cold/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname/directional/north,
@@ -60711,30 +60654,9 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/riot{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/clothing/suit/armor/riot{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_x = -3;
-	pixel_y = -2
-	},
-/obj/item/shield/riot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/shield/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/effect/spawner/random/armory/bulletproof_armor,
+/obj/effect/spawner/random/armory/riot_armor,
+/obj/effect/spawner/random/armory/riot_shield,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)
 "vpb" = (
@@ -64177,6 +64099,10 @@
 /obj/machinery/recharger{
 	pixel_x = 5;
 	pixel_y = 3
+	},
+/obj/item/storage/wallet/random{
+	pixel_x = -7;
+	pixel_y = 1
 	},
 /obj/item/assembly/flash/handheld{
 	pixel_x = -6;

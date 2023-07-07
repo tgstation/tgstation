@@ -531,6 +531,29 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.cure_trauma_type(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
 
+/datum/quirk/hemiplegic
+	name = "Hemiplegic"
+	desc = "Half of your body doesn't work. Nothing will ever fix this."
+	icon = FA_ICON_CIRCLE_HALF_STROKE
+	value = -10 // slightly more bearable than paraplegic but not by much
+	gain_text = null // Handled by trauma.
+	lose_text = null
+	medical_record_text = "Patient has an untreatable impairment in motor function on half of their body."
+	hardcore_value = 10
+	mail_goodies = list(
+		/obj/item/stack/sheet/mineral/uranium/half, //half a stack of a material that has a half life
+		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full,
+	)
+
+/datum/quirk/hemiplegic/add(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/trauma_type = pick(/datum/brain_trauma/severe/paralysis/hemiplegic/left, /datum/brain_trauma/severe/paralysis/hemiplegic/right)
+	human_holder.gain_trauma(trauma_type, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/hemiplegic/remove()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.cure_trauma_type(/datum/brain_trauma/severe/paralysis/hemiplegic, TRAUMA_RESILIENCE_ABSOLUTE)
+
 /datum/quirk/poor_aim
 	name = "Stormtrooper Aim"
 	desc = "You've never hit anything you were aiming for in your life."
@@ -865,7 +888,7 @@
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/junkie/process(seconds_per_tick)
-	if(HAS_TRAIT(quirk_holder, TRAIT_NOMETABOLISM))
+	if(HAS_TRAIT(quirk_holder, TRAIT_LIVERLESS_METABOLISM))
 		return
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(world.time > next_process)
@@ -888,6 +911,7 @@
 	icon = FA_ICON_SMOKING
 	value = -4
 	gain_text = span_danger("You could really go for a smoke right about now.")
+	lose_text = span_notice("You don't feel nearly as hooked to nicotine anymore.")
 	medical_record_text = "Patient is a current smoker."
 	reagent_type = /datum/reagent/drug/nicotine
 	accessory_type = /obj/item/lighter/greyscale
@@ -916,7 +940,7 @@
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
 	// smoker lungs have 25% less health and healing
 	var/obj/item/organ/internal/lungs/smoker_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if (smoker_lungs && !(smoker_lungs.organ_flags & ORGAN_SYNTHETIC)) // robotic lungs aren't affected
+	if(smoker_lungs && IS_ORGANIC_ORGAN(smoker_lungs)) // robotic lungs aren't affected
 		smoker_lungs.maxHealth = smoker_lungs.maxHealth * 0.75
 		smoker_lungs.healing_factor = smoker_lungs.healing_factor * 0.75
 
@@ -924,12 +948,80 @@
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/mask_item = human_holder.get_item_by_slot(ITEM_SLOT_MASK)
-	if (istype(mask_item, /obj/item/clothing/mask/cigarette))
+	if(istype(mask_item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/storage/fancy/cigarettes/cigarettes = drug_container_type
 		if(istype(mask_item, initial(cigarettes.spawn_type)))
 			quirk_holder.clear_mood_event("wrong_cigs")
-			return
-		quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
+		else
+			quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
+
+/datum/quirk/item_quirk/junkie/alcoholic
+	name = "Alcoholic"
+	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
+	icon = FA_ICON_WINE_GLASS
+	value = -4
+	gain_text = span_danger("You really need a drink.")
+	lose_text = span_notice("Alcohol doesn't seem nearly as enticing anymore.")
+	medical_record_text = "Patient is an alcoholic."
+	reagent_type = /datum/reagent/consumable/ethanol
+	drug_container_type = /obj/item/reagent_containers/cup/glass/bottle/whiskey
+	mob_trait = TRAIT_HEAVY_DRINKER
+	hardcore_value = 1
+	drug_flavour_text = "Make sure you get your favorite type of drink when you run out."
+	mail_goodies = list(
+		/obj/effect/spawner/random/food_or_drink/booze,
+		/obj/item/book/bible/booze,
+	)
+	/// Cached typepath of the owner's favorite alcohol reagent
+	var/datum/reagent/consumable/ethanol/favorite_alcohol
+
+/datum/quirk/item_quirk/junkie/alcoholic/New()
+	drug_container_type = pick(
+		/obj/item/reagent_containers/cup/glass/bottle/whiskey,
+		/obj/item/reagent_containers/cup/glass/bottle/vodka,
+		/obj/item/reagent_containers/cup/glass/bottle/ale,
+		/obj/item/reagent_containers/cup/glass/bottle/beer,
+		/obj/item/reagent_containers/cup/glass/bottle/hcider,
+		/obj/item/reagent_containers/cup/glass/bottle/wine,
+		/obj/item/reagent_containers/cup/glass/bottle/sake,
+	)
+
+	return ..()
+
+/datum/quirk/item_quirk/junkie/alcoholic/post_add()
+	. = ..()
+	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK, PROC_REF(check_brandy))
+
+	var/obj/item/reagent_containers/brandy_container = GLOB.alcohol_containers[drug_container_type]
+	if(isnull(brandy_container))
+		stack_trace("Alcoholic quirk added while the GLOB.alcohol_containers is (somehow) not initialized!")
+		brandy_container = new drug_container_type
+		favorite_alcohol = brandy_container.list_reagents[1]
+		qdel(brandy_container)
+	else
+		favorite_alcohol = brandy_container.list_reagents[1]
+
+	quirk_holder.add_mob_memory(/datum/memory/key/quirk_alcoholic, protagonist = quirk_holder, preferred_brandy = initial(favorite_alcohol.name))
+	// alcoholic livers have 25% less health and healing
+	var/obj/item/organ/internal/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(alcohol_liver && IS_ORGANIC_ORGAN(alcohol_liver)) // robotic livers aren't affected
+		alcohol_liver.maxHealth = alcohol_liver.maxHealth * 0.75
+		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75
+
+/datum/quirk/item_quirk/junkie/alcoholic/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK)
+
+/datum/quirk/item_quirk/junkie/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze)
+	SIGNAL_HANDLER
+
+	//we don't care if it is not alcohol
+	if(!istype(booze, /datum/reagent/consumable/ethanol))
+		return
+
+	if(istype(booze, favorite_alcohol))
+		quirk_holder.clear_mood_event("wrong_alcohol")
+	else
+		quirk_holder.add_mood_event("wrong_alcohol", /datum/mood_event/wrong_brandy)
 
 /datum/quirk/item_quirk/chronic_illness
 	name = "Chronic Illness"
@@ -946,7 +1038,7 @@
 	var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
 	quirk_holder.ForceContractDisease(hms)
 	give_item_to_holder(/obj/item/storage/pill_bottle/sansufentanyl, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK),flavour_text = "You've been provided with medication to help manage your condition. Take it regularly to avoid complications.")
-	give_item_to_holder(/obj/item/healthanalyzer/disease, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK))
+	give_item_to_holder(/obj/item/healthanalyzer/simple/disease, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK))
 
 /datum/quirk/unstable
 	name = "Unstable"
@@ -1175,10 +1267,10 @@
 	if(!istype(owner))
 		return
 	for(var/obj/item/bodypart/limb as anything in owner.bodyparts)
-		if(!IS_ORGANIC_LIMB(limb))
+		if(IS_ROBOTIC_LIMB(limb))
 			cybernetics_level++
 	for(var/obj/item/organ/organ as anything in owner.organs)
-		if((organ.organ_flags & ORGAN_SYNTHETIC || organ.status == ORGAN_ROBOTIC) && !(organ.organ_flags & ORGAN_HIDDEN))
+		if(IS_ROBOTIC_ORGAN(organ) && !(organ.organ_flags & ORGAN_HIDDEN))
 			cybernetics_level++
 	update_mood()
 
@@ -1189,25 +1281,25 @@
 
 /datum/quirk/body_purist/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER
-	if((new_organ.organ_flags & ORGAN_SYNTHETIC || new_organ.status == ORGAN_ROBOTIC) && !(new_organ.organ_flags & ORGAN_HIDDEN)) //why the fuck are there 2 of them
+	if(IS_ROBOTIC_ORGAN(new_organ) && !(new_organ.organ_flags & ORGAN_HIDDEN)) //why the fuck are there 2 of them
 		cybernetics_level++
 		update_mood()
 
 /datum/quirk/body_purist/proc/on_organ_lose(datum/source, obj/item/organ/old_organ, special)
 	SIGNAL_HANDLER
-	if((old_organ.organ_flags & ORGAN_SYNTHETIC || old_organ.status == ORGAN_ROBOTIC) && !(old_organ.organ_flags & ORGAN_HIDDEN))
+	if(IS_ROBOTIC_ORGAN(old_organ) && !(old_organ.organ_flags & ORGAN_HIDDEN))
 		cybernetics_level--
 		update_mood()
 
 /datum/quirk/body_purist/proc/on_limb_gain(datum/source, obj/item/bodypart/new_limb, special)
 	SIGNAL_HANDLER
-	if(!IS_ORGANIC_LIMB(new_limb))
+	if(IS_ROBOTIC_LIMB(new_limb))
 		cybernetics_level++
 		update_mood()
 
 /datum/quirk/body_purist/proc/on_limb_lose(datum/source, obj/item/bodypart/old_limb, special)
 	SIGNAL_HANDLER
-	if(!IS_ORGANIC_LIMB(old_limb))
+	if(IS_ROBOTIC_LIMB(old_limb))
 		cybernetics_level--
 		update_mood()
 

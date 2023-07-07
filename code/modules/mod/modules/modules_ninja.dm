@@ -287,52 +287,24 @@
 	empulse(src, heavy_range = 4, light_range = 6)
 	drain_power(use_power_cost)
 
-///Status Readout - Puts a lot of information including health, nutrition, fingerprints, temperature to the suit TGUI.
-/obj/item/mod/module/status_readout
-	name = "MOD status readout module"
-	desc = "A once-common module, this technology went unfortunately out of fashion; \
-		and right into the arachnid grip of the Spider Clan. This hooks into the suit's spine, \
-		capable of capturing and displaying all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
-		and even useful information such as their overall health and wellness."
-	icon_state = "status"
-	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
-	incompatible_modules = list(/obj/item/mod/module/status_readout)
-	tgui_id = "status_readout"
-
-/obj/item/mod/module/status_readout/add_ui_data()
-	. = ..()
-	.["statustime"] = station_time_timestamp()
-	.["statusid"] = GLOB.round_id
-	.["statushealth"] = mod.wearer?.health || 0
-	.["statusmaxhealth"] = mod.wearer?.getMaxHealth() || 0
-	.["statusbrute"] = mod.wearer?.getBruteLoss() || 0
-	.["statusburn"] = mod.wearer?.getFireLoss() || 0
-	.["statustoxin"] = mod.wearer?.getToxLoss() || 0
-	.["statusoxy"] = mod.wearer?.getOxyLoss() || 0
-	.["statustemp"] = mod.wearer?.bodytemperature || 0
-	.["statusnutrition"] = mod.wearer?.nutrition || 0
-	.["statusfingerprints"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
-	.["statusdna"] = mod.wearer?.dna.unique_enzymes
-	.["statusviruses"] = null
-	if(!length(mod.wearer?.diseases))
-		return
-	var/list/viruses = list()
-	for(var/datum/disease/virus as anything in mod.wearer.diseases)
-		var/list/virus_data = list()
-		virus_data["name"] = virus.name
-		virus_data["type"] = virus.spread_text
-		virus_data["stage"] = virus.stage
-		virus_data["maxstage"] = virus.max_stages
-		virus_data["cure"] = virus.cure_text
-		viruses += list(virus_data)
-	.["statusviruses"] = viruses
+/// Ninja Status Readout - Like the normal status display (see the base type), but with a clock.
+/obj/item/mod/module/status_readout/ninja
+	name = "MOD Spider Clan status readout module"
+	desc = "A once-common module, this technology unfortunately went out of fashion in the safer regions of space; \
+		and, according to the extra markings on this particular unit's casing, right into the arachnid grip of the Spider Clan. \
+		Like other similar units, this one hooks into the suit's spine, and is capable of capturing and displaying \
+		all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
+		and even useful information such as their overall health and wellness. This one comes with a clock that calibrates to the \
+		local system time, and an operational ID number display. The vital monitor's speaker has been removed."
+	show_time = TRUE
+	death_sound = null
+	death_sound_volume = null
 
 ///Energy Net - Ensnares enemies in a net that prevents movement.
 /obj/item/mod/module/energy_net
 	name = "MOD energy net module"
 	desc = "A custom-built net-thrower. While conventional implementations of this capturing device \
-		tilize monomolecular fibers or cutting razorwire, this uses hardlight technology to deploy a \
+		utilize monomolecular fibers or cutting razorwire, this uses hardlight technology to deploy a \
 		trapping field capable of immobilizing even the strongest opponents."
 	icon_state = "energy_net"
 	removable = FALSE
