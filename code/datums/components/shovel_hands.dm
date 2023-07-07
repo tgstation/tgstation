@@ -1,5 +1,6 @@
 /// This component lets mobs dig up the floor with their bare hands
 /datum/component/shovel_hands
+	dupe_mode = COMPONENT_DUPE_SOURCES
 	/// It's a lie, they're actually just using a shovel
 	var/obj/item/shovel/internal_shovel
 
@@ -13,13 +14,15 @@
 
 /datum/component/shovel_hands/RegisterWithParent()
 	. = ..()
-	RegisterSignals(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET), PROC_REF(dig))
+	RegisterSignals(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET), PROC_REF(dig))
 
 /datum/component/shovel_hands/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
+	UnregisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	return ..()
 
 /datum/component/shovel_hands/Destroy(force, silent)
+	if (internal_shovel)
+		UnregisterSignal(internal_shovel, COMSIG_QDELETING)
 	QDEL_NULL(internal_shovel)
 	return ..()
 
