@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(minor_mapping)
 		if(is_type_in_list(get_area(turf), blacklisted_area_types))
 			continue
 		//Replace the floor of the chosen turf with a random tile
-		turf.replace_floor(pick_weight(possible_replacement_tiles), flags = CHANGETURF_INHERIT_AIR)
+		turf.ChangeTurf(pick_weight(possible_replacement_tiles), flags = CHANGETURF_INHERIT_AIR)
 
 		var/obj/item/storage/backpack/satchel/flat/flat_satchel = new(turf)
 
