@@ -46,8 +46,8 @@
 	switch(mode)
 		if(MODE_MESON)
 			vision_flags = SEE_TURFS
-			color_cutoffs = list(15, 12, 0)
-			change_glass_color(user, /datum/client_colour/glass_colour/yellow)
+			color_cutoffs = list(5, 15, 5)
+			change_glass_color(user, /datum/client_colour/glass_colour/lightgreen)
 
 		if(MODE_TRAY) //undoes the last mode, meson
 			vision_flags = NONE
