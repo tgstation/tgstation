@@ -958,7 +958,7 @@
 		overlay.pixel_y += owner.top_offset
 	return overlays
 
-/// Returns the top_offset we should apply to our overlays in get_limb_icon()
+/// Returns the top_offset we should apply to our overlays after get_limb_icon(), useless if we don't have an owner
 /obj/item/bodypart/proc/get_applicable_top_offset()
 	var/top_offset = 0
 	if(ishuman(owner))
