@@ -163,7 +163,8 @@
 #define FLOOR_CLEAN_LAYER 2.55
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
-#define WATER_LEVEL_LAYER 2.64
+///Anything below this layer is to be considered completely (visually) under water by the immerse layer.
+#define WATER_LEVEL_LAYER 2.61
 #define BLASTDOOR_LAYER 2.65
 #define OPEN_DOOR_LAYER 2.7
 #define DOOR_ACCESS_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER, special layer used for /obj/effect/mapping_helpers/airlock/access

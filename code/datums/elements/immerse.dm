@@ -53,7 +53,7 @@
 	 * overlaying one mutable appearance with the blend multiply on another.
 	 * Well, the latter option doesn't work as neatly when ultimately added
 	 * to an atom with the KEEP_TOGETHER appearance flag, with the mask also
-	 * applying to said atom, when we don't want it to.
+	 * showing on said atom, while we don't want it to.
 	 */
 	var/icon/immerse_icon = generated_immerse_icons["[icon]-[icon_state]-[mask_icon]"]
 	if(!immerse_icon)
@@ -69,30 +69,37 @@
 	if(!HAS_TRAIT(target, TRAIT_IMMERSE_STOPPED))
 		start_immersion(target)
 
-/datum/element/immerse/proc/stop_immersion(turf/source)
-	SIGNAL_HANDLER
-	UnregisterSignal(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, COMSIG_ATOM_EXITED))
-	for(var/atom/movable/movable as anything in attached_turfs_and_movables[source])
-		remove_from_element(source, movable)
-	attached_turfs_and_movables -= source
-
-/datum/element/immerse/proc/start_immersion(turf/source)
-	SIGNAL_HANDLER
-	RegisterSignals(source, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON), PROC_REF(on_init_or_entered))
-	RegisterSignal(source, COMSIG_ATOM_EXITED, PROC_REF(on_atom_exited))
-	attached_turfs_and_movables += source
-	for(var/atom/movable/movable as anything in source)
-		on_init_or_entered(source, movable)
-
 /datum/element/immerse/Detach(turf/source)
 	UnregisterSignal(source, list(SIGNAL_ADDTRAIT(TRAIT_IMMERSE_STOPPED), SIGNAL_REMOVETRAIT(TRAIT_IMMERSE_STOPPED)))
 	if(!HAS_TRAIT(source, TRAIT_IMMERSE_STOPPED))
 		stop_immersion(source)
 	return ..()
 
+///Makes the element start affecting the turf and its contents. Called on Attach() or when TRAIT_IMMERSE_STOPPED is removed.
+/datum/element/immerse/proc/start_immersion(turf/source)
+	SIGNAL_HANDLER
+	RegisterSignals(source, list(COMSIG_ATOM_ABSTRACT_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON), PROC_REF(on_init_or_entered))
+	RegisterSignal(source, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(on_atom_exited))
+	attached_turfs_and_movables += source
+	for(var/atom/movable/movable as anything in source)
+		on_init_or_entered(source, movable)
+
+///Stops the element from affecting on the turf and its contents. Called on Detach() or when TRAIT_IMMERSE_STOPPED is added.
+/datum/element/immerse/proc/stop_immersion(turf/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, list(COMSIG_ATOM_ABSTRACT_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, COMSIG_ATOM_ABSTRACT_EXITED))
+	for(var/atom/movable/movable as anything in attached_turfs_and_movables[source])
+		remove_from_element(source, movable)
+	attached_turfs_and_movables -= source
+
+/**
+ * If the movable is within the right layers and planes, not in the list of movable types to ignore,
+ * or already affected by the element for that matter, Signals will be registered and,
+ * unless the movable (or whatever it's buckled to) is flying, it'll appear as if immersed in that water.
+ */
 /datum/element/immerse/proc/on_init_or_entered(turf/source, atom/movable/movable)
 	SIGNAL_HANDLER
-	if(!ISINRANGE_EX(movable.layer, WATER_LEVEL_LAYER, ABOVE_ALL_MOB_LAYER) || !ISINRANGE(movable.plane, FLOOR_PLANE, GAME_PLANE_UPPER_FOV_HIDDEN))
+	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, FLOOR_PLANE, GAME_PLANE_UPPER_FOV_HIDDEN))
 		return
 	if(HAS_TRAIT(movable, TRAIT_IMMERSED))
 		return
@@ -114,12 +121,23 @@
 	SIGNAL_HANDLER
 	remove_from_element(source.loc, source)
 
+/**
+ * The main proc, which adds a visual overlay to the movable that has entered the turf to make it look immersed.
+ * It's kind of iffy but basically, we want the overlay to cover as much area as needed to
+ * avoid the movable's icon from spilling horizontally or below.
+ * Also, while these visual overlays are mainly cached movables, for certain movables, such as living mobs,
+ * we want them to have their own unique vis overlay with additional signals registered.
+ * This allows the vis overlay to look more or less unchanged while its owner is spinning or resting
+ * without otherwise affecting other movables with identical overlays.
+ */
 /datum/element/immerse/proc/add_immerse_overlay(atom/movable/movable)
 	var/icon/movable_icon = icon(movable.icon)
 	var/width = movable_icon.Width() || world.icon_size
 	var/height = movable_icon.Height() || world.icon_size
 
-	var/atom/movable/immerse_overlay/vis_overlay = generated_visual_overlays["[width]x[height]"]
+	var/is_below_water = movable.layer < WATER_LEVEL_LAYER ? "underwater-" : ""
+
+	var/atom/movable/immerse_overlay/vis_overlay = generated_visual_overlays["[is_below_water][width]x[height]"]
 
 	if(!vis_overlay) //create the overlay if not already done.
 		vis_overlay = new(null, src)
@@ -140,7 +158,7 @@
 			underwater.pixel_y = -world.icon_size - extra_height
 			overlay_appearance.overlays += underwater
 
-			var/mutable_appearance/water_level = mutable_appearance(immerse_icon)
+			var/mutable_appearance/water_level = is_below_water ? underwater : mutable_appearance(immerse_icon)
 			water_level.pixel_x = world.icon_size * i - extra_width
 			water_level.pixel_y = -extra_height
 			overlay_appearance.overlays += water_level
@@ -154,7 +172,7 @@
 		vis_overlay.extra_height = extra_height
 		vis_overlay.overlay_appearance = overlay_appearance
 
-		generated_visual_overlays["[width]x[height]"] = vis_overlay
+		generated_visual_overlays["[is_below_water][width]x[height]"] = vis_overlay
 
 
 	ADD_KEEP_TOGETHER(movable, ELEMENT_TRAIT(src))
@@ -178,7 +196,7 @@
 
 	LAZYSET(immersed_movables, movable, vis_overlay)
 
-/// Remove the vis_overlay, the keep together trait and some signals from the movable
+///This proc removes the vis_overlay, the keep together trait and some signals from the movable.
 /datum/element/immerse/proc/remove_immerse_overlay(atom/movable/movable)
 	var/atom/movable/immerse_overlay/vis_overlay = LAZYACCESS(immersed_movables, movable)
 	if(!vis_overlay)
@@ -242,6 +260,10 @@
 		for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
 			add_immerse_overlay(buckled_mob)
 
+/**
+ * Called when a movable exits the turf. If its new location is not in the list of turfs with this element,
+ * Remove the movable from the element.
+ */
 /datum/element/immerse/proc/on_atom_exited(turf/source, atom/movable/exited, direction)
 	SIGNAL_HANDLER
 	if(!(exited.loc in attached_turfs_and_movables))
@@ -250,6 +272,7 @@
 		LAZYREMOVE(attached_turfs_and_movables[source], exited)
 		LAZYADD(attached_turfs_and_movables[exited.loc], exited)
 
+///Remove any signal, overlay, trait given to the movable and reference to it within the element.
 /datum/element/immerse/proc/remove_from_element(turf/source, atom/movable/movable)
 	var/atom/movable/buckled
 	if(isliving(movable))
@@ -261,7 +284,7 @@
 	REMOVE_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
 	LAZYREMOVE(attached_turfs_and_movables[source], movable)
 
-/// A band-aid to keep the overlay from scaling and rotating along with its owner
+/// A band-aid to keep the (unique) visual overlay from scaling and rotating along with its owner. I'm sorry.
 /datum/element/immerse/proc/on_update_transform(mob/living/source, resize, new_lying_angle, is_opposite_angle)
 	SIGNAL_HANDLER
 	var/matrix/new_transform = matrix()
@@ -306,12 +329,13 @@
 	animate(vis_overlay, transform = new_transform, pixel_x = new_x, pixel_y = new_y, time = UPDATE_TRANSFORM_ANIMATION_TIME, easing = (EASE_IN|EASE_OUT))
 	addtimer(CALLBACK(vis_overlay, TYPE_PROC_REF(/atom/movable/immerse_overlay, adjust_living_overlay_offset), source), UPDATE_TRANSFORM_ANIMATION_TIME)
 
+///Spin the overlay in the opposite direction so it doesn't look like it's spinning at all.
 /datum/element/immerse/proc/on_spin_animation(atom/source, speed, loops, segments, segment)
 	SIGNAL_HANDLER
 	var/atom/movable/immerse_overlay/vis_overlay = immersed_movables[source]
 	vis_overlay.transform.do_spin_animation(vis_overlay, speed, loops, segments, -segment)
 
-///Make sure to remove hard refs from the element.
+///We need to make sure to remove hard refs from the element when deleted.
 /datum/element/immerse/proc/clear_overlay_refs(atom/movable/immerse_overlay/source)
 	//Assume that every vis loc is also in the immersed_movables list
 	for(var/atom/movable/vis_loc as anything in source.vis_locs)
@@ -336,6 +360,7 @@
 	verbs.Cut() //"Cargo cultttttt" or something. Either way, they're better off without verbs.
 	element?.RegisterSignal(src, COMSIG_QDELETING, TYPE_PROC_REF(/datum/element/immerse, clear_overlay_refs))
 
+///Called by COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY for living mobs and a few procs from the immerse element.
 /atom/movable/immerse_overlay/proc/adjust_living_overlay_offset(mob/living/source)
 	pixel_x = extra_width
 	pixel_y = extra_height
