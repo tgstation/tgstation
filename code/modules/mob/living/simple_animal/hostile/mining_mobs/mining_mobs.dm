@@ -39,6 +39,7 @@
 		below_projectile_multiplier = 0.3,\
 		vulnerable_projectile_types = MINING_MOB_PROJECTILE_VULNERABILITY,\
 		minimum_thrown_force = 20,\
+		throw_blocked_message = throw_message,\
 	)
 
 	RegisterSignals(src, list(COMSIG_PROJECTILE_PREHIT, COMSIG_ATOM_PREHITBY), PROC_REF(Aggro))

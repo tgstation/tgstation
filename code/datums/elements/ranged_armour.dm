@@ -10,6 +10,8 @@
 	var/list/vulnerable_projectile_types
 	/// The minimum force a thrown object must have to ignore our armour
 	var/minimum_thrown_force
+	/// Message to output if throwing damage is absorbed
+	var/throw_blocked_message
 
 /datum/element/ranged_armour/Attach(
 	atom/target,
@@ -17,6 +19,7 @@
 	below_projectile_multiplier = 0,
 	list/vulnerable_projectile_types = list(),
 	minimum_thrown_force = 0,
+	throw_blocked_message = "bounces off"
 )
 	. = ..()
 	if (!isatom(target))
@@ -25,6 +28,7 @@
 	src.below_projectile_multiplier = below_projectile_multiplier
 	src.vulnerable_projectile_types = vulnerable_projectile_types
 	src.minimum_thrown_force = minimum_thrown_force
+	src.throw_blocked_message = throw_blocked_message
 
 	if (minimum_projectile_force > 0)
 		RegisterSignal(target, COMSIG_PROJECTILE_PREHIT, PROC_REF(pre_bullet_impact))
@@ -53,5 +57,5 @@
 		return
 	if (hit_atom.throwforce >= minimum_thrown_force)
 		return
-	parent.visible_message(span_danger("[parent] seems unharmed by [hit_atom]!"))
+	parent.visible_message(span_danger("[hit_atom] [throw_blocked_message] [parent]!"))
 	return COMSIG_HIT_PREVENTED

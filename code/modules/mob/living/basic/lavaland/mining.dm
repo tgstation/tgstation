@@ -5,10 +5,8 @@
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
-	// Pale purple, should be red enough to see stuff on lavaland
-	lighting_cutoff_red = 25
-	lighting_cutoff_green = 15
-	lighting_cutoff_blue = 35
+	/// Message to output if throwing damage is absorbed
+	var/throw_blocked_message = "bounces off"
 	/// What crusher trophy this mob drops, if any
 	var/crusher_loot
 	/// What is the chance the mob drops it if all their health was taken by crusher attacks
@@ -24,6 +22,7 @@
 		below_projectile_multiplier = 0.3,\
 		vulnerable_projectile_types = MINING_MOB_PROJECTILE_VULNERABILITY,\
 		minimum_thrown_force = 20,\
+		throw_blocked_message = throw_blocked_message,\
 	)
 	if(crusher_loot)
 		AddElement(\
