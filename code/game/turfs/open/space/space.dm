@@ -251,7 +251,7 @@
 
 /turf/open/space/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-	if(PERFORM_ALL_TESTS(focus_only/openspace_clear) && !SSmapping.get_turf_below(src))
+	if(PERFORM_ALL_TESTS(focus_only/openspace_clear) && !GET_TURF_BELOW(src))
 		stack_trace("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
 	icon_state = "pure_white"
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
@@ -265,7 +265,7 @@
 
 /turf/open/space/openspace/Destroy()
 	// Signals persist through destroy, GO HOME
-	var/turf/below = SSmapping.get_turf_below(src)
+	var/turf/below = GET_TURF_BELOW(src)
 	if(below)
 		UnregisterSignal(below, COMSIG_TURF_CHANGE)
 	return ..()
