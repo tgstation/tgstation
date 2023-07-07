@@ -57,7 +57,7 @@
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(tamed)))
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 100, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 	tentacles = new (src)
 	tentacles.Grant(src)
@@ -76,6 +76,11 @@
 /mob/living/basic/mining/goliath/Destroy()
 	QDEL_NULL(tentacles)
 	return ..()
+
+/mob/living/basic/mining/goliath/examine(mob/user)
+	. = ..()
+	if (saddled)
+		. += span_info("Someone appears to have attached a saddle to this one.")
 
 /mob/living/basic/mining/goliath/revive(full_heal_flags, excess_healing, force_grab_ghost)
 	. = ..()

@@ -27,12 +27,11 @@
 
 /datum/ai_behavior/basic_melee_attack/goliath/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
 	var/mob/living/target = controller.blackboard[target_key]
-	if (!isliving(target))
-		return ..()
-	var/datum/action/cooldown/using_action = controller.blackboard[BB_GOLIATH_TENTACLES]
-	if (using_action?.IsAvailable())
-		finish_action(controller, succeeded = FALSE)
-		return
+	if (isliving(target))
+		var/datum/action/cooldown/using_action = controller.blackboard[BB_GOLIATH_TENTACLES]
+		if (using_action?.IsAvailable())
+			finish_action(controller, succeeded = FALSE)
+			return
 	return ..()
 
 /datum/ai_planning_subtree/targeted_mob_ability/goliath_tentacles
