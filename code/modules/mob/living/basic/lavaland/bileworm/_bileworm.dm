@@ -20,6 +20,7 @@
 		/obj/item/stack/ore/gold = 2,
 	)
 	death_message = "seizes up and falls limp, slowly receeding into its burrow with a dying gurgle..."
+	throw_blocked_message = "is absorbed by the spongy hide of"
 
 	//it can't be dragged, just butcher it
 	move_resist = INFINITY
