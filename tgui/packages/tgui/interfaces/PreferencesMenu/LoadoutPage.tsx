@@ -1,5 +1,5 @@
 import { useBackend, useSharedState, useLocalState } from '../../backend';
-import { Box, Button, Section, Stack, Dropdown } from '../../components';
+import { Box, Button, Section, Stack, Dropdown, FitText } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { PreferencesMenuData, createSetPreference } from './data';
 import { NameInput } from './names';
@@ -11,7 +11,10 @@ const CLOTHING_SELECTION_CELL_SIZE = 64;
 const CLOTHING_SELECTION_WIDTH = 6.3;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
-const CharacterControls = (props: { handleRotate: () => void }) => {
+const CharacterControls = (props: {
+  handleRotate: () => void;
+  handleStore: () => void;
+}) => {
   return (
     <Stack>
       <Stack.Item>
@@ -23,13 +26,24 @@ const CharacterControls = (props: { handleRotate: () => void }) => {
           tooltipPosition="top"
         />
       </Stack.Item>
+      {props.handleStore && (
+        <Stack.Item>
+          <Button
+            onClick={props.handleStore}
+            fontSize="22px"
+            icon="sack-dollar"
+            tooltip="Show Store Menu"
+            tooltipPosition="top"
+          />
+        </Stack.Item>
+      )}
     </Stack>
   );
 };
 
 export const LoadoutManager = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
-  const { selected_loadout, loadout_tabs, user_is_donator } = data;
+  const { selected_loadout, loadout_tabs, user_is_donator, total_coins } = data;
   const [multiNameInputOpen, setMultiNameInputOpen] = useLocalState(
     context,
     'multiNameInputOpen',
@@ -49,11 +63,31 @@ export const LoadoutManager = (props, context) => {
       <Stack.Item fill>
         <Stack vertical fill>
           <Stack.Item>
-            <CharacterControls
-              handleRotate={() => {
-                act('rotate');
-              }}
-            />
+            <Stack horiztonal fill>
+              <Stack.Item>
+                <CharacterControls
+                  handleRotate={() => {
+                    act('rotate');
+                  }}
+                  handleStore={() => {
+                    act('open_store');
+                  }}
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  width={`${CLOTHING_CELL_SIZE * 2}px`}
+                  height="37px"
+                  fontSize="22px"
+                  icon="fa-solid fa-coins"
+                  align="center"
+                  tooltip="This is your total Monkecoin amount.">
+                  <FitText maxFontSize={22} maxWidth={CLOTHING_CELL_SIZE * 1}>
+                    {total_coins}
+                  </FitText>
+                </Button>
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
 
           <Stack.Item grow>

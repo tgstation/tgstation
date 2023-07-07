@@ -55,6 +55,7 @@
 	data["ismoth"] = istype(preferences.parent.prefs.read_preference(/datum/preference/choiced/species), /datum/species/moth) // Moth's humanflaticcon isn't the same dimensions for some reason
 	data["preivew_options"] = list(PREVIEW_PREF_JOB, PREVIEW_PREF_LOADOUT, PREVIEW_PREF_NAKED)
 	data["preview_selection"] = PREVIEW_PREF_JOB
+	data["total_coins"] = preferences.metacoins
 
 	return data
 

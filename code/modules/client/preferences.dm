@@ -208,6 +208,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	switch (action)
+		if ("update_body")
+			character_preview_view?.update_body()
 		if ("change_slot")
 			// Save existing character
 			save_character()
@@ -247,14 +249,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (istype(requested_preference, /datum/preference/name))
 				tainted_character_profiles = TRUE
 
-			return TRUE
-
-		if ("open_loadout")
-			if(parent.open_loadout_ui)
-				parent.open_loadout_ui.ui_interact(usr)
-			else
-				var/datum/loadout_manager/tgui = new(usr)
-				tgui.ui_interact(usr)
 			return TRUE
 
 		if ("open_store")
