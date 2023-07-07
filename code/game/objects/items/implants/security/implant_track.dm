@@ -31,10 +31,10 @@
 
 /obj/item/implant/tracking/Initialize(mapload)
 	. = ..()
-	GLOB.tracked_implants += src
+	GLOB.tracked_tracking_implants += src
 
 /obj/item/implant/tracking/Destroy()
-	GLOB.tracked_implants -= src
+	GLOB.tracked_tracking_implants -= src
 	return ..()
 
 /obj/item/implanter/tracking

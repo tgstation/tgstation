@@ -30,39 +30,55 @@
 			dat += "Space Law recommends quotas of 100 points per minute they would normally serve in the brig.<BR>"
 		else
 			dat += "<A href='?src=[REF(src)];id=insert'>Insert Prisoner ID.</A><br>"
+
 		dat += "<H3>Prisoner Implant Management</H3>"
+
 		dat += "<HR>Chemical Implants<BR>"
 		var/turf/current_turf = get_turf(src)
-		for(var/obj/item/implant/chem/C in GLOB.tracked_chem_implants)
-			var/turf/implant_turf = get_turf(C)
+		for(var/obj/item/implant/chem/chem_implant in GLOB.tracked_chem_implants)
+			var/turf/implant_turf = get_turf(chem_implant)
 			if(!is_valid_z_level(current_turf, implant_turf))
 				continue//Out of range
-			if(!C.imp_in)
+			if(!chem_implant.imp_in)
 				continue
-			dat += "ID: [C.imp_in.name] | Remaining Units: [C.reagents.total_volume] <BR>"
+			dat += "ID: [chem_implant.imp_in.name] | Remaining Units: [chem_implant.reagents.total_volume] <BR>"
 			dat += "| Inject: "
-			dat += "<A href='?src=[REF(src)];inject1=[REF(C)]'>(<font class='bad'>(1)</font>)</A>"
-			dat += "<A href='?src=[REF(src)];inject5=[REF(C)]'>(<font class='bad'>(5)</font>)</A>"
-			dat += "<A href='?src=[REF(src)];inject10=[REF(C)]'>(<font class='bad'>(10)</font>)</A><BR>"
+			dat += "<A href='?src=[REF(src)];inject1=[REF(chem_implant)]'>(<font class='bad'>(1)</font>)</A>"
+			dat += "<A href='?src=[REF(src)];inject5=[REF(chem_implant)]'>(<font class='bad'>(5)</font>)</A>"
+			dat += "<A href='?src=[REF(src)];inject10=[REF(chem_implant)]'>(<font class='bad'>(10)</font>)</A><BR>"
 			dat += "********************************<BR>"
+
 		dat += "<HR>Tracking Implants<BR>"
-		for(var/obj/item/implant/tracking/T in GLOB.tracked_implants)
-			if(!isliving(T.imp_in))
+		for(var/obj/item/implant/tracking/track_implant in GLOB.tracked_tracking_implants)
+			if(!isliving(track_implant.imp_in) || track_implant.imp_in.timeofdeath + track_implant.lifespan_postmortem < world.time)
 				continue
-			var/turf/implant_turf = get_turf(T)
+			var/turf/implant_turf = get_turf(track_implant)
 			if(!is_valid_z_level(current_turf, implant_turf))
-				continue//Out of range
+				continue //Out of range
 
 			var/loc_display = "Unknown"
-			var/mob/living/M = T.imp_in
-			if(is_station_level(implant_turf.z) && !isspaceturf(M.loc))
-				var/turf/mob_loc = get_turf(M)
+			var/mob/living/implanted_mob = track_implant.imp_in
+			if(is_station_level(implant_turf.z) && !isspaceturf(implanted_mob.loc))
+				var/turf/mob_loc = get_turf(implanted_mob)
 				loc_display = mob_loc.loc
 
-			dat += "ID: [T.imp_in.name] | Location: [loc_display]<BR>"
-			dat += "<A href='?src=[REF(src)];warn=[REF(T)]'>(<font class='bad'><i>Message Holder</i></font>)</A> |<BR>"
+			dat += "ID: [track_implant.imp_in.name] | Location: [loc_display]<BR>"
+			dat += "<A href='?src=[REF(src)];warn=[REF(track_implant)]'>(<font class='bad'><i>Message Holder</i></font>)</A> |<BR>"
 			dat += "********************************<BR>"
+
+		dat += "<HR>Beacon Implants<BR>"
+		for(var/obj/item/implant/beacon/beacon_implant in GLOB.tracked_beacon_implants)
+			var/turf/implant_turf = get_turf(beacon_implant)
+			var/mob/living/implanted_mob = beacon_implant.imp_in
+			dat += "ID: [beacon_implant.imp_in.name]<BR>"
+			if(!is_safe_turf(implant_turf))
+				dat += "(<font class='bad'><i>Implant carrier is in a hazardous environment</i></font>)BR>"
+			else
+				dat += "Implant carrier is safe to teleport to<BR>"
+			dat += "********************************<BR>"
+
 		dat += "<HR><A href='?src=[REF(src)];lock=1'>{Log Out}</A>"
+
 	var/datum/browser/popup = new(user, "computer", "Prisoner Management Console", 400, 500)
 	popup.set_content(dat)
 	popup.open()
@@ -126,7 +142,7 @@
 			var/warning = tgui_input_text(usr, "Enter your message here", "Messaging")
 			if(!warning)
 				return
-			var/obj/item/implant/I = locate(href_list["warn"]) in GLOB.tracked_implants
+			var/obj/item/implant/I = locate(href_list["warn"]) in GLOB.tracked_tracking_implants
 			if(I && istype(I) && I.imp_in)
 				var/mob/living/R = I.imp_in
 				to_chat(R, span_hear("You hear a voice in your head saying: '[warning]'"))

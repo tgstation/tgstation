@@ -1,7 +1,6 @@
 /obj/item/implant/beacon
 	name = "beacon implant"
 	desc = "Teleports things."
-	icon_state = "reagents" //change
 	actions_types = null
 	implant_flags = IMPLANT_TYPE_SECURITY
 	hud_icon_state = "hud_imp_beacon"
