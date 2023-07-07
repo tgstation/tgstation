@@ -1,5 +1,8 @@
 /datum/hud/new_player
-	inventory_shown = TRUE
+	///Whether the menu is currently on the client's screen or not
+	var/menu_hud_status = TRUE
+	///List of menu HUD elements that we hide when collapsing the menu
+	var/list/toggleable_elements = list()
 
 /datum/hud/new_player/New(mob/owner)
 	..()
@@ -15,19 +18,22 @@
 		var/atom/movable/screen/lobby/lobbyscreen = new button_type()
 		lobbyscreen.SlowInit()
 		lobbyscreen.hud = src
-		if(lobbyscreen.always_shown)
-			static_inventory += lobbyscreen
-		else
-			toggleable_inventory += lobbyscreen
+		static_inventory += lobbyscreen
+		if(!lobbyscreen.always_shown)
+			toggleable_elements += lobbyscreen
 		if(istype(lobbyscreen, /atom/movable/screen/lobby/button))
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
 			lobby_button.owner = REF(owner)
+
+/datum/hud/new_player/Destroy()
+	. = ..()
+	QDEL_LIST(toggleable_elements)
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_BUTTON_LAYER
 	screen_loc = "TOP,CENTER"
-	///Whether this HUD element is toggleable or not (show/hide)
+	///Whether this HUD element can be hidden from the client's screen or not
 	var/always_shown = FALSE
 
 /// Run sleeping actions after initialize
@@ -128,6 +134,7 @@
 	icon = 'icons/hud/lobby/ready.dmi'
 	icon_state = "not_ready"
 	base_icon_state = "not_ready"
+	///Whether we are readied up for the round or not
 	var/ready = FALSE
 
 /atom/movable/screen/lobby/button/ready/Initialize(mapload)
@@ -399,13 +406,14 @@
 	if(!.)
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
-	//whether we are currently showing the menu to the client or not
-	var/inventory_status = hud.inventory_shown
-	base_icon_state = inventory_status ? "expand" : "collapse"
-	name = "[inventory_status ? "Collapse" : "Expand"] Lobby Menu"
+	if(!istype(hud, /datum/hud/new_player))
+		return
+	var/datum/hud/new_player/our_hud = hud
+	base_icon_state = our_hud.menu_hud_status ? "expand" : "collapse"
+	name = "[our_hud.menu_hud_status ? "Collapse" : "Expand"] Lobby Menu"
 	set_button_status(FALSE)
 	//re-enable clicking the button when the shutter animation finishes
-	addtimer(CALLBACK(src, PROC_REF(set_button_status), TRUE), (2 * SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION))
+	addtimer(CALLBACK(src, PROC_REF(set_button_status), TRUE), (2 * SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION), TIMER_CLIENT_TIME)
 
 	//get the shutter object used by our hud
 	var/atom/movable/screen/lobby/shutter/menu_shutter = locate(/atom/movable/screen/lobby/shutter) in hud.static_inventory
@@ -414,11 +422,11 @@
 		for(var/atom/movable/screen/lobby/button/bottom/lobbyscreen in hud.static_inventory)
 			menu_shutter.bottom_buttons += lobbyscreen
 
-	addtimer(CALLBACK(src, PROC_REF(toggle_menu), new_player), SHUTTER_MOVEMENT_DURATION + 1) //ever so slightly after the shutter pulls down
+	addtimer(CALLBACK(src, PROC_REF(toggle_menu), new_player, our_hud), SHUTTER_MOVEMENT_DURATION + 1, TIMER_CLIENT_TIME) //ever so slightly after the shutter pulls down
 	//animate the shutter
 	menu_shutter.setup_shutter_animation()
 	//animate bottom buttons' movement
-	if(inventory_status)
+	if(our_hud.menu_hud_status)
 		menu_shutter.collapse_bottom_buttons()
 		collapse_button()
 	else
@@ -439,12 +447,12 @@
 	ce_button_matrix = matrix()
 
 ///Disables/enables menu buttons on the client's screen
-/atom/movable/screen/lobby/button/collapse/proc/toggle_menu(mob/dead/new_player/new_player)
-	if(hud.inventory_shown)
-		new_player.client.screen -= hud.toggleable_inventory
+/atom/movable/screen/lobby/button/collapse/proc/toggle_menu(mob/dead/new_player/new_player, datum/hud/new_player/our_hud)
+	if(our_hud.menu_hud_status)
+		new_player.client.screen -= our_hud.toggleable_elements
 	else
-		new_player.client.screen += hud.toggleable_inventory
-	hud.inventory_shown = !hud.inventory_shown
+		new_player.client.screen += our_hud.toggleable_elements
+	our_hud.menu_hud_status = !our_hud.menu_hud_status
 
 /atom/movable/screen/lobby/shutter
 	icon = 'icons/hud/lobby/shutter.dmi'
