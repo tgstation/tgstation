@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(minor_mapping)
 	///List of areas where satchels should not be placed.
 	var/list/blacklisted_area_types = list(
 		/area/station/holodeck,
-		/area/station/engineering/supermatter
+		/area/station/engineering/supermatter,
 		)
 
 	while(turfs.len && amount > 0)
