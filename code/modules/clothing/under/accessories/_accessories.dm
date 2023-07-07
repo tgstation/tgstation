@@ -58,7 +58,7 @@
 	plane = FLOAT_PLANE
 
 	if(minimize_when_attached)
-		transform *= 0.75
+		transform *= 0.5
 		// just randomize position
 		pixel_x = 0 + rand(4, -4)
 		pixel_y = 0 + rand(4, -4)
@@ -93,7 +93,7 @@
 		on_uniform_dropped(detach_from, dropped_from)
 
 	if(minimize_when_attached)
-		transform /= 0.75
+		transform *= 2
 		pixel_x -= 8
 		pixel_y += (8 + LAZYLEN(detach_from.attached_accessories) * 2)
 
