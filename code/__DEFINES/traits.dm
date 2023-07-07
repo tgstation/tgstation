@@ -285,8 +285,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
 #define TRAIT_FASTMED "fast_med_use"
-/// The mob is immune to all forms of magic
-#define TRAIT_ANTIMAGIC "anti_magic"
 /// The mob is holy and resistance to cult magic
 #define TRAIT_HOLY "holy"
 /// This mob is antimagic, and immune to spells / cannot cast spells

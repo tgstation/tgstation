@@ -113,10 +113,10 @@
 	antimagic_sources += parent
 
 	if((charges != INFINITY) && charge_cost > 0)
-		drain_antimagic?.Invoke(user, parent)
+		drain_antimagic?.Invoke(source, parent)
 		charges -= charge_cost
 		if(charges <= 0)
-			expiration?.Invoke(user, parent)
+			expiration?.Invoke(source, parent)
 
 	return COMPONENT_MAGIC_BLOCKED
 

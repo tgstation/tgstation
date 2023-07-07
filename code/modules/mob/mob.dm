@@ -997,6 +997,9 @@
 
 /// Called whenever a magic effect with a charge cost is blocked and we haven't recently blocked magic.
 /mob/proc/on_block_magic_effects(magic_flags, list/antimagic_sources)
+	return
+
+/mob/living/on_block_magic_effects(magic_flags, list/antimagic_sources)
 	ADD_TRAIT(src, TRAIT_RECENTLY_BLOCKED_MAGIC, MAGIC_TRAIT)
 	addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_RECENTLY_BLOCKED_MAGIC, MAGIC_TRAIT), 6 SECONDS)
 
@@ -1005,35 +1008,35 @@
 	var/atom/antimagic_source = length(antimagic_sources) ? pick(antimagic_sources) : src
 
 	if(magic_flags & MAGIC_RESISTANCE)
-		user.visible_message(
-			span_warning("[user] pulses red as [ismob(antimagic_source) ? user.p_they() : antimagic_source] absorbs magic energy!"),
+		visible_message(
+			span_warning("[src] pulses red as [ismob(antimagic_source) ? p_they() : antimagic_source] absorbs magic energy!"),
 			span_userdanger("An intense magical aura pulses around [ismob(antimagic_source) ? "you" : antimagic_source] as it dissipates into the air!"),
 		)
 		antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
 		antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
-		playsound(user, 'sound/magic/magic_block.ogg', 50, TRUE)
+		playsound(src, 'sound/magic/magic_block.ogg', 50, TRUE)
 
 	else if(magic_flags & MAGIC_RESISTANCE_HOLY)
-		user.visible_message(
-			span_warning("[user] starts to glow as [ismob(antimagic_source) ? user.p_they() : antimagic_source] emits a halo of light!"),
+		visible_message(
+			span_warning("[src] starts to glow as [ismob(antimagic_source) ? p_they() : antimagic_source] emits a halo of light!"),
 			span_userdanger("A feeling of warmth washes over [ismob(antimagic_source) ? "you" : antimagic_source] as rays of light surround your body and protect you!"),
 		)
 		antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 		antimagic_color = LIGHT_COLOR_HOLY_MAGIC
-		playsound(user, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
+		playsound(src, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
 
 	else if(magic_flags & MAGIC_RESISTANCE_MIND)
-		user.visible_message(
-			span_warning("[user] forehead shines as [ismob(antimagic_source) ? user.p_they() : antimagic_source] repulses magic from their mind!"),
+		visible_message(
+			span_warning("[src] forehead shines as [ismob(antimagic_source) ? p_they() : antimagic_source] repulses magic from their mind!"),
 			span_userdanger("A feeling of cold splashes on [ismob(antimagic_source) ? "you" : antimagic_source] as your forehead reflects magic usering your mind!"),
 		)
 		antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
 		antimagic_color = LIGHT_COLOR_DARK_BLUE
-		playsound(user, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
+		playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
 
-	user.mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
-	user.add_overlay(antimagic_effect)
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 5 SECONDS)
+	mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
+	add_overlay(antimagic_effect)
+	addtimer(CALLBACK(src, PROC_REF(cut_overlay), antimagic_effect), 5 SECONDS)
 
 /**
  * Buckle a living mob to this mob. Also turns you to face the other mob
