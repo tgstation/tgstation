@@ -42,10 +42,6 @@
 	real_name = newname
 	AddElement(/datum/element/waddling)
 
-/mob/living/basic/cluwne/Destroy()
-	. = ..()
-	UnregisterSignal(src, COMSIG_MOB_SAY)
-
 /mob/living/basic/cluwne/attack_hand()
 	. = ..()
 	playsound(src, 'sound/items/bikehorn.ogg', 25, 2)
@@ -65,7 +61,7 @@
 	spans |= SPAN_CLOWN
 
 	if(prob(5)) //the brain isn't fully gone yet...
-		message = pick("AAAAAAA!!", "END MY SUFFERING", "I CANT TAKE THIS ANYMORE!!" ,"SOMEBODY STOP ME!!")
+		message = pick("AAAAAAA!!", "END MY SUFFERING", "I CANT TAKE THIS ANYMORE!!", "SOMEBODY STOP ME!!")
 		return ..()
 
 	if(prob(25))

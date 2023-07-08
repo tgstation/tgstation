@@ -33,7 +33,7 @@
 
 /obj/item/clothing/mask/gas/cluwne/handle_speech(datum/source, list/speech_args)
 	if(prob(5)) //the brain isn't fully gone yet...
-		speech_args[SPEECH_MESSAGE] = pick("AAAAAAA!!", "END MY SUFFERING", "I CANT TAKE THIS ANYMORE!!" ,"SOMEBODY STOP ME!!")
+		speech_args[SPEECH_MESSAGE] = pick("AAAAAAA!!", "END MY SUFFERING", "I CANT TAKE THIS ANYMORE!!", "SOMEBODY STOP ME!!")
 		return SPEECH_MESSAGE
 
 	if(prob(25))
