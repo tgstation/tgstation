@@ -71,7 +71,7 @@
 	required_site_traits = list(EXPLORATION_SITE_HABITABLE,EXPLORATION_SITE_SURFACE)
 	band_values = list(EXOSCANNER_BAND_LIFE=2)
 	required_path = /obj/item/stock_parts/servo/nano
-	traded_path = list(/obj/item/seeds/tomato/killer,/obj/item/seeds/orange_3d,/obj/item/seeds/firelemon,/obj/item/seeds/gatfruit)
+	traded_path = list(/obj/item/seeds/tomato/killer, /obj/item/seeds/orange_3d, /obj/item/seeds/firelemon, /obj/item/seeds/gatfruit)
 	amount = 1
 
 /datum/exploration_event/simple/trader/fish
@@ -89,7 +89,7 @@
 	requires_translator = FALSE
 	required_site_traits = list(EXPLORATION_SITE_HABITABLE,EXPLORATION_SITE_CIVILIZED)
 	band_values = list(EXOSCANNER_BAND_LIFE=1)
-	required_path = list(/obj/item/organ/heart,/obj/item/organ/liver,/obj/item/organ/stomach,/obj/item/organ/eyes)
+	required_path = list(/obj/item/organ/heart, /obj/item/organ/liver, /obj/item/organ/stomach, /obj/item/organ/eyes)
 	traded_path = list(/obj/item/implanter/explosive)
 	amount = 1
 
@@ -98,7 +98,7 @@
 	deep_scan_description = "You decrypt a transmission advertising military surplus sale on the site."
 	required_site_traits = list(EXPLORATION_SITE_HABITABLE,EXPLORATION_SITE_CIVILIZED)
 	band_values = list(EXOSCANNER_BAND_LIFE=1)
-	required_path = list(/obj/item/clothing/suit/armor,/obj/item/clothing/shoes/jackboots)
+	required_path = list(/obj/item/clothing/suit/armor, /obj/item/clothing/shoes/jackboots)
 	traded_path = /obj/item/gun/energy/laser/retro/old
 	amount = 3
 
