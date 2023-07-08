@@ -857,7 +857,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 						continue
 					elligible_organs += organ
 				vomit(20, TRUE)
-				if(elligible_organs.len)
+				if(length(elligible_organs))
 					var/obj/item/organ/vomited_organ = pick(elligible_organs)
 					vomited_organ.Remove(src)
 					visible_message(span_danger("[src] vomits up [p_their()] [vomited_organ.name]!"), span_danger("You vomit up your [vomited_organ.name]")) //no "vomit up your heart"
