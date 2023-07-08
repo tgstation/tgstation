@@ -137,6 +137,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		//for reasons i don't want to know, this CAN be null!
 		if(receiver.dna.features[bodypart_overlay.feature_key])
 			bodypart_overlay.set_appearance_from_name(receiver.dna.features[bodypart_overlay.feature_key])
+		bodypart_overlay.inherit_color(limb)
 		bodypart_overlay.imprint_on_next_insertion = FALSE
 
 	// organs_slot must ALWAYS be ordered in the same way as organ_process_order
