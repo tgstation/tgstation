@@ -12,9 +12,10 @@
 	grind_results = null
 	wound_resistance = 10
 	bodypart_trait_source = CHEST_TRAIT
-	///The bodytype(s) allowed to attach to this chest.
+	/// The bodytype(s) allowed to attach to this chest.
 	var/acceptable_bodytype = BODYTYPE_HUMANOID
 
+	/// Current item inserted in the chest's cavity, if any
 	var/obj/item/cavity_item
 
 	/// Offset to apply to equipment worn as a uniform
