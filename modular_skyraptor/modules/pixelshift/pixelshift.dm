@@ -107,7 +107,7 @@
 
 /// Pre-pending pixelshift support to mob_movement's /client/Move because *genuinely why*
 /client/Move(new_loc, direct)
-	if(!(world.time < move_delay))
+	if(!(world.time < move_delay) && direct && new_loc)
 		if(mob.shifting)
 			mob.pixel_shift(direct)
 			return FALSE
