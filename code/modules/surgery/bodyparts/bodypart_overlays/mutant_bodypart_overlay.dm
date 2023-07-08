@@ -41,7 +41,7 @@
 			continue
 		valid_restyles += accessory_datum
 	//no restyles? this is fucked
-	if(!valid_restyles)
+	if(!length(valid_restyles))
 		CRASH("[type] had no available valid appearances on get_random_appearance()!")
 	return pick(valid_restyles)
 
