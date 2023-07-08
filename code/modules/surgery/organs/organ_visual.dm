@@ -62,7 +62,7 @@
 	if(bodypart_overlay)
 		if(bodypart_overlay.imprint_on_next_insertion)
 			. += span_info("Interesting... This organ has many stem cells, and will adapt to a new owner's DNA.")
-		else if(bodypart_overlay.sprite_datum?.name)
+		if(bodypart_overlay.sprite_datum?.name)
 			. += span_info("This organ has a \"<em>[bodypart_overlay.sprite_datum.name]</em>\" style.")
 
 	if(restyle_flags)
