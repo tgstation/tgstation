@@ -28,9 +28,12 @@ handles linking back and forth.
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(OnMultitool))
 
 	var/turf/T = get_turf(parent)
-	if (force_connect || (mapload && is_station_level(T.z)))
+	if(force_connect || (mapload && is_station_level(T.z)))
 		addtimer(CALLBACK(src, PROC_REF(LateInitialize)))
-	else if (allow_standalone)
+		src.allow_standalone = FALSE
+
+/datum/component/remote_materials/RegisterWithParent()
+	if(allow_standalone)
 		_MakeLocal()
 
 /datum/component/remote_materials/proc/LateInitialize()
@@ -50,8 +53,7 @@ handles linking back and forth.
 		mat_container = null
 	else if (mat_container)
 		// specify explicitly in case the other component is deleted first
-		var/atom/P = parent
-		mat_container.retrieve_all(P.drop_location())
+		mat_container.retrieve_all()
 		QDEL_NULL(mat_container)
 	return ..()
 
@@ -122,6 +124,7 @@ handles linking back and forth.
 			return COMPONENT_BLOCK_TOOL_ATTACK
 		if (silo)
 			silo.ore_connected_machines -= src
+			silo.holds -= src
 			silo.updateUsrDialog()
 		else if (mat_container)
 			mat_container.retrieve_all()

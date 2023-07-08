@@ -22,9 +22,6 @@
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/datum/design/cached_designs
 
-	/// The department this fabricator is assigned to.
-	var/department_tag = "Unassigned"
-
 	/// What color is this machine's stripe? Leave null to not have a stripe.
 	var/stripe_color = null
 
