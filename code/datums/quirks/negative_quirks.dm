@@ -684,16 +684,16 @@
 	var/obj/item/organ/prosthetic
 	switch(organ_slot)
 		if(ORGAN_SLOT_HEART)
-			prosthetic = new /obj/item/organ/internal/heart/cybernetic/surplus
+			prosthetic = new /obj/item/organ/heart/cybernetic/surplus
 			slot_string = "heart"
 		if(ORGAN_SLOT_LUNGS)
-			prosthetic = new /obj/item/organ/internal/lungs/cybernetic/surplus
+			prosthetic = new /obj/item/organ/lungs/cybernetic/surplus
 			slot_string = "lungs"
 		if(ORGAN_SLOT_LIVER)
-			prosthetic = new /obj/item/organ/internal/liver/cybernetic/surplus
+			prosthetic = new /obj/item/organ/liver/cybernetic/surplus
 			slot_string = "liver"
 		if(ORGAN_SLOT_STOMACH)
-			prosthetic = new /obj/item/organ/internal/stomach/cybernetic/surplus
+			prosthetic = new /obj/item/organ/stomach/cybernetic/surplus
 			slot_string = "stomach"
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic [slot_string]. \
 	<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
@@ -724,10 +724,10 @@
 /datum/quirk/tin_man/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/static/list/organ_slots = list(
-		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart/cybernetic/surplus,
-		ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs/cybernetic/surplus,
-		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver/cybernetic/surplus,
-		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach/cybernetic/surplus,
+		ORGAN_SLOT_HEART = /obj/item/organ/heart/cybernetic/surplus,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/lungs/cybernetic/surplus,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver/cybernetic/surplus,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach/cybernetic/surplus,
 	)
 	var/list/possible_organ_slots = organ_slots.Copy()
 	if(HAS_TRAIT(human_holder, TRAIT_NOBLOOD))
