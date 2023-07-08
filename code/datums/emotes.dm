@@ -294,10 +294,6 @@
 		CRASH("Someone passed nothing to manual_emote(), fix it")
 
 	log_message(text, LOG_EMOTE)
-
-	var/ghost_text = "<b>[src]</b> [text]"
-
-	var/origin_turf = get_turf(src)
 	visible_message(text, visible_message_flags = EMOTE_MESSAGE)
 	return TRUE
 
@@ -309,6 +305,8 @@
 		return FALSE
 	if (!client)
 		return TRUE
+	var/ghost_text = "<b>[src]</b> [text]"
+	var/origin_turf = get_turf(src)
 	for(var/mob/ghost as anything in GLOB.dead_mob_list)
 		if(!ghost.client || isnewplayer(ghost))
 			continue
