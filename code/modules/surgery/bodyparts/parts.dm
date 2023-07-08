@@ -80,23 +80,27 @@
 				underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 			if(!underwear.use_static)
 				underwear_overlay.color = human_owner.underwear_color
+			underwear_overlay.dir = image_dir
 			. += underwear_overlay
 
 	if(human_owner.undershirt)
 		var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[human_owner.undershirt]
 		if(undershirt)
-			var/mutable_appearance/working_shirt
+			var/mutable_appearance/shirt_overlay
 			if(is_dimorphic && limb_gender == "f")
-				working_shirt = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
+				shirt_overlay = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 			else
-				working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
-			. += working_shirt
+				shirt_overlay = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+			shirt_overlay.dir = image_dir
+			. += shirt_overlay
 
 	//handling socks here is not ideal and this should be moved to be handled by legs somehow, but that's for later i guess
 	if(human_owner.socks && (human_owner.num_legs >= 2) && !(human_owner.bodytype & BODYTYPE_DIGITIGRADE))
 		var/datum/sprite_accessory/socks/socks = GLOB.socks_list[human_owner.socks]
 		if(socks)
-			. += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+			var/mutable_appearance/socks_overlay =mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+			socks_overlay.dir = image_dir
+			. += socks_overlay
 
 	return .
 
