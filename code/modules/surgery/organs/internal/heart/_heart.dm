@@ -209,6 +209,37 @@
 	var/ramount = 10
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
+/obj/item/organ/internal/heart/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	// Some effects are byassed if our owner (should it exist) doesn't need a heart
+	var/owner_needs_us = owner?.needs_heart()
+
+	if(owner_needs_us && !COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		owner.set_dizzy_if_lower(20 SECONDS)
+		owner.losebreath += 10
+		COOLDOWN_START(src, severe_cooldown, 20 SECONDS)
+
+	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+		Stop()
+		addtimer(CALLBACK(src, PROC_REF(Restart)), 10 SECONDS)
+		if(owner_needs_us)
+			owner.visible_message(
+				span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"),
+				span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"),
+			)
+
+/obj/item/organ/internal/heart/cybernetic/on_life(seconds_per_tick, times_fired)
+	. = ..()
+	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
+		used_dose()
+
+/obj/item/organ/internal/heart/cybernetic/proc/used_dose()
+	owner.reagents.add_reagent(rid, ramount)
+	dose_available = FALSE
+
 /obj/item/organ/internal/heart/cybernetic/tier2
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
@@ -227,38 +258,23 @@
 	dose_available = TRUE
 	emp_vulnerability = 20
 
-/obj/item/organ/internal/heart/cybernetic/emp_act(severity)
-	. = ..()
-
-	// If the owner doesn't need a heart, we don't need to do anything with it.
-	if(!owner.needs_heart())
-		return
-
-	if(. & EMP_PROTECT_SELF)
-		return
-	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
-		owner.set_dizzy_if_lower(20 SECONDS)
-		owner.losebreath += 10
-		COOLDOWN_START(src, severe_cooldown, 20 SECONDS)
-	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
-		Stop()
-		owner.visible_message(span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"), \
-						span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
-		addtimer(CALLBACK(src, PROC_REF(Restart)), 10 SECONDS)
-
-/obj/item/organ/internal/heart/cybernetic/on_life(seconds_per_tick, times_fired)
-	. = ..()
-	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
-		used_dose()
-
-/obj/item/organ/internal/heart/cybernetic/proc/used_dose()
-	owner.reagents.add_reagent(rid, ramount)
-	dose_available = FALSE
-
 /obj/item/organ/internal/heart/cybernetic/tier3/used_dose()
 	. = ..()
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
+
+/obj/item/organ/internal/heart/cybernetic/surplus
+	name = "surplus prosthetic heart"
+	desc = "A fragile mockery of a human heart that resembles a water pump more than an actual heart. \
+		Offers no protection against EMPs."
+	icon_state = "heart-c-s-on"
+	base_icon_state = "heart-c-s"
+	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
+	emp_vulnerability = 100
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/heart/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_surgical_removal)
 
 /obj/item/organ/internal/heart/freedom
 	name = "heart of freedom"

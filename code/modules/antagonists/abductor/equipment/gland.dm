@@ -29,7 +29,7 @@
 
 /obj/item/organ/internal/heart/gland/examine(mob/user)
 	. = ..()
-	if((user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)) || isobserver(user))
+	if(HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_SCIENTIST_TRAINING) || isobserver(user))
 		. += span_notice("It is \a [abductor_hint]")
 
 /obj/item/organ/internal/heart/gland/proc/ownerCheck()

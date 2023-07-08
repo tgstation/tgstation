@@ -915,6 +915,8 @@
 	return
 
 /obj/item/organ/internal/cyberimp/arm/shard/katana
+	name = "dark shard"
+	desc = "An eerie metal shard surrounded by dark energies."
 	items_to_create = list(/obj/item/cursed_katana)
 
 /obj/item/organ/internal/cyberimp/arm/shard/katana/Retract()

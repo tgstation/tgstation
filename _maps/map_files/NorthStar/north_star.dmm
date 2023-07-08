@@ -109,9 +109,6 @@
 	},
 /obj/item/folder/blue,
 /obj/machinery/light/small/directional/west,
-/obj/item/hand_labeler{
-	pixel_y = 8
-	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hop)
 "aba" = (
@@ -10856,15 +10853,7 @@
 "cGI" = (
 /obj/structure/table,
 /obj/item/paper_bin/construction,
-/obj/item/pen/fountain{
-	pixel_x = -3;
-	pixel_y = -3
-	},
 /obj/item/pen/fountain,
-/obj/item/pen/fountain{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/hop)
 "cGQ" = (
@@ -11073,9 +11062,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/item/gun/energy/laser,
-/obj/item/gun/energy/laser,
-/obj/item/gun/energy/laser,
+/obj/effect/spawner/random/armory/laser_gun,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "cJh" = (
@@ -13127,16 +13114,8 @@
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/item/gun/energy/disabler{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/gun/energy/disabler,
-/obj/item/gun/energy/disabler{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/structure/cable,
+/obj/effect/spawner/random/armory/disablers,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "dnJ" = (
@@ -18194,6 +18173,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
 	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "eDe" = (
@@ -27456,28 +27436,13 @@
 /area/station/service/library)
 "hdK" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/riot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/shield/riot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/shield/riot,
-/obj/item/shield/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/spawner/random/armory/riot_armor,
+/obj/effect/spawner/random/armory/riot_helmet,
+/obj/effect/spawner/random/armory/riot_shield,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "hdL" = (
@@ -28058,8 +28023,6 @@
 /area/station/service/hydroponics)
 "hlG" = (
 /obj/structure/closet/mini_fridge{
-	desc = "A small contraption designed to imbue a few drinks with a pleasant chill.";
-	name = "mini-fridge";
 	pixel_x = 6;
 	pixel_y = 5
 	},
@@ -31166,13 +31129,7 @@
 "idM" = (
 /obj/structure/table,
 /obj/machinery/status_display/evac/directional/north,
-/obj/item/paper_bin/construction{
-	pixel_x = -6
-	},
-/obj/item/paper_bin,
-/obj/item/storage/box/pdas{
-	pixel_x = 10
-	},
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "iea" = (
@@ -33467,30 +33424,10 @@
 /area/station/maintenance/floor2/starboard/fore)
 "iKy" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/clothing/head/helmet/alt{
-	layer = 3.00001;
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/clothing/head/helmet/alt{
-	layer = 3.00001
-	},
-/obj/item/clothing/head/helmet/alt{
-	layer = 3.00001;
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/item/storage/secure/safe/directional/east,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/spawner/random/armory/bulletproof_armor,
+/obj/effect/spawner/random/armory/bulletproof_helmet,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "iKz" = (
@@ -39967,14 +39904,8 @@
 "kvk" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
-/obj/item/gun/ballistic/shotgun/riot,
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_y = 3
-	},
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_y = 6
-	},
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/spawner/random/armory/shotgun,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "kvw" = (
@@ -56328,27 +56259,11 @@
 /turf/open/openspace,
 /area/station/medical/psychology)
 "ozE" = (
-/obj/item/storage/box/rubbershot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/rubbershot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/storage/box/rubbershot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/structure/table/reinforced,
 /obj/structure/sign/poster/official/random/directional/south,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/spawner/random/armory/rubbershot,
+/obj/effect/spawner/random/armory/rubbershot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "ozF" = (
@@ -57229,25 +57144,13 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "oMn" = (
-/obj/item/grenade/barrier{
-	pixel_x = -3;
-	pixel_y = 1
-	},
-/obj/item/grenade/barrier,
-/obj/item/grenade/barrier{
-	pixel_x = 3;
-	pixel_y = -1
-	},
-/obj/item/grenade/barrier{
-	pixel_x = 6;
-	pixel_y = -2
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/camera/directional/south{
 	c_tag = "Armory - Interior"
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/cable,
+/obj/effect/spawner/random/armory/barrier_grenades,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "oMz" = (
@@ -57665,26 +57568,10 @@
 /area/station/science/lower)
 "oSf" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/vest{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/clothing/suit/armor/vest,
-/obj/item/clothing/suit/armor/vest{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/clothing/head/helmet/sec,
-/obj/item/clothing/head/helmet/sec{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/structure/sign/poster/official/random/directional/east,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/spawner/random/armory/bulletproof_armor,
+/obj/effect/spawner/random/armory/bulletproof_helmet,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "oSg" = (
@@ -63108,14 +62995,8 @@
 "qsN" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun,
-/obj/item/gun/energy/e_gun{
-	pixel_y = 3
-	},
-/obj/item/gun/energy/e_gun{
-	pixel_y = 6
-	},
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/spawner/random/armory/e_gun,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "qsP" = (
@@ -66703,11 +66584,6 @@
 /area/station/medical/paramedic)
 "rmm" = (
 /obj/structure/table,
-/obj/item/storage/box/ids{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/silver_ids,
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/requests_console/directional/north{
 	department = "Head of Personnel's Desk";
@@ -66716,6 +66592,9 @@
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/assistance,
+/obj/item/hand_labeler{
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "rmu" = (
@@ -76180,8 +76059,6 @@
 /area/station/cargo/sorting)
 "tSD" = (
 /obj/structure/closet/mini_fridge{
-	desc = "A small contraption designed to imbue a few drinks with a pleasant chill.";
-	name = "mini-fridge";
 	pixel_x = 6;
 	pixel_y = 5
 	},
