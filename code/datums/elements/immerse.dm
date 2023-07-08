@@ -27,7 +27,7 @@
 	var/color
 	var/alpha
 
-/datum/element/immerse/Attach(turf/target, icon, icon_state, mask_icon, color, alpha = 210)
+/datum/element/immerse/Attach(turf/target, icon, icon_state, mask_icon, color, alpha = 180)
 	. = ..()
 	if(!isturf(target) || !icon || !icon_state || !mask_icon)
 		return ELEMENT_INCOMPATIBLE
@@ -63,8 +63,8 @@
 		immerse_icon = fcopy_rsc(immerse_icon)
 		generated_immerse_icons["[icon]-[icon_state]-[mask_icon]"] = immerse_icon
 
-	RegisterSignals(target, SIGNAL_ADDTRAIT(TRAIT_IMMERSE_STOPPED), PROC_REF(stop_immersion))
-	RegisterSignals(target, SIGNAL_REMOVETRAIT(TRAIT_IMMERSE_STOPPED), PROC_REF(start_immersion))
+	RegisterSignal(target, SIGNAL_ADDTRAIT(TRAIT_IMMERSE_STOPPED), PROC_REF(stop_immersion))
+	RegisterSignal(target, SIGNAL_REMOVETRAIT(TRAIT_IMMERSE_STOPPED), PROC_REF(start_immersion))
 
 	if(!HAS_TRAIT(target, TRAIT_IMMERSE_STOPPED))
 		start_immersion(target)
@@ -99,7 +99,7 @@
  */
 /datum/element/immerse/proc/on_init_or_entered(turf/source, atom/movable/movable)
 	SIGNAL_HANDLER
-	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, FLOOR_PLANE, GAME_PLANE_UPPER_FOV_HIDDEN))
+	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE_UPPER_FOV_HIDDEN, source)))
 		return
 	if(HAS_TRAIT(movable, TRAIT_IMMERSED))
 		return
@@ -345,7 +345,7 @@
 
 ///The not-quite-perfect movable used by the immerse element for its nefarious deeds.
 /atom/movable/immerse_overlay
-	appearance_flags = RESET_TRANSFORM|RESET_COLOR|KEEP_TOGETHER
+	appearance_flags = RESET_TRANSFORM|RESET_COLOR|RESET_ALPHA|KEEP_TOGETHER
 	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_INSET_OVERLAY

@@ -4,7 +4,7 @@
  */
 /mob/living/proc/update_transform(resize = RESIZE_DEFAULT_SIZE)
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	var/final_pixel_y = pixel_y - body_position_pixel_y_offset
+	var/final_pixel_y = pixel_y
 	var/final_dir = dir
 	var/changed = FALSE
 

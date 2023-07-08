@@ -13,10 +13,11 @@
 	barefootstep = FOOTSTEP_WATER
 	clawfootstep = FOOTSTEP_WATER
 	heavyfootstep = FOOTSTEP_WATER
+	var/immerse_overlay_color = "#5AAA88"
 
 /turf/open/water/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/immerse, icon, icon_state, "submerge", "#88BBCC")
+	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color)
 
 /turf/open/water/jungle
 
@@ -28,6 +29,7 @@
 	icon_state = "water"
 	base_icon_state = "water"
 	baseturfs = /turf/open/water/beach
+	immerse_overlay_color = "#88AAAA"
 
 /turf/open/water/beach/Initialize(mapload)
 	. = ..()
