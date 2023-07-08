@@ -1,0 +1,6 @@
+author: "Toastgoats"
+delete-after: True
+changes:
+  - rscadd: "Adds the Lustrous, ethereal pirates in a big bluespace geode!"
+  - sound: "Unique scream sound for the Lustrous species."
+  - image: "Unique head icon for the Lustrous species."
