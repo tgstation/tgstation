@@ -16337,6 +16337,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
+"ert" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "erv" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -102252,7 +102259,7 @@ dQt
 iRL
 snQ
 iRL
-pjC
+ert
 twg
 dWn
 cWZ

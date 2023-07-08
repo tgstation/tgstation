@@ -32012,10 +32012,8 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/computer/order_console/cook{
-	dir = 8
-	},
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/vending/cigarette,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "lFq" = (
@@ -37742,7 +37740,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/structure/chair/stool/directional/east,
+/obj/machinery/computer/order_console/cook{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "nEC" = (
@@ -57281,7 +57281,7 @@
 "uEn" = (
 /obj/machinery/light/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/cigarette,
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "uEo" = (

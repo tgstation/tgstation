@@ -18184,6 +18184,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
 	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "eDe" = (
