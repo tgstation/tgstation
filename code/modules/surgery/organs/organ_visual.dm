@@ -53,6 +53,27 @@
 	if(update_appearance && use_mob_sprite_as_obj_sprite)
 		update_appearance()
 
+/// Returns an examine list about the visual elements of this organ.
+/obj/item/organ/proc/visuals_examine(mob/user)
+	RETURN_TYPE(/list)
+	. = list()
+	if(!HAS_MIND_TRAIT(user, TRAIT_ENTRAILS_READER) && !isobserver(user))
+		return .
+
+	if(bodypart_overlay.sprite_datum?.name)
+		. += span_info("This organ has a \"<em>[bodypart_overlay.sprite_datum.name]</em>\" style.")
+
+	if(restyle_flags)
+		var/list/restyle_tools = list()
+		if(restyle_flags & EXTERNAL_RESTYLE_PLANT)
+			restyle_tools += "<em>secateurs</em>"
+		if(restyle_flags & EXTERNAL_RESTYLE_FLESH)
+			restyle_tools += "<em>surgical tools</em>"
+		if(restyle_flags & EXTERNAL_RESTYLE_ENAMEL)
+			restyle_tools += "<em>files</em>"
+		if(length(restyle_tools))
+			. += span_info("This organ can be restyled with [english_list(restyle_tools)].")
+
 /// Update our features after something changed our appearance (if we have an attached DNA block)
 /obj/item/organ/proc/mutate_feature(features, mob/living/carbon/human/human)
 	if(!dna_block)

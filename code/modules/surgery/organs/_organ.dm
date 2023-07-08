@@ -367,19 +367,20 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	. = ..()
 
 	. += span_notice("It should be inserted in the [parse_zone(zone)].")
-
 	if(organ_flags & ORGAN_FAILING)
 		if(IS_ROBOTIC_ORGAN(src))
 			. += span_warning("[src] seems to be broken.")
 			return
 		. += span_warning("[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.")
-		return
-
-	if(damage > high_threshold)
+	else if(damage > high_threshold)
 		if(IS_ROBOTIC_ORGAN(src))
 			. += span_warning("[src] seems to be malfunctioning.")
 			return
 		. += span_warning("[src] is starting to look discolored.")
+
+	var/list/visuals_examine = visuals_examine()
+	if(length(visuals_examine))
+		. += visuals_examine
 
 ///Used as callbacks by object pooling
 /obj/item/organ/proc/exit_wardrobe()
