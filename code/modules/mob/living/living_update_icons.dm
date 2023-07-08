@@ -4,7 +4,7 @@
  */
 /mob/living/proc/update_transform(resize = RESIZE_DEFAULT_SIZE)
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	var/final_pixel_y = pixel_y
+	var/final_pixel_y = base_pixel_y + body_position_pixel_y_offset
 	var/final_dir = dir
 	var/changed = FALSE
 
@@ -13,7 +13,6 @@
 		ntransform.TurnTo(lying_prev, lying_angle)
 		if(lying_angle && lying_prev == 0 && dir & (EAST|WEST)) //Standing to lying and facing east or west
 			final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
-		final_pixel_y = base_pixel_y + body_position_pixel_y_offset
 
 	if(resize != RESIZE_DEFAULT_SIZE)
 		changed = TRUE
@@ -23,7 +22,7 @@
 		if(!lying_angle || !rotate_on_lying) //But not if the mob has been rotated.
 			//Make sure the body position y offset is also updated
 			body_position_pixel_y_offset = get_pixel_y_offset_standing(current_size)
-			final_pixel_y += body_position_pixel_y_offset
+			final_pixel_y = base_pixel_y + body_position_pixel_y_offset
 
 	if(!changed) //Nothing has been changed, nothing has to be done.
 		return
