@@ -47,6 +47,7 @@
 		bodypart_overlay.imprint_on_next_insertion = FALSE
 	else
 		bodypart_overlay.randomize_appearance()
+		bodypart_overlay.imprint_on_next_insertion = TRUE
 
 	if(use_mob_sprite_as_obj_sprite)
 		update_appearance()
