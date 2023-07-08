@@ -4992,7 +4992,6 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 4
 	},
-/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "bSm" = (
@@ -48885,16 +48884,11 @@
 	c_tag = "Head of Personnel's Office"
 	},
 /obj/structure/table/wood,
-/obj/item/storage/box/pdas{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/box/silver_ids,
-/obj/item/storage/box/ids,
 /obj/machinery/light/directional/south,
 /obj/item/papercutter{
 	pixel_x = -4
 	},
+/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "rJz" = (

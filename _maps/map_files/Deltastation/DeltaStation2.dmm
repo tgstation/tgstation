@@ -47719,7 +47719,6 @@
 	req_access = list("hop")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "lQV" = (
@@ -62665,7 +62664,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/item/paper/fluff/ids_for_dummies,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
@@ -63796,11 +63794,8 @@
 /area/station/command/heads_quarters/captain)
 "pXM" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/ids{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/silver_ids,
+/obj/item/papercutter,
+/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "pXW" = (
