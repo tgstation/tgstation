@@ -197,7 +197,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /**
  * Called after the organ is removed from a mob.
- * Removes Traits, Actions, and Status Effects on the mob in which the organ was impanted.
+ * Removes Traits, Actions, and Status Effects on the mob in which the organ was implanted.
  * Override this proc to create unique side-effects for removing your organ. Must be called by overrides.
  */
 /obj/item/organ/proc/on_remove(mob/living/carbon/organ_owner, special = FALSE)
