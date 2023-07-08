@@ -81,15 +81,15 @@
 /obj/item/greentext/Destroy(force)
 	LAZYREMOVE(SSticker.round_end_events, roundend_callback)
 	QDEL_NULL(roundend_callback) //This ought to free the callback datum, and prevent us from harddeling
-	for(var/mob/all_player_mobs as anything in GLOB.player_list)
+	for(var/mob/player as anything in GLOB.player_list)
 		var/message = "<span class='warning'>A dark temptation has passed from this world"
-		if(all_player_mobs in color_altered_mobs)
+		if(player in color_altered_mobs)
 			message += " and you're finally able to forgive yourself"
-			if(all_player_mobs.color == "#ff0000" || all_player_mobs.color == "#00ff00")
-				all_player_mobs.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+			if(player.color == "#ff0000" || player.color == "#00ff00")
+				player.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 		message += "...</span>"
 		if(!quiet)
-			to_chat(all_player_mobs, message)
+			to_chat(player, message)
 	return ..()
 
 /obj/item/greentext/proc/check_winner()
