@@ -4244,7 +4244,6 @@
 #include "code\modules\mob\living\simple_animal\friendly\cat.dm"
 #include "code\modules\mob\living\simple_animal\friendly\crab.dm"
 #include "code\modules\mob\living\simple_animal\friendly\farm_animals.dm"
-#include "code\modules\mob\living\simple_animal\friendly\fox.dm"
 #include "code\modules\mob\living\simple_animal\friendly\gondola.dm"
 #include "code\modules\mob\living\simple_animal\friendly\penguin.dm"
 #include "code\modules\mob\living\simple_animal\friendly\pet.dm"
