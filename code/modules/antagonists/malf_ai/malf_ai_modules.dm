@@ -1129,7 +1129,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/ai_module/utility/core_tilt
 	name = "Rolling Servos"
 	description = "Allows you to slowly roll around, crushing anything in your way with your bulk."
-	cost = 20
+	cost = 10
 	one_purchase = FALSE
 	power_type = /datum/action/innate/ai/ranged/core_tilt
 	unlock_sound = 'sound/effects/bang.ogg'
