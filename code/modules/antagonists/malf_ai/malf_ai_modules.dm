@@ -1078,7 +1078,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/picked_dir_string = show_radial_menu(ai_caller, clicked_vendor, GLOB.all_radial_directions, custom_check = CALLBACK(src, PROC_REF(radial_check), caller, clicked_vendor))
 	if (isnull(picked_dir_string))
 		return FALSE
-	var/picked_dir = get_dir_from_string(picked_dir_string)
+	var/picked_dir = text2dir(picked_dir_string)
 
 	var/turf/target = get_step(clicked_vendor, picked_dir)
 	if (!ai_caller.can_see(target))
