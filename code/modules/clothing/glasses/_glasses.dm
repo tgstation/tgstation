@@ -624,10 +624,10 @@
 	. = ..()
 	if(ishuman(user))
 		if(xray)
-			vision_flags -= SEE_MOBS|SEE_OBJS
+			vision_flags &= ~SEE_MOBS|SEE_OBJS
 			REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		else
-			vision_flags += SEE_MOBS|SEE_OBJS
+			vision_flags |= SEE_MOBS|SEE_OBJS
 			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		xray = !xray
 		var/mob/living/carbon/human/H = user
