@@ -73,7 +73,9 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 			my_head.remove_bodypart_overlay(bodypart_overlay)
 			if(!my_head.owner)
 				my_head.update_icon_dropped()
+			QDEL_NULL(bodypart_overlay)
 		UnregisterSignal(my_head, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING))
+		my_head = null
 	if(iscarbon(parent))
 		var/mob/living/carbon/carbon_parent = parent
 		carbon_parent.clear_mood_event("creampie")
@@ -82,6 +84,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 		var/atom/atom_parent = parent
 		UnregisterSignal(atom_parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 		atom_parent.update_appearance()
+		normal_overlay = null
 
 ///Callback to remove pieface
 /datum/component/creamed/proc/clean_up(datum/source, clean_types)
