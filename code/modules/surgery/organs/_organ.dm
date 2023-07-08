@@ -381,7 +381,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			return
 		. += span_warning("[src] is starting to look discolored.")
 
-	var/list/visuals_examine = visuals_examine()
+	var/list/visuals_examine = visuals_examine(user)
 	if(length(visuals_examine))
 		. += visuals_examine
 
