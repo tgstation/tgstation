@@ -66,7 +66,7 @@
 	if(!(bodytype & BODYTYPE_HUMANOID) || !ishuman(owner) || HAS_TRAIT(owner, TRAIT_NO_UNDERWEAR))
 		return .
 
-	var/mob/living/carbon/human/human_owner
+	var/mob/living/carbon/human/human_owner = owner
 	var/atom/location = loc || owner || src
 	var/image_dir = (dropped ? SOUTH : NONE)
 
