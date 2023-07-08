@@ -956,7 +956,7 @@
 /// Applies the current top_offset of the owner to a given list of overlays if necessary, and returns the modified list
 /obj/item/bodypart/proc/apply_top_offset(list/overlays)
 	var/applied_top_offset = get_applicable_top_offset()
-	for(var/image/overlay in overlays)
+	for(var/image/overlay as anything in overlays)
 		overlay.pixel_y += applied_top_offset
 	return overlays
 
