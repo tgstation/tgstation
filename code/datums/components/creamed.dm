@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 /datum/component/creamed
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// Creampie overlay we use for non-carbon mobs
-	var/mutable_appearance/creamface
+	var/mutable_appearance/normal_overlay
 	/// Creampie bodypart overlay we use for carbon mobs
 	var/datum/bodypart_overlay/simple/creampie/bodypart_overlay
 	/// Cached head for carbons, to ensure proper removal of the creampie overlay
@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 /datum/component/creamed/Destroy(force)
 	. = ..()
-	creamface = null
+	normal_overlay = null
 	my_head = null
 	QDEL_NULL(bodypart_overlay)
 
@@ -50,16 +50,16 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 		carbon_parent.add_mood_event("creampie", /datum/mood_event/creampie)
 		carbon_parent.update_body_parts()
 	else if(iscorgi(parent))
-		creamface = mutable_appearance('icons/effects/creampie.dmi', "creampie_corgi")
+		normal_overlay = mutable_appearance('icons/effects/creampie.dmi', "creampie_corgi")
 	else if(isAI(parent))
-		creamface = mutable_appearance('icons/effects/creampie.dmi', "creampie_ai")
+		normal_overlay = mutable_appearance('icons/effects/creampie.dmi', "creampie_ai")
 
 	RegisterSignals(parent, list(
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_COMPONENT_CLEAN_FACE_ACT),
 		PROC_REF(clean_up)
 	)
-	if(creamface)
+	if(normal_overlay)
 		var/atom/atom_parent = parent
 		RegisterSignal(atom_parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_overlays))
 		atom_parent.update_appearance()
@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 		var/mob/living/carbon/carbon_parent = parent
 		carbon_parent.clear_mood_event("creampie")
 		carbon_parent.update_body_parts()
-	if(creamface)
+	if(normal_overlay)
 		var/atom/atom_parent = parent
 		UnregisterSignal(atom_parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 		atom_parent.update_appearance()
@@ -91,12 +91,12 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	qdel(src)
 	return COMPONENT_CLEANED
 
-/// Ensures creamface overlay in case the mob is not a carbon
+/// Ensures normal_overlay overlay in case the mob is not a carbon
 /datum/component/creamed/proc/update_overlays(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
-	if(creamface)
-		overlays += creamface
+	if(normal_overlay)
+		overlays += normal_overlay
 
 /// Removes creampie when the head gets dismembered
 /datum/component/creamed/proc/lost_head(obj/item/bodypart/source, mob/living/carbon/owner, dismembered)
