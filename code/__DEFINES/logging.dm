@@ -101,7 +101,7 @@
 #define LOG_CATEGORY_SILO "silo"
 #define LOG_CATEGORY_SIGNAL "signal"
 #define LOG_CATEGORY_SPEECH_INDICATOR "speech-indiciator"
-#define LOG_CATEGORY_SUSPICIOUS_LOGIN "supicious-login"
+#define LOG_CATEGORY_SUSPICIOUS_LOGIN "suspicious_logins"
 #define LOG_CATEGORY_TARGET_ZONE_SWITCH "target-zone-switch"
 #define LOG_CATEGORY_TELECOMMS "telecomms"
 #define LOG_CATEGORY_TOOL "tool"
