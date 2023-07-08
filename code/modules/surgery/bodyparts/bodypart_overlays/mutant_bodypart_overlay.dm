@@ -25,16 +25,17 @@
 
 ///Grab a random sprite
 /datum/bodypart_overlay/mutant/proc/randomize_sprite()
-	sprite_datum = get_random_appearance()
+	sprite_datum = get_random_sprite_accessory()
 
-///Grab a random appearance datum (thats not locked)
-/datum/bodypart_overlay/mutant/proc/get_random_appearance()
+///Grab a random sprite accessory datum (thats not locked)
+/datum/bodypart_overlay/mutant/proc/get_random_sprite_accessory()
 	var/list/valid_restyles = list()
 	var/list/feature_list = get_global_feature_list()
 	for(var/accessory in feature_list)
 		var/datum/sprite_accessory/accessory_datum = feature_list[accessory]
 		//locked is for stuff that shouldn't appear here
 		//nameless sprite accessories are not valid for mutant bodypart overlays
+		//SPRITE_ACCESSORY_NONE is not valid for mutant bodypart overlays
 		if(initial(accessory_datum.locked) || \
 			!initial(accessory_datum.name) || \
 			(initial(accessory_datum.name) == SPRITE_ACCESSORY_NONE))
