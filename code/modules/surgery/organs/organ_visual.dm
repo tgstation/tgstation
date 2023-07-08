@@ -58,8 +58,11 @@
 	if(!HAS_MIND_TRAIT(user, TRAIT_ENTRAILS_READER) && !isobserver(user))
 		return .
 
-	if(bodypart_overlay.sprite_datum?.name)
-		. += span_info("This organ has a \"<em>[bodypart_overlay.sprite_datum.name]</em>\" style.")
+	if(bodypart_overlay)
+		if(bodypart_overlay.imprint_on_next_insertion)
+			. += span_info("Interesting... This organ has many stem cells, and will adapt to a new owner's DNA.")
+		else if(bodypart_overlay.sprite_datum?.name)
+			. += span_info("This organ has a \"<em>[bodypart_overlay.sprite_datum.name]</em>\" style.")
 
 	if(restyle_flags)
 		var/list/restyle_tools = list()
