@@ -1,5 +1,6 @@
 /obj/item/organ
 	name = "organ"
+	desc = "A completely unidentifiable organ. Uhhh... Make a bug report, pretty please?"
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
