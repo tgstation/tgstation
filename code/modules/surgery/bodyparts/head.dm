@@ -191,16 +191,19 @@
 
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
-	real_name = owner.real_name
-	if(HAS_TRAIT(owner, TRAIT_HUSK))
-		real_name = "Unknown"
+	if(owner)
+		real_name = owner.real_name
+		if(HAS_TRAIT(owner, TRAIT_HUSK))
+			real_name = "Unknown"
 	update_hair_and_lips(dropping_limb, is_creating)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/item/bodypart/head/get_limb_icon(dropped)
 	. = ..()
-
+	// husks don't get any of the fancy stuff
+	if(is_husked)
+		return .
 	. += get_hair_and_lips_icon(dropped)
 	// We need to get the eyes if we are dropped (ugh)
 	if(dropped)
@@ -230,7 +233,7 @@
 			worn_face_offset?.apply_offset(no_eyes)
 			. += no_eyes
 
-	return
+	return .
 
 /obj/item/bodypart/head/talk_into(mob/holder, message, channel, spans, datum/language/language, list/message_mods)
 	var/mob/headholder = holder

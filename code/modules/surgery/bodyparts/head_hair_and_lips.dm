@@ -80,9 +80,7 @@
 	. = list()
 
 	var/atom/location = loc || owner || src
-	var/image_dir = NONE
-	if(dropped)
-		image_dir = SOUTH
+	var/image_dir = (dropped ? SOUTH : NONE)
 
 	var/datum/sprite_accessory/sprite_accessory
 	if(!facial_hair_hidden && lip_style && (head_flags & HEAD_LIPS))

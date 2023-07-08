@@ -631,6 +631,32 @@
 
 	return .
 
+/obj/item/bodypart/chest/generate_icon_key()
+	. = ..()
+	if(!(bodytype & BODYTYPE_HUMANOID) || !ishuman(owner) || HAS_TRAIT(owner, TRAIT_NO_UNDERWEAR))
+		return .
+
+	var/mob/living/carbon/human/human_owner = owner
+	. += "-[human_owner.underwear]"
+	. += "-[human_owner.underwear_color]"
+	. += "-[human_owner.undershirt]"
+	. += "-[human_owner.socks]"
+
+	return .
+
+/obj/item/bodypart/chest/generate_husk_key()
+	. = ..()
+	if(!(bodytype & BODYTYPE_HUMANOID) || !ishuman(owner) || HAS_TRAIT(owner, TRAIT_NO_UNDERWEAR))
+		return .
+
+	var/mob/living/carbon/human/human_owner = owner
+	. += "-[human_owner.underwear]"
+	. += "-[human_owner.underwear_color]"
+	. += "-[human_owner.undershirt]"
+	. += "-[human_owner.socks]"
+
+	return .
+
 GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
 
 /**

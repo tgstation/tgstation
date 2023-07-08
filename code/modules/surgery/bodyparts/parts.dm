@@ -1,4 +1,3 @@
-
 /obj/item/bodypart/chest
 	name = BODY_ZONE_CHEST
 	desc = "It's impolite to stare at a person's chest."
@@ -54,6 +53,52 @@
 		cavity_item.forceMove(drop_location())
 		cavity_item = null
 	..()
+
+/obj/item/bodypart/chest/get_limb_icon(dropped)
+	. = ..()
+	. += get_underwear_icon(dropped)
+	return .
+
+/obj/item/bodypart/chest/proc/get_underwear_icon(dropped)
+	SHOULD_CALL_PARENT(TRUE)
+	RETURN_TYPE(/list)
+	. = list()
+	if(!(bodytype & BODYTYPE_HUMANOID) || !ishuman(owner) || HAS_TRAIT(owner, TRAIT_NO_UNDERWEAR))
+		return .
+
+	var/mob/living/carbon/human/human_owner
+	var/atom/location = loc || owner || src
+	var/image_dir = (dropped ? SOUTH : NONE)
+
+	if(human_owner.underwear)
+		var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[human_owner.underwear]
+		var/mutable_appearance/underwear_overlay
+		if(underwear)
+			if(is_dimorphic && limb_gender == "f" && (underwear.gender == MALE))
+				underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
+			else
+				underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
+			if(!underwear.use_static)
+				underwear_overlay.color = human_owner.underwear_color
+			. += underwear_overlay
+
+	if(human_owner.undershirt)
+		var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[human_owner.undershirt]
+		if(undershirt)
+			var/mutable_appearance/working_shirt
+			if(is_dimorphic && limb_gender == "f")
+				working_shirt = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
+			else
+				working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+			. += working_shirt
+
+	//handling socks here is not ideal and this should be moved to be handled by legs somehow, but that's for later i guess
+	if(human_owner.socks && (human_owner.num_legs >= 2) && !(human_owner.bodytype & BODYTYPE_DIGITIGRADE))
+		var/datum/sprite_accessory/socks/socks = GLOB.socks_list[human_owner.socks]
+		if(socks)
+			. += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+
+	return .
 
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
