@@ -3,7 +3,7 @@
 
 #define VENDOR_TIPPING_USES 8
 #define MALF_VENDOR_TIPPING_TIME 0.5 SECONDS //within human reaction time
-#define MALF_VENDOR_TIPPING_CRIT_CHANCE 10 //percent
+#define MALF_VENDOR_TIPPING_CRIT_CHANCE 100 //percent - guaranteed
 
 #define MALF_AI_ROLL_TIME 0.5 SECONDS
 #define MALF_AI_ROLL_COOLDOWN 1 SECONDS + MALF_AI_ROLL_TIME
@@ -1105,7 +1105,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if (vendor.tilted || !vendor.tiltable)
 		return FALSE
 
-	var/crit = (rand(1, 100) >= (100 - MALF_VENDOR_TIPPING_CRIT_CHANCE)) //mimicks vendor chances
+	var/crit = (rand(1, 100) >= (100 - MALF_VENDOR_TIPPING_CRIT_CHANCE)) // 100% chance with current defines
 
 	vendor.tilt(target, crit)
 
