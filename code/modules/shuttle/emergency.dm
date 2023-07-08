@@ -328,7 +328,6 @@
 	. = ..()
 
 /obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, area/signal_origin, reason, red_alert, set_coefficient=null, silent=FALSE) /// SKYRAPTOR ADDITION: silent mode for autotransfer
-	to_chat(world, "SKYRAPTOR DEBUG: shuttle requested")
 	if(!isnum(set_coefficient))
 		var/security_num = SSsecurity_level.get_current_level_as_number()
 		switch(security_num)
@@ -339,16 +338,13 @@
 			else
 				set_coefficient = 0.5
 	var/call_time = SSshuttle.emergency_call_time * set_coefficient * engine_coeff
-	to_chat(world, "SKYRAPTOR DEBUG: call time should be [call_time]")
 	switch(mode)
 		// The shuttle can not normally be called while "recalling", so
 		// if this proc is called, it's via admin fiat
 		if(SHUTTLE_RECALL, SHUTTLE_IDLE, SHUTTLE_CALL)
 			mode = SHUTTLE_CALL
 			setTimer(call_time)
-			to_chat(world, "SKYRAPTOR DEBUG: timer was set")
 		else
-			to_chat(world, "SKYRAPTOR DEBUG: timer not set, something's fucked up!")
 			return
 
 	SSshuttle.emergencyCallAmount++
