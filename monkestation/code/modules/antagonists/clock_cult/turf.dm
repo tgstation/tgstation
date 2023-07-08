@@ -51,6 +51,10 @@
 		if(prob(40))
 			new /obj/structure/lattice/clockwork(src)
 
+//edge of the reebe map
+/turf/open/indestructible/reebe_void/void_edge
+	icon_state = "reebespawn"
+
 /turf/open/indestructible/reebe_flooring //used on reebe
 	name = "clockwork floor"
 	desc = "You feel a faint warmth from below it."
@@ -220,7 +224,7 @@
 		icon = 'monkestation/icons/obj/clock_cult/lattice_clockwork.dmi'
 		pixel_x = 0
 		pixel_y = 0
-		return TRUE
+	return TRUE
 
 /obj/structure/lattice/catwalk/clockwork
 	name = "clockwork catwalk"
@@ -228,7 +232,7 @@
 	icon_state = "catwalk_clockwork-0"
 	base_icon_state = "catwalk_clockwork"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CATWALK + SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_OPEN_FLOOR
+	smoothing_groups = SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_CATWALK + SMOOTH_GROUP_OPEN_FLOOR
 	canSmoothWith = SMOOTH_GROUP_CATWALK
 
 /obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
@@ -240,7 +244,15 @@
 		resistance_flags |= INDESTRUCTIBLE
 
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
-	return FALSE
+	if(ISODD(x+y))
+		icon = 'monkestation/icons/obj/clock_cult/catwalk_clockwork_large.dmi'
+		pixel_x = -9
+		pixel_y = -9
+	else
+		icon = 'monkestation/icons/obj/clock_cult/catwalk_clockwork.dmi'
+		pixel_x = 0
+		pixel_y = 0
+	return TRUE
 
 /obj/structure/window/reinforced/clockwork
 	name = "brass window"

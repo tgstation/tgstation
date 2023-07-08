@@ -32,13 +32,39 @@
 /obj/item/stock_parts/cell/clock/give(amount) //no
 	return FALSE
 
-//these are just for flavor, also only for mechs
+//these are just for flavor
 /obj/item/stock_parts/scanning_module/triphasic/clock
 	name = "Ticking Scanning Module"
 	desc = "A bronze colored scanning module, you hear a faint ticking from inside."
 	color = rgb(190, 135, 0)
 
+/datum/stock_part/scanning_module/clock
+	tier = 4
+	physical_object_type = /obj/item/stock_parts/scanning_module/triphasic/clock
+
 /obj/item/stock_parts/capacitor/quadratic/clock
 	name = "Clicking Capacitor"
 	desc = "A bronze colored scanning module with a slow clicking within."
 	color = rgb(190, 135, 0)
+
+/datum/stock_part/capacitor/clock
+	tier = 4
+	physical_object_type = /obj/item/stock_parts/capacitor/quadratic/clock
+
+/obj/item/stock_parts/matter_bin/bluespace/clock
+	name = "Glowing Matter Bin"
+	desc = "It has a faint glow emitting from within."
+	color = rgb(190, 135, 0)
+
+/datum/stock_part/matter_bin/clock
+	tier = 4
+	physical_object_type = /obj/item/stock_parts/matter_bin/bluespace/clock
+
+/obj/item/stock_parts/manipulator/femto/clock
+	name = "Powered Manipulator"
+	desc = "Changes the energy flow around an object to manipulate it."
+	color = rgb(190, 135, 0)
+
+/datum/stock_part/manipulator/clock
+	tier = 4
+	physical_object_type = /obj/item/stock_parts/manipulator/femto/clock

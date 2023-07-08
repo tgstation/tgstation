@@ -1,22 +1,142 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"al" = (
+/obj/machinery/telecomms/relay/preset/reebe,
+/turf/open/indestructible/reebe_flooring/filled,
+/area/ruin/powered/reebe/city)
+"bJ" = (
+/obj/machinery/computer/camera_advanced/ratvar{
+	dir = 4
+	},
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"bN" = (
+/obj/structure/table/bronze,
+/obj/item/clockwork/weapon/brass_sword{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/clockwork/weapon/brass_sword,
+/obj/item/clockwork/weapon/brass_sword{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
 "cg" = (
 /obj/machinery/door/airlock/bronze/clock/glass,
 /turf/open/indestructible/reebe_flooring/filled,
 /area/ruin/powered/reebe/city)
+"cF" = (
+/obj/structure/table/bronze,
+/obj/item/clockwork/replica_fabricator,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"dm" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/indestructible/reebe_flooring,
+/area/ruin/powered/reebe/city)
+"fi" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/turf/open/indestructible/reebe_flooring,
+/area/ruin/powered/reebe/city)
+"fV" = (
+/obj/structure/fluff/clockwork/alloy_shards/large,
+/turf/open/indestructible/reebe_flooring,
+/area/ruin/powered/reebe/city)
+"gj" = (
+/obj/structure/table/bronze,
+/obj/item/clockwork/clockwork_slab{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/clockwork/clockwork_slab,
+/obj/item/clockwork/clockwork_slab{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/turf/open/indestructible/reebe_flooring/filled,
+/area/ruin/powered/reebe/city)
+"gu" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/suit/clockwork{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/clockwork,
+/obj/item/clothing/suit/clockwork{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/clothing/head/helmet/clockwork{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clothing/head/helmet/clockwork,
+/obj/item/clothing/head/helmet/clockwork{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"gL" = (
+/obj/structure/table/bronze,
+/obj/effect/mob_spawn/ghost_role/drone/cogscarab,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"hu" = (
+/obj/structure/chair/bronze{
+	dir = 8
+	},
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"in" = (
+/obj/structure/table/optable,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
 "iJ" = (
 /obj/effect/landmark/abscond_marker,
+/turf/open/indestructible/reebe_flooring,
+/area/ruin/powered/reebe/city)
+"jN" = (
+/obj/structure/table/bronze,
+/obj/item/clockwork/integration_cog{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clockwork/integration_cog,
+/obj/item/clockwork/integration_cog{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"jP" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium,
 /turf/open/indestructible/reebe_flooring,
 /area/ruin/powered/reebe/city)
 "lj" = (
 /obj/effect/spawner/structure/window/clockwork,
 /turf/open/indestructible/reebe_flooring,
 /area/ruin/powered/reebe/city)
+"mg" = (
+/obj/structure/table/bronze,
+/obj/item/clockwork/clockwork_slab,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
 "mL" = (
 /turf/open/indestructible/reebe_void,
 /area/ruin/powered/reebe/space)
+"nw" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
 "ok" = (
 /obj/structure/fans/tiny/invisible,
-/turf/open/indestructible/reebe_void,
+/turf/open/indestructible/reebe_void/void_edge,
 /area/ruin/powered/reebe/space)
 "oH" = (
 /turf/open/indestructible/reebe_flooring,
@@ -28,42 +148,209 @@
 "qI" = (
 /turf/open/indestructible/reebe_void/spawning,
 /area/ruin/powered/reebe/space)
+"sa" = (
+/obj/machinery/computer/operating/clockwork{
+	dir = 1
+	},
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
 "tr" = (
 /turf/closed/wall/clockwork/reebe,
+/area/ruin/powered/reebe/city)
+"tU" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
 "ve" = (
 /obj/effect/servant_blocker,
 /obj/structure/lattice/catwalk/clockwork,
 /turf/open/indestructible/reebe_void,
 /area/ruin/powered/reebe/city)
+"vo" = (
+/obj/structure/table/bronze,
+/obj/item/stack/sheet/bronze/thirty,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"zN" = (
+/obj/structure/table/bronze,
+/obj/item/clockwork/weapon/brass_spear{
+	pixel_y = 4;
+	pixel_x = -4
+	},
+/obj/item/clockwork/weapon/brass_spear,
+/obj/item/clockwork/weapon/brass_spear{
+	pixel_y = -4;
+	pixel_x = 4
+	},
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"zR" = (
+/obj/structure/table/bronze,
+/obj/item/storage/medkit/advanced,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"Ao" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/glasses/clockwork/wraith_spectacles,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
 "AF" = (
 /obj/machinery/door/airlock/bronze/clock,
 /turf/open/indestructible/reebe_flooring/filled,
+/area/ruin/powered/reebe/city)
+"Bv" = (
+/obj/machinery/computer/camera_advanced/ratvar,
+/turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
 "BT" = (
 /obj/effect/landmark/late_cog_portals,
 /turf/open/indestructible/reebe_flooring,
 /area/ruin/powered/reebe/city)
+"En" = (
+/obj/structure/table/bronze,
+/obj/item/storage/belt/utility/clock{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/belt/utility/clock,
+/obj/item/storage/belt/utility/clock{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
 "EK" = (
-/obj/structure/chair/bronze,
+/obj/structure/destructible/clockwork/eminence_beacon,
 /turf/open/indestructible/reebe_flooring/filled,
+/area/ruin/powered/reebe/city)
+"Fq" = (
+/obj/structure/table/bronze,
+/obj/item/radio/intercom/reebe,
+/turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
 "FD" = (
 /obj/effect/landmark/abscond_marker,
 /turf/open/indestructible/reebe_flooring/filled,
 /area/ruin/powered/reebe/city)
+"FK" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/suit/clockwork/cloak,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"FY" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/glasses/clockwork/judicial_visor,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"Hi" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
+/turf/open/indestructible/reebe_flooring,
+/area/ruin/powered/reebe/city)
+"Hm" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/turf/open/indestructible/reebe_flooring/filled,
+/area/ruin/powered/reebe/city)
+"HT" = (
+/obj/structure/table/bronze,
+/obj/item/storage/medkit/regular,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"Kr" = (
+/obj/structure/table/bronze,
+/obj/item/clockwork/weapon/brass_battlehammer{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/clockwork/weapon/brass_battlehammer,
+/obj/item/clockwork/weapon/brass_battlehammer{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"Lo" = (
+/obj/machinery/sleeper/clockwork{
+	dir = 8
+	},
+/turf/open/indestructible/reebe_flooring/filled,
+/area/ruin/powered/reebe/city)
+"Mf" = (
+/obj/structure/table/bronze,
+/obj/item/storage/toolbox/brass/surgery,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
 "Ni" = (
 /turf/open/indestructible/reebe_flooring/filled,
 /area/ruin/powered/reebe/city)
+"OQ" = (
+/obj/machinery/computer/camera_advanced/ratvar{
+	dir = 8
+	},
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"OX" = (
+/obj/machinery/sleeper/clockwork{
+	dir = 8
+	},
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"PO" = (
+/obj/structure/fluff/clockwork/alloy_shards/small,
+/turf/open/indestructible/reebe_flooring,
+/area/ruin/powered/reebe/city)
+"Rs" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/gloves/clockwork,
+/obj/item/clothing/gloves/clockwork,
+/obj/item/clothing/gloves/clockwork,
+/obj/item/clothing/gloves/clockwork,
+/obj/item/clothing/gloves/clockwork,
+/obj/item/gun/ballistic/bow/clockwork,
+/obj/item/gun/ballistic/bow/clockwork,
+/obj/item/gun/ballistic/bow/clockwork,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
 "To" = (
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"TL" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/suit/clockwork/speed,
 /turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
 "VS" = (
 /turf/open/indestructible/reebe_void/spawning/lattices,
 /area/ruin/powered/reebe/space)
+"WL" = (
+/obj/structure/chair/bronze{
+	dir = 8
+	},
+/turf/open/indestructible/reebe_flooring,
+/area/ruin/powered/reebe/city)
+"Xr" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/turf/open/indestructible/reebe_flooring,
+/area/ruin/powered/reebe/city)
 "XZ" = (
 /obj/machinery/door/airlock/bronze/clock,
 /turf/open/indestructible/reebe_flooring,
+/area/ruin/powered/reebe/city)
+"ZE" = (
+/obj/structure/table/bronze,
+/obj/item/clockwork/replica_fabricator{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clockwork/replica_fabricator,
+/obj/item/clockwork/replica_fabricator{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
 
 (1,1,1) = {"
@@ -3203,14 +3490,14 @@ oH
 oH
 oH
 oH
+Hi
 oH
 oH
 oH
 oH
 oH
 oH
-oH
-oH
+PO
 oH
 oH
 oH
@@ -3506,7 +3793,7 @@ oH
 oH
 oH
 oH
-oH
+PO
 oH
 oH
 ve
@@ -3632,7 +3919,7 @@ ve
 oH
 oH
 oH
-oH
+jP
 oH
 oH
 XZ
@@ -3707,7 +3994,7 @@ tr
 oH
 tr
 oH
-oH
+Hi
 oH
 oH
 oH
@@ -3720,7 +4007,7 @@ oH
 oH
 oH
 oH
-oH
+fV
 oH
 oH
 oH
@@ -3919,7 +4206,7 @@ ve
 oH
 oH
 oH
-oH
+fi
 oH
 oH
 oH
@@ -4034,15 +4321,15 @@ oH
 oH
 oH
 oH
+Hm
 Ni
-Ni
 oH
 oH
 oH
 oH
 oH
 oH
-oH
+fV
 oH
 oH
 ve
@@ -4328,7 +4615,7 @@ ve
 oH
 oH
 oH
-oH
+Hi
 oH
 oH
 oH
@@ -4340,7 +4627,7 @@ tr
 oH
 tr
 tr
-Ni
+gj
 tr
 tr
 oH
@@ -4351,7 +4638,7 @@ oH
 Ni
 oH
 oH
-oH
+jP
 oH
 oH
 oH
@@ -4441,11 +4728,11 @@ AF
 Ni
 To
 tr
+Rs
+Ao
 To
-To
-To
-To
-To
+TL
+gu
 tr
 To
 Ni
@@ -4534,7 +4821,7 @@ oH
 oH
 oH
 oH
-oH
+jP
 oH
 Ni
 oH
@@ -4544,11 +4831,11 @@ Ni
 oH
 To
 tr
-To
+FY
 oH
 oH
 oH
-To
+FK
 tr
 To
 oH
@@ -4565,7 +4852,7 @@ oH
 oH
 ve
 oH
-oH
+PO
 oH
 lj
 qI
@@ -4748,15 +5035,15 @@ To
 oH
 oH
 oH
-To
+vo
 tr
-To
+Kr
 oH
 oH
 oH
-To
+ZE
 tr
-To
+mg
 oH
 oH
 oH
@@ -4765,7 +5052,7 @@ tr
 oH
 Ni
 oH
-oH
+fi
 oH
 oH
 oH
@@ -4850,17 +5137,17 @@ tr
 To
 To
 Ni
-To
-To
+mg
+gL
 tr
-To
-To
+zN
+bN
 Ni
-To
-To
+jN
+En
 tr
-To
-To
+cF
+vo
 Ni
 To
 To
@@ -5053,11 +5340,11 @@ oH
 oH
 oH
 tr
-To
-To
+Bv
+tU
 Ni
-To
-To
+bJ
+bJ
 tr
 iJ
 oH
@@ -5065,11 +5352,11 @@ FD
 oH
 iJ
 tr
-To
-To
+Fq
+Fq
 Ni
-To
-To
+Fq
+Fq
 tr
 oH
 oH
@@ -5156,11 +5443,11 @@ oH
 oH
 oH
 tr
-To
+Bv
+Xr
 oH
-oH
-oH
-To
+WL
+hu
 lj
 oH
 To
@@ -5168,11 +5455,11 @@ To
 To
 oH
 lj
-To
+hu
+WL
 oH
-oH
-oH
-To
+WL
+hu
 tr
 oH
 oH
@@ -5251,7 +5538,7 @@ oH
 ve
 oH
 oH
-oH
+fV
 oH
 oH
 Ni
@@ -5276,7 +5563,7 @@ oH
 To
 oH
 To
-Ni
+al
 tr
 oH
 oH
@@ -5284,7 +5571,7 @@ Ni
 oH
 oH
 oH
-oH
+fi
 oH
 ve
 oH
@@ -5362,11 +5649,11 @@ oH
 oH
 oH
 tr
-To
+Bv
+Xr
 oH
-oH
-oH
-To
+dm
+nw
 lj
 oH
 To
@@ -5374,11 +5661,11 @@ To
 To
 oH
 lj
-To
+nw
+dm
 oH
-oH
-oH
-To
+dm
+nw
 tr
 oH
 oH
@@ -5462,14 +5749,14 @@ oH
 oH
 Ni
 oH
-oH
+Hi
 oH
 tr
-To
-To
+Bv
+tU
 Ni
-To
-To
+OQ
+OQ
 tr
 iJ
 oH
@@ -5477,11 +5764,11 @@ FD
 oH
 iJ
 tr
-To
-To
+Fq
+Fq
 Ni
-To
-To
+Fq
+Fq
 tr
 oH
 oH
@@ -5489,7 +5776,7 @@ oH
 Ni
 oH
 oH
-oH
+jP
 oH
 ve
 oH
@@ -5674,17 +5961,17 @@ tr
 To
 To
 Ni
-To
-To
+vo
+cF
 tr
-To
-To
+zR
+Mf
 Ni
 To
-To
+in
 tr
-To
-To
+gL
+mg
 Ni
 To
 To
@@ -5778,15 +6065,15 @@ To
 oH
 oH
 oH
-To
+mg
 tr
-To
+HT
 oH
 oH
 oH
-To
+sa
 tr
-To
+vo
 oH
 oH
 oH
@@ -5870,8 +6157,8 @@ oH
 oH
 ve
 oH
-oH
-oH
+PO
+PO
 oH
 oH
 Ni
@@ -6002,7 +6289,7 @@ Ni
 oH
 oH
 oH
-oH
+fV
 oH
 oH
 ve
@@ -6089,11 +6376,11 @@ AF
 Ni
 To
 tr
+OX
+OX
 To
-To
-To
-To
-To
+OX
+OX
 tr
 To
 Ni
@@ -6194,7 +6481,7 @@ tr
 oH
 tr
 tr
-Ni
+Lo
 tr
 tr
 oH
@@ -6288,7 +6575,7 @@ oH
 oH
 oH
 oH
-oH
+fi
 oH
 Ni
 oH
@@ -6383,7 +6670,7 @@ qI
 tr
 tr
 oH
-oH
+jP
 oH
 ve
 oH
@@ -6407,7 +6694,7 @@ oH
 oH
 Ni
 Ni
-oH
+jP
 oH
 oH
 oH
@@ -6503,7 +6790,7 @@ Ni
 Ni
 oH
 oH
-oH
+Hi
 oH
 oH
 Ni
@@ -6611,7 +6898,7 @@ Ni
 Ni
 oH
 oH
-oH
+fV
 oH
 oH
 oH
@@ -6717,7 +7004,7 @@ oH
 oH
 oH
 oH
-oH
+PO
 oH
 oH
 oH
@@ -6808,7 +7095,7 @@ oH
 oH
 oH
 oH
-oH
+PO
 oH
 oH
 oH
@@ -6826,7 +7113,7 @@ ve
 ve
 oH
 oH
-oH
+jP
 oH
 oH
 tr
@@ -6911,7 +7198,7 @@ ve
 oH
 oH
 oH
-oH
+Hi
 oH
 oH
 oH
@@ -7006,7 +7293,7 @@ oH
 tr
 oH
 oH
-oH
+PO
 oH
 oH
 oH

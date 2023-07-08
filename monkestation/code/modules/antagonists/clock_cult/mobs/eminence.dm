@@ -18,7 +18,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	move_resist = INFINITY
 	status_flags = GODMODE
 	sight = SEE_SELF
-	incorporeal_move = INCORPOREAL_MOVE_JAUNT
+	incorporeal_move = INCORPOREAL_MOVE_BASIC
 	initial_language_holder = /datum/language_holder/universal //lesser god, they CAN understand you
 	hud_possible = list(ANTAG_HUD)
 
@@ -48,6 +48,16 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	if(GLOB.current_eminence == src)
 		GLOB.current_eminence = FALSE
 	return ..()
+
+/mob/living/eminence/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	var/turf/new_turf = get_turf(src)
+	if(!istype(new_turf, /turf/open/indestructible/reebe_void/void_edge))
+		return ..()
+
+	to_chat(src, span_brass("Going this far into the void would leave you forever lost."))
+	forceMove(old_loc)
+	return FALSE
+
 
 /mob/living/eminence/ClickOn(atom/clicked_on, params)
 	. = ..()

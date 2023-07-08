@@ -196,6 +196,14 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 		new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
 	qdel(src)
 
+/obj/structure/table/ratvar_act()
+	var/atom/location = loc
+	qdel(src)
+	new /obj/structure/table/bronze(location)
+
+/obj/structure/table/bronze/ratvar_act()
+	return
+
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become clock airlocks that only allow servants
 	var/obj/machinery/door/airlock/bronze/clock/made_door
 	if(glass)
@@ -205,10 +213,14 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	made_door.name = name
 	qdel(src)
 
-/obj/structure/table/ratvar_act()
-	var/atom/location = loc
-	qdel(src)
-	new /obj/structure/table/bronze(location)
+/obj/machinery/computer
+	///used for tracking ratvar_act() and narsie_act()
+	var/clockwork = FALSE
 
-/obj/structure/table/bronze/ratvar_act()
-	return
+/obj/machinery/computer/ratvar_act()
+	if(!clockwork)
+		clockwork = TRUE
+		icon_screen = "ratvar[rand(1, 3)]"
+		icon_keyboard = "ratvar_key[rand(1, 2)]"
+		icon_state = "ratvarcomputer"
+		update_appearance()

@@ -66,4 +66,28 @@
 	new /obj/item/clockwork/replica_fabricator(src)
 	new /obj/item/clockwork/clockwork_slab(src)
 
+/obj/item/storage/toolbox/brass
+	name = "brass box"
+	desc = "A large box to hold things."
+	icon = 'icons/obj/storage/storage.dmi'
+	icon_state = "brassbox"
+	has_latches = FALSE
+	material_flags = NONE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/storage/toolbox/brass/surgery
+	name = "surgery brass box"
+	desc = "A large brass box containing tools for surgery."
+
+/obj/item/storage/backpack/duffelbag/brass/surgery/PopulateContents()
+	new /obj/item/scalpel(src)
+	new /obj/item/hemostat(src)
+	new /obj/item/retractor(src)
+	new /obj/item/circular_saw(src)
+	new /obj/item/surgicaldrill(src)
+	new /obj/item/cautery(src)
+	new /obj/item/bonesetter(src)
+	new /obj/item/surgical_drapes(src)
+	new /obj/item/blood_filter(src)
+
 #undef BRASS_TOOLSPEED_MOD
