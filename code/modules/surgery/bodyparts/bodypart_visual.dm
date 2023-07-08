@@ -1,6 +1,8 @@
 /obj/item/bodypart
 	// States used in determining overlays for limb damage states. As the mob receives more burn/brute damage, their limbs update to reflect.
+	/// Current brute damage state, from 0 (intact) to 3 (max damage)
 	var/brutestate = 0
+	/// Current burn damage state, from 0 (intact) to 3 (max damage)
 	var/burnstate = 0
 
 /**
