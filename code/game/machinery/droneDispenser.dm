@@ -59,6 +59,7 @@
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 /obj/machinery/drone_dispenser/Destroy()
+	materials.retrieve_all()
 	materials = null
 	return ..()
 
