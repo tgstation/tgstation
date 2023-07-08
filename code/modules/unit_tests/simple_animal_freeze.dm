@@ -276,8 +276,6 @@
 		/mob/living/simple_animal/pet/cat/original,
 		/mob/living/simple_animal/pet/cat/runtime,
 		/mob/living/simple_animal/pet/cat/space,
-		/mob/living/simple_animal/pet/fox,
-		/mob/living/simple_animal/pet/fox/renault,
 		/mob/living/simple_animal/pet/gondola,
 		/mob/living/simple_animal/pet/gondola/gondolapod,
 		/mob/living/simple_animal/pet/penguin,

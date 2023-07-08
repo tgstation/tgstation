@@ -22,7 +22,7 @@
 			/mob/living/basic/pet/dog/corgi/ian,
 			/mob/living/basic/pet/dog/corgi/puppy/ian
 		),
-		JOB_CAPTAIN = /mob/living/simple_animal/pet/fox/renault,
+		JOB_CAPTAIN = /mob/living/basic/pet/fox/renault,
 		JOB_CHIEF_MEDICAL_OFFICER = /mob/living/simple_animal/pet/cat/runtime,
 		JOB_CHIEF_ENGINEER = /mob/living/simple_animal/parrot/poly,
 		JOB_QUARTERMASTER = list(

@@ -27974,7 +27974,7 @@
 /area/station/hallway/floor1/aft)
 "hkj" = (
 /obj/structure/bed/dogbed/renault,
-/mob/living/simple_animal/pet/fox/renault,
+/mob/living/basic/pet/fox/renault,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/west,
@@ -42954,7 +42954,7 @@
 /obj/machinery/door/window/brigdoor{
 	dir = 1
 	},
-/mob/living/simple_animal/pet/fox,
+/mob/living/basic/pet/fox,
 /turf/open/floor/noslip,
 /area/station/maintenance/floor1/port)
 "ljs" = (

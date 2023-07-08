@@ -41219,7 +41219,7 @@
 	pixel_y = -29
 	},
 /obj/structure/bed/dogbed/renault,
-/mob/living/simple_animal/pet/fox/renault,
+/mob/living/basic/pet/fox/renault,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "oSc" = (
