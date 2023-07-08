@@ -702,8 +702,7 @@
 
 /obj/item/clothing/glasses/nightmare_vision/dropped(mob/living/user)
 	. = ..()
-	if(stored_hallucination)
-		QDEL_NULL(stored_hallucination)
+	QDEL_NULL(stored_hallucination)
 
 /obj/item/clothing/glasses/osi
 	name = "O.S.I. Sunglasses"
