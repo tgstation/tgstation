@@ -52,7 +52,13 @@
 
 /obj/machinery/drone_dispenser/Initialize(mapload)
 	. = ..()
-	materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_DRONE_DISPENSER, allowed_items=/obj/item/stack)
+	materials = AddComponent( \
+		/datum/component/material_container, \
+		list(/datum/material/iron, /datum/material/glass), \
+		SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, \
+		MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_DRONE_DISPENSER, \
+		allowed_items=/obj/item/stack \
+	)
 	materials.insert_amount_mat(starting_amount)
 	materials.precise_insertion = TRUE
 	using_materials = list(/datum/material/iron = iron_cost, /datum/material/glass = glass_cost)
