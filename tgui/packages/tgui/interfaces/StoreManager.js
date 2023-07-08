@@ -102,7 +102,7 @@ export const StoreManager = (props, context) => {
                                 content="Purchase"
                                 minWidth="49%"
                                 disabled={
-                                  item.item_path in owned_items ||
+                                  owned_items.includes(item.item_path) ||
                                   total_coins < item.cost
                                 }
                                 onClick={() =>
