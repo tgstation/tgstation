@@ -289,13 +289,7 @@
 *
 * Returns TRUE if it was able to run the emote, FALSE otherwise.
 */
-/atom/proc/manual_emote(text) //Just override the song and dance
-	. = TRUE
-	if (isliving(src))
-		var/mob/living/living_emoter = src
-		if (living_emoter.stat != CONSCIOUS)
-			return
-
+/atom/proc/manual_emote(text)
 	if(!text)
 		CRASH("Someone passed nothing to manual_emote(), fix it")
 
@@ -305,14 +299,19 @@
 
 	var/origin_turf = get_turf(src)
 	visible_message(text, visible_message_flags = EMOTE_MESSAGE)
-	if (!ismob(src))
-		return
-	var/mob/mob_emoter = src
-	if(!mob_emoter.client)
-		return
+	return TRUE
+
+/mob/manual_emote(text)
+	if (stat != CONSCIOUS)
+		return FALSE
+	. = ..()
+	if (!.)
+		return FALSE
+	if (!client)
+		return TRUE
 	for(var/mob/ghost as anything in GLOB.dead_mob_list)
 		if(!ghost.client || isnewplayer(ghost))
 			continue
 		if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(origin_turf, null)))
 			ghost.show_message("[FOLLOW_LINK(ghost, src)] [ghost_text]")
-
+	return TRUE
