@@ -101,6 +101,7 @@
 #define LOG_CATEGORY_SILO "silo"
 #define LOG_CATEGORY_SIGNAL "signal"
 #define LOG_CATEGORY_SPEECH_INDICATOR "speech-indiciator"
+// Leave the underscore, it's there for backwards compatibility reasons
 #define LOG_CATEGORY_SUSPICIOUS_LOGIN "suspicious_logins"
 #define LOG_CATEGORY_TARGET_ZONE_SWITCH "target-zone-switch"
 #define LOG_CATEGORY_TELECOMMS "telecomms"
