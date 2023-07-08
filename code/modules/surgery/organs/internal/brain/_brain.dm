@@ -374,27 +374,26 @@
 	organ_flags = ORGAN_MINERAL
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ROCK_METAMORPHIC)
 
-/obj/item/organ/internal/brain/lustrous
+/obj/item/organ/brain/lustrous
 	name = "lustrous brain"
 	desc = "This is your brain on bluespace dust. Not even once."
 	icon_state = "random_fly_4"
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
 
-/obj/item/organ/internal/brain/lustrous/before_organ_replacement(mob/living/carbon/organ_owner, special)
+/obj/item/organ/brain/lustrous/before_organ_replacement(mob/living/carbon/organ_owner, special)
 	. = ..()
 	organ_owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/obj/item/organ/internal/brain/lustrous/on_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/brain/lustrous/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	organ_owner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
 /obj/item/organ/brain/proc/has_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
-	for(var/X in traumas)
-		var/datum/brain_trauma/BT = X
-		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience))
-			return BT
+	for(var/datum/brain_trauma/trauma as anything in traumas)
+		if(istype(trauma, brain_trauma_type) && (trauma.resilience <= resilience))
+			return trauma
 
 /obj/item/organ/brain/proc/get_traumas_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
 	. = list()

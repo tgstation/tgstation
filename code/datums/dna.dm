@@ -852,16 +852,18 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				ForceContractDisease(new/datum/disease/decloning()) //slow acting, non-viral clone damage based GBS
 			if(8)
 				var/list/elligible_organs = list()
-				for(var/obj/item/organ/internal_organ in organs) //make sure we dont get an implant or cavity item
-					elligible_organs += internal_organ
+				for(var/obj/item/organ/organ as anything in organs) //make sure we dont get an implant or cavity item
+					if(organ.organ_flags & ORGAN_UNREMOVABLE)
+						continue
+					elligible_organs += organ
 				vomit(20, TRUE)
 				if(elligible_organs.len)
-					var/obj/item/organ/O = pick(elligible_organs)
-					O.Remove(src)
-					visible_message(span_danger("[src] vomits up [p_their()] [O.name]!"), span_danger("You vomit up your [O.name]")) //no "vomit up your heart"
-					O.forceMove(drop_location())
+					var/obj/item/organ/vomited_organ = pick(elligible_organs)
+					vomited_organ.Remove(src)
+					visible_message(span_danger("[src] vomits up [p_their()] [vomited_organ.name]!"), span_danger("You vomit up your [vomited_organ.name]")) //no "vomit up your heart"
+					vomited_organ.forceMove(drop_location())
 					if(prob(20))
-						O.animate_atom_living()
+						vomited_organ.animate_atom_living()
 			if(9 to 10)
 				ForceContractDisease(new/datum/disease/gastrolosis())
 				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
