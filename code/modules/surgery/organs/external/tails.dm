@@ -106,7 +106,6 @@
 	desc = "A severed monkey tail. Animal cruelty is a serious crime, you know."
 	preference = "feature_monkey_tail"
 
-	sprite_accessory_override = /datum/sprite_accessory/tails/monkey/monkey //RRRAAAAAAAAAAAAUGH
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/monkey
 
 	dna_block = DNA_MONKEY_TAIL_BLOCK

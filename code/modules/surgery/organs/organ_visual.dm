@@ -37,20 +37,18 @@
 
 /// Initializes visual elements of an organ
 /obj/item/organ/proc/initialize_visuals()
+	//we don't need to initialize shit if we don't have a bodypart_overlay path
 	if(!bodypart_overlay)
 		return
-	bodypart_overlay = new bodypart_overlay()
 
-	var/update_appearance = TRUE
+	bodypart_overlay = new bodypart_overlay()
 	if(sprite_accessory_override)
 		bodypart_overlay.set_appearance(sprite_accessory_override)
 		bodypart_overlay.imprint_on_next_insertion = FALSE
-	else if(loc) //we've been spawned into the world, and not in nullspace to be added to a limb (yes its fucking scuffed)
-		bodypart_overlay.randomize_appearance()
 	else
-		update_appearance = FALSE
+		bodypart_overlay.randomize_appearance()
 
-	if(update_appearance && use_mob_sprite_as_obj_sprite)
+	if(use_mob_sprite_as_obj_sprite)
 		update_appearance()
 
 /// Returns an examine list about the visual elements of this organ.
