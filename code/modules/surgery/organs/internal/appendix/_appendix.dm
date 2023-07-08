@@ -4,6 +4,7 @@
 
 /obj/item/organ/appendix
 	name = "appendix"
+	desc = "The most useless organ in the human body. Until you get appendicitis."
 	icon_state = "appendix"
 	base_icon_state = "appendix"
 	visual = FALSE

@@ -1,4 +1,3 @@
-
 /obj/item/organ/appendix/golem
 	name = "internal forge"
 	desc = "This expanded digestive chamber allows golems to smelt minerals, provided that they are immersed in lava."
