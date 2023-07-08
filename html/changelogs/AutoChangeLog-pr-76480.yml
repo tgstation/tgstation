@@ -1,0 +1,4 @@
+author: "YehnBeep"
+delete-after: True
+changes:
+  - qol: "Produce consoles now have tables near them."
