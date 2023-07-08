@@ -454,6 +454,8 @@ multiple modular subtrees with behaviors
  * Called after we set a blackboard key, forwards signal information.
  */
 /datum/ai_controller/proc/post_blackboard_key_set(key)
+	if (!pawn)
+		return
 	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key))
 
 /**
