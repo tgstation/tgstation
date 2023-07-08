@@ -630,8 +630,8 @@
 			vision_flags |= SEE_MOBS|SEE_OBJS
 			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		xray = !xray
-		var/mob/living/carbon/human/H = user
-		H.update_sight()
+		var/mob/living/carbon/human/human_user = user
+		human_user.update_sight()
 
 /obj/item/clothing/glasses/regular/kim
 	name = "binoclard lenses"
