@@ -48,5 +48,7 @@
 	var/atom/new_target = source.ai_controller.blackboard[target_key]
 	if (isnull(new_target) || !prob(emote_chance))
 		return
+	if (living_only && !isliving(new_target))
+		return // If we don't want to bark at food items or chairs or windows
 	emote_chance = max(emote_chance - subtract_chance, minimum_chance)
 	source.manual_emote("[pick(emote_list)] at [new_target].")
