@@ -11199,9 +11199,6 @@
 /area/station/engineering/atmos)
 "cIa" = (
 /obj/effect/landmark/start/hangover,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
 /obj/machinery/camera/directional/east{
@@ -11211,6 +11208,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "cIn" = (
@@ -47721,7 +47719,6 @@
 	req_access = list("hop")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "lQV" = (
@@ -62667,7 +62664,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/item/paper/fluff/ids_for_dummies,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
@@ -63798,11 +63794,8 @@
 /area/station/command/heads_quarters/captain)
 "pXM" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/ids{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/silver_ids,
+/obj/item/papercutter,
+/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "pXW" = (
@@ -87254,6 +87247,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},

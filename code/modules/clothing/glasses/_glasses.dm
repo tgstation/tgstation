@@ -679,6 +679,7 @@
 	inhand_icon_state = "glasses"
 	glass_colour_type = /datum/client_colour/glass_colour/nightmare
 	forced_glass_color = TRUE
+	lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
 
 /obj/item/clothing/glasses/osi
 	name = "O.S.I. Sunglasses"

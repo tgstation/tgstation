@@ -6905,7 +6905,7 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "Nt" = (
 /obj/structure/table/glass,
-/obj/structure/closet/mini_fridge{
+/obj/structure/closet/mini_fridge/grimy{
 	pixel_y = 8;
 	pixel_x = 2
 	},

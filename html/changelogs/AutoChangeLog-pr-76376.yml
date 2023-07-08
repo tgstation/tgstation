@@ -1,7 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - refactor: "Replaced hardcoded \"safeties\" for lava, chasms and ignoring turf slowdowns on catwalks with traits."
-  - balance: "much like catwalks, tables and conveyors also disable turf slowdowns."
-  - balance: "slippery turfs won't slip you when walking on a table."
-  - bugfix: "Fixed an edge case in which a mob standing on a lava turf would be left visually but permanently  on fire if the lava is changed to another kind of turf."
