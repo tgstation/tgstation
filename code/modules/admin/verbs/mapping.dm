@@ -319,9 +319,14 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	set name = "Debug Z-Levels"
 	set category = "Mapping"
 
-	var/list/z_list = SSmapping.z_list
+	to_chat(src, examine_block(gather_z_level_information(append_grid = TRUE)), confidential = TRUE)
+
+/// Returns all necessary z-level information. Argument `append_grid` allows the user to see a table showing all of the z-level linkages, which is only visible and useful in-game.
+/proc/gather_z_level_information(append_grid = FALSE)
 	var/list/messages = list()
-	messages += "<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]<br><br>"
+
+	var/list/z_list = SSmapping.z_list
+	messages += "\n<b>World</b>: [world.maxx] x [world.maxy] x [world.maxz]\n"
 
 	var/list/linked_levels = list()
 	var/min_x = INFINITY
@@ -331,49 +336,50 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 
 	for(var/z in 1 to max(world.maxz, z_list.len))
 		if (z > z_list.len)
-			messages += "<b>[z]</b>: Unmanaged (out of bounds)<br>"
+			messages += "<b>[z]</b>: Unmanaged (out of bounds)"
 			continue
-		var/datum/space_level/S = z_list[z]
-		if (!S)
-			messages += "<b>[z]</b>: Unmanaged (null)<br>"
+		var/datum/space_level/level = z_list[z]
+		if (!level)
+			messages += "<b>[z]</b>: Unmanaged (null)"
 			continue
 		var/linkage
-		switch (S.linkage)
+		switch (level.linkage)
 			if (UNAFFECTED)
 				linkage = "no linkage"
 			if (SELFLOOPING)
 				linkage = "self-looping"
 			if (CROSSLINKED)
-				linkage = "linked at ([S.xi], [S.yi])"
-				linked_levels += S
-				min_x = min(min_x, S.xi)
-				min_y = min(min_y, S.yi)
-				max_x = max(max_x, S.xi)
-				max_y = max(max_y, S.yi)
+				linkage = "linked at ([level.xi], [level.yi])"
+				linked_levels += level
+				min_x = min(min_x, level.xi)
+				min_y = min(min_y, level.yi)
+				max_x = max(max_x, level.xi)
+				max_y = max(max_y, level.yi)
 			else
-				linkage = "unknown linkage '[S.linkage]'"
+				linkage = "unknown linkage '[level.linkage]'"
 
-		messages += "<b>[z]</b>: [S.name], [linkage], traits: [json_encode(S.traits)]<br>"
-		if (S.z_value != z)
-			messages += "-- z_value is [S.z_value], should be [z]<br>"
-		if (S.name == initial(S.name))
-			messages += "-- name not set<br>"
+		messages += "<b>[z]</b>: [level.name], [linkage], traits: [json_encode(level.traits)]"
+		if (level.z_value != z)
+			messages += "-- z_value is [level.z_value], should be [z]"
+		if (level.name == initial(level.name))
+			messages += "-- name not set"
 		if (z > world.maxz)
 			messages += "-- exceeds max z"
 
 	var/grid[max_x - min_x + 1][max_y - min_y + 1]
-	for(var/datum/space_level/S in linked_levels)
-		grid[S.xi - min_x + 1][S.yi - min_y + 1] = S.z_value
+	for(var/datum/space_level/linked_level in linked_levels)
+		grid[linked_level.xi - min_x + 1][linked_level.yi - min_y + 1] = linked_level.z_value
 
-	messages += "<br><table border='1'>"
-	for(var/y in max_y to min_y step -1)
-		var/list/part = list()
-		for(var/x in min_x to max_x)
-			part += "[grid[x - min_x + 1][y - min_y + 1]]"
-		messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
-	messages += "</table>"
+	if(append_grid)
+		messages += "<br><table border='1'>"
+		for(var/y in max_y to min_y step -1)
+			var/list/part = list()
+			for(var/x in min_x to max_x)
+				part += "[grid[x - min_x + 1][y - min_y + 1]]"
+			messages += "<tr><td>[part.Join("</td><td>")]</td></tr>"
+		messages += "</table>"
 
-	to_chat(src, examine_block(messages.Join("")), confidential = TRUE)
+	return messages.Join("\n")
 
 /client/proc/station_food_debug()
 	set name = "Count Station Food"

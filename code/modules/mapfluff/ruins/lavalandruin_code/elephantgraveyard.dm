@@ -237,12 +237,12 @@
 			dug_closed = TRUE
 			close(user)
 		else if(open(user, force = TRUE))
-			if (user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID))
+			if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
 				user.add_mood_event("morbid_graverobbing", /datum/mood_event/morbid_graverobbing)
 			else
 				user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 			if(lead_tomb && first_open)
-				if(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID))
+				if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
 					to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
 				else
 					user.gain_trauma(/datum/brain_trauma/magic/stalker)

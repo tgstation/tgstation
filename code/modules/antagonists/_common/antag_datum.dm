@@ -155,13 +155,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return TRUE
 
 /datum/antagonist/proc/can_be_owned(datum/mind/new_owner)
-	. = TRUE
 	var/datum/mind/tested = new_owner || owner
 	if(tested.has_antag_datum(type))
 		return FALSE
 	for(var/datum/antagonist/badguy as anything in tested.antag_datums)
 		if(is_type_in_typecache(src, badguy.typecache_datum_blacklist))
 			return FALSE
+	return TRUE
 
 //This will be called in add_antag_datum before owner assignment.
 //Should return antag datum without owner.
