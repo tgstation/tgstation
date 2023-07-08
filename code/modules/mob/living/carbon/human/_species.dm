@@ -804,9 +804,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/organ/randomized_organ = human_mob.get_organ_by_type(organ_path)
 		if(randomized_organ)
 			var/datum/bodypart_overlay/mutant/overlay = randomized_organ.bodypart_overlay
-			var/new_look = pick(overlay.get_global_feature_list())
-			human_mob.dna.features["[overlay.feature_key]"] = new_look
-			mutant_bodyparts["[overlay.feature_key]"] = new_look
+			var/datum/sprite_accessory/new_accessory = overlay.get_random_sprite_accessory()
+			human_mob.dna.features["[overlay.feature_key]"] = new_accessory.name
 
 ///Proc that randomizes all the appearance elements (external organs, markings, hair etc.) of a species' associated mob. Function set by child procs
 /datum/species/proc/randomize_features(mob/living/carbon/human/human_mob)
