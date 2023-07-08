@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 			qdel(src)
 			return
 		bodypart_overlay = new()
-		if(my_head.bodytype & BODYTYPE_SNOUTED)
+		if(carbon_parent.bodytype & BODYTYPE_SNOUTED) //stupid, but external organ bodytypes are not stored on the limb
 			bodypart_overlay.icon_state = "creampie_lizard"
 		else if(my_head.bodytype & BODYTYPE_MONKEY)
 			bodypart_overlay.icon_state = "creampie_monkey"
@@ -71,6 +71,8 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	if(my_head)
 		if(bodypart_overlay)
 			my_head.remove_bodypart_overlay(bodypart_overlay)
+			if(!my_head.owner)
+				my_head.update_icon_dropped()
 		UnregisterSignal(my_head, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING))
 	if(iscarbon(parent))
 		var/mob/living/carbon/carbon_parent = parent
