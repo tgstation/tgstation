@@ -24,3 +24,8 @@
 /datum/bodypart_overlay/simple/sixpack
 	icon_state = "sixpack"
 	layers = EXTERNAL_ADJACENT
+
+///A creampie drawn on the head
+/datum/bodypart_overlay/simple/creampie
+	icon_state = "creampie"
+	layers = EXTERNAL_FRONT

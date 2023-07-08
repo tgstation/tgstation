@@ -3,17 +3,16 @@
 	id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_USES_SKINTONES,
 	)
 	mutant_bodyparts = list("wings" = "None")
-	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	payday_modifier = 1
 
 /datum/species/human/prepare_human_for_preview(mob/living/carbon/human/human)
-	human.hairstyle = "Business Hair"
-	human.hair_color = "#bb9966" // brown
-	human.update_body_parts()
+	human.set_haircolor("#bb9966", update = FALSE) // brown
+	human.set_hairstyle("Business Hair", update = TRUE)
 
 /datum/species/human/randomize_features(mob/living/carbon/human/human_mob)
 	human_mob.skin_tone = random_skin_tone()
