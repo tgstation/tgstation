@@ -28023,8 +28023,6 @@
 /area/station/service/hydroponics)
 "hlG" = (
 /obj/structure/closet/mini_fridge{
-	desc = "A small contraption designed to imbue a few drinks with a pleasant chill.";
-	name = "mini-fridge";
 	pixel_x = 6;
 	pixel_y = 5
 	},
@@ -76061,8 +76059,6 @@
 /area/station/cargo/sorting)
 "tSD" = (
 /obj/structure/closet/mini_fridge{
-	desc = "A small contraption designed to imbue a few drinks with a pleasant chill.";
-	name = "mini-fridge";
 	pixel_x = 6;
 	pixel_y = 5
 	},

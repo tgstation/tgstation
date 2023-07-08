@@ -62030,10 +62030,7 @@
 /area/station/commons/storage/art)
 "vbb" = (
 /obj/structure/table,
-/obj/structure/closet/mini_fridge{
-	name = "mini-fridge";
-	anchored = 1
-	},
+/obj/structure/closet/mini_fridge,
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/cup/soda_cans/cola,
 /turf/open/floor/iron/white,
