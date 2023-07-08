@@ -683,8 +683,7 @@
 	var/datum/hallucination/stored_hallucination
 
 /obj/item/clothing/glasses/nightmare_vision/Destroy()
-	if(stored_hallucination)
-		QDEL_NULL(stored_hallucination)
+	QDEL_NULL(stored_hallucination)
 	return ..()
 
 /obj/item/clothing/glasses/nightmare_vision/equipped(mob/living/user, slot)
