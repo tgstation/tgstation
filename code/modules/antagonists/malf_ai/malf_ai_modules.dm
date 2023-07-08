@@ -1212,22 +1212,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/action/innate/ai/ranged/core_tilt/proc/get_rotation_from_dir(dir)
 	switch (dir)
-		if (NORTH)
+		if (NORTH, NORTHWEST, WEST, SOUTHWEST)
 			return 270 // try our best to not return 180 since it works badly with animate
-		if (NORTHEAST)
+		if (EAST, NORTHEAST, SOUTH, SOUTHEAST)
 			return 90
-		if (EAST)
-			return 90
-		if (SOUTHEAST)
-			return 90
-		if (SOUTH)
-			return 90
-		if (SOUTHWEST)
-			return 270
-		if (WEST)
-			return 270
-		if (NORTHWEST)
-			return 270
 		else
 			stack_trace("non-standard dir entered")
 			return 0
