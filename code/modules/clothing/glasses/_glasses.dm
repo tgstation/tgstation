@@ -690,15 +690,17 @@
 	. = ..()
 	if(!(slot & ITEM_SLOT_EYES))
 		return
-	stored_hallucination = 	user.cause_hallucination( \
-		/datum/hallucination/delusion/preset/mare, \
-		"[src]", \
-		duration = 0, \
-		affects_us = TRUE, \
-		affects_others = TRUE, \
-		skip_nearby = FALSE, \
-		play_wabbajack = FALSE, \
-	)
+	//5% chance to get mare vision
+	if(prob(5))
+		stored_hallucination = 	user.cause_hallucination( \
+			/datum/hallucination/delusion/preset/mare, \
+			"[src]", \
+			duration = 0, \
+			affects_us = TRUE, \
+			affects_others = TRUE, \
+			skip_nearby = FALSE, \
+			play_wabbajack = FALSE, \
+		)
 
 /obj/item/clothing/glasses/nightmare_vision/dropped(mob/living/user)
 	. = ..()
