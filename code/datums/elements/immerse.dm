@@ -215,12 +215,13 @@
  */
 /datum/element/immerse/proc/try_immerse(atom/movable/movable, atom/movable/buckled)
 	var/atom/movable/to_check = buckled || movable
-	if(!(to_check.movement_type & (FLYING|FLOATING)))
+	if(!(to_check.movement_type & (FLYING|FLOATING)) && !movable.throwing)
 		add_immerse_overlay(movable)
-		if(!buckled)
-			RegisterSignal(movable, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_move_flag_enabled))
-	else if(!buckled)
+	if(!buckled)
+		RegisterSignal(movable, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_move_flag_enabled))
 		RegisterSignal(movable, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_move_flag_disabled))
+		RegisterSignal(movable, COMSIG_MOVABLE_POST_THROW, PROC_REF(on_throw))
+		RegisterSignal(movable, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(on_throw_landed))
 
 /**
  * Called by on_set_buckled() and remove_from_element().
@@ -228,12 +229,10 @@
  */
 /datum/element/immerse/proc/try_unimmerse(atom/movable/movable, atom/movable/buckled)
 	var/atom/movable/to_check = buckled || movable
-	if(!(to_check.movement_type & (FLYING|FLOATING)))
+	if(!(to_check.movement_type & (FLYING|FLOATING)) && !movable.throwing)
 		remove_immerse_overlay(movable)
-		if(!buckled)
-			UnregisterSignal(movable, COMSIG_MOVETYPE_FLAG_ENABLED)
-	else if(!buckled)
-		UnregisterSignal(movable, COMSIG_MOVETYPE_FLAG_DISABLED)
+	if(!buckled)
+		UnregisterSignal(movable, list(COMSIG_MOVETYPE_FLAG_ENABLED, COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_THROW_LANDED))
 
 /datum/element/immerse/proc/on_set_buckled(mob/living/source, atom/movable/new_buckled)
 	SIGNAL_HANDLER
@@ -243,22 +242,38 @@
 ///Removes the overlay from mob and bucklees is flying.
 /datum/element/immerse/proc/on_move_flag_enabled(atom/movable/source, flag, old_movement_type)
 	SIGNAL_HANDLER
-	if(flag & (FLYING | FLOATING))
-		UnregisterSignal(source, COMSIG_MOVETYPE_FLAG_ENABLED)
-		RegisterSignal(source, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_move_flag_disabled))
-		remove_immerse_overlay(source)
-		for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
-			remove_immerse_overlay(buckled_mob)
+	if(!(flag & (FLYING|FLOATING)) || old_movement_type & (FLYING|FLOATING) || source.throwing)
+		return
+	remove_immerse_overlay(source)
+	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
+		remove_immerse_overlay(buckled_mob)
+
+///Works just like on_move_flag_enabled, except it only has to check that movable isn't flying
+/datum/element/immerse/proc/on_throw(atom/movable/source)
+	SIGNAL_HANDLER
+	if(source.movement_type & (FLYING|FLOATING))
+		return
+	remove_immerse_overlay(source)
+	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
+		remove_immerse_overlay(buckled_mob)
 
 ///Readds the overlay to the mob and bucklees if no longer flying.
 /datum/element/immerse/proc/on_move_flag_disabled(atom/movable/source, flag, old_movement_type)
 	SIGNAL_HANDLER
-	if(flag & (FLYING|FLOATING) && !(source.movement_type & (FLYING|FLOATING)))
-		UnregisterSignal(source, COMSIG_MOVETYPE_FLAG_DISABLED)
-		RegisterSignal(source, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_move_flag_enabled))
-		add_immerse_overlay(source)
-		for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
-			add_immerse_overlay(buckled_mob)
+	if(!(flag & (FLYING|FLOATING)) || source.movement_type & (FLYING|FLOATING) || source.throwing)
+		return
+	add_immerse_overlay(source)
+	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
+		add_immerse_overlay(buckled_mob)
+
+///Works just like on_move_flag_disabled, except it only has to check that movable isn't flying
+/datum/element/immerse/proc/on_throw_landed(atom/movable/source)
+	SIGNAL_HANDLER
+	if(source.movement_type & (FLYING|FLOATING))
+		return
+	add_immerse_overlay(source)
+	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
+		add_immerse_overlay(buckled_mob)
 
 /**
  * Called when a movable exits the turf. If its new location is not in the list of turfs with this element,
