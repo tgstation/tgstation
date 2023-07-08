@@ -38,6 +38,16 @@
 	icon_state = "decking_jumpsuit"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/tragic
+	name = "tragic mime suit"
+	desc = "A skin-tight black suit for theatre actors. You feel the need to remind a doctor to eat food and sleep."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "tragic"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS|HANDS|FEET
+	alternate_worn_layer = GLOVES_LAYER
+	can_adjust = FALSE
+
 /*
 *	LUNAR AND JAPANESE CLOTHES
 */
