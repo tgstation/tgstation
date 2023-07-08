@@ -90,7 +90,7 @@
 		lip_overlay.color = lip_color
 		//Emissive blocker
 		if(blocks_emissive)
-			lip_overlay.overlays += emissive_blocker(lip_overlay.icon, lip_overlay.icon_state, location, alpha = facial_hair_alpha)
+			lip_overlay.overlays += emissive_blocker(lip_overlay.icon, lip_overlay.icon_state, location)
 		//Offsets
 		worn_face_offset?.apply_offset(lip_overlay)
 		. += lip_overlay
