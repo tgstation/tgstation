@@ -43,9 +43,9 @@
 		return
 	operating = !operating
 	if (user)
-		var/on_or_off = operating ? "on" : "off"
-		balloon_alert(user, "power toggled [on_or_off]")
-		user.log_message("turned [on_or_off] the [src]", LOG_GAME)
+		var/enabled_or_disabled = operating ? "enabled" : "disabled"
+		balloon_alert(user, "power [enabled_or_disabled]")
+		user.log_message("turned [enabled_or_disabled] the [src]", LOG_GAME)
 		add_hiddenprint(user)
 	update()
 	update_appearance()

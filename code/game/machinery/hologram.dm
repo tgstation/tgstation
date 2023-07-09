@@ -102,6 +102,14 @@ Possible to do for anyone motivated enough:
 	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 	update_appearance()
 
+	AddElement( \
+		/datum/element/contextual_screentip_mob_typechecks, \
+		list(/mob/living/silicon = list( \
+				SCREENTIP_CONTEXT_ALT_LMB = "Disconnect all active calls" \
+			) \
+		) \
+	)
+
 /obj/machinery/holopad/secure
 	name = "secure holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
@@ -219,9 +227,6 @@ Possible to do for anyone motivated enough:
 		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units. Use :h to speak through the projection. Right-click to project or cancel a projection. Alt-click to hangup all active and incomming calls. Ctrl-click to end projection without jumping to your last location.")
 	else if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units.")
-
-	if (issilicon(user))
-		. += span_notice("Alt-Click to disconnect all active calls.")
 
 /obj/machinery/holopad/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

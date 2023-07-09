@@ -74,7 +74,16 @@
 		), \
 	)
 
+	AddElement( \
+		/datum/element/contextual_screentip_mob_typechecks, \
+		list(/mob/living/silicon = list( \
+				SCREENTIP_CONTEXT_CTRL_LMB = "Toggle thermal sensors, which control auto-deploy" \
+			) \
+		) \
+	)
+
 	update_appearance()
+
 
 /obj/machinery/firealarm/Destroy()
 	if(my_area)
@@ -460,9 +469,6 @@
 		. += "The local area thermal detection light is [my_area.fire_detect ? "lit" : "unlit"]."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."
 
-	if (issilicon(user))
-		. += span_notice("Ctrl-Click the fire alarm to toggle thermal sensors, which controls auto-activation.")
-
 // Allows Silicons to disable thermal sensor
 /obj/machinery/firealarm/BorgCtrlClick(mob/living/silicon/robot/user)
 	if(get_dist(src,user) <= user.interaction_range)
@@ -483,7 +489,6 @@
 	if (user)
 		balloon_alert(user, "thermal sensors [my_area.fire_detect ? "enabled" : "disabled"]")
 		user.log_message("[ my_area.fire_detect ? "enabled" : "disabled" ] firelock sensors using [src].", LOG_GAME)
-	//to_chat(user, span_notice("You [ my_area.fire_detect ? "enable" : "disable" ] the local firelock thermal sensors!"))
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 

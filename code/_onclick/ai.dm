@@ -200,9 +200,9 @@
 	environ = environ ? APC_CHANNEL_OFF : APC_CHANNEL_ON
 	if (user)
 		add_hiddenprint(user)
-		var/on_or_off = environ ? "on" : "off"
-		balloon_alert(user, "environment power toggled [on_or_off]")
-		user.log_message("turned [on_or_off] the [src] environment settings", LOG_GAME)
+		var/enabled_or_disabled = environ ? "enabled" : "disabled"
+		balloon_alert(user, "environment power [enabled_or_disabled]")
+		user.log_message("[enabled_or_disabled] the [src] environment settings", LOG_GAME)
 	update_appearance()
 	update()
 
@@ -216,11 +216,11 @@
 
 	lighting = lighting ? APC_CHANNEL_OFF : APC_CHANNEL_ON
 	if (user)
-		var/on_or_off = lighting ? "on" : "off"
+		var/enabled_or_disabled = lighting ? "enabled" : "disabled"
 		add_hiddenprint(user)
-		balloon_alert(user, "lighting power toggled [on_or_off]")
-		user.log_message("turned [on_or_off] the [src] lighting settings", LOG_GAME)
-		update_appearance()
+		balloon_alert(user, "lighting power toggled [enabled_or_disabled]")
+		user.log_message("turned [enabled_or_disabled] the [src] lighting settings", LOG_GAME)
+	update_appearance()
 	update()
 
 /// Toggle APC equipment settings
@@ -233,10 +233,10 @@
 
 	equipment = equipment ? APC_CHANNEL_OFF : APC_CHANNEL_ON
 	if (user)
-		var/on_or_off = equipment ? "on" : "off"
-		balloon_alert(user, "equipment power toggled [on_or_off]")
+		var/enabled_or_disabled = equipment ? "enabled" : "disabled"
+		balloon_alert(user, "equipment power toggled [enabled_or_disabled]")
 		add_hiddenprint(user)
-		user.log_message("turned [on_or_off] the [src] equipment settings", LOG_GAME)
+		user.log_message("turned [enabled_or_disabled] the [src] equipment settings", LOG_GAME)
 	update_appearance()
 	update()
 
