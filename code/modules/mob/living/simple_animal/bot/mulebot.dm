@@ -135,8 +135,6 @@
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
-	if(!paicard)
-		name = "[initial(name)] ([new_id])"
 
 /mob/living/simple_animal/bot/mulebot/bot_reset()
 	..()
@@ -263,7 +261,6 @@
 	data["autoReturn"] = auto_return
 	data["autoPickup"] = auto_pickup
 	data["reportDelivery"] = report_delivery
-	data["haspai"] = paicard ? TRUE : FALSE
 	data["id"] = id
 	return data
 
@@ -342,8 +339,6 @@
 			auto_pickup = !auto_pickup
 		if("report")
 			report_delivery = !report_delivery
-		if("ejectpai")
-			ejectpairemote(user)
 
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
@@ -658,7 +653,7 @@
 
 
 /mob/living/simple_animal/bot/mulebot/MobBump(mob/M) // called when the bot bumps into a mob
-	if(paicard || !isliving(M)) //if there's a PAIcard controlling the bot, they aren't allowed to harm folks.
+	if(mind || !isliving(M)) //if there's a sentience controlling the bot, they aren't allowed to harm folks.
 		return ..()
 	var/mob/living/L = M
 	if(wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over.
@@ -764,11 +759,6 @@
 		unload(get_dir(loc, A))
 	else
 		return ..()
-
-/mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/pai_card/card)
-	. = ..()
-	if(.)
-		visible_message(span_notice("[src]'s safeties are locked on."))
 
 /// Checks whether the bot can complete a step_towards, checking whether the bot is on and has the charge to do the move. Returns COMPONENT_MOB_BOT_CANCELSTEP if the bot should not step.
 /mob/living/simple_animal/bot/mulebot/proc/check_pre_step(datum/source)

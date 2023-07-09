@@ -37,8 +37,6 @@
 	var/maints_access_required = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/arm/right/robot
-	///The inserted (if any) pAI in this bot.
-	var/obj/item/pai_card/paicard
 	///The type of bot it is, for radio control.
 	var/bot_type = NONE
 
@@ -108,25 +106,20 @@
 
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
-		if(paicard)
-			return "<b>pAI Controlled</b>"
-		else
-			return "<b>Autonomous</b>"
-	else if(!(bot_mode_flags & BOT_MODE_ON))
+		return "<b>Autonomous</b>"
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return "<span class='bad'>Inactive</span>"
-	else
-		return "<span class='average'>[mode]</span>"
+	return "<span class='average'>[mode]</span>"
 
 /**
  * Returns a status string about the bot's current status, if it's moving, manually controlled, or idle.
  */
 /mob/living/simple_animal/bot/proc/get_mode_ui()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
-		return paicard ? "pAI Controlled" : "Autonomous"
-	else if(!(bot_mode_flags & BOT_MODE_ON))
+		return "Autonomous"
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return "Inactive"
-	else
-		return "[mode]"
+	return "[mode]"
 
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)
@@ -195,8 +188,6 @@
 		QDEL_NULL(path_hud)
 		path_hud = null
 	GLOB.bots_list -= src
-	if(paicard)
-		ejectpai()
 	QDEL_NULL(internal_radio)
 	QDEL_NULL(access_card)
 	return ..()
@@ -271,10 +262,6 @@
 		var/is_sillycone = issilicon(user)
 		if(!(bot_cover_flags & BOT_COVER_EMAGGED) && (is_sillycone || user.Adjacent(src)))
 			. += span_info("Alt-click [is_sillycone ? "" : "or use your ID on "]it to [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]lock its control panel.")
-	if(paicard)
-		. += span_notice("It has a pAI device installed.")
-		if(!(bot_cover_flags & BOT_COVER_OPEN))
-			. += span_info("You can use a <b>hemostat</b> to remove it.")
 
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0 && prob(10))
@@ -393,21 +380,10 @@
 /mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(attacking_item.GetID())
 		unlock_with_id(user)
-	else if(istype(attacking_item, /obj/item/pai_card))
-		insertpai(user, attacking_item)
-	else if(attacking_item.tool_behaviour == TOOL_HEMOSTAT && paicard)
-		if(bot_cover_flags & BOT_COVER_OPEN)
-			to_chat(user, span_warning("Close the access panel before manipulating the personality slot!"))
-		else
-			to_chat(user, span_notice("You attempt to pull [paicard] free..."))
-			if(do_after(user, 30, target = src))
-				if (paicard)
-					user.visible_message(span_notice("[user] uses [attacking_item] to pull [paicard] out of [initial(src.name)]!"),span_notice("You pull [paicard] out of [initial(src.name)] with [attacking_item]."))
-					ejectpai(user)
-	else
-		if(attacking_item.force) //if force is non-zero
-			do_sparks(5, TRUE, src)
-		..()
+		return
+	if(attacking_item.force) //if force is non-zero
+		do_sparks(5, TRUE, src)
+	return ..()
 
 /mob/living/simple_animal/bot/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
@@ -422,10 +398,6 @@
 	var/was_on = bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE
 	stat |= EMPED
 	new /obj/effect/temp_visual/emp(loc)
-	if(paicard)
-		paicard.emp_act(severity)
-		src.visible_message(span_notice("[paicard] is flies out of [initial(src.name)]!"), span_warning("You are forcefully ejected from [initial(src.name)]!"))
-		ejectpai(0)
 
 	if(prob(70/severity))
 		var/datum/language_holder/bot_languages = get_language_holder()
@@ -795,9 +767,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 				access_card.set_access(user_access + prev_access) //Adds the user's access, if any.
 			mode = BOT_SUMMON
 			speak("Responding.", radio_channel)
-
-		if("ejectpai")
-			ejectpairemote(user)
 	return
 
 
@@ -882,8 +851,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 	data["pai"] = list()
 	data["settings"] = list()
 	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
-		data["pai"]["allow_pai"] = bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE
-		data["pai"]["card_inserted"] = paicard
 		data["settings"]["airplane_mode"] = !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
 		data["settings"]["maintenance_lock"] = !(bot_cover_flags & BOT_COVER_OPEN)
 		data["settings"]["power"] = bot_mode_flags & BOT_MODE_ON
@@ -931,10 +898,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 				to_chat(usr, span_notice("You reset the [src]'s [hackables]."))
 				usr.log_message("re-enabled safety lock of [src]", LOG_GAME)
 				bot_reset()
-		if("eject_pai")
-			if(paicard)
-				to_chat(usr, span_notice("You eject [paicard] from [initial(src.name)]."))
-				ejectpai(usr)
 
 /mob/living/simple_animal/bot/update_icon_state()
 	icon_state = "[isnull(base_icon_state) ? initial(icon_state) : base_icon_state][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
@@ -950,55 +913,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 		else if(!issilicon(user) && !isAdminGhostAI(user)) //Bot is hacked, so only silicons and admins are allowed access.
 			return TRUE
 	return FALSE
-
-/mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/pai_card/card)
-	if(paicard)
-		to_chat(user, span_warning("A [paicard] is already inserted!"))
-		return
-	if(bot_cover_flags & BOT_COVER_LOCKED || !(bot_cover_flags & BOT_COVER_OPEN))
-		to_chat(user, span_warning("The personality slot is locked."))
-		return
-	if(!(bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE) || key) //Not pAI controllable or is already player controlled.
-		to_chat(user, span_warning("[src] is not compatible with [card]!"))
-		return
-	if(!card.pai || !card.pai.mind)
-		to_chat(user, span_warning("[card] is inactive."))
-		return
-	if(!user.transferItemToLoc(card, src))
-		return
-	paicard = card
-	user.visible_message(span_notice("[user] inserts [card] into [src]!"), span_notice("You insert [card] into [src]."))
-	paicard.pai.mind.transfer_to(src)
-	to_chat(src, span_notice("You sense your form change as you are uploaded into [src]."))
-	name = paicard.pai.name
-	faction = user.faction.Copy()
-	log_combat(user, paicard.pai, "uploaded to [initial(src.name)],")
-	return TRUE
-
-/mob/living/simple_animal/bot/proc/ejectpai(mob/user = null, announce = TRUE)
-	if(paicard)
-		if(mind && paicard.pai)
-			mind.transfer_to(paicard.pai)
-		else if(paicard.pai)
-			paicard.pai.key = key
-		else
-			ghostize(FALSE) // The pAI card that just got ejected was dead.
-		key = null
-		paicard.forceMove(loc)
-		if(user)
-			log_combat(user, paicard.pai, "ejected from [initial(src.name)],")
-		else
-			log_combat(src, paicard.pai, "ejected")
-		if(announce)
-			to_chat(paicard.pai, span_notice("You feel your control fade as [paicard] ejects from [initial(src.name)]."))
-		paicard = null
-		name = initial(src.name)
-		faction = initial(faction)
-
-/mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
-	if(check_access(user) && paicard)
-		speak("Ejecting personality chip.", radio_channel)
-		ejectpai(user)
 
 /mob/living/simple_animal/bot/Login()
 	. = ..()
@@ -1019,12 +933,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return
 
 	update_appearance()
-
-/mob/living/simple_animal/bot/ghost()
-	if(stat != DEAD) // Only ghost if we're doing this while alive, the pAI probably isn't dead yet.
-		return ..()
-	if(paicard && (!client || stat == DEAD))
-		ejectpai(0)
 
 /mob/living/simple_animal/bot/sentience_act()
 	faction -= FACTION_SILICON
