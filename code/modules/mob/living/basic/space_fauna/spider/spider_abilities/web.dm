@@ -161,3 +161,4 @@
 
 /datum/action/cooldown/web_effigy/Activate()
 	new /obj/structure/spider/effigy(get_turf(owner))
+	return ..()
