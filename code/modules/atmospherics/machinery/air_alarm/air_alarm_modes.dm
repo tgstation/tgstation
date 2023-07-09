@@ -41,6 +41,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE
+		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
@@ -59,6 +60,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE
+		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
 	var/list/filtered = subtypesof(/datum/gas)
@@ -79,6 +81,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE * 2
+		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
@@ -96,6 +99,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE * 3
+		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
@@ -131,6 +135,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE
+		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
@@ -194,8 +199,54 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_INTERNAL_BOUND
 		vent.internal_pressure_bound = 0
+		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
 	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
 		scrubber.on = FALSE
+		scrubber.update_appearance(UPDATE_ICON)
+
+/datum/air_alarm_mode/vent_siphon
+	name = "Vent siphon"
+	desc = "Disables scrubbers and turns vents to siphon"
+	danger = TRUE
+	emag = TRUE // siphoning things with vents can horribly fuck up distro, even if its surprisingly fast
+
+/datum/air_alarm_mode/vent_siphon/apply(area/applied)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+		vent.on = TRUE
+		vent.pressure_checks = NONE
+		vent.internal_pressure_bound = 0
+		vent.external_pressure_bound = 0
+		vent.pump_direction = ATMOS_DIRECTION_SIPHONING
+		vent.update_appearance(UPDATE_ICON)
+
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+		scrubber.on = FALSE
+		scrubber.update_appearance(UPDATE_ICON)
+
+// Of all air alarm modes, this one siphons at the highest rate, capable of siphoning brig in ~15 seconds or so.
+/datum/air_alarm_mode/total_siphon
+	name = "Total Siphon"
+	desc = "Turns both scrubbers and vents into siphon mode"
+	danger = TRUE
+	emag = TRUE
+	// this mode both fucks up distro and siphons VERY VERY fast
+	// the only non-malicious use is the extremely rare scenario where damaging distro doesnt matter and you need to clean up some places air REALLY REALLY fast
+	// however, this is perfect for the purpose of total destruction
+	// thus, emag only
+
+/datum/air_alarm_mode/total_siphon/apply(area/applied)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+		vent.on = TRUE
+		vent.pressure_checks = NONE
+		vent.internal_pressure_bound = 0
+		vent.external_pressure_bound = 0
+		vent.pump_direction = ATMOS_DIRECTION_SIPHONING
+		vent.update_appearance(UPDATE_ICON)
+
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+		scrubber.on = TRUE
+		scrubber.set_widenet(TRUE)
+		scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
 		scrubber.update_appearance(UPDATE_ICON)
