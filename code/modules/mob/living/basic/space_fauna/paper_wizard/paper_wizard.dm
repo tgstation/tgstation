@@ -17,11 +17,13 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	attack_sound = 'sound/hallucinations/growl1.ogg'
-	var/list/copies = list()
-	var/datum/action/cooldown/spell/wizard_summon_minions/summon
-	var/datum/action/cooldown/spell/pointed/wizard_mimic/mimic
-
 	ai_controller = /datum/ai_controller/basic_controller/paper_wizard
+	///the list of our clones
+	var/list/copies = list()
+	///spell to summon minions
+	var/datum/action/cooldown/spell/wizard_summon_minions/summon
+	///spell to summon clones
+	var/datum/action/cooldown/spell/pointed/wizard_mimic/mimic
 
 
 /mob/living/basic/paper_wizard/Initialize(mapload)
@@ -56,7 +58,7 @@
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 		BB_WRITING_LIST = list(
 			"I can turned the paper into gold and ink into diamonds!",
-			"Your fate is written and seeled!",
+			"Your fate is written and sealed!",
 			"You shall suffered the rath of a thousand paper cuts!",
 		)
 	)

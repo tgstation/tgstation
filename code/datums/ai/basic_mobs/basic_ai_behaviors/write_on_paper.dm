@@ -9,7 +9,7 @@
 		target.add_raw_text(pick(writing_list))
 		target.update_appearance()
 	wizard.dropItemToGround(target)
-	finish_action(controller, succeeded = TRUE, found_paper)
+	finish_action(controller, TRUE, found_paper)
 
 /datum/ai_behavior/write_on_paper/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()

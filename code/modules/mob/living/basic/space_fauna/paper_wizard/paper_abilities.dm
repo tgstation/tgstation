@@ -11,6 +11,12 @@
 	var/max_minions = 6
 	///How many minions we should spawn
 	var/minions_to_summon = 3
+	///the minions we can summoned
+	var/list/minions = list(
+		/mob/living/basic/stickman,
+		/mob/living/basic/stickman/ranged,
+		/mob/living/basic/stickman/dog,
+	)
 
 
 /datum/action/cooldown/spell/wizard_summon_minions/can_cast_spell(feedback = TRUE)
@@ -23,11 +29,6 @@
 
 /datum/action/cooldown/spell/wizard_summon_minions/cast(mob/living/cast_on)
 	. = ..()
-	var/list/minions = list(
-		/mob/living/basic/stickman,
-		/mob/living/basic/stickman/ranged,
-		/mob/living/basic/stickman/dog,
-	)
 	var/list/directions = GLOB.cardinals.Copy()
 	var/summon_amount = min(minions_to_summon, max_minions - summoned_minions)
 	for(var/i in 1 to summon_amount)
