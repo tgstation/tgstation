@@ -60,3 +60,23 @@
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Unkempt Curls"
 	icon_state = "unkempt_curls"
+
+/datum/sprite_accessory/hair/bowpigtails
+	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	name = "Pigtails with Bows"
+	icon_state = "hair_bowpigtails"
+
+/datum/sprite_accessory/hair/silky
+	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	name = "Silky"
+	icon_state = "hair_silky"
+
+/datum/sprite_accessory/hair/shortchoppy
+	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	name = "Short Choppy"
+	icon_state = "hair_choppy"
+
+/datum/sprite_accessory/hair/choppylong
+	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	name = "Choppy Long"
+	icon_state = "hair_choppylong"

@@ -6,6 +6,7 @@
 /datum/sprite_accessory/anime_head/none
 	name = "None"
 	icon_state = "None"
+
 /datum/sprite_accessory/anime_head/pony
 	name = "Pony Ears"
 	icon_state = "pony"
@@ -15,6 +16,10 @@
 	name = "Kitsune Ears"
 	icon_state = "kitsune"
 
+/datum/sprite_accessory/anime_head/frills
+	name = "Frills"
+	icon_state = "frills"
+
 /datum/sprite_accessory/anime_head/oni
 	name = "Oni Ears"
 	icon_state = "oni"
@@ -22,6 +27,11 @@
 /datum/sprite_accessory/anime_head/demon
 	name = "Demon Horns"
 	icon_state = "demon"
+
+/datum/sprite_accessory/anime_head/tallhorns
+	name = "Tall Horns"
+	icon = 'monkestation/icons/mob/anime/anime_head32x48.dmi'
+	icon_state = "tallhorns"
 
 /datum/sprite_accessory/anime_head/antlers
 	name = "Antlers"
@@ -35,6 +45,16 @@
 /datum/sprite_accessory/anime_head/cat
 	name = "Cat Ears"
 	icon_state = "cat"
+	hasinner = TRUE
+
+/datum/sprite_accessory/anime_head/rabbit
+	name = "Rabbit Ears"
+	icon = 'monkestation/icons/mob/anime/anime_head32x48.dmi'
+	icon_state = "rabbit"
+
+/datum/sprite_accessory/anime_head/mouse
+	name = "Mouse Ears"
+	icon_state = "mouse"
 	hasinner = TRUE
 
 /datum/sprite_accessory/anime_middle
