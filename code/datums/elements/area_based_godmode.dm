@@ -18,7 +18,6 @@
 	var/lose_message
 
 /datum/component/area_based_godmode/Initialize(
-	datum/target,
 	area_type,
 	allow_area_subtypes = FALSE,
 	gain_message = span_big(span_green("You are now invulnerable.")),
@@ -26,17 +25,17 @@
 )
 	. = ..()
 
-	if(!ismob(target))
+	var/mob/mob_target = parent
+	if(!istype(mob_target))
 		return COMPONENT_INCOMPATIBLE
 
-	var/mob/mob_target = target
 	if(initial(mob_target.status_flags) & GODMODE)
 		return COMPONENT_INCOMPATIBLE
 
-	var/list/datum/component/area_based_godmode/others = target.GetComponents(/datum/component/area_based_godmode)
+	var/list/datum/component/area_based_godmode/others = mob_target.GetComponents(/datum/component/area_based_godmode)
 	for(var/datum/component/area_based_godmode/other as anything in (others - src))
 		if(other.area_type == area_type)
-			stack_trace("attempted to add a duplicate [type] to [target.type] for [area_type]")
+			stack_trace("attempted to add a duplicate [type] to [mob_target.type] for [area_type]")
 			return COMPONENT_INCOMPATIBLE
 
 	src.area_type = area_type
@@ -45,8 +44,8 @@
 	src.lose_message = lose_message
 
 	mob_target.become_area_sensitive(REF(src))
-	RegisterSignal(target, COMSIG_ENTER_AREA, PROC_REF(check_area))
-	check_area(target)
+	RegisterSignal(mob_target, COMSIG_ENTER_AREA, PROC_REF(check_area))
+	check_area(mob_target)
 
 /datum/component/area_based_godmode/UnregisterFromParent()
 	var/mob/mob_parent = parent
