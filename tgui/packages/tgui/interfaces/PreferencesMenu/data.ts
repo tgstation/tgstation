@@ -74,6 +74,7 @@ export type Department = {
 export type Job = {
   description: string;
   department: string;
+  alt_titles?: string[];
 };
 
 export type Quirk = {
@@ -155,6 +156,7 @@ export type PreferencesMenuData = {
 
   job_bans?: string[];
   job_days_left?: Record<string, number>;
+  job_alt_titles: Record<string, string>;
   job_required_experience?: Record<
     string,
     {

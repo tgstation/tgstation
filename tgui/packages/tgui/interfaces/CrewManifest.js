@@ -48,12 +48,12 @@ export const CrewManifest = (props, context) => {
                     collapsing
                     minWidth="40px"
                     width="40px">
-                    {positions[dept].exceptions.includes(crewMember.rank) && (
+                    {positions[dept].exceptions.includes(crewMember.trim) && (
                       <Tooltip content="No position limit" position="bottom">
                         <Icon className="CrewManifest__Icon" name="infinity" />
                       </Tooltip>
                     )}
-                    {crewMember.rank === 'Captain' && (
+                    {crewMember.trim === 'Captain' && (
                       <Tooltip content="Captain" position="bottom">
                         <Icon
                           className={classes([
@@ -64,7 +64,7 @@ export const CrewManifest = (props, context) => {
                         />
                       </Tooltip>
                     )}
-                    {commandJobs.includes(crewMember.rank) && (
+                    {commandJobs.includes(crewMember.trim) && (
                       <Tooltip content="Member of command" position="bottom">
                         <Icon
                           className={classes([
