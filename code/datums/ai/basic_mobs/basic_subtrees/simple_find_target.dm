@@ -8,9 +8,8 @@
 /datum/ai_planning_subtree/simple_find_target/not_while_observed
 
 /datum/ai_planning_subtree/simple_find_target/not_while_observed/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/list/nearby_mobs = hearers(7, controller.pawn)
-	for(var/mob/watcher in nearby_mobs)
-		if(istype(watcher, /mob/living/carbon/human) && watcher.stat != DEAD)
+	for(var/mob/living/carbon/human/watcher in hearers(7, controller.pawn))
+		if(watcher.stat != DEAD)
 			return
 	return ..()
 

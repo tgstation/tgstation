@@ -53,13 +53,21 @@
 		/datum/ai_planning_subtree/random_speech/fox,
 	)
 
+// An AI controller for more docile foxes.
+/datum/ai_controller/basic_controller/fox/docile
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate/to_flee,
+		/datum/ai_planning_subtree/flee_target/from_flee_key,
+		/datum/ai_planning_subtree/random_speech/fox,
+	)
+
 // Foxes will attack other station pets regardless of faction.
 /datum/targetting_datum/basic/of_size/ours_or_smaller/ignore_faction
 
 /datum/targetting_datum/basic/of_size/ours_or_smaller/ignore_faction/faction_check(mob/living/living_mob, mob/living/the_target)
 	return FALSE
 
-//Captain fox
+// The captain's fox, Renault
 /mob/living/basic/pet/fox/renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox."
@@ -67,4 +75,6 @@
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
 
-
+// A more docile subtype that won't attack other animals.
+/mob/living/basic/pet/fox/docile
+	ai_controller = /datum/ai_controller/basic_controller/fox/docile
