@@ -47,7 +47,6 @@
 	var/paper_effect = new /obj/effect/temp_visual/paper_scatter(get_turf(src))
 	animate(paper_effect, alpha = 0, 1 SECONDS)
 
-
 /mob/living/basic/paper_wizard/Destroy()
 	QDEL_LIST(copies)
 	return ..()
@@ -60,7 +59,6 @@
 			"Your fate is written and seeled!",
 			"You shall suffered the rath of a thousand paper cuts!",
 		)
-
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
