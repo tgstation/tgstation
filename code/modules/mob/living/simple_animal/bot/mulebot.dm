@@ -30,6 +30,7 @@
 	radio_channel = RADIO_CHANNEL_SUPPLY
 	bot_type = MULE_BOT
 	path_image_color = "#7F5200"
+	possessed_message = "You are a MULEbot! Do your best to make sure that packages get to their destination!"
 
 	/// unique identifier in case there are multiple mulebots.
 	var/id
@@ -262,6 +263,8 @@
 	data["autoPickup"] = auto_pickup
 	data["reportDelivery"] = report_delivery
 	data["id"] = id
+	data["allow_possession"] = bot_mode_flags & BOT_MODE_GHOST_CONTROLLABLE
+	data["possession_enabled"] = can_be_possessed
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
@@ -273,7 +276,7 @@
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
 				bot_cover_flags ^= BOT_COVER_LOCKED
-				. = TRUE
+				return TRUE
 		if("on")
 			if(bot_mode_flags & BOT_MODE_ON)
 				turn_off()
@@ -284,10 +287,10 @@
 				if(!turn_on())
 					to_chat(usr, span_warning("You can't switch on [src]!"))
 					return
-			. = TRUE
+			return TRUE
 		else
 			bot_control(action, usr, params) // Kill this later. // Kill PDAs in general please
-			. = TRUE
+			return TRUE
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)
 	if(pda && wires.is_cut(WIRE_RX)) // MULE wireless is controlled by wires.

@@ -46,8 +46,8 @@
 	var/list/prev_access = list()
 
 	///Bot-related mode flags on the Bot indicating how they will act.
-	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_PAI_CONTROLLABLE
-//	Selections: BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_PAI_CONTROLLABLE
+	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_GHOST_CONTROLLABLE
+//	Selections: BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_GHOST_CONTROLLABLE
 
 	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging.
 	var/bot_cover_flags = BOT_COVER_LOCKED
@@ -103,6 +103,15 @@
 	var/path_image_color = "#FFFFFF"
 	var/reset_access_timer_id
 	var/ignorelistcleanuptimer = 1 // This ticks up every automated action, at 300 we clean the ignore list
+
+	/// Component which allows ghosts to take over this bot
+	var/datum/component/ghost_direct_control/personality_download
+	/// If true we will allow ghosts to control this mob
+	var/can_be_possessed = FALSE
+	/// If true we will offer this
+	COOLDOWN_DECLARE(post_ghost_offer)
+	/// Message to display upon possession
+	var/possessed_message = "You're a generic bot. How did one of these even get made?"
 
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
@@ -183,14 +192,52 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
 		randomize_language_if_on_station()
 
+	if(mapload && is_station_level(z) && (bot_mode_flags & BOT_MODE_GHOST_CONTROLLABLE))
+		enable_possession(mapload)
+
 /mob/living/simple_animal/bot/Destroy()
-	if(path_hud)
-		QDEL_NULL(path_hud)
-		path_hud = null
 	GLOB.bots_list -= src
+	QDEL_NULL(personality_download)
 	QDEL_NULL(internal_radio)
 	QDEL_NULL(access_card)
+	QDEL_NULL(path_hud)
 	return ..()
+
+/// Allows this bot to be controlled by a ghost, who will become its mind
+/mob/living/simple_animal/bot/proc/enable_possession(mapload = FALSE)
+	can_be_possessed = TRUE
+	personality_download = AddComponent(\
+		/datum/component/ghost_direct_control,\
+		poll_candidates = !mapload,\
+		poll_ignore_key = POLL_IGNORE_BOTS,\
+		assumed_control_message = possessed_message,\
+		extra_control_checks = CALLBACK(src, PROC_REF(check_possession)),\
+		after_assumed_control = CALLBACK(src, PROC_REF(post_possession)),\
+	)
+
+/// Disables this bot from being possessed by ghosts
+/mob/living/simple_animal/bot/proc/disable_possession(mob/user)
+	can_be_possessed = FALSE
+	QDEL_NULL(personality_download)
+	if (mind)
+		if (user)
+			log_combat(user, src, "ejected from [initial(src.name)] control.")
+		to_chat(src, span_warning("You feel yourself fade as your personality matrix is reset!"))
+		ghostize(can_reenter_corpse = FALSE)
+		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+		say("Personally matrix reset!", forced = "bot")
+		key = null
+
+/// Returns true if this mob can be controlled
+/mob/living/simple_animal/bot/proc/check_possession(mob/potential_possessor)
+	if (!can_be_possessed)
+		to_chat(potential_possessor, span_warning("The bot's personality download has been disabled!"))
+	return can_be_possessed
+
+/// Fired after something takes control of this mob
+/mob/living/simple_animal/bot/proc/post_possession()
+	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+	say("New personality installed successfully!", forced = "bot")
 
 /mob/living/simple_animal/bot/proc/check_access(mob/living/user, obj/item/card/id)
 	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
@@ -848,9 +895,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 	data["emagged"] = bot_cover_flags & BOT_COVER_EMAGGED
 	data["has_access"] = check_access(user)
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
-	data["pai"] = list()
 	data["settings"] = list()
 	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+		data["settings"]["allow_possession"] = bot_mode_flags & BOT_MODE_GHOST_CONTROLLABLE
+		data["settings"]["possession_enabled"] = can_be_possessed
 		data["settings"]["airplane_mode"] = !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
 		data["settings"]["maintenance_lock"] = !(bot_cover_flags & BOT_COVER_OPEN)
 		data["settings"]["power"] = bot_mode_flags & BOT_MODE_ON
@@ -898,6 +946,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 				to_chat(usr, span_notice("You reset the [src]'s [hackables]."))
 				usr.log_message("re-enabled safety lock of [src]", LOG_GAME)
 				bot_reset()
+		if("toggle_personality")
+			if (can_be_possessed)
+				disable_possession(usr)
+			else
+				enable_possession()
 
 /mob/living/simple_animal/bot/update_icon_state()
 	icon_state = "[isnull(base_icon_state) ? initial(icon_state) : base_icon_state][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
