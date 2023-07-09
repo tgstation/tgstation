@@ -4,7 +4,7 @@
 #define BEE_PROB_GOHOME 35 //Probability to go home when idle is below BEE_IDLE_GOHOME
 #define BEE_PROB_GOROAM 5 //Probability to go roaming when idle is above BEE_IDLE_ROAMING
 #define BEE_TRAY_RECENT_VISIT 200 //How long in deciseconds until a tray can be visited by a bee again
-#define BEE_DEFAULT_COLOUR "#e5e500" //the colour we make the stripes of the bee if our reagent has no colour (or we have no reagent)
+#define BEE_DEFAULT_COLOUR "#e8d850" //the colour we make the stripes of the bee if our reagent has no colour (or we have no reagent)
 
 #define BEE_POLLINATE_YIELD_CHANCE 33
 #define BEE_POLLINATE_PEST_CHANCE 33
@@ -101,11 +101,12 @@
 	var/obj/item/food/pollensac/sac = new(loc) //monkestation edit, bee update
 	sac.pixel_x = pixel_x
 	sac.pixel_y = pixel_y
-	sac.reagents.add_reagent(/datum/reagent/consumable/honey, 5)
-	sac.color =
+	sac.reagents.add_reagent(/datum/reagent/consumable/honey, 2)
+	sac.color = loc.color
 	if(beegent)
 		sac.beegent = beegent
 		sac.reagents.add_reagent(beegent.type, 5)
+		sac.color = beegent.color
 	sac.update_appearance()
 	beegent = null
 	return ..()
