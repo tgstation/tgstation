@@ -995,6 +995,7 @@
 #include "code\datums\components\seethrough.dm"
 #include "code\datums\components\shell.dm"
 #include "code\datums\components\shielded.dm"
+#include "code\datums\components\shovel_hands.dm"
 #include "code\datums\components\shrink.dm"
 #include "code\datums\components\shuttle_cling.dm"
 #include "code\datums\components\shy.dm"

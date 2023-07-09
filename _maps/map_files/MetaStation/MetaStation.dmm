@@ -4992,7 +4992,6 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 4
 	},
-/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "bSm" = (
@@ -32012,10 +32011,8 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/computer/order_console/cook{
-	dir = 8
-	},
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/vending/cigarette,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "lFq" = (
@@ -37742,7 +37739,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/structure/chair/stool/directional/east,
+/obj/machinery/computer/order_console/cook{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "nEC" = (
@@ -48885,16 +48884,11 @@
 	c_tag = "Head of Personnel's Office"
 	},
 /obj/structure/table/wood,
-/obj/item/storage/box/pdas{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/box/silver_ids,
-/obj/item/storage/box/ids,
 /obj/machinery/light/directional/south,
 /obj/item/papercutter{
 	pixel_x = -4
 	},
+/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "rJz" = (
@@ -57281,7 +57275,7 @@
 "uEn" = (
 /obj/machinery/light/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/cigarette,
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "uEo" = (

@@ -109,9 +109,6 @@
 	},
 /obj/item/folder/blue,
 /obj/machinery/light/small/directional/west,
-/obj/item/hand_labeler{
-	pixel_y = 8
-	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hop)
 "aba" = (
@@ -10856,15 +10853,7 @@
 "cGI" = (
 /obj/structure/table,
 /obj/item/paper_bin/construction,
-/obj/item/pen/fountain{
-	pixel_x = -3;
-	pixel_y = -3
-	},
 /obj/item/pen/fountain,
-/obj/item/pen/fountain{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/hop)
 "cGQ" = (
@@ -18184,6 +18173,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 1
 	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "eDe" = (
@@ -28033,8 +28023,6 @@
 /area/station/service/hydroponics)
 "hlG" = (
 /obj/structure/closet/mini_fridge{
-	desc = "A small contraption designed to imbue a few drinks with a pleasant chill.";
-	name = "mini-fridge";
 	pixel_x = 6;
 	pixel_y = 5
 	},
@@ -31141,13 +31129,7 @@
 "idM" = (
 /obj/structure/table,
 /obj/machinery/status_display/evac/directional/north,
-/obj/item/paper_bin/construction{
-	pixel_x = -6
-	},
-/obj/item/paper_bin,
-/obj/item/storage/box/pdas{
-	pixel_x = 10
-	},
+/obj/item/papercutter,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "iea" = (
@@ -66602,11 +66584,6 @@
 /area/station/medical/paramedic)
 "rmm" = (
 /obj/structure/table,
-/obj/item/storage/box/ids{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/silver_ids,
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/requests_console/directional/north{
 	department = "Head of Personnel's Desk";
@@ -66615,6 +66592,9 @@
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/assistance,
+/obj/item/hand_labeler{
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "rmu" = (
@@ -76079,8 +76059,6 @@
 /area/station/cargo/sorting)
 "tSD" = (
 /obj/structure/closet/mini_fridge{
-	desc = "A small contraption designed to imbue a few drinks with a pleasant chill.";
-	name = "mini-fridge";
 	pixel_x = 6;
 	pixel_y = 5
 	},
