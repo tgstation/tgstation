@@ -202,10 +202,20 @@
 		if(locate(/obj/item/pillow) in owner.loc)
 			healing += 0.1
 
-		if(healing > 0 && health_ratio > 0.8)
-			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
-			owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
-			owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
+		if(healing > 0)
+			// gives a boost to internal organs healing
+			for(var/obj/item/bodypart/target_bodypart in owner.bodyparts)
+				for(var/obj/item/organ/internal/target_organ in target_bodypart.contents)
+					if(!target_organ.damage || target_organ.organ_flags & ORGAN_FAILING)
+						continue
+
+					var/healing_bonus = target_organ.healing_factor * healing
+					target_organ.apply_organ_damage(-healing_bonus * target_organ.maxHealth)
+
+			if(health_ratio > 0.8) // only heals minor physical damage
+				owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
+				owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
+				owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
 		owner.adjustStaminaLoss(min(-1 * healing, -1 * HEALING_SLEEP_DEFAULT))
 	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
 	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
