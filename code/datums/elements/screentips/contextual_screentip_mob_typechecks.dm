@@ -1,5 +1,5 @@
-/// Apply basic contextual screentips when the user hovers over this item as a specific typepath.
-/// A "Type A" interaction.
+/// Apply basic contextual screentips when a user of a specific typepath hovers over us.
+/// A "Type B" interaction.
 /// This stacks with other contextual screentip elements, though you may want to register the signal/flag manually at that point for performance.
 /datum/element/contextual_screentip_mob_typechecks
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
