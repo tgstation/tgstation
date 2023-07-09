@@ -324,16 +324,21 @@
 /obj/machinery/door/window/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(round(exposed_temperature / 200), BURN, 0, 0)
 
-
-/obj/machinery/door/window/emag_act(mob/user)
+/obj/machinery/door/window/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!operating && density && !(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
 		operating = TRUE
 		flick("[base_state]spark", src)
 		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		sleep(0.6 SECONDS)
-		operating = FALSE
-		open(BYPASS_DOOR_CHECKS)
+		if (user)
+			balloon_alert(user, "circuitry overloaded")
+		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
+		return TRUE
+	return FALSE
+
+/obj/machinery/door/window/proc/finish_emag_act()
+	operating = FALSE
+	open(BYPASS_DOOR_CHECKS)
 
 /obj/machinery/door/window/examine(mob/user)
 	. = ..()

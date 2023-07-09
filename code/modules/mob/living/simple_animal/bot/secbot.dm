@@ -233,12 +233,12 @@
 		retaliate(user)
 		special_retaliate_after_attack(user)
 
-/mob/living/simple_animal/bot/secbot/emag_act(mob/user)
-	..()
+/mob/living/simple_animal/bot/secbot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 	if(user)
-		to_chat(user, span_danger("You short out [src]'s target assessment circuits."))
+		balloon_alert(user, "target assessment circuits shorted")
 		oldtarget_name = user.name
 
 	if(bot_type == HONK_BOT)
@@ -249,6 +249,7 @@
 
 	security_mode_flags &= ~SECBOT_DECLARE_ARRESTS
 	update_appearance()
+	return TRUE
 
 /mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/Proj)
 	if(istype(Proj, /obj/projectile/beam) || istype(Proj, /obj/projectile/bullet))

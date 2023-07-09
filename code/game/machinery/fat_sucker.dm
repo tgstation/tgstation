@@ -210,10 +210,13 @@
 	if(default_deconstruction_crowbar(I))
 		return TRUE
 
-/obj/machinery/fat_sucker/emag_act(mob/living/user)
+/obj/machinery/fat_sucker/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	start_at = 100
 	stop_at = 0
+	if (user)
+		balloon_alert(user, "emagged")
 	to_chat(user, span_notice("You remove the access restrictions and lower the automatic ejection threshold!"))
 	obj_flags |= EMAGGED
+	return TRUE

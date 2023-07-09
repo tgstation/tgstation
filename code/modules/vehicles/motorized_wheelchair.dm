@@ -185,8 +185,11 @@
 			visible_message(span_danger("[src] crashes into [A], sending [disabled] flying!"))
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
-/obj/vehicle/ridden/wheelchair/motorized/emag_act(mob/user)
+/obj/vehicle/ridden/wheelchair/motorized/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if((obj_flags & EMAGGED) || !panel_open)
-		return
-	to_chat(user, span_warning("A bomb appears in [src], what the fuck?"))
+		return FALSE
+	if (user)
+		balloon_alert("bomb implanted?")
+		visible_message(span_warning("A bomb appears in [src], what the fuck?"))
 	obj_flags |= EMAGGED
+	return TRUE

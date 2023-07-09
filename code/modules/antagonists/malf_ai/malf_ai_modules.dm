@@ -682,11 +682,11 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		to_chat(src, span_warning("[alert_msg]"))
 	return success
 
-/// Air Alarm Safety Override: Unlocks the ability to enable flooding on all air alarms.
+/// Air Alarm Safety Override: Unlocks the ability to enable dangerous modes on all air alarms.
 /datum/ai_module/utility/break_air_alarms
 	name = "Air Alarm Safety Override"
-	description = "Gives you the ability to disable safeties on all air alarms. This will allow you to use the environmental mode Flood, \
-		which disables scrubbers as well as pressure checks on vents. Anyone can check the air alarm's interface and may be tipped off by their nonfunctionality."
+	description = "Gives you the ability to disable safeties on all air alarms. This will allow you to use extremely dangerous environmental modes. \
+			Anyone can check the air alarm's interface and may be tipped off by their nonfunctionality."
 	one_purchase = TRUE
 	cost = 50
 	power_type = /datum/action/innate/ai/break_air_alarms
@@ -695,7 +695,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/action/innate/ai/break_air_alarms
 	name = "Override Air Alarm Safeties"
-	desc = "Enables the Flood setting on all air alarms."
+	desc = "Enables extremely dangerous settings on all air alarms."
 	button_icon_state = "break_air_alarms"
 	uses = 1
 
@@ -704,7 +704,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		if(!is_station_level(AA.z))
 			continue
 		AA.obj_flags |= EMAGGED
-	to_chat(owner, span_notice("All air alarm safeties on the station have been overridden. Air alarms may now use the Flood environmental mode."))
+	to_chat(owner, span_notice("All air alarm safeties on the station have been overridden. Air alarms may now use extremely dangerous environmental modes."))
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
 /// Thermal Sensor Override: Unlocks the ability to disable all fire alarms from doing their job.
@@ -1013,6 +1013,88 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 				owner.verb_yell = say_verb
 		if("name")
 			say_name = params["name"]
+
+/datum/ai_module/utility/emag
+	name = "Targetted Safeties Override"
+	description = "Allows you to disable the safeties of any machinery on the station, provided you can access it."
+	cost = 20
+	power_type = /datum/action/innate/ai/ranged/emag
+	unlock_text = span_notice("You download an illicit software package from a syndicate database leak and integrate it into your firmware, fighting off a few kernel intrusions along the way.")
+	unlock_sound = SFX_SPARKS
+
+/datum/action/innate/ai/ranged/emag
+	name = "Targetted Safeties Override"
+	desc = "Allows you to effectively emag anything you click on."
+	button_icon_state = "emag"
+	uses = 7
+	auto_use_uses = FALSE
+	enable_text = span_notice("You load your syndicate software package to your most recent memory slot.")
+	disable_text = span_notice("You unload your syndicate software package.")
+	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+
+/datum/action/innate/ai/ranged/emag/Destroy()
+	return ..()
+
+/datum/action/innate/ai/ranged/emag/New()
+	. = ..()
+	desc = "[desc] It has [uses] use\s remaining."
+
+/datum/action/innate/ai/ranged/emag/do_ability(mob/living/caller, atom/clicked_on)
+
+	if (!isAI(caller))
+		return FALSE
+	var/mob/living/silicon/ai/ai_caller = caller
+
+	if(ai_caller.incapacitated())
+		unset_ranged_ability(caller)
+		return FALSE
+
+	if (!ai_caller.can_see(clicked_on))
+		clicked_on.balloon_alert(ai_caller, "can't see!")
+		return FALSE
+
+	if (ismachinery(clicked_on))
+		var/obj/machinery/clicked_machine = clicked_on
+		if (!clicked_machine.is_operational)
+			clicked_machine.balloon_alert(ai_caller, "not operational!")
+			return FALSE
+
+	if (!(ismachinery(clicked_on) || isbot(clicked_on) || isstructure(clicked_on) || issilicon(clicked_on) || istype(clicked_on, /obj/item/radio/intercom) || istype(clicked_on, /obj/item/modular_computer)))
+		clicked_on.balloon_alert(ai_caller, "incompatable!")
+		return FALSE
+
+	if (istype(clicked_on, /obj/machinery/door/airlock)) // I HATE THIS CODE SO MUCHHH
+		var/obj/machinery/door/airlock/clicked_airlock = clicked_on
+		if (!clicked_airlock.canAIControl(ai_caller))
+			clicked_airlock.balloon_alert(ai_caller, "unable to interface!")
+			return FALSE
+
+	if (istype(clicked_on, /obj/machinery/airalarm))
+		var/obj/machinery/airalarm/alarm = clicked_on
+		if (alarm.aidisabled)
+			alarm.balloon_alert(ai_caller, "unable to interface!")
+			return FALSE
+
+	if (istype(clicked_on, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/clicked_apc = clicked_on
+		if (clicked_apc.aidisabled)
+			clicked_apc.balloon_alert(ai_caller, "unable to interface!")
+			return FALSE
+
+	if (!clicked_on.emag_act(ai_caller))
+		to_chat(ai_caller, span_warning("Emag failed!")) // lets not overlap balloon alerts
+		return FALSE
+
+	adjust_uses(-1)
+	if(uses)
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+		build_all_button_icons()
+	else
+		unset_ranged_ability(ai_caller, span_warning("Out of uses!"))
+
+	return TRUE
+
+
 
 
 #undef DEFAULT_DOOMSDAY_TIMER

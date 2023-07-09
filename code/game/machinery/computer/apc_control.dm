@@ -27,12 +27,15 @@
 		return
 	..()
 
-/obj/machinery/computer/apc_control/emag_act(mob/user)
+/obj/machinery/computer/apc_control/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
-	usr.log_message("emagged [src].", LOG_ATTACK, color="red")
+	if (user)
+		user.log_message("emagged [src].", LOG_ATTACK, color="red")
+		balloon_alert(user, "access controller shorted")
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return TRUE
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	if(!should_log)

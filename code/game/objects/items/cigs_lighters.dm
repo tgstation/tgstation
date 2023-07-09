@@ -1060,21 +1060,27 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(screw && (obj_flags & EMAGGED))
 		to_chat(user, span_warning("[src] can't be modified!"))
 
-/obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
+/obj/item/clothing/mask/vape/emag_act(mob/user, obj/item/card/emag/emag_card) // I WON'T REGRET WRITTING THIS, SURLY.
 	if(screw)
 		if(!(obj_flags & EMAGGED))
 			obj_flags |= EMAGGED
 			super = FALSE
-			to_chat(user, span_warning("You maximize the voltage of [src]."))
+			if (user)
+				balloon_alert(user, "voltage maximized")
 			icon_state = "vape_open_high"
 			set_greyscale(new_config = /datum/greyscale_config/vape/open_high)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread //for effect
 			sp.set_up(5, 1, src)
 			sp.start()
+			return TRUE
 		else
-			to_chat(user, span_warning("[src] is already emagged!"))
+			if (user)
+				balloon_alert(user, "already emagged!")
+			return FALSE
 	else
-		to_chat(user, span_warning("You need to open the cap to do that!"))
+		if (user)
+			balloon_alert(user, "open the cap first!")
+		return FALSE
 
 /obj/item/clothing/mask/vape/attack_self(mob/user)
 	if(reagents.total_volume > 0)

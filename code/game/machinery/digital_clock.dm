@@ -57,12 +57,15 @@
 		obj_flags &= ~EMAGGED
 		return TRUE
 
-/obj/machinery/digital_clock/emag_act(mob/user)
+/obj/machinery/digital_clock/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	do_sparks(3, cardinal_only = FALSE, source = src)
 	obj_flags |= EMAGGED
+	if (user)
+		balloon_alert(user, "emagged")
+	return TRUE
 
 /obj/machinery/digital_clock/emp_act(severity)
 	. = ..()

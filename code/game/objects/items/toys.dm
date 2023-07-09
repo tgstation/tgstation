@@ -815,11 +815,13 @@
 		to_chat(user, span_alert("Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on the small display."))
 		sleep(0.5 SECONDS)
 
-/obj/item/toy/nuke/emag_act(mob/user)
+/obj/item/toy/nuke/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (obj_flags & EMAGGED)
-		return
-	to_chat(user, span_warning("You short-circuit \the [src]."))
+		return FALSE
+	if (user)
+		balloon_alert(user, "short-circuited")
 	obj_flags |= EMAGGED
+	return TRUE
 
 /*
  * Fake meteor
@@ -832,24 +834,21 @@
 	inhand_icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/toy/minimeteor/emag_act(mob/user)
+/obj/item/toy/minimeteor/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (obj_flags & EMAGGED)
-		return
-	to_chat(user, span_warning("You short-circuit whatever electronics exist inside \the [src], if there even are any."))
+		return FALSE
+	if (user)
+		balloon_alert(user, "short-circuited whatever electronics exist inside")
 	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
+	for(var/mob/M in urange(10, src))
+		if(!M.stat && !isAI(M))
+			shake_camera(M, 3, 1)
 	if (obj_flags & EMAGGED)
-		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
 		explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 1)
-		for(var/mob/M in urange(10, src))
-			if(!M.stat && !isAI(M))
-				shake_camera(M, 3, 1)
-	else
-		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
-		for(var/mob/M in urange(10, src))
-			if(!M.stat && !isAI(M))
-				shake_camera(M, 3, 1)
 
 /*
  * Toy big red button
@@ -1608,11 +1607,13 @@ GLOBAL_LIST_EMPTY(intento_players)
 	START_PROCESSING(SSfastprocess, src)
 	COOLDOWN_START(src, next_icon_reset, TIME_TO_RESET_ICON)
 
-/obj/item/toy/intento/emag_act(mob/user)
+/obj/item/toy/intento/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
-	to_chat(user, span_notice("You short-circuit [src], activating the negative feedback loop."))
+	if (user)
+		balloon_alert(user, "short-circuited, enabling negative feedback loop")
+	return TRUE
 
 /obj/item/toy/intento/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
