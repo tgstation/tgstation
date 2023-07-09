@@ -133,7 +133,6 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	speed = 0.2
-	player_speed_modifier = -2
 	poison_type = /datum/reagent/toxin/viperspider
 	poison_per_bite = 2
 
