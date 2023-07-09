@@ -29,6 +29,8 @@
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
 	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	/// Cached icon that has been built for this card. Intended to be displayed in chat. Cardboards IDs and actual IDs use it.
 	var/icon/cached_flat_icon
@@ -58,8 +60,6 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "card_grey"
 	worn_icon_state = "nothing"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	slot_flags = ITEM_SLOT_ID
 	armor_type = /datum/armor/card_id
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -1190,8 +1190,6 @@
 	desc = "You are a number, you are not a free man."
 	icon_state = "card_prisoner"
 	inhand_icon_state = "orange-id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	registered_name = "Scum"
 	registered_age = null
 	trim = /datum/id_trim/job/prisoner
@@ -1661,8 +1659,6 @@
 	icon_state = "cardboard_id"
 	inhand_icon_state = "cardboard-id"
 	worn_icon_state = "nothing"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_ID
 	///The "name" of the "owner" of this "ID"
