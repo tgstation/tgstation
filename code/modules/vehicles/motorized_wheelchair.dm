@@ -189,7 +189,7 @@
 	if((obj_flags & EMAGGED) || !panel_open)
 		return FALSE
 	if (user)
-		balloon_alert("bomb implanted?")
+		balloon_alert(user, "bomb implanted?")
 		visible_message(span_warning("A bomb appears in [src], what the fuck?"))
 	obj_flags |= EMAGGED
 	return TRUE
