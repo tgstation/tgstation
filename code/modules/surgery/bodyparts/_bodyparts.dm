@@ -188,7 +188,7 @@
 	var/list/bodypart_traits = list()
 	/// The name of the trait source that the organ gives. Should not be altered during the events of gameplay, and will cause problems if it is.
 	var/bodypart_trait_source = BODYPART_TRAIT
-	/// List of the above datums which have actually been instantiated, managed automatically
+	/// List of feature offset datums which have actually been instantiated, managed automatically
 	var/list/feature_offsets = list()
 
 /obj/item/bodypart/Initialize(mapload)
