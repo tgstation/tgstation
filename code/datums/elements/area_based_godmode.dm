@@ -4,7 +4,7 @@
  */
 /datum/element/area_based_godmode
 	element_flags = ELEMENT_BESPOKE
-	argument_hash_start_idx = 1
+	argument_hash_start_idx = 2
 
 	/// The type of area that will trigger godmode.
 	var/area_type
@@ -17,9 +17,6 @@
 
 	/// The message to send to the mob when they lose godmode.
 	var/lose_message
-
-	/// Lazy. The cache of mobs that are currently in godmode; prevents sending the gain message multiple times.
-	var/list/godmode_cache
 
 /datum/element/area_based_godmode/Attach(
 	datum/target,
@@ -54,8 +51,6 @@
 	return ..()
 
 /datum/element/area_based_godmode/proc/check_in_valid_area(mob/checking)
-	SHOULD_NOT_SLEEP(TRUE)
-
 	var/area/area = get_area(checking)
 	if(area.type == area_type)
 		return TRUE
@@ -67,17 +62,17 @@
 /datum/element/area_based_godmode/proc/check_area(mob/source)
 	SIGNAL_HANDLER
 
-	var/source_id = "[REF(source)]:[source.type]"
+	var/source_id = "[REF(source)]"
+	var/has_godmode = source.status_flags & GODMODE
+
 	if(!check_in_valid_area(source))
-		if(source_id in godmode_cache)
-			LAZYREMOVE(godmode_cache, source_id)
+		if(has_godmode)
 			to_chat(source, lose_message)
-			source.status_flags &= ~GODMODE
+			source.status_flags ^= GODMODE
 		return
 
-	if(source_id in godmode_cache)
+	if(has_godmode)
 		return
 
-	LAZYADD(godmode_cache, source_id)
 	to_chat(source, gain_message)
-	source.status_flags |= GODMODE
+	source.status_flags ^= GODMODE
