@@ -517,6 +517,9 @@ SUBSYSTEM_DEF(job)
 
 //Gives the player the stuff he should have with his rank
 /datum/controller/subsystem/job/proc/EquipRank(mob/living/equipping, datum/job/job, client/player_client)
+	var/chosen_title = player_client?.prefs.alt_job_titles[job.title] || job.title
+	var/default_title = job.title
+
 	equipping.job = job.title
 
 	SEND_SIGNAL(equipping, COMSIG_JOB_RECEIVED, job)
@@ -525,7 +528,7 @@ SUBSYSTEM_DEF(job)
 
 	equipping.on_job_equipping(job, player_client?.prefs)
 
-	job.announce_job(equipping)
+	job.announce_job(equipping, chosen_title)
 
 	if(player_client?.holder)
 		if(CONFIG_GET(flag/auto_deadmin_players) || (player_client.prefs?.toggles & DEADMIN_ALWAYS))
@@ -547,10 +550,15 @@ SUBSYSTEM_DEF(job)
 				[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
 				have been added to your ID card."))
 
+		if(chosen_title != default_title)
+			to_chat(player_client, span_infoplain(span_warning("Remember that alternate titles are purely for flavor and roleplay.")))
+			to_chat(player_client, span_infoplain(span_doyourjobidiot("Do not use your \"[chosen_title]\" alt title as an excuse to forego your duties as a [job.title].")))
+
 	if(ishuman(equipping))
 		var/mob/living/carbon/human/wageslave = equipping
 		wageslave.add_mob_memory(/datum/memory/key/account, remembered_id = wageslave.account_id)
 
+		setup_alt_job_items(wageslave, job, player_client)
 
 	job.after_spawn(equipping, player_client)
 

@@ -91,7 +91,7 @@
 
 /datum/sprite_accessory/anime_bottom/none
 	name = "None"
-	icon_state = "None"
+	icon_state = "none"
 
 /datum/sprite_accessory/anime_bottom/pony
 	name = "Pony Tail"
