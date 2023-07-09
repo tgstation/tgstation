@@ -68,6 +68,7 @@
 		return .
 
 	var/mob/living/carbon/human/human_owner = owner
+
 	var/atom/location = loc || owner || src
 	var/image_dir = (dropped ? SOUTH : NONE)
 
@@ -82,6 +83,10 @@
 			if(!underwear.use_static)
 				underwear_overlay.color = human_owner.underwear_color
 			underwear_overlay.dir = image_dir
+			//Emissive blocker
+			if(blocks_emissive)
+				underwear_overlay.overlays += emissive_blocker(underwear_overlay.icon, underwear_overlay.icon_state, location)
+			worn_uniform_offset?.apply_offset(underwear_overlay)
 			. += underwear_overlay
 
 	if(human_owner.undershirt)
@@ -93,14 +98,22 @@
 			else
 				shirt_overlay = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 			shirt_overlay.dir = image_dir
+			//Emissive blocker
+			if(blocks_emissive)
+				underwear_overlay.overlays += emissive_blocker(shirt_overlay.icon, shirt_overlay.icon_state, location)
+			worn_uniform_offset?.apply_offset(shirt_overlay)
 			. += shirt_overlay
 
 	//handling socks here is not ideal and this should be moved to be handled by legs somehow, but that's for later i guess
 	if(human_owner.socks && (human_owner.num_legs >= 2) && !(human_owner.bodytype & BODYTYPE_DIGITIGRADE))
 		var/datum/sprite_accessory/socks/socks = GLOB.socks_list[human_owner.socks]
 		if(socks)
-			var/mutable_appearance/socks_overlay =mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+			var/mutable_appearance/socks_overlay = mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
 			socks_overlay.dir = image_dir
+			//Emissive blocker
+			if(blocks_emissive)
+				underwear_overlay.overlays += emissive_blocker(socks_overlay.icon, socks_overlay.icon_state, location)
+			worn_uniform_offset?.apply_offset(socks_overlay)
 			. += socks_overlay
 
 	return .
