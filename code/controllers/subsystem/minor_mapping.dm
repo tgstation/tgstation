@@ -53,7 +53,6 @@ SUBSYSTEM_DEF(minor_mapping)
 		var/turf/turf = pick_n_take(turfs)
 		if(is_type_in_list(get_area(turf), blacklisted_area_types))
 			continue
-
 		var/obj/item/storage/backpack/satchel/flat/flat_satchel = new(turf)
 
 		SEND_SIGNAL(flat_satchel, COMSIG_OBJ_HIDE, turf.underfloor_accessibility)
