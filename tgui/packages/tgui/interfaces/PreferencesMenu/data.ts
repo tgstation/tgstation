@@ -180,7 +180,7 @@ export type PreferencesMenuData = {
   user_is_donator: BooleanLike;
   selected_loadout: string[];
   total_coins: number;
-  loadout_tabs: LoadoutData[];
+  loadout_tabs: LoadoutData;
   window: Window;
 };
 
@@ -193,6 +193,7 @@ type LoadoutItem = {
   name: string;
   path: string;
   is_greyscale: boolean;
+  is_renamable: boolean;
   is_job_restricted: boolean;
   is_donator_only: boolean;
   is_ckey_whitelisted: boolean;
