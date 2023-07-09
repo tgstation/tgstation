@@ -65,9 +65,7 @@
 		return FALSE
 
 	var/security_implants = 0 //Tracks how many implants with the "security" flag are in the user. Rejects if over the cap.
-	for(var/X in target.implants)
-		var/obj/item/implant/other_implant = X
-
+	for(var/obj/item/implant/other_implant in target.implants)
 		if(other_implant.implant_flags & IMPLANT_TYPE_SECURITY)
 			security_implants++
 			if(security_implants >= SECURITY_IMPLANT_CAP)

@@ -1,6 +1,6 @@
 /obj/machinery/computer/prisoner/management
 	name = "prisoner management console"
-	desc = "Used to manage tracking implants placed inside criminals."
+	desc = "Used to manage security implants placed inside criminals."
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_BRIG)
@@ -33,49 +33,51 @@
 
 		dat += "<H3>Prisoner Implant Management</H3>"
 
-		dat += "<HR>Chemical Implants<BR>"
 		var/turf/current_turf = get_turf(src)
-		for(var/obj/item/implant/chem/chem_implant in GLOB.tracked_chem_implants)
-			var/turf/implant_turf = get_turf(chem_implant)
-			if(!is_valid_z_level(current_turf, implant_turf))
-				continue//Out of range
-			if(!chem_implant.imp_in)
-				continue
-			dat += "ID: [chem_implant.imp_in.name] | Remaining Units: [chem_implant.reagents.total_volume] <BR>"
-			dat += "| Inject: "
-			dat += "<A href='?src=[REF(src)];inject1=[REF(chem_implant)]'>(<font class='bad'>(1)</font>)</A>"
-			dat += "<A href='?src=[REF(src)];inject5=[REF(chem_implant)]'>(<font class='bad'>(5)</font>)</A>"
-			dat += "<A href='?src=[REF(src)];inject10=[REF(chem_implant)]'>(<font class='bad'>(10)</font>)</A><BR>"
-			dat += "********************************<BR>"
+		if(length(GLOB.tracked_chem_implants))
+			dat += "<HR>Chemical Implants<BR>"
+			for(var/obj/item/implant/chem/chem_implant in GLOB.tracked_chem_implants)
+				var/turf/implant_turf = get_turf(chem_implant)
+				if(!is_valid_z_level(current_turf, implant_turf))
+					continue//Out of range
+				if(!chem_implant.imp_in)
+					continue
+				dat += "ID: [chem_implant.imp_in.name] | Remaining Units: [chem_implant.reagents.total_volume] <BR>"
+				dat += "| Inject: "
+				dat += "<A href='?src=[REF(src)];inject1=[REF(chem_implant)]'>(<font class='bad'>(1)</font>)</A>"
+				dat += "<A href='?src=[REF(src)];inject5=[REF(chem_implant)]'>(<font class='bad'>(5)</font>)</A>"
+				dat += "<A href='?src=[REF(src)];inject10=[REF(chem_implant)]'>(<font class='bad'>(10)</font>)</A><BR>"
+				dat += "********************************<BR>"
 
-		dat += "<HR>Tracking Implants<BR>"
-		for(var/obj/item/implant/tracking/track_implant in GLOB.tracked_tracking_implants)
-			if(!isliving(track_implant.imp_in) || track_implant.imp_in.timeofdeath + track_implant.lifespan_postmortem < world.time)
-				continue
-			var/turf/implant_turf = get_turf(track_implant)
-			if(!is_valid_z_level(current_turf, implant_turf))
-				continue //Out of range
+		if(length(GLOB.tracked_tracking_implants))
+			dat += "<HR>Tracking Implants<BR>"
+			for(var/obj/item/implant/tracking/track_implant in GLOB.tracked_tracking_implants)
+				if(track_implant.imp_in.stat == DEAD && track_implant.imp_in.timeofdeath + track_implant.lifespan_postmortem < world.time)
+					continue
+				var/turf/implant_turf = get_turf(track_implant)
+				if(!is_valid_z_level(current_turf, implant_turf))
+					continue //Out of range
 
-			var/loc_display = "Unknown"
-			var/mob/living/implanted_mob = track_implant.imp_in
-			if(is_station_level(implant_turf.z) && !isspaceturf(implanted_mob.loc))
-				var/turf/mob_loc = get_turf(implanted_mob)
-				loc_display = mob_loc.loc
+				var/loc_display = "Unknown"
+				var/mob/living/implanted_mob = track_implant.imp_in
+				if(is_station_level(implant_turf.z) && !isspaceturf(implanted_mob.loc))
+					var/turf/mob_loc = get_turf(implanted_mob)
+					loc_display = mob_loc.loc
 
-			dat += "ID: [track_implant.imp_in.name] | Location: [loc_display]<BR>"
-			dat += "<A href='?src=[REF(src)];warn=[REF(track_implant)]'>(<font class='bad'><i>Message Holder</i></font>)</A> |<BR>"
-			dat += "********************************<BR>"
+				dat += "ID: [track_implant.imp_in.name] | Location: [loc_display]<BR>"
+				dat += "<A href='?src=[REF(src)];warn=[REF(track_implant)]'>(<font class='bad'><i>Message Holder</i></font>)</A> |<BR>"
+				dat += "********************************<BR>"
 
-		dat += "<HR>Beacon Implants<BR>"
-		for(var/obj/item/implant/beacon/beacon_implant in GLOB.tracked_beacon_implants)
-			var/turf/implant_turf = get_turf(beacon_implant)
-			var/mob/living/implanted_mob = beacon_implant.imp_in
-			dat += "ID: [beacon_implant.imp_in.name]<BR>"
-			if(!is_safe_turf(implant_turf))
-				dat += "(<font class='bad'><i>Implant carrier is in a hazardous environment</i></font>)BR>"
-			else
-				dat += "Implant carrier is safe to teleport to<BR>"
-			dat += "********************************<BR>"
+		if(length(GLOB.tracked_beacon_implants))
+			dat += "<HR>Beacon Implants<BR>"
+			for(var/obj/item/implant/beacon/beacon_implant in GLOB.tracked_beacon_implants)
+				var/turf/implant_turf = get_turf(beacon_implant)
+				dat += "ID: [beacon_implant.imp_in.name]<BR>"
+				if(!is_safe_turf(implant_turf))
+					dat += "(<font class='bad'><i>Implant carrier is in a hazardous environment</i></font>)BR>"
+				else
+					dat += "Implant carrier is safe to teleport to<BR>"
+				dat += "********************************<BR>"
 
 		dat += "<HR><A href='?src=[REF(src)];lock=1'>{Log Out}</A>"
 
