@@ -2,6 +2,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, LabeledList, Stack, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { getReputation } from './Uplink/calculateReputationLevel';
+import type { InfernoNode } from 'inferno';
 
 type Objective = {
   name: string;
@@ -129,7 +130,7 @@ const sortingOptions: SortingOption[] = [
 export const TraitorObjectiveDebug = (props, context) => {
   const { data, act } = useBackend<ObjectiveData>(context);
   const { objective_data, player_data, current_progression } = data;
-  const lines: JSX.Element[] = [];
+  const lines: InfernoNode[] = [];
   lines.sort();
   for (let i = 10; i < 100; i += 10) {
     lines.push(
