@@ -100,6 +100,9 @@
 /datum/movespeed_modifier/fast_web
 	multiplicative_slowdown = 0.2
 
+/datum/movespeed_modifier/young_web
+	multiplicative_slowdown = 0.5
+
 /datum/movespeed_modifier/spiderling_web
 	multiplicative_slowdown = 0.7
 

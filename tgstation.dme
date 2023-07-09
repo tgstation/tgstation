@@ -4062,6 +4062,8 @@
 #include "code\modules\mob\living\basic\space_fauna\spider\spider_abilities\wrap.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\spiderlings\spiderling.dm"
 #include "code\modules\mob\living\basic\space_fauna\spider\spiderlings\spiderling_subtypes.dm"
+#include "code\modules\mob\living\basic\space_fauna\spider\young_spider\young_spider.dm"
+#include "code\modules\mob\living\basic\space_fauna\spider\young_spider\young_spider_subtypes.dm"
 #include "code\modules\mob\living\basic\space_fauna\statue\statue.dm"
 #include "code\modules\mob\living\basic\space_fauna\wumborian_fugu\fugu_gland.dm"
 #include "code\modules\mob\living\basic\space_fauna\wumborian_fugu\inflation.dm"

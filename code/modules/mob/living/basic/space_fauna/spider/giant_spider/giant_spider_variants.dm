@@ -426,6 +426,7 @@
  * They also occasionally leave puddles of blood when they walk around. Flavorful!
  */
 /mob/living/basic/giant_spider/hunter/flesh
+	name = "flesh spider"
 	desc = "A odd fleshy creature in the shape of a spider.  Its eyes are pitch black and soulless."
 	icon_state = "flesh_spider"
 	icon_living = "flesh_spider"
@@ -452,20 +453,18 @@
 		complete_text = "%SOURCE%'s wounds mend together.",\
 	)
 
+	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
+	spikes_web.Grant(src)
+
+	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
+	web_sticky.Grant(src)
+
 /// Prevent you from healing other flesh spiders, or healing when on fire
 /mob/living/basic/giant_spider/hunter/flesh/proc/can_mend(mob/living/source, mob/living/target)
 	if (on_fire)
 		balloon_alert(src, "on fire!")
 		return FALSE
 	return TRUE
-
-/mob/living/basic/giant_spider/hunter/flesh/Initialize(mapload)
-	. = ..()
-	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
-	spikes_web.Grant(src)
-
-	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
-	web_sticky.Grant(src)
 
 /**
  * ### Viper Spider (Wizard)
@@ -481,6 +480,13 @@
 /mob/living/basic/giant_spider/viper/wizard/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+	var/datum/action/cooldown/lay_web/web_spikes/spikes_web = new(src)
+	spikes_web.Grant(src)
+
+	var/datum/action/cooldown/lay_web/sticky_web/web_sticky = new(src)
+	web_sticky.Grant(src)
+
 
 /**
  * ### Sergeant Araneus
