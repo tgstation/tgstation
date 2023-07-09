@@ -22,7 +22,7 @@
 		disable_revive(user) // this should be already called via signal, but just incase something wacky happens
 
 	else
-		to_chat(user, span_notice("We begin our stasis, preparing energy to arise once more."))
+		to_chat(user, span_changeling("We begin our stasis, preparing energy to arise once more."))
 		enable_fakedeath(user)
 
 	return TRUE
@@ -35,6 +35,9 @@
 	changeling.fakedeath(CHANGELING_TRAIT)
 	addtimer(CALLBACK(src, PROC_REF(ready_to_regenerate), changeling), fakedeath_duration, TIMER_UNIQUE)
 	RegisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA), PROC_REF(fakedeath_reset))
+	if(changeling.stat == DEAD)
+		// Lets changeling exit fakedeath if
+		RegisterSignal(changeling, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
 /// Sets [revive_ready] to FALSE and updates the button icons.
 /datum/action/changeling/fakedeath/proc/disable_revive(mob/living/changeling)
@@ -45,6 +48,7 @@
 	revive_ready = FALSE
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 	UnregisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA))
+	UnregisterSignal(changeling, COMSIG_MOB_STATCHANGE)
 
 /// Sets [revive_ready] to TRUE and updates the button icons.
 /datum/action/changeling/fakedeath/proc/enable_revive(mob/living/changeling)
@@ -56,13 +60,23 @@
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
 /// Signal proc to stop the revival process if the changeling exits their stasis early.
-/datum/action/changeling/fakedeath/proc/fakedeath_reset(datum/source)
+/datum/action/changeling/fakedeath/proc/fakedeath_reset(mob/living/source)
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT_FROM(source, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
 		return
 
 	disable_revive(source)
+
+/// Signal proc to exit fakedeath early if we're revived from being previously dead
+/datum/action/changeling/fakedeath/proc/on_stat_change(mob/living/source, new_stat, old_stat)
+	SIGNAL_HANDLER
+
+	if(old_stat != DEAD)
+		return
+
+	source.cure_fakedeath(CHANGELING_TRAIT)
+	to_chat(source, span_changeling("We exit our revival stasis early."))
 
 /datum/action/changeling/fakedeath/proc/revive(mob/living/carbon/user)
 	if(!istype(user))
