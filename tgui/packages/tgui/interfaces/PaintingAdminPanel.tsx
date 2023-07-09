@@ -153,10 +153,6 @@ export const PaintingAdminPanel = (props, context) => {
                     src={resolveAsset(`paintings_${painting.md5}`)}
                     height="36px"
                     width="36px"
-                    style={{
-                      'vertical-align': 'middle',
-                      '-ms-interpolation-mode': 'nearest-neighbor',
-                    }}
                   />
                 </Table.Cell>
                 <Table.Cell>

@@ -344,9 +344,7 @@ const MainFeature = (
       }}
       popperContent={
         isOpen && (
-          <TrackOutsideClicks
-            onOutsideClick={handleCloseInternal}
-            removeOnOutsideClick>
+          <TrackOutsideClicks onOutsideClick={handleCloseInternal}>
             <ChoicedSelection
               name={catalog.name}
               catalog={catalog}
