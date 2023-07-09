@@ -50,3 +50,8 @@
   CliffracerX:
   - rscadd: cryosleep module
   - code_imp: cryosleep announce added to announcement_system
+2023-07-09:
+  CliffracerX:
+  - rscadd: auto-transfer subsystem
+  - rscadd: ability to call transfer votes
+  - code_imp: silent mode in emergency shuttle request() function
