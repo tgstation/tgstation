@@ -12,5 +12,5 @@
 	for(var/mob/watcher in nearby_mobs)
 		if(istype(watcher, /mob/living/carbon/human) && watcher.stat != DEAD)
 			return
-	..()
+	return ..()
 
