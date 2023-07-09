@@ -265,48 +265,32 @@
 
 /obj/item/reagent_containers/pill/maintenance/Initialize(mapload)
 	//monkestation edit on next line: replaced get_random_reagent_id_unrestricted() with get_random_reagent_id_unrestricted_non_ethanol()
-	testing("INIT: list_reagents")
 	list_reagents = list(get_random_reagent_id_unrestricted_non_ethanol() = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
-	testing("INIT: parent init: [list_reagents[1]]")
 	. = ..()
-	testing("INIT: parent init finished")
 	if(!GLOB.pill_names.len)
-		testing("INIT: json")
 		var/json = file("strings/pill_names.json")
 		GLOB.pill_names = json_decode(file2text(json))
 
-	testing("INIT: drug_word")
 	var/drug_word = pick(GLOB.pill_names)
 	if(prob(10))
-		testing("INIT: drug_word first prob(10)")
 		drug_word = "[pick("The", "All-Natural", "Kilgor's Favorite", "Tasty", "New & Improved", "Radical", "Double", "Triple", "Quad")] [drug_word]"
 	else
-		testing("INIT: drug_word first else")
 		drug_word = "[drug_word] [pick(GLOB.pill_names)]"
-	testing("INIT: second probs")
 	if(prob(25))
-		testing("INIT: prob(25)")
 		drug_word = "[drug_word]'s"
 	if(!drug_word)
-		testing("INIT: !drug_word")
 		name = "Floorpill"
 	else
-		testing("INIT: !drug_word else")
 		name = "[drug_word]"
 
 	if(prob(30))
-		testing("INIT: prob(30)")
 		desc = pick(descs)
 	if(prob(10))
-		testing("INIT: prob(10)")
 		icon = 'monkestation/icons/obj/pills.dmi'
 		icon_state = "mdma_wario"
-		testing("INIT: prob(10) scale")
 		transform.Scale(0.5 ,0.5)
 	else
-		testing("INIT: prob(10) else")
 		icon_state = "pill[rand(1,21)]"
-	testing("INIT: finished")
 
 /obj/item/reagent_containers/pill/maintenance/achievement/on_consumption(mob/M, mob/user)
 	. = ..()

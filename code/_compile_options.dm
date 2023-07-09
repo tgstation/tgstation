@@ -1,4 +1,4 @@
-#define TESTING //By using the testing("message") proc you can create debug-feedback for people with this
+//#define TESTING //By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
 
 //#define DATUMVAR_DEBUGGING_MODE //Enables the ability to cache datum vars and retrieve later for debugging which vars changed.
@@ -105,7 +105,7 @@
 
 //Additional code for the above flags.
 #ifdef TESTING
-//#warn compiling in TESTING mode. testing() debug messages will be visible.
+#warn compiling in TESTING mode. testing() debug messages will be visible.
 #endif
 
 #ifdef CIBUILDING
