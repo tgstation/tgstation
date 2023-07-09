@@ -23,11 +23,6 @@
 	///Same as handcuffs but for legs. Bear traps use this.
 	var/obj/item/legcuffed = null
 
-	/// Measure of how disgusted we are. See DISGUST_LEVEL_GROSS and friends
-	var/disgust = 0
-	/// How disgusted we were LAST time we processed disgust. Helps prevent unneeded work
-	var/old_disgust = 0
-
 	//inventory slots
 	var/obj/item/back = null
 	var/obj/item/clothing/mask/wear_mask = null

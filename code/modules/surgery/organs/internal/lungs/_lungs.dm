@@ -493,7 +493,7 @@
 			breather.clear_mood_event("smell")
 	// In a full miasma atmosphere with 101.34 pKa, about 10 disgust per breath, is pretty low compared to threshholds
 	// Then again, this is a purely hypothetical scenario and hardly reachable
-	breather.adjust_disgust(0.1 * miasma_pp)
+	breather.adjust_disgust_effect(0.1 * miasma_pp)
 
 /// We're free from the stick, clear out its impacts
 /obj/item/organ/internal/lungs/proc/safe_miasma(mob/living/carbon/breather, datum/gas_mixture/breath, old_miasma_pp)

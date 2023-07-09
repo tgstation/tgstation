@@ -7,6 +7,7 @@
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AGENDER), PROC_REF(on_agender_trait_loss))
 
 	//Traits that register add only
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOHUNGER), PROC_REF(on_nohunger_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(on_nobreath_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_LIVERLESS_METABOLISM), PROC_REF(on_liverless_metabolism_trait_gain))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_VIRUSIMMUNE), PROC_REF(on_virusimmune_trait_gain))
@@ -45,6 +46,17 @@
 			gender = FEMALE
 		else
 			gender = PLURAL
+
+/**
+ * On gain of TRAIT_NOHUNGER
+ *
+ * This will clear all alerts related to hunger and remove disgust status effect
+ */
+/mob/living/carbon/proc/on_nohunger_trait_gain(datum/source)
+	SIGNAL_HANDLER
+
+	set_disgust_effect(0)
+	clear_alert(ALERT_NUTRITION)
 
 /**
  * On gain of TRAIT_NOBREATH

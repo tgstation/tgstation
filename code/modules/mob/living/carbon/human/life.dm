@@ -298,17 +298,75 @@
 			return TRUE
 	return ..()
 
+/// Handles heart attacks, even if we don't have a heart
 /mob/living/carbon/human/proc/handle_heart(seconds_per_tick, times_fired)
-	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT)
-
 	if(!undergoing_cardiac_arrest())
 		return
 
-	if(we_breath)
+	if(!HAS_TRAIT(src, TRAIT_NOBREATH))
 		adjustOxyLoss(4 * seconds_per_tick)
 		Unconscious(8 SECONDS)
 	// Tissues die without blood circulation
 	adjustBruteLoss(1 * seconds_per_tick)
+
+/// Handles stomach adjacent stuff (hunger and disgust) if we lack a stomach.
+/mob/living/carbon/human/proc/handle_stomach(seconds_per_tick, times_fired)
+	if(get_organ_slot(ORGAN_SLOT_STOMACH))
+		return //everything is being handled by the stomach
+	handle_hunger(seconds_per_tick, times_fired)
+
+/// Handles hunger if we lack a stomach (and do not have TRAIT_NOHUNGER).
+/mob/living/carbon/human/proc/handle_hunger(seconds_per_tick, times_fired)
+	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
+		return //hunger is for BABIES
+
+	// nutrition decrease and satiety
+	if((nutrition > 0) && (stat < DEAD))
+		// THEY HUNGER
+		var/hunger_rate = HUNGER_FACTOR * 3 //3 times hunger rate as having a normal stomach, fuck you
+		if(mob_mood && (mob_mood.sanity > SANITY_DISTURBED))
+			hunger_rate *= max(1 - 0.002 * mob_mood.sanity, 0.5) //0.85 to 0.75
+		hunger_rate *= physiology.hunger_mod
+		adjust_nutrition(-hunger_rate * seconds_per_tick)
+
+	// The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
+	if(nutrition > NUTRITION_LEVEL_FULL && !HAS_TRAIT(src, TRAIT_NOFAT))
+		if(overeatduration < 20 MINUTES) //capped so people don't take forever to unfat
+			overeatduration = min(overeatduration + (1 SECONDS * seconds_per_tick), 20 MINUTES)
+	else
+		if(overeatduration > 0)
+			overeatduration = max(overeatduration - (2 SECONDS * seconds_per_tick), 0) //doubled the unfat rate
+
+	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))//I share your pain, past coder.
+		if(overeatduration < 200 SECONDS)
+			to_chat(src, span_notice("You feel fit again!"))
+			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
+			remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
+			update_worn_undersuit()
+			update_worn_oversuit()
+	else
+		if(overeatduration >= 200 SECONDS)
+			to_chat(src, span_danger("You suddenly feel blubbery!"))
+			ADD_TRAIT(src, TRAIT_FAT, OBESITY)
+			add_movespeed_modifier(/datum/movespeed_modifier/obesity)
+			update_worn_undersuit()
+			update_worn_oversuit()
+
+	//always sluggish while lacking a stomach
+	if(metabolism_efficiency != 0.8)
+		to_chat(src, span_notice("You feel sluggish."))
+	metabolism_efficiency = 0.8
+
+	//Hunger slowdown for if mood isn't enabled
+	if(CONFIG_GET(flag/disable_human_mood))
+		var/hungry = (500 - nutrition) / 5 //So overeat would be 100 and default level would be 80
+		if(hungry >= 70)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (hungry / 50))
+		else
+			remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
+
+	// Always display starving alert if lacking a stomach, even if not actually hungry (i think it's pretty funny)
+	throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/starving)
 
 #undef THERMAL_PROTECTION_HEAD
 #undef THERMAL_PROTECTION_CHEST

@@ -1457,6 +1457,7 @@
 #include "code\datums\status_effects\debuffs\choke.dm"
 #include "code\datums\status_effects\debuffs\confusion.dm"
 #include "code\datums\status_effects\debuffs\debuffs.dm"
+#include "code\datums\status_effects\debuffs\disgust.dm"
 #include "code\datums\status_effects\debuffs\dizziness.dm"
 #include "code\datums\status_effects\debuffs\drowsiness.dm"
 #include "code\datums\status_effects\debuffs\drugginess.dm"

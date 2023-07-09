@@ -28,7 +28,7 @@
 	if(!SPT_PROB(2, seconds_per_tick))
 		return
 	to_chat(owner, span_userdanger("Your head hurts... It can't fit your brain!"))
-	owner.adjust_disgust(33 * seconds_per_tick)
+	owner.adjust_disgust_effect(33 * seconds_per_tick)
 	apply_organ_damage(5 * seconds_per_tick, 199)
 
 /obj/item/bodypart/head/psyker

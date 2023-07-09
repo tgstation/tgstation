@@ -1511,7 +1511,7 @@
 	affected_mob.adjust_jitter(-12 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_dizzy(-12 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_confusion(-6 SECONDS * REM * seconds_per_tick)
-	affected_mob.disgust = max(affected_mob.disgust - (6 * REM * seconds_per_tick), 0)
+	affected_mob.set_disgust_effect(max(affected_mob.get_disgust_amount() - (6 * REM * seconds_per_tick), 0))
 	if(affected_mob.mob_mood != null && affected_mob.mob_mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
 		affected_mob.mob_mood.set_sanity(min(affected_mob.mob_mood.sanity + (5 * REM * seconds_per_tick), SANITY_NEUTRAL)) // set minimum to prevent unwanted spiking over neutral
 	..()

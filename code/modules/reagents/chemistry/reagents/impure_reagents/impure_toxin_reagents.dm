@@ -13,9 +13,9 @@
 	liver_damage = 0
 
 /datum/reagent/impurity/ipecacide/on_mob_add(mob/living/carbon/owner)
-	if(owner.disgust >= DISGUST_LEVEL_GROSS)
+	if(owner.get_disgust_amount() >= DISGUST_LEVEL_GROSS)
 		return ..()
-	owner.adjust_disgust(50)
+	owner.adjust_disgust_effect(50)
 	..()
 
 

@@ -1,7 +1,6 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting
 
-
 /mob/living/carbon/IsParalyzed(include_stamcrit = TRUE)
 	return ..() || (include_stamcrit && HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 
@@ -15,13 +14,6 @@
 	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED), STAMINA)
 	if(getStaminaLoss() < 120) // Puts you a little further into the initial stamcrit, makes stamcrit harder to outright counter with chems.
 		adjustStaminaLoss(30, FALSE)
-
-/mob/living/carbon/adjust_disgust(amount)
-	disgust = clamp(disgust+amount, 0, DISGUST_LEVEL_MAXEDOUT)
-
-/mob/living/carbon/set_disgust(amount)
-	disgust = clamp(amount, 0, DISGUST_LEVEL_MAXEDOUT)
-
 
 ////////////////////////////////////////TRAUMAS/////////////////////////////////////////
 

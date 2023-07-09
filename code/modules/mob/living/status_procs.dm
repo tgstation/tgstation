@@ -719,6 +719,47 @@
 	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
 	return inebriation?.drunk_value || 0
 
+/**
+ * Adjust the "disgust value" the mob is currently experiencing,
+ * or applies a disgust effect if the mob isn't currently drunk (or tipsy)
+ *
+ * Like drunkness, this status effect doesn't have a set duration and relies on an external value.
+ *
+ * amount - the amount of "disgust" to apply to the mob.
+ * down_to - the lower end of the clamp, when adding the value
+ * up_to - the upper end of the clamp, when adding the value
+ */
+/mob/living/proc/adjust_disgust_effect(amount, down_to = 0, up_to = INFINITY)
+	if(!isnum(amount))
+		CRASH("adjust_disgust_effect: called with an invalid amount. (Got: [amount])")
+
+	var/datum/status_effect/disgust/disgust = has_status_effect(/datum/status_effect/disgust)
+	if(disgust)
+		disgust.set_disgust_value(clamp(disgust.disgust_value + amount, down_to, up_to))
+	else if(amount > 0)
+		apply_status_effect(/datum/status_effect/disgust, amount)
+
+/**
+ * Directly sets the "disgust value" the mob is currently experiencing to the passed value,
+ * or applies a disgust effect with the passed value if the mob isn't currently disgusted.
+ *
+ * set_to - the amount of "disgust" to set on the mob.
+ */
+/mob/living/proc/set_disgust_effect(set_to)
+	if(!isnum(set_to) || set_to < 0)
+		CRASH("set_disgust_effect: called with an invalid value. (Got: [set_to])")
+
+	var/datum/status_effect/disgust/disgust = has_status_effect(/datum/status_effect/disgust)
+	if(disgust)
+		disgust.set_disgust_value(set_to)
+	else if(set_to > 0)
+		apply_status_effect(/datum/status_effect/disgust, set_to)
+
+/// Helper to get the amount of disgust the mob's currently experiencing.
+/mob/living/proc/get_disgust_amount()
+	var/datum/status_effect/disgust/disgust = has_status_effect(/datum/status_effect/disgust)
+	return disgust?.disgust_value || 0
+
 /// Helper to check if we seem to be alive or not
 /mob/living/proc/appears_alive()
 	return health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH)

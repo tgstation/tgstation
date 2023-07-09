@@ -105,7 +105,7 @@
 		if(81 to 100)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "cough")
 			owner.adjust_dizzy(20 SECONDS)
-			owner.adjust_disgust(5)
+			owner.adjust_disgust_effect(5)
 			to_chat(owner, span_userdanger("You gag and swallow a bit of bile..."))
 
 // if the creep examines first, then the obsession examines them, have a 50% chance to possibly blow their cover. wearing a mask avoids this risk

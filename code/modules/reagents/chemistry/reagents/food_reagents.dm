@@ -862,8 +862,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/astrotame/overdose_process(mob/living/carbon/M, seconds_per_tick, times_fired)
-	if(M.disgust < 80)
-		M.adjust_disgust(10 * REM * seconds_per_tick)
+	if(M.get_disgust_amount() < 80)
+		M.adjust_disgust_effect(10 * REM * seconds_per_tick)
 	..()
 	. = TRUE
 

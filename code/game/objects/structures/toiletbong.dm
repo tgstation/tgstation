@@ -52,7 +52,7 @@
 				else
 					to_chat(user, span_userdanger("There was something disgusting in the pipes!"))
 					user.visible_message(span_danger("[user] spits out a mouse."))
-					user.adjust_disgust(50)
+					user.adjust_disgust_effect(50)
 					user.vomit(10)
 				var/mob/living/spawned_mob = new /mob/living/basic/mouse(get_turf(user))
 				spawned_mob.faction |= "[REF(user)]"

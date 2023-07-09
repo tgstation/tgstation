@@ -404,7 +404,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	texture_layer_icon_state = "sand"
 
 /datum/material/sand/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.adjust_disgust(17)
+	victim.adjust_disgust_effect(17)
 	return TRUE
 
 //And now for our lavaland dwelling friends, sand, but in stone form! Truly revolutionary.

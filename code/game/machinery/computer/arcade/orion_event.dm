@@ -284,14 +284,14 @@
 	var/severity = rand(1,maxSeverity) //pray to RNGesus. PRAY, PIGS
 	if(severity == 1)
 		to_chat(gamer, span_userdanger("You suddenly feel slightly nauseated.") )
-		gamer.adjust_disgust(50)
+		gamer.adjust_disgust_effect(50)
 	if(severity == 2)
 		to_chat(usr, span_userdanger("You suddenly feel extremely nauseated and hunch over until it passes."))
-		gamer.adjust_disgust(110)
+		gamer.adjust_disgust_effect(110)
 		gamer.Stun(60)
 	if(severity >= 3) //you didn't pray hard enough
 		to_chat(gamer, span_warning("An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit."))
-		gamer.adjust_disgust(150) //max this bitch out so they barf a lot
+		gamer.adjust_disgust_effect(150) //max this bitch out so they barf a lot
 		gamer.Stun(100)
 
 #define BUTTON_KEEP_SPEED "Keep Speed"

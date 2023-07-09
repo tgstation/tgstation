@@ -459,7 +459,7 @@
  */
 /mob/living/carbon/proc/expel_ingested(atom/bite, amount)
 	visible_message(span_danger("[src] throws up all over [p_them()]self!"), \
-					span_userdanger("You are unable to keep the [bite] down without a stomach!"))
+					span_userdanger("You are unable to keep the [bite] down without a functioning stomach!"))
 
 	var/turf/floor = get_turf(src)
 	var/obj/effect/decal/cleanable/vomit/spew = new(floor, get_static_viruses())
@@ -1309,9 +1309,6 @@
 
 /mob/living/carbon/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if(NAMEOF(src, disgust))
-			set_disgust(var_value)
-			. = TRUE
 		if(NAMEOF(src, handcuffed))
 			set_handcuffed(var_value)
 			. = TRUE

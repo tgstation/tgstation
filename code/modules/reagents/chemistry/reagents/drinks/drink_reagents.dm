@@ -719,7 +719,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/cinderella/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick)
+	affected_mob.adjust_disgust_effect(-5 * REM * seconds_per_tick)
 	return ..()
 
 /datum/reagent/consumable/cherryshake
@@ -942,7 +942,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/sol_dry/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick)
+	affected_mob.adjust_disgust_effect(-5 * REM * seconds_per_tick)
 	..()
 
 /datum/reagent/consumable/shirley_temple
@@ -954,7 +954,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/shirley_temple/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	affected_mob.adjust_disgust(-3 * REM * seconds_per_tick)
+	affected_mob.adjust_disgust_effect(-3 * REM * seconds_per_tick)
 	return ..()
 
 /datum/reagent/consumable/red_queen

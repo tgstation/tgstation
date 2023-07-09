@@ -408,7 +408,7 @@
 
 /datum/reagent/medicine/c2/syriniver/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	affected_mob.adjust_disgust(3 * REM * seconds_per_tick)
+	affected_mob.adjust_disgust_effect(3 * REM * seconds_per_tick)
 	affected_mob.reagents.add_reagent(/datum/reagent/medicine/c2/musiver, 0.225 * REM * seconds_per_tick)
 	..()
 	. = TRUE
@@ -446,7 +446,7 @@
 
 /datum/reagent/medicine/c2/musiver/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	affected_mob.adjust_disgust(3 * REM * seconds_per_tick)
+	affected_mob.adjust_disgust_effect(3 * REM * seconds_per_tick)
 	..()
 	. = TRUE
 

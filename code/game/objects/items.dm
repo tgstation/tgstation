@@ -1256,7 +1256,7 @@
 				playsound(victim, SFX_SHATTER, 15, TRUE)
 			discover_after = FALSE
 
-		victim.adjust_disgust(33)
+		victim.adjust_disgust_effect(33)
 		victim.visible_message(span_warning("[victim] looks like [victim.p_theyve()] just bitten into something hard."), \
 						span_warning("Eugh! Did I just bite into something?"))
 

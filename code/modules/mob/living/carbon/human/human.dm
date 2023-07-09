@@ -704,8 +704,8 @@
 							span_userdanger("You try to throw up, but there's nothing in your stomach!"))
 		if(stun)
 			Stun(20 SECONDS)
-		return 1
-	..()
+		return TRUE
+	return ..()
 
 /mob/living/carbon/human/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, mob_height))

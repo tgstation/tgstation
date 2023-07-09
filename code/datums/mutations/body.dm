@@ -343,7 +343,7 @@
 		owner.visible_message(warpmessage, span_userdanger("You feel a wave of nausea as you fall through reality!"))
 		var/warpdistance = rand(10, 15) * GET_MUTATION_POWER(src)
 		do_teleport(owner, get_turf(owner), warpdistance, channel = TELEPORT_CHANNEL_FREE)
-		owner.adjust_disgust(GET_MUTATION_SYNCHRONIZER(src) * (warpchance * warpdistance))
+		owner.adjust_disgust_effect(GET_MUTATION_SYNCHRONIZER(src) * (warpchance * warpdistance))
 		warpchance = 0
 		owner.visible_message(span_danger("[owner] appears out of nowhere!"))
 	else

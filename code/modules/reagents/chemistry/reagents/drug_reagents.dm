@@ -292,7 +292,7 @@
 /datum/reagent/drug/happiness/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	affected_mob.remove_status_effect(/datum/status_effect/confusion)
-	affected_mob.disgust = 0
+	affected_mob.set_disgust_effect(0)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	..()
 	. = TRUE
@@ -642,8 +642,8 @@
 	spin_count = 0 //Do a super spin.
 	dancer.visible_message(span_danger("[dancer] spins around violently!"), span_danger("You spin around violently!"))
 	dancer.spin(30, 2)
-	if(dancer.disgust < 40)
-		dancer.adjust_disgust(10)
+	if(dancer.get_disgust_amount() < 40)
+		dancer.adjust_disgust_effect(10)
 	if(!dancer.pulledby)
 		return
 	var/dancer_turf = get_turf(dancer)

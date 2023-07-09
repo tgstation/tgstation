@@ -14,13 +14,13 @@
 
 /datum/addiction/opioids/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
-	if(affected_carbon.disgust < DISGUST_LEVEL_DISGUSTED && SPT_PROB(7.5, seconds_per_tick))
-		affected_carbon.adjust_disgust(12.5 * seconds_per_tick)
+	if(affected_carbon.get_disgust_amount() < DISGUST_LEVEL_DISGUSTED && SPT_PROB(7.5, seconds_per_tick))
+		affected_carbon.adjust_disgust_effect(12.5 * seconds_per_tick)
 
 /datum/addiction/opioids/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.remove_status_effect(/datum/status_effect/high_blood_pressure)
-	affected_carbon.set_disgust(affected_carbon.disgust * 0.5) //half their disgust to help
+	affected_carbon.set_disgust_effect(affected_carbon.get_disgust_amount() * 0.5) //half their disgust to help
 
 ///Stimulants
 

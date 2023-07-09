@@ -234,17 +234,18 @@
 	if(!iscarbon(user))
 		return
 
+	var/mob/living/carbon/carbon_user = user
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 
-	if(!IS_HERETIC_OR_MONSTER(user))
-		to_chat(user, span_danger("You down some of the liquid from [src]. The taste causes you to retch, and the glass vanishes."))
-		user.reagents?.add_reagent(/datum/reagent/eldritch, 10)
-		user.adjust_disgust(50)
+	if(!IS_HERETIC_OR_MONSTER(carbon_user))
+		to_chat(carbon_user, span_danger("You down some of the liquid from [src]. The taste causes you to retch, and the glass vanishes."))
+		carbon_user.reagents?.add_reagent(/datum/reagent/eldritch, 10)
+		carbon_user.adjust_disgust_effect(50)
 		qdel(src)
 		return TRUE
 
-	to_chat(user, span_notice("You drink the viscous liquid from [src], causing the glass to dematerialize."))
-	potion_effect(user)
+	to_chat(carbon_user, span_notice("You drink the viscous liquid from [src], causing the glass to dematerialize."))
+	potion_effect(carbon_user)
 	qdel(src)
 	return TRUE
 

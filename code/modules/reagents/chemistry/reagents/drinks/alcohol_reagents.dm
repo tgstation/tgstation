@@ -2208,7 +2208,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/pruno/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	drinker.adjust_disgust(5 * REM * seconds_per_tick)
+	drinker.adjust_disgust_effect(5 * REM * seconds_per_tick)
 	..()
 
 /datum/reagent/consumable/ethanol/ginger_amaretto
@@ -2309,9 +2309,9 @@
 /datum/reagent/consumable/ethanol/protein_blend/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	drinker.adjust_nutrition(2 * REM * seconds_per_tick)
 	if(!islizard(drinker))
-		drinker.adjust_disgust(5 * REM * seconds_per_tick)
+		drinker.adjust_disgust_effect(5 * REM * seconds_per_tick)
 	else
-		drinker.adjust_disgust(2 * REM * seconds_per_tick)
+		drinker.adjust_disgust_effect(2 * REM * seconds_per_tick)
 	..()
 
 /datum/reagent/consumable/ethanol/mushi_kombucha
