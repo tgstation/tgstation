@@ -140,3 +140,24 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/grey/shitter
 	rank = "Tidemaster"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/lustrous
+	name = "lustrous crystal"
+	desc = "A crystal housing a mutated Ethereal, it emanates a foreboding glow."
+	density = FALSE
+	you_are_text = "Once you were a proud Ethereal, now all that remains is your hunger for the precious bluespace crystal."
+	flavour_text = "The station has denied you your bluespace crystals, the sweet ambrosia of the fifth-dimension. Strike the earth!"
+	icon = 'icons/obj/ethereal_crystal.dmi'
+	icon_state = "ethereal_crystal"
+	fluff_spawn = null
+	prompt_name = "a geode dweller"
+	mob_species = /datum/species/ethereal/lustrous
+	outfit = /datum/outfit/pirate/lustrous
+	rank = "Scintillant"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/captain
+	rank = "Radiant"
+	outfit = /datum/outfit/pirate/lustrous/captain
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/gunner
+	rank = "Coruscant"

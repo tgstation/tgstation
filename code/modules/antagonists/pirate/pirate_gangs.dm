@@ -150,3 +150,21 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_received = "Wait, you ACTUALLY gave us the money? Thanks, but we're coming for the rest anyways!"
 	response_too_late = "Nothing, huh? Looks like the Tide's coming aboard!"
 	response_not_enough = "You trying to cheat us? That's fine, we'll take your station as collateral."
+
+//Mutated Ethereals who have adopted bluespace technology in all the wrong ways.
+/datum/pirate_gang/lustrous
+	name = "Geode Scavengers"
+
+	ship_template_id = "geode"
+	ship_name_pool = "geode_names"
+
+	threat_title = "Unusual transmission"
+	threat_content = "The crystal of mother-void cracks, and forth comes the %SHIPNAME. We are the Lustrous, the hands of the crystal king.\
+		Our coffers of bluespace dust are low, ergo, our synthesis ceases. %PAYOFF credits shall remedy this!"
+	arrival_announcement = "We have arrived, we have always been here, and we have already left."
+	possible_answers = list("Uh, ok? Sure."," We don't have time for crazy-talk, go away.")
+
+
+	response_received = "An excellent haul, the synthesis shall resume."
+	response_too_late = "You were not ready then, and now that time has passed. We can only go forward, never back."
+	response_not_enough = "You have insulted us, but there shall be no feud, only swift justice!"

@@ -173,6 +173,7 @@
 	force = 10
 	throwforce = 12
 	w_class = WEIGHT_CLASS_NORMAL
+	tool_behaviour = TOOL_SHOVEL // hey, it's serrated.
 	toolspeed = 0.3
 	attack_verb_continuous = list("slashes", "impales", "stabs", "slices")
 	attack_verb_simple = list("slash", "impale", "stab", "slice")
@@ -182,6 +183,20 @@
 /obj/item/shovel/serrated/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/bane, mob_biotypes = MOB_ORGANIC, damage_multiplier = 1) //You may be horridly cursed now, but at least you kill the living a whole lot more easily!
+
+/obj/item/shovel/serrated/examine(mob/user)
+	. = ..()
+	if( !(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID)) )
+		return
+	. += span_deadsay("You feel an intense, strange craving to 'dig' straight through living flesh with this shovel. Why else would it be serrated? The thought is mesmerizing...")
+
+// Coroner mail version
+/obj/item/shovel/serrated/dull
+	name = "dull bone shovel"
+	desc = "An ancient, dull bone shovel with a strange design and markings. Visually, it seems pretty weak, but you get the feeling there's more to it than meets the eye..."
+	force = 8
+	throwforce = 10
+	toolspeed = 0.8
 
 /obj/item/trench_tool
 	name = "entrenching tool"

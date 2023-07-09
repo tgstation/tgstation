@@ -382,7 +382,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/carp))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
+	if(ispath(MP, /mob/living/basic/mushroom))
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/shade))
 		return TRUE
