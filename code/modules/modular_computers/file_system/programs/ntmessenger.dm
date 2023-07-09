@@ -292,7 +292,10 @@
 		var/mob/living/carbon/human/old_person = user
 		sent_prob = old_person.age >= 30 ? 25 : sent_prob
 	if (prob(sent_prob))
-		message += " Sent from my PDA"
+		if(istype(computer, /obj/item/modular_computer/pda/clear))
+			message += " Sent from my crystal PDA"
+		else
+			message += " Sent from my PDA"
 
 	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(
 		"name" = fake_name || computer.saved_identification,
