@@ -73,7 +73,7 @@
 	if(prob(10))
 		new /obj/item/stack/ore/iron(src, 1)
 		new /obj/item/stack/ore/glass(src, 1)
-		new /obj/effect/decal/remains/human/grave(src, 1)
+		new /obj/effect/decal/remains/human(src, 1)
 	else
 		new /obj/item/stack/sheet/bone(src, 1)
 
@@ -166,7 +166,7 @@
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
-	new /obj/effect/decal/remains/human/grave(src)
+	new /obj/effect/decal/remains/human(src)
 	switch(rand(1,8))
 		if(1)
 			new /obj/item/coin/gold(src)
@@ -237,10 +237,16 @@
 			dug_closed = TRUE
 			close(user)
 		else if(open(user, force = TRUE))
-			user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
+			if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
+				user.add_mood_event("morbid_graverobbing", /datum/mood_event/morbid_graverobbing)
+			else
+				user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 			if(lead_tomb && first_open)
-				user.gain_trauma(/datum/brain_trauma/magic/stalker)
-				to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
+				if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
+					to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
+				else
+					user.gain_trauma(/datum/brain_trauma/magic/stalker)
+					to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
 				first_open = FALSE
 
 		return TRUE
@@ -274,9 +280,6 @@
 	..()
 	new /obj/effect/decal/cleanable/blood/gibs/old(src)
 	new /obj/item/book/granter/crafting_recipe/boneyard_notes(src)
-
-/obj/effect/decal/remains/human/grave
-	turf_loc_check = FALSE
 
 //***Fluff items for lore/intrigue
 /obj/item/paper/crumpled/muddy/fluff/elephant_graveyard

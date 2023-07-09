@@ -116,7 +116,7 @@ GLOBAL_VAR(station_nuke_source)
 				if(!weapon.tool_start_check(user, amount = 1))
 					return TRUE
 				to_chat(user, span_notice("You start cutting [src]'s inner plate..."))
-				if(weapon.use_tool(src, user, 8 SECONDS, volume=100, amount=1))
+				if(weapon.use_tool(src, user, 8 SECONDS, volume=100))
 					to_chat(user, span_notice("You cut [src]'s inner plate."))
 					deconstruction_state = NUKESTATE_WELDED
 					update_appearance()
@@ -627,6 +627,9 @@ GLOBAL_VAR(station_nuke_source)
  * Helper proc that handles gibbing someone who has been nuked.
  */
 /proc/nuke_gib(mob/living/gibbed, atom/source)
+	if(HAS_TRAIT(gibbed, TRAIT_NUKEIMMUNE))
+		return FALSE
+
 	if(istype(gibbed.loc, /obj/structure/closet/secure_closet/freezer))
 		var/obj/structure/closet/secure_closet/freezer/freezer = gibbed.loc
 		if(!freezer.jones)

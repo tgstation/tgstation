@@ -81,16 +81,16 @@
 	selected_dna = changeling.select_dna()
 	if(!selected_dna)
 		return
-	if(NOTRANSSTING in selected_dna.dna.species.species_traits)
+	if(HAS_TRAIT(user, TRAIT_NO_TRANSFORMATION_STING))
 		user.balloon_alert(user, "incompatible DNA!")
 		return
-	..()
+	return ..()
 
 /datum/action/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
 	. = ..()
 	if(!.)
 		return
-	if((HAS_TRAIT(target, TRAIT_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
+	if(!iscarbon(target) || HAS_TRAIT(target, TRAIT_HUSK) || HAS_TRAIT(target, TRAIT_NO_TRANSFORMATION_STING))
 		user.balloon_alert(user, "incompatible DNA!")
 		return FALSE
 	return TRUE
@@ -215,8 +215,9 @@
 
 /datum/action/changeling/sting/lsd
 	name = "Hallucination Sting"
-	desc = "We cause mass terror to our victim."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
+	desc = "We cause mass terror to our victim. Costs 10 chemicals."
+	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. \
+			The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
 	button_icon_state = "sting_lsd"
 	chemical_cost = 10
 	dna_cost = 1

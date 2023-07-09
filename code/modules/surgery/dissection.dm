@@ -4,7 +4,7 @@
 		/mob/living/carbon/human,
 		/mob/living/carbon/alien,
 	)
-	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB | SURGERY_MORBID_CURIOSITY
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -55,6 +55,9 @@
 	var/obj/machinery/computer/operating/operating_computer = surgery.locate_operating_computer(get_turf(target))
 	if (!isnull(operating_computer))
 		SEND_SIGNAL(operating_computer, COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE, target)
+	if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user))
+		var/mob/living/carbon/human/morbid_weirdo = user
+		morbid_weirdo.add_mood_event("morbid_dissection_success", /datum/mood_event/morbid_dissection_success)
 
 	return TRUE
 

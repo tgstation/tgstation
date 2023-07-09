@@ -62,7 +62,7 @@
 	var/card_reader_installed = FALSE
 	/// physical reference of the players id card to check for PERSONAL access level
 	var/datum/weakref/id_card = null
-	/// should we prevent furthur access change
+	/// should we prevent further access change
 	var/access_locked = FALSE
 
 /obj/machinery/suit_storage_unit/standard_unit
@@ -137,6 +137,11 @@
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	storage_type = /obj/item/tank/jetpack/oxygen/harness
 	mod_type = /obj/item/mod/control/pre_equipped/nuclear
+
+/obj/machinery/suit_storage_unit/interdyne
+	mask_type = /obj/item/clothing/mask/gas/syndicate
+	storage_type = /obj/item/tank/jetpack/oxygen/harness
+	mod_type = /obj/item/mod/control/pre_equipped/interdyne
 
 /obj/machinery/suit_storage_unit/void_old
 	suit_type = /obj/item/clothing/suit/space/nasavoid/old

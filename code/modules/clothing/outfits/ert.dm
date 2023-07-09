@@ -181,7 +181,7 @@
 	name = "Inquisition Commander"
 
 	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
-	r_hand = /obj/item/nullrod/scythe/talking/chainsword
+	r_hand = /obj/item/nullrod/vibro/talking/chainsword
 	backpack_contents = list(
 		/obj/item/storage/box/survival = 1,
 	)
@@ -537,3 +537,32 @@
 	belt = /obj/item/storage/belt/utility/full/powertools/rcd
 	glasses = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/ce
+
+/datum/outfit/centcom/militia
+	name = "Militia Man"
+
+	id = /obj/item/card/id/advanced/centcom/ert/militia
+	suit = /obj/item/clothing/suit/armor/militia
+	suit_store = /obj/item/gun/energy/laser/musket
+	head = /obj/item/clothing/head/cowboy/black
+	uniform = /obj/item/clothing/under/rank/centcom/military
+	shoes = /obj/item/clothing/shoes/cowboy
+	gloves = /obj/item/clothing/gloves/combat
+	back = /obj/item/storage/backpack/satchel/leather
+	l_pocket = /obj/item/switchblade
+	r_pocket = /obj/item/reagent_containers/hypospray/medipen/salacid
+	ears = /obj/item/radio/headset
+	backpack_contents = list(
+			/obj/item/storage/box/survival = 1,
+			/obj/item/storage/medkit/emergency = 1,
+			/obj/item/crowbar = 1,
+			/obj/item/restraints/handcuffs = 1,
+	)
+
+/datum/outfit/centcom/militia/general
+	name = "Militia General"
+
+	id = /obj/item/card/id/advanced/centcom/ert/militia/general
+	head = /obj/item/clothing/head/beret/militia
+	l_hand = /obj/item/megaphone
+	suit_store = /obj/item/gun/energy/laser/musket/prime

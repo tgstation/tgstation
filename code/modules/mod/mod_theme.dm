@@ -41,6 +41,8 @@
 	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
 	var/slowdown_active = 0.75
+	/// How long this MOD takes each part to seal.
+	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
 	/// Theme used by the MOD TGUI.
 	var/ui_theme = "ntos"
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
@@ -317,7 +319,7 @@
 	resistance_flags = FIRE_PROOF|LAVA_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 2
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	allowed_suit_storage = list(
 		/obj/item/resonator,
@@ -1159,6 +1161,88 @@
 	acid = 100
 	wound = 25
 
+/datum/mod_theme/interdyne
+	name = "interdyne"
+	desc = "A corpse-snatching and rapid-retrieval modsuit, resulting from a lucrative tech exchange between Interdyne Pharmaceutics and Cybersun Industries."
+	extended_desc = "While Waffle Co. and Azik Interstellar provide the means, Donk Co., Tiger Cooperative, Animal Rights Consortium and \
+		Gorlex Marauders willing or easly bribable brawn, S.E.L.F. and MI13 information, the clear syndicate tech providers would be Interdyne and Cybersun, \
+		their combined knowledge in technologies rivaled by only most enigmatic of aliens, and certainly not by any Nanotrasen scientist. \
+		This model is one of rare fruits created by their joint operations, mashing scrapped designs with super soldier enhancements. \
+		Already light, when powered on, this modsuits injects the wearer seemlessly with muscle-enhancing supplements, while adding piston strenght \
+		to their legs. Combination of these mechanisms is very energy draining - but results in next to no speed reduction for the wearer.\
+		Over the years, many a rich person, including Nanostrasen officials with premium subscriptions, had their life or genes rescued thanks to \
+		unrivaled speed of this suit model. Equally as many, however, mysteriously dissapeared in the flash of these white suits after they forgot \
+		to pay off said subscriptions in due time or publicly communicated unfavourable opinions on Intrudyne's gene-modding tech and ethics. "
+	default_skin = "interdyne"
+	armor_type = /datum/armor/mod_theme_interdyne
+	resistance_flags = FIRE_PROOF|ACID_PROOF
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	charge_drain = DEFAULT_CHARGE_DRAIN * 2
+	slowdown_inactive = 0.0
+	slowdown_active = -0.5
+	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced, /obj/item/mod/module/organ_thrower)
+	allowed_suit_storage = list(
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/assembly/flash,
+		/obj/item/healthanalyzer,
+		/obj/item/melee/baton,
+		/obj/item/melee/baton/telescopic,
+		/obj/item/melee/energy/sword,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/restraints/handcuffs,
+		/obj/item/sensor_device,
+		/obj/item/shield/energy,
+		/obj/item/stack/medical,
+		/obj/item/storage/bag/bio,
+		/obj/item/storage/bag/chemistry,
+		/obj/item/storage/pill_bottle,
+	)
+	skins = list(
+		"interdyne" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_LAYER = NECK_LAYER,
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+			),
+		),
+	)
+
+/datum/armor/mod_theme_interdyne
+	melee = 30
+	bullet = 30
+	laser = 30
+	energy = 30
+	bomb = 20
+	bio = 100
+	fire = 100
+	acid = 100
+	wound = 30
+
 /datum/mod_theme/enchanted
 	name = "enchanted"
 	desc = "The Wizard Federation's relatively low-tech MODsuit. Is very protective, though."
@@ -1293,7 +1377,7 @@
 		post-void war era modular suit to ever be safely utilized by an operator. This ancient clunker is still functional, \
 		though it's missing several modern-day luxuries from updated Nakamura Engineering designs. \
 		Primarily, the suit's myoelectric suit layer is entirely non-existant, and the servos do very little to \
-		help distribute the weight evenly across the wearer's body, making it slow and bulky to move in. \
+		help distribute the weight evenly across the wearer's body when the suit is deactivated, making it slow and bulky to move in. \
 		The internal heads-up display is rendered in nearly unreadable cyan, as the visor suggests, \
 		leaving the user unable to see long distances. However, the way the helmet retracts is pretty cool."
 	default_skin = "prototype"
@@ -1302,8 +1386,8 @@
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
-	slowdown_inactive = 2
-	slowdown_active = 1.5
+	slowdown_inactive = 1.5
+	slowdown_active = 1
 	ui_theme = "hackerman"
 	inbuilt_modules = list(/obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype)
 	allowed_suit_storage = list(
@@ -1633,6 +1717,7 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
+	activation_step_time = 0.4 SECONDS
 	allowed_suit_storage = list(
 		/obj/item/gun,
 	)
@@ -1692,6 +1777,7 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0
 	slowdown_active = 0
+	activation_step_time = 0.1 SECONDS
 	allowed_suit_storage = list(
 		/obj/item/gun,
 	)

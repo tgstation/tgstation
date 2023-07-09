@@ -25,7 +25,7 @@
 		return
 	if(mapload)
 		for (var/i in 1 to range)
-			if(prob(40) && (!isgroundlessturf(loc) || SSmapping.get_turf_below(loc)))
+			if(prob(40) && (!isgroundlessturf(loc) || GET_TURF_BELOW(loc)))
 				new /obj/effect/decal/cleanable/oil/streak(loc)
 			if (!step_to(src, get_step(src, direction), 0))
 				break
@@ -36,7 +36,7 @@
 
 /obj/effect/decal/cleanable/robot_debris/proc/spread_movement_effects(datum/move_loop/has_target/source)
 	SIGNAL_HANDLER
-	if(isclosedturf(loc) || (isgroundlessturf(loc) && !SSmapping.get_turf_below(loc)))
+	if(NeverShouldHaveComeHere(loc))
 		return
 	if (prob(40))
 		new /obj/effect/decal/cleanable/oil/streak(loc)

@@ -85,41 +85,41 @@
 			return
 
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
+		if(CanReach(A,W))
+			W.melee_attack_chain(src, A, params)
+			return
 		if(isturf(A) || isturf(A.loc))
-			if(A.Adjacent(src)) // see adjacent.dm
-				W.melee_attack_chain(src, A, params)
-				return
-			else
-				W.afterattack(A, src, 0, params)
-				return
+			W.afterattack(A, src, 0, params)
 
 //Give cyborgs hotkey clicks without breaking existing uses of hotkey clicks
 // for non-doors/apcs
-/mob/living/silicon/robot/CtrlShiftClickOn(atom/A)
-	A.BorgCtrlShiftClick(src)
-/mob/living/silicon/robot/ShiftClickOn(atom/A)
-	A.BorgShiftClick(src)
-/mob/living/silicon/robot/CtrlClickOn(atom/A)
-	A.BorgCtrlClick(src)
-/mob/living/silicon/robot/AltClickOn(atom/A)
-	A.BorgAltClick(src)
+/mob/living/silicon/robot/CtrlShiftClickOn(atom/target)
+	target.BorgCtrlShiftClick(src)
+
+/mob/living/silicon/robot/ShiftClickOn(atom/target)
+	target.BorgShiftClick(src)
+
+/mob/living/silicon/robot/CtrlClickOn(atom/target)
+	target.BorgCtrlClick(src)
+
+/mob/living/silicon/robot/AltClickOn(atom/target)
+	target.BorgAltClick(src)
 
 /atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
 	CtrlShiftClick(user)
 
 /obj/machinery/door/airlock/BorgCtrlShiftClick(mob/living/silicon/robot/user) // Sets/Unsets Emergency Access Override Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		AICtrlShiftClick()
+	if(get_dist(src, user) <= user.interaction_range)
+		AICtrlShiftClick(user)
 	else
 		..()
-
 
 /atom/proc/BorgShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
 	ShiftClick(user)
 
 /obj/machinery/door/airlock/BorgShiftClick(mob/living/silicon/robot/user)  // Opens and closes doors! Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		AIShiftClick()
+	if(get_dist(src, user) <= user.interaction_range)
+		AIShiftClick(user)
 	else
 		..()
 
@@ -128,20 +128,45 @@
 	CtrlClick(user)
 
 /obj/machinery/door/airlock/BorgCtrlClick(mob/living/silicon/robot/user) // Bolts doors. Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		AICtrlClick()
+	if(get_dist(src, user) <= user.interaction_range)
+		AICtrlClick(user)
 	else
 		..()
 
 /obj/machinery/power/apc/BorgCtrlClick(mob/living/silicon/robot/user) // turns off/on APCs. Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		AICtrlClick()
+	if(get_dist(src, user) <= user.interaction_range)
+		AICtrlClick(user)
+	else
+		..()
+
+/obj/machinery/power/apc/BorgCtrlShiftClick(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range)
+		AICtrlShiftClick(user)
+	else
+		..()
+
+/obj/machinery/power/apc/BorgShiftClick(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range)
+		AIShiftClick(user)
+	else
+		..()
+
+/obj/machinery/power/apc/BorgAltClick(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range)
+		AIAltClick(user)
+	else
+		..()
+
+
+/obj/machinery/power/apc/attack_robot_secondary(mob/living/silicon/user, list/modifiers)
+	if(get_dist(src, user) <= user.interaction_range)
+		return attack_ai_secondary(user, modifiers)
 	else
 		..()
 
 /obj/machinery/turretid/BorgCtrlClick(mob/living/silicon/robot/user) //turret control on/off. Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		AICtrlClick()
+	if(get_dist(src, user) <= user.interaction_range)
+		AICtrlClick(user)
 	else
 		..()
 
@@ -150,14 +175,14 @@
 	return
 
 /obj/machinery/door/airlock/BorgAltClick(mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		AIAltClick()
+	if(get_dist(src, user) <= user.interaction_range)
+		AIAltClick(user)
 	else
 		..()
 
 /obj/machinery/turretid/BorgAltClick(mob/living/silicon/robot/user) //turret lethal on/off. Forwards to AI code.
-	if(get_dist(src,user) <= user.interaction_range)
-		AIAltClick()
+	if(get_dist(src, user) <= user.interaction_range)
+		AIAltClick(user)
 	else
 		..()
 

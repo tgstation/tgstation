@@ -124,7 +124,7 @@
 		if (machine_stat & BROKEN)
 			balloon_alert(user, "too damaged to repair!")
 			return
-		if(!welder.tool_start_check(user, amount=0))
+		if(!welder.tool_start_check(user, amount=1))
 			return
 		balloon_alert(user, "repairing...")
 		if(welder.use_tool(src, user, 4 SECONDS, volume = 50))
@@ -135,12 +135,12 @@
 	//disassembling the frame
 	if(!opened || has_electronics || terminal)
 		return
-	if(!welder.tool_start_check(user, amount=3))
+	if(!welder.tool_start_check(user, amount=1))
 		return
 	user.visible_message(span_notice("[user.name] welds [src]."), \
 						span_hear("You hear welding."))
 	balloon_alert(user, "welding the APC frame")
-	if(!welder.use_tool(src, user, 50, volume=50, amount=3))
+	if(!welder.use_tool(src, user, 50, volume=50))
 		return
 	if((machine_stat & BROKEN) || opened == APC_COVER_REMOVED)
 		new /obj/item/stack/sheet/iron(loc)
@@ -251,7 +251,5 @@
 			locked = !locked
 			balloon_alert(user, locked ? "locked" : "unlocked")
 			update_appearance()
-			if(!locked)
-				ui_interact(user)
 		else
 			balloon_alert(user, "access denied!")

@@ -70,6 +70,10 @@
 		if((head.flags_inv & HIDEHAIR) && !istype(head, /obj/item/clothing/head/wig))
 			to_chat(user, span_warning("You can't get a good look at [target.p_their()] hair!"))
 			return
+	var/obj/item/bodypart/head/noggin = target.get_bodypart(BODY_ZONE_HEAD)
+	if(!noggin)
+		to_chat(user, span_warning("[target.p_they(TRUE)] have no head!"))
+		return
 
 	var/selected_hairstyle = null
 	var/selected_hairstyle_color = null
@@ -77,7 +81,7 @@
 		var/obj/item/clothing/head/wig/wig = target.head
 		selected_hairstyle = wig.hairstyle
 		selected_hairstyle_color = wig.color
-	else if((HAIR in target.dna.species.species_traits) && target.hairstyle != "Bald")
+	else if((noggin.head_flags & HEAD_HAIR) && target.hairstyle != "Bald")
 		selected_hairstyle = target.hairstyle
 		selected_hairstyle_color = "[target.hair_color]"
 
@@ -106,7 +110,7 @@
 /obj/item/clothing/head/wig/natural/visual_equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
-		if (color != user.hair_color) // only update if necessary
+		if(color != user.hair_color) // only update if necessary
 			add_atom_colour(user.hair_color, FIXED_COLOUR_PRIORITY)
 			update_appearance()
 		user.update_worn_head()

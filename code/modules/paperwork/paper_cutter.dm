@@ -71,12 +71,12 @@
 	if(!isnull(stored_blade))
 		stored_blade.forceMove(drop_location())
 
-/obj/item/papercutter/Exited(atom/movable/leaving, direction)
+/obj/item/papercutter/Exited(atom/movable/leaving, atom/new_loc)
+	. = ..()
 	if(leaving == stored_paper)
 		stored_paper = null
 	if(leaving == stored_blade)
 		stored_blade = null
-	return ..()
 
 /obj/item/papercutter/suicide_act(mob/living/user)
 	if(iscarbon(user) && stored_blade)
