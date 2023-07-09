@@ -64,7 +64,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
 	. = list()
-	if(!(bodytype & BODYTYPE_HUMANOID) || !ishuman(owner) || HAS_TRAIT(owner, TRAIT_NO_UNDERWEAR))
+	if(!(bodytype & BODYTYPE_HUMANOID) || is_invisible || is_husked || !ishuman(owner) || HAS_TRAIT(owner, TRAIT_NO_UNDERWEAR))
 		return .
 
 	var/mob/living/carbon/human/human_owner = owner
