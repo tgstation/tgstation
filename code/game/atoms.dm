@@ -238,6 +238,7 @@
  */
 /atom/proc/Initialize(mapload, ...)
 	SHOULD_CALL_PARENT(TRUE)
+	testing("INIT: [type]")
 
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -288,7 +289,7 @@
  */
 /atom/proc/LateInitialize()
 	set waitfor = FALSE
-
+	testing("INIT: [type]")
 /**
  * Top level of the destroy chain for most atoms
  *
