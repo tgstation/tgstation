@@ -15,6 +15,7 @@
 
 	RegisterSignals(owner, list(COMSIG_LIVING_STATUS_UNCONSCIOUS, COMSIG_LIVING_DEATH), PROC_REF(disconnect))
 
+/// Injures the owner of this avatar.
 /mob/living/carbon/human/avatar/proc/on_damage(mob/target, damage, damage_type, def_zone)
 	SIGNAL_HANDLER
 
@@ -23,6 +24,7 @@
 
 	owner.apply_damage(damage, damage_type, def_zone, forced = TRUE)
 
+/// Disconnects the avatar and returns the mind to the owner.
 /mob/living/carbon/human/avatar/proc/disconnect()
 	SIGNAL_HANDLER
 
@@ -33,5 +35,9 @@
 	flash_act()
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
 	mind.transfer_to(owner)
-	to_chat(owner, span_danger("You've been forcefully disconnected from your avatar! Your thoughts feel scrambled!"))
+	if(owner.stat != DEAD)
+		to_chat(owner, span_danger("You've been forcefully disconnected from your avatar! Your thoughts feel scrambled!"))
+		owner.do_jitter_animation(100)
+		owner.Paralyze(3)
+
 	dust()

@@ -3707,7 +3707,6 @@
 #include "code\modules\jobs\job_types\antagonists\clown_operative.dm"
 #include "code\modules\jobs\job_types\antagonists\lone_operative.dm"
 #include "code\modules\jobs\job_types\antagonists\morph.dm"
-
 #include "code\modules\jobs\job_types\antagonists\nightmare.dm"
 #include "code\modules\jobs\job_types\antagonists\nuclear_operative.dm"
 #include "code\modules\jobs\job_types\antagonists\paradox_clone.dm"
@@ -5252,6 +5251,8 @@
 #include "code\modules\voidrunning\mobs\avatar.dm"
 #include "code\modules\voidrunning\structures\hololadder.dm"
 #include "code\modules\voidrunning\structures\netchair.dm"
+#include "code\modules\voidrunning\structures\quantum_console.dm"
+#include "code\modules\voidrunning\structures\quantum_server.dm"
 #include "code\modules\wiremod\components\abstract\compare.dm"
 #include "code\modules\wiremod\components\abstract\equpiment_action.dm"
 #include "code\modules\wiremod\components\abstract\list_variable.dm"

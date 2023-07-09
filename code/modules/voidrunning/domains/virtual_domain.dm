@@ -1,12 +1,12 @@
 /datum/map_template/virtual_domain
-	/// For blacklisting purposes
-	var/id
-	/// The map file to load
-	var/filename
 	/// Cost of this map to load
 	var/cost = 0
 	/// The description of the map
-	var/description = "A map."
+	var/desc = "A map."
+	/// The map file to load
+	var/filename
+	/// For blacklisting purposes
+	var/id
 
 /datum/map_template/virtual_domain/New()
 	if(!name && id)
@@ -17,7 +17,6 @@
 
 /datum/map_template/virtual_domain/gondola
 	name = "Gondola Forest"
-	id = "gondola"
-	description = "A bountiful forest of gondolas. Peaceful."
+	desc = "A bountiful forest of gondolas. Peaceful."
 	filename = "gondola_asteroid.dmm"
-	cost = 0
+	id = "gondola"
