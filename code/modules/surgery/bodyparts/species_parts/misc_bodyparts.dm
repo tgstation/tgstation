@@ -366,6 +366,26 @@
 	unarmed_damage_high = 14
 	unarmed_stun_threshold = 11
 
+/obj/item/bodypart/arm/left/golem/Initialize(mapload)
+	held_hand_offset =  new(
+		attached_part = src,
+		feature_key = OFFSET_HELD,
+		offset_x = list("north" = -1, "south" = 2, "east" = 0, "west" = -3),
+		offset_y = list("south" = -2),
+	)
+	return ..()
+
+/obj/item/bodypart/arm/left/golem/set_owner(new_owner)
+	. = ..()
+	if (. == FALSE)
+		return
+	if (owner)
+		owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
+	if (isnull(.))
+		return
+	var/mob/living/carbon/old_owner = .
+	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
+
 /obj/item/bodypart/arm/right/golem
 	biological_state = BIO_INORGANIC
 	limb_id = SPECIES_GOLEM
@@ -374,6 +394,26 @@
 	unarmed_damage_low = 5
 	unarmed_damage_high = 14
 	unarmed_stun_threshold = 11
+
+/obj/item/bodypart/arm/right/golem/Initialize(mapload)
+	held_hand_offset =  new(
+		attached_part = src,
+		feature_key = OFFSET_HELD,
+		offset_x = list("north" = 2, "south" = -2, "east" = 3, "west" = 0),
+		offset_y = list("south" = -2),
+	)
+	return ..()
+
+/obj/item/bodypart/arm/right/golem/set_owner(new_owner)
+	. = ..()
+	if (. == FALSE)
+		return
+	if (owner)
+		owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
+	if (isnull(.))
+		return
+	var/mob/living/carbon/old_owner = .
+	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
 
 /obj/item/bodypart/leg/left/golem
 	biological_state = BIO_INORGANIC
