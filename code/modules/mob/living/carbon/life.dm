@@ -717,9 +717,12 @@
 	adjustOrganLoss(pick(ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_EYES, ORGAN_SLOT_EARS), 0.5* seconds_per_tick)
 
 /mob/living/carbon/proc/undergoing_liver_failure()
+	if(HAS_TRAIT(src, TRAIT_LIVERLESS_METABOLISM) || HAS_TRAIT(src, TRAIT_STABLELIVER))
+		return FALSE
 	var/obj/item/organ/internal/liver/liver = get_organ_slot(ORGAN_SLOT_LIVER)
-	if(liver?.organ_flags & ORGAN_FAILING)
+	if(!liver || (liver.organ_flags & ORGAN_FAILING))
 		return TRUE
+	return FALSE
 
 ////////////////
 //BRAIN DAMAGE//
