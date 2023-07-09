@@ -42,13 +42,13 @@
 	return TRUE
 
 /// Sets [revive_ready] to FALSE and updates the button icons.
+/// Can be called mid-revival if the process is being cancelled
 /datum/action/changeling/fakedeath/proc/disable_revive(mob/living/changeling)
-	if(!revive_ready)
-		return
+	if(revive_ready)
+		chemical_cost = 15
+		revive_ready = FALSE
+		build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
-	chemical_cost = 15
-	revive_ready = FALSE
-	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 	UnregisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA))
 	UnregisterSignal(changeling, COMSIG_MOB_STATCHANGE)
 
