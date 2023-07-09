@@ -751,6 +751,7 @@
 		return
 	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(recheck_patient))
 	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
+	potential_patient.pixel_y = potential_patient.base_pixel_y
 
 /// Unmark the potential patient.
 /obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/carbon/potential_patient)
@@ -760,6 +761,7 @@
 	if(potential_patient == patient)
 		recheck_patient(patient) // Can just set patient to null, but doing the recheck lets us find a replacement patient.
 	UnregisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION)
+	potential_patient.pixel_y = potential_patient.base_pixel_y + potential_patient.body_position_pixel_y_offset
 
 /// Someone on our tile just lied down, got up, moved in, or moved out.
 /// potential_patient is the mob that had one of those four things change.
