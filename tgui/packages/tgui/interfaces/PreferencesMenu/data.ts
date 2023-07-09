@@ -180,15 +180,15 @@ export type PreferencesMenuData = {
   user_is_donator: BooleanLike;
   selected_loadout: string[];
   total_coins: number;
-  loadout_tabs: {
-    name: string;
-    title: string;
-    contents: string[];
-  };
+  loadout_tabs: LoadoutData[];
 
   window: Window;
 };
-
+interface LoadoutData {
+  name: string;
+  title: string;
+  contents: string[];
+}
 export type ServerData = {
   jobs: {
     departments: Record<string, Department>;
