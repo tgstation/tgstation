@@ -11,7 +11,6 @@
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
-	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
@@ -40,7 +39,6 @@
 	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"Donk Co.\" logo stamped on the back."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
-	inhand_icon_state = "card-id"
 	slot_flags = ITEM_SLOT_ID
 	worn_icon_state = "emag"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
