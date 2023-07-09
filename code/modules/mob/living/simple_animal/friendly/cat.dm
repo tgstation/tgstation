@@ -303,7 +303,9 @@
 	var/obj/item/organ/internal/brain/candidate = locate(/obj/item/organ/internal/brain) in contents
 	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)
 		return
-	candidate.brainmob.mind.transfer_to(src)
+	var/datum/mind/candidate_mind = candidate.brainmob.mind
+	candidate_mind.transfer_to(src)
+	candidate_mind.grab_ghost()
 	to_chat(src, "[span_boldbig("You are a cak!")]<b> You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free cake to the station!</b>")
