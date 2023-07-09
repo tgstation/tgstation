@@ -418,3 +418,24 @@
   - bugfix: Fixed a dummy parent feature of the health analyzer (Verbose mode) showing
       up, uselessly, on the disease and first aid subtypes.
   - image: Surgical processors and slime scanners have recieved a similar resprite.
+2023-07-09:
+  DATA-xPUNGED:
+  - qol: It has been issued brand new mini-fridges for our active stations, Featuring
+      more booze and less moldy pizza!
+  - rscdel: Removed excess ID boxes on HoP's office
+  Fikou:
+  - balance: nightmare vision goggles give you night vision
+  Imaginos:
+  - image: A new sprite for oeprating tables
+  Melbert:
+  - bugfix: Fix hard deletes that brick all of a wizards spell when their body is
+      delted
+  - rscadd: The Atrocinator will now flip you even more.
+  Rhials:
+  - bugfix: The organ manipulator menu will now delete implants or organs that fail
+      to properly insert.
+  - code_imp: The organ manipulator menu code now looks nicer :)
+  YehnBeep:
+  - qol: Produce consoles now have tables near them.
+  YesterdaysPromise:
+  - rscadd: Added Interdyne ModSuits for Interdyne pirates.

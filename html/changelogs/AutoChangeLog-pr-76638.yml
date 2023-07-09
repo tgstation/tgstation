@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fix hard deletes that brick all of a wizards spell when their body is delted"
