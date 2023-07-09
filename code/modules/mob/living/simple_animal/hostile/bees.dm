@@ -102,7 +102,7 @@
 	sac.pixel_x = pixel_x
 	sac.pixel_y = pixel_y
 	sac.reagents.add_reagent(/datum/reagent/consumable/honey, 2)
-	sac.color = loc.color
+	sac.color = BEE_DEFAULT_COLOUR
 	if(beegent)
 		sac.beegent = beegent
 		sac.reagents.add_reagent(beegent.type, 5)
