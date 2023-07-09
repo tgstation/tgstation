@@ -9,7 +9,7 @@
 	ignores_fakedeath = TRUE
 
 	/// How long it takes for revival to ready upon entering stasis.
-	/// The changelin can opt to stay in fakedeath for longer, though.
+	/// The changeling can opt to stay in fakedeath for longer, though.
 	var/fakedeath_duration = 40 SECONDS
 	/// If TRUE, we're ready to revive and can click the button to heal.
 	var/revive_ready = FALSE
@@ -21,9 +21,11 @@
 		INVOKE_ASYNC(src, PROC_REF(revive), user)
 		disable_revive(user) // this should be already called via signal, but just incase something wacky happens
 
-	else
+	else if(enable_fakedeath(user))
 		to_chat(user, span_changeling("We begin our stasis, preparing energy to arise once more."))
-		enable_fakedeath(user)
+
+	else
+		stack_trace("Changeling revive failed to enter fakedeath when it should have been in a valid state to.")
 
 	return TRUE
 
@@ -34,10 +36,10 @@
 
 	changeling.fakedeath(CHANGELING_TRAIT)
 	addtimer(CALLBACK(src, PROC_REF(ready_to_regenerate), changeling), fakedeath_duration, TIMER_UNIQUE)
+	// Basically, these let the ling exit stasis without giving away their ling-y-ness if revived through other means
 	RegisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA), PROC_REF(fakedeath_reset))
-	if(changeling.stat == DEAD)
-		// Lets changeling exit fakedeath if
-		RegisterSignal(changeling, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+	RegisterSignal(changeling, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+	return TRUE
 
 /// Sets [revive_ready] to FALSE and updates the button icons.
 /datum/action/changeling/fakedeath/proc/disable_revive(mob/living/changeling)
@@ -76,7 +78,7 @@
 		return
 
 	source.cure_fakedeath(CHANGELING_TRAIT)
-	to_chat(source, span_changeling("We exit our revival stasis early."))
+	to_chat(source, span_changeling("We exit our stasis early."))
 
 /datum/action/changeling/fakedeath/proc/revive(mob/living/carbon/user)
 	if(!istype(user))
@@ -89,7 +91,7 @@
 	var/flags_to_heal = (HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS)
 	// but leave out limbs so we can do it specially
 	user.revive(flags_to_heal & ~HEAL_LIMBS)
-	to_chat(user, span_notice("We have revived ourselves."))
+	to_chat(user, span_changeling("We have revived ourselves."))
 
 	var/static/list/dont_regenerate = list(BODY_ZONE_HEAD) // headless changelings are funny
 	if(!length(user.get_missing_limbs() - dont_regenerate))
@@ -115,7 +117,7 @@
 	if(!HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
 		return
 
-	to_chat(user, span_notice("We are ready to revive."))
+	to_chat(user, span_changeling("We are ready to revive."))
 	enable_revive(user)
 
 /datum/action/changeling/fakedeath/can_sting(mob/living/user)
