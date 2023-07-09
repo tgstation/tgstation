@@ -571,10 +571,11 @@
 		. += "-[draw_color]"
 	if(is_invisible)
 		. += "-invisible"
-	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-		if(!overlay.can_draw_on_bodypart(owner))
-			continue
-		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
+	else
+		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
+			if(!overlay.can_draw_on_bodypart(owner))
+				continue
+			. += "-[jointext(overlay.generate_icon_cache(), "-")]"
 	. += "-[get_applicable_top_offset()]"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
