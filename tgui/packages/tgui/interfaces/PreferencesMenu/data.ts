@@ -181,14 +181,23 @@ export type PreferencesMenuData = {
   selected_loadout: string[];
   total_coins: number;
   loadout_tabs: LoadoutData[];
-
   window: Window;
 };
-interface LoadoutData {
+
+type LoadoutData = {
   name: string;
   title: string;
-  contents: string[];
-}
+  contents: LoadoutItem[];
+};
+type LoadoutItem = {
+  name: string;
+  path: string;
+  is_greyscale: boolean;
+  is_job_restricted: boolean;
+  is_donator_only: boolean;
+  is_ckey_whitelisted: boolean;
+  tooltip_text: string;
+};
 export type ServerData = {
   jobs: {
     departments: Record<string, Department>;
