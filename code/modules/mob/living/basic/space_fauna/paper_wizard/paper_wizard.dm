@@ -120,7 +120,7 @@
 		original = null
 
 //Hit a fake? eat pain!
-/mob/living/basic/paper_wizard/copy/proc/damage_nearby(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/basic/paper_wizard/copy/proc/damage_nearby()
 	SIGNAL_HANDLER
 
 	for(var/mob/living/damaged in oview(5, src))
