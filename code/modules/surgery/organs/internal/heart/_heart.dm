@@ -30,14 +30,14 @@
 /obj/item/organ/internal/heart/Remove(mob/living/carbon/heartless, special = 0)
 	. = ..()
 	if(!special)
-		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 120)
+		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 12 SECONDS)
 
 /obj/item/organ/internal/heart/proc/stop_if_unowned()
 	if(!owner)
 		Stop()
 
 /obj/item/organ/internal/heart/attack_self(mob/user)
-	..()
+	. = ..()
 	if(!beating)
 		user.visible_message("<span class='notice'>[user] squeezes [src] to \
 			make it beat again!</span>",span_notice("You squeeze [src] to make it beat again!"))
@@ -56,8 +56,7 @@
 
 /obj/item/organ/internal/heart/OnEatFrom(eater, feeder)
 	. = ..()
-	beating = FALSE
-	update_appearance()
+	Stop()
 
 /obj/item/organ/internal/heart/on_life(seconds_per_tick, times_fired)
 	..()

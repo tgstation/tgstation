@@ -46,15 +46,13 @@
 /obj/item/organ/internal/stomach/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
-	//Manage species digestion
-	if(ishuman(owner))
-		var/mob/living/carbon/human/humi = owner
-		if(!(organ_flags & ORGAN_FAILING))
-			handle_hunger(humi, seconds_per_tick, times_fired)
+	var/mob/living/carbon/human/human_owner = (ishuman(owner) ? owner : null)
 
-	var/mob/living/carbon/body = owner
+	// manage hunger
+	if(human_owner)
+		handle_hunger(human_owner, seconds_per_tick, times_fired)
 
-	// digest food, sent all reagents that can metabolize to the body
+	// digest food, send all reagents that can metabolize to the body
 	for(var/datum/reagent/bit as anything in reagents.reagent_list)
 
 		// If the reagent does not metabolize then it will sit in the stomach
@@ -82,13 +80,13 @@
 		// transfer the reagents over to the body at the rate of the stomach metabolim
 		// this way the body is where all reagents that are processed and react
 		// the stomach manages how fast they are feed in a drip style
-		reagents.trans_id_to(body, bit.type, amount=amount)
+		reagents.trans_id_to(owner, bit.type, amount=amount)
 
-	//Handle disgust
-	if(body)
-		handle_disgust(body, seconds_per_tick, times_fired)
+	// manage disgust
+	if(human_owner)
+		handle_disgust(human_owner, seconds_per_tick, times_fired)
 
-	//If the stomach is not damage exit out
+	//If the stomach is not damaged exit out
 	if(damage < low_threshold)
 		return
 
@@ -105,19 +103,19 @@
 		nutri_vol = max(nutri_vol - amount_food, 0)
 
 	// found nutriment was stomach food reagent
-	if(!(nutri_vol > 0))
+	if(nutri_vol <= 0)
 		return
 
-	//The stomach is damage has nutriment but low on theshhold, lo prob of vomit
+	//The stomach is damaged, has nutriment. but low on theshold - low probability of vomit
 	if(SPT_PROB(0.0125 * damage * nutri_vol * nutri_vol, seconds_per_tick))
-		body.vomit(damage)
-		to_chat(body, span_warning("Your stomach reels in pain as you're incapable of holding down all that food!"))
+		owner.vomit(damage)
+		to_chat(owner, span_warning("Your [src] reels in pain as you're incapable of holding down all that food!"))
 		return
 
 	// the change of vomit is now high
-	if(damage > high_threshold && SPT_PROB(0.05 * damage * nutri_vol * nutri_vol, seconds_per_tick))
-		body.vomit(damage)
-		to_chat(body, span_warning("Your stomach reels in pain as you're incapable of holding down all that food!"))
+	if((damage > high_threshold) && SPT_PROB(0.05 * damage * nutri_vol * nutri_vol, seconds_per_tick))
+		owner.vomit(damage)
+		to_chat(owner, span_warning("Your [src] reels in pain as you're incapable of holding down all that food!"))
 
 /obj/item/organ/internal/stomach/proc/handle_hunger(mob/living/carbon/human/human, seconds_per_tick, times_fired)
 	if(HAS_TRAIT(human, TRAIT_NOHUNGER))
@@ -140,7 +138,7 @@
 			human.update_worn_oversuit()
 
 	// nutrition decrease and satiety
-	if (human.nutrition > 0 && human.stat != DEAD)
+	if (human.nutrition > 0 && human.stat < DEAD)
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
 		if(human.mob_mood && human.mob_mood.sanity > SANITY_DISTURBED)
@@ -156,7 +154,7 @@
 			human.satiety++
 			if(SPT_PROB(round(-human.satiety/77), seconds_per_tick))
 				human.set_jitter_if_lower(10 SECONDS)
-			hunger_rate = 3 * HUNGER_FACTOR
+			hunger_rate *= 3
 		hunger_rate *= hunger_modifier
 		hunger_rate *= human.physiology.hunger_mod
 		human.adjust_nutrition(-hunger_rate * seconds_per_tick)
@@ -176,13 +174,15 @@
 		if(human.metabolism_efficiency != 1.25)
 			to_chat(human, span_notice("You feel vigorous."))
 			human.metabolism_efficiency = 1.25
-	else if(nutrition < NUTRITION_LEVEL_STARVING + 50)
+	else if(nutrition < NUTRITION_LEVEL_SLUGGISH)
 		if(human.metabolism_efficiency != 0.8)
 			to_chat(human, span_notice("You feel sluggish."))
 		human.metabolism_efficiency = 0.8
 	else
 		if(human.metabolism_efficiency == 1.25)
 			to_chat(human, span_notice("You no longer feel vigorous."))
+		else if(human.metabolism_efficiency == 0.8)
+			to_chat(human, span_notice("You no longer feel sluggish."))
 		human.metabolism_efficiency = 1
 
 	//Hunger slowdown for if mood isn't enabled

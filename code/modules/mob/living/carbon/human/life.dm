@@ -33,10 +33,12 @@
 			//handle active mutations
 			for(var/datum/mutation/human/human_mutation as anything in dna.mutations)
 				human_mutation.on_life(seconds_per_tick, times_fired)
-			//heart attack stuff
+			//heart attack stuff - this should be handled by the heart organ when one exists, but isn't currently
 			handle_heart(seconds_per_tick, times_fired)
 			//handles liver failure effects, if we lack a liver
 			handle_liver(seconds_per_tick, times_fired)
+			//handles hunger, if we lack a stomach
+			handle_stomach(seconds_per_tick, times_fired)
 
 		// for special species interactions
 		dna.species.spec_life(src, seconds_per_tick, times_fired)
@@ -304,7 +306,7 @@
 
 	if(we_breath)
 		adjustOxyLoss(4 * seconds_per_tick)
-		Unconscious(80)
+		Unconscious(8 SECONDS)
 	// Tissues die without blood circulation
 	adjustBruteLoss(1 * seconds_per_tick)
 

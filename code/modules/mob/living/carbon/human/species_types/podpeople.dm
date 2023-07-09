@@ -61,7 +61,7 @@
 	if(H.nutrition > NUTRITION_LEVEL_ALMOST_FULL) //don't make podpeople fat because they stood in the sun for too long
 		H.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
 
-	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
+	if(H.nutrition < NUTRITION_LEVEL_SLUGGISH)
 		H.take_overall_damage(brute = 1 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
 
 /datum/species/pod/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
