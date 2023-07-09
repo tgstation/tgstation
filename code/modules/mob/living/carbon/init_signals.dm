@@ -56,6 +56,7 @@
 	SIGNAL_HANDLER
 
 	set_disgust_effect(0)
+	set_nutrition(NUTRITION_LEVEL_WELL_FED) //just in case!
 	clear_alert(ALERT_NUTRITION)
 
 /**
