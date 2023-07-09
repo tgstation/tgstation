@@ -81,6 +81,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 		if("select_item")
 			select_item(interacted_item)
 			owner?.prefs?.character_preview_view.update_body()
+			owner?.prefs?.update_static_data(usr)
 
 		// Rotates the dummy left or right depending on params["dir"]
 		if("rotate_dummy")

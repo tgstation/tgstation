@@ -9,10 +9,12 @@ import { JobsPage } from './JobsPage';
 import { MainPage } from './MainPage';
 import { SpeciesPage } from './SpeciesPage';
 import { QuirksPage } from './QuirksPage';
+import { LoadoutManager } from './LoadoutPage';
 
 enum Page {
   Antags,
   Main,
+  Loadout,
   Jobs,
   Species,
   Quirks,
@@ -61,6 +63,9 @@ export const CharacterPreferenceWindow = (props, context) => {
     case Page.Jobs:
       pageContents = <JobsPage />;
       break;
+    case Page.Loadout:
+      pageContents = <LoadoutManager />;
+      break;
     case Page.Main:
       pageContents = (
         <MainPage openSpecies={() => setCurrentPage(Page.Species)} />
@@ -81,7 +86,11 @@ export const CharacterPreferenceWindow = (props, context) => {
   }
 
   return (
-    <Window title="Character Preferences" width={920} height={770}>
+    <Window
+      title="Character Preferences"
+      width={1200}
+      height={770}
+      theme="generic">
       <Window.Content scrollable>
         <Stack vertical fill>
           <Stack.Item>
@@ -113,6 +122,19 @@ export const CharacterPreferenceWindow = (props, context) => {
                   setPage={setCurrentPage}
                   otherActivePages={[Page.Species]}>
                   Character
+                </PageButton>
+              </Stack.Item>
+
+              <Stack.Item grow>
+                <PageButton
+                  currentPage={currentPage}
+                  page={Page.Loadout}
+                  setPage={setCurrentPage}>
+                  {/*
+                    Fun fact: This isn't "Jobs" so that it intentionally
+                    catches your eyes, because it's really important!
+                  */}
+                  Loadout
                 </PageButton>
               </Stack.Item>
 
