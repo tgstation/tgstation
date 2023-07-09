@@ -6,7 +6,7 @@
 /datum/status_effect/disgust
 	id = "disgust"
 	tick_interval = 2 SECONDS
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_UNIQUE
 	remove_on_fullheal = TRUE
 	/// The level of disgust we are currently at.
 	var/disgust_value = 0
