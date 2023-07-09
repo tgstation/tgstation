@@ -42,8 +42,11 @@
 	if(!is_operational || failure_timer)
 		return
 	operating = !operating
-	add_hiddenprint(user)
-	user.log_message("turned [operating ? "on" : "off"] the [src]", LOG_GAME)
+	if (user)
+		var/on_or_off = operating ? "on" : "off"
+		balloon_alert(user, "power toggled [on_or_off]")
+		user.log_message("turned [on_or_off] the [src]", LOG_GAME)
+		add_hiddenprint(user)
 	update()
 	update_appearance()
 

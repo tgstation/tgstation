@@ -220,6 +220,9 @@ Possible to do for anyone motivated enough:
 	else if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units.")
 
+	if (issilicon(user))
+		. += span_notice("Alt-Click to disconnect all active calls.")
+
 /obj/machinery/holopad/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)

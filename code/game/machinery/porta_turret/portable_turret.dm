@@ -1020,20 +1020,29 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/turretid/proc/toggle_lethal(mob/user)
 	lethal = !lethal
-	add_hiddenprint(user)
-	log_combat(user, src, "[lethal ? "enabled" : "disabled"] lethals on")
+	if (user)
+		var/enabled_or_disabled = lethal ? "disabled" : "enabled"
+		balloon_alert(user, "safeties [enabled_or_disabled]")
+		add_hiddenprint(user)
+		log_combat(user, src, "[enabled_or_disabled] lethals on")
 	updateTurrets()
 
 /obj/machinery/turretid/proc/toggle_on(mob/user)
 	enabled = !enabled
-	add_hiddenprint(user)
-	log_combat(user, src, "[enabled ? "enabled" : "disabled"]")
+	if (user)
+		var/enabled_or_disabled = enabled ? "enabled" : "disabled"
+		balloon_alert(user, "[enabled_or_disabled]")
+		add_hiddenprint(user)
+		log_combat(user, src, "[enabled ? "enabled" : "disabled"]")
 	updateTurrets()
 
 /obj/machinery/turretid/proc/shoot_silicons(mob/user)
 	shoot_cyborgs = !shoot_cyborgs
-	add_hiddenprint(user)
-	log_combat(user, src, "[shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"]")
+	if (user)
+		var/status = shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"
+		balloon_alert(user, lowertext(status))
+		add_hiddenprint(user)
+		log_combat(user, src, "[status]")
 	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()

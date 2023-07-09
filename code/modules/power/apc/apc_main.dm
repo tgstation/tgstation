@@ -288,6 +288,9 @@
 
 	if(issilicon(user))
 		. += span_notice("Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].")
+		. += span_notice("Alt-Click the APC to toggle equipment power.")
+		. += span_notice("Shift-Click the APC to toggle lighting power.")
+		. += span_notice("Shift+Ctrl-Click the APC to toggle environment power.")
 
 /obj/machinery/power/apc/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)
