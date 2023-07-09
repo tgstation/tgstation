@@ -16,6 +16,7 @@
 	health = 1000
 	melee_damage_lower = 10
 	melee_damage_upper = 20
+	obj_damage = 50
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/paper_wizard
 	///the list of our clones
@@ -36,10 +37,10 @@
 	mimic.Grant(src)
 	ai_controller.set_blackboard_key(BB_WIZARD_MIMICS, mimic)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(animate_step))
-	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(delete_copies))
+	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_change))
 	AddElement(/datum/element/death_drops, list(/obj/effect/temp_visual/paperwiz_dying))
 
-/mob/living/basic/paper_wizard/proc/delete_copies()
+/mob/living/basic/paper_wizard/proc/on_health_change()
 	SIGNAL_HANDLER
 	for(var/copy in copies)
 		qdel(copy)
@@ -72,7 +73,6 @@
 		/datum/ai_planning_subtree/use_mob_ability/wizard_summon_minions,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
-
 /datum/ai_planning_subtree/targeted_mob_ability/wizard_mimic
 	ability_key = BB_WIZARD_MIMICS
 	finish_planning = FALSE
@@ -110,7 +110,7 @@
 /mob/living/basic/paper_wizard/copy/Initialize(mapload)
 	. = ..()
 	RegisterSignals(src, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(remove_copy))
-	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(damage_nearby))
+	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(damage_nearby), override = TRUE)
 
 /mob/living/basic/paper_wizard/copy/proc/remove_copy()
 	SIGNAL_HANDLER
