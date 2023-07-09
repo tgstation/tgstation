@@ -274,7 +274,7 @@
 		if(5 to 8)
 			affected_mob.adjustStaminaLoss(40 * REM * seconds_per_tick, 0)
 		if(9 to INFINITY)
-			if(affected_mob.stat != STAT_DEAD)
+			if(affected_mob.stat != DEAD)
 				affected_mob.fakedeath(type)
 	..()
 	return TRUE
