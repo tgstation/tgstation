@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(minor_mapping)
 	return SS_INIT_NO_NEED
 	#else
 	trigger_migration(CONFIG_GET(number/mice_roundstart))
-	place_satchels(2)
+	place_satchels(satchel_amount = 2)
 	return SS_INIT_SUCCESS
 	#endif // the mice are easily the bigger problem, but let's just avoid anything that could cause some bullshit.
 
