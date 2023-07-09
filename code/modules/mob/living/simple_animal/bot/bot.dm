@@ -109,7 +109,7 @@
 	/// If true we will allow ghosts to control this mob
 	var/can_be_possessed = FALSE
 	/// If true we will offer this
-	COOLDOWN_DECLARE(post_ghost_offer)
+	COOLDOWN_DECLARE(offer_ghosts_cooldown)
 	/// Message to display upon possession
 	var/possessed_message = "You're a generic bot. How did one of these even get made?"
 
@@ -206,14 +206,17 @@
 /// Allows this bot to be controlled by a ghost, who will become its mind
 /mob/living/simple_animal/bot/proc/enable_possession(mapload = FALSE)
 	can_be_possessed = TRUE
+	var/can_announce = !mapload && COOLDOWN_FINISHED(src, offer_ghosts_cooldown)
 	personality_download = AddComponent(\
 		/datum/component/ghost_direct_control,\
-		poll_candidates = !mapload,\
+		poll_candidates = can_announce,\
 		poll_ignore_key = POLL_IGNORE_BOTS,\
 		assumed_control_message = possessed_message,\
 		extra_control_checks = CALLBACK(src, PROC_REF(check_possession)),\
 		after_assumed_control = CALLBACK(src, PROC_REF(post_possession)),\
 	)
+	if (can_announce)
+		COOLDOWN_START(src, offer_ghosts_cooldown, 30 SECONDS)
 
 /// Disables this bot from being possessed by ghosts
 /mob/living/simple_animal/bot/proc/disable_possession(mob/user)

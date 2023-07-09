@@ -42,15 +42,26 @@
 /datum/component/ghost_direct_control/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, PROC_REF(on_ghost_clicked))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 
 /datum/component/ghost_direct_control/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST)
+	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_EXAMINE))
 	return ..()
 
 /datum/component/ghost_direct_control/Destroy(force, silent)
 	QDEL_NULL(extra_control_checks)
 	QDEL_NULL(after_assumed_control)
 	return ..()
+
+/// Inform ghosts that they can possess this
+/datum/component/ghost_direct_control/proc/on_examined(datum/source, mob/user, list/examine_text)
+	SIGNAL_HANDLER
+	if (!isobserver(user))
+		return
+	var/mob/living/our_mob = parent
+	if (our_mob.stat == DEAD || our_mob.key || awaiting_ghosts)
+		return
+	examine_text += span_notice("You could take control of this mob by clicking on it.")
 
 /// Send out a request for a brain
 /datum/component/ghost_direct_control/proc/request_ghost_control()
