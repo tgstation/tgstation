@@ -17,7 +17,7 @@
 /// Useful for doing "we're done" effects without duped code
 #define BREATH_LOST 1
 
-//The proportion of oxygen needed for metabolism to pluoxium
+//The proportion of oxygen needed for metabolism compared to pluoxium. (Pluoxium is this many times efficient as oxygen)
 #define PLUOXIUM_PROPORTION 8
 
 //Defines for N2O and Healium euphoria moodlets
