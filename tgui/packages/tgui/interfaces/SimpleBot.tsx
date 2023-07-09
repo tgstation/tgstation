@@ -166,9 +166,9 @@ const SettingsDisplay = (props, context) => {
         <LabeledControls.Item label="Personality">
           <Tooltip
             content={
-              !possession_enabled
-                ? 'Enables download of a unique personality.'
-                : 'Resets personality to factory default.'
+              possession_enabled
+                ? 'Resets personality to factory default.'
+                : 'Enables download of a unique personality.'
             }>
             <Icon
               size={2}

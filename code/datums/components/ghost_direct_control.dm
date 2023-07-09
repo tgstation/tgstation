@@ -30,8 +30,8 @@
 	if (!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 		return INITIALIZE_HINT_QDEL
 
-	src.poll_role_string = isnull(poll_role_string) ? "[parent]" : poll_role_string
-	src.assumed_control_message = isnull(assumed_control_message) ? "You are [parent]!" : assumed_control_message
+	src.poll_role_string = poll_role_string || "[parent]"
+	src.assumed_control_message = assumed_control_message || "You are [parent]!"
 	src.poll_ignore_key = poll_ignore_key
 	src.extra_control_checks = extra_control_checks
 	src.after_assumed_control= after_assumed_control
