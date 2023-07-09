@@ -57,6 +57,9 @@
 
 /obj/item/bodypart/chest/get_limb_icon(dropped)
 	. = ..()
+	// husks don't get any of the fancy stuff
+	if(is_invisible || is_husked)
+		return .
 	. += get_underwear_icon(dropped)
 	return .
 

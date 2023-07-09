@@ -202,7 +202,7 @@
 /obj/item/bodypart/head/get_limb_icon(dropped)
 	. = ..()
 	// husks don't get any of the fancy stuff
-	if(is_husked)
+	if(is_invisible || is_husked)
 		return .
 	. += get_hair_and_lips_icon(dropped)
 	// We need to get the eyes if we are dropped (ugh)
