@@ -43,31 +43,16 @@ SUBSYSTEM_DEF(minor_mapping)
 	return turf_gasmix.has_gas(/datum/gas/oxygen, 5) && turf_temperature < NPC_DEFAULT_MAX_TEMP && turf_temperature > NPC_DEFAULT_MIN_TEMP
 
 /datum/controller/subsystem/minor_mapping/proc/place_satchels(satchel_amount)
-	///List of possible tiles to be placed above the satchels
-	var/list/possible_replacement_tiles = list( //We want these to look out of place most of the time
-		/turf/open/floor/iron = 1,
-		/turf/open/floor/iron/edge = 1,
-		/turf/open/floor/iron/half = 1,
-		/turf/open/floor/iron/corner = 1,
-		/turf/open/floor/iron/large = 1,
-		/turf/open/floor/iron/small = 1,
-		/turf/open/floor/iron/diagonal = 1,
-		/turf/open/floor/iron/herringbone = 1,
-		/turf/open/floor/plastic = 1,
-		)
 	var/list/turfs = find_satchel_suitable_turfs()
 	///List of areas where satchels should not be placed.
 	var/list/blacklisted_area_types = list(
 		/area/station/holodeck,
-		/area/station/engineering/supermatter,
 		)
 
 	while(turfs.len && satchel_amount > 0)
 		var/turf/turf = pick_n_take(turfs)
 		if(is_type_in_list(get_area(turf), blacklisted_area_types))
 			continue
-		//Replace the floor of the chosen turf with a random tile
-		turf.ChangeTurf(pick_weight(possible_replacement_tiles), flags = CHANGETURF_INHERIT_AIR)
 
 		var/obj/item/storage/backpack/satchel/flat/flat_satchel = new(turf)
 
