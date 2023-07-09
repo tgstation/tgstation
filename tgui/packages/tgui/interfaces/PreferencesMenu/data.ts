@@ -180,7 +180,7 @@ export type PreferencesMenuData = {
   user_is_donator: BooleanLike;
   selected_loadout: string[];
   total_coins: number;
-  loadout_tabs: LoadoutData;
+  loadout_tabs: LoadoutData[];
   window: Window;
 };
 
