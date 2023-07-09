@@ -156,7 +156,7 @@
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/flee_target
+		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/find_unwebbed_turf,
 		/datum/ai_planning_subtree/spin_web,
