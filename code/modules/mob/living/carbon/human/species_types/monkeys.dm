@@ -12,17 +12,17 @@
 	meat = /obj/item/food/meat/slab/monkey
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	inherent_traits = list(
-		TRAIT_NO_UNDERWEAR,
-		TRAIT_NO_BLOOD_OVERLAY,
+		TRAIT_AGENDER,
 		TRAIT_GUN_NATURAL,
+		TRAIT_NO_AUGMENTS,
+		TRAIT_NO_BLOOD_OVERLAY,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_NO_UNDERWEAR,
 		TRAIT_VENTCRAWLER_NUDE,
 		TRAIT_WEAK_SOUL,
-		TRAIT_NO_TRANSFORMATION_STING,
-		TRAIT_NO_AUGMENTS,
 	)
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
-	sexes = FALSE
 	species_language_holder = /datum/language_holder/monkey
 
 	bodypart_overrides = list(

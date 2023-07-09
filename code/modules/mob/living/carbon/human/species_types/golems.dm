@@ -3,18 +3,19 @@
 	name = "Golem"
 	id = SPECIES_GOLEM
 	inherent_traits = list(
-		TRAIT_NO_UNDERWEAR,
+		TRAIT_AGENDER,
 		TRAIT_GENELESS,
 		TRAIT_LAVA_IMMUNE,
-		TRAIT_NOBREATH,
-		TRAIT_NODISMEMBER,
 		TRAIT_NOBLOOD,
-		TRAIT_NOFIRE,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
+		TRAIT_NOBREATH,
 		TRAIT_NO_DNA_COPY,
+		TRAIT_NOFIRE,
 		TRAIT_NO_TRANSFORMATION_STING,
 		TRAIT_NO_AUGMENTS,
+		TRAIT_NODISMEMBER,
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_RADIMMUNE,
 	)
 	mutantheart = null
 	mutantlungs = null
@@ -24,7 +25,6 @@
 	siemens_coeff = 0
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
-	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/golem
 	species_language_holder = /datum/language_holder/golem
 

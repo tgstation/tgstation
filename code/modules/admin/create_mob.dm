@@ -11,7 +11,7 @@
 	user << browse(create_panel_helper(create_mob_html), "window=create_mob;size=425x475")
 
 /proc/randomize_human(mob/living/carbon/human/human)
-	if(human.dna.species.sexes)
+	if(!HAS_TRAIT(human, TRAIT_AGENDER))
 		human.gender = pick(MALE, FEMALE, PLURAL)
 	else
 		human.gender = PLURAL

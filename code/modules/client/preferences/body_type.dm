@@ -22,7 +22,8 @@
 	if (!..(preferences))
 		return FALSE
 
-	var/datum/species/species = preferences.read_preference(/datum/preference/choiced/species)
-	return initial(species.sexes)
+	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = new species_type
+	return !(TRAIT_AGENDER in species.inherent_traits)
 
 #undef USE_GENDER
