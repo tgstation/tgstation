@@ -6,17 +6,7 @@
 	resistance_flags = LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	anchored = FALSE
 	density = TRUE
-	var/datum/component/artifact/assoc_comp = /datum/component/artifact //should never be null
-
-/obj/structure/artifact/Initialize(mapload, var/forced_origin = null)
-	. = ..()
-	START_PROCESSING(SSobj, src)
-	assoc_comp = AddComponent(assoc_comp, forced_origin)
-
-/obj/structure/artifact/process()
-	assoc_comp?.heat_from_turf(get_turf(src))
-	if(assoc_comp?.active)
-		assoc_comp.effect_process()
+	ARTIFACT_SETUP(/obj/structure/artifact, /datum/component/artifact, SSobj)
 
 /obj/effect/artifact_spawner/Initialize(mapload)
 	. = ..()

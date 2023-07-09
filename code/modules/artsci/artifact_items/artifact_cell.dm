@@ -4,12 +4,8 @@
 	resistance_flags = LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	ratingdesc = FALSE
 	charge_light_type = null
-	var/datum/component/artifact/cell/assoc_comp = /datum/component/artifact/cell
+	ARTIFACT_SETUP(/obj/item/stock_parts/cell/artifact, /datum/component/artifact/cell, SSobj)
 
-/obj/item/stock_parts/cell/artifact/Initialize(mapload, var/forced_origin = null)
-	. = ..()
-	assoc_comp = AddComponent(assoc_comp, forced_origin)
-	START_PROCESSING(SSobj, src)
 
 /datum/component/artifact/cell
 	associated_object = /obj/item/stock_parts/cell/artifact
@@ -37,11 +33,7 @@
 	var/obj/item/stock_parts/cell/artifact/cell = holder
 	cell.ratingdesc = FALSE
 
-/obj/item/stock_parts/cell/artifact/use(amount, force)
+/obj/item/stock_parts/cell/artifact/use(amount, force) //dont use power unless active
 	. = FALSE
 	if(assoc_comp.active)
 		return ..()
-
-/obj/item/stock_parts/cell/artifact/process()
-	. = ..()
-	assoc_comp.heat_from_turf(get_turf(src))

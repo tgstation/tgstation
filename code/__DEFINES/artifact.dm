@@ -20,3 +20,22 @@
 #define ARTIFACT_VERYUNCOMMON 300
 #define ARTIFACT_RARE 250
 #define ARTIFACT_VERYRARE 140
+
+//cuts down on boiler plate code 
+#define ARTIFACT_SETUP(X,type,subsystem) var##type/assoc_comp = ##type;\
+##X/Initialize(mapload, var/forced_origin = null){\
+	. = ..();\
+	START_PROCESSING(subsystem, src);\
+	assoc_comp = AddComponent(assoc_comp, forced_origin);\
+	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete));\
+} \
+##X/proc/on_delete(atom/source){\
+	SIGNAL_HANDLER;\
+	assoc_comp = null;\
+} \
+##X/process(){\
+	assoc_comp?.heat_from_turf(get_turf(src));\
+	if(assoc_comp?.active) {\
+		assoc_comp.effect_process();\
+	}\
+}

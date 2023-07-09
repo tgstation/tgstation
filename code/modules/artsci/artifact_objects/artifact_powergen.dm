@@ -11,12 +11,7 @@
 	circuit = null
 	density = TRUE
 	anchored = FALSE
-	processing_flags = START_PROCESSING_ON_INIT
-	var/datum/component/artifact/cell/assoc_comp = /datum/component/artifact/generator
-
-/obj/machinery/power/generator_artifact/Initialize(mapload, var/forced_origin = null)
-	. = ..()
-	assoc_comp = AddComponent(assoc_comp, forced_origin)
+	ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, /datum/component/artifact/generator, SSmachines)
 
 /datum/component/artifact/generator
 	associated_object = /obj/machinery/power/generator_artifact
@@ -100,11 +95,6 @@
 	powerholder.disconnect_from_network()
 	powerholder.anchored = FALSE
 	playsound(get_turf(powerholder), 'sound/items/deconstruct.ogg', 50, TRUE)
-
-/obj/machinery/power/generator_artifact/process()
-	assoc_comp.heat_from_turf(get_turf(src))
-	if(assoc_comp?.active)
-		assoc_comp.effect_process()
 
 #undef SHITFUCK_THRESHOLD
 #undef SIDEEFFECT_THRESHOLD
