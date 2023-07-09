@@ -1,0 +1,10 @@
+@use 'sass:color';
+@use '../base.scss';
+@use '../functions.scss';
+
+$background-color: base.$color-bg-section !default;
+
+.section-background {
+  background-color: functions.fake-alpha($background-color, base.$color-bg);
+  background-color: $background-color;
+}

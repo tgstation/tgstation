@@ -1,0 +1,4 @@
+author: "QuacksQ"
+delete-after: True
+changes:
+  - bugfix: "Fixes roundstart active turfs from happening when singulo engine rolls on Tram, Kilo and Meta."

@@ -81,6 +81,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 		if("select_item")
 			select_item(interacted_item)
 			owner?.prefs?.character_preview_view.update_body()
+			owner?.prefs?.update_static_data(usr)
 
 		// Rotates the dummy left or right depending on params["dir"]
 		if("rotate_dummy")
@@ -121,12 +122,8 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 	var/list/all_selected_paths = list()
 	for(var/path in owner?.prefs?.loadout_list)
 		all_selected_paths += path
-	data["selected_loadout"] = all_selected_paths
 	data["user_is_donator"] = !!(owner.patreon?.is_donator() || is_admin(owner))
-	data["mob_name"] = owner.prefs.read_preference(/datum/preference/name/real_name)
-	data["ismoth"] = istype(owner.prefs.read_preference(/datum/preference/choiced/species), /datum/species/moth) // Moth's humanflaticcon isn't the same dimensions for some reason
-	data["preivew_options"] = list(PREVIEW_PREF_JOB, PREVIEW_PREF_LOADOUT, PREVIEW_PREF_NAKED)
-	data["preview_selection"] = PREVIEW_PREF_JOB
+	data["owned_items"] = user.client.prefs.inventory
 
 	data["total_coins"] = user.client.prefs.metacoins
 
@@ -176,19 +173,35 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 		return
 
 	var/list/formatted_list = new(length(list_of_datums))
-
 	var/array_index = 1
 	for(var/datum/store_item/item as anything in list_of_datums)
 		if(item.hidden)
 			formatted_list.len--
 			continue
-
+		var/atom/new_item = new item.item_path
 		var/list/formatted_item = list()
 		formatted_item["name"] = item.name
 		formatted_item["path"] = item.item_path
 		formatted_item["cost"] = item.item_cost
+		formatted_item["desc"] = new_item.desc
+		formatted_item["item_path"] = new_item.type
+		formatted_item["job_restricted"] = null
 
+		var/datum/loadout_item/selected = GLOB.all_loadout_datums[new_item.type]
+		if(selected)
+			if(length(selected.restricted_roles))
+				formatted_item["job_restricted"] = selected.restricted_roles.Join(", ")
+
+
+		var/icon/icon = getFlatIcon(new_item)
+		var/md5 = md5(fcopy_rsc(icon))
+		if(!SSassets.cache["photo_[md5]_[item.name]_icon.png"])
+			SSassets.transport.register_asset("photo_[md5]_[item.name]_icon.png", icon)
+		SSassets.transport.send_assets(usr, list("photo_[md5]_[item.name]_icon.png" = icon))
+
+		formatted_item["icon"] = SSassets.transport.get_asset_url("photo_[md5]_[item.name]_icon.png")
 		formatted_list[array_index++] = formatted_item
+		qdel(new_item)
 
 	return formatted_list
 

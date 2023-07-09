@@ -31,6 +31,8 @@
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
 	#define COMSIG_ATOM_BLOCKS_BSA_BEAM (1<<0)
+/// from base of atom/Exited(): (mob/user, obj/item/extrapolator/E, scan = TRUE)
+#define COMSIG_ATOM_EXTRAPOLATOR_ACT "atom_extrapolator_act"
 ///for any tool behaviors: (mob/living/user, obj/item/I, list/recipes)
 #define COMSIG_ATOM_TOOL_ACT(tooltype) "tool_act_[tooltype]"
 	#define COMPONENT_BLOCK_TOOL_ATTACK (1<<0)

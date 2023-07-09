@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { InfernoNode, SFC } from 'inferno';
+import { InfernoNode, Inferno } from 'inferno';
 import { useBackend } from '../../backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
 import { createSetPreference, Job, JoblessRole, JobPriority, PreferencesMenuData } from './data';
@@ -182,9 +182,15 @@ const JobRow = (
 
   const createSetPriority = createCreateSetPriorityFromName(context, name);
 
+  const { act } = useBackend<PreferencesMenuData>(context);
+
   const experienceNeeded =
     data.job_required_experience && data.job_required_experience[name];
   const daysLeft = data.job_days_left ? data.job_days_left[name] : 0;
+
+  const alt_title_selected = data.job_alt_titles[name]
+    ? data.job_alt_titles[name]
+    : name;
 
   let rightSide: InfernoNode;
 
@@ -240,7 +246,23 @@ const JobRow = (
             style={{
               'padding-left': '0.3em',
             }}>
-            {name}
+            {' '}
+            {
+              // SKYRAT EDIT
+              !job.alt_titles ? (
+                name
+              ) : (
+                <Dropdown
+                  width="100%"
+                  options={job.alt_titles}
+                  displayText={alt_title_selected}
+                  onSelected={(value) =>
+                    act('set_job_title', { job: name, new_title: value })
+                  }
+                />
+              )
+              // SKYRAT EDIT END
+            }
           </Stack.Item>
         </Tooltip>
 
@@ -252,7 +274,7 @@ const JobRow = (
   );
 };
 
-const Department: SFC<{ department: string }> = (props) => {
+const Department: Inferno.SFC<{ department: string }> = (props) => {
   const { children, department: name } = props;
   const className = `PreferencesMenu__Jobs__departments--${name}`;
 

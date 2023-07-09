@@ -1,0 +1,8 @@
+author: "KittyNoodle"
+delete-after: True
+changes:
+  - rscadd: "Natural ethereal blood regen."
+  - rscdel: "Enriched liquid electricity"
+  - qol: "Upgraded cyborg chargers no longer overcharge ethereals."
+  - balance: "Ethereals no longer suffer heart attacks from overcharge"
+  - bugfix: "Charge alerts now correctly clear themselves"

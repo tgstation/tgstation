@@ -72,11 +72,13 @@
 
 
 	if(!(flags_inv & HIDEHAIR))
-		if(ishuman(usr))
-			var/mob/living/carbon/human/user = usr
-			var/datum/sprite_accessory/hair/hair_style = GLOB.hairstyles_list[user.hairstyle]
-			if(hair_style.vertical_offset)
-				standing.pixel_y = hair_style.vertical_offset
+		if(ismob(loc))
+			if(ishuman(loc))
+				var/mob/living/carbon/human/user = loc
+				var/datum/sprite_accessory/hair/hair_style = GLOB.hairstyles_list[user.hairstyle]
+				if(hair_style)
+					if(hair_style.vertical_offset)
+						standing.pixel_y = hair_style.vertical_offset
 
 	if(contents)
 		var/current_hat = 1
