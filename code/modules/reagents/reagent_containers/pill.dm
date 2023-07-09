@@ -267,7 +267,9 @@
 	//monkestation edit on next line: replaced get_random_reagent_id_unrestricted() with get_random_reagent_id_unrestricted_non_ethanol()
 	testing("INIT: list_reagents")
 	list_reagents = list(get_random_reagent_id_unrestricted_non_ethanol() = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
+	testing("INIT: parent init")
 	. = ..()
+	testing("INIT: parent init finished")
 	if(!GLOB.pill_names.len)
 		testing("INIT: json")
 		var/json = file("strings/pill_names.json")
