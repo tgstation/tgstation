@@ -48,6 +48,15 @@
 	alternate_worn_layer = GLOVES_LAYER
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/bee
+	name = "bee hide costume"
+	desc = "A suit made of beehide"
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "bee"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	can_adjust = FALSE
+
 /*
 *	LUNAR AND JAPANESE CLOTHES
 */
