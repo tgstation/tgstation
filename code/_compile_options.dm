@@ -105,7 +105,7 @@
 
 //Additional code for the above flags.
 #ifdef TESTING
-#warn compiling in TESTING mode. testing() debug messages will be visible.
+//#warn compiling in TESTING mode. testing() debug messages will be visible.
 #endif
 
 #ifdef CIBUILDING
