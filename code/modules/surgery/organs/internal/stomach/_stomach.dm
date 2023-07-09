@@ -24,10 +24,10 @@
 	//This is a reagent user and needs more then the 10u from edible component
 	reagent_vol = 1000
 
-	///The rate that disgust decays
+	/// The rate that disgust decays at
 	var/disgust_metabolism = 1
 
-	///The rate that the stomach will transfer reagents to the body
+	/// The rate that the stomach will transfer reagents to the body
 	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.025
 
 	/// Multiplier for hunger rate
@@ -231,7 +231,7 @@
 	name = "mass of bones"
 	desc = "You have no idea what this strange ball of bones does."
 	icon_state = "stomach-bone"
-	metabolism_efficiency = 0.025 //very bad
+	metabolism_efficiency = 0.025 //as low as possible
 	organ_traits = list(TRAIT_NOHUNGER)
 
 /obj/item/organ/internal/stomach/bone/plasmaman
@@ -286,7 +286,7 @@
 	icon_state = "stomach-c-s"
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.35
 	emp_vulnerability = 100
-	metabolism_efficiency = 0.025
+	metabolism_efficiency = 0.025 //as low as possible
 
 //surplus organs are so awful that they explode when removed, unless failing
 /obj/item/organ/internal/stomach/cybernetic/surplus/Initialize(mapload)
