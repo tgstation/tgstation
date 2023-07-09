@@ -38,9 +38,12 @@
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
 		return
-	to_chat(mod.wearer, span_notice("[src] tries to store [mod.wearer.s_store] inside itself."))
-	if(atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE))
-		mod.wearer.temporarilyRemoveItemFromInventory(mod.wearer.s_store)
+	if(!atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE))
+		balloon_alert(mod.wearer, "storage failed!")
+		to_chat(mod.wearer, span_warning("[src] fails to store [mod.wearer.s_store] inside itself!"))
+		return
+	to_chat(mod.wearer, span_notice("[src] stores [mod.wearer.s_store] inside itself."))
+	mod.wearer.temporarilyRemoveItemFromInventory(mod.wearer.s_store)
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
@@ -214,7 +217,7 @@
 		virus_data["cure"] = virus.cure_text
 		viruses += list(virus_data)
 	.["statusviruses"] = viruses
-	
+
 	return .
 
 /obj/item/mod/module/status_readout/on_suit_activation()
