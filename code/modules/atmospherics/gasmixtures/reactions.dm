@@ -860,7 +860,7 @@
 
 	var/nob_formed = min((nitrogen[MOLES] + tritium[MOLES]) * 0.01, tritium[MOLES] * INVERSE(5 * reduction_factor), nitrogen[MOLES] * INVERSE(10))
 
-	if (nob_formed <= 0 || (cached_gases[/datum/gas/tritium][MOLES] - 5 * nob_formed < 0) || (cached_gases[/datum/gas/nitrogen][MOLES] - 10 * nob_formed < 0))
+	if (nob_formed <= 0 || (tritium[MOLES] - 5 * nob_formed < 0) || (nitrogen[MOLES] - 10 * nob_formed < 0))
 		air.garbage_collect(arglist(asserted_gases))
 		return NO_REACTION
 
