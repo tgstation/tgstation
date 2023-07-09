@@ -102,3 +102,10 @@
 		/obj/item/restraints/legcuffs/beartrap/prearmed = 5, //not really a landmine, but still a good threat
 		/obj/effect/mine/shrapnel = 5,
 	)
+
+/obj/effect/spawner/random/contraband/qm_rocket
+	name = "QMs dud rocket spawner"
+	loot = list(
+		/obj/item/ammo_casing/rocket/reverse = 90,
+		/obj/item/ammo_casing/rocket/heap = 10,
+	)

@@ -26,6 +26,11 @@
 	desc = "An 84mm High Explosive rocket. This one isn't quite as devastating."
 	projectile_type = /obj/projectile/bullet/rocket/weak
 
+/obj/item/ammo_casing/rocket/reverse
+	name = "\improper rusty PM-9HE"
+	desc = "An old, rusty 84mm High Explosive rocket. Fire at people and pray. Most likely faulty."
+	projectile_type = /obj/projectile/bullet/rocket/reverse
+
 /obj/item/ammo_casing/a75
 	desc = "A .75 bullet casing."
 	caliber = CALIBER_75

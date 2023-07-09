@@ -724,6 +724,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	name = "elevator door"
 	desc = "Keeps idiots like you from walking into an open elevator shaft."
 	icon = 'icons/obj/doors/liftdoor.dmi'
+	elevator_mode = TRUE
 	opacity = FALSE
 	glass = TRUE
 
