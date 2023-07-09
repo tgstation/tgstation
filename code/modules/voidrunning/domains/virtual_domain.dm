@@ -3,7 +3,7 @@
 	var/id
 	/// The map file to load
 	var/filename
-	/// Weight that this map will be spawned
+	/// Cost of this map to load
 	var/cost = 0
 	/// The description of the map
 	var/description = "A map."
@@ -20,3 +20,4 @@
 	id = "gondola"
 	description = "A bountiful forest of gondolas. Peaceful."
 	filename = "gondola_asteroid.dmm"
+	cost = 0

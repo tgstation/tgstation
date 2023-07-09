@@ -1,7 +1,7 @@
 
 /obj/structure/netchair
 	name = "net chair"
-	desc = "A link to the netverse. It has an assortment of cables to connect to a virtual domain."
+	desc = "A link to the netverse. It has an assortment of cables to connect yourself to a virtual domain."
 
 	anchored = TRUE
 	buckle_lying = 0 //you sit in a chair, not lay
@@ -105,7 +105,7 @@
 		return
 
 	var/obj/structure/hololadder/wayout = new(destination, src)
-	var/mob/living/carbon/human/avatar = new(wayout)
+	var/mob/living/carbon/human/avatar/avatar = new(wayout, neo)
 	avatar.equipOutfit(netsuit, visualsOnly = TRUE)
 
 	voidrunner = WEAKREF(neo)
@@ -116,7 +116,6 @@
 
 
 /obj/structure/netchair/proc/resolve_outfit(text)
-
 	var/path = text2path(text)
 	if(ispath(path, /datum/outfit))
 		return path
