@@ -11166,12 +11166,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"kyJ" = (
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
-	dir = 4
-	},
-/turf/open/floor/plating/ocean,
-/area/ocean/generated_above)
 "kyN" = (
 /turf/open/floor/iron/stairs{
 	dir = 4
@@ -14431,10 +14425,10 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/locker)
 "nKd" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "nKi" = (
@@ -65794,7 +65788,7 @@ aah
 aah
 aah
 aah
-kyJ
+aah
 aah
 avm
 avm
@@ -66051,7 +66045,7 @@ aah
 aah
 aah
 aah
-kyJ
+aah
 sks
 sks
 fZK
