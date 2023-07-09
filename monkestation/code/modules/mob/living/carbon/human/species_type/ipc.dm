@@ -80,7 +80,7 @@
 	)
 
 /datum/species/ipc/get_species_description()
-	return "Integrated Positronic Chassis, IPC for short, \
+	return "Integrated Positronic Chassis - or IPC for short - \
 	 are a race of sentient and unbound humanoid robots."
 
 /datum/species/ipc/random_name(gender, unique, lastname, attempts)
