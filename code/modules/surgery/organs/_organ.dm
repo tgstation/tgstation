@@ -320,7 +320,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	// Default organ fixing handling
 	// May result in kinda cursed stuff for mobs which don't need these organs
 	var/obj/item/organ/internal/lungs/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(!lungs)
+	if(!lungs && !HAS_TRAIT(src, TRAIT_NOBREATH))
 		lungs = new()
 		lungs.Insert(src)
 	lungs.set_organ_damage(0)
