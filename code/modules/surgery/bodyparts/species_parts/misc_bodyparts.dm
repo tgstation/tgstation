@@ -487,7 +487,6 @@
 		return
 	if (owner)
 		owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
-		return
 	if (isnull(.))
 		return
 	var/mob/living/carbon/old_owner = .
@@ -522,7 +521,6 @@
 		return
 	if (owner)
 		owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
-		return
 	if (isnull(.))
 		return
 	var/mob/living/carbon/old_owner = .
