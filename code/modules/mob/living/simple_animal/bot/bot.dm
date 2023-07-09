@@ -207,6 +207,7 @@
 	var/can_announce = !mapload && COOLDOWN_FINISHED(src, offer_ghosts_cooldown)
 	personality_download = AddComponent(\
 		/datum/component/ghost_direct_control,\
+		ban_type = ROLE_BOT,\
 		poll_candidates = can_announce,\
 		poll_ignore_key = POLL_IGNORE_BOTS,\
 		assumed_control_message = possessed_message,\

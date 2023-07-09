@@ -60,7 +60,8 @@ GLOBAL_LIST_EMPTY(wire_name_directory)
 
 GLOBAL_LIST_EMPTY(ai_status_displays)
 
-GLOBAL_LIST_EMPTY(mob_spawners)     // All mob_spawn objects
+GLOBAL_LIST_EMPTY(mob_spawners) // All mob_spawn objects
+GLOBAL_LIST_EMPTY(joinable_mobs) // Mobs which you can click on to control them
 GLOBAL_LIST_EMPTY(alert_consoles) // Station alert consoles, /obj/machinery/computer/station_alert
 
 GLOBAL_LIST_EMPTY(roundstart_station_borgcharger_areas) // List of area names of roundstart station cyborg rechargers, for the low charge/no charge cyborg screen alert tooltips.

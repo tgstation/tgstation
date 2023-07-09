@@ -2,12 +2,12 @@
  * Component which lets ghosts click on a mob to take control of it
  */
 /datum/component/ghost_direct_control
-	/// String describing this role to ghosts who are polled
-	var/poll_role_string
-	/// Key used to ignore polls of this type
-	var/poll_ignore_key
+	/// String describing this role to ghosts
+	var/role_name
 	/// Message to display upon successful possession
 	var/assumed_control_message
+	/// Type of ban you can get to prevent you from accepting this role
+	var/ban_type
 	/// Any extra checks which need to run before we take over
 	var/datum/callback/extra_control_checks
 	/// Callback run after someone successfully takes over the body
@@ -16,8 +16,10 @@
 	var/awaiting_ghosts = FALSE
 
 /datum/component/ghost_direct_control/Initialize(
+	ban_type = ROLE_SENTIENCE,
+	role_name = null,
 	poll_candidates = TRUE,
-	poll_role_string = null,
+	poll_length = 10 SECONDS,
 	poll_ignore_key = POLL_IGNORE_SENTIENCE_POTION,
 	assumed_control_message = null,
 	datum/callback/extra_control_checks,
@@ -26,18 +28,20 @@
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-
 	if (!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 		return INITIALIZE_HINT_QDEL
 
-	src.poll_role_string = poll_role_string || "[parent]"
+	src.ban_type = ban_type
+	src.role_name = role_name || "[parent]"
 	src.assumed_control_message = assumed_control_message || "You are [parent]!"
-	src.poll_ignore_key = poll_ignore_key
 	src.extra_control_checks = extra_control_checks
 	src.after_assumed_control= after_assumed_control
 
+	var/mob/mob_parent = parent
+	LAZYADD(GLOB.joinable_mobs[format_text("[initial(mob_parent.name)]")], mob_parent)
+
 	if (poll_candidates)
-		INVOKE_ASYNC(src, PROC_REF(request_ghost_control))
+		INVOKE_ASYNC(src, PROC_REF(request_ghost_control), poll_length, poll_ignore_key)
 
 /datum/component/ghost_direct_control/RegisterWithParent()
 	. = ..()
@@ -51,6 +55,12 @@
 /datum/component/ghost_direct_control/Destroy(force, silent)
 	QDEL_NULL(extra_control_checks)
 	QDEL_NULL(after_assumed_control)
+
+	var/mob/mob_parent = parent
+	var/list/spawners = GLOB.joinable_mobs[format_text("[initial(mob_parent.name)]")]
+	LAZYREMOVE(spawners, mob_parent)
+	if(!LAZYLEN(spawners))
+		GLOB.joinable_mobs -= format_text("[initial(mob_parent.name)]")
 	return ..()
 
 /// Inform ghosts that they can possess this
@@ -61,16 +71,16 @@
 	var/mob/living/our_mob = parent
 	if (our_mob.stat == DEAD || our_mob.key || awaiting_ghosts)
 		return
-	examine_text += span_notice("You could take control of this mob by clicking on it.")
+	examine_text += span_boldnotice("You could take control of this mob by clicking on it.")
 
 /// Send out a request for a brain
-/datum/component/ghost_direct_control/proc/request_ghost_control()
+/datum/component/ghost_direct_control/proc/request_ghost_control(poll_length, poll_ignore_key)
 	awaiting_ghosts = TRUE
 	var/list/mob/dead/observer/candidates = poll_ghost_candidates(
-		question = "Do you want to play as [poll_role_string]?",
-		jobban_type = ROLE_SENTIENCE,
-		be_special_flag = ROLE_SENTIENCE,
-		poll_time = 10 SECONDS,
+		question = "Do you want to play as [role_name]?",
+		jobban_type = ban_type,
+		be_special_flag = ban_type,
+		poll_time = poll_length,
 		ignore_category = poll_ignore_key,
 	)
 	awaiting_ghosts = FALSE
@@ -97,7 +107,7 @@
 
 /// We got far enough to establish that this mob is a valid target, let's try to posssess it
 /datum/component/ghost_direct_control/proc/attempt_possession(mob/our_mob, mob/dead/observer/hopeful_ghost)
-	var/ghost_asked = tgui_alert(usr, "Become [poll_role_string]?", "Are you sure?", list("Yes", "No"))
+	var/ghost_asked = tgui_alert(usr, "Become [role_name]?", "Are you sure?", list("Yes", "No"))
 	if (ghost_asked != "Yes" || QDELETED(our_mob))
 		return
 	assume_direct_control(hopeful_ghost)
@@ -106,6 +116,9 @@
 /datum/component/ghost_direct_control/proc/assume_direct_control(mob/harbinger)
 	if (QDELETED(src))
 		to_chat(harbinger, span_warning("Offer to possess creature has expired!"))
+		return
+	if (is_banned_from(harbinger.ckey, list(ban_type)))
+		to_chat(usr, span_warning("You are banned from playing as this role!"))
 		return
 	var/mob/living/new_body = parent
 	if (new_body.stat == DEAD)
@@ -119,6 +132,6 @@
 		return
 	harbinger.log_message("took control of [new_body].", LOG_GAME)
 	new_body.key = harbinger.key
-	to_chat(new_body, span_notice(assumed_control_message))
+	to_chat(new_body, span_boldnotice(assumed_control_message))
 	after_assumed_control?.Invoke(harbinger)
 	qdel(src)
