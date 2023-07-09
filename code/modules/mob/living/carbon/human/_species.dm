@@ -136,13 +136,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi
 	var/fire_overlay = "human"
 
-	/// Generic traits tied to having the species.
-	var/list/inherent_traits = list()
 	/// List of biotypes the mob belongs to. Used by diseases.
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	/// The type of respiration the mob is capable of doing. Used by adjustOxyLoss.
 	var/inherent_respiration_type = RESPIRATION_OXYGEN
-	///List of factions the mob gain upon gaining this species.
+	/// Generic traits tied to having the species.
+	var/list/inherent_traits = list()
+	/// List of factions the mob gain upon gaining this species.
 	var/list/inherent_factions
 
 	///What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]
@@ -484,13 +484,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(length(inherent_traits))
 		C.add_traits(inherent_traits, SPECIES_TRAIT)
 
-	if(inherent_factions)
+	if(length(inherent_factions))
 		for(var/i in inherent_factions)
 			C.faction += i //Using +=/-= for this in case you also gain the faction from a different source.
 
-	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
-
 	properly_gained = TRUE
+	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
 /**
  * Proc called when a carbon is no longer this species.
@@ -505,8 +504,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
 	C.butcher_results = null
-	for(var/X in inherent_traits)
-		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 
 	for(var/obj/item/organ/external/organ in C.organs)
 		organ.Remove(C)
@@ -522,7 +519,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
 		C.dna.default_mutation_genes[new_species.inert_mutation] = C.dna.mutation_index[new_species.inert_mutation]
 
-	if(inherent_factions)
+	if(length(inherent_traits))
+		for(var/X in inherent_traits)
+			REMOVE_TRAIT(C, X, SPECIES_TRAIT)
+
+	if(length(inherent_factions))
 		for(var/i in inherent_factions)
 			C.faction -= i
 
