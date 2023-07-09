@@ -206,7 +206,7 @@
 			SCREENTIP_CONTEXT_CTRL_LMB = "Toggle power",
 			SCREENTIP_CONTEXT_ALT_LMB = "Toggle equipment power",
 			SCREENTIP_CONTEXT_SHIFT_LMB = "Toggle lighting power",
-			SCREENTIP_CONTEXT_CTRL_SHIFT_LMB = "Toggle environment power"
+			SCREENTIP_CONTEXT_CTRL_SHIFT_LMB = "Toggle environment power",
 		)
 	)
 
