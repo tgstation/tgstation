@@ -57,9 +57,9 @@
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 		BB_WRITING_LIST = list(
-			"I can turned the paper into gold and ink into diamonds!",
+			"I can turn the paper into gold and ink into diamonds!",
 			"Your fate is written and sealed!",
-			"You shall suffered the rath of a thousand paper cuts!",
+			"You shall suffer the wrath of a thousand paper cuts!",
 		)
 	)
 
