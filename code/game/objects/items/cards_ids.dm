@@ -1663,6 +1663,7 @@
 	worn_icon_state = "nothing"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_ID
 	///The "name" of the "owner" of this "ID"
 	var/scribbled_name
@@ -1763,6 +1764,7 @@
 	add_fingerprint(user)
 
 /obj/item/card/cardboard/update_name()
+	. = ..()
 	if(!scribbled_name)
 		name = initial(name)
 		return
