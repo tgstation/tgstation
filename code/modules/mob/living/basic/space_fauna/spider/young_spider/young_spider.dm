@@ -1,7 +1,7 @@
 /**
- * # Giant Spider
+ * # Young Spider
  *
- * A mob which can be created by dynamic event, botany, or xenobiology.
+ * A mob which can be created by spiderlings/spider eggs.
  * The basic type is the guard, which is slow but sturdy and outputs good damage.
  * All spiders can produce webbing.
  */
