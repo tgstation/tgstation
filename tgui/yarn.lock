@@ -3597,7 +3597,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^3.1.2":
+"csstype@npm:^3.1.1, csstype@npm:^3.1.2":
   version: 3.1.2
   resolution: "csstype@npm:3.1.2"
   checksum: e1a52e6c25c1314d6beef5168da704ab29c5186b877c07d822bd0806717d9a265e8493a2e35ca7e68d0f5d472d43fac1cdce70fd79fd0853dff81f3028d857b5
@@ -5316,7 +5316,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inferno-vnode-flags@npm:8.2.2":
+"inferno-vnode-flags@npm:8.2.2, inferno-vnode-flags@npm:^8.2.1":
   version: 8.2.2
   resolution: "inferno-vnode-flags@npm:8.2.2"
   checksum: 2b4688c0e1606af3ed16e39d6eb4703505ede787786a3637d38eea9b0c75920fdcf1de8f7e27787fdc5e1e19c3ee4a713c07ab7e6c5b5eaf5696ab9464a8de05
@@ -9325,11 +9325,12 @@ resolve@^2.0.0-next.3:
     "@popperjs/core": ^2.9.3
     "@types/marked": ^4.0.8
     common: "workspace:*"
+    csstype: ^3.1.1
     dateformat: ^4.5.1
     dompurify: ^2.3.1
     highlight.js: ^11.5.1
     inferno: ^8.2.1
-    inferno-vnode-flags: ^7.4.8
+    inferno-vnode-flags: ^8.2.1
     js-yaml: ^4.1.0
     marked: ^4.2.12
     tgui-dev-server: "workspace:*"
