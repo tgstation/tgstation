@@ -2781,6 +2781,7 @@
 #include "code\modules\artsci\artifact_objects\artifact_forcegen.dm"
 #include "code\modules\artsci\artifact_objects\artifact_injector.dm"
 #include "code\modules\artsci\artifact_objects\artifact_lamp.dm"
+#include "code\modules\artsci\artifact_objects\artifact_powergen.dm"
 #include "code\modules\artsci\artifact_objects\artifact_repulser.dm"
 #include "code\modules\artsci\artifact_objects\artifact_vomit.dm"
 #include "code\modules\artsci\testing_machines\heater.dm"

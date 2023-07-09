@@ -114,7 +114,7 @@
 		holder.visible_message(span_notice("[holder] [activation_message]"))
 	active = TRUE
 	holder.add_overlay(act_effect)
-	effect_activate()
+	effect_activate(silent)
 	return TRUE
 
 /datum/component/artifact/proc/on_examine(atom/source, mob/user, list/examine_list)
@@ -131,7 +131,7 @@
 		holder.visible_message(span_notice("[holder] [deactivation_message]"))
 	active = FALSE
 	holder.cut_overlay(act_effect)
-	effect_deactivate()
+	effect_deactivate(silent)
 
 /datum/component/artifact/proc/Artifact_Destroyed(atom/source, silent=FALSE)
 	SIGNAL_HANDLER
@@ -196,7 +196,7 @@
 	SIGNAL_HANDLER
 	if(!user.Adjacent(holder))
 		return
-	Stimulate(STIMULUS_SILICON_TOUCH)
+	Touched(null, user)
 
 //doesnt work
 /*/datum/artifact/proc/Irradiating(atom/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
@@ -280,7 +280,7 @@
 /datum/component/artifact/proc/on_analysis(atom/source, obj/item/sticker/sticker, mob/user)
 	SIGNAL_HANDLER
 	if(analysis)
-		to_chat(user, "You peel off [sticker], to make room for [sticker].")
+		to_chat(user, "You peel off [analysis], to make room for [sticker].")
 		sticker.peel()
 	if(!istype(sticker, /obj/item/sticker/analysis_form))
 		return
@@ -291,11 +291,11 @@
 	analysis = null
 
 // Effects for subtypes
-/datum/component/artifact/proc/effect_activate()
+/datum/component/artifact/proc/effect_activate(silent)
 	return
-/datum/component/artifact/proc/effect_deactivate()
+/datum/component/artifact/proc/effect_deactivate(silent)
 	return
-/datum/component/artifact/proc/effect_touched()
+/datum/component/artifact/proc/effect_touched(mob/living/user)
 	return
 /datum/component/artifact/proc/effect_process()
 	return
