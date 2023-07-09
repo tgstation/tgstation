@@ -206,6 +206,8 @@
 /// Allows this bot to be controlled by a ghost, who will become its mind
 /mob/living/simple_animal/bot/proc/enable_possession(mapload = FALSE)
 	can_be_possessed = TRUE
+	if (bot_cover_flags & BOT_COVER_EMAGGED)
+		return // Still visually appears to work on the UI, but actually does nothing
 	var/can_announce = !mapload && COOLDOWN_FINISHED(src, offer_ghosts_cooldown)
 	personality_download = AddComponent(\
 		/datum/component/ghost_direct_control,\
@@ -219,17 +221,19 @@
 		COOLDOWN_START(src, offer_ghosts_cooldown, 30 SECONDS)
 
 /// Disables this bot from being possessed by ghosts
-/mob/living/simple_animal/bot/proc/disable_possession(mob/user)
+/mob/living/simple_animal/bot/proc/disable_possession(mob/user, silent = FALSE)
 	can_be_possessed = FALSE
 	QDEL_NULL(personality_download)
-	if (mind)
-		if (user)
-			log_combat(user, src, "ejected from [initial(src.name)] control.")
-		to_chat(src, span_warning("You feel yourself fade as your personality matrix is reset!"))
-		ghostize(can_reenter_corpse = FALSE)
+	if (!key)
+		return
+	if (user)
+		log_combat(user, src, "ejected from [initial(src.name)] control.")
+	to_chat(src, span_warning("You feel yourself fade as your personality matrix is reset!"))
+	ghostize(can_reenter_corpse = FALSE)
+	if (!silent)
 		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 		say("Personally matrix reset!", forced = "bot")
-		key = null
+	key = null
 
 /// Returns true if this mob can be controlled
 /mob/living/simple_animal/bot/proc/check_possession(mob/potential_possessor)
@@ -290,6 +294,7 @@
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 		to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
+		disable_possession(user = user, silent = TRUE)
 		if(user)
 			log_combat(user, src, "emagged")
 		return
