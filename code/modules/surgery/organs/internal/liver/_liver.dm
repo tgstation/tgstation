@@ -128,7 +128,7 @@
 
 /obj/item/organ/internal/liver/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	//If your liver is failing, then we use the liverless version of metabolize
+	//If your liver is failing, or you have forced liverless metabolism, then we use the liverless version of metabolize
 	if((organ_flags & ORGAN_FAILING) || HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM))
 		owner.reagents.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
 		return
@@ -160,9 +160,8 @@
 	if(provide_pain_message && damage > 10 && SPT_PROB(damage/6, seconds_per_tick)) //the higher the damage the higher the probability
 		to_chat(owner, span_warning("You feel a dull pain in your abdomen."))
 
-
 /obj/item/organ/internal/liver/handle_failing_organs(seconds_per_tick)
-	if(HAS_TRAIT(owner, TRAIT_STABLELIVER) || HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM))
+	if(!owner.needs_liver())
 		return
 	return ..()
 

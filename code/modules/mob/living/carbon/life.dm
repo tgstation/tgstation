@@ -467,9 +467,8 @@
 		// We don't use get_organ_slot here because we know we have the organ we want, since we're iterating the list containing em already
 		// This code is hot enough that it's just not worth the time
 		var/obj/item/organ/internal/organ = organs_slot[slot]
-		if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
+		if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling (pain)
 			organ.on_life(seconds_per_tick, times_fired)
-
 
 /mob/living/carbon/handle_diseases(seconds_per_tick, times_fired)
 	for(var/thing in diseases)
@@ -702,6 +701,12 @@
 //LIVER//
 /////////
 
+/// Check to see if we actually need to have a liver
+/mob/living/carbon/proc/needs_liver()
+	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_LIVERLESS_METABOLISM))
+		return FALSE
+	return TRUE
+
 /// Check to see if we have the liver, if not automatically gives you last-stage effects of liver failure.
 /mob/living/carbon/proc/handle_liver(seconds_per_tick, times_fired)
 	if(get_organ_slot(ORGAN_SLOT_LIVER))
@@ -710,7 +715,7 @@
 	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
 	reagents.metabolize(src, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
 
-	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_LIVERLESS_METABOLISM))
+	if(!needs_liver())
 		return
 
 	adjustToxLoss(0.6 * seconds_per_tick, TRUE,  TRUE)
@@ -733,22 +738,20 @@
 		var/datum/brain_trauma/BT = T
 		BT.on_life(seconds_per_tick, times_fired)
 
-/////////////////////////////////////
-//MONKEYS WITH TOO MUCH CHOLOESTROL//
-/////////////////////////////////////
+/////////
+//HEART//
+/////////
+
+/mob/living/carbon/proc/needs_heart()
+	if(HAS_TRAIT(src, TRAIT_STABLEHEART) || HAS_TRAIT(src, TRAIT_NOBLOOD))
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/proc/can_heartattack()
 	if(!needs_heart())
 		return FALSE
 	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
 	if(!heart || IS_ROBOTIC_ORGAN(heart))
-		return FALSE
-	return TRUE
-
-/mob/living/carbon/proc/needs_heart()
-	if(HAS_TRAIT(src, TRAIT_STABLEHEART))
-		return FALSE
-	if(dna && dna.species && (HAS_TRAIT(src, TRAIT_NOBLOOD) || isnull(dna.species.mutantheart))) //not all carbons have species!
 		return FALSE
 	return TRUE
 
