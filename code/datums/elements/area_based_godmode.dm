@@ -2,9 +2,8 @@
  * Area-based godmode.
  * (area, allow_area_subtypes, gain_message, lose_message)
  */
-/datum/element/area_based_godmode
-	element_flags = ELEMENT_BESPOKE
-	argument_hash_start_idx = 2
+/datum/component/area_based_godmode
+	dupe_mode = COMPONENT_DUPE_ALLOWED
 
 	/// The type of area that will trigger godmode.
 	var/area_type
@@ -18,7 +17,7 @@
 	/// The message to send to the mob when they lose godmode.
 	var/lose_message
 
-/datum/element/area_based_godmode/Attach(
+/datum/component/area_based_godmode/Initialize(
 	datum/target,
 	area_type,
 	allow_area_subtypes = FALSE,
@@ -28,29 +27,37 @@
 	. = ..()
 
 	if(!ismob(target))
-		return ELEMENT_INCOMPATIBLE
+		return COMPONENT_INCOMPATIBLE
 
 	var/mob/mob_target = target
 	if(initial(mob_target.status_flags) & GODMODE)
-		return ELEMENT_INCOMPATIBLE
+		return COMPONENT_INCOMPATIBLE
+
+	var/list/datum/component/area_based_godmode/others = target.GetComponents(/datum/component/area_based_godmode)
+	for(var/datum/component/area_based_godmode/other as anything in (others - src))
+		if(other.area_type == area_type)
+			stack_trace("attempted to add a duplicate [type] to [target.type] for [area_type]")
+			return COMPONENT_INCOMPATIBLE
 
 	src.area_type = area_type
 	src.allow_area_subtypes = allow_area_subtypes
 	src.gain_message = gain_message
 	src.lose_message = lose_message
 
-	mob_target.become_area_sensitive(type)
+	mob_target.become_area_sensitive(REF(src))
 	RegisterSignal(target, COMSIG_ENTER_AREA, PROC_REF(check_area))
 	check_area(target)
 
-/datum/element/area_based_godmode/Detach(datum/source, ...)
-	var/mob/mob_source = source
-	mob_source.lose_area_sensitivity(type)
-	UnregisterSignal(source, COMSIG_ENTER_AREA)
-	mob_source.status_flags &= ~GODMODE
+/datum/component/area_based_godmode/UnregisterFromParent()
+	var/mob/mob_parent = parent
+	mob_parent.lose_area_sensitivity(REF(src))
+	UnregisterSignal(mob_parent, COMSIG_ENTER_AREA)
+	if(check_in_valid_area(mob_parent))
+		to_chat(mob_parent, lose_message)
+		mob_parent.status_flags &= ~GODMODE
 	return ..()
 
-/datum/element/area_based_godmode/proc/check_in_valid_area(mob/checking)
+/datum/component/area_based_godmode/proc/check_in_valid_area(mob/checking)
 	var/area/area = get_area(checking)
 	if(area.type == area_type)
 		return TRUE
@@ -59,7 +66,7 @@
 		return FALSE
 	return istype(area, area_type)
 
-/datum/element/area_based_godmode/proc/check_area(mob/source)
+/datum/component/area_based_godmode/proc/check_area(mob/source)
 	SIGNAL_HANDLER
 
 	var/source_id = "[REF(source)]"
