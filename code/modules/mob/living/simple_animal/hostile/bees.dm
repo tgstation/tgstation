@@ -381,7 +381,7 @@
 /obj/item/trash/bee
 	name = "bee"
 	desc = "No wonder the bees are dying out, you monster."
-	icon = 'monkestation/icons/mob/simple/bees.dmi'
+	icon = 'icons/mob/simple/bees.dmi'
 	icon_state = "bee_item"
 	var/datum/reagent/beegent
 
