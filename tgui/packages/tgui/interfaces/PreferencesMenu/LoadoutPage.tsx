@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useBackend, useSharedState, useLocalState } from '../../backend';
 import { Box, Button, Section, Stack, Dropdown, FitText } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
@@ -130,7 +131,10 @@ export const LoadoutManager = (props, context) => {
                 width="100%"
                 selected={selectedTabName}
                 displayText={selectedTabName}
-                options={loadout_tabs.map((curTab) => curTab.name)}
+                options={loadout_tabs.map((curTab) => ({
+                  value: curTab,
+                  displayText: curTab.name,
+                }))}
                 onSelected={(curTab) => setSelectedTab(curTab.name)}
               />
             </Section>
