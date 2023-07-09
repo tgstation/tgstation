@@ -1,4 +1,5 @@
 /obj/item/clothing/suit/armor
+	name = "armor"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
 	allowed = null
