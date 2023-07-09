@@ -103,7 +103,7 @@
 			shirt_overlay.dir = image_dir
 			//Emissive blocker
 			if(blocks_emissive)
-				underwear_overlay.overlays += emissive_blocker(shirt_overlay.icon, shirt_overlay.icon_state, location)
+				shirt_overlay.overlays += emissive_blocker(shirt_overlay.icon, shirt_overlay.icon_state, location)
 			worn_uniform_offset?.apply_offset(shirt_overlay)
 			. += shirt_overlay
 
@@ -115,7 +115,7 @@
 			socks_overlay.dir = image_dir
 			//Emissive blocker
 			if(blocks_emissive)
-				underwear_overlay.overlays += emissive_blocker(socks_overlay.icon, socks_overlay.icon_state, location)
+				socks_overlay.overlays += emissive_blocker(socks_overlay.icon, socks_overlay.icon_state, location)
 			worn_uniform_offset?.apply_offset(socks_overlay)
 			. += socks_overlay
 
