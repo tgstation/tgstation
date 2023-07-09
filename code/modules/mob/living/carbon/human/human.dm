@@ -445,6 +445,7 @@
 		return
 
 	var/panicking = FALSE
+	var/cprquality = 0
 
 	do
 		CHECK_DNA_AND_SPECIES(target)
@@ -456,27 +457,30 @@
 			to_chat(src, span_warning("[target.name] is dead!"))
 			return FALSE
 
-		if (is_mouth_covered())
-			to_chat(src, span_warning("Remove your mask first!"))
+		for(var/obj/item/clothing/C in target.get_equipped_items())
+			if((C.body_parts_covered & CHEST) && (C.clothing_flags & THICKMATERIAL)) //check to see if something is obscuring their chest.
+				to_chat(src, span_warning("[target.name]'s chest is obscured, preventing compressions!"))
 			return FALSE
 
-		if (target.is_mouth_covered())
-			to_chat(src, span_warning("Remove [p_their()] mask first!"))
-			return FALSE
+		if (target.is_mouth_covered() || !HAS_TRAIT(src, TRAIT_NOBREATH))
+			to_chat(src, span_warning("[target.name]'s mouth is obscured, preventing ventilation!"))
+		else if(src.is_holding_item_of_type(/obj/item/bvm))
+			to_chat(src, span_notice("You ready the bag valve mask for use on [target.name]."))
+			cprstage = 2
+		else if (HAS_TRAIT(src, TRAIT_NOBREATH))
+			to_chat(src, span_notice("You do not breathe, so you cannot perform rescue breaths."))
+		else if (is_mouth_covered())
+			to_chat(src, span_warning("Your mask is obscuring your mouth, preventing rescue breaths!"))
+		else
+			to_chat(src, span_notice("You prepare to perform rescue breaths on [target.name]."))
+			cprstage = 1
 
-		if (!get_organ_slot(ORGAN_SLOT_LUNGS))
-			to_chat(src, span_warning("You have no lungs to breathe with, so you cannot perform CPR!"))
-			return FALSE
-
-		if (HAS_TRAIT(src, TRAIT_NOBREATH))
-			to_chat(src, span_warning("You do not breathe, so you cannot perform CPR!"))
-			return FALSE
 
 		visible_message(span_notice("[src] is trying to perform CPR on [target.name]!"), \
-						span_notice("You try to perform CPR on [target.name]... Hold still!"))
+					span_notice("You try to perform CPR on [target.name]... Hold still!"))
 
 		if (!do_after(src, delay = panicking ? CPR_PANIC_SPEED : (3 SECONDS), target = target))
-			to_chat(src, span_warning("You fail to perform CPR on [target]!"))
+			to_chat(src, span_warning("You fail to perform CPR on [target.name]!"))
 			return FALSE
 
 		if (target.health > target.crit_threshold)
@@ -489,17 +493,45 @@
 			add_mood_event("saved_life", /datum/mood_event/saved_life)
 		log_combat(src, target, "CPRed")
 
-		if (HAS_TRAIT(target, TRAIT_NOBREATH))
-			to_chat(target, span_unconscious("You feel a breath of fresh air... which is a sensation you don't recognise..."))
-		else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
-			to_chat(target, span_unconscious("You feel a breath of fresh air... but you don't feel any better..."))
-		else
-			target.adjustOxyLoss(-min(target.getOxyLoss(), 7))
-			to_chat(target, span_unconscious("You feel a breath of fresh air enter your lungs... It feels good..."))
+		switch (cprquality)
+			if (0)
+				target.adjustOxyloss(-min(target.getOxyLoss(), 5))
+				visible_message(span_notice("[src] performs compression-only CPR on [target.name]!"), span_notice("You perform compression-only CPR on [target.name]."))
+				to_chat(target, span_unconscious("You feel your blood flow steadily again... It feels good..."))
+			if (1)
+				target.adjustOxyloss(-min(target.getOxyLoss(), 5))
+				visible_message(span_notice("[src] performs CPR on [target.name]!"), span_notice("You perform CPR on [target.name]."))
+				if (HAS_TRAIT(target, TRAIT_NOBREATH))
+					to_chat(target, span_unconscious("You feel a breath of fresh air... which is a sensation you don't recognise..."))
+				else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
+					to_chat(target, span_unconscious("You feel a breath of fresh air... but you don't feel any better..."))
+				else
+					target.adjustOxyLoss(-min(target.getOxyLoss(), 2))
+					to_chat(target, span_unconscious("You feel a breath of fresh air enter your lungs... It feels good..."))
+			if (2)
+				target.adjustOxyloss (-min(target.getOxyLoss(), 5))
+				visible_message(span_notice("[src] performs BVM-assisted CPR on [target.name]!"), span_notice("You perform BVM-assisted CPR on [target.name]."))
+				if (HAS_TRAIT(target, TRAIT_NOBREATH))
+					to_chat(target, span_unconscious("You feel a strong pump of fresh air... which is a sensation you don't recognise..."))
+				else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
+					to_chat(target, span_unconscious("You feel a strong pump of fresh air... but you don't feel any better..."))
+				else
+					target.adjustOxyLoss(-min(target.getOxyLoss(), 5))
+					to_chat(target, span_unconscious("You feel a strong pump of fresh air enter your lungs... It feels good..."))
+			if (3)
+				target.adjustOxyloss (-min(target.getOxyLoss(), 5))
+				visible_message(span_notice("[src] performs oxygen and BVM-assisted CPR on [target.name]!"), span_notice("You perform oxygen and BVM-assisted CPR on [target.name]."))
+				if (HAS_TRAIT(target, TRAIT_NOBREATH))
+					to_chat(target, span_unconscious("You feel a strong pump of pure oxygen... which is a sensation you don't recognise..."))
+				else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
+					to_chat(target, span_unconscious("You feel a strong pump of pure oxygen... but you don't feel any better..."))
+				else
+					target.adjustOxyLoss(-min(target.getOxyLoss(), 5))
+					to_chat(target, span_unconscious("You feel a strong pump of pure oxygen enter your lungs... It feels good..."))
 
 		if (target.health <= target.crit_threshold)
 			if (!panicking)
-				to_chat(src, span_warning("[target] still isn't up! You try harder!"))
+			to_chat(src, span_warning("[target] still isn't up! You try harder!"))
 			panicking = TRUE
 		else
 			panicking = FALSE
