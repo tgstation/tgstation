@@ -9,7 +9,7 @@
 	health = 70
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	speed = 1
+	speed = 0.7
 
 /// Will differentiate into the "ambush" giant spider.
 /mob/living/basic/young_spider/ambush
@@ -22,7 +22,7 @@
 	health = 55
 	melee_damage_lower = 12
 	melee_damage_upper = 18
-	speed = 1.5
+	speed = 1
 
 /mob/living/basic/young_spider/ambush/Initialize(mapload)
 	. = ..()
@@ -40,7 +40,7 @@
 	health = 35
 	melee_damage_lower = 2
 	melee_damage_upper = 4
-	speed = 0.7
+	speed = 0.5
 	poison_per_bite = 4
 	poison_type = /datum/reagent/peaceborg/confuse
 
@@ -55,7 +55,7 @@
 	health = 45
 	melee_damage_lower = 8
 	melee_damage_upper = 12
-	speed = 0.7
+	speed = 0.5
 	poison_per_bite = 2
 
 /// Will differentiate into the "nurse" giant spider.
@@ -69,7 +69,7 @@
 	health = 25
 	melee_damage_lower = 2
 	melee_damage_upper = 4
-	speed = 1
+	speed = 0.7
 	web_speed = 0.5
 	web_type = /datum/action/cooldown/lay_web/sealer
 	///The health HUD applied to the mob.
@@ -100,7 +100,7 @@
 	health = 25
 	melee_damage_lower = 1
 	melee_damage_upper = 1
-	speed = 1
+	speed = 0.7
 	web_speed = 0.25
 	web_type = /datum/action/cooldown/lay_web/sealer
 	poison_per_bite = 2
@@ -117,7 +117,7 @@
 	health = 100
 	melee_damage_lower = 5
 	melee_damage_upper = 10
-	speed = 1
+	speed = 0.7
 	web_speed = 0.5
 	web_type = /datum/action/cooldown/lay_web/sealer
 
@@ -148,7 +148,7 @@
 	health = 130
 	melee_damage_lower = 20
 	melee_damage_upper = 25
-	speed = 1.5
+	speed = 1
 	obj_damage = 40
 
 /// Will differentiate into the "flesh" giant spider.
