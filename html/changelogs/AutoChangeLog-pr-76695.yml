@@ -1,0 +1,4 @@
+author: "TerraGS"
+delete-after: True
+changes:
+  - bugfix: "The military surplus trader encountered by explorer drones will now correctly ask for armor rather than \"suit\""
