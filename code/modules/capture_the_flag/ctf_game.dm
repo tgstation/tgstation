@@ -256,8 +256,15 @@
 		anchored = TRUE // Avoid directly assigning to anchored and prefer to use set_anchored() on normal circumstances.
 		return
 	//passing means the user picked up the flag so we can now apply this
+	to_chat(user, span_userdanger("Take \the [initial(name)] to your team's controller!"))
 	user.set_anchored(TRUE)
 	user.status_flags &= ~CANPUSH
+
+/obj/item/ctf_flag/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/ctf_flag))
+		var/obj/item/ctf_flag/flag = item
+		if(flag.team != team)
+			to_chat(user, span_userdanger("Take \the [initial(flag.name)] to your team's controller!"))
 
 /obj/item/ctf_flag/dropped(mob/user)
 	..()
