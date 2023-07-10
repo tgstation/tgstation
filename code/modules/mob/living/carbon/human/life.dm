@@ -339,15 +339,11 @@
 			to_chat(src, span_notice("You feel fit again!"))
 			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)
 			remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			update_worn_undersuit()
-			update_worn_oversuit()
 	else
 		if(overeatduration >= 200 SECONDS)
 			to_chat(src, span_danger("You suddenly feel blubbery!"))
 			ADD_TRAIT(src, TRAIT_FAT, OBESITY)
 			add_movespeed_modifier(/datum/movespeed_modifier/obesity)
-			update_worn_undersuit()
-			update_worn_oversuit()
 
 	//always sluggish while lacking a stomach
 	if(metabolism_efficiency != 0.8)

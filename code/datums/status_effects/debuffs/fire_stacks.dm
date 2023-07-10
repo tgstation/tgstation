@@ -28,17 +28,6 @@
 
 /datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
-
-	if(isanimal(owner))
-		qdel(src)
-		return
-
-	if(isbasicmob(owner))
-		var/mob/living/basic/basic_owner = owner
-		if(!(basic_owner.basic_mob_flags & FLAMMABLE_MOB))
-			qdel(src)
-			return
-
 	owner = new_owner
 	set_stacks(new_stacks)
 
@@ -83,8 +72,16 @@
 			qdel(override_effect)
 
 /datum/status_effect/fire_handler/on_apply()
-	. = ..()
+	if(isanimal(owner))
+		return FALSE
+
+	if(isbasicmob(owner))
+		var/mob/living/basic/basic_owner = owner
+		if(!(basic_owner.basic_mob_flags & FLAMMABLE_MOB))
+			return FALSE
+
 	update_particles()
+	return TRUE
 
 /datum/status_effect/fire_handler/on_remove()
 	if(particle_effect)

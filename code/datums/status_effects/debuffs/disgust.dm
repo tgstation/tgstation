@@ -13,18 +13,23 @@
 
 /datum/status_effect/disgust/on_creation(mob/living/new_owner, disgust_value = 0)
 	. = ..()
-	//this is pointless for non-carbons
-	if(!iscarbon(new_owner))
-		qdel(src)
-		return
 	set_disgust_value(disgust_value)
+	RegisterSignal(new_owner, COMSIG_LIVING_DEATH, PROC_REF(you_are_dead))
 
 /datum/status_effect/disgust/on_apply()
+	//doesn't make sense if you don't feel hunger
 	if(HAS_TRAIT(owner, TRAIT_NOHUNGER))
+		return FALSE
+	//doesn't make sense if you are dead
+	if(owner.stat >= DEAD)
+		return FALSE
+	//this is pointless for non-carbons, they can't puke
+	if(!iscarbon(owner))
 		return FALSE
 	return TRUE
 
 /datum/status_effect/disgust/on_remove()
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 	owner.clear_alert(ALERT_DISGUST)
 	owner.clear_mood_event("disgust")
 
@@ -72,8 +77,8 @@
 			owner.add_mood_event("disgust", /datum/mood_event/disgusted)
 
 /datum/status_effect/disgust/tick(seconds_per_tick, times_fired)
-	// Disgust value does not decrease while dead or in stasis
-	if(owner.stat == DEAD || IS_IN_STASIS(owner))
+	// Disgust value does not decrease while in stasis
+	if(IS_IN_STASIS(owner))
 		return
 
 	var/mob/living/carbon/carbon_owner = owner
@@ -102,3 +107,9 @@
 	else
 		disgust_decrease *= 0.5 //halved disgust decrease without a stomach, honestly very lenient
 	set_disgust_value(disgust_value - disgust_decrease)
+
+/// Disgust goes away once you die, personally I think this is stupid, but it's legacy behavior and we're keeping it
+/datum/status_effect/disgust/proc/you_are_dead(mob/living/source, gibbed)
+	SIGNAL_HANDLER
+
+	qdel(src)

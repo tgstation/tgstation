@@ -852,7 +852,6 @@
 
 	// These should be tracked by status effects
 	losebreath = 0
-	set_disgust_effect(0)
 	cure_husk()
 
 	if(heal_flags & HEAL_TEMP)
