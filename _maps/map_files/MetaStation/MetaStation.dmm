@@ -50231,7 +50231,7 @@
 /area/station/cargo/miningoffice)
 "sfO" = (
 /obj/structure/rack{
-	icon = 'icons/obj/stationobjs.dmi';
+	icon = 'icons/obj/fluff.dmi';
 	icon_state = "minibar";
 	name = "skeletal minibar"
 	},

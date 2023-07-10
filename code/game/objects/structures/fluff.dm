@@ -6,7 +6,7 @@
 /obj/structure/fluff
 	name = "fluff structure"
 	desc = "Fluffier than a sheep. This shouldn't exist."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/fluff.dmi'
 	icon_state = "minibar"
 	anchored = TRUE
 	density = FALSE

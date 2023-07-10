@@ -31,7 +31,7 @@
 GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants and other ghosties.
 
 /obj/structure/bodycontainer
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "morgue1"
 	density = TRUE
 	anchored = TRUE
@@ -365,7 +365,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
  * For overriding only
  */
 /obj/structure/tray
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/basic_machine.dmi'
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = PASSTABLE | LETPASSTHROW
