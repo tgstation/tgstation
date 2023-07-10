@@ -209,10 +209,6 @@
 				to_chat(owner, span_warning("[src] can't be cast in this state!"))
 			return FALSE
 
-		// Being put into a card form breaks a lot of spells, so we'll just forbid them in these states
-		if(ispAI(owner) || (isAI(owner) && istype(owner.loc, /obj/item/aicard)))
-			return FALSE
-
 	return TRUE
 
 /**
