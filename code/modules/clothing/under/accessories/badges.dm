@@ -116,6 +116,9 @@
 		new /obj/item/lipstick/random(src)
 
 /obj/item/clothing/accessory/dogtag
+	name = "Dogtag"
+	icon_state = "allergy"
+	attachment_slot = NONE // actually NECK but that doesn't make sense
 	/// What message is displayed when our dogtags / its clothes / its wearer is examined
 	var/display = "Nothing!"
 
@@ -149,21 +152,22 @@
 	if(!IN_GIVEN_RANGE(get_turf(user), get_turf(src), 2))
 		return
 
-	examine_list += display
+	if(ismob(source))
+		// Examining a mob wearing the clothes, wearing the dogtag will also show the message
+		examine_list += "A dogtag is hanging around [user.p_their()] neck: [display]"
+	else
+		examine_list += display
 
 /obj/item/clothing/accessory/dogtag/allergy
 	name = "Allergy dogtag"
 	desc = "A dogtag with a listing of allergies."
-	icon_state = "allergy"
-	minimize_when_attached = TRUE
-	attachment_slot = CHEST
 
 /obj/item/clothing/accessory/dogtag/allergy/Initialize(mapload, allergy_string)
 	. = ..()
 	if(allergy_string)
 		display = span_notice("The dogtag has a listing of allergies: [allergy_string]")
 	else
-		display = span_notice("The dogtags are all scratched up.")
+		display = span_notice("The dogtag is all scratched up.")
 
 /// Reskins for the pride pin accessory, mapped by display name to icon state
 GLOBAL_LIST_INIT(pride_pin_reskins, list(

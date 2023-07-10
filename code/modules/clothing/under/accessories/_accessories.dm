@@ -25,6 +25,10 @@
 	/// If NONE, can always attach, while if supplied, can only attach if the clothing covers this slot.
 	var/attachment_slot = CHEST
 
+/obj/item/clothing/accessory/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /**
  * Can we be attached to the passed clothing article?
  */
@@ -39,7 +43,7 @@
 
 	if(attachment_slot && !(attach_to.body_parts_covered & attachment_slot))
 		if(user)
-			attach_to.balloon_alert(user, "can't fit!")
+			attach_to.balloon_alert(user, "can't attach there!")
 		return FALSE
 
 	return TRUE
@@ -50,6 +54,8 @@
  * The accessory is not yet within the clothing's loc at this point, this hapens after success.
  */
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(atom_storage)
 		attach_to.clone_storage(atom_storage)
 		attach_to.atom_storage.set_real_location(src)
@@ -60,20 +66,27 @@
 
 	if(minimize_when_attached)
 		transform *= 0.5
-		// just randomize position
-		pixel_x = 0 + rand(4, -4)
-		pixel_y = 0 + rand(4, -4)
+		pixel_x += 8
+		pixel_y += (-8 + LAZYLEN(attach_to.attached_accessories) * 2)
 
 	RegisterSignal(attach_to, COMSIG_ITEM_EQUIPPED, PROC_REF(on_uniform_equipped))
 	RegisterSignal(attach_to, COMSIG_ITEM_DROPPED, PROC_REF(on_uniform_dropped))
 	RegisterSignal(attach_to, COMSIG_CLOTHING_UNDER_ADJUSTED, PROC_REF(on_uniform_adjusted))
 	RegisterSignal(attach_to, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_uniform_update))
 
-	var/mob/equipped_to = attach_to.loc
-	if(istype(equipped_to))
-		on_uniform_equipped(attach_to, equipped_to, equipped_to.get_slot_by_item(attach_to))
-
 	return TRUE
+
+/// Called after attach is completely successful and the accessory is in the clothing's loc
+/obj/item/clothing/accessory/proc/successful_attach(obj/item/clothing/under/attached_to)
+	SHOULD_CALL_PARENT(TRUE)
+
+	// Do on-equip effects if we're already equipped
+	var/mob/worn_on = attached_to.loc
+	if(istype(worn_on))
+		on_uniform_equipped(attached_to, worn_on, worn_on.get_slot_by_item(attached_to))
+
+	SEND_SIGNAL(src, COMSIG_ACCESSORY_ATTACHED, attached_to)
+	SEND_SIGNAL(attached_to, COMSIG_CLOTHING_ACCESSORY_ATTACHED, src)
 
 /**
  * Detach this accessory from the passed clothing article
@@ -81,6 +94,8 @@
  * We may have exited the clothing's loc at this point
  */
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/detach_from)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(IS_WEAKREF_OF(src, detach_from.atom_storage?.real_location))
 		// Ensure void items do not stick around
 		atom_storage.close_all()
@@ -93,10 +108,14 @@
 	if(istype(dropped_from))
 		on_uniform_dropped(detach_from, dropped_from)
 
+	SEND_SIGNAL(src, COMSIG_ACCESSORY_DETACHED, detach_from)
+	SEND_SIGNAL(detach_from, COMSIG_CLOTHING_ACCESSORY_DETACHED, src)
+
 	if(minimize_when_attached)
 		transform *= 2
-		pixel_x -= 8
-		pixel_y += (8 + LAZYLEN(detach_from.attached_accessories) * 2)
+		// just randomize position
+		pixel_x = rand(4, -4)
+		pixel_y = rand(4, -4)
 
 	layer = initial(layer)
 	SET_PLANE_IMPLICIT(src, initial(plane))
@@ -150,10 +169,17 @@
 		return
 	if(user.can_perform_action(src, NEED_DEXTERITY))
 		above_suit = !above_suit
-		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
+		balloon_alert(user, "wearing [above_suit ? "above" : "below"] suits")
 		return TRUE
 
 /obj/item/clothing/accessory/examine(mob/user)
 	. = ..()
-	. += "It can be attached to a uniform. Alt-click to remove it once attached."
+	. += "It can be attached to a uniform."
 	. += "It can be worn above or below your suit. Right-click to toggle."
+
+/obj/item/clothing/accessory/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!isnull(held_item))
+		return NONE
+
+	context[SCREENTIP_CONTEXT_RMB] = "Wear [above_suit ? "below" : "above"] suit"
+	return CONTEXTUAL_SCREENTIP_SET

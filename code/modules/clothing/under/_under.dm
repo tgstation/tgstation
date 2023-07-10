@@ -61,18 +61,16 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle suit sensors"
 		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/clothing/accessory) && length(attached_accessories) <= max_number_of_accessories)
-		var/obj/item/clothing/accessory/accessory = held_item
-		if(accessory.can_attach_accessory(src, user))
-			context[SCREENTIP_CONTEXT_LMB] = "Attach accessory"
-			. = CONTEXTUAL_SCREENTIP_SET
-
-	if(istype(held_item, /obj/item/stack/cable_coil) && has_sensor == BROKEN_SENSORS)
-		context[SCREENTIP_CONTEXT_LMB] = "Repair suit sensors"
+	if(istype(held_item, /obj/item/clothing/accessory) && length(attached_accessories) < max_number_of_accessories)
+		context[SCREENTIP_CONTEXT_LMB] = "Attach accessory"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(LAZYLEN(attached_accessories))
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Remove accessory"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/stack/cable_coil) && has_sensor == BROKEN_SENSORS)
+		context[SCREENTIP_CONTEXT_LMB] = "Repair suit sensors"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(can_adjust && adjusted != DIGITIGRADE_STYLE)
@@ -197,6 +195,9 @@
 
 	LAZYADD(attached_accessories, accessory)
 	accessory.forceMove(src)
+	// Allow for accessories to react to the acccessory list now
+	accessory.successful_attach(src)
+
 	if(user && attach_message)
 		balloon_alert(user, "accessory attached")
 
@@ -223,8 +224,9 @@
 	if(removed == attached_accessories[1])
 		accessory_overlay = null
 
-	removed.detach(src)
+	// Remove it from the list before detaching
 	LAZYREMOVE(attached_accessories, removed)
+	removed.detach(src)
 
 	if(isnull(accessory_overlay) && LAZYLEN(attached_accessories))
 		create_accessory_overlay()
