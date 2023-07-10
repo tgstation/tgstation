@@ -67,11 +67,12 @@
 	. = ..()
 	var/directions = GLOB.cardinals.Copy()
 	for(var/i in 1 to 3)
-		var/mob/living/basic/paper_wizard/copy/copies = new (get_step(cast_on, pick_n_take(directions)))
-		copies.original = owner
-		invocation(copies)
-		RegisterSignals(copies, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
-		QDEL_IN(copies, clone_lifespan)
+		var/mob/living/basic/paper_wizard/copy/copy = new (get_step(cast_on, pick_n_take(directions)))
+		copy.original = owner
+		invocation(copy)
+		RegisterSignals(copy, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
+		copies += copy
+		QDEL_IN(copy, clone_lifespan)
 	owner.forceMove(get_step(cast_on, pick_n_take(directions)))
 
 /datum/action/cooldown/spell/pointed/wizard_mimic/proc/lost_minion(mob/source)
