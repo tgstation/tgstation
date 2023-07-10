@@ -502,8 +502,8 @@
 				target_cpr_feeling = "You feel blood rushing through your veins"
 				target_cpr_reaction = "... It feels good..."
 			else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
-					target_cpr_reaction = "... but only the pressure seems to help..."
-					cpr_healing = 5
+				target_cpr_reaction = "... but only the pressure seems to help..."
+				cpr_healing = 5
 			else
 				target_cpr_reaction = "enter your lungs... It feels good..."
 
