@@ -48,6 +48,7 @@
 				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced/fulltile, ICON = "rwindow0", TITLE = "Full Tile Reinforced Window"),
 				list(CONSTRUCTION_MODE = RCD_CATWALK, ICON = "catwalk-0", TITLE = "Catwalk"),
 				list(CONSTRUCTION_MODE = RCD_REFLECTOR, ICON = "reflector_base", TITLE = "Reflector"),
+				list(CONSTRUCTION_MODE = RCD_GIRDER, ICON = "girder", TITLE = "Girder"),
 			),
 
 			//Computers & Machine Frames

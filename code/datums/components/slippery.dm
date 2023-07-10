@@ -98,6 +98,10 @@
 	SIGNAL_HANDLER
 	if(!isliving(arrived))
 		return
+	if(lube_flags & SLIPPERY_TURF)
+		var/turf/turf = get_turf(source)
+		if(HAS_TRAIT(turf, TRAIT_TURF_IGNORE_SLIPPERY))
+			return
 	var/mob/living/victim = arrived
 	if((victim.movement_type & (FLYING | FLOATING)))
 		return
