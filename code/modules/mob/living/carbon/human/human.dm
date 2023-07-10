@@ -449,7 +449,7 @@
 	var/src_old_lung = !get_organ_slot(ORGAN_SLOT_LUNGS)
 	var/src_old_mask = is_mouth_covered()
 	var/target_old_mask = target.is_mouth_covered()
-	// var/bvm_equipped = is_holding_item_of_type(/obj/item/bvm)
+	var/bvm_equipped// = is_holding_item_of_type(/obj/item/bvm)
 	var/cpr_situation_changed = FALSE
 	var/cpr_healing = 5
 	var/cpr_type
