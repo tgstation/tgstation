@@ -305,7 +305,9 @@
 		The second blow will be slightly weaker."
 	gain_text = "I found him cleaved in twain, halves locked in a duel without end; \
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
-	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
+	next_knowledge = list(
+			/datum/heretic_knowledge/spell/furious_steel,
+			/datum/heretic_knowledge/rifle)
 	route = PATH_BLADE
 	/// How much force do we apply to the offhand?
 	var/offand_force_decrement = 0
@@ -372,7 +374,6 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/maid_in_mirror,
 		/datum/heretic_knowledge/ultimate/blade_final,
-		/datum/heretic_knowledge/rifle,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
