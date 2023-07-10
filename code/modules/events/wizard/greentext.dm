@@ -68,7 +68,8 @@
 /obj/item/greentext/Destroy(force)
 	LAZYREMOVE(SSticker.round_end_events, roundend_callback)
 	QDEL_NULL(roundend_callback) //This ought to free the callback datum, and prevent us from harddeling
-	INVOKE_ASYNC(src, PROC_REF(release_victims))
+	if(LAZYLEN(color_altered_mobs))
+		INVOKE_ASYNC(src, PROC_REF(release_victims))
 	return ..()
 
 /obj/item/greentext/proc/release_victims()
@@ -88,6 +89,7 @@
 		REMOVE_TRAIT(player, TRAIT_GREENTEXT_CURSED, REF(src))
 		if (!HAS_TRAIT(player, TRAIT_GREENTEXT_CURSED))
 			player.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+	LAZYNULL(color_altered_mobs)
 
 
 /obj/item/greentext/proc/check_winner()
@@ -96,10 +98,10 @@
 	if(!is_centcom_level(holder.z)) //you're winner!
 		return
 
+	REMOVE_TRAIT(holder, TRAIT_GREENTEXT_CURSED, REF(src))
+	release_victims()
 	to_chat(holder, span_green("At last it feels like victory is assured!"))
 	holder.mind.add_antag_datum(/datum/antagonist/greentext)
 	holder.log_message("won with greentext!!!", LOG_ATTACK, color = "green")
-	LAZYREMOVE(color_altered_mobs, WEAKREF(holder))
-	REMOVE_TRAIT(holder, TRAIT_GREENTEXT_CURSED, REF(src))
 	resistance_flags |= ON_FIRE
 	qdel(src)
