@@ -11,7 +11,7 @@
 		'icons/obj/lighting.dmi' = list("floodlight_c1"),
 		'icons/obj/monitors.dmi' = list("alarm_bitem"),
 		'icons/obj/wallframe.dmi' = list("apc"),
-		'icons/obj/stock_parts.dmi' = list("box_1"),
+		'icons/obj/assemblies/stock_parts.dmi' = list("box_1"),
 		'icons/obj/objects.dmi' = list("bed"),
 		'icons/obj/smooth_structures/catwalk.dmi' = list("catwalk-0"),
 		'icons/hud/radial.dmi' = list("cnorth", "csouth", "ceast", "cwest", "chair", "secure_windoor", "stool", "wallfloor", "windowsize", "windowtype", "windoor"),
