@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(minor_mapping)
 	return SS_INIT_NO_NEED
 	#else
 	trigger_migration(CONFIG_GET(number/mice_roundstart))
-	place_satchels()
+	place_satchels(satchel_amount = 2)
 	return SS_INIT_SUCCESS
 	#endif // the mice are easily the bigger problem, but let's just avoid anything that could cause some bullshit.
 
@@ -42,19 +42,21 @@ SUBSYSTEM_DEF(minor_mapping)
 	var/turf_temperature = proposed_turf.temperature
 	return turf_gasmix.has_gas(/datum/gas/oxygen, 5) && turf_temperature < NPC_DEFAULT_MAX_TEMP && turf_temperature > NPC_DEFAULT_MIN_TEMP
 
-/datum/controller/subsystem/minor_mapping/proc/place_satchels(amount=10)
+/datum/controller/subsystem/minor_mapping/proc/place_satchels(satchel_amount)
 	var/list/turfs = find_satchel_suitable_turfs()
 	///List of areas where satchels should not be placed.
-	var/list/blacklisted_area_types = list(/area/station/holodeck)
+	var/list/blacklisted_area_types = list(
+		/area/station/holodeck,
+		)
 
-	while(turfs.len && amount > 0)
+	while(turfs.len && satchel_amount > 0)
 		var/turf/turf = pick_n_take(turfs)
 		if(is_type_in_list(get_area(turf), blacklisted_area_types))
 			continue
 		var/obj/item/storage/backpack/satchel/flat/flat_satchel = new(turf)
 
 		SEND_SIGNAL(flat_satchel, COMSIG_OBJ_HIDE, turf.underfloor_accessibility)
-		amount--
+		satchel_amount--
 
 /proc/find_exposed_wires()
 	var/list/exposed_wires = list()
