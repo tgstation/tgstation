@@ -181,8 +181,11 @@
 	visible_message(span_boldannounce("The wizard cries out in pain as a gate appears behind him, sucking him in!"))
 	playsound(get_turf(src), 'sound/magic/mandswap.ogg', 50, vary = TRUE, pressure_affected = TRUE)
 	playsound(get_turf(src), 'sound/hallucinations/wail.ogg', 50, vary = TRUE, pressure_affected = TRUE)
+	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(on_delete))
 
-/obj/effect/temp_visual/paperwiz_dying/Destroy()
+/obj/effect/temp_visual/paperwiz_dying/proc/on_delete()
+	SIGNAL_HANDLER
+
 	for(var/mob/nearby in range(7, src))
 		shake_camera(nearby, duration = 7 SECONDS, strength = 1)
 	var/turf/current_turf = get_turf(src)
@@ -190,5 +193,4 @@
 	new /obj/effect/temp_visual/paper_scatter(current_turf)
 	new /obj/item/clothing/suit/wizrobe/paper(current_turf)
 	new /obj/item/clothing/head/collectable/paper(current_turf)
-	return ..()
 
