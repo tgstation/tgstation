@@ -469,7 +469,7 @@
 	//wait for the shutter to come down
 	animate(src, transform = transformation, time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
 	//then pull the button up with the shutter and leave it on the edge of the screen
-	animate(transform = transform.Translate(x = 0, y = 134), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
+	animate(transform = transformation.Translate(x = 0, y = 134), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
 
 ///Extends the button back to its usual spot
 ///Sends a signal on the hud for the bottom buttons to listen to
@@ -497,7 +497,6 @@
 /atom/movable/screen/lobby/shutter/proc/setup_shutter_animation()
 	var/matrix/transformation = matrix()
 	transformation.Translate(x = 0, y = -143)
-	//transform = transformation
 	//bring down the shutter
 	animate(src, transform = transformation, time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
 

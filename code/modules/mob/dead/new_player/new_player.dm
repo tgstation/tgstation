@@ -43,12 +43,6 @@
 /mob/dead/new_player/prepare_huds()
 	return
 
-/mob/dead/new_player/show_other_mob_action_buttons(mob/take_from)
-	return //new players are unobservable and they don't observe other mobs
-
-/mob/dead/new_player/hide_other_mob_action_buttons(mob/take_from)
-	return //new players are unobservable and they don't observe other mobs
-
 /mob/dead/new_player/Topic(href, href_list)
 	if (usr != src)
 		return
@@ -359,4 +353,4 @@
 	if(new_player?.client)
 		qdel(new_player.hud_used)
 		create_mob_hud()
-		hud_used.show_hud(hud_used.hud_version, new_player)
+		hud_used.show_hud(hud_used.hud_version)
