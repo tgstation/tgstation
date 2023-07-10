@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Added cardboard IDs to the game. They can be crafted with a cardboard sheet and wirecutters and modified with a writing tool. While worn, these will modify the visible name of the wearer just like actual IDs, though they aren't real IDs and won't work as such."
