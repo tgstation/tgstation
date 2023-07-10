@@ -1,3 +1,6 @@
+///List of all beacon implants currently in a mob.
+GLOBAL_LIST_EMPTY(tracked_beacon_implants)
+
 /obj/item/implant/beacon
 	name = "beacon implant"
 	desc = "Teleports things."
@@ -21,11 +24,10 @@
 
 /obj/item/implant/beacon/Initialize(mapload)
 	. = ..()
-	GLOB.tracked_beacon_implants += src
-
-/obj/item/implant/beacon/Destroy()
-	GLOB.tracked_beacon_implants -= src
-	return ..()
+	AddComponent( \
+		/datum/component/tracked_implant, \
+		global_list = GLOB.tracked_beacon_implants, \
+	)
 
 /obj/item/implanter/beacon
 	imp_type = /obj/item/implant/beacon

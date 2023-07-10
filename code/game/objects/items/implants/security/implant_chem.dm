@@ -1,3 +1,6 @@
+///List of all chemical implants currently in a mob.
+GLOBAL_LIST_EMPTY(tracked_chem_implants)
+
 /obj/item/implant/chem
 	name = "chem implant"
 	desc = "Injects things."
@@ -25,11 +28,10 @@
 /obj/item/implant/chem/Initialize(mapload)
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
-	GLOB.tracked_chem_implants += src
-
-/obj/item/implant/chem/Destroy()
-	GLOB.tracked_chem_implants -= src
-	return ..()
+	AddComponent( \
+		/datum/component/tracked_implant, \
+		global_list = GLOB.tracked_chem_implants, \
+	)
 
 /obj/item/implant/chem/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()

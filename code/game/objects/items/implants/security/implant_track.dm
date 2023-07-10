@@ -1,3 +1,6 @@
+///List of all tracking implants currently in a mob.
+GLOBAL_LIST_EMPTY(tracked_tracking_implants)
+
 /obj/item/implant/tracking
 	name = "tracking implant"
 	desc = "Track with this."
@@ -7,6 +10,13 @@
 
 	///How long will the implant continue to function after death?
 	var/lifespan_postmortem = 10 MINUTES
+
+/obj/item/implant/tracking/Initialize(mapload)
+	. = ..()
+	AddComponent( \
+		/datum/component/tracked_implant, \
+		global_list = GLOB.tracked_tracking_implants, \
+	)
 
 /obj/item/implant/tracking/c38
 	name = "TRAC implant"
@@ -27,14 +37,6 @@
 	timerid = null
 
 /obj/item/implant/tracking/c38/Destroy()
-	return ..()
-
-/obj/item/implant/tracking/Initialize(mapload)
-	. = ..()
-	GLOB.tracked_tracking_implants += src
-
-/obj/item/implant/tracking/Destroy()
-	GLOB.tracked_tracking_implants -= src
 	return ..()
 
 /obj/item/implanter/tracking
