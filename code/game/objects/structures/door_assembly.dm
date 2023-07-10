@@ -11,7 +11,7 @@
 	var/mineral = null
 	var/obj/item/electronics/airlock/electronics = null
 	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
-	var/multi_tile = FALSE
+	var/multi_tile = FALSE //! DMDoc goes here
 	var/glass_type = /obj/machinery/door/airlock/glass
 	var/glass = 0 // 0 = glass can be installed. 1 = glass is already installed.
 	var/created_name = null
