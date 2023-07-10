@@ -85,7 +85,7 @@
 		/mob/living/basic/butterfly,
 		/mob/living/basic/rabbit,
 		/mob/living/simple_animal/chick/holo,
-		/mob/living/simple_animal/pet/fox,
+		/mob/living/basic/pet/fox/docile,
 	)
 	mobtype += pick(
 		/mob/living/basic/pet/dog/corgi,

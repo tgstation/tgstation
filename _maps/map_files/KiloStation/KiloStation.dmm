@@ -23865,6 +23865,16 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central/fore)
+"hRs" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/bed/dogbed/renault,
+/mob/living/basic/pet/fox/renault,
+/obj/machinery/firealarm/directional/south,
+/turf/closed/wall,
+/area/station/maintenance/fore)
 "hRB" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -104089,7 +104099,7 @@ pGA
 vVM
 oYV
 jCD
-efG
+hRs
 qlC
 yaN
 efG
