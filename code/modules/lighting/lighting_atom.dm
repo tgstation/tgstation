@@ -119,7 +119,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_RANGE, new_range) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
 	. = light_range
-	light_range = new_range
+	light_outer_range = new_range
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_RANGE, .)
 
 /// Setter for the light color of this atom.

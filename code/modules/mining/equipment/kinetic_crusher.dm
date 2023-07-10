@@ -22,7 +22,7 @@
 	actions_types = list(/datum/action/item_action/toggle_light)
 	obj_flags = UNIQUE_RENAME
 	light_system = MOVABLE_LIGHT
-	light_range = 5
+	light_outer_range = 5
 	light_on = FALSE
 	var/list/trophies = list()
 	var/charged = TRUE

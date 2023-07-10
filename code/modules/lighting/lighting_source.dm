@@ -48,7 +48,7 @@
 	pixel_turf = get_turf_pixel(top_atom) || source_turf
 
 	light_power = source_atom.light_power
-	light_range = source_atom.light_range
+	light_outer_range = source_atom.light_range
 	light_color = source_atom.light_color
 
 	PARSE_LIGHT_COLOR(src)
@@ -321,7 +321,7 @@
 		update = TRUE
 
 	if (source_atom.light_range != light_range)
-		light_range = source_atom.light_range
+		light_outer_range = source_atom.light_range
 		update = TRUE
 
 	if (!top_atom)

@@ -235,7 +235,7 @@
 	overlay_state_inactive = "module_light"
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_color = COLOR_WHITE
-	light_range = 4
+	light_outer_range = 4
 	light_power = 1
 	light_on = FALSE
 	/// Charge drain per range amount.

@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	light_color = COLOR_BLUE_LIGHT
-	light_range = 0 //we dont want to spam SSlighting with source updates every movement
+	light_outer_range = 0 //we dont want to spam SSlighting with source updates every movement
 
 	///Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
@@ -245,7 +245,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	density = FALSE
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
-	light_range = 1.5
+	light_outer_range = 1.5
 	light_power = 3
 	light_color = LIGHT_COLOR_BABY_BLUE
 	luminosity = 1
@@ -321,7 +321,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.74
 	anchored = TRUE
 	density = FALSE
-	light_range = 1.5
+	light_outer_range = 1.5
 	light_power = 3
 	light_color = COLOR_VIBRANT_LIME
 	luminosity = 1
@@ -594,7 +594,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 /obj/machinery/destination_sign/indicator
 	icon_state = "indicator_off"
 	base_icon_state = "indicator_"
-	light_range = 1.5
+	light_outer_range = 1.5
 	light_color = LIGHT_COLOR_DARK_BLUE
 	light_mask = "indicator_off_e"
 

@@ -9,7 +9,7 @@
 	move_resist = INFINITY
 	plane = MASSIVE_OBJ_PLANE
 	plane = ABOVE_LIGHTING_PLANE
-	light_range = 6
+	light_outer_range = 6
 	appearance_flags = LONG_GLIDE
 
 	/// the prepended string to the icon state (singularity_s1, dark_matter_s1, etc)

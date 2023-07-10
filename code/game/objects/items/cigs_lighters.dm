@@ -701,7 +701,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
 	custom_price = PAYCHECK_CREW * 1.1
 	light_system = MOVABLE_LIGHT
-	light_range = 2
+	light_outer_range = 2
 	light_power = 0.6
 	light_color = LIGHT_COLOR_FIRE
 	light_on = FALSE
@@ -932,7 +932,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 0 //I swear it's a real lighter dude you just can't see the flame dude I promise
 	overlay_state = "mime"
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/consumable/nothing = 10)
-	light_range = 0
+	light_outer_range = 0
 	light_power = 0
 	fancy = FALSE
 
@@ -946,7 +946,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
 	overlay_state = "bright"
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/flash_powder = 10)
-	light_range = 8
+	light_outer_range = 8
 	light_power = 3 //Irritatingly bright and large enough to cover a small room.
 	fancy = FALSE
 

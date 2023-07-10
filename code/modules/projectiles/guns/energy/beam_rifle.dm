@@ -532,7 +532,7 @@
 	hitsound_wall = null
 	damage = 0
 	constant_tracer = TRUE
-	hitscan_light_range = 0
+	hitscan_light_outer_range = 0
 	hitscan_light_intensity = 0
 	hitscan_light_color_override = "#99ff99"
 	reflectable = REFLECT_FAKEPROJECTILE

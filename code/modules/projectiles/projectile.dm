@@ -125,13 +125,13 @@
 
 	//Fancy hitscan lighting effects!
 	var/hitscan_light_intensity = 1.5
-	var/hitscan_light_range = 0.75
+	var/hitscan_light_outer_range = 0.75
 	var/hitscan_light_color_override
 	var/muzzle_flash_intensity = 3
 	var/muzzle_flash_range = 1.5
 	var/muzzle_flash_color_override
 	var/impact_light_intensity = 3
-	var/impact_light_range = 2
+	var/impact_light_outer_range = 2
 	var/impact_light_color_override
 
 	//Homing

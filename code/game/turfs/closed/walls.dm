@@ -18,6 +18,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WALLS
+	lighting_uses_jen = TRUE
 
 	rcd_memory = RCD_MEMORY_WALL
 	///bool on whether this wall can be chiselled into

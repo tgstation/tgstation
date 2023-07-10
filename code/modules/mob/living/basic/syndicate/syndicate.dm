@@ -101,7 +101,7 @@
 	attack_sound = 'sound/weapons/blade1.ogg'
 	armour_penetration = 35
 	projectile_deflect_chance = 50
-	light_range = 2
+	light_outer_range = 2
 	light_power = 2.5
 	light_color = COLOR_SOFT_RED
 	r_hand = /obj/item/melee/energy/sword/saber/red

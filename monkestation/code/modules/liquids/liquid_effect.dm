@@ -8,7 +8,7 @@
 	color = "#DDF"
 	alpha = 175
 	//For being on fire
-	light_range = 0
+	light_outer_range = 0
 	light_power = 1
 	light_color = LIGHT_COLOR_FIRE
 

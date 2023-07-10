@@ -126,7 +126,7 @@ at the cost of risking a vicious bite.**/
 	break_message = "<span class='warning'>The structure shatters, leaving only a demonic screech!</span>"
 	break_sound = 'sound/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
-	light_range = 2
+	light_outer_range = 2
 	use_cooldown_duration = 1 MINUTES
 	/// Color of the pants that will come out
 	var/pants_color = COLOR_WHITE

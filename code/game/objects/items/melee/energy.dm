@@ -6,7 +6,7 @@
 	attack_verb_simple = list("hit", "tap", "poke")
 	resistance_flags = FIRE_PROOF
 	light_system = MOVABLE_LIGHT
-	light_range = 3
+	light_outer_range = 3
 	light_power = 1
 	light_on = FALSE
 	bare_wound_bonus = 20

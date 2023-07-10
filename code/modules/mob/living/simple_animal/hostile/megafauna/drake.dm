@@ -243,7 +243,7 @@
 	icon_state = "lavastaff_warn"
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
-	light_range = 2
+	light_outer_range = 2
 	duration = 13
 	var/mob/owner
 
@@ -292,7 +292,7 @@
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "trap-earth"
 	layer = BELOW_MOB_LAYER
-	light_range = 2
+	light_outer_range = 2
 	duration = 13
 
 /obj/effect/temp_visual/fireball
@@ -315,7 +315,7 @@
 	icon_state = "sniper_zoom"
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
-	light_range = 2
+	light_outer_range = 2
 	duration = 9
 
 /obj/effect/temp_visual/target/Initialize(mapload, list/flame_hit)

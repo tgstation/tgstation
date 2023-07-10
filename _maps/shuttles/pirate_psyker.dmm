@@ -447,7 +447,7 @@
 	desc = "A metallic frame that can hold crystal balls. Comes with lights!";
 	light_color = "#0074FF";
 	light_power = 2;
-	light_range = 3;
+	light_outer_range = 3;
 	name = "ball holder";
 	pixel_y = 12
 	},

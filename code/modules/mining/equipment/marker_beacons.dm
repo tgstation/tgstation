@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	armor_type = /datum/armor/structure_marker_beacon
 	max_integrity = 50
 	anchored = TRUE
-	light_range = 2
+	light_outer_range = 2
 	light_power = 3
 	var/icon_prefix = "marker"
 	var/remove_speed = 15

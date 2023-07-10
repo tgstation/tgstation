@@ -1744,7 +1744,7 @@
 	name = "relatively interesting news";
 	desc = "It's been live this whole time, news from Nanotrasen core space, just an hour ago.";
 	light_power = 0.5;
-	light_range = 3
+	light_outer_range = 3
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)

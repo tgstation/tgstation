@@ -26,7 +26,7 @@
 	desc = "A field of bluespace energy, locking on to teleport a target."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "dragnetfield"
-	light_range = 3
+	light_outer_range = 3
 	anchored = TRUE
 
 /obj/effect/nettingportal/Initialize(mapload)

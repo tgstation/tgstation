@@ -13,7 +13,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	light_range = 8
+	light_outer_range = 8
 	light_color = LIGHT_COLOR_LAVA
 	var/open = FALSE
 	var/changing_openness = FALSE

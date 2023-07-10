@@ -147,7 +147,7 @@
 	)
 		set_light(0)
 		return
-	set_light(1.5, 0.7, LIGHT_COLOR_BLUE) // blue light
+	set_light(l_outer_range = 1.4, l_power = 0.7, l_color = LIGHT_COLOR_BLUE) // blue light
 
 /obj/machinery/status_display/update_overlays()
 	. = ..()

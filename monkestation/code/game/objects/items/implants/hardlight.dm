@@ -45,7 +45,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = NONE
 	light_system = MOVABLE_LIGHT
-	light_range = 3
+	light_outer_range = 3
 	light_power = 1
 	throwforce = 25
 	throw_speed = 6

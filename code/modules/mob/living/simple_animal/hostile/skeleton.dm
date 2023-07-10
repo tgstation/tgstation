@@ -118,7 +118,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	light_color = LIGHT_COLOR_PURPLE
-	light_range = 2
+	light_outer_range = 2
 	death_message = "collapses into a pile of bones, their suit dissolving among the plasma!"
 	loot = list(/obj/effect/decal/remains/plasma)
 	outfit = /datum/outfit/plasma_miner

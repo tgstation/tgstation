@@ -20,7 +20,7 @@
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 	actions_types = list(/datum/action/item_action/toggle_light)
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
-	light_range = 4
+	light_outer_range = 4
 	light_power = 1
 	light_on = FALSE
 	/// Can we toggle this light on and off (used for contexual screentips only)
@@ -218,7 +218,7 @@
 	worn_icon_state = "pen"
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
-	light_range = 2
+	light_outer_range = 2
 	var/holo_cooldown = 0
 
 /obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
@@ -267,7 +267,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.
-	light_range = 5 // A little better than the standard flashlight.
+	light_outer_range = 5 // A little better than the standard flashlight.
 	hitsound = 'sound/weapons/genhit1.ogg'
 
 // the desk lamps are a bit special
@@ -279,7 +279,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
-	light_range = 3.5
+	light_outer_range = 3.5
 	light_system = STATIC_LIGHT
 	light_color = LIGHT_COLOR_FAINT_BLUE
 	w_class = WEIGHT_CLASS_BULKY
@@ -306,7 +306,7 @@
 /obj/item/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	light_range = 7 // Pretty bright.
+	light_outer_range = 7 // Pretty bright.
 	icon_state = "flare"
 	inhand_icon_state = "flare"
 	worn_icon_state = "flare"
@@ -429,7 +429,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
 	light_color = LIGHT_COLOR_FIRE
-	light_range = 2
+	light_outer_range = 2
 	fuel = 35 MINUTES
 	randomize_fuel = FALSE
 	trash_type = /obj/item/trash/candle
@@ -456,7 +456,7 @@
 			current_wax_level = 2
 		if(0 to 15 MINUTES)
 			current_wax_level = 3
-			
+
 	if(last_wax_level != current_wax_level)
 		last_wax_level = current_wax_level
 		update_appearance(UPDATE_ICON | UPDATE_NAME)
@@ -509,7 +509,7 @@
 /obj/item/flashlight/flare/candle/attackby(obj/item/attacking_item, mob/user, params)
 	if(try_light_candle(attacking_item, user, silent = istype(attacking_item, src.type))) // so we don't double balloon alerts when a candle is used to light another candle
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	else 
+	else
 		return ..()
 
 // allows lighting an unlit candle from some fire source by left clicking the source with the candle
@@ -541,7 +541,7 @@
 /obj/item/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
-	light_range = 4
+	light_outer_range = 4
 	icon_state = "torch"
 	inhand_icon_state = "torch"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -559,20 +559,20 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A mining lantern."
-	light_range = 6 // luminosity when on
+	light_outer_range = 6 // luminosity when on
 	light_system = MOVABLE_LIGHT
 
 /obj/item/flashlight/lantern/heirloom_moth
 	name = "old lantern"
 	desc = "An old lantern that has seen plenty of use."
-	light_range = 4
+	light_outer_range = 4
 
 /obj/item/flashlight/lantern/syndicate
 	name = "suspicious lantern"
 	desc = "A suspicious looking lantern."
 	icon_state = "syndilantern"
 	inhand_icon_state = "syndilantern"
-	light_range = 10
+	light_outer_range = 10
 
 /obj/item/flashlight/lantern/jade
 	name = "jade lantern"
@@ -590,7 +590,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = null
-	light_range = 7 //luminosity when on
+	light_outer_range = 7 //luminosity when on
 	light_system = MOVABLE_LIGHT
 
 /obj/item/flashlight/emp
@@ -654,7 +654,7 @@
 	desc = "A military-grade glowstick."
 	custom_price = PAYCHECK_LOWER
 	w_class = WEIGHT_CLASS_SMALL
-	light_range = 4
+	light_outer_range = 4
 	light_system = MOVABLE_LIGHT
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
@@ -763,7 +763,7 @@
 	desc = "Groovy..."
 	icon_state = null
 	light_system = MOVABLE_LIGHT
-	light_range = 4
+	light_outer_range = 4
 	light_power = 10
 	alpha = 0
 	plane = FLOOR_PLANE
@@ -773,12 +773,12 @@
 	///Boolean that switches when a full color flip ends, so the light can appear in all colors.
 	var/even_cycle = FALSE
 	///Base light_range that can be set on Initialize to use in smooth light range expansions and contractions.
-	var/base_light_range = 4
+	var/base_light_outer_range = 4
 
 /obj/item/flashlight/spotlight/Initialize(mapload, _light_range, _light_power, _light_color)
 	. = ..()
 	if(!isnull(_light_range))
-		base_light_range = _light_range
+		base_light_outer_range = _light_range
 		set_light_range(_light_range)
 	if(!isnull(_light_power))
 		set_light_power(_light_power)
@@ -791,16 +791,16 @@
 	icon_state = "flashdark"
 	inhand_icon_state = "flashdark"
 	light_system = STATIC_LIGHT //The overlay light component is not yet ready to produce darkness.
-	light_range = 0
+	light_outer_range = 0
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
-	var/dark_light_range = 2.5
+	var/dark_light_outer_range = 2.5
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
 	var/dark_light_power = -3
 
 /obj/item/flashlight/flashdark/update_brightness()
 	. = ..()
 	if(on)
-		set_light(dark_light_range, dark_light_power)
+		set_light(l_outer_range = dark_light_range, l_power = dark_light_power)
 	else
 		set_light(0)
 
@@ -809,7 +809,7 @@
 	name = "eyelight"
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
 	light_system = MOVABLE_LIGHT
-	light_range = 15
+	light_outer_range = 15
 	light_power = 1
 	flags_1 = CONDUCT_1
 	item_flags = DROPDEL
@@ -820,10 +820,10 @@
 	desc = "There is no possible way for a player to see this, so I can safely talk at length about why this exists. Adapted eyes come \
 	with icons that go above the lighting layer so to make sure the red eyes that pierce the darkness are always visible we make the \
 	human emit the smallest amount of light possible. Thanks for reading :)"
-	light_range = 1
+	light_outer_range = 1
 	light_power = 0.07
 
-#undef FAILURE 
-#undef SUCCESS 
-#undef NO_FUEL 
-#undef ALREADY_LIT 
+#undef FAILURE
+#undef SUCCESS
+#undef NO_FUEL
+#undef ALREADY_LIT

@@ -47,7 +47,7 @@
 	var/door_reset_timerid
 	/// The light mask overlay we use
 	light_power = 0.5 // Minimums, we want the button to glow if it has a mask, not light an area
-	light_range = 1.5
+	light_outer_range = 1.5
 	light_color = LIGHT_COLOR_DARK_BLUE
 	var/light_mask = "elev-light-mask"
 
@@ -112,7 +112,7 @@
 		if(elevator_door.elevator_linked_id != linked_elevator_id)
 			continue
 		if(elevator_door.obj_flags & EMAGGED)
-			continue			
+			continue
 		elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
 		INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open), BYPASS_DOOR_CHECKS)
 		elevator_door.obj_flags |= EMAGGED

@@ -186,7 +186,7 @@
 	explosion_block = 3
 	armor_type = /datum/armor/structure_light_puzzle
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_power = 3
 	light_color = LIGHT_COLOR_ORANGE
 	var/powered = FALSE

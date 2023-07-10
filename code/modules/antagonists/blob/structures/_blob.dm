@@ -2,7 +2,7 @@
 /obj/structure/blob
 	name = "blob"
 	icon = 'icons/mob/nonhuman-player/blob.dmi'
-	light_range = 2
+	light_outer_range = 2
 	desc = "A thick wall of writhing tendrils."
 	density = TRUE
 	opacity = FALSE
@@ -349,7 +349,7 @@
 /obj/structure/blob/normal
 	name = "normal blob"
 	icon_state = "blob"
-	light_range = 0
+	light_outer_range = 0
 	max_integrity = BLOB_REGULAR_MAX_HP
 	var/initial_integrity = BLOB_REGULAR_HP_INIT
 	health_regen = BLOB_REGULAR_HP_REGEN

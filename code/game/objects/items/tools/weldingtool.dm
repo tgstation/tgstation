@@ -18,7 +18,7 @@
 	drop_sound = 'sound/items/handling/weldingtool_drop.ogg'
 	pickup_sound = 'sound/items/handling/weldingtool_pickup.ogg'
 	light_system = MOVABLE_LIGHT
-	light_range = 2
+	light_outer_range = 2
 	light_power = 0.75
 	light_color = LIGHT_COLOR_FIRE
 	light_on = FALSE
@@ -58,7 +58,7 @@
 /obj/item/weldingtool/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
-	AddElement(/datum/element/tool_flash, light_range)
+	AddElement(/datum/element/tool_flash, light_outer_range)
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
 
 	create_reagents(max_fuel)
@@ -382,7 +382,7 @@
 	toolspeed = 0.1
 	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	light_system = NO_LIGHT_SUPPORT
-	light_range = 0
+	light_outer_range = 0
 	change_icons = FALSE
 
 /obj/item/weldingtool/abductor/process()
@@ -407,7 +407,7 @@
 	custom_materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/plasma = 1500, /datum/material/uranium = 200)
 	change_icons = FALSE
 	can_off_process = TRUE
-	light_range = 1
+	light_outer_range = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.5
 	var/last_gen = 0

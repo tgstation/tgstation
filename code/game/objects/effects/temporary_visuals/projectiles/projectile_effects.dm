@@ -58,5 +58,5 @@
 
 /obj/effect/projectile_lighting/Initialize(mapload, color, range, intensity, owner_key)
 	. = ..()
-	set_light(range, intensity, color)
+	set_light(l_outer_range = range, l_power = intensity, l_color = color)
 	owner = owner_key

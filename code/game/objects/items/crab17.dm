@@ -230,7 +230,7 @@
 	icon = 'icons/mob/actions/actions_items.dmi'
 	icon_state = "sniper_zoom"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
-	light_range = 2
+	light_outer_range = 2
 	var/obj/effect/dumpeet_fall/DF
 	var/obj/structure/checkoutmachine/dump
 	var/mob/living/bogdanoff

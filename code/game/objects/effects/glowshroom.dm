@@ -83,7 +83,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 		our_glow_gene = new our_glow_gene
 		myseed.genes += our_glow_gene
 	if(istype(our_glow_gene))
-		set_light(our_glow_gene.glow_range(myseed), our_glow_gene.glow_power(myseed), our_glow_gene.glow_color)
+		set_light(l_outer_range = our_glow_gene.glow_range(myseed), l_power = our_glow_gene.glow_power(myseed), l_color = our_glow_gene.glow_color)
 	setDir(calc_dir())
 	base_icon_state = initial(icon_state)
 	if(!floor)

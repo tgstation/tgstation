@@ -72,7 +72,7 @@
 	desc = "Eating this <i>makes</i> you immortal."
 	icon_state = "ambrosia_gaia"
 	light_system = MOVABLE_LIGHT
-	light_range = 3
+	light_outer_range = 3
 	seed = /obj/item/seeds/ambrosia/gaia
 	wine_power = 70
 	wine_flavor = "the earthmother's blessing"

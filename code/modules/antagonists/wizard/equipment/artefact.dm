@@ -118,7 +118,7 @@
 	move_resist = INFINITY
 	plane = MASSIVE_OBJ_PLANE
 	plane = ABOVE_LIGHTING_PLANE
-	light_range = 6
+	light_outer_range = 6
 	appearance_flags = LONG_GLIDE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION

@@ -14,7 +14,7 @@
 	anchored = TRUE
 	density = FALSE
 
-	light_range = 1
+	light_outer_range = 1
 	light_power = 1
 	light_color = LIGHT_COLOR_DARK_BLUE
 	luminosity = 1

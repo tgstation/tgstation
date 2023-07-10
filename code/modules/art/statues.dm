@@ -64,7 +64,7 @@
 
 /obj/structure/statue/uranium
 	max_integrity = 300
-	light_range = 2
+	light_outer_range = 2
 	custom_materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT*5)
 	impressiveness = 25 // radiation makes an impression
 	abstract_type = /obj/structure/statue/uranium

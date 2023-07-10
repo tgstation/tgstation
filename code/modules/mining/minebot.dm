@@ -36,7 +36,7 @@
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 	del_on_death = TRUE
 	light_system = MOVABLE_LIGHT
-	light_range = 6
+	light_outer_range = 6
 	light_on = FALSE
 	var/mode = MINEDRONE_COLLECT
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/minebot/stored_gun

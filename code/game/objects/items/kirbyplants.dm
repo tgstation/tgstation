@@ -73,7 +73,7 @@
 	desc = "A bioluminescent plant."
 	icon_state = "plant-09"
 	light_color = COLOR_BRIGHT_BLUE
-	light_range = 3
+	light_outer_range = 3
 
 /obj/item/kirbyplants/fullysynthetic
 	name = "plastic potted plant"

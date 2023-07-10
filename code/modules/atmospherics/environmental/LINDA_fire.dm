@@ -77,7 +77,7 @@
 	plane = ABOVE_GAME_PLANE
 	blend_mode = BLEND_ADD
 	light_system = MOVABLE_LIGHT
-	light_range = LIGHT_RANGE_FIRE
+	light_outer_range = LIGHT_RANGE_FIRE
 	light_power = 1
 	light_color = LIGHT_COLOR_FIRE
 
@@ -311,6 +311,6 @@
 /obj/effect/dummy/lighting_obj/moblight/fire
 	name = "fire"
 	light_color = LIGHT_COLOR_FIRE
-	light_range = LIGHT_RANGE_FIRE
+	light_outer_range = LIGHT_RANGE_FIRE
 
 #undef INSUFFICIENT

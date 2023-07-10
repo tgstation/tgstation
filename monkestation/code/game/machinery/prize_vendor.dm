@@ -10,7 +10,7 @@
 	armor_type = /datum/armor/prize_vendor
 	circuit = /obj/item/circuitboard/machine/prize_vendor
 	light_power = 0.7
-	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
 	density = TRUE
 
 	///What subtypes of things can we dispense

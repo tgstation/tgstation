@@ -12,7 +12,7 @@
 	interaction_flags_atom = NONE
 	interaction_flags_machine = NONE
 	can_atmos_pass = ATMOS_PASS_NO
-	light_range = 4
+	light_outer_range = 4
 	layer = ABOVE_OBJ_LAYER
 	///First of the generators producing the containment field
 	var/obj/machinery/field/generator/field_gen_1 = null

@@ -28,7 +28,7 @@
 	resistance_flags = FIRE_PROOF
 
 	light_power = 1
-	light_range = 1.6
+	light_outer_range = 1.6
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
 
 	//Trick to get the glowing overlay visible from a distance
