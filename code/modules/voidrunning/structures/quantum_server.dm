@@ -1,5 +1,7 @@
+#define BOTTOM_LEFT 1
+
 /**
- * ### Quantum CPU
+ * ### Quantum Server
  * Houses artificial realities. Interfaced by the console.
  * Destroying this causes brain damage to the occupants and deletes the level.
  */
@@ -10,12 +12,22 @@
 	desc = "A hulking computational machine designed to fabricate virtual domains."
 	density = TRUE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 3
+	/// The area type for safehouse surroundting tiles
+	var/area/domain_biome_area = /area/station/virtual_domain/outside
+	/// The area type to spawn a presets into
+	var/area/domain_generation_area = /area/station/virtual_domain/generated
+	/// The loaded domain preset
+	var/datum/map_template/virtual_domain/generated_domain
+	/// The generated base level to spawn other presets into
+	var/datum/space_level/vdom
 	/// Current plugged in users
 	var/list/datum/weakref/occupant_refs = list()
 	/// The connected console
 	var/obj/machinery/computer/quantum_console/console
-	/// The currently generated level
-	var/datum/space_level/generated_domain
+	/// Turfs to replace with the generated domain
+	var/turf/available_turfs = list()
+	/// "Safe" turfs surrounding the safehouse
+	var/turf/biome_turfs = list()
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -45,14 +57,23 @@
 		return ..()
 
 /// Generates a new virtual domain
-/obj/machinery/quantum_server/proc/generate_domain(datum/map_template/virtual_domain/to_generate)
-	var/datum/space_level/loaded_map = to_generate.load_new_z()
+/obj/machinery/quantum_server/proc/generate_virtual_domain(mob/user)
+	balloon_alert(user, "Generating virtual domain...")
+	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
+
+	var/datum/map_template/virtual_domain/base_zone = new()
+	var/datum/space_level/loaded_map = base_zone.load_new_z()
 	if(!loaded_map)
 		log_game("The virtual domain z-level failed to load.")
 		message_admins("The virtual domain z-level failed to load. Hackers won't be teleported to the netverse.")
 		CRASH("Failed to initialize virtual domain z-level!")
 
-	generated_domain = loaded_map
+	vdom = loaded_map
+	if(!length(available_turfs))
+		available_turfs = get_area_turfs(domain_generation_area, vdom.z_value)
+	if(!length(biome_turfs))
+		biome_turfs = get_area_turfs(domain_biome_area, vdom.z_value)
+
 	return TRUE
 
 /// Returns a list of occupant data if the refs are still valid
@@ -72,6 +93,28 @@
 
 	return occupants
 
+/// Generates the virtual template around the safehouse
+/obj/machinery/quantum_server/proc/load_domain(mob/user, datum/map_template/virtual_domain/to_generate)
+	if(!to_generate)
+		return FALSE
+
+	if(!vdom)
+		generate_virtual_domain(user)
+
+	for(var/turf/open/to_replace in available_turfs)
+		to_replace.ChangeTurf(to_generate.biome_turf)
+
+	to_generate.load(available_turfs[BOTTOM_LEFT])
+
+	for(var/turf/open/to_replace in biome_turfs)
+		to_replace.ChangeTurf(to_generate.biome_turf)
+
+	generated_domain = to_generate
+	balloon_alert(user, "Virtual domain generated.")
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
+
+	return TRUE
+
 /// Attempts to connect to a quantum console
 /obj/machinery/quantum_server/proc/panic_find_console()
 	for(var/obj/machinery/computer/quantum_console/console as anything in oview(7))
@@ -84,13 +127,13 @@
 	return FALSE
 
 /// Sets the current virtual domain to the given map template
-/obj/machinery/quantum_server/proc/set_domain(id)
+/obj/machinery/quantum_server/proc/set_domain(mob/user, id)
 	if(!id)
-		balloon_alert(usr, "No domain specified.")
+		balloon_alert(user, "No domain specified.")
 		return FALSE
 
 	if(length(occupant_refs))
-		balloon_alert(src, "Cannot change domain while server is occupied.")
+		balloon_alert(user, "Cannot change domain while server is occupied.")
 		return FALSE
 
 	var/datum/map_template/virtual_domain/to_generate
@@ -99,8 +142,8 @@
 			to_generate = new available
 			break
 
-	if(!to_generate || !generate_domain(to_generate))
-		balloon_alert(usr, "Failed to generate domain.")
+	if(!load_domain(user, to_generate))
+		balloon_alert(user, "Failed to generate domain.")
 		return FALSE
 
 	return TRUE
@@ -117,3 +160,5 @@
 			avatar.disconnect()
 
 	qdel(generated_domain)
+
+#undef BOTTOM_LEFT

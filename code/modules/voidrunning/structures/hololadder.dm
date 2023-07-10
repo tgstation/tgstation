@@ -4,8 +4,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder11"
 	anchored = TRUE
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN    //the ladder above this one
-	var/crafted = FALSE
+	obj_flags = BLOCK_Z_OUT_DOWN
 	/// The connected netchair
 	var/obj/structure/netchair/connection
 	/// travel time for ladder in deciseconds
@@ -15,28 +14,38 @@
 	. = ..()
 	src.connection = connection
 
-	return INITIALIZE_HINT_LATELOAD
-
 /obj/structure/hololadder/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	use(user)
+	escape(user)
 
-/obj/structure/hololadder/proc/use(mob/user)
+/// Attempts to unplug the user by putting their mind back in their body.
+/obj/structure/hololadder/proc/escape(mob/user)
 	if(!in_range(src, user) || DOING_INTERACTION(user, DOAFTER_SOURCE_CLIMBING_LADDER))
 		return
 
 	if(!connection) // Oh fuck
 		balloon_alert(user, "This ladder isn't connected to anything!")
+		return
 
-	balloon_alert(user, "Disconnecting...")
-	var/mob/living/carbon/human/neo = connection.voidrunner.resolve()
+	var/mob/living/carbon/human/avatar/player = user
+	if(!isavatar(player))
+		balloon_alert(user, "Only avatars can cross the barrier!")
+		return
 
+	var/mob/living/carbon/human/neo = player.owner
 	if(!neo)
 		balloon_alert(user, "Your mortal connection has been severed!")
+		return
 
+	var/mob/living/carbon/human/occupant = connection.voidrunner_ref?.resolve()
+	if(neo != occupant)
+		balloon_alert(user, "Wrong connection!")
+		return
+
+	balloon_alert(user, "Disconnecting...")
 	if(do_after(user, travel_time, src))
-		user.mind.transfer_to(neo)
+		player.disconnect()
 
-
+	qdel(src)

@@ -12,7 +12,7 @@
 
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	desc = "Even in the grim future of [CURRENT_STATION_YEAR] they're still using REST APIs."
+	desc = "Even in the distant year [CURRENT_STATION_YEAR], Nanostrasen is still using REST APIs. How grim."
 	if(!server)
 		panic_find_server()
 
@@ -57,7 +57,7 @@
 
 	switch(action)
 		if("set_domain")
-			if(server.set_domain(params["id"]))
+			if(server.set_domain(usr, params["id"]))
 				return TRUE
 		if("stop_domain")
 			if(server.stop_domain())

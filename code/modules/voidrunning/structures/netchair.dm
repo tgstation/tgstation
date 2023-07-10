@@ -18,7 +18,9 @@
 	max_integrity = 250
 	resistance_flags = NONE
 	/// The person sitting in this chair.
-	var/datum/weakref/voidrunner
+	var/datum/weakref/voidrunner_ref
+	/// The current avatar for the voidrunner.
+	var/datum/weakref/avatar_ref
 	/// The selected outfit for the gamer chair.
 	var/datum/outfit/netsuit = /datum/outfit/job/miner
 	/// Static list of outfits to select from
@@ -35,13 +37,11 @@
 
 /obj/structure/netchair/Destroy()
 	. = ..()
-	QDEL_NULL(server)
 	QDEL_NULL(netsuit)
 	cached_outfits.Cut()
-	var/mob/living/carbon/human/avatar/avatar = voidrunner?.resolve()
+	var/mob/living/carbon/human/avatar/avatar = voidrunner_ref?.resolve()
 	if(avatar)
 		avatar.disconnect()
-	QDEL_NULL(voidrunner)
 
 /obj/structure/netchair/attack_hand(mob/living/user, list/modifiers)
 	if(ishuman(user) && !user.combat_mode)
@@ -92,23 +92,46 @@
 	if(!server)
 		return
 
-	var/turf/destination = pick(get_area_turfs(/area/station/holodeck/rec_center, server.generated_domain.z_value))
+	var/mob/living/carbon/human/avatar/current_avatar = avatar_ref.resolve()
+	if(!current_avatar)
+		current_avatar = generate_avatar(neo)
 
-	var/obj/structure/hololadder/wayout = new(destination, src)
-	var/mob/living/carbon/human/avatar/avatar = new(wayout, neo)
-	avatar.equipOutfit(netsuit, visualsOnly = TRUE)
+	if(!current_avatar)
+		balloon_alert(neo, "There is no room for you in the virtual domain.")
+		return
 
-	if(QDELETED(destination) || QDELETED(neo) || neo.stat == DEAD || !neo.mind)
+	// Final check before we start the transfer
+	if(QDELETED(neo) || QDELETED(current_avatar) || neo.stat == DEAD || current_avatar.stat == DEAD)
 		return
 
 	var/datum/weakref/neo_ref = WEAKREF(neo)
-	voidrunner = neo_ref
+	voidrunner_ref = neo_ref
 	server.occupant_refs += neo_ref
+	avatar_ref = WEAKREF(current_avatar)
+	current_avatar.owner = neo
 
-	neo.mind.transfer_to(avatar, TRUE)
+	neo.mind.transfer_to(current_avatar, TRUE)
+	playsound(current_avatar, 'sound/magic/repulse.ogg', 30, 2)
 
-	if(!do_teleport(avatar, destination, asoundin = 'sound/magic/repulse.ogg', asoundout = 'sound/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
-		CRASH("Failed to teleport the hacker to the netverse.")
+/// Generates a new avatar for the voidrunner.
+/obj/structure/netchair/proc/generate_avatar(mob/living/carbon/human/neo)
+	var/list/turf/possible_turfs = get_area_turfs(/area/station/virtual_domain/safehouse/exit, server.vdom.z_value)
+	if(!length(possible_turfs))
+		return FALSE
+
+	// Find an empty spot to spawn the ladder
+	var/turf/destination
+	for(var/turf/dest_turf as anything in possible_turfs)
+		if(!locate(/obj/structure/hololadder) in dest_turf)
+			destination = dest_turf
+			break
+	if(!destination)
+		return FALSE
+
+	var/obj/structure/hololadder/wayout = new(destination, src)
+	var/mob/living/carbon/human/avatar/avatar = new(wayout.loc, neo)
+	avatar.equipOutfit(netsuit, visualsOnly = TRUE)
+	return avatar
 
 /// Creates a list of outfit entries for the UI.
 /obj/structure/netchair/proc/make_outfit_collection(identifier, list/outfit_list)
@@ -135,7 +158,7 @@
 /// Finds a quantum server to link to.
 /obj/structure/netchair/proc/panic_find_server()
 	for(var/obj/machinery/quantum_server/server as anything in oview(7))
-		if(istype(server, /obj/machinery/quantum_server/server))
+		if(istype(server, /obj/machinery/quantum_server))
 			src.server = server
 			return TRUE
 
