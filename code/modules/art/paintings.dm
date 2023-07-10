@@ -354,7 +354,8 @@
 /obj/item/canvas/proc/try_rename(mob/user)
 	if(painting_metadata.loaded_from_json) // No renaming old paintings
 		return TRUE
-	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece")
+	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece", null, MAX_NAME_LEN)
+	new_name = reject_bad_name(new_name, allow_numbers = TRUE, ascii_only = FALSE, strict = TRUE, cap_after_symbols = FALSE)
 	if(isnull(new_name))
 		return FALSE
 	if(new_name != painting_metadata.title && user.can_perform_action(src))
