@@ -120,10 +120,6 @@
 	///the master that summoned us
 	var/mob/living/basic/paper_wizard/original
 
-/mob/living/basic/paper_wizard/copy/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(damage_nearby))
-
 /mob/living/basic/paper_wizard/copy/grant_abilities()
 	return
 
@@ -131,8 +127,8 @@
 	return
 
 //Hit a fake? eat pain!
-/mob/living/basic/paper_wizard/copy/proc/damage_nearby()
-	SIGNAL_HANDLER
+/mob/living/basic/paper_wizard/copy/death(gibbed)
+	. = ..()
 
 	for(var/mob/living/damaged in oview(5, src))
 		if(faction_check_mob(damaged, exact_match = FALSE))
