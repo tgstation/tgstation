@@ -5,7 +5,7 @@
 	var/mob/living/wizard = controller.pawn
 	var/list/writing_list = controller.blackboard[list_of_writings]
 	var/obj/item/paper/target = controller.blackboard[found_paper]
-	if(writing_list.len)
+	if(length(writing_list))
 		target.add_raw_text(pick(writing_list))
 		target.update_appearance()
 	wizard.dropItemToGround(target)
