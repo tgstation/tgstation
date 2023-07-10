@@ -125,3 +125,21 @@
 	ears = /obj/item/radio/headset/syndicate/alt/leader
 	head = null
 	belt = /obj/item/storage/belt/holster/detective/full/ert
+
+/datum/outfit/pirate/lustrous
+	name = "Lustrous Scintillant"
+
+	id = /obj/item/card/id/advanced/black
+	uniform = /obj/item/clothing/under/ethereal_tunic
+	suit = /obj/item/clothing/suit/hooded/ethereal_raincoat
+	back = /obj/item/storage/backpack/satchel
+	gloves = /obj/item/clothing/gloves/combat
+	shoes = /obj/item/clothing/shoes/bhop
+	l_pocket = /obj/item/switchblade
+
+/datum/outfit/pirate/lustrous/captain
+	name = "Lustrous Radiant"
+
+	glasses = null
+	suit = /obj/item/clothing/suit/jacket/oversized
+	head = /obj/item/clothing/head/costume/crown

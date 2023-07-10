@@ -337,3 +337,125 @@
   - bugfix: silicons can depower airlocks via their UI again
   norsvenska:
   - image: Siding now uses the correct sprite on corners and endpieces.
+2023-07-08:
+  1393F:
+  - bugfix: The cursed katana shard you can get from tendril loot no longer falsely
+      tells you you're not supposed to have it
+  BlueMemesauce:
+  - qol: AI VOX messages are sent over announcement instead of radio
+  - bugfix: AI VOX messages work properly on multi-Z stations
+  ChungusGamer666:
+  - rscadd: You can now put sandstone bricks in pillows to... make them deadlier?
+  - rscadd: Added colorblindness as a mild brain trauma.
+  - rscadd: Added two new quirks, prosthetic organ and tin man. Essentially, they
+      replace organs with bad bad not good cybernetic counterparts.
+  Ghommie:
+  - refactor: Replaced hardcoded "safeties" for lava, chasms and ignoring turf slowdowns
+      on catwalks with traits.
+  - balance: much like catwalks, tables and conveyors also disable turf slowdowns.
+  - balance: slippery turfs won't slip you when walking on a table.
+  - bugfix: Fixed an edge case in which a mob standing on a lava turf would be left
+      visually but permanently  on fire if the lava is changed to another kind of
+      turf.
+  Jacquerel:
+  - rscadd: A bible or lighter in your suit slot, or cowboy hat on your head will
+      occasionally intercept a bullet.
+  JohnFulpWillard:
+  - balance: Bilingual quirk now lets you choose your language between ones given
+      to roundstart species.
+  - balance: Foreigner and Bilingual are now mutually exclusive languages.
+  - bugfix: Cultists promoted to Leader no longer lose their spells (rip whoever tried
+      saving up blood rites)
+  - admin: Admins can now force promote/demote people from Cult Leader if necessary.
+  - code_imp: Jousting now registers/unregisters properly on two-handed items.
+  Jolly:
+  - bugfix: '[TramStation] - Removed a (possibly) unused var on the barber shop doors.
+      Hopefully those taking refuge in the commissary wasn''t causing too many issues.'
+  Jolly, timothymtorres:
+  - code_imp: 'Jolly: Armories across all maps have been tweaked slightly. Report
+      to a Nanotrasen security advisor for any missing guns, armor, helmets or anything
+      else that was there previously (that means, post an issue on Github if theres
+      an issue!!)'
+  - code_imp: 'timothymtorres: Random item spawners now support better control of
+      their X/Y pixel offset.'
+  Melbert:
+  - bugfix: Fix certain emote interactions happening twice at the same time
+  - bugfix: Fixed some hard deletes involving constructed cyborgs
+  - bugfix: Cyborgs with nodrop hats no longer lose them on tip
+  - refactor: Refactor of connections.js. Yeah that's it.
+  Toastgoats:
+  - rscadd: Adds the Lustrous, ethereal pirates in a big bluespace geode!
+  - sound: Unique scream sound for the Lustrous species.
+  - image: Unique head icon for the Lustrous species.
+  Youtubeboy139:
+  - image: Added new HUD sprites
+  - image: Added new Goggle Sprites
+  - image: Added new NVG sprites
+  - image: Removed unused/depreciated sprites in `glasses.dmi`
+  carlarctg:
+  - bugfix: Serrated bone shovels can be created with any kind of shovel now, not
+      just a spade (???)
+  - rscadd: Serrated bone shovels can be used in place of circular saw in most surgeries.
+  - rscadd: Added a duller (still deadly) variant of the serrated bone shovel as coroner
+      mail.
+  - rscadd: Autopsy scanners now act as advanced health analyzers on dead and seemingly-dead
+      people.
+  - rscadd: Increased the force, throwforce, and wound bonus of inert ritual knives
+      and scythes.
+  - rscadd: Coroner gloves can quickly apply medicine like nitrile gloves.
+  - image: Heavily reworks and resprites first aid analyzers. They now display if
+      they're happy, sad, angry, or warning you! Also a 'pricking' animation.
+  - rscadd: First aid analyzers are now found in all basic and specialized medkits.
+      Toxin medkits get a new* disease analyzer. Miners get a miner-colored one in
+      their box.
+  - balance: Scanning yourself with a first aid analyzer will 'create a holo-image
+      with treatment instructions next to your wounds', doubling the speed of treatment
+      of scanned wounds!
+  - sound: Health analyzers and gene scanners now have a scanning sound, courtesy
+      of CM.
+  - refactor: Refactored some wound code to make treatment duration changes and changes
+      in the description of wounds easier.
+  - bugfix: Fixed a dummy parent feature of the health analyzer (Verbose mode) showing
+      up, uselessly, on the disease and first aid subtypes.
+  - image: Surgical processors and slime scanners have recieved a similar resprite.
+2023-07-09:
+  DATA-xPUNGED:
+  - qol: It has been issued brand new mini-fridges for our active stations, Featuring
+      more booze and less moldy pizza!
+  - rscdel: Removed excess ID boxes on HoP's office
+  Fikou:
+  - balance: nightmare vision goggles give you night vision
+  Imaginos:
+  - image: A new sprite for oeprating tables
+  Melbert:
+  - bugfix: Fix hard deletes that brick all of a wizards spell when their body is
+      delted
+  - rscadd: The Atrocinator will now flip you even more.
+  Rhials:
+  - bugfix: The organ manipulator menu will now delete implants or organs that fail
+      to properly insert.
+  - code_imp: The organ manipulator menu code now looks nicer :)
+  YehnBeep:
+  - qol: Produce consoles now have tables near them.
+  YesterdaysPromise:
+  - rscadd: Added Interdyne ModSuits for Interdyne pirates.
+2023-07-10:
+  DATA-xPUNGED:
+  - qol: The Warden's locker now has a garment bag
+  Fikou:
+  - bugfix: service borg apparatus now works on stoves and griddles and ovens
+  - qol: borgs can now activate stoves and griddles
+  - rscadd: rnd can research a cookbook for service borgs
+  FlufflesTheDog:
+  - bugfix: You can once again directly place patients on operating tables
+  Jacquerel:
+  - rscadd: Golems can scoop sand (or snow) off the floor by clicking on it.
+  Nimowa:
+  - bugfix: Fully charged APCs will now actually be fully charged, instead of nearly
+      empty.
+  Riggle:
+  - spellcheck: fix suspicious_logins
+  Youtubeboy139:
+  - image: Added new Security Cap sprite
+  distributivgesetz:
+  - spellcheck: Fixed some underscores in spiderling names.

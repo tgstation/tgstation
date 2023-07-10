@@ -1,7 +1,0 @@
-author: "Youtubeboy139"
-delete-after: True
-changes:
-  - image: "Added new HUD sprites"
-  - image: "Added new Goggle Sprites"
-  - image: "Added new NVG sprites"
-  - image: "Removed unused/depreciated sprites in `glasses.dmi`"
