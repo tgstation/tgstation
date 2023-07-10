@@ -500,6 +500,11 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/singulo)
+"fy" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/template_noop,
+/area/space/nearstation)
 "fz" = (
 /obj/structure/cable,
 /obj/structure/frame/computer{
@@ -1053,6 +1058,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
+"mN" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/ks13/engineering/aux_storage)
 "mQ" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
@@ -1115,7 +1124,7 @@
 /obj/structure/table_frame,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/ruin/space/ks13/medical/medbay)
 "nK" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/mapping_helpers/apc/no_charge,
@@ -1473,6 +1482,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/medical/medbay)
+"pQ" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/ks13/service/bar)
 "pR" = (
 /turf/open/floor/iron,
 /area/ruin/space/ks13/engineering/sb_bow_solars_control)
@@ -1611,6 +1624,10 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/security/sec)
+"qL" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/ks13/service/kitchen)
 "qM" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/decal/cleanable/dirt,
@@ -1726,6 +1743,10 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/vault)
+"rp" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/medical/medbay)
 "rq" = (
 /obj/structure/table_frame,
 /obj/structure/cable,
@@ -2705,7 +2726,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/ruin/space/ks13/medical/medbay)
 "wF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -3094,18 +3115,25 @@
 "yw" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/titanium{
-	amount = 15
+	amount = 50
 	},
 /obj/item/stack/sheet/mineral/wood/fifty,
 /obj/item/stack/sheet/plastic/fifty,
-/obj/item/stack/sheet/mineral/bananium,
-/obj/item/stack/sheet/mineral/bananium,
-/obj/item/stack/sheet/mineral/bananium,
-/obj/item/stack/sheet/mineral/adamantine,
-/obj/item/stack/sheet/mineral/adamantine,
-/obj/item/stack/sheet/bluespace_crystal,
-/obj/item/stack/sheet/bluespace_crystal,
-/obj/item/stack/sheet/mineral/abductor,
+/obj/item/stack/sheet/mineral/bananium{
+	amount = 50
+	},
+/obj/item/stack/sheet/mineral/bananium{
+	amount = 50
+	},
+/obj/item/stack/sheet/mineral/adamantine{
+	amount = 50
+	},
+/obj/item/stack/sheet/bluespace_crystal{
+	amount = 50
+	},
+/obj/item/stack/sheet/mineral/abductor{
+	amount = 50
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/ai/vault)
 "yy" = (
@@ -4079,7 +4107,7 @@
 /obj/structure/lattice,
 /obj/structure/door_assembly/door_assembly_public,
 /turf/template_noop,
-/area/space/nearstation)
+/area/ruin/space/ks13/service/hydro)
 "Dr" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
@@ -4480,6 +4508,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/ks13/medical/morgue)
+"Fr" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/ks13/engineering/singulo)
 "Ft" = (
 /obj/structure/chair{
 	dir = 1
@@ -5816,12 +5848,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/science/ordnance)
 "MG" = (
-/obj/item/stack/ore/iron,
-/obj/item/stack/ore/iron,
-/obj/item/stack/ore/iron,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/ruin/space/ks13/medical/medbay)
 "MJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -6942,10 +6971,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
 "So" = (
-/obj/item/stack/ore/slag,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/ruin/space/ks13/service/hydro)
 "Sp" = (
 /obj/structure/table_frame,
 /turf/open/floor/plating/airless,
@@ -7337,7 +7365,7 @@
 /obj/item/chair,
 /obj/machinery/light/small/broken/directional/east,
 /turf/template_noop,
-/area/space/nearstation)
+/area/ruin/space/ks13/medical/medbay)
 "TQ" = (
 /obj/item/shard{
 	icon_state = "medium"
@@ -7881,18 +7909,21 @@
 /area/ruin/space/ks13/hallway/central)
 "WN" = (
 /obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/diamond{
+	amount = 50
+	},
+/obj/item/stack/sheet/mineral/diamond{
+	amount = 50
+	},
 /obj/item/stack/sheet/mineral/gold{
-	amount = 15
+	amount = 50
 	},
-/obj/item/stack/sheet/mineral/silver{
-	amount = 15
+/obj/item/stack/sheet/mineral/gold{
+	amount = 50
 	},
-/obj/item/stack/sheet/mineral/gold,
-/obj/item/stack/sheet/mineral/gold,
-/obj/item/stack/sheet/mineral/diamond,
-/obj/item/stack/sheet/mineral/diamond,
-/obj/item/stack/sheet/mineral/diamond,
-/obj/item/stack/sheet/mineral/diamond,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 50
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/ai/vault)
 "WO" = (
@@ -8367,18 +8398,16 @@
 "Zp" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/uranium{
-	amount = 15
+	amount = 50
 	},
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 15
 	},
 /obj/item/stack/sheet/mineral/plasma/thirty,
 /obj/item/stack/sheet/mineral/plasma/thirty,
-/obj/item/stack/sheet/mineral/uranium,
-/obj/item/stack/sheet/mineral/uranium,
-/obj/item/stack/sheet/mineral/uranium,
-/obj/item/stack/sheet/mineral/uranium,
-/obj/item/stack/sheet/mineral/uranium,
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 50
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/ai/vault)
 "Zq" = (
@@ -10664,10 +10693,10 @@ Kh
 rk
 mK
 td
-rk
+So
 cI
 qJ
-rk
+So
 aa
 rk
 rk
@@ -10777,7 +10806,7 @@ WC
 oF
 mE
 hm
-rk
+So
 OX
 kG
 Me
@@ -11113,9 +11142,9 @@ LJ
 UT
 ak
 Vk
-rk
+qL
 He
-rk
+So
 vZ
 VE
 rR
@@ -11226,10 +11255,10 @@ Cs
 pK
 an
 UF
-rk
+qL
 Me
 Dg
-rk
+So
 vZ
 zr
 Iy
@@ -11342,9 +11371,9 @@ oL
 CW
 Iy
 sB
-rk
+So
 Zj
-rk
+So
 Me
 rk
 rk
@@ -11455,18 +11484,18 @@ JD
 Zk
 Ii
 pS
-rk
+So
 Ii
 zx
 Me
-aa
-aa
-aa
+Uz
+Uz
+Uz
 ZK
 ke
 Ez
-rk
-rk
+Ez
+fy
 rk
 aa
 aa
@@ -11571,15 +11600,15 @@ jl
 jl
 jl
 dH
-rk
+pQ
 Uz
-aa
-aa
+Uz
+Uz
 XO
 TK
 Fv
-rk
-IF
+Ez
+NW
 rk
 aa
 aa
@@ -11686,7 +11715,7 @@ wN
 dH
 Fa
 KV
-rk
+mN
 lW
 ZK
 TK
@@ -11994,12 +12023,12 @@ rd
 WH
 ID
 Sn
-rk
-rk
-Bw
-rk
-rk
-qG
+Fr
+Fr
+EK
+MG
+MG
+rp
 nI
 DS
 Hb
@@ -12107,12 +12136,12 @@ PI
 PI
 qv
 zv
-rk
-rk
-rk
-rk
-rk
-rk
+Fr
+Fr
+Fr
+Fr
+MG
+MG
 nI
 DV
 Se
@@ -12226,7 +12255,7 @@ fg
 Wk
 sU
 TO
-rk
+MG
 Xr
 BB
 yQ
@@ -12306,10 +12335,10 @@ aa
 aa
 aa
 aa
-aa
-rk
-rk
-rk
+wQ
+wQ
+wQ
+wQ
 yf
 yf
 yf
@@ -12420,7 +12449,7 @@ aa
 aa
 aa
 uu
-MG
+wQ
 wQ
 wQ
 wQ
@@ -12874,7 +12903,7 @@ rk
 yf
 WF
 wQ
-So
+wQ
 gs
 wQ
 pH
@@ -12988,8 +13017,8 @@ yf
 yf
 uu
 uu
-aa
-rk
+wQ
+wQ
 yf
 yf
 yf
@@ -14520,7 +14549,7 @@ jV
 NW
 aa
 mR
-rk
+hK
 hK
 mR
 yt
