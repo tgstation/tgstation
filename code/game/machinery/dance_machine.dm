@@ -1,3 +1,6 @@
+/// Helper macro to check if the passed mob has jukebox sound preference enabled
+#define HAS_JUKEBOX_PREF(mob) (!QDELETED(mob) && !isnull(mob.client) && mob.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox))
+
 /obj/machinery/jukebox
 	name = "jukebox"
 	desc = "A classic music player."
@@ -51,6 +54,12 @@
 	song_length = length
 	song_beat = beat
 
+/datum/track/default
+	song_path = 'sound/ambience/title3.ogg'
+	song_name = "Tintin on the Moon"
+	song_length = 3 MINUTES + 52 SECONDS
+	song_beat = 1 SECONDS
+
 /obj/machinery/jukebox/Initialize(mapload)
 	. = ..()
 	songs = load_songs_from_config()
@@ -76,12 +85,7 @@
 
 		if(!length(config_songs))
 			// Includes title3 as a default for testing / "no config" support, also because it's a banger
-			var/datum/track/default_track = new()
-			default_track.song_path = 'sound/ambience/title3.ogg'
-			default_track.song_name = "Tintin on the Moon"
-			default_track.song_length = 3 MINUTES + 52 SECONDS
-			default_track.song_beat = 1 SECONDS
-			config_songs += default_track
+			config_songs += new /datum/track/default()
 
 	// returns a copy so it can mutate if desired.
 	return config_songs.Copy()
@@ -486,17 +490,13 @@
 		// Goes through existing mobs in rangers to determine if they should not be played to
 		for(var/datum/weakref/weak_to_hide_from as anything in rangers)
 			var/mob/to_hide_from = weak_to_hide_from?.resolve()
-			if(QDELETED(to_hide_from) \
-				|| get_dist(src, get_turf(to_hide_from)) > 10 \
-				|| !to_hide_from.client \
-				|| !(to_hide_from.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox)) \
-			)
+			if(!HAS_JUKEBOX_PREF(to_hide_from) || get_dist(src, get_turf(to_hide_from)) > 10)
 				rangers -= weak_to_hide_from
 				to_hide_from?.stop_sound_channel(CHANNEL_JUKEBOX)
 
 		// Collect mobs to play the song to, stores weakrefs of them in rangers
 		for(var/mob/to_play_to in range(world.view, src))
-			if(!to_play_to.client || !(to_play_to.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox)))
+			if(!HAS_JUKEBOX_PREF(to_play_to))
 				continue
 			var/datum/weakref/weak_playing_to = WEAKREF(to_play_to)
 			if(rangers[weak_playing_to])
@@ -526,3 +526,5 @@
 			continue
 		if(prob(5 + (allowed(to_dance) * 4)))
 			dance(to_dance)
+
+#undef HAS_JUKEBOX_PREF
