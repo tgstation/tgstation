@@ -648,7 +648,8 @@
 	opacity = TRUE
 	anchored = TRUE
 	can_atmos_pass = ATMOS_PASS_DENSITY
-	var/parent_airlock
+	/// The door/airlock this fluff panel is attached to
+	var/obj/machinery/door/filled_airlock
 
 /obj/machinery/door/airlock/multi_tile/narsie_act()
 	return

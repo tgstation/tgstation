@@ -185,7 +185,7 @@
 	bound_height = (get_adjusted_dir(dir) == NORTH) ? size * world.icon_size : world.icon_size
 	if(!filler)
 		filler = new(get_step(src, get_adjusted_dir(dir)))
-		filler.parent_airlock = src
+		filler.filled_airlock = src
 	else
 		filler.loc = get_step(src, get_adjusted_dir(dir))
 

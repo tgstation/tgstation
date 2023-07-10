@@ -1755,8 +1755,8 @@
 	return
 
 /obj/structure/fluff/airlock_filler/Destroy(force)
-	if(parent_airlock)
-		parent_airlock = null
+	if(filled_airlock)
+		filled_airlock = null
 	return ..()
 
 #undef AIRLOCK_CLOSED
