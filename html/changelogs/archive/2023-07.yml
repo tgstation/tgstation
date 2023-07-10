@@ -1,0 +1,62 @@
+2023-07-01:
+  CliffracerX:
+  - rscadd: meme emotes (the *agony series)
+  - rscadd: some familiar generalist emotes (*clap1, etc)
+  - rscadd: some familiar species noises (*wurble, *peep, *msqueak, etc)
+  - sound: sound for the new emotes
+  - image: reworks medkit sprites to match the rugged aesthetic of tools
+  - image: reworks medkit inhands to better match their inventory sprites
+  - image: reworks surgical tools
+  - image: airlock lights now consistent
+  - image: fixed extinguisher inhands
+  - image: green main menu, HUDs, and cyborg view
+  - image: unfucked gimmick map buttons
+  - image: stock parts (including cells) fit better
+  - image: lots more tools fit now
+  - image: ruggedized atmos devices
+  - rscadd: ICSpawning module
+  - admin: ctrl-click a ghost to ICspawn them
+  - rscadd: beakers and bottles come with caps to prevent spills
+  - image: significant aesthetics tweaks!
+  - rscadd: slugcat species, ft. many style options
+  - refactor: huge reworks under the hood to speciesprefs
+  - refactor: lizard prefs updated to work with new code
+  - image: digi-leg sprites for most (all?) uniforms
+  - image: snouted variants for most (all?) masks
+  - image: digi + snouted support for most (all?) MODs
+  - bugfix: button rendering as expected
+  - image: button colors match the general look
+  - image: launcher buttons resprited
+  Ghommie:
+  - rscadd: 'Expanded the Experimental MODsuit Bepis node with three new modules:
+      Magneto Charger, Recycler and Shooting Assistant.'
+  - rscadd: Added a Riot Foam Recycler module to the black market, as well a more
+      innocuous version as maint loot.
+  MTandi:
+  - qol: You can name barrels with a pen now, changing its icon
+  Melbert:
+  - bugfix: Fix hungover people never spawning stuck in closets
+  Tattle:
+  - image: removed a stray gray pixel from the milk containers
+  carlarctg:
+  - qol: Heretic runes no longer have every single transparent pixel set to 1 alpha,
+      to make it easier to click on objects.
+  - qol: Clearing heretic runes with mansus grasp takes 0.4 seconds of standing still,
+      to prevent you from accidentally clearing it in combat.
+  - code_imp: Added code for effect remover element to use a windup if set.
+  mc-oofert:
+  - bugfix: siliconnect log tab updates correctly
+2023-07-03:
+  CliffracerX:
+  - rscadd: cryosleep module
+  - code_imp: cryosleep announce added to announcement_system
+2023-07-09:
+  CliffracerX:
+  - rscadd: auto-transfer subsystem
+  - rscadd: ability to call transfer votes
+  - code_imp: silent mode in emergency shuttle request() function
+2023-07-10:
+  CliffracerX:
+  - rscadd: pixelshifting - use B to slide your sprite around
+  - rscadd: pixelshifting far enough stops you from being an obstacle
+  - config: changed immobilizing button from B to Ctrl

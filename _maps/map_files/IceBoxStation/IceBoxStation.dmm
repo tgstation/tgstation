@@ -10022,17 +10022,16 @@
 /turf/open/floor/carpet/red,
 /area/station/security/prison/work)
 "dcq" = (
-/obj/structure/bed,
-/obj/machinery/airalarm/directional/north,
-/obj/item/bedsheet/dorms,
-/obj/machinery/button/door/directional/east{
-	id = "Dorm3";
-	name = "Dorm Bolt Control";
-	normaldoorcontrol = 1;
-	specialfunctions = 4
+/obj/structure/table/glass,
+/obj/item/storage/medkit/fire{
+	pixel_x = 6;
+	pixel_y = 6
 	},
-/obj/item/pillow/random,
-/turf/open/floor/wood,
+/obj/item/storage/medkit/o2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/dorms)
 "dcr" = (
 /obj/machinery/chem_master,
@@ -42700,10 +42699,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
 "nCP" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+/obj/machinery/cryopod{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/dorms)
 "nCQ" = (
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2,
@@ -45280,10 +45279,12 @@
 /area/station/engineering/atmos/storage)
 "oqg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/computer/cryopod{
+	pixel_y = -24;
+	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/dorms)
 "oqy" = (
 /obj/machinery/airalarm/directional/south,
@@ -47664,10 +47665,9 @@
 /turf/open/floor/iron/large,
 /area/station/command/gateway)
 "peb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/dorms)
 "pec" = (
 /obj/machinery/vending/cart,
@@ -50646,9 +50646,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "qbF" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/wood,
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/dorms)
 "qbO" = (
 /obj/structure/cable,
@@ -52055,13 +52056,15 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "qBd" = (
-/obj/machinery/door/airlock{
-	id_tag = "Dorm3";
-	name = "Dorm 3"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
+/obj/machinery/door/airlock{
+	id_tag = "Cabin7";
+	name = "Cryogenics Cabin"
+	},
+/turf/open/floor/iron/white/side{
+	dir = 8
+	},
 /area/station/commons/dorms)
 "qBj" = (
 /obj/structure/cable,
@@ -58010,9 +58013,13 @@
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "svH" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/dresser,
-/turf/open/floor/wood,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/turf/open/floor/iron/white/smooth_large,
 /area/station/commons/dorms)
 "svL" = (
 /obj/machinery/camera/directional/north{
@@ -68312,7 +68319,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "publicElevator";
-	preset_destination_names = list("3"="Icemoon Level","4"="Station Level")
+	preset_destination_names = list("3"="Icemoon  Level","4"="Station  Level")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
