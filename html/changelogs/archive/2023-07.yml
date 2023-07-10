@@ -439,3 +439,23 @@
   - qol: Produce consoles now have tables near them.
   YesterdaysPromise:
   - rscadd: Added Interdyne ModSuits for Interdyne pirates.
+2023-07-10:
+  DATA-xPUNGED:
+  - qol: The Warden's locker now has a garment bag
+  Fikou:
+  - bugfix: service borg apparatus now works on stoves and griddles and ovens
+  - qol: borgs can now activate stoves and griddles
+  - rscadd: rnd can research a cookbook for service borgs
+  FlufflesTheDog:
+  - bugfix: You can once again directly place patients on operating tables
+  Jacquerel:
+  - rscadd: Golems can scoop sand (or snow) off the floor by clicking on it.
+  Nimowa:
+  - bugfix: Fully charged APCs will now actually be fully charged, instead of nearly
+      empty.
+  Riggle:
+  - spellcheck: fix suspicious_logins
+  Youtubeboy139:
+  - image: Added new Security Cap sprite
+  distributivgesetz:
+  - spellcheck: Fixed some underscores in spiderling names.
