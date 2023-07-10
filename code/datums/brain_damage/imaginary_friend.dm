@@ -237,7 +237,7 @@
 	var/rendered = "[span_name("[name]")] [quoted_message]"
 	var/dead_rendered = "[span_name("[name] (Imaginary friend of [owner])")] [quoted_message]"
 
-	var/language = message_language || owner.language_holder.get_selected_language()
+	var/language = message_language || owner.get_selected_language()
 	Hear(rendered, src, language, message, null, spans, message_mods) // We always hear what we say
 	var/group = owner.imaginary_group - src // The people in our group don't, so we have to exclude ourselves not to hear twice
 	for(var/mob/person in group)

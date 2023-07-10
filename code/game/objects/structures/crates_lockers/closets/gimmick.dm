@@ -113,10 +113,13 @@
 
 /obj/structure/closet/mini_fridge
 	name = "grimy mini-fridge"
-	desc = "A small contraption designed to imbue a few drinks with a pleasant chill. This antiquated unit however seems to serve no purpose other than keeping the roaches company."
+	desc = "A small contraption designed to imbue a few drinks with a pleasant chill."
 	icon_state = "mini_fridge"
 	icon_welded = "welded_small"
 	max_mob_size = MOB_SIZE_SMALL
+	pass_flags = PASSTABLE
+	anchored_tabletop_offset = 3
+	anchored = 1
 	storage_capacity = 10
 
 /obj/structure/closet/mini_fridge/PopulateContents()
@@ -126,9 +129,21 @@
 	if(prob(50))
 		new /obj/effect/spawner/random/food_or_drink/refreshing_beverage(src)
 	if(prob(40))
+		new /obj/item/reagent_containers/cup/glass/bottle/beer(src)
+
+/obj/structure/closet/mini_fridge/grimy
+	name = "grimy mini_fridge"
+	desc = "A small contraption designed to imbue a few drinks with a pleasant chill. This antiquated unit however seems to serve no purpose other than keeping the roaches company."
+
+/obj/structure/closet/mini_fridge/grimy/PopulateContents()
+	. = ..()
+	if(prob(40))
 		if(prob(50))
 			new /obj/item/food/pizzaslice/moldy/bacteria(src)
 		else
 			new /obj/item/food/breadslice/moldy/bacteria(src)
-	else if(prob(30))
-		new /obj/item/food/syndicake(src)
+	else if(prob(40))
+		if(prob(50))
+			new /obj/item/food/syndicake(src)
+		else
+			new /mob/living/basic/cockroach(src)

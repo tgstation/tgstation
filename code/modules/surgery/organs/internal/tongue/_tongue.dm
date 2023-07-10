@@ -54,13 +54,13 @@
 
 /obj/item/organ/internal/tongue/examine(mob/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_ENTRAILS_READER) || (user.mind && HAS_TRAIT(user.mind, TRAIT_ENTRAILS_READER)) || isobserver(user))
+	if(HAS_MIND_TRAIT(user, TRAIT_ENTRAILS_READER)|| isobserver(user))
 		if(liked_foodtypes)
-			. += span_info("This tongue has an affinity the taste of [english_list(bitfield_to_list(liked_foodtypes), FOOD_FLAGS_IC)].")
+			. += span_info("This tongue has an affinity for the taste of [english_list(bitfield_to_list(liked_foodtypes, FOOD_FLAGS_IC))].")
 		if(disliked_foodtypes)
-			. += span_info("This tongue has an aversion for taste of [english_list(bitfield_to_list(disliked_foodtypes), FOOD_FLAGS_IC)].")
+			. += span_info("This tongue has an aversion for the taste of [english_list(bitfield_to_list(disliked_foodtypes, FOOD_FLAGS_IC))].")
 		if(toxic_foodtypes)
-			. += span_info("This tongue's physiology makes [english_list(bitfield_to_list(toxic_foodtypes), FOOD_FLAGS_IC)] toxic.")
+			. += span_info("This tongue's physiology makes [english_list(bitfield_to_list(toxic_foodtypes, FOOD_FLAGS_IC))] toxic.")
 
 /**
  * Used in setting up the "languages possible" list.
@@ -375,7 +375,7 @@
 
 /obj/item/organ/internal/tongue/abductor/examine(mob/examining_mob)
 	. = ..()
-	if(HAS_TRAIT(examining_mob, TRAIT_ABDUCTOR_TRAINING) || (examining_mob.mind && HAS_TRAIT(examining_mob.mind, TRAIT_ABDUCTOR_TRAINING)) || isobserver(examining_mob))
+	if(HAS_MIND_TRAIT(examining_mob, TRAIT_ABDUCTOR_TRAINING) || isobserver(examining_mob))
 		. += span_notice("It can be attuned to a different channel by using it inhand.")
 		if(!mothership)
 			. += span_notice("It is not attuned to a specific mothership.")

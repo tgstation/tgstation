@@ -246,9 +246,6 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"aU" = (
-/turf/open/openspace/airless,
-/area/template_noop)
 "aV" = (
 /obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/north,
@@ -426,7 +423,7 @@ ak
 aQ
 ak
 aj
-aU
+aa
 aj
 ak
 aW
@@ -435,7 +432,7 @@ aW
 ak
 ak
 aj
-aU
+aa
 aj
 ak
 ak
@@ -460,7 +457,7 @@ aO
 aE
 aS
 ak
-aU
+aa
 ak
 aE
 aE
@@ -469,7 +466,7 @@ aE
 aE
 aP
 ak
-aU
+aa
 ak
 aX
 bc
@@ -664,7 +661,7 @@ aE
 aE
 aE
 ak
-aU
+aa
 ak
 aV
 aE
@@ -673,7 +670,7 @@ aE
 aE
 aE
 ak
-aU
+aa
 ak
 bb
 bd
@@ -698,7 +695,7 @@ ab
 ab
 ak
 aj
-aU
+aa
 aj
 ak
 ab
@@ -707,7 +704,7 @@ ab
 ab
 ak
 aj
-aU
+aa
 aj
 ak
 ak

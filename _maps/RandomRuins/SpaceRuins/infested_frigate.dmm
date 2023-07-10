@@ -1664,7 +1664,7 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/structure/table/reinforced,
-/obj/structure/closet/mini_fridge{
+/obj/structure/closet/mini_fridge/grimy{
 	anchored = 1;
 	pixel_y = 6
 	},
