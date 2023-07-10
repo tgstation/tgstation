@@ -762,9 +762,6 @@ const EventScreen = (
                 src={resolveAsset(event.image)}
                 height="125px"
                 width="250px"
-                style={{
-                  '-ms-interpolation-mode': 'nearest-neighbor',
-                }}
               />
             </Stack.Item>
             <Stack.Item>
@@ -832,14 +829,7 @@ export const AdventureScreen = (
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item>
-          <img
-            src={imgSource}
-            height="100px"
-            width="200px"
-            style={{
-              '-ms-interpolation-mode': 'nearest-neighbor',
-            }}
-          />
+          <img src={imgSource} height="100px" width="200px" />
           <Stack vertical>
             <Stack.Divider />
             <Stack.Item grow />

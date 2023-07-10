@@ -10,7 +10,7 @@
 /area/station/engineering/supermatter/room)
 "bp" = (
 /obj/structure/cable/multilayer/connected,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "bM" = (
 /turf/closed/wall/r_wall,
@@ -52,7 +52,7 @@
 "dT" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/bot_white/left,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "eg" = (
 /turf/open/floor/carpet/black,
@@ -251,7 +251,7 @@
 /area/station/engineering/supermatter/room)
 "vB" = (
 /obj/effect/turf_decal/bot_red,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "vI" = (
 /obj/structure/chair/sofa/corp/left,
@@ -269,7 +269,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "wm" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "wo" = (
 /obj/structure/sign/warning/no_smoking,
@@ -285,7 +285,7 @@
 /obj/machinery/power/emitter{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "xA" = (
 /obj/machinery/door/airlock/external,
@@ -342,7 +342,7 @@
 "zA" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/bot_white/right,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "zC" = (
 /turf/open/floor/iron/dark,
@@ -432,7 +432,7 @@
 /obj/machinery/power/emitter{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "Fa" = (
 /obj/effect/turf_decal/stripes/line{
@@ -467,7 +467,7 @@
 "GG" = (
 /obj/structure/cable,
 /obj/machinery/power/emitter,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "GM" = (
 /obj/machinery/power/rad_collector,
@@ -477,7 +477,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "HO" = (
 /obj/structure/cable,
@@ -524,7 +524,7 @@
 	dir = 1
 	},
 /obj/machinery/field/generator,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "MT" = (
 /turf/closed/wall/r_wall,
@@ -555,7 +555,7 @@
 "NU" = (
 /obj/structure/cable,
 /obj/structure/cable/layer1,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "Oh" = (
 /obj/effect/turf_decal/stripes/line,

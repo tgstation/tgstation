@@ -1,15 +1,20 @@
 import { InfernoNode } from 'inferno';
 import { Button } from '../../components';
+import { useBackend } from '../../backend';
+import { PreferencesMenuData } from './data';
 
-export const PageButton = <P extends unknown>(props: {
-  currentPage: P;
-  page: P;
-  otherActivePages?: P[];
+export const PageButton = <P extends unknown>(
+  props: {
+    currentPage: P;
+    page: P;
+    otherActivePages?: P[];
 
-  setPage: (page: P) => void;
-
-  children?: InfernoNode;
-}) => {
+    setPage: (page: P) => void;
+    children?: InfernoNode;
+  },
+  context
+) => {
+  const { act } = useBackend<PreferencesMenuData>(context);
   const pageIsActive =
     props.currentPage === props.page ||
     (props.otherActivePages &&
@@ -21,7 +26,10 @@ export const PageButton = <P extends unknown>(props: {
       fontSize="1.2em"
       fluid
       selected={pageIsActive}
-      onClick={() => props.setPage(props.page)}>
+      onClick={() => {
+        props.setPage(props.page);
+        act('update_body');
+      }}>
       {props.children}
     </Button>
   );

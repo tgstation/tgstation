@@ -208,6 +208,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	switch (action)
+		if ("update_body")
+			character_preview_view?.update_body()
 		if ("change_slot")
 			// Save existing character
 			save_character()
@@ -247,14 +249,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (istype(requested_preference, /datum/preference/name))
 				tainted_character_profiles = TRUE
 
-			return TRUE
-
-		if ("open_loadout")
-			if(parent.open_loadout_ui)
-				parent.open_loadout_ui.ui_interact(usr)
-			else
-				var/datum/loadout_manager/tgui = new(usr)
-				tgui.ui_interact(usr)
 			return TRUE
 
 		if ("open_store")
@@ -363,11 +357,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /// A preview of a character for use in the preferences menu
 /atom/movable/screen/map_view/char_preview
 	name = "character_preview"
+	name = "default"
+	icon = 'monkestation/icons/hud/screen_gen64x32.dmi'
 
 	/// The body that is displayed
-	var/mob/living/carbon/human/dummy/body
+	var/mob/living/carbon/human/dummy/extra_tall/body
 	/// The preferences this refers to
 	var/datum/preferences/preferences
+	bound_height = 64
 
 /atom/movable/screen/map_view/char_preview/Initialize(mapload, datum/preferences/preferences)
 	. = ..()
@@ -393,7 +390,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	body = new
 
 	// Without this, it doesn't show up in the menu
-	body.appearance_flags &= ~KEEP_TOGETHER
+	body.appearance_flags &= ~TILE_BOUND
 
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()

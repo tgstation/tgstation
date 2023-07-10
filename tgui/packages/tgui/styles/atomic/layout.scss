@@ -1,0 +1,35 @@
+.loading-one {
+  opacity: 0;
+  animation: dot 0.6s infinite;
+  animation-delay: 0s;
+}
+
+.loading-two {
+  opacity: 0;
+  animation: dot 0.6s infinite;
+  animation-delay: 0.1s;
+}
+
+.loading-three {
+  opacity: 0;
+  animation: dot 0.6s infinite;
+  animation-delay: 0.2s;
+}
+
+@-webkit-keyframes dot {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dot {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
