@@ -130,6 +130,8 @@
 // Examining the clothes will display the examine message of the dogtag
 /obj/item/clothing/accessory/dogtag/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	. = ..()
+	if(!.)
+		return
 	RegisterSignal(attach_to, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /obj/item/clothing/accessory/dogtag/detach(obj/item/clothing/under/detach_from)
@@ -138,11 +140,9 @@
 
 // Double examining the person wearing the clothes will display the examine message of the dogtag
 /obj/item/clothing/accessory/dogtag/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
-	. = ..()
 	RegisterSignal(user, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine))
 
 /obj/item/clothing/accessory/dogtag/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
-	. = ..()
 	UnregisterSignal(user, COMSIG_ATOM_EXAMINE_MORE)
 
 /// Adds the examine message to the clothes and mob.
@@ -155,9 +155,9 @@
 
 	if(ismob(source))
 		// Examining a mob wearing the clothes, wearing the dogtag will also show the message
-		examine_list += "A dogtag is hanging around [user.p_their()] neck: [display]"
+		examine_list += "A dogtag is hanging around [source.p_their()] neck: [display]"
 	else
-		examine_list += display
+		examine_list += "A dogtag is attached to [source]: [display]"
 
 /obj/item/clothing/accessory/dogtag/allergy
 	name = "Allergy dogtag"
