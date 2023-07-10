@@ -430,9 +430,13 @@
 	if(attacking_item.GetID())
 		unlock_with_id(user)
 		return
-	if(attacking_item.force) //if force is non-zero
-		do_sparks(5, TRUE, src)
 	return ..()
+
+/mob/living/simple_animal/bot/attacked_by(obj/item/I, mob/living/user)
+	. = ..()
+	if (!.)
+		return
+	do_sparks(5, TRUE, src)
 
 /mob/living/simple_animal/bot/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))

@@ -28,8 +28,6 @@
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	if (!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
-		return INITIALIZE_HINT_QDEL
 
 	src.ban_type = ban_type
 	src.role_name = role_name || "[parent]"
@@ -75,6 +73,8 @@
 
 /// Send out a request for a brain
 /datum/component/ghost_direct_control/proc/request_ghost_control(poll_length, poll_ignore_key)
+	if (!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
+		return
 	awaiting_ghosts = TRUE
 	var/list/mob/dead/observer/candidates = poll_ghost_candidates(
 		question = "Do you want to play as [role_name]?",
@@ -91,10 +91,13 @@
 /// A ghost clicked on us, they want to get in this body
 /datum/component/ghost_direct_control/proc/on_ghost_clicked(mob/our_mob, mob/dead/observer/hopeful_ghost)
 	SIGNAL_HANDLER
-	if (!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) || our_mob.key)
+	if (our_mob.key)
 		qdel(src)
 		return
 	if (!hopeful_ghost.client)
+		return
+	if (!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
+		to_chat(hopeful_ghost, span_warning("Ghost roles have been temporarily disabled!"))
 		return
 	if (awaiting_ghosts)
 		to_chat(hopeful_ghost, span_warning("Ghost candidate selection currently in progress!"))
@@ -118,7 +121,10 @@
 		to_chat(harbinger, span_warning("Offer to possess creature has expired!"))
 		return
 	if (is_banned_from(harbinger.ckey, list(ban_type)))
-		to_chat(usr, span_warning("You are banned from playing as this role!"))
+		to_chat(harbinger, span_warning("You are banned from playing as this role!"))
+		return
+	if (!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
+		to_chat(harbinger, span_warning("Ghost roles have been temporarily disabled!"))
 		return
 	var/mob/living/new_body = parent
 	if (new_body.stat == DEAD)
