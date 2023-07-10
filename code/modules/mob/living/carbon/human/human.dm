@@ -438,6 +438,9 @@
 				to_chat(src, span_warning("\The [S] pulls \the [hand] from your grip!"))
 
 #define CPR_PREPPED_SPEED (0.8 SECONDS)
+#define CPR_COMPRESSIONS ("CPR compressions")
+#define CPR_RESCUE ("CPR")
+#define CPR_BVM ("ventilated CPR")
 
 /// Performs CPR on the target after a delay.
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/target)
@@ -477,28 +480,28 @@
 		if (!cpr_prepped)
 			if (target_old_mask)
 				to_chat(src, span_warning("[target.name]'s mouth is obscured, preventing ventilation!"))
-				cpr_type = "CPR compressions"
+				cpr_type = CPR_COMPRESSIONS
 			else if(bvm_equipped)
 				to_chat(src, span_notice("You ready the bag valve mask for use on [target.name]."))
-				cpr_type = "ventilated CPR"
+				cpr_type = CPR_BVM
 				target_cpr_feeling = "You feel a strong pump of fresh air"
 				cpr_healing += 5
 			else if (src_old_lung)
 				to_chat(src, span_notice("You have no lungs to breathe with, so you cannot perform rescue breaths."))
-				cpr_type = "CPR compressions"
+				cpr_type = CPR_COMPRESSIONS
 			else if (src_old_breath)
 				to_chat(src, span_notice("You do not breathe, so you cannot perform rescue breaths."))
-				cpr_type = "CPR compressions"
+				cpr_type = CPR_COMPRESSIONS
 			else if (src_old_mask)
 				to_chat(src, span_warning("Your mask is obscuring your mouth, preventing rescue breaths!"))
-				cpr_type = "CPR compressions"
+				cpr_type = CPR_COMPRESSIONS
 			else
 				to_chat(src, span_notice("You prepare to perform rescue breaths on [target.name]."))
-				cpr_type = "CPR"
+				cpr_type = CPR_RESCUE
 				target_cpr_feeling = "You feel a breath of fresh air"
 				cpr_healing += 2
 
-			if(cpr_type == ("CPR Compressions"))
+			if(cpr_type == (CPR_COMPRESSIONS))
 				target_cpr_feeling = "You feel blood rushing through your veins"
 				target_cpr_reaction = "... It feels good..."
 			else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
@@ -515,10 +518,10 @@
 					span_notice("You try to perform [cpr_type] on [target.name]... Hold still!"))
 
 		//check to see if ventilation ability has changed depending on the type of CPR.
-		if (cpr_type == "CPR")
+		if (cpr_type == CPR_RESCUE)
 			if (src_old_breath != HAS_TRAIT(src, TRAIT_NOBREATH) || src_old_lung != !get_organ_slot(ORGAN_SLOT_LUNGS) || src_old_mask != is_mouth_covered() || target_old_mask != target.is_mouth_covered())
 				cpr_situation_changed = TRUE
-		else if (cpr_type == "ventilated CPR")
+		else if (cpr_type == CPR_BVM)
 			if (target_old_mask != target.is_mouth_covered())
 				cpr_situation_changed = TRUE
 
@@ -548,6 +551,9 @@
 	while (cpr_prepped)
 
 #undef CPR_PREPPED_SPEED
+#undef CPR_COMPRESSIONS
+#undef CPR_RESCUE
+#undef CPR_BVM
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna?.check_mutation(/datum/mutation/human/hulk))
