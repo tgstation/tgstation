@@ -12,6 +12,8 @@
 #define COMSIG_ENTER_AREA "enter_area"
 ///from base of area/Exited(): (area). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_EXIT_AREA "exit_area"
+///from base of /datum/controller/subsystem/atoms/proc/InitAtom(): (atom/new_atom)
+#define COMSIG_AREA_INITIALIZED_IN "area_initialized_in"
 
 // Alarm listener datum signals
 ///Sent when an alarm is fired and an alarm listener has tracked onto it (alarm, area/source_area)

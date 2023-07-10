@@ -51,7 +51,7 @@
 		return
 
 	glow_stuff = partially_block_emissives(src, alpha_to_leave)
-	set_light(2, 0.75, starlight_color)
+	set_light(2, 0.75, (starlight_color == COLOR_STARLIGHT) ? GLOB.starlight_color : starlight_color)
 
 /turf/open/floor/glass/make_plating()
 	return

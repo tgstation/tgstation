@@ -21,7 +21,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///Base alpha of the material, is used for greyscale icons.
 	var/alpha = 255
 	///Starlight color of the material
-	///This is the color of light it'll emit if its turf is transparent and over space
+	///This is the color of light it'll emit if its turf is transparent and over space. Set in Initialize()
 	var/starlight_color = COLOR_STARLIGHT
 	///Bitflags that influence how SSmaterials handles this material.
 	var/init_flags = MATERIAL_INIT_MAPLOAD
@@ -154,7 +154,11 @@ Simple datum which is instanced once per type and is used for every object of sa
 	// We assume no parallax means no space means no light
 	if(SSmapping.level_trait(on.z, ZTRAIT_NOPARALLAX))
 		return
-	on.set_light(2, 0.75, starlight_color)
+	on.set_light(2, 0.75, get_starlight_color())
+
+///Gets the space color and possible changed color if space is different
+/datum/material/proc/get_starlight_color()
+	return (starlight_color == COLOR_STARLIGHT) ? GLOB.starlight_color : starlight_color
 
 /datum/material/proc/get_greyscale_config_for(datum/greyscale_config/config_path)
 	if(!config_path)

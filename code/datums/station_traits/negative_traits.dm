@@ -400,3 +400,60 @@
 					continue
 
 			CHECK_TICK
+
+/datum/station_trait/nebula
+	name = "Nebula"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 0
+	show_in_report = TRUE
+
+	///The color of the "nebula" we send to the players client
+	var/nebula_color
+	///The parallax layer of the nebula
+	var/nebula_layer = /atom/movable/screen/parallax_layer/random/space_gas
+	///The color space 'glows'
+	var/space_light_color = COLOR_STARLIGHT
+
+/datum/station_trait/nebula/New()
+	. = ..()
+
+	SSparallax.random_layer = nebula_layer
+	SSparallax.random_parallax_color = nebula_color
+	GLOB.starlight_color = space_light_color
+
+	for(var/client/client as anything in GLOB.clients)
+		client.parallax_layers_cached.Cut()
+		client.mob.hud_used.update_parallax_pref(client.mob)
+
+/datum/station_trait/nebula/radiation
+	name = "Radioactive Nebula"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 9999
+	show_in_report = TRUE
+	report_message = "This station is located in a radioactive nebula."
+	trait_to_give = STATION_TRAIT_RADIOACTIVE_NEBULA
+
+	nebula_color = COLOR_VIBRANT_LIME
+	space_light_color = COLOR_VIBRANT_LIME
+
+/datum/station_trait/nebula/radiation/New()
+	. = ..()
+
+	for(var/area/target as anything in get_areas(/area/space))
+		RegisterSignals(target, list(COMSIG_AREA_ENTERED, COMSIG_AREA_INITIALIZED_IN), PROC_REF(on_entered))
+		RegisterSignal(target, COMSIG_AREA_EXITED, PROC_REF(on_exited))
+
+/datum/station_trait/nebula/radiation/proc/on_entered(area/space, atom/movable/enterer)
+	SIGNAL_HANDLER
+
+	if(!ismovable(enterer))
+		return
+
+	enterer.AddElement(/datum/element/radioactive, range = 0, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
+	enterer.add_filter("glow_nebula", 2, list("type" = "outline", "color" = "#39ff1430", "size" = 2))
+
+/datum/station_trait/nebula/radiation/proc/on_exited(area/space, atom/movable/exiter)
+	SIGNAL_HANDLER
+
+	exiter.RemoveElement(/datum/element/radioactive, range = 0, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
+	exiter.remove_filter("glow_nebula")
