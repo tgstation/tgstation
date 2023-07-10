@@ -33,7 +33,7 @@
 	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/wizard/paper)
 	grant_abilities()
 	grant_loot()
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(animate_step))
+	AddElement(/datum/element/effect_trail, /obj/effect/temp_visual/paper_scatter)
 
 /mob/living/basic/paper_wizard/proc/grant_abilities()
 	summon = new(src)
@@ -45,11 +45,6 @@
 
 /mob/living/basic/paper_wizard/proc/grant_loot()
 	AddElement(/datum/element/death_drops, dropped_loot)
-
-/mob/living/basic/paper_wizard/proc/animate_step()
-	SIGNAL_HANDLER
-	var/paper_effect = new /obj/effect/temp_visual/paper_scatter(get_turf(src))
-	animate(paper_effect, alpha = 0, 1 SECONDS)
 
 /mob/living/basic/paper_wizard/Destroy()
 	QDEL_NULL(summon)
@@ -117,8 +112,11 @@
 	melee_damage_upper = 5
 
 	ai_controller = /datum/ai_controller/basic_controller/wizard_copy
-	///the master that summoned us
-	var/mob/living/basic/paper_wizard/original
+
+/mob/living/basic/paper_wizard/copy/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/relay_attackers)
+	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
 /mob/living/basic/paper_wizard/copy/grant_abilities()
 	return
@@ -127,13 +125,12 @@
 	return
 
 //Hit a fake? eat pain!
-/mob/living/basic/paper_wizard/copy/death(gibbed)
-	. = ..()
+/mob/living/basic/paper_wizard/copy/proc/on_attacked(mob/source, mob/living/attacker, attack_flags)
+	SIGNAL_HANDLER
 
-	for(var/mob/living/damaged in oview(5, src))
-		if(faction_check_mob(damaged, exact_match = FALSE))
-			continue
-		damaged.adjustBruteLoss(50)
+	if(!(attack_flags & (ATTACKER_STAMINA_ATTACK|ATTACKER_SHOVING)))
+		attacker.adjustBruteLoss(20)
+		to_chat(attacker, span_warning("The clone casts a spell to damage you before he dies!"))
 
 
 /mob/living/basic/paper_wizard/copy/examine(mob/user)
@@ -141,6 +138,7 @@
 	if(isobserver(user))
 		. += span_notice("It's an illusion - what is it hiding?")
 	else
+		new /obj/effect/temp_visual/small_smoke/halfsecond(get_turf(src))
 		qdel(src) //I see through your ruse!
 
 /datum/ai_controller/basic_controller/wizard_copy
@@ -164,7 +162,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paper_scatter"
 	anchored = TRUE
-	duration = 5
+	duration = 0.5 SECONDS
 	randomdir = FALSE
 
 /obj/effect/temp_visual/paperwiz_dying
@@ -175,7 +173,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paperwiz_poof"
 	anchored = TRUE
-	duration = 18
+	duration = 1.8 SECONDS
 	randomdir = FALSE
 
 /obj/effect/temp_visual/paperwiz_dying/Initialize(mapload)

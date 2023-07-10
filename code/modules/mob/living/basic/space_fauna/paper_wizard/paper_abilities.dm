@@ -17,7 +17,6 @@
 	var/summoned_minions = 0
 	///How many minions we can have at once
 	var/max_minions = 6
-	///How many minions we should spawn
 
 
 /datum/action/cooldown/spell/conjure/wizard_summon_minions/can_cast_spell(feedback = TRUE)
@@ -68,26 +67,22 @@
 	var/list/directions = GLOB.cardinals.Copy()
 	for(var/i in 1 to 3)
 		var/mob/living/basic/paper_wizard/copy/copy = new (get_step(cast_on, pick_n_take(directions)))
-		copy.original = owner
 		invocation(copy)
 		RegisterSignals(copy, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
 		copies += copy
 		QDEL_IN(copy, clone_lifespan)
 	owner.forceMove(get_step(cast_on, pick_n_take(directions)))
 
-/datum/action/cooldown/spell/pointed/wizard_mimic/proc/lost_minion(mob/source)
+/datum/action/cooldown/spell/pointed/wizard_mimic/proc/lost_minion(mob/living/basic/paper_wizard/copy/source)
 	SIGNAL_HANDLER
 
-	copies -= src
-	var/mob/living/basic/paper_wizard/copy/clone = source
-	clone.original = null
+	copies -= source
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
 
 /datum/action/cooldown/spell/pointed/wizard_mimic/proc/delete_clones(mob/source)
 	SIGNAL_HANDLER
 
-	for(var/copy in copies)
-		qdel(copy)
-
+	QDEL_LIST(copies)
 
 /datum/action/cooldown/spell/pointed/wizard_mimic/Destroy()
 	QDEL_LIST(copies)
