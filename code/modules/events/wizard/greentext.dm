@@ -34,7 +34,7 @@
 	///The current holder of the greentext.
 	var/mob/living/new_holder
 	///Every person who has touched the greentext, having their colors changed by it.
-	var/list/color_altered_mobs = list()
+	var/list/color_altered_mobs
 	///The callback at the end of a round to check if the greentext has been completed.
 	var/datum/callback/roundend_callback
 	///Boolean on whether to announce the greentext's destruction to all mobs.
@@ -59,7 +59,7 @@
 	if(!last_holder)
 		last_holder = user
 	if(!HAS_TRAIT(user, TRAIT_GREENTEXT_CURSED))
-		color_altered_mobs |= user
+		LAZYOR(color_altered_mobs, WEAKREF(user))
 		ADD_TRAIT(user, TRAIT_GREENTEXT_CURSED, REF(src))
 	user.add_atom_colour("#00ff00", ADMIN_COLOUR_PRIORITY)
 	START_PROCESSING(SSobj, src)
@@ -86,13 +86,19 @@
 	return ..()
 
 /obj/item/greentext/proc/release_victims()
-	var/list/announce_list = quiet ? color_altered_mobs : GLOB.player_list
+	var/list/victims = list()
+	for (var/datum/weakref/player_ref as anything in color_altered_mobs)
+		var/mob/player_mob = player_ref.resolve()
+		if (player_mob)
+			victims += player_mob
+
+	var/list/announce_list = quiet ? victims : GLOB.player_list
 	for(var/mob/player as anything in announce_list)
 		var/list/messages = list(span_warning("A dark temptation has passed from this world!"))
 		if(HAS_TRAIT(player, TRAIT_GREENTEXT_CURSED))
 			messages += span_green("You're finally able to forgive yourself...")
 		to_chat(player, messages.Join("\n"))
-	for(var/mob/player as anything in color_altered_mobs)
+	for(var/mob/player as anything in victims)
 		REMOVE_TRAIT(player, TRAIT_GREENTEXT_CURSED, REF(src))
 		if (!HAS_TRAIT(player, TRAIT_GREENTEXT_CURSED))
 			player.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
@@ -107,7 +113,7 @@
 	to_chat(new_holder, "<font color='green'>At last it feels like victory is assured!</font>")
 	new_holder.mind.add_antag_datum(/datum/antagonist/greentext)
 	new_holder.log_message("won with greentext!!!", LOG_ATTACK, color = "green")
-	color_altered_mobs -= new_holder
+	LAZYREMOVE(color_altered_mobs, WEAKREF(new_holder))
 	REMOVE_TRAIT(new_holder, TRAIT_GREENTEXT_CURSED, REF(src))
 	resistance_flags |= ON_FIRE
 	qdel(src)
