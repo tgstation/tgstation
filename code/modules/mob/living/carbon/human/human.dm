@@ -449,7 +449,7 @@
 	var/src_old_lung = !get_organ_slot(ORGAN_SLOT_LUNGS)
 	var/src_old_mask = is_mouth_covered()
 	var/target_old_mask = target.is_mouth_covered()
-	var/bvm_equipped = is_holding_item_of_type(/obj/item/bvm)
+	// var/bvm_equipped = is_holding_item_of_type(/obj/item/bvm)
 	var/cpr_situation_changed = FALSE
 	var/cpr_healing = 5
 	var/cpr_type
@@ -499,14 +499,13 @@
 				cpr_healing += 2
 
 			if(cpr_type == ("CPR Compressions"))
-				target__cpr_feeling = "You feel blood rushing through your veins"
+				target_cpr_feeling = "You feel blood rushing through your veins"
 				target_cpr_reaction = "... It feels good..."
-			else
-				else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
+			else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
 					target_cpr_reaction = "... but only the pressure seems to help..."
 					cpr_healing = 5
-				else
-					target_cpr_reaction = "enter your lungs... It feels good..."
+			else
+				target_cpr_reaction = "enter your lungs... It feels good..."
 
 			if (HAS_TRAIT(target, TRAIT_NOBREATH))
 				target_cpr_reaction = "... which is a sensation you don't recognise..."
@@ -523,8 +522,8 @@
 			if (target_old_mask != target.is_mouth_covered())
 				cpr_situation_changed = TRUE
 
-		if (!do_after(src, delay = panicking ? CPR_PREPPED_SPEED : (3 SECONDS), target = target) || cpr_situation_changed)
-			to_chat(src, span_warning("You fail to perform [cpr_type_name] on [target.name]!"))
+		if (!do_after(src, delay = cpr_prepped ? CPR_PREPPED_SPEED : (3 SECONDS), target = target) || cpr_situation_changed)
+			to_chat(src, span_warning("You fail to perform [cpr_type] on [target.name]!"))
 			return FALSE
 
 		if (target.health > target.crit_threshold)
@@ -542,10 +541,10 @@
 
 		if (target.health <= target.crit_threshold)
 			if (!cpr_prepped)
-			to_chat(src, span_warning("[target.name] still isn't up! You try harder!"))
-			cpr_prepped = TRUE
-		else
-			cpr_prepped = FALSE
+				to_chat(src, span_warning("[target.name] still isn't up! You try harder!"))
+				cpr_prepped = TRUE
+			else
+				cpr_prepped = FALSE
 	while (cpr_prepped)
 
 #undef CPR_PREPPED_SPEED
