@@ -141,7 +141,7 @@ GLOBAL_LIST_EMPTY(horns_list_akula)
 
 /datum/sprite_accessory/horns/akula/innercolor_override(mob/living/carbon/human/target)
 	if(!isnull(target))
-		var/col = target.dna.features["tricolor-a1"]
+		var/col = target.dna.features["tricolor-a2"]
 		if(!isnull(col))
 			return col
 		else

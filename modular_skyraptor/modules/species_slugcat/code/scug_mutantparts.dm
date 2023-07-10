@@ -15,6 +15,18 @@ GLOBAL_LIST_EMPTY(snouts_list_slugcat)
 /datum/sprite_accessory/snouts/slugcat
 	icon = 'modular_skyraptor/modules/species_slugcat/icons/slugcat_external.dmi'
 	em_block = TRUE
+	hasinner = TRUE
+	inner_color_src = SPRITE_ACC_SCRIPTED_COLOR
+
+/datum/sprite_accessory/snouts/slugcat/innercolor_override(mob/living/carbon/human/target)
+	if(!isnull(target))
+		var/col = target.dna.features["tricolor-a1"]
+		if(!isnull(col))
+			return col
+		else
+			return COLOR_WHITE
+	else
+		return COLOR_WHITE
 
 /datum/sprite_accessory/snouts/slugcat/standard
 	name = "Standard"
@@ -60,6 +72,17 @@ GLOBAL_LIST_EMPTY(bodymarks_list_slugcat)
 
 /datum/sprite_accessory/body_markings/slugcat
 	icon = 'modular_skyraptor/modules/species_slugcat/icons/slugcat_external.dmi'
+	color_src = SPRITE_ACC_SCRIPTED_COLOR
+
+/datum/sprite_accessory/body_markings/slugcat/color_override(mob/living/carbon/human/target)
+	if(!isnull(target))
+		var/col = target.dna.features["tricolor-a1"]
+		if(!isnull(col))
+			return col
+		else
+			return COLOR_WHITE
+	else
+		return COLOR_WHITE
 
 /datum/sprite_accessory/body_markings/slugcat/none
 	name = "None"
