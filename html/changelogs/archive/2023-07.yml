@@ -55,3 +55,8 @@
   - rscadd: auto-transfer subsystem
   - rscadd: ability to call transfer votes
   - code_imp: silent mode in emergency shuttle request() function
+2023-07-10:
+  CliffracerX:
+  - rscadd: pixelshifting - use B to slide your sprite around
+  - rscadd: pixelshifting far enough stops you from being an obstacle
+  - config: changed immobilizing button from B to Ctrl
