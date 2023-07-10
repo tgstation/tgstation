@@ -50,8 +50,7 @@
 /obj/item/greentext/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
 	to_chat(user, span_green("So long as you leave this place with greentext in hand you know will be happy..."))
-	var/list/other_objectives = user.mind.get_all_objectives()
-	if(user.mind && other_objectives.len > 0)
+	if(user.mind && user.mind.get_all_objectives().len > 0)
 		to_chat(user, span_warning("... so long as you still perform your other objectives that is!"))
 	holder = user
 	if(!HAS_TRAIT(user, TRAIT_GREENTEXT_CURSED))
