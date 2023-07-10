@@ -29,10 +29,8 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "greentext"
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
-	///The last person to touch the greentext, used for failures.
-	var/mob/living/last_holder
 	///The current holder of the greentext.
-	var/mob/living/new_holder
+	var/mob/living/holder
 	///Every person who has touched the greentext, having their colors changed by it.
 	var/list/color_altered_mobs
 	///The callback at the end of a round to check if the greentext has been completed.
@@ -55,29 +53,18 @@
 	var/list/other_objectives = user.mind.get_all_objectives()
 	if(user.mind && other_objectives.len > 0)
 		to_chat(user, span_warning("... so long as you still perform your other objectives that is!"))
-	new_holder = user
-	if(!last_holder)
-		last_holder = user
+	holder = user
 	if(!HAS_TRAIT(user, TRAIT_GREENTEXT_CURSED))
 		LAZYOR(color_altered_mobs, WEAKREF(user))
 		ADD_TRAIT(user, TRAIT_GREENTEXT_CURSED, REF(src))
 	user.add_atom_colour("#00ff00", ADMIN_COLOUR_PRIORITY)
-	START_PROCESSING(SSobj, src)
 
 /obj/item/greentext/dropped(mob/user, silent = FALSE)
 	if(HAS_TRAIT(user, TRAIT_GREENTEXT_CURSED))
 		to_chat(user, span_warning("A sudden wave of failure washes over you..."))
 		user.add_atom_colour("#ff0000", ADMIN_COLOUR_PRIORITY) //ya blew it
-	STOP_PROCESSING(SSobj, src)
-	last_holder = null
-	new_holder = null
+	holder = null
 	return ..()
-
-/obj/item/greentext/process()
-	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped
-		to_chat(last_holder, span_warning("A sudden wave of failure washes over you..."))
-		last_holder.add_atom_colour("#ff0000", ADMIN_COLOUR_PRIORITY)
-		last_holder = new_holder //long live the king
 
 /obj/item/greentext/Destroy(force)
 	LAZYREMOVE(SSticker.round_end_events, roundend_callback)
@@ -105,15 +92,15 @@
 
 
 /obj/item/greentext/proc/check_winner()
-	if(!new_holder)
+	if(!holder)
 		return
-	if(!is_centcom_level(new_holder.z)) //you're winner!
+	if(!is_centcom_level(holder.z)) //you're winner!
 		return
 
-	to_chat(new_holder, "<font color='green'>At last it feels like victory is assured!</font>")
-	new_holder.mind.add_antag_datum(/datum/antagonist/greentext)
-	new_holder.log_message("won with greentext!!!", LOG_ATTACK, color = "green")
-	LAZYREMOVE(color_altered_mobs, WEAKREF(new_holder))
-	REMOVE_TRAIT(new_holder, TRAIT_GREENTEXT_CURSED, REF(src))
+	to_chat(holder, "<font color='green'>At last it feels like victory is assured!</font>")
+	holder.mind.add_antag_datum(/datum/antagonist/greentext)
+	holder.log_message("won with greentext!!!", LOG_ATTACK, color = "green")
+	LAZYREMOVE(color_altered_mobs, WEAKREF(holder))
+	REMOVE_TRAIT(holder, TRAIT_GREENTEXT_CURSED, REF(src))
 	resistance_flags |= ON_FIRE
 	qdel(src)
