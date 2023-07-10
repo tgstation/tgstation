@@ -58,13 +58,14 @@
 	new_holder = user
 	if(!last_holder)
 		last_holder = user
-	if(!(user in color_altered_mobs))
+	if(!HAS_TRAIT(user, TRAIT_GREENTEXT_CURSED))
 		color_altered_mobs |= user
+		ADD_TRAIT(user, TRAIT_GREENTEXT_CURSED, REF(src))
 	user.add_atom_colour("#00ff00", ADMIN_COLOUR_PRIORITY)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/greentext/dropped(mob/user, silent = FALSE)
-	if(user in color_altered_mobs)
+	if(HAS_TRAIT(user, TRAIT_GREENTEXT_CURSED))
 		to_chat(user, span_warning("A sudden wave of failure washes over you..."))
 		user.add_atom_colour("#ff0000", ADMIN_COLOUR_PRIORITY) //ya blew it
 	STOP_PROCESSING(SSobj, src)
@@ -88,12 +89,13 @@
 	var/list/announce_list = quiet ? color_altered_mobs : GLOB.player_list
 	for(var/mob/player as anything in announce_list)
 		var/list/messages = list(span_warning("A dark temptation has passed from this world!"))
-		if(player in color_altered_mobs)
+		if(HAS_TRAIT(player, TRAIT_GREENTEXT_CURSED))
 			messages += span_green("You're finally able to forgive yourself...")
-		if(!quiet)
-			to_chat(player, messages.Join("\n"))
+		to_chat(player, messages.Join("\n"))
 	for(var/mob/player as anything in color_altered_mobs)
-		player.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+		REMOVE_TRAIT(player, TRAIT_GREENTEXT_CURSED, REF(src))
+		if (!HAS_TRAIT(player, TRAIT_GREENTEXT_CURSED))
+			player.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 
 
 /obj/item/greentext/proc/check_winner()
@@ -106,5 +108,6 @@
 	new_holder.mind.add_antag_datum(/datum/antagonist/greentext)
 	new_holder.log_message("won with greentext!!!", LOG_ATTACK, color = "green")
 	color_altered_mobs -= new_holder
+	REMOVE_TRAIT(new_holder, TRAIT_GREENTEXT_CURSED, REF(src))
 	resistance_flags |= ON_FIRE
 	qdel(src)
