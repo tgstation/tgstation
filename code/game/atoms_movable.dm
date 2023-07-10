@@ -1449,7 +1449,7 @@
 */
 
 /// Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.
-/atom/movable/proc/get_language_holder(get_minds = TRUE)
+/atom/movable/proc/get_language_holder()
 	RETURN_TYPE(/datum/language_holder)
 	if(QDELING(src))
 		CRASH("get_language_holder() called on a QDELing atom, \
@@ -1516,6 +1516,8 @@
 
 	return get_language_holder().copy_languages(from_holder, source_override)
 
+/// Sets the passed path as the active language
+/// Returns the currently selected language if successful, if the language was not valid, returns null
 /atom/movable/proc/set_active_language(language_path)
 	var/datum/language_holder/our_holder = get_language_holder()
 	our_holder.selected_language = language_path

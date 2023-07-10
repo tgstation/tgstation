@@ -235,8 +235,12 @@ Key procs
 	if(to_holder.owner)
 		to_holder.get_selected_language()
 
+/// A global assoc list containing prototypes of all language holders
+/// [Language holder typepath] to [language holder instance]
+/// Used for easy reference of what can speak what without needing to constantly recreate language holders.
 GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 
+/// Inits the global list of language holder prototypes.
 /proc/init_language_holder_prototypes()
 	var/list/prototypes = list()
 	for(var/holdertype in typesof(/datum/language_holder))
@@ -244,11 +248,12 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 
 	return prototypes
 
-//************************************************
-//*        Specific language holders              *
-//*      Use atom language sources only.           *
-//************************************************/
-
+/*
+ * Specific language holders presets
+ *
+ * If the language is intended to be used with a species only, it should be using [LANGUAGE_SPECIES].
+ * Otherwise [LANGUAGE_ATOM] will suffice for languages unique to the mob (atom).
+ */
 
 /datum/language_holder/alien
 	understood_languages = list(/datum/language/xenocommon = list(LANGUAGE_ATOM))

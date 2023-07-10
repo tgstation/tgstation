@@ -80,21 +80,20 @@
 				var/choice = tgui_input_list(user, "How do you want to add this language?", "[language_datum]", choices)
 				if(isnull(choice))
 					return
-				var/spoken = FALSE
-				var/understood = FALSE
+				var/adding_flags = NONE
 				switch(choice)
 					if("Only Spoken")
-						spoken = TRUE
+						adding_flags |= SPOKEN_LANGUAGE
 					if("Only Understood")
-						understood = TRUE
+						adding_flags |= UNDERSTOOD_LANGUAGE
 					if("Both")
-						spoken = TRUE
-						understood = TRUE
+						adding_flags |= ALL
+
 				if(LAZYACCESS(language_holder.blocked_languages, language_datum))
 					choice = tgui_alert(user, "Do you want to lift the blockage that's also preventing the language to be spoken or understood?", "[language_datum]", list("Yes", "No"))
 					if(choice == "Yes")
 						language_holder.remove_blocked_language(language_datum, LANGUAGE_ALL)
-				language_holder.grant_language(language_datum, understood, spoken)
+				language_holder.grant_language(language_datum, adding_flags)
 				if(is_admin)
 					message_admins("[key_name_admin(user)] granted the [language_name] language to [key_name_admin(speaker)].")
 					log_admin("[key_name(user)] granted the language [language_name] to [key_name(speaker)].")
