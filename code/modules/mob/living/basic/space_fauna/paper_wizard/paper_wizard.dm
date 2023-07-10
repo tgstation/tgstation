@@ -11,6 +11,7 @@
 	response_help_simple = "brush"
 	response_disarm_continuous = "pushes"
 	response_disarm_simple = "push"
+	basic_mob_flags = DEL_ON_DEATH
 
 	maxHealth = 1000
 	health = 1000
@@ -19,31 +20,31 @@
 	obj_damage = 50
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/paper_wizard
-	///the list of our clones
-	var/list/copies = list()
 	///spell to summon minions
-	var/datum/action/cooldown/spell/wizard_summon_minions/summon
+	var/datum/action/cooldown/spell/conjure/wizard_summon_minions/summon
 	///spell to summon clones
 	var/datum/action/cooldown/spell/pointed/wizard_mimic/mimic
+	///the loot we will drop
+	var/static/list/dropped_loot = list(/obj/effect/temp_visual/paperwiz_dying)
 
 
 /mob/living/basic/paper_wizard/Initialize(mapload)
 	. = ..()
 	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/wizard/paper)
+	grant_abilities()
+	grant_loot()
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(animate_step))
+
+/mob/living/basic/paper_wizard/proc/grant_abilities()
 	summon = new(src)
 	summon.Grant(src)
 	ai_controller.set_blackboard_key(BB_WIZARD_SUMMON_MINIONS, summon)
 	mimic = new(src)
 	mimic.Grant(src)
 	ai_controller.set_blackboard_key(BB_WIZARD_MIMICS, mimic)
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(animate_step))
-	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_change))
-	AddElement(/datum/element/death_drops, list(/obj/effect/temp_visual/paperwiz_dying))
 
-/mob/living/basic/paper_wizard/proc/on_health_change()
-	SIGNAL_HANDLER
-	for(var/copy in copies)
-		qdel(copy)
+/mob/living/basic/paper_wizard/proc/grant_loot()
+	AddElement(/datum/element/death_drops, dropped_loot)
 
 /mob/living/basic/paper_wizard/proc/animate_step()
 	SIGNAL_HANDLER
@@ -51,7 +52,8 @@
 	animate(paper_effect, alpha = 0, 1 SECONDS)
 
 /mob/living/basic/paper_wizard/Destroy()
-	QDEL_LIST(copies)
+	QDEL_NULL(summon)
+	QDEL_NULL(mimic)
 	return ..()
 
 /datum/ai_controller/basic_controller/paper_wizard
@@ -68,11 +70,22 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/find_paper_and_write,
 		/datum/ai_planning_subtree/targeted_mob_ability/wizard_mimic,
 		/datum/ai_planning_subtree/use_mob_ability/wizard_summon_minions,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/attack_obstacle_in_path/paper_wizard,
+		/datum/ai_planning_subtree/find_paper_and_write,
 	)
+
+/datum/ai_planning_subtree/attack_obstacle_in_path/paper_wizard
+	target_key = BB_FOUND_PAPER
+	attack_behaviour = /datum/ai_behavior/attack_obstructions/paper_wizard
+
+/datum/ai_behavior/attack_obstructions/paper_wizard
+	action_cooldown = 0.4 SECONDS
+	can_attack_turfs = TRUE
+	can_attack_dense_objects = TRUE
+
 /datum/ai_planning_subtree/targeted_mob_ability/wizard_mimic
 	ability_key = BB_WIZARD_MIMICS
 	finish_planning = FALSE
@@ -82,7 +95,7 @@
 	finish_planning = FALSE
 
 /datum/ai_behavior/find_and_set/empty_paper
-	action_cooldown = 40 SECONDS
+	action_cooldown = 10 SECONDS
 
 /datum/ai_behavior/find_and_set/empty_paper/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/list/empty_papers = list()
@@ -109,15 +122,13 @@
 
 /mob/living/basic/paper_wizard/copy/Initialize(mapload)
 	. = ..()
-	RegisterSignals(src, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(remove_copy))
-	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(damage_nearby), override = TRUE)
+	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(damage_nearby))
 
-/mob/living/basic/paper_wizard/copy/proc/remove_copy()
-	SIGNAL_HANDLER
+/mob/living/basic/paper_wizard/copy/grant_abilities()
+	return
 
-	if(original)
-		original.copies -= src
-		original = null
+/mob/living/basic/paper_wizard/copy/grant_loot()
+	return
 
 //Hit a fake? eat pain!
 /mob/living/basic/paper_wizard/copy/proc/damage_nearby()
