@@ -115,7 +115,7 @@
 		LAZYREMOVE(owner.all_scars, scar)
 
 	for(var/obj/item/organ/organ as anything in organs)
-		organ.transfer_to_limb(src, null, special) //Null is the second arg because the bodypart is being removed from it's owner.
+		organ.transfer_to_limb(src, special) //Null is the second arg because the bodypart is being removed from it's owner.
 
 	var/mob/living/carbon/phantom_owner = set_owner(null) // so we can still refer to the guy who lost their limb after said limb forgets 'em
 
@@ -441,6 +441,7 @@
 		scaries.generate(limb, phantom_loss)
 
 		//Copied from /datum/species/proc/on_species_gain()
+		//fucking stupid shit to be honest
 		for(var/obj/item/organ/organ_path as anything in dna.species.cosmetic_organs)
 			//Load a persons preferences from DNA
 			var/zone = initial(organ_path.zone)

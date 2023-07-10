@@ -115,7 +115,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return FALSE
 
 	//There is not a single valid reason to add organs to a limb that doesn't exist. Don't do that.
-	var/obj/item/bodypart/limb = receiver.get_bodypart(deprecise_zone(zone))
+	var/obj/item/bodypart/limb = receiver.get_bodypart(check_zone(zone))
 	if(!limb)
 		return FALSE
 
@@ -237,19 +237,19 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(use_mob_sprite_as_obj_sprite)
 		update_appearance()
 
-/// Transfers the organ to the limb, and to the limb's owner, if there is one - Currently only used by dismemberment
-/obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner, special = FALSE)
+/// Transfers the organ to a given detached limb, this proc should only be used on dismemberment
+/obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/new_bodypart, special = FALSE)
 	if(owner)
 		Remove(owner, special)
 	else if(ownerlimb)
 		remove_from_limb(ownerlimb, special)
 
-	if(bodypart_owner)
-		Insert(bodypart_owner, special)
-	else
-		add_to_limb(bodypart, special)
+	add_to_limb(new_bodypart, special)
 
-/// Changes the body zone of an organ, handling removal from one limb and insertion to the other
+/**
+ * Changes the body zone of an organ, handling removal from one limb and insertion to the other
+ * Never modify the zone directly, it will fuck shit up.
+ */
 /obj/item/organ/proc/set_zone(new_zone = BODY_ZONE_CHEST, special = FALSE)
 	if(zone == new_zone)
 		return
@@ -259,7 +259,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		// Not valid, fuck you
 		if(!new_bodypart)
 			return FALSE
-	else if(ownerlimb)
+	if(ownerlimb)
 		remove_from_limb(ownerlimb, special)
 	zone = new_zone
 	if(new_bodypart)
