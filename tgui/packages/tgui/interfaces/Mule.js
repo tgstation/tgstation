@@ -31,14 +31,21 @@ export const Mule = (props, context) => {
           title="Status"
           minHeight="110px"
           buttons={
-            !locked && (
+            <>
               <Button
-                icon={on ? 'power-off' : 'times'}
-                content={on ? 'On' : 'Off'}
-                selected={on}
-                onClick={() => act('on')}
+                icon="fa-poll-h"
+                content="Rename"
+                onClick={() => act('rename')}
               />
-            )
+              {!locked && (
+                <Button
+                  icon={on ? 'power-off' : 'times'}
+                  content={on ? 'On' : 'Off'}
+                  selected={on}
+                  onClick={() => act('on')}
+                />
+              )}
+            </>
           }>
           <ProgressBar
             value={cell ? cellPercent / 100 : 0}
