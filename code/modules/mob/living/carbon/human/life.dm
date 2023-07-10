@@ -270,17 +270,18 @@
 	return min(1, thermal_protection)
 
 /mob/living/carbon/human/handle_random_events(seconds_per_tick, times_fired)
-	//Puke if toxloss is too high
-	if(stat)
-		return
-	if(getToxLoss() < 45 || nutrition <= 20)
+	if(stat >= UNCONSCIOUS || (nutrition <= 20))
 		return
 
-	lastpuke += SPT_PROB(30, seconds_per_tick)
-	if(lastpuke >= 50) // about 25 second delay I guess // This is actually closer to 150 seconds
+	//puking only if toxloss is high enough
+	if(getToxLoss() < 45)
+		puke_counter = 0
+		return
+
+	puke_counter += SPT_PROB(30, seconds_per_tick)
+	if(puke_counter >= 50) // about 25 second delay I guess // This is actually closer to 150 seconds
 		vomit(20)
-		lastpuke = 0
-
+		puke_counter = 0
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(isclothing(wear_mask))
