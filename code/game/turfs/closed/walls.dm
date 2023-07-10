@@ -34,15 +34,16 @@
 	var/list/dent_decals
 
 /turf/closed/wall/MouseDrop_T(mob/living/carbon/carbon_mob, mob/user)
+	..()
 	if(carbon_mob != user)
 		return
-	if(carbon_mob.Is_Leaning == TRUE)
+	if(carbon_mob.is_leaning == TRUE)
 		return
 	if(carbon_mob.pulledby)
 		return
 	if(!carbon_mob.density)
 		return
-	carbon_mob.Is_Leaning = TRUE
+	carbon_mob.is_leaning = TRUE
 	var/turf/checked_turf = get_step(carbon_mob, turn(carbon_mob.dir, 180))
 	if(checked_turf == src)
 		carbon_mob.start_leaning(src)
@@ -58,6 +59,7 @@
 		if(EAST)
 			pixel_x += -11
 	ADD_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
+	ADD_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
 	visible_message(span_notice("[src] leans against \the [wall]!"), \
 						span_notice("You lean against \the [wall]!"))
 	RegisterSignal(src, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(stop_leaning))
@@ -67,7 +69,6 @@
 	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(stop_leaning))
 	update_fov()
 
-
 /mob/living/carbon/proc/stop_leaning()
 	SIGNAL_HANDLER
 	UnregisterSignal(src, COMSIG_MOB_CLIENT_PRE_MOVE)
@@ -75,10 +76,11 @@
 	UnregisterSignal(src, COMSIG_LIVING_GET_PULLED)
 	UnregisterSignal(src, COMSIG_MOVABLE_TELEPORTING)
 	UnregisterSignal(src, COMSIG_ATOM_DIR_CHANGE)
-	Is_Leaning = FALSE
-	pixel_y = initial(pixel_y)
-	pixel_x = initial(pixel_x)
+	is_leaning = FALSE
+	pixel_y = base_pixel_y + body_position_pixel_x_offset
+	pixel_x = base_pixel_y + body_position_pixel_y_offset
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
 	update_fov()
 
 /turf/closed/wall/Initialize(mapload)

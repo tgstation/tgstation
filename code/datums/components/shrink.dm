@@ -36,12 +36,11 @@
 	parent_atom.set_opacity(oldopac)
 	if(isliving(parent_atom))
 		var/mob/living/L = parent_atom
-		REMOVE_TRAIT(L, TRAIT_UNDENSE, SHRUNKEN_TRAIT)
 		L.remove_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			H.physiology.damage_resistance += 100
-		REMOVE_TRAIT(L, TRAIT_UNDENSE, SHRUNKEN_TRAIT)
+			REMOVE_TRAIT(L, TRAIT_UNDENSE, SHRUNKEN_TRAIT)
 	else
 		parent_atom.set_density(olddens) // this is handled by the UNDENSE trait on mobs
 	return ..()

@@ -218,6 +218,7 @@
 	var/override_notes = FALSE
 	/// Used if we want to have a custom verb text for throwing. "John Spaceman flicks the ciggerate" for example.
 	var/throw_verb
+
 /obj/item/Initialize(mapload)
 
 	if(attack_verb_continuous)

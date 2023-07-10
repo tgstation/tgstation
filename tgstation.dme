@@ -949,7 +949,6 @@
 #include "code\datums\components\keep_me_secure.dm"
 #include "code\datums\components\knockoff.dm"
 #include "code\datums\components\label.dm"
-#include "code\datums\components\leaning.dm"
 #include "code\datums\components\light_eater.dm"
 #include "code\datums\components\lock_on_cursor.dm"
 #include "code\datums\components\manual_blinking.dm"
