@@ -100,9 +100,10 @@
 		brain_trauma.on_lose(TRUE)
 		brain_trauma.owner = null
 
-	if(!QDELETED(src) && !QDELETED(organ_owner) && !no_id_transfer)
-		transfer_identity(organ_owner, silent = special)
-	organ_owner.clear_mood_event("brain_damage")
+	if(!QDELETED(organ_owner))
+		organ_owner.clear_mood_event("brain_damage")
+		if(!QDELETED(src) && !no_id_transfer)
+			transfer_identity(organ_owner, silent = special)
 
 /obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/new_bodypart, special = FALSE)
 	. = ..()
