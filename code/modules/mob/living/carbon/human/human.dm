@@ -445,7 +445,8 @@
 		return
 
 	var/panicking = FALSE
-	var/cprquality = 0
+	var/cpr_quality = 0
+	var/mask_changed = FALSE
 
 	do
 		CHECK_DNA_AND_SPECIES(target)
@@ -473,7 +474,8 @@
 			to_chat(src, span_warning("Your mask is obscuring your mouth, preventing rescue breaths!"))
 		else
 			to_chat(src, span_notice("You prepare to perform rescue breaths on [target.name]."))
-			cprstage = 1
+
+		while (target.is_mouth_covered) //WIP implementing distinct CPR loops
 
 
 		visible_message(span_notice("[src] is trying to perform CPR on [target.name]!"), \
@@ -493,7 +495,7 @@
 			add_mood_event("saved_life", /datum/mood_event/saved_life)
 		log_combat(src, target, "CPRed")
 
-		switch (cprquality)
+		switch (cpr_quality)
 			if (0)
 				target.adjustOxyloss(-min(target.getOxyLoss(), 5))
 				visible_message(span_notice("[src] performs compression-only CPR on [target.name]!"), span_notice("You perform compression-only CPR on [target.name]."))
