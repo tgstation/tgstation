@@ -12,11 +12,11 @@ export type Data = {
 };
 
 export type NavBeaconControl = {
-  location: String;
+  location: string;
   patrol_enabled: BooleanLike;
-  patrol_next: String;
+  patrol_next: string;
   delivery_enabled: BooleanLike;
-  delivery_direction: String;
+  delivery_direction: string;
   cover_locked: BooleanLike;
 };
 
@@ -25,7 +25,7 @@ export type DisabledProps = {
 };
 
 export type NavBeaconStaticControl = {
-  direction_options: String[];
+  direction_options: string[];
   has_codes: BooleanLike;
 };
 
