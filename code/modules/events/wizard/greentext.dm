@@ -86,14 +86,13 @@
 
 /obj/item/greentext/proc/release_victims()
 	for(var/mob/player as anything in GLOB.player_list)
-		var/message = "<span class='warning'>A dark temptation has passed from this world"
+		var/list/messages = list(span_warning("A dark temptation has passed from this world!"))
 		if(player in color_altered_mobs)
-			message += " and you're finally able to forgive yourself"
+			messages += span_green("You're finally able to forgive yourself...")
 			if(player.color == "#ff0000" || player.color == "#00ff00")
 				player.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
-		message += "...</span>"
 		if(!quiet)
-			to_chat(player, message)
+			to_chat(player, messages.Join("\n"))
 
 
 /obj/item/greentext/proc/check_winner()
