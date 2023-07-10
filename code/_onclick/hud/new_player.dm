@@ -13,7 +13,7 @@
 	if(!owner || !owner.client)
 		return
 
-	if (owner.client.interviewee)
+	if(owner.client.interviewee)
 		return
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
@@ -300,12 +300,10 @@
 ///Animates moving the button off-screen, disabling it
 /atom/movable/screen/lobby/button/bottom/proc/collapse_button()
 	SIGNAL_HANDLER
-	var/matrix/transformation = matrix()
-	transform = transformation
 	//wait for the shutter to come down
-	animate(src, transform = transformation, time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
+	animate(src, transform = transform, time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
 	//then pull the buttons up with the shutter
-	animate(transform = transformation.Translate(x = 0, y = 146), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
+	animate(transform = transform.Translate(x = 0, y = 146), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
 	if(istype(src, /atom/movable/screen/lobby/button/bottom/poll))
 		var/atom/movable/screen/lobby/button/bottom/poll/poll_button = src
 		if(!poll_button.new_poll) //don't deactivate the poll button unless a poll is up (it's already inactive)
@@ -465,11 +463,10 @@
 ///Sends a signal on the hud for the bottom buttons to listen to
 /atom/movable/screen/lobby/button/collapse/proc/collapse_buttons()
 	SEND_SIGNAL(hud, COMSIG_HUD_LOBBY_COLLAPSED)
-	var/matrix/transformation = matrix()
 	//wait for the shutter to come down
-	animate(src, transform = transformation, time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
+	animate(src, transform = matrix(), time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
 	//then pull the button up with the shutter and leave it on the edge of the screen
-	animate(transform = transformation.Translate(x = 0, y = 134), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
+	animate(transform = transform.Translate(x = 0, y = 134), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
 
 ///Extends the button back to its usual spot
 ///Sends a signal on the hud for the bottom buttons to listen to
@@ -495,13 +492,11 @@
 
 ///Sets up the shutter pulling down and up. It's the same animation for both collapsing and expanding the menu.
 /atom/movable/screen/lobby/shutter/proc/setup_shutter_animation()
-	var/matrix/transformation = matrix()
-	transformation.Translate(x = 0, y = -143)
 	//bring down the shutter
-	animate(src, transform = transformation, time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
+	animate(src, transform = transform.Translate(x = 0, y = -143), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
 
 	//wait a little bit before bringing the shutter up
-	animate(transform = transformation, time = SHUTTER_WAIT_DURATION)
+	animate(transform = transform, time = SHUTTER_WAIT_DURATION)
 
 	//pull the shutter back off-screen
 	animate(transform = matrix(), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)

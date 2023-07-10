@@ -1,3 +1,5 @@
+///Cooldown for the Reset Lobby Menu HUD verb
+#define RESET_HUD_INTERVAL 15 SECONDS
 /mob/dead/new_player
 	flags_1 = NONE
 	invisibility = INVISIBILITY_ABSTRACT
@@ -15,7 +17,8 @@
 	var/ineligible_for_roles = FALSE
 	/// Used to track if the player's jobs menu sent a message saying it successfully mounted.
 	var/jobs_menu_mounted = FALSE
-
+	///Cooldown for the Reset Lobby Menu HUD verb
+	COOLDOWN_DECLARE(reset_hud_cooldown)
 
 /mob/dead/new_player/Initialize(mapload)
 	if(client && SSticker.state == GAME_STATE_STARTUP)
@@ -350,7 +353,15 @@
 	set name = "Reset Lobby Menu HUD"
 	set category = "OOC"
 	var/mob/dead/new_player/new_player = usr
+	if(!COOLDOWN_FINISHED(new_player, reset_hud_cooldown))
+		to_chat(new_player, span_warning("You must wait <b>[DisplayTimeText(COOLDOWN_TIMELEFT(new_player, reset_hud_cooldown))]</b> before resetting the Lobby Menu HUD again!"))
+		return
 	if(new_player?.client)
+		COOLDOWN_START(new_player, reset_hud_cooldown, RESET_HUD_INTERVAL)
 		qdel(new_player.hud_used)
 		create_mob_hud()
 		hud_used.show_hud(hud_used.hud_version)
+		to_chat(new_player, span_info("Lobby Menu HUD reset. You may reset the HUD again in <b>[DisplayTimeText(RESET_HUD_INTERVAL)]</b>."))
+		return
+
+#undef RESET_HUD_INTERVAL
