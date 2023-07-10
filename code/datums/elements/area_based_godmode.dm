@@ -68,9 +68,7 @@
 /datum/component/area_based_godmode/proc/check_area(mob/source)
 	SIGNAL_HANDLER
 
-	var/source_id = "[REF(source)]"
 	var/has_godmode = source.status_flags & GODMODE
-
 	if(!check_in_valid_area(source))
 		if(has_godmode)
 			to_chat(source, lose_message)
