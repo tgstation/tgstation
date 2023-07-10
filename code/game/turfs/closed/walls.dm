@@ -66,7 +66,7 @@
 	RegisterSignal(src, COMSIG_LIVING_GET_PULLED, PROC_REF(stop_leaning))
 	RegisterSignal(src, COMSIG_MOVABLE_TELEPORTING, PROC_REF(stop_leaning))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_THROW, PROC_REF(stop_leaning))
-
+	update_fov()
 
 
 /mob/living/carbon/proc/stop_leaning()
@@ -80,6 +80,7 @@
 	pixel_y = initial(pixel_y)
 	pixel_x = initial(pixel_x)
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
+	update_fov()
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
