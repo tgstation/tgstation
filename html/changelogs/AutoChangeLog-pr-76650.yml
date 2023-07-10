@@ -1,0 +1,4 @@
+author: "Nimowa"
+delete-after: True
+changes:
+  - bugfix: "Fully charged APCs will now actually be fully charged, instead of nearly empty."

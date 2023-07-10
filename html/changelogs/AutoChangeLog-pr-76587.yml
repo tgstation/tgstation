@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed EMPing a cybernetic heart not implanted in a body not applying effects (stopping the heartbeat temporarily)"

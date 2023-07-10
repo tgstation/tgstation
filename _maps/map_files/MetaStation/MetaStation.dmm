@@ -4992,7 +4992,6 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 4
 	},
-/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "bSm" = (
@@ -6315,18 +6314,10 @@
 /area/station/maintenance/aft/lesser)
 "cuY" = (
 /obj/structure/rack,
-/obj/item/gun/energy/disabler{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/disabler,
-/obj/item/gun/energy/disabler{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
+/obj/effect/spawner/random/armory/disablers,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "cuZ" = (
@@ -7883,16 +7874,10 @@
 /area/station/service/lawoffice)
 "daO" = (
 /obj/structure/rack,
-/obj/item/gun/ballistic/shotgun/riot,
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_y = 6
-	},
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_y = 3
-	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/effect/spawner/random/armory/shotgun,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "daT" = (
@@ -20071,19 +20056,11 @@
 /area/station/hallway/secondary/entry)
 "hxF" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/e_gun,
-/obj/item/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/effect/spawner/random/armory/e_gun,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "hxV" = (
@@ -20322,16 +20299,8 @@
 /area/station/science/ordnance/testlab)
 "hBR" = (
 /obj/structure/rack,
-/obj/item/shield/riot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/shield/riot,
-/obj/item/shield/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/effect/spawner/random/armory/riot_shield,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "hBY" = (
@@ -32042,10 +32011,8 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/computer/order_console/cook{
-	dir = 8
-	},
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/vending/cigarette,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "lFq" = (
@@ -37772,7 +37739,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/structure/chair/stool/directional/east,
+/obj/machinery/computer/order_console/cook{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "nEC" = (
@@ -48915,16 +48884,11 @@
 	c_tag = "Head of Personnel's Office"
 	},
 /obj/structure/table/wood,
-/obj/item/storage/box/pdas{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/box/silver_ids,
-/obj/item/storage/box/ids,
 /obj/machinery/light/directional/south,
 /obj/item/papercutter{
 	pixel_x = -4
 	},
+/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "rJz" = (
@@ -49396,22 +49360,10 @@
 /area/station/security/brig)
 "rRf" = (
 /obj/structure/rack,
-/obj/item/grenade/barrier{
-	pixel_x = -3;
-	pixel_y = 1
-	},
-/obj/item/grenade/barrier,
-/obj/item/grenade/barrier{
-	pixel_x = 3;
-	pixel_y = -1
-	},
-/obj/item/grenade/barrier{
-	pixel_x = 6;
-	pixel_y = -2
-	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
+/obj/effect/spawner/random/armory/barrier_grenades,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "rRm" = (
@@ -51497,18 +51449,10 @@
 /area/station/hallway/primary/starboard)
 "sDw" = (
 /obj/structure/rack,
-/obj/item/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/laser,
-/obj/item/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/effect/spawner/random/armory/laser_gun,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "sDC" = (
@@ -56913,30 +56857,10 @@
 "uwg" = (
 /obj/structure/rack,
 /obj/machinery/light/directional/west,
-/obj/item/clothing/head/helmet/toggleable/riot{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/clothing/head/helmet/toggleable/riot{
-	pixel_y = 2
-	},
-/obj/item/clothing/head/helmet/toggleable/riot{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/clothing/head/helmet/alt{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/clothing/head/helmet/alt{
-	pixel_y = -2
-	},
-/obj/item/clothing/head/helmet/alt{
-	pixel_x = -3;
-	pixel_y = -2
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/spawner/random/armory/riot_helmet,
+/obj/effect/spawner/random/armory/bulletproof_helmet,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "uwh" = (
@@ -57351,7 +57275,7 @@
 "uEn" = (
 /obj/machinery/light/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/cigarette,
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/greater)
 "uEo" = (
@@ -62663,28 +62587,6 @@
 /area/station/maintenance/aft/greater)
 "wya" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/riot{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/clothing/suit/armor/riot{
-	pixel_y = 2
-	},
-/obj/item/clothing/suit/armor/riot{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_y = -2
-	},
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_x = -3;
-	pixel_y = -2
-	},
 /obj/machinery/requests_console/directional/north{
 	department = "Security";
 	name = "Security Requests Console"
@@ -62692,6 +62594,8 @@
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/spawner/random/armory/riot_armor,
+/obj/effect/spawner/random/armory/bulletproof_armor,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "wyn" = (

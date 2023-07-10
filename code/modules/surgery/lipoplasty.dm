@@ -20,6 +20,7 @@
 	name = "cut excess fat (circular saw)"
 	implements = list(
 		TOOL_SAW = 100,
+		/obj/item/shovel/serrated = 75,
 		/obj/item/hatchet = 35,
 		/obj/item/knife/butcher = 25)
 	time = 64

@@ -618,6 +618,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This movable atom has the explosive block element
 #define TRAIT_BLOCKING_EXPLOSIVES "blocking_explosives"
 
+///Lava will be safe to cross while it has this trait.
+#define TRAIT_LAVA_STOPPED "lava_stopped"
+///Chasms will be safe to cross while they've this trait.
+#define TRAIT_CHASM_STOPPED "chasm_stopped"
+///Turf slowdown will be ignored when this trait is added to a turf.
+#define TRAIT_TURF_IGNORE_SLOWDOWN "turf_ignore_slowdown"
+///Mobs won't slip on a wet turf while it has this trait
+#define TRAIT_TURF_IGNORE_SLIPPERY "turf_ignore_slippery"
+
 /// Mobs with this trait can't send the mining shuttle console when used outside the station itself
 #define TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION "forbid_mining_shuttle_console_outside_station"
 
