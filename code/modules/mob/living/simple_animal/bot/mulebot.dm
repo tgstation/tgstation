@@ -780,6 +780,10 @@
 
 	cell?.use(cell_move_power_usage)
 
+/mob/living/simple_animal/bot/mulebot/post_possession()
+	. = ..()
+	visible_message(span_notice("[src]'s safeties are locked on."))
+
 /mob/living/simple_animal/bot/mulebot/paranormal//allows ghosts only unless hacked to actually be useful
 	name = "\improper GHOULbot"
 	desc = "A rather ghastly looking... Multiple Utility Load Effector bot? It only seems to accept paranormal forces, and for this reason is fucking useless."
