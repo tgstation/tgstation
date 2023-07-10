@@ -1,3 +1,6 @@
+///A second masterlist of all tracked implants, for when we want to search a more broad list of tracked implants.
+GLOBAL_LIST_EMPTY(tracked_generic_implants)
+
 /*
  * A small component for implants that are tracked on a global list when implanted into a mob.
  */
@@ -19,7 +22,9 @@
 	UnregisterSignal(parent, list(COMSIG_IMPLANT_IMPLANTED, COMSIG_IMPLANT_REMOVED))
 
 /datum/component/tracked_implant/proc/on_implant(datum/source, mob/living/target, mob/user, silent = FALSE, force = FALSE)
-	global_list += src
+	global_list += parent
+	GLOB.tracked_generic_implants += parent
 
 /datum/component/tracked_implant/proc/on_remove(datum/source, mob/target, silent = FALSE, special = FALSE)
-	global_list -= src
+	global_list -= parent
+	GLOB.tracked_generic_implants -= parent

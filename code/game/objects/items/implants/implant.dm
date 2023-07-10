@@ -64,18 +64,18 @@
 	if(!force && !can_be_implanted_in(target))
 		return FALSE
 
-	var/security_implants = 0 //Tracks how many implants with the "security" flag are in the user. Rejects if over the cap.
+	var/security_implants = 0 //Used to track how many implants with the "security" flag are in the user.
 	for(var/obj/item/implant/other_implant in target.implants)
-		if(other_implant.implant_flags & IMPLANT_TYPE_SECURITY)
-			security_implants++
-			if(security_implants >= SECURITY_IMPLANT_CAP)
-				balloon_alert_to_viewers("too many security implants!", vision_distance = 3)
-				return FALSE
-
 		var/flags = SEND_SIGNAL(other_implant, COMSIG_IMPLANT_OTHER, args, src)
 		if(flags & COMPONENT_STOP_IMPLANTING)
 			UNSETEMPTY(target.implants)
 			return FALSE
+		if(!force)
+			if(other_implant.implant_flags & IMPLANT_TYPE_SECURITY)
+				security_implants++
+				if(security_implants >= SECURITY_IMPLANT_CAP) //We've found too many security implants in this mob, and will reject implantation (unless forced)
+					balloon_alert_to_viewers("too many security implants!", vision_distance = 3)
+					return FALSE
 		if(flags & COMPONENT_DELETE_NEW_IMPLANT)
 			UNSETEMPTY(target.implants)
 			qdel(src)

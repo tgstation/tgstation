@@ -1,15 +1,10 @@
 /obj/machinery/computer/prisoner/management
 	name = "prisoner management console"
-	desc = "Used to manage security implants placed inside criminals."
+	desc = "Used to modify prisoner IDs, as well as manage security implants placed inside convicts and parolees."
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_BRIG)
 	light_color = COLOR_SOFT_RED
-	var/id = 0
-	var/temp = null
-	var/status = 0
-	var/timeleft = 60
-	var/stop = 0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 	circuit = /obj/item/circuitboard/computer/prisoner
 
@@ -47,6 +42,7 @@
 				dat += "<A href='?src=[REF(src)];inject1=[REF(chem_implant)]'>(<font class='bad'>(1)</font>)</A>"
 				dat += "<A href='?src=[REF(src)];inject5=[REF(chem_implant)]'>(<font class='bad'>(5)</font>)</A>"
 				dat += "<A href='?src=[REF(src)];inject10=[REF(chem_implant)]'>(<font class='bad'>(10)</font>)</A><BR>"
+				dat += add_destroy_topic(chem_implant)
 				dat += "********************************<BR>"
 
 		if(length(GLOB.tracked_tracking_implants))
@@ -65,7 +61,7 @@
 					loc_display = mob_loc.loc
 
 				dat += "ID: [track_implant.imp_in.name] | Location: [loc_display]<BR>"
-				dat += "<A href='?src=[REF(src)];warn=[REF(track_implant)]'>(<font class='bad'><i>Message Holder</i></font>)</A> |<BR>"
+				dat += "<A href='?src=[REF(src)];warn=[REF(track_implant)]'>(<font class='bad'><i>Message Holder</i></font>)</A> | [add_destroy_topic(track_implant)]<BR>"
 				dat += "********************************<BR>"
 
 		if(length(GLOB.tracked_beacon_implants))
@@ -73,10 +69,11 @@
 			for(var/obj/item/implant/beacon/beacon_implant in GLOB.tracked_beacon_implants)
 				var/turf/implant_turf = get_turf(beacon_implant)
 				dat += "ID: [beacon_implant.imp_in.name]<BR>"
-				if(!is_safe_turf(implant_turf))
-					dat += "(<font class='bad'><i>Implant carrier is in a hazardous environment</i></font>)BR>"
-				else
+				if(is_safe_turf(implant_turf))
 					dat += "Implant carrier is safe to teleport to<BR>"
+				else
+					dat += "(<font class='bad'><i>Implant carrier is in a hazardous environment</i></font>)<BR>"
+				dat += add_destroy_topic(beacon_implant)
 				dat += "********************************<BR>"
 
 		dat += "<HR><A href='?src=[REF(src)];lock=1'>{Log Out}</A>"
@@ -86,8 +83,8 @@
 	popup.open()
 	return
 
-/obj/machinery/computer/prisoner/management/attackby(obj/item/I, mob/user, params)
-	if(isidcard(I))
+/obj/machinery/computer/prisoner/management/attackby(obj/item/our_id, mob/user, params)
+	if(isidcard(our_id))
 		if(screen)
 			id_insert(user)
 		else
@@ -121,17 +118,17 @@
 							return
 						contained_id.goal = round(num)
 		else if(href_list["inject1"])
-			var/obj/item/implant/I = locate(href_list["inject1"]) in GLOB.tracked_chem_implants
-			if(I && istype(I))
-				I.activate(1)
+			var/obj/item/implant/chem_implant = locate(href_list["inject1"]) in GLOB.tracked_chem_implants
+			if(chem_implant && istype(chem_implant))
+				chem_implant.activate(chem_implant)
 		else if(href_list["inject5"])
-			var/obj/item/implant/I = locate(href_list["inject5"]) in GLOB.tracked_chem_implants
-			if(I && istype(I))
-				I.activate(5)
+			var/obj/item/implant/chem_implant = locate(href_list["inject5"]) in GLOB.tracked_chem_implants
+			if(chem_implant && istype(chem_implant))
+				chem_implant.activate(chem_implant)
 		else if(href_list["inject10"])
-			var/obj/item/implant/I = locate(href_list["inject10"]) in GLOB.tracked_chem_implants
-			if(I && istype(I))
-				I.activate(10)
+			var/obj/item/implant/chem_implant = locate(href_list["inject10"]) in GLOB.tracked_chem_implants
+			if(chem_implant && istype(chem_implant))
+				chem_implant.activate(10)
 
 		else if(href_list["lock"])
 			if(allowed(usr))
@@ -144,12 +141,26 @@
 			var/warning = tgui_input_text(usr, "Enter your message here", "Messaging")
 			if(!warning)
 				return
-			var/obj/item/implant/I = locate(href_list["warn"]) in GLOB.tracked_tracking_implants
-			if(I && istype(I) && I.imp_in)
-				var/mob/living/R = I.imp_in
-				to_chat(R, span_hear("You hear a voice in your head saying: '[warning]'"))
-				log_directed_talk(usr, R, warning, LOG_SAY, "implant message")
+			var/obj/item/implant/warn_implant = locate(href_list["warn"]) in GLOB.tracked_tracking_implants
+			if(warn_implant && istype(warn_implant) && warn_implant.imp_in)
+				var/mob/living/victim = warn_implant.imp_in
+				to_chat(victim, span_hear("You hear a voice in your head saying: '[warning]'"))
+				log_directed_talk(usr, victim, warning, LOG_SAY, "implant message")
+		else if(href_list["self_destruct"])
+			var/warning = tgui_alert(usr, "Activation will harmlessly self-destruct this implant. Proceed?", "You sure?", list("Yes","No"))
+			if(!warning)
+				return
+			var/obj/item/implant/our_implant = locate(href_list["self_destruct"]) in GLOB.tracked_generic_implants
+			if(our_implant && istype(our_implant) && our_implant.imp_in)
+				var/mob/living/victim = our_implant.imp_in
+				to_chat(victim, span_hear("You feel a tiny jolt from inside of you as one of your implants fizzles out."))
+				do_sparks(number = 2, cardinal_only = FALSE, source = our_implant)
+				qdel(our_implant)
 
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
+
+///Adds a topic for remotely destroying a security implant. Appended to all implants in the menu.
+/obj/machinery/computer/prisoner/management/proc/add_destroy_topic(/obj/item/implant/our_implant)
+	return "<A href='?src=[REF(src)];self_destruct=[REF(our_implant)]'>(<font class='bad'>Disable</font>)</A><BR>"
