@@ -61,8 +61,6 @@
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
-	var/name_override //For temporary visible name changes
-
 	var/datum/physiology/physiology
 
 	var/list/datum/bioware/biowares
