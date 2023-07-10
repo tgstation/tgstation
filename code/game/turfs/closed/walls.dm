@@ -43,7 +43,6 @@
 	if(!carbon_mob.density)
 		return
 	carbon_mob.Is_Leaning = TRUE
-	//carbon_mob.check_fov()
 	var/turf/checked_turf = get_step(carbon_mob, turn(carbon_mob.dir, 180))
 	if(checked_turf == src)
 		carbon_mob.start_leaning(src)
@@ -59,13 +58,13 @@
 		if(EAST)
 			pixel_x += -11
 	ADD_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
-	visible_message(span_notice("[src] leans up against \the [wall]!"), \
-						span_notice("You lean up against \the [wall]!"))
+	visible_message(span_notice("[src] leans against \the [wall]!"), \
+						span_notice("You lean against \the [wall]!"))
 	RegisterSignal(src, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(stop_leaning))
 	RegisterSignal(src, COMSIG_HUMAN_DISARM_HIT, PROC_REF(stop_leaning))
 	RegisterSignal(src, COMSIG_LIVING_GET_PULLED, PROC_REF(stop_leaning))
 	RegisterSignal(src, COMSIG_MOVABLE_TELEPORTING, PROC_REF(stop_leaning))
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_THROW, PROC_REF(stop_leaning))
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(stop_leaning))
 	update_fov()
 
 
@@ -75,7 +74,7 @@
 	UnregisterSignal(src, COMSIG_HUMAN_DISARM_HIT)
 	UnregisterSignal(src, COMSIG_LIVING_GET_PULLED)
 	UnregisterSignal(src, COMSIG_MOVABLE_TELEPORTING)
-	UnregisterSignal(src, COMSIG_MOVABLE_PRE_THROW)
+	UnregisterSignal(src, COMSIG_ATOM_DIR_CHANGE)
 	Is_Leaning = FALSE
 	pixel_y = initial(pixel_y)
 	pixel_x = initial(pixel_x)
