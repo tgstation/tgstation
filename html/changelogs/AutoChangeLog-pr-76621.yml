@@ -1,0 +1,4 @@
+author: "Seven"
+delete-after: True
+changes:
+  - balance: "Only 2 smugglers satchels will spawn on the station at roundstart, down from 10"
