@@ -18,7 +18,7 @@
 			OUTPUT_ITEMS = list(/obj/item/sharpener/cult),
 			),
 		CONSTRUCT_SHELL = list(
-			PREVIEW_IMAGE = image(icon = 'icons/obj/wizard.dmi', icon_state = "construct_cult"),
+			PREVIEW_IMAGE = image(icon = 'icons/mob/shells.dmi', icon_state = "construct_cult"),
 			OUTPUT_ITEMS = list(/obj/structure/constructshell),
 			),
 		UNHOLY_WATER = list(
