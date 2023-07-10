@@ -164,7 +164,7 @@
 
 /obj/item/knife/shiv
 	name = "glass shiv"
-	icon = 'icons/obj/shards.dmi'
+	icon = 'icons/obj/debree.dmi'
 	icon_state = "shiv"
 	inhand_icon_state = "shiv"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
