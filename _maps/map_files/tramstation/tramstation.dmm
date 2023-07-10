@@ -16337,6 +16337,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
+"ert" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "erv" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -36158,14 +36165,10 @@
 /area/station/security/courtroom/holding)
 "lPd" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/pdas{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/box/pdas,
 /obj/item/papercutter{
 	pixel_x = -4
 	},
+/obj/item/paper/fluff/ids_for_dummies,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "lPl" = (
@@ -50287,6 +50290,10 @@
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"raH" = (
+/obj/item/paper/fluff/ids_for_dummies,
+/turf/open/misc/asteroid/airless,
+/area/station/asteroid)
 "raP" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -54261,13 +54268,6 @@
 /obj/item/storage/secure/briefcase{
 	pixel_x = -2;
 	pixel_y = 6
-	},
-/obj/item/storage/box/silver_ids{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/assembly/flash/handheld{
-	pixel_x = -8
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -62030,10 +62030,7 @@
 /area/station/commons/storage/art)
 "vbb" = (
 /obj/structure/table,
-/obj/structure/closet/mini_fridge{
-	name = "mini-fridge";
-	anchored = 1
-	},
+/obj/structure/closet/mini_fridge,
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/cup/soda_cans/cola,
 /turf/open/floor/iron/white,
@@ -74862,7 +74859,7 @@ aaa
 gcp
 gcp
 gcp
-aac
+raH
 aac
 aaa
 aaa
@@ -102252,7 +102249,7 @@ dQt
 iRL
 snQ
 iRL
-pjC
+ert
 twg
 dWn
 cWZ

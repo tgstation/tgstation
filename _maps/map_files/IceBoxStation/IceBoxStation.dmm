@@ -10404,15 +10404,6 @@
 "dho" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/secure/briefcase,
-/obj/item/storage/box/pdas{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/box/silver_ids{
-	pixel_x = 4;
-	pixel_y = 6
-	},
-/obj/item/storage/box/ids,
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -14216,9 +14207,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/disposalpipe/junction{
-	dir = 1
-	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "etB" = (
@@ -39620,6 +39609,10 @@
 	dir = 4
 	},
 /area/station/service/chapel)
+"mJv" = (
+/obj/item/paper/fluff/ids_for_dummies,
+/turf/open/genturf,
+/area/icemoon/underground/unexplored/rivers/deep)
 "mJD" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -45778,16 +45771,13 @@
 /turf/open/floor/iron/dark,
 /area/mine/eva/lower)
 "oBp" = (
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Service Hallway - Upper West"
 	},
+/obj/structure/table,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "oBs" = (
@@ -59442,7 +59432,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "sUS" = (
@@ -69376,6 +69366,10 @@
 	dir = 10
 	},
 /obj/machinery/duct,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "whP" = (
@@ -79140,7 +79134,7 @@ oSU
 oSU
 oSU
 oSU
-oSU
+mJv
 oSU
 oSU
 oSU
