@@ -1,8 +1,8 @@
 import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Box, Collapsible, Divider, LabeledList, Section, Stack } from '../components';
+import { useBackend } from '../../backend';
+import { Box, Collapsible, Divider, LabeledList, Section, Stack } from '../../components';
 
-import { Window } from '../layouts';
+import { Window } from '../../layouts';
 
 type Data = {
   color: string;
