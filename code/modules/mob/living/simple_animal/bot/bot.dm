@@ -428,8 +428,7 @@
 		ejectpai(0)
 
 	if(prob(70/severity))
-		var/datum/language_holder/bot_languages = get_language_holder()
-		bot_languages.selected_language = bot_languages.get_random_spoken_language()
+		set_active_language(get_random_spoken_language())
 
 	if(bot_mode_flags & BOT_MODE_ON)
 		turn_off()
