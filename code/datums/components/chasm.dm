@@ -217,6 +217,9 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
 
+///Global list needed to let fishermen with a rescue hook fish fallen mobs from any place
+GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
+
 /**
  * An abstract object which is basically just a bag that the chasm puts people inside
  */
@@ -234,11 +237,13 @@
 	. = ..()
 	if (isliving(arrived))
 		RegisterSignal(arrived, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
+		chasm_fallen_mobs += gone
 
 /obj/effect/abstract/chasm_storage/Exited(atom/movable/gone)
 	. = ..()
 	if (isliving(gone))
 		UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
+		chasm_fallen_mobs -= gone
 
 #define CHASM_TRAIT "chasm trait"
 /**
