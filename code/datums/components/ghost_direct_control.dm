@@ -2,8 +2,6 @@
  * Component which lets ghosts click on a mob to take control of it
  */
 /datum/component/ghost_direct_control
-	/// String describing this role to ghosts
-	var/role_name
 	/// Message to display upon successful possession
 	var/assumed_control_message
 	/// Type of ban you can get to prevent you from accepting this role
@@ -30,7 +28,6 @@
 		return COMPONENT_INCOMPATIBLE
 
 	src.ban_type = ban_type
-	src.role_name = role_name || "[parent]"
 	src.assumed_control_message = assumed_control_message || "You are [parent]!"
 	src.extra_control_checks = extra_control_checks
 	src.after_assumed_control= after_assumed_control
@@ -39,7 +36,7 @@
 	LAZYADD(GLOB.joinable_mobs[format_text("[initial(mob_parent.name)]")], mob_parent)
 
 	if (poll_candidates)
-		INVOKE_ASYNC(src, PROC_REF(request_ghost_control), poll_length, poll_ignore_key)
+		INVOKE_ASYNC(src, PROC_REF(request_ghost_control), role_name || "[parent]", poll_length, poll_ignore_key)
 
 /datum/component/ghost_direct_control/RegisterWithParent()
 	. = ..()
@@ -72,7 +69,7 @@
 	examine_text += span_boldnotice("You could take control of this mob by clicking on it.")
 
 /// Send out a request for a brain
-/datum/component/ghost_direct_control/proc/request_ghost_control(poll_length, poll_ignore_key)
+/datum/component/ghost_direct_control/proc/request_ghost_control(role_name, poll_length, poll_ignore_key)
 	if (!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 		return
 	awaiting_ghosts = TRUE
@@ -110,7 +107,7 @@
 
 /// We got far enough to establish that this mob is a valid target, let's try to posssess it
 /datum/component/ghost_direct_control/proc/attempt_possession(mob/our_mob, mob/dead/observer/hopeful_ghost)
-	var/ghost_asked = tgui_alert(usr, "Become [role_name]?", "Are you sure?", list("Yes", "No"))
+	var/ghost_asked = tgui_alert(usr, "Become [our_mob]?", "Are you sure?", list("Yes", "No"))
 	if (ghost_asked != "Yes" || QDELETED(our_mob))
 		return
 	assume_direct_control(hopeful_ghost)

@@ -63,6 +63,13 @@ const TabDisplay = (props, context) => {
       {!!can_hack && <HackButton />}
       <Button
         color="transparent"
+        icon="fa-poll-h"
+        onClick={() => act('rename')}
+        tooltip="Update the bot's name registration.">
+        Rename
+      </Button>
+      <Button
+        color="transparent"
         disabled={!has_access && !can_hack}
         icon={locked ? 'lock' : 'lock-open'}
         onClick={() => act('lock')}

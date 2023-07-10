@@ -240,6 +240,29 @@
 /mob/living/simple_animal/bot/proc/post_possession()
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	say("New personality installed successfully!", forced = "bot")
+	rename(src)
+
+/// Allows renaming the bot to something else
+/mob/living/simple_animal/bot/proc/rename(mob/user)
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(
+		user = user,
+		message = "This machine is designated [real_name]. Would you like to update its registration?",
+		title = "Name change",
+		default = real_name,
+		max_length = MAX_NAME_LEN,
+	)))
+	if (isnull(new_name) || QDELETED(src))
+		return
+	if (key && user != src)
+		var/accepted = tgui_alert(
+			src,
+			message = "Do you wish to be renamed to [new_name]?",
+			title = "Name change",
+			buttons = list("Yes", "No"),
+		)
+		if (accepted != "Yes" || QDELETED(src))
+			return
+	fully_replace_character_name(real_name, new_name)
 
 /mob/living/simple_animal/bot/proc/check_access(mob/living/user, obj/item/card/id)
 	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
@@ -957,6 +980,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 				disable_possession(usr)
 			else
 				enable_possession()
+		if("rename")
+			rename(usr)
 
 /mob/living/simple_animal/bot/update_icon_state()
 	icon_state = "[isnull(base_icon_state) ? initial(icon_state) : base_icon_state][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
