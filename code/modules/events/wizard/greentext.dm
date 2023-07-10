@@ -96,7 +96,7 @@
 	if(!is_centcom_level(holder.z)) //you're winner!
 		return
 
-	to_chat(holder, "<font color='green'>At last it feels like victory is assured!</font>")
+	to_chat(holder, span_green("At last it feels like victory is assured!"))
 	holder.mind.add_antag_datum(/datum/antagonist/greentext)
 	holder.log_message("won with greentext!!!", LOG_ATTACK, color = "green")
 	LAZYREMOVE(color_altered_mobs, WEAKREF(holder))
