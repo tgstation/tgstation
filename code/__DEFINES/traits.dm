@@ -885,6 +885,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SUIT_TRAIT "suit"
 /// Trait associated to lying down (having a [lying_angle] of a different value than zero).
 #define LYING_DOWN_TRAIT "lying-down"
+#define LEANING_TRAIT "leaning"
 /// Trait associated to lacking electrical power.
 #define POWER_LACK_TRAIT "power-lack"
 /// Trait associated to lacking motor movement

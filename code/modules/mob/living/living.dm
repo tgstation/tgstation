@@ -650,6 +650,7 @@
 	if(HAS_TRAIT(src, TRAIT_UNDENSE))
 		set_density(FALSE)
 		return
+	set_density(TRUE)
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()

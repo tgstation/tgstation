@@ -34,21 +34,52 @@
 	var/list/dent_decals
 
 /turf/closed/wall/MouseDrop_T(mob/living/carbon/carbon_mob, mob/user)
-	if(carbon_mob != user || carbon_mob.Is_Leaning == TRUE )
+	if(carbon_mob != user)
+		return
+	if(carbon_mob.Is_Leaning == TRUE)
+		return
+	if(carbon_mob.pulledby)
+		return
+	if(!carbon_mob.density)
 		return
 	carbon_mob.Is_Leaning = TRUE
 	//carbon_mob.check_fov()
 	var/turf/checked_turf = get_step(carbon_mob, turn(carbon_mob.dir, 180))
 	if(checked_turf == src)
-		switch(carbon_mob.dir)
-			if(SOUTH)
-				carbon_mob.pixel_y += 11
-			if(NORTH)
-				carbon_mob.pixel_y += -11
-			if(WEST)
-				carbon_mob.pixel_x += 11
-			if(EAST)
-				carbon_mob.pixel_x += -11
+		carbon_mob.start_leaning(src)
+
+/mob/living/carbon/proc/start_leaning(obj/wall)
+	switch(dir)
+		if(SOUTH)
+			pixel_y += 11
+		if(NORTH)
+			pixel_y += -11
+		if(WEST)
+			pixel_x += 11
+		if(EAST)
+			pixel_x += -11
+	ADD_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
+	visible_message(span_notice("[src] leans up against \the [wall]!"), \
+						span_notice("You lean up against \the [wall]!"))
+	RegisterSignal(src, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(stop_leaning))
+	RegisterSignal(src, COMSIG_HUMAN_DISARM_HIT, PROC_REF(stop_leaning))
+	RegisterSignal(src, COMSIG_LIVING_GET_PULLED, PROC_REF(stop_leaning))
+	RegisterSignal(src, COMSIG_MOVABLE_TELEPORTING, PROC_REF(stop_leaning))
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_THROW, PROC_REF(stop_leaning))
+
+
+
+/mob/living/carbon/proc/stop_leaning()
+	SIGNAL_HANDLER
+	UnregisterSignal(src, COMSIG_MOB_CLIENT_PRE_MOVE)
+	UnregisterSignal(src, COMSIG_HUMAN_DISARM_HIT)
+	UnregisterSignal(src, COMSIG_LIVING_GET_PULLED)
+	UnregisterSignal(src, COMSIG_MOVABLE_TELEPORTING)
+	UnregisterSignal(src, COMSIG_MOVABLE_PRE_THROW)
+	Is_Leaning = FALSE
+	pixel_y = initial(pixel_y)
+	pixel_x = initial(pixel_x)
+	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
