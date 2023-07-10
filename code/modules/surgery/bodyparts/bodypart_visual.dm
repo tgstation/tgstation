@@ -6,6 +6,16 @@
 	var/burnstate = 0
 
 /**
+ * Updates a bodypart's external_bodytypes variable, matching it to the organs it has.
+ */
+/obj/item/bodypart/proc/synchronize_bodytypes()
+	var/final_bodytype = NONE
+	for(var/obj/item/organ/organ as anything in organs)
+		external_bodytypes |= organ.external_bodytypes
+	external_bodytypes = final_bodytype
+	return final_bodytype
+
+/**
  * Updates a bodypart's brute/burn states for use by update_damage_overlays()
  * Returns TRUE if we need to update overlays. FALSE otherwise.
  */

@@ -20,7 +20,7 @@
 	 * This will not work if it doesn't have a limb to generate it's icon with, yes that is scuffed.
 	 */
 	var/use_mob_sprite_as_obj_sprite = FALSE
-	///Does this organ have any bodytypes to pass to it's ownerlimb?
+	/// Does this organ have any bodytypes to pass to it's ownerlimb?
 	var/external_bodytypes = NONE
 	/// Which flags does a 'modification tool' need to have to restyle us, if it all possible (located in code/_DEFINES/mobs)
 	var/restyle_flags = NONE

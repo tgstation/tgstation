@@ -37,6 +37,8 @@
 	var/biological_state = BIO_FLESH_BONE
 	/// A bitfield of bodytypes for clothing, surgery, and misc information
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
+	/// Same as above, but this purely exists to cache the external bodytypes of organs inside us - Gets updated on synchronize_bodytypes()
+	var/external_bodytypes = NONE
 	/// Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
 	var/change_exempt_flags = NONE
 	/// Random flags that describe this bodypart, such as BODYPART_UNREMOVABLE
@@ -730,14 +732,12 @@
 	if(can_be_disabled)
 		update_disabled()
 
-
 /// Called when TRAIT_NOLIMBDISABLE is added to the owner.
 /obj/item/bodypart/proc/on_owner_nolimbdisable_trait_gain(mob/living/carbon/source)
 	PROTECTED_PROC(TRUE)
 	SIGNAL_HANDLER
 
 	set_can_be_disabled(FALSE)
-
 
 /// Called when TRAIT_NOLIMBDISABLE is removed from the owner.
 /obj/item/bodypart/proc/on_owner_nolimbdisable_trait_loss(mob/living/carbon/source)

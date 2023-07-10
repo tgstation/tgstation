@@ -176,13 +176,11 @@
 
 /// Makes sure that the owner's bodytype flags match the flags of all of it's parts and organs
 /mob/living/carbon/proc/synchronize_bodytypes()
-	var/all_limb_flags = NONE
+	var/final_bodytype = NONE
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		for(var/obj/item/organ/organ as anything in limb.organs)
-			all_limb_flags |= organ.external_bodytypes
-		all_limb_flags |= limb.bodytype
-
-	bodytype = all_limb_flags
+		final_bodytype |= limb.bodytype | limb.external_bodytypes
+	bodytype = final_bodytype
+	return final_bodytype
 
 /proc/skintone2hex(skin_tone)
 	. = 0

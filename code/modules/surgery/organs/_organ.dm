@@ -272,6 +272,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	ownerlimb = bodypart
 	if(bodypart_overlay)
 		bodypart.add_bodypart_overlay(bodypart_overlay)
+	if(external_bodytypes)
+		bodypart.synchronize_bodytypes()
 
 /// Removes the organ from the limb
 /obj/item/organ/proc/remove_from_limb(obj/item/bodypart/bodypart, special = FALSE)
@@ -280,6 +282,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	ownerlimb = null
 	if(bodypart_overlay)
 		bodypart.remove_bodypart_overlay(bodypart_overlay)
+	if(external_bodytypes)
+		bodypart.synchronize_bodytypes()
 
 /// Add a Trait to an organ that it will give its owner.
 /obj/item/organ/proc/add_organ_trait(trait)
