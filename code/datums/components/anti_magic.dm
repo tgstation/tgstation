@@ -117,6 +117,7 @@
 		charges -= charge_cost
 		if(charges <= 0)
 			expiration?.Invoke(source, parent)
+			qdel(src) // no more antimagic
 
 	return COMPONENT_MAGIC_BLOCKED
 
