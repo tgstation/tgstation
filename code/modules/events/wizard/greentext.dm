@@ -68,7 +68,7 @@
 /obj/item/greentext/Destroy(force)
 	LAZYREMOVE(SSticker.round_end_events, roundend_callback)
 	QDEL_NULL(roundend_callback) //This ought to free the callback datum, and prevent us from harddeling
-	INVOKE_ASYNC(src, PROC_REF(release_victims), color_altered_mobs)
+	INVOKE_ASYNC(src, PROC_REF(release_victims))
 	return ..()
 
 /obj/item/greentext/proc/release_victims()
