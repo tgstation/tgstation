@@ -14,7 +14,7 @@
 	src.gravity = gravity
 	src.ignore_turf_gravity = ignore_turf_gravity
 
-	RegisterSignal(target, COMSIG_ATOM_HAS_GRAVITY, PROC_REF(gravity_check), override = override_sig)
+	RegisterSignal(target, COMSIG_ATOM_HAS_GRAVITY, PROC_REF(gravity_check), override = overrides_sig)
 	if(isturf(target))
 		RegisterSignal(target, COMSIG_TURF_HAS_GRAVITY, PROC_REF(turf_gravity_check), override = overrides_sig)
 
