@@ -219,7 +219,7 @@
 		AddComponent(/datum/component/edible, bite_consumption = reagents.total_volume / (charges_left / 5), after_eat = CALLBACK(src, PROC_REF(after_eat)))
 
 /obj/item/toy/crayon/proc/after_eat(mob/user)
-	use_charges(user, 5, FALSE, TRUE)
+	use_charges(user, amount = 5, requires_full = FALSE, override_infinity = TRUE)
 	if(check_empty(user, override_infinity = TRUE)) //Prevents division by zero
 		return
 
