@@ -11,6 +11,7 @@
 	var/mineral = null
 	var/obj/item/electronics/airlock/electronics = null
 	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
+	var/multi_tile = FALSE
 	var/glass_type = /obj/machinery/door/airlock/glass
 	var/glass = 0 // 0 = glass can be installed. 1 = glass is already installed.
 	var/created_name = null
@@ -21,10 +22,26 @@
 	var/material_type = /obj/item/stack/sheet/iron
 	var/material_amt = 4
 
+/obj/structure/door_assembly/multi_tile
+	dir = EAST
+	/// Whether or not the assembly is for a multi-tile airlock.
+	multi_tile = TRUE
+
 /obj/structure/door_assembly/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	update_name()
+
+/obj/structure/door_assembly/multi_tile/Initialize(mapload)
+	. = ..()
+	multi_tile = get_size_in_tiles(src) > 1
+	if(multi_tile)
+		set_bounds()
+	update_overlays()
+
+/obj/structure/door_assembly/multi_tile/Move()
+	. = ..()
+	set_bounds()
 
 /obj/structure/door_assembly/examine(mob/user)
 	. = ..()
@@ -360,3 +377,18 @@
 			qdel(src)
 			return TRUE
 	return FALSE
+
+/**
+ * Updates the bounds of the airlock assembly
+ * Sets the bounds of the airlock assembly according to the direction.
+ * This ensures that the bounds are always correct, even if the airlock is rotated.
+ */
+/obj/structure/door_assembly/multi_tile/proc/set_bounds()
+	var/size = get_size_in_tiles(src)
+
+	if(dir in list(NORTH, SOUTH))
+		bound_width = size * world.icon_size
+		bound_height = world.icon_size
+	else
+		bound_width = world.icon_size
+		bound_height = size * world.icon_size

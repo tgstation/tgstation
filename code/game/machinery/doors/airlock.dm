@@ -1226,9 +1226,13 @@
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
 	sleep(0.1 SECONDS)
 	set_opacity(0)
+	if(multi_tile)
+		filler.set_opacity(FALSE)
 	update_freelook_sight()
 	sleep(0.4 SECONDS)
 	set_density(FALSE)
+	if(multi_tile)
+		filler.set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, FALSE)
 	sleep(0.1 SECONDS)
@@ -1278,10 +1282,11 @@
 
 	var/dangerous_close = !safe || force_crush
 	if(!dangerous_close)
-		for(var/atom/movable/M in get_turf(src))
-			if(M.density && M != src) //something is blocking the door
-				autoclose_in(DOOR_CLOSE_WAIT)
-				return FALSE
+		for(var/turf/checked_turf in get_turfs())
+			for(var/atom/movable/M in checked_turf)
+				if(M.density && M != src)
+					autoclose_in(DOOR_CLOSE_WAIT)
+					return FALSE
 
 	if(!try_to_force_door_shut(forced))
 		return FALSE
@@ -1295,18 +1300,24 @@
 	layer = CLOSED_DOOR_LAYER
 	if(air_tight)
 		set_density(TRUE)
+		if(multi_tile)
+			filler.density = TRUE
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
 	sleep(0.1 SECONDS)
 	if(!air_tight)
 		set_density(TRUE)
+		if(multi_tile)
+			filler.density = TRUE
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
 	sleep(0.4 SECONDS)
 	if(dangerous_close)
 		crush()
 	if(visible && !glass)
-		set_opacity(1)
+		set_opacity(TRUE)
+		if(multi_tile)
+			filler.set_opacity(TRUE)
 	update_freelook_sight()
 	sleep(0.1 SECONDS)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
@@ -1724,6 +1735,29 @@
 /obj/machinery/door/airlock/proc/get_wires()
 	var/area/source_area = get_area(src)
 	return source_area?.airlock_wires ? new source_area.airlock_wires(src) : new /datum/wires/airlock(src)
+
+
+/obj/structure/fluff/airlock_filler/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(.)
+		return
+	// Snowflake handling for PASSGLASS.
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
+		return !opacity
+
+/obj/structure/fluff/airlock_filler/can_be_pulled(user, grab_state, force)
+	return FALSE
+
+/obj/structure/fluff/airlock_filler/singularity_act()
+	return
+
+/obj/structure/fluff/airlock_filler/singularity_pull(S, current_size)
+	return
+
+/obj/structure/fluff/airlock_filler/Destroy(force)
+	if(parent_airlock)
+		parent_airlock = null
+	return ..()
 
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING

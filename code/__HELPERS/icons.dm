@@ -1492,3 +1492,16 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		if(scream)
 			stack_trace("Icon Lookup for state: [state] in file [file] failed.")
 		return FALSE
+
+/**
+ * Returns the size of the sprite in tiles.
+ * Takes the icon size and divides it by the world icon size (default 32).
+ * This gives the size of the sprite in tiles.
+ *
+ * @return size of the sprite in tiles
+ */
+/proc/get_size_in_tiles(obj/target)
+	var/icon/size_check = icon(target.icon, target.icon_state)
+	var/size = size_check.Width() / world.icon_size
+
+	return size

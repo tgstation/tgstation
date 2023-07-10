@@ -631,16 +631,26 @@
 	Misc Airlocks
 */
 
-/obj/machinery/door/airlock/glass_large
+/obj/machinery/door/airlock/multi_tile/glass
+	multi_tile = TRUE
 	name = "large glass airlock"
 	icon = 'icons/obj/doors/airlocks/glass_large/glass_large.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
 	opacity = FALSE
-	assemblytype = null
+	assemblytype = /obj/structure/door_assembly/multi_tile/glass
 	glass = TRUE
 	bound_width = 64 // 2x1
 
-/obj/machinery/door/airlock/glass_large/narsie_act()
+/obj/structure/fluff/airlock_filler
+	icon = null
+	icon_state = null
+	density = TRUE
+	opacity = TRUE
+	anchored = TRUE
+	can_atmos_pass = ATMOS_PASS_DENSITY
+	var/parent_airlock
+
+/obj/machinery/door/airlock/multi_tile/narsie_act()
 	return
 
 /// Subtype used in unit tests to ensure instant airlock opening/closing. Pretty much just excises everything that would delay the process or is un-needed for the sake of the test (sleeps, icon animations).

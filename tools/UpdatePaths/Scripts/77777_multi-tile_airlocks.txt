@@ -1,0 +1,3 @@
+#comment New path for large glass airlock. 
+
+/obj/machinery/door/airlock/glass_large : /obj/machinery/door/airlock/multi_tile/glass{@OLD}
