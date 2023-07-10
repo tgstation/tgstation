@@ -542,9 +542,9 @@
 		if (target.health <= target.crit_threshold)
 			if (!cpr_prepped)
 				to_chat(src, span_warning("[target.name] still isn't up! You try harder!"))
-				cpr_prepped = TRUE
-			else
-				cpr_prepped = FALSE
+			cpr_prepped = TRUE
+		else
+			cpr_prepped = FALSE
 	while (cpr_prepped)
 
 #undef CPR_PREPPED_SPEED
