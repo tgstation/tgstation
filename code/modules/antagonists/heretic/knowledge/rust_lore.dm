@@ -170,6 +170,7 @@
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/curse/corrosion,
 		/datum/heretic_knowledge/crucible,
+		/datum/heretic_knowledge/rifle,
 	)
 	spell_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 1
@@ -195,7 +196,6 @@
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 	next_knowledge = list(
-		/datum/heretic_knowledge/rifle,
 		/datum/heretic_knowledge/ultimate/rust_final,
 		/datum/heretic_knowledge/summon/rusty,
 	)
