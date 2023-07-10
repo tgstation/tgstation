@@ -1,4 +1,0 @@
-author: "Riggle"
-delete-after: True
-changes:
-  - spellcheck: "fix suspicious_logins"
