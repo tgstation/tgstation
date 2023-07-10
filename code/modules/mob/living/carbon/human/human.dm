@@ -445,8 +445,6 @@
 		return
 
 	var/panicking = FALSE
-	var/cpr_quality = 0
-	var/mask_changed = FALSE
 
 	do
 		CHECK_DNA_AND_SPECIES(target)
