@@ -15,7 +15,40 @@
 
 /datum/bodypart_overlay/mutant/get_overlay(layer, obj/item/bodypart/limb)
 	inherit_color(limb) // If draw_color is not set yet, go ahead and do that
-	return ..()
+	/// SKYRAPTOR ADDITION BEGIN
+	var/mob/living/carbon/human/the_humie = limb.owner
+	if(sprite_datum.color_src == SPRITE_ACC_SCRIPTED_COLOR && !isnull(the_humie))
+		draw_color = sprite_datum.color_override(the_humie)
+	var/base_r = ..()
+	var/list/overlays = list()
+	overlays += base_r
+	if(!isnull(sprite_datum))
+		if(sprite_datum.hasinner)
+			var/image_layer = bitflag_to_layer(layer)
+			var/gender = (limb?.limb_gender == FEMALE) ? "f" : "m"
+			var/list/icon_state_builder = list()
+			icon_state_builder += sprite_datum.gender_specific ? gender : "m" //Male is default because sprite accessories are so ancient they predate the concept of not hardcoding gender
+			icon_state_builder += "[feature_key]inner"
+			icon_state_builder += get_base_icon_state()
+			icon_state_builder += mutant_bodyparts_layertext(image_layer)
+
+			var/finished_icon_state = icon_state_builder.Join("_")
+
+			var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = image_layer)
+
+			if(sprite_datum.center)
+				center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
+
+			switch(sprite_datum.inner_color_src)
+				if(MUTCOLORS)
+					appearance.color = limb.draw_color
+				if(SPRITE_ACC_SCRIPTED_COLOR)
+					appearance.color = sprite_datum.innercolor_override(the_humie)
+
+			overlays += appearance
+	. = overlays
+	/// SKYRAPTOR ADDITION END - this is completely reworked, basically
+	return .
 
 ///Completely random image and color generation (obeys what a player can choose from)
 /datum/bodypart_overlay/mutant/proc/randomize_appearance()

@@ -65,6 +65,10 @@
 	var/color_src = MUTCOLORS
 	/// Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
 	var/hasinner = FALSE
+
+	/// SKYRAPTOR ADDITION - this is used with hasinner and works the same way as normal color_src.
+	var/inner_color_src = 0
+
 	/// Is this part locked from roundstart selection? Used for parts that apply effects.
 	var/locked = FALSE
 	/// Should we center the sprite?
@@ -77,6 +81,10 @@
 	var/em_block = FALSE
 
 /datum/sprite_accessory/proc/color_override(mob/living/carbon/human/target) /// SKYRAPTOR ADDITION: meant to be used with SPRITE_ACC_SCRIPTED_COLOR
+	world.log << "Sprite accessory had color_override called without an implementation!"
+	return COLOR_WHITE
+
+/datum/sprite_accessory/proc/innercolor_override(mob/living/carbon/human/target) /// SKYRAPTOR ADDITION: meant to be used with SPRITE_ACC_SCRIPTED_COLOR
 	world.log << "Sprite accessory had color_override called without an implementation!"
 	return COLOR_WHITE
 

@@ -819,6 +819,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 							accessory_overlay.color = source.facial_hair_color
 						if(EYECOLOR)
 							accessory_overlay.color = source.eye_color_left
+						if(SPRITE_ACC_SCRIPTED_COLOR) /// Skyraptor addition
+							accessory_overlay.color = accessory.color_override(source)
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
@@ -832,6 +834,28 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 				if(accessory.center)
 					inner_accessory_overlay = center_image(inner_accessory_overlay, accessory.dimension_x, accessory.dimension_y)
+
+				/// SKYRAPTOR ADDITION BEGIN
+				switch(accessory.inner_color_src)
+					if(MUTCOLORS)
+						if(fixed_mut_color)
+							inner_accessory_overlay.color = fixed_mut_color
+						else
+							inner_accessory_overlay.color = source.dna.features["mcolor"]
+					if(HAIR)
+						if(hair_color == "mutcolor")
+							inner_accessory_overlay.color = source.dna.features["mcolor"]
+						else if(hair_color == "fixedmutcolor")
+							inner_accessory_overlay.color = fixed_mut_color
+						else
+							inner_accessory_overlay.color = source.hair_color
+					if(FACEHAIR)
+						inner_accessory_overlay.color = source.facial_hair_color
+					if(EYECOLOR)
+						inner_accessory_overlay.color = source.eye_color_left
+					if(SPRITE_ACC_SCRIPTED_COLOR)
+						inner_accessory_overlay.color = accessory.innercolor_override(source)
+				/// SKYRAPTOR ADDITION END
 
 				standing += inner_accessory_overlay
 
