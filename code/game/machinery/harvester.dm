@@ -189,6 +189,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	allow_living = TRUE
+	allow_clothing = TRUE
 	if (user)
 		balloon_alert(user, "lifesign scanners overloaded")
 	return TRUE

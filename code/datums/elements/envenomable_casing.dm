@@ -44,7 +44,7 @@
 	venom_container.reagents.remove_reagent(venom_applied.type, amount_applied)
 	///stops further poison application
 	UnregisterSignal(casing, COMSIG_ITEM_AFTERATTACK)
-	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine_after_dip), override = TRUE)
+	RegisterSignal(casing, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine_after_dip), override = TRUE)
 
 ///signal called on parent being examined while not coated
 /datum/element/envenomable_casing/proc/on_examine_before_dip(obj/item/ammo_casing/casing, mob/user, list/examine_list)

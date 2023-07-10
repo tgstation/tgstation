@@ -209,24 +209,6 @@
 	var/ramount = 10
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
-/obj/item/organ/internal/heart/cybernetic/tier2
-	name = "cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
-	icon_state = "heart-c-u-on"
-	base_icon_state = "heart-c-u"
-	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
-	dose_available = TRUE
-	emp_vulnerability = 40
-
-/obj/item/organ/internal/heart/cybernetic/tier3
-	name = "upgraded cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
-	icon_state = "heart-c-u2-on"
-	base_icon_state = "heart-c-u2"
-	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
-	dose_available = TRUE
-	emp_vulnerability = 20
-
 /obj/item/organ/internal/heart/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -258,9 +240,41 @@
 	owner.reagents.add_reagent(rid, ramount)
 	dose_available = FALSE
 
+/obj/item/organ/internal/heart/cybernetic/tier2
+	name = "cybernetic heart"
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
+	icon_state = "heart-c-u-on"
+	base_icon_state = "heart-c-u"
+	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	dose_available = TRUE
+	emp_vulnerability = 40
+
+/obj/item/organ/internal/heart/cybernetic/tier3
+	name = "upgraded cybernetic heart"
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
+	icon_state = "heart-c-u2-on"
+	base_icon_state = "heart-c-u2"
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	dose_available = TRUE
+	emp_vulnerability = 20
+
 /obj/item/organ/internal/heart/cybernetic/tier3/used_dose()
 	. = ..()
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
+
+/obj/item/organ/internal/heart/cybernetic/surplus
+	name = "surplus prosthetic heart"
+	desc = "A fragile mockery of a human heart that resembles a water pump more than an actual heart. \
+		Offers no protection against EMPs."
+	icon_state = "heart-c-s-on"
+	base_icon_state = "heart-c-s"
+	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
+	emp_vulnerability = 100
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/heart/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_surgical_removal)
 
 /obj/item/organ/internal/heart/freedom
 	name = "heart of freedom"

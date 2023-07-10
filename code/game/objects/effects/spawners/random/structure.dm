@@ -142,7 +142,7 @@
 		/obj/structure/closet/l3closet = 1,
 		/obj/structure/closet/radiation = 1,
 		/obj/structure/closet/bombcloset = 1,
-		/obj/structure/closet/mini_fridge = 1,
+		/obj/structure/closet/mini_fridge/grimy = 1,
 	)
 
 /obj/effect/spawner/random/structure/chair_flipped

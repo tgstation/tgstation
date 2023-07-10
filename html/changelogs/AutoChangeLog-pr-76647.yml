@@ -1,0 +1,5 @@
+author: "cnleth"
+delete-after: True
+changes:
+  - image: "Engineering scanner goggles are now yellow and not green when in meson mode"
+  - image: "Atmospheric thermal imaging goggles are now green"
