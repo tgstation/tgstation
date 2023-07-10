@@ -437,14 +437,26 @@
 				step_towards(hand, src)
 				to_chat(src, span_warning("\The [S] pulls \the [hand] from your grip!"))
 
-#define CPR_PANIC_SPEED (0.8 SECONDS)
+#define CPR_PREPPED_SPEED (0.8 SECONDS)
 
 /// Performs CPR on the target after a delay.
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/target)
 	if(target == src)
 		return
 
-	var/panicking = FALSE
+	var/cpr_prepped = FALSE
+	var/src_old_breath = HAS_TRAIT(src, TRAIT_NOBREATH)
+	var/src_old_lung = !get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/src_old_mask = is_mouth_covered()
+	var/target_old_mask = target.is_mouth_covered()
+	var/bvm_equipped = is_holding_item_of_type(/obj/item/bvm)
+	var/cpr_situation_changed = FALSE
+	var/cpr_healing = 5
+	var/cpr_type
+	var/target_cpr_feeling
+	var/target_cpr_reaction
+
+
 
 	do
 		CHECK_DNA_AND_SPECIES(target)
@@ -459,85 +471,84 @@
 		for(var/obj/item/clothing/C in target.get_equipped_items())
 			if((C.body_parts_covered & CHEST) && (C.clothing_flags & THICKMATERIAL)) //check to see if something is obscuring their chest.
 				to_chat(src, span_warning("[target.name]'s chest is obscured, preventing compressions!"))
-			return FALSE
+				return FALSE
 
-		if (target.is_mouth_covered() || !HAS_TRAIT(src, TRAIT_NOBREATH))
-			to_chat(src, span_warning("[target.name]'s mouth is obscured, preventing ventilation!"))
-		else if(src.is_holding_item_of_type(/obj/item/bvm))
-			to_chat(src, span_notice("You ready the bag valve mask for use on [target.name]."))
-			cprstage = 2
-		else if (HAS_TRAIT(src, TRAIT_NOBREATH))
-			to_chat(src, span_notice("You do not breathe, so you cannot perform rescue breaths."))
-		else if (is_mouth_covered())
-			to_chat(src, span_warning("Your mask is obscuring your mouth, preventing rescue breaths!"))
-		else
-			to_chat(src, span_notice("You prepare to perform rescue breaths on [target.name]."))
+		//determines what kind of CPR we're doing on the first loop.
+		if (!cpr_prepped)
+			if (target_old_mask)
+				to_chat(src, span_warning("[target.name]'s mouth is obscured, preventing ventilation!"))
+				cpr_type = "CPR compressions"
+			else if(bvm_equipped)
+				to_chat(src, span_notice("You ready the bag valve mask for use on [target.name]."))
+				cpr_type = "ventilated CPR"
+				target_cpr_feeling = "You feel a strong pump of fresh air"
+				cpr_healing += 5
+			else if (src_old_lung)
+				to_chat(src, span_notice("You have no lungs to breathe with, so you cannot perform rescue breaths."))
+				cpr_type = "CPR compressions"
+			else if (src_old_breath)
+				to_chat(src, span_notice("You do not breathe, so you cannot perform rescue breaths."))
+				cpr_type = "CPR compressions"
+			else if (src_old_mask)
+				to_chat(src, span_warning("Your mask is obscuring your mouth, preventing rescue breaths!"))
+				cpr_type = "CPR compressions"
+			else
+				to_chat(src, span_notice("You prepare to perform rescue breaths on [target.name]."))
+				cpr_type = "CPR"
+				target_cpr_feeling = "You feel a breath of fresh air"
+				cpr_healing += 2
 
-		while (target.is_mouth_covered) //WIP implementing distinct CPR loops
+			if(cpr_type == ("CPR Compressions"))
+				target__cpr_feeling = "You feel blood rushing through your veins"
+				target_cpr_reaction = "... It feels good..."
+			else
+				else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
+					target_cpr_reaction = "... but only the pressure seems to help..."
+					cpr_healing = 5
+				else
+					target_cpr_reaction = "enter your lungs... It feels good..."
 
+			if (HAS_TRAIT(target, TRAIT_NOBREATH))
+				target_cpr_reaction = "... which is a sensation you don't recognise..."
+				cpr_healing = 0
 
-		visible_message(span_notice("[src] is trying to perform CPR on [target.name]!"), \
-					span_notice("You try to perform CPR on [target.name]... Hold still!"))
+		visible_message(span_notice("[src] is trying to perform [cpr_type] on [target.name]!"), \
+					span_notice("You try to perform [cpr_type] on [target.name]... Hold still!"))
 
-		if (!do_after(src, delay = panicking ? CPR_PANIC_SPEED : (3 SECONDS), target = target))
-			to_chat(src, span_warning("You fail to perform CPR on [target.name]!"))
+		//check to see if ventilation ability has changed depending on the type of CPR.
+		if (cpr_type == "CPR")
+			if (src_old_breath != HAS_TRAIT(src, TRAIT_NOBREATH) || src_old_lung != !get_organ_slot(ORGAN_SLOT_LUNGS) || src_old_mask != is_mouth_covered() || target_old_mask != target.is_mouth_covered())
+				cpr_situation_changed = TRUE
+		else if (cpr_type == "ventilated CPR")
+			if (target_old_mask != target.is_mouth_covered())
+				cpr_situation_changed = TRUE
+
+		if (!do_after(src, delay = panicking ? CPR_PREPPED_SPEED : (3 SECONDS), target = target) || cpr_situation_changed)
+			to_chat(src, span_warning("You fail to perform [cpr_type_name] on [target.name]!"))
 			return FALSE
 
 		if (target.health > target.crit_threshold)
 			return FALSE
 
-		visible_message(span_notice("[src] performs CPR on [target.name]!"), span_notice("You perform CPR on [target.name]."))
+		visible_message(span_notice("[src] performs [cpr_type] on [target.name]!"), span_notice("You perform [cpr_type] on [target.name]."))
 		if(HAS_MIND_TRAIT(src, TRAIT_MORBID))
 			add_mood_event("morbid_saved_life", /datum/mood_event/morbid_saved_life)
 		else
 			add_mood_event("saved_life", /datum/mood_event/saved_life)
 		log_combat(src, target, "CPRed")
 
-		switch (cpr_quality)
-			if (0)
-				target.adjustOxyloss(-min(target.getOxyLoss(), 5))
-				visible_message(span_notice("[src] performs compression-only CPR on [target.name]!"), span_notice("You perform compression-only CPR on [target.name]."))
-				to_chat(target, span_unconscious("You feel your blood flow steadily again... It feels good..."))
-			if (1)
-				target.adjustOxyloss(-min(target.getOxyLoss(), 5))
-				visible_message(span_notice("[src] performs CPR on [target.name]!"), span_notice("You perform CPR on [target.name]."))
-				if (HAS_TRAIT(target, TRAIT_NOBREATH))
-					to_chat(target, span_unconscious("You feel a breath of fresh air... which is a sensation you don't recognise..."))
-				else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
-					to_chat(target, span_unconscious("You feel a breath of fresh air... but you don't feel any better..."))
-				else
-					target.adjustOxyLoss(-min(target.getOxyLoss(), 2))
-					to_chat(target, span_unconscious("You feel a breath of fresh air enter your lungs... It feels good..."))
-			if (2)
-				target.adjustOxyloss (-min(target.getOxyLoss(), 5))
-				visible_message(span_notice("[src] performs BVM-assisted CPR on [target.name]!"), span_notice("You perform BVM-assisted CPR on [target.name]."))
-				if (HAS_TRAIT(target, TRAIT_NOBREATH))
-					to_chat(target, span_unconscious("You feel a strong pump of fresh air... which is a sensation you don't recognise..."))
-				else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
-					to_chat(target, span_unconscious("You feel a strong pump of fresh air... but you don't feel any better..."))
-				else
-					target.adjustOxyLoss(-min(target.getOxyLoss(), 5))
-					to_chat(target, span_unconscious("You feel a strong pump of fresh air enter your lungs... It feels good..."))
-			if (3)
-				target.adjustOxyloss (-min(target.getOxyLoss(), 5))
-				visible_message(span_notice("[src] performs oxygen and BVM-assisted CPR on [target.name]!"), span_notice("You perform oxygen and BVM-assisted CPR on [target.name]."))
-				if (HAS_TRAIT(target, TRAIT_NOBREATH))
-					to_chat(target, span_unconscious("You feel a strong pump of pure oxygen... which is a sensation you don't recognise..."))
-				else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
-					to_chat(target, span_unconscious("You feel a strong pump of pure oxygen... but you don't feel any better..."))
-				else
-					target.adjustOxyLoss(-min(target.getOxyLoss(), 5))
-					to_chat(target, span_unconscious("You feel a strong pump of pure oxygen enter your lungs... It feels good..."))
+		target.adjustOxyLoss(-min(target.getOxyLoss(), cpr_healing))
+		to_chat(target, span_unconscious("[target_cpr_feeling][target_cpr_reaction]"))
 
 		if (target.health <= target.crit_threshold)
-			if (!panicking)
-			to_chat(src, span_warning("[target] still isn't up! You try harder!"))
-			panicking = TRUE
+			if (!cpr_prepped)
+			to_chat(src, span_warning("[target.name] still isn't up! You try harder!"))
+			cpr_prepped = TRUE
 		else
-			panicking = FALSE
-	while (panicking)
+			cpr_prepped = FALSE
+	while (cpr_prepped)
 
-#undef CPR_PANIC_SPEED
+#undef CPR_PREPPED_SPEED
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna?.check_mutation(/datum/mutation/human/hulk))
