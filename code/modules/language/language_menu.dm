@@ -104,17 +104,16 @@
 				var/choice = tgui_input_list(user, "Which part do you wish to remove?", "[language_datum]", choices)
 				if(isnull(choice))
 					return
-				var/spoken = FALSE
-				var/understood = FALSE
+				var/removing_flags = NONE
 				switch(choice)
 					if("Only Spoken")
-						spoken = TRUE
+						removing_flags |= SPOKEN_LANGUAGE
 					if("Only Understood")
-						understood = TRUE
+						removing_flags |= UNDERSTOOD_LANGUAGE
 					if("Both")
-						spoken = TRUE
-						understood = TRUE
-				language_holder.remove_language(language_datum, understood, spoken)
+						removing_flags |= ALL
+
+				language_holder.remove_language(language_datum, removing_flags)
 				if(is_admin)
 					message_admins("[key_name_admin(user)] removed the [language_name] language to [key_name_admin(speaker)].")
 					log_admin("[key_name(user)] removed the language [language_name] to [key_name(speaker)].")
