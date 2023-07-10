@@ -6,6 +6,10 @@
 	var/obj/item/item_type
 	/// If TRUE, we delete any previously created items when we cast the spell
 	var/delete_old = TRUE
+	/// If TRUE, we delete the item if it fails to enter the hands
+	var/delete_on_failure = TRUE
+	/// If TRUE, we drop any in-hand item when casting the spell, putting the new item in its place
+	var/drop_inhand = TRUE
 	/// List of weakrefs to items summoned
 	var/list/datum/weakref/item_refs
 
@@ -20,28 +24,28 @@
 
 	return ..()
 
-/datum/action/cooldown/spell/conjure_item/is_valid_target(atom/cast_on)
-	return iscarbon(cast_on)
+//datum/action/cooldown/spell/conjure_item/is_valid_target(atom/cast_on)
+//	return iscarbon(cast_on)
 
 /datum/action/cooldown/spell/conjure_item/cast(mob/living/carbon/cast_on)
 	if(delete_old && LAZYLEN(item_refs))
 		QDEL_LAZYLIST(item_refs)
 
 	var/obj/item/existing_item = cast_on.get_active_held_item()
-	if(existing_item)
+	if(existing_item && drop_inhand)
 		cast_on.dropItemToGround(existing_item)
 
 	var/obj/item/created = make_item()
 	if(QDELETED(created))
 		CRASH("[type] tried to create an item, but failed. It's item type is [item_type].")
 
-	cast_on.put_in_hands(created, del_on_fail = TRUE)
+	cast_on.put_in_hands(created, del_on_fail = delete_on_failure)
 	return ..()
 
 /// Instantiates the item we're conjuring and returns it.
 /// Item is made in nullspace and moved out in cast().
 /datum/action/cooldown/spell/conjure_item/proc/make_item()
-	var/obj/item/made_item = new item_type()
+	var/obj/item/made_item = new item_type(get_turf(owner))
 	LAZYADD(item_refs, WEAKREF(made_item))
 	return made_item
 

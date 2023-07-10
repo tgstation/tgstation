@@ -22,6 +22,8 @@
 	spell_max_level = 1
 
 	delete_old = FALSE
+	delete_on_failure = FALSE
+	drop_inhand = FALSE
 	item_type = /obj/item/storage/box/mime
 	/// How long boxes last before going away
 	var/box_lifespan = 50 SECONDS

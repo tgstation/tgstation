@@ -9,6 +9,8 @@
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 2 SECONDS
 	delete_old = FALSE
+	delete_on_failure = FALSE
+	drop_inhand = FALSE
 	/// Amount of time it takes you to rummage around in there
 	var/cast_time = 3 SECONDS
 	/// True while currently casting the spell

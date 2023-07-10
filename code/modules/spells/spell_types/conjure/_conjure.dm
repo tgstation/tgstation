@@ -19,7 +19,8 @@
 /datum/action/cooldown/spell/conjure/cast(atom/cast_on)
 	. = ..()
 	var/list/to_summon_in = list()
-	for(var/turf/summon_turf in range(summon_radius, cast_on))
+	var/turf/cast_turf = get_turf(cast_on)
+	for(var/turf/summon_turf in range(summon_radius, cast_turf))
 		if(summon_respects_density && summon_turf.density)
 			continue
 		to_summon_in += summon_turf

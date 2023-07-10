@@ -144,7 +144,11 @@
 
 /datum/action/cooldown/spell/charged/beam/cast(atom/cast_on)
 	. = ..()
-	send_beam(cast_on, initial_target, max_beam_bounces)
+	var/castloc = cast_on
+	if(!isturf(cast_on.loc)) // If inside a locker or something
+		castloc = cast_on.loc
+
+	send_beam(castloc, initial_target, max_beam_bounces)
 	initial_target = null
 
 /datum/action/cooldown/spell/charged/beam/proc/send_beam(atom/origin, atom/to_beam, bounces)

@@ -17,7 +17,8 @@
 /datum/action/cooldown/spell/aoe/cast(atom/cast_on)
 	. = ..()
 	// Get every atom around us to our aoe cast on
-	var/list/atom/things_to_cast_on = get_things_to_cast_on(cast_on)
+	var/cast_turf = get_turf(cast_on)
+	var/list/atom/things_to_cast_on = get_things_to_cast_on(cast_turf)
 	// If set, shuffle the list of things we're going to cast on to remove any existing order
 	if(shuffle_targets_list)
 		shuffle_inplace(things_to_cast_on)
