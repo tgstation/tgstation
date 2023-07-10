@@ -383,7 +383,8 @@
 		L = get(computer, /mob/living/silicon)
 
 	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
-		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Reply</a>)"
+		var/topic_insert = signal.data["rigged"] ? "reply_rigged" : "reply"
+		var/reply = "(<a href='byond://?src=[REF(src)];skiprefresh=1;[topic_insert]=[signal.data["ref"]]'>Reply</a>)"
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
@@ -406,21 +407,32 @@
 /// topic call that answers to people pressing "(Reply)" in chat
 /datum/computer_file/program/messenger/Topic(href, href_list)
 	..()
+
 	if(QDELETED(src))
 		return
-	// send an activation message, open the messenger, kill whoever reads this nesting mess
-	if(!computer.enabled)
-		if(!computer.turn_on(usr, open_ui = FALSE))
-			return
-	if(computer.active_program != src)
-		if(!computer.open_program(usr, src, open_ui = FALSE))
-			return
-	if(!href_list["close"] && usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
-		switch(href_list["choice"])
-			if("Message")
-				send_message(usr, list(locate(href_list["target"])))
-			if("mess_us_up")
-				if(!HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
-					var/obj/item/modular_computer/pda/comp = computer
-					comp.explode(usr, from_message_menu = TRUE)
-					return
+
+	if(!computer.enabled && !computer.turn_on(usr, open_ui = FALSE))
+		return
+
+	if(computer.active_program != src && !computer.open_program(usr, src, open_ui = FALSE))
+		return
+
+	if(!issilicon(usr) && !usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
+		return
+
+	var/reply_target = href_list["reply"]
+	if(!isnull(reply_target))
+		var/messenger = locate(reply_target)
+		if(!istype(messenger, /obj/item/modular_computer))
+			return // no, bad cheater
+
+		send_message(usr, list(messenger))
+		return
+
+	if(href_list["reply_rigged"])
+		if(!HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
+			return // rigged messages only explode within X amount of time after being sent
+
+		var/obj/item/modular_computer/pda/comp = computer
+		comp.explode(usr, from_message_menu = TRUE)
+		return
