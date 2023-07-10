@@ -65,7 +65,7 @@
 
 /datum/action/cooldown/spell/pointed/wizard_mimic/cast(mob/living/cast_on)
 	. = ..()
-	var/directions = GLOB.cardinals.Copy()
+	var/list/directions = GLOB.cardinals.Copy()
 	for(var/i in 1 to 3)
 		var/mob/living/basic/paper_wizard/copy/copy = new (get_step(cast_on, pick_n_take(directions)))
 		copy.original = owner

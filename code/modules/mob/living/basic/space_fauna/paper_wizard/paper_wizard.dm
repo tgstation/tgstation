@@ -122,7 +122,7 @@
 
 /mob/living/basic/paper_wizard/copy/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(damage_nearby))
+	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(damage_nearby))
 
 /mob/living/basic/paper_wizard/copy/grant_abilities()
 	return
