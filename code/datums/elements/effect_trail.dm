@@ -13,9 +13,7 @@
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(generate_effect))
-
 	src.chosen_effect = chosen_effect
-
 
 /datum/element/effect_trail/Detach(datum/target)
 	. = ..()
