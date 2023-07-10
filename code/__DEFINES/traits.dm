@@ -138,6 +138,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PULL_BLOCKED "pullblocked"
 /// Abstract condition that prevents movement if being pulled and might be resisted against. Handcuffs and straight jackets, basically.
 #define TRAIT_RESTRAINED "restrained"
+/// Apply this to make a mob not dense, and remove it when you want it to no longer make them undense, other sorces of undesity will still apply. Always define a unique source when adding a new instance of this!
+#define TRAIT_UNDENSE "undense"
 /// Doesn't miss attacks
 #define TRAIT_PERFECT_ATTACKER "perfect_attacker"
 #define TRAIT_INCAPACITATED "incapacitated"
@@ -955,6 +957,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define FROSTMINER_ENRAGE_TRAIT "frostminer-enrage"
 #define NO_GRAVITY_TRAIT "no-gravity"
 #define LEAPING_TRAIT "leaping"
+#define VANISHING_TRAIT "vainishing"
+#define SWOOPING_TRAIT "swooping"
+#define MIMIC_TRAIT "mimic"
+#define SHRUNKEN_TRAIT "shrunken"
 #define LEAPER_BUBBLE_TRAIT "leaper-bubble"
 #define DNA_VAULT_TRAIT "dna_vault"
 /// sticky nodrop sounds like a bad soundcloud rapper's name
@@ -1013,6 +1019,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHOKING_TRAIT "choking_trait"
 /// Trait given by hallucinations
 #define HALLUCINATION_TRAIT "hallucination_trait"
+/// Trait given by simple/basic mob death
+#define BASIC_MOB_DEATH_TRAIT "basic_mob_death"
 
 
 /**

@@ -215,7 +215,7 @@
 	if(z != target.z)
 		return
 	hopping = TRUE
-	set_density(FALSE)
+	ADD_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
 	pass_flags |= PASSMOB
 	notransform = TRUE
 	var/turf/new_turf = locate((target.x + rand(-3,3)),(target.y + rand(-3,3)),target.z)
@@ -228,7 +228,7 @@
 	throw_at(new_turf, max(3,get_dist(src,new_turf)), 1, src, FALSE, callback = CALLBACK(src, PROC_REF(FinishHop)))
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/FinishHop()
-	set_density(TRUE)
+	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
 	notransform = FALSE
 	pass_flags &= ~PASSMOB
 	hopping = FALSE
@@ -245,12 +245,12 @@
 	addtimer(CALLBACK(src, PROC_REF(BellyFlopHop), new_turf), 30)
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/BellyFlopHop(turf/T)
-	set_density(FALSE)
+	ADD_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
 	throw_at(T, get_dist(src,T),1,src, FALSE, callback = CALLBACK(src, PROC_REF(Crush)))
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/Crush()
 	hopping = FALSE
-	set_density(TRUE)
+	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
 	notransform = FALSE
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, TRUE)
 	for(var/mob/living/L in orange(1, src))

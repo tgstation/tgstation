@@ -33,6 +33,23 @@
 
 	var/list/dent_decals
 
+/turf/closed/wall/MouseDrop_T(mob/living/carbon/carbon_mob, mob/user)
+	if(carbon_mob != user || carbon_mob.Is_Leaning == TRUE )
+		return
+	carbon_mob.Is_Leaning = TRUE
+	//carbon_mob.check_fov()
+	var/turf/checked_turf = get_step(carbon_mob, turn(carbon_mob.dir, 180))
+	if(checked_turf == src)
+		switch(carbon_mob.dir)
+			if(SOUTH)
+				carbon_mob.pixel_y += 11
+			if(NORTH)
+				carbon_mob.pixel_y += -11
+			if(WEST)
+				carbon_mob.pixel_x += 11
+			if(EAST)
+				carbon_mob.pixel_x += -11
+
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
 	if(!can_engrave)
