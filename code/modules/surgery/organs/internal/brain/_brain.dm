@@ -40,22 +40,11 @@
 	var/max_skillchip_slots = 5
 
 /obj/item/organ/brain/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
-	var/obj/item/bodypart/head/brain_holder = ownerlimb
 	. = ..()
 	if(!.)
 		return
 
 	name = initial(name)
-
-	// Are we inserting into a new mob from a head?
-	// If yes, we want to quickly steal the brainmob from the head before we do anything else.
-	// This is usually stuff like reattaching dismembered/amputated heads.
-	if(istype(brain_holder) && brain_holder.brainmob)
-		brainmob = brain_holder.brainmob
-		brain_holder.brainmob = null
-		brainmob.container = null
-		brainmob.forceMove(src)
-
 	// Special check for if you're trapped in a body you can't control because it's owned by a ling.
 	if(receiver?.mind?.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)
 		if(brainmob && !(receiver.stat == DEAD || (HAS_TRAIT(receiver, TRAIT_DEATHCOMA))))
@@ -70,36 +59,37 @@
 			receiver.ghostize()
 
 		if(brainmob.mind)
-			brainmob.mind.transfer_to(brain_owner)
+			brainmob.mind.transfer_to(receiver)
 		else
-			brain_owner.key = brainmob.key
+			receiver.key = brainmob.key
 
-		brain_owner.set_suicide(HAS_TRAIT(brainmob, TRAIT_SUICIDED))
+		receiver.set_suicide(HAS_TRAIT(brainmob, TRAIT_SUICIDED))
 
 		QDEL_NULL(brainmob)
 	else
-		brain_owner.set_suicide(suicided)
+		receiver.set_suicide(suicided)
 
 	for(var/datum/brain_trauma/trauma as anything in traumas)
 		if(trauma.owner)
-			if(trauma.owner == brain_owner)
+			if(trauma.owner == receiver)
 				// if we're being special replaced, the trauma is already applied, so this is expected
 				// but if we're not... this is likely a bug, and should be reported
 				if(!special)
-					stack_trace("A brain trauma ([trauma]) is being re-applied to its owning mob ([brain_owner])!")
+					stack_trace("A brain trauma ([trauma]) is being re-applied to its owning mob ([receiver])!")
 				continue
 
-			stack_trace("A brain trauma ([trauma]) is being applied to a new mob ([brain_owner]) when it's owned by someone else ([trauma.owner])!")
+			stack_trace("A brain trauma ([trauma]) is being applied to a new mob ([receiver]) when it's owned by someone else ([trauma.owner])!")
 			continue
 
-		trauma.owner = brain_owner
+		trauma.owner = receiver
 		trauma.on_gain()
 
-/obj/item/organ/brain/Remove(mob/living/carbon/brain_owner, special = FALSE, no_id_transfer = FALSE)
-	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
-	if(!QDELETED(brain_owner) && length(skillchips))
+/obj/item/organ/brain/Remove(mob/living/carbon/organ_owner, special = FALSE, no_id_transfer = FALSE)
+	// Delete skillchips first as parent proc sets owner to null,
+	// and skillchips need to know the brain's owner on try_deactivate_skillchip()
+	if(!QDELETED(organ_owner) && length(skillchips))
 		if(!special)
-			to_chat(brain_owner, span_notice("You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body..."))
+			to_chat(organ_owner, span_notice("You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body..."))
 		for(var/chip in skillchips)
 			var/obj/item/skillchip/skillchip = chip
 			// Run the try_ proc with force = TRUE.
@@ -111,9 +101,36 @@
 		brain_trauma.on_lose(TRUE)
 		brain_trauma.owner = null
 
-	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
-		transfer_identity(brain_owner, silent = special)
-	brain_owner.clear_mood_event("brain_damage")
+	if(!QDELETED(src) && !QDELETED(organ_owner) && !no_id_transfer)
+		transfer_identity(organ_owner, silent = special)
+	organ_owner.clear_mood_event("brain_damage")
+
+/obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/new_bodypart, special = FALSE)
+	. = ..()
+	//bastard
+	if(!istype(new_bodypart, /obj/item/bodypart/head))
+		return
+	var/obj/item/bodypart/head/new_head = new_bodypart
+	new_head.brain = src
+	if(brainmob)
+		brainmob.container = null
+		new_head.brainmob = brainmob
+		brainmob.forceMove(new_head)
+		brainmob.set_stat(DEAD) //not exactly sure why this is necessary, but it was in the code before sooo
+		brainmob = null
+
+/obj/item/organ/brain/remove_from_limb(obj/item/bodypart/bodypart, special)
+	. = ..()
+	//bastard
+	if(!istype(bodypart, /obj/item/bodypart/head))
+		return
+	var/obj/item/bodypart/head/head = bodypart
+	head.brain = null
+	if(head.brainmob)
+		head.brainmob.container = null
+		brainmob = head.brainmob
+		brainmob.forceMove(src)
+		head.brainmob = null
 
 /obj/item/organ/brain/proc/transfer_identity(mob/living/brainiac, silent = FALSE)
 	name = "[brainiac.name]'s [initial(name)]"
@@ -121,6 +138,7 @@
 		return
 	if(!brainiac.mind)
 		return
+
 	brainmob = new(src)
 	brainmob.name = brainiac.real_name
 	brainmob.real_name = brainiac.real_name
@@ -262,12 +280,6 @@
 	if(owner?.mind) //You aren't allowed to return to brains that don't exist
 		owner.mind.set_current(null)
 	return ..()
-
-/obj/item/organ/brain/on_life(seconds_per_tick, times_fired)
-	if(damage >= BRAIN_DAMAGE_DEATH) //rip
-		to_chat(owner, span_userdanger("The last spark of life in your brain fizzles out..."))
-		owner.investigate_log("has been killed by brain damage.", INVESTIGATE_DEATHS)
-		owner.death()
 
 /obj/item/organ/brain/check_damage_thresholds(mob/M)
 	. = ..()
@@ -520,6 +532,10 @@
 		owner.add_mood_event("brain_damage", /datum/mood_event/brain_damage)
 	else
 		owner.clear_mood_event("brain_damage")
+	if(damage >= BRAIN_DAMAGE_DEATH && (owner.stat < DEAD)) //rip
+		to_chat(owner, span_userdanger("The last spark of life in your brain fizzles out..."))
+		owner.investigate_log("has been killed by brain damage.", INVESTIGATE_DEATHS)
+		owner.death()
 
 /// This proc lets the mob's brain decide what bodypart to attack with in an unarmed strike.
 /obj/item/organ/brain/proc/get_attacking_limb(mob/living/carbon/human/target)

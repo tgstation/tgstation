@@ -60,8 +60,48 @@
 	apply_eye_effects()
 	refresh(eye_recipient, inserting = TRUE, call_update = TRUE)
 
-/// Refreshes the visuals of the eyes
-/// If call_update is TRUE, we also will call update_body
+/obj/item/organ/eyes/Remove(mob/living/carbon/eye_owner, special = FALSE)
+	. = ..()
+	if(ishuman(eye_owner))
+		var/mob/living/carbon/human/human_owner = eye_owner
+		if(initial(eye_color_left))
+			human_owner.eye_color_left = old_eye_color_left
+		if(initial(eye_color_right))
+			human_owner.eye_color_right = old_eye_color_right
+		if(native_fov)
+			eye_owner.remove_fov_trait(type)
+		human_owner.update_body()
+
+	// Cure blindness from eye damage
+	eye_owner.cure_blind(EYE_DAMAGE)
+	eye_owner.cure_nearsighted(EYE_DAMAGE)
+	// Eye blind and temp blind go to, even if this is a bit of cheesy way to clear blindness
+	eye_owner.remove_status_effect(/datum/status_effect/eye_blur)
+	eye_owner.remove_status_effect(/datum/status_effect/temporary_blindness)
+	// Then become blind anyways (if not special)
+	if(!special)
+		eye_owner.become_blind(NO_EYES)
+
+	eye_owner.update_tint()
+	eye_owner.update_sight()
+
+/obj/item/organ/eyes/transfer_to_limb(obj/item/bodypart/new_bodypart, special = FALSE)
+	. = ..()
+	//bastard
+	if(!istype(new_bodypart, /obj/item/bodypart/head))
+		return
+	var/obj/item/bodypart/head/new_head = new_bodypart
+	new_head.eyes = src
+
+/obj/item/organ/eyes/remove_from_limb(obj/item/bodypart/new_bodypart, special)
+	. = ..()
+	//bastard
+	if(!istype(new_bodypart, /obj/item/bodypart/head))
+		return
+	var/obj/item/bodypart/head/new_head = new_bodypart
+	new_head.eyes = null
+
+/// Refreshes the visuals of the eyes - If call_update is TRUE, we also will call update_body
 /obj/item/organ/eyes/proc/refresh(mob/living/carbon/eye_owner = owner, inserting = FALSE, call_update = TRUE)
 	owner.update_sight()
 	owner.update_tint()
@@ -88,31 +128,6 @@
 
 	if(call_update)
 		affected_human.update_body()
-
-/obj/item/organ/eyes/Remove(mob/living/carbon/eye_owner, special = FALSE)
-	. = ..()
-	if(ishuman(eye_owner))
-		var/mob/living/carbon/human/human_owner = eye_owner
-		if(initial(eye_color_left))
-			human_owner.eye_color_left = old_eye_color_left
-		if(initial(eye_color_right))
-			human_owner.eye_color_right = old_eye_color_right
-		if(native_fov)
-			eye_owner.remove_fov_trait(type)
-		human_owner.update_body()
-
-	// Cure blindness from eye damage
-	eye_owner.cure_blind(EYE_DAMAGE)
-	eye_owner.cure_nearsighted(EYE_DAMAGE)
-	// Eye blind and temp blind go to, even if this is a bit of cheesy way to clear blindness
-	eye_owner.remove_status_effect(/datum/status_effect/eye_blur)
-	eye_owner.remove_status_effect(/datum/status_effect/temporary_blindness)
-	// Then become blind anyways (if not special)
-	if(!special)
-		eye_owner.become_blind(NO_EYES)
-
-	eye_owner.update_tint()
-	eye_owner.update_sight()
 
 #define OFFSET_X 1
 #define OFFSET_Y 2

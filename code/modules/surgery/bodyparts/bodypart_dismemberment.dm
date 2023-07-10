@@ -198,27 +198,6 @@
 		var/datum/wound/loss/dismembering = new
 		return dismembering.apply_dismember(src, wounding_type)
 
-/obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
-	. = ..()
-	head.brain = src
-	if(brainmob)
-		head.brainmob = brainmob
-		brainmob.forceMove(head)
-		brainmob.set_stat(DEAD)
-		brainmob = null
-
-/obj/item/organ/eyes/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
-	. = ..()
-	head.eyes = src
-
-/obj/item/organ/ears/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
-	. = ..()
-	head.ears = src
-
-/obj/item/organ/tongue/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/bodypart_owner, special = FALSE)
-	. = ..()
-	head.tongue = src
-
 /obj/item/bodypart/chest/drop_limb(special)
 	if(special)
 		return ..()
@@ -264,8 +243,6 @@
 		// Drop all worn head items
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			owner.dropItemToGround(head_item, force = TRUE)
-
-	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay flushed emoji
 
 	// Handle dental implants
 	for(var/datum/action/item_action/hands_free/activate_pill/pill_action in owner.actions)
@@ -378,15 +355,6 @@
 	. = ..()
 	if(!.)
 		return
-
-	if(brain)
-		brain = null
-	if(tongue)
-		tongue = null
-	if(ears)
-		ears = null
-	if(eyes)
-		eyes = null
 
 	if(old_real_name)
 		new_head_owner.real_name = old_real_name

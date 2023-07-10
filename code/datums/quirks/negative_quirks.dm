@@ -698,7 +698,8 @@
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic [slot_string]. \
 	<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
 	old_organ = human_holder.get_organ_slot(organ_slot)
-	if(prosthetic.Insert(human_holder, special = TRUE, drop_if_replaced = FALSE))
+	old_organ?.before_organ_replacement(prosthetic)
+	if(prosthetic.Insert(human_holder, special = TRUE, drop_if_replaced = FALSE) && old_organ)
 		old_organ.moveToNullspace()
 		STOP_PROCESSING(SSobj, old_organ)
 
@@ -708,6 +709,8 @@
 
 /datum/quirk/prosthetic_organ/remove()
 	if(old_organ)
+		var/obj/item/organ/prosthetic = quirk_holder.get_organ_slot(old_organ.slot)
+		prosthetic?.before_organ_replacement(old_organ)
 		old_organ.Insert(quirk_holder, special = TRUE, drop_if_replaced = FALSE)
 	old_organ = null
 
@@ -742,7 +745,9 @@
 		return
 	for(var/organ_slot in possible_organ_slots)
 		var/organ_path = possible_organ_slots[organ_slot]
+		var/obj/item/organ/old_organ = human_holder.get_organ_slot(organ_slot)
 		var/obj/item/organ/new_organ = new organ_path()
+		old_organ?.before_organ_replacement(new_organ)
 		new_organ.Insert(human_holder, special = TRUE, drop_if_replaced = FALSE)
 
 /datum/quirk/tin_man/post_add()

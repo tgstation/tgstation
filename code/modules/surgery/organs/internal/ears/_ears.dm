@@ -28,6 +28,22 @@
 	// Multiplier for both long term and short term ear damage
 	var/damage_multiplier = 1
 
+/obj/item/organ/ears/transfer_to_limb(obj/item/bodypart/new_bodypart, special = FALSE)
+	. = ..()
+	//bastard
+	if(!istype(new_bodypart, /obj/item/bodypart/head))
+		return
+	var/obj/item/bodypart/head/new_head = new_bodypart
+	new_head.ears = src
+
+/obj/item/organ/ears/remove_from_limb(obj/item/bodypart/new_bodypart, special)
+	. = ..()
+	//bastard
+	if(!istype(new_bodypart, /obj/item/bodypart/head))
+		return
+	var/obj/item/bodypart/head/new_head = new_bodypart
+	new_head.ears = null
+
 /obj/item/organ/ears/on_life(seconds_per_tick, times_fired)
 	// only inform when things got worse, needs to happen before we heal
 	if((damage > low_threshold && prev_damage < low_threshold) || (damage > high_threshold && prev_damage < high_threshold))

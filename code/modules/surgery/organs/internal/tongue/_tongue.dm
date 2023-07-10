@@ -52,6 +52,22 @@
 	// this results in tongues with identical possible languages sharing a cached list instance
 	languages_possible = string_list(get_possible_languages())
 
+/obj/item/organ/tongue/transfer_to_limb(obj/item/bodypart/new_bodypart, special = FALSE)
+	. = ..()
+	//bastard
+	if(!istype(new_bodypart, /obj/item/bodypart/head))
+		return
+	var/obj/item/bodypart/head/new_head = new_bodypart
+	new_head.tongue = src
+
+/obj/item/organ/tongue/remove_from_limb(obj/item/bodypart/new_bodypart, special)
+	. = ..()
+	//bastard
+	if(!istype(new_bodypart, /obj/item/bodypart/head))
+		return
+	var/obj/item/bodypart/head/new_head = new_bodypart
+	new_head.tongue = null
+
 /obj/item/organ/tongue/examine(mob/user)
 	. = ..()
 	if(!HAS_MIND_TRAIT(user, TRAIT_ENTRAILS_READER) && !isobserver(user))
