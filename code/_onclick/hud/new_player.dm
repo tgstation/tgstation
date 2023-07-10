@@ -4,8 +4,6 @@
 /datum/hud/new_player
 	///Whether the menu is currently on the client's screen or not
 	var/menu_hud_status = TRUE
-	///List of menu HUD elements that we hide when collapsing the menu
-	var/list/toggleable_elements = list()
 
 /datum/hud/new_player/New(mob/owner)
 	..()
@@ -22,20 +20,17 @@
 		lobbyscreen.SlowInit()
 		static_inventory += lobbyscreen
 		if(!lobbyscreen.always_shown)
-			toggleable_elements += lobbyscreen
+			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
+			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
 		if(istype(lobbyscreen, /atom/movable/screen/lobby/button))
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
 			lobby_button.owner = REF(owner)
-
-/datum/hud/new_player/Destroy()
-	. = ..()
-	QDEL_LIST(toggleable_elements)
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_MENU_LAYER
 	screen_loc = "TOP,CENTER"
-	///Whether this HUD element can be hidden from the client's screen or not
+	///Whether this HUD element can be hidden from the client's "screen" (moved off-screen) or not
 	var/always_shown = FALSE
 
 /atom/movable/screen/lobby/New(loc, datum/hud/our_hud, ...)
@@ -43,9 +38,23 @@
 		hud = our_hud
 	return ..()
 
-/// Run sleeping actions after initialize
+///Run sleeping actions after initialize
 /atom/movable/screen/lobby/proc/SlowInit()
 	return
+
+///Animates moving the button off-screen
+/atom/movable/screen/lobby/proc/collapse_button()
+	SIGNAL_HANDLER
+	//wait for the shutter to come down
+	animate(src, transform = transform, time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
+	//then pull the buttons up with the shutter
+	animate(transform = transform.Translate(x = 0, y = 146), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
+
+///Animates moving the button back into place
+/atom/movable/screen/lobby/proc/expand_button()
+	SIGNAL_HANDLER
+	//the buttons are off-screen, so we sync them up to come down with the shutter
+	animate(src, transform = matrix(), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
 
 /atom/movable/screen/lobby/background
 	icon = 'icons/hud/lobby/background.dmi'
@@ -284,42 +293,6 @@
 /atom/movable/screen/lobby/button/bottom
 	layer = LOBBY_BOTTOM_BUTTON_LAYER
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
-	always_shown = TRUE
-
-/atom/movable/screen/lobby/button/bottom/Initialize(mapload)
-	. = ..()
-	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_LOBBY_COLLAPSED, PROC_REF(collapse_button))
-		RegisterSignal(hud, COMSIG_HUD_LOBBY_EXPANDED, PROC_REF(expand_button))
-
-/atom/movable/screen/lobby/button/bottom/Destroy()
-	. = ..()
-	if(hud)
-		UnregisterSignal(hud, list(COMSIG_HUD_LOBBY_COLLAPSED, COMSIG_HUD_LOBBY_EXPANDED))
-
-///Animates moving the button off-screen, disabling it
-/atom/movable/screen/lobby/button/bottom/proc/collapse_button()
-	SIGNAL_HANDLER
-	//wait for the shutter to come down
-	animate(src, transform = transform, time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
-	//then pull the buttons up with the shutter
-	animate(transform = transform.Translate(x = 0, y = 146), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
-	if(istype(src, /atom/movable/screen/lobby/button/bottom/poll))
-		var/atom/movable/screen/lobby/button/bottom/poll/poll_button = src
-		if(!poll_button.new_poll) //don't deactivate the poll button unless a poll is up (it's already inactive)
-			return
-	set_button_status(FALSE)
-
-///Animates moving the button back into place, enabling it
-/atom/movable/screen/lobby/button/bottom/proc/expand_button()
-	SIGNAL_HANDLER
-	//the buttons are off-screen, so we sync them up to come down with the shutter
-	animate(src, transform = matrix(), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
-	if(istype(src, /atom/movable/screen/lobby/button/bottom/poll))
-		var/atom/movable/screen/lobby/button/bottom/poll/poll_button = src
-		if(!poll_button.new_poll) //don't activate the poll button unless a poll is up
-			return
-	set_button_status(TRUE)
 
 /atom/movable/screen/lobby/button/bottom/settings
 	name = "View Game Preferences"
@@ -437,7 +410,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/mob/dead/new_player/new_player = hud.mymob
+
 	if(!istype(hud, /datum/hud/new_player))
 		return
 	var/datum/hud/new_player/our_hud = hud
@@ -450,18 +423,18 @@
 	//get the shutter object used by our hud
 	var/atom/movable/screen/lobby/shutter/menu_shutter = locate(/atom/movable/screen/lobby/shutter) in hud.static_inventory
 
-	addtimer(CALLBACK(src, PROC_REF(toggle_menu), new_player, our_hud), SHUTTER_MOVEMENT_DURATION + 1, TIMER_CLIENT_TIME) //ever so slightly after the shutter pulls down
 	//animate the shutter
 	menu_shutter.setup_shutter_animation()
 	//animate bottom buttons' movement
 	if(our_hud.menu_hud_status)
-		collapse_buttons()
+		collapse_menu()
 	else
-		expand_buttons()
+		expand_menu()
+	our_hud.menu_hud_status = !our_hud.menu_hud_status
 
 ///Moves the button to the top of the screen, leaving only the screen part in view
-///Sends a signal on the hud for the bottom buttons to listen to
-/atom/movable/screen/lobby/button/collapse/proc/collapse_buttons()
+///Sends a signal on the hud for the menu hud elements to listen to
+/atom/movable/screen/lobby/button/collapse/proc/collapse_menu()
 	SEND_SIGNAL(hud, COMSIG_HUD_LOBBY_COLLAPSED)
 	//wait for the shutter to come down
 	animate(src, transform = matrix(), time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
@@ -469,18 +442,10 @@
 	animate(transform = transform.Translate(x = 0, y = 134), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
 
 ///Extends the button back to its usual spot
-///Sends a signal on the hud for the bottom buttons to listen to
-/atom/movable/screen/lobby/button/collapse/proc/expand_buttons()
+///Sends a signal on the hud for the menu hud elements to listen to
+/atom/movable/screen/lobby/button/collapse/proc/expand_menu()
 	SEND_SIGNAL(hud, COMSIG_HUD_LOBBY_EXPANDED)
 	animate(src, transform = matrix(), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
-
-///Disables/enables menu buttons on the client's screen
-/atom/movable/screen/lobby/button/collapse/proc/toggle_menu(mob/dead/new_player/new_player, datum/hud/new_player/our_hud)
-	if(our_hud.menu_hud_status)
-		new_player.client.screen -= our_hud.toggleable_elements
-	else
-		new_player.client.screen += our_hud.toggleable_elements
-	our_hud.menu_hud_status = !our_hud.menu_hud_status
 
 /atom/movable/screen/lobby/shutter
 	icon = 'icons/hud/lobby/shutter.dmi'
