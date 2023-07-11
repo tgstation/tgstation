@@ -18,10 +18,10 @@
 		if(ispath(part_type, /obj/item/stock_parts/cell))
 			switch(part_type)
 				if(/obj/item/stock_parts/cell)
-				if(/obj/item/stock_parts/cell/high/empty)
-				if(/obj/item/stock_parts/cell/super/empty)
-				if(/obj/item/stock_parts/cell/hyper/empty)
-				if(/obj/item/stock_parts/cell/bluespace/empty)
+				if(/obj/item/stock_parts/cell/high)
+				if(/obj/item/stock_parts/cell/super)
+				if(/obj/item/stock_parts/cell/hyper)
+				if(/obj/item/stock_parts/cell/bluespace)
 				else
 					continue
 
