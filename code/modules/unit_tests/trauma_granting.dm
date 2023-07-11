@@ -15,7 +15,7 @@
 	trauma_blacklist += typesof(/datum/brain_trauma/severe/split_personality)
 	// Requires another player, sleeps in gain()
 	trauma_blacklist += typesof(/datum/brain_trauma/special/imaginary_friend)
-	// Requires a obession target
+	// Requires a obsession target
 	trauma_blacklist += typesof(/datum/brain_trauma/special/obsessed)
 
 	for(var/datum/brain_trauma/trauma as anything in typesof(/datum/brain_trauma) - trauma_blacklist)
