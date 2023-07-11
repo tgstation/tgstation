@@ -257,7 +257,7 @@
 	desc = "~J'I'CE!~"
 	icon_state = "shamblerseldritch"
 	volume = 40
-	list_reagents = list(/datum/reagent/consumable/shamblers = 30, /datum/reagent/eldritch = 10)
+	list_reagents = list(/datum/reagent/consumable/shamblers = 30, /datum/reagent/eldritch = 3)
 	drink_type = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/cup/soda_cans/grey_bull
