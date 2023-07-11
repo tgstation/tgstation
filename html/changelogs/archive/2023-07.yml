@@ -60,3 +60,14 @@
   - rscadd: pixelshifting - use B to slide your sprite around
   - rscadd: pixelshifting far enough stops you from being an obstacle
   - config: changed immobilizing button from B to Ctrl
+2023-07-11:
+  CliffracerX:
+  - rscadd: some mossmed drip, as a treat
+  - rscadd: Akula, frigid sharks from Ceres of the Sol system
+  - rscadd: Talon IV Moths, a sturdier, digi variant of moths
+  - bugfix: monkey tails are no longer haunted
+  - bugfix: paramedic labcoat, coroner stuff work now
+  - balance: regular Mute no longer mutes emote sounds
+  - image: you can recolor moth parts with matrices
+  - image: lizards and slugcats have colorable underbellies
+  - code_imp: tricolor prefs code exists now
