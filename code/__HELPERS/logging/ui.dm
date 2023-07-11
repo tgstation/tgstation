@@ -9,7 +9,7 @@
 	message,
 	context,
 	datum/tgui_window/window,
-	datum/src_object
+	datum/src_object,
 )
 
 	var/entry = ""
