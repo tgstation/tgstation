@@ -151,6 +151,28 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_too_late = "Nothing, huh? Looks like the Tide's coming aboard!"
 	response_not_enough = "You trying to cheat us? That's fine, we'll take your station as collateral."
 
+///Agents from the space I.R.S. heavily armed to stea- I mean, collect the station's tax dues
+/datum/pirate_gang/irs
+	name = "Space IRS"
+
+	is_heavy_threat = TRUE
+	ship_template_id = "irs"
+	ship_name_pool = "irs_names"
+
+	threat_title = "Missing Tax Dues"
+	threat_content = "%SHIPNAME Here, We noticed that your station hasn't been paying your taxes.. \
+		Let's rectify that, Your missing tax dues amounts to %PAYOFF \
+		We highly recommend paying your taxes stat, \
+		we don't need to send a team to your station to resolve the situation do we?"
+	arrival_announcement = "This is the tax conflict resolution team, prepare for your assets to be liquidated and be charged with tax fraud, \
+		if you fail to pay your taxes in time."
+	possible_answers = list("You know, I was just about to pay that. Thanks for the reminder!","I don't care WHO the IRS sends, I'm not paying for my taxes!")
+
+	response_received = "Payment received, We salute you for being law-abiding tax-paying citizens"
+	response_too_late = "Too late, A team has already been sent out resolve this matter directly."
+	response_not_enough = "You filed your taxes incorrectly, A team has been sent to assist in liquidating assets and arrest you for tax fraud. \
+		Nothing personel kid."
+
 //Mutated Ethereals who have adopted bluespace technology in all the wrong ways.
 /datum/pirate_gang/lustrous
 	name = "Geode Scavengers"
