@@ -22,12 +22,10 @@
 		if(trauma == initial(trauma.abstract_type))
 			continue
 
-		dummy.gain_trauma(trauma)
-		if(!dummy.has_trauma_type(trauma))
-			TEST_FAIL("Brain trauma [trauma] failed to grant to dummy")
-			continue
+		test_trauma(dummy, trauma)
 
-		dummy.cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
-		if(dummy.has_trauma_type(trauma))
-			TEST_FAIL("Brain trauma [trauma] failed to cure from dummy")
-			continue
+/datum/unit_test/trauma_granting/proc/test_trauma(mob/living/carbon/human/dummy, trauma)
+	dummy.gain_trauma(trauma)
+	TEST_ASSERT(!dummy.has_trauma_type(trauma), "Brain trauma [trauma] failed to grant to dummy")
+	dummy.cure_trauma_type(trauma, TRAUMA_RESILIENCE_ABSOLUTE)
+	TEST_ASSERT(dummy.has_trauma_type(trauma), "Brain trauma [trauma] failed to cure from dummy")
