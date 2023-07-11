@@ -206,7 +206,6 @@
 		if(healing > 0)
 			if(iscarbon(owner))
 				var/mob/living/carbon/carbon_owner = owner
-				// gives a boost to internal organs healing
 				for(var/obj/item/organ/target_organ as anything in carbon_owner.organs)
 					// no healing boost for robotic or dying organs
 					if(IS_ROBOTIC_ORGAN(target_organ) || !target_organ.damage || target_organ.organ_flags & ORGAN_FAILING)
