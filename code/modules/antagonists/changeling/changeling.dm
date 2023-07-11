@@ -123,7 +123,7 @@
 	create_initial_profile()
 	if(give_objectives)
 		forge_objectives()
-	owner.current.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue. We are able to transform our body after all.
+	owner.current.get_language_holder().omnitongue = TRUE
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_alert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	return ..()
 
@@ -229,11 +229,11 @@
 
 /*
  * Instantiate all the default actions of a ling (transform, dna sting, absorb, etc)
- * Any Changeling action with `dna_cost == 0` will be added here automatically
+ * Any Changeling action with dna_cost = CHANGELING_POWER_INNATE will be added here automatically
  */
 /datum/antagonist/changeling/proc/create_innate_actions()
 	for(var/datum/action/changeling/path as anything in all_powers)
-		if(initial(path.dna_cost) != 0)
+		if(initial(path.dna_cost) != CHANGELING_POWER_INNATE)
 			continue
 
 		var/datum/action/changeling/innate_ability = new path()
@@ -848,7 +848,7 @@
 			flesh_id.hud_icon = chosen_profile.id_icon
 
 		if(equip)
-			user.equip_to_slot_or_del(new_flesh_item, slot2slot[slot])
+			user.equip_to_slot_or_del(new_flesh_item, slot2slot[slot], indirect_action = TRUE)
 			if(!QDELETED(new_flesh_item))
 				ADD_TRAIT(new_flesh_item, TRAIT_NODROP, CHANGELING_TRAIT)
 

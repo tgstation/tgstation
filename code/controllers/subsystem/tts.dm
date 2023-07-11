@@ -116,7 +116,7 @@ SUBSYSTEM_DEF(tts)
 		sound_volume = sound_volume * (volume_to_play_at / 100)
 		var/datum/language_holder/holder = listening_mob.get_language_holder()
 		var/audio_to_use = use_blips ? audio_blips : audio
-		if(!holder.has_language(language, spoken = FALSE))
+		if(!holder.has_language(language))
 			continue
 		if(get_dist(listening_mob, turf_source) <= range)
 			listening_mob.playsound_local(

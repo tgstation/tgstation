@@ -233,7 +233,7 @@ Difficulty: Extremely Hard
 /obj/item/resurrection_crystal
 	name = "resurrection crystal"
 	desc = "When used by anything holding it, this crystal gives them a second chance at life if they die."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "demonic_crystal"
 
 /obj/item/resurrection_crystal/attack_self(mob/living/user)

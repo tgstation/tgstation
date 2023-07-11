@@ -41,7 +41,7 @@
 		return
 
 	if(victim.reagents)
-		if(victim.reagents.has_reagent(/datum/reagent/medicine/spaceacillin))
+		if(HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
 			sanitization += 0.9
 		if(victim.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine/))
 			sanitization += 0.9
@@ -128,7 +128,7 @@
 						var/datum/brain_trauma/severe/paralysis/sepsis = new (limb.body_zone)
 						victim.gain_trauma(sepsis)
 
-/datum/wound/burn/get_examine_description(mob/user)
+/datum/wound/burn/get_wound_description(mob/user)
 	if(strikes_to_lose_limb <= 0)
 		return span_deadsay("<B>[victim.p_their(TRUE)] [limb.plaintext_zone] has locked up completely and is non-functional.</B>")
 
@@ -162,9 +162,9 @@
 	return "<B>[condition.Join()]</B>"
 
 /datum/wound/burn/get_scanner_description(mob/user)
-	if(strikes_to_lose_limb == 0)
+	if(strikes_to_lose_limb <= 0) // Unclear if it can go below 0, best to not take the chance
 		var/oopsie = "Type: [name]\nSeverity: [severity_text()]"
-		oopsie += "<div class='ml-3'>Infection Level: [span_deadsay("The body part has suffered complete sepsis and must be removed. Amputate or augment limb immediately.")]</div>"
+		oopsie += "<div class='ml-3'>Infection Level: [span_deadsay("The body part has suffered complete sepsis and must be removed. Amputate or augment limb immediately, or place the patient in a cryotube.")]</div>"
 		return oopsie
 
 	. = ..()
@@ -274,7 +274,7 @@
 /datum/wound/burn/severe
 	name = "Third Degree Burns"
 	desc = "Patient is suffering extreme burns with full skin penetration, creating serious risk of infection and greatly reduced limb integrity."
-	treat_text = "Recommended immediate disinfection and excision of any infected skin, followed by bandaging and ointment."
+	treat_text = "Recommended immediate disinfection and excision of any infected skin, followed by bandaging and ointment. If the limb has locked up, it must be amputated, augmented or treated with cryogenics."
 	examine_desc = "appears seriously charred, with aggressive red splotches"
 	occur_text = "chars rapidly, exposing ruined tissue and spreading angry red burns"
 	severity = WOUND_SEVERITY_SEVERE
@@ -290,7 +290,7 @@
 /datum/wound/burn/critical
 	name = "Catastrophic Burns"
 	desc = "Patient is suffering near complete loss of tissue and significantly charred muscle and bone, creating life-threatening risk of infection and negligible limb integrity."
-	treat_text = "Immediate surgical debriding of any infected skin, followed by potent tissue regeneration formula and bandaging."
+	treat_text = "Immediate surgical debriding of any infected skin, followed by potent tissue regeneration formula and bandaging. If the limb has locked up, it must be amputated, augmented or treated with cryogenics."
 	examine_desc = "is a ruined mess of blanched bone, melted fat, and charred tissue"
 	occur_text = "vaporizes as flesh, bone, and fat melt together in a horrifying mess"
 	severity = WOUND_SEVERITY_CRITICAL

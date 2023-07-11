@@ -154,10 +154,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!try_speak(original_message, ignore_spam, forced, filterproof))
 		return
 
-	language = message_mods[LANGUAGE_EXTENSION]
-
-	if(!language)
-		language = get_selected_language()
+	language = message_mods[LANGUAGE_EXTENSION] || get_selected_language()
 
 	var/succumbed = FALSE
 
@@ -288,7 +285,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
 	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
-		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods, FALSE, TRUE)
+		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods, TRUE)
 
 		if(speaker != src)
 			if(!radio_freq) //I'm about 90% sure there's a way to make this less cluttered
@@ -417,7 +414,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return FALSE
 
 	if(!can_speak())
-		if(HAS_TRAIT(src, TRAIT_MIMING))
+		if(HAS_MIND_TRAIT(src, TRAIT_MIMING))
 			to_chat(src, span_green("Your vow of silence prevents you from speaking!"))
 		else
 			to_chat(src, span_warning("You find yourself unable to speak!"))
@@ -426,7 +423,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	return TRUE
 
 /mob/living/can_speak(allow_mimes = FALSE)
-	if(!allow_mimes && HAS_TRAIT(src, TRAIT_MIMING))
+	if(!allow_mimes && HAS_MIND_TRAIT(src, TRAIT_MIMING))
 		return FALSE
 
 	if(HAS_TRAIT(src, TRAIT_MUTE))
@@ -554,8 +551,3 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!message)
 		return
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced, filterproof)
-
-/mob/living/get_language_holder(get_minds = TRUE)
-	if(get_minds && mind)
-		return mind.get_language_holder()
-	. = ..()

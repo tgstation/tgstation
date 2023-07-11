@@ -1191,6 +1191,34 @@
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
+"up" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table/reinforced,
+/obj/structure/closet/mini_fridge/grimy{
+	anchored = 1;
+	pixel_y = 6
+	},
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/booze{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/effect/spawner/random/food_or_drink/booze{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets_single,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/item/bodypart/head,
+/obj/machinery/chem_dispenser/drinks/beer{
+	pixel_y = 32
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/infested_frigate)
 "uC" = (
 /obj/effect/turf_decal,
 /obj/machinery/recharge_station{
@@ -1387,6 +1415,26 @@
 	faction = list("syndicate","xenomorph")
 	},
 /turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/infested_frigate)
+"xd" = (
+/obj/effect/turf_decal{
+	icon_state = "warningline_white";
+	dir = 1
+	},
+/obj/item/storage/toolbox/ammobox/a762{
+	pixel_y = 16;
+	pixel_x = 5
+	},
+/obj/item/storage/toolbox/ammobox/a762{
+	pixel_y = 8;
+	pixel_x = 3
+	},
+/obj/item/storage/box/handcuffs{
+	pixel_y = 2;
+	pixel_x = -8
+	},
+/obj/structure/table/glass/plasmaglass,
+/turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "xi" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -1657,34 +1705,6 @@
 /obj/item/ammo_casing/spent,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/infested_frigate)
-"Ar" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table/reinforced,
-/obj/structure/closet/mini_fridge{
-	anchored = 1;
-	pixel_y = 6
-	},
-/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
-/obj/effect/spawner/random/food_or_drink/booze{
-	pixel_x = 4;
-	pixel_y = 6
-	},
-/obj/effect/spawner/random/food_or_drink/booze{
-	pixel_x = 4;
-	pixel_y = 6
-	},
-/obj/effect/spawner/random/food_or_drink/donkpockets_single,
-/obj/effect/spawner/random/food_or_drink/booze,
-/obj/effect/spawner/random/food_or_drink/booze,
-/obj/item/bodypart/head,
-/obj/machinery/chem_dispenser/drinks/beer{
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/infested_frigate)
 "AH" = (
 /obj/structure/cable,
@@ -2137,26 +2157,6 @@
 /obj/structure/cable,
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/infested_frigate)
-"IO" = (
-/obj/effect/turf_decal{
-	icon_state = "warningline_white";
-	dir = 1
-	},
-/obj/item/storage/toolbox/a762{
-	pixel_y = 16;
-	pixel_x = 5
-	},
-/obj/item/storage/toolbox/a762{
-	pixel_y = 8;
-	pixel_x = 3
-	},
-/obj/item/storage/box/handcuffs{
-	pixel_y = 2;
-	pixel_x = -8
-	},
-/obj/structure/table/glass/plasmaglass,
-/turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "IS" = (
 /obj/item/ammo_casing/spent,
@@ -3429,7 +3429,7 @@ df
 DR
 Hx
 LF
-Ar
+up
 kT
 wP
 fl
@@ -3967,7 +3967,7 @@ bD
 wP
 zV
 kS
-IO
+xd
 wP
 wu
 wP

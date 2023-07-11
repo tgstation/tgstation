@@ -488,11 +488,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			old_species.on_species_loss(src, new_race, pref_load)
 
 		dna.species.on_species_gain(src, old_species, pref_load)
-		if(ishuman(src))
-			qdel(language_holder)
-			var/species_holder = initial(mrace.species_language_holder)
-			language_holder = new species_holder(src)
-		update_atom_languages()
 		log_mob_tag("TAG: [tag] SPECIES: [key_name(src)] \[[mrace]\]")
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
@@ -586,10 +581,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	..()
 	var/structure = dna.unique_identity
 	skin_tone = GLOB.skin_tones[deconstruct_block(get_uni_identity_block(structure, DNA_SKIN_TONE_BLOCK), GLOB.skin_tones.len)]
-	set_haircolor(sanitize_hexcolor(get_uni_identity_block(structure, DNA_HAIR_COLOR_BLOCK)), update = FALSE)
-	set_facial_haircolor(sanitize_hexcolor(get_uni_identity_block(structure, DNA_FACIAL_HAIR_COLOR_BLOCK)), update = FALSE)
 	eye_color_left = sanitize_hexcolor(get_uni_identity_block(structure, DNA_EYE_COLOR_LEFT_BLOCK))
 	eye_color_right = sanitize_hexcolor(get_uni_identity_block(structure, DNA_EYE_COLOR_RIGHT_BLOCK))
+	set_haircolor(sanitize_hexcolor(get_uni_identity_block(structure, DNA_HAIR_COLOR_BLOCK)), update = FALSE)
+	set_facial_haircolor(sanitize_hexcolor(get_uni_identity_block(structure, DNA_FACIAL_HAIR_COLOR_BLOCK)), update = FALSE)
 	if(HAS_TRAIT(src, TRAIT_SHAVED))
 		set_facial_hairstyle("Shaved", update = FALSE)
 	else
@@ -640,10 +635,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		external_organ.mutate_feature(features, src)
 
 	if(icon_update)
-		dna.species.handle_body(src) // We want 'update_body_parts(update_limb_data = TRUE)' to be called only if mutcolor_update is TRUE, so no 'update_body()' here.
-		update_body_parts() //We can call this because it doesnt refresh limb data, and it handles hair and such.
 		if(mutcolor_update)
-			update_body_parts(update_limb_data = TRUE)
+			update_body(is_creating = TRUE)
+		else
+			update_body()
 		if(mutations_overlay_update)
 			update_mutations_overlay()
 
@@ -876,7 +871,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			if(2)
 				investigate_log("has been transformed into a statue by DNA instability.", INVESTIGATE_DEATHS)
 				death()
-				petrify(INFINITY)
+				petrify(statue_timer = INFINITY, save_brain = FALSE)
 				ghostize(FALSE)
 			if(3)
 				if(prob(95))

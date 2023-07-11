@@ -1,6 +1,6 @@
 
 /obj/item/gun/ballistic/bow
-	icon = 'icons/obj/weapons/guns/bows/bows.dmi'
+	icon = 'icons/obj/weapons/bows/bows.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/bows_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bows_righthand.dmi'
 	name = "bow"
