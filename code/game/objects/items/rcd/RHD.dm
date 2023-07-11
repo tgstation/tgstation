@@ -179,7 +179,7 @@
 			return FALSE
 
 		var/list/materials = list()
-		materials[GET_MATERIAL_REF(/datum/material/iron)] = 500
+		materials[GET_MATERIAL_REF(/datum/material/iron)] = QUARTER_SHEET_MATERIAL_AMOUNT
 		silo_mats.mat_container.use_materials(materials, amount)
 		silo_mats.silo_log(src, "consume", -amount, "build", materials)
 		return TRUE
