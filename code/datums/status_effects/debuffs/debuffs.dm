@@ -1,3 +1,6 @@
+#define HEALING_SLEEP_DEFAULT 0.2
+#define HEALING_SLEEP_ORGAN_MULTIPLIER 5
+
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
@@ -154,8 +157,6 @@
 	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	tick_interval = initial(tick_interval)
 
-#define HEALING_SLEEP_DEFAULT 0.2
-
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
@@ -203,14 +204,18 @@
 			healing += 0.1
 
 		if(healing > 0)
-			// gives a boost to internal organs healing
-			for(var/obj/item/organ/target_organ as anything in owner.organs)
-				// no healing boost for robotic or dying organs
-				if(IS_ROBOTIC_ORGAN(target_organ) || !target_organ.damage || target_organ.organ_flags & ORGAN_FAILING)
-					continue
+			if(iscarbon(owner))
+				var/mob/living/carbon/carbon_owner = owner
+				// gives a boost to internal organs healing
+				for(var/obj/item/organ/target_organ as anything in carbon_owner.organs)
+					// no healing boost for robotic or dying organs
+					if(IS_ROBOTIC_ORGAN(target_organ) || !target_organ.damage || target_organ.organ_flags & ORGAN_FAILING)
+						continue
 
-				var/healing_bonus = target_organ.healing_factor * healing
-				target_organ.apply_organ_damage(-healing_bonus * target_organ.maxHealth)
+					// organ regeneration is very low so we crank up the healing rate to give a good bonus
+					var/healing_bonus = target_organ.healing_factor * healing * HEALING_SLEEP_ORGAN_MULTIPLIER
+					target_organ.apply_organ_damage(-healing_bonus * target_organ.maxHealth)
+					to_chat(carbon_owner, span_notice("[healing_bonus] is applied to [target_organ], the damage is now [target_organ.damage]"))
 
 			if(health_ratio > 0.8) // only heals minor physical damage
 				owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
@@ -226,8 +231,6 @@
 
 	if(prob(2) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
-
-#undef HEALING_SLEEP_DEFAULT
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -929,3 +932,6 @@
 
 /datum/status_effect/teleport_madness/tick()
 	dump_in_space(owner)
+
+#undef HEALING_SLEEP_DEFAULT
+#undef HEALING_SLEEP_ORGAN_MULTIPLIER
