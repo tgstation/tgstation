@@ -19,6 +19,11 @@
 	name = "Virtual Domain: Generated"
 	icon_state = "bit_gen"
 
+/area/station/virtual_domain/ruin
+	name = "Virtual Ruin"
+	icon_state = "bit_ruin"
+	requires_power = FALSE
+
 /area/station/virtual_domain/safehouse
 	name = "Safe House"
 	icon_state = "bit_safe"
@@ -32,3 +37,4 @@
 /area/station/virtual_domain/safehouse/send
 	name = "Transfer Point"
 	icon_state = "bit_send"
+

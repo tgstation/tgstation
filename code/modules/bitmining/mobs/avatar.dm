@@ -10,8 +10,23 @@
 /mob/living/carbon/human/avatar/proc/connect(mob/living/carbon/human/pilot)
 	src.pilot = pilot
 	RegisterSignal(src, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damage))
-	RegisterSignals(src, list(COMSIG_LIVING_DEATH, COMSIG_QSERVER_DISCONNECT), PROC_REF(disconnect), TRUE)
-	RegisterSignals(pilot, list(COMSIG_LIVING_STATUS_UNCONSCIOUS, COMSIG_LIVING_DEATH), PROC_REF(disconnect))
+	RegisterSignals(src, list(
+		COMSIG_LIVING_DEATH,
+		COMSIG_LIVING_GIBBED,
+		COMSIG_QSERVER_DISCONNECT
+		),
+		PROC_REF(disconnect),
+		TRUE
+	)
+	RegisterSignals(pilot, list(
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_MOVABLE_UNBUCKLE,
+		COMSIG_LIVING_STATUS_UNCONSCIOUS,
+		COMSIG_LIVING_DEATH
+		),
+		PROC_REF(disconnect),
+		TRUE
+	)
 
 /// Disconnects the avatar and returns the mind to the pilot.
 /mob/living/carbon/human/avatar/proc/disconnect(forced = FALSE)
@@ -23,18 +38,21 @@
 
 	playsound_local(src, 'sound/magic/blind.ogg', 30, 2)
 	mind.transfer_to(pilot)
-	pilot.flash_act()
 	pilot.Paralyze(3)
 
 	UnregisterSignal(src, COMSIG_MOB_APPLY_DAMAGE)
 	UnregisterSignal(src, COMSIG_LIVING_DEATH)
+	UnregisterSignal(src, COMSIG_LIVING_GIBBED)
 	UnregisterSignal(src, COMSIG_QSERVER_DISCONNECT)
 	UnregisterSignal(pilot, COMSIG_LIVING_STATUS_UNCONSCIOUS)
 	UnregisterSignal(pilot, COMSIG_LIVING_DEATH)
+	UnregisterSignal(pilot, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(pilot, COMSIG_MOVABLE_UNBUCKLE)
 
 	if(!forced || pilot.stat == DEAD)
 		return
 
+	pilot.flash_act()
 	pilot.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
 	INVOKE_ASYNC(pilot, PROC_REF(emote), "scream")
 	pilot.do_jitter_animation(100)

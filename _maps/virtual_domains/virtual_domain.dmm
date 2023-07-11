@@ -1,18 +1,18 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/genturf,
+/turf/closed/indestructible/binary,
 /area/station/virtual_domain/generated)
 "b" = (
 /turf/closed/indestructible/binary,
 /area/space)
 "h" = (
-/obj/structure/chair/wood,
+/obj/machinery/light/small/blacklight/directional/west,
 /turf/open/indestructible/hotelwood,
 /area/station/virtual_domain/safehouse)
 "w" = (
-/obj/structure/table/wood,
-/turf/open/indestructible/hotelwood,
-/area/station/virtual_domain/safehouse)
+/obj/machinery/light/small/blacklight/directional/east,
+/turf/open/floor/carpet/green,
+/area/station/virtual_domain/safehouse/send)
 "x" = (
 /turf/open/genturf,
 /area/space)
@@ -34,13 +34,16 @@
 /turf/open/indestructible/hotelwood,
 /area/station/virtual_domain/safehouse)
 "J" = (
-/turf/open/indestructible/hotelwood,
+/obj/structure/railing,
+/turf/open/floor/carpet/green,
 /area/station/virtual_domain/safehouse/send)
-"T" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
+"P" = (
+/obj/structure/sign/poster/random/directional/east,
 /turf/open/indestructible/hotelwood,
 /area/station/virtual_domain/safehouse)
+"T" = (
+/turf/open/floor/carpet/green,
+/area/station/virtual_domain/safehouse/send)
 "Z" = (
 /obj/machinery/light/floor,
 /turf/open/indestructible/hotelwood,
@@ -121,7 +124,7 @@ b
 b
 b
 b
-b
+a
 "}
 (2,1,1) = {"
 b
@@ -197,7 +200,7 @@ x
 x
 x
 x
-a
+x
 b
 "}
 (3,1,1) = {"
@@ -2811,7 +2814,7 @@ x
 x
 I
 h
-T
+z
 z
 z
 I
@@ -2887,8 +2890,8 @@ x
 x
 x
 y
-h
-w
+z
+z
 Z
 D
 y
@@ -3041,7 +3044,7 @@ x
 x
 x
 y
-J
+T
 J
 Z
 D
@@ -3118,9 +3121,9 @@ x
 x
 x
 I
+w
 J
-J
-z
+P
 z
 I
 x

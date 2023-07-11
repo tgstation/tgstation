@@ -4,7 +4,7 @@
  */
 /obj/machinery/computer/quantum_console
 	name = "quantum console"
-	icon_screen = "pod_on"
+	icon_screen = "teleport"
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_MINING)
 	/// The server this console is connected to.

@@ -1,4 +1,4 @@
-#define BOTTOM_LEFT 1
+#define BOTTOM_LEFT 1 // There should only ever be one turf, but this is a list
 
 /**
  * ### Quantum Server
@@ -11,23 +11,20 @@
 	icon_state = "hub"
 	desc = "A hulking computational machine designed to fabricate virtual domains."
 	density = TRUE
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 3
-	/// The area type for safehouse surroundting tiles
-	var/area/domain_biome_area = /area/station/virtual_domain/outside
-	/// The area type to spawn a presets into
-	var/area/domain_generation_area = /area/station/virtual_domain/generated
-	/// The loaded domain preset
+	/// The area type used as a reference to load templates
+	var/area/preset_load_area = /area/station/virtual_domain/generated
+	/// The loaded template
 	var/datum/map_template/virtual_domain/generated_domain
 	/// The generated base level to spawn other presets into
 	var/datum/space_level/vdom
+	/// Currently loading a domain. Prevents multiple domains.
+	var/loading_domain = FALSE
 	/// Current plugged in users
 	var/list/datum/weakref/occupant_refs = list()
 	/// The connected console
 	var/obj/machinery/computer/quantum_console/console
 	/// Turfs to replace with the generated domain
 	var/turf/available_turfs = list()
-	/// "Safe" turfs surrounding the safehouse
-	var/turf/biome_turfs = list()
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -64,6 +61,10 @@
 	balloon_alert(user, "initializing virtual domain...")
 	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
 
+	if(loading_domain)
+		balloon_alert(user, "error: please wait...")
+		return FALSE
+
 	var/datum/map_template/virtual_domain/base_zone = new()
 	var/datum/space_level/loaded_map = base_zone.load_new_z()
 	if(!loaded_map)
@@ -73,9 +74,7 @@
 
 	vdom = loaded_map
 	if(!length(available_turfs))
-		available_turfs = get_area_turfs(domain_generation_area, vdom.z_value)
-	if(!length(biome_turfs))
-		biome_turfs = get_area_turfs(domain_biome_area, vdom.z_value)
+		available_turfs = get_area_turfs(preset_load_area, vdom.z_value)
 
 	return TRUE
 
@@ -104,17 +103,13 @@
 	if(!vdom)
 		generate_virtual_domain(user)
 
-	for(var/turf/open/to_replace in available_turfs)
-		to_replace.ChangeTurf(to_generate.biome_turf)
-
-	to_generate.load(available_turfs[BOTTOM_LEFT])
-
-	for(var/turf/open/to_replace in biome_turfs)
-		to_replace.ChangeTurf(to_generate.biome_turf)
+	var/turf/BL = available_turfs[BOTTOM_LEFT]
+	to_generate.load(BL)
 
 	generated_domain = to_generate
 	balloon_alert(user, "virtual domain generated.")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
+	loading_domain = FALSE
 
 	return TRUE
 
@@ -156,7 +151,7 @@
 	if(!generated_domain)
 		return
 
-	SEND_SIGNAL(COMSIG_QSERVER_DISCONNECT)
+	SEND_SIGNAL(src, COMSIG_QSERVER_DISCONNECT)
 
 	qdel(generated_domain)
 

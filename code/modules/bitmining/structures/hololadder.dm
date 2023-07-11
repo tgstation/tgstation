@@ -29,23 +29,23 @@
 		balloon_alert(user, "not connected!")
 		return
 
-	var/mob/living/carbon/human/avatar/player = user
-	if(!isavatar(player))
+	var/mob/living/carbon/human/avatar/this_avatar = user
+	if(!isavatar(this_avatar))
 		balloon_alert(user, "improper serial port!")
 		return
 
-	var/mob/living/carbon/human/neo = player.owner
-	if(!neo)
+	var/mob/living/carbon/human/pilot = this_avatar.pilot
+	if(!pilot)
 		balloon_alert(user, "connection severed!")
 		return
 
 	var/mob/living/carbon/human/occupant = connection.bitminer_ref?.resolve()
-	if(neo != occupant)
-		balloon_alert(user, "mismatched machine ID!")
+	if(pilot != occupant)
+		balloon_alert(user, "mismatched pilot ID!")
 		return
 
 	balloon_alert(user, "disconnecting...")
 	if(do_after(user, travel_time, src))
-		player.disconnect()
+		this_avatar.disconnect()
 
 	qdel(src)

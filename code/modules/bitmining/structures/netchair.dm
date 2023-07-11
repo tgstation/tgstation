@@ -12,7 +12,7 @@
 	can_buckle = TRUE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	icon = 'icons/obj/chairs.dmi'
-	icon_state = "chair"
+	icon_state = "echair0"
 	integrity_failure = 0.1
 	layer = OBJ_LAYER
 	max_integrity = 250
@@ -92,7 +92,7 @@
 	if(!server)
 		return
 
-	var/mob/living/carbon/human/avatar/current_avatar = avatar_ref.resolve()
+	var/mob/living/carbon/human/avatar/current_avatar = avatar_ref?.resolve()
 	if(!current_avatar)
 		current_avatar = generate_avatar(neo)
 
@@ -108,7 +108,7 @@
 	bitminer_ref = neo_ref
 	server.occupant_refs += neo_ref
 	avatar_ref = WEAKREF(current_avatar)
-	current_avatar.owner = neo
+	current_avatar.pilot = neo
 
 	neo.mind.transfer_to(current_avatar, TRUE)
 	playsound(current_avatar, 'sound/magic/repulse.ogg', 30, 2)

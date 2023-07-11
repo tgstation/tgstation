@@ -13,8 +13,6 @@
 	var/filename = "virtual_domain.dmm"
 	/// For blacklisting purposes
 	var/id
-	/// Biome type: Sets which tiles are used for the map
-	var/turf/open/biome_turf
 
 /datum/map_template/virtual_domain/New()
 	if(!name && id)
