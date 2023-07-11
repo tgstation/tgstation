@@ -419,7 +419,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	else
 		color = "#03A728" // green
 
-	set_light(1.5, 1, color)
+	set_light(l_outer_range = 1.4, l_power = 1, l_color = color)
 
 /obj/machinery/airalarm/update_icon_state()
 	if(panel_open)

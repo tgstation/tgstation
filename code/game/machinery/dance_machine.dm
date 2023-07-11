@@ -256,11 +256,11 @@
 						glow.set_light_on(FALSE)
 						glow.set_light_color(LIGHT_COLOR_BLUE)
 					else
-						glow.set_light_range_power_color(glow.base_light_range * DISCO_INFENO_RANGE, glow.light_power * 1.48, LIGHT_COLOR_BLUE)
+						glow.set_light_range_power_color(glow.base_light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 1.48, LIGHT_COLOR_BLUE)
 						glow.set_light_on(TRUE)
 				if(LIGHT_COLOR_BLUE)
 					if(glow.even_cycle)
-						glow.set_light_range_power_color(glow.base_light_range * DISCO_INFENO_RANGE, glow.light_power * 2, LIGHT_COLOR_GREEN)
+						glow.set_light_range_power_color(glow.base_light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 2, LIGHT_COLOR_GREEN)
 						glow.set_light_on(TRUE)
 					else
 						glow.set_light_on(FALSE)
@@ -270,11 +270,11 @@
 						glow.set_light_on(FALSE)
 						glow.set_light_color(LIGHT_COLOR_ORANGE)
 					else
-						glow.set_light_range_power_color(glow.base_light_range * DISCO_INFENO_RANGE, glow.light_power * 0.5, LIGHT_COLOR_ORANGE)
+						glow.set_light_range_power_color(glow.base_light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 0.5, LIGHT_COLOR_ORANGE)
 						glow.set_light_on(TRUE)
 				if(LIGHT_COLOR_ORANGE)
 					if(glow.even_cycle)
-						glow.set_light_range_power_color(glow.base_light_range * DISCO_INFENO_RANGE, glow.light_power * 2.27, LIGHT_COLOR_PURPLE)
+						glow.set_light_range_power_color(glow.base_light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 2.27, LIGHT_COLOR_PURPLE)
 						glow.set_light_on(TRUE)
 					else
 						glow.set_light_on(FALSE)
@@ -284,11 +284,11 @@
 						glow.set_light_on(FALSE)
 						glow.set_light_color(LIGHT_COLOR_BLUEGREEN)
 					else
-						glow.set_light_range_power_color(glow.base_light_range * DISCO_INFENO_RANGE, glow.light_power * 0.44, LIGHT_COLOR_BLUEGREEN)
+						glow.set_light_range_power_color(glow.base_light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 0.44, LIGHT_COLOR_BLUEGREEN)
 						glow.set_light_on(TRUE)
 				if(LIGHT_COLOR_BLUEGREEN)
 					if(glow.even_cycle)
-						glow.set_light_range(glow.base_light_range * DISCO_INFENO_RANGE)
+						glow.set_light_range(glow.base_light_outer_range * DISCO_INFENO_RANGE)
 						glow.set_light_color(LIGHT_COLOR_DIM_YELLOW)
 						glow.set_light_on(TRUE)
 					else
@@ -299,12 +299,12 @@
 						glow.set_light_on(FALSE)
 						glow.set_light_color(LIGHT_COLOR_CYAN)
 					else
-						glow.set_light_range(glow.base_light_range * DISCO_INFENO_RANGE)
+						glow.set_light_range(glow.base_light_outer_range * DISCO_INFENO_RANGE)
 						glow.set_light_color(LIGHT_COLOR_CYAN)
 						glow.set_light_on(TRUE)
 				if(LIGHT_COLOR_CYAN)
 					if(glow.even_cycle)
-						glow.set_light_range_power_color(glow.base_light_range * DISCO_INFENO_RANGE, glow.light_power * 0.68, COLOR_SOFT_RED)
+						glow.set_light_range_power_color(glow.base_light_outer_range * DISCO_INFENO_RANGE, glow.light_power * 0.68, COLOR_SOFT_RED)
 						glow.set_light_on(TRUE)
 					else
 						glow.set_light_on(FALSE)

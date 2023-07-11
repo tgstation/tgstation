@@ -790,7 +790,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/turf/T = get_turf(src)
 	visible_message(span_warning("[src] turns a bright, glowing orange!"))
 	color = "#FC9B54"
-	set_light(6, 1, color)
+	set_light(l_outer_range = 6, l_power = 1, l_color = color)
 	for(var/mob/living/target in viewers(T))
 		if(!IS_CULTIST(target) && target.blood_volume)
 			if(target.can_block_magic(charge_cost = 0))
@@ -815,7 +815,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	qdel(src)
 
 /obj/effect/rune/blood_boil/proc/do_area_burn(turf/T, multiplier)
-	set_light(6, 1, color)
+	set_light(l_outer_range = 6, l_power = 1, l_color = color)
 	for(var/mob/living/target in viewers(T))
 		if(!IS_CULTIST(target) && target.blood_volume)
 			if(target.can_block_magic(charge_cost = 0))

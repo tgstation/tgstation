@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 /turf/open/floor/plating/ocean/proc/enable_starlight()
 	if(!has_starlight)
 		return
-	if(!light_range)
+	if(!light_outer_range)
 		set_light(2)
 
 

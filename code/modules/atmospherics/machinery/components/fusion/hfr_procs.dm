@@ -550,7 +550,7 @@
 		empulse(
 			epicenter = loc,
 			heavy_range = critical ? emp_heavy_size * 2 : emp_heavy_size,
-			light_outer_range = critical ? emp_light_size * 2 : emp_heavy_size,
+			light_range = critical ? emp_light_size * 2 : emp_heavy_size,
 			log = TRUE
 			)
 

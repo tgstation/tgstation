@@ -59,7 +59,7 @@
 
 /datum/spacevine_mutation/light/on_grow(obj/structure/spacevine/holder)
 	if(holder.growth_stage)
-		holder.set_light(LIGHT_MUTATION_BRIGHTNESS, 0.3)
+		holder.set_light(l_outer_range = LIGHT_MUTATION_BRIGHTNESS, l_power = 0.3)
 
 /datum/spacevine_mutation/toxicity
 	name = "Toxic"

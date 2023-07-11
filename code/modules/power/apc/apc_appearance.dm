@@ -15,12 +15,12 @@
 				set_light_color(LIGHT_COLOR_BLUE)
 			if(APC_FULLY_CHARGED)
 				set_light_color(LIGHT_COLOR_GREEN)
-		set_light(light_on_range)
+		set_light(l_outer_range = light_on_outer_range, l_inner_range = light_on_inner_range)
 		return
 
 	if(update_state & UPSTATE_BLUESCREEN)
 		set_light_color(LIGHT_COLOR_BLUE)
-		set_light(light_on_range)
+		set_light(l_outer_range = light_on_outer_range, l_inner_range = light_on_inner_range)
 		return
 
 	set_light(0)
@@ -61,12 +61,29 @@
 	if(!operating)
 		return
 
-	. += mutable_appearance(icon, "apco0-[equipment]")
-	. += emissive_appearance(icon, "apco0-[equipment]", src)
-	. += mutable_appearance(icon, "apco1-[lighting]")
-	. += emissive_appearance(icon, "apco1-[lighting]", src)
-	. += mutable_appearance(icon, "apco2-[environ]")
-	. += emissive_appearance(icon, "apco2-[environ]", src)
+	//Heehoo stole this pattern from bay along with their APC sprite -fran
+	var/static/list/map_apc_statcode_to_color = list(
+		COLOR_RED, //APC_CHANNEL_OFF
+		COLOR_ORANGE, //APC_CHANNEL_AUTO_OFF
+		COLOR_LIME, //APC_CHANNEL_ON
+		COLOR_BLUE //APC_CHANNEL_AUTO_ON
+	)
+	var/mutable_appearance/colorbuffer
+
+	colorbuffer = mutable_appearance(icon, "apco0", src)
+	colorbuffer.color = map_apc_statcode_to_color[equipment+1]
+	. += colorbuffer
+	. += emissive_appearance(icon, "apco0", src)
+
+	colorbuffer = mutable_appearance(icon, "apco1", src)
+	colorbuffer.color = map_apc_statcode_to_color[lighting+1]
+	. += colorbuffer
+	. += emissive_appearance(icon, "apco1", src)
+
+	colorbuffer = mutable_appearance(icon, "apco2", src)
+	colorbuffer.color = map_apc_statcode_to_color[environ+1]
+	. += colorbuffer
+	. += emissive_appearance(icon, "apco2", src)
 
 /// Checks for what icon updates we will need to handle
 /obj/machinery/power/apc/proc/check_updates()

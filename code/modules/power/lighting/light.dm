@@ -20,12 +20,17 @@
 	var/on = FALSE
 	///Amount of power used
 	var/static_power_used = 0
-	///Luminosity when on, also used in power calculation
-	var/brightness = 8
+	///The outer radius of the light's... light.
+	var/bulb_outer_range = 7
+	///The inner radius of the bulb's light, where it is at maximum brightness
+	var/bulb_inner_range = 1.5
 	///Basically the alpha of the emitted light source
 	var/bulb_power = 1
+	///The falloff of the emitted light. Adjust until it looks good.
+	var/bulb_falloff = LIGHTING_DEFAULT_FALLOFF_CURVE
+
 	///Default colour of the light.
-	var/bulb_colour = "#f3fffa"
+	var/bulb_colour = "#f2f9f7"
 	///LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/status = LIGHT_OK
 	///Should we flicker?
@@ -47,12 +52,15 @@
 	var/nightshift_enabled = FALSE
 	///Set to FALSE to never let this light get switched to night mode.
 	var/nightshift_allowed = TRUE
-	///Brightness of the nightshift light
-	var/nightshift_brightness = 8
+	///Outer radius of the nightshift light
+	var/nightshift_outer_range = 6
+	///Inner, brightest radius of the nightshift light
+	var/nightshift_inner_range = 1.5
 	///Alpha of the nightshift light
-	var/nightshift_light_power = 0.45
+	var/nightshift_light_power = 0.85
 	///Basecolor of the nightshift light
 	var/nightshift_light_color = "#FFDDCC"
+	var/nightshift_falloff = LIGHTING_DEFAULT_FALLOFF_CURVE
 	///If true, the light is in low power mode
 	var/low_power_mode = FALSE
 	///If true, this light cannot ever be in low power mode
@@ -153,6 +161,9 @@
 	if(!on || status != LIGHT_OK)
 		return
 
+	if(!overlay_icon)
+		return
+
 	var/area/local_area = get_room_area(src)
 	if(low_power_mode || major_emergency || (local_area?.fire))
 		. += mutable_appearance(overlay_icon, "[base_state]_emergency")
@@ -191,7 +202,7 @@
 			on = FALSE
 	low_power_mode = FALSE
 	if(on)
-		var/brightness_set = brightness
+		var/brightness_set = bulb_outer_range
 		var/power_set = bulb_power
 		var/color_set = bulb_colour
 		if(color)
@@ -203,14 +214,14 @@
 			color_set = fire_colour
 			brightness_set = fire_brightness
 		else if (nightshift_enabled)
-			brightness_set = nightshift_brightness
+			brightness_set = nightshift_outer_range
 			power_set = nightshift_light_power
 			if(!color)
 				color_set = nightshift_light_color
 		else if (major_emergency)
 			color_set = bulb_low_power_colour
-			brightness_set = brightness * bulb_major_emergency_brightness_mul
-		var/matching = light && brightness_set == light.light_range && power_set == light.light_power && color_set == light.light_color
+			brightness_set = bulb_outer_range * bulb_major_emergency_brightness_mul
+		var/matching = light && brightness_set == light.light_outer_range && power_set == light.light_power && color_set == light.light_color
 		if(!matching)
 			switchcount++
 			if( prob( min(60, (switchcount**2)*0.01) ) )
@@ -219,7 +230,7 @@
 			else
 				use_power = ACTIVE_POWER_USE
 				set_light(
-					l_range = brightness_set,
+					l_outer_range = brightness_set,
 					l_power = power_set,
 					l_color = color_set
 					)
@@ -229,7 +240,7 @@
 		START_PROCESSING(SSmachines, src)
 	else
 		use_power = IDLE_POWER_USE
-		set_light(l_range = 0)
+		set_light(0)
 	update_appearance()
 	update_current_power_usage()
 	broken_sparks(start_only=TRUE)
@@ -242,9 +253,9 @@
 		var/static_power_used_new = 0
 		var/area/local_area = get_room_area(src)
 		if (nightshift_enabled && !local_area?.fire)
-			static_power_used_new = nightshift_brightness * nightshift_light_power * power_consumption_rate
+			static_power_used_new = nightshift_outer_range * nightshift_light_power * power_consumption_rate
 		else
-			static_power_used_new = brightness * bulb_power * power_consumption_rate
+			static_power_used_new = bulb_outer_range * bulb_power * power_consumption_rate
 		if(static_power_used != static_power_used_new) //Consumption changed - update
 			removeStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
 			static_power_used = static_power_used_new
@@ -278,7 +289,7 @@
 		status = LIGHT_BURNED
 		icon_state = "[base_state]-burned"
 		on = FALSE
-		set_light(l_range = 0)
+		set_light(l_outer_range = 0)
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
@@ -344,7 +355,8 @@
 			light_object.reagents.trans_to(reagents, LIGHT_REAGENT_CAPACITY)
 		status = light_object.status
 		switchcount = light_object.switchcount
-		brightness = light_object.brightness
+		bulb_inner_range = light_object.bulb_inner_range
+		bulb_outer_range = light_object.bulb_outer_range
 		on = has_power()
 		update()
 
@@ -463,9 +475,10 @@
 		return FALSE
 	real_cell.use(power_usage_amount)
 	set_light(
-		l_range = brightness * bulb_low_power_brightness_mul,
-		l_power = max(bulb_low_power_pow_min, bulb_low_power_pow_mul * (real_cell.charge / real_cell.maxcharge)),
-		l_color = bulb_low_power_colour
+			l_outer_range = bulb_outer_range * bulb_major_emergency_brightness_mul,
+			l_inner_range = bulb_inner_range * bulb_major_emergency_brightness_mul,
+			l_power = max(bulb_low_power_pow_min, bulb_major_emergency_brightness_mul * (cell.charge / cell.maxcharge)),
+			l_color = bulb_emergency_colour
 		)
 	return TRUE
 
@@ -581,7 +594,8 @@
 		reagents.trans_to(light_object.reagents, LIGHT_REAGENT_CAPACITY)
 		QDEL_NULL(reagents)
 	light_object.status = status
-	light_object.brightness = brightness
+	light_object.bulb_inner_range = bulb_inner_range
+	light_object.bulb_outer_range = bulb_outer_range
 
 	// light item inherits the switchcount, then zero it
 	light_object.switchcount = switchcount
@@ -625,7 +639,8 @@
 	if(status == LIGHT_OK)
 		return
 	status = LIGHT_OK
-	brightness = initial(brightness)
+	bulb_inner_range = initial(bulb_inner_range)
+	bulb_outer_range = initial(bulb_outer_range)
 	on = TRUE
 	update()
 
@@ -675,7 +690,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	base_state = "floor" // base description and icon_state
 	icon_state = "floor"
-	brightness = 4
+	bulb_outer_range = 4
 	layer = LOW_OBJ_LAYER
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb

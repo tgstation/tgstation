@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		picked_color = pick(GLOB.marker_beacon_colors)
 
 	. = ..()
-	set_light(light_range, light_power, GLOB.marker_beacon_colors[picked_color])
+	set_light(light_outer_range, light_inner_range, light_power, l_color = GLOB.marker_beacon_colors[picked_color])
 
 /obj/structure/marker_beacon/update_icon_state()
 	icon_state = "[icon_prefix][lowertext(picked_color)]-on"

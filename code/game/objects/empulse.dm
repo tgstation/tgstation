@@ -13,7 +13,7 @@
 		new /obj/effect/temp_visual/emp/pulse(epicenter)
 
 	if(heavy_range > light_range)
-		light_outer_range = heavy_range
+		light_range = heavy_range
 
 	for(var/A in spiral_range(light_range, epicenter))
 		var/atom/T = A

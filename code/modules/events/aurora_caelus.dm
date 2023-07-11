@@ -32,7 +32,7 @@
 	for(var/area/affected_area as anything in GLOB.areas)
 		if(affected_area.area_flags & AREA_USES_STARLIGHT)
 			for(var/turf/open/space/spess in affected_area.get_contained_turfs())
-				spess.set_light(spess.light_range * 3, spess.light_power * 0.5)
+				spess.set_light(l_outer_range = spess.light_outer_range * 3, l_power = spess.light_power * 0.5)
 		if(istype(affected_area, /area/station/service/kitchen))
 			for(var/turf/open/kitchen in affected_area.get_contained_turfs())
 				kitchen.set_light(1, 0.75)
@@ -78,8 +78,8 @@
 
 /datum/round_event/aurora_caelus/proc/fade_to_black(turf/open/space/spess)
 	set waitfor = FALSE
-	var/new_light = initial(spess.light_range)
-	while(spess.light_range > new_light)
-		spess.set_light(spess.light_range - 0.2)
-		sleep(3 SECONDS)
-	spess.set_light(new_light, initial(spess.light_power), initial(spess.light_color))
+	var/new_light = initial(spess.light_outer_range)
+	while(spess.light_outer_range > new_light)
+		spess.set_light(l_outer_range = spess.light_outer_range - 0.2)
+		sleep(30)
+	spess.set_light(l_outer_range = new_light, l_power = initial(spess.light_power), l_color = initial(spess.light_color))

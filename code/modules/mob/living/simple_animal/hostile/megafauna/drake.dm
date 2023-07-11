@@ -174,7 +174,7 @@
 	mass_fire.StartCooldown(8 SECONDS)
 	move_to_delay = initial(move_to_delay)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	set_light_range(initial(light_range))
+	set_light_range(initial(light_outer_range))
 
 //fire line keeps going even if dragon is deleted
 /proc/dragon_fire_line(atom/source, list/turfs, frozen = FALSE)

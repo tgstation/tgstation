@@ -77,7 +77,7 @@
 	invisibility = 0
 	visible_message(span_danger("[src] suddenly appears!"))
 	alpha = initial(alpha)
-	set_light_range(initial(light_range))
+	set_light_range(initial(light_outer_range))
 	set_light_power(initial(light_power))
 	update_light()
 

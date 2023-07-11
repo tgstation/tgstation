@@ -516,10 +516,10 @@
 	if(highlander && istype(gun))
 		QDEL_LIST(gun.current_tracers)
 		for(var/datum/point/p in beam_segments)
-			gun.current_tracers += generate_tracer_between_points(p, beam_segments[p], tracer_type, color, 0, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
+			gun.current_tracers += generate_tracer_between_points(p, beam_segments[p], tracer_type, color, 0, hitscan_light_outer_range, hitscan_light_color_override, hitscan_light_intensity)
 	else
 		for(var/datum/point/p in beam_segments)
-			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_range, hitscan_light_color_override, hitscan_light_intensity)
+			generate_tracer_between_points(p, beam_segments[p], tracer_type, color, duration, hitscan_light_outer_range, hitscan_light_color_override, hitscan_light_intensity)
 	if(cleanup)
 		QDEL_LIST(beam_segments)
 		beam_segments = null

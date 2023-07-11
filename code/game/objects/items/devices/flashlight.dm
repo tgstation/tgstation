@@ -800,7 +800,7 @@
 /obj/item/flashlight/flashdark/update_brightness()
 	. = ..()
 	if(on)
-		set_light(l_outer_range = dark_light_range, l_power = dark_light_power)
+		set_light(l_outer_range = dark_light_outer_range, l_power = dark_light_power)
 	else
 		set_light(0)
 

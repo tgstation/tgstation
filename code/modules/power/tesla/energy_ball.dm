@@ -46,7 +46,7 @@
 	START_PROCESSING(SSobj, src)
 
 	if (!is_miniball)
-		set_light(10, 7, "#5e5edd")
+		set_light(l_outer_range = 10, l_power = 7, l_color= "#5e5edd")
 
 		var/turf/spawned_turf = get_turf(src)
 		message_admins("A tesla has been created at [ADMIN_VERBOSEJMP(spawned_turf)].")
