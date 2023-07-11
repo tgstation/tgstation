@@ -498,7 +498,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	var/played_ding = FALSE
 	for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
-		if(elevator_door.elevator_linked_id != specific_lift_id)
+		if(elevator_door.transport_linked_id != specific_lift_id)
 			continue
 		if(on_z_level && !(elevator_door.z in on_z_level))
 			continue

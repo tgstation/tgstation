@@ -112,7 +112,7 @@
 		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed) * 0.5
 
 	for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
-		if(elevator_door.elevator_linked_id != linked_elevator_id)
+		if(elevator_door.transport_linked_id != linked_elevator_id)
 			continue
 		if(elevator_door.obj_flags & EMAGGED)
 			continue
@@ -146,7 +146,7 @@
 			lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed)
 
 		for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
-			if(elevator_door.elevator_linked_id != linked_elevator_id)
+			if(elevator_door.transport_linked_id != linked_elevator_id)
 				continue
 			if(!(elevator_door.obj_flags & EMAGGED))
 				continue

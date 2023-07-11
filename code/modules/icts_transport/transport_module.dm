@@ -808,7 +808,7 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	//kind of a centerpiece of the station, so pretty tough to destroy
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	transport_id = TRAM_LIFT_ID
+	transport_id = ICTS_TYPE_TRAM
 	transport_controller_type = /datum/transport_controller/linear/tram
 	radial_travel = FALSE
 

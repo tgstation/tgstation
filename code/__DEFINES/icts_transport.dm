@@ -8,3 +8,7 @@
 
 #define CONTROLLER_IDLE (1<<0)
 #define DOORS_OPEN (1<<1)
+
+#define ICTS_TYPE_ELEVATOR "icts_elev"
+#define ICTS_TYPE_TRAM "icts_tram"
+

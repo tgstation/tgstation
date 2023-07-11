@@ -24,7 +24,7 @@
 	airlock_material = "glass"
 	air_tight = TRUE
 	// req_access = list("tcomms")
-	elevator_linked_id = TRAMSTATION_LINE_1
+	transport_linked_id = TRAMSTATION_LINE_1
 	doorOpen = 'sound/machines/tramopen.ogg'
 	doorClose = 'sound/machines/tramclose.ogg'
 	autoclose = FALSE
@@ -122,8 +122,8 @@
 	return TRUE
 
 /obj/machinery/door/airlock/tram/proc/find_tram()
-	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
-		if(lift.specific_lift_id == elevator_linked_id)
+	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[ICTS_TYPE_TRAM])
+		if(lift.specific_lift_id == transport_linked_id)
 			tram_ref = WEAKREF(lift)
 
 /obj/machinery/door/airlock/tram/Initialize(mapload, set_dir, unres_sides)

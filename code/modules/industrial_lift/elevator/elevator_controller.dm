@@ -59,7 +59,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed) * 0.5
 
 	for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
-		if(elevator_door.elevator_linked_id != lift.lift_id)
+		if(elevator_door.transport_linked_id != lift.lift_id)
 			continue
 		if(elevator_door.obj_flags & EMAGGED)
 			continue
@@ -88,7 +88,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 		lift_platform.elevator_vertical_speed = initial(lift_platform.elevator_vertical_speed)
 
 	for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
-		if(elevator_door.elevator_linked_id != lift.lift_id)
+		if(elevator_door.transport_linked_id != lift.lift_id)
 			continue
 		if(!(elevator_door.obj_flags & EMAGGED))
 			continue

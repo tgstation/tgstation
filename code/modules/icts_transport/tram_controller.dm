@@ -106,6 +106,16 @@
 			xing.set_signal_state(XING_STATE_MALF)
 			xing.update_appearance()
 
+
+/datum/transport_controller/linear/tram/proc/calculate_route(obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
+	if(destination_platform == idle_platform)
+		return FALSE
+
+	travel_direction = get_dir(idle_platform, destination_platform)
+	travel_remaining = get_dist(idle_platform, destination_platform)
+	travel_trip_length = travel_remaining
+	idle_platform = destination_platform
+	return TRUE
 /**
  * Handles moving the tram
  *
@@ -212,7 +222,7 @@
 /datum/transport_controller/linear/tram/proc/update_tram_doors(action)
 	message_admins("ICTS: update_tram_doors")
 	for(var/obj/machinery/door/airlock/tram/tram_door in GLOB.tram_doors)
-		if(tram_door.elevator_linked_id != specific_transport_id)
+		if(tram_door.transport_linked_id != specific_transport_id)
 			continue
 		set_door_state(tram_door, action)
 

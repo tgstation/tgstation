@@ -36,7 +36,7 @@
  * Locates tram parts in the lift global list after everything is done.
  */
 /obj/machinery/computer/icts_controls/proc/find_tram()
-	for(var/datum/transport_controller/linear/transport as anything in SSicts_transport.transports_by_type[TRAM_LIFT_ID])
+	for(var/datum/transport_controller/linear/transport as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
 		if(transport.specific_transport_id == specific_transport_id)
 			module_ref = WEAKREF(transport)
 

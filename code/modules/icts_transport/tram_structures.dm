@@ -54,7 +54,7 @@
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(set_spoiler))
 
 /obj/structure/tram/spoiler/proc/find_tram()
-	for(var/datum/lift_master/tram/tram as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
+	for(var/datum/lift_master/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
 		if(tram.specific_lift_id != tram_id)
 			continue
 		tram_ref = WEAKREF(tram)
