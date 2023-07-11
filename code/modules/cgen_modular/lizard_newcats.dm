@@ -15,6 +15,18 @@ GLOBAL_LIST_EMPTY(snouts_list_lizard)
 /datum/sprite_accessory/snouts/lizard
 	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
 	em_block = TRUE
+	hasinner = TRUE
+	inner_color_src = SPRITE_ACC_SCRIPTED_COLOR
+
+/datum/sprite_accessory/snouts/lizard/innercolor_override(mob/living/carbon/human/target)
+	if(!isnull(target))
+		var/col = target.dna.features["tricolor-a1"]
+		if(!isnull(col))
+			return col
+		else
+			return COLOR_WHITE
+	else
+		return COLOR_WHITE
 
 /datum/sprite_accessory/snouts/lizard/sharp
 	name = "Sharp"
@@ -50,6 +62,29 @@ GLOBAL_LIST_EMPTY(bodymarks_list_lizard)
 
 /datum/sprite_accessory/body_markings/lizard
 	icon = 'icons/mob/species/lizard/lizard_misc.dmi'
+	color_src = SPRITE_ACC_SCRIPTED_COLOR
+	hasinner = TRUE
+	inner_color_src = SPRITE_ACC_SCRIPTED_COLOR
+
+/datum/sprite_accessory/body_markings/lizard/color_override(mob/living/carbon/human/target)
+	if(!isnull(target))
+		var/col = target.dna.features["tricolor-a1"]
+		if(!isnull(col))
+			return col
+		else
+			return COLOR_WHITE
+	else
+		return COLOR_WHITE
+
+/datum/sprite_accessory/body_markings/lizard/innercolor_override(mob/living/carbon/human/target)
+	if(!isnull(target))
+		var/col = target.dna.features["tricolor-a2"]
+		if(!isnull(col))
+			return col
+		else
+			return COLOR_WHITE
+	else
+		return COLOR_WHITE
 
 /datum/sprite_accessory/body_markings/lizard/none
 	name = "None"

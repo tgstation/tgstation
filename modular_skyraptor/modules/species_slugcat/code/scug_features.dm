@@ -69,6 +69,13 @@
 	var/datum/sprite_accessory/horns/slugcat/standard/horns = /datum/sprite_accessory/horns/slugcat/standard
 	return initial(horns.name)
 
+/datum/preference/choiced/slugcat_horns/compile_constant_data()
+	var/list/data = ..()
+
+	data[SUPPLEMENTAL_FEATURE_KEY] = "horns_color"
+
+	return data
+
 
 
 //== TAIL
@@ -110,6 +117,13 @@
 /datum/preference/choiced/slugcat_frills/create_default_value()
 	var/datum/sprite_accessory/frills/slugcat/none/frills = /datum/sprite_accessory/frills/slugcat/none
 	return initial(frills.name)
+
+/datum/preference/choiced/slugcat_frills/compile_constant_data()
+	var/list/data = ..()
+
+	data[SUPPLEMENTAL_FEATURE_KEY] = "frills_color"
+
+	return data
 
 
 

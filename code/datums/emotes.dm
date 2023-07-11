@@ -267,8 +267,9 @@
 	if(emote_type & EMOTE_AUDIBLE && !muzzle_ignore)
 		if(user.is_muzzled())
 			return FALSE
-		if(HAS_TRAIT(user, TRAIT_MUTE))
-			return FALSE
+		/// SKYRAPTOR REMOVAL: regular mute continues to allow sounds to play, we're going to make a separate one that's emotemute
+		/*if(HAS_TRAIT(user, TRAIT_MUTE))
+			return FALSE*/
 		if(ishuman(user))
 			var/mob/living/carbon/human/loud_mouth = user
 			if(HAS_TRAIT(loud_mouth, TRAIT_MIMING)) // vow of silence prevents outloud noises

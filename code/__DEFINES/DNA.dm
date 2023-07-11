@@ -40,7 +40,7 @@
 #define DNA_UNI_IDENTITY_BLOCKS 7
 
 /// This number needs to equal the total number of DNA blocks
-#define DNA_FEATURE_BLOCKS 15
+#define DNA_FEATURE_BLOCKS 26 /// SKYRAPTOR EDIT: 23, up from 15
 
 #define DNA_MUTANT_COLOR_BLOCK 1
 #define DNA_ETHEREAL_COLOR_BLOCK 2
@@ -57,6 +57,21 @@
 #define DNA_MOTH_MARKINGS_BLOCK 13
 #define DNA_MUSHROOM_CAPS_BLOCK 14
 #define DNA_POD_HAIR_BLOCK 15
+
+/// SKYRAPTOR ADDITION: Tri-Colors for Species Customization
+#define DNA_TRICOL_A1_BLOCK 16
+#define DNA_TRICOL_A2_BLOCK 17
+#define DNA_TRICOL_A3_BLOCK 18
+#define DNA_TRICOL_B1_BLOCK 19
+#define DNA_TRICOL_B2_BLOCK 20
+#define DNA_TRICOL_B3_BLOCK 21
+#define DNA_TRICOL_C1_BLOCK 22
+#define DNA_TRICOL_C2_BLOCK 23
+#define DNA_TRICOL_C3_BLOCK 24
+// Frills and Horns colors for further customization
+#define DNA_FRILLS_COLOR_BLOCK 25
+#define DNA_HORNS_COLOR_BLOCK 26
+/// SKYRAPTOR ADDITION END
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
@@ -89,6 +104,12 @@
 #define BLOOD_CLANS 18
 /// Similar to NOEYESPRITES but only excludes the eyeless overlay
 #define NOEYEHOLES 19
+
+/// SKYRAPTOR ADDITIONS: tricolor alpha and beta tags
+#define USE_TRICOLOR_ALPHA 600
+#define USE_TRICOLOR_BETA 601
+#define USE_TRICOLOR_CHARLIE 602
+#define SPRITE_ACC_SCRIPTED_COLOR 690
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"

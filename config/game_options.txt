@@ -392,6 +392,8 @@ ROUNDSTART_RACES ethereal
 
 ## Skyraptor species
 ROUNDSTART_RACES slugcat
+ROUNDSTART_RACES akula
+ROUNDSTART_RACES talonmoth
 
 ##-------------------------------------------------------------------------------------------
 
@@ -402,7 +404,7 @@ ROUNDSTART_RACES slugcat
 ## Disable roundstart species morgue cadavers?
 ## Cadavers in the morgue at the start of the round will be randomly picked from all enabled ROUNDSTART_RACES
 ## Recommended to leave this commented out so nonhuman species will have viable replacement bodies / organs when they die.
-# MORGUE_CADAVER_DISABLE_NONHUMANS
+MORGUE_CADAVER_DISABLE_NONHUMANS
 
 ## Morgue Cadaver Species Probability
 ## The probability for nonhuman cadavers to spawn in the morgue.
