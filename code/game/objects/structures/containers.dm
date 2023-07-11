@@ -1,7 +1,7 @@
 /obj/structure/shipping_container
 	name = "shipping container"
 	desc = "A standard-measure shipping container for bulk transport of goods. This one is blank, offering no clue as to its contents."
-	icon = 'icons/obj/containers.dmi'
+	icon = 'icons/obj/fluff/containers.dmi'
 	icon_state = "container_blank"
 	max_integrity = 1000
 	bound_width = 96

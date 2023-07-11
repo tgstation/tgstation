@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/fire_breath
 	name = "Fire Breath"
-	button_icon = 'icons/obj/wizard.dmi'
+	button_icon = 'icons/effects/magic.dmi'
 	button_icon_state = "fireball"
 	desc = "Allows you to shoot fire towards a target."
 	cooldown_time = 3 SECONDS
