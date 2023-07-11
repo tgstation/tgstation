@@ -1,0 +1,7 @@
+author: "Singul0"
+delete-after: True
+changes:
+  - rscadd: "IRS jacket is now back in the clothesvend"
+  - rscadd: "Ports breaching shells from beestation"
+  - rscadd: "Space IRS has been added into the heavy weight pirates spawn pool"
+  - code_imp: "Mosin nagant ammo boxes is now a subtype of regular ammo boxes (the toolbox subtype)"

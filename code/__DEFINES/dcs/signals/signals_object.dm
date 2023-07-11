@@ -126,11 +126,18 @@
 #define COMSIG_ITEM_DROPPED "item_drop"
 ///from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_PICKUP "item_pickup"
+///from base of obj/item/on_outfit_equip(): (mob/equipper, visuals_only, slot)
+#define COMSIG_ITEM_EQUIPPED_AS_OUTFIT "item_equip_as_outfit"
 
 /// Sebt from obj/item/ui_action_click(): (mob/user, datum/action)
 #define COMSIG_ITEM_UI_ACTION_CLICK "item_action_click"
 	/// Return to prevent the default behavior (attack_selfing) from ocurring.
 	#define COMPONENT_ACTION_HANDLED (1<<0)
+
+/// Sent from obj/item/item_action_slot_check(): (mob/user, datum/action, slot)
+#define COMSIG_ITEM_UI_ACTION_SLOT_CHECKED "item_action_slot_checked"
+	/// Return to prevent the default behavior (attack_selfing) from ocurring.
+	#define COMPONENT_ITEM_ACTION_SLOT_INVALID (1<<0)
 
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
@@ -345,6 +352,7 @@
 #define COMSIG_PROJECTILE_FIRE "projectile_fire"
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
+	#define PROJECTILE_INTERRUPT_HIT (1<<0)
 ///from the base of /obj/projectile/Range(): ()
 #define COMSIG_PROJECTILE_RANGE "projectile_range"
 ///from the base of /obj/projectile/on_range(): ()

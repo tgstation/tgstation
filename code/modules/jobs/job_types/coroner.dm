@@ -13,6 +13,9 @@
 	outfit = /datum/outfit/job/coroner
 	plasmaman_outfit = /datum/outfit/plasmaman/coroner
 
+	mind_traits = list(TRAIT_MORBID)
+	liver_traits = list(TRAIT_CORONER_METABOLISM)
+
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED
 
@@ -28,11 +31,13 @@
 		/obj/item/reagent_containers/cup/bottle/formaldehyde = 30,
 		/obj/item/storage/box/bodybags = 15,
 		/obj/item/healthanalyzer = 10,
+		/obj/item/shovel/serrated/dull = 5,
 		/obj/effect/spawner/random/medical/organs = 5,
 		/obj/effect/spawner/random/medical/memeorgans = 1,
+		/obj/item/scythe = 1,
 	)
 
-	family_heirlooms = list(/obj/item/clothing/head/helmet/skull, /obj/item/table_clock)
+	family_heirlooms = list(/obj/item/clothing/head/helmet/skull, /obj/item/table_clock, /obj/item/shovel, /obj/item/storage/fancy/pickles_jar)
 
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 

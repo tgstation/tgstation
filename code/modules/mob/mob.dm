@@ -424,17 +424,19 @@
  * unset redraw_mob to prevent the mob icons from being redrawn at the end.
  *
  * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ *
+ * set indirect_action to allow insertions into "soft" locked objects, things that are easily opened by the owning mob
  */
-/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, initial = FALSE)
+/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, initial = FALSE, indirect_action = FALSE)
 	if(!istype(W) || QDELETED(W)) //This qdeleted is to prevent stupid behavior with things that qdel during init, like say stacks
 		return FALSE
-	if(!W.mob_can_equip(src, slot, disable_warning, bypass_equip_delay_self))
+	if(!W.mob_can_equip(src, slot, disable_warning, bypass_equip_delay_self, indirect_action = indirect_action))
 		if(qdel_on_fail)
 			qdel(W)
 		else if(!disable_warning)
 			to_chat(src, span_warning("You are unable to equip that!"))
 		return FALSE
-	equip_to_slot(W, slot, initial, redraw_mob) //This proc should not ever fail.
+	equip_to_slot(W, slot, initial, redraw_mob, indirect_action = indirect_action) //This proc should not ever fail.
 	return TRUE
 
 /**
@@ -445,7 +447,7 @@
  *
  *In most cases you will want to use equip_to_slot_if_possible()
  */
-/mob/proc/equip_to_slot(obj/item/W, slot)
+/mob/proc/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
 	return
 
 /**
@@ -456,9 +458,10 @@
  *
  * Also bypasses equip delay checks, since the mob isn't actually putting it on.
  * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ * set indirect_action to allow insertions into "soft" locked objects, things that are easily opened by the owning mob
  */
-/mob/proc/equip_to_slot_or_del(obj/item/W, slot, initial = FALSE)
-	return equip_to_slot_if_possible(W, slot, TRUE, TRUE, FALSE, TRUE, initial)
+/mob/proc/equip_to_slot_or_del(obj/item/W, slot, initial = FALSE, indirect_action = FALSE)
+	return equip_to_slot_if_possible(W, slot, TRUE, TRUE, FALSE, TRUE, initial, indirect_action)
 
 /**
  * Auto equip the passed in item the appropriate slot based on equipment priority
@@ -467,7 +470,7 @@
  *
  * returns 0 if it cannot, 1 if successful
  */
-/mob/proc/equip_to_appropriate_slot(obj/item/W, qdel_on_fail = FALSE)
+/mob/proc/equip_to_appropriate_slot(obj/item/W, qdel_on_fail = FALSE, indirect_action = FALSE)
 	if(!istype(W))
 		return FALSE
 	var/slot_priority = W.slot_equipment_priority
@@ -485,7 +488,7 @@
 		)
 
 	for(var/slot in slot_priority)
-		if(equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE, FALSE, FALSE)) //qdel_on_fail = FALSE; disable_warning = TRUE; redraw_mob = TRUE;
+		if(equip_to_slot_if_possible(W, slot, disable_warning = TRUE, redraw_mob = TRUE, indirect_action = indirect_action))
 			return TRUE
 
 	if(qdel_on_fail)
@@ -1231,13 +1234,19 @@
  * Proc that returns TRUE if the mob can write using the writing_instrument, FALSE otherwise.
  *
  * This proc a side effect, outputting a message to the mob's chat with a reason if it returns FALSE.
+ * Unless silent_if_not_writing_tool is TRUE. In that case it'll be silent if it isn't a writing implement/tool/instrument w/e.
  */
-/mob/proc/can_write(obj/item/writing_instrument)
-	if(!istype(writing_instrument))
-		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+/mob/proc/can_write(obj/item/writing_instrument, silent_if_not_writing_tool = FALSE)
+	if(!writing_instrument)
 		return FALSE
 
-	if(HAS_TRAIT(src, TRAIT_MIMING) && !istype(writing_instrument, /obj/item/toy/crayon/mime))
+	var/pen_info = writing_instrument.get_writing_implement_details()
+	if(!pen_info || (pen_info["interaction_mode"] != MODE_WRITING))
+		if(!silent_if_not_writing_tool)
+			to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+		return FALSE
+
+	if(HAS_MIND_TRAIT(src, TRAIT_MIMING) && !istype(writing_instrument, /obj/item/toy/crayon/mime))
 		to_chat(src, span_warning("Your vow of silence is preventing you from talking with text."))
 		return FALSE
 
@@ -1247,11 +1256,6 @@
 
 	if(!has_light_nearby() && !has_nightvision())
 		to_chat(src, span_warning("It's too dark in here to write anything!"))
-		return FALSE
-
-	var/pen_info = writing_instrument.get_writing_implement_details()
-	if(!pen_info || (pen_info["interaction_mode"] != MODE_WRITING))
-		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
 		return FALSE
 
 	if(has_gravity())
@@ -1386,12 +1390,11 @@
 	fully_replace_character_name(real_name, new_name)
 
 ///Show the language menu for this mob
-/mob/verb/open_language_menu()
+/mob/verb/open_language_menu_verb()
 	set name = "Open Language Menu"
 	set category = "IC"
 
-	var/datum/language_holder/H = get_language_holder()
-	H.open_language_menu(usr)
+	get_language_holder().open_language_menu(usr)
 
 ///Adjust the nutrition of a mob
 /mob/proc/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks

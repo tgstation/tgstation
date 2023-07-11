@@ -7,7 +7,7 @@
 	name = "external organ"
 	desc = "An external organ that is too external."
 
-	organ_flags = ORGAN_EDIBLE
+	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE
 	visual = TRUE
 
 	///The overlay datum that actually draws stuff on the limb
@@ -86,7 +86,7 @@
 	add_to_limb(ownerlimb)
 
 	if(external_bodytypes)
-		limb.synchronize_bodytypes(receiver)
+		receiver.synchronize_bodytypes()
 
 	receiver.update_body_parts()
 
@@ -123,7 +123,7 @@
 	ownerlimb.external_organs -= src
 	ownerlimb.remove_bodypart_overlay(bodypart_overlay)
 	if(ownerlimb.owner && external_bodytypes)
-		ownerlimb.synchronize_bodytypes(ownerlimb.owner)
+		ownerlimb.owner.synchronize_bodytypes()
 	ownerlimb = null
 	return ..()
 
