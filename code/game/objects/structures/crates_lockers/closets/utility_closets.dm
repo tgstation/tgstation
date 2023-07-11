@@ -21,7 +21,7 @@
 	anchored = TRUE
 
 /obj/structure/closet/emcloset/Initialize(mapload)
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA))
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA) && prob(30))
 		new /obj/structure/closet/radiation(loc)
 		return INITIALIZE_HINT_QDEL
 

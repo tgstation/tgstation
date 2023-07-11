@@ -104,3 +104,6 @@
 	#define MOVABLE_SAY_QUOTE_MESSAGE 1
 	#define MOVABLE_SAY_QUOTE_MESSAGE_SPANS 2
 	#define MOVABLE_SAY_QUOTE_MESSAGE_MODS 3
+
+/// Sent from /datum/station_trait/nebula/hostile/proc/get_shielding_level(): (/datum/station_trait/nebula/hostile)
+#define COMSIG_MOVABLE_GET_NEBULA_SHIELDING "movable_get_nebula_shielding"

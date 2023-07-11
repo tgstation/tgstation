@@ -81,3 +81,6 @@ SUBSYSTEM_DEF(weather)
 			A = W
 			break
 	return A
+
+/datum/controller/subsystem/weather/proc/get_weather_by_type(type)
+	return locate(type) in processing

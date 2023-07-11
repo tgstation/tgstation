@@ -413,6 +413,8 @@
 	var/nebula_layer = /atom/movable/screen/parallax_layer/random/space_gas
 	///The color space 'glows'
 	var/space_light_color = COLOR_STARLIGHT
+	///If set, gives the basic carp different colors
+	var/carp_color_override
 
 /datum/station_trait/nebula/New()
 	. = ..()
@@ -425,35 +427,114 @@
 		client.parallax_layers_cached.Cut()
 		client.mob.hud_used.update_parallax_pref(client.mob)
 
-/datum/station_trait/nebula/radiation
+	if(carp_color_override)
+		var/mob/living/basic/carp/carp_type = /mob/living/basic/carp
+		carp_type.carp_colors = carp_color_override
+		carp_type = carp_type //I think it's funnier if I don't explain why this is absolutely necessary
+
+/datum/station_trait/nebula/hostile
+	trait_processes = TRUE
+
+	///Intensity of the nebula
+	VAR_PROTECTED/nebula_intensity = -1
+	///The max intensity of a nebula
+	var/maximum_nebula_intensity = 2 HOURS
+	///How long it takes to go to the next nebula level/intensity
+	var/intensity_increment_time = INFINITE
+	///Objects that we use to calculate the current shielding level
+	var/list/shielding = list()
+
+/datum/station_trait/nebula/hostile/process(seconds_per_tick)
+	calculate_nebula_strength()
+
+	apply_nebula_effect(nebula_intensity - get_shielding_level())
+
+/datum/station_trait/nebula/hostile/proc/calculate_nebula_strength()
+	nebula_intensity = min(STATION_TIME_PASSED / intensity_increment_time, maximum_nebula_intensity)
+
+/datum/station_trait/nebula/hostile/proc/get_shielding_level()
+	var/shield_strength = 0
+	for(var/atom/movable/shielder as anything in shielding)
+		for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+			if(shielder.z == z)
+				shield_strength += SEND_SIGNAL(shielder, COMSIG_MOVABLE_GET_NEBULA_SHIELDING)
+				break
+
+	return shield_strength
+
+/datum/station_trait/nebula/hostile/proc/add_shielder(atom/movable/shielder, shielding_proc)
+	shielding.Add(shielder)
+
+	shielder.RegisterSignal(shielder, COMSIG_MOVABLE_GET_NEBULA_SHIELDING, shielding_proc)
+	RegisterSignal(shielder, COMSIG_QDELETING, PROC_REF(remove_shielder))
+
+/datum/station_trait/nebula/hostile/proc/remove_shielder(atom/movable/shielder)
+	SIGNAL_HANDLER
+
+	shielding.Remove(shielder)
+
+/datum/station_trait/nebula/hostile/proc/apply_nebula_effect(effect_strength = 0)
+	return
+
+/proc/add_to_nebula_shielding(atom/movable/shielder, nebula_type, shielding_proc)
+	var/datum/station_trait/nebula/hostile/nebula = locate(nebula_type) in SSstation.station_traits
+	if(!nebula)
+		return FALSE
+
+	nebula.add_shielder(shielder, shielding_proc)
+
+/datum/station_trait/nebula/hostile/radiation
 	name = "Radioactive Nebula"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 9999
+	weight = 1
+	force = TRUE
 	show_in_report = TRUE
 	report_message = "This station is located in a radioactive nebula."
 	trait_to_give = STATION_TRAIT_RADIOACTIVE_NEBULA
 
-	nebula_color = COLOR_VIBRANT_LIME
-	space_light_color = COLOR_VIBRANT_LIME
+	intensity_increment_time = 5 MINUTES
 
-/datum/station_trait/nebula/radiation/New()
+	nebula_color = list(0,0,0,0, 0,2,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //very vibrant green
+	space_light_color = COLOR_VIBRANT_LIME
+	carp_color_override = list(
+		COLOR_CARP_GREEN = 1,
+		COLOR_CARP_TEAL = 1,
+		COLOR_CARP_PALE_GREEN = 1,
+		COLOR_CARP_DARK_GREEN = 1,
+	)
+
+/datum/station_trait/nebula/hostile/radiation/New()
 	. = ..()
 
 	for(var/area/target as anything in get_areas(/area/space))
 		RegisterSignals(target, list(COMSIG_AREA_ENTERED, COMSIG_AREA_INITIALIZED_IN), PROC_REF(on_entered))
 		RegisterSignal(target, COMSIG_AREA_EXITED, PROC_REF(on_exited))
 
-/datum/station_trait/nebula/radiation/proc/on_entered(area/space, atom/movable/enterer)
+/datum/station_trait/nebula/hostile/radiation/process(seconds_per_tick)
+	. = ..()
+
+/datum/station_trait/nebula/hostile/radiation/proc/on_entered(area/space, atom/movable/enterer)
 	SIGNAL_HANDLER
 
 	if(!ismovable(enterer))
 		return
 
 	enterer.AddElement(/datum/element/radioactive, range = 0, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
-	enterer.add_filter("glow_nebula", 2, list("type" = "outline", "color" = "#39ff1430", "size" = 2))
+	if(!SSradiation.can_irradiate_basic(enterer))
+		enterer.add_filter("glow_nebula", 2, list("type" = "drop_shadow", "color" = "#66ff33", "size" = 2))
 
-/datum/station_trait/nebula/radiation/proc/on_exited(area/space, atom/movable/exiter)
+/datum/station_trait/nebula/hostile/radiation/proc/on_exited(area/space, atom/movable/exiter)
 	SIGNAL_HANDLER
 
 	exiter.RemoveElement(/datum/element/radioactive, range = 0, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
 	exiter.remove_filter("glow_nebula")
+
+/datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
+	if(effect_strength > 0)
+		if(SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula))
+			return
+		SSweather.run_weather(/datum/weather/rad_storm/nebula)
+	else if(effect_strength <= 0)
+		var/datum/weather/weather = SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula)
+		if(weather)
+			weather.wind_down()

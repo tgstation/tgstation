@@ -77,3 +77,28 @@
 
 	var/atom/movable/virtualspeaker/virt = new(null)
 	frequency.post_signal(virt, signal)
+
+/datum/weather/rad_storm/nebula
+	protected_areas = list(/area/shuttle)
+
+	weather_overlay = "nebula_radstorm"
+	weather_duration_lower = 100 HOURS
+	weather_duration_upper = 100 HOURS
+
+	///Chance we pulse a living during the storm
+	var/radiation_chance = 20
+
+/datum/weather/rad_storm/nebula/weather_act(mob/living/living)
+	if(!prob(radiation_chance))
+		return
+
+	if(!SSradiation.can_irradiate_basic(living) || SSradiation.wearing_rad_protected_clothing(living))
+		return
+
+	radiation_pulse(
+		source = living,
+		max_range = 0,
+		threshold = RAD_LIGHT_INSULATION,
+		chance = URANIUM_IRRADIATION_CHANCE,
+		minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME,
+	)
