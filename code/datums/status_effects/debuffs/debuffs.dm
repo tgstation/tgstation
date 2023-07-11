@@ -204,13 +204,13 @@
 
 		if(healing > 0)
 			// gives a boost to internal organs healing
-			for(var/obj/item/bodypart/target_bodypart in owner.bodyparts)
-				for(var/obj/item/organ/internal/target_organ in target_bodypart.contents)
-					if(!target_organ.damage || target_organ.organ_flags & ORGAN_FAILING)
-						continue
+			for(var/obj/item/organ/target_organ as anything in owner.organs)
+				// no healing boost for robotic or dying organs
+				if(IS_ROBOTIC_ORGAN(target_organ) || !target_organ.damage || target_organ.organ_flags & ORGAN_FAILING)
+					continue
 
-					var/healing_bonus = target_organ.healing_factor * healing
-					target_organ.apply_organ_damage(-healing_bonus * target_organ.maxHealth)
+				var/healing_bonus = target_organ.healing_factor * healing
+				target_organ.apply_organ_damage(-healing_bonus * target_organ.maxHealth)
 
 			if(health_ratio > 0.8) // only heals minor physical damage
 				owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
