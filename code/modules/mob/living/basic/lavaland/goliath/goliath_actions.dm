@@ -9,6 +9,7 @@
 	click_to_activate = TRUE
 	cooldown_time = 12 SECONDS
 	melee_cooldown_time = 0
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	/// Furthest range we can activate ability at
 	var/max_range = 7
 
@@ -40,6 +41,7 @@
 	overlay_icon_state = "bg_demon_border"
 	cooldown_time = 24 SECONDS
 	melee_cooldown_time = 0
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 
 /datum/action/cooldown/tentacle_burst/Activate(atom/target)
 	. = ..()
@@ -62,6 +64,7 @@
 	click_to_activate = TRUE
 	cooldown_time = 12 SECONDS
 	melee_cooldown_time = 0
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 
 /datum/action/cooldown/tentacle_grasp/Activate(atom/target)
 	. = ..()

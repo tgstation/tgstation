@@ -57,7 +57,7 @@
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 100, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(tamed)))
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 	tentacles = new (src)
 	tentacles.Grant(src)
