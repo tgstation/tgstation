@@ -1,0 +1,4 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "Destroying the fabled \"green text\" now properly releases its victims from their curse."

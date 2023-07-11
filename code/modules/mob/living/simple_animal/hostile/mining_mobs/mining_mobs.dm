@@ -33,6 +33,16 @@
 	if(crusher_loot)
 		AddElement(/datum/element/crusher_loot, crusher_loot, crusher_drop_mod, del_on_death)
 	AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
+	AddElement(\
+		/datum/element/ranged_armour,\
+		minimum_projectile_force = 30,\
+		below_projectile_multiplier = 0.3,\
+		vulnerable_projectile_types = MINING_MOB_PROJECTILE_VULNERABILITY,\
+		minimum_thrown_force = 20,\
+		throw_blocked_message = throw_message,\
+	)
+
+	RegisterSignals(src, list(COMSIG_PROJECTILE_PREHIT, COMSIG_ATOM_PREHITBY), PROC_REF(Aggro))
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -44,21 +54,3 @@
 	if(stat == DEAD)
 		return
 	icon_state = icon_living
-
-/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/projectile/shot)//Reduces damage from most projectiles to curb off-screen kills
-	if(!stat)
-		Aggro()
-	if(shot.damage < 30 && shot.damage_type != BRUTE)
-		shot.damage = (shot.damage / 3)
-		visible_message(span_danger("[shot] has a reduced effect on [src]!"))
-	..()
-
-/mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
-	if(isitem(AM))
-		var/obj/item/T = AM
-		if(!stat)
-			Aggro()
-		if(T.throwforce <= 20)
-			visible_message(span_notice("The [T.name] [throw_message] [src.name]!"))
-			return
-	..()

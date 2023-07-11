@@ -227,11 +227,11 @@
 
 // Check if we are entitled to morbid bonuses
 /datum/surgery_step/proc/check_morbid_curiosity(mob/user, obj/item/tool, datum/surgery/surgery)
-	if(!(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID)))
+	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY))
 		return FALSE
-	if(!tool || tool && !(tool.item_flags & CRUEL_IMPLEMENT))
+	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
 		return FALSE
-	if(surgery.surgery_flags != SURGERY_MORBID_CURIOSITY)
+	if(!HAS_MIND_TRAIT(user, TRAIT_MORBID))
 		return FALSE
 	return TRUE
 

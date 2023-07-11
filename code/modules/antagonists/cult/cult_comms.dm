@@ -46,20 +46,20 @@
 
 /datum/action/innate/cult/comm/proc/cultist_commune(mob/living/user, message)
 	var/my_message
-	if(!message)
+	if(!message || !user.mind)
 		return
 	user.whisper("O bidai nabora se[pick("'","`")]sma!", language = /datum/language/common)
 	user.whisper(html_decode(message), filterproof = TRUE)
 	var/title = "Acolyte"
 	var/span = "cult italic"
-	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/cult/master))
+	var/datum/antagonist/cult/cult_datum = user.mind.has_antag_datum(/datum/antagonist/cult)
+	if(cult_datum.is_cult_leader())
 		span = "cultlarge"
 		title = "Master"
 	else if(!ishuman(user))
 		title = "Construct"
 	my_message = "<span class='[span]'><b>[title] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]:</b> [message]</span>"
-	for(var/i in GLOB.player_list)
-		var/mob/M = i
+	for(var/mob/M as anything in GLOB.player_list)
 		if(IS_CULTIST(M))
 			to_chat(M, my_message)
 		else if(M in GLOB.dead_mob_list)
@@ -108,7 +108,7 @@
 		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 		pollCultists(owner,C.cult_team)
 
-/proc/pollCultists(mob/living/Nominee,datum/team/cult/team) //Cult Master Poll
+/proc/pollCultists(mob/living/Nominee, datum/team/cult/team) //Cult Master Poll
 	if(world.time < CULT_POLL_WAIT)
 		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [DisplayTimeText(CULT_POLL_WAIT-world.time)].")
 		return
@@ -150,22 +150,16 @@
 				if(!B.current.incapacitated())
 					to_chat(B.current, span_cultlarge("[Nominee] could not win the cult's support and shall continue to serve as an acolyte."))
 		return FALSE
-	team.cult_master = Nominee
-	var/datum/antagonist/cult/cultist = Nominee.mind.has_antag_datum(/datum/antagonist/cult)
-	if (cultist)
-		cultist.silent = TRUE
-		cultist.on_removal()
-	Nominee.mind.add_antag_datum(/datum/antagonist/cult/master)
-	for(var/datum/mind/B in team.members)
-		if(B.current)
-			for(var/datum/action/innate/cult/mastervote/vote in B.current.actions)
-				vote.Remove(B.current)
-			if(!B.current.incapacitated())
-				to_chat(B.current,span_cultlarge("[Nominee] has won the cult's support and is now their master. Follow [Nominee.p_their()] orders to the best of your ability!"))
+	var/datum/antagonist/cult/cult_datum = Nominee.mind.has_antag_datum(/datum/antagonist/cult)
+	if(!cult_datum.make_cult_leader())
+		CRASH("[cult_datum.owner.current] was supposed to turn into the leader, but they didn't for some reason. This isn't supposed to happen unless an Admin messed with it.")
 	return TRUE
 
 /datum/action/innate/cult/master/IsAvailable(feedback = FALSE)
-	if(!owner.mind || !owner.mind.has_antag_datum(/datum/antagonist/cult/master) || GLOB.cult_narsie)
+	if(!owner.mind || GLOB.cult_narsie)
+		return FALSE
+	var/datum/antagonist/cult/cult_datum = owner.mind.has_antag_datum(/datum/antagonist/cult)
+	if(!cult_datum.is_cult_leader())
 		return FALSE
 	return ..()
 

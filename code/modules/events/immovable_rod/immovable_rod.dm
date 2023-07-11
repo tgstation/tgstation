@@ -2,7 +2,7 @@
 /obj/effect/immovablerod
 	name = "immovable rod"
 	desc = "What the fuck is that?"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "immrod"
 	throwforce = 100
 	move_force = INFINITY
@@ -226,7 +226,7 @@
 	if(.)
 		return
 
-	if(!(HAS_TRAIT(user, TRAIT_ROD_SUPLEX) || (user.mind && HAS_TRAIT(user.mind, TRAIT_ROD_SUPLEX))))
+	if(!HAS_MIND_TRAIT(user, TRAIT_ROD_SUPLEX))
 		return
 
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)

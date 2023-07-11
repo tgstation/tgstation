@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Added a new 0 cost passive changeling ability, the Defibrillator Grasp."
-  - rscadd: "DNA sing is now no longer innate, but 0 cost, allowing changelings to not take it if they don't plan on using it."

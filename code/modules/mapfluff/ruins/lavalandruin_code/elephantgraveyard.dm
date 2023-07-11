@@ -20,7 +20,7 @@
 	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*4)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "rib"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "rib"
 
 /obj/structure/statue/bone/skull
@@ -29,7 +29,7 @@
 	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*12)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "skull"
 
 /obj/structure/statue/bone/skull/half
@@ -37,7 +37,7 @@
 	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*6)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull-half"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "halfskull"
 
 //***Wasteland floor and rock turfs here.
@@ -237,12 +237,12 @@
 			dug_closed = TRUE
 			close(user)
 		else if(open(user, force = TRUE))
-			if (user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID))
+			if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
 				user.add_mood_event("morbid_graverobbing", /datum/mood_event/morbid_graverobbing)
 			else
 				user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 			if(lead_tomb && first_open)
-				if(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID))
+				if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
 					to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
 				else
 					user.gain_trauma(/datum/brain_trauma/magic/stalker)

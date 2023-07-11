@@ -132,6 +132,8 @@
 
 
 /datum/disease/proc/cure(add_resistance = TRUE)
+	if(severity == DISEASE_SEVERITY_UNCURABLE) //aw man :(
+		return
 	if(affected_mob)
 		if(add_resistance && (disease_flags & CAN_RESIST))
 			LAZYOR(affected_mob.disease_resistances, GetDiseaseID())

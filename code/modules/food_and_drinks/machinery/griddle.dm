@@ -83,6 +83,13 @@
 
 /obj/machinery/griddle/attack_hand(mob/user, list/modifiers)
 	. = ..()
+	toggle_mode()
+
+/obj/machinery/griddle/attack_robot(mob/user)
+	. = ..()
+	toggle_mode()
+
+/obj/machinery/griddle/proc/toggle_mode()
 	on = !on
 	if(on)
 		begin_processing()

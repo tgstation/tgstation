@@ -88,7 +88,7 @@
 
 /datum/disease/advance/carpellosis/proc/gnash_someone()
 	var/mob/living/carbon/human/target = find_nearby_human()
-	if(isnull(target) || !target.get_bodypart(BODY_ZONE_HEAD)) // Need mouth to gnash
+	if(isnull(target) || !affected_mob.get_bodypart(BODY_ZONE_HEAD)) // Need mouth to gnash
 		to_chat(affected_mob, span_warning("You want to gnash at someone..."))
 		return
 	to_chat(affected_mob, span_warning("[target.name] makes you angry for some reason..."))
