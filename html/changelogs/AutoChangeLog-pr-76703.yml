@@ -1,0 +1,5 @@
+author: "YesterdaysPromise"
+delete-after: True
+changes:
+  - image: "added sprites for different variants of scrolls."
+  - image: "modified couple posters with ghost pixels."

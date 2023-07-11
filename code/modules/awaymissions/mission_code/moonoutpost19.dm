@@ -3,7 +3,7 @@
 /obj/structure/fluff/minepost
 	name = "wooden post"
 	desc = "A sturdy space-wood post, capable of holding up a mineshaft."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "minepost"
 	density = FALSE
 
