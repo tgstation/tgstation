@@ -414,7 +414,7 @@
 	if(do_after(user, 30))
 		if(eyes)
 			to_chat(user, span_notice("the contacts seamlessly merge with your iris."))
-			eyes.flash_protect = FLASH_PROTECTION_WELDER
+			eyes.flash_protect += FLASH_PROTECTION_WELDER
 			to_chat(user, span_warning("The [src] disintegrates into nothing."))
 			qdel(src)
 		else
