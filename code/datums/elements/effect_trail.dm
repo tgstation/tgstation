@@ -8,7 +8,7 @@
 	/// The effect used for the trail generation.
 	var/chosen_effect
 
-/datum/element/effect_trail/Attach(datum/target, chosen_effect)
+/datum/element/effect_trail/Attach(datum/target, chosen_effect = /obj/effect/forcefield/cosmic_field)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
