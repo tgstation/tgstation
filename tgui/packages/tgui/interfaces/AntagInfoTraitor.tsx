@@ -1,9 +1,9 @@
-import { useBackend } from '../../backend';
+import { useBackend } from '../backend';
 import { multiline } from 'common/string';
-import { BlockQuote, Button, Dimmer, Section, Stack } from '../../components';
+import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
 import { BooleanLike } from 'common/react';
-import { Window } from '../../layouts';
-import { ObjectivePrintout, Objective } from './Objectives';
+import { Window } from '../layouts';
+import { ObjectivePrintout, Objective } from './common/Objectives';
 
 const allystyle = {
   fontWeight: 'bold',

@@ -1,8 +1,8 @@
-import { useBackend } from '../../backend';
-import { Box, Collapsible, Divider, LabeledList, Section, Stack } from '../../components';
-import { Objective } from './Objectives';
+import { useBackend } from '../backend';
+import { Box, Collapsible, Divider, LabeledList, Section, Stack } from '../components';
+import { Objective } from './common/Objectives';
 
-import { Window } from '../../layouts';
+import { Window } from '../layouts';
 
 type Data = {
   color: string;

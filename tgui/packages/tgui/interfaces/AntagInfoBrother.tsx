@@ -1,23 +1,24 @@
-import { useBackend } from '../../backend';
-import { Section, Stack } from '../../components';
-import { Window } from '../../layouts';
-import { ObjectivePrintout, Objective } from './Objectives';
+import { useBackend } from '../backend';
+import { Section, Stack } from '../components';
+import { Window } from '../layouts';
+import { ObjectivePrintout, Objective } from './common/Objectives';
 
 type Info = {
   antag_name: string;
   objectives: Objective[];
+  brothers: string;
 };
 
-export const AntagInfoGeneric = (props, context) => {
+export const AntagInfoBrother = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const { antag_name, objectives } = data;
+  const { antag_name, brothers, objectives } = data;
   return (
     <Window width={620} height={250}>
       <Window.Content>
         <Section scrollable fill>
           <Stack vertical>
             <Stack.Item textColor="red" fontSize="20px">
-              You are the {antag_name}!
+              You are the {antag_name} of {brothers}!
             </Stack.Item>
             <Stack.Item>
               <ObjectivePrintout objectives={objectives} />

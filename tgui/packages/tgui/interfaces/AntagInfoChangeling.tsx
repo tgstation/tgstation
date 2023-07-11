@@ -1,8 +1,8 @@
 import { multiline } from 'common/string';
-import { useBackend, useSharedState } from '../../backend';
-import { Button, Dimmer, Dropdown, Section, Stack, NoticeBox } from '../../components';
-import { Window } from '../../layouts';
-import { ObjectivePrintout, Objective } from './Objectives';
+import { useBackend, useSharedState } from '../backend';
+import { Button, Dimmer, Dropdown, Section, Stack, NoticeBox } from '../components';
+import { Window } from '../layouts';
+import { ObjectivePrintout, Objective } from './common/Objectives';
 
 const hivestyle = {
   fontWeight: 'bold',

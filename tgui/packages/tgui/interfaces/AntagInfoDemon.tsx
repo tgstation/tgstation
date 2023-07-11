@@ -1,8 +1,8 @@
-import { useBackend } from '../../backend';
-import { Box, Section, Stack } from '../../components';
+import { useBackend } from '../backend';
+import { Box, Section, Stack } from '../components';
 import { BooleanLike } from 'common/react';
-import { Window } from '../../layouts';
-import { ObjectivePrintout, Objective } from './Objectives';
+import { Window } from '../layouts';
+import { ObjectivePrintout, Objective } from './common/Objectives';
 
 const jauntstyle = {
   color: 'lightblue',

@@ -1,7 +1,7 @@
-import { useBackend } from '../../backend';
-import { Box, Section, Stack } from '../../components';
-import { Window } from '../../layouts';
-import { ObjectivePrintout, Objective } from './Objectives';
+import { useBackend } from '../backend';
+import { Box, Section, Stack } from '../components';
+import { Window } from '../layouts';
+import { ObjectivePrintout, Objective } from './common/Objectives';
 
 const teleportstyle = {
   color: 'yellow',
