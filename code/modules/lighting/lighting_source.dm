@@ -306,61 +306,67 @@
 		var/uses_multiz = !!GET_LOWEST_STACK_OFFSET(source_turf.z)
 		var/oldlum = source_turf.luminosity
 		source_turf.luminosity = CEILING(light_outer_range, 1)
-		if(uses_multiz)
+		if(!uses_multiz) // Yes I know this could be acomplished with an if in the for loop, but it's fukin lighting code man
 			for(var/turf/T in view(CEILING(light_outer_range, 1), source_turf))
-				if(!IS_OPAQUE_TURF(T))
-					if (!T.lighting_corners_initialised)
-						T.generate_missing_corners()
-					corners[T.lighting_corner_NE] = 0
-					corners[T.lighting_corner_SE] = 0
-					corners[T.lighting_corner_SW] = 0
-					corners[T.lighting_corner_NW] = 0
+				if(IS_OPAQUE_TURF(T))
+					continue
+				if (!T.lighting_corners_initialised)
+					T.generate_missing_corners()
+				corners[T.lighting_corner_NE] = 0
+				corners[T.lighting_corner_SE] = 0
+				corners[T.lighting_corner_SW] = 0
+				corners[T.lighting_corner_NW] = 0
 				turfs += T
 
-				var/turf/below = SSmapping.get_turf_below(T)
-				var/turf/previous = T
-				while(below)
-					// If we find a non transparent previous, end
-					if(!istransparentturf(previous))
-						break
-					if(IS_OPAQUE_TURF(below))
-						// If we're opaque but the tile above us is transparent, then we should be counted as part of the potential "space"
-						// Of this corner
-						break
-					if (!previous.lighting_corners_initialised)
-						previous.generate_missing_corners()
-					corners[previous.lighting_corner_NE] = 0
-					corners[previous.lighting_corner_SE] = 0
-					corners[previous.lighting_corner_SW] = 0
-					corners[previous.lighting_corner_NW] = 0
+			source_turf.luminosity = oldlum
+			return corners
 
-					// ANNND then we add the one below it
-					previous = below
-					below = SSmapping.get_turf_below(below)
+		for(var/turf/T in view(CEILING(light_outer_range, 1), source_turf))
+			if(IS_OPAQUE_TURF(T))
+				continue
+			if (!T.lighting_corners_initialised)
+				T.generate_missing_corners()
+			corners[T.lighting_corner_NE] = 0
+			corners[T.lighting_corner_SE] = 0
+			corners[T.lighting_corner_SW] = 0
+			corners[T.lighting_corner_NW] = 0
+			turfs += T
 
-				var/turf/above = SSmapping.get_turf_above(T)
-				while(above)
-					// If we find a non transparent turf, end
-					if(!istransparentturf(above) || IS_OPAQUE_TURF(above))
-						break
-					if (!above.lighting_corners_initialised)
-						above.generate_missing_corners()
-					corners[above.lighting_corner_NE] = 0
-					corners[above.lighting_corner_SE] = 0
-					corners[above.lighting_corner_SW] = 0
-					corners[above.lighting_corner_NW] = 0
+			var/turf/below = SSmapping.get_turf_below(T)
+			var/turf/previous = T
+			while(below)
+				// If we find a non transparent previous, end
+				if(!istransparentturf(previous))
+					break
+				if(IS_OPAQUE_TURF(below))
+					// If we're opaque but the tile above us is transparent, then we should be counted as part of the potential "space"
+					// Of this corner
+					break
+				// Now we do lighting things to it
+				if (!below.lighting_corners_initialised)
+					below.generate_missing_corners()
+				corners[below.lighting_corner_NE] = 0
+				corners[below.lighting_corner_SE] = 0
+				corners[below.lighting_corner_SW] = 0
+				corners[below.lighting_corner_NW] = 0
+				turfs += below
+				// ANNND then we add the one below it
+				previous = below
+				below = SSmapping.get_turf_below(below)
 
-					above = SSmapping.get_turf_above(above)
-		else // Yes I know this could be acomplished with an if in the for loop, but it's fukin lighting code man
-			for(var/turf/T in view(CEILING(light_outer_range, 1), source_turf))
-				if(!IS_OPAQUE_TURF(T))
-					if (!T.lighting_corners_initialised)
-						T.generate_missing_corners()
-					corners[T.lighting_corner_NE] = 0
-					corners[T.lighting_corner_SE] = 0
-					corners[T.lighting_corner_SW] = 0
-					corners[T.lighting_corner_NW] = 0
-				turfs += T
+			var/turf/above = SSmapping.get_turf_above(T)
+			while(above)
+				// If we find a non transparent turf, end
+				if(!istransparentturf(above) || IS_OPAQUE_TURF(above))
+					break
+				if (!above.lighting_corners_initialised)
+					above.generate_missing_corners()
+				corners[above.lighting_corner_NE] = 0
+				corners[above.lighting_corner_SE] = 0
+				corners[above.lighting_corner_SW] = 0
+				corners[above.lighting_corner_NW] = 0
+				turfs += above
+				above = SSmapping.get_turf_above(above)
 
 		source_turf.luminosity = oldlum
 
