@@ -11,7 +11,7 @@
 	/// List of refs to atoms vs when they can next move
 	var/list/next_move_cache = list()
 
-/datum/element/move_cooldown/Attach(datum/target, move_delay)
+/datum/element/move_cooldown/Attach(datum/target, move_delay = 1 SECONDS)
 	. = ..()
 	if (!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
