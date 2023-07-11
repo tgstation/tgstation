@@ -131,7 +131,7 @@
 	desc = "A bandana made from durathread, you wish it would provide some protection to its wearer, but it's far too thin..."
 	greyscale_colors = "#5c6d80"
 	flags_1 = NONE
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "bandana_durathread"
 
 /obj/item/clothing/mask/bandana/striped

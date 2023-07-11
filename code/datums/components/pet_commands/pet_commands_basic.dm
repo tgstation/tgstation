@@ -7,7 +7,7 @@
 /datum/pet_command/idle
 	command_name = "Stay"
 	command_desc = "Command your pet to stay idle in this location."
-	radial_icon = 'icons/obj/objects.dmi'
+	radial_icon = 'icons/obj/bed.dmi'
 	radial_icon_state = "dogbed"
 	speech_commands = list("sit", "stay", "stop")
 	command_feedback = "sits"
