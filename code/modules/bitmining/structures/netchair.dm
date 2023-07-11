@@ -18,8 +18,8 @@
 	max_integrity = 250
 	resistance_flags = NONE
 	/// The person sitting in this chair.
-	var/datum/weakref/voidrunner_ref
-	/// The current avatar for the voidrunner.
+	var/datum/weakref/bitminer_ref
+	/// The current avatar for the bitminer.
 	var/datum/weakref/avatar_ref
 	/// The selected outfit for the gamer chair.
 	var/datum/outfit/netsuit = /datum/outfit/job/miner
@@ -39,7 +39,7 @@
 	. = ..()
 	QDEL_NULL(netsuit)
 	cached_outfits.Cut()
-	var/mob/living/carbon/human/avatar/avatar = voidrunner_ref?.resolve()
+	var/mob/living/carbon/human/avatar/avatar = bitminer_ref?.resolve()
 	if(avatar)
 		avatar.disconnect()
 
@@ -97,7 +97,7 @@
 		current_avatar = generate_avatar(neo)
 
 	if(!current_avatar)
-		balloon_alert(neo, "There is no room for you in the virtual domain.")
+		balloon_alert(neo, "out of bandwidth!")
 		return
 
 	// Final check before we start the transfer
@@ -105,7 +105,7 @@
 		return
 
 	var/datum/weakref/neo_ref = WEAKREF(neo)
-	voidrunner_ref = neo_ref
+	bitminer_ref = neo_ref
 	server.occupant_refs += neo_ref
 	avatar_ref = WEAKREF(current_avatar)
 	current_avatar.owner = neo
@@ -113,7 +113,7 @@
 	neo.mind.transfer_to(current_avatar, TRUE)
 	playsound(current_avatar, 'sound/magic/repulse.ogg', 30, 2)
 
-/// Generates a new avatar for the voidrunner.
+/// Generates a new avatar for the bitminer.
 /obj/structure/netchair/proc/generate_avatar(mob/living/carbon/human/neo)
 	var/list/turf/possible_turfs = get_area_turfs(/area/station/virtual_domain/safehouse/exit, server.vdom.z_value)
 	if(!length(possible_turfs))

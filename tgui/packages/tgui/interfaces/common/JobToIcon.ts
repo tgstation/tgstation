@@ -6,6 +6,8 @@ export const JOB2ICON = {
   'Assistant': 'toolbox',
   'Atmospheric Technician': 'fan',
   'Bartender': 'cocktail',
+  'Bit Avatar': 'code-branch',
+  'Bitminer': 'code',
   'Botanist': 'seedling',
   'Captain': 'crown',
   'Cargo Technician': 'box',
@@ -48,7 +50,5 @@ export const JOB2ICON = {
   'Station Engineer': 'gears',
   'Syndicate Operative': 'dragon',
   'Virologist': 'virus',
-  'Voidrunner': 'code',
-  'Void Avatar': 'code-branch',
   'Warden': 'handcuffs',
 } as const;

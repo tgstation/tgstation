@@ -34,6 +34,9 @@
 	if(!console)
 		panic_find_console()
 
+	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(stop_domain))
+
+
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
 	stop_domain()
@@ -58,7 +61,7 @@
 
 /// Generates a new virtual domain
 /obj/machinery/quantum_server/proc/generate_virtual_domain(mob/user)
-	balloon_alert(user, "Generating virtual domain...")
+	balloon_alert(user, "initializing virtual domain...")
 	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
 
 	var/datum/map_template/virtual_domain/base_zone = new()
@@ -110,7 +113,7 @@
 		to_replace.ChangeTurf(to_generate.biome_turf)
 
 	generated_domain = to_generate
-	balloon_alert(user, "Virtual domain generated.")
+	balloon_alert(user, "virtual domain generated.")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
 
 	return TRUE
@@ -129,11 +132,11 @@
 /// Sets the current virtual domain to the given map template
 /obj/machinery/quantum_server/proc/set_domain(mob/user, id)
 	if(!id)
-		balloon_alert(user, "No domain specified.")
+		balloon_alert(user, "no domain specified.")
 		return FALSE
 
 	if(length(occupant_refs))
-		balloon_alert(user, "Cannot change domain while server is occupied.")
+		balloon_alert(user, "error: connected clients!")
 		return FALSE
 
 	var/datum/map_template/virtual_domain/to_generate
@@ -143,7 +146,7 @@
 			break
 
 	if(!load_domain(user, to_generate))
-		balloon_alert(user, "Failed to generate domain.")
+		balloon_alert(user, "failed to generate domain.")
 		return FALSE
 
 	return TRUE
@@ -153,11 +156,7 @@
 	if(!generated_domain)
 		return
 
-	for(var/datum/weakref/user_ref in occupant_refs)
-		var/mob/living/carbon/human/avatar/avatar = user_ref.resolve()
-
-		if(avatar)
-			avatar.disconnect()
+	SEND_SIGNAL(COMSIG_QSERVER_DISCONNECT)
 
 	qdel(generated_domain)
 
