@@ -38,8 +38,7 @@
 	var/list/new_edge_turfs = new_turfs[EDGE_TURFS_KEY]
 
 	for(var/turf/old_turf as anything in field_turfs)
-		if(!(old_turf in new_field_turfs))
-			cleanup_field_turf(old_turf)
+		cleanup_field_turf(old_turf)
 	for(var/turf/old_turf as anything in edge_turfs)
 		cleanup_edge_turf(old_turf)
 
