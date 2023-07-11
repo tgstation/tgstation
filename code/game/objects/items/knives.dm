@@ -122,6 +122,7 @@
 
 /obj/item/knife/combat
 	name = "combat knife"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "buckknife"
 	desc = "A military combat utility survival knife."
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
@@ -133,6 +134,7 @@
 
 /obj/item/knife/combat/survival
 	name = "survival knife"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "survivalknife"
 	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
 	desc = "A hunting grade survival knife."
@@ -143,6 +145,7 @@
 /obj/item/knife/combat/bone
 	name = "bone dagger"
 	inhand_icon_state = "bone_dagger"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "bone_dagger"
 	worn_icon_state = "bone_dagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
