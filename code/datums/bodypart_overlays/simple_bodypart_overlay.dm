@@ -27,5 +27,5 @@
 
 ///A creampie drawn on the head
 /datum/bodypart_overlay/simple/creampie
-	icon_state = "creampie"
+	icon_state = "creampie_human"
 	layers = EXTERNAL_FRONT

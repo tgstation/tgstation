@@ -55,7 +55,7 @@
 	var/mob/living/current = owner.current || mob_override
 	handle_clown_mutation(current, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	current.faction |= FACTION_CULT
-	current.grant_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
+	current.grant_language(/datum/language/narsie, source = LANGUAGE_CULTIST)
 
 	var/datum/action/innate/cult/comm/communion = new
 	communion.Grant(current)
@@ -78,7 +78,7 @@
 	var/mob/living/current = owner.current || mob_override
 	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= FACTION_CULT
-	current.remove_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
+	current.remove_language(/datum/language/narsie, source = LANGUAGE_CULTIST)
 
 	QDEL_NULL(vote_ability)
 	for(var/datum/action/innate/cult/cult_buttons in owner.current.actions)

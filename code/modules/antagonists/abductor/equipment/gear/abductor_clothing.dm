@@ -94,12 +94,17 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc
 		new /obj/effect/temp_visual/dir_setting/ninja/cloak(get_turf(wearer), wearer.dir)
-		wearer.name_override = disguise.name
+		RegisterSignal(wearer, COMSIG_HUMAN_GET_VISIBLE_NAME, PROC_REF(return_disguise_name))
 		wearer.icon = disguise.icon
 		wearer.icon_state = disguise.icon_state
 		wearer.cut_overlays()
 		wearer.add_overlay(disguise.overlays)
 		wearer.update_held_items()
+
+/obj/item/clothing/suit/armor/abductor/vest/proc/return_disguise_name(mob/living/carbon/human/source, list/identity)
+	SIGNAL_HANDLER
+	identity[VISIBLE_NAME_FACE] = disguise.name
+	identity[VISIBLE_NAME_ID] = ""
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
@@ -108,7 +113,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc
 		new /obj/effect/temp_visual/dir_setting/ninja(get_turf(wearer), wearer.dir)
-		wearer.name_override = null
+		UnregisterSignal(wearer, COMSIG_HUMAN_GET_VISIBLE_NAME)
 		wearer.cut_overlays()
 		wearer.regenerate_icons()
 

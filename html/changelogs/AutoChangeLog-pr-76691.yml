@@ -1,0 +1,8 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "PAIs can no longer be inserted into Bots"
+  - rscadd: "Bots can now have their sapience toggled by anyone with access to their settings panel"
+  - rscadd: "Bots which exist on the map at the start of the round automatically have this setting enabled"
+  - qol: "Bots, Regal Rats, and Cargorilla now appear in the Spawners menu if you are dead"
+  - qol: "Bots can be renamed from their maintenance panel"

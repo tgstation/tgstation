@@ -141,6 +141,36 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/grey/shitter
 	rank = "Tidemaster"
 
+/obj/effect/mob_spawn/ghost_role/human/pirate/irs
+	name = "\improper Space IRS sleeper"
+	desc = "A surprisingly clean cryogenic sleeper. You can see your reflection on the sides!"
+	density = FALSE
+	you_are_text = "You are an agent working for the space IRS"
+	flavour_text = "Not even in the expanse of the expanding universe can someone evade the tax man! Whether you are just a well disciplined and professional pirate gang or an actual agent from a local polity. You will squeeze the station dry of it's income regardless! Through peaceful means or otherwise..."
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	prompt_name = "An agent of the space IRS"
+	outfit = /datum/outfit/pirate/irs
+	fluff_spawn = null // dirs are fucked and I don't have the energy to deal with it
+	rank = "Agent"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/irs/generate_pirate_name(spawn_gender)
+	var/first_name
+	switch(spawn_gender)
+		if(MALE)
+			first_name = pick(GLOB.first_names_male)
+		if(FEMALE)
+			first_name = pick(GLOB.first_names_female)
+		else
+			first_name = pick(GLOB.first_names)
+
+	return "[rank] [first_name]"
+
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/irs/auditor
+	rank = "Head Auditor"
+	outfit = /datum/outfit/pirate/irs/auditor
+
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous
 	name = "lustrous crystal"
 	desc = "A crystal housing a mutated Ethereal, it emanates a foreboding glow."

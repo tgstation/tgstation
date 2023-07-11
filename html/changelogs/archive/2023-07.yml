@@ -439,3 +439,75 @@
   - qol: Produce consoles now have tables near them.
   YesterdaysPromise:
   - rscadd: Added Interdyne ModSuits for Interdyne pirates.
+2023-07-10:
+  DATA-xPUNGED:
+  - qol: The Warden's locker now has a garment bag
+  Fikou:
+  - bugfix: service borg apparatus now works on stoves and griddles and ovens
+  - qol: borgs can now activate stoves and griddles
+  - rscadd: rnd can research a cookbook for service borgs
+  FlufflesTheDog:
+  - bugfix: You can once again directly place patients on operating tables
+  Jacquerel:
+  - rscadd: Golems can scoop sand (or snow) off the floor by clicking on it.
+  Nimowa:
+  - bugfix: Fully charged APCs will now actually be fully charged, instead of nearly
+      empty.
+  Riggle:
+  - spellcheck: fix suspicious_logins
+  Youtubeboy139:
+  - image: Added new Security Cap sprite
+  distributivgesetz:
+  - spellcheck: Fixed some underscores in spiderling names.
+2023-07-11:
+  ATHATH:
+  - qol: Emagged organ harvesters will no longer refuse a victim that has items on
+      their person, such as the handcuffs they've been bound with.
+  CRITAWAKETS:
+  - bugfix: Hereditary Manifold Sickness, and other uncurable diseases, have been
+      found to no longer disappear upon miraculous acts of divine restoration. In
+      addition, viral bonding no longer makes you into a carrier for those aswell.
+  ChungusGamer666:
+  - rscadd: Nightmare vision goggles now give you mare vision
+  - bugfix: Creampies will no longer irreparably stain your face
+  Ghommie:
+  - bugfix: Fixes venomous projectiles for real, and invisible arrow sprites.
+  - rscadd: Added cardboard IDs to the game. They can be crafted with a cardboard
+      sheet and wirecutters and modified with a writing tool. While worn, these will
+      modify the visible name of the wearer just like actual IDs, though they aren't
+      real IDs and won't work as such.
+  Helg2:
+  - bugfix: androids now have proper robotic organs and no appendix.
+  - bugfix: snakes, security, spiders and skeletons phobias now properly react on
+      mobs
+  Jacquerel:
+  - rscadd: AI-controlled spiders will make more web-shaped webs.
+  JohnFulpWillard:
+  - qol: Clear PDAs now has all themes in their themify app by default.
+  Melbert:
+  - bugfix: Fix ling revival for full-dead lings
+  - refactor: Refactored language holders, making species changes not delete all of
+      your known languages
+  Seven:
+  - balance: Only 2 smugglers satchels will spawn on the station at roundstart, down
+      from 10
+  TerraGS:
+  - bugfix: The military surplus trader encountered by explorer drones will now correctly
+      ask for armor rather than "suit"
+  Time-Green:
+  - balance: Metalgen cannot spawn as a random chem anymore (strange seeds, maintpills
+      etc)
+  carshalash:
+  - bugfix: ' Infinite spider eggs are no more.'
+  cnleth:
+  - image: Engineering scanner goggles are now yellow and not green when in meson
+      mode
+  - image: Atmospheric thermal imaging goggles are now green
+  mc-oofert:
+  - bugfix: morgue units can no longer hold ghosts
+  - bugfix: Cake cats/butter bear now grab the ghost of the brain used in their making
+  nikothedude:
+  - bugfix: Quantum relays now process, meaning DOS attacks actually function
+  san7890:
+  - admin: If a circuit component outputs a radio signal, it should now be logged
+      in list-signalers.
