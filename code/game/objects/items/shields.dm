@@ -342,7 +342,7 @@
 	force = 10
 	damtype = STAMINA
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = null
+	slot_flags = NONE
 	///Shield gains bonus blocking for these weapons
 	var/static/list/countered_object = list(/obj/item/spear/pillow, /obj/item/shield/pillow, /obj/item/pillow)
 
