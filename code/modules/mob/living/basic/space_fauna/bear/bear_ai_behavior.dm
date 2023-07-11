@@ -26,5 +26,5 @@
 /datum/ai_behavior/hunt_target/find_honeycomb
 	always_reset_target = TRUE
 
-/datum/ai_behavior/hunt_target/find_honeycomb/target_caught(mob/living/hunter, obj/item/food/honeycomb/food_target)
+/datum/ai_behavior/hunt_target/find_honeycomb/target_caught(mob/living/hunter, obj/item/food/grown/banana/food_target)
 	hunter.start_pulling(food_target)

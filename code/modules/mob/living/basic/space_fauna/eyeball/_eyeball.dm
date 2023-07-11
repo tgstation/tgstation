@@ -77,7 +77,7 @@
 
 /mob/living/basic/eyeball/attackby(obj/item/weapon, mob/living/carbon/human/user, list/modifiers)
 	. = ..()
-	if(!weapon.force && !user.combat_mode)
+	if(!weapon.force && !(user.istate & ISTATE_HARM))
 		return
 	if(crying)
 		return

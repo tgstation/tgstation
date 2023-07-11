@@ -11,14 +11,6 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/pig,
 	/mob/living/basic/rabbit,
 	/mob/living/basic/sheep,
-	/mob/living/simple_animal/pet,
-	/mob/living/simple_animal/parrot,
-	/mob/living/simple_animal/sloth,
-	/mob/living/simple_animal/hostile/retaliate/goat,
-	/mob/living/basic/chicken,
-	/mob/living/simple_animal/hostile/retaliate/snake,
-	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
-	/mob/living/simple_animal/bot/mulebot,
 	/mob/living/simple_animal/bot/secbot/beepsky,
 )))
 

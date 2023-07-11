@@ -14,7 +14,7 @@
 
 /datum/component/tree_climber/RegisterWithParent()
 	RegisterSignals(parent, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_CLIMB_TREE), PROC_REF(climb_tree))
-	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/tree_climber/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_CLIMB_TREE, COMSIG_ATOM_EXAMINE))
@@ -81,9 +81,9 @@
 
 /datum/component/tree_climber/proc/register_tree_signals()
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(remove_from_tree))
-	RegisterSignal(current_tree, COMSIG_PREQDELETED, PROC_REF(remove_from_tree))
+	RegisterSignal(current_tree, COMSIG_PARENT_PREQDELETED, PROC_REF(remove_from_tree))
 
 /datum/component/tree_climber/proc/remove_tree_signals()
 	UnregisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE)
-	UnregisterSignal(current_tree, COMSIG_PREQDELETED)
+	UnregisterSignal(current_tree, COMSIG_PARENT_PREQDELETED)
 
