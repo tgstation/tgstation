@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Bile/Vileworms now have the same projectile and thrown weapon resistances of other mining mobs."

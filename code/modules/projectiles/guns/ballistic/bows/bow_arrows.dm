@@ -2,7 +2,7 @@
 /obj/item/ammo_casing/arrow
 	name = "arrow"
 	desc = "Stabby Stabman!"
-	icon = 'icons/obj/weapons/guns/bows/arrows.dmi'
+	icon = 'icons/obj/weapons/bows/arrows.dmi'
 	icon_state = "arrow"
 	base_icon_state = "arrow"
 	inhand_icon_state = "arrow"
@@ -27,7 +27,17 @@
 /obj/projectile/bullet/arrow
 	name = "arrow"
 	desc = "Ow! Get it out of me!"
-	icon = 'icons/obj/weapons/guns/bows/arrows.dmi'
+	icon = 'icons/obj/weapons/bows/arrows.dmi'
+	icon_state = "arrow_projectile"
+	damage = 50
+	speed = 1
+	range = 25
+
+///*sigh* NON-REUSABLE base arrow projectile. In the future: let's componentize the reusable subtype, jesus
+/obj/projectile/bullet/arrow
+	name = "arrow"
+	desc = "Ow! Get it out of me!"
+	icon = 'icons/obj/weapons/bows/arrows.dmi'
 	icon_state = "arrow_projectile"
 	damage = 50
 	speed = 1
