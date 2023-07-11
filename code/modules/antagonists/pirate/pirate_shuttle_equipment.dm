@@ -154,7 +154,7 @@
 //Pad & Pad Terminal
 /obj/machinery/piratepad
 	name = "cargo hold pad"
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "lpad-idle-off"
 	///This is the icon_state that this telepad uses when it's not in use.
 	var/idle_state = "lpad-idle-off"
