@@ -94,6 +94,9 @@
 		diag_hud_set_mulebotcell()
 	return ..()
 
+/mob/living/simple_animal/bot/mulebot/update_stamina() //we override this so that the speed changes from our motor wires won't be reset every time our health is updated
+	return
+
 /mob/living/simple_animal/bot/mulebot/examine(mob/user)
 	. = ..()
 	if(bot_cover_flags & BOT_COVER_OPEN)
