@@ -1,5 +1,5 @@
-import { BlockQuote, Stack } from '../components';
-import { Window } from '../layouts';
+import { BlockQuote, Stack } from '../../components';
+import { Window } from '../../layouts';
 
 const goodstyle = {
   color: 'lightgreen',

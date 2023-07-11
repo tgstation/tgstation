@@ -1,5 +1,5 @@
-import { BlockQuote, LabeledList, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { BlockQuote, LabeledList, Section, Stack } from '../../components';
+import { Window } from '../../layouts';
 
 const tipstyle = {
   color: 'white',
