@@ -158,8 +158,47 @@
 	open(forced = BYPASS_DOOR_CHECKS) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
 	return
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/left, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/right, 0)
+/obj/item/assembly/control/icts_call
+	name = "tram call button"
+	desc = "A small device used to bring trams to you."
+	///ID to link to allow us to link to one specific tram in the world
+	var/specific_transport_id = TRAMSTATION_LINE_1
+	id = 0
+
+/obj/item/assembly/control/icts_call/Initialize(mapload)
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/assembly/control/icts_call/LateInitialize()
+	. = ..()
+	RegisterSignal(SSicts_transport, COMSIG_ICTS_RESPONSE, PROC_REF(call_response))
+
+/obj/item/assembly/control/icts_call/activate()
+	if(cooldown)
+		return
+	cooldown = TRUE
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
+
+	SEND_ICTS_SIGNAL()
+
+	if(!tram || !tram.controller_operational) //tram is QDEL or has no power
+		say("The tram is not in service. Please send a technician to repair the internals of the tram.")
+		return
+	if(tram.travelling) //in use
+		say("The tram is already travelling to [tram.idle_platform].")
+		return
+	if(!destination_platform)
+		return
+	var/obj/effect/landmark/icts/nav_beacon/tram/current_location = destination_platform.resolve()
+	if(!current_location)
+		return
+	if(tram.idle_platform == current_location) //already here
+		say("The tram is already here. Please board the tram and select a destination.")
+		return
+
+	say("The tram has been called to [current_location.name]. Please wait for its arrival.")
+	tram.tram_travel(current_location)
+
 
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING
