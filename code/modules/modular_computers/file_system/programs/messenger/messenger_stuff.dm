@@ -49,15 +49,15 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 /datum/pda_chat
 	/// The cached name of the recipient, so we can
 	/// identify this chat even after the recipient is deleted
-	var/cached_name = null
+	var/cached_name = "Unknown"
+	/// The cached job of the recipient
+	var/cached_job = "Unknown"
 	/// Weakref to the recipient messenger
 	var/datum/weakref/recipient = null
 	/// A list of messages in this chat
 	var/list/datum/pda_msg/messages = list()
 	/// Used to determine if we should show this in recents
 	var/visible_in_recents = FALSE
-	/// Used to label chats where the owner is no longer available
-	var/owner_deleted = FALSE
 	/// Used to determine if you can talk in a chat
 	var/can_reply = TRUE
 
@@ -73,11 +73,21 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 /// Returns this datum as an associative list, used for ui_data calls.
 /datum/pda_chat/proc/get_data()
 	var/list/data = list()
-	var/datum/computer_file/program/messenger/recp = recipient.resolve()
-	if(recp)
-		cached_name = get_messenger_name(recp)
 
-	data["recipient_name"] = cached_name
+	var/list/recp_data = list()
+
+	var/datum/computer_file/program/messenger/recp = recipient.resolve()
+	if(istype(recp))
+		recp_data["name"] = recp.computer.saved_identification
+		recp_data["job"] = recp.computer.saved_job
+		recp_data["ref"] = recipient.reference
+	else
+		recp_data["name"] = cached_name
+		recp_data["job"] = cached_job
+		recp_data["ref"] = null
+
+	data["ref"] = REF(src)
+	data["recp"] = recp_data
 
 	var/list/messages_data = list()
 	for(var/datum/pda_msg/message in messages)
@@ -85,10 +95,21 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	data["messages"] = messages
 
 	data["visible"] = visible_in_recents
-	data["owner_deleted"] = owner_deleted
 	data["can_reply"] = can_reply
 
 	return data
+
+/datum/pda_chat/proc/get_recp_name()
+	var/datum/computer_file/program/messenger/recp = recipient.resolve()
+	if(istype(recp))
+		cached_name = recp.computer.saved_identification
+	return cached_name
+
+/datum/pda_chat/proc/get_recp_job()
+	var/datum/computer_file/program/messenger/recp = recipient.resolve()
+	if(istype(recp))
+		cached_job = recp.computer.saved_job
+	return cached_job
 
 /datum/pda_msg
 	var/message

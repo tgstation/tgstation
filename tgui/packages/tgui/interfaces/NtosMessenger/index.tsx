@@ -1,41 +1,18 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend, useLocalState } from '../../backend';
 import { createSearch } from 'common/string';
-import { Box, Button, Dimmer, Icon, Section, Stack, Input, TextArea } from '../components';
-import { NtosWindow } from '../layouts';
-import { Component, createRef, RefObject, SFC } from 'inferno';
-import { sanitizeText } from '../sanitize';
+import { Box, Button, Icon, Section, Stack, Input, TextArea } from '../../components';
+import { NtosWindow } from '../../layouts';
+import { Component, createRef, RefObject } from 'inferno';
 import { BooleanLike } from 'common/react';
 
-import '../styles/interfaces/NtosMessenger.scss';
-
-type NtMessage = {
-  contents: string;
-  outgoing: BooleanLike;
-  photo_path: string;
-  everyone: BooleanLike;
-};
-
-type NtMessenger = {
-  name: string;
-  job: string;
-  ref: string;
-};
-
-type NtChat = {
-  recipient_name: string;
-  messages: NtMessage[];
-  visible: BooleanLike;
-  owner_deleted: BooleanLike;
-  can_reply: BooleanLike;
-};
-
-type NtMessengers = Record<string, NtMessenger>;
+import { NtChat, NtMessengers, NtMessenger } from './types';
+import { ChatMessage, NoIDDimmer } from './auxiliary';
 
 type NtosMessengerData = {
-  is_silicon: BooleanLike;
   can_spam: BooleanLike;
-  owner: string;
-  saved_chats: NtChat[];
+  is_silicon: BooleanLike;
+  owner: NtMessenger | null;
+  saved_chats: Record<string, NtChat>;
   unreads: Record<string, number>;
   messengers: NtMessengers;
   sort_by_job: BooleanLike;
@@ -48,40 +25,15 @@ type NtosMessengerData = {
   sending_virus: BooleanLike;
 };
 
-const NoIDDimmer = () => {
-  return (
-    <Dimmer>
-      <Stack align="baseline" vertical>
-        <Stack.Item>
-          <Stack ml={-2}>
-            <Stack.Item>
-              <Icon color="red" name="address-card" size={10} />
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
-        <Stack.Item fontSize="18px">
-          Please imprint an ID to continue.
-        </Stack.Item>
-      </Stack>
-    </Dimmer>
-  );
-};
-
 export const NtosMessenger = (_props: any, context: any) => {
   const { act, data } = useBackend<NtosMessengerData>(context);
-  const { messages, viewing_messages_of } = data;
+  const { saved_chats, open_chat } = data;
 
   let content: JSX.Element;
-  if (viewing_messages_of !== null) {
-    let filteredMsgs = messages.filter((msg) =>
-      msg.outgoing
-        ? msg.targets.includes(viewing_messages_of.ref)
-        : viewing_messages_of.ref === msg.sender
-    );
+  if (open_chat !== null) {
     content = (
       <ChatScreen
-        msgs={filteredMsgs}
-        recp={viewing_messages_of}
+        chat={saved_chats[open_chat]}
         onReturn={() => act('PDA_viewMessages', { ref: null })}
       />
     );
@@ -111,10 +63,7 @@ const ContactsScreen = (_props: any, context: any) => {
     sending_virus,
   } = data;
 
-  const messengerArray = Object.entries(messengers).map(([k, v]) => {
-    v.ref = k;
-    return v;
-  });
+  const messengerArray = Object.entries(messengers).map(([_, v]) => v);
 
   const [searchUser, setSearchUser] = useLocalState<string>(
     context,
@@ -147,7 +96,7 @@ const ContactsScreen = (_props: any, context: any) => {
             <Button
               icon="bell"
               content={alert_silenced ? 'Ringer: On' : 'Ringer: Off'}
-              onClick={() => act('PDA_ringer_status')}
+              onClick={() => act('PDA_toggleAlerts')}
             />
             <Button
               icon="address-card"
@@ -236,38 +185,8 @@ const ContactsScreen = (_props: any, context: any) => {
   );
 };
 
-type ChatMessageProps = {
-  isSelf: BooleanLike;
-  msg: string;
-  everyone?: BooleanLike;
-  photoPath?: string;
-};
-
-const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
-  const { msg, everyone, isSelf, photoPath } = props;
-  const text = {
-    __html: sanitizeText(msg),
-  };
-
-  return (
-    <Box className={`NtosMessenger__ChatMessage${isSelf ? '__outgoing' : ''}`}>
-      <Box
-        className="NtosMessenger__ChatMessage__content"
-        dangerouslySetInnerHTML={text}
-      />
-      {photoPath !== null && <Box as="img" src={photoPath} />}
-      {everyone && (
-        <Box className="NtosMessenger__ChatMessage__everyone">
-          Sent to everyone
-        </Box>
-      )}
-    </Box>
-  );
-};
-
 type ChatScreenProps = {
   onReturn: () => void;
-  recp: NtMessenger;
   chat: NtChat;
 };
 
@@ -278,6 +197,7 @@ type ChatScreenState = {
 
 class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   scrollRef: RefObject<HTMLDivElement>;
+
   state: ChatScreenState = {
     msg: '',
     canSend: true,
@@ -302,7 +222,7 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     _prevState: ChatScreenState,
     _snapshot: any
   ) {
-    if (prevProps.msgs.length !== this.props.msgs.length) {
+    if (prevProps.chat.messages.length !== this.props.chat.messages.length) {
       this.scrollToBottom();
     }
   }
@@ -318,9 +238,7 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     if (this.state.msg === '') return;
     const { act } = useBackend<NtosMessengerData>(this.context);
     act('PDA_sendMessage', {
-      ref: this.props.recp.ref,
-      name: this.props.recp.name,
-      job: this.props.recp.job,
+      ref: this.props.chat.ref,
       msg: this.state.msg,
     });
     this.setState({ msg: '', canSend: false });
@@ -333,17 +251,19 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
   render() {
     const { act } = useBackend<NtosMessengerData>(this.context);
-    const { recp, onReturn, msgs } = this.props;
+    const { onReturn, chat } = this.props;
     const { msg, canSend } = this.state;
 
-    let lastMsgRef = '';
+    const msgs = chat.messages;
+
+    let lastOutgoing: boolean = false;
     let filteredMessages: JSX.Element[] = [];
 
     for (let index = 0; index < msgs.length; index++) {
       let message = msgs[index];
 
-      const isSwitch = lastMsgRef !== message.sender;
-      lastMsgRef = message.sender;
+      const isSwitch = lastOutgoing !== message.outgoing;
+      lastOutgoing = !!message.outgoing;
 
       filteredMessages.push(
         <Stack.Item key={index} mt={isSwitch ? 2 : 0.5}>
@@ -365,7 +285,7 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             <Button.Confirm
               icon="trash-can"
               content="Delete chat"
-              onClick={() => act('PDA_clearMessages', { ref: recp.ref })}
+              onClick={() => act('PDA_clearMessages', { ref: chat.ref })}
             />
           </Section>
         </Stack.Item>
@@ -375,11 +295,11 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             scrollable
             fill
             fitted
-            title={`${recp.name} (${recp.job})`}
+            title={`${chat.recp.name} (${chat.recp.job})`}
             scrollableRef={this.scrollRef}>
             <Stack vertical fill className="NtosMessenger__ChatLog">
               <Stack.Item textAlign="center" fontSize={1}>
-                This is the beginning of your chat with {recp.name}.
+                This is the beginning of your chat with {chat.recp.name}.
               </Stack.Item>
               <Stack.Divider />
               {filteredMessages}
@@ -392,7 +312,7 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             <Stack fill>
               <Stack.Item>
                 <Input
-                  placeholder={`Send message to ${recp.name}...`}
+                  placeholder={`Send message to ${chat.recp.name}...`}
                   fluid
                   autofocus
                   justify

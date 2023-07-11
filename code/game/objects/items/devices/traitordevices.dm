@@ -274,6 +274,13 @@ effective or pretty fucking useless.
 
 		animate(user,alpha = clamp(255 - charge,0,255),time = 10)
 
+/proc/is_within_jammer_range(atom/source)
+	var/turf/position = get_turf(source)
+	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
+		var/turf/jammer_turf = get_turf(jammer)
+		if(position?.z == jammer_turf.z && (get_dist(position, jammer_turf) <= jammer.range))
+			return TRUE
+	return FALSE
 
 /obj/item/jammer
 	name = "radio jammer"

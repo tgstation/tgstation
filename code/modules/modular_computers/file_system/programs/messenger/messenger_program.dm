@@ -19,9 +19,9 @@
 	// Whether or not this device is currently hidden from the message monitor.
 	var/monitor_hidden = FALSE
 	/// great wisdom from PDA.dm - "no spamming" (prevents people from spamming the same message over and over)
-	var/last_text
+	COOLDOWN_DECLARE(last_text)
 	/// even more wisdom from PDA.dm - "no everyone spamming" (prevents people from spamming the same message over and over)
-	var/last_text_everyone
+	COOLDOWN_DECLARE(last_text_everyone)
 	/// Whether or not we're in a mime PDA.
 	var/mime_mode = FALSE
 	/// Whether this app can send messages to all.
@@ -89,7 +89,7 @@
 		data["job"] = msgr.computer.saved_job
 		data["ref"] = REF(msgr)
 
-		dictionary += list(data["ref"] = data)
+		dictionary[data["ref"]] = data
 
 	return dictionary
 
@@ -101,7 +101,7 @@
 		photo_path = deter_path
 
 /datum/computer_file/program/messenger/proc/can_send_everyone_message()
-	return (last_text && world.time < last_text + 10) || (last_text_everyone && world.time < last_text_everyone + 2 MINUTES)
+	return COOLDOWN_FINISHED(src, last_text) && COOLDOWN_FINISHED(src, last_text_everyone)
 
 /datum/computer_file/program/messenger/ui_state(mob/user)
 	if(issilicon(user))
@@ -114,10 +114,10 @@
 			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", ringtone, MESSENGER_RINGTONE_MAX_LENGTH)
 			var/mob/living/usr_mob = usr
 			if(!new_ringtone || !in_range(computer, usr_mob) || computer.loc != usr_mob)
-				return
+				return FALSE
 
 			if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, usr_mob, new_ringtone) & COMPONENT_STOP_RINGTONE_CHANGE)
-				return
+				return FALSE
 
 			ringtone = new_ringtone
 			return TRUE
@@ -135,12 +135,12 @@
 			return TRUE
 
 		if("PDA_clearMessages")
-			var/user_ref = params["ref"]
-			if(!(user_ref in saved_chats))
+			var/chat_ref = params["ref"]
+			if(!(chat_ref in saved_chats))
 				return FALSE
 
-			if(user_ref)
-				saved_chats.Remove(user_ref)
+			if(chat_ref)
+				saved_chats.Remove(chat_ref)
 			else
 				saved_chats = list()
 			viewing_messages_of = null
@@ -218,21 +218,21 @@
 			return TRUE
 
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
-	var/list/data = ..()
+	var/list/static_data = list()
 
-	data["can_spam"] = spam_mode
-	data["is_silicon"] = issilicon(user)
+	static_data["can_spam"] = spam_mode
+	static_data["is_silicon"] = issilicon(user)
 
-	return data
+	return static_data
 
 /datum/computer_file/program/messenger/ui_data(mob/user)
 	var/list/data = list()
 
-	var/list/chat_data = list()
+	var/list/chats_data = list()
 	for(var/chat_ref as anything in saved_chats)
 		var/datum/pda_chat/chat = saved_chats[chat_ref]
-		var/list/data = chat.get_data()
-		chat_data[chat_ref] = data
+		var/list/chat_data = chat.get_data()
+		chats_data[chat_ref] = chat_data
 
 	var/list/messengers = get_messengers()
 
@@ -241,7 +241,7 @@
 			"job" = computer.saved_job,
 			"ref" = REF(src)
 		) : null)
-	data["saved_chats"] = chat_data
+	data["saved_chats"] = chats_data
 	data["unreads"] = unread_chats
 	data["messengers"] = messengers
 	data["sort_by_job"] = sort_by_job
@@ -264,11 +264,11 @@
 /// Brings up the quick reply prompt to send a message.
 /datum/computer_file/program/messenger/proc/quick_reply_prompt(mob/living/user, datum/pda_chat/chat)
 	var/datum/computer_file/program/messenger/target = chat.recipient.resolve()
-	if(isnull(target) || isnull(target.computer))
+	if(!istype(target) || !istype(target.computer))
 		return
 	var/target_name = target.computer.saved_identification
 	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]", encode = FALSE)
-	send_message(user, list(target), input_message)
+	send_message(user, list(chat), input_message)
 
 /// Helper proc that sends a message to everyone
 /datum/computer_file/program/messenger/proc/send_message_to_all(mob/living/user, message)
@@ -288,8 +288,8 @@
 		var/datum/pda_chat/new_chat = create_chat(GLOB.TabletMessengers[missing_msgr])
 		chats += new_chat
 
-	send_message(user, chats, message, everyone = TRUE)
-	last_text_everyone = world.time
+	if(send_message(user, chats, message, everyone = TRUE))
+		COOLDOWN_START(src, last_text_everyone, 2 MINUTES)
 
 /datum/computer_file/program/messenger/proc/create_chat(datum/computer_file/program/messenger/recipient, name)
 	if(!(REF(recipient) in GLOB.TabletMessengers))
@@ -297,7 +297,7 @@
 
 	var/datum/pda_chat/new_chat = new /datum/pda_chat(recipient)
 	// this is a chat with a "fake user" (automated or rigged message)
-	if(isnull(recipient) && istext(name))
+	if(!istype(recipient) && istext(name))
 		new_chat.cached_name = name
 	saved_chats += new_chat
 
@@ -317,6 +317,9 @@
 	if(!sender.can_perform_action(computer))
 		return FALSE
 
+	if(!COOLDOWN_FINISHED(src, last_text))
+		return FALSE
+
 	if(!istype(targets) && !length(targets))
 		return FALSE
 
@@ -330,25 +333,23 @@
 		return FALSE
 
 	// check for jammers
-	var/turf/position = get_turf(computer)
-	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
-		var/turf/jammer_turf = get_turf(jammer)
-		if(position?.z == jammer_turf.z && (get_dist(position, jammer_turf) <= jammer.range))
-			to_chat(sender, span_notice("ERROR: Server communication failed."))
-			if(!alert_silenced)
-				playsound(src, 'sound/machines/terminal_error.ogg', 15, TRUE)
-			return FALSE
+	if(is_within_jammer_range(src))
+		// different message so people know it's a radio jammer
+		to_chat(sender, span_notice("ERROR: Server unavailable, please try again later."))
+		if(!alert_silenced)
+			playsound(computer, 'sound/machines/terminal_error.ogg', 15, TRUE)
+		return FALSE
 
 	// check message against filter
 	if(!check_pda_msg_against_filter(message, sender))
 		return FALSE
 
-	var/sent_prob = 1
+	var/sent_prob = 0
 	if(ishuman(sender))
 		var/mob/living/carbon/human/old_person = sender
-		sent_prob = old_person.age >= 30 ? 25 : sent_prob
+		sent_prob = old_person.age >= 40 ? 25 : 1
 	if (prob(sent_prob))
-		message += "\n Sent from my PDA"
+		message += " - Sent from my PDA"
 
 	var/datum/pda_msg/message_datum = new(message, saved_image, photo_path, everyone)
 
@@ -360,8 +361,7 @@
 	// filter out invalid targets
 	for(var/datum/pda_chat/target_chat in targets.Copy())
 		var/datum/computer_file/program/messenger/msgr = target_chat.recipient.resolve()
-		if(isnull(msgr))
-			target_chat.owner_deleted = TRUE
+		if(!istype(msgr))
 			targets -= target_chat
 			continue
 		if(!msgr.sending_and_receiving)
@@ -371,7 +371,7 @@
 		stringified_targets += get_messenger_name(msgr.computer)
 
 	if(!length(target_msgrs))
-		return
+		return FALSE
 
 	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(
 		"ref" = REF(src),
@@ -392,10 +392,10 @@
 	if (!signal.data["done"])
 		to_chat(sender, span_notice("ERROR: Server is not responding."))
 		if(!alert_silenced)
-			playsound(src, 'sound/machines/terminal_error.ogg', 15, TRUE)
+			playsound(computer, 'sound/machines/terminal_error.ogg', 15, TRUE)
 		return FALSE
 
-	message = emoji_parse(message)//already sent- this just shows the sent emoji as one to the sender in the to_chat
+	message = emoji_parse(message) //already sent- this just shows the sent emoji as one to the sender in the to_chat
 
 	// Log it in our logs
 	var/list/message_data = list()
@@ -421,7 +421,7 @@
 	if (!alert_silenced)
 		computer.send_sound()
 
-	last_text = world.time
+	COOLDOWN_START(src, last_text, 1 SECONDS)
 
 	saved_image = null
 	photo_path = null
@@ -436,10 +436,11 @@
 	var/is_fake_user = is_rigged || is_automated
 	var/fake_identity = is_fake_user ? STRINGIFY_PDA_TARGET(signal.data["fakename"], signal.data["fakejob"]) : null
 
+	// don't create a new chat for rigged messages, make it a one off notif
 	if(!is_rigged)
 		message = message.copy()
 		chat = find_chat_by_recp(is_automated ? fake_identity : signal.data["ref"], is_automated)
-		if(isnull(chat))
+		if(!istype(chat))
 			chat = create_chat(is_automated ? null : signal.data["ref"], fake_identity)
 		chat.add_msg(message)
 
