@@ -144,7 +144,7 @@ export const AntagInfoWizard = (props, context) => {
 const RitualPrintout = (props: { ritual: GrandRitual }, context) => {
   const { ritual } = props;
   if (!ritual.next_area) {
-    return;
+    return null;
   }
   return (
     <Box>
