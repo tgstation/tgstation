@@ -113,6 +113,8 @@
 						else if(R.lockcharge&&R.ai_lockdown)
 							R.ai_lockdown = FALSE
 							src.lock_unlock_borg(R)
+						else if(R.lockcharge&&locked_down_borg!=R)
+							to_chat(usr, span_danger("The cyborg was locked by a different console."))
 						else
 							to_chat(usr, span_danger("You can lock down only one cyborg at a time."))
 			else
@@ -184,9 +186,17 @@
 			src.lock_unlock_borg(locked_down_borg)
 	return ..()
 
+/obj/machinery/computer/robotics/atom_break() // This shouldnt be needed, but hitting console doesnt trigger destroy apparently
+	if(!isnull(locked_down_borg))
+		src.lock_unlock_borg(locked_down_borg)
+		UnregisterSignal(locked_down_borg, COMSIG_PARENT_QDELETING)
+		locked_down_borg = null
+	return ..()
+
 /obj/machinery/computer/robotics/Destroy()
 	if(!isnull(locked_down_borg))
 		src.lock_unlock_borg(locked_down_borg)
+		UnregisterSignal(locked_down_borg, COMSIG_PARENT_QDELETING)
 		locked_down_borg = null
 	return ..()
 
