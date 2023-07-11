@@ -316,8 +316,7 @@
 		new /obj/effect/temp_visual/emp(loc)
 
 		if(prob(70/severity))
-			var/datum/language_holder/machine_languages = get_language_holder()
-			machine_languages.selected_language = machine_languages.get_random_spoken_language()
+			set_active_language(get_random_spoken_language())
 
 /**
  * Opens the machine.
