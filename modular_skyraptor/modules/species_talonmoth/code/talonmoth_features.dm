@@ -49,3 +49,47 @@
 /datum/preference/choiced/talonmoth_snout/create_default_value()
 	var/datum/sprite_accessory/snouts/talonmoth/long/snout = /datum/sprite_accessory/snouts/talonmoth/long
 	return initial(snout.name)
+
+
+
+
+
+
+//== BODY MARKINGS
+/datum/preference/choiced/talonmoth_body_markings
+	savefile_key = "feature_talonmoth_body_markings"
+	savefile_identifier = PREFERENCE_CHARACTER
+	category = PREFERENCE_CATEGORY_FEATURES
+	main_feature_name = "Body markings"
+	should_generate_icons = TRUE
+	relevant_mutant_bodypart = "bodymarks_talonmoth"
+
+/datum/preference/choiced/talonmoth_body_markings/init_possible_values()
+	var/list/values = list()
+
+	var/icon/lizard = icon('modular_skyraptor/modules/species_talonmoth/icons/bodyparts.dmi', "talonmoth_chest_m")
+
+	for (var/name in GLOB.bodymarks_list_talonmoth)
+		var/datum/sprite_accessory/sprite_accessory = GLOB.bodymarks_list_talonmoth[name]
+
+		var/icon/final_icon = icon(lizard)
+
+		if (sprite_accessory.icon_state != "none")
+			var/icon/body_markings_icon = icon(
+				'modular_skyraptor/modules/species_talonmoth/icons/talonmoth_external.dmi',
+				"m_bodymarks_talonmoth_[sprite_accessory.icon_state]_ADJ",
+			)
+
+			final_icon.Blend(body_markings_icon, ICON_OVERLAY)
+
+		final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+		final_icon.Crop(10, 8, 22, 23)
+		final_icon.Scale(26, 32)
+		final_icon.Crop(-2, 1, 29, 32)
+
+		values[name] = final_icon
+
+	return values
+
+/datum/preference/choiced/talonmoth_body_markings/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features["bodymarks_talonmoth"] = value

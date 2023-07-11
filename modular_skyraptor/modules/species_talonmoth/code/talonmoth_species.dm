@@ -2,7 +2,7 @@
 	// Slugcats from Rain World, revamped to fit into
 	name = "\improper Talon IV Moth"
 	plural_form = "\improper Tal4 Moths"
-	id = SPECIES_AKULA
+	id = SPECIES_TALONMOTH
 	species_traits = list(
 		MUTCOLORS,
 		EYECOLOR,

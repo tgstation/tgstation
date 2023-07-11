@@ -393,6 +393,7 @@ ROUNDSTART_RACES ethereal
 ## Skyraptor species
 ROUNDSTART_RACES slugcat
 ROUNDSTART_RACES akula
+ROUNDSTART_RACES talonmoth
 
 ##-------------------------------------------------------------------------------------------
 
