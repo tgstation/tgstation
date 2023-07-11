@@ -38,6 +38,8 @@
 /// If we were attacked, get revenge
 /datum/component/revenge_ability/proc/on_attacked(mob/living/victim, atom/attacker)
 	SIGNAL_HANDLER
+	if (victim.stat != CONSCIOUS)
+		return
 	var/atom/ability_user = ability.owner
 	var/distance = get_dist(ability_user, attacker)
 	if (distance < min_range || distance > max_range)
