@@ -1,6 +1,7 @@
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
-import { Button, LabeledList, NoticeBox, Section, Stack } from '../components';
+import { Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from '../components';
+import { TableCell, TableRow } from '../components/Table';
 
 type Data =
   | {
@@ -21,13 +22,26 @@ type Occupant = {
 type Domain = {
   cost: number;
   desc: string;
+  difficulty: number;
   id: string;
   name: string;
+  reward: number;
 };
 
 /** Type guard */
 const isConnected = (data: Data): data is Data & { connected: true } =>
   data.connected;
+
+const getColor = (difficulty: number) => {
+  switch (difficulty) {
+    case 2:
+      return 'average';
+    case 3:
+      return 'bad';
+    default:
+      return '';
+  }
+};
 
 export const QuantumConsole = (props, context) => {
   return (
@@ -52,34 +66,43 @@ const AccessView = (props, context) => {
     <Stack fill vertical>
       <Stack.Item grow>
         <Section fill title="Virtual Domains">
-          <LabeledList>
-            {available_domains.map(({ cost, desc, id, name }) => {
-              const current = name === generated_domain;
+          <Table>
+            {available_domains.map(
+              ({ cost, desc, difficulty, id, name, reward }) => {
+                const current = name === generated_domain;
 
-              return (
-                <LabeledList.Item
-                  buttons={
-                    <Button
-                      disabled={current}
-                      icon={current ? 'download' : 'coins'}
-                      tooltip={current ? '' : `Cost: ${cost}`}
-                      tooltipPositition="left"
-                      onClick={() => act('set_domain', { id })}>
-                      {current ? 'Deployed' : 'Purchase'}
-                    </Button>
-                  }
-                  className="candystripe"
-                  key={name}
-                  label={name}>
-                  {desc}
-                </LabeledList.Item>
-              );
-            })}
-          </LabeledList>
+                return (
+                  <>
+                    <TableRow className="candystripe" key={name}>
+                      <TableCell color={getColor(difficulty)}>
+                        {difficulty === 4 && <Icon name="skull" />} {name}
+                      </TableCell>
+                      <TableCell>{desc}</TableCell>
+                      <TableCell>
+                        <Button
+                          disabled={current}
+                          icon={current ? 'download' : 'coins'}
+                          tooltip={current ? '' : `Cost: ${cost}`}
+                          tooltipPositition="left"
+                          onClick={() => act('set_domain', { id })}>
+                          {current ? 'Deployed' : 'Purchase'}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Difficulty: {difficulty}</TableCell>
+                      <TableCell>Reward: {reward}</TableCell>
+                      <TableCell>Cost: {cost}</TableCell>
+                    </TableRow>
+                  </>
+                );
+              }
+            )}
+          </Table>
         </Section>
       </Stack.Item>
       <Stack.Item>
-        <Section title="Occupants">
+        <Section title="Connected Clients">
           <LabeledList>
             {occupants.map(({ health, name }) => (
               <LabeledList.Item className="candystripe" key={name} label={name}>

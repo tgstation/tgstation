@@ -9,10 +9,16 @@
 	var/cost = 0
 	/// The description of the map
 	var/desc = "A map."
+	/// The 'difficulty' of the map, which affects the ui
+	var/difficulty = 0
+	/// Any additional loot to add after completion
+	var/extra_loot
 	/// The map file to load
 	var/filename = "virtual_domain.dmm"
 	/// For blacklisting purposes
 	var/id
+	/// Points to give towards purchasing new locales
+	var/reward_points = 1
 
 /datum/map_template/virtual_domain/New()
 	if(!name && id)

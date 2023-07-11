@@ -1,4 +1,4 @@
-#define BOTTOM_LEFT 1 // There should only ever be one turf, but this is a list
+#define ONLY_TURF 1 // There should only ever be one turf at the bottom left of the map.
 
 /**
  * ### Quantum Server
@@ -13,6 +13,12 @@
 	density = TRUE
 	/// The area type used as a reference to load templates
 	var/area/preset_load_area = /area/station/virtual_domain/generated
+	/// The area type used in vdom to send loot and mark completion
+	var/area/preset_send_area = /area/station/virtual_domain/safehouse/send
+	/// The area type to receive loot after a domain is completed
+	var/area/receive_area = /area/station/bitminer_den/receive
+	/// The amount of points in the system, used to purchase maps
+	var/points = 0
 	/// The loaded template
 	var/datum/map_template/virtual_domain/generated_domain
 	/// The generated base level to spawn other presets into
@@ -23,8 +29,12 @@
 	var/list/datum/weakref/occupant_refs = list()
 	/// The connected console
 	var/obj/machinery/computer/quantum_console/console
-	/// Turfs to replace with the generated domain
-	var/turf/available_turfs = list()
+	/// This marks the starting point (bottom left) of the virtual dom map. We use this to spawn templates over. Expected: 1
+	var/turf/load_turfs = list()
+	/// The turfs in the safehouse that we check for end game loot boxes. Expected: 4
+	var/turf/send_turfs = list()
+	/// The 2x2 turfs on station where we generate loot.
+	var/turf/receive_turfs = list()
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -32,7 +42,6 @@
 		panic_find_console()
 
 	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(stop_domain))
-
 
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
@@ -56,6 +65,33 @@
 	else
 		return ..()
 
+/// Checks if there is a loot crate in the designated send areas (2x2)
+/obj/machinery/quantum_server/proc/check_completion(mob/user)
+	if(!generated_domain)
+		return FALSE
+
+	for(var/turf/tile in send_turfs)
+		if(locate(/obj/structure/closet/crate/bitminer_locked) in tile)
+			return TRUE
+
+	return FALSE
+
+/// Generates a reward based on the given domain
+/obj/machinery/quantum_server/proc/generate_loot(mob/user)
+	if(!generated_domain)
+		return FALSE
+
+	points += generated_domain.reward_points
+
+	if(!length(receive_area))
+		receive_area = get_area_turfs(receive_turfs)
+
+	var/turf/to_spawn = pick(receive_area)
+	if(!to_spawn)
+		CRASH("Failed to find a turf to spawn loot crate on.")
+
+	new /obj/structure/closet/crate/bitminer_unlocked(to_spawn, generated_domain)
+
 /// Generates a new virtual domain
 /obj/machinery/quantum_server/proc/generate_virtual_domain(mob/user)
 	balloon_alert(user, "initializing virtual domain...")
@@ -73,8 +109,11 @@
 		CRASH("Failed to initialize virtual domain z-level!")
 
 	vdom = loaded_map
-	if(!length(available_turfs))
-		available_turfs = get_area_turfs(preset_load_area, vdom.z_value)
+	if(!length(load_turfs))
+		load_turfs = get_area_turfs(preset_load_area, vdom.z_value)
+
+	if(!length(send_turfs))
+		send_turfs = get_area_turfs(preset_send_area, vdom.z_value)
 
 	return TRUE
 
@@ -103,8 +142,7 @@
 	if(!vdom)
 		generate_virtual_domain(user)
 
-	var/turf/BL = available_turfs[BOTTOM_LEFT]
-	to_generate.load(BL)
+	to_generate.load(load_turfs[ONLY_TURF])
 
 	generated_domain = to_generate
 	balloon_alert(user, "virtual domain generated.")
@@ -147,12 +185,14 @@
 	return TRUE
 
 /// Stops the current virtual domain and disconnects all users
-/obj/machinery/quantum_server/proc/stop_domain()
+/obj/machinery/quantum_server/proc/stop_domain(mob/user)
 	if(!generated_domain)
 		return
 
+	balloon_alert(usr, "powering down domain...")
+	playsound(src, 'sound/machines/terminal_off.ogg', 30, 2)
 	SEND_SIGNAL(src, COMSIG_QSERVER_DISCONNECT)
 
 	qdel(generated_domain)
 
-#undef BOTTOM_LEFT
+#undef ONLY_TURF

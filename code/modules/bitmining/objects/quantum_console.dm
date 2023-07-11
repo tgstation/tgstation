@@ -34,6 +34,7 @@
 	data["connected"] = TRUE
 	data["generated_domain"] = server.generated_domain?.name
 	data["occupants"] = server.get_occupant_data()
+	data["points"] = server.points
 
 	return data
 
@@ -56,11 +57,16 @@
 		return FALSE
 
 	switch(action)
+		if("check_completion")
+			if(!server.check_completion(usr))
+				return TRUE
+			if(server.generate_loot(usr))
+				return TRUE
 		if("set_domain")
 			if(server.set_domain(usr, params["id"]))
 				return TRUE
 		if("stop_domain")
-			if(server.stop_domain())
+			if(server.stop_domain(usr))
 				return TRUE
 
 	return FALSE
@@ -73,8 +79,10 @@
 		levels += list(list(
 			"cost" = initial(domain.cost),
 			"desc" = initial(domain.desc),
+			"difficulty" = initial(domain.difficulty),
 			"id" = initial(domain.id),
 			"name" = initial(domain.name),
+			"reward" = initial(domain.reward_points),
 		))
 
 	return levels
