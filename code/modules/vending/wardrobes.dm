@@ -75,7 +75,7 @@
 		/obj/item/clothing/shoes/sneakers/white = 4,
 		/obj/item/clothing/shoes/sneakers/blue = 4,
 		/obj/item/clothing/gloves/latex/nitrile = 4,
-		/obj/item/clothing/gloves/latex,
+		/obj/item/clothing/gloves/latex = 4,
 		/obj/item/storage/backpack/duffelbag/med = 4,
 		/obj/item/storage/backpack/medic = 4,
 		/obj/item/storage/backpack/satchel/med = 4,
