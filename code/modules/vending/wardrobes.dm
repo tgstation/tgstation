@@ -75,9 +75,11 @@
 		/obj/item/clothing/shoes/sneakers/white = 4,
 		/obj/item/clothing/shoes/sneakers/blue = 4,
 		/obj/item/clothing/gloves/latex/nitrile = 4,
+		/obj/item/clothing/gloves/latex,
 		/obj/item/storage/backpack/duffelbag/med = 4,
 		/obj/item/storage/backpack/medic = 4,
 		/obj/item/storage/backpack/satchel/med = 4,
+		/obj/item/radio/headset/headset_med = 4,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 	payment_department = ACCOUNT_MED
