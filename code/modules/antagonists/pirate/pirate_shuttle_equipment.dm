@@ -130,7 +130,14 @@
 /obj/item/disk/surgery/irs
 	name = "Advanced Surgery Disk"
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
-	surgeries = list(/datum/surgery/advanced/lobotomy, /datum/surgery/advanced/bioware/vein_threading, /datum/surgery/advanced/bioware/nerve_splicing, /datum/surgery_step/heal/combo/upgraded, /datum/surgery_step/pacify, /datum/surgery_step/revive)
+	surgeries = list(
+		/datum/surgery/advanced/lobotomy,
+		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery_step/heal/combo/upgraded,
+		/datum/surgery_step/pacify,
+		/datum/surgery_step/revive,
+	)
 
 /obj/machinery/loot_locator/interact(mob/user)
 	if(world.time <= next_use)
