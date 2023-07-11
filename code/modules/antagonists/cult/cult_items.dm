@@ -347,6 +347,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/sharpener/cult
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
+	icon = 'icons/obj/cult/items.dmi'
 	icon_state = "cult_sharpener"
 	uses = 1
 	increment = 5

@@ -107,6 +107,7 @@
 
 /obj/item/knife/hunting
 	name = "hunting knife"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	desc = "Despite its name, it's mainly used for cutting meat from dead prey rather than actual hunting."
 	inhand_icon_state = "huntingknife"
 	icon_state = "huntingknife"
@@ -121,7 +122,6 @@
 
 /obj/item/knife/combat
 	name = "combat knife"
-	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "buckknife"
 	desc = "A military combat utility survival knife."
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
@@ -165,6 +165,7 @@
 
 /obj/item/knife/shiv
 	name = "glass shiv"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "shiv"
 	inhand_icon_state = "shiv"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
