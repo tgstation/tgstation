@@ -215,7 +215,6 @@
 					// organ regeneration is very low so we crank up the healing rate to give a good bonus
 					var/healing_bonus = target_organ.healing_factor * healing * HEALING_SLEEP_ORGAN_MULTIPLIER
 					target_organ.apply_organ_damage(-healing_bonus * target_organ.maxHealth)
-					to_chat(carbon_owner, span_notice("[healing_bonus] is applied to [target_organ], the damage is now [target_organ.damage]"))
 
 			if(health_ratio > 0.8) // only heals minor physical damage
 				owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
