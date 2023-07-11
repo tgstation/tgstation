@@ -4,7 +4,7 @@
 #define BEE_PROB_GOHOME 35 //Probability to go home when idle is below BEE_IDLE_GOHOME
 #define BEE_PROB_GOROAM 5 //Probability to go roaming when idle is above BEE_IDLE_ROAMING
 #define BEE_TRAY_RECENT_VISIT 200 //How long in deciseconds until a tray can be visited by a bee again
-#define BEE_DEFAULT_COLOUR "#e5e500" //the colour we make the stripes of the bee if our reagent has no colour (or we have no reagent)
+#define BEE_DEFAULT_COLOUR "#e8d850" //the colour we make the stripes of the bee if our reagent has no colour (or we have no reagent)
 
 #define BEE_POLLINATE_YIELD_CHANCE 33
 #define BEE_POLLINATE_PEST_CHANCE 33
@@ -17,7 +17,7 @@
 	desc = "Buzzy buzzy bee, stingy sti- Ouch!"
 	icon_state = ""
 	icon_living = ""
-	icon = 'icons/mob/simple/bees.dmi'
+	icon = 'monkestation/icons/mob/simple/bees.dmi'
 	gender = FEMALE
 	speak_emote = list("buzzes")
 	emote_hear = list("buzzes")
@@ -40,23 +40,25 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	density = FALSE
-	mob_size = MOB_SIZE_TINY
+	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	gold_core_spawnable = FRIENDLY_SPAWN
 	search_objects = 1 //have to find those plant trays!
 	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
+	butcher_results = list(/obj/item/stack/sheet/animalhide/bee = 3)
 
 	//Spaceborn beings don't get hurt by space
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	del_on_death = 1
+	del_on_death = 0
 
 	var/datum/reagent/beegent = null //hehe, beegent
 	var/obj/structure/beebox/beehome = null
 	var/idle = 0
 	var/isqueen = FALSE
-	var/icon_base = "bee"
+	var/icon_base = "angry_bee" //add friendly maint bees
+	var/dead_icon_base = "dead_bee"
 	var/static/beehometypecache = typecacheof(/obj/structure/beebox)
 	var/static/hydroponicstypecache = typecacheof(/obj/machinery/hydroponics)
 
@@ -89,18 +91,23 @@
 
 
 /mob/living/simple_animal/hostile/bee/death(gibbed)
+	icon_base = dead_icon_base
+	generate_bee_visuals()
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
 	if((flags_1 & HOLOGRAM_1))
 		return ..()
-	var/obj/item/trash/bee/bee_to_eat = new(loc)
-	bee_to_eat.pixel_x = pixel_x
-	bee_to_eat.pixel_y = pixel_y
+	var/obj/item/food/pollensac/sac = new(loc) //monkestation edit, bee update
+	sac.pixel_x = pixel_x
+	sac.pixel_y = pixel_y
+	sac.reagents.add_reagent(/datum/reagent/consumable/honey, 2)
+	sac.color = BEE_DEFAULT_COLOUR
 	if(beegent)
-		bee_to_eat.beegent = beegent
-		bee_to_eat.reagents.add_reagent(beegent.type, 5)
-	bee_to_eat.update_appearance()
+		sac.beegent = beegent
+		sac.reagents.add_reagent(beegent.type, 5)
+		sac.color = beegent.color
+	sac.update_appearance()
 	beegent = null
 	return ..()
 
@@ -134,7 +141,7 @@
 	add_overlay("[icon_base]_base")
 
 	var/static/mutable_appearance/greyscale_overlay
-	greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/simple/bees.dmi')
+	greyscale_overlay = greyscale_overlay || mutable_appearance('monkestation/icons/mob/simple/bees.dmi')
 	greyscale_overlay.icon_state = "[icon_base]_grey"
 	greyscale_overlay.color = col
 	add_overlay(greyscale_overlay)
@@ -262,6 +269,7 @@
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_base = "queen"
+	dead_icon_base = "dead_queen_bee"
 	isqueen = TRUE
 
 //the Queen doesn't leave the box on her own, and she CERTAINLY doesn't pollinate by herself
@@ -276,7 +284,6 @@
 		var/mob/living/L = target
 		beegent.expose_mob(L, TOUCH)
 		L.reagents.add_reagent(beegent.type, rand(1,5))
-
 
 //PEASENT BEES
 /mob/living/simple_animal/hostile/bee/queen/pollinate()
@@ -307,7 +314,7 @@
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_state = "queen_item"
 	inhand_icon_state = ""
-	icon = 'icons/mob/simple/bees.dmi'
+	icon = 'monkestation/icons/mob/simple/bees.dmi'
 	/// The actual mob that our bee item corresponds to
 	var/mob/living/simple_animal/hostile/bee/queen/queen
 
