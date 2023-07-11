@@ -186,7 +186,7 @@
 	///for finding the landmark initially - should be the exact same as the landmark's destination id.
 	var/initial_id
 	///ID to link to allow us to link to one specific tram in the world
-	var/specific_lift_id = MAIN_STATION_TRAM
+	var/specific_transport_id = TRAMSTATION_LINE_1
 	///this is our destination's landmark, so we only have to find it the first time.
 	var/datum/weakref/destination_platform
 
@@ -197,7 +197,7 @@
 /obj/item/assembly/control/tram/LateInitialize()
 	. = ..()
 	//find where the tram needs to go to (our destination). only needs to happen the first time
-	for(var/obj/effect/landmark/tram/our_destination as anything in GLOB.tram_landmarks[specific_lift_id])
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/our_destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
 		if(our_destination.platform_code == initial_id)
 			destination_platform = WEAKREF(our_destination)
 			break
@@ -212,13 +212,13 @@
 	cooldown = TRUE
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
 
-	var/datum/lift_master/tram/tram
-	for(var/datum/lift_master/tram/possible_match as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
-		if(possible_match.specific_lift_id == specific_lift_id)
+	var/datum/transport_controller/linear/tram/tram
+	for(var/datum/transport_controller/linear/tram/possible_match as anything in SSicts_transport.transports_by_type[TRAM_LIFT_ID])
+		if(possible_match.specific_transport_id == specific_transport_id)
 			tram = possible_match
 			break
 
-	if(!tram || !tram.is_operational) //tram is QDEL or has no power
+	if(!tram || !tram.controller_operational) //tram is QDEL or has no power
 		say("The tram is not in service. Please send a technician to repair the internals of the tram.")
 		return
 	if(tram.travelling) //in use
@@ -226,7 +226,7 @@
 		return
 	if(!destination_platform)
 		return
-	var/obj/effect/landmark/tram/current_location = destination_platform.resolve()
+	var/obj/effect/landmark/icts/nav_beacon/tram/current_location = destination_platform.resolve()
 	if(!current_location)
 		return
 	if(tram.idle_platform == current_location) //already here

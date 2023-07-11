@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	icon_state = "tram"
 
 	///the id of the tram we're linked to.
-	var/specific_lift_id = MAIN_STATION_TRAM
+	var/specific_lift_id = TRAMSTATION_LINE_1
 	/// The ID of that particular destination.
 	var/platform_code = null
 	/// Icons for the tgui console to list out for what is at this location
@@ -67,4 +67,4 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	icon_state = "lift_id"
 
 	///what specific id we give to the tram we're placed on, should explicitely set this if its a subtype, or weird things might happen
-	var/specific_lift_id = MAIN_STATION_TRAM
+	var/specific_lift_id = TRAMSTATION_LINE_1

@@ -2,6 +2,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 GLOBAL_LIST_EMPTY(tram_signs)
 GLOBAL_LIST_EMPTY(tram_doors)
 
+/*
 /obj/machinery/computer/tram_controls
 	name = "tram controls"
 	desc = "An interface for the tram that lets you tell the tram where to go and hopefully it makes it there. I'm here to describe the controls to you, not to inspire confidence."
@@ -51,6 +52,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 /obj/machinery/computer/tram_controls/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
 
+/*
 /obj/machinery/computer/tram_controls/ui_status(mob/user,/datum/tgui/ui)
 	var/datum/lift_master/tram/tram = tram_ref?.resolve()
 
@@ -59,6 +61,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	if(!in_range(user, src) && !isobserver(user))
 		return UI_CLOSE
 	return ..()
+*/
 
 /obj/machinery/computer/tram_controls/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -186,6 +189,8 @@ GLOBAL_LIST_EMPTY(tram_doors)
 		else
 			tram_part.is_operational = TRUE
 
+
+
 /obj/item/circuit_component/tram_controls
 	display_name = "Tram Controls"
 
@@ -254,6 +259,9 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	SIGNAL_HANDLER
 	location.set_output(destination_platform.name)
 
+*/
+
+
 /// Pedestrian crossing signal for tram
 /obj/machinery/crossing_signal
 	name = "crossing signal"
@@ -277,7 +285,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.
 	var/signal_state = XING_STATE_MALF
 	/// The ID of the tram we control
-	var/tram_id = MAIN_STATION_TRAM
+	var/tram_id = TRAMSTATION_LINE_1
 	/// Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
 
@@ -597,7 +605,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 
 	/// The ID of the tram we're indicating
-	var/tram_id = MAIN_STATION_TRAM
+	var/tram_id = TRAMSTATION_LINE_1
 	/// Weakref to the tram piece we indicate
 	var/datum/weakref/tram_ref
 	/// The last destination we were at
@@ -754,12 +762,12 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	req_access = list()
 	id = 1
 	/// The specific lift id of the tram we're calling.
-	var/lift_id = MAIN_STATION_TRAM
+	var/lift_id = TRAMSTATION_LINE_1
 
 /obj/machinery/button/tram/setup_device()
 	var/obj/item/assembly/control/tram/tram_device = device
 	tram_device.initial_id = id
-	tram_device.specific_lift_id = lift_id
+	tram_device.specific_transport_id = lift_id
 	return ..()
 
 /obj/machinery/button/tram/examine(mob/user)
