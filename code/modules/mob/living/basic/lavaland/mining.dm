@@ -29,5 +29,5 @@
 			/datum/element/crusher_loot,\
 			trophy_type = crusher_loot,\
 			drop_mod = crusher_drop_chance,\
-			drop_immediately = basic_mob_flags & DEL_ON_DEATH\
+			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
 		)

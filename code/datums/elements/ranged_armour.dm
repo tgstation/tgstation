@@ -19,7 +19,7 @@
 	below_projectile_multiplier = 0,
 	list/vulnerable_projectile_types = list(),
 	minimum_thrown_force = 0,
-	throw_blocked_message = "bounces off"
+	throw_blocked_message = "bounces off",
 )
 	. = ..()
 	if (!isatom(target))
