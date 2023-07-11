@@ -584,6 +584,11 @@
 	. = ..() && intentional
 
 /datum/emote/living/custom/proc/emote_is_valid(mob/user, input)
+	// We're assuming clientless mobs custom emoting is something codebase-driven and not player-driven.
+	// If players ever get the ability to force clientless mobs to emote, we'd need to reconsider this.
+	if(!user.client)
+		return TRUE
+
 	if(CAN_BYPASS_FILTER(user))
 		return TRUE
 
