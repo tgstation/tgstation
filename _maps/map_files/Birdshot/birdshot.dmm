@@ -22594,7 +22594,6 @@
 /obj/machinery/light/cold/directional/north,
 /obj/structure/table,
 /obj/item/book/manual/wiki/tcomms,
-/obj/item/radio/intercom/directional/east,
 /turf/open/floor/circuit,
 /area/station/tcommsat/server)
 "iwV" = (
@@ -65438,6 +65437,7 @@
 	dir = 8;
 	network = "tcommsat"
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/server)
 "wMm" = (
