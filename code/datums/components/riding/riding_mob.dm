@@ -378,6 +378,17 @@
 
 /datum/component/riding/creature/goliath
 	keytype = /obj/item/key/lasso
+	vehicle_move_delay = 4
+
+/datum/component/riding/creature/goliath/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
+	. = ..()
+	var/mob/living/basic/mining/goliath/goliath = parent
+	goliath.RemoveElement(/datum/element/move_cooldown, move_delay = goliath.movement_delay)
+
+/datum/component/riding/creature/goliath/Destroy(force, silent)
+	var/mob/living/basic/mining/goliath/goliath = parent
+	goliath.AddElement(/datum/element/move_cooldown, move_delay = goliath.movement_delay)
+	return ..()
 
 /datum/component/riding/creature/goliath/handle_specials()
 	. = ..()

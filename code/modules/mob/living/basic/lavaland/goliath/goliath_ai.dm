@@ -28,6 +28,8 @@
 /datum/ai_behavior/basic_melee_attack/goliath/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
 	var/mob/living/target = controller.blackboard[target_key]
 	if (isliving(target))
+		if (target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled))
+			return // Don't try to keep grabbing someone who is already grabbed
 		var/datum/action/cooldown/using_action = controller.blackboard[BB_GOLIATH_TENTACLES]
 		if (using_action?.IsAvailable())
 			finish_action(controller, succeeded = FALSE)
@@ -39,8 +41,8 @@
 
 /datum/ai_planning_subtree/targeted_mob_ability/goliath_tentacles/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/target = controller.blackboard[target_key]
-	if (!isliving(target))
-		return // Target can be an item, we don't want to tentacle those
+	if (!isliving(target) || target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled))
+		return // Target can be an item or already grabbed, we don't want to tentacle those
 	return ..()
 
 /// If we got nothing better to do, find a turf we can search for tasty roots and such

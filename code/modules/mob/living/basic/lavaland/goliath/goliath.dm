@@ -32,6 +32,8 @@
 	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
 	butcher_results = list(/obj/item/food/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
+	/// Goliath can only take a step in intervals of this
+	var/movement_delay = 4 SECONDS
 	/// Icon state to use when tentacles are available
 	var/tentacle_warning_state = "goliath_preattack"
 	/// Can this kind of goliath be tamed?
@@ -53,7 +55,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = goliath_foods)
-	AddElement(/datum/element/move_cooldown, move_delay = 4 SECONDS)
+	AddElement(/datum/element/move_cooldown, move_delay = movement_delay)
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
@@ -63,10 +65,10 @@
 	tentacles.Grant(src)
 	var/datum/action/cooldown/tentacle_burst/melee_tentacles = new (src)
 	melee_tentacles.Grant(src)
-	AddComponent(/datum/component/revenge_ability, melee_tentacles, max_range = 1, target_self = TRUE)
+	AddComponent(/datum/component/revenge_ability, melee_tentacles, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM], max_range = 1, target_self = TRUE)
 	var/datum/action/cooldown/tentacle_grasp/ranged_tentacles = new (src)
 	ranged_tentacles.Grant(src)
-	AddComponent(/datum/component/revenge_ability, ranged_tentacles, min_range = 2, max_range = 9)
+	AddComponent(/datum/component/revenge_ability, ranged_tentacles, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM], min_range = 2, max_range = 9)
 
 	tentacles_ready()
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
@@ -134,6 +136,8 @@
 	if (stat == DEAD || ability.IsAvailable())
 		return // We died or the action failed for some reason like being out of range
 	if (istype(ability, /datum/action/cooldown/goliath_tentacles))
+		if (ability.cooldown_time <= 2 SECONDS)
+			return
 		icon_state = icon_living
 		addtimer(CALLBACK(src, PROC_REF(tentacles_ready)), ability.cooldown_time - 2 SECONDS, TIMER_DELETE_ME)
 		return

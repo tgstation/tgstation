@@ -7,6 +7,8 @@
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	/// The ability to use when we are attacked
 	var/datum/action/cooldown/ability
+	/// Optional datum for validating targets
+	var/datum/targetting_datum/targetting
 	/// Trigger only if target is at least this far away
 	var/min_range
 	/// Trigger only if target is at least this close
@@ -14,11 +16,12 @@
 	/// Target the ability at ourself instead of at the offender
 	var/target_self
 
-/datum/component/revenge_ability/Initialize(datum/action/cooldown/ability, min_range = 0, max_range = INFINITY, target_self = FALSE)
+/datum/component/revenge_ability/Initialize(datum/action/cooldown/ability, datum/targetting_datum/targetting, min_range = 0, max_range = INFINITY, target_self = FALSE)
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.ability = ability
+	src.targetting = targetting
 	src.min_range = min_range
 	src.max_range = max_range
 	src.target_self = target_self
@@ -41,6 +44,8 @@
 	var/atom/ability_user = ability.owner
 	var/distance = get_dist(ability_user, attacker)
 	if (distance < min_range || distance > max_range)
+		return
+	if (targetting && !targetting.can_attack(victim, attacker))
 		return
 	INVOKE_ASYNC(ability, TYPE_PROC_REF(/datum/action/cooldown, InterceptClickOn), ability_user, null, (target_self) ? ability_user : attacker)
 
