@@ -105,8 +105,10 @@
 							src.lock_unlock_borg(R, src.loc.loc.name)
 							R.ai_lockdown = FALSE //Just in case I'm stupid
 							locked_down_borg = R
+							RegisterSignal(R, COMSIG_PARENT_QDELETING, PROC_REF(borg_destroyed))
 						else if(locked_down_borg == R) //If the borg locked down by the console is the same as the one we're trying to unlock
 							src.lock_unlock_borg(R)
+							UnregisterSignal(R, COMSIG_PARENT_QDELETING)
 							locked_down_borg = null
 						else if(R.lockcharge&&R.ai_lockdown)
 							R.ai_lockdown = FALSE
@@ -172,6 +174,15 @@
 	if(R.connected_ai)
 		to_chat(R.connected_ai, "[!R.lockcharge ? span_notice("NOTICE - Cyborg lockdown lifted") : span_alert("ALERT - Cyborg lockdown detected")]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a><br>")
 
+/obj/machinery/computer/robotics/proc/borg_destroyed()
+	SIGNAL_HANDLER
+	locked_down_borg = null
+
+/obj/machinery/computer/robotics/on_set_machine_stat(old_value)  //depowering the console unlocks the borg
+	if(!isnull(locked_down_borg))
+		if(machine_stat & (NOPOWER|BROKEN|MAINT) && locked_down_borg.lockcharge)
+			src.lock_unlock_borg(locked_down_borg)
+	return ..()
 
 /obj/machinery/computer/robotics/Destroy()
 	if(!isnull(locked_down_borg))
