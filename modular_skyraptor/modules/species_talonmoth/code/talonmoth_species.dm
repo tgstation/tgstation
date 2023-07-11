@@ -23,6 +23,7 @@
 	external_organs = list(
 		/obj/item/organ/external/wings/moth = "Jungle",
 		/obj/item/organ/external/snout/talonmoth = "Full Snout",
+		/obj/item/organ/external/horns/slugcat = "Standard",
 	)
 
 	mutanttongue = /obj/item/organ/internal/tongue/moth

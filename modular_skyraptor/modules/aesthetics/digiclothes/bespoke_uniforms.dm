@@ -62,6 +62,7 @@
 	desc = "A winter coat in a vibrant shade of chartreuse, with shiny golden zippers for the pockets & a giant gold cross on the back."
 	icon_state = "coatcmo_mossmed"
 	icon = 'modular_skyraptor/modules/aesthetics/digiclothes/icons/med_suits.dmi'
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/cmo/mossmed
 
 /obj/item/clothing/head/hooded/winterhood/medical/cmo/mossmed
 	desc = "A chartreuse winter coat hood."
@@ -78,12 +79,11 @@
 	new /obj/item/clothing/suit/hooded/wintercoat/medical/cmo/mossmed(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo/mossmed(src)
 
-/obj/machinery/vending/wardrobe/medi_wardrobe/Initialize(mapload)
-	. = ..()
-	products[/obj/item/clothing/under/rank/medical/doctor/mossmed] = 4
-	products[/obj/item/clothing/under/rank/medical/doctor/mossmed/skirt] = 4
-	products[/obj/item/clothing/suit/toggle/labcoat/mossmed] = 4
-	products[/obj/item/clothing/suit/hooded/wintercoat/medical/mossmed] = 4
+/obj/machinery/vending/wardrobe/medi_wardrobe
+	premium = list(/obj/item/clothing/under/rank/medical/doctor/mossmed = 4,
+		/obj/item/clothing/under/rank/medical/doctor/mossmed/skirt = 4,
+		/obj/item/clothing/suit/hooded/wintercoat/medical/mossmed = 4,
+		/obj/item/clothing/suit/toggle/labcoat/mossmed = 4)
 
 
 
