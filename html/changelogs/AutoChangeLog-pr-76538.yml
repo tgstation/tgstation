@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - balance: "Metalgen cannot spawn as a random chem anymore (strange seeds, maintpills etc)"
