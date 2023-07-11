@@ -1,6 +1,7 @@
 /datum/lighting_object
 	///the underlay we are currently applying to our turf to apply light
 	var/mutable_appearance/current_underlay
+	var/mutable_appearance/additive_underlay
 
 	///whether we are already in the SSlighting.objects_queue list
 	var/needs_update = FALSE
@@ -17,6 +18,9 @@
 	. = ..()
 
 	current_underlay = mutable_appearance(LIGHTING_ICON, (source.lighting_uses_jen ? "wall-jen-[source.smoothing_junction]" : "light"), source.z, source, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM)
+
+	additive_underlay = mutable_appearance(LIGHTING_ICON, (source.lighting_uses_jen ? "wall-jen-[source.smoothing_junction]" : "light"), source.z, source, LIGHTING_PLANE_ADDITIVE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM)
+	additive_underlay.blend_mode = BLEND_ADD
 
 	affected_turf = source
 	if (affected_turf.lighting_object)
@@ -47,6 +51,7 @@
 		affected_turf.lighting_object = null
 		affected_turf.luminosity = 1
 		affected_turf.underlays -= current_underlay
+		affected_turf.underlays -= additive_underlay
 	affected_turf = null
 	return ..()
 
@@ -122,4 +127,35 @@
 		)
 
 	affected_turf.underlays += current_underlay
+
+	if(red_corner.applying_additive || green_corner.applying_additive || blue_corner.applying_additive || alpha_corner.applying_additive)
+		affected_turf.underlays -= additive_underlay
+		additive_underlay.icon_state = affected_turf.lighting_uses_jen ? "wall-jen-[affected_turf.smoothing_junction]" : "light"
+		var/arr = red_corner.add_r
+		var/arb = red_corner.add_b
+		var/arg = red_corner.add_g
+
+		var/agr = green_corner.add_r
+		var/agb = green_corner.add_b
+		var/agg = green_corner.add_g
+
+		var/abr = blue_corner.add_r
+		var/abb = blue_corner.add_b
+		var/abg = blue_corner.add_g
+
+		var/aarr = alpha_corner.add_r
+		var/aarb = alpha_corner.add_b
+		var/aarg = alpha_corner.add_g
+
+		additive_underlay.color = list(
+			arr, arg, arb, 00,
+			agr, agg, agb, 00,
+			abr, abg, abb, 00,
+			aarr, aarg, aarb, 00,
+			00, 00, 00, 01
+		)
+		affected_turf.underlays += additive_underlay
+	else
+		affected_turf.underlays -= additive_underlay
+
 	affected_turf.luminosity = set_luminosity

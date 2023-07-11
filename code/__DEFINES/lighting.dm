@@ -23,7 +23,7 @@
 /// height off the ground of light sources on the pseudo-z-axis, you should probably leave this alone
 #define LIGHTING_HEIGHT 1
 /// Value used to round lumcounts, values smaller than 1/129 don't matter (if they do, thanks sinking points), greater values will make lighting less precise, but in turn increase performance, VERY SLIGHTLY.
-#define LIGHTING_ROUND_VALUE (1 / 64)
+#define LIGHTING_ROUND_VALUE (1 / 128)
 
 /// icon used for lighting shading effects
 #define LIGHTING_ICON 'icons/effects/lighting_object.dmi'
@@ -109,4 +109,7 @@ do { \
 
 
 /// The default falloff curve for all atoms. It's a magic number you should adjust until it looks good.
-#define LIGHTING_DEFAULT_FALLOFF_CURVE 3
+#define LIGHTING_DEFAULT_FALLOFF_CURVE 2.36 //3
+
+/// Include this to have lights randomly break on initialize.
+#define LIGHTS_RANDOMLY_BROKEN

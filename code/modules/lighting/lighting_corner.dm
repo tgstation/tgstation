@@ -24,6 +24,12 @@
 	var/cache_g = LIGHTING_SOFT_THRESHOLD
 	var/cache_b = LIGHTING_SOFT_THRESHOLD
 
+	//additive light values
+	var/add_r = 0
+	var/add_g = 0
+	var/add_b = 0
+	var/applying_additive = FALSE
+
 	///the maximum of lum_r, lum_g, and lum_b. if this is > 1 then the three cached color values are divided by this
 	var/largest_color_luminosity = 0
 
@@ -102,6 +108,12 @@
 	lum_r += delta_r
 	lum_g += delta_g
 	lum_b += delta_b
+
+	add_r = clamp((lum_r - 1.4) * 0.5, 0, 0.3)
+	add_g = clamp((lum_g - 1.4) * 0.5, 0, 0.3)
+	add_b = clamp((lum_b - 1.4) * 0.5, 0, 0.3)
+
+	applying_additive = add_r || add_b || add_g
 
 	if (!needs_update)
 		needs_update = TRUE
