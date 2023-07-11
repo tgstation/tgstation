@@ -1282,9 +1282,9 @@
 
 	var/dangerous_close = !safe || force_crush
 	if(!dangerous_close)
-		for(var/turf/checked_turf in get_turfs())
-			for(var/atom/movable/M in checked_turf)
-				if(M.density && M != src)
+		for(var/turf/checked_turf in locs)
+			for(var/atom/movable/blocking in checked_turf)
+				if(blocking.density && blocking != src)
 					autoclose_in(DOOR_CLOSE_WAIT)
 					return FALSE
 

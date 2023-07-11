@@ -70,9 +70,9 @@
 	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	set_init_door_layer()
-	multi_tile = get_size_in_tiles(src) > 1
-	if(multi_tile)
-		set_bounds()
+	if(bound_width > world.icon_size)
+		multi_tile = TRUE
+		set_filler()
 		update_overlays()
 	update_freelook_sight()
 	air_update_turf(TRUE, TRUE)
@@ -151,25 +151,8 @@
 
 /obj/machinery/door/Move()
 	if(multi_tile)
-		set_bounds()
+		set_filler()
 	return ..()
-
-/**
- * Returns a list of turfs that the door occupies.
- * If the door is multi-tile, it will return a list of turfs that the door occupies.
- * If the door is not multi-tile, it will return only the current turf.
- *
- * @return list of turfs the door occupies
- */
-/obj/machinery/door/proc/get_turfs()
-	var/turf/current_turf = get_turf(src)
-	if(!multi_tile)
-		return current_turf
-	var/list/occupied_turfs = list()
-	for(var/i in 1 to get_size_in_tiles(src))
-		occupied_turfs += current_turf
-		current_turf = get_step(current_turf, get_adjusted_dir(dir))
-	return occupied_turfs
 
 /**
  * Sets the bounds of the airlock. For use with multi-tile airlocks.
@@ -177,12 +160,9 @@
  * If the airlock doesn't already have a filler object, it will create one.
  * If the airlock already has a filler object, it will move it to the correct location.
  */
-/obj/machinery/door/proc/set_bounds()
+/obj/machinery/door/proc/set_filler()
 	if(!multi_tile)
 		return
-	var/size = get_size_in_tiles(src)
-	bound_width = (get_adjusted_dir(dir) == NORTH) ? world.icon_size : size * world.icon_size
-	bound_height = (get_adjusted_dir(dir) == NORTH) ? size * world.icon_size : world.icon_size
 	if(!filler)
 		filler = new(get_step(src, get_adjusted_dir(dir)))
 		filler.filled_airlock = src
@@ -517,7 +497,7 @@
 		open()
 
 /obj/machinery/door/proc/crush()
-	for(var/turf/checked_turf in get_turfs(src))
+	for(var/turf/checked_turf in locs)
 		for(var/mob/living/future_pancake in checked_turf)
 			future_pancake.visible_message(span_warning("[src] closes on [future_pancake], crushing [future_pancake.p_them()]!"), span_userdanger("[src] closes on you and crushes you!"))
 			SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
