@@ -187,6 +187,9 @@
 		/obj/item/clothing/suit/hooded/wintercoat/science/robotics = 2,
 		/obj/item/clothing/gloves/fingerless = 2,
 		/obj/item/clothing/shoes/sneakers/black = 2,
+		/obj/item/storage/backpack/science = 3,
+		/obj/item/storage/backpack/satchel/science = 3,
+		/obj/item/storage/backpack/duffelbag/science = 3,
 		/obj/item/radio/headset/headset_sci = 2,
 	)
 	contraband = list(
