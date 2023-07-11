@@ -3,7 +3,7 @@
 	can_buckle_to = FALSE
 	density = FALSE
 	desc = "A generic pAI hard-light holographics emitter."
-	health = 20
+	health = 500
 	held_lh = 'icons/mob/inhands/pai_item_lh.dmi'
 	held_rh = 'icons/mob/inhands/pai_item_rh.dmi'
 	head_icon = 'icons/mob/clothing/head/pai_head.dmi'
@@ -17,7 +17,7 @@
 	light_on = FALSE
 	light_range = 3
 	light_system = MOVABLE_LIGHT
-	maxHealth = 20
+	maxHealth = 500
 	mob_size = MOB_SIZE_TINY
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	mouse_opacity = MOUSE_OPACITY_ICON
