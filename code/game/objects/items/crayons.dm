@@ -218,16 +218,23 @@
 	if(edible)
 		AddComponent(/datum/component/edible, bite_consumption = reagents.total_volume / (charges_left / 5), after_eat = CALLBACK(src, PROC_REF(after_eat)))
 
+/// Used for edible component to reduce charges_left on bite.
 /obj/item/toy/crayon/proc/after_eat(mob/user)
-	use_charges(user, amount = 5, requires_full = FALSE, override_infinity = TRUE)
+	use_charges(user, 5, FALSE, TRUE)
 	if(check_empty(user, override_infinity = TRUE)) //Prevents division by zero
 		return
 
+/// Sets painting color and updates appearance.
 /obj/item/toy/crayon/set_painting_tool_color(chosen_color)
 	. = ..()
 	paint_color = chosen_color
 	update_appearance()
 
+/**
+ *	Refills charges_left in infinite crayons on use.
+ *	Sets charges_left in infinite crayons to 100 for spawning reagents.
+ *	Spawns reagents in crayons based on the amount of charges_left if not spawned yet.
+ */
 /obj/item/toy/crayon/proc/refill()
 	if(charges == INFINITE_CHARGES)
 		charges_left = 100
@@ -248,8 +255,16 @@
 		var/amount = weight * units_per_weight
 		reagents.add_reagent(reagent, amount)
 
+/**
+ * Returns number of charges actually used.
+ *
+ * Arguments:
+ * * user - the user.
+ * * amount - how much charges do we reduce.
+ * * requires_full - Seems to transfer its data to the same argument on check_empty(). I'm not sure tho.
+ * * override_infinity - if TRUE stops infinite crayons from refilling.
+ */
 /obj/item/toy/crayon/proc/use_charges(mob/user, amount = 1, requires_full = TRUE, override_infinity = FALSE)
-	// Returns number of charges actually used
 	if(charges == INFINITE_CHARGES && !override_infinity)
 		refill()
 		return TRUE
@@ -258,9 +273,19 @@
 	charges_left -= min(charges_left, amount)
 	return TRUE
 
+/**
+ *	When eating a crayon, check_empty() can be called twice producing two messages unless we check for being deleted first.
+ *
+ *	Either qdells or calls balloon_alerts if crayon or spraycan is empty.
+ *	Also balloon_alerts you if don't have enought charges_left for big painting.
+ *
+ * Arguments:
+ * * user - the user.
+ * * amount - used for use_on() and when requires_full is TRUE
+ * * requires_full - if TRUE and charges_left < amount it will balloon_alert you. Used just for borgs spraycan it seems.
+ * * override_infinity - if TRUE it will override checks for infinite crayons.
+ */
 /obj/item/toy/crayon/proc/check_empty(mob/user, amount = 1, requires_full = TRUE, override_infinity = FALSE)
-	// When eating a crayon, check_empty() can be called twice producing
-	// two messages unless we check for being deleted first
 	if(QDELETED(src))
 		return TRUE
 
