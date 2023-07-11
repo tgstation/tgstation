@@ -14,7 +14,7 @@
 /obj/structure/showcase/fakeid
 	name = "\improper CentCom identification console"
 	desc = "You can use this to change ID's."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "computer"
 
 /obj/structure/showcase/fakeid/Initialize(mapload)
@@ -25,7 +25,7 @@
 /obj/structure/showcase/fakesec
 	name = "\improper CentCom security records"
 	desc = "Used to view and edit personnel's security records."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "computer"
 
 /obj/structure/showcase/fakesec/update_overlays()
@@ -98,7 +98,7 @@
 /obj/structure/showcase/machinery/tv
 	name = "\improper Nanotrasen corporate newsfeed"
 	desc = "A slightly battered looking TV. Various Nanotrasen infomercials play on a loop, accompanied by a jaunty tune."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "television"
 
 /obj/structure/showcase/machinery/signal_decrypter

@@ -70,7 +70,7 @@
 /obj/item/knife/bloodletter
 	name = "bloodletter"
 	desc = "An occult looking dagger that is cold to the touch. Somehow, the flawless orb on the pommel is made entirely of liquid blood."
-	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "bloodletter"
 	worn_icon_state = "render"
 	w_class = WEIGHT_CLASS_NORMAL

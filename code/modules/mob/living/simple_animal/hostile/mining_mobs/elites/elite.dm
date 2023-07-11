@@ -125,7 +125,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	desc = "An odd, pulsing tumor sticking out of the ground.  You feel compelled to reach out and touch it..."
 	armor_type = /datum/armor/structure_elite_tumor
 	resistance_flags = INDESTRUCTIBLE
-	icon = 'icons/obj/lavaland/tumor.dmi'
+	icon = 'icons/obj/mining_zones/tumor.dmi'
 	icon_state = "tumor"
 	pixel_x = -16
 	base_pixel_x = -16

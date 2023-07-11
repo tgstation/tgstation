@@ -157,7 +157,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 /obj/item/gps/computer
 	name = "pod computer"
 	icon_state = "pod_computer"
-	icon = 'icons/obj/lavaland/pod_computer.dmi'
+	icon = 'icons/obj/lavaland/pod_machines/computer.dmi'
 	anchored = TRUE
 	density = TRUE
 	pixel_y = -32
