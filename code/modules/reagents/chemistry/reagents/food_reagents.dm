@@ -33,6 +33,8 @@
 	if(!(methods & INGEST) || !quality || HAS_TRAIT(exposed_mob, TRAIT_AGEUSIA))
 		return
 	switch(quality)
+		if (DRINK_REVOLTING)
+			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_revolting)
 		if (DRINK_NICE)
 			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_nice)
 		if (DRINK_GOOD)

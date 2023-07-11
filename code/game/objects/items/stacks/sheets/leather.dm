@@ -22,6 +22,9 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	. = ..()
 	. += GLOB.human_recipes
 
+/obj/item/stack/sheet/animalhide/human/five
+	amount = 5
+
 /obj/item/stack/sheet/animalhide/generic
 	name = "skin"
 	desc = "A piece of skin."
@@ -42,6 +45,9 @@ GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/costume/gondola, 2, check_density = FALSE, category = CAT_CLOTHING), \
 	))
 
+/obj/item/stack/sheet/animalhide/corgi/five
+	amount = 5
+
 /obj/item/stack/sheet/animalhide/mothroach
 	name = "mothroach hide"
 	desc = "A thin layer of mothroach hide."
@@ -49,6 +55,9 @@ GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	icon_state = "sheet-mothroach"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/mothroach
+
+/obj/item/stack/sheet/animalhide/mothroach/five
+	amount = 5
 
 /obj/item/stack/sheet/animalhide/gondola
 	name = "gondola hide"
@@ -70,6 +79,9 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	. = ..()
 	. += GLOB.corgi_recipes
 
+/obj/item/stack/sheet/animalhide/gondola/five
+	amount = 5
+
 /obj/item/stack/sheet/animalhide/cat
 	name = "cat hide"
 	desc = "The by-product of cat farming."
@@ -77,6 +89,9 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	icon_state = "sheet-cat"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/cat
+
+/obj/item/stack/sheet/animalhide/cat/five
+	amount = 5
 
 /obj/item/stack/sheet/animalhide/monkey
 	name = "monkey hide"
@@ -95,6 +110,9 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	. = ..()
 	. += GLOB.monkey_recipes
 
+/obj/item/stack/sheet/animalhide/monkey/five
+	amount = 5
+
 /obj/item/stack/sheet/animalhide/lizard
 	name = "lizard skin"
 	desc = "Sssssss..."
@@ -102,6 +120,9 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	icon_state = "sheet-lizard"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/lizard
+
+/obj/item/stack/sheet/animalhide/lizard/five
+	amount = 5
 
 /obj/item/stack/sheet/animalhide/xeno
 	name = "alien hide"
@@ -119,6 +140,9 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 /obj/item/stack/sheet/animalhide/xeno/get_main_recipes()
 	. = ..()
 	. += GLOB.xeno_recipes
+
+/obj/item/stack/sheet/animalhide/xeno/five
+	amount = 5
 
 /obj/item/stack/sheet/animalhide/carp
 	name = "carp scales"
@@ -139,6 +163,9 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 /obj/item/stack/sheet/animalhide/carp/get_main_recipes()
 	. = ..()
 	. += GLOB.carp_recipes
+
+/obj/item/stack/sheet/animalhide/carp/five
+	amount = 5
 
 //don't see anywhere else to put these, maybe together they could be used to make the xenos suit?
 /obj/item/stack/sheet/xenochitin

@@ -72,3 +72,36 @@
 	new /obj/item/ammo_box/magazine/sniper_rounds/disruptor(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/disruptor(src)
 	new /obj/item/suppressor(src)
+
+/obj/item/storage/briefcase/mosincase
+	name = "ancient gun case"
+	desc = "A weapon's case. Has the symbol of the Third Soviet Union stamped on the side."
+	icon_state = "mosin_case"
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
+	inhand_icon_state = "mosin_case"
+
+
+/obj/item/storage/briefcase/mosincase/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
+	atom_storage.max_total_storage = 7 //enough to hold ONE mosin and the ammo boxes
+	atom_storage.max_slots = 4
+
+/obj/item/storage/briefcase/mosincase/PopulateContents()
+	var/gun_to_add
+	var/ammo_to_add
+	var/roll_them_bones = rand(1,100)
+	switch(roll_them_bones)
+		if(90-100)
+			gun_to_add = /obj/item/gun/ballistic/rifle/boltaction
+			ammo_to_add = /obj/item/ammo_box/a762
+		if(2-89)
+			gun_to_add = /obj/item/gun/ballistic/rifle/boltaction/surplus
+			ammo_to_add = /obj/item/ammo_box/a762/surplus
+		if(1)
+			gun_to_add = /obj/item/food/rationpack //sorry comrade, took gun, here is ration as compensation
+			ammo_to_add = /obj/item/food/rationpack //very sorry
+	new gun_to_add (src)
+	for(var/i in 1 to 3)
+		new ammo_to_add(src)
