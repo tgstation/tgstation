@@ -40,7 +40,7 @@
 /obj/structure/checkoutmachine
 	name = "\improper Nanotrasen Space-Coin Market"
 	desc = "This is good for spacecoin because"
-	icon = 'icons/obj/money_machine.dmi'
+	icon = 'icons/obj/machines/money_machine.dmi'
 	icon_state = "bogdanoff"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -217,7 +217,7 @@
 
 /obj/effect/dumpeet_fall //Falling pod
 	name = ""
-	icon = 'icons/obj/money_machine_64.dmi'
+	icon = 'icons/obj/machines/money_machine_64.dmi'
 	pixel_z = 300
 	desc = "Get out of the way!"
 	layer = FLY_LAYER//that wasn't flying, that was falling with style!
