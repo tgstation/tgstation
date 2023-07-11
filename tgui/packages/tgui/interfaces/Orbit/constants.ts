@@ -6,7 +6,7 @@ export const ANTAG2COLOR = {
   'Emergency Response Team': 'teal',
   'Escaped Fugitives': 'orange',
   'Bounty Hunters': 'yellow',
-  'Xenomorph Infestation': 'purple',
+  'Xenomorph Infestation': 'violet',
 } as const;
 
 export const THREAT = {
