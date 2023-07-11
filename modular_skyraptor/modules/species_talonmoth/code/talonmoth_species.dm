@@ -24,13 +24,17 @@
 		/obj/item/organ/external/wings/moth = "Jungle",
 		/obj/item/organ/external/snout/talonmoth = "Full Snout",
 	)
+
+	mutanttongue = /obj/item/organ/internal/tongue/moth
 	mutanteyes = /obj/item/organ/internal/eyes/talonmoth
+	wing_types = list(/obj/item/organ/external/wings/functional/moth/megamoth, /obj/item/organ/external/wings/functional/moth/mothra)
 
 	payday_modifier = 1 //we're going to be doing a master_files override to universally set payday mod to 1 bcuz it's still some serious wtfery
 
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	disliked_food = JUNKFOOD | BUGS
-	liked_food = MEAT | SEAFOOD
+	liked_food = VEGETABLES | DAIRY | CLOTH | MEAT
+	disliked_food = GROSS | BUGS | GORE
+	toxic_food = FRUIT | RAW | SEAFOOD
 	//scugs have forced digi thru custom legs, this is necessary until we rework the digi_customization setting to allow for other digileg types
 	//digitigrade_customization = DIGITIGRADE_FORCED
 
