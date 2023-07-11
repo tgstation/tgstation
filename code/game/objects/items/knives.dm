@@ -121,6 +121,7 @@
 
 /obj/item/knife/combat
 	name = "combat knife"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "buckknife"
 	desc = "A military combat utility survival knife."
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
@@ -164,7 +165,6 @@
 
 /obj/item/knife/shiv
 	name = "glass shiv"
-	icon = 'icons/obj/debree.dmi'
 	icon_state = "shiv"
 	inhand_icon_state = "shiv"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -247,7 +247,6 @@
 	name = "carrot shiv"
 	icon_state = "carrotshiv"
 	inhand_icon_state = "carrotshiv"
-	icon = 'icons/obj/kitchen.dmi'
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
 	custom_materials = null
 
