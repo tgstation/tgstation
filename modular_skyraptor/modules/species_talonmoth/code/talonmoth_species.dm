@@ -34,8 +34,6 @@
 	//scugs have forced digi thru custom legs, this is necessary until we rework the digi_customization setting to allow for other digileg types
 	//digitigrade_customization = DIGITIGRADE_FORCED
 
-	ass_image = 'icons/ass/assmoth.png' //one day this system gets deleted.  one day...
-
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/talonmoth,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/talonmoth,
