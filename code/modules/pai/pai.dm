@@ -3,7 +3,7 @@
 	can_buckle_to = FALSE
 	density = FALSE
 	desc = "A generic pAI hard-light holographics emitter."
-	health = 500
+	health = 20
 	held_lh = 'icons/mob/inhands/pai_item_lh.dmi'
 	held_rh = 'icons/mob/inhands/pai_item_rh.dmi'
 	head_icon = 'icons/mob/clothing/head/pai_head.dmi'
@@ -17,7 +17,7 @@
 	light_on = FALSE
 	light_range = 3
 	light_system = MOVABLE_LIGHT
-	maxHealth = 500
+	maxHealth = 20
 	mob_size = MOB_SIZE_TINY
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -37,6 +37,8 @@
 	var/can_transmit = TRUE
 	/// The card we inhabit
 	var/obj/item/pai_card/card
+	/// The maximum distance we can travel away from our pai card
+	var/max_distance = 4
 	/// The current chasis that will appear when in holoform
 	var/chassis = "repairbot"
 	/// Toggles whether the pAI can hold encryption keys or not
@@ -225,14 +227,28 @@
 		var/newcardloc = pai_card
 		pai_card = new(newcardloc)
 		pai_card.set_personality(src)
-	forceMove(pai_card)
 	card = pai_card
+	forceMove(pai_card)
 	addtimer(VARSET_WEAK_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
 	if(!holoform)
 		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), PAI_FOLDED)
-	desc = "A pAI hard-light holographics emitter. This one appears in the form of a [chassis]."
+	update_appearance(UPDATE_DESC)
 
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
+	RegisterSignal(card, COMSIG_MOVABLE_MOVED, PROC_REF(check_distance))
+
+/mob/living/silicon/pai/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	check_distance()
+
+/// Checks if we're in range of our pai card
+/mob/living/silicon/pai/proc/check_distance()
+	SIGNAL_HANDLER
+	if (get_dist(get_turf(card), get_turf(src)) <= max_distance)
+		return
+	to_chat(src, span_warning("You moved out of range of your holotransmitter!"))
+	new /obj/effect/temp_visual/guardian/phase/out(loc)
+	forceMove(get_turf(card))
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -258,6 +274,15 @@
 	set_health(maxHealth - getBruteLoss() - getFireLoss())
 	update_stat()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
+
+/mob/living/silicon/pai/update_desc(updates)
+	desc = "A hard-light holographic avatar representing a pAI. This one appears in the form of a [chassis]."
+	return ..()
+
+/mob/living/silicon/pai/update_icon_state()
+	icon_state = resting ? "[chassis]_rest" : "[chassis]"
+	held_state = "[chassis]"
+	return ..()
 
 /**
  * Resolves the weakref of the pai's master.
