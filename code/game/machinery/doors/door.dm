@@ -27,7 +27,7 @@
 	var/visible = TRUE
 	var/operating = FALSE
 	var/glass = FALSE
-	/// Do we need to check our bound width/height
+	/// Do we need to keep track of a filler panel with the airlock
 	var/multi_tile
 	/// A filler object used to fill the space of multi-tile airlocks
 	var/obj/structure/fluff/airlock_filler/filler
