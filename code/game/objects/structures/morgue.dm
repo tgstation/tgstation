@@ -365,7 +365,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
  * For overriding only
  */
 /obj/structure/tray
-	icon = 'icons/obj/machines/basic_machine.dmi'
+	icon = 'icons/obj/machines/basic_machines.dmi'
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = PASSTABLE | LETPASSTHROW
