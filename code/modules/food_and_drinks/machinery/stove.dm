@@ -14,7 +14,7 @@
 	active_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.8
 
 	// Stove icon is 32x48, we'll use a Range for preview instead
-	icon_preview = 'icons/obj/machines/kitchenmachines.dmi'
+	icon_preview = 'icons/obj/machines/kitchen_machines.dmi'
 	icon_state_preview = "range_off"
 
 /obj/machinery/stove/Initialize(mapload)
