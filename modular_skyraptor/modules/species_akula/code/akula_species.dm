@@ -119,15 +119,15 @@
 			Sol politics moving forward, and claim the one and only title as being one of two original founding species from the Solar Federation.",
 	)
 
-/datum/species/akula/create_pref_unique_perks()
+/datum/species/akula/create_pref_temperature_perks()
 	var/list/to_add = list()
 
-	to_add += list(
+	to_add = list(
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "thermometer-empty",
 			SPECIES_PERK_NAME = "Frigid Native",
-			SPECIES_PERK_DESC = "Being native to an icy dwarf planet with only subsurface pockets of atmosphere and water, Akula are resilient to low pressures and temperatures and can walk freely where others would need a spacesuit.",
+			SPECIES_PERK_DESC = "Being native to an icy dwarf planet with only subsurface pockets of atmosphere and water, Akula are resilient to low pressures and temperatures and can walk freely where others would need protective gear.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,

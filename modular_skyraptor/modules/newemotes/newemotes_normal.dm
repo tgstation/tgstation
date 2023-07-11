@@ -200,5 +200,5 @@
 	vary = TRUE
 
 /datum/emote/living/claponce/get_sound(mob/living/user)
-	return pick('modular_skyraptor/modules/newemotes/sounds/hiss1.ogg',
-					'modular_skyraptor/modules/newemotes/sounds/hiss2.ogg')
+	return pick('modular_skyraptor/modules/newemotes/sounds/voice/hiss1.ogg',
+					'modular_skyraptor/modules/newemotes/sounds/voice/hiss2.ogg')
