@@ -479,6 +479,8 @@ SUBSYSTEM_DEF(ticker)
 			livings += living
 			if(living.client && length(living.client?.active_challenges))
 				SSchallenges.apply_challenges(living.client)
+			if(living.job == JOB_SECURITY_OFFICER||living.job == JOB_SECURITY_OFFICER_ENGINEERING || living.job == JOB_SECURITY_OFFICER_MEDICAL || living.job == JOB_SECURITY_OFFICER_SCIENCE || living.job == JOB_SECURITY_OFFICER_SUPPLY || living.job == JOB_WARDEN || living.job == JOB_DETECTIVE || living.job == JOB_HEAD_OF_SECURITY)
+				living.client.reward_this_person += 150
 	if(livings.len)
 		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 30, TIMER_CLIENT_TIME)
 

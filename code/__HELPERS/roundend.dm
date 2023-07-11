@@ -283,6 +283,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt"))
 	for(var/client/C in GLOB.clients)
 		if(C && C.prefs)
 			C.prefs.adjust_metacoins(C.ckey, 75, "Played a Round")
+			C.prefs.adjust_metacoins(C.ckey, C.reward_this_person, "Special Bonus")
 		if(length(C.applied_challenges))
 			if(isliving(C.mob))
 				var/mob/living/client_mob = C.mob

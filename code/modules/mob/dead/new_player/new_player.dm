@@ -192,6 +192,9 @@
 	if(character.client && length(character.client?.active_challenges))
 		SSchallenges.apply_challenges(character.client)
 
+	if(character.job == JOB_SECURITY_OFFICER|| character.job == JOB_SECURITY_OFFICER_ENGINEERING || character.job == JOB_SECURITY_OFFICER_MEDICAL || character.job == JOB_SECURITY_OFFICER_SCIENCE || character.job == JOB_SECURITY_OFFICER_SUPPLY || character.job == JOB_WARDEN || character.job == JOB_DETECTIVE || character.job == JOB_HEAD_OF_SECURITY)
+		character.client.reward_this_person += 150
+
 	#define IS_NOT_CAPTAIN 0
 	#define IS_ACTING_CAPTAIN 1
 	#define IS_FULL_CAPTAIN 2
