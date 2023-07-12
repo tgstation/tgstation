@@ -443,7 +443,6 @@
 		var/obj/item/card/emag/doorjack/digital_crowbar = emag_card
 		digital_crowbar.use_charge(user)
 	obj_flags |= EMAGGED
-	balloon_alert(user, "circuitry overloaded")
 	INVOKE_ASYNC(src, PROC_REF(open))
 	return TRUE
 
