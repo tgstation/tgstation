@@ -108,14 +108,16 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 
 //eminence_act() stuff, might be a better way to do this
 /atom/proc/eminence_act(mob/living/eminence/user)
-	return
+	SEND_SIGNAL(src, COMSIG_ATOM_EMINENCE_ACT, user)
 
 /mob/living/eminence_act(mob/living/eminence/user)
+	. = ..()
 	if(IS_CLOCK(src))
 		user.marked_servant = WEAKREF(src)
 		to_chat(user, "You mark [src].")
 
 /obj/machinery/door/airlock/eminence_act(mob/living/eminence/user)
+	. = ..()
 	if(seal)
 		to_chat(user, span_warning("The [src] has been sealed and wont open!"))
 		return
@@ -135,6 +137,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 		open(BYPASS_DOOR_CHECKS)
 
 /obj/machinery/door/window/eminence_act(mob/living/eminence/user)
+	. = ..()
 	if(!hasPower())
 		to_chat(user, span_warning("The [src] has no power and wont open!"))
 		return
@@ -142,6 +145,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	open(BYPASS_DOOR_CHECKS)
 
 /obj/machinery/button/eminence_act(mob/living/eminence/user)
+	. = ..()
 	if(panel_open)
 		to_chat(user, span_warning("The panel is open and preventing you from accessing the [src]!"))
 		return
@@ -154,6 +158,10 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
 
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 15)
+
+/obj/machinery/light/eminence_act(mob/living/eminence/user)
+	. = ..()
+	break_light_tube()
 
 //Internal Radio
 /obj/item/radio/borg/eminence

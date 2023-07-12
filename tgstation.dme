@@ -5391,6 +5391,7 @@
 #include "monkestation\code\modules\antagonists\clock_cult\scriptures\preservation\clockwork_armaments.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\scriptures\preservation\sentinels_compromise.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\scriptures\preservation\summon_marauder.dm"
+#include "monkestation\code\modules\antagonists\clock_cult\scriptures\preservation\vanguard.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\scriptures\servitude\abscond.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\scriptures\servitude\hateful_manacels.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\scriptures\servitude\integration_cog.dm"

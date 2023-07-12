@@ -3,7 +3,7 @@
 	desc = "Recalls you and anyone you are dragging to reebe."
 	tip = "If using this with a prisoner dont forget to cuff them first."
 	button_icon_state = "Abscond"
-	invocation_time = 4 SECONDS
+	invocation_time = 3 SECONDS
 	invocation_text = list("Return to our home, the city of cogs.")
 	category = SPELLTYPE_SERVITUDE
 	power_cost = 5

@@ -47,8 +47,8 @@
 /obj/item/clock_module/kindle
 	scripture_datum = /datum/scripture/slab/kindle
 
-///obj/item/clock_module/sentinels_compromise need to add this
-//	scripture_datum = /datum/scripture/slab/sentinelscompromise
+/obj/item/clock_module/sentinels_compromise
+	scripture_datum = /datum/scripture/slab/sentinels_compromise
 
 /obj/item/clock_module/prosperity_prism
 	scripture_datum = /datum/scripture/create_structure/prosperity_prism
@@ -62,8 +62,8 @@
 ///obj/item/clock_module/stargazer need to add this as well
 //	scripture_datum = /datum/scripture/create_structure/stargazer
 
-///obj/item/clock_module/vanguard also need to add this
-//	scripture_datum = /datum/scripture/slab/vanguard
+/obj/item/clock_module/vanguard
+	scripture_datum = /datum/scripture/slab/vanguard
 
 ///obj/item/clock_module/sigil_submission yes also this
 //	scripture_datum = /datum/scripture/create_structure/sigil_submission
