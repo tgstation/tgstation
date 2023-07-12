@@ -378,7 +378,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(biggerfish && biggerfish.max_specific_storage < max_specific_storage)
 		if(messages && user)
-			user.balloon_alert(user, "[resolve_parent.loc] is in the way!")
+			user.balloon_alert(user, "[lowertext(resolve_parent.loc.name)] is in the way!")
 		return FALSE
 
 	if(istype(resolve_parent))
