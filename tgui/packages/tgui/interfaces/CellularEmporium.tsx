@@ -104,7 +104,8 @@ const AbilityList = (props, context) => {
     return (
       <NoticeBox>
         {abilities.length === 0
-          ? 'No abilities available to purchase. Contact your local hivemind today. '
+          ? 'No abilities available to purchase. \
+        This is in error, contact your local hivemind today.'
           : 'No abilities found.'}
       </NoticeBox>
     );
