@@ -10,10 +10,10 @@
 		return
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
-	for(var/button_type in buttons)
+	for(var/atom/movable/screen/lobby/button_type as anything in buttons)
 		var/atom/movable/screen/lobby/lobbyscreen = new button_type()
-		lobbyscreen.SlowInit()
 		lobbyscreen.hud = src
+		lobbyscreen.SlowInit()
 		static_inventory += lobbyscreen
 		if(istype(lobbyscreen, /atom/movable/screen/lobby/button))
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
@@ -108,7 +108,7 @@
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.client.prefs
+	var/datum/preferences/preferences = hud.mymob.canon_client.prefs
 	preferences.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
 	preferences.update_static_data(usr)
 	preferences.ui_interact(usr)
@@ -121,7 +121,7 @@
 	base_icon_state = "not_ready"
 	var/ready = FALSE
 
-/atom/movable/screen/lobby/button/ready/Initialize(mapload)
+/atom/movable/screen/lobby/button/ready/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	switch(SSticker.current_state)
 		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
@@ -166,7 +166,7 @@
 	base_icon_state = "join_game"
 	enabled = FALSE
 
-/atom/movable/screen/lobby/button/join/Initialize(mapload)
+/atom/movable/screen/lobby/button/join/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	switch(SSticker.current_state)
 		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
@@ -236,7 +236,7 @@
 	base_icon_state = "observe"
 	enabled = FALSE
 
-/atom/movable/screen/lobby/button/observe/Initialize(mapload)
+/atom/movable/screen/lobby/button/observe/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	if(SSticker.current_state > GAME_STATE_STARTUP)
 		set_button_status(TRUE)
@@ -267,7 +267,7 @@
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.client.prefs
+	var/datum/preferences/preferences = hud.mymob.canon_client.prefs
 	preferences.current_window = PREFERENCE_TAB_GAME_PREFERENCES
 	preferences.update_static_data(usr)
 	preferences.ui_interact(usr)
