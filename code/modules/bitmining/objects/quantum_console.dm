@@ -4,8 +4,9 @@
  */
 /obj/machinery/computer/quantum_console
 	name = "quantum console"
-	icon_screen = "teleport"
+
 	icon_keyboard = "security_key"
+	icon_screen = "teleport"
 	req_access = list(ACCESS_MINING)
 	/// The server this console is connected to.
 	var/obj/machinery/quantum_server/server
@@ -13,15 +14,14 @@
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	desc = "Even in the distant year [CURRENT_STATION_YEAR], Nanostrasen is still using REST APIs. How grim."
-	if(!server)
-		panic_find_server()
 
 /obj/machinery/computer/quantum_console/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	if(!server)
+		panic_find_server()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "QuantumConsole")
-		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /obj/machinery/computer/quantum_console/ui_data()
@@ -33,7 +33,8 @@
 
 	data["connected"] = TRUE
 	data["generated_domain"] = server.generated_domain?.name
-	data["occupants"] = server.get_occupant_data()
+	data["loading"] = server.loading
+	data["occupants"] = length(server.occupant_refs)
 	data["points"] = server.points
 
 	return data
@@ -45,6 +46,7 @@
 		return data
 
 	data["available_domains"] = get_available_domains()
+	data["avatars"] = server.get_avatar_data()
 
 	return data
 
@@ -60,8 +62,10 @@
 		if("check_completion")
 			if(!server.check_completion(usr))
 				return TRUE
-			if(server.generate_loot(usr))
+			if(!server.generate_loot(usr))
 				return TRUE
+			server.stop_domain(usr)
+			return TRUE
 		if("set_domain")
 			if(server.set_domain(usr, params["id"]))
 				return TRUE

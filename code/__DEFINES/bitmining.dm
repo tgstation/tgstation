@@ -1,0 +1,19 @@
+#define BITMINING_COST_NONE 0
+#define BITMINING_COST_LOW 1
+#define BITMINING_COST_MEDIUM 2
+#define BITMINING_COST_HIGH 3
+
+/// Rewards formula: (1 + rewards_points) * ORE_MULTIPLIER
+
+#define BITMINING_REWARD_LOW 1
+#define BITMINING_REWARD_MEDIUM 2
+#define BITMINING_REWARD_HIGH 3
+
+/// Blue in ui
+#define BITMINING_DIFFICULTY_NONE 0
+/// Yellow
+#define BITMINING_DIFFICULTY_LOW 1
+/// Orange
+#define BITMINING_DIFFICULTY_MEDIUM 2
+/// Red with skull
+#define BITMINING_DIFFICULTY_HIGH 3

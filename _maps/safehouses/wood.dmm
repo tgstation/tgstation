@@ -1,0 +1,101 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/indestructible/hotelwood,
+/area/station/virtual_domain/safehouse/exit)
+"j" = (
+/turf/open/indestructible/hotelwood,
+/area/station/virtual_domain/safehouse)
+"p" = (
+/obj/machinery/light/small/blacklight/directional/east,
+/turf/open/floor/carpet/green,
+/area/station/virtual_domain/safehouse/send)
+"q" = (
+/obj/machinery/light/small/blacklight/directional/west,
+/turf/open/indestructible/hotelwood,
+/area/station/virtual_domain/safehouse)
+"v" = (
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/indestructible/hotelwood,
+/area/station/virtual_domain/safehouse)
+"x" = (
+/turf/closed/wall/mineral/wood,
+/area/template_noop)
+"A" = (
+/turf/open/floor/carpet/green,
+/area/station/virtual_domain/safehouse/send)
+"B" = (
+/obj/structure/railing,
+/turf/open/floor/carpet/green,
+/area/station/virtual_domain/safehouse/send)
+"K" = (
+/obj/effect/spawner/structure/window,
+/turf/open/indestructible/hotelwood,
+/area/station/virtual_domain/safehouse)
+"L" = (
+/obj/machinery/door/airlock/wood/glass,
+/turf/open/floor/wood,
+/area/station/virtual_domain/safehouse)
+"O" = (
+/turf/closed/wall/mineral/wood,
+/area/station/virtual_domain/safehouse)
+"V" = (
+/obj/machinery/light/floor,
+/turf/open/indestructible/hotelwood,
+/area/station/virtual_domain/safehouse)
+
+(1,1,1) = {"
+O
+O
+K
+O
+O
+x
+"}
+(2,1,1) = {"
+K
+q
+j
+j
+j
+K
+"}
+(3,1,1) = {"
+O
+j
+j
+V
+a
+O
+"}
+(4,1,1) = {"
+L
+j
+j
+j
+a
+O
+"}
+(5,1,1) = {"
+O
+A
+B
+V
+a
+O
+"}
+(6,1,1) = {"
+K
+p
+B
+v
+j
+K
+"}
+(7,1,1) = {"
+O
+O
+K
+O
+O
+O
+"}
