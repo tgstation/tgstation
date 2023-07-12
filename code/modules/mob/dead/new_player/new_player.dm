@@ -356,12 +356,12 @@
 	if(!COOLDOWN_FINISHED(new_player, reset_hud_cooldown))
 		to_chat(new_player, span_warning("You must wait <b>[DisplayTimeText(COOLDOWN_TIMELEFT(new_player, reset_hud_cooldown))]</b> before resetting the Lobby Menu HUD again!"))
 		return
-	if(new_player?.client)
-		COOLDOWN_START(new_player, reset_hud_cooldown, RESET_HUD_INTERVAL)
-		qdel(new_player.hud_used)
-		create_mob_hud()
-		hud_used.show_hud(hud_used.hud_version)
-		to_chat(new_player, span_info("Lobby Menu HUD reset. You may reset the HUD again in <b>[DisplayTimeText(RESET_HUD_INTERVAL)]</b>."))
+	if(!new_player?.client)
 		return
+	COOLDOWN_START(new_player, reset_hud_cooldown, RESET_HUD_INTERVAL)
+	qdel(new_player.hud_used)
+	create_mob_hud()
+	to_chat(new_player, span_info("Lobby Menu HUD reset. You may reset the HUD again in <b>[DisplayTimeText(RESET_HUD_INTERVAL)]</b>."))
+	hud_used.show_hud(hud_used.hud_version)
 
 #undef RESET_HUD_INTERVAL

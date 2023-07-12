@@ -417,8 +417,6 @@
 	base_icon_state = our_hud.menu_hud_status ? "expand" : "collapse"
 	name = "[our_hud.menu_hud_status ? "Expand" : "Collapse"] Lobby Menu"
 	set_button_status(FALSE)
-	//re-enable clicking the button when the shutter animation finishes
-	addtimer(CALLBACK(src, PROC_REF(set_button_status), TRUE), (2 * SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION), TIMER_CLIENT_TIME)
 
 	//get the shutter object used by our hud
 	var/atom/movable/screen/lobby/shutter/menu_shutter = locate(/atom/movable/screen/lobby/shutter) in hud.static_inventory
@@ -432,12 +430,17 @@
 		expand_menu()
 	our_hud.menu_hud_status = !our_hud.menu_hud_status
 
+	//re-enable clicking the button when the shutter animation finishes
+	//we use sleep here so it can work during game setup, as addtimer would not work until the game would finish setting up
+	sleep(2 * SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
+	set_button_status(TRUE)
+
 ///Moves the button to the top of the screen, leaving only the screen part in view
 ///Sends a signal on the hud for the menu hud elements to listen to
 /atom/movable/screen/lobby/button/collapse/proc/collapse_menu()
 	SEND_SIGNAL(hud, COMSIG_HUD_LOBBY_COLLAPSED)
 	//wait for the shutter to come down
-	animate(src, transform = matrix(), time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
+	animate(src, transform = transform, time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
 	//then pull the button up with the shutter and leave it on the edge of the screen
 	animate(transform = transform.Translate(x = 0, y = 134), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
 
