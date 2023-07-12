@@ -1,0 +1,7 @@
+author: "lmenvs"
+delete-after: True
+changes:
+  - rscadd: "New bee sprites!"
+  - rscadd: "You can now butcher bees and craft bee clothing from butchering their corpses (at the risk of being a horrible, horrible person)"
+  - rscadd: "bees now drop pollen sacs instead of corpses, same effect as eating a dead bee."
+  - rscadd: "Bees now spawn in maintenance, don't worry, they're friendly and harmless!"

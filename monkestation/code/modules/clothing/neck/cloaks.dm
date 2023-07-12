@@ -33,3 +33,11 @@
 	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
 	icon_state = "hornet_cloak"
 	worn_icon_state = "hornet_cloak"
+
+/obj/item/clothing/neck/beecloak
+	name = "Bee Cloak"
+	desc = "A cloak made of fuzzy beehide"
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
+	icon_state = "beecloak"
+	worn_icon_state = "beecloak"

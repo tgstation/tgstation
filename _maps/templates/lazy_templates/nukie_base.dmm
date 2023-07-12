@@ -817,6 +817,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
+/obj/effect/spawner/random/aimodule/syndicate,
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
 "jW" = (
