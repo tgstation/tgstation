@@ -2,21 +2,27 @@ export enum Gender {
   Male = 'male',
   Female = 'female',
   Other = 'plural',
+  Other2 = 'neuter',
 }
 
 export const GENDERS = {
   [Gender.Male]: {
     icon: 'male',
-    text: 'Male',
+    text: 'He/Him',
   },
 
   [Gender.Female]: {
     icon: 'female',
-    text: 'Female',
+    text: 'She/Her',
   },
 
   [Gender.Other]: {
     icon: 'tg-non-binary',
-    text: 'Other',
+    text: 'They/Them',
+  },
+
+  [Gender.Other2]: {
+    icon: 'tg-non-binary',
+    text: 'It/Its',
   },
 };
