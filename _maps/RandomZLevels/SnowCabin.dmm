@@ -2548,7 +2548,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "jp" = (
-/mob/living/simple_animal/pet/penguin/baby/permenant,
+/mob/living/simple_animal/pet/penguin/baby/permanent,
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/snowforest)
 "jq" = (
