@@ -386,7 +386,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(biggerfish && biggerfish.max_specific_storage < max_specific_storage)
 		if(messages && user)
 			//to_chat(user, span_warning("[to_insert] can't fit in [resolve_parent] while [resolve_parent.loc] is in the way!"))
-			user.balloon_alert(user, "\the [resolve_parent.loc] in the way!")
+			user.balloon_alert(user, "[resolve_parent.loc] in the way!")
 		return FALSE
 
 	if(istype(resolve_parent))
@@ -775,7 +775,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	// Storage to storage transfer is instant
 	if(dest_object.atom_storage)
 		//to_chat(user, span_notice("You dump the contents of [resolve_parent] into [dest_object]."))
-		user.balloon_alert(user, "dumped into \the [dest_object]")
+		user.balloon_alert(user, "dumped into [dest_object]")
 
 		if(rustle_sound)
 			playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
