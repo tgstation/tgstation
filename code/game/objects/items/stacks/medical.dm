@@ -398,7 +398,6 @@
 	merge_type = /obj/item/stack/medical/bone_gel
 
 /obj/item/stack/medical/bone_gel/attack(mob/living/patient, mob/user)
-	patient.balloon_alert(user, "no fractures!")
 	return
 
 /obj/item/stack/medical/bone_gel/suicide_act(mob/living/user)

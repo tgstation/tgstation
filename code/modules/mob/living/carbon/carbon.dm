@@ -67,15 +67,15 @@
 		mode() // Activate held item
 
 /mob/living/carbon/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+
 	if(!all_wounds || !(!user.combat_mode || user == src))
 		return ..()
 
 	for(var/i in shuffle(all_wounds))
 		var/datum/wound/W = i
 		if(W.try_treating(I, user))
-			return 1
-
-	return ..()
+			return TRUE
 
 /mob/living/carbon/CtrlShiftClick(mob/user)
 	..()

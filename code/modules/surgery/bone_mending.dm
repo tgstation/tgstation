@@ -105,8 +105,6 @@
 		var/obj/item/stack/used_stack = tool
 		used_stack.use(1)
 
-
-
 ///// Reset Compound Fracture (Crticial)
 /datum/surgery_step/reset_compound_fracture
 	name = "reset bone (bonesetter)"
@@ -176,6 +174,12 @@
 		display_pain(target, "The aching pain in your [parse_zone(user.zone_selected)] is overwhelming!")
 	else
 		user.visible_message(span_notice("[user] looks for [target]'s [parse_zone(user.zone_selected)]."), span_notice("You look for [target]'s [parse_zone(user.zone_selected)]..."))
+
+/datum/surgery_step/repair_bone_compound/tool_check(mob/user, obj/item/tool)
+	if(is_type_in_list(tool, implements))
+		return TRUE
+
+	return FALSE
 
 /datum/surgery_step/repair_bone_compound/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(surgery.operated_wound)
