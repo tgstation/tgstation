@@ -220,7 +220,7 @@
 
 /// Used for edible component to reduce charges_left on bite.
 /obj/item/toy/crayon/proc/after_eat(mob/user)
-	use_charges(user, 5, FALSE, TRUE)
+	use_charges(user, amount = 5, requires_full = FALSE, override_infinity = TRUE)
 	if(check_empty(user, override_infinity = TRUE)) //Prevents division by zero
 		return
 
@@ -924,7 +924,7 @@
 	desc = "A metallic container containing shiny synthesised paint."
 	charges = INFINITE_CHARGES
 
-/obj/item/toy/crayon/spraycan/borg/use_charges(mob/user, amount = 1, requires_full = TRUE)
+/obj/item/toy/crayon/spraycan/borg/use_charges(mob/user, amount = 1, requires_full = TRUE, override_infinity = FALSE)
 	if(!iscyborg(user))
 		to_chat(user, span_notice("How did you get this?"))
 		qdel(src)
