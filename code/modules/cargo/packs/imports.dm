@@ -195,7 +195,7 @@
 	contains = list(
 		/obj/item/clothing/mask/chameleon,
 		/obj/item/clothing/under/chameleon,
-		/obj/item/storage/belt/chameleon
+		/obj/item/storage/belt/chameleon,
 		/obj/item/card/id/advanced/chameleon,
 		/obj/item/switchblade,
 		/obj/item/grenade/mirage = 5,
