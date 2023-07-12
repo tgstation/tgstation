@@ -31,7 +31,7 @@
 GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants and other ghosties.
 
 /obj/structure/bodycontainer
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "morgue1"
 	density = TRUE
 	anchored = TRUE
@@ -156,6 +156,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 					continue
 			else if(istype(AM, /obj/effect/dummy/phased_mob))
 				continue
+			else if(isdead(AM))
+				continue
 			AM.forceMove(src)
 	toggle_organ_decay(src)
 	update_appearance()
@@ -265,6 +267,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium
 	name = "crematorium"
 	desc = "A human incinerator. Works well on barbecue nights."
+	icon = 'icons/obj/machines/basic_machines.dmi'
 	icon_state = "crema1"
 	base_icon_state = "crema"
 	dir = SOUTH
@@ -365,7 +368,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
  * For overriding only
  */
 /obj/structure/tray
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/basic_machines.dmi'
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = PASSTABLE | LETPASSTHROW
@@ -447,6 +450,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/tray/m_tray
 	name = "morgue tray"
 	desc = "Apply corpse before closing."
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "morguet"
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 

@@ -1,4 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - bugfix: "Quantum relays now process, meaning DOS attacks actually function"

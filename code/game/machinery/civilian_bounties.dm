@@ -364,7 +364,7 @@
 /obj/item/civ_bounty_beacon
 	name = "civilian bounty beacon"
 	desc = "N.T. approved civilian bounty beacon, toss it down and you will have a bounty pad and computer delivered to you."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/machines/basic_machines.dmi'
 	icon_state = "floor_beacon"
 	var/uses = 2
 

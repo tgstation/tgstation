@@ -82,7 +82,7 @@
 	new /obj/item/dog_bone(src)
 	new /obj/item/radio/headset/headset_sec(src)
 	new /obj/item/holosign_creator/security(src)
-	new /obj/item/storage/bag/garment/warden
+	new /obj/item/storage/bag/garment/warden(src)
 	new /obj/item/storage/box/zipties(src)
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/storage/belt/security/full(src)
