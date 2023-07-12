@@ -66,7 +66,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING) && !HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
+	if(!HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
 		to_chat(user, span_warning("You start mashing alien buttons at random!"))
 		if(do_after(user,100, target = src))
 			TeleporterSend()

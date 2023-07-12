@@ -78,11 +78,11 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/silicon/robot,
 		/mob/living/simple_animal/bot,
 		/mob/living/simple_animal/drone,
+	)),
 	"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
 	"spiders" = typecacheof(list(/mob/living/basic/giant_spider)),
 	"skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
 	"snakes" = typecacheof(list(/mob/living/simple_animal/hostile/retaliate/snake)),
-	)),
 	"the supernatural" = typecacheof(list(
 		/mob/dead/observer,
 		/mob/living/simple_animal/bot/mulebot/paranormal,

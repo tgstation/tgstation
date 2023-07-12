@@ -12,11 +12,11 @@
 	update_appearance()
 	RegisterSignal(src, COMSIG_TURF_RESERVATION_RELEASED, PROC_REF(launch_contents))
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(initialize_drifting))
-	RegisterSignal(src, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(initialize_drifting_but_from_initialize))
+	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialize_drifting_but_from_initialize))
 
 /turf/open/space/transit/Destroy()
 	//Signals are NOT removed from turfs upon replacement, and we get replaced ALOT, so unregister our signal
-	UnregisterSignal(src, list(COMSIG_TURF_RESERVATION_RELEASED, COMSIG_ATOM_ENTERED, COMSIG_ATOM_INITIALIZED_ON))
+	UnregisterSignal(src, list(COMSIG_TURF_RESERVATION_RELEASED, COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 
 	return ..()
 

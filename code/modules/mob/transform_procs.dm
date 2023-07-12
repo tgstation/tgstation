@@ -215,7 +215,6 @@
 
 	new_xeno.set_combat_mode(TRUE)
 	new_xeno.key = key
-	update_atom_languages()
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	. = new_xeno
@@ -383,7 +382,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/carp))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
+	if(ispath(MP, /mob/living/basic/mushroom))
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/shade))
 		return TRUE

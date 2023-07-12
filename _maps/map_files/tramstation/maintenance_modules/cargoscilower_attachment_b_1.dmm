@@ -26,7 +26,7 @@
 /area/station/maintenance/starboard/central)
 "v" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/mini_fridge,
+/obj/structure/closet/mini_fridge/grimy,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
 "z" = (

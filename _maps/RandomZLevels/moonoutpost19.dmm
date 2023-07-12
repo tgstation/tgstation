@@ -76,7 +76,7 @@
 	pixel_x = 4
 	},
 /turf/open/floor/plastic,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "ap" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/dark/opposingcorners{
@@ -206,6 +206,10 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
+"bg" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/awaymission/moonoutpost19/arrivals/shed)
 "bk" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -302,7 +306,7 @@
 /obj/structure/rack,
 /obj/item/flashlight,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "bU" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Post";
@@ -1094,6 +1098,9 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
+"hH" = (
+/turf/closed/wall/rust,
+/area/awaymission/moonoutpost19/arrivals/shed)
 "hI" = (
 /turf/closed/wall/rust,
 /area/awaymission/moonoutpost19/arrivals)
@@ -1320,7 +1327,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "je" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
@@ -1436,7 +1443,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "ki" = (
 /obj/structure/sign/warning/vacuum{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
@@ -2818,7 +2825,7 @@
 /obj/item/cigbutt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/plastic,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "rU" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 5
@@ -3175,7 +3182,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "uD" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/stripes/line{
@@ -3183,7 +3190,7 @@
 	},
 /obj/effect/turf_decal/lunar_sand/plating,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "uF" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/misc/asteroid/moon{
@@ -3399,7 +3406,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/moonoutpost19/research)
 "vI" = (
-/obj/structure/closet/mini_fridge,
+/obj/structure/closet/mini_fridge/grimy,
 /obj/item/food/pizzaslice/margherita,
 /obj/item/food/pizzaslice/margherita{
 	pixel_x = 5;
@@ -3426,7 +3433,7 @@
 "vN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "vR" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
@@ -4093,7 +4100,7 @@
 	dir = 4
 	},
 /turf/open/floor/plastic,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "AY" = (
 /obj/structure/fence/cut/large{
 	dir = 8
@@ -4157,7 +4164,7 @@
 	},
 /obj/structure/chair/plastic,
 /turf/open/floor/plastic,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "Bx" = (
 /turf/open/floor/iron/white/corner{
 	dir = 8
@@ -4840,7 +4847,7 @@
 	dir = 1
 	},
 /turf/open/floor/plastic,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "Gv" = (
 /obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt,
@@ -4914,7 +4921,7 @@
 	},
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "GU" = (
 /obj/effect/baseturf_helper/asteroid/moon,
 /turf/open/misc/asteroid/moon{
@@ -5378,7 +5385,7 @@
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "Kb" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -5625,7 +5632,7 @@
 /obj/item/radio/intercom/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plastic,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "My" = (
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -5706,7 +5713,7 @@
 /obj/effect/turf_decal/lunar_sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "Nf" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -5908,7 +5915,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "Oh" = (
 /turf/closed/indestructible/reinforced,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "Oj" = (
 /obj/structure/table/rolling,
 /obj/item/clothing/mask/facehugger/impregnated{
@@ -6151,7 +6158,7 @@
 	puzzle_id = "atvs"
 	},
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "Pu" = (
 /obj/effect/decal/cleanable/xenoblood{
 	desc = "It's green and acidic. Nothing good could come of this..."
@@ -6475,7 +6482,7 @@
 	pixel_x = -7
 	},
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "RI" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
@@ -6632,7 +6639,7 @@
 "Sy" = (
 /obj/effect/turf_decal/lunar_sand,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "SD" = (
 /obj/item/trash/can{
 	pixel_x = 7;
@@ -6688,13 +6695,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "SU" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "awaymission19atvs"
 	},
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "SX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/purple{
@@ -6823,11 +6830,11 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/lunar_sand/plating,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "TP" = (
 /obj/structure/reagent_dispensers/fueltank/large,
 /turf/open/floor/plastic,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "TR" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -6981,7 +6988,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/lunar_sand,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "Vi" = (
 /obj/item/ammo_casing/spent{
 	pixel_x = -7;
@@ -7059,7 +7066,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "VH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -7182,7 +7189,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/plastic,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "Ws" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds,
@@ -7211,7 +7218,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "Ww" = (
 /obj/structure/table,
 /obj/item/newspaper,
@@ -7268,7 +7275,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "WP" = (
 /obj/structure/table,
 /obj/item/mmi,
@@ -7407,7 +7414,7 @@
 	},
 /obj/item/clothing/under/shorts/black,
 /turf/open/floor/plastic,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "XH" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/tank_holder/emergency_oxygen,
@@ -7538,7 +7545,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "Yx" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
@@ -7555,7 +7562,7 @@
 	req_access = "201"
 	},
 /turf/open/floor/plastic,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "YD" = (
 /obj/item/kirbyplants{
 	desc = "A plastic potted plant.";
@@ -7688,7 +7695,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
+/area/awaymission/moonoutpost19/arrivals/shed)
 "Zo" = (
 /turf/open/floor/pod/light,
 /area/awaymission/moonoutpost19/tent)
@@ -31653,11 +31660,11 @@ My
 My
 Ia
 Oh
-hI
+hH
 Oh
-hI
+hH
 Oh
-hI
+hH
 Oh
 dA
 dA
@@ -31915,7 +31922,7 @@ Mx
 ao
 TP
 Yx
-hI
+hH
 dA
 dA
 dA
@@ -32172,7 +32179,7 @@ Bt
 Wm
 rR
 Gu
-hI
+hH
 dA
 dA
 dA
@@ -32686,7 +32693,7 @@ kh
 vN
 VD
 GS
-hI
+hH
 dA
 dA
 dA
@@ -32939,11 +32946,11 @@ My
 Qs
 Oh
 Ve
-Ue
+bg
 SS
 Sy
-Ue
-hI
+bg
+hH
 dA
 dA
 dA

@@ -1,0 +1,4 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - balance: "Rocket launcher's backblast doesnt ignore armor now."

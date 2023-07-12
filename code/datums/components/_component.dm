@@ -405,7 +405,7 @@
 	if(ispath(component_type))
 		component_type = GetExactComponent(component_type)
 	if(!component_type)
-		CRASH("Attempted to remove a null or non-existent component '[component_type]' from '[type]'")
+		return
 	component_type.on_source_remove(source)
 
 /**
