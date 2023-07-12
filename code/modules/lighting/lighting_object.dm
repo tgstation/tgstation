@@ -21,7 +21,8 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 
 	current_underlay = new(GLOB.default_lighting_underlays_by_z[source.z])
 
-	additive_underlay = new(GLOB.default_lighting_underlays_by_z[source.z])
+	additive_underlay = mutable_appearance(LIGHTING_ICON, ("light"), source.z, source, LIGHTING_PLANE_ADDITIVE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM)
+
 	additive_underlay.blend_mode = BLEND_ADD
 
 	affected_turf = source
