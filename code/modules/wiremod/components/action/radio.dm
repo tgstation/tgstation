@@ -22,7 +22,22 @@
 	/// Current frequency value
 	var/current_freq = DEFAULT_SIGNALER_CODE
 
+	/// Holds a reference to the shell.
+	var/atom/movable/parent_shell = null
+
+	/// The ckey of the user who used the shell we were placed in, important for signalling logs.
+	var/owner_ckey = null
+
 	var/datum/radio_frequency/radio_connection
+
+/obj/item/circuit_component/radio/register_shell(atom/movable/shell)
+	parent_shell = shell
+	var/potential_fingerprints = shell.fingerprintslast
+	if(!isnull(potential_fingerprints))
+		owner_ckey = potential_fingerprints
+
+/obj/item/circuit_component/radio/unregister_shell(atom/movable/shell)
+	parent_shell = null
 
 /obj/item/circuit_component/radio/populate_options()
 	var/static/component_options = list(
@@ -58,7 +73,20 @@
 		current_freq = frequency
 
 	if(COMPONENT_TRIGGERED_BY(trigger_input, port))
-		var/datum/signal/signal = new(list("code" = round(code.value) || 0, "key" = parent?.owner_id))
+		var/signal_code = round(code.value) || 0
+		var/turf/location = get_turf(src)
+		var/time = time2text(world.realtime,"hh:mm:ss")
+
+		var/list/loggable_strings = list("[time] <B>:</B> The [QDELETED(parent_shell) ? "null circuit shell(?)" : parent_shell] @ location ([location.x],[location.y],[location.z]) transmitted the following signal <B>:</B> [format_frequency(current_freq)]/[signal_code] via the radio circuit component.")
+		if(!isnull(owner_ckey))
+			loggable_strings += "<B>:</B> The person who inserted the signalling circuit component was very likely [owner_ckey]."
+		if(!QDELETED(parent_shell))
+			loggable_strings += "<B>:</B> The last fingerprints on the containing shell was [parent_shell.fingerprintslast]."
+
+		var/loggable_string = loggable_strings.Join(" ")
+		GLOB.lastsignalers.Add(loggable_string)
+
+		var/datum/signal/signal = new(list("code" = signal_code, "key" = parent?.owner_id), logging_data = loggable_string)
 		radio_connection.post_signal(src, signal)
 
 /obj/item/circuit_component/radio/receive_signal(datum/signal/signal)

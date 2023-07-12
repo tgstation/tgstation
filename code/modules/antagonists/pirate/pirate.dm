@@ -43,12 +43,12 @@
 	. = ..()
 	var/mob/living/owner_mob = mob_override || owner.current
 	var/datum/language_holder/holder = owner_mob.get_language_holder()
-	holder.grant_language(/datum/language/piratespeak, TRUE, TRUE, LANGUAGE_PIRATE)
+	holder.grant_language(/datum/language/piratespeak, source = LANGUAGE_PIRATE)
 	holder.selected_language = /datum/language/piratespeak
 
 /datum/antagonist/pirate/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/owner_mob = mob_override || owner.current
-	owner_mob.remove_language(/datum/language/piratespeak, TRUE, TRUE, LANGUAGE_PIRATE)
+	owner_mob.remove_language(/datum/language/piratespeak, source = LANGUAGE_PIRATE)
 	return ..()
 
 /datum/team/pirate

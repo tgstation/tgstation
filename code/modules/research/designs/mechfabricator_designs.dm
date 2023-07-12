@@ -1171,7 +1171,7 @@
 	)
 
 /datum/design/borg_upgrade_silicon_knife
-	name = "Kitchen toolset"
+	name = "Kitchen Toolset"
 	id = "borg_upgrade_silicon_knife"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/silicon_knife
@@ -1182,11 +1182,22 @@
 	)
 
 /datum/design/borg_upgrade_service_apparatus
-	name = "Service apparatus"
+	name = "Service Apparatus"
 	id = "borg_upgrade_service_apparatus"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/service_apparatus
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2.5)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+/datum/design/borg_upgrade_service_cookbook
+	name = "Service Cookbook"
+	id = "borg_upgrade_service_cookbook"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/service_cookbook
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT)
 	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
@@ -1893,6 +1904,19 @@
 	id = "mod_defib"
 	materials = list(/datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/mod/module/defibrillator
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
+	)
+
+/datum/design/module/statusreadout
+	name = "Status Readout Module"
+	id = "mod_statusreadout"
+	materials = list(
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2,
+	)
+	build_path = /obj/item/mod/module/status_readout
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)

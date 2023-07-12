@@ -156,6 +156,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 					continue
 			else if(istype(AM, /obj/effect/dummy/phased_mob))
 				continue
+			else if(isdead(AM))
+				continue
 			AM.forceMove(src)
 	toggle_organ_decay(src)
 	update_appearance()
