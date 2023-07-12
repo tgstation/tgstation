@@ -4,7 +4,7 @@
 /obj/structure/flora/ash
 	name = "large mushrooms"
 	desc = "A number of large mushrooms, covered in a faint layer of ash and what can only be spores."
-	icon = 'icons/obj/lavaland/ash_flora.dmi'
+	icon = 'icons/obj/mining_zones/ash_flora.dmi'
 	icon_state = "l_mushroom1"
 	base_icon_state = "l_mushroom"
 	resistance_flags = LAVA_PROOF
@@ -183,7 +183,7 @@
 /obj/item/food/grown/ash_flora
 	name = "mushroom shavings"
 	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
-	icon = 'icons/obj/lavaland/ash_flora.dmi'
+	icon = 'icons/obj/mining_zones/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
@@ -381,10 +381,10 @@
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl
 	name = "mushroom bowl"
 	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."
-	icon = 'icons/obj/lavaland/ash_flora.dmi'
+	icon = 'icons/obj/mining_zones/ash_flora.dmi'
 	icon_state = "mushroom_bowl"
 	fill_icon_state = "fullbowl"
-	fill_icon = 'icons/obj/lavaland/ash_flora.dmi'
+	fill_icon = 'icons/obj/mining_zones/ash_flora.dmi'
 
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl/update_icon_state()
 	if(!reagents.total_volume)

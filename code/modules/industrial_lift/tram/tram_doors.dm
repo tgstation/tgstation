@@ -20,7 +20,7 @@
 	base_state = "right"
 
 /obj/machinery/door/window/tram/hilbert
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
 	associated_lift = HILBERT_TRAM
 	icon_state = "windoor"
 	base_state = "windoor"

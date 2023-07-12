@@ -4,7 +4,7 @@
 /*Completely generic structures for use by mappers to create fake objects, i.e. display rooms*/
 /obj/structure/showcase
 	name = "showcase"
-	icon = 'icons/fluff/general.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "showcase_1"
 	desc = "A stand with the empty body of a cyborg bolted to it."
 	density = TRUE

@@ -1,7 +1,7 @@
 /obj/machinery/autolathe
 	name = "autolathe"
 	desc = "It produces items using iron, glass, plastic and maybe some more."
-	icon = "icons/obj/machines/light_lathes.dmi"
+	icon = 'icons/obj/machines/light_lathes.dmi'
 	icon_state = "autolathe"
 	density = TRUE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5

@@ -118,7 +118,7 @@ Difficulty: Hard
 
 /datum/action/innate/megafauna_attack/blink_spam
 	name = "Blink Chase"
-	button_icon = 'icons/obj/lavaland/artefacts.dmi'
+	button_icon = 'icons/obj/mining_zones/artefacts.dmi'
 	button_icon_state = "hierophant_club_ready_beacon"
 	chosen_message = "<span class='colossus'>You are now repeatedly blinking at your target.</span>"
 	chosen_attack_num = 4
@@ -744,7 +744,7 @@ Difficulty: Hard
 /obj/effect/hierophant
 	name = "hierophant beacon"
 	desc = "A strange beacon, allowing mass teleportation for those able to use it."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "hierophant_tele_off"
 	light_range = 2
 	layer = LOW_OBJ_LAYER
