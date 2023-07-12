@@ -6,7 +6,7 @@
 /obj/structure/fluff
 	name = "fluff structure"
 	desc = "Fluffier than a sheep. This shouldn't exist."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "minibar"
 	anchored = TRUE
 	density = FALSE
@@ -86,7 +86,7 @@
 /obj/structure/fluff/bus
 	name = "bus"
 	desc = "GO TO SCHOOL. READ A BOOK."
-	icon = 'icons/obj/bus.dmi'
+	icon = 'icons/obj/fluff/bus.dmi'
 	icon_state = null
 	density = TRUE
 	anchored = TRUE
@@ -125,7 +125,7 @@
 /obj/structure/fluff/paper
 	name = "dense lining of papers"
 	desc = "A lining of paper scattered across the bottom of a wall."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "paper"
 	deconstructible = FALSE
 
@@ -181,7 +181,7 @@
 /obj/structure/fluff/fokoff_sign
 	name = "crude sign"
 	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "fokof"
 
 /obj/structure/fluff/big_chain
@@ -207,7 +207,7 @@
 /obj/structure/fluff/beach_umbrella
 	name = "beach umbrella"
 	desc = "A fancy umbrella designed to keep the sun off beach-goers."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "brella"
 	density = FALSE
 	anchored = TRUE
@@ -230,7 +230,7 @@
 
 /obj/structure/fluff/clockwork
 	name = "Clockwork Fluff"
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "error"
 	deconstructible = FALSE
 

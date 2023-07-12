@@ -1,14 +1,14 @@
 /obj/effect/decal/cleanable/generic
 	name = "clutter"
 	desc = "Someone should clean that up."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "shards"
 	beauty = -50
 
 /obj/effect/decal/cleanable/ash
 	name = "ashes"
 	desc = "Ashes to ashes, dust to dust, and into space."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "ash"
 	mergeable_decal = FALSE
 	beauty = -50
@@ -33,7 +33,7 @@
 /obj/effect/decal/cleanable/glass
 	name = "tiny shards"
 	desc = "Back to sand."
-	icon = 'icons/obj/shards.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "tiny"
 	beauty = -100
 
@@ -203,7 +203,7 @@
 	name = "chemical pile"
 	desc = "A pile of chemicals. You can't quite tell what's inside it."
 	gender = NEUTER
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "ash"
 
 /obj/effect/decal/cleanable/shreds
@@ -271,14 +271,14 @@
 /obj/effect/decal/cleanable/plastic
 	name = "plastic shreds"
 	desc = "Bits of torn, broken, worthless plastic."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "shards"
 	color = "#c6f4ff"
 
 /obj/effect/decal/cleanable/wrapping
 	name = "wrapping shreds"
 	desc = "Torn pieces of cardboard and paper, left over from a package."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "paper_shreds"
 
 /obj/effect/decal/cleanable/wrapping/pinata
@@ -292,7 +292,7 @@
 /obj/effect/decal/cleanable/garbage
 	name = "decomposing garbage"
 	desc = "A split open garbage bag, its stinking content seems to be partially liquified. Yuck!"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "garbage"
 	plane = GAME_PLANE
 	layer = FLOOR_CLEAN_LAYER //To display the decal over wires.
@@ -306,7 +306,7 @@
 /obj/effect/decal/cleanable/ants
 	name = "space ants"
 	desc = "A small colony of space ants. They're normally used to the vacuum of space, so they can't climb too well."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "ants"
 	beauty = -150
 	plane = GAME_PLANE

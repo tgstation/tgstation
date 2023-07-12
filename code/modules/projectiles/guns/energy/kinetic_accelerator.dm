@@ -223,7 +223,7 @@
 /obj/item/borg/upgrade/modkit
 	name = "kinetic accelerator modification kit"
 	desc = "An upgrade for kinetic accelerators."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "modkit"
 	w_class = WEIGHT_CLASS_SMALL
 	require_model = TRUE

@@ -12,32 +12,40 @@ export const Mule = (props, context) => {
     load,
     mode,
     modeStatus,
-    haspai,
     autoReturn,
     autoPickup,
     reportDelivery,
     destination,
     home,
     id,
+    allow_possession,
+    possession_enabled,
     destinations = [],
   } = data;
   const locked = data.locked && !data.siliconUser;
   return (
-    <Window width={350} height={425}>
+    <Window width={350} height={445}>
       <Window.Content>
         <InterfaceLockNoticeBox />
         <Section
           title="Status"
           minHeight="110px"
           buttons={
-            !locked && (
+            <>
               <Button
-                icon={on ? 'power-off' : 'times'}
-                content={on ? 'On' : 'Off'}
-                selected={on}
-                onClick={() => act('on')}
+                icon="fa-poll-h"
+                content="Rename"
+                onClick={() => act('rename')}
               />
-            )
+              {!locked && (
+                <Button
+                  icon={on ? 'power-off' : 'times'}
+                  content={on ? 'On' : 'Off'}
+                  selected={on}
+                  onClick={() => act('on')}
+                />
+              )}
+            </>
           }>
           <ProgressBar
             value={cell ? cellPercent / 100 : 0}
@@ -66,22 +74,13 @@ export const Mule = (props, context) => {
           <Section
             title="Controls"
             buttons={
-              <>
-                {!!load && (
-                  <Button
-                    icon="eject"
-                    content="Unload"
-                    onClick={() => act('unload')}
-                  />
-                )}
-                {!!haspai && (
-                  <Button
-                    icon="eject"
-                    content="Eject PAI"
-                    onClick={() => act('ejectpai')}
-                  />
-                )}
-              </>
+              !!load && (
+                <Button
+                  icon="eject"
+                  content="Unload"
+                  onClick={() => act('unload')}
+                />
+              )
             }>
             <LabeledList>
               <LabeledList.Item label="ID">
@@ -137,6 +136,14 @@ export const Mule = (props, context) => {
                   content="Report Delivery"
                   onClick={() => act('report')}
                 />
+                <br />
+                {allow_possession && (
+                  <Button.Checkbox
+                    checked={possession_enabled}
+                    content="Download Personality"
+                    onClick={() => act('toggle_personality')}
+                  />
+                )}
               </LabeledList.Item>
             </LabeledList>
           </Section>

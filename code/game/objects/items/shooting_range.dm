@@ -1,7 +1,7 @@
 /obj/item/target
 	name = "shooting target"
 	desc = "A shooting target."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "target_h"
 	density = FALSE
 	var/hp = 1800
