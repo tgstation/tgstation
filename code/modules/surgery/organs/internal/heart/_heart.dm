@@ -457,7 +457,7 @@
 /obj/structure/ethereal_crystal
 	name = "ethereal resurrection crystal"
 	desc = "It seems to contain the corpse of an ethereal mending its wounds."
-	icon = 'icons/obj/ethereal_crystal.dmi'
+	icon = 'icons/mob/effects/ethereal_crystal.dmi'
 	icon_state = "ethereal_crystal"
 	damage_deflection = 0
 	max_integrity = 100

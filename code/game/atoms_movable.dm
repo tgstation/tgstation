@@ -1243,8 +1243,11 @@
 	if(impact_signal & COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH)
 		hitpush = FALSE // hacky, tie this to something else or a proper workaround later
 
-	if(!(impact_signal && (impact_signal & COMPONENT_MOVABLE_IMPACT_NEVERMIND))) // in case a signal interceptor broke or deleted the thing before we could process our hit
-		return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
+	if(impact_signal && (impact_signal & COMPONENT_MOVABLE_IMPACT_NEVERMIND))
+		return // in case a signal interceptor broke or deleted the thing before we could process our hit
+	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum) & COMSIG_HIT_PREVENTED)
+		return
+	return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
 
 /atom/movable/hitby(atom/movable/hitting_atom, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))
