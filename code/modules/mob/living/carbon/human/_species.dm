@@ -1322,7 +1322,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(human.mind && human.stat == CONSCIOUS && human != user && prob(weapon.force + ((100 - human.health) * 0.5))) // rev deconversion through blunt trauma.
 					var/datum/antagonist/rev/rev = human.mind.has_antag_datum(/datum/antagonist/rev)
 					if(rev)
-						rev.remove_revolutionary(FALSE, user)
+						rev.remove_revolutionary(user)
 
 			if(bloody) //Apply blood
 				if(human.wear_mask)
