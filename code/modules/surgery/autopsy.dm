@@ -36,7 +36,7 @@
 /datum/surgery_step/autopsy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/autopsy_scanner/tool, datum/surgery/surgery, default_display_results = FALSE)
 	ADD_TRAIT(target, TRAIT_DISSECTED, REF(src))
 	tool.scan_cadaver(user, target)
-	if(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID) && ishuman(user))
+	if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user))
 		var/mob/living/carbon/human/morbid_weirdo = user
 		morbid_weirdo.add_mood_event("morbid_dissection_success", /datum/mood_event/morbid_dissection_success)
 	return ..()

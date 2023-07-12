@@ -268,6 +268,7 @@
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 			target_organ.Remove(target)
 			target_organ.forceMove(get_turf(target))
+			target_organ.on_surgical_removal(user, target, target_zone, tool)
 		else
 			display_results(
 				user,
@@ -276,7 +277,7 @@
 				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"),
 				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"),
 			)
-	if(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID) && ishuman(user))
+	if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user))
 		var/mob/living/carbon/human/morbid_weirdo = user
 		morbid_weirdo.add_mood_event("morbid_abominable_surgery_success", /datum/mood_event/morbid_abominable_surgery_success)
 	return ..()

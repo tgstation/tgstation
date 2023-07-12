@@ -123,7 +123,7 @@
 	create_initial_profile()
 	if(give_objectives)
 		forge_objectives()
-	owner.current.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue. We are able to transform our body after all.
+	owner.current.get_language_holder().omnitongue = TRUE
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_alert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	return ..()
 

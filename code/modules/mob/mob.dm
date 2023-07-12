@@ -1021,7 +1021,7 @@
 			span_warning("[src] starts to glow as [ismob(antimagic_source) ? p_they() : antimagic_source] emits a halo of light!"),
 			span_userdanger("A feeling of warmth washes over [ismob(antimagic_source) ? "you" : antimagic_source] as rays of light surround your body and protect you!"),
 		)
-		antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
+		antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 		antimagic_color = LIGHT_COLOR_HOLY_MAGIC
 		playsound(src, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
 
@@ -1030,7 +1030,7 @@
 			span_warning("[src] forehead shines as [ismob(antimagic_source) ? p_they() : antimagic_source] repulses magic from their mind!"),
 			span_userdanger("A feeling of cold splashes on [ismob(antimagic_source) ? "you" : antimagic_source] as your forehead reflects magic usering your mind!"),
 		)
-		antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
+		antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
 		antimagic_color = LIGHT_COLOR_DARK_BLUE
 		playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
 
@@ -1283,13 +1283,19 @@
  * Proc that returns TRUE if the mob can write using the writing_instrument, FALSE otherwise.
  *
  * This proc a side effect, outputting a message to the mob's chat with a reason if it returns FALSE.
+ * Unless silent_if_not_writing_tool is TRUE. In that case it'll be silent if it isn't a writing implement/tool/instrument w/e.
  */
-/mob/proc/can_write(obj/item/writing_instrument)
-	if(!istype(writing_instrument))
-		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+/mob/proc/can_write(obj/item/writing_instrument, silent_if_not_writing_tool = FALSE)
+	if(!writing_instrument)
 		return FALSE
 
-	if(HAS_TRAIT(src, TRAIT_MIMING) && !istype(writing_instrument, /obj/item/toy/crayon/mime))
+	var/pen_info = writing_instrument.get_writing_implement_details()
+	if(!pen_info || (pen_info["interaction_mode"] != MODE_WRITING))
+		if(!silent_if_not_writing_tool)
+			to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+		return FALSE
+
+	if(HAS_MIND_TRAIT(src, TRAIT_MIMING) && !istype(writing_instrument, /obj/item/toy/crayon/mime))
 		to_chat(src, span_warning("Your vow of silence is preventing you from talking with text."))
 		return FALSE
 
@@ -1299,11 +1305,6 @@
 
 	if(!has_light_nearby() && !has_nightvision())
 		to_chat(src, span_warning("It's too dark in here to write anything!"))
-		return FALSE
-
-	var/pen_info = writing_instrument.get_writing_implement_details()
-	if(!pen_info || (pen_info["interaction_mode"] != MODE_WRITING))
-		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
 		return FALSE
 
 	if(has_gravity())
@@ -1438,12 +1439,11 @@
 	fully_replace_character_name(real_name, new_name)
 
 ///Show the language menu for this mob
-/mob/verb/open_language_menu()
+/mob/verb/open_language_menu_verb()
 	set name = "Open Language Menu"
 	set category = "IC"
 
-	var/datum/language_holder/H = get_language_holder()
-	H.open_language_menu(usr)
+	get_language_holder().open_language_menu(usr)
 
 ///Adjust the nutrition of a mob
 /mob/proc/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks

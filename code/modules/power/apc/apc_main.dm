@@ -705,7 +705,7 @@
 
 /// Used for full_charge apc helper, which sets apc charge to 100%.
 /obj/machinery/power/apc/proc/set_full_charge()
-	cell.charge = 100
+	cell.charge = cell.maxcharge
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc

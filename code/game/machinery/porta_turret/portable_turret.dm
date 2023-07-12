@@ -785,6 +785,14 @@ DEFINE_BITFIELD(turret_flags, list(
 	stun_projectile = /obj/projectile/bullet/syndicate_turret
 	lethal_projectile = /obj/projectile/bullet/syndicate_turret
 
+/obj/machinery/porta_turret/syndicate/irs
+	lethal_projectile = /obj/projectile/bullet/c10mm/ap
+	lethal_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
+	stun_projectile = /obj/projectile/bullet/c10mm/ap
+	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
+	armor_type = /datum/armor/syndicate_turret
+	faction = list(FACTION_PIRATE)
+
 /obj/machinery/porta_turret/syndicate/shuttle
 	scan_range = 9
 	shot_delay = 3
