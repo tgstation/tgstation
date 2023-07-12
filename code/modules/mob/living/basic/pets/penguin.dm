@@ -21,6 +21,8 @@
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddElement(/datum/element/pet_bonus, "honks happily!")
 	AddElement(/datum/element/waddling)
+	if(!can_lay_eggs)
+		return
 	AddComponent(\
 		/datum/component/egg_layer,\
 		/obj/item/food/egg/penguin_egg,\
@@ -89,6 +91,7 @@
 	mob_size = MOB_SIZE_SMALL
 	butcher_results = list(/obj/item/organ/internal/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 1)
 	ai_controller = /datum/ai_controller/basic_controller/penguin/baby
+	can_lay_eggs = FALSE
 	///he will grow or not
 	var/grow_up = TRUE
 
