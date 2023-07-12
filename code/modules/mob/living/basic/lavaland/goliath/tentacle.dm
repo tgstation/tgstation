@@ -43,6 +43,7 @@
 	for (var/mob/living/victim in loc)
 		if (victim.stat == DEAD || HAS_TRAIT(victim, TRAIT_TENTACLE_IMMUNE))
 			continue
+		balloon_alert(victim, "grabbed")
 		visible_message(span_danger("[src] grabs hold of [victim]!"))
 		victim.adjustBruteLoss(rand(min_damage, max_damage))
 		if (victim.apply_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled, grapple_time, src))
@@ -88,12 +89,12 @@
 	. = ..()
 	RegisterSignal(owner, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(on_helped))
 	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_TENTACLE_IMMUNE), COMSIG_BRIMDUST_EXPLOSION), PROC_REF(release))
-	RegisterSignal(tentacle, list(COMSIG_QDELETING, COMSIG_GOLIATH_TENTACLE_RETRACTING), PROC_REF(on_tentacle_left))
+	RegisterSignals(tentacle, list(COMSIG_QDELETING, COMSIG_GOLIATH_TENTACLE_RETRACTING), PROC_REF(on_tentacle_left))
 
 /datum/status_effect/incapacitating/stun/goliath_tentacled/on_remove()
 	. = ..()
 	UnregisterSignal(owner, list(COMSIG_CARBON_PRE_MISC_HELP, SIGNAL_ADDTRAIT(TRAIT_TENTACLE_IMMUNE), COMSIG_BRIMDUST_EXPLOSION))
-	if (!tentacle)
+	if (isnull(tentacle))
 		return
 	UnregisterSignal(tentacle, list(COMSIG_QDELETING, COMSIG_GOLIATH_TENTACLE_RETRACTING))
 	tentacle.retract()

@@ -59,7 +59,13 @@
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(tamed)))
+		AddComponent(\
+			/datum/component/tameable,\
+			food_types = list(/obj/item/food/grown/ash_flora),\
+			tame_chance = 10,\
+			bonus_tame_chance = 5,\
+			after_tame = CALLBACK(src, PROC_REF(tamed)),\
+		)
 
 	tentacles = new (src)
 	tentacles.Grant(src)
@@ -123,7 +129,7 @@
 	balloon_alert(user, "affixing saddle...")
 	if (!do_after(user, delay = 5.5 SECONDS, target = src))
 		return
-	user.visible_message(span_notice("[user] mounts [attacking_item] to [src], [p_they()] are ready for riding!"))
+	balloon_alert(user, "ready to ride")
 	qdel(attacking_item)
 	saddled = TRUE
 	buckle_lying = 0

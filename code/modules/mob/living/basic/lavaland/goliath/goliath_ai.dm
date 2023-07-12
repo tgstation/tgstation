@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/goliath
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/goliath(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/goliath,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -27,9 +27,8 @@
 
 /datum/ai_behavior/basic_melee_attack/goliath/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
 	var/mob/living/target = controller.blackboard[target_key]
-	if (isliving(target))
-		if (target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled))
-			return // Don't try to keep grabbing someone who is already grabbed
+	// Interrupt attack chain to use tentacles, unless the target is already tentacled
+	if (isliving(target) && !target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled))
 		var/datum/action/cooldown/using_action = controller.blackboard[BB_GOLIATH_TENTACLES]
 		if (using_action?.IsAvailable())
 			finish_action(controller, succeeded = FALSE)

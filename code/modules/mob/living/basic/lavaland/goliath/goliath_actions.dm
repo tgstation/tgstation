@@ -13,11 +13,13 @@
 	/// Furthest range we can activate ability at
 	var/max_range = 7
 
-/datum/action/cooldown/goliath_tentacles/Activate(atom/target)
+/datum/action/cooldown/goliath_tentacles/PreActivate(atom/target)
 	target = get_turf(target)
 	if (get_dist(owner, target) > max_range)
 		return FALSE
+	return ..()
 
+/datum/action/cooldown/goliath_tentacles/Activate(atom/target)
 	. = ..()
 	new /obj/effect/goliath_tentacle(target)
 	var/list/directions = GLOB.cardinals.Copy()
