@@ -26,7 +26,7 @@
 	name = "greentext"
 	desc = "No one knows what this massive tome does, but it feels <i><font color='green'>desirable</font></i> all the same..."
 	w_class = WEIGHT_CLASS_BULKY
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "greentext"
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	///The current holder of the greentext.

@@ -334,7 +334,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	anchored = FALSE
 	density = FALSE
 	var/shuttle_ID = "landing_zone_dock"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "miningbeacon"
 	var/obj/docking_port/stationary/Mport //Linked docking port for the mining shuttle
 	pressure_resistance = 200 //So it does not get blown into lava.
