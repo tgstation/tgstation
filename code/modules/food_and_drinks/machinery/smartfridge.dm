@@ -601,7 +601,7 @@
 		if(IS_ROBOTIC_ORGAN(target_organ) || !target_organ.damage)
 			continue
 
-		organ.apply_organ_damage(-repair_rate * organ.maxHealth * seconds_per_tick)
+		target_organ.apply_organ_damage(-repair_rate * target_organ.maxHealth * seconds_per_tick)
 
 /obj/machinery/smartfridge/organ/Exited(atom/movable/gone, direction)
 	. = ..()
