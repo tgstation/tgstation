@@ -30,7 +30,7 @@
 	var/bulb_falloff = LIGHTING_DEFAULT_FALLOFF_CURVE
 
 	///Default colour of the light.
-	var/bulb_colour = "#f2f9f7"
+	var/bulb_colour = "#f3fffac4"
 	///LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/status = LIGHT_OK
 	///Should we flicker?

@@ -126,12 +126,13 @@
 	var/lum_b = src.lum_b
 	var/largest_color_luminosity = max(lum_r, lum_g, lum_b) // Scale it so one of them is the strongest lum, if it is above 1.
 	. = 1 // factor
-	if (largest_color_luminosity > 1)
-		. = 1 / largest_color_luminosity
 
 	var/old_r = cache_r
 	var/old_g = cache_g
 	var/old_b = cache_b
+
+	if (largest_color_luminosity > 1)
+		. = 1 / largest_color_luminosity
 
 	#if LIGHTING_SOFT_THRESHOLD != 0
 	else if (largest_color_luminosity < LIGHTING_SOFT_THRESHOLD)
