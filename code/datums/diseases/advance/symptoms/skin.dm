@@ -19,17 +19,17 @@
 	symptom_delay_min = 7
 	symptom_delay_max = 14
 
-/datum/symptom/polyvitiligo/Activate(datum/disease/advance/advanced_disease)
+/datum/symptom/polyvitiligo/Activate(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/victim = advanced_disease.affected_mob
-	switch(advanced_disease.stage)
+	var/mob/living/M = A.affected_mob
+	switch(A.stage)
 		if(5)
 			var/static/list/banned_reagents = list(/datum/reagent/colorful_reagent/powder/invisible, /datum/reagent/colorful_reagent/powder/white)
 			var/color = pick(subtypesof(/datum/reagent/colorful_reagent/powder) - banned_reagents)
-			if(victim.reagents.total_volume <= (victim.reagents.maximum_volume/10)) // no flooding humans with 1000 units of colorful reagent
-				victim.reagents.add_reagent(color, 5)
+			if(M.reagents.total_volume <= (M.reagents.maximum_volume/10)) // no flooding humans with 1000 units of colorful reagent
+				M.reagents.add_reagent(color, 5)
 		else
 			if (prob(50)) // spam
-				victim.visible_message(span_warning("[victim] looks rather vibrant..."), span_notice("The colors, man, the colors..."))
+				M.visible_message(span_warning("[M] looks rather vibrant..."), span_notice("The colors, man, the colors..."))

@@ -141,9 +141,11 @@ GLOBAL_LIST_INIT(loadout_necks, generate_loadout_items(/datum/loadout_item/neck)
 	requires_purchase = FALSE
 
 /datum/loadout_item/neck/donator/knight_cloak
+	name = "Knight Cloak"
 	restricted_roles = list(JOB_MIME)
 	item_path = /obj/item/clothing/neck/knightcloak
 
 /datum/loadout_item/neck/donator/hornet_cloak
+	name = "Hornet Cloak"
 	item_path = /obj/item/clothing/neck/hornetcloak
 
