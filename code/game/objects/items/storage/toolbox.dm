@@ -307,6 +307,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	inhand_icon_state = "mosin_case"
+	has_latches = FALSE
 
 /obj/item/storage/toolbox/mosincase/Initialize(mapload)
 	. = ..()
