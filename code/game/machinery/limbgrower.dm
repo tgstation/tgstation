@@ -40,7 +40,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	update_static_data(user)
-	balloon_alert(user, "emagged")
+	balloon_alert(user, "illegal limb production enabled")
 	return TRUE
 
 /obj/machinery/limbgrower/ui_interact(mob/user, datum/tgui/ui)
