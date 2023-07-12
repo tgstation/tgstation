@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "You no longer fall over when you get dusted, making the animation line up with your body"
