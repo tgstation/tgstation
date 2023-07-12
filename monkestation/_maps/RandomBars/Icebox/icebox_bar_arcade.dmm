@@ -133,7 +133,7 @@
 "gc" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/computer/arcade/amputation,
+/obj/machinery/computer/arcade/amputation/bar,
 /turf/open/floor/circuit/green,
 /area/station/service/theater)
 "gS" = (

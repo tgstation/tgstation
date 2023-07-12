@@ -652,6 +652,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	desc = "A picture of a blood-soaked medical cyborg flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/amputation
+	/// does this machine work with slime people and oozlings
+	var/works_with_slimes = TRUE
 
 /obj/machinery/computer/arcade/amputation/attack_tk(mob/user)
 	return //that's a pretty damn big guillotine
@@ -670,9 +672,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		qdel(chopchop)
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
 		user.won_game()
-		playsound(src, 'sound/arcade/win.ogg', 50, TRUE)
-		new /obj/item/stack/arcadeticket((get_turf(src)), rand(6,10))
-		to_chat(user, span_notice("[src] dispenses a handful of tickets!"))
+//monkestation edit start
+		if((isoozeling(user) || isslimeperson(user)) && !(works_with_slimes))
+			playsound(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg', 50, TRUE)
+			new /obj/effect/spawner/random/food_or_drink/soup(get_turf(src))
+			to_chat(user, span_warning("Your arm breaks \the [src]! Making it dispense a weird soup..."))
+//monkestation edit end, the else below this is also an edit
+		else
+			playsound(src, 'sound/arcade/win.ogg', 50, TRUE)
+			new /obj/item/stack/arcadeticket((get_turf(src)), rand(6,10))
+			to_chat(user, span_notice("[src] dispenses a handful of tickets!"))
 		return
 	else if(!do_they_still_have_that_hand(user, chopchop))
 		to_chat(user, span_warning("The guillotine drops, but your hand seems to be gone already!"))
