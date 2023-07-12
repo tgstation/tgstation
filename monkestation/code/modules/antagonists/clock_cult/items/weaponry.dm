@@ -57,9 +57,89 @@
 	icon_state = "ratvarian_spear"
 	embedding = list("max_damage_mult" = 15, "armour_block" = 80)
 	throwforce = 36
-	force = 25
+	force = 26
 	armour_penetration = 24
+	block_chance = 35
+	clockwork_desc = "Can be summoned back to its last holder every 10 seconds if they are standing on bronze."
+	///our recall spell
+	var/datum/action/cooldown/spell/summon_spear/our_summon = new //making this a spell for things like antimagic blocking
+	///weakref to our current holder
+	var/datum/weakref/current_holder
 
+/obj/item/clockwork/weapon/brass_spear/Initialize(mapload)
+	. = ..()
+
+	RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
+	our_summon.recalled_spear = src
+
+/obj/item/clockwork/weapon/brass_spear/Destroy(force)
+	UnregisterSignal(src, COMSIG_ITEM_PICKUP)
+	qdel(our_summon)
+	return ..()
+
+/obj/item/clockwork/weapon/brass_spear/proc/on_pickup(picked_up, mob/taker)
+	SIGNAL_HANDLER
+
+	if(taker == current_holder?.resolve())
+		message_admins("RETURNED")
+		return
+
+	current_holder = WEAKREF(taker)
+	if(our_summon.owner)
+		our_summon.Remove(our_summon.owner)
+	if(!IS_CLOCK(taker))
+		return
+	if(!(locate(our_summon) in taker.actions)) //dont let them have multiple summons
+		our_summon.Grant(taker)
+
+/datum/action/cooldown/spell/summon_spear
+	name = "Summon Brass Spear"
+	desc = "Summons the last brass spear you picked up if you are currently standing on bronze."
+	button_icon = 'monkestation/icons/obj/clock_cult/clockwork_weapons.dmi'
+	button_icon_state = "ratvarian_spear"
+	background_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
+	background_icon_state = "bg_clock"
+	overlay_icon_state = ""
+	active_background_icon_state = "bg_clock_active"
+	invocation_type = INVOCATION_NONE
+	cooldown_time = 10 SECONDS
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+	///ref to the spear we summon
+	var/obj/item/clockwork/weapon/brass_spear/recalled_spear
+
+/datum/action/cooldown/spell/summon_spear/Destroy()
+	recalled_spear = null
+	return ..()
+
+/datum/action/cooldown/spell/summon_spear/can_cast_spell(feedback)
+	. = ..()
+	if(QDELETED(recalled_spear))
+		qdel(src)
+		return FALSE
+
+	if(!recalled_spear)
+		return FALSE
+
+	if(!IS_CLOCK(owner))
+		return FALSE
+
+	var/turf/summoner_turf = get_turf(owner)
+	if(!is_type_in_typecache(summoner_turf, recalled_spear?.effect_turf_typecache))
+		if(feedback)
+			to_chat(owner, span_brass("You need to be standing on bronze to do this."))
+		return FALSE
+
+/datum/action/cooldown/spell/summon_spear/cast(mob/living/cast_on)
+	. = ..()
+
+	recalled_spear.loc?.visible_message(span_warning("\The [recalled_spear] suddenly disappears!"))
+
+	if(cast_on.put_in_hands(recalled_spear))
+		recalled_spear.loc.visible_message(span_warning("[recalled_spear] suddenly appears in [cast_on]'s hand!"))
+	else
+		recalled_spear.forceMove(cast_on.drop_location())
+		recalled_spear.loc.visible_message(span_warning("[recalled_spear] suddenly appears!"))
+	playsound(get_turf(recalled_spear), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 
 /obj/item/clockwork/weapon/brass_battlehammer
 	name = "brass battle-hammer"
@@ -73,6 +153,7 @@
 	clockwork_desc = "Enemies hit by this will be flung back while you are on bronze tiles."
 	sharpness = 0
 	hitsound = 'sound/weapons/smash.ogg'
+	block_chance = 10
 
 
 /obj/item/clockwork/weapon/brass_battlehammer/Initialize(mapload)
@@ -80,7 +161,7 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 15, \
 		icon_wielded = "[base_icon_state]1", \
-		force_wielded = 28, \
+		force_wielded = 30, \
 	)
 
 
@@ -105,6 +186,7 @@
 	attack_verb_simple = list("attack", "slash", "cut", "tear", "gore")
 	attack_verb_continuous = list("attacks", "slashes", "cuts", "tears", "gores")
 	clockwork_desc = "Enemies and mechs will be struck with a powerful electromagnetic pulse while you are on bronze tiles, with a cooldown."
+	block_chance = 30
 	COOLDOWN_DECLARE(emp_cooldown)
 
 

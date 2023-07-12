@@ -16,11 +16,9 @@
 		return FALSE
 
 	var/mob/living/teleported = em_user.marked_servant?.resolve()
-	if(iscarbon(teleported))
-		var/mob/living/carbon/carbon_teleported = teleported
-		if(carbon_teleported.has_reagent(/datum/reagent/water/holywater)) //cant abscond servents with holy water in them, use reagent purge
-			to_chat(em_user, span_warning("Holy water inside [carbon_teleported] is blocking you from absconding them!"))
-			return FALSE
+	if(teleported.has_reagent(/datum/reagent/water/holywater)) //cant abscond servents with holy water in them, use reagent purge
+		to_chat(em_user, span_warning("Holy water inside [teleported] is blocking you from absconding them!"))
+		return FALSE
 
 	to_chat(em_user, span_brass("You begin to recall [teleported]."))
 	to_chat(teleported, span_bigbrass("You are being recalled by the eminence."))

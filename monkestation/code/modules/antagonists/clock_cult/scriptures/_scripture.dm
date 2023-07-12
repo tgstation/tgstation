@@ -28,6 +28,8 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	var/category = SPELLTYPE_ABSTRACT
 	/// Only set to false if you call end_invoke somewhere in your scripture
 	var/end_on_invocation = TRUE
+	/// How much of a reduction in invocation time should the TRAIT_FASTER_SLAB_INVOKE give, multiplicative
+	var/fast_invoke_mult = 0.5
 	/// Ref to the mob invoking this
 	var/mob/living/invoker
 	/// Ref to the slab invoking this
@@ -36,8 +38,6 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	var/invocation_chant_timer = null
 	/// Sound to play on finish
 	var/sound/recital_sound = null
-	/// If set then how much of a reduction in invocation time should the TRAIT_FASTER_SLAB_INVOKE give, multiplicative
-	var/fast_invoke_mult
 
 /datum/scripture/New()
 	. = ..()
@@ -159,11 +159,9 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		to_chat(invoker, span_brass("You need [invokers_required] servants to channel [name]!"))
 		return FALSE
 
-	if(iscarbon(invoker))
-		var/mob/living/carbon/carbon_invoker = invoker
-		if(carbon_invoker.has_reagent(/datum/reagent/water/holywater))
-			to_chat(invoker, span_brass("The holy water inside you is blocking your ability to invoke!"))
-			return FALSE
+	if(invoker.has_reagent(/datum/reagent/water/holywater))
+		to_chat(invoker, span_brass("The holy water inside you is blocking your ability to invoke!"))
+		return FALSE
 
 	return TRUE
 
@@ -192,6 +190,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	var/true_invocation_time = invocation_time
 	if(fast_invoke_mult && HAS_TRAIT(invoker, TRAIT_FASTER_SLAB_INVOKE))
 		true_invocation_time = invocation_time * fast_invoke_mult
+
 	if(do_after(invoking_mob, true_invocation_time, target = invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob)))
 		invoke()
 
@@ -289,7 +288,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	uses_left = uses
 	time_left = use_time
 	invoking_slab.charge_overlay = slab_overlay
-	invoking_slab.update_icon()
+	invoking_slab.update_overlays()
 	invoking_slab.active_scripture = src
 	pointed_spell.set_click_ability(invoker)
 	count_down()

@@ -79,7 +79,7 @@
 	name = "surgery brass box"
 	desc = "A large brass box containing tools for surgery."
 
-/obj/item/storage/backpack/duffelbag/brass/surgery/PopulateContents()
+/obj/item/storage/toolbox/brass/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
 	new /obj/item/hemostat(src)
 	new /obj/item/retractor(src)

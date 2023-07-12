@@ -135,24 +135,23 @@
 	/// What additional desc to show if the person examining is a clock cultist
 	var/clock_desc = ""
 
-
-/obj/item/clothing/glasses/clockwork/examine(mob/user)
+/obj/item/clothing/glasses/clockwork/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/clockwork_description, clock_desc) //why are these being called here?
+	AddElement(/datum/element/clockwork_description, clock_desc)
 	AddElement(/datum/element/clockwork_pickup, ~(ITEM_SLOT_HANDS))
 
 
+#define SECONDS_FOR_EYE_HEAL 60
 // Thermal goggles, no protection from eye stuff
 /obj/item/clothing/glasses/clockwork/wraith_spectacles
 	name = "wraith spectacles"
 	desc = "Mystical glasses that glow with a bright energy. Some say they can see things that shouldn't be seen."
 	icon_state = "wraith_specs_0"
 	base_icon_state = "wraith_specs"
-	invis_view = SEE_INVISIBLE_OBSERVER
-	invis_override = null
+	invis_override = SEE_INVISIBLE_OBSERVER
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	vision_flags = SEE_MOBS
-	color_cutoffs = list(5, 15, 5)
+	color_cutoffs = list(20, 16, 0)
 	glass_colour_type = /datum/client_colour/glass_colour/yellow
 	actions_types = list(/datum/action/item_action/toggle/clock)
 	clock_desc = "Applies passive eye damage that regenerates after unequipping, grants thermal vision, and lets you see all forms of invisibility."
@@ -160,6 +159,8 @@
 	var/mob/living/wearer
 	/// Are the glasses enabled (flipped down)
 	var/enabled = TRUE
+	/// List of mobs we have delt eye damage to as well as how much damage we have delt to them and a counter for how close to healing that damage we are
+	var/list/damaged_mobs = list()
 
 
 /obj/item/clothing/glasses/clockwork/wraith_spectacles/Initialize(mapload)
@@ -194,39 +195,68 @@
 /// "enable" the spectacles, flipping them down and applying their effects, calling on_toggle_eyes() if someone is wearing them
 /obj/item/clothing/glasses/clockwork/wraith_spectacles/proc/enable()
 	enabled = TRUE
-	color_cutoffs = list(15, 12, 0)
-	visor_toggling()
+	color_cutoffs = list(20, 16, 0)
+	invis_override = SEE_INVISIBLE_OBSERVER
+	vision_flags = SEE_MOBS
 
 	if(wearer)
 		on_toggle_eyes()
 
 	update_icon_state()
-	wearer.update_sight()
 
 
 /// "disable" the spectacles, flipping them up and removing all applied effects
 /obj/item/clothing/glasses/clockwork/wraith_spectacles/proc/disable()
 	enabled = FALSE
 	color_cutoffs = null
-	visor_toggling() //this doesn't remove everything, check later
+	invis_override = null
+	vision_flags = NONE
 
 	if(wearer)
 		de_toggle_eyes()
 
 	update_icon_state()
-	wearer.update_sight()
 
 
-/// The start of application of the actual effects, including eye damage
+/// The start of application of the actual effects like eye damage
 /obj/item/clothing/glasses/clockwork/wraith_spectacles/proc/on_toggle_eyes()
 	wearer.update_sight()
-	to_chat(wearer, span_clockgray("You suddenly see so much more."))
+	to_chat(wearer, span_clockgray("You suddenly see so much more, but your eyes begin to falter."))
+	START_PROCESSING(SSobj, src)
+	if(!damaged_mobs[wearer])
+		damaged_mobs[wearer] = list("damage" = 0, "timer" = 0)
+	else
+		var/wearer_data = damaged_mobs[wearer]
+		wearer_data["timer"] = 0
 
 
-/// The stopping of effect application, will remove the wearer's eye damage a minute after
+/// The stopping of effect application, will remove the wearer's eye damage a minute after, eye damage removal is handled by process() to avoid a large amount of timers
 /obj/item/clothing/glasses/clockwork/wraith_spectacles/proc/de_toggle_eyes()
 	wearer.update_sight()
 	to_chat(wearer, span_clockgray("You feel your eyes slowly readjusting."))
+
+
+/obj/item/clothing/glasses/clockwork/wraith_spectacles/process(seconds_per_tick)
+	if(enabled && wearer)
+		var/delt_damage = 0.5 * seconds_per_tick
+		wearer.adjustOrganLoss(ORGAN_SLOT_EYES, delt_damage, 70)
+		if(damaged_mobs[wearer])
+			var/wearer_data = damaged_mobs[wearer]
+			wearer_data["damage"] = min(wearer_data["damage"] + delt_damage, 70)
+
+	if(damaged_mobs.len)
+		for(var/mob_entry in damaged_mobs)
+			if(enabled && mob_entry == wearer)
+				continue
+			var/mob_data = damaged_mobs[mob_entry]
+			mob_data["timer"] += seconds_per_tick
+			if(mob_data["timer"] >= SECONDS_FOR_EYE_HEAL)
+				var/mob/living/living_healed = mob_entry
+				living_healed.adjustOrganLoss(ORGAN_SLOT_EYES, -mob_data["damage"])
+				damaged_mobs -= mob_entry
+
+	if(!damaged_mobs.len)
+		STOP_PROCESSING(SSobj, src)
 
 
 /obj/item/clothing/glasses/clockwork/wraith_spectacles/equipped(mob/living/user, slot)
@@ -245,6 +275,7 @@
 		de_toggle_eyes()
 
 	wearer = null
+#undef SECONDS_FOR_EYE_HEAL
 
 
 // Flash protected and generally info-granting with huds
@@ -323,6 +354,7 @@
 	sec_hud.show_to(wearer)
 
 	ADD_TRAIT(wearer, TRAIT_MADNESS_IMMUNE, CLOTHING_TRAIT)
+	ADD_TRAIT(wearer, TRAIT_MESON_VISION, CLOTHING_TRAIT)
 	ADD_TRAIT(wearer, TRAIT_KNOW_CYBORG_WIRES, CLOTHING_TRAIT)
 	color_cutoffs = list(50, 10, 30)
 	wearer.update_sight()
@@ -340,6 +372,7 @@
 	sec_hud.hide_from(wearer)
 
 	REMOVE_TRAIT(wearer, TRAIT_MADNESS_IMMUNE, CLOTHING_TRAIT)
+	REMOVE_TRAIT(wearer, TRAIT_MESON_VISION, CLOTHING_TRAIT)
 	REMOVE_TRAIT(wearer, TRAIT_KNOW_CYBORG_WIRES, CLOTHING_TRAIT)
 	color_cutoffs = null
 	wearer.update_sight()

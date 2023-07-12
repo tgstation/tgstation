@@ -22,7 +22,7 @@
 
 
 /datum/scripture/marauder/invoke()
-	var/list/candidates = poll_ghost_candidates("Do you want to play as a Clockwork Marauder?", ROLE_PAI, FALSE, 100, POLL_IGNORE_CONSTRUCT)
+	var/list/candidates = poll_ghost_candidates("Do you want to play as a Clockwork Marauder?", ROLE_CLOCK_CULTIST, FALSE, 100, POLL_IGNORE_CONSTRUCT)
 	if(length(candidates))
 		selected = pick(candidates)
 

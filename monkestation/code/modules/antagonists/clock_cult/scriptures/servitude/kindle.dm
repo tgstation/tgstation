@@ -6,8 +6,8 @@
 /datum/scripture/slab/kindle
 	name = "Kindle"
 	desc = "Stuns and mutes a target from a short range."
-	tip = "Stuns and mutes a target from a short range."
-	button_icon_state = "Kindle"
+	tip = "Best paired with hateful manacels for conversion, they are stunned for 6.5 seconds and muted for 13."
+	button_icon_state = "volt"
 	power_cost = 125
 	invocation_time = 1 SECONDS
 	invocation_text = list("Divinity, show them your light!")
@@ -75,12 +75,12 @@
 		carbon_hit.adjust_stutter(15 SECONDS)
 		carbon_hit.adjust_jitter(15 SECONDS)
 
-		carbon_hit.adjust_timed_status_effect(12 SECONDS, /datum/status_effect/speech/slurring/cult)
+		carbon_hit.adjust_timed_status_effect(26 SECONDS, /datum/status_effect/speech/slurring/cult)
 
-		carbon_hit.adjust_silence(EFFECT_TIME)
-		carbon_hit.AdjustKnockdown(EFFECT_TIME)
+		carbon_hit.adjust_silence(EFFECT_TIME * 2) //enough time to cuff and remove their radio, or just go back to reebe where their comms wont work
+		carbon_hit.AdjustKnockdown(EFFECT_TIME * 1.5)
 
-		carbon_hit.Stun(6.5 SECONDS) //I would like to make this deal stamina but it regens far too fast for it to be viable
+		carbon_hit.Stun(EFFECT_TIME * (on_reebe(carbon_hit) ? 0.1 : 1)) //pretty much 0 stun if your on reebe, still good for knockdown though
 
 	if(hit_mob.client)
 		var/client_color = hit_mob.client.color

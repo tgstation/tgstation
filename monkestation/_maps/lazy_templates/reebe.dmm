@@ -37,24 +37,16 @@
 	},
 /turf/open/indestructible/reebe_flooring,
 /area/ruin/powered/reebe/city)
-"fi" = (
-/obj/structure/fluff/clockwork/alloy_shards,
-/turf/open/indestructible/reebe_flooring,
-/area/ruin/powered/reebe/city)
-"fV" = (
-/obj/structure/fluff/clockwork/alloy_shards/large,
-/turf/open/indestructible/reebe_flooring,
-/area/ruin/powered/reebe/city)
 "gj" = (
 /obj/structure/table/bronze,
 /obj/item/clockwork/clockwork_slab{
-	pixel_x = -4;
-	pixel_y = 4
+	pixel_x = 4;
+	pixel_y = -4
 	},
 /obj/item/clockwork/clockwork_slab,
 /obj/item/clockwork/clockwork_slab{
-	pixel_x = 4;
-	pixel_y = -4
+	pixel_x = -4;
+	pixel_y = 4
 	},
 /turf/open/indestructible/reebe_flooring/filled,
 /area/ruin/powered/reebe/city)
@@ -112,10 +104,6 @@
 	},
 /turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
-"jP" = (
-/obj/structure/fluff/clockwork/alloy_shards/medium,
-/turf/open/indestructible/reebe_flooring,
-/area/ruin/powered/reebe/city)
 "lj" = (
 /obj/effect/spawner/structure/window/clockwork,
 /turf/open/indestructible/reebe_flooring,
@@ -163,15 +151,15 @@
 	},
 /turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
+"uF" = (
+/obj/structure/table/bronze,
+/obj/item/stack/sheet/bronze/thirty,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
 "ve" = (
 /obj/effect/servant_blocker,
 /obj/structure/lattice/catwalk/clockwork,
 /turf/open/indestructible/reebe_void,
-/area/ruin/powered/reebe/city)
-"vo" = (
-/obj/structure/table/bronze,
-/obj/item/stack/sheet/bronze/thirty,
-/turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
 "zN" = (
 /obj/structure/table/bronze,
@@ -206,6 +194,10 @@
 /area/ruin/powered/reebe/city)
 "BT" = (
 /obj/effect/landmark/late_cog_portals,
+/turf/open/indestructible/reebe_flooring,
+/area/ruin/powered/reebe/city)
+"CE" = (
+/obj/structure/fluff/clockwork/alloy_shards,
 /turf/open/indestructible/reebe_flooring,
 /area/ruin/powered/reebe/city)
 "En" = (
@@ -244,18 +236,14 @@
 /obj/item/clothing/glasses/clockwork/judicial_visor,
 /turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
-"Hi" = (
-/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
-/turf/open/indestructible/reebe_flooring,
-/area/ruin/powered/reebe/city)
-"Hm" = (
-/obj/structure/fluff/clockwork/alloy_shards,
-/turf/open/indestructible/reebe_flooring/filled,
-/area/ruin/powered/reebe/city)
 "HT" = (
 /obj/structure/table/bronze,
 /obj/item/storage/medkit/regular,
 /turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"IX" = (
+/obj/structure/fluff/clockwork/alloy_shards/large,
+/turf/open/indestructible/reebe_flooring,
 /area/ruin/powered/reebe/city)
 "Kr" = (
 /obj/structure/table/bronze,
@@ -284,6 +272,10 @@
 "Ni" = (
 /turf/open/indestructible/reebe_flooring/filled,
 /area/ruin/powered/reebe/city)
+"OA" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
+/turf/open/indestructible/reebe_flooring,
+/area/ruin/powered/reebe/city)
 "OQ" = (
 /obj/machinery/computer/camera_advanced/ratvar{
 	dir = 8
@@ -296,7 +288,7 @@
 	},
 /turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
-"PO" = (
+"QA" = (
 /obj/structure/fluff/clockwork/alloy_shards/small,
 /turf/open/indestructible/reebe_flooring,
 /area/ruin/powered/reebe/city)
@@ -319,6 +311,10 @@
 /obj/structure/table/bronze,
 /obj/item/clothing/suit/clockwork/speed,
 /turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"Vi" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium,
+/turf/open/indestructible/reebe_flooring,
 /area/ruin/powered/reebe/city)
 "VS" = (
 /turf/open/indestructible/reebe_void/spawning/lattices,
@@ -351,6 +347,10 @@
 	pixel_y = -4
 	},
 /turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
+"ZW" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/turf/open/indestructible/reebe_flooring/filled,
 /area/ruin/powered/reebe/city)
 
 (1,1,1) = {"
@@ -3067,11 +3067,11 @@ lj
 VS
 VS
 VS
-qI
-qI
-qI
-qI
-qI
+mL
+mL
+mL
+mL
+mL
 qI
 qI
 qI
@@ -3093,11 +3093,11 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
+mL
+mL
+mL
+mL
+mL
 VS
 VS
 VS
@@ -3170,11 +3170,11 @@ tr
 VS
 VS
 VS
-qI
-qI
-qI
-qI
-qI
+mL
+mL
+mL
+mL
+mL
 qI
 qI
 qI
@@ -3196,11 +3196,11 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
+mL
+mL
+mL
+mL
+mL
 VS
 VS
 VS
@@ -3490,14 +3490,14 @@ oH
 oH
 oH
 oH
-Hi
+OA
 oH
 oH
 oH
 oH
 oH
 oH
-PO
+QA
 oH
 oH
 oH
@@ -3793,7 +3793,7 @@ oH
 oH
 oH
 oH
-PO
+QA
 oH
 oH
 ve
@@ -3919,7 +3919,7 @@ ve
 oH
 oH
 oH
-jP
+Vi
 oH
 oH
 XZ
@@ -3985,8 +3985,8 @@ mL
 mL
 mL
 mL
-qI
-qI
+mL
+mL
 qI
 qI
 qI
@@ -3994,7 +3994,7 @@ tr
 oH
 tr
 oH
-Hi
+OA
 oH
 oH
 oH
@@ -4007,7 +4007,7 @@ oH
 oH
 oH
 oH
-fV
+IX
 oH
 oH
 oH
@@ -4032,8 +4032,8 @@ tr
 qI
 qI
 qI
-qI
-qI
+mL
+mL
 mL
 mL
 mL
@@ -4088,8 +4088,8 @@ mL
 mL
 mL
 mL
-qI
-qI
+mL
+mL
 qI
 qI
 qI
@@ -4135,8 +4135,8 @@ qI
 qI
 qI
 qI
-qI
-qI
+mL
+mL
 mL
 mL
 mL
@@ -4191,8 +4191,8 @@ mL
 mL
 mL
 mL
-qI
-qI
+mL
+mL
 qI
 qI
 qI
@@ -4206,7 +4206,7 @@ ve
 oH
 oH
 oH
-fi
+CE
 oH
 oH
 oH
@@ -4238,8 +4238,8 @@ tr
 qI
 qI
 qI
-qI
-qI
+mL
+mL
 mL
 mL
 mL
@@ -4294,8 +4294,8 @@ mL
 mL
 mL
 mL
-qI
-qI
+mL
+mL
 qI
 qI
 qI
@@ -4321,7 +4321,7 @@ oH
 oH
 oH
 oH
-Hm
+ZW
 Ni
 oH
 oH
@@ -4329,7 +4329,7 @@ oH
 oH
 oH
 oH
-fV
+IX
 oH
 oH
 ve
@@ -4341,8 +4341,8 @@ tr
 qI
 qI
 qI
-qI
-qI
+mL
+mL
 mL
 mL
 mL
@@ -4397,8 +4397,8 @@ mL
 mL
 mL
 mL
-qI
-qI
+mL
+mL
 qI
 qI
 tr
@@ -4444,8 +4444,8 @@ tr
 tr
 qI
 qI
-qI
-qI
+mL
+mL
 mL
 mL
 mL
@@ -4615,7 +4615,7 @@ ve
 oH
 oH
 oH
-Hi
+OA
 oH
 oH
 oH
@@ -4638,7 +4638,7 @@ oH
 Ni
 oH
 oH
-jP
+Vi
 oH
 oH
 oH
@@ -4821,7 +4821,7 @@ oH
 oH
 oH
 oH
-jP
+Vi
 oH
 Ni
 oH
@@ -4852,7 +4852,7 @@ oH
 oH
 ve
 oH
-PO
+QA
 oH
 lj
 qI
@@ -5035,7 +5035,7 @@ To
 oH
 oH
 oH
-vo
+uF
 tr
 Kr
 oH
@@ -5052,7 +5052,7 @@ tr
 oH
 Ni
 oH
-fi
+CE
 oH
 oH
 oH
@@ -5147,7 +5147,7 @@ jN
 En
 tr
 cF
-vo
+uF
 Ni
 To
 To
@@ -5538,7 +5538,7 @@ oH
 ve
 oH
 oH
-fV
+IX
 oH
 oH
 Ni
@@ -5571,7 +5571,7 @@ Ni
 oH
 oH
 oH
-fi
+CE
 oH
 ve
 oH
@@ -5749,7 +5749,7 @@ oH
 oH
 Ni
 oH
-Hi
+OA
 oH
 tr
 Bv
@@ -5776,7 +5776,7 @@ oH
 Ni
 oH
 oH
-jP
+Vi
 oH
 ve
 oH
@@ -5961,7 +5961,7 @@ tr
 To
 To
 Ni
-vo
+uF
 cF
 tr
 zR
@@ -6073,7 +6073,7 @@ oH
 oH
 sa
 tr
-vo
+uF
 oH
 oH
 oH
@@ -6157,8 +6157,8 @@ oH
 oH
 ve
 oH
-PO
-PO
+QA
+QA
 oH
 oH
 Ni
@@ -6289,7 +6289,7 @@ Ni
 oH
 oH
 oH
-fV
+IX
 oH
 oH
 ve
@@ -6575,7 +6575,7 @@ oH
 oH
 oH
 oH
-fi
+CE
 oH
 Ni
 oH
@@ -6670,7 +6670,7 @@ qI
 tr
 tr
 oH
-jP
+Vi
 oH
 ve
 oH
@@ -6694,7 +6694,7 @@ oH
 oH
 Ni
 Ni
-jP
+Vi
 oH
 oH
 oH
@@ -6710,8 +6710,8 @@ tr
 tr
 qI
 qI
-qI
-qI
+mL
+mL
 mL
 mL
 mL
@@ -6766,8 +6766,8 @@ mL
 mL
 mL
 mL
-qI
-qI
+mL
+mL
 qI
 qI
 qI
@@ -6790,7 +6790,7 @@ Ni
 Ni
 oH
 oH
-Hi
+OA
 oH
 oH
 Ni
@@ -6813,8 +6813,8 @@ tr
 qI
 qI
 qI
-qI
-qI
+mL
+mL
 mL
 mL
 mL
@@ -6869,8 +6869,8 @@ mL
 mL
 mL
 mL
-qI
-qI
+mL
+mL
 qI
 qI
 qI
@@ -6898,7 +6898,7 @@ Ni
 Ni
 oH
 oH
-fV
+IX
 oH
 oH
 oH
@@ -6916,8 +6916,8 @@ tr
 qI
 qI
 qI
-qI
-qI
+mL
+mL
 mL
 mL
 mL
@@ -6972,8 +6972,8 @@ mL
 mL
 mL
 mL
-qI
-qI
+mL
+mL
 qI
 qI
 qI
@@ -7004,7 +7004,7 @@ oH
 oH
 oH
 oH
-PO
+QA
 oH
 oH
 oH
@@ -7019,8 +7019,8 @@ qI
 qI
 qI
 qI
-qI
-qI
+mL
+mL
 mL
 mL
 mL
@@ -7075,8 +7075,8 @@ mL
 mL
 mL
 mL
-qI
-qI
+mL
+mL
 qI
 qI
 qI
@@ -7095,7 +7095,7 @@ oH
 oH
 oH
 oH
-PO
+QA
 oH
 oH
 oH
@@ -7113,7 +7113,7 @@ ve
 ve
 oH
 oH
-jP
+Vi
 oH
 oH
 tr
@@ -7122,8 +7122,8 @@ tr
 qI
 qI
 qI
-qI
-qI
+mL
+mL
 mL
 mL
 mL
@@ -7198,7 +7198,7 @@ ve
 oH
 oH
 oH
-Hi
+OA
 oH
 oH
 oH
@@ -7293,7 +7293,7 @@ oH
 tr
 oH
 oH
-PO
+QA
 oH
 oH
 oH
@@ -7908,11 +7908,11 @@ tr
 VS
 VS
 VS
-qI
-qI
-qI
-qI
-qI
+mL
+mL
+mL
+mL
+mL
 qI
 qI
 qI
@@ -7934,11 +7934,11 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
+mL
+mL
+mL
+mL
+mL
 VS
 VS
 VS
@@ -8011,11 +8011,11 @@ lj
 VS
 VS
 VS
-qI
-qI
-qI
-qI
-qI
+mL
+mL
+mL
+mL
+mL
 qI
 qI
 qI
@@ -8037,11 +8037,11 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
+mL
+mL
+mL
+mL
+mL
 VS
 VS
 VS

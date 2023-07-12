@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 	. = ..()
 	cut_overlays()
 	if(charge_overlay)
-		add_overlay(charge_overlay)
+		add_overlay(list(charge_overlay))
 
 
 /// Handle binding a spell to a quickbind slot

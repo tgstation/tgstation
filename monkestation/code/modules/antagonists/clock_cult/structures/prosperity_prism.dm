@@ -18,7 +18,7 @@
 	if(!.)
 		return
 
-	for(var/mob/living/possible_cultist in range(3, src)) // Kyler said this is faster than spatial grid
+	for(var/mob/living/possible_cultist in range(3, src))
 		if(!IS_CLOCK(possible_cultist))
 			continue
 
@@ -33,7 +33,7 @@
 			possible_cultist.adjustOxyLoss(-2.5 * seconds_per_tick)
 			possible_cultist.adjustCloneLoss(-1 * seconds_per_tick)
 
-			new /obj/effect/temp_visual/heal(get_turf(possible_cultist), "#45dd8a")
+			new /obj/effect/temp_visual/heal(get_turf(possible_cultist), LIGHT_COLOR_CLOCKWORK)
 
 			for(var/datum/reagent/toxin/toxin_chem in possible_cultist.reagents.reagent_list)
 				possible_cultist.reagents.remove_reagent(toxin_chem.type, 2.5 * seconds_per_tick)
