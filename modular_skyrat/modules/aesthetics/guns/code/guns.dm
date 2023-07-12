@@ -64,6 +64,17 @@
 	vary_fire_sound = TRUE
 	fire_sound = 'modular_skyrat/modules/aesthetics/guns/sound/shotgun_light.ogg'
 
+/obj/item/gun/ballistic/shotgun/riot/syndicate
+	name = "\improper Peacebreaker shotgun"
+	desc = "A Scarborough riot control shotgun fitted with a crimson furnishing and a wooden tactical stock. You swear you've seen this model elsewhere before..."
+	icon_state = "riotshotgun_syndie"
+	inhand_icon_state = "riot_shotgun_syndie"
+	can_be_sawn_off = FALSE
+	can_suppress = FALSE
+
+/obj/item/gun/ballistic/shotgun/riot/syndicate/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
+
 /obj/item/gun/ballistic/shotgun/automatic/combat
 	name = "\improper Peacekeeper combat shotgun"
 	desc = "A semi-automatic Nanotrasen Peacekeeper shotgun with tactical furnishing and heavier internals meant for sustained fire. Lacks a threaded barrel."
@@ -212,7 +223,9 @@
 	can_suppress = TRUE
 	can_unsuppress = TRUE
 	weapon_weight = WEAPON_LIGHT
-	company_flag = COMPANY_SCARBOROUGH
+
+/obj/item/gun/ballistic/automatic/sniper_rifle/modular/syndicate/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
 
 /obj/item/gun/ballistic/automatic/sniper_rifle/modular/blackmarket  //Normal sniper but epic
 	name = "SA-107 anti-materiel rifle"
@@ -315,7 +328,9 @@
 	fire_delay = 5
 	fire_sound_volume = 90
 	mag_type = /obj/item/ammo_box/magazine/multi_sprite/ostwind/arg75
-	company_flag = COMPANY_NANOTRASEN
+
+/obj/item/gun/ballistic/automatic/ar/modular/model75/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_NANOTRASEN)
 
 /obj/item/ammo_box/magazine/multi_sprite/ostwind/arg75
 	name = "7.62mm straight magazine"

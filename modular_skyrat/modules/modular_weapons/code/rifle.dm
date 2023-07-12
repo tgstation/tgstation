@@ -148,6 +148,12 @@
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 1.5)
 
+/obj/item/gun/ballistic/automatic/cfa_rifle/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_CANTALAN)
+
+/obj/item/gun/ballistic/automatic/cfa_rifle/give_gun_safeties()
+	return
+
 /obj/item/gun/ballistic/automatic/cfa_rifle/empty
 	spawnwithmagazine = FALSE
 

@@ -21,8 +21,14 @@
 	load_empty_sound = 'modular_skyrat/modules/gunsgalore/sound/guns/interact/ltrifle_magin.ogg'
 	eject_sound = 'modular_skyrat/modules/gunsgalore/sound/guns/interact/ltrifle_magout.ogg'
 	alt_icons = TRUE
-	dirt_modifier = 0.75
-	company_flag = COMPANY_IZHEVSK
+
+/obj/item/gun/ballistic/automatic/akm/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/automatic_fire, fire_delay)
+
+/obj/item/gun/ballistic/automatic/akm/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_IZHEVSK)
 
 /obj/item/ammo_box/magazine/akm
 	name = "\improper AKM magazine"

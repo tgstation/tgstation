@@ -31,7 +31,13 @@
 	dirt_modifier = 1
 	emp_damageable = TRUE
 	fire_delay = 1.90
-	company_flag = COMPANY_CANTALAN
+	projectile_damage_multiplier = 0.5
+
+/obj/item/gun/ballistic/automatic/pistol/g17/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_CANTALAN)
+
+/obj/item/gun/ballistic/automatic/pistol/g17/add_seclight_point()
+	return
 
 /obj/item/ammo_box/magazine/multi_sprite/g17
 	name = "9x19mm double stack magazine"
@@ -71,9 +77,13 @@
 	spread = 8
 	mag_display = FALSE
 	mag_display_ammo = FALSE
-	can_flashlight = TRUE
-	company_flag = COMPANY_CANTALAN
-	dirt_modifier = 1
+	projectile_damage_multiplier = 0.5
+
+/obj/item/gun/ballistic/automatic/pistol/g18/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_CANTALAN)
+
+/obj/item/gun/ballistic/automatic/pistol/g18/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', light_overlay = "flight")
 
 /obj/item/ammo_box/magazine/multi_sprite/g18
 	name = "extended 9x19mm magazine"
@@ -131,10 +141,12 @@
 	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
-	realistic = TRUE
-	can_flashlight = TRUE
-	emp_damageable = TRUE
-	company_flag = COMPANY_ARMADYNE
+
+/obj/item/gun/ballistic/automatic/pistol/pdh/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ARMADYNE)
+
+/obj/item/gun/ballistic/automatic/pistol/pdh/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', light_overlay = "flight")
 
 /obj/item/gun/ballistic/automatic/pistol/pdh/alt
 	name = "\improper PDH-6C 'SOCOM'"
@@ -251,7 +263,13 @@
 	dirt_modifier = 0.8
 	emp_damageable = TRUE
 	fire_delay = 4.20
-	company_flag = COMPANY_ARMADYNE
+	projectile_damage_multiplier = 0.7
+
+/obj/item/gun/ballistic/automatic/pistol/ladon/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ARMADYNE)
+
+/obj/item/gun/ballistic/automatic/pistol/ladon/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', light_overlay = "flight")
 
 /obj/item/ammo_box/magazine/multi_sprite/ladon
 	name = "10mm Auto pistol magazine"
@@ -286,9 +304,10 @@
 	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
-	dirt_modifier = 0.75
-	emp_damageable = TRUE
-	company_flag = COMPANY_IZHEVSK
+	projectile_damage_multiplier = 0.6
+
+/obj/item/gun/ballistic/automatic/pistol/makarov/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_IZHEVSK)
 
 /obj/item/ammo_box/magazine/multi_sprite/makarov
 	name = "small 10mm Auto pistol magazine"
@@ -325,10 +344,10 @@
 	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
-	realistic = TRUE
-	dirt_modifier = 0.4
-	emp_damageable = TRUE
-	company_flag = COMPANY_ARMADYNE
+	projectile_damage_multiplier = 0.5
+
+/obj/item/gun/ballistic/automatic/pistol/mk58/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ARMADYNE)
 
 /obj/item/ammo_box/magazine/multi_sprite/mk58
 	name = "outdated 9x19mm magazine"
@@ -364,10 +383,14 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/multi_sprite/firefly
 	can_suppress = FALSE
-	realistic = TRUE
-	can_flashlight = TRUE
-	emp_damageable = TRUE
-	company_flag = COMPANY_ARMADYNE
+	projectile_damage_multiplier = 0.5
+
+/obj/item/gun/ballistic/automatic/pistol/firefly/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ARMADYNE)
+
+/obj/item/gun/ballistic/automatic/pistol/firefly/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', light_overlay = "flight")
+
 
 /obj/item/ammo_box/magazine/multi_sprite/firefly
 	name = "9x19mm special pistol magazine"
@@ -415,11 +438,9 @@
 	spread = 25
 	mag_display = FALSE
 	mag_display_ammo = FALSE
-	fire_select_modes = list(SELECT_SEMI_AUTOMATIC, SELECT_BURST_SHOT)
-	realistic = TRUE
-	dirt_modifier = 1.7 //the croon is an EXTRA piece of shit
-	emp_damageable = TRUE
-	company_flag = COMPANY_IZHEVSK
+
+/obj/item/gun/ballistic/automatic/croon/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_IZHEVSK)
 
 /obj/item/ammo_box/magazine/multi_sprite/croon
 	name = "6.3mm SMG magazine"
@@ -460,9 +481,9 @@
 	rack_sound = 'sound/weapons/gun/smg/smgrack.ogg'
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
-	realistic = TRUE
-	emp_damageable = TRUE
-	company_flag = COMPANY_ARMADYNE
+
+/obj/item/gun/ballistic/automatic/dozer/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ARMADYNE)
 
 /obj/item/ammo_box/magazine/multi_sprite/dozer
 	name = "9x19mm small PDW magazine"
@@ -507,7 +528,14 @@
 	realistic = TRUE
 	fire_sound_volume = 60
 	fire_sound = 'modular_skyrat/modules/sec_haul/sound/sniper_fire.ogg'
-	company_flag = COMPANY_ARMADYNE
+
+/obj/item/gun/ballistic/automatic/dmr/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/automatic_fire, fire_delay)
+
+/obj/item/gun/ballistic/automatic/dmr/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ARMADYNE)
 
 /obj/item/ammo_box/magazine/dmr
 	name = ".557 DMR Magazine"
@@ -530,7 +558,9 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/zeta
 	fire_sound = 'modular_skyrat/modules/sec_haul/sound/revolver_fire.ogg'
 	fire_delay = 3
-	company_flag = COMPANY_BOLT
+
+/obj/item/gun/ballistic/revolver/zeta/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_BOLT)
 
 /obj/item/ammo_box/magazine/internal/cylinder/zeta
 	name = "10mm Auto revolver cylinder"
@@ -563,7 +593,10 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/revolution
 	fire_sound = 'modular_skyrat/modules/sec_haul/sound/revolver_fire.ogg'
 	fire_delay = 1.90
-	company_flag = COMPANY_BOLT
+	projectile_damage_multiplier = 0.5
+
+/obj/item/gun/ballistic/revolver/revolution/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_BOLT)
 
 /obj/item/ammo_box/magazine/internal/cylinder/revolution
 	name = "revolver cylinder"
@@ -618,7 +651,9 @@
 	load_empty_sound = 'modular_skyrat/modules/sec_haul/sound/chaingun_magout.ogg'
 	var/recharge_time = 5 SECONDS
 	var/recharging = FALSE
-	company_flag = COMPANY_ARMADYNE
+
+/obj/item/gun/ballistic/automatic/smartgun/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ARMADYNE)
 
 /obj/item/gun/ballistic/automatic/smartgun/process_chamber()
 	. = ..()
@@ -692,9 +727,14 @@
 	fire_sound = 'modular_skyrat/modules/sec_haul/sound/ltrifle_fire.ogg'
 	emp_damageable = FALSE
 	can_bayonet = TRUE
-	can_flashlight = TRUE
-	dirt_modifier = 0.1
-	company_flag = COMPANY_OLDARMS
+
+/obj/item/gun/ballistic/automatic/g11/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/automatic_fire, fire_delay)
+
+/obj/item/gun/ballistic/automatic/g11/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ARMADYNE)
 
 /obj/item/ammo_box/magazine/multi_sprite/g11
 	name = "4.73x33mm top-loader magazine"
@@ -725,7 +765,9 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/m23
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT | ITEM_SLOT_OCLOTHING
-	company_flag = COMPANY_BOLT
+
+/obj/item/gun/ballistic/shotgun/m23/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_BOLT)
 
 /obj/item/ammo_box/magazine/internal/shot/m23
 	name = "m23 shotgun internal magazine"
@@ -753,7 +795,9 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/as2
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT | ITEM_SLOT_OCLOTHING
-	company_flag = COMPANY_ARMADYNE
+
+/obj/item/gun/ballistic/shotgun/automatic/as2/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ARMADYNE)
 
 /obj/item/ammo_box/magazine/internal/shot/as2
 	name = "shotgun internal magazine"
@@ -779,33 +823,237 @@
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT | ITEM_SLOT_OCLOTHING
 	weapon_weight = WEAPON_MEDIUM
 	burst_size = 1
-	fire_select_modes = list(SELECT_SEMI_AUTOMATIC)
-	semi_auto = TRUE
-	internal_magazine = FALSE
-	company_flag = COMPANY_ARMADYNE
+	fire_delay = 10
+	actions_types = list()
 
-/obj/item/ammo_box/magazine/sas14
-	name = "14 Gauge box magazine"
+/obj/item/gun/ballistic/automatic/norwind/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/scope, range_modifier = 1.75)
+
+/obj/item/gun/ballistic/automatic/norwind/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ARMADYNE)
+
+/obj/item/gun/ballistic/automatic/norwind/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', light_overlay = "flight")
+
+/obj/item/ammo_box/magazine/multi_sprite/norwind
+	name = "\improper Norwind magazine"
+	desc = "An eight-round magazine for the Norwind DMR, chambered for 12mm."
 	icon = 'modular_skyrat/modules/sec_haul/icons/guns/mags.dmi'
-	icon_state = "sas14"
-	multiple_sprites = AMMO_BOX_FULL_EMPTY_BASIC
-	caliber = CALIBER_14GAUGE
-	ammo_type = /obj/item/ammo_casing/s14gauge
-	max_ammo = 5
+	icon_state = "norwind"
+	ammo_type = /obj/item/ammo_casing/b12mm
+	caliber = CALIBER_12MM
+	max_ammo = 8
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	possible_types = list(AMMO_TYPE_LETHAL, AMMO_TYPE_HOLLOWPOINT, AMMO_TYPE_RUBBER)
 
-//New SAS14 mags beyond here
+/obj/item/ammo_box/magazine/multi_sprite/norwind/hp
+	ammo_type = /obj/item/ammo_casing/b12mm/hp
+	round_type = AMMO_TYPE_HOLLOWPOINT
 
-/obj/item/ammo_box/magazine/sas14/empty
-	start_empty = TRUE
+/obj/item/ammo_box/magazine/multi_sprite/norwind/rubber
+	ammo_type = /obj/item/ammo_casing/b12mm/rubber
+	round_type = AMMO_TYPE_RUBBER
+
+/*
+*	VINTOREZ
+*/
+
+/obj/item/gun/ballistic/automatic/vintorez
+	name = "\improper VKC 'Vintorez'"
+	desc = "The VKC Vintorez is a lightweight integrally-suppressed scoped carbine usually employed in stealth operations. It was rechambered to 9x19mm for peacekeeping work."
+	icon = 'modular_skyrat/modules/sec_haul/icons/guns/vintorez.dmi'
+	righthand_file = 'modular_skyrat/modules/sec_haul/icons/guns/inhands/righthand.dmi'
+	lefthand_file = 'modular_skyrat/modules/sec_haul/icons/guns/inhands/lefthand.dmi'
+	icon_state = "vintorez"
+	worn_icon = 'modular_skyrat/modules/sec_haul/icons/guns/norwind.dmi'
+	worn_icon_state = "norwind_worn"
+	alt_icons = TRUE
+	alt_icon_state = "vintorez_worn"
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT | ITEM_SLOT_OCLOTHING
+	inhand_icon_state = "vintorez"
+	mag_type = /obj/item/ammo_box/magazine/multi_sprite/vintorez
+	suppressed = TRUE
+	can_unsuppress = FALSE
+	can_bayonet = FALSE
+	mag_display = FALSE
+	mag_display_ammo = FALSE
+	fire_delay = 4
+	spread = 10
+	fire_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
+	projectile_damage_multiplier = 0.5
+
+/obj/item/gun/ballistic/automatic/vintorez/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/scope, range_modifier = 1.5)
+
+	AddComponent(/datum/component/automatic_fire, fire_delay)
+
+/obj/item/gun/ballistic/automatic/vintorez/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_IZHEVSK)
+
+/obj/item/ammo_box/magazine/multi_sprite/vintorez
+	name = "\improper VKC magazine"
+	desc = "A twenty-round magazine for the VKC marksman rifle, chambered in 9x25mm."
+	icon = 'modular_skyrat/modules/sec_haul/icons/guns/mags.dmi'
+	icon_state = "norwind"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = CALIBER_9MM
+	max_ammo = 20
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+
+/obj/item/ammo_box/magazine/multi_sprite/vintorez/hp
+	ammo_type = /obj/item/ammo_casing/c9mm/hp
+	round_type = AMMO_TYPE_HOLLOWPOINT
+
+/obj/item/ammo_box/magazine/multi_sprite/vintorez/ihdf
+	ammo_type = /obj/item/ammo_casing/c9mm/ihdf
+	round_type = AMMO_TYPE_IHDF
+
+/obj/item/ammo_box/magazine/multi_sprite/vintorez/rubber
+	ammo_type = /obj/item/ammo_casing/c9mm/rubber
+	round_type = AMMO_TYPE_RUBBER
+
+/*
+*	PCR-9
+*/
+
+/obj/item/gun/ballistic/automatic/pcr
+	name = "\improper PCR-9 SMG"
+	desc = "An accurate, fast-firing SMG chambered in 9x19mm."
+	icon = 'modular_skyrat/modules/sec_haul/icons/guns/pcr.dmi'
+	righthand_file = 'modular_skyrat/modules/sec_haul/icons/guns/inhands/righthand.dmi'
+	lefthand_file = 'modular_skyrat/modules/sec_haul/icons/guns/inhands/lefthand.dmi'
+	worn_icon = 'modular_skyrat/modules/sec_haul/icons/guns/ostwind.dmi'
+	worn_icon_state = "ostwind_worn"
+	inhand_icon_state = "pcr"
+	icon_state = "pcr"
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT | ITEM_SLOT_OCLOTHING
+	w_class = WEIGHT_CLASS_BULKY
+	mag_type = /obj/item/ammo_box/magazine/multi_sprite/pcr
+	fire_delay = 1.80
+	can_suppress = FALSE
+	spread = 10
+	can_bayonet = FALSE
+	mag_display = TRUE
+	mag_display_ammo = TRUE
+	fire_sound = 'modular_skyrat/modules/sec_haul/sound/smg_fire.ogg'
+	projectile_damage_multiplier = 0.5
+
+/obj/item/gun/ballistic/automatic/pcr/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/automatic_fire, fire_delay)
+
+/obj/item/gun/ballistic/automatic/pcr/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_BOLT)
+
+/obj/item/gun/ballistic/automatic/pcr/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', light_overlay = "flight")
 
 /obj/item/ammo_box/magazine/sas14/beanbag
 	ammo_type = /obj/item/ammo_casing/s14gauge/beanbag
 
-/obj/item/ammo_box/magazine/sas14/buckshot
-	ammo_type = /obj/item/ammo_casing/s14gauge/buckshot
+/obj/item/ammo_box/magazine/multi_sprite/pcr/rubber
+	ammo_type = /obj/item/ammo_casing/c9mm/rubber
+	round_type = AMMO_TYPE_RUBBER
+
+/obj/item/gun/ballistic/automatic/pitbull
+	name = "\improper Pitbull PDW"
+	desc = "A sturdy personal defense weapon designed to fire 10mm Auto rounds."
+	icon = 'modular_skyrat/modules/sec_haul/icons/guns/pitbull.dmi'
+	righthand_file = 'modular_skyrat/modules/sec_haul/icons/guns/inhands/righthand.dmi'
+	lefthand_file = 'modular_skyrat/modules/sec_haul/icons/guns/inhands/lefthand.dmi'
+	inhand_icon_state = "pitbull"
+	icon_state = "pitbull"
+	worn_icon = 'modular_skyrat/modules/sec_haul/icons/guns/ostwind.dmi'
+	worn_icon_state = "ostwind_worn"
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT | ITEM_SLOT_OCLOTHING
+	mag_type = /obj/item/ammo_box/magazine/multi_sprite/pitbull
+	fire_delay = 4.20
+	can_suppress = FALSE
+	burst_size = 3
+	spread = 15
+	actions_types = list(/datum/action/item_action/toggle_firemode)
+	mag_display = TRUE
+	mag_display_ammo = TRUE
+	fire_sound = 'modular_skyrat/modules/sec_haul/sound/sfrifle_fire.ogg'
+	can_bayonet = TRUE
+	projectile_damage_multiplier = 0.7
+
+/obj/item/gun/ballistic/automatic/pitbull/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/automatic_fire, fire_delay)
+
+/obj/item/gun/ballistic/automatic/pitbull/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_BOLT)
+
+/obj/item/gun/ballistic/automatic/pitbull/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', light_overlay = "flight")
 
 /obj/item/ammo_box/magazine/sas14/rubbershot
 	ammo_type = /obj/item/ammo_casing/s14gauge/rubbershot
 
-/obj/item/ammo_box/magazine/sas14/stunslug
-	ammo_type = /obj/item/ammo_casing/s14gauge/stunslug
+/obj/item/ammo_box/magazine/multi_sprite/pitbull/rubber
+	ammo_type = /obj/item/ammo_casing/c10mm/rubber
+	round_type = AMMO_TYPE_RUBBER
+
+/*
+*	DTR-6
+*/
+
+/obj/item/gun/ballistic/automatic/ostwind
+	name = "\improper DTR-6 Rifle"
+	desc = "A 6.3mm special-purpose rifle designed to deal with threats uniquely. You feel like this is a support type firearm."
+	icon = 'modular_skyrat/modules/sec_haul/icons/guns/ostwind.dmi'
+	righthand_file = 'modular_skyrat/modules/sec_haul/icons/guns/inhands/righthand.dmi'
+	lefthand_file = 'modular_skyrat/modules/sec_haul/icons/guns/inhands/lefthand.dmi'
+	inhand_icon_state = "ostwind"
+	icon_state = "ostwind"
+	worn_icon = 'modular_skyrat/modules/sec_haul/icons/guns/ostwind.dmi'
+	worn_icon_state = "ostwind_worn"
+	alt_icons = TRUE
+	alt_icon_state = "ostwind_worn"
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT | ITEM_SLOT_OCLOTHING
+	mag_type = /obj/item/ammo_box/magazine/multi_sprite/ostwind
+	spread = 10
+	fire_delay = 2
+	can_suppress = FALSE
+	burst_size = 2
+	actions_types = list(/datum/action/item_action/toggle_firemode)
+	mag_display = TRUE
+	mag_display_ammo = TRUE
+	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
+	can_bayonet = TRUE
+
+/obj/item/gun/ballistic/automatic/ostwind/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/automatic_fire, fire_delay)
+
+/obj/item/gun/ballistic/automatic/ostwind/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_ARMADYNE)
+
+/obj/item/ammo_box/magazine/multi_sprite/ostwind
+	name = "\improper DTR-6 magazine"
+	desc = "A thirty round double-stack magazine for the DTR-6 rifle, capable of loading flechettes, fragmentation ammo or dissuasive pellets. Chambered for 6.3mm."
+	icon = 'modular_skyrat/modules/sec_haul/icons/guns/mags.dmi'
+	icon_state = "pcr"
+	ammo_type = /obj/item/ammo_casing/b6mm
+	caliber = CALIBER_6MM
+	max_ammo = 30
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	possible_types = list(AMMO_TYPE_LETHAL, AMMO_TYPE_RUBBER, AMMO_TYPE_IHDF)
+
+/obj/item/ammo_box/magazine/multi_sprite/ostwind/rubber
+	ammo_type = /obj/item/ammo_casing/b6mm/rubber
+	round_type = AMMO_TYPE_RUBBER
+
+/obj/item/ammo_box/magazine/multi_sprite/ostwind/ihdf
+	ammo_type = /obj/item/ammo_casing/b6mm/ihdf
+	round_type = AMMO_TYPE_IHDF

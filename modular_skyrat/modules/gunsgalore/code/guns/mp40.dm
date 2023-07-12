@@ -20,8 +20,11 @@
 	load_empty_sound = 'modular_skyrat/modules/gunsgalore/sound/guns/interact/smg_magin.ogg'
 	eject_sound = 'modular_skyrat/modules/gunsgalore/sound/guns/interact/smg_magout.ogg'
 	alt_icons = TRUE
-	realistic = TRUE
-	company_flag = COMPANY_OLDARMS
+
+/obj/item/gun/ballistic/automatic/mp40/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/ammo_box/magazine/mp40
 	name = "mp40 magazine (9mmx19)"

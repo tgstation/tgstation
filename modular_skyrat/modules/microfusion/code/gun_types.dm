@@ -4,7 +4,9 @@
 	icon_state = "mcr01"
 	inhand_icon_state = "mcr01"
 	shaded_charge = TRUE
-	company_flag = COMPANY_MICRON
+
+/obj/item/gun/microfusion/mcr01/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_MICRON)
 
 /// Gun for cargo crates.
 /obj/item/gun/microfusion/mcr01/advanced

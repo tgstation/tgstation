@@ -15,10 +15,9 @@
 	cell_type = /obj/item/stock_parts/cell/mini_egun
 	ammo_x_offset = 2
 	charge_sections = 3
-	can_flashlight = FALSE // Can't attach or detach the flashlight, and override it's icon update
-	gunlight_state = "cfa-disabler-light"
-	has_gun_safety = FALSE
-	company_flag = COMPANY_BOLT
+
+/obj/item/gun/energy/disabler/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_BOLT)
 
 /obj/item/gun/energy/disabler/bolt_disabler/Initialize()
 	set_gun_light(new /obj/item/flashlight/seclite(src))
@@ -42,10 +41,17 @@
 	has_gun_safety = FALSE
 	cell_type = /obj/item/stock_parts/cell/hos_gun
 
-//////////////////////
-//    CFA Paladin   //
-//////////////////////
-// Identical to a heavy laser.
+/obj/item/gun/energy/e_gun/cfa_phalanx/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_CANTALAN)
+
+/obj/item/gun/energy/e_gun/cfa_phalanx/give_gun_safeties()
+	return
+
+/*
+*	CFA PALADIN
+*	Identical to a heavy laser.
+*/
+
 
 /obj/item/gun/energy/laser/cfa_paladin
 	name = "\improper Mk.IV Paladin plasma carbine"
@@ -55,12 +61,18 @@
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/double)
 	charge_sections = 5
-	has_gun_safety = FALSE
 
-//////////////////////
-// Bounce Disabler  //
-//////////////////////
-// It's a disabler that will always ricochet.
+/obj/item/gun/energy/laser/cfa_paladin/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_CANTALAN)
+
+/obj/item/gun/energy/laser/cfa_paladin/give_gun_safeties()
+	return
+
+/*
+*	BOUNCE DISABLER
+*	A disabler that will always ricochet.
+*/
+
 
 /obj/item/ammo_casing/energy/disabler/bounce
 	projectile_type = /obj/projectile/beam/disabler/bounce

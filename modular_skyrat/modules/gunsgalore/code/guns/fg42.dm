@@ -29,6 +29,8 @@
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 1)
 
+	AddComponent(/datum/component/automatic_fire, fire_delay)
+
 /obj/item/ammo_box/magazine/fg42
 	name = "fg42 magazine (7.92x57mm)"
 	icon = 'modular_skyrat/modules/gunsgalore/icons/guns/gunsgalore_items.dmi'
