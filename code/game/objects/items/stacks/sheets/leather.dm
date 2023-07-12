@@ -79,9 +79,6 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	. = ..()
 	. += GLOB.corgi_recipes
 
-/obj/item/stack/sheet/animalhide/gondola/five
-	amount = 5
-
 /obj/item/stack/sheet/animalhide/cat
 	name = "cat hide"
 	desc = "The by-product of cat farming."

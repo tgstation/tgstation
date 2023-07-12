@@ -14,5 +14,5 @@
 		/obj/item/stack/sheet/animalhide/xeno/five = 1,
 		/obj/item/stack/sheet/animalhide/lizard/five = 1,
 		/obj/item/stack/sheet/animalhide/human/five = 1,
-		/obj/item/stack/sheet/animalhide/gondola/five = 1,
+		/obj/item/stack/sheet/animalhide/gondola = 1,
 	)
