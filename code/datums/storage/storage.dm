@@ -386,7 +386,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		var/datum/storage/item_storage = to_insert.atom_storage
 		if((to_insert.w_class >= resolve_parent.w_class) && item_storage && !allow_big_nesting)
 			if(messages && user)
-				user.balloon_alert("too big!")
+				user.balloon_alert(user, "too big!")
 			return FALSE
 
 	return TRUE
