@@ -39,6 +39,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		/obj/machinery/atm,
 		/datum/hotspot,
 		/obj/machinery/ocean_elevator,
+		///we generate mobs in this now
+		/obj/item/loot_table_maker,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
