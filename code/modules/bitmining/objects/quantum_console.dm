@@ -52,7 +52,7 @@
 
 	return data
 
-/obj/machinery/computer/quantum_console/ui_act(action, list/params)
+/obj/machinery/computer/quantum_console/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return TRUE
@@ -67,6 +67,9 @@
 			if(!server.generate_loot(usr))
 				return TRUE
 			server.stop_domain(usr)
+			return TRUE
+		if("refresh")
+			ui.send_full_update()
 			return TRUE
 		if("set_domain")
 			if(server.set_domain(usr, params["id"]))

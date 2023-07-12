@@ -35,7 +35,7 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "r" = (
-/mob/living/simple_animal/pet/gondola,
+/mob/living/simple_animal/pet/gondola/virtual_domain,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "s" = (
@@ -84,6 +84,13 @@
 /obj/structure/flora/bush/reed/style_random,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
+"K" = (
+/obj/structure/table/wood,
+/obj/item/storage/bag/tray,
+/obj/item/kitchen/fork,
+/obj/item/knife/kitchen,
+/turf/open/space/basic,
+/area/template_noop)
 "M" = (
 /obj/machinery/door/airlock/survival_pod/glass{
 	dir = 4
@@ -109,11 +116,15 @@
 /turf/closed/indestructible/binary,
 /turf/closed/indestructible/binary,
 /area/space)
+"W" = (
+/obj/structure/closet/crate/secure/bitminer_loot/encrypted/gondola,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
 "X" = (
 /obj/structure/table/wood,
 /obj/item/storage/bag/tray,
 /obj/item/kitchen/fork,
-/obj/item/knife/plastic,
+/obj/item/knife/kitchen,
 /turf/template_noop,
 /area/template_noop)
 "Z" = (
@@ -2886,7 +2897,7 @@ O
 B
 T
 g
-X
+K
 T
 T
 T
@@ -3177,7 +3188,7 @@ P
 P
 q
 P
-P
+W
 P
 P
 P

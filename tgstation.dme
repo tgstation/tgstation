@@ -2986,7 +2986,7 @@
 #include "code\modules\bitmining\virtual_domain\safehouses.dm"
 #include "code\modules\bitmining\virtual_domain\virtual_domain.dm"
 #include "code\modules\bitmining\virtual_domain\domains\bubblegum.dm"
-#include "code\modules\bitmining\virtual_domain\domains\gondola.dm"
+#include "code\modules\bitmining\virtual_domain\domains\gondola_asteroid.dm"
 #include "code\modules\bitmining\virtual_domain\domains\hierophant.dm"
 #include "code\modules\buildmode\bm_mode.dm"
 #include "code\modules\buildmode\buildmode.dm"

@@ -18,10 +18,9 @@
 	desc = "Needs delivered back station side to be opened."
 	locked = TRUE
 
+
 /obj/structure/closet/crate/secure/bitminer_loot/encrypted/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
-	. = ..()
-	balloon_alert(user, "encrypted! deliver it first.")
-	return
+	return FALSE
 
 /// The bitminer den - side of the bitmining crate. Appears in the receive location.
 /obj/structure/closet/crate/secure/bitminer_loot/decrypted
@@ -40,7 +39,7 @@
 
 /obj/structure/closet/crate/secure/bitminer_loot/decrypted/PopulateContents(difficulty, reward_points, list/extra_loot)
 	. = ..()
-	var/sum = 1 + reward_points
+	var/sum = 10 + reward_points
 
 	for(var/path in extra_loot)
 		if(ispath(path))
