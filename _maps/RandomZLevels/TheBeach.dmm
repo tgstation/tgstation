@@ -368,7 +368,7 @@
 "bA" = (
 /obj/structure{
 	desc = "Bar and beach south, dorms east.";
-	icon = 'icons/obj/stationobjs.dmi';
+	icon = 'icons/obj/fluff/general.dmi';
 	icon_state = "signpost";
 	name = "directions signpost"
 	},

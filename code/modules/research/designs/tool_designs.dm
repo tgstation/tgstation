@@ -88,7 +88,7 @@
 
 /datum/design/rtd_loaded
 	name = "Rapid Tiling Device"
-	desc = "A tool that can lay & destory floor tiles on the fly."
+	desc = "A tool that can lay & destroy floor tiles on the fly."
 	id = "rtd_loaded"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 15, /datum/material/glass =SHEET_MATERIAL_AMOUNT*1.25)
@@ -171,7 +171,7 @@
 
 /datum/design/rld_mini
 	name = "Mini Rapid Light Device (MRLD)"
-	desc = "A tool that can portable and standing lighting orbs and glowsticks."
+	desc = "A tool that can deploy portable and standing lighting orbs and glowsticks."
 	id = "rld_mini"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*10, /datum/material/glass =SHEET_MATERIAL_AMOUNT*5, /datum/material/plastic =SHEET_MATERIAL_AMOUNT*4, /datum/material/gold =SHEET_MATERIAL_AMOUNT)

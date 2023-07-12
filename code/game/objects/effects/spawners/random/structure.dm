@@ -188,7 +188,7 @@
 
 /obj/effect/spawner/random/structure/billboard
 	name = "billboard spawner"
-	icon = 'icons/obj/billboard.dmi'
+	icon = 'icons/obj/fluff/billboard.dmi'
 	icon_state = "billboard_random"
 	loot = list(
 		/obj/structure/billboard/azik = 50,

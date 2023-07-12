@@ -2,8 +2,8 @@
 
 /obj/item/station_charter
 	name = "station charter"
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "scroll2"
+	icon = 'icons/obj/scrolls.dmi'
+	icon_state = "charter"
 	desc = "An official document entrusting the governance of the station \
 		and surrounding space to the Captain."
 	var/used = FALSE

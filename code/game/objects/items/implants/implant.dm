@@ -3,7 +3,7 @@
  */
 /obj/item/implant
 	name = "implant"
-	icon = 'icons/obj/implants.dmi'
+	icon = 'icons/hud/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
 	item_flags = ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE
