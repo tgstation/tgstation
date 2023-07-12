@@ -79,6 +79,17 @@
 /datum/supply_pack/proc/generate_supply_packs()
 	return
 
+///Easily send a supplypod to an area
+/proc/send_supply_pod_to_area(contents, area_type, pod_type = /obj/structure/closet/supplypod)
+	var/list/open_turfs = get_area_turfs(pick(get_areas(area_type)), subtypes = TRUE)
+	for(var/turf/open/floor/turf in get_area_turfs(pick(get_areas(area_type))))
+		open_turfs += turf
+
+	if(!LAZYLEN(open_turfs))
+		return
+
+	new /obj/effect/pod_landingzone (pick(open_turfs), new pod_type (), contents)
+
 /**
  * Custom supply pack
  * The contents are given on New rather than being static

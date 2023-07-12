@@ -502,6 +502,10 @@
 		COLOR_CARP_PALE_GREEN = 1,
 		COLOR_CARP_DARK_GREEN = 1,
 	)
+	///When are we going to send them a care package?
+	VAR_PRIVATE/send_care_package_at = INFINITY
+	///How long does the storm have to last for us to send a care package?
+	VAR_PROTECTED/send_care_package_time = 5 MINUTES
 
 /datum/station_trait/nebula/hostile/radiation/New()
 	. = ..()
@@ -509,6 +513,13 @@
 	for(var/area/target as anything in get_areas(/area/space))
 		RegisterSignals(target, list(COMSIG_AREA_ENTERED, COMSIG_AREA_INITIALIZED_IN), PROC_REF(on_entered))
 		RegisterSignal(target, COMSIG_AREA_EXITED, PROC_REF(on_exited))
+
+/datum/station_trait/nebula/hostile/on_round_start()
+	. = ..()
+
+	//Give robotics some radiation protection modules for modsuits
+	var/datum/supply_pack/supply_pack = new /datum/supply_pack/materials/rad_protection_modules()
+	send_supply_pod_to_area(supply_pack.generate(null), /area/station/science/robotics)
 
 /datum/station_trait/nebula/hostile/radiation/process(seconds_per_tick)
 	. = ..()
@@ -531,10 +542,16 @@
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
 	if(effect_strength > 0)
-		if(SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula))
-			return
-		SSweather.run_weather(/datum/weather/rad_storm/nebula)
+		if(!SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula))
+			send_care_package_at = world.time + send_care_package_time
+			SSweather.run_weather(/datum/weather/rad_storm/nebula)
+
+		if(send_care_package_at < world.time)
+			send_care_package_at = world.time + send_care_package_time
+			send_supply_pod_to_area(new /obj/machinery/nebula_shielding/emergency/radiation(), /area/station)
+
 	else if(effect_strength <= 0)
 		var/datum/weather/weather = SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula)
 		if(weather)
 			weather.wind_down()
+		send_care_package_at = INFINITY

@@ -292,3 +292,11 @@
 	crate_name = "HFR crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
+
+/datum/supply_pack/materials/rad_protection_modules
+	name = "Radiation Protection modules"
+	desc = "Contains a high-capacity water tank. Useful for botany or other service jobs."
+	hidden = TRUE
+	contains = list(/obj/item/mod/module/rad_protection = 3)
+	crate_name = "modsuit radiation modules"
+	crate_type = /obj/structure/closet/crate/engineering
