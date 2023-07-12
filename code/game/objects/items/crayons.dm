@@ -231,9 +231,9 @@
 	update_appearance()
 
 /**
- *	Refills charges_left in infinite crayons on use.
- *	Sets charges_left in infinite crayons to 100 for spawning reagents.
- *	Spawns reagents in crayons based on the amount of charges_left if not spawned yet.
+ * Refills charges_left in infinite crayons on use.
+ * Sets charges_left in infinite crayons to 100 for spawning reagents.
+ * Spawns reagents in crayons based on the amount of charges_left if not spawned yet.
  */
 /obj/item/toy/crayon/proc/refill()
 	if(charges == INFINITE_CHARGES)
@@ -274,7 +274,7 @@
 	return TRUE
 
 /**
- *	When eating a crayon, check_empty() can be called twice producing two messages unless we check for being deleted first.
+ * When eating a crayon, check_empty() can be called twice producing two messages unless we check for being deleted first.
  *
  * Arguments:
  * * user - the user.
