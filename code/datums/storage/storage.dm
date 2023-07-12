@@ -328,6 +328,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 
 	if(locked > force)
+		user.balloon_alert(user, "closed!")
 		return FALSE
 
 	if((to_insert == resolve_parent) || (to_insert == real_location))
@@ -756,6 +757,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/obj/item/resolve_location = real_location.resolve()
 
 	if(locked)
+		user.balloon_alert(user, "closed!")
 		return
 	if(!user.CanReach(resolve_parent) || !user.CanReach(dest_object))
 		return
@@ -987,7 +989,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(locked)
 		if(!silent)
-			resolve_parent.balloon_alert(to_show, "locked!")
+			resolve_parent.balloon_alert(to_show, "closed!")
 		return FALSE
 
 	// If we're quickdrawing boys
