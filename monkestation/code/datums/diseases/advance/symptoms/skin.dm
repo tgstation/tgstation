@@ -118,8 +118,6 @@ BONUS
 
 /obj/item/food/fleshegg/New(loc, var/list/disease, var/sneaky, var/large_heal)
 	..()
-	if(!reagents)
-		reagents = new()
 	for(var/datum/disease/variable55 in disease)
 		diseases += variable55
 	if(large_heal)
