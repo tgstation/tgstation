@@ -35,26 +35,32 @@
 	if(A.totalStealth() >= 4)
 		suppress_warning = TRUE
 
-/datum/symptom/choking/Activate(datum/disease/advance/A)
+/datum/symptom/choking/Activate(datum/disease/advance/advanced_disease)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/M = A.affected_mob
-	switch(A.stage)
+
+	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
+
+	var/obj/item/organ/internal/lungs/target_lungs = infected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(target_lungs && IS_ROBOTIC_ORGAN(target_lungs))
+		return
+
+	switch(advanced_disease.stage)
 		if(1, 2)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, span_warning("[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]"))
+				to_chat(infected_mob, span_warning("[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]"))
 		if(3, 4)
 			if(!suppress_warning)
-				to_chat(M, span_warning("[pick("Your windpipe feels like a straw.", "Your breathing becomes tremendously difficult.")]"))
+				to_chat(infected_mob, span_warning("[pick("Your windpipe feels like a straw.", "Your breathing becomes tremendously difficult.")]"))
 			else
-				to_chat(M, span_warning("You feel very [pick("dizzy","woozy","faint")].")) //fake bloodloss messages
-			Choke_stage_3_4(M, A)
-			M.emote("gasp")
+				to_chat(infected_mob, span_warning("You feel very [pick("dizzy","woozy","faint")].")) //fake bloodloss messages
+			Choke_stage_3_4(infected_mob, advanced_disease)
+			infected_mob.emote("gasp")
 		else
-			to_chat(M, span_userdanger("[pick("You're choking!", "You can't breathe!")]"))
-			Choke(M, A)
-			M.emote("gasp")
+			to_chat(infected_mob, span_userdanger("[pick("You're choking!", "You can't breathe!")]"))
+			Choke(infected_mob, advanced_disease)
+			infected_mob.emote("gasp")
 
 /datum/symptom/choking/proc/Choke_stage_3_4(mob/living/M, datum/disease/advance/A)
 	M.adjustOxyLoss(rand(6,13))
