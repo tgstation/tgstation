@@ -345,7 +345,7 @@
 	category = CAT_WEAPON_RANGED
 
 /datum/crafting_recipe/smoothbore_disabler_prime
-	name = "Smoothbore Disabler Prime"
+	name = "Elite Smoothbore Disabler"
 	always_available = FALSE
 	result = /obj/item/gun/energy/disabler/smoothbore/prime
 	reqs = list(

@@ -60,9 +60,9 @@
 		overlay_y = 12) //i swear 1812 being the overlay numbers was accidental
 
 /obj/item/gun/energy/disabler/smoothbore/prime //much stronger than the other prime variants, so dont just put this in as maint loot
-	name = "smoothbore disabler prime"
+	name = "elite smoothbore disabler"
 	desc = "An enhancement version of the smoothbore disabler pistol. Improved optics and cell type result in good accuracy and the ability to fire twice. \
-	Has altered mod polarities for greater customization."
+	The disabler bolts also don't dissipate upon impact with armor, unlike the previous model."
 	icon_state = "smoothbore_prime"
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smoothbore/prime)
 	charge_sections = 2
