@@ -302,6 +302,7 @@
 /obj/item/storage/toolbox/mosincase
 	name = "ancient gun case"
 	desc = "A weapon's case. Has the symbol of the Third Soviet Union stamped on the side."
+	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "mosin_case"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
