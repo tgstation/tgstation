@@ -1364,6 +1364,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/construction)
+"xn" = (
+/obj/machinery/button/icts/tram/directional/west{
+	id = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "xw" = (
 /obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/noslip/tram_plate,
@@ -1412,7 +1418,7 @@
 /area/station/engineering/main)
 "yR" = (
 /obj/machinery/elevator_control_panel/directional/east{
-	preset_destination_names = list("2"="Bottom    Floor","3"="Middle    Floor","4"="Top    Floor");
+	preset_destination_names = list("2"="Bottom        Floor","3"="Middle        Floor","4"="Top        Floor");
 	linked_elevator_id = "test_vator"
 	},
 /obj/structure/industrial_lift/public,
@@ -2093,11 +2099,8 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "Yj" = (
-/obj/machinery/button/tram/directional/east{
+/obj/machinery/button/icts/tram/directional/east{
 	id = 3
-	},
-/obj/machinery/destination_sign/indicator/directional/east{
-	tram_id = "tram_1"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
@@ -5667,7 +5670,7 @@ eE
 eE
 iu
 Jq
-dY
+xn
 WN
 dY
 dY

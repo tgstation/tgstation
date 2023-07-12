@@ -6,8 +6,6 @@
 
 #define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSdcs, sigtype, ##arguments) )
 
-#define SEND_ICTS_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSicts_transport, sigtype, ##arguments) )
-
 /// Signifies that this proc is used to handle signals.
 /// Every proc you pass to RegisterSignal must have this.
 #define SIGNAL_HANDLER SHOULD_NOT_SLEEP(TRUE)

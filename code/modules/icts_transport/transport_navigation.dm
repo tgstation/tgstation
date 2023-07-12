@@ -8,6 +8,7 @@
 	var/platform_code = null
 	/// Icons for the tgui console to list out for what is at this location
 	var/list/tgui_icons = list()
+	var/platform_status = PLATFORM_ACTIVE
 
 /obj/effect/landmark/icts/nav_beacon/tram/Initialize(mapload)
 	. = ..()

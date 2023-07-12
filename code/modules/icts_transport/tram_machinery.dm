@@ -179,25 +179,39 @@
 	cooldown = TRUE
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
 
-	SEND_ICTS_SIGNAL()
+	debug_admins("ICTS: COMSIG_ICTS_REQUEST, [specific_transport_id], [id]")
+	INVOKE_ASYNC(SSicts_transport, TYPE_PROC_REF(/datum/controller/subsystem/processing/icts_transport, call_request), src, specific_transport_id, id)
 
-	if(!tram || !tram.controller_operational) //tram is QDEL or has no power
-		say("The tram is not in service. Please send a technician to repair the internals of the tram.")
-		return
-	if(tram.travelling) //in use
-		say("The tram is already travelling to [tram.idle_platform].")
-		return
-	if(!destination_platform)
-		return
-	var/obj/effect/landmark/icts/nav_beacon/tram/current_location = destination_platform.resolve()
-	if(!current_location)
-		return
-	if(tram.idle_platform == current_location) //already here
-		say("The tram is already here. Please board the tram and select a destination.")
-		return
+/obj/item/assembly/control/icts_call/proc/call_response(response_code, response_info)
+	SIGNAL_HANDLER
 
-	say("The tram has been called to [current_location.name]. Please wait for its arrival.")
-	tram.tram_travel(current_location)
+	debug_admins("ICTS: [response_code] [response_info]")
+
+/obj/machinery/button/icts/tram
+	name = "tram request"
+	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
+	base_icon_state = "tram"
+	icon_state = "tram"
+	light_color = LIGHT_COLOR_DARK_BLUE
+	can_alter_skin = FALSE
+	device_type = /obj/item/assembly/control/icts_call
+	req_access = list()
+	var/specific_transport_id = TRAMSTATION_LINE_1
+	id = 0
+
+/obj/machinery/button/icts/tram/setup_device()
+	var/obj/item/assembly/control/icts_call/icts_device = device
+	icts_device.id = id
+	icts_device.specific_transport_id = specific_transport_id
+	return ..()
+
+/obj/machinery/button/icts/tram/examine(mob/user)
+	. = ..()
+	. += span_notice("There's a small inscription on the button...")
+	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/icts/tram, 32)
+
 
 
 #undef AIRLOCK_CLOSED
