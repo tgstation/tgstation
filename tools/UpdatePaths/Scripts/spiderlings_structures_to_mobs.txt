@@ -1,0 +1,1 @@
+/obj/structure/spider/spiderling/@SUBTYPES : /mob/living/basic/spiderling/@SUBTYPES{@OLD}

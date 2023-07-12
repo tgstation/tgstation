@@ -8,6 +8,7 @@
 	overlay_icon_state = "bg_alien_border"
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 0 SECONDS
+	melee_cooldown_time = 0
 	/// How long it takes to lay a web
 	var/webbing_time = 4 SECONDS
 
@@ -83,3 +84,69 @@
 
 /datum/action/cooldown/lay_web/sealer/obstructed_by_other_web()
 	return !!(locate(/obj/structure/spider/stickyweb/sealed) in get_turf(owner))
+
+/datum/action/cooldown/lay_web/solid_web
+	name = "Spin Solid Web"
+	desc = "Spin a web to slow down potential prey."
+	button_icon_state = "lay_solid_web"
+	cooldown_time = 0 SECONDS
+	webbing_time = 5 SECONDS
+
+/datum/action/cooldown/lay_web/solid_web/obstructed_by_other_web()
+	return !!(locate(/obj/structure/spider/solid) in get_turf(owner))
+
+/datum/action/cooldown/lay_web/solid_web/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
+	new /obj/structure/spider/solid(target_turf)
+
+/datum/action/cooldown/lay_web/web_passage
+	name = "Spin Web Passage"
+	desc = "Spin a web passage to hide the nest from prey view."
+	button_icon_state = "lay_web_passage"
+	cooldown_time = 0 SECONDS
+	webbing_time = 4 SECONDS
+
+/datum/action/cooldown/lay_web/web_passage/obstructed_by_other_web()
+	return !!(locate(/obj/structure/spider/passage) in get_turf(owner))
+
+/datum/action/cooldown/lay_web/web_passage/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
+	new /obj/structure/spider/passage(target_turf)
+
+
+/datum/action/cooldown/lay_web/sticky_web
+	name = "Spin Sticky Web"
+	desc = "Spin a web to stick intruders in place."
+	button_icon_state = "lay_sticky_web"
+	cooldown_time = 20 SECONDS
+	webbing_time = 3 SECONDS
+
+/datum/action/cooldown/lay_web/sticky_web/obstructed_by_other_web()
+	return !!(locate(/obj/structure/spider/sticky) in get_turf(owner))
+
+/datum/action/cooldown/lay_web/sticky_web/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
+	new /obj/structure/spider/sticky(target_turf)
+
+/datum/action/cooldown/lay_web/web_spikes
+	name = "Spin Web Spikes"
+	desc = "Spin a spikes made out of web to stop intruders."
+	button_icon_state = "lay_web_spikes"
+	cooldown_time = 40 SECONDS
+	webbing_time = 3 SECONDS
+
+/datum/action/cooldown/lay_web/web_spikes/obstructed_by_other_web()
+	return !!(locate(/obj/structure/spider/spikes) in get_turf(owner))
+
+/datum/action/cooldown/lay_web/web_spikes/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
+	new /obj/structure/spider/spikes(target_turf)
+
+/datum/action/cooldown/lay_web/web_carcass
+	name = "leave carcass"
+	desc = "Shed your skin and leave a web carcass behind."
+	button_icon_state = "shed_web_carcass"
+	cooldown_time = 60 SECONDS
+	webbing_time = 0 SECONDS
+
+/datum/action/cooldown/lay_web/web_carcass/obstructed_by_other_web()
+	return !!(locate(/obj/structure/spider/carcass) in get_turf(owner))
+
+/datum/action/cooldown/lay_web/web_carcass/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
+	new /obj/structure/spider/carcass(target_turf)
