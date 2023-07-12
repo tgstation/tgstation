@@ -67,7 +67,7 @@
 /datum/ai_controller/basic_controller/chick
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_MOM_TYPES = list(/mob/living/basic/chicken),
+		BB_FIND_MOM_TYPES = list(/mob/living/basic/chicken),
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

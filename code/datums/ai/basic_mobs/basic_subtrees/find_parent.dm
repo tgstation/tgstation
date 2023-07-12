@@ -7,7 +7,7 @@
 	var/mob/baby = controller.pawn
 
 	if(QDELETED(target))
-		controller.queue_behavior(/datum/ai_behavior/find_mom, BB_MOM_TYPES, BB_FOUND_MOM)
+		controller.queue_behavior(/datum/ai_behavior/find_mom, BB_FIND_MOM_TYPES, BB_IGNORE_MOM_TYPES, BB_FOUND_MOM)
 		return
 
 	if(get_dist(target, baby) > minimum_distance)

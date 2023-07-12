@@ -288,7 +288,9 @@
 ///key holds the adukt we finded
 #define BB_FOUND_MOM "BB_found_mom"
 ///list of types of mobs we will look for
-#define BB_MOM_TYPES "BB_mom_types"
+#define BB_FIND_MOM_TYPES "BB_find_mom_types"
+///list of types of mobs we must ignore
+#define BB_IGNORE_MOM_TYPES "BB_ignore_mom_types"
 
 // Bileworm AI keys
 
