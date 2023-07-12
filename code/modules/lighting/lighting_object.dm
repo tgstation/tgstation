@@ -129,7 +129,7 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 			00, 00, 00, 01
 		)
 
-	affected_turf.underlays += current_underlay
+		affected_turf.underlays += current_underlay
 
 	if(red_corner.applying_additive || green_corner.applying_additive || blue_corner.applying_additive || alpha_corner.applying_additive)
 		affected_turf.underlays -= additive_underlay

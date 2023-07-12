@@ -202,9 +202,11 @@
 			on = FALSE
 	low_power_mode = FALSE
 	if(on)
+		var/IR = bulb_inner_range
 		var/brightness_set = bulb_outer_range
 		var/power_set = bulb_power
 		var/color_set = bulb_colour
+		var/FC = bulb_falloff
 		if(color)
 			color_set = color
 		if(reagents)
@@ -214,14 +216,16 @@
 			color_set = fire_colour
 			brightness_set = fire_brightness
 		else if (nightshift_enabled)
+			IR = nightshift_inner_range
 			brightness_set = nightshift_outer_range
 			power_set = nightshift_light_power
 			if(!color)
 				color_set = nightshift_light_color
+			FC = nightshift_falloff
 		else if (major_emergency)
 			color_set = bulb_low_power_colour
 			brightness_set = bulb_outer_range * bulb_major_emergency_brightness_mul
-		var/matching = light && brightness_set == light.light_outer_range && power_set == light.light_power && color_set == light.light_color
+		var/matching = light && brightness_set == light.light_outer_range && power_set == light.light_power && color_set == light.light_color && FC == light.light_falloff_curve && IR == light.light_inner_range
 		if(!matching)
 			switchcount++
 			if( prob( min(60, (switchcount**2)*0.01) ) )
@@ -231,7 +235,9 @@
 				use_power = ACTIVE_POWER_USE
 				set_light(
 					l_outer_range = brightness_set,
+					l_inner_range = IR,
 					l_power = power_set,
+					l_falloff_curve = FC,
 					l_color = color_set
 					)
 	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())

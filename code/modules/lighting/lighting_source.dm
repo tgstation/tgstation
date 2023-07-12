@@ -86,7 +86,7 @@
 
 	LAZYADD(new_atom_host.light_sources, src)
 	//yes, we register the signal to the top atom too, this is intentional and ensures contained lighting updates properly
-	if(ismovable(new_atom_host))
+	if(ismovable(new_atom_host) && new_atom_host == source_atom)
 		RegisterSignal(new_atom_host, COMSIG_MOVABLE_MOVED, PROC_REF(update_host_lights))
 	return TRUE
 
@@ -96,7 +96,7 @@
 		return FALSE
 
 	LAZYREMOVE(old_atom_host.light_sources, src)
-	if(ismovable(old_atom_host))
+	if(ismovable(old_atom_host) && old_atom_host == source_atom)
 		UnregisterSignal(old_atom_host, COMSIG_MOVABLE_MOVED)
 	return TRUE
 
@@ -142,26 +142,6 @@
 // Will cause the light source to recalculate turfs that were removed or added to visibility only.
 /datum/light_source/proc/vis_update()
 	EFFECT_UPDATE(LIGHTING_VIS_UPDATE)
-
-// This exists so we can cache the vars used in this macro, and save MASSIVE time :)
-// Most of this is saving off datum var accesses, tho some of it does actually cache computation
-// You will NEED to call this before you call APPLY_CORNER
-#define SETUP_CORNERS_CACHE(lighting_source)                  \
-	var/_turf_x = lighting_source.pixel_turf.x;               \
-	var/_turf_y = lighting_source.pixel_turf.y;               \
-	var/_turf_z = lighting_source.pixel_turf.z;               \
-	var/_range_divisor = max(1, lighting_source.light_range); \
-	var/_light_power = lighting_source.light_power;           \
-	var/_applied_lum_r = lighting_source.applied_lum_r;       \
-	var/_applied_lum_g = lighting_source.applied_lum_g;       \
-	var/_applied_lum_b = lighting_source.applied_lum_b;       \
-	var/_lum_r = lighting_source.lum_r;                       \
-	var/_lum_g = lighting_source.lum_g;                       \
-
-#define SETUP_CORNERS_REMOVAL_CACHE(lighting_source)    \
-	var/_applied_lum_r = lighting_source.applied_lum_r; \
-	var/_applied_lum_g = lighting_source.applied_lum_g; \
-	var/_applied_lum_b = lighting_source.applied_lum_b;
 
 // Read out of our sources light sheet, a map of offsets -> the luminosity to use
 //#define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
