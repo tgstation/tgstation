@@ -77,6 +77,8 @@
 		if(W.try_treating(I, user))
 			return TRUE
 
+	return ..()
+
 /mob/living/carbon/CtrlShiftClick(mob/user)
 	..()
 	if(iscarbon(user))
