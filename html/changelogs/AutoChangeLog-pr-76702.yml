@@ -1,4 +1,0 @@
-author: "Tattle"
-delete-after: True
-changes:
-  - qol: "changed mouth blocked message to a balloon alert"
