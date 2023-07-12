@@ -91,8 +91,8 @@
 			if(blood_id != /datum/reagent/blood)
 				var/datum/reagent/reagents = GLOB.chemical_reagents_list[blood_id]
 				blood_type = reagents ? reagents.name : blood_id
-				autopsy_information += "Blood Type: [blood_type]<br>"
-				autopsy_information += "Blood Volume: [scanned.blood_volume] cl ([blood_percent]) %<br>"
+			autopsy_information += "Blood Type: [blood_type]<br>"
+			autopsy_information += "Blood Volume: [scanned.blood_volume] cl ([blood_percent]%) <br>"
 
 	for(var/datum/disease/diseases as anything in scanned.diseases)
 		autopsy_information += "Name: [diseases.name] | Type: [diseases.spread_text]<br>"
