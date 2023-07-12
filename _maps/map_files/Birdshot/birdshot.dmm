@@ -8735,7 +8735,6 @@
 "dBA" = (
 /obj/structure/bed,
 /obj/item/bedsheet/dorms,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet/royalblack,
 /area/station/commons/dorms)
 "dBH" = (
@@ -10367,7 +10366,6 @@
 /obj/item/bedsheet/dorms{
 	dir = 4
 	},
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/carpet/purple,
 /area/station/commons/dorms)
 "eip" = (
@@ -34887,12 +34885,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security)
-"mMZ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/small/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/station/commons/dorms)
 "mNh" = (
 /obj/machinery/computer/cargo{
 	dir = 1
@@ -38591,7 +38583,6 @@
 "ohO" = (
 /obj/structure/bed,
 /obj/item/bedsheet/dorms,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet/red,
 /area/station/commons/dorms)
 "ohQ" = (
@@ -39671,6 +39662,7 @@
 "oDm" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "oDs" = (
@@ -40756,11 +40748,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/cafeteria)
-"oXI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron,
-/area/station/commons/dorms)
 "oXM" = (
 /obj/machinery/light/cold/directional/south,
 /obj/item/kirbyplants/random,
@@ -68901,7 +68888,6 @@
 /obj/item/bedsheet/dorms{
 	dir = 4
 	},
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/carpet/orange,
 /area/station/commons/dorms)
 "xGl" = (
@@ -101567,7 +101553,7 @@ aVV
 qZq
 qIv
 oEi
-mMZ
+oGv
 qUt
 qUt
 qUt
@@ -104137,7 +104123,7 @@ qIv
 nOf
 rsv
 oGv
-oXI
+nhs
 qUt
 tnO
 uYp

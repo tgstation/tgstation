@@ -1575,7 +1575,14 @@
 "aFv" = (
 /obj/machinery/newscaster/directional/north,
 /obj/structure/table/wood,
-/obj/effect/spawner/random/bureaucracy/paper,
+/obj/effect/spawner/random/bureaucracy/paper{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/obj/effect/spawner/random/decoration/ornament{
+	pixel_x = 8;
+	pixel_y = 5
+	},
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "aFW" = (
@@ -3411,7 +3418,6 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "bmz" = (
-/obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/bed,
 /obj/item/bedsheet/dorms,
@@ -4182,6 +4188,9 @@
 "bAD" = (
 /obj/structure/dresser,
 /obj/machinery/newscaster/directional/north,
+/obj/effect/spawner/random/decoration/ornament{
+	pixel_y = 13
+	},
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "bAR" = (
@@ -8403,7 +8412,6 @@
 "dis" = (
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -14543,7 +14551,6 @@
 /area/station/engineering/atmos)
 "fyo" = (
 /obj/effect/landmark/generic_maintenance_landmark,
-/obj/machinery/light/small/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -33544,7 +33551,14 @@
 "mil" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster/directional/east,
-/obj/effect/spawner/random/bureaucracy/paper,
+/obj/effect/spawner/random/bureaucracy/paper{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/obj/effect/spawner/random/decoration/ornament{
+	pixel_x = 8;
+	pixel_y = 5
+	},
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "min" = (
@@ -41884,10 +41898,15 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "pgI" = (
-/obj/machinery/light/small/directional/north,
 /obj/structure/table/wood,
 /obj/machinery/newscaster/directional/north,
-/obj/effect/spawner/random/entertainment/lighter,
+/obj/effect/spawner/random/entertainment/lighter{
+	pixel_x = -8
+	},
+/obj/effect/spawner/random/decoration/ornament{
+	pixel_x = 8;
+	pixel_y = 5
+	},
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "pgJ" = (
@@ -67132,9 +67151,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "yft" = (
-/obj/machinery/light/small/directional/north,
 /obj/machinery/newscaster/directional/north,
 /obj/structure/dresser,
+/obj/effect/spawner/random/decoration/ornament{
+	pixel_y = 13
+	},
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "yfx" = (
@@ -67305,10 +67326,6 @@
 /obj/effect/spawner/random/bureaucracy/stamp,
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
-"yjN" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/carpet,
-/area/station/commons/dorms)
 "yjW" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -105075,7 +105092,7 @@ qXB
 cgL
 qXB
 bAD
-yjN
+xpo
 lnc
 cUP
 mil

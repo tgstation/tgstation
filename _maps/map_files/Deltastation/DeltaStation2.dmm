@@ -26971,7 +26971,7 @@
 /obj/structure/sign/calendar/directional/north,
 /obj/structure/table/wood,
 /obj/effect/landmark/start/hangover,
-/obj/item/flashlight/lamp,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "gIk" = (
@@ -74718,8 +74718,8 @@
 /area/station/commons/dorms)
 "sKM" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp,
 /obj/machinery/newscaster/directional/south,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "sKP" = (
@@ -79776,7 +79776,7 @@
 /area/station/security/prison/garden)
 "tYs" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "tYu" = (
@@ -80094,9 +80094,9 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/hangover,
-/obj/item/flashlight/lamp/green{
-	pixel_x = 8;
-	pixel_y = 6
+/obj/effect/spawner/random/decoration/ornament{
+	pixel_x = 5;
+	pixel_y = 5
 	},
 /turf/open/floor/wood,
 /area/station/commons/dorms)
@@ -88392,8 +88392,8 @@
 /area/station/engineering/supermatter)
 "wgE" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp,
 /obj/machinery/newscaster/directional/north,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "wgF" = (

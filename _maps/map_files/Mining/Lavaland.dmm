@@ -160,10 +160,10 @@
 /area/mine/laborcamp)
 "bh" = (
 /obj/structure/table/wood/fancy/blue,
-/obj/machinery/light/small/directional/south,
 /obj/item/paper,
 /obj/item/pen,
 /obj/effect/turf_decal/siding/yellow,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/carpet/royalblue,
 /area/mine/living_quarters)
 "bt" = (
@@ -996,7 +996,6 @@
 /turf/open/floor/plating,
 /area/mine/hydroponics)
 "gz" = (
-/obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
@@ -3951,6 +3950,7 @@
 /obj/structure/table,
 /obj/item/paper,
 /obj/item/pen,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
 "xn" = (

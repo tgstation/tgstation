@@ -10780,6 +10780,9 @@
 /area/station/command/heads_quarters/rd)
 "dnk" = (
 /obj/structure/dresser,
+/obj/effect/spawner/random/decoration/ornament{
+	pixel_y = 13
+	},
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "dnq" = (
@@ -11354,7 +11357,6 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "dxh" = (
-/obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
@@ -34835,8 +34837,8 @@
 /turf/closed/wall/ice,
 /area/icemoon/underground/explored)
 "lcB" = (
-/obj/machinery/light/small/directional/west,
 /obj/structure/table/wood,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "lcG" = (
@@ -37152,7 +37154,6 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "lQr" = (
-/obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
@@ -54155,6 +54156,7 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "rlV" = (
 /obj/structure/table/wood,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "rlX" = (
@@ -57899,8 +57901,10 @@
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "svH" = (
-/obj/machinery/light/small/directional/west,
 /obj/structure/dresser,
+/obj/effect/spawner/random/decoration/ornament{
+	pixel_y = 13
+	},
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "svL" = (
@@ -71067,9 +71071,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "wIz" = (
-/obj/machinery/light/small/directional/west,
 /obj/structure/table/wood,
 /obj/effect/landmark/start/hangover,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "wIF" = (

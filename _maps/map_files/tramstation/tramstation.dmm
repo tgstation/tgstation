@@ -20060,7 +20060,7 @@
 /area/station/maintenance/tram/mid)
 "fOs" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "fOv" = (
@@ -28742,10 +28742,10 @@
 /area/station/security/prison/safe)
 "jiz" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "jiF" = (
@@ -46809,7 +46809,7 @@
 /area/station/solars/starboard/fore)
 "pKZ" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "pLf" = (
