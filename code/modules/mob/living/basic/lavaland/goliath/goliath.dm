@@ -163,6 +163,11 @@
 /mob/living/basic/mining/goliath/proc/tamed()
 	tamed = TRUE
 
+// Copy entire faction rather than just placing user into faction, to avoid tentacle peril on station
+/mob/living/basic/mining/goliath/befriend(mob/living/new_friend)
+	. = ..()
+	faction = new_friend.faction.Copy()
+
 /// Goliath which sometimes replaces itself with a rare variant
 /mob/living/basic/mining/goliath/random
 
