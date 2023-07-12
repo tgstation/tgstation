@@ -30,6 +30,8 @@ import './styles/themes/clockwork.scss';
 // MONKESTATION ADDITION END
 
 import './styles/themes/chicken_book.scss';
+import './styles/themes/generic-yellow.scss';
+import './styles/themes/generic.scss';
 
 import { StoreProvider, configureStore } from './store';
 

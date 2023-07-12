@@ -18,7 +18,7 @@
 	name = "\improper God's Weakest Snacks"
 	desc = "The leftovers of what was likely a great snack in a past time."
 	icon = 'monkestation/icons/obj/food/imported_quick_foods.dmi'
-	icon_state = "foodpack_generic_empty"
+	icon_state = "foodpack_generic_trash"
 	custom_materials = list(/datum/material/plastic = 1000)
 
 /*
@@ -76,14 +76,13 @@
 /obj/item/trash/vendor_trash/mochi_ice_cream
 	name = "empty mochi ice cream tray"
 	desc = "Somehow, that tiny plastic skewer it came with has gone missing."
-	icon_state = "mochi_ice_trash"
+	icon_state = "mochiice_trash"
 
 /obj/item/reagent_containers/cup/glass/waterbottle/tea
 	name = "bottle of tea"
 	desc = "A bottle of tea brought to you in a convenient plastic bottle."
 	icon = 'monkestation/icons/obj/food/imported_quick_foods.dmi'
 	icon_state = "tea_bottle"
-	inhand_icon_state = "bottle"
 	list_reagents = list(/datum/reagent/consumable/tea = 40)
 	cap_icon_state = "bottle_cap_tea"
 	flip_chance = 5 //I fucking dare you

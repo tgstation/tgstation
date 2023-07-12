@@ -288,7 +288,6 @@
  */
 /atom/proc/LateInitialize()
 	set waitfor = FALSE
-
 /**
  * Top level of the destroy chain for most atoms
  *
@@ -1979,6 +1978,10 @@
 	var/mob/user = client?.mob
 	if (isnull(user))
 		return
+
+	// Face directions on combat mode. No procs, no typechecks, just a var for speed
+	if(user.face_mouse)
+		user.face_atom(src)
 
 	// Screentips
 	var/datum/hud/active_hud = user.hud_used

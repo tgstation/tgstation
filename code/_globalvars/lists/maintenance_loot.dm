@@ -364,7 +364,6 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/item/dice/d20/fate/stealth/one_use = 1, //Looks like a d20, keep the d20 in the uncommon pool.
 		/obj/item/shadowcloak = 1,
 		/obj/item/spear/grey_tide = 1,
-		/obj/item/storage/box/donkpockets/donkpocketgondola = 1,
 		list(//music
 			/obj/item/instrument/saxophone/spectral = 1,
 			/obj/item/instrument/trombone/spectral = 1,
@@ -375,6 +374,12 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/item/organ/internal/butt/atomic = 1, //monkestation edit
 	))
 
+
+GLOBAL_LIST_INIT(maint_fauna, list(//fauna: there be critters living in yer maint tunnels
+		/mob/living/simple_animal/hostile/bee/friendly = 1,
+	))
+
+
 //Maintenance loot spawner pools
 #define maint_trash_weight 4500
 #define maint_common_weight 4497 //monkestation edit: from 4500 to 4497
@@ -382,6 +387,7 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 #define maint_rarity_weight 99
 #define maint_oddity_weight 4 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg, monkestation edit: from 1 to 4
 #define maint_holiday_weight 3500 // When holiday loot is enabled, it'll give every loot item a 25% chance of being a holiday item
+#define maint_fauna_weight 150 //monkestation edit: adds friendly maintenance bees, also allows for other maintenance fauna to be coded in.
 
 //Loot pool used by default maintenance loot spawners
 GLOBAL_LIST_INIT(maintenance_loot, list(
@@ -390,6 +396,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	GLOB.uncommon_loot = maint_uncommon_weight,
 	GLOB.rarity_loot = maint_rarity_weight,
 	GLOB.oddity_loot = maint_oddity_weight,
+	GLOB.maint_fauna = maint_fauna_weight,
 	))
 
 GLOBAL_LIST_INIT(ratking_trash, list(//Garbage: used by the regal rat mob when spawning garbage.

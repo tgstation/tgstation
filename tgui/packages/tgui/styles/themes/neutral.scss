@@ -43,6 +43,7 @@ $neutral: #ffb300;
     '../layouts/TitleBar.scss',
     $with: ('background-color': color.scale($neutral, $lightness: -25%))
   );
+  @include meta.load-css('../layouts/PopupWindow.scss');
 
   .Layout__content {
     background-image: url('../../assets/bg-neutral.svg');

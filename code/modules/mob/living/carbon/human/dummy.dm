@@ -187,3 +187,6 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 	if(istype(dummy))
 		GLOB.dummy_mob_list -= dummy
 		qdel(dummy)
+
+/mob/living/carbon/human/dummy/extra_tall
+	bound_height = 64

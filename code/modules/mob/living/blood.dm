@@ -73,8 +73,12 @@
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		var/iter_bleed_rate = iter_part.get_modified_bleed_rate()
 		temp_bleed += iter_bleed_rate * seconds_per_tick
+		if(HAS_TRAIT(src, TRAIT_HEAVY_BLEEDER))
+			temp_bleed *= 2
 
 		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
+			if(HAS_TRAIT(src, TRAIT_HEAVY_BLEEDER))
+				iter_part.adjustBleedStacks(-1, 0) /// we basically double up on bleedstacks
 			iter_part.adjustBleedStacks(-1, 0)
 
 	if(temp_bleed)
@@ -218,7 +222,7 @@
 				if(blood_data["viruses"])
 					for(var/thing in blood_data["viruses"])
 						var/datum/disease/D = thing
-						if((D.spread_flags & DISEASE_SPREAD_SPECIAL) || (D.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
+						if((D.spread_flags & DISEASE_SPREAD_SPECIAL) || (D.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS)|| (D.spread_flags & DISEASE_SPREAD_FALTERED))
 							continue
 						C.ForceContractDisease(D)
 				if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)))

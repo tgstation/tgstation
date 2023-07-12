@@ -9,7 +9,7 @@ import { Action, AnyAction, Middleware } from '../common/redux';
 import { Dispatch } from 'common/redux';
 
 const EXCLUDED_PATTERNS = [/v4shim/i];
-const loadedMappings: Record<string, string> = {};
+export const loadedMappings: Record<string, string> = {};
 
 export const resolveAsset = (name: string): string =>
   loadedMappings[name] || name;

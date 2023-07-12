@@ -282,8 +282,11 @@
 
 /atom/movable/screen/lobby/button/intents/Click(location, control, params)
 	. = ..()
-	to_chat(hud.mymob, span_big("Here on Monkestation you can change between Intents and Combat Mode to do this you need to enter the game preferences by either clicking the cogwheel on the main menu or by opening the Game Preferences via the top bar in the preferences section. From there search for Interaction Style in the Gameplay section of the preferences. You can also revert right click showing your context menu by setting the Context Menu On Shift Click to False."))
-
+	if(!hud.mymob.client.challenge_menu)
+		var/datum/challenge_selector/new_tgui = new(hud.mymob)
+		new_tgui.ui_interact(hud.mymob)
+	else
+		hud.mymob.client.challenge_menu.ui_interact(hud.mymob)
 /atom/movable/screen/lobby/button/discord
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "discord"

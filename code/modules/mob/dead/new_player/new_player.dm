@@ -189,6 +189,9 @@
 	SSjob.EquipRank(character, job, character.client)
 	job.after_latejoin_spawn(character)
 
+	if(character.client && length(character.client?.active_challenges))
+		SSchallenges.apply_challenges(character.client)
+
 	#define IS_NOT_CAPTAIN 0
 	#define IS_ACTING_CAPTAIN 1
 	#define IS_FULL_CAPTAIN 2
@@ -213,11 +216,12 @@
 		humanc = character //Let's retypecast the var to be human,
 
 	if(humanc) //These procs all expect humans
-		GLOB.manifest.inject(humanc)
+		var/chosen_rank = humanc.client?.prefs.alt_job_titles[rank] || rank
+		GLOB.manifest.inject(humanc, humanc.client)
 		if(SSshuttle.arrivals)
-			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
+			SSshuttle.arrivals.QueueAnnounce(humanc, chosen_rank)
 		else
-			announce_arrival(humanc, rank)
+			announce_arrival(humanc, chosen_rank)
 		AddEmploymentContract(humanc)
 
 		humanc.increment_scar_slot()

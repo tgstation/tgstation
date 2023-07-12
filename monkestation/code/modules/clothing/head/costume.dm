@@ -5,3 +5,12 @@
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "tragic"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+
+/obj/item/clothing/head/bee
+	name = "bee hat"
+	desc = "A hat made from beehide"
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "bee"
+	flags_inv = HIDEHAIR
+	worn_y_offset = 2
