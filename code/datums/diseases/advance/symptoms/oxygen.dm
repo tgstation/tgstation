@@ -29,20 +29,25 @@
 	if(A.totalResistance() >= 8) //blood regeneration
 		regenerate_blood = TRUE
 
-/datum/symptom/oxygen/Activate(datum/disease/advance/A)
+/datum/symptom/oxygen/Activate(datum/disease/advance/advanced_disease)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/carbon/M = A.affected_mob
-	switch(A.stage)
+	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
+
+	var/obj/item/organ/internal/lungs/target_lungs = infected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(target_lungs && IS_ROBOTIC_ORGAN(target_lungs))
+		return
+
+	switch(advanced_disease.stage)
 		if(4, 5)
-			M.adjustOxyLoss(-7, 0)
-			M.losebreath = max(0, M.losebreath - 4)
-			if(regenerate_blood && M.blood_volume < BLOOD_VOLUME_NORMAL)
-				M.blood_volume += 1
+			infected_mob.adjustOxyLoss(-7, 0)
+			infected_mob.losebreath = max(0, infected_mob.losebreath - 4)
+			if(regenerate_blood && infected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
+				infected_mob.blood_volume += 1
 		else
 			if(prob(base_message_chance))
-				to_chat(M, span_notice("[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]"))
+				to_chat(infected_mob, span_notice("[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]"))
 	return
 
 /datum/symptom/oxygen/on_stage_change(datum/disease/advance/A)
