@@ -1,4 +1,4 @@
-// Autowiki Stock Parts
+/// Automtically generated string list of stock part templates and relevant data for the /tg/station wiki
 /datum/autowiki/stock_parts
 	page = "Template:Autowiki/Content/StockParts"
 
@@ -30,14 +30,14 @@
 
 		var/list/entry_contents = list()
 
-		entry_contents["name"]        = escape_value(format_text(stock_part.name))
-		entry_contents["icon"]        = escape_value(format_text(create_icon(stock_part)))
-		entry_contents["desc"]        = escape_value(format_text(stock_part.desc))
-		entry_contents["id"]          = escape_value(format_text(recipe.id))
-		entry_contents["tier"]        = escape_value(format_text("[stock_part.rating]"))
-		entry_contents["sources"]     = escape_value(format_text(generate_source_list(recipe)))
-		entry_contents["node"]        = escape_value(format_text(required_node.display_name))
-		entry_contents["materials"]   = escape_value(format_text(generate_material_list(recipe)))
+		entry_contents["name"] = escape_value(format_text(stock_part.name))
+		entry_contents["icon"] = escape_value(format_text(create_icon(stock_part)))
+		entry_contents["desc"] = escape_value(format_text(stock_part.desc))
+		entry_contents["id"] = escape_value(format_text(recipe.id))
+		entry_contents["tier"] = escape_value(format_text("[stock_part.rating]"))
+		entry_contents["sources"] = escape_value(format_text(generate_source_list(recipe)))
+		entry_contents["node"] = escape_value(format_text(required_node.display_name))
+		entry_contents["materials"] = escape_value(format_text(generate_material_list(recipe)))
 
 		output += include_template("Autowiki/StockPart", entry_contents)
 
