@@ -27,11 +27,9 @@ export const Fabricator = (props, context) => {
               busy={!!busy}
               designs={Object.values(designs)}
               availableMaterials={availableMaterials}
-              buildRecipeElement={(
-                design,
-                availableMaterials,
-                onPrintDesign
-              ) => <Recipe design={design} available={availableMaterials} />}
+              buildRecipeElement={(design, availableMaterials) => (
+                <Recipe design={design} available={availableMaterials} />
+              )}
             />
           </Stack.Item>
           <Stack.Item>
@@ -127,7 +125,7 @@ const CustomPrint = (props: CustomPrintProps, context) => {
 };
 
 const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
-  const { act, data } = useBackend<FabricatorData>(context);
+  const { act } = useBackend<FabricatorData>(context);
   const { design, available } = props;
 
   const canPrint = !Object.entries(design.cost).some(
@@ -160,7 +158,9 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('build', { ref: design.id, amount: 1 })}>
+          onClick={() =>
+            canPrint && act('build', { ref: design.id, amount: 1 })
+          }>
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}

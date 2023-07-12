@@ -81,7 +81,7 @@ const MaterialCounter = (props: MaterialCounterProps, context) => {
     false
   );
 
-  const canEject = material.amount > SHEET_MATERIAL_AMOUNT;
+  const canEject = material.amount >= SHEET_MATERIAL_AMOUNT;
 
   return (
     <div
@@ -113,25 +113,21 @@ const MaterialCounter = (props: MaterialCounterProps, context) => {
             <Flex vertical direction={'column-reverse'}>
               <EjectButton
                 material={material}
-                available={material.amount}
                 amount={5}
                 onEject={onEjectRequested}
               />
               <EjectButton
                 material={material}
-                available={material.amount}
                 amount={10}
                 onEject={onEjectRequested}
               />
               <EjectButton
                 material={material}
-                available={material.amount}
                 amount={25}
                 onEject={onEjectRequested}
               />
               <EjectButton
                 material={material}
-                available={material.amount}
                 amount={50}
                 onEject={onEjectRequested}
               />
@@ -145,13 +141,12 @@ const MaterialCounter = (props: MaterialCounterProps, context) => {
 
 type EjectButtonProps = {
   material: Material;
-  available: number;
   amount: number;
   onEject: (quantity: number) => void;
 };
 
 const EjectButton = (props: EjectButtonProps, context) => {
-  const { amount, available, material, onEject } = props;
+  const { amount, material, onEject } = props;
   const { data } = useBackend<Material>(context);
   const { SHEET_MATERIAL_AMOUNT } = data;
 
@@ -161,7 +156,7 @@ const EjectButton = (props: EjectButtonProps, context) => {
       color={'transparent'}
       className={classes([
         'Fabricator__PrintAmount',
-        amount * SHEET_MATERIAL_AMOUNT > available &&
+        amount * SHEET_MATERIAL_AMOUNT > material.amount &&
           'Fabricator__PrintAmount--disabled',
       ])}
       onClick={() => onEject(amount)}>
