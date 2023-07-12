@@ -401,11 +401,14 @@
 
 			CHECK_TICK
 
+///Station traits that influence the space background and apply some unique effects!
 /datum/station_trait/nebula
 	name = "Nebula"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 0
+
 	show_in_report = TRUE
+	can_revert = FALSE //we're too invasive to properly revert. if you feel inspired, im sure you can make it work
 
 	///The color of the "nebula" we send to the players client
 	var/nebula_color
@@ -419,19 +422,23 @@
 /datum/station_trait/nebula/New()
 	. = ..()
 
+	///We set the parallax layer to give a visual effect
 	SSparallax.random_layer = nebula_layer
-	SSparallax.random_parallax_color = nebula_color
-	GLOB.starlight_color = space_light_color
+	SSparallax.random_parallax_color = nebula_color //give a unique color to tell the player somethings up
+	GLOB.starlight_color = space_light_color //color starlight in our nebula color
 
+	//parallax is generated for quick-joiners before we can change it, so reset it for them :/
 	for(var/client/client as anything in GLOB.clients)
 		client.parallax_layers_cached.Cut()
 		client.mob.hud_used.update_parallax_pref(client.mob)
 
+	//Color the carp in unique colors to better blend with the nebula
 	if(carp_color_override)
 		var/mob/living/basic/carp/carp_type = /mob/living/basic/carp
 		carp_type.carp_colors = carp_color_override
 		carp_type = carp_type //I think it's funnier if I don't explain why this is absolutely necessary
 
+///Station nebula that incur some sort of effect if no shielding is created
 /datum/station_trait/nebula/hostile
 	trait_processes = TRUE
 
@@ -449,9 +456,20 @@
 
 	apply_nebula_effect(nebula_intensity - get_shielding_level())
 
+/datum/station_trait/nebula/hostile/on_round_start()
+	. = ..()
+
+	addtimer(CALLBACK(src, PROC_REF(send_instructions)), 30 SECONDS)
+
+///Announce to the station what's going on and what they need to do
+/datum/station_trait/nebula/hostile/proc/send_instructions()
+	return
+
+///Calculate how strong we currently are
 /datum/station_trait/nebula/hostile/proc/calculate_nebula_strength()
 	nebula_intensity = min(STATION_TIME_PASSED / intensity_increment_time, maximum_nebula_intensity)
 
+///Check how strong the stations shielding is
 /datum/station_trait/nebula/hostile/proc/get_shielding_level()
 	var/shield_strength = 0
 	for(var/atom/movable/shielder as anything in shielding)
@@ -462,17 +480,20 @@
 
 	return shield_strength
 
+///Add a shielding unit to ask for shielding
 /datum/station_trait/nebula/hostile/proc/add_shielder(atom/movable/shielder, shielding_proc)
 	shielding.Add(shielder)
 
 	shielder.RegisterSignal(shielder, COMSIG_MOVABLE_GET_NEBULA_SHIELDING, shielding_proc)
 	RegisterSignal(shielder, COMSIG_QDELETING, PROC_REF(remove_shielder))
 
+///Remove a shielding unit from our tracking
 /datum/station_trait/nebula/hostile/proc/remove_shielder(atom/movable/shielder)
 	SIGNAL_HANDLER
 
 	shielding.Remove(shielder)
 
+///The station did not set up shielding, start creating effects
 /datum/station_trait/nebula/hostile/proc/apply_nebula_effect(effect_strength = 0)
 	return
 
@@ -483,16 +504,18 @@
 
 	nebula.add_shielder(shielder, shielding_proc)
 
+///The station will be inside a radioactive nebula! Space is radioactive and the station needs to start setting up nebula shielding
 /datum/station_trait/nebula/hostile/radiation
 	name = "Radioactive Nebula"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 1
 	force = TRUE
 	show_in_report = TRUE
-	report_message = "This station is located in a radioactive nebula."
+	report_message = "This station is located inside a radioactive nebula."
 	trait_to_give = STATION_TRAIT_RADIOACTIVE_NEBULA
 
 	intensity_increment_time = 5 MINUTES
+	maximum_nebula_intensity = 1 HOURS + 40 MINUTES
 
 	nebula_color = list(0,0,0,0, 0,2,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //very vibrant green
 	space_light_color = COLOR_VIBRANT_LIME
@@ -517,13 +540,21 @@
 /datum/station_trait/nebula/hostile/on_round_start()
 	. = ..()
 
+	//Let people order more nebula shielding
+	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/engineering/rad_nebula_shielding_kit]
+	pack.special_enabled = TRUE
+
 	//Give robotics some radiation protection modules for modsuits
-	var/datum/supply_pack/supply_pack = new /datum/supply_pack/materials/rad_protection_modules()
-	send_supply_pod_to_area(supply_pack.generate(null), /area/station/science/robotics)
+	var/datum/supply_pack/supply_pack_modsuits = new /datum/supply_pack/engineering/rad_protection_modules()
+	send_supply_pod_to_area(supply_pack_modsuits.generate(null), /area/station/science/robotics, /obj/structure/closet/supplypod/centcompod)
 
-/datum/station_trait/nebula/hostile/radiation/process(seconds_per_tick)
-	. = ..()
+	//Send a nebula shielding unit to engineering
+	var/datum/supply_pack/supply_pack_shielding = new /datum/supply_pack/engineering/rad_nebula_shielding_kit()
+	if(!send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/engineering/main, /obj/structure/closet/supplypod/centcompod))
+		//if engineering isnt valid, just send it to the bridge
+		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/centcompod)
 
+///They entered space? START BOMBING WITH RADS HAHAHAHA
 /datum/station_trait/nebula/hostile/radiation/proc/on_entered(area/space, atom/movable/enterer)
 	SIGNAL_HANDLER
 
@@ -531,9 +562,11 @@
 		return
 
 	enterer.AddElement(/datum/element/radioactive, range = 0, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
+	//Don't actually make EVERY. SINGLE. THING. radioactive, just make them glow so people arent killed instantly
 	if(!SSradiation.can_irradiate_basic(enterer))
 		enterer.add_filter("glow_nebula", 2, list("type" = "drop_shadow", "color" = "#66ff33", "size" = 2))
 
+///Called when an atom leaves space, so we can remove the radiation effect
 /datum/station_trait/nebula/hostile/radiation/proc/on_exited(area/space, atom/movable/exiter)
 	SIGNAL_HANDLER
 
@@ -541,17 +574,56 @@
 	exiter.remove_filter("glow_nebula")
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
+	//big bombad now
 	if(effect_strength > 0)
 		if(!SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula))
 			send_care_package_at = world.time + send_care_package_time
 			SSweather.run_weather(/datum/weather/rad_storm/nebula)
 
+		//Send a care package to temporarily lift the storm!
 		if(send_care_package_at < world.time)
 			send_care_package_at = world.time + send_care_package_time
-			send_supply_pod_to_area(new /obj/machinery/nebula_shielding/emergency/radiation(), /area/station)
+			var/obj/machinery/nebula_shielding/emergency/rad_shield = /obj/machinery/nebula_shielding/emergency/radiation
 
+			priority_announce(
+				{"Is everything okay there? We're getting high radiation readings from inside the station. \
+				We're sending an emergency shielding unit for now, it will last [initial(rad_shield.detonate_in) / (1 MINUTES)] minutes. \n\n\
+				Set up the nebula shielding. You can order construction kits at cargo if yours have been lost.
+				"})
+
+			addtimer(CALLBACK(src, PROC_REF(send_care_package)), 10 SECONDS)
+
+	//No storms, shielding is good!
 	else if(effect_strength <= 0)
 		var/datum/weather/weather = SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula)
 		if(weather)
 			weather.wind_down()
 		send_care_package_at = INFINITY
+
+///Send a care package because it is not going well
+/datum/station_trait/nebula/hostile/radiation/proc/send_care_package()
+	new /obj/effect/pod_landingzone (get_safe_random_station_turf(), new /obj/structure/closet/supplypod/centcompod (), new /obj/machinery/nebula_shielding/emergency/radiation ())
+
+/datum/station_trait/nebula/hostile/radiation/send_instructions()
+	var/obj/machinery/nebula_shielding/shielder = /obj/machinery/nebula_shielding/radiation
+	var/obj/machinery/gravity_generator/main/innate_shielding = /obj/machinery/gravity_generator/main
+	//How long do we have untill the first shielding unit needs to be up?
+	var/deadline = "[(initial(innate_shielding.radioactive_nebula_shielding) * intensity_increment_time) / (1 MINUTES)] minutes"
+	//For how long each shielding unit will protect for
+	var/shielder_time = "[(initial(shielder.shielding_strength) * intensity_increment_time) / (1 MINUTES)] minutes"
+	//Max shielders, excluding the grav-gen to avoid confusion when that goes down
+	var/max_shielders = ((maximum_nebula_intensity / intensity_increment_time)) / initial(shielder.shielding_strength)
+
+	var/announcement = {"Your station has been constructed inside a radioactive nebula. While the nebula poses a serious threat to the station, \
+	especially outside exploration, it also defends and hides the station to those who would threaten it. \n\n\
+	Standard spacesuits will not protect against the nebula and using them is strongly discouraged, \
+	so radioactive protection MODsuit modules have been pre-researched. \
+	We've also supplied extra radiation suits and potassium iodide pills. \n\n\
+	EXTREME IMPORTANCE: The station is falling deeper into the nebula, and the gravity generators innate radiation shielding \
+	will not hold very long. Your engineering department has been supplied with all the necessary supplies to set up \
+	shields to protect against the nebula. Additional supply crates can be ordered at cargo. \n\n\
+	You have [deadline] before the nebula enters the station. \
+	Every shielding unit will provide an additional [shielder_time] of protection, fully protecting the station with [max_shielders] shielding units.
+	"}
+
+	priority_announce(announcement)

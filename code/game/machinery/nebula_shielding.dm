@@ -22,7 +22,10 @@
 
 	add_to_nebula_shielding(src, nebula_type, PROC_REF(get_nebula_shielding))
 
+///Nebula is asking us how strong we are. Return our shield strength is all is well
 /obj/machinery/nebula_shielding/proc/get_nebula_shielding()
+	if(panel_open)
+		return
 	if(!powered())
 		icon_state = initial(icon_state)
 		return
@@ -32,9 +35,11 @@
 	icon_state = active_icon_state
 	return shielding_strength
 
+///Generate a resource for defending against the nebula
 /obj/machinery/nebula_shielding/proc/generate_reward()
 	return
 
+///Short-lived nebula shielding sent by centcom in-case there hasn't been shielding for a while
 /obj/machinery/nebula_shielding/emergency
 	density = TRUE
 	anchored = FALSE //so some handsome rogue could potentially move it off the station z-level
@@ -48,6 +53,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(self_destruct)), detonate_in)
 
+///We don't live for very long, so self-destruct
 /obj/machinery/nebula_shielding/emergency/proc/self_destruct()
 	explosion(src, light_impact_range = 5, flame_range = 3, explosion_cause = src)
 	qdel(src)
@@ -55,7 +61,7 @@
 /obj/machinery/nebula_shielding/emergency/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Will block the nebula for [round(detonate_in / MINUTES)] minutes with a shield strength of [shielding_strength].")
+	. += span_notice("Will block the nebula for [round(detonate_in / (1 MINUTES))] minutes with a shield strength of [shielding_strength].")
 
 /obj/machinery/nebula_shielding/emergency/get_nebula_shielding()
 	return shielding_strength //no strings attached, we will always produce shielding
@@ -63,12 +69,15 @@
 /obj/machinery/nebula_shielding/emergency/generate_reward()
 	return //no reward for you
 
+///We shield against the radioactive nebula and passively generate tritium
 /obj/machinery/nebula_shielding/radiation
 	name = "radioactive nebula shielder"
 	desc = "Generates a field around the station, protecting it from a radioactive nebula."
 
 	icon_state = "radioactive_shielding"
 	active_icon_state = "radioactive_shielding_on"
+
+	circuit = /obj/item/circuitboard/machine/radioactive_nebula_shielding
 
 	nebula_type = /datum/station_trait/nebula/hostile/radiation
 	shielding_strength = 4
@@ -81,8 +90,18 @@
 /obj/machinery/nebula_shielding/radiation/generate_reward()
 	var/turf/open/turf = get_turf(src)
 	if(isopenturf(turf))
-		turf.atmos_spawn_air("[GAS_TRITIUM]=4;[TURF_TEMPERATURE(T20C)]")
+		turf.atmos_spawn_air("[GAS_TRITIUM]=1;[TURF_TEMPERATURE(T20C)]")
 
+/obj/machinery/nebula_shielding/radiation/attackby(obj/item/item, mob/user, params)
+	if(default_deconstruction_screwdriver(user, initial(icon_state) + "_open", initial(icon_state), item))
+		return
+
+	if(default_deconstruction_crowbar(item))
+		return
+
+	return ..()
+
+///Emergency shielding so people aren't permanently in a radstorm if shit goes very wrong in engineering
 /obj/machinery/nebula_shielding/emergency/radiation
 	name = "emergency nebula radiation shielder"
 	desc = "Generates a field around the station to protect it from a radioactive nebula."
@@ -96,6 +115,15 @@
 /obj/machinery/nebula_shielding/emergency/radiation/self_destruct()
 	var/turf/open/turf = get_turf(src)
 	if(isopenturf(turf))
-		turf.atmos_spawn_air("[GAS_TRITIUM]=50;[TURF_TEMPERATURE(T20C)]")
+		turf.atmos_spawn_air("[GAS_TRITIUM]=50;[TURF_TEMPERATURE(T20C)]") //causes a small tritium fire when combined with the explosion
 
 	..()
+
+///Small explanation for engineering on how to set-up the radioactive nebula shielding
+/obj/item/paper/fluff/radiation_nebula
+	name = "radioactive nebula shielding"
+	default_raw_text = {"EXTREME IMPORTANCE!!!! <br>
+	Set up these radioactive nebula shielding units before the gravity generators native shielding is overwhelmed! <br>
+	Shielding units passively generate tritium, so make sure to properly ventilate/isolate the area before setting up a shielding unit!
+	More circuit boards can be ordered through cargo. Consider setting up auxillary shielding units in-case of destruction, power loss or sabotage.
+	"}

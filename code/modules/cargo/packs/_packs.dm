@@ -86,9 +86,10 @@
 		open_turfs += turf
 
 	if(!LAZYLEN(open_turfs))
-		return
+		return FALSE
 
 	new /obj/effect/pod_landingzone (pick(open_turfs), new pod_type (), contents)
+	return TRUE
 
 /**
  * Custom supply pack
