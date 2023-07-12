@@ -108,7 +108,7 @@
 /obj/machinery/drone_dispenser/hivebot
 	name = "hivebot fabricator"
 	desc = "A large, bulky machine that whirs with activity, steam hissing from vents in its sides."
-	icon = 'icons/obj/machines/basic.dmi'
+	icon = 'icons/obj/machines/hivebot_fabricator.dmi'
 	icon_state = "hivebot_fab"
 	icon_off = "hivebot_fab"
 	icon_on = "hivebot_fab"
