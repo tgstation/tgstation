@@ -44,8 +44,9 @@
 		return
 	var/mob/living/carbon/infected_mob = A.affected_mob
 	var/obj/item/organ/internal/ears/ears = infected_mob.get_organ_slot(ORGAN_SLOT_EARS)
-	if(!ears)
+	if(!ears || IS_ROBOTIC_ORGAN(ears))
 		return //cutting off your ears to cure the deafness: the ultimate own
+
 	switch(A.stage)
 		if(3, 4)
 			if(prob(base_message_chance) && !suppress_warning)

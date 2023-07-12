@@ -95,15 +95,15 @@
 	switch(source_disease.stage)
 		if(4, 5)
 			var/obj/item/organ/internal/ears/ears = ill_mob.get_organ_slot(ORGAN_SLOT_EARS)
-			if(ears)
+			if(ears && !IS_ROBOTIC_ORGAN(ears))
 				ears.adjustEarDamage(-4, -4)
+
+			var/obj/item/organ/internal/eyes/eyes = ill_mob.get_organ_slot(ORGAN_SLOT_EYES)
+			if(!eyes || IS_ROBOTIC_ORGAN(eyes)) // only dealing with eye stuff from here on out
+				return
 
 			ill_mob.adjust_temp_blindness(-4 SECONDS)
 			ill_mob.adjust_eye_blur(-4 SECONDS)
-
-			var/obj/item/organ/internal/eyes/eyes = ill_mob.get_organ_slot(ORGAN_SLOT_EYES)
-			if(!eyes) // only dealing with eye stuff from here on out
-				return
 
 			eyes.apply_organ_damage(-2)
 			if(prob(20))

@@ -206,6 +206,10 @@
 		user.balloon_alert(user, "no eyes!")
 		return FALSE
 
+	if(IS_ROBOTIC_ORGAN(eyes))
+		user.balloon_alert(user, "robotic eyes!")
+		return FALSE
+
 	log_combat(user, target, "stung", "blind sting")
 	to_chat(target, span_danger("Your eyes burn horrifically!"))
 	eyes.apply_organ_damage(eyes.maxHealth * 0.8)
