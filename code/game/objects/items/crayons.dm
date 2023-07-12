@@ -276,9 +276,6 @@
 /**
  *	When eating a crayon, check_empty() can be called twice producing two messages unless we check for being deleted first.
  *
- *	Either qdells or calls balloon_alerts if crayon or spraycan is empty.
- *	Also balloon_alerts you if don't have enought charges_left for big painting.
- *
  * Arguments:
  * * user - the user.
  * * amount - used for use_on() and when requires_full is TRUE
@@ -752,7 +749,6 @@
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
 	return (isfloorturf(surface) || iswallturf(surface))
-
 
 /obj/item/toy/crayon/spraycan/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/H = user
