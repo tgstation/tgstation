@@ -598,10 +598,10 @@
 
 /obj/machinery/smartfridge/organ/process(seconds_per_tick)
 	for(var/obj/item/organ/target_organ in contents)
-		if(IS_ROBOTIC_ORGAN(target_organ) || !target_organ.damage)
+		if(!target_organ.damage)
 			continue
 
-		target_organ.apply_organ_damage(-repair_rate * target_organ.maxHealth * seconds_per_tick)
+		target_organ.apply_organ_damage(-repair_rate * target_organ.maxHealth * seconds_per_tick, required_organ_flag = ORGAN_ORGANIC)
 
 /obj/machinery/smartfridge/organ/Exited(atom/movable/gone, direction)
 	. = ..()
