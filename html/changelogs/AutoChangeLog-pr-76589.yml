@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - code_imp: "Jousting now registers/unregisters properly on two-handed items."

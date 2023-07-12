@@ -131,6 +131,13 @@
 ///from /mob/living/carbon/human/proc/force_say(): ()
 #define COMSIG_HUMAN_FORCESAY "human_forcesay"
 
+///from /mob/living/carbon/human/get_visible_name(), not sent if the mob has TRAIT_UNKNOWN: (identity)
+#define COMSIG_HUMAN_GET_VISIBLE_NAME "human_get_visible_name"
+	//Index for the name of the face
+	#define VISIBLE_NAME_FACE 1
+	//Index for the name of the id
+	#define VISIBLE_NAME_ID 2
+
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()
 #define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"

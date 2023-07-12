@@ -104,7 +104,7 @@
 	name = "pile of bear armor"
 	desc = "A scattered pile of various shaped armor pieces fitted for a bear, some duct tape, and a nail filer. Crude instructions \
 		are written on the back of one of the plates in russian. This seems like an awful idea."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "bear_armor_upgrade"
 
 /obj/item/bear_armor/afterattack(atom/target, mob/user, proximity_flag)
@@ -167,7 +167,9 @@
 	var/obj/item/organ/internal/brain/candidate = locate(/obj/item/organ/internal/brain) in contents
 	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)
 		return
-	candidate.brainmob.mind.transfer_to(src)
+	var/datum/mind/candidate_mind = candidate.brainmob.mind
+	candidate_mind.transfer_to(src)
+	candidate_mind.grab_ghost()
 	to_chat(src, "[span_boldbig("You are a butter bear!")]<b> You're a mostly harmless bear/butter hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free butter to the station!</b>")

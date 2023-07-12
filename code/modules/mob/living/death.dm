@@ -45,6 +45,9 @@
  * * force - Should this mob be FORCABLY dusted?
 */
 /mob/living/proc/dust(just_ash, drop_items, force)
+	if(body_position == STANDING_UP)
+		// keep us upright so the animation fits.
+		ADD_TRAIT(src, TRAIT_FORCED_STANDING, TRAIT_GENERIC)
 	death(TRUE)
 
 	if(drop_items)

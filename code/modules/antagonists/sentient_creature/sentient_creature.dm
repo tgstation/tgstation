@@ -23,8 +23,7 @@
 	var/mob/living/master = owner.enslaved_to?.resolve()
 	if(master)
 		owner.current.copy_languages(master, LANGUAGE_MASTER)
-		owner.current.update_atom_languages()
-	. = ..()
+	return ..()
 
 /datum/antagonist/sentient_creature/ui_static_data(mob/user)
 	var/list/data = list()

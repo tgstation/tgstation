@@ -84,8 +84,8 @@
 	mobtype = list(
 		/mob/living/basic/butterfly,
 		/mob/living/basic/chick/permanent,
+		/mob/living/basic/pet/fox/docile,
 		/mob/living/basic/rabbit,
-		/mob/living/simple_animal/pet/fox,
 	)
 	mobtype += pick(
 		/mob/living/basic/pet/dog/corgi,

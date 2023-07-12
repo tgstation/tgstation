@@ -2,7 +2,7 @@
 /obj/item/storage/bag/quiver
 	name = "quiver"
 	desc = "Holds arrows for your bow. Good, because while pocketing arrows is possible, it surely can't be pleasant."
-	icon = 'icons/obj/weapons/guns/bows/quivers.dmi'
+	icon = 'icons/obj/weapons/bows/quivers.dmi'
 	icon_state = "quiver"
 	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
