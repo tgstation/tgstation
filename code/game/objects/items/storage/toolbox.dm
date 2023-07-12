@@ -314,20 +314,7 @@
 	atom_storage.max_slots = 4
 
 /obj/item/storage/toolbox/mosincase/PopulateContents()
-	var/gun_to_add
-	var/ammo_to_add
-	var/roll_them_bones = rand(1,100)
-	switch(roll_them_bones)
-		if(90-100)
-			gun_to_add = /obj/item/gun/ballistic/rifle/boltaction
-			ammo_to_add = /obj/item/ammo_box/a762
-		if(2-89)
-			gun_to_add = /obj/item/gun/ballistic/rifle/boltaction/surplus
-			ammo_to_add = /obj/item/ammo_box/a762/surplus
-		if(1)
-			gun_to_add = /obj/item/food/rationpack //sorry comrade, took gun, here is ration as compensation
-			ammo_to_add = /obj/item/food/rationpack //very sorry
-	new gun_to_add (src)
+	new /obj/effect/spawner/random/mosin (src)
 	for(var/i in 1 to 3)
-		new ammo_to_add(src)
+		new /obj/effect/spawner/random/mosin/ammo (src)
 
