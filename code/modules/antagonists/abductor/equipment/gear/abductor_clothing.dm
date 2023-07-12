@@ -15,7 +15,7 @@
 /obj/item/clothing/suit/armor/abductor/vest
 	name = "agent vest"
 	desc = "A vest outfitted with advanced stealth technology. It has two modes - combat and stealth."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "vest_stealth"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"

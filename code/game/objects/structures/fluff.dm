@@ -140,7 +140,7 @@
 
 /obj/structure/fluff/divine
 	name = "Miracle"
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "error"
 	anchored = TRUE
 	density = TRUE
@@ -269,7 +269,7 @@
 /obj/structure/fluff/tram_rail
 	name = "tram rail"
 	desc = "Great for trams, not so great for skating."
-	icon = 'icons/obj/tram_rails.dmi'
+	icon = 'icons/obj/fluff/tram_rails.dmi'
 	icon_state = "rail"
 	layer = TRAM_RAIL_LAYER
 	plane = FLOOR_PLANE

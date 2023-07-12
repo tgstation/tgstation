@@ -55,8 +55,8 @@
 		TOOL_WRENCH = icon('icons/obj/tools.dmi', "wrench"),
 		TOOL_WELDER = icon('icons/obj/tools.dmi', "welder"),
 		TOOL_ANALYZER = icon('icons/obj/device.dmi', "analyzer"),
-		TOOL_MINING = icon('icons/obj/mining.dmi', "minipick"),
-		TOOL_SHOVEL = icon('icons/obj/mining.dmi', "spade"),
+		TOOL_MINING = icon('icons/obj/service/mining.dmi', "minipick"),
+		TOOL_SHOVEL = icon('icons/obj/service/mining.dmi', "spade"),
 		TOOL_RETRACTOR = icon('icons/obj/medical/surgery_tools.dmi', "retractor"),
 		TOOL_HEMOSTAT = icon('icons/obj/medical/surgery_tools.dmi', "hemostat"),
 		TOOL_CAUTERY = icon('icons/obj/medical/surgery_tools.dmi', "cautery"),
@@ -64,9 +64,9 @@
 		TOOL_SCALPEL = icon('icons/obj/medical/surgery_tools.dmi', "scalpel"),
 		TOOL_SAW = icon('icons/obj/medical/surgery_tools.dmi', "saw"),
 		TOOL_BONESET = icon('icons/obj/medical/surgery_tools.dmi', "bonesetter"),
-		TOOL_KNIFE = icon('icons/obj/kitchen.dmi', "knife"),
+		TOOL_KNIFE = icon('icons/obj/service/kitchen.dmi', "knife"),
 		TOOL_BLOODFILTER = icon('icons/obj/medical/surgery_tools.dmi', "bloodfilter"),
-		TOOL_ROLLINGPIN = icon('icons/obj/kitchen.dmi', "rolling_pin"),
+		TOOL_ROLLINGPIN = icon('icons/obj/service/kitchen.dmi', "rolling_pin"),
 		TOOL_RUSTSCRAPER = icon('icons/obj/tools.dmi', "wirebrush"),
 	)
 

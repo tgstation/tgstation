@@ -323,7 +323,7 @@
 /obj/item/food/icecream
 	name = "waffle cone"
 	desc = "Delicious waffle cone, but no ice cream."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "icecream_cone_waffle"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cream" = 2, "waffle" = 1)

@@ -1,7 +1,7 @@
 /obj/structure/trap
 	name = "IT'S A TRAP"
 	desc = "Stepping on me is a guaranteed bad day."
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "trap"
 	density = FALSE
 	anchored = TRUE

@@ -5,7 +5,7 @@
 /obj/item/wallframe/firealarm
 	name = "fire alarm frame"
 	desc = "Used for building fire alarms."
-	icon = 'icons/obj/firealarm.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
 	pixel_shift = 26
@@ -13,7 +13,7 @@
 /obj/machinery/firealarm
 	name = "fire alarm"
 	desc = "Pull this in case of emergency. Thus, keep pulling it forever."
-	icon = 'icons/obj/firealarm.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "fire0"
 	max_integrity = 250
 	integrity_failure = 0.4

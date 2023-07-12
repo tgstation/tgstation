@@ -34,7 +34,7 @@
 /obj/item/storage/bag/trash
 	name = "trash bag"
 	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "trashbag"
 	inhand_icon_state = "trashbag"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
@@ -118,7 +118,7 @@
 /obj/item/storage/bag/ore
 	name = "mining satchel"
 	desc = "This little bugger can be used to store and transport ores."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/service/mining.dmi'
 	icon_state = "satchel"
 	worn_icon_state = "satchel"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
@@ -222,7 +222,7 @@
 
 /obj/item/storage/bag/plants
 	name = "plant bag"
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
 	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE
@@ -279,7 +279,7 @@
 /obj/item/storage/bag/sheetsnatcher
 	name = "sheet snatcher"
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/service/mining.dmi'
 	icon_state = "sheetsnatcher"
 	worn_icon_state = "satchel"
 
@@ -315,7 +315,7 @@
 /obj/item/storage/bag/books
 	name = "book bag"
 	desc = "A bag for books."
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "bookbag"
 	worn_icon_state = "bookbag"
 	resistance_flags = FLAMMABLE

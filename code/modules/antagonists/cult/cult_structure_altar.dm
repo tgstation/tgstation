@@ -14,7 +14,7 @@
 /obj/structure/destructible/cult/item_dispenser/altar/setup_options()
 	var/static/list/altar_items = list(
 		ELDRITCH_WHETSTONE = list(
-			PREVIEW_IMAGE = image(icon = 'icons/obj/cult/items.dmi', icon_state = "cult_sharpener"),
+			PREVIEW_IMAGE = image(icon = 'icons/obj/antags/cult/items.dmi', icon_state = "cult_sharpener"),
 			OUTPUT_ITEMS = list(/obj/item/sharpener/cult),
 			),
 		CONSTRUCT_SHELL = list(

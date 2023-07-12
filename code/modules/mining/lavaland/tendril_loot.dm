@@ -491,7 +491,7 @@
 /obj/item/book_of_babel
 	name = "Book of Babel"
 	desc = "An ancient tome written in countless tongues."
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "book1"
 	w_class = WEIGHT_CLASS_SMALL
 

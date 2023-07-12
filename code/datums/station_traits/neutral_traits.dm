@@ -297,7 +297,7 @@
 /obj/item/birthday_invite/proc/setup_card(birthday_name)
 	desc = "A card stating that its [birthday_name]'s birthday today."
 	icon_state = "paperslip_words"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 
 /obj/item/clothing/head/costume/party
 	name = "party hat"

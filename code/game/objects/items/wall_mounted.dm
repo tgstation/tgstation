@@ -84,7 +84,7 @@
 
 /obj/item/electronics
 	desc = "Looks like a circuit. Probably is."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "door_electronics"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'

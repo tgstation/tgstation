@@ -1,7 +1,7 @@
 // Knife Template, should not appear in game normaly //
 /obj/item/knife
 	name = "knife"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'

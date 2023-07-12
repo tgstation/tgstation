@@ -269,7 +269,7 @@
 	product = /obj/item/food/grown/ash_flora/cactus_fruit
 	mutatelist = list(/obj/item/seeds/star_cactus)
 	genes = list(/datum/plant_gene/trait/fire_resistance)
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	growthstages = 2
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/vitfro = 0.08)
 
@@ -289,7 +289,7 @@
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/sticky, /datum/plant_gene/trait/stinging)
 	graft_gene = /datum/plant_gene/trait/sticky
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	reagents_add = list(/datum/reagent/water = 0.08, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/c2/helbital = 0.05)
 
 ///Star Cactus Plants.
@@ -310,7 +310,7 @@
 	plantname = "Polypore Mushrooms"
 	product = /obj/item/food/grown/ash_flora/shavings
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance)
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/sugar = 0.06, /datum/reagent/consumable/ethanol = 0.04, /datum/reagent/stabilizing_agent = 0.06, /datum/reagent/consumable/mintextract = 0.02)
 
 /obj/item/seeds/lavaland/porcini
@@ -321,7 +321,7 @@
 	plantname = "Porcini Mushrooms"
 	product = /obj/item/food/grown/ash_flora/mushroom_leaf
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance)
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.06, /datum/reagent/consumable/vitfro = 0.04, /datum/reagent/drug/nicotine = 0.04)
 
 /obj/item/seeds/lavaland/inocybe
@@ -332,7 +332,7 @@
 	plantname = "Inocybe Mushrooms"
 	product = /obj/item/food/grown/ash_flora/mushroom_cap
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance)
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/toxin/mindbreaker = 0.04, /datum/reagent/consumable/entpoly = 0.08, /datum/reagent/drug/mushroomhallucinogen = 0.04)
 
 /obj/item/seeds/lavaland/ember
@@ -343,7 +343,7 @@
 	plantname = "Embershroom Mushrooms"
 	product = /obj/item/food/grown/ash_flora/mushroom_stem
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/glow, /datum/plant_gene/trait/fire_resistance)
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/tinlux = 0.04, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/drug/space_drugs = 0.02)
 
 /obj/item/seeds/lavaland/seraka
@@ -354,7 +354,7 @@
 	plantname = "Seraka Mushrooms"
 	product = /obj/item/food/grown/ash_flora/seraka
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance)
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/toxin/mushroom_powder = 0.1, /datum/reagent/medicine/coagulant/seraka_extract = 0.02)
 
 /obj/item/seeds/lavaland/fireblossom
@@ -366,7 +366,7 @@
 	growthstages = 3
 	product = /obj/item/food/grown/ash_flora/fireblossom
 	genes = list(/datum/plant_gene/trait/fire_resistance, /datum/plant_gene/trait/glow/yellow)
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	reagents_add = list(/datum/reagent/consumable/tinlux = 0.04, /datum/reagent/consumable/nutriment = 0.03, /datum/reagent/carbon = 0.05)
 
 //CRAFTING
