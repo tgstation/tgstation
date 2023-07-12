@@ -278,7 +278,7 @@
 /turf/open/floor/plating/rust,
 /area/centcom/heretic_sacrifice/rust)
 "AN" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/decal/fakelattice{
 	density = 0
 	},

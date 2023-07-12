@@ -19666,7 +19666,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "hur" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "huv" = (
@@ -49719,7 +49719,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "rVJ" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},

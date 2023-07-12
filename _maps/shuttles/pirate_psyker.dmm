@@ -760,7 +760,7 @@
 /area/shuttle/pirate)
 "NO" = (
 /obj/effect/mob_spawn/ghost_role/human/pirate/psykers,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/structure/curtain/bounty,
 /turf/open/floor/engine,
 /area/shuttle/pirate)
@@ -929,12 +929,12 @@
 /turf/open/floor/carpet/black,
 /area/shuttle/pirate)
 "Ww" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/pirate)
 "Wy" = (
 /obj/effect/mob_spawn/ghost_role/human/pirate/psykers/captain,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/structure/curtain/bounty,
 /turf/open/floor/engine,
 /area/shuttle/pirate)
