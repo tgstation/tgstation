@@ -136,7 +136,6 @@
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/tile/iron/base //this subtype should be used for most stuff
-	turf_type = /turf/open/floor/iron/base
 	merge_type = /obj/item/stack/tile/iron/base
 
 /obj/item/stack/tile/iron/base/cyborg //cant reskin these, fucks with borg code
