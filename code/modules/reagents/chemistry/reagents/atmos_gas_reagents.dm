@@ -127,10 +127,10 @@
 		return ..()
 
 	for(var/obj/item/organ/organ_being_healed as anything in breather.organs)
-		if(IS_ROBOTIC_ORGAN(organ_being_healed) || !organ_being_healed.damage)
+		if(!organ_being_healed.damage)
 			continue
 
-		organ_being_healed.apply_organ_damage(-0.5 * REM * seconds_per_tick)
+		organ_being_healed.apply_organ_damage(-0.5 * REM * seconds_per_tick, required_organ_flag = ORGAN_ORGANIC)
 
 	return ..()
 
