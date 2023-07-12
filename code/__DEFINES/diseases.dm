@@ -18,7 +18,6 @@
 #define DISEASE_SPREAD_CONTACT_FLUIDS (1<<3)
 #define DISEASE_SPREAD_CONTACT_SKIN (1<<4)
 #define DISEASE_SPREAD_AIRBORNE (1<<5)
-#define DISEASE_SPREAD_FALTERED	(1<<6)
 
 //Severity Defines
 /// Diseases that buff, heal, or at least do nothing at all
