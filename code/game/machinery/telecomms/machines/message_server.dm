@@ -7,7 +7,7 @@
 
 // A decorational representation of SSblackbox, usually placed alongside the message server. Also contains a traitor theft item.
 /obj/machinery/blackbox_recorder
-	icon = 'icons/obj/machines/basic.dmi'
+	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = TRUE
