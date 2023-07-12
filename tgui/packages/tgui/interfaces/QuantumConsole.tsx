@@ -7,14 +7,15 @@ type Data =
   | {
       available_domains: Domain[];
       avatars: Avatar[];
-      connected: true;
+      connected: 1;
       generated_domain: string;
       loading: BooleanLike;
       occupants: number;
       points: number;
+      scanner_tier: number;
     }
   | {
-      connected: false;
+      connected: 0;
     };
 
 type Avatar = {
@@ -44,8 +45,8 @@ enum Difficulty {
 }
 
 /** Type guard */
-const isConnected = (data: Data): data is Data & { connected: true } =>
-  data.connected;
+const isConnected = (data: Data): data is Data & { connected: 1 } =>
+  data.connected === 1;
 
 const getColor = (difficulty: number) => {
   switch (difficulty) {
@@ -140,8 +141,10 @@ const DomainEntry = (props: DomainEntryProps, context) => {
     return null;
   }
 
-  const { generated_domain, loading, occupants, points } = data;
+  const { generated_domain, loading, occupants, points, scanner_tier } = data;
 
+  const canView = difficulty <= scanner_tier;
+  const canViewRewards = difficulty <= scanner_tier + 1;
   const current = generated_domain === name;
   const occupied = occupants > 0;
 
@@ -158,13 +161,15 @@ const DomainEntry = (props: DomainEntryProps, context) => {
       color={getColor(difficulty)}
       title={
         <>
-          {name}
+          {canView ? name : '???'}
           {difficulty === Difficulty.High && <Icon name="skull" ml={1} />}
         </>
       }>
       <Stack height={5}>
         <Stack.Item color="label" grow={2}>
-          {desc}
+          {canView
+            ? desc
+            : 'Limited scanning capabilities. Cannot infer domain details.'}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>
@@ -175,9 +180,11 @@ const DomainEntry = (props: DomainEntryProps, context) => {
             <LabeledList.Item label="Difficulty">
               <DisplayDetails amount={difficulty} icon="skull" />
             </LabeledList.Item>
-            <LabeledList.Item label="Reward">
-              <DisplayDetails amount={reward} icon="star" />
-            </LabeledList.Item>
+            {canViewRewards && (
+              <LabeledList.Item label="Reward">
+                <DisplayDetails amount={reward} icon="star" />
+              </LabeledList.Item>
+            )}
           </LabeledList>
         </Stack.Item>
       </Stack>
@@ -197,8 +204,8 @@ const AvatarDisplay = (props, context) => {
     <Section title="Connected Clients">
       <LabeledList>
         {avatars.map(({ health, name, pilot }) => (
-          <LabeledList.Item key={pilot} label={pilot}>
-            {name} | {health} damage received
+          <LabeledList.Item key={name} label={pilot}>
+            &quot;{name}&quot; | {health} health
           </LabeledList.Item>
         ))}
       </LabeledList>

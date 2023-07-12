@@ -18,6 +18,10 @@
 /obj/structure/flora/bush/large/style_random,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
+"g" = (
+/obj/structure/chair/wood,
+/turf/template_noop,
+/area/template_noop)
 "h" = (
 /obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass,
@@ -105,6 +109,13 @@
 /turf/closed/indestructible/binary,
 /turf/closed/indestructible/binary,
 /area/space)
+"X" = (
+/obj/structure/table/wood,
+/obj/item/storage/bag/tray,
+/obj/item/kitchen/fork,
+/obj/item/knife/plastic,
+/turf/template_noop,
+/area/template_noop)
 "Z" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
@@ -2874,8 +2885,8 @@ O
 O
 B
 T
-T
-T
+g
+X
 T
 T
 T
@@ -2951,8 +2962,8 @@ O
 O
 O
 T
-T
-T
+g
+X
 T
 T
 T

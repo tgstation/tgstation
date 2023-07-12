@@ -5,6 +5,8 @@
  */
 /datum/map_template/virtual_domain
 	name = "virtual domain"
+
+	returns_created_atoms = TRUE
 	/// Cost of this map to load
 	var/cost = BITMINING_COST_NONE
 	/// The description of the map

@@ -17,7 +17,7 @@ export const AvatarHelp = (props, context) => {
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
-            <Section fill scrollable title="Welcome to the Virtual Domain.">
+            <Section color="label" fill title="Welcome to the Virtual Domain.">
               <Box>
                 - Study the area and do what needs to be done to recover the
                 crate.
@@ -25,6 +25,10 @@ export const AvatarHelp = (props, context) => {
               <Box>
                 - Bring the crate to the designated sending location in the
                 safehouse.
+              </Box>
+              <Box>
+                - Generating avatars costs tremendous bandwidth. Do not waste
+                them.
               </Box>
               <Box color="bad">
                 - Remember that you are physically linked to this presence.
@@ -36,7 +40,7 @@ export const AvatarHelp = (props, context) => {
               color="good"
               fill
               scrollable
-              title="Provided Domain Information">
+              title="Detected Domain Information">
               {help_text}
             </Section>
           </Stack.Item>

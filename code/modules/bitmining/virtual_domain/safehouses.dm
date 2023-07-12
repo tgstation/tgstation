@@ -6,6 +6,8 @@
  */
 /datum/map_template/safehouse
 	name = "virtual domain: safehouse"
+
+	returns_created_atoms = TRUE
 	/// The map file to load
 	var/filename = "wood.dmm"
 

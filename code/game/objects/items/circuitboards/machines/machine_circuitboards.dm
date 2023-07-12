@@ -1499,3 +1499,13 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/navbeacon
 	req_components = list()
+
+/obj/item/circuitboard/machine/quantum_server
+	name = "Quantum Server"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/quantum_server
+	req_components = list(
+		/datum/stock_part/servo = 2,
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/capacitor = 1,
+	)

@@ -5,6 +5,7 @@
 /obj/machinery/computer/quantum_console
 	name = "quantum console"
 
+	circuit = /obj/item/circuitboard/computer/quantum_console
 	icon_keyboard = "security_key"
 	icon_screen = "teleport"
 	req_access = list(ACCESS_MINING)
@@ -33,9 +34,10 @@
 
 	data["connected"] = TRUE
 	data["generated_domain"] = server.generated_domain?.name
-	data["loading"] = server.loading
+	data["loading"] = !server.get_ready_status()
 	data["occupants"] = length(server.occupant_refs)
 	data["points"] = server.points
+	data["scanner_tier"] = server.scanner_tier
 
 	return data
 
