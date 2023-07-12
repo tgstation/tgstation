@@ -42,7 +42,7 @@
 	SIGNAL_HANDLER
 	if (!isliving(target))
 		return
-	if (HAS_TRAIT_FROM(source, TRAIT_BASIC_ATTACK_FORECAST), REF(SRC))
+	if (HAS_TRAIT_FROM(source, TRAIT_BASIC_ATTACK_FORECAST, REF(SRC)))
 		REMOVE_TRAIT(source, TRAIT_BASIC_ATTACK_FORECAST, REF(src))
 		return
 
