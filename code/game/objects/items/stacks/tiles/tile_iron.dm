@@ -12,11 +12,11 @@
 	armor_type = /datum/armor/tile_iron
 	resistance_flags = FIRE_PROOF
 	matter_amount = 1
-	cost = SMALL_MATERIAL_AMOUNT * 5
+	cost = HALF_SHEET_MATERIAL_AMOUNT / 2
 	source = /datum/robot_energy_storage/material/iron
 	merge_type = /obj/item/stack/tile/iron
 	tile_reskin_types = list(
-		/obj/item/stack/tile/iron,
+		/obj/item/stack/tile/iron/base,
 		/obj/item/stack/tile/iron/edge,
 		/obj/item/stack/tile/iron/half,
 		/obj/item/stack/tile/iron/corner,
@@ -136,10 +136,10 @@
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/tile/iron/base //this subtype should be used for most stuff
+	turf_type = /turf/open/floor/iron/base
 	merge_type = /obj/item/stack/tile/iron/base
 
 /obj/item/stack/tile/iron/base/cyborg //cant reskin these, fucks with borg code
-	merge_type = /obj/item/stack/tile/iron/base/cyborg
 	tile_reskin_types = null
 
 /obj/item/stack/tile/iron/edge
