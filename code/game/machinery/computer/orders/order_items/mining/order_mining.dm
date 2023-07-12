@@ -28,7 +28,7 @@
 
 /datum/orderable_item/mining/point_card
 	item_path = /obj/item/card/mining_point_card
-	cost_per_order = 500
+	cost_per_order = 50
 
 /datum/orderable_item/mining/jaunter
 	item_path = /obj/item/wormhole_jaunter
