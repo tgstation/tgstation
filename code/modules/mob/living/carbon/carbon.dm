@@ -845,10 +845,10 @@
 			blood_volume += (excess_healing * 2) //1 excess = 10 blood
 
 		for(var/obj/item/organ/target_organ as anything in organs)
-			if(IS_ROBOTIC_ORGAN(target_organ) || !target_organ.damage)
+			if(!target_organ.damage)
 				continue
 
-			target_organ.apply_organ_damage(excess_healing * -1) //1 excess = 5 organ damage healed
+			target_organ.apply_organ_damage(excess_healing * -1, required_organ_flag = ORGAN_ORGANIC) //1 excess = 5 organ damage healed
 
 	return ..()
 
