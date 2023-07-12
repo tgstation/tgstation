@@ -33,7 +33,6 @@
 		entry_contents["name"] = escape_value(format_text(stock_part.name))
 		entry_contents["icon"] = escape_value(format_text(create_icon(stock_part)))
 		entry_contents["desc"] = escape_value(format_text(stock_part.desc))
-		entry_contents["id"] = escape_value(format_text(recipe.id))
 		entry_contents["tier"] = escape_value(format_text("[stock_part.rating]"))
 		entry_contents["sources"] = escape_value(format_text(generate_source_list(recipe)))
 		entry_contents["node"] = escape_value(format_text(required_node.display_name))
@@ -61,7 +60,7 @@
 	var/filename = SANITIZE_FILENAME(escape_value(stock_part.icon_state))
 	upload_icon(icon(stock_part.icon, stock_part.icon_state, SOUTH, 1, FALSE), filename)
 
-	return "Autowiki-" + filename + ".png"
+	return "Autowiki-" + "[filename]" + ".png"
 
 /datum/autowiki/stock_parts/proc/generate_source_list(datum/design/recipe)
 	var/source_list = ""
@@ -84,19 +83,12 @@
 	return source_list
 
 /datum/autowiki/stock_parts/proc/generate_material_list(datum/design/recipe)
-	var/initial = TRUE
 
-	var/material_list = ""
+	var/list/materials = list()
 
 	for(var/ingredient_type in recipe.materials)
 		var/datum/material/ingredient = new ingredient_type()
-		if(!initial)
-			material_list += "<br>"
 
-		material_list += "[recipe.materials[ingredient_type]] "
+		materials.Add("[recipe.materials[ingredient_type]] " + "[ingredient.name]")
 
-		material_list += ingredient.name
-
-		initial = FALSE
-
-	return material_list
+	return materials.Join("<br>")
