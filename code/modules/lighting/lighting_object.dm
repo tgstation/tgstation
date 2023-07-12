@@ -9,6 +9,8 @@
 	///the turf that our light is applied to
 	var/turf/affected_turf
 
+GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
+
 /datum/lighting_object/New(turf/source)
 	if(!isturf(source))
 		qdel(src, force=TRUE)
@@ -17,9 +19,9 @@
 
 	. = ..()
 
-	current_underlay = mutable_appearance(LIGHTING_ICON, ("light"), source.z, source, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM)
+	current_underlay = new(GLOB.default_lighting_underlays_by_z[source.z])
 
-	additive_underlay = mutable_appearance(LIGHTING_ICON, ("light"), source.z, source, LIGHTING_PLANE_ADDITIVE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM)
+	additive_underlay = new(GLOB.default_lighting_underlays_by_z[source.z])
 	additive_underlay.blend_mode = BLEND_ADD
 
 	affected_turf = source
