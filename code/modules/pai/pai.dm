@@ -38,7 +38,7 @@
 	/// The card we inhabit
 	var/obj/item/pai_card/card
 	/// The maximum distance we can travel away from our pai card
-	var/max_distance = 4
+	var/max_distance = 5
 	/// The current chasis that will appear when in holoform
 	var/chassis = "repairbot"
 	/// Toggles whether the pAI can hold encryption keys or not
@@ -459,3 +459,12 @@
 	for(var/mob/living/cultist as anything in invokers)
 		to_chat(cultist, span_cultitalic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
 	return STOP_SACRIFICE
+
+/// Updates the distance we can be from our pai card
+/mob/living/silicon/pai/proc/increment_range(increment_amount)
+	var/new_distance = max_distance + increment_amount
+	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
+		return
+	max_distance = new_distance
+	if (increment_amount < 0)
+		check_distance()
