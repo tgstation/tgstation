@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Guard spiders can now only make one scary duplicate of themselves at a time, rather than as many as they can click on the button."
