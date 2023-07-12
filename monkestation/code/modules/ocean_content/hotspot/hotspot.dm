@@ -127,6 +127,8 @@
 		return
 	///we run all events of a snigle turf inside the hotspots area, this allows stuff like flashes and fires to happen from the inside if a centers turf is outside
 	var/turf/calculation_point = locate(center_turf.x + (rand(-radius, radius) * 0.5), center_turf.y + (rand(-radius, radius) * 0.5), SSmapping.levels_by_trait(ZTRAIT_STATION)[1])
+	if(!calculation_point)
+		return
 	///now we calculate heat
 	var/heat = subcall_heat ? subcall_heat : SShotspots.return_heat(calculation_point)
 	///event flags

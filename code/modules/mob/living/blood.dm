@@ -73,8 +73,12 @@
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		var/iter_bleed_rate = iter_part.get_modified_bleed_rate()
 		temp_bleed += iter_bleed_rate * seconds_per_tick
+		if(HAS_TRAIT(src, TRAIT_HEAVY_BLEEDER))
+			temp_bleed *= 2
 
 		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
+			if(HAS_TRAIT(src, TRAIT_HEAVY_BLEEDER))
+				iter_part.adjustBleedStacks(-1, 0) /// we basically double up on bleedstacks
 			iter_part.adjustBleedStacks(-1, 0)
 
 	if(temp_bleed)

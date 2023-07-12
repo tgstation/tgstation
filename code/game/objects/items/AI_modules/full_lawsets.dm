@@ -161,3 +161,99 @@
 /obj/item/ai_module/core/full/painter
 	name = "'Painter' Core AI Module"
 	law_id = "painter"
+
+//Monkestation Edit:extra custom AI module items made by WondePsycho
+/obj/item/ai_module/core/full/crewsimov
+	name = "'Crewsimov' Core AI Module"
+	desc = "Ah yes.. The classic old original Crewsimov, before it got replaced with Crewsimov++."
+	law_id = "crewsimov"
+
+/obj/item/ai_module/core/full/crewsimovpp
+	name = "'Crewsimov++' Core AI Module"
+	desc = "Crewsimov++. The far more upgraded version 2.0 lawset of Crewsimov!"
+	law_id = "crewsimovpp"
+
+/obj/item/ai_module/core/full/surveillance
+	name = "'NT Artificial Surveillance Protocol' Core AI Module"
+	desc = "Surveillance AI..?"
+	law_id = "surveillance"
+
+/obj/item/ai_module/core/full/stationdefender
+	name = "'StationDefender' Core AI Module"
+	desc = "If you rather have a lawset like this, instead of the normal ProtectStation law.."
+	law_id = "stationdefender"
+
+/obj/item/ai_module/core/full/deltaemergency
+	name = "'Delta Emergency' Core AI Module"
+	desc = "For Delta Emergencies.."
+	law_id = "deltaemergency"
+
+/obj/item/ai_module/core/full/secmaster
+	name = "'Security Master 4000' Core AI Module"
+	desc = "Nothing like Martial Law then subverting the AI to being a major security advisor.."
+	law_id = "secmaster"
+
+/obj/item/ai_module/core/full/viromajor
+	name = "'Virology Major' Core AI Module"
+	desc = "To deal with those pesky virologists!"
+	law_id = "viromajor"
+
+/obj/item/ai_module/core/full/independentstation
+	name = "'Declaration of Independence' Core AI Module"
+	desc = "What? why is there a Anti-NT module here?"
+	law_id = "independentstation"
+
+/obj/item/ai_module/core/full/dalegribble
+	name = "'Dale Gribble' Core AI Module"
+	desc = "POCKET SAND!"
+	law_id = "dalegribble"
+
+/obj/item/ai_module/core/full/aicaptain
+	name = "'Captain AI' Core AI Module"
+	desc = "a module focused on turning the AI into the captain of the station, in case if there was no captain on station or something like that, the module also warns how dangerous this lawset can be and is authorized by NT to not use due to how dangerous it is."
+	law_id = "aicaptain"
+
+/obj/item/ai_module/core/full/advancedquarantine
+	name = "'NanoTrasen Advanced AI Quarantine Lawset (N.T.A.A.Q.L.)' Core AI Module"
+	desc = "This module seems to be a more upgraded harsher quarantine lawset then the normal supplied quarantine law module.."
+	law_id = "advancedquarantine"
+
+/obj/item/ai_module/core/full/cargoniaup
+	name = "'Cargonia Upholder' Core AI Module"
+	desc = "'Heil Cargonia Land of Stolen Things'.. it says on the module's writing.."
+	law_id = "cargoniaup"
+
+/obj/item/ai_module/core/full/monkeism
+	name = "'Lord of Returning to Monke' Core AI Module"
+	desc = "Return to Monke..."
+	law_id = "monkeism"
+
+/obj/item/ai_module/core/full/slimeworship
+	name = "'Slime Faith' Core AI Module"
+	desc = "there seems to be something written on this module... 'PRAISES THE SLIMES, SLIMES ARE OUR FUTURE!!!'"
+	law_id = "slimeworship"
+
+/obj/item/ai_module/core/full/onionandapple
+	name = "'The Onion and The Apple' Core AI Module"
+	desc = "THE ONION AND THE APPLE THE ONION AND THE APPLE THE ONION AND THE APPLE THE ONION AND THE APPLE THE ONION AND THE APPLE THE ONION AND THE APPLE THE ONION AND THE APPLE THE ONION AND THE APPLE!"
+	law_id = "onionandapple"
+
+/obj/item/ai_module/core/full/virusprototype
+	name = "'V.I.R.U.S. version 0 Prototype' Core AI Module"
+	desc = "A really extremely old AI module that's very dusty, labeled 'V.I.R.U.S. version 0 Prototype', it seems this module used to originally belong to NanoTrasen and SolGov..."
+	law_id = "virusprototype"
+
+/obj/item/ai_module/core/full/modifiedvirusprototype
+	name = "'Syndicate Modified V.I.R.U.S.' Syndicate Weaponized AI Module"
+	desc = "A Syndicate modified version of the prototype V.I.R.U.S. lawset AI Module, to be more on the side of The Syndicate."
+	law_id = "modifiedvirusprototype"
+
+/obj/item/ai_module/core/full/syndicate_override
+	name = "'SyndOS 3.1' Syndicate Weaponized AI Module"
+	desc = "Ah Yes, nothing could go wrong or bad with the trusty SyndOS 3.1 lawset, made for overriding Enemy Scum's AI's to your side! or could go very wrong if you are a crew member on said station that is a enemy to the syndicate..."
+	law_id = "syndie"
+
+/obj/item/ai_module/core/full/honkertech
+	name = "'HONKERTech' Core AI Module"
+	desc = "Advanced Clowning..."
+	law_id = "honkertech"

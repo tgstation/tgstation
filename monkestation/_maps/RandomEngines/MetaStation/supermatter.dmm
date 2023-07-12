@@ -443,15 +443,6 @@
 "yn" = (
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
-"yo" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room"
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter/room)
 "yt" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -1288,7 +1279,7 @@ af
 UK
 UI
 Bc
-yo
+SS
 kK
 kK
 kK
