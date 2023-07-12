@@ -1,0 +1,5 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - bugfix: "eating mime's and rainbow crayons now properly transfers reagents."
+  - bugfix: "I somehow fixed the amount of reagents in crayons to what it was before."
