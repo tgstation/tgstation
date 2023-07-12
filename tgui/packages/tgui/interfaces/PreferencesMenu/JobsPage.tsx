@@ -232,14 +232,13 @@ const JobRow = (
   }
 
   return (
-    <Stack.Item
+    <Box
       className={className}
-      height="100%"
       style={{
         'margin-top': 0,
       }}>
-      <Stack fill align="center">
-        <Tooltip content={job.description} position="bottom-start">
+      <Stack align="center">
+        <Tooltip content={job.description} position="right">
           <Stack.Item
             className="job-name"
             width="50%"
@@ -247,30 +246,26 @@ const JobRow = (
               'padding-left': '0.3em',
             }}>
             {' '}
-            {
-              // SKYRAT EDIT
-              !job.alt_titles ? (
-                name
-              ) : (
-                <Dropdown
-                  width="100%"
-                  options={job.alt_titles}
-                  displayText={alt_title_selected}
-                  onSelected={(value) =>
-                    act('set_job_title', { job: name, new_title: value })
-                  }
-                />
-              )
-              // SKYRAT EDIT END
-            }
+            {!job.alt_titles ? (
+              name
+            ) : (
+              <Dropdown
+                width="100%"
+                options={job.alt_titles}
+                displayText={alt_title_selected}
+                onSelected={(value) =>
+                  act('set_job_title', { job: name, new_title: value })
+                }
+              />
+            )}
           </Stack.Item>
         </Tooltip>
 
-        <Stack.Item grow className="options">
+        <Stack.Item width="50%" className="options" /* SKYRAT EDIT */>
           {rightSide}
         </Stack.Item>
       </Stack>
-    </Stack.Item>
+    </Box>
   );
 };
 
