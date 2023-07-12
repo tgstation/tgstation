@@ -234,6 +234,10 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 /obj/item/stack/sheet/leather/get_main_recipes()
 	. = ..()
 	. += GLOB.leather_recipes
+
+/obj/item/stack/sheet/leather/five
+	amount = 5
+
 /*
  * Sinew
  */
