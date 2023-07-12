@@ -1,8 +1,8 @@
 // Autowiki Stock Parts
-/datum/autowiki/stockparts
+/datum/autowiki/stock_parts
 	page = "Template:Autowiki/Content/StockParts"
 
-/datum/autowiki/stockparts/generate()
+/datum/autowiki/stock_parts/generate()
 	// Output string to append to autowiki data block
 	var/output = ""
 
@@ -52,7 +52,7 @@
 	return output
 
 // Find the associated fabricator design for a stock part
-/datum/autowiki/stockparts/proc/find_design(obj/item/stock_parts/stock_part)
+/datum/autowiki/stock_parts/proc/find_design(obj/item/stock_parts/stock_part)
 	for(var/design_type in subtypesof(/datum/design))
 		var/datum/design/recipe = new design_type()
 
@@ -60,7 +60,7 @@
 			return recipe
 
 // Find the associated research for a stock part
-/datum/autowiki/stockparts/proc/find_research(datum/design/recipe)
+/datum/autowiki/stock_parts/proc/find_research(datum/design/recipe)
 	for(var/node_type in subtypesof(/datum/techweb_node))
 		var/datum/techweb_node/node = new node_type()
 
@@ -68,14 +68,14 @@
 			return node
 
 // Create and upload a static icon to the wiki
-/datum/autowiki/stockparts/proc/create_icon(obj/item/stock_parts/stock_part)
+/datum/autowiki/stock_parts/proc/create_icon(obj/item/stock_parts/stock_part)
 	var/filename = SANITIZE_FILENAME(escape_value(stock_part.icon_state))
 	upload_icon(icon(stock_part.icon, stock_part.icon_state, SOUTH, 1, FALSE), filename)
 
 	return "Autowiki-" + filename + ".png"
 
 // Generate a string of fabricators this part can be crafted from
-/datum/autowiki/stockparts/proc/generate_source_list(datum/design/recipe)
+/datum/autowiki/stock_parts/proc/generate_source_list(datum/design/recipe)
 	// String for proc output
 	var/source_list = ""
 
@@ -100,7 +100,7 @@
 	return source_list
 
 // Generate a string of materials required to fabricate this part
-/datum/autowiki/stockparts/proc/generate_material_list(datum/design/recipe)
+/datum/autowiki/stock_parts/proc/generate_material_list(datum/design/recipe)
 	// Is this the first list pass?
 	var/initial = TRUE
 
