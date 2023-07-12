@@ -40,4 +40,4 @@
 		return // Can't really eliminate involuntary movement but we'll try
 	if (!(source.movement_type & FLYING) && !source.has_gravity())
 		return // Skip newtonian movement if it's not under control
-	next_move_cache[REF(source)] = world.time + move_delay;
+	next_move_cache[REF(source)] = world.time + move_delay

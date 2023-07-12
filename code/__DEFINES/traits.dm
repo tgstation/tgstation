@@ -615,7 +615,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WEATHER_IMMUNE "weather_immune" //Immune to ALL weather effects.
 
 /// Cannot be grabbed by goliath tentacles
-#define TRAIT_TENTACLE_IMMUNE "tentacle_immune "
+#define TRAIT_TENTACLE_IMMUNE "tentacle_immune"
 
 //non-mob traits
 /// Used for limb-based paralysis, where replacing the limb will fix it.

@@ -13,7 +13,7 @@
 	/// Speed at which we chase target
 	var/move_speed = 3
 	/// What are we chasing?
-	var/datum/weakref/target
+	var/atom/target
 	/// Stop spawning if we have this many effects already
 	var/max_spawned = 20
 	/// Do we home in after we started moving?
@@ -28,7 +28,7 @@
 
 	AddElement(/datum/element/floor_loving)
 	AddComponent(/datum/component/spawner, spawn_types = list(spawned_effect), max_spawned = max_spawned, spawn_time = spawn_interval)
-	src.target = WEAKREF(target)
+	src.target = target
 	movement = SSmove_manager.move_towards(src, chasing = target, delay = move_speed, home = homing, timeout = duration, flags = MOVEMENT_LOOP_START_FAST)
 
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_invalid))
@@ -38,6 +38,7 @@
 /// Destroy ourselves if the target is no longer valid
 /obj/effect/temp_visual/effect_trail/proc/on_target_invalid()
 	SIGNAL_HANDLER
+	target = null
 	qdel(src)
 
 /obj/effect/temp_visual/effect_trail/Destroy()
