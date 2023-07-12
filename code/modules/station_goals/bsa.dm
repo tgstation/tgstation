@@ -394,7 +394,6 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	if (user)
-		balloon_alert(user, "emagged")
-		to_chat(user, span_warning("You emag [src] and hear the focusing crystal short out."))
+	balloon_alert(user, "rigged to explode")
+	to_chat(user, span_warning("You emag [src] and hear the focusing crystal short out. You get the feeling it wouldn't be wise to stand near [src] when the BSA fires..."))
 	return TRUE

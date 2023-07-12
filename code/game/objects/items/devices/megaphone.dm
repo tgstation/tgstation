@@ -41,8 +41,7 @@
 /obj/item/megaphone/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	if (user)
-		balloon_alert(user, "voice synthesizer overloaded")
+	balloon_alert(user, "voice synthesizer overloaded")
 	obj_flags |= EMAGGED
 	voicespan = list(SPAN_REALLYBIG, "userdanger")
 	return TRUE

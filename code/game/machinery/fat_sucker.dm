@@ -215,8 +215,6 @@
 		return FALSE
 	start_at = 100
 	stop_at = 0
-	if (user)
-		balloon_alert(user, "emagged")
 	to_chat(user, span_notice("You remove the access restrictions and lower the automatic ejection threshold!"))
 	obj_flags |= EMAGGED
 	return TRUE

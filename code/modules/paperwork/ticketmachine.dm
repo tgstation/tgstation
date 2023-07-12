@@ -61,9 +61,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/machinery/ticket_machine/emag_act(mob/user, obj/item/card/emag/emag_card) //Emag the ticket machine to dispense burning tickets, as well as randomize its number to destroy the HoP's mind.
 	if(obj_flags & EMAGGED)
 		return FALSE
-	if (user)
-		balloon_alert(user, "emagged")
-		to_chat(user, span_warning("You overload [src]'s bureaucratic logic circuitry to its MAXIMUM setting."))
+	balloon_alert(user, "bureaucratic nightmare engaged")
 	ticket_number = rand(0,max_number)
 	current_number = ticket_number
 	obj_flags |= EMAGGED

@@ -25,8 +25,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	if (user)
-		balloon_alert(user, "console emagged")
+	balloon_alert(user, "console emagged")
 	return TRUE
 
 /obj/machinery/computer/rdservercontrol/ui_interact(mob/user, datum/tgui/ui)

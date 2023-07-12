@@ -193,8 +193,7 @@
 		bot_cover_flags |= BOT_COVER_EMAGGED
 	if(!(bot_cover_flags & BOT_COVER_OPEN))
 		bot_cover_flags ^= BOT_COVER_LOCKED
-	if (user)
-		balloon_alert(user, "controls [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]")
+	balloon_alert(user, "controls [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]")
 	flick("[base_icon]-emagged", src)
 	playsound(src, SFX_SPARKS, 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE

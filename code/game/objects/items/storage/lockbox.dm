@@ -57,11 +57,10 @@
 		broken = TRUE
 		atom_storage.locked = STORAGE_NOT_LOCKED
 		icon_state = src.icon_broken
-		if (user)
-			balloon_alert(user, "lock destroyed")
-			if (emag_card)
-				user.visible_message("[user] swipes [emag_card] over [src], breaking it!")
-			return TRUE
+		balloon_alert(user, "lock destroyed")
+		if (emag_card && user)
+			user.visible_message("[user] swipes [emag_card] over [src], breaking it!")
+		return TRUE
 	return FALSE
 
 /obj/item/storage/lockbox/examine(mob/user)

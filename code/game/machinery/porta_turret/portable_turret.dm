@@ -358,8 +358,7 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	if (user)
-		balloon_alert(user, "threat assessment circuits shorted")
+	balloon_alert(user, "threat assessment circuits shorted")
 	audible_message(span_hear("[src] hums oddly..."))
 	obj_flags |= EMAGGED
 	controllock = TRUE
@@ -971,8 +970,7 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/turretid/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	if (user)
-		balloon_alert(user, "access analysis module shorted")
+	balloon_alert(user, "access analysis module shorted")
 	obj_flags |= EMAGGED
 	locked = FALSE
 	return TRUE

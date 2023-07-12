@@ -624,9 +624,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(obj_flags & EMAGGED)
 		return FALSE
 
-	if (user)
-		balloon_alert(user, "hard mode enabled")
-		to_chat(user, span_warning("A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!"))
+	balloon_alert(user, "hard mode enabled")
+	to_chat(user, span_warning("A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!"))
 	temp = "<br><center><h2>If you die in the game, you die for real!<center><h2>"
 	max_passive = 6
 	bomb_cooldown = 18

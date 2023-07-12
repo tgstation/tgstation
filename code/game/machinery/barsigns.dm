@@ -178,6 +178,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 10 SECONDS)
 	return TRUE
 
+/// Timer proc, called after ~10 seconds after [emag_act], since [emag_act] returns a value and cannot sleep
 /obj/machinery/barsign/proc/finish_emag_act()
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 

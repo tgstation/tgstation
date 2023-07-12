@@ -231,8 +231,7 @@
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 	medical_mode_flags &= ~MEDBOT_DECLARE_CRIT
-	if(user)
-		balloon_alert(user, "reagent synthesis circuits shorted")
+	balloon_alert(user, "reagent synthesis circuits shorted")
 	audible_message(span_danger("[src] buzzes oddly!"))
 	flick("medibot_spark", src)
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)

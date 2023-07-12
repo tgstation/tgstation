@@ -121,8 +121,7 @@
 		elevator_door.obj_flags |= EMAGGED
 
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	if (user)
-		balloon_alert(user, "safeties overridden")
+	balloon_alert(user, "safeties overridden")
 	return TRUE
 
 /obj/machinery/elevator_control_panel/multitool_act(mob/living/user)

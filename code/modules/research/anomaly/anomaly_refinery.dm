@@ -126,8 +126,7 @@
 /obj/machinery/research/anomaly_refinery/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if (obj_flags & EMAGGED)
-		if (user)
-			balloon_alert(user, "already hacked!")
+		balloon_alert(user, "already hacked!")
 		return
 
 	obj_flags |= EMAGGED

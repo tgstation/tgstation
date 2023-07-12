@@ -185,11 +185,10 @@ RSF
 
 /obj/item/rsf/cookiesynth/emag_act(mob/user, obj/item/card/emag/emag_card)
 	obj_flags ^= EMAGGED
-	if (user)
-		if(obj_flags & EMAGGED)
-			balloon_alert(user, "reagent safety checker shorted out")
-		else
-			balloon_alert(user, "reagent safety checker reset")
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "reagent safety checker shorted out")
+	else
+		balloon_alert(user, "reagent safety checker reset")
 	return TRUE
 
 /obj/item/rsf/cookiesynth/attack_self(mob/user)

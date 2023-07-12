@@ -86,12 +86,13 @@
 	. = 0
 
 /obj/machinery/porta_turret_cover/emag_act(mob/user, obj/item/card/emag/emag_card)
-	if(!(parent_turret.obj_flags & EMAGGED))
-		if (user)
-			balloon_alert(user, "threat assessment circutis shorted")
-		audible_message(span_hear("[parent_turret] hums oddly..."))
-		parent_turret.obj_flags |= EMAGGED
-		parent_turret.on = FALSE
-		addtimer(VARSET_CALLBACK(parent_turret, on, TRUE), 4 SECONDS)
-		return TRUE
-	return FALSE
+
+	if((parent_turret.obj_flags & EMAGGED))
+		return FALSE
+
+	balloon_alert(user, "threat assessment circuits shorted")
+	audible_message(span_hear("[parent_turret] hums oddly..."))
+	parent_turret.obj_flags |= EMAGGED
+	parent_turret.on = FALSE
+	addtimer(VARSET_CALLBACK(parent_turret, on, TRUE), 4 SECONDS)
+	return TRUE

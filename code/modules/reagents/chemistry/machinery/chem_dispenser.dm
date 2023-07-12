@@ -154,12 +154,9 @@
 
 /obj/machinery/chem_dispenser/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		if (user)
-			balloon_alert(user, "already emagged!")
-			to_chat(user, span_warning("[src] has no functional safeties to emag."))
+		balloon_alert(user, "already emagged!")
 		return FALSE
-	if (user)
-		balloon_alert(user, "safeties shorted out")
+	balloon_alert(user, "safeties shorted out")
 	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
 	obj_flags |= EMAGGED
 	return TRUE

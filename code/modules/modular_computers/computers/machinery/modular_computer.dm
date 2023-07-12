@@ -63,9 +63,7 @@
 
 /obj/machinery/modular_computer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!cpu)
-		if (user)
-			balloon_alert(user, "turn it on first!")
-			to_chat(user, span_warning("You'd need to turn the [src] on first."))
+		balloon_alert(user, "turn it on first!")
 		return FALSE
 	return cpu.emag_act(user)
 

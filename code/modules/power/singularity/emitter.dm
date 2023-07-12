@@ -380,8 +380,7 @@
 		return FALSE
 	locked = FALSE
 	obj_flags |= EMAGGED
-	if(user)
-		balloon_alert(user, "lock shorted out")
+	balloon_alert(user, "id lock shorted out")
 	return TRUE
 
 

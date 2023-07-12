@@ -135,8 +135,7 @@
 	spark_system.set_up(4, 0, src.loc)
 	spark_system.start()
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	if (user)
-		balloon_alert(user, "machine rigged")
+	balloon_alert(user, "machine rigged")
 	return TRUE
 
 /obj/machinery/computer/slot_machine/ui_interact(mob/living/user)

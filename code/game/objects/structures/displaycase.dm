@@ -630,9 +630,8 @@
 	. = ..()
 	payments_acc = null
 	req_access = list()
-	if (user)
-		balloon_alert(user, "account owner reset")
-		to_chat(user, span_warning("[src]'s card reader fizzles and smokes."))
+	balloon_alert(user, "account owner reset")
+	to_chat(user, span_warning("[src]'s card reader fizzles and smokes."))
 	return TRUE
 
 /obj/structure/displaycase/forsale/examine(mob/user)

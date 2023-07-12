@@ -1379,12 +1379,11 @@
 			doorjack_card.use_charge(user)
 		operating = TRUE
 		update_icon(ALL, AIRLOCK_EMAG, 1)
-		if (user)
-			balloon_alert(user, "circuitry overloaded")
 		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
 		return TRUE
 	return FALSE
 
+/// Timer proc, called ~0.6 seconds after [emag_act]. Finishes the emag sequence by breaking the airlock, permanently locking it, and disabling power.
 /obj/machinery/door/airlock/proc/finish_emag_act()
 	if(QDELETED(src))
 		return FALSE

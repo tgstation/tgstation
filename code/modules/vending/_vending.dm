@@ -856,8 +856,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	if (user)
-		balloon_alert(user, "product lock disabled")
+	balloon_alert(user, "product lock disabled")
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)

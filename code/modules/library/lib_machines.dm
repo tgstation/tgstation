@@ -558,8 +558,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	if(!density || obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	if (user)
-		balloon_alert(user, "forbidden knowledge unlocked")
+	balloon_alert(user, "forbidden knowledge unlocked")
 	return TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/set_screen_state(new_state)

@@ -139,8 +139,7 @@
 	obj_flags |= EMAGGED
 	if (authenticated)
 		authorize_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
-	if (user)
-		balloon_alert(user, "routing circuits scrambled")
+	balloon_alert(user, "routing circuits scrambled")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 	return TRUE
 

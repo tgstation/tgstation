@@ -229,8 +229,7 @@
 
 	if(weapon)
 		weapon.force = initial(weapon.force)
-	if(user)
-		balloon_alert(user, "safeties disabled")
+	balloon_alert(user, "safeties disabled")
 	audible_message(span_danger("[src] buzzes oddly!"))
 	get_targets() //recalibrate target list
 	return TRUE

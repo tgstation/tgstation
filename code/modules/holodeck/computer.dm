@@ -403,14 +403,12 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	if(obj_flags & EMAGGED)
 		return FALSE
 	if(!LAZYLEN(emag_programs))
-		if (user)
-			balloon_alert(user, "unable to emag!")
-			to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
+		balloon_alert(user, "no card swipe port!")
 		return FALSE
 	playsound(src, SFX_SPARKS, 75, TRUE)
 	obj_flags |= EMAGGED
 	if (user)
-		balloon_alert(user, "safety protocols destroyed")
+		balloon_alert(user, "safety protocols destroyed") // im gonna keep this once since this perfectly describes it, and the to_chat is just flavor
 		to_chat(user, span_warning("You vastly increase projector power and override the safety and security protocols."))
 		user.log_message("emagged the Holodeck Control Console.", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(user)] emagged the Holodeck Control Console.")

@@ -68,7 +68,6 @@
 	if(user)
 		if (emag_card)
 			user.visible_message(span_warning("[user] swipes [emag_card] through [src]!"))
-		balloon_alert(user, "extra supplies unlocked")
 		to_chat(user, span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
 
 	obj_flags |= EMAGGED

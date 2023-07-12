@@ -137,8 +137,7 @@
 	switch(freqlock)
 		// Emagging an intercom with an emaggable lock will remove the lock
 		if(RADIO_FREQENCY_EMAGGABLE_LOCK)
-			if (user)
-				balloon_alert(user, "frequency lock cleared")
+			balloon_alert(user, "frequency lock cleared")
 			playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 			freqlock = RADIO_FREQENCY_UNLOCKED
 			obj_flags |= EMAGGED
@@ -146,8 +145,7 @@
 
 		// A fully locked one will do nothing, as locked is intended to be used for stuff that should never be changed
 		if(RADIO_FREQENCY_LOCKED)
-			if (user)
-				balloon_alert(user, "can't override frequency lock!")
+			balloon_alert(user, "can't override frequency lock!")
 			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
 			return
 

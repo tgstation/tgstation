@@ -129,8 +129,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	if (user)
-		balloon_alert(user, "resampling circuit overloaded")
+	balloon_alert(user, "resampling circuit overloaded")
 	flick("growing_vat_emagged", src)
 	return TRUE
 

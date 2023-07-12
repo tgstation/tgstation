@@ -219,8 +219,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/morgue/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	if (user)
-		balloon_alert(user, "alert system overloaded")
+	balloon_alert(user, "alert system overloaded")
 	obj_flags |= EMAGGED
 	update_appearance(UPDATE_ICON)
 	return TRUE

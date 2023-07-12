@@ -259,8 +259,7 @@
 		if(istype(/obj/item/knife/combat/cyborg, potential_knife))
 			return FALSE
 
-	if (user)
-		balloon_alert(user, "integrated knife unlocked")
+	balloon_alert(user, "integrated knife unlocked")
 	items_list += WEAKREF(new /obj/item/knife/combat/cyborg(src))
 	return TRUE
 

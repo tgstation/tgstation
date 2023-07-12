@@ -300,11 +300,10 @@
 
 /obj/item/harmalarm/emag_act(mob/user, obj/item/card/emag/emag_card)
 	obj_flags ^= EMAGGED
-	if (user)
-		if(obj_flags & EMAGGED)
-			balloon_alert(user, "safeties shorted")
-		else
-			balloon_alert(user, "safeties reset")
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "safeties shorted")
+	else
+		balloon_alert(user, "safeties reset")
 	return TRUE
 
 /obj/item/harmalarm/attack_self(mob/user)

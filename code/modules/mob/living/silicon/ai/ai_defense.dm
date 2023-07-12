@@ -64,13 +64,12 @@
 /mob/living/silicon/ai/emag_act(mob/user, obj/item/card/emag/emag_card) ///emags access panel lock, so you can crowbar it without robotics access or consent
 	. = ..()
 	if(emagged)
-		if (user)
-			balloon_alert(user, "access panel lock already shorted!")
+		balloon_alert(user, "access panel lock already shorted!")
 		return
-	if (user)
-		balloon_alert(user, "access panel lock shorted")
+	balloon_alert(user, "access panel lock shorted")
 	var/message = (user ? "[user] shorts out your access panel lock!" : "Your access panel lock was short circuited!")
 	to_chat(src, span_warning(message))
+	do_sparks(3, FALSE, src) // just a bit of extra "oh shit" to the ai - might grab its attention
 	emagged = TRUE
 	return TRUE
 

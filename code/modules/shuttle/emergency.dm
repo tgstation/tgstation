@@ -269,8 +269,7 @@
 		return FALSE
 
 	if((obj_flags & EMAGGED) || ENGINES_STARTED) //SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
-		if (user)
-			balloon_alert(user, "shuttle already about to launch!")
+		balloon_alert(user, "shuttle already about to launch!")
 		return FALSE
 
 	var/time = TIME_LEFT
@@ -279,7 +278,7 @@
 		log_shuttle("[key_name(user)] has emagged the emergency shuttle in [COORD(src)] [time] seconds before launch.")
 	else
 		message_admins("The emergency shuttle was emagged [time] seconds before launch, with no emagger.")
-		log_shuttle("The emergency shuttle was emagged [time] seconds before launch, with no emagger.")
+		log_shuttle("The emergency shuttle was emagged in [COORD(src)] [time] seconds before launch, with no emagger.")
 
 	obj_flags |= EMAGGED
 	SSshuttle.emergency.movement_force = list("KNOCKDOWN" = 60, "THROW" = 20)//YOUR PUNY SEATBELTS can SAVE YOU NOW, MORTAL
@@ -645,8 +644,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	locked = FALSE
-	if (user)
-		balloon_alert(user, "alert level checking system fried")
+	balloon_alert(user, "alert level checking disabled")
 	icon_screen = "emagged_general"
 	update_appearance()
 	return TRUE

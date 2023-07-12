@@ -150,7 +150,7 @@
 
 	// The device inside can be emagged by swiping the button
 	// returning TRUE will prevent feedback (so we can do our own)
-	if(!device?.emag_act(user))
+	if(!device?.emag_act(user, emag_card))
 		balloon_alert(user, "access overridden")
 	return TRUE
 

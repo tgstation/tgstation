@@ -101,8 +101,8 @@
 	if(!emagged)
 		emagged = TRUE
 		smokeradius = 2
-		if (user)
-			balloon_alert(user, "toilet broke")
+		balloon_alert(user, "toilet broke")
+		if (emag_card)
 			to_chat(user, span_boldwarning("The [emag_card] falls into the toilet. You fish it back out. Looks like you broke the toilet."))
 		return TRUE
 	return FALSE

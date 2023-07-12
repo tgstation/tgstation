@@ -156,13 +156,11 @@
 
 /obj/item/lightreplacer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return TRUE
+		return FALSE
 	obj_flags |= EMAGGED
 	playsound(loc, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_appearance()
-	if (user)
-		balloon_alert(user, "gas synthesizer scrambled")
-		to_chat(user, span_warning("[src]'s lights are now filled with plasma! Be careful to only install them in disabled light fixtures, lest they explode!"))
+	to_chat(user, span_warning("[src]'s lights are now filled with plasma! Be careful to only install them in disabled light fixtures, lest they explode!"))
 	return FALSE
 
 /obj/item/lightreplacer/update_name(updates)

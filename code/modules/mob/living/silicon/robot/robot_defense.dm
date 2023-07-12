@@ -329,26 +329,22 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return FALSE
 	if(!opened)//Cover is closed
 		if(locked)
-			if (user)
-				balloon_alert(user, "cover lock destroyed")
+			balloon_alert(user, "cover lock destroyed")
 			locked = FALSE
-			if(shell && user) //A warning to Traitors who may not know that emagging AI shells does not slave them.
-				balloon_alert(user, "shells cannot be subverted")
+			if(shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
+				balloon_alert(user, "shells cannot be subverted!")
 				to_chat(user, span_boldwarning("[src] seems to be controlled remotely! Emagging the interface may not work as expected."))
 			return TRUE
 		else
-			if (user)
-				balloon_alert(user, "cover already unlocked!")
+			balloon_alert(user, "cover already unlocked!")
 			return FALSE
 	if(world.time < emag_cooldown)
 		return FALSE
 	if(wiresexposed)
-		if (user)
-			balloon_alert(user, "expose the fires first!")
+		balloon_alert(user, "expose the fires first!")
 		return FALSE
 
-	if (user)
-		balloon_alert(user, "interface emagged")
+	balloon_alert(user, "interface hacked")
 	emag_cooldown = world.time + 100
 
 	if(connected_ai && connected_ai.mind && connected_ai.mind.has_antag_datum(/datum/antagonist/malf_ai))
@@ -376,10 +372,11 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	else
 		GLOB.lawchanges.Add("[time] <B>:</B> [name]([key]) emagged by external event.")
 
-	INVOKE_ASYNC(src, PROC_REF(borg_emag_flavor), user)
+	INVOKE_ASYNC(src, PROC_REF(borg_emag_end), user)
 	return TRUE
 
-/mob/living/silicon/robot/proc/borg_emag_flavor(mob/user)
+/// A async proc called from [emag_act] that gives the borg a lot of flavortext, and applies the syndicate lawset after a delay.
+/mob/living/silicon/robot/proc/borg_emag_end(mob/user)
 	to_chat(src, span_danger("ALERT: Foreign software detected."))
 	logevent("ALERT: Foreign software detected.")
 	sleep(0.5 SECONDS)

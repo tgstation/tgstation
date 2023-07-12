@@ -270,8 +270,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 
-	if (user)
-		balloon_alert(user, "interface scrambled")
+	balloon_alert(user, "interface scrambled")
 	obj_flags |= EMAGGED
 
 	var/list/av_chem = available_chems.Copy()

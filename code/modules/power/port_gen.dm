@@ -213,9 +213,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	if (user)
-		balloon_alert(user, "emagged")
-		to_chat(user, span_notice("You hear a hefty clunk from inside the generator."))
+	balloon_alert(user, "maximum power output unlocked")
 	emp_act(EMP_HEAVY)
 	return TRUE
 

@@ -56,8 +56,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	if (user)
-		balloon_alert(user, "authentication overridden")
+	balloon_alert(user, "authentication checks overridden")
 	return TRUE
 
 /obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/G)

@@ -322,23 +322,20 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/emag_act(mob/user, obj/item/card/emag/emag_card, forced)
 	if(!enabled && !forced)
-		if (user)
-			balloon_alert(user, "turn it on first!")
+		balloon_alert(user, "turn it on first!")
 		return FALSE
 	if(obj_flags & EMAGGED)
-		if (user)
-			balloon_alert(user, "already emagged!")
-			if (emag_card)
-				to_chat(user, span_notice("You swipe \the [src] with [emag_card]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
+		balloon_alert(user, "already emagged!")
+		if (emag_card)
+			to_chat(user, span_notice("You swipe \the [src] with [emag_card]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
 		return FALSE
 
 	. = ..()
 	obj_flags |= EMAGGED
 	device_theme = PDA_THEME_SYNDICATE
-	if (user)
-		balloon_alert(user, "emagged")
-		if (emag_card)
-			to_chat(user, span_notice("You swipe \the [src] with [emag_card]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
+	balloon_alert(user, "syndieOS loaded")
+	if (emag_card)
+		to_chat(user, span_notice("You swipe \the [src] with [emag_card]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
 	return TRUE
 
 /obj/item/modular_computer/examine(mob/user)

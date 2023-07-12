@@ -87,8 +87,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	visible_message(span_warning("Sparks fly out of [src]!"))
-	if (user)
-		balloon_alert(user, "authentication sensors scrambled")
+	balloon_alert(user, "authentication sensors scrambled")
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 

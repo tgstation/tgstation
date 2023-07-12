@@ -92,8 +92,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	if (user)
-		balloon_alert(user, "safety sensor BIOS disabled")
+	balloon_alert(user, "safety sensor BIOS disabled")
 	return TRUE
 
 /obj/machinery/destructive_scanner/update_icon_state()

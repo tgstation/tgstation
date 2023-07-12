@@ -186,10 +186,14 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
 /obj/vehicle/ridden/wheelchair/motorized/emag_act(mob/user, obj/item/card/emag/emag_card)
-	if((obj_flags & EMAGGED) || !panel_open)
+	if (obj_flags & EMAGGED)
 		return FALSE
-	if (user)
-		balloon_alert(user, "bomb implanted?")
-		visible_message(span_warning("A bomb appears in [src], what the fuck?"))
+
+	if (panel_open)
+		balloon_alert(user, "open maintenance panel!")
+		return FALSE
+
+	balloon_alert(user, "bomb implanted...?")
+	visible_message(span_warning("A bomb appears in [src], what the fuck?"))
 	obj_flags |= EMAGGED
 	return TRUE

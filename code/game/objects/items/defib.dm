@@ -176,14 +176,12 @@
 		return ..()
 
 /obj/item/defibrillator/emag_act(mob/user, obj/item/card/emag/emag_card)
-	if(safety)
-		safety = FALSE
-		if (user)
-			balloon_alert(user, "safety procotols silently disabled")
-	else
-		safety = TRUE
-		if (user)
-			balloon_alert(user, "safety protocols silently enabled")
+
+	safety = !safety
+
+	var/enabled_or_disabled = (safety ? "enabled" : "disabled")
+	balloon_alert(user, "safety protocols [enabled_or_disabled]")
+
 	return TRUE
 
 /obj/item/defibrillator/emp_act(severity)

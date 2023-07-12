@@ -104,8 +104,7 @@
 	. = ..()
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
-	if(user)
-		balloon_alert(user, "safeties disabled")
+	balloon_alert(user, "safeties disabled")
 	audible_message(span_danger("[src] buzzes oddly!"))
 	return TRUE
 

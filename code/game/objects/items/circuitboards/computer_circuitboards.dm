@@ -488,14 +488,13 @@
 		to_chat(user, span_alert("The spectrum chip is unresponsive."))
 
 /obj/item/circuitboard/computer/cargo/emag_act(mob/user, obj/item/card/emag/emag_card)
-	if(!(obj_flags & EMAGGED))
-		contraband = TRUE
-		obj_flags |= EMAGGED
-		if (user)
-			balloon_alert(user, "extra supplies unlocked")
-			to_chat(user, span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
-		return TRUE
-	return FALSE
+	if (obj_flags & EMAGGED)
+		return FALSE
+
+	contraband = TRUE
+	obj_flags |= EMAGGED
+	to_chat(user, span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
+	return TRUE
 
 /obj/item/circuitboard/computer/cargo/configure_machine(obj/machinery/computer/cargo/machine)
 	if(!istype(machine))
@@ -512,14 +511,13 @@
 	build_path = /obj/machinery/computer/cargo/express
 
 /obj/item/circuitboard/computer/cargo/express/emag_act(mob/user, obj/item/card/emag/emag_card)
-	if(!(obj_flags & EMAGGED))
-		contraband = TRUE
-		obj_flags |= EMAGGED
-		if (user)
-			balloon_alert(user, "drop pods can now land anywhere")
-			to_chat(user, span_notice("You change the routing protocols, allowing the Drop Pod to land anywhere on the station."))
-		return TRUE
-	return FALSE
+	if (obj_flags & EMAGGED)
+		return FALSE
+
+	contraband = TRUE
+	obj_flags |= EMAGGED
+	to_chat(user, span_notice("You change the routing protocols, allowing the Drop Pod to land anywhere on the station."))
+	return TRUE
 
 /obj/item/circuitboard/computer/cargo/express/multitool_act(mob/living/user)
 	if (!(obj_flags & EMAGGED))

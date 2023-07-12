@@ -53,13 +53,9 @@
 		addtimer(CALLBACK(src, PROC_REF(unemag_console)), time)
 		error_message = "%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!"
 		linkedServer.toggled = FALSE
-		if (user)
-			balloon_alert(user, "emagged")
 		return TRUE
 	else
-		if (user)
-			balloon_alert(user, "unable to emag")
-			to_chat(user, span_notice("A no server error appears on the screen."))
+		to_chat(user, span_notice("A no server error appears on the screen."))
 	return FALSE
 
 /// Remove the emag effect from the console

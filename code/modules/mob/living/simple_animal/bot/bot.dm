@@ -240,8 +240,7 @@
 	. = ..()
 	if(bot_cover_flags & BOT_COVER_LOCKED) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		bot_cover_flags &= ~BOT_COVER_LOCKED
-		if (user)
-			balloon_alert(user, "cover unlocked")
+		balloon_alert(user, "cover unlocked")
 		return TRUE
 	if(!(bot_cover_flags & BOT_COVER_LOCKED) && bot_cover_flags & BOT_COVER_OPEN) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		bot_cover_flags |= BOT_COVER_EMAGGED
@@ -254,10 +253,8 @@
 			log_combat(user, src, "emagged")
 		return TRUE
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver (or through the UI) yet.
-		if (user)
-			balloon_alert(user, "open maintenance panel first!")
-
-	return TRUE
+		balloon_alert(user, "open maintenance panel first!")
+		return FALSE
 
 /mob/living/simple_animal/bot/examine(mob/user)
 	. = ..()

@@ -275,8 +275,7 @@
 	obj_flags |= EMAGGED
 	locked = FALSE
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	if (user)
-		balloon_alert(user, "access controller shorted")
+	balloon_alert(user, "access controller shorted")
 	return TRUE
 
 /obj/machinery/shieldgen/update_icon_state()
@@ -479,8 +478,7 @@
 	obj_flags |= EMAGGED
 	locked = FALSE
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	if (user)
-		balloon_alert(user, "access controller shorted")
+	balloon_alert(user, "access controller shorted")
 	return TRUE
 
 //////////////Containment Field START

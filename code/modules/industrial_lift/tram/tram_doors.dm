@@ -28,8 +28,7 @@
 /obj/machinery/door/window/tram/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	if (user)
-		balloon_alert(user, "disabled motion sensors")
+	balloon_alert(user, "disabled motion sensors")
 	obj_flags |= EMAGGED
 	return TRUE
 

@@ -403,8 +403,7 @@
 
 /obj/item/mod/control/emag_act(mob/user, obj/item/card/emag/emag_card)
 	locked = !locked
-	if (user)
-		balloon_alert(user, "suit access [locked ? "locked" : "unlocked"]")
+	balloon_alert(user, "suit access [locked ? "locked" : "unlocked"]")
 	return TRUE
 
 /obj/item/mod/control/emp_act(severity)

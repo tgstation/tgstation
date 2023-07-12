@@ -144,9 +144,7 @@ Nothing else in the console has ID requirements.
 	. = ..()
 	if (obj_flags & EMAGGED)
 		return
-	if (user)
-		balloon_alert(user, "security protocols disabled")
-		to_chat(user, span_notice("You disable the security protocols[locked? " and unlock the console":""]."))
+	balloon_alert(user, "security protocols disabled")
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
 	locked = FALSE

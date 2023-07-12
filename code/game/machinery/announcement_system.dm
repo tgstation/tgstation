@@ -181,6 +181,5 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return FALSE
 	obj_flags |= EMAGGED
 	act_up()
-	if (user)
-		balloon_alert(user, "emagged")
+	balloon_alert(user, "announcement strings corrupted")
 	return TRUE

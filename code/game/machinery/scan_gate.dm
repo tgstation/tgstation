@@ -111,8 +111,7 @@
 	locked = FALSE
 	req_access = list()
 	obj_flags |= EMAGGED
-	if (user)
-		balloon_alert(user, "id checker disabled")
+	balloon_alert(user, "id checker disabled")
 	return TRUE
 
 /obj/machinery/scanner_gate/proc/perform_scan(mob/living/M)

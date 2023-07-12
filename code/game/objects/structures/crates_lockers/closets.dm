@@ -1055,8 +1055,7 @@
 /obj/structure/closet/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(secure && !broken)
 		visible_message(span_warning("Sparks fly from [src]!"), blind_message = span_hear("You hear a faint electrical spark."))
-		if(user)
-			balloon_alert(user, "lock broken open")
+		balloon_alert(user, "lock broken open")
 		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		broken = TRUE
 		locked = FALSE

@@ -106,15 +106,13 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
  */
 /obj/machinery/fax/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (!panel_open && !allow_exotic_faxes)
-		if (user)
-			balloon_alert(user, "open panel first!")
+		balloon_alert(user, "open panel first!")
 		return FALSE
 	if (!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
 		playsound(src, 'sound/creatures/dog/growl2.ogg', 50, FALSE)
-		if (user)
-			balloon_alert(user, "emagged")
-			to_chat(user, span_warning("An image appears on [src] screen for a moment with Ian in the cap of a Syndicate officer."))
+		balloon_alert(user, "migrated to syndienet 2.0")
+		to_chat(user, span_warning("An image appears on [src] screen for a moment with Ian in the cap of a Syndicate officer."))
 		return TRUE
 	return FALSE
 

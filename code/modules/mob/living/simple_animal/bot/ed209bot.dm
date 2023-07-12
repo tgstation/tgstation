@@ -30,8 +30,7 @@
 	. = ..()
 	icon_state = "ed209[get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 	set_weapon()
-	if (user)
-		balloon_alert(user, "safeties disabled")
+	balloon_alert(user, "safeties disabled")
 	audible_message(span_bolddanger("[src] buzzes menacingly!"))
 	return TRUE
 

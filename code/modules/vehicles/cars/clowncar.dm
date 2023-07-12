@@ -151,9 +151,8 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	if (user)
-		balloon_alert(user, "child safety disabled")
-		to_chat(user, span_danger("You scramble [src]'s child safety lock, and a panel with six colorful buttons appears!"))
+	balloon_alert(user, "fun mode engaged")
+	to_chat(user, span_danger("You scramble [src]'s child safety lock, and a panel with six colorful buttons appears!"))
 	initialize_controller_action_type(/datum/action/vehicle/sealed/roll_the_dice, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/cannon, VEHICLE_CONTROL_DRIVE)
 	AddElement(/datum/element/waddling)

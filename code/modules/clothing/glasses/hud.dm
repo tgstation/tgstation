@@ -38,8 +38,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	if (user)
-		balloon_alert(user, "display scrambled")
+	balloon_alert(user, "display scrambled")
 	desc = "[desc] The display is flickering slightly."
 	return TRUE
 

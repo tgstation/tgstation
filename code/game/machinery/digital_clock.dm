@@ -63,8 +63,6 @@
 	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	do_sparks(3, cardinal_only = FALSE, source = src)
 	obj_flags |= EMAGGED
-	if (user)
-		balloon_alert(user, "emagged")
 	return TRUE
 
 /obj/machinery/digital_clock/emp_act(severity)

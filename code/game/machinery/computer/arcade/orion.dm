@@ -493,9 +493,9 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	if(obj_flags & EMAGGED)
 		return FALSE
 	if (user)
+		user.log_message("emagged [src], activating Realism Mode.", LOG_GAME)
 		balloon_alert(user, "realism mode enabled")
 		to_chat(user, span_notice("You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode."))
-		user.log_message("emagged [src], activating Realism Mode.", LOG_GAME)
 	name = "The Orion Trail: Realism Edition"
 	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
 	newgame()

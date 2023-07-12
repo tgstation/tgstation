@@ -1025,6 +1025,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/ranged/emag
 	name = "Targetted Safeties Override"
 	desc = "Allows you to effectively emag anything you click on."
+	button_icon = 'icons/obj/card.dmi'
 	button_icon_state = "emag"
 	uses = 7
 	auto_use_uses = FALSE
@@ -1040,6 +1041,16 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	desc = "[desc] It has [uses] use\s remaining."
 
 /datum/action/innate/ai/ranged/emag/do_ability(mob/living/caller, atom/clicked_on)
+
+	// Only things with of or subtyped of any of these types may be remotely emagged
+	var/static/list/compatable_typepaths = list(
+		/obj/machinery,
+		/obj/structure,
+		/obj/item/radio/intercom,
+		/obj/item/modular_computer,
+		/mob/living/simple_animal/bot,
+		/mob/living/silicon,
+	)
 
 	if (!isAI(caller))
 		return FALSE
@@ -1059,7 +1070,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			clicked_machine.balloon_alert(ai_caller, "not operational!")
 			return FALSE
 
-	if (!(ismachinery(clicked_on) || isbot(clicked_on) || isstructure(clicked_on) || issilicon(clicked_on) || istype(clicked_on, /obj/item/radio/intercom) || istype(clicked_on, /obj/item/modular_computer)))
+	if (!(is_type_in_list(clicked_on.type, compatable_typepaths)))
 		clicked_on.balloon_alert(ai_caller, "incompatable!")
 		return FALSE
 
@@ -1082,8 +1093,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			return FALSE
 
 	if (!clicked_on.emag_act(ai_caller))
-		to_chat(ai_caller, span_warning("Emag failed!")) // lets not overlap balloon alerts
+		to_chat(ai_caller, span_warning("Hostile software insertion failed!")) // lets not overlap balloon alerts
 		return FALSE
+
+	to_chat(ai_caller, span_notice("Software package successfully injected."))
 
 	adjust_uses(-1)
 	if(uses)

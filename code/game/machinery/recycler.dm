@@ -91,8 +91,7 @@
 		safety_mode = FALSE
 		update_appearance()
 	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	if (user)
-		balloon_alert(user, "safeties disabled")
+	balloon_alert(user, "safeties disabled")
 	return FALSE
 
 /obj/machinery/recycler/update_icon_state()

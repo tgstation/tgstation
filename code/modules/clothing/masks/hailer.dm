@@ -129,8 +129,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(safety)
 		safety = FALSE
-		if (user)
-			balloon_alert(user, "vocal circuit fried")
+		balloon_alert(user, "vocal circuit fried")
 		return TRUE
 	return FALSE
 

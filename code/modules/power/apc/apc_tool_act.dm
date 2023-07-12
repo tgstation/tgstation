@@ -207,24 +207,20 @@
 		return FALSE
 
 	if(opened)
-		if (user)
-			balloon_alert(user, "close the cover first!")
+		balloon_alert(user, "close the cover first!")
 		return FALSE
 	else if(panel_open)
-		if (user)
-			balloon_alert(user, "close the panel first!")
+		balloon_alert(user, "close the panel first!")
 		return FALSE
 	else if(machine_stat & (BROKEN|MAINT))
-		if (user)
-			balloon_alert(user, "nothing happens!")
+		balloon_alert(user, "nothing happens!")
 		return FALSE
 	else
 		flick("apc-spark", src)
 		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		obj_flags |= EMAGGED
 		locked = FALSE
-		if (user)
-			balloon_alert(user, "emagged")
+		balloon_alert(user, "interface damaged")
 		update_appearance()
 		return TRUE
 

@@ -330,12 +330,11 @@
 		operating = TRUE
 		flick("[base_state]spark", src)
 		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		if (user)
-			balloon_alert(user, "circuitry overloaded")
 		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
 		return TRUE
 	return FALSE
 
+/// Timer proc, called ~0.6 seconds after [emag_act]. Finishes the emag sequence by breaking the windoor.
 /obj/machinery/door/window/proc/finish_emag_act()
 	operating = FALSE
 	open(BYPASS_DOOR_CHECKS)

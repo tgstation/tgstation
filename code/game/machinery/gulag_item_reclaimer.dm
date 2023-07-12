@@ -39,8 +39,7 @@
 	obj_flags |= EMAGGED
 	screen_icon = "emagged_general"
 	update_appearance()
-	if (user)
-		balloon_alert(user, "emagged")
+	balloon_alert(user, "id checker scrambled")
 	return TRUE
 
 /obj/machinery/gulag_item_reclaimer/ui_interact(mob/user, datum/tgui/ui)

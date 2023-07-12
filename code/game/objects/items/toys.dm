@@ -818,8 +818,7 @@
 /obj/item/toy/nuke/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (obj_flags & EMAGGED)
 		return FALSE
-	if (user)
-		balloon_alert(user, "short-circuited")
+	balloon_alert(user, "explosive simulation enabled")
 	obj_flags |= EMAGGED
 	return TRUE
 
@@ -837,8 +836,8 @@
 /obj/item/toy/minimeteor/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (obj_flags & EMAGGED)
 		return FALSE
-	if (user)
-		balloon_alert(user, "short-circuited whatever electronics exist inside")
+	to_chat(user, span_warning("You short circuit whatever electronics exist inside. The \"meteor\" suddenly feels a lot heavier...?"))
+	// not adding a balloon alert here since its hard to actually describe what this emag does in the balloon
 	obj_flags |= EMAGGED
 	return TRUE
 
@@ -1611,8 +1610,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	if (user)
-		balloon_alert(user, "short-circuited, enabling negative feedback loop")
+	balloon_alert(user, "negative feedback loop enabled")
 	return TRUE
 
 /obj/item/toy/intento/Destroy()

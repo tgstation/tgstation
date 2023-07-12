@@ -70,8 +70,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	// Note that we can either be emagged by having the button we are inside swiped,
 	// or by someone emagging the assembly directly after removing it (to be cheeky)
 	var/atom/balloon_alert_loc = get(src, /obj/machinery/button) || src
-	if (user)
-		balloon_alert_loc.balloon_alert(user, "safeties overridden")
+	balloon_alert_loc.balloon_alert(user, "safeties overridden")
 	return TRUE
 
 // Multitooling emagged elevator buttons will fix the safeties
