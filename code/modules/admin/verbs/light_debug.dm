@@ -31,7 +31,11 @@
 
 /proc/undebug_sources()
 	GLOB.light_debug_enabled = FALSE
-	for(var/atom/button as anything in GLOB.light_debugged_atoms)
+	for(var/datum/weakref/button_ref as anything in GLOB.light_debugged_atoms)
+		var/atom/button = button_ref.resolve()
+		if(!button)
+			GLOB.light_debugged_atoms -= button_ref
+			continue
 		button.undebug()
 
 	SEND_GLOBAL_SIGNAL(COMSIG_LIGHT_DEBUG_DISABLED)
@@ -44,7 +48,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	if(isturf(src) || HAS_TRAIT(src, TRAIT_LIGHTING_DEBUGGED))
 		return
 	ADD_TRAIT(src, TRAIT_LIGHTING_DEBUGGED, LIGHT_DEBUG_TRAIT)
-	GLOB.light_debugged_atoms += src
+	GLOB.light_debugged_atoms += WEAKREF(src)
 	add_filter("debug_light", 0, outline_filter(2, COLOR_CENTCOM_BLUE))
 	var/static/uid = 0
 	if(!render_target)
@@ -67,7 +71,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	if(isturf(src) || !HAS_TRAIT(src, TRAIT_LIGHTING_DEBUGGED) || !light)
 		return
 	REMOVE_TRAIT(src, TRAIT_LIGHTING_DEBUGGED, LIGHT_DEBUG_TRAIT)
-	GLOB.light_debugged_atoms -= src
+	GLOB.light_debugged_atoms -= WEAKREF(src)
 	remove_filter("debug_light")
 	// Removes the glow overlay via stupid, sorry
 	var/atom/movable/render_step/color/above_light = new(null, src, "#ffffff23")
