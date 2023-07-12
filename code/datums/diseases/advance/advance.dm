@@ -32,7 +32,7 @@
 	var/processing = FALSE
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
 	var/oldres //To prevent setting new cures unless resistance changes.
-
+	var/faltered = FALSE //used if a disease has been made non-contagious
 	///Lists of cures and how hard we expect them to be to cure. Sentient diseases will pick two from 6+
 	var/static/list/advance_cures = list(
 		list( // level 1
@@ -185,6 +185,7 @@
 	A.properties = properties.Copy()
 	A.id = id
 	A.mutable = mutable
+	A.faltered = faltered
 	A.oldres = oldres
 	//this is a new disease starting over at stage 1, so processing is not copied
 	return A
@@ -265,7 +266,10 @@
 		else
 			visibility_flags &= ~HIDDEN_SCANNER
 
-		if(properties["transmittable"] >= 11)
+		if(faltered)
+			spread_flags = DISEASE_SPREAD_FALTERED
+			spread_text = "Intentional Injection"
+		else if(properties["transmittable"] >= 11)
 			set_spread(DISEASE_SPREAD_AIRBORNE)
 		else if(properties["transmittable"] >= 7)
 			set_spread(DISEASE_SPREAD_CONTACT_SKIN)
