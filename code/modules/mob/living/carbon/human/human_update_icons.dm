@@ -190,7 +190,8 @@ There are several things that need to be remembered:
 		var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file)
 
 		var/feature_y_offset = 0
-		for (var/obj/item/bodypart/arm/my_hand as anything in hand_bodyparts)
+		//needs to be typed, hand_bodyparts can have nulls
+		for (var/obj/item/bodypart/arm/my_hand in hand_bodyparts)
 			var/list/glove_offset = my_hand.worn_glove_offset?.get_offset()
 			if (glove_offset && (!feature_y_offset || glove_offset["y"] > feature_y_offset))
 				feature_y_offset = glove_offset["y"]

@@ -760,7 +760,7 @@
 "Sp" = (
 /obj/structure{
 	desc = "A jukebox for playing music. Seems like it ran out of charge.";
-	icon = 'icons/obj/stationobjs.dmi';
+	icon = 'icons/obj/machines/basic_machines.dmi';
 	icon_state = "jukebox";
 	name = "jukebox"
 	},

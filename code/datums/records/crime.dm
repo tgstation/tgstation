@@ -32,6 +32,9 @@
 
 /// Pays off a fine and attempts to fix any weird values.
 /datum/crime/citation/proc/pay_fine(amount)
+	if(amount <= 0)
+		return FALSE
+
 	paid += amount
 	if(paid > fine)
 		paid = fine

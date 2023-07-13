@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Tom will now always be a brown rat, instead of a random colour, as intended."

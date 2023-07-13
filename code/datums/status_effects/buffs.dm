@@ -72,35 +72,6 @@
 	desc = "You are being resurrected!"
 	icon_state = "wish_granter"
 
-/datum/status_effect/cult_master
-	id = "The Cult Master"
-	duration = -1
-	alert_type = null
-	on_remove_on_mob_delete = TRUE
-	var/alive = TRUE
-
-/datum/status_effect/cult_master/proc/deathrattle()
-	if(!QDELETED(GLOB.cult_narsie))
-		return //if Nar'Sie is alive, don't even worry about it
-	var/area/A = get_area(owner)
-	for(var/datum/mind/B as anything in get_antag_minds(/datum/antagonist/cult))
-		if(isliving(B.current))
-			var/mob/living/M = B.current
-			SEND_SOUND(M, sound('sound/hallucinations/veryfar_noise.ogg'))
-			to_chat(M, span_cultlarge("The Cult's Master, [owner], has fallen in \the [A]!"))
-
-/datum/status_effect/cult_master/tick()
-	if(owner.stat != DEAD && !alive)
-		alive = TRUE
-		return
-	if(owner.stat == DEAD && alive)
-		alive = FALSE
-		deathrattle()
-
-/datum/status_effect/cult_master/on_remove()
-	deathrattle()
-	. = ..()
-
 /datum/status_effect/blooddrunk
 	id = "blooddrunk"
 	duration = 10

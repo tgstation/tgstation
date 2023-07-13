@@ -37,7 +37,7 @@
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	unique_name = 1
+	unique_name = TRUE
 	gold_core_spawnable = HOSTILE_SPAWN
 	// VERY red, to fit the eyes
 	lighting_cutoff_red = 22

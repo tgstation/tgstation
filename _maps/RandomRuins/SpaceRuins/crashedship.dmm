@@ -130,7 +130,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/crashedship/fore)
 "fI" = (
-/obj/structure/closet/mini_fridge,
+/obj/structure/closet/mini_fridge/grimy,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/crashedship/fore)
