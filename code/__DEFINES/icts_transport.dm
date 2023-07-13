@@ -20,7 +20,7 @@
 #define TRAMSTATION_LINE_1 "tram_1"
 #define HILBERT_LINE_1 "hilb_1"
 #define BIRDSHOT_LINE_1 "bird_1"
-#define BIRDSHOT_LINE_2 "bird_1"
+#define BIRDSHOT_LINE_2 "bird_2"
 
 #define PLATFORM_ACTIVE 1
 

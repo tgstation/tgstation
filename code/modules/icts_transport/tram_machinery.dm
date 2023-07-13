@@ -167,11 +167,30 @@
 
 /obj/item/assembly/control/icts_call/Initialize(mapload)
 	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/item/assembly/control/icts_call/LateInitialize()
-	. = ..()
+	SSicts_transport.hello(src)
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_RESPONSE, PROC_REF(call_response))
+
+/obj/item/assembly/control/icts_call/proc/call_response(controller, list/relevant, response_code, response_info)
+	SIGNAL_HANDLER
+	if(!LAZYFIND(relevant, src))
+		return
+
+	switch(response_code)
+		if(REQUEST_SUCCESS)
+			say("The tram has been called to the platform.")
+
+		if(REQUEST_FAIL)
+			switch(response_info)
+				if(NOT_IN_SERVICE) //tram is QDEL or has no power
+					say("The tram is not in service. Please contact the nearest engineer.")
+				if(INVALID_PLATFORM) //engineer needs to fix button
+					say("Button configuration error. Please contact the nearest engineer.")
+				if(INTERNAL_ERROR)
+					say("Tram controller error. Please contact the nearest engineer.")
+				if(PLATFORM_DISABLED)
+					say("The tram is set to skip this platform.")
+				if(NO_CALL_REQUIRED) //already here
+					say("The tram is already here. Please board the tram and select a destination.")
 
 /obj/item/assembly/control/icts_call/activate()
 	if(cooldown)
@@ -179,13 +198,9 @@
 	cooldown = TRUE
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
 
-	debug_admins("ICTS: COMSIG_ICTS_REQUEST, [specific_transport_id], [id]")
-	INVOKE_ASYNC(SSicts_transport, TYPE_PROC_REF(/datum/controller/subsystem/processing/icts_transport, call_request), src, specific_transport_id, id)
-
-/obj/item/assembly/control/icts_call/proc/call_response(response_code, response_info)
-	SIGNAL_HANDLER
-
-	debug_admins("ICTS: [response_code] [response_info]")
+	message_admins("ICTS: COMSIG_ICTS_REQUEST, [specific_transport_id], [id]")
+	// INVOKE_ASYNC(SSicts_transport, TYPE_PROC_REF(/datum/controller/subsystem/processing/icts_transport, call_request), src, specific_transport_id, id)
+	SEND_SIGNAL(src, COMSIG_ICTS_REQUEST, specific_transport_id, id)
 
 /obj/machinery/button/icts/tram
 	name = "tram request"
