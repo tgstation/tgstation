@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "service borg apparatus now works on stoves and griddles and ovens"
-  - qol: "borgs can now activate stoves and griddles"
-  - rscadd: "rnd can research a cookbook for service borgs"

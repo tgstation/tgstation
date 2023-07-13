@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscadd: "Golems can scoop sand (or snow) off the floor by clicking on it."
