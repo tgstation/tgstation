@@ -145,7 +145,7 @@
 	var/list/potential_locations = list()
 
 	for(var/turf/nearby_turf in view(1, get_turf(vent)))
-		if(!nearby_turf.is_blocked_turf_ignore_climbable()) // not perfect, but the worst that happens here is they ignore directional windows
+		if(!nearby_turf.is_blocked_turf_ignore_climbable()) // not perfect, but the worst that happens here is they ignore windows
 			potential_locations += nearby_turf
 
 	var/turf/spawn_location = pick(potential_locations)
