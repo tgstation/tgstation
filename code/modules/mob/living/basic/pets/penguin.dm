@@ -14,6 +14,9 @@
 	ai_controller = /datum/ai_controller/basic_controller/penguin
 	///he can lay a egg?
 	var/can_lay_eggs = TRUE
+	///the egg he carry
+	var/obj/carried_egg
+
 
 /mob/living/basic/pet/penguin/Initialize(mapload)
 	. = ..()
@@ -34,18 +37,46 @@
 		egg_laid_callback = CALLBACK(src, PROC_REF(lay_penguin_egg)),\
 	)
 
+/mob/living/basic/pet/penguin/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+	. = ..()
+	if(!.)
+		return
+
+	if(!proximity_flag)
+		return
+	if(!istype(attack_target, /obj/item/food/egg/penguin_egg))
+		return
+
+	if(carried_egg)
+		carried_egg.forceMove(get_turf(src))
+	var/obj/item/egg_target = attack_target
+	egg_target.forceMove(src)
+	carried_egg = attack_target
+	RegisterSignal(egg_target, COMSIG_QDELETING, PROC_REF(on_hatch_egg))
+	add_overlay("penguin_egg_overlay")
+
+/mob/living/basic/pet/penguin/death(gibbed)
+	if(carried_egg)
+		carried_egg.forceMove(get_turf(src))
+		cut_overlays()
+	return ..()
+
 /mob/living/basic/pet/penguin/proc/lay_penguin_egg(obj/item/penguin_egg)
-	if(prob(30))
+	if(prob(100))
 		penguin_egg.AddComponent(\
 			/datum/component/fertile_egg,\
 			embryo_type = /mob/living/basic/pet/penguin/baby,\
-			minimum_growth_rate = 1,\
-			maximum_growth_rate = 1,\
-			total_growth_required = 400,\
+			minimum_growth_rate = 5,\
+			maximum_growth_rate = 5,\
+			total_growth_required = 100,\
 			current_growth = 0,\
-			location_allowlist = typecacheof(list(/turf)),\
-			spoilable = TRUE,\
+			location_allowlist = typecacheof(list(/turf, /mob/living/basic/pet/penguin)),\
 		)
+
+/mob/living/basic/pet/penguin/proc/on_hatch_egg()
+	SIGNAL_HANDLER
+	carried_egg = null
+	cut_overlays()
 
 /datum/ai_controller/basic_controller/penguin
 	blackboard = list(
@@ -59,9 +90,22 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/find_and_hunt_target/penguin_egg,
 		/datum/ai_planning_subtree/random_speech/penguin,
 	)
 
+/datum/ai_planning_subtree/find_and_hunt_target/penguin_egg
+	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
+	hunting_behavior = /datum/ai_behavior/hunt_target/penguin_egg
+	hunt_targets = list(/obj/item/food/egg/penguin_egg)
+	hunt_range = 7
+
+/datum/ai_behavior/hunt_target/penguin_egg
+	hunt_cooldown = 15 SECONDS
+	always_reset_target = TRUE
+
+/datum/ai_behavior/hunt_target/penguin_egg/target_caught(mob/living/basic/hunter, obj/item/food/egg/target)
+	hunter.UnarmedAttack(target, TRUE)
 
 /mob/living/basic/pet/penguin/emperor
 	name = "Emperor penguin"
