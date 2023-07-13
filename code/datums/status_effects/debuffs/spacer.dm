@@ -66,8 +66,11 @@
 	// Sit at a passive amount of stamina damage depending on how long it's been
 	if(!the_spacer.getStaminaLoss())
 		the_spacer.adjustStaminaLoss(min(25, 5 * minutes_active))
-	// Max disgust increases
+	// Max disgust increases over time as well
 	max_disgust = min(DISGUST_LEVEL_VERYGROSS + 5, initial(max_disgust) + 5 * minutes_active)
+	// And your lungs can't really handle it good
+	if(!the_spacer.internal && seconds_active % 10 == 0)
+		the_spacer.losebreath = min(the_spacer.losebreath++, minutes_active, 8)
 
 /atom/movable/screen/alert/status_effect/gravity_sickness
 	name = "Gravity Sickness"
