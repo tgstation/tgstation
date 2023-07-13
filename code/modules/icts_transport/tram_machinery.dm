@@ -198,7 +198,6 @@
 	cooldown = TRUE
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
 
-	message_admins("ICTS: COMSIG_ICTS_REQUEST, [specific_transport_id], [id]")
 	// INVOKE_ASYNC(SSicts_transport, TYPE_PROC_REF(/datum/controller/subsystem/processing/icts_transport, call_request), src, specific_transport_id, id)
 	SEND_SIGNAL(src, COMSIG_ICTS_REQUEST, specific_transport_id, id)
 
