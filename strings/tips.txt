@@ -229,7 +229,7 @@ Most job-related exosuit clothing can fit job-related items into it, such as the
 Most things have special interactions with right, alt, shift, and control click. Experiment!
 On most clothing items that go in the exosuit slot, you can put certain small items into your suit storage, such as a spraycan, your emergency oxygen tank, or a flashlight.
 Remote devices will work when used through cameras. For example: Bluespace RPEDs and door remotes.
-Sleeping can be used to recover from minor injuries. Sanity, darkness, blindfolds, earmuffs, tables, beds, and bedsheets affect the healing rate.
+Sleeping can be used to recover from minor injuries and organ damage. Sanity, darkness, blindfolds, earmuffs, tables, beds, and bedsheets affect the healing rate.
 Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
 Some weapons are better at taking down robots and structures than others. Don't try to break a window with a scalpel, try a toolbox.
 Standard epipens contain a potent coagulant that not only slow bloodloss, but also help clot whichever of your wounds is bleeding the most! If you're suffering multiple bad bleeding wounds, make sure to seek out additional treatment ASAP!
