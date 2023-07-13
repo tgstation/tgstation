@@ -382,71 +382,95 @@
 	var/recovering_timer
 
 /datum/quirk/spacer_born/add(client/client_source)
+	// drift slightly faster through zero G
+	quirk_holder.inertia_move_delay -= 1
+
 	var/mob/living/carbon/human/human_quirker = quirk_holder
 	human_quirker.set_mob_height(HUMAN_HEIGHT_TALLER)
 	human_quirker.physiology.pressure_mod *= 0.8
 
 	// Only start tracking when we arrive on station (or a mining level of a map is weird)
-	var/spawn_z = quirk_holder.loc?.z
-	if(is_station_level(spawn_z) || is_mining_level(spawn_z))
-		start_tracking()
-	else
-		RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(arrived_at_station))
+	if(!start_tracking(quirk_holder))
+		RegisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(arrived_at_station))
 
 /datum/quirk/spacer_born/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED)
-	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
 
-	if(!QDELING(quirk_holder))
-		quirk_holder.clear_mood_event("spacer")
-		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/spacer)
-		quirk_holder.remove_status_effect(/datum/status_effect/spacer)
+	if(QDELING(quirk_holder))
+		return
 
-		var/mob/living/carbon/human/human_quirker = quirk_holder
-		human_quirker.set_mob_height(HUMAN_HEIGHT_MEDIUM)
-		human_quirker.physiology.pressure_mod /= 0.8
+	quirk_holder.inertia_move_delay += 1
+	quirk_holder.clear_mood_event("spacer")
+	quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/spacer)
+	quirk_holder.remove_status_effect(/datum/status_effect/spacer)
 
-/datum/quirk/spacer_born/proc/start_tracking()
-	RegisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(moved_z))
-	check_z(quirk_holder, get_turf(quirk_holder), skip_timers = TRUE)
-	// Yes it's assumed, for planetary maps, that you start at gravity sickness.
+	var/mob/living/carbon/human/human_quirker = quirk_holder
+	human_quirker.set_mob_height(HUMAN_HEIGHT_MEDIUM)
+	human_quirker.physiology.pressure_mod /= 0.8
 
-/// Proc to check quirk holder moves to determine when we should start tracking
-/datum/quirk/spacer_born/proc/arrived_at_station(mob/living/source, atom/old_loc)
+/datum/quirk/spacer_born/proc/start_tracking(mob/living/tracking)
+	var/new_z = tracking.loc?.z
+	// Some maps may decide to spawn people on mining Z, so just cast a wide net.
+	if(!is_station_level(new_z) && !is_mining_level(new_z) && !is_centcom_level(new_z))
+		return FALSE
+
+	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED) // gets rid of arrived_at_station registration if present
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(spacer_moved)) // replaces it with spacer_moved
+
+	// Yes, it's assumed for planetary maps that you start at gravity sickness.
+	check_z(quirk_holder, skip_timers = TRUE)
+	return TRUE
+
+/// Check on Z level change if we should start tracking the mob, esssentially to catch latejoiners or other oddities
+/datum/quirk/spacer_born/proc/arrived_at_station(mob/living/source, turf/old_turf, turf/new_turf, same_z_layer)
 	SIGNAL_HANDLER
 
-	var/new_z = source.loc?.z
-	if(is_station_level(new_z) || is_mining_level(new_z))
-		UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
-		start_tracking()
+	start_tracking(source)
+
+/// Check on Z change whether we should start or stop timers
+/datum/quirk/spacer_born/proc/spacer_moved(mob/living/source, turf/old_turf, turf/new_turf, same_z_layer)
+	SIGNAL_HANDLER
+
+	check_z(source)
+	// Using Z moved because we don't urgently need to check on every single turf movement for planetary status.
+	// If you've arrived at a "planet", the entire Z is gonna be a "planet".
+	// It won't really make sense to walk 3 feet and then suddenly gain / lose gravity sickness.
+	// If I'm proven wrong, swap this to use M
+	oved.
 
 /**
  * Used to check if we should start or stop timers based on the quirk holder's location.
  *
  * * afflicted - the mob arriving / same as quirk holder
- * * new_turf - the turf they are arriving on
  * * skip_timers - if TRUE, this is being done instantly / should not have feedback (such as in init)
  */
-/datum/quirk/spacer_born/proc/check_z(mob/living/source, turf/open/new_turf, skip_timers = FALSE)
-	// - Mining level is definitely planetside
+/datum/quirk/spacer_born/proc/check_z(mob/living/source, skip_timers = FALSE)
+	var/turf/open/new_turf = get_turf(source)
+
+	// What is a planet?
+	// - Mining level is definitely planetside (asteroid mining stay away)
 	// - Station level is planetside if planetary is enabled
 	// - Also just check for planetary turfs, might as well
-	// All in all, though: gravity is a sign of planets.
+	// - If there's no gravity, it's definitely not a planet
+	// This essentially narrows it down so that
+	// - Mining is a planet
+	// - Away missions are planets if they have gravity and planetary turfs
+	// - Icebox above ground is a planet
+	// - Icebox below ground is, yes, a planet
 	var/z_level_checks = (is_station_level(new_turf.z) && SSmapping.config.planetary) || is_mining_level(new_turf.z)
 	var/planetary_check = istype(new_turf) && new_turf.planetary_atmos
-	if(new_turf.has_gravity() && (z_level_checks || planetary_check))
+	if((z_level_checks || planetary_check) && new_turf.has_gravity())
 		on_planet(source, skip_timers)
+		return
 
-	// Otherwise, we assume space.
-	// This includes away missions which may be on a planet, but it's hard to tell afterall.
-	else
-		in_space(source, skip_timers)
-
-/// When changing Zs, check if we should start or stop timers
-/datum/quirk/spacer_born/proc/moved_z(mob/living/source, turf/old_turf, turf/new_turf, same_z_layer)
-	SIGNAL_HANDLER
-
-	check_z(source, new_turf)
+	// Otherwise, we assume space. This includes
+	// - Metastation (and friends)
+	// - Shuttles
+	// - Centcom
+	// - Deep space
+	// - Away Missions without gravity OR planetary turfs
+	// - Anyting on reserved z-levels without gravity OR planetary turfs (Lazy map templates)
+	in_space(source, skip_timers)
 
 // Going to a planet
 
@@ -457,19 +481,23 @@
  * * skip_timers - if TRUE, this is being done instantly / should not have feedback (such as in init)
  */
 /datum/quirk/spacer_born/proc/on_planet(mob/living/afflicted, skip_timers = FALSE)
+	if(planetside_timer)
+		return
 	if(recovering_timer)
 		deltimer(recovering_timer)
 		recovering_timer = null
 
 	if(skip_timers)
 		on_planet_for_too_long(afflicted, TRUE)
-	else
-		var/exercise_bonus = afflicted.has_status_effect(/datum/status_effect/exercised) ? 2 : 1
-		planetside_timer = addtimer(CALLBACK(src, PROC_REF(on_planet_for_too_long), afflicted), planet_period * exercise_bonus, TIMER_UNIQUE | TIMER_STOPPABLE)
-		afflicted.add_mood_event("spacer", /datum/mood_event/spacer/on_planet)
-		afflicted.add_movespeed_modifier(/datum/movespeed_modifier/spacer/on_planet)
-		afflicted.remove_status_effect(/datum/status_effect/spacer) // removes the wellness effect.
-		to_chat(afflicted, span_danger("You feel a bit sick under the gravity here."))
+		return
+
+	// Recently exercising lets us last longer under heavy strain
+	var/exercise_bonus = afflicted.has_status_effect(/datum/status_effect/exercised) ? 2 : 1
+	planetside_timer = addtimer(CALLBACK(src, PROC_REF(on_planet_for_too_long), afflicted), planet_period * exercise_bonus, TIMER_STOPPABLE)
+	afflicted.add_mood_event("spacer", /datum/mood_event/spacer/on_planet)
+	afflicted.add_movespeed_modifier(/datum/movespeed_modifier/spacer/on_planet)
+	afflicted.remove_status_effect(/datum/status_effect/spacer) // removes the wellness effect.
+	to_chat(afflicted, span_danger("You feel a bit sick under the gravity here."))
 
 /**
  * Ran after remaining on a planet for too long.
@@ -497,16 +525,19 @@
  * * skip_timers - if TRUE, this is being done instantly / should not have feedback (such as in init)
  */
 /datum/quirk/spacer_born/proc/in_space(mob/living/afflicted, skip_timers = FALSE)
+	if(recovering_timer)
+		return
 	if(planetside_timer)
 		deltimer(planetside_timer)
 		planetside_timer = null
 
 	if(skip_timers)
 		comfortably_in_space(afflicted, TRUE)
-	else
-		recovering_timer = addtimer(CALLBACK(src, PROC_REF(comfortably_in_space), afflicted), recover_period, TIMER_UNIQUE | TIMER_STOPPABLE)
-		afflicted.remove_status_effect(/datum/status_effect/spacer) // removes the sickness effect, but not the other modifiers.
-		to_chat(afflicted, span_green("You start feeling better now that you're back in space."))
+		return
+
+	recovering_timer = addtimer(CALLBACK(src, PROC_REF(comfortably_in_space), afflicted), recover_period, TIMER_STOPPABLE)
+	afflicted.remove_status_effect(/datum/status_effect/spacer) // removes the sickness effect, but not the other modifiers.
+	to_chat(afflicted, span_green("You start feeling better now that you're back in space."))
 
 /**
  * Ran when living back in space for a long enough period.

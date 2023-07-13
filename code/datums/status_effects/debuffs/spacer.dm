@@ -31,13 +31,14 @@
 	var/nograv_mod = in_nograv ? 1 : 0.5
 	owner.adjust_disgust(-1 * disgust_healing_per_tick * nograv_mod)
 
-	if(in_nograv)
-		seconds_in_nograv += (initial(tick_interval) * 0.1)
-	else
+	if(!in_nograv)
 		seconds_in_nograv = 0
 		return
 
+	seconds_in_nograv += (initial(tick_interval) * 0.1)
+
 	if(seconds_in_nograv >= 1 MINUTES)
+		// This has some interesting side effects with gravitum or similar negating effects that may be worth nothing
 		owner.adjustStaminaLoss(-1 * stamina_heal_per_tick * initial(tick_interval) * 0.1)
 		owner.AdjustAllImmobility(-1 * stun_heal_per_tick * initial(tick_interval) * 0.1)
 
@@ -52,6 +53,10 @@
 	var/seconds_active = 0
 
 /datum/status_effect/spacer/gravity_sickness/tick(seconds_per_tick, times_fired)
+	if(owner.mob_negates_gravity())
+		// Might seem redundant but we can totally be on a planet but have an anti-gravity effect like gravitum
+		return
+
 	seconds_active += (initial(tick_interval) * 0.1)
 
 	var/mob/living/carbon/the_spacer = owner
