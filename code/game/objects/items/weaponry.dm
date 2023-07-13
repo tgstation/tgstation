@@ -579,7 +579,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "ectoplasm"
 	desc = "Spooky."
 	gender = PLURAL
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/effects/magic.dmi'
 	icon_state = "ectoplasm"
 
 /obj/item/ectoplasm/suicide_act(mob/living/user)
@@ -587,7 +587,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return OXYLOSS
 
 /obj/item/ectoplasm/angelic
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/effects/magic.dmi'
 	icon_state = "angelplasm"
 
 /obj/item/ectoplasm/mystic

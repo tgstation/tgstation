@@ -481,6 +481,17 @@
 	)
 	return ..()
 
+/obj/item/bodypart/arm/left/golem/set_owner(new_owner)
+	. = ..()
+	if (. == FALSE)
+		return
+	if (owner)
+		owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
+	if (isnull(.))
+		return
+	var/mob/living/carbon/old_owner = .
+	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
+
 /obj/item/bodypart/arm/right/golem
 	icon = 'icons/mob/species/golems.dmi'
 	icon_static = 'icons/mob/species/golems.dmi'
@@ -503,6 +514,17 @@
 		offset_y = list("south" = -2),
 	)
 	return ..()
+
+/obj/item/bodypart/arm/right/golem/set_owner(new_owner)
+	. = ..()
+	if (. == FALSE)
+		return
+	if (owner)
+		owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
+	if (isnull(.))
+		return
+	var/mob/living/carbon/old_owner = .
+	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
 
 /obj/item/bodypart/leg/left/golem
 	icon = 'icons/mob/species/golems.dmi'

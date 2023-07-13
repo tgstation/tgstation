@@ -102,6 +102,14 @@ Possible to do for anyone motivated enough:
 	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 	update_appearance()
 
+	AddElement( \
+		/datum/element/contextual_screentip_mob_typechecks, \
+		list(/mob/living/silicon = list( \
+				SCREENTIP_CONTEXT_ALT_LMB = "Disconnect all active calls" \
+			) \
+		) \
+	)
+
 /obj/machinery/holopad/secure
 	name = "secure holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."

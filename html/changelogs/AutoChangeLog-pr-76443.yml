@@ -1,0 +1,7 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - qol: "Lobby Menu buttons can now be collapsed. Rejoice!"
+  - qol: "Lobby Menu buttons have names, which can be seen in the prompt on the bottom left of the viewport."
+  - qol: "you may see your readiness status during pre-game in the Status Bar."
+  - qol: "Reset Lobby Menu HUD verb added in case you manage to break the damn thing."

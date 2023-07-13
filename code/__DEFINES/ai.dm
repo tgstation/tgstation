@@ -319,3 +319,7 @@
 #define BB_FOUND_PAPER "BB_found_paper"
 /// Key where we store the list of things we can write on a paper
 #define BB_WRITING_LIST "BB_writing_list"
+/// Key where we store the tentacleing ability
+#define BB_GOLIATH_TENTACLES "BB_goliath_tentacles"
+/// Key where goliath stores a hole it wants to get into
+#define BB_GOLIATH_HOLE_TARGET "BB_goliath_hole"
