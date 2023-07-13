@@ -32,35 +32,30 @@
 	owner.adjust_disgust(-1 * disgust_healing_per_tick * nograv_mod)
 
 	if(in_nograv)
-		seconds_in_nograv += (tick_interval * 0.1)
+		seconds_in_nograv += (initial(tick_interval) * 0.1)
 	else
 		seconds_in_nograv = 0
 		return
 
 	if(seconds_in_nograv >= 1 MINUTES)
-		owner.adjustStaminaLoss(-1 * stamina_heal_per_tick)
-		owner.AdjustAllImmobility(-1 * stun_heal_per_tick)
+		owner.adjustStaminaLoss(-1 * stamina_heal_per_tick * initial(tick_interval) * 0.1)
+		owner.AdjustAllImmobility(-1 * stun_heal_per_tick * initial(tick_interval) * 0.1)
 
 // The bad side (being on a planet)
 /datum/status_effect/spacer/gravity_sickness
 	alert_type = /atom/movable/screen/alert/status_effect/gravity_sickness
 	/// How much disgust to gain per tick
-	var/disgust_per_tick = 0
+	var/disgust_per_tick = 1
 	/// The cap to which we can apply disgust
 	var/max_disgust = DISGUST_LEVEL_GROSS + 5
 	/// Tracks how many seconds this has been active
 	var/seconds_active = 0
 
-/datum/status_effect/spacer/gravity_sickness/on_creation(mob/living/new_owner, ...)
-	. = ..()
-	// Should take about a minute to get up to the max.
-	disgust_per_tick = (max_disgust / (6 SECONDS * tick_interval * 0.1))
-
 /datum/status_effect/spacer/gravity_sickness/tick(seconds_per_tick, times_fired)
-	seconds_active += (tick_interval * 0.1)
+	seconds_active += (initial(tick_interval) * 0.1)
 
 	var/mob/living/carbon/the_spacer = owner
-	the_spacer.adjust_disgust(disgust_per_tick, max = max_disgust + 5)
+	the_spacer.adjust_disgust(disgust_per_tick * initial(tick_interval) * 0.1, max = max_disgust + 5)
 
 	if(nerfed_effects_because_planetary)
 		return
