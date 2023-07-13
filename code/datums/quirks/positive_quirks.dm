@@ -362,3 +362,161 @@
 
 /datum/quirk/item_quirk/signer/remove()
 	qdel(quirk_holder.GetComponent(/datum/component/sign_language))
+
+/datum/quirk/spacer_born
+	name = "Spacer"
+	desc = "You were born in space, and have never known the comfort of a planet's gravity. Your body has adapted to this. \
+		You are more comfortable in zero and artifical gravity and are more resistant to the effects of space, \
+		but travelling to a planet's surface for an extended period of time will make you feel sick."
+	icon = FA_ICON_USER_ASTRONAUT
+	value = 7
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
+
+	/// How long on a planet before we get averse effects
+	var/planet_period = 3 MINUTES
+	/// TimerID for time spend on a planet
+	var/planetside_timer
+	/// How long in space before we get beneficial effects
+	var/recover_period = 1 MINUTES
+	/// TimerID for time spend in space
+	var/recovering_timer
+
+/datum/quirk/spacer_born/add(client/client_source)
+	var/mob/living/carbon/human/human_quirker = quirk_holder
+	human_quirker.set_mob_height(HUMAN_HEIGHT_TALLER)
+	human_quirker.physiology.pressure_mod *= 0.8
+
+	// Only start tracking when we arrive on station (or a mining level of a map is weird)
+	var/spawn_z = quirk_holder.loc?.z
+	if(is_station_level(spawn_z) || is_mining_level(spawn_z))
+		start_tracking()
+	else
+		RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(arrived_at_station))
+
+/datum/quirk/spacer_born/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED)
+	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
+
+	if(!QDELING(quirk_holder))
+		quirk_holder.clear_mood_event("spacer")
+		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/spacer)
+		quirk_holder.remove_status_effect(/datum/status_effect/spacer)
+
+		var/mob/living/carbon/human/human_quirker = quirk_holder
+		human_quirker.set_mob_height(HUMAN_HEIGHT_MEDIUM)
+		human_quirker.physiology.pressure_mod /= 0.8
+
+/datum/quirk/spacer_born/proc/start_tracking()
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(moved_z))
+	check_z(quirk_holder, get_turf(quirk_holder), skip_timers = TRUE)
+
+/// Proc to check quirk holder moves to determine when we should start tracking
+/datum/quirk/spacer_born/proc/arrived_at_station(mob/living/source, atom/old_loc)
+	SIGNAL_HANDLER
+
+	var/new_z = source.loc?.z
+	if(is_station_level(new_z) || is_mining_level(new_z))
+		start_tracking()
+
+/**
+ * Used to check if we should start or stop timers based on the quirk holder's location.
+ *
+ * * afflicted - the mob arriving / same as quirk holder
+ * * new_turf - the turf they are arriving on
+ * * skip_timers - if TRUE, this is being done instantly / should not have feedback (such as in init)
+ */
+/datum/quirk/spacer_born/proc/check_z(mob/living/source, turf/open/new_turf, skip_timers = FALSE)
+	// - Mining level is definitely planetside
+	// - Station level is planetside if planetary is enabled
+	// - Also just check for planetary turfs, might as well
+	// All in all, though: gravity is a sign of planets.
+	var/z_level_checks = (is_station_level(new_turf.z) && SSmapping.config.planetary) || is_mining_level(new_turf.z)
+	var/planetary_check = istype(new_turf) && new_turf.planetary_atmos
+	if(new_turf.has_gravity() && (z_level_checks || planetary_check))
+		on_planet(source, skip_timers)
+
+	// Otherwise, we assume space.
+	// This includes away missions which may be on a planet, but it's hard to tell afterall.
+	else
+		in_space(source, skip_timers)
+
+/// When changing Zs, check if we should start or stop timers
+/datum/quirk/spacer_born/proc/moved_z(mob/living/source, turf/old_turf, turf/new_turf, same_z_layer)
+	SIGNAL_HANDLER
+
+	check_z(source, new_turf)
+
+// Going to a planet
+
+/**
+ * Ran when we arrive on a planet.
+ *
+ * * afflicted - the mob arriving / same as quirk holder
+ * * skip_timers - if TRUE, this is being done instantly / should not have feedback (such as in init)
+ */
+/datum/quirk/spacer_born/proc/on_planet(mob/living/afflicted, skip_timers = FALSE)
+	if(recovering_timer)
+		deltimer(recovering_timer)
+		recovering_timer = null
+
+	if(skip_timers)
+		on_planet_for_too_long(afflicted)
+	else
+		var/exercise_bonus = afflicted.has_status_effect(/datum/status_effect/exercised) ? 2 : 1
+		planetside_timer = addtimer(CALLBACK(src, PROC_REF(on_planet_for_too_long), afflicted), planet_period * exercise_bonus, TIMER_UNIQUE | TIMER_STOPPABLE)
+		afflicted.add_mood_event("spacer", /datum/mood_event/spacer/on_planet)
+		afflicted.add_movespeed_modifier(/datum/movespeed_modifier/spacer/on_planet)
+		to_chat(afflicted, span_danger("You feel a bit sick under the gravity here."))
+
+/**
+ * Ran after remaining on a planet for too long.
+ *
+ * * afflicted - the mob arriving / same as quirk holder
+ * * skip_timers - if TRUE, this is being done instantly / should not have feedback (such as in init)
+ */
+/datum/quirk/spacer_born/proc/on_planet_for_too_long(mob/living/afflicted, skip_timers = FALSE)
+	if(QDELETED(src) || QDELETED(afflicted))
+		return
+
+	planetside_timer = null
+	afflicted.apply_status_effect(/datum/status_effect/spacer/gravity_sickness)
+	afflicted.add_mood_event("spacer", /datum/mood_event/spacer/on_planet/too_long)
+	afflicted.add_movespeed_modifier(/datum/movespeed_modifier/spacer/on_planet/too_long)
+	if(!skip_timers)
+		to_chat(afflicted, span_danger("You've been here for too long. The gravity really starts getting to you."))
+
+// Going back into space
+
+/**
+ * Ran when returning to space / somewhere with low gravity.
+ *
+ * * afflicted - the mob arriving / same as quirk holder
+ * * skip_timers - if TRUE, this is being done instantly / should not have feedback (such as in init)
+ */
+/datum/quirk/spacer_born/proc/in_space(mob/living/afflicted, skip_timers = FALSE)
+	if(planetside_timer)
+		deltimer(planetside_timer)
+		planetside_timer = null
+
+	if(skip_timers)
+		comfortably_in_space(afflicted)
+	else
+		recovering_timer = addtimer(CALLBACK(src, PROC_REF(comfortably_in_space), afflicted), recover_period, TIMER_UNIQUE | TIMER_STOPPABLE)
+		to_chat(afflicted, span_green("You start feeling better now that you're back in space."))
+
+/**
+ * Ran when living back in space for a long enough period.
+ *
+ * * afflicted - the mob arriving / same as quirk holder
+ * * skip_timers - if TRUE, this is being done instantly / should not have feedback (such as in init)
+ */
+/datum/quirk/spacer_born/proc/comfortably_in_space(mob/living/afflicted, skip_timers = FALSE)
+	if(QDELETED(src) || QDELETED(afflicted))
+		return
+
+	recovering_timer = null
+	afflicted.apply_status_effect(/datum/status_effect/spacer/gravity_wellness)
+	afflicted.add_mood_event("spacer", /datum/mood_event/spacer/in_space)
+	afflicted.add_movespeed_modifier(/datum/movespeed_modifier/spacer/in_space)
+	if(!skip_timers)
+		to_chat(afflicted, span_green("You feel better."))
