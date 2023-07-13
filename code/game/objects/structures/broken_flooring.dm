@@ -1,7 +1,7 @@
 /obj/structure/broken_flooring
 	name = "broken tiling"
 	desc = "A segment of broken flooring."
-	icon = 'icons/obj/brokentiling.dmi'
+	icon = 'icons/obj/fluff/brokentiling.dmi'
 	icon_state = "corner"
 	anchored = TRUE
 	density = FALSE

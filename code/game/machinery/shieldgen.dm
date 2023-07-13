@@ -137,7 +137,7 @@
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"
 	desc = "Used to seal minor hull breaches."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/machines/basic_machines.dmi'
 	icon_state = "shieldoff"
 	density = TRUE
 	opacity = FALSE
@@ -286,7 +286,7 @@
 /obj/machinery/power/shieldwallgen
 	name = "shield wall generator"
 	desc = "A shield generator."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/basic_machines.dmi'
 	icon_state = "shield_wall_gen"
 	anchored = FALSE
 	density = TRUE

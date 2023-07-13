@@ -645,12 +645,12 @@
 		/mob/living/basic/mouse,
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/pet/dog/pug,
+		/mob/living/basic/pet/fox,
 		/mob/living/simple_animal/crab,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/bee,
 		/mob/living/simple_animal/parrot/natural,
 		/mob/living/simple_animal/pet/cat,
-		/mob/living/simple_animal/pet/fox,
 	)
 	for(var/counter in 1 to rand(1, 25))
 		var/mobType = pick(valid_animals)

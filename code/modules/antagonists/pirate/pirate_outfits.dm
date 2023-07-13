@@ -102,6 +102,30 @@
 	l_pocket = /obj/item/reagent_containers/cup/glass/coffee
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
 
+/datum/outfit/pirate/irs
+	name = "IRS Agent Outfit"
+	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/syndicom/irs
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks
+	suit = /obj/item/clothing/suit/costume/irs
+	back = null
+	glasses = /obj/item/clothing/glasses/sunglasses
+	gloves = null
+	head = /obj/item/clothing/head/costume/irs
+	shoes = /obj/item/clothing/shoes/laceup
+	ears = /obj/item/radio/headset/syndicate
+	ears = /obj/item/radio/headset/syndicate/alt
+
+/datum/outfit/pirate/irs/auditor
+	name = "IRS Head Auditor"
+	id_trim = /datum/id_trim/syndicom/irs/auditor
+	uniform = /obj/item/clothing/under/suit/charcoal
+	neck = /obj/item/clothing/neck/tie/red/tied
+	suit = null
+	ears = /obj/item/radio/headset/syndicate/alt/leader
+	head = null
+	belt = /obj/item/storage/belt/holster/detective/full/ert
+
 /datum/outfit/pirate/lustrous
 	name = "Lustrous Scintillant"
 

@@ -11,7 +11,6 @@
 	suicide_cry = "FOR THE ETERNAL REVOLUTION!!"
 
 /datum/antagonist/enemy_of_the_state/forge_objectives()
-
 	var/datum/objective/exile/exile_choice = new
 	exile_choice.owner = owner
 	exile_choice.objective_name = "Choice"
@@ -32,7 +31,7 @@
 	. = ..()
 	to_chat(owner, span_userdanger("The revolution is dead."))
 	to_chat(owner, span_boldannounce("You're an enemy of the state to Nanotrasen. You're a loose end to the Syndicate."))
-	to_chat(owner, "<b>It's time to live out your days as an exile... or go out in one last big bang.</b>")
+	to_chat(owner, "<b>It's time to live out your days as an exile... Or go out in one last big bang.</b>")
 	owner.announce_objectives()
 
 /datum/antagonist/enemy_of_the_state/roundend_report()
