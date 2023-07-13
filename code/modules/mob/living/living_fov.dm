@@ -98,7 +98,6 @@
 	var/turf/anchor_point = get_turf(center)
 	var/image/fov_image/fov_image
 	var/list/clients_shown
-	var/list/visible_mobs = viewers(range, center)
 
 	for(var/mob/living/living_mob in override_list || get_hearers_in_view(range, center))
 		var/client/mob_client = living_mob.client
@@ -106,8 +105,7 @@
 			continue
 		if(HAS_TRAIT(living_mob, TRAIT_DEAF)) //Deaf people can't hear sounds so no sound indicators
 			continue
-		//
-		if(living_mob.in_fov(center, ignore_self) && (!HAS_TRAIT(living_mob, TRAIT_SEE_NOISES) || (living_mob in visible_mobs)))
+		if(living_mob.in_fov(center, ignore_self))
 			continue
 		if(!fov_image) //Make the image once we found one recipient to receive it
 			fov_image = new()
