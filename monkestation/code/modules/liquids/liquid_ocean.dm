@@ -178,13 +178,13 @@ GLOBAL_LIST_INIT(initalized_ocean_areas, list())
 	for(var/direction in open_turfs)
 		var/turf/directional_turf = get_step(src, direction)
 		if(isspaceturf(directional_turf) || istype(directional_turf, /turf/open/floor/plating/ocean))
-			RegisterSignal(directional_turf, COMSIG_TURF_DESTROY, PROC_REF(add_turf_direction))
+			RegisterSignal(directional_turf, COMSIG_TURF_DESTROY, PROC_REF(add_turf_direction), TRUE)
 			open_turfs -= direction
 			if(!open_turfs.len)
 				SSliquids.active_ocean_turfs -= src
 			return
 		else if(!(directional_turf in atmos_adjacent_turfs))
-			RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, PROC_REF(add_turf_direction_non_closed))
+			RegisterSignal(directional_turf, COMSIG_TURF_UPDATE_AIR, PROC_REF(add_turf_direction_non_closed), TRUE)
 			open_turfs -= direction
 			if(!open_turfs.len)
 				SSliquids.active_ocean_turfs -= src

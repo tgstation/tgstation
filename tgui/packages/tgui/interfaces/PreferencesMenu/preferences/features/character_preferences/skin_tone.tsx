@@ -1,11 +1,5 @@
 import { sortBy } from 'common/collections';
-import { Box, Stack } from '../../../../../components';
-import { Feature, FeatureChoicedServerData, FeatureValueProps, StandardizedDropdown } from '../base';
-
-type HexValue = {
-  lightness: number;
-  value: string;
-};
+import { Feature, FeatureChoicedServerData, FeatureValueProps, HexValue, StandardizedPalette } from '../base';
 
 type SkinToneServerData = FeatureChoicedServerData & {
   display_names: NonNullable<FeatureChoicedServerData['display_names']>;
@@ -17,7 +11,7 @@ const sortHexValues = sortBy<[string, HexValue]>(
 );
 
 export const skin_tone: Feature<string, string, SkinToneServerData> = {
-  name: 'Skin tone',
+  name: 'Skin Tone',
   component: (props: FeatureValueProps<string, string, SkinToneServerData>) => {
     const { handleSetValue, serverData, value } = props;
 
@@ -26,33 +20,17 @@ export const skin_tone: Feature<string, string, SkinToneServerData> = {
     }
 
     return (
-      <StandardizedDropdown
+      <StandardizedPalette
         choices={sortHexValues(Object.entries(serverData.to_hex)).map(
           ([key]) => key
         )}
-        displayNames={Object.fromEntries(
-          Object.entries(serverData.display_names).map(([key, displayName]) => {
-            const hexColor = serverData.to_hex[key];
-
-            return [
-              key,
-              <Stack align="center" fill key={key}>
-                <Stack.Item>
-                  <Box
-                    style={{
-                      background: hexColor.value,
-                      'box-sizing': 'content-box',
-                      'height': '11px',
-                      'width': '11px',
-                    }}
-                  />
-                </Stack.Item>
-
-                <Stack.Item grow>{displayName}</Stack.Item>
-              </Stack>,
-            ];
-          })
+        choices_to_hex={Object.fromEntries(
+          Object.entries(serverData.to_hex).map(([key, hex]) => [
+            key,
+            hex.value,
+          ])
         )}
+        displayNames={serverData.display_names}
         onSetValue={handleSetValue}
         value={value}
       />

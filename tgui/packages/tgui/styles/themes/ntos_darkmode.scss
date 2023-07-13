@@ -41,4 +41,5 @@ $nanotrasen: #2c2c2c;
     '../layouts/TitleBar.scss',
     $with: ('background-color': color.scale($nanotrasen, $lightness: -25%))
   );
+  @include meta.load-css('../layouts/PopupWindow.scss');
 }

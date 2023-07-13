@@ -17,7 +17,7 @@ export const StoreManager = (props, context) => {
   });
 
   return (
-    <Window title="Store Manager" width={500} height={650}>
+    <Window title="Store Manager" width={500} height={650} theme="generic">
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
@@ -102,7 +102,7 @@ export const StoreManager = (props, context) => {
                                 content="Purchase"
                                 minWidth="49%"
                                 disabled={
-                                  item.item_path in owned_items ||
+                                  owned_items.includes(item.item_path) ||
                                   total_coins < item.cost
                                 }
                                 onClick={() =>

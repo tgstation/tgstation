@@ -80,8 +80,8 @@
 	)
 
 /datum/species/ipc/get_species_description()
-	return "Hailing from a planet that was lost long ago, the moths travel \
-		the galaxy as a nomadic people aboard a colossal fleet of ships, seeking a new homeland."
+	return "Integrated Positronic Chassis - or IPC for short - \
+	 are a race of sentient and unbound humanoid robots."
 
 /datum/species/ipc/random_name(gender, unique, lastname, attempts)
 	. = "[pick(GLOB.posibrain_names)]-[rand(100, 999)]"

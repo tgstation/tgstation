@@ -3,6 +3,7 @@ import { Component } from 'inferno';
 import { Section, Stack, Box, Button, Flex, Tooltip, NoticeBox, Dimmer, Icon } from '../../components';
 import { calculateProgression, getReputation, Rank } from './calculateReputationLevel';
 import { ObjectiveState } from './constants';
+import type { InfernoNode } from 'inferno';
 
 export type Objective = {
   id: number;
@@ -338,7 +339,7 @@ type ObjectiveElementProps = {
   description: string;
   telecrystalReward: number;
   progressionReward: number;
-  uiButtons?: JSX.Element;
+  uiButtons?: InfernoNode;
   objectiveState?: ObjectiveState;
   originalProgression: number;
   telecrystalPenalty: number;

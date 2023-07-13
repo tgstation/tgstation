@@ -288,7 +288,6 @@
  */
 /atom/proc/LateInitialize()
 	set waitfor = FALSE
-
 /**
  * Top level of the destroy chain for most atoms
  *

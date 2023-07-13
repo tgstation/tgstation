@@ -46,6 +46,7 @@ $nanotrasen: #ffffff;
     '../layouts/TitleBar.scss',
     $with: ('background-color': gray)
   );
+  @include meta.load-css('../layouts/PopupWindow.scss');
   .Button {
     color: #161613;
   }

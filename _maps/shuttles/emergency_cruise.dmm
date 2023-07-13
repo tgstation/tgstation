@@ -1176,7 +1176,6 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "yn" = (
-/obj/structure/table,
 /obj/item/defibrillator/loaded,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/window/reinforced/spawner/directional/west,

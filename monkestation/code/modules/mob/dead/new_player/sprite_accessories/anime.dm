@@ -5,7 +5,7 @@
 
 /datum/sprite_accessory/anime_head/none
 	name = "None"
-	icon_state = "None"
+	icon_state = "none"
 /datum/sprite_accessory/anime_head/pony
 	name = "Pony Ears"
 	icon_state = "pony"
@@ -71,7 +71,7 @@
 
 /datum/sprite_accessory/anime_bottom/none
 	name = "None"
-	icon_state = "None"
+	icon_state = "none"
 
 /datum/sprite_accessory/anime_bottom/pony
 	name = "Pony Tail"

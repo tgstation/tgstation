@@ -103,22 +103,6 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	item_path = /obj/item/clothing/neck/tie/disco
 	item_cost = 10000
 
-
-/*
-*	CLOAKS
-*/
-
-/datum/store_item/neck/knight_cloak
-	name = "Knight Cloak"
-	item_path = /obj/item/clothing/neck/knightcloak
-	item_cost = 12500
-
-/datum/store_item/neck/hornet_cloak
-	name = "Hornet Cloak"
-	item_path = /obj/item/clothing/neck/hornetcloak
-	item_cost = 12500
-
-
 /*
 *	MISC
 */

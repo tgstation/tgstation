@@ -42,7 +42,7 @@
 	name = "Poooooooooolnareff"
 	icon_state = "poooooooooolnareff"
 	locked = TRUE
-	vertical_offset = 19
+	vertical_offset = 15
 
 /datum/sprite_accessory/hair/gigapomp
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'

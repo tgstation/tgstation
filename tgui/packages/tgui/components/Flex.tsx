@@ -105,6 +105,7 @@ const FlexItem = (props) => {
   return (
     <div
       className={classes([className, computeFlexItemClassName(props)])}
+      ref={props.innerRef}
       {...computeFlexItemProps(rest)}
     />
   );
