@@ -97,8 +97,8 @@
 	id = "spacer"
 
 /datum/movespeed_modifier/spacer/in_space
-	movetypes = FLOATING|FLYING
-	multiplicative_slowdown = -0.2
+	movetypes = FLOATING
+	multiplicative_slowdown = -0.15
 
 /datum/movespeed_modifier/spacer/on_planet
 	movetypes = GROUND

@@ -417,6 +417,7 @@
 
 	var/new_z = source.loc?.z
 	if(is_station_level(new_z) || is_mining_level(new_z))
+		UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 		start_tracking()
 
 /**
@@ -461,7 +462,7 @@
 		recovering_timer = null
 
 	if(skip_timers)
-		on_planet_for_too_long(afflicted)
+		on_planet_for_too_long(afflicted, TRUE)
 	else
 		var/exercise_bonus = afflicted.has_status_effect(/datum/status_effect/exercised) ? 2 : 1
 		planetside_timer = addtimer(CALLBACK(src, PROC_REF(on_planet_for_too_long), afflicted), planet_period * exercise_bonus, TIMER_UNIQUE | TIMER_STOPPABLE)
@@ -500,7 +501,7 @@
 		planetside_timer = null
 
 	if(skip_timers)
-		comfortably_in_space(afflicted)
+		comfortably_in_space(afflicted, TRUE)
 	else
 		recovering_timer = addtimer(CALLBACK(src, PROC_REF(comfortably_in_space), afflicted), recover_period, TIMER_UNIQUE | TIMER_STOPPABLE)
 		to_chat(afflicted, span_green("You start feeling better now that you're back in space."))
