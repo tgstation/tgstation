@@ -536,6 +536,11 @@
 	incompatible_modules = list(/obj/item/mod/module/plasma_stabilizer)
 	overlay_state_inactive = "module_plasma"
 
+/obj/item/mod/module/plasma_stabilizer/generate_worn_overlay()
+	if(locate(/obj/item/mod/module/infiltrator) in mod.modules)
+		return list()
+	return ..()
+
 /obj/item/mod/module/plasma_stabilizer/on_equip()
 	ADD_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
 
