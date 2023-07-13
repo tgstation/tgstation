@@ -245,6 +245,7 @@
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/crucible,
+		/datum/heretic_knowledge/rifle,
 	)
 	cost = 1
 	route = PATH_BLADE
@@ -307,7 +308,7 @@
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
 	next_knowledge = list(
 			/datum/heretic_knowledge/spell/furious_steel,
-			/datum/heretic_knowledge/rifle)
+			)
 	route = PATH_BLADE
 	/// How much force do we apply to the offhand?
 	var/offand_force_decrement = 0
