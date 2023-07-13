@@ -309,6 +309,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
 /// Makes whispers clearly heard from seven tiles away, the full hearing range
 #define TRAIT_GOOD_HEARING "good_hearing"
+/// Allows the mob to see visual effects for sound cues as if blind, if the source of the effect is not visible (e.g. behind a wall)
+#define TRAIT_SEE_NOISES "see_noises"
 
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
