@@ -25,7 +25,7 @@
 	color = "#FFFFFF"
 	taste_description = "bad code and slime"
 	chemical_flags = NONE
-	penetrates_skin = VAPOR
+	penetrates_skin = NONE
 
 /// Used by blob reagents to calculate the reaction volume they should use when exposing mobs.
 /datum/reagent/blob/proc/return_mob_expose_reac_volume(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
