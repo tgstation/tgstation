@@ -368,9 +368,15 @@
 	desc = "You were born in space, and have never known the comfort of a planet's gravity. Your body has adapted to this. \
 		You are more comfortable in zero and artifical gravity and are more resistant to the effects of space, \
 		but travelling to a planet's surface for an extended period of time will make you feel sick."
+	gain_text = span_notice("You feel at home in space.")
+	lose_text = span_danger("You feel homesick.")
 	icon = FA_ICON_USER_ASTRONAUT
 	value = 7
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
+	mail_goodies = list(
+		/obj/item/storage/pill_bottle/ondansetron,
+		/obj/item/reagent_containers/pill/gravitum,
+	)
 
 	/// How long on a planet before we get averse effects
 	var/planet_period = 3 MINUTES
@@ -382,16 +388,34 @@
 	var/recovering_timer
 
 /datum/quirk/spacer_born/add(client/client_source)
+	// Only start tracking when we arrive on station (or a mining level of a map is weird)
+	if(!start_tracking(quirk_holder))
+		RegisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(arrived_at_station))
+
+/datum/quirk/spacer_born/add_unique(client/client_source)
 	// drift slightly faster through zero G
-	quirk_holder.inertia_move_delay -= 1
+	quirk_holder.inertia_move_delay *= 0.8
 
 	var/mob/living/carbon/human/human_quirker = quirk_holder
 	human_quirker.set_mob_height(HUMAN_HEIGHT_TALLER)
 	human_quirker.physiology.pressure_mod *= 0.8
+	human_quirker.physiology.cold_mod *= 0.8
 
-	// Only start tracking when we arrive on station (or a mining level of a map is weird)
-	if(!start_tracking(quirk_holder))
-		RegisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(arrived_at_station))
+/datum/quirk/spacer_born/post_add()
+	var/on_a_planet = SSmapping.config.planetary
+	var/planet_job = istype(quirk_holder.mind?.assigned_role, /datum/job/shaft_miner)
+	if(!on_a_planet && !planet_job)
+		return
+	var/datum/bank_account/spacer_account = quirk_holder.get_bank_account()
+	if(!isnull(spacer_account))
+		spacer_account.payday_modifier *= 1.25
+		to_chat(quirk_holder, span_info("Given your background as a Spacer, \
+			you are awarded with a 25% hazard pay bonus due to your [on_a_planet ?  "station" : "occupational"] assignment."))
+
+	// Supply them with some patches to help out on their new assignment
+	var/obj/item/storage/pill_bottle/ondansetron/disgust_killers = new()
+	disgust_killers.desc += " Best to take one when travelling to a planet's surface."
+	quirk_holder.equip_to_slot_if_possible(disgust_killers, ITEM_SLOT_BACKPACK, qdel_on_fail = TRUE, initial = TRUE, indirect_action = TRUE)
 
 /datum/quirk/spacer_born/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED)
@@ -399,7 +423,7 @@
 	if(QDELING(quirk_holder))
 		return
 
-	quirk_holder.inertia_move_delay += 1
+	quirk_holder.inertia_move_delay /= 0.8
 	quirk_holder.clear_mood_event("spacer")
 	quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/spacer)
 	quirk_holder.remove_status_effect(/datum/status_effect/spacer)
@@ -407,6 +431,7 @@
 	var/mob/living/carbon/human/human_quirker = quirk_holder
 	human_quirker.set_mob_height(HUMAN_HEIGHT_MEDIUM)
 	human_quirker.physiology.pressure_mod /= 0.8
+	human_quirker.physiology.cold_mod /= 0.8
 
 /datum/quirk/spacer_born/proc/start_tracking(mob/living/tracking)
 	var/new_z = tracking.loc?.z
@@ -435,8 +460,7 @@
 	// Using Z moved because we don't urgently need to check on every single turf movement for planetary status.
 	// If you've arrived at a "planet", the entire Z is gonna be a "planet".
 	// It won't really make sense to walk 3 feet and then suddenly gain / lose gravity sickness.
-	// If I'm proven wrong, swap this to use M
-	oved.
+	// If I'm proven wrong, swap this to use Moved.
 
 /**
  * Used to check if we should start or stop timers based on the quirk holder's location.
@@ -536,8 +560,9 @@
 		return
 
 	recovering_timer = addtimer(CALLBACK(src, PROC_REF(comfortably_in_space), afflicted), recover_period, TIMER_STOPPABLE)
-	afflicted.remove_status_effect(/datum/status_effect/spacer) // removes the sickness effect, but not the other modifiers.
-	to_chat(afflicted, span_green("You start feeling better now that you're back in space."))
+	// removes the sickness effect, but not any other modifiers (yet).
+	if(afflicted.remove_status_effect(/datum/status_effect/spacer))
+		to_chat(afflicted, span_green("You start feeling better now that you're back in space."))
 
 /**
  * Ran when living back in space for a long enough period.
