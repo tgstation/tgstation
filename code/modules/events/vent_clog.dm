@@ -83,7 +83,7 @@
 /**
  * Finds a valid vent to spawn mobs from.
  *
- * Randomly selects a vent that is on-station and unwelded. If no vents are found, the event
+ * Randomly selects a vent that is on-station, unwelded, and hosted by a passable turf. If no vents are found, the event
  * is immediately killed.
  */
 
@@ -91,7 +91,7 @@
 	var/list/vent_list = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in GLOB.machines)
 		var/turf/vent_turf = get_turf(vent)
-		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded)
+		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded && !vent_turf.is_blocked_turf_ignore_climbable())
 			vent_list += vent
 
 	if(!length(vent_list))
@@ -145,7 +145,7 @@
 	var/list/potential_locations = list()
 
 	for(var/turf/nearby_turf in view(1, get_turf(vent)))
-		if(!nearby_turf.density)
+		if(!nearby_turf.is_blocked_turf_ignore_climbable()) // not perfect, but the worst that happens here is they ignore directional windows
 			potential_locations += nearby_turf
 
 	var/turf/spawn_location = pick(potential_locations)
