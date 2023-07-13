@@ -5,6 +5,12 @@
 "ad" = (
 /turf/open/space,
 /area/space)
+"an" = (
+/mob/living/simple_animal/hostile/retaliate/clown{
+	limb_destroyer = 1
+	},
+/turf/open/ballpit,
+/area/centcom/central_command_areas/fore)
 "ar" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -67,6 +73,20 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
+"aC" = (
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Security"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/evacuation)
 "aD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -157,6 +177,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"aY" = (
+/obj/structure/sink/kitchen/directional/west,
+/turf/open/floor/iron/kitchen/herringbone,
+/area/centcom/central_command_areas/fore)
 "aZ" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/reinforced,
@@ -234,15 +258,17 @@
 /area/centcom/central_command_areas/armory)
 "bk" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Central Command Brig"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/entrance,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "bm" = (
@@ -355,6 +381,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"bZ" = (
+/obj/structure/table/wood/fancy/red,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
+/obj/item/storage/cans/sixsoda,
+/turf/open/floor/iron/kitchen/diagonal,
+/area/centcom/central_command_areas/fore)
 "ca" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -414,7 +446,8 @@
 	name = "Thunderdome"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/all/admin/bar,
+/obj/effect/mapping_helpers/airlock/access/any/admin/bar,
+/obj/effect/mapping_helpers/airlock/access/any/service/bar,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "cl" = (
@@ -460,11 +493,12 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
 "ct" = (
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom Security"
-	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
+/obj/machinery/door/airlock/security/glass{
+	name = "Central Command Courtroom"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/court,
+/obj/effect/mapping_helpers/airlock/access/any/service/lawyer,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/courtroom)
 "cw" = (
@@ -538,6 +572,13 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/evacuation/ship)
+"cR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/vending/liberationstation,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/prison)
 "cS" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
@@ -590,6 +631,19 @@
 /obj/effect/landmark/start/new_player,
 /turf/closed/indestructible/start_area,
 /area/misc/start)
+"df" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "CentCom"
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/control)
 "di" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -597,6 +651,28 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
+"dj" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Thunderdome Green Team"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/floor/iron,
+/area/centcom/tdome/observation)
+"dm" = (
+/obj/effect/turf_decal/siding/wideplating/dark/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating/dark/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/central_command_areas/fore)
 "dn" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -643,6 +719,17 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"dy" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/centcom{
+	name = "Thunderdome VIP"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/turf/open/floor/iron,
+/area/centcom/tdome/administration)
 "dz" = (
 /obj/item/clipboard,
 /obj/structure/table/reinforced,
@@ -691,12 +778,31 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
+"dO" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/centcom/central_command_areas/fore)
 "dV" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/beanbag,
-/obj/item/gun/ballistic/shotgun/doublebarrel,
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/storage/box/lethalshot,
+/obj/item/ammo_casing/shotgun/pulverizer,
+/obj/item/ammo_casing/shotgun/pulverizer,
+/obj/item/ammo_casing/shotgun/pulverizer,
+/obj/item/ammo_casing/shotgun/pulverizer,
+/obj/item/ammo_casing/shotgun/pulverizer,
+/obj/item/ammo_casing/shotgun/pulverizer,
+/obj/item/ammo_casing/shotgun/pulverizer,
+/obj/item/ammo_casing/shotgun/pulverizer,
+/obj/item/ammo_casing/shotgun/pulverizer,
+/obj/item/ammo_casing/shotgun/pulverizer,
+/obj/item/ammo_casing/shotgun/pulverizer,
+/obj/item/ammo_casing/shotgun/pulverizer,
+/obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun,
+/obj/item/gun/ballistic/shotgun/bulldog/unrestricted,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "dW" = (
@@ -788,6 +894,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"eo" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/iron,
+/area/centcom/tdome/observation)
 "ep" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/effect/decal/cleanable/dirt,
@@ -802,6 +913,12 @@
 	},
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/courtroom)
+"ew" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen/diagonal,
+/area/centcom/central_command_areas/fore)
 "ey" = (
 /obj/structure/flora/bush/leavy,
 /obj/effect/decal/cleanable/cobweb,
@@ -810,6 +927,7 @@
 "eB" = (
 /obj/structure/bookcase/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "eD" = (
@@ -818,7 +936,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "eE" = (
@@ -978,6 +1095,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
+"fx" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/obj/item/storage/cans/sixsoda,
+/obj/structure/closet/crate/freezer,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/centcom/central_command_areas/fore)
 "fy" = (
 /obj/structure/signpost/salvation{
 	icon = 'icons/obj/structures.dmi';
@@ -996,8 +1123,8 @@
 /turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "fA" = (
-/obj/machinery/vending/cola,
 /obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "fE" = (
@@ -1020,9 +1147,19 @@
 	name = "Bathroom"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/admin)
+"fH" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Supply Pod Storage"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/supply/shipping,
+/turf/open/floor/iron,
+/area/centcom/tdome/administration)
 "fI" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt,
@@ -1088,6 +1225,13 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/grass,
 /area/centcom/tdome/administration)
+"gb" = (
+/obj/structure/table,
+/obj/machinery/processor{
+	pixel_y = 8
+	},
+/turf/open/floor/iron/kitchen/herringbone,
+/area/centcom/central_command_areas/fore)
 "gd" = (
 /obj/machinery/door/airlock/highsecurity,
 /obj/effect/turf_decal/tile/neutral/full,
@@ -1103,9 +1247,10 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/evacuation/ship)
 "gh" = (
-/turf/closed/indestructible/fakedoor{
-	name = "Thunderdome Admin"
+/obj/machinery/door/airlock/centcom{
+	name = "Thunderdome Administration"
 	},
+/turf/open/floor/iron/dark,
 /area/centcom/tdome/administration)
 "gi" = (
 /obj/docking_port/stationary{
@@ -1161,6 +1306,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/administration)
+"gr" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/turf_decal/tile/yellow/opposingcorners{
+	dir = 1
+	},
+/obj/structure/chair/stool/bar/directional{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/observation)
 "gs" = (
 /obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/item/paper/pamphlet/centcom/visitor_info,
@@ -1188,6 +1343,12 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
+"gx" = (
+/obj/structure/table/wood/fancy/red,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
+/obj/mystery_box_item,
+/turf/open/floor/iron/kitchen/diagonal,
+/area/centcom/central_command_areas/fore)
 "gy" = (
 /obj/machinery/shower/directional/east,
 /obj/effect/turf_decal/tile/red{
@@ -1239,6 +1400,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"gK" = (
+/obj/effect/landmark/thunderdome/observe,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/observation)
 "gO" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/briefing)
@@ -1316,7 +1482,18 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/bar,
+/obj/effect/mapping_helpers/airlock/access/any/admin/bar,
+/obj/effect/mapping_helpers/airlock/access/any/service/bar,
+/turf/open/floor/iron,
+/area/centcom/tdome/observation)
+"hg" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/turf_decal/tile/yellow/opposingcorners{
+	dir = 1
+	},
+/obj/structure/chair/stool/bar/directional{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "hi" = (
@@ -1363,6 +1540,14 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
+"hu" = (
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "cafe_counter";
+	name = "Kitchen Counter Shutters"
+	},
+/turf/open/floor/iron/kitchen/herringbone,
+/area/centcom/central_command_areas/fore)
 "hv" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave{
@@ -1427,11 +1612,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "hN" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Thunderdome"
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/public/glass{
+	name = "ThunderDome"
+	},
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "hP" = (
@@ -1532,6 +1717,7 @@
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/gas,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/recharger,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "iu" = (
@@ -1551,6 +1737,7 @@
 /obj/item/radio,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/recharger,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "iw" = (
@@ -1574,6 +1761,7 @@
 /obj/item/clothing/ears/earmuffs,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/recharger,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "iy" = (
@@ -1581,6 +1769,7 @@
 /obj/item/restraints/handcuffs/cable/zipties,
 /obj/item/assembly/flash/handheld,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/recharger,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "iz" = (
@@ -1639,10 +1828,13 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/supply)
 "iG" = (
-/turf/closed/indestructible/fakedoor{
-	name = "CentCom Warehouse"
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/airlock/security/glass{
+	name = "Central Command Courtroom"
 	},
-/area/centcom/central_command_areas/supply)
+/obj/effect/mapping_helpers/airlock/access/any/security/court,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/courtroom)
 "iH" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/indestructible/riveted,
@@ -1760,11 +1952,11 @@
 /area/centcom/central_command_areas/supply)
 "ja" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "CentCom Courtroom"
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/courtroom)
@@ -1821,11 +2013,10 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "jh" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "ji" = (
@@ -1911,7 +2102,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/storage,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/supply/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "js" = (
@@ -2285,7 +2477,9 @@
 	name = "CentCom Security"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "la" = (
@@ -2371,9 +2565,12 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "lr" = (
-/turf/closed/indestructible/fakedoor{
-	name = "CentCom"
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/airlock/bananium/glass{
+	desc = "People who take escape pods over the shuttle don't get to visit centcomm's pizza tower...";
+	name = "Peppino Pizza"
 	},
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/centcom/central_command_areas/fore)
 "ls" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2421,7 +2618,6 @@
 	name = "Shuttle Control Office"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "lK" = (
@@ -2429,7 +2625,8 @@
 	name = "CentCom Supply"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/all/admin/storage,
+/obj/effect/mapping_helpers/airlock/access/any/supply/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "lL" = (
@@ -2437,9 +2634,13 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/prison)
 "lM" = (
-/obj/machinery/door/poddoor/shutters,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "pizzatime";
+	name = "Pizza Time shutters";
+	desc = "People who take escape pods over the shuttle don't get to visit centcomm's pizza tower..."
+	},
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/centcom/central_command_areas/fore)
 "lN" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -2487,7 +2688,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "lV" = (
@@ -2525,6 +2728,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/evacuation/ship)
+"mh" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/grass,
+/area/centcom/central_command_areas/evacuation)
 "mi" = (
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
@@ -2565,6 +2778,19 @@
 "mo" = (
 /obj/structure/table/wood,
 /turf/open/floor/iron/grimy,
+/area/centcom/central_command_areas/courtroom)
+"mz" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Central Command Brig"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/entrance,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/service/lawyer,
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/courtroom)
 "mB" = (
 /obj/item/kirbyplants{
@@ -2804,13 +3030,14 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "nq" = (
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom Security"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
+/obj/machinery/door/airlock/security/glass{
+	name = "Central Command Courtroom"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/court,
+/obj/effect/mapping_helpers/airlock/access/any/service/lawyer,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/courtroom)
 "nr" = (
@@ -2823,6 +3050,17 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
+"nx" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Thunderdome Backstage"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
+/turf/open/floor/iron,
+/area/centcom/tdome/observation)
 "nA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -2839,7 +3077,9 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "nG" = (
@@ -2873,11 +3113,11 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "nM" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "XCCsecdepartment";
-	name = "XCC Security Checkpoint Shutters"
-	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "XCC Security Checkpoint Shutters";
+	id = "XCCsecdepartment"
+	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "nN" = (
@@ -2962,7 +3202,6 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
-/obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
@@ -2993,6 +3232,18 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
+"om" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom/central_command_areas/fore)
 "on" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -3139,7 +3390,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/thunderdome,
 /turf/open/floor/iron,
 /area/centcom/tdome/administration)
 "oJ" = (
@@ -3302,6 +3552,9 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
+"pn" = (
+/turf/open/floor/iron/dark/diagonal,
+/area/centcom/central_command_areas/supplypod)
 "pr" = (
 /obj/structure/chair,
 /obj/machinery/newscaster/directional/north,
@@ -3314,6 +3567,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
+"pt" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Shuttle Control Office"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/airlock/access/any/supply/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/supply)
 "pB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -3545,6 +3807,14 @@
 	name = "plating"
 	},
 /area/centcom/central_command_areas/control)
+"qx" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/courtroom)
 "qy" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -3587,6 +3857,7 @@
 "qD" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
+/mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
 "qF" = (
@@ -3618,7 +3889,7 @@
 	name = "CentCom Security"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
+/obj/effect/mapping_helpers/airlock/access/any/security/armory,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "qR" = (
@@ -3631,15 +3902,16 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/access/all/admin/storage,
+/obj/effect/mapping_helpers/airlock/access/any/supply/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "qT" = (
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom"
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/public/glass{
+	name = "CentCom"
+	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "qW" = (
@@ -3668,6 +3940,21 @@
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/grimy,
+/area/centcom/central_command_areas/courtroom)
+"rh" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/centcom/tdome/administration)
+"ri" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/airlock/security{
+	name = "Central Command Legal Affairs"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/court,
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/courtroom)
 "rk" = (
 /turf/open/floor/wood,
@@ -3777,11 +4064,11 @@
 	},
 /area/centcom/central_command_areas/fore)
 "rI" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "XCCsec3";
-	name = "XCC Checkpoint 3 Shutters"
-	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "XCC Checkpoint 3 Shutters";
+	id = "XCCsec3"
+	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "rJ" = (
@@ -3851,10 +4138,13 @@
 /turf/open/floor/iron/white,
 /area/centcom/tdome/observation)
 "sa" = (
-/obj/structure/table/wood,
-/obj/item/lighter,
-/obj/item/crowbar/power,
-/turf/open/floor/iron/dark,
+/obj/machinery/door/airlock/command/glass{
+	name = "Chief Engineer"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/supplypod)
 "sb" = (
 /obj/machinery/vending/snack,
@@ -3874,7 +4164,7 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Orbital Drop Pod Loading"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "sm" = (
@@ -3891,7 +4181,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/medical,
+/obj/effect/mapping_helpers/airlock/access/any/medical/cmo,
+/obj/effect/mapping_helpers/airlock/access/any/security,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "sq" = (
@@ -4018,7 +4310,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/security,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
 "sN" = (
@@ -4086,14 +4379,16 @@
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Supplypod Loading"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/storage,
+/obj/effect/mapping_helpers/airlock/access/any/security,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
 "sZ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Supplypod Loading"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/storage,
+/obj/effect/mapping_helpers/airlock/access/any/supply/shipping,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
 "ta" = (
@@ -4209,7 +4504,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "ty" = (
@@ -4252,7 +4546,6 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/access/all/admin/thunderdome,
 /turf/open/floor/iron,
 /area/centcom/tdome/administration)
 "tI" = (
@@ -4343,20 +4636,19 @@
 "tW" = (
 /turf/open/indestructible/hierophant/two,
 /area/centcom/central_command_areas/admin)
+"tX" = (
+/obj/structure/sign/poster/contraband/tipper_cream_soda{
+	pixel_y = 35
+	},
+/obj/machinery/griddle,
+/turf/open/floor/iron/kitchen/herringbone,
+/area/centcom/central_command_areas/fore)
 "ub" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom"
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
+/turf/open/floor/iron/kitchen/diagonal,
+/area/centcom/central_command_areas/fore)
 "uc" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -4425,6 +4717,10 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"uu" = (
+/obj/machinery/oven,
+/turf/open/floor/iron/kitchen/herringbone,
+/area/centcom/central_command_areas/fore)
 "uw" = (
 /obj/structure/chair/office,
 /obj/effect/turf_decal/tile/red/half/contrasted,
@@ -4499,7 +4795,7 @@
 	name = "Shuttle Control Office"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "uP" = (
@@ -4508,6 +4804,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"uR" = (
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
+/area/centcom/central_command_areas/fore)
 "uV" = (
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
@@ -4614,13 +4916,14 @@
 /area/centcom/central_command_areas/control)
 "vu" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
+/obj/machinery/door/airlock/security{
+	name = "Central Command Legal Affairs"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/court,
+/obj/effect/mapping_helpers/airlock/access/any/service/lawyer,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/courtroom)
 "vA" = (
@@ -4674,7 +4977,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "vG" = (
@@ -4708,12 +5011,12 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "vP" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "XCCcustoms2";
-	name = "XCC Customs 2 Shutters"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "XCC Customs 2 Shutters";
+	id = "XCCcustoms2"
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
@@ -4752,12 +5055,12 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "vU" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "XCCcustoms1";
-	name = "XCC Customs 1 Shutters"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "XCC Customs 1 Shutters";
+	id = "XCCcustoms1"
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
@@ -4862,7 +5165,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "wv" = (
@@ -4924,7 +5227,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "wG" = (
@@ -4945,14 +5249,14 @@
 /area/centcom/central_command_areas/control)
 "wJ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "CentCom"
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
@@ -5036,7 +5340,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "xd" = (
@@ -5134,6 +5437,11 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
+"xu" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/iron,
+/area/centcom/tdome/observation)
 "xy" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -5145,6 +5453,18 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
+"xA" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/centcom/central_command_areas/evacuation)
 "xB" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -5271,7 +5591,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "yn" = (
@@ -5295,7 +5616,7 @@
 	name = "Briefing Room"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "ys" = (
@@ -5325,6 +5646,17 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
+"yE" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Kitchen"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "cafe_counter";
+	name = "Kitchen Counter Shutters"
+	},
+/turf/open/floor/iron/kitchen/herringbone,
+/area/centcom/central_command_areas/fore)
 "yH" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/wood{
@@ -5369,16 +5701,19 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
+"yT" = (
+/turf/open/ballpit,
+/area/centcom/central_command_areas/fore)
 "yU" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "CentCom"
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
@@ -5456,7 +5791,7 @@
 	name = "Infirmary"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/all/admin/medical,
+/obj/effect/mapping_helpers/airlock/access/any/medical,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "zl" = (
@@ -5742,6 +6077,12 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/evacuation/ship)
+"AC" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/centcom/central_command_areas/fore)
 "AD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -5799,6 +6140,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"AQ" = (
+/obj/structure/chair/sofa/corp/left,
+/turf/open/floor/iron/kitchen/diagonal,
+/area/centcom/central_command_areas/fore)
 "AT" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/indestructible/riveted,
@@ -5947,7 +6292,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "BB" = (
@@ -5958,11 +6305,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "BE" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "XCCsec3";
-	name = "CC Main Access Shutters"
-	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "CC Main Access Shutters";
+	id = "XCCsec3"
+	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "BF" = (
@@ -6042,7 +6389,8 @@
 	name = "CentCom Security"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/security,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
 "BN" = (
@@ -6122,6 +6470,7 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/flora/bush/generic/style_random,
 /obj/machinery/light/directional/south,
+/mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
 "Cf" = (
@@ -6139,6 +6488,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
+"Ch" = (
+/obj/structure/chair/sofa/corp{
+	dir = 8
+	},
+/turf/open/floor/iron/kitchen/diagonal,
+/area/centcom/central_command_areas/fore)
 "Co" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
@@ -6175,12 +6530,12 @@
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/evacuation/ship)
 "Cz" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Thunderdome"
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "ThunderDome"
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
@@ -6285,6 +6640,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
+"CX" = (
+/turf/open/floor/iron/kitchen/herringbone,
+/area/centcom/central_command_areas/fore)
 "CY" = (
 /obj/structure/chair{
 	dir = 4
@@ -6327,14 +6685,28 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation/ship)
-"Dq" = (
-/obj/machinery/door/airlock/external/ruin,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+"Dp" = (
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Security"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
+"Dq" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/central_command_areas/fore)
 "Ds" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -6434,6 +6806,20 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/evacuation/ship)
+"DO" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/centcom/central_command_areas/fore)
+"DQ" = (
+/obj/effect/turf_decal/siding/wideplating/dark,
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/central_command_areas/fore)
 "DV" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -6450,11 +6836,19 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
-"Eg" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Thunderdome Booth"
-	},
+"Ea" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/airlock/security{
+	name = "Central Command Legal Affairs"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/service/lawyer,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/courtroom)
+"Eg" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/airlock/public/glass{
+	name = "ThunderDome"
+	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "Eq" = (
@@ -6584,13 +6978,13 @@
 /area/space)
 "Fj" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
-	name = "Thunderdome Administration"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/thunderdome,
+/obj/machinery/door/airlock/centcom{
+	name = "Thunderdome VIP"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron,
 /area/centcom/tdome/administration)
 "Fk" = (
@@ -6612,11 +7006,11 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/control)
 "Fv" = (
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom"
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/public/glass{
+	name = "CentCom"
+	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "FB" = (
@@ -6629,6 +7023,11 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
+"FD" = (
+/obj/machinery/door/airlock/freezer,
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/centcom/central_command_areas/fore)
 "FE" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 8
@@ -6644,6 +7043,19 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
+"FG" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Security"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/ferry)
 "FO" = (
 /obj/structure/table/reinforced,
 /obj/item/computer_disk/quartermaster,
@@ -6655,6 +7067,18 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
+"FT" = (
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "cafe_counter";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/machinery/reagentgrinder{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/turf/open/floor/iron/kitchen/herringbone,
+/area/centcom/central_command_areas/fore)
 "FX" = (
 /obj/machinery/computer/auxiliary_base/directional/north,
 /obj/structure/table/reinforced,
@@ -6705,6 +7129,15 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/evacuation/ship)
+"Gk" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/grass,
+/area/centcom/central_command_areas/evacuation)
 "Gs" = (
 /obj/machinery/power/smes/magical,
 /obj/effect/turf_decal/stripes/line,
@@ -6713,6 +7146,15 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
+"Gt" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark/diagonal,
+/area/centcom/central_command_areas/evacuation)
+"Gv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/structure/closet/crate/secure/freezer/pizza,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/centcom/central_command_areas/fore)
 "GB" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/line,
@@ -6736,15 +7178,18 @@
 /area/centcom/central_command_areas/admin/storage)
 "GC" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Central Command Brig"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/entrance,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/service/lawyer,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "GJ" = (
@@ -6779,6 +7224,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
+"GX" = (
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Supplypod Loading"
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/supplypod)
 "Ha" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -6819,6 +7270,16 @@
 	name = "plating"
 	},
 /area/centcom/tdome/observation)
+"Hn" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/item/storage/cans/sixsoda,
+/obj/structure/closet/crate/freezer,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/centcom/central_command_areas/fore)
 "Ho" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
@@ -6827,12 +7288,17 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
+/obj/effect/mapping_helpers/airlock/access/any/security/armory,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "Hv" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/courtroom)
+"Hx" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/turf/open/floor/plating,
+/area/centcom/central_command_areas/ferry)
 "Hz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -6878,6 +7344,17 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/evacuation/ship)
+"HV" = (
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Security"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/control)
 "HZ" = (
 /obj/structure/railing{
 	dir = 6;
@@ -6907,6 +7384,18 @@
 /obj/structure/sign/poster/contraband/syndicate_recruitment,
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/admin)
+"Im" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 10
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/central_command_areas/fore)
 "Io" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -7139,6 +7628,20 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
+"Jm" = (
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Security"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/evacuation)
 "Jq" = (
 /obj/machinery/camera/motion/thunderdome{
 	pixel_x = 10
@@ -7252,6 +7755,9 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
+"JU" = (
+/turf/open/floor/iron/kitchen/diagonal,
+/area/centcom/central_command_areas/fore)
 "JV" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -7295,7 +7801,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "Km" = (
@@ -7380,6 +7886,11 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"KU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/gibber/autogibber,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/centcom/central_command_areas/fore)
 "KV" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 4
@@ -7681,6 +8192,28 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
+"Mj" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/centcom/central_command_areas/evacuation)
+"Mm" = (
+/obj/effect/turf_decal/siding/wideplating/dark,
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	desc = "WARNING, Nanotrasen declines any responsibility for clown related injury, enter at your own risk"
+	},
+/turf/open/floor/wood,
+/area/centcom/central_command_areas/fore)
 "Mo" = (
 /obj/structure/bed,
 /obj/item/bedsheet/black,
@@ -7770,7 +8303,7 @@
 /obj/machinery/light/directional/north,
 /obj/structure/table/wood,
 /obj/structure/reagent_dispensers/beerkeg,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/supplypod)
 "MJ" = (
 /obj/structure/chair/office,
@@ -7857,7 +8390,8 @@
 /obj/structure/table/wood,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/reagent_containers/cup/glass/shaker,
-/turf/open/floor/iron/dark,
+/obj/item/lighter,
+/turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/supplypod)
 "Nk" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
@@ -7949,7 +8483,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "NH" = (
@@ -8005,12 +8540,12 @@
 /turf/open/floor/iron/white,
 /area/centcom/tdome/observation)
 "NU" = (
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom"
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
+	},
+/obj/machinery/door/airlock/public/glass{
+	name = "CentCom"
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
@@ -8038,8 +8573,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/any/admin/living,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "Od" = (
@@ -8129,6 +8664,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin/storage)
+"Os" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 8
+	},
+/turf/open/floor/iron/kitchen/diagonal,
+/area/centcom/central_command_areas/fore)
 "Ot" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -8148,11 +8689,9 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "Oz" = (
-/obj/machinery/door/airlock/external/ruin,
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/control)
+/obj/machinery/stove,
+/turf/open/floor/iron/kitchen/herringbone,
+/area/centcom/central_command_areas/fore)
 "OC" = (
 /obj/structure/table/reinforced,
 /obj/item/toy/plush/space_lizard_plushie{
@@ -8167,7 +8706,7 @@
 	pixel_y = 5
 	},
 /obj/structure/table/wood,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/supplypod)
 "OE" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -8217,6 +8756,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
+"ON" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 4
+	},
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
+/area/centcom/central_command_areas/fore)
 "OP" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -8227,7 +8775,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "OR" = (
@@ -8282,6 +8830,17 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"Pa" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Supply Pod Storage"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/supply/shipping,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/supplypod)
 "Pc" = (
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -8457,6 +9016,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"PO" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Chief Engineer"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/iron/dark/diagonal,
+/area/centcom/central_command_areas/evacuation)
 "PR" = (
 /obj/structure/table/wood,
 /obj/item/phone{
@@ -8517,6 +9083,9 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"Qa" = (
+/turf/open/floor/iron/dark/diagonal,
+/area/centcom/central_command_areas/evacuation)
 "Qb" = (
 /obj/structure/table/wood,
 /obj/item/folder/red,
@@ -8661,6 +9230,10 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation/ship)
+"QG" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/centcom/central_command_areas/fore)
 "QH" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /obj/effect/turf_decal/tile/neutral/full,
@@ -8670,6 +9243,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/central_command_areas/evacuation/ship)
+"QJ" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Thunderdome"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
+/turf/open/floor/iron,
+/area/centcom/tdome/observation)
 "QM" = (
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
@@ -8734,7 +9316,7 @@
 	name = "CentCom Security"
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/brig,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "Rb" = (
@@ -8767,7 +9349,7 @@
 /obj/machinery/door/airlock/vault{
 	req_access = list("cent_captain")
 	},
-/obj/machinery/door/poddoor/shutters/indestructible,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
 "Rk" = (
@@ -8787,7 +9369,12 @@
 /obj/item/storage/fancy/cigarettes/cigars/cohiba{
 	pixel_y = 3
 	},
-/turf/open/floor/iron/dark,
+/obj/item/crowbar/power,
+/mob/living/simple_animal/parrot/poly{
+	name = "Poly Prime";
+	desc = "Poly the Parrot. Don't tell anyone, but the others are clones."
+	},
+/turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/supplypod)
 "Rp" = (
 /obj/machinery/computer/communications,
@@ -9132,6 +9719,14 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/two)
+"Td" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/airlock/public/glass{
+	name = "CentCom Courtroom"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/courtroom)
 "Te" = (
 /obj/structure/closet/crate/engineering,
 /obj/item/stack/sheet/mineral/plasma{
@@ -9166,7 +9761,7 @@
 /obj/item/clothing/mask/cigarette/cigar/havana{
 	pixel_x = 2
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/supplypod)
 "Tl" = (
 /obj/structure/table/wood,
@@ -9269,6 +9864,15 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/briefing)
+"TH" = (
+/obj/structure/chair/stool{
+	dir = 8
+	},
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
+/area/centcom/central_command_areas/fore)
 "TI" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -9381,6 +9985,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"Uj" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/airlock/public/glass{
+	name = "CentCom Courtroom"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/evacuation)
 "Ul" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -9457,6 +10071,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
+"UD" = (
+/obj/structure/chair/sofa/corp/right,
+/turf/open/floor/iron/kitchen/diagonal,
+/area/centcom/central_command_areas/fore)
 "UH" = (
 /obj/machinery/light/directional/west,
 /obj/structure/closet/secure_closet/personal,
@@ -9489,7 +10107,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/security,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "UR" = (
@@ -9613,6 +10232,14 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
+"Vt" = (
+/obj/machinery/button/door/directional/west{
+	id = "cafe_counter";
+	name = "Counter Shutters Control";
+	pixel_y = 24
+	},
+/turf/open/floor/iron/kitchen/herringbone,
+/area/centcom/central_command_areas/fore)
 "Vu" = (
 /obj/structure/closet/secure_closet/ert_med,
 /obj/machinery/vending/wallmed/directional/south{
@@ -9728,6 +10355,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"VX" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/obj/item/storage/cans/sixsoda,
+/obj/structure/closet/crate/freezer,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/centcom/central_command_areas/fore)
 "VY" = (
 /obj/machinery/computer/records/security{
 	dir = 8
@@ -9763,7 +10400,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/medical/cmo,
+/obj/effect/mapping_helpers/airlock/access/any/security,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
 "Wd" = (
@@ -9780,13 +10419,10 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "Wi" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
-/obj/structure/extinguisher_cabinet/directional/south,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/courtroom)
+/obj/structure/table/wood/fancy/red,
+/obj/item/storage/cans/sixsoda,
+/turf/open/floor/iron/kitchen/diagonal,
+/area/centcom/central_command_areas/fore)
 "Wl" = (
 /obj/structure/table/wood,
 /obj/machinery/recharger,
@@ -9860,7 +10496,6 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
 "Wv" = (
-/obj/structure/chair,
 /obj/effect/landmark/thunderdome/observe,
 /obj/machinery/barsign/all_access/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -9987,7 +10622,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "WR" = (
@@ -10022,7 +10657,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "WX" = (
@@ -10158,7 +10792,8 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "Xu" = (
@@ -10182,7 +10817,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "Xz" = (
@@ -10197,8 +10831,8 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
 "XC" = (
-/obj/machinery/vending/snack,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/vending/imported/yangyu,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "XD" = (
@@ -10231,6 +10865,12 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
+"XO" = (
+/obj/structure/chair/sofa/corp/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/kitchen/diagonal,
+/area/centcom/central_command_areas/fore)
 "XQ" = (
 /obj/machinery/computer/crew{
 	dir = 1
@@ -10267,6 +10907,13 @@
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
+/area/centcom/tdome/observation)
+"Yh" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Thunderdome Red Team"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "Yi" = (
 /obj/machinery/computer/camera_advanced,
@@ -10335,8 +10982,22 @@
 	locked = 1;
 	name = "CentCom Auxiliary Announcement Closet"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/control)
+"YB" = (
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Security"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "YD" = (
 /obj/structure/table/wood,
@@ -10569,6 +11230,18 @@
 /obj/machinery/barsign/all_access/directional/north,
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/evacuation/ship)
+"ZH" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom/central_command_areas/fore)
 "ZM" = (
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
@@ -10634,7 +11307,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/all/admin/storage,
+/obj/effect/mapping_helpers/airlock/access/any/supply/general,
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 
@@ -48075,7 +48749,7 @@ Yj
 YQ
 uh
 oh
-mD
+Hx
 ss
 fw
 tr
@@ -48332,7 +49006,7 @@ Yq
 Xq
 Xq
 ef
-mD
+Hx
 wx
 fw
 wB
@@ -49659,7 +50333,7 @@ Bp
 Sz
 Sz
 uf
-gh
+uf
 uf
 aa
 aa
@@ -50676,7 +51350,7 @@ gE
 FZ
 gE
 cq
-QC
+Yh
 IA
 IT
 IT
@@ -50926,7 +51600,7 @@ PT
 Nl
 QC
 QC
-hf
+nx
 QC
 QC
 QC
@@ -51385,7 +52059,7 @@ aa
 aa
 aa
 aa
-iG
+iF
 iR
 oJ
 Qx
@@ -51399,12 +52073,12 @@ iO
 uG
 oJ
 lo
-lJ
+pt
 hz
 iR
 lo
 hz
-lJ
+pt
 hz
 iR
 oJ
@@ -51642,7 +52316,7 @@ aa
 aa
 aa
 aa
-iG
+iF
 iR
 oJ
 Qx
@@ -51674,9 +52348,9 @@ YU
 YU
 mD
 mD
-wu
+FG
 xh
-wu
+FG
 mD
 Ya
 rY
@@ -51686,7 +52360,7 @@ Ya
 rY
 Ya
 Ya
-Dq
+iu
 io
 io
 io
@@ -51943,7 +52617,7 @@ io
 io
 qw
 iu
-MF
+uc
 iu
 lN
 iu
@@ -52156,7 +52830,7 @@ aa
 aa
 aa
 aa
-iG
+iF
 iR
 oJ
 Qx
@@ -52188,9 +52862,9 @@ iu
 iu
 io
 io
-ub
+Oj
 mk
-ub
+Oj
 io
 io
 iu
@@ -52200,7 +52874,7 @@ mQ
 io
 iu
 io
-Oz
+uc
 io
 iu
 io
@@ -52213,10 +52887,10 @@ QC
 bf
 eI
 ch
-ck
+QJ
 BW
-Kd
-Kd
+hg
+hg
 SZ
 Is
 IE
@@ -52413,7 +53087,7 @@ aa
 aa
 aa
 aa
-iG
+iF
 iR
 oJ
 oJ
@@ -52473,7 +53147,7 @@ QC
 QC
 Wv
 Kd
-yY
+gK
 SZ
 It
 It
@@ -52728,9 +53402,9 @@ Xf
 XJ
 Xf
 QC
-yY
+gK
 Kd
-yY
+gK
 SZ
 Iu
 IF
@@ -52935,7 +53609,7 @@ iF
 iF
 iF
 iF
-iF
+iX
 iF
 iF
 iF
@@ -53185,18 +53859,18 @@ aa
 aa
 aa
 Vx
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+KU
+DO
+fx
+Vx
+an
+yT
+an
+Im
+ON
+ON
+ON
+uR
 Vx
 Ul
 Jg
@@ -53442,18 +54116,18 @@ aa
 aa
 aa
 Vx
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Gv
+dO
+Hn
+Vx
+yT
+yT
+yT
+Mm
+TH
+TH
+TH
+uR
 Vx
 Vx
 Vx
@@ -53699,18 +54373,18 @@ aa
 aa
 aa
 Vx
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+QG
+AC
+VX
+Vx
+an
+yT
+an
+DQ
+uR
+uR
+uR
+uR
 Vx
 lM
 tI
@@ -53956,18 +54630,18 @@ aa
 aa
 aa
 Vx
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Vx
+FD
+Vx
+Vx
+om
+ZH
+ZH
+dm
+Dq
+Dq
+Dq
+Dq
 lr
 lM
 lr
@@ -54213,18 +54887,18 @@ aa
 aa
 aa
 Vx
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oz
+Vt
+gb
+FT
+JU
+JU
+JU
+JU
+JU
+JU
+JU
+JU
 Vx
 lM
 Jg
@@ -54470,18 +55144,18 @@ aa
 aa
 aa
 Vx
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+tX
+CX
+CX
+hu
+JU
+JU
+UD
+gx
+ub
+JU
+bZ
+ub
 Vx
 Vx
 Vx
@@ -54727,18 +55401,18 @@ aa
 aa
 aa
 Vx
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uu
+aY
+CX
+yE
+JU
+JU
+AQ
+Wi
+ew
+Os
+Ch
+XO
 Vx
 hG
 Jg
@@ -55279,9 +55953,9 @@ Ab
 mR
 Ab
 zG
-Xt
+HV
 MF
-NG
+Dp
 uc
 uc
 uc
@@ -55300,7 +55974,7 @@ XJ
 QC
 Wv
 Kd
-yY
+gK
 SZ
 Iu
 IF
@@ -55555,9 +56229,9 @@ QC
 QC
 QC
 QC
-yY
+gK
 Kd
-yY
+gK
 SZ
 It
 It
@@ -55783,7 +56457,7 @@ io
 io
 io
 Fq
-UO
+YB
 io
 io
 yU
@@ -55802,7 +56476,7 @@ NJ
 io
 iu
 io
-eM
+eo
 ZM
 Vs
 tG
@@ -55813,8 +56487,8 @@ cS
 nj
 ck
 BW
-Kd
-Kd
+gr
+gr
 SZ
 Is
 IJ
@@ -56059,7 +56733,7 @@ uc
 iu
 Ym
 iu
-yc
+xu
 Bo
 FZ
 bD
@@ -56084,7 +56758,7 @@ uf
 uf
 uf
 uf
-Fj
+dy
 uf
 uf
 aa
@@ -56300,9 +56974,9 @@ io
 yj
 io
 io
-Oj
+df
 mk
-Oj
+df
 io
 io
 iu
@@ -57042,7 +57716,7 @@ iE
 iE
 iW
 lL
-jh
+cR
 il
 jw
 lL
@@ -57358,7 +58032,7 @@ Vs
 tG
 Vs
 MK
-QC
+dj
 IN
 Jc
 Jc
@@ -58086,9 +58760,9 @@ Jb
 pc
 Hv
 RI
-ja
+mz
 et
-ja
+mz
 RI
 io
 io
@@ -58351,7 +59025,7 @@ Hv
 cg
 cg
 cg
-UO
+YB
 cg
 cg
 cg
@@ -58865,7 +59539,7 @@ Hv
 cg
 cg
 cg
-Wc
+Jm
 cg
 cg
 cg
@@ -58882,10 +59556,10 @@ cg
 cg
 cg
 cg
-Wc
+aC
 cg
 Yn
-sZ
+GX
 Yn
 QC
 QC
@@ -58902,7 +59576,7 @@ Sl
 Sl
 QC
 uf
-uf
+fH
 Wn
 Wn
 uf
@@ -59110,7 +59784,7 @@ kz
 kX
 lw
 rk
-ct
+Ea
 ps
 rM
 rM
@@ -59119,7 +59793,7 @@ rM
 rM
 zc
 Hv
-qy
+Gk
 qz
 cg
 sN
@@ -59159,7 +59833,7 @@ pO
 HE
 Sl
 SU
-Wn
+rh
 Vl
 bM
 Wn
@@ -59416,7 +60090,7 @@ Yn
 Yn
 Yn
 Yn
-Yn
+Pa
 Yn
 Yn
 uf
@@ -59619,7 +60293,7 @@ aa
 aa
 Hv
 Hv
-vu
+ri
 Hv
 Hv
 Hv
@@ -59634,7 +60308,7 @@ ja
 pc
 Hv
 qA
-qy
+Gk
 fm
 sP
 tT
@@ -59657,8 +60331,8 @@ SG
 Yn
 Yn
 Yn
-sZ
-sZ
+Yn
+Yn
 Yn
 Yn
 Yn
@@ -60135,7 +60809,7 @@ Hv
 NW
 rM
 rM
-ct
+iG
 ps
 ps
 Zx
@@ -61461,8 +62135,8 @@ Yn
 Yn
 Yn
 Yn
-XT
-XT
+NO
+NO
 Yn
 Yn
 Yn
@@ -61718,8 +62392,8 @@ zM
 zM
 zs
 Yn
-aa
-aa
+NO
+NO
 Yn
 Pv
 Pv
@@ -61947,7 +62621,7 @@ rM
 Np
 Hv
 qy
-qz
+mh
 cg
 fE
 tT
@@ -61975,8 +62649,8 @@ Se
 Se
 Tc
 Yn
-aa
-aa
+Yv
+yf
 Yn
 Pm
 Pm
@@ -62220,10 +62894,10 @@ us
 At
 Bb
 fm
-Cd
+Gk
 cg
 MI
-NO
+pn
 Yn
 Se
 Si
@@ -62231,10 +62905,10 @@ Se
 Si
 Se
 Tc
-Yn
-aa
-aa
-Yn
+sZ
+UM
+UM
+sZ
 Xh
 Xh
 Pm
@@ -62460,8 +63134,8 @@ mY
 rM
 NW
 Hv
-qz
-qy
+xA
+Mj
 cg
 sO
 tT
@@ -62477,10 +63151,10 @@ us
 At
 AW
 cg
-qy
+Mj
 cg
 OD
-NO
+pn
 Yn
 Se
 Si
@@ -62488,10 +63162,10 @@ Se
 Si
 Se
 Tc
-Yn
-aa
-aa
-Yn
+sZ
+QO
+QO
+sZ
 Xh
 Xh
 Pm
@@ -62705,7 +63379,7 @@ Hv
 NW
 rM
 rM
-ct
+iG
 ps
 lV
 lW
@@ -62715,11 +63389,11 @@ RI
 ps
 rk
 rk
-Wi
-Hv
-qz
-qy
-cg
+ps
+Td
+HH
+HH
+Uj
 sT
 tU
 tU
@@ -62733,11 +63407,11 @@ tU
 tU
 tU
 Bc
-cg
-qz
-cg
+PO
+Gt
+Qa
 sa
-NO
+pn
 Yn
 Se
 Se
@@ -62746,8 +63420,8 @@ Si
 Se
 Tc
 Yn
-aa
-aa
+Sv
+Ru
 Yn
 Pm
 Pm
@@ -62972,7 +63646,7 @@ gC
 ps
 Ha
 gA
-oD
+qx
 Hv
 cg
 cg
@@ -62994,7 +63668,7 @@ cg
 cg
 cg
 Tj
-Su
+pn
 Yn
 Vk
 Vk
@@ -63003,8 +63677,8 @@ Vk
 Vk
 Oq
 Yn
-aa
-aa
+NO
+NO
 Yn
 Co
 Co
@@ -63260,8 +63934,8 @@ Yn
 Yn
 Yn
 Yn
-aa
-aa
+XT
+XT
 Yn
 Yn
 Yn
