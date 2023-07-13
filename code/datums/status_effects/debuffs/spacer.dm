@@ -101,10 +101,12 @@
 
 /datum/movespeed_modifier/spacer/in_space
 	movetypes = FLOATING
+	blacklisted_movetypes = FLYING
 	multiplicative_slowdown = -0.15
 
 /datum/movespeed_modifier/spacer/on_planet
-	movetypes = GROUND
+	movetypes = GROUND|FLYING
+	blacklisted_movetypes = FLOATING
 	multiplicative_slowdown = 0.2
 
 /datum/movespeed_modifier/spacer/on_planet/too_long
