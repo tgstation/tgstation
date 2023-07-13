@@ -23,6 +23,9 @@
 	name = "Tool Storage"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "aD" = (
@@ -200,8 +203,7 @@
 /area/shuttle/hunter)
 "vH" = (
 /obj/structure/tank_dispenser/oxygen,
-/obj/machinery/light/dim/directional/west,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/hunter)
 "wb" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -367,9 +369,13 @@
 	},
 /area/shuttle/hunter)
 "JP" = (
-/obj/structure/rack,
-/obj/item/analyzer,
-/turf/open/floor/plating,
+/obj/machinery/light/dim/directional/east,
+/obj/structure/table/reinforced,
+/obj/machinery/microwave,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/hunter)
+"KB" = (
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/hunter)
 "KG" = (
 /obj/machinery/atmospherics/pipe/smart/simple/brown/hidden/layer2{
@@ -421,6 +427,7 @@
 /area/shuttle/hunter)
 "Ob" = (
 /obj/structure/table/optable,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "Of" = (
@@ -471,7 +478,8 @@
 	name = "Weird Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "SC" = (
 /obj/structure/curtain/bounty,
@@ -496,6 +504,16 @@
 /area/shuttle/hunter)
 "Va" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/hunter)
+"Vk" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/smooth_corner{
+	dir = 4
+	},
 /area/shuttle/hunter)
 "Wh" = (
 /obj/effect/turf_decal/loading_area/white{
@@ -590,7 +608,7 @@ ss
 ZC
 OI
 OI
-tZ
+Vk
 on
 KM
 aD
@@ -667,7 +685,7 @@ wE
 rz
 IQ
 PX
-xL
+KM
 xL
 Tk
 my
@@ -697,7 +715,7 @@ NU
 NU
 KG
 Sk
-NU
+KB
 an
 Bh
 my
