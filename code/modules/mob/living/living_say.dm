@@ -343,7 +343,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		// actually have a define, nor does the range for whispers
 		is_speaker_whispering = TRUE
 
-	var/list/listening = get_hearers_in_view(message_range + whisper_range, source)
+	var/list/in_view = dview(message_range + whisper_range, get_turf(source))
+	var/list/listening = get_hearers(message_range + whisper_range, source)
+
+	// Pre-process listeners to account for line-of-sight
+	for(var/atom/movable/listening_movable as anything in listening)
+		if(!(listening_movable in in_view) && !HAS_TRAIT(listening_movable, TRAIT_XRAY_HEARING))
+			listening.Remove(listening_movable)
 
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)

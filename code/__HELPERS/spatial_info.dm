@@ -122,6 +122,46 @@
 	return .
 
 /**
+ * The exact same as get_hearers_in_view, but not limited by visibility. Does no filtering for traits, line of sight, or any other such criteria.
+ * Filtering is intended to be done by whatever calls this function.
+ *
+ * This function exists to allow for mobs to hear speech without line of sight, if such a thing is needed.
+ *
+ * * view_radius - what radius search circle we are using, worse performance as this increases
+ * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
+ */
+/proc/get_hearers(view_radius, atom/source)
+	var/turf/center_turf = get_turf(source)
+	if(!center_turf)
+		return
+
+	. = list()
+
+	if(view_radius <= 0)//special case for if only source cares
+		for(var/atom/movable/target as anything in center_turf)
+			var/list/recursive_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			if(recursive_contents)
+				. += recursive_contents
+		return .
+
+	var/list/hearables_from_grid = SSspatial_grid.orthogonal_range_search(source, RECURSIVE_CONTENTS_HEARING_SENSITIVE, view_radius)
+
+	if(!length(hearables_from_grid))//we know that something is returned by the grid, but we dont know if we need to actually filter down the output
+		return .
+
+	var/list/assigned_oranges_ears = SSspatial_grid.assign_oranges_ears(hearables_from_grid)
+
+	// The main difference from get_hearers_in_view, range() is used instead of view() so that visibility is ignored.
+	// Since we aren't using view, there's no need to mess with the luminosity
+	for(var/mob/oranges_ear/ear in range(view_radius, center_turf))
+		. += ear.references
+
+	for(var/mob/oranges_ear/remaining_ear as anything in assigned_oranges_ears)//we need to clean up our mess
+		remaining_ear.unassign()
+
+	return .
+
+/**
  * Returns a list of movable atoms that are hearing sensitive in view_radius and line of sight to source
  * the majority of the work is passed off to the spatial grid if view_radius > 0
  * because view() isnt a raycasting algorithm, this does not hold symmetry to it. something in view might not be hearable with this.
