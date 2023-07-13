@@ -19,38 +19,37 @@
 /area/shuttle/hunter)
 "an" = (
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock{
+	name = "Tool Storage"
+	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "aD" = (
-/obj/structure/chair,
-/obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating,
-/area/shuttle/hunter)
-"ba" = (
-/obj/structure/marker_beacon/bronze,
-/obj/docking_port/mobile{
-	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
-	name = "hunter shuttle";
-	rechargeTime = 1800;
-	shuttle_id = "huntership"
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
 	},
-/turf/closed/wall/mineral/plastitanium,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron/smooth_corner,
 /area/shuttle/hunter)
 "cr" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/iron/smooth_large,
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/multitool,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "db" = (
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
 	},
-/obj/effect/turf_decal/bot_white,
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/iron/smooth_large,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"eR" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/frame/computer,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
 "fn" = (
 /obj/structure/lattice,
@@ -62,16 +61,45 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
-"hm" = (
-/obj/machinery/door/airlock/external/ruin,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "huntershuttleCycle2"
+"ga" = (
+/obj/structure/bed{
+	dir = 1
+	},
+/obj/item/bedsheet{
+	dir = 1
+	},
+/obj/structure/sign/poster/contraband/lusty_xenomorph/directional/west,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"gT" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_corner{
+	dir = 8
+	},
+/area/shuttle/hunter)
+"jw" = (
+/obj/machinery/light/small/directional/south,
+/obj/machinery/atmospherics/pipe/smart/simple/brown/hidden/layer2{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/hunter)
-"jw" = (
+"jE" = (
+/obj/structure/marker_beacon/bronze,
+/obj/docking_port/mobile{
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "hunter shuttle";
+	rechargeTime = 1800;
+	shuttle_id = "huntership"
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/hunter)
+"kD" = (
+/obj/machinery/atmospherics/pipe/smart/simple/brown/hidden/layer2{
+	dir = 9
+	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
@@ -79,9 +107,12 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/hunter)
 "lb" = (
-/obj/structure/table,
-/obj/item/flashlight/lamp,
-/turf/open/floor/iron/smooth_large,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_corner{
+	dir = 1
+	},
 /area/shuttle/hunter)
 "my" = (
 /turf/open/floor/iron/smooth_large,
@@ -89,13 +120,22 @@
 "ny" = (
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/shuttle/hunter)
+"on" = (
+/obj/structure/chair/stool/directional{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
 "pA" = (
 /obj/structure/table,
 /obj/item/toy/cards/deck,
-/turf/open/floor/iron/smooth_large,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "qN" = (
-/turf/open/floor/plating/plasma,
+/obj/structure/hoop{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/shuttle/hunter)
 "qY" = (
 /obj/machinery/suit_storage_unit/standard_unit,
@@ -107,12 +147,10 @@
 /obj/item/pinpointer/shuttle{
 	pixel_y = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/dark/hidden/layer4{
+	dir = 4
+	},
 /turf/open/floor/plating,
-/area/shuttle/hunter)
-"rK" = (
-/obj/machinery/light/very_dim/directional/east,
-/obj/structure/chair/stool/directional,
-/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "ss" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -143,6 +181,18 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/hunter)
+"tR" = (
+/obj/structure/sign/poster/contraband/bountyhunters/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"tZ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_corner{
+	dir = 4
+	},
+/area/shuttle/hunter)
 "uK" = (
 /obj/structure/table/reinforced,
 /obj/item/phone,
@@ -155,6 +205,21 @@
 /area/shuttle/hunter)
 "wb" = (
 /turf/closed/wall/mineral/plastitanium,
+/area/shuttle/hunter)
+"wy" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "huntershuttleCycle2"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"wE" = (
+/obj/structure/table,
+/obj/item/binoculars,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
 "xh" = (
 /obj/machinery/power/shuttle_engine/heater{
@@ -180,6 +245,16 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/hunter)
+"zI" = (
+/obj/docking_port/stationary{
+	dwidth = 11;
+	height = 16;
+	name = "Deep Space";
+	shuttle_id = "pirate_home";
+	width = 17
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
 "Al" = (
 /obj/machinery/computer/shuttle/hunter{
 	dir = 8
@@ -192,7 +267,7 @@
 	},
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/light/cold/no_nightlight/directional/north,
-/turf/open/floor/iron/smooth_large,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "AC" = (
 /turf/template_noop,
@@ -209,6 +284,8 @@
 /area/shuttle/hunter)
 "BX" = (
 /obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/synth,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "Ck" = (
@@ -218,7 +295,7 @@
 /obj/item/bedsheet{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_large,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "Ee" = (
 /obj/effect/turf_decal/stripes/line{
@@ -237,6 +314,11 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/hunter)
+"Fq" = (
+/obj/machinery/light/small/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/layer2,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
 "Ft" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
 	dir = 8
@@ -244,36 +326,68 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "FC" = (
-/obj/item/bonesetter,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer4{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "Gy" = (
 /obj/structure/marker_beacon/bronze,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/hunter)
-"ID" = (
-/obj/docking_port/stationary{
-	dwidth = 11;
-	height = 16;
-	name = "Deep Space";
-	shuttle_id = "pirate_home";
-	width = 17
+"HC" = (
+/obj/item/toy/basketball,
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/turf/closed/wall/mineral/titanium,
+/turf/open/floor/iron/smooth_corner{
+	dir = 8
+	},
 /area/shuttle/hunter)
 "IQ" = (
 /obj/structure/table,
 /obj/item/clothing/head/helmet/space/syndicate/contract,
+/obj/machinery/atmospherics/pipe/smart/simple/brown/hidden/layer2{
+	dir = 4
+	},
 /turf/open/floor/plating,
+/area/shuttle/hunter)
+"JD" = (
+/obj/machinery/light/very_dim/directional/east,
+/obj/structure/chair/stool/directional,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"JN" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
 /area/shuttle/hunter)
 "JP" = (
 /obj/structure/rack,
-/obj/item/analyzer/ranged,
+/obj/item/analyzer,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "KG" = (
-/obj/effect/spawner/structure/window/survival_pod,
+/obj/machinery/atmospherics/pipe/smart/simple/brown/hidden/layer2{
+	dir = 4
+	},
 /turf/open/floor/plating,
+/area/shuttle/hunter)
+"KM" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"LP" = (
+/obj/machinery/atmospherics/pipe/smart/simple/brown/hidden/layer2,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"MB" = (
+/obj/machinery/holopad/secure,
+/turf/open/floor/iron/smooth_large,
 /area/shuttle/hunter)
 "Na" = (
 /obj/structure/chair/comfy/shuttle{
@@ -285,54 +399,91 @@
 /obj/machinery/light/very_dim/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
+"Nq" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Ns" = (
+/obj/structure/table,
+/obj/item/bonesetter,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
 "NH" = (
 /obj/structure/table,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/multitool,
-/turf/open/floor/iron/smooth_large,
+/obj/item/flashlight/lamp,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "NU" = (
 /turf/open/floor/plating,
 /area/shuttle/hunter)
+"Ob" = (
+/obj/structure/table/optable,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Of" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/brown/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/survival,
+/area/shuttle/hunter)
 "Ow" = (
+/obj/effect/turf_decal/bot_white,
+/obj/item/wrench,
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
 	},
-/obj/effect/turf_decal/bot_white,
-/obj/item/wrench,
-/turf/open/floor/iron/smooth_large,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "Oz" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/machinery/light/dim/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
+"OI" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
+/area/shuttle/hunter)
 "Pr" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/machinery/light/very_dim/directional/west,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "PX" = (
 /turf/closed/wall/mineral/titanium/survival,
 /area/shuttle/hunter)
+"Rw" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
 "Sk" = (
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
 /obj/machinery/door/airlock/maintenance/external{
-	name = "Tool Storage"
+	name = "Weird Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
+/area/shuttle/hunter)
+"SC" = (
+/obj/structure/curtain/bounty,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "Tk" = (
 /obj/structure/fluff/empty_sleeper,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
-"Tz" = (
+"TJ" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
-/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "huntershuttleCycle2"
@@ -351,7 +502,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/iron/smooth_large,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "Wx" = (
 /obj/machinery/power/shuttle_engine/propulsion{
@@ -360,7 +511,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/hunter)
 "WO" = (
-/obj/machinery/door/airlock/shuttle/glass,
+/obj/machinery/door/airlock/shuttle/glass{
+	name = "Cockpit"
+	},
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/smooth_large,
@@ -374,6 +527,16 @@
 "Yf" = (
 /obj/structure/marker_beacon/olive,
 /turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/hunter)
+"ZC" = (
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron/smooth_corner,
+/area/shuttle/hunter)
+"ZL" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/dark/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/survival,
 /area/shuttle/hunter)
 
 (1,1,1) = {"
@@ -389,11 +552,11 @@ Wx
 Wx
 wb
 wb
-ba
+jE
 "}
 (2,1,1) = {"
 AC
-Tz
+wy
 NU
 wb
 xh
@@ -409,12 +572,12 @@ am
 (3,1,1) = {"
 AC
 Va
-hm
+TJ
 Va
 Ck
 pA
-Ck
-lb
+ga
+wb
 NH
 cr
 Va
@@ -424,31 +587,31 @@ Va
 (4,1,1) = {"
 AC
 ss
-NU
-NU
-NU
-NU
-NU
-NU
-NU
-NU
-NU
-NU
+ZC
+OI
+OI
+tZ
+on
+KM
+aD
+OI
+OI
+tZ
 Eu
 "}
 (5,1,1) = {"
 AC
 ss
-NU
-NU
-NU
-NU
-NU
-NU
-NU
-NU
-NU
-NU
+HC
+JN
+JN
+lb
+tR
+SC
+gT
+JN
+JN
+lb
 Eu
 "}
 (6,1,1) = {"
@@ -464,7 +627,7 @@ kG
 xp
 my
 xp
-ID
+zI
 "}
 (7,1,1) = {"
 AC
@@ -486,8 +649,8 @@ AC
 ny
 PX
 PX
-PX
-PX
+ZL
+Of
 PX
 fn
 xL
@@ -499,8 +662,8 @@ xL
 (9,1,1) = {"
 ny
 PX
-qN
-KG
+Ul
+wE
 rz
 IQ
 PX
@@ -513,9 +676,9 @@ xL
 "}
 (10,1,1) = {"
 PX
-qN
-qN
-KG
+Ob
+NU
+NU
 FC
 jw
 PX
@@ -528,26 +691,26 @@ xL
 "}
 (11,1,1) = {"
 PX
-qN
-qN
-KG
-aD
+eR
+Rw
 NU
+NU
+KG
 Sk
 NU
 an
 Bh
 my
-rK
+JD
 Eu
 "}
 (12,1,1) = {"
 PX
-qN
-qN
-KG
-Ul
 NU
+NU
+NU
+NU
+KG
 PX
 JP
 xL
@@ -558,10 +721,10 @@ xL
 "}
 (13,1,1) = {"
 PX
-qN
-qN
-KG
-KG
+NU
+NU
+NU
+NU
 KG
 PX
 xL
@@ -573,26 +736,26 @@ xL
 "}
 (14,1,1) = {"
 PX
-qN
-qN
-qN
-qN
-qN
+NU
+NU
+Nq
+Ns
+KG
 PX
 fn
 ss
 xw
-my
+MB
 xw
 Eu
 "}
 (15,1,1) = {"
 PX
-qN
-qN
-qN
-qN
-qN
+Fq
+LP
+LP
+LP
+kD
 PX
 AC
 ss
@@ -604,9 +767,9 @@ Eu
 (16,1,1) = {"
 ny
 PX
+NU
 qN
-qN
-qN
+NU
 PX
 ny
 AC
