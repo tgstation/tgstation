@@ -1,0 +1,4 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - rscadd: "Adds support for it/its pronouns. You can select these in character preferences."
