@@ -1105,9 +1105,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if (vendor.tilted || !vendor.tiltable)
 		return FALSE
 
-	var/crit = (rand(1, 100) >= (100 - MALF_VENDOR_TIPPING_CRIT_CHANCE)) // 100% chance with current defines
-
-	vendor.tilt(target, crit)
+	vendor.tilt(target, MALF_VENDOR_TIPPING_CRIT_CHANCE)
 
 /// Used in our radial menu, state-checking proc after the radial menu sleeps
 /datum/action/innate/ai/ranged/remote_vendor_tilt/proc/radial_check(mob/living/silicon/ai/caller, obj/machinery/vending/clicked_vendor)
@@ -1195,10 +1193,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if (isnull(target))
 		return
 
-	var/squish_damage = MALF_AI_ROLL_DAMAGE
 	var/paralyze_time = clamp(6 SECONDS, 0 SECONDS, (MALF_AI_ROLL_COOLDOWN * 0.9)) //the clamp prevents stunlocking as the max is always a little less than the cooldown between rolls
 
-	return ai_caller.fall_and_crush(target, squish_damage, (MALF_AI_ROLL_CRIT_CHANCE), null, paralyze_time, picked_dir, rotation = get_rotation_from_dir(picked_dir))
+	return ai_caller.fall_and_crush(target, MALF_AI_ROLL_DAMAGE, MALF_AI_ROLL_CRIT_CHANCE, null, paralyze_time, picked_dir, rotation = get_rotation_from_dir(picked_dir))
 
 /// Used in our radial menu, state-checking proc after the radial menu sleeps
 /datum/action/innate/ai/ranged/core_tilt/proc/radial_check(mob/living/silicon/ai/caller)

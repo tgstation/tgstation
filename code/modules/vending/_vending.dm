@@ -79,6 +79,8 @@
 	var/tilted_rotation = 0
 	var/tiltable = TRUE
 	var/squish_damage = 75
+	/// The chance, in percent, of this vendor performing a critical hit on anything it crushes via [tilt].
+	var/crit_chance = 15
 	/// If set to a critical define in crushing.dm, anything this vendor crushes will always be hit with that effect.
 	var/forcecrit = null
 	var/num_shards = 7
@@ -639,10 +641,8 @@
 					freebie(user, 1)
 				if(26 to 75)
 					return
-				if(76 to 90)
+				if(76 to 100)
 					tilt(user)
-				if(91 to 100)
-					tilt(user, crit=TRUE)
 
 /obj/machinery/vending/proc/freebie(mob/fatty, freebies)
 	visible_message(span_notice("[src] yields [freebies > 1 ? "several free goodies" : "a free goody"]!"))
@@ -665,20 +665,16 @@
 			R.amount--
 			break
 
-///Tilts ontop of the atom supplied, if crit is true some extra shit can happen. See [fall_and_crush] for return values.
-/obj/machinery/vending/proc/tilt(atom/fatty, crit=FALSE)
+/// Tilts ontop of the atom supplied, if crit is true some extra shit can happen. See [fall_and_crush] for return values.
+/obj/machinery/vending/proc/tilt(atom/fatty, local_crit_chance = crit_chance, forced_crit = forcecrit)
 	if(QDELETED(src) || !has_gravity(src))
 		return
-
-	var/critchance = 0
-	if(crit)
-		critchance = 100
 
 	. = FALSE
 
 	var/picked_rotation = pick(90, 270)
 	if(Adjacent(fatty))
-		. = fall_and_crush(get_turf(fatty), squish_damage, critchance, forcecrit, 6 SECONDS, rotation = picked_rotation)
+		. = fall_and_crush(get_turf(fatty), squish_damage, local_crit_chance, forced_crit, 6 SECONDS, rotation = picked_rotation)
 
 		if (. & SUCCESSFULLY_FELL_OVER)
 			visible_message(span_danger("[src] tips over!"))
@@ -688,7 +684,7 @@
 			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 
 	if(get_turf(fatty) != get_turf(src))
-		throw_at(get_turf(fatty), 1, 1, spin=FALSE, quickstart=FALSE)
+		throw_at(get_turf(fatty), 1, 1, spin = FALSE, quickstart = FALSE)
 
 /**
  * Causes src to fall onto [target], crushing everything on it (including itself) with [damage]
@@ -723,7 +719,7 @@
 
 			var/crit_case = forced_crit_case
 			if (isnull(crit_case) && chance_to_crit > 0)
-				if (rand(0, 100) > (100 - chance_to_crit))
+				if (prob(chance_to_crit))
 					crit_case = pick_weight(get_crit_crush_chances())
 			var/crit_rebate_mult = 1 // lessen the normal damage we deal for some of the crits
 
@@ -755,7 +751,7 @@
 				living_target.emote("scream")
 				playsound(living_target, 'sound/effects/blobattack.ogg', 40, TRUE)
 				playsound(living_target, 'sound/effects/splat.ogg', 50, TRUE)
-				post_crush_living(crushed, was_alive)
+				post_crush_living(living_target, was_alive)
 				flags_to_return |= SUCCESSFULLY_CRUSHED_MOB
 				flags_to_return |= SUCCESSFULLY_CRUSHED_ATOM
 
@@ -770,7 +766,7 @@
 
 		var/matrix/to_turn = turn(transform, rotation)
 		animate(src, transform = to_turn, 0.2 SECONDS)
-		playsound(src, 'sound/effects/bang.ogg', 50)
+		playsound(src, 'sound/effects/bang.ogg', 40)
 
 		visible_message(span_danger("[src] tips over, slamming hard onto [target]!"))
 		flags_to_return |= SUCCESSFULLY_FELL_OVER
@@ -847,7 +843,6 @@
 	weighted_crits[CRUSH_CRIT_SHATTER_LEGS] = 100
 	weighted_crits[CRUSH_CRIT_PARAPALEGIC] = 80
 	weighted_crits[CRUSH_CRIT_HEADGIB] = 20
-	weighted_crits[CRUSH_CRIT_PIN] = 100
 	weighted_crits[CRUSH_CRIT_SQUISH_LIMB] = 100
 
 	return weighted_crits
@@ -856,6 +851,7 @@
 	var/list/weighted_crits = ..()
 
 	weighted_crits[VENDOR_CRUSH_CRIT_GLASSCANDY] = 100
+	weighted_crits[VENDOR_CRUSH_CRIT_PIN] = 100
 
 	return weighted_crits
 
@@ -884,14 +880,6 @@
 			if(left_leg || right_leg)
 				carbon_target.visible_message(span_danger("[carbon_target]'s legs shatter with a sickening crunch!"), span_userdanger("Your legs shatter with a sickening crunch!"))
 			return TRUE
-		if(CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
-			if (!isliving(atom_target))
-				return FALSE
-			var/mob/living/living_target = atom_target
-			forceMove(get_turf(living_target))
-			buckle_mob(living_target, force=TRUE)
-			living_target.visible_message(span_danger("[living_target] is pinned underneath [src]!"), span_userdanger("You are pinned down by [src]!"))
-			return TRUE
 		if(CRUSH_CRIT_PARAPALEGIC) // paralyze this binch
 			// the new paraplegic gets like 4 lines of losing their legs so skip them
 			if (!iscarbon(atom_target))
@@ -907,7 +895,7 @@
 			for(var/obj/item/bodypart/squish_part in carbon_target.bodyparts)
 				if(IS_ORGANIC_LIMB(squish_part))
 					var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
-					squish_part.force_wound_upwards(type_wound, wound_source = "crushing by vending machine")
+					squish_part.force_wound_upwards(type_wound, wound_source = "crushed by [src]")
 				else
 					squish_part.receive_damage(brute=30)
 			carbon_target.visible_message(span_danger("[carbon_target]'s body is maimed underneath the mass of [src]!"), span_userdanger("Your body is maimed underneath the mass of [src]!"))
@@ -919,8 +907,7 @@
 			var/obj/item/bodypart/head/carbon_head = carbon_target.get_bodypart(BODY_ZONE_HEAD)
 			if(carbon_head)
 				if(carbon_head.dismember())
-					carbon_target.visible_message(span_danger("[carbon_head] explodes in a shower of gore beneath [src]!"), \
-						span_userdanger("Oh f-"))
+					carbon_target.visible_message(span_danger("[carbon_head] explodes in a shower of gore beneath [src]!"),	span_userdanger("Oh f-"))
 					carbon_head.drop_organs()
 					qdel(carbon_head)
 					new /obj/effect/gibspawner/human/bodypartless(get_turf(carbon_target))
@@ -934,18 +921,27 @@
 	if (.)
 		return TRUE
 
-	if (crit_case == VENDOR_CRUSH_CRIT_GLASSCANDY)
-		if (!iscarbon(atom_target))
-			return FALSE
-		var/mob/living/carbon/carbon_target = atom_target
-		for(var/i in 1 to num_shards)
-			var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
-			shard.updateEmbedding()
-			carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-			shard.embedding = list()
-			shard.updateEmbedding()
-		return TRUE
+	switch (crit_case)
+		if (VENDOR_CRUSH_CRIT_GLASSCANDY)
+			if (!iscarbon(atom_target))
+				return FALSE
+			var/mob/living/carbon/carbon_target = atom_target
+			for(var/i in 1 to num_shards)
+				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
+				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
+				shard.updateEmbedding()
+				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
+				shard.embedding = list()
+				shard.updateEmbedding()
+			return TRUE
+		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
+			if (!isliving(atom_target))
+				return FALSE
+			var/mob/living/living_target = atom_target
+			forceMove(get_turf(living_target))
+			buckle_mob(living_target, force=TRUE)
+			living_target.visible_message(span_danger("[living_target] is pinned underneath [src]!"), span_userdanger("You are pinned down by [src]!"))
+			return TRUE
 
 	return FALSE
 
