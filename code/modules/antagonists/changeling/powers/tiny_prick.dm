@@ -195,7 +195,7 @@
 /datum/action/changeling/sting/blind
 	name = "Blind Sting"
 	desc = "We temporarily blind our victim. Costs 25 chemicals."
-	helptext = "This sting completely blinds a target for a short time, and leaves them with blurred vision for a long time."
+	helptext = "This sting completely blinds a target for a short time, and leaves them with blurred vision for a long time. Does not work if target has robotic or missing eyes."
 	button_icon_state = "sting_blind"
 	chemical_cost = 25
 	dna_cost = 1
