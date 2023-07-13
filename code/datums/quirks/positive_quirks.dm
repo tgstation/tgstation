@@ -409,6 +409,7 @@
 /datum/quirk/spacer_born/proc/start_tracking()
 	RegisterSignal(quirk_holder, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(moved_z))
 	check_z(quirk_holder, get_turf(quirk_holder), skip_timers = TRUE)
+	// Yes it's assumed, for planetary maps, that you start at gravity sickness.
 
 /// Proc to check quirk holder moves to determine when we should start tracking
 /datum/quirk/spacer_born/proc/arrived_at_station(mob/living/source, atom/old_loc)
