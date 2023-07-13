@@ -119,6 +119,7 @@
 #define CHROMOSOME_USED 2
 
 //used for mob's genetic gender (mainly just for pronouns, members of sexed species with plural gender refer to their physique for the actual sprites, which is not genetic)
+#define GENDERS 4
 #define G_MALE 1
 #define G_FEMALE 2
 #define G_PLURAL 3
