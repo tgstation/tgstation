@@ -7,6 +7,7 @@
 	icon_state = "item_pink"
 
 	max_amount = 40
+	merge_type = /obj/item/stack/neon_lining
 
 	w_class = WEIGHT_CLASS_TINY
 	///the color we currently are set to in icon state we set it to item_[lining_color] and placement is [lining_color]{state}_{style}
