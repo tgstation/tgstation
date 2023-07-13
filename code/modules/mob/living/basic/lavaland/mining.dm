@@ -1,7 +1,7 @@
 ///prototype for mining mobs
 /mob/living/basic/mining
-
 	istate = ISTATE_HARM|ISTATE_BLOCKING
+	mob_size = MOB_SIZE_LARGE
 	faction = list(FACTION_MINING)
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0

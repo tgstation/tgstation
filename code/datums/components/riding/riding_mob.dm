@@ -378,12 +378,24 @@
 
 /datum/component/riding/creature/goliath
 	keytype = /obj/item/key/lasso
+	vehicle_move_delay = 4
+
+/datum/component/riding/creature/goliath/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
+	. = ..()
+	var/mob/living/basic/mining/goliath/goliath = parent
+	goliath.RemoveElement(/datum/element/move_cooldown, move_delay = goliath.movement_delay)
+
+/datum/component/riding/creature/goliath/Destroy(force, silent)
+	var/mob/living/basic/mining/goliath/goliath = parent
+	goliath.AddElement(/datum/element/move_cooldown, move_delay = goliath.movement_delay)
+	return ..()
 
 /datum/component/riding/creature/goliath/handle_specials()
 	. = ..()
-	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
+	set_vehicle_offsets(list(TEXT_NORTH = list(-12, 0), TEXT_SOUTH = list(-12, 0), TEXT_EAST = list(-12, 0), TEXT_WEST = list(-12, 0)))
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 12), TEXT_SOUTH = list(0, 12), TEXT_EAST = list(-4, 12), TEXT_WEST = list(3, 12)))
 	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(NORTH, ABOVE_MOB_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 

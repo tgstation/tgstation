@@ -53,7 +53,18 @@
 	max_integrity = 200
 	max_mobs = 15
 	spawn_time = 15 SECONDS
-	mob_types = list(/mob/living/simple_animal/hostile/retaliate/clown, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk, /mob/living/simple_animal/hostile/retaliate/clown/longface, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus, /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton, /mob/living/simple_animal/hostile/retaliate/clown/banana, /mob/living/simple_animal/hostile/retaliate/clown/honkling, /mob/living/simple_animal/hostile/retaliate/clown/lube)
+	mob_types = list(
+		/mob/living/simple_animal/hostile/retaliate/clown,
+		/mob/living/simple_animal/hostile/retaliate/clown/banana,
+		/mob/living/simple_animal/hostile/retaliate/clown/clownhulk,
+		/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown,
+		/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus,
+		/mob/living/simple_animal/hostile/retaliate/clown/fleshclown,
+		/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton,
+		/mob/living/simple_animal/hostile/retaliate/clown/honkling,
+		/mob/living/simple_animal/hostile/retaliate/clown/longface,
+		/mob/living/simple_animal/hostile/retaliate/clown/lube,
+	)
 	spawn_text = "climbs out of"
 	faction = list(FACTION_CLOWN)
 
@@ -65,7 +76,13 @@
 	max_mobs = 3
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls out of"
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goldgrub, /mob/living/simple_animal/hostile/asteroid/goliath, /mob/living/simple_animal/hostile/asteroid/hivelord, /mob/living/simple_animal/hostile/asteroid/basilisk, /mob/living/basic/wumborian_fugu)
+	mob_types = list(
+		/mob/living/basic/mining/goliath/ancient,
+		/mob/living/basic/wumborian_fugu,
+		/mob/living/simple_animal/hostile/asteroid/basilisk,
+		/mob/living/simple_animal/hostile/asteroid/goldgrub,
+		/mob/living/simple_animal/hostile/asteroid/hivelord,
+	)
 	faction = list(FACTION_MINING)
 
 /obj/structure/spawner/mining/goldgrub
@@ -76,7 +93,7 @@
 /obj/structure/spawner/mining/goliath
 	name = "goliath den"
 	desc = "A den housing a nest of goliaths, oh god why?"
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goliath)
+	mob_types = list(/mob/living/basic/mining/goliath/ancient)
 
 /obj/structure/spawner/mining/hivelord
 	name = "hivelord den"
@@ -102,7 +119,11 @@
 	max_mobs = 15
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls through"
-	mob_types = list(/mob/living/basic/migo, /mob/living/basic/creature, /mob/living/basic/blankbody)
+	mob_types = list(
+		/mob/living/basic/blankbody,
+		/mob/living/basic/creature,
+		/mob/living/basic/migo,
+	)
 	faction = list(FACTION_NETHER)
 
 /obj/structure/spawner/nether/Initialize(mapload)
