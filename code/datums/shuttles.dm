@@ -791,6 +791,10 @@
 	suffix = "grey"
 	name = "pirate ship (The Space Toolbox)"
 
+/datum/map_template/shuttle/pirate/irs
+	suffix = "irs"
+	name = "pirate ship (Space IRS)"
+
 /datum/map_template/shuttle/pirate/geode
 	suffix = "geode"
 	name = "pirate ship (Lustrous Geode)"

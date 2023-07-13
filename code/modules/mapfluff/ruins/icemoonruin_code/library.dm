@@ -26,7 +26,7 @@
 /obj/item/feather
 	name = "feather"
 	desc = "A dark, wilting feather. It seems as old as time."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/library.dmi'
 	icon_state = "feather"
 	force = 0
 	throwforce = 0

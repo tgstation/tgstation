@@ -233,3 +233,29 @@
 #undef THROW_LOLLIPOP_MODE
 #undef THROW_GUMBALL_MODE
 #undef DISPENSE_ICECREAM_MODE
+
+/obj/item/borg/cookbook
+	name = "Codex Cibus Mechanicus"
+	desc = "It's a robot cookbook!"
+	icon = 'icons/obj/library.dmi'
+	icon_state = "cooked_book"
+	item_flags = NOBLUDGEON
+	var/datum/component/personal_crafting/cooking
+
+/obj/item/borg/cookbook/Initialize(mapload)
+	. = ..()
+	cooking = AddComponent(/datum/component/personal_crafting)
+	cooking.forced_mode = TRUE
+	cooking.mode = TRUE
+
+/obj/item/borg/cookbook/attack_self(mob/user, modifiers)
+	. = ..()
+	cooking.ui_interact(user)
+
+/obj/item/borg/cookbook/dropped(mob/user, silent)
+	SStgui.close_uis(cooking)
+	return ..()
+
+/obj/item/borg/cookbook/cyborg_unequip(mob/user)
+	SStgui.close_uis(cooking)
+	return ..()
