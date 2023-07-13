@@ -100,6 +100,21 @@
 			qdel(destabilizing_crystal)
 		return
 
+	if(istype(item, /obj/item/hypernoblium_crystal))
+		var/obj/item/hypernoblium_crystal/hypernoblium_crystal = item
+		to_chat(user, span_warning("You begin to attach \the [hypernoblium_crystal] to \the [src]'s surface..."))
+		if(do_after(user, 3 SECONDS, src))
+			qdel(hypernoblium_crystal)
+		if(internal_energy <= SUPERMATTER_MAXIMUM_INTERNAL_ENERGY_TO_BE_TURNED_OFF)
+			message_admins("[ADMIN_LOOKUPFLW(user)] turned the supermatter offline with [hypernoblium_crystal] at [ADMIN_VERBOSEJMP(src)].")
+			to_chat(user, span_danger("\The [hypernoblium_crystal] snaps onto \the [src] and it stops vibrating."))
+			user.log_message("attached [hypernoblium_crystal] to the supermatter", LOG_GAME)
+			user.investigate_log("attached [hypernoblium_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
+			internal_energy = 0
+		else
+			to_chat(user, span_danger("\The [hypernoblium_crystal] snaps onto \the [src] with no effect!"))
+		return
+
 	return ..()
 
 //Do not blow up our internal radio

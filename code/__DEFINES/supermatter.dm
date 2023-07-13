@@ -169,3 +169,6 @@
 #define SUPERMATTER_TESLA_COLOUR "#00ffff"
 #define SUPERMATTER_SINGULARITY_RAYS_COLOUR "#750000"
 #define SUPERMATTER_SINGULARITY_LIGHT_COLOUR "#400060"
+
+/// Maximum of [var/internal_energy] the SM can have for an attempt to turn the SM offline with a hypernob crystal to work.
+#define SUPERMATTER_MAXIMUM_INTERNAL_ENERGY_TO_BE_TURNED_OFF 300
