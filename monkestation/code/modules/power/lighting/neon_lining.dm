@@ -2,6 +2,7 @@
 /obj/item/stack/neon_lining
 	name = "neon lining"
 	desc = "a coil of neon lining"
+	singular_name = "neon lining"
 
 	icon = 'goon/icons/obj/decals/neon_lining.dmi'
 	icon_state = "item_pink"
