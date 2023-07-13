@@ -85,6 +85,14 @@
 	name = "Succubus Wings"
 	icon_state = "succubus"
 
+/datum/sprite_accessory/anime_middle/angel
+	name = "Angel Wings"
+	icon_state = "angel"
+
+/datum/sprite_accessory/anime_middle/seraphim
+	name = "Seraphim Wings"
+	icon_state = "seraphim"
+
 /datum/sprite_accessory/anime_bottom
 	icon = 'monkestation/icons/mob/anime/anime_bottom.dmi'
 	color_src = ANIME
