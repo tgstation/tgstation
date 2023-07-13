@@ -23,7 +23,7 @@
 	hijack_speed = 0.5
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
 	preview_outfit = /datum/outfit/heretic
-	var/list/all_sac_targets()
+	var/list/all_sac_targets = list()
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
@@ -409,7 +409,7 @@
 
 	LAZYSET(sac_targets, target, target_image)
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
-	add_sac_target.add(target)
+	all_sac_targets.add(target.real_name)
 
 /**
  * Removes [target] from the heretic's sacrifice list.
