@@ -194,5 +194,5 @@
 	qdel(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/light/neon_lining/break_light_tube()
+/obj/machinery/light/neon_lining/break_light_tube(skip_sound_and_sparks = TRUE)
 	return
