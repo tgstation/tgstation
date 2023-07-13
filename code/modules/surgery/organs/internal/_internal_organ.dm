@@ -64,7 +64,7 @@
 	if(!damage) // No sense healing if you're not even hurt bro
 		return
 
-	if(organ_flags & ORGAN_ROBOTIC) // Robotic organs don't naturally heal
+	if(IS_ROBOTIC_ORGAN(src)) // Robotic organs don't naturally heal
 		return
 
 	///Damage decrements by a percent of its maxhealth
