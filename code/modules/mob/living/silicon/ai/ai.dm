@@ -113,13 +113,6 @@
 	///whether AI is anchored or not, used for checks
 	var/is_anchored = TRUE
 
-/mob/living/silicon/ai/weak_syndie
-	radio = /obj/item/radio/headset/silicon/ai/evil
-	radio_enabled = TRUE
-	interaction_range = 0
-	sprint = 5
-	laws = /datum/ai_laws/syndicate_override
-
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -203,6 +196,16 @@
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
+
+/mob/living/silicon/ai/weak_syndie
+	radio = /obj/item/radio/headset/silicon/ai/evil
+	radio_enabled = TRUE
+	interaction_range = 1
+	sprint = 5
+
+/mob/living/silicon/ai/weak_syndie/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
+	. = ..()
+	laws = new /datum/ai_laws/syndicate_override
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
