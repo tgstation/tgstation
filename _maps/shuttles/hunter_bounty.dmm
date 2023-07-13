@@ -1,203 +1,257 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/turf/template_noop,
-/area/template_noop)
-"b" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/hunter)
-"c" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external/ruin,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
-/area/shuttle/hunter)
-"d" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/hunter)
-"e" = (
-/obj/machinery/power/shuttle_engine/propulsion{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/hunter)
-"f" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external/ruin,
-/obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
-/area/shuttle/hunter)
-"g" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/hunter)
-"h" = (
-/obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"i" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/hunter)
-"j" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
-/area/shuttle/hunter)
-"k" = (
-/obj/structure/sign/poster/contraband/bountyhunters,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/hunter)
-"l" = (
-/obj/structure/table,
-/obj/item/multitool,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"m" = (
-/obj/structure/chair/office{
+"ai" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hunter_shuttle";
 	dir = 4
 	},
-/obj/machinery/light/dim/directional/north,
-/turf/open/floor/pod/light,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
-"n" = (
+"am" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "huntershuttleCycle1"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"an" = (
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/machinery/door/airlock,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"aD" = (
+/obj/structure/chair,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ba" = (
+/obj/structure/marker_beacon/bronze,
+/obj/docking_port/mobile{
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "hunter shuttle";
+	rechargeTime = 1800;
+	shuttle_id = "huntership"
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/hunter)
+"cr" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/hunter)
+"db" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/hunter)
+"fn" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/hunter)
+"fw" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/hook{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"hm" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "huntershuttleCycle2"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"jw" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"kG" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/hunter)
+"lb" = (
 /obj/structure/table,
-/turf/open/floor/pod/light,
+/obj/item/flashlight/lamp,
+/turf/open/floor/iron/smooth_large,
 /area/shuttle/hunter)
-"o" = (
-/obj/structure/chair/office{
+"my" = (
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/hunter)
+"ny" = (
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/area/shuttle/hunter)
+"pA" = (
+/obj/structure/table,
+/obj/item/toy/cards/deck,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/hunter)
+"qN" = (
+/turf/open/floor/plating/plasma,
+/area/shuttle/hunter)
+"qY" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"rz" = (
+/obj/structure/table,
+/obj/item/pinpointer/shuttle{
+	pixel_y = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"rK" = (
+/obj/machinery/light/very_dim/directional/east,
+/obj/structure/chair/stool/directional,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"ss" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hunter_shuttle";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"sB" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/armor{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"sX" = (
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/light/dim/directional/north,
-/turf/open/floor/pod/light,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/hunter)
-"p" = (
-/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/hook,
-/turf/open/floor/pod/light,
+"tl" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "huntershuttleCycle1"
+	},
+/turf/open/floor/plating,
 /area/shuttle/hunter)
-"q" = (
+"uK" = (
+/obj/structure/table/reinforced,
+/obj/item/phone,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"vH" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"wb" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/hunter)
+"xh" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/hunter)
-"r" = (
-/obj/machinery/computer/launchpad{
-	dir = 4
-	},
-/turf/open/floor/pod/dark,
+"xp" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
-"s" = (
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"t" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"u" = (
-/obj/structure/curtain/bounty,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"v" = (
-/obj/structure/chair/office{
-	dir = 4
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"w" = (
-/obj/structure/table,
-/obj/item/phone,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"x" = (
-/obj/structure/table,
-/obj/item/pinpointer/shuttle{
-	pixel_y = 4
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"y" = (
-/obj/structure/chair/office{
-	dir = 8
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"z" = (
+"xw" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
-"A" = (
+"xL" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"yX" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"Al" = (
 /obj/machinery/computer/shuttle/hunter{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
-"B" = (
-/obj/machinery/launchpad,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"C" = (
-/obj/machinery/fugitive_capture,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"D" = (
-/obj/effect/turf_decal/stripes/line{
+"Av" = (
+/obj/effect/turf_decal/loading_area/white{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/light/cold/no_nightlight/directional/north,
+/turf/open/floor/iron/smooth_large,
 /area/shuttle/hunter)
-"E" = (
-/obj/structure/table,
-/obj/item/binoculars,
-/turf/open/floor/pod/dark,
+"AC" = (
+/turf/template_noop,
+/area/template_noop)
+"Bh" = (
+/obj/machinery/light/very_dim/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
-"F" = (
-/obj/machinery/power/smes,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"G" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external/ruin,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
-/area/shuttle/hunter)
-"H" = (
+"Br" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/pod/dark,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/hunter)
-"I" = (
+"BX" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/synth,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"Ck" = (
+/obj/structure/bed{
+	dir = 1
+	},
+/obj/item/bedsheet{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/hunter)
+"Ee" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/hunter)
+"Ef" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/hunter)
+"Eu" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "hunter_shuttle"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Ft" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
-"J" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/mechanical,
-/turf/open/floor/pod/light,
+"FC" = (
+/obj/item/bonesetter,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
-"K" = (
-/turf/open/floor/pod/light,
+"Gy" = (
+/obj/structure/marker_beacon/bronze,
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/hunter)
-"L" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external/ruin,
+"ID" = (
 /obj/docking_port/stationary{
 	dwidth = 11;
 	height = 16;
@@ -205,290 +259,375 @@
 	shuttle_id = "pirate_home";
 	width = 17
 	},
-/obj/docking_port/mobile{
-	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
-	name = "hunter shuttle";
-	rechargeTime = 1800;
-	shuttle_id = "huntership"
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"IQ" = (
+/obj/structure/table,
+/obj/item/clothing/head/helmet/space/syndicate/contract,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"JP" = (
+/obj/structure/rack,
+/obj/item/analyzer/ranged,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"KG" = (
+/obj/effect/spawner/structure/window/survival_pod,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Na" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
 	},
-/obj/structure/fans/tiny,
+/obj/machinery/button/door/directional/north{
+	id = "hunter_shuttle"
+	},
+/obj/machinery/light/very_dim/directional/west,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"NH" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/multitool,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/hunter)
+"NU" = (
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Ow" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/item/wrench,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/hunter)
+"Oz" = (
+/obj/machinery/suit_storage_unit/open,
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"Pr" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light/very_dim/directional/west,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"PX" = (
+/turf/closed/wall/mineral/titanium/survival,
+/area/shuttle/hunter)
+"Sk" = (
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/machinery/door/airlock/maintenance/external{
+	name = "Tool Storage"
+	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
-"M" = (
-/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/armor{
-	dir = 1
+"Tk" = (
+/obj/structure/fluff/empty_sleeper,
+/turf/open/floor/iron/dark/smooth_large,
+/area/shuttle/hunter)
+"Tz" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "huntershuttleCycle2"
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
-"P" = (
-/obj/structure/fluff/empty_sleeper{
-	dir = 1
+"Ul" = (
+/obj/machinery/fugitive_capture,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Va" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/hunter)
+"Wh" = (
+/obj/effect/turf_decal/loading_area/white{
+	dir = 4
 	},
-/turf/open/floor/pod/light,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/smooth_large,
 /area/shuttle/hunter)
-"S" = (
-/obj/machinery/light/dim/directional/south,
-/turf/open/floor/pod/light,
+"Wx" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/hunter)
-"Z" = (
-/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/synth,
-/turf/open/floor/pod/light,
+"WO" = (
+/obj/machinery/door/airlock/shuttle/glass,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/hunter)
+"XP" = (
+/obj/machinery/door/airlock/shuttle,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/hunter)
+"Yf" = (
+/obj/structure/marker_beacon/olive,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/hunter)
 
 (1,1,1) = {"
-a
-a
-a
-b
-a
-a
-a
-a
-a
-b
-a
-a
-a
+AC
+Gy
+wb
+wb
+Wx
+Wx
+wb
+wb
+Wx
+Wx
+wb
+wb
+ba
 "}
 (2,1,1) = {"
-a
-a
-a
-b
-a
-a
-a
-a
-a
-b
-a
-a
-a
+AC
+Tz
+NU
+wb
+xh
+xh
+wb
+wb
+xh
+xh
+wb
+NU
+am
 "}
 (3,1,1) = {"
-b
-a
-a
-b
-a
-e
-a
-e
-a
-b
-a
-a
-b
+AC
+Va
+hm
+Va
+Ck
+pA
+Ck
+lb
+NH
+cr
+Va
+tl
+Va
 "}
 (4,1,1) = {"
-b
-a
-e
-b
-b
-q
-i
-q
-b
-b
-e
-a
-b
+AC
+ss
+NU
+NU
+NU
+NU
+NU
+NU
+NU
+NU
+NU
+NU
+Eu
 "}
 (5,1,1) = {"
-b
-b
-q
-b
-b
-r
-B
-F
-b
-b
-q
-b
-b
+AC
+ss
+NU
+NU
+NU
+NU
+NU
+NU
+NU
+NU
+NU
+NU
+Eu
 "}
 (6,1,1) = {"
-b
-b
-g
-b
-h
-s
-s
-s
-C
-b
-g
-b
-b
+AC
+Ee
+yX
+kG
+Av
+Wh
+sX
+Br
+kG
+xp
+my
+xp
+ID
 "}
 (7,1,1) = {"
-f
-d
-j
-c
-s
-t
-D
-H
-s
-G
-d
-j
-L
+AC
+AC
+fn
+xL
+db
+Ow
+xL
+fn
+xL
+qY
+my
+Oz
+xL
 "}
 (8,1,1) = {"
-b
-b
-i
-b
-b
-u
-u
-u
-b
-b
-i
-b
-b
+AC
+ny
+PX
+PX
+PX
+PX
+PX
+fn
+xL
+xL
+XP
+xL
+xL
 "}
 (9,1,1) = {"
-a
-b
-i
-b
-m
-v
-s
-s
-S
-b
-i
-b
-a
+ny
+PX
+qN
+KG
+rz
+IQ
+PX
+xL
+xL
+Tk
+my
+fw
+xL
 "}
 (10,1,1) = {"
-a
-a
-i
-k
-n
-w
-l
-s
-K
-b
-i
-a
-a
+PX
+qN
+qN
+KG
+FC
+jw
+PX
+vH
+xL
+BX
+my
+sB
+xL
 "}
 (11,1,1) = {"
-a
-a
-a
-b
-J
-x
-E
-s
-K
-b
-a
-a
-a
+PX
+qN
+qN
+KG
+aD
+NU
+Sk
+NU
+an
+Bh
+my
+rK
+Eu
 "}
 (12,1,1) = {"
-a
-a
-a
-b
-o
-y
-s
-s
-S
-b
-a
-a
-a
+PX
+qN
+qN
+KG
+Ul
+NU
+PX
+JP
+xL
+xL
+WO
+xL
+xL
 "}
 (13,1,1) = {"
-a
-a
-a
-i
-b
-u
-u
-u
-b
-i
-a
-a
-a
+PX
+qN
+qN
+KG
+KG
+KG
+PX
+xL
+xL
+Na
+my
+Pr
+xL
 "}
 (14,1,1) = {"
-a
-a
-a
-i
-p
-s
-s
-s
-P
-i
-a
-a
-a
+PX
+qN
+qN
+qN
+qN
+qN
+PX
+fn
+ss
+xw
+my
+xw
+Eu
 "}
 (15,1,1) = {"
-a
-a
-a
-i
-Z
-z
-s
-z
-M
-i
-a
-a
-a
+PX
+qN
+qN
+qN
+qN
+qN
+PX
+AC
+ss
+Al
+uK
+Ft
+Eu
 "}
 (16,1,1) = {"
-a
-a
-a
-b
-i
-A
-n
-I
-i
-b
-a
-a
-a
+ny
+PX
+qN
+qN
+qN
+PX
+ny
+AC
+Ef
+ai
+ai
+ai
+Yf
 "}
 (17,1,1) = {"
-a
-a
-a
-a
-i
-i
-i
-i
-i
-a
-a
-a
-a
+AC
+ny
+PX
+PX
+PX
+ny
+AC
+AC
+AC
+AC
+AC
+AC
+AC
 "}
