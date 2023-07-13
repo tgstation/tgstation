@@ -10,7 +10,9 @@
 	anchored = TRUE
 	density = TRUE
 	var/win_prob = 5
+	/// clone damaged dealt each roll
 	var/damage_on_roll = 20
+	/// machine's reward when you hit jackpot
 	var/prize = /obj/structure/cursed_money
 
 /obj/structure/cursed_slot_machine/Initialize(mapload)
