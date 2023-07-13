@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - image: "Roller bed now has an inhand sprite"
