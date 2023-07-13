@@ -468,6 +468,7 @@
 		planetside_timer = addtimer(CALLBACK(src, PROC_REF(on_planet_for_too_long), afflicted), planet_period * exercise_bonus, TIMER_UNIQUE | TIMER_STOPPABLE)
 		afflicted.add_mood_event("spacer", /datum/mood_event/spacer/on_planet)
 		afflicted.add_movespeed_modifier(/datum/movespeed_modifier/spacer/on_planet)
+		afflicted.remove_status_effect(/datum/status_effect/spacer) // removes the wellness effect.
 		to_chat(afflicted, span_danger("You feel a bit sick under the gravity here."))
 
 /**
@@ -504,6 +505,7 @@
 		comfortably_in_space(afflicted, TRUE)
 	else
 		recovering_timer = addtimer(CALLBACK(src, PROC_REF(comfortably_in_space), afflicted), recover_period, TIMER_UNIQUE | TIMER_STOPPABLE)
+		afflicted.remove_status_effect(/datum/status_effect/spacer) // removes the sickness effect, but not the other modifiers.
 		to_chat(afflicted, span_green("You start feeling better now that you're back in space."))
 
 /**
