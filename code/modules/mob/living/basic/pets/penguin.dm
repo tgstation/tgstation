@@ -56,25 +56,30 @@
 	add_overlay("penguin_egg_overlay")
 
 /mob/living/basic/pet/penguin/death(gibbed)
-	if(carried_egg)
-		carried_egg.forceMove(get_turf(src))
-		cut_overlays()
-	return ..()
+	. = ..()
+	remove_egg()
 
 /mob/living/basic/pet/penguin/proc/lay_penguin_egg(obj/item/penguin_egg)
-	if(prob(100))
+	if(prob(35))
 		penguin_egg.AddComponent(\
 			/datum/component/fertile_egg,\
 			embryo_type = /mob/living/basic/pet/penguin/baby,\
-			minimum_growth_rate = 5,\
-			maximum_growth_rate = 5,\
-			total_growth_required = 100,\
+			minimum_growth_rate = 1,\
+			maximum_growth_rate = 2,\
+			total_growth_required = 400,\
 			current_growth = 0,\
 			location_allowlist = typecacheof(list(/turf, /mob/living/basic/pet/penguin)),\
 		)
 
-/mob/living/basic/pet/penguin/proc/on_hatch_egg()
+/mob/living/basic/pet/penguin/proc/on_hatch_egg(obj/source)
 	SIGNAL_HANDLER
+
+	remove_egg()
+	UnregisterSignal(source, COMSIG_QDELETING)
+
+/mob/living/basic/pet/penguin/proc/remove_egg()
+	if(carried_egg)
+		carried_egg.forceMove(get_turf(src))
 	carried_egg = null
 	cut_overlays()
 
