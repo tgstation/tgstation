@@ -1,4 +1,6 @@
 GLOBAL_LIST_EMPTY(roundstart_races)
+///List of all roundstart languages by path
+GLOBAL_LIST_EMPTY(roundstart_languages)
 
 /// An assoc list of species types to their features (from get_features())
 GLOBAL_LIST_EMPTY(features_by_species)
@@ -15,16 +17,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species
 	///If the game needs to manually check your race to do something not included in a proc here, it will use this.
 	var/id
+	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
+	var/examine_limb_id
 	///This is the fluff name. They are displayed on health analyzers and in the character setup menu. Leave them generic for other servers to customize.
 	var/name
-	/// The formatting of the name of the species in plural context. Defaults to "[name]\s" if unset.
-	/// Ex "[Plasmamen] are weak", "[Mothmen] are strong", "[Lizardpeople] don't like", "[Golems] hate"
+	/**
+	 * The formatting of the name of the species in plural context. Defaults to "[name]\s" if unset.
+	 *  Ex "[Plasmamen] are weak", "[Mothmen] are strong", "[Lizardpeople] don't like", "[Golems] hate"
+	 */
 	var/plural_form
 
 	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
 	var/sexes = TRUE
-	///A bitfield of "bodytypes", updated by /obj/item/bodypart/proc/synchronize_bodytypes()
-	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 
 	///The maximum number of bodyparts this species can have.
 	var/max_bodypart_count = 6
@@ -35,12 +39,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///The alpha used by the facial hair. 255 is completely solid, 0 is invisible.
 	var/facial_hair_alpha = 255
 
-	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
-	var/examine_limb_id
 	///Never, Optional, or Forced digi legs?
 	var/digitigrade_customization = DIGITIGRADE_NEVER
-	///Does the species use skintones or not? As of now only used by humans.
-	var/use_skintones = FALSE
 	///If your race bleeds something other than bog standard blood, change this to reagent id. For example, ethereals bleed liquid electricity.
 	var/datum/reagent/exotic_blood
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
@@ -51,16 +51,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/meat = /obj/item/food/meat/slab/human
 	///What skin the species drops when gibbed by a gibber machine.
 	var/skinned_type
-	///Bitfield for food types that the species likes, giving them a mood boost. Lizards like meat, for example.
-	var/liked_food = NONE
-	///Bitfield for food types that the species dislikes, giving them disgust. Humans hate raw food, for example.
-	var/disliked_food = GROSS
-	///Bitfield for food types that the species absolutely hates, giving them even more disgust than disliked food. Meat is "toxic" to moths, for example.
-	var/toxic_food = TOXIC
 	///flags for inventory slots the race can't equip stuff to. Golems cannot wear jumpsuits, for example.
 	var/no_equip_flags
-	///What languages this species can understand and say. Use a [language holder datum][/datum/language_holder] in this var.
-	var/species_language_holder = /datum/language_holder
+	/// What languages this species can understand and say.
+	/// Use a [language holder datum][/datum/language_holder] typepath in this var.
+	/// Should never be null.
+	var/datum/language_holder/species_language_holder = /datum/language_holder/human_basic
 	/**
 	  * Visible CURRENT bodyparts that are unique to a species.
 	  * DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK
@@ -80,9 +76,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
-	///Internal organs that are unique to this race, like a tail.
+	///Internal organs that are unique to this race, like a tail. list(typepath of organ 1, typepath of organ 2)
 	var/list/mutant_organs = list()
-
 	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
 	var/list/external_organs = list()
 	///Replaces default brain with a different organ
@@ -104,8 +99,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Replaces default appendix with a different organ.
 	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
 
-	///Multiplier for the race's speed. Positive numbers make it move slower, negative numbers make it move faster.
-	var/speedmod = 0
 	/**
 	 * Percentage modifier for overall defense of the race, or less defense, if it's negative
 	 * THIS MODIFIES ALL DAMAGE TYPES.
@@ -148,9 +141,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi
 	var/fire_overlay = "human"
 
-	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
-	var/list/species_traits = list()
-	///Generic traits tied to having the species.
+	/// Generic traits tied to having the species.
 	var/list/inherent_traits = list()
 	/// List of biotypes the mob belongs to. Used by diseases.
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -210,6 +201,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(!plural_form)
 		plural_form = "[name]\s"
+	if(!examine_limb_id)
+		examine_limb_id = id
 
 	return ..()
 
@@ -218,23 +211,28 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	RETURN_TYPE(/list)
 
 	if (!GLOB.roundstart_races.len)
-		GLOB.roundstart_races = generate_selectable_species()
+		GLOB.roundstart_races = generate_selectable_species_and_languages()
 
 	return GLOB.roundstart_races
-
 /**
  * Generates species available to choose in character setup at roundstart
  *
  * This proc generates which species are available to pick from in character setup.
  * If there are no available roundstart species, defaults to human.
  */
-/proc/generate_selectable_species()
+/proc/generate_selectable_species_and_languages()
 	var/list/selectable_species = list()
 
 	for(var/species_type in subtypesof(/datum/species))
 		var/datum/species/species = new species_type
 		if(species.check_roundstart_eligible())
 			selectable_species += species.id
+			var/datum/language_holder/temp_holder = new species.species_language_holder
+			for(var/datum/language/spoken_languages as anything in temp_holder.understood_languages)
+				if(spoken_languages in GLOB.roundstart_languages)
+					continue
+				GLOB.roundstart_languages += spoken_languages
+			qdel(temp_holder)
 			qdel(species)
 
 	if(!selectable_species.len)
@@ -246,7 +244,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Checks if a species is eligible to be picked at roundstart.
  *
  * Checks the config to see if this species is allowed to be picked in the character setup menu.
- * Used by [/proc/generate_selectable_species].
+ * Used by [/proc/generate_selectable_species_and_languages].
  */
 /datum/species/proc/check_roundstart_eligible()
 	if(id in (CONFIG_GET(keyed_list/roundstart_races)))
@@ -454,15 +452,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/on_species_gain(mob/living/carbon/human/C, datum/species/old_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
-
-	if(AGENDER in species_traits)
-		C.gender = PLURAL
-
+	// Drop the items the new species can't wear
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
 
 	C.mob_biotypes = inherent_biotypes
 	C.mob_respiration_type = inherent_respiration_type
+	C.butcher_results = knife_butcher_results?.Copy()
 
 	if(old_species.type != type)
 		replace_body(C, src)
@@ -497,7 +493,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		for(var/i in inherent_factions)
 			C.faction += i //Using +=/-= for this in case you also gain the faction from a different source.
 
-	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, multiplicative_slowdown = speedmod)
+	// All languages associated with this language holder are added with source [LANGUAGE_SPECIES]
+	// rather than source [LANGUAGE_ATOM], so we can track what to remove if our species changes again
+	var/datum/language_holder/gaining_holder = GLOB.prototype_language_holders[species_language_holder]
+	for(var/language in gaining_holder.understood_languages)
+		C.grant_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
+	for(var/language in gaining_holder.spoken_languages)
+		C.grant_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
+	for(var/language in gaining_holder.blocked_languages)
+		C.add_blocked_language(language, LANGUAGE_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
@@ -515,10 +519,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	SHOULD_CALL_PARENT(TRUE)
-	if(C.dna.species.exotic_bloodtype)
-		C.dna.blood_type = random_blood_type()
+	C.butcher_results = null
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
+
 	for(var/obj/item/organ/external/organ in C.organs)
 		organ.Remove(C)
 		qdel(organ)
@@ -539,7 +543,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	clear_tail_moodlets(C)
 
-	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
+	// Removes all languages previously associated with [LANGUAGE_SPECIES], gaining our new species will add new ones back
+	var/datum/language_holder/losing_holder = GLOB.prototype_language_holders[species_language_holder]
+	for(var/language in losing_holder.understood_languages)
+		C.remove_language(language, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
+	for(var/language in losing_holder.spoken_languages)
+		C.remove_language(language, SPOKEN_LANGUAGE, LANGUAGE_SPECIES)
+	for(var/language in losing_holder.blocked_languages)
+		C.remove_blocked_language(language, LANGUAGE_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
@@ -609,7 +620,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					standing += eye_overlay
 
 		// organic body markings (oh my god this is terrible please rework this to be done on the limbs themselves i beg you)
-		if(HAS_MARKINGS in species_traits)
+		if(HAS_TRAIT(species_human, TRAIT_HAS_MARKINGS))
 			var/obj/item/bodypart/chest/chest = species_human.get_bodypart(BODY_ZONE_CHEST)
 			var/obj/item/bodypart/arm/right/right_arm = species_human.get_bodypart(BODY_ZONE_R_ARM)
 			var/obj/item/bodypart/arm/left/left_arm = species_human.get_bodypart(BODY_ZONE_L_ARM)
@@ -645,7 +656,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				standing += markings_l_leg_overlay
 
 	//Underwear, Undershirts & Socks
-	if(!(NO_UNDERWEAR in species_traits))
+	if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
 		if(species_human.underwear)
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
@@ -670,7 +681,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				working_shirt.pixel_y += height_offset
 				standing += working_shirt
 
-		if(species_human.socks && species_human.num_legs >= 2 && !(src.bodytype & BODYTYPE_DIGITIGRADE))
+		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodytype & BODYTYPE_DIGITIGRADE))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[species_human.socks]
 			if(socks)
 				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
@@ -706,7 +717,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 
 	if(mutant_bodyparts["ears"])
-		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || !IS_ORGANIC_LIMB(noggin))
+		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || IS_ROBOTIC_LIMB(noggin))
 			bodyparts_to_add -= "ears"
 
 	if(!bodyparts_to_add)
@@ -800,8 +811,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 ///Proc that will randomise the hair, or primary appearance element (i.e. for moths wings) of a species' associated mob
 /datum/species/proc/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
-	human_mob.hairstyle = random_hairstyle(human_mob.gender)
-	human_mob.update_body_parts()
+	human_mob.set_hairstyle(random_hairstyle(human_mob.gender), update = FALSE)
 
 ///Proc that will randomise the underwear (i.e. top, pants and socks) of a species' associated mob,
 /// but will not update the body right away.
@@ -839,7 +849,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
 	if(no_equip_flags & slot)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
@@ -883,7 +893,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_FEET)
 			if(H.num_legs < 2)
 				return FALSE
-			if((bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
+			if((H.bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
 				if(!(I.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
@@ -984,7 +994,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				return FALSE
 			return TRUE
 		if(ITEM_SLOT_BACKPACK)
-			if(H.back && H.back.atom_storage?.can_insert(I, H, messages = TRUE))
+			if(H.back && H.back.atom_storage?.can_insert(I, H, messages = TRUE, force = indirect_action ? STORAGE_SOFT_LOCKED : STORAGE_NOT_LOCKED))
 				return TRUE
 			return FALSE
 	return FALSE //Unsupported slot
@@ -1018,7 +1028,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		chem.overdosed = TRUE
 		chem.overdose_start(affected)
 		affected.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
-	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, affected, seconds_per_tick, times_fired)
+	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, seconds_per_tick, times_fired)
 
 /datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
 	return 1 //This is not a boolean, it's the multiplier for the damage that the user takes from the item. The force of the item is multiplied by this value
@@ -1071,8 +1081,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/go_bald(mob/living/carbon/human/target)
 	if(QDELETED(target)) //may be called from a timer
 		return
-	target.facial_hairstyle = "Shaved"
-	target.hairstyle = "Bald"
+	target.set_facial_hairstyle("Shaved", update = FALSE)
+	target.set_hairstyle("Bald", update = FALSE)
 	target.update_body_parts()
 
 //////////////////
@@ -1312,7 +1322,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(human.mind && human.stat == CONSCIOUS && human != user && prob(weapon.force + ((100 - human.health) * 0.5))) // rev deconversion through blunt trauma.
 					var/datum/antagonist/rev/rev = human.mind.has_antag_datum(/datum/antagonist/rev)
 					if(rev)
-						rev.remove_revolutionary(FALSE, user)
+						rev.remove_revolutionary(user)
 
 			if(bloody) //Apply blood
 				if(human.wear_mask)
@@ -1341,7 +1351,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					human.update_worn_undersuit()
 
 	/// Triggers force say events
-	if(weapon.force > 10 || weapon.force >= 5 && prob(33))
+	if(weapon.force > 10 || (weapon.force >= 5 && prob(33)))
 		human.force_say(user)
 
 	return TRUE
@@ -1773,7 +1783,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		if ( \
 			(preference.relevant_mutant_bodypart in mutant_bodyparts) \
-			|| (preference.relevant_species_trait in species_traits) \
+			|| (preference.relevant_inherent_trait in inherent_traits) \
 			|| (preference.relevant_external_organ in external_organs) \
 			|| (preference.relevant_head_flag && check_head_flags(preference.relevant_head_flag)) \
 		)
@@ -1862,15 +1872,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Returns a list, or null if they have no diet.
  */
 /datum/species/proc/get_species_diet()
-	if(TRAIT_NOHUNGER in inherent_traits)
+	if((TRAIT_NOHUNGER in inherent_traits) || !mutanttongue)
 		return null
 
-	var/list/food_flags = FOOD_FLAGS
+	var/static/list/food_flags = FOOD_FLAGS
+	var/obj/item/organ/internal/tongue/fake_tongue = mutanttongue
 
 	return list(
-		"liked_food" = bitfield_to_list(liked_food, food_flags),
-		"disliked_food" = bitfield_to_list(disliked_food, food_flags),
-		"toxic_food" = bitfield_to_list(toxic_food, food_flags),
+		"liked_food" = bitfield_to_list(initial(fake_tongue.liked_foodtypes), food_flags),
+		"disliked_food" = bitfield_to_list(initial(fake_tongue.disliked_foodtypes), food_flags),
+		"toxic_food" = bitfield_to_list(initial(fake_tongue.toxic_foodtypes), food_flags),
 	)
 
 /**
@@ -2241,21 +2252,23 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Returns a list containing perks, or an empty list.
  */
 /datum/species/proc/create_pref_language_perk()
-	var/list/to_add = list()
 
 	// Grab galactic common as a path, for comparisons
 	var/datum/language/common_language = /datum/language/common
 
 	// Now let's find all the languages they can speak that aren't common
 	var/list/bonus_languages = list()
-	var/datum/language_holder/temp_holder = new species_language_holder()
-	for(var/datum/language/language_type as anything in temp_holder.spoken_languages)
+	var/datum/language_holder/basic_holder = GLOB.prototype_language_holders[species_language_holder]
+	for(var/datum/language/language_type as anything in basic_holder.spoken_languages)
 		if(ispath(language_type, common_language))
 			continue
 		bonus_languages += initial(language_type.name)
 
-	// If we have any languages we can speak: create a perk for them all
-	if(length(bonus_languages))
+	if(!length(bonus_languages))
+		return // You're boring
+
+	var/list/to_add = list()
+	if(common_language in basic_holder.spoken_languages)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "comment",
@@ -2263,7 +2276,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_DESC = "Alongside [initial(common_language.name)], [plural_form] gain the ability to speak [english_list(bonus_languages)].",
 		))
 
-	qdel(temp_holder)
+	else
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "comment",
+			SPECIES_PERK_NAME = "Foreign Speaker",
+			SPECIES_PERK_DESC = "[plural_form] may not speak [initial(common_language.name)], but they can speak [english_list(bonus_languages)].",
+		))
 
 	return to_add
 

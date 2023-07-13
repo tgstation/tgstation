@@ -1,0 +1,5 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - rscadd: "You can now swab plasmaman clown clothes to get clown microbes."
+  - rscadd: "Clown phobia makes you fear plasmaman clown's gloves and helmet."

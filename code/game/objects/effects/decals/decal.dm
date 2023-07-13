@@ -24,7 +24,7 @@
 
 ///Checks if we are allowed to be in `here_turf`, and returns that result. Subtypes should override this when necessary.
 /obj/effect/decal/proc/NeverShouldHaveComeHere(turf/here_turf)
-	return isclosedturf(here_turf) || (isgroundlessturf(here_turf) && !SSmapping.get_turf_below(here_turf))
+	return isclosedturf(here_turf) || (isgroundlessturf(here_turf) && !GET_TURF_BELOW(here_turf))
 
 /obj/effect/decal/ex_act(severity, target)
 	qdel(src)

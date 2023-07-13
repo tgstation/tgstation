@@ -895,3 +895,182 @@
   - image: Resprited the Limb Grower
   norsvenska:
   - rscadd: Christmas now has special station prefixes.
+2023-06-26:
+  Funnytoilet:
+  - qol: Allows you to craft plastitanium shards.
+  Ghommie:
+  - bugfix: Fixes the lights from Tinea Luxor being stackable to the point of crashing
+      the game for others.
+  IndieanaJones:
+  - balance: Xenos have been rebalanced, removing their hardstuns on their disarm
+      and neurotoxin, along with a slew of other changes. Xenos have received buffs
+      to their more unique abilities in return.
+  - bugfix: Fixed simplemobs ignoring xenomorph's melee damage values when being attacked
+      by them.
+  winterboekje:
+  - sound: Adds unique sounds to library barcode scanner
+  - image: Removes soul from library
+2023-06-27:
+  ChungusGamer666:
+  - refactor: Liking/disliking food is now handled by the tongue organ, not the species.
+      Also, having a failing tongue means you can't taste food properly!
+  - rscadd: You can read peoples' tongues now, if you have the entrail reading skillchip.
+  GPeckman:
+  - bugfix: The lavaproof tracks cyborg upgrade now protects against liquid plasma,
+      the Icebox equivalent of lava.
+  LovliestPlant:
+  - qol: '[Birdshot] Adds layer adapters to gas tank output hookups in atmospherics'
+  - qol: '[Birdshot] Adds additional navigation verb landmarks'
+  - bugfix: '[Birdshot] Fixes entrances to some departments from maints not requiring
+      department access'
+  - bugfix: '[Birdshot] Converts the guard locker in perma to a normal security officer''s
+      locker'
+  - bugfix: '[Birdshot] Adds an exterior outlet vent for the incinerator'
+  Momo8289:
+  - bugfix: Items that shouldn't have been stacking should no longer stack.
+  ReinaCoder:
+  - image: the mosin and prime nagants' mob sprites have been updated
+  TheVekter:
+  - bugfix: Added the missing medical laptop to the morgue on Northstar.
+  axietheaxolotl / viro:
+  - image: resprited surgery tables, and stasis beds
+  cnleth:
+  - bugfix: Symbols display correctly when sending messages via mind link
+  the-og-gear:
+  - sound: One (1) new space ambience track has been added. Good luck and godspeed.
+2023-06-28:
+  ChungusGamer666:
+  - bugfix: Plasma will now heal plasmamen properly
+  Ghommie:
+  - rscadd: You can now revive dead fishes, bees and (mindless) mice with a lazarus
+      injector.
+  - balance: Tom, the mouse, no longer counts toward the mice population cap.
+  Hatterhat:
+  - balance: The Regal Condor's base spread has been reduced to 0, like damn near
+      every other gun that exists.
+  LT3:
+  - refactor: Refactored maptext (those floating words)
+  - bugfix: Fixed special chat bubbles for yelling, clown, redtext, greentext
+  - bugfix: Fixed alignment of status display text
+  - code_imp: Status displays now synchronize their message lines when scrolling
+  - bugfix: MetaStation's bridge incident counter and clock no longer overlap
+  - bugfix: Deltastation's missing incident counter has been found. Does that count
+      as an incident?
+  - qol: Tramstation bridge and medbay now have a clock where the tram hit counter
+      used to be
+  Melbert:
+  - bugfix: You can once again "too slow" someone with a high five
+  Momo8289:
+  - bugfix: Had to destroy a lot more of em, but the value of iron coins are now back
+      to normal
+  SapphicOverload:
+  - bugfix: fixed hostile mobs trying to attack supermatter discharge bolts
+  Seven:
+  - qol: Mops, some cleaning items, and light replacers now use balloon alerts
+  - rscadd: Surgical caps now actually hide your hair
+  Time-Green:
+  - bugfix: hardcore random now gives you a species specific name
+  Youtubeboy139:
+  - rscadd: Added new Pirate Boots
+  - image: Added new Pirate Bandana sprites
+  - image: Added new Pirate Hat sprites
+  - image: Added new Pirate Uniform sprites
+  - image: Added new Sailor Uniform sprites
+  - image: Added new Pirate Coat sprites
+  - image: Added new Pirate EVA gear sprites
+  - image: Added new Cutlass sprites
+  - image: Added new Energy Cutlass sprites
+  - image: Added new `hgpirate` suit and hat sprites
+  vinylspiders:
+  - bugfix: sliding puzzles can no longer have their icons erased by the hand labeler
+2023-06-29:
+  ChungusGamer666:
+  - bugfix: Clarke ore box now has a less confusing dump contents button.
+  Funnytoilet:
+  - bugfix: Plasmamen can now get HMS
+  Iamgoofball, Nadare, ddPn08, Mangio621, the rest of the RVC dev team:
+  - rscadd: Improves the audio quality and speaker fidelity by implementing Retrieval
+      Voice Conversion as an intermediary layer, utilizing the repository at https://github.com/ddPn08/rvc-webui.
+  - rscadd: Leverages RVC to allow players to set a pitch for their voice.
+  - rscadd: Makes silicons utilize a player's chosen voice preference on their character
+      slot, and adds a preview button to hear the voice as a silicon on character
+      creation.
+  - rscadd: Adds a toggle on character creation to disable having a voice on a specific
+      character slot.
+  - rscadd: Adds support for per-tongue voice filters.
+  - rscadd: Reworks the silicon voice effect to be a special effect done on the TTS
+      server level instead of via normal filters.
+  - rscadd: Reworks the vending machine effect to use the new robotic voicebox effect.
+  Jolly:
+  - spellcheck: Changeling hallucination sting will now tell you it costs 10 chemicals.
+      It always did, but now its there. Cheers?
+  LemonInTheDark:
+  - balance: Tcomms now works across connected (vertically) zlevels. No more hunting
+      in maint for the relay.
+  Melbert:
+  - qol: Scanning apps (Lifeline app) start with a scan
+  - bugfix: Fixes a potential exploit in radar apps
+  Rhials:
+  - rscadd: The abductor equipment vendor now offers a hacking/medical hypertool,
+      at a price of 2 research points.
+  - rscadd: The abductor equipment vendor now sells decorative abductor posters, at
+      a price of 1 research point.
+  - rscadd: The abductor equipment vendor now sells a cow, at the price of 1 research
+      point.
+  - bugfix: Fixes a runtime when trying to probe non-human mobs.
+  - image: Some abductorized versions of existing wall posters and an alien hypertool.
+  - code_imp: The abductor shop listings now use lists of items, rather than single
+      build paths.
+  - code_imp: The abductor_gear.dm file has been split up into a few different files.
+  - code_imp: Posters can now be hung on indestructible walls.
+  SyncIt21:
+  - bugfix: cable layers 1 & 3 can now be used by machine's like emitters, smes, tesla
+      coil & turbine.
+  - bugfix: terminals(smes & apc) can operate on different cable layers by installing
+      them with right click
+  chemistrymain2:
+  - balance: Syndicate simplemob fire-rate raised to one shot per second.
+  tf-4:
+  - bugfix: Brand intelligence can no longer affect off-station vendors in some specific
+      circumstances.
+2023-06-30:
+  Chadley:
+  - bugfix: fixes the EHMS injector's do_after()
+  - code_imp: Improves the code for the disease scan proc (thank you fikou)
+  ChungusGamer666:
+  - refactor: Head rendering code has been updated significantly... Again. Please
+      report any issues with hair, facial hair, lipstick and such.
+  - refactor: Species speed is now stored in bodyparts. Leg transplants from slower
+      species will make you slower.
+  - bugfix: Healthy tongues will no longer randomly start slurring
+  - refactor: A significant species refactor happened, report any issues on the github.
+  DATA-xPUNGED:
+  - rscadd: Added butter slices, which you can make by cutting butter into 3.
+  - qol: Recipes that once required butter now only require a slice of it. With the
+      exception of the butter on a stick, of course.
+  - balance: Butter now requires 25 milk to mix and has 3 times as much nutriment.
+  - image: Resprited butter and butter on a stick using bluespace technology, managing
+      to compress more butter into a smaller space
+  Ghommie:
+  - bugfix: Fixed snatcherprods potentially giving held objects a one-way ticket to
+      nullspace if thrown at someone by something that's not a mob.
+  LemonInTheDark:
+  - balance: Duffelbags will now only make you slow while they are unzipped. As a
+      tradeoff, you now need to stand still and zip/unzip them to access their contents/not
+      move real slow.
+  Melbert:
+  - bugfix: Fix Debug verb "Spawn full crew"
+  - bugfix: Fix everyone being vampires
+  Sealed101:
+  - bugfix: fixed RPD switching layers on mousescroll when not in active hand
+  - qol: installing an RPD wrench upgrade & reprogramming a pipe via RMB produces
+      a balloon alert
+  Seven:
+  - bugfix: Fixes changelings not being put into their headslug when using last resort
+  - bugfix: Fixes changeling headslugs not putting their eggs into dead bodies
+  Singul0:
+  - bugfix: Names for Interdyne pirates are now less bizzare
+  Youtubeboy139:
+  - image: Added new Police Whistle sprites
+  oranges:
+  - balance: Ashlizards can no longer use the shuttle console to go on station

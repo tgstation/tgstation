@@ -130,7 +130,7 @@ As an Atmospheric Technician, your ATMOS holofan projector blocks gases while al
 As an Atmospheric Technician, your backpack firefighter tank can launch resin. This resin will extinguish fires and replace any gases with a safe, room-temperature airmix.
 As an Engineer, return to Engineering once in a while to check on the engine and SMES cells. It's always a good idea to make sure the Supermatter isn't delaminating.
 As an Engineer, the Supermatter Monitoring Program on modular computers give you a detailed report on the Supermatter's condition, and the contents of the air inside of the chamber, allowing you to both diagnose and monitor programs from afar!
-As an Engineer, the Supermatter shard is an extremely dangerous piece of equipment: touching it will disintegrate you. So will touching it with telepathy.
+As an Engineer, the Supermatter shard is an extremely dangerous piece of equipment: touching it will disintegrate you. So will touching it with telekinesis.
 As an Engineer, you can cool the Supermatter crystal by spraying it with a fire extinguisher. Only for the brave!
 As an Engineer, you can electrify grilles by placing powered cables beneath them.
 As an Engineer, you can lock APCs and emitters using your ID card to prevent others from disabling them.

@@ -496,7 +496,7 @@
 /turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "Fg" = (
-/mob/living/simple_animal/hostile/asteroid/goliath/beast,
+/mob/living/basic/mining/goliath,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)

@@ -412,14 +412,14 @@
 /datum/uplink_item/ammo/rocket/basic
 	name = "84mm HE Rocket"
 	desc = "A low-yield anti-personnel HE rocket. Gonna take you out in style!"
-	item = /obj/item/ammo_casing/caseless/rocket
+	item = /obj/item/ammo_casing/rocket
 	cost = 4
 
 /datum/uplink_item/ammo/rocket/heap
 	name = "84mm HEAP Rocket"
 	desc = "A high-yield HEAP rocket; extremely effective against literally everything and anything near that thing that doesn't exist anymore. \
 			Strike fear into the hearts of your enemies."
-	item = /obj/item/ammo_casing/caseless/rocket/heap
+	item = /obj/item/ammo_casing/rocket/heap
 	cost = 6
 
 /datum/uplink_item/ammo/surplus_smg

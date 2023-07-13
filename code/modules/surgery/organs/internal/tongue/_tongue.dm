@@ -7,6 +7,7 @@
 	slot = ORGAN_SLOT_TONGUE
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
+	voice_filter = ""
 	/**
 	 * A cached list of paths of all the languages this tongue is capable of speaking
 	 *
@@ -34,6 +35,12 @@
 	/// Determines how "sensitive" this tongue is to tasting things, lower is more sensitive.
 	/// See [/mob/living/proc/get_taste_sensitivity].
 	var/taste_sensitivity = 15
+	/// Foodtypes this tongue likes
+	var/liked_foodtypes = JUNKFOOD | FRIED //human tastes are default
+	/// Foodtypes this tongue dislikes
+	var/disliked_foodtypes = GROSS | RAW | CLOTH | BUGS | GORE //human tastes are default
+	/// Foodtypes this tongue HATES
+	var/toxic_foodtypes = TOXIC //human tastes are default
 	/// Whether this tongue modifies speech via signal
 	var/modifies_speech = FALSE
 
@@ -44,6 +51,16 @@
 	// - then we cache it via string list
 	// this results in tongues with identical possible languages sharing a cached list instance
 	languages_possible = string_list(get_possible_languages())
+
+/obj/item/organ/internal/tongue/examine(mob/user)
+	. = ..()
+	if(HAS_MIND_TRAIT(user, TRAIT_ENTRAILS_READER)|| isobserver(user))
+		if(liked_foodtypes)
+			. += span_info("This tongue has an affinity for the taste of [english_list(bitfield_to_list(liked_foodtypes, FOOD_FLAGS_IC))].")
+		if(disliked_foodtypes)
+			. += span_info("This tongue has an aversion for the taste of [english_list(bitfield_to_list(disliked_foodtypes, FOOD_FLAGS_IC))].")
+		if(toxic_foodtypes)
+			. += span_info("This tongue's physiology makes [english_list(bitfield_to_list(toxic_foodtypes, FOOD_FLAGS_IC))] toxic.")
 
 /**
  * Used in setting up the "languages possible" list.
@@ -76,6 +93,7 @@
 
 /obj/item/organ/internal/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
+
 	if(speech_args[SPEECH_LANGUAGE] in languages_native)
 		return FALSE //no changes
 	modify_speech(source, speech_args)
@@ -83,31 +101,69 @@
 /obj/item/organ/internal/tongue/proc/modify_speech(datum/source, list/speech_args)
 	return speech_args[SPEECH_MESSAGE]
 
+/**
+ * Gets the food reaction a tongue would have from the food item,
+ * assuming that no check_liked callback was used in the edible component.
+ *
+ * Can be overriden by subtypes for more complex behavior.
+ * Does not get called if the owner has ageusia.
+ **/
+/obj/item/organ/internal/tongue/proc/get_food_taste_reaction(obj/item/food, foodtypes = NONE)
+	var/food_taste_reaction
+	if(foodtypes & toxic_foodtypes)
+		food_taste_reaction = FOOD_TOXIC
+	else if(foodtypes & disliked_foodtypes)
+		food_taste_reaction = FOOD_DISLIKED
+	else if(foodtypes & liked_foodtypes)
+		food_taste_reaction = FOOD_LIKED
+	return food_taste_reaction
+
 /obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(tongue_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
-	if (modifies_speech)
+	if(modifies_speech)
 		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-
+	tongue_owner.voice_filter = voice_filter
 	/* This could be slightly simpler, by making the removal of the
 	* NO_TONGUE_TRAIT conditional on the tongue's `sense_of_taste`, but
 	* then you can distinguish between ageusia from no tongue, and
 	* ageusia from having a non-tasting tongue.
 	*/
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
-	if(!sense_of_taste)
-		ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
+	apply_tongue_effects()
 
 /obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
 	. = ..()
-	REMOVE_TRAIT(tongue_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
 	temp_say_mod = ""
 	UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
+	REMOVE_TRAIT(tongue_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+	tongue_owner.voice_filter = initial(tongue_owner.voice_filter)
+
+/obj/item/organ/internal/tongue/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
+	. = ..()
+	if(!owner)
+		return
+	apply_tongue_effects()
+
+/// Applies effects to our owner based on how damaged our tongue is
+/obj/item/organ/internal/tongue/proc/apply_tongue_effects()
+	if(sense_of_taste)
+		//tongues can't taste food when they are failing
+		if(organ_flags & ORGAN_FAILING)
+			ADD_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
+		else
+			REMOVE_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
+	else
+		//tongues can't taste food when they lack a sense of taste
+		ADD_TRAIT(owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
+	if(organ_flags & ORGAN_FAILING)
+		REMOVE_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
+	else
+		ADD_TRAIT(owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
 
 /obj/item/organ/internal/tongue/could_speak_language(datum/language/language_path)
 	return (language_path in languages_possible)
@@ -123,6 +179,8 @@
 	taste_sensitivity = 10 // combined nose + tongue, extra sensitive
 	modifies_speech = TRUE
 	languages_native = list(/datum/language/draconic)
+	liked_foodtypes = GORE | MEAT | SEAFOOD | NUTS | BUGS
+	disliked_foodtypes = GRAIN | DAIRY | CLOTH | GROSS
 
 /obj/item/organ/internal/tongue/lizard/modify_speech(datum/source, list/speech_args)
 	var/static/regex/lizard_hiss = new("s+", "g")
@@ -145,81 +203,150 @@
 	name = "silver tongue"
 	desc = "A genetic branch of the high society Silver Scales that gives them their silverizing properties. To them, it is everything, and society traitors have their tongue forcibly revoked. Oddly enough, it itself is just blue."
 	icon_state = "silvertongue"
-	actions_types = list(/datum/action/item_action/organ_action/statue)
+	actions_types = list(/datum/action/cooldown/turn_to_statue)
 
-/datum/action/item_action/organ_action/statue
+/datum/action/cooldown/turn_to_statue
 	name = "Become Statue"
 	desc = "Become an elegant silver statue. Its durability and yours are directly tied together, so make sure you're careful."
-	COOLDOWN_DECLARE(ability_cooldown)
+	button_icon = 'icons/obj/medical/organs/organs.dmi'
+	button_icon_state = "silvertongue"
+	cooldown_time = 10 SECONDS
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_LYING
 
+	/// The statue we turn into.
+	/// We only ever make one (in New) and simply move it into nullspace or back.
 	var/obj/structure/statue/custom/statue
 
-/datum/action/item_action/organ_action/statue/New(Target)
+/datum/action/cooldown/turn_to_statue/New(Target)
 	. = ..()
-	statue = new
-	RegisterSignal(statue, COMSIG_QDELETING, PROC_REF(statue_destroyed))
+	if(!istype(Target, /obj/item/organ/internal/tongue/lizard/silver))
+		stack_trace("Non-silverscale tongue initialized a turn to statue action.")
+		qdel(src)
+		return
 
-/datum/action/item_action/organ_action/statue/Destroy()
-	UnregisterSignal(statue, COMSIG_QDELETING)
-	QDEL_NULL(statue)
+	init_statue()
+
+/datum/action/cooldown/turn_to_statue/Destroy()
+	clean_up_statue()
+	return ..()
+
+/datum/action/cooldown/turn_to_statue/IsAvailable(feedback)
 	. = ..()
+	if(!.)
+		return FALSE
 
-/datum/action/item_action/organ_action/statue/Trigger(trigger_flags)
-	. = ..()
-	if(!iscarbon(owner))
-		to_chat(owner, span_warning("Your body rejects the powers of the tongue!"))
-		return
-	var/mob/living/carbon/becoming_statue = owner
-	if(becoming_statue.health < 1)
-		to_chat(becoming_statue, span_danger("You are too weak to become a statue!"))
-		return
-	if(!COOLDOWN_FINISHED(src, ability_cooldown))
-		to_chat(becoming_statue, span_warning("You just used the ability, wait a little bit!"))
-		return
-	var/is_statue = becoming_statue.loc == statue
-	to_chat(becoming_statue, span_notice("You begin to [is_statue ? "break free from the statue" : "make a glorious pose as you become a statue"]!"))
-	if(!do_after(becoming_statue, (is_statue ? 5 : 30), target = get_turf(becoming_statue)))
-		to_chat(becoming_statue, span_warning("Your transformation is interrupted!"))
-		COOLDOWN_START(src, ability_cooldown, 3 SECONDS)
-		return
-	COOLDOWN_START(src, ability_cooldown, 10 SECONDS)
+	if(!isliving(owner))
+		return FALSE
+	var/obj/item/organ/internal/tongue/lizard/silver/tongue_target = target
+	if(tongue_target.owner != owner)
+		return FALSE
 
-	if(statue.name == initial(statue.name)) //statue has not been set up
-		statue.name = "statue of [becoming_statue.real_name]"
-		statue.desc = "statue depicting [becoming_statue.real_name]"
-		statue.set_custom_materials(list(/datum/material/silver=SHEET_MATERIAL_AMOUNT*5))
+	if(isnull(statue))
+		if(feedback)
+			owner.balloon_alert(owner, "you can't seem to statue-ize!")
+		return FALSE // permanently bricked
+	if(owner.stat != CONSCIOUS)
+		if(feedback)
+			owner.balloon_alert(owner, "you're too weak!")
+		return FALSE
+
+	return TRUE
+
+/datum/action/cooldown/turn_to_statue/Activate(atom/target)
+	StartCooldown(3 SECONDS)
+
+	var/is_statue = owner.loc == statue
+	if(!is_statue)
+		owner.visible_message(
+			span_notice("[owner] strikes a glorious pose."),
+			span_notice("You strike a glorious pose as you become a statue!"),
+		)
+
+	owner.balloon_alert(owner, is_statue ? "breaking free..." : "striking a pose...")
+	if(!do_after(owner, (is_statue ? 0.5 SECONDS : 3 SECONDS), target = get_turf(owner)))
+		owner.balloon_alert(owner, "interrupted!")
+		return
+
+	StartCooldown()
+
+	statue.name = "statue of [owner.real_name]"
+	statue.desc = "statue depicting [owner.real_name]"
 
 	if(is_statue)
 		statue.visible_message(span_danger("[statue] becomes animated!"))
-		becoming_statue.forceMove(get_turf(statue))
+		owner.forceMove(get_turf(statue))
 		statue.moveToNullspace()
-		UnregisterSignal(becoming_statue, COMSIG_MOVABLE_MOVED)
-	else
-		becoming_statue.visible_message(span_notice("[becoming_statue] hardens into a silver statue."), span_notice("You have become a silver statue!"))
-		statue.set_visuals(becoming_statue.appearance)
-		statue.forceMove(get_turf(becoming_statue))
-		becoming_statue.forceMove(statue)
-		statue.update_integrity(becoming_statue.health)
-		RegisterSignal(becoming_statue, COMSIG_MOVABLE_MOVED, PROC_REF(human_left_statue))
+		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
-	//somehow they used an exploit/teleportation to leave statue, lets clean up
-/datum/action/item_action/organ_action/statue/proc/human_left_statue(atom/movable/mover, atom/oldloc, direction)
+	else
+		owner.visible_message(
+			span_notice("[owner] hardens into a silver statue."),
+			span_notice("You have become a silver statue!"),
+		)
+		statue.set_visuals(owner.appearance)
+		statue.forceMove(get_turf(owner))
+		owner.forceMove(statue)
+		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(human_left_statue))
+
+		var/mob/living/living_owner = owner
+		statue.update_integrity(living_owner.health) // Statue has 100 health, humans have 100 health
+
+/// Somehow they used an exploit/teleportation to leave statue, lets clean up
+/datum/action/cooldown/turn_to_statue/proc/human_left_statue(atom/movable/mover, atom/oldloc, direction)
 	SIGNAL_HANDLER
 
 	statue.moveToNullspace()
 	UnregisterSignal(mover, COMSIG_MOVABLE_MOVED)
 
-/datum/action/item_action/organ_action/statue/proc/statue_destroyed(datum/source)
+/// Statue was destroyed via IC means (destruction / deconstruction), dust the owner and drop their stuff
+/datum/action/cooldown/turn_to_statue/proc/statue_destroyed(datum/source)
 	SIGNAL_HANDLER
 
-	to_chat(owner, span_userdanger("Your existence as a living creature snaps as your statue form crumbles!"))
-	if(iscarbon(owner))
-		//drop everything, just in case
-		var/mob/living/carbon/dying_carbon = owner
-		for(var/obj/item/dropped in dying_carbon)
-			if(!dying_carbon.dropItemToGround(dropped))
-				qdel(dropped)
-	qdel(owner)
+	if(isnull(statue.loc))
+		return // the statue ended up getting destroyed while in nullspace?
+
+	var/mob/living/carbon/carbon_owner = owner
+	RegisterSignal(carbon_owner, COMSIG_MOVABLE_MOVED)
+
+	to_chat(carbon_owner, span_userdanger("Your existence as a living creature snaps as your statue form crumbles!"))
+	carbon_owner.forceMove(get_turf(statue))
+	carbon_owner.dust(just_ash = TRUE, drop_items = TRUE)
+	carbon_owner.investigate_log("has been dusted from having their Silverscale Statue deconstructed / destroyed.", INVESTIGATE_DEATHS)
+
+	clean_up_statue() // unregister signal before we can do further side effects.
+
+/// Statue was qdeleted outright, do nothing but clear refs.
+/datum/action/cooldown/turn_to_statue/proc/statue_deleted(datum/source)
+	SIGNAL_HANDLER
+
+	clean_up_statue() // Note that if the lizard is in the statue when they're raw deleted, they too will be raw deleted. This is fine
+
+/// Initializes the statue we're going to hang around inside
+/datum/action/cooldown/turn_to_statue/proc/init_statue()
+	statue = new()
+	statue.set_custom_materials(list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 5))
+	statue.max_integrity = 100 // statues already have 100 max integrity, so this is a safety net
+	statue.set_armor(/datum/armor/obj_structure/silverscale_statue_armor)
+	statue.flags_ricochet |= RICOCHET_SHINY
+	RegisterSignals(statue, list(COMSIG_OBJ_DECONSTRUCT, COMSIG_ATOM_DESTRUCTION), PROC_REF(statue_destroyed))
+	RegisterSignal(statue, COMSIG_QDELETING, PROC_REF(statue_deleted))
+
+/// Cleans up the reference to the statue and unregisters signals
+/datum/action/cooldown/turn_to_statue/proc/clean_up_statue()
+	if(QDELETED(statue))
+		statue = null
+		return
+
+	UnregisterSignal(statue, list(COMSIG_OBJ_DECONSTRUCT, COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING))
+	QDEL_NULL(statue)
+
+/datum/armor/obj_structure/silverscale_statue_armor
+	melee = 50
+	bullet = 50
+	laser = 70
+	energy = 70
+	bomb = 50
+	fire = 100
 
 /obj/item/organ/internal/tongue/abductor
 	name = "superlingual matrix"
@@ -248,7 +375,7 @@
 
 /obj/item/organ/internal/tongue/abductor/examine(mob/examining_mob)
 	. = ..()
-	if(HAS_TRAIT(examining_mob, TRAIT_ABDUCTOR_TRAINING) || (examining_mob.mind && HAS_TRAIT(examining_mob.mind, TRAIT_ABDUCTOR_TRAINING)) || isobserver(examining_mob))
+	if(HAS_MIND_TRAIT(examining_mob, TRAIT_ABDUCTOR_TRAINING) || isobserver(examining_mob))
 		. += span_notice("It can be attuned to a different channel by using it inhand.")
 		if(!mothership)
 			. += span_notice("It is not attuned to a specific mothership.")
@@ -281,6 +408,8 @@
 	say_mod = "moans"
 	modifies_speech = TRUE
 	taste_sensitivity = 32
+	liked_foodtypes = GROSS | MEAT | RAW | GORE
+	disliked_foodtypes = NONE
 
 // List of english words that translate to zombie phrases
 GLOBAL_LIST_INIT(english_to_zombie, list())
@@ -372,6 +501,8 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	attack_verb_continuous = list("bites", "chatters", "chomps", "enamelles", "bones")
 	attack_verb_simple = list("bite", "chatter", "chomp", "enamel", "bone")
 	sense_of_taste = FALSE
+	liked_foodtypes = GROSS | MEAT | RAW | GORE | DAIRY //skeletons eat spooky shit... and dairy, of course
+	disliked_foodtypes = NONE
 	modifies_speech = TRUE
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
@@ -399,18 +530,20 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	desc = "Like animated skeletons, Plasmamen vibrate their teeth in order to produce speech."
 	icon_state = "tongueplasma"
 	modifies_speech = FALSE
+	liked_foodtypes = VEGETABLES
+	disliked_foodtypes = FRUIT | CLOTH
 
 /obj/item/organ/internal/tongue/robot
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
-	status = ORGAN_ROBOTIC
-	organ_flags = NONE
+	organ_flags = ORGAN_ROBOTIC
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb_continuous = list("beeps", "boops")
 	attack_verb_simple = list("beep", "boop")
 	modifies_speech = TRUE
 	taste_sensitivity = 25 // not as good as an organic tongue
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 /obj/item/organ/internal/tongue/robot/can_speak_language(language)
 	return TRUE // THE MAGIC OF ELECTRONICS
@@ -420,9 +553,10 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 /obj/item/organ/internal/tongue/snail
 	name = "radula"
-	color = "#96DB00" // TODO proper sprite, rather than recoloured pink tongue
 	desc = "A minutely toothed, chitious ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."
+	color = "#96DB00" // TODO proper sprite, rather than recoloured pink tongue
 	modifies_speech = TRUE
+	voice_filter = "atempo=0.5" // makes them talk really slow
 
 /obj/item/organ/internal/tongue/snail/modify_speech(datum/source, list/speech_args)
 	var/new_message
@@ -440,6 +574,9 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	icon_state = "electrotongue"
 	say_mod = "crackles"
 	taste_sensitivity = 10 // ethereal tongues function (very loosely) like a gas spectrometer: vaporising a small amount of the food and allowing it to pass to the nose, resulting in more sensitive taste
+	liked_foodtypes = NONE //no food is particularly liked by ethereals
+	disliked_foodtypes = GROSS
+	toxic_foodtypes = NONE //no food is particularly toxic to ethereals
 	attack_verb_continuous = list("shocks", "jolts", "zaps")
 	attack_verb_simple = list("shock", "jolt", "zap")
 
@@ -451,21 +588,37 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	name = "felinid tongue"
 	desc = "A fleshy muscle mostly used for meowing."
 	say_mod = "meows"
+	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
+	disliked_foodtypes = GROSS | CLOTH | RAW
 
 /obj/item/organ/internal/tongue/jelly
 	name = "jelly tongue"
 	desc = "Ah... That's not the sound I expected it to make. Sounds like a Space Autumn Bird."
 	say_mod = "chirps"
+	liked_foodtypes = MEAT | BUGS
+	disliked_foodtypes = GROSS
+	toxic_foodtypes = NONE
+
+/obj/item/organ/internal/tongue/jelly/get_food_taste_reaction(obj/item/food, foodtypes = NONE)
+	// a silver slime created this? what a delicacy!
+	if(HAS_TRAIT(food, TRAIT_FOOD_SILVER))
+		return FOOD_LIKED
+	return ..()
 
 /obj/item/organ/internal/tongue/monkey
 	name = "primitive tongue"
 	desc = "For aggressively chimpering. And consuming bananas."
 	say_mod = "chimpers"
+	liked_foodtypes = MEAT | FRUIT | BUGS
+	disliked_foodtypes = CLOTH
 
 /obj/item/organ/internal/tongue/moth
 	name = "moth tongue"
 	desc = "Moths don't have tongues. Someone get god on the phone, tell them I'm not happy."
 	say_mod = "flutters"
+	liked_foodtypes = VEGETABLES | DAIRY | CLOTH
+	disliked_foodtypes = FRUIT | GROSS | BUGS | GORE
+	toxic_foodtypes = MEAT | RAW | SEAFOOD
 
 /obj/item/organ/internal/tongue/zombie
 	name = "rotting tongue"
@@ -475,15 +628,24 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/mush
 	name = "mush-tongue-room"
 	desc = "You poof with this. Got it?"
-	say_mod = "poofs"
-
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "mycelium-angel"
+	say_mod = "poofs"
+
+/obj/item/organ/internal/tongue/pod
+	name = "pod tongue"
+	desc = "A plant-like organ used for speaking and eating."
+	say_mod = "whistles"
+	liked_foodtypes = VEGETABLES | FRUIT | GRAIN
+	disliked_foodtypes = GORE | MEAT | DAIRY | SEAFOOD | BUGS
 
 /obj/item/organ/internal/tongue/golem
 	name = "golem tongue"
-	color = COLOR_WEBSAFE_DARK_GRAY
 	desc = "This silicate plate doesn't seem particularly mobile, but golems use it to form sounds."
+	color = COLOR_WEBSAFE_DARK_GRAY
+	organ_flags = ORGAN_MINERAL
 	say_mod = "rumbles"
 	sense_of_taste = FALSE
-	status = ORGAN_MINERAL
+	liked_foodtypes = STONE
+	disliked_foodtypes = NONE //you don't care for much else besides stone
+	toxic_foodtypes = NONE //you can eat fucking uranium

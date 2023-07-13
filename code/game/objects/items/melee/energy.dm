@@ -250,6 +250,7 @@
 
 /obj/item/melee/energy/sword/saber/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/jousting, damage_boost_per_tile = 1, knockdown_chance_per_tile = 10)
 	if(!sword_color_icon && LAZYLEN(possible_sword_colors))
 		sword_color_icon = pick(possible_sword_colors)
 

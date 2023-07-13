@@ -177,7 +177,7 @@
 				id.forceMove(W)
 				W.update_icon()
 		else
-			H.equip_to_slot(id,ITEM_SLOT_ID)
+			H.equip_to_slot(id, ITEM_SLOT_ID)
 
 	else
 		tgui_alert(usr,"Invalid mob")

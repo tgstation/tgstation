@@ -19,7 +19,7 @@
 	return FALSE
 
 
-/mob/living/simple_animal/drone/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/mob/living/simple_animal/drone/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
 	switch(slot)
 		if(ITEM_SLOT_HEAD)
 			if(head)
@@ -50,37 +50,37 @@
 		return ITEM_SLOT_HEAD
 	return ..()
 
-/mob/living/simple_animal/drone/equip_to_slot(obj/item/I, slot)
+/mob/living/simple_animal/drone/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
 	if(!slot)
 		return
-	if(!istype(I))
+	if(!istype(equipping))
 		return
 
-	var/index = get_held_index_of_item(I)
+	var/index = get_held_index_of_item(equipping)
 	if(index)
 		held_items[index] = null
 	update_held_items()
 
-	if(I.pulledby)
-		I.pulledby.stop_pulling()
+	if(equipping.pulledby)
+		equipping.pulledby.stop_pulling()
 
-	I.screen_loc = null // will get moved if inventory is visible
-	I.forceMove(src)
-	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
+	equipping.screen_loc = null // will get moved if inventory is visible
+	equipping.forceMove(src)
+	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
 
 	switch(slot)
 		if(ITEM_SLOT_HEAD)
-			head = I
+			head = equipping
 			update_worn_head()
 		if(ITEM_SLOT_DEX_STORAGE)
-			internal_storage = I
+			internal_storage = equipping
 			update_inv_internal_storage()
 		else
 			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
 			return
 
 	//Call back for item being equipped to drone
-	I.equipped(src, slot)
+	equipping.equipped(src, slot)
 
 /mob/living/simple_animal/drone/getBackSlot()
 	return ITEM_SLOT_DEX_STORAGE

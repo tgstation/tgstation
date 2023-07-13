@@ -273,7 +273,7 @@
 	replace_objs = list(/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/external/glass/ruin = 1))
 
 /datum/dimension_theme/glass
-	icon = 'icons/obj/shards.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "small"
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/glass = 1)

@@ -151,7 +151,7 @@
 	eye_color_left = initial(eye_color_left)
 	eye_color_right = initial(eye_color_right)
 
-/obj/item/organ/internal/eyes/apply_organ_damage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/eyes/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
 	. = ..()
 	if(!owner)
 		return
@@ -261,7 +261,7 @@
 	desc = "Golems somehow measure external light levels and detect nearby ore using this sensitive mineral lattice."
 	color = COLOR_GOLEM_GRAY
 	visual = FALSE
-	status = ORGAN_MINERAL
+	organ_flags = ORGAN_MINERAL
 	color_cutoffs = list(10, 15, 5)
 	actions_types = list(/datum/action/cooldown/golem_ore_sight)
 
@@ -284,12 +284,11 @@
 	name = "robotic eyes"
 	icon_state = "cybernetic_eyeballs"
 	desc = "Your vision is augmented."
-	status = ORGAN_ROBOTIC
-	organ_flags = ORGAN_SYNTHETIC
+	organ_flags = ORGAN_ROBOTIC
 
 /obj/item/organ/internal/eyes/robotic/emp_act(severity)
 	. = ..()
-	if(!owner || . & EMP_PROTECT_SELF)
+	if((. & EMP_PROTECT_SELF) || !owner)
 		return
 	if(prob(10 * severity))
 		return
