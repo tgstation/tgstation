@@ -409,7 +409,7 @@
 
 	LAZYSET(sac_targets, target, target_image)
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
-	all_sac_targets.add(target.real_name)
+	all_sac_targets.Add(target.real_name)
 
 /**
  * Removes [target] from the heretic's sacrifice list.
