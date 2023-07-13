@@ -296,8 +296,6 @@
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return 0
-	if(on_damage_adjustment(BURN, amount, forced) & COMPONENT_IGNORE_CHANGE)
-		return 0
 	. = fireloss
 	fireloss = clamp((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	. -= fireloss

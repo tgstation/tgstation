@@ -137,10 +137,6 @@ GLOBAL_LIST_EMPTY(clockwork_marauders)
 	action_cooldown = 1.2 SECONDS
 
 
-/datum/targetting_datum/basic/clockwork_marauder
-	stat_attack = HARD_CRIT
-
-
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/bane, /mob/living/basic/clockwork_marauder, 1, 15, FALSE)

@@ -1,12 +1,12 @@
 ///Bloodsuckers spawning a Guardian will get the Bloodsucker one instead.
-/obj/item/guardiancreator/spawn_guardian(mob/living/user, mob/dead/candidate)
+/obj/item/guardian_creator/spawn_guardian(mob/living/user, mob/dead/candidate)
 	var/list/guardians = user.get_all_linked_holoparasites()
 	if(length(guardians) && !allowmultiple)
 		to_chat(user, span_holoparasite("You already have a [mob_name]!"))
 		used = FALSE
 		return
 	if(IS_BLOODSUCKER(user))
-		var/mob/living/simple_animal/hostile/guardian/standard/timestop/bloodsucker_guardian = new(user, GUARDIAN_THEME_MAGIC)
+		var/mob/living/basic/guardian/standard/bloodsucker_guardian = new(user, GUARDIAN_THEME_MAGIC)
 
 		bloodsucker_guardian.set_summoner(user, different_person = TRUE)
 		bloodsucker_guardian.key = candidate.key
@@ -23,7 +23,7 @@
 /**
  * The Guardian itself
  */
-/mob/living/simple_animal/hostile/guardian/standard/timestop
+/mob/living/basic/guardian/standard
 	// Like Bloodsuckers do, you will take more damage to Burn and less to Brute
 	damage_coeff = list(BRUTE = 0.5, BURN = 2.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 
@@ -38,7 +38,7 @@
 	carp_fluff_string = span_holoparasite("CARP CARP CARP! You caught one! It's imbued with the power of Carp'Sie herself. Time to rule THE WORLD!.")
 	miner_fluff_string = span_holoparasite("You encounter... The World, the controller of time and space.")
 
-/mob/living/simple_animal/hostile/guardian/standard/timestop/Initialize(mapload, theme)
+/mob/living/basic/guardian/standard/Initialize(mapload, theme)
 	//Wizard Holoparasite theme, just to be more visibly stronger than regular ones
 	theme = GUARDIAN_THEME_MAGIC
 	. = ..()

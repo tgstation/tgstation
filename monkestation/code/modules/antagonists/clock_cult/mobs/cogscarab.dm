@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 
 //====Cogscarab====
 
-/mob/living/simple_animal/drone/cogscarab
+/mob/living/basic/drone/cogscarab
 	name = "Cogscarab"
 	desc = "A mechanical device, filled with twisting cogs and mechanical parts, built to maintain Reebe."
 	icon_state = "drone_clock"

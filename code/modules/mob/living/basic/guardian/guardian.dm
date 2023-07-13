@@ -12,7 +12,6 @@
 	icon_dead = "magicbase"
 	gender = NEUTER
 	basic_mob_flags = DEL_ON_DEATH
-	mob_biotypes = MOB_SPECIAL
 	sentience_type = SENTIENCE_HUMANOID
 	hud_type = /datum/hud/guardian
 	faction = list()
@@ -34,13 +33,13 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	combat_mode = TRUE
+	istate = ISTATE_HARM
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	melee_attack_cooldown = CLICK_CD_MELEE
 	light_system = MOVABLE_LIGHT
-	light_range = 3
+	light_outer_range = 3
 	light_on = FALSE
 
 	/// The summoner of the guardian, we share health with them and can't move too far away (usually)
@@ -249,7 +248,7 @@
 	if (!isnull(summoner_turf))
 		forceMove(summoner_turf)
 	unleash()
-	UnregisterSignal(summoner, list(COMSIG_QDELETING, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
+	UnregisterSignal(summoner, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 	if (different_person)
 		summoner.faction -= "[REF(src)]"
 		faction -= summoner.faction
