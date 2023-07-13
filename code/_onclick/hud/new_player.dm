@@ -33,6 +33,7 @@
 	///Whether this HUD element can be hidden from the client's "screen" (moved off-screen) or not
 	var/always_shown = FALSE
 
+///Set the HUD in New, as lobby screens are made before Atoms are Initialized.
 /atom/movable/screen/lobby/New(loc, datum/hud/our_hud, ...)
 	if(our_hud)
 		hud = our_hud
