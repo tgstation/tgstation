@@ -34,7 +34,7 @@
 // if this would look bad on laggy clients.
 /atom/proc/balloon_alert_perform(mob/viewer, text)
 
-	var/client/viewer_client = viewer.client
+	var/client/viewer_client = viewer?.client
 	if (isnull(viewer_client))
 		return
 
