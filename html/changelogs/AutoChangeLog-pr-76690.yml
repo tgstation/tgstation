@@ -1,0 +1,5 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - qol: "APCs, fire alarms, and holopads now communicate some more of their silicon interactions via screentips."
+  - qol: "APCs, fire alarms, holopads and turret control panels now use balloon alerts for more of their notifications."
