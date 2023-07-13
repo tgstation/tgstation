@@ -125,7 +125,7 @@
 // MISC ATMOSPHERICS
 /datum/greyscale_config/meter
 	name = "Meter"
-	icon_file = 'icons/obj/pipes_n_cables/pipes/meter.dmi'
+	icon_file = 'icons/obj/pipes_n_cables/meter.dmi'
 	json_config = 'code/datums/greyscale/json_configs/meter.json'
 
 /datum/greyscale_config/thermomachine

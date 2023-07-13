@@ -253,7 +253,7 @@
 	density = 1;
 	desc = "Generates power from lava!";
 	dir = 1;
-	icon = 'icons/obj/pipes_n_cables/pipes/simple.dmi';
+	icon = 'icons/obj/pipes_n_cables/simple.dmi';
 	icon_state = "compressor";
 	name = "geothermal generator"
 	},
@@ -960,7 +960,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "Generates power from lava!";
-	icon = 'icons/obj/pipes_n_cables/pipes/simple.dmi';
+	icon = 'icons/obj/pipes_n_cables/simple.dmi';
 	icon_state = "turbine";
 	name = "geothermal generator"
 	},
