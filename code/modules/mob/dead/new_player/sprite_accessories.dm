@@ -2138,7 +2138,6 @@
 /datum/sprite_accessory/moth_wings/burnt_off
 	name = "Burnt Off"
 	icon_state = "burnt_off"
-	locked = TRUE
 
 /datum/sprite_accessory/moth_wings/firewatch
 	name = "Firewatch"
