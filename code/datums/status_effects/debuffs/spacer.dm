@@ -17,14 +17,15 @@
 // The good side (being in space)
 /datum/status_effect/spacer/gravity_wellness
 	alert_type = null
+	tick_interval = 3 SECONDS
 	/// How much disgust to heal per tick
-	var/disgust_healing_per_tick = 1.2
-	/// How much of stamina damage and stuns to heal per tick when we've been in nograv for a while
-	var/stamina_heal_per_tick = 2
+	var/disgust_healing_per_tick = 1.5
+	/// How much of stamina damage to heal per tick when we've been in nograv for a while
+	var/stamina_heal_per_tick = 3
 	/// How many seconds of stuns to reduce per tick when we've been in nograv for a while
-	var/stun_heal_per_tick = 1 SECONDS
+	var/stun_heal_per_tick = 3 SECONDS
 	/// Tracks how long we've been in no gravity
-	var/seconds_in_nograv = 0
+	var/seconds_in_nograv = 0 SECONDS
 
 /datum/status_effect/spacer/gravity_wellness/tick(seconds_per_tick, times_fired)
 	var/in_nograv = !owner.has_gravity()
@@ -32,25 +33,28 @@
 	owner.adjust_disgust(-1 * disgust_healing_per_tick * nograv_mod)
 
 	if(!in_nograv)
-		seconds_in_nograv = 0
+		seconds_in_nograv = 0 SECONDS
 		return
 
 	seconds_in_nograv += (initial(tick_interval) * 0.1)
 
-	if(seconds_in_nograv >= 1 MINUTES)
+	if(seconds_in_nograv >= 3 MINUTES)
 		// This has some interesting side effects with gravitum or similar negating effects that may be worth nothing
-		owner.adjustStaminaLoss(-1 * stamina_heal_per_tick * initial(tick_interval) * 0.1)
-		owner.AdjustAllImmobility(-1 * stun_heal_per_tick * initial(tick_interval) * 0.1)
+		owner.adjustStaminaLoss(-1 * stamina_heal_per_tick)
+		owner.AdjustAllImmobility(-1 * stun_heal_per_tick)
+		// For comparison: Ephedrine heals 1 stamina per tick / 0.5 per second
+		// and Nicotine heals 5 seconds of stun per tick / 2.5 per second
 
 // The bad side (being on a planet)
 /datum/status_effect/spacer/gravity_sickness
 	alert_type = /atom/movable/screen/alert/status_effect/gravity_sickness
+	tick_interval = 1 SECONDS
 	/// How much disgust to gain per tick
 	var/disgust_per_tick = 1
 	/// The cap to which we can apply disgust
 	var/max_disgust = DISGUST_LEVEL_GROSS + 5
 	/// Tracks how many seconds this has been active
-	var/seconds_active = 0
+	var/seconds_active = 0 SECONDS
 
 /datum/status_effect/spacer/gravity_sickness/tick(seconds_per_tick, times_fired)
 	if(owner.mob_negates_gravity())
@@ -60,11 +64,11 @@
 	seconds_active += (initial(tick_interval) * 0.1)
 
 	var/mob/living/carbon/the_spacer = owner
-	the_spacer.adjust_disgust(disgust_per_tick * initial(tick_interval) * 0.1, max = max_disgust + 5)
+	the_spacer.adjust_disgust(disgust_per_tick, max = max_disgust + 5)
 
 	if(nerfed_effects_because_planetary)
 		return
-	if(seconds_active < 1 MINUTES)
+	if(seconds_active < 2 MINUTES)
 		return
 
 	var/minutes_active = round(seconds_active / (1 MINUTES))
@@ -102,7 +106,7 @@
 /datum/movespeed_modifier/spacer/in_space
 	movetypes = FLOATING
 	blacklisted_movetypes = FLYING
-	multiplicative_slowdown = -0.15
+	multiplicative_slowdown = -0.1
 
 /datum/movespeed_modifier/spacer/on_planet
 	movetypes = GROUND|FLYING
