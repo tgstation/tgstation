@@ -3956,6 +3956,17 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/smartfridge/organ,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/machinery/airalarm/directional/east,
+/obj/effect/turf_decal/siding/white{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/table/reinforced,
+/obj/machinery/computer/records/medical/laptop,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "bGn" = (
@@ -15475,6 +15486,13 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/dock)
+"fZM" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/structure/mannequin/skeleton,
+/turf/open/floor/iron/small,
+/area/station/medical/morgue)
 "gan" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/research{
@@ -19014,7 +19032,9 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
-/obj/machinery/iv_drip,
+/obj/structure/bodycontainer/morgue/beeper_off{
+	dir = 8
+	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "hkB" = (
@@ -28220,6 +28240,9 @@
 "kyG" = (
 /obj/item/radio/intercom/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/bodycontainer/morgue/beeper_off{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
 "kyI" = (
@@ -37245,9 +37268,6 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 5
 	},
-/obj/structure/bodycontainer/morgue/beeper_off{
-	dir = 2
-	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "nGA" = (
@@ -41040,9 +41060,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 9
 	},
-/obj/structure/bodycontainer/morgue/beeper_off{
-	dir = 2
-	},
+/obj/structure/bodycontainer/morgue/beeper_off,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "pds" = (
@@ -60173,6 +60191,17 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "vid" = (
@@ -105980,7 +106009,7 @@ ssz
 fmH
 ldq
 pdo
-vhQ
+fZM
 isV
 vhQ
 gGQ
