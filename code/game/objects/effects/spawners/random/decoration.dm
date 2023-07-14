@@ -31,11 +31,11 @@
 /obj/effect/spawner/random/decoration/ornament
 	name = "ornament spawner"
 	icon_state = "lamp"
+	spawn_loot_chance = 95 // station light bulbs have a 5% chance to break
 	loot = list(
-		/obj/item/flashlight/lamp = 35,
-		/obj/item/flashlight/lamp/green = 35,
+		/obj/item/flashlight/lamp = 40,
+		/obj/item/flashlight/lamp/green = 40,
 		/obj/item/flashlight/lantern = 10,
-		/obj/item/phone = 10,
 		/obj/item/flashlight/lantern/jade = 5,
 		/obj/item/flashlight/lamp/bananalamp = 5,
 	)
