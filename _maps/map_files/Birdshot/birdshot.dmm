@@ -15484,6 +15484,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
+/obj/structure/mannequin/skeleton,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "gan" = (
@@ -19027,6 +19028,9 @@
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/siding/white{
 	dir = 4
+	},
+/obj/structure/bodycontainer/morgue/beeper_off{
+	dir = 8
 	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
@@ -37263,9 +37267,6 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 5
 	},
-/obj/structure/bodycontainer/morgue/beeper_off{
-	dir = 2
-	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "nGA" = (
@@ -41058,9 +41059,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 9
 	},
-/obj/structure/bodycontainer/morgue/beeper_off{
-	dir = 2
-	},
+/obj/structure/bodycontainer/morgue/beeper_off,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "pds" = (
@@ -65321,7 +65320,6 @@
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 4
 	},
-/obj/structure/mannequin/skeleton,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "wKq" = (
