@@ -24,5 +24,5 @@
 	if(length(all_moms))
 		controller.set_blackboard_key(found_mom, pick(all_moms))
 		finish_action(controller, TRUE)
-	else
-		finish_action(controller, FALSE)
+		return
+	finish_action(controller, FALSE)
