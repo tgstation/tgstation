@@ -199,6 +199,6 @@
 	audio_cooldown = 1 SECONDS
 	vary = TRUE
 
-/datum/emote/living/claponce/get_sound(mob/living/user)
+/datum/emote/living/hiss/get_sound(mob/living/user)
 	return pick('modular_skyraptor/modules/newemotes/sounds/voice/hiss1.ogg',
 					'modular_skyraptor/modules/newemotes/sounds/voice/hiss2.ogg')

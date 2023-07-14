@@ -33,3 +33,6 @@
 
 /obj/item/clothing/suit/hooded/wintercoat
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/suits/wintercoat.dmi'
+
+/obj/item/clothing/head/hooded/winterhood
+	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/head/winterhood.dmi'
