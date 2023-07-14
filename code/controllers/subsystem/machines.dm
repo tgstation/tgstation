@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(machines)
 			propagate_network(power_cable, power_cable.powernet)
 
 /datum/controller/subsystem/machines/stat_entry(msg)
-	msg = "M:[length(processing)]|PN:[length(powernets)]"
+	msg = "M:[length(all_machines)]|MT:[length(machines_by_type)]|PM:[length(processing)]|PN:[length(powernets)]"
 	return ..()
 
 /datum/controller/subsystem/machines/fire(resumed = FALSE)
