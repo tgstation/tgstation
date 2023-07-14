@@ -14850,8 +14850,8 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/turf/closed/wall,
+/area/station/commons/dorms/laundry)
 "eIk" = (
 /obj/structure/filingcabinet,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -19917,11 +19917,11 @@
 /turf/open/floor/iron/smooth_edge,
 /area/station/security/lockers)
 "gri" = (
-/obj/structure/chair/stool/directional/west,
 /obj/machinery/camera/emp_proof/directional/south,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms/laundry)
 "grr" = (
@@ -23086,6 +23086,9 @@
 	dir = 1
 	},
 /area/station/service/hydroponics)
+"hvR" = (
+/turf/open/floor/iron/cafeteria,
+/area/station/commons/dorms/laundry)
 "hvS" = (
 /obj/effect/landmark/start/depsec/engineering,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -24597,15 +24600,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"hXL" = (
-/obj/effect/spawner/random/entertainment/arcade{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/cafeteria,
-/area/station/commons/dorms/laundry)
 "hXU" = (
 /obj/machinery/newscaster/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -25963,6 +25957,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"itf" = (
+/obj/machinery/cryopod{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/commons/dorms/laundry)
 "iti" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/red,
@@ -27644,11 +27644,11 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "iUY" = (
-/obj/structure/table,
-/obj/item/toy/foamblade,
-/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
+	},
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms/laundry)
@@ -33046,6 +33046,12 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hos)
+"kGp" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/commons/dorms/laundry)
 "kGx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -37113,6 +37119,12 @@
 	},
 /turf/open/floor/iron/smooth_half,
 /area/station/security/brig/upper)
+"lWh" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/closed/wall,
+/area/station/commons/dorms/laundry)
 "lWI" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -53340,7 +53352,6 @@
 /area/station/security/prison/rec)
 "rfz" = (
 /obj/machinery/light/small/directional/west,
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
@@ -56082,12 +56093,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
-"sbf" = (
-/obj/structure/sign/plaques/kiddie/devils_tooth{
-	pixel_y = 32
-	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "sbi" = (
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/photocopier,
@@ -57795,6 +57800,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
+"sDi" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners{
+	dir = 1
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/cafeteria,
+/area/station/commons/dorms/laundry)
 "sDl" = (
 /turf/open/openspace/icemoon/keep_below,
 /area/icemoon/surface/outdoors/nospawn)
@@ -58374,6 +58386,13 @@
 	dir = 1
 	},
 /area/station/security/prison)
+"sMT" = (
+/obj/machinery/door/airlock{
+	id_tag = "FitnessShower";
+	name = "Cryogenic Storage"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/commons/dorms/laundry)
 "sMY" = (
 /obj/structure/table,
 /obj/item/radio/off,
@@ -62484,6 +62503,14 @@
 /obj/machinery/requests_console/auto_name/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
+"ugz" = (
+/obj/machinery/light/directional/south,
+/obj/machinery/computer/cryopod{
+	pixel_y = -32;
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/station/commons/dorms/laundry)
 "ugG" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/fyellow,
@@ -72849,6 +72876,8 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/item/toy/foamblade,
+/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms/laundry)
 "xwM" = (
@@ -157624,11 +157653,11 @@ gyc
 afz
 tKI
 szG
-szG
+iwS
 eId
-gQe
-gQe
-szG
+lWh
+lWh
+iwS
 szG
 szG
 szG
@@ -157882,10 +157911,10 @@ tKI
 tKI
 iwS
 iwS
-sbf
-scw
-iDt
-scw
+itf
+itf
+itf
+iwS
 szG
 szG
 szG
@@ -158137,12 +158166,12 @@ iwS
 pfj
 ehc
 rfz
-hXL
+tDG
+sMT
+hvR
+hvR
+ugz
 iwS
-iDt
-iDt
-iDt
-iDt
 szG
 szG
 szG
@@ -158396,10 +158425,10 @@ gwz
 tDG
 gri
 iwS
-iDt
-iDt
-iDt
-iDt
+kGp
+kGp
+kGp
+iwS
 iDt
 szG
 gjq
@@ -158650,13 +158679,13 @@ iwS
 iwS
 jLD
 xjY
-tDG
+sDi
 iUY
-qMo
-iDt
-cCb
-iDt
-iDt
+iwS
+iwS
+iwS
+iwS
+iwS
 scw
 oif
 eJf
@@ -159168,7 +159197,7 @@ ipZ
 xwG
 qMo
 iDt
-iDt
+cCb
 iDt
 iDt
 iDt
