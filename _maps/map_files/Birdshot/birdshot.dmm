@@ -3955,7 +3955,8 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/mannequin/skeleton,
+/obj/structure/table/reinforced,
+/obj/machinery/computer/records/medical/laptop,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "bGn" = (
@@ -57084,6 +57085,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
+/obj/structure/mannequin/skeleton,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "uhu" = (
@@ -70511,9 +70513,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "yaJ" = (
-/obj/machinery/smartfridge/organ,
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/light/small/directional/south,
+/obj/machinery/smartfridge/organ,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "yaL" = (
