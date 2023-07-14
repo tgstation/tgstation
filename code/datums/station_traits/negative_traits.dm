@@ -414,7 +414,7 @@
 ///Station traits that influence the space background and apply some unique effects!
 /datum/station_trait/nebula
 	name = "Nebula"
-	trait_type = STATION_TRAIT_NEGATIVE
+	trait_type = STATION_TRAIT_ABSTRACT
 	weight = 0
 
 	show_in_report = TRUE
@@ -451,6 +451,7 @@
 
 ///Station nebula that incur some sort of effect if no shielding is created
 /datum/station_trait/nebula/hostile
+	trait_type = STATION_TRAIT_ABSTRACT
 	trait_processes = TRUE
 
 	///Intensity of the nebula

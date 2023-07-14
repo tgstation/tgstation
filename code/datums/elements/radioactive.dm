@@ -2,7 +2,7 @@
 
 /// This atom will regularly pulse radiation.
 /datum/element/radioactive
-	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY | ELEMENT_BESPOKE
 	argument_hash_start_idx = 1
 	///Range of our wave in tiles
 	var/range
