@@ -5141,10 +5141,10 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/chair/sofa/bench/tram/left{
+/obj/structure/transport/linear/tram/grey,
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 4
 	},
-/obj/structure/transport/linear/tram/grey,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "aEv" = (
@@ -7155,7 +7155,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_cargo_lift";
-	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck");
+	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck");
 	req_access = list("mining")
 	},
 /obj/effect/abstract/elevator_music_zone{
@@ -18084,6 +18084,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"fdw" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/transport/linear/tram/purple,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "fdz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -18142,7 +18149,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_sci_lift";
-	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
+	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)
@@ -18257,6 +18264,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom/holding)
+"fge" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/transport/linear/tram/grey,
+/obj/structure/chair/sofa/bench/tram/right{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "fgi" = (
 /turf/closed/wall,
 /area/station/cargo/lobby)
@@ -20793,6 +20810,13 @@
 /obj/structure/ladder,
 /turf/open/openspace/airless,
 /area/station/asteroid)
+"gfA" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/transport/linear/tram,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "gfK" = (
 /turf/closed/wall/r_wall,
 /area/station/security/execution/education)
@@ -33790,12 +33814,8 @@
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "kYp" = (
-/obj/effect/landmark/start/hangover,
-/obj/structure/chair/sofa/bench/tram/right{
-	dir = 4
-	},
-/obj/structure/transport/linear/tram/grey,
-/obj/structure/window/reinforced/tram_new,
+/obj/structure/fluff/tram_rail,
+/obj/structure/transport/linear/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "kYs" = (
@@ -36867,6 +36887,16 @@
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
+"mcl" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/transport/linear/tram/grey,
+/obj/structure/chair/sofa/bench/tram/left{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "mcD" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -41782,7 +41812,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_dorm_lift";
-	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
+	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck")
 	},
 /obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
@@ -42759,6 +42789,7 @@
 "olw" = (
 /obj/structure/fluff/tram_rail,
 /obj/structure/transport/linear/tram/grey,
+/obj/structure/chair/sofa/bench/tram/left,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "olG" = (
@@ -42899,12 +42930,9 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "oor" = (
-/obj/structure/chair/sofa/bench/tram/right{
-	dir = 8
-	},
-/obj/structure/transport/linear/tram/grey,
-/obj/structure/window/reinforced/tram_new,
-/turf/open/openspace,
+/obj/effect/turf_decal/tile/neutral/tram,
+/obj/structure/transport/linear/tram,
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "ooz" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -43559,7 +43587,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_perma_lift";
-	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
+	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/execution/transfer)
@@ -44374,7 +44402,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck");
+	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck");
 	layer = 3.1
 	},
 /turf/closed/wall/r_wall,
@@ -46174,6 +46202,12 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/ordnance/storage)
+"pBf" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/transport/linear/tram/grey,
+/obj/structure/chair/sofa/bench/tram/right,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "pBj" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -49681,6 +49715,14 @@
 	},
 /turf/open/floor/iron/stairs/medium,
 /area/station/commons/dorms)
+"qSD" = (
+/obj/effect/turf_decal/tile/neutral/tram,
+/obj/structure/transport/linear/tram/grey,
+/obj/structure/chair/sofa/bench/tram/left{
+	dir = 8
+	},
+/turf/open/floor/noslip/tram_plate,
+/area/station/hallway/primary/tram/center)
 "qSE" = (
 /obj/structure/table,
 /obj/machinery/computer/security/telescreen/interrogation,
@@ -52768,7 +52810,7 @@
 "rZD" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/tram,
-/obj/structure/transport/linear/tram/grey,
+/obj/structure/transport/linear/tram,
 /turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "rZF" = (
@@ -52795,7 +52837,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "tram_upper_center_lift";
-	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
+	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck")
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 1
@@ -57221,7 +57263,7 @@
 /area/station/hallway/secondary/service)
 "tzk" = (
 /obj/machinery/computer/atmos_control/oxygen_tank{
-	atmos_chambers = list("o2ordance"="Oxygen        Supply")
+	atmos_chambers = list("o2ordance"="Oxygen                Supply")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/north,
@@ -58201,7 +58243,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "tram_lower_center_lift";
-	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
+	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/mid)
@@ -60626,9 +60668,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "uGM" = (
+/obj/structure/fluff/tram_rail,
 /obj/effect/landmark/start/hangover,
-/obj/structure/transport/linear/tram/grey,
-/obj/structure/window/reinforced/tram_new,
+/obj/structure/transport/linear/tram/purple,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "uGU" = (
@@ -61307,6 +61349,14 @@
 	},
 /turf/open/space/openspace,
 /area/station/solars/port)
+"uSB" = (
+/obj/effect/turf_decal/tile/neutral/tram,
+/obj/structure/transport/linear/tram/grey,
+/obj/structure/chair/sofa/bench/tram/left{
+	dir = 4
+	},
+/turf/open/floor/noslip/tram_plate,
+/area/station/hallway/primary/tram/center)
 "uSL" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/fluff/tram_rail/floor,
@@ -62394,7 +62444,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck");
+	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck");
 	layer = 3.1
 	},
 /turf/closed/wall,
@@ -62993,10 +63043,10 @@
 "vtP" = (
 /obj/structure/fluff/tram_rail,
 /obj/effect/landmark/start/hangover,
-/obj/structure/chair/sofa/bench/tram/left{
+/obj/structure/transport/linear/tram/grey,
+/obj/structure/chair/sofa/bench/tram/right{
 	dir = 8
 	},
-/obj/structure/transport/linear/tram/grey,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "vtT" = (
@@ -166882,10 +166932,10 @@ aEk
 mYI
 tgE
 uOL
-hio
-uAE
+uGM
+uSB
 aEq
-kYp
+uOL
 ykP
 lej
 ocU
@@ -167138,11 +167188,11 @@ aEj
 rOu
 mYI
 ykP
-uOL
-olw
-uAE
-gUF
-uOL
+rlO
+kYp
+oor
+gfA
+rlO
 ykP
 lej
 iVr
@@ -167395,11 +167445,11 @@ eyK
 obC
 kjY
 ykP
-rlO
-olw
-uAE
-gUF
-rlO
+fqv
+kYp
+oor
+gfA
+fqv
 ykP
 lej
 iVr
@@ -167652,11 +167702,11 @@ aEl
 rOu
 umT
 ykP
-fqv
-olw
+uOL
+pBf
 gIm
 gUF
-fqv
+aMY
 ykP
 lej
 jeW
@@ -167909,11 +167959,11 @@ iNr
 rOu
 wCl
 izU
-aMY
+uOL
 olw
 oZC
-gUF
-aMY
+mcl
+uOL
 izU
 jHR
 dWi
@@ -168166,11 +168216,11 @@ aEk
 rOu
 umT
 ykP
-rlO
+aMY
 hio
 uAE
-gUF
-rlO
+fge
+uOL
 ykP
 lej
 pxC
@@ -168423,11 +168473,11 @@ iZV
 tQy
 cHj
 ykP
-fqv
-olw
+rlO
+kYp
 rZD
-gUF
-fqv
+gfA
+rlO
 ykP
 lej
 fxs
@@ -168680,11 +168730,11 @@ aEj
 rOu
 mpa
 ykP
-uOL
-olw
-uAE
-gUF
-uOL
+fqv
+kYp
+oor
+gfA
+fqv
 ykP
 lej
 cZo
@@ -168937,11 +168987,11 @@ moU
 aEl
 mpa
 ykP
-oor
+uOL
 vtP
-uAE
-gUF
-uGM
+qSD
+fdw
+uOL
 qwI
 lej
 fxs
