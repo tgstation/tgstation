@@ -306,7 +306,7 @@
 	desc = "Contains circuitboards and radiation modules for constructing radioactive nebula shielding."
 	cost = CARGO_CRATE_VALUE * 2
 
-	hidden = TRUE
+	special = TRUE
 	contains = list(/obj/item/mod/module/rad_protection = 5,
 					/obj/item/circuitboard/machine/radioactive_nebula_shielding = 5,
 					/obj/item/paper/fluff/radiation_nebula = 1,

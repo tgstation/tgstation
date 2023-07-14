@@ -55,3 +55,12 @@
 		REMOVE_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
 
 	qdel(src)
+
+/proc/request_station_colors(atom/thing_to_color, pattern = PATTERN_DEFAULT)
+	for(var/datum/station_trait/trait in SSstation.station_traits)
+		var/decal_color = trait.get_decal_color(thing_to_color, pattern)
+		if(decal_color)
+			return decal_color
+
+/datum/station_trait/proc/get_decal_color(thing_to_color, pattern)
+	return

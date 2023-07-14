@@ -537,7 +537,7 @@
 		RegisterSignals(target, list(COMSIG_AREA_ENTERED, COMSIG_AREA_INITIALIZED_IN), PROC_REF(on_entered))
 		RegisterSignal(target, COMSIG_AREA_EXITED, PROC_REF(on_exited))
 
-/datum/station_trait/nebula/hostile/on_round_start()
+/datum/station_trait/nebula/hostile/radiation/on_round_start()
 	. = ..()
 
 	//Let people order more nebula shielding
@@ -614,11 +614,9 @@
 	//Max shielders, excluding the grav-gen to avoid confusion when that goes down
 	var/max_shielders = ((maximum_nebula_intensity / intensity_increment_time)) / initial(shielder.shielding_strength)
 
-	var/announcement = {"Your station has been constructed inside a radioactive nebula. While the nebula poses a serious threat to the station, \
-	especially outside exploration, it also defends and hides the station to those who would threaten it. \n\n\
-	Standard spacesuits will not protect against the nebula and using them is strongly discouraged, \
-	so radioactive protection MODsuit modules have been pre-researched. \
-	We've also supplied extra radiation suits and potassium iodide pills. \n\n\
+	var/announcement = {"Your station has been constructed inside a radioactive nebula. \
+	Standard spacesuits will not protect against the nebula and using them is strongly discouraged. \n\n\
+
 	EXTREME IMPORTANCE: The station is falling deeper into the nebula, and the gravity generators innate radiation shielding \
 	will not hold very long. Your engineering department has been supplied with all the necessary supplies to set up \
 	shields to protect against the nebula. Additional supply crates can be ordered at cargo. \n\n\
@@ -626,4 +624,20 @@
 	Every shielding unit will provide an additional [shielder_time] of protection, fully protecting the station with [max_shielders] shielding units.
 	"}
 
-	priority_announce(announcement)
+	priority_announce(announcement, sound = 'sound/misc/notice1.ogg')
+
+	//Set the display screens to the radiation alert
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	if(!frequency)
+		return
+
+	var/datum/signal/signal = new
+	signal.data["command"] = "alert"
+	signal.data["picture_state"] = "radiation"
+
+	var/atom/movable/virtualspeaker/virt = new(null)
+	frequency.post_signal(virt, signal)
+
+/datum/station_trait/nebula/hostile/radiation/get_decal_color(atom/thing_to_color, pattern)
+	if(istype(get_area(thing_to_color), /area/station/hallway)) //color hallways green
+		return COLOR_GREEN

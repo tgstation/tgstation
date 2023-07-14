@@ -85,6 +85,8 @@
 	weather_duration_lower = 100 HOURS
 	weather_duration_upper = 100 HOURS
 
+	end_message = null
+
 	///Chance we pulse a living during the storm
 	var/radiation_chance = 5
 
