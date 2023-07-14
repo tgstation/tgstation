@@ -5554,6 +5554,18 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
+"wl" = (
+/mob/living/basic/monkey_animatronic,
+/obj/structure/railing{
+	dir = 6;
+	layer = 3.1
+	},
+/obj/structure/railing{
+	dir = 9;
+	layer = 3.1
+	},
+/turf/open/floor/elevated,
+/area/centcom/central_command_areas/fore)
 "wq" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
@@ -6317,6 +6329,11 @@
 /obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/centcom/tdome/administration)
+"zB" = (
+/turf/open/floor/holofloor/stairs{
+	dir = 4
+	},
+/area/centcom/central_command_areas/fore)
 "zC" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -54786,10 +54803,10 @@ Jr
 OZ
 Jr
 ub
+wl
 nc
 nc
 sf
-OL
 Vx
 Ul
 Jg
@@ -55043,10 +55060,10 @@ xK
 tj
 xK
 qU
+zB
 Zw
 Zw
 Zw
-OL
 Vx
 Vx
 Vx
