@@ -1,4 +1,4 @@
-///Machinery that blocks nebula's and generates gasses. This is just for easy of use, you don't need to use this subtype
+///Machinery that block nebula's. This type is for convenience, you can set nebula shielding on other objects aswell using add_to_nebula_shielding()
 /obj/machinery/nebula_shielding
 	density = TRUE
 

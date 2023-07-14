@@ -60,11 +60,13 @@
 
 	qdel(src)
 
+///Called by decals if they can be colored, to see if we got some cool colors for them. Only takes the first station trait
 /proc/request_station_colors(atom/thing_to_color, pattern = PATTERN_DEFAULT)
 	for(var/datum/station_trait/trait in SSstation.station_traits)
 		var/decal_color = trait.get_decal_color(thing_to_color, pattern)
 		if(decal_color)
 			return decal_color
 
+///Return a color for the decals, if any
 /datum/station_trait/proc/get_decal_color(thing_to_color, pattern)
 	return

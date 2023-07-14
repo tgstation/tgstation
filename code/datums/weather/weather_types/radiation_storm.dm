@@ -78,6 +78,7 @@
 	var/atom/movable/virtualspeaker/virt = new(null)
 	frequency.post_signal(virt, signal)
 
+/// Used by the radioactive nebula when the station doesnt have enough shielding
 /datum/weather/rad_storm/nebula
 	protected_areas = list(/area/shuttle)
 

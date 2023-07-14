@@ -21,7 +21,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///Base alpha of the material, is used for greyscale icons.
 	var/alpha = 255
 	///Starlight color of the material
-	///This is the color of light it'll emit if its turf is transparent and over space. Set in Initialize()
+	///This is the color of light it'll emit if its turf is transparent and over space.
 	var/starlight_color = COLOR_STARLIGHT
 	///Bitflags that influence how SSmaterials handles this material.
 	var/init_flags = MATERIAL_INIT_MAPLOAD

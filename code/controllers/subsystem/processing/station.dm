@@ -62,7 +62,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		if(!initial(trait_typepath.space) && !SSmapping.is_planetary()) //we dont do space but we're in space
 			continue
 
-		if(!initial(trait_typepath.planetary) && SSmapping.is_planetary())
+		if(!initial(trait_typepath.planetary) && SSmapping.is_planetary()) //we dont do planets but we're on a planet
 			continue
 
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
