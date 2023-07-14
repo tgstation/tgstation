@@ -1,7 +1,7 @@
 /mob/living/basic/festivus
 	name = "festivus pole"
 	desc = "Serenity now... SERENITY NOW!"
-	icon = 'icons/obj/flora/pinetrees.dmi'
+	icon = 'icons/obj/fluff/flora/pinetrees.dmi'
 	icon_state = "festivus_pole"
 	icon_living = "festivus_pole"
 	icon_dead = "festivus_pole"

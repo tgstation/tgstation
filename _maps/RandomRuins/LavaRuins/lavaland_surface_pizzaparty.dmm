@@ -102,7 +102,7 @@
 "ff" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/fluff{
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machines/computer.dmi';
 	icon_state = "television";
 	name = "old tv";
 	desc = "A modern plasma display boxed in by a rustic wooden frame and mock antenna. Just like the old, old, old days."
@@ -496,7 +496,7 @@
 /turf/open/floor/carpet/blue/lavaland,
 /area/ruin/unpowered)
 "Fg" = (
-/mob/living/simple_animal/hostile/asteroid/goliath/beast,
+/mob/living/basic/mining/goliath,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)

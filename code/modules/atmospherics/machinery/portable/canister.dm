@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
 	desc = "A canister for the storage of gas."
-	icon = 'icons/obj/atmospherics/canisters.dmi'
+	icon = 'icons/obj/pipes_n_cables/canisters.dmi'
 	icon_state = "#mapme"
 	greyscale_config = /datum/greyscale_config/canister/hazard
 	greyscale_colors = "#ffff00#000000"
@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	req_access = list()
 
-	var/icon/canister_overlay_file = 'icons/obj/atmospherics/canisters.dmi'
+	var/icon/canister_overlay_file = 'icons/obj/pipes_n_cables/canisters.dmi'
 
 	///Is the valve open?
 	var/valve_open = FALSE

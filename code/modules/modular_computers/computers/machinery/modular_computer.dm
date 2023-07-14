@@ -2,7 +2,7 @@
 /obj/machinery/modular_computer
 	name = "modular computer"
 	desc = "You shouldn't see this. If you do, report it." //they should be examining the processor instead
-	icon = 'icons/obj/modular_console.dmi'
+	icon = 'icons/obj/machines/modular_console.dmi'
 	icon_state = "console"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	density = TRUE

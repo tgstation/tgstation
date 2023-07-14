@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "You can now wear multiple accessories on your uniform at once (up to five by default)"
-  - balance: "Removed armor from accessories, and nerfs the effects of some accessories."

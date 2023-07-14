@@ -129,7 +129,7 @@
 /obj/structure/bouncy_castle
 	name = "bouncy castle"
 	desc = "And if you do drugs, you go to hell before you die. Please."
-	icon = 'icons/obj/bouncy_castle.dmi'
+	icon = 'icons/obj/toys/bouncy_castle.dmi'
 	icon_state = "bouncy_castle"
 	anchored = TRUE
 	density = TRUE

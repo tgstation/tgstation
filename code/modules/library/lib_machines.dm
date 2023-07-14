@@ -683,7 +683,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
  */
 /obj/machinery/libraryscanner
 	name = "scanner control interface"
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "bigscanner"
 	desc = "It's an industrial strength book scanner. Perfect!"
 	density = TRUE
@@ -755,7 +755,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
  */
 /obj/machinery/bookbinder
 	name = "book binder"
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "binder"
 	desc = "Only intended for binding paper products."
 	density = TRUE

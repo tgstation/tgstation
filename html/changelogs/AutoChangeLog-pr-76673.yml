@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - qol: "When a MOD fails to store something in itself when retracting, you're now notified in both the chat and by a balloon alert."

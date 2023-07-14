@@ -440,7 +440,7 @@
 
 /obj/structure/displaycase/forsale
 	name = "vend-a-tray"
-	icon = 'icons/obj/machines/basic_machines.dmi'
+	icon = 'icons/obj/machines/display.dmi'
 	icon_state = "laserbox"
 	custom_glass_overlay = TRUE
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents."

@@ -13,7 +13,7 @@
 /obj/structure/alien/resin/flower_bud //inheriting basic attack/damage stuff from alien structures
 	name = "flower bud"
 	desc = "A large pulsating plant..."
-	icon = 'icons/effects/spacevines.dmi'
+	icon = 'icons/mob/spacevines.dmi'
 	icon_state = "bud0"
 	layer = SPACEVINE_MOB_LAYER
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
@@ -129,7 +129,7 @@
 /mob/living/simple_animal/hostile/venus_human_trap
 	name = "venus human trap"
 	desc = "Now you know how the fly feels."
-	icon = 'icons/effects/spacevines.dmi'
+	icon = 'icons/mob/spacevines.dmi'
 	icon_state = "venus_human_trap"
 	health_doll_icon = "venus_human_trap"
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
