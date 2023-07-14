@@ -20047,6 +20047,10 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/library)
+"fiu" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet/red,
+/area/station/commons/dorms/room1)
 "fiz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/tile/light,
@@ -24361,6 +24365,10 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor2/port)
+"got" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/carpet/royalblue,
+/area/station/commons/dorms/room4)
 "goy" = (
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/item/wallframe/light_fixture{
@@ -51876,7 +51884,6 @@
 /area/station/science/lobby)
 "nsM" = (
 /obj/structure/table,
-/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/eighties,
 /area/station/commons/dorms/room2)
 "nsO" = (
@@ -52468,7 +52475,6 @@
 /area/station/maintenance/floor4/port/fore)
 "nAF" = (
 /obj/structure/table/reinforced/rglass,
-/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms/room3)
 "nAH" = (
@@ -52813,8 +52819,8 @@
 /area/station/maintenance/floor2/starboard/fore)
 "nEO" = (
 /obj/structure/table,
+/obj/item/screwdriver,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms/room4)
 "nET" = (
@@ -52996,7 +53002,6 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/random/directional/north,
-/obj/item/screwdriver,
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms/room4)
 "nHr" = (
@@ -55254,6 +55259,10 @@
 	},
 /turf/open/floor/iron/white/small,
 /area/station/medical/chemistry)
+"olg" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/parquet,
+/area/station/commons/dorms/room2)
 "olt" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -56275,6 +56284,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/floor2/aft)
+"ozK" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/carpet/neon/simple/white,
+/area/station/commons/dorms/room3)
 "ozL" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -82901,7 +82914,6 @@
 /area/station/maintenance/disposal/incinerator)
 "vLb" = (
 /obj/structure/table,
-/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/iron,
 /area/station/commons/dorms/room1)
 "vLd" = (
@@ -254954,7 +254966,7 @@ isU
 isU
 qrd
 nZR
-nWo
+fiu
 bvR
 qNF
 bxl
@@ -256496,7 +256508,7 @@ aOt
 oQN
 nWe
 niM
-lof
+olg
 pUI
 qQN
 dCU
@@ -260351,7 +260363,7 @@ qrd
 qrd
 qrd
 aiS
-ovK
+ozK
 qov
 dhs
 rfU
@@ -261893,7 +261905,7 @@ pIu
 cmu
 qrd
 nIt
-ryx
+got
 qAI
 uLH
 kDB
