@@ -10,7 +10,8 @@
 	can_bayonet = TRUE
 	knife_x_offset = 22
 	knife_y_offset = 11
-
+	//monke edit:fully charges per crank because it was really confusing and unintuitive
+	//monke edit: increased cooldown time to compensate for increased charge
 /obj/item/gun/energy/laser/musket/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_wielded = 10)
@@ -18,7 +19,7 @@
 		/datum/component/gun_crank, \
 		charging_cell = get_cell(), \
 		charge_amount = 1000, \
-		cooldown_time = 2 SECONDS, \
+		cooldown_time = 3 SECONDS, \
 		charge_sound = 'sound/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.8 SECONDS, \
 		)
@@ -30,6 +31,17 @@
 	inhand_icon_state = "musket_prime"
 	worn_icon_state = "las_musket_prime"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/prime)
+	//monke edit: cooldown time reduced to 2 for the prime version
+/obj/item/gun/energy/laser/musket/Initialize(mapload)
+	. = ..()
+	AddComponent( \
+		/datum/component/gun_crank, \
+		charging_cell = get_cell(), \
+		charge_amount = 1000, \
+		cooldown_time = 2 SECONDS, \
+		charge_sound = 'sound/weapons/laser_crank.ogg', \
+		charge_sound_cooldown_time = 1.8 SECONDS, \
+		)
 
 /obj/item/gun/energy/disabler/smoothbore
 	name = "smoothbore disabler"

@@ -124,7 +124,7 @@
 /obj/projectile/beam/disabler/smoothbore/prime
 	name = "focused disabler beam"
 	weak_against_armour = FALSE
-	stamina = 50 //monkie edit: changed from 35 to 50
+	stamina = 65 //monkie edit: changed from 35 to 65(Black market/ERT item only, even rarer is the book to make it)
 
 /obj/projectile/beam/pulse
 	name = "pulse"
