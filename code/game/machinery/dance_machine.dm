@@ -48,12 +48,6 @@
 	var/song_length = 0
 	var/song_beat = 0
 
-/datum/track/New(name, path, length, beat)
-	song_name = name
-	song_path = path
-	song_length = length
-	song_beat = beat
-
 /datum/track/default
 	song_path = 'sound/ambience/title3.ogg'
 	song_name = "Tintin on the Moon"
