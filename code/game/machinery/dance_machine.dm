@@ -1,7 +1,7 @@
 /obj/machinery/jukebox
 	name = "jukebox"
 	desc = "A classic music player."
-	icon = 'icons/obj/machines/basic_machines.dmi'
+	icon = 'icons/obj/machines/music.dmi'
 	icon_state = "jukebox"
 	verb_say = "states"
 	density = TRUE

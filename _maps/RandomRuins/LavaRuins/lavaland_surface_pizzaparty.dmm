@@ -102,7 +102,7 @@
 "ff" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/fluff{
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machines/computer.dmi';
 	icon_state = "television";
 	name = "old tv";
 	desc = "A modern plasma display boxed in by a rustic wooden frame and mock antenna. Just like the old, old, old days."

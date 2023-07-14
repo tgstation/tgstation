@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(ai_hologram_icons, list(
 	AI_HOLOGRAM_PARROT = 'icons/mob/simple/animal.dmi',
 	AI_HOLOGRAM_PUG = 'icons/mob/simple/pets.dmi',
 	AI_HOLOGRAM_RATVAR = 'icons/mob/silicon/ai.dmi',
-	AI_HOLOGRAM_SPIDER = 'icons/mob/simple/animal.dmi',
+	AI_HOLOGRAM_SPIDER = 'icons/mob/simple/arachnoid.dmi',
 	AI_HOLOGRAM_XENO = 'icons/mob/nonhuman-player/alien.dmi',
 ))
 

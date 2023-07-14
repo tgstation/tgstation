@@ -8,7 +8,7 @@
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "A control terminal for the area's electrical systems."
-
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "apc0"
 	use_power = NO_POWER_USE
 	req_access = null
