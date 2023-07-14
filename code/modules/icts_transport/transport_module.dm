@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	base_icon_state = "catwalk"
 	density = FALSE
 	anchored = TRUE
-	armor_type = /datum/armor/structure_transport
+	armor_type = /datum/armor/transport_module
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
@@ -67,10 +67,12 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	/// A lazylist of REFs to all mobs which have a radial open currently
 	var/list/current_operators
 
-/datum/armor/structure_transport
-	melee = 50
-	fire = 80
-	acid = 50
+/datum/armor/transport_module
+	melee = 80
+	bullet = 90
+	bomb = 70
+	fire = 100
+	acid = 100
 
 /obj/structure/transport/linear/Initialize(mapload)
 	. = ..()
