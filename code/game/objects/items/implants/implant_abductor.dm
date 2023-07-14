@@ -53,7 +53,7 @@
 
 	else //If we still cannot find a home associated with our team, we just pick a random pad and make it our own.
 		var/list/consoles = list()
-		for(var/obj/machinery/abductor/console/found_console in GLOB.machines)
+		for(var/obj/machinery/abductor/console/found_console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/abductor/console))
 			consoles += found_console
 		console = pick(consoles)
 		if(console)

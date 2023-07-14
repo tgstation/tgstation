@@ -1,36 +1,35 @@
-/// Index for all cables, so that powernets don't have to look through the entire world all the time
+/// List of all cables, so that powernets don't have to look through the entire world all the time
 GLOBAL_LIST_EMPTY(cable_list)
-/// list of all /obj/effect/portal
+
+/// List of all portals
 GLOBAL_LIST_EMPTY(portals)
-/// list of all airlocks
-GLOBAL_LIST_EMPTY(airlocks)
-/// list of all curtains
+
+/// List of all curtains for button tracking
 GLOBAL_LIST_EMPTY(curtains)
-/// list of all mechs. Used by hostile mobs target tracking.
+
+/// List of all mechs for hostile mob target tracking
 GLOBAL_LIST_EMPTY(mechas_list)
-/// list of all communication consoles and AIs, for automatic shuttle calls when there are none.
+
+/// List of all atoms that can call the shuttle, for automatic shuttle calls when there are none.
 GLOBAL_LIST_EMPTY(shuttle_caller_list)
-/// list of ALL machines
-GLOBAL_LIST_EMPTY(machines)
-/// list of all /obj/machinery/computer/camera_advanced/shuttle_docker
-GLOBAL_LIST_EMPTY(navigation_computers)
-/// important to keep track of for managing nukeops war declarations.
+
+/// List of all nukie shuttle boards, for forcing launch delay if they declare war
 GLOBAL_LIST_EMPTY(syndicate_shuttle_boards)
-/// list of all bot nagivation beacons, used for patrolling.
+
+/// List of all nav beacons indexed by stringified z level
 GLOBAL_LIST_EMPTY(navbeacons)
-/// list of all tracking beacons used by teleporters
+
+/// List of all active teleport beacons
 GLOBAL_LIST_EMPTY(teleportbeacons)
-/// list of all MULEbot delivery beacons.
+
+/// List of all active delivery beacons
 GLOBAL_LIST_EMPTY(deliverybeacons)
-/// list of all tags associated with delivery beacons.
+
+/// List of all active delivery beacon locations
 GLOBAL_LIST_EMPTY(deliverybeacontags)
-GLOBAL_LIST_EMPTY(nuke_list)
-/// list of all machines or programs that can display station alerts
-GLOBAL_LIST_EMPTY(alarmdisplay)
-/// list of all singularities on the station
+
+/// List of all singularity components that exist
 GLOBAL_LIST_EMPTY_TYPED(singularities, /datum/component/singularity)
-/// list of all /obj/machinery/mechpad
-GLOBAL_LIST_EMPTY(mechpad_list)
 
 /// list of all /datum/chemical_reaction datums indexed by their typepath. Use this for general lookup stuff
 GLOBAL_LIST(chemical_reactions_list)

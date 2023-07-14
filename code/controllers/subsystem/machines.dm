@@ -3,6 +3,13 @@ SUBSYSTEM_DEF(machines)
 	init_order = INIT_ORDER_MACHINES
 	flags = SS_KEEP_TIMING
 	wait = 2 SECONDS
+
+	/// Assosciative list of all machines that exist.
+	VAR_PRIVATE/list/machines_by_type = list()
+
+	/// All machines, not just those that are processing.
+	VAR_PRIVATE/list/all_machines = list()
+
 	var/list/processing = list()
 	var/list/currentrun = list()
 	///List of all powernets on the server.
@@ -12,6 +19,39 @@ SUBSYSTEM_DEF(machines)
 	makepowernets()
 	fire()
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/machines/proc/register_machine(obj/machinery/machine)
+	LAZYADD(machines_by_type[machine.type], machine)
+	all_machines |= machine
+
+/datum/controller/subsystem/machines/proc/unregister_machine(obj/machinery/machine)
+	LAZYREMOVE(machines_by_type[machine.type], machine)
+	all_machines -= machine
+
+/datum/controller/subsystem/machines/proc/get_machines_by_type_and_subtypes(obj/machinery/machine_type)
+	if(!ispath(machine_type))
+		machine_type = machine_type.type
+	if(!ispath(machine_type, /obj/machinery))
+		CRASH("called get_machines_by_type_and_subtypes with a non-machine type [machine_type]")
+	var/list/machines = list()
+	var/list/subtypes = typesof(machine_type)
+	for(var/next_type in subtypes)
+		if(!(next_type in machines_by_type))
+			continue
+		machines += machines_by_type[next_type]
+	return machines
+
+/datum/controller/subsystem/machines/proc/get_machines_by_type(obj/machinery/machine_type)
+	if(!ispath(machine_type))
+		machine_type = machine_type.type
+	if(!ispath(machine_type, /obj/machinery))
+		CRASH("called get_machines_by_type with a non-machine type [machine_type]")
+
+	var/list/machines = machines_by_type[machine_type]
+	return machines?.Copy() || list()
+
+/datum/controller/subsystem/machines/proc/get_all_machines()
+	return all_machines.Copy()
 
 /datum/controller/subsystem/machines/proc/makepowernets()
 	for(var/datum/powernet/power_network as anything in powernets)
