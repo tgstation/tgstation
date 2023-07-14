@@ -6,7 +6,7 @@
 #define COMSIG_ICTS_RESPONSE "!RESP"
 #define REQUEST_FAIL "!FAIL"
 #define REQUEST_SUCCESS "!ACK"
-
+#define COMSIG_ICTS_TRANSPORT_ACTIVE "!ACTV"
 
 // ICTS Codes
 #define NOT_IN_SERVICE "!NIS"
@@ -26,8 +26,16 @@
 
 // Flags for the ICTS Tram VOBC (vehicle on-board computer)
 
-#define CONTROLLER_IDLE (1<<0)
+#define PRE_DEPARTURE (1<<0)
 #define DOORS_OPEN (1<<1)
+#define CONTROLS_LOCKED (1<<2)
+DEFINE_BITFIELD(controller_status, list(
+	"PRE_DEPARTURE" = PRE_DEPARTURE,
+	"DOORS_OPEN" = DOORS_OPEN,
+	"CONTROLS_LOCKED" = CONTROLS_LOCKED,
+))
+
+
 
 #define ICTS_TYPE_ELEVATOR "icts_elev"
 #define ICTS_TYPE_TRAM "icts_tram"

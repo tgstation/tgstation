@@ -129,6 +129,7 @@
 /obj/machinery/door/airlock/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
+//	RegisterSignal(SSicts_transport, COMSIG_ICTS_RESPONSE, PROC_REF(call_response))
 	INVOKE_ASYNC(src, PROC_REF(open))
 	GLOB.tram_doors += src
 	// find_tram()
@@ -225,8 +226,6 @@
 	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/icts/tram, 32)
-
-
 
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING

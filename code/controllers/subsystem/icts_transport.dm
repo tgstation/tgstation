@@ -26,6 +26,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 
 	var/relevant
 	var/call_source = source
+	var/request_flags = NONE
 	var/datum/transport_controller/linear/tram/transport_controller
 	var/obj/effect/landmark/icts/nav_beacon/tram/destination
 	for(var/datum/transport_controller/linear/tram/candidate_controller as anything in transports_by_type[ICTS_TYPE_TRAM])
@@ -53,11 +54,11 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, INVALID_PLATFORM)
 		return
 
-	if(!destination.platform_status != PLATFORM_ACTIVE)
+	if(!destination.platform_status == PLATFORM_ACTIVE)
 		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, PLATFORM_DISABLED)
 		return
 
-	if(transport_controller.idle_platform == destination) //already here
+	if(transport_controller.idle_platform == destination) //did you even look?
 		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, NO_CALL_REQUIRED)
 		return
 
@@ -65,6 +66,30 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, INTERNAL_ERROR)
 		return
 
+	SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_SUCCESS)
+
+	INVOKE_ASYNC(src, PROC_REF(dispatch_transport), transport_controller, destination, request_flags)
+
+/datum/controller/subsystem/processing/icts_transport/proc/dispatch_transport(datum/transport_controller/linear/tram/transport_controller, destination, request_flags)
+	if(transport_controller.idle_platform == destination)
+		return
+
+	transport_controller.controller_active = TRUE
+	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, transport_controller, transport_controller.controller_active)
+	transport_controller.idle_platform = destination
+	pre_departure(transport_controller, destination, request_flags)
+
+/datum/controller/subsystem/processing/icts_transport/proc/pre_departure(datum/transport_controller/linear/tram/transport_controller, destination, request_flags)
+	transport_controller.controller_status |= PRE_DEPARTURE
+	transport_controller.controller_status |= CONTROLS_LOCKED
+//	if(request_flags & rapid) // bypass for unsafe, rapid departure
+//		transport_controller.clear_dispatch(destination)
+
+
+
+
 	var/trip_direction = transport_controller.travel_direction
 	var/trip_remaining = transport_controller.travel_remaining
+
+
 

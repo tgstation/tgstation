@@ -2,6 +2,7 @@
 
 	///whether this tram is traveling across vertical and/or horizontal axis for some distance. not all lifts use this
 	var/travelling = FALSE
+	var/controller_active = FALSE
 	///if we're travelling, what direction are we going
 	var/travel_direction = NONE
 	///if we're travelling, how far do we have to go
@@ -16,6 +17,7 @@
 	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
 	/// and the destination landmark.
 	var/obj/effect/landmark/icts/nav_beacon/tram/idle_platform
+	var/obj/effect/landmark/icts/nav_beacon/tram/destination
 
 	///decisecond delay between horizontal movement. cannot make the tram move faster than 1 movement per world.tick_lag.
 	///this var is poorly named its actually horizontal movement delay but whatever.
@@ -39,7 +41,7 @@
 
 	var/controller_operational = TRUE
 
-	var/controller_status = CONTROLLER_IDLE
+	var/controller_status = NONE
 
 /datum/transport_controller/linear/tram/New(obj/structure/transport/linear/tram/transport_module)
 	. = ..()
@@ -114,7 +116,7 @@
 	travel_direction = get_dir(idle_platform, destination_platform)
 	travel_remaining = get_dist(idle_platform, destination_platform)
 	travel_trip_length = travel_remaining
-	idle_platform = destination_platform
+	destination = destination_platform
 	return TRUE
 /**
  * Handles moving the tram
