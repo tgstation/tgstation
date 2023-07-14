@@ -156,7 +156,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 //Computer
 /obj/item/gps/computer
 	name = "pod computer"
-	icon = 'icons/obj/mining_zones/survival_pod.dmi'
+	icon = 'icons/obj/mining_zones/pod_computer.dmi'
 	icon_state = "pod_computer"
 	anchored = TRUE
 	density = TRUE
