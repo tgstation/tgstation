@@ -399,6 +399,16 @@
 					current_thing.take_damage(90)
 					continue
 
+				if(istype(current_thing, /obj/item/bedsheet/captain))
+					new /obj/item/bedsheet/rev(current_thing.loc)
+					qdel(current_thing)
+					continue
+
+				if(istype(current_thing, /obj/item/bedsheet/captain/double))
+					new /obj/item/bedsheet/rev/double(current_thing.loc)
+					qdel(current_thing)
+					continue
+
 			CHECK_TICK
 
 ///Station traits that influence the space background and apply some unique effects!

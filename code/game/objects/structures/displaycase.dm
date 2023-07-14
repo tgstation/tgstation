@@ -1,6 +1,6 @@
 /obj/structure/displaycase
 	name = "display case"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "glassbox"
 	desc = "A display case for prized possessions."
 	density = TRUE
@@ -226,7 +226,7 @@
 /obj/structure/displaycase_chassis
 	name = "display case chassis"
 	desc = "The wooden base of a display case."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "glassbox_chassis"
 	resistance_flags = FLAMMABLE
 	anchored = TRUE
@@ -440,6 +440,7 @@
 
 /obj/structure/displaycase/forsale
 	name = "vend-a-tray"
+	icon = 'icons/obj/machines/basic_machines.dmi'
 	icon_state = "laserbox"
 	custom_glass_overlay = TRUE
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents."
