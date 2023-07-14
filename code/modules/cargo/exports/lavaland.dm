@@ -46,7 +46,7 @@
 						/obj/item/organ/internal/vocal_cords/colossus,
 						/obj/machinery/anomalous_crystal,
 						/obj/item/mayhem,
-						/obj/item/gun/magic/staff/spellblade,
+						/obj/item/soulscythe,
 						/obj/item/storm_staff,
 						/obj/item/clothing/suit/hooded/hostile_environment,
 						)
