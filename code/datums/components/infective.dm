@@ -2,9 +2,13 @@
 	var/list/datum/disease/diseases //make sure these are the static, non-processing versions!
 	var/expire_time
 	var/required_clean_types = CLEAN_TYPE_DISEASE
+	/// The infection is weak and can only infect on consumption with small chance
+	var/is_weak = FALSE
+	/// Chance of weak infection on consumption
+	var/weak_infection_chance = 10
 
 
-/datum/component/infective/Initialize(list/datum/disease/_diseases, expire_in)
+/datum/component/infective/Initialize(list/datum/disease/_diseases, expire_in, weak = FALSE)
 	if(islist(_diseases))
 		diseases = _diseases
 	else
@@ -16,27 +20,39 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	var/static/list/disease_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(try_infect_crossed),
-	)
-	AddComponent(/datum/component/connect_loc_behalf, parent, disease_connections)
+	is_weak = weak
 
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean))
-	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, PROC_REF(try_infect_buckle))
-	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(try_infect_collide))
-	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(try_infect_impact_zone))
-	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, PROC_REF(try_infect_attack_zone))
-		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(try_infect_attack))
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(try_infect_equipped))
+	if(is_weak && isitem(parent))
 		RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(try_infect_eat))
-		if(istype(parent, /obj/item/reagent_containers/cup))
-			RegisterSignal(parent, COMSIG_GLASS_DRANK, PROC_REF(try_infect_drink))
-	else if(istype(parent, /obj/effect/decal/cleanable/blood/gibs))
-		RegisterSignal(parent, COMSIG_GIBS_STREAK, PROC_REF(try_infect_streak))
+		RegisterSignal(parent, COMSIG_PILL_CONSUMED, PROC_REF(try_infect_eat))
+	else
+		var/static/list/disease_connections = list(
+			COMSIG_ATOM_ENTERED = PROC_REF(try_infect_crossed),
+		)
+		AddComponent(/datum/component/connect_loc_behalf, parent, disease_connections)
+
+		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean))
+		RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, PROC_REF(try_infect_buckle))
+		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(try_infect_collide))
+		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(try_infect_impact_zone))
+		if(isitem(parent))
+			RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, PROC_REF(try_infect_attack_zone))
+			RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(try_infect_attack))
+			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(try_infect_equipped))
+			RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(try_infect_eat))
+			RegisterSignal(parent, COMSIG_PILL_CONSUMED, PROC_REF(try_infect_eat))
+			if(istype(parent, /obj/item/reagent_containers/cup))
+				RegisterSignal(parent, COMSIG_GLASS_DRANK, PROC_REF(try_infect_drink))
+		else if(istype(parent, /obj/effect/decal/cleanable/blood/gibs))
+			RegisterSignal(parent, COMSIG_GIBS_STREAK, PROC_REF(try_infect_streak))
 
 /datum/component/infective/proc/try_infect_eat(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
+
+	eater.add_mood_event("disgust", /datum/mood_event/disgust/dirty_food)
+
+	if(is_weak && !prob(weak_infection_chance))
+		return
 
 	for(var/V in diseases)
 		eater.ForceContractDisease(V)

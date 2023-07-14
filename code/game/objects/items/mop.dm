@@ -40,7 +40,7 @@
 	if(clean_blacklist[atom_to_clean.type])
 		return DO_NOT_CLEAN
 	if(reagents.total_volume < 0.1)
-		to_chat(cleaner, span_warning("Your mop is dry!"))
+		cleaner.balloon_alert(cleaner, "mop is dry!")
 		return DO_NOT_CLEAN
 	return reagents.has_chemical_flag(REAGENT_CLEANS, 1)
 
@@ -90,7 +90,7 @@
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj,src)
-	to_chat(user, span_notice("You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position."))
+	user.balloon_alert(user, "condenser switch [refill_enabled ? "on" : "off"]")
 	playsound(user, 'sound/machines/click.ogg', 30, TRUE)
 
 /obj/item/mop/advanced/process(seconds_per_tick)

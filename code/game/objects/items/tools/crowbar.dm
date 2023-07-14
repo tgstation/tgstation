@@ -109,7 +109,8 @@
 
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = force, \
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
@@ -128,8 +129,9 @@
 	SIGNAL_HANDLER
 
 	tool_behaviour = (active ? TOOL_WIRECUTTER : TOOL_CROWBAR)
-	balloon_alert(user, "attached [active ? "cutting" : "prying"]")
-	playsound(user ? user : src, 'sound/items/change_jaws.ogg', 50, TRUE)
+	if(user)
+		balloon_alert(user, "attached [active ? "cutting" : "prying"]")
+	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_CROWBAR)
 		RemoveElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	else

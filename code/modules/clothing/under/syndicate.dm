@@ -4,62 +4,52 @@
 	icon_state = "syndicate"
 	inhand_icon_state = "bl_suit"
 	has_sensor = NO_SENSORS
-	armor_type = /datum/armor/under_syndicate
+	armor_type = /datum/armor/clothing_under/syndicate
 	alt_covers_chest = TRUE
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
 
-/datum/armor/under_syndicate
+/datum/armor/clothing_under/syndicate
 	melee = 10
-	bio = 10
 	fire = 50
 	acid = 40
+	wound = 10
 
 /obj/item/clothing/under/syndicate/skirt
 	name = "tactical skirtleneck"
 	desc = "A non-descript and slightly suspicious looking skirtleneck."
 	icon_state = "syndicate_skirt"
 	inhand_icon_state = "bl_suit"
-	has_sensor = NO_SENSORS
-	armor_type = /datum/armor/syndicate_skirt
-	alt_covers_chest = TRUE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/datum/armor/syndicate_skirt
-	melee = 10
-	bio = 10
-	fire = 50
-	acid = 40
 
 /obj/item/clothing/under/syndicate/bloodred
 	name = "blood-red sneaksuit"
 	desc = "It still counts as stealth if there are no witnesses."
 	icon_state = "bloodred_pajamas"
 	inhand_icon_state = "bl_suit"
-	armor_type = /datum/armor/syndicate_bloodred
+	armor_type = /datum/armor/clothing_under/syndicate_bloodred
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	can_adjust = FALSE
 
-/datum/armor/syndicate_bloodred
+/datum/armor/clothing_under/syndicate_bloodred
 	melee = 10
 	bullet = 10
 	laser = 10
 	energy = 10
-	bio = 10
 	fire = 50
 	acid = 40
+	wound = 10
 
 /obj/item/clothing/under/syndicate/bloodred/sleepytime
 	name = "blood-red pajamas"
 	desc = "Do operatives dream of nuclear sheep?"
 	icon_state = "bloodred_pajamas"
 	inhand_icon_state = "bl_suit"
-	armor_type = /datum/armor/bloodred_sleepytime
+	armor_type = /datum/armor/clothing_under/bloodred_sleepytime
 
-/datum/armor/bloodred_sleepytime
-	bio = 10
+/datum/armor/clothing_under/bloodred_sleepytime
 	fire = 50
 	acid = 40
 
@@ -69,11 +59,10 @@
 	icon_state = "tactifool"
 	inhand_icon_state = "bl_suit"
 	has_sensor = HAS_SENSORS
-	armor_type = /datum/armor/syndicate_tacticool
+	armor_type = /datum/armor/clothing_under/syndicate_tacticool
 	stubborn_stains = TRUE
 
-/datum/armor/syndicate_tacticool
-	bio = 10
+/datum/armor/clothing_under/syndicate_tacticool
 	fire = 50
 	acid = 40
 
@@ -100,15 +89,9 @@
 	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
 	icon_state = "tactifool_skirt"
 	inhand_icon_state = "bl_suit"
-	armor_type = /datum/armor/tacticool_skirt
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
-/datum/armor/tacticool_skirt
-	bio = 10
-	fire = 50
-	acid = 40
 
 /obj/item/clothing/under/syndicate/sniper
 	name = "tactical turtleneck suit"
@@ -129,12 +112,11 @@
 	desc = "Badly translated labels tell you to clean this in Vodka. Great for squatting in."
 	icon_state = "trackpants"
 	can_adjust = FALSE
-	armor_type = /datum/armor/syndicate_soviet
+	armor_type = /datum/armor/clothing_under/syndicate_soviet
 	resistance_flags = NONE
 
-/datum/armor/syndicate_soviet
+/datum/armor/clothing_under/syndicate_soviet
 	melee = 10
-	bio = 10
 
 /obj/item/clothing/under/syndicate/combat
 	name = "combat uniform"
@@ -147,12 +129,11 @@
 	desc = "Military grade tracksuits for frontline squatting."
 	icon_state = "rus_under"
 	can_adjust = FALSE
-	armor_type = /datum/armor/syndicate_rus_army
+	armor_type = /datum/armor/clothing_under/syndicate_rus_army
 	resistance_flags = NONE
 
-/datum/armor/syndicate_rus_army
+/datum/armor/clothing_under/syndicate_rus_army
 	melee = 5
-	bio = 10
 
 /obj/item/clothing/under/syndicate/scrubs
 	name = "tactical scrubs"
@@ -161,9 +142,9 @@
 	worn_icon = 'icons/mob/clothing/under/medical.dmi'
 	icon_state = "scrubswine"
 	can_adjust = FALSE
-	armor_type = /datum/armor/syndicate_scrubs
+	armor_type = /datum/armor/clothing_under/syndicate_scrubs
 
-/datum/armor/syndicate_scrubs
+/datum/armor/clothing_under/syndicate_scrubs
 	melee = 10
 	bio = 50
 	fire = 50

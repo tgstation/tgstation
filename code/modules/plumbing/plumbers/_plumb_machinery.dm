@@ -47,7 +47,7 @@
 	. = ..()
 	if(anchored)
 		to_chat(user, span_warning("The [name] needs to be unbolted to do that!"))
-	if(I.tool_start_check(user, amount=0))
+	if(I.tool_start_check(user, amount=1))
 		to_chat(user, span_notice("You start slicing the [name] apart."))
 		if(I.use_tool(src, user, (1.5 SECONDS), volume=50))
 			deconstruct(TRUE)

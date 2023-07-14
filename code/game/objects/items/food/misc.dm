@@ -87,10 +87,14 @@
 	foodtypes = GROSS
 	w_class = WEIGHT_CLASS_SMALL
 	preserved_food = TRUE //Can't decompose any more than this
+	/// Variable that holds the reference to the stink lines we get when we're moldy, yucky yuck
+	var/stink_particles
 
 /obj/item/food/badrecipe/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(OnGrill))
+	if(stink_particles)
+		particles = new stink_particles
 
 /obj/item/food/badrecipe/moldy
 	name = "moldy mess"
@@ -100,6 +104,7 @@
 	ant_attracting = TRUE
 	decomp_type = null
 	decomposition_time = 30 SECONDS
+	stink_particles = /particles/stink
 
 /obj/item/food/badrecipe/moldy/bacteria
 	name = "bacteria rich moldy mess"
@@ -140,8 +145,8 @@
 /obj/item/food/spiderling
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
-	icon = 'icons/obj/food/meat.dmi'
-	icon_state = "spiderling"
+	icon = 'icons/mob/simple/animal.dmi'
+	icon_state = "spiderling_dead"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/toxin = 4,
@@ -229,7 +234,7 @@
 	name = "stick of butter"
 	desc = "A stick of delicious, golden, fatty goodness."
 	icon_state = "butter"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 15)
 	tastes = list("butter" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
@@ -259,6 +264,18 @@
 	icon_state = "butteronastick"
 	trash_type = /obj/item/stack/rods
 	food_flags = FOOD_FINGER_FOOD
+
+/obj/item/food/butter/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/butterslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+
+/obj/item/food/butterslice
+	name = "butter slice"
+	desc = "A slice of butter, for your buttering needs."
+	icon_state = "butterslice"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	tastes = list("butter" = 1)
+	foodtypes = DAIRY
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/onionrings
 	name = "onion rings"
@@ -435,11 +452,22 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/pickle = 1,
 		/datum/reagent/medicine/antihol = 2,
 	)
 	tastes = list("pickle" = 1, "spices" = 1, "salt water" = 2)
+	juice_results = list(/datum/reagent/consumable/pickle = 5)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/pickle/make_edible()
+	. = ..()
+	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
+
+/obj/item/food/pickle/proc/check_liked(fraction, mob/living/carbon/human/consumer)
+	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM))
+		return FOOD_LIKED
 
 /obj/item/food/springroll
 	name = "spring roll"

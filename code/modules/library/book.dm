@@ -132,21 +132,16 @@
 					to_chat(user, span_warning("The name is invalid."))
 					return
 				book_data.set_author(html_decode(author)) //Setting this encodes, don't want to double up
+
 	else if(istype(attacking_item, /obj/item/barcodescanner))
 		var/obj/item/barcodescanner/scanner = attacking_item
 		var/obj/machinery/computer/libraryconsole/bookmanagement/computer = scanner.computer_ref?.resolve()
 		if(!computer)
-			to_chat(user, span_alert("[scanner]'s screen flashes: 'No associated computer found!'"))
+			user.balloon_alert(user, "not connected to computer!")
 			return
 
-		scanner.book_data = book_data.return_copy()
-		switch(scanner.mode)
-			if(0)
-				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer.'"))
-			if(1)
-				computer.buffer_book = book_data.return_copy()
-				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'"))
-			if(2)
+		switch(scanner.scan_mode)
+			if(BARCODE_SCANNER_CHECKIN)
 				var/list/checkouts = computer.checkouts
 				for(var/checkout_ref in checkouts)
 					var/datum/borrowbook/maybe_ours = checkouts[checkout_ref]
@@ -154,15 +149,19 @@
 						continue
 					checkouts -= checkout_ref
 					computer.checkout_update()
-					to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"))
+					user.balloon_alert(user, "book checked in")
+					playsound(loc, 'sound/items/barcodebeep.ogg', 20, FALSE)
 					return
 
-				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"))
-			if(3)
+				user.balloon_alert(user, "book not checked out!")
+				return
+			if(BARCODE_SCANNER_INVENTORY)
 				var/datum/book_info/our_copy = book_data.return_copy()
 				computer.inventory[ref(our_copy)] = our_copy
 				computer.inventory_update()
-				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
+				user.balloon_alert(user, "book added to inventory")
+				playsound(loc, 'sound/items/barcodebeep.ogg', 20, FALSE)
+
 	else if(try_carve(attacking_item, user, params))
 		return
 	return ..()

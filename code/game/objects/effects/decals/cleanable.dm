@@ -24,8 +24,6 @@
 	var/obj/effect/decal/cleanable/existing = locate(cleanable_type) in src
 	if(existing)
 		return existing
-	if(decal_turf_compatability(src, initial(cleanable_type.turf_loc_flags)))
-		return null
 	return new cleanable_type(src)
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)

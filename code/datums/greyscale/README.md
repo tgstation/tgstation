@@ -61,15 +61,43 @@ In this example, we start off by creating a sprite specified by a different conf
 
 The first of the two in the inner group is an "icon_state", this means that the icon will be retrieved from the associated dmi file using the "icon_state" key.
 
-The last layer is another reference type. Note that you don't need to give colors to every layer if the layer does not need any colors applied to it.
+Note that you don't need to give colors to every layer if the layer does not need any colors applied to it, such as if it's a pre-colored component. 
+In this example, the last layer is one such example, referencing a separately colored config.
 
 "blend_mode" and "color_ids" are special, all layer types have them. The blend mode is what controls how that layer's finished product gets merged together with the rest of the sprite. The color ids control what colors are passed in to the layer.
 
 Once it is done generating it will be placed in an icon file with the icon state of "icon_state_name". You can use any name you like here.
 
+Most commonly, we'll only use the "icon_state" type...
+Thus, **this will be the most common layout**:
+```json
+{
+	"full_icon_state_name": [
+		{
+			"type": "icon_state",
+			"icon_state": "component_state_1",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "component_state_2",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "non_colorable_component_state",
+			"blend_mode": "overlay",
+		}
+	]
+}
+```
+
 ## Dmi File
 
 There are no special requirements from the dmi file to work with this system. You just need to specify the icon file in code and the icon_state in the json configuration.
+Additionally, for the sake of mappers, it's appreciated if there's a pre-made obj icon of the same name as the item's icon_state; this way, the item will appear in mapping software.
 
 ## Dm Code
 
@@ -78,6 +106,7 @@ While the amount of dm code required to make a greyscale sprite was minimized as
 As an example:
 ```c
 /datum/greyscale_config/canister
+	name = "Canister" //Required for debugging, will runtime without one!
 	icon_file = 'icons/obj/atmospherics/canisters/default.dmi'
 	json_config = 'code/datums/greyscale/json_configs/canister_default.json'
 ```
@@ -90,7 +119,34 @@ And that's all you need to make it usable by other code:
 	greyscale_colors = "#ee4242"
 ```
 
-More configurations can be found in [code/datums/greyscale/greyscale_configs.dm](./greyscale_configs.dm)
+More configurations can be found in the greyscale_configs folder [code/datums/greyscale/config_types/greyscale_configs/greyscale_unsorted.dm] (./config_types/greyscale_configs/greyscale_unsorted.dm)
+
+While creating a greyscale config, be sure to take subtypes into account! Rather than create several unique configs that all link to the same icon file, you can make the variants all a subtype of one base config:
+
+```c
+/datum/greyscale_config/tablet
+	name = "PDA"
+	icon_file = 'icons/obj/modular_pda.dmi'
+	json_config = 'code/datums/greyscale/json_configs/pda.json'
+
+/datum/greyscale_config/tablet/chaplain
+	name = "Chaplain PDA"
+	json_config = 'code/datums/greyscale/json_configs/pda_chaplain.json'
+```
+
+Building on this, if your obj and worn sprites have the same amount of component states, then instead of making separate .json configs for obj and worn, link to two separate .dmi's while still using the same .json config! For example:
+
+```c
+/datum/greyscale_config/trek
+	name = "Trek Uniform"
+	icon_file = 'icons/obj/clothing/under/trek.dmi'
+	json_config = 'code/datums/greyscale/json_configs/trek.json'
+
+/datum/greyscale_config/trek/worn
+	name = "Worn Trek Uniform"
+	icon_file = 'icons/mob/clothing/under/trek.dmi'
+	//The worn json is exactly the same, and both icon files use identically-named component states; so, we can just inherit the json!
+```
 
 If you want your item to be colorable in a vending machine (or other places if there's ever any support added for that), you should do it like this:
 

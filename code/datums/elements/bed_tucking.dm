@@ -19,11 +19,11 @@
 	x_offset = x
 	y_offset = y
 	starting_angle = rotation
-	RegisterSignal(target, COMSIG_ITEM_ATTACK_OBJ, PROC_REF(tuck_into_bed))
+	RegisterSignal(target, COMSIG_ITEM_ATTACK_ATOM, PROC_REF(tuck_into_bed))
 
 /datum/element/bed_tuckable/Detach(obj/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_PICKUP))
+	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK_ATOM, COMSIG_ITEM_PICKUP))
 
 /**
  * Tuck our object into bed.

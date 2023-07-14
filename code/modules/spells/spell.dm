@@ -164,7 +164,7 @@
 		// No point in feedback here, as mindless mobs aren't players
 		return FALSE
 
-	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !HAS_TRAIT(owner, TRAIT_MIMING))
+	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !HAS_MIND_TRAIT(owner, TRAIT_MIMING))
 		// In the future this can be moved out of spell checks exactly
 		if(feedback)
 			to_chat(owner, span_warning("You must dedicate yourself to silence first!"))
@@ -182,7 +182,7 @@
 			to_chat(owner, span_warning("[src] cannot be cast unless you are completely manifested in the material plane!"))
 		return FALSE
 
-	if(!try_invoke(feedback = feedback))
+	if(!try_invoke(owner, feedback = feedback))
 		return FALSE
 
 	if(ishuman(owner))
@@ -242,7 +242,7 @@
 	if(!(precast_result & SPELL_NO_FEEDBACK))
 		// We do invocation and sound effects here, before actual cast
 		// That way stuff like teleports or shape-shifts can be invoked before ocurring
-		spell_feedback()
+		spell_feedback(owner)
 
 	// Actually cast the spell. Main effects go here
 	cast(cast_on)
@@ -319,20 +319,19 @@
 	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
 
 /// Provides feedback after a spell cast occurs, in the form of a cast sound and/or invocation
-/datum/action/cooldown/spell/proc/spell_feedback()
-	if(!owner)
+/datum/action/cooldown/spell/proc/spell_feedback(mob/living/invoker)
+	if(!invoker)
 		return
 
 	///even INVOCATION_NONE should go through this because the signal might change that
-	invocation()
-	if(sound)
-		playsound(get_turf(owner), sound, 50, TRUE)
+	invocation(invoker)
+	playsound(invoker, sound, 50, vary = TRUE)
 
 /// The invocation that accompanies the spell, called from spell_feedback() before cast().
-/datum/action/cooldown/spell/proc/invocation()
+/datum/action/cooldown/spell/proc/invocation(mob/living/invoker)
 	//lists can be sent by reference, a string would be sent by value
 	var/list/invocation_list = list(invocation, invocation_type, garbled_invocation_prob)
-	SEND_SIGNAL(owner, COMSIG_MOB_PRE_INVOCATION, src, invocation_list)
+	SEND_SIGNAL(invoker, COMSIG_MOB_PRE_INVOCATION, src, invocation_list)
 	var/used_invocation_message = invocation_list[INVOCATION_MESSAGE]
 	var/used_invocation_type = invocation_list[INVOCATION_TYPE]
 	var/used_invocation_garble_prob = invocation_list[INVOCATION_GARBLE_PROB]
@@ -340,21 +339,21 @@
 	switch(used_invocation_type)
 		if(INVOCATION_SHOUT)
 			if(prob(used_invocation_garble_prob))
-				owner.say(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
+				invoker.say(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
-				owner.say(used_invocation_message, forced = "spell ([src])")
+				invoker.say(used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_WHISPER)
 			if(prob(used_invocation_garble_prob))
-				owner.whisper(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
+				invoker.whisper(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
-				owner.whisper(used_invocation_message, forced = "spell ([src])")
+				invoker.whisper(used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_EMOTE)
-			owner.visible_message(used_invocation_message, invocation_self_message)
+			invoker.visible_message(used_invocation_message, invocation_self_message)
 
 /// Checks if the current OWNER of the spell is in a valid state to say the spell's invocation
-/datum/action/cooldown/spell/proc/try_invoke(feedback = TRUE)
+/datum/action/cooldown/spell/proc/try_invoke(mob/living/invoker, feedback = TRUE)
 	if(spell_requirements & SPELL_CASTABLE_WITHOUT_INVOCATION)
 		return TRUE
 
@@ -362,26 +361,25 @@
 		return TRUE
 
 	// If you want a spell usable by ghosts for some reason, it must be INVOCATION_NONE
-	if(!isliving(owner))
+	if(!istype(invoker))
 		if(feedback)
-			to_chat(owner, span_warning("You need to be living to invoke [src]!"))
+			to_chat(invoker, span_warning("You need to be living to invoke [src]!"))
 		return FALSE
 
-	var/mob/living/living_owner = owner
-	var/invoke_sig_return = SEND_SIGNAL(owner, COMSIG_MOB_TRY_INVOKE_SPELL, src, feedback)
+	var/invoke_sig_return = SEND_SIGNAL(invoker, COMSIG_MOB_TRY_INVOKE_SPELL, src, feedback)
 	if(invoke_sig_return & SPELL_INVOCATION_ALWAYS_SUCCEED)
 		return TRUE // skips all of the following checks
 	if(invoke_sig_return & SPELL_INVOCATION_FAIL)
 		return FALSE
 
-	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE))
+	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(invoker, TRAIT_EMOTEMUTE))
 		if(feedback)
-			to_chat(owner, span_warning("You can't position your hands correctly to invoke [src]!"))
+			to_chat(invoker, span_warning("You can't position your hands correctly to invoke [src]!"))
 		return FALSE
 
-	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.can_speak())
+	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !invoker.can_speak())
 		if(feedback)
-			to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
+			to_chat(invoker, span_warning("You can't get the words out to invoke [src]!"))
 		return FALSE
 
 	return TRUE

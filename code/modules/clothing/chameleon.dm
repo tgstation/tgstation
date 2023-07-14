@@ -380,17 +380,17 @@
 	random_sensor = FALSE
 	resistance_flags = NONE
 	can_adjust = FALSE
-	armor_type = /datum/armor/under_chameleon
+	armor_type = /datum/armor/clothing_under/chameleon
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/datum/armor/under_chameleon
+/datum/armor/clothing_under/chameleon
 	melee = 10
 	bullet = 10
 	laser = 10
-	bio = 10
 	fire = 50
 	acid = 50
+	wound = 10
 
 /obj/item/clothing/under/chameleon/Initialize(mapload)
 	. = ..()

@@ -152,12 +152,12 @@
 
 	/// If we're on fire
 	var/on_fire = FALSE
-	/// A weakref to the mob light emitter
-	var/datum/weakref/firelight_ref
-	/// Type of mob light emitter we use when on fire
-	var/firelight_type = /obj/effect/dummy/lighting_obj/moblight/fire
 	/// Stores current fire overlay icon state, for optimisation purposes
 	var/last_icon_state
+	/// Reference to the mob light emitter itself
+	var/obj/effect/dummy/lighting_obj/moblight
+	/// Type of mob light emitter we use when on fire
+	var/moblight_type = /obj/effect/dummy/lighting_obj/moblight/fire
 
 /datum/status_effect/fire_handler/fire_stacks/tick(seconds_per_tick, times_fired)
 	if(stacks <= 0)
@@ -249,8 +249,10 @@
 	if(!silent)
 		owner.visible_message(span_warning("[owner] catches fire!"), span_userdanger("You're set on fire!"))
 
-	if(firelight_type)
-		firelight_ref = WEAKREF(new firelight_type(owner))
+	if(moblight_type)
+		if(moblight)
+			qdel(moblight)
+		moblight = new moblight_type(owner)
 
 	SEND_SIGNAL(owner, COMSIG_LIVING_IGNITED, owner)
 	cache_stacks()
@@ -263,20 +265,14 @@
  */
 
 /datum/status_effect/fire_handler/fire_stacks/proc/extinguish()
-	if(firelight_ref)
-		qdel(firelight_ref)
-
+	QDEL_NULL(moblight)
 	on_fire = FALSE
 	owner.clear_mood_event("on_fire")
 	SEND_SIGNAL(owner, COMSIG_LIVING_EXTINGUISHED, owner)
 	cache_stacks()
 	update_overlay()
 	update_particles()
-	if(!iscarbon(owner))
-		return
-
 	for(var/obj/item/equipped in owner.get_equipped_items())
-		equipped.wash(CLEAN_TYPE_ACID)
 		equipped.extinguish()
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
@@ -293,6 +289,11 @@
 /datum/status_effect/fire_handler/fire_stacks/on_apply()
 	. = ..()
 	update_overlay()
+
+/obj/effect/dummy/lighting_obj/moblight/fire
+	name = "fire"
+	light_color = LIGHT_COLOR_FIRE
+	light_range = LIGHT_RANGE_FIRE
 
 /datum/status_effect/fire_handler/wet_stacks
 	id = "wet_stacks"

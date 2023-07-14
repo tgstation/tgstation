@@ -3,17 +3,14 @@
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	/// Bitfield that describes what turfs this decal is ok with spawning on. Read only, as we read it using initial() in some places
-	var/turf_loc_flags = DECAL_BLOCK_CLOSED_TURF|DECAL_BLOCK_GROUNDLESS_TURF|DECAL_GROUNDLESS_ALLOW_FLOOR_BELOW_TURF
 
 /obj/effect/decal/Initialize(mapload)
 	. = ..()
-	if(turf_loc_flags && decal_turf_compatability(loc, turf_loc_flags))
-#ifdef UNIT_TESTS
-		stack_trace("[name] spawned in a bad turf ([loc]) at [AREACOORD(src)] in \the [get_area(src)]. Please remove it or set turf_loc_flags to NONE on the decal if intended.")
-#else
+	if(NeverShouldHaveComeHere(loc))
+		if(mapload)
+			stack_trace("[name] spawned in a bad turf ([loc]) at [AREACOORD(src)] in \the [get_area(src)]. \
+				Please remove it or allow it to pass NeverShouldHaveComeHere if it's intended.")
 		return INITIALIZE_HINT_QDEL
-#endif
 	var/static/list/loc_connections = list(
 		COMSIG_TURF_CHANGE = PROC_REF(on_decal_move),
 	)
@@ -22,6 +19,10 @@
 /obj/effect/decal/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)
+
+///Checks if we are allowed to be in `here_turf`, and returns that result. Subtypes should override this when necessary.
+/obj/effect/decal/proc/NeverShouldHaveComeHere(turf/here_turf)
+	return isclosedturf(here_turf) || (isgroundlessturf(here_turf) && !GET_TURF_BELOW(here_turf))
 
 /obj/effect/decal/ex_act(severity, target)
 	qdel(src)
@@ -36,16 +37,8 @@
 	post_change_callbacks += CALLBACK(src, PROC_REF(sanity_check_self))
 
 /obj/effect/decal/proc/sanity_check_self(turf/changed)
-	if(changed == loc && decal_turf_compatability(changed, turf_loc_flags))
+	if(changed == loc && NeverShouldHaveComeHere(changed))
 		qdel(src)
-
-/proc/decal_turf_compatability(turf/check, flags)
-	if(flags & DECAL_BLOCK_CLOSED_TURF && isclosedturf(check))
-		return TRUE
-	if(flags & DECAL_BLOCK_GROUNDLESS_TURF && isgroundlessturf(check))
-		if(!(flags & DECAL_GROUNDLESS_ALLOW_FLOOR_BELOW_TURF) || !SSmapping.get_turf_below(check))
-			return TRUE
-	return FALSE
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

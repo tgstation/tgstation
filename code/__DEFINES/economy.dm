@@ -44,6 +44,9 @@
 #define ACCOUNT_SEC "SEC"
 #define ACCOUNT_SEC_NAME "Defense Budget"
 
+#define IS_DEPARTMENTAL_CARD(card) (card in SSeconomy.dep_cards)
+#define IS_DEPARTMENTAL_ACCOUNT(account) (account in SSeconomy.departmental_accounts)
+
 #define NO_FREEBIES "commies go home"
 
 //Defines that set what kind of civilian bounties should be applied mid-round.

@@ -129,13 +129,20 @@
 
 	log_message("made a vocal announcement with the following message: [message].", LOG_GAME)
 	log_talk(message, LOG_SAY, tag="VOX Announcement")
-	say(";[message]", forced = "VOX Announcement")
+
+	var/list/players = list()
+	var/turf/ai_turf = get_turf(src)
+	for(var/mob/player_mob as anything in GLOB.player_list)
+		var/turf/player_turf = get_turf(player_mob)
+		if(is_valid_z_level(ai_turf, player_turf))
+			players += player_mob
+	minor_announce(capitalize(message), "[name] announces:", players = players, sound_override = TRUE)
 
 	for(var/word in words)
-		play_vox_word(word, src.z, null)
+		play_vox_word(word, ai_turf, null)
 
 
-/proc/play_vox_word(word, z_level, mob/only_listener)
+/proc/play_vox_word(word, ai_turf, mob/only_listener)
 
 	word = lowertext(word)
 
@@ -148,15 +155,19 @@
 	// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
 			// Play voice for all mobs in the z level
-			for(var/mob/player_mob in GLOB.player_list)
+			for(var/mob/player_mob as anything in GLOB.player_list)
 				if(player_mob.client && !player_mob.client?.prefs)
 					stack_trace("[player_mob] ([player_mob.ckey]) has null prefs, which shouldn't be possible!")
 					continue
 
-				if(player_mob.can_hear() && (player_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements)))
-					var/turf/T = get_turf(player_mob)
-					if(T.z == z_level)
-						SEND_SOUND(player_mob, voice)
+				if(!player_mob.can_hear() || !(player_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements)))
+					continue
+
+				var/turf/player_turf = get_turf(player_mob)
+				if(!is_valid_z_level(ai_turf, player_turf))
+					continue
+
+				SEND_SOUND(player_mob, voice)
 		else
 			SEND_SOUND(only_listener, voice)
 		return TRUE

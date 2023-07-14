@@ -43,6 +43,10 @@
 	QDEL_LIST(trophies)
 	return ..()
 
+/obj/item/kinetic_crusher/Exited(atom/movable/gone, direction)
+	. = ..()
+	trophies -= gone
+
 /obj/item/kinetic_crusher/examine(mob/living/user)
 	. = ..()
 	. += span_notice("Mark a large creature with a destabilizing force with right-click, then hit them in melee to do <b>[force + detonation_damage]</b> damage.")
@@ -243,7 +247,6 @@
 
 /obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
 	forceMove(get_turf(crusher))
-	crusher.trophies -= src
 	return TRUE
 
 /obj/item/crusher_trophy/proc/on_melee_hit(mob/living/target, mob/living/user) //the target and the user

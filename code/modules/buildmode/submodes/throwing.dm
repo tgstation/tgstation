@@ -7,11 +7,11 @@
 	throw_atom = null
 	return ..()
 
-/datum/buildmode_mode/throwing/show_help(client/c)
-	to_chat(c, span_notice("***********************************************************"))
-	to_chat(c, span_notice("Left Mouse Button on turf/obj/mob      = Select"))
-	to_chat(c, span_notice("Right Mouse Button on turf/obj/mob     = Throw"))
-	to_chat(c, span_notice("***********************************************************"))
+/datum/buildmode_mode/throwing/show_help(client/builder)
+	to_chat(builder, span_purple(examine_block(
+		"[span_bold("Select")] -> Left Mouse Button on turf/obj/mob\n\
+		[span_bold("Throw")] -> Right Mouse Button on turf/obj/mob"))
+	)
 
 /datum/buildmode_mode/throwing/handle_click(client/c, params, obj/object)
 	var/list/modifiers = params2list(params)

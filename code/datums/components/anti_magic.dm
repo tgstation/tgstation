@@ -117,7 +117,7 @@
 				span_warning("[user] starts to glow as [visible_subject] emits a halo of light!"),
 				span_userdanger("A feeling of warmth washes over [self_subject] as rays of light surround your body and protect you!"),
 			)
-			antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
+			antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 			antimagic_color = LIGHT_COLOR_HOLY_MAGIC
 			playsound(user, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
 		else if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE_MIND)
@@ -125,11 +125,11 @@
 				span_warning("[user] forehead shines as [visible_subject] repulses magic from their mind!"),
 				span_userdanger("A feeling of cold splashes on [self_subject] as your forehead reflects magic usering your mind!"),
 			)
-			antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
+			antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
 			antimagic_color = LIGHT_COLOR_DARK_BLUE
 			playsound(user, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
 
-		user.mob_light(_range = 2, _color = antimagic_color, _duration = 5 SECONDS)
+		user.mob_light(range = 2, color = antimagic_color, duration = 5 SECONDS)
 		user.add_overlay(antimagic_effect)
 		addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 50)
 

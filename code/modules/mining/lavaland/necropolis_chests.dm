@@ -26,7 +26,7 @@
 		if(2)
 			new /obj/item/soulstone/anybody/mining(src)
 		if(3)
-			new /obj/item/organ/internal/cyberimp/arm/katana(src)
+			new /obj/item/organ/internal/cyberimp/arm/shard/katana(src)
 		if(4)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(5)
@@ -117,10 +117,10 @@
 	name = "\improper Ancient Sarcophagus"
 	desc = "Once guarded by the King of Demons, this sarcophagus contains the relics of an ancient soldier."
 	icon_state = "necro_bubblegum"
+	base_icon_state = "necro_bubblegum"
 	lid_icon_state = "necro_bubblegum_lid"
 	lid_x = -26
 	lid_y = 2
-
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	new /obj/item/clothing/suit/hooded/hostile_environment(src)
