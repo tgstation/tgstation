@@ -285,7 +285,7 @@
 #define BB_BABIES_TARGET "BB_babies_target"
 
 ///Finding adult mob
-///key holds the adukt we finded
+///key holds the adult we found
 #define BB_FOUND_MOM "BB_found_mom"
 ///list of types of mobs we will look for
 #define BB_FIND_MOM_TYPES "BB_find_mom_types"

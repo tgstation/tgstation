@@ -1,5 +1,5 @@
 /datum/ai_planning_subtree/look_for_adult
-	/// distance to be near the mom
+	///how far we must be from the mom
 	var/minimum_distance = 1
 
 /datum/ai_planning_subtree/look_for_adult/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)

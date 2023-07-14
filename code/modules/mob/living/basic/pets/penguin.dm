@@ -12,9 +12,9 @@
 
 	faction = list(FACTION_NEUTRAL)
 	ai_controller = /datum/ai_controller/basic_controller/penguin
-	///he can lay a egg?
+	///it can lay an egg?
 	var/can_lay_eggs = TRUE
-	///the egg he carry
+	///the egg it carries
 	var/obj/carried_egg
 
 
@@ -113,7 +113,7 @@
 	hunter.UnarmedAttack(target, TRUE)
 
 /mob/living/basic/pet/penguin/emperor
-	name = "Emperor penguin"
+	name = "emperor penguin"
 	real_name = "penguin"
 	desc = "Emperor of all she surveys."
 	icon_state = "penguin"
@@ -122,14 +122,14 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/basic/pet/penguin/emperor/shamebrero
-	name = "Shamebrero penguin"
+	name = "shamebrero penguin"
 	icon_state = "penguin_shamebrero"
 	icon_living = "penguin_shamebrero"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
 
 /mob/living/basic/pet/penguin/baby
-	name = "Penguin chick"
+	name = "penguin chick"
 	real_name = "penguin"
 	desc = "Can't fly and barely waddles, yet the prince of all chicks."
 	icon_state = "penguin_baby"
@@ -141,20 +141,19 @@
 	butcher_results = list(/obj/item/organ/internal/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 1)
 	ai_controller = /datum/ai_controller/basic_controller/penguin/baby
 	can_lay_eggs = FALSE
-	///he will grow or not
-	var/grow_up = TRUE
+	///will it grow up?
+	var/can_grow_up = TRUE
 
 
 /mob/living/basic/pet/penguin/baby/Initialize(mapload)
 	. = ..()
-	if(!grow_up)
+	if(!can_grow_up)
 		return
-	var/grown_type
-	if(prob(95))
-		grown_type = /mob/living/basic/pet/penguin/emperor
-	else
-		grown_type = /mob/living/basic/pet/penguin/emperor/shamebrero
-
+	var/list/weight_mobtypes = list(
+		/mob/living/basic/pet/penguin/emperor = 5,
+		/mob/living/basic/pet/penguin/emperor/shamebrero = 1,
+	)
+	var/grown_type = pick_weight(weight_mobtypes)
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
 		growth_time = null,\
@@ -187,6 +186,6 @@
 	)
 
 /mob/living/basic/pet/penguin/baby/permanent
-	grow_up = FALSE
+	can_grow_up = FALSE
 
 
