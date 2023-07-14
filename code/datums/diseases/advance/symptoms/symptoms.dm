@@ -37,7 +37,7 @@
 	var/list/thresholds
 	///If this symptom can appear from /datum/disease/advance/GenerateSymptoms()
 	var/naturally_occuring = TRUE
-	///If the symptom requires an organ for the effects to function
+	///If the symptom requires an organ for the effects to function, robotic organs are immune to disease unless inorganic biology symptom is present
 	var/required_organ
 
 /datum/symptom/New()
