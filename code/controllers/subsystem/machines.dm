@@ -96,7 +96,11 @@ SUBSYSTEM_DEF(machines)
 			propagate_network(PC,PC.powernet)
 
 /datum/controller/subsystem/machines/Recover()
-	if (istype(SSmachines.processing))
+	if(islist(SSmachines.processing))
 		processing = SSmachines.processing
-	if (istype(SSmachines.powernets))
+	if(islist(SSmachines.powernets))
 		powernets = SSmachines.powernets
+	if(islist(SSmachines.all_machines))
+		all_machines = SSmachines.all_machines
+	if(islist(SSmachines.machines_by_type))
+		machines_by_type = SSmachines.machines_by_type
