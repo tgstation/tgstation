@@ -25,7 +25,10 @@ SUBSYSTEM_DEF(machines)
 	all_machines |= machine
 
 /datum/controller/subsystem/machines/proc/unregister_machine(obj/machinery/machine)
-	LAZYREMOVE(machines_by_type[machine.type], machine)
+	var/list/existing = machines_by_type[machine.type]
+	existing -= machine
+	if(!length(existing))
+		machines_by_type -= machine.type
 	all_machines -= machine
 
 /datum/controller/subsystem/machines/proc/get_machines_by_type_and_subtypes(obj/machinery/machine_type)
