@@ -10,6 +10,10 @@
 	anchored = TRUE
 	density = TRUE
 	var/win_prob = 5
+	/// clone damaged dealt each roll
+	var/damage_on_roll = 20
+	/// machine's reward when you hit jackpot
+	var/prize = /obj/structure/cursed_money
 
 /obj/structure/cursed_slot_machine/Initialize(mapload)
 	. = ..()
@@ -22,7 +26,7 @@
 	if(obj_flags & IN_USE)
 		return
 	obj_flags |= IN_USE
-	user.adjustCloneLoss(20)
+	user.adjustCloneLoss(damage_on_roll)
 	if(user.stat)
 		to_chat(user, span_userdanger("No... just one more try..."))
 		user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
@@ -41,7 +45,7 @@
 	obj_flags &= ~IN_USE
 	if(prob(win_prob))
 		playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, FALSE)
-		new/obj/structure/cursed_money(get_turf(src))
+		new prize(get_turf(src))
 		if(user)
 			to_chat(user, span_boldwarning("You've hit jackpot. Laughter echoes around you as your reward appears in the machine's place."))
 		qdel(src)

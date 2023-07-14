@@ -52,7 +52,7 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/wall_smasher, ENVIRONMENT_SMASH_RWALLS)
 	AddElement(/datum/element/simple_flying)
-	AddElement(/datum/element/effect_trail/cosmic_trail)
+	AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	AddElement(/datum/element/ai_target_damagesource)
 	AddComponent(/datum/component/regenerator, outline_colour = "#b97a5d")
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
