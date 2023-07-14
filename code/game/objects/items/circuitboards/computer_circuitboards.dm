@@ -23,6 +23,11 @@
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
 	build_path = /obj/machinery/computer/accounting
 
+/obj/item/circuitboard/computer/bankmachine
+	name = "Bank Machine Console"
+	greyscale_colors = CIRCUIT_COLOR_COMMAND
+	build_path = /obj/machinery/computer/bank_machine
+
 //Engineering
 
 /obj/item/circuitboard/computer/apc_control

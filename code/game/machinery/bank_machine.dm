@@ -1,6 +1,7 @@
 /obj/machinery/computer/bank_machine
 	name = "bank machine"
 	desc = "A machine used to deposit and withdraw station funds."
+	circuit = /obj/item/circuitboard/computer/bankmachine
 	icon_screen = "vault"
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_VAULT)
