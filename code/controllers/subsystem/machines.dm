@@ -40,11 +40,10 @@ SUBSYSTEM_DEF(machines)
 	if(!ispath(machine_type, /obj/machinery))
 		CRASH("called get_machines_by_type_and_subtypes with a non-machine type [machine_type]")
 	var/list/machines = list()
-	var/list/subtypes = typesof(machine_type)
-	for(var/next_type in subtypes)
-		if(!(next_type in machines_by_type))
-			continue
-		machines += machines_by_type[next_type]
+	for(var/next_type in typesof(machine_type))
+		var/list/found_machines = machines_by_type[next_type]
+		if(found_machines)
+			machines += found_machines 
 	return machines
 
 
