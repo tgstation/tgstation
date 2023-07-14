@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 	. = ..()
 
 /mob/living/simple_animal/drone/cogscarab/Life(seconds, times_fired)
-	if(!on_reebe(src) && !GLOB.ratvar_risen && GLOB.abscond_markers && !stay_on_reebe)
+	if(!on_reebe(src) && !GLOB.ratvar_risen && GLOB.abscond_markers && stay_on_reebe)
 		try_servant_warp(src, get_turf(pick(GLOB.abscond_markers)))
 	. = ..()
 
@@ -73,3 +73,9 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 	. = ..()
 	spawned_mob.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	spawned_mob.mind.add_antag_datum(/datum/antagonist/clock_cultist)
+
+/obj/effect/mob_spawn/ghost_role/drone/cogscarab/allow_spawn(mob/user, silent)
+	if(!GLOB.cogscarabs.len < MAXIMUM_COGSCARABS)
+		to_chat(user, span_notice("The cult currently has its maximum amount of cogscarabs."))
+		return FALSE
+	return TRUE

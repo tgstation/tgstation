@@ -38,7 +38,7 @@
 	var/mob/living/current = owner.current
 	current.playsound_local(get_turf(owner.current), 'sound/magic/clockwork/scripture_tier_up.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	objectives |= clock_team.objectives
-	if(give_slab)
+	if(give_slab && ishuman(current))
 		give_clockwork_slab(current)
 	current.log_message("has been converted to the cult of Rat'var!", LOG_ATTACK, color="#960000")
 

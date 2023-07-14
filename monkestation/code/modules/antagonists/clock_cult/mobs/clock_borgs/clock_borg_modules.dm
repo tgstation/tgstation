@@ -59,11 +59,11 @@
 /obj/item/clock_module/tinkerers_cache
 	scripture_datum = /datum/scripture/create_structure/tinkerers_cache
 
-///obj/item/clock_module/stargazer need to add this as well
+///obj/item/clock_module/stargazer need to add this
 //	scripture_datum = /datum/scripture/create_structure/stargazer
 
 /obj/item/clock_module/vanguard
 	scripture_datum = /datum/scripture/slab/vanguard
 
-///obj/item/clock_module/sigil_submission yes also this
-//	scripture_datum = /datum/scripture/create_structure/sigil_submission
+/obj/item/clock_module/sigil_submission
+	scripture_datum = /datum/scripture/create_structure/sigil_submission

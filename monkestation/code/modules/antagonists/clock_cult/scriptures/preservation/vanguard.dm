@@ -16,12 +16,10 @@
 
 /datum/scripture/slab/vanguard/invoke()
 	. = ..()
-	ADD_TRAIT(invoker, TRAIT_STUNIMMUNE, VANGUARD_TRAIT)
-	ADD_TRAIT(invoker, TRAIT_PUSHIMMUNE, VANGUARD_TRAIT)
-	ADD_TRAIT(invoker, TRAIT_CONFUSEIMMUNE, VANGUARD_TRAIT)
-	ADD_TRAIT(invoker, TRAIT_IGNOREDAMAGESLOWDOWN, VANGUARD_TRAIT)
-	ADD_TRAIT(invoker, TRAIT_NOSTAMCRIT, VANGUARD_TRAIT)
-	ADD_TRAIT(invoker, TRAIT_NOLIMBDISABLE, VANGUARD_TRAIT)
+	invoker.add_traits(list(TRAIT_STUNIMMUNE,
+							TRAIT_PUSHIMMUNE,
+							TRAIT_IGNOREDAMAGESLOWDOWN,
+							TRAIT_NOLIMBDISABLE), VANGUARD_TRAIT)
 	to_chat(invoker, span_notice("You feel like nothing can stop you!"))
 
 /datum/scripture/slab/vanguard/count_down()
@@ -31,9 +29,8 @@
 
 /datum/scripture/slab/vanguard/end_invocation(silent)
 	. = ..()
-	REMOVE_TRAIT(invoker, TRAIT_STUNIMMUNE, VANGUARD_TRAIT)
-	REMOVE_TRAIT(invoker, TRAIT_PUSHIMMUNE, VANGUARD_TRAIT)
-	REMOVE_TRAIT(invoker, TRAIT_CONFUSEIMMUNE, VANGUARD_TRAIT)
-	REMOVE_TRAIT(invoker, TRAIT_IGNOREDAMAGESLOWDOWN, VANGUARD_TRAIT)
-	REMOVE_TRAIT(invoker, TRAIT_NOSTAMCRIT, VANGUARD_TRAIT)
-	REMOVE_TRAIT(invoker, TRAIT_NOLIMBDISABLE, VANGUARD_TRAIT)
+	invoker.remove_traits(list(TRAIT_STUNIMMUNE,
+							   TRAIT_PUSHIMMUNE,
+							   TRAIT_IGNOREDAMAGESLOWDOWN,
+							   TRAIT_NOLIMBDISABLE), VANGUARD_TRAIT)
+	to_chat(invoker, span_userdanger("You feel the last of the energy from \the [invoking_slab] leave you."))

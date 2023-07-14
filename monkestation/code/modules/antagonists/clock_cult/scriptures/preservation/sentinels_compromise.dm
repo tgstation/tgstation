@@ -12,17 +12,11 @@
 	use_time = 15 SECONDS
 
 /datum/scripture/slab/sentinels_compromise/apply_effects(mob/living/healed_mob)
-	if(!istype(healed_mob))
+	if(!istype(healed_mob) || !IS_CLOCK(invoker) || !IS_CLOCK(healed_mob))
 		return FALSE
 
-	if(!IS_CLOCK(invoker))
-		return FALSE
-
-	if(!ishuman(invoker))
-		to_chat(invoker, span_brass("Only human servants may use this."))
-		return FALSE
-
-	if(!IS_CLOCK(healed_mob))
+	if(iscogscarab(invoker))
+		to_chat(invoker, span_warning("Your form is too frail to take the burden of another."))
 		return FALSE
 
 	if(!do_after(invoker, invocation_time, healed_mob))
@@ -45,6 +39,7 @@
 	healed_mob.set_nutrition(NUTRITION_LEVEL_FULL)
 	healed_mob.bodytemperature = BODYTEMP_NORMAL
 	healed_mob.reagents.remove_reagent(/datum/reagent/water/holywater, 100) //if you have over 100 units of holy water then it should take multiple to purge
+	healed_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -50)
 
 	new /obj/effect/temp_visual/heal(get_turf(healed_mob), LIGHT_COLOR_CLOCKWORK)
 
