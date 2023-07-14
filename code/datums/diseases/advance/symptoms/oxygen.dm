@@ -17,10 +17,11 @@
 	base_message_chance = 5
 	symptom_delay_min = 1
 	symptom_delay_max = 1
-	var/regenerate_blood = FALSE
+	required_organ = ORGAN_SLOT_LUNGS
 	threshold_descs = list(
 		"Resistance 8" = "Additionally regenerates lost blood."
 	)
+	var/regenerate_blood = FALSE
 
 /datum/symptom/oxygen/Start(datum/disease/advance/A)
 	. = ..()
@@ -33,12 +34,8 @@
 	. = ..()
 	if(!.)
 		return
+
 	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
-
-	var/obj/item/organ/internal/lungs/target_lungs = infected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(target_lungs && IS_ROBOTIC_ORGAN(target_lungs))
-		return
-
 	switch(advanced_disease.stage)
 		if(4, 5)
 			infected_mob.adjustOxyLoss(-7, 0)
