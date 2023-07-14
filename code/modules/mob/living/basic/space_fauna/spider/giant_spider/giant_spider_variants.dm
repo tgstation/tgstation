@@ -436,7 +436,7 @@
  */
 /mob/living/basic/giant_spider/hunter/flesh
 	name = "flesh spider"
-	desc = "A odd fleshy creature in the shape of a spider.  Its eyes are pitch black and soulless."
+	desc = "A odd fleshy creature in the shape of a spider. Its eyes are pitch black and soulless."
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "flesh_spider"
 	icon_living = "flesh_spider"
