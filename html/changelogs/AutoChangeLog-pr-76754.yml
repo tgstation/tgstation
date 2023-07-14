@@ -1,7 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - refactor: "Goliaths now use the Basic Mob framework, please report any unusual behaviour."
-  - rscadd: "Goliaths learned a couple of new attacks which they will use in self-defence."
-  - balance: "Help-clicking a miner grabbed by Goliath tentacles will immediately free them, as will the effect of several items you can scavenge from around Lavaland."
-  - image: "New sprites for the Goliath saddle."

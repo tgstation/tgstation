@@ -1,4 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - bugfix: "Deployable turrets no longer runtime when firing"
