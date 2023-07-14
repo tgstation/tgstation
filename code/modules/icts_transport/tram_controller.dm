@@ -220,3 +220,10 @@
 
 	controller_active = new_status
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active)
+
+/datum/transport_controller/linear/tram/proc/update_status()
+	controller_status &= ~DOORS_OPEN
+	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+		if(door.airlock_state != 1)
+			controller_status |= DOORS_OPEN
+			break

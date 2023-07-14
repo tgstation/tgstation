@@ -5,10 +5,10 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	can_fire = FALSE
 
 	///associative list of the form: list(lift_id = list(all lift_master datums attached to lifts of that type))
-	var/list/transports_by_type
-	var/list/nav_beacons
-	var/list/crossing_signals
-	var/list/doors
+	var/list/transports_by_type = list()
+	var/list/nav_beacons = list()
+	var/list/crossing_signals = list()
+	var/list/doors = list()
 	///how much time a tram can take per movement before we notify admins and slow down the tram. in milliseconds
 	var/max_time = 15
 	///how many times the tram can move costing over max_time milliseconds before it gets slowed down
@@ -104,7 +104,8 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 
 	current_attempt++
 
-	if(!transport_controller.controller_status == 5)
+	transport_controller.update_status()
+	if(transport_controller.controller_status & DOORS_OPEN)
 		addtimer(CALLBACK(src, PROC_REF(validate_and_dispatch), transport_controller, current_attempt), 3 SECONDS)
 		return
 	else
