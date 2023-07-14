@@ -20,6 +20,7 @@
 	base_message_chance = 15
 	symptom_delay_min = 10
 	symptom_delay_max = 30
+	required_organ = ORGAN_SLOT_LUNGS
 	threshold_descs = list(
 		"Stage Speed 8" = "Causes choking more frequently.",
 		"Stealth 4" = "The symptom remains hidden until active."
@@ -38,12 +39,6 @@
 /datum/symptom/choking/Activate(datum/disease/advance/advanced_disease)
 	. = ..()
 	if(!.)
-		return
-
-	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
-
-	var/obj/item/organ/internal/lungs/target_lungs = infected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(target_lungs && IS_ROBOTIC_ORGAN(target_lungs))
 		return
 
 	switch(advanced_disease.stage)
@@ -88,7 +83,6 @@ Bonus
 */
 
 /datum/symptom/asphyxiation
-
 	name = "Acute respiratory distress syndrome"
 	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation. May also lead to heart attacks."
 	illness = "Iron Lungs"
@@ -101,11 +95,12 @@ Bonus
 	base_message_chance = 15
 	symptom_delay_min = 14
 	symptom_delay_max = 30
-	var/paralysis = FALSE
+	required_organ = ORGAN_SLOT_LUNGS
 	threshold_descs = list(
 		"Stage Speed 8" = "Additionally synthesizes pancuronium and sodium thiopental inside the host.",
 		"Transmission 8" = "Doubles the damage caused by the symptom."
 	)
+	var/paralysis = FALSE
 
 
 /datum/symptom/asphyxiation/Start(datum/disease/advance/A)
