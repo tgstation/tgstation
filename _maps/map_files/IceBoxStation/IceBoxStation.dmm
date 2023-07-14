@@ -852,12 +852,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/gateway)
-"apL" = (
-/obj/structure/rack,
-/obj/effect/turf_decal/tile/red/half/contrasted,
-/obj/effect/spawner/random/armory/disablers,
-/turf/open/floor/iron/dark/textured,
-/area/station/ai_monitored/security/armory)
 "apM" = (
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -2425,6 +2419,22 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
+"aPS" = (
+/obj/machinery/button/door/directional/east{
+	id = "armory";
+	name = "Armory Shutters";
+	pixel_x = -9;
+	pixel_y = 30;
+	req_access = list("armory")
+	},
+/obj/structure/rack,
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/spawner/random/armory/e_gun,
+/turf/open/floor/iron/dark/textured,
+/area/station/ai_monitored/security/armory/upper)
 "aPV" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6379,6 +6389,14 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
+"bYg" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/spawner/random/armory/laser_gun,
+/turf/open/floor/iron/dark/textured,
+/area/station/ai_monitored/security/armory)
 "bYm" = (
 /obj/structure/chair/pew{
 	dir = 1
@@ -10612,6 +10630,17 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
+"dkB" = (
+/obj/structure/rack,
+/obj/structure/window/reinforced/spawner/directional/north{
+	layer = 2.9
+	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/spawner/random/armory/shotgun,
+/turf/open/floor/iron/dark/textured,
+/area/station/ai_monitored/security/armory)
 "dkK" = (
 /obj/structure/railing/corner,
 /obj/effect/turf_decal/stripes/line,
@@ -10905,17 +10934,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
-"dpX" = (
-/obj/structure/rack,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
-/obj/effect/turf_decal/tile/red/anticorner/contrasted{
-	dir = 4
-	},
-/obj/effect/spawner/random/armory/shotgun,
-/turf/open/floor/iron/dark/textured,
-/area/station/ai_monitored/security/armory)
 "dqg" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/secure_area/directional/south,
@@ -15271,14 +15289,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/service/bar)
-"eLE" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
-/obj/effect/spawner/random/armory/barrier_grenades,
-/turf/open/floor/iron/dark/textured,
-/area/station/ai_monitored/security/armory/upper)
 "eLS" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -27034,6 +27044,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"iFL" = (
+/obj/structure/bed/dogbed/renault,
+/mob/living/basic/pet/fox/renault,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/captain)
 "iFX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -27790,15 +27805,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
-"iSd" = (
-/obj/structure/rack,
-/obj/machinery/airalarm/directional/north,
-/obj/effect/turf_decal/tile/red/half/contrasted,
-/obj/effect/spawner/random/armory/riot_armor,
-/obj/effect/spawner/random/armory/riot_helmet,
-/obj/effect/spawner/random/armory/riot_shield,
-/turf/open/floor/iron/dark/textured,
-/area/station/ai_monitored/security/armory)
 "iSf" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -31924,6 +31930,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
+"kiY" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/spawner/random/armory/bulletproof_armor,
+/obj/effect/spawner/random/armory/bulletproof_helmet,
+/turf/open/floor/iron/dark/textured,
+/area/station/ai_monitored/security/armory)
 "kjw" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/camera/directional/south{
@@ -35390,11 +35403,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
-"lmo" = (
-/obj/structure/bed/dogbed/renault,
-/mob/living/simple_animal/pet/fox/renault,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/captain)
 "lms" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
@@ -38564,22 +38572,6 @@
 /obj/machinery/shower/directional/west,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
-"mqz" = (
-/obj/machinery/button/door/directional/east{
-	id = "armory";
-	name = "Armory Shutters";
-	pixel_x = -9;
-	pixel_y = 30;
-	req_access = list("armory")
-	},
-/obj/structure/rack,
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
-	},
-/obj/effect/spawner/random/armory/e_gun,
-/turf/open/floor/iron/dark/textured,
-/area/station/ai_monitored/security/armory/upper)
 "mqD" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/wood,
@@ -40967,13 +40959,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
-"ngC" = (
-/obj/structure/rack,
-/obj/effect/turf_decal/tile/red/half/contrasted,
-/obj/effect/spawner/random/armory/bulletproof_armor,
-/obj/effect/spawner/random/armory/bulletproof_helmet,
-/turf/open/floor/iron/dark/textured,
-/area/station/ai_monitored/security/armory)
 "ngH" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/stripes/line{
@@ -42671,19 +42656,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
-"nFg" = (
-/obj/structure/table,
-/obj/item/paper_bin/carbon{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/pen,
-/obj/item/stamp/head/hop,
-/obj/item/storage/wallet/random{
-	pixel_x = 9
-	},
-/turf/open/floor/iron,
-/area/station/command/heads_quarters/hop)
 "nFk" = (
 /obj/effect/landmark/start/cyborg,
 /obj/structure/cable,
@@ -42797,6 +42769,14 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/engineering/atmos/pumproom)
+"nGK" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/spawner/random/armory/barrier_grenades,
+/turf/open/floor/iron/dark/textured,
+/area/station/ai_monitored/security/armory/upper)
 "nGQ" = (
 /obj/machinery/flasher/directional/north{
 	id = "Cell 3"
@@ -46591,6 +46571,19 @@
 	dir = 9
 	},
 /area/station/science/lab)
+"oPt" = (
+/obj/structure/table,
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/pen,
+/obj/item/stamp/head/hop,
+/obj/item/storage/wallet/random{
+	pixel_x = 9
+	},
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/hop)
 "oPv" = (
 /obj/machinery/turretid{
 	control_area = "/area/station/ai_monitored/turret_protected/aisat/service";
@@ -49191,17 +49184,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
-"pHi" = (
-/obj/structure/rack,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
-/obj/effect/spawner/random/armory/rubbershot,
-/turf/open/floor/iron/dark/textured,
-/area/station/ai_monitored/security/armory)
 "pHy" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/breath,
@@ -57671,6 +57653,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
+"srX" = (
+/obj/structure/rack,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/spawner/random/armory/riot_armor,
+/obj/effect/spawner/random/armory/riot_helmet,
+/obj/effect/spawner/random/armory/riot_shield,
+/turf/open/floor/iron/dark/textured,
+/area/station/ai_monitored/security/armory)
 "srY" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/iron/cafeteria,
@@ -64479,14 +64470,6 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/station/cargo/office)
-"uDt" = (
-/obj/structure/rack,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
-	},
-/obj/effect/spawner/random/armory/laser_gun,
-/turf/open/floor/iron/dark/textured,
-/area/station/ai_monitored/security/armory)
 "uDy" = (
 /obj/item/book/bible,
 /obj/structure/cable,
@@ -67552,6 +67535,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
+"vDx" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/spawner/random/armory/disablers,
+/turf/open/floor/iron/dark/textured,
+/area/station/ai_monitored/security/armory)
 "vDy" = (
 /obj/structure/sign/poster/official/safety_report/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -67810,6 +67799,17 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"vHM" = (
+/obj/structure/rack,
+/obj/structure/window/reinforced/spawner/directional/north{
+	layer = 2.9
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/spawner/random/armory/rubbershot,
+/turf/open/floor/iron/dark/textured,
+/area/station/ai_monitored/security/armory)
 "vHR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -167392,7 +167392,7 @@ dHw
 qhS
 jaW
 yiL
-ngC
+kiY
 oqb
 uBs
 uBs
@@ -167649,7 +167649,7 @@ oZR
 oVY
 pez
 yiL
-iSd
+srX
 cxO
 xuA
 tuc
@@ -168163,11 +168163,11 @@ mlX
 oVY
 pez
 yiL
-apL
+vDx
 cxO
 xuA
-dpX
-uDt
+dkB
+bYg
 yiL
 qLD
 bbY
@@ -168680,7 +168680,7 @@ yiL
 agF
 tgP
 rGh
-pHi
+vHM
 wyF
 yiL
 szz
@@ -233442,7 +233442,7 @@ oSC
 ovV
 hEC
 feJ
-mqz
+aPS
 pdK
 lyG
 apS
@@ -233764,7 +233764,7 @@ rpu
 ybI
 nnR
 tuz
-nFg
+oPt
 bhK
 rAA
 cpm
@@ -233960,7 +233960,7 @@ mgZ
 tDL
 lyG
 lok
-eLE
+nGK
 feJ
 uVu
 aKq
@@ -239406,7 +239406,7 @@ tEd
 lpM
 eEC
 aTw
-lmo
+iFL
 hpe
 wwB
 mBX

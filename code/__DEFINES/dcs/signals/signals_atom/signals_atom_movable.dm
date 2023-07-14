@@ -107,3 +107,7 @@
 
 /// Sent from /datum/station_trait/nebula/hostile/proc/get_shielding_level(): (/datum/station_trait/nebula/hostile)
 #define COMSIG_MOVABLE_GET_NEBULA_SHIELDING "movable_get_nebula_shielding"
+/// Sent from /atom/movable/proc/compose_message() after the name part: (list/stored_name, visible_name)
+#define COMSIG_MOVABLE_MESSAGE_GET_NAME_PART "movable_message_get_name_part"
+///The index of the name part
+#define NAME_PART_INDEX 1

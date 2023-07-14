@@ -223,10 +223,9 @@
 	new /obj/item/stack/pipe_cleaner_coil/white(src)
 	new /obj/item/stack/pipe_cleaner_coil/brown(src)
 
-/obj/item/storage/toolbox/a762
-	name = "7.62mm ammo box (Surplus?)"
-	desc = "It contains a few clips. Goddamn, this thing smells awful. \
-		Has this been sitting in a warehouse for the last several centuries?"
+/obj/item/storage/toolbox/ammobox
+	name = "ammo canister"
+	desc = "A metal canister designed to hold ammunition"
 	icon_state = "ammobox"
 	inhand_icon_state = "ammobox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
@@ -234,14 +233,29 @@
 	has_latches = FALSE
 	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
 	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
-	var/ammo_to_spawn = /obj/item/ammo_box/a762
+	var/ammo_to_spawn
 
-/obj/item/storage/toolbox/a762/PopulateContents()
-	for(var/i in 1 to 6)
-		new ammo_to_spawn(src)
+/obj/item/storage/toolbox/ammobox/PopulateContents()
+	if(!isnull(ammo_to_spawn))
+		for(var/i in 1 to 6)
+			new ammo_to_spawn(src)
 
-/obj/item/storage/toolbox/a762/surplus
+/obj/item/storage/toolbox/ammobox/a762
+	name = "7.62mm ammo box (Surplus?)"
+	desc = "It contains a few clips. Goddamn, this thing smells awful. \
+		Has this been sitting in a warehouse for the last several centuries?"
+	ammo_to_spawn = /obj/item/ammo_box/a762
+
+/obj/item/storage/toolbox/ammobox/a762/surplus
 	ammo_to_spawn = /obj/item/ammo_box/a762/surplus
+
+/obj/item/storage/toolbox/ammobox/wt550m9
+	name = "4.6x30mm ammo box"
+	ammo_to_spawn = /obj/item/ammo_box/magazine/wt550m9
+
+/obj/item/storage/toolbox/ammobox/wt550m9ap
+	name = "4.6x30mm AP ammo box"
+	ammo_to_spawn = /obj/item/ammo_box/magazine/wt550m9/wtap
 
 /obj/item/storage/toolbox/maint_kit
 	name = "gun maintenance kit"
