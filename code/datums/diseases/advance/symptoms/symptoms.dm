@@ -64,10 +64,7 @@
 	if(neutered)
 		return FALSE
 	if(required_organ)
-		var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
-		if(!iscarbon(infected_mob))
-			return FALSE
-	
+		var/mob/living/carbon/infected_mob = advanced_disease.affected_mob	
 		var/obj/item/organ/target_organ = infected_mob.get_organ_slot(required_organ)
 		if(!istype(target_organ))
 			return FALSE
