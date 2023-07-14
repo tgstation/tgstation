@@ -1,7 +1,7 @@
 /obj/machinery/recharge_station
 	name = "recharging station"
 	desc = "This device recharges energy dependent lifeforms, like cyborgs, ethereals and MODsuit users."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/machines/basic_machines.dmi'
 	icon_state = "borgcharger0"
 	density = FALSE
 	req_access = list(ACCESS_ROBOTICS)

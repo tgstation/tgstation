@@ -1,3 +1,4 @@
+GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 
 //////////////////////////////////////////////
 //                                          //
@@ -554,7 +555,7 @@
 			log_dynamic("[ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
 	if(revolution.members.len)
 		revolution.update_objectives()
-		revolution.update_heads()
+		revolution.update_rev_heads()
 		SSshuttle.registerHostileEnvironment(revolution)
 		return TRUE
 	log_dynamic("[ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
@@ -570,6 +571,10 @@
 		return
 
 	finished = winner
+
+	if(winner == REVOLUTION_VICTORY)
+		GLOB.revolutionary_win = TRUE
+
 	return RULESET_STOP_PROCESSING
 
 /// Checks for revhead loss conditions and other antag datums.

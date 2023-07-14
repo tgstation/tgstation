@@ -416,7 +416,7 @@
 	name = "GLA-2 mail counterfeit device"
 	desc = "Device that actually able to counterfeit NT's mail. This device also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also it might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs."
 	w_class = WEIGHT_CLASS_NORMAL
-	icon = 'icons/obj/device_syndie.dmi'
+	icon = 'icons/obj/syndicate_tools.dmi'
 	icon_state = "mail_counterfeit_device"
 
 /obj/item/storage/mail_counterfeit_device/Initialize(mapload)

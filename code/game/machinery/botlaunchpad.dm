@@ -1,7 +1,7 @@
 /obj/machinery/botpad
 	name = "Bot pad"
 	desc = "A lighter version of the orbital mech pad modified to launch bots. Requires linking to a remote to function."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "botpad"
 	circuit = /obj/item/circuitboard/machine/botpad
 	// ID of the console, used for linking up

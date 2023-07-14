@@ -4,7 +4,7 @@
 /obj/machinery/smartfridge
 	name = "smartfridge"
 	desc = "Keeps cold things cold and hot things cold."
-	icon = 'icons/obj/smartfridge.dmi'
+	icon = 'icons/obj/machines/smartfridge.dmi'
 	icon_state = "smartfridge"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE

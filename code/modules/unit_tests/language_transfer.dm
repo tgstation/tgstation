@@ -52,7 +52,7 @@
 		"Dummy should speak two languages - Uncommon and Draconic! Instead, it knew the following: [print_language_list(holder.spoken_languages)]")
 
 	TEST_ASSERT(length(holder.understood_languages) == 3, \
-		"Dummy should understand two languages - Common, Uncommon and Draconic! Instead, it knew the following: [print_language_list(holder.understood_languages)]")
+		"Dummy should understand three languages - Common, Uncommon and Draconic! Instead, it knew the following: [print_language_list(holder.understood_languages)]")
 
 /// Test that other random languages known are not lost on species change
 /datum/unit_test/language_species_change_other_known
