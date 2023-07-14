@@ -88,7 +88,7 @@
 	end_message = null
 
 	///Chance we pulse a living during the storm
-	var/radiation_chance = 5
+	var/radiation_chance = 20
 
 /datum/weather/rad_storm/nebula/weather_act(mob/living/living)
 	if(!prob(radiation_chance))
@@ -104,3 +104,9 @@
 		chance = URANIUM_IRRADIATION_CHANCE,
 		minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME,
 	)
+
+/datum/weather/rad_storm/nebula/status_alarm(active)
+	if(!active) //we stay on
+		return
+	else
+		..()

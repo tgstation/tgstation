@@ -509,10 +509,11 @@
 	name = "Radioactive Nebula"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 1
-	force = TRUE
 	show_in_report = TRUE
-	report_message = "This station is located inside a radioactive nebula."
+	report_message = "This station is located inside a radioactive nebula. Setting up nebula shielding is top-priority."
 	trait_to_give = STATION_TRAIT_RADIOACTIVE_NEBULA
+
+	blacklist = list(/datum/station_trait/random_event_weight_modifier/rad_storms)
 
 	intensity_increment_time = 5 MINUTES
 	maximum_nebula_intensity = 1 HOURS + 40 MINUTES
