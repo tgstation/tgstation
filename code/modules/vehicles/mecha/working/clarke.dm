@@ -7,6 +7,7 @@
 	max_temperature = 65000
 	max_integrity = 200
 	movedelay = 1.25
+	encumbrance_gap = 1.6
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
 	step_energy_drain = 15 //slightly higher energy drain since you movin those wheels FAST
@@ -27,7 +28,6 @@
 	mech_type = EXOSUIT_MODULE_CLARKE
 	enter_delay = 40
 	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS
-	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
 
 /datum/armor/working_clarke
 	melee = 20
