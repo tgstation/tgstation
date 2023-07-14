@@ -3955,8 +3955,7 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/table/reinforced,
-/obj/machinery/computer/records/medical/laptop,
+/obj/machinery/smartfridge/organ,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "bGn" = (
@@ -11413,12 +11412,12 @@
 /area/station/maintenance/department/medical/central)
 "eBT" = (
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/chair/office/tactical,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/iron/small,
-/area/station/medical/morgue)
+/area/space)
 "eBV" = (
 /obj/structure/table/wood,
 /obj/item/storage/crayons{
@@ -17155,13 +17154,10 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/science/robotics/mechbay)
 "gGQ" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/siding/white{
 	dir = 10
 	},
+/obj/structure/mannequin/skeleton,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "gHe" = (
@@ -43327,9 +43323,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/effect/landmark/start/coroner,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
@@ -57078,16 +57071,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"uhk" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/effect/turf_decal/siding/white{
-	dir = 8
-	},
-/obj/structure/mannequin/skeleton,
-/turf/open/floor/iron/small,
-/area/station/medical/morgue)
 "uhu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue{
@@ -65313,6 +65296,8 @@
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 4
 	},
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "wKq" = (
@@ -70515,7 +70500,8 @@
 "yaJ" = (
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/light/small/directional/south,
-/obj/machinery/smartfridge/organ,
+/obj/structure/table/reinforced,
+/obj/machinery/computer/records/medical/laptop,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "yaL" = (
@@ -105996,7 +105982,7 @@ ldq
 pdo
 vhQ
 isV
-uhk
+vhQ
 gGQ
 kFY
 hrC
