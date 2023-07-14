@@ -25,3 +25,7 @@
 ///When a carbon mob breathes in the pollutant
 /datum/pollutant/proc/breathe_act(mob/living/carbon/victim, amount)
 	return
+
+///When a carbon mob smells scents this is called 
+/datum/pollutant/proc/on_smell(mob/living/carbon/victim, amount)
+	return
