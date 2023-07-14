@@ -1,5 +1,0 @@
-author: "Jolly, timothymtorres"
-delete-after: True
-changes:
-  - code_imp: "Jolly: Armories across all maps have been tweaked slightly. Report to a Nanotrasen security advisor for any missing guns, armor, helmets or anything else that was there previously (that means, post an issue on Github if theres an issue!!)"
-  - code_imp: "timothymtorres: Random item spawners now support better control of their X/Y pixel offset."

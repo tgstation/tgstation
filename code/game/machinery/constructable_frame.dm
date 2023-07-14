@@ -1,7 +1,7 @@
 /obj/structure/frame
 	name = "frame"
 	desc = "A generic looking construction frame. One day this will be something greater."
-	icon = 'icons/obj/stock_parts.dmi'
+	icon = 'icons/obj/assemblies/stock_parts.dmi'
 	icon_state = "box_0"
 	density = TRUE
 	max_integrity = 250

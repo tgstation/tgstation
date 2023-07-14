@@ -1397,6 +1397,7 @@
 				/mob/living/basic/cow,
 				/mob/living/basic/giant_spider,
 				/mob/living/basic/giant_spider/hunter,
+				/mob/living/basic/mining/goliath,
 				/mob/living/basic/headslug,
 				/mob/living/basic/killer_tomato,
 				/mob/living/basic/lizard,
@@ -1405,12 +1406,12 @@
 				/mob/living/basic/pet/dog/breaddog,
 				/mob/living/basic/pet/dog/corgi,
 				/mob/living/basic/pet/dog/pug,
+				/mob/living/basic/pet/fox,
 				/mob/living/basic/statue,
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
 				/mob/living/simple_animal/crab,
 				/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
-				/mob/living/simple_animal/hostile/asteroid/goliath/beast,
 				/mob/living/simple_animal/hostile/bear,
 				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 				/mob/living/simple_animal/hostile/gorilla,
@@ -1420,7 +1421,6 @@
 				/mob/living/simple_animal/parrot,
 				/mob/living/simple_animal/pet/cat,
 				/mob/living/simple_animal/pet/cat/cak,
-				/mob/living/simple_animal/pet/fox,
 			)
 			new_mob = new picked_animal(loc)
 

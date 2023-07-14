@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - bugfix: "[TramStation] - Removed a (possibly) unused var on the barber shop doors. Hopefully those taking refuge in the commissary wasn't causing too many issues."

@@ -234,7 +234,6 @@
 	burst_size = 3
 	fire_delay = 1
 
-
 // L6 SAW //
 
 /obj/item/gun/ballistic/automatic/l6_saw
