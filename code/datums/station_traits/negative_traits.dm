@@ -487,16 +487,16 @@
 	for(var/atom/movable/shielder as anything in shielding)
 		for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 			if(shielder.z == z)
-				shield_strength += SEND_SIGNAL(shielder, COMSIG_MOVABLE_GET_NEBULA_SHIELDING)
+				var/datum/callback/callback = shielding[shielder]
+				shield_strength += callback.Invoke()
 				break
 
 	return shield_strength
 
 ///Add a shielding unit to ask for shielding
 /datum/station_trait/nebula/hostile/proc/add_shielder(atom/movable/shielder, shielding_proc)
-	shielding.Add(shielder)
+	shielding[shielder] = CALLBACK(shielder, shielding_proc)
 
-	shielder.RegisterSignal(shielder, COMSIG_MOVABLE_GET_NEBULA_SHIELDING, shielding_proc)
 	RegisterSignal(shielder, COMSIG_QDELETING, PROC_REF(remove_shielder))
 
 ///Remove a shielding unit from our tracking
