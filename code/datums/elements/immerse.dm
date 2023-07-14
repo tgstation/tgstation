@@ -4,7 +4,7 @@
  * Abandon all hope, ye who read forth, for this immerse works on mind-numbing workarounds,
  */
 /datum/element/immerse
-	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_BESPOKE
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY | ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 	///An association list of turfs that have this element attached and their affected contents.
 	var/list/attached_turfs_and_movables = list()
@@ -27,7 +27,7 @@
 	var/color
 	var/alpha
 
-/datum/element/immerse/Attach(turf/target, icon, icon_state, mask_icon, color, alpha = 180)
+/datum/element/immerse/Attach(turf/target, icon, icon_state, mask_icon, color = "#777777", alpha = 180)
 	. = ..()
 	if(!isturf(target) || !icon || !icon_state || !mask_icon)
 		return ELEMENT_INCOMPATIBLE
@@ -147,8 +147,8 @@
 		 * but since we want the appearance to stay where it should be,
 		 * we have to counteract this one.
 		 */
-		var/extra_width = (width - world.icon_size) / 2
-		var/extra_height = (height - world.icon_size) / 2
+		var/extra_width = (width - world.icon_size) * 0.5
+		var/extra_height = (height - world.icon_size) * 0.5
 		var/mutable_appearance/overlay_appearance = new()
 		var/icon/immerse_icon = generated_immerse_icons["[icon]-[icon_state]-[mask_icon]"]
 		var/last_i = width/world.icon_size
@@ -367,7 +367,9 @@
 	layer = WATER_VISUAL_OVERLAY_LAYER
 	plane = FLOAT_PLANE
 	var/mutable_appearance/overlay_appearance
+	///The base pixel x offset of the overlayed mutable appearance (and this movable during on_update_transform)
 	var/extra_width = 0
+	///The base pixel y offset of the overlayed mutable appearance (and this movable during on_update_transform)
 	var/extra_height = 0
 
 /atom/movable/immerse_overlay/Initialize(mapload, datum/element/immerse/element)

@@ -64,14 +64,14 @@
 	var/abs_width = abs(width) //Taking into account inverted transform values.
 	if(abs_width > max_scale)
 		clickbox_width = max_scale/width
-	else if(abs_width < min_scale && abs_width)
+	else if(abs_width && abs_width < min_scale)
 		clickbox_width = min_scale/width
 
 	var/clickbox_height = 1
 	var/abs_height = abs(height) //Ditto
 	if(abs_height > max_scale)
 		clickbox_height = max_scale/height
-	else if(abs_height < min_scale && abs_height)
+	else if(abs_height && abs_height < min_scale)
 		clickbox_height = min_scale/height
 
 	clickbox_underlay = mutable_appearance('icons/misc/clickbox.dmi', clickbox_icon_state, CLICKBOX_LAYER, alpha = 1, appearance_flags = RESET_COLOR|RESET_ALPHA)

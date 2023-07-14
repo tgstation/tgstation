@@ -13,6 +13,11 @@
 	barefootstep = FOOTSTEP_WATER
 	clawfootstep = FOOTSTEP_WATER
 	heavyfootstep = FOOTSTEP_WATER
+	/**
+	 * Used as the color arg/var for the immerse element. It should be kept more or less in line with
+	 * the hue of the turf, as semi-transparent vis overlays can opacify the semi-transparent bits of an icon,
+	 * and we're kinda trying to offset that issue.
+	 */
 	var/immerse_overlay_color = "#5AAA88"
 
 /turf/open/water/Initialize(mapload)
@@ -29,7 +34,7 @@
 	icon_state = "water"
 	base_icon_state = "water"
 	baseturfs = /turf/open/water/beach
-	immerse_overlay_color = "#88AAAA"
+	immerse_overlay_color = "#7799AA"
 
 /turf/open/water/beach/Initialize(mapload)
 	. = ..()

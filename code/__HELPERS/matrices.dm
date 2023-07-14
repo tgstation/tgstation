@@ -43,13 +43,8 @@
 	. = new_angle - old_angle
 	Turn(.) //BYOND handles cases such as -270, 360, 540 etc. DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE SHIT
 
-/**
- * Animates source spinning around itself.
- * * segments - the number of segments the animation has. Not sure how this is really necessary.
- * * angle - the angle turned per segment, in degrees
- * * parallel - if the animation is parallel or not.
- */
-/matrix/proc/do_spin_animation(source, speed = 10, loops = -1, segments = 3, angle = 120, parallel = TRUE)
+///Animates source spinning around itself. For docmentation on the args, check atom/proc/SpinAnimation()
+/matrix/proc/do_spin_animation(atom/source, speed = 1 SECONDS, loops = -1, segments = 3, angle = 120, parallel = TRUE)
 	var/list/matrices = list()
 	for(var/i in 1 to segments-1)
 		var/matrix/segment_matrix = matrix(src)
