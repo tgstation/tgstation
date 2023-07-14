@@ -63,8 +63,6 @@ GLOBAL_LIST_EMPTY(cooking_recipes_atoms)
 GLOBAL_LIST_EMPTY(rcd_list)
 /// list of wallmounted intercom radios.
 GLOBAL_LIST_EMPTY(intercoms_list)
-/// list of all Area Power Controller machines, separate from machines for powernet speeeeeeed.
-GLOBAL_LIST_EMPTY(apcs_list)
 /// list of all current implants that are tracked to work out what sort of trek everyone is on. Sadly not on lavaworld not implemented...
 GLOBAL_LIST_EMPTY(tracked_implants)
 /// list of implants the prisoner console can track and send inject commands too
@@ -82,23 +80,22 @@ GLOBAL_LIST_EMPTY(stairs)
 GLOBAL_LIST_EMPTY(janitor_devices)
 GLOBAL_LIST_EMPTY(trophy_cases)
 GLOBAL_LIST_EMPTY(experiment_handlers)
+
 ///This is a global list of all signs you can change an existing sign or new sign backing to, when using a pen on them.
 GLOBAL_LIST_INIT(editable_sign_types, populate_editable_sign_types())
 
 GLOBAL_LIST_EMPTY(wire_color_directory)
 GLOBAL_LIST_EMPTY(wire_name_directory)
 
-GLOBAL_LIST_EMPTY(ai_status_displays)
-
 /// List of all instances of /obj/effect/mob_spawn/ghost_role in the game world
 GLOBAL_LIST_EMPTY(mob_spawners)
+
 /// List of all mobs with the "ghost_direct_control" component
 GLOBAL_LIST_EMPTY(joinable_mobs)
-/// List of all station alert consoles, /obj/machinery/computer/station_alert
-GLOBAL_LIST_EMPTY(alert_consoles)
 
 /// List of area names of roundstart station cyborg rechargers, for the low charge/no charge cyborg screen alert tooltips.
 GLOBAL_LIST_EMPTY(roundstart_station_borgcharger_areas)
+
 /// List of area names of roundstart station mech rechargers, for the low charge/no charge mech screen alert tooltips.
 GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas)
 
