@@ -68,7 +68,6 @@
 	damage = 30
 	stamina = 45
 	weak_against_armour = FALSE
-	light_color = COLOR_STRONG_MAGENTA //monke edit, makes it a different color to be visibly different
 
 /obj/projectile/beam/weak
 	damage = 15
