@@ -687,6 +687,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
+"dj" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/kitchen/diagonal,
+/area/centcom/central_command_areas/fore)
 "dn" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -3024,6 +3028,13 @@
 /obj/structure/table/wood,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
+"ms" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/centcom/tdome/administration)
 "mu" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 8
@@ -3417,8 +3428,8 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "nW" = (
-/obj/machinery/vending/cola,
 /obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "nX" = (
@@ -3710,8 +3721,8 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "oQ" = (
-/obj/machinery/vending/snack,
 /obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "oU" = (
@@ -4181,13 +4192,13 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/ferry)
 "qS" = (
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom Security"
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/access/any/supply/general,
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
+/obj/machinery/door/airlock/centcom{
+	name = "CentCom Logistics"
+	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "qT" = (
@@ -4467,6 +4478,16 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
+"sf" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
+/area/centcom/central_command_areas/fore)
 "sm" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark/herringbone,
@@ -6033,8 +6054,12 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
 "yG" = (
-/turf/open/space/basic,
-/area/centcom/central_command_areas/supplypod)
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/centcom/tdome/administration)
 "yH" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/wood{
@@ -6333,6 +6358,7 @@
 /area/centcom/central_command_areas/control)
 "zL" = (
 /obj/structure/sink/kitchen/directional/west,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/kitchen/herringbone,
 /area/centcom/central_command_areas/fore)
 "zM" = (
@@ -6440,6 +6466,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/control)
+"Ar" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/closet/crate/freezer/surplus_limbs,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/control)
 "As" = (
 /obj/machinery/computer/communications{
 	dir = 8
@@ -6448,6 +6479,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/control)
 "At" = (
@@ -6542,6 +6574,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/control)
 "AV" = (
@@ -6776,7 +6809,6 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "BI" = (
-/obj/machinery/light/directional/south,
 /obj/structure/noticeboard/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -6784,8 +6816,8 @@
 /obj/machinery/vending/wallmed/directional/south{
 	use_power = 0
 	},
-/obj/structure/closet/crate/freezer/surplus_limbs,
-/turf/open/floor/iron,
+/obj/machinery/shower/directional/north,
+/turf/open/floor/noslip,
 /area/centcom/central_command_areas/control)
 "BJ" = (
 /obj/machinery/sleeper{
@@ -9154,6 +9186,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "Ok" = (
@@ -9400,18 +9433,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "OZ" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
-	name = "CentCom Security"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/ferry)
+/obj/machinery/light/directional/west,
+/turf/open/ballpit,
+/area/centcom/central_command_areas/fore)
 "Pc" = (
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -10011,6 +10035,7 @@
 /obj/structure/chair/sofa/corp{
 	dir = 8
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/centcom/central_command_areas/fore)
 "Ro" = (
@@ -10315,6 +10340,7 @@
 /area/centcom/tdome/administration)
 "SA" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/centcom/central_command_areas/fore)
 "SB" = (
@@ -12109,7 +12135,7 @@
 /area/centcom/tdome/observation)
 "ZX" = (
 /obj/machinery/door/airlock/centcom{
-	name = "CentCom Security"
+	name = "CentCom Logistics"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -51143,7 +51169,7 @@ Rh
 pI
 tH
 Bp
-Tt
+yG
 Bj
 Bp
 oI
@@ -53166,9 +53192,9 @@ YU
 YU
 mD
 mD
-OZ
+wu
 xh
-OZ
+wu
 mD
 Ya
 rY
@@ -54682,12 +54708,12 @@ SA
 Kg
 Vx
 Jr
-xK
+OZ
 Jr
 ub
 nc
 nc
-nc
+sf
 OL
 Vx
 Ul
@@ -56224,7 +56250,7 @@ zL
 xO
 IP
 uR
-uR
+dj
 ZU
 cG
 xA
@@ -59083,7 +59109,7 @@ Ab
 yz
 iu
 kN
-xN
+Ar
 Ab
 BJ
 iu
@@ -59881,7 +59907,7 @@ Rh
 pI
 tH
 Bp
-RB
+ms
 UW
 Bp
 oI
@@ -60893,7 +60919,7 @@ cg
 Ty
 Su
 qI
-yG
+NO
 ly
 jO
 as
