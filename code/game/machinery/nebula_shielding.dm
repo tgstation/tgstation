@@ -48,7 +48,7 @@
 	///How long we work untill we self-destruct
 	var/detonate_in = 10 MINUTES
 
-/obj/machinery/nebula_shielding/emergency/Initialize()
+/obj/machinery/nebula_shielding/emergency/Initialize(mapload)
 	. = ..()
 
 	addtimer(CALLBACK(src, PROC_REF(self_destruct)), detonate_in)
