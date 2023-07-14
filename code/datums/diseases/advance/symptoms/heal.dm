@@ -180,17 +180,18 @@
 */
 /datum/symptom/heal/chem
 	name = "Toxolysis"
+	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
 	stealth = 0
 	resistance = -2
 	stage_speed = 2
 	transmittable = -2
 	level = 7
-	var/food_conversion = FALSE
-	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
+	required_organ = ORGAN_SLOT_HEART
 	threshold_descs = list(
 		"Resistance 7" = "Increases chem removal speed.",
 		"Stage Speed 6" = "Consumed chemicals nourish the host.",
 	)
+	var/food_conversion = FALSE
 
 /datum/symptom/heal/chem/Start(datum/disease/advance/A)
 	. = ..()
@@ -221,19 +222,20 @@
 */
 /datum/symptom/heal/metabolism
 	name = "Metabolic Boost"
+	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
+		but also causing increased hunger."
 	stealth = -1
 	resistance = -2
 	stage_speed = 2
 	transmittable = 1
 	level = 7
-	var/triple_metabolism = FALSE
-	var/reduced_hunger = FALSE
-	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
-		but also causing increased hunger."
+	required_organ = ORGAN_SLOT_STOMACH
 	threshold_descs = list(
 		"Stealth 3" = "Reduces hunger rate.",
 		"Stage Speed 10" = "Chemical metabolization is tripled instead of doubled.",
 	)
+	var/triple_metabolism = FALSE
+	var/reduced_hunger = FALSE
 
 /datum/symptom/heal/metabolism/Start(datum/disease/advance/A)
 	. = ..()
@@ -244,21 +246,7 @@
 	if(A.totalStealth() >= 3)
 		reduced_hunger = TRUE
 
-/datum/symptom/heal/metabolism/CanHeal(datum/disease/advance/advanced_disease)
-	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
-	if(!iscarbon(infected_mob))
-		return
-
-	var/obj/item/organ/internal/stomach/target_stomach = infected_mob.get_organ_slot(ORGAN_SLOT_STOMACH)
-	if(!target_stomach || IS_ROBOTIC_ORGAN(target_stomach))
-		return
-
-	return power
-
 /datum/symptom/heal/metabolism/Heal(mob/living/carbon/infected_mob, datum/disease/advance/A, actual_power)
-	if(!iscarbon(infected_mob))
-		return
-
 	var/metabolic_boost = triple_metabolism ? 2 : 1
 	infected_mob.reagents.metabolize(infected_mob, metabolic_boost * SSMOBS_DT, 0, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
 	infected_mob.overeatduration = max(infected_mob.overeatduration - 4 SECONDS, 0)
@@ -440,11 +428,12 @@
 	transmittable = 1
 	level = 6
 	passive_message = span_notice("Your skin feels oddly dry...")
-	var/absorption_coeff = 1
+	required_organ = ORGAN_SLOT_LIVER
 	threshold_descs = list(
 		"Resistance 5" = "Water is consumed at a much slower rate.",
 		"Stage Speed 7" = "Increases healing speed.",
 	)
+	var/absorption_coeff = 1
 
 /datum/symptom/heal/water/Start(datum/disease/advance/A)
 	. = ..()
@@ -458,10 +447,6 @@
 /datum/symptom/heal/water/CanHeal(datum/disease/advance/advanced_disease)
 	. = 0
 	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
-
-	var/obj/item/organ/internal/liver/target_liver = infected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(!target_liver || IS_ROBOTIC_ORGAN(target_liver))
-		return
 
 	if(infected_mob.fire_stacks < 0)
 		infected_mob.adjust_fire_stacks(min(absorption_coeff, -infected_mob.fire_stacks))
@@ -491,12 +476,6 @@
 	return 1
 
 /datum/symptom/heal/water/passive_message_condition(mob/living/carbon/infected_mob)
-	if(!iscarbon(infected_mob))
-		return FALSE
-
-	var/obj/item/organ/internal/liver/target_liver = infected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(!target_liver || IS_ROBOTIC_ORGAN(target_liver))
-		return FALSE
 	if(M.getBruteLoss() || M.getFireLoss())
 		return TRUE
 
@@ -524,11 +503,12 @@
 	transmittable = -2
 	level = 8
 	passive_message = span_notice("You feel an odd attraction to plasma.")
-	var/temp_rate = 1
+	required_organ = ORGAN_SLOT_LIVER
 	threshold_descs = list(
 		"Transmission 6" = "Increases temperature adjustment rate.",
 		"Stage Speed 7" = "Increases healing speed.",
 	)
+	var/temp_rate = 1
 
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
 	. = ..()
@@ -561,41 +541,33 @@
 // Check internals breath, environmental plasma, and plasma in bloodstream to determine the heal power
 /datum/symptom/heal/plasma/CanHeal(datum/disease/advance/advanced_disease)
 	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
-
-	if(!iscarbon(infected_mob))
-		return
-
 	var/datum/gas_mixture/environment
 	var/list/gases
 
 	. = 0
 
-	var/obj/item/organ/internal/lungs/target_lungs = infected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(target_lungs && IS_ORGANIC_ORGAN(target_lungs))
-		// Check internals
-		///  the amount of mols in a breath is significantly lower than in the environment so we are just going to use the tank's
-		///  distribution pressure as an abstraction rather than calculate it using the ideal gas equation.
-		///  balanced around a tank set to 4kpa = about 0.2 healing power. maxes out at 0.75 healing power, or 15kpa.
-		var/obj/item/tank/internals/internals_tank = infected_mob.internal
-		if(internals_tank)
-			var/datum/gas_mixture/tank_contents = internals_tank.return_air()
-			if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
-				if(tank_contents.gases[/datum/gas/plasma])
-					// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
-					. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
-		else // Check environment
-			if(infected_mob.loc)
-				environment = infected_mob.loc.return_air()
-			if(environment)
-				gases = environment.gases
-				if(gases[/datum/gas/plasma])
-					. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
+	// Check internals
+	///  the amount of mols in a breath is significantly lower than in the environment so we are just going to use the tank's
+	///  distribution pressure as an abstraction rather than calculate it using the ideal gas equation.
+	///  balanced around a tank set to 4kpa = about 0.2 healing power. maxes out at 0.75 healing power, or 15kpa.
+	var/obj/item/tank/internals/internals_tank = infected_mob.internal
+	if(internals_tank)
+		var/datum/gas_mixture/tank_contents = internals_tank.return_air()
+		if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
+			if(tank_contents.gases[/datum/gas/plasma])
+				// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
+				. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
+	else // Check environment
+		if(infected_mob.loc)
+			environment = infected_mob.loc.return_air()
+		if(environment)
+			gases = environment.gases
+			if(gases[/datum/gas/plasma])
+				. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
 
-	var/obj/item/organ/internal/liver/target_liver = infected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(target_liver && IS_ORGANIC_ORGAN(target_liver))
-		// Check for reagents in bloodstream
-		if(diseased_mob.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
-			. += power * MAX_HEAL_COEFFICIENT_BLOODSTREAM //Determines how much the symptom heals if injected or ingested
+	// Check for reagents in bloodstream
+	if(diseased_mob.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
+		. += power * MAX_HEAL_COEFFICIENT_BLOODSTREAM //Determines how much the symptom heals if injected or ingested
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = BASE_HEAL_PLASMA_FIXATION * actual_power
