@@ -2516,6 +2516,10 @@
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
+"bfk" = (
+/obj/machinery/computer/records/medical/laptop,
+/turf/closed/wall,
+/area/station/maintenance/department/science/xenobiology)
 "bfo" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -3950,16 +3954,6 @@
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
 "bGk" = (
-/obj/machinery/airalarm/directional/east,
-/obj/effect/turf_decal/siding/white{
-	dir = 5
-	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/smartfridge/organ,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/siding/white{
 	dir = 5
@@ -11423,12 +11417,12 @@
 /area/station/maintenance/department/medical/central)
 "eBT" = (
 /obj/structure/cable,
-/obj/structure/chair/office/tactical,
 /obj/structure/disposalpipe/segment{
-	dir = 5
+	dir = 4
 	},
+/obj/structure/chair/office/tactical,
 /turf/open/floor/iron/small,
-/area/space)
+/area/station/medical/morgue)
 "eBV" = (
 /obj/structure/table/wood,
 /obj/item/storage/crayons{
@@ -15490,7 +15484,6 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
-/obj/structure/mannequin/skeleton,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "gan" = (
@@ -17172,10 +17165,13 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/science/robotics/mechbay)
 "gGQ" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/siding/white{
 	dir = 10
 	},
-/obj/structure/mannequin/skeleton,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "gHe" = (
@@ -19031,9 +19027,6 @@
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/siding/white{
 	dir = 4
-	},
-/obj/structure/bodycontainer/morgue/beeper_off{
-	dir = 8
 	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
@@ -28240,9 +28233,6 @@
 "kyG" = (
 /obj/item/radio/intercom/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/bodycontainer/morgue/beeper_off{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/station/engineering/storage/tech)
 "kyI" = (
@@ -35417,6 +35407,11 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"mYd" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/computer/records/medical/laptop,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "mYj" = (
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 1
@@ -37267,6 +37262,9 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/siding/white{
 	dir = 5
+	},
+/obj/structure/bodycontainer/morgue/beeper_off{
+	dir = 2
 	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
@@ -41060,7 +41058,9 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 9
 	},
-/obj/structure/bodycontainer/morgue/beeper_off,
+/obj/structure/bodycontainer/morgue/beeper_off{
+	dir = 2
+	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "pds" = (
@@ -43341,6 +43341,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /obj/effect/landmark/start/coroner,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
@@ -60188,13 +60191,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "vhQ" = (
-/obj/effect/turf_decal/siding/white{
-	dir = 8
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
@@ -65325,8 +65321,7 @@
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 4
 	},
-/obj/structure/disposalpipe/trunk,
-/obj/machinery/disposal/bin,
+/obj/structure/mannequin/skeleton,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "wKq" = (
@@ -70527,10 +70522,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "yaJ" = (
+/obj/machinery/smartfridge/organ,
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/light/small/directional/south,
-/obj/structure/table/reinforced,
-/obj/machinery/computer/records/medical/laptop,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "yaL" = (
@@ -107038,7 +107032,7 @@ kUF
 kdn
 lxa
 ldq
-ldq
+bfk
 lCS
 ldq
 ldq
@@ -107295,7 +107289,7 @@ ldq
 ldq
 kUF
 kdn
-kdn
+mYd
 mlR
 qVn
 fpq
