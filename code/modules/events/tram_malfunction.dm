@@ -38,13 +38,13 @@
 	priority_announce("Our automated control system has lost contact with the tram's on board computer. Please take extra care while we diagnose and resolve the issue. Signals and emergency braking may not be available during this time.", "CentCom Engineering Division")
 
 /datum/round_event/tram_malfunction/start()
-	for(var/obj/machinery/crossing_signal/signal as anything in GLOB.tram_signals)
+	for(var/obj/machinery/crossing_signal/signal as anything in SSicts_transport.crossing_signals)
 		signal.start_malfunction()
 
-	for(var/obj/machinery/door/window/tram/door as anything in GLOB.tram_doors)
-		door.start_malfunction()
+	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+		door.malfunctioning = TRUE
 
-	for(var/obj/machinery/destination_sign/sign as anything in GLOB.tram_signs)
+	for(var/obj/machinery/destination_sign/sign as anything in SSicts_transport.displays)
 		sign.malfunctioning = TRUE
 
 	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
@@ -52,13 +52,13 @@
 		tram.collision_lethality = original_lethality * 1.25
 
 /datum/round_event/tram_malfunction/end()
-	for(var/obj/machinery/crossing_signal/signal as anything in GLOB.tram_signals)
+	for(var/obj/machinery/crossing_signal/signal as anything in SSicts_transport.crossing_signals)
 		signal.end_malfunction()
 
-	for(var/obj/machinery/door/window/tram/door as anything in GLOB.tram_doors)
-		door.end_malfunction()
+	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+		door.malfunctioning = FALSE
 
-	for(var/obj/machinery/destination_sign/sign as anything in GLOB.tram_signs)
+	for(var/obj/machinery/destination_sign/sign as anything in SSicts_transport.displays)
 		sign.malfunctioning = FALSE
 
 	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)

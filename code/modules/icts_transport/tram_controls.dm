@@ -127,15 +127,15 @@
 	if(icts_controller)
 		if(!icts_controller.controller_active)
 			if(is_operational)
-				for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
+				for(var/obj/machinery/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
 					xing.set_signal_state(XING_STATE_MALF, TRUE)
-				for(var/obj/machinery/destination_sign/desto as anything in GLOB.tram_signs)
+				for(var/obj/machinery/destination_sign/desto as anything in SSicts_transport.displays)
 					desto.icon_state = "[desto.base_icon_state][DESTINATION_OFF]"
 					desto.update_appearance()
 			else
-				for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
+				for(var/obj/machinery/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
 					xing.set_signal_state(XING_STATE_MALF, TRUE)
-				for(var/obj/machinery/destination_sign/desto as anything in GLOB.tram_signs)
+				for(var/obj/machinery/destination_sign/desto as anything in SSicts_transport.displays)
 					desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
 					desto.update_appearance()
 

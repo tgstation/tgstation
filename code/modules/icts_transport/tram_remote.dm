@@ -96,14 +96,14 @@
 
 ///send our selected commands to the tram
 /obj/item/tram_remote/proc/try_force_tram(mob/user)
-	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
+	var/datum/transport_controller/linear/tram/tram_part = tram_ref?.resolve()
 	if(!tram_part)
 		balloon_alert(user, "no tram linked!")
 		return FALSE
-	if(tram_part.controls_locked || tram_part.travelling) // someone else started already
+	if(tram_part.controller_status & CONTROLS_LOCKED || tram_part.controller_active) // someone else started already
 		balloon_alert(user, "tram busy!")
 		return FALSE
-	var/tram_id = tram_part.specific_lift_id
+	var/tram_id = tram_part.specific_transport_id
 	var/destination_platform = null
 	var/platform = 0
 	switch(direction)

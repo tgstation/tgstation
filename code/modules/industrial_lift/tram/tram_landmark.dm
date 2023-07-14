@@ -19,23 +19,6 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	LAZYREMOVEASSOC(GLOB.tram_landmarks, specific_lift_id, src)
 	return ..()
 
-//tramstation
-
-/obj/effect/landmark/tram/tramstation/west
-	name = "West Wing"
-	platform_code = TRAMSTATION_WEST
-	tgui_icons = list("Arrivals" = "plane-arrival", "Command" = "bullhorn", "Security" = "gavel")
-
-/obj/effect/landmark/tram/tramstation/central
-	name = "Central Wing"
-	platform_code = TRAMSTATION_CENTRAL
-	tgui_icons = list("Service" = "cocktail", "Medical" = "plus", "Engineering" = "wrench")
-
-/obj/effect/landmark/tram/tramstation/east
-	name = "East Wing"
-	platform_code = TRAMSTATION_EAST
-	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
-
 //birdshot
 
 /obj/effect/landmark/tram/birdshot/sec_wing

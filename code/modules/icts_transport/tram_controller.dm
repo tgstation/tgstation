@@ -48,6 +48,7 @@
 	base_speed_limiter = transport_module.speed_limiter
 
 	check_starting_landmark()
+	INVOKE_ASYNC(src, PROC_REF(cycle_doors), OPEN_DOORS)
 
 /datum/transport_controller/linear/tram/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -100,10 +101,10 @@
 			explosion(transport_module, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 			qdel(transport_module)
 
-		for(var/obj/machinery/destination_sign/desto as anything in GLOB.tram_signs)
+		for(var/obj/machinery/destination_sign/desto as anything in SSicts_transport.displays)
 			desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
 
-		for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
+		for(var/obj/machinery/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
 			xing.set_signal_state(XING_STATE_MALF)
 			xing.update_appearance()
 
@@ -142,11 +143,10 @@
 	if(rapid) // bypass for unsafe, rapid departure
 		dispatch_transport(destination_platform)
 	else
-	//	cycle_tram_doors(CLOSE_DOORS)
+		cycle_doors(CLOSE_DOORS)
 		addtimer(CALLBACK(src, PROC_REF(dispatch_transport), destination_platform), 3 SECONDS)
 
 /datum/transport_controller/linear/tram/proc/dispatch_transport(obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
-	message_admins("ICTS: dispatch_tram")
 	controller_status &= ~PRE_DEPARTURE
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
 
@@ -163,7 +163,7 @@
 
 /datum/transport_controller/linear/tram/process(seconds_per_tick)
 	if(!travel_remaining)
-	//	cycle_tram_doors(OPEN_DOORS)
+		cycle_doors(OPEN_DOORS)
 		idle_platform = destination_platform
 		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 		return PROCESS_KILL
@@ -219,11 +219,17 @@
 		return
 
 	controller_active = new_status
-	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active)
+	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /datum/transport_controller/linear/tram/proc/update_status()
 	controller_status &= ~DOORS_OPEN
 	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
-		if(door.airlock_state != 1)
-			controller_status |= DOORS_OPEN
-			break
+		if(door.transport_linked_id == specific_transport_id)
+			if(door.airlock_state != 1)
+				controller_status |= DOORS_OPEN
+				break
+/datum/transport_controller/linear/tram/proc/cycle_doors(door_status)
+	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+		if(door.transport_linked_id == specific_transport_id)
+			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), door_status)
+		update_status()

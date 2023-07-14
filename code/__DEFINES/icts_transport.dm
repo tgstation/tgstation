@@ -30,6 +30,7 @@
 #define PRE_DEPARTURE (1<<0)
 #define DOORS_OPEN (1<<1)
 #define CONTROLS_LOCKED (1<<2)
+#define SYSTEM_FAULT (1<<2)
 DEFINE_BITFIELD(controller_status, list(
 	"PRE_DEPARTURE" = PRE_DEPARTURE,
 	"DOORS_OPEN" = DOORS_OPEN,

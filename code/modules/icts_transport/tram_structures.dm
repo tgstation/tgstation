@@ -1,3 +1,24 @@
+/**
+ * the tram has a few objects mapped onto it at roundstart, by default many of those objects have unwanted properties
+ * for example grilles and windows have the atmos_sensitive element applied to them, which makes them register to
+ * themselves moving to re register signals onto the turf via connect_loc. this is bad and dumb since it makes the tram
+ * more expensive to move.
+ *
+ * if you map something on to the tram, make SURE if possible that it doesnt have anything reacting to its own movement
+ * it will make the tram more expensive to move and we dont want that because we dont want to return to the days where
+ * the tram took a third of the tick per movement when its just carrying its default mapped in objects
+ */
+
+/obj/structure/grille/tram/Initialize(mapload)
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive, mapload)
+	//atmos_sensitive applies connect_loc which 1. reacts to movement in order to 2. unregister and register signals to
+	//the old and new locs. we dont want that, pretend these grilles and windows are plastic or something idk
+
+/obj/structure/window/reinforced/tram/Initialize(mapload, direct)
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive, mapload)
+
 /obj/structure/window/reinforced/tram_new
 	name = "tram"
 	desc = "A reinforced, air-locked modular tram structure with titanium silica windows."
@@ -47,31 +68,36 @@
 
 /obj/structure/tram/spoiler/LateInitialize()
 	. = ..()
-	find_tram()
-
-	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
-	if(tram_part)
-		RegisterSignal(tram_part, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(set_spoiler))
+	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(set_spoiler))
 
 /obj/structure/tram/spoiler/proc/find_tram()
-	for(var/datum/lift_master/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
-		if(tram.specific_lift_id != tram_id)
+	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
+		if(tram.specific_transport_id != tram_id)
 			continue
 		tram_ref = WEAKREF(tram)
 		break
 
-/obj/structure/tram/spoiler/proc/set_spoiler(source, travelling, direction)
+/obj/structure/tram/spoiler/proc/set_spoiler(source, controller, controller_active, controller_status, travel_direction)
 	SIGNAL_HANDLER
 
-	if(!travelling)
+	var/spoiler_direction = travel_direction
+	if(obj_flags & EMAGGED || controller_status & SYSTEM_FAULT)
+		do_sparks(3, cardinal_only = FALSE, source = src)
+		if(!deployed)
+			// Bring out the blades
+			deploy_spoiler()
+
+	if(!controller_active)
 		return
-	switch(direction)
+
+	switch(spoiler_direction)
 		if(SOUTH, EAST)
 			switch(dir)
 				if(NORTH, EAST)
 					retract_spoiler()
 				if(SOUTH, WEST)
 					deploy_spoiler()
+
 		if(NORTH, WEST)
 			switch(dir)
 				if(NORTH, EAST)
@@ -93,3 +119,54 @@
 	flick("tram-spoiler-retracting", src)
 	icon_state = "tram-spoiler-retracted"
 	deployed = FALSE
+
+/obj/structure/tram/spoiler/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	to_chat(user, span_warning("You short-circuit the [src]'s locking mechanism!"), type = MESSAGE_TYPE_INFO)
+	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	do_sparks(5, cardinal_only = FALSE, source = src)
+	obj_flags |= EMAGGED
+
+/*
+/obj/structure/tram/spoiler/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return FALSE
+
+	if(atom_integrity >= max_integrity && !(machine_stat & BROKEN))
+		balloon_alert(user, "it doesn't need repairs!")
+		return TRUE
+
+	balloon_alert(user, "repairing display...")
+	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
+		return TRUE
+
+	balloon_alert(user, "repaired")
+	atom_integrity = max_integrity
+	set_machine_stat(machine_stat & ~BROKEN)
+	update_appearance()
+	return TRUE
+*/
+
+/obj/structure/chair/sofa/bench/tram
+	name = "bench"
+	desc = "Perfectly designed to be comfortable to sit on, and hellish to sleep on."
+	icon_state = "bench_middle"
+	greyscale_config = /datum/greyscale_config/bench_middle
+	greyscale_colors = "#00CCFF"
+
+/obj/structure/chair/sofa/bench/tram/left
+	icon_state = "bench_left"
+	greyscale_config = /datum/greyscale_config/bench_left
+
+/obj/structure/chair/sofa/bench/tram/right
+	icon_state = "bench_right"
+	greyscale_config = /datum/greyscale_config/bench_right
+
+/obj/structure/chair/sofa/bench/tram/corner
+	icon_state = "bench_corner"
+	greyscale_config = /datum/greyscale_config/bench_corner
+
+/obj/structure/chair/sofa/bench/tram/solo
+	icon_state = "bench_solo"
+	greyscale_config = /datum/greyscale_config/bench_solo

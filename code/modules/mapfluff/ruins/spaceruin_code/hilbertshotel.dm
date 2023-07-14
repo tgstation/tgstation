@@ -504,24 +504,21 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 			to_chat(user, "No vacated rooms.")
 		return .
 
-/obj/effect/landmark/lift_id/hilbert
-	specific_lift_id = HILBERT_TRAM
-
-/obj/effect/landmark/tram/hilbert/left
+/obj/effect/landmark/icts/nav_beacon/tram/hilbert/left
 	name = "Port"
-	specific_lift_id = HILBERT_TRAM
+	specific_transport_id = HILBERT_TRAM
 	platform_code = HILBERT_PORT
 	tgui_icons = list("Reception" = "briefcase", "Botany" = "leaf", "Chemistry" = "flask")
 
-/obj/effect/landmark/tram/hilbert/middle
+/obj/effect/landmark/icts/nav_beacon/tram/hilbert/middle
 	name = "Central"
-	specific_lift_id = HILBERT_TRAM
+	specific_transport_id = HILBERT_TRAM
 	platform_code = HILBERT_CENTRAL
 	tgui_icons = list("Processing" = "cogs", "Xenobiology" = "paw")
 
-/obj/effect/landmark/tram/hilbert/right
+/obj/effect/landmark/icts/nav_beacon/tram/hilbert/right
 	name = "Starboard"
-	specific_lift_id = HILBERT_TRAM
+	specific_transport_id = HILBERT_TRAM
 	platform_code = HILBERT_STARBOARD
 	tgui_icons = list("Ordnance" = "bullseye", "Office" = "user", "Dormitories" = "bed")
 

@@ -831,8 +831,17 @@ GLOBAL_LIST_EMPTY(icts_transports)
 /obj/structure/transport/linear/tram/subfloor
 	icon_state = "tram_subfloor"
 
-/obj/structure/transport/linear/tram/subfloor/window
-	icon_state = "tram_subfloor_window"
+/obj/structure/transport/linear/tram/subfloor/northwest
+	icon_state = "tram_subfloor_nw"
+
+/obj/structure/transport/linear/tram/subfloor/southwest
+	icon_state = "tram_subfloor_sw"
+
+/obj/structure/transport/linear/tram/subfloor/northeast
+	icon_state = "tram_subfloor_ne"
+
+/obj/structure/transport/linear/tram/subfloor/southeast
+	icon_state = "tram_subfloor_se"
 
 /datum/armor/structure_tram
 	melee = 50

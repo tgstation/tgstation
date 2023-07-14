@@ -9,6 +9,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	var/list/nav_beacons = list()
 	var/list/crossing_signals = list()
 	var/list/doors = list()
+	var/list/displays = list()
 	///how much time a tram can take per movement before we notify admins and slow down the tram. in milliseconds
 	var/max_time = 15
 	///how many times the tram can move costing over max_time milliseconds before it gets slowed down
@@ -68,7 +69,6 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, INTERNAL_ERROR)
 		return
 
-	SEND_ICTS_SIGNAL(COMSIG_ICTS_DESTINATION, relevant, destination)
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_SUCCESS)
 
 	INVOKE_ASYNC(src, PROC_REF(dispatch_transport), transport_controller, request_flags)

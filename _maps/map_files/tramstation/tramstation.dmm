@@ -7155,7 +7155,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_cargo_lift";
-	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck");
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck");
 	req_access = list("mining")
 	},
 /obj/effect/abstract/elevator_music_zone{
@@ -12063,7 +12063,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "cNT" = (
-/obj/structure/transport/linear/tram/grey,
+/obj/structure/transport/linear/tram/subfloor/southeast,
 /obj/structure/tram/spoiler{
 	dir = 4
 	},
@@ -18084,13 +18084,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/prison)
-"fdw" = (
-/obj/structure/fluff/tram_rail{
-	dir = 1
-	},
-/obj/structure/transport/linear/tram/purple,
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "fdz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -18149,7 +18142,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_sci_lift";
-	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)
@@ -21005,7 +20998,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "gjM" = (
-/obj/structure/transport/linear/tram/grey,
+/obj/structure/transport/linear/tram/subfloor/northeast,
 /obj/structure/tram/spoiler{
 	dir = 1
 	},
@@ -26433,7 +26426,7 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningdock/oresilo)
 "irw" = (
-/obj/structure/transport/linear/tram/grey,
+/obj/structure/transport/linear/tram/subfloor/northwest,
 /obj/structure/tram/spoiler{
 	dir = 8
 	},
@@ -40658,7 +40651,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "nxf" = (
-/obj/structure/transport/linear/tram/grey,
+/obj/structure/transport/linear/tram/subfloor/southwest,
 /obj/structure/tram/spoiler,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -41812,7 +41805,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_dorm_lift";
-	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
@@ -43587,7 +43580,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_perma_lift";
-	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/execution/transfer)
@@ -44402,7 +44395,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck");
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck");
 	layer = 3.1
 	},
 /turf/closed/wall/r_wall,
@@ -52837,7 +52830,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "tram_upper_center_lift";
-	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 1
@@ -57263,7 +57256,7 @@
 /area/station/hallway/secondary/service)
 "tzk" = (
 /obj/machinery/computer/atmos_control/oxygen_tank{
-	atmos_chambers = list("o2ordance"="Oxygen                Supply")
+	atmos_chambers = list("o2ordance"="Oxygen                                                                Supply")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/north,
@@ -58243,7 +58236,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "tram_lower_center_lift";
-	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/mid)
@@ -60667,12 +60660,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"uGM" = (
-/obj/structure/fluff/tram_rail,
-/obj/effect/landmark/start/hangover,
-/obj/structure/transport/linear/tram/purple,
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "uGU" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 8;
@@ -62444,7 +62431,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower                Deck","3"="Upper                Deck");
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck");
 	layer = 3.1
 	},
 /turf/closed/wall,
@@ -166932,7 +166919,7 @@ aEk
 mYI
 tgE
 uOL
-uGM
+hio
 uSB
 aEq
 uOL
@@ -168990,7 +168977,7 @@ ykP
 uOL
 vtP
 qSD
-fdw
+gUF
 uOL
 qwI
 lej

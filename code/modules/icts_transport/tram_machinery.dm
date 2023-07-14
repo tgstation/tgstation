@@ -122,23 +122,21 @@
 	return TRUE
 
 /obj/machinery/door/airlock/tram/proc/find_tram()
-	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[ICTS_TYPE_TRAM])
-		if(lift.specific_lift_id == transport_linked_id)
-			tram_ref = WEAKREF(lift)
+	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
+		if(tram.specific_transport_id == transport_linked_id)
+			tram_ref = WEAKREF(tram)
 
 /obj/machinery/door/airlock/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
-//	RegisterSignal(SSicts_transport, COMSIG_ICTS_RESPONSE, PROC_REF(call_response))
 	INVOKE_ASYNC(src, PROC_REF(open))
 	SSicts_transport.doors += src
-	// find_tram()
 
-/obj/machinery/door/window/tram/Destroy()
+/obj/machinery/door/airlock/tram/Destroy()
 	SSicts_transport.doors -= src
 	return ..()
 
-/obj/machinery/door/window/tram/examine(mob/user)
+/obj/machinery/door/airlock/tram/examine(mob/user)
 	. = ..()
 	. += span_notice("It has an emergency mechanism to open using <b>just your hands</b> in the event of an emergency.")
 
@@ -149,12 +147,12 @@
 			try_to_crowbar(null, user, TRUE)
 			return TRUE
 
-/obj/machinery/door/window/tram/bumpopen(mob/user)
+/obj/machinery/door/airlock/tram/bumpopen(mob/user)
 	if(operating || !density)
 		return
-	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
+	var/datum/transport_controller/linear/tram/tram_part = tram_ref?.resolve()
 	add_fingerprint(user)
-	if(tram_part.travel_distance < XING_DEFAULT_TRAM_LENGTH || tram_part.travel_distance > tram_part.travel_trip_length - XING_DEFAULT_TRAM_LENGTH)
+	if(tram_part.travel_remaining < XING_DEFAULT_TRAM_LENGTH || tram_part.travel_remaining > tram_part.travel_trip_length - XING_DEFAULT_TRAM_LENGTH)
 		return // we're already animating, don't reset that
 	open(forced = BYPASS_DOOR_CHECKS) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
 	return

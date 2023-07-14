@@ -39,23 +39,23 @@
 
 	var/is_operational = TRUE
 
-/datum/lift_master/tram/New(obj/structure/industrial_lift/tram/lift_platform)
+/datum/transport_controller/linear/tram/New(obj/structure/industrial_lift/tram/lift_platform)
 	. = ..()
 	horizontal_speed = lift_platform.horizontal_speed
 	base_horizontal_speed = lift_platform.horizontal_speed
 
 	check_starting_landmark()
 
-/datum/lift_master/tram/vv_edit_var(var_name, var_value)
+/datum/transport_controller/linear/tram/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(var_name == "base_horizontal_speed")
 		horizontal_speed = max(horizontal_speed, base_horizontal_speed)
 
-/datum/lift_master/tram/add_lift_platforms(obj/structure/industrial_lift/new_lift_platform)
+/datum/transport_controller/linear/tram/add_lift_platforms(obj/structure/industrial_lift/new_lift_platform)
 	. = ..()
 	RegisterSignal(new_lift_platform, COMSIG_MOVABLE_BUMP, PROC_REF(gracefully_break))
 
-/datum/lift_master/tram/check_for_landmarks(obj/structure/industrial_lift/tram/new_lift_platform)
+/datum/transport_controller/linear/tram/check_for_landmarks(obj/structure/industrial_lift/tram/new_lift_platform)
 	. = ..()
 	for(var/turf/platform_loc as anything in new_lift_platform.locs)
 		var/obj/effect/landmark/tram/initial_destination = locate() in platform_loc
@@ -63,7 +63,7 @@
 		if(initial_destination)
 			idle_platform = initial_destination
 
-/datum/lift_master/tram/proc/check_starting_landmark()
+/datum/transport_controller/linear/tram/proc/check_starting_landmark()
 	if(!idle_platform)
 		CRASH("a tram lift_master was initialized without any tram landmark to give it direction!")
 
@@ -77,7 +77,7 @@
  * Arguments:
  * bumped_atom - The atom this tram bumped into
  */
-/datum/lift_master/tram/proc/gracefully_break(atom/bumped_atom)
+/datum/transport_controller/linear/tram/proc/gracefully_break(atom/bumped_atom)
 	SIGNAL_HANDLER
 
 	travel_distance = 0
@@ -97,10 +97,10 @@
 			explosion(tram_part, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 			qdel(tram_part)
 
-		for(var/obj/machinery/destination_sign/desto as anything in GLOB.tram_signs)
+		for(var/obj/machinery/destination_sign/desto as anything in SSicts_transport.displays)
 			desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
 
-		for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
+		for(var/obj/machinery/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
 			xing.set_signal_state(XING_STATE_MALF)
 			xing.update_appearance()
 
@@ -112,7 +112,7 @@
  * literally ripping itself apart. all of the actual movement is handled by SStramprocess
  * Arguments: destination platform, rapid (bypass some safety checks)
  */
-/datum/lift_master/tram/proc/tram_travel(obj/effect/landmark/tram/destination_platform, rapid = FALSE)
+/datum/transport_controller/linear/tram/proc/tram_travel(obj/effect/landmark/tram/destination_platform, rapid = FALSE)
 	if(destination_platform == idle_platform)
 		return
 
@@ -128,7 +128,7 @@
 		update_tram_doors(CLOSE_DOORS)
 		addtimer(CALLBACK(src, PROC_REF(dispatch_tram), destination_platform), 3 SECONDS)
 
-/datum/lift_master/tram/proc/dispatch_tram(obj/effect/landmark/tram/destination_platform)
+/datum/transport_controller/linear/tram/proc/dispatch_tram(obj/effect/landmark/tram/destination_platform)
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
 
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms) //only thing everyone needs to know is the new location.
@@ -142,7 +142,7 @@
 
 	START_PROCESSING(SStramprocess, src)
 
-/datum/lift_master/tram/process(seconds_per_tick)
+/datum/transport_controller/linear/tram/process(seconds_per_tick)
 	if(!travel_distance)
 		update_tram_doors(OPEN_DOORS)
 		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
@@ -185,14 +185,14 @@
  * at a location before users are allowed to interact with the tram console again.
  * Tram finds its location at this point before fully unlocking controls to the user.
  */
-/datum/lift_master/tram/proc/unlock_controls()
+/datum/transport_controller/linear/tram/proc/unlock_controls()
 	set_travelling(FALSE)
 	set_controls(FALSE)
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms) //only thing everyone needs to know is the new location.
 		tram_part.set_travelling(FALSE)
 
 
-/datum/lift_master/tram/proc/set_travelling(new_travelling)
+/datum/transport_controller/linear/tram/proc/set_travelling(new_travelling)
 	if(travelling == new_travelling)
 		return
 
@@ -203,13 +203,13 @@
  * Controls the doors of the tram when it departs and arrives at stations.
  * The tram doors are in a list of airlocks and we apply the proc on that list.
  */
-/datum/lift_master/tram/proc/update_tram_doors(action)
-	for(var/obj/machinery/door/window/tram/tram_door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/window/tram))
+/datum/transport_controller/linear/tram/proc/update_tram_doors(action)
+	for(var/obj/machinery/door/window/tram/tram_door in GLOB.airlocks)
 		if(tram_door.associated_lift != specific_lift_id)
 			continue
 		set_door_state(tram_door, action)
 
-/datum/lift_master/tram/proc/set_door_state(tram_door, action)
+/datum/transport_controller/linear/tram/proc/set_door_state(tram_door, action)
 	switch(action)
 		if(OPEN_DOORS)
 			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, cycle_doors), action)

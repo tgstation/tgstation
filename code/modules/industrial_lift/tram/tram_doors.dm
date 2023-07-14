@@ -124,7 +124,7 @@
 /obj/machinery/door/window/tram/bumpopen(mob/user)
 	if(operating || !density)
 		return
-	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
+	var/datum/transport_controller/linear/tram/tram_part = tram_ref?.resolve()
 	add_fingerprint(user)
 	if(tram_part.travel_distance < XING_DEFAULT_TRAM_LENGTH || tram_part.travel_distance > tram_part.travel_trip_length - XING_DEFAULT_TRAM_LENGTH)
 		return // we're already animating, don't reset that
