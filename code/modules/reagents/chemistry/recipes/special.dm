@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 
 		var/in_reagent_count = min(rand(min_input_reagents,max_input_reagents),remaining_possible_reagents.len)
 		if(in_reagent_count <= 0)
-			return CRASH("SECRET CHEM: Couldn't generate reagents for [type]!")
+			CRASH("SECRET CHEM: Couldn't generate reagents for [type]!")
 
 		required_reagents = list()
 		for(var/i in 1 to in_reagent_count)
