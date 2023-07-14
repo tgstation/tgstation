@@ -20,6 +20,7 @@
 	bot_type = FIRE_BOT
 	hackables = "fire safety protocols"
 	path_image_color = "#FFA500"
+	possessed_message = "You are a firebot! Protect the station from fires to the best of your ability!"
 
 	var/atom/target_fire
 	var/atom/old_target_fire

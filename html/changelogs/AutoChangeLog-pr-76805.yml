@@ -1,0 +1,6 @@
+author: "generalthrax"
+delete-after: True
+changes:
+  - balance: "Lionhunter on charge now has a damage modifier of 2 instead of 1.33"
+  - balance: "Increased max range of charged shot from 16 to 30"
+  - balance: "Increased scope modifier so you can use the new max range"

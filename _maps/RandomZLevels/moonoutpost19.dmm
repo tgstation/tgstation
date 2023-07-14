@@ -3406,7 +3406,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/moonoutpost19/research)
 "vI" = (
-/obj/structure/closet/mini_fridge,
+/obj/structure/closet/mini_fridge/grimy,
 /obj/item/food/pizzaslice/margherita,
 /obj/item/food/pizzaslice/margherita{
 	pixel_x = 5;
