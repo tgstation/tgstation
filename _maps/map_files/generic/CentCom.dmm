@@ -2835,7 +2835,7 @@
 "lr" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/door/airlock/bananium/glass{
-	desc = "People who take escape pods over the shuttle don't get to visit centcomm's pizza tower...";
+	desc = "People who take escape pods over the shuttle don't get to visit centcom's pizza tower...";
 	name = "Peppino Pizza"
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
@@ -2908,7 +2908,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "pizzatime";
 	name = "Pizza Time shutters";
-	desc = "People who take escape pods over the shuttle don't get to visit centcomm's pizza tower..."
+	desc = "People who take escape pods over the shuttle don't get to visit centcom's pizza tower..."
 	},
 /obj/structure/statue/bananium/clown,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
@@ -3384,7 +3384,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "pizzatime";
 	name = "Pizza Time shutters";
-	desc = "People who take escape pods over the shuttle don't get to visit centcomm's pizza tower..."
+	desc = "People who take escape pods over the shuttle don't get to visit centcom's pizza tower..."
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/centcom/central_command_areas/fore)
