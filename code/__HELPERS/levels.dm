@@ -21,36 +21,40 @@
 /**
  * Checks if the passed non-area atom is on a "planet".
  *
- * A planet is defined as anything with planetary atmos that has gravity:
+ * A planet is defined as anything with planetary atmos that has gravity, with some hardcoded exceptions.
  *
- * * - Mining level is definitely planetside (asteroid mining btfo'd)
- * * - Station level is planetside if planetary is enabled
- * * - Also just check for planetary turfs, might as well
- * * - If there's no gravity, it's definitely not a planet
+ * * Nullspace counts as "not a planet", so you may want to check that separately.
+ * * The mining z-level (Lavaland) is always considered a planet.
+ * * The station z-level is considered a planet if the map config says so.
+ * * Central Command is always not a planet.
+ * * Syndicate recon outpost is always on a planet.
  *
- * This essentially narrows it down so that
- *
- * * - Lavaland is a planet
- * * - Away missions are planets if they have gravity and planetary turfs
- * * - Icebox above ground is a planet
- * * - Icebox below ground is, yes, a planet
- *
- * Otherwise, we assume we're in "space". This includes
- *
- * * - Metastation (and friends)
- * * - Shuttles
- * * - Centcom
- * * - Deep space
- * * - Away Missions without gravity OR planetary turfs
- * * - Anyting on reserved z-levels without gravity OR planetary turfs (Lazy map templates)
+ * Returns TRUE if we are on a planet.
+ * Returns FALSE if we are not in a planet, or otherwise, "in space".
  */
 /proc/is_on_a_planet(atom/what)
 	ASSERT(!isarea(what))
 
-	var/turf/open/new_turf = get_turf(what)
-	if(isnull(new_turf))
+	var/turf/open/what_turf = get_turf(what)
+	if(isnull(what_turf))
+		// Nullspace is, well, not a planet?
 		return FALSE
 
-	var/z_level_checks = (is_station_level(new_turf.z) && SSmapping.config.planetary) || is_mining_level(new_turf.z)
-	var/planetary_check = istype(new_turf) && new_turf.planetary_atmos
-	return (z_level_checks || planetary_check) && new_turf.has_gravity()
+	if(is_mining_level(what_turf.z))
+		// Always assume Lavaland / mining level is a planet. (Astroid mining crying right now)
+		return TRUE
+
+	if(is_station_level(what_turf.z))
+		// Station levels rely on the map config, I.E. Icebox is planetary but Meta is not
+		return SSmapping.is_planetary()
+
+	if(is_centcom_level(what_turf.z))
+		// Central Command is definitely in space
+		return FALSE
+
+	if(what.onSyndieBase())
+		// Syndicate recon outpost is on some moon or something
+		return TRUE
+
+	// Finally, more specific checks are ran for edge cases, such as lazyily loaded map templates or away missions. Not perfect.
+	return istype(what_turf) && what_turf.planetary_atmos && what_turf.has_gravity()

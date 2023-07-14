@@ -5,14 +5,14 @@
 	status_type = STATUS_EFFECT_REPLACE
 	/// Essentially, tracks whether this is a planetary map.
 	/// It'd be pretty miserable if you're playing a planetary map and getting the worse of all effects, so we handwave it a bit.
-	var/nerfed_effects_because_planetary = FALSE
+	VAR_FINAL/nerfed_effects_because_planetary = FALSE
 
 /datum/status_effect/spacer/on_apply()
 	return iscarbon(owner)
 
 /datum/status_effect/spacer/on_creation(mob/living/new_owner, ...)
 	. = ..()
-	nerfed_effects_because_planetary = SSmapping.config.planetary
+	nerfed_effects_because_planetary = SSmapping.is_planetary()
 
 // The good side (being in space)
 /datum/status_effect/spacer/gravity_wellness
@@ -25,7 +25,7 @@
 	/// How many seconds of stuns to reduce per tick when we've been in nograv for a while
 	var/stun_heal_per_tick = 3 SECONDS
 	/// Tracks how long we've been in no gravity
-	var/seconds_in_nograv = 0 SECONDS
+	VAR_FINAL/seconds_in_nograv = 0 SECONDS
 
 /datum/status_effect/spacer/gravity_wellness/tick(seconds_per_tick, times_fired)
 	var/in_nograv = !owner.has_gravity()
@@ -54,7 +54,7 @@
 	/// The cap to which we can apply disgust
 	var/max_disgust = DISGUST_LEVEL_GROSS + 5
 	/// Tracks how many seconds this has been active
-	var/seconds_active = 0 SECONDS
+	VAR_FINAL/seconds_active = 0 SECONDS
 
 /datum/status_effect/spacer/gravity_sickness/tick(seconds_per_tick, times_fired)
 	if(owner.mob_negates_gravity())
@@ -100,6 +100,10 @@
 	description = "I've been on this planet for too long. I need to get back to space."
 	mood_change = -4
 
+/datum/mood_event/spacer/on_planet/nerfed
+	description = "I'm stationed on a planet. I'd love to be back in space."
+	mood_change = -3
+
 /datum/movespeed_modifier/spacer
 	id = "spacer"
 
@@ -115,3 +119,6 @@
 
 /datum/movespeed_modifier/spacer/on_planet/too_long
 	multiplicative_slowdown = 0.5
+
+/datum/movespeed_modifier/spacer/on_planet/nerfed
+	multiplicative_slowdown = 0.25
