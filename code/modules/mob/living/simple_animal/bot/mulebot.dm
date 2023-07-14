@@ -24,6 +24,7 @@
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
 	buckle_prevents_pull = TRUE // No pulling loaded shit
+	bot_mode_flags = ~BOT_MODE_ROUNDSTART_POSSESSION
 
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CARGO)
 	radio_key = /obj/item/encryptionkey/headset_cargo
