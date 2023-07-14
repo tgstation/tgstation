@@ -95,9 +95,10 @@
 	switch(source_disease.stage)
 		if(4, 5)
 			var/obj/item/organ/internal/ears/ears = ill_mob.get_organ_slot(ORGAN_SLOT_EARS)
-			if(ears && !IS_ROBOTIC_ORGAN(ears))
+			
+			if(ears && (IS_ROBOTIC_ORGAN(ears) && ! ) )
 				ears.adjustEarDamage(-4, -4)
-
+if(IS_ROBOTIC_ORGAN(target_organ) && !(advanced_disease.infectable_biotypes & MOB_ROBOTIC))
 			var/obj/item/organ/internal/eyes/eyes = ill_mob.get_organ_slot(ORGAN_SLOT_EYES)
 			if(!eyes || IS_ROBOTIC_ORGAN(eyes)) // only dealing with eye stuff from here on out
 				return
