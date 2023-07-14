@@ -310,6 +310,15 @@
 /// Key where we store the charging apc ability
 #define BB_FESTIVE_APC "BB_festive_apc"
 
+//Paperwizard AI keys
+/// Key where we store the summon minions ability
+#define BB_WIZARD_SUMMON_MINIONS "BB_summon_minions"
+/// Key where we store the mimics ability
+#define BB_WIZARD_MIMICS "BB_summon_mimics"
+/// Key where we store the paper target
+#define BB_FOUND_PAPER "BB_found_paper"
+/// Key where we store the list of things we can write on a paper
+#define BB_WRITING_LIST "BB_writing_list"
 /// Key where we store the tentacleing ability
 #define BB_GOLIATH_TENTACLES "BB_goliath_tentacles"
 /// Key where goliath stores a hole it wants to get into
