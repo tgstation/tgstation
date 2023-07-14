@@ -31,6 +31,7 @@
 
 	///what equipment flags does this have
 	var/equipment_flags
+	var/movedelay = 0
 
 /obj/item/mecha_parts/mecha_equipment/Destroy()
 	if(chassis)
@@ -229,3 +230,7 @@
 /// AI mech pilot: returns TRUE if the Ai should try to reload the mecha
 /obj/item/mecha_parts/mecha_equipment/proc/needs_rearm()
 	return FALSE
+
+/// Equipment returns its slowdown or speedboost.
+/obj/item/mecha_parts/mecha_equipment/proc/get_movedelay()
+	return movedelay
