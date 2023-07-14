@@ -81,7 +81,10 @@
 
 ///Easily send a supplypod to an area
 /proc/send_supply_pod_to_area(contents, area_type, pod_type = /obj/structure/closet/supplypod)
-	var/list/open_turfs = get_area_turfs(pick(get_areas(area_type)), subtypes = TRUE)
+	var/areas = get_areas(area_type)
+	if(!areas)
+		return FALSE
+	var/list/open_turfs = get_area_turfs(pick(areas), subtypes = TRUE)
 	for(var/turf/open/floor/turf in open_turfs)
 		open_turfs += turf
 
