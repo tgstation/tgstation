@@ -107,7 +107,7 @@
 			if (!destination_platform)
 				return FALSE
 
-			SEND_SIGNAL(src, COMSIG_ICTS_REQUEST, specific_transport_id, destination_platform)
+			SEND_SIGNAL(src, COMSIG_ICTS_REQUEST, specific_transport_id, destination_platform.platform_code)
 			update_appearance()
 
 /obj/machinery/computer/icts_controls/proc/update_tram_display(obj/effect/landmark/icts/nav_beacon/tram/idle_platform, controller_active)

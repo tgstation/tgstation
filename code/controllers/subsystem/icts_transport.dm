@@ -22,7 +22,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 /datum/controller/subsystem/processing/icts_transport/Recover()
 	_listen_lookup = SSicts_transport._listen_lookup
 
-/datum/controller/subsystem/processing/icts_transport/proc/incoming_request(source, obj/effect/landmark/icts/nav_beacon/tram/transport_network, obj/effect/landmark/icts/nav_beacon/tram/platform)
+/datum/controller/subsystem/processing/icts_transport/proc/incoming_request(source, obj/effect/landmark/icts/nav_beacon/tram/transport_network, platform)
 	SIGNAL_HANDLER
 
 	var/relevant
@@ -47,7 +47,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 
 	var/network = LAZYACCESS(nav_beacons, transport_network)
 	for(var/obj/effect/landmark/icts/nav_beacon/tram/potential_destination in network)
-		if(potential_destination.platform_code == platform.platform_code)
+		if(potential_destination.platform_code == platform)
 			destination = potential_destination
 			break
 

@@ -188,6 +188,8 @@
 					say("Button configuration error. Please contact the nearest engineer.")
 				if(INTERNAL_ERROR)
 					say("Tram controller error. Please contact the nearest engineer.")
+				if(TRANSPORT_IN_USE)
+					say("The tram is tramversing the station, please wait.")
 				if(PLATFORM_DISABLED)
 					say("The tram is set to skip this platform.")
 				if(NO_CALL_REQUIRED) //already here

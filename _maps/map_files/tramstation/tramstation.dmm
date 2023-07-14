@@ -6325,6 +6325,10 @@
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"aOw" = (
+/obj/structure/lattice,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/right)
 "aOz" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
@@ -7151,7 +7155,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_cargo_lift";
-	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck");
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck");
 	req_access = list("mining")
 	},
 /obj/effect/abstract/elevator_music_zone{
@@ -9422,6 +9426,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
+"bSB" = (
+/obj/structure/lattice,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/left)
 "bSS" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -18134,7 +18142,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_sci_lift";
-	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)
@@ -41774,7 +41782,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_dorm_lift";
-	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
 /obj/structure/railing,
 /turf/open/floor/plating/elevatorshaft,
@@ -43551,7 +43559,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_perma_lift";
-	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/execution/transfer)
@@ -44366,7 +44374,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck");
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck");
 	layer = 3.1
 	},
 /turf/closed/wall/r_wall,
@@ -52787,7 +52795,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "tram_upper_center_lift";
-	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 1
@@ -57213,7 +57221,7 @@
 /area/station/hallway/secondary/service)
 "tzk" = (
 /obj/machinery/computer/atmos_control/oxygen_tank{
-	atmos_chambers = list("o2ordance"="Oxygen    Supply")
+	atmos_chambers = list("o2ordance"="Oxygen        Supply")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/north,
@@ -58193,7 +58201,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "tram_lower_center_lift";
-	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/mid)
@@ -62386,7 +62394,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck");
+	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck");
 	layer = 3.1
 	},
 /turf/closed/wall,
@@ -157107,11 +157115,11 @@ yiM
 tkv
 qUg
 yiM
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 yiM
 rnR
 tkv
@@ -157364,11 +157372,11 @@ yiM
 yiM
 lIQ
 yiM
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 yiM
 aGL
 yiM
@@ -157621,11 +157629,11 @@ yiM
 gTC
 ifS
 yiM
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 yiM
 aEP
 aEP
@@ -157878,11 +157886,11 @@ yiM
 tdu
 ojT
 iPy
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 iPy
 ojT
 aHe
@@ -158135,11 +158143,11 @@ yiM
 aEh
 iPy
 yiM
-afz
+bSB
 afS
 lzu
 afY
-afz
+bSB
 yiM
 iPy
 tBu
@@ -158392,11 +158400,11 @@ afz
 afA
 afz
 afH
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 afH
 afz
 age
@@ -158649,11 +158657,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 afy
 afy
 age
@@ -158906,11 +158914,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 afy
 afy
 age
@@ -159163,11 +159171,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 afy
 afy
 age
@@ -159420,11 +159428,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 afy
 afy
 age
@@ -159677,11 +159685,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 afy
 afy
 age
@@ -159934,11 +159942,11 @@ afy
 afB
 afE
 afJ
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 agb
 afE
 agf
@@ -160191,11 +160199,11 @@ afz
 afC
 vFt
 afK
-afy
+cFs
 afP
 jWQ
 afX
-afy
+cFs
 agc
 yiM
 agg
@@ -160448,11 +160456,11 @@ afy
 afD
 afG
 afM
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 agd
 afG
 agh
@@ -160705,11 +160713,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 afy
 afy
 age
@@ -160962,11 +160970,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 lzu
 afX
-afy
+cFs
 afy
 afy
 age
@@ -161219,11 +161227,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 afy
 afy
 age
@@ -161476,11 +161484,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 afy
 afy
 age
@@ -161733,11 +161741,11 @@ afy
 afB
 afE
 afJ
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 agb
 afE
 agf
@@ -161990,11 +161998,11 @@ afz
 afC
 izU
 afK
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 agc
 qas
 agg
@@ -162247,11 +162255,11 @@ afy
 afD
 afG
 afN
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 agd
 afG
 agh
@@ -162504,11 +162512,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 afy
 afy
 age
@@ -162761,11 +162769,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 afy
 afy
 age
@@ -163018,11 +163026,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 afy
 afy
 age
@@ -163275,11 +163283,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 afy
 afy
 age
@@ -163532,11 +163540,11 @@ afy
 afA
 afy
 afy
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 afy
 afy
 age
@@ -163789,11 +163797,11 @@ afz
 afA
 afz
 afO
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 afO
 afz
 age
@@ -164046,11 +164054,11 @@ izU
 vMI
 nEl
 izU
-afz
+bSB
 afV
 wJq
 aga
-afz
+bSB
 izU
 nEl
 dnp
@@ -164303,11 +164311,11 @@ izU
 wWn
 wYw
 nEl
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 nEl
 wYw
 aHf
@@ -164560,11 +164568,11 @@ izU
 jWD
 gGI
 izU
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 izU
 ghg
 ghg
@@ -164817,11 +164825,11 @@ izU
 izU
 dXc
 izU
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 izU
 aGM
 izU
@@ -165074,11 +165082,11 @@ izU
 seG
 vYA
 izU
-afy
+cFs
 afP
 wJq
 afX
-afy
+cFs
 izU
 pby
 seG
@@ -170728,11 +170736,11 @@ abE
 seG
 vYA
 izU
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 izU
 ghg
 seG
@@ -170985,11 +170993,11 @@ abE
 izU
 suw
 izU
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 izU
 aHk
 izU
@@ -171242,11 +171250,11 @@ abE
 jea
 qtS
 izU
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 izU
 ghg
 ghg
@@ -171499,11 +171507,11 @@ abE
 gEC
 wYw
 nEl
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 nEl
 wYw
 aHl
@@ -171756,11 +171764,11 @@ izU
 eqK
 nEl
 izU
-afz
+aOw
 afS
 wJq
 afY
-afz
+aOw
 izU
 nEl
 mhE
@@ -172013,11 +172021,11 @@ afz
 afA
 afz
 afH
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 afH
 afz
 age
@@ -172270,11 +172278,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 afy
 afy
 age
@@ -172527,11 +172535,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 afy
 afy
 age
@@ -172784,11 +172792,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 afy
 afy
 age
@@ -173041,11 +173049,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 afy
 afy
 age
@@ -173298,11 +173306,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 afy
 afy
 age
@@ -173555,11 +173563,11 @@ afy
 afB
 afE
 afJ
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 agb
 afE
 agf
@@ -173812,11 +173820,11 @@ afz
 afC
 qas
 afK
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 agc
 izU
 agg
@@ -174069,11 +174077,11 @@ afy
 afD
 afG
 afN
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 agd
 afG
 agh
@@ -174326,11 +174334,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 afy
 afy
 age
@@ -174583,11 +174591,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 wJq
 afX
-afy
+brm
 afy
 afy
 age
@@ -174840,11 +174848,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 afy
 afy
 age
@@ -175097,11 +175105,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 afy
 afy
 age
@@ -175354,11 +175362,11 @@ afy
 afB
 afE
 afJ
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 agb
 afE
 agf
@@ -175611,11 +175619,11 @@ afz
 afC
 bMb
 afK
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 agc
 bMb
 agg
@@ -175868,11 +175876,11 @@ afy
 afD
 afG
 afN
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 agd
 afG
 agh
@@ -176125,11 +176133,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 uEo
 afX
-afy
+brm
 afy
 afy
 age
@@ -176382,11 +176390,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 afy
 afy
 age
@@ -176639,11 +176647,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 afy
 afy
 age
@@ -176896,11 +176904,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 afy
 afy
 age
@@ -177153,11 +177161,11 @@ afy
 afA
 afy
 afy
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 afy
 afy
 age
@@ -177410,11 +177418,11 @@ afz
 afA
 afz
 afO
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 afO
 afz
 age
@@ -177667,11 +177675,11 @@ bMb
 lyt
 ghV
 bMb
-afz
+aOw
 afS
 lMF
 afY
-afz
+aOw
 bMb
 ghV
 bXG
@@ -177924,11 +177932,11 @@ lZW
 kYk
 rxO
 ghV
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 ghV
 rxO
 aHn
@@ -178181,11 +178189,11 @@ lZW
 sgq
 mzf
 bMb
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 bMb
 gaH
 aEv
@@ -178438,11 +178446,11 @@ lZW
 bMb
 qHo
 bMb
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 bMb
 aHo
 bMb
@@ -178695,11 +178703,11 @@ skT
 lRs
 lVe
 bMb
-afy
+brm
 afP
 lMF
 afX
-afy
+brm
 bMb
 aEv
 lRs
