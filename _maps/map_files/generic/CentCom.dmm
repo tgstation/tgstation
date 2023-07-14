@@ -7454,6 +7454,8 @@
 /obj/effect/spawner/random/exotic/antag_gear,
 /obj/effect/spawner/random/exotic/antag_gear,
 /obj/effect/spawner/random/exotic/syndie,
+/obj/effect/spawner/random/exotic/antag_gear,
+/obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "EV" = (
@@ -9102,9 +9104,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
-"Ns" = (
-/turf/open/space/basic,
-/area/centcom/tdome/arena)
 "Nt" = (
 /obj/structure/filingcabinet/medical,
 /obj/machinery/light/directional/north,
@@ -9547,9 +9546,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
-"Pf" = (
-/turf/closed/indestructible/riveted,
-/area/space)
 "Pg" = (
 /obj/machinery/computer/auxiliary_base/directional/north,
 /obj/structure/table/reinforced,
@@ -10776,6 +10772,9 @@
 /obj/effect/spawner/random/contraband,
 /obj/effect/spawner/random/exotic/antag_gear_weak,
 /obj/effect/spawner/random/exotic/syndie,
+/obj/effect/spawner/random/exotic/antag_gear,
+/obj/effect/spawner/random/exotic/antag_gear,
+/obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "Ua" = (
@@ -10991,6 +10990,9 @@
 /obj/effect/spawner/random/contraband,
 /obj/effect/spawner/random/exotic/languagebook,
 /obj/effect/spawner/random/exotic/syndie,
+/obj/effect/spawner/random/exotic/antag_gear,
+/obj/effect/spawner/random/exotic/antag_gear,
+/obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "UV" = (
@@ -50014,9 +50016,9 @@ aa
 aa
 aa
 aa
-Pf
-Pf
-Pf
+QC
+QC
+QC
 uf
 uf
 uf
@@ -65951,7 +65953,7 @@ aa
 aa
 aa
 aa
-Ns
+aa
 aa
 aa
 aa
