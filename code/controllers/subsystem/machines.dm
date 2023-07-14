@@ -20,10 +20,12 @@ SUBSYSTEM_DEF(machines)
 	fire()
 	return SS_INIT_SUCCESS
 
+/// Registers a machine with the machine subsystem; should only be called by the machine itself during its creation.
 /datum/controller/subsystem/machines/proc/register_machine(obj/machinery/machine)
 	LAZYADD(machines_by_type[machine.type], machine)
 	all_machines |= machine
 
+/// Removes a machine from the machine subsystem; should only be called by the machine itself inside Destroy.
 /datum/controller/subsystem/machines/proc/unregister_machine(obj/machinery/machine)
 	var/list/existing = machines_by_type[machine.type]
 	existing -= machine
@@ -31,6 +33,7 @@ SUBSYSTEM_DEF(machines)
 		machines_by_type -= machine.type
 	all_machines -= machine
 
+/// Gets a list of all machines that are either the passed type or a subtype.
 /datum/controller/subsystem/machines/proc/get_machines_by_type_and_subtypes(obj/machinery/machine_type)
 	if(!ispath(machine_type))
 		machine_type = machine_type.type
@@ -44,6 +47,8 @@ SUBSYSTEM_DEF(machines)
 		machines += machines_by_type[next_type]
 	return machines
 
+
+/// Gets a list of all machines that are the exact passed type.
 /datum/controller/subsystem/machines/proc/get_machines_by_type(obj/machinery/machine_type)
 	if(!ispath(machine_type))
 		machine_type = machine_type.type
