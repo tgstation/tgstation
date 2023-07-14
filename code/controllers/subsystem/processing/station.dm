@@ -58,6 +58,13 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 		if(initial(trait_typepath.trait_flags) & STATION_TRAIT_ABSTRACT)
 			continue //Dont add abstract ones to it
+
+		if(!initial(trait_typepath.space) && !SSmapping.is_planetary()) //we dont do space but we're in space
+			continue
+
+		if(!initial(trait_typepath.planetary) && SSmapping.is_planetary())
+			continue
+
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 
 	var/positive_trait_count = pick(20;0, 5;1, 1;2)

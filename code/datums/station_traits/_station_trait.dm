@@ -22,6 +22,10 @@
 	var/trait_flags
 	/// Whether or not this trait can be reverted by an admin
 	var/can_revert = TRUE
+	/// Can we be selected on planet stations?
+	var/planetary = TRUE
+	/// Can we be selected on space stations?
+	var/space = TRUE
 
 /datum/station_trait/New()
 	. = ..()

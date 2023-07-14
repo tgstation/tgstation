@@ -419,6 +419,7 @@
 
 	show_in_report = TRUE
 	can_revert = FALSE //we're too invasive to properly revert. if you feel inspired, im sure you can make it work
+	planetary = FALSE //there's no space so the idea doesnt really work here
 
 	///The color of the "nebula" we send to the players client
 	var/nebula_color
@@ -564,6 +565,10 @@
 	if(!send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/engineering/main, /obj/structure/closet/supplypod/centcompod))
 		//if engineering isnt valid, just send it to the bridge
 		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/centcompod)
+
+	//Disables radstorms, they don't really make sense since we already have the nebula causing storms
+	var/datum/round_event_control/modified_event = locate(/datum/round_event_control/radiation_storm) in SSevents.control
+	modified_event.weight = 0
 
 ///They entered space? START BOMBING WITH RADS HAHAHAHA
 /datum/station_trait/nebula/hostile/radiation/proc/on_entered(area/space, atom/movable/enterer)
