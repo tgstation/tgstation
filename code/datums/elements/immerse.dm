@@ -366,6 +366,7 @@
 	blend_mode = BLEND_INSET_OVERLAY
 	layer = WATER_VISUAL_OVERLAY_LAYER
 	plane = FLOAT_PLANE
+	///The actual overlay used to make the mob look like it's half-covered in water.
 	var/mutable_appearance/overlay_appearance
 	///The base pixel x offset of the overlayed mutable appearance (and this movable during on_update_transform)
 	var/extra_width = 0
