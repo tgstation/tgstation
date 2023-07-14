@@ -180,12 +180,10 @@
 
 	var/datum/hud/ling_hud = owner.current.hud_used
 
-	lingchemdisplay = new
-	lingchemdisplay.hud = ling_hud
+	lingchemdisplay = new(null, ling_hud)
 	ling_hud.infodisplay += lingchemdisplay
 
-	lingstingdisplay = new
-	lingstingdisplay.hud = ling_hud
+	lingstingdisplay = new(null, ling_hud)
 	ling_hud.infodisplay += lingstingdisplay
 
 	ling_hud.show_hud(ling_hud.hud_version)
