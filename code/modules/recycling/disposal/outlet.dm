@@ -16,7 +16,7 @@
 /obj/structure/disposaloutlet
 	name = "disposal outlet"
 	desc = "An outlet for the pneumatic disposal system."
-	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
+	icon = 'icons/obj/pipes_n_cables/disposal.dmi'
 	icon_state = "outlet"
 	density = TRUE
 	anchored = TRUE
@@ -108,7 +108,7 @@
 //if emagged it cant change the speed setting off max
 	if(obj_flags & EMAGGED)
 		to_chat(user, span_notice("The LED display flashes an error!"))
-	else		
+	else
 		to_chat(user, span_notice("You adjust the ejection force on \the [src]."))
 		switch(eject_speed)
 			if(EJECT_SPEED_SLOW)

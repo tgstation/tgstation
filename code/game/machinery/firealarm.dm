@@ -5,7 +5,7 @@
 /obj/item/wallframe/firealarm
 	name = "fire alarm frame"
 	desc = "Used for building fire alarms."
-	icon = 'icons/obj/firealarm.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
 	pixel_shift = 26
@@ -13,7 +13,7 @@
 /obj/machinery/firealarm
 	name = "fire alarm"
 	desc = "Pull this in case of emergency. Thus, keep pulling it forever."
-	icon = 'icons/obj/firealarm.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "fire0"
 	max_integrity = 250
 	integrity_failure = 0.4
@@ -74,7 +74,16 @@
 		), \
 	)
 
+	AddElement( \
+		/datum/element/contextual_screentip_mob_typechecks, \
+		list(/mob/living/silicon = list( \
+				SCREENTIP_CONTEXT_CTRL_LMB = "Toggle thermal sensors, which control auto-deploy" \
+			) \
+		) \
+	)
+
 	update_appearance()
+
 
 /obj/machinery/firealarm/Destroy()
 	if(my_area)
@@ -477,8 +486,9 @@
 	my_area.fire_detect = !my_area.fire_detect
 	for(var/obj/machinery/firealarm/fire_panel in my_area.firealarms)
 		fire_panel.update_icon()
-	to_chat(user, span_notice("You [ my_area.fire_detect ? "enable" : "disable" ] the local firelock thermal sensors!"))
-	user.log_message("[ my_area.fire_detect ? "enabled" : "disabled" ] firelock sensors using [src].", LOG_GAME)
+	if (user)
+		balloon_alert(user, "thermal sensors [my_area.fire_detect ? "enabled" : "disabled"]")
+		user.log_message("[ my_area.fire_detect ? "enabled" : "disabled" ] firelock sensors using [src].", LOG_GAME)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 

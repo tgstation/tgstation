@@ -728,7 +728,7 @@
 			"cat2" = 'icons/mob/simple/pets.dmi',
 			"poly" = 'icons/mob/simple/animal.dmi',
 			"pug" = 'icons/mob/simple/pets.dmi',
-			"spider" = 'icons/mob/simple/animal.dmi'
+			"spider" = 'icons/mob/simple/arachnoid.dmi'
 			)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
@@ -893,7 +893,10 @@
 	var/treated_message = source.say_quote(raw_translation, spans, message_mods)
 
 	var/start = "Relayed Speech: "
-	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
+	var/namepart
+	var/list/stored_name = list(null)
+	SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, FALSE)
+	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
 	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 

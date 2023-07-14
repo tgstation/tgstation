@@ -1,7 +1,7 @@
 /obj/machinery/button
 	name = "button"
 	desc = "A remote control switch."
-	icon = 'icons/obj/buttons.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	base_icon_state = "button"
 	icon_state = "button"
 	///Icon suffix for the skin of the front pannel that is added to base_icon_state
