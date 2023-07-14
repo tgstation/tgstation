@@ -27,6 +27,7 @@
 /obj/item/ammo_casing/energy/laser/musket
 	projectile_type = /obj/projectile/beam/laser/musket
 	e_cost = 1000
+	fire_sound = 'sound/weapons/lasercannonfire.ogg' //monke edit: sounds cooler
 
 /obj/item/ammo_casing/energy/laser/musket/prime
 	projectile_type = /obj/projectile/beam/laser/musket/prime
