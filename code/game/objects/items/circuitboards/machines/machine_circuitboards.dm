@@ -1507,4 +1507,5 @@
 	req_components = list(
 		/datum/stock_part/capacitor = 2,
 		/obj/item/mod/module/rad_protection = 1,
-		/obj/item/stack/sheet/plasteel = 2)
+		/obj/item/stack/sheet/plasteel = 2,
+	)

@@ -24,6 +24,7 @@
 
 ///Nebula is asking us how strong we are. Return our shield strength is all is well
 /obj/machinery/nebula_shielding/proc/get_nebula_shielding()
+	SIGNAL_HANDLER
 	if(panel_open)
 		return
 	if(!powered())

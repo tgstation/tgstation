@@ -307,9 +307,10 @@
 	cost = CARGO_CRATE_VALUE * 2
 
 	special = TRUE
-	contains = list(/obj/item/mod/module/rad_protection = 5,
-					/obj/item/circuitboard/machine/radioactive_nebula_shielding = 5,
-					/obj/item/paper/fluff/radiation_nebula = 1,
+	contains = list(
+		/obj/item/mod/module/rad_protection = 5,
+		/obj/item/circuitboard/machine/radioactive_nebula_shielding = 5,
+		/obj/item/paper/fluff/radiation_nebula = 1,
 	)
 	crate_name = "radioactive nebula shielding (IMPORTANT)"
 	crate_type = /obj/structure/closet/crate/engineering
