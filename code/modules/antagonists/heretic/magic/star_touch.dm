@@ -242,5 +242,5 @@
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
 	if(!istype(target, /mob/living/basic/star_gazer))
-		target.RemoveElement(/datum/element/effect_trail)
+		target.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	return

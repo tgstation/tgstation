@@ -191,7 +191,7 @@
 	second_target = null
 	third_target = null
 	if(combo_counter > 3)
-		source.RemoveElement(/datum/element/effect_trail)
+		source.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	combo_duration = combo_duration_amount
 	combo_counter = 0
 	new /obj/effect/temp_visual/cosmic_cloud(get_turf(source))
