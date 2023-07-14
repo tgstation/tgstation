@@ -1,8 +1,9 @@
 /datum/transport_controller/linear/tram
 
-	///whether this tram is traveling across vertical and/or horizontal axis for some distance. not all lifts use this
-	var/travelling = FALSE
+	///whether this controller is active (any state we don't accept new orders, not nessecarily moving)
 	var/controller_active = FALSE
+	///whether all required parts of the tram are considered operational
+	var/controller_operational = TRUE
 	///if we're travelling, what direction are we going
 	var/travel_direction = NONE
 	///if we're travelling, how far do we have to go
@@ -13,14 +14,16 @@
 	///multiplier on how much damage/force the tram imparts on things it hits
 	var/collision_lethality = 1
 
-	/// reference to the destination landmark we consider ourselves "at". since we potentially span multiple z levels we dont actually
+	/// reference to the destination landmarks we consider ourselves "at" or travelling towards. since we potentially span multiple z levels we dont actually
 	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
 	/// and the destination landmark.
 	var/obj/effect/landmark/icts/nav_beacon/tram/idle_platform
-	var/obj/effect/landmark/icts/nav_beacon/tram/destination
+	/// reference to the destination landmarks we consider ourselves travelling towards. since we potentially span multiple z levels we dont actually
+	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
+	/// and the destination landmark.
+	var/obj/effect/landmark/icts/nav_beacon/tram/destination_platform
 
 	///decisecond delay between horizontal movement. cannot make the tram move faster than 1 movement per world.tick_lag.
-	///this var is poorly named its actually horizontal movement delay but whatever.
 	var/speed_limiter = 0.5
 
 	///version of speed_limiter that gets set in init and is considered our base speed if our lift gets slowed down
@@ -38,10 +41,6 @@
 
 	///how many times we moved while costing less than 0.5 * SSicts_transport.max_time milliseconds per movement
 	var/recovery_clear_count = 0
-
-	var/controller_operational = TRUE
-
-	var/controller_status = NONE
 
 /datum/transport_controller/linear/tram/New(obj/structure/transport/linear/tram/transport_module)
 	. = ..()
@@ -109,14 +108,14 @@
 			xing.update_appearance()
 
 
-/datum/transport_controller/linear/tram/proc/calculate_route(obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
-	if(destination_platform == idle_platform)
+/datum/transport_controller/linear/tram/proc/calculate_route(obj/effect/landmark/icts/nav_beacon/tram/destination)
+	if(destination == idle_platform)
 		return FALSE
 
+	destination_platform = destination
 	travel_direction = get_dir(idle_platform, destination_platform)
 	travel_remaining = get_dist(idle_platform, destination_platform)
 	travel_trip_length = travel_remaining
-	destination = destination_platform
 	return TRUE
 /**
  * Handles moving the tram
@@ -135,16 +134,17 @@
 	travel_remaining = get_dist(idle_platform, destination_platform)
 	travel_trip_length = travel_remaining
 	idle_platform = destination_platform
-	set_travelling(TRUE)
-	set_controls(LIFT_PLATFORM_LOCKED)
+	set_active(TRUE)
+	controls_lock(TRUE)
 	if(rapid) // bypass for unsafe, rapid departure
-		dispatch_tram(destination_platform)
+		dispatch_transport(destination_platform)
 	else
 		update_tram_doors(CLOSE_DOORS)
-		addtimer(CALLBACK(src, PROC_REF(dispatch_tram), destination_platform), 3 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(dispatch_transport), destination_platform), 3 SECONDS)
 
-/datum/transport_controller/linear/tram/proc/dispatch_tram(obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
+/datum/transport_controller/linear/tram/proc/dispatch_transport(obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
 	message_admins("ICTS: dispatch_tram")
+	controller_status &= ~PRE_DEPARTURE
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
 
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
@@ -161,6 +161,7 @@
 /datum/transport_controller/linear/tram/process(seconds_per_tick)
 	if(!travel_remaining)
 		update_tram_doors(OPEN_DOORS)
+		idle_platform = destination_platform
 		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 		return PROCESS_KILL
 	else if(world.time >= scheduled_move)
@@ -203,19 +204,19 @@
  */
 /datum/transport_controller/linear/tram/proc/unlock_controls()
 	message_admins("ICTS: unlock_controls")
-	set_travelling(FALSE)
-	set_controls(LIFT_PLATFORM_UNLOCKED)
+	set_active(FALSE)
+	controls_lock(FALSE)
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
 		transport_module.set_travelling(FALSE)
 
 
-/datum/transport_controller/linear/tram/proc/set_travelling(new_travelling)
+/datum/transport_controller/linear/tram/proc/set_active(new_status)
 	message_admins("ICTS: set_travelling")
-	if(travelling == new_travelling)
+	if(controller_active == new_status)
 		return
 
-	travelling = new_travelling
-	SEND_SIGNAL(src, COMSIG_TRAM_SET_TRAVELLING, travelling)
+	controller_active = new_status
+	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active)
 
 /**
  * Controls the doors of the tram when it departs and arrives at stations.

@@ -29,8 +29,8 @@
 	///somewhere on the tram, if its anywhere on the tram we'll find it in init and set this to whatever it specifies
 	var/specific_transport_id
 
-	///if true, the lift cannot be manually moved.
-	var/controls_locked = FALSE
+	///bitfield of various transport states
+	var/controller_status = NONE
 
 /datum/transport_controller/linear/New(obj/structure/transport/linear/transport_module)
 	transport_id = transport_module.transport_id
@@ -385,7 +385,7 @@
 		return FALSE
 
 	// Lock controls, to prevent moving-while-moving memes
-	set_controls(LIFT_PLATFORM_LOCKED)
+	controls_lock(TRUE)
 	// Send out a signal that we're going
 	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, direction)
 	// Close all lift doors
@@ -397,7 +397,7 @@
 		// Open doors on the zs we arrive at
 		update_lift_doors(get_zs_we_are_on(), action = OPEN_DOORS)
 		// And unlock the controls after
-		set_controls(LIFT_PLATFORM_UNLOCKED)
+		controls_lock(FALSE)
 		return TRUE
 
 	// Do a delayed move
@@ -416,7 +416,7 @@
  */
 /datum/transport_controller/linear/proc/finish_simple_move_wrapper()
 	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, 0)
-	set_controls(LIFT_PLATFORM_UNLOCKED)
+	controls_lock(FALSE)
 
 /**
  * Moves the lift to the passed z-level.
@@ -452,7 +452,7 @@
 		return FALSE
 
 	// Okay we're ready to start moving now.
-	set_controls(LIFT_PLATFORM_LOCKED)
+	controls_lock(TRUE)
 	// Send out a signal that we're going
 	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, direction)
 	var/travel_speed = prime_lift.elevator_vertical_speed
@@ -478,7 +478,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(open_lift_doors_callback)), 2 SECONDS)
 	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, 0)
-	set_controls(LIFT_PLATFORM_UNLOCKED)
+	controls_lock(FALSE)
 	return TRUE
 
 /**
@@ -522,13 +522,13 @@
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
  */
 /datum/transport_controller/linear/proc/move_lift_horizontally(going)
-	set_controls(LIFT_PLATFORM_LOCKED)
+	controls_lock(TRUE)
 
 	if(modular_set)
 		for(var/obj/structure/transport/linear/module_to_move as anything in transport_modules)
 			module_to_move.travel(going)
 
-		set_controls(LIFT_PLATFORM_UNLOCKED)
+		controls_lock(FALSE)
 		return
 
 	var/max_x = 0
@@ -593,7 +593,7 @@
 						var/obj/structure/transport/linear/transport_module = locate(/obj/structure/transport/linear, locate(x, y, z))
 						transport_module?.travel(going)
 
-	set_controls(LIFT_PLATFORM_UNLOCKED)
+	controls_lock(FALSE)
 
 ///Check destination turfs
 /datum/transport_controller/linear/proc/Check_lift_move(check_dir)
@@ -609,11 +609,14 @@
 	return TRUE
 
 /**
- * Sets all lift parts's controls_locked variable. Used to prevent moving mid movement, or cooldowns.
+ * Sets transport controls_locked state. Used to prevent moving mid movement, or cooldowns.
  */
-/datum/transport_controller/linear/proc/set_controls(state)
-	message_admins("ICTS: set_controls")
-	controls_locked = state
+/datum/transport_controller/linear/proc/controls_lock(state)
+	switch(state)
+		if(FALSE)
+			controller_status &= ~CONTROLS_LOCKED
+		else
+			controller_status |= CONTROLS_LOCKED
 
 /**
  * resets the contents of all platforms to their original state in case someone put a bunch of shit onto the tram.

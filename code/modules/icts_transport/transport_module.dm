@@ -630,7 +630,7 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	LAZYREMOVE(current_operators, REF(user))
 	if(!can_open_lift_radial(user, starting_position))
 		return //nice try
-	if(!isnull(result) && result != "Cancel" && transport_controller_datum.controls_locked)
+	if(!isnull(result) && result != "Cancel" && transport_controller_datum.controller_status & CONTROLS_LOCKED)
 		// Only show this message if they actually wanted to move
 		balloon_alert(user, "elevator controls locked!")
 		return
@@ -760,7 +760,7 @@ GLOBAL_LIST_EMPTY(icts_transports)
 	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, PROC_REF(can_open_lift_radial), user, starting_position), require_near = TRUE, tooltips = FALSE)
 	if (!can_open_lift_radial(user,starting_position))
 		return	// nice try
-	if(!isnull(result) && result != "Cancel" && transport_controller_datum.controls_locked)
+	if(!isnull(result) && result != "Cancel" && transport_controller_datum.controller_status & CONTROLS_LOCKED)
 		// Only show this message if they actually wanted to move
 		balloon_alert(user, "elevator controls locked!")
 		return
@@ -857,7 +857,7 @@ GLOBAL_LIST_EMPTY(icts_transports)
 			UnregisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 
 	src.travelling = travelling
-	SEND_SIGNAL(src, COMSIG_TRAM_SET_TRAVELLING, travelling)
+	SEND_SIGNAL(src, COMSIG_ICTS_TRANSPORT_ACTIVE, travelling)
 
 /obj/structure/transport/linear/tram/set_currently_z_moving()
 	return FALSE //trams can never z fall and shouldnt waste any processing time trying to do so
@@ -872,7 +872,7 @@ GLOBAL_LIST_EMPTY(icts_transports)
 /obj/structure/transport/linear/tram/proc/unlock_controls()
 	for(var/obj/structure/transport/linear/tram/tram_part as anything in transport_controller_datum.transport_modules) //only thing everyone needs to know is the new location.
 		tram_part.set_travelling(FALSE)
-		transport_controller_datum.set_controls(LIFT_PLATFORM_UNLOCKED)
+		transport_controller_datum.controls_lock(FALSE)
 
 ///debug proc to highlight the locs of the tram platform
 /obj/structure/transport/linear/tram/proc/find_dimensions(iterations = 100)

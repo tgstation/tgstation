@@ -7,6 +7,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	///associative list of the form: list(lift_id = list(all lift_master datums attached to lifts of that type))
 	var/list/transports_by_type
 	var/list/nav_beacons
+	var/list/crossing_signals
 	///how much time a tram can take per movement before we notify admins and slow down the tram. in milliseconds
 	var/max_time = 15
 	///how many times the tram can move costing over max_time milliseconds before it gets slowed down
@@ -21,7 +22,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 /datum/controller/subsystem/processing/icts_transport/Recover()
 	_listen_lookup = SSicts_transport._listen_lookup
 
-/datum/controller/subsystem/processing/icts_transport/proc/incoming_request(source, transport_network, platform)
+/datum/controller/subsystem/processing/icts_transport/proc/incoming_request(source, obj/effect/landmark/icts/nav_beacon/tram/transport_network, obj/effect/landmark/icts/nav_beacon/tram/platform)
 	SIGNAL_HANDLER
 
 	var/relevant
@@ -40,13 +41,13 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 		SEND_ICTS_SIGNAL(call_source, COMSIG_ICTS_RESPONSE, REQUEST_FAIL, NOT_IN_SERVICE)
 		return
 
-	if(transport_controller.travelling) //in use
+	if(transport_controller.controller_active) //in use
 		SEND_ICTS_SIGNAL(call_source, COMSIG_ICTS_RESPONSE, REQUEST_FAIL, TRANSPORT_IN_USE)
 		return
 
 	var/network = LAZYACCESS(nav_beacons, transport_network)
 	for(var/obj/effect/landmark/icts/nav_beacon/tram/potential_destination in network)
-		if(potential_destination.platform_code == platform)
+		if(potential_destination.platform_code == platform.platform_code)
 			destination = potential_destination
 			break
 
@@ -66,6 +67,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, INTERNAL_ERROR)
 		return
 
+	SEND_ICTS_SIGNAL(COMSIG_ICTS_DESTINATION, relevant, destination)
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_SUCCESS)
 
 	INVOKE_ASYNC(src, PROC_REF(dispatch_transport), transport_controller, destination, request_flags)
@@ -74,22 +76,16 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	if(transport_controller.idle_platform == destination)
 		return
 
-	transport_controller.controller_active = TRUE
-	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, transport_controller, transport_controller.controller_active)
-	transport_controller.idle_platform = destination
+	transport_controller.set_active(TRUE)
 	pre_departure(transport_controller, destination, request_flags)
 
 /datum/controller/subsystem/processing/icts_transport/proc/pre_departure(datum/transport_controller/linear/tram/transport_controller, destination, request_flags)
 	transport_controller.controller_status |= PRE_DEPARTURE
 	transport_controller.controller_status |= CONTROLS_LOCKED
-//	if(request_flags & rapid) // bypass for unsafe, rapid departure
-//		transport_controller.clear_dispatch(destination)
+	if(request_flags & RAPID_MODE) // bypass for unsafe, rapid departure
+		transport_controller.dispatch_transport(destination)
 
-
-
-
-	var/trip_direction = transport_controller.travel_direction
-	var/trip_remaining = transport_controller.travel_remaining
-
+	// INVOKE_ASYNC(src, PROC_REF(update_tram_doors), CLOSE_DOORS)
+	addtimer(CALLBACK(transport_controller, PROC_REF(dispatch_transport), destination), 3 SECONDS)
 
 

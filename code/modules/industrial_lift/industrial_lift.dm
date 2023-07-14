@@ -856,7 +856,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 			UnregisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 
 	src.travelling = travelling
-	SEND_SIGNAL(src, COMSIG_TRAM_SET_TRAVELLING, travelling)
+	SEND_SIGNAL(src, COMSIG_ICTS_TRANSPORT_ACTIVE, travelling)
 
 /obj/structure/industrial_lift/tram/set_currently_z_moving()
 	return FALSE //trams can never z fall and shouldnt waste any processing time trying to do so
@@ -871,7 +871,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 /obj/structure/industrial_lift/tram/proc/unlock_controls()
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
 		tram_part.set_travelling(FALSE)
-		lift_master_datum.set_controls(LIFT_PLATFORM_UNLOCKED)
+		lift_master_datum.set_controls(FALSE)
 
 ///debug proc to highlight the locs of the tram platform
 /obj/structure/industrial_lift/tram/proc/find_dimensions(iterations = 100)

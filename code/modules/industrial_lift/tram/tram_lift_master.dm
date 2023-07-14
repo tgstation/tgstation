@@ -187,7 +187,7 @@
  */
 /datum/lift_master/tram/proc/unlock_controls()
 	set_travelling(FALSE)
-	set_controls(LIFT_PLATFORM_UNLOCKED)
+	set_controls(FALSE)
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms) //only thing everyone needs to know is the new location.
 		tram_part.set_travelling(FALSE)
 
@@ -197,7 +197,7 @@
 		return
 
 	travelling = new_travelling
-	SEND_SIGNAL(src, COMSIG_TRAM_SET_TRAVELLING, travelling)
+	SEND_SIGNAL(src, COMSIG_ICTS_TRANSPORT_ACTIVE, travelling)
 
 /**
  * Controls the doors of the tram when it departs and arrives at stations.

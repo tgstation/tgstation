@@ -221,8 +221,8 @@
 	if(!tram || !tram.controller_operational) //tram is QDEL or has no power
 		say("The tram is not in service. Please send a technician to repair the internals of the tram.")
 		return
-	if(tram.travelling) //in use
-		say("The tram is already travelling to [tram.idle_platform].")
+	if(tram.controller_active) //in use
+		say("The tram is already travelling to [tram.destination_platform].")
 		return
 	if(!destination_platform)
 		return

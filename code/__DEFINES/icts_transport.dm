@@ -7,6 +7,7 @@
 #define REQUEST_FAIL "!FAIL"
 #define REQUEST_SUCCESS "!ACK"
 #define COMSIG_ICTS_TRANSPORT_ACTIVE "!ACTV"
+#define COMSIG_ICTS_DESTINATION "!DEST"
 
 // ICTS Codes
 #define NOT_IN_SERVICE "!NIS"
@@ -34,6 +35,12 @@ DEFINE_BITFIELD(controller_status, list(
 	"DOORS_OPEN" = DOORS_OPEN,
 	"CONTROLS_LOCKED" = CONTROLS_LOCKED,
 ))
+
+#define RAPID_MODE (1<<0)
+DEFINE_BITFIELD(request_flags, list(
+	"RAPID_MODE" = RAPID_MODE,
+))
+
 
 
 

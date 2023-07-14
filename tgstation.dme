@@ -3756,6 +3756,7 @@
 #include "code\modules\hydroponics\grown\weeds\kudzu.dm"
 #include "code\modules\hydroponics\grown\weeds\nettle.dm"
 #include "code\modules\hydroponics\grown\weeds\starthistle.dm"
+#include "code\modules\icts_transport\crossing_signal.dm"
 #include "code\modules\icts_transport\linear_controller.dm"
 #include "code\modules\icts_transport\tram_controller.dm"
 #include "code\modules\icts_transport\tram_controls.dm"

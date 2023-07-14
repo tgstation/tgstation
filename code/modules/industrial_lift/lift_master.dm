@@ -388,7 +388,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		return FALSE
 
 	// Lock controls, to prevent moving-while-moving memes
-	set_controls(LIFT_PLATFORM_LOCKED)
+	set_controls(TRUE)
 	// Send out a signal that we're going
 	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, direction)
 	// Close all lift doors
@@ -400,7 +400,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		// Open doors on the zs we arrive at
 		update_lift_doors(get_zs_we_are_on(), action = OPEN_DOORS)
 		// And unlock the controls after
-		set_controls(LIFT_PLATFORM_UNLOCKED)
+		set_controls(FALSE)
 		return TRUE
 
 	// Do a delayed move
@@ -419,7 +419,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  */
 /datum/lift_master/proc/finish_simple_move_wrapper()
 	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, 0)
-	set_controls(LIFT_PLATFORM_UNLOCKED)
+	set_controls(FALSE)
 
 /**
  * Moves the lift to the passed z-level.
@@ -455,7 +455,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		return FALSE
 
 	// Okay we're ready to start moving now.
-	set_controls(LIFT_PLATFORM_LOCKED)
+	set_controls(TRUE)
 	// Send out a signal that we're going
 	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, direction)
 	var/travel_speed = prime_lift.elevator_vertical_speed
@@ -481,7 +481,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	addtimer(CALLBACK(src, PROC_REF(open_lift_doors_callback)), 2 SECONDS)
 	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, 0)
-	set_controls(LIFT_PLATFORM_UNLOCKED)
+	set_controls(FALSE)
 	return TRUE
 
 /**
@@ -525,13 +525,13 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
  */
 /datum/lift_master/proc/move_lift_horizontally(going)
-	set_controls(LIFT_PLATFORM_LOCKED)
+	set_controls(TRUE)
 
 	if(multitile_platform)
 		for(var/obj/structure/industrial_lift/platform_to_move as anything in lift_platforms)
 			platform_to_move.travel(going)
 
-		set_controls(LIFT_PLATFORM_UNLOCKED)
+		set_controls(FALSE)
 		return
 
 	var/max_x = 0
@@ -596,7 +596,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 						var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
 						lift_platform?.travel(going)
 
-	set_controls(LIFT_PLATFORM_UNLOCKED)
+	set_controls(FALSE)
 
 ///Check destination turfs
 /datum/lift_master/proc/Check_lift_move(check_dir)

@@ -24,11 +24,12 @@
 
 /obj/machinery/computer/icts_controls/LateInitialize()
 	. = ..()
+	SSicts_transport.hello(src)
 	find_tram()
 
 	var/datum/transport_controller/linear/tram/icts_controller = module_ref?.resolve()
 	if(icts_controller)
-		RegisterSignal(icts_controller, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(update_tram_display))
+		RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(update_tram_display))
 
 /**
  * Finds the tram from the console
@@ -46,7 +47,7 @@
 /obj/machinery/computer/icts_controls/ui_status(mob/user,/datum/tgui/ui)
 	var/datum/transport_controller/linear/tram/tram = module_ref?.resolve()
 
-	if(tram?.travelling)
+	if(tram?.controller_active)
 		return UI_CLOSE
 	if(!in_range(user, src) && !isobserver(user))
 		return UI_CLOSE
@@ -62,7 +63,7 @@
 /obj/machinery/computer/icts_controls/ui_data(mob/user)
 	var/datum/transport_controller/linear/tram/tram_controller = module_ref?.resolve()
 	var/list/data = list()
-	data["moving"] = tram_controller?.travelling
+	data["moving"] = tram_controller?.controller_active
 	data["broken"] = tram_controller ? FALSE : TRUE
 	var/obj/effect/landmark/icts/nav_beacon/tram/current_loc = tram_controller?.idle_platform
 	if(current_loc)
@@ -106,27 +107,16 @@
 			if (!destination_platform)
 				return FALSE
 
-			return try_send_tram(destination_platform)
+			SEND_SIGNAL(src, COMSIG_ICTS_REQUEST, specific_transport_id, destination_platform)
+			update_appearance()
 
-/// Attempts to sends the tram to the given destination
-/obj/machinery/computer/icts_controls/proc/try_send_tram(obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
-	var/datum/transport_controller/linear/tram/icts_controller = module_ref?.resolve()
-	if(!icts_controller)
-		return FALSE
-	if(icts_controller.controls_locked || icts_controller.travelling) // someone else started already
-		return FALSE
-	icts_controller.tram_travel(destination_platform)
-	say("The next station is: [destination_platform.name]")
-	update_appearance()
-	return TRUE
-
-/obj/machinery/computer/icts_controls/proc/update_tram_display(obj/effect/landmark/icts/nav_beacon/tram/idle_platform, travelling)
+/obj/machinery/computer/icts_controls/proc/update_tram_display(obj/effect/landmark/icts/nav_beacon/tram/idle_platform, controller_active)
 	SIGNAL_HANDLER
 	var/datum/transport_controller/linear/tram/icts_controller = module_ref?.resolve()
-	if(travelling)
-		icon_screen = "[base_icon_state][icts_controller.idle_platform.name]_active"
+	if(icts_controller.controller_active)
+		icon_screen = "[base_icon_state][icts_controller.destination_platform.name]_active"
 	else
-		icon_screen = "[base_icon_state][icts_controller.idle_platform.name]_idle"
+		icon_screen = "[base_icon_state][icts_controller.destination_platform.name]_idle"
 	update_appearance(UPDATE_ICON)
 	return PROCESS_KILL
 
@@ -135,7 +125,7 @@
 	var/datum/transport_controller/linear/tram/icts_controller = module_ref?.resolve()
 	update_operating()
 	if(icts_controller)
-		if(!icts_controller.travelling)
+		if(!icts_controller.controller_active)
 			if(is_operational)
 				for(var/obj/machinery/crossing_signal/xing as anything in GLOB.tram_signals)
 					xing.set_signal_state(XING_STATE_MALF, TRUE)

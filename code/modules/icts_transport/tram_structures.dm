@@ -51,7 +51,7 @@
 
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
-		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(set_spoiler))
+		RegisterSignal(tram_part, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(set_spoiler))
 
 /obj/structure/tram/spoiler/proc/find_tram()
 	for(var/datum/lift_master/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
