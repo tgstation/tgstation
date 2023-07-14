@@ -8,6 +8,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	var/list/transports_by_type
 	var/list/nav_beacons
 	var/list/crossing_signals
+	var/list/doors
 	///how much time a tram can take per movement before we notify admins and slow down the tram. in milliseconds
 	var/max_time = 15
 	///how many times the tram can move costing over max_time milliseconds before it gets slowed down
@@ -70,22 +71,48 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_DESTINATION, relevant, destination)
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_SUCCESS)
 
-	INVOKE_ASYNC(src, PROC_REF(dispatch_transport), transport_controller, destination, request_flags)
+	INVOKE_ASYNC(src, PROC_REF(dispatch_transport), transport_controller, request_flags)
 
 /datum/controller/subsystem/processing/icts_transport/proc/dispatch_transport(datum/transport_controller/linear/tram/transport_controller, destination, request_flags)
-	if(transport_controller.idle_platform == destination)
+	if(transport_controller.idle_platform == transport_controller.destination_platform)
 		return
 
 	transport_controller.set_active(TRUE)
-	pre_departure(transport_controller, destination, request_flags)
+	pre_departure(transport_controller, request_flags)
 
-/datum/controller/subsystem/processing/icts_transport/proc/pre_departure(datum/transport_controller/linear/tram/transport_controller, destination, request_flags)
+/datum/controller/subsystem/processing/icts_transport/proc/pre_departure(datum/transport_controller/linear/tram/transport_controller, request_flags)
 	transport_controller.controller_status |= PRE_DEPARTURE
 	transport_controller.controller_status |= CONTROLS_LOCKED
 	if(request_flags & RAPID_MODE) // bypass for unsafe, rapid departure
-		transport_controller.dispatch_transport(destination)
+		for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), CLOSE_DOORS, rapid = TRUE)
+		transport_controller.dispatch_transport()
 
-	// INVOKE_ASYNC(src, PROC_REF(update_tram_doors), CLOSE_DOORS)
-	addtimer(CALLBACK(transport_controller, PROC_REF(dispatch_transport), destination), 3 SECONDS)
+	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), CLOSE_DOORS, rapid = FALSE)
+	addtimer(CALLBACK(src, PROC_REF(validate_and_dispatch), transport_controller), 3 SECONDS)
 
+/datum/controller/subsystem/processing/icts_transport/proc/validate_and_dispatch(datum/transport_controller/linear/tram/transport_controller, attempt)
+	var/current_attempt
+	if(!attempt)
+		current_attempt = attempt
+	else
+		current_attempt = 0
 
+	if(current_attempt >= 4)
+		halt_and_catch_fire(transport_controller)
+
+	current_attempt++
+
+	if(!transport_controller.controller_status == 5)
+		addtimer(CALLBACK(src, PROC_REF(validate_and_dispatch), transport_controller, current_attempt), 3 SECONDS)
+		return
+	else
+		transport_controller.dispatch_transport()
+
+/datum/controller/subsystem/processing/icts_transport/proc/halt_and_catch_fire(datum/transport_controller/linear/tram/transport_controller)
+	transport_controller.travel_remaining = 0
+	transport_controller.set_active(FALSE)
+	message_admins("ICTS: Transport Controller Failed!")
+	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
+		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), OPEN_DOORS)

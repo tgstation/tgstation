@@ -117,6 +117,9 @@
 	travel_remaining = get_dist(idle_platform, destination_platform)
 	travel_trip_length = travel_remaining
 	return TRUE
+
+///datum/transport_controller/linear/tram/proc/get_status()
+
 /**
  * Handles moving the tram
  *
@@ -139,7 +142,7 @@
 	if(rapid) // bypass for unsafe, rapid departure
 		dispatch_transport(destination_platform)
 	else
-		update_tram_doors(CLOSE_DOORS)
+	//	cycle_tram_doors(CLOSE_DOORS)
 		addtimer(CALLBACK(src, PROC_REF(dispatch_transport), destination_platform), 3 SECONDS)
 
 /datum/transport_controller/linear/tram/proc/dispatch_transport(obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
@@ -160,7 +163,7 @@
 
 /datum/transport_controller/linear/tram/process(seconds_per_tick)
 	if(!travel_remaining)
-		update_tram_doors(OPEN_DOORS)
+	//	cycle_tram_doors(OPEN_DOORS)
 		idle_platform = destination_platform
 		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 		return PROCESS_KILL
@@ -217,25 +220,3 @@
 
 	controller_active = new_status
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active)
-
-/**
- * Controls the doors of the tram when it departs and arrives at stations.
- * The tram doors are in a list of airlocks and we apply the proc on that list.
- */
-/datum/transport_controller/linear/tram/proc/update_tram_doors(action)
-	message_admins("ICTS: update_tram_doors")
-	for(var/obj/machinery/door/airlock/tram/tram_door in GLOB.tram_doors)
-		if(tram_door.transport_linked_id != specific_transport_id)
-			continue
-		set_door_state(tram_door, action)
-
-/datum/transport_controller/linear/tram/proc/set_door_state(tram_door, action)
-	switch(action)
-		if(OPEN_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, cycle_doors), action)
-
-		if(CLOSE_DOORS)
-			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window/tram, cycle_doors), action)
-
-		else
-			stack_trace("Tram doors update_tram_doors called with an improper action ([action]).")

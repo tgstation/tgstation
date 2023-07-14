@@ -131,16 +131,16 @@
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 //	RegisterSignal(SSicts_transport, COMSIG_ICTS_RESPONSE, PROC_REF(call_response))
 	INVOKE_ASYNC(src, PROC_REF(open))
-	GLOB.tram_doors += src
+	SSicts_transport.doors += src
 	// find_tram()
 
 /obj/machinery/door/window/tram/Destroy()
-	GLOB.tram_doors -= src
+	SSicts_transport.doors -= src
 	return ..()
 
 /obj/machinery/door/window/tram/examine(mob/user)
 	. = ..()
-	. += span_notice("It has labels indicating that it has an emergency mechanism to open using <b>just your hands</b> in the event of an emergency.")
+	. += span_notice("It has an emergency mechanism to open using <b>just your hands</b> in the event of an emergency.")
 
 /obj/machinery/door/window/tram/try_safety_unlock(mob/user)
 	if(!hasPower()  && density)
