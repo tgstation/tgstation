@@ -91,7 +91,7 @@
 	for(var/entry in logs)
 		data["logs"] += list(list("entry" = entry))
 
-	for(var/obj/machinery/power/apc/apc in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
+	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
 		if(check_apc(apc))
 			var/has_cell = (apc.cell) ? TRUE : FALSE
 			data["apcs"] += list(list(
