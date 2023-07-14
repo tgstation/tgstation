@@ -16,8 +16,8 @@
 /area/centcom/central_command_areas/evacuation)
 "al" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate/mail/economy,
 /obj/effect/spawner/random/entertainment/money_large,
+/obj/structure/closet/crate/mail/full,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "ap" = (
@@ -113,6 +113,12 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
+"aE" = (
+/obj/structure/sign/poster/contraband/clown{
+	pixel_y = 3
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/fore)
 "aI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/south,
@@ -523,10 +529,10 @@
 /area/centcom/central_command_areas/evacuation/ship)
 "cm" = (
 /obj/structure/closet/secure_closet/ert_engi,
-/obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/fireaxecabinet/directional/north,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
 "cn" = (
@@ -624,6 +630,11 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"cK" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/mob/living/basic/frog,
+/turf/open/indestructible/dark,
+/area/centcom/central_command_areas/prison/cells)
 "cL" = (
 /obj/item/gun/energy/pulse/carbine/loyalpin,
 /obj/item/flashlight/seclite,
@@ -710,6 +721,9 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/centcom/central_command_areas/fore)
+"dm" = (
+/turf/open/floor/wood,
+/area/centcom/tdome/administration)
 "dn" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -785,6 +799,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"dH" = (
+/obj/structure/sign/painting/library{
+	pixel_y = -32
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/administration)
 "dJ" = (
 /obj/machinery/button/door/indestructible{
 	id = "thunderdomehea";
@@ -1256,6 +1276,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
+"fK" = (
+/obj/structure/sign/painting/library{
+	pixel_y = -32
+	},
+/obj/structure/sign/painting/library{
+	pixel_x = -32
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/administration)
 "fN" = (
 /obj/structure/closet/crate/bin,
 /obj/machinery/light_switch/directional/south,
@@ -2178,6 +2207,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
+/obj/structure/fireaxecabinet/directional/south,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "jj" = (
@@ -2881,6 +2911,22 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
+"lG" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/structure/window/spawner/directional/south,
+/obj/machinery/door/window{
+	dir = 8;
+	name = "Secure Art Exhibition";
+	req_access = list("library")
+	},
+/obj/structure/sign/painting/library_secure{
+	pixel_x = 32
+	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 50
+	},
+/turf/open/floor/carpet/royalblue,
+/area/centcom/tdome/administration)
 "lJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Shuttle Control Office"
@@ -3032,8 +3078,8 @@
 /area/centcom/central_command_areas/courtroom)
 "mm" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate/mail/economy,
 /obj/effect/spawner/random/entertainment/money_medium,
+/obj/structure/closet/crate/mail/full,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "mn" = (
@@ -3236,6 +3282,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
+"mX" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood,
+/area/centcom/tdome/administration)
 "mY" = (
 /obj/structure/chair{
 	dir = 1
@@ -4140,6 +4190,10 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
+"qv" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/closed/indestructible/riveted,
+/area/centcom/tdome/administration)
 "qw" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
@@ -4780,6 +4834,15 @@
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
+"th" = (
+/obj/structure/sign/poster/contraband/clown{
+	pixel_y = -29
+	},
+/turf/open/floor/eighties/red{
+	icon = 'goon/icons/turf/floors.dmi';
+	icon_state = "clown_carpet"
+	},
+/area/centcom/central_command_areas/fore)
 "tj" = (
 /obj/item/sbeacondrop/clownbomb,
 /turf/open/ballpit,
@@ -5908,6 +5971,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/fireaxecabinet/directional/east,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
 "xA" = (
@@ -6057,6 +6121,11 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
+"yl" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/mob/living/simple_animal/crab,
+/turf/open/indestructible/dark,
+/area/centcom/central_command_areas/prison/cells)
 "yn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum,
@@ -6152,11 +6221,11 @@
 "yS" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/emps,
-/obj/item/gun/energy/ionrifle,
 /obj/structure/sign/departments/medbay/alt/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/gun/energy/ionrifle/carbine,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
 "yU" = (
@@ -6706,6 +6775,16 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
+"Bn" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/structure/sign/painting/library_secure{
+	pixel_x = 32
+	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 50
+	},
+/turf/open/floor/carpet/royalblue,
+/area/centcom/tdome/administration)
 "Bo" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -7337,6 +7416,11 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/evacuation)
+"DS" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/mob/living/simple_animal/butterfly,
+/turf/open/indestructible/dark,
+/area/centcom/central_command_areas/prison/cells)
 "DV" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -7611,8 +7695,8 @@
 /area/centcom/central_command_areas/supply)
 "FW" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate/mail/economy,
 /obj/effect/spawner/random/entertainment/money_small,
+/obj/structure/closet/crate/mail/full,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "FX" = (
@@ -9226,6 +9310,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
+"Ob" = (
+/obj/structure/sign/painting/library{
+	pixel_x = -32
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/administration)
 "Oc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrative Office"
@@ -9666,6 +9756,19 @@
 /obj/item/paper/pamphlet/centcom/visitor_info,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod)
+"PD" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/door/window{
+	name = "Secure Art Exhibition";
+	req_access = list("library")
+	},
+/obj/structure/window/spawner/directional/west,
+/obj/structure/table/wood/fancy/royalblue,
+/obj/structure/sign/painting/large/library{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/administration)
 "PE" = (
 /obj/machinery/newscaster{
 	pixel_x = 32
@@ -11025,6 +11128,11 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
+"Vf" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/mob/living/simple_animal/hostile/retaliate/goose,
+/turf/open/indestructible/dark,
+/area/centcom/central_command_areas/prison/cells)
 "Vg" = (
 /obj/structure/rack,
 /obj/item/gun/energy/e_gun{
@@ -11381,6 +11489,9 @@
 	},
 /obj/item/bedsheet/ce/double{
 	dir = 4
+	},
+/obj/structure/sign/poster/contraband/clown{
+	pixel_y = -29
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/evacuation)
@@ -12211,7 +12322,7 @@
 /mob/living/basic/pet/dog/corgi/puppy/ian{
 	gender = "female";
 	name = "Fresh Ian";
-	desc = "He's the HoP's beloved corgi puppy. This one is number 604"
+	desc = "The HoP's beloved corgi puppy. This one is number 604"
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/centcom/central_command_areas/control)
@@ -50029,13 +50140,13 @@ uf
 uf
 uf
 uf
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+uf
+uf
+uf
+uf
+uf
+uf
+uf
 aa
 aa
 aa
@@ -50286,13 +50397,13 @@ Wn
 eH
 Um
 uf
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dm
+Ob
+Ob
+Ob
+Ob
+fK
+uf
 aa
 aa
 aa
@@ -50543,13 +50654,13 @@ uf
 Wn
 Wn
 uf
+mX
+Xw
+Xw
+Xw
+Xw
+dH
 uf
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -50797,16 +50908,16 @@ UW
 Bp
 oI
 Bp
-Sz
-Sz
 Js
+Sz
+Sz
+Sz
+Xw
+Xw
+Xw
+Xw
+dH
 uf
-uf
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -51054,16 +51165,16 @@ Bj
 Bp
 oI
 Bp
+Js
+Js
 Sz
-Js
-Js
-Js
+Sz
+Xw
+Xw
+Xw
+Xw
+dH
 uf
-uf
-uf
-aa
-aa
-aa
 aa
 aa
 aa
@@ -51314,13 +51425,13 @@ uf
 Sz
 Js
 Js
-Js
 Sz
-Sz
+Xw
+Xw
+Xw
+Xw
+dH
 uf
-aa
-aa
-aa
 aa
 aa
 aa
@@ -51570,14 +51681,14 @@ gQ
 uf
 Sz
 Fc
-Sz
-Js
 Js
 Sz
+Sz
+Sz
+qv
+PD
+dm
 uf
-aa
-aa
-aa
 aa
 aa
 aa
@@ -51832,9 +51943,9 @@ Mv
 Mv
 Mv
 uf
-aa
-aa
-aa
+Bn
+lG
+uf
 aa
 aa
 aa
@@ -52091,7 +52202,7 @@ Sz
 uf
 uf
 uf
-aa
+uf
 aa
 aa
 aa
@@ -52348,7 +52459,7 @@ Sz
 Wn
 zA
 uf
-aa
+uf
 aa
 aa
 aa
@@ -52605,7 +52716,7 @@ Sz
 Wn
 ga
 uf
-aa
+uf
 aa
 aa
 aa
@@ -52862,7 +52973,7 @@ Sz
 Wn
 zA
 uf
-aa
+uf
 aa
 aa
 aa
@@ -53119,7 +53230,7 @@ Sz
 uf
 uf
 uf
-aa
+uf
 aa
 aa
 aa
@@ -55100,7 +55211,7 @@ Vx
 kg
 Im
 Ey
-Vx
+aE
 xK
 tj
 xK
@@ -55365,7 +55476,7 @@ ez
 OL
 OL
 OL
-OL
+th
 Vx
 lM
 tI
@@ -56894,7 +57005,7 @@ aa
 aa
 Jb
 rs
-ze
+cK
 Dj
 rs
 LS
@@ -59795,7 +59906,7 @@ uf
 Sz
 SV
 Js
-Js
+Sz
 Sz
 Sz
 uf
@@ -59987,13 +60098,13 @@ Zd
 ze
 Dj
 Zd
-ze
+Vf
 Dj
 Zd
-ze
+yl
 Dj
 Zd
-ze
+DS
 Jb
 Vi
 Af
@@ -60052,7 +60163,7 @@ uf
 Sz
 Js
 Js
-Js
+Sz
 Sz
 Sz
 uf
@@ -60306,8 +60417,8 @@ UW
 Bp
 oI
 Bp
-Sz
-Sz
+Js
+Js
 Sz
 Sz
 uf
@@ -60563,7 +60674,7 @@ Bj
 Bp
 oI
 Bp
-Sz
+Js
 Sz
 uf
 gh
