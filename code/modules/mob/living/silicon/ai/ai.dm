@@ -728,7 +728,7 @@
 			"cat2" = 'icons/mob/simple/pets.dmi',
 			"poly" = 'icons/mob/simple/animal.dmi',
 			"pug" = 'icons/mob/simple/pets.dmi',
-			"spider" = 'icons/mob/simple/animal.dmi'
+			"spider" = 'icons/mob/simple/arachnoid.dmi'
 			)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))

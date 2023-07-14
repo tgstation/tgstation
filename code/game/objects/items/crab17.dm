@@ -1,7 +1,7 @@
 /obj/item/suspiciousphone
 	name = "suspicious phone"
 	desc = "This device raises pink levels to unknown highs."
-	icon = 'icons/obj/syndicate_tools.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "suspiciousphone"
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("dumps")

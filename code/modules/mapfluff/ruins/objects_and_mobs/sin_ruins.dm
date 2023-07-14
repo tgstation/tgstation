@@ -3,7 +3,7 @@
 /obj/structure/cursed_slot_machine //Greed's slot machine: Used in the Greed ruin. Deals clone damage on each use, with a successful use giving a d20 of fate.
 	name = "greed's slot machine"
 	desc = "High stakes, high rewards."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "slots"
 	var/icon_screen = "slots_screen"
 	var/brightness_on = 1

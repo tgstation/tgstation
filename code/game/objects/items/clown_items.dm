@@ -162,7 +162,7 @@
 /obj/item/bikehorn
 	name = "bike horn"
 	desc = "A horn off of a bicycle. Rumour has it that they're made from recycled clowns."
-	icon = 'icons/obj/weapons/horn.dmi'
+	icon = 'icons/obj/art/horn.dmi'
 	icon_state = "bike_horn"
 	inhand_icon_state = "bike_horn"
 	worn_icon_state = "horn"
