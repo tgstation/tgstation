@@ -20,7 +20,6 @@
 	overlays_file = 'icons/obj/doors/airlocks/tram/tram-overlays.dmi'
 	opacity = FALSE
 	assemblytype = null
-	glass = TRUE
 	airlock_material = "glass"
 	air_tight = TRUE
 	// req_access = list("tcomms")
@@ -48,9 +47,10 @@
 			operating = TRUE
 			playsound(src, doorOpen, vol = 40, vary = FALSE)
 			update_icon(ALL, AIRLOCK_OPENING, TRUE)
-			update_freelook_sight()
 			sleep(0.7 SECONDS)
+			set_opacity(FALSE)
 			set_density(FALSE)
+			update_freelook_sight()
 			flags_1 &= ~PREVENT_CLICK_UNDER_1
 			air_update_turf(TRUE, FALSE)
 			layer = OPEN_DOOR_LAYER
@@ -61,7 +61,6 @@
 		if(CLOSE_DOORS)
 			attempt++
 
-			message_admins("TRAM: Door close attempt [attempt]")
 			if(attempt >= 4 || rapid)
 				attempt_cycle(rapid = TRUE)
 				attempt = 0
@@ -90,9 +89,8 @@
 		return TRUE
 	var/hungry_door = rapid || malfunctioning
 	if((obj_flags & EMAGGED) || malfunctioning)
-		do_sparks(6, TRUE, src)
+		do_sparks(3, TRUE, src)
 		playsound(src, SFX_SPARKS, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-		sleep(0.6 SECONDS)
 	use_power(50)
 	playsound(src, doorClose, vol = 40, vary = FALSE)
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE)
@@ -111,12 +109,13 @@
 				return FALSE
 	sleep(0.6 SECONDS)
 	set_density(TRUE)
+	set_opacity(TRUE)
+	update_freelook_sight()
 	flags_1 |= PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, TRUE)
 	crush()
 	sleep(0.7 SECONDS)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
-	update_freelook_sight()
 	operating = FALSE
 	attempt = 0
 	return TRUE

@@ -7,7 +7,7 @@
 	icon_keyboard = null
 	layer = SIGN_LAYER
 	density = FALSE
-	circuit = /obj/item/circuitboard/computer/tram_controls
+	circuit = /obj/item/circuitboard/computer/icts_controls
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	light_color = COLOR_BLUE_LIGHT
@@ -146,3 +146,5 @@
 			icts_controller.controller_operational = FALSE
 		else
 			icts_controller.controller_operational = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/icts_controls, 32)

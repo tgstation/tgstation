@@ -129,22 +129,6 @@
  * literally ripping itself apart. all of the actual movement is handled by SSicts_transport
  * Arguments: destination platform, rapid (bypass some safety checks)
  */
-/datum/transport_controller/linear/tram/proc/tram_travel(obj/effect/landmark/icts/nav_beacon/tram/destination_platform, rapid = FALSE)
-	message_admins("ICTS: tram_travel")
-	if(destination_platform == idle_platform)
-		return
-
-	travel_direction = get_dir(idle_platform, destination_platform)
-	travel_remaining = get_dist(idle_platform, destination_platform)
-	travel_trip_length = travel_remaining
-	idle_platform = destination_platform
-	set_active(TRUE)
-	controls_lock(TRUE)
-	if(rapid) // bypass for unsafe, rapid departure
-		dispatch_transport(destination_platform)
-	else
-		cycle_doors(CLOSE_DOORS)
-		addtimer(CALLBACK(src, PROC_REF(dispatch_transport), destination_platform), 3 SECONDS)
 
 /datum/transport_controller/linear/tram/proc/dispatch_transport(obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
 	controller_status &= ~PRE_DEPARTURE
@@ -153,7 +137,6 @@
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
 		if(transport_module.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
 			return //we don't care to undo locked controls, though, as that will resolve itself
-
 		transport_module.glide_size_override = DELAY_TO_GLIDE_SIZE(speed_limiter)
 		transport_module.set_travelling(TRUE)
 
@@ -206,7 +189,6 @@
  * Tram finds its location at this point before fully unlocking controls to the user.
  */
 /datum/transport_controller/linear/tram/proc/unlock_controls()
-	message_admins("ICTS: unlock_controls")
 	set_active(FALSE)
 	controls_lock(FALSE)
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
@@ -214,7 +196,6 @@
 
 
 /datum/transport_controller/linear/tram/proc/set_active(new_status)
-	message_admins("ICTS: set_travelling")
 	if(controller_active == new_status)
 		return
 

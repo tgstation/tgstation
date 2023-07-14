@@ -124,14 +124,17 @@
 	else
 		switch(mode)
 			if(TRAMCTRL_FAST)
-				tram_part.tram_travel(destination_platform, rapid = TRUE)
+				//tram_part.dispatch_transport(destination_platform, rapid = TRUE)
+				tram_part.dispatch_transport(destination_platform)
 			if(TRAMCTRL_SAFE)
-				tram_part.tram_travel(destination_platform, rapid = FALSE)
+				//tram_part.dispatch_transport(destination_platform, rapid = FALSE)
+				tram_part.dispatch_transport(destination_platform)
 		balloon_alert(user, "tram dispatched")
 		return TRUE
-
+/*
 /obj/item/tram_remote/afterattack(atom/target, mob/user)
 	link_tram(user, target)
+
 
 /obj/item/tram_remote/proc/link_tram(mob/user, atom/target)
 	var/obj/machinery/button/tram/smacked_device = target
@@ -147,6 +150,7 @@
 	else
 		balloon_alert(user, "link failed!")
 	update_appearance()
+*/
 
 #undef TRAMCTRL_INBOUND
 #undef TRAMCTRL_OUTBOUND
