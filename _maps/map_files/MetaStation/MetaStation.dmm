@@ -34098,10 +34098,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/research)
-"muG" = (
-/obj/structure/lattice,
-/turf/closed/wall,
-/area/station/commons/fitness/recreation)
 "mvg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -101364,7 +101360,7 @@ aaa
 aaa
 aaa
 aaa
-muG
+szp
 szp
 szp
 szp
@@ -101621,7 +101617,7 @@ aaa
 aaa
 aaa
 aaa
-muG
+szp
 gwG
 fjc
 mQe
