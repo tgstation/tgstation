@@ -53,4 +53,4 @@
 
 	var/z_level_checks = (is_station_level(new_turf.z) && SSmapping.config.planetary) || is_mining_level(new_turf.z)
 	var/planetary_check = istype(new_turf) && new_turf.planetary_atmos
-	return (z_level_checks || planetary_check) && new_turf.has_gravity())
+	return (z_level_checks || planetary_check) && new_turf.has_gravity()
