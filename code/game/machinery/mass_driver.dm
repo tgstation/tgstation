@@ -1,7 +1,7 @@
 /obj/machinery/mass_driver
 	name = "mass driver"
 	desc = "The finest in spring-loaded piston toy technology, now on a space station near you."
-	icon = 'icons/obj/machines/basic_machines.dmi'
+	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "mass_driver"
 	var/power = 1
 	var/code = 1
