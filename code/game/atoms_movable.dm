@@ -1538,7 +1538,7 @@
 	var/area/atom_area = get_area(src)
 
 	if(!atom_turf) // some machines spawn in nullspace
-		return
+		return FALSE
 
 	if(!is_station_level(atom_turf.z) && !istype(atom_area, /area/shuttle/escape))
 		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with machines

@@ -20,7 +20,7 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
-	initial_language_holder = /datum/language_holder/synthetic
+	initial_language_holder = /datum/language_holder/bot
 	bubble_icon = "machine"
 	speech_span = SPAN_ROBOT
 	faction = list(FACTION_NEUTRAL, FACTION_SILICON, FACTION_TURRET)
@@ -110,6 +110,8 @@
 	COOLDOWN_DECLARE(offer_ghosts_cooldown)
 	/// Message to display upon possession
 	var/possessed_message = "You're a generic bot. How did one of these even get made?"
+	/// What language do we make automated announcements in?
+	var/datum/language/announcement_language = /datum/language/common
 
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
@@ -491,9 +493,9 @@
 	if((!(bot_mode_flags & BOT_MODE_ON)) || (!message))
 		return
 	if(channel && internal_radio.channels[channel])// Use radio if we have channel key
-		internal_radio.talk_into(src, message, channel)
+		internal_radio.talk_into(src, message = message, channel = channel, language = announcement_language)
 	else
-		say(message)
+		say(message, language = announcement_language)
 
 /mob/living/simple_animal/bot/radio(message, list/message_mods = list(), list/spans, language)
 	. = ..()
@@ -1086,3 +1088,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/rust_heretic_act()
 	adjustBruteLoss(400)
+
+// We want to store what our funny language is
+/mob/living/simple_animal/bot/randomize_language_if_on_station()
+	. = ..()
+	if (!.)
+		return
+	announcement_language = get_selected_language()
