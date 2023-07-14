@@ -395,8 +395,8 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	burn_modifier = 0
-	brute_modifier = 0
+	burn_modifier = 1
+	brute_modifier = 1
 	max_damage = 20
 
 /obj/item/bodypart/leg/left/robot/surplus
@@ -404,8 +404,8 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_modifier = 0
-	burn_modifier = 0
+	brute_modifier = 1
+	burn_modifier = 1
 	max_damage = 20
 
 /obj/item/bodypart/leg/right/robot/surplus
@@ -413,8 +413,8 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_modifier = 0
-	burn_modifier = 0
+	brute_modifier = 1
+	burn_modifier = 1
 	max_damage = 20
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
