@@ -39,7 +39,7 @@
 
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
-		if(exposed_carbon.get_blood_id() == type && ((methods & INJECT) || ((methods & INGEST) && exposed_carbon.dna && exposed_carbon.dna.species && (DRINKSBLOOD in exposed_carbon.dna.species.species_traits))))
+		if(exposed_carbon.get_blood_id() == type && ((methods & INJECT) || ((methods & INGEST) && HAS_TRAIT(exposed_carbon, TRAIT_DRINKS_BLOOD))))
 			if(!data || !(data["blood_type"] in get_safe_blood(exposed_carbon.dna.blood_type)))
 				exposed_carbon.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
@@ -483,7 +483,7 @@
 	if(ishuman(exposed_mob))
 		if(methods & (PATCH|VAPOR))
 			var/mob/living/carbon/human/exposed_human = exposed_mob
-			if(exposed_human.dna.species.id == SPECIES_HUMAN)
+			if(HAS_TRAIT(exposed_human, TRAIT_USES_SKINTONES))
 				switch(exposed_human.skin_tone)
 					if("african1")
 						exposed_human.skin_tone = "african2"
@@ -505,10 +505,10 @@
 						exposed_human.skin_tone = pick("caucasian3", "latino")
 					if("caucasian1")
 						exposed_human.skin_tone = "caucasian2"
-					if ("albino")
+					if("albino")
 						exposed_human.skin_tone = "caucasian1"
-
-			if(MUTCOLORS in exposed_human.dna.species.species_traits) //take current alien color and darken it slightly
+			//take current alien color and darken it slightly
+			else if(HAS_TRAIT(exposed_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(exposed_human, TRAIT_FIXED_MUTANT_COLORS))
 				var/newcolor = ""
 				var/string = exposed_human.dna.features["mcolor"]
 				var/len = length(string)
@@ -545,17 +545,18 @@
 
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/affected_human = affected_mob
-		if(!HAS_TRAIT(affected_human, TRAIT_BALD))
-			affected_human.hairstyle = "Spiky"
-		affected_human.facial_hairstyle = "Shaved"
-		affected_human.facial_hair_color = "#000000"
-		affected_human.hair_color = "#000000"
 		var/obj/item/bodypart/head/head = affected_human.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
 			head.head_flags |= HEAD_HAIR //No hair? No problem!
-		if(affected_human.dna.species.use_skintones)
+		if(!HAS_TRAIT(affected_human, TRAIT_SHAVED))
+			affected_human.set_facial_hairstyle("Shaved", update = FALSE)
+		affected_human.set_facial_haircolor("#000000", update = FALSE)
+		if(!HAS_TRAIT(affected_human, TRAIT_BALD))
+			affected_human.set_hairstyle("Spiky", update = FALSE)
+		affected_human.set_haircolor("#000000", update = FALSE)
+		if(HAS_TRAIT(affected_human, TRAIT_USES_SKINTONES))
 			affected_human.skin_tone = "orange"
-		else if(MUTCOLORS in affected_human.dna.species.species_traits) //Aliens with custom colors simply get turned orange
+		else if(HAS_TRAIT(affected_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(affected_human, TRAIT_FIXED_MUTANT_COLORS)) //Aliens with custom colors simply get turned orange
 			affected_human.dna.features["mcolor"] = "#ff8800"
 		affected_human.update_body(is_creating = TRUE)
 		if(SPT_PROB(3.5, seconds_per_tick))
@@ -1465,7 +1466,7 @@
 	var/colorname = "none"
 	description = "A powder that is used for coloring things."
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 207, 54, 0
+	color = COLOR_WHITE
 	taste_description = "the back of class"
 
 /datum/reagent/colorful_reagent/powder/New()
@@ -1480,7 +1481,7 @@
 /datum/reagent/colorful_reagent/powder/red
 	name = "Red Powder"
 	colorname = "red"
-	color = "#DA0000" // red
+	color = COLOR_CRAYON_RED
 	random_color_list = list("#FC7474")
 	ph = 0.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1488,29 +1489,29 @@
 /datum/reagent/colorful_reagent/powder/orange
 	name = "Orange Powder"
 	colorname = "orange"
-	color = "#FF9300" // orange
-	random_color_list = list("#FF9300")
+	color = COLOR_CRAYON_ORANGE
+	random_color_list = list(COLOR_CRAYON_ORANGE)
 	ph = 2
 
 /datum/reagent/colorful_reagent/powder/yellow
 	name = "Yellow Powder"
 	colorname = "yellow"
-	color = "#FFF200" // yellow
-	random_color_list = list("#FFF200")
+	color = COLOR_CRAYON_YELLOW
+	random_color_list = list(COLOR_CRAYON_YELLOW)
 	ph = 5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/green
 	name = "Green Powder"
 	colorname = "green"
-	color = "#A8E61D" // green
-	random_color_list = list("#A8E61D")
+	color = COLOR_CRAYON_GREEN
+	random_color_list = list(COLOR_CRAYON_GREEN)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/blue
 	name = "Blue Powder"
 	colorname = "blue"
-	color = "#00B7EF" // blue
+	color = COLOR_CRAYON_BLUE
 	random_color_list = list("#71CAE5")
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1518,7 +1519,7 @@
 /datum/reagent/colorful_reagent/powder/purple
 	name = "Purple Powder"
 	colorname = "purple"
-	color = "#DA00FF" // purple
+	color = COLOR_CRAYON_PURPLE
 	random_color_list = list("#BD8FC4")
 	ph = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1527,21 +1528,21 @@
 	name = "Invisible Powder"
 	colorname = "invisible"
 	color = "#FFFFFF00" // white + no alpha
-	random_color_list = list("#FFFFFF") //because using the powder color turns things invisible
+	random_color_list = list(COLOR_WHITE) //because using the powder color turns things invisible
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/black
 	name = "Black Powder"
 	colorname = "black"
-	color = "#1C1C1C" // not quite black
+	color = COLOR_CRAYON_BLACK
 	random_color_list = list("#8D8D8D") //more grey than black, not enough to hide your true colors
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/white
 	name = "White Powder"
 	colorname = "white"
-	color = "#FFFFFF" // white
-	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
+	color = COLOR_WHITE
+	random_color_list = list(COLOR_WHITE) //doesn't actually change appearance at all
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /* used by crayons, can't color living things but still used for stuff like food recipes */
@@ -1753,7 +1754,7 @@
 /datum/reagent/carpet/green
 	name = "Green Carpet"
 	description = "For those that need the perfect flourish for green eggs and ham."
-	color = "#A8E61D"
+	color = COLOR_CRAYON_GREEN
 	taste_description = "Green" //the caps is intentional
 	carpet_type = /turf/open/floor/carpet/green
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -2061,8 +2062,8 @@
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	exposed_human.hair_color = pick(potential_colors)
-	exposed_human.facial_hair_color = pick(potential_colors)
+	exposed_human.set_facial_haircolor(pick(potential_colors), update = FALSE)
+	exposed_human.set_haircolor(pick(potential_colors), update = TRUE)
 	exposed_human.update_body_parts()
 
 /datum/reagent/barbers_aid
@@ -2083,9 +2084,8 @@
 	var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hairstyles_list)
 	var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hairstyles_list)
 	to_chat(exposed_human, span_notice("Hair starts sprouting from your scalp."))
-	exposed_human.hairstyle = picked_hair
-	exposed_human.facial_hairstyle = picked_beard
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_hairstyle(picked_beard, update = FALSE)
+	exposed_human.set_hairstyle(picked_hair, update = TRUE)
 
 /datum/reagent/concentrated_barbers_aid
 	name = "Concentrated Barber's Aid"
@@ -2103,9 +2103,8 @@
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	to_chat(exposed_human, span_notice("Your hair starts growing at an incredible speed!"))
-	exposed_human.hairstyle = "Very Long Hair"
-	exposed_human.facial_hairstyle = "Beard (Very Long)"
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_hairstyle("Beard (Very Long)", update = FALSE)
+	exposed_human.set_hairstyle("Very Long Hair", update = TRUE)
 
 /datum/reagent/concentrated_barbers_aid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -2143,9 +2142,8 @@
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	to_chat(exposed_human, span_danger("Your hair is falling out in clumps!"))
-	exposed_human.hairstyle = "Bald"
-	exposed_human.facial_hairstyle = "Shaved"
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_hairstyle("Shaved", update = FALSE)
+	exposed_human.set_hairstyle("Bald", update = TRUE)
 
 /datum/reagent/saltpetre
 	name = "Saltpetre"
@@ -2563,7 +2561,7 @@
 	description = "A purple metal morphic liquid, said to impose it's metallic properties on whatever it touches."
 	color = "#b000aa"
 	taste_mult = 0 // oderless and tasteless
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
 	/// The material flags used to apply the transmuted materials
 	var/applied_material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	/// The amount of materials to apply to the transmuted objects if they don't contain materials

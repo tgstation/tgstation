@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "You can now revive dead fishes, bees and (mindless) mice with a lazarus injector."
-  - balance: "Tom, the mouse, no longer counts toward the mice population cap."

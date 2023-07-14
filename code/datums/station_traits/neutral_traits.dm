@@ -165,9 +165,7 @@
 	cargorilla = new(cargo_sloth.loc)
 	cargorilla.name = cargo_sloth.name
 	// We do a poll on roundstart, don't let ghosts in early
-	cargorilla.being_polled_for = TRUE
 	INVOKE_ASYNC(src, PROC_REF(make_id_for_gorilla))
-
 	// hm our sloth looks funny today
 	qdel(cargo_sloth)
 
@@ -271,7 +269,7 @@
 	))
 	hat = new hat(spawned_mob)
 	if(!spawned_mob.equip_to_slot_if_possible(hat, ITEM_SLOT_HEAD, disable_warning = TRUE))
-		spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_BACKPACK)
+		spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
 	var/obj/item/toy = pick_weight(list(
 		/obj/item/reagent_containers/spray/chemsprayer/party = 4,
 		/obj/item/toy/balloon = 2,
@@ -283,7 +281,7 @@
 	if(istype(toy, /obj/item/toy/balloon))
 		spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_HANDS) //Balloons do not fit inside of backpacks.
 	else
-		spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK)
+		spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
 	if(birthday_person_name) //Anyone who joins after the annoucement gets one of these.
 		var/obj/item/birthday_invite/birthday_invite = new(spawned_mob)
 		birthday_invite.setup_card(birthday_person_name)

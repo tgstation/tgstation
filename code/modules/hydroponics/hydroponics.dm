@@ -988,9 +988,13 @@
 		return
 
 	else if(istype(O, /obj/item/storage/bag/plants))
-		attack_hand(user)
-		for(var/obj/item/food/grown/G in locate(user.x,user.y,user.z))
-			O.atom_storage?.attempt_insert(G, user, TRUE)
+		if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
+			var/list/harvest = myseed.harvest(user)
+			for(var/obj/item/food/grown/G in harvest)
+				O.atom_storage?.attempt_insert(G, user, TRUE)
+		else if(plant_status == HYDROTRAY_PLANT_DEAD)
+			to_chat(user, span_notice("You remove the dead plant from [src]."))
+			set_seed(null)
 		return
 
 	else if(O.tool_behaviour == TOOL_SHOVEL)

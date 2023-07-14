@@ -10,7 +10,7 @@
 		The implant is stored in the module and needs to be injected in a human to function. \
 		Nakamura Engineering swears up and down there's airbrakes."
 	icon_state = "pathfinder"
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
 	/// The pathfinding implant.

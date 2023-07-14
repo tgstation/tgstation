@@ -55,8 +55,7 @@
 
 	var/obj/effect/rune/target_rune = target
 	if(target_rune.log_when_erased)
-		user.log_message("erased [target_rune.cultist_name] rune using a null rod", LOG_GAME)
-		message_admins("[ADMIN_LOOKUPFLW(user)] erased a [target_rune.cultist_name] rune with a null rod.")
+		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/nullrod/suicide_act(mob/living/user)
@@ -140,7 +139,7 @@
 /obj/item/nullrod/claymore/darkblade
 	name = "dark blade"
 	desc = "Spread the glory of the dark gods!"
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "cultblade"
 	inhand_icon_state = "cultblade"
 	worn_icon_state = "cultblade"
@@ -366,7 +365,7 @@
 /obj/item/nullrod/clown
 	name = "clown dagger"
 	desc = "Used for absolutely hilarious sacrifices."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "clownrender"
 	inhand_icon_state = "cultdagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'

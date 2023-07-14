@@ -932,7 +932,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		new_guy.mind.name = "[rank] Dummy"
 
 		// Assign the rank to the new player dummy.
-		if(!SSjob.AssignRole(new_guy, job))
+		if(!SSjob.AssignRole(new_guy, job, do_eligibility_checks = FALSE))
 			qdel(new_guy)
 			to_chat(admin, "[rank] wasn't able to be spawned.")
 			continue

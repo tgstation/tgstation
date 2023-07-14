@@ -251,7 +251,5 @@
 			locked = !locked
 			balloon_alert(user, locked ? "locked" : "unlocked")
 			update_appearance()
-			if(!locked)
-				ui_interact(user)
 		else
 			balloon_alert(user, "access denied!")

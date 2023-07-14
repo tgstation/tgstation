@@ -861,6 +861,34 @@
 	if (rtable)
 		install.model.remove_module(rtable, TRUE)
 
+/obj/item/borg/upgrade/service_cookbook
+	name = "Service Cyborg Cookbook"
+	desc = "An upgrade to the service model cyborg, that lets them create more foods."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/service)
+	model_flags = BORG_MODEL_SERVICE
+
+/obj/item/borg/upgrade/service_cookbook/action(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/borg/cookbook/book = locate() in install.model.modules
+	if(book)
+		install.balloon_alert_to_viewers("already installed!")
+		return FALSE
+	book = new(install.model)
+	install.model.basic_modules += book
+	install.model.add_module(book, FALSE, TRUE)
+
+/obj/item/borg/upgrade/service_cookbook/deactivate(mob/living/silicon/robot/install, user = usr)
+	. = ..()
+	if (!.)
+		return FALSE
+	var/obj/item/borg/cookbook/book = locate() in install.model.modules
+	if(book)
+		install.model.remove_module(book, TRUE)
+
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
 /obj/item/borg_restart_board

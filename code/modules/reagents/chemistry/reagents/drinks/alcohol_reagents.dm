@@ -60,8 +60,9 @@
 		drinker.adjust_drunk_effect(sqrt(volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
 		if(boozepwr > 0)
 			var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
+			var/heavy_drinker_multiplier = (HAS_TRAIT(drinker, TRAIT_HEAVY_DRINKER) ? 0.5 : 1)
 			if (istype(liver))
-				liver.apply_organ_damage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * liver.alcohol_tolerance * seconds_per_tick, 0))/150))
+				liver.apply_organ_damage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * liver.alcohol_tolerance * heavy_drinker_multiplier * seconds_per_tick, 0))/150))
 	return ..()
 
 /datum/reagent/consumable/ethanol/expose_obj(obj/exposed_obj, reac_volume)
@@ -129,7 +130,7 @@
 /datum/reagent/consumable/ethanol/beer/green
 	name = "Green Beer"
 	description = "An alcoholic beverage brewed since ancient times on Old Earth. This variety is dyed a festive green."
-	color = "#A8E61D"
+	color = COLOR_CRAYON_GREEN
 	taste_description = "green piss water"
 	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1229,7 +1230,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
+	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
 		. = TRUE
@@ -1373,7 +1374,7 @@
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	drinker.set_drugginess(100 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_dizzy(4 SECONDS * REM * seconds_per_tick)
-	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, required_organtype = affected_organtype)
+	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, required_organ_flag = affected_organ_flags)
 	if(SPT_PROB(10, seconds_per_tick))
 		drinker.adjustStaminaLoss(10, required_biotype = affected_biotype)
 		drinker.drop_all_held_items()
@@ -1384,7 +1385,7 @@
 			ADD_TRAIT(drinker, paralyzed_limb, type)
 			drinker.adjustStaminaLoss(10, required_biotype = affected_biotype)
 		if(current_cycle > 30)
-			drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, required_organtype = affected_organtype)
+			drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 			if(current_cycle > 50 && SPT_PROB(7.5, seconds_per_tick))
 				if(!drinker.undergoing_cardiac_arrest() && drinker.can_heartattack())
 					drinker.set_heartattack(TRUE)
@@ -1854,7 +1855,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	if(ishuman(drinker) && HAS_TRAIT(drinker, TRAIT_MIMING))
+	if(ishuman(drinker) && HAS_MIND_TRAIT(drinker, TRAIT_MIMING))
 		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
 		drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick)
 		. = TRUE
@@ -2002,17 +2003,18 @@
 	taste_description = "the pain of ten thousand slain mosquitos"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/bug_spray/on_new(data)
+	. = ..()
+	AddElement(/datum/element/bugkiller_reagent)
+
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	//Bugs should not drink Bug spray.
-	if(ismoth(drinker) || isflyperson(drinker))
-		drinker.adjustToxLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
-	return ..()
-
-/datum/reagent/consumable/ethanol/bug_spray/on_mob_metabolize(mob/living/carbon/drinker)
-
-	if(ismoth(drinker) || isflyperson(drinker))
+	// Does some damage to bug biotypes
+	var/did_damage = drinker.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = MOB_BUG)
+	// Random chance of causing a screm if we did some damage
+	if(did_damage && SPT_PROB(2, seconds_per_tick))
 		drinker.emote("scream")
-	return ..()
+
+	return ..() || did_damage
 
 /datum/reagent/consumable/ethanol/applejack
 	name = "Applejack"
@@ -2059,14 +2061,12 @@
 	if(SPT_PROB(10, seconds_per_tick) && istype(metabolizer))
 		metabolizer.age += 1
 		if(metabolizer.age > 70)
-			metabolizer.facial_hair_color = "#cccccc"
-			metabolizer.hair_color = "#cccccc"
-			metabolizer.update_body_parts()
+			metabolizer.set_facial_haircolor("#cccccc", update = FALSE)
+			metabolizer.set_haircolor("#cccccc", update = TRUE)
 			if(metabolizer.age > 100)
 				metabolizer.become_nearsighted(type)
 				if(metabolizer.gender == MALE)
-					metabolizer.facial_hairstyle = "Beard (Very Long)"
-					metabolizer.update_body_parts()
+					metabolizer.set_facial_hairstyle("Beard (Very Long)", update = TRUE)
 
 				if(metabolizer.age > 969) //Best not let people get older than this or i might incur G-ds wrath
 					metabolizer.visible_message(span_notice("[metabolizer] becomes older than any man should be.. and crumbles into dust!"))

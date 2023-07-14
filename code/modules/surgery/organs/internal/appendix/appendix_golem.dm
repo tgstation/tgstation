@@ -4,7 +4,7 @@
 	desc = "This expanded digestive chamber allows golems to smelt minerals, provided that they are immersed in lava."
 	icon_state = "ethereal_heart"
 	color = COLOR_GOLEM_GRAY
-	status = ORGAN_MINERAL
+	organ_flags = ORGAN_MINERAL
 	/// Action which performs smelting
 	var/datum/action/cooldown/internal_smelting/smelter
 

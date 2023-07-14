@@ -423,6 +423,7 @@
 		set_wearer(user)
 
 /obj/item/mod/control/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	. = ..()
 	quick_activation()
 
 /obj/item/mod/control/doStrip(mob/stripper, mob/owner)

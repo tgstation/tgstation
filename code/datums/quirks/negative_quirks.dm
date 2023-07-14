@@ -61,7 +61,6 @@
 	lose_text = span_notice("You feel vigorous again.")
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 	hardcore_value = 8
-	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/reagent_containers/blood/o_minus) // universal blood type that is safe for all
 	var/min_blood = BLOOD_VOLUME_SAFE - 25 // just barely survivable without treatment
 
@@ -531,6 +530,29 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.cure_trauma_type(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
 
+/datum/quirk/hemiplegic
+	name = "Hemiplegic"
+	desc = "Half of your body doesn't work. Nothing will ever fix this."
+	icon = FA_ICON_CIRCLE_HALF_STROKE
+	value = -10 // slightly more bearable than paraplegic but not by much
+	gain_text = null // Handled by trauma.
+	lose_text = null
+	medical_record_text = "Patient has an untreatable impairment in motor function on half of their body."
+	hardcore_value = 10
+	mail_goodies = list(
+		/obj/item/stack/sheet/mineral/uranium/half, //half a stack of a material that has a half life
+		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full,
+	)
+
+/datum/quirk/hemiplegic/add(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/trauma_type = pick(/datum/brain_trauma/severe/paralysis/hemiplegic/left, /datum/brain_trauma/severe/paralysis/hemiplegic/right)
+	human_holder.gain_trauma(trauma_type, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/hemiplegic/remove()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.cure_trauma_type(/datum/brain_trauma/severe/paralysis/hemiplegic, TRAUMA_RESILIENCE_ABSOLUTE)
+
 /datum/quirk/poor_aim
 	name = "Stormtrooper Aim"
 	desc = "You've never hit anything you were aiming for in your life."
@@ -563,10 +585,10 @@
 
 /datum/quirk/prosthetic_limb
 	name = "Prosthetic Limb"
-	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a random prosthetic!"
+	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a surplus prosthetic!"
 	icon = "tg-prosthetic-leg"
 	value = -3
-	medical_record_text = "During physical examination, patient was found to have a prosthetic limb."
+	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic limb."
 	hardcore_value = 3
 	quirk_flags = QUIRK_HUMAN_ONLY // while this technically changes appearance, we don't want it to be shown on the dummy because it's randomized at roundstart
 	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
@@ -592,6 +614,7 @@
 		if(BODY_ZONE_R_LEG)
 			prosthetic = new /obj/item/bodypart/leg/right/robot/surplus
 			slot_string = "right leg"
+	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic [slot_string]."
 	old_limb = human_holder.return_and_replace_bodypart(prosthetic, special = TRUE)
 
 /datum/quirk/prosthetic_limb/post_add()
@@ -605,12 +628,13 @@
 
 /datum/quirk/quadruple_amputee
 	name = "Quadruple Amputee"
-	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, all your limbs have been taken from you."
+	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, all your limbs have been replaced with surplus prosthetics."
 	icon = "tg-prosthetic-full"
 	value = -6
-	medical_record_text = "During physical examination, patient was found to have all prosthetic limbs."
+	medical_record_text = "During physical examination, patient was found to have all low-budget prosthetic limbs."
 	hardcore_value = 6
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
+	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
 
 /datum/quirk/quadruple_amputee/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -620,8 +644,110 @@
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/surplus, special = TRUE)
 
 /datum/quirk/quadruple_amputee/post_add()
-	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
-	you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
+	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
+	Additionally, you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
+
+/datum/quirk/prosthetic_organ
+	name = "Prosthetic Organ"
+	desc = "An accident caused you to lose one of your organs. Because of this, you now have a surplus prosthetic!"
+	icon = FA_ICON_LUNGS
+	value = -3
+	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic organ. \
+		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
+	hardcore_value = 3
+	mail_goodies = list(/obj/item/storage/organbox)
+	/// The slot to replace, in string form
+	var/slot_string = "organ"
+	/// The original organ from before the prosthetic was applied
+	var/obj/item/organ/old_organ
+
+/datum/quirk/prosthetic_organ/add_unique(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/static/list/organ_slots = list(
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_STOMACH,
+	)
+	var/list/possible_organ_slots = organ_slots.Copy()
+	if(HAS_TRAIT(human_holder, TRAIT_NOBLOOD))
+		possible_organ_slots -= ORGAN_SLOT_HEART
+	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH))
+		possible_organ_slots -= ORGAN_SLOT_LUNGS
+	if(HAS_TRAIT(human_holder, TRAIT_LIVERLESS_METABOLISM))
+		possible_organ_slots -= ORGAN_SLOT_LIVER
+	if(HAS_TRAIT(human_holder, TRAIT_NOHUNGER))
+		possible_organ_slots -= ORGAN_SLOT_STOMACH
+	if(!length(organ_slots)) //what the hell
+		return
+	var/organ_slot = pick(possible_organ_slots)
+	var/obj/item/organ/prosthetic
+	switch(organ_slot)
+		if(ORGAN_SLOT_HEART)
+			prosthetic = new /obj/item/organ/internal/heart/cybernetic/surplus
+			slot_string = "heart"
+		if(ORGAN_SLOT_LUNGS)
+			prosthetic = new /obj/item/organ/internal/lungs/cybernetic/surplus
+			slot_string = "lungs"
+		if(ORGAN_SLOT_LIVER)
+			prosthetic = new /obj/item/organ/internal/liver/cybernetic/surplus
+			slot_string = "liver"
+		if(ORGAN_SLOT_STOMACH)
+			prosthetic = new /obj/item/organ/internal/stomach/cybernetic/surplus
+			slot_string = "stomach"
+	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic [slot_string]. \
+	<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
+	old_organ = human_holder.get_organ_slot(organ_slot)
+	if(prosthetic.Insert(human_holder, special = TRUE, drop_if_replaced = TRUE))
+		old_organ.moveToNullspace()
+		STOP_PROCESSING(SSobj, old_organ)
+
+/datum/quirk/prosthetic_organ/post_add()
+	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus organ. It is fragile and will easily come apart under duress. \
+	Additionally, any EMP will make it stop working entirely."))
+
+/datum/quirk/prosthetic_organ/remove()
+	if(old_organ)
+		old_organ.Insert(quirk_holder, special = TRUE)
+	old_organ = null
+
+/datum/quirk/tin_man
+	name = "Tin Man"
+	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, most of your internal organs have been replaced with surplus prosthetics."
+	icon = FA_ICON_ROBOT
+	value = -6
+	medical_record_text = "During physical examination, patient was found to have numerous low-budget prosthetic internal organs. \
+		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
+	hardcore_value = 6
+	mail_goodies = list(/obj/item/storage/organbox)
+
+/datum/quirk/tin_man/add_unique(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/static/list/organ_slots = list(
+		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart/cybernetic/surplus,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs/cybernetic/surplus,
+		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver/cybernetic/surplus,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach/cybernetic/surplus,
+	)
+	var/list/possible_organ_slots = organ_slots.Copy()
+	if(HAS_TRAIT(human_holder, TRAIT_NOBLOOD))
+		possible_organ_slots -= ORGAN_SLOT_HEART
+	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH))
+		possible_organ_slots -= ORGAN_SLOT_LUNGS
+	if(HAS_TRAIT(human_holder, TRAIT_LIVERLESS_METABOLISM))
+		possible_organ_slots -= ORGAN_SLOT_LIVER
+	if(HAS_TRAIT(human_holder, TRAIT_NOHUNGER))
+		possible_organ_slots -= ORGAN_SLOT_STOMACH
+	if(!length(organ_slots)) //what the hell
+		return
+	for(var/organ_slot in possible_organ_slots)
+		var/organ_path = possible_organ_slots[organ_slot]
+		var/obj/item/organ/new_organ = new organ_path()
+		new_organ.Insert(human_holder, special = TRUE)
+
+/datum/quirk/tin_man/post_add()
+	to_chat(quirk_holder, span_boldannounce("Most of your internal organs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
+	Additionally, any EMP will make them stop working entirely."))
 
 /datum/quirk/pushover
 	name = "Pushover"
@@ -865,7 +991,7 @@
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/junkie/process(seconds_per_tick)
-	if(HAS_TRAIT(quirk_holder, TRAIT_NOMETABOLISM))
+	if(HAS_TRAIT(quirk_holder, TRAIT_LIVERLESS_METABOLISM))
 		return
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(world.time > next_process)
@@ -888,6 +1014,7 @@
 	icon = FA_ICON_SMOKING
 	value = -4
 	gain_text = span_danger("You could really go for a smoke right about now.")
+	lose_text = span_notice("You don't feel nearly as hooked to nicotine anymore.")
 	medical_record_text = "Patient is a current smoker."
 	reagent_type = /datum/reagent/drug/nicotine
 	accessory_type = /obj/item/lighter/greyscale
@@ -916,7 +1043,7 @@
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
 	// smoker lungs have 25% less health and healing
 	var/obj/item/organ/internal/lungs/smoker_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if (smoker_lungs && !(smoker_lungs.organ_flags & ORGAN_SYNTHETIC)) // robotic lungs aren't affected
+	if(smoker_lungs && IS_ORGANIC_ORGAN(smoker_lungs)) // robotic lungs aren't affected
 		smoker_lungs.maxHealth = smoker_lungs.maxHealth * 0.75
 		smoker_lungs.healing_factor = smoker_lungs.healing_factor * 0.75
 
@@ -924,12 +1051,80 @@
 	. = ..()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/mask_item = human_holder.get_item_by_slot(ITEM_SLOT_MASK)
-	if (istype(mask_item, /obj/item/clothing/mask/cigarette))
+	if(istype(mask_item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/storage/fancy/cigarettes/cigarettes = drug_container_type
 		if(istype(mask_item, initial(cigarettes.spawn_type)))
 			quirk_holder.clear_mood_event("wrong_cigs")
-			return
-		quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
+		else
+			quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
+
+/datum/quirk/item_quirk/junkie/alcoholic
+	name = "Alcoholic"
+	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
+	icon = FA_ICON_WINE_GLASS
+	value = -4
+	gain_text = span_danger("You really need a drink.")
+	lose_text = span_notice("Alcohol doesn't seem nearly as enticing anymore.")
+	medical_record_text = "Patient is an alcoholic."
+	reagent_type = /datum/reagent/consumable/ethanol
+	drug_container_type = /obj/item/reagent_containers/cup/glass/bottle/whiskey
+	mob_trait = TRAIT_HEAVY_DRINKER
+	hardcore_value = 1
+	drug_flavour_text = "Make sure you get your favorite type of drink when you run out."
+	mail_goodies = list(
+		/obj/effect/spawner/random/food_or_drink/booze,
+		/obj/item/book/bible/booze,
+	)
+	/// Cached typepath of the owner's favorite alcohol reagent
+	var/datum/reagent/consumable/ethanol/favorite_alcohol
+
+/datum/quirk/item_quirk/junkie/alcoholic/New()
+	drug_container_type = pick(
+		/obj/item/reagent_containers/cup/glass/bottle/whiskey,
+		/obj/item/reagent_containers/cup/glass/bottle/vodka,
+		/obj/item/reagent_containers/cup/glass/bottle/ale,
+		/obj/item/reagent_containers/cup/glass/bottle/beer,
+		/obj/item/reagent_containers/cup/glass/bottle/hcider,
+		/obj/item/reagent_containers/cup/glass/bottle/wine,
+		/obj/item/reagent_containers/cup/glass/bottle/sake,
+	)
+
+	return ..()
+
+/datum/quirk/item_quirk/junkie/alcoholic/post_add()
+	. = ..()
+	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK, PROC_REF(check_brandy))
+
+	var/obj/item/reagent_containers/brandy_container = GLOB.alcohol_containers[drug_container_type]
+	if(isnull(brandy_container))
+		stack_trace("Alcoholic quirk added while the GLOB.alcohol_containers is (somehow) not initialized!")
+		brandy_container = new drug_container_type
+		favorite_alcohol = brandy_container.list_reagents[1]
+		qdel(brandy_container)
+	else
+		favorite_alcohol = brandy_container.list_reagents[1]
+
+	quirk_holder.add_mob_memory(/datum/memory/key/quirk_alcoholic, protagonist = quirk_holder, preferred_brandy = initial(favorite_alcohol.name))
+	// alcoholic livers have 25% less health and healing
+	var/obj/item/organ/internal/liver/alcohol_liver = quirk_holder.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(alcohol_liver && IS_ORGANIC_ORGAN(alcohol_liver)) // robotic livers aren't affected
+		alcohol_liver.maxHealth = alcohol_liver.maxHealth * 0.75
+		alcohol_liver.healing_factor = alcohol_liver.healing_factor * 0.75
+
+/datum/quirk/item_quirk/junkie/alcoholic/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_CHECK)
+
+/datum/quirk/item_quirk/junkie/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze)
+	SIGNAL_HANDLER
+
+	//we don't care if it is not alcohol
+	if(!istype(booze, /datum/reagent/consumable/ethanol))
+		return
+
+	if(istype(booze, favorite_alcohol))
+		quirk_holder.clear_mood_event("wrong_alcohol")
+	else
+		quirk_holder.add_mood_event("wrong_alcohol", /datum/mood_event/wrong_brandy)
 
 /datum/quirk/item_quirk/chronic_illness
 	name = "Chronic Illness"
@@ -946,7 +1141,7 @@
 	var/datum/disease/chronic_illness/hms = new /datum/disease/chronic_illness()
 	quirk_holder.ForceContractDisease(hms)
 	give_item_to_holder(/obj/item/storage/pill_bottle/sansufentanyl, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK),flavour_text = "You've been provided with medication to help manage your condition. Take it regularly to avoid complications.")
-	give_item_to_holder(/obj/item/healthanalyzer/disease, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK))
+	give_item_to_holder(/obj/item/healthanalyzer/simple/disease, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK))
 
 /datum/quirk/unstable
 	name = "Unstable"
@@ -997,8 +1192,7 @@
 	medical_record_text = "Patient's immune system responds violently to [allergy_string]"
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/clothing/accessory/allergy_dogtag/dogtag = new(get_turf(human_holder))
-	dogtag.display = allergy_string
+	var/obj/item/clothing/accessory/dogtag/allergy/dogtag = new(get_turf(human_holder), allergy_string)
 
 	give_item_to_holder(dogtag, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS), flavour_text = "Make sure medical staff can see this...")
 
@@ -1175,10 +1369,10 @@
 	if(!istype(owner))
 		return
 	for(var/obj/item/bodypart/limb as anything in owner.bodyparts)
-		if(!IS_ORGANIC_LIMB(limb))
+		if(IS_ROBOTIC_LIMB(limb))
 			cybernetics_level++
 	for(var/obj/item/organ/organ as anything in owner.organs)
-		if((organ.organ_flags & ORGAN_SYNTHETIC || organ.status == ORGAN_ROBOTIC) && !(organ.organ_flags & ORGAN_HIDDEN))
+		if(IS_ROBOTIC_ORGAN(organ) && !(organ.organ_flags & ORGAN_HIDDEN))
 			cybernetics_level++
 	update_mood()
 
@@ -1189,25 +1383,25 @@
 
 /datum/quirk/body_purist/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER
-	if((new_organ.organ_flags & ORGAN_SYNTHETIC || new_organ.status == ORGAN_ROBOTIC) && !(new_organ.organ_flags & ORGAN_HIDDEN)) //why the fuck are there 2 of them
+	if(IS_ROBOTIC_ORGAN(new_organ) && !(new_organ.organ_flags & ORGAN_HIDDEN)) //why the fuck are there 2 of them
 		cybernetics_level++
 		update_mood()
 
 /datum/quirk/body_purist/proc/on_organ_lose(datum/source, obj/item/organ/old_organ, special)
 	SIGNAL_HANDLER
-	if((old_organ.organ_flags & ORGAN_SYNTHETIC || old_organ.status == ORGAN_ROBOTIC) && !(old_organ.organ_flags & ORGAN_HIDDEN))
+	if(IS_ROBOTIC_ORGAN(old_organ) && !(old_organ.organ_flags & ORGAN_HIDDEN))
 		cybernetics_level--
 		update_mood()
 
 /datum/quirk/body_purist/proc/on_limb_gain(datum/source, obj/item/bodypart/new_limb, special)
 	SIGNAL_HANDLER
-	if(!IS_ORGANIC_LIMB(new_limb))
+	if(IS_ROBOTIC_LIMB(new_limb))
 		cybernetics_level++
 		update_mood()
 
 /datum/quirk/body_purist/proc/on_limb_lose(datum/source, obj/item/bodypart/old_limb, special)
 	SIGNAL_HANDLER
-	if(!IS_ORGANIC_LIMB(old_limb))
+	if(IS_ROBOTIC_LIMB(old_limb))
 		cybernetics_level--
 		update_mood()
 

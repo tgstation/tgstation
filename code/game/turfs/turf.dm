@@ -130,10 +130,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(!SSmapping.plane_offset_blacklist["[plane]"])
 			plane = plane - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
 
-		var/turf/T = SSmapping.get_turf_above(src)
+		var/turf/T = GET_TURF_ABOVE(src)
 		if(T)
 			T.multiz_turf_new(src, DOWN)
-		T = SSmapping.get_turf_below(src)
+		T = GET_TURF_BELOW(src)
 		if(T)
 			T.multiz_turf_new(src, UP)
 
@@ -187,10 +187,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		stack_trace("Incorrect turf deletion")
 	changing_turf = FALSE
 	if(GET_LOWEST_STACK_OFFSET(z))
-		var/turf/T = SSmapping.get_turf_above(src)
+		var/turf/T = GET_TURF_ABOVE(src)
 		if(T)
 			T.multiz_turf_del(src, DOWN)
-		T = SSmapping.get_turf_below(src)
+		T = GET_TURF_BELOW(src)
 		if(T)
 			T.multiz_turf_del(src, UP)
 	if(force)
@@ -638,22 +638,26 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/AllowDrop()
 	return TRUE
 
-/turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge_ratio = 0.1)
+/turf/proc/add_vomit_floor(mob/living/M, vomit_type = VOMIT_TOXIC, purge_ratio = 0.1)
 
-	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
+	var/obj/effect/decal/cleanable/vomit/vomit
+	if (vomit_type == VOMIT_NEBULA)
+		vomit = new /obj/effect/decal/cleanable/vomit/nebula(src, M.get_static_viruses())
+	else
+		vomit = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
 
 	//if the vomit combined, apply toxicity and reagents to the old vomit
-	if (QDELETED(V))
-		V = locate() in src
-	if(!V)
+	if (QDELETED(vomit))
+		vomit = locate() in src
+	if(!vomit)
 		return
 	// Apply the proper icon set based on vomit type
-	if(toxvomit == VOMIT_PURPLE)
-		V.icon_state = "vomitpurp_[pick(1,4)]"
-	else if (toxvomit == VOMIT_TOXIC)
-		V.icon_state = "vomittox_[pick(1,4)]"
+	if(vomit_type == VOMIT_PURPLE)
+		vomit.icon_state = "vomitpurp_[pick(1,4)]"
+	else if (vomit_type == VOMIT_TOXIC)
+		vomit.icon_state = "vomittox_[pick(1,4)]"
 	if (purge_ratio && iscarbon(M))
-		clear_reagents_to_vomit_pool(M, V, purge_ratio)
+		clear_reagents_to_vomit_pool(M, vomit, purge_ratio)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
 	var/obj/item/organ/internal/stomach/belly = M.get_organ_slot(ORGAN_SLOT_STOMACH)

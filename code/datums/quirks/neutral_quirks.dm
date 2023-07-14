@@ -48,7 +48,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.add_blocked_language(/datum/language/common)
 	if(ishumanbasic(human_holder))
-		human_holder.grant_language(/datum/language/uncommon, understood = TRUE, spoken =  TRUE, source =  LANGUAGE_QUIRK)
+		human_holder.grant_language(/datum/language/uncommon, source = LANGUAGE_QUIRK)
 
 /datum/quirk/foreigner/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -291,15 +291,13 @@
 /datum/quirk/item_quirk/bald/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	old_hair = human_holder.hairstyle
-	human_holder.hairstyle = "Bald"
-	human_holder.update_body_parts()
+	human_holder.set_hairstyle("Bald", update = TRUE)
 	RegisterSignal(human_holder, COMSIG_CARBON_EQUIP_HAT, PROC_REF(equip_hat))
 	RegisterSignal(human_holder, COMSIG_CARBON_UNEQUIP_HAT, PROC_REF(unequip_hat))
 
 /datum/quirk/item_quirk/bald/add_unique(client/client_source)
 	var/obj/item/clothing/head/wig/natural/baldie_wig = new(get_turf(quirk_holder))
-
-	if (old_hair == "Bald")
+	if(old_hair == "Bald")
 		baldie_wig.hairstyle = pick(GLOB.hairstyles_list - "Bald")
 	else
 		baldie_wig.hairstyle = old_hair

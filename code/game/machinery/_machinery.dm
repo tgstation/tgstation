@@ -86,7 +86,7 @@
  */
 /obj/machinery
 	name = "machinery"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/basic_machines.dmi'
 	desc = "Some kind of machine."
 	verb_say = "beeps"
 	verb_yell = "blares"
@@ -316,8 +316,7 @@
 		new /obj/effect/temp_visual/emp(loc)
 
 		if(prob(70/severity))
-			var/datum/language_holder/machine_languages = get_language_holder()
-			machine_languages.selected_language = machine_languages.get_random_spoken_language()
+			set_active_language(get_random_spoken_language())
 
 /**
  * Opens the machine.
@@ -1005,7 +1004,7 @@
 				else
 					physical_part = primary_part_base
 
-				replacer_tool.atom_storage.attempt_insert(physical_part, user, TRUE)
+				replacer_tool.atom_storage.attempt_insert(physical_part, user, TRUE, force = STORAGE_SOFT_LOCKED)
 				to_chat(user, span_notice("[capitalize(physical_part.name)] replaced with [secondary_part_name]."))
 				shouldplaysound = TRUE //Only play the sound when parts are actually replaced!
 				break
