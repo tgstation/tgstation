@@ -7,6 +7,8 @@ import { Window } from '../layouts';
 type Data = {
   candidates: ReadonlyArray<Candidate>;
   pai: Pai;
+  range_max: number;
+  range_min: number;
 };
 
 type Candidate = Readonly<{
@@ -26,8 +28,6 @@ type Pai = {
   transmit: BooleanLike;
   receive: BooleanLike;
   range: number;
-  range_max: number;
-  range_min: number;
 };
 
 export const PaiCard = (props, context) => {
@@ -143,6 +143,8 @@ const CandidateDisplay = (
 const PaiOptions = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const {
+    range_max,
+    range_min,
     pai: {
       can_holo,
       dna,
@@ -153,8 +155,6 @@ const PaiOptions = (props, context) => {
       transmit,
       receive,
       range,
-      range_max,
-      range_min,
     },
   } = data;
   const suppliedLaws = laws[0] ? decodeHtmlEntities(laws[0]) : 'None';

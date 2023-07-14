@@ -38,7 +38,7 @@
 	/// The card we inhabit
 	var/obj/item/pai_card/card
 	/// The maximum distance we can travel away from our pai card
-	var/max_distance = 5
+	var/leashed_distance = 5
 	/// The current chasis that will appear when in holoform
 	var/chassis = "repairbot"
 	/// Toggles whether the pAI can hold encryption keys or not
@@ -244,7 +244,7 @@
 /// Checks if we're in range of our pai card
 /mob/living/silicon/pai/proc/check_distance()
 	SIGNAL_HANDLER
-	if (get_dist(get_turf(card), get_turf(src)) <= max_distance)
+	if (get_dist(get_turf(card), get_turf(src)) <= leashed_distance)
 		return
 	to_chat(src, span_warning("You moved out of range of your holotransmitter!"))
 	new /obj/effect/temp_visual/guardian/phase/out(loc)
@@ -462,9 +462,9 @@
 
 /// Updates the distance we can be from our pai card
 /mob/living/silicon/pai/proc/increment_range(increment_amount)
-	var/new_distance = max_distance + increment_amount
+	var/new_distance = leashed_distance + increment_amount
 	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
 		return
-	max_distance = new_distance
+	leashed_distance = new_distance
 	if (increment_amount < 0)
 		check_distance()

@@ -96,6 +96,11 @@
 		return UI_INTERACTIVE
 	return ..()
 
+/obj/item/pai_card/ui_static_data(mob/user)
+	. = ..()
+	.["range_max"] = HOLOFORM_MAX_RANGE
+	.["range_min"] = HOLOFORM_MIN_RANGE
+
 /obj/item/pai_card/ui_data(mob/user)
 	. = ..()
 	var/list/data = list()
@@ -112,8 +117,6 @@
 		transmit = pai.can_transmit,
 		receive = pai.can_receive,
 		range = pai.max_distance,
-		range_max = HOLOFORM_MAX_RANGE,
-		range_min = HOLOFORM_MIN_RANGE,
 	)
 	return data
 
