@@ -339,7 +339,7 @@
 	trauma_cycle_cooldown = 1.5 MINUTES
 	internal_bleeding_chance = 40
 	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
-	regen_ticks_needed = 60 // ticks every 2 seconds, 120 seconds, so roughly 2 minutes default
+	regen_ticks_needed = 90 // ticks every 2 seconds, 150 seconds, so roughly 3 minutes default
 
 /// Compound Fracture (Critical Blunt)
 /datum/wound/blunt/critical
