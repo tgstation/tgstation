@@ -7,6 +7,7 @@
 
 	bite_consumption_mod = 3
 	juice_results = list(/datum/reagent/consumable/milk = 0)
+	seed = /obj/item/seeds/coconut
 
 /obj/item/food/grown/shell/coconut_gun
 	seed = /obj/item/seeds/coconut/gun
@@ -19,6 +20,7 @@
 	foodtypes = FRUIT
 	tastes = list("gunpowder" = 1)
 	wine_power = 90 //It burns going down, too.
+	seed = /obj/item/seeds/coconut/gun
 
 /obj/item/gun/energy/laser/coconut_gun
 	name = "\improper coconut gun"
