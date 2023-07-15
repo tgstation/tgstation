@@ -46,7 +46,7 @@
 				/obj/item/clothing/under/costume/referee = 1,
 				/obj/item/clothing/mask/whistle = 1,
 				/obj/item/storage/backpack/henchmen = 5,
-				/obj/item/clothing/under/suit/henchmen = 5,
+				/obj/item/clothing/under/costume/henchmen = 5,
 				/obj/item/clothing/head/costume/jackbros = 5,
 				/obj/item/clothing/under/costume/jackbros = 5,
 				/obj/item/clothing/under/costume/deckers = 5,
