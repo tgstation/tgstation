@@ -19,6 +19,8 @@
 	security_mode_flags = SECBOT_CHECK_WEAPONS | SECBOT_HANDCUFF_TARGET
 	possessed_message = "You are a honkbot! Make sure the crew are having a great time!"
 
+	automated_announcements = list("Honk!", 'sound/items/bikehorn.ogg')
+
 	///Keeping track of how much we honk to prevent spamming it
 	var/limiting_spam = FALSE
 	///Sound played when HONKing someone

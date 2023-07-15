@@ -20,6 +20,21 @@
 	hackables = "cleaning service protocols"
 	path_image_color = "#993299"
 
+	automated_announcements = list(
+		"Unhygienic client found. Please stand still so I can clean you." = 'sound/voice/hygienebot/unhygienicclient.ogg',
+		"Enjoy your clean and tidy day!" = 'sound/voice/hygienebot/cleanandtidy.ogg',
+		"Either you stop running or I will fucking drag you out of an airlock." = 'sound/voice/hygienebot/dragyouout.ogg',
+		"Get back here you foul smelling fucker." = 'sound/voice/hygienebot/foulsmelling.ogg',
+		"I just want to fucking clean you you troglodyte." = 'sound/voice/hygienebot/troglodyte.ogg',
+		"If you don't come back here I'll put a green cloud around you cunt." = 'sound/voice/hygienebot/greencloud.ogg',
+		"Just fucking let me clean you you arsehole!" = 'sound/voice/hygienebot/letmeclean.ogg',
+		"STOP RUNNING OR I WILL CUT YOUR ARTERIES!" = 'sound/voice/hygienebot/cutarteries.ogg',
+		"STOP. RUNNING." = 'sound/voice/hygienebot/stoprunning.ogg',
+		"Fucking finally." = 'sound/voice/hygienebot/finally.ogg',
+		"Thank god, you finally stopped." = 'sound/voice/hygienebot/thankgod.ogg',
+		"Well about fucking time you degenerate." = 'sound/voice/hygienebot/degenerate.ogg',
+	)
+
 	///The human target the bot is trying to wash.
 	var/mob/living/carbon/human/target
 	///The mob's current speed, which varies based on how long the bot chases it's target.

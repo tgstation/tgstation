@@ -21,6 +21,15 @@
 	path_image_color = "#FF0000"
 	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
 
+	automated_announcements = list(
+		"Criminal detected!" = 'sound/voice/beepsky/criminal.ogg',
+		"Freeze, scumbag!" = 'sound/voice/beepsky/freeze.ogg',
+		"Prepare for justice!" = 'sound/voice/beepsky/justice.ogg',
+		"Your move, creep." = 'sound/voice/beepsky/creep.ogg',
+		"I am the law!" = 'sound/voice/beepsky/iamthelaw.ogg',
+		"Have a secure day." = 'sound/voice/beepsky/secureday.ogg',
+	)
+
 	///The type of baton this Secbot will use
 	var/baton_type = /obj/item/melee/baton/security
 	///The type of cuffs we use on criminals after making arrests

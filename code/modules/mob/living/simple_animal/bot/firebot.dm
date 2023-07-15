@@ -22,6 +22,16 @@
 	path_image_color = "#FFA500"
 	possessed_message = "You are a firebot! Protect the station from fires to the best of your ability!"
 
+	automated_announcements = list(
+		"Fire detected!" = 'sound/voice/firebot/detected.ogg',
+		"Stop, drop and roll!" = 'sound/voice/firebot/stopdropnroll.ogg',
+		"Extinguishing!" = 'sound/voice/firebot/extinguishing.ogg',
+		"No fires detected." = 'sound/voice/firebot/nofires.ogg',
+		"Only you can prevent station fires." = 'sound/voice/firebot/onlyyou.ogg',
+		"Temperature nominal." = 'sound/voice/firebot/tempnominal.ogg',
+		"Keep it cool." = 'sound/voice/firebot/keepitcool.ogg',
+	)
+
 	var/atom/target_fire
 	var/atom/old_target_fire
 

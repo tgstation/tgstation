@@ -12,6 +12,8 @@
 	bot_type = ADVANCED_SEC_BOT
 	hackables = "combat inhibitors"
 
+	automated_announcements = list("Please put down your weapon. You have 20 seconds to comply." = 'sound/voice/ed209_20sec.ogg')
+
 	var/lastfired = 0
 	var/shot_delay = 15
 	var/shoot_sound = 'sound/weapons/laser.ogg'

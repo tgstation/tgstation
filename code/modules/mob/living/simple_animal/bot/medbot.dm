@@ -35,6 +35,42 @@
 	path_image_color = "#DDDDFF"
 	possessed_message = "You are a medbot! Ensure good health among the crew to the best of your ability!"
 
+	automated_announcements = list(
+		"Hey! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',
+		"Wait! I want to help!" = 'sound/voice/medbot/help.ogg',
+		"You appear to be injured!" = 'sound/voice/medbot/injured.ogg',
+		"No! Stay with me!" = 'sound/voice/medbot/no.ogg',
+		"Live, damnit! LIVE!" = 'sound/voice/medbot/live.ogg',
+		"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/medbot/lost.ogg',
+		"Delicious!" = 'sound/voice/medbot/delicious.ogg',
+		"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',
+		"Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',
+		"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',
+		"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',
+		"Why are we still here? Just to suffer?" = 'sound/voice/medbot/why.ogg',
+		"Fuck you." = 'sound/voice/medbot/fuck_you.ogg',
+		"Turn off your computer. This is not a game." = 'sound/voice/medbot/turn_off.ogg',
+		"I'm different!" = 'sound/voice/medbot/im_different.ogg',
+		"Close Dreamseeker.exe now. Or else." = 'sound/voice/medbot/close.ogg',
+		"Shindemashou." = 'sound/voice/medbot/shindemashou.ogg',
+		"Hey, wait..." = 'sound/voice/medbot/hey_wait.ogg',
+		"Please don't..." = 'sound/voice/medbot/please_dont.ogg',
+		"I trusted you..." = 'sound/voice/medbot/i_trusted_you.ogg',
+		"Nooo..." = 'sound/voice/medbot/nooo.ogg',
+		"Oh fuck-" = 'sound/voice/medbot/oh_fuck.ogg',
+		"I forgive you." = 'sound/voice/medbot/forgive.ogg',
+		"Thank you!" = 'sound/voice/medbot/thank_you.ogg',
+		"You are a good person." = 'sound/voice/medbot/youre_good.ogg',
+		"Your behavior has been reported, have a nice day." = 'sound/voice/medbot/reported.ogg',
+		"I require assistance." = 'sound/voice/medbot/i_require_asst.ogg',
+		"Please put me back." = 'sound/voice/medbot/please_put_me_back.ogg',
+		"Please, I am scared!" = 'sound/voice/medbot/please_im_scared.ogg',
+		"I don't like this, I need help!" = 'sound/voice/medbot/dont_like.ogg',
+		"This hurts, my pain is real!" = 'sound/voice/medbot/pain_is_real.ogg',
+		"Is this the end?" = 'sound/voice/medbot/is_this_the_end.ogg',
+		"Nooo!" = 'sound/voice/medbot/nooo.ogg',
+	)
+
 	/// drop determining variable
 	var/healthanalyzer = /obj/item/healthanalyzer
 	/// drop determining variable

@@ -112,6 +112,8 @@
 	var/possessed_message = "You're a generic bot. How did one of these even get made?"
 	/// What language do we make automated announcements in?
 	var/datum/language/announcement_language = /datum/language/common
+	/// List of strings to sound effects corresponding to automated messages the bot can play
+	var/list/automated_announcements
 
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
@@ -194,6 +196,10 @@
 
 	if(mapload && is_station_level(z) && (bot_mode_flags & BOT_MODE_GHOST_CONTROLLABLE))
 		enable_possession(mapload)
+
+	if(length(automated_announcements))
+		var/datum/action/cooldown/bot_announcement/pa_system = new(src, automated_announcements = automated_announcements)
+		pa_system.Grant(src)
 
 /mob/living/simple_animal/bot/Destroy()
 	GLOB.bots_list -= src
@@ -485,18 +491,16 @@
 	addtimer(CALLBACK(src, PROC_REF(emp_reset), was_on), severity * 30 SECONDS)
 	if(!prob(70/severity))
 		return
-	if (!length(GLOB.uncommon_roundstart_languages))
-		return
 	remove_all_languages(source = LANGUAGE_EMP)
-	grant_random_uncommon_language(source = LANGUAGE_EMP)
-	announcement_language = new_language
+	announcement_language = grant_random_uncommon_language(source = LANGUAGE_EMP) || /datum/language/common
 
 /mob/living/simple_animal/bot/proc/emp_reset(was_on)
 	stat &= ~EMPED
 	if(was_on)
 		turn_on()
 
-/mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
+/// Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
+/mob/living/simple_animal/bot/proc/speak(message,channel)
 	if((!(bot_mode_flags & BOT_MODE_ON)) || (!message))
 		return
 

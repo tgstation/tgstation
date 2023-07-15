@@ -1554,7 +1554,7 @@
 	var/picked = pick(GLOB.uncommon_roundstart_languages)
 	grant_language(picked, source = source)
 	set_active_language(picked)
-	return TRUE
+	return picked
 
 /* End language procs */
 
