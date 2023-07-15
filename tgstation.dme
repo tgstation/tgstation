@@ -4677,6 +4677,7 @@
 #include "code\modules\projectiles\guns\energy\recharge.dm"
 #include "code\modules\projectiles\guns\energy\special.dm"
 #include "code\modules\projectiles\guns\energy\stun.dm"
+#include "code\modules\projectiles\guns\magic\arcane_barrage.dm"
 #include "code\modules\projectiles\guns\magic\staff.dm"
 #include "code\modules\projectiles\guns\magic\wand.dm"
 #include "code\modules\projectiles\guns\special\blastcannon.dm"
