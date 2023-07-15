@@ -120,7 +120,7 @@
 
 /datum/design/board/bankmachine
 	name = "Bank Machine Board"
-	desc = "All0ws for the construction of circuit boards used to build a Bank Machine."
+	desc = "Allows for the construction of circuit boards used to build a Bank Machine."
 	id = "bankmachine"
 	build_path = /obj/item/circuitboard/computer/bankmachine
 	category = list(
