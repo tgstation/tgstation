@@ -19,9 +19,9 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 
-/obj/structure/window/reinforced/tram_new
-	name = "tram"
-	desc = "A reinforced, air-locked modular tram structure with titanium silica windows."
+/obj/structure/window/reinforced/tram
+	name = "tram window"
+	desc = "A lightweight titanium composite structure with a windscreen installed."
 	icon = 'icons/obj/smooth_structures/tram_structure.dmi'
 	icon_state = "tram-part-0"
 	base_icon_state = "tram-part"
@@ -43,6 +43,11 @@
 	rad_insulation = RAD_MEDIUM_INSULATION
 	glass_material_datum = /datum/material/alloy/titaniumglass
 
+/obj/structure/window/reinforced/tram/solid
+	name = "tram structure"
+	desc = "A reinforced modular tram structure with tinted titanium glass accents."
+	opacity = TRUE
+
 /datum/armor/tram_structure
 	melee = 80
 	bullet = 5
@@ -55,6 +60,7 @@
 	icon = 'icons/obj/smooth_structures/tram_structure.dmi'
 	desc = "Nanotrasen bought the luxury package under the impression titanium spoilers make the tram go faster. They're just for looks, or potentially stabbing anybody who gets in the way."
 	icon_state = "tram-spoiler-retracted"
+	opacity = TRUE
 	///Position of the spoiler
 	var/deployed = FALSE
 	///Weakref to the tram piece we control
