@@ -671,6 +671,12 @@
 
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/run_over(mob/living/carbon/human/crushed)
+	if (mind && !((bot_cover_flags & BOT_COVER_EMAGGED) || wires.is_cut(WIRE_AVOIDANCE)))
+		if (!has_status_effect(/datum/status_effect/careful_driving))
+			crushed.visible_message(span_notice("[src] slows down to avoid crushing [crushed]."))
+		apply_status_effect(/datum/status_effect/careful_driving)
+		return // Player mules must be emagged before they can trample
+
 	log_combat(src, crushed, "run over", addition = "(DAMTYPE: [uppertext(BRUTE)])")
 	crushed.visible_message(
 		span_danger("[src] drives over [crushed]!"),
