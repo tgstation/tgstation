@@ -1,7 +1,7 @@
 /obj/machinery/gulag_item_reclaimer
 	name = "equipment reclaimer station"
 	desc = "Used to reclaim your items after you finish your sentence at the labor camp."
-	icon = 'icons/obj/terminals.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "gulag_off"
 	req_access = list(ACCESS_BRIG) //REQACCESS TO ACCESS ALL STORED ITEMS
 	density = FALSE

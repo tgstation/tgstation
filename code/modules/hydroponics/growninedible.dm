@@ -4,7 +4,7 @@
 
 /obj/item/grown // Grown weapons
 	name = "grown_weapon"
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
 	resistance_flags = FLAMMABLE
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.

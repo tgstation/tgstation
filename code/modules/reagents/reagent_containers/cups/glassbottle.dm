@@ -812,7 +812,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/pruno
 	name = "pruno mix"
 	desc = "A trash bag filled with fruit, sugar, yeast, and water, pulped together into a pungent slurry to be fermented in an enclosed space, traditionally the toilet. Security would love to confiscate this, one of the many things wrong with them."
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "trashbag"
 	list_reagents = list(/datum/reagent/consumable/prunomix = 50)
 	var/fermentation_time = 30 SECONDS /// time it takes to ferment

@@ -107,5 +107,8 @@
 
 /// Sent from /atom/movable/proc/compose_message() after the name part: (list/stored_name, visible_name)
 #define COMSIG_MOVABLE_MESSAGE_GET_NAME_PART "movable_message_get_name_part"
-///The index of the name part
-#define NAME_PART_INDEX 1
+	///The index of the name part
+	#define NAME_PART_INDEX 1
+
+///from /datum/component/track_hierarchical_movement/on_moved() if atom or any of its containers has moved: (atom/old_loc, dir, forced, list/old_locs)
+#define COMSIG_MOVABLE_OR_CONTAINER_MOVED "movable_or_container_moved"

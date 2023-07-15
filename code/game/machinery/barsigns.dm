@@ -1,7 +1,7 @@
 /obj/machinery/barsign // All Signs are 64 by 32 pixels, they take two tiles
 	name = "bar sign"
 	desc = "A bar sign which has not been initialized, somehow. Complain at a coder!"
-	icon = 'icons/obj/barsigns.dmi'
+	icon = 'icons/obj/machines/barsigns.dmi'
 	icon_state = "empty"
 	req_access = list(ACCESS_BAR)
 	max_integrity = 500

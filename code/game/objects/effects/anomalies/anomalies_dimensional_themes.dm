@@ -225,7 +225,7 @@
 	sound = 'sound/items/eatfood.ogg'
 
 /datum/dimension_theme/natural
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "map_flower"
 	window_colour = "#00f7ff"
 	replace_floors = list(/turf/open/floor/grass = 1)
@@ -236,7 +236,7 @@
 		/obj/structure/table = list(/obj/structure/table/wood = 5, /obj/structure/table/wood/fancy = 1),)
 
 /datum/dimension_theme/bamboo
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "bamboo"
 	replace_floors = list(/turf/open/floor/bamboo = 1)
 	replace_walls = /turf/closed/wall/mineral/bamboo

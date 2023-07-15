@@ -251,6 +251,8 @@
  * Reduces the stamina loss by stamina_recovery
  */
 /mob/living/simple_animal/update_stamina()
+	if(damage_coeff[STAMINA] <= 0) //we shouldn't reset our speed to its initial value if we don't need to, as that can mess with things like mulebot motor wires
+		return
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
 /mob/living/simple_animal/proc/handle_automated_action()
