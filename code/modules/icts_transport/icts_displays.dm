@@ -16,14 +16,12 @@
 	var/tram_id = TRAMSTATION_LINE_1
 	/// Weakref to the tram piece we indicate
 	var/datum/weakref/tram_ref
-	/// The last destination we were at
-	var/previous_destination
+	/// What sign face prefixes we have icons for
+	var/static/list/available_faces = list()
 	/// The light mask overlay we use
 	var/light_mask
 	/// Is this sign malfunctioning?
 	var/malfunctioning = FALSE
-	/// A default list of possible sign states
-	var/static/list/sign_states = list()
 
 /obj/machinery/destination_sign/indicator
 	icon = 'icons/obj/machines/tram_sign.dmi'
@@ -37,34 +35,19 @@
 	. = ..()
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(update_sign))
 	SSicts_transport.displays += src
-	sign_states = list(
-		"[DESTINATION_WEST_ACTIVE]",
-		"[DESTINATION_WEST_IDLE]",
-		"[DESTINATION_EAST_ACTIVE]",
-		"[DESTINATION_EAST_IDLE]",
-		"[DESTINATION_CENTRAL_IDLE]",
-		"[DESTINATION_CENTRAL_EASTBOUND_ACTIVE]",
-		"[DESTINATION_CENTRAL_WESTBOUND_ACTIVE]",
+	available_faces = list(
+		TRAMSTATION_LINE_1,
 	)
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/destination_sign/LateInitialize()
-	. = ..()
-	find_tram()
 
 /obj/machinery/destination_sign/Destroy()
 	SSicts_transport.displays -= src
 	. = ..()
 
-/obj/machinery/destination_sign/proc/find_tram()
-	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
-		if(tram.specific_transport_id != tram_id)
-			continue
-		tram_ref = WEAKREF(tram)
-		break
-
-/obj/machinery/destination_sign/proc/on_tram_travelling(datum/source, travelling)
+/obj/machinery/destination_sign/proc/on_tram_travelling(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, datum/transport_controller/linear/tram/destination_platform)
 	SIGNAL_HANDLER
+
+	if(controller.specific_transport_id != tram_id)
+		return
 	update_sign()
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, process))
 
@@ -76,10 +59,9 @@
 		return
 	end_processing()
 
-/obj/machinery/destination_sign/proc/update_sign()
-	var/datum/transport_controller/linear/tram/tram = tram_ref?.resolve()
+/obj/machinery/destination_sign/proc/update_sign(datum/source, datum/transport_controller/linear/tram/controller, controller_active, controller_status, travel_direction, obj/effect/landmark/icts/nav_beacon/tram/destination_platform)
 
-	if(!tram || !tram.controller_operational)
+	if(!controller || !controller.controller_operational)
 		icon_state = "[base_icon_state][DESTINATION_NOT_IN_SERVICE]"
 		light_mask = "[base_icon_state][DESTINATION_NOT_IN_SERVICE]_e"
 		update_appearance()
@@ -87,55 +69,20 @@
 
 	use_power(active_power_usage)
 
-	if(malfunctioning)
-		icon_state = "[base_icon_state][pick(sign_states)]"
-		light_mask = "[base_icon_state][pick(sign_states)]_e"
-		update_appearance()
-		return PROCESS_KILL
+	var/sign_face = ""
+	sign_face += "[base_icon_state]"
+	if(!LAZYFIND(available_faces, controller.specific_transport_id))
+		sign_face += "[TRAMSTATION_LINE_1]"
+	else
+		sign_face += "[controller.specific_transport_id]"
+	sign_face += "[controller_active]"
+	sign_face += "[destination_platform.platform_code]"
+	sign_face += "[travel_direction]"
+	icon_state = "[sign_face]"
+	light_mask = "[sign_face]_e"
 
-	if(!tram.controller_active)
-		if(istype(tram.idle_platform, /obj/effect/landmark/icts/nav_beacon/tram/tramstation/west))
-			icon_state = "[base_icon_state][DESTINATION_WEST_IDLE]"
-			light_mask = "[base_icon_state][DESTINATION_WEST_IDLE]_e"
-			previous_destination = tram.idle_platform
-			update_appearance()
-			return PROCESS_KILL
-
-		if(istype(tram.idle_platform, /obj/effect/landmark/icts/nav_beacon/tram/tramstation/central))
-			icon_state = "[base_icon_state][DESTINATION_CENTRAL_IDLE]"
-			light_mask = "[base_icon_state][DESTINATION_CENTRAL_IDLE]_e"
-			previous_destination = tram.idle_platform
-			update_appearance()
-			return PROCESS_KILL
-
-		if(istype(tram.idle_platform, /obj/effect/landmark/icts/nav_beacon/tram/tramstation/east))
-			icon_state = "[base_icon_state][DESTINATION_EAST_IDLE]"
-			light_mask = "[base_icon_state][DESTINATION_EAST_IDLE]_e"
-			previous_destination = tram.idle_platform
-			update_appearance()
-			return PROCESS_KILL
-
-	if(istype(tram.destination_platform, /obj/effect/landmark/icts/nav_beacon/tram/tramstation/west))
-		icon_state = "[base_icon_state][DESTINATION_WEST_ACTIVE]"
-		light_mask = "[base_icon_state][DESTINATION_WEST_ACTIVE]_e"
-		update_appearance()
-		return PROCESS_KILL
-
-	if(istype(tram.destination_platform, /obj/effect/landmark/icts/nav_beacon/tram/tramstation/central))
-		if(istype(previous_destination, /obj/effect/landmark/icts/nav_beacon/tram/tramstation/west))
-			icon_state = "[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]"
-			light_mask = "[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]_e"
-		if(istype(previous_destination, /obj/effect/landmark/icts/nav_beacon/tram/tramstation/east))
-			icon_state = "[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]"
-			light_mask = "[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]_e"
-		update_appearance()
-		return PROCESS_KILL
-
-	if(istype(tram.destination_platform, /obj/effect/landmark/icts/nav_beacon/tram/tramstation/east))
-		icon_state = "[base_icon_state][DESTINATION_EAST_ACTIVE]"
-		light_mask = "[base_icon_state][DESTINATION_EAST_ACTIVE]_e"
-		update_appearance()
-		return PROCESS_KILL
+	update_appearance()
+	return PROCESS_KILL
 
 /obj/machinery/destination_sign/update_overlays()
 	. = ..()

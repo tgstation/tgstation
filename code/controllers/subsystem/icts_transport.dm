@@ -28,7 +28,6 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	SIGNAL_HANDLER
 
 	var/relevant
-	var/call_source = source
 	var/request_flags = NONE
 	var/datum/transport_controller/linear/tram/transport_controller
 	var/obj/effect/landmark/icts/nav_beacon/tram/destination
@@ -40,11 +39,11 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	LAZYADD(relevant, source)
 
 	if(!transport_controller || !transport_controller.controller_operational)
-		SEND_ICTS_SIGNAL(call_source, COMSIG_ICTS_RESPONSE, REQUEST_FAIL, NOT_IN_SERVICE)
+		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, NOT_IN_SERVICE)
 		return
 
 	if(transport_controller.controller_active) //in use
-		SEND_ICTS_SIGNAL(call_source, COMSIG_ICTS_RESPONSE, REQUEST_FAIL, TRANSPORT_IN_USE)
+		SEND_ICTS_SIGNAL(COMSIG_ICTS_RESPONSE, relevant, REQUEST_FAIL, TRANSPORT_IN_USE)
 		return
 
 	var/network = LAZYACCESS(nav_beacons, transport_network)

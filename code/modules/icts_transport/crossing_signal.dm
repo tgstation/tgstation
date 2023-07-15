@@ -252,7 +252,10 @@
 
 	// Finally the interesting part where it's ACTUALLY approaching
 	if(approach_distance <= red_distance_threshold)
-		set_signal_state(XING_STATE_RED)
+		if(malfunctioning)
+			set_signal_state(XING_STATE_MALF)
+		else
+			set_signal_state(XING_STATE_RED)
 		return
 	if(approach_distance <= amber_distance_threshold)
 		set_signal_state(XING_STATE_AMBER)
