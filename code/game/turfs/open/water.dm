@@ -29,7 +29,7 @@
 /turf/open/water/beach
 	planetary_atmos = FALSE
 	gender = PLURAL
-	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
+	desc = "Come on in, it's great!"
 	icon = 'icons/turf/beach.dmi'
 	icon_state = "water"
 	base_icon_state = "water"
