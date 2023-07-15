@@ -430,33 +430,50 @@ const SearchSpells = (props, context) => {
   const [spellSearch] = useLocalState(context, 'spell-search', '');
   const { entries } = data;
 
-  const filteredEntries = entries.filter((entry) =>
-    entry.name.toLowerCase().includes(spellSearch.toLowerCase())
+  // Filter by name, category is also included as it's likely you'd search "rituals" or similar
+  // Desc is not included, though, as searching - say - "summon" would give you half of all entries
+  const filteredEntries = entries.filter(
+    (entry) =>
+      entry.name.toLowerCase().includes(spellSearch.toLowerCase()) ||
+      entry.cat.toLowerCase().includes(spellSearch.toLowerCase())
   );
 
   if (filteredEntries.length === 0) {
     return <NoticeBox>No spells found!</NoticeBox>;
   }
-  return <SpellTabDisplay TabSpells={filteredEntries} />;
+  return (
+    <SpellTabDisplay
+      TabSpells={filteredEntries}
+      CooldownOffset={32}
+      PointOffset={84}
+    />
+  );
 };
 
-const SpellTabDisplay = (props: { TabSpells: SpellEntry[] }, context) => {
+const SpellTabDisplay = (
+  props: {
+    TabSpells: SpellEntry[];
+    CooldownOffset?: number;
+    PointOffset?: number;
+  },
+  context
+) => {
   const { act, data } = useBackend<Data>(context);
   const { points } = data;
-  const { TabSpells } = props;
+  const { TabSpells, CooldownOffset, PointOffset } = props;
 
   const getTimeOrCatAndOffset = (entry: SpellEntry) => {
     if (entry.cat === SpellCategory.Rituals) {
       if (entry.times) {
-        return [-104, `Cast ${entry.times} times.`];
+        return `Cast ${entry.times} times.`;
       } else {
-        return [-110, 'Not cast yet.'];
+        return 'Not cast yet.';
       }
     } else {
       if (entry.cooldown) {
-        return [-115, `${entry.cooldown}s Cooldown`];
+        return `${entry.cooldown}s Cooldown`;
       } else {
-        return [-120, 'No Cooldown!'];
+        return '';
       }
     }
   };
@@ -466,32 +483,30 @@ const SpellTabDisplay = (props: { TabSpells: SpellEntry[] }, context) => {
       {TabSpells.sort((a, b) => a.name.localeCompare(b.name)).map((entry) => (
         <Stack.Item key={entry.name}>
           <Divider />
-          <Section
-            title={entry.name}
-            buttons={
-              <>
-                <Box mr={entry.buyword === Buywords.Learn ? 6.5 : 2}>
-                  {entry.cost} Points
-                </Box>
-                <Box ml={getTimeOrCatAndOffset(entry)[0]} mt={-2.2}>
-                  {getTimeOrCatAndOffset(entry)[1]}
-                </Box>
-                {entry.buyword === Buywords.Learn && (
-                  <Box mr={-9.5} mt={-3}>
-                    <Button
-                      icon="tshirt"
-                      color={entry.requires_wizard_garb ? 'bad' : 'green'}
-                      tooltipPosition="bottom-start"
-                      tooltip={
-                        entry.requires_wizard_garb
-                          ? 'Requires wizard garb.'
-                          : 'Can be cast without wizard garb.'
-                      }
-                    />
-                  </Box>
-                )}
-              </>
-            }>
+          <Stack mt={1.3} width="100%" position="absolute" textAlign="left">
+            <Stack.Item width="120px" ml={CooldownOffset}>
+              {getTimeOrCatAndOffset(entry)}
+            </Stack.Item>
+            <Stack.Item width="60px" ml={PointOffset}>
+              {entry.cost} points
+            </Stack.Item>
+            {entry.buyword === Buywords.Learn && (
+              <Stack.Item>
+                <Button
+                  mt={-0.8}
+                  icon="tshirt"
+                  color={entry.requires_wizard_garb ? 'bad' : 'green'}
+                  tooltipPosition="bottom-start"
+                  tooltip={
+                    entry.requires_wizard_garb
+                      ? 'Requires wizard garb.'
+                      : 'Can be cast without wizard garb.'
+                  }
+                />
+              </Stack.Item>
+            )}
+          </Stack>
+          <Section title={entry.name}>
             <Stack>
               <Stack.Item grow>{entry.desc}</Stack.Item>
               <Stack.Item>
@@ -558,7 +573,7 @@ const CategoryDisplay = (props: { ActiveCat: TabType }, context) => {
           {CatComponent !== null ? (
             <CatComponent />
           ) : (
-            <SpellTabDisplay TabSpells={TabSpells} />
+            <SpellTabDisplay TabSpells={TabSpells} PointOffset={38} />
           )}
         </Stack.Item>
       </Stack>
@@ -594,7 +609,7 @@ export const Spellbook = (props, context) => {
                 <Stack.Item grow>
                   <Section
                     title={'Searching...'}
-                    scrollable={ScrollableCheck}
+                    scrollable
                     height={heightSection}
                     fill
                     buttons={
