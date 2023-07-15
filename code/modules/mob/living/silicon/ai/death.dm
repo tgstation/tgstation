@@ -23,7 +23,7 @@
 
 	cameraFollow = null
 
-	if(anchored)
+	if(is_anchored)
 		flip_anchored()
 
 	if(eyeobj)
