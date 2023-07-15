@@ -132,7 +132,7 @@
 				flush = FALSE
 			else
 				var/confirm = tgui_alert(usr, "Are you sure you want to wipe this card's memory?", name, list("Yes", "No"))
-				if(confirm == "Yes")
+				if(confirm == "Yes" && !..())
 					flush = TRUE
 					wipe_ai()
 			. = TRUE
