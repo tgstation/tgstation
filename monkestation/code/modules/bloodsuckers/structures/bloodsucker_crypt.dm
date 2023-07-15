@@ -419,7 +419,7 @@
 	icon_state = "candelabrum"
 	light_color = "#66FFFF"//LIGHT_COLOR_BLUEGREEN // lighting.dm
 	light_power = 3
-	light_range = 0 // to 2
+	light_outer_range = 0 // to 2
 	density = FALSE
 	can_buckle = TRUE
 	anchored = FALSE
@@ -463,7 +463,7 @@
 	lit = !lit
 	if(lit)
 		desc = initial(desc)
-		set_light(2, 3, "#66FFFF")
+		set_light(l_outer_range = 2, l_power = 3, l_color = "#66FFFF")
 		START_PROCESSING(SSobj, src)
 	else
 		desc = "Despite not being lit, it makes your skin crawl."
