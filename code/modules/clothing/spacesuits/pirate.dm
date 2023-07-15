@@ -19,7 +19,6 @@
 
 /obj/item/clothing/head/helmet/space/pirate/bandana
 	icon_state = "spacebandana"
-	inhand_icon_state = "space_bandana_helmet"
 
 /obj/item/clothing/suit/space/pirate
 	name = "modified EVA suit"

@@ -44,11 +44,7 @@
 #define COMSIG_GASMIX_REACTED "comsig_gasmix_reacted"
 
 // Modular computer's file signals. Tells the program datum something is going on.
-/// From /obj/item/modular_computer/proc/store_file: ()
-#define COMSIG_MODULAR_COMPUTER_FILE_ADDING "comsig_modular_computer_file_adding"
-/// From /obj/item/modular_computer/proc/store_file: ()
-#define COMSIG_MODULAR_COMPUTER_FILE_ADDED "comsig_modular_computer_file_added"
-/// From /obj/item/modular_computer/proc/remove_file: ()
-#define COMSIG_MODULAR_COMPUTER_FILE_DELETING "comsig_modular_computer_file_deleting"
+/// From /obj/item/modular_computer/proc/store_file: (datum/computer_file/file_source, obj/item/modular_computer/host)
+#define COMSIG_MODULAR_COMPUTER_FILE_STORE "comsig_modular_computer_file_store"
 /// From /obj/item/modular_computer/proc/store_file: ()
 #define COMSIG_MODULAR_COMPUTER_FILE_DELETED "comsig_modular_computer_file_deleted"

@@ -1,7 +1,7 @@
 /obj/item/implant/abductor
 	name = "recall implant"
 	desc = "Returns you to the mothership."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "implant"
 	var/obj/machinery/abductor/pad/home
 	var/cooldown = 60 SECONDS

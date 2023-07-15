@@ -228,7 +228,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 					return
 			if(GRAV_NEEDS_WELDING)
 				if(weapon.tool_behaviour == TOOL_WELDER)
-					if(weapon.use_tool(src, user, 0, volume=50, amount=1))
+					if(weapon.use_tool(src, user, 0, volume=50))
 						to_chat(user, span_notice("You mend the damaged framework."))
 						broken_state++
 						update_appearance()

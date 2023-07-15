@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_master
 	/// Icons for different percentages of buffer reagents
-	var/fill_icon = 'icons/obj/reagentfillings.dmi'
+	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	var/fill_icon_state = "chemmaster"
 	var/list/fill_icon_thresholds = list(10,20,30,40,50,60,70,80,90,100)
 	/// Inserted reagent container
@@ -379,7 +379,9 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 
 	// Generate item name
 	var/item_name_default = initial(container_style.name)
-	if(!(initial(container_style.reagent_flags) & OPENCONTAINER)) // Closed containers get reagent name and units in the name
+	if(selected_container == default_container) // Tubes and bottles gain reagent name
+		item_name_default = "[reagents.get_master_reagent_name()] [item_name_default]"
+	if(!(initial(container_style.reagent_flags) & OPENCONTAINER)) // Closed containers get both reagent name and units in the name
 		item_name_default = "[reagents.get_master_reagent_name()] [item_name_default] ([volume_in_each]u)"
 	var/item_name = tgui_input_text(usr,
 		"Container name",

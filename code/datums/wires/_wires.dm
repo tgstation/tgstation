@@ -116,7 +116,8 @@
 	randomize()
 
 /datum/wires/proc/repair()
-	cut_wires.Cut()//a negative times a negative equals a positive
+	for(var/wire in cut_wires)
+		cut(wire) // I KNOW I KNOW OK
 
 /datum/wires/proc/get_wire(color)
 	return colors[color]
@@ -155,9 +156,11 @@
 /datum/wires/proc/cut(wire)
 	if(is_cut(wire))
 		cut_wires -= wire
+		SEND_SIGNAL(src, COMSIG_MEND_WIRE(wire), wire)
 		on_cut(wire, mend = TRUE)
 	else
 		cut_wires += wire
+		SEND_SIGNAL(src, COMSIG_CUT_WIRE(wire), wire)
 		on_cut(wire, mend = FALSE)
 
 /datum/wires/proc/cut_color(color)

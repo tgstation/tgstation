@@ -131,6 +131,7 @@ type Data = {
   // Dynamic
   busy: BooleanLike;
   mode: BooleanLike;
+  forced_mode: BooleanLike;
   display_compact: BooleanLike;
   display_craftable_only: BooleanLike;
   craftability: Record<string, BooleanLike>;
@@ -149,6 +150,7 @@ export const PersonalCrafting = (props, context) => {
   const {
     mode,
     busy,
+    forced_mode,
     display_compact,
     display_craftable_only,
     craftability,
@@ -417,54 +419,56 @@ export const PersonalCrafting = (props, context) => {
                     onClick={() => act('toggle_compact')}
                   />
                 </Stack.Item>
-                <Stack.Item>
-                  <Stack textAlign="center">
-                    <Stack.Item grow>
-                      <Button.Checkbox
-                        fluid
-                        lineHeight={2}
-                        content="Craft"
-                        checked={mode === MODE.crafting}
-                        icon="hammer"
-                        style={{
-                          'border':
-                            '2px solid ' +
-                            (mode === MODE.crafting ? '#20b142' : '#333'),
-                        }}
-                        onClick={() => {
-                          if (mode === MODE.crafting) {
-                            return;
-                          }
-                          setTabMode(TABS.category);
-                          setCategory(DEFAULT_CAT_CRAFTING);
-                          act('toggle_mode');
-                        }}
-                      />
-                    </Stack.Item>
-                    <Stack.Item grow>
-                      <Button.Checkbox
-                        fluid
-                        lineHeight={2}
-                        content="Cook"
-                        checked={mode === MODE.cooking}
-                        icon="utensils"
-                        style={{
-                          'border':
-                            '2px solid ' +
-                            (mode === MODE.cooking ? '#20b142' : '#333'),
-                        }}
-                        onClick={() => {
-                          if (mode === MODE.cooking) {
-                            return;
-                          }
-                          setTabMode(TABS.category);
-                          setCategory(DEFAULT_CAT_COOKING);
-                          act('toggle_mode');
-                        }}
-                      />
-                    </Stack.Item>
-                  </Stack>
-                </Stack.Item>
+                {!forced_mode && (
+                  <Stack.Item>
+                    <Stack textAlign="center">
+                      <Stack.Item grow>
+                        <Button.Checkbox
+                          fluid
+                          lineHeight={2}
+                          content="Craft"
+                          checked={mode === MODE.crafting}
+                          icon="hammer"
+                          style={{
+                            'border':
+                              '2px solid ' +
+                              (mode === MODE.crafting ? '#20b142' : '#333'),
+                          }}
+                          onClick={() => {
+                            if (mode === MODE.crafting) {
+                              return;
+                            }
+                            setTabMode(TABS.category);
+                            setCategory(DEFAULT_CAT_CRAFTING);
+                            act('toggle_mode');
+                          }}
+                        />
+                      </Stack.Item>
+                      <Stack.Item grow>
+                        <Button.Checkbox
+                          fluid
+                          lineHeight={2}
+                          content="Cook"
+                          checked={mode === MODE.cooking}
+                          icon="utensils"
+                          style={{
+                            'border':
+                              '2px solid ' +
+                              (mode === MODE.cooking ? '#20b142' : '#333'),
+                          }}
+                          onClick={() => {
+                            if (mode === MODE.cooking) {
+                              return;
+                            }
+                            setTabMode(TABS.category);
+                            setCategory(DEFAULT_CAT_COOKING);
+                            act('toggle_mode');
+                          }}
+                        />
+                      </Stack.Item>
+                    </Stack>
+                  </Stack.Item>
+                )}
               </Stack>
             </Section>
           </Stack.Item>

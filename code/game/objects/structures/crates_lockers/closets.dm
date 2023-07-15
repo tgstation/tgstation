@@ -71,7 +71,7 @@
 	var/contents_initialized = FALSE
 	/// is this closet locked by an exclusive id, i.e. your own personal locker
 	var/datum/weakref/id_card = null
-	/// should we prevent furthur access change
+	/// should we prevent further access change
 	var/access_locked = FALSE
 	/// is the card reader installed in this machine
 	var/card_reader_installed = FALSE
@@ -290,7 +290,7 @@
 		else
 			. += span_notice("Its airlock electronics are [EXAMINE_HINT("screwed")] in place.")
 		if(!card_reader_installed && length(access_choices))
-			. += span_notice("You can install a card reader for furthur access control.")
+			. += span_notice("You can install a card reader for further access control.")
 		else if(card_reader_installed)
 			. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
 			. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
@@ -787,7 +787,7 @@
 	else if(opened)
 		if(istype(weapon, cutting_tool))
 			if(weapon.tool_behaviour == TOOL_WELDER)
-				if(!weapon.tool_start_check(user, amount=0))
+				if(!weapon.tool_start_check(user, amount=1))
 					return
 
 				to_chat(user, span_notice("You begin cutting \the [src] apart..."))
@@ -810,7 +810,7 @@
 			return
 
 	else if(weapon.tool_behaviour == TOOL_WELDER && can_weld_shut)
-		if(!weapon.tool_start_check(user, amount=0))
+		if(!weapon.tool_start_check(user, amount=1))
 			return
 
 		if(weapon.use_tool(src, user, 40, volume=50))

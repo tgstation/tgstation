@@ -7,7 +7,7 @@
 
 // A decorational representation of SSblackbox, usually placed alongside the message server. Also contains a traitor theft item.
 /obj/machinery/blackbox_recorder
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = TRUE
@@ -65,7 +65,7 @@
 /obj/item/blackbox
 	name = "\proper the blackbox"
 	desc = "A strange relic, capable of recording data on extradimensional vertices. It lives inside the blackbox recorder for safe keeping."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "blackcube"
 	inhand_icon_state = "blackcube"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -164,7 +164,7 @@
 	source = init_source
 	data = init_data
 	var/turf/T = get_turf(source)
-	levels = list(T.z)
+	levels = SSmapping.get_connected_levels(T)
 	if(!("reject" in data))
 		data["reject"] = TRUE
 

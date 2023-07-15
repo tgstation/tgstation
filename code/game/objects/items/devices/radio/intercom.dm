@@ -1,6 +1,7 @@
 /obj/item/radio/intercom
 	name = "station intercom"
 	desc = "Talk through this."
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "intercom"
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_BULKY
@@ -175,6 +176,7 @@
 /obj/item/wallframe/intercom
 	name = "intercom frame"
 	desc = "A ready-to-go intercom. Just slap it on a wall and screw it in!"
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "intercom"
 	result_path = /obj/item/radio/intercom/unscrewed
 	pixel_shift = 26
@@ -196,6 +198,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 /obj/item/radio/intercom/command
 	name = "command intercom"
 	desc = "The command team's special extended-frequency intercom. Mostly just used for eavesdropping, gossiping about subordinates, and complaining about the higher-ups."
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "intercom_command"
 	freerange = TRUE
 

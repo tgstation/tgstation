@@ -37,13 +37,15 @@
 	/// Probability that, if we successfully bite a shocked cable, that we will die to it.
 	var/cable_zap_prob = 85
 
-/mob/living/basic/mouse/Initialize(mapload, tame = FALSE)
+/mob/living/basic/mouse/Initialize(mapload, tame = FALSE, new_body_color)
 	. = ..()
 	if(contributes_to_ratcap)
 		SSmobs.cheeserats |= src
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	src.tame = tame
+	if(!isnull(new_body_color))
+		body_color = new_body_color
 	if(isnull(body_color))
 		body_color = pick("brown", "gray", "white")
 	held_state = "mouse_[body_color]" // not handled by variety element
@@ -114,9 +116,7 @@
 	. = ..(TRUE)
 	// Now if we were't ACTUALLY gibbed, spawn the dead mouse
 	if(!gibbed)
-		var/obj/item/food/deadmouse/mouse = new(loc)
-		mouse.name = name
-		mouse.icon_state = icon_dead
+		var/obj/item/food/deadmouse/mouse = new(loc, src)
 		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 			mouse.desc = "They're toast."
 			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
@@ -250,6 +250,7 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	gold_core_spawnable = NO_SPAWN
+	contributes_to_ratcap = FALSE
 
 /mob/living/basic/mouse/brown/tom/make_tameable()
 	tame = TRUE
@@ -297,15 +298,36 @@
 	decomp_req_handle = TRUE
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/deadmouse/moldy
+	var/body_color = "gray"
+	var/critter_type = /mob/living/basic/mouse
 
-/obj/item/food/deadmouse/Initialize(mapload)
+/obj/item/food/deadmouse/Initialize(mapload, mob/living/basic/mouse/dead_critter)
 	. = ..()
+	if(dead_critter)
+		body_color = dead_critter.body_color
+		critter_type = dead_critter.type
+		name = dead_critter.name
+		icon_state = dead_critter.icon_dead
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
+	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
 
 /obj/item/food/deadmouse/examine(mob/user)
 	. = ..()
 	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
 		. += span_warning("[p_theyre(TRUE)] dripping with fuel and smells terrible.")
+
+///Spawn a new mouse from this dead mouse item when hit by a lazarus injector and conditions are met.
+/obj/item/food/deadmouse/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)
+	SIGNAL_HANDLER
+	if(injector.revive_type != SENTIENCE_ORGANIC)
+		balloon_alert(user, "invalid creature!")
+		return
+	var/mob/living/basic/mouse/revived_critter = new critter_type (drop_location(), FALSE, body_color)
+	revived_critter.name = name
+	revived_critter.lazarus_revive(user, injector.malfunctioning)
+	injector.expend(revived_critter, user)
+	qdel(src)
+	return LAZARUS_INJECTOR_USED
 
 /obj/item/food/deadmouse/attackby(obj/item/attacking_item, mob/user, params)
 	var/mob/living/living_user = user

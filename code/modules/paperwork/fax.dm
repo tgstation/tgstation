@@ -3,7 +3,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 /obj/machinery/fax
 	name = "Fax Machine"
 	desc = "Bluespace technologies on the application of bureaucracy."
-	icon = 'icons/obj/fax.dmi'
+	icon = 'icons/obj/machines/fax.dmi'
 	icon_state = "fax"
 	density = TRUE
 	power_channel = AREA_USAGE_EQUIP
@@ -61,7 +61,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		fax_id = assign_random_name()
 	if (!fax_name)
 		fax_name = "Unregistered fax " + fax_id
-	wires = new /datum/wires/fax(src)
+	set_wires(new /datum/wires/fax(src))
 	register_context()
 	special_networks["nanotrasen"]["fax_name"] = GLOB.nt_fax_department
 

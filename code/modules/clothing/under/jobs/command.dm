@@ -7,10 +7,9 @@
 	random_sensor = FALSE
 	icon = 'icons/obj/clothing/under/captain.dmi'
 	worn_icon = 'icons/mob/clothing/under/captain.dmi'
-	armor_type = /datum/armor/rank_captain
+	armor_type = /datum/armor/clothing_under/rank_captain
 
-/datum/armor/rank_captain
-	bio = 10
+/datum/armor/clothing_under/rank_captain
 	wound = 15
 
 /obj/item/clothing/under/rank/captain/skirt

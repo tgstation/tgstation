@@ -83,7 +83,7 @@
 	if(mob.stat == DEAD)
 		mob.ghostize()
 		return FALSE
-	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE) & COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE)
+	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, new_loc, direct) & COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE)
 		return FALSE
 
 	var/mob/living/L = mob //Already checked for isliving earlier
@@ -345,7 +345,7 @@
 			continue
 		return rebound
 
-/mob/has_gravity()
+/mob/has_gravity(turf/gravity_turf)
 	return mob_negates_gravity() || ..()
 
 /**
@@ -518,7 +518,7 @@
 	set category = "IC"
 
 	var/turf/current_turf = get_turf(src)
-	var/turf/above_turf = SSmapping.get_turf_above(current_turf)
+	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
 
 	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
 	if(!above_turf)
@@ -545,7 +545,7 @@
 	set category = "IC"
 
 	var/turf/current_turf = get_turf(src)
-	var/turf/below_turf = SSmapping.get_turf_below(current_turf)
+	var/turf/below_turf = GET_TURF_BELOW(current_turf)
 	if(!below_turf)
 		to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return

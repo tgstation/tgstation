@@ -51,7 +51,7 @@
 /datum/element/rust/proc/handle_tool_use(atom/source, mob/user, obj/item/item)
 	switch(item.tool_behaviour)
 		if(TOOL_WELDER)
-			if(!item.tool_start_check(user, amount=5))
+			if(!item.tool_start_check(user, amount=1))
 				return
 
 			user.balloon_alert(user, "burning off rust...")

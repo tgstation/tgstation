@@ -17,7 +17,7 @@
 /obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "ai" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -27,7 +27,7 @@
 /obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "ak" = (
 /turf/closed/wall/mineral/plastitanium{
@@ -100,8 +100,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "ax" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-20";
+/obj/item/kirbyplants/organic/plant20{
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -1936,9 +1935,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "jm" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-14"
-	},
+/obj/item/kirbyplants/organic/plant14,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 9
 	},
@@ -2258,9 +2255,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
 "kC" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-22"
-	},
+/obj/item/kirbyplants/organic/plant22,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 9
 	},
@@ -2475,9 +2470,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "ly" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-16"
-	},
+/obj/item/kirbyplants/organic/plant16,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 10
 	},
@@ -2843,9 +2836,7 @@
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mN" = (
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
+/obj/item/kirbyplants/organic/applebush,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
@@ -3416,9 +3407,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "Eh" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
+/obj/item/kirbyplants/organic/plant10,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/genetics)
@@ -3989,9 +3978,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "UV" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-16"
-	},
+/obj/item/kirbyplants/organic/plant16,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/genetics)

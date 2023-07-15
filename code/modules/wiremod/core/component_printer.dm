@@ -2,7 +2,7 @@
 /obj/machinery/component_printer
 	name = "component printer"
 	desc = "Produces components for the creation of integrated circuits."
-	icon = 'icons/obj/wiremod_fab.dmi'
+	icon = 'icons/obj/machines/wiremod_fab.dmi'
 	icon_state = "fab-idle"
 	circuit = /obj/item/circuitboard/machine/component_printer
 
@@ -90,7 +90,7 @@
 		var/total_storage = 0
 
 		for(var/datum/stock_part/matter_bin/bin in component_parts)
-			total_storage += bin.tier * 75000
+			total_storage += bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
 
 		materials.set_local_size(total_storage)
 
@@ -222,7 +222,7 @@
 /obj/machinery/debug_component_printer
 	name = "debug component printer"
 	desc = "Produces components for the creation of integrated circuits."
-	icon = 'icons/obj/wiremod_fab.dmi'
+	icon = 'icons/obj/machines/wiremod_fab.dmi'
 	icon_state = "fab-idle"
 
 	/// All of the possible circuit designs stored by this debug printer
@@ -302,7 +302,7 @@
 /obj/machinery/module_duplicator
 	name = "module duplicator"
 	desc = "Allows you to duplicate module components so that you don't have to recreate them. Scan a module component over this machine to add it as an entry."
-	icon = 'icons/obj/wiremod_fab.dmi'
+	icon = 'icons/obj/machines/wiremod_fab.dmi'
 	icon_state = "module-fab-idle"
 	circuit = /obj/item/circuitboard/machine/module_duplicator
 
@@ -343,7 +343,7 @@
 		var/total_storage = 0
 
 		for(var/datum/stock_part/matter_bin/bin in component_parts)
-			total_storage += bin.tier * 75000
+			total_storage += bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
 
 		materials.set_local_size(total_storage)
 

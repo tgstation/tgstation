@@ -476,6 +476,8 @@
 	///if this shuttle can move docking ports other than the one it is docked at
 	var/can_move_docking_ports = FALSE
 	var/list/hidden_turfs = list()
+	///List of shuttle events that can run or are running
+	var/list/datum/shuttle_event/event_list = list()
 
 #define WORLDMAXX_CUTOFF (world.maxx + 1)
 #define WORLDMAXY_CUTOFF (world.maxx + 1)
@@ -831,6 +833,7 @@
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()
 	check_effects()
+	//process_events() if you were to add events to non-escape shuttles, uncomment this
 
 	if(mode == SHUTTLE_IGNITING)
 		check_transit_zone()
@@ -1136,12 +1139,16 @@
 			return FALSE
 	return ..()
 
-
 //Called when emergency shuttle leaves the station
 /obj/docking_port/mobile/proc/on_emergency_launch()
 	if(launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
 		launch_status = ENDGAME_LAUNCHED
 		enterTransit()
+
+///Let people know shits about to go down
+/obj/docking_port/mobile/proc/announce_shuttle_events()
+	for(var/datum/shuttle_event/event as anything in event_list)
+		notify_ghosts("The [name] has selected: [event.name]")
 
 /obj/docking_port/mobile/emergency/on_emergency_launch()
 	return
@@ -1160,6 +1167,15 @@
 
 /obj/docking_port/mobile/emergency/on_emergency_dock()
 	return
+
+///Process all the shuttle events for every shuttle tick we get
+/obj/docking_port/mobile/proc/process_events()
+	var/list/removees
+	for(var/datum/shuttle_event/event as anything in event_list)
+		if(event.event_process() == SHUTTLE_EVENT_CLEAR) //if we return SHUTTLE_EVENT_CLEAR, we clean them up
+			LAZYADD(removees, event)
+	for(var/item in removees)
+		event_list.Remove(item)
 
 #ifdef TESTING
 #undef DOCKING_PORT_HIGHLIGHT
