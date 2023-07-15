@@ -9342,7 +9342,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/robotics/lab)
 "dlS" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos)
 "dmf" = (
@@ -9379,7 +9379,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "dmC" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
 "dmD" = (
@@ -18837,7 +18837,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "gos" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "gou" = (
@@ -20734,7 +20734,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "gTD" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
 "gTN" = (
@@ -38224,7 +38224,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "mCT" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
 "mCV" = (
@@ -44562,7 +44562,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "oQl" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/box,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -49177,7 +49177,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/lawoffice)
 "qpI" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "qpJ" = (
@@ -65502,7 +65502,7 @@
 	name = "core camera";
 	network = list("aicore")
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
 "vFv" = (
@@ -68857,7 +68857,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/station/service/chapel/office)
 "wFB" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
 "wFG" = (

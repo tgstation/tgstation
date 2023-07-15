@@ -419,7 +419,7 @@
 		return
 	if(myseed?.get_gene(/datum/plant_gene/trait/glow)) // Hydroponics needs a refactor, badly.
 		var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-		set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
+		set_light(l_outer_range = G.glow_range(myseed), l_power = G.glow_power(myseed), l_color = G.glow_color)
 		return
 	set_light(0)
 

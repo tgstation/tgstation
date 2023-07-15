@@ -1092,3 +1092,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define FOOD_JOB_MINER "food_job_miner"
 #define GLUED_ITEM_TRAIT "glued-item"
 #define TRAIT_BELT_SATCHEL "belt_satchel"
+
+/// One can breath under water, you get me?
+#define TRAIT_WATER_BREATHING "water_breathing"

@@ -7898,7 +7898,7 @@
 	},
 /obj/effect/light_emitter{
 	light_color = "#FAA019";
-	light_range = 4;
+	light_outer_range = 4;
 	name = "fire light"
 	},
 /turf/open/floor/wood,
@@ -8320,7 +8320,7 @@
 	},
 /obj/effect/light_emitter{
 	light_color = "#FAA019";
-	light_range = 4;
+	light_outer_range = 4;
 	name = "fire light"
 	},
 /turf/open/misc/asteroid/snow{

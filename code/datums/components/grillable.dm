@@ -13,7 +13,10 @@
 	/// REF() to the mind which placed us on the griddle
 	var/who_placed_us
 
-/datum/component/grillable/Initialize(cook_result, required_cook_time, positive_result, use_large_steam_sprite)
+	/// What type of pollutant we spread around as we are grilleed, can be none  // SKYRAT EDIT ADDITION
+	var/pollutant_type
+
+/datum/component/grillable/Initialize(cook_result, required_cook_time, positive_result, use_large_steam_sprite, pollutant_type)
 	. = ..()
 	if(!isitem(parent)) //Only items support grilling at the moment
 		return COMPONENT_INCOMPATIBLE
@@ -22,6 +25,7 @@
 	src.required_cook_time = required_cook_time
 	src.positive_result = positive_result
 	src.use_large_steam_sprite = use_large_steam_sprite
+	src.pollutant_type = pollutant_type
 
 /datum/component/grillable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_PLACED_ON, PROC_REF(on_grill_start))
@@ -62,6 +66,10 @@
 	SIGNAL_HANDLER
 
 	. = COMPONENT_HANDLED_GRILLING
+
+	if(pollutant_type)
+		var/turf/parent_turf = get_turf(parent)
+		parent_turf.pollute_turf(pollutant_type, 10)
 
 	current_cook_time += seconds_per_tick * 10 //turn it into ds
 	if(current_cook_time >= required_cook_time)

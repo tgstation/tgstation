@@ -587,7 +587,7 @@
 	icon = 'icons/obj/supplypods_32x32.dmi'
 	icon_state = "LZ"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
-	light_range = 2
+	light_outer_range = 2
 	anchored = TRUE
 	alpha = 0
 	var/obj/structure/closet/supplypod/pod //The supplyPod that will be landing ontop of this pod_landingzone

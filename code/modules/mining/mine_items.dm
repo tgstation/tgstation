@@ -11,7 +11,7 @@
 
 /obj/effect/light_emitter/Initialize(mapload)
 	. = ..()
-	set_light(set_luminosity, set_cap)
+	set_light(l_outer_range = set_luminosity, l_power = set_cap)
 
 /obj/effect/light_emitter/singularity_pull()
 	return

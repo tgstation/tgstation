@@ -717,7 +717,7 @@
 
 	// only used for the base moth plush light
 	light_system = MOVABLE_LIGHT
-	light_range = 4
+	light_outer_range = 4
 	light_power = 1
 
 	/// Is the light turned on or off currently

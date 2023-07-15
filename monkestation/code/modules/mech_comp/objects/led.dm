@@ -37,7 +37,7 @@
 	return TRUE
 
 /obj/item/mcobject/led/proc/set_range_config(mob/user, obj/item/tool)
-	var/range = input(user, "Input a brightness (1-5)", "Configure Component", light_range) as null|num
+	var/range = input(user, "Input a brightness (1-5)", "Configure Component", light_outer_range) as null|num
 	if(!range)
 		return
 	range = clamp(range, 1, 5)
