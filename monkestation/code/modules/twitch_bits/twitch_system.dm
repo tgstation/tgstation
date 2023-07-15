@@ -49,6 +49,7 @@ SUBSYSTEM_DEF(twitch)
 
 	if(last_event != chosen_one)
 		last_event = chosen_one
+		last_event_execution = world.time
 	else
 		if(world.time < last_event_execution + 1 SECONDS)
 			return
