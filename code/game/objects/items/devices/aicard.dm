@@ -3,6 +3,7 @@
 	desc = "A storage device for AIs. Patent pending."
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "aicard" // aicard-full
+	base_icon_state = "aicard"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -15,7 +16,6 @@
 
 /obj/item/aicard/Destroy(force)
 	if(AI)
-		AI.death()
 		AI.ghostize(can_reenter_corpse = FALSE)
 		QDEL_NULL(AI)
 
@@ -25,47 +25,78 @@
 	name = "intelliTater"
 	desc = "A stylish upgrade (?) to the intelliCard."
 	icon_state = "aitater"
+	base_icon_state = "aitater"
 
 /obj/item/aicard/aispook
 	name = "intelliLantern"
 	desc = "A spoOoOoky upgrade to the intelliCard."
 	icon_state = "aispook"
+	base_icon_state = "aispook"
 
 /obj/item/aicard/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to upload [user.p_them()]self into [src]! That's not going to work out well!"))
 	return BRUTELOSS
 
 /obj/item/aicard/pre_attack(atom/target, mob/living/user, params)
-	if(AI) //AI is on the card, implies user wants to upload it.
-		var/our_ai = AI
-		target.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)
-		if(!AI)
-			log_combat(user, our_ai, "uploaded", src, "to [target].")
-			update_appearance()
+	. = ..()
+	if(.)
+		return
+
+	if(AI)
+		if(upload_ai(target, user))
 			return TRUE
-	else //No AI on the card, therefore the user wants to download one.
-		target.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
-		if(AI)
-			log_silicon("[key_name(user)] carded [key_name(AI)]", src)
-			update_appearance()
+	else
+		if(capture_ai(target, user))
 			return TRUE
-	return ..()
+
+/obj/item/aicard/proc/capture_ai(atom/from_what, mob/living/user)
+	from_what.transfer_ai(interaction = AI_TRANS_TO_CARD, user = user, card = src)
+	if(isnull(AI))
+		return FALSE
+
+	log_silicon("[key_name(user)] carded [key_name(AI)]", src)
+	update_appearance()
+	AI.cancel_camera()
+	RegisterSignal(AI, COMSIG_MOB_STATCHANGE, PROC_REF(on_ai_stat_change))
+	return TRUE
+
+/obj/item/aicard/proc/upload_ai(atom/to_what, mob/living/user)
+	var/mob/living/silicon/ai/old_ai = AI
+	to_what.transfer_ai(interaction = AI_TRANS_FROM_CARD, user = user, AI = AI, card = src)
+	if(!isnull(AI))
+		return FALSE
+
+	log_combat(user, old_ai, "uploaded", src, "to [to_what].")
+	update_appearance()
+	old_ai.cancel_camera()
+	UnregisterSignal(old_ai, COMSIG_MOB_STATCHANGE)
+	return TRUE
+
+/obj/item/aicard/proc/on_ai_stat_change(datum/source, new_stat, old_stat)
+	SIGNAL_HANDLER
+
+	if(new_stat == DEAD || old_stat == DEAD)
+		update_appearance()
+
+/obj/item/aicard/update_name(updates)
+	. = ..()
+	if(AI)
+		name = "[initial(name)] - [AI.name]"
+	else
+		name = initial(name)
 
 /obj/item/aicard/update_icon_state()
-	if(!AI)
-		name = initial(name)
-		icon_state = initial(icon_state)
-		return ..()
-	name = "[initial(name)] - [AI.name]"
-	icon_state = "[initial(icon_state)][AI.stat == DEAD ? "-404" : "-full"]"
-	AI.cancel_camera()
+	if(AI)
+		icon_state = "[base_icon_state][AI.stat == DEAD ? "-404" : "-full"]"
+	else
+		icon_state = base_icon_state
 	return ..()
 
 /obj/item/aicard/update_overlays()
 	. = ..()
 	if(!AI?.control_disabled)
 		return
-	. += "[initial(icon_state)]-on"
+	. += "[base_icon_state]-on"
 
 /obj/item/aicard/ui_state(mob/user)
 	return GLOB.hands_state
