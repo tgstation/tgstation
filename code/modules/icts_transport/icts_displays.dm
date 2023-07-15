@@ -1,14 +1,3 @@
-/obj/machinery/destination_blank
-	name = "destination sign"
-	icon = 'icons/obj/machines/tram_sign.dmi'
-	icon_state = "desto_off"
-	base_icon_state = "desto_"
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.2
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.47
-	anchored = TRUE
-	density = FALSE
-	layer = CORGI_ASS_PIN_LAYER
-
 /obj/machinery/destination_sign
 	name = "destination sign"
 	desc = "A display to show you what direction the tram is travelling."

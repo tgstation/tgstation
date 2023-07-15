@@ -275,6 +275,10 @@
 	plane = FLOOR_PLANE
 	deconstructible = TRUE
 
+/obj/structure/fluff/tram_rail/attack_hand(mob/living/user, list/modifiers)
+	if(user.electrocute_act(75, src))
+		do_sparks(5, TRUE, src)
+
 /obj/structure/fluff/tram_rail/floor
 	icon_state = "rail_floor"
 
