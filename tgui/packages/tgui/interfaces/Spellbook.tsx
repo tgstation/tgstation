@@ -49,7 +49,7 @@ type Data = {
 type TabType = {
   title: string;
   blurb?: string;
-  component?(): InfernoNode;
+  component?: () => InfernoNode;
   locked?: boolean;
   noScrollable?: number;
 };
@@ -426,19 +426,39 @@ const Randomize = (props, context) => {
 };
 
 const SearchSpells = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+  const { data } = useBackend<Data>(context);
   const [spellSearch] = useLocalState(context, 'spell-search', '');
   const { entries } = data;
 
-  const filteredEntries = entries.filter(
-    (entry) =>
-      entry.name.toLowerCase().includes(spellSearch.toLowerCase()) ||
-      entry.desc.toLowerCase().includes(spellSearch.toLowerCase()) ||
-      entry.cat.toLowerCase().includes(spellSearch.toLowerCase())
-  );
+  const filterEntryList = (entries: SpellEntry[]) => {
+    const searchStatement = spellSearch.toLowerCase();
+    if (searchStatement === 'robeless') {
+      // Lets you just search for robeless spells, you're welcome mindswap-bros
+      return entries.filter((entry) => !entry.requires_wizard_garb);
+    }
+
+    return entries.filter(
+      (entry) =>
+        entry.name.toLowerCase().includes(searchStatement) ||
+        // Unsure about including description. Wizard spell descriptions
+        // are painfully original and use the same verbiage often,
+        // which may both be a benefit and a curse
+        entry.desc.toLowerCase().includes(searchStatement) ||
+        // Also opting to include category
+        // so you can search "rituals" to see them all at once
+        entry.cat.toLowerCase().includes(searchStatement)
+    );
+  };
+
+  const filteredEntries = filterEntryList(entries);
 
   if (filteredEntries.length === 0) {
-    return <NoticeBox>No spells found!</NoticeBox>;
+    return (
+      <NoticeBox>
+        {`No spells found! (Search tip: Search "Robeless"
+        to see only spells which don't require wizard clothes!)`}
+      </NoticeBox>
+    );
   }
   return (
     <SpellTabDisplay
@@ -569,8 +589,8 @@ const CategoryDisplay = (props: { ActiveCat: TabType }, context) => {
           </Stack.Item>
         )}
         <Stack.Item>
-          {CatComponent !== null ? (
-            <CatComponent />
+          {ActiveCat.component ? (
+            ActiveCat.component()
           ) : (
             <SpellTabDisplay TabSpells={TabSpells} PointOffset={38} />
           )}
