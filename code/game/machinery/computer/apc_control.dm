@@ -94,22 +94,21 @@
 	for(var/entry in logs)
 		data["logs"] += list(list("entry" = entry))
 
-	for(var/apc in GLOB.apcs_list)
+	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
 		if(check_apc(apc))
-			var/obj/machinery/power/apc/A = apc
-			var/has_cell = (A.cell) ? TRUE : FALSE
+			var/has_cell = (apc.cell) ? TRUE : FALSE
 			data["apcs"] += list(list(
-					"name" = A.area.name,
-					"operating" = A.operating,
-					"charge" = (has_cell) ? A.cell.percent() : "NOCELL",
-					"load" = display_power(A.lastused_total),
-					"charging" = A.charging,
-					"chargeMode" = A.chargemode,
-					"eqp" = A.equipment,
-					"lgt" = A.lighting,
-					"env" = A.environ,
-					"responds" = A.aidisabled || A.panel_open,
-					"ref" = REF(A)
+					"name" = apc.area.name,
+					"operating" = apc.operating,
+					"charge" = (has_cell) ? apc.cell.percent() : "NOCELL",
+					"load" = display_power(apc.lastused_total),
+					"charging" = apc.charging,
+					"chargeMode" = apc.chargemode,
+					"eqp" = apc.equipment,
+					"lgt" = apc.lighting,
+					"env" = apc.environ,
+					"responds" = apc.aidisabled || apc.panel_open,
+					"ref" = REF(apc)
 				)
 			)
 	return data
@@ -158,7 +157,7 @@
 		if("access-apc")
 			var/ref = params["ref"]
 			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
-			var/obj/machinery/power/apc/APC = locate(ref) in GLOB.apcs_list
+			var/obj/machinery/power/apc/APC = locate(ref) in SSmachines.get_machines_by_type(/obj/machinery/power/apc)
 			connect_apc(APC, usr)
 		if("check-logs")
 			log_activity("Checked Logs")
@@ -168,7 +167,7 @@
 			var/ref = params["ref"]
 			var/type = params["type"]
 			var/value = params["value"]
-			var/obj/machinery/power/apc/target = locate(ref) in GLOB.apcs_list
+			var/obj/machinery/power/apc/target = locate(ref) in SSmachines.get_machines_by_type(/obj/machinery/power/apc)
 			if(!target)
 				return
 
@@ -197,7 +196,7 @@
 			usr.log_message("set APC [target.area.name] [type] to [setTo]]", LOG_GAME)
 		if("breaker")
 			var/ref = params["ref"]
-			var/obj/machinery/power/apc/target = locate(ref) in GLOB.apcs_list
+			var/obj/machinery/power/apc/target = locate(ref) in SSmachines.get_machines_by_type(/obj/machinery/power/apc)
 			target.toggle_breaker(usr)
 			var/setTo = target.operating ? "On" : "Off"
 			log_activity("Turned APC [target.area.name]'s breaker [setTo]")
