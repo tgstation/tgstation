@@ -1,0 +1,5 @@
+author: "lmenvs"
+delete-after: True
+changes:
+  - rscadd: "Adds new donator plush, thank you so much bidlink!"
+  - bugfix: "properly credits donator items"
