@@ -425,3 +425,6 @@
 	greyscale_config = null
 	greyscale_colors = null
 	long_ranged = TRUE
+
+/obj/item/modular_computer/pda/clear/get_messenger_ending()
+	return "Sent from my crystal PDA"
