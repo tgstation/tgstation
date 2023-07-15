@@ -351,7 +351,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	if(!control_computer)
 		control_computer_weakref = null
 	else
-		control_computer.frozen_crew += list(list("name" = stored_name, "job" = stored_rank, "items" = list(), "ckey" = stored_ckey))
+		control_computer.frozen_crew += list(list("name" = stored_name, "job" = stored_rank, "items" = list(), "ckey" = stored_ckey), "entered_time" = world.time)
 
 	// Make an announcement and log the person entering storage. If set to quiet, does not make an announcement.
 	if(!quiet)
@@ -393,6 +393,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	for(var/list/listed as anything in control_computer.frozen_crew)
 		if(target.ckey != listed["ckey"])
 			continue
+
+		if(world.time < listed["entered_time"] + 15 MINUTES)
+			to_chat(target, span_notice("You need to wait atleast 15 minutes before you can return from cryosleep."))
+			return
 
 		var/mob/living/carbon/human/newmob = target.change_mob_type( /mob/living/carbon/human , get_turf(src), null, TRUE)
 		for(var/obj/item/listed_item as anything in listed["items"])
