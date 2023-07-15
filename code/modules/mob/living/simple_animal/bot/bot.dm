@@ -1081,6 +1081,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	disable_possession()
 	if(paicard.pai.holoform)
 		paicard.pai.fold_in()
+	copy_languages(paicard.pai, source_override = LANGUAGE_PAI)
+	set_active_language(paicard.pai.get_selected_language())
 	user.visible_message(span_notice("[user] inserts [card] into [src]!"), span_notice("You insert [card] into [src]."))
 	paicard.pai.mind.transfer_to(src)
 	to_chat(src, span_notice("You sense your form change as you are uploaded into [src]."))
@@ -1116,6 +1118,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	paicard = null
 	name = initial(src.name)
 	faction = initial(faction)
+	remove_all_languages(source = LANGUAGE_PAI)
+	set_active_language(announcement_language)
 
 /// Ejects the pAI remotely.
 /mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
