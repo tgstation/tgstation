@@ -49,8 +49,9 @@
 		if(capture_ai(target, user))
 			return TRUE
 
+/// Tries to get an AI from the atom clicked
 /obj/item/aicard/proc/capture_ai(atom/from_what, mob/living/user)
-	from_what.transfer_ai(interaction = AI_TRANS_TO_CARD, user = user, card = src)
+	from_what.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
 	if(isnull(AI))
 		return FALSE
 
@@ -60,9 +61,10 @@
 	RegisterSignal(AI, COMSIG_MOB_STATCHANGE, PROC_REF(on_ai_stat_change))
 	return TRUE
 
+/// Tries to upload the AI we have captured to the atom clicked
 /obj/item/aicard/proc/upload_ai(atom/to_what, mob/living/user)
 	var/mob/living/silicon/ai/old_ai = AI
-	to_what.transfer_ai(interaction = AI_TRANS_FROM_CARD, user = user, AI = AI, card = src)
+	to_what.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)
 	if(!isnull(AI))
 		return FALSE
 
@@ -130,15 +132,9 @@
 				flush = FALSE
 			else
 				var/confirm = tgui_alert(usr, "Are you sure you want to wipe this card's memory?", name, list("Yes", "No"))
-				if(confirm == "Yes" && !..())
+				if(confirm == "Yes")
 					flush = TRUE
-					if(AI && AI.loc == src)
-						to_chat(AI, span_userdanger("Your core files are being wiped!"))
-						while(AI.stat != DEAD && flush)
-							AI.adjustOxyLoss(5)
-							AI.updatehealth()
-							sleep(0.5 SECONDS)
-						flush = FALSE
+					wipe_ai()
 			. = TRUE
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled
@@ -153,3 +149,14 @@
 			to_chat(AI, span_warning("Your Subspace Transceiver has been [AI.radio_enabled ? "enabled" : "disabled"]!"))
 			. = TRUE
 	update_appearance()
+
+/obj/item/aicard/proc/wipe_ai()
+	set waitfor = FALSE
+
+	if(AI && AI.loc == src)
+		to_chat(AI, span_userdanger("Your core files are being wiped!"))
+		while(AI.stat != DEAD && flush)
+			AI.adjustOxyLoss(5)
+			AI.updatehealth()
+			sleep(0.5 SECONDS)
+		flush = FALSE
