@@ -1062,6 +1062,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		/mob/living/silicon,
 	)
 
+	if (!isAI(caller))
+		return FALSE
+	var/mob/living/silicon/ai/ai_caller = caller
+
 	if (!ai_caller.can_see(clicked_on))
 		clicked_on.balloon_alert(ai_caller, "can't see!")
 		return FALSE
@@ -1109,32 +1113,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 	return TRUE
 
-/datum/action/innate/ai/ranged/remote_vendor_tilt/proc/do_vendor_tilt(obj/machinery/vending/vendor, turf/target)
-	if (QDELETED(vendor))
-		return FALSE
-
-	if (vendor.tilted || !vendor.tiltable)
-		return FALSE
-
-	vendor.tilt(target, MALF_VENDOR_TIPPING_CRIT_CHANCE)
-
-/// Used in our radial menu, state-checking proc after the radial menu sleeps
-/datum/action/innate/ai/ranged/remote_vendor_tilt/proc/radial_check(mob/living/silicon/ai/caller, obj/machinery/vending/clicked_vendor)
-	if (caller.incapacitated() || caller.stat == DEAD || QDELETED(caller))
-		return FALSE
-
-	if (QDELETED(clicked_vendor))
-		return FALSE
-
-	if (uses <= 0)
-		return FALSE
-
-	if (!caller.can_see(clicked_vendor))
-		to_chat(caller, span_warning("Lost sight of [clicked_vendor]!"))
-		return FALSE
-
-	return TRUE
-
 /datum/ai_module/utility/core_tilt
 	name = "Rolling Servos"
 	description = "Allows you to slowly roll around, crushing anything in your way with your bulk."
@@ -1142,7 +1120,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	one_purchase = FALSE
 	power_type = /datum/action/innate/ai/ranged/core_tilt
 	unlock_sound = 'sound/effects/bang.ogg'
-	unlock_text = "You gain the ability to roll over and crush anything in your way."
+	unlock_text = span_notice("You gain the ability to roll over and crush anything in your way.")
 
 /datum/action/innate/ai/ranged/core_tilt
 	name = "Roll over"
@@ -1235,7 +1213,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	one_purchase = FALSE
 	power_type = /datum/action/innate/ai/ranged/remote_vendor_tilt
 	unlock_sound = 'sound/effects/bang.ogg'
-	unlock_text = "You gain the ability to remotely tip any vendor onto any adjacent tiles."
+	unlock_text = span_notice("You gain the ability to remotely tip any vendor onto any adjacent tiles.")
 
 /datum/action/innate/ai/ranged/remote_vendor_tilt
 	name = "Remotely tilt vendor"
@@ -1275,8 +1253,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		clicked_vendor.balloon_alert(ai_caller, "cannot be tilted!")
 		return FALSE
 
-	if (!clicked_vendor.powered() || clicked_vendor.machine_stat & BROKEN)
-		clicked_vendor.balloon_alert(ai_caller, "no power!")
+	if (!clicked_vendor.is_operational)
+		clicked_vendor.balloon_alert(ai_caller, "inoperable!")
 		return FALSE
 
 	var/picked_dir_string = show_radial_menu(ai_caller, clicked_vendor, GLOB.all_radial_directions, custom_check = CALLBACK(src, PROC_REF(radial_check), caller, clicked_vendor))
@@ -1300,6 +1278,32 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		build_all_button_icons()
 
 	unset_ranged_ability(caller, span_danger("Tilting..."))
+	return TRUE
+
+/datum/action/innate/ai/ranged/remote_vendor_tilt/proc/do_vendor_tilt(obj/machinery/vending/vendor, turf/target)
+	if (QDELETED(vendor))
+		return FALSE
+
+	if (vendor.tilted || !vendor.tiltable)
+		return FALSE
+
+	vendor.tilt(target, MALF_VENDOR_TIPPING_CRIT_CHANCE)
+
+/// Used in our radial menu, state-checking proc after the radial menu sleeps
+/datum/action/innate/ai/ranged/remote_vendor_tilt/proc/radial_check(mob/living/silicon/ai/caller, obj/machinery/vending/clicked_vendor)
+	if (caller.incapacitated() || caller.stat == DEAD || QDELETED(caller))
+		return FALSE
+
+	if (QDELETED(clicked_vendor))
+		return FALSE
+
+	if (uses <= 0)
+		return FALSE
+
+	if (!caller.can_see(clicked_vendor))
+		to_chat(caller, span_warning("Lost sight of [clicked_vendor]!"))
+		return FALSE
+
 	return TRUE
 
 #undef DEFAULT_DOOMSDAY_TIMER
