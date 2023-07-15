@@ -1,3 +1,7 @@
+/**
+ * I'll come up with a better file name later
+ */
+
 /// A list of all active and visible messengers
 GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger)
 
@@ -60,6 +64,10 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	var/visible_in_recents = FALSE
 	/// Used to determine if you can talk in a chat
 	var/can_reply = TRUE
+	/// Saved draft of a message so the sender can leave and come back later
+	var/message_draft = ""
+	/// Number of unread messages in this chat
+	var/unread_messages = 0
 
 /datum/pda_chat/New(datum/computer_file/program/messenger/recp)
 	recipient = WEAKREF(recp)
@@ -92,10 +100,12 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	var/list/messages_data = list()
 	for(var/datum/pda_msg/message in messages)
 		messages_data += list(message.get_data())
-	data["messages"] = messages
+	data["messages"] = messages_data
+	data["message_draft"] = message_draft
 
 	data["visible"] = visible_in_recents
 	data["can_reply"] = can_reply
+	data["unread_messages"] = unread_messages
 
 	return data
 
@@ -118,15 +128,15 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	var/photo_path
 	var/everyone
 
-/datum/pda_msg/New(msg, out, datum/picture/pic = null, path = null, to_everyone = FALSE)
-	message = msg
-	outgoing = out
-	photo = pic
-	photo_path = path
-	everyone = to_everyone
+/datum/pda_msg/New(message, outgoing, datum/picture/photo = null, photo_path = null, everyone = FALSE)
+	src.message = message
+	src.outgoing = outgoing
+	src.photo = photo
+	src.photo_path = photo_path
+	src.everyone = everyone
 
 /datum/pda_msg/proc/copy()
-	return new /datum/pda_msg(message, outgoing, photo, photo_path, everyone)
+	return new /datum/pda_msg(message = message, outgoing = outgoing, photo = photo, photo_path = photo_path, everyone = everyone)
 
 /datum/pda_msg/proc/get_data()
 	var/list/data = list()

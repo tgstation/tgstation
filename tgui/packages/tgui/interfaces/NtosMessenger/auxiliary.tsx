@@ -19,26 +19,27 @@ export const NoIDDimmer: SFC = () => {
 };
 
 export type ChatMessageProps = {
-  isSelf: BooleanLike;
+  outgoing: BooleanLike;
   msg: string;
   everyone?: BooleanLike;
   photoPath?: string;
 };
 
 export const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
-  const { msg, everyone, isSelf, photoPath } = props;
+  const { msg, everyone, outgoing, photoPath } = props;
   const text = {
     __html: sanitizeText(msg),
   };
 
   return (
-    <Box className={`NtosMessenger__ChatMessage${isSelf ? '__outgoing' : ''}`}>
+    <Box
+      className={`NtosMessenger__ChatMessage${outgoing ? '__outgoing' : ''}`}>
       <Box
         className="NtosMessenger__ChatMessage__content"
         dangerouslySetInnerHTML={text}
       />
       {photoPath !== null && <Box as="img" src={photoPath} />}
-      {everyone && (
+      {!!everyone && (
         <Box className="NtosMessenger__ChatMessage__everyone">
           Sent to everyone
         </Box>

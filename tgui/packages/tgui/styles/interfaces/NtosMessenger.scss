@@ -2,8 +2,8 @@
 @use '../base';
 @use '../functions';
 
-$msgcolor-incoming: hsl(213, 50%, 35%);
-$msgcolor-outgoing: hsl(213, 0%, 20%);
+$msgcolor-outgoing: hsl(213, 50%, 35%);
+$msgcolor-incoming: hsl(213, 0%, 20%);
 
 $msgpadding: 0.7rem;
 
@@ -45,7 +45,7 @@ $msgpadding: 0.7rem;
     @extend .NtosMessenger__ChatMessage;
     background-color: $msgcolor-outgoing;
     text-align: right;
-    align-self: flex-end;
+    float: right;
   }
 
   .NtosMessenger__ChatMessage__inner {

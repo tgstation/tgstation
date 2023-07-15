@@ -303,7 +303,7 @@
 		channel = null
 
 	// Nearby active jammers prevent the message from transmitting
-	for(is_within_jammer_range(src) && !syndie)
+	if(is_within_jammer_range(src) && !syndie)
 		return
 
 	// Determine the identity information which will be attached to the signal.

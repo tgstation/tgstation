@@ -1,9 +1,9 @@
 import { BooleanLike } from 'common/react';
 
 type NtMessage = {
-  contents: string;
+  message: string;
   outgoing: BooleanLike;
-  photo_path: string;
+  photo_path?: string;
   everyone: BooleanLike;
 };
 
@@ -20,8 +20,8 @@ type NtChat = {
   visible: BooleanLike;
   owner_deleted: BooleanLike;
   can_reply: BooleanLike;
+  message_draft: string;
+  unread_messages: number;
 };
 
-type NtMessengers = Record<string, NtMessenger>;
-
-export { NtMessage, NtMessenger, NtMessengers, NtChat };
+export { NtMessage, NtMessenger, NtChat };

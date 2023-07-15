@@ -183,7 +183,8 @@
 	return "[target.saved_identification] ([target.saved_job])"
 
 /datum/signal/subspace/messaging/tablet_msg/proc/format_message()
-	return "\"[data["message"]]\""
+	var/datum/pda_msg/msg = data["message"]
+	return "\"[msg.message]\""
 
 /datum/signal/subspace/messaging/tablet_msg/broadcast()
 	if (!logged)  // Can only go through if a message server logs it

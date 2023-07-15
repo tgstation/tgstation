@@ -5,7 +5,7 @@ import { NtosWindow } from '../../layouts';
 import { Component, createRef, RefObject } from 'inferno';
 import { BooleanLike } from 'common/react';
 
-import { NtChat, NtMessengers, NtMessenger } from './types';
+import { NtChat, NtMessenger } from './types';
 import { ChatMessage, NoIDDimmer } from './auxiliary';
 
 type NtosMessengerData = {
@@ -13,8 +13,7 @@ type NtosMessengerData = {
   is_silicon: BooleanLike;
   owner: NtMessenger | null;
   saved_chats: Record<string, NtChat>;
-  unreads: Record<string, number>;
-  messengers: NtMessengers;
+  messengers: Record<string, NtMessenger>;
   sort_by_job: BooleanLike;
   alert_silenced: BooleanLike;
   sending_and_receiving: BooleanLike;
@@ -27,13 +26,14 @@ type NtosMessengerData = {
 
 export const NtosMessenger = (_props: any, context: any) => {
   const { act, data } = useBackend<NtosMessengerData>(context);
-  const { saved_chats, open_chat } = data;
+  const { saved_chats, open_chat, messengers } = data;
 
   let content: JSX.Element;
   if (open_chat !== null) {
     content = (
       <ChatScreen
         chat={saved_chats[open_chat]}
+        temp_msgr={messengers[open_chat]}
         onReturn={() => act('PDA_viewMessages', { ref: null })}
       />
     );
@@ -54,6 +54,7 @@ const ContactsScreen = (_props: any, context: any) => {
     owner,
     alert_silenced,
     sending_and_receiving,
+    saved_chats,
     messengers,
     sort_by_job,
     can_spam,
@@ -63,7 +64,13 @@ const ContactsScreen = (_props: any, context: any) => {
     sending_virus,
   } = data;
 
-  const messengerArray = Object.entries(messengers).map(([_, v]) => v);
+  const filteredMessengers = Object.assign({}, messengers);
+  const savedChatsArray = Object.values(saved_chats);
+  savedChatsArray.forEach((chat) => {
+    if (chat.recp.ref) delete filteredMessengers[chat.recp.ref];
+  });
+  const messengerArray = Object.values(filteredMessengers);
+  savedChatsArray.sort((a, b) => a.unread_messages - b.unread_messages);
 
   const [searchUser, setSearchUser] = useLocalState<string>(
     context,
@@ -83,58 +90,60 @@ const ContactsScreen = (_props: any, context: any) => {
 
   return (
     <Stack fill vertical>
-      <Section>
-        <Stack vertical textAlign="center">
-          <Box bold>
-            <Icon name="address-card" mr={1} />
-            SpaceMessenger V6.5.1
-          </Box>
-          <Box italic opacity={0.3} mt={1}>
-            Bringing you spy-proof communications since 2467.
-          </Box>
-          <Box mt={2}>
-            <Button
-              icon="bell"
-              content={alert_silenced ? 'Ringer: On' : 'Ringer: Off'}
-              onClick={() => act('PDA_toggleAlerts')}
-            />
-            <Button
-              icon="address-card"
-              content={
-                sending_and_receiving
-                  ? 'Send / Receive: On'
-                  : 'Send / Receive: Off'
-              }
-              onClick={() => act('PDA_sAndR')}
-            />
-            <Button
-              icon="bell"
-              content="Set Ringtone"
-              onClick={() => act('PDA_ringSet')}
-            />
-            <Button
-              icon="sort"
-              content={`Sort by: ${sort_by_job ? 'Job' : 'Name'}`}
-              onClick={() => act('PDA_changeSortStyle')}
-            />
-            {!!is_silicon && (
+      <Stack.Item>
+        <Section>
+          <Stack vertical textAlign="center">
+            <Box bold>
+              <Icon name="address-card" mr={1} />
+              SpaceMessenger V6.5.3
+            </Box>
+            <Box italic opacity={0.3} mt={1}>
+              Bringing you spy-proof communications since 2467.
+            </Box>
+            <Box mt={2}>
               <Button
-                icon="camera"
-                content="Attach Photo"
-                onClick={() => act('PDA_selectPhoto')}
+                icon="bell"
+                content={alert_silenced ? 'Ringer: On' : 'Ringer: Off'}
+                onClick={() => act('PDA_toggleAlerts')}
               />
-            )}
-            {!!virus_attach && (
               <Button
-                icon="bug"
-                color="bad"
-                content={`Attach Virus: ${sending_virus ? 'Yes' : 'No'}`}
-                onClick={() => act('PDA_toggleVirus')}
+                icon="address-card"
+                content={
+                  sending_and_receiving
+                    ? 'Send / Receive: On'
+                    : 'Send / Receive: Off'
+                }
+                onClick={() => act('PDA_sAndR')}
               />
-            )}
-          </Box>
-        </Stack>
-      </Section>
+              <Button
+                icon="bell"
+                content="Set Ringtone"
+                onClick={() => act('PDA_ringSet')}
+              />
+              <Button
+                icon="sort"
+                content={`Sort by: ${sort_by_job ? 'Job' : 'Name'}`}
+                onClick={() => act('PDA_changeSortStyle')}
+              />
+              {!!is_silicon && (
+                <Button
+                  icon="camera"
+                  content="Attach Photo"
+                  onClick={() => act('PDA_selectPhoto')}
+                />
+              )}
+              {!!virus_attach && (
+                <Button
+                  icon="bug"
+                  color="bad"
+                  content={`Attach Virus: ${sending_virus ? 'Yes' : 'No'}`}
+                  onClick={() => act('PDA_toggleVirus')}
+                />
+              )}
+            </Box>
+          </Stack>
+        </Section>
+      </Stack.Item>
       {!!photo && (
         <Stack vertical>
           <Section fill textAlign="center">
@@ -148,38 +157,76 @@ const ContactsScreen = (_props: any, context: any) => {
           </Section>
         </Stack>
       )}
-      <Stack vertical>
-        <Section fill textAlign="center">
-          <Icon name="address-card" mr={1} />
-          Detected Messengers
-          <Input
-            width="220px"
-            placeholder="Search by name or job..."
-            value={searchUser}
-            onInput={(_e: any, value: string) => setSearchUser(value)}
-            mx={1}
-            ml={27}
-          />
-        </Section>
-      </Stack>
-      <Stack vertical fill mt={1}>
-        <Section fill scrollable>
-          <Stack vertical pb={1}>
-            {users.length === 0 && 'No users found'}
-            {users.map((messenger) => (
-              <Button
-                key={messenger.ref}
-                fluid
-                onClick={() => {
-                  act('PDA_viewMessages', { ref: messenger.ref });
-                }}>
-                {messenger.name} ({messenger.job})
-              </Button>
-            ))}
+      {savedChatsArray.length > 0 && (
+        <Stack.Item>
+          <Stack fill vertical>
+            <Stack vertical>
+              <Section fill>
+                <Icon name="comments" mr={1} />
+                Previous Messages
+              </Section>
+            </Stack>
+            <Section maxHeight={20} scrollable mt={1}>
+              <Stack vertical>
+                {savedChatsArray.map((chat) => {
+                  const unread_msgs = chat.unread_messages;
+                  const has_unreads = unread_msgs > 0;
+                  return (
+                    <Button
+                      icon={has_unreads && 'envelope'}
+                      key={chat.ref}
+                      fluid
+                      onClick={() => {
+                        act('PDA_viewMessages', { ref: chat.ref });
+                      }}>
+                      {has_unreads &&
+                        `[${unread_msgs} unread message${
+                          unread_msgs !== 1 ? 's' : ''
+                        }]`}{' '}
+                      {chat.recp.name} ({chat.recp.job})
+                    </Button>
+                  );
+                })}
+              </Stack>
+            </Section>
           </Stack>
-        </Section>
-        {!!can_spam && <SendToAllModal />}
-      </Stack>
+        </Stack.Item>
+      )}
+      <Stack.Item grow>
+        <Stack vertical fill>
+          <Section>
+            <Stack justify="space-between">
+              <Box m={0.5}>
+                <Icon name="address-card" mr={1} />
+                Detected Messengers
+              </Box>
+
+              <Input
+                width="220px"
+                placeholder="Search by name or job..."
+                value={searchUser}
+                onInput={(_e: any, value: string) => setSearchUser(value)}
+              />
+            </Stack>
+          </Section>
+          <Section fill scrollable>
+            <Stack vertical pb={1}>
+              {users.length === 0 && 'No users found'}
+              {users.map((messenger) => (
+                <Button
+                  key={messenger.ref}
+                  fluid
+                  onClick={() => {
+                    act('PDA_viewMessages', { ref: messenger.ref });
+                  }}>
+                  {messenger.name} ({messenger.job})
+                </Button>
+              ))}
+            </Stack>
+          </Section>
+        </Stack>
+      </Stack.Item>
+      <Stack.Item>{!!can_spam && <SendToAllModal />}</Stack.Item>
       {noId && <NoIDDimmer />}
     </Stack>
   );
@@ -187,7 +234,9 @@ const ContactsScreen = (_props: any, context: any) => {
 
 type ChatScreenProps = {
   onReturn: () => void;
-  chat: NtChat;
+  // if one doesn't exist, assume the other one does
+  chat?: NtChat;
+  temp_msgr?: NtMessenger;
 };
 
 type ChatScreenState = {
@@ -222,9 +271,21 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     _prevState: ChatScreenState,
     _snapshot: any
   ) {
-    if (prevProps.chat.messages.length !== this.props.chat.messages.length) {
+    if (prevProps.chat?.messages.length !== this.props.chat?.messages.length) {
       this.scrollToBottom();
     }
+  }
+
+  componentWillUnmount() {
+    const { act } = useBackend(this.context);
+
+    const chat = this.props.chat;
+    if (!chat) return;
+
+    act('PDA_saveMessageDraft', {
+      ref: chat.ref,
+      msg: this.state.msg,
+    });
   }
 
   scrollToBottom() {
@@ -237,10 +298,16 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   handleSendMessage() {
     if (this.state.msg === '') return;
     const { act } = useBackend<NtosMessengerData>(this.context);
+
+    let ref = this.props.chat
+      ? this.props.chat.ref
+      : this.props.temp_msgr!.ref!;
+
     act('PDA_sendMessage', {
-      ref: this.props.chat.ref,
+      ref: ref,
       msg: this.state.msg,
     });
+
     this.setState({ msg: '', canSend: false });
     setTimeout(() => this.setState({ canSend: true }), 1000);
   }
@@ -251,10 +318,12 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
   render() {
     const { act } = useBackend<NtosMessengerData>(this.context);
-    const { onReturn, chat } = this.props;
+    const { onReturn, chat, temp_msgr } = this.props;
     const { msg, canSend } = this.state;
 
-    const msgs = chat.messages;
+    // one or the other has to exist
+    const recp = chat ? chat.recp : temp_msgr!;
+    const msgs = chat ? chat.messages : [];
 
     let lastOutgoing: boolean = false;
     let filteredMessages: JSX.Element[] = [];
@@ -268,9 +337,9 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
       filteredMessages.push(
         <Stack.Item key={index} mt={isSwitch ? 2 : 0.5}>
           <ChatMessage
-            isSelf={message.outgoing}
-            msg={message.contents}
-            everyone={!!message.everyone}
+            outgoing={message.outgoing}
+            msg={message.message}
+            everyone={message.everyone}
             photoPath={message.photo_path}
           />
         </Stack.Item>
@@ -279,27 +348,43 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
     return (
       <Stack vertical fill>
-        <Stack.Item>
-          <Section fill>
-            <Button icon="arrow-left" content="Back" onClick={onReturn} />
-            <Button.Confirm
-              icon="trash-can"
-              content="Delete chat"
-              onClick={() => act('PDA_clearMessages', { ref: chat.ref })}
-            />
-          </Section>
-        </Stack.Item>
+        <Section>
+          <Button icon="arrow-left" content="Back" onClick={onReturn} />
+          {chat && (
+            <>
+              <Button
+                icon="box-archive"
+                content="Close chat"
+                onClick={() => act('PDA_closeMessages', { ref: chat.ref })}
+              />
+              <Button.Confirm
+                icon="trash-can"
+                content="Delete chat"
+                onClick={() => act('PDA_clearMessages', { ref: chat.ref })}
+              />
+            </>
+          )}
+          <Button.Confirm
+            icon="user-xmark"
+            content="Block user"
+            onClick={() =>
+              act('PDA_blockMessenger', {
+                ref: chat?.recp.ref ?? temp_msgr!.ref,
+              })
+            }
+          />
+        </Section>
 
-        <Stack.Item>
+        <Stack.Item grow={1}>
           <Section
             scrollable
             fill
             fitted
-            title={`${chat.recp.name} (${chat.recp.job})`}
+            title={`${recp.name} (${recp.job})`}
             scrollableRef={this.scrollRef}>
             <Stack vertical fill className="NtosMessenger__ChatLog">
               <Stack.Item textAlign="center" fontSize={1}>
-                This is the beginning of your chat with {chat.recp.name}.
+                This is the beginning of your chat with {recp.name}.
               </Stack.Item>
               <Stack.Divider />
               {filteredMessages}
@@ -308,28 +393,25 @@ class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
         </Stack.Item>
 
         <Stack.Item>
-          <Section>
+          <Section fill>
             <Stack fill>
-              <Stack.Item>
-                <Input
-                  placeholder={`Send message to ${chat.recp.name}...`}
-                  fluid
-                  autofocus
-                  justify
-                  id="input"
-                  value={msg}
-                  maxLength={1024}
-                  onInput={this.handleMessageInput}
-                  onEnter={this.handleSendMessage}
-                />
-              </Stack.Item>
-              <Stack.Item>
-                <Button
-                  icon="arrow-right"
-                  onClick={this.handleSendMessage}
-                  disabled={!canSend}
-                />
-              </Stack.Item>
+              <Input
+                placeholder={`Send message to ${recp.name}...`}
+                fluid
+                autofocus
+                width="100%"
+                justify
+                id="input"
+                value={msg}
+                maxLength={1024}
+                onInput={this.handleMessageInput}
+                onEnter={this.handleSendMessage}
+              />
+              <Button
+                icon="arrow-right"
+                onClick={this.handleSendMessage}
+                disabled={!canSend}
+              />
             </Stack>
           </Section>
         </Stack.Item>
@@ -349,7 +431,7 @@ const SendToAllModal = (_: any, context: any) => {
       <Section>
         <Stack justify="space-between">
           <Stack.Item align="center">
-            <Icon name="satellite-dish" mr={1} />
+            <Icon name="satellite-dish" mr={1} ml={0.5} />
             Send To All
           </Stack.Item>
           <Stack.Item>

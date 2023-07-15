@@ -29,8 +29,7 @@
 
 	/// An asssociative list of chats we have started, format: chatref -> pda_chat.
 	var/list/datum/pda_chat/saved_chats = list()
-	/// Associative list of unread messages, format: chatref -> number of unreads
-	var/list/unread_chats = list()
+	var/list/blocked_msgr_refs = list()
 	/// Whose chatlogs we currently have open. If we are in the contacts list, this is null.
 	var/viewing_messages_of = null
 
@@ -132,17 +131,31 @@
 
 		if("PDA_viewMessages")
 			viewing_messages_of = params["ref"]
+			if (viewing_messages_of in saved_chats)
+				var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
+				chat.unread_messages = 0
+			return TRUE
+
+		if("PDA_closeMessages")
+			var/target = params["ref"]
+
+			if(!(target in saved_chats))
+				return FALSE
+
+			var/datum/pda_chat/chat = saved_chats[target]
+			chat.visible_in_recents = FALSE
+			if(viewing_messages_of == target)
+				viewing_messages_of = null
 			return TRUE
 
 		if("PDA_clearMessages")
 			var/chat_ref = params["ref"]
-			if(!(chat_ref in saved_chats))
-				return FALSE
 
-			if(chat_ref)
+			if(chat_ref in saved_chats)
 				saved_chats.Remove(chat_ref)
-			else
+			else if(isnull(chat_ref))
 				saved_chats = list()
+
 			viewing_messages_of = null
 			return TRUE
 
@@ -159,20 +172,41 @@
 				to_chat(usr, span_notice("ERROR: Device does not have mass-messaging perms."))
 				return FALSE
 
-			if(can_send_everyone_message())
+			if(!can_send_everyone_message())
 				return FALSE
 
 			return send_message_to_all(usr, params["msg"])
+
+		if("PDA_saveMessageDraft")
+			var/target_chat_ref = params["ref"]
+			var/msg_draft = params["msg"]
+
+			if(!(target_chat_ref in saved_chats))
+				return FALSE
+
+			var/datum/pda_chat/chat = saved_chats[target_chat_ref]
+
+			chat.message_draft = msg_draft
+
+			return TRUE
 
 		if("PDA_sendMessage")
 			if(!sending_and_receiving)
 				to_chat(usr, span_notice("ERROR: This device has sending disabled."))
 				return FALSE
 
-			if(!(params["ref"] in saved_chats))
-				return FALSE
+			// target ref, can either be a chat in saved_chats or a messenger ref in GLOB.TabletMessengers
+			var/target_ref = params["ref"]
 
-			var/datum/pda_chat/target = saved_chats[params["ref"]]
+			var/datum/pda_chat/target
+
+			if(target_ref in saved_chats)
+				target = saved_chats[target_ref]
+			else if(target_ref in GLOB.TabletMessengers)
+				target  = create_chat(target_ref)
+				viewing_messages_of = REF(target)
+			else
+				return FALSE
 
 			if(!(target.recipient.reference in GLOB.TabletMessengers))
 				to_chat(usr, span_notice("ERROR: Recipient no longer exists."))
@@ -242,14 +276,13 @@
 			"ref" = REF(src)
 		) : null)
 	data["saved_chats"] = chats_data
-	data["unreads"] = unread_chats
 	data["messengers"] = messengers
 	data["sort_by_job"] = sort_by_job
 	data["alert_silenced"] = alert_silenced
 	data["sending_and_receiving"] = sending_and_receiving
 	data["open_chat"] = viewing_messages_of
 	data["photo"] = photo_path
-	data["on_spam_cooldown"] = can_send_everyone_message()
+	data["on_spam_cooldown"] = !can_send_everyone_message()
 
 	var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 	if(disk && istype(disk))
@@ -291,20 +324,28 @@
 	if(send_message(user, chats, message, everyone = TRUE))
 		COOLDOWN_START(src, last_text_everyone, 2 MINUTES)
 
-/datum/computer_file/program/messenger/proc/create_chat(datum/computer_file/program/messenger/recipient, name)
-	if(!(REF(recipient) in GLOB.TabletMessengers))
-		CRASH("tried to create a chat with a messenger that isn't registered")
+/datum/computer_file/program/messenger/proc/create_chat(recp_ref, name, job)
+	var/datum/computer_file/program/messenger/recipient = null
+
+	if(isnull(name))
+		if(!(recp_ref in GLOB.TabletMessengers))
+			CRASH("tried to create a chat with a messenger that isn't registered")
+		recipient = GLOB.TabletMessengers[recp_ref]
 
 	var/datum/pda_chat/new_chat = new /datum/pda_chat(recipient)
+
 	// this is a chat with a "fake user" (automated or rigged message)
-	if(!istype(recipient) && istext(name))
+	if(!istype(recipient))
 		new_chat.cached_name = name
-	saved_chats += new_chat
+		new_chat.cached_job = job
+
+	saved_chats[REF(new_chat)] = new_chat
 
 	return new_chat
 
 /datum/computer_file/program/messenger/proc/find_chat_by_recp(recipient, fake_user = FALSE)
-	for(var/datum/pda_chat/chat as anything in saved_chats)
+	for(var/chat_ref as anything in saved_chats)
+		var/datum/pda_chat/chat = saved_chats[chat_ref]
 		if(fake_user && chat.cached_name == recipient)
 			return chat
 		else if(chat.recipient.reference == recipient)
@@ -335,7 +376,7 @@
 	// check for jammers
 	if(is_within_jammer_range(src))
 		// different message so people know it's a radio jammer
-		to_chat(sender, span_notice("ERROR: Server unavailable, please try again later."))
+		to_chat(sender, span_notice("ERROR: Network unavailable, please try again later."))
 		if(!alert_silenced)
 			playsound(computer, 'sound/machines/terminal_error.ogg', 15, TRUE)
 		return FALSE
@@ -351,7 +392,7 @@
 	if (prob(sent_prob))
 		message += " - Sent from my PDA"
 
-	var/datum/pda_msg/message_datum = new(message, saved_image, photo_path, everyone)
+	var/datum/pda_msg/message_datum = new(message, TRUE, saved_image, photo_path, everyone)
 
 	// our sender targets
 	var/list/datum/computer_file/program/messenger/target_msgrs = list()
@@ -360,6 +401,8 @@
 
 	// filter out invalid targets
 	for(var/datum/pda_chat/target_chat in targets.Copy())
+		if(!target_chat.can_reply)
+			continue
 		var/datum/computer_file/program/messenger/msgr = target_chat.recipient.resolve()
 		if(!istype(msgr))
 			targets -= target_chat
@@ -434,15 +477,29 @@
 	var/is_rigged = signal.data["rigged"]
 	var/is_automated = signal.data["automated"]
 	var/is_fake_user = is_rigged || is_automated
-	var/fake_identity = is_fake_user ? STRINGIFY_PDA_TARGET(signal.data["fakename"], signal.data["fakejob"]) : null
+	var/fake_name = is_fake_user ? signal.data["fakename"] : null
+	var/fake_job = is_fake_user ? signal.data["fakejob"] : null
+
+	var/sender_ref = signal.data["ref"]
+
+	// 2 blocked messages
+	if(sender_ref && (sender_ref in blocked_msgr_refs))
+		return
 
 	// don't create a new chat for rigged messages, make it a one off notif
 	if(!is_rigged)
 		message = message.copy()
-		chat = find_chat_by_recp(is_automated ? fake_identity : signal.data["ref"], is_automated)
+		message.outgoing = FALSE
+		chat = find_chat_by_recp(is_automated ? fake_name : sender_ref, is_automated)
 		if(!istype(chat))
-			chat = create_chat(is_automated ? null : signal.data["ref"], fake_identity)
+			chat = create_chat(!is_automated ? sender_ref : null, fake_name, fake_job)
+			chat.can_reply = !is_automated
 		chat.add_msg(message)
+		chat.unread_messages++
+
+		// the recipient (us) currently has a chat with the sender open, so update their ui
+		if(viewing_messages_of == sender_ref)
+			viewing_messages_of = REF(chat)
 
 	var/mob/living/L = null
 	//Check our immediate loc
@@ -457,7 +514,7 @@
 	if(istype(L) && should_ring && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
 		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 		// resolving w/o nullcheck here, assume the messenger exists if they sent a message
-		var/sender_name = is_fake_user ? signal.data["fakename"] : get_messenger_name(chat.recipient.resolve())
+		var/sender_name = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(chat.recipient.resolve())
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
