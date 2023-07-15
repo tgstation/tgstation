@@ -36,6 +36,7 @@
 #define LANGUAGE_VOICECHANGE "voicechange"
 #define LANGUAGE_RADIOKEY "radiokey"
 #define LANGUAGE_BABEL "babel"
+#define LANGUAGE_EMP "emp"
 
 // Language flags. Used in granting and removing languages.
 /// This language can be spoken.
