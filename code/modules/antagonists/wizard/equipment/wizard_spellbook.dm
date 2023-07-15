@@ -148,8 +148,6 @@
 	var/list/data = list()
 	data["owner"] = owner
 	data["points"] = uses
-	data["semi_random_bonus"] = initial(uses) + semi_random_bonus
-	data["full_random_bonus"] = initial(uses) + full_random_bonus
 	return data
 
 //This is a MASSIVE amount of data, please be careful if you remove it from static.
@@ -172,6 +170,8 @@
 		entry_data += list(individual_entry_data)
 
 	data["entries"] = entry_data
+	data["semi_random_bonus"] = initial(uses) + semi_random_bonus
+	data["full_random_bonus"] = initial(uses) + full_random_bonus
 	return data
 
 /obj/item/spellbook/ui_act(action, params)
