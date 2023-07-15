@@ -489,6 +489,7 @@
 		return
 	remove_all_languages(source = LANGUAGE_EMP)
 	grant_random_uncommon_language(source = LANGUAGE_EMP)
+	announcement_language = new_language
 
 /mob/living/simple_animal/bot/proc/emp_reset(was_on)
 	stat &= ~EMPED
@@ -498,10 +499,19 @@
 /mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
 	if((!(bot_mode_flags & BOT_MODE_ON)) || (!message))
 		return
+
+	var/previous_language = get_selected_language()
+	var/fluent = can_speak_language(announcement_language)
+	if (!fluent)
+		grant_language(announcement_language)
+	set_active_language(announcement_language)
 	if(channel && internal_radio.channels[channel])// Use radio if we have channel key
 		internal_radio.talk_into(src, message = message, channel = channel, language = announcement_language)
 	else
 		say(message, language = announcement_language)
+	if (!fluent)
+		remove_language(announcement_language)
+	set_active_language(previous_language)
 
 /mob/living/simple_animal/bot/radio(message, list/message_mods = list(), list/spans, language)
 	. = ..()
