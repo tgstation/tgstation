@@ -149,7 +149,7 @@
 	icon_state = "data_1"
 
 	///Amount of points this card contains.
-	var/points = 500
+	var/points = 0
 
 /obj/item/card/mining_point_card/examine(mob/user)
 	. = ..()

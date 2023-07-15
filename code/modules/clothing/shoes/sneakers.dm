@@ -54,7 +54,7 @@
 /obj/item/clothing/shoes/sneakers/white
 	name = "white shoes"
 	greyscale_colors = "#ffffff#ffffff"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "shoes_cloth"
 	armor_type = /datum/armor/sneakers_white
 
@@ -76,7 +76,7 @@
 
 /obj/item/clothing/shoes/sneakers/orange
 	name = "orange shoes"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "prisonshoes"
 	greyscale_colors = "#d15b1b#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers_orange

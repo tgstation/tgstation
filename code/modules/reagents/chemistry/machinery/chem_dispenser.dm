@@ -648,7 +648,7 @@
 /obj/machinery/chem_dispenser/abductor
 	name = "reagent synthesizer"
 	desc = "Synthesizes a variety of reagents using proto-matter."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "chem_dispenser"
 	base_icon_state = "chem_dispenser"
 	has_panel_overlay = FALSE

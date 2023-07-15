@@ -12,7 +12,7 @@
 	yield = 5
 	potency = 50
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
 	icon_dead = "towercap-dead"
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list(/obj/item/seeds/tower/steel)
@@ -130,7 +130,7 @@
 /obj/structure/punji_sticks
 	name = "punji sticks"
 	desc = "Don't step on this."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "punji"
 	resistance_flags = FLAMMABLE
 	max_integrity = 30
