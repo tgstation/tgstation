@@ -1,7 +1,7 @@
 /obj/structure/ore_vent
 	name = "ore vent"
 	desc = "An ore vent, brimming with underground ore. Scan with an advanced mining scanner to start extracting ore from it."
-	icon = 'icons/obj/lavaland/terrain.dmi' /// note to self, new sprites. get on it
+	icon = 'icons/obj/mining_zones/terrain.dmi' /// note to self, new sprites. get on it
 	icon_state = "geyser"
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	anchored = TRUE
@@ -18,7 +18,7 @@
 		/datum/material/plasma = 1,
 	)
 	var/static/list/lavaland_mobs = list(
-		/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril,
+		/mob/living/basic/mining/goliath,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
 		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 		/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava,
@@ -89,7 +89,7 @@
 		spawn_time = 20 SECONDS,\
 		max_spawned = 10,\
 		spawn_per_attempt = (1 + (boulder_size/5)),\
-		spawn_text = "emerges from the depths of",\
+		spawn_text = "emerges to assault",\
 		spawn_distance = 4,\
 		spawn_distance_exclude = 3)
 	var/wave_timer = 20 SECONDS
@@ -122,15 +122,15 @@
 	desc = "An ore vent, brimming with underground ore. It's already supplying the station with iron and glass."
 	tapped = TRUE
 
+/obj/structure/ore_vent/medium
+	boulder_size = BOULDER_SIZE_MEDIUM
+
+/obj/structure/ore_vent/large
+	boulder_size = BOULDER_SIZE_LARGE
+
 
 /obj/item/boulder
 	name = "boulder"
 	desc = "This rocks."
 	icon_state = "ore"
 	icon = 'icons/obj/ore.dmi'
-
-/obj/item/boulder/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	for(var/i as anything in turf_peel(3, 2, loc))
-		var/turf/location = i
-		new /obj/item/food/cookie(location)
