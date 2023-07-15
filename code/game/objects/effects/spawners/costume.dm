@@ -65,7 +65,7 @@
 	name = "butler costume spawner"
 	items = list(
 		/obj/item/clothing/accessory/waistcoat,
-		/obj/item/clothing/under/suit/black,
+		/obj/item/clothing/under/costume/buttondown/slacks/service,
 		/obj/item/clothing/neck/tie/black,
 		/obj/item/clothing/head/hats/tophat,
 	)

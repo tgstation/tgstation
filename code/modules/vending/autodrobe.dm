@@ -159,7 +159,6 @@
 			"name" = "Service",
 			"icon" = "kitchen-set",
 			"products" = list(
-				/obj/item/clothing/under/suit/black = 1,
 				/obj/item/clothing/under/costume/buttondown/slacks/service = 1,
 				/obj/item/clothing/accessory/waistcoat = 1,
 				/obj/item/clothing/under/suit/waiter = 1,

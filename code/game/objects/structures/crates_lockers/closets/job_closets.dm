@@ -85,7 +85,7 @@
 	new /obj/item/clothing/suit/toggle/lawyer(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/purpsuit(src)
 	new /obj/item/clothing/suit/toggle/lawyer/purple(src)
-	new /obj/item/clothing/under/suit/black(src)
+	new /obj/item/clothing/under/costume/buttondown/slacks/service(src)
 	new /obj/item/clothing/neck/tie/black(src)
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)

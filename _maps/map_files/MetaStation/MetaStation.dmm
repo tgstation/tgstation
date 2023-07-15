@@ -19575,7 +19575,6 @@
 /area/station/medical/pharmacy)
 "hoQ" = (
 /obj/structure/table,
-/obj/item/clothing/under/suit/black/skirt,
 /obj/item/clothing/under/suit/black_really,
 /obj/machinery/light/small/directional/north,
 /obj/item/radio/intercom/directional/north,
@@ -19583,7 +19582,7 @@
 /obj/item/clothing/suit/toggle/lawyer/black,
 /obj/item/clothing/under/suit/red,
 /obj/item/clothing/neck/tie/black,
-/obj/item/clothing/under/suit/black,
+/obj/item/clothing/under/costume/buttondown/slacks/service,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},

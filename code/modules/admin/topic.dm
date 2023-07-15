@@ -652,7 +652,7 @@
 
 		if(ishuman(L))
 			var/mob/living/carbon/human/observer = L
-			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit/black(observer), ITEM_SLOT_ICLOTHING)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/under/costume/buttondown/slacks/service(observer), ITEM_SLOT_ICLOTHING)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/neck/tie/black/tied(observer), ITEM_SLOT_NECK)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), ITEM_SLOT_FEET)
 		L.Unconscious(100)
