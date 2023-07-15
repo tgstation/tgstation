@@ -37,11 +37,13 @@
 		return
 
 	var/mob/living/parent_as_living = parent
-
-	if(squash_flags & SQUASHED_SHOULD_BE_DOWN && parent_as_living.body_position != LYING_DOWN)
+	if((squash_flags & SQUASHED_DONT_SQUASH_IN_CONTENTS) && !isturf(parent_as_living.loc))
 		return
 
-	var/should_squash = prob(squash_chance)
+	if((squash_flags & SQUASHED_SHOULD_BE_DOWN) && parent_as_living.body_position != LYING_DOWN)
+		return
+
+	var/should_squash = ((squash_flags & SQUASHED_ALWAYS_IF_DEAD) && parent_as_living.stat == DEAD) || prob(squash_chance)
 
 	if(should_squash && on_squash_callback)
 		if(on_squash_callback.Invoke(parent_as_living, crossing_movable))

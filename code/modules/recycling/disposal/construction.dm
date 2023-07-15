@@ -4,7 +4,7 @@
 /obj/structure/disposalconstruct
 	name = "disposal pipe segment"
 	desc = "A huge pipe segment used for constructing disposal systems."
-	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
+	icon = 'icons/obj/pipes_n_cables/disposal.dmi'
 	icon_state = "conpipe"
 	anchored = FALSE
 	density = FALSE
@@ -154,7 +154,7 @@
 			to_chat(user, span_warning("A disposals machine already exists here!"))
 			return TRUE
 
-		if(!I.tool_start_check(user, amount=0))
+		if(!I.tool_start_check(user, amount=1))
 			return TRUE
 
 		to_chat(user, span_notice("You start welding the [pipename] in place..."))

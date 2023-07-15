@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { useLocalState } from '../../backend';
+import { useLocalState, useBackend } from '../../backend';
 import { Flex, Button, Stack, AnimatedNumber } from '../../components';
 import { formatSiUnit } from '../../format';
 import { MaterialIcon } from './MaterialIcon';
@@ -72,6 +72,8 @@ type MaterialCounterProps = {
 
 const MaterialCounter = (props: MaterialCounterProps, context) => {
   const { material, onEjectRequested } = props;
+  const { data } = useBackend<Material>(context);
+  const { SHEET_MATERIAL_AMOUNT } = data;
 
   const [hovering, setHovering] = useLocalState(
     context,
@@ -79,7 +81,7 @@ const MaterialCounter = (props: MaterialCounterProps, context) => {
     false
   );
 
-  const canEject = material.amount > 2_000;
+  const canEject = material.amount > SHEET_MATERIAL_AMOUNT;
 
   return (
     <div
@@ -150,6 +152,8 @@ type EjectButtonProps = {
 
 const EjectButton = (props: EjectButtonProps, context) => {
   const { amount, available, material, onEject } = props;
+  const { data } = useBackend<Material>(context);
+  const { SHEET_MATERIAL_AMOUNT } = data;
 
   return (
     <Button
@@ -157,7 +161,8 @@ const EjectButton = (props: EjectButtonProps, context) => {
       color={'transparent'}
       className={classes([
         'Fabricator__PrintAmount',
-        amount * 2_000 > available && 'Fabricator__PrintAmount--disabled',
+        amount * SHEET_MATERIAL_AMOUNT > available &&
+          'Fabricator__PrintAmount--disabled',
       ])}
       onClick={() => onEject(amount)}>
       &times;{amount}

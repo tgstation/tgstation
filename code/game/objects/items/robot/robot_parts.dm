@@ -21,8 +21,13 @@
 	var/obj/item/bodypart/head/robot/head = null
 	/// Forced name of the cyborg
 	var/created_name = ""
+
 	/// Forced master AI of the cyborg
 	var/mob/living/silicon/ai/forced_ai
+	/// The name of the AI being forced, tracked separately to above
+	/// so we can reference handle without worrying about making "AI got gibbed" detectors
+	var/forced_ai_name
+
 	/// If the cyborg starts movement free and not under lockdown
 	var/locomotion = TRUE
 	/// If the cyborg synchronizes it's laws with it's master AI
@@ -35,6 +40,30 @@
 /obj/item/robot_suit/Initialize(mapload)
 	. = ..()
 	update_appearance()
+
+/obj/item/robot_suit/Destroy()
+	QDEL_NULL(l_arm)
+	QDEL_NULL(r_arm)
+	QDEL_NULL(l_leg)
+	QDEL_NULL(r_leg)
+	QDEL_NULL(chest)
+	QDEL_NULL(head)
+	return ..()
+
+/obj/item/robot_suit/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == l_arm)
+		l_arm = null
+	if(gone == r_arm)
+		r_arm = null
+	if(gone == l_leg)
+		l_leg = null
+	if(gone == r_leg)
+		r_leg = null
+	if(gone == chest)
+		chest = null
+	if(gone == head)
+		head = null
 
 /obj/item/robot_suit/prebuilt/Initialize(mapload)
 	. = ..()
@@ -76,37 +105,30 @@
 	var/turf/T = get_turf(src)
 	if(l_leg || r_leg || chest || l_arm || r_arm || head)
 		if(I.use_tool(src, user, 5, volume=50))
-			if(l_leg)
-				l_leg.forceMove(T)
-				l_leg = null
-			if(r_leg)
-				r_leg.forceMove(T)
-				r_leg = null
-			if(chest)
-				if (chest.cell) //Sanity check.
-					chest.cell.forceMove(T)
-					chest.cell = null
-				chest.forceMove(T)
-				new /obj/item/stack/cable_coil(T, 1)
-				chest.wired = FALSE
-				chest = null
-			if(l_arm)
-				l_arm.forceMove(T)
-				l_arm = null
-			if(r_arm)
-				r_arm.forceMove(T)
-				r_arm = null
-			if(head)
-				head.forceMove(T)
-				head.flash1.forceMove(T)
-				head.flash1 = null
-				head.flash2.forceMove(T)
-				head.flash2 = null
-				head = null
+			drop_all_parts(T)
 			to_chat(user, span_notice("You disassemble the cyborg shell."))
 	else
 		to_chat(user, span_warning("There is nothing to remove from the endoskeleton!"))
 	update_appearance()
+
+/// Drops all included parts to the passed location
+/// This will also dissassemble the parts being dropped into components as well
+/obj/item/robot_suit/proc/drop_all_parts(atom/drop_to = drop_location())
+	l_leg?.forceMove(drop_to)
+	r_leg?.forceMove(drop_to)
+	l_arm?.forceMove(drop_to)
+	r_arm?.forceMove(drop_to)
+
+	if(chest)
+		chest.forceMove(drop_to)
+		new /obj/item/stack/cable_coil(drop_to, 1)
+		chest.wired = FALSE
+		chest.cell?.forceMove(drop_to)
+
+	if(head)
+		head.flash1?.forceMove(drop_to)
+		head.flash2?.forceMove(drop_to)
+		head.forceMove(drop_to)
 
 /obj/item/robot_suit/proc/put_in_hand_or_drop(mob/living/user, obj/item/I) //normal put_in_hands() drops the item ontop of the player, this drops it at the suit's loc
 	if(!user.put_in_hands(I))
@@ -124,7 +146,7 @@
 		return
 
 	var/obj/item/stock_parts/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/cell)
-	var/swap_failed
+	var/swap_failed = FALSE
 	if(!temp_cell) //if we're not holding a cell
 		swap_failed = TRUE
 	else if(!user.transferItemToLoc(temp_cell, chest))
@@ -292,7 +314,7 @@
 
 			O.cell = chest.cell
 			chest.cell.forceMove(O)
-			chest.cell = null
+
 			W.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			if(O.mmi) //we delete the mmi created by robot/New()
 				qdel(O.mmi)
@@ -347,7 +369,7 @@
 
 			O.cell = chest.cell
 			chest.cell.forceMove(O)
-			chest.cell = null
+
 			O.locked = panel_locked
 			O.job = JOB_CYBORG
 			forceMove(O)
@@ -384,7 +406,7 @@
 	data["locomotion"] = locomotion
 	data["panel"] = panel_locked
 	data["aisync"] = aisync
-	data["master"] = forced_ai ? forced_ai.name : null
+	data["master"] = forced_ai_name
 	data["lawsync"] = lawsync
 	return data
 
@@ -417,16 +439,47 @@
 			log_silicon("[key_name(user)] has [aisync ? "enabled" : "disabled"] the AI sync for a cyborg shell at [loc_name(user)]")
 			return TRUE
 		if("set_ai")
-			var/selected_ai = select_active_ai(user, z)
-			if(!in_range(src, user) && loc != user)
-				return
-			if(!selected_ai)
+			if(length(active_ais(check_mind = FALSE, z = z)) <= 0)
 				to_chat(user, span_alert("No active AIs detected."))
 				return
-			forced_ai = selected_ai
+
+			var/selected_ai = select_active_ai(user, z) // this one runs input()
+			if(!in_range(src, user) && loc != user)
+				return
+			if(!selected_ai) // null = clear
+				clear_forced_ai()
+				return TRUE
+			if(forced_ai == selected_ai) // same AI = clear
+				clear_forced_ai()
+				to_chat(user, span_notice("You reset [src]'s AI setting."))
+				return TRUE
+
+			set_forced_ai(selected_ai, user)
+			to_chat(user, span_notice("You set [src]'s AI setting to [forced_ai_name]."))
 			log_silicon("[key_name(user)] set the default AI for a cyborg shell to [key_name(selected_ai)] at [loc_name(user)]")
 			return TRUE
+
 		if("lawsync")
 			lawsync = !lawsync
 			log_silicon("[key_name(user)] has [lawsync ? "enabled" : "disabled"] the law sync for a cyborg shell at [loc_name(user)]")
 			return TRUE
+
+/// Sets [forced_ai] and [forced_ai_name] to the passed AI
+/obj/item/robot_suit/proc/set_forced_ai(mob/living/silicon/ai/ai)
+	forced_ai = ai
+	forced_ai_name = ai.name
+	RegisterSignal(ai, COMSIG_QDELETING, PROC_REF(ai_die))
+
+/// Clears [forced_ai] and [forced_ai_name]
+/obj/item/robot_suit/proc/clear_forced_ai()
+	if(forced_ai)
+		UnregisterSignal(forced_ai, COMSIG_QDELETING)
+		forced_ai = null
+	forced_ai_name = null
+
+/// Clears the forced_ai ref
+/obj/item/robot_suit/proc/ai_die(datum/source)
+	SIGNAL_HANDLER
+	// Does not use [proc/clear_forced_ai] because we'd like to keep the AI name tracked for metagaming purposes
+	UnregisterSignal(forced_ai, COMSIG_QDELETING)
+	forced_ai = null

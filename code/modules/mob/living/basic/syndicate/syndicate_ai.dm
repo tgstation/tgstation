@@ -36,7 +36,7 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/syndicate
 
 /datum/ai_behavior/basic_ranged_attack/syndicate
-	action_cooldown = 2.5 SECONDS
+	action_cooldown = 1 SECONDS
 	required_distance = 5
 
 /datum/ai_controller/basic_controller/syndicate/ranged/burst

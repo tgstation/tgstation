@@ -1014,6 +1014,101 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		if("name")
 			say_name = params["name"]
 
+/datum/ai_module/utility/emag
+	name = "Targetted Safeties Override"
+	description = "Allows you to disable the safeties of any machinery on the station, provided you can access it."
+	cost = 20
+	power_type = /datum/action/innate/ai/ranged/emag
+	unlock_text = span_notice("You download an illicit software package from a syndicate database leak and integrate it into your firmware, fighting off a few kernel intrusions along the way.")
+	unlock_sound = SFX_SPARKS
+
+/datum/action/innate/ai/ranged/emag
+	name = "Targetted Safeties Override"
+	desc = "Allows you to effectively emag anything you click on."
+	button_icon = 'icons/obj/card.dmi'
+	button_icon_state = "emag"
+	uses = 7
+	auto_use_uses = FALSE
+	enable_text = span_notice("You load your syndicate software package to your most recent memory slot.")
+	disable_text = span_notice("You unload your syndicate software package.")
+	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+
+/datum/action/innate/ai/ranged/emag/Destroy()
+	return ..()
+
+/datum/action/innate/ai/ranged/emag/New()
+	. = ..()
+	desc = "[desc] It has [uses] use\s remaining."
+
+/datum/action/innate/ai/ranged/emag/do_ability(mob/living/caller, atom/clicked_on)
+
+	// Only things with of or subtyped of any of these types may be remotely emagged
+	var/static/list/compatable_typepaths = list(
+		/obj/machinery,
+		/obj/structure,
+		/obj/item/radio/intercom,
+		/obj/item/modular_computer,
+		/mob/living/simple_animal/bot,
+		/mob/living/silicon,
+	)
+
+	if (!isAI(caller))
+		return FALSE
+	var/mob/living/silicon/ai/ai_caller = caller
+
+	if(ai_caller.incapacitated())
+		unset_ranged_ability(caller)
+		return FALSE
+
+	if (!ai_caller.can_see(clicked_on))
+		clicked_on.balloon_alert(ai_caller, "can't see!")
+		return FALSE
+
+	if (ismachinery(clicked_on))
+		var/obj/machinery/clicked_machine = clicked_on
+		if (!clicked_machine.is_operational)
+			clicked_machine.balloon_alert(ai_caller, "not operational!")
+			return FALSE
+
+	if (!(is_type_in_list(clicked_on.type, compatable_typepaths)))
+		clicked_on.balloon_alert(ai_caller, "incompatable!")
+		return FALSE
+
+	if (istype(clicked_on, /obj/machinery/door/airlock)) // I HATE THIS CODE SO MUCHHH
+		var/obj/machinery/door/airlock/clicked_airlock = clicked_on
+		if (!clicked_airlock.canAIControl(ai_caller))
+			clicked_airlock.balloon_alert(ai_caller, "unable to interface!")
+			return FALSE
+
+	if (istype(clicked_on, /obj/machinery/airalarm))
+		var/obj/machinery/airalarm/alarm = clicked_on
+		if (alarm.aidisabled)
+			alarm.balloon_alert(ai_caller, "unable to interface!")
+			return FALSE
+
+	if (istype(clicked_on, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/clicked_apc = clicked_on
+		if (clicked_apc.aidisabled)
+			clicked_apc.balloon_alert(ai_caller, "unable to interface!")
+			return FALSE
+
+	if (!clicked_on.emag_act(ai_caller))
+		to_chat(ai_caller, span_warning("Hostile software insertion failed!")) // lets not overlap balloon alerts
+		return FALSE
+
+	to_chat(ai_caller, span_notice("Software package successfully injected."))
+
+	adjust_uses(-1)
+	if(uses)
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+		build_all_button_icons()
+	else
+		unset_ranged_ability(ai_caller, span_warning("Out of uses!"))
+
+	return TRUE
+
+
+
 
 #undef DEFAULT_DOOMSDAY_TIMER
 #undef DOOMSDAY_ANNOUNCE_INTERVAL

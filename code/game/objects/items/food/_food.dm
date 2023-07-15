@@ -46,6 +46,8 @@
 	var/decomp_req_handle = FALSE
 	///Used to set custom decomposition times for food. Set to 0 to have it automatically set via the food's flags.
 	var/decomposition_time = 0
+	///Used to set decomposition stink particles for food, will have no particles if null
+	var/decomposition_particles = /particles/stink
 
 /obj/item/food/Initialize(mapload)
 	. = ..()
@@ -61,7 +63,7 @@
 	make_processable()
 	make_leave_trash()
 	make_grillable()
-	make_decompose(mapload)
+	make_germ_sensitive(mapload)
 	make_bakeable()
 	make_microwaveable()
 	ADD_TRAIT(src, FISHING_BAIT_TRAIT, INNATE_TRAIT)
@@ -108,8 +110,13 @@
 		AddElement(/datum/element/food_trash, trash_type)
 	return
 
-///This proc makes things decompose. Set preserved_food to TRUE to make it never decompose.
+///This proc makes things infective and decomposing when they stay on the floor for too long.
+///Set preserved_food to TRUE to make it never decompose.
 ///Set decomp_req_handle to TRUE to only make it decompose when someone picks it up.
-/obj/item/food/proc/make_decompose(mapload)
+///Requires /datum/component/germ_sensitive to detect exposure
+/obj/item/food/proc/make_germ_sensitive(mapload)
+	if(istype(src, /obj/item/food/bowled) || istype(src, /obj/item/food/canned) || !isnull(trash_type))
+		return // You don't eat the package and it protects from decomposing
+	AddComponent(/datum/component/germ_sensitive, mapload)
 	if(!preserved_food)
-		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
+		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time, stink_particles = decomposition_particles)

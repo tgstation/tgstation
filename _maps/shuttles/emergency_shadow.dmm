@@ -170,9 +170,7 @@
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 4
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/structure/sign/warning/hot_temp/directional/west,
 /obj/item/reagent_containers/pill/maintenance,
 /turf/open/floor/iron/dark/textured_large,
@@ -207,9 +205,7 @@
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 8
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/item/clothing/head/cone,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
@@ -739,9 +735,7 @@
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 4
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/structure/sign/warning/hot_temp/directional/west,
 /obj/item/clothing/mask/cigarette/rollie/cannabis,
 /turf/open/floor/iron/dark/textured_large,
@@ -1128,9 +1122,7 @@
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 8
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/item/kirbyplants/organic/plant21,
 /obj/item/clothing/accessory/clown_enjoyer_pin,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)

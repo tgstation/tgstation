@@ -1,5 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes:
-  - bugfix: "fixed the context tips on papercutters"
-  - bugfix: "fixes papercutters not properly updating their icons, removing their stored papers/blades, and eating papers when one is already stored"

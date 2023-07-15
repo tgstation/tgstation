@@ -142,7 +142,7 @@
 		/obj/structure/closet/l3closet = 1,
 		/obj/structure/closet/radiation = 1,
 		/obj/structure/closet/bombcloset = 1,
-		/obj/structure/closet/mini_fridge = 1,
+		/obj/structure/closet/mini_fridge/grimy = 1,
 	)
 
 /obj/effect/spawner/random/structure/chair_flipped
@@ -188,7 +188,7 @@
 
 /obj/effect/spawner/random/structure/billboard
 	name = "billboard spawner"
-	icon = 'icons/obj/billboard.dmi'
+	icon = 'icons/obj/fluff/billboard.dmi'
 	icon_state = "billboard_random"
 	loot = list(
 		/obj/structure/billboard/azik = 50,

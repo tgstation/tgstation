@@ -4,6 +4,7 @@
 /obj/item/table_clock
 	name = "table clock"
 	desc = "An annoying clock that keeps you sane through tireless nights."
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "table_clock"
 	inhand_icon_state = "table_clock"
 	base_icon_state = "table_clock"

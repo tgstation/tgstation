@@ -5,7 +5,7 @@
 	name = "MOD visor module"
 	desc = "A heads-up display installed into the visor of the suit. They say these also let you see behind you."
 	module_type = MODULE_TOGGLE
-	complexity = 2
+	complexity = 1
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/visor)
 	cooldown_time = 0.5 SECONDS

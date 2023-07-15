@@ -58,8 +58,8 @@
 /obj/machinery/button/door{
 	id = "syndieshutters";
 	name = "Cockpit View Control";
-	req_access = list("syndicate");
-	pixel_y = 24
+	pixel_y = 24;
+	req_access = list("syndicate")
 	},
 /obj/item/aicard,
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -228,7 +228,7 @@
 /area/shuttle/syndicate/airlock)
 "bd" = (
 /obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/syndicate/airlock)
 "be" = (
 /obj/machinery/suit_storage_unit/syndicate,
@@ -268,8 +268,8 @@
 	pixel_y = 9
 	},
 /obj/item/toy/figure/syndie{
-	pixel_y = -2;
-	pixel_x = 11
+	pixel_x = 11;
+	pixel_y = -2
 	},
 /turf/open/floor/fakespace,
 /area/shuttle/syndicate/hallway)
@@ -932,8 +932,8 @@
 "Ed" = (
 /obj/machinery/door/window/survival_pod{
 	dir = 1;
-	req_access = list("syndicate");
-	name = "Telecommunications Centre"
+	name = "Telecommunications Centre";
+	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/siding/red,
 /obj/effect/turf_decal/stripes/red/line{
@@ -1043,6 +1043,9 @@
 	dir = 8
 	},
 /area/shuttle/syndicate/hallway)
+"PX" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/syndicate/airlock)
 "Qb" = (
 /obj/effect/turf_decal/syndicateemblem/middle/left,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1511,7 +1514,7 @@ aa
 aa
 bO
 aB
-aB
+PX
 aY
 bd
 aB

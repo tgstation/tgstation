@@ -1,5 +1,7 @@
 import { classes } from 'common/react';
 import { Icon } from '../../components';
+import { Material } from './Types';
+import { useBackend } from '../../backend';
 
 const MATERIAL_ICONS: Record<string, [number, string][]> = {
   'iron': [
@@ -62,8 +64,8 @@ export type MaterialIconProps = {
   materialName: string;
 
   /**
-   * The amount of material. One sheet is 2,000 units. By default, the icon
-   * attempts to render a full stack (200,000 units).
+   * The amount of material. One sheet is 100 units. By default, the icon
+   * attempts to render a full stack (5,000 units).
    */
   amount?: number;
 };
@@ -72,9 +74,11 @@ export type MaterialIconProps = {
  * A 32x32 material icon. Animates between different stack sizes of the given
  * material.
  */
-export const MaterialIcon = (props: MaterialIconProps) => {
+export const MaterialIcon = (props: MaterialIconProps, context) => {
   const { materialName, amount } = props;
   const icons = MATERIAL_ICONS[materialName];
+  const { data } = useBackend<Material>(context);
+  const { SHEET_MATERIAL_AMOUNT } = data;
 
   if (!icons) {
     return <Icon name="question-circle" />;
@@ -84,7 +88,8 @@ export const MaterialIcon = (props: MaterialIconProps) => {
 
   while (
     icons[activeIdx + 1] &&
-    icons[activeIdx + 1][0] <= (amount ?? 200_000) / 2_000
+    icons[activeIdx + 1][0] <=
+      (amount ?? 50 * SHEET_MATERIAL_AMOUNT) / SHEET_MATERIAL_AMOUNT
   ) {
     activeIdx += 1;
   }

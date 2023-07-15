@@ -6,7 +6,7 @@
 	name = "drone shell dispenser"
 	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a drone shell. Does not need to be manually operated."
 
-	icon = 'icons/obj/machines/droneDispenser.dmi'
+	icon = 'icons/obj/machines/drone_dispenser.dmi'
 	icon_state = "on"
 	density = TRUE
 
@@ -108,7 +108,7 @@
 /obj/machinery/drone_dispenser/hivebot
 	name = "hivebot fabricator"
 	desc = "A large, bulky machine that whirs with activity, steam hissing from vents in its sides."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/machines/hivebot_fabricator.dmi'
 	icon_state = "hivebot_fab"
 	icon_off = "hivebot_fab"
 	icon_on = "hivebot_fab"
@@ -229,7 +229,7 @@
 			span_notice("[user] begins patching up [src] with [I]."),
 			span_notice("You begin restoring the damage to [src]..."))
 
-		if(!I.use_tool(src, user, 40, volume=50, amount=1))
+		if(!I.use_tool(src, user, 40, volume=50))
 			return
 
 		user.visible_message(
