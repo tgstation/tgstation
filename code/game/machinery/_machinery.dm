@@ -311,12 +311,17 @@
 
 /obj/machinery/emp_act(severity)
 	. = ..()
-	if(use_power && !machine_stat && !(. & EMP_PROTECT_SELF))
-		use_power(7500/severity)
-		new /obj/effect/temp_visual/emp(loc)
+	if(!use_power || machine_stat || (. & EMP_PROTECT_SELF))
+		return
+	use_power(7500/severity)
+	new /obj/effect/temp_visual/emp(loc)
 
-		if(prob(70/severity))
-			set_active_language(get_random_spoken_language())
+	if(!prob(70/severity))
+		return
+	if (!length(GLOB.uncommon_roundstart_languages))
+		return
+	remove_all_languages(source = LANGUAGE_EMP)
+	grant_random_uncommon_language(source = LANGUAGE_EMP)
 
 /**
  * Opens the machine.

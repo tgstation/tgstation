@@ -65,13 +65,7 @@
 
 /obj/item/language_manual/roundstart_species/Initialize(mapload)
 	. = ..()
-	language = pick( \
-		/datum/language/voltaic, \
-		/datum/language/nekomimetic, \
-		/datum/language/draconic, \
-		/datum/language/moffic, \
-		/datum/language/calcic \
-	)
+	language = pick(GLOB.uncommon_roundstart_languages)
 	name = "[initial(language.name)] manual"
 	desc = "The book's cover reads: \"[initial(language.name)] for Xenos - Learn common galactic tongues in seconds.\""
 	flavour_text = "you feel empowered with a mastery over [initial(language.name)]"

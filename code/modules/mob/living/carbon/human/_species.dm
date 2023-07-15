@@ -1,6 +1,8 @@
 GLOBAL_LIST_EMPTY(roundstart_races)
 ///List of all roundstart languages by path
 GLOBAL_LIST_EMPTY(roundstart_languages)
+///List of all roundstart languages by path except common
+GLOBAL_LIST_EMPTY(uncommon_roundstart_languages)
 
 /// An assoc list of species types to their features (from get_features())
 GLOBAL_LIST_EMPTY(features_by_species)
@@ -235,6 +237,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			qdel(temp_holder)
 			qdel(species)
 
+	GLOB.uncommon_roundstart_languages = GLOB.roundstart_languages - /datum/language/common
 	if(!selectable_species.len)
 		selectable_species += SPECIES_HUMAN
 
