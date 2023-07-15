@@ -4,6 +4,18 @@
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
 //Bottles now knockdown and break when smashed on people's heads. - Giacom
 
+/// Initializes GLOB.alcohol_containers, only containers that actually have reagents are added to the list.
+/proc/init_alcohol_containers()
+	var/list/containers = subtypesof(/obj/item/reagent_containers/cup/glass/bottle)
+	for(var/typepath in containers)
+		containers -= typepath
+		var/obj/item/reagent_containers/cup/glass/bottle/instance = new typepath
+		if(!length(instance.list_reagents))
+			qdel(instance)
+			continue
+		containers[typepath] = instance
+	return containers
+
 /obj/item/reagent_containers/cup/glass/bottle
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
@@ -800,7 +812,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/pruno
 	name = "pruno mix"
 	desc = "A trash bag filled with fruit, sugar, yeast, and water, pulped together into a pungent slurry to be fermented in an enclosed space, traditionally the toilet. Security would love to confiscate this, one of the many things wrong with them."
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "trashbag"
 	list_reagents = list(/datum/reagent/consumable/prunomix = 50)
 	var/fermentation_time = 30 SECONDS /// time it takes to ferment
@@ -879,6 +891,22 @@
 	icon_state = "cream"
 	list_reagents = list(/datum/reagent/consumable/cream = 100)
 	drink_type = DAIRY
+
+/obj/item/reagent_containers/cup/glass/bottle/juice/eggnog
+	name = "eggnog"
+	desc = "For enjoying the most wonderful time of the year."
+	icon = 'icons/obj/drinks/boxes.dmi'
+	icon_state = "nog2"
+	list_reagents = list(/datum/reagent/consumable/ethanol/eggnog = 100)
+	drink_type = FRUIT
+
+/obj/item/reagent_containers/cup/glass/bottle/juice/dreadnog
+	name = "eggnog"
+	desc = "For when you want some nondescript soda inside of your eggnog!"
+	icon = 'icons/obj/drinks/boxes.dmi'
+	icon_state = "dreadnog"
+	list_reagents = list(/datum/reagent/consumable/ethanol/dreadnog = 100)
+	drink_type = FRUIT | GROSS
 
 /obj/item/reagent_containers/cup/glass/bottle/juice/tomatojuice
 	name = "tomato juice"

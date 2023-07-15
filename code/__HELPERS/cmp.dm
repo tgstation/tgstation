@@ -170,3 +170,7 @@
 /// Orders heretic knowledge by priority
 /proc/cmp_heretic_knowledge(datum/heretic_knowledge/knowledge_a, datum/heretic_knowledge/knowledge_b)
 	return initial(knowledge_b.priority) - initial(knowledge_a.priority)
+
+/// Passed a list of assoc lists, sorts them by the list's "name" keys.
+/proc/cmp_assoc_list_name(list/A, list/B)
+	return sorttext(B["name"], A["name"])

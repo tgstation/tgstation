@@ -139,13 +139,14 @@
 /datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/H, mob/user)
 	SIGNAL_HANDLER
 	if(emageffect)
-		return
+		return FALSE
 	emageffect = TRUE
 	if(user)
 		to_chat(user, span_notice("You tap [H] on the back with your card."))
 	H.visible_message(span_danger("[H] starts flickering in an array of colors!"))
 	handle_emag(H)
 	addtimer(CALLBACK(src, PROC_REF(stop_emag), H), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
+	return TRUE
 
 /// Special handling for getting hit with a light eater
 /datum/species/ethereal/proc/on_light_eater(mob/living/carbon/human/source, datum/light_eater)
@@ -235,3 +236,41 @@
 	)
 
 	return to_add
+
+/datum/species/ethereal/lustrous //Ethereal pirates with an inherent bluespace prophet trauma.
+	name = "Lustrous"
+	id = SPECIES_ETHEREAL_LUSTROUS
+	examine_limb_id = SPECIES_ETHEREAL
+	mutantbrain = /obj/item/organ/internal/brain/lustrous
+	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
+	inherent_traits = list(
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_MUTANT_COLORS,
+		TRAIT_FIXED_MUTANT_COLORS,
+		TRAIT_AGENDER,
+		TRAIT_TENACIOUS,
+		TRAIT_NOBREATH,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_VIRUSIMMUNE,
+	)
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/ethereal/lustrous,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/ethereal,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/ethereal,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/ethereal,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/ethereal,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/ethereal,
+	)
+
+/datum/species/ethereal/lustrous/get_scream_sound(mob/living/carbon/human/ethereal)
+	return pick(
+		'sound/voice/ethereal/lustrous_scream_1.ogg',
+		'sound/voice/ethereal/lustrous_scream_2.ogg',
+		'sound/voice/ethereal/lustrous_scream_3.ogg',
+	)
+
+/datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load)
+	..()
+	default_color = new_lustrous.dna.features["ethcolor"]
+	new_lustrous.dna.features["ethcolor"] = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)] //Picks one of 5 lustrous-specific colors.

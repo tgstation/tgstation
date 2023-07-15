@@ -288,6 +288,20 @@
 		/obj/item/mod/module/visor/diaghud,
 	)
 
+
+/obj/item/mod/control/pre_equipped/interdyne
+	theme = /datum/mod_theme/interdyne
+	applied_cell = /obj/item/stock_parts/cell/super
+	applied_modules = list(
+		/obj/item/mod/module/defibrillator/combat,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/health_analyzer,
+		/obj/item/mod/module/injector,
+		/obj/item/mod/module/surgical_processor/preloaded,
+		/obj/item/mod/module/storage/syndicate,
+		/obj/item/mod/module/tether
+	)
+
 /obj/item/mod/control/pre_equipped/enchanted
 	theme = /datum/mod_theme/enchanted
 	applied_core = /obj/item/mod/core/infinite
@@ -303,7 +317,7 @@
 	applied_modules = list(
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/noslip,
-		/obj/item/mod/module/status_readout,
+		/obj/item/mod/module/status_readout/ninja,
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/dispenser/ninja,
 		/obj/item/mod/module/dna_lock/reinforced,

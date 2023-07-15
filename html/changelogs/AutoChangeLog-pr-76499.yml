@@ -1,5 +1,0 @@
-author: "Momo8289"
-delete-after: True
-changes:
-  - qol: "Crates that come in the cargo shuttle now have the order ID in their name"
-  - qol: "Requisition forms are now blue, and named with the timestamp they were created on"

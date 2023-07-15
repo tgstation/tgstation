@@ -8,17 +8,17 @@
 /mob/living/basic/spiderling
 	name = "spiderling"
 	desc = "It never stays still for long."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "spiderling"
 	icon_dead = "spiderling_dead"
 	density = FALSE
 	faction = list(FACTION_SPIDER)
-	speed = 1
+	speed = -0.75
 	move_resist = INFINITY // YOU CAN'T HANDLE ME LET ME BE FREE LET ME BE FREE LET ME BE FREE
 	speak_emote = list("hisses")
 	initial_language_holder = /datum/language_holder/spider
 	basic_mob_flags = FLAMMABLE_MOB | DEL_ON_DEATH
 	mob_size = MOB_SIZE_TINY
-	var/menu_description = "Normal spiderling."
 
 	unique_name = TRUE
 
@@ -52,11 +52,14 @@
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
 
+	add_overlay(image(icon = src.icon, icon_state = "spiderling_click_underlay", layer = BELOW_MOB_LAYER))
+
 	// the proc that handles passtable is nice but we should always be able to pass through table since we're so small so we can eschew adding that here
 	pass_flags |= PASSTABLE
 	add_traits(list(TRAIT_PASSTABLE, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_WEB_SURFER), INNATE_TRAIT)
 	AddComponent(/datum/component/swarming)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume = 0.2) // they're small but you can hear 'em
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/spiderling_web)
 
 	// it's A-OKAY for grow_as to be null for the purposes of this component since we override that behavior anyhow.
 	AddComponent(\
@@ -84,6 +87,7 @@
 	if(isturf(get_turf(loc)) && (basic_mob_flags & DEL_ON_DEATH || gibbed))
 		var/obj/item/food/spiderling/dead_spider = new(loc) // mmm yummy
 		dead_spider.name = name
+		dead_spider.icon_state = icon_dead
 
 	return ..()
 
@@ -93,14 +97,9 @@
 		return FALSE
 	basic_mob_flags &= ~DEL_ON_DEATH // we don't want to be deleted if we die while player controlled in case there's some revive schenanigans going on that can bring us back
 	GLOB.spidermobs[src] = TRUE
-	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/player_spider_modifier, multiplicative_slowdown = -2) // let's pick up the tempo, we are meant to be fast after all
 	if (apply_spider_antag)
 		var/datum/antagonist/spider/spider_antag = new(directive)
 		mind.add_antag_datum(spider_antag)
-
-/mob/living/basic/spiderling/Logout()
-	. = ..()
-	remove_movespeed_modifier(/datum/movespeed_modifier/player_spider_modifier)
 
 /mob/living/basic/spiderling/mob_negates_gravity() // in case our sisters want to give us a helping hand
 	if(locate(/obj/structure/spider/stickyweb) in loc)
@@ -130,6 +129,7 @@
 	ADD_TRAIT(grown, TRAIT_WAS_EVOLVED, REF(src))
 	grown.faction = faction.Copy()
 	grown.directive = directive
+	grown.set_name()
 
 	qdel(src)
 

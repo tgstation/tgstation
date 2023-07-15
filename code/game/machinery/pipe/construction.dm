@@ -14,7 +14,7 @@ Buildable meters
 	var/pipename
 	force = 7
 	throwforce = 7
-	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
+	icon = 'icons/obj/pipes_n_cables/pipe_item.dmi'
 	icon_state = "simple"
 	icon_state_preview = "manifold4w"
 	inhand_icon_state = "buildpipe"
@@ -377,7 +377,7 @@ Buildable meters
 /obj/item/pipe_meter
 	name = "meter"
 	desc = "A meter that can be wrenched on pipes, or attached to the floor with screws."
-	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
+	icon = 'icons/obj/pipes_n_cables/pipe_item.dmi'
 	icon_state = "meter"
 	inhand_icon_state = "buildpipe"
 	w_class = WEIGHT_CLASS_BULKY

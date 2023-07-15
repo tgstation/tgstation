@@ -141,6 +141,9 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 /obj/item/stack/sheet/mineral/uranium/five
 	amount = 5
 
+/obj/item/stack/sheet/mineral/uranium/half
+	amount = 25
+
 /*
  * Plasma
  */
@@ -403,7 +406,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
  */
 /obj/item/stack/sheet/mineral/abductor
 	name = "alien alloy"
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "sheet-abductor"
 	inhand_icon_state = "sheet-abductor"
 	singular_name = "alien alloy sheet"

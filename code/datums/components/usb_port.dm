@@ -188,7 +188,7 @@
 		QDEL_NULL(usb_cable_beam)
 
 	var/atom/atom_parent = parent
-	usb_cable_beam = atom_parent.Beam(new_physical_object, "usb_cable_beam", 'icons/obj/wiremod.dmi')
+	usb_cable_beam = atom_parent.Beam(new_physical_object, "usb_cable_beam", 'icons/obj/science/circuits.dmi')
 
 	RegisterSignal(new_physical_object, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(new_physical_object, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine_shell))

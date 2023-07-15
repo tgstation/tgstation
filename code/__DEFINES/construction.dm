@@ -188,6 +188,7 @@ GLOBAL_LIST_INIT(crafting_category, list(
 #define RCD_FLOODLIGHT 8
 #define RCD_WALLFRAME 9
 #define RCD_REFLECTOR 10
+#define RCD_GIRDER 11
 
 
 #define RCD_UPGRADE_FRAMES (1<<0)

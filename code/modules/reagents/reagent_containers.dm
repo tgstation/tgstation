@@ -23,7 +23,7 @@
 	/// If the reagents inside of this container will splash out when the container tries to splash onto someone or something
 	var/spillable = FALSE
 	/**
-	 * The different thresholds at which the reagent fill overlay will change. See reagentfillings.dmi.
+	 * The different thresholds at which the reagent fill overlay will change. See medical/reagent_fillings.dmi.
 	 *
 	 * Should be a list of integers which correspond to a reagent unit threshold.
 	 * If null, no automatic fill overlays are generated.
@@ -36,7 +36,7 @@
 	/// If not set, uses the current icon state.
 	var/fill_icon_state = null
 	/// The icon file to take fill icon appearances from
-	var/fill_icon = 'icons/obj/reagentfillings.dmi'
+	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
