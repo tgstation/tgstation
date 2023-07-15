@@ -428,12 +428,15 @@ const Randomize = (props, context) => {
 const SearchSpells = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const [spellSearch] = useLocalState(context, 'spell-search', '');
-  const { entries, points } = data;
+  const { entries } = data;
 
   const filteredEntries = entries.filter((entry) =>
     entry.name.toLowerCase().includes(spellSearch.toLowerCase())
   );
 
+  if (filteredEntries.length === 0) {
+    return <NoticeBox>No spells found!</NoticeBox>;
+  }
   return <SpellTabDisplay TabSpells={filteredEntries} />;
 };
 
@@ -442,18 +445,18 @@ const SpellTabDisplay = (props: { TabSpells: SpellEntry[] }, context) => {
   const { points } = data;
   const { TabSpells } = props;
 
-  const getTimeOrCat = (entry: SpellEntry) => {
+  const getTimeOrCatAndOffset = (entry: SpellEntry) => {
     if (entry.cat === SpellCategory.Rituals) {
       if (entry.times) {
-        return `Cast ${entry.times} times.`;
+        return [-104, `Cast ${entry.times} times.`];
       } else {
-        return 'Not cast yet.';
+        return [-110, 'Not cast yet.'];
       }
     } else {
       if (entry.cooldown) {
-        return `${entry.cooldown}s Cooldown`;
+        return [-115, `${entry.cooldown}s Cooldown`];
       } else {
-        return 'No Cooldown!';
+        return [-120, 'No Cooldown!'];
       }
     }
   };
@@ -470,8 +473,8 @@ const SpellTabDisplay = (props: { TabSpells: SpellEntry[] }, context) => {
                 <Box mr={entry.buyword === Buywords.Learn ? 6.5 : 2}>
                   {entry.cost} Points
                 </Box>
-                <Box ml={-110} mt={-2.2}>
-                  {getTimeOrCat(entry)}
+                <Box ml={getTimeOrCatAndOffset(entry)[0]} mt={-2.2}>
+                  {getTimeOrCatAndOffset(entry)[1]}
                 </Box>
                 {entry.buyword === Buywords.Learn && (
                   <Box mr={-9.5} mt={-3}>
