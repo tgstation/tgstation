@@ -8,22 +8,26 @@
 	worn_ears_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_EARS,
-		offset_y = list("north" = -5, "south" = -5, "east" = -5, "west" = -5),
+		offset_x = list("east" = 2, "west" = -2),
+		offset_y = list("north" = -5, "south" = -4, "east" = -5, "west" = -5),
 	)
 	worn_glasses_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_GLASSES,
-		offset_y = list("north" = -5, "south" = -5, "east" = -5, "west" = -5),
+		offset_x = list("east" = 2, "west" = -2),
+		offset_y = list("north" = -5, "south" = -4, "east" = -5, "west" = -5),
 	)
 	worn_head_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_HEAD,
-		offset_y = list("north" = -5, "south" = -5, "east" = -5, "west" = -5),
+		offset_x = list("east" = 2, "west" = -2),
+		offset_y = list("north" = -5, "south" = -4, "east" = -5, "west" = -5),
 	)
 	worn_face_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_FACE,
-		offset_y = list("north" = -5, "south" = -5, "east" = -5, "west" = -5),
+		offset_x = list("east" = 2, "west" = -2),
+		offset_y = list("north" = -5, "south" = -4, "east" = -5, "west" = -5),
 	)
 	return ..()
 
@@ -43,7 +47,7 @@
 	worn_back_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_BACK,
-		offset_x = list("east" = 2, "west" = -2),
+		offset_x = list("east" = 3, "west" = -3),
 		offset_y = list("north" = -4, "south" = -4, "east" = -4, "west" = -4),
 	)
 	return ..()
@@ -61,8 +65,8 @@
 	held_hand_offset =  new(
 		attached_part = src,
 		feature_key = OFFSET_HELD,
-		offset_x = list("east" = -2),
-		offset_y = list("north" = -6, "south" = -5, "east" = -4, "west" = -4),
+		offset_y = list("north" = 2, "south" = -1, "east" = -1, "west" = -4),
+		offset_y = list("north" = -5, "south" = -4, "east" = -3, "west" = -3),
 	)
 	return ..()
 
@@ -79,7 +83,7 @@
 	held_hand_offset =  new(
 		attached_part = src,
 		feature_key = OFFSET_HELD,
-		offset_x = list("west" = 2),
+		offset_y = list("north" = -2, "south" = 1, "east" = 4, "west" = 1),
 		offset_y = list("north" = -6, "south" = -5, "east" = -4, "west" = -4),
 	)
 	return ..()
