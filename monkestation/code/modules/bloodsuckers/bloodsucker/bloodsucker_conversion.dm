@@ -27,6 +27,9 @@
 /datum/antagonist/bloodsucker/proc/can_make_vassal(mob/living/conversion_target)
 	if(!iscarbon(conversion_target) || conversion_target.stat > UNCONSCIOUS)
 		return FALSE
+	if(length(vassals) == return_current_max_vassals())
+		to_chat(owner.current, span_danger("You find that your powers run thin and are unable to dominate their mind with your blood!"))
+		return FALSE
 	// No Mind!
 	if(!conversion_target.mind)
 		to_chat(owner.current, span_danger("[conversion_target] isn't self-aware enough to be made into a Vassal."))
@@ -43,6 +46,20 @@
 		return TRUE
 	to_chat(owner.current, span_danger("[conversion_target]'s mind is overwhelmed with too much external force to put your own!"))
 	return FALSE
+
+/**
+ *  This proc is responsible for calculating how many vassals you can have at any given
+ *  time, ranges from 1 at 20 pop to 4 at 40 pop
+ */
+/datum/antagonist/bloodsucker/proc/return_current_max_vassals()
+	var/total_players = GLOB.joined_player_list.len
+	switch(total_players)
+		if(1 to 20)
+			return 1
+		if(21 to 30)
+			return 3
+		else
+			return 4
 
 /**
  * First will check if the target can be turned into a Vassal, if so then it will
