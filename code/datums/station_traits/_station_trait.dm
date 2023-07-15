@@ -26,11 +26,16 @@
 	var/planetary = TRUE
 	/// Can we be selected on space stations?
 	var/space = TRUE
+	/// If ran during dynamic, do we reduce the total threat?
+	var/threat_reduction = 0
 
 /datum/station_trait/New()
 	. = ..()
 
 	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
+
+	if(threat_reduction)
+		GLOB.dynamic_threat_mods[type] = threat_reduction
 
 	if(trait_processes)
 		START_PROCESSING(SSstation, src)

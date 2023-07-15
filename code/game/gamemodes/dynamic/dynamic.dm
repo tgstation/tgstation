@@ -15,6 +15,8 @@ GLOBAL_VAR_INIT(dynamic_stacking_limit, 90)
 GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 // Forced threat level, setting this to zero or higher forces the roundstart threat to the value.
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
+/// Modify the threat level before dynamic can be Initialized (for station traits, as example). List(type = threat_reduction)
+GLOBAL_LIST_EMPTY(dynamic_threat_mods)
 
 /datum/game_mode/dynamic
 	// Threat logging vars
@@ -394,6 +396,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/proc/generate_threat()
 	var/relative_threat = LORENTZ_DISTRIBUTION(threat_curve_centre, threat_curve_width)
 	threat_level = clamp(round(lorentz_to_amount(relative_threat), 0.1), 0, max_threat_level)
+
+	for(var/type in GLOB.dynamic_threat_mods)
+		threat_level = max(threat_level - GLOB.dynamic_threat_mods[type], 0)
+		log_dynamic("Threat reduced by [GLOB.dynamic_threat_mods[type]]. Source: [type].")
 
 	if (SSticker.totalPlayersReady < low_pop_player_threshold)
 		threat_level = min(threat_level, LERP(low_pop_maximum_threat, max_threat_level, SSticker.totalPlayersReady / low_pop_player_threshold))

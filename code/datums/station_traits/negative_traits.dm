@@ -526,6 +526,8 @@
 	trait_to_give = STATION_TRAIT_RADIOACTIVE_NEBULA
 
 	blacklist = list(/datum/station_trait/random_event_weight_modifier/rad_storms)
+	force = TRUE
+	threat_reduction = 30
 
 	intensity_increment_time = 5 MINUTES
 	maximum_nebula_intensity = 1 HOURS + 40 MINUTES
@@ -570,6 +572,18 @@
 	//Disables radstorms, they don't really make sense since we already have the nebula causing storms
 	var/datum/round_event_control/modified_event = locate(/datum/round_event_control/radiation_storm) in SSevents.control
 	modified_event.weight = 0
+
+	//Set the display screens to the radiation alert
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	if(!frequency)
+		return
+
+	var/datum/signal/signal = new
+	signal.data["command"] = "alert"
+	signal.data["picture_state"] = "radiation"
+
+	var/atom/movable/virtualspeaker/virt = new(null)
+	frequency.post_signal(virt, signal)
 
 ///They entered space? START BOMBING WITH RADS HAHAHAHA
 /datum/station_trait/nebula/hostile/radiation/proc/on_entered(area/space, atom/movable/enterer)
@@ -642,18 +656,6 @@
 	"}
 
 	priority_announce(announcement, sound = 'sound/misc/notice1.ogg')
-
-	//Set the display screens to the radiation alert
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-	if(!frequency)
-		return
-
-	var/datum/signal/signal = new
-	signal.data["command"] = "alert"
-	signal.data["picture_state"] = "radiation"
-
-	var/atom/movable/virtualspeaker/virt = new(null)
-	frequency.post_signal(virt, signal)
 
 /datum/station_trait/nebula/hostile/radiation/get_decal_color(atom/thing_to_color, pattern)
 	if(istype(get_area(thing_to_color), /area/station/hallway)) //color hallways green
