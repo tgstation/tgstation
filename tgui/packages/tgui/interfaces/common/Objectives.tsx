@@ -13,29 +13,28 @@ export type Objective = {
   complete: BooleanLike;
 };
 
-export const ObjectivePrintout = (
-  props: {
-    // For passing onto the Stack component
-    fill?: boolean;
-    // Allows additional components to follow the printout in the same stack
-    objectiveFollowup?: InfernoNode;
-    // The prefix to use for each objective, defaults to "#" (#1, #2)
-    objectivePrefix?: string;
-    // The font size to use for each objective
-    objectiveTextSize?: string;
-    // The objectives to print out
-    objectives: Objective[];
-    // The title to use for the printout, defaults to "Your current objectives"
-    titleMessage?: string;
-  },
-  context
-) => {
+type ObjectivePrintoutProps = {
+  // For passing onto the Stack component
+  fill?: boolean;
+  // Allows additional components to follow the printout in the same stack
+  objectiveFollowup?: InfernoNode;
+  // The prefix to use for each objective, defaults to "#" (#1, #2)
+  objectivePrefix?: string;
+  // The font size to use for each objective
+  objectiveTextSize?: string;
+  // The objectives to print out
+  objectives: Objective[];
+  // The title to use for the printout, defaults to "Your current objectives"
+  titleMessage?: string;
+};
+
+export const ObjectivePrintout = (props: ObjectivePrintoutProps, context) => {
   const {
     fill,
     objectiveFollowup,
     objectivePrefix,
     objectiveTextSize,
-    objectives,
+    objectives = [],
     titleMessage,
   } = props;
 
@@ -51,7 +50,7 @@ export const ObjectivePrintout = (
             </Stack.Item>
           ))}
       </Stack.Item>
-      {objectiveFollowup && <Stack.Item>{objectiveFollowup}</Stack.Item>}
+      {!!objectiveFollowup && <Stack.Item>{objectiveFollowup}</Stack.Item>}
     </Stack>
   );
 };
