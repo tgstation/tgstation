@@ -276,6 +276,9 @@
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/under/costume/buttondown/slacks/service //preset one to be a formal white shirt and black pants
+	greyscale_colors = "#EEEEEE#45270c#45270c#222227"
+
 /obj/item/clothing/under/costume/buttondown/shorts
 	name = "buttondown shirt with shorts"
 	desc = "A fancy buttondown shirt with shorts."

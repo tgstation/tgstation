@@ -161,7 +161,7 @@
 			"icon" = "kitchen-set",
 			"products" = list(
 				/obj/item/clothing/under/suit/black = 1,
-				/obj/item/clothing/under/suit/sl = 1,
+				/obj/item/clothing/under/costume/buttondown/slacks/service = 1,
 				/obj/item/clothing/accessory/waistcoat = 1,
 				/obj/item/clothing/under/suit/waiter = 1,
 				/obj/item/clothing/suit/apron = 1,

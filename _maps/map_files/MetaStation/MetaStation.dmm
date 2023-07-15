@@ -28218,7 +28218,7 @@
 /area/station/science/research)
 "kjL" = (
 /obj/structure/table,
-/obj/item/clothing/under/suit/sl,
+/obj/item/clothing/under/costume/buttondown/slacks/service,
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)

@@ -20,10 +20,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY|FEMALE_UNIFORM_NO_BREASTS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/under/suit/sl
-	desc = "It's a very amish looking suit."
-	name = "amish suit"
-	icon_state = "sl_suit"
 
 /obj/item/clothing/under/suit/waiter
 	name = "waiter's outfit"

@@ -95,7 +95,7 @@
 		/obj/effect/spawner/random/clothing/bowler_or_that,
 		/obj/item/clothing/shoes/sneakers/black,
 		/obj/item/cane,
-		/obj/item/clothing/under/suit/sl,
+		/obj/item/clothing/under/costume/buttondown/slacks/service,
 		/obj/item/clothing/mask/fakemoustache,
 	)
 
