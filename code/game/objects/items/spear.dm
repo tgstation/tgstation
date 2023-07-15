@@ -242,7 +242,7 @@
 	force_wielded = 18
 
 /obj/item/spear/pillow
-	name = "pillow spear"
+	name = "pillow lance"
 	desc = "A spear with a pillow for a tip, used for harmless jousting and spearfighting. Wielder of this are able to charge."
 	icon_state = "spearglass0"
 	base_icon_state = "spearglass0"

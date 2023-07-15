@@ -348,6 +348,22 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			user.balloon_alert(user, "crafted spear")
 		return
 
+	if(istype(attacking_item, /obj/item/pillow))
+		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/pillow_lance
+		user.balloon_alert(user, "crafting lance...")
+		if(do_after(user, initial(recipe_to_use.time), src)) // we do initial work here to get the correct timer
+			var/obj/item/spear/crafted_spear = new /obj/item/spear/pillow()
+
+			remove_item_from_storage(user)
+			if (!user.transferItemToLoc(attacking_item, crafted_spear))
+				return
+			crafted_spear.CheckParts(list(attacking_item))
+			qdel(src)
+
+			user.put_in_hands(crafted_spear)
+			user.balloon_alert(user, "crafted lance")
+		return
+
 	if(isigniter(attacking_item) && !(HAS_TRAIT(attacking_item, TRAIT_NODROP)))
 		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/stunprod
 		user.balloon_alert(user, "crafting cattleprod...")

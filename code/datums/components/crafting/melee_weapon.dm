@@ -33,6 +33,17 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
+/datum/crafting_recipe/pillow_lance
+	name = "Pillow lance"
+	result = /obj/item/spear/pillow
+	reqs = list(
+		/obj/item/restraints/handcuffs/cable = 1,
+		/obj/item/stack/rods = 1,
+		/obj/item/pillow
+	)
+	time = 2 SECONDS
+	category = CAT_WEAPON_MELEE
+
 /datum/crafting_recipe/tailclub
 	name = "Tail Club"
 	result = /obj/item/tailclub
