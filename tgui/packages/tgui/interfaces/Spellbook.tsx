@@ -430,11 +430,10 @@ const SearchSpells = (props, context) => {
   const [spellSearch] = useLocalState(context, 'spell-search', '');
   const { entries } = data;
 
-  // Filter by name, category is also included as it's likely you'd search "rituals" or similar
-  // Desc is not included, though, as searching - say - "summon" would give you half of all entries
   const filteredEntries = entries.filter(
     (entry) =>
       entry.name.toLowerCase().includes(spellSearch.toLowerCase()) ||
+      entry.desc.toLowerCase().includes(spellSearch.toLowerCase()) ||
       entry.cat.toLowerCase().includes(spellSearch.toLowerCase())
   );
 
