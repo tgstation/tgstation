@@ -1,4 +1,0 @@
-author: "VladinXXV"
-delete-after: True
-changes:
-  - bugfix: "Autopsy reports will now correctly report blood type and level for corpses who happen to have blood for blood."
