@@ -107,7 +107,7 @@
 	name = "emergency nebula radiation shielder"
 	desc = "Generates a field around the station to protect it from a radioactive nebula."
 
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/engine/other.dmi'
 	icon_state = "portgen1_1"
 	pixel_x = 0
 
