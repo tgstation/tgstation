@@ -6,8 +6,10 @@
 	icon_state = "coconut_seed"
 
 	growing_icon = 'goon/icons/obj/hydroponics/plants_fruit.dmi'
-	growthstages = 4
+	growthstages = 3
 	icon_grow = "coconut-grow"
+	icon_dead = "coconut-dead"
+	icon_harvest = "coconut-harvest"
 	plantname = "Coconut Tree"
 
 	yield = 5
