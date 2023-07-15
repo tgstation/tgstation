@@ -262,7 +262,7 @@
 /datum/supply_pack/imports/abandoned
 	name = "Abandoned Crate"
 	desc = "...wait, how did this get here?"
-	cost = CARGO_CRATE_VALUE * 100
+	cost = CARGO_CRATE_VALUE * 50
 	contains = list()
 	crate_type = /obj/structure/closet/crate/secure/loot
 	crate_name = "abandoned crate"
@@ -272,7 +272,7 @@
 /datum/supply_pack/imports/shambler_evil
 	name = "Shamber's Juice Eldritch Energy! Crate"
 	desc = "~J'I'CE!~"
-	cost = CARGO_CRATE_VALUE * 100
+	cost = CARGO_CRATE_VALUE * 50
 	contains = list(/obj/item/reagent_containers/cup/soda_cans/shamblers/eldritch = 1)
 	crate_name = "illegal shambler's juice crate"
 	contraband = TRUE
