@@ -271,7 +271,7 @@
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"
 	desc = "It seems to be empty."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "datadisk3"
 	var/upgrade
 

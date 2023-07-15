@@ -253,7 +253,7 @@
 	density = 1;
 	desc = "Generates power from lava!";
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
+	icon = 'icons/obj/pipes_n_cables/simple.dmi';
 	icon_state = "compressor";
 	name = "geothermal generator"
 	},
@@ -960,7 +960,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "Generates power from lava!";
-	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
+	icon = 'icons/obj/pipes_n_cables/simple.dmi';
 	icon_state = "turbine";
 	name = "geothermal generator"
 	},
@@ -3575,7 +3575,7 @@
 "su" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
-	icon = 'icons/obj/flora/snowflora.dmi';
+	icon = 'icons/obj/fluff/flora/snowflora.dmi';
 	icon_state = "snowgrass3";
 	name = "frozen flora"
 	},
@@ -3686,7 +3686,7 @@
 "uK" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
-	icon = 'icons/obj/flora/snowflora.dmi';
+	icon = 'icons/obj/fluff/flora/snowflora.dmi';
 	icon_state = "snowgrass2";
 	name = "frozen flora"
 	},
@@ -3961,7 +3961,7 @@
 "Af" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
-	icon = 'icons/obj/flora/snowflora.dmi';
+	icon = 'icons/obj/fluff/flora/snowflora.dmi';
 	icon_state = "snowgrass3";
 	name = "frozen flora"
 	},
@@ -4114,7 +4114,7 @@
 "Hn" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
-	icon = 'icons/obj/flora/snowflora.dmi';
+	icon = 'icons/obj/fluff/flora/snowflora.dmi';
 	icon_state = "snowgrass";
 	name = "frozen flora"
 	},
@@ -4177,7 +4177,7 @@
 "Lc" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
-	icon = 'icons/obj/flora/snowflora.dmi';
+	icon = 'icons/obj/fluff/flora/snowflora.dmi';
 	icon_state = "snowgrass2";
 	name = "frozen flora"
 	},
@@ -4346,7 +4346,7 @@
 "Ow" = (
 /obj/structure/flora{
 	desc = "Looks frozen.";
-	icon = 'icons/obj/flora/snowflora.dmi';
+	icon = 'icons/obj/fluff/flora/snowflora.dmi';
 	icon_state = "snowgrass_sw";
 	name = "frozen flora"
 	},

@@ -395,7 +395,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/action/innate/ai/lockdown/Activate()
 	hack_in_progress = TRUE
-	for(var/obj/machinery/door/locked_down as anything in GLOB.airlocks)
+	for(var/obj/machinery/door/locked_down as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door))
 		if(QDELETED(locked_down) || !is_station_level(locked_down.z))
 			continue
 		INVOKE_ASYNC(locked_down, TYPE_PROC_REF(/obj/machinery/door, hostile_lockdown), owner)
@@ -415,7 +415,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /// For Lockdown malf AI ability. Opens all doors on the station.
 /proc/_malf_ai_undo_lockdown()
-	for(var/obj/machinery/door/locked_down as anything in GLOB.airlocks)
+	for(var/obj/machinery/door/locked_down as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door))
 		if(QDELETED(locked_down) || !is_station_level(locked_down.z))
 			continue
 		INVOKE_ASYNC(locked_down, TYPE_PROC_REF(/obj/machinery/door, disable_lockdown))
@@ -575,7 +575,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	desc = "[desc] It has [uses] use\s remaining."
 
 /datum/action/innate/ai/blackout/Activate()
-	for(var/obj/machinery/power/apc/apc in GLOB.apcs_list)
+	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
 		if(prob(30 * apc.overload))
 			apc.overload_lighting()
 		else
@@ -736,12 +736,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	uses = 1
 
 /datum/action/innate/ai/break_fire_alarms/Activate()
-	for(var/obj/machinery/firealarm/bellman in GLOB.machines)
+	for(var/obj/machinery/firealarm/bellman as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/firealarm))
 		if(!is_station_level(bellman.z))
 			continue
 		bellman.obj_flags |= EMAGGED
 		bellman.update_appearance()
-	for(var/obj/machinery/door/firedoor/firelock in GLOB.machines)
+	for(var/obj/machinery/door/firedoor/firelock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/firedoor))
 		if(!is_station_level(firelock.z))
 			continue
 		firelock.emag_act(owner_AI, src)
@@ -766,7 +766,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	uses = 1
 
 /datum/action/innate/ai/emergency_lights/Activate()
-	for(var/obj/machinery/light/L in GLOB.machines)
+	for(var/obj/machinery/light/L as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
 		if(is_station_level(L.z))
 			L.no_low_power = TRUE
 			INVOKE_ASYNC(L, TYPE_PROC_REF(/obj/machinery/light/, update), FALSE)
@@ -867,7 +867,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	unlock_sound = 'sound/items/rped.ogg'
 
 /datum/ai_module/upgrade/upgrade_turrets/upgrade(mob/living/silicon/ai/AI)
-	for(var/obj/machinery/porta_turret/ai/turret in GLOB.machines)
+	for(var/obj/machinery/porta_turret/ai/turret as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/porta_turret/ai))
 		turret.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
 		turret.max_integrity = 200
 		turret.repair_damage(200)
@@ -1024,78 +1024,89 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		if("name")
 			say_name = params["name"]
 
-/datum/ai_module/utility/remote_vendor_tilt
-	name = "Remote vendor tilting"
-	description = "Lets you remotely tip vendors over in any direction."
-	cost = 15
-	one_purchase = FALSE
-	power_type = /datum/action/innate/ai/ranged/remote_vendor_tilt
-	unlock_sound = 'sound/effects/bang.ogg'
-	unlock_text = "You gain the ability to remotely tip any vendor onto any adjacent tiles."
+/datum/ai_module/utility/emag
+	name = "Targetted Safeties Override"
+	description = "Allows you to disable the safeties of any machinery on the station, provided you can access it."
+	cost = 20
+	power_type = /datum/action/innate/ai/ranged/emag
+	unlock_text = span_notice("You download an illicit software package from a syndicate database leak and integrate it into your firmware, fighting off a few kernel intrusions along the way.")
+	unlock_sound = SFX_SPARKS
 
-/datum/action/innate/ai/ranged/remote_vendor_tilt
-	name = "Remotely tilt vendor"
-	desc = "Use to remotely tilt a vendor in any direction you desire."
-	button_icon_state = "vendor_tilt"
+/datum/action/innate/ai/ranged/emag
+	name = "Targetted Safeties Override"
+	desc = "Allows you to effectively emag anything you click on."
+	button_icon = 'icons/obj/card.dmi'
+	button_icon_state = "emag"
+	uses = 7
+	auto_use_uses = FALSE
+	enable_text = span_notice("You load your syndicate software package to your most recent memory slot.")
+	disable_text = span_notice("You unload your syndicate software package.")
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
-	uses = VENDOR_TIPPING_USES
-	var/time_to_tilt = MALF_VENDOR_TIPPING_TIME
-	enable_text = span_notice("You prepare to wobble any vendors you see.")
-	disable_text = span_notice("You stop focusing on tipping vendors.")
 
-/datum/action/innate/ai/ranged/remote_vendor_tilt/New()
+/datum/action/innate/ai/ranged/emag/Destroy()
+	return ..()
+
+/datum/action/innate/ai/ranged/emag/New()
 	. = ..()
 	desc = "[desc] It has [uses] use\s remaining."
 
-/datum/action/innate/ai/ranged/remote_vendor_tilt/do_ability(mob/living/caller, atom/clicked_on)
+/datum/action/innate/ai/ranged/emag/do_ability(mob/living/caller, atom/clicked_on)
 
-	if (!isAI(caller))
-		return FALSE
-	var/mob/living/silicon/ai/ai_caller = caller
+	// Only things with of or subtyped of any of these types may be remotely emagged
+	var/static/list/compatable_typepaths = list(
+		/obj/machinery,
+		/obj/structure,
+		/obj/item/radio/intercom,
+		/obj/item/modular_computer,
+		/mob/living/simple_animal/bot,
+		/mob/living/silicon,
+	)
 
-	if(ai_caller.incapacitated())
-		unset_ranged_ability(caller)
-		return FALSE
-
-	if(!isvendor(clicked_on))
-		clicked_on.balloon_alert(ai_caller, "not a vendor!")
-		return FALSE
-
-	var/obj/machinery/vending/clicked_vendor = clicked_on
-
-	if (clicked_vendor.tilted)
-		clicked_vendor.balloon_alert(ai_caller, "already tilted!")
+	if (!ai_caller.can_see(clicked_on))
+		clicked_on.balloon_alert(ai_caller, "can't see!")
 		return FALSE
 
-	if (!clicked_vendor.tiltable)
-		clicked_vendor.balloon_alert(ai_caller, "cannot be tilted!")
+	if (ismachinery(clicked_on))
+		var/obj/machinery/clicked_machine = clicked_on
+		if (!clicked_machine.is_operational)
+			clicked_machine.balloon_alert(ai_caller, "not operational!")
+			return FALSE
+
+	if (!(is_type_in_list(clicked_on.type, compatable_typepaths)))
+		clicked_on.balloon_alert(ai_caller, "incompatable!")
 		return FALSE
 
-	if (!clicked_vendor.powered() || clicked_vendor.machine_stat & BROKEN)
-		clicked_vendor.balloon_alert(ai_caller, "no power!")
+	if (istype(clicked_on, /obj/machinery/door/airlock)) // I HATE THIS CODE SO MUCHHH
+		var/obj/machinery/door/airlock/clicked_airlock = clicked_on
+		if (!clicked_airlock.canAIControl(ai_caller))
+			clicked_airlock.balloon_alert(ai_caller, "unable to interface!")
+			return FALSE
+
+	if (istype(clicked_on, /obj/machinery/airalarm))
+		var/obj/machinery/airalarm/alarm = clicked_on
+		if (alarm.aidisabled)
+			alarm.balloon_alert(ai_caller, "unable to interface!")
+			return FALSE
+
+	if (istype(clicked_on, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/clicked_apc = clicked_on
+		if (clicked_apc.aidisabled)
+			clicked_apc.balloon_alert(ai_caller, "unable to interface!")
+			return FALSE
+
+	if (!clicked_on.emag_act(ai_caller))
+		to_chat(ai_caller, span_warning("Hostile software insertion failed!")) // lets not overlap balloon alerts
 		return FALSE
 
-	var/picked_dir_string = show_radial_menu(ai_caller, clicked_vendor, GLOB.all_radial_directions, custom_check = CALLBACK(src, PROC_REF(radial_check), caller, clicked_vendor))
-	if (isnull(picked_dir_string))
-		return FALSE
-	var/picked_dir = text2dir(picked_dir_string)
-
-	var/turf/target = get_step(clicked_vendor, picked_dir)
-	if (!ai_caller.can_see(target))
-		to_chat(ai_caller, span_warning("You can't see the target tile!"))
-		return FALSE
-
-	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target, time_to_tilt)
-	clicked_vendor.visible_message(span_warning("[clicked_vendor] starts falling over..."))
-	clicked_vendor.balloon_alert_to_viewers("falling over...")
-	addtimer(CALLBACK(src, PROC_REF(do_vendor_tilt), clicked_vendor, target), time_to_tilt)
+	to_chat(ai_caller, span_notice("Software package successfully injected."))
 
 	adjust_uses(-1)
 	if(uses)
 		desc = "[initial(desc)] It has [uses] use\s remaining."
 		build_all_button_icons()
+	else
+		unset_ranged_ability(ai_caller, span_warning("Out of uses!"))
 
-	unset_ranged_ability(caller, span_danger("Tilting..."))
 	return TRUE
 
 /datum/action/innate/ai/ranged/remote_vendor_tilt/proc/do_vendor_tilt(obj/machinery/vending/vendor, turf/target)
@@ -1216,6 +1227,80 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		else
 			stack_trace("non-standard dir entered")
 			return 0
+
+/datum/ai_module/utility/remote_vendor_tilt
+	name = "Remote vendor tilting"
+	description = "Lets you remotely tip vendors over in any direction."
+	cost = 15
+	one_purchase = FALSE
+	power_type = /datum/action/innate/ai/ranged/remote_vendor_tilt
+	unlock_sound = 'sound/effects/bang.ogg'
+	unlock_text = "You gain the ability to remotely tip any vendor onto any adjacent tiles."
+
+/datum/action/innate/ai/ranged/remote_vendor_tilt
+	name = "Remotely tilt vendor"
+	desc = "Use to remotely tilt a vendor in any direction you desire."
+	button_icon_state = "vendor_tilt"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+	uses = VENDOR_TIPPING_USES
+	var/time_to_tilt = MALF_VENDOR_TIPPING_TIME
+	enable_text = span_notice("You prepare to wobble any vendors you see.")
+	disable_text = span_notice("You stop focusing on tipping vendors.")
+
+/datum/action/innate/ai/ranged/remote_vendor_tilt/New()
+	. = ..()
+	desc = "[desc] It has [uses] use\s remaining."
+
+/datum/action/innate/ai/ranged/remote_vendor_tilt/do_ability(mob/living/caller, atom/clicked_on)
+
+	if (!isAI(caller))
+		return FALSE
+	var/mob/living/silicon/ai/ai_caller = caller
+
+	if(ai_caller.incapacitated())
+		unset_ranged_ability(caller)
+		return FALSE
+
+	if(!isvendor(clicked_on))
+		clicked_on.balloon_alert(ai_caller, "not a vendor!")
+		return FALSE
+
+	var/obj/machinery/vending/clicked_vendor = clicked_on
+
+	if (clicked_vendor.tilted)
+		clicked_vendor.balloon_alert(ai_caller, "already tilted!")
+		return FALSE
+
+	if (!clicked_vendor.tiltable)
+		clicked_vendor.balloon_alert(ai_caller, "cannot be tilted!")
+		return FALSE
+
+	if (!clicked_vendor.powered() || clicked_vendor.machine_stat & BROKEN)
+		clicked_vendor.balloon_alert(ai_caller, "no power!")
+		return FALSE
+
+	var/picked_dir_string = show_radial_menu(ai_caller, clicked_vendor, GLOB.all_radial_directions, custom_check = CALLBACK(src, PROC_REF(radial_check), caller, clicked_vendor))
+	if (isnull(picked_dir_string))
+		return FALSE
+	var/picked_dir = text2dir(picked_dir_string)
+
+	var/turf/target = get_step(clicked_vendor, picked_dir)
+	if (!ai_caller.can_see(target))
+		to_chat(ai_caller, span_warning("You can't see the target tile!"))
+		return FALSE
+
+	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target, time_to_tilt)
+	clicked_vendor.visible_message(span_warning("[clicked_vendor] starts falling over..."))
+	clicked_vendor.balloon_alert_to_viewers("falling over...")
+	addtimer(CALLBACK(src, PROC_REF(do_vendor_tilt), clicked_vendor, target), time_to_tilt)
+
+	adjust_uses(-1)
+	if(uses)
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+		build_all_button_icons()
+
+	unset_ranged_ability(caller, span_danger("Tilting..."))
+	return TRUE
 
 #undef DEFAULT_DOOMSDAY_TIMER
 #undef DOOMSDAY_ANNOUNCE_INTERVAL

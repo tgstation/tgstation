@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Cultists promoted to Leader no longer lose their spells (rip whoever tried saving up blood rites)"
-  - admin: "Admins can now force promote/demote people from Cult Leader if necessary."
