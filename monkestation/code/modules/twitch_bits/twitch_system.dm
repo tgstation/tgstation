@@ -17,6 +17,7 @@ SUBSYSTEM_DEF(twitch)
 
 	var/datum/twitch_event/last_event
 	var/last_event_execution = 0
+	var/last_executor
 
 /datum/controller/subsystem/twitch/stat_entry(msg)
 	msg += "Running Events:[running_events.len]"
@@ -50,8 +51,9 @@ SUBSYSTEM_DEF(twitch)
 	if(last_event != chosen_one)
 		last_event = chosen_one
 		last_event_execution = world.time
+		last_executor = incoming[4]
 	else
-		if(world.time < last_event_execution + 1 SECONDS)
+		if((world.time < last_event_execution + 2 SECONDS) && last_executor == incoming[4])
 			return
 
 	switch(SSticker.current_state)
