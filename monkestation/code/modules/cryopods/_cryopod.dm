@@ -344,14 +344,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		for(var/datum/record/crew/possible_target_record as anything in GLOB.manifest.general)
 			if(possible_target_record.name == stored_name && (stored_rank == "N/A" || possible_target_record.trim == stored_rank))
 				announce_rank = possible_target_record.rank
-				qdel(possible_target_record)
+				//qdel(possible_target_record) <- we allow people to exit and i dont wanna deal with recreating manifest records
 				break
 
 	var/obj/machinery/computer/cryopod/control_computer = control_computer_weakref?.resolve()
 	if(!control_computer)
 		control_computer_weakref = null
 	else
-		control_computer.frozen_crew += list(list("name" = stored_name, "job" = stored_rank))
+		control_computer.frozen_crew += list(list("name" = stored_name, "job" = stored_rank, "items" = list(), "ckey" = stored_ckey))
 
 	// Make an announcement and log the person entering storage. If set to quiet, does not make an announcement.
 	if(!quiet)
@@ -372,6 +372,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 			mob_occupant.transferItemToLoc(item_content, control_computer, force = TRUE, silent = TRUE)
 			item_content.dropped(mob_occupant)
 			control_computer.frozen_item += item_content
+			for(var/list/stored as anything in control_computer.frozen_crew)
+				if(stored["name"] == stored_name)
+					stored["items"] += item_content
 		else
 			mob_occupant.transferItemToLoc(item_content, drop_location(), force = TRUE, silent = TRUE)
 
@@ -382,6 +385,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	QDEL_NULL(occupant)
 	open_machine()
 	name = initial(name)
+
+/obj/machinery/cryopod/proc/attempt_return(mob/target)
+	var/obj/machinery/computer/cryopod/control_computer = control_computer_weakref?.resolve()
+	if(!control_computer)
+		return
+	for(var/list/listed as anything in control_computer.frozen_crew)
+		if(target.ckey != listed["ckey"])
+			continue
+
+		var/mob/living/carbon/human/newmob = target.change_mob_type( /mob/living/carbon/human , get_turf(src), null, TRUE)
+		for(var/obj/item/listed_item as anything in listed["items"])
+			if(listed_item in control_computer.frozen_item)
+				if(!newmob.equip_to_appropriate_slot(listed_item))
+					listed_item.forceMove(get_turf(newmob))
+				control_computer.frozen_item -= listed_item
+		control_computer.frozen_crew -= listed
+		control_computer.announce("CRYO_JOIN", newmob.real_name, listed["job"])
 
 /// It's time to kill GLOB
 /**
@@ -459,6 +479,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	return holy_successors
 
 /obj/machinery/cryopod/MouseDrop_T(mob/living/target, mob/user)
+	if(isobserver(target) && target == user)
+		attempt_return(target)
+		return
 	if(!istype(target) || !can_interact(user) || !target.Adjacent(user) || !ismob(target) || isanimal(target) || !istype(user.loc, /turf) || target.buckled)
 		return
 
