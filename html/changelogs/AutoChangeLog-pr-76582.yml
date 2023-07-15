@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixes a runtime from clientless mobs listening to Jukeboxes"
-  - bugfix: "Fixes some potential hard-dels from Jukeboxes"
-  - qol: "Jukeboxes now start with \"title3.ogg\" loaded for servers which do not have jukebox songs included in their config."
