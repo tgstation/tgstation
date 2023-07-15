@@ -4,12 +4,6 @@
 	can_adjust = FALSE
 	female_sprite_flags = FEMALE_UNIFORM_NO_BREASTS
 
-/obj/item/clothing/under/suit/white_on_white
-	name = "white suit"
-	desc = "A white suit, suitable for an excellent host."
-	icon_state = "scratch"
-	inhand_icon_state = null
-
 /obj/item/clothing/under/suit/white/skirt
 	name = "white suitskirt"
 	desc = "A white suitskirt, suitable for an excellent host."
@@ -77,7 +71,7 @@
 	inhand_icon_state = "dg_suit"
 	worn_icon = 'icons/mob/clothing/under/captain.dmi'
 
-/obj/item/clothing/under/suit/red
+/obj/item/clothing/under/suit/red //Also used by the Curator's suit, /obj/item/clothing/under/rank/civilian/curator
 	name = "red suit"
 	desc = "A red suit and blue tie. Somewhat formal."
 	icon_state = "red_suit"

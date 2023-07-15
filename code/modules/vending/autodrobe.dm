@@ -104,7 +104,6 @@
 				/obj/item/clothing/shoes/singerb = 1,
 				/obj/item/clothing/under/costume/singer/blue = 1,
 				/obj/item/clothing/head/costume/cueball = 1,
-				/obj/item/clothing/under/suit/white_on_white = 1,
 			),
 		),
 		list(
