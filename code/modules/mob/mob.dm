@@ -1163,7 +1163,7 @@
 		if(!client.prefs.read_preference(/datum/preference/toggle/bloom))
 			light.alpha = 0
 		else
-			light.alpha = 255
+			light.alpha = 140
 
 ///Update the mouse pointer of the attached client in this mob
 /mob/proc/update_mouse_pointer()
