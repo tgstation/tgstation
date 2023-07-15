@@ -60,3 +60,11 @@
 	desc = "This bastard's about to commit tax evasion!"
 	icon = 'monkestation/icons/obj/plushes.dmi'
 	icon_state = "turnip"
+
+/obj/item/toy/plush/tinywitchplush
+	name = "tiny witch plush"
+	desc = "Some sort of mini magical girl"
+	icon = 'monkestation/icons/obj/plushes.dmi'
+	squeak_override = list('sound/magic/wand_teleport.ogg'=1)
+	icon_state = "mage"
+
