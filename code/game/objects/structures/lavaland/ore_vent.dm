@@ -128,3 +128,9 @@
 	desc = "This rocks."
 	icon_state = "ore"
 	icon = 'icons/obj/ore.dmi'
+
+/obj/item/boulder/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	for(var/i as anything in turf_peel(3, 2, loc))
+		var/turf/location = i
+		new /obj/item/food/cookie(location)
