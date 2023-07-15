@@ -180,9 +180,9 @@ const ContactsScreen = (_props: any, context: any) => {
                         act('PDA_viewMessages', { ref: chat.ref });
                       }}>
                       {has_unreads &&
-                        `[${unread_msgs} unread message${
-                          unread_msgs !== 1 ? 's' : ''
-                        }]`}{' '}
+                        `[${
+                          unread_msgs <= 9 ? unread_msgs : '9+'
+                        } unread message${unread_msgs !== 1 ? 's' : ''}]`}{' '}
                       {chat.recp.name} ({chat.recp.job})
                     </Button>
                   );
