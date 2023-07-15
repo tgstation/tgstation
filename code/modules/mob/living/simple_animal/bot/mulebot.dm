@@ -264,8 +264,9 @@
 	data["autoPickup"] = auto_pickup
 	data["reportDelivery"] = report_delivery
 	data["id"] = id
-	data["allow_possession"] = bot_mode_flags & BOT_MODE_GHOST_CONTROLLABLE
+	data["allow_possession"] = bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT
 	data["possession_enabled"] = can_be_possessed
+	data["pai_inserted"] = !!paicard
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
