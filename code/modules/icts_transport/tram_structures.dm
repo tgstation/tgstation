@@ -36,6 +36,8 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_INDUSTRIAL_LIFT
 	canSmoothWith = SMOOTH_GROUP_INDUSTRIAL_LIFT
+	can_be_unanchored = FALSE
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	explosion_block = 3
 	glass_type = /obj/item/stack/sheet/titaniumglass
 	glass_amount = 2
@@ -47,6 +49,9 @@
 	name = "tram structure"
 	desc = "A reinforced modular tram structure with tinted titanium glass accents."
 	opacity = TRUE
+
+/obj/structure/window/reinforced/tram/split
+	base_icon_state = "tram-split"
 
 /datum/armor/tram_structure
 	melee = 80
