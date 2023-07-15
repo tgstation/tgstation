@@ -3,7 +3,7 @@
 /obj/item/paper_bin
 	name = "paper bin"
 	desc = "Contains all the paper you'll never need."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "paper_bin0"
 	inhand_icon_state = "sheet-metal"
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'

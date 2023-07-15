@@ -34,12 +34,13 @@
 	obj_flags |= EMAGGED
 	desc = "[desc] The display is flickering slightly."
 
-/obj/item/clothing/glasses/hud/emag_act(mob/user)
+/obj/item/clothing/glasses/hud/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
-	to_chat(user, span_warning("PZZTTPFFFT"))
+	balloon_alert(user, "display scrambled")
 	desc = "[desc] The display is flickering slightly."
+	return TRUE
 
 /obj/item/clothing/glasses/hud/suicide_act(mob/living/user)
 	if(user.is_blind())

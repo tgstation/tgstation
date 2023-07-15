@@ -344,7 +344,7 @@
 /obj/item/reagent_containers/cup/bucket
 	name = "bucket"
 	desc = "It's a bucket."
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "bucket"
 	inhand_icon_state = "bucket"

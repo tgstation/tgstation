@@ -103,7 +103,7 @@
 	if(spell_requirements & SPELL_REQUIRES_STATION)
 		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_status_on_signal))
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
-		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(update_status_on_signal))
+		RegisterSignals(owner, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM), PROC_REF(update_status_on_signal))
 	if(invocation_type == INVOCATION_EMOTE)
 		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), PROC_REF(update_status_on_signal))
 	if(invocation_type == INVOCATION_SHOUT || invocation_type == INVOCATION_WHISPER)
@@ -119,6 +119,7 @@
 		COMSIG_MOB_AFTER_EXIT_JAUNT,
 		COMSIG_MOB_ENTER_JAUNT,
 		COMSIG_MOB_EQUIPPED_ITEM,
+		COMSIG_MOB_UNEQUIPPED_ITEM,
 		COMSIG_MOVABLE_Z_CHANGED,
 		SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE),
 		SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE),
@@ -164,7 +165,7 @@
 		// No point in feedback here, as mindless mobs aren't players
 		return FALSE
 
-	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !HAS_TRAIT(owner, TRAIT_MIMING))
+	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !HAS_MIND_TRAIT(owner, TRAIT_MIMING))
 		// In the future this can be moved out of spell checks exactly
 		if(feedback)
 			to_chat(owner, span_warning("You must dedicate yourself to silence first!"))

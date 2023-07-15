@@ -273,7 +273,7 @@
 	name = "minebot melee upgrade"
 	desc = "A minebot upgrade."
 	icon_state = "door_electronics"
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 
 /obj/item/mine_bot_upgrade/afterattack(mob/living/simple_animal/hostile/mining_drone/minebot, mob/user, proximity)
 	. = ..()
@@ -310,7 +310,7 @@
 	name = "minebot AI upgrade"
 	desc = "Can be used to grant sentience to minebots. It's incompatible with minebot armor and melee upgrades, and will override them."
 	icon_state = "door_electronics"
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	sentience_type = SENTIENCE_MINEBOT
 	var/base_health_add = 5 //sentient minebots are penalized for beign sentient; they have their stats reset to normal plus these values
 	var/base_damage_add = 1 //this thus disables other minebot upgrades

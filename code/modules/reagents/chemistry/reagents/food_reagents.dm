@@ -33,6 +33,8 @@
 	if(!(methods & INGEST) || !quality || HAS_TRAIT(exposed_mob, TRAIT_AGEUSIA))
 		return
 	switch(quality)
+		if (DRINK_REVOLTING)
+			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_revolting)
 		if (DRINK_NICE)
 			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_nice)
 		if (DRINK_GOOD)
@@ -794,7 +796,7 @@
 		var/amount = round(reac_volume * clamp(1 - touch_protection, 0, 1))
 		var/duration = (amount / metabolization_rate) * SSmobs.wait
 		if(duration > 1 SECONDS)
-			exposed_mob.adjust_timed_status_effect(/datum/status_effect/tinlux_light, duration)
+			exposed_mob.adjust_timed_status_effect(duration, /datum/status_effect/tinlux_light)
 
 /datum/reagent/consumable/tinlux/on_mob_add(mob/living/living_mob)
 	. = ..()
