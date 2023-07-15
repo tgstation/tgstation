@@ -2196,4 +2196,4 @@
 	if(!clockwise)
 		segment = -segment
 	SEND_SIGNAL(src, COMSIG_ATOM_SPIN_ANIMATION, speed, loops, segments, segment)
-	transform.do_spin_animation(src, speed, loops, segments, segment, parallel)
+	do_spin_animation(speed, loops, segments, segment, parallel)

@@ -51,9 +51,15 @@
 	/**
 	 * Hello, you may be wondering why we're blending icons and not simply
 	 * overlaying one mutable appearance with the blend multiply on another.
-	 * Well, the latter option doesn't work as neatly when ultimately added
-	 * to an atom with the KEEP_TOGETHER appearance flag, with the mask also
+	 * Well, the latter option doesn't work as neatly when added
+	 * to an atom with the KEEP_TOGETHER appearance flag, with the mask icon also
 	 * showing on said atom, while we don't want it to.
+	 *
+	 * Also using KEEP_APART isn't an option, because unless it's drawn as one with
+	 * its visual loation, the whole plane the atom belongs to will count as part of the
+	 * mask of the final visual overlay since that's how the BLEND_INSET_OVERLAY blend mode works here.
+	 * In layman terms, with KEEP_APART on, if a flying monkey gets nears an immersed
+	 * human, the visual overlay will appear on the flying monkey even if it shouldn't.
 	 */
 	var/icon/immerse_icon = generated_immerse_icons["[icon]-[icon_state]-[mask_icon]"]
 	if(!immerse_icon)
@@ -99,9 +105,9 @@
  */
 /datum/element/immerse/proc/on_init_or_entered(turf/source, atom/movable/movable)
 	SIGNAL_HANDLER
-	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE_UPPER_FOV_HIDDEN, source)))
-		return
 	if(HAS_TRAIT(movable, TRAIT_IMMERSED))
+		return
+	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE_UPPER_FOV_HIDDEN, source)))
 		return
 	if(is_type_in_typecache(movable, movables_to_ignore))
 		return
@@ -140,39 +146,7 @@
 	var/atom/movable/immerse_overlay/vis_overlay = generated_visual_overlays["[is_below_water][width]x[height]"]
 
 	if(!vis_overlay) //create the overlay if not already done.
-		vis_overlay = new(null, src)
-
-		/**
-		 * vis contents spin around the center of the icon of their vis locs
-		 * but since we want the appearance to stay where it should be,
-		 * we have to counteract this one.
-		 */
-		var/extra_width = (width - world.icon_size) * 0.5
-		var/extra_height = (height - world.icon_size) * 0.5
-		var/mutable_appearance/overlay_appearance = new()
-		var/icon/immerse_icon = generated_immerse_icons["[icon]-[icon_state]-[mask_icon]"]
-		var/last_i = width/world.icon_size
-		for(var/i in -1 to last_i)
-			var/mutable_appearance/underwater = mutable_appearance(icon, icon_state)
-			underwater.pixel_x = world.icon_size * i - extra_width
-			underwater.pixel_y = -world.icon_size - extra_height
-			overlay_appearance.overlays += underwater
-
-			var/mutable_appearance/water_level = is_below_water ? underwater : mutable_appearance(immerse_icon)
-			water_level.pixel_x = world.icon_size * i - extra_width
-			water_level.pixel_y = -extra_height
-			overlay_appearance.overlays += water_level
-
-
-		vis_overlay.color = color
-		vis_overlay.alpha = alpha
-		vis_overlay.overlays = list(overlay_appearance)
-
-		vis_overlay.extra_width = extra_width
-		vis_overlay.extra_height = extra_height
-		vis_overlay.overlay_appearance = overlay_appearance
-
-		generated_visual_overlays["[is_below_water][width]x[height]"] = vis_overlay
+		vis_overlay = generate_vis_overlay(width, height, is_below_water)
 
 
 	ADD_KEEP_TOGETHER(movable, ELEMENT_TRAIT(src))
@@ -195,6 +169,43 @@
 	movable.vis_contents |= vis_overlay
 
 	LAZYSET(immersed_movables, movable, vis_overlay)
+
+///Initializes and caches a new visual overlay given parameters such as width, height and whether it should appear fully underwater.
+/datum/element/immerse/proc/generate_vis_overlay(width, height, is_below_water)
+
+	var/atom/movable/immerse_overlay/vis_overlay = new(null, src)
+
+	/**
+	 * vis contents spin around the center of the icon of their vis locs
+	 * but since we want the appearance to stay where it should be,
+	 * we have to counteract this one.
+	 */
+	var/extra_width = (width - world.icon_size) * 0.5
+	var/extra_height = (height - world.icon_size) * 0.5
+	var/mutable_appearance/overlay_appearance = new()
+	var/icon/immerse_icon = generated_immerse_icons["[icon]-[icon_state]-[mask_icon]"]
+	var/last_i = width/world.icon_size
+	for(var/i in -1 to last_i)
+		var/mutable_appearance/underwater = mutable_appearance(icon, icon_state)
+		underwater.pixel_x = world.icon_size * i - extra_width
+		underwater.pixel_y = -world.icon_size - extra_height
+		overlay_appearance.overlays += underwater
+
+		var/mutable_appearance/water_level = is_below_water ? underwater : mutable_appearance(immerse_icon)
+		water_level.pixel_x = world.icon_size * i - extra_width
+		water_level.pixel_y = -extra_height
+		overlay_appearance.overlays += water_level
+
+
+	vis_overlay.color = color
+	vis_overlay.alpha = alpha
+	vis_overlay.overlays = list(overlay_appearance)
+
+	vis_overlay.extra_width = extra_width
+	vis_overlay.extra_height = extra_height
+	vis_overlay.overlay_appearance = overlay_appearance
+
+	generated_visual_overlays["[is_below_water][width]x[height]"] = vis_overlay
 
 ///This proc removes the vis_overlay, the keep together trait and some signals from the movable.
 /datum/element/immerse/proc/remove_immerse_overlay(atom/movable/movable)
@@ -348,7 +359,7 @@
 /datum/element/immerse/proc/on_spin_animation(atom/source, speed, loops, segments, segment)
 	SIGNAL_HANDLER
 	var/atom/movable/immerse_overlay/vis_overlay = immersed_movables[source]
-	vis_overlay.transform.do_spin_animation(vis_overlay, speed, loops, segments, -segment)
+	vis_overlay.do_spin_animation(speed, loops, segments, -segment)
 
 ///We need to make sure to remove hard refs from the element when deleted.
 /datum/element/immerse/proc/clear_overlay_refs(atom/movable/immerse_overlay/source)
@@ -366,11 +377,23 @@
 	blend_mode = BLEND_INSET_OVERLAY
 	layer = WATER_VISUAL_OVERLAY_LAYER
 	plane = FLOAT_PLANE
-	///The actual overlay used to make the mob look like it's half-covered in water.
+	/**
+	 * The actual overlay used to make the mob look like it's half-covered in water.
+	 *
+	 * For visual overlays, pixel y/x/w/z are amplified by the a, b, d, e variables
+	 * of the transform matrix of the movable they're attached to.
+	 * For example, if a mob is twice its normal size (a = 2, e = 2),
+	 * offsetting the movable used as visual overlay by 4 pixels to the right will result
+	 * in the visual overlay moving 8 pixels to the right.
+	 *
+	 * This however, doesn't extend to the overlays of our visual overlay. which is why there's
+	 * a mutable appearance variable that we use for those pixel offsets that really shouldn't be affected
+	 * by the transform of our vis loc(s) in the first place.
+	 */
 	var/mutable_appearance/overlay_appearance
-	///The base pixel x offset of the overlayed mutable appearance (and this movable during on_update_transform)
+	///The base pixel x offset of this movable
 	var/extra_width = 0
-	///The base pixel y offset of the overlayed mutable appearance (and this movable during on_update_transform)
+	///The base pixel y offset of this movable
 	var/extra_height = 0
 
 /atom/movable/immerse_overlay/Initialize(mapload, datum/element/immerse/element)
