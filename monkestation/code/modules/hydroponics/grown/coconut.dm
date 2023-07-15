@@ -12,6 +12,7 @@
 	seed = /obj/item/seeds/coconut/gun
 	name = "coconut gun"
 	desc = "It smells like burning."
+	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "coconut_gun_husked"
 	trash_type = /obj/item/gun/energy/laser/coconut_gun
 	bite_consumption_mod = 2

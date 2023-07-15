@@ -2,7 +2,7 @@
 	name = "coconut tree"
 	desc = "A coconut tree"
 	seed_offset = -12
-
+	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "coconut_seed"
 
 	growing_icon = 'goon/icons/obj/hydroponics/plants_fruit.dmi'
