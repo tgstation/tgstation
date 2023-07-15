@@ -8,23 +8,22 @@
 	worn_ears_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_EARS,
-		offset_y = list("north" = -4, "south" = -3, "east" = -4, "west" = -4),
+		offset_y = list("north" = -4, "south" = -4, "east" = -4, "west" = -4),
 	)
 	worn_glasses_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_GLASSES,
-		offset_y = list("north" = -4, "south" = -3, "east" = -4, "west" = -4),
+		offset_y = list("north" = -4, "south" = -4, "east" = -4, "west" = -4),
 	)
 	worn_head_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_HEAD,
-		offset_x = list("east" = 1, "west" = -1),
-		offset_y = list("north" = -4, "south" = -3, "east" = -4, "west" = -4),
+		offset_y = list("north" = -4, "south" = -4, "east" = -4, "west" = -4),
 	)
 	worn_face_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_FACE,
-		offset_y = list("north" = -4, "south" = -3, "east" = -4, "west" = -4),
+		offset_y = list("north" = -4, "south" = -4, "east" = -4, "west" = -4),
 	)
 	return ..()
 
