@@ -1,7 +1,7 @@
 /datum/species/teshvali
 	// Teshari/Avali, SPRITED BESPOKE.  FLEXING FLEXING FLEXING
-	name = "\improper Tesh'Vali"
-	plural_form = "Tesh'Valis"
+	name = "\improper Teshari"
+	plural_form = "Teshari"
 	id = SPECIES_TESHVALI
 	species_traits = list(
 		MUTCOLORS,
@@ -9,6 +9,7 @@
 		//HAIR,
 		LIPS,
 		NO_UNDERWEAR,
+		NOAUGMENTS,
 		USE_TRICOLOR_ALPHA,
 	)
 	inherent_traits = list(

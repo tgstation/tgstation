@@ -9,6 +9,7 @@
 		//HAIR,
 		LIPS,
 		NO_UNDERWEAR,
+		NOAUGMENTS,
 		USE_TRICOLOR_ALPHA,
 	)
 	inherent_traits = list(
