@@ -618,3 +618,39 @@
       interactions via screentips.
   - qol: APCs, fire alarms, holopads and turret control panels now use balloon alerts
       for more of their notifications.
+2023-07-15:
+  ATHATH:
+  - bugfix: Simplemobs that can't take stamina damage, including mulebots, will no
+      longer be reset to their default speed whenever they take damage or are healed.
+  Ben10Omintrix:
+  - refactor: paper wizard have been refactored, please report any bugs/unintended
+      behavior
+  - refactor: refacted the datum/elememt/trial to an bespoken element
+  - rscadd: paper wizard now have effects when he walking and he will now go and look
+      for paperes and write stuff in them
+  Melbert:
+  - qol: Changeling Emporium is now sorted alphabetically.
+  - qol: Changeling Emporium now has a search bar!
+  - bugfix: Ling Augmented Eyesight now no longer causes you to lose the effects of
+      your Meson glasses
+  - bugfix: Ling Augmented Eyesight now more consistently tracks the flash protection
+      / vulnerability it confers.
+  - bugfix: Fixes a runtime from clientless mobs listening to Jukeboxes
+  - bugfix: Fixes some potential hard-dels from Jukeboxes
+  - qol: Jukeboxes now start with "title3.ogg" loaded for servers which do not have
+      jukebox songs included in their config.
+  NotDhu:
+  - bugfix: Added missing telecomms monitoring consoles to Birdshot.
+  Rhials:
+  - qol: The Xenomorph Infestation orbit menu tab is now violet instead of red!
+  Striders13:
+  - code_imp: Admins can now choose the reward cursed slot machine gives when hitting
+      jackpot.
+  VladinXXV:
+  - qol: You can now rename the coroner's skeleton model with a pen!
+  - bugfix: Autopsy reports will now correctly report blood type and level for corpses
+      who happen to have blood for blood.
+  generalthrax:
+  - balance: Lionhunter on charge now has a damage modifier of 2 instead of 1.33
+  - balance: Increased max range of charged shot from 16 to 30
+  - balance: Increased scope modifier so you can use the new max range
