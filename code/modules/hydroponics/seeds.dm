@@ -71,6 +71,8 @@
 	var/list/infusion_mutations = list()
 	///infusion damage
 	var/infusion_damage = 0
+	///the seed offset used for plants
+	var/seed_offset = 0
 
 /obj/item/seeds/Initialize(mapload, nogenes = FALSE)
 	. = ..()
