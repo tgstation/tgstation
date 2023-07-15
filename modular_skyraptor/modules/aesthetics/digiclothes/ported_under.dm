@@ -10,8 +10,8 @@
 
 /obj/item/clothing/under/rank/medical
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/medical.dmi'
-	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE)
-	bodytype_icon_files = list("4" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/medical.dmi', "8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/medical_digi.dmi')
+	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE, BODYTYPE_TESHVALI)
+	bodytype_icon_files = list("4" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/medical.dmi', "8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/medical_digi.dmi', "1024" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/under/teshvali_under_medical.dmi')
 
 /obj/item/clothing/under/rank/cargo
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/cargo.dmi'
@@ -42,8 +42,8 @@
 
 /// Colored/generic
 /obj/item/clothing/under/color
-	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE)
-	bodytype_icon_files = list("4" = 'icons/mob/clothing/under/color.dmi', "8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/color_digi.dmi')
+	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE, BODYTYPE_TESHVALI)
+	bodytype_icon_files = list("4" = 'icons/mob/clothing/under/color.dmi', "8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/color_digi.dmi', "1024" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/under/teshvali_under_color.dmi')
 
 /obj/item/clothing/under/color/Initialize(mapload)
 	. = ..()
@@ -56,12 +56,22 @@
 	icon_file = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/color_digi.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_worn.json'
 
+/datum/greyscale_config/jumpsuit_worn/teshvali
+	name = "Worn Teshari Jumpsuit"
+	icon_file = 'modular_skyraptor/modules/species_teshvali/icons/clothing/under/teshvali_under_color.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jumpsuit_worn.json'
+
 
 /obj/item/clothing/under/rank/prisoner
-	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE)
-	bodytype_icon_files = list("4" = 'icons/mob/clothing/under/color.dmi', "8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/color_digi.dmi')
+	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE, BODYTYPE_TESHVALI)
+	bodytype_icon_files = list("4" = 'icons/mob/clothing/under/color.dmi', "8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/color_digi.dmi', "1024" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/under/teshvali_under_color.dmi')
 
 /datum/greyscale_config/jumpsuit_prison_worn/digi
 	name = "Worn Prison Digitigrade Jumpsuit"
 	icon_file = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/color_digi.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_worn.json'
+
+/datum/greyscale_config/jumpsuit_prison_worn/teshvali
+	name = "Worn Prison Teshari Jumpsuit"
+	icon_file = 'modular_skyraptor/modules/species_teshvali/icons/clothing/under/teshvali_under_color.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_worn.json'

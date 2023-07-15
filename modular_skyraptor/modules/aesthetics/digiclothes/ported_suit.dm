@@ -9,8 +9,8 @@
 
 /obj/item/clothing/suit/toggle/labcoat
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/suits/labcoat.dmi'
-	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE)
-	bodytype_icon_files = list("4" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/suits/labcoat.dmi', "8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/suits/labcoat_digi.dmi')
+	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE, BODYTYPE_TESHVALI)
+	bodytype_icon_files = list("4" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/suits/labcoat.dmi', "8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/suits/labcoat_digi.dmi', "1024" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/suits/teshvali_labcoats.dmi')
 
 /obj/item/clothing/suit/space
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/suits/spacesuit.dmi'

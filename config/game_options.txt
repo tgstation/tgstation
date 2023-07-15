@@ -394,6 +394,8 @@ ROUNDSTART_RACES ethereal
 ROUNDSTART_RACES slugcat
 ROUNDSTART_RACES akula
 ROUNDSTART_RACES talonmoth
+ROUNDSTART_RACES teshvali
+ROUNDSTART_RACES avalari
 
 ##-------------------------------------------------------------------------------------------
 
