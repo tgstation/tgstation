@@ -147,7 +147,10 @@
 /datum/transport_controller/linear/tram/process(seconds_per_tick)
 	if(!travel_remaining)
 		cycle_doors(OPEN_DOORS)
-		idle_platform = destination_platform
+		if(controller_status & EMERGENCY_STOP)
+			idle_platform = null
+		else
+			idle_platform = destination_platform
 		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 		return PROCESS_KILL
 	else if(world.time >= scheduled_move)
@@ -214,3 +217,9 @@
 		if(door.transport_linked_id == specific_transport_id)
 			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), door_status)
 		update_status()
+
+/datum/transport_controller/linear/tram/proc/estop()
+	controller_status |= EMERGENCY_STOP
+	if(!travel_remaining)
+		return
+	travel_remaining = 0

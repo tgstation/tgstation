@@ -140,8 +140,8 @@
 
 /obj/machinery/crossing_signal/proc/start_malfunction()
 	malfunctioning = TRUE
-	amber_distance_threshold = XING_DISTANCE_AMBER * 0.375
-	red_distance_threshold = XING_DISTANCE_RED * 0.375
+	amber_distance_threshold = XING_DISTANCE_AMBER * 0.5
+	red_distance_threshold = XING_DISTANCE_RED * 0.5
 
 /obj/machinery/crossing_signal/proc/end_malfunction()
 	malfunctioning = FALSE

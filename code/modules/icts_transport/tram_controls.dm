@@ -125,19 +125,17 @@
 	var/datum/transport_controller/linear/tram/icts_controller = module_ref?.resolve()
 	update_operating()
 	if(icts_controller)
-		if(!icts_controller.controller_active)
-			if(is_operational)
-				for(var/obj/machinery/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
-					xing.set_signal_state(XING_STATE_MALF, TRUE)
-				for(var/obj/machinery/destination_sign/desto as anything in SSicts_transport.displays)
-					desto.icon_state = "[desto.base_icon_state][DESTINATION_OFF]"
-					desto.update_appearance()
-			else
-				for(var/obj/machinery/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
-					xing.set_signal_state(XING_STATE_MALF, TRUE)
-				for(var/obj/machinery/destination_sign/desto as anything in SSicts_transport.displays)
-					desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
-					desto.update_appearance()
+		for(var/obj/machinery/crossing_signal/xing as anything in SSicts_transport.crossing_signals)
+			xing.set_signal_state(XING_STATE_MALF, TRUE)
+		if(is_operational)
+			for(var/obj/machinery/destination_sign/desto as anything in SSicts_transport.displays)
+				desto.icon_state = "[desto.base_icon_state][DESTINATION_OFF]"
+				desto.update_appearance()
+		else
+			icts_controller.estop()
+			for(var/obj/machinery/destination_sign/desto as anything in SSicts_transport.displays)
+				desto.icon_state = "[desto.base_icon_state][DESTINATION_NOT_IN_SERVICE]"
+				desto.update_appearance()
 
 /obj/machinery/computer/icts_controls/proc/update_operating() // Pass the operating status from the controls to the lift_master
 	var/datum/transport_controller/linear/tram/icts_controller = module_ref?.resolve()

@@ -5440,6 +5440,7 @@
 	pixel_y = -24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/center)
 "aGO" = (
@@ -5485,6 +5486,7 @@
 	name = "External Access Console";
 	pixel_y = -24
 	},
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/center)
 "aHk" = (
@@ -7665,6 +7667,7 @@
 	name = "Ladder Access Hatch"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/center)
 "blS" = (
@@ -11144,6 +11147,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/processing)
+"cxW" = (
+/obj/machinery/door/airlock/maintenance/external,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/tram)
 "cya" = (
 /obj/structure/railing{
 	dir = 4
@@ -11486,6 +11494,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
+"cDR" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/openspace,
+/area/station/tram)
 "cDX" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/secure/briefcase,
@@ -13464,6 +13477,7 @@
 	pixel_y = -24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/hallway/primary/tram/center)
 "dnD" = (
@@ -20874,6 +20888,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"ghS" = (
+/turf/closed/wall,
+/area/station/tram)
 "ghV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -31793,6 +31810,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
+"koV" = (
+/obj/machinery/light/directional/east,
+/obj/structure/lattice,
+/turf/open/openspace,
+/area/station/tram)
 "kpd" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /turf/open/floor/iron/white,
@@ -43165,6 +43187,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lower)
+"ouc" = (
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/plating,
+/area/station/tram)
 "ouE" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 4
@@ -44634,6 +44660,7 @@
 "pby" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/center)
 "pbH" = (
@@ -44917,6 +44944,9 @@
 "phl" = (
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
+"phn" = (
+/turf/open/floor/plating,
+/area/station/tram)
 "phB" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
@@ -50718,6 +50748,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/center)
 "rkp" = (
@@ -51870,6 +51901,10 @@
 /obj/machinery/teleport/hub,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"rHR" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/tram)
 "rIg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -52269,6 +52304,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/right)
+"rON" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/hallway/primary/tram/center)
 "rOT" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
@@ -66387,6 +66427,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"wGq" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/plating,
+/area/station/tram)
 "wGA" = (
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
 	id = "engsm";
@@ -163546,11 +163591,11 @@ bEt
 afy
 afy
 age
-afy
-abW
-afg
-aaa
-aaa
+ghS
+ghS
+ghS
+ghS
+aaS
 xBk
 xBk
 xBk
@@ -163800,13 +163845,13 @@ iOd
 wJq
 vVY
 bEt
-afO
-afz
-age
-afz
-afv
-aaa
-aaa
+koV
+afX
+cDR
+cxW
+rHR
+rHR
+phn
 xBk
 xBk
 kul
@@ -164061,9 +164106,9 @@ izU
 nEl
 dnp
 izU
-aaa
-aaa
-aaa
+ouc
+rHR
+phn
 xBk
 sBa
 sKO
@@ -164318,9 +164363,9 @@ nEl
 wYw
 aHf
 izU
-aaa
-aaa
-aaa
+phn
+wGq
+phn
 xBk
 xBk
 lHW
@@ -164572,8 +164617,8 @@ wJq
 vVY
 bEt
 izU
-ghg
-ghg
+rON
+rON
 jyH
 jyH
 jyH

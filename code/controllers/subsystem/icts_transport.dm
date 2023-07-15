@@ -93,7 +93,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 
 /datum/controller/subsystem/processing/icts_transport/proc/validate_and_dispatch(datum/transport_controller/linear/tram/transport_controller, attempt)
 	var/current_attempt
-	if(!attempt)
+	if(attempt)
 		current_attempt = attempt
 	else
 		current_attempt = 0
