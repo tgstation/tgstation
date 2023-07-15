@@ -22,31 +22,6 @@
 	inhand_icon_state = "waiter"
 	supports_variations_flags = CLOTHING_MONKEY_VARIATION
 
-/obj/item/clothing/under/suit/blacktwopiece
-	name = "black two piece suit"
-	desc = "A black suit and red tie. Very formal."
-	icon_state = "black_suit"
-	inhand_icon_state = null
-
-/obj/item/clothing/under/suit/black
-	name = "black suit"
-	desc = "A professional looking black suit. Ready for some serious law."
-	icon_state = "blacksuit"
-	inhand_icon_state = null
-	can_adjust = TRUE
-	alt_covers_chest = TRUE
-
-/obj/item/clothing/under/suit/black/skirt
-	name = "black suitskirt"
-	desc = "A professional black suitskirt. Nanotrasen Investigation Bureau approved!"
-	icon_state = "blacksuit_skirt"
-	inhand_icon_state = "bar_suit"
-	alt_covers_chest = TRUE
-	body_parts_covered = CHEST|GROIN|ARMS
-	dying_key = DYE_REGISTRY_JUMPSKIRT
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY|FEMALE_UNIFORM_NO_BREASTS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-
 /obj/item/clothing/under/suit/black_really
 	name = "executive suit"
 	desc = "A formal black suit, intended for the station's finest."
@@ -106,6 +81,19 @@
 	desc = "A tan suit. Smart, but casual."
 	icon_state = "tan_suit"
 	inhand_icon_state = "tan_suit"
+/obj/item/clothing/under/suit/black
+	name = "black two piece suit"
+	desc = "A black suit with charcoal pants and a red tie. Very formal."
+	icon_state = "black_suit"
+
+/obj/item/clothing/under/suit/black/skirt
+	name = "black two piece suit"
+	desc = "A black suit with a charcoal skirt and a red tie. Very formal."
+	icon_state = "black_suit_skirt"
+	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/suit/white
 	name = "white suit"
