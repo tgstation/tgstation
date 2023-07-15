@@ -48,6 +48,7 @@
 	desc = "A holy diver seeking its target."
 	icon_state = "holy_arrow"
 	inhand_icon_state = "holy_arrow"
+	base_icon_state = "holy_arrow"
 	projectile_type = /obj/projectile/bullet/arrow/holy
 
 /// holy arrow projectile
