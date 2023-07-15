@@ -1,0 +1,7 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - rscadd: "New malf ability: Remote safety overrides. Allows the AI to remotely emag things it has access to."
+  - code_imp: "emag_act() now returns a boolean designating it's success in emagging"
+  - code_imp: "All instances of emag_act() now have the proper arguments"
+  - qol: "Most usecases of emagging now have some kind of feedback, and existing feedback has been sanity checked and converted to balloon alerts."
