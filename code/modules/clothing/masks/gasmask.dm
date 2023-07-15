@@ -32,6 +32,13 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /datum/armor/mask_gas
 	bio = 100
 
+/obj/item/clothing/mask/gas/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	if(!isinhands && cig)
+		. += cig.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
+	else
+		cut_overlays()
+
 /obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
 	init_fov()
@@ -73,11 +80,13 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 			)
 			return ..()
 
-		if(!user.transferItemToLoc(tool, src.loc))
-			return ..()
 		cig = tool
 		if(valid_wearer)
 			cig.equipped(src.loc, ITEM_SLOT_MASK)
+
+		cig.forceMove(src)
+		var/mob/wearer = src.loc
+		wearer.update_worn_mask()
 		return TRUE
 
 	if(cig)
@@ -103,6 +112,9 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	if(cig)
 		user.put_in_hands(cig)
 		cig = null
+		if(istype(src.loc, /mob))
+			var/mob/wearer = src.loc
+			wearer.update_worn_mask()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!has_filter || !max_filters)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
