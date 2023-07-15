@@ -122,14 +122,20 @@
 	return TRUE
 
 
-/mob/living/carbon/human/CanContractDisease(datum/disease/D)
+/mob/living/carbon/human/CanContractDisease(datum/disease/disease)
 	if(dna)
-		if(HAS_TRAIT(src, TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
+		if(HAS_TRAIT(src, TRAIT_VIRUSIMMUNE) && !disease.bypasses_immunity)
 			return FALSE
 
-	for(var/thing in D.required_organs)
-		if(!((locate(thing) in bodyparts) || (locate(thing) in organs)))
+	if(disease.required_organ)
+		var/obj/item/organ/target_organ = get_organ_slot(disease.required_organ)
+		if(!istype(target_organ))
 			return FALSE
+
+		// robotic organs are immune to disease unless 'inorganic biology' symptom is present
+		if(IS_ROBOTIC_ORGAN(target_organ) && !(disease.infectable_biotypes & MOB_ROBOTIC))
+			return FALSE
+
 	return ..()
 
 /mob/living/proc/CanSpreadAirborneDisease()

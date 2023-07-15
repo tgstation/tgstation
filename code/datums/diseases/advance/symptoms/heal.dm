@@ -476,7 +476,7 @@
 	return 1
 
 /datum/symptom/heal/water/passive_message_condition(mob/living/carbon/infected_mob)
-	if(M.getBruteLoss() || M.getFireLoss())
+	if(infected_mob.getBruteLoss() || infected_mob.getFireLoss())
 		return TRUE
 
 	return FALSE
@@ -566,7 +566,7 @@
 				. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
 
 	// Check for reagents in bloodstream
-	if(diseased_mob.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
+	if(infected_mob.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
 		. += power * MAX_HEAL_COEFFICIENT_BLOODSTREAM //Determines how much the symptom heals if injected or ingested
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)

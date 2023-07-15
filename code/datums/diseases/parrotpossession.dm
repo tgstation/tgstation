@@ -13,6 +13,7 @@
 	severity = DISEASE_SEVERITY_MEDIUM
 	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC|MOB_MINERAL
 	bypasses_immunity = TRUE //2spook
+	required_organ = ORGAN_SLOT_TONGUE
 	var/mob/living/simple_animal/parrot/poly/ghost/parrot
 
 

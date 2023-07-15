@@ -41,6 +41,8 @@
 	if(!.)
 		return
 
+	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
+
 	switch(advanced_disease.stage)
 		if(1, 2)
 			if(prob(base_message_chance) && !suppress_warning)
