@@ -751,7 +751,7 @@
 					uses = 0
 				playsound(get_turf(construct_thing), 'sound/magic/staff_healing.ogg', 25)
 				user.Beam(construct_thing, icon_state="sendbeam", time = 1 SECONDS)
-		if(istype(target, /obj/effect/decal/cleanable/blood) || istype(target, /obj/effect/decal/cleanable/trail_holder))
+		if(istype(target, /obj/effect/decal/cleanable/blood) || istype(target, /obj/effect/decal/cleanable/trail_holder) || isturf(target))
 			blood_draw(target, user)
 		..()
 
