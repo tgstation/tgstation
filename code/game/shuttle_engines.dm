@@ -162,7 +162,7 @@
 
 /obj/machinery/power/shuttle_engine/large
 	name = "engine"
-	icon = 'icons/obj/2x2.dmi'
+	icon = 'icons/obj/fluff/2x2.dmi'
 	icon_state = "large_engine"
 	desc = "A very large bluespace engine used to propel very large ships."
 	circuit = null
@@ -173,7 +173,7 @@
 
 /obj/machinery/power/shuttle_engine/huge
 	name = "engine"
-	icon = 'icons/obj/3x3.dmi'
+	icon = 'icons/obj/fluff/3x3.dmi'
 	icon_state = "huge_engine"
 	desc = "An extremely large bluespace engine used to propel extremely large ships."
 	circuit = null

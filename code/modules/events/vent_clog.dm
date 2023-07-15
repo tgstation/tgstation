@@ -83,7 +83,7 @@
 /**
  * Finds a valid vent to spawn mobs from.
  *
- * Randomly selects a vent that is on-station and unwelded. If no vents are found, the event
+ * Randomly selects a vent that is on-station, unwelded, and hosted by a passable turf. If no vents are found, the event
  * is immediately killed.
  */
 
@@ -91,7 +91,7 @@
 	var/list/vent_list = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in GLOB.machines)
 		var/turf/vent_turf = get_turf(vent)
-		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded)
+		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded && !vent_turf.is_blocked_turf_ignore_climbable())
 			vent_list += vent
 
 	if(!length(vent_list))
@@ -139,20 +139,27 @@
  */
 
 /datum/round_event/vent_clog/proc/produce_mob()
-	if(vent.welded)
+	var/turf/vent_loc = get_turf(vent)
+	if (isnull(vent_loc))
+		CRASH("[vent] has no loc, aborting mobspawn")
+
+	if(vent.welded || vent_loc.is_blocked_turf_ignore_climbable()) // vents under tables can still spawn stuff
 		return
 
-	var/list/potential_locations = list()
+	var/mob/new_mob = new spawned_mob(vent_loc) // we spawn it early so we can actually use is_blocked_turf
+	living_mobs += WEAKREF(new_mob)
+	vent.visible_message(span_warning("[new_mob] crawls out of [vent]!"))
 
-	for(var/turf/nearby_turf in view(1, get_turf(vent)))
-		if(!nearby_turf.density)
+	var/list/potential_locations = list(vent_loc) // already confirmed to be accessable via the 2nd if check of the proc
+
+	// exists to prevent mobs from trying to move onto turfs they physically cannot
+	for(var/turf/nearby_turf in oview(1, get_turf(vent))) // oview, since we always add our loc to the list
+		if(!nearby_turf.is_blocked_turf(source_atom = new_mob))
 			potential_locations += nearby_turf
 
 	var/turf/spawn_location = pick(potential_locations)
+	new_mob.Move(spawn_location)
 
-	var/mob/new_mob = new spawned_mob(spawn_location)
-	living_mobs += WEAKREF(new_mob)
-	vent.visible_message(span_warning("[new_mob] crawls out of [vent]!"))
 	var/filth_to_spawn = pick(filth_spawn_types)
 	new filth_to_spawn(spawn_location)
 	playsound(spawn_location, 'sound/effects/splat.ogg', 30, TRUE)

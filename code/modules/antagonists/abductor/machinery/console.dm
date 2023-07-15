@@ -15,7 +15,7 @@
 /obj/machinery/abductor/console
 	name = "abductor console"
 	desc = "Ship command center."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "console"
 	density = TRUE
 	var/obj/item/abductor/gizmo/gizmo
