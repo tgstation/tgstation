@@ -27,6 +27,13 @@
 #define POLL_IGNORE_LAVALAND_ELITE "lavaland_elite"
 #define POLL_IGNORE_SHUTTLE_DENIZENS "shuttle_denizens"
 #define POLL_IGNORE_BOTS "bots"
+#define POLL_IGNORE_HERETIC_MONSTER "heretic_monster"
+#define POLL_IGNORE_RAW_PROPHET "raw_prophet"
+#define POLL_IGNORE_STALKER "stalker"
+#define POLL_IGNORE_FIRE_SHARK "fire_shark"
+#define POLL_IGNORE_ASH_SPIRIT "ash_spirit"
+#define POLL_IGNORE_RUST_SPIRIT "rust_spirit"
+#define POLL_IGNORE_MAID_IN_MIRROR "maid_in_mirror"
 
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
@@ -57,6 +64,13 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_LAVALAND_ELITE = "Lavaland elite",
 	POLL_IGNORE_SHUTTLE_DENIZENS = "Shuttle denizens",
 	POLL_IGNORE_BOTS = "Bots",
+	POLL_IGNORE_HERETIC_MONSTER = "Heretic Monster",
+	POLL_IGNORE_RAW_PROPHET = "Raw Prophet",
+	POLL_IGNORE_STALKER = "Stalker",
+	POLL_IGNORE_FIRE_SHARK = "Fire Shark",
+	POLL_IGNORE_ASH_SPIRIT = "Ash Spirit",
+	POLL_IGNORE_RUST_SPIRIT = "Rust Spirit",
+	POLL_IGNORE_MAID_IN_MIRROR = "Maid in the Mirror",
 ))
 GLOBAL_LIST_INIT(poll_ignore, init_poll_ignore())
 
