@@ -517,6 +517,10 @@ SUBSYSTEM_DEF(job)
 
 //Gives the player the stuff he should have with his rank
 /datum/controller/subsystem/job/proc/EquipRank(mob/living/equipping, datum/job/job, client/player_client)
+
+	if(isnull(player_client?.prefs.alt_job_titles))
+		player_client.prefs.alt_job_titles = list()
+
 	var/chosen_title = player_client?.prefs.alt_job_titles[job.title] || job.title
 	var/default_title = job.title
 

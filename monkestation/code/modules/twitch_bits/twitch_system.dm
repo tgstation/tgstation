@@ -15,6 +15,9 @@ SUBSYSTEM_DEF(twitch)
 	///list of deferred handlers
 	var/list/deferred_handlers = list()
 
+	var/datum/twitch_event/last_event
+	var/last_event_execution = 0
+	var/last_executor
 
 /datum/controller/subsystem/twitch/stat_entry(msg)
 	msg += "Running Events:[running_events.len]"
@@ -36,6 +39,7 @@ SUBSYSTEM_DEF(twitch)
 	if(incoming[2] != CONFIG_GET(string/twitch_key))
 		return
 
+
 	var/datum/twitch_event/chosen_one
 	for(var/datum/twitch_event/listed_events as anything in subtypesof(/datum/twitch_event))
 		if(incoming[3] != initial(listed_events.id_tag))
@@ -43,6 +47,14 @@ SUBSYSTEM_DEF(twitch)
 		chosen_one = new listed_events
 	if(!chosen_one)
 		return
+
+	if(last_event != chosen_one)
+		last_event = chosen_one
+		last_event_execution = world.time
+		last_executor = incoming[4]
+	else
+		if((world.time < last_event_execution + 2 SECONDS) && last_executor == incoming[4])
+			return
 
 	switch(SSticker.current_state)
 		if(GAME_STATE_STARTUP, GAME_STATE_PREGAME, GAME_STATE_SETTING_UP)

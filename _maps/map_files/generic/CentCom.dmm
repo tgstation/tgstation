@@ -4097,7 +4097,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
 "ta" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/ferry)
@@ -5629,7 +5629,7 @@
 /area/centcom/central_command_areas/supplypod/loading/two)
 "zT" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/briefing)
 "zZ" = (

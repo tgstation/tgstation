@@ -61,6 +61,11 @@
 
 	var/atom/target = holding || get_turf(src)
 	scrub(target.return_air())
+
+	for(var/turf/open/open_turf in view(3, src))
+		if(open_turf.pollution)
+			open_turf.pollution.scrub_amount(POLLUTION_HEIGHT_DIVISOR)
+
 	return ..()
 
 /**

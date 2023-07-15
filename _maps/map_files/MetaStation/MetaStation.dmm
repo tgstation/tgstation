@@ -19666,7 +19666,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "hur" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "huv" = (
@@ -49719,7 +49719,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "rVJ" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
@@ -57542,6 +57542,8 @@
 	id = "AI"
 	},
 /obj/effect/spawner/round_default_module,
+/obj/item/ai_module/core/full/crewsimov,
+/obj/item/ai_module/core/full/crewsimovpp,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "uGf" = (
@@ -64039,6 +64041,7 @@
 	req_access = list("captain")
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/ai_module/core/freeformcore,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "wWk" = (

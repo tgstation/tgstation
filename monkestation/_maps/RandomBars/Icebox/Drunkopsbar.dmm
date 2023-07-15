@@ -844,12 +844,12 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/closet/gimmick/tacticool,
 /obj/item/clothing/under/syndicate/tacticool,
 /obj/item/clothing/under/syndicate/tacticool/skirt,
 /obj/item/toy/mecha/mauler,
 /obj/item/toy/sword,
 /obj/item/clothing/mask/gas,
+/obj/structure/closet,
 /turf/open/floor/mineral/plastitanium,
 /area/station/service/bar)
 "RX" = (
@@ -915,7 +915,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "TM" = (
-/obj/structure/closet/gimmick/tacticool,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -925,6 +924,7 @@
 /obj/item/clothing/under/syndicate/tacticool/skirt,
 /obj/item/toy/gun,
 /obj/item/toy/sword,
+/obj/structure/closet,
 /turf/open/floor/mineral/plastitanium,
 /area/station/service/bar)
 "TO" = (

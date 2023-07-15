@@ -946,6 +946,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ORBITING_TRAIT "orbiting"
 /// From the item_scaling element
 #define ITEM_SCALING_TRAIT "item_scaling"
+#define MECH_TRAIT "mech_trait"
 /// Trait given by choking
 #define CHOKING_TRAIT "choking_trait"
 /// Trait given by hallucinations
@@ -1091,3 +1092,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define FOOD_JOB_MINER "food_job_miner"
 #define GLUED_ITEM_TRAIT "glued-item"
 #define TRAIT_BELT_SATCHEL "belt_satchel"
+
+/// One can breath under water, you get me?
+#define TRAIT_WATER_BREATHING "water_breathing"
