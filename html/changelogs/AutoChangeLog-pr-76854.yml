@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - code_imp: "Adds an opt out for the rest of the round for the various heretic summons."

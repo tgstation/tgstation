@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes:
-  - rscdel: "Revolution has been reverted back to old behaviour. The round once again ends when the revolution is successful. The round continues as normal if the revolution fails."
-  - rscadd: "When the station is rolled in a state of Post-Revolutionary Fervor, the Captain will find their bedsheets replaced with an anti-Nanotrasen variant."

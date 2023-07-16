@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "transformed jellypeople with the blood deficiency quirk will now receive the right bloodpacks as mail goodies"
