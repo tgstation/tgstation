@@ -29,9 +29,9 @@
 
 /obj/effect/mob_spawn/corpse/human/legioninfested/Initialize(mapload)
 	var/corpse_theme = pick_weight(list(
-		"Miner" = 66,
-		"Ashwalker" = 10,
-		"Clown" = 10,
+		"Miner" = 64,
+		"Clown" = 5,
+		"Ashwalker" = 15,
 		"Golem" = 10,
 		pick(list(
 			"Cultist",
@@ -45,12 +45,44 @@
 			outfit = /datum/outfit/consumed_miner
 		if("Ashwalker")
 			outfit = /datum/outfit/consumed_ashwalker
+		if("Golem")
+			outfit = /datum/outfit/consumed_golem
 		if("Clown")
 			outfit = /datum/outfit/consumed_clown
 		if("Cultist")
 			outfit = /datum/outfit/consumed_cultist
 		if("Dame")
 			outfit = /datum/outfit/consumed_dame
+		if("Operative")
+			outfit = /datum/outfit/syndicatecommandocorpse/lessenedgear
+		if("Shadow")
+			outfit = /datum/outfit/consumed_shadowperson
+	. = ..()
+
+/obj/effect/mob_spawn/corpse/human/legioninfested/snow/Initialize(mapload)
+	var/corpse_theme = pick_weight(list(
+		"Miner" = 64,
+		"Clown" = 5,
+		"Golem" = 15,
+		"Eskimo" = 10,
+		pick(list(
+			"Cultist",
+			"Heremoth",
+			"Operative",
+			"Shadow",
+		)) = 4,
+	))
+	switch(corpse_theme)
+		if("Miner")
+			outfit = /datum/outfit/consumed_miner
+		if("Eskimo")
+			outfit = /datum/outfit/consumed_eskimo
+		if("Heremoth")
+			outfit = /datum/outfit/consumed_heremoth
+		if("Clown")
+			outfit = /datum/outfit/consumed_clown
+		if("Cultist")
+			outfit = /datum/outfit/consumed_cultist
 		if("Golem")
 			outfit = /datum/outfit/consumed_golem
 		if("Operative")
@@ -222,6 +254,27 @@
 	if(prob(50))
 		neck = /obj/item/bedsheet/rd/royal_cape
 
+/datum/outfit/consumed_eskimo
+	name = "Legion-Consumed Eskimo"
+	suit = /obj/item/clothing/suit/hooded/wintercoat
+	shoes = /obj/item/clothing/shoes/winterboots
+	mask = /obj/item/clothing/mask/breath
+
+/datum/outfit/consumed_eskimo/pre_equip(mob/living/carbon/human/eskimo, visualsOnly = FALSE)
+	if(prob(70))
+		belt = pick_weight(list(
+			/obj/item/pickaxe = 4,
+			/obj/item/fishing_rod = 4,
+			/obj/item/tank/internals/emergency_oxygen = 2,
+			/obj/item/shovel = 2,
+			/obj/item/crowbar = 2,
+		))
+	r_pocket = pick_weight(list(
+		/obj/item/food/fishmeat = 89,
+		/obj/item/food/fishmeat/carp = 10,
+		/obj/item/skeleton_key = 1,
+	))
+
 //this is so pointlessly gendered but whatever bro i'm here to refactor not judge
 /datum/outfit/consumed_dame
 	name = "Legion-Consumed Dame"
@@ -274,3 +327,20 @@
 		/obj/item/stack/sheet/runed_metal = 15,
 		)
 	r_pocket = /obj/item/clothing/glasses/hud/health/night/cultblind
+
+/datum/outfit/consumed_heremoth
+	name = "Legion-Consumed Tribal Mothman"
+	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
+	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
+
+/datum/outfit/consumed_heremoth/pre_equip(mob/living/carbon/human/moth, visualsOnly = FALSE)
+	if(!visualsOnly)
+		moth.set_species(/datum/species/moth)
+	if(prob(50))
+		glasses = /obj/item/clothing/glasses/blindfold
+	r_pocket = pick_weight(list(
+		/obj/item/flashlight/lantern = 4,
+		/obj/item/toy/plush/moth = 2,
+		/obj/item/toy/eldritch_book = 2,
+		/obj/item/storage/box/heretic_box = 2,
+	))

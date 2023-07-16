@@ -126,6 +126,7 @@
 	robust_searching = 1
 	has_clickbox = FALSE
 	var/dwarf_mob = FALSE
+	var/snow_legion = FALSE
 	var/mob/living/carbon/human/stored_mob
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/random/Initialize(mapload)
@@ -158,6 +159,8 @@
 			new /obj/effect/mob_spawn/corpse/human/charredskeleton(T)
 		else if(dwarf_mob)
 			new /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf(T)
+		else if(snow_legion)
+			new /obj/effect/mob_spawn/corpse/human/legioninfested/snow(T)
 		else
 			new /obj/effect/mob_spawn/corpse/human/legioninfested(T)
 	..(gibbed)
@@ -304,6 +307,7 @@
 	loot = list(/obj/item/organ/internal/monster_core/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
+	snow_legion = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow/make_legion(mob/living/carbon/human/H)
 	return new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow(H.loc)
