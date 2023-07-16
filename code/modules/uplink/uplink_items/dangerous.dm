@@ -103,7 +103,7 @@
 	name = "Syndicate Laser Musket"
 	desc = "An exprimental 'rifle' designed by Aethrofusion. This laser(probably) uses alien technology to fit 4 high energy capacitors \
 			into a small rifle which can be stored safely(?) in any backpack. To charge, simply press down on the main control panel. \
-			Rumors of this 'siphoning power off your lifeforce' are greatly overstated, and Aethrofusion assures saftey for up to 2 years of use."
+			Rumors of this 'siphoning power off your lifeforce' are greatly exaggerated, and Aethrofusion assures safety for up to 2 years of use."
 	item = /obj/item/gun/energy/laser/musket/syndicate
 	progression_minimum = 30 MINUTES
 	cost = 12
