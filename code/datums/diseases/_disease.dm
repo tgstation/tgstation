@@ -62,10 +62,18 @@
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
 
-
 ///Proc to process the disease and decide on whether to advance, cure or make the sympthoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
 	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
+
+	if(required_organ)
+		var/obj/item/organ/target_organ = affected_mob.get_organ_slot(required_organ)
+		if(!istype(target_organ))
+			return FALSE
+
+		// robotic organs are immune to disease unless 'inorganic biology' symptom is present
+		if(IS_ROBOTIC_ORGAN(target_organ) && !(infectable_biotypes & MOB_ROBOTIC))
+			return FALSE
 
 	if(has_cure())
 		if(disease_flags & CHRONIC && SPT_PROB(cure_chance, seconds_per_tick))
