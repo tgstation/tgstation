@@ -15,13 +15,13 @@
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_wielded = 10)
 	AddComponent( \
-		/datum/component/gun_crank, \
+		/datum/component/crank_recharge, \
 		charging_cell = get_cell(), \
 		charge_amount = 500, \
 		cooldown_time = 2 SECONDS, \
 		charge_sound = 'sound/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.8 SECONDS, \
-		)
+	)
 
 /obj/item/gun/energy/laser/musket/update_icon_state()
 	inhand_icon_state = "[initial(inhand_icon_state)][(get_charge_ratio() == 4 ? "charged" : "")]"
@@ -48,20 +48,21 @@
 /obj/item/gun/energy/disabler/smoothbore/Initialize(mapload)
 	. = ..()
 	AddComponent( \
-		/datum/component/gun_crank, \
+		/datum/component/crank_recharge, \
 		charging_cell = get_cell(), \
 		charge_amount = 1000, \
 		cooldown_time = 2 SECONDS, \
 		charge_sound = 'sound/weapons/laser_crank.ogg', \
 		charge_sound_cooldown_time = 1.8 SECONDS, \
-		)
+	)
 
 /obj/item/gun/energy/disabler/smoothbore/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
 		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
 		light_overlay = "flight", \
 		overlay_x = 18, \
-		overlay_y = 12) //i swear 1812 being the overlay numbers was accidental
+		overlay_y = 12, \ //i swear 1812 being the overlay numbers was accidental
+		)
 
 /obj/item/gun/energy/disabler/smoothbore/prime //much stronger than the other prime variants, so dont just put this in as maint loot
 	name = "elite smoothbore disabler"

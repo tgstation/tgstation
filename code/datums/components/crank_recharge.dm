@@ -1,5 +1,5 @@
 // Cranking feature on the laser musket and smoothbore disabler, could possibly be used on more than guns
-/datum/component/gun_crank
+/datum/component/crank_recharge
 	/// Our cell to charge
 	var/obj/item/stock_parts/cell/charging_cell
 	/// How much charge we give our cell on each crank
@@ -14,7 +14,7 @@
 	var/is_charging = FALSE
 	COOLDOWN_DECLARE(charge_sound_cooldown)
 
-/datum/component/gun_crank/Initialize(charging_cell, charge_amount = 500, cooldown_time = 2 SECONDS, charge_sound = 'sound/weapons/laser_crank.ogg', charge_sound_cooldown_time = 1.8 SECONDS)
+/datum/component/crank_recharge/Initialize(charging_cell, charge_amount = 500, cooldown_time = 2 SECONDS, charge_sound = 'sound/weapons/laser_crank.ogg', charge_sound_cooldown_time = 1.8 SECONDS)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -26,20 +26,20 @@
 	src.charge_sound = charge_sound
 	src.charge_sound_cooldown_time = charge_sound_cooldown_time
 
-/datum/component/gun_crank/RegisterWithParent()
+/datum/component/crank_recharge/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 
-/datum/component/gun_crank/UnregisterFromParent()
+/datum/component/crank_recharge/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 
-/datum/component/gun_crank/proc/on_attack_self(obj/source, mob/living/user as mob)
+/datum/component/crank_recharge/proc/on_attack_self(obj/source, mob/living/user as mob)
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(crank_gun), source, user) //game doesnt like signal handler and do afters mingling
 
-/datum/component/gun_crank/proc/crank_gun(obj/source, mob/user)
+/datum/component/crank_recharge/proc/crank_gun(obj/source, mob/user)
 	if(charging_cell.charge >= charging_cell.maxcharge)
 		source.balloon_alert(user, "already charged!")
 		return

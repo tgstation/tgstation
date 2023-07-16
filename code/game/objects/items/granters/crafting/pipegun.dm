@@ -1,11 +1,4 @@
-/obj/item/book/granter/crafting_recipe/maint_gun
-	icon_state = "book1"
-
-/obj/item/book/granter/crafting_recipe/maint_gun/recoil(mob/living/user)
-	to_chat(user, span_warning("The book turns to dust in your hands."))
-	qdel(src)
-
-/obj/item/book/granter/crafting_recipe/maint_gun/pipegun_prime
+/obj/item/book/granter/crafting_recipe/dusting/pipegun_prime
 	name = "diary of a dead assistant"
 	desc = "A battered journal. Looks like he had a pretty rough life."
 	crafting_recipe_types = list(
@@ -20,7 +13,7 @@
 		"What the hell does he mean by 'ancient warrior tradition'?",
 	)
 
-/obj/item/book/granter/crafting_recipe/maint_gun/laser_musket_prime
+/obj/item/book/granter/crafting_recipe/dusting/laser_musket_prime
 	name = "journal of a space ranger"
 	desc = "A singed and weathered book, how did this get onto the station?"
 	crafting_recipe_types = list(
@@ -36,7 +29,7 @@
 	)
 
 //This one isn't found as maint loot, it's too powerful for that, but it keeps the theming of the others
-/obj/item/book/granter/crafting_recipe/maint_gun/smoothbore_disabler_prime
+/obj/item/book/granter/crafting_recipe/dusting/smoothbore_disabler_prime
 	name = "tome of a space pirate"
 	desc = "A beaten-up tome. Where was this plundered from?"
 	crafting_recipe_types = list(
