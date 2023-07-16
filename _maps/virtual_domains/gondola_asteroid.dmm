@@ -75,13 +75,6 @@
 /obj/structure/flora/bush/reed/style_random,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
-"K" = (
-/obj/structure/table/wood,
-/obj/item/storage/bag/tray,
-/obj/item/kitchen/fork,
-/obj/item/knife/kitchen,
-/turf/open/space/basic,
-/area/template_noop)
 "N" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -2881,7 +2874,7 @@ O
 O
 T
 g
-K
+X
 T
 T
 T

@@ -32,7 +32,7 @@
 	. = ..()
 	playsound(src, 'sound/magic/blink.ogg')
 
-	if(!completed_domain)
+	if(isnull(completed_domain))
 		return
 
 	PopulateContents(completed_domain.difficulty, completed_domain.reward_points, completed_domain.extra_loot)

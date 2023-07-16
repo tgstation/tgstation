@@ -1,38 +1,41 @@
+/// Sets the pilot to the occupant in the chair, linking damage. Represents the start of the avatar process
 /datum/mind/proc/initial_avatar_connection(mob/living/carbon/human/occupant, mob/living/carbon/human/avatar, obj/structure/netchair/hosting_chair, help_text)
-	help_datum = new(help_text)
+	var/datum/avatar_help_text/help_datum = new(help_text)
 	var/datum/action/avatar_domain_info/action = new(help_datum)
-	action.Grant(src)
 
 	pilot_ref = WEAKREF(occupant)
 	netchair_ref = WEAKREF(hosting_chair)
 
-	connect_avatar_signals(avatar)
+	connect_avatar_signals(avatar, action)
 	RegisterSignals(occupant, list(
+		COMSIG_LIVING_DEATH,
+		COMSIG_LIVING_STATUS_UNCONSCIOUS,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_MOVABLE_UNBUCKLE,
-		COMSIG_LIVING_STATUS_UNCONSCIOUS,
-		COMSIG_LIVING_DEATH
 		),
 		PROC_REF(disconnect_avatar),
 		TRUE
 	)
 
 	transfer_to(avatar)
+	avatar.playsound_local(avatar, "sound/magic/blink.ogg", 25, TRUE)
 
 /// Used any time we want to link the pilot body to an avatar or subsequent avatar
-/datum/mind/proc/connect_avatar_signals(mob/living/target)
+/datum/mind/proc/connect_avatar_signals(mob/living/target, datum/action/avatar_domain_info/action)
 	var/obj/structure/netchair/hosting_chair = netchair_ref?.resolve()
-	if(!hosting_chair)
+	if(isnull(hosting_chair))
 		disconnect_avatar(forced = TRUE)
 		return
 
-	hosting_chair.avatar_ref = WEAKREF(target)
+	hosting_chair.avatar_ref = WEAKREF(target) // we need to set this just in case there's a subsequent hop
+
+	action.Grant(target)
 
 	RegisterSignal(target, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
 	RegisterSignals(target, list(
 		COMSIG_LIVING_DEATH,
 		COMSIG_LIVING_GIBBED,
-		COMSIG_QSERVER_DISCONNECT
+		COMSIG_QSERVER_DISCONNECT,
 		),
 		PROC_REF(disconnect_avatar),
 		TRUE
@@ -44,35 +47,41 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/pilot = pilot_ref?.resolve()
-	if(!pilot)
+	if(isnull(pilot))
 		current.dust()
 
-	UnregisterSignal(current, COMSIG_MOB_APPLY_DAMAGE)
-	UnregisterSignal(current, COMSIG_LIVING_DEATH)
-	UnregisterSignal(current, COMSIG_LIVING_GIBBED)
-	UnregisterSignal(current, COMSIG_QSERVER_DISCONNECT)
-	UnregisterSignal(pilot, COMSIG_LIVING_STATUS_UNCONSCIOUS)
+	disconnect_avatar_signals()
+
 	UnregisterSignal(pilot, COMSIG_LIVING_DEATH)
+	UnregisterSignal(pilot, COMSIG_LIVING_STATUS_UNCONSCIOUS)
 	UnregisterSignal(pilot, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(pilot, COMSIG_MOVABLE_UNBUCKLE)
 
-	var/datum/action/avatar_domain_info/action = locate(/datum/action/avatar_domain_info) in src
-	action.Remove(src)
-
 	var/obj/structure/netchair/hosting_chair = netchair_ref?.resolve()
-	if(!hosting_chair)
+	if(isnull(hosting_chair))
 		current.dust()
 
 	hosting_chair.disconnect_occupant(src, forced)
 
+/// Simply disconnects the signals, but does not port the mind back to the pilot
+/datum/mind/proc/disconnect_avatar_signals()
+	var/datum/action/avatar_domain_info/action = locate(/datum/action/avatar_domain_info) in current.actions
+	if(action)
+		action.Remove(current)
+
+	UnregisterSignal(current, COMSIG_LIVING_DEATH)
+	UnregisterSignal(current, COMSIG_LIVING_GIBBED)
+	UnregisterSignal(current, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal(current, COMSIG_QSERVER_DISCONNECT)
+
+/// Helper to transfer the mind to a new avatar
 /datum/mind/proc/transfer_avatar_signals(mob/living/origin, mob/living/target)
-	UnregisterSignal(origin, COMSIG_MOB_APPLY_DAMAGE)
-	UnregisterSignal(origin, COMSIG_LIVING_DEATH)
-	UnregisterSignal(origin, COMSIG_LIVING_GIBBED)
-	UnregisterSignal(origin, COMSIG_QSERVER_DISCONNECT)
+	var/datum/action/avatar_domain_info/action = locate(/datum/action/avatar_domain_info) in origin.actions
 
-	connect_avatar_signals(target)
+	disconnect_avatar_signals(origin)
+	connect_avatar_signals(target, action)
 
+/// Transfers damage from the avatar to the pilot
 /datum/mind/proc/on_linked_damage(mob/target, damage, damage_type, def_zone)
 	SIGNAL_HANDLER
 

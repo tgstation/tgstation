@@ -15,11 +15,13 @@
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	desc = "Even in the distant year [CURRENT_STATION_YEAR], Nanostrasen is still using REST APIs. How grim."
+	if(!server_ref)
+		find_server()
 
 /obj/machinery/computer/quantum_console/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 
-	if(!server_ref)
+	if(isnull(server_ref))
 		find_server()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -30,14 +32,13 @@
 	var/list/data = list()
 
 	var/obj/machinery/quantum_server/server = find_server()
-	if(!server)
+	if(isnull(server))
 		data["connected"] = FALSE
 		return data
 
 	data["connected"] = TRUE
 
-	var/datum/map_template/virtual_domain/generated_domain = server.generated_domain_ref?.resolve()
-	data["generated_domain"] = generated_domain?.name
+	data["generated_domain"] = server.generated_domain?.name
 	data["loading"] = !server.get_ready_status()
 	data["occupants"] = length(server.occupant_mind_refs)
 	data["points"] = server.points
@@ -49,7 +50,7 @@
 	var/list/data = list()
 
 	var/obj/machinery/quantum_server/server = find_server()
-	if(!server)
+	if(isnull(server))
 		return data
 
 	data["available_domains"] = get_available_domains()
@@ -63,7 +64,7 @@
 		return TRUE
 
 	var/obj/machinery/quantum_server/server = find_server()
-	if(!server)
+	if(isnull(server))
 		return FALSE
 
 	switch(action)
@@ -86,6 +87,21 @@
 
 	return FALSE
 
+/// Attempts to find a quantum server.
+/obj/machinery/computer/quantum_console/proc/find_server()
+	var/obj/machinery/quantum_server/server = server_ref?.resolve()
+	if(server)
+		return server
+
+	for(var/obj/machinery/quantum_server/nearby_server as anything in oview(1))
+		if(!istype(nearby_server, /obj/machinery/quantum_server))
+			continue
+		server_ref = WEAKREF(nearby_server)
+		nearby_server.console_ref = WEAKREF(src)
+		return nearby_server
+
+	return FALSE
+
 /// Compiles a list of available domains.
 /obj/machinery/computer/quantum_console/proc/get_available_domains()
 	var/list/levels = list()
@@ -101,18 +117,3 @@
 		))
 
 	return levels
-
-/// Attempts to find a quantum server.
-/obj/machinery/computer/quantum_console/proc/find_server()
-	var/obj/machinery/quantum_server/server = server_ref?.resolve()
-	if(server)
-		return server
-
-	for(var/obj/machinery/quantum_server/nearby_server as anything in oview(7))
-		if(!istype(nearby_server, /obj/machinery/quantum_server))
-			continue
-		server_ref = WEAKREF(nearby_server)
-		server.console_ref = WEAKREF(src)
-		return nearby_server
-
-	return FALSE

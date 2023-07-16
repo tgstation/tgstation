@@ -33,6 +33,7 @@
 /obj/structure/netchair/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_BUCKLE, PROC_REF(on_buckle))
+	RegisterSignal(src, COMSIG_MOVABLE_UNBUCKLE, PROC_REF(on_unbuckle))
 
 /obj/structure/netchair/Destroy()
 	. = ..()
@@ -60,7 +61,7 @@
 /obj/structure/netchair/ui_static_data()
 	var/list/data = list()
 
-	if(!cached_outfits)
+	if(!length(cached_outfits))
 		cached_outfits += make_outfit_collection("Jobs", subtypesof(/datum/outfit/job))
 
 	data["collections"] = cached_outfits
@@ -86,11 +87,15 @@
 
 	var/mob/living/occupant = occupant_ref?.resolve()
 	var/datum/mind/hosted_mind = occupant_mind_ref?.resolve()
+	if(isnull(occupant))
+		return
+
 	if(receiving != hosted_mind)
-		balloon_alert(receiving.current, "you are not connected!")
+		balloon_alert(receiving.current, "wrong connection!")
 		return
 
 	hosted_mind.transfer_to(occupant)
+	occupant.playsound_local(occupant, "sound/magic/blink.ogg", 25, TRUE)
 
 	var/obj/machinery/quantum_server/server = find_server()
 	if(server)
@@ -112,12 +117,12 @@
 	set waitfor = FALSE
 
 	var/obj/machinery/quantum_server/server = find_server()
-	if(!server)
+	if(isnull(server))
 		balloon_alert(neo, "no server connected!")
 		return
 
-	var/datum/map_template/virtual_domain/loaded_domain = server.generated_domain_ref?.resolve()
-	if(!loaded_domain)
+	var/datum/map_template/virtual_domain/generated_domain = server.generated_domain
+	if(isnull(generated_domain))
 		balloon_alert(neo, "no connection!")
 		return
 
@@ -125,7 +130,7 @@
 	var/obj/structure/hololadder/wayout
 	if(!current_avatar || current_avatar.stat != CONSCIOUS) // We need an avatar that exists and is living
 		wayout = generate_hololadder()
-		if(!wayout)
+		if(isnull(wayout))
 			balloon_alert(neo, "out of bandwidth!")
 			return
 		current_avatar = generate_avatar(wayout)
@@ -135,18 +140,20 @@
 	if(QDELETED(neo) || QDELETED(current_avatar) || neo.stat == DEAD || current_avatar.stat == DEAD)
 		return
 
-	server.occupant_mind_refs += WEAKREF(neo.mind)
-	neo.mind.initial_avatar_connection(occupant = neo, avatar = current_avatar, hosting_chair = src, help_text = loaded_domain.help_text)
+	var/datum/weakref/neo_mind_ref = WEAKREF(neo.mind)
+	occupant_mind_ref = neo_mind_ref
+	server.occupant_mind_refs += neo_mind_ref
+	neo.mind.initial_avatar_connection(occupant = neo, avatar = current_avatar, hosting_chair = src, help_text = generated_domain.help_text)
 
 /obj/structure/netchair/proc/find_server()
 	var/obj/machinery/quantum_server/server = server_ref?.resolve()
 	if(server)
 		return server
 
-	for(var/obj/machinery/quantum_server/server as anything in oview(7))
-		if(istype(server, /obj/machinery/quantum_server))
-			server_ref = WEAKREF(server)
-			return server
+	for(var/obj/machinery/quantum_server/nearby_server as anything in oview(4))
+		if(istype(nearby_server, /obj/machinery/quantum_server))
+			server_ref = WEAKREF(nearby_server)
+			return nearby_server
 
 	return FALSE
 
@@ -161,11 +168,11 @@
 /// Generates a new hololadder for the bitminer. Effectively a respawn attempt.
 /obj/structure/netchair/proc/generate_hololadder()
 	var/obj/machinery/quantum_server/server = find_server()
-	if(!server)
+	if(isnull(server))
 		return
 
 	var/datum/space_level/vdom = server.vdom_ref?.resolve()
-	if(!vdom)
+	if(isnull(vdom))
 		return
 
 	var/list/turf/possible_turfs = get_area_turfs(/area/station/virtual_domain/safehouse/exit, vdom.z_value)
@@ -177,11 +184,11 @@
 		if(!locate(/obj/structure/hololadder) in dest_turf)
 			destination = dest_turf
 			break
-	if(!destination)
+	if(isnull(destination))
 		return FALSE
 
 	var/obj/structure/hololadder/wayout = new(destination, src)
-	if(!wayout)
+	if(isnull(wayout))
 		return FALSE
 
 	return wayout
@@ -207,12 +214,22 @@
 		return FALSE
 
 	var/obj/machinery/quantum_server/server = find_server(mob_to_buckle)
-	if(!server)
+	if(isnull(server))
 		return
 
 	occupant_ref = WEAKREF(mob_to_buckle)
 
 	enter_matrix(mob_to_buckle)
+
+/// On unbuckle, make sure the occupant ref is null
+/obj/structure/netchair/proc/on_unbuckle(mob/living/mob_to_unbuckle, force)
+	SIGNAL_HANDLER
+
+	occupant_ref = null
+
+	var/datum/mind/hosted_mind = occupant_mind_ref?.resolve()
+	if(hosted_mind)
+		disconnect_occupant(hosted_mind, forced = TRUE)
 
 /// Resolves a path to an outfit.
 /obj/structure/netchair/proc/resolve_outfit(text)

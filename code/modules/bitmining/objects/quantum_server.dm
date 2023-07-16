@@ -22,9 +22,9 @@
 	/// The area type to receive loot after a domain is completed
 	var/area/receive_area = /area/station/bitminer_den/receive
 	/// The loaded map template, map_template/virtual_domain
-	var/datum/weakref/generated_domain_ref
+	var/datum/map_template/virtual_domain/generated_domain
 	/// The loaded safehouse, map_template/safehouse
-	var/datum/weakref/generated_safehouse_ref
+	var/datum/map_template/safehouse/generated_safehouse
 	/// The generated space level to spawn other presets onto, datum/space_level
 	var/datum/weakref/vdom_ref
 	/// The connected console
@@ -54,13 +54,17 @@
 	. = ..()
 	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(stop_domain), usr, TRUE)
 	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	if(mapload)
-		RefreshParts()
+
+	RefreshParts()
+	if(!console_ref)
+		find_console()
 
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
 	SEND_SIGNAL(src, COMSIG_QSERVER_DISCONNECT)
 	occupant_mind_refs.Cut()
+	QDEL_NULL(generated_domain)
+	QDEL_NULL(generated_safehouse)
 
 /obj/machinery/quantum_server/attackby(obj/item/tool, mob/user, params)
 	var/icon_closed = initial(icon_state)
@@ -95,12 +99,11 @@
 
 /// Checks if there is a loot crate in the designated send areas (2x2)
 /obj/machinery/quantum_server/proc/check_completion(mob/user)
-	var/datum/map_template/virtual_domain/generated_domain = generated_domain_ref?.resolve()
-	if(!generated_domain)
+	if(isnull(generated_domain))
 		return FALSE
 
 	var/datum/space_level/vdom = vdom_ref?.resolve()
-	if(!vdom)
+	if(isnull(vdom))
 		return FALSE
 
 	var/turf/send_turfs = get_area_turfs(preset_send_area, vdom.z_value)
@@ -115,8 +118,7 @@
 
 /// Generates a reward based on the given domain
 /obj/machinery/quantum_server/proc/generate_loot(mob/user)
-	var/datum/map_template/virtual_domain/generated_domain = generated_domain_ref?.resolve()
-	if(!generated_domain)
+	if(isnull(generated_domain))
 		return FALSE
 
 	if(length(occupant_mind_refs))
@@ -132,7 +134,7 @@
 	playsound(src, 'sound/machines/terminal_success.ogg', 30, 2)
 
 	var/turf/to_spawn = pick(receive_turfs)
-	if(!to_spawn)
+	if(isnull(to_spawn))
 		CRASH("Failed to find a turf to spawn loot crate on.")
 
 	new /obj/structure/closet/crate/secure/bitminer_loot/decrypted(to_spawn, generated_domain)
@@ -141,7 +143,7 @@
 /// Generates a new virtual domain
 /obj/machinery/quantum_server/proc/generate_virtual_domain(mob/user)
 	var/obj/machinery/computer/quantum_console/console = find_console()
-	if(!console)
+	if(isnull(console))
 		balloon_alert(user, "no console found.")
 		return FALSE
 
@@ -178,7 +180,7 @@
 
 	for(var/datum/weakref/mind_ref in occupant_mind_refs)
 		var/datum/mind/this_mind = mind_ref.resolve()
-		if(!this_mind)
+		if(isnull(this_mind))
 			occupant_mind_refs -= this_mind
 
 		var/mob/living/creature = this_mind.current
@@ -198,12 +200,11 @@
 
 /// Generates the virtual template around the safehouse
 /obj/machinery/quantum_server/proc/load_domain(mob/user, datum/map_template/virtual_domain/to_generate)
-	if(!to_generate || !get_ready_status())
+	if(isnull(to_generate) || !get_ready_status())
 		return FALSE
 
-
-	var/datum/map_template/virtual_domain/vdom = vdom_ref?.resolve()
-	if(!vdom)
+	var/datum/space_level/vdom = vdom_ref?.resolve()
+	if(isnull(vdom))
 		generate_virtual_domain(user)
 
 	loading = TRUE
@@ -213,8 +214,8 @@
 	safehouse.load(safehouse_load_turf[ONLY_TURF])
 	to_generate.load(map_load_turf[ONLY_TURF])
 
-	generated_domain_ref = WEAKREF(to_generate)
-	generated_safehouse_ref = WEAKREF(safehouse)
+	generated_domain = to_generate
+	generated_safehouse = safehouse
 	balloon_alert(user, "virtual domain generated.")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
 	loading = FALSE
@@ -238,23 +239,27 @@
 	if(console)
 		return console
 
-	for(var/obj/machinery/computer/quantum_console/nearby_console as anything in oview(7))
+	for(var/obj/machinery/computer/quantum_console/nearby_console as anything in oview(1))
 		if(!istype(nearby_console, /obj/machinery/computer/quantum_console))
 			continue
 		console_ref = WEAKREF(nearby_console)
-		console.server_ref = WEAKREF(src)
+		nearby_console.server_ref = WEAKREF(src)
 		return nearby_console
 
 	return FALSE
 
 /// Sets the current virtual domain to the given map template
 /obj/machinery/quantum_server/proc/set_domain(mob/user, id)
-	if(!id)
+	if(isnull(id))
 		balloon_alert(user, "no domain specified.")
 		return FALSE
 
 	if(length(occupant_mind_refs))
 		balloon_alert(user, "error: connected clients!")
+		return FALSE
+
+	if(generated_domain)
+		balloon_alert(user, "stop the current domain first.")
 		return FALSE
 
 	loading = TRUE
@@ -271,8 +276,6 @@
 		balloon_alert(user, "invalid domain specified.")
 		return FALSE
 
-	stop_domain(user)
-
 	points -= to_generate.cost
 
 	if(points < 0 || !load_domain(user, to_generate))
@@ -283,8 +286,6 @@
 
 /// Stops the current virtual domain and disconnects all users
 /obj/machinery/quantum_server/proc/stop_domain(mob/user, force = FALSE)
-	set waitfor = FALSE
-
 	if(!force)
 		balloon_alert(user, "powering down domain...")
 		playsound(src, 'sound/machines/terminal_off.ogg', 30, 2)
@@ -293,12 +294,10 @@
 	SEND_SIGNAL(src, COMSIG_QSERVER_DISCONNECT)
 	COOLDOWN_START(src, cooling_off, min(server_cooldown_time * server_cooldown_efficiency))
 
-	var/datum/map_template/virtual_domain/generated_domain = generated_domain_ref?.resolve()
 	if(generated_domain)
 		generated_domain.clear_atoms()
 		generated_domain = null
 
-	var/datum/map_template/safehouse/generated_safehouse = generated_safehouse_ref?.resolve()
 	if(generated_safehouse)
 		generated_safehouse.clear_atoms()
 		generated_safehouse = null

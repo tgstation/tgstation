@@ -24,10 +24,10 @@
 		return
 
 	var/obj/structure/netchair/hosting_chair = netchair_ref?.resolve()
-	if(!hosting_chair) // Oh fuck
+	if(isnull(hosting_chair)) // Oh fuck
 		balloon_alert(user, "not connected!")
 		return
 
 	balloon_alert(user, "disconnecting...")
 	if(do_after(user, travel_time, src))
-		hosting_chair.disconnect_occupant(user.mind)
+		user.mind.disconnect_avatar()
