@@ -51,8 +51,8 @@
 	var/obj/item/egg_target = attack_target
 	egg_target.forceMove(src)
 	carried_egg = attack_target
-	RegisterSignal(egg_target, COMSIG_QDELETING, PROC_REF(on_hatch_egg))
 	add_overlay("penguin_egg_overlay")
+	RegisterSignal(egg_target, COMSIG_QDELETING, PROC_REF(on_hatch_egg))
 
 /mob/living/basic/pet/penguin/death(gibbed)
 	. = ..()
@@ -81,7 +81,7 @@
 	carried_egg.forceMove(get_turf(src))
 	UnregisterSignal(carried_egg, COMSIG_QDELETING)
 	carried_egg = null
-	cut_overlays()
+	cut_overlay("penguin_egg_overlay")
 
 /datum/ai_controller/basic_controller/penguin
 	blackboard = list(
@@ -102,9 +102,12 @@
 /datum/ai_planning_subtree/find_and_hunt_target/penguin_egg
 	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
 	hunting_behavior = /datum/ai_behavior/hunt_target/penguin_egg
+	finding_behavior = /datum/ai_behavior/find_hunt_target/penguin_egg
 	hunt_targets = list(/obj/item/food/egg/penguin_egg)
 	hunt_range = 7
 
+/datum/ai_behavior/find_hunt_target/penguin_egg/valid_dinner(mob/living/source, atom/dinner, radius)
+	return can_see(source, dinner, radius) && !(dinner in source.contents)
 /datum/ai_behavior/hunt_target/penguin_egg
 	hunt_cooldown = 15 SECONDS
 	always_reset_target = TRUE
