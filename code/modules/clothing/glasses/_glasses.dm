@@ -397,6 +397,7 @@
 	inhand_icon_state = "gar"
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
+///Syndicate item that upgrades the flash protection of your eyes.
 /obj/item/syndicate_contacts
 	name = "suspicious contact lens case"
 	desc = "A sinister red case that contains two shiny black contact lenses."
