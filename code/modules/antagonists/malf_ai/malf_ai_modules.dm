@@ -1070,7 +1070,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			clicked_machine.balloon_alert(ai_caller, "not operational!")
 			return FALSE
 
-	if (!(is_type_in_list(clicked_on.type, compatable_typepaths)))
+	if (!(is_type_in_list(clicked_on, compatable_typepaths)))
 		clicked_on.balloon_alert(ai_caller, "incompatable!")
 		return FALSE
 

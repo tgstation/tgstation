@@ -860,15 +860,16 @@
 	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
-	if(seconds_electrified && !(machine_stat & NOPOWER))
-		if(shock(user, 100))
-			return
+	if (!isAI(user))
+		if(seconds_electrified && !(machine_stat & NOPOWER))
+			if(shock(user, 100))
+				return
 
-	if(tilted && !user.buckled && !isAdminGhostAI(user))
-		to_chat(user, span_notice("You begin righting [src]."))
-		if(do_after(user, 50, target=src))
-			untilt(user)
-		return
+		if(tilted && !user.buckled && !isAdminGhostAI(user))
+			to_chat(user, span_notice("You begin righting [src]."))
+			if(do_after(user, 50, target=src))
+				untilt(user)
+			return
 
 	return ..()
 
