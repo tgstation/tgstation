@@ -11,6 +11,8 @@
  * user - The person whose UI we're updating.
  */
 /obj/item/modular_computer/proc/update_tablet_open_uis(mob/user)
+	if(!user)
+		return FALSE
 	var/datum/tgui/active_ui = SStgui.get_open_ui(user, src)
 	if(!active_ui)
 		if(active_program)
