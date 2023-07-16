@@ -47,8 +47,7 @@
 	if(!istype(attack_target, /obj/item/food/egg/penguin_egg))
 		return
 
-	if(carried_egg)
-		carried_egg.forceMove(get_turf(src))
+	remove_egg() //to check if we already have a egg
 	var/obj/item/egg_target = attack_target
 	egg_target.forceMove(src)
 	carried_egg = attack_target
@@ -75,11 +74,11 @@
 	SIGNAL_HANDLER
 
 	remove_egg()
-	UnregisterSignal(source, COMSIG_QDELETING)
 
 /mob/living/basic/pet/penguin/proc/remove_egg()
 	if(carried_egg)
 		carried_egg.forceMove(get_turf(src))
+		UnregisterSignal(carried_egg, COMSIG_QDELETING)
 	carried_egg = null
 	cut_overlays()
 
