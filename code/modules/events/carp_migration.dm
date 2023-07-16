@@ -2,8 +2,8 @@
 	name = "Carp Migration"
 	typepath = /datum/round_event/carp_migration
 	weight = 15
-	min_players = 12
-	earliest_start = 10 MINUTES
+	min_players = 12 //monkie edit: 12 to 20
+	earliest_start = 40 MINUTES //monkie edit: 10 to 40
 	max_occurrences = 6
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Summons a school of space carp."
