@@ -84,11 +84,11 @@
 	var/list/areas = get_areas(area_type)
 	if(!LAZYLEN(areas))
 		return FALSE
-	var/list/open_turfs = get_area_turfs(pick(areas), subtypes = TRUE)
-	for(var/turf/open/floor/turf in open_turfs)
-		open_turfs += turf
+	var/list/open_turfs = list()
+	for(var/turf/open/floor/found_turf in get_area_turfs(pick(areas), subtypes = TRUE))
+		open_turfs += found_turf 
 
-	if(!LAZYLEN(open_turfs))
+	if(!length(open_turfs))
 		return FALSE
 
 	new /obj/effect/pod_landingzone (pick(open_turfs), new pod_type (), contents)
