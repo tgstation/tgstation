@@ -23060,8 +23060,8 @@
 /area/station/ai_monitored/aisat/exterior)
 "fMd" = (
 /obj/machinery/door/window/brigdoor/left/directional/south{
-	req_access = list("morgue_secure");
-	name = "Coroner's Office"
+	name = "Coroner's Office";
+	req_access = list("morgue_secure")
 	},
 /obj/effect/turf_decal/siding/dark_blue,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
@@ -38035,6 +38035,8 @@
 /obj/item/storage/box/petridish,
 /obj/effect/turf_decal/siding/purple,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "jyc" = (
