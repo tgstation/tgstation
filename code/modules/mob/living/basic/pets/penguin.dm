@@ -124,12 +124,18 @@
 	icon_dead = "penguin_dead"
 	gold_core_spawnable = FRIENDLY_SPAWN
 
+/mob/living/basic/pet/penguin/emperor/neuter
+	can_lay_eggs = FALSE
+
 /mob/living/basic/pet/penguin/emperor/shamebrero
 	name = "shamebrero penguin"
 	icon_state = "penguin_shamebrero"
 	icon_living = "penguin_shamebrero"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
+
+/mob/living/basic/pet/penguin/emperor/shamebrero/neuter
+	can_lay_eggs = FALSE
 
 /mob/living/basic/pet/penguin/baby
 	name = "penguin chick"

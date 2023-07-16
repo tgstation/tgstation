@@ -104,11 +104,11 @@
 	mobtype = /mob/living/simple_animal/holodeck_monkey
 
 /obj/effect/holodeck_effect/mobspawner/penguin
-	mobtype = /mob/living/basic/pet/penguin/emperor
+	mobtype = /mob/living/basic/pet/penguin/emperor/neuter
 
 /obj/effect/holodeck_effect/mobspawner/penguin/Initialize(mapload)
 	if(prob(1))
-		mobtype = /mob/living/basic/pet/penguin/emperor/shamebrero
+		mobtype = /mob/living/basic/pet/penguin/emperor/shamebrero/neuter
 	return ..()
 
 /obj/effect/holodeck_effect/mobspawner/penguin_baby
