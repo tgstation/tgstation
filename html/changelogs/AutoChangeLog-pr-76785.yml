@@ -1,0 +1,5 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - bugfix: "fixed energy cost on floor tiles for engi borgs."
+  - bugfix: "engi borgs can now properly merge base floor tiles with other base floor tiles."
