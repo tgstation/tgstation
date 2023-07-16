@@ -622,6 +622,45 @@ export const Spellbook = (props, context) => {
   const ActiveCat = TAB2NAME[tabIndex - 1];
   const ActiveNextCat = TAB2NAME[tabIndex];
 
+  // Has a chance of selecting a random funny verb instead of "Searching"
+  const SelectSearchVerb = () => {
+    let found = Math.random();
+    if (found <= 0.03) {
+      return 'Seeking';
+    }
+    if (found <= 0.06) {
+      return 'Contemplating';
+    }
+    if (found <= 0.09) {
+      return 'Divining';
+    }
+    if (found <= 0.12) {
+      return 'Scrying';
+    }
+    if (found <= 0.15) {
+      return 'Peeking';
+    }
+    if (found <= 0.18) {
+      return 'Pondering';
+    }
+    if (found <= 0.21) {
+      return 'Divining';
+    }
+    if (found <= 0.24) {
+      return 'Gazing';
+    }
+    if (found <= 0.27) {
+      return 'Studying';
+    }
+    if (found <= 0.3) {
+      return 'Reviewing';
+    }
+
+    return 'Searching';
+  };
+
+  const SelectedVerb = SelectSearchVerb();
+
   return (
     <Window title="Spellbook" theme="wizard" width={950} height={540}>
       <Window.Content>
@@ -631,14 +670,14 @@ export const Spellbook = (props, context) => {
               {spellSearch.length > 1 ? (
                 <Stack.Item grow>
                   <Section
-                    title={'Searching...'}
+                    title={`${SelectedVerb}...`}
                     scrollable
                     height={heightSection}
                     fill
                     buttons={
                       <Button
-                        content="Back to book"
-                        icon="arrow-left"
+                        content={`Stop ${SelectedVerb}`}
+                        icon="arrow-rotate-left"
                         onClick={() => setSpellSearch('')}
                       />
                     }>
