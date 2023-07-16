@@ -102,6 +102,9 @@
 							span_notice("You hug [attacked_mob] to make [attacked_mob.p_them()] feel better!"))
 				if(attacked_mob.resting)
 					attacked_mob.set_resting(FALSE, TRUE)
+			else if(issilicon(attacked_mob))
+				user.visible_message(span_notice("[user] pats [attacked_mob]!"), \
+						span_notice("You pat [attacked_mob]!"))
 			else
 				user.visible_message(span_notice("[user] pets [attacked_mob]!"), \
 						span_notice("You pet [attacked_mob]!"))
@@ -138,7 +141,7 @@
 					user.visible_message(span_userdanger("[user] shocks [attacked_mob]!"), \
 						span_danger("You shock [attacked_mob]!"))
 				else
-					user.visible_message(span_userdanger("[user] shocks [attacked_mob]. It does not seem to have an effect"), \
+					user.visible_message(span_userdanger("[user] shocks [attacked_mob]. It does not seem to have an effect."), \
 						span_danger("You shock [attacked_mob] to no effect."))
 			playsound(loc, 'sound/effects/sparks2.ogg', 50, TRUE, -1)
 			user.cell.charge -= 500

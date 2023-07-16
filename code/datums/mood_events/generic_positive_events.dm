@@ -182,7 +182,7 @@
 	mood_change = 6
 	timeout = 5 MINUTES
 
-/datum/mood_event/pet_borg
+/datum/mood_event/pat_borg
 	description = "I just love my robotic friends!"
 	mood_change = 3
 	timeout = 5 MINUTES
