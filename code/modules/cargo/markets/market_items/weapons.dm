@@ -68,7 +68,7 @@
 /datum/market_item/weapon/smoothbore_disabler_prime
 	name = "Elite Smoothbore Disabler"
 	desc = "A rare and sought after disabler often used by Nanotrasen's high command, and historical LARPers."
-	item = /obj/item/book/granter/crafting_recipe/maint_gun/smoothbore_disabler_prime
+	item = /obj/item/gun/energy/disabler/smoothbore/prime
 
 	price_min = CARGO_CRATE_VALUE * 3
 	price_max = CARGO_CRATE_VALUE * 5
