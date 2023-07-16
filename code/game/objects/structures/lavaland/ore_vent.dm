@@ -134,7 +134,9 @@
 	icon_state = "ore"
 	icon = 'icons/obj/ore.dmi'
 	item_flags = NO_MAT_REDEMPTION
+	///When a refinery machine is working on this boulder, we'll set this. Re reset when the process is finished, but the boulder may still be refined/operated on further.
+	var/obj/machinery/bouldertech/processed_by = null
 
 /obj/item/boulder/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed) //Heavy as all hell, it's a boulder.
+	AddComponent(/datum/component/two_handed) //Heavy as all hell, it's a boulder, dude.

@@ -1,4 +1,4 @@
-/**********************Ore Redemption Unit**************************/
+/**********************Ore Redemption Unit (ORM)**************************/
 //Turns all the various mining machines into a single unit to speed up mining and establish a point system
 
 /obj/machinery/mineral/ore_redemption
