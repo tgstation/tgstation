@@ -4,7 +4,7 @@
 	name = "Immovable Rod"
 	typepath = /datum/round_event/immovable_rod
 	min_players = 20 // monke edit: 15 to 20
-	earliest_start = 60 MINUTES // monke edit: 20 minutes to 60 minutes
+	earliest_start = 30 MINUTES // monke edit: 20 minutes to 30 minutes
 	max_occurrences = 5
 	category = EVENT_CATEGORY_SPACE
 	description = "The station passes through an immovable rod."
