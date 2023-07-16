@@ -267,7 +267,7 @@ const SendToAllSection = (_: any, context: any) => {
       </Section>
       <Section>
         <TextArea
-          rows={5}
+          height={6}
           value={msg}
           placeholder="Send message to everyone..."
           onInput={(_: any, v: string) => setMsg(v)}

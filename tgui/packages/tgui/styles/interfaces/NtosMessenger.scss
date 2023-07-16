@@ -10,7 +10,7 @@ $msgpadding: 0.7rem;
 // very nasty theme hacks inbound
 
 .theme-ntOS95 {
-  .NtosMessenger__ChatMessage {
+  .ChatMessage {
     color: white !important;
 
     padding: $msgpadding - base.rem(2px);
@@ -24,12 +24,12 @@ $msgpadding: 0.7rem;
     }
   }
 
-  .NtosMessenger__ChatLog {
+  .ChatLog {
     background-color: white;
   }
 }
 
-.NtosMessenger__ChatMessage {
+.ChatMessage {
   display: inline-flex;
   flex-direction: column;
 
@@ -41,19 +41,16 @@ $msgpadding: 0.7rem;
   border-radius: 3px;
   background-color: $msgcolor-incoming;
 
-  &__outgoing {
-    @extend .NtosMessenger__ChatMessage;
+  &_outgoing {
+    @extend .ChatMessage;
     background-color: $msgcolor-outgoing;
     text-align: right;
     float: right;
   }
 
-  .NtosMessenger__ChatMessage__inner {
-    text-align: left;
-  }
-
   &__content {
     word-wrap: break-word;
+    text-align: left;
   }
 
   &__everyone {
@@ -68,7 +65,7 @@ $msgpadding: 0.7rem;
   }
 }
 
-.NtosMessenger__ChatLog {
+.ChatLog {
   padding: 1rem;
   justify-content: flex-end;
   margin: 0;

@@ -1,4 +1,4 @@
-import { Stack, Section, Button, TextArea, Box } from '../../components';
+import { Stack, Section, Button, Box, Input } from '../../components';
 import { Component, RefObject, createRef, SFC } from 'inferno';
 import { NtChat, NtMessenger } from './types';
 import { sanitizeText } from '../../sanitize';
@@ -104,11 +104,11 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     for (let index = 0; index < msgs.length; index++) {
       let message = msgs[index];
 
-      const isSwitch = lastOutgoing !== message.outgoing;
+      const isSwitch = lastOutgoing !== !!message.outgoing;
       lastOutgoing = !!message.outgoing;
 
       filteredMessages.push(
-        <Stack.Item key={index} mt={isSwitch ? 2 : 0.5}>
+        <Stack.Item key={index} mt={isSwitch ? 5 : 1}>
           <ChatMessage
             outgoing={message.outgoing}
             msg={message.message}
@@ -146,7 +146,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             fitted
             title={`${recp.name} (${recp.job})`}
             scrollableRef={this.scrollRef}>
-            <Stack vertical fill className="NtosMessenger__ChatLog">
+            <Stack vertical height="auto" className="ChatLog">
               <Stack.Item textAlign="center" fontSize={1}>
                 This is the beginning of your chat with {recp.name}.
               </Stack.Item>
@@ -160,10 +160,10 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
           <Section fill>
             <Stack fill align="center">
               <Stack.Item grow={1}>
-                <TextArea
+                <Input
                   placeholder={`Send message to ${recp.name}...`}
                   fluid
-                  autofocus
+                  autoFocus
                   width="100%"
                   justify
                   id="input"
@@ -203,17 +203,11 @@ export const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
   };
 
   return (
-    <Box
-      className={`NtosMessenger__ChatMessage${outgoing ? '__outgoing' : ''}`}>
-      <Box
-        className="NtosMessenger__ChatMessage__content"
-        dangerouslySetInnerHTML={text}
-      />
+    <Box className={`ChatMessage${outgoing ? '_outgoing' : ''}`}>
+      <Box className="ChatMessage__content" dangerouslySetInnerHTML={text} />
       {photoPath !== null && <Box as="img" src={photoPath} />}
       {!!everyone && (
-        <Box className="NtosMessenger__ChatMessage__everyone">
-          Sent to everyone
-        </Box>
+        <Box className="ChatMessage__everyone">Sent to everyone</Box>
       )}
     </Box>
   );
