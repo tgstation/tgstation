@@ -84,6 +84,8 @@
 		filtered.add_gas(gas)
 		filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
 		filtering.gases[gas][MOLES] = 0
+	filtered.heat_capacity += filtering.heat_capacity
+	filtering.heat_capacity = 0
 	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.
 
 	air_contents.merge(filtered) // Store filtered out gasses.

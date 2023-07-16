@@ -136,6 +136,7 @@
 	var/datum/gas_mixture/merger = new
 	merger.assert_gas(spawn_id)
 	merger.gases[spawn_id][MOLES] = spawn_mol * seconds_per_tick
+	merger.heat_capacity = spawn_mol * merger.gases[spawn_id][GAS_META][META_GAS_SPECIFIC_HEAT] * seconds_per_tick
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
 

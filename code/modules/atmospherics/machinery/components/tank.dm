@@ -137,7 +137,7 @@
 
 	var/moles_to_add = (pressure_limit * air_contents.volume) / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.assert_gas(gastype)
-	air_contents.gases[gastype][MOLES] += moles_to_add
+	air_contents.change_moles(gastype, moles_to_add)
 	air_contents.archive()
 
 /obj/machinery/atmospherics/components/tank/process_atmos()

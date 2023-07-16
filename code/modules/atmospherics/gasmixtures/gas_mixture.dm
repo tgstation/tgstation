@@ -69,8 +69,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		ADD_GAS(id, cached_gases)
 
 ///Changes the moles of a gas by moles amount. Check if the gas exists first before trying to change its mole count!
+///Includes mole sanity check, so don't use this in hot atmos code.
 /datum/gas_mixture/proc/change_moles(datum/gas/gas_id, moles)
 	var/list/cached_gas = gases[gas_id]
+	moles = max(-cached_gas[MOLES], moles)
 	cached_gas[MOLES] += moles
 	heat_capacity += moles * cached_gas[GAS_META][META_GAS_SPECIFIC_HEAT]
 

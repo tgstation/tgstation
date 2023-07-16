@@ -246,35 +246,35 @@
 	var/scaled_production = production_amount * selected_fuel.gas_production_multiplier
 
 	for(var/gas_id in fuel.requirements)
-		internal_fusion.gases[gas_id][MOLES] -= min(fuel_list[gas_id], fuel_consumption)
+		internal_fusion.change_moles(gas_id, -fuel_consumption)
 	for(var/gas_id in fuel.primary_products)
-		internal_fusion.gases[gas_id][MOLES] += fuel_consumption * 0.5
+		internal_fusion.change_moles(gas_id, fuel_consumption * 0.5)
 
 	// Each recipe provides a tier list of six output gases.
 	// Which gases are produced depend on what the fusion level is.
 	var/list/tier = fuel.secondary_products
 	switch(power_level)
 		if(1)
-			moderator_internal.gases[tier[1]][MOLES] += scaled_production * 0.95
-			moderator_internal.gases[tier[2]][MOLES] += scaled_production * 0.75
+			moderator_internal.change_moles(tier[1], scaled_production * 0.95)
+			moderator_internal.change_moles(tier[2], scaled_production * 0.75)
 		if(2)
-			moderator_internal.gases[tier[1]][MOLES] += scaled_production * 1.65
-			moderator_internal.gases[tier[2]][MOLES] += scaled_production
+			moderator_internal.change_moles(tier[1], scaled_production * 1.65)
+			moderator_internal.change_moles(tier[2], scaled_production)
 			if(moderator_list[/datum/gas/plasma] > 50)
-				moderator_internal.gases[tier[3]][MOLES] += scaled_production * 1.15
+				moderator_internal.change_moles(tier[3], scaled_production * 1.15)
 		if(3)
-			moderator_internal.gases[tier[2]][MOLES] += scaled_production * 0.5
-			moderator_internal.gases[tier[3]][MOLES] += scaled_production * 0.45
+			moderator_internal.change_moles(tier[2], scaled_production * 0.5)
+			moderator_internal.change_moles(tier[3], scaled_production * 0.45)
 		if(4)
-			moderator_internal.gases[tier[3]][MOLES] += scaled_production * 1.65
-			moderator_internal.gases[tier[4]][MOLES] += scaled_production * 1.25
+			moderator_internal.change_moles(tier[3], scaled_production * 1.65)
+			moderator_internal.change_moles(tier[4], scaled_production * 1.25)
 		if(5)
-			moderator_internal.gases[tier[4]][MOLES] += scaled_production * 0.65
-			moderator_internal.gases[tier[5]][MOLES] += scaled_production
-			moderator_internal.gases[tier[6]][MOLES] += scaled_production * 0.75
+			moderator_internal.change_moles(tier[4], scaled_production * 0.65)
+			moderator_internal.change_moles(tier[5], scaled_production)
+			moderator_internal.change_moles(tier[6], scaled_production * 0.75)
 		if(6)
-			moderator_internal.gases[tier[5]][MOLES] += scaled_production * 0.35
-			moderator_internal.gases[tier[6]][MOLES] += scaled_production
+			moderator_internal.change_moles(tier[5], scaled_production * 0.35)
+			moderator_internal.change_moles(tier[6], scaled_production)
 
 /**
  * Perform common fusion actions:
@@ -288,93 +288,93 @@
 		if(1)
 			if(moderator_list[/datum/gas/plasma] > 100)
 				internal_output.assert_gases(/datum/gas/nitrous_oxide)
-				internal_output.gases[/datum/gas/nitrous_oxide] += scaled_production * 0.5
-				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.85)
+				internal_output.change_moles(/datum/gas/nitrous_oxide, scaled_production * 0.5)
+				moderator_internal.change_moles(/datum/gas/plasma, scaled_production * -0.85)
 			if(moderator_list[/datum/gas/bz] > 150)
 				internal_output.assert_gases(/datum/gas/halon)
-				internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 0.55
-				moderator_internal.gases[/datum/gas/bz][MOLES] -= min(moderator_internal.gases[/datum/gas/bz][MOLES], scaled_production * 0.95)
+				internal_output.change_moles(/datum/gas/halon, scaled_production * 0.55)
+				moderator_internal.change_moles(/datum/gas/bz, scaled_production * -0.95)
 		if(2)
 			if(moderator_list[/datum/gas/plasma] > 50)
 				internal_output.assert_gases(/datum/gas/bz)
-				internal_output.gases[/datum/gas/bz][MOLES] += scaled_production * 1.8
-				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.75)
+				internal_output.change_moles(/datum/gas/bz, scaled_production * 1.8)
+				moderator_internal.change_moles(/datum/gas/plasma, scaled_production * -1.75)
 			if(moderator_list[/datum/gas/proto_nitrate] > 20)
 				radiation *= 1.55
 				heat_output *= 1.025
 				internal_output.assert_gases(/datum/gas/nitrium)
-				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 1.05
-				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
+				internal_output.change_moles(/datum/gas/nitrium, scaled_production * 1.05)
+				moderator_internal.change_moles(/datum/gas/proto_nitrate, scaled_production * 1.35)
 		if(3, 4)
 			if(moderator_list[/datum/gas/plasma] > 10)
 				internal_output.assert_gases(/datum/gas/freon, /datum/gas/nitrium)
-				internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 0.15
-				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 1.05
-				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45)
+				internal_output.change_moles(/datum/gas/freon, scaled_production * 0.15)
+				internal_output.change_moles(/datum/gas/nitrium, scaled_production * 1.05)
+				moderator_internal.change_moles(/datum/gas/plasma, scaled_production * 0.45)
 			if(moderator_list[/datum/gas/freon] > 50)
 				heat_output *= 0.9
 				radiation *= 0.8
 			if(moderator_list[/datum/gas/proto_nitrate]> 15)
 				internal_output.assert_gases(/datum/gas/nitrium, /datum/gas/halon)
-				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 1.25
-				internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 1.15
-				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.55)
+				internal_output.change_moles(/datum/gas/nitrium, scaled_production * 1.25)
+				internal_output.change_moles(/datum/gas/halon, scaled_production * 1.15)
+				moderator_internal.change_moles(/datum/gas/proto_nitrate, scaled_production * 1.55)
 				radiation *= 1.95
 				heat_output *= 1.25
 			if(moderator_list[/datum/gas/bz] > 100)
 				internal_output.assert_gases(/datum/gas/healium, /datum/gas/proto_nitrate)
-				internal_output.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 1.5
-				internal_output.gases[/datum/gas/healium][MOLES] += scaled_production * 1.5
+				internal_output.change_moles(/datum/gas/proto_nitrate, scaled_production * 1.5)
+				internal_output.change_moles(/datum/gas/healium, scaled_production * 1.5)
 				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * seconds_per_tick)
 
 		if(5)
 			if(moderator_list[/datum/gas/plasma] > 15)
 				internal_output.assert_gases(/datum/gas/freon)
-				internal_output.gases[/datum/gas/freon][MOLES] += scaled_production *0.25
-				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
+				internal_output.change_moles(/datum/gas/freon, scaled_production *0.25)
+				moderator_internal.change_moles(/datum/gas/plasma, scaled_production * 1.45)
 			if(moderator_list[/datum/gas/freon] > 500)
 				heat_output *= 0.5
 				radiation *= 0.2
 			if(moderator_list[/datum/gas/proto_nitrate] > 50)
 				internal_output.assert_gases(/datum/gas/nitrium, /datum/gas/pluoxium)
-				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 1.95
-				internal_output.gases[/datum/gas/pluoxium][MOLES] += scaled_production
-				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
+				internal_output.change_moles(/datum/gas/nitrium, scaled_production * 1.95)
+				internal_output.change_moles(/datum/gas/pluoxium, scaled_production)
+				moderator_internal.change_moles(/datum/gas/proto_nitrate, scaled_production * 1.35)
 				radiation *= 1.95
 				heat_output *= 1.25
 			if(moderator_list[/datum/gas/bz] > 100)
 				internal_output.assert_gases(/datum/gas/healium, /datum/gas/freon)
-				internal_output.gases[/datum/gas/healium][MOLES] += scaled_production
+				internal_output.change_moles(/datum/gas/healium, scaled_production)
 				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * seconds_per_tick)
-				internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 1.15
+				internal_output.change_moles(/datum/gas/freon, scaled_production * 1.15)
 			if(moderator_list[/datum/gas/healium] > 100)
 				if(critical_threshold_proximity > 400)
 					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * seconds_per_tick ), 0)
-					moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
+					moderator_internal.change_moles(/datum/gas/healium, scaled_production * 20)
 			if(moderator_internal.temperature < 1e7 || (moderator_list[/datum/gas/plasma] > 100 && moderator_list[/datum/gas/bz] > 50))
 				internal_output.assert_gases(/datum/gas/antinoblium)
-				internal_output.gases[/datum/gas/antinoblium][MOLES] += dirty_production_rate * 0.9 / 0.065 * seconds_per_tick
+				internal_output.change_moles(/datum/gas/antinoblium, dirty_production_rate * 0.9 / 0.065 * seconds_per_tick)
 		if(6)
 			internal_output.assert_gases(/datum/gas/antinoblium)
 			if(moderator_list[/datum/gas/plasma] > 30)
 				internal_output.assert_gases(/datum/gas/bz)
-				internal_output.gases[/datum/gas/bz][MOLES] += scaled_production * 1.15
-				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
+				internal_output.change_moles(/datum/gas/bz, scaled_production * 1.15)
+				moderator_internal.change_moles(/datum/gas/plasma, scaled_production * 1.45)
 			if(moderator_list[/datum/gas/proto_nitrate])
 				internal_output.assert_gases(/datum/gas/zauker, /datum/gas/nitrium)
-				internal_output.gases[/datum/gas/zauker][MOLES] += scaled_production * 5.35
-				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 2.15
-				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 3.35)
+				internal_output.change_moles(/datum/gas/zauker, scaled_production * 5.35)
+				internal_output.change_moles(/datum/gas/nitrium, scaled_production * 2.15)
+				moderator_internal.change_moles(/datum/gas/proto_nitrate, scaled_production * -3.35)
 				radiation *= 2
 				heat_output *= 2.25
 			if(moderator_list[/datum/gas/bz])
 				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * seconds_per_tick)
-				internal_output.gases[/datum/gas/antinoblium][MOLES] += clamp(dirty_production_rate / 0.045, 0, 10) * seconds_per_tick
+				internal_output.change_moles(/datum/gas/antinoblium, clamp(dirty_production_rate / 0.045, 0, 10) * seconds_per_tick)
 			if(moderator_list[/datum/gas/healium] > 100)
 				if(critical_threshold_proximity > 400)
 					critical_threshold_proximity = max(critical_threshold_proximity - (moderator_list[/datum/gas/healium] / 100 * seconds_per_tick ), 0)
-					moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
-			internal_fusion.gases[/datum/gas/antinoblium][MOLES] += dirty_production_rate * 0.01 / 0.095 * seconds_per_tick
+					moderator_internal.change_moles(/datum/gas/healium, scaled_production * -20)
+			internal_fusion.change_moles(/datum/gas/antinoblium, dirty_production_rate * 0.01 / 0.095 * seconds_per_tick)
 
 	//Modifies the internal_fusion temperature with the amount of heat output
 	var/temperature_modifier = selected_fuel.temperature_change_multiplier
@@ -403,7 +403,7 @@
 			var/max_iron_removable = IRON_OXYGEN_HEAL_PER_SECOND
 			var/iron_removed = min(max_iron_removable * seconds_per_tick, iron_content)
 			iron_content -= iron_removed
-			moderator_internal.gases[/datum/gas/oxygen][MOLES] -= iron_removed * OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL
+			moderator_internal.change_moles(/datum/gas/oxygen, iron_removed * -OXYGEN_MOLES_CONSUMED_PER_IRON_HEAL)
 
 	check_gravity_pulse(seconds_per_tick)
 

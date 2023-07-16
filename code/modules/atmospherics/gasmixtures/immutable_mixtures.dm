@@ -3,6 +3,7 @@
 
 /datum/gas_mixture/immutable
 	var/initial_temperature
+	var/initial_heat_capacity
 	gc_share = TRUE
 
 /datum/gas_mixture/immutable/New()
@@ -12,6 +13,7 @@
 /datum/gas_mixture/immutable/garbage_collect()
 	temperature = initial_temperature
 	temperature_archived = initial_temperature
+	heat_capacity = initial_heat_capacity
 	gases.Cut()
 
 /datum/gas_mixture/immutable/archive()
@@ -44,7 +46,7 @@
 //used by space tiles
 /datum/gas_mixture/immutable/space
 	initial_temperature = TCMB
-	heat_capacity = HEAT_CAPACITY_VACUUM
+	initial_heat_capacity = HEAT_CAPACITY_VACUUM
 
 /datum/gas_mixture/immutable/space/heat_capacity()
 	return HEAT_CAPACITY_VACUUM
@@ -97,3 +99,5 @@
 		var/heat_capacity_change = mix_id[MOLES] * mix_id[GAS_META][META_GAS_SPECIFIC_HEAT]
 		heat_capacity += heat_capacity_change
 		heat_capacity_archived += heat_capacity_change
+
+	initial_heat_capacity = heat_capacity

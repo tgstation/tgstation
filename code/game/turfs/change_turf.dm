@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		var/datum/gas_mixture/turf/mix = turf.air
 		//"borrowing" this code from merge(), I need to play with the temp portion. Lets expand it out
 		//temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
-		var/capacity = mix.heat_capacity()
+		var/capacity = mix.heat_capacity
 		energy += mix.temperature * capacity
 		heat_cap += capacity
 
@@ -260,6 +260,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			total_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
 	total.temperature = energy / heat_cap
+	total.heat_capacity = heat_cap / turflen
 	for(var/id in total_gases)
 		total_gases[id][MOLES] /= turflen
 

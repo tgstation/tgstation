@@ -119,7 +119,7 @@ oxygen[MOLES] = 100
 air.heat_capacity += 100 * oxygen[GAS_META][META_GAS_SPECIFIC_HEAT] //Adjust the gas_mixture's heat_capacity when manually modifying moles.
 world << oxygen[GAS_META][META_GAS_NAME] //outputs "Oxygen"
 world << air.heat_capacity //outputs 2000 (100 mol * 20 J/K/mol)
-air.gases[/datum/gas/oxygen][MOLES] -= 100
+air.gases[/datum/gas/oxygen][MOLES] -= 110
 air.heat_capacity -= 110 * oxygen[GAS_META][META_GAS_SPECIFIC_HEAT]
 air.garbage_collect() //oxygen is now removed from the gases list, since it was empty
 ```

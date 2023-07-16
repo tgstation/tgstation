@@ -251,20 +251,26 @@
 			var/removal_ratio =  min(1, volume_rate / environment.volume)
 
 			var/total_moles_to_remove = 0
-			for(var/gas in filter_types & env_gases)
+			for(var/datum/gas/gas in filter_types & env_gases)
 				total_moles_to_remove += env_gases[gas][MOLES]
 
 			if(total_moles_to_remove == 0)//sometimes this gets non gc'd values
 				environment.garbage_collect()
 				return FALSE
 
-			for(var/gas in filter_types & env_gases)
-				filtered_out.add_gas(gas)
-				//take this gases portion of removal_ratio of the turfs air, or all of that gas if less than or equal to MINIMUM_MOLES_TO_SCRUB
-				var/transfered_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MINIMUM_MOLES_TO_SCRUB, env_gases[gas][MOLES]))
+			var/transfered_heat_capacity = 0
 
-				filtered_gases[gas][MOLES] = transfered_moles
-				env_gases[gas][MOLES] -= transfered_moles
+			for(var/datum/gas/gas_id in filter_types & env_gases)
+				filtered_out.add_gas(gas_id)
+				var/list/gas = env_gases[gas_id]
+				//take this gases portion of removal_ratio of the turfs air, or all of that gas if less than or equal to MINIMUM_MOLES_TO_SCRUB
+				var/transfered_moles = max(QUANTIZE(gas[MOLES] * removal_ratio * (gas[MOLES] / total_moles_to_remove)), min(MINIMUM_MOLES_TO_SCRUB, gas[MOLES]))
+				transfered_heat_capacity += transfered_moles * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
+				filtered_gases[gas_id][MOLES] = transfered_moles
+				gas[MOLES] -= transfered_moles
+
+			filtered_out.heat_capacity += transfered_heat_capacity
+			environment.heat_capacity -= transfered_heat_capacity
 
 			environment.garbage_collect()
 
