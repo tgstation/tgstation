@@ -51,7 +51,7 @@ type TabType = {
   blurb?: string;
   component?: () => InfernoNode;
   locked?: boolean;
-  noScrollable?: number;
+  scrollable?: boolean;
 };
 
 const TAB2NAME: TabType[] = [
@@ -59,56 +59,59 @@ const TAB2NAME: TabType[] = [
     title: 'Enscribed Name',
     blurb:
       "This book answers only to its owner, and of course, must have one. The permanence of the pact between a spellbook and its owner ensures such a powerful artifact cannot fall into enemy hands, or be used in ways that break the Federation's rules such as bartering spells.",
-    component: () => EnscribedName,
-    noScrollable: 2,
+    component: () => <EnscribedName />,
   },
   {
     title: 'Table of Contents',
-    component: () => TableOfContents,
+    component: () => <TableOfContents />,
   },
   {
     title: 'Offensive',
     blurb: 'Spells and items geared towards debilitating and destroying.',
+    scrollable: true,
   },
   {
     title: 'Defensive',
     blurb:
       "Spells and items geared towards improving your survivability or reducing foes' ability to attack.",
+    scrollable: true,
   },
   {
     title: 'Mobility',
     blurb:
       'Spells and items geared towards improving your ability to move. It is a good idea to take at least one.',
+    scrollable: true,
   },
   {
     title: 'Assistance',
     blurb:
       'Spells and items geared towards bringing in outside forces to aid you or improving upon your other items and abilities.',
+    scrollable: true,
   },
   {
     title: 'Challenges',
     blurb:
       'The Wizard Federation is looking for shows of power. Arming the station against you will increase the danger, but will grant you more charges for your spellbook.',
     locked: true,
-    noScrollable: 1,
+    scrollable: true,
   },
   {
     title: 'Rituals',
     blurb:
       'These powerful spells change the very fabric of reality. Not always in your favour.',
+    scrollable: true,
   },
   {
     title: 'Loadouts',
     blurb:
       'The Wizard Federation accepts that sometimes, choosing is hard. You can choose from some approved wizard loadouts here.',
-    component: () => Loadouts,
-    noScrollable: 2,
+    component: () => <Loadouts />,
   },
   {
     title: 'Randomize',
     blurb:
       "If you didn't like the loadouts offered, you can embrace chaos. Not recommended for newer wizards.",
-    component: () => Randomize,
+    component: () => <Randomize />,
   },
 ];
 
@@ -454,10 +457,17 @@ const SearchSpells = (props, context) => {
 
   if (filteredEntries.length === 0) {
     return (
-      <NoticeBox>
-        {`No spells found! (Search tip: Search "Robeless"
-        to see only spells which don't require wizard clothes!)`}
-      </NoticeBox>
+      <Stack width="100%" vertical>
+        <Stack.Item>
+          <NoticeBox>{`No spells found!`}</NoticeBox>
+        </Stack.Item>
+        <Stack.Item>
+          <Box italic align="center" color="lightgrey">
+            {`Search tip: Searching "Robeless" will only show you
+            spells that don't require wizard garb!`}
+          </Box>
+        </Stack.Item>
+      </Stack>
     );
   }
   return (
@@ -481,7 +491,7 @@ const SpellTabDisplay = (
   const { points } = data;
   const { TabSpells, CooldownOffset, PointOffset } = props;
 
-  const getTimeOrCatAndOffset = (entry: SpellEntry) => {
+  const getTimeOrCat = (entry: SpellEntry) => {
     if (entry.cat === SpellCategory.Rituals) {
       if (entry.times) {
         return `Cast ${entry.times} times.`;
@@ -504,7 +514,7 @@ const SpellTabDisplay = (
           <Divider />
           <Stack mt={1.3} width="100%" position="absolute" textAlign="left">
             <Stack.Item width="120px" ml={CooldownOffset}>
-              {getTimeOrCatAndOffset(entry)}
+              {getTimeOrCat(entry)}
             </Stack.Item>
             <Stack.Item width="60px" ml={PointOffset}>
               {entry.cost} points
@@ -570,11 +580,10 @@ const SpellTabDisplay = (
 };
 
 const CategoryDisplay = (props: { ActiveCat: TabType }, context) => {
-  const { act, data } = useBackend<Data>(context);
+  const { data } = useBackend<Data>(context);
   const { entries } = data;
   const { ActiveCat } = props;
 
-  const CatComponent = ActiveCat.component ? ActiveCat.component() : null;
   const TabSpells = entries.filter((entry) => entry.cat === ActiveCat.title);
 
   return (
@@ -589,9 +598,7 @@ const CategoryDisplay = (props: { ActiveCat: TabType }, context) => {
           </Stack.Item>
         )}
         <Stack.Item>
-          {ActiveCat.component ? (
-            ActiveCat.component()
-          ) : (
+          {(ActiveCat.component && ActiveCat.component()) || (
             <SpellTabDisplay TabSpells={TabSpells} PointOffset={38} />
           )}
         </Stack.Item>
@@ -604,8 +611,8 @@ const widthSection = '466px';
 const heightSection = '456px';
 
 export const Spellbook = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
-  const { entries, points } = data;
+  const { data } = useBackend<Data>(context);
+  const { points } = data;
   const [tabIndex, setTabIndex] = useLocalState(context, 'tab-index', 1);
   const [spellSearch, setSpellSearch] = useLocalState(
     context,
@@ -614,9 +621,6 @@ export const Spellbook = (props, context) => {
   );
   const ActiveCat = TAB2NAME[tabIndex - 1];
   const ActiveNextCat = TAB2NAME[tabIndex];
-
-  const ScrollableCheck = ActiveCat.noScrollable ? false : true;
-  const ScrollableNextCheck = ActiveNextCat.noScrollable !== 2;
 
   return (
     <Window title="Spellbook" theme="wizard" width={950} height={540}>
@@ -645,7 +649,7 @@ export const Spellbook = (props, context) => {
                 <>
                   <Stack.Item grow>
                     <Section
-                      scrollable={ScrollableCheck}
+                      scrollable={ActiveCat.scrollable}
                       textAlign="center"
                       width={widthSection}
                       height={heightSection}
@@ -670,7 +674,7 @@ export const Spellbook = (props, context) => {
                   </Stack.Item>
                   <Stack.Item grow>
                     <Section
-                      scrollable={ScrollableNextCheck}
+                      scrollable={ActiveNextCat.scrollable}
                       textAlign="center"
                       width={widthSection}
                       height={heightSection}
