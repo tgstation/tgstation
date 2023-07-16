@@ -32,9 +32,37 @@
 			if((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 
-			if(methods & (INJECT|INGEST|PATCH))
+			if(methods & INGEST)
+				var/obj/item/organ/internal/stomach/target_stomach = get_organ_slot(ORGAN_SLOT_STOMACH)
+				if(!istype(target_stomach))
+					continue
+			
+				// robotic stomachs are immune to digested disease unless 'inorganic biology' symptom is present
+				if(IS_ROBOTIC_ORGAN(target_stomach) && !(strain.infectable_biotypes & MOB_ROBOTIC))
+					continue
+
 				exposed_mob.ForceContractDisease(strain)
-			else if((methods & (TOUCH|VAPOR)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+			else if(methods & (INJECT|PATCH))
+				var/obj/item/organ/internal/heart/target_heart = get_organ_slot(ORGAN_SLOT_HEART)
+				if(!istype(target_heart))
+					continue
+			
+				// robotic hearts are immune to cardiovascular disease unless 'inorganic biology' symptom is present
+				if(IS_ROBOTIC_ORGAN(target_heart) && !(strain.infectable_biotypes & MOB_ROBOTIC))
+					continue
+
+				exposed_mob.ForceContractDisease(strain)
+			else if((methods & VAPOR) && (strain.spread_flags & DISEASE_SPREAD_AIRBORNE))
+				var/obj/item/organ/internal/heart/target_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+				if(!istype(target_lungs))
+					continue
+			
+				// robotic lungs are immune to airborne disease unless 'inorganic biology' symptom is present
+				if(IS_ROBOTIC_ORGAN(target_lungs) && !(strain.infectable_biotypes & MOB_ROBOTIC))
+					continue
+
+				exposed_mob.ContactContractDisease(strain)
+			else if((methods & TOUCH) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
 				exposed_mob.ContactContractDisease(strain)
 
 	if(iscarbon(exposed_mob))
