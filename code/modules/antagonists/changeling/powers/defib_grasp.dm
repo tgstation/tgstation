@@ -33,7 +33,6 @@
 	else
 		changeling.fully_heal(heal_flags)
 
-	changeling.cure_fakedeath(CHANGELING_TRAIT) // rips us out of revival stasis (if we're in it)
 	changeling.buckled?.unbuckle_mob(changeling) // get us off of stasis beds please
 	changeling.set_resting(FALSE)
 	changeling.adjust_jitter(20 SECONDS)

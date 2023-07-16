@@ -5,7 +5,7 @@
 */
 /obj/machinery/plumbing
 	name = "pipe thing"
-	icon = 'icons/obj/plumbing/plumbers.dmi'
+	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 	icon_state = "pump"
 	density = TRUE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 7.5

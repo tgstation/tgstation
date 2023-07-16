@@ -20,16 +20,17 @@
 	base_state = "right"
 
 /obj/machinery/door/window/tram/hilbert
-	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
 	associated_lift = HILBERT_TRAM
 	icon_state = "windoor"
 	base_state = "windoor"
 
-/obj/machinery/door/window/tram/emag_act(mob/living/user)
+/obj/machinery/door/window/tram/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	balloon_alert(user, "disabled motion sensors")
 	obj_flags |= EMAGGED
+	return TRUE
 
 /// Random event called by code\modules\events\tram_malfunction.dm
 /// Makes the doors malfunction

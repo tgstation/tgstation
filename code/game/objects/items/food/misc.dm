@@ -145,8 +145,8 @@
 /obj/item/food/spiderling
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
-	icon = 'icons/obj/food/meat.dmi'
-	icon_state = "spiderling"
+	icon = 'icons/mob/simple/arachnoid.dmi'
+	icon_state = "spiderling_dead"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/toxin = 4,

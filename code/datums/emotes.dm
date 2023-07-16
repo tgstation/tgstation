@@ -121,8 +121,6 @@
 			if(viewer.is_blind() && !viewer.can_hear())
 				to_chat(viewer, msg)
 
-	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))
-
 /**
  * For handling emote cooldown, return true to allow the emote to happen.
  *
@@ -191,7 +189,7 @@
 	. = msg
 	if(!muzzle_ignore && user.is_muzzled() && emote_type & EMOTE_AUDIBLE)
 		return "makes a [pick("strong ", "weak ", "")]noise."
-	if(HAS_TRAIT(user, TRAIT_MIMING) && message_mime)
+	if(HAS_MIND_TRAIT(user, TRAIT_MIMING) && message_mime)
 		. = message_mime
 	if(isalienadult(user) && message_alien)
 		. = message_alien
@@ -273,7 +271,7 @@
 			return FALSE
 		if(ishuman(user))
 			var/mob/living/carbon/human/loud_mouth = user
-			if(HAS_TRAIT(loud_mouth, TRAIT_MIMING)) // vow of silence prevents outloud noises
+			if(HAS_MIND_TRAIT(loud_mouth, TRAIT_MIMING)) // vow of silence prevents outloud noises
 				return FALSE
 			if(!loud_mouth.get_organ_slot(ORGAN_SLOT_TONGUE))
 				return FALSE

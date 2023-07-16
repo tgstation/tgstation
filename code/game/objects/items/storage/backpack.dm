@@ -94,7 +94,7 @@
 	var/mob/user = get(loc, /mob)
 	if(!istype(user))
 		return
-	if(user.mind && HAS_TRAIT(user.mind, TRAIT_CANNOT_OPEN_PRESENTS))
+	if(HAS_MIND_TRAIT(user, TRAIT_CANNOT_OPEN_PRESENTS))
 		var/turf/floor = get_turf(src)
 		var/obj/item/thing = new /obj/item/a_gift/anything(floor)
 		if(!atom_storage.attempt_insert(thing, user, override = TRUE, force = STORAGE_SOFT_LOCKED))
@@ -368,12 +368,8 @@
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
-	var/datum/supply_pack/imports/contraband/smuggled_goods = new
-	for(var/items in 1 to 2)
-		var/smuggled_goods_type = pick(smuggled_goods.contains)
-		new smuggled_goods_type(src)
-
-	qdel(smuggled_goods)
+	for(var/items in 1 to 4)
+		new /obj/effect/spawner/random/contraband(src)
 
 /obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
 	new /obj/item/stack/tile/iron/base(src)

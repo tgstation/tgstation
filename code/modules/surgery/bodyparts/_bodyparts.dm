@@ -95,11 +95,6 @@
 	var/brute_modifier = 1
 	/// Burn damage gets multiplied by this on receive_damage()
 	var/burn_modifier = 1
-	// Damage reduction variables for damage handled on the limb level. Handled after worn armor.
-	/// Amount subtracted from brute damage inflicted on the limb.
-	var/brute_reduction = 0
-	/// Amount subtracted from burn damage inflicted on the limb.
-	var/burn_reduction = 0
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -316,9 +311,9 @@
 			if(WOUND_SEVERITY_MODERATE)
 				check_list += "\t [span_warning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!")]"
 			if(WOUND_SEVERITY_SEVERE)
-				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!")]"
-			if(WOUND_SEVERITY_CRITICAL)
 				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!!")]"
+			if(WOUND_SEVERITY_CRITICAL)
+				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!!!")]"
 
 	for(var/obj/item/embedded_thing in embedded_objects)
 		var/stuck_word = embedded_thing.isEmbedHarmless() ? "stuck" : "embedded"
@@ -445,8 +440,6 @@
 	var/dmg_multi = CONFIG_GET(number/damage_multiplier) * hit_percent
 	brute = round(max(brute * dmg_multi * brute_modifier, 0), DAMAGE_PRECISION)
 	burn = round(max(burn * dmg_multi * burn_modifier, 0), DAMAGE_PRECISION)
-	brute = max(0, brute - brute_reduction)
-	burn = max(0, burn - burn_reduction)
 
 	if(!brute && !burn)
 		return FALSE
@@ -649,6 +642,15 @@
 	SEND_SIGNAL(src, COMSIG_BODYPART_CHANGED_OWNER, new_owner, old_owner)
 	var/needs_update_disabled = FALSE //Only really relevant if there's an owner
 	if(old_owner)
+		if(held_index)
+			old_owner.on_lost_hand(src)
+			if(old_owner.hud_used)
+				var/atom/movable/screen/inventory/hand/hand = old_owner.hud_used.hand_slots["[held_index]"]
+				if(hand)
+					hand.update_appearance()
+			old_owner.update_worn_gloves()
+		if(speed_modifier)
+			old_owner.update_bodypart_speed_modifier()
 		if(length(bodypart_traits))
 			old_owner.remove_traits(bodypart_traits, bodypart_trait_source)
 		if(initial(can_be_disabled))
@@ -664,6 +666,15 @@
 				))
 		UnregisterSignal(old_owner, COMSIG_ATOM_RESTYLE)
 	if(owner)
+		if(held_index)
+			owner.on_added_hand(src, held_index)
+			if(owner.hud_used)
+				var/atom/movable/screen/inventory/hand/hand = owner.hud_used.hand_slots["[held_index]"]
+				if(hand)
+					hand.update_appearance()
+			owner.update_worn_gloves()
+		if(speed_modifier)
+			owner.update_bodypart_speed_modifier()
 		if(length(bodypart_traits))
 			owner.add_traits(bodypart_traits, bodypart_trait_source)
 		if(initial(can_be_disabled))

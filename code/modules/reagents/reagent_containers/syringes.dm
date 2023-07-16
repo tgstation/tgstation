@@ -150,7 +150,7 @@
 /// Returns a list of overlays to add that relate to the reagents inside the syringe
 /obj/item/reagent_containers/syringe/proc/update_reagent_overlay()
 	if(reagents?.total_volume)
-		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[get_rounded_vol()]")
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/medical/reagent_fillings.dmi', "syringe[get_rounded_vol()]")
 		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling_overlay
 

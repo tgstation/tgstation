@@ -85,7 +85,7 @@
 		these are only capable of working in zero-gravity environments, a blessing to some Engineers."
 	icon_state = "tether"
 	module_type = MODULE_ACTIVE
-	complexity = 3
+	complexity = 2
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/tether)
 	cooldown_time = 1.5 SECONDS

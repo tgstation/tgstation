@@ -87,6 +87,17 @@
 	var/mob/living/carbon/human/corpse = locate() in .
 	corpse.death()
 
+/datum/supply_pack/imports/dumpsterloot
+	name = "A....Dumpster"
+	desc = "I'm not sure why you bothered to buy this...and why does it cost so much?"
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(
+		/obj/effect/spawner/random/maintenance/three,
+		/obj/effect/spawner/random/trash/garbage = 5,
+	)
+	crate_name = "putrid dumpster"
+	crate_type = /obj/structure/closet/crate/trashcart
+
 /datum/supply_pack/imports/error
 	name = "NULL_ENTRY"
 	desc = "(*!&@#OKAY, OPERATIVE, WE SEE HOW MUCH MONEY YOU'RE FLAUNTING. FINE. HAVE THIS, AND GOOD LUCK PUTTING IT TOGETHER!#@*$"
@@ -128,33 +139,11 @@
 	desc = "Psst.. bud... want some contraband? I can get you a poster, some nice cigs, dank, even some \
 		sponsored items...you know, the good stuff. Just keep it away from the cops, kay?"
 	contraband = TRUE
-	cost = CARGO_CRATE_VALUE * 4
+	cost = CARGO_CRATE_VALUE * 20
 	contains = list(
-		/obj/item/poster/random_contraband = 2,
-		/obj/item/food/grown/cannabis,
-		/obj/item/food/grown/cannabis/rainbow,
-		/obj/item/food/grown/cannabis/white,
-		/obj/item/storage/box/fireworks/dangerous,
-		/obj/item/storage/pill_bottle/zoom,
-		/obj/item/storage/pill_bottle/happy,
-		/obj/item/storage/pill_bottle/lsd,
-		/obj/item/storage/pill_bottle/aranesp,
-		/obj/item/storage/pill_bottle/stimulant,
-		/obj/item/toy/cards/deck/syndicate,
-		/obj/item/reagent_containers/cup/glass/bottle/absinthe,
-		/obj/item/clothing/under/syndicate/tacticool,
-		/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
-		/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
-		/obj/item/clothing/mask/gas/syndicate,
-		/obj/item/clothing/neck/necklace/dope,
-		/obj/item/vending_refill/donksoft,
+		/obj/effect/spawner/random/contraband = 5,
 	)
 	crate_name = "crate"
-
-/datum/supply_pack/imports/contraband/fill(obj/structure/closet/crate/our_crate)
-	for(var/items in 1 to 10)
-		var/item = pick(contains)
-		new item(our_crate)
 
 /datum/supply_pack/imports/wt550
 	name = "Smuggled WT-550 Autorifle Crate"
@@ -185,7 +174,7 @@
 /datum/supply_pack/imports/shocktrooper
 	name = "Shocktrooper Crate"
 	desc = "(*!&@#WANT TO PUT THE FEAR OF DEATH INTO YOUR ENEMIES? THIS CRATE OF GOODIES CAN HELP MAKE THAT A REALITY. \
-		CONTAINS A BOX OF FIVE EMP GRENADES, THREE SMOKEBOMBS, TWO GLUON GRENADES AND TWO FRAG GRENADES!#@*$"
+		CONTAINS AN ARMOR VEST AND HELMET, A BOX OF FIVE EMP GRENADES, THREE SMOKEBOMBS, TWO GLUON GRENADES AND TWO FRAG GRENADES!#@*$"
 	hidden = TRUE
 	cost = CARGO_CRATE_VALUE * 10
 	contains = list(
@@ -193,19 +182,23 @@
 		/obj/item/grenade/smokebomb = 3,
 		/obj/item/grenade/gluon = 2,
 		/obj/item/grenade/frag = 2,
+		/obj/item/clothing/suit/armor/vest,
+		/obj/item/clothing/head/helmet,
 	)
 
 /datum/supply_pack/imports/specialops
 	name = "Special Ops Crate"
 	desc = "(*!&@#THE PIGS ON YOUR TAIL? MAYBE YOU CAN BUY SOME TIME WITH THIS CRATE! \
-		CONTAINS A CHAMELEON MASK, A CHAMELEON JUMPSUIT AND AN AGENT CARD! AND A KNIFE!!#@*$"
+		CONTAINS A CHAMELEON MASK, BELT AND JUMPSUIT, MIRAGE GRENADES AND AN AGENT CARD! AND A KNIFE!!#@*$"
 	hidden = TRUE
 	cost = CARGO_CRATE_VALUE * 10
 	contains = list(
 		/obj/item/clothing/mask/chameleon,
 		/obj/item/clothing/under/chameleon,
+		/obj/item/storage/belt/chameleon,
 		/obj/item/card/id/advanced/chameleon,
-		/obj/item/knife/combat/survival,
+		/obj/item/switchblade,
+		/obj/item/grenade/mirage = 5,
 	)
 
 /datum/supply_pack/imports/russian
@@ -219,8 +212,8 @@
 		/obj/item/food/rationpack,
 		/obj/item/ammo_box/a762,
 		/obj/item/ammo_box/a762/surplus,
-		/obj/item/storage/toolbox/a762,
-		/obj/item/storage/toolbox/a762/surplus,
+		/obj/item/storage/toolbox/ammobox/a762,
+		/obj/item/storage/toolbox/ammobox/a762/surplus,
 		/obj/item/storage/toolbox/maint_kit,
 		/obj/item/clothing/suit/armor/vest/russian,
 		/obj/item/clothing/head/helmet/rus_helmet,
@@ -231,8 +224,7 @@
 		/obj/item/clothing/mask/russian_balaclava,
 		/obj/item/clothing/head/helmet/rus_ushanka,
 		/obj/item/clothing/suit/armor/vest/russian_coat,
-		/obj/item/gun/ballistic/rifle/boltaction,
-		/obj/item/gun/ballistic/rifle/boltaction/surplus = 2,
+		/obj/item/storage/toolbox/mosincase = 2,
 	)
 
 /datum/supply_pack/imports/russian/fill(obj/structure/closet/crate/our_crate)
@@ -266,3 +258,36 @@
 	)//so you can properly #cargoniabikergang
 	crate_name = "biker kit"
 	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/imports/abandoned
+	name = "Abandoned Crate"
+	desc = "...wait, how did this get here?"
+	cost = CARGO_CRATE_VALUE * 50
+	contains = list()
+	crate_type = /obj/structure/closet/crate/secure/loot
+	crate_name = "abandoned crate"
+	contraband = TRUE
+	dangerous = TRUE //these are literally bombs so....
+
+/datum/supply_pack/imports/shambler_evil
+	name = "Shamber's Juice Eldritch Energy! Crate"
+	desc = "~J'I'CE!~"
+	cost = CARGO_CRATE_VALUE * 50
+	contains = list(/obj/item/reagent_containers/cup/soda_cans/shamblers/eldritch = 1)
+	crate_name = "illegal shambler's juice crate"
+	contraband = TRUE
+
+/datum/supply_pack/imports/hide
+	name = "Animal Hide Crate"
+	desc = "Want to not bother slaughtering a bunch of innocent creatures? Here, have some animal pelts! \
+		Just don't ask where they came from..."
+	cost = CARGO_CRATE_VALUE * 30
+	contains = list(/obj/effect/spawner/random/animalhide = 5)
+	crate_name = "animal hide crate"
+
+/datum/supply_pack/imports/dreadnog
+	name = "Dreadnog Carton Crate"
+	desc = "I have eggnog and I must soda."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/reagent_containers/cup/glass/bottle/juice/dreadnog = 3)
+	crate_name = "dreadnog crate"

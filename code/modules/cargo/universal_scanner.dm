@@ -227,7 +227,7 @@
 /obj/item/barcode
 	name = "barcode tag"
 	desc = "A tiny tag, associated with a crewmember's account. Attach to a wrapped item to give that account a portion of the wrapped item's profit."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "barcode"
 	w_class = WEIGHT_CLASS_TINY
 	//All values inherited from the sales tagger it came from.
