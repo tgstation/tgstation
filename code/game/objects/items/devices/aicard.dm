@@ -16,7 +16,7 @@
 /obj/item/computer_disk/syndie_ai_upgrade
 	name = "AI interaction range upgrade"
 	desc = "A NT data chip containing information that a syndiCard AI can utilize to improve its wireless interfacing abilities. Simply slap it on top of an intelliCard, MODsuit, or AI core and watch it do its work! It's rumoured that there's something 'pretty awful' in it."
-	icon = 'icons/obj/nuke_tools.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "something_awful"
 	max_capacity = 1000
 	w_class = WEIGHT_CLASS_NORMAL
