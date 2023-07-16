@@ -1,5 +1,6 @@
 /datum/storage/duffel
 	max_total_storage = 30
+	max_slots = 21
 
 // Syndi bags get some FUN extras
 // You can fit any 3 bulky objects (assuming they're in the whitelist)

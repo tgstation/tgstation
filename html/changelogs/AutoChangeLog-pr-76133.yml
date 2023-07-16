@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "jetpack modules work on mod suits again"
-  - bugfix: "jetpack cyber implants also work"
-  - refactor: "removed `get_mover` callback, user is retrieved during activation"
-  - refactor: "timestop module on `on_module_triggered()` accepts user as 2nd param"

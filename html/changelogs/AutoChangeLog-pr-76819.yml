@@ -1,0 +1,4 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - bugfix: "The AI can no longer untip vendors remotely/spam sparks from shocked vendors"

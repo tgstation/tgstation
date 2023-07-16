@@ -79,7 +79,7 @@
 	var/psy_coeff_diff = -0.05
 	for(var/mob/living/carbon/human/seen_by_sm in view(src, SM_HALLUCINATION_RANGE(internal_energy)))
 		// Someone (generally a Psychologist), when looking at the SM within hallucination range makes it easier to manage.
-		if(HAS_TRAIT(seen_by_sm, TRAIT_SUPERMATTER_SOOTHER) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_SUPERMATTER_SOOTHER)))
+		if(HAS_MIND_TRAIT(seen_by_sm, TRAIT_SUPERMATTER_SOOTHER))
 			psy_coeff_diff = 0.05
 	visible_hallucination_pulse(
 		center = src,
