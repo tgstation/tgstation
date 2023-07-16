@@ -106,6 +106,15 @@
 		return
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return
+
+	var/obj/item/organ/internal/heart/target_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(!istype(target_lungs))
+		return
+
+	// robotic lungs are immune to airborne disease unless 'inorganic biology' symptom is present
+	if(IS_ROBOTIC_ORGAN(target_lungs) && !(disease.infectable_biotypes & MOB_ROBOTIC))
+		continue
+
 	..()
 
 
