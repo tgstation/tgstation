@@ -54,21 +54,48 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	QDEL_LAZYLIST(gas_filters)
 	return..()
 
+/obj/item/clothing/mask/gas/equipped(mob/equipee, slot)
+	if(cig)
+		cig.equipped(equipee, slot)
+	return ..()
+
+/obj/item/clothing/mask/gas/adjustmask(mob/living/carbon/user)
+	if(cig)
+		user.visible_message(
+				span_warning("You need to remove [cig] before you can adjust the mask")
+		)
+		return
+	return ..()
+
+
 /obj/item/clothing/mask/gas/examine(mob/user)
 	. = ..()
-	if(max_filters > 0)
+	if(cig)
+		. += "<span class='notice'>There is a [cig.name] jammed into the filter slot</span>"
+	if(max_filters > 0 && !cig)
 		. += "<span class='notice'>[src] has [max_filters] slot\s for filters.</span>"
 	if(LAZYLEN(gas_filters) > 0)
 		. += "<span class='notice'>Currently there [LAZYLEN(gas_filters) == 1 ? "is" : "are"] [LAZYLEN(gas_filters)] filter\s with [get_filter_durability()]% durability.</span>"
 		. += "<span class='notice'>The filters can be removed by right-clicking with an empty hand on [src].</span>"
 
+/obj/item/clothing/mask/gas/proc/on_cig_destroyed()
+	SIGNAL_HANDLER
+	if(cig)
+		cig = null
+		if(istype(src.loc, /mob))
+			var/mob/wearer = src.loc
+			wearer.update_worn_mask()
+
 /obj/item/clothing/mask/gas/attackby(obj/item/tool, mob/user)
 	if(istype(tool, /obj/item/clothing/mask/cigarette))
 		var/valid_wearer = istype(src.loc, /mob)
-		if(!valid_wearer)
+
+		if(flags_cover & MASKCOVERSMOUTH)
 			user.visible_message(
-				span_warning("You have to be wearing the mask to do that")
+				span_warning("You can't do that while the mask's mouth is covered")
 			)
+			return ..()
+
 		if(max_filters <= 0 || cig)
 			user.visible_message(
 				span_warning("There's nowhere for that to fit")
@@ -83,14 +110,17 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		cig = tool
 		if(valid_wearer)
 			cig.equipped(src.loc, ITEM_SLOT_MASK)
-
+		RegisterSignal(cig, COMSIG_QDELETING, PROC_REF(on_cig_destroyed))
 		cig.forceMove(src)
 		var/mob/wearer = src.loc
 		wearer.update_worn_mask()
 		return TRUE
 
 	if(cig)
-		return cig.attackby(tool, user)
+		var/c = cig.attackby(tool, user)
+		var/mob/wearer = src.loc
+		wearer.update_worn_mask()
+		return c
 	if(!istype(tool, /obj/item/gas_filter))
 		return ..()
 	if(LAZYLEN(gas_filters) >= max_filters)
@@ -106,11 +136,10 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	if(cig)
 		cig.equipped(M, slot)
 
-
-
 /obj/item/clothing/mask/gas/attack_hand_secondary(mob/user, list/modifiers)
 	if(cig)
 		user.put_in_hands(cig)
+		UnregisterSignal(cig, COMSIG_QDELETING)
 		cig = null
 		if(istype(src.loc, /mob))
 			var/mob/wearer = src.loc
