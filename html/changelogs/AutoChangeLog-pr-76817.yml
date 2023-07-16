@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - balance: "Changed damage reduction for robotic limbs to be multiplicative instead of additive"

@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - rscadd: "The 'Sent from my PDA' message is different for Clear PDAs now (specifying they are crystal)."

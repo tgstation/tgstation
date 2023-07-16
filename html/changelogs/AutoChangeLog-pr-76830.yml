@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - bugfix: "Metalgen recipe generation works again"
