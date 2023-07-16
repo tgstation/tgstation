@@ -814,17 +814,21 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/projectile/magic/arcane_barrage/blood/prehit_pierce(atom/target)
 	. = ..()
-	if(ismob(target))
-		var/mob/living/our_target = target
-		if(IS_CULTIST(our_target))
-			if(iscarbon(our_target) && our_target.stat != DEAD)
-				var/mob/living/carbon/carbon_cultist = our_target
-				carbon_cultist.reagents.add_reagent(/datum/reagent/fuel/unholywater, 4)
-			if(isshade(our_target) || isconstruct(our_target))
-				var/mob/living/simple_animal/undead_abomination = our_target
-				if(undead_abomination.health+5 < undead_abomination.maxHealth)
-					undead_abomination.adjustHealth(-5)
-			return PROJECTILE_DELETE_WITHOUT_HITTING
+	if(!ismob(target))
+		return PROJECTILE_PIERCE_NONE
+
+	var/mob/living/our_target = target
+	if(!IS_CULTIST(our_target))
+		return PROJECTILE_PIERCE_NONE
+
+	if(iscarbon(our_target) && our_target.stat != DEAD)
+		var/mob/living/carbon/carbon_cultist = our_target
+		carbon_cultist.reagents.add_reagent(/datum/reagent/fuel/unholywater, 4)
+	if(isshade(our_target) || isconstruct(our_target))
+		var/mob/living/simple_animal/undead_abomination = our_target
+		if(undead_abomination.health+5 < undead_abomination.maxHealth)
+			undead_abomination.adjustHealth(-5)
+	return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/item/blood_beam
 	name = "\improper magical aura"
