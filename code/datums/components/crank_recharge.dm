@@ -1,4 +1,4 @@
-// Cranking feature on the laser musket and smoothbore disabler, could possibly be used on more than guns
+// Cranking feature on the laser musket and smoothbore disabler, could probably be used on more than guns
 /datum/component/crank_recharge
 	/// Our cell to charge
 	var/obj/item/stock_parts/cell/charging_cell
@@ -37,9 +37,9 @@
 /datum/component/crank_recharge/proc/on_attack_self(obj/source, mob/living/user as mob)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, PROC_REF(crank_gun), source, user) //game doesnt like signal handler and do afters mingling
+	INVOKE_ASYNC(src, PROC_REF(crank), source, user) //game doesnt like signal handler and do afters mingling
 
-/datum/component/crank_recharge/proc/crank_gun(obj/source, mob/user)
+/datum/component/crank_recharge/proc/crank(obj/source, mob/user)
 	if(charging_cell.charge >= charging_cell.maxcharge)
 		source.balloon_alert(user, "already charged!")
 		return
@@ -50,7 +50,7 @@
 		COOLDOWN_START(src, charge_sound_cooldown, charge_sound_cooldown_time)
 		playsound(source, charge_sound, 40)
 	source.balloon_alert(user, "charging...")
-	if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_GUNCRANK))
+	if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_CRANKRECHARGE))
 		is_charging = FALSE
 		return
 	charging_cell.give(charge_amount)

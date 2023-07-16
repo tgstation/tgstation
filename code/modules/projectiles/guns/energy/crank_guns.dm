@@ -61,8 +61,8 @@
 		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
 		light_overlay = "flight", \
 		overlay_x = 18, \
-		overlay_y = 12, \ //i swear 1812 being the overlay numbers was accidental
-		)
+		overlay_y = 12, \
+	) //i swear 1812 being the overlay numbers was accidental
 
 /obj/item/gun/energy/disabler/smoothbore/prime //much stronger than the other prime variants, so dont just put this in as maint loot
 	name = "elite smoothbore disabler"
