@@ -414,7 +414,7 @@
 ///Station traits that influence the space background and apply some unique effects!
 /datum/station_trait/nebula
 	name = "Nebula"
-	trait_type = STATION_TRAIT_ABSTRACT
+	trait_flags = STATION_TRAIT_ABSTRACT
 	weight = 0
 
 	show_in_report = TRUE
@@ -440,18 +440,20 @@
 
 	//parallax is generated for quick-joiners before we can change it, so reset it for them :/
 	for(var/client/client as anything in GLOB.clients)
-		client.parallax_layers_cached.Cut()
-		client.mob.hud_used.update_parallax_pref(client.mob)
+		client.parallax_layers_cached?.Cut()
+		client.mob?.hud_used?.update_parallax_pref(client.mob)
 
 	//Color the carp in unique colors to better blend with the nebula
 	if(carp_color_override)
 		var/mob/living/basic/carp/carp_type = /mob/living/basic/carp
 		carp_type.carp_colors = carp_color_override
-		carp_type = carp_type //I think it's funnier if I don't explain why this is absolutely necessary
+		//Statics are stored globally, so if we acces a static we never actually acces the object and byond will throw a warning that the var is unused
+		//So we set it to itself to trick byond into working the way it's intended
+		carp_type = carp_type
 
 ///Station nebula that incur some sort of effect if no shielding is created
 /datum/station_trait/nebula/hostile
-	trait_type = STATION_TRAIT_ABSTRACT
+	trait_flags = STATION_TRAIT_ABSTRACT
 	trait_processes = TRUE
 
 	///Intensity of the nebula

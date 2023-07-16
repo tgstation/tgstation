@@ -458,8 +458,8 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	for(var/obj/machinery/gravity_generator/part as anything in generator_parts)
 		SET_PLANE(part, PLANE_TO_TRUE(part.plane), new_turf)
 
+/// Returns the radioactive shielding (if there's a radioactive nebula). Called from a callback set in add_to_nebula_shielding()
 /obj/machinery/gravity_generator/main/proc/get_radioactive_nebula_shielding()
-	SIGNAL_HANDLER
 	return on ? radioactive_nebula_shielding : 0
 
 //prevents shuttles attempting to rotate this since it messes up sprites
