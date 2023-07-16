@@ -10,7 +10,7 @@
 	icon_screen = "teleport"
 	req_access = list(ACCESS_MINING)
 	/// The server this console is connected to.
-	var/obj/machinery/quantum_server/server
+	var/datum/weakref/server_ref
 
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -18,8 +18,9 @@
 
 /obj/machinery/computer/quantum_console/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
-	if(!server)
-		panic_find_server()
+
+	if(!server_ref)
+		find_server()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "QuantumConsole")
@@ -28,14 +29,17 @@
 /obj/machinery/computer/quantum_console/ui_data()
 	var/list/data = list()
 
+	var/obj/machinery/quantum_server/server = find_server()
 	if(!server)
 		data["connected"] = FALSE
 		return data
 
 	data["connected"] = TRUE
-	data["generated_domain"] = server.generated_domain?.name
+
+	var/datum/map_template/virtual_domain/generated_domain = server.generated_domain_ref?.resolve()
+	data["generated_domain"] = generated_domain?.name
 	data["loading"] = !server.get_ready_status()
-	data["occupants"] = length(server.occupant_refs)
+	data["occupants"] = length(server.occupant_mind_refs)
 	data["points"] = server.points
 	data["scanner_tier"] = server.scanner_tier
 
@@ -44,6 +48,7 @@
 /obj/machinery/computer/quantum_console/ui_static_data(mob/user)
 	var/list/data = list()
 
+	var/obj/machinery/quantum_server/server = find_server()
 	if(!server)
 		return data
 
@@ -57,6 +62,7 @@
 	if(.)
 		return TRUE
 
+	var/obj/machinery/quantum_server/server = find_server()
 	if(!server)
 		return FALSE
 
@@ -97,12 +103,16 @@
 	return levels
 
 /// Attempts to find a quantum server.
-/obj/machinery/computer/quantum_console/proc/panic_find_server()
-	for(var/obj/machinery/quantum_server/server as anything in oview(7))
-		if(!istype(server, /obj/machinery/quantum_server))
+/obj/machinery/computer/quantum_console/proc/find_server()
+	var/obj/machinery/quantum_server/server = server_ref?.resolve()
+	if(server)
+		return server
+
+	for(var/obj/machinery/quantum_server/nearby_server as anything in oview(7))
+		if(!istype(nearby_server, /obj/machinery/quantum_server))
 			continue
-		src.server = server
-		server.console = src
-		return TRUE
+		server_ref = WEAKREF(nearby_server)
+		server.console_ref = WEAKREF(src)
+		return nearby_server
 
 	return FALSE

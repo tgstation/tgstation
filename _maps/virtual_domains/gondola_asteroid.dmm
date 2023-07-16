@@ -2,15 +2,6 @@
 "b" = (
 /turf/closed/indestructible/binary,
 /area/space)
-"c" = (
-/obj/machinery/door/airlock/survival_pod/glass{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/grass,
-/area/ruin/space/has_grav)
 "d" = (
 /turf/open/space/basic,
 /area/space)
@@ -91,13 +82,6 @@
 /obj/item/knife/kitchen,
 /turf/open/space/basic,
 /area/template_noop)
-"M" = (
-/obj/machinery/door/airlock/survival_pod/glass{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/grass,
-/area/ruin/space/has_grav)
 "N" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -2817,7 +2801,7 @@ P
 O
 O
 O
-B
+O
 T
 T
 T
@@ -2894,7 +2878,7 @@ P
 P
 O
 O
-B
+O
 T
 g
 K
@@ -2970,8 +2954,8 @@ D
 P
 P
 O
-O
-O
+P
+P
 T
 g
 X
@@ -3046,9 +3030,9 @@ P
 P
 P
 P
-M
 P
-c
+P
+P
 T
 T
 T
@@ -3122,10 +3106,10 @@ P
 P
 P
 P
-O
-O
-O
-O
+P
+P
+P
+P
 T
 T
 T

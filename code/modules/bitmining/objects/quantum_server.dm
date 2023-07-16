@@ -21,20 +21,18 @@
 	var/area/preset_send_area = /area/station/virtual_domain/safehouse/send
 	/// The area type to receive loot after a domain is completed
 	var/area/receive_area = /area/station/bitminer_den/receive
-	/// The loaded template
-	var/datum/map_template/virtual_domain/generated_domain
-	/// The loaded safehouse
-	var/datum/map_template/safehouse/generated_safehouse
-	/// The generated base level to spawn other presets into
-	var/datum/space_level/vdom
+	/// The loaded map template, map_template/virtual_domain
+	var/datum/weakref/generated_domain_ref
+	/// The loaded safehouse, map_template/safehouse
+	var/datum/weakref/generated_safehouse_ref
+	/// The generated space level to spawn other presets onto, datum/space_level
+	var/datum/weakref/vdom_ref
+	/// The connected console
+	var/datum/weakref/console_ref
 	/// Currently (un)loading a domain. Prevents multiple user actions.
 	var/loading = FALSE
-	/// Currently plugged in avatars
-	var/list/datum/weakref/avatar_refs = list()
 	/// Current plugged in users
-	var/list/datum/weakref/occupant_refs = list()
-	/// The connected console
-	var/obj/machinery/computer/quantum_console/console
+	var/list/datum/weakref/occupant_mind_refs = list()
 	/// The amount of points in the system, used to purchase maps
 	var/points = 0
 	/// Scanner tier
@@ -62,11 +60,7 @@
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
 	SEND_SIGNAL(src, COMSIG_QSERVER_DISCONNECT)
-	QDEL_NULL(generated_domain)
-	QDEL_NULL(generated_safehouse)
-	QDEL_NULL(vdom)
-	occupant_refs.Cut()
-	avatar_refs.Cut()
+	occupant_mind_refs.Cut()
 
 /obj/machinery/quantum_server/attackby(obj/item/tool, mob/user, params)
 	var/icon_closed = initial(icon_state)
@@ -101,7 +95,12 @@
 
 /// Checks if there is a loot crate in the designated send areas (2x2)
 /obj/machinery/quantum_server/proc/check_completion(mob/user)
+	var/datum/map_template/virtual_domain/generated_domain = generated_domain_ref?.resolve()
 	if(!generated_domain)
+		return FALSE
+
+	var/datum/space_level/vdom = vdom_ref?.resolve()
+	if(!vdom)
 		return FALSE
 
 	var/turf/send_turfs = get_area_turfs(preset_send_area, vdom.z_value)
@@ -116,10 +115,11 @@
 
 /// Generates a reward based on the given domain
 /obj/machinery/quantum_server/proc/generate_loot(mob/user)
+	var/datum/map_template/virtual_domain/generated_domain = generated_domain_ref?.resolve()
 	if(!generated_domain)
 		return FALSE
 
-	if(length(occupant_refs))
+	if(length(occupant_mind_refs))
 		balloon_alert(user, "all clients must disconnect!")
 		return FALSE
 
@@ -140,12 +140,13 @@
 
 /// Generates a new virtual domain
 /obj/machinery/quantum_server/proc/generate_virtual_domain(mob/user)
-	if(!console && !panic_find_console())
-		balloon_alert(user, "error: no console found.")
+	var/obj/machinery/computer/quantum_console/console = find_console()
+	if(!console)
+		balloon_alert(user, "no console found.")
 		return FALSE
 
 	if(loading)
-		balloon_alert(user, "error: please wait...")
+		balloon_alert(user, "please wait...")
 		return FALSE
 
 	balloon_alert(user, "initializing virtual domain...")
@@ -159,32 +160,34 @@
 		message_admins("The virtual domain z-level failed to load. Hackers won't be teleported to the netverse.")
 		CRASH("Failed to initialize virtual domain z-level!")
 
-	vdom = loaded_map
+	vdom_ref = WEAKREF(loaded_map)
 
 	if(!length(map_load_turf))
-		map_load_turf = get_area_turfs(preset_mapload_area, vdom.z_value)
+		map_load_turf = get_area_turfs(preset_mapload_area, loaded_map.z_value)
 
 	if(!length(safehouse_load_turf))
-		safehouse_load_turf = get_area_turfs(preset_safehouse_area, vdom.z_value)
+		safehouse_load_turf = get_area_turfs(preset_safehouse_area, loaded_map.z_value)
 
 	loading = FALSE
 
 	return TRUE
 
-/// Returns a list of occupant data if the refs are still valid
+/// If there are hosted minds, attempts to get a list of their current virtual bodies w/ vitals
 /obj/machinery/quantum_server/proc/get_avatar_data()
 	var/list/hosted_avatars = list()
 
-	for(var/datum/weakref/avatar_ref in avatar_refs)
-		var/mob/living/carbon/human/avatar/avatar = avatar_ref.resolve()
-		if(!avatar)
-			avatar_refs -= avatar_ref
-			continue
+	for(var/datum/weakref/mind_ref in occupant_mind_refs)
+		var/datum/mind/this_mind = mind_ref.resolve()
+		if(!this_mind)
+			occupant_mind_refs -= this_mind
+
+		var/mob/living/creature = this_mind.current
+		var/mob/living/pilot = this_mind.pilot_ref?.resolve()
 
 		hosted_avatars += list(list(
-			"health" = avatar.health,
-			"name" = avatar.name,
-			"pilot" = avatar.pilot,
+			"health" = creature.health,
+			"name" = creature.name,
+			"pilot" = pilot,
 		))
 
 	return hosted_avatars
@@ -198,6 +201,8 @@
 	if(!to_generate || !get_ready_status())
 		return FALSE
 
+
+	var/datum/map_template/virtual_domain/vdom = vdom_ref?.resolve()
 	if(!vdom)
 		generate_virtual_domain(user)
 
@@ -208,8 +213,8 @@
 	safehouse.load(safehouse_load_turf[ONLY_TURF])
 	to_generate.load(map_load_turf[ONLY_TURF])
 
-	generated_domain = to_generate
-	generated_safehouse = safehouse
+	generated_domain_ref = WEAKREF(to_generate)
+	generated_safehouse_ref = WEAKREF(safehouse)
 	balloon_alert(user, "virtual domain generated.")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
 	loading = FALSE
@@ -228,13 +233,17 @@
 		examine_text += span_notice("Its coolant capacity reduces cooldown time by [(1 - server_cooldown_efficiency) * 100]%.")
 
 /// Attempts to connect to a quantum console
-/obj/machinery/quantum_server/proc/panic_find_console()
-	for(var/obj/machinery/computer/quantum_console/console as anything in oview(7))
-		if(!istype(console, /obj/machinery/computer/quantum_console))
+/obj/machinery/quantum_server/proc/find_console()
+	var/obj/machinery/computer/quantum_console/console = console_ref?.resolve()
+	if(console)
+		return console
+
+	for(var/obj/machinery/computer/quantum_console/nearby_console as anything in oview(7))
+		if(!istype(nearby_console, /obj/machinery/computer/quantum_console))
 			continue
-		src.console = console
-		console.server = src
-		return TRUE
+		console_ref = WEAKREF(nearby_console)
+		console.server_ref = WEAKREF(src)
+		return nearby_console
 
 	return FALSE
 
@@ -244,7 +253,7 @@
 		balloon_alert(user, "no domain specified.")
 		return FALSE
 
-	if(length(occupant_refs))
+	if(length(occupant_mind_refs))
 		balloon_alert(user, "error: connected clients!")
 		return FALSE
 
@@ -275,8 +284,6 @@
 /// Stops the current virtual domain and disconnects all users
 /obj/machinery/quantum_server/proc/stop_domain(mob/user, force = FALSE)
 	set waitfor = FALSE
-	if(!generated_domain)
-		return
 
 	if(!force)
 		balloon_alert(user, "powering down domain...")
@@ -286,18 +293,15 @@
 	SEND_SIGNAL(src, COMSIG_QSERVER_DISCONNECT)
 	COOLDOWN_START(src, cooling_off, min(server_cooldown_time * server_cooldown_efficiency))
 
-	generated_domain.clear_atoms()
-	generated_domain = null
+	var/datum/map_template/virtual_domain/generated_domain = generated_domain_ref?.resolve()
+	if(generated_domain)
+		generated_domain.clear_atoms()
+		generated_domain = null
 
-	generated_safehouse.clear_atoms()
-	generated_safehouse = null
-
-	for(var/datum/weakref/avatar_ref in avatar_refs)
-		var/mob/living/carbon/human/avatar/avatar = avatar_ref.resolve()
-		avatar_refs -= avatar_ref
-		if(!avatar)
-			continue
-		qdel(avatar)
+	var/datum/map_template/safehouse/generated_safehouse = generated_safehouse_ref?.resolve()
+	if(generated_safehouse)
+		generated_safehouse.clear_atoms()
+		generated_safehouse = null
 
 	loading = FALSE
 

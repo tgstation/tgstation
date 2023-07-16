@@ -193,7 +193,7 @@ const DomainEntry = (props: DomainEntryProps, context) => {
 };
 
 const AvatarDisplay = (props, context) => {
-  const { data } = useBackend<Data>(context);
+  const { act, data } = useBackend<Data>(context);
   if (!isConnected(data)) {
     return null;
   }
@@ -201,7 +201,16 @@ const AvatarDisplay = (props, context) => {
   const { avatars = [] } = data;
 
   return (
-    <Section title="Connected Clients">
+    <Section
+      title="Connected Clients"
+      buttons={
+        <Button
+          icon="sync"
+          onClick={() => act('refresh')}
+          tooltip="Refresh avatar data">
+          Refresh
+        </Button>
+      }>
       <LabeledList>
         {avatars.map(({ health, name, pilot }) => (
           <LabeledList.Item key={name} label={pilot}>

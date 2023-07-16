@@ -78,6 +78,22 @@
 /obj/structure/water_source/puddle,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
+"v" = (
+/obj/machinery/door/airlock/survival_pod/glass{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
+"w" = (
+/obj/machinery/door/airlock/survival_pod/glass{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/ruin/space/has_grav)
 
 (1,1,1) = {"
 a
@@ -669,7 +685,7 @@ d
 b
 b
 b
-b
+c
 "}
 (17,1,1) = {"
 a
@@ -706,7 +722,7 @@ d
 d
 b
 b
-b
+c
 "}
 (18,1,1) = {"
 a
@@ -742,8 +758,8 @@ i
 d
 d
 b
-d
-d
+b
+b
 "}
 (19,1,1) = {"
 a
@@ -778,9 +794,9 @@ d
 d
 d
 d
+v
 d
-d
-d
+w
 "}
 (20,1,1) = {"
 a
@@ -814,10 +830,10 @@ d
 d
 d
 d
-d
-d
-d
-d
+b
+b
+b
+b
 "}
 (21,1,1) = {"
 a
