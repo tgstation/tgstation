@@ -217,8 +217,9 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 
 /obj/machinery/gravity_generator/main/examine(mob/user)
 	. = ..()
-	if(machine_stat & BROKEN)
-		switch(broken_state)
+	if(!(machine_stat & BROKEN))
+		return
+	switch(broken_state)
 			if(GRAV_NEEDS_SCREWDRIVER)
 				. += span_notice("The entire frame is barely holding together, the <b>screws</b> need to be refastened.")
 			if(GRAV_NEEDS_WELDING)
