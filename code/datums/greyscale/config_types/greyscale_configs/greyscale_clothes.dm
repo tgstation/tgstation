@@ -359,7 +359,7 @@
 /datum/greyscale_config/buttondown_slacks_worn
 	name = "Worn Buttondown with Slacks"
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buttondown_slacks_worn.json'
+	json_config = 'code/datums/greyscale/json_configs/buttondown_slacks_worn.json' //Needed a unique object .json to fix height issues, so the worn is separate
 
 /datum/greyscale_config/buttondown_shorts
 	name = "Buttondown with Shorts"
@@ -369,7 +369,7 @@
 /datum/greyscale_config/buttondown_shorts_worn
 	name = "Worn Buttondown with Shorts"
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buttondown_shorts_worn.json'
+	json_config = 'code/datums/greyscale/json_configs/buttondown_shorts_worn.json' //Ditto
 
 //
 // SUITS
