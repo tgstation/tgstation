@@ -23,6 +23,10 @@
 		charge_sound_cooldown_time = 1.8 SECONDS, \
 		)
 
+/obj/item/gun/energy/laser/musket/update_icon_state()
+	inhand_icon_state = "[initial(inhand_icon_state)][(get_charge_ratio() == 4 ? "charged" : "")]"
+	return ..()
+
 /obj/item/gun/energy/laser/musket/prime
 	name = "heroic laser musket"
 	desc = "A well-engineered, hand-charged laser weapon. Its capacitors hum with potential."
