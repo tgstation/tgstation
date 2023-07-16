@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - bugfix: "The preference menu has had its weird index lowered (Assets are no longer semi garbled)"

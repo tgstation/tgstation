@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Anti-magic visual effects will no longer trigger overtop one another"

@@ -1,4 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - bugfix: "Ventilation clog no longer spawns mobs in inappropriate places"
