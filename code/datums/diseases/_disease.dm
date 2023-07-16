@@ -158,7 +158,7 @@
 	//note that stage is not copied over - the copy starts over at stage 1
 	var/static/list/copy_vars = list("name", "visibility_flags", "disease_flags", "spread_flags", "form", "desc", "agent", "spread_text",
 									"cure_text", "max_stages", "stage_prob", "viable_mobtypes", "cures", "infectivity", "cure_chance",
-									"bypasses_immunity", "spreading_modifier", "severity", "needs_all_cures", "strain_data",
+									"required_organ", "bypasses_immunity", "spreading_modifier", "severity", "needs_all_cures", "strain_data",
 									"infectable_biotypes", "process_dead")
 
 	var/datum/disease/D = copy_type ? new copy_type() : new type()
