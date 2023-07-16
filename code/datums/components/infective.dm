@@ -49,23 +49,41 @@
 /datum/component/infective/proc/try_infect_eat(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
 
+	try_infect(feeder, BODY_ZONE_L_ARM)
+
 	eater.add_mood_event("disgust", /datum/mood_event/disgust/dirty_food)
 
 	if(is_weak && !prob(weak_infection_chance))
 		return
 
-	for(var/V in diseases)
-		eater.ForceContractDisease(V)
-	try_infect(feeder, BODY_ZONE_L_ARM)
+	var/obj/item/organ/internal/stomach/target_stomach = get_organ_slot(ORGAN_SLOT_STOMACH)
+	if(!istype(target_stomach))
+		return
+
+	for(var/datum/disease/disease in diseases)
+		// robotic stomachs are immune to digested disease unless 'inorganic biology' symptom is present
+		if(IS_ROBOTIC_ORGAN(target_stomach) && !(disease.infectable_biotypes & MOB_ROBOTIC))
+			continue
+
+		eater.ForceContractDisease(disease)
+
 
 /datum/component/infective/proc/try_infect_drink(datum/source, mob/living/drinker, mob/living/feeder)
 	SIGNAL_HANDLER
 
-	for(var/disease in diseases)
-		drinker.ForceContractDisease(disease)
 	var/appendage_zone = feeder.held_items.Find(source)
 	appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : appendage_zone % 2 ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
 	try_infect(feeder, appendage_zone)
+
+	var/obj/item/organ/internal/stomach/target_stomach = get_organ_slot(ORGAN_SLOT_STOMACH)
+	if(!istype(target_stomach))
+		return
+
+	for(var/datum/disease/disease in diseases)
+		// robotic stomachs are immune to digested disease unless 'inorganic biology' symptom is present
+		if(IS_ROBOTIC_ORGAN(target_stomach) && !(disease.infectable_biotypes & MOB_ROBOTIC))
+			continue
+		drinker.ForceContractDisease(disease)
 
 /datum/component/infective/proc/clean(datum/source, clean_types)
 	SIGNAL_HANDLER
