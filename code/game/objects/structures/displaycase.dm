@@ -627,11 +627,13 @@
 		to_chat(user, span_notice("[src] must be open to move it."))
 		return
 
-/obj/structure/displaycase/forsale/emag_act(mob/user)
+/obj/structure/displaycase/forsale/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	payments_acc = null
 	req_access = list()
-	to_chat(user, span_warning("[src]'s card reader fizzles and smokes, and the account owner is reset."))
+	balloon_alert(user, "account owner reset")
+	to_chat(user, span_warning("[src]'s card reader fizzles and smokes."))
+	return TRUE
 
 /obj/structure/displaycase/forsale/examine(mob/user)
 	. = ..()

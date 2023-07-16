@@ -1,6 +1,4 @@
 GLOBAL_LIST_EMPTY(roundstart_races)
-///List of all roundstart languages by path
-GLOBAL_LIST_EMPTY(roundstart_languages)
 ///List of all roundstart languages by path except common
 GLOBAL_LIST_EMPTY(uncommon_roundstart_languages)
 
@@ -230,14 +228,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(species.check_roundstart_eligible())
 			selectable_species += species.id
 			var/datum/language_holder/temp_holder = new species.species_language_holder
-			for(var/datum/language/spoken_languages as anything in temp_holder.understood_languages)
-				if(spoken_languages in GLOB.roundstart_languages)
-					continue
-				GLOB.roundstart_languages += spoken_languages
+			for(var/datum/language/spoken_language as anything in temp_holder.understood_languages)
+				GLOB.uncommon_roundstart_languages |= spoken_language
 			qdel(temp_holder)
 			qdel(species)
 
-	GLOB.uncommon_roundstart_languages = GLOB.roundstart_languages - /datum/language/common
+	GLOB.uncommon_roundstart_languages -= /datum/language/common
 	if(!selectable_species.len)
 		selectable_species += SPECIES_HUMAN
 

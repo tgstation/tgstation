@@ -35,6 +35,10 @@
 	is_charging = FALSE
 	balloon_alert(user, "charged")
 
+/obj/item/gun/energy/laser/musket/update_icon_state()
+	inhand_icon_state = "[initial(inhand_icon_state)][(get_charge_ratio() == 4 ? "charged" : "")]"
+	return ..()
+
 /obj/item/gun/energy/laser/musket/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_wielded = 10)

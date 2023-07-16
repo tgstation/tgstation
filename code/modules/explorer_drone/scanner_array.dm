@@ -77,6 +77,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 
 /obj/machinery/computer/exoscanner_control
 	name = "Scanner Array Control Console"
+	circuit = /obj/item/circuitboard/computer/exoscanner_console
 	/// If scan was interrupted show a popup until dismissed.
 	var/failed_popup = FALSE
 	/// Site we're configuring targeted scans for.

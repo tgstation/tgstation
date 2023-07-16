@@ -175,13 +175,14 @@
 	else
 		return ..()
 
-/obj/item/defibrillator/emag_act(mob/user)
-	if(safety)
-		safety = FALSE
-		to_chat(user, span_warning("You silently disable [src]'s safety protocols with the cryptographic sequencer."))
-	else
-		safety = TRUE
-		to_chat(user, span_notice("You silently enable [src]'s safety protocols with the cryptographic sequencer."))
+/obj/item/defibrillator/emag_act(mob/user, obj/item/card/emag/emag_card)
+
+	safety = !safety
+
+	var/enabled_or_disabled = (safety ? "enabled" : "disabled")
+	balloon_alert(user, "safety protocols [enabled_or_disabled]")
+
+	return TRUE
 
 /obj/item/defibrillator/emp_act(severity)
 	. = ..()
