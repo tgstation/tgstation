@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	oxygen[MOLES] += proportion
 	hydrogen[MOLES] += proportion * 2
 
-	air.heat_capacity += proportion * (hydrogen[GAS_META][META_GAS_SPECIFIC_HEAT] * 2 + oxygen[GAS_META][META_GAS_SPECIFIC_HEAT] - water_vapor[GAS_META][META_GAS_SPECIFIC_HEAT] * 2)
+	air_mixture.heat_capacity += proportion * (hydrogen[GAS_META][META_GAS_SPECIFIC_HEAT] * 2 + oxygen[GAS_META][META_GAS_SPECIFIC_HEAT] - water_vapor[GAS_META][META_GAS_SPECIFIC_HEAT] * 2)
 
 	var/new_heat_capacity = air_mixture.heat_capacity
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
