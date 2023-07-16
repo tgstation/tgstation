@@ -266,7 +266,7 @@
 			/obj/item/pickaxe = 4,
 			/obj/item/fishing_rod = 4,
 			/obj/item/tank/internals/emergency_oxygen = 2,
-			/obj/item/shovel = 2,
+			/obj/item/flashlight/flare/torch = 2,
 			/obj/item/crowbar = 2,
 		))
 	r_pocket = pick_weight(list(
