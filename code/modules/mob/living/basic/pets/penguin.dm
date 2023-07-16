@@ -70,7 +70,7 @@
 			location_allowlist = typecacheof(list(/turf, /mob/living/basic/pet/penguin)),\
 		)
 
-/mob/living/basic/pet/penguin/proc/on_hatch_egg(obj/source)
+/mob/living/basic/pet/penguin/proc/on_hatch_egg()
 	SIGNAL_HANDLER
 
 	remove_egg()
