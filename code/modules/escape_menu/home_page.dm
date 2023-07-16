@@ -2,7 +2,6 @@
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button(
 			null,
-			/* hud_owner = */ src,
 			src,
 			"Resume",
 			/* offset = */ 0,
@@ -13,7 +12,6 @@
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button(
 			null,
-			/* hud_owner = */ null,
 			src,
 			"Settings",
 			/* offset = */ 1,
@@ -24,7 +22,6 @@
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button/admin_help(
 			null,
-			/* hud_owner = */ src,
 			src,
 			"Admin Help",
 			/* offset = */ 2,
@@ -34,7 +31,6 @@
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button/leave_body(
 			null,
-			/* hud_owner = */ src,
 			src,
 			"Leave Body",
 			/* offset = */ 3,
@@ -59,7 +55,6 @@
 
 /atom/movable/screen/escape_menu/home_button/Initialize(
 	mapload,
-	datum/hud/hud_owner,
 	datum/escape_menu/escape_menu,
 	button_text,
 	offset,
@@ -72,7 +67,6 @@
 
 	home_button_text = new /atom/movable/screen/escape_menu/home_button_text(
 		src,
-		/* hud_owner = */ src,
 		button_text,
 	)
 
@@ -115,7 +109,7 @@
 		button_text
 		hovered = FALSE
 
-/atom/movable/screen/escape_menu/home_button_text/Initialize(mapload, datum/hud/hud_owner, button_text)
+/atom/movable/screen/escape_menu/home_button_text/Initialize(mapload, button_text)
 	. = ..()
 
 	src.button_text = button_text

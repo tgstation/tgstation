@@ -8,14 +8,15 @@
 	maptext = ""
 	layer = SCREENTIP_LAYER //Added to make screentips appear above action buttons (and other /atom/movable/screen objects)
 
-/atom/movable/screen/screentip/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/screentip/Initialize(mapload, _hud)
 	. = ..()
+	hud = _hud
 	update_view()
 
 /atom/movable/screen/screentip/proc/update_view(datum/source)
 	SIGNAL_HANDLER
-	if(!hud || !hud.mymob.canon_client.view_size) //Might not have been initialized by now
+	if(!hud || !hud.mymob.client.view_size) //Might not have been initialized by now
 		return
-	maptext_width = view_to_pixels(hud.mymob.canon_client.view_size.getView())[1]
+	maptext_width = view_to_pixels(hud.mymob.client.view_size.getView())[1]
 
 

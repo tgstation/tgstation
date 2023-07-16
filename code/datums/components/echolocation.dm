@@ -173,7 +173,7 @@
 	layer = ECHO_LAYER
 	show_when_dead = TRUE
 
-/atom/movable/screen/fullscreen/echo/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/fullscreen/echo/Initialize(mapload)
 	. = ..()
 	particles = new /particles/echo()
 
