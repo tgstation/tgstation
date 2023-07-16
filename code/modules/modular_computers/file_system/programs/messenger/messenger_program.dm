@@ -29,7 +29,6 @@
 
 	/// An asssociative list of chats we have started, format: chatref -> pda_chat.
 	var/list/datum/pda_chat/saved_chats = list()
-	var/list/blocked_msgr_refs = list()
 	/// Whose chatlogs we currently have open. If we are in the contacts list, this is null.
 	var/viewing_messages_of = null
 
@@ -481,10 +480,6 @@
 	var/fake_job = is_fake_user ? signal.data["fakejob"] : null
 
 	var/sender_ref = signal.data["ref"]
-
-	// 2 blocked messages
-	if(sender_ref && (sender_ref in blocked_msgr_refs))
-		return
 
 	// don't create a new chat for rigged messages, make it a one off notif
 	if(!is_rigged)
