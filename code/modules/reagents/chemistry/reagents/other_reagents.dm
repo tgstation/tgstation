@@ -1229,6 +1229,7 @@
 	burning_volume = 0.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/alcohol = 4)
+	liquid_fire_power = 25
 
 /datum/glass_style/drinking_glass/fuel
 	required_drink_type = /datum/reagent/fuel
@@ -1777,6 +1778,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = null
 	default_container = /obj/effect/decal/cleanable/oil
+	liquid_fire_power = 15
 
 /datum/reagent/stable_plasma
 	name = "Stable Plasma"
