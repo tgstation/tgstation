@@ -62,9 +62,8 @@
 	say(pick_weight(mineral_breakdown))
 	for(var/iteration in 1 to minerals_per_boulder)
 		var/picked_mat = pick_weight(mineral_breakdown) // Material should be picked, weighed by random weights.
-		var/sheets_worth_of_minerals = ore_quantity_function(iteration)
 		var/list/quantity_list = list()
-		quantity_list[picked_mat] = sheets_worth_of_minerals
+		quantity_list[picked_mat] = ore_quantity_function(iteration)
 		refined_list.Insert(refined_list.len, quantity_list)
 	return refined_list
 
@@ -74,7 +73,7 @@
 /obj/structure/ore_vent/proc/ore_quantity_function(ore_floor)
 	var/mineral_count = boulder_size * (log(rand(1+ore_floor, 4+ore_floor))**-1)
 	mineral_count = SHEET_MATERIAL_AMOUNT * round(mineral_count)
-	say(mineral_count)
+	say("[mineral_count] is the count!")
 	return mineral_count
 
 /**
@@ -134,3 +133,8 @@
 	desc = "This rocks."
 	icon_state = "ore"
 	icon = 'icons/obj/ore.dmi'
+	item_flags = NO_MAT_REDEMPTION
+
+/obj/item/boulder/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/two_handed) //Heavy as all hell, it's a boulder.
