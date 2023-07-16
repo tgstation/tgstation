@@ -11,6 +11,11 @@
 /// The amount of time between spamming for pAI candidates
 #define PAI_SPAM_TIME (40 SECONDS)
 
+/// Maximum distance you can set the holoform leash
+#define HOLOFORM_MAX_RANGE 9
+/// Minimum distance you can set the holoform leash
+#define HOLOFORM_MIN_RANGE 3
+
 /// UI action to toggle huds
 #define PAI_TOGGLE_MEDICAL_HUD 0
 #define PAI_TOGGLE_SECURITY_HUD 1

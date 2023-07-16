@@ -87,7 +87,7 @@
 ///The Bot is currently allowed to be remote controlled by Silicon.
 #define BOT_MODE_REMOTE_ENABLED (1<<2)
 ///The Bot is allowed to have a ghost placed in control of it.
-#define BOT_MODE_GHOST_CONTROLLABLE (1<<3)
+#define BOT_MODE_CAN_BE_SAPIENT (1<<3)
 
 //Bot cover defines indicating the Bot's status
 ///The Bot's cover is open and can be modified/emagged by anyone.

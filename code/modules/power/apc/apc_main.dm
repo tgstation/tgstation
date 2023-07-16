@@ -8,7 +8,7 @@
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "A control terminal for the area's electrical systems."
-
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "apc0"
 	use_power = NO_POWER_USE
 	req_access = null
@@ -201,11 +201,19 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 	update_appearance()
 
-	GLOB.apcs_list += src
+	var/static/list/hovering_mob_typechecks = list(
+		/mob/living/silicon = list(
+			SCREENTIP_CONTEXT_CTRL_LMB = "Toggle power",
+			SCREENTIP_CONTEXT_ALT_LMB = "Toggle equipment power",
+			SCREENTIP_CONTEXT_SHIFT_LMB = "Toggle lighting power",
+			SCREENTIP_CONTEXT_CTRL_SHIFT_LMB = "Toggle environment power",
+		)
+	)
+
+	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Toggle interface lock")
+	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
 
 /obj/machinery/power/apc/Destroy()
-	GLOB.apcs_list -= src
-
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10, 0, 1000)
 	disconnect_from_area()
@@ -283,11 +291,6 @@
 			. += "The cover is broken. It may be hard to force it open."
 		else
 			. += "The cover is closed."
-
-	. += span_notice("Right-click the APC to [ locked ? "unlock" : "lock"] the interface.")
-
-	if(issilicon(user))
-		. += span_notice("Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].")
 
 /obj/machinery/power/apc/deconstruct(disassembled = TRUE)
 	if(flags_1 & NODECONSTRUCT_1)

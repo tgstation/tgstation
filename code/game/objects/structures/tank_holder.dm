@@ -2,7 +2,7 @@
 /obj/structure/tank_holder
 	name = "tank holder"
 	desc = "A metallic frame that can hold tanks and extinguishers."
-	icon = 'icons/obj/atmospherics/tank.dmi'
+	icon = 'icons/obj/canisters.dmi'
 	icon_state = "holder"
 
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)

@@ -8,6 +8,7 @@
 /mob/living/basic/giant_spider
 	name = "giant spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "guard"
 	icon_living = "guard"
 	icon_dead = "guard_dead"

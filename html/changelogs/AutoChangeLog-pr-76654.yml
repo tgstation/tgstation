@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Carp, Trees, and Festivus Poles will once more sometimes emote at you if they think you are looking at them the wrong way, before they come over to beat you up."
