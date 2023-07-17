@@ -342,11 +342,16 @@
 /datum/outfit/consumed_heremoth/pre_equip(mob/living/carbon/human/moth, visualsOnly = FALSE)
 	if(!visualsOnly)
 		moth.set_species(/datum/species/moth)
-	if(prob(50))
+	if(prob(70))
 		glasses = /obj/item/clothing/glasses/blindfold
-	r_pocket = pick_weight(list(
-		/obj/item/flashlight/lantern = 4,
-		/obj/item/knife/combat/survival = 2,
-		/obj/item/toy/eldritch_book = 2,
-		/obj/item/storage/box/heretic_box = 2,
-	))
+	if(prob(70))
+		belt = pick(list(
+			/obj/item/flashlight/lantern
+			/obj/item/toy/plush/moth
+		))
+	if(prob(50))
+		r_pocket = pick_weight(list(
+			/obj/item/knife/combat/survival = 1,
+			/obj/item/toy/eldritch_book = 2,
+			/obj/item/storage/box/heretic_box = 2,
+		))
