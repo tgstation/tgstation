@@ -29,18 +29,18 @@
 	var/datum/weakref/vdom_ref
 	/// The connected console
 	var/datum/weakref/console_ref
-	/// Currently (un)loading a domain. Prevents multiple user actions.
-	var/loading = FALSE
 	/// Current plugged in users
 	var/list/datum/weakref/occupant_mind_refs = list()
+	/// Currently (un)loading a domain. Prevents multiple user actions.
+	var/loading = FALSE
 	/// The amount of points in the system, used to purchase maps
 	var/points = 0
 	/// Scanner tier
 	var/scanner_tier = 1
-	/// Length of time it takes for the server to cool down after despawning a map. Here to give miners downtime so their faces don't get stuck like that
-	var/server_cooldown_time = 2 MINUTES
 	/// Server cooldown efficiency
 	var/server_cooldown_efficiency = 1
+	/// Length of time it takes for the server to cool down after despawning a map. Here to give miners downtime so their faces don't get stuck like that
+	var/server_cooldown_time = 2 MINUTES
 	/// If the server is cooling down from a recent despawn
 	COOLDOWN_DECLARE(cooling_off)
 	/// This marks the starting point (bottom left) of the virtual dom map. We use this to spawn templates. Expected: 1
@@ -54,9 +54,13 @@
 	. = ..()
 	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(stop_domain), usr, TRUE)
 	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-
 	RefreshParts()
-	if(!console_ref)
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/quantum_server/LateInitialize()
+	. = ..()
+	if(isnull(console_ref))
 		find_console()
 
 /obj/machinery/quantum_server/Destroy(force)
@@ -113,6 +117,21 @@
 	for(var/turf/tile in send_turfs)
 		if(locate(/obj/structure/closet/crate/secure/bitminer_loot/encrypted) in tile)
 			return TRUE
+
+	return FALSE
+
+/// Attempts to connect to a quantum console
+/obj/machinery/quantum_server/proc/find_console()
+	var/obj/machinery/computer/quantum_console/console = console_ref?.resolve()
+	if(console)
+		return console
+
+	for(var/direction in GLOB.cardinals)
+		var/obj/machinery/computer/quantum_console/nearby_console = locate(/obj/machinery/computer/quantum_console, get_step(src, direction))
+		if(nearby_console)
+			console_ref = WEAKREF(nearby_console)
+			nearby_console.server_ref = WEAKREF(src)
+			return nearby_console
 
 	return FALSE
 
@@ -232,21 +251,6 @@
 	examine_text += span_notice("It is currently cooling down. Give it a few moments.")
 	if(server_cooldown_efficiency < 1)
 		examine_text += span_notice("Its coolant capacity reduces cooldown time by [(1 - server_cooldown_efficiency) * 100]%.")
-
-/// Attempts to connect to a quantum console
-/obj/machinery/quantum_server/proc/find_console()
-	var/obj/machinery/computer/quantum_console/console = console_ref?.resolve()
-	if(console)
-		return console
-
-	for(var/obj/machinery/computer/quantum_console/nearby_console as anything in oview(1))
-		if(!istype(nearby_console, /obj/machinery/computer/quantum_console))
-			continue
-		console_ref = WEAKREF(nearby_console)
-		nearby_console.server_ref = WEAKREF(src)
-		return nearby_console
-
-	return FALSE
 
 /// Sets the current virtual domain to the given map template
 /obj/machinery/quantum_server/proc/set_domain(mob/user, id)

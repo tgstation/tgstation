@@ -23,6 +23,8 @@
 	var/id
 	/// Points to reward for completion. These are used to purchase new domains, but also calculate ore rewards.
 	var/reward_points = BITMINING_REWARD_LOW
+	/// This map is specifically for unit tests. Shouldn't display in game
+	var/test_only = FALSE
 	/// The safehouse to load into the map
 	var/datum/map_template/safehouse/safehouse_path = /datum/map_template/safehouse/wood
 

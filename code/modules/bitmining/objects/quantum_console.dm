@@ -12,10 +12,15 @@
 	/// The server this console is connected to.
 	var/datum/weakref/server_ref
 
-/obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/C)
+/obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/circuit)
 	. = ..()
 	desc = "Even in the distant year [CURRENT_STATION_YEAR], Nanostrasen is still using REST APIs. How grim."
-	if(!server_ref)
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/quantum_console/LateInitialize()
+	. = ..()
+	if(isnull(server_ref))
 		find_server()
 
 /obj/machinery/computer/quantum_console/ui_interact(mob/user, datum/tgui/ui)
@@ -93,12 +98,12 @@
 	if(server)
 		return server
 
-	for(var/obj/machinery/quantum_server/nearby_server as anything in oview(1))
-		if(!istype(nearby_server, /obj/machinery/quantum_server))
-			continue
-		server_ref = WEAKREF(nearby_server)
-		nearby_server.console_ref = WEAKREF(src)
-		return nearby_server
+	for(var/direction in GLOB.cardinals)
+		var/obj/machinery/quantum_server/nearby_server = locate(/obj/machinery/quantum_server, get_step(src, direction))
+		if(nearby_server)
+			server_ref = WEAKREF(nearby_server)
+			nearby_server.console_ref = WEAKREF(src)
+			return nearby_server
 
 	return FALSE
 
@@ -107,6 +112,9 @@
 	var/list/levels = list()
 
 	for(var/datum/map_template/virtual_domain/domain as anything in subtypesof(/datum/map_template/virtual_domain))
+		if(initial(domain.test_only))
+			continue
+
 		levels += list(list(
 			"cost" = initial(domain.cost),
 			"desc" = initial(domain.desc),
