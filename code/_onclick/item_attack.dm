@@ -171,7 +171,7 @@
 
 	if(..())
 		return TRUE
-	if(attacking_item.force > 1)
+	if(attacking_item.force > 1 && user != src)
 		stack_trace("Potentially deprecated use of a weapon ([attacking_item.type]) via attackby. \
 			If this item is intended to be a weapon, implement an attack style.")
 
