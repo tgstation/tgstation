@@ -79,7 +79,7 @@
 			. = "he"
 
 /client/p_They(temp_gender)
-	. = capitalize(p_They(temp_gender))
+	. = capitalize(p_they(temp_gender))
 
 /client/p_their(temp_gender)
 	if(!temp_gender)
