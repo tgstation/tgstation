@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Replaces direct calls of try_infect() with appropriate procs so that CRISPR and Miasma aren't forcing diseases on the disease immune."

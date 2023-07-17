@@ -391,13 +391,14 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	if(tram_part)
 		UnregisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING)
 
-/obj/machinery/crossing_signal/emag_act(mob/living/user)
+/obj/machinery/crossing_signal/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	balloon_alert(user, "disabled motion sensors")
 	if(signal_state != XING_STATE_MALF)
 		set_signal_state(XING_STATE_MALF)
 	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/machinery/crossing_signal/proc/start_malfunction()
 	if(signal_state != XING_STATE_MALF)

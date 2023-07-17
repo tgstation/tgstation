@@ -254,16 +254,13 @@
 
 	being_drained = TRUE
 	balloon_alert(user, "draining influence...")
-	RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 	if(!do_after(user, 10 SECONDS, src))
 		being_drained = FALSE
 		balloon_alert(user, "interrupted!")
-		UnregisterSignal(user, COMSIG_ATOM_EXAMINE)
 		return
 
 	// We don't need to set being_drained back since we delete after anyways
-	UnregisterSignal(user, COMSIG_ATOM_EXAMINE)
 	balloon_alert(user, "influence drained")
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
@@ -285,19 +282,6 @@
 
 	GLOB.reality_smash_track.num_drained++
 	qdel(src)
-
-/*
- * Signal proc for [COMSIG_ATOM_EXAMINE], registered on the user draining the influence.
- *
- * Gives a chance for examiners to see that the heretic is interacting with an infuence.
- */
-/obj/effect/heretic_influence/proc/on_examine(atom/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-
-	if(prob(50))
-		return
-
-	examine_list += span_warning("[source]'s hand seems to be glowing a [span_hypnophrase("strange purple")]...")
 
 /*
  * Add a mind to the list of tracked minds,

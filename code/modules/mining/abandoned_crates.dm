@@ -100,11 +100,13 @@
 			return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
+/obj/structure/closet/crate/secure/loot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+
 	if(locked)
-		boom(user)
-		return
-	return ..()
+		boom(user) // no feedback since it just explodes, thats its own feedback
+		return TRUE
+	return
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user, silent = FALSE)
 	if(!locked)
