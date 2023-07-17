@@ -128,7 +128,7 @@
 	for(var/i in 1 to length(scoop_overlays))
 		var/image/overlay = scoop_overlays[i]
 		if(istext(overlay))
-			overlay = image('icons/obj/kitchen.dmi', overlay)
+			overlay = image('icons/obj/service/kitchen.dmi', overlay)
 		overlay.pixel_x = x_offset
 		overlay.pixel_y = y_offset + added_offset
 		new_overlays += overlay
@@ -295,7 +295,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 /datum/ice_cream_flavour/custom/add_flavour(datum/component/ice_cream_holder/target, datum/reagents/R, custom_name)
 	if(!R || R.total_volume < 4) //consumable reagents have stronger taste so higher volume are required to allow non-food flavourings to break through better.
 		return GLOB.ice_cream_flavours[ICE_CREAM_BLAND].add_flavour(target) //Bland, sugary ice and milk.
-	var/image/flavoring = image('icons/obj/kitchen.dmi', "icecream_custom")
+	var/image/flavoring = image('icons/obj/service/kitchen.dmi', "icecream_custom")
 	var/datum/reagent/master = R.get_master_reagent()
 	custom_name = lowertext(master.name) // reagent names are capitalized, while items' aren't.
 	flavoring.color = master.color

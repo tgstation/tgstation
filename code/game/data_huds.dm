@@ -238,19 +238,24 @@ FAN HUDs! For identifying other fans on-sight.
 
 /mob/living/carbon/human/proc/fan_hud_set_fandom()
 	var/image/holder = hud_list[FAN_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
+	var/icon/hud_icon = icon(icon, icon_state, dir)
+	holder.pixel_y = hud_icon.Height() - world.icon_size
 	holder.icon_state = "hudfan_no"
-	var/obj/item/clothing/under/U = get_item_by_slot(ITEM_SLOT_ICLOTHING)
-	if(!U)
+
+	var/obj/item/clothing/under/undershirt = w_uniform
+	if(!istype(undershirt))
 		set_hud_image_inactive(FAN_HUD)
 		return
 
-	if(istype(U.attached_accessory, /obj/item/clothing/accessory/mime_fan_pin))
-		holder.icon_state = "mime_fan_pin"
+	for(var/accessory in undershirt.attached_accessories)
+		if(istype(accessory, /obj/item/clothing/accessory/mime_fan_pin))
+			holder.icon_state = "mime_fan_pin"
+			break
 
-	else if(istype(U.attached_accessory, /obj/item/clothing/accessory/clown_enjoyer_pin))
-		holder.icon_state = "clown_enjoyer_pin"
+		if(istype(accessory, /obj/item/clothing/accessory/clown_enjoyer_pin))
+			holder.icon_state = "clown_enjoyer_pin"
+			break
+
 	set_hud_image_active(FAN_HUD)
 	return
 

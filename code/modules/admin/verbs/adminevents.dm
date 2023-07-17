@@ -277,7 +277,7 @@
 			SSshuttle.hostile_environments.Cut()
 			SSshuttle.checkHostileEnvironment()
 
-/client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in GLOB.nuke_list)
+/client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
 	set category = "Admin.Events"
 	set name = "Toggle Nuke"
 	set popup_menu = FALSE

@@ -18,6 +18,7 @@
 	mob_to_summon = /mob/living/basic/fire_shark
 	cost = 1
 	route = PATH_SIDE
+	poll_ignore_define = POLL_IGNORE_FIRE_SHARK
 
 /datum/heretic_knowledge/spell/space_phase
 	name = "Space Phase"

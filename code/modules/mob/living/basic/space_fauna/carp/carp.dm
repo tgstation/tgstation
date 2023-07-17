@@ -110,6 +110,7 @@
 	AddElement(/datum/element/ai_flee_while_injured)
 	setup_eating()
 
+	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	if (tamer)
 		on_tamed(tamer, feedback = FALSE)
