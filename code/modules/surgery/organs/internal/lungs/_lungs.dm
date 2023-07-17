@@ -465,7 +465,7 @@
 		// Each argument has a minimum of 1 and rounds to the nearest value. Feel free to change the pp scaling I couldn't decide on good numbers for it.
 		if(breather.CanContractDisease(miasma_disease))
 			miasma_disease.name = "Unknown"
-			breather.AirborneContractDisease(random_disease, TRUE)
+			breather.AirborneContractDisease(miasma_disease, TRUE)
 	// Miasma side effects
 	switch(miasma_pp)
 		if(0.25 to 5)
