@@ -14,6 +14,7 @@
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_MUTANT_COLORS,
 		TRAIT_FIXED_MUTANT_COLORS,
+		TRAIT_FIXED_HAIRCOLOR,
 		TRAIT_AGENDER,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
@@ -119,9 +120,11 @@
 		ethereal_light.set_light_range_power_color(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
 		ethereal_light.set_light_on(TRUE)
 		fixed_mut_color = current_color
+		fixed_hair_color = current_color
 	else
 		ethereal_light.set_light_on(FALSE)
 		fixed_mut_color = rgb(128,128,128)
+		fixed_hair_color = rgb(128,128,128)
 	ethereal.set_facial_haircolor(current_color, update = FALSE)
 	ethereal.set_haircolor(current_color, update = TRUE)
 
@@ -247,6 +250,7 @@
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_MUTANT_COLORS,
 		TRAIT_FIXED_MUTANT_COLORS,
+		TRAIT_FIXED_HAIRCOLOR,
 		TRAIT_AGENDER,
 		TRAIT_TENACIOUS,
 		TRAIT_NOBREATH,
