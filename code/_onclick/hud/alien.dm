@@ -82,7 +82,7 @@
 	throw_icon.screen_loc = ui_drop_throw
 	hotkeybuttons += throw_icon
 
-	strafe_icon = new /atom/movable/screen/strafe(null, src))
+	strafe_icon = new /atom/movable/screen/strafe(null, src)
 	strafe_icon.icon = ui_style
 	strafe_icon.screen_loc = ui_strafe
 	hotkeybuttons += strafe_icon

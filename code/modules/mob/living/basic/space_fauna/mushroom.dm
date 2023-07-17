@@ -94,7 +94,7 @@
 	hunt_cooldown = 15 SECONDS
 	always_reset_target = TRUE
 
-/mob/living/basic/mushroom/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/basic/mushroom/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
 	if(!.)
 		return
