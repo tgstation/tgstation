@@ -555,7 +555,7 @@
 	to_chat(owner, span_warning("You snap out of your trance!"))
 
 /datum/status_effect/trance/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] slow and unfocused.")
+	return span_warning("[owner.p_They()] seem[owner.p_s()] slow and unfocused.")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
@@ -798,7 +798,7 @@
 	return COMPONENT_CLEANED
 
 /datum/status_effect/ants/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] [owner.p_are()] covered in ants!")
+	return span_warning("[owner.p_They()] [owner.p_are()] covered in ants!")
 
 /datum/status_effect/ants/tick()
 	var/mob/living/carbon/human/victim = owner

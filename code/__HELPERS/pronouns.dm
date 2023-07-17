@@ -1,9 +1,10 @@
 //pronoun procs, for getting pronouns without using the text macros that only work in certain positions
 //datums don't have gender, but most of their subtypes do!
-/datum/proc/p_they(capitalized, temp_gender)
+/datum/proc/p_they(temp_gender)
 	. = "it"
-	if(capitalized)
-		. = capitalize(.)
+
+/datum/proc/p_They(temp_gender)
+	. = capitalize(p_they())
 
 /datum/proc/p_their(capitalized, temp_gender)
 	. = "its"
@@ -60,7 +61,7 @@
 					. = "s"
 
 //like clients, which do have gender.
-/client/p_they(capitalized, temp_gender)
+/client/p_they(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "they"
@@ -69,8 +70,9 @@
 			. = "she"
 		if(MALE)
 			. = "he"
-	if(capitalized)
-		. = capitalize(.)
+
+/client/p_They(temp_gender)
+	. = capitalize(p_they())
 
 /client/p_their(capitalized, temp_gender)
 	if(!temp_gender)
@@ -149,7 +151,7 @@
 		. = "es"
 
 //mobs(and atoms but atoms don't really matter write your own proc overrides) also have gender!
-/mob/p_they(capitalized, temp_gender)
+/mob/p_they(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "it"
@@ -160,8 +162,9 @@
 			. = "he"
 		if(PLURAL)
 			. = "they"
-	if(capitalized)
-		. = capitalize(.)
+
+/mob/p_They(temp_gender)
+	. = capitalize(p_they(temp_gender))
 
 /mob/p_their(capitalized, temp_gender)
 	if(!temp_gender)
@@ -246,12 +249,15 @@
 		. = "es"
 
 //humans need special handling, because they can have their gender hidden
-/mob/living/carbon/human/p_they(capitalized, temp_gender)
+/mob/living/carbon/human/p_they(temp_gender)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
+
+/mob/living/carbon/human/p_They(temp_gender)
+	. = capitalize(p_they(temp_gender))
 
 /mob/living/carbon/human/p_their(capitalized, temp_gender)
 	var/obscured = check_obscured_slots()

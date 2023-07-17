@@ -127,7 +127,7 @@
 	if(!victim || !is_visible(viewer))
 		return
 
-	var/msg = "[victim.p_they(TRUE)] [victim.p_have()] [description] on [victim.p_their()] [precise_location]."
+	var/msg = "[victim.p_They()] [victim.p_have()] [description] on [victim.p_their()] [precise_location]."
 	switch(severity)
 		if(WOUND_SEVERITY_MODERATE)
 			msg = span_tinynoticeital("[msg]")
