@@ -110,6 +110,7 @@
 	AddElement(/datum/element/ai_flee_while_injured)
 	setup_eating()
 
+	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	if (tamer)
 		on_tamed(tamer, feedback = FALSE)
@@ -272,6 +273,17 @@
 	obj_damage = 15
 
 #undef RARE_CAYENNE_CHANCE
+
+///Carp-parasite from carpellosis disease
+/mob/living/basic/carp/ella
+	name = "Ella"
+	real_name = "Ella"
+	desc = "It came out of someone."
+	gold_core_spawnable = NO_SPAWN
+
+/mob/living/basic/carp/ella/Initialize(mapload)
+	. = ..()
+	death() // It comes into the world dead when the disease is cured
 
 ///Wild carp that just vibe ya know
 /mob/living/basic/carp/passive

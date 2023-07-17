@@ -215,6 +215,20 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 
 // Interaction
 
+/obj/machinery/gravity_generator/main/examine(mob/user)
+	. = ..()
+	if(!(machine_stat & BROKEN))
+		return
+	switch(broken_state)
+		if(GRAV_NEEDS_SCREWDRIVER)
+			. += span_notice("The entire frame is barely holding together, the <b>screws</b> need to be refastened.")
+		if(GRAV_NEEDS_WELDING)
+			. += span_notice("There's lots of broken seals on the framework, it could use some <b>welding</b>.")
+		if(GRAV_NEEDS_PLASTEEL)
+			. += span_notice("Some of this damaged plating needs full replacement. <b>10 plasteel</> should be enough.")
+		if(GRAV_NEEDS_WRENCH)
+			. += span_notice("The new plating just needs to be <b>bolted</b> into place now.")
+
 // Fixing the gravity generator.
 /obj/machinery/gravity_generator/main/attackby(obj/item/weapon, mob/user, params)
 	if(machine_stat & BROKEN)
@@ -228,7 +242,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 					return
 			if(GRAV_NEEDS_WELDING)
 				if(weapon.tool_behaviour == TOOL_WELDER)
-					if(weapon.use_tool(src, user, 0, volume=50, amount=1))
+					if(weapon.use_tool(src, user, 0, volume=50))
 						to_chat(user, span_notice("You mend the damaged framework."))
 						broken_state++
 						update_appearance()

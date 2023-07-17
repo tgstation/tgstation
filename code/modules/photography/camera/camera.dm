@@ -193,7 +193,7 @@
 	var/height = size_y * 2 + 1
 	for(var/turf/placeholder as anything in CORNER_BLOCK_OFFSET(target_turf, width, height, -size_x, -size_y))
 		while(istype(placeholder, /turf/open/openspace)) //Multi-z photography
-			placeholder = SSmapping.get_turf_below(placeholder)
+			placeholder = GET_TURF_BELOW(placeholder)
 			if(!placeholder)
 				break
 

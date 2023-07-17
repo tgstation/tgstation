@@ -216,7 +216,7 @@
 /obj/machinery/power/turbine/inlet_compressor
 	name = "inlet compressor"
 	desc = "The input side of a turbine generator, contains the compressor."
-	icon = 'icons/obj/turbine/turbine.dmi'
+	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "inlet_compressor"
 
 	circuit = /obj/item/circuitboard/machine/turbine_compressor
@@ -279,7 +279,7 @@
 /obj/machinery/power/turbine/turbine_outlet
 	name = "turbine outlet"
 	desc = "The output side of a turbine generator, contains the turbine and the stator."
-	icon = 'icons/obj/turbine/turbine.dmi'
+	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "turbine_outlet"
 
 	circuit = /obj/item/circuitboard/machine/turbine_stator
@@ -331,8 +331,9 @@
 /obj/machinery/power/turbine/core_rotor
 	name = "core rotor"
 	desc = "The middle part of a turbine generator, contains the rotor and the main computer."
-	icon = 'icons/obj/turbine/turbine.dmi'
+	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "core_rotor"
+	can_change_cable_layer = TRUE
 
 	circuit = /obj/item/circuitboard/machine/turbine_rotor
 
@@ -398,7 +399,22 @@
 	QDEL_NULL(radio)
 	return ..()
 
+/obj/machinery/power/turbine/core_rotor/examine(mob/user)
+	. = ..()
+	if(!panel_open)
+		. += span_notice("[EXAMINE_HINT("screw")] open its panel to change cable layer.")
+
+/obj/machinery/power/turbine/core_rotor/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		balloon_alert(user, "open panel first!")
+		return FALSE
+	return TRUE
+
 /obj/machinery/power/turbine/core_rotor/multitool_act(mob/living/user, obj/item/tool)
+	//allow cable layer changing
+	if(panel_open)
+		return ..()
+
 	//failed checks
 	if(!activate_parts(user))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -413,6 +429,11 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/turbine/core_rotor/multitool_act_secondary(mob/living/user, obj/item/tool)
+	//allow cable layer changing
+	if(panel_open)
+		return ..()
+
+	//works same as regular left click
 	return multitool_act(user, tool)
 
 /// convinience proc for balloon alert which returns if viewer is null

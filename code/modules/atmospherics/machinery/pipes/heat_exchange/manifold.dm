@@ -1,7 +1,7 @@
 //3-Way Manifold
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold
-	icon = 'icons/obj/atmospherics/pipes/he-manifold.dmi'
+	icon = 'icons/obj/pipes_n_cables/he-manifold.dmi'
 	icon_state = "manifold-3"
 	base_icon_state = "manifold"
 

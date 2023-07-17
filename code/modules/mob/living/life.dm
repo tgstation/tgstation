@@ -44,8 +44,6 @@
 		if(stat != DEAD)
 			//Mutations and radiation
 			handle_mutations(seconds_per_tick, times_fired)
-
-		if(stat != DEAD)
 			//Breathing, if applicable
 			handle_breathing(seconds_per_tick, times_fired)
 

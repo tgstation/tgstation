@@ -1,6 +1,6 @@
 /obj/structure/displaycase
 	name = "display case"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "glassbox"
 	desc = "A display case for prized possessions."
 	density = TRUE
@@ -138,11 +138,11 @@
 			to_chat(user, span_alert("Access denied."))
 	else if(tool.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(atom_integrity < max_integrity)
-			if(!tool.tool_start_check(user, amount=5))
+			if(!tool.tool_start_check(user, amount=1))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
-			if(tool.use_tool(src, user, 40, amount=5, volume=50))
+			if(tool.use_tool(src, user, 40, volume=50))
 				atom_integrity = max_integrity
 				update_appearance()
 				to_chat(user, span_notice("You repair [src]."))
@@ -226,7 +226,7 @@
 /obj/structure/displaycase_chassis
 	name = "display case chassis"
 	desc = "The wooden base of a display case."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "glassbox_chassis"
 	resistance_flags = FLAMMABLE
 	anchored = TRUE
@@ -440,6 +440,7 @@
 
 /obj/structure/displaycase/forsale
 	name = "vend-a-tray"
+	icon = 'icons/obj/machines/display.dmi'
 	icon_state = "laserbox"
 	custom_glass_overlay = TRUE
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents."
@@ -626,11 +627,13 @@
 		to_chat(user, span_notice("[src] must be open to move it."))
 		return
 
-/obj/structure/displaycase/forsale/emag_act(mob/user)
+/obj/structure/displaycase/forsale/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	payments_acc = null
 	req_access = list()
-	to_chat(user, span_warning("[src]'s card reader fizzles and smokes, and the account owner is reset."))
+	balloon_alert(user, "account owner reset")
+	to_chat(user, span_warning("[src]'s card reader fizzles and smokes."))
+	return TRUE
 
 /obj/structure/displaycase/forsale/examine(mob/user)
 	. = ..()

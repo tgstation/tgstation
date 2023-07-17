@@ -77,6 +77,10 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	if(allow_rename)
 		rename_wizard()
 
+/datum/antagonist/wizard/Destroy()
+	QDEL_NULL(ritual)
+	return ..()
+
 /datum/antagonist/wizard/create_team(datum/team/wizard/new_team)
 	if(!new_team)
 		return
@@ -98,7 +102,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /// Initialises the grand ritual action for this mob
 /datum/antagonist/wizard/proc/assign_ritual()
-	ritual = new(owner.current)
+	ritual = new(src)
 	RegisterSignal(ritual, COMSIG_GRAND_RITUAL_FINAL_COMPLETE, PROC_REF(on_ritual_complete))
 
 /datum/antagonist/wizard/proc/send_to_lair()

@@ -100,6 +100,9 @@
 /datum/movespeed_modifier/fast_web
 	multiplicative_slowdown = 0.2
 
+/datum/movespeed_modifier/spiderling_web
+	multiplicative_slowdown = 0.7
+
 /datum/movespeed_modifier/average_web
 	multiplicative_slowdown = 1.2
 
@@ -145,6 +148,9 @@
 	variable = TRUE
 
 /datum/movespeed_modifier/health_scaling_speed_buff
+	variable = TRUE
+
+/datum/movespeed_modifier/alien_speed
 	variable = TRUE
 
 /datum/movespeed_modifier/grown_killer_tomato

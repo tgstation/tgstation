@@ -33,6 +33,9 @@ SUBSYSTEM_DEF(mapping)
 	/// List of z level (as number) -> plane offset of that z level
 	/// Used to maintain the plane cube
 	var/list/z_level_to_plane_offset = list()
+	/// List of z level (as number) -> list of all z levels vertically connected to ours
+	/// Useful for fast grouping lookups and such
+	var/list/z_level_to_stack = list()
 	/// List of z level (as number) -> The lowest plane offset in that z stack
 	var/list/z_level_to_lowest_plane_offset = list()
 	// This pair allows for easy conversion between an offset plane, and its true representation
@@ -104,7 +107,7 @@ SUBSYSTEM_DEF(mapping)
 		var/old_config = config
 		config = global.config.defaultmap
 		if(!config || config.defaulted)
-			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to Meta Station."))
+			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to MetaStation."))
 			config = old_config
 	plane_offset_to_true = list()
 	true_to_offset_planes = list()
@@ -140,6 +143,9 @@ SUBSYSTEM_DEF(mapping)
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
+
+	else if (SSmapping.config.load_all_away_missions) // we're likely in a local testing environment, so punch it.
+		load_all_away_missions()
 
 	loading_ruins = TRUE
 	setup_ruins()
@@ -206,13 +212,13 @@ SUBSYSTEM_DEF(mapping)
 	if(multiz_levels.len < z_level)
 		multiz_levels.len = z_level
 
-	var/linked_down = level_trait(z_level, ZTRAIT_DOWN)
-	var/linked_up = level_trait(z_level, ZTRAIT_UP)
-	multiz_levels[z_level] = list()
-	if(linked_down)
-		multiz_levels[z_level]["[DOWN]"] = TRUE
-	if(linked_up)
-		multiz_levels[z_level]["[UP]"] = TRUE
+	var/z_above = level_trait(z_level, ZTRAIT_UP)
+	var/z_below = level_trait(z_level, ZTRAIT_DOWN)
+	if(!(z_above == TRUE || z_above == FALSE || z_above == null) || !(z_below == TRUE || z_below == FALSE || z_below == null))
+		stack_trace("Warning, numeric mapping offsets are deprecated. Instead, mark z level connections by setting UP/DOWN to true if the connection is allowed")
+	multiz_levels[z_level] = new /list(LARGEST_Z_LEVEL_INDEX)
+	multiz_levels[z_level][Z_LEVEL_UP] = !!z_above
+	multiz_levels[z_level][Z_LEVEL_DOWN] = !!z_below
 
 /datum/controller/subsystem/mapping/proc/calculate_z_level_gravity(z_level_number)
 	if(!isnum(z_level_number) || z_level_number < 1)
@@ -773,8 +779,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// We are guarenteed that we'll always grow bottom up
 	// Suck it jannies
 	z_level_to_plane_offset.len += 1
-	z_level_to_lowest_plane_offset += 1
+	z_level_to_lowest_plane_offset.len += 1
 	gravity_by_z_level.len += 1
+	z_level_to_stack.len += 1
+	// Bare minimum we have ourselves
+	z_level_to_stack[z_value] = list(z_value)
 	// 0's the default value, we'll update it later if required
 	z_level_to_plane_offset[z_value] = 0
 	z_level_to_lowest_plane_offset[z_value] = 0
@@ -806,24 +815,25 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/update_plane_tracking(datum/space_level/update_with)
 	// We're essentially going to walk down the stack of connected z levels, and set their plane offset as we go
-	// Yes this will cause infinite loops if our templating is fucked. Fuck off
-	var/below_offset = 0
-	// I'm sorry, it needs to start at 0
-	var/current_level = -1
-	var/current_z = update_with.z_value
+	var/plane_offset = 0
+	var/datum/space_level/current_z = update_with
 	var/list/datum/space_level/levels_checked = list()
-	do
-		current_level += 1
-		current_z += below_offset
-		z_level_to_plane_offset[current_z] = current_level
-		var/datum/space_level/next_level = z_list[current_z]
-		below_offset = next_level.traits[ZTRAIT_DOWN]
-		levels_checked += next_level
-	while(below_offset)
+	var/list/z_stack = list()
+	while(TRUE)
+		var/z_level = current_z.z_value
+		z_stack += z_level
+		z_level_to_plane_offset[z_level] = plane_offset
+		levels_checked += current_z
+		if(!current_z.traits[ZTRAIT_DOWN]) // If there's nothing below, stop looking
+			break
+		// Otherwise, down down down we go
+		current_z = z_list[z_level - 1]
+		plane_offset += 1
 
 	/// Updates the lowest offset value
 	for(var/datum/space_level/level_to_update in levels_checked)
-		z_level_to_lowest_plane_offset[level_to_update.z_value] = current_level
+		z_level_to_lowest_plane_offset[level_to_update.z_value] = plane_offset
+		z_level_to_stack[level_to_update.z_value] = z_stack
 
 	// This can be affected by offsets, so we need to update it
 	// PAIN
@@ -831,7 +841,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		generate_lighting_appearance_by_z(i)
 
 	var/old_max = max_plane_offset
-	max_plane_offset = max(max_plane_offset, current_level)
+	max_plane_offset = max(max_plane_offset, plane_offset)
 	if(max_plane_offset == old_max)
 		return
 
@@ -882,6 +892,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 			true_to_offset_planes[string_real] |= offset_plane
 
+/// Takes a turf or a z level, and returns a list of all the z levels that are connected to it
+/datum/controller/subsystem/mapping/proc/get_connected_levels(turf/connected)
+	var/z_level = connected
+	if(isturf(z_level))
+		z_level = connected.z
+	return z_level_to_stack[z_level]
+
 /datum/controller/subsystem/mapping/proc/lazy_load_template(template_key, force = FALSE)
 	RETURN_TYPE(/datum/turf_reservation)
 
@@ -915,3 +932,77 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /// Returns true if the map we're playing on is on a planet
 /datum/controller/subsystem/mapping/proc/is_planetary()
 	return config.planetary
+
+/// For debug purposes, will add every single away mission present in a given directory.
+/// You can optionally pass in a string directory to load from instead of the default.
+/datum/controller/subsystem/mapping/proc/load_all_away_missions(map_directory)
+	if(!map_directory)
+		map_directory = "_maps/RandomZLevels/"
+	var/start_time = null // in case we're doing this at runtime, useful to know how much time we're spending loading all these away missions
+	var/confirmation_alert_result = null
+	var/new_wait = 0 // default to always zeroing out the wait time for away missions to be unlocked due to the unit-testery nature of this map
+
+	if(IsAdminAdvancedProcCall())
+		if(!check_rights(R_DEBUG))
+			return
+		var/confirmation_string = "This will load every single away mission in the [map_directory] directory. This might cause a bit of lag that can only be cleared on a world restart. Are you sure you want to do this?"
+		confirmation_alert_result = tgui_alert(usr, confirmation_string, "DEBUG ONLY!!!", list("Yes", "Cancel"))
+		if(confirmation_alert_result != "Yes")
+			return
+
+		var/current_wait_time = CONFIG_GET(number/gateway_delay)
+		switch(tgui_alert(usr, "Do you want to zero out the cooldown for access to these maps? Currently [DisplayTimeText(current_wait_time)]", "OH FUCK!!!", list("Yes", "No", "Cancel")))
+			if("No")
+				new_wait = current_wait_time
+			if("Cancel")
+				return
+
+	else
+		start_time = REALTIMEOFDAY
+		var/beginning_message = "Loading all away missions..."
+		to_chat(world, span_boldannounce(beginning_message))
+		log_world(beginning_message)
+		log_mapping(beginning_message)
+
+	var/list/all_away_missions = generate_map_list_from_directory(map_directory)
+	var/number_of_away_missions = length(all_away_missions)
+	for(var/entry in all_away_missions)
+		load_new_z_level(entry, entry, secret = FALSE) // entry in both fields so we know if something failed to load since it'll log the full file name of what was loaded.
+
+	for(var/datum/gateway_destination/away_datum in GLOB.gateway_destinations)
+		away_datum.wait = new_wait
+		log_mapping("Now loading [away_datum.name]...")
+
+	validate_z_level_loading(all_away_missions)
+
+	if(!isnull(start_time))
+		var/tracked_time = (REALTIMEOFDAY - start_time) / 10
+		var/finished_message = "Loaded [number_of_away_missions] away missions in [tracked_time] second[tracked_time == 1 ? "" : "s"]!"
+		to_chat(world, span_boldannounce(finished_message))
+		log_world(finished_message)
+		log_mapping(finished_message)
+
+	if(isnull(confirmation_alert_result))
+		log_mapping("All away missions have been loaded. List of away missions paired to corresponding Z-Levels are as follows:")
+		log_mapping(gather_z_level_information())
+		return
+
+	message_admins("[key_name_admin(usr)] has loaded every single away mission in the [map_directory] directory. [ADMIN_SEE_ZLEVEL_LAYOUT]")
+	log_game("[key_name(usr)] has loaded every single away mission in the [map_directory] directory.")
+
+/// Lightweight proc that just checks to make sure that all of the expected z-levels were loaded. Split out for clarity from load_all_away_missions()
+/// Argument "checkable_levels" is just a list of the names (typically the filepaths) of the z-levels we were expected to load, which should correspond to the name on the space level datum.
+/datum/controller/subsystem/mapping/proc/validate_z_level_loading(list/checkable_levels)
+	for(var/z in 1 to max(world.maxz, length(z_list)))
+		var/datum/space_level/level = z_list[z]
+		if(isnull(level))
+			continue
+
+		var/level_name = level.name
+		if(level_name in checkable_levels)
+			checkable_levels -= level_name
+			continue
+
+	var/number_of_remaining_levels = length(checkable_levels)
+	if(number_of_remaining_levels > 0)
+		CRASH("The following [number_of_remaining_levels] away mission(s) were not loaded: [checkable_levels.Join("\n")]")

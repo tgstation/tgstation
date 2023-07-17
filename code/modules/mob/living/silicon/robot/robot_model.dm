@@ -8,7 +8,7 @@
  **/
 /obj/item/robot_model
 	name = "Default"
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "std_mod"
 	w_class = WEIGHT_CLASS_GIGANTIC
 	inhand_icon_state = "electronic"
@@ -265,7 +265,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	if(cyborg.hat)
 		cyborg.hat.forceMove(drop_location())
-		cyborg.hat = null
+
 	cyborg.cut_overlays()
 	cyborg.setDir(SOUTH)
 	do_transform_delay()

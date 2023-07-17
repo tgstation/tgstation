@@ -6,7 +6,7 @@
 	desc = "A key ring with a beeper, allowing the keys to change shape depending on which department it has access to."
 	icon_state = "access_key"
 	inhand_icon_state = "access_key"
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	lefthand_file = 'icons/mob/inhands/items/keys_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/keys_righthand.dmi'
 	hitsound = 'sound/items/rattling_keys_attack.ogg'

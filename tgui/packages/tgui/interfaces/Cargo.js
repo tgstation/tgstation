@@ -156,6 +156,7 @@ export const CargoCatalog = (props, context) => {
   const { self_paid, app_cost } = data;
 
   const supplies = Object.values(data.supplies);
+  const { amount_by_name = [], max_order } = data;
 
   const [activeSupplyName, setActiveSupplyName] = useSharedState(
     context,
@@ -264,10 +265,10 @@ export const CargoCatalog = (props, context) => {
                       fluid
                       tooltip={pack.desc}
                       tooltipPosition="left"
+                      disabled={(amount_by_name[pack.name] || 0) >= max_order}
                       onClick={() =>
                         act('add', {
                           id: pack.id,
-                          amount: 1,
                         })
                       }>
                       {formatMoney(
@@ -398,7 +399,15 @@ const CartHeader = (props, context) => {
 
 const CargoCart = (props, context) => {
   const { act, data } = useBackend(context);
-  const { requestonly, away, docked, location, can_send } = data;
+  const {
+    requestonly,
+    away,
+    docked,
+    location,
+    can_send,
+    amount_by_name,
+    max_order,
+  } = data;
   const cart = data.cart || [];
   return (
     <Section fill>
@@ -416,7 +425,7 @@ const CargoCart = (props, context) => {
                   <RestrictedInput
                     width="40px"
                     minValue={0}
-                    maxValue={50}
+                    maxValue={max_order}
                     value={entry.amount}
                     onEnter={(e, value) =>
                       act('modify', {
@@ -431,6 +440,7 @@ const CargoCart = (props, context) => {
                 {!!can_send && !!entry.can_be_cancelled && (
                   <Button
                     icon="plus"
+                    disabled={amount_by_name[entry.object] >= max_order}
                     onClick={() =>
                       act('add_by_name', { order_name: entry.object })
                     }
