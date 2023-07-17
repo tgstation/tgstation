@@ -134,7 +134,7 @@ The format of this file is:
 
 	"Station": {
 		/* Special threat reductions for dangerous station traits. Traits are selected before dynamic, so traits will always  */
-		/* reduce threat even if there's no threat for it available. Only "threat" can be modified */
+		/* reduce threat even if there's no threat for it available. Only "cost" can be modified */
 	}
 }
 ```

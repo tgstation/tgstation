@@ -796,7 +796,7 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 	var/list/station_trait_config = LAZYACCESSASSOC(configuration, "Station", station_trait.dynamic_threat_id)
 	var/cost = station_trait_config["cost"]
 
-	if(!cost)
+	if(isnull(cost)) //0 is valid so check for null specifically
 		return
 
 	if(cost != GLOB.dynamic_station_traits[station_trait])
