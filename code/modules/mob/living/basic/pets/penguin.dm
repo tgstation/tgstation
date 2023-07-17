@@ -72,7 +72,6 @@
 
 /mob/living/basic/pet/penguin/proc/on_hatch_egg()
 	SIGNAL_HANDLER
-
 	remove_egg()
 
 /mob/living/basic/pet/penguin/proc/remove_egg()
