@@ -34,7 +34,9 @@
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
 	synced_bank_account = SSeconomy.get_dep_account(account_department)
-	AddComponent(/datum/component/gps, "Forbidden Cash Signal")
+
+	if(!mapload)
+		AddComponent(/datum/component/gps, "Forbidden Cash Signal")
 
 /obj/machinery/computer/bank_machine/Destroy()
 	QDEL_NULL(radio)
