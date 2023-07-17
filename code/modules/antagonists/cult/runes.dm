@@ -294,6 +294,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
 	if(istype(human_convertee))
 		human_convertee.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY)
+	convertee.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	convertee.mind.special_role = ROLE_CULTIST
 	convertee.mind.add_antag_datum(/datum/antagonist/cult, cult_team)
 

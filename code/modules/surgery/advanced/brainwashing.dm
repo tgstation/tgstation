@@ -51,12 +51,20 @@
 	display_pain(target, "Your head pounds with unimaginable pain!") // Same message as other brain surgeries
 
 /datum/surgery_step/brainwash/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	if(!target.mind)
+	if(!target.mind || target.mind.unconvertable)
 		to_chat(user, span_warning("[target] doesn't respond to the brainwashing, as if [target.p_they()] lacked a mind..."))
 		return FALSE
 	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
 		to_chat(user, span_warning("You hear a faint buzzing from a device inside [target]'s brain, and the brainwashing is erased."))
 		return FALSE
+
+	if(IS_REVOLUTIONARY(user) && IS_REVOLUTIONARY(target))
+		to_chat(user, span_danger("[target] is already on your team!"))
+		return FALSE
+	if(IS_CULTIST(user) && IS_REVOLUTIONARY(target))
+		to_chat(user, span_danger("[target] is already on your team!"))
+		return FALSE
+
 	display_results(
 		user,
 		target,
@@ -64,6 +72,15 @@
 		span_notice("[user] successfully fixes [target]'s brain!"),
 		span_notice("[user] completes the surgery on [target]'s brain."),
 	)
+
+	if(IS_REVOLUTIONARY(target))
+		target.log_message("has been deconverted from the revolution by [user] via brainwashing!", LOG_ATTACK, color="#960000")
+		target.mind.special_role = null
+		target.mind.remove_antag_datum(/datum/antagonist/rev)
+	if(IS_CULTIST(target))
+		target.log_message("has been deconverted from the cult by [user] via brainwashing!", LOG_ATTACK, color="#960000")
+		target.mind.remove_antag_datum(/datum/antagonist/cult)
+
 	to_chat(target, span_userdanger("A new compulsion fills your mind... you feel forced to obey it!"))
 	brainwash(target, objective)
 	message_admins("[ADMIN_LOOKUPFLW(user)] surgically brainwashed [ADMIN_LOOKUPFLW(target)] with the objective '[objective]'.")

@@ -305,6 +305,7 @@
 	if(iscarbon(convertee))
 		var/mob/living/carbon/carbon_convertee = convertee
 		carbon_convertee.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY)
+	owner.remove_antag_datum(/datum/antagonist/brainwashed)
 
 	rev_mind.add_memory(/datum/memory/recruited_by_headrev, protagonist = rev_mind.current, antagonist = owner.current)
 	rev_mind.add_antag_datum(/datum/antagonist/rev,rev_team)

@@ -360,7 +360,7 @@
 			if(IS_REVOLUTIONARY(user) && IS_REVOLUTIONARY(hypnotize_target))
 				to_chat(user, span_danger("[hypnotize_target] is already on your team!"))
 				hypnosis = FALSE
-			if(IS_CULTIST(hypnotize_target) && IS_REVOLUTIONARY(hypnotize_target))
+			if(IS_CULTIST(user) && IS_REVOLUTIONARY(hypnotize_target))
 				to_chat(user, span_danger("[hypnotize_target] is already on your team!"))
 				hypnosis = FALSE
 			if(user)
