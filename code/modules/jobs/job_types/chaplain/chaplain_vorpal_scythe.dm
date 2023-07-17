@@ -27,6 +27,8 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 			part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
 	return ..()
 
+/datum/attack_style/melee_weapon/swing/wider_arc/scythe/vorpal
+
 /obj/item/vorpalscythe
 	name = "vorpal scythe"
 	desc = "Reap what you sow."
@@ -41,7 +43,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	w_class = WEIGHT_CLASS_GIGANTIC
 	force = 10 //a lot worse than most nullrods initially. Why did you invest so much into making it vorpal, you dork.
 	armour_penetration = 50 //Very good armor penetration to make up for our abysmal force
-	reach = 2 //why yes, this does have reach
+	attack_style = /datum/attack_style/melee_weapon/swing/wider_arc/scythe/vorpal
 	slot_flags = null
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
