@@ -140,3 +140,15 @@
 	var/obj/item/storage/toolbox/toolbox = allocate(/obj/item/storage/toolbox)
 	attacker.put_in_active_hand(toolbox, forced = TRUE)
 	return ..()
+
+/datum/unit_test/no_stam_healing
+
+/datum/unit_test/no_stam_healing/Run()
+	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
+
+	ADD_TRAIT(victim, TRAIT_CANNOT_HEAL_STAMINA, TRAIT_SOURCE_UNIT_TESTS)
+	victim.adjustStaminaLoss(10)
+	TEST_ASSERT_EQUAL(victim.getStaminaLoss(), 10, "Victim did not take stamina damage while blocking.")
+
+	victim.adjustStaminaLoss(-10)
+	TEST_ASSERT_EQUAL(victim.getStaminaLoss(), 10, "Victim healed stamina damage while blocking.")

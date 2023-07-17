@@ -21,7 +21,7 @@
 	// Heal our attacker for easy comparison later
 	botanist.adjustFireLoss(-100)
 	// And give them the plant safe trait so we don't have to worry about attacks being cancelled
-	ADD_TRAIT(botanist, TRAIT_PLANT_SAFE, "unit_test")
+	ADD_TRAIT(botanist, TRAIT_PLANT_SAFE, TRAIT_SOURCE_UNIT_TESTS)
 
 	// Now, let's get a smack with the novaflower and see what happens.
 	click_wrapper(botanist, victim)
@@ -33,7 +33,7 @@
 	TEST_ASSERT(victim.on_fire, "[weapon] didn't set the target on fire after an attack.")
 
 	// Lastly we should check that degredation to zero works.
-	weapon.force = 0
+	weapon.force = 1
 	click_wrapper(botanist, victim)
 
 	TEST_ASSERT(QDELETED(weapon), "[weapon] wasn't deleted after hitting someone with zero force.")

@@ -295,7 +295,7 @@
 	if(!forced)
 		if(status_flags & GODMODE)
 			return FALSE
-		if(amount > 0 && HAS_TRAIT(src, TRAIT_CANNOT_HEAL_STAMINA))
+		if(amount < 0 && HAS_TRAIT(src, TRAIT_CANNOT_HEAL_STAMINA))
 			return FALSE
 	if(required_biotype && !(mob_biotypes & required_biotype))
 		return
