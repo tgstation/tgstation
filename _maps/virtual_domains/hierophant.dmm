@@ -9,8 +9,11 @@
 /obj/machinery/light/small/blacklight/directional/south,
 /turf/open/indestructible/hierophant,
 /area/ruin/powered/hierophant)
+"m" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/explored)
 "v" = (
-/mob/living/simple_animal/hostile/megafauna/hierophant,
+/mob/living/simple_animal/hostile/megafauna/hierophant/virtual_domain,
 /turf/open/indestructible/hierophant/two,
 /area/ruin/unpowered/hierophant)
 "w" = (
@@ -2046,15 +2049,15 @@ b
 b
 b
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (27,1,1) = {"
@@ -2123,15 +2126,15 @@ b
 b
 b
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (28,1,1) = {"
@@ -2200,15 +2203,15 @@ b
 b
 b
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (29,1,1) = {"
@@ -2277,15 +2280,15 @@ b
 b
 b
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (30,1,1) = {"
@@ -2354,15 +2357,15 @@ W
 W
 b
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (31,1,1) = {"
@@ -2431,15 +2434,15 @@ V
 V
 W
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (32,1,1) = {"
@@ -2508,15 +2511,15 @@ V
 V
 V
 W
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (33,1,1) = {"
@@ -2586,14 +2589,14 @@ V
 V
 V
 W
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (34,1,1) = {"
@@ -2664,13 +2667,13 @@ V
 V
 V
 W
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (35,1,1) = {"
@@ -2747,7 +2750,7 @@ J
 J
 J
 J
-b
+m
 J
 "}
 (36,1,1) = {"
@@ -2824,7 +2827,7 @@ I
 z
 J
 J
-b
+m
 J
 "}
 (37,1,1) = {"
@@ -2901,7 +2904,7 @@ J
 J
 J
 J
-b
+m
 J
 "}
 (38,1,1) = {"
@@ -2978,7 +2981,7 @@ J
 J
 J
 J
-b
+m
 J
 "}
 (39,1,1) = {"
@@ -3055,7 +3058,7 @@ J
 J
 J
 J
-b
+m
 J
 "}
 (40,1,1) = {"
@@ -3132,7 +3135,7 @@ J
 J
 J
 J
-b
+m
 J
 "}
 (41,1,1) = {"
@@ -3209,7 +3212,7 @@ J
 J
 J
 J
-b
+m
 J
 "}
 (42,1,1) = {"
@@ -3280,13 +3283,13 @@ V
 V
 V
 W
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (43,1,1) = {"
@@ -3356,14 +3359,14 @@ V
 V
 V
 W
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (44,1,1) = {"
@@ -3432,15 +3435,15 @@ V
 V
 V
 W
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (45,1,1) = {"
@@ -3509,15 +3512,15 @@ V
 V
 W
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (46,1,1) = {"
@@ -3586,15 +3589,15 @@ W
 W
 b
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (47,1,1) = {"
@@ -3663,15 +3666,15 @@ b
 b
 b
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (48,1,1) = {"
@@ -3740,15 +3743,15 @@ b
 b
 b
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (49,1,1) = {"
@@ -3817,15 +3820,15 @@ b
 b
 b
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (50,1,1) = {"
@@ -3894,15 +3897,15 @@ b
 b
 b
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+m
+m
+m
+m
+m
+m
+m
+m
+m
 J
 "}
 (51,1,1) = {"

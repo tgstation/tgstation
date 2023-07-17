@@ -15,7 +15,7 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "k" = (
-/mob/living/simple_animal/hostile/megafauna/bubblegum,
+/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual_domain,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/explored)
 "u" = (
@@ -2871,7 +2871,7 @@ P
 P
 P
 P
-P
+k
 P
 P
 P
@@ -2949,7 +2949,7 @@ P
 P
 P
 P
-k
+P
 P
 P
 P

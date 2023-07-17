@@ -1,4 +1,3 @@
-
 /**
  * # Safe Houses
  * The starting point for virtual domains.
