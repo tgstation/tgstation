@@ -69,7 +69,7 @@
 		to_chat(owner, span_warning("You don't particularly want to be dead!"))
 		return FALSE
 	if(!living_target.mind && target_requires_mind)
-		to_chat(owner, span_warning("[living_target.p_They()] [living_target.p_do]n't appear to have a mind to swap into!"))
+		to_chat(owner, span_warning("[living_target.p_They()] [living_target.p_do()]n't appear to have a mind to swap into!"))
 		return FALSE
 	if(!living_target.key && target_requires_key)
 		to_chat(owner, span_warning("[living_target.p_They()] appear[living_target.p_s()] to be catatonic! \
