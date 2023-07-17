@@ -564,13 +564,20 @@
 		return
 
 	var/mob/hearing_speaker = hearing_args[HEARING_SPEAKER]
-	var/mob/living/carbon/C = owner
-	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
+	var/mob/living/carbon/carbon_owner = owner
+	carbon_owner.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
 	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
-	hearing_speaker.log_message("hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK, color="red")
-	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM, color="orange", log_globally = FALSE)
-	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, gain_trauma), /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
-	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living, Stun), 60, TRUE, TRUE), 15) //Take some time to think about it
+	hearing_speaker.log_message("hypnotised [key_name(carbon_owner)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK, color="red")
+	carbon_owner.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM, color="orange", log_globally = FALSE)
+	if(IS_REVOLUTIONARY(carbon_owner))
+		carbon_owner.log_message("has been deconverted from the revolution by [hearing_speaker] via hypnosis!", LOG_ATTACK, color="#960000")
+		carbon_owner.mind.special_role = null
+		carbon_owner.mind.remove_antag_datum(/datum/antagonist/rev)
+	if(IS_CULTIST(carbon_owner))
+		carbon_owner.log_message("has been deconverted from the cult by [hearing_speaker] via hypnosis!", LOG_ATTACK, color="#960000")
+		carbon_owner.mind.remove_antag_datum(/datum/antagonist/cult)
+	addtimer(CALLBACK(carbon_owner, TYPE_PROC_REF(/mob/living/carbon, gain_trauma), /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
+	addtimer(CALLBACK(carbon_owner, TYPE_PROC_REF(/mob/living, Stun), 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
 
 /datum/status_effect/spasms

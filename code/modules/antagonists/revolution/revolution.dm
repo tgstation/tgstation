@@ -292,14 +292,19 @@
  * * mute - If TRUE, we will apply a mute when we're applied
  */
 /datum/antagonist/rev/proc/add_revolutionary(datum/mind/rev_mind, stun = TRUE, mute = TRUE)
-	if(!can_be_converted(rev_mind.current))
+	var/mob/living/convertee = rev_mind.current
+	if(!can_be_converted(convertee))
 		return FALSE
 
 	if(mute)
-		rev_mind.current.set_silence_if_lower(10 SECONDS)
+		convertee.set_silence_if_lower(10 SECONDS)
 	if(stun)
-		rev_mind.current.flash_act(1, 1)
-		rev_mind.current.Stun(10 SECONDS)
+		convertee.flash_act(1, 1)
+		convertee.Stun(10 SECONDS)
+
+	if(iscarbon(convertee))
+		var/mob/living/carbon/carbon_convertee = convertee
+		carbon_convertee.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY)
 
 	rev_mind.add_memory(/datum/memory/recruited_by_headrev, protagonist = rev_mind.current, antagonist = owner.current)
 	rev_mind.add_antag_datum(/datum/antagonist/rev,rev_team)

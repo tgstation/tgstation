@@ -343,42 +343,48 @@
 /obj/item/assembly/flash/hypnotic/burn_out()
 	return
 
-/obj/item/assembly/flash/hypnotic/flash_carbon(mob/living/carbon/M, mob/user, confusion_duration = 15, targeted = TRUE, generic_message = FALSE)
-	if(!istype(M))
+/obj/item/assembly/flash/hypnotic/flash_carbon(mob/living/carbon/hypnotize_target, mob/user, confusion_duration = 15, targeted = TRUE, generic_message = FALSE)
+	if(!istype(hypnotize_target))
 		return
 	if(user)
-		log_combat(user, M, "[targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", src)
+		log_combat(user, hypnotize_target, "[targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", src)
 	else //caused by emp/remote signal
-		M.log_message("was [targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", LOG_ATTACK)
-	if(generic_message && M != user)
-		to_chat(M, span_notice("[src] emits a soothing light..."))
+		hypnotize_target.log_message("was [targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"]", LOG_ATTACK)
+	if(generic_message && hypnotize_target != user)
+		to_chat(hypnotize_target, span_notice("[src] emits a soothing light..."))
 	if(targeted)
-		if(M.flash_act(1, 1))
+		if(hypnotize_target.flash_act(1, 1))
 			var/hypnosis = FALSE
-			if(M.hypnosis_vulnerable())
+			if(hypnotize_target.hypnosis_vulnerable())
 				hypnosis = TRUE
+			if(IS_REVOLUTIONARY(user) && IS_REVOLUTIONARY(hypnotize_target))
+				to_chat(user, span_danger("[hypnotize_target] is already on your team!"))
+				hypnosis = FALSE
+			if(IS_CULTIST(hypnotize_target) && IS_REVOLUTIONARY(hypnotize_target))
+				to_chat(user, span_danger("[hypnotize_target] is already on your team!"))
+				hypnosis = FALSE
 			if(user)
-				user.visible_message(span_danger("[user] blinds [M] with the flash!"), span_danger("You hypno-flash [M]!"))
+				user.visible_message(span_danger("[user] blinds [hypnotize_target] with the flash!"), span_danger("You hypno-flash [hypnotize_target]!"))
 
 			if(!hypnosis)
-				to_chat(M, span_hypnophrase("The light makes you feel oddly relaxed..."))
-				M.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
-				M.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)
-				M.adjust_drowsiness_up_to(20 SECONDS, 40 SECONDS)
-				M.adjust_pacifism(10 SECONDS)
+				to_chat(hypnotize_target, span_hypnophrase("The light makes you feel oddly relaxed..."))
+				hypnotize_target.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
+				hypnotize_target.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)
+				hypnotize_target.adjust_drowsiness_up_to(20 SECONDS, 40 SECONDS)
+				hypnotize_target.adjust_pacifism(10 SECONDS)
 			else
-				M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
+				hypnotize_target.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
 
 		else if(user)
-			user.visible_message(span_warning("[user] fails to blind [M] with the flash!"), span_warning("You fail to hypno-flash [M]!"))
+			user.visible_message(span_warning("[user] fails to blind [hypnotize_target] with the flash!"), span_warning("You fail to hypno-flash [hypnotize_target]!"))
 		else
-			to_chat(M, span_danger("[src] fails to blind you!"))
+			to_chat(hypnotize_target, span_danger("[src] fails to blind you!"))
 
-	else if(M.flash_act())
-		to_chat(M, span_notice("Such a pretty light..."))
-		M.adjust_confusion_up_to(4 SECONDS, 20 SECONDS)
-		M.adjust_dizzy_up_to(8 SECONDS, 40 SECONDS)
-		M.adjust_drowsiness_up_to(8 SECONDS, 40 SECONDS)
-		M.adjust_pacifism(4 SECONDS)
+	else if(hypnotize_target.flash_act())
+		to_chat(hypnotize_target, span_notice("Such a pretty light..."))
+		hypnotize_target.adjust_confusion_up_to(4 SECONDS, 20 SECONDS)
+		hypnotize_target.adjust_dizzy_up_to(8 SECONDS, 40 SECONDS)
+		hypnotize_target.adjust_drowsiness_up_to(8 SECONDS, 40 SECONDS)
+		hypnotize_target.adjust_pacifism(4 SECONDS)
 
 #undef CONFUSION_STACK_MAX_MULTIPLIER
