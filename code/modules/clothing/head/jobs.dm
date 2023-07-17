@@ -447,6 +447,21 @@
 	desc = "A blue medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
 	flags_inv = HIDEHAIR //Cover your head doctor!
 
+/obj/item/clothing/head/utility/surgerycap/attack_self(mob/user)
+	to_chat(user, span_notice("You begin to [flags_inv ? "loosen" : "tighten"] the strings on \the [src]..."))
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	if(!flags_inv)
+		flags_inv = HIDEHAIR
+		to_chat(user, span_notice("You tighten the strings on \the [src]."))
+	else
+		flags_inv = NONE
+		to_chat(user, span_notice("You loosen the strings on \the [src]."))
+
+/obj/item/clothing/head/utility/surgerycap/examine(mob/user)
+	. = ..()
+	. += span_notice("Use in hand to [flags_inv ? "loosen" : "tighten"] the strings.")
+
 /obj/item/clothing/head/utility/surgerycap/purple
 	name = "burgundy surgery cap"
 	icon_state = "surgicalcapwine"
