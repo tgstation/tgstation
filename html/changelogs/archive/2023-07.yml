@@ -654,3 +654,99 @@
   - balance: Lionhunter on charge now has a damage modifier of 2 instead of 1.33
   - balance: Increased max range of charged shot from 16 to 30
   - balance: Increased scope modifier so you can use the new max range
+2023-07-16:
+  DATA-xPUNGED:
+  - rscdel: The Head of Personnel no longer spawns with an ID box.
+  Helg2:
+  - bugfix: roundstart exodrone consoles are now unscrewable.
+  Jacquerel:
+  - rscadd: Personal AI holograms are now limited to an area around their PAI card.
+      The size of this are can be configured via the PAI card.
+  - rscadd: pAI cards can now be placed inside bots in order to grant them control
+      of the bot.
+  JohnFulpWillard:
+  - rscadd: The 'Sent from my PDA' message is different for Clear PDAs now (specifying
+      they are crystal).
+  - bugfix: Chaplain armor no longer blocks being shoved down.
+  LemonInTheDark:
+  - bugfix: The preference menu has had its weird index lowered (Assets are no longer
+      semi garbled)
+  Melbert:
+  - bugfix: Anti-magic visual effects will no longer trigger overtop one another
+  Thunder12345:
+  - qol: CTF has more reminders of how to capture flags.
+  Time-Green:
+  - bugfix: Metalgen recipe generation works again
+  Watermelon914:
+  - balance: Changed damage reduction for robotic limbs to be multiplicative instead
+      of additive
+  carshalash:
+  - bugfix: Intern returns misplaced droppers back to deltastation's xenobiology lab.
+  necromanceranne:
+  - bugfix: Stops manifest generation runtiming when a cargo crate is empty.
+  - rscadd: Abandoned crates are now available via cargo imports.
+  - rscadd: Dumpsters full of maintenance trash are now available via cargo imports.
+  - rscadd: An ultra-rare can of Shambler's Juice is now available via cargo imports.
+  - rscadd: Animal hides and leathers can be (unreliably) ordered via cargo imports.
+  - rscadd: The Dreadnog has entered this realm. To consume, purchase it via cargo
+      imports.
+  - balance: Contraband Crates (and as a consequence, smuggler's satchels) now generate
+      more varied goods. Mostly the same, but sometimes you get something quite different
+      or even valuable.
+  - balance: Mosins generated via the Russian supply crate are a bit more random,
+      weighing more heavily towards bad mosins than good mosins.
+  - balance: Buffed both the shocktrooper and special op crate. Shocktrooper now has
+      an armored helmet and vest, and special op now has 5 mirage grenades and a chameleon
+      belt. The survival knife in the special op crate is now a switchblade.
+  - bugfix: Fixes holy arrows being invisible.
+  nikothedude:
+  - bugfix: Ventilation clog no longer spawns mobs in inappropriate places
+  - rscadd: 'New malf ability: Remote safety overrides. Allows the AI to remotely
+      emag things it has access to.'
+  - code_imp: emag_act() now returns a boolean designating it's success in emagging
+  - code_imp: All instances of emag_act() now have the proper arguments
+  - qol: Most usecases of emagging now have some kind of feedback, and existing feedback
+      has been sanity checked and converted to balloon alerts.
+2023-07-17:
+  DATA-xPUNGED:
+  - balance: Pyre Sect can now heal with their bible as normal.
+  - qol: Some of Pyre Sect's rituals have been shortened slightly
+  Donglesplonge:
+  - bugfix: replaces icebox genetics' regular science headset with a medisci headset,
+      making it more in line with other genetics offices
+  Helg2:
+  - bugfix: Onehuman and Freeform ai modules now have proper material prices.
+  - qol: People with deviant tastes now don't care about dirt on the food.
+  - bugfix: fixed energy cost on floor tiles for engi borgs.
+  - bugfix: engi borgs can now properly merge base floor tiles with other base floor
+      tiles.
+  Jacquerel:
+  - bugfix: Station traits can once again allow vending machines and bots to speak
+      a random language
+  - bugfix: EMPed bots and vending machines once again speak a random language
+  - bugfix: Carp, Trees, and Festivus Poles will once more sometimes emote at you
+      if they think you are looking at them the wrong way, before they come over to
+      beat you up.
+  JohnFulpWillard:
+  - refactor: Huds now have their hud owner set in Initialize
+  Melbert:
+  - code_imp: AI cards should react more snap-ily to having their occupant perish
+  OrionTheFox:
+  - qol: in the event the Gravity Generator becomes damaged, examining the main part
+      will now give repair hints!
+  Timberpoes:
+  - bugfix: Emotes now respect word filters.
+  Watermelon914:
+  - bugfix: Fixed the AI vox announcement interrupting every other sound being played.
+  itseasytosee:
+  - rscadd: A new traitor item has been added, Polarized Contacts!
+  necromanceranne:
+  - code_imp: Adds an opt out for the rest of the round for the various heretic summons.
+  nikothedude:
+  - bugfix: The malf AI emag ability now works
+  - bugfix: The AI can no longer untip vendors remotely/spam sparks from shocked vendors
+  vinylspiders:
+  - bugfix: transformed jellypeople with the blood deficiency quirk will now receive
+      the right bloodpacks as mail goodies
+  - qol: laser muskets' inhand sprites will show now whether or not they are charged
+  - image: new inhand sprites for the laser muskets

@@ -335,7 +335,7 @@
 	objects = list()
 
 	// All the nukes
-	for(var/obj/machinery/nuclearbomb/nuke as anything in GLOB.nuke_list)
+	for(var/obj/machinery/nuclearbomb/nuke as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
 		var/list/nuke_info = list(
 			ref = REF(nuke),
 			name = nuke.name,
@@ -362,7 +362,7 @@
 /datum/computer_file/program/radar/fission360/on_examine(obj/item/modular_computer/source, mob/user)
 	var/list/examine_list = list()
 
-	for(var/obj/machinery/nuclearbomb/bomb as anything in GLOB.nuke_list)
+	for(var/obj/machinery/nuclearbomb/bomb as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
 		if(bomb.timing)
 			examine_list += span_danger("Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()].")
 	return examine_list

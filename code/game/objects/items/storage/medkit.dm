@@ -654,6 +654,14 @@
 	for(var/i in 1 to 7)
 		new /obj/item/food/bait/natural(src)
 
+/obj/item/storage/pill_bottle/ondansetron
+	name = "ondansetron patches"
+	desc = "A bottle containing patches of ondansetron, a drug used to treat nausea and vomiting. May cause drowsiness."
+
+/obj/item/storage/pill_bottle/ondansetron/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/patch/ondansetron(src)
+
 /// A box which takes in coolant and uses it to preserve organs and body parts
 /obj/item/storage/organbox
 	name = "organ transport box"
