@@ -60,12 +60,9 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	return ..()
 
 /obj/item/clothing/mask/gas/adjustmask(mob/living/carbon/user)
-	if(cig)
-		user.visible_message(
-				span_warning("You need to remove [cig] before you can adjust the mask")
-		)
-		return
-	return ..()
+	if(isnull(cig))
+		return ..()
+	user.visible_message(span_warning("You need to remove [cig] before you can adjust the mask!"))
 
 
 /obj/item/clothing/mask/gas/examine(mob/user)
