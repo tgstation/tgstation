@@ -721,7 +721,6 @@
 	hardcore_value = 6
 	mail_goodies = list(/obj/item/storage/organbox)
 
-
 /datum/quirk/tin_man/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/static/list/organ_slots = list(
