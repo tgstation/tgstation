@@ -57,7 +57,7 @@
 /datum/team/pirate/proc/forge_objectives()
 	var/datum/objective/loot/getbooty = new()
 	getbooty.team = src
-	for(var/obj/machinery/computer/piratepad_control/P in GLOB.machines)
+	for(var/obj/machinery/computer/piratepad_control/P as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/piratepad_control))
 		var/area/A = get_area(P)
 		if(istype(A,/area/shuttle/pirate))
 			getbooty.cargo_hold = P

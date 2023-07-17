@@ -1,7 +1,7 @@
 /obj/item/hand_labeler
 	name = "hand labeler"
 	desc = "A combined label printer, applicator, and remover, all in a single portable device. Designed to be easy to operate and use."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "labeler0"
 	inhand_icon_state = null
 	var/label = null
@@ -121,7 +121,7 @@
 
 /obj/item/hand_labeler_refill
 	name = "hand labeler paper roll"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	desc = "A roll of paper. Use it on a hand labeler to refill it."
 	icon_state = "labeler_refill"
 	inhand_icon_state = "electropack"

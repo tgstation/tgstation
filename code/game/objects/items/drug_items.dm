@@ -1,7 +1,7 @@
 /obj/item/food/drug
 	name = "generic drug"
 	desc = "I am error"
-	icon = 'icons/obj/drugs.dmi'
+	icon = 'icons/obj/medical/drugs.dmi'
 	foodtypes = GROSS
 	food_flags = FOOD_FINGER_FOOD
 	max_volume = 50
@@ -32,7 +32,7 @@
 /obj/item/reagent_containers/cup/blastoff_ampoule
 	name = "bLaSToFF ampoule" //stylized name
 	desc = "A small ampoule. The liquid inside appears to be boiling violently.\nYou suspect it contains bLasSToFF; the drug thought to be the cause of the infamous Luna nightclub mass casualty incident."
-	icon = 'icons/obj/drugs.dmi'
+	icon = 'icons/obj/medical/drugs.dmi'
 	icon_state = "blastoff_ampoule"
 	base_icon_state = "blastoff_ampoule"
 	volume = 20

@@ -1,0 +1,4 @@
+author: "BlueMemesauce"
+delete-after: True
+changes:
+  - spellcheck: "Fix duplicate sentence in space comms agent flavor text"
