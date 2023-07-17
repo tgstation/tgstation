@@ -78,7 +78,7 @@
 		add_verb(holder_living, help_verb)
 	holder_living.mind.martial_art = src
 	holder = WEAKREF(holder_living)
-	RegisterSignal(holder, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(block_check))
+	RegisterSignal(holder_living, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(block_check))
 	return TRUE
 
 /datum/martial_art/proc/store(datum/martial_art/old, mob/living/holder_living)

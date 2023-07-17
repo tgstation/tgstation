@@ -6,7 +6,7 @@
 	ADD_TRAIT(puncher, TRAIT_PERFECT_ATTACKER, INNATE_TRAIT)
 
 	puncher.set_combat_mode(TRUE)
-	victim.attack_hand(puncher, list(RIGHT_CLICK = FALSE))
+	click_wrapper(puncher, victim)
 
 	TEST_ASSERT(victim.getBruteLoss() > 0, "Victim took no brute damage after being punched")
 
@@ -17,7 +17,7 @@
 
 	tider.put_in_active_hand(toolbox, forced = TRUE)
 	tider.set_combat_mode(TRUE)
-	victim.attackby(toolbox, tider)
+	click_wrapper(tider, victim)
 
 	TEST_ASSERT(victim.getBruteLoss() > 0, "Victim took no brute damage after being hit by a toolbox")
 
@@ -30,7 +30,7 @@
 	attacker.set_combat_mode(TRUE)
 
 	welding_tool.attack_self(attacker) // Turn it on
-	victim.attackby(welding_tool, attacker)
+	click_wrapper(attacker, victim)
 
 	TEST_ASSERT_EQUAL(victim.getBruteLoss(), 0, "Victim took brute damage from a lit welding tool")
 	TEST_ASSERT(victim.getFireLoss() > 0, "Victim took no burn damage after being hit by a lit welding tool")
@@ -63,7 +63,7 @@
 
 	attacker.put_in_active_hand(toolbox, forced = TRUE)
 	attacker.set_combat_mode(TRUE)
-	toolbox.melee_attack_chain(attacker, victim)
+	click_wrapper(attacker, victim)
 
 	TEST_ASSERT(pre_attack_hit, "Pre-attack signal was not fired")
 	TEST_ASSERT(attack_hit, "Attack signal was not fired")
@@ -85,7 +85,7 @@
 
 	// First disarm, world should now look like:
 	// Attacker --> Empty space --> Victim --> Wall
-	victim.attack_hand(attacker, list(RIGHT_CLICK = TRUE))
+	click_wrapper(attacker, victim, list2params(list(RIGHT_CLICK = TRUE)))
 
 	TEST_ASSERT_EQUAL(victim.loc.x, run_loc_floor_bottom_left.x + 2, "Victim wasn't moved back after being pushed")
 	TEST_ASSERT(!victim.has_status_effect(/datum/status_effect/incapacitating/knockdown), "Victim was knocked down despite not being against a wall")
@@ -94,7 +94,7 @@
 	attacker.forceMove(get_step(attacker, EAST))
 
 	// Second disarm, victim was against wall and should be down
-	victim.attack_hand(attacker, list(RIGHT_CLICK = TRUE))
+	click_wrapper(attacker, victim, list2params(list(RIGHT_CLICK = TRUE)))
 
 	TEST_ASSERT_EQUAL(victim.loc.x, run_loc_floor_bottom_left.x + 2, "Victim was moved after being pushed against a wall")
 	TEST_ASSERT(victim.has_status_effect(/datum/status_effect/incapacitating/knockdown), "Victim was not knocked down after being pushed against a wall")

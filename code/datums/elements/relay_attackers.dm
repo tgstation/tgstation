@@ -9,8 +9,6 @@
 	. = ..()
 	// Boy this sure is a lot of ways to tell us that someone tried to attack us
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_MECH, PROC_REF(on_attack_mech))
-	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
-	RegisterSignal(target, COMSIG_ATOM_HITBY, PROC_REF(on_hitby))
 	RegisterSignal(target, COMSIG_ATOM_PREHITBY, PROC_REF(on_hitby))
 	RegisterSignal(target, COMSIG_LIVING_ATTACKED_BY, PROC_REF(on_attacked_by))
 	RegisterSignal(target, COMSIG_LIVING_DISARM_HIT, PROC_REF(on_shoved))

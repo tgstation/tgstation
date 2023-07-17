@@ -171,8 +171,6 @@
 	///How fast does the tool work
 	var/toolspeed = 1
 
-	///Chance of blocking incoming attack
-	// var/block_chance = 0
 	///Effect of blocking
 	var/block_effect = /obj/effect/temp_visual/block
 

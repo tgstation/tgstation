@@ -22,7 +22,7 @@
 	ADD_TRAIT(botanist, TRAIT_PLANT_SAFE, "unit_test")
 
 	// Now, let's get a smack with the novaflower and see what happens.
-	weapon.melee_attack_chain(botanist, victim)
+	click_wrapper(botanist, victim)
 
 	TEST_ASSERT(botanist.getFireLoss() <= 0, "The botanist took fire damage from [weapon], even though they were plant safe.")
 	TEST_ASSERT_EQUAL(victim.getFireLoss(), initial_force, "The target took an incorrect amount of fire damage after being hit with [weapon].")

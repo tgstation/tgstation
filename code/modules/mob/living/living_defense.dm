@@ -483,7 +483,7 @@
 		return FALSE
 	if(incapacitated(IGNORE_GRAB))
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_STUNIMMUNE)) // also check for knockdown
+	if(HAS_TRAIT(src, TRAIT_STUNIMMUNE)) // also check for knockdown?
 		return FALSE
 	if(usable_hands <= 0)
 		return FALSE

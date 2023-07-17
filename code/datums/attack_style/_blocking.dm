@@ -150,8 +150,9 @@
 			span_danger("[source] blocks [attack_text][blocking_with ? " with [blocking_with]" : ""]!"),
 			span_danger("You block [attack_text][blocking_with ? " with [blocking_with]" : ""]!"),
 		)
-	source.add_movespeed_modifier(/datum/movespeed_modifier/successful_block)
-	addtimer(CALLBACK(source, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/successful_block), 0.5 SECONDS)
+	if(final_damage > 0)
+		source.add_movespeed_modifier(/datum/movespeed_modifier/successful_block)
+		addtimer(CALLBACK(source, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/successful_block), 0.5 SECONDS)
 	if(istype(attacker))
 		attacker.add_movespeed_modifier(/datum/movespeed_modifier/successful_block)
 		addtimer(CALLBACK(attacker, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/successful_block), 0.8 SECONDS)

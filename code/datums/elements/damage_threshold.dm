@@ -3,6 +3,7 @@
 /// IE, if they are hit with an attack that deals less than X damage, the attack does nothing.
 /datum/element/damage_threshold
 	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	/// Incoming attacks beneath this threshold, inclusive, will be blocked entirely
 	var/force_threshold = -1
 
