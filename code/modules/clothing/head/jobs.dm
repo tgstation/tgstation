@@ -448,6 +448,9 @@
 	flags_inv = HIDEHAIR //Cover your head doctor!
 
 /obj/item/clothing/head/utility/surgerycap/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return
 	to_chat(user, span_notice("You begin to [flags_inv ? "loosen" : "tighten"] the strings on \the [src]..."))
 	if(!do_after(user, 3 SECONDS, src))
 		return
