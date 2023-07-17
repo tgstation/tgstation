@@ -26,7 +26,9 @@
 	var/planetary = TRUE
 	/// Can we be selected on space stations?
 	var/space = TRUE
-	/// If ran during dynamic, do we reduce the total threat?
+	/// The ID that we look for in dynamic.json. Not synced with 'name' because I can already see this go wrong
+	var/dynamic_threat_id
+	/// If ran during dynamic, do we reduce the total threat? Will be overriden by config if set
 	var/threat_reduction = 0
 
 /datum/station_trait/New()
@@ -35,7 +37,7 @@
 	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
 
 	if(threat_reduction)
-		GLOB.dynamic_threat_mods[type] = threat_reduction
+		GLOB.dynamic_station_traits[src] = threat_reduction
 
 	if(trait_processes)
 		START_PROCESSING(SSstation, src)
@@ -44,6 +46,7 @@
 
 /datum/station_trait/Destroy()
 	SSstation.station_traits -= src
+	GLOB.dynamic_station_traits.Remove(src)
 	return ..()
 
 /// Proc ran when round starts. Use this for roundstart effects.
@@ -71,6 +74,7 @@
 		var/decal_color = trait.get_decal_color(thing_to_color, pattern)
 		if(decal_color)
 			return decal_color
+	return null
 
 ///Return a color for the decals, if any
 /datum/station_trait/proc/get_decal_color(thing_to_color, pattern)

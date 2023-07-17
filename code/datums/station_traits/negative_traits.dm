@@ -445,11 +445,7 @@
 
 	//Color the carp in unique colors to better blend with the nebula
 	if(carp_color_override)
-		var/mob/living/basic/carp/carp_type = /mob/living/basic/carp
-		carp_type.carp_colors = carp_color_override
-		//Statics are stored globally, so if we acces a static we never actually acces the object and byond will throw a warning that the var is unused
-		//So we set it to itself to trick byond into working the way it's intended
-		carp_type = carp_type
+		GLOB.carp_colors = carp_color_override
 
 ///Station nebula that incur some sort of effect if no shielding is created
 /datum/station_trait/nebula/hostile
@@ -457,11 +453,11 @@
 	trait_processes = TRUE
 
 	///Intensity of the nebula
-	VAR_PROTECTED/nebula_intensity = -1
+	VAR_PRIVATE/nebula_intensity = -1
 	///The max intensity of a nebula
-	var/maximum_nebula_intensity = 2 HOURS
+	VAR_PROTECTED/maximum_nebula_intensity = 2 HOURS
 	///How long it takes to go to the next nebula level/intensity
-	var/intensity_increment_time = INFINITE
+	VAR_PROTECTED/intensity_increment_time = INFINITE
 	///Objects that we use to calculate the current shielding level
 	var/list/shielding = list()
 
@@ -481,7 +477,7 @@
 
 ///Calculate how strong we currently are
 /datum/station_trait/nebula/hostile/proc/calculate_nebula_strength()
-	nebula_intensity = min(STATION_TIME_PASSED / intensity_increment_time, maximum_nebula_intensity)
+	nebula_intensity = min(STATION_TIME_PASSED() / intensity_increment_time, maximum_nebula_intensity)
 
 ///Check how strong the stations shielding is
 /datum/station_trait/nebula/hostile/proc/get_shielding_level()
@@ -518,6 +514,8 @@
 
 	nebula.add_shielder(shielder, shielding_proc)
 
+#define GLOW_NEBULA "glow_nebula"
+
 ///The station will be inside a radioactive nebula! Space is radioactive and the station needs to start setting up nebula shielding
 /datum/station_trait/nebula/hostile/radiation
 	name = "Radioactive Nebula"
@@ -529,6 +527,7 @@
 
 	blacklist = list(/datum/station_trait/random_event_weight_modifier/rad_storms)
 	threat_reduction = 30
+	dynamic_threat_id = "Radioactive Nebula"
 
 	intensity_increment_time = 5 MINUTES
 	maximum_nebula_intensity = 1 HOURS + 40 MINUTES
@@ -542,9 +541,11 @@
 		COLOR_CARP_DARK_GREEN = 1,
 	)
 	///When are we going to send them a care package?
-	VAR_PRIVATE/send_care_package_at = INFINITY
+	COOLDOWN_DECLARE(send_care_package_at)
 	///How long does the storm have to last for us to send a care package?
 	VAR_PROTECTED/send_care_package_time = 5 MINUTES
+	///The glow of 'fake' radioactive objects in space
+	var/nebula_radglow = "#66ff33"
 
 /datum/station_trait/nebula/hostile/radiation/New()
 	. = ..()
@@ -584,25 +585,25 @@
 	enterer.AddElement(/datum/element/radioactive, range = 0, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
 	//Don't actually make EVERY. SINGLE. THING. radioactive, just make them glow so people arent killed instantly
 	if(!SSradiation.can_irradiate_basic(enterer))
-		enterer.add_filter("glow_nebula", 2, list("type" = "drop_shadow", "color" = "#66ff33", "size" = 2))
+		enterer.add_filter(GLOW_NEBULA, 2, list("type" = "drop_shadow", "color" = nebula_radglow, "size" = 2))
 
 ///Called when an atom leaves space, so we can remove the radiation effect
 /datum/station_trait/nebula/hostile/radiation/proc/on_exited(area/space, atom/movable/exiter)
 	SIGNAL_HANDLER
 
 	exiter.RemoveElement(/datum/element/radioactive, range = 0, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
-	exiter.remove_filter("glow_nebula")
+	exiter.remove_filter(GLOW_NEBULA)
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
 	//big bombad now
 	if(effect_strength > 0)
 		if(!SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula))
-			send_care_package_at = world.time + send_care_package_time
+			COOLDOWN_START(src, send_care_package_at, send_care_package_time)
 			SSweather.run_weather(/datum/weather/rad_storm/nebula)
 
 		//Send a care package to temporarily lift the storm!
-		if(send_care_package_at < world.time)
-			send_care_package_at = world.time + send_care_package_time
+		if(COOLDOWN_FINISHED(src, send_care_package_at))
+			COOLDOWN_START(src, send_care_package_at, send_care_package_time)
 			var/obj/machinery/nebula_shielding/emergency/rad_shield = /obj/machinery/nebula_shielding/emergency/radiation
 
 			priority_announce(
@@ -619,7 +620,7 @@
 		var/datum/weather/weather = SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula)
 		if(weather)
 			weather.wind_down()
-		send_care_package_at = INFINITY
+		COOLDOWN_RESET(src, send_care_package_at)
 
 ///Send a care package because it is not going well
 /datum/station_trait/nebula/hostile/radiation/proc/send_care_package()
@@ -636,13 +637,13 @@
 	var/max_shielders = ((maximum_nebula_intensity / intensity_increment_time)) / initial(shielder.shielding_strength)
 
 	var/announcement = {"Your station has been constructed inside a radioactive nebula. \
-	Standard spacesuits will not protect against the nebula and using them is strongly discouraged. \n\n\
+		Standard spacesuits will not protect against the nebula and using them is strongly discouraged. \n\n\
 
-	EXTREME IMPORTANCE: The station is falling deeper into the nebula, and the gravity generators innate radiation shielding \
-	will not hold very long. Your engineering department has been supplied with all the necessary supplies to set up \
-	shields to protect against the nebula. Additional supply crates can be ordered at cargo. \n\n\
-	You have [deadline] before the nebula enters the station. \
-	Every shielding unit will provide an additional [shielder_time] of protection, fully protecting the station with [max_shielders] shielding units.
+		EXTREME IMPORTANCE: The station is falling deeper into the nebula, and the gravity generators innate radiation shielding \
+		will not hold very long. Your engineering department has been supplied with all the necessary supplies to set up \
+		shields to protect against the nebula. Additional supply crates can be ordered at cargo. \n\n\
+		You have [deadline] before the nebula enters the station. \
+		Every shielding unit will provide an additional [shielder_time] of protection, fully protecting the station with [max_shielders] shielding units.
 	"}
 
 	priority_announce(announcement, sound = 'sound/misc/notice1.ogg')
@@ -656,8 +657,8 @@
 	signal.data["command"] = "alert"
 	signal.data["picture_state"] = "radiation"
 
-	var/atom/movable/virtualspeaker/virt = new(null)
-	frequency.post_signal(virt, signal)
+	var/atom/movable/virtualspeaker/virtual_speaker = new(null)
+	frequency.post_signal(virtual_speaker, signal)
 
 /datum/station_trait/nebula/hostile/radiation/get_decal_color(atom/thing_to_color, pattern)
 	if(istype(get_area(thing_to_color), /area/station/hallway)) //color hallways green
