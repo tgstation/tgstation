@@ -37,7 +37,7 @@
 	send_clock_message(user, message)
 
 /// Send `sent_message` to all other clock cultists and ghosts from the user
-/proc/send_clock_message(mob/living/user, sent_message, span = "<span class='brass'>", msg_ghosts = TRUE, sent_sound) //todo refactor to use span() procs
+/proc/send_clock_message(mob/living/user, sent_message, span = "<span class='brass'>", msg_ghosts = TRUE, sent_sound)
 	var/final_message = ""
 	if(user && istype(user, /mob/living/eminence))
 		final_message = span + span_bigbrass("<i><b>Master Eminence<b> transmits, \"") + sent_message + span_bigbrass("\"</i></span>")

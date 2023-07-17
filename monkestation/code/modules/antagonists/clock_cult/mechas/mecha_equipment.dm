@@ -1,4 +1,3 @@
-//NEED TO ADD POWER USAGE ONCE I REFACTOR CLOCK POWER
 //should never be outside a mech without an admin
 /obj/item/mecha_parts/mecha_equipment/weapon/clock
 	name = "clock mech weapon"
@@ -12,18 +11,20 @@
 	desc = "A strange device that concentrates energy into \"arrows\"."
 	projectile = /obj/projectile/energy/clockbolt
 	equip_cooldown = 1 SECONDS
+	energy_drain = 5
 
 /obj/item/mecha_parts/mecha_equipment/weapon/clock/steam_cannon
 	name = "Steam Cannon"
 	desc = "A large tube that shoots pressurized steam."
 	projectile = /obj/projectile/steam_cloud
 	equip_cooldown = 5 SECONDS
+	energy_drain = 20
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/clock
 	name = "Clockwork Repair Droid"
 	desc = "A small device that constantly re-adjusts any out of place gears in a mech."
 	color = rgb(190, 135, 0)
-	energy_drain = 0 //WILL HAVE ENERGY DRAIN AFTER CLOCK POWER REFACTOR
+	energy_drain = 0 //we will see if an energy drain is needed
 	equipment_flags = NOT_ABLE_TO_REMOVE_FROM_MECHA
 	health_boost = 1 //should really just buff the normal repair droid up to this, its really bad right now
 	repairable_damage = list(MECHA_INT_FIRE, MECHA_INT_CONTROL_LOST)

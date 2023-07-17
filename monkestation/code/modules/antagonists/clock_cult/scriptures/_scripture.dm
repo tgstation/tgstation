@@ -30,6 +30,8 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	var/end_on_invocation = TRUE
 	/// How much of a reduction in invocation time should the TRAIT_FASTER_SLAB_INVOKE give, multiplicative
 	var/fast_invoke_mult = 0.5
+	/// Are we only visible/usable if a unique condition is met
+	var/unique_locked = FALSE //if needed it might be worth turning these into descriptor strings
 	/// Ref to the mob invoking this
 	var/mob/living/invoker
 	/// Ref to the slab invoking this
@@ -112,13 +114,13 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 			if(!invokers_left)
 				break
 
+			if(potential_invoker.stat || !potential_invoker.mind)
+				continue
+
 			if(potential_invoker?.mind.has_antag_datum(/datum/antagonist/clock_cultist/solo)) // Solo cultists can use all scriptures alone, while group clock cult doesn't get so lucky
 				invokers_left = 0
 				clockwork_say(potential_invoker, text2ratvar(invocation_text[text_point]), TRUE)
 				break
-
-			if(potential_invoker.stat)
-				continue
 
 			if(IS_CLOCK(potential_invoker))
 				clockwork_say(potential_invoker, text2ratvar(invocation_text[text_point]), TRUE)
@@ -144,14 +146,17 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		return FALSE
 
 	var/invokers = 0
+	if(locate(/obj/item/toy/plush/ratplush) in range(1, invoker)) //ratvar plushies count as an invoker
+		invokers++
+
 	for(var/mob/living/potential_invoker in viewers(invoker))
-		if(potential_invoker.stat)
+		if(potential_invoker.stat || !potential_invoker.mind)
 			continue
 
 		if(IS_CLOCK(potential_invoker))
 			invokers++
 
-		if(potential_invoker.mind?.has_antag_datum(/datum/antagonist/clock_cultist/solo)) // They count for infinite so they can do all scriptures solo
+		if(potential_invoker?.mind.has_antag_datum(/datum/antagonist/clock_cultist/solo)) // They count for infinite so they can do all scriptures solo
 			invokers = INFINITY
 			break
 
@@ -176,7 +181,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	invoker = invoking_mob
 	invoking_slab = slab
 
-	if(!(type in slab.purchased_scriptures) && !bypass_unlock_checks)
+	if(!((slab.owned_scriptures[type]) && !bypass_unlock_checks) || unique_locked) //unique_locked scriptures should not even be visible so this should never happen
 		log_runtime("CLOCKCULT: Attempting to invoke a scripture that has not been unlocked. Either there is a bug, or [ADMIN_LOOKUP(invoker)] is using some wacky exploits.")
 		end_invoke()
 		return
@@ -211,6 +216,31 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 /// End the invoking, nulling things out
 /datum/scripture/proc/end_invoke()
 	invoking_slab.invoking_scripture = null
+
+
+// Call these on the instances in the global lists
+/// Set a scripture's unique_locked to FALSE and reload the UIs of slabs if set
+/datum/scripture/proc/unique_unlock(reload_uis = FALSE)
+	unique_locked = FALSE
+	if(reload_uis)
+		for(var/obj/item/clockwork/clockwork_slab/slab in GLOB.clockwork_slabs)
+			SStgui.update_uis(slab)
+
+
+/// Set a scripture's unique_locked to TRUE, remove quickbinds of it, and reload the UIs of slabs if set
+/datum/scripture/proc/unique_lock(reload_uis = FALSE)
+	unique_locked = TRUE
+	for(var/obj/item/clockwork/clockwork_slab/slab in GLOB.clockwork_slabs)
+		for(var/i in 1 to slab.quick_bound_scriptures.len)
+			if(slab.quick_bound_scriptures[i])
+				var/datum/action/innate/clockcult/quick_bind/quickbound = slab.quick_bound_scriptures[i]
+				if(istype(src, quickbound.scripture.type))
+					slab.quick_bound_scriptures[i] = null
+					qdel(quickbound)
+					break
+
+		if(reload_uis)
+			SStgui.update_uis(slab)
 
 
 // Base create structure scripture

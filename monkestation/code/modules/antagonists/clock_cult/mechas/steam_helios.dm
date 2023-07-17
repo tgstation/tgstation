@@ -1,5 +1,3 @@
-//NOTE THIS DOES NOT USE CHARGE UNTIL I REFACTOR CLOCK POWER INTO AN SS
-
 /obj/vehicle/sealed/mecha/steam_helios
 	name = "Steam Helios"
 	desc = "A huge creation of bronze gears and steam, you have no idea how it stays together."
@@ -55,6 +53,7 @@
 //kinda lame to lose it to a single heretic clicking it once
 /obj/vehicle/sealed/mecha/steam_helios/rust_heretic_act()
 	visible_message(span_warning("\The [src] glows for a second, but is uneffected by the magic!"))
+	return
 
 //restricted to servants only
 /obj/vehicle/sealed/mecha/steam_helios/operation_allowed(mob/checked_mob)
@@ -82,8 +81,8 @@
 
 /datum/action/vehicle/sealed/mecha/judicial_mark
 	name = "Judicial Mark"
-	button_icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
-	button_icon_state = "judicial_visor_1"
+	button_icon = 'monkestation/icons/mob/clock_cult/actions_clock.dmi'
+	button_icon_state = "Judicial Marker"
 	background_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
 	background_icon_state = "bg_clock"
 	///how often the action can be used
@@ -136,12 +135,12 @@
 	end_mark_targeting()
 	S_TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_JUDICIAL_MARK, mark_cooldown)
 	new /obj/effect/judicial_mark(target_turf)
-	button_icon_state = "judicial_visor_0"
+	button_icon_state = "Judicial Marker Recharging"
 	build_all_button_icons()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/action/vehicle/sealed/mecha/judicial_mark, reset_button_icon)), mark_cooldown)
 
 /datum/action/vehicle/sealed/mecha/judicial_mark/proc/reset_button_icon()
-	button_icon_state = "judicial_visor_1"
+	button_icon_state = "Judicial Marker"
 	build_all_button_icons()
 
 //may reality break and bend

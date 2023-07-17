@@ -36,6 +36,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 	. = ..()
 	if(!GLOB.clock_ark)
 		GLOB.clock_ark = src
+	SSpoints_of_interest.make_point_of_interest(src)
 
 /obj/structure/destructible/clockwork/the_ark/examine(mob/user)
 	. = ..()
@@ -53,17 +54,17 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 		GLOB.clock_ark = null
 	if(GLOB.ratvar_risen)
 		return ..()
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSprocessing, src)
 	send_clock_message(null, span_bigbrass("The Ark has been destroyed, Reebe is becoming unstable!"))
 	for(var/mob/living/current_mob in GLOB.player_list)
 		if(!on_reebe(current_mob))
 			continue
 		if(IS_CLOCK(current_mob))
-			to_chat(current_mob, span_reallybig(span_hypnophrase("Your mind is distorted by the distant sound of a thousand screams. <i>YOU HAVE FAILED TO PROTECT MY ARK. \
+			to_chat(current_mob, span_reallybig(span_ratvar("Your mind is distorted by the distant sound of a thousand screams. <i>YOU HAVE FAILED TO PROTECT MY ARK. \
 																  YOU WILL BE TRAPPED HERE WITH ME TO SUFFER FOREVER...</i>")))
 			continue
 		current_mob.SetSleeping(5 SECONDS)
-		to_chat(current_mob, span_reallybig(span_hypnophrase("Your mind is distorted by the distant sound of a thousand screams before suddenly everything falls silent.")))
+		to_chat(current_mob, span_reallybig(span_ratvar("Your mind is distorted by the distant sound of a thousand screams before suddenly everything falls silent.")))
 		to_chat(current_mob, span_hypnophrase("The only thing you remember is suddenly feeling hard ground beneath you and the safety of home."))
 		current_mob.forceMove(find_safe_turf())
 	INVOKE_ASYNC(src, PROC_REF(explode_reebe))
@@ -127,36 +128,26 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 	current_state = ARK_STATE_CHARGING
 	SSshuttle.registerHostileEnvironment(src)
 	icon_state = "clockwork_gateway_charging"
-	if(!GLOB.main_clock_cult)
-		stack_trace("Clockwork ark calling prepare_ark() without a set main_clock_cult.")
-	else
-		for(var/datum/mind/servant_mind in GLOB.main_clock_cult.members)
-			SEND_SOUND(servant_mind.current, 'sound/magic/clockwork/scripture_tier_up.ogg')
-	send_clock_message(null, span_bigbrass("The cult has reached maximum servants and has an anchoring crystal, we will be revealed in 5 minutes."))
+	send_clock_message(null, span_bigbrass("The Ark's many cogs suddenly whir to life, steam gushing out of its many crevices; it will open in 5 minutes!"), \
+					   sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
 	addtimer(CALLBACK(src, PROC_REF(open_gateway)), ARK_READY_PERIOD)
 
 /obj/structure/destructible/clockwork/the_ark/proc/open_gateway()
 	if(current_state >= ARK_STATE_ACTIVE)
 		return
 	current_state = ARK_STATE_ACTIVE
+	SSshuttle.registerHostileEnvironment(src)
 	icon_state = "clockwork_gateway_active"
-	if(!GLOB.main_clock_cult)
-		stack_trace("Clockwork ark calling open_gateway() without a set main_clock_cult.")
-	else
-		for(var/datum/mind/servant_mind in GLOB.main_clock_cult.members)
-			SEND_SOUND(servant_mind.current, 'sound/magic/clockwork/ark_activation_sequence.ogg')
-			to_chat(servant_mind, span_bigbrass("The Ark has been activated, you will be transported soon! Dont forget to gather weapons with your \"Clockwork Armaments\" scripture."))
+	send_clock_message(null, span_bigbrass("The Ark has been activated, you will be transported soon! Dont forget to gather weapons with your \"Clockwork Armaments\" scripture."), \
+					   sent_sound = 'sound/magic/clockwork/ark_activation_sequence.ogg')
 	addtimer(CALLBACK(src, PROC_REF(announce_gateway)), 27 SECONDS)
 
 /obj/structure/destructible/clockwork/the_ark/proc/announce_gateway()
-	for(var/datum/mind/servant_mind in GLOB.main_clock_cult.members)
-		if(!servant_mind) //just in case
-			continue
-		SEND_SOUND(servant_mind.current, 'monkestation/sound/machines/clockcult/ark_recall.ogg')
+	send_clock_message(null, span_ratvar("DESTROY THEM."), sent_sound = 'monkestation/sound/machines/clockcult/ark_recall.ogg')
 
 	sleep(3 SECONDS)
 
-	for(var/datum/mind/servant_mind in GLOB.main_clock_cult.members) //pain, sadly the only way I can think of to get around this would be an addtimer on an extra proc
+	for(var/datum/mind/servant_mind in GLOB.main_clock_cult.members)
 		var/mob/living/servant_mob = servant_mind.current
 		if(!servant_mob || QDELETED(servant_mob))
 			continue
@@ -174,7 +165,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 
 	priority_announce("Massive [Gibberish("bluespace", 100)] anomaly detected on all frequencies. All crew are directed to \
 	@!$, [text2ratvar("PURGE ALL UNTRUTHS")] <&. the anomalies and destroy their source to prevent further damage to corporate property. This is \
-	not a drill. Estimated time of appearance: [ARK_GRACE_PERIOD/10] seconds. Use this time to prepare for an attack on [station_name()]."\
+	not a drill. Estimated time of appearance: [ARK_GRACE_PERIOD/10] seconds. Use this time to prepare for an attack on [station_name()]." \
 	,"Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ark_activation.ogg')
 
 	sound_to_playing_players(volume = 10, vary = TRUE, S = sound('monkestation/sound/effects/clockcult_gateway_charging.ogg'))
@@ -196,7 +187,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 	if(current_state >= ARK_STATE_FINAL)
 		return
 	current_state = ARK_STATE_FINAL
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSprocessing, src)
 	resistance_flags |= INDESTRUCTIBLE
 	send_clock_message(null, span_bigbrass("Ratvar approaches, you shall be eternally rewarded for your servitude!"), msg_ghosts = FALSE)
 	send_to_playing_players(span_warning("You feel time slow down."))
@@ -214,22 +205,22 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 
 	for(var/mob/checked_mob as anything in GLOB.player_list)
 		if(on_reebe(checked_mob)) //doing an addtimer to insure these run on time as the ark will be getting qdeled at this time
-			addtimer(CALLBACK(null, GLOBAL_PROC_REF(try_servant_warp), checked_mob, find_safe_turf()), 12.8 SECONDS)
+			addtimer(CALLBACK(null, GLOBAL_PROC_REF(try_servant_warp), checked_mob, get_safe_random_station_turf()), 12.8 SECONDS)
 
 	var/original_matrix = matrix()
 	animate(src, transform = original_matrix * 1.5, alpha = 255, time = 125)
 	sleep(3 SECONDS)
-	send_to_playing_players(span_warning("You see cracks forming in space around you.")) //these are magic spacetime cracks, I dont care if your blind
+	send_to_playing_players(span_warning("You see cracks forming in space around you."))
 	sleep(3 SECONDS)
 	send_to_playing_players(span_warning("You are deafened by the sound of a million screams."))
 	sleep(5.5 SECONDS)
-	send_to_playing_players(span_userdanger("HE IS HERE."))
+	send_to_playing_players(span_userdanger("THE JUSTICAR IS HERE."))
 	sleep(1 SECONDS)
 	transform = original_matrix
 	animate(src, transform = original_matrix * 3, alpha = 0, time = 5)
 	QDEL_IN(src, 4)
 	sleep(3)
-	new /obj/ratvar(SSmapping.get_station_center())
+	new /obj/ratvar(get_random_station_turf())
 
 /obj/structure/destructible/clockwork/the_ark/proc/explode_reebe()
 	var/list/reebe_area_list = get_area_turfs(/area/ruin/powered/reebe/city)

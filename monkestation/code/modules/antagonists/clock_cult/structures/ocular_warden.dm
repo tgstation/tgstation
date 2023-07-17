@@ -14,7 +14,7 @@
 	base_icon_state = "ocular_warden"
 	max_integrity = 75
 	armor_type = /datum/armor/clockwork_ocular_warden
-	passive_consumption = 10
+	passive_consumption = 5
 	minimum_power = SHOOT_POWER_USE
 	can_unwrench = FALSE
 	anchored = TRUE
@@ -24,8 +24,8 @@
 /datum/armor/clockwork_ocular_warden
 	melee = -50
 	bullet = -20
-	laser = 50
-	energy = 50
+	laser = 60
+	energy = 60
 	bomb = 20
 	bio = 0
 

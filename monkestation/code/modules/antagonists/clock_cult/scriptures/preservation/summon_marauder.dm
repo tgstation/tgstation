@@ -12,6 +12,7 @@
 	category = SPELLTYPE_PRESERVATION
 	cogs_required = 6
 	invokers_required = 3
+	fast_invoke_mult = 1
 	// Ref to the selected observer
 	var/mob/dead/observer/selected
 

@@ -39,15 +39,7 @@
 /area/ruin/powered/reebe/city)
 "gj" = (
 /obj/structure/table/bronze,
-/obj/item/clockwork/clockwork_slab{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/item/clockwork/clockwork_slab,
-/obj/item/clockwork/clockwork_slab{
-	pixel_x = -4;
-	pixel_y = 4
-	},
+/obj/item/toy/plush/ratplush,
 /turf/open/indestructible/reebe_flooring/filled,
 /area/ruin/powered/reebe/city)
 "gu" = (

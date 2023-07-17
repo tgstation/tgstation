@@ -60,15 +60,19 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 	if(GLOB.anchoring_crystals.len >= 2)
 		priority_announce("Reality warping object detected aboard the station.", "Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
 
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSprocessing, src)
 
 	RegisterSignal(src, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 
 	update_icon()
 
-/obj/structure/destructible/clockwork/anchoring_crystal/attacked_by(obj/item/attacking_item, mob/living/user)
-	if(IS_CLOCK(user)) //dont use charges for clock cultists
-		return
+	var/datum/objective/anchoring_crystals/crystals_objective = locate() in GLOB.main_clock_cult?.objectives
+	if(crystal_area in crystals_objective?.valid_areas) //if a crystal gets destroyed you cant use that area again
+		crystals_objective.valid_areas -= crystal_area
+
+	SSshuttle.registerHostileEnvironment(src) //removed on destruction on on completetion of charging
+
+/obj/structure/destructible/clockwork/anchoring_crystal/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	COOLDOWN_START(src, recently_hit_cd, CRYSTAL_SHIELD_DELAY)
 	if(shields >= 1)
 		shields--
@@ -79,8 +83,8 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 			overlay_state = SHIELD_BREAK
 		do_sparks(2, TRUE, src)
 		update_icon()
-		return
-	return ..()
+		damage_amount = 0 //dont take damage if we have shields
+	. = ..()
 
 /obj/structure/destructible/clockwork/anchoring_crystal/process(seconds_per_tick)
 	for(var/mob/living/affected_mob in crystal_area)
@@ -91,7 +95,7 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 		affected_mob.adjust_silence_up_to(5 SECONDS * seconds_per_tick, 2 MINUTES)
 
 	if(charge_state == FULLY_CHARGED) //if fully charged then add the power and return as we are done here
-		GLOB.clock_power = min(GLOB.clock_power + (10 * seconds_per_tick), GLOB.max_clock_power) //might need to be adjusted
+		GLOB.clock_power = min(GLOB.clock_power + (3 * seconds_per_tick), GLOB.max_clock_power) //might need to be adjusted
 		return
 
 	charging_for = min(charging_for + seconds_per_tick, CRYSTAL_CHARGE_TIMER)
@@ -114,8 +118,9 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 /obj/structure/destructible/clockwork/anchoring_crystal/Destroy()
 	send_clock_message(null, span_bigbrass(span_bold("The Anchoring Crystal at [crystal_area] has been destroyed!")))
 	GLOB.anchoring_crystals -= src
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSprocessing, src)
 	UnregisterSignal(src, COMSIG_ATOM_UPDATE_OVERLAYS)
+	SSshuttle.clearHostileEnvironment(src)
 	return ..()
 
 /obj/structure/destructible/clockwork/anchoring_crystal/examine(mob/user) //needs to be here as it has updating information
@@ -151,21 +156,40 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 	atom_integrity = INFINITY
 	set_armor(/datum/armor/immune)
 	if(GLOB.anchoring_crystals.len >= 2)
-		priority_announce("Reality in [crystal_area] has been destabilized, all personnel are advised to avoid the area.", "Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, \
-						  has_important_message = TRUE)
-	GLOB.max_clock_power += 1000
-	send_clock_message(null, span_bigbrass(span_bold("The Anchoring Crystal at [crystal_area] has fully charged! [get_charge_message()]")))
+		priority_announce("Reality in [crystal_area] has been destabilized, all personnel are advised to avoid the area.", \
+						  "Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
 
-//return a message based off of what this anchoring crystal did for the cult
-/obj/structure/destructible/clockwork/anchoring_crystal/proc/get_charge_message()
-	return //message
+	GLOB.max_clock_power += 1000
+	send_clock_message(null, span_bigbrass(span_bold("The Anchoring Crystal at [crystal_area] has fully charged! [anchoring_crystal_charge_message(TRUE)]")))
+	SSshuttle.clearHostileEnvironment(src)
+	var/datum/scripture/create_structure/anchoring_crystal/creation_scripture = /datum/scripture/create_structure/anchoring_crystal
+	if(locate(creation_scripture) in GLOB.clock_scriptures_by_type)
+		creation_scripture = GLOB.clock_scriptures_by_type[creation_scripture]
+		creation_scripture.update_info()
+
+	switch(get_charged_anchor_crystals())
+		if(1) //add 2 more max servants
+			GLOB.main_clock_cult.max_human_servants += 2
+		if(2) //create a steam helios on reebe
+			if(GLOB.abscond_markers.len)
+				new /obj/vehicle/sealed/mecha/steam_helios(get_turf(pick(GLOB.abscond_markers)))
+			else if(GLOB.clock_ark)
+				new /obj/vehicle/sealed/mecha/steam_helios(get_turf(GLOB.clock_ark))
+			else
+				message_admins("No valid location for Steam Helios creation.")
+		if(3) //lock the anchoring crystal scripture and unlock the golem scripture
+			var/datum/scripture/create_structure/anchoring_crystal/crystal_scripture = GLOB.clock_scriptures_by_type[/datum/scripture/create_structure/anchoring_crystal]
+			crystal_scripture.unique_lock()
+
+			var/datum/scripture/transform_to_golem/golem_scripture = GLOB.clock_scriptures_by_type[/datum/scripture/transform_to_golem]
+			golem_scripture.unique_unlock(TRUE)
 
 //set the shield overlay
 /obj/structure/destructible/clockwork/anchoring_crystal/proc/on_update_overlays(atom/crystal, list/overlays)
 	SIGNAL_HANDLER
 
 	var/mutable_appearance/shield_appearance = mutable_appearance('monkestation/icons/obj/clock_cult/clockwork_effects.dmi', \
-																  overlay_state == SHIELD_BROKEN ? "broken" : "clock_shield", CULT_OVERLAY_LAYER)
+																  overlay_state == SHIELD_BROKEN ? "broken" : "clock_shield", ABOVE_OBJ_LAYER)
 	if(overlay_state == SHIELD_DEFLECT)
 		shield_appearance.icon_state = "clock_shield_deflect"
 		overlay_state = SHIELD_ACTIVE
@@ -176,8 +200,21 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2)
 	overlays += shield_appearance
 
-//returns how many charged anchor crystals there are
-/proc/check_charged_anchor_crystals()
+///return a message based off of what this anchoring crystal did/will do for the cult
+/proc/anchoring_crystal_charge_message(completed = FALSE)
+	var/message
+	switch(get_charged_anchor_crystals())
+		if(1)
+			message = "[completed ? "We can now" : "We will be able to"] support 2 more servants and the ark can be opened."
+		if(2)
+			message = "The Steam Helios, a strong 2 pilot mech, [completed ? "has been" : "will be"] summoned to reebe."
+		if(3)
+			message = "Humaniod servants [completed ? "may now" : "will be able to"] ascend their form to that of a clockwork golem, giving them innate armor, environmental immunity, \
+					   and faster invoking for most scriptures."
+	return message
+
+///returns how many charged anchor crystals there are
+/proc/get_charged_anchor_crystals()
 	var/charged_count = 0
 	for(var/obj/structure/destructible/clockwork/anchoring_crystal/checked_crystal in GLOB.anchoring_crystals)
 		if(checked_crystal.charge_state == FULLY_CHARGED)

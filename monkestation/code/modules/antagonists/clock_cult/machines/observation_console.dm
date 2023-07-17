@@ -41,6 +41,8 @@
 	button_icon_state = "warp_down"
 	///are we warping down
 	var/warping = FALSE
+	///what area types are we blocked from warping to
+	var/static/list/blocked_areas = typecacheof(list(/area/station/service/chapel, /area/station/ai_monitored))
 
 /datum/action/innate/clockcult/warp/IsAvailable(feedback)
 	if(!IS_CLOCK(owner) || owner.incapacitated())
@@ -66,7 +68,7 @@
 	if(isclosedturf(target_loc))
 		to_chat(owner, span_brass("You cannot warp into dense objects."))
 		return
-	if((target_area.area_flags & ABDUCTOR_PROOF) || istype(target_area, /area/station/service/chapel)) //ABDUCTOR_PROOF should block about the areas we want
+	if((target_area.area_flags & ABDUCTOR_PROOF) || is_type_in_typecache(target_area, blocked_areas))
 		to_chat(owner, span_brass("A strange force blocks you from warping here"))
 		return
 

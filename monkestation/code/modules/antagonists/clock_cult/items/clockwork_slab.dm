@@ -33,8 +33,8 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 
 	/// How many cogs this slab has currently
 	var/cogs = 0
-	/// A list of what scriptures that this slab has purchased
-	var/list/purchased_scriptures = list()
+	/// An assoc list of refs to instances that are owned/have been purchased by this slab. Assoc is by type
+	var/list/owned_scriptures = list()
 
 	//Initialise an empty list for quickbinding
 	var/list/quick_bound_scriptures = list(
@@ -64,8 +64,8 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 		if(!script)
 			continue
 
-		purchased_scriptures += script
-		var/datum/scripture/default_script = GLOB.clock_scriptures_by_type[script]
+		var/datum/scripture/default_script = new script()
+		owned_scriptures[default_script.type] = default_script
 		bind_spell(null, default_script, pos++)
 
 
@@ -74,6 +74,10 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 	invoking_scripture = null
 	active_scripture = null
 	buffer = null
+	for(var/scripture_path in owned_scriptures)
+		var/scripture_ref = owned_scriptures[scripture_path] //so we can clear the ref before qdeling
+		owned_scriptures[scripture_path] = null
+		qdel(scripture_ref)
 	return ..()
 
 
@@ -164,13 +168,16 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 
 	//2 scriptures accessible at the same time will cause issues
 	for(var/datum/scripture/scripture as anything in GLOB.clock_scriptures)
+		if(scripture.unique_locked)
+			continue
+
 		var/list/scripture_data = list(
 			"name" = scripture.name,
 			"desc" = scripture.desc,
 			"type" = scripture.category,
 			"tip" = scripture.tip,
 			"cost" = scripture.power_cost,
-			"purchased" = (scripture.type in purchased_scriptures),
+			"purchased" = (owned_scriptures[scripture.type] ? TRUE : FALSE),
 			"cog_cost" = scripture.cogs_required,
 			"typepath" = scripture.type,
 		)
@@ -195,27 +202,30 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 			if(!scripture)
 				return FALSE
 
-			if(scripture.type in purchased_scriptures)
+			if(owned_scriptures[scripture.type])
+				var/datum/scripture/owned_scripture = owned_scriptures[scripture.type]
 				if(invoking_scripture)
 					living_user.balloon_alert(living_user, "failed to invoke!")
 					return FALSE
 
-				if(scripture.power_cost > GLOB.clock_power)
-					living_user.balloon_alert(living_user, "[scripture.power_cost]W required!")
+				if(owned_scripture.power_cost > GLOB.clock_power)
+					living_user.balloon_alert(living_user, "[owned_scripture.power_cost]W required!")
 					return FALSE
 
-				if(scripture.vitality_cost > GLOB.clock_vitality)
-					living_user.balloon_alert(living_user, "[scripture.vitality_cost] vitality required!")
+				if(owned_scripture.vitality_cost > GLOB.clock_vitality)
+					living_user.balloon_alert(living_user, "[owned_scripture.vitality_cost] vitality required!")
 					return FALSE
 
-				scripture.begin_invoke(living_user, src)
+				owned_scripture.begin_invoke(living_user, src)
 
 			else
 				if(cogs >= scripture.cogs_required)
 					cogs -= scripture.cogs_required
 					living_user.balloon_alert(living_user, "[scripture.name] purchased")
 					log_game("[scripture.name] purchased by [living_user.ckey]/[living_user.name] the [living_user.job] for [scripture.cogs_required] cogs, [cogs] cogs remaining.")
-					purchased_scriptures += scripture.type
+					var/datum/scripture/new_scripture = new scripture.type()
+					new_scripture.unique_locked = scripture.unique_locked
+					owned_scriptures[new_scripture.type] = new_scripture
 
 				else
 					living_user.balloon_alert(living_user, "need at least [scripture.cogs_required]!")
@@ -224,7 +234,7 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 
 
 		if("quickbind")
-			var/datum/scripture/scripture = GLOB.clock_scriptures_by_type[text2path(params["scriptureType"])]
+			var/datum/scripture/scripture = owned_scriptures[text2path(params["scriptureType"])]
 			if(!scripture)
 				return FALSE
 

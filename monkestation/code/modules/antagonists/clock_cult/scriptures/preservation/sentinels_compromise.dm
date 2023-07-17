@@ -10,6 +10,8 @@
 	category = SPELLTYPE_PRESERVATION
 	slab_overlay = "compromise"
 	use_time = 15 SECONDS
+	recital_sound = 'sound/magic/magic_missile.ogg'
+	fast_invoke_mult = 0.8
 
 /datum/scripture/slab/sentinels_compromise/apply_effects(mob/living/healed_mob)
 	if(!istype(healed_mob) || !IS_CLOCK(invoker) || !IS_CLOCK(healed_mob))

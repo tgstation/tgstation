@@ -55,7 +55,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	send_to_playing_players(span_ratvar("The bluespace veil gives way to Ratvar, his light shall shine upon all mortals!"))
 	UnregisterSignal(src, COMSIG_ATOM_BSA_BEAM)
 	SSshuttle.registerHostileEnvironment(src)
-	addtimer(CALLBACK(src, GLOBAL_PROC_REF(clockcult_ending_start)), 5 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clockcult_ending_start)), 5 SECONDS)
 
 	var/area/area = get_area(src)
 	if(area)
@@ -132,7 +132,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 			SEND_SOUND(lit_mob, sound('sound/magic/fireball.ogg'))
 		if(!IS_CLOCK(lit_mob) && isliving(lit_mob))
 			var/mob/living/very_lit_mob = lit_mob
-			very_lit_mob.fire_stacks = INFINITY
+			very_lit_mob.fire_stacks = 1000
 			very_lit_mob.ignite_mob()
 			very_lit_mob.emote("scream")
 	sleep(1.5 SECONDS)
@@ -167,15 +167,6 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	. = ..()
 	if(.)
 		ChangeTurf(/turf/open/indestructible/reebe_flooring, flags = CHANGETURF_INHERIT_AIR)
-
-/*/obj/machinery/computer/ratvar_act()
-	if(!clockwork)
-		clockwork = TRUE
-		icon_screen = "ratvar[rand(1, 3)]"
-		icon_keyboard = "ratvar_key[rand(1, 2)]"
-		icon_state = "ratvarcomputer"
-		broken_overlay_emissive = TRUE
-		update_appearance()*/
 
 /turf/closed/wall/ratvar_act(force, ignore_mobs)
 	. = ..()

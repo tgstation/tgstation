@@ -197,6 +197,10 @@
 /turf/closed/wall/clockwork/ratvar_act()
 	return FALSE
 
+/turf/closed/wall/clockwork/rust_heretic_act()
+	visible_message(span_warning("\The [src] glows for a second, but is uneffected by the magic!"))
+	return
+
 /turf/closed/wall/clockwork/reebe //for mapping on reebe, should make this instead just use the on_reebe() check at some point
 	baseturfs = /turf/open/indestructible/reebe_flooring
 

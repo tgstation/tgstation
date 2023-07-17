@@ -8,8 +8,8 @@
 	prefix = "Clockwork"
 	special_names = null
 	examine_limb_id = SPECIES_GOLEM
-	armor = 50
-	speedmod = 0.5
+	armor = 65
+	speedmod = 0.4
 	///ref to our turf_healing component, used for deletion on_species_loss()
 	var/datum/component/turf_healing/mob_turf_healing
 

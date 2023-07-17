@@ -1,4 +1,4 @@
-#define POWER_PER_USE 50
+#define POWER_PER_USE 30
 
 /obj/structure/destructible/clockwork/gear_base/powered/prosperity_prism
 	name = "prosperity prism"

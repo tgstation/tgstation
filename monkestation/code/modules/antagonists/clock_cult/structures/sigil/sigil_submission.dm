@@ -27,19 +27,24 @@
 		converted_mob.client.color = LIGHT_COLOR_CLOCKWORK
 		animate(converted_mob.client, color = previous_colour, time = 1 SECONDS)
 
-	var/datum/antagonist/clock_cultist/servant_datum = new
-	servant_datum.give_slab = FALSE
-	converted_mob.mind.add_antag_datum(servant_datum)
-	new /obj/item/clockwork/clockwork_slab(get_turf(src))
-	converted_mob.Paralyze(5 SECONDS)
+	if(GLOB.main_clock_cult?.human_servants < GLOB.main_clock_cult?.max_human_servants)
+		var/datum/antagonist/clock_cultist/servant_datum = new
+		servant_datum.give_slab = FALSE
+		converted_mob.mind.add_antag_datum(servant_datum)
+		new /obj/item/clockwork/clockwork_slab(get_turf(src))
+		converted_mob.Paralyze(5 SECONDS)
 
-	var/brutedamage = converted_mob.getBruteLoss()
-	var/burndamage = converted_mob.getFireLoss()
-	if(brutedamage || burndamage)
-		converted_mob.adjustBruteLoss(-(round(brutedamage * 0.75)))
-		converted_mob.adjustFireLoss(-(round(burndamage * 0.75)))
+		var/brutedamage = converted_mob.getBruteLoss()
+		var/burndamage = converted_mob.getFireLoss()
+		if(brutedamage || burndamage)
+			converted_mob.adjustBruteLoss(-(round(brutedamage * 0.75)))
+			converted_mob.adjustFireLoss(-(round(burndamage * 0.75)))
 
-	converted_mob.visible_message(span_warning("[converted_mob] sits completely motionless as \
-	 											[(brutedamage || burndamage) ? "a birght light pours from [converted_mob.p_their()] wounds as they close." \
-												: "as the sigil below [converted_mob.p_them()] glows brightly."]!"),
-								  span_bigbrass("<i>You feel a flash of light and the world spin around you!</i>"))
+		converted_mob.visible_message(span_warning("[converted_mob] sits completely motionless as \
+	 												[(brutedamage || burndamage) ? "a birght light pours from [converted_mob.p_their()] wounds as they close." \
+													: "as the sigil below [converted_mob.p_them()] glows brightly."]!"),
+									 span_bigbrass("<i>You feel a flash of light and the world spin around you!</i>"))
+		send_clock_message(null, "[converted_mob] has been converted!")
+	else
+		visible_message(span_warning("\The [src] falters as though it cannot support more servants."))
+		return FALSE

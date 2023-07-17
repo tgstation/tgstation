@@ -5,7 +5,7 @@
 	desc = "An eye turret that will fire upon nearby targets."
 	tip = "Place these around to prevent crew from rushing past your defenses."
 	button_icon_state = "Ocular Warden"
-	power_cost = 400
+	power_cost = 350
 	invocation_time = 5 SECONDS
 	invocation_text = list("Summon thee to defend our temple")
 	summoned_structure = /obj/structure/destructible/clockwork/gear_base/powered/ocular_warden

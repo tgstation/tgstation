@@ -11,7 +11,7 @@
 	break_message = span_warning("The interdiction lens breaks into multiple fragments, which gently float to the ground.")
 	max_integrity = 150
 	minimum_power = POWER_PER_PERSON
-	passive_consumption = 25
+	passive_consumption = 10
 	/// Part 1/2 of the interdictor. This portion acts as the monitor, sending calls to the 2nd part when it finds something.
 	var/datum/proximity_monitor/advanced/dampening_field
 	/// Part 2 of the interdictor. This one actually does the dampening, but requires the dampening_field to tell it what to dampen

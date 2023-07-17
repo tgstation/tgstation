@@ -25,8 +25,8 @@
 /atom/movable/screen/alert/status_effect/interdiction
 	name = "Interdicted"
 	desc = "I don't think I am meant to go this way."
-	icon = 'monkestation/icons/mob/clock_cult/actions_clock.dmi'
-	icon_state = "interdiction_effect" //fix later
+	icon = 'monkestation/icons/hud/screen_alert.dmi'
+	icon_state = "belligerent"
 
 /datum/movespeed_modifier/clock_interdiction
 	multiplicative_slowdown = 1.5

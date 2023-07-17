@@ -42,7 +42,7 @@
 		give_clockwork_slab(current)
 	current.log_message("has been converted to the cult of Rat'var!", LOG_ATTACK, color="#960000")
 
-//given_clock_team is provided by conversion methods
+//given_clock_team is provided by conversion methods, although we never use it due to wanting to just set their team to the main clock cult
 /datum/antagonist/clock_cultist/create_team(datum/team/clock_cult/given_clock_team)
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_OUTPOST_OF_COGS)
 	if(!given_clock_team)
@@ -65,7 +65,7 @@
 	var/mob/living/current = owner.current
 	current.faction |= FACTION_CLOCK
 	current.grant_language(/datum/language/ratvar, TRUE, TRUE, LANGUAGE_CULTIST)
-	current.throw_alert("clockinfo", /atom/movable/screen/alert/clocksense)
+	current.throw_alert("clockinfo", /atom/movable/screen/alert/clockwork/clocksense)
 	if(!istype(current, /mob/living/eminence))
 		add_team_hud(current)
 		communicate.Grant(current)

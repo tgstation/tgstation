@@ -6,40 +6,42 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	item_flags = NOBLUDGEON
 	///what scripture type are we
-	var/scripture_datum = /datum/scripture
+	var/datum/scripture/scripture_datum = /datum/scripture
 
 /obj/item/clock_module/Initialize(mapload)
 	. = ..()
 
-	var/datum/scripture/new_scripture = new scripture_datum
-	name = new_scripture.name
-	desc = new_scripture.desc
-	icon_state = new_scripture.button_icon_state
+	scripture_datum = new scripture_datum()
+	name = scripture_datum.name
+	desc = scripture_datum.desc
+	icon_state = scripture_datum.button_icon_state
+
+/obj/item/clock_module/Destroy(force)
+	var/scripture_ref = scripture_datum
+	scripture_datum = null
+	QDEL_NULL(scripture_ref)
+	return ..()
 
 /obj/item/clock_module/attack_self(mob/user, modifiers)
 	. = ..()
 
 	if(!IS_CLOCK(user))
-		return
+		return FALSE
+
 	var/mob/living/silicon/robot/our_borg = user
-	if(!istype(our_borg))
-		return
-	if(!scripture_datum)
-		return
+	if(!istype(our_borg) || !scripture_datum)
+		return FALSE
 
 	var/obj/item/clockwork/clockwork_slab/internal_slab = our_borg.internal_clock_slab
 	if(!internal_slab)
 		to_chat(user, span_userdanger("You dont have an internal slab, this should not be the case and you should tell an admin with an ahelp(f1)."))
-		return
-	if(internal_slab.invoking_scripture)
+		return FALSE
+
+	if(internal_slab.invoking_scripture || (scripture_datum.power_cost > GLOB.clock_power))
 		to_chat(user, span_brass("You fail to invoke [name]."))
 		return FALSE
 
-	var/datum/scripture/selected_scripture = GLOB.clock_scriptures_by_type[scripture_datum]
-	if(selected_scripture.power_cost > GLOB.clock_power)
-		return FALSE
-
-	selected_scripture.begin_invoke(user, internal_slab, TRUE)
+	scripture_datum.begin_invoke(user, internal_slab, TRUE)
 
 /obj/item/clock_module/abscond
 	scripture_datum = /datum/scripture/abscond
