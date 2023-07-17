@@ -64,7 +64,7 @@
 		"Miner" = 64,
 		"Clown" = 5,
 		"Golem" = 15,
-		"Eskimo" = 10,
+		"Settler" = 10,
 		pick(list(
 			"Cultist",
 			"Heremoth",
@@ -75,8 +75,8 @@
 	switch(corpse_theme)
 		if("Miner")
 			outfit = /datum/outfit/consumed_miner
-		if("Eskimo")
-			outfit = /datum/outfit/consumed_eskimo
+		if("Settler")
+			outfit = /datum/outfit/consumed_ice_settler
 		if("Heremoth")
 			outfit = /datum/outfit/consumed_heremoth
 		if("Clown")
@@ -254,22 +254,23 @@
 	if(prob(50))
 		neck = /obj/item/bedsheet/rd/royal_cape
 
-/datum/outfit/consumed_eskimo
-	name = "Legion-Consumed Eskimo"
+/datum/outfit/consumed_ice_settler
+	name = "Legion-Consumed Settler"
 	suit = /obj/item/clothing/suit/hooded/wintercoat
 	shoes = /obj/item/clothing/shoes/winterboots
 	mask = /obj/item/clothing/mask/breath
+	back = /obj/item/tank/internals/oxygen
 
-/datum/outfit/consumed_eskimo/pre_equip(mob/living/carbon/human/eskimo, visualsOnly = FALSE)
+/datum/outfit/consumed_ice_settler/pre_equip(mob/living/carbon/human/ice_settler, visualsOnly = FALSE)
 	if(prob(70))
-		belt = pick_weight(list(
+		back = pick_weight(list(
 			/obj/item/pickaxe = 4,
 			/obj/item/fishing_rod = 4,
-			/obj/item/tank/internals/emergency_oxygen = 2,
+			/obj/item/tank/internals/oxygen = 2,
 			/obj/item/flashlight/flare/torch = 2,
 			/obj/item/crowbar = 2,
 		))
-	r_pocket = pick_weight(list(
+	belt = pick_weight(list(
 		/obj/item/food/fishmeat = 89,
 		/obj/item/food/fishmeat/carp = 10,
 		/obj/item/skeleton_key = 1,
