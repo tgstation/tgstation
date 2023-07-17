@@ -130,9 +130,9 @@
 	if(dna)
 		if(HAS_TRAIT(src, TRAIT_VIRUSIMMUNE) && !disease.bypasses_immunity)
 			return FALSE
-
-	if(!disease.has_required_infectious_organ(src, disease.required_organ))
-		return FALSE
+	if(disease.required_organ)
+		if(!disease.has_required_infectious_organ(src, disease.required_organ))
+			return FALSE
 
 	return ..()
 
