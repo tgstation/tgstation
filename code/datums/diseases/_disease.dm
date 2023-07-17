@@ -203,8 +203,11 @@
 	return FALSE
 
 /// Checks if the mob has the required organ and it's not robotic or affected by inorganic biology
-/datum/disease/proc/has_required_infectious_organ(required_organ_slot)
-	var/obj/item/organ/target_organ = affected_mob.get_organ_slot(required_organ_slot)
+/datum/disease/proc/has_required_infectious_organ(mob/living/carbon/target, required_organ_slot)
+	if(!iscarbon(target))
+		return FALSE
+
+	var/obj/item/organ/target_organ = target.get_organ_slot(required_organ_slot)
 	if(!istype(target_organ))
 		return FALSE
 

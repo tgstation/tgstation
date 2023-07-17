@@ -57,7 +57,7 @@
 		return
 
 	for(var/datum/disease/disease in diseases)
-		if(!disease.has_required_infectious_organ(ORGAN_SLOT_STOMACH))
+		if(!disease.has_required_infectious_organ(eater, ORGAN_SLOT_STOMACH))
 			continue
 
 		eater.ForceContractDisease(disease)

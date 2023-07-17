@@ -33,17 +33,17 @@
 				continue
 
 			if(methods & INGEST)
-				if(!strain.has_required_infectious_organ(ORGAN_SLOT_STOMACH))
+				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_STOMACH))
 					continue
 
 				exposed_mob.ForceContractDisease(strain)
 			else if(methods & (INJECT|PATCH))
-				if(!strain.has_required_infectious_organ(ORGAN_SLOT_HEART))
+				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_HEART))
 					continue
 
 				exposed_mob.ForceContractDisease(strain)
 			else if((methods & VAPOR) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
-				if(!strain.has_required_infectious_organ(ORGAN_SLOT_LUNGS))
+				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_LUNGS))
 					continue
 
 				exposed_mob.ContactContractDisease(strain)

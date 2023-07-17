@@ -107,7 +107,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return
 
-	if(!disease.has_required_infectious_organ(ORGAN_SLOT_LUNGS))
+	if(!disease.has_required_infectious_organ(src, ORGAN_SLOT_LUNGS))
 		return
 
 	..()
@@ -131,7 +131,7 @@
 		if(HAS_TRAIT(src, TRAIT_VIRUSIMMUNE) && !disease.bypasses_immunity)
 			return FALSE
 
-	if(!disease.has_required_infectious_organ(disease.required_organ))
+	if(!disease.has_required_infectious_organ(src, disease.required_organ))
 		return FALSE
 
 	return ..()
