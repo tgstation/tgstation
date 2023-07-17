@@ -343,7 +343,7 @@
 		glasses = /obj/item/clothing/glasses/blindfold
 	r_pocket = pick_weight(list(
 		/obj/item/flashlight/lantern = 4,
-		/obj/item/toy/plush/moth = 2,
+		/obj/item/knife/comat/survival = 2,
 		/obj/item/toy/eldritch_book = 2,
 		/obj/item/storage/box/heretic_box = 2,
 	))
