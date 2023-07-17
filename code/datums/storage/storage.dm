@@ -244,7 +244,7 @@
 /// ~Lemon
 GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
-/datum/storage/proc/set_holdable(list/can_hold_list = null, list/cant_hold_list = null)
+/datum/storage/proc/set_holdable(list/can_hold_list = null, list/cant_hold_list = null, generate_can_hold_subtypes = TRUE)
 	if(!islist(can_hold_list))
 		can_hold_list = list(can_hold_list)
 	if(!islist(cant_hold_list))
@@ -253,9 +253,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	can_hold_description = generate_hold_desc(can_hold_list)
 
 	if (can_hold_list)
-		var/unique_key = can_hold_list.Join("-")
+		var/unique_key = (generate_can_hold_subtypes ? "SB" : "RO") + "-" + can_hold_list.Join("-")
 		if(!GLOB.cached_storage_typecaches[unique_key])
-			GLOB.cached_storage_typecaches[unique_key] = typecacheof(can_hold_list)
+			if(generate_can_hold_subtypes)
+				GLOB.cached_storage_typecaches[unique_key] = typecacheof(can_hold_list)
+			else
+				GLOB.cached_storage_typecaches[unique_key] = list2cache(can_hold_list)
 		can_hold = GLOB.cached_storage_typecaches[unique_key]
 
 	if (cant_hold_list != null)

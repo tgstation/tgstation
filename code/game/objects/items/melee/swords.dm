@@ -212,7 +212,7 @@
 			/obj/item/nullrod/claymore/darkblade,
 			/obj/item/melee/cultblade,
 			/obj/item/melee/sword/reforged,
-		)
+		), generate_can_hold_subtypes = FALSE
 	)
 
 /obj/item/storage/belt/sheath/examine(mob/user)

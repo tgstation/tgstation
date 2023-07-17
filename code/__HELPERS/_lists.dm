@@ -271,6 +271,12 @@
 		if(typecache_include[atom_checked.type] && !typecache_exclude[atom_checked.type])
 			. += atom_checked
 
+/// Converts a given list to a cache list.
+/proc/list2cache(list/input)
+	. = list()
+	for(var/entry in input)
+		.[entry] = TRUE
+
 /**
  * Like typesof() or subtypesof(), but returns a typecache instead of a list.
  *
