@@ -262,7 +262,7 @@
 	back = /obj/item/tank/internals/oxygen
 
 /datum/outfit/consumed_ice_settler/pre_equip(mob/living/carbon/human/ice_settler, visualsOnly = FALSE)
-	if(prob(70))
+	if(prob(50))
 		back = pick_weight(list(
 			/obj/item/pickaxe = 4,
 			/obj/item/fishing_rod = 4,
@@ -270,11 +270,13 @@
 			/obj/item/flashlight/flare/torch = 2,
 			/obj/item/crowbar = 2,
 		))
-	belt = pick_weight(list(
-		/obj/item/food/fishmeat = 89,
-		/obj/item/food/fishmeat/carp = 10,
-		/obj/item/skeleton_key = 1,
-	))
+	else
+		/obj/item/storage/backpack/satchel/explorer
+		var/backpack_loot = pick(list(
+			/obj/item/food/fishmeat = 89,
+			/obj/item/food/fishmeat/carp = 10,
+			/obj/item/skeleton_key = 1,
+		))
 
 //this is so pointlessly gendered but whatever bro i'm here to refactor not judge
 /datum/outfit/consumed_dame
