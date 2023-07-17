@@ -716,12 +716,10 @@
 				//should be a "sometimes" thing, not an "always" thing, but risky enough to force the need for precautions to isolate the subject
 				if(prob(60))
 					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(2,2)
-					if(scanner_occupant.CanContractDisease(random_disease))
-						random_disease.try_infect(scanner_occupant, FALSE)
+					scanner_occupant.ContactContractDisease(random_disease)
 				else if (prob(30))
 					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(3,4)
-					if(scanner_occupant.CanContractDisease(random_disease))
-						random_disease.try_infect(scanner_occupant, FALSE)
+					scanner_occupant.ContactContractDisease(random_disease)
 				//Instantiate list to hold resulting mutation_index
 				var/mutation_data[0]
 				//Start with the bad mutation, overwrite with the desired mutation if it passes the check

@@ -121,9 +121,7 @@
 
 /datum/disease/advance/try_infect(mob/living/infectee, make_copy = TRUE)
 	//see if we are more transmittable than enough diseases to replace them
-	if(HAS_TRAIT(infectee, TRAIT_VIRUSIMMUNE)) //If anything calls this directly, this should catch it if the infectee should be immune
-		return FALSE
-
+	//diseases replaced in this way do not confer immunity
 	var/list/advance_diseases = list()
 	for(var/datum/disease/advance/P in infectee.diseases)
 		advance_diseases += P
