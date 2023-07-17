@@ -50,7 +50,7 @@
 	SSair.stop_processing_machine(src)
 
 	if(nob_crystal_inserted)
-		new /obj/item/hypernoblium_crystal(src)
+		new /obj/item/grenade/gas_crystal/hypernoblium_crystal(src)
 
 	return ..()
 
