@@ -2516,10 +2516,6 @@
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
-"bfk" = (
-/obj/machinery/computer/records/medical/laptop,
-/turf/closed/wall,
-/area/station/maintenance/department/science/xenobiology)
 "bfo" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -35411,11 +35407,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"mYd" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/computer/records/medical/laptop,
-/turf/open/floor/plating,
-/area/station/maintenance/department/science/xenobiology)
 "mYj" = (
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 1
@@ -37265,7 +37256,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/siding/white{
-	dir = 5
+	dir = 1
 	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
@@ -41059,7 +41050,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 9
 	},
-/obj/structure/bodycontainer/morgue/beeper_off,
+/obj/machinery/vending/wardrobe/coroner_wardrobe,
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "pds" = (
@@ -62889,7 +62880,9 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 5
 	},
-/obj/machinery/vending/wardrobe/coroner_wardrobe,
+/obj/structure/bodycontainer/morgue/beeper_off{
+	dir = 8
+	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
 "vWe" = (
@@ -107030,7 +107023,7 @@ kUF
 kdn
 lxa
 ldq
-bfk
+ldq
 lCS
 ldq
 ldq
@@ -107287,7 +107280,7 @@ ldq
 ldq
 kUF
 kdn
-mYd
+kdn
 mlR
 qVn
 fpq
