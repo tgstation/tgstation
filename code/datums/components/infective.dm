@@ -56,13 +56,8 @@
 	if(is_weak && !prob(weak_infection_chance))
 		return
 
-	var/obj/item/organ/internal/stomach/target_stomach = get_organ_slot(ORGAN_SLOT_STOMACH)
-	if(!istype(target_stomach))
-		return
-
 	for(var/datum/disease/disease in diseases)
-		// robotic stomachs are immune to digested disease unless 'inorganic biology' symptom is present
-		if(IS_ROBOTIC_ORGAN(target_stomach) && !(disease.infectable_biotypes & MOB_ROBOTIC))
+		if(!disease.has_required_infectious_organ(ORGAN_SLOT_STOMACH))
 			continue
 
 		eater.ForceContractDisease(disease)
@@ -75,7 +70,7 @@
 	appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : appendage_zone % 2 ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
 	try_infect(feeder, appendage_zone)
 
-	var/obj/item/organ/internal/stomach/target_stomach = get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/target_stomach = drinker.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!istype(target_stomach))
 		return
 

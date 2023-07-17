@@ -101,19 +101,14 @@
 	if(((disease.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob((50*disease.spreading_modifier) - 1))
 		ForceContractDisease(disease)
 
-/mob/living/carbon/AirborneContractDisease(datum/disease/D, force_spread)
+/mob/living/carbon/AirborneContractDisease(datum/disease/disease, force_spread)
 	if(internal)
 		return
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return
 
-	var/obj/item/organ/internal/heart/target_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(!istype(target_lungs))
+	if(!disease.has_required_infectious_organ(ORGAN_SLOT_LUNGS))
 		return
-
-	// robotic lungs are immune to airborne disease unless 'inorganic biology' symptom is present
-	if(IS_ROBOTIC_ORGAN(target_lungs) && !(disease.infectable_biotypes & MOB_ROBOTIC))
-		continue
 
 	..()
 
@@ -136,14 +131,8 @@
 		if(HAS_TRAIT(src, TRAIT_VIRUSIMMUNE) && !disease.bypasses_immunity)
 			return FALSE
 
-	if(disease.required_organ)
-		var/obj/item/organ/target_organ = get_organ_slot(disease.required_organ)
-		if(!istype(target_organ))
-			return FALSE
-
-		// robotic organs are immune to disease unless 'inorganic biology' symptom is present
-		if(IS_ROBOTIC_ORGAN(target_organ) && !(disease.infectable_biotypes & MOB_ROBOTIC))
-			return FALSE
+	if(!disease.has_required_infectious_organ(disease.required_organ))
+		return FALSE
 
 	return ..()
 
