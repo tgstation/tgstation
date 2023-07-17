@@ -267,8 +267,7 @@
 			/obj/item/pickaxe = 4,
 			/obj/item/fishing_rod = 4,
 			/obj/item/tank/internals/oxygen = 2,
-			/obj/item/flashlight/flare/torch = 2,
-			/obj/item/crowbar = 2,
+			/obj/item/flashlight/flare/torch = 4,
 		))
 	else
 		/obj/item/storage/backpack/satchel/explorer
