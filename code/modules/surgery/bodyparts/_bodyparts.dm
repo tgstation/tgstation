@@ -449,15 +449,15 @@
 
 		//Handling for bone only/flesh only(none right now)/flesh and bone targets
 		switch(biological_state)
-			// if we're bone only, all cutting attacks go straight to the bone
-			if(BIO_BONE)
+			// if we're fleshless, all cutting attacks go straight to the bone
+			if(BIO_BONE, BIO_INORGANIC)
 				if(wounding_type == WOUND_SLASH)
 					wounding_type = WOUND_BLUNT
 					wounding_dmg *= (easy_dismember ? 1 : 0.6)
 				else if(wounding_type == WOUND_PIERCE)
 					wounding_type = WOUND_BLUNT
 					wounding_dmg *= (easy_dismember ? 1 : 0.75)
-				if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+				if(((mangled_state & BODYPART_MANGLED_BONE) || biological_state == BIO_INORGANIC) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 					return
 			// note that there's no handling for BIO_FLESH since we don't have any that are that right now (slimepeople maybe someday)
 			// standard humanoids
