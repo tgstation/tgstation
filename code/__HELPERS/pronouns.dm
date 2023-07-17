@@ -334,16 +334,16 @@
 		temp_gender = PLURAL
 	return ..()
 
-
 //clothing need special handling due to pairs of items, ie gloves vs a singular glove, shoes, ect.
-/obj/item/clothing/p_they(capitalized, temp_gender)
+/obj/item/clothing/p_they(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "it"
 	if(temp_gender == PLURAL)
 		. = "they"
-	if(capitalized)
-		. = capitalize(.)
+
+/obj/item/clothing/p_They(temp_gender)
+	. = capitalize(p_they(temp_gender))
 
 /obj/item/clothing/p_their(temp_gender)
 	if(!temp_gender)
@@ -351,8 +351,6 @@
 	. = "its"
 	if(temp_gender == PLURAL)
 		. = "their"
-	if(capitalized)
-		. = capitalize(.)
 
 /obj/item/clothing/p_Their(temp_gender)
 	. = capitalize(p_their(temp_gender))
