@@ -13,7 +13,7 @@
 /// Approximate height in pixels of an 'average' line, used for height decay
 #define CHAT_MESSAGE_APPROX_LHEIGHT 11
 /// Max width of chat message in pixels
-#define CHAT_MESSAGE_WIDTH 96
+#define CHAT_MESSAGE_WIDTH 112
 /// The dimensions of the chat message icons
 #define CHAT_MESSAGE_ICON_SIZE 9
 
@@ -77,12 +77,14 @@
 	INVOKE_ASYNC(src, PROC_REF(generate_image), text, target, owner, language, extra_classes, lifespan)
 
 /datum/chatmessage/Destroy()
-	if(REALTIMEOFDAY < animate_start + animate_lifespan)
-		stack_trace("Del'd before we finished fading, with [(animate_start + animate_lifespan) - REALTIMEOFDAY] time left")
-	if (owned_by)
+	if (!QDELING(owned_by))
+		if(REALTIMEOFDAY < animate_start + animate_lifespan)
+			stack_trace("Del'd before we finished fading, with [(animate_start + animate_lifespan) - REALTIMEOFDAY] time left")
+
 		if (owned_by.seen_messages)
 			LAZYREMOVEASSOC(owned_by.seen_messages, message_loc, src)
 		owned_by.images.Remove(message)
+
 	owned_by = null
 	message_loc = null
 	message = null
@@ -112,7 +114,7 @@
 
 	// Register client who owns this message
 	owned_by = owner.client
-	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_qdel))
+	RegisterSignal(owned_by, COMSIG_QDELETING, PROC_REF(on_parent_qdel))
 
 	// Remove spans in the message from things like the recorder
 	var/static/regex/span_check = new(@"<\/?span[^>]*>", "gi")
@@ -143,6 +145,10 @@
 	if (!ismob(target))
 		extra_classes |= "small"
 
+	// Why are you yelling?
+	if(copytext_char(text, -2) == "!!")
+		extra_classes |= SPAN_YELL
+
 	var/list/prefixes
 
 	// Append radio icon if from a virtual speaker
@@ -169,7 +175,7 @@
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
 
 	// Approximate text height
-	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[owner.say_emphasis(text)]</span>"
+	var/complete_text = "<span style='color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[owner.say_emphasis(text)]</span></span>"
 
 	var/mheight
 	WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH), mheight)
@@ -233,7 +239,7 @@
 	message.pixel_y = target.maptext_height
 	message.pixel_x = -target.base_pixel_x
 	message.maptext_width = CHAT_MESSAGE_WIDTH
-	message.maptext_height = mheight
+	message.maptext_height = mheight * 1.25 // We add extra because some characters are superscript, like actions
 	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5
 	message.maptext = MAPTEXT(complete_text)
 
@@ -360,7 +366,7 @@
 #undef CHAT_LAYER_MAX_Z
 #undef CHAT_LAYER_Z_STEP
 #undef CHAT_MESSAGE_APPROX_LHEIGHT
-#undef CHAT_MESSAGE_GRACE_PERIOD 
+#undef CHAT_MESSAGE_GRACE_PERIOD
 #undef CHAT_MESSAGE_EOL_FADE
 #undef CHAT_MESSAGE_EXP_DECAY
 #undef CHAT_MESSAGE_HEIGHT_DECAY

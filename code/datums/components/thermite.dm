@@ -6,6 +6,8 @@
 	var/burn_require
 	/// The thermite overlay
 	var/thermite_overlay
+	/// Default thermite overlay, do not touch
+	var/static/mutable_appearance/default_thermite_overlay = mutable_appearance('icons/effects/effects.dmi', "thermite")
 	/// Callback related to burning, stored so the timer can be easily reset without losing the user
 	var/datum/callback/burn_callback
 	/// The timer for burning parent, calls burn_callback when done
@@ -13,8 +15,6 @@
 	/// The thermite fire overlay
 	var/obj/effect/overlay/thermite/fakefire
 
-	/// Default thermite overlay, do not touch
-	var/static/mutable_appearance/default_thermite_overlay = mutable_appearance('icons/effects/effects.dmi', "thermite")
 	/// Blacklist of turfs that cannot have thermite on it
 	var/static/list/blacklist = typecacheof(list(
 		/turf/open/lava,
@@ -54,33 +54,35 @@
 
 /datum/component/thermite/Destroy()
 	thermite_overlay = null
-	if(burn_callback)
-		QDEL_NULL(burn_callback)
 	if(burn_timer)
 		deltimer(burn_timer)
 		burn_timer = null
+	if(burn_callback)
+		QDEL_NULL(burn_callback)
 	if(fakefire)
 		QDEL_NULL(fakefire)
 	return ..()
 
 /datum/component/thermite/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attackby_react))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, PROC_REF(on_fire_act))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_react))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_react))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(parent_qdeleting)) //probably necessary because turfs are wack
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(parent_qdeleting)) //probably necessary because turfs are wack
 	var/turf/turf_parent = parent
 	turf_parent.update_appearance()
 
 /datum/component/thermite/UnregisterFromParent()
 	UnregisterSignal(parent, list(
+		COMSIG_ATOM_ATTACKBY,
+		COMSIG_ATOM_ATTACK_HAND,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_FIRE_ACT,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_COMPONENT_CLEAN_ACT,
-		COMSIG_PARENT_ATTACKBY,
-		COMSIG_PARENT_EXAMINE,
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 	))
 	var/turf/turf_parent = parent
 	turf_parent.update_appearance()
@@ -118,8 +120,8 @@
 	fakefire = new(parent_turf)
 	burn_callback = CALLBACK(src, PROC_REF(burn_parent), user)
 	burn_timer = addtimer(burn_callback, min(amount * 0.35 SECONDS, 20 SECONDS), TIMER_STOPPABLE)
-	//unregister everything mechanical, we are burning up
-	UnregisterSignal(parent, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_FIRE_ACT))
+	//unregister everything related to burning
+	UnregisterSignal(parent, list(COMSIG_COMPONENT_CLEAN_ACT, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_FIRE_ACT))
 
 /**
  * Used to actually melt parent
@@ -145,7 +147,7 @@
 /datum/component/thermite/proc/clean_react(datum/source, strength)
 	SIGNAL_HANDLER
 
-	//Thermite is just some loose powder, you could probably clean it with your hands. << todo?
+	//Thermite is just some loose powder, you could probably clean it with your hands
 	qdel(src)
 
 	return COMPONENT_CLEANED
@@ -166,6 +168,29 @@
 	if(exposed_temperature >= 1922)
 		thermite_melt()
 
+/// Handles searing the hand of anyone who tries to touch parent without protection, while burning
+/datum/component/thermite/proc/on_attack_hand(atom/source, mob/living/carbon/user)
+	SIGNAL_HANDLER
+
+	//not burning
+	if(!fakefire)
+		return NONE
+
+	if(!iscarbon(user) || user.can_touch_burning(source))
+		return NONE
+
+	var/obj/item/bodypart/affecting = user.get_active_hand()
+	//Should not happen!
+	if(!affecting)
+		return NONE
+
+	affecting.receive_damage(burn = 5)
+	to_chat(user, span_userdanger("The ignited thermite on \the [source] burns your hand!"))
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
+	playsound(source, SFX_SEAR, 50, TRUE)
+	user.update_damage_overlays()
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 /**
  * attackby reaction, ignites the thermite if its a flame creating object
  *
@@ -181,7 +206,7 @@
 	if(thing.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		thermite_melt(user)
 
-/// Signal handler for COMSIG_PARENT_QDELETING, necessary because turfs can be weird with qdel()
+/// Signal handler for COMSIG_QDELETING, necessary because turfs can be weird with qdel()
 /datum/component/thermite/proc/parent_qdeleting(datum/source)
 	SIGNAL_HANDLER
 

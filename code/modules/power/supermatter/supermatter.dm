@@ -17,7 +17,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal
 	name = "supermatter crystal"
 	desc = "A strangely translucent and iridescent crystal."
-	icon = 'icons/obj/engine/supermatter.dmi'
+	icon = 'icons/obj/machines/engine/supermatter.dmi'
 	density = TRUE
 	anchored = TRUE
 	layer = MOB_LAYER
@@ -230,7 +230,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/examine(mob/user)
 	. = ..()
-	var/immune = HAS_TRAIT(user, TRAIT_MADNESS_IMMUNE) || (user.mind && HAS_TRAIT(user.mind, TRAIT_MADNESS_IMMUNE))
+	var/immune = HAS_MIND_TRAIT(user, TRAIT_MADNESS_IMMUNE)
 	if(isliving(user) && !immune && (get_dist(user, src) < SM_HALLUCINATION_RANGE(internal_energy)))
 		. += span_danger("You get headaches just from looking at it.")
 	. += delamination_strategy.examine(src)
@@ -548,9 +548,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	gas_powerloss_inhibition = 0
 
 	var/total_moles = absorbed_gasmix.total_moles()
-
+	if(total_moles < MINIMUM_MOLE_COUNT) //it's not worth processing small amounts like these, total_moles can also be 0 in vacuume
+		return
 	for (var/gas_path in absorbed_gasmix.gases)
-		gas_percentage[gas_path] = absorbed_gasmix.gases[gas_path][MOLES] / total_moles
+		var/mole_count = absorbed_gasmix.gases[gas_path][MOLES]
+		if(mole_count < MINIMUM_MOLE_COUNT) //save processing power from small amounts like these
+			continue
+		gas_percentage[gas_path] = mole_count / total_moles
 		var/datum/sm_gas/sm_gas = GLOB.sm_gas_behavior[gas_path]
 		if(!sm_gas)
 			continue

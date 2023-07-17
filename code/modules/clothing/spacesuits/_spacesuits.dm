@@ -107,13 +107,13 @@
 
 	// If we got here, thermal regulators are on. If there's no cell, turn them off
 	if(!cell)
-		toggle_spacesuit(user)
+		toggle_spacesuit(user, FALSE)
 		update_hud_icon(user)
 		return
 
 	// cell.use will return FALSE if charge is lower than THERMAL_REGULATOR_COST
 	if(!cell.use(THERMAL_REGULATOR_COST))
-		toggle_spacesuit(user)
+		toggle_spacesuit(user, FALSE)
 		update_hud_icon(user)
 		to_chat(user, span_warning("The thermal regulator cuts off as [cell] runs out of charge."))
 		return
@@ -220,8 +220,16 @@
 	cell_cover_open = !cell_cover_open
 	to_chat(user, span_notice("You [cell_cover_open ? "open" : "close"] the cell cover on \the [src]."))
 
-/// Toggle the space suit's thermal regulator status
-/obj/item/clothing/suit/space/proc/toggle_spacesuit(mob/toggler)
+/**
+ * Toggle the space suit's thermal regulator status
+ *
+ * Toggle the space suit's thermal regulator status...
+ * Can't do it if it has no charge.
+ * Arguments:
+ * * toggler - User mob who recieves the to_chat messages.
+ * * manual_toggle - If false get a differently-flavored message about it being disabled by itself
+ */
+/obj/item/clothing/suit/space/proc/toggle_spacesuit(mob/toggler, manual_toggle = TRUE)
 	// If we're turning thermal protection on, check for valid cell and for enough
 	// charge that cell. If it's too low, we shouldn't bother with setting the
 	// thermal protection value and should just return out early.
@@ -232,21 +240,29 @@
 
 	thermal_on = !thermal_on
 	min_cold_protection_temperature = thermal_on ? SPACE_SUIT_MIN_TEMP_PROTECT : SPACE_SUIT_MIN_TEMP_PROTECT_OFF
-	if(toggler)
-		to_chat(toggler, span_notice("You turn [thermal_on ? "on" : "off"] [src]'s thermal regulator."))
 
 	update_item_action_buttons()
+
+	if(!toggler)
+		return
+	if(manual_toggle)
+		to_chat(toggler, span_notice("You turn [thermal_on ? "on" : "off"] [src]'s thermal regulator."))
+	else
+		to_chat(toggler, span_danger("You feel [src]'s thermal regulator switch [thermal_on ? "on" : "off"] by itself!"))
 
 /obj/item/clothing/suit/space/ui_action_click(mob/user, actiontype)
 	toggle_spacesuit(user)
 
 // let emags override the temperature settings
-/obj/item/clothing/suit/space/emag_act(mob/user)
-	if(!(obj_flags & EMAGGED))
-		obj_flags |= EMAGGED
-		user.visible_message(span_warning("You emag [src], overwriting thermal regulator restrictions."))
+/obj/item/clothing/suit/space/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	if (user)
+		balloon_alert(user, "thermal regulator restrictions overridden")
 		user.log_message("emagged [src], overwriting thermal regulator restrictions.", LOG_GAME)
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return TRUE
 
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)

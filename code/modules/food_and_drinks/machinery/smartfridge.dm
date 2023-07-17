@@ -4,7 +4,7 @@
 /obj/machinery/smartfridge
 	name = "smartfridge"
 	desc = "Keeps cold things cold and hot things cold."
-	icon = 'icons/obj/smartfridge.dmi'
+	icon = 'icons/obj/machines/smartfridge.dmi'
 	icon_state = "smartfridge"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
@@ -67,14 +67,14 @@
 	if(istype(src, /obj/machinery/smartfridge/drying_rack))
 		return FALSE
 	if(welded_down)
-		if(!tool.tool_start_check(user, amount=1))
+		if(!tool.tool_start_check(user, amount=2))
 			return TRUE
 		user.visible_message(
 			span_notice("[user.name] starts to cut the [name] free from the floor."),
 			span_notice("You start to cut [src] free from the floor..."),
 			span_hear("You hear welding."),
 		)
-		if(!tool.use_tool(src, user, delay=100, amount=1, volume=100))
+		if(!tool.use_tool(src, user, delay=100, volume=100))
 			return FALSE
 		welded_down = FALSE
 		to_chat(user, span_notice("You cut [src] free from the floor."))
@@ -82,14 +82,14 @@
 	if(!anchored)
 		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
 		return TRUE
-	if(!tool.tool_start_check(user, amount=1))
+	if(!tool.tool_start_check(user, amount=2))
 		return TRUE
 	user.visible_message(
 		span_notice("[user.name] starts to weld the [name] to the floor."),
 		span_notice("You start to weld [src] to the floor..."),
 		span_hear("You hear welding."),
 	)
-	if(!tool.use_tool(src, user, delay=100, amount=1, volume=100))
+	if(!tool.use_tool(src, user, delay=100, volume=100))
 		balloon_alert(user, "cancelled!")
 		return FALSE
 	welded_down = TRUE
@@ -101,7 +101,7 @@
 	if(istype(src, /obj/machinery/smartfridge/drying_rack))
 		return FALSE
 	if(machine_stat & BROKEN)
-		if(!tool.tool_start_check(user, amount=0))
+		if(!tool.tool_start_check(user, amount=1))
 			return FALSE
 		user.visible_message(
 			span_notice("[user] is repairing [src]."),
@@ -121,15 +121,22 @@
 		return FALSE
 
 /obj/machinery/smartfridge/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
+	var/tool_tip_set = FALSE
 	if(held_item.tool_behaviour == TOOL_WELDER && !istype(src, /obj/machinery/smartfridge/drying_rack))
 		if(welded_down)
 			context[SCREENTIP_CONTEXT_LMB] = "Unweld"
+			tool_tip_set = TRUE
 		else if (!welded_down && anchored)
 			context[SCREENTIP_CONTEXT_LMB] = "Weld down"
+			tool_tip_set = TRUE
 		if(machine_stat & BROKEN)
 			context[SCREENTIP_CONTEXT_RMB] = "Repair"
+			tool_tip_set = TRUE
 
-	return CONTEXTUAL_SCREENTIP_SET
+	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
 
 /obj/machinery/smartfridge/RefreshParts()
 	. = ..()
@@ -391,7 +398,7 @@
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
 	desc = "A wooden contraption, used to dry plant products, food and hide."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "drying_rack"
 	resistance_flags = FLAMMABLE
 	visible_contents = FALSE
@@ -493,7 +500,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	atmos_spawn_air("TEMP=1000")
+	atmos_spawn_air("[TURF_TEMPERATURE(1000)]")
 
 
 // ----------------------------
@@ -614,6 +621,7 @@
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
 	var/static/list/chemfridge_typecache = typecacheof(list(
 					/obj/item/reagent_containers/syringe,
+					/obj/item/reagent_containers/cup/tube,
 					/obj/item/reagent_containers/cup/bottle,
 					/obj/item/reagent_containers/cup/beaker,
 					/obj/item/reagent_containers/spray,
@@ -655,6 +663,7 @@
 
 /obj/machinery/smartfridge/chemistry/virology/preloaded
 	initial_contents = list(
+		/obj/item/storage/pill_bottle/sansufentanyl = 2,
 		/obj/item/reagent_containers/syringe/antiviral = 4,
 		/obj/item/reagent_containers/cup/bottle/cold = 1,
 		/obj/item/reagent_containers/cup/bottle/flu_virion = 1,
@@ -671,7 +680,7 @@
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	pass_flags = PASSTABLE
 	can_atmos_pass = ATMOS_PASS_YES
 	visible_contents = FALSE

@@ -3,22 +3,10 @@
 	icon_state = "tile_corner"
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
+	use_holiday_colors = TRUE
 
-#define PRIDE_ALPHA 60
-
-/obj/effect/turf_decal/tile/Initialize(mapload)
-	if (check_holidays(APRIL_FOOLS))
-		color = "#[random_short_color()]"
-	else if (check_holidays(PRIDE_WEEK))
-		var/datum/holiday/pride_week/pride_week = GLOB.holidays[PRIDE_WEEK]
-		color = pride_week.get_floor_tile_color(src)
-
-		// It looks garish at different alphas, and it's not possible to get a
-		// consistent color palette without this.
-		alpha = PRIDE_ALPHA
-	return ..()
-
-#undef PRIDE_ALPHA
+/obj/effect/turf_decal/tile/neutral/tram
+	pattern = PATTERN_VERTICAL_STRIPE
 
 /// Automatically generates all subtypes for a decal with the given path.
 #define TILE_DECAL_SUBTYPE_HELPER(path)\
@@ -48,18 +36,21 @@
 }\
 ##path/diagonal_edge {\
 	icon_state = "diagonal_edge";\
+}\
+##path/tram {\
+	icon_state = "tile_tram";\
 }
 
 /// Blue tiles
 /obj/effect/turf_decal/tile/blue
-	name = "blue corner"
+	name = "blue tile decal"
 	color = "#52B4E9"
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/blue)
 
 /// Dark blue tiles
 /obj/effect/turf_decal/tile/dark_blue
-	name = "dark blue corner"
+	name = "dark blue tile decal"
 	color = "#486091"
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark_blue)
@@ -67,7 +58,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark_blue)
 /// Green tiles
 
 /obj/effect/turf_decal/tile/green
-	name = "green corner"
+	name = "green tile decal"
 	color = "#9FED58"
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/green)
@@ -75,7 +66,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/green)
 /// Dark green tiles
 
 /obj/effect/turf_decal/tile/dark_green
-	name = "dark green corner"
+	name = "dark green tile decal"
 	color = "#439C1E"
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark_green)
@@ -83,7 +74,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark_green)
 /// Yellow tiles
 
 /obj/effect/turf_decal/tile/yellow
-	name = "yellow corner"
+	name = "yellow tile decal"
 	color = "#EFB341"
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/yellow)
@@ -91,7 +82,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/yellow)
 /// Red tiles
 
 /obj/effect/turf_decal/tile/red
-	name = "red corner"
+	name = "red tile decal"
 	color = "#DE3A3A"
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/red)
@@ -99,7 +90,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/red)
 /// Dark red tiles
 
 /obj/effect/turf_decal/tile/dark_red
-	name = "dark red corner"
+	name = "dark red tile decal"
 	color = "#B11111"
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark_red)
@@ -107,7 +98,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark_red)
 /// Bar tiles
 
 /obj/effect/turf_decal/tile/bar
-	name = "bar corner"
+	name = "bar tile decal"
 	color = "#791500"
 	alpha = 130
 
@@ -116,7 +107,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/bar)
 /// Purple tiles
 
 /obj/effect/turf_decal/tile/purple
-	name = "purple corner"
+	name = "purple tile decal"
 	color = "#D381C9"
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/purple)
@@ -124,7 +115,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/purple)
 /// Brown tiles
 
 /obj/effect/turf_decal/tile/brown
-	name = "brown corner"
+	name = "brown tile decal"
 	color = "#A46106"
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/brown)
@@ -132,7 +123,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/brown)
 /// Neutral tiles
 
 /obj/effect/turf_decal/tile/neutral
-	name = "neutral corner"
+	name = "neutral tile decal"
 	color = "#D4D4D4"
 	alpha = 50
 
@@ -141,22 +132,35 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/neutral)
 /// Dark tiles
 
 /obj/effect/turf_decal/tile/dark
-	name = "dark corner"
+	name = "dark tile decal"
 	color = "#0e0f0f"
 
 TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark)
 
-/// Random tiles
+/// Date-specific tiles
+/obj/effect/turf_decal/tile/holiday
+	name = "ERROR tile decal"
+	color = "#FF0000"
 
-/obj/effect/turf_decal/tile/random // so many colors
-	name = "colorful corner"
-	color = "#E300FF" //bright pink as default for mapping
-
-TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/random)
-
-/obj/effect/turf_decal/tile/random/Initialize(mapload)
-	color = "#[random_short_color()]"
+/obj/effect/turf_decal/tile/holiday/Initialize(mapload)
+	color = request_holiday_colors(src, pattern)
+	alpha = DECAL_ALPHA
 	return ..()
+
+/// Pattern tiles
+/obj/effect/turf_decal/tile/holiday/rainbow
+	name = "rainbow tile decal"
+	color = "#75C9EB" //bright blue as default for mapping
+	pattern = PATTERN_RAINBOW
+
+TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday/rainbow)
+
+/obj/effect/turf_decal/tile/holiday/random // so many colors
+	name = "colorful tile decal"
+	color = "#E300FF" //bright pink as default for mapping
+	pattern = PATTERN_RANDOM
+
+TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday/random)
 
 #undef TILE_DECAL_SUBTYPE_HELPER
 
@@ -165,10 +169,29 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/random)
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
 	icon_state = "trimline_box"
+	use_holiday_colors = TRUE
 
-/obj/effect/turf_decal/trimline/Initialize(mapload)
-	if(check_holidays(APRIL_FOOLS))
-		color = "#[random_short_color()]"
+/obj/effect/turf_decal/trimline/tram
+	pattern = PATTERN_VERTICAL_STRIPE
+
+/obj/effect/turf_decal/trimline/tram/filled/corner/Initialize(mapload)
+	if(use_holiday_colors)
+		var/current_holiday_color = request_holiday_colors(src, pattern)
+		if(current_holiday_color)
+			color = current_holiday_color
+			alpha = DECAL_ALPHA
+	else
+		color = "#ffc875"
+	return ..()
+
+/obj/effect/turf_decal/trimline/tram/filled/line/Initialize(mapload)
+	if(use_holiday_colors)
+		var/current_holiday_color = request_holiday_colors(src, pattern)
+		if(current_holiday_color)
+			color = current_holiday_color
+			alpha = DECAL_ALPHA
+	else
+		color = "#ffc875"
 	return ..()
 
 /// Automatically generates all trimlines for a decal with the given path.
@@ -296,6 +319,13 @@ TRIMLINE_SUBTYPE_HELPER(/obj/effect/turf_decal/trimline/brown)
 
 TRIMLINE_SUBTYPE_HELPER(/obj/effect/turf_decal/trimline/neutral)
 
+/// Tram trimlines
+/obj/effect/turf_decal/trimline/tram
+	color = "#D4D4D4"
+	alpha = 50
+
+TRIMLINE_SUBTYPE_HELPER(/obj/effect/turf_decal/trimline/tram)
+
 /// Dark trimlines
 /obj/effect/turf_decal/trimline/dark
 	color = "#0e0f0f"
@@ -303,3 +333,4 @@ TRIMLINE_SUBTYPE_HELPER(/obj/effect/turf_decal/trimline/neutral)
 TRIMLINE_SUBTYPE_HELPER(/obj/effect/turf_decal/trimline/dark)
 
 #undef TRIMLINE_SUBTYPE_HELPER
+#undef DECAL_ALPHA

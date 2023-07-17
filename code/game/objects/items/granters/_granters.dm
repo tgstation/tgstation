@@ -5,7 +5,7 @@
  */
 /obj/item/book/granter
 	due_date = 0
-	unique = 1
+	unique = TRUE
 	/// Flavor messages displayed to mobs reading the granter
 	var/list/remarks = list()
 	/// Controls how long a mob must keep the book in his hand to actually successfully learn
@@ -14,6 +14,8 @@
 	var/reading = FALSE
 	/// The amount of uses on the granter.
 	var/uses = 1
+	/// The time it takes to read the book
+	var/reading_time = 5 SECONDS
 	/// The sounds played as the user's reading the book.
 	var/list/book_sounds = list(
 		'sound/effects/pageturn1.ogg',
@@ -44,7 +46,7 @@
 			on_reading_stopped()
 			reading = FALSE
 			return
-	if(do_after(user, 5 SECONDS, src))
+	if(do_after(user, reading_time, src))
 		uses--
 		on_reading_finished(user)
 	reading = FALSE
@@ -67,7 +69,7 @@
 /obj/item/book/granter/proc/turn_page(mob/living/user)
 	playsound(user, pick(book_sounds), 30, TRUE)
 
-	if(!do_after(user, 5 SECONDS, src))
+	if(!do_after(user, reading_time, src))
 		return FALSE
 
 	to_chat(user, span_notice("[length(remarks) ? pick(remarks) : "You keep reading..."]"))

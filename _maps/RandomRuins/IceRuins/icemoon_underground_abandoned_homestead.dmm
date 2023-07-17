@@ -185,7 +185,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/storage/book/bible{
+/obj/item/book/bible{
 	pixel_y = 5
 	},
 /obj/item/flashlight/flare/candle{

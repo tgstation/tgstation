@@ -3,6 +3,10 @@
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
 	icon = 'icons/obj/weapons/guns/mosinnagant.dmi'
 	icon_state = "moistnugget"
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "moistnugget"
 	worn_icon_state = "moistnugget"
@@ -30,12 +34,6 @@
 /obj/item/gun/ballistic/rifle/can_shoot()
 	if (bolt_locked)
 		return FALSE
-	return ..()
-
-/obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
-	if (!bolt_locked && !istype(A, /obj/item/stack/sheet/cloth))
-		balloon_alert(user, "[bolt_wording] is closed!")
-		return
 	return ..()
 
 /obj/item/gun/ballistic/rifle/examine(mob/user)
@@ -101,19 +99,20 @@
 	return ..()
 
 /obj/item/gun/ballistic/rifle/boltaction/attackby(obj/item/item, mob/user, params)
-	. = ..()
-	if(!can_jam)
-		balloon_alert(user, "can't jam!")
-		return
-
-	if(!bolt_locked)
+	if(!bolt_locked && !istype(item, /obj/item/knife))
 		balloon_alert(user, "bolt closed!")
 		return
 
-	if(istype(item, /obj/item/gun_maintenance_supplies) && do_after(user, 10 SECONDS, target = src))
-		user.visible_message(span_notice("[user] finishes maintenance of [src]."))
-		jamming_chance = initial(jamming_chance)
-		qdel(item)
+	. = ..()
+
+	if(istype(item, /obj/item/gun_maintenance_supplies))
+		if(!can_jam)
+			balloon_alert(user, "can't jam!")
+			return
+		if(do_after(user, 10 SECONDS, target = src))
+			user.visible_message(span_notice("[user] finishes maintaining [src]."))
+			jamming_chance = initial(jamming_chance)
+			qdel(item)
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = FALSE
@@ -126,6 +125,10 @@
 	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors. Because it's ironic."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "speargun"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	inhand_icon_state = "speargun"
 	worn_icon_state = "speargun"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
@@ -181,7 +184,6 @@
 	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	alternative_fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	can_modify_ammo = TRUE
-	can_misfire = FALSE
 	can_bayonet = TRUE
 	knife_y_offset = 11
 	can_be_sawn_off = FALSE
@@ -262,6 +264,10 @@
 		It is also able to be suppressed....somehow."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "sniper"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	weapon_weight = WEAPON_HEAVY
 	inhand_icon_state = "sniper"
 	worn_icon_state = null

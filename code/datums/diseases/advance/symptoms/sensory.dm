@@ -45,7 +45,10 @@
 	if(A.stage >= 3)
 		M.adjust_dizzy(-4 SECONDS)
 		M.adjust_drowsiness(-4 SECONDS)
-		M.adjust_slurring(-1 SECONDS)
+		// All slurring effects get reduced down a bit
+		for(var/datum/status_effect/speech/slurring/slur in M.status_effects)
+			slur.remove_duration(1 SECONDS)
+
 		M.adjust_confusion(-2 SECONDS)
 		if(purge_alcohol)
 			M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)

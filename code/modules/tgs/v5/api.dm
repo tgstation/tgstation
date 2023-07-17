@@ -166,6 +166,10 @@
 		ids += channel.id
 
 	message = UpgradeDeprecatedChatMessage(message)
+
+	if (!length(channels))
+		return
+
 	message = message._interop_serialize()
 	message[DMAPI5_CHAT_MESSAGE_CHANNEL_IDS] = ids
 	if(intercepted_message_queue)
@@ -181,6 +185,10 @@
 			channels += channel.id
 
 	message = UpgradeDeprecatedChatMessage(message)
+
+	if (!length(channels))
+		return
+
 	message = message._interop_serialize()
 	message[DMAPI5_CHAT_MESSAGE_CHANNEL_IDS] = channels
 	if(intercepted_message_queue)
@@ -199,6 +207,7 @@
 
 /datum/tgs_api/v5/ChatChannelInfo()
 	RequireInitialBridgeResponse()
+	WaitForReattach(TRUE)
 	return chat_channels.Copy()
 
 /datum/tgs_api/v5/proc/DecodeChannels(chat_update_json)

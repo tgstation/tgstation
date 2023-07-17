@@ -34,12 +34,12 @@
 	var/turf/user_turf = get_turf(computer.ui_host())
 	if(!user_turf)
 		return
-	for(var/obj/machinery/power/supermatter_crystal/sm in GLOB.machines)
+	for(var/obj/machinery/power/supermatter_crystal/sm as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/supermatter_crystal))
 		//Exclude Syndicate owned, Delaminating, not within coverage, not on a tile.
 		if (!sm.include_in_cims || !isturf(sm.loc) || !(is_station_level(sm.z) || is_mining_level(sm.z) || sm.z == user_turf.z))
 			continue
 		supermatters += sm
-		RegisterSignal(sm, COMSIG_PARENT_QDELETING, PROC_REF(clear_supermatter))
+		RegisterSignal(sm, COMSIG_QDELETING, PROC_REF(clear_supermatter))
 
 /datum/computer_file/program/supermatter_monitor/ui_static_data(mob/user)
 	var/list/data = list()
@@ -82,7 +82,7 @@
 	supermatters -= sm
 	if(focused_supermatter == sm)
 		unfocus_supermatter()
-	UnregisterSignal(sm, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(sm, COMSIG_QDELETING)
 
 /datum/computer_file/program/supermatter_monitor/proc/focus_supermatter(obj/machinery/power/supermatter_crystal/sm)
 	if(sm == focused_supermatter)

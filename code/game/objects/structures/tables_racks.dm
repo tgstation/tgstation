@@ -23,6 +23,14 @@
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	layer = TABLE_LAYER
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	max_integrity = 100
+	integrity_failure = 0.33
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_TABLES
+	canSmoothWith = SMOOTH_GROUP_TABLES
+	///TRUE if the table can be climbed on and have living mobs placed on it normally, FALSE otherwise
+	var/climbable = TRUE
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/glass_shard_type = /obj/item/shard
@@ -30,25 +38,24 @@
 	var/busy = FALSE
 	var/buildstackamount = 1
 	var/framestackamount = 2
-	var/deconstruction_ready = 1
-	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
-	max_integrity = 100
-	integrity_failure = 0.33
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_TABLES
-	canSmoothWith = SMOOTH_GROUP_TABLES
+	var/deconstruction_ready = TRUE
 
 /obj/structure/table/Initialize(mapload, _buildstack)
 	. = ..()
 	if(_buildstack)
 		buildstack = _buildstack
-	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+
+	if (climbable)
+		AddElement(/datum/element/climbable)
 
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(table_carbon),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
+	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY)
+	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -100,6 +107,9 @@
 		if(isliving(user.pulling))
 			var/mob/living/pushed_mob = user.pulling
 			if(pushed_mob.buckled)
+				if(pushed_mob.buckled == src)
+					//Already buckled to the table, you probably meant to unbuckle them
+					return ..()
 				to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
 				return
 			if(user.combat_mode)
@@ -324,7 +334,7 @@
 		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
 	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-	log_combat(src, target, "shoved", "onto [src] (table)")
+	log_combat(shover, target, "shoved", "onto [src] (table)")
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /obj/structure/table/greyscale
@@ -354,6 +364,10 @@
 	icon_state = "rollingtable"
 	var/list/attached_items = list()
 
+/obj/structure/table/rolling/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/noisy_movement)
+
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	. = ..()
 	attached_items += I
@@ -377,10 +391,6 @@
 		if(!attached_movable.Move(loc))
 			RemoveItemFromTable(attached_movable, attached_movable.loc)
 
-/obj/structure/table/rolling/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 /*
  * Glass tables
  */
@@ -588,7 +598,7 @@
 	icon = 'icons/obj/smooth_structures/reinforced_table.dmi'
 	icon_state = "reinforced_table-0"
 	base_icon_state = "reinforced_table"
-	deconstruction_ready = 0
+	deconstruction_ready = FALSE
 	buildstack = /obj/item/stack/sheet/plasteel
 	max_integrity = 200
 	integrity_failure = 0.25
@@ -707,8 +717,8 @@
 	smoothing_groups = null
 	canSmoothWith = null
 	can_buckle = 1
-	buckle_lying = NO_BUCKLE_LYING
-	buckle_requires_restraints = TRUE
+	buckle_lying = 90
+	climbable = FALSE
 	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
@@ -720,6 +730,7 @@
 		if(computer)
 			computer.table = src
 			break
+
 	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(mark_patient))
 	RegisterSignal(loc, COMSIG_ATOM_EXITED, PROC_REF(unmark_patient))
 
@@ -743,6 +754,7 @@
 		return
 	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(recheck_patient))
 	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
+	potential_patient.pixel_y = potential_patient.base_pixel_y
 
 /// Unmark the potential patient.
 /obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/carbon/potential_patient)
@@ -752,6 +764,7 @@
 	if(potential_patient == patient)
 		recheck_patient(patient) // Can just set patient to null, but doing the recheck lets us find a replacement patient.
 	UnregisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION)
+	potential_patient.pixel_y = potential_patient.base_pixel_y + potential_patient.body_position_pixel_y_offset
 
 /// Someone on our tile just lied down, got up, moved in, or moved out.
 /// potential_patient is the mob that had one of those four things change.

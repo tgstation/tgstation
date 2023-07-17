@@ -1,0 +1,1 @@
+/mob/living/simple_animal/butterfly : /mob/living/basic/butterfly{@OLD}

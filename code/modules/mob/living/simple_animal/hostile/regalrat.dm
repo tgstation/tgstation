@@ -35,50 +35,39 @@
 	var/datum/action/cooldown/domain/domain
 	///The Spell that the rat uses to recruit/convert more rats.
 	var/datum/action/cooldown/riot/riot
+	///Should we request a mind immediately upon spawning?
+	var/poll_ghosts = FALSE
 
 /mob/living/simple_animal/hostile/regalrat/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	AddElement(/datum/element/waddling)
+	AddComponent(\
+		/datum/component/ghost_direct_control,\
+		poll_candidates = poll_ghosts,\
+		role_name = "the Regal Rat, cheesy be their crown",\
+		poll_ignore_key = POLL_IGNORE_REGAL_RAT,\
+		assumed_control_message = "You are an independent, invasive force on the station! Hoard coins, trash, cheese, and the like from the safety of darkness!",\
+		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
+	)
 	domain = new(src)
 	riot = new(src)
 	domain.Grant(src)
 	riot.Grant(src)
-	AddElement(/datum/element/waddling)
-
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/regalrat/Destroy()
 	QDEL_NULL(domain)
 	QDEL_NULL(riot)
 	return ..()
 
-/mob/living/simple_animal/hostile/regalrat/proc/become_player_controlled(mob/user)
-	log_message("took control of [name].", LOG_GAME)
-	key = user.key
-	notify_ghosts("All rise for the rat king, ascendant to the throne in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Rat Created")
-	to_chat(src, span_notice("You are an independent, invasive force on the station! Horde coins, trash, cheese, and the like from the safety of darkness!"))
-
-/mob/living/simple_animal/hostile/regalrat/proc/get_player()
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the Regal Rat, cheesey be their crown?", ROLE_SENTIENCE, ROLE_SENTIENCE, 100, POLL_IGNORE_REGAL_RAT)
-	if(LAZYLEN(candidates) && !mind)
-		var/mob/dead/observer/candidate = pick(candidates)
-		become_player_controlled(candidate)
-
-/mob/living/simple_animal/hostile/regalrat/attack_ghost(mob/user)
-	. = ..()
-	if(. || !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
-		return
-	if(key || stat)
-		return
-	if(!SSticker.HasRoundStarted())
-		to_chat(user, span_warning("You cannot assume control of this until after the round has started!"))
-		return
-	var/rat_ask = tgui_alert(usr, "Become the Royal Rat?", "Are you sure?", list("Yes", "No"))
-	if(rat_ask != "Yes" || QDELETED(src))
-		return
-	if(key)
-		to_chat(user, span_warning("Someone else already took the rat!"))
-		return
-	become_player_controlled(user)
+/mob/living/simple_animal/hostile/regalrat/proc/became_player_controlled()
+	notify_ghosts(
+		"All rise for the rat king, ascendant to the throne in \the [get_area(src)].",
+		source = src,
+		action = NOTIFY_ORBIT,
+		flashwindow = FALSE,
+		header = "Sentient Rat Created",
+	)
 
 /mob/living/simple_animal/hostile/regalrat/handle_automated_action()
 	if(prob(20))
@@ -181,9 +170,11 @@
 		return FALSE
 	opening_airlock = FALSE
 
+/mob/living/simple_animal/hostile/regalrat/controlled
+	poll_ghosts = TRUE
+
 /mob/living/simple_animal/hostile/regalrat/controlled/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, PROC_REF(get_player))
 	var/kingdom = pick("Plague","Miasma","Maintenance","Trash","Garbage","Rat","Vermin","Cheese")
 	var/title = pick("King","Lord","Prince","Emperor","Supreme","Overlord","Master","Shogun","Bojar","Tsar")
 	name = "[kingdom] [title]"
@@ -206,7 +197,7 @@
 
 /datum/action/cooldown/domain/proc/domain()
 	var/turf/T = get_turf(owner)
-	T.atmos_spawn_air("miasma=4;TEMP=[T20C]")
+	T.atmos_spawn_air("[GAS_MIASMA]=4;[TURF_TEMPERATURE(T20C)]")
 	switch (rand(1,10))
 		if (8)
 			new /obj/effect/decal/cleanable/vomit(T)

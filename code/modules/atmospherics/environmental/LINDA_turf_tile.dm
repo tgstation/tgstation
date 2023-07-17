@@ -62,7 +62,7 @@
 				var/datum/gas_mixture/immutable/planetary/mix = new
 				mix.parse_string_immutable(initial_gas_mix)
 				SSair.planetary[initial_gas_mix] = mix
-	. = ..()
+	return ..()
 
 /turf/open/Destroy()
 	if(active_hotspot)

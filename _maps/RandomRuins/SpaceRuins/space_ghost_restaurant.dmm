@@ -51,6 +51,12 @@
 /obj/item/reagent_containers/cup/glass/mug/nanotrasen,
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/space_ghost_restaurant)
+"gS" = (
+/obj/item/food/mashed_potatoes,
+/obj/structure/lattice,
+/obj/item/clothing/head/costume/scarecrow_hat,
+/turf/template_noop,
+/area/space/nearstation)
 "hp" = (
 /obj/item/stack/rods,
 /turf/template_noop,
@@ -66,6 +72,11 @@
 "kf" = (
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/space_ghost_restaurant)
+"kM" = (
+/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "kX" = (
 /obj/structure/bed,
 /obj/item/bedsheet/yellow,
@@ -80,13 +91,6 @@
 /obj/structure/lattice,
 /obj/effect/mob_spawn/corpse/human/assistant{
 	mob_name = "Henry Fresh"
-	},
-/turf/template_noop,
-/area/space/nearstation)
-"nr" = (
-/obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
 	},
 /turf/template_noop,
 /area/space/nearstation)
@@ -135,20 +139,16 @@
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/open/floor/plating,
 /area/ruin/space/space_ghost_restaurant)
-"Ak" = (
-/obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "singular"
-	},
-/turf/template_noop,
-/area/space/nearstation)
 "AT" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/frame/machine,
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/space_ghost_restaurant)
+"Bv" = (
+/obj/structure/broken_flooring/singular/directional/south,
+/turf/template_noop,
+/area/template_noop)
 "BA" = (
 /obj/effect/decal/cleanable/robot_debris,
 /obj/effect/decal/cleanable/glass,
@@ -175,10 +175,20 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/space_ghost_restaurant)
+"Hc" = (
+/obj/structure/lattice,
+/obj/structure/broken_flooring/singular/directional/south,
+/turf/template_noop,
+/area/space/nearstation)
 "Hx" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/space_ghost_restaurant)
+"Im" = (
+/obj/structure/lattice,
+/obj/structure/broken_flooring/singular/directional/east,
+/turf/template_noop,
+/area/space/nearstation)
 "Ix" = (
 /obj/structure/lattice,
 /turf/template_noop,
@@ -196,13 +206,6 @@
 /obj/item/stack/tile/iron/cafeteria,
 /turf/template_noop,
 /area/space/nearstation)
-"Jd" = (
-/obj/item/food/mashed_potatoes,
-/obj/structure/lattice,
-/obj/effect/decal/cleanable/robot_debris/up,
-/obj/item/clothing/head/costume/scarecrow_hat,
-/turf/template_noop,
-/area/space/nearstation)
 "Jo" = (
 /obj/item/bodypart/leg/left/robot/surplus,
 /obj/item/stack/tile/iron/cafeteria,
@@ -212,14 +215,6 @@
 /obj/item/chair,
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/space_ghost_restaurant)
-"Kj" = (
-/obj/structure/fluff/broken_flooring{
-	dir = 4;
-	icon_state = "pile"
-	},
-/obj/structure/lattice,
-/turf/template_noop,
-/area/space/nearstation)
 "Km" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/clothing/head/costume/papersack/smiley,
@@ -260,12 +255,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/space_ghost_restaurant)
-"Oy" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
-	},
-/turf/template_noop,
-/area/template_noop)
 "Py" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/clothing/head/wizard/santa,
@@ -398,7 +387,7 @@ Ea
 Ix
 Ea
 Ea
-Ak
+Im
 Ea
 Ea
 Ea
@@ -485,7 +474,7 @@ Ns
 RI
 kf
 Qi
-Jd
+gS
 Dz
 Ix
 hp
@@ -509,7 +498,7 @@ WY
 Jo
 vs
 vh
-Kj
+kM
 Ea
 Ea
 Ea
@@ -533,7 +522,7 @@ Ix
 AT
 Ea
 Ea
-Oy
+Bv
 Ea
 Ea
 Ea
@@ -575,7 +564,7 @@ Ix
 Ea
 Ea
 Ea
-nr
+Hc
 Ea
 Ea
 Ea

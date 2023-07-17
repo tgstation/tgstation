@@ -50,6 +50,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/show_to_ghosts = FALSE
 	/// The typepath for the outfit to show in the preview for the preferences menu.
 	var/preview_outfit
+	/// Flags for antags to turn on or off and check!
+	var/antag_flags = FLAG_ANTAG_CAN_BE_INDUCTED
 
 	//ANTAG UI
 
@@ -153,13 +155,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return TRUE
 
 /datum/antagonist/proc/can_be_owned(datum/mind/new_owner)
-	. = TRUE
 	var/datum/mind/tested = new_owner || owner
 	if(tested.has_antag_datum(type))
 		return FALSE
 	for(var/datum/antagonist/badguy as anything in tested.antag_datums)
 		if(is_type_in_typecache(src, badguy.typecache_datum_blacklist))
 			return FALSE
+	return TRUE
 
 //This will be called in add_antag_datum before owner assignment.
 //Should return antag datum without owner.

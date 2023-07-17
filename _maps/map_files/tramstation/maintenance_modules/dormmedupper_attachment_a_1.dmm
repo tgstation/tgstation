@@ -8,7 +8,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "l" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
@@ -36,14 +36,14 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "O" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/engineering/canister,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "P" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/six,

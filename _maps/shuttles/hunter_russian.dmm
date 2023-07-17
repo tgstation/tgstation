@@ -93,18 +93,14 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/structure/sign/poster/contraband/communist_state{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/communist_state/directional/west,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "fN" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/fugitive_capture,
-/obj/structure/sign/poster/contraband/bountyhunters{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/bountyhunters/directional/west,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "gp" = (
@@ -124,9 +120,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband/soviet_propaganda{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/soviet_propaganda/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/russian)
 "gU" = (
@@ -138,6 +132,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "ho" = (
@@ -154,10 +149,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/item/binoculars,
+/obj/item/pinpointer/shuttle,
 /obj/machinery/button/door/directional/south{
 	id = "russia_ship_bolt_s";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
+	req_access = list("hunter");
 	specialfunctions = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -171,6 +168,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "kL" = (
@@ -213,6 +211,7 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "qF" = (
@@ -244,6 +243,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Cockpit Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "vZ" = (
@@ -282,6 +282,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "yo" = (
@@ -306,7 +307,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "zr" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -318,6 +319,7 @@
 	id = "russia_ship_bolt_n";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
+	req_access = list("hunter");
 	specialfunctions = 4
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -417,10 +419,14 @@
 "FG" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/tank/internals/emergency_oxygen/engi,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
@@ -490,16 +496,16 @@
 /area/shuttle/hunter/russian)
 "JS" = (
 /obj/docking_port/mobile{
-	shuttle_id = "huntership";
 	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "hunter shuttle";
-	rechargeTime = 1800
+	rechargeTime = 1800;
+	shuttle_id = "huntership"
 	},
 /obj/docking_port/stationary{
 	dwidth = 11;
 	height = 16;
-	shuttle_id = "pirate_home";
 	name = "Deep Space";
+	shuttle_id = "pirate_home";
 	width = 17
 	},
 /obj/machinery/door/airlock/external/glass/ruin{
@@ -510,6 +516,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/plating,
 /area/shuttle/hunter/russian)
 "JU" = (
@@ -575,6 +582,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Cargo Hold Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "QG" = (
@@ -584,6 +592,7 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/plating,
 /area/shuttle/hunter/russian)
 "Se" = (
@@ -609,9 +618,7 @@
 	},
 /obj/effect/turf_decal/bot_red,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/kss13{
-	pixel_y = -32
-	},
+/obj/structure/sign/poster/contraband/kss13/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "Ut" = (
@@ -622,6 +629,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "Uu" = (
@@ -689,6 +697,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "Xu" = (

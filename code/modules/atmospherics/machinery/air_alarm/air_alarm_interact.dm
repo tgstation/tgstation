@@ -82,12 +82,14 @@
 			to_chat(user, span_danger("Access denied."))
 	return
 
-/obj/machinery/airalarm/emag_act(mob/user)
+/obj/machinery/airalarm/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
-	visible_message(span_warning("Sparks fly out of [src]!"), span_notice("You emag [src], disabling its safeties."))
+	visible_message(span_warning("Sparks fly out of [src]!"))
+	balloon_alert(user, "authentication sensors scrambled")
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return TRUE
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -182,7 +184,7 @@
 /obj/item/wallframe/airalarm
 	name = "air alarm frame"
 	desc = "Used for building Air Alarms."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "alarm_bitem"
 	result_path = /obj/machinery/airalarm
-	pixel_shift = 24
+	pixel_shift = 27

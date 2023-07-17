@@ -229,7 +229,7 @@
 	name = "anomalous crystal"
 	desc = "A strange chunk of crystal, being in the presence of it fills you with equal parts excitement and dread."
 	var/observer_desc = "Anomalous crystals have descriptions that only observers can see. But this one hasn't been changed from the default."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "anomaly_crystal"
 	light_range = 8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -262,7 +262,7 @@
 		. += "It is activated by [activation_method]."
 
 /obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
-	..()
+	. = ..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
 
@@ -526,10 +526,10 @@
 	if(.)
 		return
 	if(ready_to_deploy)
-		var/be_helper = tgui_alert(usr,"Become a Lightgeist? (Warning, You can no longer be revived!)",,list("Yes","No"))
-		if(be_helper == "Yes" && !QDELETED(src) && isobserver(user))
-			var/mob/living/simple_animal/hostile/lightgeist/W = new /mob/living/simple_animal/hostile/lightgeist(get_turf(loc))
-			W.key = user.key
+		var/be_helper = tgui_alert(usr, "Become a Lightgeist? (Warning, You can no longer be revived!)", "Lightgeist Deployment", list("Yes", "No"))
+		if((be_helper == "Yes") && !QDELETED(src) && isobserver(user))
+			var/mob/living/basic/lightgeist/deployable = new(get_turf(loc))
+			deployable.key = user.key
 
 
 /obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)
@@ -581,35 +581,28 @@
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	paint_jobs = null
-	var/mob/living/simple_animal/holder_animal
-
-/obj/structure/closet/stasis/process()
-	if(holder_animal)
-		if(holder_animal.stat == DEAD)
-			dump_contents()
-			holder_animal.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			holder_animal.gib()
-			return
+	///The animal the closet (and the user's body) is inside of
+	var/mob/living/holder_animal
 
 /obj/structure/closet/stasis/Initialize(mapload)
 	. = ..()
 	if(isanimal_or_basicmob(loc))
 		holder_animal = loc
-	START_PROCESSING(SSobj, src)
+		RegisterSignal(holder_animal, COMSIG_LIVING_DEATH, PROC_REF(on_holder_animal_death))
 
 /obj/structure/closet/stasis/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
 	if(isliving(arrived) && holder_animal)
-		var/mob/living/L = arrived
-		L.notransform = 1
-		ADD_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
-		L.status_flags |= GODMODE
-		L.mind.transfer_to(holder_animal)
+		var/mob/living/possessor = arrived
+		possessor.notransform = TRUE
+		ADD_TRAIT(possessor, TRAIT_MUTE, STASIS_MUTE)
+		possessor.status_flags |= GODMODE
+		possessor.mind.transfer_to(holder_animal)
 		var/datum/action/exit_possession/escape = new(holder_animal)
 		escape.Grant(holder_animal)
 		remove_verb(holder_animal, /mob/living/verb/pulled)
 
 /obj/structure/closet/stasis/dump_contents(kill = TRUE)
-	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/possessor in src)
 		REMOVE_TRAIT(possessor, TRAIT_MUTE, STASIS_MUTE)
 		possessor.status_flags &= ~GODMODE
@@ -621,6 +614,7 @@
 			possessor.forceMove(get_turf(holder_animal))
 			holder_animal.mind.transfer_to(possessor)
 			possessor.mind.grab_ghost(force = TRUE)
+			holder_animal.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			holder_animal.gib()
 			return ..()
 	return ..()
@@ -630,6 +624,11 @@
 
 /obj/structure/closet/stasis/ex_act()
 	return FALSE
+
+///When our host animal dies in any way, we empty the stasis closet out.
+/obj/structure/closet/stasis/proc/on_holder_animal_death()
+	SIGNAL_HANDLER
+	dump_contents()
 
 /datum/action/exit_possession
 	name = "Exit Possession"

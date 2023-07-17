@@ -35,11 +35,14 @@
 	if(!bci)
 		return
 
+	if(!parent.shell)
+		return
+
 	var/mob/living/owner = bci.owner
 	if(!owner || !istype(owner) || !owner.client)
 		return
 
-	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_TARGET_INTERCEPT))
+	if(TIMER_COOLDOWN_CHECK(parent.shell, COOLDOWN_CIRCUIT_TARGET_INTERCEPT))
 		return
 
 	to_chat(owner, "<B>Left-click to trigger target interceptor!</B>")
@@ -55,7 +58,8 @@
 	user.client.click_intercept = null
 	clicked_atom.set_output(object)
 	trigger_output.set_output(COMPONENT_SIGNAL)
-	TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_TARGET_INTERCEPT, intercept_cooldown)
+	if(parent.shell)
+		TIMER_COOLDOWN_START(parent.shell, COOLDOWN_CIRCUIT_TARGET_INTERCEPT, intercept_cooldown)
 
 /obj/item/circuit_component/target_intercept/get_ui_notices()
 	. = ..()

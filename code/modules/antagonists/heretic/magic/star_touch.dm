@@ -85,7 +85,7 @@
 /obj/item/melee/touch_attack/star_touch/proc/after_clear_rune(obj/effect/target, mob/living/user)
 	new /obj/effect/temp_visual/cosmic_rune_fade(get_turf(target))
 	var/datum/action/cooldown/spell/touch/star_touch/star_touch_spell = spell_which_made_us?.resolve()
-	star_touch_spell?.spell_feedback()
+	star_touch_spell?.spell_feedback(user)
 	remove_hand_with_no_refund(user)
 
 /obj/item/melee/touch_attack/star_touch/ignition_effect(atom/to_light, mob/user)
@@ -192,7 +192,7 @@
 	current_target = target
 	active = TRUE
 	current_beam = user.Beam(current_target, icon_state="cosmic_beam", time = 1 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/cosmic)
-	RegisterSignal(current_beam, COMSIG_PARENT_QDELETING, PROC_REF(beam_died))
+	RegisterSignal(current_beam, COMSIG_QDELETING, PROC_REF(beam_died))
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	if(current_target)
@@ -230,7 +230,7 @@
 /// What to add when the beam connects to a target
 /datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target)
 	if(!istype(target, /mob/living/basic/star_gazer))
-		target.AddElement(/datum/element/effect_trail/cosmic_trail)
+		target.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	return
 
 /// What to process when the beam is connected to a target
@@ -242,5 +242,5 @@
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
 	if(!istype(target, /mob/living/basic/star_gazer))
-		target.RemoveElement(/datum/element/effect_trail/cosmic_trail)
+		target.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	return

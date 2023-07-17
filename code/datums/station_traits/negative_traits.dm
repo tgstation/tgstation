@@ -81,7 +81,7 @@
 
 /datum/station_trait/blackout/on_round_start()
 	. = ..()
-	for(var/obj/machinery/power/apc/apc as anything in GLOB.apcs_list)
+	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
 		if(is_station_level(apc.z) && prob(60))
 			apc.overload_lighting()
 
@@ -320,7 +320,6 @@
 		"guy",
 		"matt",
 		"peace",
-		"poseur tag",
 		"prolizard",
 		"radiation",
 		"revolution",
@@ -398,6 +397,16 @@
 
 				if(istype(current_thing, /obj/structure/fireaxecabinet)) //A staple of revolutionary behavior
 					current_thing.take_damage(90)
+					continue
+
+				if(istype(current_thing, /obj/item/bedsheet/captain))
+					new /obj/item/bedsheet/rev(current_thing.loc)
+					qdel(current_thing)
+					continue
+
+				if(istype(current_thing, /obj/item/bedsheet/captain/double))
+					new /obj/item/bedsheet/rev/double(current_thing.loc)
+					qdel(current_thing)
 					continue
 
 			CHECK_TICK

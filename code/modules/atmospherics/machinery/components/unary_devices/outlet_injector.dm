@@ -17,11 +17,11 @@
 	///Rate of operation of the device
 	var/volume_rate = 50
 
-	///id of air sensor its connected to
-	var/chamber_id
-
 /obj/machinery/atmospherics/components/unary/outlet_injector/Initialize(mapload)
+	if(isnull(id_tag))
+		id_tag = assign_random_name()
 	. = ..()
+
 	var/static/list/tool_screentips = list(
 		TOOL_MULTITOOL = list(
 			SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
@@ -42,27 +42,17 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
-	if (!istype(multi_tool))
-		return .
+
+	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+		sensor.inlet_id = id_tag
+		multi_tool.buffer = null
+		balloon_alert(user, "input linked to sensor")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	balloon_alert(user, "saved in buffer")
 	multi_tool.buffer = src
-	return TRUE
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(.)
-		disconnect_chamber()
-
-///called when its either unwrenched or destroyed
-/obj/machinery/atmospherics/components/unary/outlet_injector/proc/disconnect_chamber()
-	if(chamber_id != null)
-		GLOB.objects_by_id_tag -= CHAMBER_INPUT_FROM_ID(chamber_id)
-		chamber_id = null
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
-	disconnect_chamber()
-	return ..()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
 	if(can_interact(user))

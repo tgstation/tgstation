@@ -532,7 +532,7 @@
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bt" = (
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/flora/bush/generic/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,

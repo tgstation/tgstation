@@ -2,7 +2,7 @@
 #define MOVE_ANIMATION_STAGE_TWO 2
 
 /obj/structure/transit_tube_pod
-	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
+	icon = 'icons/obj/pipes_n_cables/transit_tube.dmi'
 	icon_state = "pod"
 	animate_movement = FORWARD_STEPS
 	anchored = TRUE
@@ -103,7 +103,7 @@
 	var/datum/move_loop/engine = SSmove_manager.force_move_dir(src, dir, 0, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	RegisterSignal(engine, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(before_pipe_transfer))
 	RegisterSignal(engine, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(after_pipe_transfer))
-	RegisterSignal(engine, COMSIG_PARENT_QDELETING, PROC_REF(engine_finish))
+	RegisterSignal(engine, COMSIG_QDELETING, PROC_REF(engine_finish))
 	calibrate_engine(engine)
 
 /obj/structure/transit_tube_pod/proc/before_pipe_transfer(datum/move_loop/move/source)

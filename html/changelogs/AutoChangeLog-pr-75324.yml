@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - code_imp: "The update_icon_updates_onmob element will now automatically update all slots in an item's slot_flags var. This does fix multiple things that weren't updating properly. Passing a slot to the element is now only necessary if you want to add additional slots to be updated."

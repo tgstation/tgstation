@@ -4,7 +4,7 @@
 /area/station/maintenance/department/security)
 "g" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/material_cheap,

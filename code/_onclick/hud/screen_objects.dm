@@ -116,9 +116,7 @@
 	screen_loc = ui_language_menu
 
 /atom/movable/screen/language_menu/Click()
-	var/mob/M = usr
-	var/datum/language_holder/H = M.get_language_holder()
-	H.open_language_menu(usr)
+	usr.get_language_holder().open_language_menu(usr)
 
 /atom/movable/screen/inventory
 	/// The identifier for the slot. It has nothing to do with ID cards.

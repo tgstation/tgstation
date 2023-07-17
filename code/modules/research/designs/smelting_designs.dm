@@ -77,7 +77,7 @@
 	desc = "A sheet of reverse-engineered alien alloy."
 	id = "alienalloy"
 	build_type = SMELTER | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/plasma = 4000)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/plasma = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/stack/sheet/mineral/abductor
 	category = list(
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS

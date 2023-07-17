@@ -9,7 +9,7 @@
 	growthstages = 2
 	yield = 5
 	potency = 20
-	growing_icon = 'icons/obj/hydroponics/growing.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing.dmi'
 	icon_grow = "herbs-grow"
 	icon_dead = "herbs-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)

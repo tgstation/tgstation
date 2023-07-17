@@ -84,3 +84,17 @@
 	mappath = "_maps/map_files/basketball/soviet_bears.dmm"
 	team_name = "Soviet Bears"
 	home_team_uniform = /datum/outfit/basketball/soviet_bears
+
+/datum/map_template/basketball/ash_gladiators
+	name = "Ash Gladiators Stadium"
+	description = "The homecourt of the Ash Gladiators."
+	mappath = "_maps/map_files/basketball/ash_gladiators.dmm"
+	team_name = "Ash Gladiators"
+	home_team_uniform = /datum/outfit/basketball/ash_gladiators
+
+/datum/map_template/basketball/beach_bums
+	name = "Beach Bums Stadium"
+	description = "The homecourt of the Beach Bums."
+	mappath = "_maps/map_files/basketball/beach_bums.dmm"
+	team_name = "Beach Bums"
+	home_team_uniform = /datum/outfit/basketball/beach_bums

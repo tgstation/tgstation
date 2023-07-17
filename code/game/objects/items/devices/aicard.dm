@@ -13,6 +13,14 @@
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
 
+/obj/item/aicard/Destroy(force)
+	if(AI)
+		AI.death()
+		AI.ghostize(can_reenter_corpse = FALSE)
+		QDEL_NULL(AI)
+
+	return ..()
+
 /obj/item/aicard/aitater
 	name = "intelliTater"
 	desc = "A stylish upgrade (?) to the intelliCard."

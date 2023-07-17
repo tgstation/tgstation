@@ -25,3 +25,16 @@
 			to_chat(user, span_notice("You cut the cables and disassemble the unused power terminal."))
 			qdel(E)
 	return TRUE
+
+/obj/item/wallframe/apc/screwdriver_act(mob/living/user, obj/item/tool)
+	//overriding the wallframe parent screwdriver act with this one which allows applying to existing apc frames.
+
+	var/turf/T = get_step(get_turf(user), user.dir)
+	if(iswallturf(T))
+		if(locate(/obj/machinery/power/apc) in get_turf(user))
+			var/obj/machinery/power/apc/mounted_apc = locate(/obj/machinery/power/apc) in get_turf(user)
+			mounted_apc.attackby(src, user)
+			return TOOL_ACT_TOOLTYPE_SUCCESS
+		T.attackby(src, user)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+

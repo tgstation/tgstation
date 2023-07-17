@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE
 	light_color = COLOR_BLUE_LIGHT
 	light_range = 0 //we dont want to spam SSlighting with source updates every movement
 
@@ -34,6 +35,8 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(update_tram_display))
+		icon_screen = "[base_icon_state][tram_part.idle_platform.name]_idle"
+		update_appearance(UPDATE_ICON)
 
 /**
  * Finds the tram from the console
@@ -59,10 +62,31 @@ GLOBAL_LIST_EMPTY(tram_doors)
 
 /obj/machinery/computer/tram_controls/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	if(!user.can_read(src, reading_check_flags = READING_CHECK_LITERACY))
+		try_illiterate_movement(user)
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TramControl", name)
 		ui.open()
+
+/// Traverse to a random location after some time
+/obj/machinery/computer/tram_controls/proc/try_illiterate_movement(mob/user)
+	var/datum/lift_master/tram/tram_lift = tram_ref?.resolve()
+	if (!tram_lift || tram_lift.travelling)
+		return
+	user.visible_message(span_notice("[user] starts mashing buttons at random!"))
+	if(!do_after(user, 5 SECONDS, target = src))
+		return
+	if (!tram_lift || tram_lift.travelling)
+		to_chat(user, span_warning("The screen displays a flashing error message, but you can't comprehend it."))
+		return // Broke or started moving during progress bar
+	var/list/all_destinations = GLOB.tram_landmarks[specific_lift_id] || list()
+	var/list/possible_destinations = all_destinations.Copy() - tram_lift.idle_platform
+	if (!length(possible_destinations))
+		to_chat(user, span_warning("The screen displays a flashing error message, but you can't comprehend it."))
+		return // No possible places to end up
+	try_send_tram(pick(possible_destinations))
 
 /obj/machinery/computer/tram_controls/ui_data(mob/user)
 	var/datum/lift_master/tram/tram_lift = tram_ref?.resolve()
@@ -367,13 +391,14 @@ GLOBAL_LIST_EMPTY(tram_doors)
 	if(tram_part)
 		UnregisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING)
 
-/obj/machinery/crossing_signal/emag_act(mob/living/user)
+/obj/machinery/crossing_signal/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	balloon_alert(user, "disabled motion sensors")
 	if(signal_state != XING_STATE_MALF)
 		set_signal_state(XING_STATE_MALF)
 	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/machinery/crossing_signal/proc/start_malfunction()
 	if(signal_state != XING_STATE_MALF)
@@ -639,7 +664,7 @@ GLOBAL_LIST_EMPTY(tram_doors)
 /obj/machinery/destination_sign/proc/on_tram_travelling(datum/source, travelling)
 	SIGNAL_HANDLER
 	update_sign()
-	process()
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, process))
 
 /obj/machinery/destination_sign/proc/update_operating()
 	// Immediately process for snappy feedback
@@ -721,12 +746,13 @@ GLOBAL_LIST_EMPTY(tram_doors)
 /obj/machinery/button/tram
 	name = "tram request"
 	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
-	icon_state = "tramctrl"
-	skin = "tramctrl"
+	base_icon_state = "tram"
+	icon_state = "tram"
+	light_color = LIGHT_COLOR_DARK_BLUE
+	can_alter_skin = FALSE
 	device_type = /obj/item/assembly/control/tram
 	req_access = list()
 	id = 1
-	light_mask = "tram-light-mask"
 	/// The specific lift id of the tram we're calling.
 	var/lift_id = MAIN_STATION_TRAM
 

@@ -82,7 +82,7 @@
 	if(our_loop)
 		RegisterSignal(our_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 		RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(try_expel))
-		RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, PROC_REF(movement_stop))
+		RegisterSignal(our_loop, COMSIG_QDELETING, PROC_REF(movement_stop))
 		current_pipe = loc
 
 /// Handles the preprocess check signal, sets the current pipe as the last pipe

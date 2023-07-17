@@ -3,14 +3,18 @@
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	///Boolean on whether this decal can be placed inside of groundless turfs/walls. If FALSE, will runtime and delete if it happens.
 	var/turf_loc_check = TRUE
 
 /obj/effect/decal/Initialize(mapload)
 	. = ..()
-	if(turf_loc_check && (!isturf(loc) || NeverShouldHaveComeHere(loc)))
+	if(NeverShouldHaveComeHere(loc))
+		if(mapload)
+			stack_trace("[name] spawned in a bad turf ([loc]) at [AREACOORD(src)] in \the [get_area(src)]. \
+				Please remove it or allow it to pass NeverShouldHaveComeHere if it's intended.")
 		return INITIALIZE_HINT_QDEL
 	var/static/list/loc_connections = list(
-		COMSIG_TURF_CHANGED = PROC_REF(handle_turf_change),
+		COMSIG_TURF_CHANGE = PROC_REF(on_decal_move),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -18,8 +22,9 @@
 	if(B && B.loc == loc)
 		qdel(src)
 
-/obj/effect/decal/proc/NeverShouldHaveComeHere(turf/T)
-	return isclosedturf(T) || isgroundlessturf(T)
+///Checks if we are allowed to be in `here_turf`, and returns that result. Subtypes should override this when necessary.
+/obj/effect/decal/proc/NeverShouldHaveComeHere(turf/here_turf)
+	return isclosedturf(here_turf) || (isgroundlessturf(here_turf) && !GET_TURF_BELOW(here_turf))
 
 /obj/effect/decal/ex_act(severity, target)
 	qdel(src)
@@ -29,7 +34,7 @@
 	if(!(resistance_flags & FIRE_PROOF)) //non fire proof decal or being burned by lava
 		qdel(src)
 
-/obj/effect/decal/proc/handle_turf_change(turf/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
+/obj/effect/decal/proc/on_decal_move(turf/changed, path, list/new_baseturfs, flags, list/post_change_callbacks)
 	SIGNAL_HANDLER
 	post_change_callbacks += CALLBACK(src, PROC_REF(sanity_check_self))
 
@@ -45,6 +50,10 @@
 	plane = FLOOR_PLANE
 	layer = TURF_DECAL_LAYER
 	anchored = TRUE
+	/// Does this decal change colors on holidays
+	var/use_holiday_colors = FALSE
+	/// The pattern used when recoloring the decal
+	var/pattern = PATTERN_DEFAULT
 
 // This is with the intent of optimizing mapload
 // See spawners for more details since we use the same pattern
@@ -54,6 +63,13 @@
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+
+	// If the tile uses holiday colors, apply them here
+	if(use_holiday_colors)
+		var/current_holiday_color = request_holiday_colors(src, pattern)
+		if(current_holiday_color)
+			color = current_holiday_color
+			alpha = DECAL_ALPHA
 
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow

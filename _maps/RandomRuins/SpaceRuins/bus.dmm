@@ -275,7 +275,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "ET" = (
-/mob/living/simple_animal/hostile/lizard,
+/mob/living/basic/lizard,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "Fo" = (

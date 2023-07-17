@@ -37,6 +37,7 @@
 	name = "shuttle console"
 	shuttleId = "huntership"
 	possible_destinations = "huntership_home;huntership_custom;whiteship_home;syndicate_nw"
+	req_access = list(ACCESS_HUNTER)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter
 	name = "shuttle navigation computer"
@@ -128,7 +129,7 @@
 /obj/structure/bouncy_castle
 	name = "bouncy castle"
 	desc = "And if you do drugs, you go to hell before you die. Please."
-	icon = 'icons/obj/bouncy_castle.dmi'
+	icon = 'icons/obj/toys/bouncy_castle.dmi'
 	icon_state = "bouncy_castle"
 	anchored = TRUE
 	density = TRUE

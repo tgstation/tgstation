@@ -205,7 +205,7 @@
 		var/turf/open/T = get_turf(holder.my_atom)
 		if(istype(T))
 			var/datum/gas/gastype = /datum/gas/nitrogen
-			T.atmos_spawn_air("[initial(gastype.id)]=50;TEMP=2.7")
+			T.atmos_spawn_air("[initial(gastype.id)]=50;[TURF_TEMPERATURE(2.7)]")
 
 /datum/chemical_reaction/slime/slimefireproof
 	required_reagents = list(/datum/reagent/water = 1)
@@ -239,7 +239,7 @@
 	if(holder?.my_atom)
 		var/turf/open/T = get_turf(holder.my_atom)
 		if(istype(T))
-			T.atmos_spawn_air("plasma=50;TEMP=1000")
+			T.atmos_spawn_air("[GAS_PLASMA]=50;[TURF_TEMPERATURE(1000)]")
 
 
 /datum/chemical_reaction/slime/slimesmoke

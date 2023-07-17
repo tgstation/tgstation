@@ -18,13 +18,13 @@
 	if(!dragon)
 		return
 	var/area/rift_location = get_area(owner)
-	if(!(rift_location.area_flags & VALID_TERRITORY))
-		to_chat(owner, span_warning("You can't summon a rift here! Try summoning somewhere secure within the station!"))
+	if(!(rift_location in dragon.chosen_rift_areas))
+		owner.balloon_alert(owner, "can't summon a rift here!")
 		return
 	for(var/obj/structure/carp_rift/rift as anything in dragon.rift_list)
 		var/area/used_location = get_area(rift)
 		if(used_location == rift_location)
-			to_chat(owner, span_warning("You've already summoned a rift in this area! You have to summon again somewhere else!"))
+			owner.balloon_alert(owner, "already summoned a rift here!")
 			return
 	var/turf/rift_spawn_turf = get_turf(dragon)
 	if(isopenspaceturf(rift_spawn_turf))
@@ -59,12 +59,12 @@
 	desc = "A rift akin to the ones space carp use to travel long distances."
 	armor_type = /datum/armor/structure_carp_rift
 	max_integrity = 300
-	icon = 'icons/obj/carp_rift.dmi'
+	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "carp_rift_carpspawn"
 	light_color = LIGHT_COLOR_PURPLE
 	light_range = 10
 	anchored = TRUE
-	density = FALSE
+	density = TRUE
 	plane = MASSIVE_OBJ_PLANE
 	/// The amount of time the rift has charged for.
 	var/time_charged = 0
@@ -77,11 +77,13 @@
 	/// Current charge state of the rift.
 	var/charge_state = CHARGE_ONGOING
 	/// The interval for adding additional space carp spawns to the rift.
-	var/carp_interval = 60
+	var/carp_interval = 45
 	/// The time since an extra carp was added to the ghost role spawning pool.
 	var/last_carp_inc = 0
 	/// A list of all the ckeys which have used this carp rift to spawn in as carps.
 	var/list/ckey_list = list()
+	/// Gravity aura for the rift, makes all turfs nearby forced grav.
+	var/datum/proximity_monitor/advanced/gravity/warns_on_entrance/gravity_aura
 
 /datum/armor/structure_carp_rift
 	energy = 100
@@ -90,18 +92,32 @@
 	fire = 100
 	acid = 100
 
+/obj/structure/carp_rift/hulk_damage()
+	return 30
+
 /obj/structure/carp_rift/Initialize(mapload)
 	. = ..()
 
 	AddComponent( \
 		/datum/component/aura_healing, \
-		range = 0, \
+		range = 1, \
 		simple_heal = 5, \
 		limit_to_trait = TRAIT_HEALS_FROM_CARP_RIFTS, \
 		healing_color = COLOR_BLUE, \
 	)
 
+	gravity_aura = new(
+		/* host = */src,
+		/* range = */15,
+		/* ignore_if_not_on_turf = */TRUE,
+		/* gravity = */1,
+	)
+
 	START_PROCESSING(SSobj, src)
+
+/obj/structure/carp_rift/Destroy()
+	QDEL_NULL(gravity_aura)
+	return ..()
 
 // Carp rifts always take heavy explosion damage. Discourages the use of maxcaps
 // and favours more weaker explosives to destroy the portal
@@ -180,7 +196,7 @@
 	if(time_charged >= max_charge)
 		charge_state = CHARGE_COMPLETED
 		var/area/A = get_area(src)
-		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Wildlife Observations")
+		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Wildlife Observations", has_important_message = TRUE)
 		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_DIM_YELLOW)
@@ -227,12 +243,13 @@
 		to_chat(user, span_warning("The rift already summoned enough carp!"))
 		return FALSE
 
-	if(!dragon)
+	if(isnull(dragon))
 		return
 	var/mob/living/newcarp = new dragon.minion_to_spawn(loc)
 	newcarp.faction = dragon.owner.current.faction
 	newcarp.AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	newcarp.AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
+	dragon.wavespeak?.link_mob(newcarp)
 
 	if(!is_listed)
 		ckey_list += user.ckey

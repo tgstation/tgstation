@@ -24,6 +24,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
 	},
+/obj/structure/sign/poster/official/high_class_martini/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/transit_booth)
 "e" = (
@@ -85,9 +86,6 @@
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
-	pixel_y = 35
-	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)
 "o" = (
@@ -98,6 +96,7 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
 	},
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/transit_booth)
 "p" = (
@@ -457,9 +456,6 @@
 "Y" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
-	},
-/obj/structure/sign/poster/official/high_class_martini{
-	pixel_y = -28
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)

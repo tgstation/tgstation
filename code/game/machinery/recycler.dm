@@ -3,7 +3,7 @@
 /obj/machinery/recycler
 	name = "recycler"
 	desc = "A large crushing machine used to recycle small items inefficiently. There are lights on the side."
-	icon = 'icons/obj/recycling.dmi'
+	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "grinder-o0"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	plane = ABOVE_GAME_PLANE
@@ -83,15 +83,16 @@
 		return
 	return ..()
 
-/obj/machinery/recycler/emag_act(mob/user)
+/obj/machinery/recycler/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	if(safety_mode)
 		safety_mode = FALSE
 		update_appearance()
 	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	to_chat(user, span_notice("You use the cryptographic sequencer on [src]."))
+	balloon_alert(user, "safeties disabled")
+	return FALSE
 
 /obj/machinery/recycler/update_icon_state()
 	var/is_powered = !(machine_stat & (BROKEN|NOPOWER))
@@ -150,35 +151,44 @@
 		if(obj_flags & EMAGGED)
 			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
 				if(isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
+					if(!is_operational) //we ran out of power after recycling a large amount to living stuff, time to stop
+						break
 					crush_living(CRUNCH)
 					use_power(active_power_usage)
 		else // Stop processing right now without eating anything.
 			emergency_stop()
 			return
-	for(var/nommed in nom)
-		recycle_item(nommed)
-		use_power(active_power_usage)
-	if(nom.len && sound)
-		playsound(src, item_recycle_sound, (50 + nom.len*5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
-	if(not_eaten)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten*5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
-	if(!ismob(morsel))
-		qdel(morsel)
 
-/obj/machinery/recycler/proc/recycle_item(obj/item/I)
-	var/obj/item/grown/log/L = I
-	if(istype(L))
+	/**
+	 * we process the list in reverse so that atoms without parents/contents are deleted first & their parents are deleted next & so on.
+	 * this is the reverse order in which get_all_contents() returns it's list
+	 * if we delete an atom containing stuff then all its stuff are deleted with it as well so we will end recycling deleted items down the list and gain nothing from them
+	 */
+	for(var/i = length(nom); i >= 1; i--)
+		if(!is_operational) //we ran out of power after recycling a large amount to items, time to stop
+			break
+		use_power(active_power_usage / (recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
+	if(nom.len && sound)
+		playsound(src, item_recycle_sound, (50 + nom.len * 5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
+	if(not_eaten)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten * 5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
+
+/obj/machinery/recycler/proc/recycle_item(obj/item/weapon)
+	. = FALSE
+	var/obj/item/grown/log/wood = weapon
+	if(istype(wood))
 		var/seed_modifier = 0
-		if(L.seed)
-			seed_modifier = round(L.seed.potency / 25)
-		new L.plank_type(loc, 1 + seed_modifier)
+		if(wood.seed)
+			seed_modifier = round(wood.seed.potency / 25)
+		new wood.plank_type(loc, 1 + seed_modifier)
+		. = TRUE
 	else
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-		var/material_amount = materials.get_item_material_amount(I, BREAKDOWN_FLAGS_RECYCLER)
-		if(material_amount)
-			materials.insert_item(I, material_amount, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
+		var/retrived = materials.insert_item(weapon, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
+		if(retrived > 0) //item was salvaged i.e. deleted
 			materials.retrieve_all()
-	qdel(I)
+			return TRUE
+	qdel(weapon)
 
 /obj/machinery/recycler/proc/emergency_stop()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
@@ -192,7 +202,6 @@
 	update_appearance()
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
-
 	L.forceMove(loc)
 
 	if(issilicon(L))

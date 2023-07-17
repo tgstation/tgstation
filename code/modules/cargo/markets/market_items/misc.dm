@@ -41,6 +41,15 @@
 	stock_max = 8
 	availability_prob = 60
 
+/datum/market_item/misc/donk_recycler
+	name = "MOD Riot Foam Dart Recycler Module"
+	desc = "If you love toy guns, hate cleaning and got a MODsuit, this module is a must have."
+	item = /obj/item/mod/module/recycler/donk
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 4.5
+	stock_max = 2
+	availability_prob = 30
+
 /datum/market_item/misc/holywater
 	name = "Flask of holy water"
 	desc = "Father Lootius' own brand of ready-made holy water."

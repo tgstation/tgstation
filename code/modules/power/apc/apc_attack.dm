@@ -61,9 +61,17 @@
 			balloon_alert(user, "need ten lengths of cable!")
 			return
 
+		var/terminal_cable_layer = CABLE_LAYER_1
+		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
+			if(isnull(choice))
+				return
+			terminal_cable_layer = GLOB.cable_name_to_layer[choice]
+
 		user.visible_message(span_notice("[user.name] adds cables to the APC frame."))
 		balloon_alert(user, "adding cables to the frame...")
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+
 		if(!do_after(user, 20, target = src))
 			return
 		if(installing_cable.get_amount() < 10 || !installing_cable)
@@ -77,7 +85,7 @@
 			return
 		installing_cable.use(10)
 		balloon_alert(user, "cables added to the frame")
-		make_terminal()
+		make_terminal(terminal_cable_layer)
 		terminal.connect_to_network()
 		return
 
@@ -139,12 +147,14 @@
 		if(!(machine_stat & BROKEN || opened == APC_COVER_REMOVED || atom_integrity < max_integrity)) // There is nothing to repair
 			balloon_alert(user, "no reason for repairs!")
 			return
-		if(!(machine_stat & BROKEN) && opened == APC_COVER_REMOVED) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
+		if((machine_stat & BROKEN) && opened == APC_COVER_REMOVED && has_electronics && terminal) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
 			user.visible_message(span_notice("[user.name] replaces missing APC's cover."))
 			balloon_alert(user, "replacing APC's cover...")
 			if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
 				balloon_alert(user, "cover replaced")
 				qdel(attacking_object)
+				update_integrity(30) //needs to be welded to fully repair but can work without
+				set_machine_stat(machine_stat & ~(BROKEN|MAINT))
 				opened = APC_COVER_OPENED
 				update_appearance()
 			return

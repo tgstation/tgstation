@@ -124,10 +124,8 @@
 	. = ..()
 	. += "You can use your tendril hammer arm to deliver a devastating blow against mining fauna, but only once every two seconds."
 
-/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user, proximity_flag, click_parameters)
+/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user, click_parameters)
 	. = ..()
-	if(!proximity_flag)
-		return
 
 	//If we're on cooldown, we'll do a normal attack.
 	if(!COOLDOWN_FINISHED(src, tendril_hammer_cd))

@@ -83,3 +83,24 @@
 	desc = "Officially branded Saints sneakers. Incredibly valuable!"
 	icon_state = "saints_shoes"
 	inhand_icon_state = null
+
+/obj/item/clothing/shoes/ducky_shoes
+	name = "ducky shoes"
+	desc = "I got boots, that go *quack quack quack quack quack."
+	icon_state = "ducky_shoes"
+	inhand_icon_state = "ducky_shoes"
+
+/obj/item/clothing/shoes/ducky_shoes/Initialize(mapload)
+	. = ..()
+
+	create_storage(storage_type = /datum/storage/pockets/shoes)
+	LoadComponent(/datum/component/squeak, list('sound/effects/quack.ogg' = 1), 50, falloff_exponent = 20)
+
+/obj/item/clothing/shoes/ducky_shoes/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_FEET)
+		user.AddElement(/datum/element/waddling)
+
+/obj/item/clothing/shoes/ducky_shoes/dropped(mob/living/user)
+	. = ..()
+	user.RemoveElement(/datum/element/waddling)

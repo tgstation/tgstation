@@ -227,7 +227,7 @@
 /mob/living/simple_animal/examine(mob/user)
 	. = ..()
 	if(stat == DEAD)
-		if(HAS_TRAIT(user, TRAIT_NAIVE))
+		if(HAS_MIND_TRAIT(user, TRAIT_NAIVE))
 			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be asleep.")
 		else
 			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be dead.")
@@ -251,6 +251,8 @@
  * Reduces the stamina loss by stamina_recovery
  */
 /mob/living/simple_animal/update_stamina()
+	if(damage_coeff[STAMINA] <= 0) //we shouldn't reset our speed to its initial value if we don't need to, as that can mess with things like mulebot motor wires
+		return
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
 /mob/living/simple_animal/proc/handle_automated_action()
@@ -322,10 +324,10 @@
 		var/turf/open/ST = loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
-			ST.air.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
+			ST.air.assert_gases(/datum/gas/oxygen, /datum/gas/pluoxium, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
 
 			var/plas = ST_gases[/datum/gas/plasma][MOLES]
-			var/oxy = ST_gases[/datum/gas/oxygen][MOLES]
+			var/oxy = ST_gases[/datum/gas/oxygen][MOLES] + (ST_gases[/datum/gas/pluoxium][MOLES] * PLUOXIUM_PROPORTION)
 			var/n2 = ST_gases[/datum/gas/nitrogen][MOLES]
 			var/co2 = ST_gases[/datum/gas/carbon_dioxide][MOLES]
 
@@ -466,6 +468,9 @@
 		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
+	if(!isatom(the_target)) // no
+		stack_trace("Invalid target in CanAttack(): [the_target]")
+		return FALSE
 	if(see_invisible < the_target.invisibility)
 		return FALSE
 	if(ismob(the_target))

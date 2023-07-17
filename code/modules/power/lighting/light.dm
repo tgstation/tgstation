@@ -313,13 +313,6 @@
 // attack with item - insert light (if right type), otherwise try to break the light
 
 /obj/machinery/light/attackby(obj/item/tool, mob/living/user, params)
-
-	//Light replacer code
-	if(istype(tool, /obj/item/lightreplacer))
-		var/obj/item/lightreplacer/replacer = tool
-		replacer.replace_light(src, user)
-		return
-
 	// attempt to insert light
 	if(istype(tool, /obj/item/light))
 		if(status == LIGHT_OK)

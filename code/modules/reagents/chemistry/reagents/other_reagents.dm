@@ -20,11 +20,8 @@
 	icon_state = "glass_red"
 
 	// FEED ME
-/datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_pestlevel(rand(2,3))
+/datum/reagent/blood/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_pestlevel(rand(2, 3))
 
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
@@ -42,7 +39,7 @@
 
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
-		if(exposed_carbon.get_blood_id() == type && ((methods & INJECT) || ((methods & INGEST) && exposed_carbon.dna && exposed_carbon.dna.species && (DRINKSBLOOD in exposed_carbon.dna.species.species_traits))))
+		if(exposed_carbon.get_blood_id() == type && ((methods & INJECT) || ((methods & INGEST) && HAS_TRAIT(exposed_carbon, TRAIT_DRINKS_BLOOD))))
 			if(!data || !(data["blood_type"] in get_safe_blood(exposed_carbon.dna.blood_type)))
 				exposed_carbon.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
@@ -265,14 +262,11 @@
 	if(affected_mob.blood_volume)
 		affected_mob.blood_volume += 0.1 * REM * seconds_per_tick // water is good for you!
 
-///For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
-/datum/reagent/water/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
+// For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
+/datum/reagent/water/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_waterlevel(round(volume))
 	//You don't belong in this world, monster!
-	chems.remove_reagent(/datum/reagent/water, chems.get_reagent_amount(type))
+	mytray.reagents.remove_reagent(type, volume)
 
 /datum/reagent/water/holywater
 	name = "Holy Water"
@@ -289,14 +283,11 @@
 	desc = "A glass of holy water."
 	icon_state = "glass_clear"
 
-	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
-/datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_waterlevel(round(chems.get_reagent_amount(type)))
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
-	myseed?.adjust_instability(round(chems.get_reagent_amount(type) * 0.15))
+// Holy water. Unlike water, which is nuked, stays in and heals the plant a little with the power of the spirits. Also ALSO increases instability.
+/datum/reagent/water/holywater/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_waterlevel(round(volume))
+	mytray.adjust_plant_health(round(volume * 0.1))
+	mytray.myseed?.adjust_instability(round(volume * 0.15))
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/affected_mob)
 	..()
@@ -492,7 +483,7 @@
 	if(ishuman(exposed_mob))
 		if(methods & (PATCH|VAPOR))
 			var/mob/living/carbon/human/exposed_human = exposed_mob
-			if(exposed_human.dna.species.id == SPECIES_HUMAN)
+			if(HAS_TRAIT(exposed_human, TRAIT_USES_SKINTONES))
 				switch(exposed_human.skin_tone)
 					if("african1")
 						exposed_human.skin_tone = "african2"
@@ -514,10 +505,10 @@
 						exposed_human.skin_tone = pick("caucasian3", "latino")
 					if("caucasian1")
 						exposed_human.skin_tone = "caucasian2"
-					if ("albino")
+					if("albino")
 						exposed_human.skin_tone = "caucasian1"
-
-			if(MUTCOLORS in exposed_human.dna.species.species_traits) //take current alien color and darken it slightly
+			//take current alien color and darken it slightly
+			else if(HAS_TRAIT(exposed_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(exposed_human, TRAIT_FIXED_MUTANT_COLORS))
 				var/newcolor = ""
 				var/string = exposed_human.dna.features["mcolor"]
 				var/len = length(string)
@@ -554,16 +545,18 @@
 
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/affected_human = affected_mob
+		var/obj/item/bodypart/head/head = affected_human.get_bodypart(BODY_ZONE_HEAD)
+		if(head)
+			head.head_flags |= HEAD_HAIR //No hair? No problem!
+		if(!HAS_TRAIT(affected_human, TRAIT_SHAVED))
+			affected_human.set_facial_hairstyle("Shaved", update = FALSE)
+		affected_human.set_facial_haircolor("#000000", update = FALSE)
 		if(!HAS_TRAIT(affected_human, TRAIT_BALD))
-			affected_human.hairstyle = "Spiky"
-		affected_human.facial_hairstyle = "Shaved"
-		affected_human.facial_hair_color = "#000000"
-		affected_human.hair_color = "#000000"
-		if(!(HAIR in affected_human.dna.species.species_traits)) //No hair? No problem!
-			affected_human.dna.species.species_traits += HAIR
-		if(affected_human.dna.species.use_skintones)
+			affected_human.set_hairstyle("Spiky", update = FALSE)
+		affected_human.set_haircolor("#000000", update = FALSE)
+		if(HAS_TRAIT(affected_human, TRAIT_USES_SKINTONES))
 			affected_human.skin_tone = "orange"
-		else if(MUTCOLORS in affected_human.dna.species.species_traits) //Aliens with custom colors simply get turned orange
+		else if(HAS_TRAIT(affected_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(affected_human, TRAIT_FIXED_MUTANT_COLORS)) //Aliens with custom colors simply get turned orange
 			affected_human.dna.features["mcolor"] = "#ff8800"
 		affected_human.update_body(is_creating = TRUE)
 		if(SPT_PROB(3.5, seconds_per_tick))
@@ -832,8 +825,7 @@
 /datum/reagent/oxygen/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
 	if(istype(exposed_turf))
-		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("o2=[reac_volume/20];TEMP=[temp]")
+		exposed_turf.atmos_spawn_air("[GAS_O2]=[reac_volume/20];[TURF_TEMPERATURE(holder ? holder.chem_temp : T20C)]")
 	return
 
 /datum/reagent/copper
@@ -865,8 +857,7 @@
 
 /datum/reagent/nitrogen/expose_turf(turf/open/exposed_turf, reac_volume)
 	if(istype(exposed_turf))
-		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("n2=[reac_volume/20];TEMP=[temp]")
+		exposed_turf.atmos_spawn_air("[GAS_N2]=[reac_volume/20];[TURF_TEMPERATURE(holder ? holder.chem_temp : T20C)]")
 	return ..()
 
 /datum/reagent/hydrogen
@@ -939,14 +930,11 @@
 
 
 // You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
-/datum/reagent/chlorine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type)))
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1.5))
-	mytray.adjust_waterlevel(-round(chems.get_reagent_amount(type) * 0.5))
-	mytray.adjust_weedlevel(-rand(1,3))
+/datum/reagent/chlorine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(-round(volume))
+	mytray.adjust_toxic(round(volume * 1.5))
+	mytray.adjust_waterlevel(-round(volume * 0.5))
+	mytray.adjust_weedlevel(-rand(1, 3))
 	// White Phosphorous + water -> phosphoric acid. That's not a good thing really.
 
 
@@ -965,14 +953,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 // You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
-/datum/reagent/fluorine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 2))
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2.5))
-	mytray.adjust_waterlevel(-round(chems.get_reagent_amount(type) * 0.5))
-	mytray.adjust_weedlevel(-rand(1,4))
+/datum/reagent/fluorine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(-round(volume * 2))
+	mytray.adjust_toxic(round(volume * 2.5))
+	mytray.adjust_waterlevel(-round(volume * 0.5))
+	mytray.adjust_weedlevel(-rand(1, 4))
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustToxLoss(0.5*REM*seconds_per_tick, 0)
@@ -998,13 +983,10 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 // Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
-/datum/reagent/phosphorus/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 0.75))
-	mytray.adjust_waterlevel(-round(chems.get_reagent_amount(type) * 0.5))
-	mytray.adjust_weedlevel(-rand(1,2))
+/datum/reagent/phosphorus/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(-round(volume * 0.75))
+	mytray.adjust_waterlevel(-round(volume * 0.5))
+	mytray.adjust_weedlevel(-rand(1, 2))
 
 /datum/reagent/lithium
 	name = "Lithium"
@@ -1080,17 +1062,17 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/uranium
-	name ="Uranium"
+	name = "Uranium"
 	description = "A jade-green metallic chemical element in the actinide series, weakly radioactive."
 	reagent_state = SOLID
 	color = "#5E9964" //this used to be silver, but liquid uranium can still be green and it's more easily noticeable as uranium like this so why bother?
 	taste_description = "the inside of a reactor"
-	/// How much tox damage to deal per tick
-	var/tox_damage = 0.5
 	ph = 4
 	material = /datum/material/uranium
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/effect/decal/cleanable/greenglow
+	/// How much tox damage to deal per tick
+	var/tox_damage = 0.5
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjustToxLoss(tox_damage * seconds_per_tick * REM)
@@ -1108,14 +1090,10 @@
 		glow.reagents.add_reagent(type, reac_volume)
 
 //Mutagenic chem side-effects.
-/datum/reagent/uranium/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
+/datum/reagent/uranium/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.mutation_roll(user)
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type)))
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
+	mytray.adjust_plant_health(-round(volume))
+	mytray.adjust_toxic(round(volume / tox_damage)) // more damage = more
 
 /datum/reagent/uranium/radium
 	name = "Radium"
@@ -1123,19 +1101,10 @@
 	reagent_state = SOLID
 	color = "#00CC00" // ditto
 	taste_description = "the colour blue and regret"
-	tox_damage = 1*REM
+	tox_damage = 1
 	material = null
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/uranium/radium/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.mutation_roll(user)
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type)))
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
 
 /datum/reagent/bluespace
 	name = "Bluespace Dust"
@@ -1403,12 +1372,12 @@
 	ph = 11.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/ammonia/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
+/datum/reagent/ammonia/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	// Ammonia is bad ass.
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.12))
-	if(myseed && prob(10))
+	mytray.adjust_plant_health(round(volume * 0.12))
+
+	var/obj/item/seeds/myseed = mytray.myseed
+	if(!isnull(myseed) && prob(10))
 		myseed.adjust_yield(1)
 		myseed.adjust_instability(1)
 
@@ -1421,15 +1390,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 // This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant. The new trade off is it culls stability.
-/datum/reagent/diethylamine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type)))
+/datum/reagent/diethylamine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(round(volume))
 	mytray.adjust_pestlevel(-rand(1,2))
-	if(myseed)
-		myseed.adjust_yield(round(chems.get_reagent_amount(type)))
-		myseed.adjust_instability(-round(chems.get_reagent_amount(type)))
+	var/obj/item/seeds/myseed = mytray.myseed
+	if(!isnull(myseed))
+		myseed.adjust_yield(round(volume))
+		myseed.adjust_instability(-round(volume))
 
 /datum/reagent/carbondioxide
 	name = "Carbon Dioxide"
@@ -1442,8 +1409,7 @@
 
 /datum/reagent/carbondioxide/expose_turf(turf/open/exposed_turf, reac_volume)
 	if(istype(exposed_turf))
-		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("co2=[reac_volume/20];TEMP=[temp]")
+		exposed_turf.atmos_spawn_air("[GAS_CO2]=[reac_volume/20];[TURF_TEMPERATURE(holder ? holder.chem_temp : T20C)]")
 	return ..()
 
 /datum/reagent/nitrous_oxide
@@ -1460,8 +1426,7 @@
 /datum/reagent/nitrous_oxide/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
 	if(istype(exposed_turf))
-		var/temp = holder ? holder.chem_temp : T20C
-		exposed_turf.atmos_spawn_air("n2o=[reac_volume/20];TEMP=[temp]")
+		exposed_turf.atmos_spawn_air("[GAS_N2O]=[reac_volume/20];[TURF_TEMPERATURE(holder ? holder.chem_temp : T20C)]")
 
 /datum/reagent/nitrous_oxide/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -1501,7 +1466,7 @@
 	var/colorname = "none"
 	description = "A powder that is used for coloring things."
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 207, 54, 0
+	color = COLOR_WHITE
 	taste_description = "the back of class"
 
 /datum/reagent/colorful_reagent/powder/New()
@@ -1516,7 +1481,7 @@
 /datum/reagent/colorful_reagent/powder/red
 	name = "Red Powder"
 	colorname = "red"
-	color = "#DA0000" // red
+	color = COLOR_CRAYON_RED
 	random_color_list = list("#FC7474")
 	ph = 0.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1524,29 +1489,29 @@
 /datum/reagent/colorful_reagent/powder/orange
 	name = "Orange Powder"
 	colorname = "orange"
-	color = "#FF9300" // orange
-	random_color_list = list("#FF9300")
+	color = COLOR_CRAYON_ORANGE
+	random_color_list = list(COLOR_CRAYON_ORANGE)
 	ph = 2
 
 /datum/reagent/colorful_reagent/powder/yellow
 	name = "Yellow Powder"
 	colorname = "yellow"
-	color = "#FFF200" // yellow
-	random_color_list = list("#FFF200")
+	color = COLOR_CRAYON_YELLOW
+	random_color_list = list(COLOR_CRAYON_YELLOW)
 	ph = 5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/green
 	name = "Green Powder"
 	colorname = "green"
-	color = "#A8E61D" // green
-	random_color_list = list("#A8E61D")
+	color = COLOR_CRAYON_GREEN
+	random_color_list = list(COLOR_CRAYON_GREEN)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/blue
 	name = "Blue Powder"
 	colorname = "blue"
-	color = "#00B7EF" // blue
+	color = COLOR_CRAYON_BLUE
 	random_color_list = list("#71CAE5")
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1554,7 +1519,7 @@
 /datum/reagent/colorful_reagent/powder/purple
 	name = "Purple Powder"
 	colorname = "purple"
-	color = "#DA00FF" // purple
+	color = COLOR_CRAYON_PURPLE
 	random_color_list = list("#BD8FC4")
 	ph = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1563,21 +1528,21 @@
 	name = "Invisible Powder"
 	colorname = "invisible"
 	color = "#FFFFFF00" // white + no alpha
-	random_color_list = list("#FFFFFF") //because using the powder color turns things invisible
+	random_color_list = list(COLOR_WHITE) //because using the powder color turns things invisible
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/black
 	name = "Black Powder"
 	colorname = "black"
-	color = "#1C1C1C" // not quite black
+	color = COLOR_CRAYON_BLACK
 	random_color_list = list("#8D8D8D") //more grey than black, not enough to hide your true colors
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/white
 	name = "White Powder"
 	colorname = "white"
-	color = "#FFFFFF" // white
-	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
+	color = COLOR_WHITE
+	random_color_list = list(COLOR_WHITE) //doesn't actually change appearance at all
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /* used by crayons, can't color living things but still used for stuff like food recipes */
@@ -1647,13 +1612,12 @@
 	tox_prob = 5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/plantnutriment/eznutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
-		return
-	if(myseed)
+/datum/reagent/plantnutriment/eznutriment/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	var/obj/item/seeds/myseed = mytray.myseed
+	if(!isnull(myseed))
 		myseed.adjust_instability(0.2)
-		myseed.adjust_potency(round(chems.get_reagent_amount(type) * 0.3))
-		myseed.adjust_yield(round(chems.get_reagent_amount(type) * 0.1))
+		myseed.adjust_potency(round(volume * 0.3))
+		myseed.adjust_yield(round(volume * 0.1))
 
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"
@@ -1662,12 +1626,10 @@
 	tox_prob = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/plantnutriment/left4zednutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
-		return
+/datum/reagent/plantnutriment/left4zednutriment/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
-	myseed?.adjust_instability(round(chems.get_reagent_amount(type) * 0.2))
+	mytray.adjust_plant_health(round(volume * 0.1))
+	mytray.myseed?.adjust_instability(round(volume * 0.2))
 
 /datum/reagent/plantnutriment/robustharvestnutriment
 	name = "Robust Harvest"
@@ -1676,14 +1638,12 @@
 	tox_prob = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/plantnutriment/robustharvestnutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
-		return
-
-	if(myseed)
+/datum/reagent/plantnutriment/robustharvestnutriment/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	var/obj/item/seeds/myseed = mytray.myseed
+	if(!isnull(myseed))
 		myseed.adjust_instability(-0.25)
-		myseed.adjust_potency(round(chems.get_reagent_amount(type) * 0.1))
-		myseed.adjust_yield(round(chems.get_reagent_amount(type) * 0.2))
+		myseed.adjust_potency(round(volume * 0.1))
+		myseed.adjust_yield(round(volume * 0.2))
 
 /datum/reagent/plantnutriment/endurogrow
 	name = "Enduro Grow"
@@ -1692,14 +1652,12 @@
 	tox_prob = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/plantnutriment/endurogrow/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
-		return
-
-	if(myseed)
-		myseed.adjust_potency(-round(chems.get_reagent_amount(type) * 0.1))
-		myseed.adjust_yield(-round(chems.get_reagent_amount(type) * 0.075))
-		myseed.adjust_endurance(round(chems.get_reagent_amount(type) * 0.35))
+/datum/reagent/plantnutriment/endurogrow/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	var/obj/item/seeds/myseed = mytray.myseed
+	if(!isnull(myseed))
+		myseed.adjust_potency(-round(volume * 0.1))
+		myseed.adjust_yield(-round(volume * 0.075))
+		myseed.adjust_endurance(round(volume * 0.35))
 
 /datum/reagent/plantnutriment/liquidearthquake
 	name = "Liquid Earthquake"
@@ -1708,14 +1666,13 @@
 	tox_prob = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/plantnutriment/liquidearthquake/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(!check_tray(chems, mytray))
-		return
+/datum/reagent/plantnutriment/liquidearthquake/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 
-	if(myseed)
-		myseed.adjust_weed_rate(round(chems.get_reagent_amount(type) * 0.1))
-		myseed.adjust_weed_chance(round(chems.get_reagent_amount(type) * 0.3))
-		myseed.adjust_production(-round(chems.get_reagent_amount(type) * 0.075))
+	var/obj/item/seeds/myseed = mytray.myseed
+	if(!isnull(myseed))
+		myseed.adjust_weed_rate(round(volume * 0.1))
+		myseed.adjust_weed_chance(round(volume * 0.3))
+		myseed.adjust_production(-round(volume * 0.075))
 
 // GOON OTHERS
 
@@ -1797,7 +1754,7 @@
 /datum/reagent/carpet/green
 	name = "Green Carpet"
 	description = "For those that need the perfect flourish for green eggs and ham."
-	color = "#A8E61D"
+	color = COLOR_CRAYON_GREEN
 	taste_description = "Green" //the caps is intentional
 	carpet_type = /turf/open/floor/carpet/green
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -2034,11 +1991,8 @@
 	default_container = /obj/effect/decal/cleanable/ash
 
 // Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
-/datum/reagent/ash/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type)))
+/datum/reagent/ash/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(round(volume))
 	mytray.adjust_weedlevel(-1)
 
 /datum/reagent/acetone
@@ -2108,8 +2062,8 @@
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	exposed_human.hair_color = pick(potential_colors)
-	exposed_human.facial_hair_color = pick(potential_colors)
+	exposed_human.set_facial_haircolor(pick(potential_colors), update = FALSE)
+	exposed_human.set_haircolor(pick(potential_colors), update = TRUE)
 	exposed_human.update_body_parts()
 
 /datum/reagent/barbers_aid
@@ -2130,9 +2084,8 @@
 	var/datum/sprite_accessory/hair/picked_hair = pick(GLOB.hairstyles_list)
 	var/datum/sprite_accessory/facial_hair/picked_beard = pick(GLOB.facial_hairstyles_list)
 	to_chat(exposed_human, span_notice("Hair starts sprouting from your scalp."))
-	exposed_human.hairstyle = picked_hair
-	exposed_human.facial_hairstyle = picked_beard
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_hairstyle(picked_beard, update = FALSE)
+	exposed_human.set_hairstyle(picked_hair, update = TRUE)
 
 /datum/reagent/concentrated_barbers_aid
 	name = "Concentrated Barber's Aid"
@@ -2150,9 +2103,8 @@
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	to_chat(exposed_human, span_notice("Your hair starts growing at an incredible speed!"))
-	exposed_human.hairstyle = "Very Long Hair"
-	exposed_human.facial_hairstyle = "Beard (Very Long)"
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_hairstyle("Beard (Very Long)", update = FALSE)
+	exposed_human.set_hairstyle("Very Long Hair", update = TRUE)
 
 /datum/reagent/concentrated_barbers_aid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -2162,12 +2114,10 @@
 		var/mob/living/carbon/human/human_mob = affected_mob
 		if(creation_purity == 1 && human_mob.has_quirk(/datum/quirk/item_quirk/bald))
 			human_mob.remove_quirk(/datum/quirk/item_quirk/bald)
-		var/datum/species/species_datum = human_mob.dna?.species
-		if(!species_datum)
+		var/obj/item/bodypart/head/head = human_mob.get_bodypart(BODY_ZONE_HEAD)
+		if(!head || (head.head_flags & HEAD_HAIR))
 			return
-		if(species_datum.species_traits.Find(HAIR))
-			return
-		species_datum.species_traits |= HAIR
+		head.head_flags |= HEAD_HAIR
 		var/message
 		if(HAS_TRAIT(affected_mob, TRAIT_BALD))
 			message = span_warning("You feel your scalp mutate, but you are still hopelessly bald.")
@@ -2192,9 +2142,8 @@
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	to_chat(exposed_human, span_danger("Your hair is falling out in clumps!"))
-	exposed_human.hairstyle = "Bald"
-	exposed_human.facial_hairstyle = "Shaved"
-	exposed_human.update_body_parts()
+	exposed_human.set_facial_hairstyle("Shaved", update = FALSE)
+	exposed_human.set_hairstyle("Bald", update = TRUE)
 
 /datum/reagent/saltpetre
 	name = "Saltpetre"
@@ -2206,15 +2155,10 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 // Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
-/datum/reagent/saltpetre/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	var/salt = chems.get_reagent_amount(type)
-	mytray.adjust_plant_health(round(salt * 0.18))
-	if(myseed)
-		myseed.adjust_production(-round(salt/10)-prob(salt%10))
-		myseed.adjust_potency(round(salt))
+/datum/reagent/saltpetre/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(round(volume * 0.18))
+	mytray.myseed?.adjust_production(-round(volume / 10)-prob(volume % 10))
+	mytray.myseed?.adjust_potency(round(volume))
 
 /datum/reagent/lye
 	name = "Lye"
@@ -2372,15 +2316,13 @@
 		if(200 to INFINITY)
 			newsize = 3.5*RESIZE_DEFAULT_SIZE
 
-	affected_mob.resize = newsize/current_size
+	affected_mob.update_transform(newsize/current_size)
 	current_size = newsize
-	affected_mob.update_transform()
 	..()
 
 /datum/reagent/growthserum/on_mob_end_metabolize(mob/living/affected_mob)
-	affected_mob.resize = RESIZE_DEFAULT_SIZE/current_size
+	affected_mob.update_transform(RESIZE_DEFAULT_SIZE/current_size)
 	current_size = RESIZE_DEFAULT_SIZE
-	affected_mob.update_transform()
 	..()
 
 /datum/reagent/plastic_polymers
@@ -2619,7 +2561,7 @@
 	description = "A purple metal morphic liquid, said to impose it's metallic properties on whatever it touches."
 	color = "#b000aa"
 	taste_mult = 0 // oderless and tasteless
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
 	/// The material flags used to apply the transmuted materials
 	var/applied_material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	/// The amount of materials to apply to the transmuted objects if they don't contain materials
@@ -2888,14 +2830,11 @@
 	. = ..()
 	affected_mob.adjustFireLoss((ispodperson(affected_mob) ? -1 : 1) * seconds_per_tick)
 
-/datum/reagent/brimdust/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
+/datum/reagent/brimdust/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_weedlevel(-1)
 	mytray.adjust_pestlevel(-1)
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type)))
-	myseed?.adjust_potency(round(chems.get_reagent_amount(type) * 0.5))
+	mytray.adjust_plant_health(round(volume))
+	mytray.myseed?.adjust_potency(round(volume * 0.5))
 
 // I made this food....with love.
 // Reagent added to food by chef's with a chef's kiss. Makes people happy.

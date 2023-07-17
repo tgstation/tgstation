@@ -41,6 +41,10 @@
 		COLOR_TOOL_CYAN,
 		COLOR_TOOL_YELLOW,
 	)
+	/// Used on Initialize, how much time to cut cable restraints and zipties.
+	var/snap_time_weak_handcuffs = 0 SECONDS
+	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
+	var/snap_time_strong_handcuffs = null
 
 /datum/armor/item_wirecutters
 	fire = 50
@@ -51,15 +55,7 @@
 		set_greyscale(colors = list(pick(wirecutter_colors)))
 
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
-
-	return ..()
-
-/obj/item/wirecutters/attack(mob/living/carbon/attacked_carbon, mob/user)
-	if(istype(attacked_carbon) && attacked_carbon.handcuffed && istype(attacked_carbon.handcuffed, /obj/item/restraints/handcuffs/cable))
-		user.visible_message(span_notice("[user] cuts [attacked_carbon]'s restraints with [src]!"))
-		qdel(attacked_carbon.handcuffed)
-		return
-
+	AddElement(/datum/element/cuffsnapping, snap_time_weak_handcuffs, snap_time_strong_handcuffs)
 	return ..()
 
 /obj/item/wirecutters/suicide_act(mob/living/user)
@@ -70,11 +66,12 @@
 /obj/item/wirecutters/abductor
 	name = "alien wirecutters"
 	desc = "Extremely sharp wirecutters, made out of a silvery-green metal."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 	icon_state = "cutters"
 	toolspeed = 0.1
 	random_color = FALSE
+	snap_time_strong_handcuffs = 1 SECONDS
 
 /obj/item/wirecutters/cyborg
 	name = "powered wirecutters"

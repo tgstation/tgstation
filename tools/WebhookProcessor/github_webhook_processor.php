@@ -28,7 +28,8 @@ define('F_SECRET_PR', 1<<1);
 
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
-$repoOwnerAndName = "tgstation/tgstation";
+$repoOwnerAndName = "tgstation/tgstation"; // this is just the repository auto-updates happen from
+$repoAutoTaggerWhitelist = array("tgstation", "TerraGov-Marine-Corps");
 $servers = array();
 $enable_live_tracking = true;
 $path_to_script = 'tools/WebhookProcessor/github_webhook_processor.php';
@@ -209,6 +210,11 @@ function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_labe
 }
 
 function set_labels($payload, $labels, $remove) {
+	global $repoAutoTaggerWhitelist;
+	if(!in_array($payload['repository']['name'], $repoAutoTaggerWhitelist)) {
+		return;
+	}
+
 	$existing = get_labels($payload);
 	$tags = array();
 
@@ -230,11 +236,15 @@ function set_labels($payload, $labels, $remove) {
 function tag_pr($payload, $opened) {
 	//get the mergeable state
 	$url = $payload['pull_request']['url'];
-	$payload['pull_request'] = json_decode(github_apisend($url), TRUE);
+	$new_pull_request_payload = json_decode(github_apisend($url), TRUE);
+	if (isset($new_pull_request_payload['id']))
+		$payload['pull_request'] = $new_pull_request_payload;
 	if($payload['pull_request']['mergeable'] == null) {
 		//STILL not ready. Give it a bit, then try one more time
 		sleep(10);
-		$payload['pull_request'] = json_decode(github_apisend($url), TRUE);
+		$new_pull_request_payload = json_decode(github_apisend($url), TRUE);
+		if (isset($new_pull_request_payload['id']))
+			$payload['pull_request'] = $new_pull_request_payload;
 	}
 
 	$tags = array();
@@ -636,10 +646,10 @@ $no_changelog = false;
 function checkchangelog($payload) {
 	global $no_changelog;
 	if (!isset($payload['pull_request']) || !isset($payload['pull_request']['body'])) {
-		return;
+		return array();
 	}
 	if (!isset($payload['pull_request']['user']) || !isset($payload['pull_request']['user']['login'])) {
-		return;
+		return array();
 	}
 	$body = $payload['pull_request']['body'];
 

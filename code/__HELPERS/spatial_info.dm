@@ -1,8 +1,3 @@
-/turf
-	///what /mob/oranges_ear instance is already assigned to us as there should only ever be one.
-	///used for guaranteeing there is only one oranges_ear per turf when assigned, speeds up view() iteration
-	var/mob/oranges_ear/assigned_oranges_ear
-
 /** # Oranges Ear
  *
  * turns out view() spends a significant portion of its processing time generating lists of contents of viewable turfs which includes EVERYTHING on it visible

@@ -190,7 +190,7 @@
 /area/template_noop)
 "au" = (
 /obj/structure/table/wood/fancy,
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -495,7 +495,7 @@
 /area/template_noop)
 "kv" = (
 /obj/structure/table/wood/fancy,
-/obj/item/storage/book/bible,
+/obj/item/book/bible,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/holofloor/dark,
 /area/template_noop)

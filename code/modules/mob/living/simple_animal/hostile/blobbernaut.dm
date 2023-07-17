@@ -96,11 +96,11 @@
 		attack_verb_continuous = initial(attack_verb_continuous)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
-	..(gibbed)
 	if(factory)
-		factory.naut = null //remove this naut from its factory
+		factory.blobbernaut = null //remove this blobbernaut from its factory
 		factory.max_integrity = initial(factory.max_integrity)
 	flick("blobbernaut_death", src)
+	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/independent
 	independent = TRUE

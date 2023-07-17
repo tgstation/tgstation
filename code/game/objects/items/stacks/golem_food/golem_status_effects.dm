@@ -260,9 +260,9 @@
 	alert_icon_state = "sheet-diamond"
 	alert_desc = "Light is bending around you, making you hard to see while still and faster while moving."
 	/// Alpha to remove per second while stood still
-	var/alpha_per_tick = 25
+	var/alpha_per_tick = 20
 	/// Alpha to apply while moving
-	var/moving_alpha = 150
+	var/moving_alpha = 200
 	/// List of arms we have updated
 	var/list/modified_arms
 
@@ -270,7 +270,7 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_THROW, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK), PROC_REF(on_reveal))
 	owner.alpha = moving_alpha
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/light_speed)
 
@@ -285,7 +285,7 @@
 	owner.alpha = max(owner.alpha - alpha_per_tick, 0)
 
 /// Reset alpha to starting value
-/datum/status_effect/golem/diamond/proc/on_move()
+/datum/status_effect/golem/diamond/proc/on_reveal()
 	SIGNAL_HANDLER
 	owner.alpha = moving_alpha
 
@@ -295,13 +295,13 @@
 	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	arm.unarmed_attack_sound = 'sound/weapons/slash.ogg'
 	arm.unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
-	RegisterSignal(arm, COMSIG_PARENT_QDELETING, PROC_REF(on_arm_destroyed))
+	RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 	LAZYADD(modified_arms, arm)
 
 /datum/status_effect/golem/diamond/on_remove()
 	owner.alpha = initial(owner.alpha)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/light_speed)
-	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_THROW, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK))
 	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
 		reset_arm_fluff(arm)
 	LAZYCLEARLIST(modified_arms)
@@ -315,7 +315,7 @@
 	arm.unarmed_attack_effect = initial(arm.unarmed_attack_effect)
 	arm.unarmed_attack_sound = initial(arm.unarmed_attack_sound)
 	arm.unarmed_miss_sound = initial(arm.unarmed_miss_sound)
-	UnregisterSignal(arm, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(arm, COMSIG_QDELETING)
 
 /// Remove references to deleted arms
 /datum/status_effect/golem/diamond/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
@@ -365,7 +365,7 @@
 	arm.unarmed_damage_low += damage_increase
 	arm.unarmed_damage_high += damage_increase
 	arm.unarmed_stun_threshold += damage_increase // We don't want to make knockdown more likely
-	RegisterSignal(arm, COMSIG_PARENT_QDELETING, PROC_REF(on_arm_destroyed))
+	RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 	LAZYADD(modified_arms, arm)
 
 /datum/status_effect/golem/titanium/on_remove()
@@ -384,7 +384,7 @@
 	arm.unarmed_damage_low -= damage_increase
 	arm.unarmed_damage_high -= damage_increase
 	arm.unarmed_stun_threshold -= damage_increase
-	UnregisterSignal(arm, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(arm, COMSIG_QDELETING)
 
 /// Remove references to deleted arms
 /datum/status_effect/golem/titanium/proc/on_arm_destroyed(obj/item/bodypart/arm/arm)
@@ -407,7 +407,16 @@
 		return
 	owner.AddElement(/datum/element/waddling)
 	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
-	slipperiness = owner.AddComponent(/datum/component/slippery, knockdown = 12 SECONDS, lube_flags = NO_SLIP_WHEN_WALKING)
+	slipperiness = owner.AddComponent(\
+		/datum/component/slippery,\
+		knockdown = 12 SECONDS,\
+		lube_flags = NO_SLIP_WHEN_WALKING,\
+		can_slip_callback = CALLBACK(src, PROC_REF(try_slip)),\
+	)
+
+/// Only slip people when we're down on the ground
+/datum/status_effect/golem/bananium/proc/try_slip(mob/living/slipper, mob/living/slippee)
+	return owner.body_position == LYING_DOWN
 
 /datum/status_effect/golem/bananium/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))

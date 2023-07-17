@@ -65,10 +65,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/supply)
-"r" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/supply)
 "s" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
@@ -180,9 +176,9 @@ a
 k
 a
 a
-r
+a
 R
-r
+a
 a
 a
 J

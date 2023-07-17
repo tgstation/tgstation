@@ -69,12 +69,15 @@
 	. = new_overlays
 	if(manifest)
 		. += "manifest"
-	if(broken)
-		. += "securecrateemag"
-	else if(locked)
-		. += "securecrater"
-	else if(secure)
-		. += "securecrateg"
+
+	if(!opened)
+		if(broken)
+			. += "securecrateemag"
+		else if(locked)
+			. += "securecrater"
+		else if(secure)
+			. += "securecrateg"
+
 	if(opened && lid_icon_state)
 		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
 		lid.pixel_x = lid_x
@@ -155,9 +158,24 @@
 	for (var/i in 1 to rand(2,6))
 		new /obj/effect/spawner/random/maintenance(src)
 
+/obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
+	desc = "A heavy, metal trashcart with wheels."
+	name = "trash cart"
+	icon_state = "trashcart"
+	base_icon_state = "trashcart"
+	can_install_electronics = FALSE
+	paint_jobs = null
+
+/obj/structure/closet/crate/trashcart/laundry
+	name = "laundry cart"
+	desc = "A large cart for hauling around large amounts of laundry."
+	icon_state = "laundry"
+	base_icon_state = "laundry"
+
 /obj/structure/closet/crate/trashcart/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 15)
+	AddElement(/datum/element/noisy_movement)
 
 /obj/structure/closet/crate/trashcart/filled
 
@@ -178,25 +196,6 @@
 	name = "internals crate"
 	icon_state = "o2crate"
 	base_icon_state = "o2crate"
-
-/obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
-	desc = "A heavy, metal trashcart with wheels."
-	name = "trash cart"
-	icon_state = "trashcart"
-	base_icon_state = "trashcart"
-	can_install_electronics = FALSE
-	paint_jobs = null
-
-/obj/structure/closet/crate/trashcart/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
-
-/obj/structure/closet/crate/trashcart/laundry
-	name = "laundry cart"
-	desc = "A large cart for hauling around large amounts of laundry."
-	icon_state = "laundry"
-	base_icon_state = "laundry"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."

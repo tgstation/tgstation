@@ -330,7 +330,7 @@
 /turf/open/floor/grass,
 /area/station/asteroid)
 "NE" = (
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/station/asteroid)
 "NX" = (
@@ -355,7 +355,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "Qt" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
-/mob/living/simple_animal/butterfly,
+/mob/living/basic/butterfly,
 /turf/open/floor/grass,
 /area/station/asteroid)
 "SV" = (

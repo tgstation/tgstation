@@ -182,8 +182,8 @@
 	underbarrel = new /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted(src)
 	update_appearance()
 
-/obj/item/gun/ballistic/automatic/m90/afterattack_secondary(atom/target, mob/living/user, flag, params)
-	underbarrel.afterattack(target, user, flag, params)
+/obj/item/gun/ballistic/automatic/m90/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
+	underbarrel.afterattack(target, user, proximity_flag, click_parameters)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/gun/ballistic/automatic/m90/attackby(obj/item/A, mob/user, params)
@@ -233,7 +233,6 @@
 	can_suppress = FALSE
 	burst_size = 3
 	fire_delay = 1
-
 
 // L6 SAW //
 
@@ -327,6 +326,10 @@
 	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
 	icon_state = "surplus"
 	inhand_icon_state = "moistnugget"
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	worn_icon_state = null
 	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/m10mm/rifle

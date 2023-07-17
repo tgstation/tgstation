@@ -30,7 +30,7 @@
 		/obj/item/food/grown/banana,
 		/obj/item/gun/energy/laser/thermal,
 		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
-		))
+	))
 
 /obj/item/storage/belt/holster/energy
 	name = "energy shoulder holsters"
@@ -47,7 +47,7 @@
 		/obj/item/food/grown/banana,
 		/obj/item/gun/energy/laser/thermal,
 		/obj/item/gun/energy/recharge/ebow,
-		))
+	))
 
 /obj/item/storage/belt/holster/energy/thermal
 	name = "thermal shoulder holsters"
@@ -93,7 +93,7 @@
 		/obj/item/gun/energy/dueling,
 		/obj/item/gun/energy/laser/thermal,
 		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
-		))
+	))
 
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
 	generate_items_inside(list(
@@ -125,31 +125,8 @@
 
 /obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
-
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/storage/belt
-	chameleon_action.chameleon_name = "Belt"
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
-	. = ..()
-	atom_storage.silent = TRUE
-
-/obj/item/storage/belt/holster/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
-
-/obj/item/storage/belt/holster/chameleon/broken/Initialize(mapload)
-	. = ..()
-	chameleon_action.emp_randomise(INFINITY)
-
-/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
-	. = ..()
 	atom_storage.max_slots = 2
-	atom_storage.max_total_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm,
@@ -166,7 +143,25 @@
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling
-		))
+	))
+
+	atom_storage.silent = TRUE
+
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/storage/belt
+	chameleon_action.chameleon_name = "Belt"
+	chameleon_action.initialize_disguises()
+	add_item_action(chameleon_action)
+
+/obj/item/storage/belt/holster/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	chameleon_action.emp_randomise()
+
+/obj/item/storage/belt/holster/chameleon/broken/Initialize(mapload)
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/storage/belt/holster/nukie
 	name = "operative holster"
@@ -188,4 +183,4 @@
 		/obj/item/ammo_box/a762,
 		/obj/item/ammo_casing, // For shotgun shells, rockets, launcher grenades, and a few other things.
 		/obj/item/grenade, // All regular grenades, the big grenade launcher fires these.
-		))
+	))

@@ -181,7 +181,7 @@
 	if(!user.combat_mode)
 		user.throw_item(target)
 
-/obj/item/toy/basketball/afterattack_secondary(atom/aim_target, mob/living/baller, params)
+/obj/item/toy/basketball/afterattack_secondary(atom/aim_target, mob/living/baller, proximity_flag, click_parameters)
 	// dunking negates shooting
 	if(istype(aim_target, /obj/structure/hoop) && baller.Adjacent(aim_target))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

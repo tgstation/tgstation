@@ -17,11 +17,8 @@
 	var/health_required = -100
 
 // Are you a bad enough dude to poison your own plants?
-/datum/reagent/toxin/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
+/datum/reagent/toxin/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_toxic(round(volume * 2))
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(toxpwr && affected_mob.health > health_required)
@@ -68,12 +65,8 @@
 	affected_mob.adjustToxLoss(0.5 * seconds_per_tick * REM, required_biotype = affected_biotype)
 	return ..()
 
-/datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
+/datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.mutation_roll(user)
-
 	mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
 
 #define LIQUID_PLASMA_BP (50+T0C)
@@ -125,7 +118,7 @@
 	if((holder.flags & SEALED_CONTAINER) && (holder.chem_temp < LIQUID_PLASMA_IG))
 		return
 	var/atom/A = holder.my_atom
-	A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
+	A.atmos_spawn_air("[GAS_PLASMA]=[volume];[TURF_TEMPERATURE(holder.chem_temp)]")
 	holder.del_reagent(type)
 
 /datum/reagent/toxin/plasma/expose_turf(turf/open/exposed_turf, reac_volume)
@@ -133,7 +126,7 @@
 		return
 	var/temp = holder ? holder.chem_temp : T20C
 	if(temp >= LIQUID_PLASMA_BP)
-		exposed_turf.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
+		exposed_turf.atmos_spawn_air("[GAS_PLASMA]=[reac_volume];[TURF_TEMPERATURE(temp)]")
 	return ..()
 
 #undef LIQUID_PLASMA_BP
@@ -254,7 +247,7 @@
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/holder_mob)
 	. = ..()
 	holder_mob.adjustOxyLoss(0.5*REM, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	if(data?["method"] & INGEST)
+	if((data?["method"] & INGEST) && holder_mob.stat != DEAD)
 		holder_mob.fakedeath(type)
 
 /datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/holder_mob)
@@ -281,7 +274,8 @@
 		if(5 to 8)
 			affected_mob.adjustStaminaLoss(40 * REM * seconds_per_tick, 0)
 		if(9 to INFINITY)
-			affected_mob.fakedeath(type)
+			if(affected_mob.stat != DEAD)
+				affected_mob.fakedeath(type)
 	..()
 	return TRUE
 
@@ -353,13 +347,10 @@
 	ph = 2.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	// Plant-B-Gone is just as bad
-/datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 10))
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 6))
+// Plant-B-Gone is just as bad
+/datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(-round(volume * 10))
+	mytray.adjust_toxic(round(volume * 6))
 	mytray.adjust_weedlevel(-rand(4,8))
 
 /datum/reagent/toxin/plantbgone/expose_obj(obj/exposed_obj, reac_volume)
@@ -398,12 +389,9 @@
 	ph = 3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	//Weed Spray
-/datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 0.5))
+//Weed Spray
+/datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_toxic(round(volume * 0.5))
 	mytray.adjust_weedlevel(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller
@@ -414,19 +402,18 @@
 	ph = 3.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-//Pest Spray
-/datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
-	mytray.adjust_pestlevel(-rand(1,2))
-
-/datum/reagent/toxin/pestkiller/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+/datum/reagent/toxin/pestkiller/on_new(data)
 	. = ..()
-	if(exposed_mob.mob_biotypes & MOB_BUG)
-		var/damage = min(round(0.4*reac_volume, 0.1),10)
-		exposed_mob.adjustToxLoss(damage, required_biotype = affected_biotype)
+	AddElement(/datum/element/bugkiller_reagent)
+
+/datum/reagent/toxin/pestkiller/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = affected_mob.adjustToxLoss(2 * toxpwr * REM * seconds_per_tick, updating_health = FALSE, required_biotype = MOB_BUG)
+	return ..() || .
+
+//Pest Spray
+/datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_toxic(round(volume))
+	mytray.adjust_pestlevel(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller/organic
 	name = "Natural Pest Killer"
@@ -436,11 +423,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 //Pest Spray
-/datum/reagent/toxin/pestkiller/organic/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 0.1))
+/datum/reagent/toxin/pestkiller/organic/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_toxic(round(volume * 0.1))
 	mytray.adjust_pestlevel(-rand(1,2))
 
 /datum/reagent/toxin/spore
@@ -657,7 +641,12 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(SPT_PROB(2.5, seconds_per_tick))
+	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM)) //mmmm, the forbidden pickle juice
+		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype) //it counteracts its own toxin damage.
+		. = TRUE
+		return ..()
+	else if(SPT_PROB(2.5, seconds_per_tick))
 		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5,15))
 		holder.remove_reagent(/datum/reagent/toxin/formaldehyde, 1.2)
 	else
@@ -676,9 +665,8 @@
 
 /datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	var/newsize = 1.1 * RESIZE_DEFAULT_SIZE
-	affected_mob.resize = newsize/current_size
+	affected_mob.update_transform(newsize/current_size)
 	current_size = newsize
-	affected_mob.update_transform()
 
 	toxpwr = 0.1 * volume
 	affected_mob.adjustBruteLoss((0.3 * volume) * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
@@ -690,9 +678,8 @@
 		..()
 
 /datum/reagent/toxin/venom/on_mob_end_metabolize(mob/living/affected_mob)
-	affected_mob.resize = RESIZE_DEFAULT_SIZE/current_size
+	affected_mob.update_transform(RESIZE_DEFAULT_SIZE/current_size)
 	current_size = RESIZE_DEFAULT_SIZE
-	affected_mob.update_transform()
 	..()
 
 /datum/reagent/toxin/fentanyl
@@ -1067,13 +1054,11 @@
 	ph = 2.75
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-// ...Why? I mean, clearly someone had to have done this and thought, well, acid doesn't hurt plants, but what brought us here, to this point?
-/datum/reagent/toxin/acid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type)))
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1.5))
+// ...Why? I mean, clearly someone had to have done this and thought, well,
+// acid doesn't hurt plants, but what brought us here, to this point?
+/datum/reagent/toxin/acid/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(-round(volume))
+	mytray.adjust_toxic(round(volume * 1.5))
 	mytray.adjust_weedlevel(-rand(1,2))
 
 /datum/reagent/toxin/acid/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
@@ -1115,12 +1100,9 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 // SERIOUSLY
-/datum/reagent/toxin/acid/fluacid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 2))
-	mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 3))
+/datum/reagent/toxin/acid/fluacid/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(-round(volume * 2))
+	mytray.adjust_toxic(round(volume * 3))
 	mytray.adjust_weedlevel(-rand(1,4))
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)

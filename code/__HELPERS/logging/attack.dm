@@ -1,7 +1,6 @@
 /// Generic attack logging
-/proc/log_attack(text)
-	if (CONFIG_GET(flag/log_attack))
-		WRITE_LOG(GLOB.world_attack_log, "ATTACK: [text]")
+/proc/log_attack(text, list/data)
+	logger.Log(LOG_CATEGORY_ATTACK, text)
 
 /**
  * Log a combat message in the attack log

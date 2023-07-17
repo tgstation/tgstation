@@ -66,7 +66,7 @@
 	inhand_icon_state = "tapehat"
 	dog_fashion = null
 	worn_y_offset = 6
-	body_parts_covered = HEAD|HAIR
+	body_parts_covered = HEAD //this used to also cover HAIR, but that was never valid code as HAIR is not actually a body_part define!
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/wizard/magus
@@ -220,7 +220,7 @@
 
 	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
 	playsound(loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
-	var/mob/living/M = new /mob/living/basic/stickman(get_turf(usr))
+	var/mob/living/M = new /mob/living/basic/stickman/lesser(get_turf(usr))
 	M.faction += list("[REF(usr)]")
 	robe_charge = FALSE
 	sleep(3 SECONDS)

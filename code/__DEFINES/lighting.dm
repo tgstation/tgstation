@@ -38,6 +38,9 @@
 
 ///How many tiles standard fires glow.
 #define LIGHT_RANGE_FIRE 3
+#define LIGHT_FIRE_BLOSSOM 2.1
+#define LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED 2.7
+#define LIGHT_POWER_FIRE_BLOSSOM_HARVESTED 1.5
 
 // Lighting cutoff defines
 // These are a percentage of how much darkness to cut off (in rgb)

@@ -140,7 +140,7 @@
 
 		while(crewmember_name in name_counts)
 			name_counts[crewmember_name]++
-			crewmember_name = text("[] ([])", crewmember_name, name_counts[crewmember_name])
+			crewmember_name = "[crewmember_name] ([name_counts[crewmember_name]])"
 		names[crewmember_name] = H
 		name_counts[crewmember_name] = 1
 
@@ -227,7 +227,7 @@ GLOBAL_LIST_EMPTY(sniffable_sheets)
 	worn_icon_state = "pinpointer_black"
 
 /obj/item/pinpointer/material_sniffer/scan_for_target()
-	if(target)
+	if(target || !GLOB.sniffable_sheets.len)
 		return
 	var/obj/item/stack/sheet/new_sheet_target
 	var/closest_distance = INFINITY

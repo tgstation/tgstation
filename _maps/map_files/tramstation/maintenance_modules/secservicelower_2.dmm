@@ -299,7 +299,7 @@
 /area/station/asteroid)
 "rw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner,
+/obj/structure/window/spawner/directional/south,
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/smooth,

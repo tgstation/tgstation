@@ -7,29 +7,23 @@
 /datum/species/vampire
 	name = "Vampire"
 	id = SPECIES_VAMPIRE
-	species_traits = list(
-		EYECOLOR,
-		HAIR,
-		FACEHAIR,
-		LIPS,
-		DRINKSBLOOD,
-		BLOOD_CLANS,
-	)
+	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
+		TRAIT_BLOOD_CLANS,
+		TRAIT_DRINKS_BLOOD,
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
+		TRAIT_USES_SKINTONES,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	exotic_bloodtype = "U"
 	blood_deficiency_drain_rate = BLOOD_DEFICIENCY_MODIFIER // vampires already passively lose blood, so this just makes them lose it slightly more quickly when they have blood deficiency.
-	use_skintones = TRUE
 	mutantheart = /obj/item/organ/internal/heart/vampire
 	mutanttongue = /obj/item/organ/internal/tongue/vampire
 	mutantstomach = null
 	mutantlungs = null
-	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."

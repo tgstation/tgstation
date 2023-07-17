@@ -1,4 +1,0 @@
-author: "lebedev"
-delete-after: True
-changes:
-  - bugfix: "fixed custom say emotes with non-ASCII characters"

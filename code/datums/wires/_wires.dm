@@ -51,7 +51,7 @@
 	// If there is a dictionary key set, we'll want to use that. Otherwise, use the holder type.
 	var/key = dictionary_key ? dictionary_key : holder_type
 
-	RegisterSignal(holder, COMSIG_PARENT_QDELETING, PROC_REF(on_holder_qdel))
+	RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(on_holder_qdel))
 	if(randomize)
 		randomize()
 	else
@@ -64,7 +64,12 @@
 
 /datum/wires/Destroy()
 	holder = null
-	assemblies = list()
+	//properly clear refs to avoid harddels & other problems
+	for(var/color in assemblies)
+		var/obj/item/assembly/assembly = assemblies[color]
+		assembly.holder = null
+		assembly.connected = null
+	LAZYCLEARLIST(assemblies)
 	return ..()
 
 /datum/wires/proc/add_duds(duds)
@@ -111,7 +116,8 @@
 	randomize()
 
 /datum/wires/proc/repair()
-	cut_wires.Cut()//a negative times a negative equals a positive
+	for(var/wire in cut_wires)
+		cut(wire) // I KNOW I KNOW OK
 
 /datum/wires/proc/get_wire(color)
 	return colors[color]
@@ -150,9 +156,11 @@
 /datum/wires/proc/cut(wire)
 	if(is_cut(wire))
 		cut_wires -= wire
+		SEND_SIGNAL(src, COMSIG_MEND_WIRE(wire), wire)
 		on_cut(wire, mend = TRUE)
 	else
 		cut_wires += wire
+		SEND_SIGNAL(src, COMSIG_CUT_WIRE(wire), wire)
 		on_cut(wire, mend = FALSE)
 
 /datum/wires/proc/cut_color(color)
@@ -183,6 +191,14 @@
 	if(S && istype(S) && S.attachable && !is_attached(color))
 		assemblies[color] = S
 		S.forceMove(holder)
+		/**
+		 * special snowflake check for machines
+		 * someone attached a signaler to the machines wires
+		 * move it to the machines component parts so it doesn't get moved out in dump_inventory_contents() which gets called a lot
+		 */
+		if(istype(holder, /obj/machinery))
+			var/obj/machinery/machine = holder
+			LAZYADD(machine.component_parts, S)
 		S.connected = src
 		S.on_attach() // Notify assembly that it is attached
 		return S
@@ -192,7 +208,6 @@
 	if(S && istype(S))
 		assemblies -= color
 		S.on_detach()		// Notify the assembly.  This should remove the reference to our holder
-		S.forceMove(holder.drop_location())
 		return S
 
 /// Called from [/atom/proc/emp_act]

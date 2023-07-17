@@ -158,6 +158,8 @@
 		return
 	for(var/datum/record/crew/target in GLOB.manifest.general)
 		target.wanted_status = WANTED_ARREST
+	update_all_security_huds()
+
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
 		return

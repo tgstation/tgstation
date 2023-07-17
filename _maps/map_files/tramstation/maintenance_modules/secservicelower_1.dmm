@@ -436,7 +436,7 @@
 /area/station/maintenance/central/greater)
 "BM" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space/basic,
 /area/space/nearstation)
 "CW" = (
@@ -609,7 +609,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},

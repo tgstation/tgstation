@@ -104,7 +104,7 @@
  * tipper - the mob tipping the tipped_mob
  */
 /datum/component/tippable/proc/try_tip(mob/living/tipped_mob, mob/tipper)
-	if(tipped_mob.stat != CONSCIOUS)
+	if(tipped_mob.stat != CONSCIOUS && !HAS_TRAIT(tipped_mob, TRAIT_FORCED_STANDING))
 		return
 
 	if(pre_tipped_callback?.Invoke(tipper))

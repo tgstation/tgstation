@@ -206,7 +206,7 @@
 	toggle_magazine()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/gun/ballistic/shotgun/bulldog/afterattack_secondary(mob/living/victim, mob/living/user, params)
+/obj/item/gun/ballistic/shotgun/bulldog/afterattack_secondary(mob/living/victim, mob/living/user, proximity_flag, click_parameters)
 	if(secondary_magazine)
 		toggle_magazine()
 	return SECONDARY_ATTACK_CALL_NORMAL
@@ -291,6 +291,12 @@
 	desc = "A hunting shotgun used by the wealthy to hunt \"game\"."
 	sawn_desc = "A sawn-off hunting shotgun. In its new state, it's remarkably less effective at hunting... anything."
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual/slugs
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/breacherslug
+	name = "breaching shotgun"
+	desc = "A normal double-barrel shotgun that has been rechambered to fit breaching shells. Useful in breaching airlocks and windows, not much else."
+	sawn_desc = "A sawn-off breaching shotgun, making for a more compact configuration while still having the same capability as before."
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual/breacherslug
 
 /obj/item/gun/ballistic/shotgun/hook
 	name = "hook modified sawn-off shotgun"

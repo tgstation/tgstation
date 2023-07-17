@@ -11,7 +11,7 @@
 
 /turf/open/floor/mineral
 	name = "mineral floor"
-	icon_state = ""
+	icon_state = null
 	material_flags = MATERIAL_EFFECTS
 	var/list/icons
 	tiled_dirt = FALSE
@@ -22,7 +22,7 @@
 	icons = typelist("icons", icons)
 
 /turf/open/floor/mineral/broken_states()
-	return list("[initial(icon_state)]_dam")
+	return isnull(icon_state) ? list() : list("[initial(icon_state)]_dam")
 
 /turf/open/floor/mineral/update_icon_state()
 	if(!broken && !burnt && !(icon_state in icons))
@@ -288,6 +288,7 @@
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
 	baseturfs = /turf/open/floor/plating/abductor2
 	custom_materials = list(/datum/material/alloy/alien = SMALL_MATERIAL_AMOUNT*5)
+	damaged_dmi = null
 
 /turf/open/floor/mineral/abductor/Initialize(mapload)
 	. = ..()

@@ -41,6 +41,7 @@
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
+		/obj/item/healthanalyzer/simple = 1,
 	)
 	generate_items_inside(items_inside,src)
 
@@ -53,7 +54,7 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/healthanalyzer/wound = 1,
+		/obj/item/healthanalyzer/simple = 1,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/suture/emergency = 1,
 		/obj/item/stack/medical/ointment = 1,
@@ -79,6 +80,7 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/medigel,
@@ -195,10 +197,12 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-	    /obj/item/storage/pill_bottle/multiver/less = 1,
+		/obj/item/storage/pill_bottle/multiver/less = 1,
 		/obj/item/reagent_containers/syringe/syriniver = 3,
 		/obj/item/storage/pill_bottle/potassiodide = 1,
-		/obj/item/reagent_containers/hypospray/medipen/penacid = 1)
+		/obj/item/reagent_containers/hypospray/medipen/penacid = 1,
+		/obj/item/healthanalyzer/simple/disease = 1,
+		)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/o2
@@ -240,7 +244,9 @@
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/probital = 1,
-		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
+		/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
+		/obj/item/healthanalyzer/simple = 1,
+		)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/medkit/advanced
@@ -328,12 +334,27 @@
 	inhand_icon_state = "coronerkit"
 	var/max_slots = 6
 	var/max_total_storage = 6
+	var/max_object_size = WEIGHT_CLASS_SMALL //so it cannot fit an autopsy scanner
 
 /obj/item/storage/medkit/coroner/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL //lowering this so it can't hold the autopsy scanner
+	atom_storage.max_specific_storage = max_object_size
 	atom_storage.max_slots = max_slots
 	atom_storage.max_total_storage = max_total_storage
+	atom_storage.set_holdable(list(
+		/obj/item/reagent_containers,
+		/obj/item/bodybag,
+		/obj/item/folder/white,
+		/obj/item/toy/crayon,
+		/obj/item/pen,
+		/obj/item/paper,
+		/obj/item/surgical_drapes,
+		/obj/item/scalpel,
+		/obj/item/retractor,
+		/obj/item/hemostat,
+		/obj/item/cautery,
+		/obj/item/autopsy_scanner,
+	))
 
 /obj/item/storage/medkit/coroner/PopulateContents()
 	if(empty)
@@ -353,8 +374,9 @@
 	icon = 'icons/obj/storage/medkit.dmi'
 	icon_state = "coronerkit"
 	inhand_icon_state = "coronerkit"
-	max_slots = 12
+	max_slots = 14
 	max_total_storage = 24
+	max_object_size = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/medkit/coroner/large/PopulateContents()
 	if(empty)
@@ -367,6 +389,11 @@
 		/obj/item/bodybag = 2,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/folder/white = 1,//for storing autopsy reports from the scanner
+		/obj/item/surgical_drapes = 1,
+		/obj/item/scalpel/cruel = 1,
+		/obj/item/retractor/cruel = 1,
+		/obj/item/hemostat/cruel = 1,
+		/obj/item/cautery/cruel = 1,
 	)
 	generate_items_inside(items_inside,src)
 
@@ -408,6 +435,7 @@
 	icon_state = "pill_canister"
 	icon = 'icons/obj/medical/chemical.dmi'
 	inhand_icon_state = "contsolid"
+	worn_icon_state = "nothing"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -501,6 +529,14 @@
 /obj/item/storage/pill_bottle/stimulant/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/stimulant(src)
+
+/obj/item/storage/pill_bottle/sansufentanyl
+	name = "bottle of experimental medication"
+	desc = "A bottle of pills developed by Interdyne Pharmaceuticals. They're used to treat Hereditary Manifold Sickness."
+
+/obj/item/storage/pill_bottle/sansufentanyl/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/pill/sansufentanyl(src)
 
 /obj/item/storage/pill_bottle/mining
 	name = "bottle of patches"
@@ -718,3 +754,31 @@
 /obj/item/storage/organbox/preloaded/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/cryostylane, reagents.maximum_volume)
+
+/obj/item/storage/test_tube_rack
+	name = "test tube rack"
+	desc = "A wooden rack for storing test tubes."
+	icon_state = "rack"
+	base_icon_state = "rack"
+	icon = 'icons/obj/medical/chemical.dmi'
+	inhand_icon_state = "contsolid"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/storage/test_tube_rack/Initialize(mapload)
+	. = ..()
+	atom_storage.allow_quick_gather = TRUE
+	atom_storage.max_slots = 8
+	atom_storage.screen_max_columns = 4
+	atom_storage.screen_max_rows = 2
+	atom_storage.set_holdable(list(
+		/obj/item/reagent_containers/cup/tube,
+	))
+
+/obj/item/storage/test_tube_rack/attack_self(mob/user)
+	emptyStorage()
+
+/obj/item/storage/test_tube_rack/update_icon_state()
+	icon_state = "[base_icon_state][contents.len > 0 ? contents.len : null]"
+	return ..()

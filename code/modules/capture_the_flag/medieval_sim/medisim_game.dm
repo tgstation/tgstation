@@ -64,7 +64,9 @@
 	name = "\improper Bluesworth Hold Fair Maiden"
 	desc = "Protect your maiden, and capture theirs!"
 	icon = 'icons/obj/toys/plushes.dmi'
-	icon_state = "plushie_slime"
+	icon_state = "map_plushie_slime"
+	greyscale_config = /datum/greyscale_config/plush_slime
+	greyscale_colors = "#3399ff#000000"
 	force = 0
 	movement_type = FLOATING //there are chasms, and resetting when they fall in is really lame so lets minimize that
 	game_id = CTF_MEDISIM_CTF_GAME_ID

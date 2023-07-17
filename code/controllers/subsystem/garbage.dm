@@ -82,32 +82,36 @@ SUBSYSTEM_DEF(garbage)
 
 /datum/controller/subsystem/garbage/Shutdown()
 	//Adds the del() log to the qdel log file
-	var/list/dellog = list()
+	var/list/del_log = list()
 
 	//sort by how long it's wasted hard deleting
 	sortTim(items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
 	for(var/path in items)
 		var/datum/qdel_item/I = items[path]
-		dellog += "Path: [path]"
+		var/list/entry = list()
+		del_log[path] = entry
+
 		if (I.qdel_flags & QDEL_ITEM_SUSPENDED_FOR_LAG)
-			dellog += "\tSUSPENDED FOR LAG"
+			entry["SUSPENDED FOR LAG"] = TRUE
 		if (I.failures)
-			dellog += "\tFailures: [I.failures]"
-		dellog += "\tqdel() Count: [I.qdels]"
-		dellog += "\tDestroy() Cost: [I.destroy_time]ms"
+			entry["Failures"] = I.failures
+		entry["qdel() Count"] = I.qdels
+		entry["Destroy() Cost (ms)"] = I.destroy_time
+
 		if (I.hard_deletes)
-			dellog += "\tTotal Hard Deletes: [I.hard_deletes]"
-			dellog += "\tTime Spent Hard Deleting: [I.hard_delete_time]ms"
-			dellog += "\tHighest Time Spent Hard Deleting: [I.hard_delete_max]ms"
+			entry["Total Hard Deletes"] = I.hard_deletes
+			entry["Time Spend Hard Deleting (ms)"] = I.hard_delete_time
+			entry["Highest Time Spend Hard Deleting (ms)"] = I.hard_delete_max
 			if (I.hard_deletes_over_threshold)
-				dellog += "\tHard Deletes Over Threshold: [I.hard_deletes_over_threshold]"
+				entry["Hard Deletes Over Threshold"] = I.hard_deletes_over_threshold
 		if (I.slept_destroy)
-			dellog += "\tSleeps: [I.slept_destroy]"
+			entry["Total Sleeps"] = I.slept_destroy
 		if (I.no_respect_force)
-			dellog += "\tIgnored force: [I.no_respect_force] times"
+			entry["Total Ignored Force"] = I.no_respect_force
 		if (I.no_hint)
-			dellog += "\tNo hint: [I.no_hint] times"
-	log_qdel(dellog.Join("\n"))
+			entry["Total No Hint"] = I.no_hint
+
+	log_qdel("", del_log)
 
 /datum/controller/subsystem/garbage/fire()
 	//the fact that this resets its processing each fire (rather then resume where it left off) is intentional.
@@ -273,12 +277,16 @@ SUBSYSTEM_DEF(garbage)
 
 #ifdef EXPERIMENT_515_QDEL_HARD_REFERENCE
 	var/refid = D
-#else
-	var/refid = text_ref(D)
-#endif
 	if (D.gc_destroyed <= 0)
 		D.gc_destroyed = queue_time
-	
+#else
+	var/refid = text_ref(D)
+	var/static/uid = 0
+	if (D.gc_destroyed <= 0)
+		uid = WRAP(uid+1, 1, SHORT_REAL_LIMIT - 1)
+		D.gc_destroyed = uid
+#endif
+
 	var/list/queue = queues[level]
 
 	queue[++queue.len] = list(queue_time, refid, D.gc_destroyed) // not += for byond reasons
@@ -357,12 +365,12 @@ SUBSYSTEM_DEF(garbage)
 	I.qdels++
 
 	if(isnull(D.gc_destroyed))
-		if (SEND_SIGNAL(D, COMSIG_PARENT_PREQDELETED, force)) // Give the components a chance to prevent their parent from being deleted
+		if (SEND_SIGNAL(D, COMSIG_PREQDELETED, force)) // Give the components a chance to prevent their parent from being deleted
 			return
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
 		var/start_tick = world.tick_usage
-		SEND_SIGNAL(D, COMSIG_PARENT_QDELETING, force) // Let the (remaining) components know about the result of Destroy
+		SEND_SIGNAL(D, COMSIG_QDELETING, force) // Let the (remaining) components know about the result of Destroy
 		var/hint = D.Destroy(arglist(args.Copy(2))) // Let our friend know they're about to get fucked up.
 		if(world.time != start_time)
 			I.slept_destroy++
@@ -400,7 +408,7 @@ SUBSYSTEM_DEF(garbage)
 			#ifdef REFERENCE_TRACKING
 			if (QDEL_HINT_FINDREFERENCE) //qdel will, if REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.Queue(D)
-				D.find_references() //This breaks ci. Consider it insurance against somehow pring reftracking on accident
+				INVOKE_ASYNC(D, TYPE_PROC_REF(/datum, find_references))
 			if (QDEL_HINT_IFFAIL_FINDREFERENCE) //qdel will, if REFERENCE_TRACKING is enabled and the object fails to collect, display all references to this object.
 				SSgarbage.Queue(D)
 				SSgarbage.reference_find_on_fail[text_ref(D)] = TRUE

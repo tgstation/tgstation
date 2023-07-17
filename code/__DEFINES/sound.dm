@@ -8,6 +8,7 @@
 #define CHANNEL_BUZZ 1018
 #define CHANNEL_TRAITOR 1017
 #define CHANNEL_CHARGED_SPELL 1016
+#define CHANNEL_ELEVATOR 1015
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
@@ -146,6 +147,7 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_EXPLOSION_CREAKING "explosion_creaking"
 #define SFX_HISS "hiss"
 #define SFX_HONKBOT_E "honkbot_e"
+#define SFX_GOOSE "goose"
 #define SFX_HULL_CREAKING "hull_creaking"
 #define SFX_HYPERTORUS_CALM "hypertorus_calm"
 #define SFX_HYPERTORUS_MELTING "hypertorus_melting"
@@ -167,3 +169,4 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_CRUNCHY_BUSH_WHACK "crunchy_bush_whack"
 #define SFX_TREE_CHOP "tree_chop"
 #define SFX_ROCK_TAP "rock_tap"
+#define SFX_SEAR "sear"

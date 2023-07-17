@@ -67,7 +67,7 @@
 	is_dimorphic = FALSE
 	wound_resistance = -10
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
-	acceptable_bodytype = BODYTYPE_HUMANOID
+	acceptable_bodytype = BODYTYPE_MONKEY
 	dmg_overlay_type = SPECIES_MONKEY
 
 /obj/item/bodypart/chest/alien
@@ -326,7 +326,7 @@
 	max_damage = 100
 	should_draw_greyscale = FALSE
 
-/// Parent Type for arms, should not appear in game.
+/// Parent Type for legs, should not appear in game.
 /obj/item/bodypart/leg
 	name = "leg"
 	desc = "This item shouldn't exist. Talk about breaking a leg. Badum-Tss!"

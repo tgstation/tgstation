@@ -1,4 +1,0 @@
-author: "YehnBeep"
-delete-after: True
-changes:
-  - bugfix: "Fixed bottleneck on North Star's SM waste line (it can now handle the full output of 1 filter per the stock setup)."

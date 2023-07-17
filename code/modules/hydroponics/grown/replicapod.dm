@@ -15,7 +15,7 @@
 	yield = 4
 	instability = 10
 	growthstages = 1
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/replicapod)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
@@ -67,12 +67,12 @@
 	. = ..()
 	RegisterSignals(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT), PROC_REF(on_reagent_add))
 	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_del))
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
+	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
 
 /// Handles the seeds' reagents datum getting deleted.
 /obj/item/seeds/replicapod/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_QDELETING))
 	return NONE
 
 /// Handles reagents getting added to this seed.
@@ -136,7 +136,7 @@
 						make_podman = TRUE
 						break
 				else
-					if(M.ckey == ckey && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED))
+					if(M.ckey == ckey && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED) && !HAS_TRAIT(M, TRAIT_MIND_TEMPORARILY_GONE))
 						make_podman = TRUE
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key

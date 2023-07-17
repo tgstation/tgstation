@@ -43,6 +43,10 @@
 	QDEL_LIST(trophies)
 	return ..()
 
+/obj/item/kinetic_crusher/Exited(atom/movable/gone, direction)
+	. = ..()
+	trophies -= gone
+
 /obj/item/kinetic_crusher/examine(mob/living/user)
 	. = ..()
 	. += span_notice("Mark a large creature with a destabilizing force with right-click, then hit them in melee to do <b>[force + detonation_damage]</b> damage.")
@@ -120,21 +124,21 @@
 /obj/item/kinetic_crusher/attack_secondary(atom/target, mob/living/user, clickparams)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/item/kinetic_crusher/afterattack_secondary(atom/target, mob/living/user, clickparams)
+/obj/item/kinetic_crusher/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		balloon_alert(user, "wield it first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target == user)
 		balloon_alert(user, "can't aim at yourself!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	fire_kinetic_blast(target, user, clickparams)
+	fire_kinetic_blast(target, user, click_parameters)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/kinetic_crusher/proc/fire_kinetic_blast(atom/target, mob/living/user, clickparams)
+/obj/item/kinetic_crusher/proc/fire_kinetic_blast(atom/target, mob/living/user, click_parameters)
 	if(!charged)
 		return
-	var/modifiers = params2list(clickparams)
+	var/modifiers = params2list(click_parameters)
 	var/turf/proj_turf = user.loc
 	if(!isturf(proj_turf))
 		return
@@ -212,7 +216,7 @@
 /obj/item/crusher_trophy
 	name = "tail spike"
 	desc = "A strange spike with no usage."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "tail_spike"
 	var/bonus_value = 10 //if it has a bonus effect, this is how much that effect is
 	var/denied_type = /obj/item/crusher_trophy
@@ -243,7 +247,6 @@
 
 /obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
 	forceMove(get_turf(crusher))
-	crusher.trophies -= src
 	return TRUE
 
 /obj/item/crusher_trophy/proc/on_melee_hit(mob/living/target, mob/living/user) //the target and the user

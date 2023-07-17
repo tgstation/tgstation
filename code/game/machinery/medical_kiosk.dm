@@ -143,17 +143,19 @@
 	qdel(scanner_wand)
 	return ..()
 
-/obj/machinery/medical_kiosk/emag_act(mob/user)
-	..()
+/obj/machinery/medical_kiosk/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	if(user)
-		user.visible_message(span_warning("[user] waves a suspicious card by the [src]'s biometric scanner!"),
-	span_notice("You overload the sensory electronics, the diagnostic readouts start jittering across the screen.."))
+		if (emag_card)
+			user.visible_message(span_warning("[user] waves a suspicious card by the [src]'s biometric scanner!"))
+		balloon_alert(user, "sensors overloaded")
 	obj_flags |= EMAGGED
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.obj_flags |= EMAGGED //Mirrors emag status onto the board as well.
 	pandemonium = TRUE
+	return TRUE
 
 /obj/machinery/medical_kiosk/examine(mob/user)
 	. = ..()
@@ -218,7 +220,7 @@
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
 			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
-	if(patient.has_dna()) //Blood levels Information
+	if(!HAS_TRAIT(patient, TRAIT_GENELESS) && !HAS_TRAIT(patient, TRAIT_NOBLOOD)) //Blood levels Information
 		if(patient.is_bleeding())
 			bleed_status = "Patient is currently bleeding!"
 		if(blood_percent <= 80)

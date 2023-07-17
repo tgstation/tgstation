@@ -297,7 +297,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/hercuri/overdose_process(mob/living/carbon/owner, seconds_per_tick, times_fired)
 	. = ..()
-	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * seconds_per_tick, required_organtype = affected_organtype) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
+	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
 	var/heating = 10 * creation_purity * REM * seconds_per_tick * TEMPERATURE_DAMAGE_COEFFICIENT
 	owner.adjust_bodytemperature(heating) //hot hot
 	if(ishuman(owner))
@@ -491,7 +491,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
 /datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(length(affected_mob.reagents.reagent_list) > 1)
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organtype = affected_organtype) //Hey! It's everyone's favourite drawback from multiver!
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organ_flag = affected_organ_flags) //Hey! It's everyone's favourite drawback from multiver!
 		return ..()
 	affected_mob.adjustToxLoss(-2 * REM * creation_purity * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	..()
@@ -552,7 +552,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
 		iter_wound.adjust_blood_flow(1-creation_purity)
 	affected_mob.adjustBruteLoss(5 * (1-creation_purity) * seconds_per_tick, required_bodytype = affected_bodytype)
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * seconds_per_tick, required_organtype = affected_organtype)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(affected_mob.health < HEALTH_THRESHOLD_CRIT)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(affected_mob.health < HEALTH_THRESHOLD_FULLCRIT)
@@ -684,20 +684,23 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	metabolization_rate = REM
 	chemical_flags = REAGENT_DEAD_PROCESS
 	tox_damage = 0
-	///The old heart we're swapping for
-	var/obj/item/organ/internal/heart/original_heart
-	///The new heart that's temp added
-	var/obj/item/organ/internal/heart/cursed/manual_heart
+	///Weakref to the old heart we're swapping for
+	var/datum/weakref/original_heart_ref
+	///Weakref to the new heart that's temp added
+	var/datum/weakref/manual_heart_ref
 
 ///Creates a new cursed heart and puts the old inside of it, then replaces the position of the old
 /datum/reagent/inverse/corazargh/on_mob_metabolize(mob/living/affected_mob)
 	if(!iscarbon(affected_mob))
 		return
 	var/mob/living/carbon/carbon_mob = affected_mob
-	original_heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/original_heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
 	if(!original_heart)
 		return
-	manual_heart = new(null, src)
+	original_heart_ref = WEAKREF(original_heart)
+
+	var/obj/item/organ/internal/heart/cursed/manual_heart = new(null, src)
+	manual_heart_ref = WEAKREF(manual_heart)
 	original_heart.Remove(carbon_mob, special = TRUE) //So we don't suddenly die
 	original_heart.forceMove(manual_heart)
 	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
@@ -713,23 +716,35 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/internal/heart))
 		return
+	// DO NOT REACT TO YOUR OWN HEART ADDITION I SWEAR TO CHRIST
+	var/obj/item/organ/internal/heart/cursed/manual_heart = manual_heart_ref?.resolve()
+	if(organ == manual_heart)
+		return
+
 	var/mob/living/carbon/affected_carbon = affected_mob
-	original_heart = organ
+	var/obj/item/organ/internal/heart/original_heart = organ
+	original_heart_ref = WEAKREF(original_heart)
 	original_heart.Remove(affected_carbon, special = TRUE)
-	original_heart.forceMove(manual_heart)
-	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
 	if(!manual_heart)
 		manual_heart = new(null, src)
+		manual_heart_ref = WEAKREF(manual_heart)
+	original_heart.forceMove(manual_heart)
+	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
 	manual_heart.Insert(affected_carbon, special = TRUE)
 
 ///If we're ejecting out the organ - replace it with the original
 /datum/reagent/inverse/corazargh/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
-	if(!organ == manual_heart)
+	var/obj/item/organ/internal/heart/cursed/manual_heart = manual_heart_ref?.resolve()
+	if(organ != manual_heart)
 		return
-	original_heart.forceMove(organ.loc)
+	var/obj/item/organ/internal/heart/original_heart = original_heart_ref?.resolve()
+	if(!original_heart)
+		return
+
+	original_heart.forceMove(manual_heart.loc)
 	original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
-	qdel(organ)
+	QDEL_NULL(manual_heart_ref)
 
 ///We're done - remove the curse and restore the old one
 /datum/reagent/inverse/corazargh/on_mob_end_metabolize(mob/living/affected_mob)
@@ -739,10 +754,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!iscarbon(affected_mob))
 		return
 	var/mob/living/carbon/affected_carbon = affected_mob
+	var/obj/item/organ/internal/heart/original_heart = original_heart_ref?.resolve()
 	if(original_heart) //Mostly a just in case
 		original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
 		original_heart.Insert(affected_carbon, special = TRUE)
-	qdel(manual_heart)
+	QDEL_NULL(manual_heart_ref)
 	to_chat(affected_mob, span_userdanger("You feel your heart start beating normally again!"))
 	..()
 

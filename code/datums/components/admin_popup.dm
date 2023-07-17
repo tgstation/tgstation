@@ -21,7 +21,7 @@
 		list(
 			COMSIG_ADMIN_HELP_MADE_INACTIVE,
 			COMSIG_ADMIN_HELP_REPLIED,
-			COMSIG_PARENT_QDELETING,
+			COMSIG_QDELETING,
 		),
 		PROC_REF(delete_self),
 	)
@@ -36,7 +36,7 @@
 		UnregisterSignal(ticket, list(
 			COMSIG_ADMIN_HELP_MADE_INACTIVE,
 			COMSIG_ADMIN_HELP_REPLIED,
-			COMSIG_PARENT_QDELETING,
+			COMSIG_QDELETING,
 		))
 
 		ticket = null
@@ -104,9 +104,9 @@
 
 	last_color_index = (last_color_index % colors.len) + 1
 
-	var/message = "<b style='color: [colors[last_color_index]]; text-align: center; font-size: 32px'>"
-	message += "HEY! An admin is trying to talk to you!<br>Check your chat window, and click their name to respond!"
-	message += "</b>"
+	var/message = "<span style='color: [colors[last_color_index]]; text-align: center; font-size: 24pt'>"
+	message += "HEY!<br>An admin is trying to talk to you!<br>Check your chat window,<br>and click their name to respond!"
+	message += "</span>"
 
 	maptext = MAPTEXT(message)
 	last_update_time = world.time

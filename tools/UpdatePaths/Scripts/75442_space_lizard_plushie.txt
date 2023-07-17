@@ -1,0 +1,3 @@
+#comment This repathe space lizard plushies to a subtype of lizard plushies https://github.com/tgstation/tgstation/pull/75442
+
+/obj/item/toy/plush/space_lizard_plushie : /obj/item/toy/plush/lizard_plushie/space/green{@OLD}

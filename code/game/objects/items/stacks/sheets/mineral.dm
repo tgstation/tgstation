@@ -141,6 +141,9 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 /obj/item/stack/sheet/mineral/uranium/five
 	amount = 5
 
+/obj/item/stack/sheet/mineral/uranium/half
+	amount = 25
+
 /*
  * Plasma
  */
@@ -403,7 +406,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
  */
 /obj/item/stack/sheet/mineral/abductor
 	name = "alien alloy"
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "sheet-abductor"
 	inhand_icon_state = "sheet-abductor"
 	singular_name = "alien alloy sheet"
@@ -451,7 +454,7 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 		return ..()
 
 /obj/item/stack/sheet/mineral/coal/fire_act(exposed_temperature, exposed_volume)
-	atmos_spawn_air("co2=[amount*10];TEMP=[exposed_temperature]")
+	atmos_spawn_air("[GAS_CO2]=[amount*10];[TURF_TEMPERATURE(exposed_temperature)]")
 	qdel(src)
 
 /obj/item/stack/sheet/mineral/coal/five

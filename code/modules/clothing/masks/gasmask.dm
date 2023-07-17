@@ -164,7 +164,8 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	acid = 55
 
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
-	weldingvisortoggle(user)
+	if(weldingvisortoggle(user))
+		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/mask/gas/welding/up
 

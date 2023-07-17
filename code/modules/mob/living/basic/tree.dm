@@ -1,7 +1,7 @@
 /mob/living/basic/tree
 	name = "pine tree"
 	desc = "A pissed off tree-like alien. It seems annoyed with the festivities..."
-	icon = 'icons/obj/flora/pinetrees.dmi'
+	icon = 'icons/obj/fluff/flora/pinetrees.dmi'
 	icon_state = "pine_1"
 	icon_living = "pine_1"
 	icon_dead = "pine_1"
@@ -69,7 +69,7 @@
 	if(co2 > 0 && SPT_PROB(13, seconds_per_tick))
 		var/amt = min(co2, 9)
 		our_turf.air.gases[/datum/gas/carbon_dioxide][MOLES] -= amt
-		our_turf.atmos_spawn_air("o2=[amt]")
+		our_turf.atmos_spawn_air("[GAS_O2]=[amt]")
 
 /mob/living/basic/tree/melee_attack(atom/target, list/modifiers)
 	. = ..()

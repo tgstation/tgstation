@@ -6,7 +6,7 @@
 /obj/structure/fluff
 	name = "fluff structure"
 	desc = "Fluffier than a sheep. This shouldn't exist."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "minibar"
 	anchored = TRUE
 	density = FALSE
@@ -31,7 +31,7 @@
 /obj/structure/fluff/empty_terrarium
 	name = "empty terrarium"
 	desc = "An ancient machine that seems to be used for storing plant matter. Its hatch is ajar."
-	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon = 'icons/obj/mining_zones/spawners.dmi'
 	icon_state = "terrarium_open"
 	density = TRUE
 /**
@@ -57,14 +57,9 @@
 /obj/structure/fluff/empty_cryostasis_sleeper
 	name = "empty cryostasis sleeper"
 	desc = "Although comfortable, this sleeper won't function as anything but a bed ever again."
-	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon = 'icons/obj/mining_zones/spawners.dmi'
 	icon_state = "cryostasis_sleeper_open"
 
-/obj/structure/fluff/broken_flooring
-	name = "broken tiling"
-	desc = "A segment of broken flooring."
-	icon = 'icons/obj/brokentiling.dmi'
-	icon_state = "corner"
 /**
  * Ash drake status spawn on either side of the necropolis gate in lavaland.
  */
@@ -91,7 +86,7 @@
 /obj/structure/fluff/bus
 	name = "bus"
 	desc = "GO TO SCHOOL. READ A BOOK."
-	icon = 'icons/obj/bus.dmi'
+	icon = 'icons/obj/fluff/bus.dmi'
 	icon_state = null
 	density = TRUE
 	anchored = TRUE
@@ -130,7 +125,7 @@
 /obj/structure/fluff/paper
 	name = "dense lining of papers"
 	desc = "A lining of paper scattered across the bottom of a wall."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "paper"
 	deconstructible = FALSE
 
@@ -145,7 +140,7 @@
 
 /obj/structure/fluff/divine
 	name = "Miracle"
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "error"
 	anchored = TRUE
 	density = TRUE
@@ -186,7 +181,7 @@
 /obj/structure/fluff/fokoff_sign
 	name = "crude sign"
 	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "fokof"
 
 /obj/structure/fluff/big_chain
@@ -212,7 +207,7 @@
 /obj/structure/fluff/beach_umbrella
 	name = "beach umbrella"
 	desc = "A fancy umbrella designed to keep the sun off beach-goers."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "brella"
 	density = FALSE
 	anchored = TRUE
@@ -235,7 +230,7 @@
 
 /obj/structure/fluff/clockwork
 	name = "Clockwork Fluff"
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "error"
 	deconstructible = FALSE
 
@@ -274,7 +269,7 @@
 /obj/structure/fluff/tram_rail
 	name = "tram rail"
 	desc = "Great for trams, not so great for skating."
-	icon = 'icons/obj/tram_rails.dmi'
+	icon = 'icons/obj/fluff/tram_rails.dmi'
 	icon_state = "rail"
 	layer = TRAM_RAIL_LAYER
 	plane = FLOOR_PLANE

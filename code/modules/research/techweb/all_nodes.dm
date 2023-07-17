@@ -666,6 +666,11 @@
 		"turbine_compressor",
 		"turbine_rotor",
 		"turbine_stator",
+		"modular_shield_generator",
+		"modular_shield_node",
+		"modular_shield_relay",
+		"modular_shield_charger",
+		"modular_shield_well",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors = 2500)
@@ -955,6 +960,7 @@
 		"borg_upgrade_condiment_synthesizer",
 		"borg_upgrade_silicon_knife",
 		"borg_upgrade_service_apparatus",
+		"borg_upgrade_service_cookbook",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
@@ -1687,6 +1693,7 @@
 		"mod_defib",
 		"mod_threadripper",
 		"mod_surgicalprocessor",
+		"mod_statusreadout",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 
@@ -2296,10 +2303,13 @@
 /datum/techweb_node/mod_experimental
 	id = "mod_experimental"
 	display_name = "Experimental Modular Suits"
-	description = "Applications of experimentality when creating MODsuits has created these..."
+	description = "Applications of experimentality when creating MODsuits have created these..."
 	prereq_ids = list("base")
 	design_ids = list(
 		"mod_disposal",
+		"mod_joint_torsion",
+		"mod_recycler",
+		"mod_shooting",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE

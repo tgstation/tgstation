@@ -1,8 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ac" = (
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/north,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
@@ -212,9 +210,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/soap/syndie,
-/obj/structure/sign/poster/contraband/gorlex_recruitment{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/gorlex_recruitment/directional/west,
 /obj/machinery/light/very_dim/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/listeningstation)

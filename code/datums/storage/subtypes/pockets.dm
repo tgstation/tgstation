@@ -75,6 +75,7 @@
 	. = ..()
 	set_holdable(list(
 		/obj/item/knife,
+		/obj/item/spess_knife,
 		/obj/item/switchblade,
 		/obj/item/boxcutter,
 		/obj/item/pen,
@@ -102,7 +103,7 @@
 		/obj/item/toy/crayon,
 		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
-		/obj/item/ammo_casing/caseless/rocket,
+		/obj/item/ammo_casing/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,
 		/obj/item/toy/crayon/spraycan)
 		)
@@ -111,6 +112,7 @@
 	. = ..()
 	set_holdable(list(
 		/obj/item/knife,
+		/obj/item/spess_knife,
 		/obj/item/switchblade,
 		/obj/item/pen,
 		/obj/item/scalpel,
@@ -136,7 +138,7 @@
 		/obj/item/bikehorn,
 		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
-		/obj/item/ammo_casing/caseless/rocket,
+		/obj/item/ammo_casing/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,
 		/obj/item/toy/crayon/spraycan)
 		)

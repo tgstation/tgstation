@@ -165,13 +165,16 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	. = ""
 	var/list/L = new /list(DNA_UNI_IDENTITY_BLOCKS)
 
+	//ignores TRAIT_AGENDER so that a "real" gender can be stored in the DNA if later use is needed
 	switch(holder.gender)
 		if(MALE)
-			L[DNA_GENDER_BLOCK] = construct_block(G_MALE, 3)
+			L[DNA_GENDER_BLOCK] = construct_block(G_MALE, GENDERS)
 		if(FEMALE)
-			L[DNA_GENDER_BLOCK] = construct_block(G_FEMALE, 3)
+			L[DNA_GENDER_BLOCK] = construct_block(G_FEMALE, GENDERS)
+		if(NEUTER)
+			L[DNA_GENDER_BLOCK] = construct_block(G_NEUTER, GENDERS)
 		else
-			L[DNA_GENDER_BLOCK] = construct_block(G_PLURAL, 3)
+			L[DNA_GENDER_BLOCK] = construct_block(G_PLURAL, GENDERS)
 	if(ishuman(holder))
 		var/mob/living/carbon/human/H = holder
 		if(!GLOB.hairstyles_list.len)
@@ -299,7 +302,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/mob/living/carbon/human/H = holder
 	switch(blocknumber)
 		if(DNA_HAIR_COLOR_BLOCK)
-			set_uni_identity_block( blocknumber, sanitize_hexcolor(H.hair_color, include_crunch = FALSE))
+			set_uni_identity_block(blocknumber, sanitize_hexcolor(H.hair_color, include_crunch = FALSE))
 		if(DNA_FACIAL_HAIR_COLOR_BLOCK)
 			set_uni_identity_block(blocknumber, sanitize_hexcolor(H.facial_hair_color, include_crunch = FALSE))
 		if(DNA_SKIN_TONE_BLOCK)
@@ -311,11 +314,13 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		if(DNA_GENDER_BLOCK)
 			switch(H.gender)
 				if(MALE)
-					set_uni_identity_block(blocknumber, construct_block(G_MALE, 3))
+					set_uni_identity_block(blocknumber, construct_block(G_MALE, GENDERS))
 				if(FEMALE)
-					set_uni_identity_block(blocknumber, construct_block(G_FEMALE, 3))
+					set_uni_identity_block(blocknumber, construct_block(G_FEMALE, GENDERS))
+				if(NEUTER)
+					set_uni_identity_block(blocknumber, construct_block(G_NEUTER, GENDERS))
 				else
-					set_uni_identity_block(blocknumber, construct_block(G_PLURAL, 3))
+					set_uni_identity_block(blocknumber, construct_block(G_PLURAL, GENDERS))
 		if(DNA_FACIAL_HAIRSTYLE_BLOCK)
 			set_uni_identity_block(blocknumber, construct_block(GLOB.facial_hairstyles_list.Find(H.facial_hairstyle), GLOB.facial_hairstyles_list.len))
 		if(DNA_HAIRSTYLE_BLOCK)
@@ -487,12 +492,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			old_species.on_species_loss(src, new_race, pref_load)
 
 		dna.species.on_species_gain(src, old_species, pref_load)
-		if(ishuman(src))
-			qdel(language_holder)
-			var/species_holder = initial(mrace.species_language_holder)
-			language_holder = new species_holder(src)
-		update_atom_languages()
-		log_mob_tag("SPECIES: [key_name(src)] \[[mrace]\]")
+		log_mob_tag("TAG: [tag] SPECIES: [key_name(src)] \[[mrace]\]")
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
@@ -568,30 +568,39 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(!has_dna())
 		return
 
-	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), 3))
+	//Always plural gender if agender
+	if(HAS_TRAIT(src, TRAIT_AGENDER))
+		gender = PLURAL
+		return
+
+	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), GENDERS))
 		if(G_MALE)
 			gender = MALE
 		if(G_FEMALE)
 			gender = FEMALE
+		if(G_NEUTER)
+			gender = NEUTER
 		else
 			gender = PLURAL
 
-/mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)
+/mob/living/carbon/human/updateappearance(icon_update = TRUE, mutcolor_update = FALSE, mutations_overlay_update = FALSE)
 	..()
 	var/structure = dna.unique_identity
-	hair_color = sanitize_hexcolor(get_uni_identity_block(structure, DNA_HAIR_COLOR_BLOCK))
-	facial_hair_color = sanitize_hexcolor(get_uni_identity_block(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
 	skin_tone = GLOB.skin_tones[deconstruct_block(get_uni_identity_block(structure, DNA_SKIN_TONE_BLOCK), GLOB.skin_tones.len)]
 	eye_color_left = sanitize_hexcolor(get_uni_identity_block(structure, DNA_EYE_COLOR_LEFT_BLOCK))
 	eye_color_right = sanitize_hexcolor(get_uni_identity_block(structure, DNA_EYE_COLOR_RIGHT_BLOCK))
+	set_haircolor(sanitize_hexcolor(get_uni_identity_block(structure, DNA_HAIR_COLOR_BLOCK)), update = FALSE)
+	set_facial_haircolor(sanitize_hexcolor(get_uni_identity_block(structure, DNA_FACIAL_HAIR_COLOR_BLOCK)), update = FALSE)
 	if(HAS_TRAIT(src, TRAIT_SHAVED))
-		hairstyle = "Shaved"
+		set_facial_hairstyle("Shaved", update = FALSE)
 	else
-		facial_hairstyle = GLOB.facial_hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_FACIAL_HAIRSTYLE_BLOCK), GLOB.facial_hairstyles_list.len)]
+		var/style = GLOB.facial_hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_FACIAL_HAIRSTYLE_BLOCK), GLOB.facial_hairstyles_list.len)]
+		set_facial_hairstyle(style, update = FALSE)
 	if(HAS_TRAIT(src, TRAIT_BALD))
-		hairstyle = "Bald"
+		set_hairstyle("Bald", update = FALSE)
 	else
-		hairstyle = GLOB.hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_HAIRSTYLE_BLOCK), GLOB.hairstyles_list.len)]
+		var/style = GLOB.hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_HAIRSTYLE_BLOCK), GLOB.hairstyles_list.len)]
+		set_hairstyle(style, update = FALSE)
 	var/features = dna.unique_features
 	if(dna.features["mcolor"])
 		dna.features["mcolor"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_MUTANT_COLOR_BLOCK))
@@ -632,10 +641,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		external_organ.mutate_feature(features, src)
 
 	if(icon_update)
-		dna.species.handle_body(src) // We want 'update_body_parts(update_limb_data = TRUE)' to be called only if mutcolor_update is TRUE, so no 'update_body()' here.
-		update_body_parts() //We can call this because it doesnt refresh limb data, and it handles hair and such.
 		if(mutcolor_update)
-			update_body_parts(update_limb_data = TRUE)
+			update_body(is_creating = TRUE)
+		else
+			update_body()
 		if(mutations_overlay_update)
 			update_mutations_overlay()
 
@@ -832,8 +841,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			if(3)
 				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
 			if(4)
-				to_chat(src, span_notice("Oh, I actually feel quite alright!")) //you thought
-				physiology.damage_resistance = -20000
+				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
+				physiology.damage_resistance -= 20000 //you thought
 			if(5)
 				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
 				reagents.add_reagent(/datum/reagent/aslimetoxin, 10)
@@ -868,7 +877,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			if(2)
 				investigate_log("has been transformed into a statue by DNA instability.", INVESTIGATE_DEATHS)
 				death()
-				petrify(INFINITY)
+				petrify(statue_timer = INFINITY, save_brain = FALSE)
 				ghostize(FALSE)
 			if(3)
 				if(prob(95))
