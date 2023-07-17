@@ -19,6 +19,13 @@
 /obj/effect/light_emitter/singularity_act()
 	return
 
+/obj/effect/light_emitter/podbay
+	set_cap = 1
+
+/obj/effect/light_emitter/thunderdome
+	set_cap = 1
+	set_luminosity = 1.6
+
 /**********************Miner Lockers**************************/
 
 /obj/structure/closet/wardrobe/miner
