@@ -454,12 +454,8 @@
 	balloon_alert(user, "[flags_inv & HIDEHAIR ? "loosening" : "tightening"] strings...")
 	if(!do_after(user, 3 SECONDS, src))
 		return
-	if(!flags_inv)
-		flags_inv = HIDEHAIR
-		to_chat(user, span_notice("You tighten the strings on \the [src]."))
-	else
-		flags_inv = NONE
-		to_chat(user, span_notice("You loosen the strings on \the [src]."))
+	flags_inv ^= HIDEHAIR
+	balloon_alert(user, "[flags_inv & HIDEHAIR ? "tightened" : "loosened "] strings")
 
 /obj/item/clothing/head/utility/surgerycap/examine(mob/user)
 	. = ..()
