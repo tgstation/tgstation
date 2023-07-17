@@ -77,8 +77,16 @@ GLOBAL_LIST_INIT(mining_ambience, list(
 ))
 
 GLOBAL_LIST_INIT(icemoon_ambience,list(
-	/* your sounds here */,
-	/* your sounds here */,
+	'sound/ambience/ambiicetheme.ogg',
+	'sound/ambience/ambiicemelody1.ogg',
+	'sound/ambience/ambiicemelody2.ogg',
+	'sound/ambience/ambiicemelody3.ogg',
+	'sound/ambience/ambiicemelody4.ogg',
+	'sound/ambience/ambiicesting1.ogg',
+	'sound/ambience/ambiicesting2.ogg',
+	'sound/ambience/ambiicesting3.ogg',
+	'sound/ambience/ambiicesting4.ogg',
+	'sound/ambience/ambiicesting5.ogg',
 ))
 
 GLOBAL_LIST_INIT(medical_ambience,list(
