@@ -131,7 +131,7 @@
 
 	var/final_damage = defense_multiplier * damage
 	var/mob/living/attacker = GET_ASSAILANT(hitby)
-	if(attacker && HAS_TRAIT(attacker, TRAIT_HULK))
+	if(istype(attacker) && HAS_TRAIT(attacker, TRAIT_HULK))
 		final_damage *= 1.25 // Hulk attacks are harder to stop
 	if(source.body_position == LYING_DOWN)
 		final_damage *= 1.25 // Harder to block while lying down
@@ -152,6 +152,11 @@
 		)
 	source.add_movespeed_modifier(/datum/movespeed_modifier/successful_block)
 	addtimer(CALLBACK(source, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/successful_block), 0.5 SECONDS)
+	if(istype(attacker))
+		attacker.add_movespeed_modifier(/datum/movespeed_modifier/successful_block)
+		addtimer(CALLBACK(attacker, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/successful_block), 0.8 SECONDS)
+		attacker.apply_damage(5, STAMINA, spread_damage = TRUE)
+
 	if(!QDELETED(src))
 		animate(shield_overlay, time = 0.15 SECONDS, pixel_x = 2, easing = BACK_EASING|EASE_OUT)
 		animate(time = 0.20 SECONDS, pixel_x = -2, easing = BACK_EASING|EASE_OUT)

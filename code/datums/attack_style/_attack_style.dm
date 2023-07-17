@@ -7,7 +7,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	return styles
 
-/datum/movespeed_modifier/ATTACK_SWING_executed
+/datum/movespeed_modifier/attack_style_executed
 	variable = TRUE
 
 /**
@@ -94,8 +94,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		return FALSE
 
 	if(slowdown > 0)
-		attacker.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/ATTACK_SWING_executed, multiplicative_slowdown = slowdown)
-		addtimer(CALLBACK(attacker, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/ATTACK_SWING_executed), cd * 0.2)
+		attacker.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/attack_style_executed, multiplicative_slowdown = slowdown)
+		addtimer(CALLBACK(attacker, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/attack_style_executed), cd * 0.2)
 	attacker.changeNext_move(cd)
 	return TRUE
 
