@@ -13,7 +13,7 @@
 	var/disease_armor_thresold = 2
 
 /datum/attack_style/unarmed/generic_damage/limb_based/bite/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affecting, atom/priority_target, right_clicking)
-	if(attacker.is_muzzled() || attacker.is_mouth_covered(ITEM_SLOT_MASK))
+	if(attacker.is_muzzled() || attacker.is_mouth_covered())
 		attacker.balloon_alert(attacker, "mouth covered, can't bite!")
 		return FALSE
 
