@@ -14,3 +14,13 @@
 	item = /obj/item/flashlight/lantern/syndicate
 	restricted_species = list(SPECIES_MOTH)
 	surplus = 0
+
+/datum/uplink_item/species_restricted/mothletgrenade
+	name = "Mothlet Grenade"
+	desc = "A experimental greande comprised of a C02 canister, and dozens of tiny moths (dubbed mothlets). They are very hungery \
+			and are ready to eat just about any clothing the next person they meet is wearing. We are not responsible for any gear \
+			you accidently loose to these hungry little guys."
+	item = /obj/item/grenade/frag/mothlet
+	cost = 4
+	restricted_species = list(SPECIES_MOTH)
+	surplus = 0
