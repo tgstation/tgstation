@@ -76,7 +76,7 @@
 	remove_egg()
 
 /mob/living/basic/pet/penguin/proc/remove_egg()
-	if(!carried_egg)
+	if(isnull(carried_egg))
 		return
 	carried_egg.forceMove(get_turf(src))
 	UnregisterSignal(carried_egg, COMSIG_QDELETING)
