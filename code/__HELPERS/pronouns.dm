@@ -78,9 +78,6 @@
 		if(MALE)
 			. = "he"
 
-/client/p_They(temp_gender)
-	. = capitalize(p_they(temp_gender))
-
 /client/p_their(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
@@ -90,9 +87,6 @@
 			. = "her"
 		if(MALE)
 			. = "his"
-
-/client/p_Their(temp_gender)
-	. = capitalize(p_their(temp_gender))
 
 /client/p_theirs(capitalized, temp_gender)
 	if(!temp_gender)
@@ -171,9 +165,6 @@
 		if(PLURAL)
 			. = "they"
 
-/mob/p_They(temp_gender)
-	. = capitalize(p_they(temp_gender))
-
 /mob/p_their(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
@@ -185,9 +176,6 @@
 			. = "his"
 		if(PLURAL)
 			. = "their"
-
-/mob/p_Their(temp_gender)
-	. = capitalize(p_their(temp_gender))
 
 /mob/p_theirs(capitalized, temp_gender)
 	if(!temp_gender)
@@ -265,18 +253,12 @@
 		temp_gender = PLURAL
 	return ..()
 
-/mob/living/carbon/human/p_They(temp_gender)
-	. = capitalize(p_they(temp_gender))
-
 /mob/living/carbon/human/p_their(temp_gender)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
-
-/mob/living/carbon/human/p_Their(temp_gender)
-	. = capitalize(p_their(temp_gender))
 
 /mob/living/carbon/human/p_theirs(capitalized, temp_gender)
 	var/obscured = check_obscured_slots()
@@ -342,18 +324,12 @@
 	if(temp_gender == PLURAL)
 		. = "they"
 
-/obj/item/clothing/p_They(temp_gender)
-	. = capitalize(p_they(temp_gender))
-
 /obj/item/clothing/p_their(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "its"
 	if(temp_gender == PLURAL)
 		. = "their"
-
-/obj/item/clothing/p_Their(temp_gender)
-	. = capitalize(p_their(temp_gender))
 
 /obj/item/clothing/p_theirs(capitalized, temp_gender)
 	if(!temp_gender)
