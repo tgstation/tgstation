@@ -233,7 +233,7 @@
 			unload(0)
 		if(prob(25))
 			visible_message(span_danger("Something shorts out inside [src]!"))
-			wires.cut_random()
+			wires.cut_random(source = Proj.firer)
 
 /mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
