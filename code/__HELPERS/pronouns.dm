@@ -1,249 +1,249 @@
 //pronoun procs, for getting pronouns without using the text macros that only work in certain positions
 //datums don't have gender, but most of their subtypes do!
 /datum/proc/p_they(temp_gender)
-	. = "it"
+	return "it"
 
 /datum/proc/p_They(temp_gender)
-	. = capitalize(p_they(temp_gender))
+	return capitalize(p_they(temp_gender))
 
 /datum/proc/p_their(temp_gender)
-	. = "its"
+	return "its"
 
 /datum/proc/p_Their(temp_gender)
-	. = capitalize(p_their(temp_gender))
+	return capitalize(p_their(temp_gender))
 
 /datum/proc/p_theirs(capitalized, temp_gender)
-	. = "its"
+	return "its"
 	if(capitalized)
-		. = capitalize(.)
+		return capitalize(.)
 
 /datum/proc/p_them(capitalized, temp_gender)
-	. = "it"
+	return "it"
 	if(capitalized)
-		. = capitalize(.)
+		return capitalize(.)
 
 /datum/proc/p_have(temp_gender)
-	. = "has"
+	return "has"
 
 /datum/proc/p_are(temp_gender)
-	. = "is"
+	return "is"
 
 /datum/proc/p_were(temp_gender)
-	. = "was"
+	return "was"
 
 /datum/proc/p_do(temp_gender)
-	. = "does"
+	return "does"
 
 /datum/proc/p_theyve(temp_gender)
-	. = p_they(temp_gender) + "'" + copytext_char(p_have(temp_gender), 3)
+	return p_they(temp_gender) + "'" + copytext_char(p_have(temp_gender), 3)
 
 /datum/proc/p_Theyve(temp_gender)
-	. = p_They(temp_gender) + "'" + copytext_char(p_have(temp_gender), 3)
+	return p_They(temp_gender) + "'" + copytext_char(p_have(temp_gender), 3)
 
 /datum/proc/p_theyre(temp_gender)
-	. = p_they(temp_gender) + "'" + copytext_char(p_are(temp_gender), 2)
+	return p_they(temp_gender) + "'" + copytext_char(p_are(temp_gender), 2)
 
 /datum/proc/p_Theyre(temp_gender)
-	. = p_They(temp_gender) + "'" + copytext_char(p_are(temp_gender), 2)
+	return p_They(temp_gender) + "'" + copytext_char(p_are(temp_gender), 2)
 
 /datum/proc/p_s(temp_gender) //is this a descriptive proc name, or what?
-	. = "s"
+	return "s"
 
 /datum/proc/p_es(temp_gender)
-	. = "es"
+	return "es"
 
 /datum/proc/plural_s(pluralize)
 	switch(copytext_char(pluralize, -2))
 		if ("ss")
-			. = "es"
+			return "es"
 		if ("sh")
-			. = "es"
+			return "es"
 		if ("ch")
-			. = "es"
+			return "es"
 		else
 			switch(copytext_char(pluralize, -1))
 				if("s", "x", "z")
-					. = "es"
+					return "es"
 				else
-					. = "s"
+					return "s"
 
 //like clients, which do have gender.
 /client/p_they(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "they"
+	return "they"
 	switch(temp_gender)
 		if(FEMALE)
-			. = "she"
+			return "she"
 		if(MALE)
-			. = "he"
+			return "he"
 
 /client/p_their(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "their"
+	return "their"
 	switch(temp_gender)
 		if(FEMALE)
-			. = "her"
+			return "her"
 		if(MALE)
-			. = "his"
+			return "his"
 
 /client/p_theirs(capitalized, temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "theirs"
+	return "theirs"
 	switch(temp_gender)
 		if(FEMALE)
-			. = "hers"
+			return "hers"
 		if(MALE)
-			. = "his"
+			return "his"
 	if(capitalized)
-		. = capitalize(.)
+		return capitalize(.)
 
 /client/p_them(capitalized, temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "them"
+	return "them"
 	switch(temp_gender)
 		if(FEMALE)
-			. = "her"
+			return "her"
 		if(MALE)
-			. = "him"
+			return "him"
 	if(capitalized)
-		. = capitalize(.)
+		return capitalize(.)
 
 /client/p_have(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "has"
+	return "has"
 	if(temp_gender == PLURAL || temp_gender == NEUTER)
-		. = "have"
+		return "have"
 
 /client/p_are(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "is"
+	return "is"
 	if(temp_gender == PLURAL || temp_gender == NEUTER)
-		. = "are"
+		return "are"
 
 /client/p_were(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "was"
+	return "was"
 	if(temp_gender == PLURAL || temp_gender == NEUTER)
-		. = "were"
+		return "were"
 
 /client/p_do(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "does"
+	return "does"
 	if(temp_gender == PLURAL || temp_gender == NEUTER)
-		. = "do"
+		return "do"
 
 /client/p_s(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	if(temp_gender != PLURAL && temp_gender != NEUTER)
-		. = "s"
+		return "s"
 
 /client/p_es(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	if(temp_gender != PLURAL && temp_gender != NEUTER)
-		. = "es"
+		return "es"
 
 //mobs(and atoms but atoms don't really matter write your own proc overrides) also have gender!
 /mob/p_they(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "it"
+	return "it"
 	switch(temp_gender)
 		if(FEMALE)
-			. = "she"
+			return "she"
 		if(MALE)
-			. = "he"
+			return "he"
 		if(PLURAL)
-			. = "they"
+			return "they"
 
 /mob/p_their(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "its"
+	return "its"
 	switch(temp_gender)
 		if(FEMALE)
-			. = "her"
+			return "her"
 		if(MALE)
-			. = "his"
+			return "his"
 		if(PLURAL)
-			. = "their"
+			return "their"
 
 /mob/p_theirs(capitalized, temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "its"
+	return "its"
 	switch(temp_gender)
 		if(FEMALE)
-			. = "hers"
+			return "hers"
 		if(MALE)
-			. = "his"
+			return "his"
 		if(PLURAL)
-			. = "theirs"
+			return "theirs"
 	if(capitalized)
-		. = capitalize(.)
+		return capitalize(.)
 
 /mob/p_them(capitalized, temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "it"
+	return "it"
 	switch(temp_gender)
 		if(FEMALE)
-			. = "her"
+			return "her"
 		if(MALE)
-			. = "him"
+			return "him"
 		if(PLURAL)
-			. = "them"
+			return "them"
 	if(capitalized)
-		. = capitalize(.)
+		return capitalize(.)
 
 /mob/p_have(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "has"
+	return "has"
 	if(temp_gender == PLURAL)
-		. = "have"
+		return "have"
 
 /mob/p_are(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "is"
+	return "is"
 	if(temp_gender == PLURAL)
-		. = "are"
+		return "are"
 
 /mob/p_were(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "was"
+	return "was"
 	if(temp_gender == PLURAL)
-		. = "were"
+		return "were"
 
 /mob/p_do(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "does"
+	return "does"
 	if(temp_gender == PLURAL)
-		. = "do"
+		return "do"
 
 /mob/p_s(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	if(temp_gender != PLURAL)
-		. = "s"
+		return "s"
 
 /mob/p_es(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	if(temp_gender != PLURAL)
-		. = "es"
+		return "es"
 
 //humans need special handling, because they can have their gender hidden
 /mob/living/carbon/human/p_they(temp_gender)
@@ -320,71 +320,71 @@
 /obj/item/clothing/p_they(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "it"
+	return "it"
 	if(temp_gender == PLURAL)
-		. = "they"
+		return "they"
 
 /obj/item/clothing/p_their(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "its"
+	return "its"
 	if(temp_gender == PLURAL)
-		. = "their"
+		return "their"
 
 /obj/item/clothing/p_theirs(capitalized, temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "its"
+	return "its"
 	if(temp_gender == PLURAL)
-		. = "theirs"
+		return "theirs"
 	if(capitalized)
-		. = capitalize(.)
+		return capitalize(.)
 
 /obj/item/clothing/p_them(capitalized, temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "it"
+	return "it"
 	if(temp_gender == PLURAL)
-		. = "them"
+		return "them"
 	if(capitalized)
-		. = capitalize(.)
+		return capitalize(.)
 
 /obj/item/clothing/p_have(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "has"
+	return "has"
 	if(temp_gender == PLURAL)
-		. = "have"
+		return "have"
 
 /obj/item/clothing/p_are(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "is"
+	return "is"
 	if(temp_gender == PLURAL)
-		. = "are"
+		return "are"
 
 /obj/item/clothing/p_were(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "was"
+	return "was"
 	if(temp_gender == PLURAL)
-		. = "were"
+		return "were"
 
 /obj/item/clothing/p_do(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
-	. = "does"
+	return "does"
 	if(temp_gender == PLURAL)
-		. = "do"
+		return "do"
 
 /obj/item/clothing/p_s(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	if(temp_gender != PLURAL)
-		. = "s"
+		return "s"
 
 /obj/item/clothing/p_es(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	if(temp_gender != PLURAL)
-		. = "es"
+		return "es"
