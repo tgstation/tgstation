@@ -272,7 +272,7 @@
 		))
 	else
 		/obj/item/storage/backpack/satchel/explorer
-		var/backpack_loot = pick(list(
+		backpack_contents = (list(
 			/obj/item/food/fishmeat = 89,
 			/obj/item/food/fishmeat/carp = 10,
 			/obj/item/skeleton_key = 1,
@@ -343,7 +343,7 @@
 		glasses = /obj/item/clothing/glasses/blindfold
 	r_pocket = pick_weight(list(
 		/obj/item/flashlight/lantern = 4,
-		/obj/item/knife/comat/survival = 2,
+		/obj/item/knife/combat/survival = 2,
 		/obj/item/toy/eldritch_book = 2,
 		/obj/item/storage/box/heretic_box = 2,
 	))
