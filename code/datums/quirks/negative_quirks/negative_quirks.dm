@@ -721,7 +721,6 @@
 	hardcore_value = 6
 	mail_goodies = list(/obj/item/storage/organbox)
 
-	var/obj/item/organ/old_organ
 
 /datum/quirk/tin_man/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -743,21 +742,13 @@
 	if(!length(organ_slots)) //what the hell
 		return
 	for(var/organ_slot in possible_organ_slots)
-		old_organ = human_holder.get_organ_slot(organ_slot)
 		var/organ_path = possible_organ_slots[organ_slot]
 		var/obj/item/organ/new_organ = new organ_path()
-		new_organ.Insert(human_holder, special = TRUE)
-		old_organ.moveToNullspace()
-		STOP_PROCESSING(SSobj, old_organ)
+		new_organ.Insert(human_holder, special = TRUE, drop_if_replaced = FALSE)
 
 /datum/quirk/tin_man/post_add()
 	to_chat(quirk_holder, span_boldannounce("Most of your internal organs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
 	Additionally, any EMP will make them stop working entirely."))
-
-/datum/quirk/tin_man/remove()
-	if(old_organ)
-		old_organ.Insert(quirk_holder, special = TRUE)
-	old_organ = null
 
 /datum/quirk/pushover
 	name = "Pushover"
