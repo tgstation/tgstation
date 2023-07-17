@@ -37,7 +37,7 @@
 			return
 
 	if(partner && children < max_children)
-		controller.blackboard[target_key] = WEAKREF(partner)
+		controller.set_blackboard_key(target_key, partner)
 
 	finish_action(controller, TRUE)
 
@@ -49,8 +49,7 @@
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
 /datum/ai_behavior/make_babies/setup(datum/ai_controller/controller, target_key, child_types_key)
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/atom/target = weak_target?.resolve()
+	var/atom/target = controller.blackboard[target_key]
 	if(!target)
 		return FALSE
 	set_movement_target(controller, target)
@@ -58,8 +57,7 @@
 
 /datum/ai_behavior/make_babies/perform(seconds_per_tick, datum/ai_controller/controller, target_key, child_types_key)
 	. = ..()
-	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/mob/target = weak_target?.resolve()
+	var/mob/target = controller.blackboard[target_key]
 	if(!target || target.stat != CONSCIOUS)
 		finish_action(controller, FALSE, target_key)
 		return
@@ -74,4 +72,4 @@
 /datum/ai_behavior/make_babies/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 
-	controller.blackboard -= target_key
+	controller.clear_blackboard_key(target_key)
