@@ -98,13 +98,13 @@
 
 /obj/machinery/elevator_control_panel/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 
 	obj_flags |= EMAGGED
 
 	var/datum/lift_master/lift = lift_weakref?.resolve()
 	if(!lift)
-		return
+		return FALSE
 
 	for(var/obj/structure/industrial_lift/lift_platform as anything in lift.lift_platforms)
 		lift_platform.violent_landing = TRUE
@@ -122,6 +122,7 @@
 
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(user, "safeties overridden")
+	return TRUE
 
 /obj/machinery/elevator_control_panel/multitool_act(mob/living/user)
 	var/datum/lift_master/lift = lift_weakref?.resolve()

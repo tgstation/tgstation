@@ -1715,3 +1715,20 @@
 	required_drink_type = /datum/reagent/medicine/coagulant/seraka_extract
 	name = "glass of seraka extract"
 	desc = "Deeply savoury, bitter, and makes your blood clot up in your veins. A great drink, all things considered."
+
+/datum/reagent/medicine/ondansetron
+	name = "Ondansetron"
+	description = "Prevents nausea and vomiting. May cause drowsiness and wear."
+	reagent_state = LIQUID
+	color = "#74d3ff"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	ph = 10.6
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/medicine/ondansetron/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
+	if(SPT_PROB(8, seconds_per_tick))
+		M.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
+	if(SPT_PROB(15, seconds_per_tick) && !M.getStaminaLoss())
+		M.adjustStaminaLoss(10)
+	M.adjust_disgust(-10 * REM * seconds_per_tick)
