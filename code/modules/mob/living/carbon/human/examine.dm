@@ -1,7 +1,7 @@
 /mob/living/carbon/human/examine(mob/user)
 //this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
 	var/t_He = p_They()
-	var/t_His = p_their(TRUE)
+	var/t_His = p_Their()
 	var/t_his = p_their()
 	var/t_him = p_them()
 	var/t_has = p_have()

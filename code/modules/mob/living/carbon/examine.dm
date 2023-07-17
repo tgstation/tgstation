@@ -1,6 +1,6 @@
 /mob/living/carbon/examine(mob/user)
 	var/t_He = p_They()
-	var/t_His = p_their(TRUE)
+	var/t_His = p_Their()
 	var/t_his = p_their()
 	var/t_him = p_them()
 	var/t_has = p_have()

@@ -4,12 +4,13 @@
 	. = "it"
 
 /datum/proc/p_They(temp_gender)
-	. = capitalize(p_they())
+	. = capitalize(p_they(temp_gender))
 
-/datum/proc/p_their(capitalized, temp_gender)
+/datum/proc/p_their(temp_gender)
 	. = "its"
-	if(capitalized)
-		. = capitalize(.)
+
+/datum/proc/p_Their(temp_gender)
+	. = capitalize(p_their(temp_gender))
 
 /datum/proc/p_theirs(capitalized, temp_gender)
 	. = "its"
@@ -72,9 +73,9 @@
 			. = "he"
 
 /client/p_They(temp_gender)
-	. = capitalize(p_they())
+	. = capitalize(p_they(temp_gender))
 
-/client/p_their(capitalized, temp_gender)
+/client/p_their(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "their"
@@ -83,8 +84,9 @@
 			. = "her"
 		if(MALE)
 			. = "his"
-	if(capitalized)
-		. = capitalize(.)
+
+/client/p_Their(temp_gender)
+	. = capitalize(p_their(temp_gender))
 
 /client/p_theirs(capitalized, temp_gender)
 	if(!temp_gender)
@@ -166,7 +168,7 @@
 /mob/p_They(temp_gender)
 	. = capitalize(p_they(temp_gender))
 
-/mob/p_their(capitalized, temp_gender)
+/mob/p_their(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "its"
@@ -177,8 +179,9 @@
 			. = "his"
 		if(PLURAL)
 			. = "their"
-	if(capitalized)
-		. = capitalize(.)
+
+/mob/p_Their(temp_gender)
+	. = capitalize(p_their(temp_gender))
 
 /mob/p_theirs(capitalized, temp_gender)
 	if(!temp_gender)
@@ -259,12 +262,15 @@
 /mob/living/carbon/human/p_They(temp_gender)
 	. = capitalize(p_they(temp_gender))
 
-/mob/living/carbon/human/p_their(capitalized, temp_gender)
+/mob/living/carbon/human/p_their(temp_gender)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
+
+/mob/living/carbon/human/p_Their(temp_gender)
+	. = capitalize(p_their(temp_gender))
 
 /mob/living/carbon/human/p_theirs(capitalized, temp_gender)
 	var/obscured = check_obscured_slots()
@@ -333,7 +339,7 @@
 	if(capitalized)
 		. = capitalize(.)
 
-/obj/item/clothing/p_their(capitalized, temp_gender)
+/obj/item/clothing/p_their(temp_gender)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "its"
@@ -341,6 +347,9 @@
 		. = "their"
 	if(capitalized)
 		. = capitalize(.)
+
+/obj/item/clothing/p_Their(temp_gender)
+	. = capitalize(p_their(temp_gender))
 
 /obj/item/clothing/p_theirs(capitalized, temp_gender)
 	if(!temp_gender)

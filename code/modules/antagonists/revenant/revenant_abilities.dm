@@ -37,7 +37,7 @@
 		to_chat(src, span_revenwarning("You are already siphoning the essence of a soul!"))
 		return
 	if(!target.stat)
-		to_chat(src, span_revennotice("[target.p_their(TRUE)] soul is too strong to harvest."))
+		to_chat(src, span_revennotice("[target.p_Their()] soul is too strong to harvest."))
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
 		return
@@ -48,16 +48,16 @@
 	to_chat(src, span_revennotice("You search for the soul of [target]."))
 	if(do_after(src, rand(10, 20), target, timed_action_flags = IGNORE_HELD_ITEM)) //did they get deleted in that second?
 		if(target.ckey)
-			to_chat(src, span_revennotice("[target.p_their(TRUE)] soul burns with intelligence."))
+			to_chat(src, span_revennotice("[target.p_Their()] soul burns with intelligence."))
 			essence_drained += rand(20, 30)
 		if(target.stat != DEAD && !HAS_TRAIT(target, TRAIT_WEAK_SOUL))
-			to_chat(src, span_revennotice("[target.p_their(TRUE)] soul blazes with life!"))
+			to_chat(src, span_revennotice("[target.p_Their()] soul blazes with life!"))
 			essence_drained += rand(40, 50)
 		if(HAS_TRAIT(target, TRAIT_WEAK_SOUL) && !target.ckey)
-			to_chat(src, span_revennotice("[target.p_their(TRUE)] soul is weak and underdeveloped. They won't be worth very much."))
+			to_chat(src, span_revennotice("[target.p_Their()] soul is weak and underdeveloped. They won't be worth very much."))
 			essence_drained = 5
 		else
-			to_chat(src, span_revennotice("[target.p_their(TRUE)] soul is weak and faltering."))
+			to_chat(src, span_revennotice("[target.p_Their()] soul is weak and faltering."))
 		if(do_after(src, rand(15, 20), target, timed_action_flags = IGNORE_HELD_ITEM)) //did they get deleted NOW?
 			switch(essence_drained)
 				if(1 to 30)

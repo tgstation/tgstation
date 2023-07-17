@@ -620,7 +620,7 @@
 	qdel(fire)
 
 /datum/status_effect/stabilized/darkpurple/get_examine_text()
-	return span_notice("[owner.p_their(TRUE)] fingertips burn brightly!")
+	return span_notice("[owner.p_Their()] fingertips burn brightly!")
 
 /datum/status_effect/stabilized/darkblue
 	id = "stabilizeddarkblue"

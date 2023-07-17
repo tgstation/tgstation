@@ -102,7 +102,7 @@
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
 		|| mind_to_swap.key?[1] == "@" \
 	)
-		to_chat(caster, span_warning("[to_swap.p_their(TRUE)] mind is resisting your spell!"))
+		to_chat(caster, span_warning("[to_swap.p_Their()] mind is resisting your spell!"))
 		return FALSE
 
 	// MIND TRANSFER BEGIN

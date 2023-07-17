@@ -723,10 +723,10 @@
 					user.Beam(H, icon_state="sendbeam", time = 15)
 			else
 				if(H.stat == DEAD)
-					to_chat(user,span_warning("[H.p_their(TRUE)] blood has stopped flowing, you'll have to find another way to extract it."))
+					to_chat(user,span_warning("[H.p_Their()] blood has stopped flowing, you'll have to find another way to extract it."))
 					return
 				if(H.has_status_effect(/datum/status_effect/speech/slurring/cult))
-					to_chat(user,span_danger("[H.p_their(TRUE)] blood has been tainted by an even stronger form of blood magic, it's no use to us like this!"))
+					to_chat(user,span_danger("[H.p_Their()] blood has been tainted by an even stronger form of blood magic, it's no use to us like this!"))
 					return
 				if(H.blood_volume > BLOOD_VOLUME_SAFE)
 					H.blood_volume -= 100

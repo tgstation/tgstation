@@ -405,7 +405,7 @@
 		owner.emote(pick("gasp", "gag", "choke"))
 
 /datum/status_effect/neck_slice/get_examine_text()
-	return span_warning("[owner.p_their(TRUE)] neck is cut and is bleeding profusely!")
+	return span_warning("[owner.p_Their()] neck is cut and is bleeding profusely!")
 
 /mob/living/proc/apply_necropolis_curse(set_curse)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(/datum/status_effect/necropolis_curse)
