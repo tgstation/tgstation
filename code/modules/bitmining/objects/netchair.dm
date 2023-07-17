@@ -137,7 +137,7 @@
 		avatar_ref = WEAKREF(current_avatar)
 
 	// Final sanity check before we start the transfer
-	if(QDELETED(neo) || QDELETED(current_avatar) || neo.stat == DEAD || current_avatar.stat == DEAD)
+	if(QDELETED(neo) || QDELETED(current_avatar) || isnull(neo.mind) || neo.stat == DEAD || current_avatar.stat == DEAD)
 		return
 
 	var/datum/weakref/neo_mind_ref = WEAKREF(neo.mind)
@@ -150,10 +150,10 @@
 	if(server)
 		return server
 
-	for(var/obj/machinery/quantum_server/nearby_server as anything in oview(4))
-		if(istype(nearby_server, /obj/machinery/quantum_server))
-			server_ref = WEAKREF(nearby_server)
-			return nearby_server
+	server = locate(/obj/machinery/quantum_server) in oview(4, src)
+	if(server)
+		server_ref = WEAKREF(server)
+		return server
 
 	return FALSE
 

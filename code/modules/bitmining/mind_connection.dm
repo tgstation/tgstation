@@ -13,8 +13,7 @@
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_MOVABLE_UNBUCKLE,
 		),
-		PROC_REF(disconnect_avatar),
-		TRUE
+		PROC_REF(force_disconnect_avatar),
 	)
 
 	transfer_to(avatar)
@@ -37,8 +36,7 @@
 		COMSIG_LIVING_GIBBED,
 		COMSIG_QSERVER_DISCONNECT,
 		),
-		PROC_REF(disconnect_avatar),
-		TRUE
+		PROC_REF(force_disconnect_avatar),
 	)
 
 /// Disconnects the avatar and returns the mind to the pilot.
@@ -73,6 +71,10 @@
 	UnregisterSignal(current, COMSIG_LIVING_GIBBED)
 	UnregisterSignal(current, COMSIG_MOB_APPLY_DAMAGE)
 	UnregisterSignal(current, COMSIG_QSERVER_DISCONNECT)
+
+/// Helper so that we don't have to apply args to register_signal
+/datum/mind/proc/force_disconnect_avatar()
+	disconnect_avatar(forced = TRUE)
 
 /// Helper to transfer the mind to a new avatar
 /datum/mind/proc/transfer_avatar_signals(mob/living/origin, mob/living/target)
