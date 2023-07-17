@@ -1,4 +1,4 @@
-///Machinery that block nebula's. This type is for convenience, you can set nebula shielding on other objects aswell using add_to_nebula_shielding()
+///Machinery that block nebulas. This type is for convenience, you can set nebula shielding on other objects as well using add_to_nebula_shielding()
 /obj/machinery/nebula_shielding
 	density = TRUE
 
@@ -62,7 +62,7 @@
 /obj/machinery/nebula_shielding/emergency/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Will block the nebula for [round(detonate_in / (1 MINUTES))] minutes with a shield strength of [shielding_strength].")
+	. += span_notice("[p_they(capitalized = TRUE)] will block the nebula for [round(detonate_in / (1 MINUTES))] minute\s with a shield strength of [shielding_strength].")
 
 /obj/machinery/nebula_shielding/emergency/get_nebula_shielding()
 	return shielding_strength //no strings attached, we will always produce shielding

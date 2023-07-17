@@ -109,5 +109,4 @@
 /datum/weather/rad_storm/nebula/status_alarm(active)
 	if(!active) //we stay on
 		return
-	else
-		..()
+	..()
