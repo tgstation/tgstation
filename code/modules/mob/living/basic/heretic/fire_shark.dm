@@ -1,14 +1,10 @@
 /mob/living/basic/heretic_summon/fire_shark
 	name = "fire shark"
 	desc = "It is a eldritch dwarf space shark, also known as a fire shark."
-	icon = 'icons/mob/nonhuman-player/eldritch_mobs.dmi'
 	icon_state = "fire_shark"
 	icon_living = "fire_shark"
 	pass_flags = PASSTABLE | PASSMOB
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
-	unsuitable_atmos_damage = 0
-	unsuitable_cold_damage = 0
-	unsuitable_heat_damage = 0
 	speed = -0.5
 	health = 16
 	maxHealth = 16
@@ -21,7 +17,6 @@
 	attack_verb_simple = "bite"
 	damage_coeff = list(BRUTE = 1, BURN = 0.25, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	mob_size = MOB_SIZE_TINY
-	speak_emote = list("screams")
 
 /mob/living/basic/heretic_summon/fire_shark/Initialize(mapload)
 	. = ..()

@@ -26,11 +26,6 @@
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	death_sound = 'sound/magic/cosmic_expansion.ogg'
 
-	unsuitable_atmos_damage = 0
-	unsuitable_cold_damage = 0
-	unsuitable_heat_damage = 0
-
-	gold_core_spawnable = NO_SPAWN
 	slowed_by_drag = FALSE
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
