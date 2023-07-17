@@ -83,14 +83,9 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
 "aI" = (
-/obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/flora/bush/sparsegrass/style_random,
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/grassy/style_random,
-/obj/structure/flora/bush/flowers_pp/style_random,
-/obj/structure/flora/bush/pointy/style_random,
-/obj/machinery/light/directional/east,
-/turf/open/floor/grass,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "aK" = (
 /obj/structure/table/reinforced,
@@ -1647,10 +1642,14 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/prison)
 "iI" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/floor,
-/turf/open/floor/iron/dark,
-/area/centcom/tdome/observation)
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/evacuation/ship)
 "iJ" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
@@ -2952,11 +2951,16 @@
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/ferry)
 "of" = (
-/obj/structure/flora/tree/palm{
-	icon_state = "palm2"
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 8
 	},
-/obj/machinery/light/directional/west,
-/turf/open/floor/grass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/floor,
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation/ship)
 "oh" = (
 /obj/structure/table/wood,
@@ -3892,13 +3896,15 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "sm" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/floor,
-/turf/open/floor/iron/dark/herringbone,
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation/ship)
 "sn" = (
 /obj/machinery/door/airlock/centcom{
@@ -3986,17 +3992,14 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
 "sB" = (
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/floor,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/evacuation/ship)
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
+/obj/machinery/light/directional/west,
+/turf/open/floor/grass,
+/area/centcom/tdome/observation)
 "sC" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
@@ -6564,10 +6567,7 @@
 "EN" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -7453,15 +7453,11 @@
 /turf/closed/wall/mineral/titanium,
 /area/centcom/central_command_areas/evacuation/ship)
 "KJ" = (
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 8
+/obj/structure/flora/tree/palm{
+	icon_state = "palm2"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/floor,
-/turf/open/floor/iron,
+/obj/machinery/light/directional/west,
+/turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation/ship)
 "KK" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -8137,7 +8133,10 @@
 "NV" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -9040,9 +9039,10 @@
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/flora/bush/flowers_br/style_random,
-/obj/structure/flora/bush/generic/style_random,
-/obj/machinery/light/directional/west,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
+/obj/machinery/light/directional/east,
 /turf/open/floor/grass,
 /area/centcom/tdome/observation)
 "RU" = (
@@ -38005,7 +38005,7 @@ Nm
 Lt
 ey
 LG
-of
+KJ
 gj
 Lt
 KH
@@ -38763,7 +38763,7 @@ Lw
 SX
 jC
 Hl
-sm
+iI
 YW
 gd
 kr
@@ -38781,19 +38781,19 @@ HJ
 HJ
 ci
 QH
-EN
+NV
 WE
 Li
 Lb
-KJ
+sm
 WE
 WE
 Lb
-sB
+of
 Li
 Lb
 bN
-NV
+EN
 bN
 Lt
 aa
@@ -52879,7 +52879,7 @@ gE
 oj
 QC
 Xf
-RT
+sB
 Xf
 QC
 yY
@@ -54164,7 +54164,7 @@ Mu
 dL
 hN
 BW
-iI
+aI
 BW
 Cz
 BW
@@ -55449,7 +55449,7 @@ Vs
 RO
 QC
 XJ
-aI
+RT
 XJ
 QC
 Wv
