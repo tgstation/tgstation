@@ -64,7 +64,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		id = type
 
 	if(texture_layer_icon_state)
-		cached_texture_filter_icon = icon('icons/materials/composite.dmi', texture_layer_icon_state)
+		cached_texture_filter_icon = icon('icons/turf/composite.dmi', texture_layer_icon_state)
 
 	return TRUE
 

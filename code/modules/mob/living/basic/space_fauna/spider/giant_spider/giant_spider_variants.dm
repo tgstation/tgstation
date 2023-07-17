@@ -6,6 +6,7 @@
 /mob/living/basic/giant_spider/ambush
 	name = "ambush spider"
 	desc = "Furry and white, it makes you shudder to look at it. This one has sparkling pink eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "ambush"
 	icon_living = "ambush"
 	icon_dead = "ambush_dead"
@@ -36,6 +37,7 @@
 /mob/living/basic/giant_spider/guard
 	name = "guard spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "guard"
 	icon_living = "guard"
 	icon_dead = "guard_dead"
@@ -64,6 +66,7 @@
 /mob/living/basic/giant_spider/hunter
 	name = "hunter spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
@@ -89,6 +92,7 @@
 /mob/living/basic/giant_spider/scout
 	name = "scout spider"
 	desc = "Furry and blueish black, it makes you shudder to look at it. This one has sparkling blue eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "scout"
 	icon_living = "scout"
 	icon_dead = "scout_dead"
@@ -121,6 +125,7 @@
 /mob/living/basic/giant_spider/nurse
 	name = "nurse spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "nurse"
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
@@ -162,6 +167,7 @@
 /mob/living/basic/giant_spider/tangle
 	name = "tangle spider"
 	desc = "Furry and brown, it makes you shudder to look at it. This one has dim brown eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "tangle"
 	icon_living = "tangle"
 	icon_dead = "tangle_dead"
@@ -215,6 +221,7 @@
 /mob/living/basic/giant_spider/tarantula
 	name = "tarantula"
 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "tarantula"
 	icon_living = "tarantula"
 	icon_dead = "tarantula_dead"
@@ -256,6 +263,7 @@
 /mob/living/basic/giant_spider/viper
 	name = "viper spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has effervescent purple eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "viper"
 	icon_living = "viper"
 	icon_dead = "viper_dead"
@@ -282,6 +290,7 @@
 	name = "broodmother spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has scintillating green eyes. Might also be hiding a real knife somewhere."
 	gender = FEMALE
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "midwife"
 	icon_living = "midwife"
 	icon_dead = "midwife_dead"
@@ -427,6 +436,7 @@
  */
 /mob/living/basic/giant_spider/hunter/flesh
 	desc = "A odd fleshy creature in the shape of a spider.  Its eyes are pitch black and soulless."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "flesh_spider"
 	icon_living = "flesh_spider"
 	icon_dead = "flesh_spider_dead"
@@ -514,6 +524,7 @@
 /mob/living/basic/giant_spider/maintenance
 	name = "duct spider"
 	desc = "Nanotrasen's imported solution to mice, comes with its own problems."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "maint_spider"
 	icon_living = "maint_spider"
 	icon_dead = "maint_spider_dead"

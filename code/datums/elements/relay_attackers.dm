@@ -8,20 +8,24 @@
 /datum/element/relay_attackers/Attach(datum/target)
 	. = ..()
 	// Boy this sure is a lot of ways to tell us that someone tried to attack us
-	RegisterSignal(target, COMSIG_LIVING_ATTACKED_BY, PROC_REF(on_attacked_by))
-	RegisterSignal(target, COMSIG_LIVING_DISARM_HIT, PROC_REF(on_shoved))
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_MECH, PROC_REF(on_attack_mech))
 	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	RegisterSignal(target, COMSIG_ATOM_HITBY, PROC_REF(on_hitby))
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_MECH, PROC_REF(on_attack_mech))
+	RegisterSignal(target, COMSIG_ATOM_PREHITBY, PROC_REF(on_hitby))
+	RegisterSignal(target, COMSIG_LIVING_ATTACKED_BY, PROC_REF(on_attacked_by))
+	RegisterSignal(target, COMSIG_LIVING_DISARM_HIT, PROC_REF(on_shoved))
+	RegisterSignal(target, COMSIG_PROJECTILE_PREHIT, PROC_REF(on_bullet_act))
 
 /datum/element/relay_attackers/Detach(datum/source, ...)
 	. = ..()
 	UnregisterSignal(source, list(
+		COMSIG_ATOM_ATTACK_MECH,
 		COMSIG_ATOM_BULLET_ACT,
 		COMSIG_ATOM_HITBY,
-		COMSIG_ATOM_ATTACK_MECH,
+		COMSIG_ATOM_PREHITBY,
 		COMSIG_LIVING_ATTACKED_BY,
 		COMSIG_LIVING_DISARM_HIT,
+		COMSIG_PROJECTILE_PREHIT,
 	))
 
 /datum/element/relay_attackers/proc/on_attacked_by(atom/target, mob/living/attacker, obj/item/weapon, obj/item/bodypart/hit_limb, damage, damage_type, armor_block)
@@ -32,7 +36,8 @@
 	SIGNAL_HANDLER
 	relay_attacker(target, attacker, ATTACKER_SHOVING)
 
-/datum/element/relay_attackers/proc/on_bullet_act(atom/target, obj/projectile/hit_projectile)
+/// Even if another component blocked this hit, someone still shot at us
+/datum/element/relay_attackers/proc/on_bullet_act(atom/target, list/bullet_args, obj/projectile/hit_projectile)
 	SIGNAL_HANDLER
 	if(!hit_projectile.is_hostile_projectile())
 		return
@@ -40,7 +45,8 @@
 		return
 	relay_attacker(target, hit_projectile.firer, hit_projectile.damage_type == STAMINA ? ATTACKER_STAMINA_ATTACK : NONE)
 
-/datum/element/relay_attackers/proc/on_hitby(atom/target, atom/movable/hit_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+/// Even if another component blocked this hit, someone still threw something
+/datum/element/relay_attackers/proc/on_hitby(atom/target, atom/movable/hit_atom, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 	if(!isitem(hit_atom))
 		return

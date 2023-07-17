@@ -31,7 +31,7 @@
 		/obj/item/reagent_containers/cup/bottle/formaldehyde = 30,
 		/obj/item/storage/box/bodybags = 15,
 		/obj/item/healthanalyzer = 10,
-		/obj/item/shovel = 5,
+		/obj/item/shovel/serrated/dull = 5,
 		/obj/effect/spawner/random/medical/organs = 5,
 		/obj/effect/spawner/random/medical/memeorgans = 1,
 		/obj/item/scythe = 1,

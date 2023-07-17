@@ -75,11 +75,7 @@
 /obj/item/melee/baton/can_attack_with(mob/living/attacker)
 	if(!chunky_finger_usable && ishuman(attacker))
 		var/mob/living/carbon/human/potential_chunky_finger_human = attacker
-		if(potential_chunky_finger_human.check_chunky_fingers() \
-			&& attacker.is_holding(src) \
-			&& !HAS_TRAIT(attacker, TRAIT_CHUNKYFINGERS_IGNORE_BATON) \
-			&& (attacker.mind && !HAS_TRAIT(attacker.mind, TRAIT_CHUNKYFINGERS_IGNORE_BATON)) \
-		)
+		if(potential_chunky_finger_human.check_chunky_fingers() && attacker.is_holding(src) && !HAS_MIND_TRAIT(attacker, TRAIT_CHUNKYFINGERS_IGNORE_BATON))
 			balloon_alert(attacker, "fingers are too big!")
 			return FALSE
 

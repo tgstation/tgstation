@@ -4376,7 +4376,7 @@
 /turf/open/floor/iron/smooth_edge,
 /area/mine/laborcamp/quarters)
 "zS" = (
-/mob/living/simple_animal/hostile/asteroid/goliath/beast,
+/mob/living/basic/mining/goliath,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "zU" = (

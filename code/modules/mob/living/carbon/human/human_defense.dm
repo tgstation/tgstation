@@ -748,7 +748,7 @@
 				&& prob(damage + ((100 - health) * 0.5)) \
 			)
 				var/datum/antagonist/rev/rev = mind?.has_antag_datum(/datum/antagonist/rev)
-				rev?.remove_revolutionary(FALSE, user)
+				rev?.remove_revolutionary(user)
 
 		if(BODY_ZONE_CHEST)
 			if(stat == CONSCIOUS && prob(damage))

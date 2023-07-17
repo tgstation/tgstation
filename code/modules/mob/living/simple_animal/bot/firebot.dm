@@ -20,6 +20,7 @@
 	bot_type = FIRE_BOT
 	hackables = "fire safety protocols"
 	path_image_color = "#FFA500"
+	possessed_message = "You are a firebot! Protect the station from fires to the best of your ability!"
 
 	var/atom/target_fire
 	var/atom/old_target_fire
@@ -103,12 +104,13 @@
 	last_found = world.time
 	update_appearance()
 
-/mob/living/simple_animal/bot/firebot/emag_act(mob/user)
-	..()
+/mob/living/simple_animal/bot/firebot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
-	if(user)
-		to_chat(user, span_danger("[src] buzzes and beeps."))
+
+	to_chat(user, span_warning("You enable the very ironically named \"fighting with fire\" mode, and disable the targetting safeties.")) // heheehe. funny
+
 	audible_message(span_danger("[src] buzzes oddly!"))
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(user)
@@ -123,6 +125,7 @@
 	internal_ext.precision = FALSE
 	internal_ext.max_water = INFINITY
 	internal_ext.refill()
+	return TRUE
 
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/firebot/ui_data(mob/user)

@@ -50,7 +50,7 @@
 /obj/machinery/vending
 	name = "\improper Vendomat"
 	desc = "A generic vending machine."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "generic"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
@@ -856,22 +856,24 @@
 	update_canister()
 	. = ..()
 
-/obj/machinery/vending/emag_act(mob/user)
+/obj/machinery/vending/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
-	to_chat(user, span_notice("You short out the product lock on [src]."))
+	balloon_alert(user, "product lock disabled")
+	return TRUE
 
 /obj/machinery/vending/interact(mob/user)
-	if(seconds_electrified && !(machine_stat & NOPOWER))
-		if(shock(user, 100))
-			return
+	if (!isAI(user))
+		if(seconds_electrified && !(machine_stat & NOPOWER))
+			if(shock(user, 100))
+				return
 
-	if(tilted && !user.buckled && !isAdminGhostAI(user))
-		to_chat(user, span_notice("You begin righting [src]."))
-		if(do_after(user, 50, target=src))
-			untilt(user)
-		return
+		if(tilted && !user.buckled && !isAdminGhostAI(user))
+			to_chat(user, span_notice("You begin righting [src]."))
+			if(do_after(user, 50, target=src))
+				untilt(user)
+			return
 
 	return ..()
 

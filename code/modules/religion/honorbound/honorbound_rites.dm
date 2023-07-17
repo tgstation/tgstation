@@ -138,8 +138,8 @@
 	return TRUE
 
 /obj/item/paper/holy_writ
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "scroll"
+	icon = 'icons/obj/scrolls.dmi'
+	icon_state = "honorscroll"
 	slot_flags = null
 	show_written_words = FALSE
 

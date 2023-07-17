@@ -165,9 +165,7 @@
 	cargorilla = new(cargo_sloth.loc)
 	cargorilla.name = cargo_sloth.name
 	// We do a poll on roundstart, don't let ghosts in early
-	cargorilla.being_polled_for = TRUE
 	INVOKE_ASYNC(src, PROC_REF(make_id_for_gorilla))
-
 	// hm our sloth looks funny today
 	qdel(cargo_sloth)
 
@@ -299,7 +297,7 @@
 /obj/item/birthday_invite/proc/setup_card(birthday_name)
 	desc = "A card stating that its [birthday_name]'s birthday today."
 	icon_state = "paperslip_words"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 
 /obj/item/clothing/head/costume/party
 	name = "party hat"

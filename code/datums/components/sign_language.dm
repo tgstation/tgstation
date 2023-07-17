@@ -131,7 +131,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/carbon_parent = parent
-	if(HAS_TRAIT(carbon_parent, TRAIT_MIMING))
+	if(HAS_MIND_TRAIT(carbon_parent, TRAIT_MIMING))
 		to_chat(carbon_parent, span_green("You stop yourself from signing in favor of the artform of mimery!"))
 		return COMPONENT_CANNOT_SPEAK
 
@@ -214,7 +214,7 @@
 	var/mob/living/carbon/carbon_parent = parent
 	if(spell.invocation_type == INVOCATION_EMOTE) // Mime spells are not cast with signs
 		return NONE // Run normal checks
-	else if(check_signables_state() != SIGN_OKAY || HAS_TRAIT(carbon_parent, TRAIT_MIMING)) // Cannot cast if miming or not SIGN_OKAY
+	else if(check_signables_state() != SIGN_OKAY || HAS_MIND_TRAIT(carbon_parent, TRAIT_MIMING)) // Cannot cast if miming or not SIGN_OKAY
 		if(feedback)
 			to_chat(carbon_parent, span_warning("You can't sign the words to invoke [spell]!"))
 		return SPELL_INVOCATION_FAIL

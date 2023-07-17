@@ -159,6 +159,10 @@
 	. = rand(hitting_with.unarmed_damage_low, hitting_with.unarmed_damage_high)
 	if(attacker != hitting_with.owner)
 		. *= 0.5 // Damage penalty for using a limb as a melee weapon
+	if(isbasicmob(smacked))
+		var/mob/living/basic/smacked_basic = smacked
+		if(smacked_basic.basic_mob_flags & IMMUNE_TO_FISTS)
+			. *= 0
 
 /datum/attack_style/unarmed/generic_damage/limb_based/calculate_miss_chance(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
 	if(..() == 0) // Guaranteed hit from parent

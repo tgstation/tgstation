@@ -72,10 +72,7 @@
 	if(!isturf(loc))
 		return
 
-	// Actual weapon handling goes here
-	if(isturf(A) || isturf(A.loc))
-		click_on_with_item(A, active_module, params)
-		return
+	click_on_with_item(A, active_module, params)
 
 //Give cyborgs hotkey clicks without breaking existing uses of hotkey clicks
 // for non-doors/apcs
