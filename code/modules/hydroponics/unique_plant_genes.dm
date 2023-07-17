@@ -110,8 +110,8 @@
 		return
 
 	// We probably hit something or someone. Reduce our force
+	our_plant.force -= rand(1, (our_plant.force / 3) + 1)
 	if(our_plant.force > 0)
-		our_plant.force -= rand(1, (our_plant.force / 3) + 1)
 		return
 
 	// When our force degrades to zero or below, we're all done

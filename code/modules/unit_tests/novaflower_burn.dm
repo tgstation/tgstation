@@ -6,6 +6,8 @@
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/grown/novaflower/weapon = allocate(/obj/item/grown/novaflower)
 
+	botanist.set_combat_mode(TRUE)
+
 	TEST_ASSERT(weapon.force > 0, "[weapon] spawned with zero force.")
 
 	// Keep this around for comparison later.
@@ -32,6 +34,6 @@
 
 	// Lastly we should check that degredation to zero works.
 	weapon.force = 0
-	weapon.melee_attack_chain(botanist, victim)
+	click_wrapper(botanist, victim)
 
 	TEST_ASSERT(QDELETED(weapon), "[weapon] wasn't deleted after hitting someone with zero force.")

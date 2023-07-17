@@ -225,6 +225,8 @@
 	/// Attack style used when right-clicking while attacking.
 	/// By default, this is null, which means it will use the same attack style as the left click.
 	var/datum/attack_style/melee_weapon/alt_attack_style = null
+	/// If TRUE, outright skips attack style execution attempts if the user right-click, proceedes directly to afterattack
+	var/afterattack_on_right_click = FALSE
 	/// Relates to the sprite of the weapon, used to rotate the sprite to be vertical before animating for attacks
 	var/weapon_sprite_angle = 0
 
@@ -661,9 +663,9 @@
 )
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY)
-			return -1
+			return round(blocking_ability * 1.66, 0.2)
 		if(WEIGHT_CLASS_SMALL)
-			return blocking_ability * 2
+			return  round(blocking_ability * 1.33, 0.2)
 		else
 			return blocking_ability
 

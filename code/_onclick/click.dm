@@ -319,7 +319,7 @@
 			clicked_with_what.melee_attack_chain(src, clicked_on, params)
 			return
 
-	else if(combat_mode)
+	else if(combat_mode && !(right_clicking && clicked_with_what.afterattack_on_right_click))
 		// Handles swinging at the clicked atom
 		var/datum/attack_style/using_what_style = (right_clicking && clicked_with_what.alt_attack_style) || clicked_with_what.attack_style
 		// Surgical tools won't swing if we're clicking on a dude who's in the middle of surgery

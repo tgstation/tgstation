@@ -1,4 +1,7 @@
+
 /*********************Mining Hammer****************/
+/datum/attack_style/melee_weapon/swing/crusher
+
 /obj/item/kinetic_crusher
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "crusher"
@@ -24,7 +27,8 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 5
 	light_on = FALSE
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style = /datum/attack_style/melee_weapon/swing/crusher
+	afterattack_on_right_click = TRUE // let us shoot the projectile
 	weapon_sprite_angle = 45
 
 	var/list/trophies = list()
@@ -45,6 +49,9 @@
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
 	return ..()
+
+/obj/item/kinetic_crusher/can_attack_with(mob/living/attacker)
+	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/kinetic_crusher/Exited(atom/movable/gone, direction)
 	. = ..()

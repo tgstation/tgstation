@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  *
  * Return TRUE on success, and FALSE on failure
  */
-/datum/attack_style/proc/process_attack(mob/living/attacker, obj/item/weapon, atom/aimed_towards, right_clicking = FALSE)
+/datum/attack_style/proc/process_attack(mob/living/attacker, obj/item/weapon, atom/aimed_towards, right_clicking = FALSE, list/click_modifiers)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	weapon?.add_fingerprint(attacker)
