@@ -262,12 +262,16 @@
 	back = /obj/item/tank/internals/oxygen
 
 /datum/outfit/consumed_ice_settler/pre_equip(mob/living/carbon/human/ice_settler, visualsOnly = FALSE)
-	if(prob(50))
+	if(prob(30))
+		belt = pick(list(
+			/obj/item/crowbar =2,
+			/obj/item/fishing_rod = 4,
+			/obj/item/flashlight/flare/torch = 4,
+		))
+	if(prob(30))
 		back = pick_weight(list(
 			/obj/item/pickaxe = 4,
-			/obj/item/fishing_rod = 4,
-			/obj/item/tank/internals/oxygen = 2,
-			/obj/item/flashlight/flare/torch = 4,
+			/obj/item/tank/internals/oxygen = 6,
 		))
 	else
 		/obj/item/storage/backpack/satchel/explorer
