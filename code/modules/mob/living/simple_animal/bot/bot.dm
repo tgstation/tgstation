@@ -20,7 +20,7 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
-	initial_language_holder = /datum/language_holder/bot
+	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 	speech_span = SPAN_ROBOT
 	faction = list(FACTION_NEUTRAL, FACTION_SILICON, FACTION_TURRET)
@@ -112,8 +112,6 @@
 	COOLDOWN_DECLARE(offer_ghosts_cooldown)
 	/// Message to display upon possession
 	var/possessed_message = "You're a generic bot. How did one of these even get made?"
-	/// What language do we make automated announcements in?
-	var/datum/language/announcement_language = /datum/language/common
 	/// List of strings to sound effects corresponding to automated messages the bot can play
 	var/list/automated_announcements
 
@@ -536,18 +534,10 @@
 	if((!(bot_mode_flags & BOT_MODE_ON)) || (!message))
 		return
 
-	var/previous_language = get_selected_language()
-	var/fluent = can_speak_language(announcement_language)
-	if (!fluent)
-		grant_language(announcement_language)
-	set_active_language(announcement_language)
 	if(channel && internal_radio.channels[channel])// Use radio if we have channel key
-		internal_radio.talk_into(src, message = message, channel = channel, language = announcement_language)
+		internal_radio.talk_into(src, message = message, channel = channel)
 	else
-		say(message, language = announcement_language)
-	if (!fluent)
-		remove_language(announcement_language)
-	set_active_language(previous_language)
+		say(message)
 
 /mob/living/simple_animal/bot/radio(message, list/message_mods = list(), list/spans, language)
 	. = ..()
@@ -1122,7 +1112,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	name = initial(src.name)
 	faction = initial(faction)
 	remove_all_languages(source = LANGUAGE_PAI)
-	set_active_language(announcement_language)
+	get_selected_language()
 
 /// Ejects the pAI remotely.
 /mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
@@ -1219,10 +1209,3 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/rust_heretic_act()
 	adjustBruteLoss(400)
-
-// We want to store what our funny language is
-/mob/living/simple_animal/bot/randomize_language_if_on_station()
-	. = ..()
-	if (!.)
-		return
-	announcement_language = get_selected_language()

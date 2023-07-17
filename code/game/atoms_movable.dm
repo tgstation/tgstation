@@ -1556,15 +1556,6 @@
 	set_active_language(picked)
 	return TRUE
 
-/// Teaches a random non-common language and sets it as the active language
-/atom/movable/proc/grant_random_uncommon_language(source)
-	if (!length(GLOB.uncommon_roundstart_languages))
-		return FALSE
-	var/picked = pick(GLOB.uncommon_roundstart_languages)
-	grant_language(picked, source = source)
-	set_active_language(picked)
-	return picked
-
 /* End language procs */
 
 //Returns an atom's power cell, if it has one. Overload for individual items.
