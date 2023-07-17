@@ -70,7 +70,7 @@
 					to_chat(src, span_revenbignotice("Ah, the perfect soul. [target] will yield massive amounts of essence to you."))
 			if(do_after(src, rand(15, 25), target, timed_action_flags = IGNORE_HELD_ITEM)) //how about now
 				if(!target.stat)
-					to_chat(src, span_revenwarning("[target.p_theyre(TRUE)] now powerful enough to fight off your draining."))
+					to_chat(src, span_revenwarning("[target.p_Theyre()] now powerful enough to fight off your draining."))
 					to_chat(target, span_boldannounce("You feel something tugging across your body before subsiding."))
 					draining = 0
 					essence_drained = 0
@@ -107,7 +107,7 @@
 						target.investigate_log("has died from revenant harvest.", INVESTIGATE_DEATHS)
 					target.death(FALSE)
 				else
-					to_chat(src, span_revenwarning("[target ? "[target] has":"[target.p_theyve(TRUE)]"] been drawn out of your grasp. The link has been broken."))
+					to_chat(src, span_revenwarning("[target ? "[target] has":"[target.p_Theyve()]"] been drawn out of your grasp. The link has been broken."))
 					if(target) //Wait, target is WHERE NOW?
 						target.visible_message(span_warning("[target] slumps onto the ground."), \
 											   span_revenwarning("Violets lights, dancing in your vision, receding--"))

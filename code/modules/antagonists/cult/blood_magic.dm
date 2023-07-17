@@ -737,7 +737,7 @@
 					to_chat(user,span_cultitalic("Your blood rite gains 50 charges from draining [H]'s blood."))
 					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
 				else
-					to_chat(user,span_warning("[H.p_theyre(TRUE)] missing too much blood - you cannot drain [H.p_them()] further!"))
+					to_chat(user,span_warning("[H.p_Theyre()] missing too much blood - you cannot drain [H.p_them()] further!"))
 					return
 		if(isconstruct(target))
 			var/mob/living/simple_animal/M = target

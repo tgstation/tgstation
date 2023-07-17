@@ -34,11 +34,17 @@
 /datum/proc/p_do(temp_gender)
 	. = "does"
 
-/datum/proc/p_theyve(capitalized, temp_gender)
-	. = p_they(capitalized, temp_gender) + "'" + copytext_char(p_have(temp_gender), 3)
+/datum/proc/p_theyve(temp_gender)
+	. = p_they(temp_gender) + "'" + copytext_char(p_have(temp_gender), 3)
 
-/datum/proc/p_theyre(capitalized, temp_gender)
-	. = p_they(capitalized, temp_gender) + "'" + copytext_char(p_are(temp_gender), 2)
+/datum/proc/p_Theyve(temp_gender)
+	. = p_They(temp_gender) + "'" + copytext_char(p_have(temp_gender), 3)
+
+/datum/proc/p_theyre(temp_gender)
+	. = p_they(temp_gender) + "'" + copytext_char(p_are(temp_gender), 2)
+
+/datum/proc/p_Theyre(temp_gender)
+	. = p_They(temp_gender) + "'" + copytext_char(p_are(temp_gender), 2)
 
 /datum/proc/p_s(temp_gender) //is this a descriptive proc name, or what?
 	. = "s"
