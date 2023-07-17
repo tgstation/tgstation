@@ -451,7 +451,7 @@
 	. = ..()
 	if(.)
 		return
-	to_chat(user, span_notice("You begin to [flags_inv ? "loosen" : "tighten"] the strings on \the [src]..."))
+	balloon_alert(user, "[flags_inv & HIDEHAIR ? "loosening" : "tightening"] strings...")
 	if(!do_after(user, 3 SECONDS, src))
 		return
 	if(!flags_inv)
