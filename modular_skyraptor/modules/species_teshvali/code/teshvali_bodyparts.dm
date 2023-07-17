@@ -38,6 +38,7 @@
 	worn_belt_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_BELT,
+		offset_x = list("east" = -1, "west" = 1),
 		offset_y = list("north" = -3, "south" = -3, "east" = -3, "west" = -3),
 	)
 	worn_back_offset = new(
@@ -61,8 +62,8 @@
 	held_hand_offset =  new(
 		attached_part = src,
 		feature_key = OFFSET_HELD,
-		offset_x = list("east" = -2),
-		offset_y = list("north" = -5, "south" = -4, "east" = -3, "west" = -3),
+		offset_x = list("east" = -2, "west" = -1, "north" = -1),
+		offset_y = list("north" = -4, "south" = -5, "east" = -2, "west" = -4),
 	)
 	return ..()
 
@@ -79,8 +80,8 @@
 	held_hand_offset =  new(
 		attached_part = src,
 		feature_key = OFFSET_HELD,
-		offset_x = list("west" = 2),
-		offset_y = list("north" = -5, "south" = -4, "east" = -3, "west" = -3),
+		offset_x = list("west" = 2, "east" = 1, "north" = 1),
+		offset_y = list("north" = -4, "south" = -5, "east" = -4, "west" = -2),
 	)
 	return ..()
 
