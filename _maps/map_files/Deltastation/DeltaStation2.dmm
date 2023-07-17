@@ -9835,7 +9835,7 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/rock/pile/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "cmI" = (
@@ -9988,7 +9988,7 @@
 "cnK" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/grassy/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "cnL" = (
@@ -21789,7 +21789,7 @@
 	dir = 5
 	},
 /obj/item/kirbyplants/random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
@@ -49876,7 +49876,7 @@
 	dir = 10
 	},
 /obj/item/kirbyplants/random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
@@ -49964,7 +49964,7 @@
 "mhj" = (
 /obj/structure/flora/bush/grassy/style_random,
 /obj/structure/flora/rock/pile/jungle/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "mhl" = (
@@ -76909,7 +76909,7 @@
 	dir = 6
 	},
 /obj/item/kirbyplants/random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
@@ -84078,7 +84078,7 @@
 "uCY" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "uDb" = (
@@ -84745,7 +84745,7 @@
 /obj/structure/railing{
 	dir = 9
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
 	},

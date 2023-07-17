@@ -38,7 +38,7 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	health = 100
 	maxHealth = 100
-	light_range = 1.5 // Bioluminescence!
+	light_outer_range = 1.5 // Bioluminescence!
 	light_color = "#d43229" // The ants that comprise the giant ant still glow red despite the sludge.
 
 /mob/living/simple_animal/hostile/ant/Initialize(mapload)

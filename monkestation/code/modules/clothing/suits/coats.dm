@@ -9,7 +9,7 @@
 	worn_icon_state = "coatcosmic"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/cosmic
 	light_power = 1.8
-	light_range = 1.2
+	light_outer_range = 1.2
 
 /obj/item/clothing/head/hooded/winterhood/cosmic
 	desc = "A starry winter hood."

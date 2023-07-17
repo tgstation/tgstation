@@ -97,8 +97,12 @@
 
 	///Light systems, both shouldn't be active at the same time.
 	var/light_system = STATIC_LIGHT
-	///Range of the light in tiles. Zero means no light.
-	var/light_range = 0
+	///Range of the maximum brightness of light in tiles. Zero means no light.
+	var/light_inner_range = 0
+	///Range where light begins to taper into darkness in tiles.
+	var/light_outer_range = 0
+	///Adjusts curve for falloff gradient
+	var/light_falloff_curve = LIGHTING_DEFAULT_FALLOFF_CURVE
 	///Intensity of the light. The stronger, the less shadows you will see on the lit area.
 	var/light_power = 1
 	///Hexadecimal RGB string representing the colour of the light. White by default.
@@ -255,7 +259,7 @@
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-	if (light_system == STATIC_LIGHT && light_power && light_range)
+	if (light_system == STATIC_LIGHT && light_power && (light_inner_range || light_outer_range))
 		update_light()
 
 	SETUP_SMOOTHING()
@@ -1213,9 +1217,13 @@
  */
 /atom/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if(NAMEOF(src, light_range))
+		if(NAMEOF(src, light_inner_range))
 			if(light_system == STATIC_LIGHT)
-				set_light(l_range = var_value)
+				set_light(l_inner_range = var_value)
+				. = TRUE
+		if(NAMEOF(src, light_outer_range))
+			if(light_system == STATIC_LIGHT)
+				set_light(l_outer_range = var_value)
 			else
 				set_light_range(var_value)
 			. = TRUE

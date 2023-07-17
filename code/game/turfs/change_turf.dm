@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_opacity = opacity
 	// I'm so sorry brother
 	// This is used for a starlight optimization
-	var/old_light_range = light_range
+	var/old_light_range = light_outer_range
 	// We get just the bits of explosive_resistance that aren't the turf
 	var/old_explosive_resistance = explosive_resistance - get_explosive_block()
 	var/old_lattice_underneath = lattice_underneath
@@ -193,11 +193,17 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		var/datum/gas_mixture/stashed_air = new()
 		stashed_air.copy_from(air)
 		var/stashed_state = excited
+		var/datum/pollution/stashed_pollution = pollution
 		var/datum/excited_group/stashed_group = excited_group
 		. = ..() //If path == type this will return us, don't bank on making a new type
 		if (!.) // changeturf failed or didn't do anything
 			return
 		var/turf/open/new_turf = .
+
+		if(stashed_pollution)
+			new_turf.pollution = stashed_pollution
+			stashed_pollution.handle_overlay()
+
 		new_turf.air.copy_from(stashed_air)
 		new_turf.excited = stashed_state
 		new_turf.excited_group = stashed_group
@@ -209,6 +215,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			if(stashed_group.should_display || SSair.display_all_groups)
 				stashed_group.display_turf(new_turf)
 	else
+		if(pollution)
+			qdel(pollution)
 		if(excited || excited_group)
 			SSair.remove_from_active(src) //Clean up wall excitement, and refresh excited groups
 		if(ispath(path,/turf/closed) || ispath(path,/turf/cordon))

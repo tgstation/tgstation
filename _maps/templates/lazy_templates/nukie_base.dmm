@@ -416,7 +416,7 @@
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "fu" = (
 /obj/machinery/shower/directional/south,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/freezer,
 /area/centcom/syndicate_mothership/control)
 "fw" = (
@@ -1645,7 +1645,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "sl" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "so" = (
@@ -2701,7 +2701,7 @@
 /turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "FR" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 4
 	},
@@ -2884,7 +2884,7 @@
 /turf/open/floor/circuit/red,
 /area/centcom/syndicate_mothership/control)
 "Hv" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
 "HD" = (

@@ -114,3 +114,5 @@
 	var/last_top_offset
 
 	COOLDOWN_DECLARE(bleeding_message_cd)
+
+	var/next_smell = 0 /// Cooldown for the next smell

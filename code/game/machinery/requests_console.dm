@@ -106,7 +106,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	if(machine_stat & NOPOWER)
 		set_light(0)
 		return
-	set_light(1.5, 0.7, "#34D352")//green light
+	set_light(l_outer_range = 1.4, l_power = 0.7, l_color ="#34D352")//green light
 
 /obj/machinery/requests_console/examine(mob/user)
 	. = ..()

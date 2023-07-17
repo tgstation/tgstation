@@ -76,7 +76,7 @@
 	desc = "A large number of mushrooms, some of which have long, fleshy stems. They're radiating light!"
 	icon_state = "t_mushroom1"
 	base_icon_state = "t_mushroom"
-	light_range = 1.5
+	light_outer_range = 1.5
 	light_power = 2.1
 	product_types = list(/obj/item/food/grown/ash_flora/mushroom_stem = 1)
 	harvested_name = "tiny mushrooms"

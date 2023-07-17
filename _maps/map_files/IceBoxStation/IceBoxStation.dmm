@@ -3288,7 +3288,7 @@
 /turf/open/floor/plating/icemoon,
 /area/station/engineering/atmos)
 "bed" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/structure/industrial_lift,
 /obj/effect/landmark/lift_id{
 	specific_lift_id = "publicElevator"
@@ -6005,7 +6005,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "bTq" = (
@@ -22370,7 +22370,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "hiF" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "hjh" = (
@@ -23828,7 +23828,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "hKT" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -29956,7 +29956,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "jKA" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/dark/fourcorners,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
@@ -65624,7 +65624,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/virology)
 "vjM" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "vjP" = (
