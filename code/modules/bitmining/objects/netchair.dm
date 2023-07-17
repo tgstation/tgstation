@@ -94,13 +94,17 @@
 		balloon_alert(receiving.current, "wrong connection!")
 		return
 
+	occupant.mind.key = null
 	hosted_mind.transfer_to(occupant)
+	var/datum/action/avatar_domain_info/action = locate(/datum/action/avatar_domain_info) in occupant.actions
+	if(action)
+		action.Remove()
+
 	occupant.playsound_local(occupant, "sound/magic/blink.ogg", 25, TRUE)
 
 	var/obj/machinery/quantum_server/server = find_server()
 	if(server)
 		server.occupant_mind_refs -= occupant_mind_ref
-
 	occupant_mind_ref = null
 
 	if(!forced || occupant.stat == DEAD)

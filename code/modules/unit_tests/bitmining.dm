@@ -1,3 +1,5 @@
+#define TEST_KEY "test_key"
+
 /datum/unit_test/quantum_server_find_console
 
 /// The qserver and qconsole should find each other on init
@@ -57,9 +59,8 @@
 	var/obj/structure/netchair/chair = allocate(/obj/structure/netchair, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	labrat.mind_initialize()
 	labrat.mock_client = new()
-	SSmobs.pause()
 
-	chair.find_server()
+	chair.find_server() // buckle_mob calls this but i want to test it separately
 	TEST_ASSERT_NOTNULL(chair.server_ref, "Netchair did not set server_ref")
 
 	var/obj/machinery/quantum_server/connected_server = chair.server_ref.resolve()
@@ -69,8 +70,45 @@
 	TEST_ASSERT_NOTNULL(server.generated_domain, "QServer did not load generated_domain")
 	TEST_ASSERT_EQUAL(server.generated_domain.id, "test_only", "QServer did not load generated_domain correctly")
 
-	// chair.buckle_mob(labrat, check_loc = FALSE)
-	// TEST_ASSERT_NOTNULL(chair.occupant_ref, "Netchair did not set occupant_ref")
+	chair.buckle_mob(labrat, check_loc = FALSE)
+	TEST_ASSERT_NOTNULL(chair.occupant_ref, "Netchair did not set occupant_ref")
+	TEST_ASSERT_NOTNULL(chair.occupant_mind_ref, "Netchair did not set occupant_mind_ref")
+	TEST_ASSERT_EQUAL(server.occupant_mind_refs[1], chair.occupant_mind_ref, "Netchair did not add mind to server occupant_mind_refs")
 
-	// var/mob/living/labrat_resolved = chair.occupant_ref.resolve()
-	// TEST_ASSERT_EQUAL(labrat, labrat_resolved, "Netchair did not set occupant_ref correctly")
+	var/mob/living/labrat_resolved = chair.occupant_ref.resolve()
+	TEST_ASSERT_EQUAL(labrat, labrat_resolved, "Netchair did not set occupant_ref correctly")
+
+/datum/unit_test/avatar_connection
+
+/// Tests the connection between avatar and pilot
+/datum/unit_test/avatar_connection/Run()
+	var/obj/structure/netchair/chair = allocate(/obj/structure/netchair)
+	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/target = allocate(/mob/living/carbon/human/consistent)
+	labrat.mind_initialize()
+	labrat.mock_client = new()
+	labrat.mind.key = TEST_KEY
+
+	var/datum/mind/initial_mind = labrat.mind
+	labrat.mind.initial_avatar_connection(labrat, target, chair)
+	TEST_ASSERT_NOTNULL(target.mind, "Couldn't transfer mind to target")
+	TEST_ASSERT_EQUAL(target.mind, initial_mind, "New mind is different from original")
+	TEST_ASSERT_NOTNULL(target.mind.pilot_ref, "Could not set avatar_ref")
+	TEST_ASSERT_NOTNULL(target.mind.netchair_ref, "Could not set netchair_ref")
+
+	var/mob/living/carbon/human/labrat_resolved = target.mind.pilot_ref.resolve()
+	TEST_ASSERT_EQUAL(labrat, labrat_resolved, "Wrong avatar_ref")
+
+	var/obj/structure/netchair/connected_chair = target.mind.netchair_ref.resolve()
+	TEST_ASSERT_EQUAL(connected_chair, chair, "Wrong netchair_ref")
+
+	target.apply_damage(10, damagetype = BURN, def_zone = BODY_ZONE_HEAD, forced = TRUE)
+	TEST_ASSERT_EQUAL(labrat.getFireLoss(), 10, "Damage was not transferred to pilot")
+	TEST_ASSERT_NOTNULL(locate(/obj/item/bodypart/head) in labrat.get_damaged_bodyparts(burn = TRUE), "Pilot did not get damaged bodypart")
+
+	var/datum/mind/fake_mind = labrat.mind
+	target.apply_damage(500, def_zone = BODY_ZONE_HEAD, forced = TRUE)
+	TEST_ASSERT_EQUAL(target.stat, DEAD, "Target should have died on lethal damage")
+	TEST_ASSERT_EQUAL(labrat.stat, DEAD, "Pilot should have died on lethal damage")
+
+#undef TEST_KEY

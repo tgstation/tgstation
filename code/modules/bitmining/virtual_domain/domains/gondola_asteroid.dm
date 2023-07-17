@@ -2,10 +2,10 @@
 	name = "Gondola Forest"
 	desc = "A bountiful forest of gondolas. Peaceful."
 	filename = "gondola_asteroid.dmm"
-	id = "gondola"
 	help_text = "What a lovely forest. There's a loot crate here in the middle of the map. \
 	Hmm... It doesn't budge. The gondolas don't seem to have any trouble moving it, though. \
 	I bet there's a way to move it myself."
+	id = "gondola"
 
 /// Very pushy gondolas, great for moving loot crates.
 /obj/structure/closet/crate/secure/bitminer_loot/encrypted/gondola
@@ -28,5 +28,5 @@
 		exposed_mob.ForceContractDisease(new /datum/disease/transformation/gondola/virtual_domain(), FALSE, TRUE)
 
 /datum/disease/transformation/gondola/virtual_domain
-	stage_prob = 6
+	stage_prob = 7
 	new_form = /mob/living/simple_animal/pet/gondola/virtual_domain

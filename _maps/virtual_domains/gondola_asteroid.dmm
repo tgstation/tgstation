@@ -10,7 +10,9 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav)
 "g" = (
-/obj/structure/chair/wood,
+/obj/structure/chair/wood{
+	dir = 8
+	},
 /turf/template_noop,
 /area/template_noop)
 "h" = (
@@ -2873,9 +2875,9 @@ O
 O
 O
 T
-g
-X
 T
+X
+X
 T
 T
 d
@@ -2950,9 +2952,9 @@ O
 P
 P
 T
-g
-X
 T
+g
+g
 T
 T
 d
