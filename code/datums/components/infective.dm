@@ -61,6 +61,7 @@
 
 		eater.ForceContractDisease(disease)
 
+	try_infect(feeder, BODY_ZONE_L_ARM)
 
 /datum/component/infective/proc/try_infect_drink(datum/source, mob/living/drinker, mob/living/feeder)
 	SIGNAL_HANDLER
