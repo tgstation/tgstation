@@ -43,6 +43,7 @@ SUBSYSTEM_DEF(wardrobe)
 	load_outfits()
 	load_species()
 	load_storage_contents()
+	load_flick_effects()
 	hard_refresh_queue()
 	stock_hit = 0
 	stock_miss = 0
@@ -310,8 +311,12 @@ SUBSYSTEM_DEF(wardrobe)
 	initial_callbacks[/obj/item/organ] = play_with
 
 	play_with = new /list(WARDROBE_CALLBACK_REMOVE)
-	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, TYPE_PROC_REF(/obj/item/storage/box/survival,wardrobe_removal))
+	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, TYPE_PROC_REF(/obj/item/storage/box/survival, wardrobe_removal))
 	initial_callbacks[/obj/item/storage/box/survival] = play_with
+
+	play_with = new /list(WARDROBE_CALLBACK_REMOVE)
+	play_with[WARDROBE_CALLBACK_INSERT] = CALLBACK(null, TYPE_PROC_REF(/atom/movable/flick_visual, clear_effects))
+	initial_callbacks[/atom/movable/flick_visual] = play_with
 
 /datum/controller/subsystem/wardrobe/proc/load_outfits()
 	for(var/datum/outfit/to_stock as anything in subtypesof(/datum/outfit))
@@ -344,3 +349,7 @@ SUBSYSTEM_DEF(wardrobe)
 		for(var/datum/a_really_small_box as anything in somehow_more_boxes)
 			canonize_type(a_really_small_box)
 		qdel(another_crate)
+
+/datum/controller/subsystem/wardrobe/proc/load_flick_effects()
+	for(var/i in 1 to 20)
+		canonize_type(/atom/movable/flick_visual)

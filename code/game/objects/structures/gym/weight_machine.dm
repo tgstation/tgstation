@@ -105,9 +105,9 @@
 	if(!has_buckled_mobs())
 		end_workout()
 		return FALSE
-	var/image/workout_icon = new(icon, src, "[base_icon_state]-o", ABOVE_MOB_LAYER)
-	workout_icon.plane = GAME_PLANE_UPPER
-	flick_overlay_view(workout_icon, 8)
+	var/mutable_appearance/workout = mutable_appearance(icon, "[base_icon_state]-o", ABOVE_MOB_LAYER)
+	SET_PLANE_EXPLICIT(workout, GAME_PLANE_UPPER, src)
+	flick_overlay_view(workout, 0.8 SECONDS)
 	flick("[base_icon_state]-u", src)
 	var/mob/living/user = buckled_mobs[1]
 	animate(user, pixel_y = pixel_shift_y, time = 4)
