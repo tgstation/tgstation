@@ -64,7 +64,7 @@
 	if(neutered)
 		return FALSE
 	if(required_organ)
-		if(!advanced_disease.has_required_infectious_organ(affected_mob, required_organ))
+		if(!advanced_disease.has_required_infectious_organ(advanced_disease.affected_mob, required_organ))
 			return FALSE
 
 	if(world.time < next_activation)
