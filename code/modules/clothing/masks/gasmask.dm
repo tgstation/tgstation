@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 
 /obj/item/clothing/mask/gas/attackby(obj/item/tool, mob/user)
 	if(istype(tool, /obj/item/clothing/mask/cigarette))
-		var/valid_wearer = istype(src.loc, /mob)
+		var/valid_wearer = ismob(src.loc)
 
 		if(flags_cover & MASKCOVERSMOUTH)
 			balloon_alert(user, "You can't do that while the mask's mouth is covered")
@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		user.put_in_hands(cig)
 		UnregisterSignal(cig, COMSIG_QDELETING)
 		cig = null
-		if(istype(src.loc, /mob))
+		if(ismob(src.loc))
 			var/mob/wearer = src.loc
 			wearer.update_worn_mask()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
