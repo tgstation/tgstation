@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - bugfix: "anti-breach shields wont be dragged away during shuttle flight anymore"

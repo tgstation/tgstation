@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Adds a new 7 point positive quirk, \"Spacer Born\". You were born in space, and as a result your body's adapted to life in artificial gravity, making you much more effective and comfortable in lower gravity. However, travelling planet-side is quite a chore, especially if you're assigned to work there."
-  - rscadd: "Adds a chemical: Ondansetron, created by Oil + Nitrogen + Oxygen + Ethanol catalyst. A powerful Antiemetic (lowers disgust)."
