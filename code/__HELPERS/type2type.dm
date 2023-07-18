@@ -60,7 +60,10 @@
 		else
 	return
 
-// Also see [angle2dir]
+//Converts an angle (degrees) into a ss13 direction
+GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST))
+#define angle2dir(X) (GLOB.modulo_angle_to_dir[round((((X%360)+382.5)%360)/45)+1])
+
 /proc/angle2dir_cardinal(degree)
 	degree = SIMPLIFY_DEGREES(degree)
 	switch(round(degree, 0.1))

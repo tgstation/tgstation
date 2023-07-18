@@ -7,7 +7,7 @@
 	name = "treat fabricator"
 	desc = "Reward humans with various treats. Toggle in-module to switch between dispensing and high velocity ejection modes."
 	icon_state = "lollipop"
-	attack_style = null
+	attack_style_path = null
 
 	/// The current amount of available candy
 	var/candy = 5

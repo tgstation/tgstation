@@ -24,7 +24,7 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1.5 //Turn it on first you dork
 	blocking_ability = 2
-	attack_style = /datum/attack_style/melee_weapon/swing/only_left
+	attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
 	weapon_sprite_angle = 270
 
 	var/on = FALSE

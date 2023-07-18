@@ -5,7 +5,7 @@
 	icon_state = "tongue"
 
 	w_class = WEIGHT_CLASS_TINY
-	attack_style = null
+	attack_style_path = null
 
 	var/taste_sensitivity = 15
 

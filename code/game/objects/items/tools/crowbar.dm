@@ -65,7 +65,7 @@
 	icon_state = "crowbar_large"
 	worn_icon_state = "crowbar"
 	toolspeed = 0.7
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 
 /obj/item/crowbar/large/emergency
 	name = "emergency crowbar"
@@ -191,7 +191,7 @@
 	resistance_flags = FIRE_PROOF
 	bare_wound_bonus = 15
 	wound_bonus = 10
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	weapon_sprite_angle = 30
 
 /datum/armor/crowbar_mechremoval

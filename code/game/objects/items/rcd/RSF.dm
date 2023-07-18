@@ -21,7 +21,7 @@ RSF
 	anchored = FALSE
 	item_flags = NOBLUDGEON
 	armor_type = /datum/armor/none
-	attack_style = null
+	attack_style_path = null
 	///The current matter count
 	var/matter = 0
 	///The max amount of matter in the device

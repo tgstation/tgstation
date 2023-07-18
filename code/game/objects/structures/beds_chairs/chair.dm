@@ -327,7 +327,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	can_block_flags = BLOCK_ALL_MELEE|LEAP_ATTACK
 	hit_reaction_chance = 50
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 

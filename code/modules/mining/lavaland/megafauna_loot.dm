@@ -776,7 +776,7 @@
 	attack_verb_continuous = list("sears", "clubs", "burn")
 	attack_verb_simple = list("sear", "club", "burn")
 	hitsound = 'sound/weapons/sear.ogg'
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	var/turf_type = /turf/open/lava/smooth/weak
 	var/transform_string = "lava"
 	var/reset_turf_type = /turf/open/misc/asteroid/basalt
@@ -857,7 +857,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
-	attack_style = /datum/attack_style/melee_weapon/cleaving_saw_closed
+	attack_style_path = /datum/attack_style/melee_weapon/cleaving_saw_closed
 	/// List of factions we deal bonus damage to
 	var/list/nemesis_factions = list(FACTION_MINING, FACTION_BOSS)
 	/// Amount of damage we deal to the above factions
@@ -938,9 +938,9 @@
 	user.changeNext_move(CLICK_CD_MELEE * 0.25)
 
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon/swing/cleaving_saw_open]
+		attack_style_path = GLOB.attack_styles[/datum/attack_style/melee_weapon/swing/cleaving_saw_open]
 	else
-		attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon/cleaving_saw_closed]
+		attack_style_path = GLOB.attack_styles[/datum/attack_style/melee_weapon/cleaving_saw_closed]
 
 	if(user)
 		balloon_alert(user, "[active ? "opened" : "closed"] [src]")

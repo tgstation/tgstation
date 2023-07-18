@@ -125,7 +125,7 @@
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_style = /datum/attack_style/melee_weapon/stab_out
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out
 	weapon_sprite_angle = 45
 
 /obj/item/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)

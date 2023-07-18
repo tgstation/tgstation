@@ -24,7 +24,7 @@
 		pain_mult = 3,
 		rip_time = 15,
 	)
-	attack_style = /datum/attack_style/melee_weapon/stab_out
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out
 	weapon_sprite_angle = 45
 
 	/// Whether we're currently drawing a rune

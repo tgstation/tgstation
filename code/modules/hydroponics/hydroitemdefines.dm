@@ -526,7 +526,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	item_flags = CRUEL_IMPLEMENT //maybe they want to use it in surgery
-	attack_style = /datum/attack_style/melee_weapon/swing/wider_arc/scythe
+	attack_style_path = /datum/attack_style/melee_weapon/swing/wider_arc/scythe
 
 /obj/item/scythe/Initialize(mapload)
 	. = ..()

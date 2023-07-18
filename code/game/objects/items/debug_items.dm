@@ -1,6 +1,6 @@
 /* This file contains standalone items for debug purposes. */
 /obj/item/debug
-	attack_style = null
+	attack_style_path = null
 
 /obj/item/debug/human_spawner
 	name = "human spawner"

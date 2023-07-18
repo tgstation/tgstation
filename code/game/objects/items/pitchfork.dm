@@ -22,7 +22,7 @@
 	max_integrity = 200
 	armor_type = /datum/armor/item_pitchfork
 	resistance_flags = FIRE_PROOF
-	attack_style = /datum/attack_style/melee_weapon/stab_out/spear
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out/spear
 	weapon_sprite_angle = 45
 
 /datum/armor/item_pitchfork

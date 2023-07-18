@@ -27,7 +27,7 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 5
 	light_on = FALSE
-	attack_style = /datum/attack_style/melee_weapon/swing/crusher
+	attack_style_path = /datum/attack_style/melee_weapon/swing/crusher
 	afterattack_on_right_click = TRUE // let us shoot the projectile
 	weapon_sprite_angle = 45
 

@@ -221,10 +221,14 @@
 	 * Set this to null to make the item un-swingable, and by extent, un-usable in combat.
 	 * Generally don't do that unless it's stuff that would not function as a weapon, like an RCD.
 	 */
-	var/datum/attack_style/melee_weapon/attack_style = /datum/attack_style/melee_weapon
+	var/datum/attack_style/melee_weapon/attack_style_path = /datum/attack_style/melee_weapon
 	/// Attack style used when right-clicking while attacking.
 	/// By default, this is null, which means it will use the same attack style as the left click.
 	var/datum/attack_style/melee_weapon/alt_attack_style = null
+	/// Reference to global singleton attack style
+	var/datum/attack_style/melee_weapon/attack_style
+	/// Reference to global singleton attack style
+	var/datum/attack_style/melee_weapon/alt_attack_style
 	/// If TRUE, outright skips attack style execution attempts if the user right-click, proceedes directly to afterattack
 	var/afterattack_on_right_click = FALSE
 	/// Relates to the sprite of the weapon, used to rotate the sprite to be vertical before animating for attacks
@@ -264,11 +268,11 @@
 	if(!greyscale_config && greyscale_colors && (greyscale_config_worn || greyscale_config_belt || greyscale_config_inhand_right || greyscale_config_inhand_left))
 		update_greyscale()
 
-	if(ispath(attack_style, /datum/attack_style))
-		attack_style = GLOB.attack_styles[attack_style]
+	if(ispath(attack_style_path, /datum/attack_style))
+		attack_style = GLOB.attack_styles[attack_style_path]
 
-	if(ispath(alt_attack_style, /datum/attack_style))
-		alt_attack_style = GLOB.attack_styles[alt_attack_style]
+	if(ispath(alt_attack_style_path, /datum/attack_style))
+		alt_attack_style = GLOB.attack_styles[alt_attack_style_path]
 
 	. = ..()
 
@@ -304,9 +308,6 @@
 	// Handle cleaning up our actions list
 	for(var/datum/action/action as anything in actions)
 		remove_item_action(action)
-
-	attack_style = null
-	alt_attack_style = null
 
 	return ..()
 

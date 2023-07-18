@@ -101,7 +101,7 @@
 	//inhand_icon_state = null
 	w_class = WEIGHT_CLASS_GIGANTIC
 	plane = ABOVE_HUD_PLANE
-	attack_style = null
+	attack_style_path = null
 
 	///Object focused / selected by the TK user
 	var/atom/movable/focus

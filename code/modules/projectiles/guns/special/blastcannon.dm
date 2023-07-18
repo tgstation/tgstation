@@ -27,7 +27,7 @@
 	item_flags = NONE
 	clumsy_check = FALSE
 	randomspread = FALSE
-	attack_style = null
+	attack_style_path = null
 
 	// Firing data.
 	/// The person who opened the valve on the TTV loaded into this.

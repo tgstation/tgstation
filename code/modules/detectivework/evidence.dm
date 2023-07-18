@@ -7,7 +7,7 @@
 	icon_state = "evidenceobj"
 	inhand_icon_state = ""
 	w_class = WEIGHT_CLASS_TINY
-	attack_style = null
+	attack_style_path = null
 
 /obj/item/evidencebag/afterattack(obj/item/I, mob/user,proximity)
 	. = ..()

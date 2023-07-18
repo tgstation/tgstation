@@ -31,7 +31,7 @@
 	bare_wound_bonus = 20
 	demolition_mod = 1.5 //1.5x damage to objects, robots, etc.
 	item_flags = NO_BLOOD_ON_ITEM
-	attack_style = /datum/attack_style/melee_weapon/swing/desword
+	attack_style_path = /datum/attack_style/melee_weapon/swing/desword
 	weapon_sprite_angle = 45
 	blocking_ability = 1
 	can_block_flags = BLOCK_ALL_BUT_TACKLE
@@ -234,7 +234,7 @@
 		reverse_range(turfs_in_order)
 	return turfs_in_order
 
-/datum/attack_style/melee_weapon/swing/desword/execute_attack(mob/living/attacker, obj/item/dualsaber/weapon, list/turf/affecting, atom/priority_target, right_clicking)
+/datum/attack_style/melee_weapon/swing/desword/execute_attack(mob/living/attacker, obj/item/dualsaber/weapon, list/turf/affected_turfs, atom/priority_target, right_clicking)
 	. = ..()
 	if(!istype(weapon))
 		return
@@ -244,7 +244,7 @@
 		INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item/dualsaber, jedi_spin), attacker)
 
 // melbert todo
-/datum/attack_style/melee_weapon/swing/desword/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
+/datum/attack_style/melee_weapon/swing/desword/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
 	if(length(affecting) < 3)
 		// Affecting will only get this small if we're in a super weird place like, say, in the corner of the map
 		return

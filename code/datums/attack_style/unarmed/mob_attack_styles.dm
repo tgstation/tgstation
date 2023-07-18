@@ -33,19 +33,20 @@
 	obj/item/bodypart/affecting,
 	datum/apply_damage_packet/packet,
 )
-	. = ..()
+	var/log_message = ..()
 
 	if(isslime(smacked))
 		steal_slime_stuff(attacker, smacked, packet.damage)
-		return . + "(stealing nutrition and health)"
+		log_message += "(stealing nutrition and health)"
+		return log_message
 
 	var/slime_power = attacker.powerlevel
 	if(slime_power <= 0)
-		return .
+		return log_message
 
 	var/stunprob = slime_power * 7 + 10  // 17 at level 1, 80 at level 10
 	if(!prob(stunprob))
-		return .
+		return log_message
 
 	do_sparks(5, TRUE, smacked)
 	attacker.powerlevel = max(attacker.powerlevel - 3, 0)
@@ -66,7 +67,8 @@
 		// Bonus fire damage
 		smacked.adjustFireLoss(effect_power * rand(3, 5))
 
-	return . + "(applying slime stun for [effect_power * 2] seconds)"
+	log_message += "(applying slime stun for [effect_power * 2] seconds)"
+	return log_message
 
 /datum/attack_style/unarmed/generic_damage/mob_attack/glomp/proc/steal_slime_stuff(
 	mob/living/simple_animal/slime/attacker,

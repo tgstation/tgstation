@@ -5,7 +5,7 @@
 	icon = 'icons/obj/medical/bodybag.dmi'
 	icon_state = "bodybag_folded"
 	w_class = WEIGHT_CLASS_SMALL
-	attack_style = null
+	attack_style_path = null
 	///Stored path we use for spawning a new body bag entity when unfolded.
 	var/unfoldedbag_path = /obj/structure/closet/body_bag
 

@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("pokes")
 	attack_verb_simple = list("poke")
-	attack_style = null
+	attack_style_path = null
 
 	var/fail_message = "invalid user!"
 	/// Explode when user check is failed.

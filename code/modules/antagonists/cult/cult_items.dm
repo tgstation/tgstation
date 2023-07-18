@@ -25,7 +25,7 @@
 	wound_bonus = -10
 	bare_wound_bonus = 20
 	armour_penetration = 35
-	attack_style = /datum/attack_style/melee_weapon/stab_out
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out
 	block_sound = 'sound/weapons/parry.ogg'
 	weapon_sprite_angle = 45
 
@@ -67,7 +67,7 @@ Striking a noncultist, however, will tear their flesh."}
 	block_sound = 'sound/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	weapon_sprite_angle = 45
 
 /obj/item/melee/cultblade/Initialize(mapload)
@@ -120,7 +120,7 @@ Striking a noncultist, however, will tear their flesh."}
 	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
 	blocking_ability = 2 //these dweebs don't get full block ability, because they're free cultists
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	block_sound = 'sound/weapons/parry.ogg'
 
 /obj/item/melee/cultblade/ghost/Initialize(mapload)
@@ -639,7 +639,7 @@ Striking a noncultist, however, will tear their flesh."}
 	on_damage = 15
 	slot_flags = null
 	on = TRUE
-	attack_style = null
+	attack_style_path = null
 
 	var/charges = 5
 
@@ -705,7 +705,7 @@ Striking a noncultist, however, will tear their flesh."}
 	attack_verb_simple = list("attack", "slice", "shred", "sunder", "lacerate", "cleave")
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	block_sound = 'sound/weapons/parry.ogg'
 	var/datum/action/innate/cult/halberd/halberd_act
 
@@ -850,7 +850,7 @@ Striking a noncultist, however, will tear their flesh."}
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
-	attack_style = null
+	attack_style_path = null
 
 	var/charging = FALSE
 	var/firing = FALSE

@@ -82,7 +82,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor_type = /datum/armor/item_claymore
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	resistance_flags = FIRE_PROOF
 
 /datum/armor/item_claymore
@@ -113,7 +113,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_speed = 3
 	throw_range = 5
 	armour_penetration = 35
-	attack_style = /datum/attack_style/melee_weapon/swing/fast
+	attack_style_path = /datum/attack_style/melee_weapon/swing/fast
 
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
@@ -708,7 +708,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3.5)
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_HUGE
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	weapon_sprite_angle = 45
 	/// Are we able to do a homerun?
 	var/homerun_able = FALSE
@@ -988,7 +988,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	attack_style = /datum/attack_style/melee_weapon/high_frequency_blade
+	attack_style_path = /datum/attack_style/melee_weapon/high_frequency_blade
 	/// The color of the slash we create
 	var/slash_color = COLOR_BLUE
 	/// Previous x position of where we clicked on the target's icon

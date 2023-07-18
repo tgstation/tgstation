@@ -17,7 +17,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "sampler"
 	item_flags = NOBLUDGEON
-	attack_style = null
+	attack_style_path = null
 	///Whether we have Carp DNA
 	var/carp_dna_loaded = FALSE
 	///What sources of DNA this sampler can extract from.

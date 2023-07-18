@@ -9,7 +9,7 @@
 	. = ..()
 	attacker.zone_selected = old_zone
 
-/datum/attack_style/melee_weapon/overhead/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
+/datum/attack_style/melee_weapon/overhead/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
 	var/side_angle = prob(50) ? -15 : 15 // so it slightly goes either left -> right or right -> left
 	var/start_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affecting[1]) + side_angle
 	var/image/attack_image = create_attack_image(attacker, weapon, affecting[1], start_angle)

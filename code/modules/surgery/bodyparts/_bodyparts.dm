@@ -21,7 +21,7 @@
 
 	// This works differently for limbs, as it's ALSO used for unarmed combat
 	// Meaning a leg can be used in "kick style" both by smacking someone with a leg and also by kicking someone
-	attack_style = null
+	attack_style_path = null
 
 	/// The mob that "owns" this limb
 	/// DO NOT MODIFY DIRECTLY. Use set_owner()

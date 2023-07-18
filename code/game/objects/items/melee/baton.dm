@@ -17,7 +17,7 @@
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
 	wound_bonus = 15
-	attack_style = /datum/attack_style/melee_weapon/baton
+	attack_style_path = /datum/attack_style/melee_weapon/baton
 
 	/// Whether this baton is active or not
 	var/active = TRUE

@@ -23,7 +23,7 @@
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5
-	attack_style = /datum/attack_style/melee_weapon
+	attack_style_path = /datum/attack_style/melee_weapon
 
 /obj/item/storage/toolbox/Initialize(mapload)
 	. = ..()
@@ -334,4 +334,3 @@
 	new /obj/effect/spawner/random/mosin (src)
 	for(var/i in 1 to 3)
 		new /obj/effect/spawner/random/mosin/ammo (src)
-

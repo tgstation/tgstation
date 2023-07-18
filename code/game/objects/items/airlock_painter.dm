@@ -14,7 +14,7 @@
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	usesound = 'sound/effects/spray2.ogg'
-	attack_style = null
+	attack_style_path = null
 
 	/// The ink cartridge to pull charges from.
 	var/obj/item/toner/ink = null

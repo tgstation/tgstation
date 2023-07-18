@@ -25,7 +25,7 @@
 
 	return select_turfs
 
-/datum/attack_style/melee_weapon/stab_out/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affecting)
+/datum/attack_style/melee_weapon/stab_out/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
 	var/image/attack_image = create_attack_image(attacker, weapon, affecting[1])
 	var/stab_length = time_per_turf * length(affecting)
 	attacker.do_attack_animation(affecting[1], no_effect = TRUE) // melbert todo

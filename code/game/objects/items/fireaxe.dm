@@ -23,7 +23,7 @@
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -15
 	bare_wound_bonus = 20
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	weapon_sprite_angle = 90
 	/// How much damage to do unwielded
 	var/force_unwielded = 5

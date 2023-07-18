@@ -102,7 +102,7 @@
 	icon_state = "pHmeter"
 	icon = 'icons/obj/medical/chemical.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	attack_style = null
+	attack_style_path = null
 	///level of detail for output for the meter
 	var/scanmode = DETAILED_CHEM_OUTPUT
 
@@ -288,7 +288,7 @@
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	grind_results = list(/datum/reagent/mercury = 5)
-	attack_style = null
+	attack_style_path = null
 	///The reagents datum that this object is attached to, so we know where we are when it's added to something.
 	var/datum/reagents/attached_to_reagents
 

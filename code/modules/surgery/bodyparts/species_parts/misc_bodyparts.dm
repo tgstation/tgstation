@@ -12,26 +12,26 @@
 
 /obj/item/bodypart/arm/left/snail
 	limb_id = SPECIES_SNAIL
-	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/snail
+	attack_style_path = /datum/attack_style/unarmed/generic_damage/limb_based/punch/snail
 	unarmed_damage_high = 0.5 //snails are soft and squishy
 	burn_modifier = 2
 
 /obj/item/bodypart/arm/right/snail
 	limb_id = SPECIES_SNAIL
-	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/snail
+	attack_style_path = /datum/attack_style/unarmed/generic_damage/limb_based/punch/snail
 	unarmed_damage_high = 0.5
 	burn_modifier = 2
 
 /obj/item/bodypart/leg/left/snail
 	limb_id = SPECIES_SNAIL
-	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/snail
+	attack_style_path = /datum/attack_style/unarmed/generic_damage/limb_based/punch/snail
 	unarmed_damage_high = 0.5
 	burn_modifier = 2
 	speed_modifier = 3 //disgustingly slow
 
 /obj/item/bodypart/leg/right/snail
 	limb_id = SPECIES_SNAIL
-	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/snail
+	attack_style_path = /datum/attack_style/unarmed/generic_damage/limb_based/punch/snail
 	unarmed_damage_high = 0.5
 	burn_modifier = 2
 	speed_modifier = 3 //disgustingly slow
@@ -220,12 +220,12 @@
 
 /obj/item/bodypart/arm/left/pod
 	limb_id = SPECIES_PODPERSON
-	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/claw
+	attack_style_path = /datum/attack_style/unarmed/generic_damage/limb_based/punch/claw
 	burn_modifier = 1.25
 
 /obj/item/bodypart/arm/right/pod
 	limb_id = SPECIES_PODPERSON
-	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/claw
+	attack_style_path = /datum/attack_style/unarmed/generic_damage/limb_based/punch/claw
 	burn_modifier = 1.25
 
 /obj/item/bodypart/leg/left/pod

@@ -23,7 +23,7 @@
 	inhand_y_dimension = 64
 	actions_types = list()
 	item_flags = SLOWS_WHILE_IN_HAND
-	attack_style = /datum/attack_style/melee_weapon/swing/wider_arc // maybe a unique style for spin2win?
+	attack_style_path = /datum/attack_style/melee_weapon/swing/wider_arc // maybe a unique style for spin2win?
 	weapon_sprite_angle = 45
 	blocking_ability = 1.2
 	block_effect = /obj/effect/temp_visual/cult/sparks

@@ -252,7 +252,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "bug"
-	attack_style = null
+	attack_style_path = null
 
 	/// The object on which this bug can be planted on. Has to be a type.
 	var/obj/target_object_type

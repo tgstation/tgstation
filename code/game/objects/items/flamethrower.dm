@@ -17,7 +17,7 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL
 	light_system = MOVABLE_LIGHT
 	light_on = FALSE
-	attack_style = null
+	attack_style_path = null
 	var/status = FALSE
 	var/lit = FALSE //on or off
 	var/operating = FALSE//cooldown

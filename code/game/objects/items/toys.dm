@@ -42,7 +42,7 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "waterballoon-e"
 	inhand_icon_state = "balloon-empty"
-	attack_style = null
+	attack_style_path = null
 
 /obj/item/toy/waterballoon/Initialize(mapload)
 	. = ..()
@@ -327,7 +327,7 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.1)
 	attack_verb_continuous = list("strikes", "pistol whips", "hits", "bashes")
 	attack_verb_simple = list("strike", "pistol whip", "hit", "bash")
-	attack_style = null
+	attack_style_path = null
 	var/bullets = 7
 
 /obj/item/toy/gun/examine(mob/user)
@@ -886,7 +886,7 @@
 	icon_state = "snowball"
 	throwforce = 20 //the same damage as a disabler shot
 	damtype = STAMINA //maybe someday we can add stuffing rocks (or perhaps ore?) into snowballs to make them deal brute damage
-	attack_style = null
+	attack_style_path = null
 
 /obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	. = ..()

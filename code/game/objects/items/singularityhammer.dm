@@ -17,7 +17,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
 	armor_type = /datum/armor/item_magichammer
-	attack_style = /datum/attack_style/melee_weapon/swing/singularity_hammer
+	attack_style_path = /datum/attack_style/melee_weapon/swing/singularity_hammer
 	weapon_sprite_angle = 45
 	/// AOE radius if the suck. Don't VV this too high, you have been warned
 	var/suck_radius = 5
@@ -43,7 +43,7 @@
 
 /datum/attack_style/melee_weapon/swing/singularity_hammer
 
-/datum/attack_style/melee_weapon/swing/singularity_hammer/execute_attack(mob/living/attacker, obj/item/singularityhammer/weapon, list/turf/affecting, atom/priority_target, right_clicking)
+/datum/attack_style/melee_weapon/swing/singularity_hammer/execute_attack(mob/living/attacker, obj/item/singularityhammer/weapon, list/turf/affected_turfs, atom/priority_target, right_clicking)
 	. = ..()
 	if(!istype(weapon) || !(. & (ATTACK_SWING_HIT|ATTACK_SWING_BLOCKED)))
 		return
@@ -92,7 +92,7 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
 	armor_type = /datum/armor/item_magichammer
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	weapon_sprite_angle = 45
 
 /obj/item/mjollnir/Initialize(mapload)

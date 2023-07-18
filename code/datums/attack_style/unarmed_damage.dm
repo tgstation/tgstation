@@ -213,7 +213,7 @@
 /datum/attack_style/unarmed/generic_damage/mob_attack/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/weapon)
 	return rand(attacker.melee_damage_lower, attacker.melee_damage_upper)
 
-/datum/attack_style/unarmed/generic_damage/mob_attack/attack_effect_animation(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affecting, override_effect)
+/datum/attack_style/unarmed/generic_damage/mob_attack/attack_effect_animation(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affected_turfs, override_effect)
 	if(isanimal(attacker))
 		var/mob/living/simple_animal/animal = attacker
 		override_effect = animal.attack_vis_effect

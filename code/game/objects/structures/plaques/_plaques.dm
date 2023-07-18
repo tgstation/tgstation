@@ -124,7 +124,7 @@
 	custom_materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT)
 	max_integrity = 200
 	armor_type = /datum/armor/item_plaque
-	attack_style = null
+	attack_style_path = null
 
 	///This points the item to make the proper structure when placed on a wall.
 	var/plaque_path = /obj/structure/plaque

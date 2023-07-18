@@ -17,7 +17,7 @@
 	scars_covered_by_clothes = FALSE
 	grind_results = null
 	is_dimorphic = TRUE
-	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/bite
+	attack_style_path = /datum/attack_style/unarmed/generic_damage/limb_based/bite
 	unarmed_damage_low = 1 // Yeah, biteing is pretty weak, blame the monkey super-nerf
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
@@ -265,7 +265,7 @@
 	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = 500
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
-	attack_style = /datum/attack_style/unarmed/generic_damage/mob_attack/bite
+	attack_style_path = /datum/attack_style/unarmed/generic_damage/mob_attack/bite
 
 /obj/item/bodypart/head/larva
 	icon = 'icons/mob/species/alien/bodyparts.dmi'
@@ -279,4 +279,4 @@
 	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = 50
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
-	attack_style = /datum/attack_style/unarmed/generic_damage/mob_attack/bite/larva
+	attack_style_path = /datum/attack_style/unarmed/generic_damage/mob_attack/bite/larva

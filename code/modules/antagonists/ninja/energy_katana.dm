@@ -40,7 +40,7 @@
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	attack_style = /datum/attack_style/melee_weapon/swing/katana
+	attack_style_path = /datum/attack_style/melee_weapon/swing/katana
 	weapon_sprite_angle = 105
 	var/datum/effect_system/spark_spread/spark_system
 	var/datum/action/innate/dash/ninja/jaunt

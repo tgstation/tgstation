@@ -11,7 +11,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
-	attack_style = null
+	attack_style_path = null
 	var/max_shield_integrity = 250
 	var/shield_integrity = 250
 	var/max_fields = 3

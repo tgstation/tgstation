@@ -21,7 +21,7 @@
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	armor_type = /datum/armor/item_knife
-	attack_style = /datum/attack_style/melee_weapon/stab_out
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out
 	wound_bonus = 5
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
@@ -69,7 +69,7 @@
 	throwforce = 15
 	wound_bonus = 20
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_style = /datum/attack_style/melee_weapon/swing/only_left
+	attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
 
 /obj/item/knife/bloodletter
 	name = "bloodletter"
@@ -109,7 +109,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_CREW * 5
 	wound_bonus = 15
-	attack_style = /datum/attack_style/melee_weapon/swing/only_left
+	attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
 	weapon_sprite_angle = 45
 
 /obj/item/knife/hunting

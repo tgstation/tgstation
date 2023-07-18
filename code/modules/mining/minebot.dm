@@ -274,7 +274,7 @@
 	desc = "A minebot upgrade."
 	icon_state = "door_electronics"
 	icon = 'icons/obj/assemblies/module.dmi'
-	attack_style = null
+	attack_style_path = null
 
 /obj/item/mine_bot_upgrade/afterattack(mob/living/simple_animal/hostile/mining_drone/minebot, mob/user, proximity)
 	. = ..()

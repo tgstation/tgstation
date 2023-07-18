@@ -27,7 +27,7 @@
 	throw_range = 7
 	grind_results = list(/datum/reagent/lye = 10)
 	force_string = "robust... against germs"
-	attack_style = null
+	attack_style_path = null
 	var/cleanspeed = 3.5 SECONDS //slower than mop
 	var/uses = 100
 

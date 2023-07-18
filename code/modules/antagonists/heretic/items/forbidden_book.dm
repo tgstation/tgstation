@@ -7,7 +7,7 @@
 	icon_state = "book"
 	worn_icon_state = "book"
 	w_class = WEIGHT_CLASS_SMALL
-	attack_style = null
+	attack_style_path = null
 	/// Helps determine the icon state of this item when it's used on self.
 	var/book_open = FALSE
 	/// id for timer

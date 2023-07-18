@@ -21,7 +21,7 @@
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
-	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/claw
+	attack_style_path = /datum/attack_style/unarmed/generic_damage/limb_based/punch/claw
 
 /obj/item/bodypart/arm/right/moth
 	icon = 'icons/mob/species/moth/bodyparts.dmi'
@@ -29,7 +29,7 @@
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
-	attack_style = /datum/attack_style/unarmed/generic_damage/limb_based/punch/claw
+	attack_style_path = /datum/attack_style/unarmed/generic_damage/limb_based/punch/claw
 
 /obj/item/bodypart/leg/left/moth
 	icon = 'icons/mob/species/moth/bodyparts.dmi'

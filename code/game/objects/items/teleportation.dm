@@ -113,7 +113,7 @@
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 5)
 	armor_type = /datum/armor/item_hand_tele
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	attack_style = null
+	attack_style_path = null
 	var/list/active_portal_pairs
 	var/max_portal_pairs = 3
 

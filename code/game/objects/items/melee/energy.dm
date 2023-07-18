@@ -14,8 +14,8 @@
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_BLOOD_ON_ITEM
-	attack_style = /datum/attack_style/melee_weapon/swing/esword
-	alt_attack_style = /datum/attack_style/melee_weapon/stab_out/esword
+	attack_style_path = /datum/attack_style/melee_weapon/swing/esword
+	alt_attack_style_path = /datum/attack_style/melee_weapon/stab_out/esword
 	weapon_sprite_angle = 45
 	blocking_ability = 1.5
 	can_block_flags = BLOCK_ALL_BUT_TACKLE
@@ -170,8 +170,8 @@
 	active_throwforce = 30
 	active_w_class = WEIGHT_CLASS_HUGE
 
-	attack_style = /datum/attack_style/melee_weapon/swing
-	alt_attack_style = null
+	attack_style_path = /datum/attack_style/melee_weapon/swing
+	alt_attack_style_path = null
 
 /obj/item/melee/energy/axe/make_transformable()
 	AddComponent( \

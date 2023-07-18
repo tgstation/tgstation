@@ -42,7 +42,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
-	attack_style = /datum/attack_style/melee_weapon/swing/only_left
+	attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
 
 /obj/item/melee/synthetic_arm_blade/Initialize(mapload)
 	. = ..()
@@ -184,7 +184,7 @@
 	attack_verb_simple = list("slash", "sting", "prickle", "poke")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	block_sound = 'sound/weapons/parry.ogg'
-	attack_style = /datum/attack_style/melee_weapon/rapid_attacks
+	attack_style_path = /datum/attack_style/melee_weapon/rapid_attacks
 
 /obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -216,7 +216,7 @@
 	armour_penetration = 1000
 	force_string = "INFINITE"
 	item_flags = NEEDS_PERMIT|NO_BLOOD_ON_ITEM
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	var/obj/machinery/power/supermatter_crystal/shard
 	var/balanced = 1
 
@@ -476,5 +476,5 @@
 	armour_penetration = 50
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
-	attack_style = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing
 	weapon_sprite_angle = 45
