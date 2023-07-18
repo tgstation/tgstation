@@ -68,12 +68,12 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/examine(mob/user)
 	. = ..()
 	if(cig)
-		. += "<span class='notice'>There is a [cig.name] jammed into the filter slot</span>"
+		. += span_notice("There is a [cig.name] jammed into the filter slot".)
 	if(max_filters > 0 && !cig)
-		. += "<span class='notice'>[src] has [max_filters] slot\s for filters.</span>"
+		. += span_notice("[src] has [max_filters] slot\s for filters.")
 	if(LAZYLEN(gas_filters) > 0)
-		. += "<span class='notice'>Currently there [LAZYLEN(gas_filters) == 1 ? "is" : "are"] [LAZYLEN(gas_filters)] filter\s with [get_filter_durability()]% durability.</span>"
-		. += "<span class='notice'>The filters can be removed by right-clicking with an empty hand on [src].</span>"
+		. += span_notice("Currently there [LAZYLEN(gas_filters) == 1 ? "is" : "are"] [LAZYLEN(gas_filters)] filter\s with [get_filter_durability()]% durability.")
+		. += span_notice("The filters can be removed by right-clicking with an empty hand on [src].")
 
 /obj/item/clothing/mask/gas/proc/on_cig_destroyed()
 	SIGNAL_HANDLER
