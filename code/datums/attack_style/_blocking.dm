@@ -28,12 +28,12 @@
 	if(!isnull(new_blocker))
 		set_blocking_item(new_blocker)
 
+/datum/status_effect/blocking/on_apply()
 	// melbert todo: hides under mobs 1 tile up (not z wise)
 	var/static/shield_offset_const = (0.8 * world.icon_size)
 	shield_overlay = new(owner)
 	shield_overlay.pixel_y += shield_offset_const
 
-/datum/status_effect/blocking/on_apply()
 	owner.vis_contents += shield_overlay
 	update_shield()
 
