@@ -162,8 +162,7 @@
 /atom/movable/flick_visual
 
 /// Takes the passed in MA/icon_state, mirrors it onto ourselves, and displays that in world for duration seconds
-/// Returns the object to be animated and such. You do NOT own this object, it will be pooled when we're done with it
-/// Do me a favor and don't do any parallel animates with it either, you run the risk of infecting the pool
+/// Returns the displayed object, you can animate it and all, but you don't own it, we'll delete it after the duration
 /atom/proc/flick_overlay_view(mutable_appearance/display, duration)
 	if(!display)
 		return null
