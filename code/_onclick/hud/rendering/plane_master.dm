@@ -64,7 +64,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// If this plane master is outside of our visual bounds right now
 	var/is_outside_bounds = FALSE
 
-/atom/movable/screen/plane_master/Initialize(mapload, datum/plane_master_group/home, offset = 0)
+/atom/movable/screen/plane_master/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset = 0)
 	. = ..()
 	src.offset = offset
 	true_alpha = alpha
@@ -132,7 +132,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(force_hidden)
 		return FALSE
 
-	var/client/our_client = mymob?.client
+	var/client/our_client = mymob?.canon_client
 	// Alright, let's get this out of the way
 	// Mobs can move z levels without their client. If this happens, we need to ensure critical display settings are respected
 	// This is done here. Mild to severe pain but it's nessesary
@@ -244,7 +244,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	multiz_scaled = FALSE
 	critical = PLANE_CRITICAL_DISPLAY
 
-/atom/movable/screen/plane_master/clickcatcher/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/clickcatcher/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(offset_increased))
 	offset_increased(SSmapping, 0, SSmapping.max_plane_offset)
@@ -265,7 +265,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_relay_planes = list(RENDER_PLANE_GAME, LIGHT_MASK_PLANE)
 	critical = PLANE_CRITICAL_FUCKO_PARALLAX // goes funny when touched. no idea why I don't trust byond
 
-/atom/movable/screen/plane_master/parallax_white/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/parallax_white/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_SPACE_LAYER)
 
@@ -282,7 +282,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	multiz_scaled = FALSE
 
-/atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	if(offset != 0)
 		// You aren't the source? don't change yourself
@@ -360,7 +360,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	// Needs to be critical or it uh, it'll look white
 	critical = PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_RELAY
 
-/atom/movable/screen/plane_master/floor/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/floor/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_FLOOR_LAYER, relay_color = GLOB.em_block_color)
 
@@ -370,7 +370,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = WALL_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD, LIGHT_MASK_PLANE)
 
-/atom/movable/screen/plane_master/wall/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/wall/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_WALL_LAYER, relay_color = GLOB.em_block_color)
 
@@ -386,7 +386,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = GAME_PLANE_FOV_HIDDEN
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
-/atom/movable/screen/plane_master/game_world_fov_hidden/Initialize(mapload)
+/atom/movable/screen/plane_master/game_world_fov_hidden/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	add_filter("vision_cone", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
 
@@ -406,7 +406,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	// This is safe because we will ALWAYS be on the top z layer, so it DON'T MATTER
 	multiz_scaled = FALSE
 
-/atom/movable/screen/plane_master/field_of_vision_blocker/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/field_of_vision_blocker/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	mirror_parent_hidden()
 
@@ -423,7 +423,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = WALL_PLANE_UPPER
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD, LIGHT_MASK_PLANE)
 
-/atom/movable/screen/plane_master/wall_upper/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/wall_upper/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_WALL_LAYER, relay_color = GLOB.em_block_color)
 
@@ -433,7 +433,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
-/atom/movable/screen/plane_master/game_world_upper_fov_hidden/Initialize(mapload)
+/atom/movable/screen/plane_master/game_world_upper_fov_hidden/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	// Dupe of the other hidden plane
 	add_filter("vision_cone", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
@@ -536,7 +536,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = PIPECRAWL_IMAGES_PLANE
 	start_hidden = TRUE
 
-/atom/movable/screen/plane_master/pipecrawl/Initialize(mapload)
+/atom/movable/screen/plane_master/pipecrawl/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	// Makes everything on this plane slightly brighter
 	// Has a nice effect, makes thing stand out
@@ -563,7 +563,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	// This can call on a cycle cause we don't clear in hide_from
 	// Yes this is the best way of hooking into the hud, I hate myself too
 	RegisterSignal(our_hud, COMSIG_HUD_EYE_CHANGED, PROC_REF(eye_changed), override = TRUE)
-	eye_changed(our_hud, null, our_hud.mymob?.client?.eye)
+	eye_changed(our_hud, null, our_hud.mymob?.canon_client?.eye)
 
 /atom/movable/screen/plane_master/camera_static/proc/eye_changed(datum/hud/source, atom/old_eye, atom/new_eye)
 	SIGNAL_HANDLER
@@ -611,7 +611,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(!.)
 		return
 	remove_filter("AO")
-	if(istype(mymob) && mymob.client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
+	if(istype(mymob) && mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/ambient_occlusion))
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
 /atom/movable/screen/plane_master/balloon_chat

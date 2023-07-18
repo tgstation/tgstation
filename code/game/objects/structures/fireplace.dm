@@ -5,7 +5,7 @@
 /obj/structure/fireplace
 	name = "fireplace"
 	desc = "A large stone brick fireplace."
-	icon = 'icons/obj/fireplace.dmi'
+	icon = 'icons/obj/fluff/fireplace.dmi'
 	icon_state = "fireplace"
 	density = FALSE
 	anchored = TRUE

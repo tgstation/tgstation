@@ -1,7 +1,7 @@
 /obj/structure/weightmachine
 	name = "chest press machine"
 	desc = "Just looking at this thing makes you feel tired."
-	icon = 'icons/obj/gym_equipment.dmi'
+	icon = 'icons/obj/fluff/gym_equipment.dmi'
 	icon_state = "stacklifter"
 	base_icon_state = "stacklifter"
 	can_buckle = TRUE

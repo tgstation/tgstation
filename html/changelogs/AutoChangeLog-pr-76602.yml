@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "The organ manipulator menu will now delete implants or organs that fail to properly insert."
-  - code_imp: "The organ manipulator menu code now looks nicer :)"

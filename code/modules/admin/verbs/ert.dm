@@ -254,7 +254,7 @@
 
 		//Open the Armory doors
 		if(ertemplate.opendoors)
-			for(var/obj/machinery/door/poddoor/ert/door in GLOB.airlocks)
+			for(var/obj/machinery/door/poddoor/ert/door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor/ert))
 				door.open()
 				CHECK_TICK
 		return TRUE

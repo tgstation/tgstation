@@ -1,7 +1,7 @@
 /mob/living/basic/festivus
 	name = "festivus pole"
 	desc = "Serenity now... SERENITY NOW!"
-	icon = 'icons/obj/flora/pinetrees.dmi'
+	icon = 'icons/obj/fluff/flora/pinetrees.dmi'
 	icon_state = "festivus_pole"
 	icon_living = "festivus_pole"
 	icon_dead = "festivus_pole"
@@ -43,6 +43,7 @@
 /mob/living/basic/festivus/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/item/stack/rods))
+	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("growls")), emote_chance = 20)
 	var/datum/action/cooldown/mob_cooldown/charge_apc/charge_ability = new(src)
 	charge_ability.Grant(src)
 	ai_controller.set_blackboard_key(BB_FESTIVE_APC, charge_ability)

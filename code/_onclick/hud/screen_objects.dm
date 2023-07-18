@@ -18,7 +18,7 @@
 	/// A reference to the object in the slot. Grabs or items, generally.
 	var/obj/master = null
 	/// A reference to the owner HUD, if any.
-	var/datum/hud/hud = null
+	VAR_PRIVATE/datum/hud/hud = null
 	/**
 	 * Map name assigned to this object.
 	 * Automatically set by /client/proc/add_obj_to_map.
@@ -35,6 +35,11 @@
 
 	/// If FALSE, this will not be cleared when calling /client/clear_screen()
 	var/clear_with_screen = TRUE
+
+/atom/movable/screen/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	if(hud_owner && istype(hud_owner))
+		hud = hud_owner
 
 /atom/movable/screen/Destroy()
 	master = null
@@ -116,9 +121,7 @@
 	screen_loc = ui_language_menu
 
 /atom/movable/screen/language_menu/Click()
-	var/mob/M = usr
-	var/datum/language_holder/H = M.get_language_holder()
-	H.open_language_menu(usr)
+	usr.get_language_holder().open_language_menu(usr)
 
 /atom/movable/screen/inventory
 	/// The identifier for the slot. It has nothing to do with ID cards.
@@ -244,7 +247,7 @@
 	plane = ABOVE_HUD_PLANE
 	icon_state = "backpack_close"
 
-/atom/movable/screen/close/Initialize(mapload, new_master)
+/atom/movable/screen/close/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
 	master = new_master
 
@@ -269,7 +272,7 @@
 	icon_state = "combat_off"
 	screen_loc = ui_combat_toggle
 
-/atom/movable/screen/combattoggle/Initialize(mapload)
+/atom/movable/screen/combattoggle/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	update_appearance()
 
@@ -386,7 +389,7 @@
 	screen_loc = "7,7 to 10,8"
 	plane = HUD_PLANE
 
-/atom/movable/screen/storage/Initialize(mapload, new_master)
+/atom/movable/screen/storage/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
 	master = new_master
 
@@ -627,7 +630,7 @@
 
 INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 
-/atom/movable/screen/splash/Initialize(mapload, client/C, visible, use_previous_title)
+/atom/movable/screen/splash/Initialize(mapload, datum/hud/hud_owner, client/C, visible, use_previous_title)
 	. = ..()
 	if(!istype(C))
 		return

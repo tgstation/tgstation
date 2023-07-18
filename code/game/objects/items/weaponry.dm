@@ -579,7 +579,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "ectoplasm"
 	desc = "Spooky."
 	gender = PLURAL
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/effects/magic.dmi'
 	icon_state = "ectoplasm"
 
 /obj/item/ectoplasm/suicide_act(mob/living/user)
@@ -587,7 +587,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return OXYLOSS
 
 /obj/item/ectoplasm/angelic
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/effects/magic.dmi'
 	icon_state = "angelplasm"
 
 /obj/item/ectoplasm/mystic
@@ -842,7 +842,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter
 	name = "flyswatter"
 	desc = "Useful for killing pests of all sizes."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "flyswatter"
 	inhand_icon_state = "flyswatter"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'

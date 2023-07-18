@@ -177,6 +177,6 @@
 /obj/item/skeleton_key
 	name = "skeleton key"
 	desc = "An artifact usually found in the hands of the natives of lavaland, which NT now holds a monopoly on."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "skeleton_key"
 	w_class = WEIGHT_CLASS_SMALL
