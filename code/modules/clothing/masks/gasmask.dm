@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/adjustmask(mob/living/carbon/user)
 	if(isnull(cig))
 		return ..()
-	balloon_alert(user, "You need to remove [cig] before you can adjust the mask!")
+	balloon_alert(user, "Remove [cig] first!")
 
 
 /obj/item/clothing/mask/gas/examine(mob/user)
@@ -88,15 +88,15 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		var/valid_wearer = ismob(src.loc)
 
 		if(flags_cover & MASKCOVERSMOUTH)
-			balloon_alert(user, "You can't do that while the mask's mouth is covered")
+			balloon_alert(user, "Mask's mouth is covered!")
 			return ..()
 
 		if(max_filters <= 0 || cig)
-			balloon_alert(user, "There's nowhere for that to fit")
+			balloon_alert(user, "Can't hold filters!")
 			return ..()
 
 		if(has_filter)
-			balloon_alert("You can't fit that in while there are filters in the mask")
+			balloon_alert(user, "Filters in the mask!")
 			return ..()
 
 		cig = tool
