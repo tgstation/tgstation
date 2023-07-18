@@ -161,12 +161,6 @@
 */
 /atom/movable/flick_visual
 
-/atom/movable/flick_visual/proc/clear_effects()
-	vis_locs.Cut()
-	animate(src, flags = ANIMATION_END_NOW)
-	var/atom/movable/flick_visual/default = new()
-	appearance = default // Reset everything about our appearance, so we're reusable
-
 /// Takes the passed in MA/icon_state, mirrors it onto ourselves, and displays that in world for duration seconds
 /// Returns the object to be animated and such. You do NOT own this object, it will be pooled when we're done with it
 /// Do me a favor and don't do any parallel animates with it either, you run the risk of infecting the pool
@@ -183,12 +177,13 @@
 	// Because this is vis_contents, we need to set the layer manually (you can just set it as you want on return if this is a problem)
 	if(passed_appearance.layer == FLOAT_LAYER)
 		passed_appearance.layer = layer + 0.1
-	var/atom/movable/flick_visual/visual = SSwardrobe.provide_type(/atom/movable/flick_visual)
+	// This is faster then pooling. I promise
+	var/atom/movable/flick_visual/visual = new()
 	visual.appearance = passed_appearance
 	// I hate /area
 	var/atom/movable/lies_to_children = src
 	lies_to_children.vis_contents += visual
-	addtimer(CALLBACK(SSwardrobe, TYPE_PROC_REF(/datum/controller/subsystem/wardrobe, stash_object), visual), duration, TIMER_CLIENT_TIME)
+	QDEL_IN_CLIENT_TIME(visual, duration)
 	return visual
 
 /area/flick_overlay_view(mutable_appearance/display, duration)
