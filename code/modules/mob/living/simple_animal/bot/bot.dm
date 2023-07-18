@@ -228,14 +228,14 @@
 /mob/living/simple_animal/bot/proc/disable_possession(mob/user)
 	can_be_possessed = FALSE
 	QDEL_NULL(personality_download)
-	if (!key)
+	if (isnull(key))
 		return
 	if (user)
 		log_combat(user, src, "ejected from [initial(src.name)] control.")
 	to_chat(src, span_warning("You feel yourself fade as your personality matrix is reset!"))
 	ghostize(can_reenter_corpse = FALSE)
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-	say("Personality matrix reset!", forced = "bot")
+	speak("Personality matrix reset!")
 	key = null
 
 /// Returns true if this mob can be controlled
@@ -247,7 +247,7 @@
 /// Fired after something takes control of this mob
 /mob/living/simple_animal/bot/proc/post_possession()
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-	say("New personality installed successfully!", forced = "bot")
+	speak("New personality installed successfully!")
 	rename(src)
 
 /// Allows renaming the bot to something else
@@ -505,12 +505,18 @@
 		src.visible_message(span_notice("[paicard] is flies out of [initial(src.name)]!"), span_warning("You are forcefully ejected from [initial(src.name)]!"))
 		ejectpai()
 
-	if(prob(70/severity))
-		set_active_language(get_random_spoken_language())
+	if (QDELETED(src))
+		return
 
 	if(bot_mode_flags & BOT_MODE_ON)
 		turn_off()
 	addtimer(CALLBACK(src, PROC_REF(emp_reset), was_on), severity * 30 SECONDS)
+	if(!prob(70/severity))
+		return
+	if (!length(GLOB.uncommon_roundstart_languages))
+		return
+	remove_all_languages(source = LANGUAGE_EMP)
+	grant_random_uncommon_language(source = LANGUAGE_EMP)
 
 /mob/living/simple_animal/bot/proc/emp_reset(was_on)
 	stat &= ~EMPED
