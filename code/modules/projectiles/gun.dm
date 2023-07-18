@@ -258,9 +258,14 @@
 		user.AddComponent(/datum/component/gunpoint, victim, src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/item/gun/select_attacking_style(mob/living/attacker, atom/clicked_on, right_clicking)
+	if(get_dist(attacker, clicked_on) > 1)
+		return null
+	// You can only pistol whip by clicking adjacent targets
+	return bayonet?.attack_style || GLOB.attack_styles[/datum/attack_style/melee_weapon]
+
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
-	..()
-	return fire_gun(target, user, flag, params) | AFTERATTACK_PROCESSED_ITEM
+	return ..() | fire_gun(target, user, flag, params) | AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
 	if(QDELETED(target))
@@ -454,20 +459,10 @@
 /obj/item/gun/proc/reset_semicd()
 	semicd = FALSE
 
-/obj/item/gun/attack(mob/M, mob/living/user)
-	if(user.combat_mode) //Flogging
-		if(bayonet)
-			M.attackby(bayonet, user)
-			return
-		else
-			return ..()
-	return
+/obj/item/gun/attack_atom(atom/attacked_atom, mob/living/user, params)
+	if(user.combat_mode && bayonet)
+		return attacked_atom.attackby(bayonet, user)
 
-/obj/item/gun/attack_atom(obj/O, mob/living/user, params)
-	if(user.combat_mode)
-		if(bayonet)
-			O.attackby(bayonet, user)
-			return
 	return ..()
 
 /obj/item/gun/attackby(obj/item/I, mob/living/user, params)

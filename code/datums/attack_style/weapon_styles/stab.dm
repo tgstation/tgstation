@@ -39,7 +39,6 @@
 		y_move += 8
 	else if(stab_dir & SOUTH)
 		y_move -= 8
-
 	if(stab_dir & EAST)
 		x_move += 8
 	else if(stab_dir & WEST)

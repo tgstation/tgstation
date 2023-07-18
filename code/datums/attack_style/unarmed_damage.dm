@@ -8,7 +8,7 @@
 	var/default_attack_verb = "bump"
 	/// For deaf people, when this attack misses, this is the phrase used. Yeah pretty niche var.
 	var/deaf_miss_phrase = "a swoosh"
-	/// Flat added modifier to miss chance
+	/// Flat added modifier to miss chance. Negative means more likely to hit.
 	var/miss_chance_modifier = 0
 	/// Wound bonus on attacks from this attack method
 	var/wound_bonus_modifier = 0
@@ -22,22 +22,27 @@
 /datum/attack_style/unarmed/generic_damage/check_pacifism(mob/living/attacker, obj/item/weapon)
 	return TRUE
 
+/// Gets how much damage this attack will actually end up doing.
 /datum/attack_style/unarmed/generic_damage/proc/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with)
 	return -1
 
+/// Selects which verb to use for the feedback visible message component of the attack.
 /datum/attack_style/unarmed/generic_damage/proc/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
-	if(smacked.response_harm_simple)
-		return smacked.response_harm_simple
 	if(damage == 0 && attacker.friendly_verb_simple)
 		return attacker.friendly_verb_simple
+
+	if(smacked.response_harm_simple)
+		return smacked.response_harm_simple
 	if(attacker.attack_verb_simple)
 		return attacker.attack_verb_simple
 
 	return default_attack_verb
 
+/// Calculates the probability (out of 100) that this attack will miss.
 /datum/attack_style/unarmed/generic_damage/proc/calculate_miss_chance(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
 	if(smacked.body_position == LYING_DOWN || HAS_TRAIT(attacker, TRAIT_PERFECT_ATTACKER))
-		return 0
+		// Guarantee this shit hits no matter what gets added on
+		return -INFINITY
 
 	return miss_chance_modifier
 
@@ -101,7 +106,7 @@
 		/* bare_wound_bonus = */bare_wound_bonus_modifier,
 		/* sharpness = */NONE,
 		/* attack_direction = */get_dir(attacker, smacked),
-		/* attack attacking_item = */null,
+		/* attacking_item = */null,
 	)
 
 	var/additional_logging = "([default_attack_verb])"
@@ -124,12 +129,12 @@
  * * attacker - The mob that is attacking
  * * smacked - The mob that is being attacked
  * * hitting_with - The bodypart that is being used to attack. CAN BE NULL, if this unarmed attack is created without bodypart (such as simplemob attacks)
- * * damage - The amount of damage that is being applied
- * * affecting - The bodypart that is being hit by the attack. CAN BE NULL if the mob being hit is a simplemob or other mob that has no bodyparts.
- * * armor_block - The amount of armor that is blocking the attack (0 - 100, MELEE flag)
- * * direction - The dir of the attacker to the smacked mob
+ * * affecting - The bodypart being hit by the attack
+ * * packet - A [/datum/apply_damage_packet] that contains all the information about the damage being applied.
+ * Passed this way so one can either modify or use the arguments being passed before they're sent.
  *
- * Returns a string. This string will be added to the final combat log for this attack.
+ * Returns a string.
+ * This string will be added to the final combat log for this attack.
  */
 /datum/attack_style/unarmed/generic_damage/proc/actually_apply_damage(
 	mob/living/attacker,
@@ -165,16 +170,20 @@
 			. *= 0
 
 /datum/attack_style/unarmed/generic_damage/limb_based/calculate_miss_chance(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
-	if(..() == 0) // Guaranteed hit from parent
-		return 0
-
-	if(hitting_with.unarmed_damage_low <= 0)
+	// 0 damage is a guaranteed miss
+	if(hitting_with.unarmed_damage_low <= 0 || hitting_with.unarmed_damage_high <= 0)
 		return 100
 
-	return (hitting_with.unarmed_damage_high / hitting_with.unarmed_damage_low) \
-		+ (attacker.getBruteLoss() * 0.5) \
-		+ attacker.getStaminaLoss() \
-		+ miss_chance_modifier
+	// Get base miss chance modifier (from parent)
+	. = ..()
+	// Adds a chance of missing based on the damage range of the limb...
+	. += (hitting_with.unarmed_damage_high / hitting_with.unarmed_damage_low)
+	// Adds some chance of missing if the attacker is wounded...
+	. += (attacker.getBruteLoss() * 0.5)
+	// And also adds some chance of missing if the attacker is worn out
+	. += (attacker.getStaminaLoss())
+
+	return .
 
 /datum/attack_style/unarmed/generic_damage/limb_based/actually_apply_damage(
 	mob/living/attacker,

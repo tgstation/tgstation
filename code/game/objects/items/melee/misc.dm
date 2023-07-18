@@ -43,6 +43,7 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
+	weapon_sprite_angle = 270
 
 /obj/item/melee/synthetic_arm_blade/Initialize(mapload)
 	. = ..()

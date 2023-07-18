@@ -564,7 +564,7 @@
 	right_clicking,
 )
 	. = ..()
-	for(var/atom/to_hit as anything in typecache_filter_list(hitting.contents, scythe_attackables))
+	for(var/atom/movable/to_hit as anything in typecache_filter_list(hitting.contents, scythe_attackables))
 		if(attacker.CanReach(to_hit, weapon))
 			to_hit.attacked_by(weapon, attacker)
 			. |= ATTACK_SWING_HIT

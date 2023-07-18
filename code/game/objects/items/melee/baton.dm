@@ -107,19 +107,13 @@
  */
 /obj/item/melee/baton/attack(mob/living/target_mob, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	var/harmbatonning = LAZYACCESS(modifiers, RIGHT_CLICK)
-	if(harmbatonning && ..())
-		return ATTACK_NO_AFTERATTACK // pacifism check
-
 	switch(baton_attack(target_mob, user, modifiers))
 		if(BATON_DO_NORMAL_ATTACK)
-			return ATTACK_DEFAULT // default afterattack
+			return FALSE // default afterattack
 
 		if(BATON_ATTACKING)
 			finalize_baton_attack(target_mob, user, modifiers)
-			return ATTACK_SKIPPED // do our own thing
-
-	return ATTACK_NO_AFTERATTACK // ???
+			return TRUE // do our own thing
 
 /obj/item/melee/baton/add_item_context(datum/source, list/context, atom/target, mob/living/user)
 	if (isturf(target))

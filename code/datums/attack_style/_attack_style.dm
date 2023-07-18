@@ -300,7 +300,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /// Determines behavior when we collide with a solid / dense atom mid swing.
 /datum/attack_style/proc/collide_with_solid_atom(atom/blocking_us, obj/item/weapon, mob/living/attacker)
-	blocking_us.attacked_by(weapon, attacker)
+	if(blocking_us.uses_integrity)
+		blocking_us.attacked_by(weapon, attacker)
 	return ATTACK_SWING_BLOCKED
 
 /**

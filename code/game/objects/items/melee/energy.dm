@@ -369,7 +369,6 @@
 
 /datum/attack_style/melee_weapon/swing/esword/get_swing_description(has_alt_style)
 	. = ..()
-	. += " It must be active to swing."
 	if(!has_alt_style)
 		. += " Right-clicking will swing in the opposite direction."
 	return .
@@ -383,6 +382,3 @@
 	cd = CLICK_CD_MELEE * 1.25
 	slowdown = 0.75
 	sprite_size_multiplier = 1.25
-
-/datum/attack_style/melee_weapon/stab_out/esword/get_swing_description(has_alt_style)
-	return ..() + " It must be active to stab."

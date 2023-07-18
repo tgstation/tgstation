@@ -229,8 +229,6 @@
 	var/datum/attack_style/melee_weapon/attack_style
 	/// Reference to global singleton attack style
 	var/datum/attack_style/melee_weapon/alt_attack_style
-	/// If TRUE, outright skips attack style execution attempts if the user right-click, proceedes directly to afterattack
-	var/afterattack_on_right_click = FALSE
 	/// Relates to the sprite of the weapon, used to rotate the sprite to be vertical before animating for attacks
 	var/weapon_sprite_angle = 0
 

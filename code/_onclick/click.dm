@@ -321,27 +321,31 @@
 			clicked_with_what.melee_attack_chain(src, clicked_on, params)
 			return
 
-	else if(combat_mode && !(right_clicking && clicked_with_what.afterattack_on_right_click))
+	else if(combat_mode)
 		// Handles swinging at the clicked atom
-		var/datum/attack_style/using_what_style = (right_clicking && clicked_with_what.alt_attack_style) || clicked_with_what.attack_style
-		// Surgical tools won't swing if we're clicking on a dude who's in the middle of surgery
-		if(isliving(clicked_on) && (clicked_with_what.item_flags & SURGICAL_TOOL))
-			var/mob/living/living_clicked = clicked_on
-			if(length(living_clicked.surgeries) && living_clicked.body_position == LYING_DOWN)
-				using_what_style = null
-
+		var/datum/attack_style/using_what_style = clicked_with_what.select_attacking_style(src, clicked_on, right_clicking)
 		if(using_what_style)
 			using_what_style.process_attack(src, clicked_with_what, clicked_on, right_clicking)
 			return
 
 	// Handle afterattack, called regardless of if an attack was done, allowing "ranged click on" interactions for items
 	if(right_clicking)
-		var/after_attack_secondary_result = clicked_with_what.afterattack_secondary(clicked_on, src, FALSE, params)
+		var/after_attack_secondary_result = clicked_with_what.afterattack_secondary(clicked_on, src, close_enough, params)
 		if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
-			clicked_with_what.afterattack(clicked_on, src, FALSE, params)
+			clicked_with_what.afterattack(clicked_on, src, close_enough, params)
 
 	else
-		clicked_with_what.afterattack(clicked_on, src, FALSE, params)
+		clicked_with_what.afterattack(clicked_on, src, close_enough, params)
+
+/// Selects what attack style this item is going to use when being used in a swing
+/obj/item/proc/select_attacking_style(mob/living/attacker, atom/clicked_on, right_clicking)
+	// Surgical tools won't swing if we're clicking on a dude who's in the middle of surgery
+	if(isliving(clicked_on) && (item_flags & SURGICAL_TOOL))
+		var/mob/living/living_clicked = clicked_on
+		if(length(living_clicked.surgeries) && living_clicked.body_position == LYING_DOWN)
+			return null
+
+	return (right_clicking && alt_attack_style) || attack_style
 
 /**
  * Also known as "Unarmed attack"ing

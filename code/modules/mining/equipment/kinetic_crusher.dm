@@ -31,7 +31,6 @@
 	light_range = 5
 	light_on = FALSE
 	attack_style_path = /datum/attack_style/melee_weapon/swing/crusher
-	afterattack_on_right_click = TRUE // let us shoot the projectile
 	weapon_sprite_angle = 45
 
 	var/list/trophies = list()
@@ -51,6 +50,12 @@
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
+	return ..()
+
+/obj/item/kinetic_crusher/select_attacking_style(mob/living/attacker, atom/clicked_on, right_clicking)
+	if(right_clicking)
+		return null // if we're right clicking, don't swing: shoot
+
 	return ..()
 
 /obj/item/kinetic_crusher/can_attack_with(mob/living/attacker)

@@ -261,7 +261,7 @@
  */
 /obj/item/proc/attack(mob/living/target_mob, mob/living/user, params)
 	PROTECTED_PROC(TRUE)
-	return
+	return FALSE
 
 /// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking
 /obj/item/proc/attack_secondary(mob/living/victim, mob/living/user, params)

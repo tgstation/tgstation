@@ -56,7 +56,6 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	force = 10 //a lot worse than most nullrods initially. Why did you invest so much into making it vorpal, you dork.
 	armour_penetration = 50 //Very good armor penetration to make up for our abysmal force
 	attack_style_path = /datum/attack_style/melee_weapon/swing/wider_arc/scythe/vorpal
-	afterattack_on_right_click = TRUE
 	slot_flags = null
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
@@ -123,11 +122,9 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	if(!istype(user))
 		return .
 
-	var/mob/living/carbon/victim = target
-	if(!proximity_flag || !istype(victim) || user.combat_mode || user.zone_selected != BODY_ZONE_HEAD)
+	var/mob/living/carbon/potential_reaping = target
+	if(!proximity_flag || !istype(potential_reaping) || user.combat_mode || user.zone_selected != BODY_ZONE_HEAD)
 		return SECONDARY_ATTACK_CALL_NORMAL
-
-	var/mob/living/carbon/potential_reaping = victim
 
 	if(HAS_TRAIT(potential_reaping, TRAIT_NODISMEMBER))
 		to_chat(user, span_warning("You do not think you can behead this creature..."))
