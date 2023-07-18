@@ -311,7 +311,7 @@
 		owner_nanites.nanite_volume *= 0.5
 		spare.AddComponent(/datum/component/nanites, owner_nanites.nanite_volume)
 		SEND_SIGNAL(spare, COMSIG_NANITE_SYNC, owner_nanites, TRUE, TRUE) //The trues are to copy activation as well
-		
+
 	H.blood_volume *= 0.45
 	H.notransform = 0
 
@@ -549,7 +549,7 @@
 	desc = "Tell a coder if you're seeing this."
 	icon_state = "nothing"
 	light_system = MOVABLE_LIGHT
-	light_range = LUMINESCENT_DEFAULT_GLOW
+	light_outer_range = LUMINESCENT_DEFAULT_GLOW
 	light_power = 2.5
 	light_color = COLOR_WHITE
 
@@ -820,7 +820,7 @@
 		return FALSE
 
 	return TRUE
-	
+
 #undef JELLY_REGEN_RATE
 #undef JELLY_REGEN_RATE_EMPTY
 #undef BLOOD_VOLUME_LOSE_NUTRITION

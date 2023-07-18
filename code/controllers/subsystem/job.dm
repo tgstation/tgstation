@@ -517,6 +517,13 @@ SUBSYSTEM_DEF(job)
 
 //Gives the player the stuff he should have with his rank
 /datum/controller/subsystem/job/proc/EquipRank(mob/living/equipping, datum/job/job, client/player_client)
+
+	if(isnull(player_client?.prefs.alt_job_titles))
+		player_client.prefs.alt_job_titles = list()
+
+	var/chosen_title = player_client?.prefs.alt_job_titles[job.title] || job.title
+	var/default_title = job.title
+
 	equipping.job = job.title
 
 	SEND_SIGNAL(equipping, COMSIG_JOB_RECEIVED, job)
@@ -525,7 +532,7 @@ SUBSYSTEM_DEF(job)
 
 	equipping.on_job_equipping(job, player_client?.prefs)
 
-	job.announce_job(equipping)
+	job.announce_job(equipping, chosen_title)
 
 	if(player_client?.holder)
 		if(CONFIG_GET(flag/auto_deadmin_players) || (player_client.prefs?.toggles & DEADMIN_ALWAYS))
@@ -547,10 +554,15 @@ SUBSYSTEM_DEF(job)
 				[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
 				have been added to your ID card."))
 
+		if(chosen_title != default_title)
+			to_chat(player_client, span_infoplain(span_warning("Remember that alternate titles are purely for flavor and roleplay.")))
+			to_chat(player_client, span_infoplain(span_doyourjobidiot("Do not use your \"[chosen_title]\" alt title as an excuse to forego your duties as a [job.title].")))
+
 	if(ishuman(equipping))
 		var/mob/living/carbon/human/wageslave = equipping
 		wageslave.add_mob_memory(/datum/memory/key/account, remembered_id = wageslave.account_id)
 
+		setup_alt_job_items(wageslave, job, player_client)
 
 	job.after_spawn(equipping, player_client)
 
@@ -880,8 +892,21 @@ SUBSYSTEM_DEF(job)
 	if(buckle && isliving(joining_mob))
 		buckle_mob(joining_mob, FALSE, FALSE)
 
+
+/atom/proc/JoinLaunchTowards(mob/joining_mob, obj/effect/oshan_launch_point/player/launched_point)
+	var/obj/structure/closet/stasis_pod/new_pod = new(src)
+	joining_mob.forceMove(new_pod)
+	new_pod.throw_at(launched_point, get_dist(src, launched_point) + 4, 4, null, FALSE)
+
 /datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
 	var/atom/destination
+
+	if(length(GLOB.oshan_launch_points))
+		var/obj/effect/oshan_launch_point/player/picked_point = pick(GLOB.oshan_launch_points)
+		destination = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
+		destination.JoinLaunchTowards(M, picked_point)
+		return TRUE
+
 	if(M.mind && !is_unassigned_job(M.mind.assigned_role) && length(GLOB.jobspawn_overrides[M.mind.assigned_role.title])) //We're doing something special today.
 		destination = pick(GLOB.jobspawn_overrides[M.mind.assigned_role.title])
 		destination.JoinPlayerHere(M, FALSE)

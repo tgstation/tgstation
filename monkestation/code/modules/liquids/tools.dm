@@ -44,3 +44,29 @@
 
 	message_admins("[key_name_admin(usr)] removed liquids with range [range] in [epicenter.loc.name]")
 	log_game("[key_name_admin(usr)] removed liquids with range [range] in [epicenter.loc.name]")
+
+
+
+/client/proc/change_ocean()
+	set category = "Admin.Fun"
+	set name = "Change Ocean Liquid"
+	set desc = "Changes the reagent of the ocean."
+
+
+	var/choice = tgui_input_list(usr, "Choose a reagent", "Ocean Reagent", subtypesof(/datum/reagent))
+	if(!choice)
+		return
+	var/datum/reagent/chosen_reagent = choice
+	var/rebuilt = FALSE
+	for(var/turf/open/floor/plating/ocean/listed_ocean as anything in SSliquids.ocean_turfs)
+		if(!rebuilt)
+			listed_ocean.ocean_reagents = list()
+			listed_ocean.ocean_reagents[chosen_reagent] = 100
+			listed_ocean.static_overlay.mix_colors(listed_ocean.ocean_reagents)
+			for(var/area/ocean/ocean_types in GLOB.initalized_ocean_areas)
+				ocean_types.base_lighting_color = listed_ocean.static_overlay.color
+				ocean_types.update_base_lighting()
+			rebuilt = TRUE
+		listed_ocean.light_color = listed_ocean.static_overlay.color
+		listed_ocean.light_outer_range = 0
+		listed_ocean.update_starlight()

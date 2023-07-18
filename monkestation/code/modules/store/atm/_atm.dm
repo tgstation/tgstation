@@ -148,6 +148,7 @@
 
 	if(!withdraw_amount)
 		return
+	withdraw_amount = clamp(withdraw_amount, 0, current_balance)
 	if(!living_user.client.prefs.adjust_metacoins(living_user.client.ckey, -withdraw_amount, donator_multipler = FALSE))
 		return
 
@@ -211,6 +212,7 @@
 	var/withdrawn_amount = tgui_input_number(living_mob, "How much cash would you like to withdraw?", "ATM", 0, registed_account.account_balance, 0)
 	if(!withdrawn_amount)
 		return
+	withdrawn_amount = clamp(withdrawn_amount, 0, registed_account.account_balance)
 	registed_account.account_balance -= withdrawn_amount
 	var/obj/item/stack/spacecash/c1/stack_of_cash = new(living_mob.loc)
 	stack_of_cash.amount = withdrawn_amount

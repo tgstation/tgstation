@@ -13,6 +13,9 @@
 
 /datum/patreon_data/New(client/created_client)
 	. = ..()
+	if(!created_client)
+		return
+
 	if(!SSdbcore.IsConnected())
 		owned_rank = NUKIE_RANK ///this is a testing variable
 		return

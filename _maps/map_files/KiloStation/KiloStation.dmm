@@ -9105,6 +9105,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/storage)
 "dij" = (
@@ -9341,7 +9342,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/robotics/lab)
 "dlS" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/vacuum,
 /area/station/engineering/atmos)
 "dmf" = (
@@ -9378,7 +9379,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "dmC" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
 "dmD" = (
@@ -18836,7 +18837,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "gos" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/n2,
 /area/station/engineering/atmos)
 "gou" = (
@@ -20733,7 +20734,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "gTD" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
 "gTN" = (
@@ -32817,6 +32818,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/storage)
 "kOw" = (
@@ -38222,7 +38224,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "mCT" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
 "mCV" = (
@@ -40720,6 +40722,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
+	},
+/obj/item/food/spaghetti/security{
+	pixel_y = 15
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hos)
@@ -44557,7 +44562,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "oQl" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/box,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -49172,7 +49177,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/lawoffice)
 "qpI" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "qpJ" = (
@@ -50152,6 +50157,7 @@
 	name = "Core Modules";
 	req_access = list("captain")
 	},
+/obj/item/ai_module/core/freeformcore,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "qHV" = (
@@ -56281,6 +56287,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/ai_module/core/full/crewsimov,
+/obj/item/ai_module/core/full/crewsimovpp,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "sHk" = (
@@ -56382,6 +56390,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "sIF" = (
@@ -65493,7 +65502,7 @@
 	name = "core camera";
 	network = list("aicore")
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
 "vFv" = (
@@ -67013,6 +67022,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "wbT" = (
@@ -68847,7 +68857,7 @@
 /turf/open/floor/carpet/royalblue,
 /area/station/service/chapel/office)
 "wFB" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/floor/engine/plasma,
 /area/station/engineering/atmos)
 "wFG" = (

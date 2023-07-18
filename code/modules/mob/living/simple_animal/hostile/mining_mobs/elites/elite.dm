@@ -130,7 +130,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	pixel_x = -16
 	base_pixel_x = -16
 	light_color = COLOR_SOFT_RED
-	light_range = 3
+	light_outer_range = 3
 	anchored = TRUE
 	density = FALSE
 	var/activity = TUMOR_INACTIVE
@@ -396,7 +396,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
 	color = rgb(255,0,0)
-	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = COLOR_SOFT_RED
 	var/datum/weakref/activator_ref
 	var/datum/weakref/ourelite_ref

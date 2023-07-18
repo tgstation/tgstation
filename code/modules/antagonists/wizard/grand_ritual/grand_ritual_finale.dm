@@ -1,6 +1,9 @@
 #define DOOM_SINGULARITY "singularity"
 #define DOOM_TESLA "tesla"
 #define DOOM_METEORS "meteors"
+#define DOOM_EVENTS "events" //monkestation edit: we can get singalos and teslas normally, so im adding a few more
+#define DOOM_ANTAGS "threats" //monkestation edit
+#define DOOM_ROD "rod" //monkestation edit
 
 /**
  * A big final event to run when you complete seven rituals
@@ -120,7 +123,7 @@
 	for (var/mob/living/carbon/human/former_captain as anything in former_captains)
 		create_vendetta(former_captain.mind, invoker.mind)
 	for (var/mob/living/carbon/human/random_crewmate as anything in other_crew)
-		if (prob(10))
+		if (prob(5)) //monkestation edit: halves the prob from 10 to 5, I dont see a real reason to have there be that many crew going after the "captain"
 			create_vendetta(random_crewmate.mind, invoker.mind)
 
 /**
@@ -221,6 +224,7 @@
 			continue
 		if (!ismonkey(victim)) // Monkeys cannot yet wear clothes
 			dress_as_magic_clown(victim)
+			ADD_TRAIT(victim, TRAIT_CLUMSY, MAGIC_TRAIT) //monkestation edit: HONK HONK!
 		if (prob(15))
 			create_vendetta(victim.mind, invoker.mind)
 
@@ -270,16 +274,18 @@
 	equip_to_slot_then_hands(victim, ITEM_SLOT_BELT, belt)
 	victim.internal = internal
 
-/// Give everyone magic items
+/// Give everyone magic items //monkestation edit: and guns and events
 /datum/grand_finale/magic
-	name = "Evolution"
-	desc = "The ultimate use of your gathered power! Give the crew their own magic, they'll surely realise that right and wrong have no meaning when you hold ultimate power!"
+	name = "Chaos" //monkestation edit: replaced "Evolution"
+	desc = "Bring true chaos to the station by giving them all guns, magic, and change all of the interesting events of the station into our own more magical versions!" //monkestation edit
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 
 /datum/grand_finale/magic/trigger(mob/living/carbon/human/invoker)
 	message_admins("[key_name(invoker)] summoned magic")
 	summon_magic(survivor_probability = 20) // Wow, this one was easy!
+	summon_guns(survivor_probability = 20) //monkestation edit
+	summon_events() //monkestation edit
 
 /// Open all of the doors
 /datum/grand_finale/all_access
@@ -298,6 +304,8 @@
 			INVOKE_ASYNC(target_door, TYPE_PROC_REF(/obj/machinery/door/airlock, open))
 			CHECK_TICK
 	priority_announce("AULIE OXIN FIERA!!", null, 'sound/magic/knock.ogg', sender_override = "[invoker.real_name]")
+	var/obj/item/remote = new /obj/item/door_remote/omni(get_turf(invoker)) //monkestation edit: you now also control bolting
+	invoker.put_in_hands(remote) //monkestation edit
 
 /// Completely transform the station
 /datum/grand_finale/midas
@@ -311,6 +319,9 @@
 		/datum/dimension_theme/meat,
 		/datum/dimension_theme/pizza,
 		/datum/dimension_theme/natural,
+		/datum/dimension_theme/clown, //monkestation edit: HONK!
+		/datum/dimension_theme/fancy, //monkestation edit
+		/datum/dimension_theme/disco,, //monkestation edit
 	)
 	var/datum/dimension_theme/chosen_theme
 
@@ -381,7 +392,7 @@
 
 	var/static/list/doom_options = list()
 	if (!length(doom_options))
-		doom_options = list(DOOM_SINGULARITY, DOOM_TESLA)
+		doom_options = list(DOOM_SINGULARITY, DOOM_TESLA, DOOM_EVENTS, DOOM_ANTAGS, DOOM_ROD) //monkestation edit: added DOOM_EVENTS, DOOM_ANTAGS and DOOM_ROD
 		if (!SSmapping.config.planetary)
 			doom_options += DOOM_METEORS
 
@@ -398,7 +409,40 @@
 			var/datum/game_mode/dynamic/mode = SSticker.mode
 			mode.execute_roundstart_rule(meteors) // Meteors will continue until morale is crushed.
 			priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", ANNOUNCER_METEORS)
+		if (DOOM_EVENTS) //monkestation edit start: triggers a MASSIVE amount of events pretty quickly
+			summon_events() //wont effect the events created directly from this, but it will effect any events that happen after
+			var/list/possible_events = list()
+			for(var/datum/round_event_control/possible_event as anything in SSevents.control)
+				if(possible_event.max_wizard_trigger_potency < 6) //only run the decently big ones
+					continue
+				possible_events += possible_event
+			var/timer_counter = 1
+			for(var/i in 1 to 50) //high chance this number needs tweaking, but we do want this to be a round ending amount of events
+				var/datum/round_event_control/event = pick(possible_events)
+				addtimer(CALLBACK(event, TYPE_PROC_REF(/datum/round_event_control, runEvent)), (10 * timer_counter) SECONDS)
+				timer_counter++
+		if (DOOM_ANTAGS) //so I heard you like antags
+			var/datum/game_mode/dynamic/dynamic = SSticker.mode
+			dynamic.create_threat(100, dynamic.threat_log, "Final grand ritual")
+			ASYNC //sleeps
+				for(var/i in 1 to 4) //spawn 4 midrounds
+					sleep(50) //sleep 5 seconds between each one
+					var/list/possible_rulesets = dynamic.init_rulesets(/datum/dynamic_ruleset/midround/from_ghosts)
+					if(i == 1) //always draft at least one heavy, although funny, it would be kind of lame if we just got 4 abductors
+						for(var/datum/dynamic_ruleset/midround/entry in possible_rulesets)
+							if(!entry.midround_ruleset_style == MIDROUND_RULESET_STYLE_HEAVY)
+								possible_rulesets -= entry
+					var/picked_ruleset = pick(possible_rulesets)
+					dynamic.picking_specific_rule(picked_ruleset, TRUE)
+		if (DOOM_ROD) //spawns a ghost controlled, forced looping rod, only technically less damaging then singaloth or tesloose
+			var/obj/effect/immovablerod/rod = new(current_location)
+			rod.loopy_rod = TRUE
+			rod.can_suplex = FALSE
+			rod.deadchat_plays(ANARCHY_MODE, 4 SECONDS)//monkestation edit end
 
 #undef DOOM_SINGULARITY
 #undef DOOM_TESLA
 #undef DOOM_METEORS
+#undef DOOM_EVENTS //monkestation edit
+#undef DOOM_ANTAGS //monkestation edit
+#undef DOOM_ROD //monkestation edit

@@ -511,7 +511,8 @@
 //Cannot remove negative damage (i.e. apply damage)
 /obj/item/bodypart/proc/heal_damage(brute, burn, required_bodytype, updating_health = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
-
+	if(HAS_TRAIT(owner, TRAIT_NO_HEALS))
+		return
 	if(required_bodytype && !(bodytype & required_bodytype)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
 		return
 

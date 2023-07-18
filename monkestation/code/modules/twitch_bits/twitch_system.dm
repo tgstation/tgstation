@@ -15,6 +15,9 @@ SUBSYSTEM_DEF(twitch)
 	///list of deferred handlers
 	var/list/deferred_handlers = list()
 
+	var/datum/twitch_event/last_event
+	var/last_event_execution = 0
+	var/last_executor
 
 /datum/controller/subsystem/twitch/stat_entry(msg)
 	msg += "Running Events:[running_events.len]"
@@ -36,19 +39,21 @@ SUBSYSTEM_DEF(twitch)
 	if(incoming[2] != CONFIG_GET(string/twitch_key))
 		return
 
+
 	var/datum/twitch_event/chosen_one
-	switch(incoming[3])
-		if("amongus-all15")
-			chosen_one = new /datum/twitch_event/amongus
-		if("amongus-ook10")
-			chosen_one = new /datum/twitch_event/amongus/ook
-		if("skinny-5")
-			chosen_one = new /datum/twitch_event/skinny
-		if("buff-5")
-			chosen_one = new /datum/twitch_event/buff
-		if("anime-ook")
-			chosen_one = new /datum/twitch_event/anime_ook
-		else
+	for(var/datum/twitch_event/listed_events as anything in subtypesof(/datum/twitch_event))
+		if(incoming[3] != initial(listed_events.id_tag))
+			continue
+		chosen_one = new listed_events
+	if(!chosen_one)
+		return
+
+	if(last_event != chosen_one)
+		last_event = chosen_one
+		last_event_execution = world.time
+		last_executor = incoming[4]
+	else
+		if((world.time < last_event_execution + 2 SECONDS) && last_executor == incoming[4])
 			return
 
 	switch(SSticker.current_state)
@@ -59,27 +64,26 @@ SUBSYSTEM_DEF(twitch)
 			for(var/datum/twitch_event/listed_event as anything in running_events)
 				if(listed_event.type == chosen_one.type)
 					running_events[listed_event] = running_events[listed_event] + chosen_one.event_duration
+					minor_announce("[listed_event.event_name] has just been extended by [incoming[4]].", "The Observers")
 					return
 
-			chosen_one.run_event()
+			chosen_one.run_event(incoming[4])
 			running_events[chosen_one] = world.time + chosen_one.event_duration
 
 /datum/controller/subsystem/twitch/proc/run_deferred()
 	for(var/listed_item in deferred_handlers)
 		var/datum/twitch_event/chosen_one
-		switch(listed_item)
-			if("amongus-all15")
-				chosen_one = new /datum/twitch_event/amongus
-			if("amongus-ook10")
-				chosen_one = new /datum/twitch_event/amongus/ook
-			if("skinny-5")
-				chosen_one = new /datum/twitch_event/skinny
-			if("buff-5")
-				chosen_one = new /datum/twitch_event/buff
-			if("anime-ook")
-				chosen_one = new /datum/twitch_event/anime_ook
-			else
-				return
+		for(var/datum/twitch_event/listed_events as anything in subtypesof(/datum/twitch_event))
+			if(listed_item != initial(listed_events.id_tag))
+				continue
+			chosen_one = new listed_events
+		if(!chosen_one)
+			return
 		chosen_one.run_event()
 		running_events[chosen_one] = world.time + chosen_one.event_duration
 		deferred_handlers -= listed_item
+
+/datum/controller/subsystem/twitch/proc/add_to_queue(choice_id)
+	deferred_handlers += choice_id
+
+

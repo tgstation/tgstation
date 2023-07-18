@@ -5,7 +5,7 @@
   "dependencies": {
     "common": "workspace:*",
     "dompurify": "^2.3.1",
-    "inferno": "^7.4.8",
+    "inferno": "^8.2.1",
     "tgui": "workspace:*",
     "tgui-dev-server": "workspace:*",
     "tgui-polyfill": "workspace:*"

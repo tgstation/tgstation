@@ -99,6 +99,8 @@
 		armor_check = min(ARMOR_MAX_BLOCK, armor_check) //cap damage reduction at 90%
 		apply_damage(P.damage, P.damage_type, def_zone, armor_check, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness, attack_direction = attack_direction)
 		apply_effects(P.stun, P.knockdown, P.unconscious, P.slur, P.stutter, P.eyeblur, P.drowsy, armor_check, P.stamina, P.jitter, P.paralyze, P.immobilize)
+		if(P.paralyze_timer)
+			Disorient(6 SECONDS, 1, paralyze = 5 SECONDS, stack_status = FALSE)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
 	return . ? BULLET_ACT_HIT : BULLET_ACT_BLOCK

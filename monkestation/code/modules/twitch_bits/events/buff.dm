@@ -2,8 +2,9 @@
 	event_name = "Bodybuilder Mode"
 	event_duration = 5 MINUTES
 	event_flags = TWITCH_AFFECTS_ALL
+	id_tag = "buff-5"
 
-/datum/twitch_event/buff/run_event()
+/datum/twitch_event/buff/run_event(name)
 	. = ..()
 	for(var/mob/living/target in targets)
 		target.apply_displacement_icon(/obj/effect/distortion/buff)

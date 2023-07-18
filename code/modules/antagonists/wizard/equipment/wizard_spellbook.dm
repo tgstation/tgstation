@@ -242,12 +242,12 @@
 			wanted_spells = list(
 				/datum/spellbook_entry/fireball = 1,
 				/datum/spellbook_entry/magicm = 1,
-				/datum/spellbook_entry/disintegrate = 1,
+				/datum/spellbook_entry/smite = 1, //monkestation edit: replaced /datum/spellbook_entry/disintegrate
 				/datum/spellbook_entry/jaunt = 2,
 			)
 		if(WIZARD_LOADOUT_MJOLNIR) //(Mjolnir>2, Summon Itemx1>1, Mutate>2, Force Wall>1, Blink>2, tesla>2) = 10
 			wanted_spells = list(
-				/datum/spellbook_entry/item/mjolnir = 1,
+				/datum/spellbook_entry/summon_mjollnir = 1, //monkestation edit: replaced item/mjollnir with summon_mjollnir
 				/datum/spellbook_entry/summonitem = 1,
 				/datum/spellbook_entry/mutate = 1,
 				/datum/spellbook_entry/forcewall = 1,
@@ -265,7 +265,7 @@
 		if(WIZARD_LOADOUT_SOULTAP) //(Soul Tap>1, Smite>2, Flesh to Stone>2, Mindswap>2, Knock>1, Teleport>2) = 10
 			wanted_spells = list(
 				/datum/spellbook_entry/tap = 1,
-				/datum/spellbook_entry/disintegrate = 1,
+				/datum/spellbook_entry/smite = 1, //monkestation edit: replaced /datum/spellbook_entry/disintegrate, also its funny how bad this loadout is, most likely gonna change it
 				/datum/spellbook_entry/fleshtostone = 1,
 				/datum/spellbook_entry/mindswap = 1,
 				/datum/spellbook_entry/knock = 1,
@@ -322,6 +322,8 @@
 	uses += bonus_to_give
 	while(uses > 0 && length(entries_copy))
 		var/datum/spellbook_entry/entry = pick(entries_copy)
+		if(!entry.can_random) //monkestation edit: as explained on the var, some things dont random well
+			continue //monkestation edit
 		if(!purchase_entry(entry, wizard))
 			continue
 		entries_copy -= entry

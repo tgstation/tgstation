@@ -90,6 +90,8 @@
 
 /obj/effect/spawner/random_engines/Initialize(mapload)
 	..()
+	if(!mapload)
+		return INITIALIZE_HINT_QDEL
 	if(!length(SSmapping.random_engine_templates))
 		message_admins("Room spawner created with no templates available. This shouldn't happen.")
 		return INITIALIZE_HINT_QDEL
@@ -143,7 +145,10 @@
 
 /obj/effect/spawner/random_bar/Initialize(mapload)
 	..()
-	if(!length(SSmapping.random_engine_templates))
+	if(!mapload)
+		return INITIALIZE_HINT_QDEL
+
+	if(!length(SSmapping.random_bar_templates))
 		message_admins("Room spawner created with no templates available. This shouldn't happen.")
 		return INITIALIZE_HINT_QDEL
 	var/list/possible_bar_templates = list()
@@ -156,11 +161,11 @@
 			continue
 		possible_bar_templates[bar_candidate] = bar_candidate.weight
 	if(possible_bar_templates.len)
-		var/datum/map_template/random_room/random_engines/template = pick_weight(possible_bar_templates)
+		var/datum/map_template/random_room/random_bar/template = pick_weight(possible_bar_templates)
 		template.load(get_turf(src), centered = template.centerspawner)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/random_bar/icebox
-	name = "kilo bar spawner"
+	name = "Icebox bar spawner"
 	room_width = 18
 	room_height = 12

@@ -432,7 +432,7 @@
 	icon_state ="energypizza"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 18,
-		/datum/reagent/consumable/liquidelectricity/enriched = 18,
+		/datum/reagent/consumable/liquidelectricity = 18,
 	)
 	tastes = list("pure electricity" = 4, "pizza" = 2)
 	slice_type = /obj/item/food/pizzaslice/energy

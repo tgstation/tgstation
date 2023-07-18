@@ -1,0 +1,5 @@
+author: "wraith-54321"
+delete-after: True
+changes:
+  - rscadd: "Added 2 new random bars for icebox"
+  - code_imp: "minor fixes to random room code"

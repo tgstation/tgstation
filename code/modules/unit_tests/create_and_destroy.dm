@@ -33,6 +33,12 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		//Both are abstract types meant to scream bloody murder if spawned in raw
 		/obj/item/organ/external,
 		/obj/item/organ/external/wings,
+		/obj/effect/spawner/random_engines,
+		/obj/effect/spawner/random_bar,
+		///this instant starts a timer, and if its being instantly deleted it can cause issues
+		/obj/machinery/atm,
+		/datum/hotspot,
+		/obj/machinery/ocean_elevator,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers)
@@ -103,6 +109,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	ignore += subtypesof(/obj/machinery/airlock_controller)
 	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
 	ignore += subtypesof(/atom/movable/screen/escape_menu)
+	///we generate mobs in these and create destroy does this in null space
+	ignore += typesof(/obj/item/loot_table_maker,)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/original_turf_type = spawn_at.type

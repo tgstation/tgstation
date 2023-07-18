@@ -305,6 +305,7 @@
 				if("extract")
 					if(disk && !disk.read_only)
 						disk.gene = G
+						seed.genes -= G
 						if(istype(G, /datum/plant_gene/core))
 							var/datum/plant_gene/core/gene = G
 							if(istype(G, /datum/plant_gene/core/potency))

@@ -73,8 +73,12 @@
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		var/iter_bleed_rate = iter_part.get_modified_bleed_rate()
 		temp_bleed += iter_bleed_rate * seconds_per_tick
+		if(HAS_TRAIT(src, TRAIT_HEAVY_BLEEDER))
+			temp_bleed *= 2
 
 		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
+			if(HAS_TRAIT(src, TRAIT_HEAVY_BLEEDER))
+				iter_part.adjustBleedStacks(-1, 0) /// we basically double up on bleedstacks
 			iter_part.adjustBleedStacks(-1, 0)
 
 	if(temp_bleed)
@@ -335,6 +339,7 @@
 		var/obj/effect/decal/cleanable/blood/drip/drop = locate() in T
 		if(drop)
 			if(drop.drips < 5)
+				T.pollute_turf(/datum/pollutant/metallic_scent, 5)
 				drop.drips++
 				drop.add_overlay(pick(drop.random_icon_states))
 				drop.transfer_mob_blood_dna(src)
@@ -343,9 +348,13 @@
 				temp_blood_DNA = GET_ATOM_BLOOD_DNA(drop) //we transfer the dna from the drip to the splatter
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
+			T.pollute_turf(/datum/pollutant/metallic_scent, 5)
 			drop = new(T, get_static_viruses())
 			drop.transfer_mob_blood_dna(src)
 			return
+
+	// Create a bit of metallic pollution, as that's how blood smells
+	T.pollute_turf(/datum/pollutant/metallic_scent, 30)
 
 	// Find a blood decal or create a new one.
 	var/obj/effect/decal/cleanable/blood/B = locate() in T

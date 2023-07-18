@@ -75,17 +75,20 @@
 	name = "Interim Product Alpha"
 	description = "This reagent is a prefactor to the purity tester reagent, and will react with stable plasma to create it"
 	color = "#bafa69"
+	restricted = TRUE
 
 /datum/reagent/prefactor_b
 	name = "Interim Product Beta"
 	description = "This reagent is a prefactor to the reaction speed agent reagent, and will react with stable plasma to create it"
 	color = "#8a3aa9"
+	restricted = TRUE
 
 /datum/reagent/reaction_agent/purity_tester
 	name = "Purity Tester"
 	description = "This reagent will consume itself and violently react if there is a highly impure reagent in the beaker."
 	ph = 3
 	color = "#ffffff"
+	restricted = TRUE
 
 /datum/reagent/reaction_agent/purity_tester/intercept_reagents_transfer(datum/reagents/target, amount)
 	. = ..()
@@ -108,6 +111,7 @@
 	description = "This reagent will consume itself and speed up an ongoing reaction, modifying the current reaction's purity by it's own."
 	ph = 10
 	color = "#e61f82"
+	restricted = TRUE
 	///How much the reaction speed is sped up by - for 5u added to 100u, an additional step of 1 will be done up to a max of 2x
 	var/strength = 20
 

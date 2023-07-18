@@ -1,0 +1,5 @@
+author: "NanoCats"
+delete-after: True
+changes:
+  - bugfix: "tramstation no longer kills 5 chickens on every map load"
+  - rscadd: "adds two new uniforms to the meta shop"

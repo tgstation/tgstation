@@ -1,3 +1,6 @@
+/// Returns 0 if A and B are on adjacent turfs, otherwise return dist.
+#define BOUNDS_DIST(A, B) ((get_dist(A, B) <= 1 ? 0 : max(0, bounds_dist(A, B))))
+
 ///Returns the src and all recursive contents as a list.
 /atom/proc/get_all_contents(ignore_flag_1)
 	. = list(src)

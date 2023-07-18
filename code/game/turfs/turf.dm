@@ -67,7 +67,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/tmp/datum/lighting_corner/lighting_corner_SW
 	var/tmp/datum/lighting_corner/lighting_corner_NW
 
-
 	///Which directions does this turf block the vision of, taking into account both the turf's opacity and the movable opacity_sources.
 	var/directional_opacity = NONE
 	///Lazylist of movable atoms providing opacity sources.
@@ -158,7 +157,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(requires_activation)
 		CALCULATE_ADJACENT_TURFS(src, KILL_EXCITED)
 
-	if (light_power && light_range)
+	if (light_power && light_outer_range)
 		update_light()
 
 	if (opacity)
@@ -427,6 +426,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return FALSE
 	if(!can_pass_self) //Even if mover is unstoppable they need to bump us.
 		first_bump = src
+	if(mover.cant_grab) //This will cause someone nightmares one day, but that someone isn't me
+		return TRUE
 	if(first_bump)
 		mover.Bump(first_bump)
 		return (mover.movement_type & PHASING)

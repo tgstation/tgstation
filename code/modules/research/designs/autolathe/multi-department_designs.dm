@@ -153,6 +153,19 @@
 	maxstack = MAXCOIL
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/industrial_coil
+	name = "Industrial Cable Coil"
+	id = "industrial_coil"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 30, /datum/material/glass = 5)
+	build_path = /obj/item/stack/cable_coil/industrial
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING,
+	)
+	maxstack = MAXCOIL
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/toolbox
 	name = "Toolbox"
 	id = "tool_box"

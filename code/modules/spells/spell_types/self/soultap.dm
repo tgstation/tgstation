@@ -18,6 +18,7 @@
 	invocation = "AT ANY COST!"
 	invocation_type = INVOCATION_SHOUT
 	spell_max_level = 1
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC //monkestation edit: this spell is never used so im making it robeless
 
 	/// The amount of health we take on tap
 	var/tap_health_taken = 20

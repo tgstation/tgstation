@@ -73,10 +73,11 @@ const GhostFormInput = (
     <Dropdown
       disabled={!data.content_unlocked}
       selected={props.value}
-      displayText={displayTexts[props.value]}
+      displayText={props.value ? displayTexts[props.value] : null}
       onSelected={props.handleSetValue}
       width="100%"
       options={options}
+      buttons
     />
   );
 };

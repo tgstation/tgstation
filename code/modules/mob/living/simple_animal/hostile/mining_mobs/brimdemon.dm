@@ -41,7 +41,7 @@
 	death_sound = 'sound/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_power = 5
-	light_range = 1.4
+	light_outer_range = 1.4
 	crusher_loot = /obj/item/crusher_trophy/brimdemon_fang
 	/// Are we charging/firing? If yes stops our movement.
 	var/firing = FALSE
@@ -168,7 +168,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_power = 3
-	light_range = 2
+	light_outer_range = 2
 
 /obj/effect/brimbeam/Initialize(mapload)
 	. = ..()

@@ -62,13 +62,13 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 
 /obj/structure/no_effect_signpost/void/Initialize(mapload)
 	. = ..()
-	set_light(range, power)
+	set_light(l_outer_range = range, l_power = power)
 
 // Some VERY dim lights, used for the void sacrifice realm.
 /obj/machinery/light/very_dim
 	nightshift_allowed = FALSE
 	bulb_colour = "#d6b6a6ff"
-	brightness = 3
+	bulb_inner_range = 3
 	fire_brightness = 2
 	bulb_power = 0.5
 

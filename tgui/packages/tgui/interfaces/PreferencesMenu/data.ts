@@ -74,6 +74,7 @@ export type Department = {
 export type Job = {
   description: string;
   department: string;
+  alt_titles?: string[];
 };
 
 export type Quirk = {
@@ -87,6 +88,11 @@ export type QuirkInfo = {
   max_positive_quirks: number;
   quirk_info: Record<string, Quirk>;
   quirk_blacklist: string[][];
+};
+
+export type LoadoutInfo = {
+  user_is_donator: BooleanLike;
+  selected_loadout: string[];
 };
 
 export enum RandomSetting {
@@ -150,6 +156,7 @@ export type PreferencesMenuData = {
 
   job_bans?: string[];
   job_days_left?: Record<string, number>;
+  job_alt_titles: Record<string, string>;
   job_required_experience?: Record<
     string,
     {
@@ -170,9 +177,28 @@ export type PreferencesMenuData = {
   active_slot: number;
   name_to_use: string;
 
+  user_is_donator: BooleanLike;
+  selected_loadout: string[];
+  total_coins: number;
+  loadout_tabs: LoadoutData[];
   window: Window;
 };
 
+type LoadoutData = {
+  name: string;
+  title: string;
+  contents: LoadoutItem[];
+};
+type LoadoutItem = {
+  name: string;
+  path: string;
+  is_greyscale: boolean;
+  is_renamable: boolean;
+  is_job_restricted: boolean;
+  is_donator_only: boolean;
+  is_ckey_whitelisted: boolean;
+  tooltip_text: string;
+};
 export type ServerData = {
   jobs: {
     departments: Record<string, Department>;
@@ -182,6 +208,7 @@ export type ServerData = {
     types: Record<string, Name>;
   };
   quirks: QuirkInfo;
+  loadout: LoadoutInfo;
   random: {
     randomizable: string[];
   };

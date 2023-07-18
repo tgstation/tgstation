@@ -518,6 +518,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 			SSliquids.burning_turfs |= adjacent_turf
 			for(var/atom/movable/movable in adjacent_turf)
 				movable.fire_act((T20C+50) + (50*adjacent_turf.liquids.fire_state), 125)
+				member.pollute_turf_list(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_ACTIVE_EMITTER_CAP)
 
 /datum/liquid_group/proc/extinguish_all()
 	group_burn_power = 0
@@ -538,6 +539,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		return
 	member.liquids.fire_state = LIQUID_FIRE_STATE_NONE
 	member.liquids.set_fire_effect()
+	member.pollute_turf_list(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_ACTIVE_EMITTER_CAP)
 
 ///EDGE COLLECTION AND PROCESSING
 

@@ -1,0 +1,5 @@
+author: "SeeBeeSee"
+delete-after: True
+changes:
+  - rscadd: "Added secdusters, bandanas, and cowboy hats"
+  - rscadd: "Secduster stuff added to secdrobe"

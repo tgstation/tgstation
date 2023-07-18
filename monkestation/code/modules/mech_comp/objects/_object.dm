@@ -45,6 +45,8 @@
 	var/datum/component/mclinker/link = tool.GetComponent(/datum/component/mclinker)
 	if(link)
 		if(!create_link(user, link.target))
+			to_chat(user, span_warning("Unsucessful link buffer cleared."))
+			qdel(link)
 			return
 		qdel(link)
 		return

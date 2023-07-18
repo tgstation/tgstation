@@ -40,7 +40,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	AIStatus = AI_OFF
 	can_have_ai = FALSE
 	light_system = MOVABLE_LIGHT
-	light_range = 3
+	light_outer_range = 3
 	light_on = FALSE
 	hud_type = /datum/hud/guardian
 	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.

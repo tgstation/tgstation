@@ -11,6 +11,7 @@
 	active_power_usage = 1000
 	buffer = 300
 	category="Distribution"
+	reagent_flags = NO_REACT
 
 	/// Pump is turned on by engineer, etc.
 	var/turned_on = FALSE
@@ -23,12 +24,15 @@
 	/// Base amount to drain
 	var/drain_flat = 20
 	/// Additional ratio of liquid volume to drain
-	var/drain_percent = 0.4
+	var/drain_percent = 1
 
 	/// Currently pumping.
 	var/is_pumping = FALSE
 	/// Floor tile is placed down
 	var/tile_placed = FALSE
+
+	var/processes = 0
+	var/processes_required = 25
 
 /obj/machinery/plumbing/floor_pump/Initialize(mapload, bolt, layer)
 	. = ..()
@@ -189,7 +193,11 @@
 	return affected_turf.liquids && affected_turf.liquids.liquid_group.expected_turf_height > height_regulator
 
 /obj/machinery/plumbing/floor_pump/input/pump_turf(turf/affected_turf, seconds_per_tick, multiplier)
-	if(!affected_turf.liquids || !affected_turf.liquids.liquid_group)
+	if(processes < processes_required)
+		processes++
+		return
+	processes = 0
+	if(!affected_turf.liquids || !affected_turf.liquids.liquid_group || reagents.total_volume)
 		return
 	var/target_value = seconds_per_tick * (drain_flat + (affected_turf.liquids.liquid_group.total_reagent_volume * drain_percent)) * multiplier
 	//Free space handling

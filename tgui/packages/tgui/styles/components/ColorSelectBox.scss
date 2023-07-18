@@ -1,0 +1,53 @@
+@use 'sass:color';
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss' as *;
+
+$color-default: color.adjust(base.$color-bg, $lightness: 10%) !default;
+$color-disabled: #0c0c0c !default;
+$color-selected: colors.bg(colors.$green) !default;
+
+.ColorSelectBox {
+  display: inline-block;
+  box-sizing: content-box;
+  height: 11px;
+  width: 11px;
+  border: 2px solid $color-default;
+
+  .ColorSelectBox--inner {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    background-color: black;
+  }
+
+  &:hover {
+    transition: color 0ms, border-color 0ms;
+  }
+
+  &:focus {
+    transition: color 100ms, border-color 100ms;
+  }
+
+  &:hover,
+  &:focus {
+    border-color: lighten($color-default, 30%);
+  }
+}
+
+.ColorSelectBox--selected {
+  border-color: $color-selected;
+  &:hover,
+  &:focus {
+    border-color: lighten($color-selected, 30%);
+  }
+}
+
+.ColorSelectBox--disabled {
+  border-color: $color-disabled;
+  &:hover,
+  &:focus {
+    border-color: $color-disabled;
+  }
+}

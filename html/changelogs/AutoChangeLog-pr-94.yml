@@ -1,0 +1,5 @@
+author: "dwasint"
+delete-after: True
+changes:
+  - rscadd: "new twitch events"
+  - code_imp: "restructured event handling for twitch integration"

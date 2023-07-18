@@ -266,21 +266,9 @@ const ProductImage = (props) => {
   const { product } = props;
 
   return product.img ? (
-    <img
-      src={`data:image/jpeg;base64,${product.img}`}
-      style={{
-        'vertical-align': 'middle',
-        'horizontal-align': 'middle',
-      }}
-    />
+    <img src={`data:image/jpeg;base64,${product.img}`} />
   ) : (
-    <span
-      className={classes(['vending32x32', product.path])}
-      style={{
-        'vertical-align': 'middle',
-        'horizontal-align': 'middle',
-      }}
-    />
+    <span className={classes(['vending32x32', product.path])} />
   );
 };
 

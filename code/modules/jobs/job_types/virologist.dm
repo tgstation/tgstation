@@ -45,6 +45,9 @@
 
 	id_trim = /datum/id_trim/job/virologist
 	uniform = /obj/item/clothing/under/rank/medical/virologist
+	backpack_contents = list(
+		/obj/item/extrapolator = 1,
+	)
 	suit = /obj/item/clothing/suit/toggle/labcoat/virologist
 	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/modular_computer/pda/viro

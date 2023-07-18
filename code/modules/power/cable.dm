@@ -28,6 +28,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/datum/powernet/powernet
 	var/cable_color = CABLE_COLOR_YELLOW
 	var/is_fully_initialized = FALSE
+	///used to seperate industrial and normal cables
+	var/cable_tag = "normal"
 
 /obj/structure/cable/layer1
 	color = CABLE_HEX_COLOR_RED
@@ -107,6 +109,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		var/inverse = turn(check_dir, 180)
 		for(var/obj/structure/cable/C in TB)
 			if(C.cable_layer & cable_layer)
+				if(src.cable_tag != C.cable_tag)
+					continue
 				linked_dirs |= check_dir
 				C.linked_dirs |= inverse
 

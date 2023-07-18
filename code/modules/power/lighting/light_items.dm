@@ -10,7 +10,8 @@
 	custom_materials = list(/datum/material/glass=100)
 	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 	///How much light it gives off
-	var/brightness = 2
+	var/bulb_outer_range = 3
+	var/bulb_inner_range = 2
 	///LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/status = LIGHT_OK
 	///Base icon state for each bulb types
@@ -36,7 +37,8 @@
 	icon_state = "ltube"
 	base_state = "ltube"
 	inhand_icon_state = "ltube"
-	brightness = 8
+	bulb_outer_range = 6
+	bulb_inner_range = 2
 	custom_price = PAYCHECK_CREW * 0.5
 
 /obj/item/light/tube/update_icon_state()
@@ -59,7 +61,8 @@
 	inhand_icon_state = "contvapour"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	brightness = 4
+	bulb_outer_range = 5
+	bulb_inner_range = 1
 	custom_price = PAYCHECK_CREW * 0.4
 
 /obj/item/light/bulb/broken

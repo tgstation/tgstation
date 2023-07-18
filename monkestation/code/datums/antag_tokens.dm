@@ -22,6 +22,8 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 
 /datum/antag_token_holder/New(client/creator)
 	. = ..()
+	if(!creator)
+		return
 	owner = creator
 
 	var/datum/preferences/owners_prefs = creator.prefs
@@ -52,6 +54,8 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 		return FALSE
 	if(!GLOB.used_monthly_token.len)
 		var/json_file = file("data/monthly_tokens.json")
+		if(!json_file)
+			return TRUE
 		GLOB.used_monthly_token = json_decode(file2text(json_file))
 	if(owner.ckey in GLOB.used_monthly_token)
 		return FALSE

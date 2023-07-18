@@ -257,6 +257,11 @@ GLOBAL_LIST_INIT(store_head, generate_store_items(/datum/store_item/head))
 	item_path = /obj/item/clothing/head/wig/natural
 	item_cost = 4000
 
+/datum/store_item/head/tragic
+	name = "Tragic Mime Headpiece"
+	item_path = /obj/item/clothing/head/tragic
+	item_cost = 1000
+
 /*
 *	JOB-LOCKED
 */

@@ -232,7 +232,7 @@
 	potency = 30 //-> brightness
 	growthstages = 4
 	rarity = 20
-	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
+	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/potencylimit)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	possible_mutations = list(/datum/hydroponics/plant_mutation/glow_cap, /datum/hydroponics/plant_mutation/shadow_shroom)
 	reagents_add = list(/datum/reagent/uranium/radium = 0.1, /datum/reagent/phosphorus = 0.1, /datum/reagent/consumable/nutriment = 0.04)

@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(store_toys, generate_store_items(/datum/store_item/toys))
 	item_cost = 8000
 
 /datum/store_item/toys/tyria
-	name = "Tryia Plush"
+	name = "Tyria Plush"
 	item_path = /obj/item/toy/plush/moth/tyriaplush
 	item_cost = 10000
 
@@ -196,4 +196,19 @@ GLOBAL_LIST_INIT(store_toys, generate_store_items(/datum/store_item/toys))
 /datum/store_item/toys/cirno_plush
 	name = "Cirno Plush"
 	item_path = /obj/item/toy/plush/cirno_plush
+	item_cost = 10000
+
+/datum/store_item/toys/knight_plush
+	name = "Knight Plush"
+	item_path = /obj/item/toy/plush/knightplush
+	item_cost = 10000
+
+/datum/store_item/toys/turnip_plush
+	name = "Turnip Plush"
+	item_path = /obj/item/toy/plush/turnipplush
+	item_cost = 10000
+
+/datum/store_item/toys/tiny_witch_plush
+	name = "Tiny Witch Plush"
+	item_path = /obj/item/toy/plush/tinywitchplush
 	item_cost = 10000

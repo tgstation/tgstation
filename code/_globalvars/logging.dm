@@ -18,6 +18,7 @@ GLOBAL_PROTECT(config_error_log)
 GLOBAL_VAR(demo_log)
 GLOBAL_PROTECT(demo_log)
 
+
 GLOBAL_VAR(dynamic_log)
 GLOBAL_PROTECT(dynamic_log)
 

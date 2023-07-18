@@ -1,0 +1,5 @@
+author: "NanoCats"
+delete-after: True
+changes:
+  - rscadd: "Refurbished NTSS Independence"
+  - rscdel: "Scrapped old NTSS Independence"

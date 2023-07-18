@@ -9835,7 +9835,7 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/rock/pile/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "cmI" = (
@@ -9988,7 +9988,7 @@
 "cnK" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/grassy/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "cnL" = (
@@ -21789,7 +21789,7 @@
 	dir = 5
 	},
 /obj/item/kirbyplants/random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
@@ -26940,6 +26940,9 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 10
+	},
+/obj/item/food/spaghetti/security{
+	pixel_y = 15
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hos)
@@ -41734,6 +41737,8 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
+/obj/item/ai_module/core/full/crewsimovpp,
+/obj/item/ai_module/core/full/crewsimov,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "keC" = (
@@ -49871,7 +49876,7 @@
 	dir = 10
 	},
 /obj/item/kirbyplants/random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
 	},
@@ -49959,7 +49964,7 @@
 "mhj" = (
 /obj/structure/flora/bush/grassy/style_random,
 /obj/structure/flora/rock/pile/jungle/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "mhl" = (
@@ -65362,6 +65367,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel)
+"pXY" = (
+/obj/machinery/door/firedoor/heavy,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/iron/white/smooth_half{
+	dir = 1
+	},
+/area/station/science/ordnance/storage)
 "pYh" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
@@ -76894,7 +76909,7 @@
 	dir = 6
 	},
 /obj/item/kirbyplants/random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
@@ -84063,7 +84078,7 @@
 "uCY" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "uDb" = (
@@ -84730,7 +84745,7 @@
 /obj/structure/railing{
 	dir = 9
 	},
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 1
 	},
@@ -86818,6 +86833,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "vnu" = (
@@ -87541,6 +87557,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -88499,6 +88516,7 @@
 /obj/effect/spawner/random/aimodule/neutral{
 	pixel_y = -16
 	},
+/obj/item/ai_module/core/freeformcore,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "vFx" = (
@@ -131624,7 +131642,7 @@ wtb
 bKw
 qgo
 vvy
-sBE
+pXY
 tsZ
 sBE
 hkU

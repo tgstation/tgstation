@@ -583,9 +583,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	update_use_power(total_users > 0 ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 	update_mode_power_usage(ACTIVE_POWER_USE, active_power_usage + HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users))
 	if(total_users || replay_mode)
-		set_light(2)
+		set_light(l_outer_range = 2)
 	else
-		set_light(0)
+		set_light(l_outer_range = 2)
 	update_appearance()
 
 /obj/machinery/holopad/update_icon_state()

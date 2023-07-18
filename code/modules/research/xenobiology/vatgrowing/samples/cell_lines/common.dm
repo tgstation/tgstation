@@ -427,7 +427,7 @@
 		/datum/reagent/consumable/nutriment/protein,
 		/datum/reagent/consumable/nutriment/vitamin,
 		/datum/reagent/consumable/nutriment/peptides,
-		/datum/reagent/consumable/liquidelectricity/enriched,
+		/datum/reagent/consumable/liquidelectricity,
 		/datum/reagent/growthserum,
 		/datum/reagent/yuck)
 

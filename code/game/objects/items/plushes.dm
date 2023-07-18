@@ -508,7 +508,7 @@
 	greyscale_config = /datum/greyscale_config/plush_lizard
 	attack_verb_continuous = list("claws", "hisses", "tail slaps")
 	attack_verb_simple = list("claw", "hiss", "tail slap")
-	squeak_override = list('sound/weapons/slash.ogg' = 1)
+	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
 
 /obj/item/toy/plush/lizard_plushie/Initialize(mapload)
 	. = ..()
@@ -537,7 +537,7 @@
 	// space lizards can't hit people with their tail, it's stuck in their suit
 	attack_verb_continuous = list("claws", "hisses", "bops")
 	attack_verb_simple = list("claw", "hiss", "bops")
-	squeak_override = list('sound/weapons/slash.ogg' = 1)
+	squeak_override = list('monkestation/sound/voice/weh.ogg' = 1) // Monkestation Edit
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
@@ -715,6 +715,24 @@
 	var/creepy_plush_type = "mothperson" //for modularizing creepy toys
 	var/has_creepy_icons = FALSE //for updating icons
 
+	// only used for the base moth plush light
+	light_system = MOVABLE_LIGHT
+	light_outer_range = 4
+	light_power = 1
+
+	/// Is the light turned on or off currently
+	var/on = FALSE
+
+/obj/item/toy/plush/moth/Initialize(mapload)
+	. = ..()
+	if(icon_state == "[initial(icon_state)]-on")
+		on = TRUE
+	update_brightness()
+
+/obj/item/toy/plush/moth/attack_self(mob/user)
+	. = ..()
+	toggle_light()
+
 /obj/item/toy/plush/moth/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  It looks like [user.p_theyre()] trying to commit suicide!"))
 	suicide_count++
@@ -735,6 +753,25 @@
 		forceMove(random_open_spot)
 	user.dust(just_ash = FALSE, drop_items = TRUE)
 	return MANUAL_SUICIDE
+
+/obj/item/toy/plush/moth/proc/update_brightness()
+	if(on)
+		icon_state = "[initial(icon_state)]_on"
+	else
+		icon_state = initial(icon_state)
+
+
+/obj/item/toy/plush/moth/proc/toggle_light()
+	if (icon_state == "moffplush_on" || icon_state == "moffplush")
+		on = !on
+		update_brightness()
+
+		set_light_on(on)
+		if(light_system == STATIC_LIGHT)
+			update_light()
+
+		return TRUE
+	return FALSE
 
 /obj/item/toy/plush/pkplush
 	name = "peacekeeper plushie"

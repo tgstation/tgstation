@@ -706,7 +706,7 @@
 
 /// Jupitercup's fragile Liquid Electricity
 /datum/plant_gene/reagent/preset/liquidelectricity
-	reagent_id = /datum/reagent/consumable/liquidelectricity/enriched
+	reagent_id = /datum/reagent/consumable/liquidelectricity
 	rate = 0.1
 
 /// Carbon Roses's fragile Carbon

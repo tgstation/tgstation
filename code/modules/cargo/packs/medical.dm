@@ -1,6 +1,5 @@
 /datum/supply_pack/medical
 	group = "Medical"
-	access_view = ACCESS_MEDICAL
 	crate_type = /obj/structure/closet/crate/medical
 
 /datum/supply_pack/medical/bloodpacks
@@ -16,6 +15,7 @@
 					/obj/item/reagent_containers/blood/o_minus,
 					/obj/item/reagent_containers/blood/lizard,
 					/obj/item/reagent_containers/blood/ethereal,
+					/obj/item/reagent_containers/blood/slime
 				)
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
