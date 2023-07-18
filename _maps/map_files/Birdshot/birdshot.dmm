@@ -20684,11 +20684,8 @@
 /area/station/security/execution/transfer)
 "hOR" = (
 /obj/structure/closet/crate,
-/obj/projectile/bullet/cannonball,
-/obj/projectile/bullet/cannonball,
-/obj/projectile/bullet/cannonball,
-/obj/projectile/bullet/cannonball,
 /obj/structure/barricade/wooden/crude,
+/obj/item/stack/cannonball/four,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "hOS" = (
