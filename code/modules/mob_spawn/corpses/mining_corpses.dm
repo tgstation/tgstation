@@ -265,7 +265,8 @@
 	if(prob(30))
 		belt = pick(list(
 			/obj/item/crowbar =2,
-			/obj/item/fishing_rod = 4,
+			/obj/item/fishing_hook = 2,
+			/obj/item/fishing_hook/shiny = 2,
 			/obj/item/flashlight/flare/torch = 4,
 		))
 	if(prob(30))
