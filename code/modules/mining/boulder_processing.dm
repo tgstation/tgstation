@@ -49,6 +49,7 @@
 	random_boulder.Shake(duration = 1.5 SECONDS)
 	//todo: Maybe add some kind of teleporation raster effect thing? filters? I can probably make something happen here...
 	sleep(1.5 SECONDS)
+	flick("brm-flash", src)
 	if(QDELETED(random_boulder))
 		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		balloon_alert_to_viewers("Target lost!")
@@ -76,6 +77,7 @@
 		my_boulder.forceMove(contents)
 		visible_message(span_warning("[my_boulder] is smelted into metals?!"))
 		breakdown_boulder(my_boulder)
+		return FALSE
 
 
 /obj/machinery/bouldertech/refinery

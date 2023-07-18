@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(ore_generation)
 	for(var/vent in processed_vents)
 		var/obj/structure/ore_vent/current_vent = vent
 
-		for(var/obj/item//old_rock as anything in current_vent.loc) /// This is expensive and bad, I know. Optimize?
+		for(var/obj/item/old_rock as anything in current_vent.loc) /// This is expensive and bad, I know. Optimize?
 			if(!isitem(old_rock))
 				continue
 			available_boulders += old_rock
@@ -24,8 +24,8 @@ SUBSYSTEM_DEF(ore_generation)
 		var/obj/item/boulder/new_rock = new (current_vent.loc)
 		var/list/mats_list = current_vent.create_mineral_contents()
 		current_vent.Shake(duration = 1.5 SECONDS)
-		new_rock.custom_materials = mats_list
+		new_rock.set_custom_materials(mats_list)
 		available_boulders += new_rock
-		///new_rock.set_custom_materials(mats_list)
+
 
 

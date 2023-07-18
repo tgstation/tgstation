@@ -1,4 +1,3 @@
-
 /obj/structure/ore_vent
 	name = "ore vent"
 	desc = "An ore vent, brimming with underground ore. Scan with an advanced mining scanner to start extracting ore from it."
@@ -64,13 +63,19 @@
  * Then assigns custom_materials based on boulder_size, assigned via the ore_quantity_function
  */
 /obj/structure/ore_vent/proc/create_mineral_contents()
+	// var/list/refined_list = list()
+	// for(var/iteration in 1 to minerals_per_boulder)
+	// 	var/picked_mat = pick_weight(mineral_breakdown) // Material should be picked, weighed by the weights of that vent's output.
+	// 	var/list/quantity_list = list()
+	// 	quantity_list[picked_mat] = ore_quantity_function(iteration)
+	// 	refined_list.Insert(refined_list.len, quantity_list)
+	// return refined_list
+
 	var/list/refined_list = list()
-	say(pick_weight(mineral_breakdown))
 	for(var/iteration in 1 to minerals_per_boulder)
-		var/picked_mat = pick_weight(mineral_breakdown) // Material should be picked, weighed by random weights.
-		var/list/quantity_list = list()
-		quantity_list[picked_mat] = ore_quantity_function(iteration)
-		refined_list.Insert(refined_list.len, quantity_list)
+		var/datum/material/material = pick_weight(mineral_breakdown)
+		refined_list.Insert(refined_list.len, material)
+		refined_list[material] += ore_quantity_function(iteration)
 	return refined_list
 
 /**
@@ -124,11 +129,11 @@
 	for(var/potential_miner as anything in oview(5))
 		if(ishuman(potential_miner))
 			var/mob/living/carbon/human/true_miner = potential_miner
-			var/obj/item/card/id/user_id_card = get_idcard(TRUE)
+			var/obj/item/card/id/user_id_card = true_miner.get_idcard(TRUE)
 			if(!user_id_card)
 				continue
 			if(user_id_card)
-				user_id_card.registered_account.mining_points +=
+				user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER * boulder_size)
 
 /obj/structure/ore_vent/starter_resources
 	name = "active ore vent"
