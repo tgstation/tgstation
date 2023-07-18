@@ -369,3 +369,8 @@
 	description = "Slam dunk! Boom, shakalaka!"
 	mood_change = 2
 	timeout = 5 MINUTES
+
+/datum/mood_event/satisfied_nomad
+	description = "Ah, travel to see new things! Now THIS is the life!"
+	mood_change = 3
+	timeout = 5 MINUTES

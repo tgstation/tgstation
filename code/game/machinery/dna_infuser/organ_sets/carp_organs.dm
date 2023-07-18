@@ -25,11 +25,45 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
 
+	actions_types = list(/datum/action/cooldown/euryhaline_adaptation)
+
 /obj/item/organ/internal/lungs/carp/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "neck has odd gills.", BODY_ZONE_HEAD)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 	ADD_TRAIT(src, TRAIT_SPACEBREATHING, REF(src))
+	// oh god
+	add_gas_reaction(/datum/gas/oxygen, always = PROC_REF(breathe_oxygen))
+
+/// Make yourself able to breath oxygen for 5 minutes. Refreshes on visiting a new zlevel.
+/datum/action/adapt_lungs
+	name = "Euryhaline Adaptation"
+	desc = "Spin a web to slow down potential prey."
+	button_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "adapt_lungs"
+	background_icon_state = "bg_alien"
+	overlay_icon_state = "bg_alien_border"
+	check_flags = AB_CHECK_CONSCIOUS
+	var/ready = TRUE
+
+/datum/action/cooldown/lay_web/Grant(mob/grant_to)
+	. = ..()
+	if (!owner)
+		return
+	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_status_on_signal))
+
+/datum/action/cooldown/lay_web/Remove(mob/removed_from)
+	. = ..()
+	UnregisterSignal(removed_from, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED))
+
+
+/// Returns true if there's a web we can't put stuff on in our turf
+/datum/action/cooldown/lay_web/proc/obstructed_by_other_web()
+	return !!(locate(/obj/structure/spider/stickyweb) in get_turf(owner))
+
+/datum/action/cooldown/lay_web/Activate()
+	. = ..()
+
 
 ///occasionally sheds carp teeth, stronger melee (bite) attacks, but you can't cover your mouth anymore.
 /obj/item/organ/internal/tongue/carp
@@ -87,10 +121,38 @@
 
 /obj/item/knife/carp
 	name = "carp tooth"
-	desc = "Looks sharp. Sharp enough to poke someone's eye out. Holy fuck it's big."
+	desc = "Looks sharp. Sharp enough to poke someone's eye out. Or pry something open? Wow, convenient for exploring space!"
 	icon_state = "carptooth"
+	tool_behaviour = TOOL_KNIFE
 
-///carp brain. you need to occasionally go to a new zlevel. think of it as... walking your dog!
+/obj/item/knife/carp/Initialize(mapload)
+	. = ..()
+	AddComponent( \
+		/datum/component/transforming, \
+		force_on = force, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		clumsy_check = FALSE, \
+		inhand_icon_change = FALSE, \
+	)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Toggles between crowbar and wirecutters and gives feedback to the user.
+ */
+/obj/item/crowbar/power/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	tool_behaviour = (active ? TOOL_CROWBAR : TOOL_KNIFE)
+	if(user)
+		balloon_alert(user, "switched to [active ? "prying" : "cutting"]")
+	SEND_SOUND(src, 'sound/items/unsheath.ogg')
+	return COMPONENT_NO_DEFAULT_MESSAGE
+
+///carp brain. happy from going to new places.
 /obj/item/organ/internal/brain/carp
 	name = "mutated carp-brain"
 	desc = "Carp DNA infused into what was once a normal brain."
@@ -100,11 +162,6 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
 
-	///Timer counting down. When finished, the owner gets a bad moodlet.
-	var/cooldown_timer
-	///how much time the timer is given
-	var/cooldown_time = 10 MINUTES
-
 /obj/item/organ/internal/brain/carp/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
@@ -112,7 +169,6 @@
 
 /obj/item/organ/internal/brain/carp/on_insert(mob/living/carbon/brain_owner)
 	. = ..()
-	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE|TIMER_UNIQUE)
 	RegisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(satisfied_nomad))
 
 //technically you could get around the mood issue by extracting and reimplanting the brain but it will be far easier to just go one z there and back
@@ -124,13 +180,9 @@
 /obj/item/organ/internal/brain/carp/get_attacking_limb(mob/living/carbon/human/target)
 	return owner.get_bodypart(BODY_ZONE_HEAD)
 
-/obj/item/organ/internal/brain/carp/proc/unsatisfied_nomad()
-	owner.add_mood_event("nomad", /datum/mood_event/unsatisfied_nomad)
-
 /obj/item/organ/internal/brain/carp/proc/satisfied_nomad()
 	SIGNAL_HANDLER
-	owner.clear_mood_event("nomad")
-	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE|TIMER_UNIQUE)
+	owner.add_mood_event("nomad", /datum/mood_event/satisfied_nomad)
 
 /// makes you cold resistant, but heat-weak.
 /obj/item/organ/internal/heart/carp
