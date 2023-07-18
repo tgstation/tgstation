@@ -212,13 +212,13 @@
 				render_list += "<span class='danger ml-1'>[M] doesn't have any lungs!</span>\n"
 			else
 				if(carbon_patient.stat == DEAD || (HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)) || (HAS_TRAIT(carbon_patient, TRAIT_NOBREATH))|| carbon_patient.failed_last_breath || carbon_patient.losebreath)//If pt is dead or otherwise not breathing
-					render_list += "<span class='danger ml-1'>[M.p_theyre(TRUE)] not breathing!</span>\n"
+					render_list += "<span class='danger ml-1'>[M.p_Theyre()] not breathing!</span>\n"
 				else if(lungs.damage > 10)//if breathing, check for lung damage
 					render_list += "<span class='danger ml-1'>You hear fluid in [M.p_their()] lungs!</span>\n"
 				else if(oxy_loss > 10)//if they have suffocation damage
-					render_list += "<span class='danger ml-1'>[M.p_theyre(TRUE)] breathing heavily!</span>\n"
+					render_list += "<span class='danger ml-1'>[M.p_Theyre()] breathing heavily!</span>\n"
 				else
-					render_list += "<span class='notice ml-1'>[M.p_theyre(TRUE)] breathing normally.</span>\n"//they're okay :D
+					render_list += "<span class='notice ml-1'>[M.p_Theyre()] breathing normally.</span>\n"//they're okay :D
 
 			//assess heart
 			if(body_part == BODY_ZONE_CHEST)//if we're listening to the chest
@@ -245,7 +245,7 @@
 					liver_okay = FALSE
 				else
 					if(liver.damage > 10)
-						render_list += "<span class='danger ml-1'>[M.p_their(TRUE)] liver feels firm.</span>\n"//their liver is damaged
+						render_list += "<span class='danger ml-1'>[M.p_Their()] liver feels firm.</span>\n"//their liver is damaged
 						liver_okay = FALSE
 
 				if(!appendix)//sanity check, ensure the patient actually has an appendix
@@ -293,7 +293,7 @@
 					else
 						pulse_pressure = span_notice("strong")//they're okay :D
 
-					render_list += "<span class='notice ml-1'>[M.p_their(TRUE)] pulse is [pulse_pressure] and [heart_strength].</span>\n"
+					render_list += "<span class='notice ml-1'>[M.p_Their()] pulse is [pulse_pressure] and [heart_strength].</span>\n"
 
 	//display our packaged information in an examine block for easy reading
 	to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
