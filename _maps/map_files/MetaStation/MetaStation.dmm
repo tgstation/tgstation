@@ -20062,9 +20062,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "hBH" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/space/basic,
 /area/space/nearstation)
 "hBI" = (
@@ -32014,7 +32012,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
-/turf/closed/wall/r_wall,
+/turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "lNF" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
