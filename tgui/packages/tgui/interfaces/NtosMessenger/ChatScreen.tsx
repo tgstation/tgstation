@@ -108,7 +108,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
       lastOutgoing = !!message.outgoing;
 
       filteredMessages.push(
-        <Stack.Item key={index} mt={isSwitch ? 5 : 1}>
+        <Stack.Item key={index} mt={isSwitch ? 3 : 1}>
           <ChatMessage
             outgoing={message.outgoing}
             msg={message.message}
@@ -146,7 +146,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             fitted
             title={`${recp.name} (${recp.job})`}
             scrollableRef={this.scrollRef}>
-            <Stack vertical height="auto" className="ChatLog">
+            <Stack vertical className="ChatLog">
               <Stack.Item textAlign="center" fontSize={1}>
                 This is the beginning of your chat with {recp.name}.
               </Stack.Item>
