@@ -132,7 +132,7 @@
 		new /obj/item/reagent_containers/cup/glass/bottle/beer(src)
 
 /obj/structure/closet/mini_fridge/grimy
-	name = "grimy mini_fridge"
+	name = "grimy mini-fridge"
 	desc = "A small contraption designed to imbue a few drinks with a pleasant chill. This antiquated unit however seems to serve no purpose other than keeping the roaches company."
 
 /obj/structure/closet/mini_fridge/grimy/PopulateContents()
