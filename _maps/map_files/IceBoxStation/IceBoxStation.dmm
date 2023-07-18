@@ -4308,12 +4308,12 @@
 	pixel_x = 11;
 	pixel_y = 7
 	},
-/obj/item/radio/headset/headset_sci{
-	pixel_x = -7;
-	pixel_y = 6
-	},
 /obj/item/reagent_containers/spray/cleaner{
 	pixel_x = 2
+	},
+/obj/item/radio/headset/headset_medsci{
+	pixel_x = -7;
+	pixel_y = 6
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
@@ -23541,7 +23541,7 @@
 	pixel_x = -6;
 	pixel_y = -3
 	},
-/mob/living/simple_animal/pet/penguin/baby,
+/mob/living/basic/pet/penguin/baby/permanent,
 /turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/research)
 "hyY" = (
@@ -35315,7 +35315,7 @@
 /area/station/command/bridge)
 "lkP" = (
 /obj/structure/flora/grass/green/style_random,
-/mob/living/simple_animal/pet/penguin/emperor{
+/mob/living/basic/pet/penguin/emperor{
 	name = "Club"
 	},
 /turf/open/misc/asteroid/snow/standard_air,

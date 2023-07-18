@@ -280,7 +280,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	var/turf/T = get_turf(user)
 	var/obj/machinery/computer/auxiliary_base/AB
 
-	for (var/obj/machinery/computer/auxiliary_base/A in GLOB.machines)
+	for (var/obj/machinery/computer/auxiliary_base/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/auxiliary_base))
 		if(is_station_level(A.z))
 			AB = A
 			break
@@ -362,7 +362,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		to_chat(user, span_warning("This device is only to be used in a mining zone."))
 		return
 	var/obj/machinery/computer/auxiliary_base/aux_base_console
-	for(var/obj/machinery/computer/auxiliary_base/ABC in GLOB.machines)
+	for(var/obj/machinery/computer/auxiliary_base/ABC as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/auxiliary_base))
 		if(get_dist(landing_spot, ABC) <= console_range)
 			aux_base_console = ABC
 			break

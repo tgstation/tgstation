@@ -12,7 +12,7 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		var/turf/vent_turf = get_turf(vent)
 		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded)
 			return TRUE //make sure we have a valid vent to spawn from.
@@ -89,7 +89,7 @@
 
 /datum/round_event/vent_clog/proc/get_vent()
 	var/list/vent_list = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		var/turf/vent_turf = get_turf(vent)
 		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded && !vent_turf.is_blocked_turf_ignore_climbable())
 			vent_list += vent

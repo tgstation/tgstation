@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Cyborgs no longer drop their radio key when deleted, only when deconstructed first"
+  - bugfix: "Cyborgs no longer drop their MMI on deletion, only prior to deletion. This may result in bad code rearing its ugly head, open an issue report on the github if you're a cyborg and get ghosted when you feel like you shouldn't"
+  - bugfix: "Runtime from syndie cyborgs spawning"
+  - bugfix: "AI deaths are reported to black box"

@@ -221,7 +221,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 /obj/machinery/fax/ui_data(mob/user)
 	var/list/data = list()
 	//Record a list of all existing faxes.
-	for(var/obj/machinery/fax/FAX in GLOB.machines)
+	for(var/obj/machinery/fax/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
 		if(FAX.fax_id == fax_id) //skip yourself
 			continue
 		var/list/fax_data = list()
@@ -327,7 +327,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
  * * id - The network ID of the fax machine you want to send the item to.
  */
 /obj/machinery/fax/proc/send(obj/item/loaded, id)
-	for(var/obj/machinery/fax/FAX in GLOB.machines)
+	for(var/obj/machinery/fax/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
 		if (FAX.fax_id != id)
 			continue
 		if (FAX.jammed)
@@ -447,7 +447,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
  * * new_fax_name - The text of the name to be checked for a match.
  */
 /obj/machinery/fax/proc/fax_name_exist(new_fax_name)
-	for(var/obj/machinery/fax/FAX in GLOB.machines)
+	for(var/obj/machinery/fax/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
 		if (FAX.fax_name == new_fax_name)
 			return TRUE
 	return FALSE

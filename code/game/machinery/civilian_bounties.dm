@@ -38,7 +38,7 @@
 /obj/machinery/computer/piratepad_control/civilian/LateInitialize()
 	. = ..()
 	if(cargo_hold_id)
-		for(var/obj/machinery/piratepad/civilian/C in GLOB.machines)
+		for(var/obj/machinery/piratepad/civilian/C as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/piratepad/civilian))
 			if(C.cargo_hold_id == cargo_hold_id)
 				pad_ref = WEAKREF(C)
 				return

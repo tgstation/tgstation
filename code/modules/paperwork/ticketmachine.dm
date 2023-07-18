@@ -137,7 +137,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 
 /// Locate the ticket machine to which we're linked by our ID
 /obj/item/assembly/control/ticket_machine/proc/find_machine()
-	for(var/obj/machinery/ticket_machine/ticketsplease in GLOB.machines)
+	for(var/obj/machinery/ticket_machine/ticketsplease as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ticket_machine))
 		if(ticketsplease.id == id)
 			ticket_machine_ref = WEAKREF(ticketsplease)
 	if(ticket_machine_ref)

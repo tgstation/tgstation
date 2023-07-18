@@ -213,11 +213,7 @@
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Toggle interface lock")
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
 
-	GLOB.apcs_list += src
-
 /obj/machinery/power/apc/Destroy()
-	GLOB.apcs_list -= src
-
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10, 0, 1000)
 	disconnect_from_area()

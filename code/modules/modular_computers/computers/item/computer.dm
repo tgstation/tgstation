@@ -119,7 +119,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
-
 	START_PROCESSING(SSobj, src)
 	if(!physical)
 		physical = src
@@ -825,3 +824,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/proc/Remove_Messenger()
 	GLOB.TabletMessengers -= src
+
+///Returns a string of what to send at the end of messenger's messages.
+/obj/item/modular_computer/proc/get_messenger_ending()
+	return "Sent from my PDA"
