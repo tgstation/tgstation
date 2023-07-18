@@ -379,7 +379,7 @@
 				return
 
 		if(IS_DEAD_OR_INCAP(offered))
-			to_chat(src, span_warning("[offered.p_theyre(TRUE)] unable to take anything in [offered.p_their()] current state!"))
+			to_chat(src, span_warning("[offered.p_Theyre()] unable to take anything in [offered.p_their()] current state!"))
 			return
 
 		if(!CanReach(offered))
