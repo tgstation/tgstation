@@ -275,11 +275,13 @@
 		))
 	else
 		/obj/item/storage/backpack/satchel/explorer
-		backpack_contents = (list(
+		backpack_contents = list()
+		var/backpack_loot = pick(list(
 			/obj/item/food/fishmeat = 89,
 			/obj/item/food/fishmeat/carp = 10,
 			/obj/item/skeleton_key = 1,
 		))
+		backpack_contents += backpack_loot
 
 //this is so pointlessly gendered but whatever bro i'm here to refactor not judge
 /datum/outfit/consumed_dame
