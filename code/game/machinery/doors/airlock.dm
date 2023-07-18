@@ -193,7 +193,7 @@
 		id_tag = "[port.shuttle_id]_[id_tag]"
 
 /obj/machinery/door/airlock/proc/update_other_id()
-	for(var/obj/machinery/door/airlock/Airlock in GLOB.airlocks)
+	for(var/obj/machinery/door/airlock/Airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 		if(Airlock.closeOtherId == closeOtherId && Airlock != src)
 			if(!(Airlock in close_others))
 				close_others += Airlock
@@ -292,7 +292,7 @@
 			otherlock.close_others -= src
 		close_others.Cut()
 	if(id_tag)
-		for(var/obj/machinery/door_buttons/D in GLOB.machines)
+		for(var/obj/machinery/door_buttons/D as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door_buttons))
 			D.removeMe(src)
 	QDEL_NULL(note)
 	QDEL_NULL(seal)
@@ -1372,23 +1372,29 @@
 	//Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
 	return !density || (check_access(ID) && !locked && hasPower() && !no_id)
 
-/obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/doorjack/D)
+/obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
-		if(istype(D, /obj/item/card/emag/doorjack))
-			D.use_charge(user)
+		if(istype(emag_card, /obj/item/card/emag/doorjack))
+			var/obj/item/card/emag/doorjack/doorjack_card = emag_card
+			doorjack_card.use_charge(user)
 		operating = TRUE
 		update_icon(ALL, AIRLOCK_EMAG, 1)
-		sleep(0.6 SECONDS)
-		if(QDELETED(src))
-			return
-		operating = FALSE
-		if(!open())
-			update_icon(ALL, AIRLOCK_CLOSED, 1)
-		obj_flags |= EMAGGED
-		lights = FALSE
-		locked = TRUE
-		loseMainPower()
-		loseBackupPower()
+		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
+		return TRUE
+	return FALSE
+
+/// Timer proc, called ~0.6 seconds after [emag_act]. Finishes the emag sequence by breaking the airlock, permanently locking it, and disabling power.
+/obj/machinery/door/airlock/proc/finish_emag_act()
+	if(QDELETED(src))
+		return FALSE
+	operating = FALSE
+	if(!open())
+		update_icon(ALL, AIRLOCK_CLOSED, 1)
+	obj_flags |= EMAGGED
+	lights = FALSE
+	locked = TRUE
+	loseMainPower()
+	loseBackupPower()
 
 /obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(isElectrified() && shock(user, 100)) //Mmm, fried xeno!

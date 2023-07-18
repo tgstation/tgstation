@@ -309,7 +309,28 @@
 		balloon_alert(user, "needs 10 tiles!")
 		return
 
-
 /obj/item/storage/toolbox/haunted
 	name = "old toolbox"
 	custom_materials = list(/datum/material/hauntium = SMALL_MATERIAL_AMOUNT*5)
+
+/obj/item/storage/toolbox/mosincase
+	name = "ancient gun case"
+	desc = "A weapon's case. Has the symbol of the Third Soviet Union stamped on the side."
+	icon = 'icons/obj/storage/case.dmi'
+	icon_state = "mosin_case"
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
+	inhand_icon_state = "mosin_case"
+	has_latches = FALSE
+
+/obj/item/storage/toolbox/mosincase/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
+	atom_storage.max_total_storage = 7 //enough to hold ONE mosin and the ammo boxes
+	atom_storage.max_slots = 4
+
+/obj/item/storage/toolbox/mosincase/PopulateContents()
+	new /obj/effect/spawner/random/mosin (src)
+	for(var/i in 1 to 3)
+		new /obj/effect/spawner/random/mosin/ammo (src)
+

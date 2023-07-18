@@ -1,4 +1,0 @@
-author: "SomeRandomOwl"
-delete-after: True
-changes:
-  - bugfix: "Music Request Credit shows CKEY instead of character name"

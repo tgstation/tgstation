@@ -2550,10 +2550,10 @@
 /turf/open/floor/pod,
 /area/station/maintenance/floor4/port/fore)
 "aGj" = (
-/obj/structure/rack,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/effect/turf_decal/stripes/white/line,
+/obj/machinery/bci_implanter,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "aGm" = (
@@ -3530,7 +3530,7 @@
 /obj/machinery/shower/directional/west,
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},
@@ -23567,7 +23567,7 @@
 /turf/open/floor/iron/white/herringbone,
 /area/station/medical/patients_rooms)
 "gdd" = (
-/mob/living/simple_animal/pet/penguin/emperor{
+/mob/living/basic/pet/penguin/emperor{
 	desc = "Spaghetti.";
 	name = "Spaghetti"
 	},
@@ -27065,7 +27065,7 @@
 "gYI" = (
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},
@@ -44190,7 +44190,7 @@
 /obj/item/bikehorn/rubberducky,
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},
@@ -55498,7 +55498,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "onY" = (
-/mob/living/simple_animal/pet/penguin/baby{
+/mob/living/basic/pet/penguin/baby/permanent{
 	dir = 8
 	},
 /turf/open/floor/fake_snow{
@@ -55682,7 +55682,7 @@
 "oqc" = (
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},
@@ -80935,7 +80935,7 @@
 "vlh" = (
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/lavaland/survival_pod.dmi';
+	icon = 'icons/obj/mining_zones/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},

@@ -1,6 +1,7 @@
 /obj/machinery/computer/exodrone_control_console
 	name = "exploration drone control console"
 	desc = "control eploration drones from intersteller distances. Communication lag not included."
+	circuit = /obj/item/circuitboard/computer/exodrone_console
 	//Currently controlled drone
 	var/obj/item/exodrone/controlled_drone
 	/// Have we lost contact with the drone without disconnecting. Unset on user confirmation.

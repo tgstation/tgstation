@@ -12575,7 +12575,6 @@
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "eZT" = (
-/obj/structure/hedge,
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
@@ -12583,6 +12582,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/hidden{
 	dir = 8
 	},
+/obj/structure/filingcabinet,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/server)
 "faj" = (
@@ -12893,6 +12893,9 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/office{
+	dir = 4
+	},
 /turf/open/floor/wood/tile,
 /area/station/tcommsat/server)
 "fhS" = (
@@ -16042,7 +16045,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "glt" = (
-/obj/structure/chair/office,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
@@ -16050,6 +16052,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/hidden{
 	dir = 8
 	},
+/obj/machinery/announcement_system,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/server)
 "glv" = (
@@ -20681,11 +20684,8 @@
 /area/station/security/execution/transfer)
 "hOR" = (
 /obj/structure/closet/crate,
-/obj/projectile/bullet/cannonball,
-/obj/projectile/bullet/cannonball,
-/obj/projectile/bullet/cannonball,
-/obj/projectile/bullet/cannonball,
 /obj/structure/barricade/wooden/crude,
+/obj/item/stack/cannonball/four,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "hOS" = (
@@ -27714,10 +27714,10 @@
 /area/station/medical/medbay/lobby)
 "kow" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 8
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/tcommsat/server)
 "koz" = (
@@ -32784,13 +32784,15 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)
 "lZu" = (
-/obj/structure/hedge,
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
 /obj/machinery/light/cold/directional/north,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/hidden{
 	dir = 8
+	},
+/obj/item/kirbyplants/random{
+	pixel_y = 8
 	},
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/server)
@@ -33901,11 +33903,14 @@
 	},
 /area/station/hallway/primary/central/fore)
 "mwm" = (
-/obj/structure/filingcabinet,
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/structure/table/glass,
+/obj/item/folder/red,
+/obj/item/pen,
+/obj/machinery/airalarm/directional/west,
+/obj/item/paper/monitorkey,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/server)
 "mwn" = (
@@ -46234,11 +46239,14 @@
 /turf/open/floor/iron,
 /area/station/commons)
 "qJJ" = (
-/obj/structure/chair/office,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/dark/hidden{
+	dir = 8
+	},
+/obj/machinery/computer/telecomms/monitor{
+	network = "tcommsat";
 	dir = 8
 	},
 /turf/open/floor/iron/grimy,
@@ -46596,8 +46604,10 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/obj/item/radio/intercom/directional/east,
-/obj/machinery/announcement_system,
+/obj/machinery/light_switch/directional/east,
+/obj/machinery/computer/message_monitor{
+	dir = 8
+	},
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/server)
 "qQg" = (
@@ -65417,13 +65427,14 @@
 /turf/open/floor/plating,
 /area/station/service/library)
 "wMi" = (
-/obj/structure/table/glass,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/machinery/airalarm/directional/east,
-/obj/item/folder/red,
-/obj/item/pen,
+/obj/machinery/computer/telecomms/server{
+	dir = 8;
+	network = "tcommsat"
+	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/server)
 "wMm" = (
