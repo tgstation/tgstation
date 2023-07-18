@@ -499,7 +499,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		undebug_sources()
 		return
 
-	for(var/obj/machinery/light/fix_up in GLOB.machines)
+	for(var/obj/machinery/light/fix_up as anything in SSmachines.get_machines_by_type_and_subtypes(obj/machinery/light))
 		// Only fix lights that started out fixed
 		if(initial(fix_up.status) == LIGHT_OK)
 			fix_up.fix()
