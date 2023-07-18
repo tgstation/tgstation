@@ -37,7 +37,7 @@
 		egg_laid_callback = CALLBACK(src, PROC_REF(lay_penguin_egg)),\
 	)
 
-/mob/living/basic/pet/penguin/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/basic/pet/penguin/click_on_without_item(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
 	if(!.)
 		return
@@ -107,12 +107,13 @@
 
 /datum/ai_behavior/find_hunt_target/penguin_egg/valid_dinner(mob/living/source, atom/dinner, radius)
 	return can_see(source, dinner, radius) && !(dinner in source.contents)
+
 /datum/ai_behavior/hunt_target/penguin_egg
 	hunt_cooldown = 15 SECONDS
 	always_reset_target = TRUE
 
 /datum/ai_behavior/hunt_target/penguin_egg/target_caught(mob/living/basic/hunter, obj/item/food/egg/target)
-	hunter.UnarmedAttack(target, TRUE)
+	hunter.ClickOn(target)
 
 /mob/living/basic/pet/penguin/emperor
 	name = "emperor penguin"
@@ -195,5 +196,3 @@
 
 /mob/living/basic/pet/penguin/baby/permanent
 	can_grow_up = FALSE
-
-
