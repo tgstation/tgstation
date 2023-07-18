@@ -4,8 +4,8 @@
 	argument_hash_start_idx = 2
 	///A list of traits that are added to the turf while occupied.
 	var/list/traits
-	///The list of occupied turfs: Assoc value is a list of movables with this element that are occupying the turf.
-	var/list/occupied_turfs = list()
+	///List of sources we are using to reapply traits when turf changes
+	var/list/trait_sources = list()
 
 /datum/element/give_turf_traits/Attach(atom/movable/target, list/traits)
 	. = ..()
@@ -38,16 +38,14 @@
  * Otherwise, it just adds the movable to the assoc value of lists occupying the turf.
  */
 /datum/element/give_turf_traits/proc/add_to_occupied_turfs(turf/location, atom/movable/source)
-	if(occupied_turfs[location])
-		occupied_turfs[location] += source
-		return
+	var/trait_source = REF(source)
+	if(isnull(trait_sources[location]))
+		RegisterSignal(location, COMSIG_TURF_CHANGE, PROC_REF(pre_change_turf))
 
-	occupied_turfs[location] = list(source)
-	RegisterSignal(location, COMSIG_TURF_CHANGE, PROC_REF(pre_change_turf))
-
+	LAZYADDASSOCLIST(trait_sources, location, trait_source)
 	var/update_movespeeds = (TRAIT_TURF_IGNORE_SLOWDOWN in traits) && !HAS_TRAIT(location, TRAIT_TURF_IGNORE_SLOWDOWN)
 	for(var/trait in traits)
-		ADD_TRAIT(location, trait, REF(src))
+		ADD_TRAIT(location, trait,  trait_source)
 	if(update_movespeeds)
 		for(var/mob/living/living in location)
 			living.update_turf_movespeed()
@@ -57,15 +55,13 @@
  * Otherwise, it just removes the movable from the assoc value of lists occupying the turf.
  */
 /datum/element/give_turf_traits/proc/remove_from_occupied_turfs(turf/location, atom/movable/source)
-	LAZYREMOVE(occupied_turfs[location], source)
-	if(occupied_turfs[location])
-		return
-
-	occupied_turfs -= location
-	UnregisterSignal(location, COMSIG_TURF_CHANGE)
+	var/trait_source = REF(source)
+	LAZYREMOVEASSOC(trait_sources, location, trait_source)
+	if(isnull(trait_sources[location]))
+		UnregisterSignal(location, COMSIG_TURF_CHANGE)
 
 	for(var/trait in traits)
-		REMOVE_TRAIT(location, trait, REF(src))
+		REMOVE_TRAIT(location, trait, trait_source)
 
 	if((TRAIT_TURF_IGNORE_SLOWDOWN in traits) && !HAS_TRAIT(location, TRAIT_TURF_IGNORE_SLOWDOWN))
 		for(var/mob/living/living in location)
@@ -78,4 +74,5 @@
 
 /datum/element/give_turf_traits/proc/reoccupy_turf(turf/changed)
 	for(var/trait in traits)
-		ADD_TRAIT(changed, trait, REF(src))
+		for(var/source in trait_sources[changed])
+			ADD_TRAIT(changed, trait, source)
