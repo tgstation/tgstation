@@ -13,7 +13,9 @@
 	var/boulders_processing = 0
 	/// How many boulders can we process maximum?
 	var/boulders_processing_max = 1
-	
+	///How many boulders are we allowed to store at once?
+	var/boulders_held = 1
+
 
 	/// Mats we look for?
 	var/list/processed_materials = list(/datum/material/iron, /datum/material/glass)
@@ -27,13 +29,14 @@
 	for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
 		if(is_type_in_list(possible_mat, processed_materials))
 			///Alright, screw it, just copy the ORM's smelt_ore proc wholesale.
+			return
 
 
 
 /obj/machinery/bouldertech/brm
 	name = "boulder retrieval matrix"
 	desc = "A teleportation matrix used to retrieve boulders excavated by mining NODEs from ore vents."
-
+	icon_state = "brm"
 
 /**
  * So, this should be probably handed in a more elegant way going forward, like a small TGUI prompt to select which boulder you want to pull from.
@@ -46,10 +49,14 @@
 	random_boulder.Shake(duration = 1.5 SECONDS)
 	//todo: Maybe add some kind of teleporation raster effect thing? filters? I can probably make something happen here...
 	sleep(1.5 SECONDS)
-
+	if(QDELETED(random_boulder))
+		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		balloon_alert_to_viewers("Target lost!")
+		return FALSE
 	//todo:do the thing we do where we make sure the thing still exists and hasn't been deleted between the start of the recall and after.
 	random_boulder.forceMove(drop_location())
-
+	SSore_generation.available_boulders -= random_boulder
+	balloon_alert_to_viewers("[random_boulder] appears!")
 	random_boulder.visible_message(span_warning("[random_boulder] suddenly appears!"))
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
@@ -60,10 +67,11 @@
 /obj/machinery/bouldertech/smelter
 	name = "boulder smeltery"
 	desc = "B-S for short. Accept boulders and refines metallic ores into sheets. Can be upgraded with stock parts or through gas inputs."
+	icon_state = "furnace"
 
 /obj/machinery/bouldertech/smelter/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(istype(obj/item/boulder))
+	if(istype(attacking_item , /obj/item/boulder))
 		var/obj/item/boulder/my_boulder = attacking_item
 		my_boulder.forceMove(contents)
 		visible_message(span_warning("[my_boulder] is smelted into metals?!"))
@@ -73,6 +81,7 @@
 /obj/machinery/bouldertech/refinery
 	name = "boulder refinery"
 	desc = "B-R for short. Accepts boulders and refines non-metallic ores into sheets. Can be upgraded with stock parts or through chemical inputs."
+	icon_state = "stacker"
 
 /obj/machinery/bouldertech/refinery/Initialize(mapload)
 	. = ..()
@@ -81,16 +90,14 @@
 
 /obj/machinery/bouldertech/refinery/RefreshParts()
 	. = ..()
-	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		C += ((capacitor.tier - 1) * 0.1)
-	power_saver = 1 - C
+	var/manipulator_stack = 0
+	var/matter_bin_stack = 0
 	for(var/datum/stock_part/servo/servo in component_parts)
-		M += ((servo.tier - 1) * PART_CASH_OFFSET_AMOUNT)
-	positive_cash_offset = M
-	for(var/datum/stock_part/micro_laser/Laser in component_parts)
-		L += ((Laser.tier - 1) * PART_CASH_OFFSET_AMOUNT)
-	negative_cash_offset = L
-	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
-		S += ((scanning_module.tier - 1) * 0.25)
-	inaccuracy_percentage = (1.5 - S)
+		manipulator_stack += ((servo.tier - 1))
+	boulders_processing_max = manipulator_stack
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		matter_bin_stack += ((bin.tier))
+	boulders_held = matter_bin_stack
+
+
 

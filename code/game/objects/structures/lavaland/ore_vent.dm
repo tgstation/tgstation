@@ -1,3 +1,4 @@
+
 /obj/structure/ore_vent
 	name = "ore vent"
 	desc = "An ore vent, brimming with underground ore. Scan with an advanced mining scanner to start extracting ore from it."
@@ -43,6 +44,11 @@
 		SSore_generation.processed_vents += src
 	. = ..()
 	///This is the part where we start processing to produce a new boulder over time.
+
+/obj/structure/ore_vent/Destroy()
+	. = ..()
+	if(tapped)
+		SSore_generation.processed_vents -= src
 
 /obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -115,6 +121,14 @@
 		else
 			visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, but stays it's current size."))
 	SEND_SIGNAL(src, COMSIG_MINING_SPAWNER_STOP)
+	for(var/potential_miner as anything in oview(5))
+		if(ishuman(potential_miner))
+			var/mob/living/carbon/human/true_miner = potential_miner
+			var/obj/item/card/id/user_id_card = get_idcard(TRUE)
+			if(!user_id_card)
+				continue
+			if(user_id_card)
+				user_id_card.registered_account.mining_points +=
 
 /obj/structure/ore_vent/starter_resources
 	name = "active ore vent"
@@ -139,4 +153,8 @@
 
 /obj/item/boulder/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed) //Heavy as all hell, it's a boulder, dude.
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 0, force_wielded = 5) //Heavy as all hell, it's a boulder, dude.
+
+/obj/item/boulder/Destroy(force)
+	. = ..()
+	SSore_generation.available_boulders -= src
