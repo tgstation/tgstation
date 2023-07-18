@@ -10,12 +10,9 @@
 	tick_interval = 1 SECONDS
 	duration = -1
 
-	/// A pool of blocking overlay effects, to save on re-creating effects.
-	var/static/list/obj/effect/blocking_effect/pooled_overlays = list()
-
 	/// What we're blocking with currently
 	var/obj/item/blocking_with
-	/// A ref to our active shile doverlay
+	/// A ref to our shield overlay object
 	var/obj/effect/blocking_effect/shield_overlay
 
 /datum/status_effect/blocking/nextmove_modifier()
@@ -24,33 +21,6 @@
 	// interfacing with your backpack or other actions.
 	return 2
 
-/datum/status_effect/blocking/proc/provide_blocking_effect()
-	var/obj/effect/blocking_effect/shield
-	for(var/obj/effect/blocking_effect/stored_shield as anything in pooled_overlays)
-		if(ismob(shield.loc))
-			continue
-		shield = stored_shield
-		break
-
-	if(isnull(shield))
-		shield = new(owner)
-		var/static/shield_offset_const = (0.8 * world.icon_size)
-		shield.pixel_y += shield_offset_const
-		pooled_overlays += shield
-	else
-		shield.forceMove(owner)
-
-	shield.color = owner.chat_color || LIGHT_COLOR_BLUE
-	shield.alpha = min(owner.alpha, 200)
-	shield.layer = owner.layer + 0.1 // melbert todo: hides under mobs 1 tile up (not z wise)
-	owner.vis_contents += shield_overlay
-	return shield
-
-/datum/status_effect/blocking/proc/hide_blocking_effect()
-	owner.vis_contents -= shield_overlay
-	shield_overlay.moveToNullspace()
-	shield_overlay = null
-
 /datum/status_effect/blocking/on_creation(mob/living/new_owner, obj/item/new_blocker)
 	. = ..()
 	if(!.)
@@ -58,14 +28,21 @@
 	if(!isnull(new_blocker))
 		set_blocking_item(new_blocker)
 
+	// melbert todo: hides under mobs 1 tile up (not z wise)
+	var/static/shield_offset_const = (0.8 * world.icon_size)
+	shield_overlay = new(owner)
+	shield_overlay.pixel_y += shield_offset_const
+
 /datum/status_effect/blocking/on_apply()
-	shield_overlay = provide_blocking_effect()
+	owner.vis_contents += shield_overlay
 	update_shield()
+
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_attacked))
 	RegisterSignals(owner, list(COMSIG_MOB_APPLY_DAMAGE, COMSIG_LIVING_HEALTH_UPDATE), PROC_REF(on_health_update))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/blocking)
 	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/blocking)
 	ADD_TRAIT(owner, TRAIT_CANNOT_HEAL_STAMINA, id)
+
 	return TRUE
 
 /datum/status_effect/blocking/refresh(effect, obj/item/new_blocker)
@@ -76,7 +53,9 @@
 		set_blocking_item(new_blocker)
 
 /datum/status_effect/blocking/on_remove()
-	hide_blocking_effect()
+	owner.vis_contents -= shield_overlay
+	QDEL_NULL(shield_overlay)
+
 	UnregisterSignal(owner, list(
 		COMSIG_LIVING_CHECK_BLOCK,
 		COMSIG_LIVING_HEALTH_UPDATE,
