@@ -202,9 +202,25 @@
 	cell = /obj/item/stock_parts/cell/hyper
 	radio = /obj/item/radio/borg/syndicate
 
+/mob/living/silicon/robot/model/syndicate/Initialize(mapload)
+	laws = new /datum/ai_laws/syndicate_override()
+	laws.associate(src)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(show_playstyle)), 0.5 SECONDS)
+
+/mob/living/silicon/robot/model/syndicate/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg/syndicate(src)
+		modularInterface.saved_identification = real_name
+		modularInterface.saved_job = "Cyborg"
+	return ..()
+
 /mob/living/silicon/robot/model/syndicate/proc/show_playstyle()
 	if(playstyle_string)
 		to_chat(src, playstyle_string)
+
+/mob/living/silicon/robot/model/syndicate/ResetModel()
+	return
 
 /mob/living/silicon/robot/model/syndicate/medical
 	icon_state = "synd_medical"
