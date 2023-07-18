@@ -68,7 +68,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	if(!(prefs.chat_toggles & CHAT_OOC))
+	if(!(prefs && (prefs.chat_toggles & CHAT_OOC)))
 		to_chat(src, span_danger("You have OOC muted."))
 		return
 

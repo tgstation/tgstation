@@ -267,9 +267,9 @@
 	for(var/mob/dead_player in GLOB.dead_mob_list)
 		if(dead_player.z != z || get_dist(src, dead_player) > 7)
 			if(eavesdrop_range)
-				if(!(dead_player.client?.prefs.chat_toggles & CHAT_GHOSTWHISPER))
+				if(!(dead_player.client?.prefs?.chat_toggles & CHAT_GHOSTWHISPER))
 					continue
-			else if(!(dead_player.client?.prefs.chat_toggles & CHAT_GHOSTEARS))
+			else if(!(dead_player.client?.prefs?.chat_toggles & CHAT_GHOSTEARS))
 				continue
 		var/link = FOLLOW_LINK(dead_player, owner)
 		to_chat(dead_player, "[link] [dead_rendered]")
@@ -309,7 +309,7 @@
 		for(var/mob/ghost as anything in GLOB.dead_mob_list)
 			if(!ghost.client || isnewplayer(ghost))
 				continue
-			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
+			if(ghost.client.prefs?.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
 				ghost.show_message("[FOLLOW_LINK(ghost, user)] [dchatmsg]")
 
 	for(var/mob/person in friend.owner.imaginary_group)
