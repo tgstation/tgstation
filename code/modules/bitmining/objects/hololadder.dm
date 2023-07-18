@@ -1,3 +1,7 @@
+/**
+ * ### Hololadder
+ * Provides a way for players to reconnect with their physical bodies.
+ */
 /obj/structure/hololadder
 	name = "hololadder"
 

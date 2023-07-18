@@ -7,13 +7,15 @@
 	pilot_ref = WEAKREF(occupant)
 	netchair_ref = WEAKREF(hosting_chair)
 
-	/// Begin the swap - use a fake mind so it isn't cata
+	// Begin the swap - use a fake mind so it isn't cata
 	transfer_to(avatar)
 	action.Grant(avatar)
 	fake_mind.active = TRUE
 	fake_mind.transfer_to(occupant)
 
 	avatar.playsound_local(avatar, "sound/magic/blink.ogg", 25, TRUE)
+	avatar.set_static_vision(2 SECONDS)
+	avatar.set_temp_blindness(1 SECONDS)
 
 	connect_avatar_signals(avatar)
 	RegisterSignals(occupant, list(

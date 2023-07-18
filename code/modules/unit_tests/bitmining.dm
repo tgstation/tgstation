@@ -70,7 +70,8 @@
 
 	chair.buckle_mob(labrat, check_loc = FALSE)
 	TEST_ASSERT_NOTNULL(chair.occupant_ref, "Netchair did not set occupant_ref")
-	TEST_ASSERT_NOTNULL(chair.occupant_mind_ref, "Netchair did not set occupant_mind_ref")
+
+	UNTIL(!isnull(chair.occupant_mind_ref))
 	TEST_ASSERT_EQUAL(server.occupant_mind_refs[1], chair.occupant_mind_ref, "Netchair did not add mind to server occupant_mind_refs")
 
 	var/mob/living/labrat_resolved = chair.occupant_ref.resolve()

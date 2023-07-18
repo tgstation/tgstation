@@ -1,6 +1,6 @@
 
 /**
- * ## Net Chair
+ * ### Net Chair
  * Provides a way for players to engage with the loaded virtual domains.
  */
 /obj/structure/netchair
@@ -98,6 +98,8 @@
 		action.Remove()
 
 	occupant.playsound_local(occupant, "sound/magic/blink.ogg", 25, TRUE)
+	occupant.set_static_vision(2 SECONDS)
+	occupant.set_temp_blindness(1 SECONDS)
 
 	var/obj/machinery/quantum_server/server = find_server()
 	if(server)
@@ -107,7 +109,7 @@
 	if(!forced || occupant.stat == DEAD)
 		return
 
-	occupant.flash_act()
+	occupant.flash_act(override_blindness_check = TRUE, visual = TRUE)
 	occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
 	INVOKE_ASYNC(occupant, TYPE_PROC_REF(/mob/living, emote), "scream")
 	occupant.do_jitter_animation(200)
@@ -115,8 +117,6 @@
 
 /// Creates a new z-level, an avatar, then transfers the mind to the avatar.
 /obj/structure/netchair/proc/enter_matrix(mob/living/carbon/human/neo)
-	set waitfor = FALSE
-
 	var/obj/machinery/quantum_server/server = find_server()
 	if(isnull(server))
 		balloon_alert(neo, "no server connected!")
@@ -136,6 +136,10 @@
 			return
 		current_avatar = generate_avatar(wayout)
 		avatar_ref = WEAKREF(current_avatar)
+
+	neo.set_static_vision(3 SECONDS)
+	if(!do_after(neo, 2 SECONDS, src))
+		return
 
 	// Final sanity check before we start the transfer
 	if(QDELETED(neo) || QDELETED(current_avatar) || isnull(neo.mind) || neo.stat == DEAD || current_avatar.stat == DEAD)
@@ -214,13 +218,8 @@
 	if(!istype(mob_to_buckle) || !ishuman(mob_to_buckle) || mob_to_buckle.stat == DEAD)
 		return FALSE
 
-	var/obj/machinery/quantum_server/server = find_server(mob_to_buckle)
-	if(isnull(server))
-		return
-
 	occupant_ref = WEAKREF(mob_to_buckle)
-
-	enter_matrix(mob_to_buckle)
+	INVOKE_ASYNC(src, PROC_REF(enter_matrix), mob_to_buckle)
 
 /// On unbuckle, make sure the occupant ref is null
 /obj/structure/netchair/proc/on_unbuckle(mob/living/mob_to_unbuckle, force)

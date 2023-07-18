@@ -1,8 +1,9 @@
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
-import { Button, Collapsible, Icon, LabeledList, NoticeBox, Section, Stack, Tooltip } from '../components';
+import { Button, Collapsible, Icon, LabeledList, NoticeBox, ProgressBar, Section, Stack, Table, Tooltip } from '../components';
 import { BooleanLike } from 'common/react';
 import { LoadingScreen } from './common/LoadingToolbox';
+import { TableCell, TableRow } from '../components/Table';
 
 type Data =
   | {
@@ -215,13 +216,26 @@ const AvatarDisplay = (props, context) => {
           Refresh
         </Button>
       }>
-      <LabeledList>
+      <Table>
         {avatars.map(({ health, name, pilot }) => (
-          <LabeledList.Item key={name} label={pilot}>
-            &quot;{name}&quot; | {health} health
-          </LabeledList.Item>
+          <TableRow key={name}>
+            <TableCell color="label">{pilot}:</TableCell>
+            <TableCell collapsing>&quot;{name}&quot;</TableCell>
+            <TableCell>
+              <ProgressBar
+                minValue={-100}
+                maxValue={100}
+                ranges={{
+                  good: [90, Infinity],
+                  average: [50, 89],
+                  bad: [-Infinity, 45],
+                }}
+                value={health}
+              />
+            </TableCell>
+          </TableRow>
         ))}
-      </LabeledList>
+      </Table>
     </Section>
   );
 };

@@ -154,3 +154,8 @@
 #define adjust_temp_blindness_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/temporary_blindness, up_to)
 #define set_temp_blindness(duration) set_timed_status_effect(duration, /datum/status_effect/temporary_blindness)
 #define set_temp_blindness_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/temporary_blindness, TRUE)
+
+#define adjust_static_vision(duration) adjust_timed_status_effect(duration, /datum/status_effect/static_vision)
+#define adjust_static_vision_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/static_vision, up_to)
+#define set_static_vision(duration) set_timed_status_effect(duration, /datum/status_effect/static_vision)
+#define set_static_vision_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/static_vision, TRUE)
