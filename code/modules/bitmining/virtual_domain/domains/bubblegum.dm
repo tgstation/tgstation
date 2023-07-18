@@ -1,7 +1,7 @@
 /datum/map_template/virtual_domain/bubblegum
-	name = "Bubblegum's Lair"
+	name = "Blood-Soaked Lair"
 	cost = BITMINING_COST_HIGH
-	desc = "King of the slaughter demons."
+	desc = "King of the slaughter demons. Bubblegum is a massive, hulking beast with a penchant for violence."
 	difficulty = BITMINING_DIFFICULTY_HIGH
 	filename = "bubblegum.dmm"
 	id = "bubblegum"

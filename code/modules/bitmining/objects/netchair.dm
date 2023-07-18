@@ -87,15 +87,12 @@
 
 	var/mob/living/occupant = occupant_ref?.resolve()
 	var/datum/mind/hosted_mind = occupant_mind_ref?.resolve()
-	if(isnull(occupant))
-		return
-
-	if(receiving != hosted_mind)
-		balloon_alert(receiving.current, "wrong connection!")
+	if(isnull(occupant) || receiving != hosted_mind)
 		return
 
 	occupant.mind.key = null
-	hosted_mind.transfer_to(occupant)
+	occupant.key = null
+	receiving.transfer_to(occupant)
 	var/datum/action/avatar_domain_info/action = locate(/datum/action/avatar_domain_info) in occupant.actions
 	if(action)
 		action.Remove()
@@ -181,7 +178,7 @@
 
 	var/list/turf/possible_turfs = get_area_turfs(/area/station/virtual_domain/safehouse/exit, vdom.z_value)
 	if(!length(possible_turfs))
-		return FALSE
+		return
 
 	var/turf/destination
 	for(var/turf/dest_turf as anything in possible_turfs)
@@ -189,11 +186,11 @@
 			destination = dest_turf
 			break
 	if(isnull(destination))
-		return FALSE
+		return
 
 	var/obj/structure/hololadder/wayout = new(destination)
 	if(isnull(wayout))
-		return FALSE
+		return
 
 	return wayout
 

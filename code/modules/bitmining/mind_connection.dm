@@ -2,16 +2,15 @@
 /datum/mind/proc/initial_avatar_connection(mob/living/carbon/human/occupant, mob/living/carbon/human/avatar, obj/structure/netchair/hosting_chair, help_text)
 	var/datum/avatar_help_text/help_datum = new(help_text)
 	var/datum/action/avatar_domain_info/action = new(help_datum)
+	var/datum/mind/fake_mind = new(key + " (pilot)")
 
 	pilot_ref = WEAKREF(occupant)
 	netchair_ref = WEAKREF(hosting_chair)
 
 	/// Begin the swap - use a fake mind so it isn't cata
-	var/datum/mind/fake_mind = new()
-	fake_mind.active = TRUE
-	fake_mind.key = REF(occupant)
 	transfer_to(avatar)
 	action.Grant(avatar)
+	fake_mind.active = TRUE
 	fake_mind.transfer_to(occupant)
 
 	avatar.playsound_local(avatar, "sound/magic/blink.ogg", 25, TRUE)
@@ -23,7 +22,7 @@
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_MOVABLE_UNBUCKLE,
 		),
-		PROC_REF(force_disconnect_avatar),
+		PROC_REF(on_sever_connection),
 		override = TRUE,
 	)
 
@@ -38,12 +37,10 @@
 
 	RegisterSignal(target, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
 	RegisterSignals(target, list(
-		COMSIG_LIVING_DEATH,
-		COMSIG_LIVING_GIBBED,
 		COMSIG_QSERVER_DISCONNECT,
+		COMSIG_LIVING_GIBBED
 		),
-		PROC_REF(force_disconnect_avatar),
-		override = TRUE,
+		PROC_REF(on_sever_connection),
 	)
 	RegisterSignal(src, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer), override = TRUE)
 
@@ -71,24 +68,22 @@
 
 /// Simply disconnects the signals, but does not port the mind back to the pilot
 /datum/mind/proc/disconnect_avatar_signals()
-	UnregisterSignal(current, COMSIG_LIVING_DEATH)
-	UnregisterSignal(current, COMSIG_LIVING_GIBBED)
 	UnregisterSignal(src, COMSIG_MIND_TRANSFERRED)
+	if(isnull(current)) // sometimes this is called after the mind has been destroyed
+		return
 	UnregisterSignal(current, COMSIG_MOB_APPLY_DAMAGE)
 	UnregisterSignal(current, COMSIG_QSERVER_DISCONNECT)
-
-/// Helper so that we don't have to apply args to register_signal
-/datum/mind/proc/force_disconnect_avatar()
-	SIGNAL_HANDLER
-
-	last_death = world.time
-	disconnect_avatar(forced = TRUE)
 
 /// Transfers damage from the avatar to the pilot
 /datum/mind/proc/on_linked_damage(mob/target, damage, damage_type, def_zone)
 	SIGNAL_HANDLER
 
+	if(!isliving(target))
+		return
+
+	var/mob/living/avatar = target
 	var/mob/living/carbon/pilot = pilot_ref?.resolve()
+
 	if(!pilot || damage_type == STAMINA || damage_type == OXY)
 		return
 
@@ -98,13 +93,23 @@
 	if(damage > 30 && prob(30))
 		INVOKE_ASYNC(pilot, TYPE_PROC_REF(/mob/living, emote), "scream")
 
-	pilot.apply_damage(damage, damage_type, def_zone, forced = TRUE)
+	pilot.apply_damage(damage, damage_type, def_zone, blocked = FALSE, forced = TRUE)
+
+	if((avatar.health + MAX_LIVING_HEALTH) <= damage)
+		disconnect_avatar(forced = TRUE)
 
 /// Handles minds being swapped around in subsequent avatars
 /datum/mind/proc/on_mind_transfer(mob/living/previous_body)
 	SIGNAL_HANDLER
 
 	transfer_avatar_signals(previous_body, current)
+
+/// Helper so that we don't have to apply args to register_signal
+/datum/mind/proc/on_sever_connection()
+	SIGNAL_HANDLER
+
+	last_death = world.time
+	disconnect_avatar(forced = TRUE)
 
 /// Helper to transfer the mind to a new avatar
 /datum/mind/proc/transfer_avatar_signals(mob/living/origin, mob/living/target)

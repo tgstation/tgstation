@@ -2,6 +2,7 @@ import { Window } from '../layouts';
 import { useBackend } from '../backend';
 import { Button, Collapsible, Icon, LabeledList, NoticeBox, Section, Stack, Tooltip } from '../components';
 import { BooleanLike } from 'common/react';
+import { LoadingScreen } from './common/LoadingToolbox';
 
 type Data =
   | {
@@ -62,9 +63,12 @@ const getColor = (difficulty: number) => {
 };
 
 export const QuantumConsole = (props, context) => {
+  const { data } = useBackend<Data>(context);
+
   return (
     <Window title="Quantum Console" width={500} height={500}>
       <Window.Content>
+        {!!data.connected && !!data.loading && <LoadingScreen />}
         <AccessView />
       </Window.Content>
     </Window>

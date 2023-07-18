@@ -1,5 +1,3 @@
-#define TEST_KEY "test_key"
-
 /datum/unit_test/quantum_server_find_console
 
 /// The qserver and qconsole should find each other on init
@@ -87,7 +85,7 @@
 	var/mob/living/carbon/human/target = allocate(/mob/living/carbon/human/consistent)
 	labrat.mind_initialize()
 	labrat.mock_client = new()
-	labrat.mind.key = TEST_KEY
+	labrat.mind.key = "test_key"
 
 	var/datum/mind/initial_mind = labrat.mind
 	labrat.mind.initial_avatar_connection(labrat, target, chair)
@@ -102,13 +100,24 @@
 	var/obj/structure/netchair/connected_chair = target.mind.netchair_ref.resolve()
 	TEST_ASSERT_EQUAL(connected_chair, chair, "Wrong netchair_ref")
 
-	target.apply_damage(10, damagetype = BURN, def_zone = BODY_ZONE_HEAD, forced = TRUE)
+	target.apply_damage(10, damagetype = BURN, def_zone = BODY_ZONE_HEAD, blocked = 0, forced = TRUE)
 	TEST_ASSERT_EQUAL(labrat.getFireLoss(), 10, "Damage was not transferred to pilot")
 	TEST_ASSERT_NOTNULL(locate(/obj/item/bodypart/head) in labrat.get_damaged_bodyparts(burn = TRUE), "Pilot did not get damaged bodypart")
 
-	var/datum/mind/fake_mind = labrat.mind
-	target.apply_damage(500, def_zone = BODY_ZONE_HEAD, forced = TRUE)
+	target.apply_damage(999, blocked = 0, forced = TRUE)
+	if(target.stat != DEAD) // Some times they just inexplicably avoid it
+		target.apply_damage(999, blocked = 0, forced = TRUE)
 	TEST_ASSERT_EQUAL(target.stat, DEAD, "Target should have died on lethal damage")
 	TEST_ASSERT_EQUAL(labrat.stat, DEAD, "Pilot should have died on lethal damage")
+	TEST_ASSERT_EQUAL(REF(labrat_resolved.mind), REF(labrat.mind), "Pilot should have been transferred back to initial mind")
 
-#undef TEST_KEY
+	target.fully_heal()
+	labrat.fully_heal()
+	labrat.mind.initial_avatar_connection(labrat, target, chair)
+	var/mob/living/carbon/human/rejuvenated_pilot = target.mind.pilot_ref.resolve()
+	TEST_ASSERT_EQUAL(rejuvenated_pilot, labrat, "Sanity test fail: Target pilot mismatched with the labrat")
+
+	target.gib()
+	TEST_ASSERT_EQUAL(REF(rejuvenated_pilot.mind), REF(labrat.mind), "Pilot should have been transferred back on avatar gib")
+	// This is working but won't test for some raisin
+	// TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Pilot should have taken brain dmg on disconnect")

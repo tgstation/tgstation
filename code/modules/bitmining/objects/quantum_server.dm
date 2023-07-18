@@ -118,6 +118,9 @@
 		if(locate(/obj/structure/closet/crate/secure/bitminer_loot/encrypted) in tile)
 			return TRUE
 
+	playsound(src, 'sound/machines/buzz-two.ogg', 30, 2)
+	balloon_alert(user, "no loot crate found.")
+
 	return FALSE
 
 /// Attempts to connect to a quantum console
@@ -292,7 +295,7 @@
 /obj/machinery/quantum_server/proc/stop_domain(mob/user, force = FALSE)
 	if(!force)
 		balloon_alert(user, "powering down domain...")
-		playsound(src, 'sound/machines/terminal_off.ogg', 30, 2)
+		playsound(src, 'sound/machines/terminal_off.ogg', 40, 2)
 
 	loading = TRUE
 	SEND_SIGNAL(src, COMSIG_QSERVER_DISCONNECT)

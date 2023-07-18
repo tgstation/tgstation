@@ -5,7 +5,7 @@
 	help_text = "What a lovely forest. There's a loot crate here in the middle of the map. \
 	Hmm... It doesn't budge. The gondolas don't seem to have any trouble moving it, though. \
 	I bet there's a way to move it myself."
-	id = "gondola"
+	id = "gondola_asteroid"
 
 /// Very pushy gondolas, great for moving loot crates.
 /obj/structure/closet/crate/secure/bitminer_loot/encrypted/gondola
