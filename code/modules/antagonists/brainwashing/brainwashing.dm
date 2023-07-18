@@ -19,8 +19,7 @@
 
 	var/begin_message = " has been brainwashed with the following objectives: "
 	var/obj_message = english_list(directives)
-	var/end_message = "."
-	var/rendered = begin_message + obj_message + end_message
+	var/rendered = begin_message + obj_message
 	deadchat_broadcast(rendered, "<b>[L]</b>", follow_target = L, turf_target = get_turf(L), message_type=DEADCHAT_ANNOUNCEMENT)
 	if(check_holidays(APRIL_FOOLS))
 		// Note: most of the time you're getting brainwashed you're unconscious
