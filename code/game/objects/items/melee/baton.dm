@@ -173,7 +173,7 @@
 	cooldown_check = world.time + cooldown
 	if(on_stun_sound)
 		playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
-	if(target.check_block(src, stamina_damage - force, "the [name]'s stun"), MELEE_ATTACK, 0, STAMINA)
+	if(target.check_block(src, stamina_damage - force, "the [name]'s stun", MELEE_ATTACK, 0, STAMINA))
 		return BATON_ATTACK_DONE
 
 	if(user)
