@@ -59,13 +59,10 @@ GLOBAL_LIST_EMPTY(cooking_recipes)
 /// This is a global list of typepaths, these typepaths are atoms or reagents that are associated with cooking recipes.
 /// This includes stuff like recipe components and results.
 GLOBAL_LIST_EMPTY(cooking_recipes_atoms)
-
 /// list of Rapid Construction Devices.
 GLOBAL_LIST_EMPTY(rcd_list)
 /// list of wallmounted intercom radios.
 GLOBAL_LIST_EMPTY(intercoms_list)
-/// list of all Area Power Controller machines, separate from machines for powernet speeeeeeed.
-GLOBAL_LIST_EMPTY(apcs_list)
 /// list of all pinpointers. Used to change stuff they are pointing to all at once.
 GLOBAL_LIST_EMPTY(pinpointer_list)
 /// A list of all zombie_infection organs, for any mass "animation"
