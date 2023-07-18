@@ -41,3 +41,6 @@
 
 /obj/item/modular_computer/processor/relay_qdel()
 	qdel(machinery_computer)
+
+/obj/item/modular_computer/processor/get_messenger_ending()
+	return "Sent from my Desktop"

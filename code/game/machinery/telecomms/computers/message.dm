@@ -38,9 +38,9 @@
 		return TRUE
 	return ..()
 
-/obj/machinery/computer/message_monitor/emag_act(mob/user)
+/obj/machinery/computer/message_monitor/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	if(!isnull(linkedServer))
 		obj_flags |= EMAGGED
 		screen = MSG_MON_SCREEN_HACKED
@@ -53,8 +53,10 @@
 		addtimer(CALLBACK(src, PROC_REF(unemag_console)), time)
 		error_message = "%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!"
 		linkedServer.toggled = FALSE
+		return TRUE
 	else
 		to_chat(user, span_notice("A no server error appears on the screen."))
+	return FALSE
 
 /// Remove the emag effect from the console
 /obj/machinery/computer/message_monitor/proc/unemag_console()

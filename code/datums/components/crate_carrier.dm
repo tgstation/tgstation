@@ -41,7 +41,7 @@
 
 	var/num_crates = LAZYLEN(crates_in_hand)
 	if(num_crates > 0)
-		examine_list += span_notice("[source.p_theyre(TRUE)] carrying [num_crates == 1 ? "a crate":"[num_crates] crates"].")
+		examine_list += span_notice("[source.p_Theyre()] carrying [num_crates == 1 ? "a crate":"[num_crates] crates"].")
 
 /// Signal proc for [COMSIG_LIVING_UNARMED_ATTACK] to allow mobs to pick up or drop crates
 /datum/component/crate_carrier/proc/on_unarm_attack(mob/living/source, atom/target, proximity, modifiers)

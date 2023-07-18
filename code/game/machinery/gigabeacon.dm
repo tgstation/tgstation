@@ -1,6 +1,6 @@
 /obj/machinery/bluespace_beacon
 
-	icon = 'icons/obj/machines/basic_machines.dmi'
+	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "floor_beaconf"
 	name = "bluespace gigabeacon"
 	desc = "A device that draws power from bluespace and creates a permanent tracking beacon."

@@ -236,7 +236,7 @@
 /obj/item/crusher_trophy/broodmother_tongue
 	name = "broodmother tongue"
 	desc = "The tongue of a broodmother. If attached a certain way, makes for a suitable crusher trophy.  It also feels very spongey, I wonder what would happen if you squeezed it?..."
-	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
 	icon_state = "broodmother_tongue"
 	denied_type = /obj/item/crusher_trophy/broodmother_tongue
 	bonus_value = 10

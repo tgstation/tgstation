@@ -388,8 +388,8 @@
 	if(ishuman(sender))
 		var/mob/living/carbon/human/old_person = sender
 		sent_prob = old_person.age >= 40 ? 25 : 1
-	if (prob(sent_prob))
-		message += " - Sent from my PDA"
+	if (computer && prob(sent_prob))
+		message += "[computer.get_messenger_ending()]"
 
 	var/datum/pda_msg/message_datum = new(message, TRUE, saved_image, photo_path, everyone)
 

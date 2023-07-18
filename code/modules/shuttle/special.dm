@@ -6,7 +6,7 @@
 /obj/machinery/power/emitter/energycannon
 	name = "Energy Cannon"
 	desc = "A heavy duty industrial laser."
-	icon = 'icons/obj/engine/singularity.dmi'
+	icon = 'icons/obj/machines/engine/singularity.dmi'
 	icon_state = "emitter_+a"
 	base_icon_state = "emitter_+a"
 	anchored = TRUE
@@ -68,8 +68,8 @@
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
 	return FALSE
 
-/obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)
-	return
+/obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user, obj/item/card/emag/emag_card)
+	return FALSE
 
 /obj/structure/table/abductor/wabbajack
 	name = "wabbajack altar"
@@ -277,8 +277,8 @@
 /obj/machinery/scanner_gate/luxury_shuttle/attackby(obj/item/W, mob/user, params)
 	return
 
-/obj/machinery/scanner_gate/luxury_shuttle/emag_act(mob/user)
-	return
+/obj/machinery/scanner_gate/luxury_shuttle/emag_act(mob/user, obj/item/card/emag/emag_card)
+	return FALSE
 
 #define LUXURY_MESSAGE_COOLDOWN 100
 /obj/machinery/scanner_gate/luxury_shuttle/Bumped(atom/movable/AM)

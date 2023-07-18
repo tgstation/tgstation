@@ -432,3 +432,6 @@
 	if(theme_app)
 		for(var/theme_key in GLOB.pda_name_to_theme - GLOB.default_pda_themes)
 			theme_app.imported_themes += theme_key
+
+/obj/item/modular_computer/pda/clear/get_messenger_ending()
+	return "Sent from my crystal PDA"

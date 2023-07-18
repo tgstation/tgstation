@@ -133,7 +133,7 @@
 /obj/item/weakpoint_locator
 	name = "structural weakpoint locator"
 	desc = "A device that can triangulate station's structural weakpoint. It has to be used in %AREA1% and %AREA2% in order to triangulate the weakpoint. Warning: station's AI will be notified as soon as the process starts!"
-	icon = 'icons/obj/syndicate_tools.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "weakpoint_locator"
 	inhand_icon_state = "weakpoint_locator"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
