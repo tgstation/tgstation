@@ -150,7 +150,7 @@
 
 	var/list/msg = list()
 	if(!limb.current_gauze)
-		msg += "[victim.p_their(TRUE)] [limb.plaintext_zone] [examine_desc]"
+		msg += "[victim.p_Their()] [limb.plaintext_zone] [examine_desc]"
 	else
 		var/sling_condition = ""
 		// how much life we have left in these bandages
@@ -164,7 +164,7 @@
 			if(4 to INFINITY)
 				sling_condition = "tightly"
 
-		msg += "[victim.p_their(TRUE)] [limb.plaintext_zone] is [sling_condition] fastened in a sling of [limb.current_gauze.name]"
+		msg += "[victim.p_Their()] [limb.plaintext_zone] is [sling_condition] fastened in a sling of [limb.current_gauze.name]"
 
 	if(taped)
 		msg += ", [span_notice("and appears to be reforming itself under some surgical tape!")]"
