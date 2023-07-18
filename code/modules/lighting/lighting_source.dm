@@ -176,7 +176,7 @@
 	var/_applied_lum_b = lighting_source.applied_lum_b;
 
 // Read out of our sources light sheet, a map of offsets -> the luminosity to use
-#define LUM_FALLOFF(C) _sheet[C.x - _turf_x + _range_offset][C.y + _range_offset]
+#define LUM_FALLOFF(C) _sheet[C.x - _turf_x + _range_offset][C.y  - _turf_y + _range_offset]
 #define LUM_FALLOFF_MULTIZ(C) _multiz_sheet[C.z - _turf_z + _multiz_offset][C.x - _turf_x + _range_offset][C.y - _turf_y + _range_offset]
 
 // Macro that applies light to a new corner.
@@ -293,15 +293,15 @@
 		multiz_depth = length(sheet)
 	var/column_seperator = ""
 	for(var/i in 1 to length(sheet))
-		column_seperator += "--"
-	print_column += column_seperator
+		column_seperator += "----"
+	output += column_seperator
 	for(var/i in 1 to multiz_depth)
 		for(var/list/column in sheet)
 			var/list/print_column = list()
 			for(var/row in column)
 				print_column += round(row, 0.1)
 			output += print_column.Join(", ")
-		print_column += column_seperator
+		output += column_seperator
 	message_admins("\n[output.Join("\n")]")
 
 /// Debug proc, for when lighting sheets fuck up

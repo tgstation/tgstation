@@ -6193,13 +6193,11 @@
 /area/station/engineering/atmos)
 "cpf" = (
 /obj/machinery/reagentgrinder,
-/obj/effect/mapping_helpers/requests_console/ore_update,
-/obj/effect/mapping_helpers/requests_console/supplies,
-/obj/structure/table/glass,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
+/obj/structure/table/glass,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "cph" = (
@@ -10128,6 +10126,8 @@
 	},
 /obj/effect/spawner/random/armory/disablers,
 /obj/machinery/requests_console/directional/west,
+/obj/effect/mapping_helpers/requests_console/supplies,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "dNw" = (
@@ -10631,9 +10631,6 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
-/obj/effect/mapping_helpers/requests_console/announcement,
-/obj/effect/mapping_helpers/requests_console/information,
-/obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
@@ -13829,15 +13826,13 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/obj/structure/table/reinforced,
-/obj/effect/mapping_helpers/requests_console/supplies,
-/obj/effect/mapping_helpers/requests_console/assistance,
 /obj/machinery/camera/directional/north{
 	c_tag = "Security Post - Medbay";
 	network = list("ss13","medbay")
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/light/small/directional/north,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "fdl" = (
@@ -19008,7 +19003,6 @@
 /area/station/engineering/main)
 "gZI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
 /obj/item/storage/box/lights/mixed{
 	pixel_x = 6;
 	pixel_y = 8
@@ -19030,8 +19024,8 @@
 	pixel_x = -7;
 	pixel_y = 12
 	},
-/obj/effect/mapping_helpers/requests_console/assistance,
 /obj/machinery/light/small/directional/north,
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "gZM" = (
@@ -26456,6 +26450,9 @@
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /obj/machinery/requests_console/directional/south,
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/announcement,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "jxV" = (
@@ -33776,13 +33773,12 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "mhJ" = (
-/obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/siding/purple{
 	dir = 10
 	},
-/obj/effect/mapping_helpers/requests_console/supplies,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/dna_scannernew,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "mhR" = (
@@ -34220,6 +34216,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/requests_console/directional/east,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "mrl" = (
@@ -42393,6 +42390,7 @@
 	department = "Janitorial";
 	name = "Janitorial Requests Console"
 	},
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "pnk" = (
@@ -54281,13 +54279,11 @@
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "tCX" = (
-/obj/structure/rack,
 /obj/machinery/light/small/directional/north,
-/obj/effect/mapping_helpers/requests_console/supplies,
-/obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/effect/spawner/random/armory/riot_armor,
 /obj/effect/spawner/random/armory/bulletproof_armor,
+/obj/structure/rack,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "tDk" = (
@@ -57510,6 +57506,8 @@
 	department = "Pharmacy";
 	name = "Pharmacy Requests Console"
 	},
+/obj/effect/mapping_helpers/requests_console/supplies,
+/obj/effect/mapping_helpers/requests_console/ore_update,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "uHA" = (
@@ -61061,6 +61059,8 @@
 	department = "Security";
 	name = "Security Requests Console"
 	},
+/obj/effect/mapping_helpers/requests_console/supplies,
+/obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "vVV" = (

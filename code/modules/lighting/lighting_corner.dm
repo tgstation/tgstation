@@ -193,6 +193,7 @@
 
 	return ..()
 
+/// Debug proc to aid in understanding how corners work
 /datum/lighting_corner/proc/display(max_lum)
 	if(QDELETED(src))
 		return
@@ -216,6 +217,7 @@
 /datum/lighting_corner/dummy/display()
 	return
 
+/// Makes all lighting corners visible, debug to aid in understanding
 /proc/display_corners()
 	var/list/corners = list()
 	var/max_lum = 0
