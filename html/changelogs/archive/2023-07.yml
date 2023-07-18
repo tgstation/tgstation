@@ -750,3 +750,46 @@
       the right bloodpacks as mail goodies
   - qol: laser muskets' inhand sprites will show now whether or not they are charged
   - image: new inhand sprites for the laser muskets
+2023-07-18:
+  BlueMemesauce:
+  - bugfix: Abductor posters can no longer randomly spawn
+  - spellcheck: Fix duplicate sentence in space comms agent flavor text
+  CRITAWAKETS:
+  - rscadd: Added the smoothbore disabler and it's prime variant. You can now craft
+      a disabler with only one shot and terrible accuracy.
+  - code_imp: Gun cranking has been made a component and could theoretically be used
+      on more than guns.
+  Jacquerel:
+  - bugfix: Megafauna can be consumed by the singularity.
+  JohnFulpWillard:
+  - bugfix: Multi-z maps should now work again.
+  Melbert:
+  - rscadd: Adds a new 7 point positive quirk, "Spacer Born". You were born in space,
+      and as a result your body's adapted to life in artificial gravity, making you
+      much more effective and comfortable in lower gravity. However, travelling planet-side
+      is quite a chore, especially if you're assigned to work there.
+  - rscadd: 'Adds a chemical: Ondansetron, created by Oil + Nitrogen + Oxygen + Ethanol
+      catalyst. A powerful Antiemetic (lowers disgust).'
+  - refactor: Refactored display-ing of antag objectives in their UIs
+  Rhials:
+  - spellcheck: removes an errant period from the flux anomaly announcement.
+  Time-Green:
+  - bugfix: Triple carp player controlled shuttle event works again
+  - bugfix: anti-breach shields wont be dragged away during shuttle flight anymore
+  carlarctg:
+  - rscdel: There is no longer a 50% chance of catching a heretic out when examining
+      them drawing influences.
+  dieamond13:
+  - bugfix: adds a BCI implanter to northstar circuit lab as it didn't come with one
+      before
+  itseasytosee:
+  - balance: the Syndicate Tome traitor item now grants anti-magic while held and
+      can be used to clear cult runes.
+  necromanceranne:
+  - bugfix: Replaces direct calls of try_infect() with appropriate procs so that CRISPR
+      and Miasma aren't forcing diseases on the disease immune.
+  sergeirocks100:
+  - spellcheck: A spelling error in the name of the Tiziran fish case has been corrected.
+  timothymtorres:
+  - rscadd: Add healing boost to organs while mob is sleeping (does not apply to robotic
+      or dying organs)

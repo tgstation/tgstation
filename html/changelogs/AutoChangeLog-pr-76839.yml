@@ -1,0 +1,4 @@
+author: "Donglesplonge"
+delete-after: True
+changes:
+  - bugfix: "replaces the unspawnable cannonballs in birdshot maintenance with a stack so that the 4 cannonballs properly spawn, make sure to point them away from medical!"

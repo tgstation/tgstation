@@ -114,11 +114,11 @@
 		var/key = scoops[1]
 		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[LAZYACCESS(special_scoops, key) || key]
 		if(flavour?.desc) //I scream.
-			examine_list += "[source.p_theyre(TRUE)] filled with scoops of [flavour ? flavour.name : "broken, unhappy"] icecream."
+			examine_list += "[source.p_Theyre()] filled with scoops of [flavour ? flavour.name : "broken, unhappy"] icecream."
 		else
-			examine_list += replacetext(replacetext("[source.p_theyre(TRUE)] [flavour.desc]", "$CONE_NAME", initial(source.name)), "$CUSTOM_NAME", key)
+			examine_list += replacetext(replacetext("[source.p_Theyre()] [flavour.desc]", "$CONE_NAME", initial(source.name)), "$CUSTOM_NAME", key)
 	else /// Many flavours.
-		examine_list += "[source.p_theyre(TRUE)] filled with scoops of [english_list(scoops)] icecream. That's as many as [scoops_len] scoops!"
+		examine_list += "[source.p_Theyre()] filled with scoops of [english_list(scoops)] icecream. That's as many as [scoops_len] scoops!"
 
 /datum/component/ice_cream_holder/proc/on_update_overlays(atom/source, list/new_overlays)
 	SIGNAL_HANDLER
