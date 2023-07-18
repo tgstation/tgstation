@@ -1,3 +1,8 @@
+/// The damage healed per tick while sleeping without any modifiers
+#define HEALING_SLEEP_DEFAULT 0.2
+/// The sleep healing multipler for organ passive healing (since organs heal slowly)
+#define HEALING_SLEEP_ORGAN_MULTIPLIER 5
+
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
@@ -154,8 +159,6 @@
 	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	tick_interval = initial(tick_interval)
 
-#define HEALING_SLEEP_DEFAULT 0.2
-
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
@@ -202,10 +205,22 @@
 		if(locate(/obj/item/pillow) in owner.loc)
 			healing += 0.1
 
-		if(healing > 0 && health_ratio > 0.8)
-			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
-			owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
-			owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
+		if(healing > 0)
+			if(iscarbon(owner))
+				var/mob/living/carbon/carbon_owner = owner
+				for(var/obj/item/organ/target_organ as anything in carbon_owner.organs)
+					// no healing boost for robotic or dying organs
+					if(IS_ROBOTIC_ORGAN(target_organ) || !target_organ.damage || target_organ.organ_flags & ORGAN_FAILING)
+						continue
+
+					// organ regeneration is very low so we crank up the healing rate to give a good bonus
+					var/healing_bonus = target_organ.healing_factor * healing * HEALING_SLEEP_ORGAN_MULTIPLIER
+					target_organ.apply_organ_damage(-healing_bonus * target_organ.maxHealth)
+
+			if(health_ratio > 0.8) // only heals minor physical damage
+				owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
+				owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
+				owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
 		owner.adjustStaminaLoss(min(-1 * healing, -1 * HEALING_SLEEP_DEFAULT))
 	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
 	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
@@ -216,8 +231,6 @@
 
 	if(prob(2) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
-
-#undef HEALING_SLEEP_DEFAULT
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -919,3 +932,6 @@
 
 /datum/status_effect/teleport_madness/tick()
 	dump_in_space(owner)
+
+#undef HEALING_SLEEP_DEFAULT
+#undef HEALING_SLEEP_ORGAN_MULTIPLIER

@@ -440,8 +440,7 @@
 	. = ..()
 	if(!istype(exposed_turf) || (reac_volume < 1))
 		return
-
-	new/obj/effect/decal/cleanable/food/salt(exposed_turf)
+	exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/food/salt)
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
@@ -611,10 +610,9 @@
 	if(isspaceturf(exposed_turf))
 		return
 
-	var/obj/effect/decal/cleanable/food/flour/reagentdecal = new(exposed_turf)
-	reagentdecal = locate() in exposed_turf //Might have merged with flour already there.
-	if(reagentdecal)
-		reagentdecal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
+	var/obj/effect/decal/cleanable/food/flour/flour_decal = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/food/flour)
+	if(flour_decal)
+		flour_decal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
