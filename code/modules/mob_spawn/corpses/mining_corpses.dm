@@ -348,10 +348,10 @@
 	if(prob(70))
 		glasses = /obj/item/clothing/glasses/blindfold
 	if(prob(70))
-		belt = pick(list(
-			/obj/item/flashlight/lantern = 1,
-			/obj/item/toy/plush/moth = 1,
-		))
+		if(prob(50))
+			belt = /obj/item/flashlight/lantern
+		else
+			l_pocket = /obj/item/toy/plush/moth
 	if(prob(50))
 		r_pocket = pick_weight(list(
 			/obj/item/knife/combat/survival = 1,
