@@ -481,11 +481,9 @@
 /mob/living/proc/begin_blocking(obj/item/blocker)
 	if(next_move > world.time)
 		return FALSE
-	if(incapacitated(IGNORE_GRAB))
-		return FALSE
 	if(HAS_TRAIT(src, TRAIT_STUNIMMUNE)) // also check for knockdown?
 		return FALSE
-	if(usable_hands <= 0)
+	if(usable_hands <= 0 || incapacitated(IGNORE_GRAB) || !(mobility_flags & MOBILITY_USE))
 		return FALSE
 
 	if(isnull(blocker))

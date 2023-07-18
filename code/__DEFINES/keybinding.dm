@@ -43,6 +43,9 @@
 
 //Living
 #define COMSIG_KB_LIVING_RESIST_DOWN "keybinding_living_resist_down"
+#define COMSIG_KB_LIVING_BLOCK_HOLD_DOWN "keybinding_living_hold_block_down"
+#define COMSIG_KB_LIVING_BLOCK_TOGGLE_DOWN "keybinding_living_toggle_block_down"
+#define COMSIG_KB_LIVING_STRAFE_DOWN "keybinding_living_strafe_down"
 #define COMSIG_KB_LIVING_LOOKUP_DOWN "keybinding_living_lookup_down"
 #define COMSIG_KB_LIVING_LOOKDOWN_DOWN "keybinding_living_lookdown_down"
 #define COMSIG_KB_LIVING_REST_DOWN "keybinding_living_rest_down"

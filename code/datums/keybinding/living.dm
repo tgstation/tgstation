@@ -17,16 +17,64 @@
 	if(.)
 		return
 	var/mob/living/L = user.mob
-	if(!L.buckled && !L.incapacitated() && !L.on_fire)
-		L.begin_blocking()
-
 	L.resist()
 	return TRUE
 
-/datum/keybinding/living/resist/up(client/user)
+/datum/keybinding/living/hold_block
+	hotkey_keys = list("B") // defaults to the same as resist intentionally.
+	name = "block (hold)"
+	full_name = "Block (Hold)"
+	description = "Prepare yourself to block incoming attacks. Hold to continue blocking."
+	keybind_signal = COMSIG_KB_LIVING_BLOCK_HOLD_DOWN
+
+/datum/keybinding/living/hold_block/down(client/user)
 	. = ..()
-	var/mob/living/L = user.mob
-	L.stop_blocking()
+	if(.)
+		return
+	var/mob/living/blocker = user.mob
+	if(blocker.buckled || blocker.on_fire) // should be resisting instead
+		return
+
+	blocker.begin_blocking()
+	return TRUE
+
+/datum/keybinding/living/hold_block/up(client/user)
+	var/mob/living/blocker = user.mob
+	blocker.stop_blocking()
+	return TRUE
+
+/datum/keybinding/living/toggle_block
+	name = "block (toggle)"
+	full_name = "Block (Toggle)"
+	description = "Prepare yourself to block incoming attacks. Press to toggle blocking on or off."
+	keybind_signal = COMSIG_KB_LIVING_BLOCK_TOGGLE_DOWN
+
+/datum/keybinding/living/toggle_block/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/blocker = user.mob
+	if(blocker.buckled || blocker.on_fire) // should be resisting instead
+		return
+
+	if(IS_BLOCKING(blocker))
+		blocker.stop_blocking()
+	else
+		blocker.begin_blocking()
+	return TRUE
+
+/datum/keybinding/living/strafe
+	name = "strafe"
+	full_name = "Toggle Strafe"
+	description = "Toggle strafing, which slows you down a bit and locks your view to a certain direction while moving."
+	keybind_signal = COMSIG_KB_LIVING_STRAFE_DOWN
+
+/datum/keybinding/living/strafe/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/strafer = user.mob
+	strafer.toggle_strafe_lock()
 	return TRUE
 
 /datum/keybinding/living/look_up

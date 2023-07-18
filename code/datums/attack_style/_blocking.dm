@@ -58,11 +58,9 @@
 	if(!isnull(new_blocker))
 		set_blocking_item(new_blocker)
 
+/datum/status_effect/blocking/on_apply()
 	shield_overlay = provide_blocking_effect()
 	update_shield()
-
-/datum/status_effect/blocking/on_apply()
-	hide_blocking_effect()
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_attacked))
 	RegisterSignals(owner, list(COMSIG_MOB_APPLY_DAMAGE, COMSIG_LIVING_HEALTH_UPDATE), PROC_REF(on_health_update))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/blocking)
@@ -78,7 +76,7 @@
 		set_blocking_item(new_blocker)
 
 /datum/status_effect/blocking/on_remove()
-	QDEL_NULL(shield_overlay)
+	hide_blocking_effect()
 	UnregisterSignal(owner, list(
 		COMSIG_LIVING_CHECK_BLOCK,
 		COMSIG_LIVING_HEALTH_UPDATE,

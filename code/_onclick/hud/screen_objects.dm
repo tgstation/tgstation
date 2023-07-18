@@ -455,7 +455,6 @@
 	if(isliving(usr))
 		var/mob/living/living_user = usr
 		living_user.toggle_strafe_lock()
-		update_appearance(UPDATE_ICON_STATE)
 
 /atom/movable/screen/strafe/update_icon_state()
 	. = ..()
