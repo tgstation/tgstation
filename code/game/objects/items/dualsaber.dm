@@ -225,7 +225,7 @@
 		. += " Right-clicking will swing in the opposite direction, if no alternate style is set."
 	return .
 
-/datum/attack_style/melee_weapon/swing/desword/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
+/datum/attack_style/melee_weapon/swing/desword/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
 	var/list/turfs_in_order = list()
 	turfs_in_order |= get_turfs_and_adjacent_in_direction(attacker, turn(attack_direction, 90))
 	turfs_in_order |= get_step(attacker, attack_direction)
@@ -245,17 +245,17 @@
 
 // melbert todo
 /datum/attack_style/melee_weapon/swing/desword/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
-	if(length(affecting) < 3)
-		// Affecting will only get this small if we're in a super weird place like, say, in the corner of the map
+	if(length(affected_turfs) < 3)
+		// affected_turfs will only get this small if we're in a super weird place like, say, in the corner of the map
 		return
 
-	var/initial_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affecting[1])
-	var/final_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affecting[3]) // Only go up to the third turf, since we're two sided baby
+	var/initial_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affected_turfs[1])
+	var/final_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affected_turfs[3]) // Only go up to the third turf, since we're two sided baby
 	var/image/attack_image = create_attack_image(attacker, weapon, get_turf(attacker), initial_angle)
 	var/matrix/final_transform = turn(attack_image.transform, final_angle)
 	var/anim_time = 8 * time_per_turf // basically, travel 3 turfs at 2x the speed. then 2 turfs time for fade out.
 
-	attacker.do_attack_animation(affecting[ROUND_UP(length(affecting) / 2)], no_effect = TRUE)
+	attacker.do_attack_animation(affected_turfs[ROUND_UP(length(affected_turfs) / 2)], no_effect = TRUE)
 	flick_overlay_global(attack_image, GLOB.clients, anim_time)
 	animate(
 		attack_image,

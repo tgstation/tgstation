@@ -277,11 +277,10 @@
 	SIGNAL_HANDLER
 
 	var/datum/hud/hud = mob_parent.hud_used
-	mood_screen_object = new
+	mood_screen_object = new(null, hud)
 	mood_screen_object.color = "#4b96c4"
 	hud.infodisplay += mood_screen_object
 	RegisterSignal(hud, COMSIG_QDELETING, PROC_REF(unmodify_hud))
-	RegisterSignal(mood_screen_object, COMSIG_CLICK, PROC_REF(hud_click))
 
 /// Removes the mood HUD object
 /datum/mood/proc/unmodify_hud(datum/source)
@@ -293,14 +292,6 @@
 	if(hud?.infodisplay)
 		hud.infodisplay -= mood_screen_object
 	QDEL_NULL(mood_screen_object)
-
-/// Handles clicking on the mood HUD object
-/datum/mood/proc/hud_click(datum/source, location, control, params, mob/user)
-	SIGNAL_HANDLER
-
-	if(user != mob_parent)
-		return
-	print_mood(user)
 
 /// Prints the users mood, sanity, and moodies to chat
 /datum/mood/proc/print_mood(mob/user)

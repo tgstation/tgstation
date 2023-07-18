@@ -56,16 +56,6 @@
 /obj/item/fireaxe/can_attack_with(mob/living/attacker)
 	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
-/obj/item/fireaxe/afterattack(atom/A, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(HAS_TRAIT(src, TRAIT_WIELDED)) //destroys windows and grilles in one hit
-		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille))
-			if(!(A.resistance_flags & INDESTRUCTIBLE))
-				var/obj/structure/W = A
-				W.atom_destruction("fireaxe")
-
 /*
  * Bone Axe
  */

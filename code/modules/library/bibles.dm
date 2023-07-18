@@ -388,6 +388,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	if(owner_name)
 		. += span_warning("The name [owner_name] is written in blood inside the cover.")
 
+// melbert todo
 /obj/item/book/bible/syndicate/attack(mob/living/target_mob, mob/living/carbon/human/user, params, heal_mode = TRUE)
 	if(!user.combat_mode)
 		return ..()

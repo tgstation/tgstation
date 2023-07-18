@@ -29,6 +29,18 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 /datum/attack_style/melee_weapon/swing/wider_arc/scythe/vorpal
 
+/datum/attack_style/melee_weapon/swing/wider_arc/scythe/vorpal/get_swing_description(has_alt_style)
+	. = ..()
+	. += " Has a bit of extended reach."
+
+/datum/attack_style/melee_weapon/swing/wider_arc/scythe/vorpal/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
+	var/list/swing_turfs = ..()
+	var/midpoint = ROUND_UP(length(swing_turfs) / 2)
+	var/turf/open/one_in_front_of_the_middle = get_step(swing_turfs[midpoint], attack_direction)
+	if(istype(one_in_front_of_the_middle))
+		swing_turfs.Insert(midpoint + 1, one_in_front_of_the_middle)
+	return swing_turfs
+
 /obj/item/vorpalscythe
 	name = "vorpal scythe"
 	desc = "Reap what you sow."
@@ -44,6 +56,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	force = 10 //a lot worse than most nullrods initially. Why did you invest so much into making it vorpal, you dork.
 	armour_penetration = 50 //Very good armor penetration to make up for our abysmal force
 	attack_style_path = /datum/attack_style/melee_weapon/swing/wider_arc/scythe/vorpal
+	afterattack_on_right_click = TRUE
 	slot_flags = null
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
@@ -66,7 +79,6 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 /obj/item/vorpalscythe/examine(mob/user)
 	. = ..()
 	. += span_notice("You can perform a death knell using [src] on a human with Right-Click. If they were sentient (whether currently or at some point), [src] is empowered on a successful death knell.")
-	. += span_notice("[src] seems to have quite a bit of reach. You might be able to hit things from further away.")
 
 	var/current_empowerment = empowerment
 	switch(current_empowerment)
@@ -104,11 +116,15 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	return ..()
 
 //Borrows some amputation shear code, but much more specific
-/obj/item/vorpalscythe/attack_secondary(mob/living/victim, mob/living/user, params)
-	if(!iscarbon(victim) || user.combat_mode)
-		return SECONDARY_ATTACK_CALL_NORMAL
+/obj/item/vorpalscythe/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return .
+	if(!istype(user))
+		return .
 
-	if(user.zone_selected != BODY_ZONE_HEAD)
+	var/mob/living/carbon/victim = target
+	if(!proximity_flag || !istype(victim) || user.combat_mode || user.zone_selected != BODY_ZONE_HEAD)
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	var/mob/living/carbon/potential_reaping = victim

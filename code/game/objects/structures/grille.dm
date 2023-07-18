@@ -274,6 +274,15 @@
 
 	return ..()
 
+/obj/structure/grille/attacked_by(obj/item/attacking_item, mob/living/user)
+	. = ..()
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
+	// future todo: dehardcode
+	if(!istype(attacking_item, /obj/item/fireaxe))
+		return
+	atom_destruction(attacking_item.damtype)
+
 /obj/structure/grille/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)

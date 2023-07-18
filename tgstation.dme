@@ -262,6 +262,7 @@
 #include "code\__DEFINES\dcs\signals\signals_ai_controller.dm"
 #include "code\__DEFINES\dcs\signals\signals_area.dm"
 #include "code\__DEFINES\dcs\signals\signals_assembly.dm"
+#include "code\__DEFINES\dcs\signals\signals_attack_styles.dm"
 #include "code\__DEFINES\dcs\signals\signals_backpack.dm"
 #include "code\__DEFINES\dcs\signals\signals_beam.dm"
 #include "code\__DEFINES\dcs\signals\signals_bot.dm"

@@ -224,7 +224,7 @@
 	var/datum/attack_style/melee_weapon/attack_style_path = /datum/attack_style/melee_weapon
 	/// Attack style used when right-clicking while attacking.
 	/// By default, this is null, which means it will use the same attack style as the left click.
-	var/datum/attack_style/melee_weapon/alt_attack_style = null
+	var/datum/attack_style/melee_weapon/alt_attack_style_path = null
 	/// Reference to global singleton attack style
 	var/datum/attack_style/melee_weapon/attack_style
 	/// Reference to global singleton attack style

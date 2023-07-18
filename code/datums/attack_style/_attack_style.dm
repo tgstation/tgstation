@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  *
  * Return TRUE on success, and FALSE on failure
  */
-/datum/attack_style/proc/process_attack(mob/living/attacker, obj/item/weapon, atom/aimed_towards, right_clicking = FALSE, list/click_modifiers)
+/datum/attack_style/proc/process_attack(mob/living/attacker, obj/item/weapon, atom/aimed_towards, right_clicking = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	weapon?.add_fingerprint(attacker)
@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		// is far smaller than the window for NE/SE/SW/NW attacks.
 		attack_direction = angle2dir(get_angle(attacker, aimed_towards))
 
-	var/list/turf/affected_turfs = select_targeted_turfs(attacker, attack_direction, right_clicking)
+	var/list/turf/affected_turfs = select_targeted_turfs(attacker, weapon, attack_direction, right_clicking)
 
 	// Make sure they can't attack while swinging
 	attacker.changeNext_move(2 * time_per_turf * length(affected_turfs))
@@ -90,14 +90,15 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/attack_result = execute_attack(attacker, weapon, affected_turfs, priority_target = aimed_towards, right_clicking = right_clicking)
 	attacker.set_dir_on_move = pre_set_dir
 
-	if(attack_result & ATTACK_SWING_CANCEL)
-		return FALSE
+	var/successful_attack = !(attack_result & ATTACK_SWING_CANCEL)
+	if(successful_attack)
+		if(slowdown > 0)
+			attacker.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/attack_style_executed, multiplicative_slowdown = slowdown)
+			addtimer(CALLBACK(attacker, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/attack_style_executed), cd * 0.2)
+		attacker.changeNext_move(cd)
 
-	if(slowdown > 0)
-		attacker.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/attack_style_executed, multiplicative_slowdown = slowdown)
-		addtimer(CALLBACK(attacker, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/attack_style_executed), cd * 0.2)
-	attacker.changeNext_move(cd)
-	return TRUE
+	SEND_SIGNAL(attacker, COMSIG_ATTACK_STYLE_PROCESSED, weapon, attack_result)
+	return successful_attack
 
 /datum/attack_style/proc/execute_attack(
 	mob/living/attacker,
@@ -129,16 +130,16 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/starting_dir = attacker.dir
 
 	// Main attack loop starts here.
-	while(affecting_index <= length(affecting))
-		var/turf/hitting = affecting[affecting_index]
+	while(affecting_index <= length(affected_turfs))
+		var/turf/hitting = affected_turfs[affecting_index]
 
 #ifdef TESTING
 		apply_testing_color(hitting, affecting_index)
 #endif
 
 		affecting_index += 1
-		if(attacker.CanReach(hitting, weapon))
-			attack_result |= swing_enters_turf(attacker, weapon, hitting, already_hit, priority_target, right_clicking)
+		// melbert todo : border objects SUCK, needs to be addressed
+		attack_result |= swing_enters_turf(attacker, weapon, hitting, already_hit, priority_target, right_clicking)
 		if(attack_result & ATTACK_SWING_CANCEL)
 			// Cancel attacks stop outright
 			return attack_result
@@ -147,7 +148,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			break
 
 		// Travel time.
-		if(time_per_turf > 0 && length(affecting) <= affecting_index)
+		if(time_per_turf > 0 && length(affected_turfs) <= affecting_index)
 			sleep(time_per_turf) // probably shouldn't use stoplag? May result in undesired behavior during high load
 
 			// Sanity checking. We don't need to care about the other flags set if these fail.
@@ -162,7 +163,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 				// At this point we've moved a turf but can continue attacking, so we'll
 				// soft restart the swing from this point at the new turf.
 				starting_loc = attacker.loc
-				affecting = select_targeted_turfs(attacker, starting_dir, right_clicking)
+				affected_turfs = select_targeted_turfs(attacker, weapon, starting_dir, right_clicking)
 
 	if(!(attack_result & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT)))
 		// counts as a miss by default if we don't hit anyone
@@ -256,7 +257,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  *
  * Return a list of turfs with nulls filtered out
  */
-/datum/attack_style/proc/select_targeRted_turfs(mob/living/attacker, attack_direction, right_clicking)
+/datum/attack_style/proc/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
 	RETURN_TYPE(/list)
 	return list(get_step(attacker, attack_direction))
 
@@ -280,12 +281,12 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
  * * affecting - The list of turfs being affected by the attack
  */
 /datum/attack_style/proc/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
-	attacker.do_attack_animation(get_movable_to_layer_effect_over(affecting))
+	attacker.do_attack_animation(get_movable_to_layer_effect_over(affected_turfs))
 
 /// Can be used in [proc/attack_effect_animation] to select some atom
 /// in the list of affecting turfs to play the attack animation over
 /datum/attack_style/proc/get_movable_to_layer_effect_over(list/turf/affected_turfs)
-	var/turf/midpoint = affecting[ROUND_UP(length(affecting) / 2)]
+	var/turf/midpoint = affected_turfs[ROUND_UP(length(affected_turfs) / 2)]
 	var/atom/movable/current_pick = midpoint
 	for(var/atom/movable/thing as anything in midpoint)
 		if(isProbablyWallMounted(thing))
@@ -455,7 +456,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /datum/attack_style/unarmed/attack_effect_animation(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affected_turfs, override_effect)
 	var/selected_effect = override_effect || attack_effect
 	if(selected_effect)
-		attacker.do_attack_animation(get_movable_to_layer_effect_over(affecting), selected_effect)
+		attacker.do_attack_animation(get_movable_to_layer_effect_over(affected_turfs), selected_effect)
 
 /datum/attack_style/unarmed/collide_with_solid_atom(atom/blocking_us, obj/item/weapon, mob/living/attacker)
 	attacker.resolve_unarmed_attack(blocking_us)

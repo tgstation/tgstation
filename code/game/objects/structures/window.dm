@@ -159,6 +159,14 @@
 	playsound(src, knock_sound, 50, TRUE)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
+/obj/structure/window/attacked_by(obj/item/attacking_item, mob/living/user)
+	. = ..()
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
+	// future todo: dehardcode
+	if(!istype(attacking_item, /obj/item/fireaxe))
+		return
+	atom_destruction(attacking_item.damtype)
 
 /obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(!can_be_reached(user))

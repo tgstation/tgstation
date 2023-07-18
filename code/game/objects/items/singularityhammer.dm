@@ -51,7 +51,7 @@
 		return
 
 	// Grab the middle turf of the swing
-	var/turf/middle_turf = affecting[ROUND_UP(length(affecting) / 2)]
+	var/turf/middle_turf = affected_turfs[ROUND_UP(length(affected_turfs) / 2)]
 	var/mob/living/bonus_damage_target = (isliving(priority_target) && (priority_target in middle_turf)) ? priority_target : locate() in middle_turf
 	// Apply some bonus damage to anyone (prioritizing the clicked atom) in the middle turf
 	bonus_damage_target?.apply_damage(20, BRUTE, BODY_ZONE_CHEST, wound_bonus = 5)

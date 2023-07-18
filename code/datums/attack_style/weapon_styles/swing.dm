@@ -10,16 +10,16 @@
 	return "Swings in an arc of three tiles in the direction you are attacking."
 
 /datum/attack_style/melee_weapon/swing/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
-	var/num_turfs_to_move = length(affecting)
+	var/num_turfs_to_move = length(affected_turfs)
 	var/final_animation_length = time_per_turf * num_turfs_to_move
-	var/initial_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affecting[1])
-	var/final_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affecting[num_turfs_to_move])
-	var/image/attack_image = create_attack_image(attacker, weapon, affecting[1], initial_angle)
+	var/initial_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affected_turfs[1])
+	var/final_angle = -weapon.weapon_sprite_angle + get_angle(attacker, affected_turfs[num_turfs_to_move])
+	var/image/attack_image = create_attack_image(attacker, weapon, affected_turfs[1], initial_angle)
 	var/matrix/final_transform = turn(attack_image.transform, final_angle - initial_angle)
-	var/final_x = (affecting[num_turfs_to_move].x - attacker.x) * 16
-	var/final_y = (affecting[num_turfs_to_move].y - attacker.y) * 16
+	var/final_x = (affected_turfs[num_turfs_to_move].x - attacker.x) * 16
+	var/final_y = (affected_turfs[num_turfs_to_move].y - attacker.y) * 16
 
-	attacker.do_attack_animation(affecting[ROUND_UP(length(affecting) / 2)], no_effect = TRUE)
+	attacker.do_attack_animation(affected_turfs[ROUND_UP(length(affected_turfs) / 2)], no_effect = TRUE)
 	flick_overlay_global(attack_image, GLOB.clients, final_animation_length + time_per_turf) // add a little extra time
 	animate(
 		attack_image,
@@ -36,7 +36,7 @@
 		easing = CIRCULAR_EASING|EASE_OUT,
 	)
 
-/datum/attack_style/melee_weapon/swing/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
+/datum/attack_style/melee_weapon/swing/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
 	var/list/swing_turfs = get_turfs_and_adjacent_in_direction(attacker, attack_direction)
 	if(reverse_for_lefthand && (attacker.active_hand_index % 2 == 1))
 		reverse_range(swing_turfs)
@@ -45,9 +45,9 @@
 /datum/attack_style/melee_weapon/swing/wider_arc
 
 /datum/attack_style/melee_weapon/swing/wider_arc/get_swing_description(has_alt_style)
-	return "Swings in an arc of six tiles in the direction you are attacking."
+	return "Swings in an arc of five tiles in the direction you are attacking."
 
-/datum/attack_style/melee_weapon/swing/wider_arc/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
+/datum/attack_style/melee_weapon/swing/wider_arc/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
 	var/list/swing_turfs = ..()
 	// Also grab turfs to the left and right of the attacker
 	var/turf/adjacent_left = get_step(attacker, turn(attack_direction, -90))
@@ -70,7 +70,7 @@
 /datum/attack_style/melee_weapon/swing/only_left/get_swing_description(has_alt_style)
 	return "Swings in an arc of two tiles in the direction you are attacking, away from your active hand."
 
-/datum/attack_style/melee_weapon/swing/only_left/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
+/datum/attack_style/melee_weapon/swing/only_left/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
 	// Does not hit the last turf (right most turf).
 	var/list/swing_turfs = ..()
 	if(length(swing_turfs))

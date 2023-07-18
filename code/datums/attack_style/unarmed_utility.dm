@@ -5,7 +5,7 @@
 /datum/attack_style/unarmed/disarm/execute_attack(mob/living/attacker, obj/item/bodypart/weapon, list/turf/affected_turfs, atom/priority_target, right_clicking)
 	if(attacker.body_position != STANDING_UP)
 		return ATTACK_SWING_CANCEL
-	if(attacker.loc in affecting)
+	if(attacker.loc in affected_turfs)
 		return ATTACK_SWING_CANCEL
 
 	return ..()

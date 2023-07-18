@@ -551,6 +551,10 @@
 		/obj/structure/alien/resin/flower_bud,
 	))
 
+/datum/attack_style/melee_weapon/swing/wider_arc/scythe/get_swing_description(has_alt_style)
+	. = ..()
+	. += " Also effective at clearing out wild vines."
+
 /datum/attack_style/melee_weapon/swing/wider_arc/scythe/swing_enters_turf(
 	mob/living/attacker,
 	obj/item/weapon,

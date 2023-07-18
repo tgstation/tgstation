@@ -9,7 +9,7 @@
 /datum/attack_style/melee_weapon/stab_out/get_swing_description(has_alt_style)
 	return "Stabs out [stab_range] tiles in the direction you are attacking."
 
-/datum/attack_style/melee_weapon/stab_out/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
+/datum/attack_style/melee_weapon/stab_out/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
 	var/max_range = stab_range
 	var/turf/last_turf = get_turf(attacker)
 	var/list/select_turfs = list()
@@ -18,7 +18,7 @@
 		if(istype(next_turf))
 			select_turfs += next_turf
 		// This block stabbing over tables... needs a bit of work to allow that.
-		if(next_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker)) // melbert todo
+		if(isnull(next_turf) || next_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = weapon)) // melbert todo
 			return select_turfs
 		last_turf = next_turf
 		max_range--
@@ -26,15 +26,15 @@
 	return select_turfs
 
 /datum/attack_style/melee_weapon/stab_out/attack_effect_animation(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs)
-	var/image/attack_image = create_attack_image(attacker, weapon, affecting[1])
-	var/stab_length = time_per_turf * length(affecting)
-	attacker.do_attack_animation(affecting[1], no_effect = TRUE) // melbert todo
+	var/image/attack_image = create_attack_image(attacker, weapon, affected_turfs[1])
+	var/stab_length = time_per_turf * length(affected_turfs)
+	attacker.do_attack_animation(affected_turfs[1], no_effect = TRUE) // melbert todo
 	flick_overlay_global(attack_image, GLOB.clients, stab_length + animation_linger_time)
 	var/start_x = attack_image.pixel_x
 	var/start_y = attack_image.pixel_y
 	var/x_move = 0
 	var/y_move = 0
-	var/stab_dir = get_dir(attacker, affecting[1])
+	var/stab_dir = get_dir(attacker, affected_turfs[1])
 	if(stab_dir & NORTH)
 		y_move += 8
 	else if(stab_dir & SOUTH)

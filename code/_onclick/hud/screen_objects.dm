@@ -658,8 +658,11 @@
 	icon_state = "mood5"
 	screen_loc = ui_mood
 
-/atom/movable/screen/mood/attack_tk()
-	return
+/atom/movable/screen/mood/Click(location, control, params)
+	var/mob/living/moody_person = hud?.mymob
+	if(!istype(moody_person) || usr != moody_person)
+		return
+	moody_person.mob_mood?.print_mood(usr)
 
 /atom/movable/screen/splash
 	icon = 'icons/blanks/blank_title.png'

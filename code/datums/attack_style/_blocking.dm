@@ -10,7 +10,12 @@
 	tick_interval = 1 SECONDS
 	duration = -1
 
+	/// A pool of blocking overlay effects, to save on re-creating effects.
+	var/static/list/obj/effect/blocking_effect/pooled_overlays = list()
+
+	/// What we're blocking with currently
 	var/obj/item/blocking_with
+	/// A ref to our active shile doverlay
 	var/obj/effect/blocking_effect/shield_overlay
 
 /datum/status_effect/blocking/nextmove_modifier()
@@ -19,6 +24,33 @@
 	// interfacing with your backpack or other actions.
 	return 2
 
+/datum/status_effect/blocking/proc/provide_blocking_effect()
+	var/obj/effect/blocking_effect/shield
+	for(var/obj/effect/blocking_effect/stored_shield as anything in pooled_overlays)
+		if(ismob(shield.loc))
+			continue
+		shield = stored_shield
+		break
+
+	if(isnull(shield))
+		shield = new(owner)
+		var/static/shield_offset_const = (0.8 * world.icon_size)
+		shield.pixel_y += shield_offset_const
+		pooled_overlays += shield
+	else
+		shield.forceMove(owner)
+
+	shield.color = owner.chat_color || LIGHT_COLOR_BLUE
+	shield.alpha = min(owner.alpha, 200)
+	shield.layer = owner.layer + 0.1 // melbert todo: hides under mobs 1 tile up (not z wise)
+	owner.vis_contents += shield_overlay
+	return shield
+
+/datum/status_effect/blocking/proc/hide_blocking_effect()
+	owner.vis_contents -= shield_overlay
+	shield_overlay.moveToNullspace()
+	shield_overlay = null
+
 /datum/status_effect/blocking/on_creation(mob/living/new_owner, obj/item/new_blocker)
 	. = ..()
 	if(!.)
@@ -26,13 +58,11 @@
 	if(!isnull(new_blocker))
 		set_blocking_item(new_blocker)
 
-	var/static/shield_offset_const = (0.8 * world.icon_size)
-	shield_overlay = new(new_owner)
-	shield_overlay.pixel_y += shield_offset_const // melbert todo: hides under mobs
-	owner.vis_contents += shield_overlay
+	shield_overlay = provide_blocking_effect()
 	update_shield()
 
 /datum/status_effect/blocking/on_apply()
+	hide_blocking_effect()
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_attacked))
 	RegisterSignals(owner, list(COMSIG_MOB_APPLY_DAMAGE, COMSIG_LIVING_HEALTH_UPDATE), PROC_REF(on_health_update))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/blocking)
@@ -48,7 +78,6 @@
 		set_blocking_item(new_blocker)
 
 /datum/status_effect/blocking/on_remove()
-	owner.vis_contents -= shield_overlay
 	QDEL_NULL(shield_overlay)
 	UnregisterSignal(owner, list(
 		COMSIG_LIVING_CHECK_BLOCK,
@@ -183,12 +212,27 @@
 	desc = initial(desc)
 	var/datum/status_effect/blocking/blocking_effect = attached_effect
 	ASSERT(istype(blocking_effect))
-	if(blocking_effect.blocking_with)
-		desc += " You are blocking with [blocking_effect.blocking_with], \
-			which has an effectiveness of [blocking_effect.blocking_with.blocking_ability]."
-	else
-		desc += " You are blocking with your bare hands, \
-			which has an effectiveness of [BARE_HAND_DEFENSE_MULTIPLIER]."
+	var/effectiveness = blocking_effect.blocking_with?.blocking_ability || BARE_HAND_DEFENSE_MULTIPLIER
+	var/effectiveness_verb = ""
+	switch(effectiveness)
+		if(-1)
+			effectiveness_verb = "can't block a thing!"
+		if(0)
+			effectiveness_verb = "can bare any attack!"
+		if(0 to 1)
+			effectiveness_verb = "can block very well!"
+		if(1 to 1.5)
+			effectiveness_verb = "can block moderately well."
+		if(1.5 to 2)
+			effectiveness_verb = "can block decently."
+		if(2 to 3)
+			effectiveness_verb = "is not very good at blocking..."
+		if(3 to INFINITY)
+			effectiveness_verb = "is terrible at blocking!"
+		else
+			effectiveness_verb = "is blocking with an unknown effectiveness, perhaps report this as a bug?"
+
+	desc += "\n\nYou are blocking with [blocking_effect.blocking_with || "your bare hands"], which [effectiveness_verb]"
 
 /obj/effect/blocking_effect
 	icon = 'icons/effects/blocking.dmi'

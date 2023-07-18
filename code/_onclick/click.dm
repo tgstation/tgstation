@@ -295,6 +295,8 @@
  * Ends up translating into melee_attack_chain (tool act, pre_attack, attackby, attack / attack_atom, attacked_by, afterattack)
  * Or instead goes into attack styles (process_attack, execute_attack, finalize_attack, etc)
  * Or neither: If no attack style is executed and the mob is not in attack range of what they clicked, afterattack is called
+ *
+ * Going into this proc, click CD is NOT SET YET
  */
 /mob/proc/click_on_with_item(atom/clicked_on, obj/item/clicked_with_what, params)
 	PROTECTED_PROC(TRUE)
@@ -307,7 +309,7 @@
 	var/close_enough = CanReach(clicked_on, clicked_with_what)
 	// Handle non-combat uses of attacking, IE using a screwdriver on a wall
 	if(close_enough && !combat_mode && !ismob(clicked_on))
-		changeNext_move(CLICK_CD_MELEE)
+		// changeNext_move(CLICK_CD_MELEE)
 		clicked_with_what.melee_attack_chain(src, clicked_on, params)
 		return
 
@@ -315,7 +317,7 @@
 	if(clicked_with_what.item_flags & NOBLUDGEON)
 		// Handles non-combat uses of attacking mobs, like health scanning
 		if(close_enough)
-			changeNext_move(CLICK_CD_MELEE)
+			// changeNext_move(CLICK_CD_MELEE)
 			clicked_with_what.melee_attack_chain(src, clicked_on, params)
 			return
 

@@ -369,11 +369,11 @@
 	if(active)
 		tool_behaviour = TOOL_SAW
 		set_light_range(2)
-		attack_style_path = GLOB.attack_styles[/datum/attack_style/melee_weapon/swing]
+		attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon/swing]
 	else
 		tool_behaviour = TOOL_SCALPEL
 		set_light_range(1)
-		attack_style_path = GLOB.attack_styles[/datum/attack_style/melee_weapon/stab_out]
+		attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon/stab_out]
 
 	balloon_alert(user, "[active ? "enabled" : "disabled"] bone-cutting mode")
 	playsound(user ? user : src, 'sound/machines/click.ogg', 50, TRUE)

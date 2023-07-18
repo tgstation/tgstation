@@ -374,7 +374,7 @@
 		. += " Right-clicking will swing in the opposite direction."
 	return .
 
-/datum/attack_style/melee_weapon/swing/esword/select_targeted_turfs(mob/living/attacker, attack_direction, right_clicking)
+/datum/attack_style/melee_weapon/swing/esword/select_targeted_turfs(mob/living/attacker, obj/item/weapon, attack_direction, right_clicking)
 	. = ..()
 	if(right_clicking)
 		reverse_range(.)

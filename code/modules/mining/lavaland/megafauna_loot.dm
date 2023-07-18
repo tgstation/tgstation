@@ -834,9 +834,12 @@
 //Blood-Drunk Miner: Cleaving Saw
 
 /datum/attack_style/melee_weapon/cleaving_saw_closed
-	cd = CLICK_CD_MELEE * 0.5
+	cd = 3 DECISECONDS
+	slowdown = 0.5
 
 /datum/attack_style/melee_weapon/swing/cleaving_saw_open
+	cd = 12 DECISECONDS
+	slowdown = 0.8
 
 /obj/item/melee/cleaving_saw
 	name = "cleaving saw"
@@ -858,6 +861,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
 	attack_style_path = /datum/attack_style/melee_weapon/cleaving_saw_closed
+	weapon_sprite_angle = 225
 	/// List of factions we deal bonus damage to
 	var/list/nemesis_factions = list(FACTION_MINING, FACTION_BOSS)
 	/// Amount of damage we deal to the above factions
@@ -938,9 +942,9 @@
 	user.changeNext_move(CLICK_CD_MELEE * 0.25)
 
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		attack_style_path = GLOB.attack_styles[/datum/attack_style/melee_weapon/swing/cleaving_saw_open]
+		attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon/swing/cleaving_saw_open]
 	else
-		attack_style_path = GLOB.attack_styles[/datum/attack_style/melee_weapon/cleaving_saw_closed]
+		attack_style = GLOB.attack_styles[/datum/attack_style/melee_weapon/cleaving_saw_closed]
 
 	if(user)
 		balloon_alert(user, "[active ? "opened" : "closed"] [src]")
