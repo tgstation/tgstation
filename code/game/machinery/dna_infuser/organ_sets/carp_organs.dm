@@ -25,7 +25,7 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
 
-	actions_types = list(/datum/action/cooldown/euryhaline_adaptation)
+	actions_types = list(/datum/action/adapt_lungs)
 
 /obj/item/organ/internal/lungs/carp/Initialize(mapload)
 	. = ..()
@@ -33,7 +33,7 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 	ADD_TRAIT(src, TRAIT_SPACEBREATHING, REF(src))
 	// oh god
-	add_gas_reaction(/datum/gas/oxygen, always = PROC_REF(breathe_oxygen))
+	// add_gas_reaction(/datum/gas/oxygen, always = PROC_REF(breathe_oxygen))
 
 /// Make yourself able to breath oxygen for 5 minutes. Refreshes on visiting a new zlevel.
 /datum/action/adapt_lungs
@@ -44,25 +44,14 @@
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	check_flags = AB_CHECK_CONSCIOUS
-	var/ready = TRUE
+	/// this ability refreshes on visiting a new zlevel
+	var/traveled_zlevel = TRUE
 
-/datum/action/cooldown/lay_web/Grant(mob/grant_to)
-	. = ..()
-	if (!owner)
-		return
-	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_status_on_signal))
+// /datum/action/adapt_lungs/IsAvailable(feedback = FALSE)
+// 	// check traveled_zlevel, hook up a signal to detect that
 
-/datum/action/cooldown/lay_web/Remove(mob/removed_from)
-	. = ..()
-	UnregisterSignal(removed_from, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED))
-
-
-/// Returns true if there's a web we can't put stuff on in our turf
-/datum/action/cooldown/lay_web/proc/obstructed_by_other_web()
-	return !!(locate(/obj/structure/spider/stickyweb) in get_turf(owner))
-
-/datum/action/cooldown/lay_web/Activate()
-	. = ..()
+// /datum/action/adapt_lungs/Activate()
+// 	. = ..()
 
 
 ///occasionally sheds carp teeth, stronger melee (bite) attacks, but you can't cover your mouth anymore.
@@ -138,12 +127,8 @@
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/*
- * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
- *
- * Toggles between crowbar and wirecutters and gives feedback to the user.
- */
-/obj/item/crowbar/power/proc/on_transform(obj/item/source, mob/user, active)
+/// signal when the transforming component triggers
+/obj/item/knife/carp/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
 	tool_behaviour = (active ? TOOL_CROWBAR : TOOL_KNIFE)
@@ -175,7 +160,6 @@
 /obj/item/organ/internal/brain/carp/on_remove(mob/living/carbon/brain_owner)
 	. = ..()
 	UnregisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED)
-	deltimer(cooldown_timer)
 
 /obj/item/organ/internal/brain/carp/get_attacking_limb(mob/living/carbon/human/target)
 	return owner.get_bodypart(BODY_ZONE_HEAD)
