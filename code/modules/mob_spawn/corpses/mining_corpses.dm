@@ -263,8 +263,8 @@
 
 /datum/outfit/consumed_ice_settler/pre_equip(mob/living/carbon/human/ice_settler, visualsOnly = FALSE)
 	if(prob(30))
-		if (prob(60)
-			belt = pick(list(
+		if (prob(60))
+			belt = pick_weight(list(
 				/obj/item/crowbar = 1,
 				/obj/item/flashlight/flare/torch = 2,
 			))
