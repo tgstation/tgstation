@@ -1,7 +1,6 @@
 
 // The proc you should always use to set the light of this atom.
-#warn lemnon todo, reorder
-/atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_on, l_angle, l_dir)
+/atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_angle, l_dir, l_on)
 	// We null everything but l_dir, because we don't want to allow for modifications while frozen
 	if(light_flags & LIGHT_FROZEN)
 		l_range = null

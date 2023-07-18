@@ -28,7 +28,6 @@
 	var/port_x_offset
 	var/port_y_offset
 	var/extra_desc = ""
-	var/passed_over = FALSE
 
 /datum/map_template/shuttle/proc/prerequisites_met()
 	return TRUE
@@ -155,7 +154,6 @@
 	suffix = "backup"
 	name = "Backup Shuttle"
 	who_can_purchase = null
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/construction
 	suffix = "construction"
@@ -164,7 +162,6 @@
 	admin_notes = "No brig, no medical facilities."
 	credit_cost = CARGO_CRATE_VALUE * 5
 	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_CE)
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/construction/post_load()
 	. = ..()
@@ -178,14 +175,12 @@
 	name = "Asteroid Station Emergency Shuttle"
 	description = "A respectable mid-sized shuttle that first saw service shuttling Nanotrasen crew to and from their asteroid belt embedded facilities."
 	credit_cost = CARGO_CRATE_VALUE * 6
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/venture
 	suffix = "venture"
 	name = "Venture Emergency Shuttle"
 	description = "A mid-sized shuttle for those who like a lot of space for their legs."
 	credit_cost = CARGO_CRATE_VALUE * 10
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
@@ -194,7 +189,6 @@
 	admin_notes = "Bardrone and Barmaid are GODMODE, will be automatically sentienced by the fun balloon at 60 seconds before arrival. \
 	Has medical facilities."
 	credit_cost = CARGO_CRATE_VALUE * 10
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/pod
 	suffix = "pod"
@@ -202,7 +196,6 @@
 	description = "We did not expect an evacuation this quickly. All we have available is two escape pods."
 	admin_notes = "For player punishment."
 	who_can_purchase = null
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/russiafightpit
 	suffix = "russiafightpit"
@@ -210,7 +203,6 @@
 	description = "Dis is a high-quality shuttle, da. Many seats, lots of space, all equipment! Even includes entertainment! Such as lots to drink, and a fighting arena for drunk crew to have fun! If arena not fun enough, simply press button of releasing bears. Do not worry, bears trained not to break out of fighting pit, so totally safe so long as nobody stupid or drunk enough to leave door open. Try not to let asimov babycons ruin fun!"
 	admin_notes = "Includes a small variety of weapons. And bears. Only captain-access can release the bears. Bears won't smash the windows themselves, but they can escape if someone lets them."
 	credit_cost = CARGO_CRATE_VALUE * 10 // While the shuttle is rusted and poorly maintained, trained bears are costly.
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/meteor
 	suffix = "meteor"
@@ -219,7 +211,6 @@
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
 	credit_cost = CARGO_CRATE_VALUE * 30
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/monastery
 	suffix = "monastery"
@@ -229,7 +220,6 @@
 	emag_only = TRUE
 	credit_cost = EMAG_LOCKED_SHUTTLE_COST * 1.8
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 5)
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
@@ -239,7 +229,6 @@
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	emag_only = TRUE
 	credit_cost = EMAG_LOCKED_SHUTTLE_COST
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/medisim
 	suffix = "medisim"
@@ -247,7 +236,6 @@
 	description = "A state of the art simulation dome, loaded onto your shuttle! Watch and laugh at how petty humanity used to be before it reached the stars. Guaranteed to be at least 40% historically accurate."
 	admin_notes = "Ghosts can spawn in and fight as knights or archers. The CTF auto restarts, so no admin intervention necessary."
 	credit_cost = 20000
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/medisim/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_MEDISIM]
@@ -259,7 +247,6 @@
 	admin_notes = "Flaming hot. The main area has a dance machine as well as plasma floor tiles that will be ignited by players every single time."
 	emag_only = TRUE
 	credit_cost = EMAG_LOCKED_SHUTTLE_COST
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
@@ -269,7 +256,6 @@
 	credit_cost = CARGO_CRATE_VALUE * 20
 	/// Whether the arena z-level has been created
 	var/arena_loaded = FALSE
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/arena/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_BUBBLEGUM]
@@ -290,14 +276,12 @@
 	name = "Birdboat Station Emergency Shuttle"
 	description = "Though a little on the small side, this shuttle is feature complete, which is more than can be said for the pattern of station it was commissioned for."
 	credit_cost = CARGO_CRATE_VALUE * 2
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/box
 	suffix = "box"
 	name = "Box Station Emergency Shuttle"
 	credit_cost = CARGO_CRATE_VALUE * 4
 	description = "The gold standard in emergency exfiltration, this tried and true design is equipped with everything the crew needs for a safe flight home."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/donut
 	suffix = "donut"
@@ -305,7 +289,6 @@
 	description = "The perfect spearhead for any crude joke involving the station's shape, this shuttle supports a separate containment cell for prisoners and a compact medical wing."
 	admin_notes = "Has airlocks on both sides of the shuttle and will probably intersect near the front on some stations that build past departures."
 	credit_cost = CARGO_CRATE_VALUE * 5
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/clown
 	suffix = "clown"
@@ -317,7 +300,6 @@
 	Have a fun ride!"
 	admin_notes = "Brig is replaced by anchored greentext book surrounded by lavaland chasms, stationside door has been removed to prevent accidental dropping. No brig."
 	credit_cost = CARGO_CRATE_VALUE * 16
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/cramped
 	suffix = "cramped"
@@ -327,42 +309,36 @@
 	\n\
 	Contains contraband armory guns, maintenance loot, and abandoned crates!"
 	admin_notes = "Due to origin as a solo piloted secure vessel, has an active GPS onboard labeled STV5. Has roughly as much space as Hi Daniel, except with explosive crates."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
 	name = "Meta Station Emergency Shuttle"
 	credit_cost = CARGO_CRATE_VALUE * 8
 	description = "A fairly standard shuttle, though larger and slightly better equipped than the Box Station variant."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/kilo
 	suffix = "kilo"
 	name = "Kilo Station Emergency Shuttle"
 	credit_cost = CARGO_CRATE_VALUE * 10
 	description = "A fully functional shuttle including a complete infirmary, storage facilties and regular amenities."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/mini
 	suffix = "mini"
 	name = "Ministation emergency shuttle"
 	credit_cost = CARGO_CRATE_VALUE * 2
 	description = "Despite its namesake, this shuttle is actually only slightly smaller than standard, and still complete with a brig and medbay."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/tram
 	suffix = "tram"
 	name = "Tram Station Emergency Shuttle"
 	credit_cost = CARGO_CRATE_VALUE * 4
 	description = "A train but in space, choo choo!"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/birdshot
 	suffix = "birdshot"
 	name = "Birdshot Station Emergency Shuttle"
 	credit_cost = CARGO_CRATE_VALUE * 2
 	description = "We pulled this one out of Mothball just for you!"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
@@ -371,7 +347,6 @@
 	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean too heavily on the exterior windows, they are fragile."
 	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight."
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
@@ -380,7 +355,6 @@
 	admin_notes = "Contains real cult ruins, mob eyeballs, and inactive constructs. Cult mobs will automatically be sentienced by fun balloon. \
 	Cloning pods in 'medbay' area are showcases and nonfunctional."
 	credit_cost = 6667 ///The joke is the number so no defines
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/narnar/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR]
@@ -391,7 +365,6 @@
 	description = "A train but in space! Complete with a first, second class, brig and storage area."
 	admin_notes = "Choo choo motherfucker!"
 	credit_cost = CARGO_CRATE_VALUE * 2
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/cere
 	suffix = "cere"
@@ -400,7 +373,6 @@
 	an engine room stocked with various supplies, and a crew capacity of 80+ to top it all off. Live large, live Cere."
 	admin_notes = "Seriously big, even larger than the Delta shuttle."
 	credit_cost = CARGO_CRATE_VALUE * 20
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"
@@ -416,7 +388,6 @@
 	emag_only = TRUE
 	credit_cost = EMAG_LOCKED_SHUTTLE_COST
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
 	suffix = "imfedupwiththisworld"
@@ -427,14 +398,12 @@
 	emag_only = TRUE
 	credit_cost = EMAG_LOCKED_SHUTTLE_COST
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
 	name = "NES Port"
 	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) is a shuttle used at other less known Nanotrasen facilities and has a more open inside for larger crowds, but fewer onboard shuttle facilities."
 	credit_cost = CARGO_CRATE_VALUE
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/rollerdome
 	suffix = "rollerdome"
@@ -443,7 +412,6 @@
 	He says this shuttle is based off an old entertainment complex from the 1990s, though our database has no records on anything pertaining to that decade."
 	admin_notes = "ONLY NINETIES KIDS REMEMBER. Uses the fun balloon and drone from the Emergency Bar."
 	credit_cost = CARGO_CRATE_VALUE * 5
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/basketball
 	suffix = "bballhooper"
@@ -453,7 +421,6 @@
 	It also wasn't manufactured to deal with the form-factor of some of your stations... good luck with that."
 	admin_notes = "A larger shuttle built around a basketball stadium: entirely impractical but just a complete blast!"
 	credit_cost = CARGO_CRATE_VALUE * 10
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"
@@ -463,14 +430,12 @@
 	Needless to say, no engineering team wanted to go near the thing, and it's only being used as an Emergency Escape Shuttle because there is literally nothing else available."
 	admin_notes = "If the crew can solve the puzzle, they will wake the wabbajack statue. It will likely not end well. There's a reason it's boarded up. Maybe they should have just left it alone."
 	credit_cost = CARGO_CRATE_VALUE * 30
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/omega
 	suffix = "omega"
 	name = "Omegastation Emergency Shuttle"
 	description = "On the smaller size with a modern design, this shuttle is for the crew who like the cosier things, while still being able to stretch their legs."
 	credit_cost = CARGO_CRATE_VALUE * 2
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/cruise
 	suffix = "cruise"
@@ -478,7 +443,6 @@
 	description = "Ordinarily reserved for special functions and events, the Cruise Shuttle Independence can bring a summery cheer to your next station evacuation for a 'modest' fee!"
 	admin_notes = "This motherfucker is BIG. You might need to force dock it."
 	credit_cost = CARGO_CRATE_VALUE * 100
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/monkey
 	suffix = "nature"
@@ -486,7 +450,6 @@
 	description = "A large shuttle with a center biodome that is flourishing with life. Frolick with the monkeys! (Extra monkeys are stored on the bridge.)"
 	admin_notes = "Pretty freakin' large, almost as big as Raven or Cere. Excercise caution with it."
 	credit_cost = CARGO_CRATE_VALUE * 16
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/casino
 	suffix = "casino"
@@ -494,7 +457,6 @@
 	description = "A luxurious casino packed to the brim with everything you need to start new gambling addicitions!"
 	admin_notes = "The ship is a bit chunky, so watch where you park it."
 	credit_cost = 7777
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/shadow
 	suffix = "shadow"
@@ -502,7 +464,6 @@
 	description = "Guaranteed to get you somewhere FAST. With a custom-built plasma engine, this bad boy will put more distance between you and certain danger than any other!"
 	admin_notes = "The aft of the ship has a plasma tank that starts ignited. May get released by crew. The plasma windows next to the engine heaters will also erupt into flame, and also risk getting released by crew."
 	credit_cost = CARGO_CRATE_VALUE * 50
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/fish
 	suffix = "fish"
@@ -510,7 +471,6 @@
 	description = "Trades such amenities as 'storage space' and 'sufficient seating' for an artifical environment ideal for fishing, plus ample supplies (also for fishing)."
 	admin_notes = "There's a chasm in it, it has railings but that won't stop determined players."
 	credit_cost = CARGO_CRATE_VALUE * 10
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/lance
 	suffix = "lance"
@@ -518,7 +478,6 @@
 	description = "A brand new shuttle by Nanotrasen's finest in shuttle-engineering, it's designed to tactically slam into a destroyed station, dispatching threats and saving crew at the same time! Be careful to stay out of it's path."
 	admin_notes = "WARNING: This shuttle is designed to crash into the station. It has turrets, similar to the raven."
 	credit_cost = CARGO_CRATE_VALUE * 70
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/tranquility
 	suffix = "tranquility"
@@ -526,7 +485,6 @@
 	description = "A large shuttle, covered in flora and comfortable resting areas. The perfect way to end a peaceful shift"
 	admin_notes = "it's pretty big, and comfy. Be careful when placing it down!"
 	credit_cost = CARGO_CRATE_VALUE * 25
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/hugcage
 	suffix = "hugcage"
@@ -539,7 +497,6 @@
 	suffix = "base"
 	name = "transport ferry"
 	description = "Standard issue Box/Metastation CentCom ferry."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/ferry/meat
 	suffix = "meat"
@@ -548,7 +505,6 @@
 	Oh and lizard meat too,mighty popular that is. Definitely 100% fresh, just ask this guy here. *person on meatspike moans* See? \
 	Definitely high quality meat, nothin' wrong with it, nothin' added, definitely no zombifyin' reagents!"
 	admin_notes = "Meat currently contains no zombifying reagents, lizard on meatspike must be spawned in."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/ferry/lighthouse
 	suffix = "lighthouse"
@@ -558,123 +514,102 @@
 	seeing ERT officers onboard, but no missions are on file for ...static...static...annoying jingle... only at The LIGHTHOUSE! \
 	Fulfilling needs you didn't even know you had. We've got EVERYTHING, and something else!"
 	admin_notes = "Currently larger than ferry docking port on Box, will not hit anything, but must be force docked. Trader and ERT bodyguards are not included."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/ferry/fancy
 	suffix = "fancy"
 	name = "fancy transport ferry"
 	description = "At some point, someone upgraded the ferry to have fancier flooring... and fewer seats."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/ferry/kilo
 	suffix = "kilo"
 	name = "kilo transport ferry"
 	description = "Standard issue CentCom Ferry for Kilo pattern stations. Includes additional equipment and rechargers."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/ferry/northstar
 	suffix = "northstar"
 	name = "north star transport ferry"
 	description = "In the very depths of the frontier, you'll need a rugged shuttle capable of delivering crew, this is that."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
 	name = "Hospital Ship"
 	description = "Whiteship with medical supplies. Zombies do not currently spawn corpses, and are not infectious."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/whiteship/meta
 	suffix = "meta"
 	name = "Salvage Ship"
 	description = "Whiteship that focuses on a large cargo bay that players can build in. Spawns with Syndicate mobs who do not drop corpses and are highly aggressive."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"
 	name = "NT Science Vessel"
 	description = "A small science vessel that uses just one area and is full of angry ants."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/whiteship/cere
 	suffix = "cere"
 	name = "NT Heavy Salvage Vessel"
 	description = "A beefy, well-rounded salvage vessel with a pair of corpses (miner and engineer) and a Captain's hat. Equipped with solar sails and a PACMAN generator."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/whiteship/birdshot
 	suffix = "birdshot"
 	name = "NT Patrol Bee"
 	description = "A small patrol vessel with a central corridor connecting all rooms. Features 2 small cargo bays and a brig. Spawns with an agressive and deadly Gelatinous Cube"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/whiteship/kilo
 	suffix = "kilo"
 	name = "NT Mining Shuttle"
 	description = "A mining vessel with a curious shape starting with a few angry netherworld mobs."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/whiteship/donut
 	suffix = "donut"
 	name = "NT Long-Distance Bluespace Jumper"
 	description = "A ship hit with an engine blowout, leaving it as a depressurised husk. Has infinite power, although likely to bait people into removing that property. Also the most open out of all the whiteships, and starts with a 25% ripley chance."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/whiteship/tram
 	suffix = "tram"
 	name = "NT Long-Distance Bluespace Freighter"
 	description = "A long shuttle that starts with Nanotrasen private security corpses. DOES NOT FIT IN THE BASE DOCKS! Does fit in Deep Space's dock though."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
 	name = "NT Frigate"
 	description = "A standard whiteship with big spiders onboard. PACMAN generator is not wired and next to main grid cabling, so it requires some work."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
 	description = "There is no map for this vessel and it was supposed to be used with the Meta-class. Do not try to spawn it!"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/whiteship/personalshuttle
 	suffix = "personalshuttle"
 	name = "Personal Travel Shuttle"
 	description = "A small vessel with a few zombies and an engineer's corpse that can be looted."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/whiteship/obelisk
 	suffix = "obelisk"
 	name = "Obelisk"
 	description = "A large research vessel affected by the Cult of Nar'Sie. PACMAN generator is not wired and next to main grid cabling, so it requires some work."
 	admin_notes = "Not actually an obelisk, has nonsentient cult constructs."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/cargo/kilo
 	suffix = "kilo"
 	name = "supply shuttle (Kilo)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/cargo/birdboat
 	suffix = "birdboat"
 	name = "supply shuttle (Birdboat)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/cargo/donut
 	suffix = "donut"
 	name = "supply shuttle (Donut)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/cargo/pubby
 	suffix = "pubby"
 	name = "supply shuttle (Pubby)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/cargo/birdshot
 	suffix = "birdshot"
 	name = "supply shuttle (Birdshot)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/delta
 	suffix = "delta"
@@ -682,7 +617,6 @@
 	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
 	admin_notes = "Go big or go home."
 	credit_cost = CARGO_CRATE_VALUE * 15
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/northstar
 	suffix = "northstar"
@@ -690,7 +624,6 @@
 	description = "A rugged shuttle meant for long-distance transit from the tips of the frontier to Central Command and back. \
 	moderately comfortable and large, but cramped."
 	credit_cost = CARGO_CRATE_VALUE * 14
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/raven
 	suffix = "raven"
@@ -700,7 +633,6 @@
 	This escape shuttle boasts shields and numerous anti-personnel turrets guarding its perimeter to fend off meteors and enemy boarding attempts."
 	admin_notes = "Comes with turrets that will target anything without the neutral faction (nuke ops, xenos etc, but not pets)."
 	credit_cost = CARGO_CRATE_VALUE * 60
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/zeta
 	suffix = "zeta"
@@ -709,7 +641,6 @@
 	It seems strange and alien, you may need a special technology to access the signal.."
 	admin_notes = "Has alien surgery tools, and a void core that provides unlimited power."
 	credit_cost = CARGO_CRATE_VALUE * 16
-	passed_over = TRUE
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
@@ -717,94 +648,76 @@
 /datum/map_template/shuttle/arrival/box
 	suffix = "box"
 	name = "arrival shuttle (Box)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "cargo ferry (Box)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/mining/box
 	suffix = "box"
 	name = "mining shuttle (Box)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/labour/box
 	suffix = "box"
 	name = "labour shuttle (Box)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/labour/generic
 	suffix = "generic"
 	name = "labour shuttle (Generic)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/arrival/donut
 	suffix = "donut"
 	name = "arrival shuttle (Donut)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/arrival/birdshot
 	suffix = "birdshot"
 	name = "arrival shuttle (Birdshot)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/infiltrator/basic
 	suffix = "basic"
 	name = "basic syndicate infiltrator"
 	description = "Base Syndicate infiltrator, spawned by default for nukeops to use."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/infiltrator/advanced
 	suffix = "advanced"
 	name = "advanced syndicate infiltrator"
 	description = "A much larger version of the standard Syndicate infiltrator that feels more like Kilostation. Has APCs, but power is not a concern for nuclear operatives. Also comes with atmos!"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/cargo/delta
 	suffix = "delta"
 	name = "cargo ferry (Delta)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/mining/delta
 	suffix = "delta"
 	name = "mining shuttle (Delta)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/mining/kilo
 	suffix = "kilo"
 	name = "mining shuttle (Kilo)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/mining/large
 	suffix = "large"
 	name = "mining shuttle (Large)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/mining/northstar
 	suffix = "northstar"
 	name = "mining shuttle (North Star)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/labour/delta
 	suffix = "delta"
 	name = "labour shuttle (Delta)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/labour/kilo
 	suffix = "kilo"
 	name = "labour shuttle (Kilo)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/mining_common/meta
 	suffix = "meta"
 	name = "lavaland shuttle (Meta)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/mining_common/kilo
 	suffix = "kilo"
 	name = "lavaland shuttle (Kilo)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/mining_common/northstar
 	suffix = "northstar"
@@ -813,77 +726,62 @@
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"
 	name = "arrival shuttle (Delta)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/arrival/kilo
 	suffix = "kilo"
 	name = "arrival shuttle (Kilo)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/arrival/pubby
 	suffix = "pubby"
 	name = "arrival shuttle (Pubby)"
-	passed_over = TRUE
 
-#warn DEAD
 /datum/map_template/shuttle/arrival/omega
 	suffix = "omega"
 	name = "arrival shuttle (Omega)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/aux_base/default
 	suffix = "default"
 	name = "auxilliary base (Default)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/aux_base/small
 	suffix = "small"
 	name = "auxilliary base (Small)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/escape_pod/default
 	suffix = "default"
 	name = "escape pod (Default)"
 	description = "Base escape pod with 2 tiles of interior space."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/escape_pod/large
 	suffix = "large"
 	name = "escape pod (Large)"
 	description = "Actually the old Pubbystation monastery shuttle."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/escape_pod/luxury
 	suffix = "luxury"
 	name = "escape pod (Luxury)"
 	description = "Upgraded escape pod with 3 tiles of interior space."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/escape_pod/cramped
 	suffix = "cramped"
 	name = "escape pod (Cramped)"
 	description = "Downgraded escape pod that lacks a window and only has one seat, alongside lacking an emergency safe."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/assault_pod/default
 	suffix = "default"
 	name = "assault pod (Default)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/pirate/default
 	suffix = "default"
 	name = "pirate ship (Default)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/pirate/silverscale
 	suffix = "silverscale"
 	name = "pirate ship (Silver Scales)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/pirate/dutchman
 	suffix = "dutchman"
 	name = "pirate ship (Flying Dutchman)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/pirate/interdyne
 	suffix = "interdyne"
@@ -904,22 +802,18 @@
 /datum/map_template/shuttle/hunter/space_cop
 	suffix = "space_cop"
 	name = "Police Spacevan"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/hunter/russian
 	suffix = "russian"
 	name = "Russian Cargo Ship"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/hunter/bounty
 	suffix = "bounty"
 	name = "Bounty Hunter Ship"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/hunter/psyker
 	suffix = "psyker"
 	name = "Psyker Fortune-Telling Ship"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/starfury
 	port_id = "starfury"
@@ -928,52 +822,43 @@
 /datum/map_template/shuttle/starfury/fighter_one
 	suffix = "fighter1"
 	name = "SBC Starfury Fighter (1)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/starfury/fighter_two
 	suffix = "fighter2"
 	name = "SBC Starfury Fighter (2)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/starfury/fighter_three
 	suffix = "fighter3"
 	name = "SBC Starfury Fighter (3)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/starfury/corvette
 	suffix = "corvette"
 	name = "SBC Starfury Corvette"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/ruin/cyborg_mothership
 	suffix = "cyborg_mothership"
 	name = "Cyborg Mothership"
 	description = "A highly industrialised vessel designed for silicon operation infested with hivebots and space vines."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/ruin/caravan_victim
 	suffix = "caravan_victim"
 	name = "Small Freighter"
 	description = "Small freight vessel, starts near blacked-out with 3 Syndicate Commandos and 1 Syndicate Stormtrooper, alongside a large hull breach."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/ruin/pirate_cutter
 	suffix = "pirate_cutter"
 	name = "Pirate Cutter"
 	description = "Small pirate vessel with ballistic turrets. Spawns with 3 pirate mobs, one of which drops an energy cutlass."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/ruin/syndicate_dropship
 	suffix = "syndicate_dropship"
 	name = "Syndicate Dropship"
 	description = "Light Syndicate vessel with laser turrets. Spawns with a Syndicate mob in the bridge."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/ruin/syndicate_fighter_shiv
 	suffix = "syndicate_fighter_shiv"
 	name = "Syndicate Fighter"
 	description = "A small Syndicate vessel with exactly one tile of useful interior space and 4 laser turrets. Starts with a Syndicate mob in the pilot's seat, and extremely cramped."
-	passed_over = TRUE
 
 /datum/map_template/shuttle/snowdin/mining
 	suffix = "mining"
@@ -986,17 +871,14 @@
 /datum/map_template/shuttle/arrival/northstar
 	suffix = "northstar"
 	name = "arrival shuttle (North Star)"
-	passed_over = TRUE
 
 /datum/map_template/shuttle/cargo/northstar
 	suffix = "northstar"
 	name = "cargo ferry (North Star)"
-	passed_over = TRUE
 
 // Custom ERT shuttles
 /datum/map_template/shuttle/ert/bounty
 	suffix = "bounty"
 	name = "Bounty Hunter ERT Shuttle"
-	passed_over = TRUE
 
 #undef EMAG_LOCKED_SHUTTLE_COST

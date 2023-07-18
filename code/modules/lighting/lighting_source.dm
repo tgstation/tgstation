@@ -176,7 +176,7 @@
 	var/_applied_lum_b = lighting_source.applied_lum_b;
 
 // Read out of our sources light sheet, a map of offsets -> the luminosity to use
-#define LUM_FALLOFF(C) read_sheet(_sheet, C.x - _turf_x, C.y - _turf_y, _range_offset)// _sheet[C.x - _turf_x + _range_offset][C.y + _range_offset]
+#define LUM_FALLOFF(C) _sheet[C.x - _turf_x + _range_offset][C.y + _range_offset]
 #define LUM_FALLOFF_MULTIZ(C) _multiz_sheet[C.z - _turf_z + _multiz_offset][C.x - _turf_x + _range_offset][C.y - _turf_y + _range_offset]
 
 // Macro that applies light to a new corner.
@@ -283,16 +283,31 @@
 	// This could be variable, it just isn't yet yaknow?
 	return max(multiplier * (1 - max(angle_delta - (angle / 2), 0) / 30), 0)
 
+/// Dumps the content of a lighting sheet to chat, for debugging
 /datum/light_source/proc/print_sheet()
 	var/list/sheet = get_sheet()
 	var/list/output = list()
-	for(var/list/column in sheet)
-		var/list/print_column = list()
-		for(var/row in column)
-			print_column += round(row, 0.1)
-		output += print_column.Join(", ")
+	var/multiz_depth = 1
+	// If we have a list 3 layers down we're multiz
+	if(length(sheet[1][1]))
+		multiz_depth = length(sheet)
+	var/column_seperator = ""
+	for(var/i in 1 to length(sheet))
+		column_seperator += "--"
+	print_column += column_seperator
+	for(var/i in 1 to multiz_depth)
+		for(var/list/column in sheet)
+			var/list/print_column = list()
+			for(var/row in column)
+				print_column += round(row, 0.1)
+			output += print_column.Join(", ")
+		print_column += column_seperator
 	message_admins("\n[output.Join("\n")]")
 
+/// Debug proc, for when lighting sheets fuck up
+/// Accepts the sheet (2 or 3 (multiz) dimensional list of lighting values at some offset)
+/// alongside x and y delta values and the sheet's "offset", which is the amount required to ensure everything indexes at 1
+/// Optionally, you can pass similar values for multiz stuff
 /proc/read_sheet(list/sheet, x, y, offset, z, z_offset)
 	var/list/working = sheet
 	var/offset_x = x + offset

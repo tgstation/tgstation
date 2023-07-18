@@ -18,7 +18,6 @@
 	var/suffix = null
 
 	var/ruin_type = null
-	var/ignore = FALSE
 
 /datum/map_template/ruin/New()
 	if(!name && id)

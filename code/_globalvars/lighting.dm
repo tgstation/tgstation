@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT_TYPED(light_types, /datum/light_template, generate_light_types(
 /datum/light_template/proc/create(atom/location, direction)
 	var/atom/lad = new spawn_type(location)
 	lad.light_flags &= ~LIGHT_FROZEN
-	lad.set_light(range, power, color, TRUE, angle)
+	lad.set_light(range, power, color, angle, l_on = TRUE)
 	lad.setDir(direction)
 
 	lad.light_flags |= LIGHT_FROZEN

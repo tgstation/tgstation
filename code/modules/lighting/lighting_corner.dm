@@ -226,6 +226,3 @@
 
 	for(var/datum/lighting_corner/corner as anything in corners)
 		corner.display(max_lum)
-
-
-

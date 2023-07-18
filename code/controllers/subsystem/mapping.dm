@@ -580,7 +580,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	for(var/item in sort_list(subtypesof(/datum/map_template/ruin), GLOBAL_PROC_REF(cmp_ruincost_priority)))
 		var/datum/map_template/ruin/ruin_type = item
 		// screen out the abstract subtypes
-		if(!initial(ruin_type.id) || initial(ruin_type.ignore))
+		if(!initial(ruin_type.id))
 			continue
 		var/datum/map_template/ruin/R = new ruin_type()
 
