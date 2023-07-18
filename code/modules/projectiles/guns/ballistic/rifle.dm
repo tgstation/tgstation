@@ -211,22 +211,6 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/enchanted
 	can_be_sawn_off = FALSE
 
-/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage
-	name = "arcane barrage"
-	desc = "Pew Pew Pew."
-	fire_sound = 'sound/weapons/emitter.ogg'
-	pin = /obj/item/firing_pin/magic
-	icon_state = "arcane_barrage"
-	inhand_icon_state = "arcane_barrage"
-	slot_flags = null
-	can_bayonet = FALSE
-	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
-	flags_1 = NONE
-	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
-	show_bolt_icon = FALSE //It's a magic hand, not a rifle
-
-	mag_type = /obj/item/ammo_box/magazine/internal/arcane_barrage
-
 /obj/item/gun/ballistic/rifle/enchanted/dropped()
 	. = ..()
 	guns_left = 0
@@ -235,9 +219,6 @@
 
 /obj/item/gun/ballistic/rifle/enchanted/proc/discard_gun(mob/living/user)
 	user.throw_item(pick(oview(7,get_turf(user))))
-
-/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/discard_gun(mob/living/user)
-	qdel(src)
 
 /obj/item/gun/ballistic/rifle/enchanted/attack_self()
 	return

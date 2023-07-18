@@ -1,0 +1,5 @@
+author: "CRITAWAKETS"
+delete-after: True
+changes:
+  - rscadd: "Added the smoothbore disabler and it's prime variant. You can now craft a disabler with only one shot and terrible accuracy."
+  - code_imp: "Gun cranking has been made a component and could theoretically be used on more than guns."
