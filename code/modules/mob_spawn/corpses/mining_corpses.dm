@@ -275,7 +275,7 @@
 			/obj/item/tank/internals/oxygen = 6,
 		))
 	else
-		/obj/item/storage/backpack/satchel/explorer
+		back = /obj/item/storage/backpack/satchel/explorer
 		backpack_contents = list()
 		var/backpack_loot = pick(list(
 			/obj/item/food/fishmeat = 89,
