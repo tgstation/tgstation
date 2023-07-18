@@ -170,10 +170,12 @@
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
 	if(!in_attack_chain && HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
 		return BATON_ATTACK_DONE
-
 	cooldown_check = world.time + cooldown
 	if(on_stun_sound)
 		playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+	if(target.check_block(src, stamina_damage - force, "the [name]'s stun"), MELEE_ATTACK, 0, STAMINA)
+		return BATON_ATTACK_DONE
+
 	if(user)
 		UPDATE_LAST_ATTACKER(target, user)
 		target.LAssailant = WEAKREF(user)
