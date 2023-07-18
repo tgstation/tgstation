@@ -67,12 +67,7 @@
 	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 
 	if(required_organ)
-		var/obj/item/organ/target_organ = affected_mob.get_organ_slot(required_organ)
-		if(!istype(target_organ))
-			return FALSE
-
-		// robotic organs are immune to disease unless 'inorganic biology' symptom is present
-		if(IS_ROBOTIC_ORGAN(target_organ) && !(infectable_biotypes & MOB_ROBOTIC))
+		if(!has_required_infectious_organ(affected_mob, required_organ))
 			return FALSE
 
 	if(has_cure())
