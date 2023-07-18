@@ -23091,7 +23091,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/floor1/aft)
 "gdd" = (
-/mob/living/simple_animal/pet/penguin/emperor{
+/mob/living/basic/pet/penguin/emperor{
 	desc = "Spaghetti.";
 	name = "Spaghetti"
 	},
@@ -54688,7 +54688,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "onY" = (
-/mob/living/simple_animal/pet/penguin/baby{
+/mob/living/basic/pet/penguin/baby/permanent{
 	dir = 8
 	},
 /turf/open/floor/fake_snow{
