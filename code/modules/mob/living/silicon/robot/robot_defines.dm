@@ -206,7 +206,7 @@
 	laws = new /datum/ai_laws/syndicate_override()
 	laws.associate(src)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(show_playstyle)), 5)
+	addtimer(CALLBACK(src, PROC_REF(show_playstyle)), 0.5 SECONDS)
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)

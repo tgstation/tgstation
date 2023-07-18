@@ -526,15 +526,16 @@
 
 
 /// Dumps the current occupant of the cyborg into an MMI at the passed location
+/// Returns the borg's MMI on success
 /mob/living/silicon/robot/proc/dump_into_mmi(atom/at_location = drop_location())
-	if(!mmi)
+	if(isnull(mmi))
 		return
 
 	var/obj/item/mmi/removing = mmi
 	mmi.forceMove(at_location) // Nulls it out via exited
 
-	if(!mind)
-		return
+	if(isnull(mind)) // no one to transfer, just leave the MMI.
+		return mmi
 
 	if(removing.brainmob)
 		if(removing.brainmob.stat == DEAD)
@@ -547,6 +548,8 @@
 			You have been ghosted. Please make a bug report so we can fix this bug."))
 		ghostize()
 		stack_trace("Borg MMI lacked a brainmob")
+
+	return mmi
 
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)
