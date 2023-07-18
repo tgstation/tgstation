@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Station traits can once again allow vending machines and bots to speak a random language"
-  - bugfix: "EMPed bots and vending machines once again speak a random language"

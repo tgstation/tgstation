@@ -707,3 +707,89 @@
   - code_imp: All instances of emag_act() now have the proper arguments
   - qol: Most usecases of emagging now have some kind of feedback, and existing feedback
       has been sanity checked and converted to balloon alerts.
+2023-07-17:
+  DATA-xPUNGED:
+  - balance: Pyre Sect can now heal with their bible as normal.
+  - qol: Some of Pyre Sect's rituals have been shortened slightly
+  Donglesplonge:
+  - bugfix: replaces icebox genetics' regular science headset with a medisci headset,
+      making it more in line with other genetics offices
+  Helg2:
+  - bugfix: Onehuman and Freeform ai modules now have proper material prices.
+  - qol: People with deviant tastes now don't care about dirt on the food.
+  - bugfix: fixed energy cost on floor tiles for engi borgs.
+  - bugfix: engi borgs can now properly merge base floor tiles with other base floor
+      tiles.
+  Jacquerel:
+  - bugfix: Station traits can once again allow vending machines and bots to speak
+      a random language
+  - bugfix: EMPed bots and vending machines once again speak a random language
+  - bugfix: Carp, Trees, and Festivus Poles will once more sometimes emote at you
+      if they think you are looking at them the wrong way, before they come over to
+      beat you up.
+  JohnFulpWillard:
+  - refactor: Huds now have their hud owner set in Initialize
+  Melbert:
+  - code_imp: AI cards should react more snap-ily to having their occupant perish
+  OrionTheFox:
+  - qol: in the event the Gravity Generator becomes damaged, examining the main part
+      will now give repair hints!
+  Timberpoes:
+  - bugfix: Emotes now respect word filters.
+  Watermelon914:
+  - bugfix: Fixed the AI vox announcement interrupting every other sound being played.
+  itseasytosee:
+  - rscadd: A new traitor item has been added, Polarized Contacts!
+  necromanceranne:
+  - code_imp: Adds an opt out for the rest of the round for the various heretic summons.
+  nikothedude:
+  - bugfix: The malf AI emag ability now works
+  - bugfix: The AI can no longer untip vendors remotely/spam sparks from shocked vendors
+  vinylspiders:
+  - bugfix: transformed jellypeople with the blood deficiency quirk will now receive
+      the right bloodpacks as mail goodies
+  - qol: laser muskets' inhand sprites will show now whether or not they are charged
+  - image: new inhand sprites for the laser muskets
+2023-07-18:
+  BlueMemesauce:
+  - bugfix: Abductor posters can no longer randomly spawn
+  - spellcheck: Fix duplicate sentence in space comms agent flavor text
+  CRITAWAKETS:
+  - rscadd: Added the smoothbore disabler and it's prime variant. You can now craft
+      a disabler with only one shot and terrible accuracy.
+  - code_imp: Gun cranking has been made a component and could theoretically be used
+      on more than guns.
+  Jacquerel:
+  - bugfix: Megafauna can be consumed by the singularity.
+  JohnFulpWillard:
+  - bugfix: Multi-z maps should now work again.
+  Melbert:
+  - rscadd: Adds a new 7 point positive quirk, "Spacer Born". You were born in space,
+      and as a result your body's adapted to life in artificial gravity, making you
+      much more effective and comfortable in lower gravity. However, travelling planet-side
+      is quite a chore, especially if you're assigned to work there.
+  - rscadd: 'Adds a chemical: Ondansetron, created by Oil + Nitrogen + Oxygen + Ethanol
+      catalyst. A powerful Antiemetic (lowers disgust).'
+  - refactor: Refactored display-ing of antag objectives in their UIs
+  Rhials:
+  - spellcheck: removes an errant period from the flux anomaly announcement.
+  Time-Green:
+  - bugfix: Triple carp player controlled shuttle event works again
+  - bugfix: anti-breach shields wont be dragged away during shuttle flight anymore
+  carlarctg:
+  - rscdel: There is no longer a 50% chance of catching a heretic out when examining
+      them drawing influences.
+  dieamond13:
+  - bugfix: adds a BCI implanter to northstar circuit lab as it didn't come with one
+      before
+  itseasytosee:
+  - balance: the Syndicate Tome traitor item now grants anti-magic while held and
+      can be used to clear cult runes.
+  necromanceranne:
+  - bugfix: Replaces direct calls of try_infect() with appropriate procs so that CRISPR
+      and Miasma aren't forcing diseases on the disease immune.
+  sergeirocks100:
+  - spellcheck: A spelling error in the name of the Tiziran fish case has been corrected.
+  timothymtorres:
+  - rscadd: Add healing boost to organs while mob is sleeping (does not apply to robotic
+      or dying organs)
