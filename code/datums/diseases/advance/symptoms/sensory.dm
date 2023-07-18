@@ -94,13 +94,10 @@
 	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
 	switch(advanced_disease.stage)
 		if(4, 5)
-			// robotic organs are immune to disease effects unless inorganic biology is present
-			var/obj/item/organ/internal/ears/ears = infected_mob.get_organ_slot(ORGAN_SLOT_EARS)
-			if(ears && (IS_ORGANIC_ORGAN(ears) || (advanced_disease.infectable_biotypes & MOB_ROBOTIC)))
+			if(advanced_disease.has_required_infectious_organ(infected_mob, ORGAN_SLOT_EARS))
 				ears.adjustEarDamage(-4, -4)
 
-			var/obj/item/organ/internal/eyes/eyes = infected_mob.get_organ_slot(ORGAN_SLOT_EYES)
-			if(!eyes || (IS_ROBOTIC_ORGAN(eyes) && !(advanced_disease.infectable_biotypes & MOB_ROBOTIC)))
+			if(!advanced_disease.has_required_infectious_organ(infected_mob, ORGAN_SLOT_EYES))
 				return
 
 			infected_mob.adjust_temp_blindness(-4 SECONDS)
