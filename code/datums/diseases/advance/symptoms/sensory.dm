@@ -96,7 +96,7 @@
 		if(4, 5)
 			// robotic organs are immune to disease effects unless inorganic biology is present
 			var/obj/item/organ/internal/ears/ears = infected_mob.get_organ_slot(ORGAN_SLOT_EARS)
-			if(ears && (IS_ORGANIC_ORGAN(ears) || advanced_disease.infectable_biotypes & MOB_ROBOTIC))
+			if(ears && (IS_ORGANIC_ORGAN(ears) || (advanced_disease.infectable_biotypes & MOB_ROBOTIC)))
 				ears.adjustEarDamage(-4, -4)
 
 			var/obj/item/organ/internal/eyes/eyes = infected_mob.get_organ_slot(ORGAN_SLOT_EYES)
