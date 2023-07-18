@@ -322,24 +322,28 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/to_smoke = smoke_all ? (reagents.total_volume * (dragtime / smoketime)) : REAGENTS_METABOLISM
 	var/mob/living/carbon/smoker = loc
 	// These checks are a bit messy but at least they're fairly readable
-	// Check if the smoker is a mob
+	// Check if the smoker is a carbon mob, since it needs to have wear_mask
 	if(!istype(smoker))
 		// If not, check if it's a gas mask
 		if(!istype(smoker, /obj/item/clothing/mask/gas))
 			reagents.remove_any(to_smoke)
 			return
-		// If it is, check if that mask is on a mob
-		if(!istype(smoker.loc, /mob/living/carbon))
+
+		var/atom/potential_smoker = smoker.loc
+
+		// If it is, check if that mask is on a carbon mob
+		if(!iscarbon(potential_smoker))
 			reagents.remove_any(to_smoke)
 			return
+
 		// If it is, check if that mob is actually wearing the mask
-		var/mob/living/carbon/mask_holder = smoker.loc
+		var/mob/living/carbon/mask_holder = potential_smoker
 		if(!mask_holder.wear_mask == smoker)
 			reagents.remove_any(to_smoke)
 			return
 
 		// Update smoker to the wearer of the mask
-		smoker = smoker.loc
+		smoker = potential_smoker
 
 	// Check if the smoker is actually wearing the cig
 	if(src != smoker.wear_mask)
