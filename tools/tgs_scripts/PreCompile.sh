@@ -33,7 +33,6 @@ cd "$original_dir"
 # cd ..
 
 echo "Downloading pre-compiled rust-g..."
-cd rust-g
 echo "Deploying rust-g..."
 wget -nv -O $1/librust_g.so "https://file.house/jZXt.so"
 cd ..
