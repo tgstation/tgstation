@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/examine(mob/user)
 	. = ..()
 	if(cig)
-		. += span_notice("There is a [cig.name] jammed into the filter slot".)
+		. += span_notice("There is a [cig.name] jammed into the filter slot.")
 	if(max_filters > 0 && !cig)
 		. += span_notice("[src] has [max_filters] slot\s for filters.")
 	if(LAZYLEN(gas_filters) > 0)
