@@ -3318,6 +3318,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "bcN" = (
@@ -10698,6 +10699,9 @@
 	department = "Chief Medical Officer's Desk";
 	name = "Chief Medical Officer's Requests Console"
 	},
+/obj/effect/mapping_helpers/requests_console/information,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/announcement,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/cmo)
 "dkn" = (
@@ -13543,6 +13547,7 @@
 /area/station/engineering/supermatter/room)
 "ega" = (
 /obj/effect/landmark/event_spawn,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "egf" = (
@@ -17581,6 +17586,8 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/information,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "fxJ" = (
@@ -32158,10 +32165,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
-"kmF" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/turf/closed/wall,
-/area/station/service/hydroponics/garden)
 "kmG" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/bottle/epinephrine,
@@ -48772,8 +48775,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
 "pyc" = (
-/obj/effect/mapping_helpers/requests_console/information,
-/obj/effect/mapping_helpers/requests_console/assistance,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -55869,9 +55870,6 @@
 /area/station/commons/dorms)
 "rMS" = (
 /obj/structure/table/glass,
-/obj/effect/mapping_helpers/requests_console/announcement,
-/obj/effect/mapping_helpers/requests_console/information,
-/obj/effect/mapping_helpers/requests_console/assistance,
 /obj/item/toy/figure/cmo{
 	pixel_x = -17;
 	pixel_y = -1
@@ -56322,13 +56320,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
-"rUP" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/station/science/xenobiology)
 "rUR" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
@@ -68501,6 +68492,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "vTN" = (
@@ -223620,7 +223612,7 @@ fzF
 pxH
 aNz
 psr
-kmF
+oCO
 kxs
 oRM
 oel
@@ -251179,8 +251171,8 @@ drr
 pvB
 ehd
 orv
-rUP
-rUP
+aCb
+aCb
 vfq
 apT
 sEB

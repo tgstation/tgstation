@@ -4268,9 +4268,6 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
-"Ik" = (
-/turf/open/space/basic,
-/area/awaymission/cabin)
 "IJ" = (
 /obj/item/reagent_containers/pill/patch/libital,
 /obj/effect/light_emitter{
@@ -34557,7 +34554,7 @@ RM
 hp
 UH
 hp
-Ik
+an
 aq
 eg
 an
