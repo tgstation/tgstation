@@ -209,8 +209,7 @@
 	else
 		display.pixel_y = -16
 
-	var/index = largest_color_luminosity / max_lum
-	display.color = gradient(0, COLOR_BLACK, 1, COLOR_WHITE, index)
+	display.color = rgb(cache_r * 255, cache_g * 255, cache_b * 255)
 
 	draw_to.add_overlay(display)
 
