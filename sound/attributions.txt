@@ -41,7 +41,6 @@ https://freesound.org/people/dj997/sounds/493747/
 
 standard_stamp.ogg is adapted from tom_woysky's "Stamp.wav" https://freesound.org/people/tom_woysky/sounds/348316/
 
-
 rattling_keys.ogg and rattling_keys_attack.ogg is adapted from Desibloke's "Keys rattling [Key rattle]" https://freesound.org/people/Desibloke/sounds/523671/
 
 chainsaw_loop.ogg is adapted from Audionautics "Chainsaw Idle Loops", which is licensed under CC Attribution 3.0
@@ -79,3 +78,6 @@ https://freesound.org/people/vmgraw/sounds/235610/
 
 vmgraw's "Distant Whistle" (CC 0)
 https://freesound.org/people/giddster/sounds/414480/
+
+zip_up.ogg and un_zip.ogg adapted from aboxinghelena's Zip.wav (CC 4)
+https://freesound.org/people/aboxinghelena/sounds/401139/

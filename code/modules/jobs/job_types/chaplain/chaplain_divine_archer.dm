@@ -20,7 +20,6 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/chaplainsuit_armor_weaker
-	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood/divine_archer
@@ -40,6 +39,7 @@
 	name = "divine archer hood"
 	desc = "A divine hood included, because have you ever got the sun in your eyes during archery? Oh, it's just the worst."
 	icon_state = "archerhood"
+	armor_type = /datum/armor/chaplainsuit_armor_weaker
 
 /// gloves
 /obj/item/clothing/gloves/divine_archer

@@ -38,7 +38,7 @@
 	cooldown_time = (command_cooldown * cooldown_mod)
 
 // "Invocation" is done by the actual voice of god proc
-/datum/action/cooldown/spell/voice_of_god/invocation()
+/datum/action/cooldown/spell/voice_of_god/invocation(mob/living/invoker)
 	return
 
 /datum/action/cooldown/spell/voice_of_god/clown

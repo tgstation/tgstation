@@ -23,8 +23,7 @@
 		var/fill = list()
 		to_return += list(fill)
 		for(var/j in 1 to TOTAL_VISIBLE_STATES)
-			var/obj/effect/overlay/gas/gas =  new (initial(gas_type.gas_overlay), log(4, (j+0.4*TOTAL_VISIBLE_STATES) / (0.35*TOTAL_VISIBLE_STATES)) * 255)
-			SET_PLANE_W_SCALAR(gas, gas.plane, i)
+			var/obj/effect/overlay/gas/gas = new (initial(gas_type.gas_overlay), log(4, (j+0.4*TOTAL_VISIBLE_STATES) / (0.35*TOTAL_VISIBLE_STATES)) * 255, i)
 			fill += gas
 	return to_return
 
@@ -292,8 +291,17 @@
 	plane = ABOVE_GAME_PLANE
 	appearance_flags = TILE_BOUND
 	vis_flags = NONE
+	// The visual offset we are "on".
+	// Can't use the tradtional loc because we are stored in nullspace, and we can't set plane before init because of the helping that SET_PLANE_EXPLICIT does IN init
+	var/plane_offset = 0
 
-/obj/effect/overlay/gas/New(state, alph)
+/obj/effect/overlay/gas/New(state, alph, offset)
 	. = ..()
 	icon_state = state
 	alpha = alph
+	plane_offset = offset
+
+/obj/effect/overlay/gas/Initialize(mapload)
+	. = ..()
+	SET_PLANE_W_SCALAR(src, initial(plane), plane_offset)
+

@@ -1,14 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ab" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/machinery/status_display/evac/directional/south,
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "aj" = (
 /obj/structure/chair/stool/bar/directional/east,
 /obj/effect/turf_decal/siding/wood{
@@ -53,6 +43,11 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
+"ct" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "cu" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -93,17 +88,13 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"dr" = (
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape)
 "dy" = (
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"dz" = (
-/obj/machinery/light/directional/north,
-/obj/machinery/vending/cigarette,
-/obj/effect/turf_decal/box,
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
-/obj/structure/sign/warning/vacuum/directional/north,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "el" = (
 /obj/machinery/stasis,
 /turf/open/floor/mineral/titanium/blue,
@@ -125,9 +116,10 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"fj" = (
-/obj/machinery/light/floor,
-/turf/open/floor/wood,
+"fi" = (
+/obj/structure/bed/dogbed,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "fm" = (
 /obj/structure/chair/comfy/shuttle{
@@ -135,10 +127,6 @@
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"fq" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "fS" = (
 /obj/structure/chair/wood,
@@ -246,17 +234,6 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"hr" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"id" = (
-/obj/effect/spawner/random/vending/snackvend,
-/obj/effect/turf_decal/box,
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "it" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/light/directional/east,
@@ -273,25 +250,16 @@
 /obj/structure/easel,
 /turf/open/floor/sepia,
 /area/shuttle/escape)
-"iD" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape)
 "iN" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/wallet,
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
-"jh" = (
-/obj/effect/turf_decal/siding{
-	dir = 1
-	},
-/obj/machinery/light/floor,
-/turf/open/floor/carpet/royalblue,
+"iV" = (
+/obj/structure/chair/stool/directional/north,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
+/turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "jE" = (
 /obj/structure/chair/sofa/corp/right{
@@ -346,9 +314,10 @@
 /obj/structure/sign/warning/explosives/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"kW" = (
-/obj/machinery/space_heater,
-/turf/open/floor/carpet/green,
+"kO" = (
+/obj/structure/sign/poster/official/love_ian/directional/south,
+/obj/effect/turf_decal/siding,
+/turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "la" = (
 /obj/structure/table/wood/poker,
@@ -376,6 +345,18 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"lr" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/turf_decal/siding{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"lx" = (
+/obj/structure/sign/poster/official/help_others/directional/north,
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "ly" = (
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/carpet/green,
@@ -397,6 +378,11 @@
 /obj/structure/chair/stool/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/carpet/green,
+/area/shuttle/escape)
+"lV" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "mc" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -436,6 +422,13 @@
 /obj/item/coin/gold,
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"mt" = (
+/obj/effect/turf_decal/siding{
+	dir = 9
+	},
+/obj/item/kirbyplants/organic/plant21,
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
 "mx" = (
 /obj/machinery/computer/slot_machine,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -446,11 +439,32 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"mD" = (
+/obj/structure/rack,
+/obj/item/canvas/twentyfour_twentyfour,
+/obj/item/canvas/twentyfour_twentyfour,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas,
+/obj/item/canvas,
+/obj/item/canvas,
+/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/light/directional/north,
+/turf/open/floor/sepia,
+/area/shuttle/escape)
 "mT" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"mZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/item/kirbyplants/organic/plant21,
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "ni" = (
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -488,13 +502,6 @@
 "ok" = (
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/carpet/green,
-/area/shuttle/escape)
-"oy" = (
-/obj/machinery/status_display/evac/directional/north,
-/obj/effect/turf_decal/siding{
-	dir = 1
-	},
-/turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "oz" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -539,6 +546,17 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"pp" = (
+/obj/machinery/light/directional/south,
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape)
+"px" = (
+/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/turf_decal/box,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "qd" = (
 /obj/machinery/door/airlock/external{
 	name = "Emergency Recovery Airlock"
@@ -551,11 +569,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"qo" = (
-/obj/machinery/vending/coffee,
-/obj/effect/turf_decal/box,
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
-/turf/open/floor/iron,
+"qn" = (
+/obj/machinery/stasis,
+/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"qr" = (
+/obj/machinery/light/floor,
+/turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "qx" = (
 /obj/effect/turf_decal/siding/wood{
@@ -584,29 +606,19 @@
 /obj/item/reagent_containers/cup/glass/flask,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"qU" = (
-/obj/effect/turf_decal/siding,
-/obj/machinery/light/floor,
-/turf/open/floor/carpet/royalblue,
-/area/shuttle/escape)
 "qW" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"rx" = (
-/obj/effect/turf_decal/siding{
-	dir = 9
-	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/turf/open/floor/carpet/royalblue,
-/area/shuttle/escape)
 "rH" = (
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"rV" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "sd" = (
 /obj/machinery/door/airlock/security/glass{
@@ -617,45 +629,34 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"si" = (
+/obj/structure/table,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/obj/item/circular_saw,
+/obj/item/retractor{
+	pixel_x = 4
+	},
+/obj/item/hemostat{
+	pixel_x = -4
+	},
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/surgicaldrill,
+/obj/item/cautery,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
 "so" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"sx" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/machinery/status_display/evac/directional/south,
+"sw" = (
+/obj/structure/chair/stool/directional/north,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"sB" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/item/radio/intercom/directional/north,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"sI" = (
-/obj/structure/extinguisher_cabinet/directional/west,
-/obj/effect/turf_decal/siding{
-	dir = 8
-	},
-/turf/open/floor/carpet/royalblue,
-/area/shuttle/escape)
-"tf" = (
-/obj/structure/table/reinforced,
-/obj/machinery/chem_dispenser/drinks/fullupgrade,
-/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/north,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"th" = (
-/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
-/obj/machinery/light/directional/east,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
 "tk" = (
 /obj/structure/rack,
 /obj/item/skub,
@@ -665,30 +666,11 @@
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"uE" = (
-/obj/structure/bed/dogbed,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/mineral/titanium/purple,
-/area/shuttle/escape)
-"va" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "vi" = (
 /obj/structure/table,
 /obj/item/toy/gun,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"vn" = (
-/obj/effect/turf_decal/siding{
-	dir = 10
-	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/turf/open/floor/carpet/royalblue,
-/area/shuttle/escape)
 "vv" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -698,11 +680,6 @@
 /obj/machinery/door/window,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"vF" = (
-/obj/structure/chair/stool/directional/north,
-/obj/effect/turf_decal/siding/wood,
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "vK" = (
 /obj/machinery/door/airlock/security/glass{
@@ -716,6 +693,11 @@
 /obj/item/surgical_drapes,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"vM" = (
+/obj/machinery/status_display/evac/directional/south,
+/obj/effect/turf_decal/siding,
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
 "vP" = (
 /obj/structure/rack,
 /obj/item/soap,
@@ -723,6 +705,18 @@
 /obj/item/reagent_containers/cup/bucket,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"vQ" = (
+/obj/machinery/chem_master/condimaster{
+	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
+	name = "HoochMaster Deluxe"
+	},
+/obj/machinery/status_display/evac/directional/north,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/reagent_containers/cup/glass/shaker,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "vT" = (
 /obj/machinery/computer/emergency_shuttle{
@@ -788,6 +782,18 @@
 /obj/item/toy/crayon/spraycan,
 /turf/open/floor/sepia,
 /area/shuttle/escape)
+"xl" = (
+/obj/effect/turf_decal/siding,
+/obj/machinery/light/floor,
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"xt" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/effect/turf_decal/siding{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
 "xI" = (
 /obj/structure/sink/directional/north,
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -823,6 +829,11 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"yF" = (
+/obj/structure/bed/dogbed,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
 "yH" = (
 /obj/structure/closet/crate,
 /obj/item/paint/black,
@@ -856,6 +867,13 @@
 /obj/item/toy/figure/clown,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
+"zG" = (
+/obj/effect/turf_decal/siding{
+	dir = 1
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
 "Ab" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
@@ -885,6 +903,11 @@
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"Bb" = (
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "Bf" = (
 /obj/machinery/computer/slot_machine,
 /turf/open/floor/carpet/green,
@@ -892,11 +915,6 @@
 "Bj" = (
 /turf/template_noop,
 /area/template_noop)
-"Bm" = (
-/obj/machinery/status_display/evac/directional/south,
-/obj/effect/turf_decal/siding,
-/turf/open/floor/carpet/royalblue,
-/area/shuttle/escape)
 "BY" = (
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/carpet/green,
@@ -910,15 +928,18 @@
 /obj/item/lighter,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"Ch" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/vending/cigarette,
+/obj/effect/turf_decal/box,
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/structure/sign/warning/vacuum/directional/north,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Cz" = (
 /obj/machinery/vending/boozeomat,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"Dp" = (
-/obj/machinery/light/directional/south,
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
-/turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Dv" = (
 /obj/machinery/power/shuttle_engine/heater{
@@ -971,23 +992,12 @@
 "Fi" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"Fj" = (
-/obj/structure/table,
-/obj/item/scalpel{
-	pixel_y = 12
-	},
-/obj/item/circular_saw,
-/obj/item/retractor{
-	pixel_x = 4
-	},
-/obj/item/hemostat{
-	pixel_x = -4
-	},
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/surgicaldrill,
-/obj/item/cautery,
-/turf/open/floor/mineral/titanium/blue,
+"Fl" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/obj/machinery/light/directional/north,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
+/obj/structure/sign/warning/vacuum/directional/north,
+/turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Fv" = (
 /obj/machinery/light/directional/east,
@@ -1022,9 +1032,11 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"GP" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
-/turf/open/floor/carpet/green,
+"Gz" = (
+/obj/machinery/vending/coffee,
+/obj/effect/turf_decal/box,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "GU" = (
 /obj/machinery/computer/crew{
@@ -1044,6 +1056,19 @@
 /obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
+"HS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/item/kirbyplants/organic/plant21,
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/wood,
+/area/shuttle/escape)
+"HZ" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "Ih" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
@@ -1065,19 +1090,29 @@
 /obj/item/clothing/head/fedora,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
-"KF" = (
-/obj/structure/closet/crate/bin,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape)
 "KG" = (
 /obj/structure/chair/sofa/corp/left,
 /turf/open/floor/carpet/royalblue,
+/area/shuttle/escape)
+"KN" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/fullupgrade,
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/north,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "Lb" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 4
 	},
 /turf/open/floor/carpet/green,
+/area/shuttle/escape)
+"Ll" = (
+/obj/effect/turf_decal/siding{
+	dir = 10
+	},
+/obj/item/kirbyplants/organic/plant21,
+/turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "Lv" = (
 /obj/structure/chair/comfy/shuttle{
@@ -1101,11 +1136,6 @@
 /area/shuttle/escape)
 "Mb" = (
 /turf/open/floor/carpet/royalblue,
-/area/shuttle/escape)
-"Mm" = (
-/obj/structure/chair/stool/directional/north,
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
-/turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "MO" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1177,27 +1207,20 @@
 "Oa" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
-"Of" = (
-/obj/structure/sign/departments/medbay/alt/directional/south,
-/obj/machinery/light/directional/south,
-/obj/structure/closet/crate/bin,
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape)
-"On" = (
-/obj/machinery/status_display/evac/directional/west,
-/obj/machinery/light/directional/west,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape)
-"Os" = (
+"Or" = (
 /obj/machinery/light/floor,
-/turf/open/floor/carpet/royalblue,
+/turf/open/floor/wood,
 /area/shuttle/escape)
-"OV" = (
+"Ow" = (
 /obj/machinery/status_display/evac/directional/east,
 /obj/machinery/light/directional/east,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
+"OA" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "Pb" = (
 /obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/carpet/green,
@@ -1215,10 +1238,6 @@
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/iron/recharge_floor,
 /area/shuttle/escape)
-"Pm" = (
-/obj/machinery/vending/wallmed/directional/east,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape)
 "Pu" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/drinkingglass{
@@ -1235,6 +1254,13 @@
 	},
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
+"PM" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 1
+	},
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape)
 "PP" = (
 /mob/living/simple_animal/bot/medbot{
 	name = "\improper emergency medibot";
@@ -1243,16 +1269,16 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"PS" = (
-/obj/structure/chair/stool/directional/east,
-/obj/item/radio/intercom/directional/west,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape)
-"PU" = (
+"PQ" = (
 /obj/structure/table/reinforced,
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"PS" = (
+/obj/structure/chair/stool/directional/east,
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Qk" = (
 /obj/effect/turf_decal/siding{
@@ -1260,33 +1286,11 @@
 	},
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
-"QX" = (
-/obj/structure/bed/dogbed,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/mineral/titanium/purple,
-/area/shuttle/escape)
 "QY" = (
 /obj/structure/chair/stool/directional/north,
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/sign/departments/security/directional/south,
 /turf/open/floor/wood,
-/area/shuttle/escape)
-"Ro" = (
-/obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"Rs" = (
-/obj/machinery/chem_master/condimaster{
-	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
-	name = "HoochMaster Deluxe"
-	},
-/obj/machinery/status_display/evac/directional/north,
-/obj/item/storage/box/drinkingglasses,
-/obj/item/reagent_containers/cup/glass/shaker,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
 /area/shuttle/escape)
 "Ru" = (
 /obj/structure/chair/comfy/shuttle,
@@ -1300,21 +1304,24 @@
 "RZ" = (
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"Sb" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape)
 "Sk" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"Sl" = (
+/obj/effect/spawner/random/vending/colavend,
+/obj/effect/turf_decal/box,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Ty" = (
 /turf/open/floor/mineral/titanium/purple,
-/area/shuttle/escape)
-"Tz" = (
-/obj/effect/spawner/random/entertainment/arcade,
-/obj/machinery/light/directional/north,
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
-/obj/structure/sign/warning/vacuum/directional/north,
-/turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Uu" = (
 /turf/closed/wall/mineral/titanium,
@@ -1339,22 +1346,15 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"Vp" = (
-/obj/machinery/stasis,
-/obj/machinery/vending/wallmed/directional/east,
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"Vy" = (
-/obj/structure/sign/poster/official/love_ian/directional/south,
-/obj/effect/turf_decal/siding,
-/turf/open/floor/carpet/royalblue,
-/area/shuttle/escape)
 "VQ" = (
 /obj/machinery/computer/security{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"VT" = (
+/obj/machinery/vending/wallmed/directional/east,
+/turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Wp" = (
 /turf/open/floor/carpet/green,
@@ -1403,9 +1403,25 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"XW" = (
+/obj/structure/sign/departments/medbay/alt/directional/south,
+/obj/machinery/light/directional/south,
+/obj/structure/closet/crate/bin,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape)
+"XY" = (
+/obj/machinery/space_heater,
+/turf/open/floor/carpet/green,
+/area/shuttle/escape)
 "Yc" = (
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"Yl" = (
+/obj/machinery/status_display/evac/directional/west,
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Yp" = (
 /turf/open/floor/mineral/titanium,
@@ -1448,11 +1464,6 @@
 	},
 /turf/open/floor/sepia,
 /area/shuttle/escape)
-"YY" = (
-/obj/structure/sign/poster/official/help_others/directional/north,
-/obj/machinery/light/directional/east,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "Zj" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -1468,25 +1479,6 @@
 	pixel_y = 6
 	},
 /turf/open/floor/wood,
-/area/shuttle/escape)
-"Zz" = (
-/obj/structure/rack,
-/obj/item/canvas/twentyfour_twentyfour,
-/obj/item/canvas/twentyfour_twentyfour,
-/obj/item/canvas/twentythree_twentythree,
-/obj/item/canvas/twentythree_twentythree,
-/obj/item/canvas,
-/obj/item/canvas,
-/obj/item/canvas,
-/obj/machinery/vending/wallmed/directional/west,
-/obj/machinery/light/directional/north,
-/turf/open/floor/sepia,
-/area/shuttle/escape)
-"ZE" = (
-/obj/effect/spawner/random/vending/colavend,
-/obj/effect/turf_decal/box,
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
-/turf/open/floor/iron,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -1565,7 +1557,7 @@ LR
 Pj
 vP
 mT
-va
+lV
 tk
 Pj
 MS
@@ -1576,7 +1568,7 @@ Bj
 (5,1,1) = {"
 Bj
 Uu
-YY
+lx
 Yp
 Yp
 it
@@ -1622,17 +1614,17 @@ yl
 Wp
 gm
 iN
-On
+Yl
 mm
 cb
 Wp
 yo
 PS
-kW
+XY
 Uu
 bG
 vL
-Fj
+si
 pg
 Uu
 "}
@@ -1701,20 +1693,20 @@ mz
 "}
 (11,1,1) = {"
 Uu
-Tz
-Mm
+Fl
+iV
 Wp
 Wp
 Pb
-ZE
-id
-qo
+Sl
+px
+Gz
 Nw
 Wp
 Wp
-Of
+XW
 Uu
-Vp
+qn
 el
 Fi
 lo
@@ -1733,7 +1725,7 @@ UA
 Lz
 Lz
 Lz
-ab
+HS
 Uu
 Uu
 Uu
@@ -1757,7 +1749,7 @@ RZ
 Ab
 mz
 zp
-Ro
+HZ
 dy
 oc
 Uu
@@ -1785,14 +1777,14 @@ Uu
 "}
 (15,1,1) = {"
 Uu
-PU
+PQ
 aS
 aS
 aS
 aS
 YS
 AA
-fj
+Or
 kz
 kz
 RZ
@@ -1806,7 +1798,7 @@ mz
 "}
 (16,1,1) = {"
 Uu
-tf
+KN
 Xr
 Xr
 Xr
@@ -1817,9 +1809,9 @@ RZ
 RZ
 Yc
 nx
-vF
+sw
 Uu
-sB
+OA
 dy
 dy
 Lv
@@ -1827,7 +1819,7 @@ mz
 "}
 (17,1,1) = {"
 Uu
-Rs
+vQ
 Xr
 jH
 Cz
@@ -1859,7 +1851,7 @@ RZ
 RZ
 Yc
 YN
-vF
+sw
 Uu
 Ru
 dy
@@ -1869,14 +1861,14 @@ mz
 "}
 (19,1,1) = {"
 Uu
-hr
+ct
 aS
 aS
 aS
 aS
 Gf
 AA
-fj
+Or
 rH
 rH
 RZ
@@ -1925,7 +1917,7 @@ RZ
 Ab
 mz
 MX
-th
+Bb
 dy
 vi
 Uu
@@ -1943,7 +1935,7 @@ AS
 gI
 gI
 gI
-sx
+mZ
 Uu
 Uu
 Uu
@@ -1953,20 +1945,20 @@ Uu
 "}
 (23,1,1) = {"
 Uu
-dz
-iD
+Ch
+PM
 Wp
 Wp
 Wp
-GP
-GP
-GP
+dr
+dr
+dr
 Wp
 Wp
 Wp
-Dp
+pp
 Uu
-Zz
+mD
 DA
 DA
 Ny
@@ -2037,18 +2029,18 @@ mz
 "}
 (27,1,1) = {"
 Uu
-KF
+Sb
 xc
 WW
-Pm
+VT
 Wp
-OV
+Ow
 Wp
 Wp
 Wp
 Wp
 xc
-kW
+XY
 Uu
 LL
 iz
@@ -2084,17 +2076,17 @@ iy
 fm
 cu
 Uu
-rx
-sI
+mt
+lr
 mn
 mn
 mn
 mn
-vn
+Ll
 Uu
 wu
 Ty
-QX
+yF
 mz
 Bj
 "}
@@ -2105,13 +2097,13 @@ Yp
 Yp
 Yp
 Xg
-jh
+zG
 aX
 et
 et
 et
 cF
-qU
+xl
 ye
 Ty
 Ty
@@ -2132,11 +2124,11 @@ lA
 Pu
 MT
 wI
-Vy
+kO
 Uu
 fS
 Ty
-uE
+fi
 mz
 Bj
 "}
@@ -2147,13 +2139,13 @@ Uu
 Uu
 Uu
 Oa
-oy
+xt
 KG
 Mb
-Os
+qr
 Mb
 jE
-Bm
+vM
 Oa
 Uu
 Uu
@@ -2167,7 +2159,7 @@ Bj
 Bj
 mz
 wK
-fq
+rV
 jQ
 Qk
 Qk
@@ -2175,7 +2167,7 @@ Ew
 Qk
 Qk
 dd
-fq
+rV
 cw
 mz
 Bj

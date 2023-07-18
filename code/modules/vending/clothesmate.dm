@@ -20,6 +20,9 @@
 				/obj/item/clothing/mask/bandana/skull = 3,
 				/obj/item/clothing/neck/scarf = 6,
 				/obj/item/clothing/neck/large_scarf = 6,
+				/obj/item/clothing/neck/large_scarf/red = 6,
+				/obj/item/clothing/neck/large_scarf/green = 6,
+				/obj/item/clothing/neck/large_scarf/blue = 6,
 				/obj/item/clothing/neck/infinity_scarf = 6,
 				/obj/item/clothing/neck/tie = 6,
 				/obj/item/clothing/head/rasta = 3,
@@ -31,6 +34,8 @@
 				/obj/item/clothing/head/cowboy/white = 1,
 				/obj/item/clothing/head/cowboy/grey = 1,
 				/obj/item/clothing/head/costume/sombrero/green = 1,
+				/obj/item/clothing/head/costume/nightcap/blue = 2,
+				/obj/item/clothing/head/costume/nightcap/red = 2,
 			),
 		),
 
@@ -76,6 +81,8 @@
 				/obj/item/clothing/under/dress/sailor = 1,
 				/obj/item/clothing/under/dress/redeveninggown = 1,
 				/obj/item/clothing/suit/apron/purple_bartender = 2,
+				/obj/item/clothing/under/misc/pj/blue = 2,
+				/obj/item/clothing/under/misc/pj/red = 2,
 			),
 		),
 
@@ -87,6 +94,7 @@
 				/obj/item/clothing/suit/jacket/oversized = 4,
 				/obj/item/clothing/suit/jacket/fancy = 4,
 				/obj/item/clothing/suit/hooded/wintercoat/custom = 2,
+				/obj/item/clothing/suit/hooded/wintercoat = 2,
 				/obj/item/clothing/under/suit/navy = 1,
 				/obj/item/clothing/under/suit/black_really = 1,
 				/obj/item/clothing/under/suit/burgundy = 1,
@@ -114,6 +122,7 @@
 			"icon" = "socks",
 			"products" = list(
 				/obj/item/clothing/shoes/sneakers/black = 4,
+				/obj/item/clothing/shoes/sneakers/white = 4,
 				/obj/item/clothing/shoes/sandal = 2,
 				/obj/item/clothing/shoes/laceup = 2,
 				/obj/item/clothing/shoes/winterboots = 2,
@@ -140,6 +149,7 @@
 				/obj/item/clothing/under/ethereal_tunic = 3,
 
 				/obj/item/clothing/suit/costume/ianshirt = 1,
+				/obj/item/clothing/suit/costume/irs = 20,
 				/obj/item/clothing/head/costume/irs = 20,
 				/obj/item/clothing/head/costume/tmc = 20,
 				/obj/item/clothing/head/costume/deckers = 20,

@@ -112,7 +112,7 @@
 	name = "Buttered baked corn"
 	reqs = list(
 		/obj/item/food/oven_baked_corn = 1,
-		/obj/item/food/butter = 1
+		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/buttered_baked_corn
 	category = CAT_MOTH
@@ -317,7 +317,7 @@
 /datum/crafting_recipe/food/raw_mothic_garlic
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 1,
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/grown/herbs = 1
 	)

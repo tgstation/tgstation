@@ -35,7 +35,7 @@
 		return TRUE
 	return isAdminGhostAI(user)
 
-/obj/machinery/door/airlock/shell/set_wires()
+/obj/machinery/door/airlock/shell/get_wires()
 	return new /datum/wires/airlock/shell(src)
 
 /obj/item/circuit_component/airlock

@@ -57,7 +57,7 @@
 		return TRUE
 	// Cache the list before we open the box.
 	alerted = viewers(7, src)
-	// There are no mobs to alert? clear the list & prevent furthur action after opening the box
+	// There are no mobs to alert? clear the list & prevent further action after opening the box
 	if(!(locate(/mob/living) in alerted))
 		alerted = null
 

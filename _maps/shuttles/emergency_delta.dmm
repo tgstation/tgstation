@@ -14,6 +14,16 @@
 "ac" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
+"ad" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
 "ae" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
@@ -155,17 +165,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white,
-/area/shuttle/escape)
-"an" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron,
 /area/shuttle/escape)
 "ar" = (
 /obj/item/reagent_containers/cup/bottle/epinephrine{
@@ -576,29 +575,6 @@
 /obj/machinery/recharger,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"bz" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/machinery/button/flasher{
-	id = "shuttleflash";
-	pixel_x = -26;
-	pixel_y = 24
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"bA" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "bB" = (
 /obj/structure/table,
 /obj/item/clipboard,
@@ -831,14 +807,14 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "dY" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 1
+/obj/item/kirbyplants/organic/plant21{
+	pixel_x = -3;
+	pixel_y = 3
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "en" = (
 /obj/structure/table/reinforced,
@@ -911,6 +887,23 @@
 /obj/machinery/camera/autoname,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"nL" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"nU" = (
+/obj/item/kirbyplants/organic/plant21{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "pd" = (
 /obj/machinery/camera/autoname{
 	dir = 9
@@ -935,29 +928,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"sU" = (
-/obj/structure/extinguisher_cabinet/directional/east,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "wU" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"xv" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron,
 /area/shuttle/escape)
 "yb" = (
 /obj/structure/chair/comfy/shuttle{
@@ -967,16 +943,37 @@
 /obj/machinery/status_display/ai/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"Hv" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
+"zf" = (
+/obj/item/kirbyplants/organic/plant21,
+/obj/machinery/button/flasher{
+	id = "shuttleflash";
+	pixel_x = -26;
+	pixel_y = 24
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"AX" = (
+/obj/item/kirbyplants/organic/plant21{
 	pixel_x = -3;
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"En" = (
+/obj/item/kirbyplants/organic/plant21{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/machinery/light/directional/north,
+/obj/item/radio/intercom/directional/north,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "HJ" = (
 /obj/structure/closet/crate/medical,
@@ -1002,21 +999,27 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"Iu" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Ji" = (
+/obj/item/kirbyplants/organic/plant21,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Jl" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/blue,
 /obj/item/pen,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"Jv" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/machinery/light/directional/north,
-/obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1029,7 +1032,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"PD" = (
+"Nu" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/directional/south,
@@ -1079,9 +1082,8 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"WT" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
+"WG" = (
+/obj/item/kirbyplants/organic/plant21{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -1137,22 +1139,22 @@ aa
 "}
 (2,1,1) = {"
 ab
-dY
+ad
 af
 ah
-an
+AX
 av
 av
 aH
-an
+nU
 aE
 aU
 aE
-an
+nU
 av
 av
 av
-an
+AX
 aE
 af
 pd
@@ -1168,7 +1170,7 @@ aa
 "}
 (3,1,1) = {"
 ab
-dY
+ad
 hB
 ai
 nD
@@ -1199,7 +1201,7 @@ aa
 "}
 (4,1,1) = {"
 ab
-dY
+ad
 hB
 ai
 nD
@@ -1261,7 +1263,7 @@ af
 "}
 (6,1,1) = {"
 ab
-dY
+ad
 af
 cy
 nD
@@ -1292,7 +1294,7 @@ af
 "}
 (7,1,1) = {"
 ab
-dY
+ad
 hB
 ai
 nD
@@ -1315,7 +1317,7 @@ bt
 hB
 aT
 af
-WT
+WG
 jU
 jU
 Zb
@@ -1341,10 +1343,10 @@ aw
 nD
 bo
 hB
-bz
+zf
 bF
 bP
-xv
+Iu
 af
 Ma
 JT
@@ -1354,7 +1356,7 @@ hB
 "}
 (9,1,1) = {"
 ab
-dY
+ad
 hB
 ai
 nD
@@ -1385,7 +1387,7 @@ hB
 "}
 (10,1,1) = {"
 ab
-dY
+ad
 hB
 ai
 nD
@@ -1434,8 +1436,8 @@ nD
 nD
 bo
 hB
-bA
-sU
+Ji
+nL
 bQ
 bI
 af
@@ -1447,10 +1449,10 @@ hB
 "}
 (12,1,1) = {"
 ab
-dY
+ad
 hB
 ah
-Hv
+dY
 aw
 aE
 aE
@@ -1462,7 +1464,7 @@ aw
 aw
 aE
 aE
-Hv
+dY
 ah
 af
 aT
@@ -1470,7 +1472,7 @@ af
 af
 bY
 af
-Jv
+En
 lT
 lT
 en
@@ -1478,7 +1480,7 @@ hB
 "}
 (13,1,1) = {"
 ab
-dY
+ad
 af
 af
 af
@@ -1540,7 +1542,7 @@ af
 "}
 (15,1,1) = {"
 ab
-dY
+ad
 hB
 ak
 as
@@ -1571,7 +1573,7 @@ aa
 "}
 (16,1,1) = {"
 ab
-dY
+ad
 hB
 al
 aR
@@ -1592,7 +1594,7 @@ af
 no
 bo
 ai
-PD
+Nu
 hB
 aa
 aa
@@ -1602,7 +1604,7 @@ aa
 "}
 (17,1,1) = {"
 ab
-dY
+ad
 af
 am
 au

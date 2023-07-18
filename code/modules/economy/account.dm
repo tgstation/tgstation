@@ -132,12 +132,12 @@
 		var/reason_to = "Transfer: From [from.account_holder]"
 		var/reason_from = "Transfer: To [account_holder]"
 
-		if(istype(from, /datum/bank_account/department))
+		if(IS_DEPARTMENTAL_ACCOUNT(from))
 			reason_to = "Nanotrasen: Salary"
 			reason_from = ""
 
 		if(transfer_reason)
-			reason_to = istype(src, /datum/bank_account/department) ? "" : transfer_reason
+			reason_to = IS_DEPARTMENTAL_ACCOUNT(src) ? "" : transfer_reason
 			reason_from = transfer_reason
 
 		adjust_money(amount, reason_to)
@@ -268,7 +268,7 @@
 	department_id = dep_id
 	account_balance = budget
 	account_holder = SSeconomy.department_accounts[dep_id]
-	SSeconomy.generated_accounts += src
+	SSeconomy.departmental_accounts += src
 
 /datum/bank_account/remote // Bank account not belonging to the local station
 	add_to_accounts = FALSE

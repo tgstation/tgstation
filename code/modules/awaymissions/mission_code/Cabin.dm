@@ -36,7 +36,7 @@
 /obj/structure/firepit
 	name = "firepit"
 	desc = "Warm and toasty."
-	icon = 'icons/obj/fireplace.dmi'
+	icon = 'icons/obj/fluff/fireplace.dmi'
 	icon_state = "firepit-active"
 	density = FALSE
 	var/active = TRUE
@@ -103,7 +103,7 @@
 /obj/structure/ladder/unbreakable/rune
 	name = "\improper Teleportation Rune"
 	desc = "Could lead anywhere."
-	icon = 'icons/obj/rune.dmi'
+	icon = 'icons/obj/antags/cult/rune.dmi'
 	icon_state = "1"
 	color = rgb(0,0,255)
 

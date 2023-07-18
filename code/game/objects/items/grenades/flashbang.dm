@@ -34,7 +34,7 @@
 		living_mob.Knockdown(max(200/max(1, distance), 60))
 
 //Bang
-	if(!distance || loc == living_mob || loc == living_mob.loc) //Stop allahu akbarring rooms with this.
+	if(!distance || loc == living_mob || loc == living_mob.loc)
 		living_mob.Paralyze(20)
 		living_mob.Knockdown(200)
 		living_mob.soundbang_act(1, 200, 10, 15)

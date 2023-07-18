@@ -52,14 +52,6 @@
 /obj/machinery/power/shuttle_engine/heater,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
-"eh" = (
-/obj/structure/statue/diamond/ai2{
-	anchored = 1;
-	name = "statue of an AI core."
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "en" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
@@ -156,6 +148,19 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"lg" = (
+/obj/machinery/computer/station_alert{
+	desc = "Used to access the shuttle's automated alert system.";
+	dir = 8;
+	name = "ship alert console"
+	},
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "lJ" = (
 /obj/structure/table/reinforced,
 /obj/item/camera{
@@ -192,14 +197,9 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"ou" = (
-/obj/structure/showcase/mecha/marauder{
-	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. The marauder is described as the premier unit used to defend corporate interests and employees.";
-	dir = 4;
-	max_integrity = 2500;
-	name = "marauder mech exhibit"
-	},
-/turf/open/floor/iron/white,
+"oQ" = (
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/wood,
 /area/shuttle/escape)
 "oZ" = (
 /obj/machinery/computer/crew,
@@ -214,6 +214,14 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"qs" = (
+/obj/structure/statue/diamond/ai1{
+	anchored = 1;
+	name = "statue of an AI hologram"
+	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "qw" = (
@@ -234,14 +242,11 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"rc" = (
-/obj/structure/showcase/mecha/marauder{
-	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. The seraph is described as the most valuable unit in defending the VIPs of Nanotrasen.";
-	dir = 8;
-	icon_state = "seraph";
-	max_integrity = 2500;
-	name = "seraph mech exhibit"
+"rp" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "rw" = (
@@ -347,13 +352,6 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"wr" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "wF" = (
 /obj/machinery/door/window/left/directional/west{
 	name = "Bar Door"
@@ -434,18 +432,6 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"Ch" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/head/collectable/welding,
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "Cn" = (
 /obj/machinery/shuttle_manipulator{
 	desc = "A holographic display of the cruise shuttle we're on right now.";
@@ -495,6 +481,10 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"DZ" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "El" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -524,11 +514,12 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"FC" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
+"Fx" = (
+/obj/structure/statue/diamond/ai2{
+	anchored = 1;
+	name = "statue of an AI core."
 	},
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "FR" = (
@@ -628,6 +619,35 @@
 "KD" = (
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"KM" = (
+/obj/machinery/modular_computer/preset/research{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"KS" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"KU" = (
+/obj/structure/showcase/mecha/marauder{
+	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. The marauder is described as the premier unit used to defend corporate interests and employees.";
+	dir = 4;
+	max_integrity = 2500;
+	name = "marauder mech exhibit"
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "Lo" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
@@ -639,6 +659,19 @@
 	pixel_y = 14
 	},
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"LM" = (
+/obj/structure/table/reinforced,
+/obj/item/book/bible/booze{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/taperecorder{
+	pixel_x = 15;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Me" = (
 /obj/structure/chair/comfy/brown{
@@ -664,19 +697,6 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"NX" = (
-/obj/structure/table/reinforced,
-/obj/item/book/bible/booze{
-	pixel_x = -3;
-	pixel_y = 4
-	},
-/obj/item/taperecorder{
-	pixel_x = 15;
-	pixel_y = 4
-	},
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "Oh" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
@@ -687,47 +707,18 @@
 "OJ" = (
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/shuttle/escape)
-"Px" = (
-/obj/machinery/modular_computer/console/preset/research{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 8
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"PM" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"QS" = (
-/obj/machinery/computer/station_alert{
-	desc = "Used to access the shuttle's automated alert system.";
+"Rf" = (
+/obj/structure/showcase/mecha/marauder{
+	desc = "A stand with an empty old Nanotrasen Corporation combat mech bolted to it. The seraph is described as the most valuable unit in defending the VIPs of Nanotrasen.";
 	dir = 8;
-	name = "ship alert console"
+	icon_state = "seraph";
+	max_integrity = 2500;
+	name = "seraph mech exhibit"
 	},
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "So" = (
 /obj/item/storage/cans/sixbeer,
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"Sp" = (
-/obj/structure{
-	desc = "A jukebox for playing music. Seems like it ran out of charge.";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "jukebox";
-	name = "jukebox"
-	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Sx" = (
@@ -766,14 +757,6 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4
 	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
-"Uf" = (
-/obj/structure/statue/diamond/ai1{
-	anchored = 1;
-	name = "statue of an AI hologram"
-	},
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Uo" = (
@@ -832,9 +815,26 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"YR" = (
-/obj/machinery/computer/slot_machine,
+"YN" = (
+/obj/structure{
+	desc = "A jukebox for playing music. Seems like it ran out of charge.";
+	icon = 'icons/obj/machines/music.dmi';
+	icon_state = "jukebox";
+	name = "jukebox"
+	},
 /turf/open/floor/wood,
+/area/shuttle/escape)
+"YV" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/head/collectable/welding,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "YZ" = (
 /obj/machinery/light/directional/west,
@@ -966,7 +966,7 @@ aY
 jt
 WT
 nU
-PM
+DZ
 jt
 kd
 kd
@@ -1123,7 +1123,7 @@ jt
 en
 qw
 FR
-Px
+KM
 Vm
 jT
 qw
@@ -1133,18 +1133,18 @@ TI
 qw
 jT
 Vm
-FC
+rp
 yn
 TI
 TI
 TI
 TI
 HA
-FC
+rp
 Vm
 jT
 qw
-ou
+KU
 qw
 jT
 Vm
@@ -1202,7 +1202,7 @@ WT
 NH
 NH
 NH
-PM
+DZ
 uV
 dR
 xj
@@ -1328,14 +1328,14 @@ dQ
 qw
 qw
 Nv
-NX
+LM
 Cn
 Dn
 SK
 UF
-eh
+Fx
 Vm
-YR
+oQ
 WT
 ni
 OJ
@@ -1379,15 +1379,15 @@ Gv
 iO
 SK
 cf
-Uf
+qs
 Vm
-YR
+oQ
 WT
 OJ
 ni
 OJ
 WT
-Sp
+YN
 uV
 So
 uV
@@ -1491,7 +1491,7 @@ dd
 sv
 qw
 IL
-Ch
+YV
 Vm
 KD
 qw
@@ -1524,7 +1524,7 @@ WT
 nU
 nU
 nU
-PM
+DZ
 uV
 dR
 xj
@@ -1537,7 +1537,7 @@ jt
 en
 qw
 uX
-QS
+lg
 Vm
 jT
 qw
@@ -1547,18 +1547,18 @@ Ki
 qw
 jT
 Vm
-wr
+KS
 mv
 Ki
 Ki
 Ki
 Ki
 rX
-wr
+KS
 Vm
 jT
 qw
-rc
+Rf
 qw
 jT
 Vm
@@ -1748,7 +1748,7 @@ qE
 jt
 WT
 NH
-PM
+DZ
 jt
 kd
 kd
