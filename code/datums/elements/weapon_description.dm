@@ -75,25 +75,26 @@
 	if(!source.override_notes)
 		// Make sure not to divide by 0 on accident
 		if(source.force > 0)
-			readout += "[source.p_they(capitalized = TRUE)] takes about [span_warning("[HITS_TO_CRIT(source.force)] melee hit\s")] to take down an enemy."
+			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.force)] melee hit\s")] to take down an enemy."
 		else
-			readout += "[source.p_they(capitalized = TRUE)] does not deal noticeable melee damage."
+			readout += "It does not deal noticeable melee damage."
 
 		if(source.throwforce > 0)
-			readout += "[source.p_they(capitalized = TRUE)] takes about [span_warning("[HITS_TO_CRIT(source.throwforce)] throwing hit\s")] to take down an enemy."
+			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.throwforce)] throwing hit\s")] to take down an enemy."
 		else
-			readout += "[source.p_they(capitalized = TRUE)] does not deal noticeable throwing damage."
+			readout += "[source.p_They()] does not deal noticeable throwing damage."
 
 		if(source.armour_penetration > 0)
-			readout += "[source.p_they(capitalized = TRUE)] has [span_warning("[weapon_tag_convert(source.armour_penetration)]")] armor-piercing capability."
+			readout += "[source.p_They()] has [span_warning("[weapon_tag_convert(source.armour_penetration)]")] armor-piercing capability."
 
 		// This doesn't accurately report final block ability (taking into account hit modifiers). Should be changed in the future
-		if(source.blocking_ability == 0)
-			readout += "[source.p_they(capitalized = TRUE)] can block all incoming attack."
-		else if(source.blocking_ability < 0)
-			readout += "[source.p_they(capitalized = TRUE)] cannot be used to block attacks."
-		else
-			readout += "[source.p_they(capitalized = TRUE)] can block about [HITS_TO_CRIT((25 * source.blocking_ability))] attack\s before having guard broken."
+		switch(source.blocking_ability)
+			if(-1)
+				readout += "[source.p_They()] cannot be used to block attacks."
+			if(0)
+				readout += "[source.p_They()] can block all incoming attack."
+			else
+				readout += "[source.p_They()] can block about [HITS_TO_CRIT((25 * source.blocking_ability))] attack\s before having guard broken."
 
 	// Custom manual notes
 	if(source.offensive_notes)
