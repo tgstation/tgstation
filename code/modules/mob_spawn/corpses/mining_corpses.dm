@@ -263,12 +263,13 @@
 
 /datum/outfit/consumed_ice_settler/pre_equip(mob/living/carbon/human/ice_settler, visualsOnly = FALSE)
 	if(prob(30))
-		belt = pick(list(
-			/obj/item/crowbar =2,
-			/obj/item/fishing_hook = 2,
-			/obj/item/fishing_hook/shiny = 2,
-			/obj/item/flashlight/flare/torch = 4,
-		))
+		if (prob(60)
+			belt = pick(list(
+				/obj/item/crowbar = 1,
+				/obj/item/flashlight/flare/torch = 2,
+			))
+		else
+			l_pocket = pick(/obj/item/fishing_hook, /obj/item/fishing_hook/shiny)
 	if(prob(30))
 		back = pick_weight(list(
 			/obj/item/pickaxe = 4,
