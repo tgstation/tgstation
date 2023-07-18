@@ -97,9 +97,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
-	pixel_y = 35
-	},
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)
 "ao" = (
@@ -492,9 +490,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/high_class_martini{
-	pixel_y = -28
-	},
+/obj/structure/sign/poster/official/high_class_martini/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)
 "aZ" = (

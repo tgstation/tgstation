@@ -2005,8 +2005,6 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/north,
-/obj/machinery/light/small/directional/south,
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/cafeteria,
 /area/station/hallway/secondary/exit/departure_lounge)
 "aRn" = (
@@ -21758,7 +21756,6 @@
 "iaw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/captain/private)
@@ -30213,9 +30210,9 @@
 /area/station/security/execution/education)
 "lcs" = (
 /obj/structure/hedge,
-/obj/machinery/camera/autoname/directional/west,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/station/command/heads_quarters/captain/private)
 "lct" = (
@@ -45344,9 +45341,7 @@
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
 "qmf" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/carpet/lone,

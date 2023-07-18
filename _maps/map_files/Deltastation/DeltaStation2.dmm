@@ -25167,9 +25167,7 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
 	},
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = 32
-	},
+/obj/structure/sign/poster/official/report_crimes/directional/north,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
 "gjl" = (
@@ -34950,7 +34948,6 @@
 /area/station/service/kitchen/abandoned)
 "iJk" = (
 /obj/effect/turf_decal/stripes/corner,
-/obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/safety_internals/directional/north,
 /obj/machinery/light/small/directional/north,
@@ -47554,7 +47551,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "lOf" = (
-/obj/machinery/light/small/directional/south,
 /obj/structure/sign/poster/official/report_crimes/directional/south,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral{

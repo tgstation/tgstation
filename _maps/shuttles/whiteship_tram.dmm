@@ -1418,9 +1418,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/crew)
 "YO" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/effect/turf_decal/bot_red,
 /obj/effect/spawner/random/structure/crate,
