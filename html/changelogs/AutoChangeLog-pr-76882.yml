@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Sniper rifles have a range that allows them to aim more smoothly (and still decently long ranged)"
