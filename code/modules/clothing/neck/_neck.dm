@@ -26,7 +26,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW
 	greyscale_config = /datum/greyscale_config/ties
-	greyscale_config_worn = /datum/greyscale_config/ties_worn
+	greyscale_config_worn = /datum/greyscale_config/ties/worn
 	greyscale_colors = "#4d4e4e"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	/// All ties start untied unless otherwise specified
@@ -312,7 +312,7 @@
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE#EEEEEE"
 	greyscale_config = /datum/greyscale_config/scarf
-	greyscale_config_worn = /datum/greyscale_config/scarf_worn
+	greyscale_config_worn = /datum/greyscale_config/scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/scarf/black
@@ -365,8 +365,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#C6C6C6#EEEEEE"
-	greyscale_config = /datum/greyscale_config/large_scarf
-	greyscale_config_worn = /datum/greyscale_config/large_scarf_worn
+	greyscale_config = /datum/greyscale_config/scarf
+	greyscale_config_worn = /datum/greyscale_config/scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/large_scarf/red
@@ -394,7 +394,7 @@
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#EEEEEE"
 	greyscale_config = /datum/greyscale_config/infinity_scarf
-	greyscale_config_worn = /datum/greyscale_config/infinity_scarf_worn
+	greyscale_config_worn = /datum/greyscale_config/infinity_scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/petcollar
