@@ -41,7 +41,11 @@
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
 		//special non-nullrod subtyped shit
 		rods[/obj/item/gun/ballistic/bow/divine/with_quiver] = "A divine bow and 10 quivered holy arrows."
-		rods[/obj/item/organ/internal/cyberimp/arm/shard/scythe] = "A bargain with something sinister."
+		rods[/obj/item/organ/internal/cyberimp/arm/shard/scythe] = "A shard that implants itself into your arm, \
+									allowing you to conjure forth a vorpal scythe. \
+									Allows you to behead targets for empowered strikes. \
+									Harms you if you dismiss the scythe without first causing harm to a creature. \
+									The shard also causes you to become Morbid, shifting your interests towards the macabre."
 		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
 
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
