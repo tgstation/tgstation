@@ -1,0 +1,4 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - refactor: "refactored some code relating to greyscale clothing - please report relevant issues on github!"

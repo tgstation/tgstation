@@ -55,7 +55,7 @@
 	tick_interval = 0.2 SECONDS
 
 /datum/status_effect/realignment/get_examine_text()
-	return span_notice("[owner.p_theyre(TRUE)] glowing a soft white.")
+	return span_notice("[owner.p_Theyre()] glowing a soft white.")
 
 /datum/status_effect/realignment/on_apply()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, id)

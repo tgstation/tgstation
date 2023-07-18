@@ -88,7 +88,7 @@
 /obj/item/pillow/examine(mob/user)
 	. = ..()
 	if(bricked)
-		. += span_info("[p_they(TRUE)] feel[p_s()] unnaturally heavy.")
+		. += span_info("[p_They()] feel[p_s()] unnaturally heavy.")
 	if(pillow_trophy)
 		. += span_notice("Alt-click to remove the tag!")
 

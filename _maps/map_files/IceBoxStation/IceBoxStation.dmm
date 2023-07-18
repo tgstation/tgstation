@@ -23541,7 +23541,7 @@
 	pixel_x = -6;
 	pixel_y = -3
 	},
-/mob/living/simple_animal/pet/penguin/baby,
+/mob/living/basic/pet/penguin/baby/permanent,
 /turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/research)
 "hyY" = (
@@ -35315,7 +35315,7 @@
 /area/station/command/bridge)
 "lkP" = (
 /obj/structure/flora/grass/green/style_random,
-/mob/living/simple_animal/pet/penguin/emperor{
+/mob/living/basic/pet/penguin/emperor{
 	name = "Club"
 	},
 /turf/open/misc/asteroid/snow/standard_air,
