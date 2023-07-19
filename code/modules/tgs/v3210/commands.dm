@@ -47,7 +47,7 @@
 	user.friendly_name = sender
 
 	// Discord hack, fix the mention if it's only numbers (fuck you IRC trolls)
-	var/regex/discord_id_regex = regex(@"^[0-9]+$")
+	var/regex/discord_id_regex = regex("^\[0-9\]+$")
 	if(findtext(sender, discord_id_regex))
 		sender = "<@[sender]>"
 
@@ -55,4 +55,4 @@
 	var/datum/tgs_message_content/result = stc.Run(user, params)
 	result = UpgradeDeprecatedCommandResponse(result, command)
 
-	return result?.text || TRUE
+	return result ? result.text : TRUE
