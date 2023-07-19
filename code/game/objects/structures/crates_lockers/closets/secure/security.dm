@@ -119,6 +119,7 @@
 /obj/structure/closet/secure_closet/security/sec/PopulateContents()
 	..()
 	new /obj/item/storage/belt/security/full(src)
+	new /obj/item/ammo_box/magazine/m35/rubber(src) //monkestation edit: Paco sec
 
 /obj/structure/closet/secure_closet/security/cargo
 
