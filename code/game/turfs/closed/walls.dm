@@ -53,7 +53,7 @@
 		if(SOUTH)
 			pixel_y += 11
 		if(NORTH)
-			pixel_y += -11
+			pixel_y += -1
 		if(WEST)
 			pixel_x += 11
 		if(EAST)
