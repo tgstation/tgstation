@@ -1,4 +1,5 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+<<<<<<< HEAD
 "ai" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -170,20 +171,44 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/hunter)
 "sX" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/closed/wall/mineral/titanium/nodiagonal,
+=======
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/hunter)
-"tl" = (
+"c" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "huntershuttleCycle1"
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"d" = (
+>>>>>>> parent of ccd254feb1f (new bounty hunter's shuttle)
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/hunter)
+"e" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"f" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external/ruin,
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+<<<<<<< HEAD
 "tR" = (
 /obj/structure/sign/poster/contraband/bountyhunters/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
@@ -224,22 +249,112 @@
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "xh" = (
+=======
+"g" = (
+/obj/structure/sign/warning/vacuum/external,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/hunter)
+"h" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"i" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"j" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"k" = (
+/obj/structure/sign/poster/contraband/bountyhunters,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/hunter)
+"l" = (
+/obj/structure/table,
+/obj/item/multitool,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"m" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"n" = (
+/obj/structure/table,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"o" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"p" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/hook,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"q" = (
+>>>>>>> parent of ccd254feb1f (new bounty hunter's shuttle)
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/hunter)
-"xp" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/iron/dark/smooth_large,
+"r" = (
+/obj/machinery/computer/launchpad{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
 /area/shuttle/hunter)
-"xw" = (
+"s" = (
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"t" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"u" = (
+/obj/structure/curtain/bounty,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"v" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"w" = (
+/obj/structure/table,
+/obj/item/phone,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"x" = (
+/obj/structure/table,
+/obj/item/pinpointer/shuttle{
+	pixel_y = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"y" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"z" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/smooth_large,
+/turf/open/floor/pod/dark,
 /area/shuttle/hunter)
+<<<<<<< HEAD
 "xL" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/hunter)
@@ -258,32 +373,57 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/hunter)
 "Al" = (
+=======
+"A" = (
+>>>>>>> parent of ccd254feb1f (new bounty hunter's shuttle)
 /obj/machinery/computer/shuttle/hunter{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/smooth_large,
+/turf/open/floor/pod/dark,
 /area/shuttle/hunter)
-"Av" = (
-/obj/effect/turf_decal/loading_area/white{
+"B" = (
+/obj/machinery/launchpad,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"C" = (
+/obj/machinery/fugitive_capture,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"D" = (
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/light/cold/no_nightlight/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
+=======
+/turf/open/floor/pod/dark,
+>>>>>>> parent of ccd254feb1f (new bounty hunter's shuttle)
 /area/shuttle/hunter)
-"AC" = (
-/turf/template_noop,
-/area/template_noop)
-"Bh" = (
-/obj/machinery/light/very_dim/directional/east,
-/turf/open/floor/iron/dark/smooth_large,
+"E" = (
+/obj/structure/table,
+/obj/item/binoculars,
+/turf/open/floor/pod/dark,
 /area/shuttle/hunter)
-"Br" = (
+"F" = (
+/obj/machinery/power/smes,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"G" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"H" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/closed/wall/mineral/titanium,
+/turf/open/floor/pod/dark,
 /area/shuttle/hunter)
+<<<<<<< HEAD
 "BX" = (
 /obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/synth,
 /obj/machinery/airalarm/directional/north,
@@ -322,21 +462,31 @@
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "Ft" = (
+=======
+"I" = (
+>>>>>>> parent of ccd254feb1f (new bounty hunter's shuttle)
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/smooth_large,
+/turf/open/floor/pod/dark,
 /area/shuttle/hunter)
+<<<<<<< HEAD
 "FC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer4{
 	dir = 8
 	},
 /turf/open/floor/plating,
+=======
+"J" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/pod/light,
+>>>>>>> parent of ccd254feb1f (new bounty hunter's shuttle)
 /area/shuttle/hunter)
-"Gy" = (
-/obj/structure/marker_beacon/bronze,
-/turf/closed/wall/mineral/plastitanium,
+"K" = (
+/turf/open/floor/pod/light,
 /area/shuttle/hunter)
+<<<<<<< HEAD
 "HC" = (
 /obj/item/toy/basketball,
 /obj/structure/closet/crate,
@@ -532,19 +682,50 @@
 /obj/machinery/door/airlock/shuttle/glass{
 	name = "Cockpit"
 	},
+=======
+"L" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external/ruin,
+/obj/docking_port/stationary{
+	dwidth = 11;
+	height = 16;
+	name = "Deep Space";
+	shuttle_id = "pirate_home";
+	width = 17
+	},
+/obj/docking_port/mobile{
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "hunter shuttle";
+	rechargeTime = 1800;
+	shuttle_id = "huntership"
+	},
+/obj/structure/fans/tiny,
+>>>>>>> parent of ccd254feb1f (new bounty hunter's shuttle)
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/iron/smooth_large,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
-"XP" = (
-/obj/machinery/door/airlock/shuttle,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/iron/smooth_large,
+"M" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/armor{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
 /area/shuttle/hunter)
-"Yf" = (
-/obj/structure/marker_beacon/olive,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+"P" = (
+/obj/structure/fluff/empty_sleeper{
+	dir = 1
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"S" = (
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter)
+"Z" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/synth,
+/turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "ZC" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -558,6 +739,7 @@
 /area/shuttle/hunter)
 
 (1,1,1) = {"
+<<<<<<< HEAD
 AC
 Gy
 wb
@@ -646,23 +828,114 @@ xp
 my
 xp
 zI
+=======
+a
+a
+a
+b
+a
+a
+a
+a
+a
+b
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+b
+a
+a
+a
+a
+a
+b
+a
+a
+a
+"}
+(3,1,1) = {"
+b
+a
+a
+b
+a
+e
+a
+e
+a
+b
+a
+a
+b
+"}
+(4,1,1) = {"
+b
+a
+e
+b
+b
+q
+i
+q
+b
+b
+e
+a
+b
+"}
+(5,1,1) = {"
+b
+b
+q
+b
+b
+r
+B
+F
+b
+b
+q
+b
+b
+"}
+(6,1,1) = {"
+b
+b
+g
+b
+h
+s
+s
+s
+C
+b
+g
+b
+b
+>>>>>>> parent of ccd254feb1f (new bounty hunter's shuttle)
 "}
 (7,1,1) = {"
-AC
-AC
-fn
-xL
-db
-Ow
-xL
-fn
-xL
-qY
-my
-Oz
-xL
+f
+d
+j
+c
+s
+t
+D
+H
+s
+G
+d
+j
+L
 "}
 (8,1,1) = {"
+<<<<<<< HEAD
 AC
 ny
 PX
@@ -796,19 +1069,154 @@ ai
 ai
 ai
 Yf
+=======
+b
+b
+i
+b
+b
+u
+u
+u
+b
+b
+i
+b
+b
+"}
+(9,1,1) = {"
+a
+b
+i
+b
+m
+v
+s
+s
+S
+b
+i
+b
+a
+"}
+(10,1,1) = {"
+a
+a
+i
+k
+n
+w
+l
+s
+K
+b
+i
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+b
+J
+x
+E
+s
+K
+b
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+b
+o
+y
+s
+s
+S
+b
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+i
+b
+u
+u
+u
+b
+i
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+i
+p
+s
+s
+s
+P
+i
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+i
+Z
+z
+s
+z
+M
+i
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+b
+i
+A
+n
+I
+i
+b
+a
+a
+a
+>>>>>>> parent of ccd254feb1f (new bounty hunter's shuttle)
 "}
 (17,1,1) = {"
-AC
-ny
-PX
-PX
-PX
-ny
-AC
-AC
-AC
-AC
-AC
-AC
-AC
+a
+a
+a
+a
+i
+i
+i
+i
+i
+a
+a
+a
+a
 "}
