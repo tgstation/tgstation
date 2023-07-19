@@ -10,7 +10,9 @@
 /datum/wires/explosive/on_pulse(index)
 	explode()
 
-/datum/wires/explosive/on_cut(index, mend)
+/datum/wires/explosive/on_cut(index, mend, source)
+	if (!isnull(source))
+		log_combat(source, holder, "cut the detonation wire for")
 	explode()
 
 /datum/wires/explosive/proc/explode()
@@ -34,7 +36,7 @@
 		return
 	. = ..()
 
-/datum/wires/explosive/chem_grenade/on_cut(index, mend)
+/datum/wires/explosive/chem_grenade/on_cut(index, mend, source)
 	var/obj/item/grenade/chem_grenade/grenade = holder
 	if(grenade.stage != GRENADE_READY)
 		return
@@ -127,7 +129,7 @@
 		else // Boom
 			explode()
 
-/datum/wires/explosive/pizza/on_cut(wire, mend)
+/datum/wires/explosive/pizza/on_cut(wire, mend, source)
 	var/obj/item/pizzabox/P = holder
 	switch(wire)
 		if(WIRE_DISARM) // Disarm and untrap the box.
@@ -135,6 +137,8 @@
 				P.bomb_defused = TRUE
 		else
 			if(!mend && !P.bomb_defused)
+				if (!isnull(source))
+					log_combat(source, holder, "cut the detonation wire for")
 				explode()
 
 /datum/wires/explosive/pizza/explode()
