@@ -108,7 +108,6 @@
 	},
 /obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Brig";
-	safe = 0;
 	normalspeed = 0
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
