@@ -5342,6 +5342,7 @@
 #include "modular_skyraptor\modules\aesthetics\batong\batong.dm"
 #include "modular_skyraptor\modules\aesthetics\digiclothes\bespoke_uniforms.dm"
 #include "modular_skyraptor\modules\aesthetics\digiclothes\ported_feet.dm"
+#include "modular_skyraptor\modules\aesthetics\digiclothes\ported_gloves.dm"
 #include "modular_skyraptor\modules\aesthetics\digiclothes\ported_head.dm"
 #include "modular_skyraptor\modules\aesthetics\digiclothes\ported_mask.dm"
 #include "modular_skyraptor\modules\aesthetics\digiclothes\ported_mod.dm"
