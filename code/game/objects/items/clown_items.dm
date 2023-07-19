@@ -111,7 +111,7 @@
 
 /obj/item/soap/suicide_act(mob/living/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!", forced="soap suicide")
-	user.visible_message(span_suicide("[user] lifts [src] to [user.p_their()] mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!"))
+	user.visible_message(span_suicide("[user] lifts [src] to [user.p_their()] mouth and gnaws on it furiously, producing a thick froth! [user.p_They()]'ll never get that BB gun now!"))
 	var/datum/effect_system/fluid_spread/foam/foam = new
 	foam.set_up(1, holder = src, location = get_turf(user))
 	foam.start()

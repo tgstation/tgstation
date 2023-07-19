@@ -707,3 +707,141 @@
   - code_imp: All instances of emag_act() now have the proper arguments
   - qol: Most usecases of emagging now have some kind of feedback, and existing feedback
       has been sanity checked and converted to balloon alerts.
+2023-07-17:
+  DATA-xPUNGED:
+  - balance: Pyre Sect can now heal with their bible as normal.
+  - qol: Some of Pyre Sect's rituals have been shortened slightly
+  Donglesplonge:
+  - bugfix: replaces icebox genetics' regular science headset with a medisci headset,
+      making it more in line with other genetics offices
+  Helg2:
+  - bugfix: Onehuman and Freeform ai modules now have proper material prices.
+  - qol: People with deviant tastes now don't care about dirt on the food.
+  - bugfix: fixed energy cost on floor tiles for engi borgs.
+  - bugfix: engi borgs can now properly merge base floor tiles with other base floor
+      tiles.
+  Jacquerel:
+  - bugfix: Station traits can once again allow vending machines and bots to speak
+      a random language
+  - bugfix: EMPed bots and vending machines once again speak a random language
+  - bugfix: Carp, Trees, and Festivus Poles will once more sometimes emote at you
+      if they think you are looking at them the wrong way, before they come over to
+      beat you up.
+  JohnFulpWillard:
+  - refactor: Huds now have their hud owner set in Initialize
+  Melbert:
+  - code_imp: AI cards should react more snap-ily to having their occupant perish
+  OrionTheFox:
+  - qol: in the event the Gravity Generator becomes damaged, examining the main part
+      will now give repair hints!
+  Timberpoes:
+  - bugfix: Emotes now respect word filters.
+  Watermelon914:
+  - bugfix: Fixed the AI vox announcement interrupting every other sound being played.
+  itseasytosee:
+  - rscadd: A new traitor item has been added, Polarized Contacts!
+  necromanceranne:
+  - code_imp: Adds an opt out for the rest of the round for the various heretic summons.
+  nikothedude:
+  - bugfix: The malf AI emag ability now works
+  - bugfix: The AI can no longer untip vendors remotely/spam sparks from shocked vendors
+  vinylspiders:
+  - bugfix: transformed jellypeople with the blood deficiency quirk will now receive
+      the right bloodpacks as mail goodies
+  - qol: laser muskets' inhand sprites will show now whether or not they are charged
+  - image: new inhand sprites for the laser muskets
+2023-07-18:
+  BlueMemesauce:
+  - bugfix: Abductor posters can no longer randomly spawn
+  - spellcheck: Fix duplicate sentence in space comms agent flavor text
+  CRITAWAKETS:
+  - rscadd: Added the smoothbore disabler and it's prime variant. You can now craft
+      a disabler with only one shot and terrible accuracy.
+  - code_imp: Gun cranking has been made a component and could theoretically be used
+      on more than guns.
+  Jacquerel:
+  - bugfix: Megafauna can be consumed by the singularity.
+  JohnFulpWillard:
+  - bugfix: Multi-z maps should now work again.
+  Melbert:
+  - rscadd: Adds a new 7 point positive quirk, "Spacer Born". You were born in space,
+      and as a result your body's adapted to life in artificial gravity, making you
+      much more effective and comfortable in lower gravity. However, travelling planet-side
+      is quite a chore, especially if you're assigned to work there.
+  - rscadd: 'Adds a chemical: Ondansetron, created by Oil + Nitrogen + Oxygen + Ethanol
+      catalyst. A powerful Antiemetic (lowers disgust).'
+  - refactor: Refactored display-ing of antag objectives in their UIs
+  Rhials:
+  - spellcheck: removes an errant period from the flux anomaly announcement.
+  Time-Green:
+  - bugfix: Triple carp player controlled shuttle event works again
+  - bugfix: anti-breach shields wont be dragged away during shuttle flight anymore
+  carlarctg:
+  - rscdel: There is no longer a 50% chance of catching a heretic out when examining
+      them drawing influences.
+  dieamond13:
+  - bugfix: adds a BCI implanter to northstar circuit lab as it didn't come with one
+      before
+  itseasytosee:
+  - balance: the Syndicate Tome traitor item now grants anti-magic while held and
+      can be used to clear cult runes.
+  necromanceranne:
+  - bugfix: Replaces direct calls of try_infect() with appropriate procs so that CRISPR
+      and Miasma aren't forcing diseases on the disease immune.
+  sergeirocks100:
+  - spellcheck: A spelling error in the name of the Tiziran fish case has been corrected.
+  timothymtorres:
+  - rscadd: Add healing boost to organs while mob is sleeping (does not apply to robotic
+      or dying organs)
+2023-07-19:
+  Ben10Omintrix:
+  - refactor: the penguin is a basic animal
+  - rscadd: the penguin now layed eggs
+  - rscadd: the penguin and the chicken babys will go look for adult penguin or chicken
+      and be happy when he is near the adult
+  CoiledLamb:
+  - image: updated most tank sprites.
+  DaydreamIQ:
+  - spellcheck: Maints fridge doesn't have _ in its name anymore
+  Donglesplonge:
+  - bugfix: replaces the unspawnable cannonballs in birdshot maintenance with a stack
+      so that the 4 cannonballs properly spawn, make sure to point them away from
+      medical!
+  Melbert:
+  - bugfix: Cyborgs no longer drop their radio key when deleted, only when deconstructed
+      first
+  - bugfix: Cyborgs no longer drop their MMI on deletion, only prior to deletion.
+      This may result in bad code rearing its ugly head, open an issue report on the
+      github if you're a cyborg and get ghosted when you feel like you shouldn't
+  - bugfix: Runtime from syndie cyborgs spawning
+  - bugfix: AI deaths are reported to black box
+  - qol: Wizard Spellbook is now alphabetized
+  - qol: Wizard Spellbook now has a search bar!
+  OrionTheFox:
+  - refactor: refactored some code relating to greyscale clothing - please report
+      relevant issues on github!
+  Tattle:
+  - spellcheck: Fixed the grammar on a few revenant messages
+  Vekter:
+  - rscadd: Added 2 new brain damage lines. Beat your skull in with a wrench and discover
+      them today!
+  coldud13:
+  - rscadd: You can now toggle the visibility for hair on your noggin when wearing
+      surgery caps.
+  necromanceranne:
+  - bugfix: Cleans up the lavaland exports to the modern loot table lists.
+  - spellcheck: More elaborate explanation for what exactly the sinister shard does
+      when you look at the explanation in the null rod selection UI.
+  - bugfix: Sniper rifles have a range that allows them to aim more smoothly (and
+      still decently long ranged)
+  - bugfix: Fixes a runtime on inserting the vorpal scythe into your arm. You should
+      now gain the Morbid trait, as expected.
+  scriptis:
+  - qol: techfabs now use sheets(TM) as the default unit of measurement
+  - bugfix: mechfab icons aren't perpetually gray
+  tommysalami3:
+  - rscadd: Ambient tracks for icebox.
+  - rscadd: Independent global_list for icebox.
+  vinylspiders:
+  - bugfix: ethereal hair will now go out when they die again
+  - code_imp: apc's update_icon_state proc will no longer set the icon file path
