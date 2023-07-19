@@ -263,9 +263,9 @@
 /datum/outfit/consumed_ice_settler/pre_equip(mob/living/carbon/human/ice_settler, visualsOnly = FALSE)
 	if(prob(30))
 		if (prob(20))
-			belt = /obj/item/crowbar
+			r_pocket = /obj/item/crowbar
 		else
-			l_pocket = pick(/obj/item/fishing_hook, /obj/item/fishing_hook/bone, /obj/item/fishing_line)
+			l_pocket = pick(/obj/item/fishing_hook, /obj/item/fishing_line)
 	if(prob(30))
 		back = pick_weight(list(
 			/obj/item/pickaxe = 4,
@@ -344,8 +344,6 @@
 		moth.set_species(/datum/species/moth)
 	if(prob(70))
 		glasses = /obj/item/clothing/glasses/blindfold
-	if(prob(70))
-		belt = /obj/item/knife/combat/survival
 	if(prob(90))
 		back = /obj/item/storage/backpack/cultpack
 		backpack_contents = list()
@@ -353,6 +351,7 @@
 			/obj/item/flashlight/lantern = 1,
 			/obj/item/toy/plush/moth = 1,
 			/obj/item/toy/eldritch_book = 2,
+			/obj/item/knife/combat/survival = 2,
 		))
 		backpack_contents += backpack_loot
 
