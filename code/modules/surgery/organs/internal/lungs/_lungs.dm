@@ -463,8 +463,9 @@
 		var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(max_symptoms = min(round(max(miasma_pp / 2, 1), 1), 6), max_level = min(round(max(miasma_pp, 1), 1), 8))
 		// tl;dr the first argument chooses the smaller of miasma_pp/2 or 6(typical max virus symptoms), the second chooses the smaller of miasma_pp or 8(max virus symptom level)
 		// Each argument has a minimum of 1 and rounds to the nearest value. Feel free to change the pp scaling I couldn't decide on good numbers for it.
-		miasma_disease.name = "Unknown"
-		miasma_disease.try_infect(breather)
+		if(breather.CanContractDisease(miasma_disease))
+			miasma_disease.name = "Unknown"
+			breather.AirborneContractDisease(miasma_disease, TRUE)
 	// Miasma side effects
 	switch(miasma_pp)
 		if(0.25 to 5)
@@ -822,8 +823,17 @@
 	icon_state = "lungs-c"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
-
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
+
+/obj/item/organ/internal/lungs/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		owner.losebreath += 20
+		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
+	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
 /obj/item/organ/internal/lungs/cybernetic/tier2
 	name = "cybernetic lungs"
@@ -847,16 +857,18 @@
 	cold_level_2_threshold = 140
 	cold_level_3_threshold = 100
 
-/obj/item/organ/internal/lungs/cybernetic/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
-		owner.losebreath += 20
-		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
-	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+/obj/item/organ/internal/lungs/cybernetic/surplus
+	name = "surplus prosthetic lungs"
+	desc = "Two fragile, inflatable sacks of air that only barely mimic the function of human lungs. \
+		Offer no protection against EMPs."
+	icon_state = "lungs-c-s"
+	maxHealth = 0.35 * STANDARD_ORGAN_THRESHOLD
+	emp_vulnerability = 100
 
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/lungs/cybernetic/surplus/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dangerous_surgical_removal)
 
 /obj/item/organ/internal/lungs/lavaland
 	name = "blackened frilled lungs" // blackened from necropolis exposure

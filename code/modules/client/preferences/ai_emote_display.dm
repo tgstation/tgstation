@@ -12,7 +12,7 @@
 
 	for(var/emote in GLOB.ai_status_display_emotes)
 		var/emote_icon = GLOB.ai_status_display_emotes[emote]
-		values[emote] = icon('icons/obj/status_display.dmi', emote_icon)
+		values[emote] = icon('icons/obj/machines/status_display.dmi', emote_icon)
 
 	return values
 

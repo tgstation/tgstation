@@ -1,0 +1,4 @@
+/mob/living/simple_animal/pet/penguin : /mob/living/basic/pet/penguin{@OLD}
+/mob/living/simple_animal/pet/penguin/emperor : /mob/living/basic/pet/penguin/emperor{@OLD}
+/mob/living/simple_animal/pet/penguin/emperor/shamebrero : /mob/living/basic/pet/penguin/emperor/shamebrero{@OLD}
+/mob/living/simple_animal/pet/penguin/baby : /mob/living/basic/pet/penguin/baby/permanent{@OLD}

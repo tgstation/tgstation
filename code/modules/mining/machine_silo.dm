@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo
 	name = "ore silo"
 	desc = "An all-in-one bluespace storage and transmission system for the station's mineral distribution needs."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/machines/ore_silo.dmi'
 	icon_state = "silo"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_silo

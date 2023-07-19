@@ -284,6 +284,14 @@
 ///Current partner target
 #define BB_BABIES_TARGET "BB_babies_target"
 
+///Finding adult mob
+///key holds the adult we found
+#define BB_FOUND_MOM "BB_found_mom"
+///list of types of mobs we will look for
+#define BB_FIND_MOM_TYPES "BB_find_mom_types"
+///list of types of mobs we must ignore
+#define BB_IGNORE_MOM_TYPES "BB_ignore_mom_types"
+
 // Bileworm AI keys
 
 #define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
@@ -309,3 +317,17 @@
 //Festivus AI keys
 /// Key where we store the charging apc ability
 #define BB_FESTIVE_APC "BB_festive_apc"
+
+//Paperwizard AI keys
+/// Key where we store the summon minions ability
+#define BB_WIZARD_SUMMON_MINIONS "BB_summon_minions"
+/// Key where we store the mimics ability
+#define BB_WIZARD_MIMICS "BB_summon_mimics"
+/// Key where we store the paper target
+#define BB_FOUND_PAPER "BB_found_paper"
+/// Key where we store the list of things we can write on a paper
+#define BB_WRITING_LIST "BB_writing_list"
+/// Key where we store the tentacleing ability
+#define BB_GOLIATH_TENTACLES "BB_goliath_tentacles"
+/// Key where goliath stores a hole it wants to get into
+#define BB_GOLIATH_HOLE_TARGET "BB_goliath_hole"

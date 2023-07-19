@@ -1,7 +1,7 @@
 /mob/living/carbon/human/examine(mob/user)
 //this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
-	var/t_He = p_they(TRUE)
-	var/t_His = p_their(TRUE)
+	var/t_He = p_They()
+	var/t_His = p_Their()
 	var/t_his = p_their()
 	var/t_him = p_them()
 	var/t_has = p_have()
@@ -27,13 +27,14 @@
 	//uniform
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && !(w_uniform.item_flags & EXAMINE_SKIP))
 		//accessory
-		var/accessory_msg
+		var/accessory_message = ""
 		if(istype(w_uniform, /obj/item/clothing/under))
-			var/obj/item/clothing/under/U = w_uniform
-			if(U.attached_accessory)
-				accessory_msg += " with [icon2html(U.attached_accessory, user)] \a [U.attached_accessory]"
+			var/obj/item/clothing/under/undershirt = w_uniform
+			var/list/accessories = undershirt.list_accessories_with_icon(user)
+			if(length(accessories))
+				accessory_message = " with [english_list(accessories)] attached"
 
-		. += "[t_He] [t_is] wearing [w_uniform.get_examine_string(user)][accessory_msg]."
+		. += "[t_He] [t_is] wearing [w_uniform.get_examine_string(user)][accessory_message]."
 	//head
 	if(head && !(obscured & ITEM_SLOT_HEAD) && !(head.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [head.get_examine_string(user)] on [t_his] head."
@@ -443,4 +444,4 @@
 			age_text = "very old"
 		if(101 to INFINITY)
 			age_text = "withering away"
-	. += list(span_notice("[p_they(TRUE)] appear[p_s()] to be [age_text]."))
+	. += list(span_notice("[p_They()] appear[p_s()] to be [age_text]."))

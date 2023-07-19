@@ -142,6 +142,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESTRAINED "restrained"
 /// Doesn't miss attacks
 #define TRAIT_PERFECT_ATTACKER "perfect_attacker"
+///Recolored by item/greentext
+#define TRAIT_GREENTEXT_CURSED "greentext_curse"
 #define TRAIT_INCAPACITATED "incapacitated"
 /// In some kind of critical condition. Is able to succumb.
 #define TRAIT_CRITICAL_CONDITION "critical-condition"
@@ -244,6 +246,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MUTANT_COLORS "mutcolors"
 /// Species with this trait have mutant colors that cannot be chosen by the player, nor altered ingame by external means
 #define TRAIT_FIXED_MUTANT_COLORS "fixed_mutcolors"
+/// Species with this trait have a haircolor that cannot be chosen by the player, nor altered ingame by external means
+#define TRAIT_FIXED_HAIRCOLOR "fixed_haircolor"
 /// Humans with this trait won't get bloody hands, nor bloody feet
 #define TRAIT_NO_BLOOD_OVERLAY "no_blood_overlay"
 /// Humans with this trait cannot have underwear
@@ -287,10 +291,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
 #define TRAIT_FASTMED "fast_med_use"
-#define TRAIT_ANTIMAGIC "anti_magic"
+/// The mob is holy and resistance to cult magic
 #define TRAIT_HOLY "holy"
+/// This mob is antimagic, and immune to spells / cannot cast spells
+#define TRAIT_ANTIMAGIC "anti_magic"
 /// This allows a person who has antimagic to cast spells without getting blocked
 #define TRAIT_ANTIMAGIC_NO_SELFBLOCK "anti_magic_no_selfblock"
+/// This mob recently blocked magic with some form of antimagic
+#define TRAIT_RECENTLY_BLOCKED_MAGIC "recently_blocked_magic"
 #define TRAIT_DEPRESSION "depression"
 #define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
 #define TRAIT_JOLLY "jolly"
@@ -354,6 +362,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WEB_WEAVER "web_weaver"
 /// Can navigate the web without getting stuck
 #define TRAIT_WEB_SURFER "web_surfer"
+/// A web is being spun on this turf presently
+#define TRAIT_SPINNING_WEB_TURF "spinning_web_turf"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
 #define TRAIT_SURGEON "surgeon"
@@ -610,6 +620,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_VOIDSTORM_IMMUNE "voidstorm_immune"
 #define TRAIT_WEATHER_IMMUNE "weather_immune" //Immune to ALL weather effects.
 
+/// Cannot be grabbed by goliath tentacles
+#define TRAIT_TENTACLE_IMMUNE "tentacle_immune"
+
 //non-mob traits
 /// Used for limb-based paralysis, where replacing the limb will fix it.
 #define TRAIT_PARALYSIS "paralysis"
@@ -617,6 +630,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DISABLED_BY_WOUND "disabled-by-wound"
 /// This movable atom has the explosive block element
 #define TRAIT_BLOCKING_EXPLOSIVES "blocking_explosives"
+
+///Lava will be safe to cross while it has this trait.
+#define TRAIT_LAVA_STOPPED "lava_stopped"
+///Chasms will be safe to cross while they've this trait.
+#define TRAIT_CHASM_STOPPED "chasm_stopped"
+///Turf slowdown will be ignored when this trait is added to a turf.
+#define TRAIT_TURF_IGNORE_SLOWDOWN "turf_ignore_slowdown"
+///Mobs won't slip on a wet turf while it has this trait
+#define TRAIT_TURF_IGNORE_SLIPPERY "turf_ignore_slippery"
 
 /// Mobs with this trait can't send the mining shuttle console when used outside the station itself
 #define TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION "forbid_mining_shuttle_console_outside_station"
@@ -732,6 +754,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SMOKER "smoker"
 #define TRAIT_POSTERBOY "poster_boy"
 #define TRAIT_THROWINGARM "throwing_arm"
+
+// Debug traits
+/// This object has light debugging tools attached to it
+#define TRAIT_LIGHTING_DEBUGGED "lighting_debugged"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
@@ -855,6 +881,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATUS_EFFECT_TRAIT "status-effect"
 /// A trait given by a specific status effect (not sure why we need both but whatever!)
 #define TRAIT_STATUS_EFFECT(effect_id) "[effect_id]-trait"
+/// Trait from light debugging
+#define LIGHT_DEBUG_TRAIT "light-debug"
 
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"

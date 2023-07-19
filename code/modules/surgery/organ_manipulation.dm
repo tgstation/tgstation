@@ -268,6 +268,7 @@
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 			target_organ.Remove(target)
 			target_organ.forceMove(get_turf(target))
+			target_organ.on_surgical_removal(user, target, target_zone, tool)
 		else
 			display_results(
 				user,

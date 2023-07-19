@@ -46,7 +46,7 @@ SUBSYSTEM_DEF(nightshift)
 
 /datum/controller/subsystem/nightshift/proc/update_nightshift(active, announce = TRUE, resumed = FALSE, forced = FALSE)
 	if(!resumed)
-		currentrun = GLOB.apcs_list.Copy()
+		currentrun = SSmachines.get_machines_by_type(/obj/machinery/power/apc)
 		nightshift_active = active
 		if(announce)
 			if (active)
