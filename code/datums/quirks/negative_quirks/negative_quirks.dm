@@ -367,6 +367,25 @@
 	hardcore_value = 3
 	mail_goodies = list(/obj/item/reagent_containers/cup/glass/waterbottle)
 
+/datum/quirk/lightless
+	name = "Light Sensitivity"
+	desc = "Bright lights irritate you. Your eyes start to water and burn when exposed to light. Maybe it's a medical condition."
+	icon = FA_ICON_EYE_SLASH
+	value = -6
+	gain_text = "<span class='danger'>The safety of light feels off...</span>"
+	lose_text = "<span class='notice'>Enlightening.</span>"
+	medical_record_text = "Patient has acute phobia of light, and insists it is physically harmful."
+	hardcore_value = 6
+	mail_goodies = list(/obj/item/flashlight/flashdark)
+
+/datum/quirk/lightless/on_process()
+	var/turf/T = get_turf(quirk_holder)
+	var/lums = T.get_lumcount()
+	if(lums >= 0.8)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bright_light", /datum/mood_event/bright_light)
+	else
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "bright_light")
+
 /datum/quirk/item_quirk/nearsighted
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
