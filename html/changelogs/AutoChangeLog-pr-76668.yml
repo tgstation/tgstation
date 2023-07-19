@@ -1,0 +1,4 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - rscadd: "New air alarm mode: Vent siphon, which disables scrubbers and forces vents to siphon air with no pressure regulation"
