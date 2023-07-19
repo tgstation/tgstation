@@ -23,7 +23,6 @@
 	hijack_speed = 0.5
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
 	preview_outfit = /datum/outfit/heretic
-	var/list/all_sac_targets = list()
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
@@ -44,6 +43,8 @@
 	var/high_value_sacrifices = 0
 	/// Lazy assoc list of [refs to humans] to [image previews of the human]. Humans that we have as sacrifice targets.
 	var/list/mob/living/carbon/human/sac_targets
+	// list of all targets used for end of round report
+	var/list/all_sac_targets = list()
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
 	/// A static typecache of all tools we can scribe with.
