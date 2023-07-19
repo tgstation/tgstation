@@ -426,7 +426,7 @@
 	name = "Forever Storm"
 	trait_type = STATION_TRAIT_NEGATIVE
 	trait_flags = NONE
-	weight = 4
+	weight = 3
 	show_in_report = TRUE
 	report_message = "It looks like the storm is not gonna calm down anytime soon, stay safe out there."
 
