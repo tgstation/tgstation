@@ -81,7 +81,7 @@
 
 /datum/station_trait/blackout/on_round_start()
 	. = ..()
-	for(var/obj/machinery/power/apc/apc as anything in GLOB.apcs_list)
+	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
 		if(is_station_level(apc.z) && prob(60))
 			apc.overload_lighting()
 

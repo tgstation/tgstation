@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - rscadd: "Added angle lighting, applies it to most wall lights!"
+  - rscadd: "Adds a lighting prototyping tool, mappers go try it out (it's locked behind the mapping verb)"

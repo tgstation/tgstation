@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(ai_hologram_icons, list(
 	AI_HOLOGRAM_CAT_2 = 'icons/mob/simple/pets.dmi',
 	AI_HOLOGRAM_CHICKEN = 'icons/mob/simple/animal.dmi',
 	AI_HOLOGRAM_CORGI = 'icons/mob/simple/pets.dmi',
-	AI_HOLOGRAM_COW = 'icons/mob/simple/animal.dmi',
+	AI_HOLOGRAM_COW = 'icons/mob/simple/cows.dmi',
 	AI_HOLOGRAM_CRAB = 'icons/mob/simple/animal.dmi',
 	AI_HOLOGRAM_DEFAULT = 'icons/mob/silicon/ai.dmi',
 	AI_HOLOGRAM_FACE = 'icons/mob/silicon/ai.dmi',
