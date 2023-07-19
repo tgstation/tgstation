@@ -259,14 +259,13 @@
 	suit = /obj/item/clothing/suit/hooded/wintercoat
 	shoes = /obj/item/clothing/shoes/winterboots
 	mask = /obj/item/clothing/mask/breath
-	back = /obj/item/tank/internals/oxygen
 
 /datum/outfit/consumed_ice_settler/pre_equip(mob/living/carbon/human/ice_settler, visualsOnly = FALSE)
 	if(prob(30))
 		if (prob(20))
 			belt = /obj/item/crowbar
 		else
-			l_pocket = pick(/obj/item/fishing_hook, /obj/item/fishing_hook/shiny)
+			l_pocket = pick(/obj/item/fishing_hook, /obj/item/fishing_hook/bone, /obj/item/fishing_line)
 	if(prob(30))
 		back = pick_weight(list(
 			/obj/item/pickaxe = 4,
@@ -346,12 +345,14 @@
 	if(prob(70))
 		glasses = /obj/item/clothing/glasses/blindfold
 	if(prob(70))
-		if(prob(50))
-			belt = /obj/item/flashlight/lantern
-		else
-			l_pocket = /obj/item/toy/plush/moth
-	if(prob(50))
-		r_pocket = pick_weight(list(
-			/obj/item/knife/combat/survival = 1,
+		belt = /obj/item/knife/combat/survival = 1,
+	if(prob(90))
+		back = /obj/item/storage/backpack/cultpack
+		backpack_contents = list()
+		var/backpack_loot = pick(list(
+			/obj/item/flashlight/lantern = 1,
+			/obj/item/toy/plush/moth = 1,
 			/obj/item/toy/eldritch_book = 2,
 		))
+		backpack_contents += backpack_loot
+
