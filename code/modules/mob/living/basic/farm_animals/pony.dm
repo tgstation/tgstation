@@ -23,6 +23,7 @@
 	maxHealth = 50
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
+	ai_controller = /datum/ai_controller/basic_controller/pony
 
 /mob/living/basic/pony/Initialize(mapload)
 	AddElement(/datum/element/pet_bonus, "neighs!")
@@ -40,3 +41,19 @@
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pony)
 	visible_message(span_notice("[src] snorts happily."))
+
+/datum/ai_controller/basic_controller/pony
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+	)
+
+	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
+		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree
+	)
