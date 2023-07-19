@@ -17,6 +17,8 @@
 	var/extra_loot
 	/// The map file to load
 	var/filename = "virtual_domain.dmm"
+	/// Any outfit that you wish to force on avatars. Overrides preferences
+	var/datum/outfit/forced_outfit
 	/// Information given to connected clients via ability
 	var/help_text
 	/// For blacklisting purposes

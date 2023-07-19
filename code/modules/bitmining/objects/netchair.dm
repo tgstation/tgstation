@@ -134,7 +134,7 @@
 		if(isnull(wayout))
 			balloon_alert(neo, "out of bandwidth!")
 			return
-		current_avatar = generate_avatar(wayout)
+		current_avatar = generate_avatar(wayout, generated_domain)
 		avatar_ref = WEAKREF(current_avatar)
 
 	neo.set_static_vision(3 SECONDS)
@@ -163,9 +163,11 @@
 	return FALSE
 
 /// Generates a new avatar for the bitminer.
-/obj/structure/netchair/proc/generate_avatar(obj/structure/hololadder/wayout)
+/obj/structure/netchair/proc/generate_avatar(obj/structure/hololadder/wayout, datum/map_template/virtual_domain/generated_domain)
 	var/mob/living/carbon/human/avatar = new(wayout.loc)
-	avatar.equipOutfit(netsuit, visualsOnly = TRUE)
+
+	var/datum/outfit/to_wear = generated_domain.forced_outfit || netsuit
+	avatar.equipOutfit(to_wear, visualsOnly = TRUE)
 	avatar.job = "Bit Avatar"
 
 	return avatar

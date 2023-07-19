@@ -1828,7 +1828,7 @@
 "mi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/light/blacklight/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "mE" = (
@@ -2419,7 +2419,9 @@
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
 "SN" = (
-/obj/machinery/light/cold/no_nightlight/directional/south,
+/obj/structure/table/reinforced,
+/obj/machinery/light/directional/south,
+/obj/item/assembly/bitminer_trap,
 /turf/open/floor/iron,
 /area/station/bitminer_den)
 "Td" = (

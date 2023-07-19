@@ -27,66 +27,36 @@
 		PROC_REF(on_sever_connection),
 		override = TRUE,
 	)
+	RegisterSignal(src, COMSIG_BITMINING_PROXIMITY, PROC_REF(on_proximity))
+	RegisterSignal(src, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer), override = TRUE)
+	RegisterSignal(src, COMSIG_QSERVER_DISCONNECTED, PROC_REF(on_sever_connection), override = TRUE)
 
-/// Used any time we want to link the pilot body to an avatar or subsequent avatar
-/datum/mind/proc/connect_avatar_signals(mob/living/target, datum/action/avatar_domain_info/action)
+/// Links mob damage & death as long as the netchair is there
+/datum/mind/proc/connect_avatar_signals(mob/living/target)
 	var/obj/structure/netchair/hosting_chair = netchair_ref?.resolve()
 	if(isnull(hosting_chair))
-		disconnect_avatar(forced = TRUE)
+		sever_avatar(forced = TRUE)
 		return
 
 	hosting_chair.avatar_ref = WEAKREF(target) // we need to set this just in case there's a subsequent hop
 
 	RegisterSignal(target, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
-	RegisterSignals(target, list(
-		COMSIG_QSERVER_DISCONNECT,
-		COMSIG_LIVING_GIBBED
-		),
-		PROC_REF(on_sever_connection),
-	)
-	RegisterSignal(src, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer), override = TRUE)
+	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_sever_connection), override = TRUE)
 
-/// Disconnects the avatar and returns the mind to the pilot.
-/// When done smoothly, it simply unregisters signals
-/datum/mind/proc/disconnect_avatar(forced = FALSE)
-	var/mob/living/pilot = pilot_ref?.resolve()
-	if(isnull(pilot))
-		current.dust()
-
-	disconnect_avatar_signals()
-
-	UnregisterSignal(pilot, COMSIG_LIVING_DEATH)
-	RegisterSignal(pilot, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
-
-	UnregisterSignal(pilot, COMSIG_LIVING_STATUS_UNCONSCIOUS)
-	UnregisterSignal(pilot, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(pilot, COMSIG_MOVABLE_UNBUCKLE)
-
-	var/obj/structure/netchair/hosting_chair = netchair_ref?.resolve()
-	if(isnull(hosting_chair))
-		current.dust()
-
-	hosting_chair.disconnect_occupant(src, forced)
-
-/// Simply disconnects the signals, but does not port the mind back to the pilot
+/// Unregisters damage & death signals
 /datum/mind/proc/disconnect_avatar_signals()
-	UnregisterSignal(src, COMSIG_MIND_TRANSFERRED)
 	if(isnull(current)) // sometimes this is called after the mind has been destroyed
 		return
 	UnregisterSignal(current, COMSIG_MOB_APPLY_DAMAGE)
-	UnregisterSignal(current, COMSIG_QSERVER_DISCONNECT)
+	UnregisterSignal(current, COMSIG_LIVING_DEATH)
 
 /// Transfers damage from the avatar to the pilot
-/datum/mind/proc/on_linked_damage(mob/target, damage, damage_type, def_zone)
+/datum/mind/proc/on_linked_damage(mob/target, damage, damage_type, def_zone, blocked, forced)
 	SIGNAL_HANDLER
 
-	if(!isliving(target))
-		return
-
-	var/mob/living/avatar = target
 	var/mob/living/carbon/pilot = pilot_ref?.resolve()
 
-	if(!pilot || damage_type == STAMINA || damage_type == OXY)
+	if(!pilot || damage_type == STAMINA || damage_type == OXYLOSS)
 		return
 
 	if(damage > 15)
@@ -95,25 +65,46 @@
 	if(damage > 30 && prob(30))
 		INVOKE_ASYNC(pilot, TYPE_PROC_REF(/mob/living, emote), "scream")
 
-	pilot.apply_damage(damage, damage_type, def_zone, blocked = FALSE, forced = TRUE)
-
-	if((avatar.health + MAX_LIVING_HEALTH) <= damage)
-		disconnect_avatar(forced = TRUE)
+	pilot.apply_damage(damage, damage_type, def_zone, blocked, forced = TRUE)
 
 /// Handles minds being swapped around in subsequent avatars
 /datum/mind/proc/on_mind_transfer(mob/living/previous_body)
 	SIGNAL_HANDLER
 
-	transfer_avatar_signals(previous_body, current)
+	disconnect_avatar_signals(previous_body)
+	connect_avatar_signals(current)
+
+/// Triggers when someone steps onto a trapped tile
+/datum/mind/proc/on_proximity(mutable_appearance/mob_image)
+	SIGNAL_HANDLER
+
+	var/datum/action/avatar_free_sever/action = new(src, mob_image)
+	action.Grant(current)
 
 /// Helper so that we don't have to apply args to register_signal
 /datum/mind/proc/on_sever_connection()
 	SIGNAL_HANDLER
 
 	last_death = world.time
-	disconnect_avatar(forced = TRUE)
+	sever_avatar(forced = TRUE)
 
-/// Helper to transfer the mind to a new avatar
-/datum/mind/proc/transfer_avatar_signals(mob/living/origin, mob/living/target)
-	disconnect_avatar_signals(origin)
-	connect_avatar_signals(target)
+/// Disconnects the avatar and returns the mind to the pilot.
+/datum/mind/proc/sever_avatar(forced = FALSE)
+	var/mob/living/pilot = pilot_ref?.resolve()
+	var/obj/structure/netchair/chair = netchair_ref?.resolve()
+
+	if(isnull(chair) || !isnull(pilot))
+		current.dust()
+
+	disconnect_avatar_signals()
+
+	UnregisterSignal(src, COMSIG_BITMINING_PROXIMITY)
+	UnregisterSignal(src, COMSIG_MIND_TRANSFERRED)
+	UnregisterSignal(src, COMSIG_QSERVER_DISCONNECTED)
+	UnregisterSignal(pilot, COMSIG_LIVING_STATUS_UNCONSCIOUS)
+	UnregisterSignal(pilot, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(pilot, COMSIG_MOVABLE_UNBUCKLE)
+	UnregisterSignal(pilot, COMSIG_LIVING_DEATH)
+	RegisterSignal(pilot, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
+
+	chair.disconnect_occupant(src, forced)

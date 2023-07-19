@@ -31,16 +31,16 @@
 /obj/structure/hololadder/proc/disconnect(mob/user)
 	balloon_alert(user, "disconnecting...")
 	if(do_after(user, travel_time, src))
-		user.mind.disconnect_avatar()
+		user.mind.sever_avatar()
 
 /obj/structure/hololadder/proc/on_enter(datum/source, atom/movable/arrived as mob|obj, turf/old_loc)
 	SIGNAL_HANDLER
 
-	if(!isliving(arrived) || isnull(old_loc))
+	if(!isliving(arrived))
 		return
 
-	var/mob/living/thing = arrived
-	if(isnull(thing.mind))
+	var/mob/living/user = arrived
+	if(isnull(user.mind))
 		return
 
-	INVOKE_ASYNC(src, PROC_REF(disconnect), thing)
+	INVOKE_ASYNC(src, PROC_REF(disconnect), user)

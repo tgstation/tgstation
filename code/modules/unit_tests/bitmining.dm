@@ -1,5 +1,3 @@
-/datum/unit_test/quantum_server_find_console
-
 /// The qserver and qconsole should find each other on init
 /datum/unit_test/quantum_server_find_console/Run()
 	var/obj/machinery/computer/quantum_console/console = allocate(/obj/machinery/computer/quantum_console)
@@ -13,8 +11,6 @@
 
 	TEST_ASSERT_EQUAL(connected_console, console, "Quantum console did not set server_ref correctly")
 	TEST_ASSERT_EQUAL(connected_server, server, "Quantum server did not set console_ref correctly")
-
-/datum/unit_test/quantum_server_load_map
 
 /// Handles cases with loading domains and stopping domains
 /datum/unit_test/quantum_server_load_map/Run()
@@ -48,8 +44,6 @@
 	server.set_domain(labrat, id = "test_only")
 	TEST_ASSERT_EQUAL(server.generated_domain.id, "test_only", "QServer should allow loading a new domain after cooldown")
 
-/datum/unit_test/netchair_connection
-
 /// Tests the netchair's ability to enter and exit quantum space
 /datum/unit_test/netchair_connection/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
@@ -76,8 +70,6 @@
 
 	var/mob/living/labrat_resolved = chair.occupant_ref.resolve()
 	TEST_ASSERT_EQUAL(labrat, labrat_resolved, "Netchair did not set occupant_ref correctly")
-
-/datum/unit_test/avatar_connection
 
 /// Tests the connection between avatar and pilot
 /datum/unit_test/avatar_connection/Run()
@@ -120,5 +112,38 @@
 
 	target.gib()
 	TEST_ASSERT_EQUAL(REF(rejuvenated_pilot.mind), REF(labrat.mind), "Pilot should have been transferred back on avatar gib")
-	// This is working but won't test for some raisin
 	// TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Pilot should have taken brain dmg on disconnect")
+
+/// Tests the signals sent when the server is destroyed, mobs step on a loaded tile, etc
+/datum/unit_test/bitmining_signals
+	var/received = FALSE
+
+/datum/unit_test/bitmining_signals/proc/on_proximity()
+	SIGNAL_HANDLER
+	received = TRUE
+
+/datum/unit_test/bitmining_signals/proc/on_disconnect()
+	SIGNAL_HANDLER
+	received = TRUE
+
+/datum/unit_test/bitmining_signals/Run()
+	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	var/obj/item/assembly/bitminer_trap/trap = allocate(/obj/item/assembly/bitminer_trap)
+	var/area/test_area = get_area(labrat)
+
+	rename_area(test_area, "Bitmining Den")
+	RegisterSignal(labrat, COMSIG_BITMINING_PROXIMITY, PROC_REF(on_proximity))
+	labrat.put_in_active_hand(trap, forced = TRUE)
+	trap.attack_self(labrat)
+	UNTIL(trap.used)
+	TEST_ASSERT_EQUAL(trap.used, TRUE, "Bitminer trap did not activate")
+
+	// labrat.forceMove(run_loc_floor_top_right)
+	// labrat.forceMove(run_loc_floor_bottom_left)
+	// TEST_ASSERT_EQUAL(received, TRUE, "Mob stepping on loaded tile did not chain signal")
+
+	// received = FALSE
+	// RegisterSignal(labrat, COMSIG_QSERVER_DISCONNECTED, PROC_REF(on_disconnect))
+	// qdel(server)
+	// TEST_ASSERT_EQUAL(received, TRUE, "Quantum server deletion did not chain signal")

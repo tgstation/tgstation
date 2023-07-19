@@ -52,7 +52,13 @@
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
-	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(stop_domain), usr, TRUE)
+	RegisterSignals(src, list(
+		COMSIG_MACHINERY_BROKEN,
+		COMSIG_MACHINERY_POWER_LOST,
+		COMSIG_QDELETING
+		),
+		PROC_REF(on_broken)
+	)
 	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RefreshParts()
 
@@ -65,7 +71,6 @@
 
 /obj/machinery/quantum_server/Destroy(force)
 	. = ..()
-	SEND_SIGNAL(src, COMSIG_QSERVER_DISCONNECT)
 	occupant_mind_refs.Cut()
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)
@@ -118,7 +123,7 @@
 		if(locate(/obj/structure/closet/crate/secure/bitminer_loot/encrypted) in tile)
 			return TRUE
 
-	playsound(src, 'sound/machines/buzz-two.ogg', 30, 2)
+	user.playsound_local(src, 'sound/machines/buzz-two.ogg', 30, 2)
 	balloon_alert(user, "no loot crate found.")
 
 	return FALSE
@@ -244,6 +249,12 @@
 
 	return TRUE
 
+/// If broken via signal, disconnects all users
+/obj/machinery/quantum_server/proc/on_broken()
+	SIGNAL_HANDLER
+
+	stop_domain()
+
 /// Handles examining the server. Shows cooldown time and efficiency.
 /obj/machinery/quantum_server/proc/on_examine(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
@@ -292,13 +303,13 @@
 	return TRUE
 
 /// Stops the current virtual domain and disconnects all users
-/obj/machinery/quantum_server/proc/stop_domain(mob/user, force = FALSE)
-	if(!force)
+/obj/machinery/quantum_server/proc/stop_domain(mob/user)
+	if(user) // Sometimes called by on_broken()
 		balloon_alert(user, "powering down domain...")
 		playsound(src, 'sound/machines/terminal_off.ogg', 40, 2)
 
 	loading = TRUE
-	SEND_SIGNAL(src, COMSIG_QSERVER_DISCONNECT)
+	SEND_SIGNAL(src, COMSIG_QSERVER_DISCONNECTED)
 	COOLDOWN_START(src, cooling_off, min(server_cooldown_time * server_cooldown_efficiency))
 
 	if(generated_domain)
