@@ -194,7 +194,7 @@
 /mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	if(client && !client?.prefs)
 		stack_trace("[src] ([client?.ckey]) had null prefs, which shouldn't be possible!") 
-	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
+	else if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
@@ -253,7 +253,8 @@
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/user as anything in (group + src)) // Add ourselves back in
 		if(user.client && !user.client?.prefs)
-			stack_trace("[usr] ([usr.ckey]) had null prefs, which shouldn't be possible!") 
+			stack_trace("[usr] ([usr.ckey]) had null prefs, which shouldn't be possible!")
+			continue
 		if((!user.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(user.client)
 
@@ -270,10 +271,13 @@
 
 	for(var/mob/dead_player in GLOB.dead_mob_list)
 		if(dead_player.z != z || get_dist(src, dead_player) > 7)
+			if(dead_player.client && !dead_player.client?.prefs)
+				stack_trace("[dead_player] ([dead_player.ckey]) had null prefs, which shouldn't be possible!")
+				continue
 			if(eavesdrop_range)
-				if(!(dead_player.client?.prefs?.chat_toggles & CHAT_GHOSTWHISPER))
+				if(!(dead_player.client?.prefs.chat_toggles & CHAT_GHOSTWHISPER))
 					continue
-			else if(!(dead_player.client?.prefs?.chat_toggles & CHAT_GHOSTEARS))
+			else if(!(dead_player.client?.prefs.chat_toggles & CHAT_GHOSTEARS))
 				continue
 		var/link = FOLLOW_LINK(dead_player, owner)
 		to_chat(dead_player, "[link] [dead_rendered]")

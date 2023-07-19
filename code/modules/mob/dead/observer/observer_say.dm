@@ -61,8 +61,8 @@
 	var/link = FOLLOW_LINK(src, to_follow)
 	// Create map text prior to modifying message for goonchat
 	if(client && !client.prefs)
-		stack_trace("[src] ([src.ckey]) had null prefs, which shouldn't be possible!") 
-	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
+		stack_trace("[src] ([src.ckey]) had null prefs, which shouldn't be possible!")
+	else if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	// Recompose the message, because it's scrambled by default
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)

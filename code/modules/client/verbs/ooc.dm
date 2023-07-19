@@ -69,7 +69,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			return
 
 	if(!prefs)
-		stack_trace("[src] ([ckey]) had null prefs, which shouldn't be possible!") 
+		stack_trace("[src] ([ckey]) had null prefs, which shouldn't be possible!")
+		return
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
 		to_chat(src, span_danger("You have OOC muted."))

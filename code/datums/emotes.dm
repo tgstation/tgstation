@@ -111,7 +111,8 @@
 			if(!ghost.client || isnewplayer(ghost))
 				continue
 			if(ghost.client && !ghost.client?.prefs)
-				stack_trace("[ghost] ([ghost.ckey]) had null prefs, which shouldn't be possible!") 
+				stack_trace("[ghost] ([ghost.ckey]) had null prefs, which shouldn't be possible!")
+				continue
 			if(ghost.client?.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
 				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
 	if(emote_type & (EMOTE_AUDIBLE | EMOTE_VISIBLE)) //emote is audible and visible
@@ -313,7 +314,8 @@
 		if(!ghost.client || isnewplayer(ghost))
 			continue
 		if(ghost.client && !ghost.client?.prefs)
-			stack_trace("[ghost] ([ghost.ckey]) had null prefs, which shouldn't be possible!") 
+			stack_trace("[ghost] ([ghost.ckey]) had null prefs, which shouldn't be possible!")
+			continue
 		if(ghost.client?.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(origin_turf, null)))
 			ghost.show_message("[FOLLOW_LINK(ghost, src)] [ghost_text]")
 	return TRUE
