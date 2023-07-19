@@ -26,7 +26,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/pony
 
 /mob/living/basic/pony/Initialize(mapload)
-	AddElement(/datum/element/pet_bonus, "neighs!")
+	AddElement(/datum/element/pet_bonus, "whickers.")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddElement(/datum/element/waddling)
