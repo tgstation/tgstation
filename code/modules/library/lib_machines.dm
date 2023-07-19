@@ -554,10 +554,12 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	balloon_alert(user, "scanner connected")
 	audible_message(span_hear("[src] lets out a low, short blip."))
 
-/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
-	if(!density)
-		return
+/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(!density || obj_flags & EMAGGED)
+		return FALSE
 	obj_flags |= EMAGGED
+	balloon_alert(user, "forbidden knowledge unlocked")
+	return TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/set_screen_state(new_state)
 	screen_state = clamp(new_state, MIN_LIBRARY, MAX_LIBRARY)

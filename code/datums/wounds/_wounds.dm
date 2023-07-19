@@ -427,7 +427,7 @@
 	return .
 
 /datum/wound/proc/get_wound_description(mob/user)
-	. = "[victim.p_their(TRUE)] [limb.plaintext_zone] [examine_desc]"
+	. = "[victim.p_Their()] [limb.plaintext_zone] [examine_desc]"
 	. = severity <= WOUND_SEVERITY_MODERATE ? "[.]." : "<B>[.]!</B>"
 	return .
 

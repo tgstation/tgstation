@@ -75,7 +75,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
 	. = ..()
-	var/t_He = p_they(TRUE)
+	var/t_He = p_They()
 	var/t_him = p_them()
 	var/t_s = p_s()
 	if(health < maxHealth)

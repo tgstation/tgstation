@@ -72,7 +72,7 @@
 			return
 	var/obj/item/bodypart/head/noggin = target.get_bodypart(BODY_ZONE_HEAD)
 	if(!noggin)
-		to_chat(user, span_warning("[target.p_they(TRUE)] have no head!"))
+		to_chat(user, span_warning("[target.p_They()] have no head!"))
 		return
 
 	var/selected_hairstyle = null
