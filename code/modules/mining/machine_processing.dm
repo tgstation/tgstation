@@ -156,7 +156,7 @@
 	)
 	materials = AddComponent( \
 		/datum/component/material_container, \
-		 allowed_materials, \
+		allowed_materials, \
 		INFINITY, \
 		MATCONTAINER_EXAMINE | BREAKDOWN_FLAGS_ORE_PROCESSOR, \
 		allowed_items = /obj/item/stack \
