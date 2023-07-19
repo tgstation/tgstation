@@ -83,6 +83,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	max_integrity = 200
 	armor_type = /datum/armor/item_claymore
 	attack_style_path = /datum/attack_style/melee_weapon/swing
+	alt_attack_style_path = /datum/attack_style/melee_weapon/stab_out/spear
+	weapon_sprite_angle = 45
 	resistance_flags = FIRE_PROOF
 
 /datum/armor/item_claymore

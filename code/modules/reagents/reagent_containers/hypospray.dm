@@ -13,6 +13,7 @@
 	resistance_flags = ACID_PROOF
 	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
+	item_flags = NOBLUDGEON
 	var/ignore_flags = NONE
 	var/infinite = FALSE
 

@@ -11,8 +11,9 @@
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	// Nobludgeon is required to prevent the item from being used as a weapon
 	var/obj/item/surgery_tool = parent
-	surgery_tool.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
+	surgery_tool.item_flags |= NOBLUDGEON|ITEM_HAS_CONTEXTUAL_SCREENTIPS
 
 /datum/component/surgery_initiator/Destroy(force, silent)
 	last_user_ref = null

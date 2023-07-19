@@ -35,7 +35,7 @@
 		human_smacked.w_uniform?.add_fingerprint(attacker)
 
 	// Todo : move this out and into its own style?
-	if(!HAS_TRAIT(smacked, TRAIT_MARTIAL_ARTS_IMMUNE))
+	if(!HAS_TRAIT(smacked, TRAIT_MARTIAL_ARTS_IMMUNE) && martial_arts_compatible)
 		var/datum/martial_art/art = attacker.mind?.martial_art
 		switch(art?.disarm_act(attacker, smacked))
 			if(MARTIAL_ATTACK_SUCCESS)
@@ -71,7 +71,7 @@
 		smacked.setGrabState(GRAB_PASSIVE)
 
 	. = NONE
-	if(smacked.IsKnockdown() && !smacked.IsParalyzed()) //KICK HIM IN THE NUTS
+	if(iscarbon(smacked) && smacked.IsKnockdown() && !smacked.IsParalyzed()) //KICK HIM IN THE NUTS
 		smacked.Paralyze(SHOVE_CHAIN_PARALYZE)
 		smacked.visible_message(
 			span_danger("[attacker] kicks [smacked] onto [smacked.p_their()] side!"),
@@ -168,7 +168,7 @@
 		return ATTACK_SWING_BLOCKED
 
 	// Todo : move this out and into its own style?
-	if(!HAS_TRAIT(smacked, TRAIT_MARTIAL_ARTS_IMMUNE))
+	if(!HAS_TRAIT(smacked, TRAIT_MARTIAL_ARTS_IMMUNE) && martial_arts_compatible)
 		var/datum/martial_art/art = attacker.mind?.martial_art
 		switch(art?.grab_act(attacker, smacked))
 			if(MARTIAL_ATTACK_SUCCESS)

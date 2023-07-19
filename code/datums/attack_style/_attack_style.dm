@@ -438,6 +438,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	/// Used for playing a little animation over the turf
 	var/attack_effect = ATTACK_EFFECT_PUNCH
+	/// Whether martial arts triggers off of these attacks
+	var/martial_arts_compatible = TRUE
 
 /datum/attack_style/unarmed/check_pacifism(mob/living/attacker, obj/item/weapon)
 	return FALSE

@@ -218,7 +218,8 @@
 	toolspeed = 1
 	wound_bonus = 15
 	bare_wound_bonus = 10
-	attack_style_path = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
+	weapon_sprite_angle = 270
 
 /obj/item/circular_saw/Initialize(mapload)
 	. = ..()
@@ -247,6 +248,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
+	item_flags = NOBLUDGEON
 
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()

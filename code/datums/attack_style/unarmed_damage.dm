@@ -55,7 +55,7 @@
 		return ATTACK_SWING_BLOCKED
 
 	// Todo : move this out and into its own style?
-	if(!HAS_TRAIT(smacked, TRAIT_MARTIAL_ARTS_IMMUNE))
+	if(!HAS_TRAIT(smacked, TRAIT_MARTIAL_ARTS_IMMUNE) && martial_arts_compatible)
 		var/datum/martial_art/art = attacker.mind?.martial_art
 		switch(art?.harm_act(attacker, smacked))
 			if(MARTIAL_ATTACK_SUCCESS)

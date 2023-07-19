@@ -307,19 +307,9 @@
 	var/list/modifiers = params2list(params)
 	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/close_enough = CanReach(clicked_on, clicked_with_what)
-	// Handle non-combat uses of attacking, IE using a screwdriver on a wall
-	if(close_enough && !combat_mode && !ismob(clicked_on))
-		// changeNext_move(CLICK_CD_MELEE)
+	if(close_enough && clicked_with_what.permit_melee_chain_use(src, clicked_on, right_clicking))
 		clicked_with_what.melee_attack_chain(src, clicked_on, params)
 		return
-
-	// No bludgeon prevents using swing styles, good to use for items that require "click on mob" interaction like scanners
-	if(clicked_with_what.item_flags & NOBLUDGEON)
-		// Handles non-combat uses of attacking mobs, like health scanning
-		if(close_enough)
-			// changeNext_move(CLICK_CD_MELEE)
-			clicked_with_what.melee_attack_chain(src, clicked_on, params)
-			return
 
 	else if(combat_mode)
 		// Handles swinging at the clicked atom
@@ -337,14 +327,25 @@
 	else
 		clicked_with_what.afterattack(clicked_on, src, close_enough, params)
 
+/// Determines if this item is permitted to enter melee attack chain rather than swinging
+/obj/item/proc/permit_melee_chain_use(mob/living/attacker, atom/clicked_on, right_clicking)
+	// No bludgeon prevents using swing styles, good to use for items that require "click on mob" interaction like scanners
+	if(item_flags & NOBLUDGEON)
+		return TRUE
+	if(!attacker.combat_mode)
+		// Handles non-combat use of items, like a using a screwdriver on a wall
+		if(!ismob(clicked_on))
+			return TRUE
+		// Surgical tools won't swing if we're clicking on a dude who's in the middle of surgery
+		if(isliving(clicked_on) && (item_flags & SURGICAL_TOOL))
+			var/mob/living/living_clicked = clicked_on
+			if(length(living_clicked.surgeries) && living_clicked.body_position == LYING_DOWN)
+				return TRUE
+
+	return FALSE
+
 /// Selects what attack style this item is going to use when being used in a swing
 /obj/item/proc/select_attacking_style(mob/living/attacker, atom/clicked_on, right_clicking)
-	// Surgical tools won't swing if we're clicking on a dude who's in the middle of surgery
-	if(isliving(clicked_on) && (item_flags & SURGICAL_TOOL))
-		var/mob/living/living_clicked = clicked_on
-		if(length(living_clicked.surgeries) && living_clicked.body_position == LYING_DOWN)
-			return null
-
 	return (right_clicking && alt_attack_style) || attack_style
 
 /**

@@ -1,5 +1,7 @@
+// melbert todo infinite loops
 /datum/attack_style/unarmed/generic_damage/boxing
 	attack_type = STAMINA
+	martial_arts_compatible = FALSE
 
 /datum/attack_style/unarmed/generic_damage/boxing/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
 	return pick("left hook", "right hook", "straight punch")
