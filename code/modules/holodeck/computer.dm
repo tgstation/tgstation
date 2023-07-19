@@ -315,9 +315,9 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	for(var/atom/movable/atom_contents as anything in holo_atom) //make sure that things inside of a holoitem are moved outside before destroying it
 		atom_contents.forceMove(target_turf)
 
-	if(istype(holo_atom, /obj/item/clothing/under/rank))
+	if(istype(holo_atom, /obj/item/clothing/under))
 		var/obj/item/clothing/under/holo_clothing = holo_atom
-		holo_clothing.dump_attachment()
+		holo_clothing.dump_attachments()
 
 	if(!silent)
 		visible_message(span_notice("[holo_atom] fades away!"))
