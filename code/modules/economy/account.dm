@@ -218,7 +218,10 @@
 		else
 			var/atom/sound_atom
 			for(var/mob/potential_hearer in card.loc) //If inside a container with other mobs (e.g. locker)
-				if(!potential_hearer.client || (!(potential_hearer.client?.prefs?.chat_toggles & CHAT_BANKCARD) && !force))
+				if(potential_hearer.client && !potential_hearer.client?.prefs)
+					stack_trace("[potential_hearer] ([potential_hearer.ckey]) had null prefs, which shouldn't be possible!")
+					continue
+				if(!potential_hearer.client || (!(potential_hearer.client?.prefs.chat_toggles & CHAT_BANKCARD) && !force))
 					continue
 				if(!sound_atom)
 					sound_atom = card.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
