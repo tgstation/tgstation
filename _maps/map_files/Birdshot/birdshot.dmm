@@ -417,12 +417,9 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos/project)
 "aiV" = (
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "ajg" = (
@@ -2365,10 +2362,12 @@
 /turf/open/floor/iron/white/small,
 /area/station/medical/storage)
 "bbe" = (
-/obj/machinery/atmospherics/pipe/smart/simple/general/visible,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1
+	},
 /turf/open/floor/iron/white/side{
 	dir = 10
 	},
@@ -32164,10 +32163,11 @@
 /turf/open/floor/iron/white/small,
 /area/station/science/lobby)
 "lPc" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -32612,11 +32612,12 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/security/checkpoint/supply)
 "lXd" = (
-/obj/machinery/atmospherics/pipe/smart/simple/general/visible,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/binary/pump,
+/obj/machinery/atmospherics/components/binary/pump,
 /turf/open/floor/iron/white/side{
 	dir = 9
 	},
@@ -33305,7 +33306,7 @@
 /area/station/service/abandoned_gambling_den/gaming)
 "mjP" = (
 /obj/structure/cable,
-/obj/machinery/power/shieldwallgen/xenobiologyaccess,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "mjQ" = (
@@ -35721,10 +35722,6 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
-"nev" = (
-/obj/structure/chair/stool/directional/south,
-/turf/open/floor/iron/kitchen/small,
-/area/station/maintenance/aft)
 "neZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -43388,10 +43385,11 @@
 /turf/open/floor/engine,
 /area/station/hallway/secondary/entry)
 "pQX" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -55741,12 +55739,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "tKk" = (
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/directional/east,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "tKl" = (
@@ -114985,7 +114980,7 @@ xlP
 xlP
 epN
 xlP
-eWI
+rfJ
 eWI
 eWI
 eWI
@@ -115241,10 +115236,10 @@ sYa
 rQw
 xlP
 bAo
+xlP
 tGp
 eWI
 asc
-usJ
 usJ
 lCN
 jsX
@@ -115499,9 +115494,9 @@ xlP
 xlP
 jMC
 xlP
+rfJ
 eWI
 eKf
-usJ
 skJ
 vlV
 jbb
@@ -115756,9 +115751,9 @@ axN
 rfJ
 iHH
 xlP
+rfJ
 eWI
-eWI
-nev
+usJ
 fxN
 vlV
 fSB
