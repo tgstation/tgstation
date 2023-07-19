@@ -436,6 +436,11 @@
 	icon_state = "pig_meat"
 	tastes = list("pig" = 1)
 	foodtypes = RAW | MEAT | GORE
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/nutriment/fat = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	) // Fatty piece
 	starting_reagent_purity = 1
 
 /obj/item/food/meat/slab/pig/make_grillable()
@@ -444,6 +449,11 @@
 /obj/item/food/meat/slab/grassfed
 	name = "eco meat"
 	desc = "A slab of 100% grass fed award-winning farm meat."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment/fat = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	) // Marble
 	starting_reagent_purity = 1
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
