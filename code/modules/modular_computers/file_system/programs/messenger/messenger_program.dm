@@ -130,9 +130,6 @@
 
 		if("PDA_viewMessages")
 			viewing_messages_of = params["ref"]
-			if (viewing_messages_of in saved_chats)
-				var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
-				chat.unread_messages = 0
 			return TRUE
 
 		if("PDA_closeMessages")
@@ -186,6 +183,17 @@
 			var/datum/pda_chat/chat = saved_chats[target_chat_ref]
 
 			chat.message_draft = msg_draft
+
+			return TRUE
+
+		if("PDA_clearUnreads")
+			var/target_chat_ref = params["ref"]
+
+			if(!(target_chat_ref in saved_chats))
+				return FALSE
+
+			var/datum/pda_chat/chat = saved_chats[target_chat_ref]
+			chat.unread_messages = 0
 
 			return TRUE
 
@@ -443,6 +451,7 @@
 	var/list/message_data = list()
 	for(var/datum/pda_chat/target_chat as anything in targets)
 		target_chat.add_msg(message_datum, show_in_recents = FALSE)
+		target_chat.unread_messages = 0
 
 	// Show it to ghosts
 	var/ghost_message = span_name("[message_data["name"]] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[signal.format_target()]")]: <span class='message'>[signal.format_message()]")

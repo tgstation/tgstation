@@ -1,6 +1,8 @@
 @use 'sass:color';
+@use 'sass:math';
 @use '../base';
 @use '../functions';
+@use '../colors';
 
 $msgcolor-outgoing: hsl(213, 50%, 35%);
 $msgcolor-incoming: hsl(213, 0%, 20%);
@@ -10,7 +12,7 @@ $msgpadding: 0.7rem;
 // very nasty theme hacks inbound
 
 .theme-ntOS95 {
-  .ChatMessage {
+  .NtosChatMessage {
     color: white !important;
 
     padding: $msgpadding - base.rem(2px);
@@ -24,12 +26,12 @@ $msgpadding: 0.7rem;
     }
   }
 
-  .ChatLog {
+  .NtosChatLog {
     background-color: white;
   }
 }
 
-.ChatMessage {
+.NtosChatMessage {
   display: inline-flex;
   flex-direction: column;
 
@@ -42,7 +44,7 @@ $msgpadding: 0.7rem;
   background-color: $msgcolor-incoming;
 
   &_outgoing {
-    @extend .ChatMessage;
+    @extend .NtosChatMessage;
     background-color: $msgcolor-outgoing;
     text-align: right;
     float: right;
@@ -65,8 +67,35 @@ $msgpadding: 0.7rem;
   }
 }
 
-.ChatLog {
+.NtosChatLog {
   padding: 1rem;
   min-height: 99.9%;
   margin: 0;
+}
+
+.UnreadDivider {
+  position: relative;
+  display: flex;
+  margin: 0;
+  font-size: 1rem;
+  text-align: center;
+
+  & > span {
+    color: colors.$red;
+  }
+
+  & > div {
+    display: inline-flex;
+    flex: 1;
+    border-bottom: 2px solid colors.$red;
+    height: 50%;
+
+    &:last-child {
+      margin-left: 1%;
+    }
+
+    &:first-child {
+      margin-right: 1%;
+    }
+  }
 }

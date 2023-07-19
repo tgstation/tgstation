@@ -17,8 +17,12 @@ type ChatScreenState = {
   canSend: BooleanLike;
 };
 
+const READ_UNREADS_TIME_MS = 3000;
+const SEND_COOLDOWN_MS = 1000;
+
 export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   scrollRef: RefObject<HTMLDivElement>;
+  readUnreadsTimeout: NodeJS.Timeout | null;
 
   state: ChatScreenState = {
     msg: '',
@@ -33,10 +37,14 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     this.scrollToBottom = this.scrollToBottom.bind(this);
     this.handleMessageInput = this.handleMessageInput.bind(this);
     this.handleSendMessage = this.handleSendMessage.bind(this);
+    this.trySetReadTimeout = this.trySetReadTimeout.bind(this);
+    this.tryClearReadTimeout = this.tryClearReadTimeout.bind(this);
+    this.clearUnreads = this.clearUnreads.bind(this);
   }
 
   componentDidMount() {
     this.scrollToBottom();
+    this.trySetReadTimeout();
   }
 
   componentDidUpdate(
@@ -46,6 +54,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   ) {
     if (prevProps.chat?.messages.length !== this.props.chat?.messages.length) {
       this.scrollToBottom();
+      this.trySetReadTimeout();
     }
   }
 
@@ -55,10 +64,38 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     const chat = this.props.chat;
     if (!chat) return;
 
+    this.tryClearReadTimeout();
+
     act('PDA_saveMessageDraft', {
       ref: chat.ref,
       msg: this.state.msg,
     });
+  }
+
+  trySetReadTimeout() {
+    const chat = this.props.chat;
+
+    this.tryClearReadTimeout();
+
+    if (chat && chat.unread_messages > 0) {
+      this.readUnreadsTimeout = setTimeout(() => {
+        this.clearUnreads();
+        this.readUnreadsTimeout = null;
+      }, READ_UNREADS_TIME_MS);
+    }
+  }
+
+  tryClearReadTimeout() {
+    if (this.readUnreadsTimeout) {
+      clearTimeout(this.readUnreadsTimeout);
+      this.readUnreadsTimeout = null;
+    }
+  }
+
+  clearUnreads() {
+    const { act } = useBackend(this.context);
+    const chat = this.props.chat;
+    act('PDA_clearUnreads', { ref: chat!.ref });
   }
 
   scrollToBottom() {
@@ -82,7 +119,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     });
 
     this.setState({ msg: '', canSend: false });
-    setTimeout(() => this.setState({ canSend: true }), 1000);
+    setTimeout(() => this.setState({ canSend: true }), SEND_COOLDOWN_MS);
   }
 
   handleMessageInput(_: any, val: string) {
@@ -104,8 +141,15 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     for (let index = 0; index < msgs.length; index++) {
       let message = msgs[index];
 
-      const isSwitch = lastOutgoing !== !!message.outgoing;
+      let isSwitch = lastOutgoing !== !!message.outgoing;
       lastOutgoing = !!message.outgoing;
+
+      // this code shouldn't be reached if there's no chat
+      if (index === msgs.length - chat!.unread_messages) {
+        filteredMessages.push(<ChatDivider />);
+        // my precious ui hack... my precious...
+        isSwitch = false;
+      }
 
       filteredMessages.push(
         <Stack.Item key={index} mt={isSwitch ? 3 : 1}>
@@ -146,7 +190,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             fitted
             title={`${recp.name} (${recp.job})`}
             scrollableRef={this.scrollRef}>
-            <Stack vertical className="ChatLog">
+            <Stack vertical className="NtosChatLog">
               <Stack.Item textAlign="center" fontSize={1}>
                 This is the beginning of your chat with {recp.name}.
               </Stack.Item>
@@ -203,12 +247,25 @@ export const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
   };
 
   return (
-    <Box className={`ChatMessage${outgoing ? '_outgoing' : ''}`}>
-      <Box className="ChatMessage__content" dangerouslySetInnerHTML={text} />
+    <Box className={`NtosChatMessage${outgoing ? '_outgoing' : ''}`}>
+      <Box
+        className="NtosChatMessage__content"
+        dangerouslySetInnerHTML={text}
+      />
       {photoPath !== null && <Box as="img" src={photoPath} />}
       {!!everyone && (
-        <Box className="ChatMessage__everyone">Sent to everyone</Box>
+        <Box className="NtosChatMessage__everyone">Sent to everyone</Box>
       )}
     </Box>
+  );
+};
+
+const ChatDivider: SFC = () => {
+  return (
+    <div className="UnreadDivider">
+      <div />
+      <span>Unread Messages</span>
+      <div />
+    </div>
   );
 };
