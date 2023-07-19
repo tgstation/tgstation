@@ -20,7 +20,7 @@ $msgpadding: 0.7rem;
     border-radius: 0;
 
     background-color: lighten($msgcolor-incoming, 10%);
-    &__outgoing {
+    &_outgoing {
       border-color: lighten($msgcolor-outgoing, 20%);
       background-color: lighten($msgcolor-outgoing, 30%);
     }
@@ -37,6 +37,7 @@ $msgpadding: 0.7rem;
 
   min-width: 10rem;
   max-width: 30rem;
+  margin: 0;
 
   padding: $msgpadding;
 
@@ -76,7 +77,6 @@ $msgpadding: 0.7rem;
 .UnreadDivider {
   position: relative;
   display: flex;
-  margin: 0;
   font-size: 1rem;
   text-align: center;
 

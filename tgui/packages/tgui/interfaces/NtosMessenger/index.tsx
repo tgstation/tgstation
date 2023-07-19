@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Section, Stack, Input, TextArea, Dimmer } from '../../components';
+import { Box, Button, Icon, Section, Stack, Input, TextArea, Dimmer, Divider } from '../../components';
 import { useBackend, useLocalState } from '../../backend';
 import { createSearch } from 'common/string';
 import { BooleanLike } from 'common/react';
@@ -42,7 +42,7 @@ export const NtosMessenger = (_props: any, context: any) => {
   }
 
   return (
-    <NtosWindow width={600} height={800}>
+    <NtosWindow width={600} height={850}>
       <NtosWindow.Content>{content}</NtosWindow.Content>
     </NtosWindow>
   );
@@ -64,13 +64,7 @@ const ContactsScreen = (_props: any, context: any) => {
     sending_virus,
   } = data;
 
-  const filteredMessengers = Object.assign({}, messengers);
-  const savedChatsArray = Object.values(saved_chats);
-  savedChatsArray.forEach((chat) => {
-    if (chat.recp.ref) delete filteredMessengers[chat.recp.ref];
-  });
-  const messengerArray = Object.values(filteredMessengers);
-  savedChatsArray.sort((a, b) => a.unread_messages - b.unread_messages);
+  // you are not ready for this garbage o7
 
   const [searchUser, setSearchUser] = useLocalState<string>(
     context,
@@ -78,13 +72,66 @@ const ContactsScreen = (_props: any, context: any) => {
     ''
   );
 
-  const search = createSearch(
-    searchUser,
-    (messengers: NtMessenger) => messengers.name + messengers.job
-  );
+  let savedChatsArray = Object.values(saved_chats);
+  savedChatsArray.sort((a, b) => a.unread_messages - b.unread_messages);
 
-  let users =
-    searchUser.length > 0 ? messengerArray.filter(search) : messengerArray;
+  if (searchUser.length > 0) {
+    const chatSearch = createSearch(
+      searchUser,
+      (chat: NtChat) => chat.recp.name + chat.recp.job
+    );
+
+    savedChatsArray = savedChatsArray.filter(chatSearch);
+  }
+
+  const chatToButton = (chat) => {
+    return (
+      <ChatButton
+        key={chat.ref}
+        name={`${chat.recp.name} (${chat.recp.job})`}
+        chatRef={chat.ref}
+        unreads={chat.unread_messages}
+      />
+    );
+  };
+
+  const filteredChatButtons = savedChatsArray
+    .filter((c) => c.visible)
+    .map(chatToButton);
+
+  const chatButtons = savedChatsArray.map(chatToButton);
+
+  let messengerButtons = [...chatButtons];
+  const filteredMessengers = Object.assign({}, messengers);
+
+  savedChatsArray.forEach((chat) => {
+    if (chat.recp.ref) delete filteredMessengers[chat.recp.ref];
+  });
+
+  let filteredMessengerArray = Object.values(filteredMessengers);
+
+  if (searchUser.length > 0) {
+    const msgrSearch = createSearch(
+      searchUser,
+      (messengers: NtMessenger) => messengers.name + messengers.job
+    );
+
+    filteredMessengerArray = filteredMessengerArray.filter(msgrSearch);
+  }
+
+  messengerButtons = messengerButtons.concat(
+    filteredMessengerArray.map((msgr) => {
+      // assume that the msgr has a ref if they are in GLOB.TabletMessengers
+      return (
+        <ChatButton
+          key={msgr.ref}
+          name={`${msgr.name} (${msgr.job})`}
+          chatRef={msgr.ref!}
+          unreads={0}
+        />
+      );
+    })
+  );
 
   const noId = !owner && !is_silicon;
 
@@ -100,7 +147,8 @@ const ContactsScreen = (_props: any, context: any) => {
             <Box italic opacity={0.3} mt={1}>
               Bringing you spy-proof communications since 2467.
             </Box>
-            <Box mt={2}>
+            <Divider hidden />
+            <Box>
               <Button
                 icon="bell"
                 content={alert_silenced ? 'Ringer: On' : 'Ringer: Off'}
@@ -142,6 +190,19 @@ const ContactsScreen = (_props: any, context: any) => {
               )}
             </Box>
           </Stack>
+          <Divider hidden />
+          <Stack justify="space-between">
+            <Box m={0.5}>
+              <Icon name="magnifying-glass" mr={1} />
+              Search For User
+            </Box>
+            <Input
+              width="220px"
+              placeholder="Search by name or job..."
+              value={searchUser}
+              onInput={(_e: any, value: string) => setSearchUser(value)}
+            />
+          </Stack>
         </Section>
       </Stack.Item>
       {!!photo && (
@@ -157,7 +218,7 @@ const ContactsScreen = (_props: any, context: any) => {
           </Section>
         </Stack>
       )}
-      {savedChatsArray.length > 0 && (
+      {filteredChatButtons.length > 0 && (
         <Stack.Item>
           <Stack fill vertical>
             <Stack vertical>
@@ -167,27 +228,7 @@ const ContactsScreen = (_props: any, context: any) => {
               </Section>
             </Stack>
             <Section maxHeight={20} scrollable mt={1}>
-              <Stack vertical>
-                {savedChatsArray.map((chat) => {
-                  const unread_msgs = chat.unread_messages;
-                  const has_unreads = unread_msgs > 0;
-                  return (
-                    <Button
-                      icon={has_unreads && 'envelope'}
-                      key={chat.ref}
-                      fluid
-                      onClick={() => {
-                        act('PDA_viewMessages', { ref: chat.ref });
-                      }}>
-                      {has_unreads &&
-                        `[${
-                          unread_msgs <= 9 ? unread_msgs : '9+'
-                        } unread message${unread_msgs !== 1 ? 's' : ''}]`}{' '}
-                      {chat.recp.name} ({chat.recp.job})
-                    </Button>
-                  );
-                })}
-              </Stack>
+              <Stack vertical>{filteredChatButtons}</Stack>
             </Section>
           </Stack>
         </Stack.Item>
@@ -195,33 +236,17 @@ const ContactsScreen = (_props: any, context: any) => {
       <Stack.Item grow>
         <Stack vertical fill>
           <Section>
-            <Stack justify="space-between">
+            <Stack>
               <Box m={0.5}>
                 <Icon name="address-card" mr={1} />
                 Detected Messengers
               </Box>
-
-              <Input
-                width="220px"
-                placeholder="Search by name or job..."
-                value={searchUser}
-                onInput={(_e: any, value: string) => setSearchUser(value)}
-              />
             </Stack>
           </Section>
           <Section fill scrollable>
             <Stack vertical pb={1}>
-              {users.length === 0 && 'No users found'}
-              {users.map((messenger) => (
-                <Button
-                  key={messenger.ref}
-                  fluid
-                  onClick={() => {
-                    act('PDA_viewMessages', { ref: messenger.ref });
-                  }}>
-                  {messenger.name} ({messenger.job})
-                </Button>
-              ))}
+              {messengerButtons.length === 0 && 'No users found'}
+              {messengerButtons}
             </Stack>
           </Section>
         </Stack>
@@ -233,6 +258,33 @@ const ContactsScreen = (_props: any, context: any) => {
       )}
       {noId && <NoIDDimmer />}
     </Stack>
+  );
+};
+
+type ChatButtonProps = {
+  name: string;
+  unreads: number;
+  chatRef: string;
+};
+
+const ChatButton: SFC<ChatButtonProps> = (props: ChatButtonProps, ctx: any) => {
+  const { act } = useBackend(ctx);
+  const unread_msgs = props.unreads;
+  const has_unreads = unread_msgs > 0;
+  return (
+    <Button
+      icon={has_unreads && 'envelope'}
+      key={props.chatRef}
+      fluid
+      onClick={() => {
+        act('PDA_viewMessages', { ref: props.chatRef });
+      }}>
+      {has_unreads &&
+        `[${unread_msgs <= 9 ? unread_msgs : '9+'} unread message${
+          unread_msgs !== 1 ? 's' : ''
+        }]`}{' '}
+      {props.name}
+    </Button>
   );
 };
 

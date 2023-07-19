@@ -130,6 +130,9 @@
 
 		if("PDA_viewMessages")
 			viewing_messages_of = params["ref"]
+			if (viewing_messages_of in saved_chats)
+				var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
+				chat.visible_in_recents = TRUE
 			return TRUE
 
 		if("PDA_closeMessages")

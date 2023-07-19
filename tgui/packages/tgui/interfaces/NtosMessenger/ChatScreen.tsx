@@ -139,16 +139,13 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     let filteredMessages: JSX.Element[] = [];
 
     for (let index = 0; index < msgs.length; index++) {
-      let message = msgs[index];
-
-      let isSwitch = lastOutgoing !== !!message.outgoing;
+      const message = msgs[index];
+      const isSwitch = lastOutgoing !== !!message.outgoing;
       lastOutgoing = !!message.outgoing;
 
       // this code shouldn't be reached if there's no chat
       if (index === msgs.length - chat!.unread_messages) {
-        filteredMessages.push(<ChatDivider />);
-        // my precious ui hack... my precious...
-        isSwitch = false;
+        filteredMessages.push(<ChatDivider topMargin={isSwitch ? 3 : 1} />);
       }
 
       filteredMessages.push(
@@ -260,12 +257,12 @@ export const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
   );
 };
 
-const ChatDivider: SFC = () => {
+const ChatDivider: SFC<{ topMargin: number }> = (props) => {
   return (
-    <div className="UnreadDivider">
+    <Box className="UnreadDivider" m={0} mt={props.topMargin}>
       <div />
       <span>Unread Messages</span>
       <div />
-    </div>
+    </Box>
   );
 };
