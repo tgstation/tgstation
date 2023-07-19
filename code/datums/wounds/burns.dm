@@ -34,6 +34,20 @@
 
 /datum/wound/burn/handle_process(seconds_per_tick, times_fired)
 	. = ..()
+	if(freeze)
+		if(SPT_PROB(0.5 * (2 * freeze / FREEZE_MAXIMUM_VALUE), seconds_per_tick))
+			victim.visible_message(span_blue("Frozen bits of flesh from [victim]'s [limb.plaintext_zone] flake off from his injuries!"), \
+			span_blue("You feel a rare spike of pain from [src] as it reminds you of its frigid existence, and see some flesh falling off in frosted flakes. Ew!"), vision_distance = COMBAT_MESSAGE_RANGE)
+			victim.adjustBruteLoss(0.5 * (4 * freeze / FREEZE_MAXIMUM_VALUE) * seconds_per_tick)
+			victim.adjustBurnLoss(0.5 * (4 * freeze / FREEZE_MAXIMUM_VALUE) * seconds_per_tick)
+
+		// Infestation rate is increased by 1% per second while the wound is frozen. However, other effects are frozen, and the wound itself is less susceptible.
+		infestation_rate += min((initial(infestation_rate) * 0.01) * seconds_per_tick, initial(infestation_rate) * 2)
+		freeze -= max(1 * seconds_per_tick, 0)
+		// Don't think your flesh would appreciate the frost
+		flesh_healing -= max(1 * seconds_per_tick * (freeze / FREEZE_MAXIMUM_VALUE), 0)
+		return
+
 	if(strikes_to_lose_limb == 0) // we've already hit sepsis, nothing more to do
 		victim.adjustToxLoss(0.25 * seconds_per_tick)
 		if(SPT_PROB(0.5, seconds_per_tick))
@@ -256,6 +270,17 @@
 	if(sanitization > 0)
 		infestation = max(infestation - (0.1 * WOUND_BURN_SANITIZATION_RATE * seconds_per_tick), 0)
 
+// Actual effects handled in processing
+/datum/wound/burn/on_freezing(seconds_per_tick, times_fired)
+	..()
+	switch(freeze)
+		if(0)
+			to_chat(victim, span_blue("It gets harder to feel [src] as the flesh nearby loses heat rapidly from the cold."))
+		if(40)
+			to_chat(victim, span_blue("[src] is almost completely numb, you can scarcely feel any sensation, let alone pain, from the site of injury..."))
+		if(80)
+			to_chat(victim, span_blue("You can't feel [src] at all! For a moment you think it's healed, but you take a look and just see a mess of frozen and charred flesh. That's not going to be easy to fix..."))
+
 /datum/wound/burn/on_synthflesh(reac_volume)
 	flesh_healing += reac_volume * 0.5 // 20u patch will heal 10 flesh standard
 
@@ -267,7 +292,7 @@
 	examine_desc = "is badly burned and breaking out in blisters"
 	occur_text = "breaks out with violent red burns"
 	severity = WOUND_SEVERITY_MODERATE
-	damage_mulitplier_penalty = 1.1
+	damage_multiplier_penalty = 1.1
 	threshold_minimum = 40
 	threshold_penalty = 30 // burns cause significant decrease in limb integrity compared to other wounds
 	status_effect_type = /datum/status_effect/wound/burn/moderate
@@ -281,7 +306,7 @@
 	examine_desc = "appears seriously charred, with aggressive red splotches"
 	occur_text = "chars rapidly, exposing ruined tissue and spreading angry red burns"
 	severity = WOUND_SEVERITY_SEVERE
-	damage_mulitplier_penalty = 1.2
+	damage_multiplier_penalty = 1.2
 	threshold_minimum = 80
 	threshold_penalty = 40
 	status_effect_type = /datum/status_effect/wound/burn/severe
@@ -297,7 +322,7 @@
 	examine_desc = "is a ruined mess of blanched bone, melted fat, and charred tissue"
 	occur_text = "vaporizes as flesh, bone, and fat melt together in a horrifying mess"
 	severity = WOUND_SEVERITY_CRITICAL
-	damage_mulitplier_penalty = 1.3
+	damage_multiplier_penalty = 1.3
 	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
 	threshold_minimum = 140
 	threshold_penalty = 80
