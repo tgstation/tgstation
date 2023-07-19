@@ -235,6 +235,7 @@
 	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED))
 		map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
+		area_flags |= MOB_SPAWN_ALLOWED //flip this on, the generator has already disabled dangerous fauna
 
 /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | CAVES_ALLOWED

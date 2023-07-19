@@ -40,8 +40,8 @@
 		/obj/structure/flora/ash/chilly = 1,
 	)
 
-	mob_spawn_chance = 1
-	weighted_mob_spawn_list = list(/mob/living/basic/deer = 1)
+	mob_spawn_chance = 0.2
+	weighted_mob_spawn_list = list(/mob/living/basic/deer/ice = 99, /mob/living/basic/tree = 1)
 
 /datum/map_generator/cave_generator/icemoon/surface/noruins //use this for when you don't want ruins to spawn in a certain area
 

@@ -328,7 +328,7 @@
 
 /// Tells the area map generator to ADD MORE TREEEES
 /datum/station_trait/forested
-	name = "Forested Outside"
+	name = "Forested"
 	trait_type = STATION_TRAIT_NEUTRAL
 	trait_to_give = STATION_TRAIT_FORESTED
 	weight = 4
