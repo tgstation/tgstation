@@ -17,6 +17,7 @@
 	/// The current unlocked circuit component designs. Used by integrated circuits to print off circuit components remotely.
 	var/list/current_unlocked_designs = list()
 
+	/// The efficiency of this machine
 	var/efficiency_coeff = 1
 
 /obj/machinery/component_printer/Initialize(mapload)

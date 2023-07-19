@@ -21,8 +21,8 @@
 
 	var/list/using_materials
 	var/starting_amount = 0
-	var/iron_cost =HALF_SHEET_MATERIAL_AMOUNT
-	var/glass_cost =HALF_SHEET_MATERIAL_AMOUNT
+	var/iron_cost = HALF_SHEET_MATERIAL_AMOUNT
+	var/glass_cost = HALF_SHEET_MATERIAL_AMOUNT
 	var/power_used = 1000
 
 	var/mode = DRONE_READY
@@ -70,7 +70,7 @@
 	return ..()
 
 /obj/machinery/drone_dispenser/preloaded
-	starting_amount = 5000
+	starting_amount = SHEET_MATERIAL_AMOUNT * 2.5
 
 /obj/machinery/drone_dispenser/syndrone //Please forgive me
 	name = "syndrone shell dispenser"
@@ -79,7 +79,7 @@
 	//If we're gonna be a jackass, go the full mile - 10 second recharge timer
 	cooldownTime = 100
 	end_create_message = "dispenses a suspicious drone shell."
-	starting_amount = 25000
+	starting_amount = SHEET_MATERIAL_AMOUNT * 12.5
 
 /obj/machinery/drone_dispenser/syndrone/badass //Please forgive me
 	name = "badass syndrone shell dispenser"
@@ -94,10 +94,10 @@
 	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/snowflake
 	end_create_message = "dispenses a snowflake drone shell."
 	// Those holoprojectors aren't cheap
-	iron_cost =SHEET_MATERIAL_AMOUNT
-	glass_cost =SHEET_MATERIAL_AMOUNT
+	iron_cost = SHEET_MATERIAL_AMOUNT
+	glass_cost = SHEET_MATERIAL_AMOUNT
 	power_used = 2000
-	starting_amount = 10000
+	starting_amount = SHEET_MATERIAL_AMOUNT * 5
 
 // If the derelict gets lonely, make more friends.
 /obj/machinery/drone_dispenser/derelict
@@ -105,8 +105,8 @@
 	desc = "A rusty machine that, when supplied with iron and glass, will periodically create a derelict drone shell. Does not need to be manually operated."
 	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/derelict
 	end_create_message = "dispenses a derelict drone shell."
-	iron_cost = 10000
-	glass_cost = 5000
+	iron_cost = SHEET_MATERIAL_AMOUNT * 5
+	glass_cost = SHEET_MATERIAL_AMOUNT * 2.5
 	starting_amount = 0
 	cooldownTime = 600
 

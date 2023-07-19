@@ -333,6 +333,7 @@
 		var/inserted = insert_item(target, breakdown_flags = mat_container_flags)
 		if(inserted > 0)
 			. += inserted
+			inserted /= SHEET_MATERIAL_AMOUNT // display units inserted as sheets for improved readability
 			var/message = null
 
 			//stack was either split by the container(!QDELETED(target) means the container only consumed a part of it) or by the player, put whats left back of the original stack back in players hand
