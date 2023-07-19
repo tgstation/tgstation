@@ -520,6 +520,7 @@
 /datum/station_trait/nebula/hostile/radiation
 	name = "Radioactive Nebula"
 	trait_type = STATION_TRAIT_NEGATIVE
+	trait_flags = NONE
 	weight = 1
 	show_in_report = TRUE
 	report_message = "This station is located inside a radioactive nebula. Setting up nebula shielding is top-priority."
