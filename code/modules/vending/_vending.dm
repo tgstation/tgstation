@@ -670,7 +670,7 @@
 	if(QDELETED(src) || !has_gravity(src))
 		return
 
-	. = FALSE
+	. = NONE
 
 	var/picked_rotation = pick(90, 270)
 	if(Adjacent(fatty))
@@ -705,14 +705,14 @@
  */
 /atom/movable/proc/fall_and_crush(turf/target, damage, chance_to_crit = 0, forced_crit_case = null, paralyze_time, crush_dir = get_dir(get_turf(src), target), damage_type = BRUTE, damage_flag = MELEE, rotation = 90)
 
-	if (isnull(target))
-		return
+	ASSERT(!isnull(target))
 
 	var/flags_to_return = NONE
 
 	if (!target.is_blocked_turf(TRUE, src, list(src)))
 		for(var/atom/atom_target in (target.contents) + target)
-			if (isarea(atom_target)) continue
+			if (isarea(atom_target))
+				continue
 
 			if (SEND_SIGNAL(atom_target, COMSIG_PRE_TILT_AND_CRUSH, src) & COMPONENT_IMMUNE_TO_TILT_AND_CRUSH)
 				continue
@@ -752,8 +752,7 @@
 				playsound(living_target, 'sound/effects/blobattack.ogg', 40, TRUE)
 				playsound(living_target, 'sound/effects/splat.ogg', 50, TRUE)
 				post_crush_living(living_target, was_alive)
-				flags_to_return |= SUCCESSFULLY_CRUSHED_MOB
-				flags_to_return |= SUCCESSFULLY_CRUSHED_ATOM
+				flags_to_return |= (SUCCESSFULLY_CRUSHED_MOB|SUCCESSFULLY_CRUSHED_ATOM)
 
 			else if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING) && !(is_type_in_typecache(atom_target, GLOB.WALLITEMS_INTERIOR) || is_type_in_typecache(atom_target, GLOB.WALLITEMS_EXTERIOR)))
 				atom_target.take_damage(adjusted_damage, damage_type, damage_flag, FALSE, crush_dir)
@@ -792,7 +791,7 @@
  * Exists for the purposes of custom behavior.
  * Called directly after src actually rotates and falls over.
  */
-/atom/movable/proc/post_tilt() // for the purposes of custom behavior
+/atom/movable/proc/post_tilt()
 	return
 
 /obj/machinery/vending/post_crush_living(mob/living/crushed, was_alive)
@@ -811,8 +810,7 @@
  */
 /atom/movable/proc/fall_and_crush_crit_rebate_table(crit_case)
 
-	if (isnull(crit_case))
-		return null
+	ASSERT(!isnull(crit_case))
 
 	switch(crit_case)
 		if (CRUSH_CRIT_SHATTER_LEGS)
@@ -825,11 +823,10 @@
 	if (isnull(crit_case))
 		return null
 
-	switch(crit_case)
-		if (VENDOR_CRUSH_CRIT_GLASSCANDY)
-			return 0.33
-		else
-			return ..()
+	if (crit_case == VENDOR_CRUSH_CRIT_GLASSCANDY)
+		return 0.33
+
+	return ..()
 
 /**
  * Returns a assoc list of (critcase -> num), where critcase is a critical define in crushing.dm and num is a weight.

@@ -1064,7 +1064,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 	if (!isAI(caller))
 		return FALSE
+
 	var/mob/living/silicon/ai/ai_caller = caller
+
+	if(ai_caller.incapacitated())
+		unset_ranged_ability(caller)
+		return FALSE
 
 	if (!ai_caller.can_see(clicked_on))
 		clicked_on.balloon_alert(ai_caller, "can't see!")
@@ -1165,7 +1170,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/picked_dir = get_dir(ai_caller, target)
 
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target, MALF_AI_ROLL_TIME)
-	//ai_caller.visible_message(span_danger("[ai_caller] starts rolling over menacingly!"))
 	ai_caller.balloon_alert_to_viewers("rolling...")
 	addtimer(CALLBACK(src, PROC_REF(do_roll_over), ai_caller, picked_dir), MALF_AI_ROLL_TIME)
 
@@ -1188,7 +1192,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /// Used in our radial menu, state-checking proc after the radial menu sleeps
 /datum/action/innate/ai/ranged/core_tilt/proc/radial_check(mob/living/silicon/ai/caller)
-	if (caller.incapacitated() || caller.stat == DEAD || QDELETED(caller))
+	if (QDELETED(caller) || caller.incapacitated() || caller.stat == DEAD)
 		return FALSE
 
 	if (uses <= 0)
@@ -1203,7 +1207,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		if (EAST, NORTHEAST, SOUTH, SOUTHEAST)
 			return 90
 		else
-			stack_trace("non-standard dir entered")
+			stack_trace("non-standard dir entered to get_rotation_from_dir. (got: [dir])")
 			return 0
 
 /datum/ai_module/utility/remote_vendor_tilt
@@ -1291,7 +1295,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /// Used in our radial menu, state-checking proc after the radial menu sleeps
 /datum/action/innate/ai/ranged/remote_vendor_tilt/proc/radial_check(mob/living/silicon/ai/caller, obj/machinery/vending/clicked_vendor)
-	if (caller.incapacitated() || caller.stat == DEAD || QDELETED(caller))
+	if (QDELETED(caller) || caller.incapacitated() || caller.stat == DEAD)
 		return FALSE
 
 	if (QDELETED(clicked_vendor))
