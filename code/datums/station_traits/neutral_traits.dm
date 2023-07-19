@@ -330,10 +330,15 @@
 /datum/station_trait/forested
 	name = "Forested Outside"
 	trait_type = STATION_TRAIT_NEUTRAL
+	trait_to_give = STATION_TRAIT_FOREST
 	weight = 4
 	show_in_report = TRUE
 	report_message = "There sure are a lot of trees out there."
-	trait_to_give = STATION_TRAIT_FOREST
 
 	//space = FALSE
 	//planetary = TRUE
+
+/datum/station_trait/forested/New()
+	. = ..()
+
+	GLOB.ice_river_count = 0

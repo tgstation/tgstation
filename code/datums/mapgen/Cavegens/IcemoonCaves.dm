@@ -31,12 +31,12 @@
 	flora_spawn_chance = 80
 	initial_closed_chance = 30
 
-	weighted_closed_turf_types = list(/turf/open/lava/plasma/ice_moon = 1) //closed enough
-
 	weighted_flora_spawn_list = list(
 		/obj/structure/flora/tree/pine/style_random = 18,
+		/obj/structure/flora/tree/dead/style_random = 1,
+		/obj/structure/flora/tree/stump = 1,
 		/obj/structure/flora/rock/icy/style_random = 1,
-		/obj/structure/flora/grass/both/style_random = 80,
+		/obj/structure/flora/grass/both/style_random = 78,
 		/obj/structure/flora/ash/chilly = 1,
 	)
 

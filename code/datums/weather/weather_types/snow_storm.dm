@@ -60,5 +60,7 @@
 	telegraph_duration = 0
 	perpetual = TRUE
 
+	probability = 0
+
 	cooling_lower = 10
 	cooling_upper = 20

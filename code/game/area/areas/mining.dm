@@ -231,12 +231,10 @@
 	icon_state = "danger"
 	map_generator = /datum/map_generator/cave_generator/icemoon/surface
 
-/area/icemoon/surface/outdoors/unexplored/rivers/Initialize(mapload)
+/area/icemoon/surface/outdoors/unexplored/rivers/New()
+	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_FOREST))
 		map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
-
-	. = ..()
-
 
 /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | CAVES_ALLOWED

@@ -92,6 +92,9 @@ SUBSYSTEM_DEF(mapping)
 	/// list of lazy templates that have been loaded
 	var/list/loaded_lazy_templates
 
+///How many ice rivers do we spawn?
+GLOBAL_VAR_INIT(ice_river_count, 4)
+
 /datum/controller/subsystem/mapping/PreInit()
 	..()
 #ifdef FORCE_MAP
@@ -271,7 +274,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	for (var/ice_z in ice_ruins)
-		spawn_rivers(ice_z, 4, /turf/open/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
+		spawn_rivers(ice_z, GLOB.ice_river_count, /turf/open/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	for (var/ice_z in ice_ruins_underground)
