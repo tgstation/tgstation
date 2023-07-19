@@ -55,6 +55,7 @@
 			light.update(.)
 		else
 			light = new/datum/light_source(src, .)
+		return .
 
 /**
  * Updates the atom's opacity value.
@@ -68,6 +69,7 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, new_opacity)
 	. = opacity
 	opacity = new_opacity
+	return .
 
 /atom/movable/set_opacity(new_opacity)
 	. = ..()
@@ -107,6 +109,7 @@
 	. = light_power
 	light_power = new_power
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_POWER, .)
+	return .
 
 /// Setter for the light range of this atom.
 /atom/proc/set_light_range(new_range)
@@ -117,6 +120,7 @@
 	. = light_range
 	light_range = new_range
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_RANGE, .)
+	return .
 
 /// Setter for the light color of this atom.
 /atom/proc/set_light_color(new_color)
@@ -127,6 +131,7 @@
 	. = light_color
 	light_color = new_color
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_COLOR, .)
+	return .
 
 /// Setter for the light angle of this atom
 /atom/proc/set_light_angle(new_value)
@@ -137,6 +142,7 @@
 	. = light_angle
 	light_angle = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ANGLE, .)
+	return .
 
 /// Setter for the light direction of this atom
 /atom/proc/set_light_dir(new_value)
@@ -148,6 +154,7 @@
 	. = light_dir
 	light_dir = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_DIR, .)
+	return .
 
 /// Setter for whether or not this atom's light is on.
 /atom/proc/set_light_on(new_value)
@@ -158,6 +165,7 @@
 	. = light_on
 	light_on = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ON, .)
+	return .
 
 /// Setter for the light flags of this atom.
 /atom/proc/set_light_flags(new_value)
@@ -168,6 +176,7 @@
 	. = light_flags
 	light_flags = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, .)
+	return .
 
 /atom/proc/get_light_offset()
 	return list(0, 0)

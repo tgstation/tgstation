@@ -302,7 +302,7 @@
 				print_column += round(row, 0.1)
 			output += print_column.Join(", ")
 		output += column_seperator
-	message_admins("\n[output.Join("\n")]")
+	to_chat(usr, "\n[output.Join("\n")]")
 
 /// Debug proc, for when lighting sheets fuck up
 /// Accepts the sheet (2 or 3 (multiz) dimensional list of lighting values at some offset)
