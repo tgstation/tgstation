@@ -18,7 +18,7 @@
 /proc/amount2sheet(amt)
 	if(amt >= SHEET_MATERIAL_AMOUNT)
 		return round(amt / SHEET_MATERIAL_AMOUNT)
-	return FALSE
+	return 0
 
 /**
  * Turns number of sheets into material amount, returning FALSE if the number is <= 0
@@ -29,7 +29,7 @@
 /proc/sheet2amount(sheet_amt)
 	if(sheet_amt > 0)
 		return sheet_amt * SHEET_MATERIAL_AMOUNT
-	return FALSE
+	return 0
 
 /**
  * Splits a stack. we don't use /obj/item/stack/proc/fast_split_stack because Byond complains that should only be called asynchronously.
@@ -48,3 +48,4 @@
 	target.loc.atom_storage?.refresh_views()
 
 	target.is_zero_amount(delete_if_zero = TRUE)
+
