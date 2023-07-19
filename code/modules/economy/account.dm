@@ -195,7 +195,9 @@
 			icon_source = id_card.get_cached_flat_icon()
 		var/mob/card_holder = recursive_loc_check(card, /mob)
 		if(ismob(card_holder)) //If on a mob
-			if(!card_holder.client || (!(card_holder.client.prefs?.chat_toggles & CHAT_BANKCARD) && !force))
+			if(card_holder.client && !card_holder.client?.prefs)
+				stack_trace("[card_holder] ([card_holder.ckey]) had null prefs, which shouldn't be possible!") 
+			if(!card_holder.client || (!(card_holder.client?.prefs.chat_toggles & CHAT_BANKCARD) && !force))
 				return
 
 			if(card_holder.can_hear())
@@ -204,7 +206,9 @@
 		else if(isturf(card.loc)) //If on the ground
 			var/turf/card_location = card.loc
 			for(var/mob/potential_hearer in hearers(1,card_location))
-				if(!potential_hearer.client || (!(potential_hearer.client.prefs?.chat_toggles & CHAT_BANKCARD) && !force))
+				if(!potential_hearer.client || !potential_hearer.client?.prefs)
+					stack_trace("[potential_hearer] ([potential_hearer.ckey]) had null prefs, which shouldn't be possible!") 
+				if(!potential_hearer.client || (!(potential_hearer.client?.prefs.chat_toggles & CHAT_BANKCARD) && !force))
 					continue
 				if(potential_hearer.can_hear())
 					potential_hearer.playsound_local(card_location, 'sound/machines/twobeep_high.ogg', 50, TRUE)

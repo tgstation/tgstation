@@ -192,7 +192,9 @@
 	return ..()
 
 /mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
-	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
+	if(client && !client?.prefs)
+		stack_trace("[src] ([client?.ckey]) had null prefs, which shouldn't be possible!") 
+	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
@@ -250,7 +252,9 @@
 	// Speech bubble, but only for those who have runechat off
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/user as anything in (group + src)) // Add ourselves back in
-		if(user.client && (!user.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
+		if(user.client && !user.client?.prefs)
+			stack_trace("[usr] ([usr.ckey]) had null prefs, which shouldn't be possible!") 
+		if((!user.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(user.client)
 
 	var/image/bubble = image('icons/mob/effects/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
