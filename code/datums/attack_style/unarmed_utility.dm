@@ -177,4 +177,4 @@
 				return ATTACK_SWING_MISSED
 
 	smacked.grabbedby(attacker)
-	return ATTACK_SWING_HIT
+	return smacked.pulling ? ATTACK_SWING_HIT : ATTACK_SWING_MISSED
