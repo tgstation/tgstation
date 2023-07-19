@@ -354,5 +354,4 @@
 		r_pocket = pick_weight(list(
 			/obj/item/knife/combat/survival = 1,
 			/obj/item/toy/eldritch_book = 2,
-			/obj/item/storage/box/heretic_box = 2,
 		))
