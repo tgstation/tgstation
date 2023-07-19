@@ -4,7 +4,8 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/structure/closet/secure_closet/ert_sec{
 	name = "Emergency response security locker";
-	desc = "A storage unit containing equipment for responding to emergencies."
+	desc = "A storage unit containing equipment for responding to emergencies.";
+	req_access = list("security")
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
@@ -107,7 +108,8 @@
 	},
 /obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Brig";
-	safe = 0
+	safe = 0;
+	normalspeed = 0
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -583,6 +585,10 @@
 "kx" = (
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 1
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Escape Shuttle Brig";
+	safe = 0
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
@@ -1635,7 +1641,8 @@
 "Fp" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Brig";
-	safe = 0
+	safe = 0;
+	normalspeed = 0
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/security/general,
@@ -1669,7 +1676,8 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Cockpit";
 	id_tag = "escape_cockpit_blast";
-	safe = 0
+	safe = 0;
+	normalspeed = 0
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/showroomfloor,
@@ -1966,7 +1974,8 @@
 "LH" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Brig";
-	safe = 0
+	safe = 0;
+	normalspeed = 0
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/security/general,
