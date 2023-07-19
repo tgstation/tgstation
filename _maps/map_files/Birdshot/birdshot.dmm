@@ -36607,6 +36607,10 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/station/service/library/abandoned)
+"nvW" = (
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/iron/kitchen/small,
+/area/station/maintenance/aft)
 "nwe" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -51121,7 +51125,6 @@
 /area/station/maintenance/fore/greater)
 "skJ" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron/kitchen/small,
 /area/station/maintenance/aft)
 "skP" = (
@@ -115753,8 +115756,8 @@ iHH
 xlP
 rfJ
 eWI
-usJ
 fxN
+nvW
 vlV
 fSB
 eWI
