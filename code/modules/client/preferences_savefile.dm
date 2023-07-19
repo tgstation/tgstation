@@ -119,14 +119,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			for(var/hotkeytobind in kb.hotkey_keys)
 				if(hotkeytobind == "Unbound")
 					addedbind = TRUE
-				else if(!length(binds_by_key[hotkeytobind])) //Only bind to the key if nothing else is bound
+				else if(!length(binds_by_key[hotkeytobind]) && !kb.allow_default_conflicts) //Only bind to the key if nothing else is bound
 					key_bindings[kb.name] |= hotkeytobind
 					addedbind = TRUE
 		else
 			for(var/classickeytobind in kb.classic_keys)
 				if(classickeytobind == "Unbound")
 					addedbind = TRUE
-				else if(!length(binds_by_key[classickeytobind])) //Only bind to the key if nothing else is bound
+				else if(!length(binds_by_key[classickeytobind]) && !kb.allow_default_conflicts) //Only bind to the key if nothing else is bound
 					key_bindings[kb.name] |= classickeytobind
 					addedbind = TRUE
 

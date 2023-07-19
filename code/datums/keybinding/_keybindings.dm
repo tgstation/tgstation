@@ -7,6 +7,9 @@
 	var/category = CATEGORY_MISC
 	var/weight = WEIGHT_LOWEST
 	var/keybind_signal
+	/// Allow this keybinding's defaults to conflict with other keys
+	/// Useful for having two keybindings set to the same button by default but allowing users to separate that
+	var/allow_default_conflicts = FALSE
 
 /datum/keybinding/New()
 	if(!keybind_signal)

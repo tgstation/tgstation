@@ -11,6 +11,7 @@
 	full_name = "Resist"
 	description = "Break free of your current state. Handcuffed? on fire? Resist!"
 	keybind_signal = COMSIG_KB_LIVING_RESIST_DOWN
+	allow_default_conflicts = TRUE
 
 /datum/keybinding/living/resist/down(client/user)
 	. = ..()
@@ -26,6 +27,7 @@
 	full_name = "Block (Hold)"
 	description = "Prepare yourself to block incoming attacks. Hold to continue blocking."
 	keybind_signal = COMSIG_KB_LIVING_BLOCK_HOLD_DOWN
+	allow_default_conflicts = TRUE
 
 /datum/keybinding/living/hold_block/down(client/user)
 	. = ..()
@@ -48,6 +50,7 @@
 	full_name = "Block (Toggle)"
 	description = "Prepare yourself to block incoming attacks. Press to toggle blocking on or off."
 	keybind_signal = COMSIG_KB_LIVING_BLOCK_TOGGLE_DOWN
+	allow_default_conflicts = TRUE
 
 /datum/keybinding/living/toggle_block/down(client/user)
 	. = ..()
