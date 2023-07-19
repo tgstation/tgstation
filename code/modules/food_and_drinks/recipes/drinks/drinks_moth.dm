@@ -14,19 +14,20 @@
 	results = list(/datum/reagent/consumable/ethanol/long_john_silver = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 4, /datum/reagent/consumable/ethanol/bitters = 1, /datum/reagent/consumable/lemonade = 5)
 
-/datum/chemical_reaction/drink/salt_and_swell
-	results = list(/datum/reagent/consumable/ethanol/salt_and_swell = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 4, /datum/reagent/consumable/toechtauese_syrup = 3, /datum/reagent/consumable/eggwhite = 2, /datum/reagent/medicine/salglu_solution = 1)
-
-/datum/chemical_reaction/drink/tich_toch
-	results = list(/datum/reagent/consumable/ethanol/tich_toch = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/tiltaellen = 6, /datum/reagent/consumable/toechtauese_syrup = 2, /datum/reagent/consumable/ethanol/vodka = 2)
-
 /datum/chemical_reaction/drink/tiltaellen
 	results = list(/datum/reagent/consumable/ethanol/tiltaellen = 10)
 	required_reagents = list(/datum/reagent/consumable/yoghurt = 8, /datum/reagent/consumable/vinegar = 1, /datum/reagent/consumable/salt = 1)
 	mix_message = "The mixture curdles and thickens."
 
-/datum/chemical_reaction/drink/tropical_storm
+// Shaken Recipes
+/datum/chemical_reaction/drink/shaken/salt_and_swell
+	results = list(/datum/reagent/consumable/ethanol/salt_and_swell = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 4, /datum/reagent/consumable/toechtauese_syrup = 3, /datum/reagent/consumable/eggwhite = 2, /datum/reagent/medicine/salglu_solution = 1)
+
+/datum/chemical_reaction/drink/shaken/tich_toch
+	results = list(/datum/reagent/consumable/ethanol/tich_toch = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/tiltaellen = 6, /datum/reagent/consumable/toechtauese_syrup = 2, /datum/reagent/consumable/ethanol/vodka = 2)
+
+/datum/chemical_reaction/drink/shaken/tropical_storm
 	results = list(/datum/reagent/consumable/ethanol/tropical_storm = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/ethanol/curacao = 2, /datum/reagent/consumable/triple_citrus = 4, /datum/reagent/consumable/pineapplejuice = 2)

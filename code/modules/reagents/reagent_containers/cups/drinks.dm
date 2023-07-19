@@ -434,6 +434,7 @@
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
+	var/capped = TRUE
 	var/shaken = FALSE
 
 /obj/item/reagent_containers/cup/glass/shaker/Initialize(mapload)
@@ -442,11 +443,73 @@
 		name = "\improper Nanotrasen 20th Anniversary Shaker"
 		desc += " It has an emblazoned Nanotrasen logo on it."
 		icon_state = "shaker_n"
+	cap_overlay = mutable_appearance(cap_icon, cap_icon_state)
+	if(cap_on)
+		spillable = FALSE
+		update_appearance()
 
-/obj/item/reagent_container/cup/shaker/attack_self()
-    shaken = TRUE
-    addtimer(VARSET_CALLBACK(src, shaken, FALSE), 2 SECONDS)
-    reagents.handle_reactions()
+/obj/item/reagent_containers/cup/glass/shaker/update_overlays()
+	. = ..()
+	if(cap_on)
+		. += cap_overlay
+
+/obj/item/reagent_containers/cup/glass/shaker/examine(mob/user)
+	. = ..()
+	if(cap_on)
+		. += span_notice("The cap is firmly fitted and the shaker's ready to rumble. Alt-click to remove the cap.")
+	else
+		. += span_notice("The cap has been taken off and the shaker can be filled or emptied. Alt-click to put a cap on.")
+
+/obj/item/reagent_containers/cup/glass/shaker/AltClick(mob/user)
+	. = ..()
+	if(capped)
+		capped = FALSE
+		spillable = TRUE
+		animate(src, transform = null, time = 2, loop = 0)
+		to_chat(user, span_notice("You remove the cap from [src]."))
+		playsound(loc, 'sound/effects/can_open1.ogg', 50, TRUE)
+	else
+		capped = TRUE
+		spillable = FALSE
+		to_chat(user, span_notice("You put the cap on [src]."))
+	update_appearance()
+
+/obj/item/reagent_containers/cup/glass/shaker/is_refillable()
+	if(capped)
+		return FALSE
+	return ..()
+
+/obj/item/reagent_containers/cup/glass/shaker/is_drainable()
+	if(capped)
+		return FALSE
+	return ..()
+
+/obj/item/reagent_containers/cup/glass/shaker/attack(mob/target, mob/living/user, def_zone)
+	if(!target)
+		return
+
+	if(capped && reagents.total_volume && istype(target))
+		to_chat(user, span_warning("You must remove the cap before you can do that!"))
+		return
+
+	return ..()
+
+/obj/item/reagent_containers/cup/glass/shaker/afterattack(obj/target, mob/living/user, proximity)
+	. |= AFTERATTACK_PROCESSED_ITEM
+
+	if(capped && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !user.combat_mode)))
+		to_chat(user, span_warning("You must remove the cap before you can do that!"))
+		return
+
+	return . | ..()
+
+/obj/item/reagent_containers/cup/glass/shaker/attack_self()
+	if(!is_drainable())
+		shaken = TRUE
+		addtimer(VARSET_CALLBACK(src, shaken, FALSE), 2 SECONDS)
+		reagents.handle_reactions()
+		return
+	return ..()
 
 /obj/item/reagent_containers/cup/glass/flask
 	name = "flask"
