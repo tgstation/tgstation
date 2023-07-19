@@ -25,9 +25,7 @@
 /obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return
 
-/obj/item/reagent_containers/syringe/proc/try_syringe(atom/target, mob/user, proximity)
-	if(!proximity)
-		return FALSE
+/obj/item/reagent_containers/syringe/proc/try_syringe(atom/target, mob/user)
 	if(!target.reagents)
 		return FALSE
 
@@ -40,11 +38,14 @@
 	SEND_SIGNAL(target, COMSIG_LIVING_TRY_SYRINGE, user)
 	return TRUE
 
-/obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user, proximity)
+/obj/item/reagent_containers/syringe/pre_attack(atom/target, mob/living/user, params)
 	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+	if(.)
+		return
 
-	if (!try_syringe(target, user, proximity))
+	. = TRUE // no attack / afterattack
+
+	if (!try_syringe(target, user))
 		return
 
 	var/contained = reagents.get_reagent_log_string()
@@ -52,29 +53,27 @@
 
 	if(!reagents.total_volume)
 		to_chat(user, span_warning("[src] is empty! Right-click to draw."))
-		return
+		return .
 
 	if(!isliving(target) && !target.is_injectable(user))
 		to_chat(user, span_warning("You cannot directly fill [target]!"))
-		return
+		return .
 
 	if(target.reagents.total_volume >= target.reagents.maximum_volume)
 		to_chat(user, span_notice("[target] is full."))
-		return
+		return .
 
 	if(isliving(target))
 		var/mob/living/living_target = target
-		if(!living_target.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE|inject_flags))
-			return
 		if(living_target != user)
 			living_target.visible_message(span_danger("[user] is trying to inject [living_target]!"), \
 									span_userdanger("[user] is trying to inject you!"))
 			if(!do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), living_target, extra_checks = CALLBACK(living_target, TYPE_PROC_REF(/mob/living, try_inject), user, null, INJECT_TRY_SHOW_ERROR_MESSAGE|inject_flags)))
-				return
+				return .
 			if(!reagents.total_volume)
-				return
+				return .
 			if(living_target.reagents.total_volume >= living_target.reagents.maximum_volume)
-				return
+				return .
 			living_target.visible_message(span_danger("[user] injects [living_target] with the syringe!"), \
 							span_userdanger("[user] injects you with the syringe!"))
 
@@ -86,13 +85,21 @@
 	to_chat(user, span_notice("You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [reagents.total_volume] units."))
 	target.update_appearance()
 
-/obj/item/reagent_containers/syringe/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if (!try_syringe(target, user, proximity_flag))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	return .
+
+/obj/item/reagent_containers/syringe/pre_attack_secondary(atom/target, mob/living/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return .
+
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN // no attack / afterattack / normal pre_attack behavior (injecting)
+
+	if (!try_syringe(target, user))
+		return .
 
 	if(reagents.total_volume >= reagents.maximum_volume)
 		to_chat(user, span_notice("[src] is full."))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+		return .
 
 	if(isliving(target))
 		var/mob/living/living_target = target
@@ -101,9 +108,9 @@
 			target.visible_message(span_danger("[user] is trying to take a blood sample from [target]!"), \
 							span_userdanger("[user] is trying to take a blood sample from you!"))
 			if(!do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), target, extra_checks = CALLBACK(living_target, TYPE_PROC_REF(/mob/living, try_inject), user, null, INJECT_TRY_SHOW_ERROR_MESSAGE|inject_flags)))
-				return SECONDARY_ATTACK_CONTINUE_CHAIN
+				return .
 			if(reagents.total_volume >= reagents.maximum_volume)
-				return SECONDARY_ATTACK_CONTINUE_CHAIN
+				return .
 		if(living_target.transfer_blood_to(src, drawn_amount))
 			user.visible_message(span_notice("[user] takes a blood sample from [living_target]."))
 		else
@@ -111,18 +118,18 @@
 	else
 		if(!target.reagents.total_volume)
 			to_chat(user, span_warning("[target] is empty!"))
-			return SECONDARY_ATTACK_CONTINUE_CHAIN
+			return .
 
 		if(!target.is_drawable(user))
 			to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
-			return SECONDARY_ATTACK_CONTINUE_CHAIN
+			return .
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user) // transfer from, transfer to - who cares?
 
 		to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
 		target.update_appearance()
 
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+	return .
 
 /*
  * On accidental consumption, inject the eater with 2/3rd of the syringe and reveal it

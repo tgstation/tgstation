@@ -52,14 +52,12 @@
 	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	H.dna.activate_mutation(/datum/mutation/human/race)
 	RegisterSignal(H, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(monkey_melee))
-	RegisterSignal(H, COMSIG_CLICK_CTRL, PROC_REF(ctrl_clicked))
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.pass_flags = initial(C.pass_flags)
 	C.dna.remove_mutation(/datum/mutation/human/race)
 	UnregisterSignal(C, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
-	UnregisterSignal(C, COMSIG_CLICK_CTRL)
 
 /datum/species/monkey/proc/monkey_melee(mob/living/carbon/human/source, atom/target, proximity_flag, modifiers)
 	SIGNAL_HANDLER
@@ -68,11 +66,6 @@
 	if(!ISADVANCEDTOOLUSER(source) && proximity_flag) // This prox flag check is not necessary but we'll keep it just in case
 		target.attack_paw(source, modifiers)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-/datum/species/monkey/proc/ctrl_clicked(mob/living/carbon/human/source, mob/user)
-	SIGNAL_HANDLER
-	// bad code ahead: redirects ctrl click to "xeno ctrl click" for the purpose of the xenobiology camera console
-	SEND_SIGNAL(user, COMSIG_XENO_MONKEY_CLICK_CTRL, src)
 
 /datum/species/monkey/check_roundstart_eligible()
 	if(check_holidays(MONKEYDAY))

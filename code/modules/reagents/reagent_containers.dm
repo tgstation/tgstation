@@ -64,9 +64,7 @@
 	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
 
 /obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, params)
-	if (!user.combat_mode)
-		return
-	return ..()
+	return !user.combat_mode // combat mode on = return false = afterattack, off = true = no afterattack
 
 /obj/item/reagent_containers/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER

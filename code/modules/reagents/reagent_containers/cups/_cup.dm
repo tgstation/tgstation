@@ -58,7 +58,9 @@
 
 /obj/item/reagent_containers/cup/attack(mob/living/target_mob, mob/living/user, obj/target)
 	if(user.combat_mode)
-		return ..()
+		return FALSE // no after attack, no sip
+
+	. = TRUE
 	if(!canconsume(target_mob, user))
 		return
 

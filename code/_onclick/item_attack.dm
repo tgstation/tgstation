@@ -203,7 +203,7 @@
 	return FALSE // continue chain
 
 /mob/living/attackby_secondary(obj/item/weapon, mob/living/user, params)
-	if(weapon.force > 1)
+	if(weapon.force > 1 && user != src)
 		stack_trace("Potentially deprecated use of a weapon ([weapon.type]) via attackby_secondary. \
 			If this item is intended to be a weapon, implement an attack style.")
 
