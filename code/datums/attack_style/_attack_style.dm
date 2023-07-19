@@ -236,7 +236,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	// Right after dealing damage we handle getting blocked by dense stuff
 	// If there's something dense in the turf the rest of the swing is cancelled
 	// This means wide arc swinging weapons can't hit in tight corridors
-	var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, source_atom = attacker, check_obscured = TRUE)
+	var/atom/blocking_us = hitting.is_blocked_turf(exclude_mobs = TRUE, source_atom = weapon, check_obscured = TRUE)
 	if(blocking_us)
 		attacker.visible_message(
 			span_warning("[attacker]'s attack collides with [blocking_us]!"),

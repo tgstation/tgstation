@@ -88,7 +88,8 @@
 		carbon_target = target
 		affecting = carbon_target.get_bodypart(check_zone(user.zone_selected))
 
-	for(var/datum/surgery/surgery as anything in GLOB.surgeries_list)
+	for(var/surgery_path in GLOB.surgery_prototypes_by_path)
+		var/datum/surgery/surgery = GLOB.surgery_prototypes_by_path[surgery_path]
 		if(!surgery.possible_locs.Find(user.zone_selected))
 			continue
 		if(affecting)
@@ -319,6 +320,8 @@
 	ui_close()
 
 	var/datum/surgery/procedure = new surgery.type(target, selected_zone, affecting_limb)
+	procedure.all_needed_items = surgery.all_needed_items
+
 	ADD_TRAIT(target, TRAIT_ALLOWED_HONORBOUND_ATTACK, type)
 
 	target.balloon_alert(user, "starting \"[lowertext(procedure.name)]\"")

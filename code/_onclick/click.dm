@@ -332,15 +332,20 @@
 	// No bludgeon prevents using swing styles, good to use for items that require "click on mob" interaction like scanners
 	if(item_flags & NOBLUDGEON)
 		return TRUE
-	if(!attacker.combat_mode)
-		// Handles non-combat use of items, like a using a screwdriver on a wall
-		if(!ismob(clicked_on))
+	if(attacker.combat_mode)
+		return FALSE
+
+	// Handles non-combat use of items, like a using a screwdriver on a wall
+	if(!isliving(clicked_on))
+		return TRUE
+	// Handle allowing surgical items in
+	var/mob/living/living_clicked = clicked_on
+	for(var/datum/surgery/operation as anything in living_clicked.surgeries)
+		if(IS_IN_INVALID_SURGICAL_POSITION(living_clicked, operation))
+			continue
+		// todo : misses out on generic sharpness / cautery checks related to proc "tool_check"
+		if((item_flags & SURGICAL_TOOL) || operation.all_needed_items[type] || (tool_behaviour && operation.all_needed_items[tool_behaviour]))
 			return TRUE
-		// Surgical tools won't swing if we're clicking on a dude who's in the middle of surgery
-		if(isliving(clicked_on) && (item_flags & SURGICAL_TOOL))
-			var/mob/living/living_clicked = clicked_on
-			if(length(living_clicked.surgeries) && living_clicked.body_position == LYING_DOWN)
-				return TRUE
 
 	return FALSE
 

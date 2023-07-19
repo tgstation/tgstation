@@ -40,12 +40,27 @@
 		GLOB.species_list[S.id] = spath
 	sort_list(GLOB.species_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
 
-/// Inits GLOB.surgeries
+/// Inits GLOB.surgery_prototypes_by_path
 /proc/init_surgeries()
 	var/surgeries = list()
 	for(var/path in subtypesof(/datum/surgery))
-		surgeries += new path()
-	sort_list(surgeries, GLOBAL_PROC_REF(cmp_typepaths_asc))
+		var/datum/surgery/surgery = new path()
+		surgeries[path] = surgery
+
+		// Track all tool behaviors and items for this surgery as well
+		var/list/all_items = list()
+		for(var/surgery_step in surgery.steps)
+			var/datum/surgery_step/midstep = new surgery_step()
+			for(var/thing in midstep.implements)
+				if(ispath(thing, /obj/item))
+					if(thing != /obj/item) // don't add all items pls
+						all_items |= typecacheof(thing)
+				else
+					all_items[thing] = TRUE
+			qdel(midstep)
+		surgery.all_needed_items = all_items
+
+	sortTim(surgeries, GLOBAL_PROC_REF(cmp_typepaths_asc), associative = TRUE)
 	return surgeries
 
 /// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name

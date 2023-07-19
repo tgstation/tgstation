@@ -40,6 +40,11 @@
 	/// Organ being directly manipulated, used for checking if the organ is still in the body after surgery has begun
 	var/organ_to_manipulate
 
+	/// This is a list of all items or tool behaviors this surgery may require in any of its steps
+	/// It is set by the surgery prototype stored in the global list, do not edit it
+	/// This can be used to determine if someone is making a mistake and using the wrong tool for a step
+	VAR_FINAL/list/all_needed_items
+
 /datum/surgery/New(atom/surgery_target, surgery_location, surgery_bodypart)
 	. = ..()
 	if(!surgery_target)
@@ -66,7 +71,6 @@
 	target = null
 	operated_bodypart = null
 	return ..()
-
 
 /datum/surgery/proc/can_start(mob/user, mob/living/patient) //FALSE to not show in list
 	. = TRUE
@@ -121,7 +125,14 @@
 	var/obj/item/tool = user.get_active_held_item()
 	if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 		return TRUE
-	if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
+	// The surgery step failed at this point
+
+	// If they're upright suddenly just let the attack happen
+	if(IS_IN_INVALID_SURGICAL_POSITION(target, src))
+		return FALSE
+
+	// If this is a surgical tool or is otherwise used in this surgery for another purpose, do not hit the guy with it - give a warning
+	if(tool && ((tool.item_flags & SURGICAL_TOOL) || all_needed_items[tool.type] || (tool.tool_behaviour && all_needed_items[tool.tool_behaviour])))
 		to_chat(user, span_warning("This step requires a different tool!"))
 		return TRUE
 

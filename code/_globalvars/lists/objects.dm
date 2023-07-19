@@ -46,8 +46,8 @@ GLOBAL_LIST(chemical_reactions_results_lookup_list)
 GLOBAL_LIST(fake_reagent_blacklist)
 /// list of all /datum/tech datums indexed by id.
 GLOBAL_LIST_EMPTY(tech_list)
-/// list of all surgeries by name, associated with their path.
-GLOBAL_LIST_INIT(surgeries_list, init_surgeries())
+/// list of all surgeries
+GLOBAL_LIST_INIT(surgery_prototypes_by_path, init_surgeries())
 
 /// Global list of all non-cooking related crafting recipes.
 GLOBAL_LIST_EMPTY(crafting_recipes)
