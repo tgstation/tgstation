@@ -370,15 +370,19 @@
 /datum/quirk/lightless
 	name = "Light Sensitivity"
 	desc = "Bright lights irritate you. Your eyes start to water and burn when exposed to light. Maybe it's a medical condition."
-	icon = FA_ICON_EYE_SLASH
-	value = -6
-	gain_text = "<span class='danger'>The safety of light feels off...</span>"
-	lose_text = "<span class='notice'>Enlightening.</span>"
+	icon = FA_ICON_ARROWS_TO_EYE
+	value = -4
+	gain_text = span_danger("The safety of light feels off...")
+	lose_text = span_notice("Enlightening.")
 	medical_record_text = "Patient has acute phobia of light, and insists it is physically harmful."
-	hardcore_value = 6
-	mail_goodies = list(/obj/item/flashlight/flashdark)
+	hardcore_value = 4
+	mail_goodies = list(
+		/obj/item/flashlight/flashdark,
+		/obj/item/food/grown/mushroom/glowshroom/shadowshroom,
+		/obj/item/skillchip/light_remover,
+	)
 
-/datum/quirk/lightless/on_process()
+/datum/quirk/lightless/process(seconds_per_tick)
 	var/turf/T = get_turf(quirk_holder)
 	var/lums = T.get_lumcount()
 	if(lums > LIGHTING_TILE_IS_DARK)
