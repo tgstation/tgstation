@@ -195,8 +195,6 @@
 	icon_state = "cypherkey_syndicate"
 	channels = list(RADIO_CHANNEL_SYNDICATE = 1)
 	syndie = TRUE
-	translate_binary = TRUE
-	translated_language = /datum/language/machine
 	greyscale_config = /datum/greyscale_config/encryptionkey_syndicate
 	greyscale_colors = "#171717#990000"
 
