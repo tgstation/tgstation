@@ -264,11 +264,6 @@
 /turf/closed/wall/get_dumping_location()
 	return null
 
-/turf/closed/wall/acid_act(acidpwr, acid_volume)
-	if(get_explosive_block() >= 2)
-		acidpwr = min(acidpwr, 50) //we reduce the power so strong walls never get melted.
-	return ..()
-
 /turf/closed/wall/acid_melt()
 	dismantle_wall(1)
 
