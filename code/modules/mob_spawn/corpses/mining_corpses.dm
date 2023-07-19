@@ -266,7 +266,7 @@
 		if (prob(20))
 			belt = /obj/item/crowbar
 		else
-			l_pocket = pick(/obj/item/fishing_hook, /obj/item/fishing_hook/shiny, /obj/item/flashlight/flare/torch)
+			l_pocket = pick(/obj/item/fishing_hook, /obj/item/fishing_hook/shiny)
 	if(prob(30))
 		back = pick_weight(list(
 			/obj/item/pickaxe = 4,
