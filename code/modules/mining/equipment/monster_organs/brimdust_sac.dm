@@ -171,6 +171,7 @@
 		var/armor = target.run_armor_check(attack_flag = BOMB)
 		target.apply_damage(damage_dealt, damagetype = BURN, blocked = armor, spread_damage = TRUE)
 
+	SEND_SIGNAL(owner, COMSIG_BRIMDUST_EXPLOSION)
 	add_stacks(-1)
 
 /// Slowdown applied when you are detonated on the space station

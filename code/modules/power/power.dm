@@ -8,7 +8,7 @@
 
 /obj/machinery/power
 	name = null
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/engine/other.dmi'
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
 	use_power = NO_POWER_USE

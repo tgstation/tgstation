@@ -25,20 +25,21 @@
 /obj/machinery/door_buttons/LateInitialize()
 	findObjsByTag()
 
-/obj/machinery/door_buttons/emag_act(mob/user)
+/obj/machinery/door_buttons/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	req_access = list()
 	req_one_access = list()
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	to_chat(user, span_warning("You short out the access controller."))
+	balloon_alert(user, "access controller shorted")
+	return TRUE
 
 /obj/machinery/door_buttons/proc/removeMe()
 
 
 /obj/machinery/door_buttons/access_button
-	icon = 'icons/obj/airlock_machines.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "access_button_standby"
 	base_icon_state = "access_button"
 	name = "access button"
@@ -100,7 +101,7 @@
 
 
 /obj/machinery/door_buttons/airlock_controller
-	icon = 'icons/obj/airlock_machines.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "access_control_standby"
 	base_icon_state = "access_control"
 	name = "access console"

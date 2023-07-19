@@ -5,7 +5,7 @@
 		You cannot attack while realigning. Can be casted multiple times in short succession, but each cast lengthens the cooldown."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/obj/implants.dmi'
+	button_icon = 'icons/hud/implants.dmi'
 	button_icon_state = "adrenal"
 	// sound = 'sound/magic/whistlereset.ogg'
 

@@ -174,9 +174,9 @@
 
 		var/image/overlay
 		if(turn_connects)
-			overlay = image('icons/obj/plumbing/connects.dmi', "[direction_text]-[ducting_layer]", layer = duct_layer)
+			overlay = image('icons/obj/pipes_n_cables/hydrochem/connects.dmi', "[direction_text]-[ducting_layer]", layer = duct_layer)
 		else
-			overlay = image('icons/obj/plumbing/connects.dmi', "[direction_text]-[ducting_layer]-s", layer = duct_layer)
+			overlay = image('icons/obj/pipes_n_cables/hydrochem/connects.dmi', "[direction_text]-[ducting_layer]-s", layer = duct_layer)
 			overlay.dir = direction
 
 		overlay.color = color
@@ -187,7 +187,7 @@
 
 		// This is a little wiggley extension to make wallmounts like sinks and showers visually link to the pipe
 		if(extend_pipe_to_edge && !extension_handled)
-			var/image/edge_overlay = image('icons/obj/plumbing/connects.dmi', "edge-extension", layer = duct_layer)
+			var/image/edge_overlay = image('icons/obj/pipes_n_cables/hydrochem/connects.dmi', "edge-extension", layer = duct_layer)
 			edge_overlay.dir = parent_movable.dir
 			edge_overlay.color = color
 			edge_overlay.pixel_x = -parent_movable.pixel_x - parent_movable.pixel_w

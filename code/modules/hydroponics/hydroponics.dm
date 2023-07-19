@@ -2,7 +2,7 @@
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
 	desc = "A basin used to grow plants in."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
@@ -153,7 +153,7 @@
 
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
 
 /obj/machinery/hydroponics/constructable/Initialize(mapload)
@@ -509,15 +509,15 @@
 /obj/machinery/hydroponics/proc/update_status_light_overlays()
 	. = list()
 	if(waterlevel <= 10)
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowwater3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowwater3")
 	if(reagents.total_volume <= 2)
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lownutri3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lownutri3")
 	if(plant_health <= (myseed.endurance / 2))
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowhealth3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_lowhealth3")
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_alert3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_alert3")
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
-		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_harvest3")
+		. += mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "over_harvest3")
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
 /obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE)
@@ -1145,7 +1145,7 @@
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
 	name = "soil"
 	desc = "A patch of dirt."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	gender = PLURAL
 	circuit = null

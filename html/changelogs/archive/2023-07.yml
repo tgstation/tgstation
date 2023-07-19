@@ -459,3 +459,198 @@
   - image: Added new Security Cap sprite
   distributivgesetz:
   - spellcheck: Fixed some underscores in spiderling names.
+2023-07-11:
+  ATHATH:
+  - qol: Emagged organ harvesters will no longer refuse a victim that has items on
+      their person, such as the handcuffs they've been bound with.
+  CRITAWAKETS:
+  - bugfix: Hereditary Manifold Sickness, and other uncurable diseases, have been
+      found to no longer disappear upon miraculous acts of divine restoration. In
+      addition, viral bonding no longer makes you into a carrier for those aswell.
+  ChungusGamer666:
+  - rscadd: Nightmare vision goggles now give you mare vision
+  - bugfix: Creampies will no longer irreparably stain your face
+  Ghommie:
+  - bugfix: Fixes venomous projectiles for real, and invisible arrow sprites.
+  - rscadd: Added cardboard IDs to the game. They can be crafted with a cardboard
+      sheet and wirecutters and modified with a writing tool. While worn, these will
+      modify the visible name of the wearer just like actual IDs, though they aren't
+      real IDs and won't work as such.
+  Helg2:
+  - bugfix: androids now have proper robotic organs and no appendix.
+  - bugfix: snakes, security, spiders and skeletons phobias now properly react on
+      mobs
+  Jacquerel:
+  - rscadd: AI-controlled spiders will make more web-shaped webs.
+  JohnFulpWillard:
+  - qol: Clear PDAs now has all themes in their themify app by default.
+  Melbert:
+  - bugfix: Fix ling revival for full-dead lings
+  - refactor: Refactored language holders, making species changes not delete all of
+      your known languages
+  Seven:
+  - balance: Only 2 smugglers satchels will spawn on the station at roundstart, down
+      from 10
+  TerraGS:
+  - bugfix: The military surplus trader encountered by explorer drones will now correctly
+      ask for armor rather than "suit"
+  Time-Green:
+  - balance: Metalgen cannot spawn as a random chem anymore (strange seeds, maintpills
+      etc)
+  carshalash:
+  - bugfix: ' Infinite spider eggs are no more.'
+  cnleth:
+  - image: Engineering scanner goggles are now yellow and not green when in meson
+      mode
+  - image: Atmospheric thermal imaging goggles are now green
+  mc-oofert:
+  - bugfix: morgue units can no longer hold ghosts
+  - bugfix: Cake cats/butter bear now grab the ghost of the brain used in their making
+  nikothedude:
+  - bugfix: Quantum relays now process, meaning DOS attacks actually function
+  san7890:
+  - admin: If a circuit component outputs a radio signal, it should now be logged
+      in list-signalers.
+2023-07-12:
+  Ben10Omintrix:
+  - bugfix: the fortunate cookie dont dropped a empty paper anymore.
+  FlufflesTheDog:
+  - bugfix: Destroying the fabled "green text" now properly releases its victims from
+      their curse.
+  Helg2:
+  - bugfix: warden has his garment bag in locker as should
+  Jacquerel:
+  - bugfix: Guard spiders can now only make one scary duplicate of themselves at a
+      time, rather than as many as they can click on the button.
+  - rscadd: PAIs can no longer be inserted into Bots
+  - rscadd: Bots can now have their sapience toggled by anyone with access to their
+      settings panel
+  - rscadd: Bots which exist on the map at the start of the round automatically have
+      this setting enabled
+  - qol: Bots, Regal Rats, and Cargorilla now appear in the Spawners menu if you are
+      dead
+  - qol: Bots can be renamed from their maintenance panel
+  - bugfix: Bile/Vileworms now have the same projectile and thrown weapon resistances
+      of other mining mobs.
+  Melbert:
+  - qol: You no longer fall over when you get dusted, making the animation line up
+      with your body
+  - bugfix: Fixes Aphasia being removed
+  Singul0:
+  - rscadd: IRS jacket is now back in the clothesvend
+  - rscadd: Ports breaching shells from beestation
+  - rscadd: Space IRS has been added into the heavy weight pirates spawn pool
+  - code_imp: Mosin nagant ammo boxes is now a subtype of regular ammo boxes (the
+      toolbox subtype)
+  StaringGasMask:
+  - qol: Now plasmamen can use the infiltrator MODsuit without having their species
+      revealed. The helmet's still not sealed, so remember your mask.
+  Tattle:
+  - qol: changed mouth blocked message to a balloon alert
+  Thunder12345:
+  - bugfix: Autorifle magazines are now visible in the security techfab's ammunition
+      category.
+  YehnBeep:
+  - spellcheck: Fixed typos in the descriptions of the mRLD and RTD as seen from protolathes.
+  YesterdaysPromise:
+  - image: added sprites for different variants of scrolls.
+  - image: modified couple posters with ghost pixels.
+  lizardqueenlexi:
+  - refactor: Foxes are more crafty now. They will run from danger, and hunt small
+      prey when no one is keeping an eye on them. Don't leave Renault alone with Ian!
+2023-07-13:
+  Hatterhat:
+  - qol: When a MOD fails to store something in itself when retracting, you're now
+      notified in both the chat and by a balloon alert.
+  Helg2:
+  - balance: Rocket launcher's backblast doesnt ignore armor now.
+  - bugfix: eating mime's and rainbow crayons now properly transfers reagents.
+  - bugfix: I somehow fixed the amount of reagents in crayons to what it was before.
+  LT3:
+  - image: Roller bed now has an inhand sprite
+  - bugfix: Security records no longer accept negative values for citation payment
+  Melbert:
+  - rscadd: You can now wear multiple accessories on your uniform at once (up to five
+      by default)
+  - balance: Removed armor from accessories, and nerfs the effects of some accessories.
+  SomeRandomOwl:
+  - bugfix: Music Request Credit shows CKEY instead of character name
+  Timberpoes:
+  - rscdel: Revolution has been reverted back to old behaviour. The round once again
+      ends when the revolution is successful. The round continues as normal if the
+      revolution fails.
+  - rscadd: When the station is rolled in a state of Post-Revolutionary Fervor, the
+      Captain will find their bedsheets replaced with an anti-Nanotrasen variant.
+2023-07-14:
+  Archimus12:
+  - rscadd: Adds latex gloves and medical headsets to the MediDrobe.
+  - rscadd: Adds pyjamas, nightcaps and white shoes to the ClothesMate.
+  - rscadd: Adds science backpack, duffel bag and satchel to the RoboDrobe.
+  BlueMemesauce:
+  - bugfix: Removed initial 500 point balance on mining point transfer cards. Load
+      them up with points instead.
+  - rscadd: Added mining point transfer cards to mining lockers.
+  - rscdel: Removed mining point transfer cards from mining equipment vendor.
+  Helg2:
+  - rscadd: You can now swab plasmaman clown clothes to get clown microbes.
+  - rscadd: Clown phobia makes you fear plasmaman clown's gloves and helmet.
+  Jacquerel:
+  - refactor: Goliaths now use the Basic Mob framework, please report any unusual
+      behaviour.
+  - rscadd: Goliaths learned a couple of new attacks which they will use in self-defence.
+  - balance: Help-clicking a miner grabbed by Goliath tentacles will immediately free
+      them, as will the effect of several items you can scavenge from around Lavaland.
+  - image: New sprites for the Goliath saddle.
+  LT3:
+  - bugfix: Maptext should now properly show superscript characters when performing
+      actions
+  Sealed101:
+  - qol: Lobby Menu buttons can now be collapsed. Rejoice!
+  - qol: Lobby Menu buttons have names, which can be seen in the prompt on the bottom
+      left of the viewport.
+  - qol: you may see your readiness status during pre-game in the Status Bar.
+  - qol: Reset Lobby Menu HUD verb added in case you manage to break the damn thing.
+  Vekter:
+  - rscadd: Adds support for it/its pronouns. You can select these in character preferences.
+  nikothedude:
+  - bugfix: Deployable turrets no longer runtime when firing
+  - qol: APCs, fire alarms, and holopads now communicate some more of their silicon
+      interactions via screentips.
+  - qol: APCs, fire alarms, holopads and turret control panels now use balloon alerts
+      for more of their notifications.
+2023-07-15:
+  ATHATH:
+  - bugfix: Simplemobs that can't take stamina damage, including mulebots, will no
+      longer be reset to their default speed whenever they take damage or are healed.
+  Ben10Omintrix:
+  - refactor: paper wizard have been refactored, please report any bugs/unintended
+      behavior
+  - refactor: refacted the datum/elememt/trial to an bespoken element
+  - rscadd: paper wizard now have effects when he walking and he will now go and look
+      for paperes and write stuff in them
+  Melbert:
+  - qol: Changeling Emporium is now sorted alphabetically.
+  - qol: Changeling Emporium now has a search bar!
+  - bugfix: Ling Augmented Eyesight now no longer causes you to lose the effects of
+      your Meson glasses
+  - bugfix: Ling Augmented Eyesight now more consistently tracks the flash protection
+      / vulnerability it confers.
+  - bugfix: Fixes a runtime from clientless mobs listening to Jukeboxes
+  - bugfix: Fixes some potential hard-dels from Jukeboxes
+  - qol: Jukeboxes now start with "title3.ogg" loaded for servers which do not have
+      jukebox songs included in their config.
+  NotDhu:
+  - bugfix: Added missing telecomms monitoring consoles to Birdshot.
+  Rhials:
+  - qol: The Xenomorph Infestation orbit menu tab is now violet instead of red!
+  Striders13:
+  - code_imp: Admins can now choose the reward cursed slot machine gives when hitting
+      jackpot.
+  VladinXXV:
+  - qol: You can now rename the coroner's skeleton model with a pen!
+  - bugfix: Autopsy reports will now correctly report blood type and level for corpses
+      who happen to have blood for blood.
+  generalthrax:
+  - balance: Lionhunter on charge now has a damage modifier of 2 instead of 1.33
+  - balance: Increased max range of charged shot from 16 to 30
+  - balance: Increased scope modifier so you can use the new max range
