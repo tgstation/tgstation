@@ -345,6 +345,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = INDESTRUCTIBLE
 	base_icon_state = "defibpaddles"
+	item_flags = NOBLUDGEON
 	attack_style_path = null
 
 	var/revivecost = 1000
