@@ -7,7 +7,7 @@
 	name = "the concept of cheese"
 	desc = "This probably shouldn't exist."
 	tastes = list("cheese" = 1)
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
+	food_reagents = list(/datum/reagent/consumable/nutriment/fat = 3)
 	foodtypes = DAIRY
 	crafting_complexity = 1
 	/// used to determine how much health rats/regal rats recover when they eat it.
@@ -27,7 +27,7 @@
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/fat = 2,
 		/datum/reagent/consumable/nutriment/protein = 1,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
@@ -40,7 +40,7 @@
 	desc = "A big wheel of delcious Cheddar."
 	icon_state = "cheesewheel"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 10,
+		/datum/reagent/consumable/nutriment/fat = 10,
 		/datum/reagent/consumable/nutriment/protein = 5,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	) //Hard cheeses contain about 25% protein
@@ -63,7 +63,7 @@
 	desc = "Ascend the throne. Consume the wheel. Feel the POWER."
 	icon_state = "royalcheese"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment = 15,
+		/datum/reagent/consumable/nutriment/fat = 15,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 		/datum/reagent/gold = 20,
 		/datum/reagent/toxin/mutagen = 5,

@@ -134,8 +134,89 @@
 	name = "Protein"
 	description = "A natural polyamide made up of amino acids. An essential constituent of mosts known forms of life."
 	brute_heal = 0.8 //Rewards the player for eating a balanced diet.
-	nutriment_factor = 9 //45% as calorie dense as corn oil.
+	nutriment_factor = 9 //45% as calorie dense as oil.
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/nutriment/fat
+	name = "Fat"
+	description = "Triglycerides found in vegetable oils and fatty animal tissue."
+	color = "#f0eed7"
+	taste_description = "lard"
+	brute_heal = 0
+	burn_heal = 1
+	nutriment_factor = 18 // Twice as nutritious compared to protein and carbohydrates
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
+
+/datum/reagent/consumable/nutriment/fat/expose_obj(obj/exposed_obj, reac_volume)
+	. = ..()
+	if(!holder || (holder.chem_temp <= fry_temperature))
+		return
+	if(!isitem(exposed_obj) || HAS_TRAIT(exposed_obj, TRAIT_FOOD_FRIED))
+		return
+	if(is_type_in_typecache(exposed_obj, GLOB.oilfry_blacklisted_items) || (exposed_obj.resistance_flags & INDESTRUCTIBLE))
+		exposed_obj.visible_message(span_notice("The hot oil has no effect on [exposed_obj]!"))
+		return
+	if(exposed_obj.atom_storage)
+		exposed_obj.visible_message(span_notice("The hot oil splatters about as [exposed_obj] touches it. It seems too full to cook properly!"))
+		return
+
+	exposed_obj.visible_message(span_warning("[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow."))
+	exposed_obj.AddElement(/datum/element/fried_item, volume)
+	exposed_obj.reagents.add_reagent(src.type, reac_volume)
+
+/datum/reagent/consumable/nutriment/fat/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+	. = ..()
+	if(!(methods & (VAPOR|TOUCH)) || isnull(holder) || (holder.chem_temp < fry_temperature)) //Directly coats the mob, and doesn't go into their bloodstream
+		return
+
+	var/burn_damage = ((holder.chem_temp / fry_temperature) * 0.33) //Damage taken per unit
+	if(methods & TOUCH)
+		burn_damage *= max(1 - touch_protection, 0)
+	var/FryLoss = round(min(38, burn_damage * reac_volume))
+	if(!HAS_TRAIT(exposed_mob, TRAIT_OIL_FRIED))
+		exposed_mob.visible_message(span_warning("The boiling oil sizzles as it covers [exposed_mob]!"), \
+		span_userdanger("You're covered in boiling oil!"))
+		if(FryLoss)
+			exposed_mob.emote("scream")
+		playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
+		ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
+		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 3)
+	if(FryLoss)
+		exposed_mob.adjustFireLoss(FryLoss)
+
+/datum/reagent/consumable/nutriment/fat/expose_turf(turf/open/exposed_turf, reac_volume)
+	. = ..()
+	if(!istype(exposed_turf))
+		return
+	exposed_turf.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume*2 SECONDS)
+	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in exposed_turf)
+	if(hotspot)
+		var/datum/gas_mixture/lowertemp = exposed_turf.remove_air(exposed_turf.air.total_moles())
+		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
+		lowertemp.react(src)
+		exposed_turf.assume_air(lowertemp)
+		qdel(hotspot)
+
+/datum/reagent/consumable/nutriment/fat/oil
+	name = "Vegetable Oil"
+	description = "A variety of cooking oil derived from plant fats. Used in food preparation and frying."
+	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
+	taste_mult = 0.8
+	taste_description = "oil"
+	nutriment_factor = 7 //Not very healthy on its own
+	metabolization_rate = 10 * REAGENTS_METABOLISM
+	penetrates_skin = NONE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/vegetable_oil
+
+/datum/reagent/consumable/nutriment/fat/oil/olive
+	name = "Olive Oil"
+	description = "A high quality oil, suitable for dishes where the oil is a key flavour."
+	taste_description = "olive oil"
+	color = "#DBCF5C"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/olive_oil
 
 /datum/reagent/consumable/nutriment/organ_tissue
 	name = "Organ Tissue"
@@ -179,65 +260,6 @@
 	if(length(reagent_removal_skip_list))
 		return
 	holder.remove_reagent(type, metabolization_rate * delta_time)
-
-/datum/reagent/consumable/cooking_oil
-	name = "Cooking Oil"
-	description = "A variety of cooking oil derived from fat or plants. Used in food preparation and frying."
-	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
-	taste_mult = 0.8
-	taste_description = "oil"
-	nutriment_factor = 7 //Not very healthy on its own
-	metabolization_rate = 10 * REAGENTS_METABOLISM
-	penetrates_skin = NONE
-	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	default_container = /obj/item/reagent_containers/condiment/cooking_oil
-
-/datum/reagent/consumable/cooking_oil/expose_obj(obj/exposed_obj, reac_volume)
-	. = ..()
-	if(!holder || (holder.chem_temp <= fry_temperature))
-		return
-	if(!isitem(exposed_obj) || HAS_TRAIT(exposed_obj, TRAIT_FOOD_FRIED))
-		return
-	if(is_type_in_typecache(exposed_obj, GLOB.oilfry_blacklisted_items) || (exposed_obj.resistance_flags & INDESTRUCTIBLE))
-		exposed_obj.visible_message(span_notice("The hot oil has no effect on [exposed_obj]!"))
-		return
-	if(exposed_obj.atom_storage)
-		exposed_obj.visible_message(span_notice("The hot oil splatters about as [exposed_obj] touches it. It seems too full to cook properly!"))
-		return
-
-	exposed_obj.visible_message(span_warning("[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow."))
-	exposed_obj.AddElement(/datum/element/fried_item, volume)
-	exposed_obj.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, reac_volume)
-
-/datum/reagent/consumable/cooking_oil/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
-	. = ..()
-	if(!(methods & (VAPOR|TOUCH)) || isnull(holder) || (holder.chem_temp < fry_temperature)) //Directly coats the mob, and doesn't go into their bloodstream
-		return
-
-	var/oil_damage = ((holder.chem_temp / fry_temperature) * 0.33) //Damage taken per unit
-	if(methods & TOUCH)
-		oil_damage *= max(1 - touch_protection, 0)
-	var/FryLoss = round(min(38, oil_damage * reac_volume))
-	if(!HAS_TRAIT(exposed_mob, TRAIT_OIL_FRIED))
-		exposed_mob.visible_message(span_warning("The boiling oil sizzles as it covers [exposed_mob]!"), \
-		span_userdanger("You're covered in boiling oil!"))
-		if(FryLoss)
-			exposed_mob.emote("scream")
-		playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
-		ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
-		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 3)
-	if(FryLoss)
-		exposed_mob.adjustFireLoss(FryLoss)
-
-/datum/reagent/consumable/cooking_oil/expose_turf(turf/open/exposed_turf, reac_volume)
-	. = ..()
-	if(!istype(exposed_turf) || isgroundlessturf(exposed_turf) || (reac_volume < 5))
-		return
-
-	exposed_turf.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume * 1.5 SECONDS)
-	exposed_turf.name = "Deep-fried [initial(exposed_turf.name)]"
-	exposed_turf.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 
 /datum/reagent/consumable/sugar
 	name = "Sugar"
@@ -534,28 +556,6 @@
 		M.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick, 0)
 		. = TRUE
 	..()
-
-/datum/reagent/consumable/cornoil
-	name = "Corn Oil"
-	description = "An oil derived from various types of corn."
-	nutriment_factor = 20
-	color = "#302000" // rgb: 48, 32, 0
-	taste_description = "slime"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	default_container = /obj/item/reagent_containers/condiment/cooking_oil
-
-/datum/reagent/consumable/cornoil/expose_turf(turf/open/exposed_turf, reac_volume)
-	. = ..()
-	if(!istype(exposed_turf))
-		return
-	exposed_turf.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume*2 SECONDS)
-	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in exposed_turf)
-	if(hotspot)
-		var/datum/gas_mixture/lowertemp = exposed_turf.remove_air(exposed_turf.air.total_moles())
-		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
-		lowertemp.react(src)
-		exposed_turf.assume_air(lowertemp)
-		qdel(hotspot)
 
 /datum/reagent/consumable/enzyme
 	name = "Universal Enzyme"
@@ -1055,15 +1055,6 @@
 	color = "#661F1E"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/vinegar
-
-//A better oil, representing choices like olive oil, argan oil, avocado oil, etc.
-/datum/reagent/consumable/quality_oil
-	name = "Quality Oil"
-	description = "A high quality oil, suitable for dishes where the oil is a key flavour."
-	taste_description = "olive oil"
-	color = "#DBCF5C"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	default_container = /obj/item/reagent_containers/condiment/quality_oil
 
 /datum/reagent/consumable/cornmeal
 	name = "Cornmeal"

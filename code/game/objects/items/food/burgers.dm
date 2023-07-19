@@ -614,7 +614,7 @@
 		/datum/reagent/consumable/mayonnaise = 3,
 		/datum/reagent/consumable/nutriment/protein = 7,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 	)
 	tastes = list("bun" = 2, "chicken" = 4, "God's covenant" = 1)
 	foodtypes = GRAIN | MEAT | FRIED

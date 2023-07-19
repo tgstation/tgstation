@@ -203,7 +203,7 @@
 		/datum/reagent/consumable/salt = 5,
 		/obj/item/food/grown/herbs = 2,
 		/obj/item/food/grown/garlic = 1,
-		/datum/reagent/consumable/quality_oil = 5,
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 5,
 		/obj/item/food/canned/pine_nuts = 1
 	)
 	result = /obj/item/food/pesto
@@ -215,7 +215,7 @@
 		/obj/item/food/canned/tomatoes = 1,
 		/datum/reagent/consumable/salt = 2,
 		/obj/item/food/grown/herbs = 1,
-		/datum/reagent/consumable/quality_oil = 5
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 5
 	)
 	result = /obj/item/food/tomato_sauce
 	category = CAT_MISCFOOD

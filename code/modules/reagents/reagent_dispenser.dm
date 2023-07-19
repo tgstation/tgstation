@@ -378,7 +378,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	desc = "A huge metal vat with a tap on the front. Filled with cooking oil for use in frying food."
 	icon_state = "vat"
 	anchored = TRUE
-	reagent_id = /datum/reagent/consumable/cooking_oil
+	reagent_id = /datum/reagent/consumable/nutriment/fat/oil
 	openable = TRUE
 
 /obj/structure/reagent_dispensers/servingdish

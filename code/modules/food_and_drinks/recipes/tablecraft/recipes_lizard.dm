@@ -74,7 +74,7 @@
 		/obj/item/food/grown/garlic = 1,
 		/datum/reagent/consumable/lemonjuice = 3,
 		/datum/reagent/consumable/blackpepper = 2,
-		/datum/reagent/consumable/quality_oil = 3
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 3
 	)
 	result = /obj/item/food/lizard_escargot
 	category = CAT_LIZARD
@@ -148,7 +148,7 @@
 		/obj/item/food/steeped_mushrooms = 1,
 		/obj/item/food/grown/mushroom/plumphelmet = 1,
 		/obj/item/food/grown/mushroom/chanterelle = 1,
-		/datum/reagent/consumable/quality_oil = 5
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 5
 	)
 	result = /obj/item/food/mushroomy_stirfry
 	category = CAT_LIZARD
@@ -204,7 +204,7 @@
 		/obj/item/food/spaghetti/nizaya = 1,
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/grown/chili = 1,
-		/datum/reagent/consumable/quality_oil = 5
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 5
 	)
 	result = /obj/item/food/spaghetti/garlic_nizaya
 	category = CAT_LIZARD
@@ -228,7 +228,7 @@
 		/obj/item/food/spaghetti/nizaya = 1,
 		/obj/item/food/steeped_mushrooms = 1,
 		/obj/item/food/grown/garlic = 1,
-		/datum/reagent/consumable/quality_oil = 5
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 5
 	)
 	result = /obj/item/food/spaghetti/mushroom_nizaya
 	category = CAT_LIZARD
@@ -239,7 +239,7 @@
 		/obj/item/food/root_flatbread = 1,
 		/obj/item/food/grown/garlic = 1,
 		/datum/reagent/consumable/lemonjuice = 2,
-		/datum/reagent/consumable/quality_oil = 3
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 3
 	)
 	result = /obj/item/food/pizza/flatbread/rustic
 	category = CAT_LIZARD
@@ -251,7 +251,7 @@
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/meatball = 2,
-		/datum/reagent/consumable/quality_oil = 3
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 3
 	)
 	result = /obj/item/food/pizza/flatbread/italic
 	category = CAT_LIZARD
@@ -313,7 +313,7 @@
 		/obj/item/food/root_flatbread = 1,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/grown/mushroom = 3,
-		/datum/reagent/consumable/quality_oil = 3
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 3
 	)
 	result = /obj/item/food/pizza/flatbread/mushroom
 	category = CAT_LIZARD

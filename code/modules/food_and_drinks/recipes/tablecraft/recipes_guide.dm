@@ -180,7 +180,7 @@
 	reaction = /datum/chemical_reaction/food/yoghurt
 
 /datum/crafting_recipe/food/reaction/quality_oil
-	result = /datum/reagent/consumable/quality_oil
+	result = /datum/reagent/consumable/nutriment/fat/oil/olive
 	reaction = /datum/chemical_reaction/food/quality_oil
 
 /datum/crafting_recipe/food/reaction/quality_oil/upconvert

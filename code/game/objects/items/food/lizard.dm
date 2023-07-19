@@ -174,7 +174,7 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/salt = 1,
-		/datum/reagent/consumable/cooking_oil = 1,
+		/datum/reagent/consumable/nutriment/fat/oil = 1,
 	)
 	tastes = list("black pudding" = 1, "batter" = 1, "oil" = 1)
 	foodtypes = MEAT | FRIED
@@ -220,7 +220,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 5,
 		/datum/reagent/consumable/nutriment = 3,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 	)
 	tastes = list("cheese" = 1, "oil" = 1)
 	foodtypes = MEAT | VEGETABLES | NUTS | GORE

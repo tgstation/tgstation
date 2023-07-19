@@ -57,7 +57,7 @@
 	resulting_food_path = /obj/item/food/tofu
 
 /datum/chemical_reaction/food/candycorn
-	required_reagents = list(/datum/reagent/consumable/cornoil = 5)
+	required_reagents = list(/datum/reagent/consumable/nutriment/fat/oil = 5)
 	required_catalysts = list(/datum/reagent/consumable/sugar = 5)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
@@ -203,7 +203,7 @@
 	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/flour = 1)
 
 /datum/chemical_reaction/food/mothic_pizza_dough
-	required_reagents = list(/datum/reagent/consumable/milk = 5, /datum/reagent/consumable/quality_oil = 2, /datum/reagent/medicine/salglu_solution = 5, /datum/reagent/consumable/cornmeal = 10, /datum/reagent/consumable/flour = 5)
+	required_reagents = list(/datum/reagent/consumable/milk = 5, /datum/reagent/consumable/nutriment/fat/oil/olive = 2, /datum/reagent/medicine/salglu_solution = 5, /datum/reagent/consumable/cornmeal = 10, /datum/reagent/consumable/flour = 5)
 	mix_message = "The ingredients form a pizza dough."
 	reaction_flags = REACTION_INSTANT
 	resulting_food_path = /obj/item/food/mothic_pizza_dough
@@ -242,13 +242,13 @@
 	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/quality_oil_upconvert
-	required_reagents = list(/datum/reagent/consumable/quality_oil = 1, /datum/reagent/consumable/cooking_oil = 2)
-	results = list(/datum/reagent/consumable/quality_oil = 2)
+	required_reagents = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 1, /datum/reagent/consumable/nutriment/fat/oil = 2)
+	results = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 2)
 	mix_message = "The cooking oil dilutes the quality oil- how delightfully devilish..."
 	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/quality_oil
-	results = list(/datum/reagent/consumable/quality_oil = 2)
+	results = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 2)
 	required_reagents = list(/datum/reagent/consumable/olivepaste = 4, /datum/reagent/water = 1)
 	reaction_flags = REACTION_INSTANT
 
