@@ -14,4 +14,4 @@
 	multiplicative_slowdown = 4
 
 /datum/actionspeed_modifier/trauma_savant
-	multiplicative_slowdown = 0.5
+	multiplicative_slowdown = -0.8

@@ -337,17 +337,27 @@
 	name = "Trauma Savant"
 	desc = "Patient displays enhanced, mime-like dexterity, but is unable to speak or gesticulate intelligibly."
 	scan_desc = "damaged, monochrome speech center and swollen primary motor cortex"
-	gain_text = span_warning("You feel unable to express yourself at all! And yet, things you found complex once you seem to find extremely simple now.")
-	lose_text = span_warning("You remember how to express yourself, but start having familiar trouble with complex topics.")
+	gain_text = span_warning("You feel unable to express yourself at all! And yet, you feel a newfound dexterity and ability to quickly put things together.")
+	lose_text = span_warning("You remember how to express yourself, but start having familiar trouble with complex problems and actions.")
 
 /datum/brain_trauma/severe/trauma_savant/on_gain()
 	ADD_TRAIT(owner, list(TRAIT_EMOTEMUTE, TRAIT_MUTE, TRAIT_MIMING), TRAUMA_TRAIT)
+
 	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/trauma_savant)
 	owner.sound_environment_override = SOUND_ENVIRONMENT_HANGAR
+
+	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/aphasia, LANGUAGE_APHASIA)
+	// they can *hear* it, but they can't *speak* it
+	owner.grant_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 	..()
 
 /datum/brain_trauma/severe/trauma_savant/on_lose()
 	REMOVE_TRAIT(owner, list(TRAIT_EMOTEMUTE, TRAIT_MUTE, TRAIT_MIMING), TRAUMA_TRAIT)
+
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/trauma_savant)
 	owner.sound_environment_override = NONE
+
+	if(!QDELING(owner))
+		owner.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_APHASIA)
+		owner.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 	..()
