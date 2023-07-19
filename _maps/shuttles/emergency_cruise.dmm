@@ -7,6 +7,9 @@
 	desc = "A storage unit containing equipment for responding to emergencies.";
 	req_access = list("security")
 	},
+/obj/item/food/burger/cheese,
+/obj/item/gun/ballistic/revolver/mateba,
+/obj/item/ammo_box/a357,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "ao" = (
@@ -249,6 +252,7 @@
 	pixel_x = -7;
 	pixel_y = 13
 	},
+/obj/effect/turf_decal/trimline/yellow/line,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "eM" = (
@@ -415,6 +419,9 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 10
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "iI" = (
@@ -585,9 +592,8 @@
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 1
 	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Escape Shuttle Brig";
-	safe = 0
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
@@ -777,6 +783,9 @@
 /area/shuttle/escape)
 "oH" = (
 /obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured,
@@ -1010,6 +1019,7 @@
 	pixel_x = 11;
 	pixel_y = 4
 	},
+/obj/item/gun/grenadelauncher,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "tS" = (
@@ -1025,6 +1035,9 @@
 "tU" = (
 /obj/structure/chair/sofa/bench/left,
 /obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/line{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured,
@@ -1462,16 +1475,14 @@
 	dir = 5;
 	network = list("ss13","medbay")
 	},
+/obj/effect/turf_decal/trimline/red/end{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/end{
+	dir = 4
+	},
 /obj/machinery/computer/arcade{
 	dir = 8
-	},
-/obj/effect/turf_decal/trimline/red/corner{
-	dir = 1;
-	pixel_y = -16
-	},
-/obj/effect/turf_decal/trimline/red/corner{
-	dir = 8;
-	pixel_y = 16
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
@@ -1493,6 +1504,9 @@
 "Dn" = (
 /obj/structure/chair/sofa/bench/right,
 /obj/effect/turf_decal/trimline/red/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/yellow/line{
 	dir = 9
 	},
 /turf/open/floor/iron/dark/textured,
@@ -1534,6 +1548,17 @@
 	dir = 1
 	},
 /area/shuttle/escape)
+"DU" = (
+/obj/effect/turf_decal/trimline/red/line,
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/line,
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape/brig)
 "Ed" = (
 /obj/structure/bed/double/pod,
 /obj/item/bedsheet/patriot/double,
@@ -1637,6 +1662,15 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
+"Fc" = (
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/escape/brig)
 "Fp" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Brig";
@@ -1902,6 +1936,10 @@
 /obj/structure/sign/poster/contraband/clown{
 	pixel_y = -30
 	},
+/obj/effect/turf_decal/trimline/yellow/line,
+/obj/effect/turf_decal/trimline/yellow/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Ki" = (
@@ -2042,6 +2080,9 @@
 /area/shuttle/escape)
 "MZ" = (
 /obj/effect/turf_decal/trimline/red/warning{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 5
 	},
 /turf/open/floor/iron/dark/textured,
@@ -2324,6 +2365,7 @@
 	req_access = list("security");
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "SZ" = (
@@ -2522,6 +2564,9 @@
 /area/shuttle/escape)
 "VX" = (
 /obj/effect/turf_decal/trimline/red/warning{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 10
 	},
 /turf/open/floor/iron/dark/textured,
@@ -3102,7 +3147,7 @@ vI
 nZ
 SK
 MZ
-jW
+Fc
 Kg
 rX
 DJ
@@ -3149,7 +3194,7 @@ GT
 iP
 dS
 Yh
-AB
+DU
 rX
 qx
 gY
@@ -3195,7 +3240,7 @@ Hs
 iP
 xi
 OQ
-AB
+DU
 rX
 ft
 El
