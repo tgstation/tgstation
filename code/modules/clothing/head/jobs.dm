@@ -56,14 +56,14 @@
 
 //Captain: This is no longer space-worthy
 /datum/armor/hats_caphat
-	melee = 25
-	bullet = 15
+	melee = 40
+	bullet = 30
 	laser = 25
 	energy = 35
 	bomb = 25
 	fire = 50
 	acid = 50
-	wound = 5
+	wound = 10
 
 /obj/item/clothing/head/hats/caphat/parade
 	name = "captain's parade cap"
