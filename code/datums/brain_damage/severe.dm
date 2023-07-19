@@ -330,3 +330,24 @@
 /datum/brain_trauma/severe/dyslexia/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
 	..()
+
+// Can't speak or even gesticulate, but you are now a master at sleight of hand! Inspired by Rimworld and real-life savant syndrome.
+// Also, it's pretty mimey, so you become basically a super mime, in case that somehow applies in anything you do now.
+/datum/brain_trauma/severe/trauma_savant
+	name = "Trauma Savant"
+	desc = "Patient displays enhanced, mime-like dexterity, but is unable to speak or gesticulate intelligibly."
+	scan_desc = "damaged, monochrome speech center and swollen primary motor cortex"
+	gain_text = span_warning("You feel unable to express yourself at all! And yet, things you found complex once you seem to find extremely simple now.")
+	lose_text = span_warning("You remember how to express yourself, but start having familiar trouble with complex topics.")
+
+/datum/brain_trauma/severe/trauma_savant/on_gain()
+	ADD_TRAIT(owner, list(TRAIT_EMOTEMUTE, TRAIT_MUTE, TRAIT_MIMING), TRAUMA_TRAIT)
+	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/trauma_savant)
+	owner.sound_environment_override = SOUND_ENVIRONMENT_HANGAR
+	..()
+
+/datum/brain_trauma/severe/trauma_savant/on_lose()
+	REMOVE_TRAIT(owner, list(TRAIT_EMOTEMUTE, TRAIT_MUTE, TRAIT_MIMING), TRAUMA_TRAIT)
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/trauma_savant)
+	owner.sound_environment_override = NONE
+	..()

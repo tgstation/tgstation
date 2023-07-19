@@ -12,3 +12,6 @@
 
 /datum/actionspeed_modifier/status_effect/hazard_area
 	multiplicative_slowdown = 4
+
+/datum/actionspeed_modifier/trauma_savant
+	multiplicative_slowdown = 0.5
