@@ -49,7 +49,8 @@
 /datum/component/infective/proc/try_infect_eat(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
 
-	eater.add_mood_event("disgust", /datum/mood_event/disgust/dirty_food)
+	if(!eater.has_quirk(/datum/quirk/deviant_tastes))
+		eater.add_mood_event("disgust", /datum/mood_event/disgust/dirty_food)
 
 	if(is_weak && !prob(weak_infection_chance))
 		return

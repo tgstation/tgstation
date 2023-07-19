@@ -1,0 +1,6 @@
+author: "Helg2"
+delete-after: True
+changes:
+  - rscadd: "Bank machine now has a circuit for it. Spawns in secure tech storage and researchable in the same nod as comms console."
+  - balance: "Due to possibility of creating area and making there bank machines that aren't roundstart will have gps signals."
+  - bugfix: "Bank machine now doesn't yell about unauthorized credit withdrawal when its authorized."

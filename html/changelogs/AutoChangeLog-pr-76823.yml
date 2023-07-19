@@ -1,4 +1,0 @@
-author: "carshalash"
-delete-after: True
-changes:
-  - bugfix: "Intern returns misplaced droppers back to deltastation's xenobiology lab."
