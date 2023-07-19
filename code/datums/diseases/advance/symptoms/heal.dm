@@ -650,3 +650,6 @@
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
+
+/datum/symptom/heal/radiation/can_generate_randomly()
+	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA) //because people can never really suffer enough

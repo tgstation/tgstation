@@ -108,3 +108,7 @@
 	data["neutered"] = neutered
 	data["threshold_desc"] = threshold_descs
 	return data
+
+/// Check if we can generate randomly
+/datum/symptom/proc/can_generate_randomly()
+	return naturally_occuring
