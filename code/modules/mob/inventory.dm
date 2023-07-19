@@ -273,11 +273,12 @@
 				ccw_index = dir_count
 			turfs_ordered += get_step(src, dirs[ccw_index])	// Add next tile on your left
 
-		// Check tables on these turfs
-		for(var/turf in turfs_ordered)
-			if(locate(/obj/structure/table) in turf)
-				location = turf
-				break
+		// Check for elevated structures (incl. tables) on these turfs
+		for(var/turf/our_turf in turfs_ordered)
+			for(var/atom/movable/content as anything in our_turf.contents)
+				if(GLOB.typecache_elevated_structures[content.type])
+					location = our_turf
+					break
 
 	I.forceMove(location)
 	I.layer = initial(I.layer)
