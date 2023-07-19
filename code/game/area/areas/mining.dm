@@ -233,7 +233,7 @@
 
 /area/icemoon/surface/outdoors/unexplored/rivers/New()
 	. = ..()
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_FOREST))
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED))
 		map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
 
 /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters

@@ -25,12 +25,12 @@
 	death_limit = 4
 	smoothing_iterations = 10
 
-/// Surface snow generator variant for forested station trait
+/// Surface snow generator variant for forested station trait, WITH FORESTSSSS
 /datum/map_generator/cave_generator/icemoon/surface/forested
 	weighted_open_turf_types = list(/turf/open/misc/asteroid/snow/icemoon = 1)
-	flora_spawn_chance = 80
-	initial_closed_chance = 30
+	initial_closed_chance = 10
 
+	flora_spawn_chance = 80
 	weighted_flora_spawn_list = list(
 		/obj/structure/flora/tree/pine/style_random = 18,
 		/obj/structure/flora/tree/dead/style_random = 1,
@@ -39,6 +39,9 @@
 		/obj/structure/flora/grass/both/style_random = 78,
 		/obj/structure/flora/ash/chilly = 1,
 	)
+
+	mob_spawn_chance = 1
+	weighted_mob_spawn_list = list(/mob/living/basic/deer = 1)
 
 /datum/map_generator/cave_generator/icemoon/surface/noruins //use this for when you don't want ruins to spawn in a certain area
 

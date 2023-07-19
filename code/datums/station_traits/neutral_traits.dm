@@ -330,7 +330,7 @@
 /datum/station_trait/forested
 	name = "Forested Outside"
 	trait_type = STATION_TRAIT_NEUTRAL
-	trait_to_give = STATION_TRAIT_FOREST
+	trait_to_give = STATION_TRAIT_FORESTED
 	weight = 4
 	show_in_report = TRUE
 	report_message = "There sure are a lot of trees out there."
