@@ -5722,10 +5722,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
-"cft" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/dark,
-/area/station/medical/morgue)
 "cfv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/preopen,
@@ -9525,6 +9521,7 @@
 /obj/structure/bodycontainer/morgue{
 	dir = 1
 	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "dGq" = (
@@ -35841,7 +35838,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "nbJ" = (
@@ -35980,8 +35976,8 @@
 /area/station/hallway/secondary/command)
 "ndZ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/light/small/directional/east,
 /obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ned" = (
@@ -92544,7 +92540,7 @@ ePM
 dVN
 bxE
 hZV
-cft
+xcp
 xcp
 kOM
 osD
