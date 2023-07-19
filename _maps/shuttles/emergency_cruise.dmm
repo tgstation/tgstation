@@ -621,6 +621,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/grenade/frag,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
 "ld" = (
@@ -1453,7 +1454,7 @@
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "Cw" = (
-/obj/effect/spawner/random/vending/snackvend,
+/obj/machinery/vending/imported,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "Cy" = (
@@ -1870,6 +1871,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/grenade/frag,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Jk" = (
