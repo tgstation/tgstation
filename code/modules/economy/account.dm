@@ -207,7 +207,7 @@
 		else if(isturf(card.loc)) //If on the ground
 			var/turf/card_location = card.loc
 			for(var/mob/potential_hearer in hearers(1,card_location))
-				if(!potential_hearer.client || !potential_hearer.client?.prefs)
+				if(potential_hearer.client && !potential_hearer.client?.prefs)
 					stack_trace("[potential_hearer] ([potential_hearer.ckey]) had null prefs, which shouldn't be possible!")
 					continue
 				if(!potential_hearer.client || (!(potential_hearer.client?.prefs.chat_toggles & CHAT_BANKCARD) && !force))
