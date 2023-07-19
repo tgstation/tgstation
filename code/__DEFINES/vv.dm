@@ -110,6 +110,7 @@
 
 // /obj/item
 #define VV_HK_ADD_FANTASY_AFFIX "add_fantasy_affix"
+#define VV_HK_EDIT_SWING "edit_swing"
 
 // /mob
 #define VV_HK_GIB "gib"

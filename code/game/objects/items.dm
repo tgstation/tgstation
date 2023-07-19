@@ -505,6 +505,7 @@
 /obj/item/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION(VV_HK_ADD_FANTASY_AFFIX, "Add Fantasy Affix")
+	VV_DROPDOWN_OPTION(VV_HK_EDIT_SWING, "Edit swing style")
 
 /obj/item/vv_do_topic(list/href_list)
 	. = ..()
@@ -561,6 +562,49 @@
 		to_chat(usr, span_notice("[before_name] now has [picked_affix_name]!"))
 		log_admin("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]")
 		message_admins(span_notice("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]"))
+
+	if(href_list[VV_HK_EDIT_SWING] && check_rights(R_DEBUG|R_ADMIN|R_VAREDIT))
+		if(item_flags & NOBLUDGEON)
+			tgui_alert(usr, "This item as item flag NOBLUDGEON, it cannot be used to swing.", "Swing VV", list("Oh okay"))
+			return
+
+		var/list/edit_options = list("Assign new", "Cancel")
+		if(!isnull(attack_style_path))
+			edit_options += "Edit" // Item already has a swing we can edit
+
+		var/what_are_we_doing = tgui_alert(usr, "Editing swing style of [src]:", "Swing VV", edit_options)
+		switch(what_are_we_doing)
+			if("Edit")
+				var/main_or_alt = "Main"
+				if(attack_style_path && alt_attack_style_path) // hey, we have a choice!
+					main_or_alt = tgui_alert(usr, "Edit which swing style?", "Swing VV", list("Main", "Alt", "Cancel"))
+				if(QDELETED(src) || !check_rights(R_DEBUG|R_ADMIN|R_VAREDIT))
+					return
+
+				switch(main_or_alt)
+					if("Main")
+						attack_style = new attack_style_path()
+					if("Alt")
+						alt_attack_style = new alt_attack_style_path()
+					else
+						return
+
+				tgui_alert(usr, "You can now edit the[main_or_alt == "Alt" ? " alt " : " "]attack style via VV as you would normally.", "Swing VV", list("Thanks"))
+
+			if("Assign new")
+				var/chosen_swing = tgui_input_list(usr, "Choose a style:", "Swing VV", typesof(/datum/attack_style/melee_weapon))
+				var/main_or_alt = tgui_alert(usr, "Assign to main (left click) or alt (right click)?", "Swing VV", list("Main", "Alt", "Cancel"))
+				var/edit_after = tgui_alert(usr, "Want to edit it after?", "Swing VV", list("Yes", "No")) == "Yes"
+				if(QDELETED(src) || !check_rights(R_DEBUG|R_ADMIN|R_VAREDIT) || !ispath(chosen_swing, /datum/attack_style/melee_weapon))
+					return
+
+				switch(main_or_alt)
+					if("Main")
+						attack_style_path = edit_after ? new chosen_swing() : GLOB.attack_styles[chosen_swing]
+					if("Alt")
+						alt_attack_style_path = edit_after ? new chosen_swing() : GLOB.attack_styles[chosen_swing]
+					else
+						return
 
 /obj/item/attack_hand(mob/user, list/modifiers)
 	. = ..()

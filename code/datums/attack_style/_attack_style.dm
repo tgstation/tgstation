@@ -38,6 +38,15 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	/// If TRUE, calls swing_enters_turf() when the swing enters a new turf, allowing you to add effects when the swing enters a new turf.
 	var/affects_turf = FALSE
 
+#ifndef TESTING
+/datum/attack_style/vv_edit_var(var_name, var_value)
+	// do not allow editing the global singletons
+	// admins can still create custom styles via VV dropdown
+	if(GLOB.attack_styles[type] == src)
+		return FALSE
+	return ..()
+#endif
+
 /**
  * Process attack -> execute attack -> finalize attack
  *
@@ -97,7 +106,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			addtimer(CALLBACK(attacker, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/attack_style_executed), cd * 0.2)
 		attacker.changeNext_move(cd)
 
-	SEND_SIGNAL(attacker, COMSIG_ATTACK_STYLE_PROCESSED, weapon, attack_result)
+	SEND_SIGNAL(attacker, COMSIG_ATTACK_STYLE_PROCESSED, weapon, attack_result, src)
 	return successful_attack
 
 /datum/attack_style/proc/execute_attack(

@@ -16,7 +16,7 @@
 /datum/component/wearertargeting/punchcooldown/proc/reducecooldown(mob/living/carbon/source, obj/item/weapon_used, attack_result)
 	SIGNAL_HANDLER
 
-	if(istype(source.get_active_held_item(), /obj/item/hand_item/slapper) || (attack_result & ATTACK_SWING_HIT))
+	if(istype(source.get_active_held_item(), /obj/item/hand_item/slapper) || !(attack_result & ATTACK_SWING_CANCEL))
 		INVOKE_ASYNC(src, PROC_REF(engage_turbo), source)
 
 /datum/component/wearertargeting/punchcooldown/proc/engage_turbo(mob/living/attacker)
