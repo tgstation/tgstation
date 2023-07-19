@@ -1,10 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ac" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/closet/secure_closet/ert_sec{
+	name = "Emergency response security locker";
+	desc = "A storage unit containing equipment for responding to emergencies."
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "ao" = (
@@ -883,6 +884,7 @@
 /area/shuttle/escape)
 "rw" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "rx" = (
@@ -991,6 +993,18 @@
 	pixel_y = 9
 	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/machinery/recharger{
+	active_power_usage = 0;
+	idle_power_usage = 0;
+	use_power = 0;
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/storage/box/stingbangs,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = 11;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "tS" = (
@@ -1116,15 +1130,16 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "wf" = (
-/obj/effect/turf_decal/trimline/red/line{
-	dir = 1
-	},
 /obj/machinery/door/window/survival_pod{
 	name = "Shuttle Armory";
 	req_access = list("security");
-	dir = 8
+	dir = 8;
+	safe = 0
 	},
-/obj/effect/turf_decal/trimline/red/line,
+/obj/effect/turf_decal/trimline/red/warning,
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "wF" = (
@@ -1271,10 +1286,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "za" = (
-/obj/item/storage/box/handcuffs{
-	pixel_x = -3;
-	pixel_y = 9
-	},
 /obj/machinery/recharger{
 	active_power_usage = 0;
 	idle_power_usage = 0;
@@ -1282,13 +1293,11 @@
 	pixel_x = 38;
 	pixel_y = 3
 	},
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_x = 11;
-	pixel_y = 4
-	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
-/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "zm" = (
@@ -1659,7 +1668,8 @@
 "FS" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Cockpit";
-	id_tag = "escape_cockpit_blast"
+	id_tag = "escape_cockpit_blast";
+	safe = 0
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/showroomfloor,
@@ -1818,6 +1828,7 @@
 	pixel_y = 32
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Jk" = (
@@ -2228,15 +2239,16 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Sm" = (
-/obj/effect/turf_decal/trimline/red/line,
-/obj/effect/turf_decal/trimline/red/line{
+/obj/machinery/door/window/survival_pod{
+	name = "Officer Seating";
+	req_access = list("security");
+	dir = 4;
+	safe = 0
+	},
+/obj/effect/turf_decal/trimline/red/warning{
 	dir = 1
 	},
-/obj/machinery/door/window/survival_pod{
-	name = "Holding Cell A";
-	req_access = list("security");
-	dir = 4
-	},
+/obj/effect/turf_decal/trimline/red/warning,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "So" = (
@@ -2421,9 +2433,10 @@
 /area/shuttle/escape/brig)
 "Vd" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/item/storage/box/stingbangs,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
-/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Vi" = (
