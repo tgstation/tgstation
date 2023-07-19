@@ -18,7 +18,7 @@
 	/// Because the lighting system does not like movable lights getting set_light() called.
 	switch(atom_target.light_system)
 		if(STATIC_LIGHT)
-			target.set_light(0, 0, null, FALSE)
+			target.set_light(0, 0, null, l_on = FALSE)
 		else
 			target.set_light_power(0)
 			target.set_light_range(0)
