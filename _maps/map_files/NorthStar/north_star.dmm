@@ -3417,10 +3417,6 @@
 /obj/machinery/rnd/production/protolathe/department/science,
 /obj/effect/turf_decal/bot,
 /obj/machinery/newscaster/directional/east,
-/obj/effect/mapping_helpers/requests_console/announcement,
-/obj/effect/mapping_helpers/requests_console/ore_update,
-/obj/effect/mapping_helpers/requests_console/assistance,
-/obj/effect/mapping_helpers/requests_console/information,
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "aSs" = (
@@ -5386,6 +5382,10 @@
 	department = "Research Lab";
 	name = "Research Requests Console"
 	},
+/obj/effect/mapping_helpers/requests_console/ore_update,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/announcement,
+/obj/effect/mapping_helpers/requests_console/information,
 /turf/open/floor/iron/dark,
 /area/station/science/lab)
 "boP" = (

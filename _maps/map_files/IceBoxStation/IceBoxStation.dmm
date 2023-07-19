@@ -17586,8 +17586,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/obj/effect/mapping_helpers/requests_console/assistance,
-/obj/effect/mapping_helpers/requests_console/information,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "fxJ" = (
@@ -40516,6 +40514,9 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/requests_console/directional/east,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/information,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "mYG" = (
