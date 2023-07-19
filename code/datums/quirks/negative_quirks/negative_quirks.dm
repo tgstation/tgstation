@@ -381,10 +381,10 @@
 /datum/quirk/lightless/on_process()
 	var/turf/T = get_turf(quirk_holder)
 	var/lums = T.get_lumcount()
-	if(lums >= 0.8)
-		trait_holder.SEND_SIGNAL(COMSIG_ADD_MOOD_EVENT, "bright_light", /datum/mood_event/bright_light)
+	if(lums > LIGHTING_TILE_IS_DARK)
+		quirk_holder.add_mood_event("bright_light", /datum/mood_event/bright_light)
 	else
-		trait_holder.SEND_SIGNAL(COMSIG_CLEAR_MOOD_EVENT, "bright_light")
+		quirk_holder.clear_mood_event("bright_light")
 
 /datum/quirk/item_quirk/nearsighted
 	name = "Nearsighted"
