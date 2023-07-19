@@ -887,6 +887,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SUIT_TRAIT "suit"
 /// Trait associated to lying down (having a [lying_angle] of a different value than zero).
 #define LYING_DOWN_TRAIT "lying-down"
+/// A trait gained by leaning against a wall
 #define LEANING_TRAIT "leaning"
 /// Trait associated to lacking electrical power.
 #define POWER_LACK_TRAIT "power-lack"
@@ -959,9 +960,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPECIES_FLIGHT_TRAIT "species-flight"
 #define FROSTMINER_ENRAGE_TRAIT "frostminer-enrage"
 #define NO_GRAVITY_TRAIT "no-gravity"
+/// A trait gained from a mob's leap action, like the leaper
 #define LEAPING_TRAIT "leaping"
-#define VANISHING_TRAIT "vainishing"
+/// A trait gained from a mob's vanish action, like the herophant
+#define VANISHING_TRAIT "vanishing"
+/// A trait gained from a mob's swoop action, like the ash drake
 #define SWOOPING_TRAIT "swooping"
+/// A trait gained from a mob's mimic ability, like the mimic
 #define MIMIC_TRAIT "mimic"
 #define SHRUNKEN_TRAIT "shrunken"
 #define LEAPER_BUBBLE_TRAIT "leaper-bubble"

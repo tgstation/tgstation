@@ -62,20 +62,12 @@
 	ADD_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
 	visible_message(span_notice("[src] leans against \the [wall]!"), \
 						span_notice("You lean against \the [wall]!"))
-	RegisterSignal(src, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(stop_leaning))
-	RegisterSignal(src, COMSIG_HUMAN_DISARM_HIT, PROC_REF(stop_leaning))
-	RegisterSignal(src, COMSIG_LIVING_GET_PULLED, PROC_REF(stop_leaning))
-	RegisterSignal(src, COMSIG_MOVABLE_TELEPORTING, PROC_REF(stop_leaning))
-	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(stop_leaning))
+	RegisterSignals(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_ATOM_DIR_CHANGE), PROC_REF(stop_leaning))
 	update_fov()
 
 /mob/living/carbon/proc/stop_leaning()
 	SIGNAL_HANDLER
-	UnregisterSignal(src, COMSIG_MOB_CLIENT_PRE_MOVE)
-	UnregisterSignal(src, COMSIG_HUMAN_DISARM_HIT)
-	UnregisterSignal(src, COMSIG_LIVING_GET_PULLED)
-	UnregisterSignal(src, COMSIG_MOVABLE_TELEPORTING)
-	UnregisterSignal(src, COMSIG_ATOM_DIR_CHANGE)
+	UnregisterSignal(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_ATOM_DIR_CHANGE))
 	is_leaning = FALSE
 	pixel_y = base_pixel_y + body_position_pixel_x_offset
 	pixel_x = base_pixel_y + body_position_pixel_y_offset
