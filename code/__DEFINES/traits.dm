@@ -755,6 +755,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_POSTERBOY "poster_boy"
 #define TRAIT_THROWINGARM "throwing_arm"
 
+// Debug traits
+/// This object has light debugging tools attached to it
+#define TRAIT_LIGHTING_DEBUGGED "lighting_debugged"
+
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
 
@@ -877,6 +881,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATUS_EFFECT_TRAIT "status-effect"
 /// A trait given by a specific status effect (not sure why we need both but whatever!)
 #define TRAIT_STATUS_EFFECT(effect_id) "[effect_id]-trait"
+/// Trait from light debugging
+#define LIGHT_DEBUG_TRAIT "light-debug"
 
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"
