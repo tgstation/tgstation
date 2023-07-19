@@ -345,7 +345,7 @@
 	if(prob(70))
 		glasses = /obj/item/clothing/glasses/blindfold
 	if(prob(70))
-		belt = /obj/item/knife/combat/survival = 1,
+		belt = /obj/item/knife/combat/survival
 	if(prob(90))
 		back = /obj/item/storage/backpack/cultpack
 		backpack_contents = list()
