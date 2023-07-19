@@ -793,3 +793,55 @@
   timothymtorres:
   - rscadd: Add healing boost to organs while mob is sleeping (does not apply to robotic
       or dying organs)
+2023-07-19:
+  Ben10Omintrix:
+  - refactor: the penguin is a basic animal
+  - rscadd: the penguin now layed eggs
+  - rscadd: the penguin and the chicken babys will go look for adult penguin or chicken
+      and be happy when he is near the adult
+  CoiledLamb:
+  - image: updated most tank sprites.
+  DaydreamIQ:
+  - spellcheck: Maints fridge doesn't have _ in its name anymore
+  Donglesplonge:
+  - bugfix: replaces the unspawnable cannonballs in birdshot maintenance with a stack
+      so that the 4 cannonballs properly spawn, make sure to point them away from
+      medical!
+  Melbert:
+  - bugfix: Cyborgs no longer drop their radio key when deleted, only when deconstructed
+      first
+  - bugfix: Cyborgs no longer drop their MMI on deletion, only prior to deletion.
+      This may result in bad code rearing its ugly head, open an issue report on the
+      github if you're a cyborg and get ghosted when you feel like you shouldn't
+  - bugfix: Runtime from syndie cyborgs spawning
+  - bugfix: AI deaths are reported to black box
+  - qol: Wizard Spellbook is now alphabetized
+  - qol: Wizard Spellbook now has a search bar!
+  OrionTheFox:
+  - refactor: refactored some code relating to greyscale clothing - please report
+      relevant issues on github!
+  Tattle:
+  - spellcheck: Fixed the grammar on a few revenant messages
+  Vekter:
+  - rscadd: Added 2 new brain damage lines. Beat your skull in with a wrench and discover
+      them today!
+  coldud13:
+  - rscadd: You can now toggle the visibility for hair on your noggin when wearing
+      surgery caps.
+  necromanceranne:
+  - bugfix: Cleans up the lavaland exports to the modern loot table lists.
+  - spellcheck: More elaborate explanation for what exactly the sinister shard does
+      when you look at the explanation in the null rod selection UI.
+  - bugfix: Sniper rifles have a range that allows them to aim more smoothly (and
+      still decently long ranged)
+  - bugfix: Fixes a runtime on inserting the vorpal scythe into your arm. You should
+      now gain the Morbid trait, as expected.
+  scriptis:
+  - qol: techfabs now use sheets(TM) as the default unit of measurement
+  - bugfix: mechfab icons aren't perpetually gray
+  tommysalami3:
+  - rscadd: Ambient tracks for icebox.
+  - rscadd: Independent global_list for icebox.
+  vinylspiders:
+  - bugfix: ethereal hair will now go out when they die again
+  - code_imp: apc's update_icon_state proc will no longer set the icon file path

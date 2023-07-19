@@ -1,0 +1,5 @@
+author: "SirNooben"
+delete-after: True
+changes:
+  - bugfix: "Fixed the alien limbgrower UI"
+  - bugfix: "Fixed being able to order negative or more than 20 items in mining order console"

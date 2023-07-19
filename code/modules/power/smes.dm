@@ -134,7 +134,7 @@
 			to_chat(user, span_warning("You need more wires!"))
 			return
 
-		var/terminal_cable_layer = CABLE_LAYER_1
+		var/terminal_cable_layer
 		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
 			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
 			if(isnull(choice))
@@ -205,7 +205,7 @@
 
 // create a terminal object pointing towards the SMES
 // wires will attach to this
-/obj/machinery/power/smes/proc/make_terminal(turf/T, terminal_cable_layer)
+/obj/machinery/power/smes/proc/make_terminal(turf/T, terminal_cable_layer = cable_layer)
 	terminal = new/obj/machinery/power/terminal(T)
 	terminal.cable_layer = terminal_cable_layer
 	terminal.setDir(get_dir(T,src))
