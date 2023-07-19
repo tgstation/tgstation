@@ -10,7 +10,7 @@
 	production = 4
 	potency = 15
 	growthstages = 4
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_grow = "soybean-grow"
 	icon_dead = "soybean-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -64,7 +64,7 @@
 	potency = 10
 	growthstages = 4
 	icon_dead = "bean-dead"
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
 	genes = list(/datum/plant_gene/trait/never_mutate, /datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/greenbean/jump)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/medicine/c2/multiver = 0.04) //They're good for you!

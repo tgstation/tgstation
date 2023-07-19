@@ -84,7 +84,7 @@
 			LAZYADD(launched_items, iter_item)
 		else if(isliving(iter))
 			var/mob/living/incineratee = iter
-			incineratee.take_bodypart_damage(0, damage, wound_bonus=wound_bonus, bare_wound_bonus=bare_wound_bonus)
+			incineratee.take_bodypart_damage(0, damage, check_armor = TRUE, wound_bonus=wound_bonus, bare_wound_bonus=bare_wound_bonus)
 			incineratee.adjust_fire_stacks(fire_stacks)
 
 #undef BACKBLAST_MAX_ITEM_KNOCKBACK

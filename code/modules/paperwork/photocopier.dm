@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier
 	name = "photocopier"
 	desc = "Used to copy important documents and anatomy studies."
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "photocopier"
 	density = TRUE
 	power_channel = AREA_USAGE_EQUIP

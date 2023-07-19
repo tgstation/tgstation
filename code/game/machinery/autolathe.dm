@@ -1,6 +1,7 @@
 /obj/machinery/autolathe
 	name = "autolathe"
 	desc = "It produces items using iron, glass, plastic and maybe some more."
+	icon = 'icons/obj/machines/lathes.dmi'
 	icon_state = "autolathe"
 	density = TRUE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
@@ -58,7 +59,7 @@
 		ui.open()
 
 /obj/machinery/autolathe/ui_static_data(mob/user)
-	var/list/data = list()
+	var/list/data = materials.ui_static_data()
 
 	data["designs"] = handle_designs(stored_research.researched_designs)
 	if(imported_designs.len)

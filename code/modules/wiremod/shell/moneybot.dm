@@ -5,7 +5,7 @@
  */
 /obj/structure/money_bot
 	name = "money bot"
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "setup_large"
 
 	density = FALSE

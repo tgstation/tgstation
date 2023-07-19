@@ -398,7 +398,7 @@
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
 	desc = "A wooden contraption, used to dry plant products, food and hide."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "drying_rack"
 	resistance_flags = FLAMMABLE
 	visible_contents = FALSE
@@ -680,7 +680,7 @@
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	pass_flags = PASSTABLE
 	can_atmos_pass = ATMOS_PASS_YES
 	visible_contents = FALSE
