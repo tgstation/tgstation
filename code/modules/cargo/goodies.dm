@@ -265,9 +265,3 @@
 	desc = "A standard-sized coffeepot, for use with a coffeemaker."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/reagent_containers/cup/coffeepot)
-
-/datum/supply_pack/goody/sunglasses
-	name = "Sunglasses Single-Pack"
-	desc = "A single pair of sunglasses. Very convenient for welding."
-	cost = PAYCHECK_CREW * 8
-	contains = list(/obj/item/clothing/glasses/sunglasses)

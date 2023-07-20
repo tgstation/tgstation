@@ -319,8 +319,8 @@
 
 /datum/supply_pack/security/sunglasses
 	name = "Sunglasses Crate"
-	desc = "Three pairs of flash-proof sunglasses."
-	cost = CARGO_CRATE_VALUE * 8
+	desc = "A single pair of flash-proof sunglasses."
+	cost = CARGO_CRATE_VALUE * 2
 	access_view = ACCESS_SECURITY
-	contains = list(/obj/item/clothing/glasses/sunglasses = 3)
-	crate_name = "disabler crate"
+	contains = list(/obj/item/clothing/glasses/sunglasses = 1)
+	crate_name = "sunglasses crate"
