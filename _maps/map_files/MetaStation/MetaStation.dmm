@@ -29469,6 +29469,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/structure/cable,
 /turf/open/floor/iron/textured,
 /area/station/medical/chem_storage)
 "kNV" = (
@@ -30483,6 +30484,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/textured,
 /area/station/medical/chem_storage)
 "lfm" = (

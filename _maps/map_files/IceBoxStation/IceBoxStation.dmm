@@ -13761,6 +13761,7 @@
 "eiY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "ejg" = (
@@ -17838,6 +17839,12 @@
 /obj/structure/marker_beacon/burgundy,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"fBR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "fCd" = (
 /obj/structure/table,
 /obj/machinery/button/door{
@@ -24365,6 +24372,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/end{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/textured,
 /area/station/medical/chem_storage)
 "hMJ" = (
@@ -39567,6 +39575,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/medical/pharmacy,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/cable,
 /turf/open/floor/iron/textured,
 /area/station/medical/chem_storage)
 "mGu" = (
@@ -49920,6 +49929,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/textured,
 /area/station/medical/chem_storage)
 "pQs" = (
@@ -60302,9 +60312,6 @@
 	dir = 1
 	},
 /area/station/engineering/storage)
-"tjL" = (
-/turf/closed/wall,
-/area/station/medical/chem_storage)
 "tjN" = (
 /obj/structure/closet/secure_closet/personal{
 	anchored = 1
@@ -66008,6 +66015,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "veX" = (
@@ -68443,6 +68451,9 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron/dark/side,
 /area/mine/eva/lower)
+"vTc" = (
+/turf/closed/wall,
+/area/station/medical/chem_storage)
 "vTg" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -69945,6 +69956,7 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/end,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/textured,
 /area/station/medical/chem_storage)
 "wqb" = (
@@ -240600,11 +240612,11 @@ azw
 mao
 azw
 azw
-tjL
-tjL
-tjL
-tjL
-tjL
+vTc
+vTc
+vTc
+vTc
+vTc
 cvS
 cvS
 cvS
@@ -241632,7 +241644,7 @@ azw
 azw
 azw
 mGs
-tjL
+vTc
 cvS
 kSn
 vEN
@@ -242145,7 +242157,7 @@ dQo
 oQD
 hHI
 ihr
-niu
+fBR
 fKi
 tHr
 euR
