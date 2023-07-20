@@ -710,10 +710,10 @@
 /obj/item/organ/internal/lungs/proc/breathe_gas_volume(datum/gas_mixture/breath, remove_id, exchange_id = null, volume = INFINITY)
 	var/list/breath_gases = breath.gases
 	volume = min(volume, breath_gases[remove_id][MOLES])
-	breath_gases[remove_id][MOLES] -= volume
+	breath.change_moles(remove_id, -volume)
 	if(exchange_id)
 		ASSERT_GAS(exchange_id, breath_out)
-		breath_out.gases[exchange_id][MOLES] += volume
+		breath_out.change_moles(exchange_id, volume)
 	return volume
 
 /// Applies suffocation side-effects to a given Human, scaling based on ratio of required pressure VS "true" pressure.
@@ -933,10 +933,10 @@
 /// H2O electrolysis
 /obj/item/organ/internal/lungs/ethereal/proc/consume_water(mob/living/carbon/breather, datum/gas_mixture/breath, h2o_pp, old_h2o_pp)
 	var/gas_breathed = breath.gases[/datum/gas/water_vapor][MOLES]
-	breath.gases[/datum/gas/water_vapor][MOLES] -= gas_breathed
+	breath.change_moles(/datum/gas/water_vapor, -gas_breathed)
 	breath_out.assert_gases(/datum/gas/oxygen, /datum/gas/hydrogen)
-	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
-	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
+	breath_out.change_moles(gas_id = /datum/gas/oxygen, moles = gas_breathed * 0.5, conserve_energy = TRUE)
+	breath_out.change_moles(gas_id = /datum/gas/hydrogen, moles = gas_breathed, conserve_energy = TRUE)
 
 
 #undef BREATH_RELATIONSHIP_INITIAL_GAS

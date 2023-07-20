@@ -77,7 +77,7 @@
 	lab_rat = allocate(/mob/living/carbon/human/species/plasma)
 	source = equip_labrat_internals(lab_rat, /obj/item/tank/internals/emergency_oxygen/empty)
 	source.air_contents.assert_gas(/datum/gas/nitrogen)
-	source.air_contents.gases[/datum/gas/nitrogen][MOLES] = (10 * ONE_ATMOSPHERE) *  source.volume / (R_IDEAL_GAS_EQUATION * T20C)
+	source.air_contents.set_moles(/datum/gas/nitrogen, (10 * ONE_ATMOSPHERE) *  source.volume / (R_IDEAL_GAS_EQUATION * T20C))
 	TEST_ASSERT(source.toggle_internals(lab_rat) && !isnull(lab_rat.internal), "Plasmaman toggle_internals() failed to toggle internals")
 	lab_rat.breathe()
 	TEST_ASSERT(lab_rat.failed_last_breath && lab_rat.has_alert(ALERT_NOT_ENOUGH_PLASMA), "Humans should suffocate from pure n2 tanks")

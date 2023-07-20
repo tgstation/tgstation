@@ -69,18 +69,25 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		ADD_GAS(id, cached_gases)
 
 ///Changes the moles of a gas by moles amount. Check if the gas exists first before trying to change its mole count!
-///Includes mole sanity check, so don't use this in hot atmos code.
-/datum/gas_mixture/proc/change_moles(datum/gas/gas_id, moles)
+///Automatically adjusts the heat capacity and fix negative moles. Conserves energy if conserve_energy is true.
+/datum/gas_mixture/proc/change_moles(datum/gas/gas_id, moles, conserve_energy = FALSE)
 	var/list/cached_gas = gases[gas_id]
+	var/old_heat_capacity = heat_capacity
 	moles = max(-cached_gas[MOLES], moles)
 	cached_gas[MOLES] += moles
 	heat_capacity += moles * cached_gas[GAS_META][META_GAS_SPECIFIC_HEAT]
+	if(conserve_energy)
+		temperature = temperature * old_heat_capacity / heat_capacity
 
 ///Set the moles of a given gas to moles. Check if the gas exists first before trying to set its mole count!
-/datum/gas_mixture/proc/set_moles(datum/gas/gas_id, moles)
+///Automatically adjusts the heat capacity. Conserves energy if conserve_energy is TRUE.
+/datum/gas_mixture/proc/set_moles(datum/gas/gas_id, moles, conserve_energy = FALSE)
 	var/list/cached_gas = gases[gas_id]
+	var/old_heat_capacity = heat_capacity
 	heat_capacity += cached_gas[GAS_META][META_GAS_SPECIFIC_HEAT] * (moles - cached_gas[MOLES])
 	cached_gas[MOLES] = moles
+	if(conserve_energy)
+		temperature = temperature * old_heat_capacity / heat_capacity
 
 ///garbage_collect() - removes any gas list which is empty.
 ///If called with a list as an argument, only removes gas lists with IDs from that list.

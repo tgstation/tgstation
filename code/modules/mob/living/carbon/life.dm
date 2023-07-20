@@ -234,7 +234,7 @@
 	// Behaves like Oxygen with 8X efficacy, but metabolizes into a reagent.
 	if(pluoxium_pp)
 		// Inhale Pluoxium. Exhale nothing.
-		breath_gases[/datum/gas/pluoxium][MOLES] = 0
+		breath.set_moles(/datum/gas/pluoxium, 0)
 		// Metabolize to reagent.
 		if(pluoxium_pp > gas_stimulation_min)
 			var/existing = reagents.get_reagent_amount(/datum/reagent/pluoxium)
@@ -260,8 +260,8 @@
 				adjustOxyLoss(-5)
 	// Exhale equivalent amount of CO2.
 	if(o2_pp)
-		breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
-		breath_gases[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
+		breath.change_moles(/datum/gas/oxygen, -oxygen_used)
+		breath.change_moles(/datum/gas/carbon_dioxide, oxygen_used)
 
 	//-- CARBON DIOXIDE --//
 	// Maximum CO2 effects. "Too much CO2!"

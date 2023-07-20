@@ -174,7 +174,7 @@
 	test_mix.temperature = T20C
 	for(var/datum/gas/gas_type as anything in gas_to_percent)
 		test_mix.add_gas(gas_type)
-		test_mix.gases[gas_type][MOLES] = (ONE_ATMOSPHERE * 2500 / (R_IDEAL_GAS_EQUATION * T20C) * gas_to_percent[gas_type])
+		test_mix.set_moles(gas_type, (ONE_ATMOSPHERE * 2500 / (R_IDEAL_GAS_EQUATION * T20C) * gas_to_percent[gas_type]))
 	return test_mix
 
 /// Set up an O2/N2 gas mix which is "ideal" for organic life.

@@ -33,8 +33,8 @@
 		clear_alert(ALERT_XENO_PLASMA)
 
 	//Breathe in plasma and out oxygen
-	breath_gases[/datum/gas/plasma][MOLES] -= plasma_used
-	breath_gases[/datum/gas/oxygen][MOLES] += plasma_used
+	breath.change_moles(/datum/gas/plasma, -plasma_used)
+	breath.change_moles(/datum/gas/oxygen, plasma_used)
 
 	breath.garbage_collect()
 

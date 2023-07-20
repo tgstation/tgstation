@@ -230,7 +230,7 @@
 		var/datum/gas_mixture/gas_mix = turf.air
 		if(!gas_mix.gases[/datum/gas/oxygen])
 			return
-		gas_mix.gases[/datum/gas/oxygen][MOLES] = max(gas_mix.gases[/datum/gas/oxygen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
+		gas_mix.change_moles(/datum/gas/oxygen, -GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/nitro_eater
@@ -245,7 +245,7 @@
 		var/datum/gas_mixture/gas_mix = turf.air
 		if(!gas_mix.gases[/datum/gas/nitrogen])
 			return
-		gas_mix.gases[/datum/gas/nitrogen][MOLES] = max(gas_mix.gases[/datum/gas/nitrogen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
+		gas_mix.change_moles(/datum/gas/nitrogen, -GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/carbondioxide_eater
@@ -260,7 +260,7 @@
 		var/datum/gas_mixture/gas_mix = turf.air
 		if(!gas_mix.gases[/datum/gas/carbon_dioxide])
 			return
-		gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] = max(gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
+		gas_mix.change_moles(/datum/gas/carbon_dioxide, -GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/plasma_eater
@@ -275,7 +275,7 @@
 		var/datum/gas_mixture/gas_mix = turf.air
 		if(!gas_mix.gases[/datum/gas/plasma])
 			return
-		gas_mix.gases[/datum/gas/plasma][MOLES] = max(gas_mix.gases[/datum/gas/plasma][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
+		gas_mix.change_moles(/datum/gas/plasma, -GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/thorns

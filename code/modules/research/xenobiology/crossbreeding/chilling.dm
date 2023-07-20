@@ -43,9 +43,9 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/orange/do_effect(mob/user)
 	user.visible_message(span_danger("[src] shatters, and lets out a jet of heat!"))
-	for(var/turf/T in orange(get_turf(user),2))
-		if(get_dist(get_turf(user), T) > 1)
-			new /obj/effect/hotspot(T)
+	for(var/turf/open_turf in orange(get_turf(user),2))
+		if(get_dist(get_turf(user), open_turf) > 1)
+			new /obj/effect/hotspot(open_turf)
 	..()
 
 /obj/item/slimecross/chilling/purple
@@ -53,13 +53,13 @@ Chilling extracts:
 	effect_desc = "Injects everyone in the area with some regenerative jelly."
 
 /obj/item/slimecross/chilling/purple/do_effect(mob/user)
-	var/area/A = get_area(get_turf(user))
-	if(A.outdoors)
+	var/area/area = get_area(get_turf(user))
+	if(area.outdoors)
 		to_chat(user, span_warning("[src] can't affect such a large area."))
 		return
 	user.visible_message(span_notice("[src] shatters, and a healing aura fills the room briefly."))
-	for(var/mob/living/carbon/C in A)
-		C.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,10)
+	for(var/mob/living/carbon/carbon in area)
+		carbon.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,10)
 	..()
 
 /obj/item/slimecross/chilling/blue
@@ -77,9 +77,9 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/metal/do_effect(mob/user)
 	user.visible_message(span_danger("[src] melts like quicksilver, and surrounds [user] in a wall!"))
-	for(var/turf/T in orange(get_turf(user),1))
-		if(get_dist(get_turf(user), T) > 0)
-			new /obj/effect/forcefield/slimewall(T)
+	for(var/turf/open_turf in orange(get_turf(user),1))
+		if(get_dist(get_turf(user), open_turf) > 0)
+			new /obj/effect/forcefield/slimewall(open_turf)
 	..()
 
 /obj/item/slimecross/chilling/yellow
@@ -87,11 +87,11 @@ Chilling extracts:
 	effect_desc = "Recharges the room's APC by 50%."
 
 /obj/item/slimecross/chilling/yellow/do_effect(mob/user)
-	var/area/A = get_area(get_turf(user))
+	var/area/area = get_area(get_turf(user))
 	user.visible_message(span_notice("[src] shatters, and a the air suddenly feels charged for a moment."))
-	for(var/obj/machinery/power/apc/C in A)
-		if(C.cell)
-			C.cell.charge = min(C.cell.charge + C.cell.maxcharge/2, C.cell.maxcharge)
+	for(var/obj/machinery/power/apc/apc in area)
+		if(apc.cell)
+			apc.cell.charge = min(apc.cell.charge + apc.cell.maxcharge/2, apc.cell.maxcharge)
 	..()
 
 /obj/item/slimecross/chilling/darkpurple
@@ -99,19 +99,19 @@ Chilling extracts:
 	effect_desc = "Removes all plasma gas in the area."
 
 /obj/item/slimecross/chilling/darkpurple/do_effect(mob/user)
-	var/area/A = get_area(get_turf(user))
-	if(A.outdoors)
+	var/area/area = get_area(get_turf(user))
+	if(area.outdoors)
 		to_chat(user, span_warning("[src] can't affect such a large area."))
 		return
 	var/filtered = FALSE
-	for(var/turf/open/T in A)
-		var/datum/gas_mixture/G = T.air
-		if(istype(G))
-			G.assert_gas(/datum/gas/plasma)
-			G.gases[/datum/gas/plasma][MOLES] = 0
+	for(var/turf/open/open_turf in area)
+		var/datum/gas_mixture/air = open_turf.air
+		if(istype(air))
+			air.assert_gas(/datum/gas/plasma)
+			air.set_moles(/datum/gas/plasma, 0)
 			filtered = TRUE
-			G.garbage_collect()
-			T.air_update_turf(FALSE, FALSE)
+			air.garbage_collect()
+			open_turf.air_update_turf(FALSE, FALSE)
 	if(filtered)
 		user.visible_message(span_notice("Cracks spread throughout [src], and some air is sucked in!"))
 	else
@@ -125,8 +125,8 @@ Chilling extracts:
 /obj/item/slimecross/chilling/darkblue/do_effect(mob/user)
 	if(isliving(user))
 		user.visible_message(span_notice("[src] freezes over [user]'s entire body!"))
-		var/mob/living/M = user
-		M.apply_status_effect(/datum/status_effect/frozenstasis)
+		var/mob/living/cached_user = user
+		cached_user.apply_status_effect(/datum/status_effect/frozenstasis)
 	..()
 
 /obj/item/slimecross/chilling/silver
@@ -166,21 +166,21 @@ Chilling extracts:
 		return
 	to_chat(user, span_notice("You feel [src] pulse as it begins charging bluespace energies..."))
 	active = TRUE
-	for(var/mob/living/M in allies)
-		var/datum/status_effect/slimerecall/S = M.apply_status_effect(/datum/status_effect/slimerecall)
-		S.target = user
+	for(var/mob/living/ally in allies)
+		var/datum/status_effect/slimerecall/slime_recall = ally.apply_status_effect(/datum/status_effect/slimerecall)
+		slime_recall.target = user
 	if(do_after(user, 100, target=src))
 		to_chat(user, span_notice("[src] shatters as it tears a hole in reality, snatching the linked individuals from the void!"))
-		for(var/mob/living/M in allies)
-			var/datum/status_effect/slimerecall/S = M.has_status_effect(/datum/status_effect/slimerecall)
-			M.remove_status_effect(S)
+		for(var/mob/living/ally in allies)
+			var/datum/status_effect/slimerecall/slime_recall = ally.has_status_effect(/datum/status_effect/slimerecall)
+			ally.remove_status_effect(slime_recall)
 	else
 		to_chat(user, span_warning("[src] falls dark, dissolving into nothing as the energies fade away."))
-		for(var/mob/living/M in allies)
-			var/datum/status_effect/slimerecall/S = M.has_status_effect(/datum/status_effect/slimerecall)
-			if(istype(S))
-				S.interrupted = TRUE
-				M.remove_status_effect(S)
+		for(var/mob/living/ally in allies)
+			var/datum/status_effect/slimerecall/slime_recall = ally.has_status_effect(/datum/status_effect/slimerecall)
+			if(istype(slime_recall))
+				slime_recall.interrupted = TRUE
+				ally.remove_status_effect(slime_recall)
 	..()
 
 /obj/item/slimecross/chilling/sepia
@@ -212,8 +212,8 @@ Chilling extracts:
 /obj/item/slimecross/chilling/cerulean/do_effect(mob/user)
 	if(isliving(user))
 		user.visible_message(span_warning("[src] creaks and shifts into a clone of [user]!"))
-		var/mob/living/M = user
-		M.apply_status_effect(/datum/status_effect/slime_clone)
+		var/mob/living/cached_user = user
+		cached_user.apply_status_effect(/datum/status_effect/slime_clone)
 	..()
 
 /obj/item/slimecross/chilling/pyrite
@@ -231,9 +231,9 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/red/do_effect(mob/user)
 	var/slimesfound = FALSE
-	for(var/mob/living/simple_animal/slime/S in view(get_turf(user), 7))
+	for(var/mob/living/simple_animal/slime/slime in view(get_turf(user), 7))
 		slimesfound = TRUE
-		S.docile = TRUE
+		slime.docile = TRUE
 	if(slimesfound)
 		user.visible_message(span_notice("[src] lets out a peaceful ring as it shatters, and nearby slimes seem calm."))
 	else

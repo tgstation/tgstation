@@ -69,26 +69,26 @@
 	for(var/gas_id in breath.gases)
 		if(gas_id in high_filtering_gases)
 			if(breath.gases[gas_id][MOLES] > HIGH_FILTERING_MOLES)
-				breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_high * filter_efficiency * HIGH_FILTERING_RATIO, 0)
+				breath.change_moles(gas_id, -filter_strength_high * filter_efficiency * HIGH_FILTERING_RATIO)
 				danger_points += 0.5
 				continue
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_high * filter_efficiency * LOW_FILTERING_RATIO, 0)
+			breath.change_moles(gas_id, -filter_strength_high * filter_efficiency * LOW_FILTERING_RATIO)
 			danger_points += 0.05
 			continue
 		if(gas_id in mid_filtering_gases)
 			if(breath.gases[gas_id][MOLES] > MID_FILTERING_MOLES)
-				breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_mid * filter_efficiency * HIGH_FILTERING_RATIO, 0)
+				breath.change_moles(gas_id, -filter_strength_mid * filter_efficiency * HIGH_FILTERING_RATIO)
 				danger_points += 0.75
 				continue
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_mid * filter_efficiency * LOW_FILTERING_RATIO, 0)
+			breath.change_moles(gas_id, -filter_strength_mid * filter_efficiency * LOW_FILTERING_RATIO, 0)
 			danger_points += 0.15
 			continue
 		if(gas_id in low_filtering_gases)
 			if(breath.gases[gas_id][MOLES] > LOW_FILTERING_MOLES)
-				breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_low * filter_efficiency * HIGH_FILTERING_RATIO, 0)
+				breath.change_moles(gas_id, -filter_strength_low * filter_efficiency * HIGH_FILTERING_RATIO, 0)
 				danger_points += 1
 				continue
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_low * filter_efficiency * LOW_FILTERING_RATIO, 0)
+			breath.change_moles(gas_id, -filter_strength_low * filter_efficiency * LOW_FILTERING_RATIO, 0)
 			danger_points += 0.5
 			continue
 

@@ -258,15 +258,13 @@
 		// This is sort of a combined merge + heat_capacity calculation
 
 		var/list/giver_gases = gas_mixture.gases
-		var/heat_capacity = 0
 		//gas transfer
 		for(var/giver_id in giver_gases)
 			var/giver_gas_data = giver_gases[giver_id]
 			ASSERT_GAS_IN_LIST(giver_id, total_gases)
 			total_gases[giver_id][MOLES] += giver_gas_data[MOLES]
-			heat_capacity += giver_gas_data[MOLES] * giver_gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
-		total_heat_capacity += heat_capacity
+		total_heat_capacity += gas_mixture.heat_capacity
 		total_thermal_energy += gas_mixture.temperature * heat_capacity
 
 	if(volume_sum == 0)
@@ -275,6 +273,7 @@
 	var/datum/gas_mixture/total_gas_mixture = new(volume_sum)
 	total_gas_mixture.temperature = total_heat_capacity ? (total_thermal_energy / total_heat_capacity) : 0
 	total_gas_mixture.gases = total_gases
+	total_gas_mixture.heat_capacity = total_heat_capacity
 	total_gas_mixture.garbage_collect()
 
 	//Update individual gas_mixtures by volume ratio

@@ -130,15 +130,14 @@
 			mine_gas(seconds_per_tick)
 
 /obj/machinery/atmospherics/miner/proc/mine_gas(seconds_per_tick = 2)
-	var/turf/open/O = get_turf(src)
-	if(!isopenturf(O))
+	var/turf/open/open_turf = get_turf(src)
+	if(!isopenturf(open_turf))
 		return FALSE
 	var/datum/gas_mixture/merger = new
 	merger.assert_gas(spawn_id)
-	merger.gases[spawn_id][MOLES] = spawn_mol * seconds_per_tick
-	merger.heat_capacity = spawn_mol * merger.gases[spawn_id][GAS_META][META_GAS_SPECIFIC_HEAT] * seconds_per_tick
+	merger.change_moles(spawn_id, spawn_mol * seconds_per_tick)
 	merger.temperature = spawn_temp
-	O.assume_air(merger)
+	open_turf.assume_air(merger)
 
 /obj/machinery/atmospherics/miner/attack_ai(mob/living/silicon/user)
 	if(broken)

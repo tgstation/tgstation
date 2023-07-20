@@ -28,10 +28,10 @@
 	ASSERT_GAS(/datum/gas/hypernoblium, first_mix)
 	ASSERT_GAS(/datum/gas/tritium, second_mix)
 
-	first_mix.gases[/datum/gas/hypernoblium][MOLES] = nob_moles
+	first_mix.set_moles(/datum/gas/hypernoblium, nob_moles)
 	first_mix.temperature = nob_temp
 
-	second_mix.gases[/datum/gas/tritium][MOLES] = trit_moles
+	second_mix.set_moles(/datum/gas/tritium, trit_moles)
 	second_mix.temperature = trit_temp
 
 	var/initial_pressure = second_mix.return_pressure()
