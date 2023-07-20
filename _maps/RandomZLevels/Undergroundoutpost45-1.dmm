@@ -571,14 +571,6 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/carpet,
 /area/awaymission/undergroundoutpost45/central)
-"cC" = (
-/obj/structure/window/reinforced/spawner{
-	dir = 4
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45)
 "cD" = (
 /obj/structure/closet/emcloset,
 /obj/item/clothing/mask/breath,
@@ -637,7 +629,6 @@
 /turf/open/floor/carpet,
 /area/awaymission/undergroundoutpost45/central)
 "cO" = (
-/obj/structure/window/reinforced/spawner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	dir = 4
 	},
@@ -2398,15 +2389,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/undergroundoutpost45/gateway)
-"iV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/window/reinforced/spawner{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45)
 "iW" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
@@ -3595,12 +3577,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/undergroundoutpost45/gateway)
-"mI" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/awaymission/undergroundoutpost45/caves)
 "mK" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance{
@@ -5814,9 +5790,10 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
 "tH" = (
-/obj/structure/window/reinforced/unanchored/spawner/directional,
-/turf/open/floor/engine,
-/area/awaymission/undergroundoutpost45/caves)
+/obj/item/kirbyplants/random,
+/mob/living/simple_animal/pet/gondola,
+/turf/open/floor/grass/fairy,
+/area/awaymission/undergroundoutpost45)
 "tI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green,
@@ -7619,9 +7596,6 @@
 	},
 /area/awaymission/undergroundoutpost45)
 "Ci" = (
-/obj/structure/window/reinforced/spawner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
@@ -7803,14 +7777,6 @@
 "Dn" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
-	},
-/obj/structure/window/reinforced/unanchored/spawner/directional,
-/obj/structure/window/reinforced/unanchored/spawner/directional,
-/obj/structure/window/reinforced/unanchored/spawner/directional{
-	dir = 8
-	},
-/obj/structure/window/reinforced/unanchored/spawner/directional{
-	dir = 1
 	},
 /turf/open/floor/engine,
 /area/awaymission/undergroundoutpost45/caves)
@@ -8175,14 +8141,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/undergroundoutpost45/central)
-"FT" = (
-/obj/structure/window/reinforced/spawner{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45)
 "FU" = (
 /obj/structure/chair/sofa/corp/left{
 	dir = 1
@@ -8852,13 +8810,6 @@
 /obj/item/restraints/legcuffs/beartrap/energy,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/undergroundoutpost45)
-"Lg" = (
-/obj/machinery/power/shuttle_engine/large{
-	dir = 4
-	},
-/obj/structure/window/reinforced/unanchored/spawner/directional,
-/turf/open/floor/engine,
-/area/awaymission/undergroundoutpost45/caves)
 "Lk" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/mob_spawn/corpse/human,
@@ -9439,15 +9390,6 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"PL" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/obj/structure/window/reinforced/unanchored/spawner/directional{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/awaymission/undergroundoutpost45/caves)
 "PQ" = (
 /obj/machinery/door/poddoor/ert,
 /turf/open/misc/asteroid{
@@ -9473,19 +9415,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45)
-"PY" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/obj/structure/window/reinforced/unanchored/spawner/directional,
-/obj/structure/window/reinforced/unanchored/spawner/directional{
-	dir = 1
-	},
-/obj/structure/window/reinforced/unanchored/spawner/directional{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/awaymission/undergroundoutpost45/caves)
 "PZ" = (
 /obj/effect/decal/cleanable/xenoblood/xsplatter,
 /turf/open/misc/asteroid{
@@ -34829,10 +34758,10 @@ ad
 HG
 ta
 zY
-cC
-cC
-cC
-cC
+ta
+ta
+ta
+ta
 TB
 ta
 YA
@@ -35087,7 +35016,7 @@ HG
 ta
 cO
 kD
-kD
+tH
 kD
 kD
 Ci
@@ -35343,10 +35272,10 @@ ad
 HG
 YA
 ta
-FT
-FT
-FT
-iV
+ta
+ta
+ta
+YA
 ta
 ta
 FU
@@ -38754,7 +38683,7 @@ Mq
 Mq
 Mq
 Mq
-qP
+Mq
 ND
 Io
 KR
@@ -39011,8 +38940,8 @@ Mq
 Mq
 Mq
 Mq
-PY
-PL
+Dn
+Dn
 Io
 SY
 kK
@@ -39020,7 +38949,7 @@ hY
 ER
 bO
 Io
-PL
+Dn
 Dn
 Mq
 ad
@@ -39268,7 +39197,7 @@ ad
 Mq
 Mq
 Mq
-mI
+WY
 MP
 Io
 zU
@@ -39278,7 +39207,7 @@ YX
 zP
 Io
 WY
-Lg
+MP
 Mq
 ad
 ad
@@ -39525,7 +39454,7 @@ ad
 Mq
 Mq
 Mq
-mI
+WY
 WY
 Io
 Io
@@ -39535,7 +39464,7 @@ zt
 Io
 Io
 WY
-tH
+WY
 Mq
 ad
 ad
