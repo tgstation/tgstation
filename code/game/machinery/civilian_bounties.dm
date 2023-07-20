@@ -12,12 +12,12 @@
 /obj/machinery/piratepad/civilian/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!.)
-		return default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle-off", screw)
+		return default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle-off", tool)
 
 /obj/machinery/piratepad/civilian/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	default_deconstruction_crowbar(tool)
-	return TRUE
+	if(!.)
+		return default_deconstruction_crowbar(tool)
 
 ///Computer for assigning new civilian bounties, and sending bounties for collection.
 /obj/machinery/computer/piratepad_control/civilian
