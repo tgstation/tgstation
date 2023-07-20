@@ -888,7 +888,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
-/obj/machinery/light/blacklight/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "aAn" = (
@@ -13138,7 +13138,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/light/blacklight/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "kao" = (
@@ -16911,6 +16911,7 @@
 /area/station/science/research)
 "mMJ" = (
 /obj/machinery/mineral/ore_redemption,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "mNo" = (
@@ -21527,6 +21528,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"qwQ" = (
+/obj/docking_port/stationary/mining_home{
+	dir = 8
+	},
+/turf/open/space/openspace,
+/area/space)
 "qxp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
 	dir = 8
@@ -106863,7 +106870,7 @@ hhX
 hhX
 hhX
 hhX
-hhX
+qwQ
 hhX
 hhX
 hhX
