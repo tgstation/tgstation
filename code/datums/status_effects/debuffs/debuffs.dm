@@ -1,3 +1,8 @@
+/// The damage healed per tick while sleeping without any modifiers
+#define HEALING_SLEEP_DEFAULT 0.2
+/// The sleep healing multipler for organ passive healing (since organs heal slowly)
+#define HEALING_SLEEP_ORGAN_MULTIPLIER 5
+
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
@@ -154,8 +159,6 @@
 	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	tick_interval = initial(tick_interval)
 
-#define HEALING_SLEEP_DEFAULT 0.2
-
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
@@ -202,10 +205,22 @@
 		if(locate(/obj/item/pillow) in owner.loc)
 			healing += 0.1
 
-		if(healing > 0 && health_ratio > 0.8)
-			owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
-			owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
-			owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
+		if(healing > 0)
+			if(iscarbon(owner))
+				var/mob/living/carbon/carbon_owner = owner
+				for(var/obj/item/organ/target_organ as anything in carbon_owner.organs)
+					// no healing boost for robotic or dying organs
+					if(IS_ROBOTIC_ORGAN(target_organ) || !target_organ.damage || target_organ.organ_flags & ORGAN_FAILING)
+						continue
+
+					// organ regeneration is very low so we crank up the healing rate to give a good bonus
+					var/healing_bonus = target_organ.healing_factor * healing * HEALING_SLEEP_ORGAN_MULTIPLIER
+					target_organ.apply_organ_damage(-healing_bonus * target_organ.maxHealth)
+
+			if(health_ratio > 0.8) // only heals minor physical damage
+				owner.adjustBruteLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
+				owner.adjustFireLoss(-1 * healing, required_bodytype = BODYTYPE_ORGANIC)
+				owner.adjustToxLoss(-1 * healing * 0.5, TRUE, TRUE, required_biotype = MOB_ORGANIC)
 		owner.adjustStaminaLoss(min(-1 * healing, -1 * HEALING_SLEEP_DEFAULT))
 	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
 	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
@@ -216,8 +231,6 @@
 
 	if(prob(2) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
-
-#undef HEALING_SLEEP_DEFAULT
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -405,7 +418,7 @@
 		owner.emote(pick("gasp", "gag", "choke"))
 
 /datum/status_effect/neck_slice/get_examine_text()
-	return span_warning("[owner.p_their(TRUE)] neck is cut and is bleeding profusely!")
+	return span_warning("[owner.p_Their()] neck is cut and is bleeding profusely!")
 
 /mob/living/proc/apply_necropolis_curse(set_curse)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(/datum/status_effect/necropolis_curse)
@@ -555,7 +568,7 @@
 	to_chat(owner, span_warning("You snap out of your trance!"))
 
 /datum/status_effect/trance/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] slow and unfocused.")
+	return span_warning("[owner.p_They()] seem[owner.p_s()] slow and unfocused.")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
@@ -798,7 +811,7 @@
 	return COMPONENT_CLEANED
 
 /datum/status_effect/ants/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] [owner.p_are()] covered in ants!")
+	return span_warning("[owner.p_They()] [owner.p_are()] covered in ants!")
 
 /datum/status_effect/ants/tick()
 	var/mob/living/carbon/human/victim = owner
@@ -919,3 +932,28 @@
 
 /datum/status_effect/teleport_madness/tick()
 	dump_in_space(owner)
+
+/datum/status_effect/careful_driving
+	id = "careful_driving"
+	alert_type = /atom/movable/screen/alert/status_effect/careful_driving
+	duration = 5 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/careful_driving/on_apply()
+	. = ..()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/careful_driving, update = TRUE)
+
+/datum/status_effect/careful_driving/on_remove()
+	. = ..()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/careful_driving, update = TRUE)
+
+/atom/movable/screen/alert/status_effect/careful_driving
+	name = "Careful Driving"
+	desc = "That was close! You almost ran that one over!"
+	icon_state = "paralysis"
+
+/datum/movespeed_modifier/careful_driving
+	multiplicative_slowdown = 3
+
+#undef HEALING_SLEEP_DEFAULT
+#undef HEALING_SLEEP_ORGAN_MULTIPLIER
