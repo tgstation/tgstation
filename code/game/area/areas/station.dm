@@ -1098,6 +1098,10 @@
 	name = "\improper Pharmacy"
 	icon_state = "pharmacy"
 
+/area/station/medical/chem_storage
+	name = "\improper Chemical Storage"
+	icon_state = "chem_storage"
+
 /area/station/medical/surgery
 	name = "\improper Operating Room"
 	icon_state = "surgery"
@@ -1113,6 +1117,7 @@
 /area/station/medical/surgery/theatre
 	name = "\improper Grand Surgery Theatre"
 	icon_state = "surgerytheatre"
+
 /area/station/medical/cryo
 	name = "Cryogenics"
 	icon_state = "cryo"
