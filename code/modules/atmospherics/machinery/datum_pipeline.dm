@@ -265,7 +265,7 @@
 			total_gases[giver_id][MOLES] += giver_gas_data[MOLES]
 
 		total_heat_capacity += gas_mixture.heat_capacity
-		total_thermal_energy += gas_mixture.temperature * heat_capacity
+		total_thermal_energy += gas_mixture.temperature * gas_mixture.heat_capacity
 
 	if(volume_sum == 0)
 		return
