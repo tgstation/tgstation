@@ -159,6 +159,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 		if(victim.status != FISH_DEAD || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH))
 			continue
 		eat_fish(source, victim)
+		return
 
 /datum/fish_trait/parthenogenesis
 	name = "Parthenogenesis"
@@ -222,9 +223,10 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
 		if(victim.size < source.size * 0.75) // It's a big fish eat small fish world
 			continue
-		if(victim.status != FISH_ALIVE || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH) || SPT_PROB(50, seconds_per_tick))
+		if(victim.status != FISH_ALIVE || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH) || SPT_PROB(80, seconds_per_tick))
 			continue
 		eat_fish(source, victim)
+		return
 
 /datum/fish_trait/yucky
 	name = "Yucky"
@@ -248,7 +250,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 /datum/fish_trait/toxic/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(add_toxin))
 	RegisterSignal(fish, COMSIG_FISH_EATEN_BY_OTHER_FISH, PROC_REF(on_eaten))
-	LAZYSET(fish.grind_results, /datum/reagent/toxin/tetrodotoxin, 0.3)
+	LAZYSET(fish.grind_results, /datum/reagent/toxin/tetrodotoxin, 0.5)
 
 /datum/fish_trait/toxic/proc/add_toxin(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
 	var/amount = source.grind_results[ /datum/reagent/toxin/tetrodotoxin] / length(results)
@@ -299,14 +301,16 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/aggressive/proc/try_attack_fish(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(!isaquarium(source.loc) || !SPT_PROB(5, seconds_per_tick))
+	if(!isaquarium(source.loc) || !SPT_PROB(1, seconds_per_tick))
 		return
 	var/obj/structure/aquarium/aquarium = source.loc
-	var/list/fishes = aquarium.get_fishes(blacklist = source)
-	var/obj/item/fish/victim = pick(fishes)
-	aquarium.visible_message(span_warning("[source] violently [pick("whip", "bites", "attacks", "slams")] [victim]"))
-	var/damage = round(rand(4, 20) * (source.size / victim.size)) //smaller fishes take extra damage.
-	victim.adjust_health(victim.health - damage)
+	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
+		if(victim.status != FISH_ALIVE)
+			continue
+		aquarium.visible_message(span_warning("[source] violently [pick("whips", "bites", "attacks", "slams")] [victim]"))
+		var/damage = round(rand(4, 20) * (source.size / victim.size)) //smaller fishes take extra damage.
+		victim.adjust_health(victim.health - damage)
+		return
 
 /datum/fish_trait/lubed
 	name = "Lubed"

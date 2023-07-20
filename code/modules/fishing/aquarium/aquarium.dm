@@ -38,7 +38,7 @@
 	var/list/used_layers = list()
 
 	/// /obj/item/fish in the aquarium, sorted by type - does not include things with aquarium visuals that are not fish
-	var/list/tracked_fish_by_type = list()
+	var/list/tracked_fish_by_type
 
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
@@ -50,23 +50,26 @@
 /obj/structure/aquarium/proc/track_if_fish(atom/source, atom/initialized)
 	SIGNAL_HANDLER
 	if(isfish(initialized))
-		LAZYADD(tracked_fish_by_type[initialized.type], initialized)
+		LAZYADDASSOCLIST(tracked_fish_by_type, initialized.type, initialized)
 
 /obj/structure/aquarium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(isfish(arrived))
-		LAZYADD(tracked_fish_by_type[arrived.type], arrived)
+		LAZYADDASSOCLIST(tracked_fish_by_type, arrived.type, arrived)
 
 /obj/structure/aquarium/Exited(atom/movable/gone, direction)
 	. = ..()
-	LAZYREMOVE(tracked_fish_by_type[gone.type], gone)
+	LAZYREMOVEASSOC(tracked_fish_by_type, gone.type, gone)
 
-/// Returns tracked_fish_by_type but flattened and minus the blacklist. Shuffled if shuffle is TRUE.
+/// Returns tracked_fish_by_type but flattened and without the items in the blacklist, also shuffled if shuffle is TRUE.
 /obj/structure/aquarium/proc/get_fishes(shuffle = FALSE, blacklist)
-	var/list/fishes =  flatten_list(tracked_fish_by_type) - blacklist
+	. = list()
+	for(var/fish_type in tracked_fish_by_type)
+		. += tracked_fish_by_type[fish_type]
+	. -= blacklist
 	if(shuffle)
-		fishes = shuffle(fishes)
-	return fishes
+		. = shuffle(.)
+	return .
 
 /obj/structure/aquarium/proc/request_layer(layer_type)
 	/**

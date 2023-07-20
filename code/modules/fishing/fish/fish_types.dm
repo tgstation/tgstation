@@ -11,7 +11,7 @@
 	average_weight = 500
 	favorite_bait = list(/obj/item/food/bait/worm)
 	required_temperature_min = MIN_AQUARIUM_TEMP+18
-	required_temperature_max = MIN_AQUARIUM_TEMP+25
+	required_temperature_max = MIN_AQUARIUM_TEMP+26
 
 /obj/item/fish/angelfish
 	name = "angelfish"
@@ -24,7 +24,7 @@
 	average_weight = 500
 	stable_population = 3
 	fish_traits = list(/datum/fish_trait/aggressive)
-	required_temperature_min = MIN_AQUARIUM_TEMP+23
+	required_temperature_min = MIN_AQUARIUM_TEMP+22
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
 
 /obj/item/fish/guppy
@@ -88,8 +88,8 @@
 	fish_traits = list(/datum/fish_trait/picky_eater)
 	evolution_types = list(/datum/fish_evolution/lubefish)
 	compatible_types = list(/obj/item/fish/clownfish/lube)
-	required_temperature_min = MIN_AQUARIUM_TEMP+23
-	required_temperature_max = MIN_AQUARIUM_TEMP+29
+	required_temperature_min = MIN_AQUARIUM_TEMP+22
+	required_temperature_max = MIN_AQUARIUM_TEMP+30
 
 /obj/item/fish/clownfish/lube
 	name = "lubefish"
@@ -112,8 +112,8 @@
 	average_weight = 500
 	stable_population = 4
 	fish_traits = list(/datum/fish_trait/vegan)
-	required_temperature_min = MIN_AQUARIUM_TEMP+23
-	required_temperature_max = MIN_AQUARIUM_TEMP+29
+	required_temperature_min = MIN_AQUARIUM_TEMP+22
+	required_temperature_max = MIN_AQUARIUM_TEMP+30
 
 /obj/item/fish/greenchromis
 	name = "green chromis"
@@ -126,7 +126,7 @@
 	average_weight = 500
 	stable_population = 5
 	required_temperature_min = MIN_AQUARIUM_TEMP+23
-	required_temperature_max = MIN_AQUARIUM_TEMP+27
+	required_temperature_max = MIN_AQUARIUM_TEMP+28
 
 	fishing_difficulty_modifier = 5 // Bit harder
 
@@ -175,7 +175,7 @@
 	stable_population = 3
 	fish_traits = list(/datum/fish_trait/nocturnal)
 	required_temperature_min = MIN_AQUARIUM_TEMP+2 //My source is that the water at a depth 6600 feet is pretty darn cold.
-	required_temperature_max = MIN_AQUARIUM_TEMP+15
+	required_temperature_max = MIN_AQUARIUM_TEMP+18
 
 //Tiziran Fish
 /obj/item/fish/dwarf_moonfish
@@ -239,15 +239,16 @@
 	random_case_rarity = FISH_RARITY_RARE
 	fillet_type = /obj/item/food/meat/slab/rawcrab
 	required_temperature_min = MIN_AQUARIUM_TEMP+9
+	required_temperature_max = MAX_AQUARIUM_TEMP+150
 	evolution_types = list(/datum/fish_evolution/ice_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab/ice)
 
 /obj/item/fish/chasm_crab/ice
 	name = "arctic chrab"
-	desc = "A subspecies of chasm chrab that has adapted to the harsh climate and lack of abysmal holes of the icemoon."
+	desc = "A subspecies of chasm chrabs that has adapted to the cold climate and lack of abysmal holes of the icemoon."
 	icon_state = "arctic_chrab"
 	dedicated_in_aquarium_icon_state = "ice_chrab_small"
-	required_temperature_min = MIN_AQUARIUM_TEMP
+	required_temperature_min = MIN_AQUARIUM_TEMP-150
 	required_temperature_max = MIN_AQUARIUM_TEMP+15
 	evolution_types = list(/datum/fish_evolution/chasm_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab)
@@ -312,7 +313,7 @@
 	desc = "A misshapen, fragile, loosely fish-like living goop, the only thing that'd ever thrive in the acidic and claustrophobic cavities of the station's organic waste disposal system."
 	icon_state = "sludgefish"
 	dedicated_in_aquarium_icon_state = "sludgefish_small"
-	sprite_width = 8
+	sprite_width = 7
 	sprite_height = 6
 	required_fluid_type = AQUARIUM_FLUID_SULPHWATEVER
 	stable_population = 8
@@ -340,7 +341,7 @@
 	icon_state = "slimefish"
 	icon_state_dead = "slimefish_dead"
 	dedicated_in_aquarium_icon_state = "slimefish_small"
-	sprite_width = 8
+	sprite_width = 7
 	sprite_height = 7
 	do_flop_animation = FALSE //it already has our cute bouncy wiggle. :3
 	random_case_rarity = FISH_RARITY_VERY_RARE
@@ -368,8 +369,8 @@
 	desc = "What one could mistake for fish remains, is in reality a species that chose to discard its weak flesh a long time ago. A living fossil, in its most literal sense."
 	icon_state = "bonemass"
 	dedicated_in_aquarium_icon_state = "bonemass_small"
-	sprite_width = 12
-	sprite_height = 6
+	sprite_width = 10
+	sprite_height = 7
 	fish_ai_type = FISH_AI_ZIPPY
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
@@ -389,9 +390,11 @@
 	desc = "A monster of exposed muscles and innards, wrapped in a fish-like skeleton. You don't remember ever seeing it on the catalog."
 	icon = 'icons/obj/aquarium_wide.dmi'
 	icon_state = "mastodon"
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium.dmi'
 	dedicated_in_aquarium_icon_state = "mastodon_small"
 	base_pixel_x = -16
-	sprite_width = 15
+	pixel_x = -16
+	sprite_width = 12
 	sprite_height = 7
 	show_in_catalog = FALSE
 	available_in_random_cases = FALSE
@@ -405,7 +408,7 @@
 	num_fillets = 2
 	feeding_frequency = 2 MINUTES
 	breeding_timeout = 10 MINUTES
-	average_size = 200
+	average_size = 180
 	average_weight = 5000
 	death_text = "%SRC stops moving."
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
@@ -445,8 +448,8 @@
 	icon_state = "crab"
 	dedicated_in_aquarium_icon_state = "crab_small"
 	average_weight = 1000
-	sprite_height = 7
-	sprite_width = 11
+	sprite_height = 6
+	sprite_width = 10
 
 /obj/item/fish/holo/puffer
 	name = "holographic pufferfish"

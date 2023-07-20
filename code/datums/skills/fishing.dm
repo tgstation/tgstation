@@ -6,5 +6,5 @@
 	name = "Fishing"
 	title = "Fisher"
 	desc = "How empty and alone you are on this barren Earth."
-	modifiers = list(SKILL_VALUE_MODIFIER = list(1, 1, 0, -1, -3, -4, -5))
+	modifiers = list(SKILL_VALUE_MODIFIER = list(1, 1, 0, -1, -2, -4, -6))
 	skill_item_path = /obj/item/clothing/head/soft/fishing_hat

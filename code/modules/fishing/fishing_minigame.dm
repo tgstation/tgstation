@@ -90,13 +90,17 @@
 	used_rod = null
 	return ..()
 
+/datum/fishing_challenge/proc/send_balloon_alert(message)
+	var/turf/lure_turf = get_turf(lure)
+	lure_turf?.balloon_alert(user, message)
+
 /datum/fishing_challenge/proc/on_spot_gone(datum/source)
-	lure.balloon_alert(user, "fishing spot gone!")
+	send_balloon_alert("fishing spot gone!")
 	interrupt(balloon_alert = FALSE)
 
 /datum/fishing_challenge/proc/interrupt_challenge(datum/source, reason)
 	if(reason)
-		lure.balloon_alert(user, reason)
+		send_balloon_alert(reason)
 	interrupt(balloon_alert = FALSE)
 
 /datum/fishing_challenge/proc/start(mob/living/user)
@@ -118,7 +122,7 @@
 	if(!source.get_active_held_item(used_rod) || LAZYACCESS(modifiers, SHIFT_CLICK))
 		return
 	if(phase == WAIT_PHASE) //Reset wait
-		lure.balloon_alert(user, "miss!")
+		send_balloon_alert("miss!")
 		start_baiting_phase()
 	else if(phase == BITING_PHASE)
 		INVOKE_ASYNC(src, PROC_REF(start_minigame_phase))
@@ -130,7 +134,7 @@
 	if(!completed)
 		experience_multiplier *= 0.5
 		if(balloon_alert)
-			lure.balloon_alert(user, user.is_holding(used_rod) ? "line snapped" : "tool dropped")
+			send_balloon_alert(user.is_holding(used_rod) ? "line snapped" : "tool dropped")
 		complete(FALSE)
 
 /datum/fishing_challenge/proc/on_attack_self(obj/item/source, mob/user)
@@ -140,7 +144,7 @@
 /datum/fishing_challenge/proc/stop_fishing(obj/item/rod, mob/user)
 	if((phase != MINIGAME_PHASE || do_after(user, 3 SECONDS, rod)) && !QDELETED(src) && !completed)
 		experience_multiplier *= 0.5
-		lure.balloon_alert(user, "stopped fishing")
+		send_balloon_alert("stopped fishing")
 		complete(FALSE)
 
 /datum/fishing_challenge/proc/complete(win = FALSE, perfect_win = FALSE)
@@ -176,7 +180,7 @@
 	phase = BITING_PHASE
 	// Trashing animation
 	playsound(lure, 'sound/effects/fish_splash.ogg', 100)
-	lure.balloon_alert(user, "!!!")
+	send_balloon_alert("!!!")
 	animate(lure, pixel_y = 3, time = 5, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -3, time = 5, flags = ANIMATION_RELATIVE)
 	// Setup next phase
@@ -226,7 +230,7 @@
 /datum/fishing_challenge/ui_close(mob/user)
 	. = ..()
 	if(!completed)
-		lure.balloon_alert(user, "stopped fishing")
+		send_balloon_alert("stopped fishing")
 		complete(FALSE)
 
 /datum/fishing_challenge/ui_static_data(mob/user)
@@ -258,7 +262,7 @@
 		if("win")
 			complete(win = TRUE, perfect_win = params["perfect"])
 		if("lose")
-			lure.balloon_alert(user, "it got away")
+			send_balloon_alert("it got away")
 			complete(win = FALSE)
 
 /// The visual that appears over the fishing spot

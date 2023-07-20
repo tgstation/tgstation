@@ -25,6 +25,11 @@
 	/// Original height of aquarium visual icon - used to calculate scaledown factor
 	var/source_height = 32
 
+	/**
+	 * If present and it also has a dedicated icon state, this icon file will
+	 * be used for in-aquarium visual for the fish instead of its icon
+	 */
+	var/dedicated_in_aquarium_icon
 	/// If present this icon will be used for in-aquarium visual for the fish instead of icon_state
 	var/dedicated_in_aquarium_icon_state
 
@@ -276,6 +281,8 @@
 
 ///Feed the fishes with the contents of the fish feed
 /obj/item/fish/proc/feed(datum/reagents/fed_reagents)
+	if(status != FISH_ALIVE)
+		return
 	var/fed_reagent_type
 	if(fed_reagents.remove_reagent(food, 0.1))
 		fed_reagent_type = food
@@ -362,31 +369,31 @@
 /// Checks if our current environment lets us live.
 /obj/item/fish/proc/proper_environment()
 	var/obj/structure/aquarium/aquarium = loc
-	if(!istype(aquarium))
-		if(required_fluid_type != AQUARIUM_FLUID_AIR || !HAS_TRAIT(src, TRAIT_FISH_AMPHIBIOUS))
-			return FALSE
-		var/datum/gas_mixture/mixture = loc.return_air()
-		if(!mixture)
-			return FALSE
-		var/static/list/gases_to_check = list(
-			/datum/gas/oxygen = list(16, 100),
-			/datum/gas/nitrogen,
-			/datum/gas/carbon_dioxide = list(0, 10),
-			/datum/gas/water_vapor,
-		)
-		if(!check_gases(mixture.gases, gases_to_check))
-			return FALSE
-		if(!ISINRANGE(mixture.temperature, required_temperature_min, required_temperature_max))
-			return FALSE
-		var/pressure = mixture.return_pressure()
-		if((pressure <= 20) || (pressure >= 550))
+	if(istype(aquarium))
+		if(!compatible_fluid_type(required_fluid_type, aquarium.fluid_type))
+			if(aquarium.fluid_type != AQUARIUM_FLUID_AIR || !HAS_TRAIT(src, TRAIT_FISH_AMPHIBIOUS))
+				return FALSE
+		if(!ISINRANGE(aquarium.fluid_temp, required_temperature_min, required_temperature_max))
 			return FALSE
 		return TRUE
 
-	if(!compatible_fluid_type(required_fluid_type, aquarium.fluid_type))
-		if(aquarium.fluid_type != AQUARIUM_FLUID_AIR || !HAS_TRAIT(src, TRAIT_FISH_AMPHIBIOUS))
-			return FALSE
-	if(!ISINRANGE(aquarium.fluid_temp, required_temperature_min, required_temperature_max))
+	if(required_fluid_type != AQUARIUM_FLUID_AIR && !HAS_TRAIT(src, TRAIT_FISH_AMPHIBIOUS))
+		return FALSE
+	var/datum/gas_mixture/mixture = loc.return_air()
+	if(!mixture)
+		return FALSE
+	var/static/list/gases_to_check = list(
+		/datum/gas/oxygen = list(12, 100),
+		/datum/gas/nitrogen,
+		/datum/gas/carbon_dioxide = list(0, 10),
+		/datum/gas/water_vapor,
+	)
+	if(!check_gases(mixture.gases, gases_to_check))
+		return FALSE
+	if(!ISINRANGE(mixture.temperature, required_temperature_min, required_temperature_max))
+		return FALSE
+	var/pressure = mixture.return_pressure()
+	if((pressure <= 20) || (pressure >= 550))
 		return FALSE
 	return TRUE
 
@@ -413,9 +420,9 @@
 	var/obj/structure/aquarium/aquarium = loc
 	if(!istype(aquarium))
 		return FALSE
-	if(!being_targetted && length(flatten_list(aquarium.tracked_fish_by_type)) >= AQUARIUM_MAX_BREEDING_POPULATION)
-		return FALSE
 	if(being_targetted && HAS_TRAIT(src, TRAIT_FISH_NO_MATING))
+		return FALSE
+	if(!being_targetted && length(aquarium.get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
 	return aquarium.allow_breeding && health >= initial(health) * 0.8 && stable_population > 1 && world.time >= breeding_wait
 

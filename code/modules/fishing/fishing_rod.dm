@@ -442,7 +442,7 @@
 
 /obj/item/fishing_rod/telescopic/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, force_on = 8, w_class_on = WEIGHT_CLASS_HUGE, clumsy_check = FALSE)
+	AddComponent(/datum/component/transforming, force_on = 8, hitsound_on = hitsound, w_class_on = WEIGHT_CLASS_HUGE, clumsy_check = FALSE)
 	RegisterSignal(src, COMSIG_TRANSFORMING_PRE_TRANSFORM, PROC_REF(pre_transform))
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 

@@ -1267,7 +1267,7 @@
 
 /datum/reagent/toxin/tetrodotoxin
 	name = "Tetrodotoxin"
-	description = "A colorless, oderless, tasteless neurotoxin usually carried in the livers of animals of the Tetraodontiformes order."
+	description = "A colorless, oderless, tasteless neurotoxin usually carried by livers of animals of the Tetraodontiformes order."
 	silent_toxin = TRUE
 	reagent_state = SOLID
 	color = "#EEEEEE"
@@ -1284,58 +1284,68 @@
 
 /datum/reagent/toxin/tetrodotoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	//be ready for a cocktail of symptoms, including:
-	//numbness, nausea, vomit, breath loss, weakness, paralysis and nerve damage/impairment.
+	//numbness, nausea, vomit, breath loss, weakness, paralysis and nerve damage/impairment and eventually a heart attack if enough time passes.
 	switch(current_cycle)
-		if(8 to 15)
+		if(6 to 12)
 			if(SPT_PROB(20, seconds_per_tick))
-				affected_mob.set_jitter_if_lower(rand(0 SECONDS, 3 SECONDS) * REM * seconds_per_tick)
-			if(SPT_PROB(10, seconds_per_tick))
+				affected_mob.set_jitter_if_lower(rand(2 SECONDS, 3 SECONDS) * REM * seconds_per_tick)
+			if(SPT_PROB(5, seconds_per_tick))
 				var/obj/item/organ/internal/tongue/tongue = affected_mob.get_organ_slot(ORGAN_SLOT_TONGUE)
 				if(tongue)
 					to_chat(affected_mob, span_warning("your [tongue.name] feels numb..."))
 				affected_mob.set_slurring_if_lower(5 SECONDS * REM * seconds_per_tick)
-			affected_mob.adjust_disgust(1 * REM * seconds_per_tick)
-		if(15 to 25)
+			affected_mob.adjust_disgust(3.5 * REM * seconds_per_tick)
+		if(12 to 20)
 			silent_toxin = FALSE
-			toxpwr = 0.2
-			affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, 0)
+			toxpwr = 0.5
+			affected_mob.adjustStaminaLoss(2.5 * REM * seconds_per_tick, 0)
 			if(SPT_PROB(20, seconds_per_tick))
 				affected_mob.losebreath += 1 * REM * seconds_per_tick
 			if(SPT_PROB(40, seconds_per_tick))
-				affected_mob.set_jitter_if_lower(rand(0 SECONDS, 3 SECONDS) * REM * seconds_per_tick)
-			affected_mob.adjust_disgust(2 * REM * seconds_per_tick)
+				affected_mob.set_jitter_if_lower(rand(2 SECONDS, 3 SECONDS) * REM * seconds_per_tick)
+			affected_mob.adjust_disgust(3 * REM * seconds_per_tick)
 			affected_mob.set_slurring_if_lower(1 SECONDS * REM * seconds_per_tick)
-		if(25 to 35)
-			toxpwr = 0.5
-			affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
+			affected_mob.adjustStaminaLoss(2 * REM * seconds_per_tick, 0)
+			if(SPT_PROB(4, seconds_per_tick))
+				paralyze_limb(affected_mob)
+			if(SPT_PROB(10, seconds_per_tick))
+				affected_mob.adjust_confusion(rand(6 SECONDS, 8 SECONDS))
+		if(20 to 28)
+			toxpwr = 1
+			affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)
 			if(SPT_PROB(40, seconds_per_tick))
 				affected_mob.losebreath += 2 * REM * seconds_per_tick
-			affected_mob.adjust_disgust(2 * REM * seconds_per_tick)
+			affected_mob.adjust_disgust(3 * REM * seconds_per_tick)
 			affected_mob.set_slurring_if_lower(3 SECONDS * REM * seconds_per_tick)
-			if(SPT_PROB(10, seconds_per_tick))
-				to_chat(affected_mob, span_danger("you feel horribly weak."))
-				affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, 0)
-			else if(affected_mob.getStaminaLoss() < 50)
-				affected_mob.adjustStaminaLoss(5 * REM * seconds_per_tick, 0)
 			if(SPT_PROB(5, seconds_per_tick))
+				to_chat(affected_mob, span_danger("you feel horribly weak."))
+			affected_mob.adjustStaminaLoss(5 * REM * seconds_per_tick, 0)
+			if(SPT_PROB(8, seconds_per_tick))
 				paralyze_limb(affected_mob)
-		if(35 to INFINITY)
-			toxpwr = 1
-			affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
+			if(SPT_PROB(10, seconds_per_tick))
+				affected_mob.adjust_confusion(rand(6 SECONDS, 8 SECONDS))
+		if(28 to INFINITY)
+			toxpwr = 1.5
+			affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, BRAIN_DAMAGE_DEATH)
 			affected_mob.set_silence_if_lower(3 SECONDS * REM * seconds_per_tick)
 			affected_mob.adjustStaminaLoss(5 * REM * seconds_per_tick, 0)
 			affected_mob.adjust_disgust(2 * REM * seconds_per_tick)
 			if(SPT_PROB(15, seconds_per_tick))
 				paralyze_limb(affected_mob)
+			if(SPT_PROB(10, seconds_per_tick))
+				affected_mob.adjust_confusion(rand(6 SECONDS, 8 SECONDS))
+
+	if(current_cycle >= 38 && !length(traits_not_applied) && SPT_PROB(5, seconds_per_tick) && !affected_mob.undergoing_cardiac_arrest())
+		affected_mob.set_heartattack(TRUE)
+		to_chat(affected_mob, span_danger("you feel a burning pain spread throughout your chest, oh no..."))
+
+	return ..()
 
 /datum/reagent/toxin/tetrodotoxin/proc/paralyze_limb(mob/living/affected_mob)
 	if(!length(traits_not_applied))
 		return
 	var/added_trait = pick(traits_not_applied)
 	ADD_TRAIT(affected_mob, added_trait, REF(src))
-	var/obj/item/bodypart/bodypart = affected_mob.get_bodypart(traits_not_applied[added_trait])
-	if(bodypart)
-		to_chat(affected_mob, span_warning("You can't feel your [bodypart.name] anymore!"))
 	traits_not_applied -= added_trait
 
 /datum/reagent/toxin/tetrodotoxin/on_mob_metabolize(mob/living/affected_mob)
@@ -1355,5 +1365,5 @@
 
 /datum/reagent/toxin/tetrodotoxin/proc/block_breath(mob/living/source)
 	SIGNAL_HANDLER
-	if(current_cycle > 35)
+	if(current_cycle >= 28)
 		return COMSIG_CARBON_BLOCK_BREATH

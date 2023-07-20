@@ -30,7 +30,7 @@
 	var/list/radial_choices
 
 /obj/item/fish_analyzer/Initialize(mapload)
-	var/case_color = rgb(rand(16, 255), rand(16, 255), rand(16, 255))
+	case_color = rgb(rand(16, 255), rand(16, 255), rand(16, 255))
 	set_greyscale(colors = list(case_color))
 	. = ..()
 	register_item_context()
@@ -119,7 +119,7 @@
 
 ///Called when the user has selected a choice. If it's a right click, analyze the traits, else the status
 /obj/item/fish_analyzer/proc/choice_selected(mob/user, obj/structure/aquarium/aquarium, obj/item/fish/choice, params)
-	if(!choice || !can_select_fish(aquarium, user))
+	if(!choice || !can_select_fish(user, aquarium))
 		delete_radial(aquarium)
 		return
 	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
@@ -174,18 +174,18 @@
 
 	render_list += "[span_info("Analyzing status for [fish]:")]\n<span class='info ml-1'>Overrall status: [fish_status]</span>\n"
 	render_list += "<span class='info ml-1'>Size: [fish.size] cm - Weight: [fish.weight] g</span>\n"
-	render_list += "<span class='info ml-1'>Required feed type: [initial(fish.food.name)]</span>\n"
-	render_list += "<span class='info ml-1'>Safe water temperature: [fish.required_temperature_min]-[fish.required_temperature_max]K"
+	render_list += "<span class='info ml-1'>Required feed type: <font color='[initial(fish.food.color)]'>[initial(fish.food.name)]</font></span>\n"
+	render_list += "<span class='info ml-1'>Safe temperature: [fish.required_temperature_min] - [fish.required_temperature_max]K"
 	if(isaquarium(fish.loc))
 		var/obj/structure/aquarium/aquarium = fish.loc
 		if(!ISINRANGE(aquarium.fluid_temp, fish.required_temperature_min, fish.required_temperature_max))
 			render_list += span_alert("(OUT OF RANGE)")
 	render_list += "</span>\n"
-	render_list += "<span class='info ml-1'>Safe water type: [fish.required_fluid_type]"
+	render_list += "<span class='info ml-1'>Safe fluid type: [fish.required_fluid_type]"
 	if(isaquarium(fish.loc))
 		var/obj/structure/aquarium/aquarium = fish.loc
 		if(!compatible_fluid_type(fish.required_fluid_type, aquarium.fluid_type))
-			render_list += span_alert("(IN UNSAFE WATER)")
+			render_list += span_alert("(IN UNSAFE FLUID)")
 	render_list += "</span>"
 
 	if(fish.status != FISH_DEAD)
@@ -193,17 +193,17 @@
 		var/hunger = PERCENT(min((world.time - fish.last_feeding) / fish.feeding_frequency, 1))
 		var/hunger_string = "[hunger]%"
 		switch(hunger)
-			if(0 to 66)
+			if(0 to 60)
 				hunger_string = span_info(hunger_string)
-			if(66 to 94)
+			if(60 to 90)
 				hunger_string = span_warning(hunger_string)
-			if(94 to 100)
+			if(90 to 100)
 				hunger_string = span_alert(hunger_string)
-		render_list += "<span class='info ml-1'>Hunger: <[hunger_string]</span>\n"
+		render_list += "<span class='info ml-1'>Hunger: [hunger_string]</span>\n"
 		var/time_left = round(max(fish.breeding_wait - world.time, 0)/10)
 		render_list += "<span class='info ml-1'>Time until it can breed: [time_left] seconds</span>"
 
-	to_chat(user, jointext(render_list, ""))
+	to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 
 /**
  * Called when a fish or a menu choice is left-clicked.
@@ -217,25 +217,25 @@
 	render_list += "[span_info("Analyzing traits for [fish]:")]\n<span class='info ml-1'>Progenitor species: [fish.progenitors]</span>\n"
 
 	if(!length(fish.fish_traits))
-		render_list += "<span class='info ml-1'>This fish has no trait to speak of</span>\n"
+		render_list += "<span class='info ml-1'>This fish has no trait to speak of...</span>\n"
 	else
 		render_list += "<span class='info ml-1'>Traits:</span>\n"
 		for(var/trait_type in fish.fish_traits)
 			var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
-			var/tooltipped_trait = span_tooltip(trait.name, trait.catalog_description)
-			render_list += "<span class='info ml-2'>[tooltipped_trait] - Inheritabilities: <font color='#00cc66'>[trait.inheritability]%</font> - </font>[trait.diff_traits_inheritability]%</font></span>\n"
+			var/tooltipped_trait = span_tooltip(trait.catalog_description, trait.name)
+			render_list += "<span class='info ml-2'>[tooltipped_trait] - Inheritabilities: <font color='[COLOR_EMERALD]'>[trait.inheritability]%</font> - <font color='[COLOR_BRIGHT_ORANGE]'>[trait.diff_traits_inheritability]%</font></span>\n"
 
 	var/evolution_len = length(fish.evolution_types)
 	if(!evolution_len)
-		render_list = "<span class='info ml-1'>This fish has no evolution to speak of</span>"
+		render_list += "<span class='info ml-1'>This fish has no evolution to speak of...</span>"
 	for(var/index in 1 to evolution_len)
 		var/datum/fish_evolution/evolution = GLOB.fish_evolutions[fish.evolution_types[index]]
 		var/evolution_name = evolution.name
 		var/evolution_tooltip = evolution.get_evolution_tooltip()
 		if(evolution_tooltip)
-			evolution_name = span_tooltip(evolution_name, evolution_tooltip)
+			evolution_name = span_tooltip(evolution_tooltip, evolution_name)
 		render_list += "<span class='info ml-2'>[evolution_name] - Base Probability: [evolution.probability]%</span>"
 		if(index != evolution_len)
 			render_list += "\n"
 
-	to_chat(user, jointext(render_list, ""))
+	to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)

@@ -182,17 +182,23 @@ GLOBAL_LIST_EMPTY(gas_handbook)
  * * extraneous_gas_limit: If a gas not in gases is found, this is the limit above which the proc will return FALSE.
  */
 /proc/check_gases(list/gases, list/gases_to_check, extraneous_gas_limit = 0.1)
+	gases_to_check = gases_to_check.Copy()
 	for(var/id in gases)
+		var/gas_moles = gases[id][MOLES]
 		if(!(id in gases_to_check))
-			if(gases[id][MOLES] > extraneous_gas_limit)
+			if(gas_moles > extraneous_gas_limit)
+				to_chat(world, "f1 [id]")
 				return FALSE
 			continue
 		var/list/boundaries = gases_to_check[id]
-		if(boundaries && !ISINRANGE(gases[id][MOLES], boundaries[1], boundaries[2]))
+		if(boundaries && !ISINRANGE(gas_moles, boundaries[1], boundaries[2]))
+			to_chat(world, "f2 [id] [gas_moles]")
 			return FALSE
 		gases_to_check -= id
-	///Now check that whatever gas wasn't present on the turf has a lower boundary of zero or none at all, otherwise return FALSE
+	///Check that gases absent from the turf have a lower boundary of zero or none at all, otherwise return FALSE
 	for(var/id in gases_to_check)
-		if(!gases_to_check[id]?[1] > 0)
+		var/list/boundaries = gases_to_check[id]
+		if(boundaries && boundaries[1] > 0)
+			to_chat(world, "f3 [id] [boundaries[1]]")
 			return FALSE
 	return TRUE
