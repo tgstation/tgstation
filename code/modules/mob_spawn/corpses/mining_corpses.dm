@@ -262,10 +262,7 @@
 
 /datum/outfit/consumed_ice_settler/pre_equip(mob/living/carbon/human/ice_settler, visualsOnly = FALSE)
 	if(prob(30))
-		if (prob(20))
-			r_pocket = /obj/item/coin/silver
-		else
-			l_pocket = pick(/obj/item/fishing_line)
+		r_pocket = /obj/item/coin/silver
 	if(prob(30))
 		back = pick_weight(list(
 			/obj/item/pickaxe = 4,
