@@ -265,7 +265,7 @@
 		if (prob(20))
 			r_pocket = /obj/item/coin/silver
 		else
-			l_pocket = pick(/obj/item/seeds/shrub, /obj/item/fishing_line)
+			l_pocket = pick(/obj/item/fishing_line)
 	if(prob(30))
 		back = pick_weight(list(
 			/obj/item/pickaxe = 4,
