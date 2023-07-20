@@ -26,14 +26,12 @@
 	ai_controller = /datum/ai_controller/basic_controller/pony
 
 /mob/living/basic/pony/Initialize(mapload)
+	. = ..()
+
 	AddElement(/datum/element/pet_bonus, "whickers.")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddElement(/datum/element/waddling)
-	make_tameable()
-	. = ..()
-
-/mob/living/basic/pony/proc/make_tameable()
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/apple), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 /mob/living/basic/pony/proc/tamed(mob/living/tamer)
@@ -44,7 +42,7 @@
 
 /datum/ai_controller/basic_controller/pony
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
