@@ -52,6 +52,8 @@
 	var/starting_reagent_purity = null
 	///How exquisite the meal is. Applicable to crafted food, increasing its quality. Spans from 0 to 5.
 	var/crafting_complexity = 0
+	///Buff given when a hand-crafted version of this item is consumed. Randomized according to crafting_complexity if not assigned.
+	var/datum/status_effect/food/crafed_food_buff = null
 
 /obj/item/food/New(loc, _starting_reagent_purity, ...)
 	starting_reagent_purity = _starting_reagent_purity
@@ -90,7 +92,6 @@
 		bite_consumption = bite_consumption,\
 		junkiness = junkiness,\
 	)
-
 
 ///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
 /obj/item/food/proc/make_processable()

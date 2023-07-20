@@ -230,15 +230,15 @@ Behavior that's still missing from this component that original food items had t
 		var/purity = owner.reagents.get_average_purity()
 		switch(purity)
 			if(0 to 0.2)
-				examine_list += span_warning("It is made of terrible ingredients...")
+				examine_list += span_warning("It is made of terrible ingredients, making the effect short lived...")
 			if(0.2 to 0.4)
-				examine_list += span_warning("It is made of synthetic ingredients.")
+				examine_list += span_warning("It is made of synthetic ingredients, making the effect short lived.")
 			if(0.4 to 0.6)
 				examine_list += span_notice("It is made of average ingredients.")
 			if(0.6 to 0.8)
-				examine_list += span_green("It is made of organic ingredients!")
+				examine_list += span_green("It is made of organic ingredients, making the effect last longer!")
 			if(0.8 to 1)
-				examine_list += span_green("It is made of finest ingredients!")
+				examine_list += span_green("It is made of finest ingredients, making the effect last longer!")
 		// TODO: DEBUG, REMOVE WHEN DONE
 		examine_list += span_notice("Reagent purities:")
 		for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
@@ -508,13 +508,17 @@ Behavior that's still missing from this component that original food items had t
 	var/recipe_complexity = get_recipe_complexity()
 	if(recipe_complexity == 0)
 		return
-	var/datum/status_effect/food/buff = pick(GLOB.food_quality_buffs[recipe_complexity])
+	var/obj/item/food/food = parent
+	if(!isnull(food.crafed_food_buff))
+		buff = food.crafed_food_buff
+	else
+		buff = pick_weight(GLOB.food_buffs[recipe_complexity])
 	if(!isnull(buff))
-		var/mob/living/carbon/carbon_eater = eater
+		var/mob/living/living_eater = eater
 		var/atom/owner = parent
 		var/timeout_mod = owner.reagents.get_average_purity() * 2 // buff duration is 100% at average purity of 50%
 		var/strength = recipe_complexity
-		carbon_eater.apply_status_effect(buff, timeout_mod, strength)
+		living_eater.apply_status_effect(buff, timeout_mod, strength)
 
 ///Check foodtypes to see if we should send a moodlet
 /datum/component/edible/proc/checkLiked(fraction, mob/eater)
@@ -569,7 +573,6 @@ Behavior that's still missing from this component that original food items had t
 /datum/component/edible/proc/get_recipe_complexity()
 	if(!HAS_TRAIT(parent, TRAIT_FOOD_CHEF_MADE) || !istype(parent, /obj/item/food))
 		return 0 // It is factory made. Soulless.
-
 	var/obj/item/food/food = parent
 	return food.crafting_complexity
 
