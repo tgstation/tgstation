@@ -14,6 +14,9 @@
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
 
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag
+	spawnwithmagazine = FALSE
+
 //Lethal ammo for Paco.
 /obj/item/ammo_casing/c35
 	name = ".35 bullet casing"
@@ -32,6 +35,7 @@
 	max_ammo = 16
 	multiple_sprites = AMMO_BOX_PER_BULLET
 	multiple_sprite_use_base = TRUE
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/ammo_box/magazine/m35/update_icon_state()
 	. = ..()
@@ -56,7 +60,7 @@
 
 /obj/projectile/bullet/c35/rubber
 	name = ".35 rubber bullet"
-	damage = 5
+	damage = 4
 	stamina = 35 //10 less than disabler
 	sharpness = NONE
 	embedding = null

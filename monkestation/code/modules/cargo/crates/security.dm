@@ -35,3 +35,14 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/knife/combat = 3)
 	crate_name = "combat knife crate"
+
+/datum/supply_pack/security/paco
+	name = "FS HG .35 Auto \"Paco\" crate"
+	desc = "Did security slip and lose their handguns? in that case, this crate contains two \"Paco\" handguns with two magazines of rubber."
+	cost = CARGO_CRATE_VALUE * 5
+	access_view = ACCESS_SECURITY
+	contains = list(
+		/obj/item/gun/ballistic/automatic/pistol/paco/no_mag = 2,
+		/obj/item/ammo_box/magazine/m35/rubber = 2,
+		)
+	crate_name = "\improper Paco handgun crate"

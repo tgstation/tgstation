@@ -113,13 +113,13 @@
 	new /obj/item/radio/headset/headset_sec/alt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
+	new /obj/item/ammo_box/magazine/m35/rubber(src) //monkestation edit: Paco sec
 
 /obj/structure/closet/secure_closet/security/sec
 
 /obj/structure/closet/secure_closet/security/sec/PopulateContents()
 	..()
 	new /obj/item/storage/belt/security/full(src)
-	new /obj/item/ammo_box/magazine/m35/rubber(src) //monkestation edit: Paco sec
 
 /obj/structure/closet/secure_closet/security/cargo
 
