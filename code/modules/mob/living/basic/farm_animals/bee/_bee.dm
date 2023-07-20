@@ -205,6 +205,7 @@
 	return FALSE
 
 /mob/living/basic/bee/toxin
+	desc = "This bee is holding some sort of fluid."
 
 /mob/living/basic/bee/toxin/Initialize(mapload)
 	. = ..()
