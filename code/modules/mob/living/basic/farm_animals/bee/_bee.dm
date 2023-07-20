@@ -231,6 +231,7 @@
 /obj/item/queen_bee/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_needle))
 
 /obj/item/queen_bee/Destroy()
 	QDEL_NULL(queen)
@@ -245,7 +246,9 @@
 	if(!QDELETED(src))
 		qdel(src)
 
-/obj/item/queen_bee/attackby(obj/item/syringe, mob/user, params)
+/obj/item/queen_bee/proc/handle_needle(obj/item/source, obj/item/syringe, mob/living/user, params)
+	SIGNAL_HANDLER
+
 	if(!istype(syringe, /obj/item/reagent_containers/syringe))
 		return
 	var/obj/item/reagent_containers/syringe/needle = syringe
@@ -257,7 +260,7 @@
 			new_bee.queen.assign_reagent(queen.beegent) //Bees use the global singleton instances of reagents, so we don't need to worry about one bee being deleted and her copies losing their reagents.
 		user.put_in_active_hand(new_bee)
 		user.visible_message(span_notice("[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!"),span_warning("You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!"))
-		return ..()
+		return
 	var/datum/reagent/chemical = needle.reagents.get_master_reagent()
 	if(chemical && needle.reagents.has_reagent(chemical.type, 5))
 		needle.reagents.remove_reagent(chemical.type, 5)
@@ -266,7 +269,6 @@
 		name = queen.name
 	else
 		to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
-	return ..()
 
 /obj/item/queen_bee/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] eats [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
