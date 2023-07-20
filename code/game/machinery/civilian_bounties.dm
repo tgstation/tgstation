@@ -138,7 +138,7 @@
 	sending = FALSE
 
 ///Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
-/obj/machinery/computer/piratepad_control/civilian/proc/add_bounties(var/cooldown_reduction = 0)
+/obj/machinery/computer/piratepad_control/civilian/proc/add_bounties(cooldown_reduction = 0)
 	if(!inserted_scan_id || !inserted_scan_id.registered_account)
 		return
 	var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
