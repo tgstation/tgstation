@@ -141,6 +141,7 @@
 	bomb = 25
 	fire = 20
 	acid = 50
+	wound = 4
 
 /obj/item/clothing/head/soft/paramedic
 	name = "paramedic cap"

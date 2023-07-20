@@ -391,10 +391,10 @@
 	flags_1 = NONE
 
 /datum/armor/beret_sec
-	melee = 35
-	bullet = 30
-	laser = 30
-	energy = 40
+	melee = 30
+	bullet = 25
+	laser = 25
+	energy = 35
 	bomb = 25
 	fire = 20
 	acid = 50
@@ -457,7 +457,7 @@
 	flags_inv ^= HIDEHAIR
 	balloon_alert(user, "[flags_inv & HIDEHAIR ? "tightened" : "loosened "] strings")
 	return TRUE
-	
+
 /obj/item/clothing/head/utility/surgerycap/examine(mob/user)
 	. = ..()
 	. += span_notice("Use in hand to [flags_inv & HIDEHAIR ? "loosen" : "tighten"] the strings.")
