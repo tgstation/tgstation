@@ -42,7 +42,7 @@
 	playsound(source, 'sound/effects/wounds/splatter.ogg', 60, TRUE, -1)
 	to_fire.color = "#ff7070"
 	to_fire.name = "blood-[to_fire.name]"
-	to_fire.set_light(2, 2, LIGHT_COLOR_BLOOD_MAGIC, TRUE)
+	to_fire.set_light(2, 2, LIGHT_COLOR_BLOOD_MAGIC, l_on = TRUE)
 
 ///signal sent before parent casts a spell
 /datum/component/splattercasting/proc/on_before_spell_cast(mob/living/carbon/source, datum/action/cooldown/spell/spell, atom/cast_on)
