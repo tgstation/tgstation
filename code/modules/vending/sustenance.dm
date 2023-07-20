@@ -26,6 +26,10 @@
 	extra_price = PAYCHECK_LOWER * 0.6
 	payment_department = NO_FREEBIES
 
+//Subtype to force the vendor on lavaland labor camp (or other station areas not on station z) to use prices instead of being free
+/obj/machinery/vending/sustenance/labor_camp
+	onstation_override = TRUE
+
 /obj/item/vending_refill/sustenance
 	machine_name = "Sustenance Vendor"
 	icon_state = "refill_snack"
