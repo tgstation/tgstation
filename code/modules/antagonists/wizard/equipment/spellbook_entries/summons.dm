@@ -27,7 +27,7 @@
 	// Also must be config enabled
 	return !CONFIG_GET(flag/no_summon_guns)
 
-/datum/spellbook_entry/summon/guns/buy_spell(mob/living/carbon/human/user,obj/item/spellbook/book)
+/datum/spellbook_entry/summon/guns/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
 	summon_guns(user, 10)
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
 	return ..()
@@ -45,7 +45,7 @@
 	// Also must be config enabled
 	return !CONFIG_GET(flag/no_summon_magic)
 
-/datum/spellbook_entry/summon/magic/buy_spell(mob/living/carbon/human/user,obj/item/spellbook/book)
+/datum/spellbook_entry/summon/magic/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
 	summon_magic(user, 10)
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
 	return ..()
@@ -87,7 +87,7 @@
 /datum/spellbook_entry/summon/specific_spell
 	name = "Mass Wizard Teaching"
 	desc = "Teach a specific spell (or give a specific item) to everyone on the station. \
-		The cost of this is increased by the cost of the spell you choose."
+		The cost of this is increased by the cost of the spell you choose. And don't worry - you, too, will learn the spell!"
 	cost = 3 // cheapest is 4 cost, most expensive is 7 cost
 	limit = 1
 
@@ -105,11 +105,17 @@
 	var/chosen_spell_name = tgui_input_list(user, "Choose a spell (or item) to grant to everyone...", "Wizardly Teaching", spell_options)
 	if(isnull(chosen_spell_name) || QDELETED(user) || QDELETED(book))
 		return FALSE
+	if(GLOB.mass_teaching)
+		tgui_alert(user, "Someone's already cast [name]!", "Wizardly Teaching", list("Shame"))
+		return FALSE
+
 	var/datum/spellbook_entry/chosen_entry = spell_options[chosen_spell_name]
+	if(cost + chosen_entry.cost > book.uses)
+		tgui_alert(user, "You can't afford to grant everyone [chosen_spell_name]! ([cost] points needed)", "Wizardly Teaching", list("Shame"))
+		return FALSE
 
 	cost += chosen_entry.cost
 	if(!can_buy(user, book))
-		tgui_alert(user, "You can't afford to grant everyone [chosen_spell_name]! ([cost] points needed)", "Wizardly Teaching", list("Shame"))
 		cost = initial(cost)
 		return FALSE
 
@@ -122,6 +128,11 @@
 	user.log_message("has gave everyone the [item_entry ? "item" : "spell"] \"[chosen_spell_name]\"!", LOG_GAME)
 
 	name = "[name]: [chosen_spell_name]"
+	return ..()
+
+/datum/spellbook_entry/summon/specific_spell/can_buy(mob/living/carbon/human/user, obj/item/spellbook/book)
+	if(GLOB.mass_teaching)
+		return FALSE
 	return ..()
 
 /datum/spellbook_entry/summon/specific_spell/can_be_purchased()

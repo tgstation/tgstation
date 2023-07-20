@@ -215,7 +215,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 		GLOB.summon_guns = new /datum/summon_things_controller(survivor_probability, GLOBAL_PROC_REF(give_guns))
 	GLOB.summon_guns.equip_all_affected()
 
-/*
+/**
  * Triggers Summon Events from [user].
  * If Summon Events has already been triggered, speeds up the event timer.
  */
@@ -331,6 +331,10 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 /datum/summon_things_controller/spellbook_entry/can_give_to(mob/who)
 	return istype(used_entry, /datum/spellbook_entry/item) ? ishuman(who) : isliving(who)
+
+/datum/summon_things_controller/spellbook_entry/get_affected_minds()
+	// The wizards get in on this too, wherever they may be
+	return ..() | get_antag_minds(/datum/antagonist/wizard)
 
 /datum/summon_things_controller/spellbook_entry/New(entry_type)
 	. = ..()
