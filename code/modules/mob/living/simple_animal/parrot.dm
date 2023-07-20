@@ -143,7 +143,7 @@
 	if(stat != DEAD)
 		return
 
-	if(HAS_TRAIT(user.mind, TRAIT_NAIVE))
+	if(HAS_MIND_TRAIT(user, TRAIT_NAIVE))
 		. += pick(
 			"It seems tired and shagged out after a long squawk.",
 			"It seems to be pining for the fjords.",

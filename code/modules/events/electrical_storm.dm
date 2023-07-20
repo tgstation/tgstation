@@ -30,7 +30,6 @@
 		return
 
 	for(var/centre in epicentreList)
-		for(var/a in GLOB.apcs_list)
-			var/obj/machinery/power/apc/A = a
-			if(get_dist(centre, A) <= lightsoutRange)
-				A.overload_lighting()
+		for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
+			if(get_dist(centre, apc) <= lightsoutRange)
+				apc.overload_lighting()

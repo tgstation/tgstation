@@ -1,3 +1,4 @@
+GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 
 //////////////////////////////////////////////
 //                                          //
@@ -554,7 +555,7 @@
 			log_dynamic("[ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
 	if(revolution.members.len)
 		revolution.update_objectives()
-		revolution.update_heads()
+		revolution.update_rev_heads()
 		SSshuttle.registerHostileEnvironment(revolution)
 		return TRUE
 	log_dynamic("[ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
@@ -570,6 +571,10 @@
 		return
 
 	finished = winner
+
+	if(winner == REVOLUTION_VICTORY)
+		GLOB.revolutionary_win = TRUE
+
 	return RULESET_STOP_PROCESSING
 
 /// Checks for revhead loss conditions and other antag datums.
@@ -627,16 +632,17 @@
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()
-	if(.)
-		var/obj/machinery/nuclearbomb/syndicate/syndicate_nuke = locate() in GLOB.nuke_list
-		if(syndicate_nuke)
-			var/turf/nuke_turf = get_turf(syndicate_nuke)
-			if(nuke_turf)
-				new /obj/machinery/nuclearbomb/syndicate/bananium(nuke_turf)
-				qdel(syndicate_nuke)
-		for(var/datum/mind/clowns in assigned)
-			clowns.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
-			clowns.special_role = ROLE_CLOWN_OPERATIVE
+	if(!.)
+		return
+
+	var/list/nukes = SSmachines.get_machines_by_type(/obj/machinery/nuclearbomb/syndicate)
+	for(var/obj/machinery/nuclearbomb/syndicate/nuke as anything in nukes)
+		new /obj/machinery/nuclearbomb/syndicate/bananium(nuke.loc)
+		qdel(nuke)
+
+	for(var/datum/mind/clowns in assigned)
+		clowns.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
+		clowns.special_role = ROLE_CLOWN_OPERATIVE
 
 //////////////////////////////////////////////
 //                                          //
