@@ -291,7 +291,7 @@ Difficulty: Hard
 /obj/item/wendigo_blood
 	name = "bottle of wendigo blood"
 	desc = "A bottle of viscous red liquid... You're not actually going to drink this, are you?"
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "vial"
 
 /obj/item/wendigo_blood/attack_self(mob/living/user)
@@ -328,7 +328,7 @@ Difficulty: Hard
 /obj/item/wendigo_skull
 	name = "wendigo skull"
 	desc = "A bloody skull torn from a murderous beast, the soulless eye sockets seem to constantly track your movement."
-	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "wendigo_skull"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0

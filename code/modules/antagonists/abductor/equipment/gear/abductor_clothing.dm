@@ -15,7 +15,7 @@
 /obj/item/clothing/suit/armor/abductor/vest
 	name = "agent vest"
 	desc = "A vest outfitted with advanced stealth technology. It has two modes - combat and stealth."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "vest_stealth"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
@@ -155,7 +155,7 @@
 
 /obj/item/clothing/suit/armor/abductor/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	for(var/obj/machinery/abductor/console/mothership_console in GLOB.machines)
+	for(var/obj/machinery/abductor/console/mothership_console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/abductor/console))
 		if(mothership_console.vest == src)
 			mothership_console.vest = null
 			break

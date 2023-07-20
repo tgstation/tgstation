@@ -259,7 +259,6 @@
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 1
 	},
-/obj/machinery/light/dim/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "kw" = (
@@ -425,6 +424,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/power/port_gen/pacman/pre_loaded,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "qn" = (
@@ -1445,7 +1445,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/small/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},

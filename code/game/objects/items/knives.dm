@@ -1,7 +1,7 @@
 // Knife Template, should not appear in game normaly //
 /obj/item/knife
 	name = "knife"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
@@ -70,7 +70,7 @@
 /obj/item/knife/bloodletter
 	name = "bloodletter"
 	desc = "An occult looking dagger that is cold to the touch. Somehow, the flawless orb on the pommel is made entirely of liquid blood."
-	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "bloodletter"
 	worn_icon_state = "render"
 	w_class = WEIGHT_CLASS_NORMAL

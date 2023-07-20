@@ -237,7 +237,7 @@
 /obj/item/borg/cookbook
 	name = "Codex Cibus Mechanicus"
 	desc = "It's a robot cookbook!"
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "cooked_book"
 	item_flags = NOBLUDGEON
 	var/datum/component/personal_crafting/cooking

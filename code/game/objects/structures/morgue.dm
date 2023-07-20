@@ -218,12 +218,13 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	beeper = !beeper
 	to_chat(user, span_notice("You turn the speaker function [beeper ? "on" : "off"]."))
 
-/obj/structure/bodycontainer/morgue/emag_act(mob/user)
+/obj/structure/bodycontainer/morgue/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
-	to_chat(user, span_warning("You overload [src]'s alert system."))
+		return FALSE
+	balloon_alert(user, "alert system overloaded")
 	obj_flags |= EMAGGED
 	update_appearance(UPDATE_ICON)
+	return TRUE
 
 /obj/structure/bodycontainer/morgue/update_icon_state()
 	if(!connected || connected.loc != src) // Open or tray is gone.
@@ -267,7 +268,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium
 	name = "crematorium"
 	desc = "A human incinerator. Works well on barbecue nights."
-	icon = 'icons/obj/machines/basic_machines.dmi'
+	icon = 'icons/obj/machines/crematorium.dmi'
 	icon_state = "crema1"
 	base_icon_state = "crema"
 	dir = SOUTH
@@ -368,7 +369,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
  * For overriding only
  */
 /obj/structure/tray
-	icon = 'icons/obj/machines/basic_machines.dmi'
+	icon = 'icons/obj/machines/crematorium.dmi'
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = PASSTABLE | LETPASSTHROW
