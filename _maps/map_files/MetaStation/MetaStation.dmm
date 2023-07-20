@@ -9179,11 +9179,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "dyh" = (
-/obj/machinery/light_switch/directional/north,
 /obj/structure/closet{
 	name = "janitorial supplies"
 	},
 /obj/item/storage/box/bodybags,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "dyr" = (
@@ -16195,8 +16195,8 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "gfo" = (
-/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/bot,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "gfD" = (
@@ -16990,6 +16990,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "guo" = (
@@ -35977,7 +35978,6 @@
 "ndZ" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ned" = (
@@ -44788,10 +44788,10 @@
 /area/station/command/bridge)
 "qpu" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/airalarm/directional/south,
 /obj/structure/bodycontainer/morgue{
 	dir = 1
 	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "qpD" = (
@@ -64149,6 +64149,7 @@
 "xeT" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/mannequin/skeleton,
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "xff" = (
