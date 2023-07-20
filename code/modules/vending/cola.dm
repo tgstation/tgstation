@@ -109,10 +109,8 @@
 
 /obj/machinery/vending/cola/shamblers/Initialize(mapload)
 	. = ..()
-	var/datum/language_holder/ling_languages = get_language_holder()
-	ling_languages.selected_language = ling_languages.get_random_spoken_language()
+	set_active_language(get_random_spoken_language())
 
 /obj/machinery/vending/cola/shamblers/speak(message)
 	. = ..()
-	var/datum/language_holder/ling_languages = get_language_holder()
-	ling_languages.selected_language = ling_languages.get_random_spoken_language()
+	set_active_language(get_random_spoken_language())

@@ -1060,8 +1060,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob.", confidential = TRUE)
 			return
-		var/datum/language_holder/H = M.get_language_holder()
-		H.open_language_menu(usr)
+		M.get_language_holder().open_language_menu(usr)
 
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN))
@@ -1308,7 +1307,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/code = random_nukecode()
-		for(var/obj/machinery/nuclearbomb/selfdestruct/SD in GLOB.nuke_list)
+		for(var/obj/machinery/nuclearbomb/selfdestruct/SD as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/selfdestruct))
 			SD.r_code = code
 		message_admins("[key_name_admin(usr)] has set the self-destruct \
 			code to \"[code]\".")

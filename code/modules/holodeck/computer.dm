@@ -315,9 +315,9 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	for(var/atom/movable/atom_contents as anything in holo_atom) //make sure that things inside of a holoitem are moved outside before destroying it
 		atom_contents.forceMove(target_turf)
 
-	if(istype(holo_atom, /obj/item/clothing/under/rank))
+	if(istype(holo_atom, /obj/item/clothing/under))
 		var/obj/item/clothing/under/holo_clothing = holo_atom
-		holo_clothing.dump_attachment()
+		holo_clothing.dump_attachments()
 
 	if(!silent)
 		visible_message(span_notice("[holo_atom] fades away!"))
@@ -399,19 +399,23 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		holo_effect.safety(nerf_this)
 
-/obj/machinery/computer/holodeck/emag_act(mob/user)
+/obj/machinery/computer/holodeck/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	if(!LAZYLEN(emag_programs))
-		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
-		return
+		balloon_alert(user, "no card swipe port!")
+		return FALSE
 	playsound(src, SFX_SPARKS, 75, TRUE)
 	obj_flags |= EMAGGED
-	to_chat(user, span_warning("You vastly increase projector power and override the safety and security protocols."))
+	if (user)
+		balloon_alert(user, "safety protocols destroyed") // im gonna keep this once since this perfectly describes it, and the to_chat is just flavor
+		to_chat(user, span_warning("You vastly increase projector power and override the safety and security protocols."))
+		user.log_message("emagged the Holodeck Control Console.", LOG_GAME)
+		message_admins("[ADMIN_LOOKUPFLW(user)] emagged the Holodeck Control Console.")
+
 	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
-	user.log_message("emagged the Holodeck Control Console.", LOG_GAME)
-	message_admins("[ADMIN_LOOKUPFLW(user)] emagged the Holodeck Control Console.")
 	nerf(!(obj_flags & EMAGGED),FALSE)
+	return TRUE
 
 /obj/machinery/computer/holodeck/emp_act(severity)
 	. = ..()
