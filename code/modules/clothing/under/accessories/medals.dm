@@ -43,7 +43,7 @@
 		return .
 
 	user.visible_message(
-		span_notice("[user] tries pin [src] on [distinguished]'s chest."),
+		span_notice("[user] tries to pin [src] on [distinguished]'s chest."),
 		span_notice("You try to pin [src] on [distinguished]'s chest."),
 	)
 
@@ -69,18 +69,18 @@
 /obj/item/clothing/accessory/medal/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	var/mob/living/distinguished = attach_to.loc
 	if(isnull(attacher) || !istype(distinguished) || distinguished == attacher || awarded_to)
-		// You can't be awarded by nothing, you can't award yourseld, and you can't be awarded someone else's medal
+		// You can't be awarded by nothing, you can't award yourself, and you can't be awarded someone else's medal
 		return ..()
 
 	awarder = attacher.real_name
 	awarded_to = distinguished.real_name
 
 	update_appearance(UPDATE_DESC)
-	SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[awarder]", "commendee" = "[awarded_to]", "medal" = "[src]", "reason" = commendation_message))
-	GLOB.commendations += "[awarder] awarded <b>[awarded_to]</b> the <span class='medaltext'>[name]</span>! \n- [commendation_message]"
+	add_memory_in_range(distinguished, 7, /datum/memory/received_medal, protagonist = distinguished, deuteragonist = attacher, medal_type = src, medal_text = commendation_message)
 	distinguished.log_message("was given the following commendation by <b>[key_name(attacher)]</b>: [commendation_message]", LOG_GAME, color = "green")
 	message_admins("<b>[key_name_admin(distinguished)]</b> was given the following commendation by <b>[key_name_admin(attacher)]</b>: [commendation_message]")
-	add_memory_in_range(distinguished, 7, /datum/memory/received_medal, protagonist = distinguished, deuteragonist = attacher, medal_type = src, medal_text = commendation_message)
+	GLOB.commendations += "[awarder] awarded <b>[awarded_to]</b> the <span class='medaltext'>[name]</span>! \n- [commendation_message]"
+	SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[awarder]", "commendee" = "[awarded_to]", "medal" = "[src]", "reason" = commendation_message))
 
 	return ..()
 
