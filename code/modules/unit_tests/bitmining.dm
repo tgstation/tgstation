@@ -1,3 +1,6 @@
+#define TEST_MAP "test_only"
+#define TEST_MAP_EXPENSIVE "test_only_expensive"
+
 /// The qserver and qconsole should find each other on init
 /datum/unit_test/quantum_server_find_console/Run()
 	var/obj/machinery/computer/quantum_console/console = allocate(/obj/machinery/computer/quantum_console)
@@ -8,41 +11,75 @@
 
 	var/obj/machinery/computer/quantum_console/connected_console = server.console_ref.resolve()
 	var/obj/machinery/quantum_server/connected_server = console.server_ref.resolve()
-
 	TEST_ASSERT_EQUAL(connected_console, console, "Quantum console did not set server_ref correctly")
 	TEST_ASSERT_EQUAL(connected_server, server, "Quantum server did not set console_ref correctly")
 
-/// Handles cases with loading domains and stopping domains
-/datum/unit_test/quantum_server_load_map/Run()
+/// Loading virtual domain
+/datum/unit_test/quantum_server_generate_vdom/Run()
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
+	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
+	labrat.mock_client = new()
+	var/obj/machinery/computer/quantum_console/console = allocate(/obj/machinery/computer/quantum_console, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+
+	TEST_ASSERT_NOTNULL(server.console_ref, "Sanity: QServer did not find the console")
+
+	server.generate_virtual_domain(labrat)
+	TEST_ASSERT_NOTNULL(server.vdom_ref, "QServer did not generate vdom")
+	TEST_ASSERT_EQUAL(length(server.map_load_turf), 1, "There should only ever be ONE turf, the bottom left, in the map_load_turf list")
+	TEST_ASSERT_EQUAL(length(server.safehouse_load_turf), 1, "There should only ever be ONE turf, the bottom left, in the safehouse_load_turf list")
+
+/// Handles cases with loading domains
+/datum/unit_test/quantum_server_set_domain/Run()
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
+	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
+	var/obj/machinery/computer/quantum_console/console = allocate(/obj/machinery/computer/quantum_console, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	labrat.mock_client = new()
+
+	server.set_domain(labrat, id = TEST_MAP)
+	TEST_ASSERT_NOTNULL(server.vdom_ref, "QServer did not initialize vdom_ref")
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "QServer did not load generated_domain correctly")
+
+	server.set_domain(labrat, TEST_MAP_EXPENSIVE)
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "QServer should prevent loading multiple domains")
+
+	server.stop_domain()
+	COOLDOWN_RESET(server, cooling_off)
+	var/datum/weakref/fake_mind_ref = WEAKREF(labrat)
+	server.occupant_mind_refs += fake_mind_ref
+	server.set_domain(labrat, id = TEST_MAP)
+	TEST_ASSERT_NULL(server.generated_domain, "QServer should prevent setting a domain with occupants")
+
+	server.occupant_mind_refs -= fake_mind_ref
+	server.points = 3
+	server.set_domain(labrat, id = TEST_MAP_EXPENSIVE)
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP_EXPENSIVE, "Sanity: Qserver should've loaded expensive test map")
+	TEST_ASSERT_EQUAL(server.points, 0, "QServer should've spent 3 points on loading a 3 point domain")
+
+/// Handles cases with stopping domains. The server should cool down & prevent stoppage with active mobs
+/datum/unit_test/quantum_server_stop_domain/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 	labrat.mock_client = new()
 
-	server.set_domain(labrat, "test_only")
-	TEST_ASSERT_NOTNULL(server.vdom_ref, "QServer did not initialize vdom_ref")
-	TEST_ASSERT_NOTNULL(server.generated_domain, "QServer did not load generated_domain")
-	TEST_ASSERT_EQUAL(server.generated_domain.id, "test_only", "QServer did not load generated_domain correctly")
+	server.set_domain(labrat, id = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: QServer should've loaded test_only map")
 
-	server.set_domain(labrat, id = "test_only")
-	TEST_ASSERT_EQUAL(server.generated_domain.id, "test_only", "QServer should prevent loading multiple domains")
+	server.stop_domain()
+	TEST_ASSERT_NOTNULL(server.vdom_ref, "QServer erased vdom_ref on stop_domain()")
+	TEST_ASSERT_NULL(server.generated_domain, "QServer did not stop domain")
+	TEST_ASSERT_EQUAL(server.get_ready_status(), FALSE, "QServer should cool down, but did not set ready status to FALSE")
+
+	server.set_domain(labrat, id = TEST_MAP)
+	TEST_ASSERT_NULL(server.generated_domain, "QServer should prevent loading a new domain while cooling down")
+
+	COOLDOWN_RESET(server, cooling_off)
+	server.set_domain(labrat, id = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "QServer should load a new domain after cooldown")
 
 	var/datum/weakref/fake_mind_ref = WEAKREF(labrat)
 	server.occupant_mind_refs += fake_mind_ref
-	server.set_domain(labrat, id = "test_only")
-	TEST_ASSERT_EQUAL(server.generated_domain.id, "test_only", "QServer should prevent stopping a domain with occupants")
-
-	server.occupant_mind_refs -= fake_mind_ref
-	server.stop_domain(labrat)
-	TEST_ASSERT_NOTNULL(server.vdom_ref, "QServer erased vdom_ref on stop_domain()")
-	TEST_ASSERT_NULL(server.generated_domain, "QServer did not stop domain")
-	TEST_ASSERT_EQUAL(server.get_ready_status(), FALSE, "QServer did not set ready status to FALSE")
-
-	server.set_domain(labrat, id = "test_only")
-	TEST_ASSERT_NULL(server.generated_domain, "QServer should prevent loading a new domain")
-
-	COOLDOWN_RESET(server, cooling_off)
-	server.set_domain(labrat, id = "test_only")
-	TEST_ASSERT_EQUAL(server.generated_domain.id, "test_only", "QServer should allow loading a new domain after cooldown")
+	server.stop_domain()
+	TEST_ASSERT_NULL(server.generated_domain, "QServer should force stop a domain even with occupants")
 
 /// Tests the netchair's ability to enter and exit quantum space
 /datum/unit_test/netchair_connection/Run()
@@ -58,13 +95,11 @@
 	var/obj/machinery/quantum_server/connected_server = chair.server_ref.resolve()
 	TEST_ASSERT_EQUAL(connected_server, server, "Netchair did not set server_ref correctly")
 
-	server.set_domain(labrat, id = "test_only")
-	TEST_ASSERT_NOTNULL(server.generated_domain, "QServer did not load generated_domain")
-	TEST_ASSERT_EQUAL(server.generated_domain.id, "test_only", "QServer did not load generated_domain correctly")
+	server.set_domain(labrat, id = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: QServer did not load test map correctly")
 
 	chair.buckle_mob(labrat, check_loc = FALSE)
 	TEST_ASSERT_NOTNULL(chair.occupant_ref, "Netchair did not set occupant_ref")
-
 	UNTIL(!isnull(chair.occupant_mind_ref))
 	TEST_ASSERT_EQUAL(server.occupant_mind_refs[1], chair.occupant_mind_ref, "Netchair did not add mind to server occupant_mind_refs")
 
@@ -97,9 +132,7 @@
 	TEST_ASSERT_EQUAL(labrat.getFireLoss(), 10, "Damage was not transferred to pilot")
 	TEST_ASSERT_NOTNULL(locate(/obj/item/bodypart/head) in labrat.get_damaged_bodyparts(burn = TRUE), "Pilot did not get damaged bodypart")
 
-	target.apply_damage(999, blocked = 0, forced = TRUE)
-	if(target.stat != DEAD) // Some times they just inexplicably avoid it
-		target.apply_damage(999, blocked = 0, forced = TRUE)
+	target.apply_damage(999, forced = TRUE, spread_damage = TRUE)
 	TEST_ASSERT_EQUAL(target.stat, DEAD, "Target should have died on lethal damage")
 	TEST_ASSERT_EQUAL(labrat.stat, DEAD, "Pilot should have died on lethal damage")
 	TEST_ASSERT_EQUAL(REF(labrat_resolved.mind), REF(labrat.mind), "Pilot should have been transferred back to initial mind")
@@ -118,7 +151,7 @@
 /datum/unit_test/bitmining_signals
 	var/received = FALSE
 
-/datum/unit_test/bitmining_signals/proc/on_proximity()
+/datum/unit_test/bitmining_signals/proc/on_proximity(datum/source, mob/living/intruder)
 	SIGNAL_HANDLER
 	received = TRUE
 
@@ -131,19 +164,29 @@
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	var/obj/item/assembly/bitminer_trap/trap = allocate(/obj/item/assembly/bitminer_trap)
 	var/area/test_area = get_area(labrat)
+	labrat.mind_initialize()
 
-	rename_area(test_area, "Bitmining Den")
-	RegisterSignal(labrat, COMSIG_BITMINING_PROXIMITY, PROC_REF(on_proximity))
 	labrat.put_in_active_hand(trap, forced = TRUE)
 	trap.attack_self(labrat)
-	UNTIL(trap.used)
-	TEST_ASSERT_EQUAL(trap.used, TRUE, "Bitminer trap did not activate")
+	TEST_ASSERT_EQUAL(received, FALSE, "Trap should only be usable in the bit den")
 
-	// labrat.forceMove(run_loc_floor_top_right)
-	// labrat.forceMove(run_loc_floor_bottom_left)
-	// TEST_ASSERT_EQUAL(received, TRUE, "Mob stepping on loaded tile did not chain signal")
+	rename_area(test_area, "Bitmining Den")
+	trap.attack_self(labrat)
+	TEST_ASSERT_EQUAL(trap.used, TRUE, "Trap did not activate")
 
-	// received = FALSE
-	// RegisterSignal(labrat, COMSIG_QSERVER_DISCONNECTED, PROC_REF(on_disconnect))
-	// qdel(server)
-	// TEST_ASSERT_EQUAL(received, TRUE, "Quantum server deletion did not chain signal")
+	RegisterSignal(SSdcs, COMSIG_GLOB_BITMINING_PROXIMITY, PROC_REF(on_proximity))
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BITMINING_PROXIMITY, labrat)
+	TEST_ASSERT_EQUAL(received, TRUE, "Global bitmining prox signal was not received")
+
+	received = FALSE
+	labrat.forceMove(run_loc_floor_top_right)
+	labrat.forceMove(run_loc_floor_bottom_left)
+	TEST_ASSERT_EQUAL(received, TRUE, "Signal chain: Didn't receive bitmining_proximity signal from armed tile")
+
+	received = FALSE
+	RegisterSignal(server, COMSIG_QSERVER_DISCONNECTED, PROC_REF(on_disconnect))
+	qdel(server)
+	TEST_ASSERT_EQUAL(received, TRUE, "Signal chain: Didn't receive qserver_disconnected signal from qserver deletion")
+
+#undef TEST_MAP
+#undef TEST_MAP_EXPENSIVE

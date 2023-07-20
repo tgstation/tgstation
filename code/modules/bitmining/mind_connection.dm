@@ -1,5 +1,11 @@
 /// Sets the pilot to the occupant in the chair, linking damage. Represents the start of the avatar process
-/datum/mind/proc/initial_avatar_connection(mob/living/carbon/human/occupant, mob/living/carbon/human/avatar, obj/structure/netchair/hosting_chair, help_text)
+/datum/mind/proc/initial_avatar_connection(
+	mob/living/carbon/human/occupant,
+	mob/living/carbon/human/avatar,
+	obj/structure/netchair/hosting_chair,
+	obj/machinery/quantum_server/server,
+	help_text,
+)
 	var/datum/avatar_help_text/help_datum = new(help_text)
 	var/datum/action/avatar_domain_info/action = new(help_datum)
 	var/datum/mind/fake_mind = new(key + " (pilot)")
@@ -27,9 +33,9 @@
 		PROC_REF(on_sever_connection),
 		override = TRUE,
 	)
-	RegisterSignal(src, COMSIG_BITMINING_PROXIMITY, PROC_REF(on_proximity))
+	RegisterSignal(server, COMSIG_QSERVER_DISCONNECTED, PROC_REF(on_sever_connection), override = TRUE)
 	RegisterSignal(src, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer), override = TRUE)
-	RegisterSignal(src, COMSIG_QSERVER_DISCONNECTED, PROC_REF(on_sever_connection), override = TRUE)
+	RegisterSignal(SSdcs, COMSIG_GLOB_BITMINING_PROXIMITY, PROC_REF(on_proximity))
 
 /// Links mob damage & death as long as the netchair is there
 /datum/mind/proc/connect_avatar_signals(mob/living/target)
@@ -98,7 +104,7 @@
 
 	disconnect_avatar_signals()
 
-	UnregisterSignal(src, COMSIG_BITMINING_PROXIMITY)
+	UnregisterSignal(src, COMSIG_GLOB_BITMINING_PROXIMITY)
 	UnregisterSignal(src, COMSIG_MIND_TRANSFERRED)
 	UnregisterSignal(src, COMSIG_QSERVER_DISCONNECTED)
 	UnregisterSignal(pilot, COMSIG_LIVING_STATUS_UNCONSCIOUS)

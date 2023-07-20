@@ -227,7 +227,7 @@
 
 /// Generates the virtual template around the safehouse
 /obj/machinery/quantum_server/proc/load_domain(mob/user, datum/map_template/virtual_domain/to_generate)
-	if(isnull(to_generate) || !get_ready_status())
+	if(isnull(to_generate?.id) || !get_ready_status())
 		return FALSE
 
 	var/datum/space_level/vdom = vdom_ref?.resolve()

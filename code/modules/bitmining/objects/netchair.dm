@@ -148,7 +148,13 @@
 	var/datum/weakref/neo_mind_ref = WEAKREF(neo.mind)
 	occupant_mind_ref = neo_mind_ref
 	server.occupant_mind_refs += neo_mind_ref
-	neo.mind.initial_avatar_connection(occupant = neo, avatar = current_avatar, hosting_chair = src, help_text = generated_domain.help_text)
+	neo.mind.initial_avatar_connection(
+		occupant = neo,
+		avatar = current_avatar,
+		hosting_chair = src,
+		server = server,
+		help_text = generated_domain.help_text
+	)
 
 /obj/structure/netchair/proc/find_server()
 	var/obj/machinery/quantum_server/server = server_ref?.resolve()

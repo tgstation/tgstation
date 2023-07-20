@@ -6,13 +6,15 @@
 	name = "proximity detection module"
 
 	attachable = TRUE
-	desc = "When placed on a tile, gives proximity alerts to avatars in the virtual domain."
+	desc = "When placed on a tile, gives proximity alerts while connected to the virtual domain."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "chips"
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	/// Whether this has been activated already. No reuse.
 	var/used = FALSE
+	/// The baited turf
+	var/turf/baited_turf
 
 /obj/item/assembly/bitminer_trap/attack_self(mob/living/user, list/modifiers)
 	. = ..()
@@ -27,10 +29,9 @@
 	if(!do_after(user, 3 SECONDS, src))
 		return
 
-	var/turf/current = get_turf(src)
-
+	baited_turf = get_turf(src)
+	RegisterSignal(baited_turf, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
 	playsound(src, 'sound/effects/chipbagpop.ogg', 30, TRUE)
-	RegisterSignal(current, COMSIG_ATOM_ENTERED, PROC_REF(on_atom_entered))
 	balloon_alert(user, "tile marked.")
 	used = TRUE
 	update_appearance()
@@ -43,9 +44,16 @@
 
 	return ..()
 
-/obj/item/assembly/bitminer_trap/proc/on_atom_entered(atom/movable/arrived, atom/old_loc)
+/// Chains the signalling proc to send proximity alerts to every listener
+/obj/item/assembly/bitminer_trap/proc/on_entered(datum/source, atom/movable/arrived)
 	SIGNAL_HANDLER
-	signal_proximity(arrived)
 
-/obj/item/assembly/bitminer_trap/proc/signal_proximity(atom/movable/arrived)
-	SEND_SIGNAL(src, COMSIG_BITMINING_PROXIMITY, arrived)
+	var/mob/living/intruder = arrived
+	if(!isliving(intruder))
+		return
+
+	signal_proximity(intruder)
+
+/// Is it a person? If so, sound the alarms
+/obj/item/assembly/bitminer_trap/proc/signal_proximity(mob/living/intruder)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BITMINING_PROXIMITY, intruder)
