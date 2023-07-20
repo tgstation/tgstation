@@ -10,7 +10,7 @@
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	obj_flags = UNIQUE_RENAME
 	grind_results = list()
-	///List of reagents this food gets on creation
+	///List of reagents this food gets on creation during reaction or map spawn
 	var/list/food_reagents
 	///Extra flags for things such as if the food is in a container or not
 	var/food_flags
@@ -55,8 +55,10 @@
 	///Buff given when a hand-crafted version of this item is consumed. Randomized according to crafting_complexity if not assigned.
 	var/datum/status_effect/food/crafed_food_buff = null
 
-/obj/item/food/New(loc, _starting_reagent_purity, ...)
-	starting_reagent_purity = _starting_reagent_purity
+/obj/item/food/New(loc, starting_reagent_purity, no_base_reagents = FALSE, ...)
+	src.starting_reagent_purity = starting_reagent_purity
+	if(no_base_reagents)
+		food_reagents = null
 	return ..()
 
 /obj/item/food/Initialize(mapload)

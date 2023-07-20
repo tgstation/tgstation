@@ -298,15 +298,11 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/this_food = parent
 
-	this_food.reagents.multiply_reagents(CRAFTED_FOOD_BASE_REAGENT_MODIFIER)
-	this_food.reagents.maximum_volume *= CRAFTED_FOOD_BASE_REAGENT_MODIFIER
-
 	for(var/obj/item/food/crafted_part in parts_list)
 		if(!crafted_part.reagents)
 			continue
-
-		this_food.reagents.maximum_volume += crafted_part.reagents.maximum_volume * CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER
-		crafted_part.reagents.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume, CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER)
+		this_food.reagents.maximum_volume += crafted_part.reagents.maximum_volume
+		crafted_part.reagents.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume)
 
 	this_food.reagents.maximum_volume = ROUND_UP(this_food.reagents.maximum_volume) // Just because I like whole numbers for this.
 
@@ -505,6 +501,7 @@ Behavior that's still missing from this component that original food items had t
 
 ///Applies food buffs according to the crafting complexity
 /datum/component/edible/proc/ApplyBuff(mob/eater)
+	var/buff
 	var/recipe_complexity = get_recipe_complexity()
 	if(recipe_complexity == 0)
 		return
