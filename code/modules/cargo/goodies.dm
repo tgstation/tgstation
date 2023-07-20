@@ -95,7 +95,7 @@
 
 /datum/supply_pack/goody/gorrilla_single
 	name = "Gorilla Gloves Single-Pack"
-	desc = "A spare pair of gripper gloves. Perfect for when the security vendor is empty (or when you're not actually a security officer)."
+	desc = "A spare pair of gorilla gloves. Better for tackles than grippers from the security vendor."
 	cost = PAYCHECK_COMMAND * 6
 	contains = list(/obj/item/clothing/gloves/tackler/combat)
 
@@ -266,4 +266,8 @@
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/reagent_containers/cup/coffeepot)
 
-
+/datum/supply_pack/goody/sunglasses
+	name = "Sunglasses Single-Pack"
+	desc = "A single pair of sunglasses. Very convenient for welding."
+	cost = PAYCHECK_CREW * 8
+	contains = list(/obj/item/clothing/glasses/sunglasses)
