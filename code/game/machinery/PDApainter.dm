@@ -2,7 +2,7 @@
 /obj/machinery/pdapainter
 	name = "\improper Tablet & ID Painter"
 	desc = "A painting machine that can be used to paint PDAs and trim IDs. To use, simply insert the item and choose the desired preset."
-	icon = 'icons/obj/pda.dmi'
+	icon = 'icons/obj/machines/pda.dmi'
 	icon_state = "pdapainter"
 	base_icon_state = "pdapainter"
 	density = TRUE

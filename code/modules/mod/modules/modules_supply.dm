@@ -118,7 +118,7 @@
 		your drill is surely the one that both pierces and creates the heavens."
 	icon_state = "drill"
 	module_type = MODULE_ACTIVE
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/drill)
 	cooldown_time = 0.5 SECONDS

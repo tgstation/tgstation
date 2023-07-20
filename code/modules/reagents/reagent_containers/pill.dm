@@ -22,8 +22,8 @@
 		icon_state = "pill[rand(1,20)]"
 	if(reagents.total_volume && rename_with_volume)
 		name += " ([reagents.total_volume]u)"
-
-	AddComponent(/datum/component/germ_sensitive, mapload)
+	if(apply_type == INGEST)
+		AddComponent(/datum/component/germ_sensitive, mapload)
 
 /obj/item/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!canconsume(M, user))
@@ -304,6 +304,13 @@
 	desc = "Used to reduce bloodloss slowly."
 	icon_state = "pill8"
 	list_reagents = list(/datum/reagent/iron = 30)
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/gravitum
+	name = "gravitum pill"
+	desc = "Used in weight loss. In a way."
+	icon_state = "pill8"
+	list_reagents = list(/datum/reagent/gravitum = 5)
 	rename_with_volume = TRUE
 
 // Pill styles for chem master

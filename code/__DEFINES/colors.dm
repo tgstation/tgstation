@@ -202,6 +202,8 @@
 #define LIGHT_COLOR_DEFAULT "#f3fffa"
 /// Bright but quickly dissipating neon green. rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
+/// Bright, pale "nuclear" green. rgb(120, 255, 120)
+#define LIGHT_COLOR_NUCLEAR "#78FF78"
 /// Vivid, slightly blue green. rgb(60, 240, 70)
 #define LIGHT_COLOR_VIVID_GREEN "#3CF046"
 /// Electric green. rgb(0, 255, 0)

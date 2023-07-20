@@ -63,6 +63,8 @@
 		return TRUE
 	if(GLOB.station_was_nuked)
 		return TRUE
+	if(GLOB.revolutionary_win)
+		return TRUE
 	if(force_ending)
 		return TRUE
 

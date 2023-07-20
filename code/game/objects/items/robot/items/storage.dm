@@ -68,10 +68,10 @@
 			stored = item
 			RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
 			update_appearance()
-			return
+			return TRUE
 	else
 		stored.melee_attack_chain(user, atom, params)
-		return
+		return TRUE
 	return ..()
 
 /**
@@ -307,7 +307,7 @@
 	return ..()
 
 /obj/item/borg/apparatus/service
-	name = "Service apparatus"
+	name = "service apparatus"
 	desc = "A special apparatus for carrying food, bowls, plates, oven trays, soup pots and paper."
 	icon_state = "borg_service_apparatus"
 	storable = list(

@@ -100,7 +100,7 @@
 	name = "Bounty Hunter - Armored"
 	uniform = /obj/item/clothing/under/rank/prisoner
 	back = /obj/item/storage/backpack
-	head = /obj/item/clothing/head/cowboy
+	head = /obj/item/clothing/head/cowboy/bounty
 	suit = /obj/item/clothing/suit/space/hunter
 	belt = /obj/item/gun/ballistic/automatic/pistol/fire_mag
 	gloves = /obj/item/clothing/gloves/tackler/combat

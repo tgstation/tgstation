@@ -197,9 +197,12 @@
 	if(!is_operational || failure_timer)
 		return
 
-	add_hiddenprint(user)
 	environ = environ ? APC_CHANNEL_OFF : APC_CHANNEL_ON
-	user.log_message("turned [environ ? "on" : "off"] the [src] environment settings", LOG_GAME)
+	if (user)
+		add_hiddenprint(user)
+		var/enabled_or_disabled = environ ? "enabled" : "disabled"
+		balloon_alert(user, "environment power [enabled_or_disabled]")
+		user.log_message("[enabled_or_disabled] the [src] environment settings", LOG_GAME)
 	update_appearance()
 	update()
 
@@ -211,9 +214,12 @@
 	if(!is_operational || failure_timer)
 		return
 
-	add_hiddenprint(user)
 	lighting = lighting ? APC_CHANNEL_OFF : APC_CHANNEL_ON
-	user.log_message("turned [lighting ? "on" : "off"] the [src] lighting settings", LOG_GAME)
+	if (user)
+		var/enabled_or_disabled = lighting ? "enabled" : "disabled"
+		add_hiddenprint(user)
+		balloon_alert(user, "lighting power toggled [enabled_or_disabled]")
+		user.log_message("turned [enabled_or_disabled] the [src] lighting settings", LOG_GAME)
 	update_appearance()
 	update()
 
@@ -225,9 +231,12 @@
 	if(!is_operational || failure_timer)
 		return
 
-	add_hiddenprint(user)
 	equipment = equipment ? APC_CHANNEL_OFF : APC_CHANNEL_ON
-	user.log_message("turned [equipment ? "on" : "off"] the [src] equipment settings", LOG_GAME)
+	if (user)
+		var/enabled_or_disabled = equipment ? "enabled" : "disabled"
+		balloon_alert(user, "equipment power toggled [enabled_or_disabled]")
+		add_hiddenprint(user)
+		user.log_message("turned [enabled_or_disabled] the [src] equipment settings", LOG_GAME)
 	update_appearance()
 	update()
 
@@ -251,8 +260,10 @@
 
 /* Holopads */
 /obj/machinery/holopad/AIAltClick(mob/living/silicon/ai/user)
+	if (user)
+		balloon_alert(user, "disrupted all active calls")
+		add_hiddenprint(user)
 	hangup_all_calls()
-	add_hiddenprint(user)
 
 //
 // Override TurfAdjacent for AltClicking

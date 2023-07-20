@@ -63,3 +63,4 @@ and your disease can spread via people walking on vomit.
 	desc = "The condition irritates the stomach, causing occasional vomit with stars that does not stun."
 	illness = "Nebula Nausea"
 	vomit_nebula = TRUE
+	naturally_occuring = FALSE
