@@ -20,10 +20,6 @@
 	)
 	set_frequency(FREQ_SUPPLY)
 
-/datum/orderable_item/mining/weather_radio
-	item_path = /obj/item/radio/weather_monitor
-	cost_per_order = 500
-
 /// Wall mounted mining weather tracker
 /obj/machinery/mining_weather_monitor
 	name = "barometric monitor"
