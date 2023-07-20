@@ -3,114 +3,7 @@
 #define BEE_POLLINATE_YIELD_CHANCE 33
 #define BEE_POLLINATE_PEST_CHANCE 33
 #define BEE_POLLINATE_POTENCY_CHANCE 50
-
 #define BEE_FOODGROUPS RAW | MEAT | GORE | BUGS
-
-/obj/item/queen_bee
-	name = "queen bee"
-	desc = "She's the queen of bees, BZZ BZZ!"
-	icon_state = "queen_item"
-	inhand_icon_state = ""
-	icon = 'icons/mob/simple/bees.dmi'
-	/// The actual mob that our bee item corresponds to
-	var/mob/living/basic/bee/queen/queen
-
-/obj/item/queen_bee/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-
-/obj/item/queen_bee/Destroy()
-	QDEL_NULL(queen)
-	return ..()
-
-/obj/item/queen_bee/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == queen)
-		queen = null
-		// the bee should not exist without a bee.
-		if(!QDELETED(src))
-			qdel(src)
-
-/obj/item/queen_bee/attackby(obj/item/syringe, mob/user, params)
-	if(!istype(syringe, /obj/item/reagent_containers/syringe))
-		return
-	var/obj/item/reagent_containers/syringe/needle = syringe
-	if(needle.reagents.has_reagent(/datum/reagent/royal_bee_jelly, 5)) //checked twice, because I really don't want royal bee jelly to be duped
-		needle.reagents.remove_reagent(/datum/reagent/royal_bee_jelly, 5)
-		var/obj/item/queen_bee/new_bee = new(get_turf(src))
-		new_bee.queen = new(new_bee)
-		if(queen?.beegent)
-			new_bee.queen.assign_reagent(queen.beegent) //Bees use the global singleton instances of reagents, so we don't need to worry about one bee being deleted and her copies losing their reagents.
-		user.put_in_active_hand(new_bee)
-		user.visible_message(span_notice("[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!"),span_warning("You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!"))
-		return ..()
-	var/datum/reagent/chemical = needle.reagents.get_master_reagent()
-	if(chemical && needle.reagents.has_reagent(chemical.type, 5))
-		needle.reagents.remove_reagent(chemical.type, 5)
-		queen.assign_reagent(chemical)
-		user.visible_message(span_warning("[user] injects [src]'s genome with [chemical.name], mutating its DNA!"),span_warning("You inject [src]'s genome with [chemical.name], mutating its DNA!"))
-		name = queen.name
-	else
-		to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
-	return ..()
-
-/obj/item/queen_bee/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] eats [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	user.say("IT'S HIP TO EAT BEES!")
-	qdel(src)
-	return TOXLOSS
-
-/obj/item/queen_bee/bought
-
-/obj/item/queen_bee/bought/Initialize(mapload)
-	. = ..()
-	queen = new(src)
-
-/obj/item/trash/bee
-	name = "bee"
-	desc = "No wonder the bees are dying out, you monster."
-	icon = 'icons/mob/simple/bees.dmi'
-	icon_state = "bee_item"
-	var/datum/reagent/beegent
-	var/bee_type = /mob/living/basic/bee
-
-/obj/item/trash/bee/Initialize(mapload, mob/living/basic/bee/dead_bee)
-	. = ..()
-	if(dead_bee)
-		pixel_x = dead_bee.pixel_x
-		pixel_y = dead_bee.pixel_y
-		bee_type = dead_bee.type
-		if(dead_bee.beegent)
-			beegent = dead_bee.beegent
-			reagents.add_reagent(beegent.type, 5)
-		update_appearance()
-	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
-
-/obj/item/trash/bee/Destroy()
-	beegent = null
-	return ..()
-
-/obj/item/trash/bee/update_overlays()
-	. = ..()
-	var/mutable_appearance/body_overlay = mutable_appearance(icon = icon, icon_state = "bee_item_overlay")
-	body_overlay.color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
-	. += body_overlay
-
-///Spawn a new bee from this trash item when hit by a lazarus injector and conditions are met.
-/obj/item/trash/bee/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)
-	SIGNAL_HANDLER
-	if(injector.revive_type != SENTIENCE_ORGANIC)
-		balloon_alert(user, "invalid creature!")
-		return
-	var/mob/living/basic/bee/revived_bee = new bee_type (drop_location())
-	if(beegent)
-		revived_bee.assign_reagent(beegent)
-	revived_bee.lazarus_revive(user, injector.malfunctioning)
-	injector.expend(revived_bee, user)
-	qdel(src)
-	return LAZARUS_INJECTOR_USED
 
 /mob/living/basic/bee
 	name = "bee"
@@ -323,12 +216,119 @@
 	. = ..()
 	var/datum/reagent/toxin = pick(typesof(/datum/reagent/toxin))
 	assign_reagent(GLOB.chemical_reagents_list[toxin])
+
 /mob/living/basic/bee/short
 	desc = "These bees seem unstable and won't survive for long."
 
 /mob/living/basic/bee/short/Initialize(mapload, timetolive=50 SECONDS)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(death)), timetolive)
+
+/obj/item/queen_bee
+	name = "queen bee"
+	desc = "She's the queen of bees, BZZ BZZ!"
+	icon_state = "queen_item"
+	inhand_icon_state = ""
+	icon = 'icons/mob/simple/bees.dmi'
+	/// The actual mob that our bee item corresponds to
+	var/mob/living/basic/bee/queen/queen
+
+/obj/item/queen_bee/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/obj/item/queen_bee/Destroy()
+	QDEL_NULL(queen)
+	return ..()
+
+/obj/item/queen_bee/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == queen)
+		queen = null
+		// the bee should not exist without a bee.
+		if(!QDELETED(src))
+			qdel(src)
+
+/obj/item/queen_bee/attackby(obj/item/syringe, mob/user, params)
+	if(!istype(syringe, /obj/item/reagent_containers/syringe))
+		return
+	var/obj/item/reagent_containers/syringe/needle = syringe
+	if(needle.reagents.has_reagent(/datum/reagent/royal_bee_jelly, 5)) //checked twice, because I really don't want royal bee jelly to be duped
+		needle.reagents.remove_reagent(/datum/reagent/royal_bee_jelly, 5)
+		var/obj/item/queen_bee/new_bee = new(get_turf(src))
+		new_bee.queen = new(new_bee)
+		if(queen?.beegent)
+			new_bee.queen.assign_reagent(queen.beegent) //Bees use the global singleton instances of reagents, so we don't need to worry about one bee being deleted and her copies losing their reagents.
+		user.put_in_active_hand(new_bee)
+		user.visible_message(span_notice("[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!"),span_warning("You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!"))
+		return ..()
+	var/datum/reagent/chemical = needle.reagents.get_master_reagent()
+	if(chemical && needle.reagents.has_reagent(chemical.type, 5))
+		needle.reagents.remove_reagent(chemical.type, 5)
+		queen.assign_reagent(chemical)
+		user.visible_message(span_warning("[user] injects [src]'s genome with [chemical.name], mutating its DNA!"),span_warning("You inject [src]'s genome with [chemical.name], mutating its DNA!"))
+		name = queen.name
+	else
+		to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
+	return ..()
+
+/obj/item/queen_bee/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] eats [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.say("IT'S HIP TO EAT BEES!")
+	qdel(src)
+	return TOXLOSS
+
+/obj/item/queen_bee/bought
+
+/obj/item/queen_bee/bought/Initialize(mapload)
+	. = ..()
+	queen = new(src)
+
+/obj/item/trash/bee
+	name = "bee"
+	desc = "No wonder the bees are dying out, you monster."
+	icon = 'icons/mob/simple/bees.dmi'
+	icon_state = "bee_item"
+	var/datum/reagent/beegent
+	var/bee_type = /mob/living/basic/bee
+
+/obj/item/trash/bee/Initialize(mapload, mob/living/basic/bee/dead_bee)
+	. = ..()
+	if(dead_bee)
+		pixel_x = dead_bee.pixel_x
+		pixel_y = dead_bee.pixel_y
+		bee_type = dead_bee.type
+		if(dead_bee.beegent)
+			beegent = dead_bee.beegent
+			reagents.add_reagent(beegent.type, 5)
+		update_appearance()
+	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
+
+/obj/item/trash/bee/Destroy()
+	beegent = null
+	return ..()
+
+/obj/item/trash/bee/update_overlays()
+	. = ..()
+	var/mutable_appearance/body_overlay = mutable_appearance(icon = icon, icon_state = "bee_item_overlay")
+	body_overlay.color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
+	. += body_overlay
+
+///Spawn a new bee from this trash item when hit by a lazarus injector and conditions are met.
+/obj/item/trash/bee/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)
+	SIGNAL_HANDLER
+	if(injector.revive_type != SENTIENCE_ORGANIC)
+		balloon_alert(user, "invalid creature!")
+		return
+	var/mob/living/basic/bee/revived_bee = new bee_type (drop_location())
+	if(beegent)
+		revived_bee.assign_reagent(beegent)
+	revived_bee.lazarus_revive(user, injector.malfunctioning)
+	injector.expend(revived_bee, user)
+	qdel(src)
+	return LAZARUS_INJECTOR_USED
 
 #undef BEE_DEFAULT_COLOUR
 #undef BEE_FOODGROUPS
