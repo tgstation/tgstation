@@ -334,6 +334,7 @@
 	weight = 4
 	show_in_report = TRUE
 	report_message = "There sure are a lot of trees out there."
+	force = TRUE
 
 	//space = FALSE
 	//planetary = TRUE
