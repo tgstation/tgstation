@@ -71,6 +71,9 @@
 /mob/living/carbon/human/breathe()
 	if(!HAS_TRAIT(src, TRAIT_NOBREATH))
 		return ..()
+	else
+		// TRAIT_NOBREATH prevents oxyloss due to crit anyways, so we should be good on that front
+		adjustOxyLoss(-5)
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 	var/obj/item/organ/internal/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
