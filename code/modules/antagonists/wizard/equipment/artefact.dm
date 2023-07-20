@@ -6,7 +6,7 @@
 /obj/item/veilrender
 	name = "veil render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "bone_blade"
 	inhand_icon_state = "bone_blade"
 	worn_icon_state = "bone_blade"
@@ -210,7 +210,7 @@
 /obj/item/necromantic_stone
 	name = "necromantic stone"
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "necrostone"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -258,7 +258,7 @@
 	target.revive(ADMIN_HEAL_ALL)
 	spooky_scaries |= target
 	to_chat(target, span_userdanger("You have been revived by <B>[user.real_name]</B>!"))
-	to_chat(target, span_userdanger("[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!"))
+	to_chat(target, span_userdanger("[user.p_Theyre()] your master now, assist [user.p_them()] even if it costs you your new life!"))
 	var/datum/antagonist/wizard/antag_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(antag_datum)
 		if(!antag_datum.wiz_team)
@@ -320,7 +320,7 @@
 /obj/item/warp_whistle
 	name = "warp whistle"
 	desc = "Calls a cloud to come pick you up and drop you at a random location on the station."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/art/musician.dmi'
 	icon_state = "whistle"
 
 	/// Person using the warp whistle
@@ -341,7 +341,7 @@
 /obj/effect/temp_visual/teleporting_tornado
 	name = "tornado"
 	desc = "This thing sucks!"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/effects/magic.dmi'
 	icon_state = "tornado"
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE

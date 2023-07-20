@@ -3,6 +3,7 @@ import { multiline } from 'common/string';
 import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
 import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
+import { ObjectivePrintout, Objective } from './common/Objectives';
 
 const allystyle = {
   fontWeight: 'bold',
@@ -17,12 +18,6 @@ const badstyle = {
 const goalstyle = {
   color: 'lightblue',
   fontWeight: 'bold',
-};
-
-type Objective = {
-  count: number;
-  name: string;
-  explanation: string;
 };
 
 type Info = {
@@ -43,33 +38,15 @@ type Info = {
   objectives: Objective[];
 };
 
-const ObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const { objectives } = data;
-  return (
-    <Stack vertical>
-      <Stack.Item bold>Your current objectives:</Stack.Item>
-      <Stack.Item>
-        {(!objectives && 'None!') ||
-          objectives.map((objective) => (
-            <Stack.Item key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-          ))}
-      </Stack.Item>
-    </Stack>
-  );
-};
-
 const IntroductionSection = (props, context) => {
   const { act, data } = useBackend<Info>(context);
-  const { intro } = data;
+  const { intro, objectives } = data;
   return (
     <Section fill title="Intro" scrollable>
       <Stack vertical fill>
         <Stack.Item fontSize="25px">{intro}</Stack.Item>
         <Stack.Item grow>
-          <ObjectivePrintout />
+          <ObjectivePrintout objectives={objectives} />
         </Stack.Item>
       </Stack>
     </Section>

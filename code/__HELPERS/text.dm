@@ -356,24 +356,10 @@
 		. = t[1]
 		return uppertext(.) + copytext(t, 1 + length(.))
 
-///A more thorough version of capitalize() that capitalizes each element of the text after a space character.
-/proc/capitalize_with_spaces(text)
-	if(!text)
-		return
-	text = trim_reduced(text)
-	var/return_text = ""
-	var/static/regex/identifiers_regex = regex("\\s+", "g")
-	var/static/regex/spaces_regex = regex("\\w+", "g")
-	var/list/space_characters = splittext(text, spaces_regex)
-	var/list/split_text = splittext(text, identifiers_regex)
-	var/split_text_len = length(split_text)
-	for(var/index in 1 to split_text_len)
-		var/n_text = split_text[index]
-		var/first_letter = n_text[1]
-		return_text += uppertext(first_letter) + copytext(n_text, 1 + length(first_letter))
-		if(index != split_text_len)
-			return_text += space_characters[index]
-	return return_text
+///Returns a string with the first letter of each word capitialized
+/proc/full_capitalize(input)
+	var/regex/first_letter = new(@"[^A-z]*?([A-z]*)", "g")
+	return replacetext(input, first_letter, /proc/capitalize)
 
 /proc/stringmerge(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever

@@ -140,7 +140,7 @@
 	if(apply_qualities)
 		apply_traits() //Make sure traits are applied before size and weight.
 		update_size_and_weight(first_run = TRUE)
-		progenitors = capitalize_with_spaces(name) //default value
+		progenitors = full_capitalize(name) //default value
 
 	register_evolutions()
 
@@ -502,9 +502,9 @@
 		new_fish.progenitors = initial(name)
 	if(partner && type != partner.type)
 		var/string = "[initial(name)] - [initial(partner.name)]"
-		new_fish.progenitors = capitalize_with_spaces(string)
+		new_fish.progenitors = full_capitalize(string)
 	else
-		new_fish.progenitors = capitalize_with_spaces(initial(name))
+		new_fish.progenitors = full_capitalize(initial(name))
 
 	breeding_wait = world.time + breeding_timeout
 

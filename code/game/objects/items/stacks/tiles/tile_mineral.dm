@@ -95,7 +95,7 @@
 	name = "alien floor tile"
 	singular_name = "alien floor tile"
 	desc = "A tile made out of alien alloy."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "tile_abductor"
 	inhand_icon_state = "tile-abductor"
 	mats_per_unit = list(/datum/material/alloy/alien=SHEET_MATERIAL_AMOUNT*0.25)

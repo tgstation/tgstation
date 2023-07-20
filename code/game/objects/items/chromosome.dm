@@ -1,6 +1,6 @@
 /obj/item/chromosome
 	name = "blank chromosome"
-	icon = 'icons/obj/chromosomes.dmi'
+	icon = 'icons/obj/science/chromosomes.dmi'
 	icon_state = ""
 	desc = "A tube holding chromosomic data."
 	force = 0

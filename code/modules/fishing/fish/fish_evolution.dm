@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(fish_evolutions, init_fish_evolutions())
 	if(!ispath(new_fish_type, /obj/item/fish))
 		stack_trace("[type] instantiated with a new fish type of [new_fish_type]. That's not a fish, hun, things will break.")
 	if(!name)
-		name = capitalize_with_spaces(initial(new_fish_type.name))
+		name = full_capitalize(initial(new_fish_type.name))
 /**
  * The main proc that checks whether this can happen or not.
  * Please do keep in mind a mate may not be present for fish with the

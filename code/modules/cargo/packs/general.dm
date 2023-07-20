@@ -62,7 +62,7 @@
 	crate_name = "saltwater fish crate"
 
 /datum/supply_pack/misc/tiziran_fish
-	name = "Tirizan Fish Case"
+	name = "Tiziran Fish Case"
 	desc = "Tiziran saltwater fish imported from the Zagos Sea."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/storage/fish_case/tiziran = 2)
