@@ -63,6 +63,7 @@
 	AddComponent(/datum/component/clickbox, x_offset = -2, y_offset = -2)
 	AddComponent(/datum/component/swarming)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(apply_chemicals))
 
 /mob/living/basic/bee/mob_pickup(mob/living/picker)
@@ -76,16 +77,18 @@
 	picker.visible_message(span_warning("[picker] scoops up [src]!"))
 	picker.put_in_hands(holder)
 
-/mob/living/basic/bee/UnarmedAttack(atom/target, proximity_flag, list/modifiers)
+/mob/living/basic/bee/proc/pre_attack(mob/living/puncher, atom/target)
+	SIGNAL_HANDLER
+
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/hydro = target
 		pollinate(hydro)
-		return
+		return COMPONENT_HOSTILE_NO_ATTACK
+
 	if(istype(target, /obj/structure/beebox))
 		var/obj/structure/beebox/hive = target
 		handle_habitation(hive)
-		return
-	return ..()
+		return COMPONENT_HOSTILE_NO_ATTACK
 
 /mob/living/basic/bee/proc/handle_habitation(obj/structure/beebox/hive)
 	if(hive == beehome) //if its our home, we enter or exit it

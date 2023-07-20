@@ -59,15 +59,19 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/pollinate
 	target_key = BB_TARGET_HYDRO
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/bees
+	hunting_behavior = /datum/ai_behavior/hunt_target/pollinate
 	finding_behavior = /datum/ai_behavior/find_hunt_target/pollinate
 	hunt_targets = list(/obj/machinery/hydroponics)
 	hunt_range = 7
 	hunt_chance = 25
 
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/bees
+/datum/ai_behavior/hunt_target/pollinate
 	always_reset_target = TRUE
+
+/datum/ai_behavior/hunt_target/pollinate/target_caught(mob/living/hunter, obj/machinery/hydroponics/hydro_target)
+	var/datum/callback/callback = CALLBACK(hunter, TYPE_PROC_REF(/mob/living/basic/bee, pollinate), hydro_target)
+	callback.Invoke()
 
 /datum/ai_behavior/find_hunt_target/pollinate
 
@@ -94,7 +98,8 @@
 	var/obj/structure/beebox/current_home = controller.blackboard[target_key]
 	var/mob/living/bee_pawn = controller.pawn
 
-	bee_pawn.UnarmedAttack(current_home)
+	var/datum/callback/callback = CALLBACK(bee_pawn, TYPE_PROC_REF(/mob/living/basic/bee, handle_habitation), current_home)
+	callback.Invoke()
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/inhabit_hive
@@ -116,7 +121,8 @@
 		finish_action(controller, FALSE, target_key)
 		return
 
-	bee_pawn.UnarmedAttack(potential_home) //interact with the house to inhabit
+	var/datum/callback/callback = CALLBACK(bee_pawn, TYPE_PROC_REF(/mob/living/basic/bee, handle_habitation), potential_home)
+	callback.Invoke()
 	finish_action(controller, TRUE, target_key)
 
 /datum/ai_behavior/inhabit_hive/finish_action(datum/ai_controller/controller, succeeded, target_key)
