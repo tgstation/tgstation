@@ -6,16 +6,17 @@
 	obj/machinery/quantum_server/server,
 	help_text,
 )
-	var/datum/avatar_help_text/help_datum = new(help_text)
-	var/datum/action/avatar_domain_info/action = new(help_datum)
-	var/datum/mind/fake_mind = new(key + " (pilot)")
+	if(!locate(/datum/action/avatar_domain_info) in occupant.actions)
+		var/datum/avatar_help_text/help_datum = new(help_text)
+		var/datum/action/avatar_domain_info/action = new(help_datum)
+		action.Grant(avatar)
 
 	pilot_ref = WEAKREF(occupant)
 	netchair_ref = WEAKREF(hosting_chair)
 
 	// Begin the swap - use a fake mind so it isn't cata
+	var/datum/mind/fake_mind = new(key + " (pilot)")
 	transfer_to(avatar)
-	action.Grant(avatar)
 	fake_mind.active = TRUE
 	fake_mind.transfer_to(occupant)
 
@@ -31,10 +32,9 @@
 		COMSIG_MOVABLE_UNBUCKLE,
 		),
 		PROC_REF(on_sever_connection),
-		override = TRUE,
 	)
-	RegisterSignal(server, COMSIG_QSERVER_DISCONNECTED, PROC_REF(on_sever_connection), override = TRUE)
-	RegisterSignal(src, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer), override = TRUE)
+	RegisterSignal(server, COMSIG_QSERVER_DISCONNECTED, PROC_REF(on_sever_connection))
+	RegisterSignal(src, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer))
 	RegisterSignal(SSdcs, COMSIG_GLOB_BITMINING_PROXIMITY, PROC_REF(on_proximity))
 
 /// Links mob damage & death as long as the netchair is there
@@ -51,8 +51,6 @@
 
 /// Unregisters damage & death signals
 /datum/mind/proc/disconnect_avatar_signals()
-	if(isnull(current)) // sometimes this is called after the mind has been destroyed
-		return
 	UnregisterSignal(current, COMSIG_MOB_APPLY_DAMAGE)
 	UnregisterSignal(current, COMSIG_LIVING_DEATH)
 
@@ -71,7 +69,7 @@
 	if(damage > 30 && prob(30))
 		INVOKE_ASYNC(pilot, TYPE_PROC_REF(/mob/living, emote), "scream")
 
-	pilot.apply_damage(damage, damage_type, def_zone, blocked, forced = TRUE)
+	pilot.apply_damage(damage, damage_type, def_zone, blocked, forced)
 
 /// Handles minds being swapped around in subsequent avatars
 /datum/mind/proc/on_mind_transfer(mob/living/previous_body)
@@ -98,19 +96,18 @@
 /datum/mind/proc/sever_avatar(forced = FALSE)
 	var/mob/living/pilot = pilot_ref?.resolve()
 	var/obj/structure/netchair/chair = netchair_ref?.resolve()
-
-	if(isnull(chair) || !isnull(pilot))
+	if(isnull(chair) || isnull(pilot))
 		current.dust()
 
 	disconnect_avatar_signals()
 
-	UnregisterSignal(src, COMSIG_GLOB_BITMINING_PROXIMITY)
+	UnregisterSignal(SSdcs, COMSIG_GLOB_BITMINING_PROXIMITY)
 	UnregisterSignal(src, COMSIG_MIND_TRANSFERRED)
-	UnregisterSignal(src, COMSIG_QSERVER_DISCONNECTED)
 	UnregisterSignal(pilot, COMSIG_LIVING_STATUS_UNCONSCIOUS)
 	UnregisterSignal(pilot, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(pilot, COMSIG_MOVABLE_UNBUCKLE)
 	UnregisterSignal(pilot, COMSIG_LIVING_DEATH)
-	RegisterSignal(pilot, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 
+	netchair_ref = null
+	pilot_ref = null
 	chair.disconnect_occupant(src, forced)

@@ -93,6 +93,7 @@
 	occupant.mind.key = null
 	occupant.key = null
 	receiving.transfer_to(occupant)
+
 	var/datum/action/avatar_domain_info/action = locate(/datum/action/avatar_domain_info) in occupant.actions
 	if(action)
 		action.Remove()
@@ -104,6 +105,7 @@
 	var/obj/machinery/quantum_server/server = find_server()
 	if(server)
 		server.occupant_mind_refs -= occupant_mind_ref
+		receiving.UnregisterSignal(server, COMSIG_QSERVER_DISCONNECTED)
 	occupant_mind_ref = null
 
 	if(!forced || occupant.stat == DEAD)
