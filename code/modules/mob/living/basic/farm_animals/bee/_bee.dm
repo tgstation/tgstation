@@ -137,11 +137,11 @@
 		victim.reagents.add_reagent(beegent.type, rand(1,5))
 
 /mob/living/basic/bee/proc/reagent_incompatible(mob/living/basic/bee/ruler)
-	if(!ruler || isnull(beegent))
+	if(!ruler)
 		return FALSE
 	if(ruler.beegent?.type != beegent.type)
 		return TRUE
-	if(ruler.beegent && !beegent || !ruler.beegent && beegent)
+	if(ruler.beegent && isnull(beegent) || isnull(ruler.beegent) && beegent)
 		return TRUE
 	return FALSE
 
