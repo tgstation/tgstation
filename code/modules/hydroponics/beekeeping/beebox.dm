@@ -201,7 +201,7 @@
 		//Time to get stung!
 		var/bees_attack = FALSE
 		for(var/mob/living/basic/bee/worker in bees) //everyone who's ever lived here now instantly hates you, suck it assistant!
-			if(worker.isqueen)
+			if(worker.is_queen)
 				continue
 			if(worker.loc == src)
 				worker.forceMove(drop_location())
@@ -254,7 +254,7 @@
 
 /obj/structure/beebox/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood (loc, 20)
-	for(var/mob/living/basic/worker in bees)
+	for(var/mob/living/basic/bee/worker in bees)
 		if(worker.loc == src)
 			worker.forceMove(drop_location())
 	for(var/obj/item/honey_frame/HF in honey_frames)

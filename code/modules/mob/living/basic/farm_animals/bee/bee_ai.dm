@@ -63,7 +63,7 @@
 	finding_behavior = /datum/ai_behavior/find_hunt_target/pollinate
 	hunt_targets = list(/obj/machinery/hydroponics)
 	hunt_range = 7
-	//hunt_chance = 10
+	hunt_chance = 25
 
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/bees
@@ -72,7 +72,7 @@
 /datum/ai_behavior/find_hunt_target/pollinate
 
 /datum/ai_behavior/find_hunt_target/pollinate/valid_dinner(mob/living/source, obj/machinery/hydroponics/dinner, radius)
-	if(!dinner.myseed)
+	if(isnull(dinner.myseed))
 		return FALSE
 	if(dinner.plant_status == HYDROTRAY_PLANT_DEAD || dinner.recent_bee_visit)
 		return FALSE

@@ -1,9 +1,9 @@
-#define BEE_TRAY_RECENT_VISIT 200 //How long in deciseconds until a tray can be visited by a bee again
-#define BEE_DEFAULT_COLOUR "#e5e500" //the colour we make the stripes of the bee if our reagent has no colour (or we have no reagent)
-#define BEE_POLLINATE_YIELD_CHANCE 33
-#define BEE_POLLINATE_PEST_CHANCE 33
-#define BEE_POLLINATE_POTENCY_CHANCE 50
-#define BEE_FOODGROUPS RAW | MEAT | GORE | BUGS
+#define BEE_TRAY_RECENT_VISIT 20 SECONDS //! How long in deciseconds until a tray can be visited by a bee again
+#define BEE_DEFAULT_COLOUR "#e5e500" //! the colour we make the stripes of the bee if our reagent has no colour (or we have no reagent)
+#define BEE_POLLINATE_YIELD_CHANCE 33 //! chance to increase yield of plant
+#define BEE_POLLINATE_PEST_CHANCE 33 //! chance to decrease pest of plant
+#define BEE_POLLINATE_POTENCY_CHANCE 50 //! chance to increase potancy of plant
+#define BEE_FOODGROUPS RAW | MEAT | GORE | BUGS //! the bee food contents
 
 /mob/living/basic/bee
 	name = "bee"
@@ -46,13 +46,14 @@
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	basic_mob_flags = DEL_ON_DEATH
 	ai_controller = /datum/ai_controller/basic_controller/bee
-	///he he he, beegent
+	///the reagent the bee has
 	var/datum/reagent/beegent = null
 	///the house we live in
 	var/obj/structure/beebox/beehome = null
 	///our icon base
 	var/icon_base = "bee"
-	var/isqueen = FALSE
+	///the bee is a queen?
+	var/is_queen = FALSE
 
 /mob/living/basic/bee/Initialize(mapload)
 	. = ..()
@@ -75,13 +76,6 @@
 	picker.visible_message(span_warning("[picker] scoops up [src]!"))
 	picker.put_in_hands(holder)
 
-/mob/living/basic/bee/death(gibbed)
-	if(beehome)
-		beehome.bees -= src
-		beehome = null
-	beegent = null
-	return ..()
-
 /mob/living/basic/bee/UnarmedAttack(atom/target, proximity_flag, list/modifiers)
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/hydro = target
@@ -98,15 +92,14 @@
 		var/drop_location = (src in beehome.contents) ? get_turf(beehome) : beehome
 		forceMove(drop_location)
 		return
-	if(!isnull(hive.queen_bee) && isqueen) //if we are queen and house already have a queen, dont inhabit
+	if(!isnull(hive.queen_bee) && is_queen) //if we are queen and house already have a queen, dont inhabit
 		return
 	if(!hive.habitable(src) || !isnull(beehome)) //if not habitable or we alrdy have a home
 		return
 	beehome = hive
 	beehome.bees += src
-	if(isqueen)
+	if(is_queen)
 		beehome.queen_bee = src
-	return
 
 /mob/living/basic/bee/will_escape_storage()
 	return TRUE
@@ -114,7 +107,7 @@
 /mob/living/basic/bee/examine(mob/user)
 	. = ..()
 
-	if(!beehome)
+	if(isnull(beehome))
 		. += span_warning("This bee is homeless!")
 
 /mob/living/basic/bee/Destroy()
@@ -128,7 +121,7 @@
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
-	if((flags_1 & HOLOGRAM_1))
+	if(flags_1 & HOLOGRAM_1)
 		return ..()
 	new /obj/item/trash/bee(loc, src)
 	beegent = null
@@ -136,7 +129,7 @@
 
 /mob/living/basic/bee/proc/apply_chemicals(mob/living/basic/attacker, atom/target)
 	SIGNAL_HANDLER
-	if(!beegent || !isliving(target))
+	if(isnull(beegent) || !isliving(target))
 		return
 	var/mob/living/victim = target
 	if(victim.reagents)
@@ -144,9 +137,9 @@
 		victim.reagents.add_reagent(beegent.type, rand(1,5))
 
 /mob/living/basic/bee/proc/reagent_incompatible(mob/living/basic/bee/ruler)
-	if(!ruler)
+	if(!ruler || isnull(beegent))
 		return FALSE
-	if(ruler.beegent?.type != beegent?.type)
+	if(ruler.beegent?.type != beegent.type)
 		return TRUE
 	if(ruler.beegent && !beegent || !ruler.beegent && beegent)
 		return TRUE
@@ -155,9 +148,9 @@
 /mob/living/basic/bee/proc/generate_bee_visuals()
 	cut_overlays()
 
-	var/col = BEE_DEFAULT_COLOUR
+	var/bee_color = BEE_DEFAULT_COLOUR
 	if(beegent?.color)
-		col = beegent.color
+		bee_color = beegent.color
 
 	icon_state = "[icon_base]_base"
 	add_overlay("[icon_base]_base")
@@ -165,7 +158,7 @@
 	var/static/mutable_appearance/greyscale_overlay
 	greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/simple/bees.dmi')
 	greyscale_overlay.icon_state = "[icon_base]_grey"
-	greyscale_overlay.color = col
+	greyscale_overlay.color = bee_color
 	add_overlay(greyscale_overlay)
 
 	add_overlay("[icon_base]_wings")
@@ -190,21 +183,22 @@
 		beehome.bee_resources = min(beehome.bee_resources + growth, 100)
 
 /mob/living/basic/bee/proc/assign_reagent(datum/reagent/toxin)
-	if(istype(toxin))
-		var/static/list/injection_range = list(1, 5)
-		if(beegent) //clear the old since this one is going to have some new value
-			RemoveElement(/datum/element/venomous, beegent.type, injection_range)
-		beegent = toxin
-		name = "[initial(name)] ([toxin.name])"
-		real_name = name
-		AddElement(/datum/element/venomous, beegent.type, injection_range)
-		generate_bee_visuals()
+	if(!istype(toxin))
+		return
+	var/static/list/injection_range = list(1, 5)
+	if(beegent) //clear the old since this one is going to have some new value
+		RemoveElement(/datum/element/venomous, beegent.type, injection_range)
+	beegent = toxin
+	name = "[initial(name)] ([toxin.name])"
+	real_name = name
+	AddElement(/datum/element/venomous, beegent.type, injection_range)
+	generate_bee_visuals()
 
 /mob/living/basic/bee/queen
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_base = "queen"
-	isqueen = TRUE
+	is_queen = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/queen_bee
 
 /mob/living/basic/bee/queen/will_escape_storage()
@@ -243,11 +237,12 @@
 
 /obj/item/queen_bee/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(gone == queen)
-		queen = null
-		// the bee should not exist without a bee.
-		if(!QDELETED(src))
-			qdel(src)
+	if(gone != queen)
+		return
+	queen = null
+	// the bee should not exist without a bee.
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/item/queen_bee/attackby(obj/item/syringe, mob/user, params)
 	if(!istype(syringe, /obj/item/reagent_containers/syringe))
@@ -289,7 +284,9 @@
 	desc = "No wonder the bees are dying out, you monster."
 	icon = 'icons/mob/simple/bees.dmi'
 	icon_state = "bee_item"
+	///the reagent the bee carry
 	var/datum/reagent/beegent
+	///the bee of this corpse
 	var/bee_type = /mob/living/basic/bee
 
 /obj/item/trash/bee/Initialize(mapload, mob/living/basic/bee/dead_bee)
