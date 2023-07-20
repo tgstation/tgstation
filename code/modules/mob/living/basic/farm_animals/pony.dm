@@ -37,8 +37,38 @@
 /mob/living/basic/pony/proc/tamed(mob/living/tamer)
 	can_buckle = TRUE
 	buckle_lying = 0
+	playsound(src, 'sound/creatures/pony/snort.ogg', 50)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pony)
 	visible_message(span_notice("[src] snorts happily."))
+
+	ai_controller.replace_planning_subtrees(list(
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
+		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/random_speech/pony/tamed
+	))
+
+/mob/living/basic/pony/proc/whinny_angrily()
+	manual_emote("whinnies ANGRILY!")
+
+	playsound(src, pick(list(
+		'sound/creatures/pony/whinny01.ogg',
+		'sound/creatures/pony/whinny02.ogg',
+		'sound/creatures/pony/whinny03.ogg'
+	)), 50)
+
+/mob/living/basic/pony/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	. = ..()
+
+	if (prob(33))
+		whinny_angrily()
+
+/mob/living/basic/pony/melee_attack(atom/target, list/modifiers)
+	. = ..()
+
+	if (!.)
+		return
+
+	whinny_angrily()
 
 /datum/ai_controller/basic_controller/pony
 	blackboard = list(
@@ -53,5 +83,6 @@
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/random_speech/pony
 	)
