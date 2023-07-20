@@ -45,10 +45,7 @@
 /obj/structure/beebox/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	queen_bee = null
-	for(var/mob/living/basic/bee/worker in bees)
-		bees -= worker
-		worker.beehome = null
-		worker.forceMove(get_turf(src))
+	QDEL_LIST(bees)
 	QDEL_LIST(honey_frames)
 	QDEL_LIST(honeycombs)
 	return ..()
@@ -200,7 +197,7 @@
 	if(!user.bee_friendly())
 		//Time to get stung!
 		var/bees_attack = FALSE
-		for(var/mob/living/basic/bee/worker in bees) //everyone who's ever lived here now instantly hates you, suck it assistant!
+		for(var/mob/living/basic/bee/worker as anything in bees) //everyone who's ever lived here now instantly hates you, suck it assistant!
 			if(worker.is_queen)
 				continue
 			if(worker.loc == src)
@@ -254,12 +251,15 @@
 
 /obj/structure/beebox/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood (loc, 20)
-	for(var/mob/living/basic/bee/worker in bees)
+	for(var/mob/living/basic/bee/worker as anything in bees)
 		if(worker.loc == src)
-			worker.forceMove(drop_location())
-	for(var/obj/item/honey_frame/HF in honey_frames)
-		if(HF.loc == src)
-			HF.forceMove(drop_location())
+			worker.forceMove(get_turf(src))
+		bees -= worker
+		worker.beehome = null
+	for(var/obj/item/honey_frame/frame as anything in honey_frames)
+		if(frame.loc == src)
+			frame.forceMove(get_turf(src))
+		honey_frames -= frame
 	qdel(src)
 
 /obj/structure/beebox/unwrenched

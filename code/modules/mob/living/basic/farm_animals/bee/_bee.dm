@@ -121,10 +121,10 @@
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
-	if(flags_1 & HOLOGRAM_1)
+	beegent = null
+	if(flags_1 & HOLOGRAM_1 || gibbed)
 		return ..()
 	new /obj/item/trash/bee(loc, src)
-	beegent = null
 	return ..()
 
 /mob/living/basic/bee/proc/apply_chemicals(mob/living/basic/attacker, atom/target)
@@ -139,9 +139,7 @@
 /mob/living/basic/bee/proc/reagent_incompatible(mob/living/basic/bee/ruler)
 	if(!ruler)
 		return FALSE
-	if(ruler.beegent?.type != beegent.type)
-		return TRUE
-	if(ruler.beegent && isnull(beegent) || isnull(ruler.beegent) && beegent)
+	if(ruler.beegent != beegent)
 		return TRUE
 	return FALSE
 
