@@ -253,7 +253,7 @@
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/user as anything in (group + src)) // Add ourselves back in
 		if(user.client && !user.client?.prefs)
-			stack_trace("[usr] ([usr.ckey]) had null prefs, which shouldn't be possible!")
+			stack_trace("[user] ([user.ckey]) had null prefs, which shouldn't be possible!")
 			continue
 		if((!user.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(user.client)
