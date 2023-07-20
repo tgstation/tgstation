@@ -39,15 +39,25 @@
 	thermic_constant = 0
 	H_ion_release = 0
 	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
+	required_other = TRUE
 
 	/// Typepath of food that is created on reaction
 	var/atom/resulting_food_path
+	/// Reagent purity of the result, calculated on reaction
+	var/resulting_reagent_purity
+
+/datum/chemical_reaction/food/pre_reaction_other_checks(datum/reagents/holder)
+	resulting_reagent_purity = holder.get_average_purity()
+	return TRUE
 
 /datum/chemical_reaction/food/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(resulting_food_path)
 		var/atom/location = holder.my_atom.drop_location()
 		for(var/i in 1 to created_volume)
-			new resulting_food_path(location)
+			if(ispath(resulting_food_path, /obj/item/food) && !isnull(resulting_reagent_purity))
+				new resulting_food_path(location, _starting_reagent_purity = resulting_reagent_purity)
+			else
+				new resulting_food_path(location)
 
 /datum/chemical_reaction/food/tofu
 	required_reagents = list(/datum/reagent/consumable/soymilk = 10)

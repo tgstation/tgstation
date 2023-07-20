@@ -526,20 +526,19 @@ Behavior that's still missing from this component that original food items had t
 		return
 
 	var/food_quality = get_preceived_food_quality(gourmand, parent)
-	if(food_quality <= 0)
+	if(food_quality < 0)
 		to_chat(gourmand,span_notice("That didn't taste very good..."))
 		gourmand.adjust_disgust(11 + 15 * fraction)
 		gourmand.add_mood_event("gross_food", /datum/mood_event/gross_food)
-	else
+	else if(food_quality > 0)
 		food_quality = min(food_quality, FOOD_QUALITY_TOP)
 		var/atom/owner = parent
 		var/timeout_mod = owner.reagents.get_average_purity() * 2 // 100% at average purity 50%
 		var/event = GLOB.food_quality_events[food_quality]
 		gourmand.add_mood_event("quality_food", event, timeout_mod)
 		gourmand.adjust_disgust(-5 + -2 * food_quality * fraction)
-
 		var/quality_label = GLOB.food_quality_description[food_quality]
-		to_chat(gourmand,span_notice("That's \an [quality_label] meal."))
+		to_chat(gourmand, span_notice("That's \an [quality_label] meal."))
 
 	if(istype(parent, /obj/item/food))
 		var/obj/item/food/food = parent
