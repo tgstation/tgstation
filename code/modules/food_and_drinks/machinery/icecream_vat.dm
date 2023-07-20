@@ -140,8 +140,9 @@
 			return
 		if(product_types[cone_path] >= 1)
 			product_types[cone_path]--
-			var/obj/item/food/icecream/cone = new cone_path
-			try_put_in_hand(cone, user)
+			var/obj/item/food/icecream/cone = new cone_path(get_turf(src))
+			if(!user.put_in_hands(cone))
+				cone.forceMove(drop_location())
 			visible_message(span_info("[user] dispenses a crunchy [cone.name] from [src]."))
 		else
 			to_chat(user, span_warning("There are no [initial(cone_path.name)]s left!"))
