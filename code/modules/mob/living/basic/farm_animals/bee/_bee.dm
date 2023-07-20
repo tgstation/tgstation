@@ -77,6 +77,32 @@
 	picker.visible_message(span_warning("[picker] scoops up [src]!"))
 	picker.put_in_hands(holder)
 
+/mob/living/basic/bee/will_escape_storage()
+	return TRUE
+
+/mob/living/basic/bee/examine(mob/user)
+	. = ..()
+
+	if(isnull(beehome))
+		. += span_warning("This bee is homeless!")
+
+/mob/living/basic/bee/Destroy()
+	if(beehome)
+		beehome.bees -= src
+		beehome = null
+	beegent = null
+	return ..()
+
+/mob/living/basic/bee/death(gibbed)
+	if(beehome)
+		beehome.bees -= src
+		beehome = null
+	beegent = null
+	if(flags_1 & HOLOGRAM_1 || gibbed)
+		return ..()
+	new /obj/item/trash/bee(loc, src)
+	return ..()
+
 /mob/living/basic/bee/proc/pre_attack(mob/living/puncher, atom/target)
 	SIGNAL_HANDLER
 
@@ -103,32 +129,6 @@
 	beehome.bees += src
 	if(is_queen)
 		beehome.queen_bee = src
-
-/mob/living/basic/bee/will_escape_storage()
-	return TRUE
-
-/mob/living/basic/bee/examine(mob/user)
-	. = ..()
-
-	if(isnull(beehome))
-		. += span_warning("This bee is homeless!")
-
-/mob/living/basic/bee/Destroy()
-	if(beehome)
-		beehome.bees -= src
-		beehome = null
-	beegent = null
-	return ..()
-
-/mob/living/basic/bee/death(gibbed)
-	if(beehome)
-		beehome.bees -= src
-		beehome = null
-	beegent = null
-	if(flags_1 & HOLOGRAM_1 || gibbed)
-		return ..()
-	new /obj/item/trash/bee(loc, src)
-	return ..()
 
 /mob/living/basic/bee/proc/apply_chemicals(mob/living/basic/attacker, atom/target)
 	SIGNAL_HANDLER
