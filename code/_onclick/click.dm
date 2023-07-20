@@ -31,7 +31,6 @@
 	for(var/hand in hud_used?.hand_slots)
 		var/atom/movable/screen/inventory/hand/handy = hud_used.hand_slots[hand]
 		handy.update_appearance()
-		START_PROCESSING(SSfastprocess, handy)
 
 /**
  * Before anything else, defer these calls to a per-mobtype handler.  This allows us to

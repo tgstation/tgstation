@@ -200,22 +200,7 @@
 
 	var/mutable_appearance/handcuff_overlay
 	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "blocked")
-	var/static/mutable_appearance/cd_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "dark64")
 	var/held_index = 0
-
-/atom/movable/screen/inventory/hand/process(seconds_per_tick)
-	if(hud?.mymob?.next_move > world.time)
-		update_maptext()
-		return
-
-	update_appearance()
-	return PROCESS_KILL
-
-/atom/movable/screen/inventory/hand/proc/update_maptext()
-	if(hud?.mymob?.next_move > world.time)
-		maptext = MAPTEXT("[round((hud.mymob.next_move - world.time) / 10, 0.2)]s")
-	else
-		maptext = null
 
 /atom/movable/screen/inventory/hand/update_appearance(updates)
 	. = ..()
@@ -243,8 +228,27 @@
 	if(held_index == hud.mymob.active_hand_index)
 		. += (held_index % 2) ? "lhandactive" : "rhandactive"
 
-	if(hud.mymob.next_move - 1 > world.time) // give it a bit of leeway
-		. += cd_overlay
+/atom/movable/screen/inventory/hand/proc/update_maptext()
+	if(isnull(hud?.mymob))
+		return
+	// stop other cd animations
+	// melbert todo : resets color, looks bad
+	animate(src, flags = ANIMATION_END_NOW)
+
+	var/cd_time_deciseconds = round(hud.mymob.next_move - world.time)
+	// queue an animate for each decisecond remaining in click cooldown + 1
+	for(var/i in 1 to cd_time_deciseconds + 1)
+		var/decisceonds_left_this_iter = cd_time_deciseconds - i
+		var/displaytext = null
+		if(decisceonds_left_this_iter > 0)
+			displaytext = MAPTEXT("[round(decisceonds_left_this_iter / (1 SECONDS), 0.1)]s")
+
+		if(i == 1)
+			animate(src, maptext = displaytext, color = "#777777", 1 DECISECONDS)
+		else if(i == cd_time_deciseconds + 1)
+			animate(maptext = displaytext, color = null, 1 DECISECONDS)
+		else
+			animate(maptext = displaytext, 1 DECISECONDS)
 
 /atom/movable/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else

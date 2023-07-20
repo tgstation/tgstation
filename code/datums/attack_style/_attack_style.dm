@@ -91,8 +91,9 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	var/list/turf/affected_turfs = select_targeted_turfs(attacker, weapon, attack_direction, right_clicking)
 
-	// Make sure they can't attack while swinging
-	attacker.changeNext_move(2 * time_per_turf * length(affected_turfs))
+	// Make sure they can't attack while swinging if our swing sleeps
+	if(time_per_turf > 0 SECONDS)
+		attacker.changeNext_move(cd + (time_per_turf * (length(affected_turfs) - 1)))
 	// Make sure they don't rotate while swinging on the move
 	var/pre_set_dir = attacker.set_dir_on_move
 	attacker.set_dir_on_move = FALSE
@@ -107,7 +108,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		attacker.changeNext_move(cd)
 
 	SEND_SIGNAL(attacker, COMSIG_ATTACK_STYLE_PROCESSED, weapon, attack_result, src)
-	return successful_attack
+	return attack_result
 
 /datum/attack_style/proc/execute_attack(
 	mob/living/attacker,
