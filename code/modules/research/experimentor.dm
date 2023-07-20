@@ -648,7 +648,7 @@
 		/mob/living/basic/pet/fox,
 		/mob/living/simple_animal/crab,
 		/mob/living/simple_animal/hostile/bear,
-		/mob/living/simple_animal/hostile/bee,
+		/mob/living/basic/bee,
 		/mob/living/simple_animal/parrot/natural,
 		/mob/living/simple_animal/pet/cat,
 	)
