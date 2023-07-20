@@ -158,6 +158,10 @@ GLOBAL_LIST_EMPTY(horns_list_avalari)
 	name = "Upright"
 	icon_state = "upright"
 
+/datum/sprite_accessory/horns/avalari/mane
+	name = "Mane"
+	icon_state = "mane"
+
 /datum/mutant_newdnafeature/avalari_horns
 	name = "Avali Horns DNA"
 	id = "horns_avalari"

@@ -158,6 +158,10 @@ GLOBAL_LIST_EMPTY(horns_list_teshvali)
 	name = "Upright"
 	icon_state = "upright"
 
+/datum/sprite_accessory/horns/teshvali/mane
+	name = "Mane"
+	icon_state = "mane"
+
 /datum/mutant_newdnafeature/teshvali_horns
 	name = "Teshari Horns DNA"
 	id = "horns_teshvali"
