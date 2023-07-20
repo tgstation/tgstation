@@ -669,7 +669,7 @@
 /datum/reagent/consumable/eggyolk
 	name = "Egg Yolk"
 	description = "It's full of protein."
-	nutriment_factor = 4
+	nutriment_factor = 8
 	color = "#FFB500"
 	taste_description = "egg"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -677,7 +677,7 @@
 /datum/reagent/consumable/eggwhite
 	name = "Egg White"
 	description = "It's full of even more protein."
-	nutriment_factor = 1.5
+	nutriment_factor = 4
 	color = "#fffdf7"
 	taste_description = "bland egg"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
