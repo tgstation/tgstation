@@ -15,14 +15,10 @@ GLOBAL_LIST_EMPTY(tracked_chem_implants)
 				<b>Life:</b> Deactivates upon death but remains within the body.<BR>
 				<b>Important Notes: Due to the system functioning off of nutrients in the implanted subject's body, the subject<BR>
 				will suffer from an increased appetite.</B><BR>
-				<HR>
 				<b>Implant Details:</b><BR>
-				<b>Function:</b> Contains a small capsule that can contain various chemicals. Upon receiving a specially encoded signal<BR>
-				the implant releases the chemicals directly into the blood stream.<BR>
-				<b>Special Features:</b>
 				<i>Micro-Capsule</i>- Can be loaded with any sort of chemical agent via the common syringe and can hold 50 units.<BR>
 				Can only be loaded while still in its original case.<BR>
-				<b>Integrity:</b> Implant will last so long as the subject is alive."}
+				<b>Integrity:</b> Implant will last so long as the subject is alive, breaking down and releasing all contents on death."}
 	return dat
 
 /obj/item/implant/chem/Initialize(mapload)
