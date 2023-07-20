@@ -18,7 +18,7 @@
 	tastes = list("fish" = 4, "batter" = 1, "hot peppers" = 1)
 	foodtypes = SEAFOOD | FRIED
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/fishmeat
 	name = "fish fillet"
@@ -103,7 +103,7 @@
 	foodtypes = SEAFOOD | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/fishandchips
 	name = "fish and chips"
@@ -118,7 +118,7 @@
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtypes = SEAFOOD | VEGETABLES | FRIED
 	venue_value = FOOD_PRICE_NORMAL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/fishfry
 	name = "fish fry"
@@ -132,7 +132,7 @@
 	tastes = list("fish" = 1, "pan seared vegtables" = 1)
 	foodtypes = SEAFOOD | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/vegetariansushiroll
 	name = "vegetarian sushi roll"
@@ -145,7 +145,7 @@
 	tastes = list("boiled rice" = 4, "carrots" = 2, "potato" = 2)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/vegetariansushiroll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/vegetariansushislice, 4, screentip_verb = "Chop")
@@ -161,7 +161,7 @@
 	tastes = list("boiled rice" = 4, "carrots" = 2, "potato" = 2)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/spicyfiletsushiroll
 	name = "spicy filet sushi roll"
@@ -176,7 +176,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 2, "spicyness" = 2)
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/spicyfiletsushiroll/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spicyfiletsushislice, 4, screentip_verb = "Chop")
@@ -194,7 +194,7 @@
 	tastes = list("boiled rice" = 4, "fish" = 2, "spicyness" = 2)
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 // empty sushi for custom sushi
 /obj/item/food/sushi/empty
@@ -203,7 +203,7 @@
 	tastes = list()
 	icon_state = "vegetariansushiroll"
 	desc = "A roll of customized sushi."
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/sushi/empty/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sushislice/empty, 4, screentip_verb = "Chop")
@@ -214,7 +214,7 @@
 	tastes = list()
 	icon_state = "vegetariansushislice"
 	desc = "A slice of customized sushi."
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/nigiri_sushi
 	name = "nigiri sushi"
@@ -225,7 +225,7 @@
 	tastes = list("boiled rice" = 4, "fish filet" = 2, "soy sauce" = 2)
 	foodtypes = SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/meat_poke
 	name = "meat poke"
@@ -241,7 +241,7 @@
 	tastes = list("rice and meat" = 4, "lettuce" = 2, "soy sauce" = 2)
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 4
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/fish_poke
 	name = "fish poke"
@@ -257,7 +257,7 @@
 	tastes = list("rice and fish" = 4, "lettuce" = 2, "soy sauce" = 2)
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 4
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
@@ -271,7 +271,7 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 // sliceable into 4xtempehslices
 /obj/item/food/tempeh/make_processable()
@@ -286,7 +286,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("earthy" = 3, "nutty" = 2, "bland" = 1)
 	foodtypes = VEGETABLES
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 //add an icon for blends
 /obj/item/food/tempehstarter
@@ -297,7 +297,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("nutty" = 2, "bland" = 2)
 	foodtypes = VEGETABLES | GROSS
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/tofu
 	name = "tofu"
@@ -308,7 +308,7 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/tofu/prison
 	name = "soggy tofu"
@@ -345,7 +345,7 @@
 	tastes = list("meat" = 1, "cabbage" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/bearsteak
 	name = "Filet migrawr"
@@ -361,7 +361,7 @@
 	foodtypes = MEAT | ALCOHOL
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/raw_meatball
 	name = "raw meatball"
@@ -419,7 +419,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/meatball/human
 	name = "strange meatball"
@@ -487,7 +487,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 ///Exists purely for the crafting recipe (because itll take subtypes)
 /obj/item/food/patty/plain
@@ -524,7 +524,7 @@
 	foodtypes = MEAT | RAW
 	eatverbs = list("bite", "chew", "nibble", "deep throat", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/raw_sausage/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/sausage, rand(60 SECONDS, 75 SECONDS), TRUE)
@@ -545,7 +545,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/sausage/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
@@ -569,7 +569,7 @@
 	foodtypes = MEAT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/rawkhinkali
 	name = "raw khinkali"
@@ -585,7 +585,7 @@
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/rawkhinkali/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/khinkali, rand(50 SECONDS, 60 SECONDS), TRUE)
@@ -606,7 +606,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/meatbun
 	name = "meat bun"
@@ -621,7 +621,7 @@
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/stewedsoymeat
 	name = "stewed soy meat"
@@ -636,7 +636,7 @@
 	eatverbs = list("slurp", "sip", "inhale", "drink")
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/boiledspiderleg
 	name = "boiled spider leg"
@@ -652,7 +652,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/spidereggsham
 	name = "green eggs and ham"
@@ -667,7 +667,7 @@
 	tastes = list("meat" = 1, "the colour green" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/sashimi
 	name = "carp sashimi"
@@ -684,7 +684,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	//total price of this dish is 20 and a small amount more for soy sauce, all of which are available at the orders console
 	venue_value = FOOD_PRICE_CHEAP
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/sashimi/Initialize(mapload)
 	. = ..()
@@ -705,7 +705,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 	venue_value = FOOD_PRICE_CHEAP
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/nugget/Initialize(mapload)
 	. = ..()
@@ -726,7 +726,7 @@
 	tastes = list("meat" = 1, "butter" = 1)
 	foodtypes = MEAT | DAIRY | GRAIN
 	w_class = WEIGHT_CLASS_TINY
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/bbqribs
 	name = "bbq ribs"
@@ -741,7 +741,7 @@
 	)
 	tastes = list("meat" = 3, "smokey sauce" = 1)
 	foodtypes = MEAT | SUGAR
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/meatclown
 	name = "meat clown"
@@ -756,7 +756,7 @@
 	tastes = list("meat" = 5, "clowns" = 3, "sixteen teslas" = 1)
 	w_class = WEIGHT_CLASS_SMALL
 	foodtypes = MEAT | FRUIT
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/meatclown/Initialize(mapload)
 	. = ..()
@@ -774,7 +774,7 @@
 	tastes = list("meat" = 3, "pasta" = 3, "tomato" = 2, "cheese" = 2)
 	foodtypes = MEAT | DAIRY | GRAIN
 	venue_value = FOOD_PRICE_NORMAL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 //////////////////////////////////////////// KEBABS AND OTHER SKEWERS ////////////////////////////////////////////
 
@@ -786,7 +786,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 14)
 	tastes = list("meat" = 3, "metal" = 1)
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/kebab/human
 	name = "human-kebab"
@@ -862,7 +862,7 @@
 	)
 	tastes = list("tex-mex" = 3, "cumin" = 2)
 	foodtypes = MEAT | VEGETABLES
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/fried_chicken
 	name = "fried chicken"
@@ -874,7 +874,7 @@
 	foodtypes = MEAT | FRIED
 	junkiness = 25
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/fried_chicken/Initialize(mapload)
 	. = ..()
@@ -896,7 +896,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	//basic ingredients, but a lot of them. just covering costs here
 	venue_value = FOOD_PRICE_NORMAL
-	crafting_complexity = 4
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/beef_wellington
 	name = "beef wellington"
@@ -911,7 +911,7 @@
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_NORMAL
 	venue_value = FOOD_PRICE_EXOTIC
-	crafting_complexity = 5
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/beef_wellington/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/beef_wellington_slice, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
@@ -929,7 +929,7 @@
 	foodtypes = MEAT | VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
-	crafting_complexity = 5
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/full_english
 	name = "full english breakfast"
@@ -944,7 +944,7 @@
 	foodtypes = MEAT | VEGETABLES | GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
-	crafting_complexity = 5
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/raw_meatloaf
 	name = "raw meatloaf"
@@ -959,7 +959,7 @@
 	tastes = list("raw meat" = 3, "onions" = 1)
 	foodtypes = MEAT | RAW | VEGETABLES
 	w_class = WEIGHT_CLASS_NORMAL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/raw_meatloaf/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/meatloaf, rand(30 SECONDS, 40 SECONDS), TRUE, TRUE)
@@ -978,7 +978,7 @@
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_NORMAL
 	burns_in_oven = TRUE
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/meatloaf/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meatloaf_slice, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
@@ -996,4 +996,4 @@
 	tastes = list("juicy meat" = 3, "onions" = 1, "garlic" = 1, "ketchup" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 4
+	crafting_complexity = FOOD_COMPLEXITY_4

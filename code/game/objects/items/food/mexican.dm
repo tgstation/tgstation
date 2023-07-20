@@ -10,7 +10,7 @@
 	tastes = list("tortilla" = 1)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_TINY
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/tortilla/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/hard_taco_shell, rand(15 SECONDS, 30 SECONDS), TRUE, TRUE)
@@ -29,7 +29,7 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/cheesyburrito
 	name = "cheesy burrito"
@@ -45,7 +45,7 @@
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/carneburrito
 	name = "carne asada burrito"
@@ -61,7 +61,7 @@
 	foodtypes = GRAIN | MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/fuegoburrito
 	name = "fuego plasma burrito"
@@ -78,7 +78,7 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_LEGENDARY
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/nachos
 	name = "nachos"
@@ -93,7 +93,7 @@
 	foodtypes = GRAIN | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/cheesynachos
 	name = "cheesy nachos"
@@ -109,7 +109,7 @@
 	foodtypes = GRAIN | FRIED | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/cubannachos
 	name = "Cuban nachos"
@@ -124,7 +124,7 @@
 	tastes = list("nachos" = 2, "hot pepper" = 1)
 	foodtypes = VEGETABLES | FRIED | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/taco
 	name = "classic taco"
@@ -140,7 +140,7 @@
 	foodtypes = MEAT | DAIRY | GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/taco/plain
 	name = "plain taco"
@@ -154,7 +154,7 @@
 	tastes = list("taco" = 4, "meat" = 2, "cheese" = 2)
 	foodtypes = MEAT | DAIRY | GRAIN
 	venue_value = FOOD_PRICE_CHEAP
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/taco/fish
 	name = "fish taco"
@@ -162,7 +162,7 @@
 	icon_state = "fishtaco"
 	tastes = list("taco" = 4, "fish" = 2, "cheese" = 2, "cabbage" = 1)
 	foodtypes = SEAFOOD | DAIRY | GRAIN | VEGETABLES
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/enchiladas
 	name = "enchiladas"
@@ -179,7 +179,7 @@
 	tastes = list("hot peppers" = 1, "meat" = 3, "cheese" = 1, "sour cream" = 1)
 	foodtypes = MEAT | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/stuffedlegion
 	name = "stuffed legion"
@@ -195,7 +195,7 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_LEGENDARY
-	crafting_complexity = 5
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/chipsandsalsa
 	name = "chips and salsa"
@@ -210,7 +210,7 @@
 	tastes = list("peppers" = 1, "salsa" = 3, "tortilla chips" = 1, "onion" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/classic_chimichanga
 	name = "classic chimichanga"
@@ -225,7 +225,7 @@
 	tastes = list("deep-fried tortilla" = 1, "meat" = 3, "cheese" = 1, "onions" = 1)
 	foodtypes = MEAT | GRAIN | VEGETABLES | DAIRY | FRIED
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/vegetarian_chimichanga
 	name = "vegetarian chimichanga"
@@ -239,7 +239,7 @@
 	tastes = list("deep-fried tortilla" = 1, "cabbage" = 3, "onions" = 1, "peppers" = 1)
 	foodtypes = GRAIN | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/hard_taco_shell
 	name = "hard taco shell"
@@ -251,7 +251,7 @@
 	foodtypes = GRAIN | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/hard_taco_shell/Initialize(mapload)
 	. = ..()
@@ -264,7 +264,7 @@
 	tastes = list()
 	icon_state = "hard_taco_shell"
 	desc = "A customized hard-shell taco."
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/classic_hard_shell_taco
 	name = "classic hard-shell taco"
@@ -279,7 +279,7 @@
 	tastes = list("crunchy taco shell" = 1, "cabbage" = 3, "tomatoes" = 1, "ground meat" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | MEAT | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 4
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/plain_hard_shell_taco
 	name = "plain hard-shell taco"
@@ -294,7 +294,7 @@
 	tastes = list("crunchy taco shell" = 1, "ground meat" = 1)
 	foodtypes = GRAIN | MEAT
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/refried_beans
 	name = "refried beans"
@@ -309,7 +309,7 @@
 	tastes = list("mashed beans" = 1, "onion" = 3,)
 	foodtypes = VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/spanish_rice
 	name = "spanish rice"
@@ -323,4 +323,4 @@
 	tastes = list("zesty rice" = 1, "tomato sauce" = 3,)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2

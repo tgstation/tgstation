@@ -215,7 +215,7 @@
 	description = "A high quality oil, suitable for dishes where the oil is a key flavour."
 	taste_description = "olive oil"
 	color = "#DBCF5C"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	nutriment_factor = 10
 	default_container = /obj/item/reagent_containers/condiment/olive_oil
 
 /datum/reagent/consumable/nutriment/organ_tissue

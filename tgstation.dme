@@ -1460,6 +1460,7 @@
 #include "code\datums\status_effects\agent_pinpointer.dm"
 #include "code\datums\status_effects\buffs.dm"
 #include "code\datums\status_effects\drug_effects.dm"
+#include "code\datums\status_effects\food_effects.dm"
 #include "code\datums\status_effects\gas.dm"
 #include "code\datums\status_effects\grouped_effect.dm"
 #include "code\datums\status_effects\limited_effect.dm"

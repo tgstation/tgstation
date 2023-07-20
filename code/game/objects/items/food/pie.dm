@@ -8,7 +8,7 @@
 	tastes = list("pie" = 1)
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_NORMAL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 	/// type is spawned 5 at a time and replaces this pie when processed by cutting tool
 	var/obj/item/food/pieslice/slice_type
 	/// so that the yield can change if it isnt 5
@@ -25,7 +25,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("pie" = 1, "uncertainty" = 1)
 	foodtypes = GRAIN | VEGETABLES
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pie/plain
 	name = "plain pie"
@@ -38,7 +38,7 @@
 	tastes = list("pie" = 1)
 	foodtypes = GRAIN
 	burns_in_oven = TRUE
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pie/cream
 	name = "banana cream pie"
@@ -52,7 +52,7 @@
 	tastes = list("pie" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
 	var/stunning = TRUE
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/cream/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -96,7 +96,7 @@
 	tastes = list("pie" = 1, "blackberries" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/bearypie
 	name = "beary pie"
@@ -109,7 +109,7 @@
 	)
 	tastes = list("pie" = 1, "meat" = 1, "salmon" = 1)
 	foodtypes = GRAIN | SUGAR | MEAT | FRUIT
-	crafting_complexity = 4
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pie/meatpie
 	name = "meat-pie"
@@ -123,7 +123,7 @@
 	tastes = list("pie" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_NORMAL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/tofupie
 	name = "tofu-pie"
@@ -136,7 +136,7 @@
 	)
 	tastes = list("pie" = 1, "tofu" = 1)
 	foodtypes = GRAIN | VEGETABLES
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/amanita_pie
 	name = "amanita pie"
@@ -151,7 +151,7 @@
 	)
 	tastes = list("pie" = 1, "mushroom" = 1)
 	foodtypes = GRAIN | VEGETABLES | TOXIC | GROSS
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/plump_pie
 	name = "plump pie"
@@ -163,7 +163,7 @@
 	)
 	tastes = list("pie" = 1, "mushroom" = 1)
 	foodtypes = GRAIN | VEGETABLES
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/plump_pie/Initialize(mapload)
 	var/fey = prob(10)
@@ -210,7 +210,7 @@
 	)
 	tastes = list("pie" = 7, "Nicole Paige Brooks" = 2)
 	foodtypes = GRAIN | FRUIT | SUGAR
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/pumpkinpie
 	name = "pumpkin pie"
@@ -223,7 +223,7 @@
 	tastes = list("pie" = 1, "pumpkin" = 1)
 	foodtypes = GRAIN | VEGETABLES | SUGAR
 	slice_type = /obj/item/food/pieslice/pumpkin
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pieslice/pumpkin
 	name = "pumpkin pie slice"
@@ -231,7 +231,7 @@
 	icon_state = "pumpkinpieslice"
 	tastes = list("pie" = 1, "pumpkin" = 1)
 	foodtypes = GRAIN | VEGETABLES | SUGAR
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/appletart
 	name = "golden apple streusel tart"
@@ -244,7 +244,7 @@
 	)
 	tastes = list("pie" = 1, "apple" = 1, "expensive metal" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
-	crafting_complexity = 4
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pie/grapetart
 	name = "grape tart"
@@ -256,7 +256,7 @@
 	)
 	tastes = list("pie" = 1, "grape" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
-	crafting_complexity = 4
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pie/mimetart
 	name = "mime tart"
@@ -303,7 +303,7 @@
 	tastes = list("pie" = 1, "a mouthful of pool water" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	slice_type = /obj/item/food/pieslice/blumpkin
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pieslice/blumpkin
 	name = "blumpkin pie slice"
@@ -311,7 +311,7 @@
 	icon_state = "blumpkinpieslice"
 	tastes = list("pie" = 1, "a mouthful of pool water" = 1)
 	foodtypes = GRAIN | VEGETABLES
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/dulcedebatata
 	name = "dulce de batata"
@@ -325,7 +325,7 @@
 	foodtypes = VEGETABLES | SUGAR
 	venue_value = FOOD_PRICE_EXOTIC
 	slice_type = /obj/item/food/pieslice/dulcedebatata
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pieslice/dulcedebatata
 	name = "dulce de batata slice"
@@ -333,7 +333,7 @@
 	icon_state = "dulcedebatataslice"
 	tastes = list("jelly" = 1, "sweet potato" = 1)
 	foodtypes = VEGETABLES | SUGAR
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/frostypie
 	name = "frosty pie"
@@ -345,7 +345,7 @@
 	)
 	tastes = list("mint" = 1, "pie" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/baklava
 	name = "baklava"
@@ -359,7 +359,7 @@
 	foodtypes = NUTS | SUGAR
 	slice_type = /obj/item/food/pieslice/baklava
 	yield = 6
-	crafting_complexity = 4
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pieslice/baklava
 	name = "baklava dish"
@@ -379,7 +379,7 @@
 	tastes = list("pie" = 1, "smooth chocolate" = 1, "whipped cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
 	slice_type = /obj/item/food/pieslice/frenchsilk
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pieslice/frenchsilk
 	name = "french silk pie slice"
@@ -387,7 +387,7 @@
 	icon_state = "frenchsilkpieslice"
 	tastes = list("pie" = 1, "smooth chocolate" = 1, "whipped cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/shepherds_pie
 	name = "shepherds pie"
@@ -402,7 +402,7 @@
 	foodtypes = MEAT | DAIRY | VEGETABLES
 	slice_type = /obj/item/food/pieslice/shepherds_pie
 	yield = 4
-	crafting_complexity = 5
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/pieslice/shepherds_pie
 	name = "shepherds pie slice"
@@ -415,7 +415,7 @@
 	)
 	tastes = list("juicy meat" = 1, "mashed potatoes" = 1, "baked veggies" = 1)
 	foodtypes = MEAT | DAIRY | VEGETABLES
-	crafting_complexity = 5
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/pie/asdfpie
 	name = "pie-flavored pie"
@@ -428,4 +428,4 @@
 	tastes = list("pie" = 1, "the far off year of 2010" = 1)
 	foodtypes = GRAIN
 	burns_in_oven = TRUE
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2

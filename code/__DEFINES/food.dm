@@ -109,9 +109,16 @@ DEFINE_BITFIELD(foodtypes, list(
 #define FOOD_QUALITY_AMAZING 6
 #define FOOD_QUALITY_TOP 7
 
+#define FOOD_COMPLEXITY_0 0
+#define FOOD_COMPLEXITY_1 1
+#define FOOD_COMPLEXITY_2 2
+#define FOOD_COMPLEXITY_3 3
+#define FOOD_COMPLEXITY_4 4
+#define FOOD_COMPLEXITY_5 5
+
 /// Labels for food quality
 GLOBAL_LIST_INIT(food_quality_description, list(
-	FOOD_QUALITY_NORMAL = "mediocore",
+	FOOD_QUALITY_NORMAL = "okay",
 	FOOD_QUALITY_NICE = "nice",
 	FOOD_QUALITY_GOOD = "good",
 	FOOD_QUALITY_VERYGOOD = "very good",
@@ -129,6 +136,29 @@ GLOBAL_LIST_INIT(food_quality_events, list(
 	FOOD_QUALITY_FANTASTIC = /datum/mood_event/food/fantastic,
 	FOOD_QUALITY_AMAZING = /datum/mood_event/food/amazing,
 	FOOD_QUALITY_TOP = /datum/mood_event/food/top,
+))
+
+/// Crafted food buffs grouped by crafting_complexity
+GLOBAL_LIST_INIT(food_quality_buffs, list(
+	FOOD_COMPLEXITY_1 = list(
+		/datum/status_effect/food/haste,
+	),
+	FOOD_COMPLEXITY_2 = list(
+		/datum/status_effect/food/haste,
+		/datum/status_effect/food/trait/jolly,
+	),
+	FOOD_COMPLEXITY_3 = list(
+		/datum/status_effect/food/haste,
+		/datum/status_effect/food/trait/noslip,
+	),
+	FOOD_COMPLEXITY_4 = list(
+		/datum/status_effect/food/haste,
+		/datum/status_effect/food/trait/shockimmune,
+	),
+	FOOD_COMPLEXITY_5 = list(
+		/datum/status_effect/food/haste,
+		/datum/status_effect/food/trait/stunimmune,
+	),
 ))
 
 /// Food quality change according to species diet

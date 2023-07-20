@@ -7,7 +7,7 @@
 	)
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_CHEAP
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 // Why are you putting cooked spaghetti in your pockets?
 /obj/item/food/spaghetti/make_microwaveable()
@@ -23,7 +23,7 @@
 	desc = "Now that's a nic'e pasta!"
 	icon_state = "spaghetti"
 	tastes = list("pasta" = 1)
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/spaghetti/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/spaghetti/boiledspaghetti, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
@@ -39,7 +39,7 @@
 		/datum/reagent/consumable/nutriment = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/spaghetti/boiledspaghetti/Initialize(mapload)
 	. = ..()
@@ -57,7 +57,7 @@
 	)
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtypes = GRAIN | VEGETABLES
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/spaghetti/pastatomato/soulful
 	name = "soul food"
@@ -86,7 +86,7 @@
 	)
 	tastes = list("pasta" = 1, "tomato" = 1)
 	foodtypes = GRAIN | VEGETABLES
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/spaghetti/meatballspaghetti
 	name = "spaghetti and meatballs"
@@ -99,7 +99,7 @@
 	)
 	tastes = list("pasta" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/spaghetti/spesslaw
 	name = "spesslaw"
@@ -112,7 +112,7 @@
 	)
 	tastes = list("pasta" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/spaghetti/chowmein
 	name = "chow mein"
@@ -125,7 +125,7 @@
 	)
 	tastes = list("noodle" = 1, "meat" = 1, "fried vegetables" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/spaghetti/beefnoodle
 	name = "beef noodle"
@@ -140,7 +140,7 @@
 	)
 	tastes = list("noodles" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/spaghetti/butternoodles
 	name = "butter noodles"
@@ -152,7 +152,7 @@
 	)
 	tastes = list("noodles" = 1, "butter" = 1)
 	foodtypes = GRAIN | DAIRY
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/spaghetti/mac_n_cheese
 	name = "mac n' cheese"
@@ -164,4 +164,4 @@
 	)
 	tastes = list("cheese" = 1, "breadcrumbs" = 1, "pasta" = 1)
 	foodtypes = GRAIN | DAIRY
-	crafting_complexity = 4
+	crafting_complexity = FOOD_COMPLEXITY_4

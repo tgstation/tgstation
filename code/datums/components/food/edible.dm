@@ -459,10 +459,17 @@ Behavior that's still missing from this component that original food items had t
 	if(sig_return & DESTROY_FOOD)
 		qdel(owner)
 		return
+
+	//Give a buff when the dish is hand-crafted and unbitten
+	if(bitecount == 0)
+		ApplyBuff(eater)
+
 	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
 	owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
 	bitecount++
+
 	checkLiked(fraction, eater)
+
 	if(!owner.reagents.total_volume)
 		On_Consume(eater, feeder)
 
@@ -495,6 +502,19 @@ Behavior that's still missing from this component that original food items had t
 	if(SEND_SIGNAL(eater, COMSIG_CARBON_ATTEMPT_EAT, parent) & COMSIG_CARBON_BLOCK_EAT)
 		return
 	return TRUE
+
+///Applies food buffs according to the crafting complexity
+/datum/component/edible/proc/ApplyBuff(mob/eater)
+	var/recipe_complexity = get_recipe_complexity()
+	if(recipe_complexity == 0)
+		return
+	var/datum/status_effect/food/buff = pick(GLOB.food_quality_buffs[recipe_complexity])
+	if(!isnull(buff))
+		var/mob/living/carbon/carbon_eater = eater
+		var/atom/owner = parent
+		var/timeout_mod = owner.reagents.get_average_purity() * 2 // buff duration is 100% at average purity of 50%
+		var/strength = recipe_complexity
+		carbon_eater.apply_status_effect(buff, timeout_mod, strength)
 
 ///Check foodtypes to see if we should send a moodlet
 /datum/component/edible/proc/checkLiked(fraction, mob/eater)
@@ -533,7 +553,7 @@ Behavior that's still missing from this component that original food items had t
 	else if(food_quality > 0)
 		food_quality = min(food_quality, FOOD_QUALITY_TOP)
 		var/atom/owner = parent
-		var/timeout_mod = owner.reagents.get_average_purity() * 2 // 100% at average purity 50%
+		var/timeout_mod = owner.reagents.get_average_purity() * 2 // mood event duration is 100% at average purity of 50%
 		var/event = GLOB.food_quality_events[food_quality]
 		gourmand.add_mood_event("quality_food", event, timeout_mod)
 		gourmand.adjust_disgust(-5 + -2 * food_quality * fraction)
@@ -548,7 +568,7 @@ Behavior that's still missing from this component that original food items had t
 /// Get the complexity of the crafted food
 /datum/component/edible/proc/get_recipe_complexity()
 	if(!HAS_TRAIT(parent, TRAIT_FOOD_CHEF_MADE) || !istype(parent, /obj/item/food))
-		return 0 // Non-crafted food has no complexity
+		return 0 // It is factory made. Soulless.
 
 	var/obj/item/food/food = parent
 	return food.crafting_complexity

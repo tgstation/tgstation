@@ -12,7 +12,7 @@
 	foodtypes = GRAIN
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 	/// What type of donk pocket we're warmed into via baking or microwaving.
 	var/warm_type = /obj/item/food/donkpocket/warm
@@ -54,7 +54,7 @@
 	)
 	tastes = list("meat" = 2, "dough" = 2)
 	foodtypes = GRAIN | VEGETABLES
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/donkpocket/spicy
 	name = "\improper Spicy-pocket"
@@ -145,7 +145,7 @@
 	tastes = list("banana" = 2, "dough" = 2, "children's antibiotics" = 1)
 	foodtypes = GRAIN
 	warm_type = /obj/item/food/donkpocket/warm/honk
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donkpocket/warm/honk
 	name = "warm Honk-pocket"
@@ -159,7 +159,7 @@
 	)
 	tastes = list("banana" = 2, "dough" = 2, "children's antibiotics" = 1)
 	foodtypes = GRAIN
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/donkpocket/berry
 	name = "\improper Berry-pocket"

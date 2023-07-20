@@ -54,7 +54,7 @@
 	)
 	tastes = list("salt" = 2, "popcorn" = 1)
 	trash_type = /obj/item/trash/popcorn/salty
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/popcorn/caramel
 	name = "caramel popcorn"
@@ -67,7 +67,7 @@
 	tastes = list("caramel" = 2, "popcorn" = 1)
 	foodtypes = JUNKFOOD | SUGAR
 	trash_type = /obj/item/trash/popcorn/
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/soydope
 	name = "soy dope"
@@ -80,7 +80,7 @@
 	tastes = list("soy" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/badrecipe
 	name = "burned mess"
@@ -144,7 +144,7 @@
 	tastes = list("cobwebs" = 1)
 	foodtypes = MEAT | BUGS
 	w_class = WEIGHT_CLASS_TINY
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/spiderling
 	name = "spiderling"
@@ -171,7 +171,7 @@
 	tastes = list("melon" = 1)
 	foodtypes = FRUIT
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 4
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/melonkeg
 	name = "melon keg"
@@ -186,7 +186,7 @@
 	bite_consumption = 5
 	tastes = list("grain alcohol" = 1, "fruit" = 1)
 	foodtypes = FRUIT | ALCOHOL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/honeybar
 	name = "honey nut bar"
@@ -200,7 +200,7 @@
 	foodtypes = GRAIN | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/powercrepe
 	name = "Powercrepe"
@@ -223,7 +223,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cherry" = 1, "crepe" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
-	crafting_complexity = 5
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/branrequests
 	name = "Bran Requests Cereal"
@@ -237,7 +237,7 @@
 	tastes = list("bran" = 4, "raisins" = 3, "salt" = 1)
 	foodtypes = GRAIN | FRUIT | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/butter
 	name = "stick of butter"
@@ -295,7 +295,7 @@
 	tastes = list("batter" = 3, "onion" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/pineappleslice
 	name = "pineapple slice"
@@ -320,7 +320,7 @@
 	tastes = list("cream cheese" = 4, "crab" = 3, "crispiness" = 2)
 	foodtypes = MEAT | DAIRY | GRAIN
 	venue_value = FOOD_PRICE_CHEAP
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pesto
 	name = "pesto"
@@ -330,7 +330,7 @@
 	tastes = list("pesto" = 1)
 	foodtypes = VEGETABLES | DAIRY | NUTS
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 4
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/tomato_sauce
 	name = "tomato sauce"
@@ -340,7 +340,7 @@
 	tastes = list("tomato" = 1, "herbs" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/bechamel_sauce
 	name = "béchamel sauce"
@@ -350,7 +350,7 @@
 	tastes = list("cream" = 1)
 	foodtypes = DAIRY | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/roasted_bell_pepper
 	name = "roasted bell pepper"
@@ -364,7 +364,7 @@
 	tastes = list("bell pepper" = 1, "char" = 1)
 	foodtypes = VEGETABLES
 	burns_in_oven = TRUE
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/pierogi
 	name = "pierogi"
@@ -377,7 +377,7 @@
 	tastes = list("potato" = 1, "onions" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/stuffed_cabbage
 	name = "stuffed cabbage"
@@ -390,7 +390,7 @@
 	tastes = list("juicy meat" = 1, "rice" = 1, "cabbage" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/seaweedsheet
 	name = "seaweed sheet"
@@ -421,7 +421,7 @@
 	tastes = list("granola" = 1, "nuts" = 1, "chocolate" = 1, "raisin" = 1)
 	foodtypes = GRAIN | NUTS | FRUIT | SUGAR | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 4
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/onigiri
 	name = "onigiri"
@@ -435,7 +435,7 @@
 	tastes = list("rice" = 1, "dried seaweed" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/onigiri/Initialize(mapload)
 	. = ..()
@@ -462,7 +462,7 @@
 	tastes = list("peanuts" = 1, "sweetness" = 1)
 	foodtypes = NUTS | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 1
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/pickle
 	name = "pickle"
@@ -502,7 +502,7 @@
 	tastes = list("rice wrappers" = 1, "spice" = 1, "crunchy veggies" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 3
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cheese_pierogi
 	name = "cheese pierogi"
@@ -515,7 +515,7 @@
 	tastes = list("potato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/meat_pierogi
 	name = "meat pierogi"
@@ -529,4 +529,4 @@
 	tastes = list("potato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | MEAT
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = 2
+	crafting_complexity = FOOD_COMPLEXITY_2
