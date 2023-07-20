@@ -207,7 +207,7 @@
 	if(len)
 		for(var/obj/item/I in held_items)
 			if(!holding.len)
-				holding += "[p_they(TRUE)] [p_are()] holding \a [I]"
+				holding += "[p_They()] [p_are()] holding \a [I]"
 			else if(held_items.Find(I) == len)
 				holding += ", and \a [I]."
 			else
@@ -1318,8 +1318,7 @@
 		// Disconnect AI's in shells
 		if(Robot.connected_ai)
 			Robot.connected_ai.disconnect_shell()
-		if(Robot.mmi)
-			qdel(Robot.mmi)
+		QDEL_NULL(Robot.mmi)
 		Robot.notify_ai(AI_NOTIFICATION_NEW_BORG)
 	else
 		for(var/obj/item/item in src)
