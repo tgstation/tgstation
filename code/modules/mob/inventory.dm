@@ -261,6 +261,7 @@
 		var/cw_index = facing_dir_index
 		var/ccw_index = facing_dir_index
 		var/list/turfs_ordered = list(get_step(src, dir))
+		var/elevated_found = FALSE
 
 		// Build ordered list of turfs starting from the front facing
 		for(var/i in 1 to ROUND_UP(dir_count/2) - 1)
@@ -273,12 +274,22 @@
 				ccw_index = dir_count
 			turfs_ordered += get_step(src, dirs[ccw_index])	// Add next tile on your left
 
-		// Check for elevated structures (incl. tables) on these turfs
+		// Check for not-hot elevated structures (incl. tables) on these turfs
 		for(var/turf/our_turf in turfs_ordered)
 			for(var/atom/movable/content as anything in our_turf.contents)
-				if(GLOB.typecache_elevated_structures[content.type])
+				if(GLOB.typecache_elevated_structures[content.type]) // if it's an elevated structure,
+					if(GLOB.typecache_hot_elevated_structures[content.type]) // but it's a hot one,
+						break // don't put it there
+					elevated_found = TRUE
 					location = our_turf
 					break
+		if(!elevated_found) // if we didn't find a suitable not-hot elevated structure, do everything again
+			for(var/turf/our_turf in turfs_ordered)
+				for(var/atom/movable/content as anything in our_turf.contents) // but without the not-hot check
+					if(GLOB.typecache_elevated_structures[content.type])
+						elevated_found = TRUE
+						location = our_turf
+						break
 
 	I.forceMove(location)
 	I.layer = initial(I.layer)

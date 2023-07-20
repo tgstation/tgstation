@@ -41,6 +41,13 @@ GLOBAL_LIST_INIT(typecache_elevated_structures, typecacheof(list(
 	/obj/machinery/plumbing/pill_press,
 )))
 
+/// A typecache listing elevated structures that can cook things, and thus should probably not be prioritized for putting things on.
+GLOBAL_LIST_INIT(typecache_hot_elevated_structures, typecacheof(list(
+	/obj/structure/bonfire,
+	/obj/machinery/grill,
+	/obj/machinery/griddle,
+)))
+
 /// A typecache of objects that player controlled, easily accessible, hostile mobs should not be able to attack
 GLOBAL_LIST_INIT(typecache_general_bad_hostile_attack_targets, typecacheof(list(
 	/obj/machinery/airalarm,
