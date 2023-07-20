@@ -337,8 +337,3 @@
 
 	//space = FALSE
 	//planetary = TRUE
-
-/datum/station_trait/forested/New()
-	. = ..()
-
-	GLOB.ice_river_count = 0 //we cause a lot of floating objects otherwise :/

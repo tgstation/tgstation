@@ -36,7 +36,9 @@
 		/obj/structure/flora/tree/dead/style_random = 1,
 		/obj/structure/flora/tree/stump = 1,
 		/obj/structure/flora/rock/icy/style_random = 1,
-		/obj/structure/flora/grass/both/style_random = 78,
+		/obj/structure/flora/rock/pile/icy/style_random = 3,
+		/obj/structure/flora/grass/both/style_random = 50,
+		/obj/structure/flora/bush/flowers_pp/style_random = 25,
 		/obj/structure/flora/ash/chilly = 1,
 	)
 
