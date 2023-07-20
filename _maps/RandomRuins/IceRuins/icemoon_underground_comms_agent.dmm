@@ -22,8 +22,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/light_switch/directional/south,
-/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "ce" = (
@@ -142,6 +140,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/ruin/powered)
+"lj" = (
+/obj/machinery/light_switch/directional/south,
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
 "mb" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -252,6 +255,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood,
 /area/ruin/powered)
 "up" = (
@@ -280,7 +284,8 @@
 /area/ruin/powered)
 "wh" = (
 /obj/structure/curtain{
-	open = 0
+	open = 0;
+	icon_state = "bathroom-closed"
 	},
 /obj/item/soap/syndie,
 /turf/open/floor/iron/white/diagonal,
@@ -517,7 +522,6 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/powered)
 "KG" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/black,
 /area/ruin/powered)
@@ -681,6 +685,10 @@
 	},
 /obj/machinery/computer/records/security/laptop/syndie{
 	dir = 1
+	},
+/obj/item/paper/monitorkey{
+	pixel_x = -15;
+	pixel_y = 7
 	},
 /turf/open/floor/wood/tile,
 /area/ruin/powered)
@@ -1934,7 +1942,7 @@ YI
 YI
 xs
 do
-do
+lj
 YI
 CS
 Wl
