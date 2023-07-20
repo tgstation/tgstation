@@ -22,7 +22,7 @@
 	id = MASSDRIVER_SHACK
 
 /obj/machinery/mass_driver/Destroy()
-	for(var/obj/machinery/computer/pod/control in GLOB.machines)
+	for(var/obj/machinery/computer/pod/control as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/pod))
 		if(control.id == id)
 			control.connected = null
 	return ..()

@@ -269,6 +269,12 @@
 /// Layer for tutorial instructions
 #define TUTORIAL_INSTRUCTIONS_LAYER 5
 
+/// Layer for light overlays
+#define LIGHT_DEBUG_LAYER 6
+
+#define LOBBY_BACKGROUND_LAYER 3
+#define LOBBY_BUTTON_LAYER 4
+
 ///Layer for lobby menu collapse button
 #define LOBBY_BELOW_MENU_LAYER 2
 ///Layer for lobby menu background image and main buttons (Join/Ready, Observe, Charater Prefs)

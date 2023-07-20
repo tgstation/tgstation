@@ -368,12 +368,8 @@
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
-	var/datum/supply_pack/imports/contraband/smuggled_goods = new
-	for(var/items in 1 to 2)
-		var/smuggled_goods_type = pick(smuggled_goods.contains)
-		new smuggled_goods_type(src)
-
-	qdel(smuggled_goods)
+	for(var/items in 1 to 4)
+		new /obj/effect/spawner/random/contraband(src)
 
 /obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
 	new /obj/item/stack/tile/iron/base(src)
@@ -432,6 +428,7 @@
 	playsound(src, 'sound/items/un_zip.ogg', 100, FALSE)
 	var/datum/callback/can_unzip = CALLBACK(src, PROC_REF(zipper_matches), TRUE)
 	if(!do_after(user, 2.1 SECONDS, src, extra_checks = can_unzip))
+		user.balloon_alert(user, "unzip failed!")
 		return
 	balloon_alert(user, "unzipped")
 	set_zipper(FALSE)
@@ -448,6 +445,7 @@
 	playsound(src, 'sound/items/zip_up.ogg', 100, FALSE)
 	var/datum/callback/can_zip = CALLBACK(src, PROC_REF(zipper_matches), FALSE)
 	if(!do_after(user, 0.5 SECONDS, src, extra_checks = can_zip))
+		user.balloon_alert(user, "zip failed!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	balloon_alert(user, "zipped")
 	set_zipper(TRUE)

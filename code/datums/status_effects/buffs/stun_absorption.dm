@@ -79,7 +79,7 @@
 	UnregisterSignal(owner, COMSIG_LIVING_GENERIC_STUN_CHECK)
 
 /datum/status_effect/stun_absorption/get_examine_text()
-	return replacetext(examine_message, "%EFFECT_OWNER_THEYRE", owner.p_theyre(TRUE))
+	return replacetext(examine_message, "%EFFECT_OWNER_THEYRE", owner.p_Theyre())
 
 /**
  * Signal proc for generic stun signals being sent, such as [COMSIG_LIVING_STATUS_STUN] or [COMSIG_LIVING_STATUS_KNOCKDOWN].

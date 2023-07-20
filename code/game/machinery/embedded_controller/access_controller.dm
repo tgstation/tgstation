@@ -25,14 +25,15 @@
 /obj/machinery/door_buttons/LateInitialize()
 	findObjsByTag()
 
-/obj/machinery/door_buttons/emag_act(mob/user)
+/obj/machinery/door_buttons/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	req_access = list()
 	req_one_access = list()
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	to_chat(user, span_warning("You short out the access controller."))
+	balloon_alert(user, "access controller shorted")
+	return TRUE
 
 /obj/machinery/door_buttons/proc/removeMe()
 
@@ -49,11 +50,11 @@
 	var/busy
 
 /obj/machinery/door_buttons/access_button/findObjsByTag()
-	for(var/obj/machinery/door_buttons/airlock_controller/A in GLOB.machines)
+	for(var/obj/machinery/door_buttons/airlock_controller/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door_buttons/airlock_controller))
 		if(A.idSelf == idSelf)
 			controller = A
 			break
-	for(var/obj/machinery/door/airlock/I in GLOB.airlocks)
+	for(var/obj/machinery/door/airlock/I as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 		if(I.id_tag == idDoor)
 			door = I
 			break
@@ -119,7 +120,7 @@
 		exteriorAirlock = null
 
 /obj/machinery/door_buttons/airlock_controller/Destroy()
-	for(var/obj/machinery/door_buttons/access_button/A in GLOB.machines)
+	for(var/obj/machinery/door_buttons/access_button/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door_buttons/access_button))
 		if(A.controller == src)
 			A.controller = null
 	return ..()
@@ -240,7 +241,7 @@
 			lostPower = FALSE
 
 /obj/machinery/door_buttons/airlock_controller/findObjsByTag()
-	for(var/obj/machinery/door/door as anything in GLOB.airlocks)
+	for(var/obj/machinery/door/door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door))
 		if(door.id_tag == idInterior)
 			interiorAirlock = door
 		else if(door.id_tag == idExterior)
