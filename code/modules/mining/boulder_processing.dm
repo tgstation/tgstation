@@ -16,20 +16,44 @@
 	///How many boulders are we allowed to store at once?
 	var/boulders_held = 1
 
+	var/holds_minerals = FALSE
+	/// What materials do we accept and process out of boulders? Removing iron from an iron/glass boulder would leave a boulder with glass.
+	var/list/processed_materials = list()
 
-	/// Mats we look for?
-	var/list/processed_materials = list(/datum/material/iron, /datum/material/glass)
 	/// Silo link to it's materials list.
 	var/datum/component/remote_materials/silo_materials
 
+
+/obj/machinery/bouldertech/Initialize(mapload)
+	. = ..()
+	if(holds_minerals)
+		AddComponent(/datum/component/material_container, processed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+		silo_materials = AddComponent(/datum/component/remote_materials, "orm", mapload, mat_container_flags=BREAKDOWN_FLAGS_ORM)
+
 /obj/machinery/bouldertech/proc/breakdown_boulder(obj/item/boulder/chosen_boulder)
+	if(!chosen_boulder)
+		return FALSE
+
+	if(!chosen_boulder.custom_materials)
+		qdel(chosen_boulder)
+		return FALSE
+
 	//here we loop through the boulder's ores
 	if(!silo_materials)
 		return FALSE
+
+	var/list/remaining_ores = list()
 	for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
-		if(is_type_in_list(possible_mat, processed_materials))
-			///Alright, screw it, just copy the ORM's smelt_ore proc wholesale.
-			return
+		if(!is_type_in_list(possible_mat, processed_materials))
+			remaining_ores += possible_mat
+			custom_materials -= possible_mat
+	if(!chosen_boulder.custom_materials)
+		return FALSE
+
+	silo_materials.mat_container.insert_item(chosen_boulder, refining_efficiency, breakdown_flags = BREAKDOWN_FLAGS_ORM)
+	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	var/obj/item/boulder/new_rock = new (drop_location())
+	new_rock.set_custom_materials(remaining_ores)
 
 
 
@@ -69,6 +93,7 @@
 	name = "boulder smeltery"
 	desc = "B-S for short. Accept boulders and refines metallic ores into sheets. Can be upgraded with stock parts or through gas inputs."
 	icon_state = "furnace"
+	holds_minerals = TRUE
 
 /obj/machinery/bouldertech/smelter/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -84,6 +109,7 @@
 	name = "boulder refinery"
 	desc = "B-R for short. Accepts boulders and refines non-metallic ores into sheets. Can be upgraded with stock parts or through chemical inputs."
 	icon_state = "stacker"
+	holds_minerals = TRUE
 
 /obj/machinery/bouldertech/refinery/Initialize(mapload)
 	. = ..()
