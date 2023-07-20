@@ -94,7 +94,7 @@
 	name = "Pig Crate"
 	desc = "The pig goes oink! Contains one pig."
 	cost = CARGO_CRATE_VALUE * 6
-	access_view = ACCESS_SERVICE
+	access_view = ACCESS_KITCHEN
 	contains = list(/mob/living/basic/pig)
 	crate_name = "pig crate"
 
@@ -102,7 +102,7 @@
 	name = "Pony Crate"
 	desc = "Ponies, yay! (Just the one.)"
 	cost = CARGO_CRATE_VALUE * 6
-	access_view = ACCESS_KITCHEN
+	access_view = ACCESS_SERVICE
 	contains = list(/mob/living/basic/pony)
 	crate_name = "pony crate"
 
