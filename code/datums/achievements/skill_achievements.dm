@@ -11,4 +11,4 @@
 	name = "Legendary fisher"
 	desc = "Give a spaceman a fish and you feed him for a while; teach a spaceman to fish and you feed him until the shuttle arrives."
 	database_id = MEDAL_LEGENDARY_FISHER
-	icon = "baseskill" //wip
+	icon = "fishing_hat"
