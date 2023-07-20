@@ -34,7 +34,7 @@
 	var/static/list/finished_silicon_message = list(
 		"You feel nothing!",
 		"No pain, no gain!",
-		"Your shell is hardened... not!",
+		"Chassis hardness rating... Unchanged.",
 		"You feels the exact same. Nothing.",
 	)
 
