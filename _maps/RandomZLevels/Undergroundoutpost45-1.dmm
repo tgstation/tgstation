@@ -9048,14 +9048,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45)
-"Nb" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45)
 "Nd" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/directional/west,
@@ -9530,15 +9522,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
-"QB" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/carpet/royalblue,
-/area/awaymission/undergroundoutpost45)
 "QC" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/all_access,
@@ -9830,12 +9813,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/undergroundoutpost45/gateway)
-"Sv" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45)
 "SI" = (
 /obj/machinery/vending/sustenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
@@ -31159,7 +31136,7 @@ ad
 ad
 Ye
 ta
-QB
+Dd
 Dd
 Dd
 Cx
@@ -31415,9 +31392,9 @@ ad
 nE
 ad
 HG
-Sv
+ta
 SJ
-Nb
+ta
 ta
 VY
 jg
