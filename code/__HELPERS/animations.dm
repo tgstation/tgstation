@@ -32,7 +32,7 @@
 #define UPDATE_TRANSFORM_ANIMATION_TIME (0.2 SECONDS)
 
 ///Animates source spinning around itself. For docmentation on the args, check atom/proc/SpinAnimation()
-atom/proc/do_spin_animation(speed = 1 SECONDS, loops = -1, segments = 3, angle = 120, parallel = TRUE)
+/atom/proc/do_spin_animation(speed = 1 SECONDS, loops = -1, segments = 3, angle = 120, parallel = TRUE)
 	var/list/matrices = list()
 	for(var/i in 1 to segments-1)
 		var/matrix/segment_matrix = matrix(transform)
