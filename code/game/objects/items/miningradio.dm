@@ -171,6 +171,8 @@
 
 	warning_level = WEATHER_ALERT_CLEAR
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/mining_weather_monitor, 28)
+
 #undef WEATHER_ALERT_CLEAR
 #undef WEATHER_ALERT_INCOMING
 #undef WEATHER_ALERT_IMMINENT_OR_ACTIVE
