@@ -83,8 +83,6 @@
 
 /// If this goes smoothly, should reconnect a receiving mind to the occupant's body
 /obj/structure/netchair/proc/disconnect_occupant(datum/mind/receiving, forced = FALSE)
-	SIGNAL_HANDLER
-
 	var/mob/living/occupant = occupant_ref?.resolve()
 	var/datum/mind/hosted_mind = occupant_mind_ref?.resolve()
 	if(isnull(occupant) || receiving != hosted_mind)
@@ -98,7 +96,6 @@
 	if(action)
 		action.Remove()
 
-	occupant.playsound_local(occupant, "sound/magic/blink.ogg", 25, TRUE)
 	occupant.set_static_vision(2 SECONDS)
 	occupant.set_temp_blindness(1 SECONDS)
 
@@ -232,7 +229,7 @@
 	INVOKE_ASYNC(src, PROC_REF(enter_matrix), mob_to_buckle)
 
 /// On unbuckle, make sure the occupant ref is null
-/obj/structure/netchair/proc/on_unbuckle(mob/living/mob_to_unbuckle, force)
+/obj/structure/netchair/proc/on_unbuckle(datum/source, mob/living/mob_to_unbuckle, force)
 	SIGNAL_HANDLER
 
 	occupant_ref = null

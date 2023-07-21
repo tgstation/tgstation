@@ -33,7 +33,7 @@
 	if(do_after(user, travel_time, src))
 		user.mind.sever_avatar()
 
-/obj/structure/hololadder/proc/on_enter(datum/source, atom/movable/arrived as mob|obj, turf/old_loc)
+/obj/structure/hololadder/proc/on_enter(datum/source, atom/movable/arrived, turf/old_loc)
 	SIGNAL_HANDLER
 
 	if(!isliving(arrived))

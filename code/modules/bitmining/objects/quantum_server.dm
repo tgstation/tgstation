@@ -250,7 +250,7 @@
 	return TRUE
 
 /// If broken via signal, disconnects all users
-/obj/machinery/quantum_server/proc/on_broken()
+/obj/machinery/quantum_server/proc/on_broken(datum/source)
 	SIGNAL_HANDLER
 
 	stop_domain()

@@ -55,7 +55,7 @@
 	UnregisterSignal(current, COMSIG_LIVING_DEATH)
 
 /// Transfers damage from the avatar to the pilot
-/datum/mind/proc/on_linked_damage(mob/target, damage, damage_type, def_zone, blocked, forced)
+/datum/mind/proc/on_linked_damage(datum/source, damage, damage_type, def_zone, blocked, forced)
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/pilot = pilot_ref?.resolve()
@@ -72,21 +72,24 @@
 	pilot.apply_damage(damage, damage_type, def_zone, blocked, forced)
 
 /// Handles minds being swapped around in subsequent avatars
-/datum/mind/proc/on_mind_transfer(mob/living/previous_body)
+/datum/mind/proc/on_mind_transfer(datum/mind/source, mob/living/previous_body)
 	SIGNAL_HANDLER
 
 	disconnect_avatar_signals(previous_body)
 	connect_avatar_signals(current)
 
 /// Triggers when someone steps onto a trapped tile
-/datum/mind/proc/on_proximity(mutable_appearance/mob_image)
+/datum/mind/proc/on_proximity(datum/source, mob/living/intruder)
 	SIGNAL_HANDLER
 
-	var/datum/action/avatar_free_sever/action = new(src, mob_image)
-	action.Grant(current)
+	current.throw_alert(
+		ALERT_BITMINING_PROXIMITY,
+		/atom/movable/screen/alert/bitmining_proximity,
+		new_master = intruder
+	)
 
 /// Helper so that we don't have to apply args to register_signal
-/datum/mind/proc/on_sever_connection()
+/datum/mind/proc/on_sever_connection(datum/source)
 	SIGNAL_HANDLER
 
 	last_death = world.time
@@ -100,7 +103,6 @@
 		current.dust()
 
 	disconnect_avatar_signals()
-
 	UnregisterSignal(SSdcs, COMSIG_GLOB_BITMINING_PROXIMITY)
 	UnregisterSignal(src, COMSIG_MIND_TRANSFERRED)
 	UnregisterSignal(pilot, COMSIG_LIVING_STATUS_UNCONSCIOUS)
@@ -110,4 +112,7 @@
 
 	netchair_ref = null
 	pilot_ref = null
+
+	current.playsound_local(src, "sound/magic/blink.ogg", 25, TRUE)
+	current.flash_act(override_blindness_check = TRUE, visual = TRUE)
 	chair.disconnect_occupant(src, forced)

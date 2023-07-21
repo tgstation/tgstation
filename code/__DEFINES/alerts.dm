@@ -60,3 +60,6 @@
 #define ALERT_TEMPERATURE "temp"
 #define ALERT_TEMPERATURE_HOT "temphot"
 #define ALERT_TEMPERATURE_COLD "tempcold"
+
+/** Bitmining proximity detection */
+#define ALERT_BITMINING_PROXIMITY "bitmining_proximity"

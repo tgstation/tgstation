@@ -57,3 +57,19 @@
 /// Is it a person? If so, sound the alarms
 /obj/item/assembly/bitminer_trap/proc/signal_proximity(mob/living/intruder)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BITMINING_PROXIMITY, intruder)
+
+/atom/movable/screen/alert/bitmining_proximity
+	name = "Proximity Alert"
+	icon_state = "template"
+	desc = "Activate to sever the connection."
+	timeout = 6 SECONDS
+
+/atom/movable/screen/alert/bitmining_proximity/Click()
+	var/mob/living/living_owner = owner
+	if(!isliving(living_owner))
+		return
+
+	if(tgui_alert(living_owner, "Emergency disconnect from the server?", "Sever Connection", list("Yes", "No"), 5 SECONDS) != "Yes")
+		return
+
+	living_owner.mind.sever_avatar()
