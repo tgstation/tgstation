@@ -239,11 +239,6 @@ Behavior that's still missing from this component that original food items had t
 				examine_list += span_green("It is made of organic ingredients prolonging the effect.")
 			if(0.8 to 1)
 				examine_list += span_green("It is made of finest ingredients prolonging the effect!")
-		// TODO: DEBUG, REMOVE WHEN DONE
-		examine_list += span_notice("Reagent purities:")
-		for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
-			examine_list += span_notice("- [reagent.name] [reagent.volume]u: [round(reagent.purity * 100)]% pure")
-		// /TODO: DEBUG, REMOVE WHEN DONE
 
 	var/datum/mind/mind = user.mind
 	if(mind && HAS_TRAIT_FROM(owner, TRAIT_FOOD_CHEF_MADE, REF(mind)))
