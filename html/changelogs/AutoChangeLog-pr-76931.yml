@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Cult spells, bloodsense, and pylon healing now follow cultists through mind transfer (such as body swapping)"

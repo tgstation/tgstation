@@ -1,0 +1,7 @@
+author: "itseasytosee"
+delete-after: True
+changes:
+  - rscadd: "You can now lean against walls! Simply turn your back to the wall and clickdrag yourself onto it."
+  - bugfix: "There should no longer be any instances of spacemen being able to run straight through eachother as if they weren't even there."
+  - spellcheck: "Added more variance to item throwing text."
+  - refactor: "Mob density has been refactored"

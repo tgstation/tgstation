@@ -1,0 +1,5 @@
+author: "Momo8289"
+delete-after: True
+changes:
+  - qol: "You can now use any hat with the hat stabilizer MOD"
+  - bugfix: "The MOD eating apparatus module now properly disables pepper spray protection"

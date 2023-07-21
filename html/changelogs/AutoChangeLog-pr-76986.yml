@@ -1,0 +1,4 @@
+author: "Improvedname"
+delete-after: True
+changes:
+  - bugfix: "Brings security berets down to softcap armor values also softcaps get wound armor"

@@ -1,0 +1,4 @@
+author: "jughu"
+delete-after: True
+changes:
+  - bugfix: "removed a false silly tip about blob taking damage from flashbangs"

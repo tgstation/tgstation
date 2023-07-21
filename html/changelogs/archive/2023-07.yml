@@ -845,3 +845,58 @@
   vinylspiders:
   - bugfix: ethereal hair will now go out when they die again
   - code_imp: apc's update_icon_state proc will no longer set the icon file path
+2023-07-20:
+  FernandoJ8:
+  - qol: terminals built by left-clicking on SMES and APC units will now be on the
+      same layer as the machine.
+  - bugfix: constructing a terminal on a specific layer with right-click now works
+      for APCs, not just SMES units
+  Helg2:
+  - image: .50 incendiary magazine now has sprite.
+  - rscadd: Bank machine now has a circuit for it. Spawns in secure tech storage and
+      researchable in the same nod as comms console.
+  - balance: Due to possibility of creating area and making there bank machines that
+      aren't roundstart will have gps signals.
+  - bugfix: Bank machine now doesn't yell about unauthorized credit withdrawal when
+      its authorized.
+  Jacquerel:
+  - balance: You can't possess a MULE as soon as the round starts, someone will have
+      to give you permission.
+  - balance: MULEbots no longer crush prone characters unless they have been hacked
+      (or emagged).
+  - bugfix: Bots can put numbers in their names, what with being robots.
+  - admin: 'Adds attack logging when certain wires are cut (for instance: MULEbot
+      safeties)'
+  JohnFulpWillard:
+  - bugfix: Cult spells, bloodsense, and pylon healing now follow cultists through
+      mind transfer (such as body swapping)
+  - bugfix: Cryo cells no longer appear on when off.
+  LemonInTheDark:
+  - rscadd: Added angle lighting, applies it to most wall lights!
+  - rscadd: Adds a lighting prototyping tool, mappers go try it out (it's locked behind
+      the mapping verb)
+  Nerev4r:
+  - rscadd: Due to increased exposure to low-gravity due to constant generator failures,
+      Spacer-Born have been showing up with increasingly tall statures.
+  Seven:
+  - bugfix: Xeno's corrosion ability no longer breaks reinforced walls and floors
+  - qol: Added some balloon alerts for failing to place items in storage containers
+  SirNooben:
+  - bugfix: Fixed the alien limbgrower UI
+  - bugfix: Fixed being able to order negative or more than 20 items in mining order
+      console
+  SyncIt21:
+  - bugfix: turbine does not runtime when its input or output turf is destroyed while
+      its running
+  - qol: add warning examine for rotor when its parts are not connected
+  nikothedude:
+  - rscadd: 'New air alarm mode: Vent siphon, which disables scrubbers and forces
+      vents to siphon air with no pressure regulation'
+  vinylspiders:
+  - bugfix: fixes gravity generators causing CI failures from overriding a signal
+2023-07-21:
+  Blockaboo:
+  - bugfix: Tin man no longer causes you to drop all of your organs.
+  JohnFulpWillard:
+  - bugfix: '[Birdshot] Xenos can no longer immediately destroy the shield wall generator
+      to break out.'

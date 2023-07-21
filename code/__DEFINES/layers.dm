@@ -163,6 +163,8 @@
 #define FLOOR_CLEAN_LAYER 2.55
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
+///Anything below this layer is to be considered completely (visually) under water by the immerse layer.
+#define WATER_LEVEL_LAYER 2.61
 #define BLASTDOOR_LAYER 2.65
 #define OPEN_DOOR_LAYER 2.7
 #define DOOR_ACCESS_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER, special layer used for /obj/effect/mapping_helpers/airlock/access
@@ -216,6 +218,13 @@
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
+
+/**
+ * The layer of the visual overlay used in the submerge element.
+ * The vis overlay inherits the planes of the movables it's attached to (that also have KEEP_TOGETHER added)
+ * We just have to make sure the visual overlay is rendered above all the other overlays of those movables.
+ */
+#define WATER_VISUAL_OVERLAY_LAYER 1000
 
 //---------- LIGHTING -------------
 
