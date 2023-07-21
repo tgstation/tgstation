@@ -29,10 +29,10 @@
 	var/current_regeneration
 
 	///Determins the max radius the shield can support
-	var/max_radius = 3
+	var/max_radius = 5
 
 	///Current radius the shield is set to, minimum 3
-	var/radius = 3
+	var/radius = 5
 
 	///Determins if we only generate a shield on space turfs or not
 	var/exterior_only = FALSE
@@ -59,7 +59,7 @@
 	var/innate_regen = 3
 
 	///Max radius gained from our own parts
-	var/innate_radius = 3
+	var/innate_radius = 5
 
 	///Max strength gained from our own parts
 	var/innate_strength = 40
@@ -84,10 +84,10 @@
 	innate_strength = initial(innate_strength)
 
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
-		innate_strength += new_capacitor.tier * 10
+		innate_strength += new_capacitor.tier * 12.5
 
-	for(var/datum/stock_part/servo/new_servo in component_parts)
-		innate_regen += new_servo.tier
+	for(var/datum/stock_part/manipulator/new_manipulator in component_parts)
+		innate_regen += new_manipulator.tier * 1.2
 
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
 		innate_radius += new_laser.tier * 0.25
@@ -589,8 +589,8 @@
 /obj/machinery/modular_shield/module/charger/RefreshParts()
 	. = ..()
 	charge_boost = initial(charge_boost)
-	for(var/datum/stock_part/servo/new_servo in component_parts)
-		charge_boost += new_servo.tier
+	for(var/datum/stock_part/manipulator/new_manipulator in component_parts)
+		charge_boost += new_manipulator.tier * 1.2
 
 	if(shield_generator)
 		shield_generator.calculate_boost()
@@ -639,7 +639,7 @@
 	. = ..()
 	strength_boost = initial(strength_boost)
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
-		strength_boost += new_capacitor.tier * 10
+		strength_boost += new_capacitor.tier * 12.5
 
 	if(shield_generator)
 		shield_generator.calculate_boost()
@@ -655,19 +655,30 @@
 //The shield itself
 /obj/structure/emergency_shield/modular
 	name = "Modular energy shield"
-	desc = "An energy shield with varying configurations."
+	desc = "An energy shield with varying configurations, the damage it takes puts a strain on its generator."
 	color = "#00ffff"
 	density = FALSE
 	alpha = 100
+	explosion_block = INFINITY
 	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or atleast should be
 
 	///The shield generator sustaining us
 	var/obj/machinery/modular_shield_generator/shield_generator
 
-
 /obj/structure/emergency_shield/modular/Initialize(mapload)
+	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
+
+//The feedback from getting attacked by an item
+/obj/structure/emergency_shield/modular/attacked_by(obj/item/attacking_item, mob/living/user)
+	. = ..()
+	visible_message(span_danger("The blow ripples across the field making it more unstable!"), null, null, COMBAT_MESSAGE_RANGE)
+
+//The feedback from getting attacked by a projectile
+/obj/structure/emergency_shield/modular/bullet_act(obj/projectile/P)
+	. = ..()
+	visible_message(span_danger("The impact ripples across the field making it more unstable!"), null, null, COMBAT_MESSAGE_RANGE)
 
 /obj/structure/emergency_shield/modular/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > (T0C + 400) //starts taking damage from high temps at the same temperature that nonreinforced glass does
@@ -698,3 +709,21 @@
 		return
 
 	shield_generator.shield_drain(15 / severity) //Light is 2 heavy is 1, note emp is usually a large aoe, tweak the number if not enough damage
+
+/obj/structure/emergency_shield/modular/ex_act(severity)
+	if(isnull(shield_generator))
+		qdel(src)
+		return
+
+	switch(severity)
+
+		if(EXPLODE_LIGHT)
+			shield_generator.shield_drain(20)
+			return
+
+		if(EXPLODE_HEAVY)
+			shield_generator.shield_drain(50)
+			return
+
+		if(EXPLODE_DEVASTATE)
+			shield_generator.shield_drain(100)
