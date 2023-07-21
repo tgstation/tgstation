@@ -217,7 +217,7 @@ Behavior that's still missing from this component that original food items had t
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
 		examine_list += span_notice("It is [lowertext(english_list(types))].")
 
-	var/quality = get_preceived_food_quality(user)
+	var/quality = get_perceived_food_quality(user)
 	if(quality > 0)
 		var/quality_label = GLOB.food_quality_description[quality]
 		examine_list += span_green("You find this meal [quality_label].")
@@ -541,7 +541,7 @@ Behavior that's still missing from this component that original food items had t
 		gourmand.add_mood_event("toxic_food", /datum/mood_event/disgusting_food)
 		return
 
-	var/food_quality = get_preceived_food_quality(gourmand, parent)
+	var/food_quality = get_perceived_food_quality(gourmand, parent)
 	if(food_quality < 0)
 		to_chat(gourmand,span_notice("That didn't taste very good..."))
 		gourmand.adjust_disgust(11 + 15 * fraction)
@@ -569,7 +569,7 @@ Behavior that's still missing from this component that original food items had t
 	return food.crafting_complexity
 
 /// Get food quality adjusted according to eater's preferences
-/datum/component/edible/proc/get_preceived_food_quality(mob/living/carbon/human/eater)
+/datum/component/edible/proc/get_perceived_food_quality(mob/living/carbon/human/eater)
 	var/food_quality = get_recipe_complexity()
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
