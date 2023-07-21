@@ -578,12 +578,10 @@
 /datum/station_trait/nebula/hostile/radiation/proc/on_entered(area/space, atom/movable/enterer)
 	SIGNAL_HANDLER
 
-	if(!ismovable(enterer))
-		return
+	if(isliving(enterer))//Don't actually make EVERY. SINGLE. THING. RADIOACTIVE. Just irradiate people
+		enterer.AddElement(/datum/element/radioactive, range = 1, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
 
-	enterer.AddElement(/datum/element/radioactive, range = 0, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
-	//Don't actually make EVERY. SINGLE. THING. radioactive, just make them glow so people arent killed instantly
-	if(!SSradiation.can_irradiate_basic(enterer))
+	else if(isobj(enterer)) //and fake the rest
 		//outline clashes too much with other outlines and creates pretty ugly lines
 		enterer.add_filter(GLOW_NEBULA, 2, list("type" = "drop_shadow", "color" = nebula_radglow, "size" = 2))
 
@@ -591,7 +589,7 @@
 /datum/station_trait/nebula/hostile/radiation/proc/on_exited(area/space, atom/movable/exiter)
 	SIGNAL_HANDLER
 
-	exiter.RemoveElement(/datum/element/radioactive, range = 0, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
+	exiter.RemoveElement(/datum/element/radioactive, range = 1, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
 	exiter.remove_filter(GLOW_NEBULA)
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
