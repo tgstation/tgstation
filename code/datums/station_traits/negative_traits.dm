@@ -267,7 +267,7 @@
 	name = "Ionic Stormfront"
 	report_message = "An ionic stormfront is passing over your station's system. Expect an increased likelihood of ion storms afflicting your station's silicon units."
 	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = STATION_TRAIT_UNRESTRICTED
+	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 3
 	event_control_path = /datum/round_event_control/ion_storm
 	weight_multiplier = 2
@@ -276,7 +276,7 @@
 	name = "Radiation Stormfront"
 	report_message = "A radioactive stormfront is passing through your station's system. Expect an increased likelihood of radiation storms passing over your station, as well the potential for multiple radiation storms to occur during your shift."
 	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = STATION_TRAIT_UNRESTRICTED
+	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 2
 	event_control_path = /datum/round_event_control/radiation_storm
 	weight_multiplier = 1.5
@@ -286,7 +286,7 @@
 	name = "Dust Stormfront"
 	report_message = "The space around your station is clouded by heavy pockets of space dust. Expect an increased likelyhood of space dust storms damaging the station hull."
 	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = STATION_TRAIT_UNRESTRICTED
+	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 2
 	event_control_path = /datum/round_event_control/meteor_wave/dust_storm
 	weight_multiplier = 2
