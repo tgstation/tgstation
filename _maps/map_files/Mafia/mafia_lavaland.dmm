@@ -50,13 +50,9 @@
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "al" = (
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
 /obj/item/shovel,
 /obj/item/pickaxe,
+/obj/structure/closet/secure_closet/miner/unlocked,
 /turf/open/floor/fakebasalt,
 /area/centcom/mafia)
 "am" = (
@@ -75,13 +71,9 @@
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
 	},
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
 /obj/item/shovel,
 /obj/item/pickaxe,
+/obj/structure/closet/secure_closet/miner/unlocked,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "ap" = (
@@ -100,13 +92,9 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
 /obj/item/shovel,
 /obj/item/pickaxe,
+/obj/structure/closet/secure_closet/miner/unlocked,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "as" = (
@@ -144,13 +132,9 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
 /obj/item/shovel,
 /obj/item/pickaxe,
+/obj/structure/closet/secure_closet/miner/unlocked,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aA" = (
@@ -210,26 +194,18 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
 /obj/item/shovel,
 /obj/item/pickaxe,
+/obj/structure/closet/secure_closet/miner/unlocked,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aI" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
 	},
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
 /obj/item/shovel,
 /obj/item/pickaxe,
+/obj/structure/closet/secure_closet/miner/unlocked,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aJ" = (
@@ -246,13 +222,9 @@
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 8
 	},
-/obj/structure/closet{
-	desc = "It's a storage unit. For mining stuff. Y'know.";
-	icon_state = "mining";
-	name = "miner equipment locker"
-	},
 /obj/item/shovel,
 /obj/item/pickaxe,
+/obj/structure/closet/secure_closet/miner/unlocked,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aL" = (
