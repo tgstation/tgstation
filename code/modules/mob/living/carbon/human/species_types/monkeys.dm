@@ -37,6 +37,7 @@
 	dust_anim = "dust-m"
 	gib_anim = "gibbed-m"
 
+	payday_modifier = PAY_MODIFIER_MONKEY
 	ai_controlled_species = TRUE
 
 

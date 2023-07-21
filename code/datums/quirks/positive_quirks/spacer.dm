@@ -55,7 +55,7 @@
 		return
 	var/datum/bank_account/spacer_account = quirk_holder.get_bank_account()
 	if(!isnull(spacer_account))
-		spacer_account.payday_modifier *= 1.25
+		spacer_account.payday_modifier *= PAY_MODIFIER_HAZARD
 		to_chat(quirk_holder, span_info("Given your background as a Spacer, \
 			you are awarded with a 25% hazard pay bonus due to your [on_a_planet ?  "station" : "occupational"] assignment."))
 

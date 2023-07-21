@@ -15,6 +15,16 @@
 ///Paygrade for Heads of Staff.
 #define PAYCHECK_COMMAND 100
 
+///Current values for multipliers applied to pay. Divided by standard, underclass (such as nonhumans), hazard pay bonuses, and being a monkey.
+///Our default multiplier.
+#define PAY_MODIFIER 1
+///Our multiplier for our oppressed second class citizens
+#define PAY_MODIFIER_UNDERCLASS 0.9
+///For being a goddamn monkey with a job
+#define PAY_MODIFIER_MONKEY 1.5
+///For hazard pay (such as having the Spacer quirk on a planet-based station)
+#define PAY_MODIFIER_HAZARD 1.2
+
 //How many credits a player is charged if they print something from a departmental lathe they shouldn't have access to.
 #define LATHE_TAX 10
 //How much POWER a borg's cell is taxed if they print something from a departmental lathe.
