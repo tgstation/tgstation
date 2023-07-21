@@ -378,7 +378,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	qdel(src)
 
 /obj/item/chair/describe_blocking()
-	var/all_blockables = english_list(bitfield_to_list(can_block_flags, BLOCKABLE_FLAGS), and_text = " or ")
 	return "[p_they()] can block about [HITS_TO_CRIT((25 * blocking_ability))] unarmed attacks before having guard broken."
 
 /obj/item/chair/get_blocking_ability(
