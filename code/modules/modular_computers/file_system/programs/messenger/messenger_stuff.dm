@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	return message
 
 /// Returns this datum as an associative list, used for ui_data calls.
-/datum/pda_chat/proc/get_data()
+/datum/pda_chat/proc/get_ui_data(mob/user)
 	var/list/data = list()
 
 	var/list/recp_data = list()
@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 
 	var/list/messages_data = list()
 	for(var/datum/pda_msg/message in messages)
-		messages_data += list(message.get_data())
+		messages_data += list(message.get_ui_data(user))
 	data["messages"] = messages_data
 	data["message_draft"] = message_draft
 
@@ -124,24 +124,22 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 /datum/pda_msg
 	var/message
 	var/outgoing
-	var/datum/picture/photo
-	var/photo_path
+	var/photo_asset_name
 	var/everyone
 
-/datum/pda_msg/New(message, outgoing, datum/picture/photo = null, photo_path = null, everyone = FALSE)
+/datum/pda_msg/New(message, outgoing, photo_asset_name, everyone = FALSE)
 	src.message = message
 	src.outgoing = outgoing
-	src.photo = photo
-	src.photo_path = photo_path
+	src.photo_asset_name = photo_asset_name
 	src.everyone = everyone
 
 /datum/pda_msg/proc/copy()
-	return new /datum/pda_msg(message = message, outgoing = outgoing, photo = photo, photo_path = photo_path, everyone = everyone)
+	return new /datum/pda_msg(message = message, outgoing = outgoing, photo_asset_name = photo_asset_name, everyone = everyone)
 
-/datum/pda_msg/proc/get_data()
+/datum/pda_msg/proc/get_ui_data(mob/user)
 	var/list/data = list()
 	data["message"] = message
 	data["outgoing"] = outgoing
-	data["photo_path"] = photo_path
+	data["photo_path"] = SSassets.transport.get_asset_url(photo_asset_name)
 	data["everyone"] = everyone
 	return data

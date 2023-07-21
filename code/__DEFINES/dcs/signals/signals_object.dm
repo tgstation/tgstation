@@ -447,8 +447,3 @@
 
 /// from /obj/plunger_act when an object is being plungered
 #define COMSIG_PLUNGER_ACT "plunger_act"
-
-/// from /obj/item/modular_computer/imprint_id(): (name, job)
-#define COMSIG_MODPC_IMPRINT_UPDATED "modpc_imprint_updated"
-/// from /obj/item/modular_computer/reset_id(): ()
-#define COMSIG_MODPC_IMPRINT_RESET "modpc_imprint_reset"

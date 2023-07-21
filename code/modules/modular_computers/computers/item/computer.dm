@@ -653,14 +653,14 @@
 /obj/item/modular_computer/proc/imprint_id(name = null, job_name = null)
 	saved_identification = name || computer_id_slot?.registered_name || saved_identification
 	saved_job = job_name || computer_id_slot?.assignment || saved_job
-	SEND_SIGNAL(src, COMSIG_MODPC_IMPRINT_UPDATED, saved_identification, saved_job)
+	SEND_SIGNAL(src, COMSIG_MODULAR_PDA_IMPRINT_UPDATED, saved_identification, saved_job)
 	update_appearance(UPDATE_NAME)
 
 ///Resets the imprinted name and job back to null.
 /obj/item/modular_computer/proc/reset_imprint()
 	saved_identification = null
 	saved_job = null
-	SEND_SIGNAL(src, COMSIG_MODPC_IMPRINT_RESET)
+	SEND_SIGNAL(src, COMSIG_MODULAR_PDA_IMPRINT_RESET)
 	update_appearance(UPDATE_NAME)
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)

@@ -5,7 +5,7 @@ import { BooleanLike } from 'common/react';
 import { NtosWindow } from '../../layouts';
 import { SFC } from 'inferno';
 
-import { NtChat, NtMessenger } from './types';
+import { NtChat, NtMessenger, NtPicture } from './types';
 import { ChatScreen } from './ChatScreen';
 
 type NtosMessengerData = {
@@ -18,7 +18,8 @@ type NtosMessengerData = {
   alert_silenced: BooleanLike;
   sending_and_receiving: BooleanLike;
   open_chat: string;
-  photo: string;
+  stored_photos?: NtPicture[];
+  selected_photo_path: string | null;
   on_spam_cooldown: BooleanLike;
   virus_attach: BooleanLike;
   sending_virus: BooleanLike;
@@ -26,7 +27,14 @@ type NtosMessengerData = {
 
 export const NtosMessenger = (_props: any, context: any) => {
   const { act, data } = useBackend<NtosMessengerData>(context);
-  const { saved_chats, open_chat, messengers } = data;
+  const {
+    is_silicon,
+    saved_chats,
+    stored_photos,
+    selected_photo_path,
+    open_chat,
+    messengers,
+  } = data;
 
   let content: JSX.Element;
   if (open_chat !== null) {
@@ -34,7 +42,10 @@ export const NtosMessenger = (_props: any, context: any) => {
       <ChatScreen
         chat={saved_chats[open_chat]}
         temp_msgr={messengers[open_chat]}
+        storedPhotos={stored_photos}
+        selectedPhoto={selected_photo_path}
         onReturn={() => act('PDA_viewMessages', { ref: null })}
+        isSilicon={is_silicon}
       />
     );
   } else {
@@ -59,7 +70,6 @@ const ContactsScreen = (_props: any, context: any) => {
     sort_by_job,
     can_spam,
     is_silicon,
-    photo,
     virus_attach,
     sending_virus,
   } = data;
@@ -205,19 +215,6 @@ const ContactsScreen = (_props: any, context: any) => {
           </Stack>
         </Section>
       </Stack.Item>
-      {!!photo && (
-        <Stack vertical>
-          <Section fill textAlign="center">
-            <Icon name="camera" mr={1} />
-            Current Photo
-          </Section>
-          <Section align="center" mb={1}>
-            <Button onClick={() => act('PDA_clearPhoto')}>
-              <Box mt={1} as="img" src={photo} />
-            </Button>
-          </Section>
-        </Stack>
-      )}
       {filteredChatButtons.length > 0 && (
         <Stack.Item>
           <Stack fill vertical>

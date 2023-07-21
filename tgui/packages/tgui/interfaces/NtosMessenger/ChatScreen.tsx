@@ -1,6 +1,6 @@
 import { Stack, Section, Button, Box, Input } from '../../components';
 import { Component, RefObject, createRef, SFC } from 'inferno';
-import { NtChat, NtMessenger } from './types';
+import { NtChat, NtMessenger, NtPicture } from './types';
 import { sanitizeText } from '../../sanitize';
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../../backend';
@@ -10,11 +10,15 @@ type ChatScreenProps = {
   // if one doesn't exist, assume the other one does
   chat?: NtChat;
   temp_msgr?: NtMessenger;
+  storedPhotos?: NtPicture[];
+  selectedPhoto: string | null;
+  isSilicon: BooleanLike;
 };
 
 type ChatScreenState = {
   msg: string;
-  canSend: BooleanLike;
+  selectingPhoto: boolean;
+  canSend: boolean;
 };
 
 const READ_UNREADS_TIME_MS = 3000;
@@ -26,6 +30,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
   state: ChatScreenState = {
     msg: '',
+    selectingPhoto: false,
     canSend: true,
   };
 
@@ -36,6 +41,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
     this.scrollToBottom = this.scrollToBottom.bind(this);
     this.handleMessageInput = this.handleMessageInput.bind(this);
+    this.handleSelectPicture = this.handleSelectPicture.bind(this);
     this.handleSendMessage = this.handleSendMessage.bind(this);
     this.trySetReadTimeout = this.trySetReadTimeout.bind(this);
     this.tryClearReadTimeout = this.tryClearReadTimeout.bind(this);
@@ -105,6 +111,16 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     }
   }
 
+  handleSelectPicture() {
+    const { isSilicon } = this.props;
+    const { act } = useBackend(this.context);
+    if (isSilicon) {
+      act('PDA_siliconSelectPhoto');
+    } else {
+      this.setState({ selectingPhoto: true });
+    }
+  }
+
   handleSendMessage() {
     if (this.state.msg === '') return;
     const { act } = useBackend(this.context);
@@ -145,7 +161,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
       // this code shouldn't be reached if there's no chat
       if (index === msgs.length - chat!.unread_messages) {
-        filteredMessages.push(<ChatDivider topMargin={isSwitch ? 3 : 1} />);
+        filteredMessages.push(<ChatDivider mt={isSwitch ? 3 : 1} />);
       }
 
       filteredMessages.push(
@@ -157,6 +173,99 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             photoPath={message.photo_path}
           />
         </Stack.Item>
+      );
+    }
+
+    let sendingBar: JSX.Element;
+
+    if (this.state.selectingPhoto) {
+      const photos = this.props.storedPhotos!.map((photo) => (
+        <Stack.Item key={photo.uid}>
+          <Button
+            pt={1}
+            selected={this.props.selectedPhoto === photo.path}
+            onClick={() => {
+              act('PDA_selectPhoto', { uid: photo.uid });
+              this.setState({ selectingPhoto: false });
+            }}>
+            <Box as="img" src={photo.path} maxHeight={10} />
+          </Button>
+        </Stack.Item>
+      ));
+
+      sendingBar = (
+        <Section fill>
+          <Button
+            icon="arrow-left"
+            content="Back"
+            onClick={() => this.setState({ selectingPhoto: false })}
+          />
+          {photos.length > 0 ? (
+            <Section scrollableHorizontal>
+              <Stack fill>{photos}</Stack>
+            </Section>
+          ) : (
+            <Box as="span" ml={1}>
+              No pictures found
+            </Box>
+          )}
+        </Section>
+      );
+    } else {
+      sendingBar = (
+        <Section fill>
+          <Stack vertical>
+            {this.props.selectedPhoto && (
+              <Stack.Item>
+                <Button
+                  pt={1}
+                  icon="paperclip"
+                  onClick={() => act('PDA_clearPhoto')}
+                  tooltip="Remove attachment"
+                  tooltipPosition="auto-end">
+                  <Box as="img" src={this.props.selectedPhoto} />
+                </Button>
+              </Stack.Item>
+            )}
+            <Stack.Item>
+              <Stack fill align="center">
+                <Stack.Item grow={1}>
+                  <Input
+                    placeholder={`Send message to ${recp.name}...`}
+                    fluid
+                    autoFocus
+                    width="100%"
+                    justify
+                    id="input"
+                    value={msg}
+                    maxLength={1024}
+                    onInput={this.handleMessageInput}
+                    onEnter={this.handleSendMessage}
+                  />
+                </Stack.Item>
+                {(temp_msgr || chat?.can_reply) && (
+                  <>
+                    <Stack.Item>
+                      <Button
+                        tooltip="Add attachment"
+                        icon="image"
+                        onClick={this.handleSelectPicture}
+                      />
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button
+                        tooltip="Send"
+                        icon="arrow-right"
+                        onClick={this.handleSendMessage}
+                        disabled={!canSend}
+                      />
+                    </Stack.Item>
+                  </>
+                )}
+              </Stack>
+            </Stack.Item>
+          </Stack>
+        </Section>
       );
     }
 
@@ -197,34 +306,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
           </Section>
         </Stack.Item>
 
-        <Stack.Item>
-          <Section fill>
-            <Stack fill align="center">
-              <Stack.Item grow={1}>
-                <Input
-                  placeholder={`Send message to ${recp.name}...`}
-                  fluid
-                  autoFocus
-                  width="100%"
-                  justify
-                  id="input"
-                  value={msg}
-                  maxLength={1024}
-                  onInput={this.handleMessageInput}
-                  onEnter={this.handleSendMessage}
-                />
-              </Stack.Item>
-
-              <Stack.Item>
-                <Button
-                  icon="arrow-right"
-                  onClick={this.handleSendMessage}
-                  disabled={!canSend}
-                />
-              </Stack.Item>
-            </Stack>
-          </Section>
-        </Stack.Item>
+        <Stack.Item>{sendingBar}</Stack.Item>
       </Stack>
     );
   }
@@ -257,9 +339,9 @@ export const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
   );
 };
 
-const ChatDivider: SFC<{ topMargin: number }> = (props) => {
+const ChatDivider: SFC<{ mt: number }> = (props) => {
   return (
-    <Box className="UnreadDivider" m={0} mt={props.topMargin}>
+    <Box className="UnreadDivider" m={0} mt={props.mt}>
       <div />
       <span>Unread Messages</span>
       <div />

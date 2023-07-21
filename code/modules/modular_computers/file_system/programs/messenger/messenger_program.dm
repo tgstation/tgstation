@@ -1,3 +1,5 @@
+#define TEMP_IMAGE_PATH "ntos_temp_image_path.png"
+
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
 	filedesc = "Direct Messenger"
@@ -28,7 +30,7 @@
 	var/spam_mode = FALSE
 
 	/// An asssociative list of chats we have started, format: chatref -> pda_chat.
-	var/list/datum/pda_chat/saved_chats = list()
+	var/list/saved_chats = list()
 	/// Whose chatlogs we currently have open. If we are in the contacts list, this is null.
 	var/viewing_messages_of = null
 
@@ -38,17 +40,28 @@
 	var/sort_by_job = TRUE
 	/// Whether or not we're sending and receiving messages.
 	var/sending_and_receiving = TRUE
-	/// Scanned photo for sending purposes.
-	var/datum/picture/saved_image
-	/// The path for the current loaded image in rsc
-	var/photo_path
+	/// Selected photo for sending purposes.
+	var/saved_image
 	// Whether or not we're sending (or trying to send) a virus.
 	var/sending_virus = FALSE
 
 /datum/computer_file/program/messenger/on_install()
 	. = ..()
-	RegisterSignal(computer, COMSIG_MODPC_IMPRINT_UPDATED, PROC_REF(on_imprint_added))
-	RegisterSignal(computer, COMSIG_MODPC_IMPRINT_RESET, PROC_REF(on_imprint_reset))
+	RegisterSignal(computer, COMSIG_MODULAR_COMPUTER_FILE_STORE, PROC_REF(check_new_photo))
+	RegisterSignal(computer, COMSIG_MODULAR_COMPUTER_FILE_DELETE, PROC_REF(check_photo_removed))
+	RegisterSignal(computer, COMSIG_MODULAR_PDA_IMPRINT_UPDATED, PROC_REF(on_imprint_added))
+	RegisterSignal(computer, COMSIG_MODULAR_PDA_IMPRINT_RESET, PROC_REF(on_imprint_reset))
+
+/datum/computer_file/program/messenger/proc/check_new_photo(obj/item/modular_computer/sender, datum/computer_file/picture/storing_picture)
+	SIGNAL_HANDLER
+	if(!istype(storing_picture))
+		return
+	update_pictures_for_all()
+
+/datum/computer_file/program/messenger/proc/check_photo_removed(datum/computer_file/picture/photo_removed)
+	SIGNAL_HANDLER
+	if(istype(photo_removed) && saved_image == photo_removed.picture_name)
+		saved_image = null
 
 /datum/computer_file/program/messenger/proc/on_imprint_added()
 	SIGNAL_HANDLER
@@ -63,15 +76,6 @@
 		stack_trace("Attempted to qdel messenger of [computer] without qdeling computer, this will cause problems later")
 	remove_messenger(src)
 	return ..()
-
-/datum/computer_file/program/messenger/application_attackby(obj/item/attacking_item, mob/living/user)
-	if(!istype(attacking_item, /obj/item/photo))
-		return FALSE
-	var/obj/item/photo/pic = attacking_item
-	saved_image = pic.picture
-	ProcessPhoto()
-	user.balloon_alert(user, "photo uploaded")
-	return TRUE
 
 /datum/computer_file/program/messenger/proc/get_messengers()
 	var/list/dictionary = list()
@@ -91,15 +95,33 @@
 
 	return dictionary
 
-/datum/computer_file/program/messenger/proc/ProcessPhoto()
-	if(saved_image)
-		var/icon/img = saved_image.picture_image
-		var/deter_path = "tmp_msg_photo[rand(0, 99999)].png"
-		usr << browse_rsc(img, deter_path) // funny random assignment for now, i'll make an actual key later
-		photo_path = deter_path
-
 /datum/computer_file/program/messenger/proc/can_send_everyone_message()
 	return COOLDOWN_FINISHED(src, last_text) && COOLDOWN_FINISHED(src, last_text_everyone)
+
+/datum/computer_file/program/messenger/proc/get_picture_assets()
+	var/list/data = list()
+
+	for(var/datum/computer_file/picture/photo in computer.stored_files)
+		data |= photo.picture_name
+
+	if(viewing_messages_of in saved_chats)
+		var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
+		for(var/datum/pda_msg/msg in chat.messages)
+			if(isnull(msg.photo_asset_name))
+				continue
+			data |= msg.photo_asset_name
+
+	return data
+
+/datum/computer_file/program/messenger/proc/update_pictures_for_all()
+	var/list/data = get_picture_assets()
+
+	for(var/datum/tgui/window in computer.open_uis)
+		SSassets.transport.send_assets(window.user, data)
+
+/datum/computer_file/program/messenger/ui_interact(mob/user, datum/tgui/ui)
+	var/list/data = get_picture_assets()
+	SSassets.transport.send_assets(user, data)
 
 /datum/computer_file/program/messenger/ui_state(mob/user)
 	if(issilicon(user))
@@ -133,6 +155,8 @@
 			if (viewing_messages_of in saved_chats)
 				var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
 				chat.visible_in_recents = TRUE
+
+			saved_image = null
 			return TRUE
 
 		if("PDA_closeMessages")
@@ -213,7 +237,7 @@
 			if(target_ref in saved_chats)
 				target = saved_chats[target_ref]
 			else if(target_ref in GLOB.TabletMessengers)
-				target  = create_chat(target_ref)
+				target = create_chat(target_ref)
 				viewing_messages_of = REF(target)
 			else
 				return FALSE
@@ -234,14 +258,13 @@
 			if(sending_virus)
 				var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 				if(istype(disk))
-					disk.send_virus(computer, target, usr)
+					disk.send_virus(computer, target_msgr.computer, usr, params["msg"])
 					return TRUE
 
-			return send_message(usr, list(target), params["msg"])
+			return send_message(usr, params["msg"], list(target))
 
 		if("PDA_clearPhoto")
 			saved_image = null
-			photo_path = null
 			return TRUE
 
 		if("PDA_toggleVirus")
@@ -249,16 +272,30 @@
 			return TRUE
 
 		if("PDA_selectPhoto")
+			if(issilicon(usr))
+				return FALSE
+
+			var/photo_uid = text2num(params["uid"])
+
+			var/datum/computer_file/picture/selected_photo = computer.find_file_by_uid(photo_uid)
+
+			if(!istype(selected_photo))
+				return FALSE
+
+			saved_image = selected_photo.picture_name
+			return TRUE
+
+		if("PDA_siliconSelectPhoto")
 			if(!issilicon(usr))
-				return
+				return FALSE
 			var/mob/living/silicon/user = usr
 			if(!user.aicamera)
-				return
+				return FALSE
 			var/datum/picture/selected_photo = user.aicamera.selectpicture(user)
 			if(!selected_photo)
-				return
-			saved_image = selected_photo
-			ProcessPhoto()
+				return FALSE
+			SSassets.transport.register_asset(TEMP_IMAGE_PATH, selected_photo)
+			saved_image = TEMP_IMAGE_PATH
 			return TRUE
 
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
@@ -273,9 +310,9 @@
 	var/list/data = list()
 
 	var/list/chats_data = list()
-	for(var/chat_ref as anything in saved_chats)
+	for(var/chat_ref in saved_chats)
 		var/datum/pda_chat/chat = saved_chats[chat_ref]
-		var/list/chat_data = chat.get_data()
+		var/list/chat_data = chat.get_ui_data(user)
 		chats_data[chat_ref] = chat_data
 
 	var/list/messengers = get_messengers()
@@ -291,11 +328,21 @@
 	data["alert_silenced"] = alert_silenced
 	data["sending_and_receiving"] = sending_and_receiving
 	data["open_chat"] = viewing_messages_of
-	data["photo"] = photo_path
+
+	// silicons handle selecting photos a bit differently for now
+	if(!issilicon(user))
+		var/list/stored_photos = list()
+		for(var/datum/computer_file/picture/photo_file in computer.stored_files)
+			stored_photos += list(list(
+				"uid" = photo_file.uid,
+				"path" = SSassets.transport.get_asset_url(photo_file.picture_name)
+			))
+		data["stored_photos"] = stored_photos
+	data["selected_photo_path"] = !isnull(saved_image) ? SSassets.transport.get_asset_url(saved_image) : null
 	data["on_spam_cooldown"] = !can_send_everyone_message()
 
 	var/obj/item/computer_disk/virus/disk = computer.inserted_disk
-	if(disk && istype(disk))
+	if(istype(disk))
 		data["virus_attach"] = TRUE
 		data["sending_virus"] = sending_virus
 	return data
@@ -337,12 +384,12 @@
 /datum/computer_file/program/messenger/proc/create_chat(recp_ref, name, job)
 	var/datum/computer_file/program/messenger/recipient = null
 
-	if(isnull(name))
+	if(isnull(name) && isnull(job))
 		if(!(recp_ref in GLOB.TabletMessengers))
 			CRASH("tried to create a chat with a messenger that isn't registered")
 		recipient = GLOB.TabletMessengers[recp_ref]
 
-	var/datum/pda_chat/new_chat = new /datum/pda_chat(recipient)
+	var/datum/pda_chat/new_chat = new(recipient)
 
 	// this is a chat with a "fake user" (automated or rigged message)
 	if(!istype(recipient))
@@ -354,7 +401,7 @@
 	return new_chat
 
 /datum/computer_file/program/messenger/proc/find_chat_by_recp(recipient, fake_user = FALSE)
-	for(var/chat_ref as anything in saved_chats)
+	for(var/chat_ref in saved_chats)
 		var/datum/pda_chat/chat = saved_chats[chat_ref]
 		if(fake_user && chat.cached_name == recipient)
 			return chat
@@ -362,55 +409,38 @@
 			return chat
 	return null
 
-// TODO: this proc is way too large and needs to be refactored
-/// Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
-/datum/computer_file/program/messenger/proc/send_message(mob/living/sender, list/datum/pda_chat/targets, message, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
-	if(!sender.can_perform_action(computer))
-		return FALSE
-
-	if(!COOLDOWN_FINISHED(src, last_text))
-		return FALSE
-
-	if(!istype(targets) && !length(targets))
-		return FALSE
+/datum/computer_file/program/messenger/proc/sanitize_pda_msg(message, mob/sender)
+	// check message against filter
+	if(!check_pda_msg_against_filter(message, sender))
+		return null
 
 	if(mime_mode)
 		message = emoji_sanitize(message)
 
 	message = html_encode(message)
 
-	// message at this point is not html escaped
+	return message
+
+/// Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
+/datum/computer_file/program/messenger/proc/send_message(mob/living/sender, message, list/datum/pda_chat/targets, everyone = FALSE)
+	message = sanitize_pda_msg(message, sender)
+
 	if(!message)
 		return FALSE
 
-	// check for jammers
-	if(is_within_jammer_range(src))
-		// different message so people know it's a radio jammer
-		to_chat(sender, span_notice("ERROR: Network unavailable, please try again later."))
-		if(!alert_silenced)
-			playsound(computer, 'sound/machines/terminal_error.ogg', 15, TRUE)
-		return FALSE
+	var/msg_photo_name = saved_image
+	if(msg_photo_name == TEMP_IMAGE_PATH)
+		var/datum/asset_cache_item/img_asset = SSassets.cache[msg_photo_name]
+		msg_photo_name = get_next_ntos_picture_path()
+		SSassets.transport.register_asset(msg_photo_name, img_asset.resource, img_asset.hash)
 
-	// check message against filter
-	if(!check_pda_msg_against_filter(message, sender))
-		return FALSE
-
-	var/sent_prob = 0
-	if(ishuman(sender))
-		var/mob/living/carbon/human/old_person = sender
-		sent_prob = old_person.age >= 40 ? 25 : 1
-	if (computer && prob(sent_prob))
-		message += "[computer.get_messenger_ending()]"
-
-	var/datum/pda_msg/message_datum = new(message, TRUE, saved_image, photo_path, everyone)
+	var/datum/pda_msg/message_datum = new(message, TRUE, msg_photo_name, everyone)
 
 	// our sender targets
 	var/list/datum/computer_file/program/messenger/target_msgrs = list()
-	// used for logging
-	var/list/stringified_targets = list()
 
 	// filter out invalid targets
-	for(var/datum/pda_chat/target_chat in targets.Copy())
+	for(var/datum/pda_chat/target_chat as anything in targets.Copy())
 		if(!target_chat.can_reply)
 			continue
 		var/datum/computer_file/program/messenger/msgr = target_chat.recipient.resolve()
@@ -421,15 +451,55 @@
 			targets -= target_chat
 			continue
 		target_msgrs += msgr
-		stringified_targets += get_messenger_name(msgr.computer)
 
-	if(!length(target_msgrs))
+	if(send_msg_signal(sender, message_datum, target_msgrs, everyone))
+		// Log it in our logs
+		for(var/datum/pda_chat/target_chat as anything in targets)
+			target_chat.add_msg(message_datum, show_in_recents = FALSE)
+			target_chat.unread_messages = 0
+		update_pictures_for_all()
+		return TRUE
+	return FALSE
+
+/datum/computer_file/program/messenger/proc/send_rigged_message(mob/sender, message, list/datum/computer_file/program/messenger/targets, fake_name, fake_job)
+	message = sanitize_pda_msg(message, sender)
+
+	// message at this point is not html escaped
+	if(!message)
 		return FALSE
+
+	var/datum/pda_msg/rigged_message = new(message, TRUE)
+
+	return send_msg_signal(sender, rigged_message, targets, FALSE, TRUE, fake_name, fake_job)
+
+/datum/computer_file/program/messenger/proc/send_msg_signal(mob/sender, datum/pda_msg/msg, list/datum/computer_file/program/messenger/targets, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
+	if(!sender.can_perform_action(computer))
+		return FALSE
+
+	if(!COOLDOWN_FINISHED(src, last_text))
+		return FALSE
+
+	if(!length(targets))
+		return FALSE
+
+	// check for jammers
+	if(is_within_jammer_range(src) && !rigged)
+		// different message so people know it's a radio jammer
+		to_chat(sender, span_notice("ERROR: Network unavailable, please try again later."))
+		if(!alert_silenced)
+			playsound(computer, 'sound/machines/terminal_error.ogg', 15, TRUE)
+		return FALSE
+
+	// used for logging
+	var/list/stringified_targets = list()
+
+	for(var/datum/computer_file/program/messenger/msgr as anything in targets)
+		stringified_targets += get_messenger_name(msgr)
 
 	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(
 		"ref" = REF(src),
-		"message" = message_datum,
-		"targets" = target_msgrs,
+		"message" = msg,
+		"targets" = targets,
 		"rigged" = rigged,
 		"automated" = FALSE,
 	))
@@ -448,16 +518,10 @@
 			playsound(computer, 'sound/machines/terminal_error.ogg', 15, TRUE)
 		return FALSE
 
-	message = emoji_parse(message) //already sent- this just shows the sent emoji as one to the sender in the to_chat
-
-	// Log it in our logs
-	var/list/message_data = list()
-	for(var/datum/pda_chat/target_chat as anything in targets)
-		target_chat.add_msg(message_datum, show_in_recents = FALSE)
-		target_chat.unread_messages = 0
+	msg.message = emoji_parse(msg.message) //already sent- this just shows the sent emoji as one to the sender in the to_chat
 
 	// Show it to ghosts
-	var/ghost_message = span_name("[message_data["name"]] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[signal.format_target()]")]: <span class='message'>[signal.format_message()]")
+	var/ghost_message = span_name("[rigged ? "Rigged" : ""] PDA Message --> [span_name("[signal.format_target()]")]: [signal.format_message()]")
 	for(var/mob/player_mob as anything in GLOB.current_observers_list)
 		if(player_mob.client && !player_mob.client?.prefs)
 			stack_trace("[player_mob] ([player_mob.ckey]) had null prefs, which shouldn't be possible!")
@@ -467,9 +531,9 @@
 			to_chat(player_mob, "[FOLLOW_LINK(player_mob, sender)] [ghost_message]")
 
 	// Log in the talk log
-	sender.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [message_data["name"]] to [signal.format_target()]")
+	sender.log_talk(msg.message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [computer.saved_identification] to [signal.format_target()]")
 	if(rigged)
-		log_bomber(sender, "sent a rigged PDA message (Name: [message_data["name"]]. Job: [message_data["job"]]) to [english_list(stringified_targets)] [!is_special_character(sender) ? "(SENT BY NON-ANTAG)" : ""]")
+		log_bomber(sender, "sent a rigged PDA message (Name: [fake_name]. Job: [fake_job]) to [english_list(stringified_targets)] [!is_special_character(sender) ? "(SENT BY NON-ANTAG)" : ""]")
 	to_chat(sender, span_info("PDA message sent to [signal.format_target()]: [sanitize(html_decode(signal.format_message()))]"))
 
 	if (!alert_silenced)
@@ -478,7 +542,6 @@
 	COOLDOWN_START(src, last_text, 1 SECONDS)
 
 	saved_image = null
-	photo_path = null
 	return TRUE
 
 /datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/tablet_msg/signal)
@@ -535,13 +598,14 @@
 		inbound_message = emoji_parse(inbound_message)
 
 		if(L.is_literate())
-			var/photo_message = message.photo ? " (<a href='byond://?src=[REF(signal.logged)];photo=1'>Photo</a>)" : ""
+			var/photo_message = message.photo_asset_name ? " (Photo Attached)" : ""
 			to_chat(L, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][sender_name][hrefend], </b>[sanitize(html_decode(inbound_message))][photo_message] [reply]"))
 
 	if (should_ring)
 		computer.ring(ringtone)
 
 	SStgui.update_uis(computer)
+	update_pictures_for_all()
 
 /// topic call that answers to people pressing "(Reply)" in chat
 /datum/computer_file/program/messenger/Topic(href, href_list)
@@ -549,9 +613,9 @@
 	if(QDELETED(src))
 		return
 	// send an activation message and open the messenger
-	if(!((computer.enabled || computer.turn_on(usr, open_ui = FALSE)) && (computer.active_program == src || computer.open_program(usr, src, open_ui = FALSE))))
+	if(!(!(computer.enabled || computer.turn_on(usr, open_ui = FALSE)) && !(computer.active_program == src || computer.open_program(usr, src, open_ui = FALSE))))
 		return
-	if(!href_list["close"] && usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
+	if(usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
 		switch(href_list["choice"])
 			if("Message")
 				quick_reply_prompt(usr, locate(href_list["target"]) in saved_chats)
@@ -559,4 +623,7 @@
 				if(HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
 					var/obj/item/modular_computer/pda/comp = computer
 					comp.explode(usr, from_message_menu = TRUE)
-					return
+				else
+					to_chat(usr, span_notice("ERROR: Recipient does not exist."))
+
+#undef TEMP_IMAGE_PATH

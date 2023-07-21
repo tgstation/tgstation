@@ -221,17 +221,6 @@
 	if(param_photo)
 		picture = param_photo
 
-/datum/data_tablet_msg/Topic(href,href_list)
-	..()
-	if(href_list["photo"])
-		var/mob/M = usr
-		M << browse_rsc(picture.picture_image, "pda_photo.png")
-		M << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>PDA Photo</title></head>" \
-		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
-		+ "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "</body></html>", "window=pdaphoto;size=[picture.psize_x]x[picture.psize_y];can-close=true")
-		onclose(M, "pdaphoto")
-
 /datum/data_rc_msg
 	var/rec_dpt = "Unspecified"  // receiving department
 	var/send_dpt = "Unspecified"  // sending department

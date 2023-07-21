@@ -7,6 +7,11 @@ export type NtMessage = {
   everyone: BooleanLike;
 };
 
+export type NtPicture = {
+  uid: number;
+  path: string;
+};
+
 export type NtMessenger = {
   name: string;
   job: string;
