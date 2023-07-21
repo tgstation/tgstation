@@ -1668,6 +1668,12 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 
+/datum/techweb_node/mod_advanced_engineering/New()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA)) //we'll really need the rad protection modsuit module
+		starting_node = TRUE
+
+	return ..()
+
 /datum/techweb_node/mod_medical
 	id = "mod_medical"
 	display_name = "Medical Modular Suits"

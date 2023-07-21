@@ -42,6 +42,8 @@ Ask Mothblocks if they're around
 
 /// The minimum exposure time before uranium structures can irradiate
 #define URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME (3 SECONDS)
+/// The minimum exposure time before the radioactive nebula can irradiate
+#define NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME (10 SECONDS)
 
 /// Return values of [proc/get_perceived_radiation_danger]
 // If you change these, update /datum/looping_sound/geiger as well.

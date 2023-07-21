@@ -32,9 +32,22 @@
 			if((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 
-			if(methods & (INJECT|INGEST|PATCH))
+			if(methods & INGEST)
+				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_STOMACH))
+					continue
+
 				exposed_mob.ForceContractDisease(strain)
-			else if((methods & (TOUCH|VAPOR)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+			else if(methods & (INJECT|PATCH))
+				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_HEART))
+					continue
+
+				exposed_mob.ForceContractDisease(strain)
+			else if((methods & VAPOR) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_LUNGS))
+					continue
+
+				exposed_mob.ContactContractDisease(strain)
+			else if((methods & TOUCH) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
 				exposed_mob.ContactContractDisease(strain)
 
 	if(iscarbon(exposed_mob))
