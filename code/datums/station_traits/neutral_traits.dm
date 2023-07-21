@@ -331,10 +331,8 @@
 	name = "Forested"
 	trait_type = STATION_TRAIT_NEUTRAL
 	trait_to_give = STATION_TRAIT_FORESTED
-	weight = 4
+	trait_flags = STATION_TRAIT_PLANETARY
+	weight = 6
 	show_in_report = TRUE
 	report_message = "There sure are a lot of trees out there."
-	force = TRUE
 
-	//space = FALSE
-	//planetary = TRUE
