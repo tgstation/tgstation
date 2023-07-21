@@ -8133,10 +8133,7 @@
 	dir = 5
 	},
 /obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Psychology Office";
-	name = "Psychology Office Fax Machine"
-	},
+/obj/machinery/fax/psychology,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/psychology)
 "bVW" = (
@@ -14887,10 +14884,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table/reinforced,
-/obj/machinery/fax{
-	fax_name = "Research Director's Office";
-	name = "Research Director's Fax Machine"
-	},
+/obj/machinery/fax/rd,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
@@ -16725,10 +16719,7 @@
 "edS" = (
 /obj/machinery/firealarm/directional/south,
 /obj/structure/table/reinforced,
-/obj/machinery/fax{
-	fax_name = "Chief Engineer's Office";
-	name = "Chief Engineer's Fax Machine"
-	},
+/obj/machinery/fax/ce,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
@@ -18498,10 +18489,7 @@
 /area/station/hallway/secondary/entry)
 "eCA" = (
 /obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Detective's Office";
-	name = "Detective's Fax Machine"
-	},
+/obj/machinery/fax/detective,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
@@ -21488,10 +21476,7 @@
 	c_tag = "Cargo - Office";
 	name = "cargo camera"
 	},
-/obj/machinery/fax{
-	fax_name = "Cargo Office";
-	name = "Cargo Office Fax Machine"
-	},
+/obj/machinery/fax/cargo,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
@@ -25936,10 +25921,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/machinery/fax{
-	fax_name = "Engineering Lobby";
-	name = "Engineering Lobby Fax Machine"
-	},
+/obj/machinery/fax/engineering,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "gsh" = (
@@ -28580,10 +28562,7 @@
 /area/station/engineering/atmos/hfr_room)
 "haq" = (
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Quartermaster's Office";
-	name = "Quartermaster's Fax Machine"
-	},
+/obj/machinery/fax/qm,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
 	},
@@ -37806,10 +37785,7 @@
 /area/station/service/library/lounge)
 "jst" = (
 /obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Head of Security's Office";
-	name = "Head of Security's Fax Machine"
-	},
+/obj/machinery/fax/hos,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
@@ -44346,10 +44322,7 @@
 "lbt" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster/directional/east,
-/obj/machinery/fax{
-	fax_name = "Head of Personnel's Office";
-	name = "Head of Personnel's Fax Machine"
-	},
+/obj/machinery/fax/hop,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "lbu" = (
@@ -51076,10 +51049,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Service Hallway";
-	name = "Service Fax Machine"
-	},
+/obj/machinery/fax/service,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
 "mKc" = (
@@ -51199,10 +51169,7 @@
 /area/station/hallway/secondary/entry)
 "mMF" = (
 /obj/structure/table/reinforced,
-/obj/machinery/fax{
-	fax_name = "Security Office";
-	name = "Security Office Fax Machine"
-	},
+/obj/machinery/fax/security,
 /obj/machinery/status_display/ai/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -73631,10 +73598,7 @@
 /area/station/command/heads_quarters/ce)
 "swj" = (
 /obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Captain's Office";
-	name = "Captain's Fax Machine"
-	},
+/obj/machinery/fax/captain,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "swn" = (
@@ -85032,10 +84996,7 @@
 "vmM" = (
 /obj/structure/table/wood,
 /obj/item/radio/intercom/directional/west,
-/obj/machinery/fax{
-	fax_name = "Law Office";
-	name = "Law Office Fax Machine"
-	},
+/obj/machinery/fax/law,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "vmP" = (
@@ -87930,9 +87891,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Research Division";
-	name = "Research Division Fax Machine";
+/obj/machinery/fax/science{
 	pixel_x = 1
 	},
 /turf/open/floor/iron/white,
@@ -89566,10 +89525,7 @@
 	dir = 8
 	},
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/fax{
-	fax_name = "Medical";
-	name = "Medical Fax Machine"
-	},
+/obj/machinery/fax/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
 "wtB" = (

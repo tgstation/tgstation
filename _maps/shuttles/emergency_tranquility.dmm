@@ -2074,10 +2074,7 @@
 /area/shuttle/escape)
 "LG" = (
 /obj/structure/table/reinforced,
-/obj/machinery/fax{
-	fax_name = "Captain's Office";
-	name = "Captain's Fax Machine"
-	},
+/obj/machinery/fax/captain,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "Mk" = (

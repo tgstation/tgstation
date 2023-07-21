@@ -11917,7 +11917,7 @@
 /area/station/security/prison/mess)
 "eGT" = (
 /obj/structure/table,
-/obj/machinery/fax/med{
+/obj/machinery/fax/medical{
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/siding/blue{
@@ -13710,7 +13710,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 10
 	},
-/obj/machinery/fax/engi{
+/obj/machinery/fax/engineering{
 	pixel_x = 8;
 	pixel_y = 9
 	},
@@ -44923,7 +44923,7 @@
 /area/station/commons/fitness/recreation)
 "qhV" = (
 /obj/structure/table,
-/obj/machinery/fax/sec{
+/obj/machinery/fax/security{
 	pixel_y = 6
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -61067,7 +61067,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/machinery/fax/det{
+/obj/machinery/fax/detective{
 	pixel_y = 1
 	},
 /turf/open/floor/wood,

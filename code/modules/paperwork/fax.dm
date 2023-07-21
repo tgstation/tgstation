@@ -529,11 +529,11 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	fax_name = "Head of Security's Office"
 	name = "Head of Security's Fax Machine"
 
-/obj/machinery/fax/sec
+/obj/machinery/fax/security
 	fax_name = "Security Office"
 	name = "Security Office Fax Machine"
 
-/obj/machinery/fax/det
+/obj/machinery/fax/detective
 	fax_name = "Detective's Office"
 	name = "Detective's Fax Machine"
 
@@ -545,15 +545,19 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	name = "Chief Medical Officer's Fax Machine"
 	fax_name = "Chief Medical Officer's Office"
 
-/obj/machinery/fax/med
+/obj/machinery/fax/medical
 	fax_name = "Medical"
 	name = "Medical Fax Machine"
+
+/obj/machinery/fax/psychology
+	fax_name = "Psychology Office"
+	name = "Psychology Office Fax Machine"
 
 /obj/machinery/fax/ce
 	fax_name = "Chief Engineer's Office"
 	name = "Chief Engineer's Fax Machine"
 
-/obj/machinery/fax/engi
+/obj/machinery/fax/engineering
 	fax_name = "Engineering Lobby"
 	name = "Engineering Lobby Fax Machine"
 
@@ -561,7 +565,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	fax_name = "Research Director's Office"
 	name = "Research Director's Fax Machine"
 
-/obj/machinery/fax/sci
+/obj/machinery/fax/science
 	fax_name = "Research Division"
 	name = "Research Division Fax Machine"
 

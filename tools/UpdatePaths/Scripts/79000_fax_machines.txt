@@ -1,0 +1,16 @@
+/obj/machinery/fax{fax_name = "Service Hallway";name = "Service Fax Machine"} : /obj/machinery/fax/service{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Psychology Office";name = "Psychology Office Fax Machine"} : /obj/machinery/fax/psychology{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{=fax_name = "Chief Medical Officer's Office";=name = "Chief Medical Officer's Fax Machine"} : /obj/machinery/fax/cmo{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Research Director's Office";name = "Research Director's Fax Machine"} : /obj/machinery/fax/rd{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Chief Engineer's Office";name = "Chief Engineer's Fax Machine"} : /obj/machinery/fax/ce{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Detective's Office";name = "Detective's Fax Machine"} : /obj/machinery/fax/detective{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Cargo Office";name = "Cargo Office Fax Machine"} : /obj/machinery/fax/cargo{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Engineering Lobby";name = "Engineering Lobby Fax Machine"} : /obj/machinery/fax/engineering{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Quartermaster's Office";name = "Quartermaster's Fax Machine"} : /obj/machinery/fax/qm{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Head of Security's Office";name = "Head of Security's Fax Machine"} : /obj/machinery/fax/hos{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Head of Personnel's Office";name = "Head of Personnel's Fax Machine"} : /obj/machinery/fax/hop{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Security Office";name = "Security Office Fax Machine"} : /obj/machinery/fax/security{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Captain's Office";name = "Captain's Fax Machine"} : /obj/machinery/fax/captain{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Law Office";name = "Law Office Fax Machine"} : /obj/machinery/fax/law{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Research Division";name = "Research Division Fax Machine";} : /obj/machinery/fax/science{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Medical";name = "Medical Fax Machine"} : /obj/machinery/fax/medical{@OLD;fax_name=@SKIP;name=@SKIP}
