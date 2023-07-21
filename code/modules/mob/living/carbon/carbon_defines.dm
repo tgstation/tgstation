@@ -119,4 +119,6 @@
 	/// A bitfield of "bodytypes", updated by /obj/item/bodypart/proc/synchronize_bodytypes()
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 
+	var/is_leaning = FALSE
+
 	COOLDOWN_DECLARE(bleeding_message_cd)
