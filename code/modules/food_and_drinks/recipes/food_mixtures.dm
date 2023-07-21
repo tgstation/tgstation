@@ -47,7 +47,7 @@
 	var/resulting_reagent_purity
 
 /datum/chemical_reaction/food/pre_reaction_other_checks(datum/reagents/holder)
-	resulting_reagent_purity = holder.get_average_purity()
+	resulting_reagent_purity = holder.get_average_purity(/datum/reagent/consumable)
 	return TRUE
 
 /datum/chemical_reaction/food/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)

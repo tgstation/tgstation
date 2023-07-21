@@ -227,7 +227,7 @@ Behavior that's still missing from this component that original food items had t
 		examine_list += span_warning("You find this meal inedible.")
 
 	if(owner.reagents.total_volume > 0)
-		var/purity = owner.reagents.get_average_purity()
+		var/purity = owner.reagents.get_average_purity(/datum/reagent/consumable)
 		switch(purity)
 			if(0 to 0.2)
 				examine_list += span_warning("It is made of terrible ingredients so the effect is short lived...")
@@ -513,7 +513,7 @@ Behavior that's still missing from this component that original food items had t
 	if(!isnull(buff))
 		var/mob/living/living_eater = eater
 		var/atom/owner = parent
-		var/timeout_mod = owner.reagents.get_average_purity() * 2 // buff duration is 100% at average purity of 50%
+		var/timeout_mod = owner.reagents.get_average_purity(/datum/reagent/consumable) * 2 // buff duration is 100% at average purity of 50%
 		var/strength = recipe_complexity
 		living_eater.apply_status_effect(buff, timeout_mod, strength)
 
@@ -554,7 +554,7 @@ Behavior that's still missing from this component that original food items had t
 	else if(food_quality > 0)
 		food_quality = min(food_quality, FOOD_QUALITY_TOP)
 		var/atom/owner = parent
-		var/timeout_mod = owner.reagents.get_average_purity() * 2 // mood event duration is 100% at average purity of 50%
+		var/timeout_mod = owner.reagents.get_average_purity(/datum/reagent/consumable) * 2 // mood event duration is 100% at average purity of 50%
 		var/event = GLOB.food_quality_events[food_quality]
 		gourmand.add_mood_event("quality_food", event, timeout_mod)
 		gourmand.adjust_disgust(-5 + -2 * food_quality * fraction)
