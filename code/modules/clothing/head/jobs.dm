@@ -385,12 +385,12 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#a52f29#F2F2F2"
-	armor_type = /datum/armor/beret_sec
+	armor_type = /datum/armor/cosmetic_sec
 	strip_delay = 60
 	dog_fashion = null
 	flags_1 = NONE
 
-/datum/armor/beret_sec
+/datum/armor/cosmetic_sec
 	melee = 30
 	bullet = 25
 	laser = 25
