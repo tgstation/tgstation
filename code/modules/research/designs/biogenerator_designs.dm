@@ -7,7 +7,7 @@
 	id = "milk"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.4)
-	make_reagent = /datum/reagent/consumable/milk/synthetic
+	make_reagent = /datum/reagent/consumable/milk
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/soymilk
@@ -15,7 +15,7 @@
 	id = "soymilk"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.4)
-	make_reagent = /datum/reagent/consumable/soymilk/synthetic
+	make_reagent = /datum/reagent/consumable/soymilk
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/ethanol
@@ -23,7 +23,7 @@
 	id = "ethanol"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
-	make_reagent = /datum/reagent/consumable/ethanol/synthetic
+	make_reagent = /datum/reagent/consumable/ethanol
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/cream
@@ -31,7 +31,7 @@
 	id = "cream"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
-	make_reagent = /datum/reagent/consumable/cream/synthetic
+	make_reagent = /datum/reagent/consumable/cream
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/black_pepper
@@ -39,7 +39,7 @@
 	id = "black_pepper"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
-	make_reagent = /datum/reagent/consumable/blackpepper/synthetic
+	make_reagent = /datum/reagent/consumable/blackpepper
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/enzyme
@@ -47,7 +47,7 @@
 	id = "enzyme"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
-	make_reagent = /datum/reagent/consumable/enzyme/synthetic
+	make_reagent = /datum/reagent/consumable/enzyme
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/flour
@@ -55,7 +55,7 @@
 	id = "flour_sack"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
-	make_reagent = /datum/reagent/consumable/flour/synthetic
+	make_reagent = /datum/reagent/consumable/flour
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/sugar
@@ -63,7 +63,7 @@
 	id = "sugar"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 0.6)
-	make_reagent = /datum/reagent/consumable/sugar/synthetic
+	make_reagent = /datum/reagent/consumable/sugar
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
 /datum/design/monkey_cube

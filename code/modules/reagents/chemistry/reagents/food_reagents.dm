@@ -267,15 +267,12 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	taste_mult = 1.5 // stop sugar drowning out other flavours
-	nutriment_factor = 10
+	nutriment_factor = 2
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 200 // Hyperglycaemic shock
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/sugar
-
-/datum/reagent/consumable/sugar/synthetic
-	creation_purity = 0.3
 
 // Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
 /datum/reagent/consumable/sugar/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -481,9 +478,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/peppermill
 
-/datum/reagent/consumable/blackpepper/synthetic
-	creation_purity = 0.3
-
 /datum/reagent/consumable/coco
 	name = "Coco Powder"
 	description = "A fatty, bitter paste made from coco beans."
@@ -565,9 +559,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/enzyme
 
-/datum/reagent/consumable/enzyme/synthetic
-	creation_purity = 0.3
-
 /datum/reagent/consumable/dry_ramen
 	name = "Dry Ramen"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
@@ -628,9 +619,6 @@
 	reagentdecal = locate() in exposed_turf //Might have merged with flour already there.
 	if(reagentdecal)
 		reagentdecal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
-
-/datum/reagent/consumable/flour/synthetic
-	creation_purity = 0.3
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"

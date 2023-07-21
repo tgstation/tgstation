@@ -62,7 +62,7 @@
 /obj/item/udder
 	name = "udder"
 	///typepath of reagent produced by the udder
-	var/reagent_produced_typepath = /datum/reagent/consumable/milk/whole
+	var/reagent_produced_typepath = /datum/reagent/consumable/milk
 	///how much the udder holds
 	var/size = 50
 	///mob that has the udder component
@@ -92,7 +92,7 @@
  * also useful for changing initial amounts in reagent holder (cows start with milk, gutlunches start empty)
  */
 /obj/item/udder/proc/initial_conditions()
-	reagents.add_reagent(reagent_produced_typepath, 20)
+	reagents.add_reagent(reagent_produced_typepath, 20, starting_reagent_purity = 1)
 	START_PROCESSING(SSobj, src)
 
 /**
@@ -100,7 +100,7 @@
  */
 /obj/item/udder/proc/generate()
 	if(prob(5))
-		reagents.add_reagent(reagent_produced_typepath, rand(5, 10))
+		reagents.add_reagent(reagent_produced_typepath, rand(5, 10), starting_reagent_purity = 1)
 		if(on_generate_callback)
 			on_generate_callback.Invoke(reagents.total_volume, reagents.maximum_volume)
 
@@ -161,7 +161,7 @@
 /obj/item/udder/gutlunch/generate()
 	var/made_something = FALSE
 	if(prob(60))
-		reagents.add_reagent(/datum/reagent/consumable/cream, rand(2, 5))
+		reagents.add_reagent(/datum/reagent/consumable/cream, rand(2, 5), starting_reagent_purity = 1)
 		made_something = TRUE
 	if(prob(45))
 		reagents.add_reagent(/datum/reagent/medicine/salglu_solution, rand(2,5))
