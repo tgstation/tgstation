@@ -1,6 +1,6 @@
 /obj/item/gun/ballistic/automatic/pistol/paco //Sec pistol, Paco from CEV Eris.
-	name = "FS HG .35 Auto \"Paco\""
-	desc = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard .35 and high capacity magazines."
+	name = "\improper FS HG .35 Auto \"Paco\""
+	desc = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 and high capacity magazines."
 	icon = 'monkestation/icons/obj/guns/paco.dmi'
 	icon_state = "paco"
 	inhand_icon_state = "paco"
@@ -25,7 +25,7 @@
 	projectile_type = /obj/projectile/bullet/c35
 
 /obj/item/ammo_box/magazine/m35
-	name = "\improper Paco pistol magazine (.35)"
+	name = "\improper \"Paco\" pistol magazine (.35)"
 	desc = "A .35 pistol magazine for the Paco handgun. Consult your head of security before use."
 	icon = 'monkestation/icons/obj/guns/ammo.dmi'
 	icon_state = "35"
@@ -45,10 +45,19 @@
 	name = ".35 bullet"
 	damage = 15
 
+/obj/item/ammo_box/c35
+	name = "ammo box (.35)"
+	desc = "An ammo box with .35 ammo for the \"Paco\" handgun. This one has a heart on it, d'awww."
+	icon = 'monkestation/icons/obj/guns/ammo.dmi'
+	icon_state = "35_ammobox"
+	ammo_type = /obj/item/ammo_casing/c35
+	max_ammo = 40
+	w_class = WEIGHT_CLASS_NORMAL
+
 //Rubber ammo for Paco.
 /obj/item/ammo_box/magazine/m35/rubber
-	name = "\improper Paco pistol magazine (.35 Rubber)"
-	desc = "A .35 rubber pistol magazine for the Paco handgun. Loaded with rubber ammo for assisting in arrests."
+	name = "\improper \"Paco\" pistol magazine (.35 Rubber)"
+	desc = "A .35 rubber pistol magazine for the \"Paco\" handgun. Loaded with rubber ammo for assisting in arrests."
 	icon_state = "35r"
 	base_icon_state = "35r"
 	ammo_type = /obj/item/ammo_casing/c35/rubber
@@ -64,3 +73,10 @@
 	stamina = 35 //10 less than disabler
 	sharpness = NONE
 	embedding = null
+
+/obj/item/ammo_box/c35/rubber
+	name = "ammo box (.35 Rubber)"
+	desc = "An ammo box with .35 rubber ammo for the \"Paco\" handgun."
+	icon_state = "35r_ammobox"
+	ammo_type = /obj/item/ammo_casing/c35/rubber
+	max_ammo = 40
