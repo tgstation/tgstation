@@ -382,6 +382,13 @@
 		/obj/item/skillchip/light_remover,
 	)
 
+/datum/quirk/lightless/add(client/client_source)
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
+
+/datum/quirk/lightless/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
+	quirk_holder.clear_mood_event("lightless")
+
 /datum/quirk/lightless/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 
