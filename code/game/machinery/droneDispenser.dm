@@ -141,11 +141,11 @@
 	. = ..()
 	var/material_requirement_string = "It needs "
 	if (iron_cost > 0)
-		material_requirement_string += "[iron_cost] iron "
+		material_requirement_string += "[iron_cost / SHEET_MATERIAL_AMOUNT] iron sheets "
 		if (glass_cost > 0)
 			material_requirement_string += "and "
 	if (glass_cost > 0)
-		material_requirement_string += "[glass_cost] glass "
+		material_requirement_string += "[glass_cost / SHEET_MATERIAL_AMOUNT] glass sheets "
 	if (iron_cost > 0 || glass_cost > 0)
 		material_requirement_string += "to produce one drone shell."
 		. += span_notice(material_requirement_string)
