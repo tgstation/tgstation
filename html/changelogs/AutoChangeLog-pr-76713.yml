@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "turbine does not runtime when its input or output turf is destroyed while its running"
-  - qol: "add warning examine for rotor when its parts are not connected"
