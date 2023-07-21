@@ -9,5 +9,8 @@
 /// Only run on space stations
 #define STATION_TRAIT_SPACE_BOUND (1<<2)
 
+/// Not restricted by space or planet, can always just happen
+#define STATION_TRAIT_UNRESTRICED STATION_TRAIT_PLANETARY | STATION_TRAIT_SPACE_BOUND
+
 /// The data file that future station traits forced by an admin are stored in
 #define FUTURE_STATION_TRAITS_FILE "data/future_station_traits.json"

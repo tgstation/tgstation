@@ -19,7 +19,7 @@
 	///What traits are incompatible with this one?
 	var/blacklist
 	///Extra flags for station traits such as it being abstract, planetary or space only
-	var/trait_flags = STATION_TRAIT_SPACE_BOUND | STATION_TRAIT_PLANETARY
+	var/trait_flags = STATION_TRAIT_UNRESTRICED
 	/// Whether or not this trait can be reverted by an admin
 	var/can_revert = TRUE
 	/// The ID that we look for in dynamic.json. Not synced with 'name' because I can already see this go wrong
