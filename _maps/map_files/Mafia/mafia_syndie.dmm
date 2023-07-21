@@ -73,19 +73,10 @@
 "r" = (
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/mafia)
-"s" = (
-/obj/effect/turf_decal/syndicateemblem/top/left,
-/turf/open/floor/mineral/plastitanium/red,
-/area/centcom/mafia)
-"t" = (
-/obj/effect/turf_decal/syndicateemblem/top/middle,
-/turf/open/floor/circuit/red,
-/area/centcom/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
 /obj/structure/chair,
-/obj/effect/turf_decal/syndicateemblem/middle/middle,
 /turf/open/floor/circuit/red,
 /area/centcom/mafia)
 "v" = (
@@ -160,29 +151,11 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
-"O" = (
-/obj/effect/turf_decal/syndicateemblem/bottom/right,
-/turf/open/floor/mineral/plastitanium/red,
-/area/centcom/mafia)
 "Q" = (
-/obj/effect/turf_decal/syndicateemblem/middle/left,
 /turf/open/floor/circuit/red,
 /area/centcom/mafia)
 "S" = (
-/obj/effect/turf_decal/syndicateemblem/top/right,
 /turf/open/floor/mineral/plastitanium/red,
-/area/centcom/mafia)
-"T" = (
-/obj/effect/turf_decal/syndicateemblem/middle/right,
-/turf/open/floor/circuit/red,
-/area/centcom/mafia)
-"W" = (
-/obj/effect/turf_decal/syndicateemblem/bottom/left,
-/turf/open/floor/mineral/plastitanium/red,
-/area/centcom/mafia)
-"Y" = (
-/obj/effect/turf_decal/syndicateemblem/bottom/middle,
-/turf/open/floor/circuit/red,
 /area/centcom/mafia)
 
 (1,1,1) = {"
@@ -446,9 +419,9 @@ r
 r
 y
 p
-s
+S
 Q
-W
+S
 p
 q
 o
@@ -471,9 +444,9 @@ p
 w
 p
 p
-t
+Q
 u
-Y
+Q
 p
 p
 w
@@ -497,8 +470,8 @@ o
 z
 p
 S
-T
-O
+Q
+S
 p
 E
 r
