@@ -23,10 +23,9 @@
 	owner.add_movespeed_modifier(modifier, update = TRUE)
 	return ..()
 
-/datum/status_effect/food/trait/be_replaced()
+/datum/status_effect/food/haste/be_replaced()
 	owner.remove_movespeed_modifier(modifier, update = TRUE)
 	return ..()
-
 
 /datum/status_effect/food/haste/on_remove()
 	owner.remove_movespeed_modifier(modifier, update = TRUE)
