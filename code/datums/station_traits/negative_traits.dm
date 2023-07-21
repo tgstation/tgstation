@@ -267,7 +267,7 @@
 	name = "Ionic Stormfront"
 	report_message = "An ionic stormfront is passing over your station's system. Expect an increased likelihood of ion storms afflicting your station's silicon units."
 	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = NONE
+	trait_flags = ~STATION_TRAIT_ABSTRACT
 	weight = 3
 	event_control_path = /datum/round_event_control/ion_storm
 	weight_multiplier = 2
@@ -276,7 +276,7 @@
 	name = "Radiation Stormfront"
 	report_message = "A radioactive stormfront is passing through your station's system. Expect an increased likelihood of radiation storms passing over your station, as well the potential for multiple radiation storms to occur during your shift."
 	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = NONE
+	trait_flags = ~STATION_TRAIT_ABSTRACT
 	weight = 2
 	event_control_path = /datum/round_event_control/radiation_storm
 	weight_multiplier = 1.5
@@ -286,7 +286,7 @@
 	name = "Dust Stormfront"
 	report_message = "The space around your station is clouded by heavy pockets of space dust. Expect an increased likelyhood of space dust storms damaging the station hull."
 	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = NONE
+	trait_flags = ~STATION_TRAIT_ABSTRACT
 	weight = 2
 	event_control_path = /datum/round_event_control/meteor_wave/dust_storm
 	weight_multiplier = 2
@@ -418,8 +418,6 @@
 	weight = 0
 
 	show_in_report = TRUE
-	can_revert = FALSE //we're too invasive to properly revert. if you feel inspired, im sure you can make it work
-	planetary = FALSE //there's no space so the idea doesnt really work here
 
 	///The color of the "nebula" we send to the players client
 	var/nebula_color
@@ -514,13 +512,14 @@
 
 	nebula.add_shielder(shielder, shielding_proc)
 
+/// Name of the glow we use for the radioation effect outside
 #define GLOW_NEBULA "glow_nebula"
 
 ///The station will be inside a radioactive nebula! Space is radioactive and the station needs to start setting up nebula shielding
 /datum/station_trait/nebula/hostile/radiation
 	name = "Radioactive Nebula"
 	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = NONE
+	trait_flags = STATION_TRAIT_SPACE_BOUND //maybe when we can LOOK UP
 	weight = 1
 	show_in_report = TRUE
 	report_message = "This station is located inside a radioactive nebula. Setting up nebula shielding is top-priority."
@@ -586,6 +585,7 @@
 	enterer.AddElement(/datum/element/radioactive, range = 0, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
 	//Don't actually make EVERY. SINGLE. THING. radioactive, just make them glow so people arent killed instantly
 	if(!SSradiation.can_irradiate_basic(enterer))
+		//outline clashes too much with other outlines and creates pretty ugly lines
 		enterer.add_filter(GLOW_NEBULA, 2, list("type" = "drop_shadow", "color" = nebula_radglow, "size" = 2))
 
 ///Called when an atom leaves space, so we can remove the radiation effect
@@ -615,13 +615,12 @@
 			)
 
 			addtimer(CALLBACK(src, PROC_REF(send_care_package)), 10 SECONDS)
+		return
 
 	//No storms, shielding is good!
-	else if(effect_strength <= 0)
-		var/datum/weather/weather = SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula)
-		if(weather)
-			weather.wind_down()
-		COOLDOWN_RESET(src, send_care_package_at)
+	var/datum/weather/weather = SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula)
+	weather?.wind_down()
+	COOLDOWN_RESET(src, send_care_package_at)
 
 ///Send a care package because it is not going well
 /datum/station_trait/nebula/hostile/radiation/proc/send_care_package()

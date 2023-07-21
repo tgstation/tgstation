@@ -18,14 +18,10 @@
 	var/trait_to_give
 	///What traits are incompatible with this one?
 	var/blacklist
-	///Extra flags for station traits such as it being abstract
-	var/trait_flags
+	///Extra flags for station traits such as it being abstract, planetary or space only
+	var/trait_flags = STATION_TRAIT_SPACE_BOUND | STATION_TRAIT_PLANETARY
 	/// Whether or not this trait can be reverted by an admin
 	var/can_revert = TRUE
-	/// Can we be selected on planet stations?
-	var/planetary = TRUE
-	/// Can we be selected on space stations?
-	var/space = TRUE
 	/// The ID that we look for in dynamic.json. Not synced with 'name' because I can already see this go wrong
 	var/dynamic_threat_id
 	/// If ran during dynamic, do we reduce the total threat? Will be overriden by config if set

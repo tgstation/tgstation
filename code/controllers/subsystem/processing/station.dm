@@ -59,10 +59,10 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		if(initial(trait_typepath.trait_flags) & STATION_TRAIT_ABSTRACT)
 			continue //Dont add abstract ones to it
 
-		if(!initial(trait_typepath.space) && !SSmapping.is_planetary()) //we dont do space but we're in space
+		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_PLANETARY) && SSmapping.is_planetary()) // we're on a planet but we can't do planet ;_;
 			continue
 
-		if(!initial(trait_typepath.planetary) && SSmapping.is_planetary()) //we dont do planets but we're on a planet
+		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_SPACE_BOUND) && !SSmapping.is_planetary()) //we're in space but we can't do space ;_;
 			continue
 
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
