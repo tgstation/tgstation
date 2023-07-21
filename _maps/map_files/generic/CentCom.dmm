@@ -4309,7 +4309,8 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	desc = "WARNING, Nanotrasen declines any responsibility for clown related injury, enter at your own risk"
+	desc = "WARNING, Nanotrasen declines any responsibility for clown related injury, enter at your own risk";
+	name = "Clown Hole (DANGER)"
 	},
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/fore)
@@ -4845,6 +4846,9 @@
 /area/centcom/central_command_areas/fore)
 "tj" = (
 /obj/item/sbeacondrop/clownbomb,
+/mob/living/simple_animal/hostile/retaliate/clown{
+	limb_destroyer = 1
+	},
 /turf/open/ballpit,
 /area/centcom/central_command_areas/fore)
 "tl" = (
@@ -9609,6 +9613,9 @@
 /area/centcom/central_command_areas/admin)
 "OZ" = (
 /obj/machinery/light/directional/west,
+/mob/living/simple_animal/hostile/retaliate/clown{
+	limb_destroyer = 1
+	},
 /turf/open/ballpit,
 /area/centcom/central_command_areas/fore)
 "Pc" = (
@@ -55212,7 +55219,7 @@ kg
 Im
 Ey
 aE
-xK
+Jr
 tj
 xK
 qU
@@ -55470,7 +55477,7 @@ Ck
 Zk
 Vx
 Jr
-xK
+Jr
 Jr
 ez
 OL
