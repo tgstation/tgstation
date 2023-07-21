@@ -1845,11 +1845,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
-"ov" = (
-/obj/structure/table,
-/obj/item/reagent_containers/condiment/sugar,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
 "oV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -1876,11 +1871,6 @@
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
-"qr" = (
-/obj/structure/table,
-/obj/item/knife/butcher,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
 "qx" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -1914,10 +1904,6 @@
 "sH" = (
 /obj/structure/table,
 /obj/item/storage/box/shipping,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
-"sY" = (
-/obj/machinery/oven/range,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "tE" = (
@@ -2056,11 +2042,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/science)
-"Bb" = (
-/obj/structure/table,
-/obj/item/food/bread/plain,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
 "BD" = (
 /obj/structure/closet/secure_closet/chief_medical{
 	locked = 0
@@ -2174,12 +2155,6 @@
 /obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/command/bridge)
-"Gg" = (
-/obj/structure/table,
-/obj/item/food/dough,
-/obj/item/food/dough,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
 "HW" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2237,13 +2212,6 @@
 /obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"Kb" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
 "Kx" = (
 /obj/structure/table,
 /obj/item/analyzer,
@@ -2267,21 +2235,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"Mc" = (
-/obj/structure/table,
-/obj/item/food/grown/onion,
-/obj/item/food/cheese/wheel,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
 "Mh" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"My" = (
-/obj/structure/table,
-/obj/machinery/processor,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
 "ME" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -2574,11 +2531,6 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
-"YM" = (
-/obj/structure/table,
-/obj/machinery/microwave,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
 "Zd" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -7232,7 +7184,7 @@ bE
 cS
 dc
 dC
-Kb
+dC
 dC
 dC
 eW
@@ -7324,7 +7276,7 @@ bN
 da
 fK
 dJ
-sY
+dJ
 dJ
 dJ
 dJ
@@ -7416,7 +7368,7 @@ bE
 cS
 fx
 dq
-YM
+dJ
 dJ
 dJ
 dI
@@ -7508,7 +7460,7 @@ Vg
 cS
 fy
 dr
-My
+dJ
 dJ
 dJ
 dI
@@ -7600,7 +7552,7 @@ Mh
 uO
 fz
 ds
-Gg
+dJ
 dJ
 dJ
 dI
@@ -7692,7 +7644,7 @@ bE
 cV
 fA
 dt
-Bb
+dJ
 dD
 dJ
 dI
@@ -7784,7 +7736,7 @@ bE
 cV
 fC
 du
-ov
+dJ
 dJ
 dJ
 dI
@@ -7876,7 +7828,7 @@ by
 by
 fD
 dv
-qr
+dJ
 dJ
 dJ
 dI
@@ -7968,7 +7920,7 @@ cJ
 by
 fE
 dw
-Mc
+dJ
 dJ
 dJ
 dI
