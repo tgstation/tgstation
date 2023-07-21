@@ -1,10 +1,14 @@
 // melbert todo infinite loops
 /datum/attack_style/unarmed/generic_damage/limb_based/boxing
 	attack_type = STAMINA
+	attack_effect = ATTACK_EFFECT_PUNCH
 	martial_arts_compatible = FALSE
 
 /datum/attack_style/unarmed/generic_damage/limb_based/boxing/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
 	return pick("left hook", "right hook", "straight punch")
+
+/datum/attack_style/unarmed/generic_damage/limb_based/boxing/select_damage(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with)
+	return hitting_with.unarmed_damage_low + rand(5, 8)
 
 /datum/attack_style/unarmed/generic_damage/limb_based/boxing/actually_apply_damage(
 	mob/living/attacker,

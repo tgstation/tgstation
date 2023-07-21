@@ -6,7 +6,7 @@
 	cd = 0 SECONDS // snowflaked, only set when we actually collide with a guy
 
 /datum/attack_style/unarmed/help/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
-	attacked.changeNext_move(CLICK_CD_MELEE)
+	attacker.changeNext_move(CLICK_CD_MELEE)
 	if(smacked.check_block(attacker, 0, "[attacker]'s touch", UNARMED_ATTACK, 0, STAMINA))
 		return ATTACK_SWING_BLOCKED
 

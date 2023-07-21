@@ -39,16 +39,16 @@
 /obj/item/shield/describe_blocking()
 	var/list/descriptions = list()
 	if(can_block_flags & LEAP_ATTACK)
-		descriptions += "[source.p_They()] can flawlessly block leaps and tackles."
+		descriptions += "[p_They()] can flawlessly block leaps and tackles."
 	if(can_block_flags & PROJECTILE_ATTACK)
-		descriptions += "[source.p_They()] can block about [HITS_TO_CRIT((25 * source.blocking_ability * 1.33))] projectiles before having guard broken."
+		descriptions += "[p_They()] can block about [HITS_TO_CRIT((25 * blocking_ability * 1.33))] projectiles before having guard broken."
 	if(can_block_flags & THROWN_PROJECTILE_ATTACK)
-		descriptions += "[source.p_They()] can block about [HITS_TO_CRIT((25 * source.blocking_ability * 0.66))] thrown items before having guard broken."
+		descriptions += "[p_They()] can block about [HITS_TO_CRIT((25 * blocking_ability * 0.66))] thrown items before having guard broken."
 
 	var/other_flags = can_block_flags & ~(LEAP_ATTACK|PROJECTILE_ATTACK|THROWN_PROJECTILE_ATTACK)
 	if(other_flags != NONE)
 		var/remaining_blockables = english_list(bitfield_to_list(other_flags, BLOCKABLE_FLAGS), and_text = " or ")
-		descriptions += "Otherwise, can block about [HITS_TO_CRIT((25 * source.blocking_ability * 0.66))] [remaining_blockables]."
+		descriptions += "Otherwise, can block about [HITS_TO_CRIT((25 * blocking_ability * 0.66))] [remaining_blockables]."
 
 	if(transparent)
 		descriptions += "Cannot block laser or energy projectiles."
@@ -314,8 +314,8 @@
 	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
 
 /obj/item/shield/energy/describe_blocking()
-	var/all_blockables = english_list(bitfield_to_list(source.can_block_flags, BLOCKABLE_FLAGS), and_text = " or ")
-	return "[source.p_They()] [source.p_are()] able to flawlessly block all laser and energy [all_blockables], \
+	var/all_blockables = english_list(bitfield_to_list(can_block_flags, BLOCKABLE_FLAGS), and_text = " or ")
+	return "[p_They()] [p_are()] able to flawlessly block all laser and energy [all_blockables], \
 		But cannot block anything else. Must be active to block."
 
 /obj/item/shield/energy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)

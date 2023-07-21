@@ -511,7 +511,7 @@
 		return ..()
 
 /obj/item/toy/sword/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
-	return HAS_TRAIT(src, TRAIT_ACTIVE) ? blocking_ability : -1
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? blocking_ability : -1
 
 /*
  * Foam armblade

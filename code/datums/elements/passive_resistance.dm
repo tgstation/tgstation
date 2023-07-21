@@ -15,7 +15,7 @@
 	if(!required_slots || !isnum(damage_resistance))
 		return ELEMENT_INCOMPATIBLE
 
- 	src.required_slots = required_slots
+	src.required_slots = required_slots
 	src.damage_resistance = damage_resistance
 	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, PROC_REF(item_equipped))
 	RegisterSignal(target, COMSIG_ITEM_DROPPED, PROC_REF(item_dropped))
@@ -68,7 +68,7 @@
 	if(!ishuman(owner))
 		return FALSE
 	for(var/datum/status_effect/passive_resistance/other_resistance in owner.status_effects)
-		if(other_resistance.source == new_source)
+		if(other_resistance.source == source)
 			return FALSE
 
 	var/mob/living/carbon/human/holyman = owner
@@ -78,7 +78,7 @@
 /datum/status_effect/passive_resistance/on_remove()
 	if(QDELETED(owner))
 		return
-	var/mob/living/carbon/human/holyman = user
+	var/mob/living/carbon/human/holyman = owner
 	holyman.physiology.damage_resistance -= resistance_amount
 
 /datum/status_effect/passive_resistance/before_remove(source)

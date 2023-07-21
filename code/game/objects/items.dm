@@ -461,15 +461,15 @@
 
 /// Describes how this item blocks
 /obj/item/proc/describe_blocking()
-	var/all_blockables = english_list(bitfield_to_list(source.can_block_flags, BLOCKABLE_FLAGS), and_text = " or ")
+	var/all_blockables = english_list(bitfield_to_list(can_block_flags, BLOCKABLE_FLAGS), and_text = " or ")
 	// This doesn't accurately report final block ability (taking into account hit modifiers). Should be changed in the future
-	switch(source.blocking_ability)
+	switch(blocking_ability)
 		if(-1)
-			return "[source.p_They()] cannot be used to block attacks."
+			return "[p_They()] cannot be used to block attacks."
 		if(0)
-			return "[source.p_They()] can flawlessly block [all_blockables]."
+			return "[p_They()] can flawlessly block [all_blockables]."
 		else
-			return "[source.p_They()] can block about [HITS_TO_CRIT((25 * source.blocking_ability))] [all_blockables] before having guard broken."
+			return "[p_They()] can block about [HITS_TO_CRIT((25 * blocking_ability))] [all_blockables] before having guard broken."
 
 /obj/item/examine_more(mob/user)
 	. = ..()
