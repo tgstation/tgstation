@@ -832,7 +832,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
                   }
                 />
               )}
-              {item.complexity !== undefined && (
+              {!!item.complexity && (
                 <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
                   Complexity: {item.complexity}
                 </Box>
