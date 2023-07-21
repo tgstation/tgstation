@@ -23,7 +23,7 @@
 ///For being a goddamn monkey with a job
 #define PAY_MODIFIER_MONKEY 1.5
 ///For hazard pay (such as having the Spacer quirk on a planet-based station)
-#define PAY_MODIFIER_HAZARD 1.2
+#define PAY_MODIFIER_HAZARD 1.25
 
 //How many credits a player is charged if they print something from a departmental lathe they shouldn't have access to.
 #define LATHE_TAX 10
