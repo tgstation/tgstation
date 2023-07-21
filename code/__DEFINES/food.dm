@@ -145,22 +145,19 @@ GLOBAL_LIST_INIT(food_buffs, list(
 	),
 	FOOD_COMPLEXITY_2 = list(
 		/datum/status_effect/food/haste = 1,
-		/datum/status_effect/food/trait/jolly = 2,
+		/datum/status_effect/food/trait/jolly = 1,
 	),
 	FOOD_COMPLEXITY_3 = list(
 		/datum/status_effect/food/haste = 1,
 		/datum/status_effect/food/trait/jolly = 2,
-		/datum/status_effect/food/trait/noslip = 3,
 	),
 	FOOD_COMPLEXITY_4 = list(
 		/datum/status_effect/food/haste = 1,
-		/datum/status_effect/food/trait/noslip = 2,
-		/datum/status_effect/food/trait/shockimmune = 3,
+		/datum/status_effect/food/trait/shockimmune = 1,
 	),
 	FOOD_COMPLEXITY_5 = list(
 		/datum/status_effect/food/haste = 1,
 		/datum/status_effect/food/trait/shockimmune = 2,
-		/datum/status_effect/food/trait/stunimmune = 3,
 	),
 ))
 
