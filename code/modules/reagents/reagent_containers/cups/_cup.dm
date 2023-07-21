@@ -488,9 +488,9 @@
 					user.adjustStaminaLoss(40)
 					switch(picked_option)
 						if("Juice") //prioritize juicing
-							if(grinded.juice_results)
+							if(grinded.juice_typepath)
 								grinded.on_juice()
-								reagents.add_reagent_list(grinded.juice_results)
+								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 								to_chat(user, span_notice("You juice [grinded] into a fine liquid."))
 								QDEL_NULL(grinded)
 								return
@@ -513,7 +513,7 @@
 								return
 							else
 								grinded.on_juice()
-								reagents.add_reagent_list(grinded.juice_results)
+								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 								to_chat(user, span_notice("You try to grind [grinded] but it almost instantly turns into a fine liquid."))
 								QDEL_NULL(grinded)
 								return
@@ -527,7 +527,7 @@
 	if(grinded)
 		to_chat(user, span_warning("There is something inside already!"))
 		return
-	if(I.juice_results || I.grind_results)
+	if(I.juice_typepath || I.grind_results)
 		I.forceMove(src)
 		grinded = I
 		return

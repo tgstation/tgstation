@@ -281,9 +281,8 @@
 			T.reagents.add_reagent(rid, amount, data, added_purity = reagent_purity)
 
 		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
-		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_results)
+		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_typepath)
 			grown_edible.on_juice()
-			grown_edible.reagents.add_reagent_list(grown_edible.juice_results)
 
 		/// The number of nutriments we have inside of our plant, for use in our heating / cooling genes
 		var/num_nutriment = T.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)

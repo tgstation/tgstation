@@ -43,11 +43,10 @@
 	if(!isitem(AM))
 		return
 	var/obj/item/I = AM
-	if(I.juice_results || I.grind_results)
+	if(I.juice_typepath || I.grind_results)
 		use_power(active_power_usage)
-		if(I.juice_results)
+		if(I.juice_typepath)
 			I.on_juice()
-			reagents.add_reagent_list(I.juice_results)
 			if(I.reagents)
 				I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = src)
 			qdel(I)

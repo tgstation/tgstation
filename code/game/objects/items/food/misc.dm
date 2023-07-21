@@ -12,7 +12,7 @@
 	tastes = list("watermelon" = 1)
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
-	juice_results = list(/datum/reagent/consumable/watermelonjuice = 5)
+	juice_typepath = /datum/reagent/consumable/watermelonjuice
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/hugemushroomslice
@@ -301,7 +301,7 @@
 	name = "pineapple slice"
 	desc = "A sliced piece of juicy pineapple."
 	icon_state = "pineapple_slice"
-	juice_results = list(/datum/reagent/consumable/pineapplejuice = 3)
+	juice_typepath = /datum/reagent/consumable/pineapplejuice
 	tastes = list("pineapple" = 1)
 	foodtypes = FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_TINY
@@ -476,7 +476,7 @@
 		/datum/reagent/medicine/antihol = 2,
 	)
 	tastes = list("pickle" = 1, "spices" = 1, "salt water" = 2)
-	juice_results = list(/datum/reagent/consumable/pickle = 5)
+	juice_typepath = /datum/reagent/consumable/pickle
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 

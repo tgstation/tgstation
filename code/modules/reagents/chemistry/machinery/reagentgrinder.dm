@@ -192,7 +192,7 @@
 			to_chat(user, span_notice("You fill [src] to the brim."))
 		return TRUE
 
-	if(!I.grind_results && !I.juice_results)
+	if(!I.grind_results && !I.juice_typepath)
 		if(user.combat_mode)
 			return ..()
 		else
@@ -304,7 +304,7 @@
 /obj/machinery/reagentgrinder/proc/stop_operating()
 	operating = FALSE
 
-/obj/machinery/reagentgrinder/proc/juice()
+/obj/machinery/reagentgrinder/proc/juice(mob/user)
 	power_change()
 	if(!beaker || machine_stat & (NOPOWER|BROKEN) || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
@@ -313,14 +313,15 @@
 		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 		var/obj/item/I = i
-		if(I.juice_results)
-			juice_item(I)
+		if(I.juice_typepath)
+			juice_item(I, user)
 
-/obj/machinery/reagentgrinder/proc/juice_item(obj/item/I) //Juicing results can be found in respective object definitions
+/obj/machinery/reagentgrinder/proc/juice_item(obj/item/I, mob/user) //Juicing results can be found in respective object definitions
 	if(I.on_juice(src) == -1)
 		to_chat(usr, span_danger("[src] shorts out as it tries to juice up [I], and transfers it back to storage."))
 		return
-	beaker.reagents.add_reagent_list(I.juice_results)
+	if(I.reagents)
+		I.reagents.trans_to(beaker, I.reagents.total_volume, transfered_by = user)
 	remove_object(I)
 
 /obj/machinery/reagentgrinder/proc/grind(mob/user)

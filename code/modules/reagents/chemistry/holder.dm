@@ -396,13 +396,26 @@
 	return TRUE
 
 /// Turn one reagent into another, preserving volume, temp, purity, ph
-/datum/reagents/proc/convert_reagent(source_reagent_typepath, target_reagent_typepath)
-	var/datum/reagent/source_reagent = get_reagent(source_reagent_typepath)
-	var/reagent_amount = source_reagent.volume
-	var/reagent_purity = source_reagent.purity
-	var/reagent_ph = source_reagent.ph
-	remove_reagent(source_reagent_typepath, reagent_amount)
-	add_reagent(target_reagent_typepath, reagent_amount, reagtemp = chem_temp, added_purity = reagent_purity, added_ph = reagent_ph)
+/datum/reagents/proc/convert_reagent(source_reagent_typepath, target_reagent_typepath, multiplier = 1, include_source_subtypes = FALSE)
+	var/reagent_amount
+	var/reagent_purity
+	var/reagent_ph
+	if(include_source_subtypes)
+		reagent_ph = ph
+		var/weighted_purity
+		for(var/datum/reagent/reagent as anything in reagent_list)
+			if(reagent.type in typecacheof(source_reagent_typepath))
+				weighted_purity += reagent.volume * reagent.purity
+				reagent_amount += reagent.volume
+				remove_reagent(reagent.type, reagent.volume)
+		reagent_purity = weighted_purity / reagent_amount
+	else
+		var/datum/reagent/source_reagent = get_reagent(source_reagent_typepath)
+		reagent_amount = source_reagent.volume
+		reagent_purity = source_reagent.purity
+		reagent_ph = source_reagent.ph
+		remove_reagent(source_reagent_typepath, reagent_amount)
+	add_reagent(target_reagent_typepath, reagent_amount * multiplier, reagtemp = chem_temp, added_purity = reagent_purity, added_ph = reagent_ph)
 
 //Converts the creation_purity to purity
 /datum/reagents/proc/uncache_creation_purity(id)

@@ -23,7 +23,7 @@
 	icon_state = "korta_nut"
 	foodtypes = NUTS
 	grind_results = list(/datum/reagent/consumable/korta_flour = 0)
-	juice_results = list(/datum/reagent/consumable/korta_milk = 0)
+	juice_typepath = /datum/reagent/consumable/korta_milk
 	tastes = list("peppery heat" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/kortara
 
@@ -47,6 +47,6 @@
 	desc = "A sweet treat lizards love to eat."
 	icon_state = "korta_nut"
 	grind_results = list(/datum/reagent/consumable/korta_flour = 0)
-	juice_results = list(/datum/reagent/consumable/korta_milk = 0, /datum/reagent/consumable/korta_nectar = 0)
+	juice_typepath = /datum/reagent/consumable/korta_nectar
 	tastes = list("peppery sweet" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/kortara

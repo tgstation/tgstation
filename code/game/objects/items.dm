@@ -207,8 +207,8 @@
 
 	///Grinder var:A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/grind_results
-	//Grinder var:A reagent list containing blah blah... but when JUICED in a grinder!
-	var/list/juice_results
+	///Grinder var:A typepath of a reagent the nutriments are converted into when the item is juiced.
+	var/juice_typepath
 
 	var/canMouseDown = FALSE
 
@@ -933,6 +933,8 @@
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_GRIND)
 
 /obj/item/proc/on_juice()
+	if(ispath(juice_typepath, /datum/reagent))
+		reagents.convert_reagent(/datum/reagent/consumable/nutriment, juice_typepath, include_source_subtypes = TRUE)
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_JUICE)
 
 /obj/item/proc/set_force_string()

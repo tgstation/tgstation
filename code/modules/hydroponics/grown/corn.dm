@@ -25,7 +25,7 @@
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	grind_results = list(/datum/reagent/consumable/cornmeal = 0)
-	juice_results = list(/datum/reagent/consumable/corn_starch = 0)
+	juice_typepath = /datum/reagent/consumable/corn_starch
 	tastes = list("corn" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/whiskey
 
