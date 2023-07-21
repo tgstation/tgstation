@@ -320,6 +320,10 @@
 	if(I.on_juice(src) == -1)
 		to_chat(usr, span_danger("[src] shorts out as it tries to juice up [I], and transfers it back to storage."))
 		return
+	var/avg_nutriment_factor = I.reagents.get_average_nutriment_factor()
+	I.reagents.convert_reagent(/datum/reagent/consumable, I.juice_typepath, include_source_subtypes = TRUE)
+	var/datum/reagent/consumable/juice = I.reagents.get_reagent(I.juice_typepath)
+	juice.nutriment_factor = avg_nutriment_factor
 	if(I.reagents)
 		I.reagents.trans_to(beaker, I.reagents.total_volume, transfered_by = user)
 	remove_object(I)

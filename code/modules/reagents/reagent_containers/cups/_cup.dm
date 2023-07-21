@@ -490,6 +490,10 @@
 						if("Juice") //prioritize juicing
 							if(grinded.juice_typepath)
 								grinded.on_juice()
+								var/avg_nutriment_factor = I.reagents.get_average_nutriment_factor()
+								I.reagents.convert_reagent(/datum/reagent/consumable, I.juice_typepath, include_source_subtypes = TRUE)
+								var/datum/reagent/consumable/juice = I.reagents.get_reagent(I.juice_typepath)
+								juice.nutriment_factor = avg_nutriment_factor
 								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 								to_chat(user, span_notice("You juice [grinded] into a fine liquid."))
 								QDEL_NULL(grinded)
@@ -513,6 +517,10 @@
 								return
 							else
 								grinded.on_juice()
+								var/avg_nutriment_factor = I.reagents.get_average_nutriment_factor()
+								I.reagents.convert_reagent(/datum/reagent/consumable, I.juice_typepath, include_source_subtypes = TRUE)
+								var/datum/reagent/consumable/juice = I.reagents.get_reagent(I.juice_typepath)
+								juice.nutriment_factor = avg_nutriment_factor
 								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 								to_chat(user, span_notice("You try to grind [grinded] but it almost instantly turns into a fine liquid."))
 								QDEL_NULL(grinded)

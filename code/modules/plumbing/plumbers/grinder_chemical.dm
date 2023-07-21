@@ -43,17 +43,17 @@
 	if(!isitem(AM))
 		return
 	var/obj/item/I = AM
-	if(I.juice_typepath || I.grind_results)
+	if(I.grind_results || I.juice_typepath)
 		use_power(active_power_usage)
-		if(I.juice_typepath)
+		if(I.grind_results)
+			I.on_grind()
+			reagents.add_reagent_list(I.grind_results)
+		else if (I.juice_typepath)
 			I.on_juice()
-			if(I.reagents)
-				I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = src)
-			qdel(I)
-			return
-		I.on_grind()
-		reagents.add_reagent_list(I.grind_results)
+			var/avg_nutriment_factor = I.reagents.get_average_nutriment_factor()
+			I.reagents.convert_reagent(/datum/reagent/consumable, I.juice_typepath, include_source_subtypes = TRUE)
+			var/datum/reagent/consumable/juice = I.reagents.get_reagent(I.juice_typepath)
+			juice.nutriment_factor = avg_nutriment_factor
 		if(I.reagents)
 			I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = src)
 		qdel(I)
-

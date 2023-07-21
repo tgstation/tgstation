@@ -207,6 +207,8 @@
 
 	///Grinder var:A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/grind_results
+	///A reagent the nutriments are converted into when the item is juiced.
+	var/datum/reagent/consumable/juice_typepath
 
 	var/canMouseDown = FALSE
 
