@@ -5,8 +5,6 @@
 	icon_state = "miningradio"
 	desc = "A weather radio designed for use in inhospitable environments. Gives audible warnings when storms approach. Has access to cargo channel."
 	freqlock = RADIO_FREQENCY_LOCKED
-	light_power = .5
-	light_range = .6
 
 /obj/item/radio/weather_monitor/update_overlays()
 	. = ..()
