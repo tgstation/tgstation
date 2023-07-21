@@ -18,7 +18,7 @@
 
 	var/holds_minerals = FALSE
 	/// What materials do we accept and process out of boulders? Removing iron from an iron/glass boulder would leave a boulder with glass.
-	var/list/processed_materials = list()
+	var/list/processable_materials = list()
 
 	/// Silo link to it's materials list.
 	var/datum/component/remote_materials/silo_materials
@@ -27,34 +27,92 @@
 /obj/machinery/bouldertech/Initialize(mapload)
 	. = ..()
 	if(holds_minerals)
-		AddComponent(/datum/component/material_container, processed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+		AddComponent(/datum/component/material_container, processable_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
 		silo_materials = AddComponent(/datum/component/remote_materials, "orm", mapload, mat_container_flags=BREAKDOWN_FLAGS_ORM)
+
+/obj/machinery/bouldertech/attackby(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), attacking_item))
+		return
+
+	if(default_pry_open(attacking_item, close_after_pry = TRUE, closed_density = FALSE))
+		return
+
+	if(default_deconstruction_crowbar(attacking_item))
+		return
+
+	if(holds_minerals && istype(attacking_item, /obj/item/boulder))
+		var/obj/item/boulder/my_boulder = attacking_item
+		accept_boulder(my_boulder)
+		visible_message(span_warning("[my_boulder] is accepted into \the [src]"))
+		breakdown_boulder(my_boulder)
+		return FALSE
+
+
+/obj/machinery/bouldertech/deconstruct(disassembled)
+	. = ..()
+	if(holds_minerals)
+		qdel(silo_materials)
+	if(contents.len)
+		for(var/obj/item/boulder/boulder in contents)
+			forceMove(boulder, loc)
 
 /obj/machinery/bouldertech/proc/breakdown_boulder(obj/item/boulder/chosen_boulder)
 	if(!chosen_boulder)
 		return FALSE
-
 	if(!chosen_boulder.custom_materials)
 		qdel(chosen_boulder)
+		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
-
 	//here we loop through the boulder's ores
 	if(!silo_materials)
 		return FALSE
 
 	var/list/remaining_ores = list()
 	for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
-		if(!is_type_in_list(possible_mat, processed_materials))
-			remaining_ores += possible_mat
-			custom_materials -= possible_mat
-	if(!chosen_boulder.custom_materials)
-		return FALSE
+		if(!is_type_in_list(possible_mat, processable_materials))
+			remaining_ores.Insert(remaining_ores.len, possible_mat)
+			remaining_ores[remaining_ores.len] = chosen_boulder.custom_materials[possible_mat] //Move over mineral quantity quantity
+			possible_mat = null
+	// if(!chosen_boulder.custom_materials)
+	// 	return FALSE
 
 	silo_materials.mat_container.insert_item(chosen_boulder, refining_efficiency, breakdown_flags = BREAKDOWN_FLAGS_ORM)
-	playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	var/obj/item/boulder/new_rock = new (drop_location())
-	new_rock.set_custom_materials(remaining_ores)
+	balloon_alert_to_viewers("Boulder processed!")
+	// playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE) //Maybe look for an industrial sound here instead?
+	if(!remaining_ores.len)
+		qdel(chosen_boulder)
+		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		return TRUE
 
+	var/obj/item/boulder/new_rock = new (contents)
+	new_rock.set_custom_materials(remaining_ores)
+	remove_boulder(new_rock)
+
+/obj/machinery/bouldertech/proc/accept_boulder(obj/item/boulder/new_boulder)
+	if(!new_boulder)
+		return FALSE
+	if(boulders_held >= contents.len) //Full already
+		return FALSE
+	if(!new_boulder.custom_materials) //Shouldn't happen, but just in case.
+		qdel(new_boulder)
+		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		return FALSE
+	new_boulder.forceMove(contents)
+
+/obj/machinery/bouldertech/proc/remove_boulder(obj/item/boulder/specific_boulder)
+	if(!contents.len)
+		return FALSE
+	var/obj/item/possible_boulder = specific_boulder
+	if(!possible_boulder)
+		possible_boulder = pick(contents)
+	if(!istype(possible_boulder, /obj/item/boulder))
+		return FALSE
+	if(!possible_boulder.custom_materials)
+		qdel(possible_boulder)
+		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		return FALSE
+	possible_boulder.forceMove(drop_location())
 
 
 /obj/machinery/bouldertech/brm
@@ -94,15 +152,16 @@
 	desc = "B-S for short. Accept boulders and refines metallic ores into sheets. Can be upgraded with stock parts or through gas inputs."
 	icon_state = "furnace"
 	holds_minerals = TRUE
-
-/obj/machinery/bouldertech/smelter/attackby(obj/item/attacking_item, mob/user, params)
-	. = ..()
-	if(istype(attacking_item , /obj/item/boulder))
-		var/obj/item/boulder/my_boulder = attacking_item
-		my_boulder.forceMove(contents)
-		visible_message(span_warning("[my_boulder] is smelted into metals?!"))
-		breakdown_boulder(my_boulder)
-		return FALSE
+	processable_materials = list(
+		/datum/material/iron,
+		/datum/material/titanium,
+		/datum/material/silver,
+		/datum/material/gold,
+		/datum/material/uranium,
+		/datum/material/mythril,
+		/datum/material/adamantine,
+		/datum/material/runite,
+	)
 
 
 /obj/machinery/bouldertech/refinery
@@ -110,6 +169,14 @@
 	desc = "B-R for short. Accepts boulders and refines non-metallic ores into sheets. Can be upgraded with stock parts or through chemical inputs."
 	icon_state = "stacker"
 	holds_minerals = TRUE
+	processable_materials = list(
+		/datum/material/glass,
+		/datum/material/plasma,
+		/datum/material/diamond,
+		/datum/material/bluespace,
+		/datum/material/bananium,
+		/datum/material/plastic,
+	)
 
 /obj/machinery/bouldertech/refinery/Initialize(mapload)
 	. = ..()
@@ -128,4 +195,26 @@
 	boulders_held = matter_bin_stack
 
 
+///Beacon to launch a new mining setup when activated. For testing and speed!
+/obj/item/boulder_beacon
+	name = "boulder beacon"
+	desc = "N.T. approved boulder beacon, toss it down and you will have a full bouldertech mining station."
+	icon = 'icons/obj/machines/floor.dmi'
+	icon_state = "floor_beacon"
+	var/uses = 3
 
+/obj/item/boulder_beacon/attack_self()
+	loc.visible_message(span_warning("\The [src] begins to beep loudly!"))
+	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 1 SECONDS)
+
+/obj/item/boulder_beacon/proc/launch_payload()
+	playsound(src, SFX_SPARKS, 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	switch(uses)
+		if(3)
+			new /obj/machinery/bouldertech/brm(drop_location())
+		if(2)
+			new /obj/machinery/bouldertech/refinery(drop_location())
+		if(1)
+			new /obj/machinery/bouldertech/smelter(drop_location())
+			qdel(src)
+	uses--
