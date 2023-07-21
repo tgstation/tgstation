@@ -43,7 +43,6 @@ Behavior that's still missing from this component that original food items had t
 
 /datum/component/edible/Initialize(
 	list/initial_reagents,
-	reagent_purity = 0.5,
 	food_flags = NONE,
 	foodtypes = NONE,
 	volume = 50,
@@ -55,6 +54,7 @@ Behavior that's still missing from this component that original food items had t
 	datum/callback/after_eat,
 	datum/callback/on_consume,
 	datum/callback/check_liked,
+	reagent_purity = 0.5,
 )
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE

@@ -84,7 +84,6 @@
 /obj/item/food/proc/make_edible()
 	AddComponent(/datum/component/edible,\
 		initial_reagents = food_reagents,\
-		reagent_purity = starting_reagent_purity,\
 		food_flags = food_flags,\
 		foodtypes = foodtypes,\
 		volume = max_volume,\
@@ -93,6 +92,7 @@
 		eatverbs = eatverbs,\
 		bite_consumption = bite_consumption,\
 		junkiness = junkiness,\
+		reagent_purity = starting_reagent_purity,\
 	)
 
 ///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
