@@ -894,3 +894,9 @@
       vents to siphon air with no pressure regulation'
   vinylspiders:
   - bugfix: fixes gravity generators causing CI failures from overriding a signal
+2023-07-21:
+  Blockaboo:
+  - bugfix: Tin man no longer causes you to drop all of your organs.
+  JohnFulpWillard:
+  - bugfix: '[Birdshot] Xenos can no longer immediately destroy the shield wall generator
+      to break out.'
