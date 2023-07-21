@@ -506,8 +506,8 @@ Behavior that's still missing from this component that original food items had t
 	if(recipe_complexity == 0)
 		return
 	var/obj/item/food/food = parent
-	if(!isnull(food.crafed_food_buff))
-		buff = food.crafed_food_buff
+	if(!isnull(food.crafted_food_buff))
+		buff = food.crafted_food_buff
 	else
 		buff = pick_weight(GLOB.food_buffs[recipe_complexity])
 	if(!isnull(buff))

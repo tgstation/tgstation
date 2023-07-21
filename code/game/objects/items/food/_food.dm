@@ -53,7 +53,7 @@
 	///How exquisite the meal is. Applicable to crafted food, increasing its quality. Spans from 0 to 5.
 	var/crafting_complexity = 0
 	///Buff given when a hand-crafted version of this item is consumed. Randomized according to crafting_complexity if not assigned.
-	var/datum/status_effect/food/crafed_food_buff = null
+	var/datum/status_effect/food/crafted_food_buff = null
 
 /obj/item/food/New(loc, starting_reagent_purity, no_base_reagents = FALSE, ...)
 	src.starting_reagent_purity = starting_reagent_purity

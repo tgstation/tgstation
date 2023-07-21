@@ -934,7 +934,7 @@
 
 /obj/item/proc/on_juice()
 	if(ispath(juice_typepath, /datum/reagent))
-		reagents.convert_reagent(/datum/reagent/consumable/nutriment, juice_typepath, include_source_subtypes = TRUE)
+		reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_JUICE)
 
 /obj/item/proc/set_force_string()
