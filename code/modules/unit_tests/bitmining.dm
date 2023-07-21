@@ -81,8 +81,8 @@
 	server.stop_domain()
 	TEST_ASSERT_NULL(server.generated_domain, "QServer should force stop a domain even with occupants")
 
-/// Tests the netchair's ability to enter and exit quantum space
-/datum/unit_test/netchair_connection/Run()
+/// Tests the netchair's ability to buckle in and set refs
+/datum/unit_test/netchair_buckle/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	var/obj/structure/netchair/chair = allocate(/obj/structure/netchair, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
@@ -106,46 +106,103 @@
 	var/mob/living/labrat_resolved = chair.occupant_ref.resolve()
 	TEST_ASSERT_EQUAL(labrat, labrat_resolved, "Netchair did not set occupant_ref correctly")
 
+/// Tests the netchair's ability to disconnect
+/datum/unit_test/nerchair_disconnect/Run()
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
+	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	var/obj/structure/netchair/chair = allocate(/obj/structure/netchair, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	var/datum/weakref/server_ref = WEAKREF(server)
+	var/datum/weakref/labrat_ref = WEAKREF(labrat)
+
+	labrat.mind_initialize()
+	labrat.mock_client = new()
+	labrat.mind.key = "fake_mind"
+	labrat.key = "fake_mind" // Original body gets a fake mind
+	var/datum/mind/real_mind = WEAKREF(labrat.mind)
+
+	chair.find_server()
+	TEST_ASSERT_NOTNULL(chair.server_ref, "Sanity: Netchair did not set server_ref")
+
+	chair.server_ref = null // We can use this to see if the disconnect was successful
+	chair.disconnect_occupant(labrat.mind)
+	TEST_ASSERT_NULL(chair.server_ref, "Should've prevented disconnect with no occupant")
+
+	var/datum/mind/wrong_mind = new("wrong_mind") // 'another player'
+	chair.occupant_mind_ref = real_mind
+	chair.occupant_ref = labrat_ref
+	chair.disconnect_occupant(wrong_mind)
+	TEST_ASSERT_NULL(chair.server_ref, "Should've prevented disconnect with wrong mind destination")
+
+	var/mob/living/occupant = chair.occupant_ref.resolve()
+	chair.disconnect_occupant(labrat.mind)
+	TEST_ASSERT_EQUAL(chair.server_ref, server_ref, "Should disconnect with CORRECT mind dest")
+	TEST_ASSERT_EQUAL(occupant.get_organ_loss(ORGAN_SLOT_BRAIN), 0, "Should not have taken brain damage on disconnect")
+	TEST_ASSERT_NOTNULL(chair.occupant_ref, "Should NOT clear occupant_ref, unbuckle only")
+	TEST_ASSERT_NULL(chair.occupant_mind_ref, "Should've cleared occupant_mind_ref")
+
+	/// Testing force disconn
+	chair.server_ref = null
+	chair.occupant_mind_ref = real_mind
+	chair.occupant_ref = labrat_ref
+	chair.disconnect_occupant(labrat.mind , forced = TRUE)
+	TEST_ASSERT_NOTNULL(chair.server_ref, "Sanity: Chair didn't set server")
+	TEST_ASSERT_EQUAL(occupant.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Should've taken brain damage on force disconn")
+
 /// Tests the connection between avatar and pilot
 /datum/unit_test/avatar_connection/Run()
 	var/obj/structure/netchair/chair = allocate(/obj/structure/netchair)
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/target = allocate(/mob/living/carbon/human/consistent)
+
 	labrat.mind_initialize()
 	labrat.mock_client = new()
 	labrat.mind.key = "test_key"
 
-	var/datum/mind/initial_mind = labrat.mind
-	labrat.mind.initial_avatar_connection(labrat, target, chair)
+	var/datum/weakref/labrat_ref = WEAKREF(labrat)
+	var/datum/weakref/initial_mind = labrat.mind
+	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
+	chair.occupant_mind_ref = labrat_mind_ref
+	chair.occupant_ref = labrat_ref
+
+	labrat.mind.initial_avatar_connection(labrat, target, chair, server)
 	TEST_ASSERT_NOTNULL(target.mind, "Couldn't transfer mind to target")
 	TEST_ASSERT_EQUAL(target.mind, initial_mind, "New mind is different from original")
 	TEST_ASSERT_NOTNULL(target.mind.pilot_ref, "Could not set avatar_ref")
 	TEST_ASSERT_NOTNULL(target.mind.netchair_ref, "Could not set netchair_ref")
 
 	var/mob/living/carbon/human/labrat_resolved = target.mind.pilot_ref.resolve()
-	TEST_ASSERT_EQUAL(labrat, labrat_resolved, "Wrong avatar_ref")
+	TEST_ASSERT_EQUAL(labrat, labrat_resolved, "Wrong pilot ref")
 
 	var/obj/structure/netchair/connected_chair = target.mind.netchair_ref.resolve()
-	TEST_ASSERT_EQUAL(connected_chair, chair, "Wrong netchair_ref")
+	TEST_ASSERT_EQUAL(connected_chair, chair, "Wrong netchair ref")
 
 	target.apply_damage(10, damagetype = BURN, def_zone = BODY_ZONE_HEAD, blocked = 0, forced = TRUE)
 	TEST_ASSERT_EQUAL(labrat.getFireLoss(), 10, "Damage was not transferred to pilot")
 	TEST_ASSERT_NOTNULL(locate(/obj/item/bodypart/head) in labrat.get_damaged_bodyparts(burn = TRUE), "Pilot did not get damaged bodypart")
 
+
+	TEST_ASSERT_EQUAL(target.mind.pilot_ref.resolve(), labrat, "Pilot ref should not have changed")
 	target.apply_damage(999, forced = TRUE, spread_damage = TRUE)
 	TEST_ASSERT_EQUAL(target.stat, DEAD, "Target should have died on lethal damage")
 	TEST_ASSERT_EQUAL(labrat.stat, DEAD, "Pilot should have died on lethal damage")
-	TEST_ASSERT_EQUAL(REF(labrat_resolved.mind), REF(labrat.mind), "Pilot should have been transferred back to initial mind")
+	TEST_ASSERT_EQUAL(initial_mind, labrat.mind, "Pilot should have been transferred back to initial mind")
 
-	target.fully_heal()
-	labrat.fully_heal()
-	labrat.mind.initial_avatar_connection(labrat, target, chair)
-	var/mob/living/carbon/human/rejuvenated_pilot = target.mind.pilot_ref.resolve()
-	TEST_ASSERT_EQUAL(rejuvenated_pilot, labrat, "Sanity test fail: Target pilot mismatched with the labrat")
+	var/mob/living/carbon/human/to_gib = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/pincushion = allocate(/mob/living/carbon/human/consistent)
+	pincushion.mind_initialize()
+	pincushion.mock_client = new()
+	pincushion.mind.key = "gibbed_key"
+	var/datum/mind/pincushion_mind = pincushion.mind
+	chair.occupant_mind_ref = WEAKREF(pincushion.mind)
+	chair.occupant_ref = WEAKREF(pincushion)
 
-	target.gib()
-	TEST_ASSERT_EQUAL(REF(rejuvenated_pilot.mind), REF(labrat.mind), "Pilot should have been transferred back on avatar gib")
-	// TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Pilot should have taken brain dmg on disconnect")
+	pincushion.mind.initial_avatar_connection(pincushion, to_gib, chair, server)
+	TEST_ASSERT_EQUAL(to_gib.mind, pincushion_mind, "Pincushion mind should have been transferred to the gib target")
+
+	to_gib.gib()
+	TEST_ASSERT_EQUAL(pincushion_mind, pincushion.mind, "Pilot should have been transferred back on avatar gib")
+	TEST_ASSERT_EQUAL(pincushion.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Pilot should have taken brain dmg on gib disconnect")
 
 /// Tests the signals sent when the server is destroyed, mobs step on a loaded tile, etc
 /datum/unit_test/bitmining_signals

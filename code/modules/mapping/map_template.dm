@@ -265,7 +265,7 @@
 
 	if(istype(deleting_atom, /obj/item/clothing/under/rank))
 		var/obj/item/clothing/under/holo_clothing = deleting_atom
-		holo_clothing.dump_attachment()
+		holo_clothing.dump_attachments()
 
 	if(is_type_in_list(deleting_atom.loc, special_locs))
 		qdel(deleting_atom.loc)

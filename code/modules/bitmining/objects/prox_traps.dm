@@ -38,7 +38,7 @@
 
 /obj/item/assembly/bitminer_trap/update_icon_state()
 	if(used)
-		icon = 'icons/obj/janitor.dmi'
+		icon = 'icons/obj/service/janitor.dmi'
 	else
 		icon = 'icons/obj/food/food.dmi'
 
