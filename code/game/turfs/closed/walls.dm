@@ -1,4 +1,5 @@
 #define MAX_DENT_DECALS 15
+#define LEANING_OFFSET 11
 
 /turf/closed/wall
 	name = "wall"
@@ -49,15 +50,17 @@
 		carbon_mob.start_leaning(src)
 
 /mob/living/carbon/proc/start_leaning(obj/wall)
+
 	switch(dir)
 		if(SOUTH)
-			pixel_y += 11
+			pixel_y += LEANING_OFFSET
 		if(NORTH)
-			pixel_y += -11
+			pixel_y += -LEANING_OFFSET
 		if(WEST)
-			pixel_x += 11
+			pixel_x += LEANING_OFFSET
 		if(EAST)
-			pixel_x += -11
+			pixel_x += -LEANING_OFFSET
+
 	ADD_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
 	ADD_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
 	visible_message(span_notice("[src] leans against \the [wall]!"), \
@@ -366,3 +369,4 @@
 	girder_type = /obj/structure/foamedmetal
 
 #undef MAX_DENT_DECALS
+#undef LEANING_OFFSET
