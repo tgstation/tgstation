@@ -35,7 +35,7 @@
 		"You feel nothing!",
 		"No pain, no gain!",
 		"Chassis hardness rating... Unchanged.",
-		"You feels the exact same. Nothing.",
+		"You feel the exact same. Nothing.",
 	)
 
 /obj/structure/weightmachine/Initialize(mapload)
