@@ -357,16 +357,16 @@
 	foodtypes = GRAIN | DAIRY | VEGETABLES | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/cake/bsvc // blackberry strawberries vanilla cake
+/obj/item/food/cake/berry_vanilla_cake // blackberry strawberries vanilla cake
 	name = "blackberry and strawberry vanilla cake"
 	desc = "A plain cake, filled with assortment of blackberries and strawberries!"
 	icon_state = "blackbarry_strawberries_cake_vanilla_cake"
 	tastes = list("blackberry" = 2, "strawberries" = 2, "vanilla" = 2, "sweetness" = 2, "cake" = 3)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
-	slice_type = /obj/item/food/cakeslice/bsvc
+	slice_type = /obj/item/food/cakeslice/berry_vanilla_cake
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/cakeslice/bsvc
+/obj/item/food/cakeslice/berry_vanilla_cake
 	name = "blackberry and strawberry vanilla cake slice"
 	desc = "Just a slice of cake  filled with assortment of blackberries and strawberries!"
 	icon_state = "blackbarry_strawberries_cake_vanilla_slice"
@@ -374,7 +374,7 @@
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/cake/bscc // blackbarry strawberries chocolate cake <- this is a relic from before resprite
+/obj/item/food/cake/berry_chocolate_cake // blackbarry strawberries chocolate cake <- this is a relic from before resprite
 	name = "strawberry chocolate cake"
 	desc = "A chocolate cake with five strawberries on top. For some reason, this configuration of cake is particularly aesthetically pleasing to AIs in SELF."
 	icon_state = "liars_cake"
@@ -385,10 +385,10 @@
 	)
 	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2, "cake" = 3)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
-	slice_type = /obj/item/food/cakeslice/bscc
+	slice_type = /obj/item/food/cakeslice/berry_chocolate_cake
 	crafting_complexity = FOOD_COMPLEXITY_4
 
-/obj/item/food/cakeslice/bscc
+/obj/item/food/cakeslice/berry_chocolate_cake
 	name = "strawberry chocolate cake slice"
 	desc = "Just a slice of cake with five strawberries on top. \
 		For some reason, this configuration of cake is particularly aesthetically pleasing to AIs in SELF."
