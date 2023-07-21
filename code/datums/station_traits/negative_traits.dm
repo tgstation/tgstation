@@ -481,11 +481,10 @@
 /datum/station_trait/nebula/hostile/proc/get_shielding_level()
 	var/shield_strength = 0
 	for(var/atom/movable/shielder as anything in shielding)
-		for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-			if(shielder.z == z)
-				var/datum/callback/callback = shielding[shielder]
-				shield_strength += callback.Invoke()
-				break
+		if(!is_station_level(shielder.z))
+			continue
+		var/datum/callback/callback = shielding[shielder]
+		shield_strength += callback.Invoke()
 
 	return shield_strength
 
@@ -639,7 +638,7 @@
 	var/announcement = {"Your station has been constructed inside a radioactive nebula. \
 		Standard spacesuits will not protect against the nebula and using them is strongly discouraged. \n\n\
 
-		EXTREME IMPORTANCE: The station is falling deeper into the nebula, and the gravity generators innate radiation shielding \
+		EXTREME IMPORTANCE: The station is falling deeper into the nebula, and the gravity generator's innate radiation shielding \
 		will not hold very long. Your engineering department has been supplied with all the necessary supplies to set up \
 		shields to protect against the nebula. Additional supply crates can be ordered at cargo. \n\n\
 		You have [deadline] before the nebula enters the station. \

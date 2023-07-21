@@ -23,7 +23,8 @@
 	range = 3, \
 	threshold = RAD_LIGHT_INSULATION, \
 	chance = URANIUM_IRRADIATION_CHANCE, \
-	minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME)
+	minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,\
+)
 
 	. = ..()
 
