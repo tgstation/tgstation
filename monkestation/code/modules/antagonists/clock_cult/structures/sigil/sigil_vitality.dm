@@ -82,14 +82,11 @@
 		to_chat(affected_mob, span_clockred("The last of your life is drained away..."))
 		check_special_role(affected_mob)
 		GLOB.clock_vitality = min(GLOB.clock_vitality + 30, GLOB.max_clock_vitality) // 100 (for clients) total in the ideal situation, since it'll take 7 pulses to go from full to crit
-		if(affected_mob.client && (GLOB.cogscarabs.len < MAXIMUM_COGSCARABS)) //MAKE THIS GIVE BORG SHELLS AND A POSI BRAIN
-			var/mob/living/simple_animal/drone/cogscarab/cogger = new /mob/living/simple_animal/drone/cogscarab(get_turf(src))
-			cogger.key = affected_mob.key
-			if(cogger.mind)
-				cogger.mind.add_antag_datum(/datum/antagonist/clock_cultist)
-			else
-				qdel(cogger)
-				new /obj/effect/mob_spawn/ghost_role/drone/cogscarab
+		if(affected_mob.client)
+			new /obj/item/robot_suit/prebuilt/clockwork(get_turf(src))
+			var/obj/item/mmi/posibrain/soul_vessel/new_vessel = new(get_turf(src))
+			new_vessel.transfer_personality(affected_mob)
+			new_vessel.brainmob?.mind?.add_antag_datum(/datum/antagonist/clock_cultist)
 		return
 
 	affected_mob.visible_message(span_clockred("[affected_mob] looks weak as the color fades from their body."), span_clockred("You feel your soul faltering..."))

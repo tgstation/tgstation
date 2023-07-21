@@ -36,6 +36,7 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 
 ///check how many human members we have and anything that goes with that
 /datum/team/clock_cult/proc/check_member_count()
+	check_member_distribution()
 	max_human_servants = round(max((get_active_player_count() / 6) + 6, max_human_servants))
 	var/human_servant_count = human_servants.len
 	var/main_message = "The Ark will be torn open if [max_human_servants - human_servant_count] more minds are converted to the faith of Rat'var\
@@ -59,6 +60,23 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 	else if(human_servant_count == max_human_servants && get_charged_anchor_crystals())
 		GLOB.clock_ark?.prepare_ark()
 
+///check that our human_servants and non_human_servants lists are correct and if not then set them to be correct
+/datum/team/clock_cult/proc/check_member_distribution()
+	for(var/datum/mind/member in human_servants)
+		if(ishuman(member.current))
+			continue
+		human_servants -= member
+		non_human_servants |= member
+		var/datum/antagonist/clock_cultist/servant_datum = member.has_antag_datum(/datum/antagonist/clock_cultist)
+		servant_datum.recall.Remove(member.current)
+
+	for(var/datum/mind/member in non_human_servants)
+		if(!ishuman(member))
+			continue
+		non_human_servants -= member
+		human_servants |= member
+		var/datum/antagonist/clock_cultist/servant_datum = member.has_antag_datum(/datum/antagonist/clock_cultist)
+		servant_datum.recall.Grant(member.current)
 
 /datum/team/clock_cult/proc/setup_objectives()
 	if(objectives.len)
@@ -94,8 +112,8 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 	update_explanation_text()
 
 /datum/objective/anchoring_crystals/update_explanation_text()
-	explanation_text = "Summon an anchoring crystal on the station an protect it for 5 minutes to allow the ark to open, \
-						up to 2 more crystals can be created for extra power, however, the crew will be alerted and the crystals must be summoned in [english_list(valid_areas)]."
+	explanation_text = "Summon an anchoring crystal on the station an protect it for 5 minutes to allow the ark to open. \
+						Up to 2 more crystals can be created for extra power, however, the crew will be alerted and the crystals must be summoned in [english_list(valid_areas)]."
 
 /datum/objective/anchoring_crystals/check_completion()
 	return get_charged_anchor_crystals() || completed

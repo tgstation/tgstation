@@ -85,8 +85,8 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 				sleep(2.7 SECONDS)
 				explosion(src, 1, 3, 8, 8)
 				sound_to_playing_players('sound/effects/explosion_distant.ogg', 50)
-//				for(var/obj/effect/portal/wormhole/clockcult/CC in GLOB.all_wormholes)
-//					qdel(CC)
+				for(var/obj/effect/portal/clockcult/portal in GLOB.portals)
+					qdel(portal)
 				SSshuttle.clearHostileEnvironment(src)
 				SSsecurity_level.set_level(2)
 		qdel(src)
@@ -178,10 +178,10 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 		and destroy the [text2ratvar("I'd like to see you try")], which has been determined to be the source of the \
 		pulse to prevent mass damage to Nanotrasen property.", "Anomaly Alert", ANNOUNCER_SPANOMALIES)
 
-//	for(var/i in 1 to 100)
-//		var/turf/T = get_random_station_turf()
-//		GLOB.clockwork_portals += new /obj/effect/portal/wormhole/clockcult(T, null, 0, null, FALSE)
 	log_game("The opening of the Ark of the Clockwork Justiciar has caused portals to open around the station.")
+	for(var/i in 1 to 100)
+		new /obj/effect/portal/clockcult(get_random_station_turf())
+		sleep(1)
 
 /obj/structure/destructible/clockwork/the_ark/proc/summon_ratvar()
 	if(current_state >= ARK_STATE_FINAL)

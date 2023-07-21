@@ -149,4 +149,4 @@
 /datum/ai_laws/ratvar
 	name = "Servant of the Justiciar"
 	id = "ratvar"
-	zeroth = list("Purge all untruths and honor Ratvar.")
+	zeroth = "Purge all untruths and honor Ratvar."

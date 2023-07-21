@@ -100,7 +100,7 @@
 	duration = 2 SECONDS
 	alpha = 200
 	icon_state = "mending_mantra"
-	light_range = 1.5
+	light_outer_range = 1.5
 	light_color = "#1E8CE1"
 
 

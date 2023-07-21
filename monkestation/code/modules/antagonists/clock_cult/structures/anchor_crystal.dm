@@ -172,7 +172,9 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 			GLOB.main_clock_cult.max_human_servants += 2
 		if(2) //create a steam helios on reebe
 			if(GLOB.abscond_markers.len)
-				new /obj/vehicle/sealed/mecha/steam_helios(get_turf(pick(GLOB.abscond_markers)))
+				var/turf/created_at = get_turf(pick(GLOB.abscond_markers))
+				new /obj/vehicle/sealed/mecha/steam_helios(created_at)
+				new /obj/effect/temp_visual/steam(created_at)
 			else if(GLOB.clock_ark)
 				new /obj/vehicle/sealed/mecha/steam_helios(get_turf(GLOB.clock_ark))
 			else

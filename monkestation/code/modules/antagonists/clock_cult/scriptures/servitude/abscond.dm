@@ -18,7 +18,8 @@
 	do_sparks(3, TRUE, servant)
 	do_sparks(3, TRUE, target_turf)
 	do_teleport(servant, target_turf, 0, no_effects = TRUE, channel = TELEPORT_CHANNEL_CULT, forced = TRUE)
-	new /obj/effect/temp_visual/ratvar/warp(target_turf)
+	if(ishuman(servant)) //looks weird on non-humanoids
+		new /obj/effect/temp_visual/ratvar/warp(target_turf)
 	to_chat(servant, "You warp to [get_area(target_turf)].")
 	if(istype(pulled))
 		do_teleport(pulled, target_turf, 0, no_effects = TRUE, channel = TELEPORT_CHANNEL_CULT, forced = TRUE)

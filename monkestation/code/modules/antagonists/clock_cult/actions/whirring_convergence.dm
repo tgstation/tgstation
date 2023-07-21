@@ -6,6 +6,7 @@
 	name = "Whirring Convergence"
 	desc = "Whispered words that link to the internal cogs of us all.<br><b>Warning:</b> Nearby non-servants can still hear you."
 	button_icon_state = "linked_minds"
+	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/innate/clockcult/comm/Activate()
 	var/input = tgui_input_text(usr, "Message to tell to the other followers.", "Voice of Cogs")

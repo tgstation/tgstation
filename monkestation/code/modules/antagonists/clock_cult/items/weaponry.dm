@@ -81,7 +81,6 @@
 	SIGNAL_HANDLER
 
 	if(taker == current_holder?.resolve())
-		message_admins("RETURNED")
 		return
 
 	current_holder = WEAKREF(taker)
@@ -313,7 +312,7 @@
 	name = "energy bolt"
 	icon = 'monkestation/icons/obj/clock_cult/projectiles.dmi'
 	icon_state = "arrow_energy"
-	damage = 35
+	damage = 30
 	damage_type = BURN
 
 #undef HAMMER_FLING_DISTANCE

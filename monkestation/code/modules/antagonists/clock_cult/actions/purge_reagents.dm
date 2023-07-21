@@ -15,7 +15,8 @@
 		return FALSE
 	var/mob/living/purged = em_user.marked_servant?.resolve()
 	for(var/datum/reagent/chem in purged.reagents.reagent_list)
-		purged.reagents.remove_reagent(chem.type, 9999) //I dont feel like looking at chem code right now so im just doing this, value is clamped to 0 so it should be fine
+		var/amount = purged.reagents.get_reagent_amount(chem.type)
+		purged.reagents.remove_reagent(chem.type, amount)
 	to_chat(em_user, "You purge the reagents of [purged].")
 	em_user.marked_servant = null
 	return TRUE

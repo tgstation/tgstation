@@ -66,23 +66,17 @@
 		return
 
 	if(selected_output.replace_types_of && istype(selected_output, /datum/replica_fabricator_output/turf_output))
-		message_admins("AAA")
 		if(!isopenturf(target) && !(locate(creation_turf) in selected_output.replace_types_of))
-			message_admins("TWO")
 			return
 	else if(selected_output.replace_types_of)
-		message_admins("EEE")
 		for(var/checked_type in selected_output.replace_types_of)
 			var/atom/movable/found_replaced = locate(checked_type) in creation_turf
 			if(found_replaced)
-				message_admins("ZZZ")
 				possible_replaced = found_replaced
 				break
 		if(!possible_replaced && !isopenturf(target))
-			message_admins("OOO")
 			return
 	else if(!isopenturf(target))
-		message_admins("ONE")
 		return
 
 	var/obj/effect/temp_visual/ratvar/constructing_effect/effect = new(creation_turf, selected_output.creation_delay)

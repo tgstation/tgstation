@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	invoker = invoking_mob
 	invoking_slab = slab
 
-	if(!((slab.owned_scriptures[type]) && !bypass_unlock_checks) || unique_locked) //unique_locked scriptures should not even be visible so this should never happen
+	if((!slab.owned_scriptures[type] && !bypass_unlock_checks) || unique_locked) //unique_locked scriptures should not even be visible so this should never happen
 		log_runtime("CLOCKCULT: Attempting to invoke a scripture that has not been unlocked. Either there is a bug, or [ADMIN_LOOKUP(invoker)] is using some wacky exploits.")
 		end_invoke()
 		return

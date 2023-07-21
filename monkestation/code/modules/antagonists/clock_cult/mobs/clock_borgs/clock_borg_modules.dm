@@ -26,6 +26,7 @@
 	. = ..()
 
 	if(!IS_CLOCK(user))
+		to_chat(user, span_warning("Looks like something broke, as your not meant to have this. Go tell someone who can fix it."))
 		return FALSE
 
 	var/mob/living/silicon/robot/our_borg = user
@@ -61,8 +62,8 @@
 /obj/item/clock_module/tinkerers_cache
 	scripture_datum = /datum/scripture/create_structure/tinkerers_cache
 
-///obj/item/clock_module/stargazer need to add this
-//	scripture_datum = /datum/scripture/create_structure/stargazer
+/obj/item/clock_module/stargazer
+	scripture_datum = /datum/scripture/create_structure/stargazer
 
 /obj/item/clock_module/vanguard
 	scripture_datum = /datum/scripture/slab/vanguard

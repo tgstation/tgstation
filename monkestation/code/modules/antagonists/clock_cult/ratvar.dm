@@ -16,7 +16,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	plane = MASSIVE_OBJ_PLANE
 	light_color = COLOR_ORANGE
 	light_power = 1 //slightly brighter then narsie
-	light_range = 20
+	light_outer_range = 20
 	move_resist = INFINITY
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 	pixel_x = -236

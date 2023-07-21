@@ -1,42 +1,44 @@
-/obj/effect/portal/permanent/one_way/reebe
-	name = "whirring portal"
-	desc = "A tall, glowing portal. A low emination of moving cogs can be heard. You don't feel like coming back will be the easiest."
-	id = "reebe_entry"
-	color = "#fcbe03"
+/obj/effect/portal/clockcult
+	name = "dimensional anomaly"
+	desc = "A dimensional anomaly. It feels warm to the touch, and has a gentle puff of steam emanating from it."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "bhole3"
+	mech_sized = TRUE
+	density = TRUE
+	force_teleport = TRUE
+	///list of possible targets
+	var/static/list/possible_targets
 
+/obj/effect/portal/clockcult/Initialize(mapload, _creator, _lifespan, obj/effect/portal/_linked, automatic_link, turf/hard_target_override)
+	. = ..()
+	if(!possible_targets)
+		possible_targets = list()
+		for(var/obj/effect/landmark/late_cog_portals/portal_mark in GLOB.landmarks_list)
+			possible_targets += portal_mark
 
-/obj/effect/portal/permanent/one_way/reebe/clock_only // Portal that only lets clock cultists through, so they get their head start.
-	name = "loudly whirring portal"
-	/// If this prevents non-clockies from entering
-	var/clock_only = TRUE
+	var/static/times_warned_admins = 0 //we spawn a massive amount of these normally so we dont want to warn admins for every single one if something breaks
+	if(possible_targets.len)
+		hard_target = get_turf(pick(possible_targets))
+	else if(times_warned_admins < 5)
+		message_admins("No possible_targets for clock cult portals.")
+		times_warned_admins++
 
+/obj/effect/portal/clockcult/Bumped(atom/movable/bumper)
+	. = ..()
+	teleport(bumper)
 
-/obj/effect/portal/permanent/one_way/reebe/clock_only/teleport(atom/movable/movable, force)
-	if(!ismob(movable))
-		return FALSE
+/obj/effect/portal/clockcult/teleport(atom/movable/teleported_atom)
+	if(isliving(teleported_atom))
+		to_chat(teleported_atom, span_notice("You begin climbing into the rift."))
+		if(!do_after(teleported_atom, 5 SECONDS, src))
+			return
 
-	var/mob/movable_mob = movable
-
-	if(!IS_CLOCK(movable_mob) && clock_only && !isobserver(movable_mob))
-		to_chat(movable_mob, span_warning("An invisble force pushes you back as you try to approach [src]!"))
-		return FALSE
-
-	return ..()
-
-
-/obj/effect/portal/permanent/one_way/reebe/leaving
-	desc = "For those who wish or require to leave the holy outpost."
-	id = "reebe_exit"
-
-
-/obj/effect/portal/permanent/one_way/reebe/leaving/set_linked()
-	hard_target = get_safe_random_station_turf()
-
-
-/obj/effect/portal/permanent/one_way/reebe/leaving/teleport(atom/movable/movable, force)
-	to_chat(movable, span_notice("You prepare yourself to enter [src]..."))
-
-	if(!do_after(movable, 4 SECONDS))
-		return FALSE
-
-	return ..()
+		var/mob/living/teleported_living = teleported_atom
+		if(teleported_living.client)
+			var/client_color = teleported_living.client.color
+			teleported_living.client.color = "#BE8700"
+			animate(teleported_living.client, color = client_color, time = 25)
+		var/prev_alpha = teleported_atom.alpha
+		teleported_atom.alpha = 0
+		animate(teleported_atom, alpha=prev_alpha, time=10)
+	. = ..()

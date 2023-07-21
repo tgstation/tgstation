@@ -64,6 +64,12 @@
 		var/obj/item/new_module = new path(src)
 		emag_modules += new_module
 		emag_modules -= path
+//monkestation edit start
+	for(var/path in clock_modules)
+		var/obj/item/new_module = new path(src)
+		clock_modules += new_module
+		clock_modules -= path
+//monkestation edit end
 
 /obj/item/robot_model/Destroy()
 	basic_modules.Cut()
@@ -126,6 +132,13 @@
 	if(cyborg.emagged)
 		for(var/obj/item/module in emag_modules)
 			add_module(module, FALSE, FALSE)
+	//monkestation edit start
+	if(IS_CLOCK(cyborg) && !cyborg.clockwork) //this should never happen
+		cyborg.set_clockwork(TRUE, FALSE)
+	if(cyborg.clockwork)
+		for(var/obj/item/module in clock_modules)
+			add_module(module, FALSE, FALSE)
+	//monkestation edit end
 	for(var/obj/item/module in added_modules)
 		add_module(module, FALSE, FALSE)
 	for(var/module in held_modules)

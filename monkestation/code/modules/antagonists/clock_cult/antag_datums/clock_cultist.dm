@@ -1,5 +1,5 @@
 /datum/antagonist/clock_cultist
-	name = "\improper Clock Cultist"
+	name = "\improper Servant of Rat'var"
 	antagpanel_category = "Clock Cultist"
 	preview_outfit = /datum/outfit/clock/preview
 	job_rank = ROLE_CLOCK_CULTIST
@@ -34,13 +34,15 @@
 	return ..()
 
 /datum/antagonist/clock_cultist/on_gain()
-	. = ..()
 	var/mob/living/current = owner.current
 	current.playsound_local(get_turf(owner.current), 'sound/magic/clockwork/scripture_tier_up.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	objectives |= clock_team.objectives
 	if(give_slab && ishuman(current))
 		give_clockwork_slab(current)
 	current.log_message("has been converted to the cult of Rat'var!", LOG_ATTACK, color="#960000")
+	if(issilicon(current))
+		handle_silicon_conversion(current)
+	. = ..() //have to call down here so objectives display correctly
 
 //given_clock_team is provided by conversion methods, although we never use it due to wanting to just set their team to the main clock cult
 /datum/antagonist/clock_cultist/create_team(datum/team/clock_cult/given_clock_team)
@@ -66,13 +68,15 @@
 	current.faction |= FACTION_CLOCK
 	current.grant_language(/datum/language/ratvar, TRUE, TRUE, LANGUAGE_CULTIST)
 	current.throw_alert("clockinfo", /atom/movable/screen/alert/clockwork/clocksense)
-	if(!istype(current, /mob/living/eminence))
+	if(!iseminence(current))
 		add_team_hud(current)
 		communicate.Grant(current)
-		recall.Grant(current)
-		RegisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED, PROC_REF(switch_recall_slab))
+		if(ishuman(current) || iscogscarab(current)) //only human and cogscarabs would need a recall ability
+			recall.Grant(current)
+
 		owner_turf_healing = current.AddComponent(/datum/component/turf_healing, healing_types = list(TOX = 4), \
 												  healing_turfs = list(/turf/open/floor/bronze, /turf/open/indestructible/reebe_flooring))
+		RegisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED, PROC_REF(switch_recall_slab))
 		handle_clown_mutation(current, mob_override ? null : "The light of Rat'var allows you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		ADD_TRAIT(current, TRAIT_KNOW_ENGI_WIRES, CULT_TRAIT)
 	if(ishuman(current) && GLOB.clock_ark)
@@ -87,7 +91,7 @@
 	current.faction -= FACTION_CLOCK
 	current.remove_language(/datum/language/ratvar, TRUE, TRUE, LANGUAGE_CULTIST)
 	current.clear_alert("clockinfo")
-	if(!istype(current, /mob/living/eminence))
+	if(!iseminence(current))
 		communicate.Remove(current)
 		recall.Remove(current)
 		UnregisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED)
@@ -170,6 +174,26 @@
 	recall.mark_item(slab)
 	to_chat(owner.current, span_brass("You re-attune yourself to a new Clockwork Slab."))
 
+/datum/antagonist/clock_cultist/proc/handle_silicon_conversion(mob/living/silicon/converted_silicon)
+	if(isAI(converted_silicon))
+		var/mob/living/silicon/ai/converted_ai = converted_silicon
+		converted_ai.disconnect_shell()
+		for(var/mob/living/silicon/robot/borg in converted_ai.connected_robots)
+			borg.set_connected_ai(null)
+		var/mutable_appearance/ai_clock = mutable_appearance('monkestation/icons/mob/clock_cult/clockwork_mobs.dmi', "aiframe")
+		converted_ai.add_overlay(ai_clock)
+
+	else if(iscyborg(converted_silicon))
+		var/mob/living/silicon/robot/converted_borg = converted_silicon
+		converted_borg.set_connected_ai(null)
+		converted_borg.set_clockwork(TRUE)
+
+	if(converted_silicon.laws && istype(converted_silicon.laws, /datum/ai_laws/ratvar))
+		return
+	converted_silicon.laws = new /datum/ai_laws/ratvar
+	converted_silicon.laws.associate(converted_silicon)
+	converted_silicon.show_laws()
+
 /datum/antagonist/clock_cultist/eminence
 	name = "Eminence"
 	give_slab = FALSE
@@ -197,7 +221,7 @@
 	to_chat(owner.current, span_brass("Linked Abscond: Return a marked servant and anything they are pulling to reebe, this has a lengthy cooldown and they must remain still for 7 seconds."))
 	to_chat(owner.current, span_brass("Space Fold: Fold local spacetime to ensure certain \"events\" are inflicted upon the station, while doing this will cost cogs, \
 									   these cogs are not taken from the cult itself. The cooldown is based on the cog cost of the event."))
-	to_chat(owner.current, span_brass("You can also open doors and windoors as well as interact with buttons."))
+	to_chat(owner.current, span_brass("You can also teleport yourself to any other servant, useful for servants who need to be absconded like those which are dead or being deconverted."))
 
 /datum/antagonist/clock_cultist/eminence/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -210,7 +234,6 @@
 	to_station.Grant(current)
 	return_home.Grant(current)
 
-//should never happen but still dont want runtimes in case it does
 /datum/antagonist/clock_cultist/eminence/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current

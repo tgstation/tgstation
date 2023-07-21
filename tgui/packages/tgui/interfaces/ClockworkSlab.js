@@ -96,7 +96,7 @@ const ClockworkHelp = (props, context) => {
           <b>APC&nbsp;</b>
           on the station.
           <br />
-          Slice open the&nbsp;
+          Open the cover of, or slice open the&nbsp;
           <b>APC&nbsp;</b>
           with the&nbsp;
           <b>Integration Cog&nbsp;</b>
@@ -122,8 +122,8 @@ const ClockworkHelp = (props, context) => {
             <font color={brassColor}>Traps:&nbsp;</font>
           </b>
           Traps are useful contraptions, able to be created at a{' '}
-          <font color={tinkerCache}>Tinkerer&#39;s Cache</font>. Use your Slab to
-          link traps and triggers together.
+          <font color={tinkerCache}>Tinkerer&#39;s Cache</font>. Use your Slab
+          to link traps and triggers together.
           <br />
           <b>
             <font color={clockMarauder}>Clockwork Marauder:&nbsp;</font>
@@ -147,31 +147,29 @@ const ClockworkHelp = (props, context) => {
           <b>
             <font color={brassColor}>Power:&nbsp;</font>
           </b>
-          Watch your power upkeep! You&#39;re dependent on your cogged APCs to stay
-          powered, and a lot of structures can drain it quickly.
+          Watch your power upkeep! You&#39;re dependent on your cogged APCs to
+          stay powered, and a lot of structures can drain it quickly.
           <br />
           <b>
             <font color={brassColor}>Your Base:&nbsp;</font>
           </b>
-          Make sure to have a defensible base of operations! You&#39;re
-          significantly stronger while on brass tiles, so make your home
-          indefensible.
+          Defending The Ark is your highest priority! You&#39;re significantly
+          stronger while on brass tiles, so make your home indefensible.
           <br />
           <b>
             <font color={replicaFab}>Replica Fabricator:&nbsp;</font>
           </b>
           The Replica Fabricator is one of the strongest tools available to you,
-          via the <font color={tinkerCache}>Tinkerer&#39;s Cache</font>. It allows
-          the conversion of all materials into power, which can be used to
-          create floors, walls, and airlocks. The airlocks will shock all
-          non-cultists.
+          via the <font color={tinkerCache}>Tinkerer&#39;s Cache</font>. It
+          allows the conversion of all materials into power, which can be used
+          to create floors, walls, and airlocks. The airlocks will shock all
+          non-servants.
           <br />
           <b>
             <font color={brassColor}>Nar&#39;sie:&nbsp;</font>
           </b>
-          Nar&#39;sian cultists are your greatest foe! Some of your spells are less
-          effective on them, and vice-versa. What remains of Ratvar may reward a
-          vitality sacrifice of such heresy.
+          Nar&#39;sian cultists are your greatest foe! Some of your spells are
+          less effective on them, and vice-versa.
           <br />
           <br />
         </Section>
@@ -322,4 +320,3 @@ const ClockworkButtonSelection = (props, context) => {
     </Table>
   );
 };
-

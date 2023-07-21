@@ -1,9 +1,17 @@
 import { useBackend } from '../backend';
 import { Icon, Section, Stack } from '../components';
+import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
+
+type Objective = {
+  count: number;
+  name: string;
+  explanation: string;
+};
 
 type Info = {
   antag_name: string;
+  objectives: Objective[];
 };
 
 export const AntagInfoClock = (props, context) => {
@@ -31,20 +39,18 @@ export const AntagInfoClock = (props, context) => {
 
 const ObjectivePrintout = (props, context) => {
   const { data } = useBackend<Info>(context);
+  const { objectives } = data;
   return (
     <Stack vertical>
-      <Stack.Item bold>Your goals:</Stack.Item>
+      <Stack.Item bold>To serve Rat'var you must:</Stack.Item>
       <Stack.Item>
-        {
-          '- Further the goals of any other organization you are a part of using the power granted to you.'
-        }
-      </Stack.Item>
-      <Stack.Item>
-        {
-          '- Further the grace, knowledge, and glory of our great lord of the Engine, Ratvar.'
-        }
+        {(!objectives && 'None!') ||
+          objectives.map((objective) => (
+            <Stack.Item key={objective.count}>
+              #{objective.count}: {objective.explanation}
+            </Stack.Item>
+          ))}
       </Stack.Item>
     </Stack>
   );
 };
-

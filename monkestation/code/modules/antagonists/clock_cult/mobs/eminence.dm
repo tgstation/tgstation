@@ -116,6 +116,11 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 		user.marked_servant = WEAKREF(src)
 		to_chat(user, "You mark [src].")
 
+/obj/structure/closet/eminence_act(mob/living/eminence/user)
+	. = ..()
+	if(do_after(user, 5 SECONDS, src))
+		open(user, TRUE)
+
 /obj/machinery/door/airlock/eminence_act(mob/living/eminence/user)
 	. = ..()
 	if(seal)

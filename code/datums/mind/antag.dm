@@ -104,6 +104,7 @@
 
 	var/datum/antagonist/rev/revolutionary = has_antag_datum(/datum/antagonist/rev)
 	revolutionary?.remove_revolutionary(borged = TRUE)
+	remove_antag_datum(/datum/antagonist/clock_cultist) //monkestation edit
 
 /**
  * ## give_uplink
