@@ -1,6 +1,5 @@
 import { useBackend } from '../backend';
 import { Icon, Section, Stack } from '../components';
-import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
 
 type Objective = {
@@ -42,7 +41,7 @@ const ObjectivePrintout = (props, context) => {
   const { objectives } = data;
   return (
     <Stack vertical>
-      <Stack.Item bold>To serve Rat'var you must:</Stack.Item>
+      <Stack.Item bold>To serve Rat&#39var you must:</Stack.Item>
       <Stack.Item>
         {(!objectives && 'None!') ||
           objectives.map((objective) => (
