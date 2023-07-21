@@ -26,10 +26,59 @@
 	extra_price = PAYCHECK_LOWER * 0.6
 	payment_department = NO_FREEBIES
 
-//Subtype to force the vendor on lavaland labor camp (or other station areas not on station z) to use prices instead of being free
-/obj/machinery/vending/sustenance/labor_camp
-	onstation_override = TRUE
-
 /obj/item/vending_refill/sustenance
 	machine_name = "Sustenance Vendor"
 	icon_state = "refill_snack"
+
+//Subtype to force the vendor on lavaland labor camp (or other station areas not on station z) to use prices instead of being free
+/obj/machinery/vending/sustenance/labor_camp
+	name = "\improper Labor Camp Sustenance Vendor"
+	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement. \
+			This one, however, processes labor points for its products if the user is incarcerated."
+	onstation_override = TRUE
+
+/obj/machinery/vending/ui_data(mob/user)
+	. = list()
+	var/obj/item/card/id/advanced/prisoner/paying_scum_id
+	if(isliving(user))
+		var/mob/living/living_user = user
+		paying_scum_id = living_user.get_idcard(TRUE)
+	if(paying_scum_id?.registered_account)
+		.["user"] = list()
+		.["user"]["name"] = paying_scum_id.registered_name
+		.["user"]["cash"] = paying_scum_id.points
+		if(paying_scum_id.registered_account.account_job)
+			.["user"]["job"] = paying_scum_id.registered_account.account_job.title
+			.["user"]["department"] = paying_scum_id.registered_account.account_job.paycheck_department
+		else
+			.["user"]["job"] = "No Job"
+			.["user"]["department"] = DEPARTMENT_UNASSIGNED
+	.["stock"] = list()
+
+	for (var/datum/data/vending_product/product_record in product_records + coin_records + hidden_records)
+		var/list/product_data = list(
+			name = product_record.name,
+			amount = product_record.amount,
+			colorable = product_record.colorable,
+		)
+
+		.["stock"][product_record.name] = product_data
+
+	.["extended_inventory"] = extended_inventory
+
+/obj/machinery/vending/sustenance/proceed_payment(obj/item/card/id/paying_id_card, datum/data/vending_product/product_to_vend, price_to_use)
+	if(!istype(paying_id_card, /obj/item/card/id/advanced/prisoner))
+		speak("I don't take bribes! Pay with labor points!")
+		return
+	var/obj/item/card/id/advanced/prisoner/paying_scum_id = paying_id_card
+	if(coin_records.Find(product_to_vend) || hidden_records.Find(product_to_vend))
+		price_to_use = product_to_vend.custom_premium_price ? product_to_vend.custom_premium_price : extra_price
+	if(LAZYLEN(product_to_vend.returned_products))
+		price_to_use = 0 //returned items are free
+	if(price_to_use && !(paying_scum_id.points >= price_to_use)) //not enough good prisoner points
+		speak("You do not possess the funds to purchase [product_to_vend.name].")
+		flick(icon_deny, src)
+		vend_ready = TRUE
+		return
+
+	paying_scum_id.points -= price_to_use

@@ -1081,24 +1081,7 @@
 			flick(icon_deny,src)
 			vend_ready = TRUE
 			return
-		var/datum/bank_account/account = C.registered_account
-		if(account.account_job && account.account_job.paycheck_department == payment_department)
-			price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
-		if(coin_records.Find(R) || hidden_records.Find(R))
-			price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
-		if(LAZYLEN(R.returned_products))
-			price_to_use = 0 //returned items are free
-		if(price_to_use && !account.adjust_money(-price_to_use, "Vending: [R.name]"))
-			speak("You do not possess the funds to purchase [R.name].")
-			flick(icon_deny,src)
-			vend_ready = TRUE
-			return
-		var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
-		if(D)
-			D.adjust_money(price_to_use)
-			SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
-			SSeconomy.track_purchase(account, price_to_use, name)
-			log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [R].")
+		proceed_payment(C, R, price_to_use)
 	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
 		var/vend_response = vend_reply || "Thank you for shopping with [src]!"
 		speak(vend_response)
@@ -1125,6 +1108,27 @@
 		to_chat(usr, span_warning("[capitalize(R.name)] falls onto the floor!"))
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 	vend_ready = TRUE
+
+/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, datum/data/vending_product/product_to_vend, price_to_use)
+	var/datum/bank_account/account = paying_id_card.registered_account
+	if(account.account_job && account.account_job.paycheck_department == payment_department)
+		price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
+	if(coin_records.Find(product_to_vend) || hidden_records.Find(product_to_vend))
+		price_to_use = product_to_vend.custom_premium_price ? product_to_vend.custom_premium_price : extra_price
+	if(LAZYLEN(product_to_vend.returned_products))
+		price_to_use = 0 //returned items are free
+	if(price_to_use && !account.adjust_money(-price_to_use, "Vending: [product_to_vend.name]"))
+		speak("You do not possess the funds to purchase [product_to_vend.name].")
+		flick(icon_deny,src)
+		vend_ready = TRUE
+		return
+	//actual payment here
+	var/datum/bank_account/paying_id_account = SSeconomy.get_dep_account(payment_department)
+	if(paying_id_account)
+		paying_id_account.adjust_money(price_to_use)
+		SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
+		SSeconomy.track_purchase(account, price_to_use, name)
+		log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
 
 /obj/machinery/vending/process(seconds_per_tick)
 	if(machine_stat & (BROKEN|NOPOWER))
