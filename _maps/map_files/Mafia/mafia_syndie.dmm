@@ -7,8 +7,7 @@
 	desc = "A storage closet for syndicate conflict resolution operatives.";
 	name = "red closet"
 	},
-/obj/item/clothing/under/syndicate/tacticool,
-/obj/item/clothing/under/syndicate/tacticool/skirt,
+/obj/effect/spawner/random/clothing/syndie,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/mafia)
 "c" = (
@@ -46,16 +45,6 @@
 /obj/mafia_game_board,
 /turf/open/floor/plating,
 /area/centcom/mafia)
-"m" = (
-/obj/structure/closet/syndicate{
-	desc = "A storage closet for syndicate conflict resolution operatives.";
-	name = "red closet"
-	},
-/obj/item/clothing/under/syndicate/tacticool,
-/obj/item/clothing/under/syndicate/tacticool/skirt,
-/obj/effect/turf_decal/tile/red/fourcorners,
-/turf/open/floor/iron/dark,
-/area/centcom/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/mineral/plastitanium,
@@ -85,15 +74,18 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/mafia)
 "s" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/mafia)
 "t" = (
+/obj/effect/turf_decal/syndicateemblem/top/middle,
 /turf/open/floor/circuit/red,
 /area/centcom/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
 /obj/structure/chair,
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
 /turf/open/floor/circuit/red,
 /area/centcom/mafia)
 "v" = (
@@ -155,19 +147,42 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/mafia)
 "G" = (
-/obj/item/clothing/under/syndicate/tacticool,
 /obj/structure/closet/syndicate{
 	desc = "A storage closet for syndicate conflict resolution operatives.";
 	name = "red closet"
 	},
-/obj/item/clothing/under/syndicate/tacticool/skirt,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/spawner/random/clothing/syndie,
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
 "H" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
+/area/centcom/mafia)
+"O" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/mafia)
+"Q" = (
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/turf/open/floor/circuit/red,
+/area/centcom/mafia)
+"S" = (
+/obj/effect/turf_decal/syndicateemblem/top/right,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/mafia)
+"T" = (
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/turf/open/floor/circuit/red,
+/area/centcom/mafia)
+"W" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/left,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/mafia)
+"Y" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/middle,
+/turf/open/floor/circuit/red,
 /area/centcom/mafia)
 
 (1,1,1) = {"
@@ -309,7 +324,7 @@ b
 r
 w
 o
-m
+G
 w
 j
 w
@@ -327,7 +342,7 @@ c
 c
 d
 w
-m
+G
 o
 p
 n
@@ -413,7 +428,7 @@ p
 p
 w
 p
-m
+G
 w
 d
 c
@@ -432,8 +447,8 @@ r
 y
 p
 s
-t
-s
+Q
+W
 p
 q
 o
@@ -458,7 +473,7 @@ p
 p
 t
 u
-t
+Y
 p
 p
 w
@@ -481,9 +496,9 @@ o
 o
 z
 p
-s
-t
-s
+S
+T
+O
 p
 E
 r
@@ -501,7 +516,7 @@ w
 c
 d
 w
-m
+G
 p
 w
 p
@@ -605,7 +620,7 @@ w
 w
 j
 w
-m
+G
 o
 w
 r

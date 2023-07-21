@@ -55,7 +55,8 @@
 	icon_state = "mining";
 	name = "miner equipment locker"
 	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/obj/item/shovel,
+/obj/item/pickaxe,
 /turf/open/floor/fakebasalt,
 /area/centcom/mafia)
 "am" = (
@@ -79,7 +80,8 @@
 	icon_state = "mining";
 	name = "miner equipment locker"
 	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/obj/item/shovel,
+/obj/item/pickaxe,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "ap" = (
@@ -103,7 +105,8 @@
 	icon_state = "mining";
 	name = "miner equipment locker"
 	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/obj/item/shovel,
+/obj/item/pickaxe,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "as" = (
@@ -111,20 +114,6 @@
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
-"at" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/mafia)
-"au" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/floor/iron/dark,
 /area/centcom/mafia)
 "av" = (
 /obj/mafia_game_board,
@@ -160,7 +149,8 @@
 	icon_state = "mining";
 	name = "miner equipment locker"
 	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/obj/item/shovel,
+/obj/item/pickaxe,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aA" = (
@@ -225,7 +215,8 @@
 	icon_state = "mining";
 	name = "miner equipment locker"
 	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/obj/item/shovel,
+/obj/item/pickaxe,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aI" = (
@@ -237,7 +228,8 @@
 	icon_state = "mining";
 	name = "miner equipment locker"
 	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/obj/item/shovel,
+/obj/item/pickaxe,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aJ" = (
@@ -259,7 +251,8 @@
 	icon_state = "mining";
 	name = "miner equipment locker"
 	},
-/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/obj/item/shovel,
+/obj/item/pickaxe,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aL" = (
@@ -333,24 +326,6 @@
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/centcom/mafia)
-"aW" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/mafia)
-"aX" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
 /area/centcom/mafia)
 "aY" = (
 /turf/closed/indestructible/reinforced,
