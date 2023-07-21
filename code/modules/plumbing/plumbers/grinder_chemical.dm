@@ -50,10 +50,7 @@
 			reagents.add_reagent_list(I.grind_results)
 		else if (I.juice_typepath)
 			I.on_juice()
-			var/avg_nutriment_factor = I.reagents.get_average_nutriment_factor()
 			I.reagents.convert_reagent(/datum/reagent/consumable, I.juice_typepath, include_source_subtypes = TRUE)
-			var/datum/reagent/consumable/juice = I.reagents.get_reagent(I.juice_typepath)
-			juice.nutriment_factor = avg_nutriment_factor
 		if(I.reagents)
 			I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = src)
 		qdel(I)
