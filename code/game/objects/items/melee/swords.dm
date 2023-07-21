@@ -27,7 +27,7 @@
 /obj/item/melee/sword/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, \
-	speed = 4 SECONDS, \
+	speed = 8 SECONDS, \
 	effectiveness = 105, \
 	)
 	AddElement(/datum/element/update_icon_updates_onmob)
@@ -52,10 +52,10 @@
 	desc = "A sharp steel forged sword. It's edge is rusty and corroded."
 	icon_state = "broadsword_rust"
 	force = 15
-	wound_bonus = 5
+	wound_bonus = 0
 	var/broken_icon = "broadsword_broken"
 
-	/// How many hits a sword can deal and block before it breaks.
+	/// How many hits a sword can deal and block before it breaks, with one additional final attack.
 	var/rustiness = 15 // It may say 15, but it's 16 hits/blocks before it breaks.
 	/// If the sword is broken or not.
 	var/broken = 0
@@ -93,7 +93,7 @@
 	force -= 5
 	wound_bonus = 1
 	throw_range = 2
-	embedding = list("embed_chance" = 10, "impact_pain_mult" = 15)//jagged metal in wound heh
+	embedding = list("embed_chance" = 10, "impact_pain_mult" = 15)//jagged metal in wound would be more painful.
 	block_chance = 20
 	w_class = WEIGHT_CLASS_SMALL
 
