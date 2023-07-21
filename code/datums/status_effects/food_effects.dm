@@ -80,5 +80,5 @@
 
 /atom/movable/screen/alert/status_effect/food_trait_noslip
 	name = "Stable"
-	desc = "That meal made me feel that I have complete control over your balance..."
+	desc = "That meal made me feel that I have complete control over my balance..."
 	icon_state = "terrified"

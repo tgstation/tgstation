@@ -142,7 +142,6 @@ type Data = {
   categories: string[];
   material_occurences: Material[];
   foodtypes: string[];
-  nutriments: number;
   complexity: number;
 };
 
@@ -836,11 +835,6 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
               {item.complexity !== undefined && (
                 <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
                   Complexity: {item.complexity}
-                </Box>
-              )}
-              {item.nutriments > 0 && (
-                <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
-                  Nutrition: {item.nutriments}
                 </Box>
               )}
               {item.foodtypes?.length > 0 && (
