@@ -307,7 +307,7 @@
 
 /mob/living/click_on_with_item(atom/clicked_on, obj/item/clicked_with_what, params)
 	if(IS_BLOCKING(src))
-		balloon_alert(attacker, "can't act while blocking!")
+		balloon_alert(src, "can't act while blocking!")
 		changeNext_move(0.25 SECONDS)
 		return FALSE
 
@@ -341,12 +341,17 @@
  * and attack chain should be redone to be "non-combat interaction chain" instead
  *
  * Then we can get rid of this and delegate all references to "attacking" the attack styles
+ *
+ * Until this, this proc serves as every edge case we need to handle in one neat place
  */
 /obj/item/proc/permit_melee_chain_use(mob/living/attacker, atom/clicked_on, right_clicking)
 	// No bludgeon prevents using swing styles, good to use for items that require "click on mob" interaction like scanners
 	if(item_flags & NOBLUDGEON)
 		return TRUE
 	if(attacker.combat_mode)
+		// must be able to bash tables by clicking on them
+		if(istype(clicked_on, /obj/structure/table) || istype(clicked_on, /obj/structure/rack))
+			return TRUE
 		return FALSE
 
 	// Handles non-combat use of items, like a using a screwdriver on a wall
