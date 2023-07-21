@@ -30480,10 +30480,7 @@
 /area/station/maintenance/floor3/port)
 "hZq" = (
 /obj/structure/table/wood,
-/obj/machinery/fax{
-	fax_name = "Chief Medical Officer's Office";
-	name = "Chief Medical Officer's Fax Machine"
-	},
+/obj/machinery/fax/cmo,
 /obj/machinery/duct,
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/wood/parquet,

@@ -1,6 +1,6 @@
 /obj/machinery/fax{fax_name = "Service Hallway";name = "Service Fax Machine"} : /obj/machinery/fax/service{@OLD;fax_name=@SKIP;name=@SKIP}
 /obj/machinery/fax{fax_name = "Psychology Office";name = "Psychology Office Fax Machine"} : /obj/machinery/fax/psychology{@OLD;fax_name=@SKIP;name=@SKIP}
-/obj/machinery/fax{=fax_name = "Chief Medical Officer's Office";=name = "Chief Medical Officer's Fax Machine"} : /obj/machinery/fax/cmo{@OLD;fax_name=@SKIP;name=@SKIP}
+/obj/machinery/fax{fax_name = "Chief Medical Officer's Office";name = "Chief Medical Officer's Fax Machine"} : /obj/machinery/fax/cmo{@OLD;fax_name=@SKIP;name=@SKIP}
 /obj/machinery/fax{fax_name = "Research Director's Office";name = "Research Director's Fax Machine"} : /obj/machinery/fax/rd{@OLD;fax_name=@SKIP;name=@SKIP}
 /obj/machinery/fax{fax_name = "Chief Engineer's Office";name = "Chief Engineer's Fax Machine"} : /obj/machinery/fax/ce{@OLD;fax_name=@SKIP;name=@SKIP}
 /obj/machinery/fax{fax_name = "Detective's Office";name = "Detective's Fax Machine"} : /obj/machinery/fax/detective{@OLD;fax_name=@SKIP;name=@SKIP}

@@ -58480,10 +58480,7 @@
 "vgZ" = (
 /obj/structure/table/glass,
 /obj/structure/cable,
-/obj/machinery/fax{
-	fax_name = "Chief Medical Officer's Office";
-	name = "Chief Medical Officer's Fax Machine"
-	},
+/obj/machinery/fax/cmo,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},

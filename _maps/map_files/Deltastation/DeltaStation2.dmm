@@ -12849,10 +12849,7 @@
 "deW" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Chief Medical Officer's Office";
-	name = "Chief Medical Officer's Fax Machine"
-	},
+/obj/machinery/fax/cmo,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/white,
