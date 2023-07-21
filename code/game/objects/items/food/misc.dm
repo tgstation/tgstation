@@ -243,7 +243,7 @@
 	name = "stick of butter"
 	desc = "A stick of delicious, golden, fatty goodness."
 	icon_state = "butter"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 15)
+	food_reagents = list(/datum/reagent/consumable/nutriment/fat = 6)
 	tastes = list("butter" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
