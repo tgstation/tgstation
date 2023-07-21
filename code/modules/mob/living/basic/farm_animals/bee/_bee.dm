@@ -155,11 +155,8 @@
 	add_overlay("[icon_base]_wings")
 
 /mob/living/basic/bee/proc/pollinate(obj/machinery/hydroponics/hydro)
-	if(isnull(hydro.myseed))
+	if(!hydro.can_bee_pollinate())
 		return FALSE
-	if(hydro.plant_status == HYDROTRAY_PLANT_DEAD || hydro.recent_bee_visit)
-		return FALSE
-
 	hydro.recent_bee_visit = TRUE
 	addtimer(VARSET_CALLBACK(hydro, recent_bee_visit, FALSE), BEE_TRAY_RECENT_VISIT)
 

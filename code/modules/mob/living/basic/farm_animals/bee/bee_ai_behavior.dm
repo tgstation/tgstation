@@ -8,11 +8,8 @@
 /datum/ai_behavior/find_hunt_target/pollinate
 
 /datum/ai_behavior/find_hunt_target/pollinate/valid_dinner(mob/living/source, obj/machinery/hydroponics/dinner, radius)
-	if(isnull(dinner.myseed))
+	if(!dinner.can_bee_pollinate())
 		return FALSE
-	if(dinner.plant_status == HYDROTRAY_PLANT_DEAD || dinner.recent_bee_visit)
-		return FALSE
-
 	return can_see(source, dinner, radius)
 
 /datum/ai_behavior/enter_exit_hive
