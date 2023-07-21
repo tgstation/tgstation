@@ -5,22 +5,6 @@
 /datum/keybinding/living/can_use(client/user)
 	return isliving(user.mob)
 
-/datum/keybinding/living/resist
-	hotkey_keys = list("B")
-	name = "resist"
-	full_name = "Resist"
-	description = "Break free of your current state. Handcuffed? on fire? Resist!"
-	keybind_signal = COMSIG_KB_LIVING_RESIST_DOWN
-	allow_default_conflicts = TRUE
-
-/datum/keybinding/living/resist/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/living/L = user.mob
-	L.resist()
-	return TRUE
-
 /datum/keybinding/living/hold_block
 	hotkey_keys = list("B") // defaults to the same as resist intentionally.
 	name = "block (hold)"
@@ -46,6 +30,7 @@
 	return TRUE
 
 /datum/keybinding/living/toggle_block
+	hotkey_keys = list("Unbound")
 	name = "block (toggle)"
 	full_name = "Block (Toggle)"
 	description = "Prepare yourself to block incoming attacks. Press to toggle blocking on or off."
@@ -66,7 +51,25 @@
 		blocker.begin_blocking()
 	return TRUE
 
+// must come after block. todo : resolve this with keybind priority
+/datum/keybinding/living/resist
+	hotkey_keys = list("B")
+	name = "resist"
+	full_name = "Resist"
+	description = "Break free of your current state. Handcuffed? on fire? Resist!"
+	keybind_signal = COMSIG_KB_LIVING_RESIST_DOWN
+	allow_default_conflicts = TRUE
+
+/datum/keybinding/living/resist/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/L = user.mob
+	L.resist()
+	return TRUE
+
 /datum/keybinding/living/strafe
+	hotkey_keys = list("Unbound")
 	name = "strafe"
 	full_name = "Toggle Strafe"
 	description = "Toggle strafing, which slows you down a bit and locks your view to a certain direction while moving."

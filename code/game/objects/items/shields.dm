@@ -36,6 +36,26 @@
 	fire = 80
 	acid = 70
 
+/obj/item/shield/describe_blocking()
+	var/list/descriptions = list()
+	if(can_block_flags & LEAP_ATTACK)
+		descriptions += "[source.p_They()] can flawlessly block leaps and tackles."
+	if(can_block_flags & PROJECTILE_ATTACK)
+		descriptions += "[source.p_They()] can block about [HITS_TO_CRIT((25 * source.blocking_ability * 1.33))] projectiles before having guard broken."
+	if(can_block_flags & THROWN_PROJECTILE_ATTACK)
+		descriptions += "[source.p_They()] can block about [HITS_TO_CRIT((25 * source.blocking_ability * 0.66))] thrown items before having guard broken."
+
+	var/other_flags = can_block_flags & ~(LEAP_ATTACK|PROJECTILE_ATTACK|THROWN_PROJECTILE_ATTACK)
+	if(other_flags != NONE)
+		var/remaining_blockables = english_list(bitfield_to_list(other_flags, BLOCKABLE_FLAGS), and_text = " or ")
+		descriptions += "Otherwise, can block about [HITS_TO_CRIT((25 * source.blocking_ability * 0.66))] [remaining_blockables]."
+
+	if(transparent)
+		descriptions += "Cannot block laser or energy projectiles."
+	if(breakable_by_damage)
+		descriptions += "May shatter under heavy damage."
+	return jointext(descriptions, "\n")
+
 /obj/item/shield/get_blocking_ability(
 	mob/living/blocker,
 	atom/movable/hitby,
@@ -293,6 +313,11 @@
 /obj/item/shield/energy/IsReflect()
 	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
 
+/obj/item/shield/energy/describe_blocking()
+	var/all_blockables = english_list(bitfield_to_list(source.can_block_flags, BLOCKABLE_FLAGS), and_text = " or ")
+	return "[source.p_They()] [source.p_are()] able to flawlessly block all laser and energy [all_blockables], \
+		But cannot block anything else. Must be active to block."
+
 /obj/item/shield/energy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && (damage_type == ENERGY || damage_type == LASER))
 		return 0
@@ -323,6 +348,7 @@
 	throw_speed = 3
 	throw_range = 4
 	w_class = WEIGHT_CLASS_NORMAL
+	transparent = FALSE
 
 /obj/item/shield/riot/tele/Initialize(mapload)
 	. = ..()
@@ -339,9 +365,12 @@
 
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
+/obj/item/shield/riot/tele/describe_blocking()
+	return ..() + " Must be extended to block."
+
 /obj/item/shield/riot/tele/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		return blocking_ability
+		return ..()
 	return DEFAULT_ITEM_DEFENSE_MULTIPLIER
 
 /**

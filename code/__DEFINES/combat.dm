@@ -135,9 +135,12 @@ DEFINE_BITFIELD(status_flags, list(
 #define THROWN_PROJECTILE_ATTACK (1<<3)
 #define LEAP_ATTACK (1<<4)
 
+/// List of all blockable flags in order
+#define BLOCKABLE_FLAGS list("Melee attacks", "Unarmed attacks", "Projectiles", "Thrown items", "Leaps and tackles")
+
 /// Combination flag for items that can block all melee attacks.
 #define BLOCK_ALL_MELEE (MELEE_ATTACK|UNARMED_ATTACK|THROWN_PROJECTILE_ATTACK)
-
+/// Combination flag for items that can block everything but a tackle
 #define BLOCK_ALL_BUT_TACKLE (MELEE_ATTACK|UNARMED_ATTACK|PROJECTILE_ATTACK|THROWN_PROJECTILE_ATTACK)
 
 DEFINE_BITFIELD(can_block_flags, list(

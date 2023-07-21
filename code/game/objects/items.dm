@@ -445,13 +445,31 @@
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
 
+/// Describes how this item attacks
+/obj/item/proc/describe_attack_styles()
+	var/list/styles = list()
+
 	var/style_describer = attack_style?.get_swing_description(has_alt_style = !!alt_attack_style)
 	if(style_describer)
-		. += span_notice("Left click: [style_describer]")
+		styles += span_notice("Left click: [style_describer]")
 
 	var/alt_style_describer = alt_attack_style?.get_swing_description(has_alt_style = TRUE)
 	if(alt_style_describer)
-		. += span_notice("Right click: [alt_style_describer]")
+		styles += span_notice("Right click: [alt_style_describer]")
+
+	return jointext(styles, "\n")
+
+/// Describes how this item blocks
+/obj/item/proc/describe_blocking()
+	var/all_blockables = english_list(bitfield_to_list(source.can_block_flags, BLOCKABLE_FLAGS), and_text = " or ")
+	// This doesn't accurately report final block ability (taking into account hit modifiers). Should be changed in the future
+	switch(source.blocking_ability)
+		if(-1)
+			return "[source.p_They()] cannot be used to block attacks."
+		if(0)
+			return "[source.p_They()] can flawlessly block [all_blockables]."
+		else
+			return "[source.p_They()] can block about [HITS_TO_CRIT((25 * source.blocking_ability))] [all_blockables] before having guard broken."
 
 /obj/item/examine_more(mob/user)
 	. = ..()
@@ -600,9 +618,9 @@
 
 				switch(main_or_alt)
 					if("Main")
-						attack_style_path = edit_after ? new chosen_swing() : GLOB.attack_styles[chosen_swing]
+						attack_style = edit_after ? new chosen_swing() : GLOB.attack_styles[chosen_swing]
 					if("Alt")
-						alt_attack_style_path = edit_after ? new chosen_swing() : GLOB.attack_styles[chosen_swing]
+						alt_attack_style = edit_after ? new chosen_swing() : GLOB.attack_styles[chosen_swing]
 					else
 						return
 
@@ -704,13 +722,7 @@
 	attack_type = MELEE_ATTACK,
 	damage_type = BRUTE,
 )
-	switch(w_class)
-		if(WEIGHT_CLASS_TINY)
-			return round(blocking_ability * 1.66, 0.2)
-		if(WEIGHT_CLASS_SMALL)
-			return  round(blocking_ability * 1.33, 0.2)
-		else
-			return blocking_ability
+	return blocking_ability
 
 /**
  * Called when an item is used for a successful block

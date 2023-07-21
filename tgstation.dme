@@ -1274,6 +1274,7 @@
 #include "code\datums\elements\obj_regen.dm"
 #include "code\datums\elements\openspace_item_click_handler.dm"
 #include "code\datums\elements\organ_set_bonus.dm"
+#include "code\datums\elements\passive_resistance.dm"
 #include "code\datums\elements\pet_bonus.dm"
 #include "code\datums\elements\plant_backfire.dm"
 #include "code\datums\elements\point_of_interest.dm"

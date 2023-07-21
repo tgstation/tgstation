@@ -177,10 +177,13 @@
 		if((item_atom.item_flags & IN_STORAGE) && (item_atom.loc.flags_1 & HAS_DISASSOCIATED_STORAGE_1))
 			click_on_without_item(item_atom, TRUE, modifiers)
 
+	// From here on we only deal in the physical realm
+	if(istype(clicked_on, /atom/movable/screen))
+		return
+
 	// -- Attacking with an item --
 	if(istype(clicked_with_what))
 		click_on_with_item(clicked_on, clicked_with_what, params)
-		return
 
 	// -- Unarmed combat (punching) --
 	else if(CanReach(clicked_on))
@@ -345,6 +348,11 @@
 		// todo : misses out on generic sharpness / cautery checks related to proc "tool_check"
 		if((item_flags & SURGICAL_TOOL) || operation.all_needed_items[type] || (tool_behaviour && operation.all_needed_items[tool_behaviour]))
 			return TRUE
+
+	// this is a hack, so people can open up cyborgs.
+	// ideally we would handle this more directly.
+	if(tool_behaviour == TOOL_CROWBAR && issilicon(clicked_on))
+		return TRUE
 
 	return FALSE
 

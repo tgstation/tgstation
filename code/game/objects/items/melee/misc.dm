@@ -43,7 +43,7 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
-	weapon_sprite_angle = 270
+	weapon_sprite_angle = 240
 
 /obj/item/melee/synthetic_arm_blade/Initialize(mapload)
 	. = ..()
@@ -165,6 +165,9 @@
 		user.death(FALSE)
 	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
 
+/datum/attack_style/melee_weapon/rapid_attacks
+	cd = CLICK_CD_RAPID
+
 /obj/item/melee/beesword
 	name = "The Stinger"
 	desc = "Taken from a giant bee and folded over one thousand times in pure honey. Can sting through anything."
@@ -200,8 +203,10 @@
 	playsound(get_turf(src), hitsound, 75, TRUE, -1)
 	return TOXLOSS
 
-/datum/attack_style/melee_weapon/rapid_attacks
-	cd = CLICK_CD_RAPID
+/datum/attack_style/melee_weapon/swing/sm_sword
+	cd = CLICK_CD_MELEE
+	slowdown = 0
+	time_per_turf = 0 SECONDS
 
 /obj/item/melee/supermatter_sword
 	name = "supermatter sword"
@@ -217,7 +222,8 @@
 	armour_penetration = 1000
 	force_string = "INFINITE"
 	item_flags = NEEDS_PERMIT|NO_BLOOD_ON_ITEM
-	attack_style_path = /datum/attack_style/melee_weapon/swing
+	attack_style_path = /datum/attack_style/melee_weapon/swing/sm_sword
+	weapon_sprite_angle = 45
 	var/obj/machinery/power/supermatter_crystal/shard
 	var/balanced = 1
 

@@ -1,12 +1,12 @@
 // melbert todo infinite loops
-/datum/attack_style/unarmed/generic_damage/boxing
+/datum/attack_style/unarmed/generic_damage/limb_based/boxing
 	attack_type = STAMINA
 	martial_arts_compatible = FALSE
 
-/datum/attack_style/unarmed/generic_damage/boxing/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
+/datum/attack_style/unarmed/generic_damage/limb_based/boxing/select_attack_verb(mob/living/attacker, mob/living/smacked, obj/item/bodypart/hitting_with, damage)
 	return pick("left hook", "right hook", "straight punch")
 
-/datum/attack_style/unarmed/generic_damage/boxing/actually_apply_damage(
+/datum/attack_style/unarmed/generic_damage/limb_based/boxing/actually_apply_damage(
 	mob/living/attacker,
 	mob/living/smacked,
 	obj/item/bodypart/hitting_with,
@@ -48,7 +48,7 @@
 	return MARTIAL_ATTACK_FAIL
 
 /datum/martial_art/boxing/harm_act(mob/living/attacker, mob/living/defender)
-	var/datum/attack_style/unarmed/give_them_the_heat = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/boxing]
+	var/datum/attack_style/unarmed/give_them_the_heat = GLOB.attack_styles[/datum/attack_style/unarmed/generic_damage/limb_based/boxing]
 	if(give_them_the_heat.process_attack(attacker, attacker.get_active_hand(), defender) & ATTACK_SWING_HIT)
 		return MARTIAL_ATTACK_SUCCESS
 

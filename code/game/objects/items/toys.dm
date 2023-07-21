@@ -405,6 +405,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("attacks", "strikes", "hits")
 	attack_verb_simple = list("attack", "strike", "hit")
+	blocking_ability = DEFAULT_ITEM_DEFENSE_MULTIPLIER
+	attack_style_path = /datum/attack_style/melee_weapon/swing/esword
+	alt_attack_style_path = /datum/attack_style/melee_weapon/stab_out/esword
 	/// Whether our sword has been multitooled to rainbow
 	var/hacked = FALSE
 	/// The color of our fake energy sword
@@ -507,6 +510,9 @@
 	else
 		return ..()
 
+/obj/item/toy/sword/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
+	return HAS_TRAIT(src, TRAIT_ACTIVE) ? blocking_ability : -1
+
 /*
  * Foam armblade
  */
@@ -522,6 +528,8 @@
 	attack_verb_simple = list("prick", "absorb", "gore")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
+	attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
+	weapon_sprite_angle = 240
 
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
@@ -595,11 +603,12 @@
 	throw_speed = 3
 	throw_range = 5
 	two_hand_force = 0
+	blocking_ability = DEFAULT_ITEM_DEFENSE_MULTIPLIER
 	attack_verb_continuous = list("attacks", "strikes", "hits")
 	attack_verb_simple = list("attack", "strike", "hit")
 
 /obj/item/dualsaber/toy/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
-	return DEFAULT_ITEM_DEFENSE_MULTIPLIER
+	return HAS_TRAIT(src, TRAIT_WIELDED) ? blocking_ability : -1
 
 /obj/item/dualsaber/toy/IsReflect()
 	return FALSE

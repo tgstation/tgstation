@@ -24,6 +24,7 @@
 	wound_bonus = -15
 	bare_wound_bonus = 15
 	attack_style_path = /datum/attack_style/melee_weapon/stab_out/spear
+	alt_attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
 	weapon_sprite_angle = 45
 
 	/// For explosive spears, what we cry out when we use this to bap someone
@@ -60,7 +61,7 @@
 	update_appearance()
 
 /obj/item/spear/can_attack_with(mob/living/attacker)
-	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
+	return ..() && (HAS_TRAIT(src, TRAIT_WIELDED) || attacker.get_inactive_held_item())
 
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"

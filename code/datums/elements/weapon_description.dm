@@ -87,14 +87,10 @@
 		if(source.armour_penetration > 0)
 			readout += "[source.p_They()] has [span_warning("[weapon_tag_convert(source.armour_penetration)]")] armor-piercing capability."
 
-		// This doesn't accurately report final block ability (taking into account hit modifiers). Should be changed in the future
-		switch(source.blocking_ability)
-			if(-1)
-				readout += "[source.p_They()] cannot be used to block attacks."
-			if(0)
-				readout += "[source.p_They()] can block all incoming attack."
-			else
-				readout += "[source.p_They()] can block about [HITS_TO_CRIT((25 * source.blocking_ability))] attack\s before having guard broken."
+		if(!(source.item_flags & NOBLUDGEON))
+			readout += source.describe_attack_styles()
+
+		readout += source.describe_blocking()
 
 	// Custom manual notes
 	if(source.offensive_notes)

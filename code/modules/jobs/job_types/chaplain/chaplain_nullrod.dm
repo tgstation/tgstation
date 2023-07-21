@@ -101,9 +101,14 @@
 	blocking_ability = 1.5
 	can_block_flags = BLOCK_ALL_BUT_TACKLE
 	block_sound = 'sound/weapons/genhit.ogg'
-	menu_description = "A red staff which provides a medium chance of blocking incoming attacks via a protective red aura around its user, but deals very low amount of damage. Can be worn only on the back."
+	menu_description = "A staff which proves very capable of blocking incoming attacks and reduces damage taken  \
+		while held via a protective aura around its user, but deals very low amount of damage. Can be worn only on the back."
 	/// The icon which appears over the mob holding the item
 	var/shield_icon = "shield-red"
+
+/obj/item/nullrod/staff/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/passive_resistance, ITEM_SLOT_HANDS, 5)
 
 /obj/item/nullrod/staff/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
@@ -115,7 +120,6 @@
 	icon_state = "godstaff-blue"
 	inhand_icon_state = "godstaff-blue"
 	shield_icon = "shield-old"
-	menu_description = "A blue staff which provides a medium chance of blocking incoming attacks via a protective blue aura around its user, but deals very low amount of damage. Can be worn only on the back."
 
 /obj/item/nullrod/claymore
 	name = "holy claymore"
@@ -463,7 +467,7 @@
 	bare_wound_bonus = 25
 	menu_description = "An undroppable sharp armblade capable of inflicting deep wounds. Capable of an ineffective butchering of bodies. Disappears if the arm holding it is cut off."
 	attack_style_path = /datum/attack_style/melee_weapon/swing/only_left
-	weapon_sprite_angle = 270
+	weapon_sprite_angle = 240
 
 /obj/item/nullrod/armblade/Initialize(mapload)
 	. = ..()

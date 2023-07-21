@@ -134,7 +134,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	// so we can re-generate the affecting turfs list for swings that have travel time if the attacker moves
 	var/turf/starting_loc = attacker.loc
 	// A list of mobs that have already been hit by this attack to prevent double dipping
-	var/list/mob/living/already_hit = list()
+	// (Starts with the swing-er in the list, to prevent self harm)
+	var/list/mob/living/already_hit = list(attacker = TRUE)
 	// The dir the attacker was facing when the attack started,
 	// so changing dir mid swing for attacks with travel time don't change the direction of the attack
 	var/starting_dir = attacker.dir

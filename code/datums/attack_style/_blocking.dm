@@ -28,6 +28,8 @@
 	if(!isnull(new_blocker))
 		set_blocking_item(new_blocker)
 
+	linked_alert.update_appearance(UPDATE_DESC)
+
 /datum/status_effect/blocking/on_apply()
 	// melbert todo: hides under mobs 1 tile up (not z wise)
 	var/static/shield_offset_const = (0.8 * world.icon_size)
@@ -179,7 +181,7 @@
 /atom/movable/screen/alert/status_effect/blocking
 	name = "Blocking"
 	desc = "You're blocking incoming attacks.\
-		This will prevent you from taking physical damage, but drain your stamina.\
+		This will prevent you from taking physical damage, but drain your stamina. \
 		You also won't regenerate stamina while blocking."
 	icon = 'icons/effects/blocking.dmi'
 	icon_state = "block_alert"

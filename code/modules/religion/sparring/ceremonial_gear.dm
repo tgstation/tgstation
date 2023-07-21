@@ -51,6 +51,9 @@
 	force = old_force
 	throwforce = old_throwforce
 
+/obj/item/ceremonial_blade/describe_blocking()
+	return ..() + " Less effective at blocking if not sparring."
+
 /obj/item/ceremonial_blade/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
 	if(attack_type != MELEE_ATTACK)
 		return blocking_ability

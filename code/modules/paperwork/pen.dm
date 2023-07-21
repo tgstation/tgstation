@@ -18,6 +18,7 @@
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
+	item_flags = NOBLUDGEON
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
@@ -110,6 +111,7 @@
 	force = 5
 	throwforce = 5
 	throw_speed = 4
+	item_flags = NONE
 	colour = "#DC143C"
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT*7.5)
 	sharpness = SHARP_EDGED
@@ -229,7 +231,6 @@
 /*
  * Sleepypens
  */
-
 /obj/item/pen/sleepy/attack(mob/living/M, mob/user, params)
 	. = ..()
 	if(!.)

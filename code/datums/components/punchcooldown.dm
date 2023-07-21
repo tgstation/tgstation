@@ -13,10 +13,12 @@
 		return
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(changewarcry))
 
-/datum/component/wearertargeting/punchcooldown/proc/reducecooldown(mob/living/carbon/source, obj/item/weapon_used, attack_result)
+/datum/component/wearertargeting/punchcooldown/proc/reducecooldown(mob/living/carbon/source, obj/item/weapon_used, attack_result, datum/attack_style/used)
 	SIGNAL_HANDLER
 
-	if(istype(source.get_active_held_item(), /obj/item/hand_item/slapper) || !(attack_result & ATTACK_SWING_CANCEL))
+	var/slapping_dudes = istype(source.get_active_held_item(), /obj/item/hand_item/slapper)
+	var/punching_dudes = !(attack_result & ATTACK_SWING_CANCEL) && istype(used, /datum/attack_style/unarmed)
+	if(slapping_dudes || punching_dudes)
 		INVOKE_ASYNC(src, PROC_REF(engage_turbo), source)
 
 /datum/component/wearertargeting/punchcooldown/proc/engage_turbo(mob/living/attacker)

@@ -723,7 +723,7 @@
 				w_uniform.add_fingerprint(user)
 		return
 
-	if(attacking_item.get_sharpness() || armor_block >= 50)
+	if(attacking_item.get_sharpness() || armor_block >= 50 || damage_type != BRUTE)
 		return
 
 	switch(hit_limb.body_zone)

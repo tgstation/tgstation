@@ -704,6 +704,9 @@
 		user.visible_message(span_danger("[user] strikes with the force of [num_ghosts] vengeful spirits!"))
 	return ..()
 
+/obj/item/melee/ghost_sword/holographic/describe_blocking()
+	return ..() + " More effective at blocking with additional ghosts."
+
 /obj/item/melee/ghost_sword/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
 	return max(DEFAULT_ITEM_DEFENSE_MULTIPLIER - (ghost_check() * 0.2), 0.2)
 

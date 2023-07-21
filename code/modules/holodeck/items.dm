@@ -21,6 +21,9 @@
 	active_sharpness = NONE
 	active_heat = 0
 
+/obj/item/melee/energy/sword/holographic/describe_blocking()
+	return ..() + " Much more effective at blocking other holographic energy swords."
+
 /obj/item/melee/energy/sword/holographic/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
 	// only good at blocking other holo eswords
 	if(istype(hitby, type) && HAS_TRAIT(hitby, TRAIT_TRANSFORM_ACTIVE) && HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))

@@ -60,6 +60,12 @@
 /obj/item/dualsaber/can_attack_with(mob/living/attacker)
 	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
+/obj/item/dualsaber/describe_blocking()
+	var/all_blockables = english_list(bitfield_to_list(source.can_block_flags, BLOCKABLE_FLAGS), and_text = " or ")
+	return "[source.p_They()] can flawlessly block all laser and energy [all_blockables]. Otherwise, \
+		[source.p_they()] can block about [HITS_TO_CRIT((25 * source.blocking_ability))] [all_blockables] before having guard broken. \
+		Must be active to block."
+
 /obj/item/dualsaber/get_blocking_ability(mob/living/blocker, atom/movable/hitby, damage, attack_type, damage_type)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return -1
