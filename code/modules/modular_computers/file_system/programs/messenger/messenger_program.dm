@@ -556,7 +556,7 @@
 			if("Message")
 				quick_reply_prompt(usr, locate(href_list["target"]) in saved_chats)
 			if("mess_us_up")
-				if(!HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
+				if(HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
 					var/obj/item/modular_computer/pda/comp = computer
 					comp.explode(usr, from_message_menu = TRUE)
 					return
