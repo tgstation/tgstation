@@ -1,0 +1,4 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - bugfix: "fixed silicon alarm reports displaying power alarms as ALARM_ALARM_POWER"
