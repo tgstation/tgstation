@@ -1,4 +1,0 @@
-author: "Seven"
-delete-after: True
-changes:
-  - bugfix: "Xeno's corrosion ability no longer breaks reinforced walls and floors"
