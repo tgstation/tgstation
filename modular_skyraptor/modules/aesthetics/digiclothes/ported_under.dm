@@ -14,10 +14,11 @@
 
 /obj/item/clothing/under/rank/medical
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/medical.dmi'
-	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE, BODYTYPE_TESHVALI)
+	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE, BODYTYPE_TESHVALI, BODYTYPE_AVALARI)
 	bodytype_icon_files = list("4" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/medical.dmi',
 		"8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/medical_digi.dmi',
-		"1024" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/under/teshvali_under_medical.dmi')
+		"1024" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/under/teshvali_under_medical.dmi',
+		"2048" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/under/avalari_under_medical.dmi')
 
 /obj/item/clothing/under/rank/cargo
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/cargo.dmi'

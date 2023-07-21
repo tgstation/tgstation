@@ -18,6 +18,7 @@
 	worn_head_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_HEAD,
+		offset_x = list("east" = 2, "west" = -2),
 		offset_y = list("north" = -5, "south" = -5, "east" = -5, "west" = -5),
 	)
 	worn_face_offset = new(
