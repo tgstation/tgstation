@@ -2,46 +2,6 @@
 #define WEATHER_ALERT_INCOMING 1
 #define WEATHER_ALERT_IMMINENT_OR_ACTIVE 2
 
-/// Portable mining radio purchasable by miners
-/obj/item/radio/weather_monitor
-	icon = 'icons/obj/miningradio.dmi'
-	name = "mining weather radio"
-	icon_state = "miningradio"
-	desc = "A weather radio designed for use in inhospitable environments. Gives audible warnings when storms approach. Has access to cargo channel."
-	freqlock = RADIO_FREQENCY_LOCKED
-
-/obj/item/radio/weather_monitor/Initialize(mapload)
-	. = ..()
-	AddComponent( \
-		/datum/component/weather_announcer, \
-		state_normal = "weatherwarning", \
-		state_warning = "urgentwarning", \
-		state_danger = "direwarning", \
-	)
-	set_frequency(FREQ_SUPPLY)
-
-/// Wall mounted mining weather tracker
-/obj/machinery/mining_weather_monitor
-	name = "barometric monitor"
-	desc = "A machine monitoring atmospheric data from mining environments. Provides warnings about incoming weather fronts."
-	icon = 'icons/obj/miningradio.dmi'
-	icon_state = "wallmount"
-
-/obj/machinery/mining_weather_monitor/Initialize(mapload, ndir, nbuild)
-	. = ..()
-	AddComponent( \
-		/datum/component/weather_announcer, \
-		state_normal = "wallgreen", \
-		state_warning = "wallyellow", \
-		state_danger = "wallred", \
-	)
-
-/obj/machinery/mining_weather_monitor/update_overlays()
-	. = ..()
-	if((machine_stat & BROKEN) || !powered())
-		return
-	. += emissive_appearance(icon, "emissive", src)
-
 /// Component which makes you yell about what the weather is
 /datum/component/weather_announcer
 	/// Currently displayed warning level
@@ -135,11 +95,11 @@
 			return "Weather front imminent, find shelter immediately."
 	return "Error in meteorological calculation. Please report this deviation to a trained programmer."
 
-/// Polls existing weather for what kind of warnings we should be displaying.
-/datum/component/weather_announcer/proc/set_current_alert_level()
+/datum/component/weather_announcer/proc/time_till_storm()
 	var/list/mining_z_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
 	if(!length(mining_z_levels))
 		return // No problems if there are no mining z levels
+
 
 	for(var/datum/weather/check_weather as anything in SSweather.processing)
 		if(!check_weather.barometer_predictable || check_weather.stage == WIND_DOWN_STAGE || check_weather.stage == END_STAGE)
@@ -148,26 +108,54 @@
 			if(mining_level in check_weather.impacted_z_levels)
 				is_weather_dangerous = !check_weather.aesthetic
 				warning_level = WEATHER_ALERT_IMMINENT_OR_ACTIVE
-				return
+				return 0
 
-	is_weather_dangerous = TRUE // We don't actually know until it arrives so err with caution
-	var/soonest_active_weather = INFINITY
+	var/time_until_next = INFINITY
 	for(var/mining_level in mining_z_levels)
 		var/next_time = timeleft(SSweather.next_hit_by_zlevel["[mining_level ]"]) || INFINITY
-		if (next_time && next_time < soonest_active_weather)
-			soonest_active_weather = next_time
+		if (next_time && next_time < time_until_next)
+			time_until_next = next_time
+	return time_until_next
 
-	if(soonest_active_weather < 30 SECONDS)
-		warning_level = WEATHER_ALERT_IMMINENT_OR_ACTIVE
+/// Polls existing weather for what kind of warnings we should be displaying.
+/datum/component/weather_announcer/proc/set_current_alert_level()
+	var/time_until_next = time_till_storm()
+	if(isnull(time_until_next))
+		return // No problems if there are no mining z levels
+	if(time_until_next >= 2 MINUTES)
+		warning_level = WEATHER_ALERT_CLEAR
 		return
 
-	if(soonest_active_weather < 2 MINUTES)
+	if(time_until_next >= 30 SECONDS)
 		warning_level = WEATHER_ALERT_INCOMING
 		return
 
-	warning_level = WEATHER_ALERT_CLEAR
+	// Weather is here, now we need to figure out if it is dangerous
+	warning_level = WEATHER_ALERT_IMMINENT_OR_ACTIVE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/mining_weather_monitor, 28)
+	for(var/datum/weather/check_weather as anything in SSweather.processing)
+		if(!check_weather.barometer_predictable || check_weather.stage == WIND_DOWN_STAGE || check_weather.stage == END_STAGE)
+			continue
+		var/list/mining_z_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
+		for(var/mining_level in mining_z_levels)
+			if(mining_level in check_weather.impacted_z_levels)
+				is_weather_dangerous = !check_weather.aesthetic
+			return
+
+/datum/component/weather_announcer/proc/on_examine(atom/radio, mob/examiner, list/examine_texts)
+	var/time_until_next = time_till_storm()
+	if(isnull(time_until_next))
+		return
+		examine_texts += span_notice("The next storm is inbound in [DisplayTimeText(time_until_next)] seconds.")
+	if (time_until_next = 0)
+	examine_texts += "A storm is currently active."
+
+/datum/component/weather_announcer/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
+/datum/component/weather_announcer/UnregisterFromParent()
+	.=..()
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
 #undef WEATHER_ALERT_CLEAR
 #undef WEATHER_ALERT_INCOMING
