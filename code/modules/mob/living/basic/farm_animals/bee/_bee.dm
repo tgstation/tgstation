@@ -165,6 +165,10 @@
 	add_overlay("[icon_base]_wings")
 
 /mob/living/basic/bee/proc/pollinate(obj/machinery/hydroponics/hydro)
+	if(isnull(hydro.myseed))
+		return FALSE
+	if(hydro.plant_status == HYDROTRAY_PLANT_DEAD || hydro.recent_bee_visit)
+		return FALSE
 
 	hydro.recent_bee_visit = TRUE
 	addtimer(VARSET_CALLBACK(hydro, recent_bee_visit, FALSE), BEE_TRAY_RECENT_VISIT)
@@ -295,17 +299,19 @@
 
 /obj/item/trash/bee/Initialize(mapload, mob/living/basic/bee/dead_bee)
 	. = ..()
-	if(dead_bee)
-		pixel_x = dead_bee.pixel_x
-		pixel_y = dead_bee.pixel_y
-		bee_type = dead_bee.type
-		if(dead_bee.beegent)
-			beegent = dead_bee.beegent
-			reagents.add_reagent(beegent.type, 5)
-		update_appearance()
 	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, BEE_FOODGROUPS, 10, 0, list("bee"), null, 10)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	RegisterSignal(src, COMSIG_ATOM_ON_LAZARUS_INJECTOR, PROC_REF(use_lazarus))
+	if(isnull(dead_bee))
+		return
+	pixel_x = dead_bee.pixel_x
+	pixel_y = dead_bee.pixel_y
+	bee_type = dead_bee.type
+	if(dead_bee.beegent)
+		beegent = dead_bee.beegent
+		reagents.add_reagent(beegent.type, 5)
+	update_appearance()
+
 
 /obj/item/trash/bee/Destroy()
 	beegent = null
