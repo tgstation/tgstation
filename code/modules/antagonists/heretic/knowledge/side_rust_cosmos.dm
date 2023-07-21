@@ -18,6 +18,26 @@
 	cost = 1
 	route = PATH_SIDE
 
+/datum/heretic_knowledge/entropy_pulse
+	name = "Pulse of Entropy"
+	desc = "Allows you to transmute 20 irons and 2 garbage items to fill the surrounding vicinity of the rune with rust."
+	gain_text = "Reality begins to whisper to me. To give it its entropic end."
+	required_atoms = list(
+		/obj/item/stack/sheet/iron = 20,
+		/obj/item/trash = 2
+	)
+	cost = 1
+	route = PATH_SIDE
+	var/size = 49 ///roughly 3 tiles radius
+
+/datum/heretic_knowledge/entropy_pulse/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/area/ritual_area = detect_room(loc, max_size = size)
+	for(var/turf/nearby_turf in ritual_area)
+		if(prob(20) || istype(nearby_turf, /turf/closed))
+			continue
+		nearby_turf.rust_heretic_act()
+	return TRUE
+
 /datum/heretic_knowledge/curse/corrosion
 	name = "Curse of Corrosion"
 	desc = "Allows you to transmute wirecutters, a pool of vomit, and a heart to cast a curse of sickness on a crew member. \
