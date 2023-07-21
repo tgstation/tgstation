@@ -5,13 +5,12 @@
 	inhand_icon_state = null
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
-	armor_type = /datum/armor/clothing_under/plasmaman_captain
+	armor_type = /datum/armor/clothing_under/rank_captain/plasmaman
 
-/datum/armor/clothing_under/plasmaman_captain
+/datum/armor/clothing_under/rank_captain/plasmaman
 	bio = 100
 	fire = 95
 	acid = 95
-	wound = 15
 
 /obj/item/clothing/under/plasmaman/head_of_personnel
 	name = "head of personnel's plasma envirosuit"
@@ -38,9 +37,9 @@
 	desc = "An air-tight suit designed to be used by plasmamen insane enough to achieve the rank of \"Chief Engineer\"."
 	icon_state = "ce_envirosuit"
 	inhand_icon_state = null
-	armor_type = /datum/armor/clothing_under/plasmaman_chief_engineer
+	armor_type = /datum/armor/clothing_under/engineering_chief_engineer/plasmaman
 
-/datum/armor/clothing_under/plasmaman_chief_engineer
+/datum/armor/clothing_under/engineering_chief_engineer/plasmaman
 	bio = 100
 	fire = 95
 	acid = 95
@@ -50,21 +49,15 @@
 	desc = "It's an envirosuit worn by those with the experience to be \"Chief Medical Officer\"."
 	icon_state = "cmo_envirosuit"
 	inhand_icon_state = null
-	armor_type = /datum/armor/clothing_under/plasmaman_chief_medical_officer
-
-/datum/armor/clothing_under/plasmaman_chief_medical_officer
-	bio = 100
-	fire = 95
-	acid = 95
 
 /obj/item/clothing/under/plasmaman/research_director
 	name = "research director's plasma envirosuit"
 	desc = "It's an envirosuit worn by those with the know-how to achieve the position of \"Research Director\"."
 	icon_state = "rd_envirosuit"
 	inhand_icon_state = null
-	armor_type = /datum/armor/clothing_under/plasmaman_research_director
+	armor_type = /datum/armor/clothing_under/rnd_research_director/plasmaman
 
-/datum/armor/clothing_under/plasmaman_research_director
+/datum/armor/clothing_under/rnd_research_director/plasmaman
 	bio = 100
 	fire = 95
 	acid = 95

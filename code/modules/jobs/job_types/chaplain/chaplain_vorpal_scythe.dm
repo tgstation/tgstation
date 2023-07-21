@@ -12,7 +12,8 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 /obj/item/organ/internal/cyberimp/arm/shard/scythe/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
-	ADD_TRAIT(receiver, TRAIT_MORBID, ORGAN_TRAIT)
+	if(receiver.mind)
+		ADD_TRAIT(receiver.mind, TRAIT_MORBID, ORGAN_TRAIT)
 
 /obj/item/organ/internal/cyberimp/arm/shard/scythe/Retract()
 	var/obj/item/vorpalscythe/scythe = active_item
@@ -163,7 +164,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 		scythe_empowerment(potential_empowerment)
 
-		if(HAS_TRAIT(user, TRAIT_MORBID)) //You feel good about yourself, pal?
+		if(HAS_MIND_TRAIT(user, TRAIT_MORBID)) //You feel good about yourself, pal?
 			user.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -198,8 +199,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 	var/obj/effect/rune/target_rune = target
 	if(target_rune.log_when_erased)
-		user.log_message("erased [target_rune.cultist_name] rune using the vorpal scythe", LOG_GAME)
-		message_admins("[ADMIN_LOOKUPFLW(user)] erased a [target_rune.cultist_name] rune with the vorpal scythe.")
+		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 #undef SCYTHE_WEAK

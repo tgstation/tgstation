@@ -9,7 +9,7 @@
 	name = "porous rock"
 	desc = "A spongy rock capable of absorbing chemicals."
 	icon_state = "liver-p"
-	status = ORGAN_MINERAL
+	organ_flags = ORGAN_MINERAL
 	color = COLOR_GOLEM_GRAY
 
 /obj/item/organ/internal/liver/golem/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)

@@ -1,7 +1,7 @@
 /obj/structure/punching_bag
 	name = "punching bag"
 	desc = "A punching bag. Can you get to speed level 4???"
-	icon = 'icons/obj/gym_equipment.dmi'
+	icon = 'icons/obj/fluff/gym_equipment.dmi'
 	icon_state = "punchingbag"
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER

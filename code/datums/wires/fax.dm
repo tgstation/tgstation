@@ -38,7 +38,7 @@
 		if(WIRE_LOADCHECK)
 			machine.allow_exotic_faxes = !machine.allow_exotic_faxes
 
-/datum/wires/fax/on_cut(wire, mend)
+/datum/wires/fax/on_cut(wire, mend, source)
 	var/obj/machinery/fax/machine = holder
 	switch(wire)
 		if(WIRE_SHOCK)

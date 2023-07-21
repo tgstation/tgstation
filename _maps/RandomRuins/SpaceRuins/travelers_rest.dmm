@@ -151,6 +151,7 @@
 /area/ruin/space/has_grav/travelers_rest)
 "mg" = (
 /obj/effect/turf_decal/trimline/dark_green,
+/obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "pk" = (
@@ -169,18 +170,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
-"sM" = (
-/obj/machinery/light/directional/east,
-/obj/machinery/light/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/door/window/brigdoor{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/brown/filled,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travelers_rest)
 "uq" = (
 /obj/effect/turf_decal/trimline/brown,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travelers_rest)
 "uS" = (
@@ -208,6 +200,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travelers_rest)
 "xq" = (
@@ -242,14 +235,6 @@
 	pixel_x = 1;
 	pixel_y = 2
 	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travelers_rest)
-"Dw" = (
-/obj/machinery/light/directional/west,
-/obj/machinery/light/directional/north,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/door/window/brigdoor,
-/obj/effect/turf_decal/trimline/dark_green/filled,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "Ef" = (
@@ -287,14 +272,6 @@
 /obj/effect/turf_decal/trimline/neutral/end,
 /turf/open/floor/iron/large,
 /area/ruin/space/has_grav/travelers_rest)
-"FL" = (
-/obj/machinery/light/directional/east,
-/obj/machinery/light/directional/north,
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/door/window/brigdoor,
-/obj/effect/turf_decal/trimline/blue/filled,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travelers_rest)
 "Gj" = (
 /obj/structure/table/reinforced,
 /obj/item/gps/spaceruin{
@@ -311,19 +288,10 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/textured,
 /area/ruin/space/has_grav/travelers_rest)
-"HA" = (
-/obj/machinery/light/directional/west,
-/obj/machinery/light/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/door/window/brigdoor{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/filled,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/travelers_rest)
 "HC" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue,
+/obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/travelers_rest)
 "KD" = (
@@ -584,11 +552,11 @@ MB
 Lx
 Px
 NG
-Dw
+NG
 Ob
 aX
 LU
-HA
+NG
 NG
 bz
 gF
@@ -644,11 +612,11 @@ MB
 gF
 bz
 NG
-FL
+NG
 iP
 iZ
 pk
-sM
+NG
 NG
 bz
 gF

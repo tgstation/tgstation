@@ -44,6 +44,7 @@
 #define AMBIENCE_RUINS "ruins"
 #define AMBIENCE_ENGI "engi"
 #define AMBIENCE_MINING "mining"
+#define AMBIENCE_ICEMOON "icemoon"
 #define AMBIENCE_MEDICAL "med"
 #define AMBIENCE_VIROLOGY "viro"
 #define AMBIENCE_SPOOKY "spooky"

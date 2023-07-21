@@ -30,6 +30,7 @@
 /datum/unit_test/high_five_too_slow/Run()
 	var/mob/living/carbon/human/offer_guy = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/take_guy = allocate(/mob/living/carbon/human/consistent)
+	pass(take_guy) // This guy just needs to stand around
 
 	// Just testing a too slow setup - so long as the setup works, we're good.
 	offer_guy.emote("slap")

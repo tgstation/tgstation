@@ -1,4 +1,0 @@
-author: "SapphicOverload"
-delete-after: True
-changes:
-  - bugfix: "fixed hostile mobs trying to attack supermatter discharge bolts"

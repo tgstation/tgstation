@@ -21,7 +21,7 @@
 	limb_id = SPECIES_ETHEREAL
 	is_dimorphic = FALSE
 	dmg_overlay_type = null
-	brute_modifier = 1.25 //ethereal are weak to brute damage
+	brute_modifier = 1.25 //ethereal are weak to brute damages
 
 /obj/item/bodypart/chest/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()
@@ -55,7 +55,7 @@
 	unarmed_attack_verb = "burn"
 	unarmed_attack_sound = 'sound/weapons/etherealhit.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	brute_modifier = 1.25 //ethereal are weak to brute damages
+	brute_modifier = 1.25 //ethereal are weak to brute damage
 
 /obj/item/bodypart/arm/right/ethereal/update_limb(dropping_limb, is_creating)
 	. = ..()
@@ -95,3 +95,8 @@
 		var/mob/living/carbon/human/potato_oc = owner
 		var/datum/species/ethereal/eth_holder = potato_oc.dna.species
 		species_color = eth_holder.current_color
+
+/obj/item/bodypart/head/ethereal/lustrous
+	icon_state = "lustrous_head"
+	limb_id = SPECIES_ETHEREAL_LUSTROUS
+	head_flags = NONE

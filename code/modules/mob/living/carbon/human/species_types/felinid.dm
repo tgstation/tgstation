@@ -9,7 +9,11 @@
 	external_organs = list(
 		/obj/item/organ/external/tail/cat = "Cat",
 	)
-	inherent_traits = list(TRAIT_CAN_USE_FLIGHT_POTION, TRAIT_HATED_BY_DOGS)
+	inherent_traits = list(
+		TRAIT_CAN_USE_FLIGHT_POTION,
+		TRAIT_HATED_BY_DOGS,
+		TRAIT_USES_SKINTONES,
+	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/felinid
 	payday_modifier = 0.75
@@ -124,9 +128,8 @@
 		to_chat(purrbated_human, span_boldnotice("You are no longer a cat."))
 
 /datum/species/human/felinid/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
-	human_for_preview.hairstyle = "Hime Cut"
-	human_for_preview.hair_color = "#ffcccc" // pink
-	human_for_preview.update_body_parts()
+	human_for_preview.set_haircolor("#ffcccc", update = FALSE) // pink
+	human_for_preview.set_hairstyle("Hime Cut", update = TRUE)
 
 	var/obj/item/organ/internal/ears/cat/cat_ears = human_for_preview.get_organ_by_type(/obj/item/organ/internal/ears/cat)
 	if (cat_ears)
