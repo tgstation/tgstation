@@ -140,6 +140,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PULL_BLOCKED "pullblocked"
 /// Abstract condition that prevents movement if being pulled and might be resisted against. Handcuffs and straight jackets, basically.
 #define TRAIT_RESTRAINED "restrained"
+/// Apply this to make a mob not dense, and remove it when you want it to no longer make them undense, other sorces of undesity will still apply. Always define a unique source when adding a new instance of this!
+#define TRAIT_UNDENSE "undense"
+/// Expands our FOV by 30 degrees if restricted
+#define TRAIT_EXPANDED_FOV "expanded_fov"
 /// Doesn't miss attacks
 #define TRAIT_PERFECT_ATTACKER "perfect_attacker"
 ///Recolored by item/greentext
@@ -762,6 +766,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_POSTERBOY "poster_boy"
 #define TRAIT_THROWINGARM "throwing_arm"
 
+// Debug traits
+/// This object has light debugging tools attached to it
+#define TRAIT_LIGHTING_DEBUGGED "lighting_debugged"
+
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
 
@@ -884,6 +892,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATUS_EFFECT_TRAIT "status-effect"
 /// A trait given by a specific status effect (not sure why we need both but whatever!)
 #define TRAIT_STATUS_EFFECT(effect_id) "[effect_id]-trait"
+/// Trait from light debugging
+#define LIGHT_DEBUG_TRAIT "light-debug"
 
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"
@@ -917,6 +927,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SUIT_TRAIT "suit"
 /// Trait associated to lying down (having a [lying_angle] of a different value than zero).
 #define LYING_DOWN_TRAIT "lying-down"
+/// A trait gained by leaning against a wall
+#define LEANING_TRAIT "leaning"
 /// Trait associated to lacking electrical power.
 #define POWER_LACK_TRAIT "power-lack"
 /// Trait associated to lacking motor movement
@@ -988,7 +1000,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPECIES_FLIGHT_TRAIT "species-flight"
 #define FROSTMINER_ENRAGE_TRAIT "frostminer-enrage"
 #define NO_GRAVITY_TRAIT "no-gravity"
+/// A trait gained from a mob's leap action, like the leaper
 #define LEAPING_TRAIT "leaping"
+/// A trait gained from a mob's vanish action, like the herophant
+#define VANISHING_TRAIT "vanishing"
+/// A trait gained from a mob's swoop action, like the ash drake
+#define SWOOPING_TRAIT "swooping"
+/// A trait gained from a mob's mimic ability, like the mimic
+#define MIMIC_TRAIT "mimic"
+#define SHRUNKEN_TRAIT "shrunken"
 #define LEAPER_BUBBLE_TRAIT "leaper-bubble"
 #define DNA_VAULT_TRAIT "dna_vault"
 /// sticky nodrop sounds like a bad soundcloud rapper's name
@@ -1047,6 +1067,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHOKING_TRAIT "choking_trait"
 /// Trait given by hallucinations
 #define HALLUCINATION_TRAIT "hallucination_trait"
+/// Trait given by simple/basic mob death
+#define BASIC_MOB_DEATH_TRAIT "basic_mob_death"
 
 
 /**

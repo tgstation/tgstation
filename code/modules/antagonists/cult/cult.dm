@@ -9,7 +9,7 @@
 	antag_hud_name = "cult"
 
 	///The vote ability Cultists have to elect someone to be the leader.
-	var/datum/action/innate/cult/mastervote/vote_ability = new
+	var/datum/action/innate/cult/mastervote/vote_ability
 
 	///Boolean on whether the starting equipment should be given to their inventory.
 	var/give_equipment = FALSE
@@ -32,21 +32,28 @@
 	var/mob/living/current = owner.current
 	if(give_equipment)
 		equip_cultist(TRUE)
+
+	var/datum/action/innate/cult/comm/communion = new(owner)
+	communion.Grant(current)
+	if(isnull(cult_team.cult_leader_datum))
+		vote_ability = new(owner)
+		vote_ability.Grant(current)
+	if(ishuman(current))
+		var/datum/action/innate/cult/blood_magic/magic = new(owner)
+		magic.Grant(current)
+
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
 
-	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
-		current.client.images += cult_team.blood_target_image
-
-	ADD_TRAIT(current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
-
 /datum/antagonist/cult/on_removal()
-	REMOVE_TRAIT(owner.current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
 	if(!silent)
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!"), ignored_mobs = owner.current)
 		to_chat(owner.current, span_userdanger("An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant."))
 		owner.current.log_message("has renounced the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
-	if(cult_team.blood_target && cult_team.blood_target_image && owner.current.client)
-		owner.current.client.images -= cult_team.blood_target_image
+
+	if(vote_ability)
+		QDEL_NULL(vote_ability)
+	for(var/datum/action/innate/cult/cult_buttons in owner.current.actions)
+		qdel(cult_buttons)
 
 	return ..()
 
@@ -57,20 +64,16 @@
 	current.faction |= FACTION_CULT
 	current.grant_language(/datum/language/narsie, source = LANGUAGE_CULTIST)
 
-	var/datum/action/innate/cult/comm/communion = new
-	communion.Grant(current)
-	if(isnull(cult_team.cult_leader_datum))
-		vote_ability.Grant(current)
-	if(ishuman(current))
-		var/datum/action/innate/cult/blood_magic/magic = new
-		magic.Grant(current)
-
 	current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
+	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
+		current.client.images += cult_team.blood_target_image
+
 	if(cult_team.cult_risen)
 		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
 	if(cult_team.cult_ascendent)
 		current.AddElement(/datum/element/cult_halo, initial_delay = 0 SECONDS)
 
+	ADD_TRAIT(current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
 	add_team_hud(current)
 
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)
@@ -80,16 +83,16 @@
 	current.faction -= FACTION_CULT
 	current.remove_language(/datum/language/narsie, source = LANGUAGE_CULTIST)
 
-	QDEL_NULL(vote_ability)
-	for(var/datum/action/innate/cult/cult_buttons in owner.current.actions)
-		qdel(cult_buttons)
-	current.update_mob_action_buttons()
-
 	current.clear_alert("bloodsense")
+	if(cult_team.blood_target && cult_team.blood_target_image && owner.current.client)
+		owner.current.client.images -= cult_team.blood_target_image
+
 	if (HAS_TRAIT(current, TRAIT_UNNATURAL_RED_GLOWY_EYES))
 		current.RemoveElement(/datum/element/cult_eyes)
 	if (HAS_TRAIT(current, TRAIT_CULT_HALO))
 		current.RemoveElement(/datum/element/cult_halo)
+
+	REMOVE_TRAIT(owner.current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
 
 /datum/antagonist/cult/on_mindshield(mob/implanter)
 	if(!silent)

@@ -5,11 +5,7 @@
 /obj/machinery/light/built
 	icon_state = "tube-empty"
 	start_with_cell = FALSE
-
-/obj/machinery/light/built/Initialize(mapload)
-	. = ..()
 	status = LIGHT_EMPTY
-	update(0)
 
 /obj/machinery/light/no_nightlight
 	nightshift_enabled = FALSE
@@ -67,11 +63,10 @@
 /obj/machinery/light/small/built
 	icon_state = "bulb-empty"
 	start_with_cell = FALSE
-
-/obj/machinery/light/small/built/Initialize(mapload)
-	. = ..()
 	status = LIGHT_EMPTY
-	update(0)
+
+/obj/machinery/light/small/dim
+	brightness = 2.4
 
 /obj/machinery/light/small/red
 	bulb_colour = "#FF3232"
@@ -145,6 +140,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/built, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/broken, 0)
 
 // ---- Red bulbs
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/dim, 0)
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/red, 0)
 
 // ---- Red dim bulbs
