@@ -26,11 +26,6 @@ export type Material = {
   amount: number;
 
   /**
-   * Definition of how much units 1 sheet has.
-   */
-  SHEET_MATERIAL_AMOUNT: number;
-
-  /**
    * The number of sheets.
    */
   sheets: number;

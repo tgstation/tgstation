@@ -37,7 +37,7 @@
 			A.disabled = !A.disabled
 			addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/autolathe, reset), wire), 60)
 
-/datum/wires/autolathe/on_cut(wire, mend)
+/datum/wires/autolathe/on_cut(wire, mend, source)
 	var/obj/machinery/autolathe/A = holder
 	switch(wire)
 		if(WIRE_HACK)
