@@ -567,4 +567,4 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#43523d#a2abb0"
-	armor_type = /datum/armor/beret_sec
+	armor_type = /datum/armor/cosmetic_sec
