@@ -244,7 +244,7 @@
 	addtimer(CALLBACK(src, PROC_REF(BellyFlopHop), new_turf), 3 SECONDS)
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/BellyFlopHop(turf/T)
-	set_density(FALSE)
+	ADD_TRAIT(src, TRAIT_UNDENSE, LEAPING_TRAIT)
 	throw_at(T, get_dist(src,T),1,src, FALSE, callback = CALLBACK(src, PROC_REF(Crush)))
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/Crush()

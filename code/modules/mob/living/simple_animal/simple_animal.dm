@@ -457,14 +457,13 @@
 		//a manner as to cause a call to death() again //Pain
 		del_on_death = FALSE
 		qdel(src)
-		return
-
-	health = 0
-	icon_state = icon_dead
-	if(flip_on_death)
-		transform = transform.Turn(180)
-	//ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
-	return ..()
+	else
+		health = 0
+		icon_state = icon_dead
+		if(flip_on_death)
+			transform = transform.Turn(180)
+		ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
+		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
@@ -488,7 +487,7 @@
 	if(!.)
 		return
 	icon_state = icon_living
-	set_density(initial(density))
+	REMOVE_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())

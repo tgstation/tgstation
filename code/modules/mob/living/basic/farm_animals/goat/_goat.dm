@@ -3,7 +3,6 @@
 	desc = "A slab of 100% grass fed award-winning farm meat."
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 3,
-		/datum/reagent/consumable/nutriment/fat = 4,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	) // Marble
 
