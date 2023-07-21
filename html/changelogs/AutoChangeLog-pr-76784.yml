@@ -1,5 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes:
-  - qol: "terminals built by left-clicking on SMES and APC units will now be on the same layer as the machine."
-  - bugfix: "constructing a terminal on a specific layer with right-click now works for APCs, not just SMES units"
