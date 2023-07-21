@@ -1354,12 +1354,29 @@
 			return round(cached_reagent.purity, 0.01)
 	return 0
 
-/// Get the average purity of all reagents
-/datum/reagents/proc/get_average_purity()
+/// Get the average purity of all reagents (or all subtypes of provided typepath)
+/datum/reagents/proc/get_average_purity(parent_type = null)
+	var/total_amount
 	var/weighted_purity
-	for(var/datum/reagent/reagent as anything in reagent_list)
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		if(!isnull(parent_type) && !istype(reagent, parent_type))
+			continue
+		total_amount += reagent.volume
 		weighted_purity += reagent.volume * reagent.purity
-	return weighted_purity / total_volume
+	return weighted_purity / total_amount
+
+/// Get the average nutriment_factor of all consumable reagents
+/datum/reagents/proc/get_average_nutriment_factor()
+	var/consumable_volume
+	var/weighted_nutriment_factor
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		if(istype(reagent, /datum/reagent/consumable))
+			var/datum/reagent/consumable/consumable_reagent = reagent
+			consumable_volume += consumable_reagent.volume
+			weighted_nutriment_factor += consumable_reagent.volume * consumable_reagent.nutriment_factor
+	return weighted_nutriment_factor / consumable_volume
 
 /// Get a comma separated string of every reagent name in this holder. UNUSED
 /datum/reagents/proc/get_reagent_names()
