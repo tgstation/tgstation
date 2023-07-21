@@ -1626,6 +1626,7 @@
 #include "code\game\machinery\medipen_refiller.dm"
 #include "code\game\machinery\modular_shield.dm"
 #include "code\game\machinery\navbeacon.dm"
+#include "code\game\machinery\nebula_shielding.dm"
 #include "code\game\machinery\PDApainter.dm"
 #include "code\game\machinery\prisongate.dm"
 #include "code\game\machinery\prisonlabor.dm"
