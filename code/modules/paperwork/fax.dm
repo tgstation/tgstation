@@ -519,3 +519,64 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 	return .
 
+/// Suptypes of fax machines
+
+/obj/machinery/fax/captain
+	fax_name = "Captain's Office"
+	name = "Captain's Fax Machine"
+
+/obj/machinery/fax/hos
+	fax_name = "Head of Security's Office"
+	name = "Head of Security's Fax Machine"
+
+/obj/machinery/fax/sec
+	fax_name = "Security Office"
+	name = "Security Office Fax Machine"
+
+/obj/machinery/fax/det
+	fax_name = "Detective's Office"
+	name = "Detective's Fax Machine"
+
+/obj/machinery/fax/law
+	fax_name = "Law Office"
+	name = "Law Office Fax Machine"
+
+/obj/machinery/fax/cmo
+	name = "Chief Medical Officer's Fax Machine"
+	fax_name = "Chief Medical Officer's Office"
+
+/obj/machinery/fax/med
+	fax_name = "Medical"
+	name = "Medical Fax Machine"
+
+/obj/machinery/fax/ce
+	fax_name = "Chief Engineer's Office"
+	name = "Chief Engineer's Fax Machine"
+
+/obj/machinery/fax/engi
+	fax_name = "Engineering Lobby"
+	name = "Engineering Lobby Fax Machine"
+
+/obj/machinery/fax/rd
+	fax_name = "Research Director's Office"
+	name = "Research Director's Fax Machine"
+
+/obj/machinery/fax/sci
+	fax_name = "Research Division"
+	name = "Research Division Fax Machine"
+
+/obj/machinery/fax/qm
+	fax_name = "Quartermaster's Office"
+	name = "Quartermaster's Fax Machine"
+
+/obj/machinery/fax/cargo
+	fax_name = "Cargo Office"
+	name = "Cargo Office Fax Machine"
+
+/obj/machinery/fax/hop
+	fax_name = "Head of Personnel's Office"
+	name = "Head of Personnel's Fax Machine"
+
+/obj/machinery/fax/service
+	fax_name = "Service Hallway"
+	name = "Service Fax Machine"
