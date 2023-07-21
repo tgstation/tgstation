@@ -249,8 +249,8 @@
 /obj/item/mod/module/mouthhole/on_install()
 	former_flags = mod.helmet.flags_cover
 	former_visor_flags = mod.helmet.visor_flags_cover
-	mod.helmet.flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
-	mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
+	mod.helmet.flags_cover &= ~(HEADCOVERSMOUTH|PEPPERPROOF)
+	mod.helmet.visor_flags_cover &= ~(HEADCOVERSMOUTH|PEPPERPROOF)
 
 /obj/item/mod/module/mouthhole/on_uninstall(deleting = FALSE)
 	if(deleting)
@@ -566,6 +566,9 @@
 	even though it comes inbuilt into the Magnate/Corporate MODS and spawns in maints, I like the idea of stealing them*/
 	/// Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
 	var/obj/item/clothing/head/attached_hat
+	/// Original cover flags for the MOD helmet, before a hat is placed
+	var/former_flags
+	var/former_visor_flags
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
 	RegisterSignal(mod.helmet, COMSIG_ATOM_EXAMINE, PROC_REF(add_examine))
@@ -600,6 +603,10 @@
 		return
 	if(mod.wearer.transferItemToLoc(hitting_item, src, force = FALSE, silent = TRUE))
 		attached_hat = hitting_item
+		former_flags = mod.helmet.flags_cover
+		former_visor_flags = mod.helmet.visor_flags_cover
+		mod.helmet.flags_cover |= attached_hat.flags_cover
+		mod.helmet.visor_flags_cover |= attached_hat.visor_flags_cover
 		balloon_alert(user, "hat attached, right-click to remove")
 		mod.wearer.update_clothing(mod.slot_flags)
 
@@ -619,6 +626,8 @@
 	else
 		balloon_alert_to_viewers("the hat falls to the floor!")
 	attached_hat = null
+	mod.helmet.flags_cover = former_flags
+	mod.helmet.visor_flags_cover = former_visor_flags
 	mod.wearer.update_clothing(mod.slot_flags)
 
 ///Sign Language Translator - allows people to sign over comms using the modsuit's gloves.
