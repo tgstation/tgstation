@@ -382,13 +382,31 @@
 		/obj/item/skillchip/light_remover,
 	)
 
-/datum/quirk/lightless/process(seconds_per_tick)
-	var/turf/T = get_turf(quirk_holder)
-	var/lums = T.get_lumcount()
-	if(lums > LIGHTING_TILE_IS_DARK)
-		quirk_holder.add_mood_event("bright_light", /datum/mood_event/bright_light)
-	else
+/datum/quirk/lightless/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
+		return
+
+	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	if(human_holder.dna?.species.id in list(SPECIES_SHADOW, SPECIES_NIGHTMARE))
+		return
+
+	if((human_holder.sight & SEE_TURFS) == SEE_TURFS)
+		return
+
+	var/turf/holder_turf = get_turf(quirk_holder)
+
+	var/lums = holder_turf.get_lumcount()
+
+	if(lums < LIGHTING_TILE_IS_DARK)
 		quirk_holder.clear_mood_event("bright_light")
+		return
+	quirk_holder.add_mood_event("bright_light", /datum/mood_event/bright_light)
 
 /datum/quirk/item_quirk/nearsighted
 	name = "Nearsighted"
