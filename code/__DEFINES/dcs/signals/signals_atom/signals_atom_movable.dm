@@ -112,4 +112,3 @@
 
 /// From /datum/element/immerse/proc/add_submerge_overlay(): (visual_overlay)
 #define COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY "movable_edit_unique_submerge_overlay"
-"
