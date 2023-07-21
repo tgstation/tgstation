@@ -98,6 +98,8 @@
 #define ROLE_BATTLECRUISER_CREW "Battlecruiser Crew"
 #define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
 #define ROLE_VENUSHUMANTRAP "Venus Human Trap"
+#define ROLE_CLOCK_CULTIST "Clock Cultist"
+
 
 
 /// This defines the antagonists you can operate with in the settings.
@@ -115,6 +117,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_REV_HEAD = 14,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
+	ROLE_CLOCK_CULTIST = 14,
 
 	// Midround
 	ROLE_ABDUCTOR = 0,

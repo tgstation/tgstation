@@ -41,7 +41,7 @@ const ObjectivePrintout = (props, context) => {
   const { objectives } = data;
   return (
     <Stack vertical>
-      <Stack.Item bold>To serve Rat'var you must:</Stack.Item>
+      <Stack.Item bold>To serve Rat&#39;var you must:</Stack.Item>
       <Stack.Item>
         {(!objectives && 'None!') ||
           objectives.map((objective) => (

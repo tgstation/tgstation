@@ -115,10 +115,6 @@
 
 /datum/antagonist/clock_cultist/get_preview_icon()
 	var/icon/icon = render_preview_outfit(preview_outfit)
-//	icon.Crop(-15, -15, 48, 48)
-	// Move the guy back to the bottom left, 32x32.
-//	icon.Crop(17, 17, 48, 48)
-
 	return finish_preview_icon(icon)
 
 /datum/antagonist/clock_cultist/on_mindshield(mob/implanter)

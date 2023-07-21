@@ -471,7 +471,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	minimum_round_time = 40 MINUTES
-	weight = 5
+	weight = 4 //monkestation edit: from 5 to 4
 	cost = 10
 	minimum_players = 25
 	repeatable = TRUE

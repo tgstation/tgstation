@@ -34,6 +34,36 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 	else
 		non_human_servants -= member
 
+/datum/team/clock_cult/roundend_report()
+	var/list/parts = list()
+	var/list/checked_objectives = list()
+	var/failure = FALSE
+	if(objectives.len)
+		var/count = 1
+		for(var/datum/objective/objective in objectives)
+			if(objective.check_completion())
+				checked_objectives += "<b>Objective #[count]</b>: [objective.explanation_text] [span_greentext("Success!")]"
+			else
+				checked_objectives += "<b>Objective #[count]</b>: [objective.explanation_text] [span_redtext("Fail.")]"
+				failure = TRUE
+			count++
+
+	if(failure)
+		parts += "<span class='redtext big'>The clock cult has failed to protect the ark and summon Rat'var, he will remain forever trapped!</span>"
+	else
+		parts += "<span class='greentext big'>The clock cult has succeeded! Rat'var's light shall shine forever more!</span>"
+
+	if(checked_objectives.len)
+		parts += "<b>The clock cultists' objectives were:</b>"
+		for(var/i in 1 to checked_objectives.len)
+			parts += checked_objectives[i]
+
+	if(members.len)
+		parts += "<span class='header'>The clock cultists were:</span>"
+		parts += printplayerlist(members)
+
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
 ///check how many human members we have and anything that goes with that
 /datum/team/clock_cult/proc/check_member_count()
 	check_member_distribution()
