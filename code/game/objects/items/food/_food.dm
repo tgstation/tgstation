@@ -12,6 +12,8 @@
 	grind_results = list()
 	///List of reagents this food gets on creation during reaction or map spawn
 	var/list/food_reagents
+	///A reagent the nutriments are converted into when the food is juiced.
+	var/datum/reagent/consumable/juice_typepath
 	///Extra flags for things such as if the food is in a container or not
 	var/food_flags
 	///Bitflag of the types of food this food is
@@ -132,3 +134,12 @@
 	AddComponent(/datum/component/germ_sensitive, mapload)
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time, stink_particles = decomposition_particles)
+
+///Turns all consumable reagents within the item into juice if juice_typepath is specified
+/obj/item/food/on_juice()
+	if(ispath(juice_typepath))
+		var/avg_nutriment_factor = reagents.get_average_nutriment_factor()
+		reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
+		var/datum/reagent/consumable/juice = reagents.get_reagent(juice_typepath)
+		juice.nutriment_factor = avg_nutriment_factor
+	return ..()
