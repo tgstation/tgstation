@@ -395,6 +395,15 @@
 			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, reagent)
 	return TRUE
 
+/// Turn one reagent into another, preserving volume, temp, purity, ph
+/datum/reagents/proc/convert_reagent(source_reagent_typepath, target_reagent_typepath)
+	var/datum/reagent/source_reagent = get_reagent(source_reagent_typepath)
+	var/reagent_amount = source_reagent.volume
+	var/reagent_purity = source_reagent.purity
+	var/reagent_ph = source_reagent.ph
+	remove_reagent(source_reagent_typepath, reagent_amount)
+	add_reagent(target_reagent_typepath, reagent_amount, reagtemp = chem_temp, added_purity = reagent_purity, added_ph = reagent_ph)
+
 //Converts the creation_purity to purity
 /datum/reagents/proc/uncache_creation_purity(id)
 	var/datum/reagent/R = has_reagent(id)

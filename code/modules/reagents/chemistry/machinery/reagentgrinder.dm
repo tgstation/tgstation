@@ -357,16 +357,13 @@
 	if(beaker?.reagents.total_volume)
 		//Recipe to make Butter
 		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/milk) / MILK_TO_BUTTER_COEFF, 1)
+		var/purity = beaker.reagents.get_reagent_purity(/datum/reagent/consumable/milk)
 		beaker.reagents.remove_reagent(/datum/reagent/consumable/milk, MILK_TO_BUTTER_COEFF * butter_amt)
 		for(var/i in 1 to butter_amt)
-			new /obj/item/food/butter(drop_location())
+			new /obj/item/food/butter(drop_location(), starting_reagent_purity = purity)
 		//Recipe to make Mayonnaise
 		if (beaker.reagents.has_reagent(/datum/reagent/consumable/eggyolk))
-			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggyolk)
-			beaker.reagents.remove_reagent(/datum/reagent/consumable/eggyolk, amount)
-			beaker.reagents.add_reagent(/datum/reagent/consumable/mayonnaise, amount)
+			beaker.reagents.convert_reagent(/datum/reagent/consumable/eggyolk, /datum/reagent/consumable/mayonnaise)
 		//Recipe to make whipped cream
 		if (beaker.reagents.has_reagent(/datum/reagent/consumable/cream))
-			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/cream)
-			beaker.reagents.remove_reagent(/datum/reagent/consumable/cream, amount)
-			beaker.reagents.add_reagent(/datum/reagent/consumable/whipped_cream, amount)
+			beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)
