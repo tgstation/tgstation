@@ -734,8 +734,12 @@
 
 	if(istype(attacking_item, /obj/item/photo))
 		var/obj/item/photo/attacking_photo = attacking_item
-		if(store_file(new /datum/computer_file/picture(attacking_photo.picture)))
+		var/datum/computer_file/picture/photo = new(attacking_photo.picture)
+		if(store_file(photo))
+			photo.assign_path()
 			balloon_alert(user, "photo scanned")
+		else
+			balloon_alert(user, "no space!")
 		return
 
 	// Check if any Applications need it
