@@ -22,9 +22,9 @@ export const AntagInfoClock = (props, context) => {
         <Section scrollable fill>
           <Stack vertical>
             <Stack.Item fontSize="20px" color={'good'}>
-              <Icon name={'cog'} rotation={0} spin={1} />
+              <Icon name={'cog'} rotation={0} spin={true} />
               {' You are the ' + antag_name + '! '}
-              <Icon name={'cog'} rotation={35} spin={1} />
+              <Icon name={'cog'} rotation={35} spin={true} />
             </Stack.Item>
             <Stack.Item>
               <ObjectivePrintout />
@@ -41,7 +41,7 @@ const ObjectivePrintout = (props, context) => {
   const { objectives } = data;
   return (
     <Stack vertical>
-      <Stack.Item bold>To serve Rat&#39var you must:</Stack.Item>
+      <Stack.Item bold>To serve Rat'var you must:</Stack.Item>
       <Stack.Item>
         {(!objectives && 'None!') ||
           objectives.map((objective) => (
