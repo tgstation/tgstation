@@ -64,7 +64,6 @@
 	AddComponent(/datum/component/swarming)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
-	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(apply_chemicals))
 
 /mob/living/basic/bee/mob_pickup(mob/living/picker)
 	if(flags_1 & HOLOGRAM_1)
@@ -129,15 +128,6 @@
 	beehome.bees += src
 	if(is_queen)
 		beehome.queen_bee = src
-
-/mob/living/basic/bee/proc/apply_chemicals(mob/living/basic/attacker, atom/target)
-	SIGNAL_HANDLER
-	if(isnull(beegent) || !isliving(target))
-		return
-	var/mob/living/victim = target
-	if(victim.reagents)
-		beegent.expose_mob(victim, INJECT)
-		victim.reagents.add_reagent(beegent.type, rand(1,5))
 
 /mob/living/basic/bee/proc/reagent_incompatible(mob/living/basic/bee/ruler)
 	if(!ruler)
