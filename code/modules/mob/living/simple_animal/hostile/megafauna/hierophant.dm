@@ -356,13 +356,13 @@ Difficulty: Hard
 	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	SLEEP_CHECK_DEATH(1, src)
 	visible_message(span_hierophant_warning("[src] fades out!"))
-	set_density(FALSE)
+	ADD_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
 	SLEEP_CHECK_DEATH(2, src)
 	forceMove(T)
 	SLEEP_CHECK_DEATH(1, src)
 	animate(src, alpha = 255, time = 2, easing = EASE_IN) //fade IN
 	SLEEP_CHECK_DEATH(1, src)
-	set_density(TRUE)
+	REMOVE_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
 	visible_message(span_hierophant_warning("[src] fades in!"))
 	SLEEP_CHECK_DEATH(1, src) //at this point the blasts we made detonate
 	blinking = FALSE
