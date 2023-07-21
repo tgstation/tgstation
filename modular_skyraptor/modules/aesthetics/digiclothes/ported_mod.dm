@@ -12,6 +12,8 @@
 
 /obj/item/clothing/gloves/mod
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/mod.dmi'
+	supported_bodytypes = list(BODYTYPE_HUMANOID)
+	bodytype_icon_files = list("4" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/mod.dmi')
 
 /obj/item/clothing/shoes/mod
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/mod.dmi'
