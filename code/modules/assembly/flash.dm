@@ -9,6 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throwforce = 0
 	item_flags = NOBLUDGEON // maybe should be swung?
+	attack_style_path = null
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*3, /datum/material/glass = SMALL_MATERIAL_AMOUNT*3)
 	light_system = MOVABLE_LIGHT //Used as a flash here.

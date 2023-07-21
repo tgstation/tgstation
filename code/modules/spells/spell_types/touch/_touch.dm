@@ -353,7 +353,12 @@
 	if(!(user.mobility_flags & MOBILITY_USE))
 		user.balloon_alert(user, "can't reach out!")
 		return TRUE
+	message_admins("attacking [src]")
 	return ..()
+
+/obj/item/melee/touch_attack/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	message_admins("afterattacking [src]")
 
 /**
  * When the hand component of a touch spell is qdel'd, (the hand is dropped or otherwise lost),

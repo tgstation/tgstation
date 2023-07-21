@@ -233,3 +233,24 @@
 
 /datum/actionspeed_modifier/blocking
 	multiplicative_slowdown = 1
+
+// Applied if blocking hotkey is pressed while nextmove is on cooldown (IE: can't block yet)
+// Essentially allowing people to hold down / toggle block to block as soon as possible
+/datum/status_effect/buffering_block
+	id = "buffering_block"
+	alert_type = null
+	tick_interval = 0.1 SECONDS
+	duration = 12 SECONDS // This is just a failsafe, it should never last this long
+
+/datum/status_effect/buffering_block/on_apply()
+	return !IS_BLOCKING(owner)
+
+/datum/status_effect/buffering_block/tick(seconds_per_tick, times_fired)
+	if(IS_BLOCKING(owner))
+		qdel(src)
+		return
+	if(owner.next_move > world.time)
+		return
+
+	owner.begin_blocking()
+	qdel(src)

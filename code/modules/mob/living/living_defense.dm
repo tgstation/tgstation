@@ -422,6 +422,8 @@
 /mob/living/proc/is_shove_knockdown_blocked()
 	if(HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
 		return TRUE
+	// Both flags are necessary to shove knockdown
+	// Check separated out for clarity
 	if(!(status_flags & CANKNOCKDOWN))
 		return TRUE
 	if(!(status_flags & CANPUSH))
@@ -478,6 +480,12 @@
 	ricocheting_projectile.set_angle(new_angle_s)
 	return TRUE
 
+/**
+ * Enables blocking on the mob
+ *
+ * * blocker - optional, what item to use for blocking? this is expected to be an item they are holding.
+ * if not supplied, picks a suitable item from held items.
+ */
 /mob/living/proc/begin_blocking(obj/item/blocker)
 	if(next_move > world.time)
 		return FALSE
@@ -488,8 +496,7 @@
 
 	if(isnull(blocker))
 		// Inactive is prioritized over active, for stuff like shields
-		var/list/obj/item/possible_items = list(get_inactive_held_item(), get_active_held_item())
-		for(var/obj/item/possible_item in possible_items)
+		for(var/obj/item/possible_item in list(get_inactive_held_item(), get_active_held_item()))
 			// Not capable of blocking anything
 			if(possible_item.item_flags & ABSTRACT)
 				continue
@@ -504,5 +511,7 @@
 
 	return FALSE
 
+/// Stops the mob from blocking.
+/// Only exists for parity / debugging, removing the blocking effect accomplishes the same result.
 /mob/living/proc/stop_blocking()
 	remove_status_effect(/datum/status_effect/blocking)

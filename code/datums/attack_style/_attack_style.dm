@@ -35,8 +35,6 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	/// How long does it take for the attack to travel between turfs?
 	/// Essentually, this is "swing speed". Does nothing for attacks which only hit a single turf.
 	var/time_per_turf = 0 SECONDS
-	/// If TRUE, calls swing_enters_turf() when the swing enters a new turf, allowing you to add effects when the swing enters a new turf.
-	var/affects_turf = FALSE
 
 #ifndef TESTING
 /datum/attack_style/vv_edit_var(var_name, var_value)
@@ -79,7 +77,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 	if(IS_BLOCKING(attacker))
 		attacker.balloon_alert(attacker, "can't act while blocking!")
-		attacker.changeNext_move(cd * 0.66)
+		attacker.changeNext_move(0.25 SECONDS)
 		return FALSE
 
 	var/attack_direction = NONE
@@ -105,7 +103,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		if(slowdown > 0)
 			attacker.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/attack_style_executed, multiplicative_slowdown = slowdown)
 			addtimer(CALLBACK(attacker, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/attack_style_executed), cd * 0.2)
-		attacker.changeNext_move(cd)
+		if(cd > 0)
+			attacker.changeNext_move(cd)
 
 	SEND_SIGNAL(attacker, COMSIG_ATTACK_STYLE_PROCESSED, weapon, attack_result, src)
 	return attack_result
@@ -135,7 +134,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/turf/starting_loc = attacker.loc
 	// A list of mobs that have already been hit by this attack to prevent double dipping
 	// (Starts with the swing-er in the list, to prevent self harm)
-	var/list/mob/living/already_hit = list(attacker = TRUE)
+	var/list/mob/living/already_hit = list(attacker = TRUE) // melbert todo doesn't work?
 	// The dir the attacker was facing when the attack started,
 	// so changing dir mid swing for attacks with travel time don't change the direction of the attack
 	var/starting_dir = attacker.dir
@@ -143,6 +142,9 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	// Main attack loop starts here.
 	while(affecting_index <= length(affected_turfs))
 		var/turf/hitting = affected_turfs[affecting_index]
+		// Check for continguous reach between the current and former turf hit
+		if(!hitting.Adjacent(affecting_index == 1 ? starting_loc : affected_turfs[affecting_index - 1]))
+			break
 
 #ifdef TESTING
 		apply_testing_color(hitting, affecting_index)
@@ -242,7 +244,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	if(blocking_us)
 		attacker.visible_message(
 			span_warning("[attacker]'s attack collides with [blocking_us]!"),
-			span_warning("[blocking_us] blocks your attack partway!"),
+			span_warning("[blocking_us] blocks your attack!"),
 		)
 		. |= collide_with_solid_atom(blocking_us, weapon, attacker)
 
@@ -261,6 +263,9 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /**
  * Used to determine what turfs this attack is going to hit when executed.
+ *
+ * All turfs supplied are expected to be continguously adjacent.
+ * If any are not, the swing will stop at the last-most contiguous turf.
  *
  * * attacker - The mob doing the attacking
  * * attack_direction - The direction the attack is coming from
@@ -378,7 +383,9 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		return ATTACK_SWING_CANCEL
 
 	// Blocking is checked here. Does NOT calculate final damage when passing to check block (IE, ignores armor / physiology)
-	if(attacker != smacked && smacked.check_block(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration, weapon.damtype))
+	if(attacker != smacked \
+		&& !(weapon.item_flags & NOBLUDGEON) \
+		&& smacked.check_block(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration, weapon.damtype))
 		return ATTACK_SWING_BLOCKED
 
 	var/go_to_afterattack = !right_clicking

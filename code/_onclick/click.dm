@@ -306,6 +306,11 @@
 	stack_trace("Somehow, a non-living mob ([src], [type]) called click_on_with_item with an item ([clicked_with_what], [clicked_with_what.type])")
 
 /mob/living/click_on_with_item(atom/clicked_on, obj/item/clicked_with_what, params)
+	if(IS_BLOCKING(src))
+		balloon_alert(attacker, "can't act while blocking!")
+		changeNext_move(0.25 SECONDS)
+		return FALSE
+
 	var/list/modifiers = params2list(params)
 	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/close_enough = CanReach(clicked_on, clicked_with_what)
@@ -329,7 +334,14 @@
 	else
 		clicked_with_what.afterattack(clicked_on, src, close_enough, params)
 
-/// Determines if this item is permitted to enter melee attack chain rather than swinging
+/**
+ * Determines if this item is permitted to enter melee attack chain rather than swinging
+ *
+ * In the future, every item should be permitted to go through attack chain so long as they're on non-combat mode
+ * and attack chain should be redone to be "non-combat interaction chain" instead
+ *
+ * Then we can get rid of this and delegate all references to "attacking" the attack styles
+ */
 /obj/item/proc/permit_melee_chain_use(mob/living/attacker, atom/clicked_on, right_clicking)
 	// No bludgeon prevents using swing styles, good to use for items that require "click on mob" interaction like scanners
 	if(item_flags & NOBLUDGEON)
@@ -349,8 +361,7 @@
 		if((item_flags & SURGICAL_TOOL) || operation.all_needed_items[type] || (tool_behaviour && operation.all_needed_items[tool_behaviour]))
 			return TRUE
 
-	// this is a hack, so people can open up cyborgs.
-	// ideally we would handle this more directly.
+	// todo : this is a hack, so people can open up cyborgs.
 	if(tool_behaviour == TOOL_CROWBAR && issilicon(clicked_on))
 		return TRUE
 

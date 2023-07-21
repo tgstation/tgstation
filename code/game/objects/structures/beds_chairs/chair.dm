@@ -404,6 +404,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 			span_danger("You fend off [attack_text] with [src]!"),
 		)
 		return TRUE
+	if(damage_type == BRUTE && prob(break_chance))
+		blocker.visible_message(span_danger("[src] falls to pieces upon colliding with [attack_text]!"))
+		smash(blocker)
+		return TRUE
 	return FALSE
 
 /obj/item/chair/afterattack(atom/target, mob/living/carbon/user, proximity)

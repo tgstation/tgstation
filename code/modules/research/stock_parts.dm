@@ -242,6 +242,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "What?"
 	icon = 'icons/obj/assemblies/stock_parts.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	item_flags = NOBLUDGEON
 	var/rating = 1
 	///Used when a base part has a different name to higher tiers of part. For example, machine frames want any servo and not just a micro-servo.
 	var/base_name

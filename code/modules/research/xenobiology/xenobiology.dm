@@ -10,6 +10,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
+	item_flags = NOBLUDGEON
 	grind_results = list()
 	var/Uses = 1 ///uses before it goes inert
 	var/qdel_timer = null ///deletion timer, for delayed reactions

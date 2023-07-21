@@ -4,6 +4,7 @@
 	desc = "A kit with all the tools necessary for losing a bet, or making otherwise incredibly indelible decisions."
 	icon = 'icons/obj/maintenance_loot.dmi'
 	icon_state = "tattoo_kit"
+	item_flags = NOBLUDGEON
 	///each use = 1 tattoo
 	var/uses = 1
 	///how many uses can be stored

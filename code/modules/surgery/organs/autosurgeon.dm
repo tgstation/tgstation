@@ -6,6 +6,7 @@
 	icon_state = "autosurgeon"
 	inhand_icon_state = "nothing"
 	w_class = WEIGHT_CLASS_SMALL
+	item_flags = NOBLUDGEON
 
 	/// How many times you can use the autosurgeon before it becomes useless
 	var/uses = INFINITE

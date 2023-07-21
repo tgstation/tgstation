@@ -11,6 +11,7 @@
 	death_sound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	status_flags = CANUNCONSCIOUS|CANSTUN|CANPUSH
 	examine_cursor_icon = null
 	fire_stack_decay_rate = -0.55
 	tts_silicon_voice_effect = TRUE

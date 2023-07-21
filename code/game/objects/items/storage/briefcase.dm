@@ -9,6 +9,7 @@
 	flags_1 = CONDUCT_1
 	force = 8
 	hitsound = SFX_SWING_HIT
+	attack_style_path = /datum/attack_style/melee_weapon/overhead
 	throw_speed = 2
 	throw_range = 4
 	w_class = WEIGHT_CLASS_BULKY

@@ -18,15 +18,19 @@
 	if(.)
 		return
 	var/mob/living/blocker = user.mob
-	if(blocker.buckled || blocker.on_fire) // should be resisting instead
+	if(blocker.buckled || blocker.on_fire) // you should be resisting instead
 		return
 
-	blocker.begin_blocking()
+	if(blocker.next_move > world.time)
+		blocker.apply_status_effect(/datum/status_effect/buffering_block)
+	else
+		blocker.begin_blocking()
 	return TRUE
 
 /datum/keybinding/living/hold_block/up(client/user)
 	var/mob/living/blocker = user.mob
-	blocker.stop_blocking()
+	blocker.remove_status_effect(/datum/status_effect/blocking)
+	blocker.remove_status_effect(/datum/status_effect/buffering_block)
 	return TRUE
 
 /datum/keybinding/living/toggle_block
@@ -42,13 +46,20 @@
 	if(.)
 		return
 	var/mob/living/blocker = user.mob
-	if(blocker.buckled || blocker.on_fire) // should be resisting instead
+	if(blocker.buckled || blocker.on_fire) // you should be resisting instead
 		return
 
-	if(IS_BLOCKING(blocker))
-		blocker.stop_blocking()
-	else
-		blocker.begin_blocking()
+	// buffering -> not buffering
+	if(blocker.remove_status_effect(/datum/status_effect/buffering_block))
+		return TRUE
+	// blocking -> not blocking
+	if(blocker.remove_status_effect(/datum/status_effect/blocking))
+		return TRUE
+	// not buffering -> buffering
+	if(blocker.next_move > world.time && blocker.apply_status_effect(/datum/status_effect/buffering_block))
+		return TRUE
+	// not blocking -> blocking
+	blocker.begin_blocking()
 	return TRUE
 
 // must come after block. todo : resolve this with keybind priority
