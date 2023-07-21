@@ -30,7 +30,7 @@
 		AddComponent(/datum/component/material_container, processable_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
 		silo_materials = AddComponent(/datum/component/remote_materials, "orm", mapload, mat_container_flags=BREAKDOWN_FLAGS_ORM)
 
-/obj/machinery/bouldertech/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), attacking_item))
 		return
