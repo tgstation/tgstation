@@ -301,7 +301,7 @@
 /obj/item/chisel/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/eyestab)
-	AddElement(/datum/element/wall_engraver)
+	AddElement(/datum/element/engraver)
 	//deals 200 damage to statues, meaning you can actually kill one in ~250 hits
 	AddElement(/datum/element/bane, target_type = /mob/living/basic/statue, damage_multiplier = 40)
 
