@@ -116,7 +116,7 @@
 			if((user.dir & backstab_dir) && (victim.dir & backstab_dir))
 				backstabbed = TRUE
 				combined_damage += backstab_bonus
-				playsound(user, 'sound/weapons/kenetic_accel.ogg', 80, TRUE) //Seriously who spelled it wrong
+				playsound(user, 'sound/weapons/kinetic_accel.ogg', 80, TRUE)
 
 			if(!QDELETED(crusher_damage_tracker))
 				crusher_damage_tracker.total_damage += combined_damage
@@ -182,7 +182,7 @@
 	if(!charged)
 		charged = TRUE
 		update_appearance()
-		playsound(get_turf(src), 'sound/weapons/kenetic_reload.ogg', 80, TRUE)
+		playsound(get_turf(src), 'sound/weapons/kinetic_reload.ogg', 80, TRUE)
 
 /obj/item/kinetic_crusher/compact //for admins
 	name = "compact kinetic crusher"
