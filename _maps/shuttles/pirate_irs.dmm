@@ -85,9 +85,8 @@
 /obj/machinery/turretid{
 	icon_state = "control_kill";
 	lethal = 1;
-	locked = 0;
 	pixel_y = -24;
-	req_access = null
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/pirate)
@@ -132,6 +131,7 @@
 	pixel_y = 6
 	},
 /obj/item/storage/toolbox/ammobox/wt550m9ap,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "dl" = (
@@ -194,6 +194,7 @@
 /obj/item/mop,
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "ev" = (
@@ -233,6 +234,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
@@ -559,6 +561,17 @@
 /obj/item/megaphone/command,
 /obj/item/encryptionkey/headset_com,
 /turf/open/floor/iron/white,
+/area/shuttle/pirate)
+"oX" = (
+/obj/effect/turf_decal/tile/dark_blue/half{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/edge{
+	dir = 4
+	},
 /area/shuttle/pirate)
 "pg" = (
 /obj/machinery/door/airlock/vault{
@@ -1084,6 +1097,7 @@
 /area/shuttle/pirate)
 "DT" = (
 /obj/effect/mob_spawn/ghost_role/human/pirate/irs,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/pirate)
 "DV" = (
@@ -1129,6 +1143,7 @@
 "FT" = (
 /obj/effect/turf_decal/tile/dark/full,
 /obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "FU" = (
@@ -1310,6 +1325,7 @@
 /obj/item/multitool{
 	pixel_x = 3
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "Jx" = (
@@ -1506,6 +1522,7 @@
 /area/shuttle/pirate)
 "Of" = (
 /obj/structure/chair/stool/directional/east,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "Og" = (
@@ -1675,6 +1692,7 @@
 /area/shuttle/pirate)
 "Se" = (
 /obj/machinery/photocopier/gratis,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/pirate)
 "Ss" = (
@@ -1685,6 +1703,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "SA" = (
@@ -2222,7 +2241,7 @@ gY
 vo
 WA
 hK
-gd
+hK
 Ss
 BG
 lf
@@ -2263,7 +2282,7 @@ mA
 pO
 YJ
 sH
-sH
+oX
 sH
 sH
 Vf
@@ -2297,7 +2316,7 @@ hK
 mE
 hK
 hK
-gd
+hK
 SG
 BG
 wl
