@@ -94,6 +94,8 @@
 		crusher_damage_tracker.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
 
 /obj/item/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		return //it's already dropped by this point, so no feedback/dropping is required
 	if(proximity_flag && isliving(target))
 		var/mob/living/victim = target
 		var/datum/status_effect/crusher_mark/mark_field = victim.has_status_effect(/datum/status_effect/crusher_mark)
