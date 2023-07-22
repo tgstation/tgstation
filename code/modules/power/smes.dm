@@ -147,7 +147,7 @@
 		if(do_after(user, 20, target = src))
 			if(C.get_amount() < 10 || !C)
 				return
-			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
+			var/obj/structure/cable/N = T.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE)) //animate the electrocution if uncautious and unlucky
 				do_sparks(5, TRUE, src)
 				return
