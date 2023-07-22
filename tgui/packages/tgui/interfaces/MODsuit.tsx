@@ -14,10 +14,10 @@ type MODsuitData = {
   gauntlets: string;
   boots: string;
   // Dynamic
-  module_info: Module[];
   suit_status: SuitStatus;
   user_status: UserStatus;
   module_custom_status: ModuleCustomStatus;
+  module_info: Module[];
 };
 
 type SuitStatus = {
@@ -93,7 +93,7 @@ type ModuleConfig = {
 };
 
 export const MODsuit = (props, context) => {
-  const { data } = useBackend<MODsuitData>(context);
+  const { act, data } = useBackend<MODsuitData>(context);
   const { ui_theme } = data;
   const { interface_break } = data.suit_status;
   return (
@@ -111,7 +111,7 @@ export const MODsuit = (props, context) => {
 };
 
 export const MODsuitContent = (props, context) => {
-  const { data } = useBackend<MODsuitData>(context);
+  const { act, data } = useBackend<MODsuitData>(context);
   const { interface_break } = data.suit_status;
   return (
     <Box>
@@ -406,8 +406,8 @@ const SuitStatusSection = (props, context) => {
   );
 };
 
-const HardwareSection = (context) => {
-  const { data } = useBackend<MODsuitData>(context);
+const HardwareSection = (props, context) => {
+  const { act, data } = useBackend<MODsuitData>(context);
   const { control, helmet, chestplate, gauntlets, boots } = data;
   const { ai_name, core_name } = data.suit_status;
   return (
@@ -433,8 +433,8 @@ const HardwareSection = (context) => {
   );
 };
 
-const UserStatusSection = (context) => {
-  const { data } = useBackend<MODsuitData>(context);
+const UserStatusSection = (props, context) => {
+  const { act, data } = useBackend<MODsuitData>(context);
   const { active } = data.suit_status;
   const { user_name, user_assignment } = data.user_status;
   const {

@@ -101,7 +101,7 @@
 	overlay_state_active = "module_jetpack_on"
 	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
-	var/stabilize = FALSE
+	var/stabilize = TRUE
 	var/thrust_callback
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
@@ -182,6 +182,10 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	incompatible_modules = list(/obj/item/mod/module/status_readout)
 	tgui_id = "status_readout"
+	/// Does this show damage types, body temp, satiety
+	var/display_detailed_vitals = TRUE
+	/// Does this show DNA data
+	var/display_dna = FALSE
 	/// Does this show the round ID and shift time?
 	var/display_time = FALSE
 	/// Death sound. May or may not be funny. Vareditable at your own risk.
@@ -196,14 +200,16 @@
 	.["shift_id"] = GLOB.round_id
 	.["health"] = mod.wearer?.health || 0
 	.["health_max"] = mod.wearer?.getMaxHealth() || 0
-	.["loss_brute"] = mod.wearer?.getBruteLoss() || 0
-	.["loss_fire"] = mod.wearer?.getFireLoss() || 0
-	.["loss_tox"] = mod.wearer?.getToxLoss() || 0
-	.["loss_oxy"] = mod.wearer?.getOxyLoss() || 0
-	.["body_temperature"] = mod.wearer?.bodytemperature || 0
-	.["nutrition"] = mod.wearer?.nutrition || 0
-	.["dna_unique_identity"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
-	.["dna_unique_enzymes"] = mod.wearer?.dna.unique_enzymes
+	if(display_detailed_vitals)
+		.["loss_brute"] = mod.wearer?.getBruteLoss() || 0
+		.["loss_fire"] = mod.wearer?.getFireLoss() || 0
+		.["loss_tox"] = mod.wearer?.getToxLoss() || 0
+		.["loss_oxy"] = mod.wearer?.getOxyLoss() || 0
+		.["body_temperature"] = mod.wearer?.bodytemperature || 0
+		.["nutrition"] = mod.wearer?.nutrition || 0
+	if(display_dna)
+		.["dna_unique_identity"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
+		.["dna_unique_enzymes"] = mod.wearer?.dna.unique_enzymes
 	.["viruses"] = null
 	if(!length(mod.wearer?.diseases))
 		return .
@@ -219,6 +225,18 @@
 	.["viruses"] = viruses
 
 	return .
+
+/obj/item/mod/module/status_readout/get_configuration()
+	. = ..()
+	.["display_detailed_vitals"] = add_ui_configuration("Detailed Vitals", "bool", display_detailed_vitals)
+	.["display_dna"] = add_ui_configuration("DNA Information", "bool", display_dna)
+
+/obj/item/mod/module/status_readout/configure_edit(key, value)
+	switch(key)
+		if("display_detailed_vitals")
+			display_detailed_vitals = text2num(value)
+		if("display_dna")
+			display_dna = text2num(value)
 
 /obj/item/mod/module/status_readout/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_DEATH, PROC_REF(death_sound))
