@@ -53,3 +53,9 @@
 	name = "shaft miner's jumpsuit"
 	icon_state = "explorer"
 	inhand_icon_state = null
+
+/obj/item/clothing/under/rank/cargo/bitminer
+	name = "bitminer's jumpsuit"
+	desc = "It's a leathery jumpsuit worn by a bitminer. Tacky, but comfortable to wear if sitting for prolonged periods of time."
+	icon_state = "bitminer"
+	inhand_icon_state = "w_suit"

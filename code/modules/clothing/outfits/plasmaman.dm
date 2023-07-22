@@ -281,3 +281,10 @@
 	gloves = /obj/item/clothing/gloves/color/plasmaman/clown
 	head = /obj/item/clothing/head/helmet/space/plasmaman/clown
 	mask = /obj/item/clothing/mask/gas/clown_hat/plasmaman
+
+/datum/outfit/plasmaman/bitminer
+	name = "Bitminer Plasmaman"
+
+	uniform = /obj/item/clothing/under/plasmaman/bitminer
+	gloves = /obj/item/clothing/gloves/color/plasmaman/black
+	head = /obj/item/clothing/head/helmet/space/plasmaman/bitminer
