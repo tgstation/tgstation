@@ -7,6 +7,7 @@
 	icon = 'icons/obj/assemblies/module.dmi'
 	icon_state = "cyborg_upgrade"
 	w_class = WEIGHT_CLASS_SMALL
+	item_flags = NOBLUDGEON
 	var/locked = FALSE
 	var/installed = FALSE
 	var/require_model = FALSE

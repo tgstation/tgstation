@@ -34,7 +34,7 @@
 		icon_wielded = "[base_icon_state]1", \
 	)
 
-/obj/item/singularityhammer/can_attack_with(mob/living/attacker)
+/obj/item/singularityhammer/can_attack_with(mob/living/attacker, params)
 	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/singularityhammer/update_icon_state()
@@ -104,7 +104,7 @@
 		attacksound = SFX_SPARKS, \
 	)
 
-/obj/item/mjollnir/can_attack_with(mob/living/attacker)
+/obj/item/mjollnir/can_attack_with(mob/living/attacker, params)
 	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/mjollnir/update_icon_state()

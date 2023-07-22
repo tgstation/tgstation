@@ -57,7 +57,7 @@
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
 
-/obj/item/dualsaber/can_attack_with(mob/living/attacker)
+/obj/item/dualsaber/can_attack_with(mob/living/attacker, params)
 	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/dualsaber/describe_blocking()

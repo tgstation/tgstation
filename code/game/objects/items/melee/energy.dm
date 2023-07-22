@@ -70,7 +70,7 @@
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/melee/energy/can_attack_with(mob/living/attacker)
+/obj/item/melee/energy/can_attack_with(mob/living/attacker, params)
 	return ..() && HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
 
 /obj/item/melee/energy/describe_blocking()

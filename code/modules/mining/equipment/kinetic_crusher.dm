@@ -58,7 +58,7 @@
 
 	return ..()
 
-/obj/item/kinetic_crusher/can_attack_with(mob/living/attacker)
+/obj/item/kinetic_crusher/can_attack_with(mob/living/attacker, params)
 	return ..() && HAS_TRAIT(src, TRAIT_WIELDED)
 
 /obj/item/kinetic_crusher/Exited(atom/movable/gone, direction)

@@ -134,7 +134,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	var/turf/starting_loc = attacker.loc
 	// A list of mobs that have already been hit by this attack to prevent double dipping
 	// (Starts with the swing-er in the list, to prevent self harm)
-	var/list/mob/living/already_hit = list(attacker = TRUE) // melbert todo doesn't work?
+	var/list/mob/living/already_hit = list()
+	already_hit[attacker] = TRUE
 	// The dir the attacker was facing when the attack started,
 	// so changing dir mid swing for attacks with travel time don't change the direction of the attack
 	var/starting_dir = attacker.dir
@@ -248,7 +249,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		)
 		. |= collide_with_solid_atom(blocking_us, weapon, attacker)
 
-	if(. & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT))
+	if(total_hit > 0 && (. & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT))) // melbert todo check this
 		playsound(attacker, get_hit_sound(weapon), hit_volume, TRUE)
 
 	return .
@@ -358,7 +359,9 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 
 /datum/attack_style/melee_weapon/execute_attack(mob/living/attacker, obj/item/weapon, list/turf/affected_turfs, atom/priority_target, right_clicking)
 	ASSERT(istype(weapon))
-	if(!weapon.can_attack_with(attacker))
+	var/list/fake_modifiers = list()
+	fake_modifiers[right_clicking ? RIGHT_CLICK : LEFT_CLICK] = TRUE
+	if(!weapon.can_attack_with(attacker, list2params(fake_modifiers)))
 		return ATTACK_SWING_CANCEL
 
 	return ..()
@@ -366,20 +369,23 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 /// This is essentially the same as item melee attack chain, but with some guff not necessary for combat cut out.
 /datum/attack_style/melee_weapon/finalize_attack(mob/living/attacker, mob/living/smacked, obj/item/weapon, right_clicking)
 	var/attack_result = NONE
+	var/list/fake_modifiers = list()
+	fake_modifiers[right_clicking ? RIGHT_CLICK : LEFT_CLICK] = TRUE
+	var/fake_parms = list2params(fake_modifiers)
 
-	var/go_to_attack = !right_clicking
+	var/call_pre_attack = !right_clicking
 	if(right_clicking)
-		switch(weapon.pre_attack_secondary(smacked, attacker))
+		switch(weapon.pre_attack_secondary(smacked, attacker, fake_parms))
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				return ATTACK_SWING_CANCEL // Stops entire swing - If you only want to skip, add a new define
+				return ATTACK_SWING_CANCEL // Stops entire swing
 			if(SECONDARY_ATTACK_CALL_NORMAL)
-				// pass()
+				call_pre_attack = TRUE // call normal preattack
 			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
-				go_to_attack = TRUE
+				// pass() // go to attack
 			else
 				CRASH("pre_attack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
-	if(go_to_attack && weapon.pre_attack(smacked, attacker))
+	if(call_pre_attack && weapon.pre_attack(smacked, attacker, fake_parms))
 		return ATTACK_SWING_CANCEL
 
 	// Blocking is checked here. Does NOT calculate final damage when passing to check block (IE, ignores armor / physiology)
@@ -388,47 +394,50 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		&& smacked.check_block(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration, weapon.damtype))
 		return ATTACK_SWING_BLOCKED
 
-	var/go_to_afterattack = !right_clicking
+	var/call_attack = !right_clicking
 	if(right_clicking)
-		switch(weapon.attack_secondary(smacked, attacker))
+		switch(weapon.attack_secondary(smacked, attacker, fake_parms))
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				return ATTACK_SWING_CANCEL // Stops entire swing - If you only want to skip, add a new define
+				return ATTACK_SWING_CANCEL // Stops entire swing
 			if(SECONDARY_ATTACK_CALL_NORMAL)
-				// pass()
+				call_attack = TRUE // call normal attack
 			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
-				go_to_afterattack = TRUE
+				// pass() // go to afterattack
 			else
 				CRASH("attack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
-	if(go_to_afterattack && weapon.attack_wrapper(smacked, attacker) == ATTACK_NO_AFTERATTACK)
-		return ATTACK_SWING_CANCEL
+	if(call_attack)
+		attack_result |= weapon.attack_wrapper(smacked, attacker, fake_parms)
+		if(attack_result & ATTACK_SWING_CANCEL)
+			return attack_result
 
-	UPDATE_LAST_ATTACKER(smacked, attacker)
+	if(!(attack_result & ATTACK_SWING_SKIPPED))
+		UPDATE_LAST_ATTACKER(smacked, attacker)
 
-	if(attacker == smacked && attacker.client)
-		attacker.client.give_award(/datum/award/achievement/misc/selfouch, attacker)
+		if(attacker == smacked && attacker.client)
+			attacker.client.give_award(/datum/award/achievement/misc/selfouch, attacker)
 
-	log_combat(attacker, smacked, "attacked", weapon.name, "(STYLE: [type]) (DAMTYPE: [uppertext(weapon.damtype)])")
+		log_combat(attacker, smacked, "attacked", weapon.name, "(STYLE: [type]) (DAMTYPE: [uppertext(weapon.damtype)])")
 
-	// !! ACTUAL DAMAGE GETS APPLIED HERE !!
-	if(!smacked.attacked_by(weapon, attacker))
-		return ATTACK_SWING_SKIPPED // Attack did 0 damage
+		// !! ACTUAL DAMAGE GETS APPLIED HERE !!
+		if(!smacked.attacked_by(weapon, attacker))
+			return attack_result | ATTACK_SWING_SKIPPED // Attack did 0 damage
 
-	attack_result |= ATTACK_SWING_HIT
+		attack_result |= ATTACK_SWING_HIT
 
 	if(right_clicking)
-		switch(weapon.afterattack_secondary(smacked, attacker, /* proximity_flag = */TRUE))
+		switch(weapon.afterattack_secondary(smacked, attacker, /* proximity_flag = */TRUE, fake_parms))
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 				return attack_result | ATTACK_SWING_CANCEL // Stops entire swing - If you only want to skip, add a new define
 			if(SECONDARY_ATTACK_CALL_NORMAL)
-				// pass()
+				// pass() // call normal afterattack
 			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
-				return attack_result
+				return attack_result // "continue", but there's nowhere else to go, so just return
 			else
 				CRASH("afterattack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 
-	// Don't really care about the return value of after attack.
-	weapon.afterattack(smacked, attacker, /* proximity_flag = */TRUE)
+	// We don't really care about the return value of after attack.
+	weapon.afterattack(smacked, attacker, /* proximity_flag = */TRUE, fake_parms)
 	return attack_result
 
 /// Creates an image for use in attack animations

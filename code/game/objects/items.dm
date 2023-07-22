@@ -1707,7 +1707,7 @@
 	update_slot_icon()
 
 /// Determines if the passed mob can attack with this item
-/obj/item/proc/can_attack_with(mob/living/attacker)
+/obj/item/proc/can_attack_with(mob/living/attacker, params)
 	if(item_flags & NOBLUDGEON)
 		// not really an attack but just clicking on a dude
 		return TRUE

@@ -64,6 +64,8 @@
 	/// The RMB context to show when the baton is inactive and targetting a living thing
 	var/context_living_rmb_inactive = "Attack"
 
+	var/cooldown_balloon_message = ""
+
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
 	// Adding an extra break for the sake of presentation
@@ -72,119 +74,105 @@
 
 	register_item_context()
 
-/obj/item/melee/baton/can_attack_with(mob/living/attacker)
+/obj/item/melee/baton/can_attack_with(mob/living/attacker, params)
 	if(!chunky_finger_usable && ishuman(attacker))
 		var/mob/living/carbon/human/potential_chunky_finger_human = attacker
 		if(potential_chunky_finger_human.check_chunky_fingers() && attacker.is_holding(src) && !HAS_MIND_TRAIT(attacker, TRAIT_CHUNKYFINGERS_IGNORE_BATON))
 			balloon_alert(attacker, "fingers are too big!")
 			return FALSE
 
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		return ..()
+
+	else if(active && !COOLDOWN_FINISHED(src, cooldown_check))
+		if (cooldown_balloon_message)
+			balloon_alert(attacker, cooldown_balloon_message)
+		return FALSE
+
+	if(clumsy_check(attacker))
+		return FALSE
+
 	return TRUE
 
-/**
- * Ok, think of baton attacks like a melee attack chain:
- *
- * [/baton_attack()] comes first. It checks if the user is clumsy, if the target parried the attack and handles some messages and sounds.
- * * Depending on its return value, it'll either do a normal attack, continue to the next step or stop the attack.
- *
- * [/finalize_baton_attack()] is then called. It handles logging stuff, sound effects and calls baton_effect().
- * * The proc is also called in other situations such as stunbatons right clicking or throw impact. Basically when baton_attack()
- * * checks are either redundant or unnecessary.
- *
- * [/baton_effect()] is third in the line. It knockdowns targets, along other effects called in additional_effects_cyborg() and
- * * additional_effects_non_cyborg().
- *
- * Last but not least [/set_batoned()], which gives the target the IWASBATONED trait with REF(user) as source and then removes it
- * * after a cooldown has passed. Basically, it stops users from cheesing the cooldowns by dual wielding batons.
- *
- * TL;DR: [/baton_attack()] -> [/finalize_baton_attack()] -> [/baton_effect()] -> [/set_batoned()]
+/*
+ * Attack -> left clicking -> stun attacking, no harmbatong
  */
 /obj/item/melee/baton/attack(mob/living/target_mob, mob/living/user, params)
-	var/list/modifiers = params2list(params)
-	switch(baton_attack(target_mob, user, modifiers))
-		if(BATON_DO_NORMAL_ATTACK)
-			return FALSE // default afterattack
+	if(!active)
+		user.visible_message(
+			span_notice("[user] prods [target_mob] with [src]. Luckily, it was off."),
+			span_notice("You prod [target_mob] with [src]. Luckily, it was off."),
+		)
+		user.changeNext_move(attack_style.cd)
+		return ATTACK_SWING_CANCEL
 
-		if(BATON_ATTACKING)
-			finalize_baton_attack(target_mob, user, modifiers)
-			return TRUE // do our own thing
+	if(HAS_TRAIT_FROM(target_mob, TRAIT_IWASBATONED, REF(user))) //no doublebaton abuse anon!
+		to_chat(user, span_danger("You fumble and miss [target_mob]!"))
+		user.changeNext_move(attack_style.cd)
+		return ATTACK_SWING_SKIPPED|ATTACK_SWING_MISSED
+
+	var/list/desc
+	if(iscyborg(target_mob))
+		if(affect_cyborg)
+			desc = get_cyborg_stun_description(target_mob, user)
+		else
+			desc = get_unga_dunga_cyborg_stun_description(target_mob, user)
+			playsound(target_mob, 'sound/effects/bang.ogg', 10, TRUE) //bonk
+			return ATTACK_SWING_BLOCKED|ATTACK_SWING_SKIPPED
+	else
+		desc = get_stun_description(target_mob, user)
+
+	if(desc)
+		target_mob.visible_message(desc["visible"], desc["local"])
+
+	finalize_baton_attack(target_mob, user)
+	return ATTACK_SWING_SKIPPED
+
+/*
+ * Secondaru attack -> right clicking -> harmbatong, no stun
+ */
+/obj/item/melee/baton/attack_secondary(mob/living/victim, mob/living/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return .
+
+	return SECONDARY_ATTACK_CONTINUE_CHAIN // no calling normal stun left click attack
 
 /obj/item/melee/baton/add_item_context(datum/source, list/context, atom/target, mob/living/user)
 	if (isturf(target))
 		return NONE
 
-	if (isobj(target))
-		context[SCREENTIP_CONTEXT_LMB] = "Attack"
+	if (active)
+		context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_active
+		context[SCREENTIP_CONTEXT_LMB] = user.combat_mode ? context_living_target_active_combat_mode : context_living_target_active
 	else
-		if (active)
-			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_active
-
-			if (user.combat_mode)
-				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active_combat_mode
-			else
-				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active
-		else
-			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_inactive
-
-			if (user.combat_mode)
-				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive_combat_mode
-			else
-				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive
+		context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_inactive
+		context[SCREENTIP_CONTEXT_LMB] = user.combat_mode ? context_living_target_inactive_combat_mode : context_living_target_inactive
 
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/melee/baton/proc/baton_attack(mob/living/target, mob/living/user, modifiers)
-	. = BATON_ATTACKING
-
-	if(clumsy_check(user, target))
-		return BATON_ATTACK_DONE
-
-	if(!active || LAZYACCESS(modifiers, RIGHT_CLICK))
-		return BATON_DO_NORMAL_ATTACK
-
-	if(cooldown_check > world.time)
-		var/wait_desc = get_wait_description()
-		if (wait_desc)
-			to_chat(user, wait_desc)
-		return BATON_ATTACK_DONE
-
-	if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user))) //no doublebaton abuse anon!
-		to_chat(user, span_danger("You fumble and miss [target]!"))
-		return BATON_ATTACK_DONE
-
-	var/list/desc
-
-	if(iscyborg(target))
-		if(affect_cyborg)
-			desc = get_cyborg_stun_description(target, user)
-		else
-			desc = get_unga_dunga_cyborg_stun_description(target, user)
-			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE) //bonk
-			. = BATON_ATTACK_DONE
-	else
-		desc = get_stun_description(target, user)
-
-	if(desc)
-		target.visible_message(desc["visible"], desc["local"])
-
-/obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
+/// Finalizes the effects of the stun baton hitting the target
+/obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, in_attack_chain = TRUE)
 	if(!in_attack_chain && HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
-		return BATON_ATTACK_DONE
-	cooldown_check = world.time + cooldown
-	if(on_stun_sound)
-		playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+		return
+
+	COOLDOWN_START(src, cooldown_check, cooldown)
+	playsound(src, on_stun_sound, on_stun_volume, TRUE, -1)
+	// Bonus last chance to block the incoming stamina stun damage
 	if(target.check_block(src, stamina_damage - force, "the [name]'s stun", MELEE_ATTACK, 0, STAMINA))
-		return BATON_ATTACK_DONE
+		return
 
 	if(user)
 		UPDATE_LAST_ATTACKER(target, user)
 		target.LAssailant = WEAKREF(user)
 		if(log_stun_attack)
 			log_combat(user, target, "stun attacked", src)
-	if(baton_effect(target, user, modifiers) && user)
+	if(baton_effect(target, user) && user)
 		set_batoned(target, user, cooldown)
 
-/obj/item/melee/baton/proc/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+/// Actually applies the effects of this baton against the targete
+/obj/item/melee/baton/proc/baton_effect(mob/living/target, mob/living/user, stun_override)
 	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE)
 	if(iscyborg(target))
 		if(!affect_cyborg)
@@ -202,10 +190,6 @@
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 		additional_effects_non_cyborg(target, user)
 	return TRUE
-
-/// Description for trying to stun when still on cooldown.
-/obj/item/melee/baton/proc/get_wait_description()
-	return
 
 /// Default message for stunning a living, non-cyborg mob.
 /obj/item/melee/baton/proc/get_stun_description(mob/living/target, mob/living/user)
@@ -249,7 +233,7 @@
 	ADD_TRAIT(target, TRAIT_IWASBATONED, user_ref)
 	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_IWASBATONED, user_ref), cooldown)
 
-/obj/item/melee/baton/proc/clumsy_check(mob/living/user, mob/living/intented_target)
+/obj/item/melee/baton/proc/clumsy_check(mob/living/user)
 	if(!active || !HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50))
 		return FALSE
 	user.visible_message(span_danger("[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!"), span_userdanger("You accidentally hit yourself over the head with [src]!"))
@@ -260,9 +244,9 @@
 			user.Paralyze(clumsy_knockdown_time)
 			additional_effects_cyborg(user, user) // user is the target here
 			if(on_stun_sound)
-				playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+				playsound(src, on_stun_sound, on_stun_volume, TRUE, -1)
 		else
-			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
+			playsound(user, 'sound/effects/bang.ogg', 10, TRUE)
 	else
 		//straight up always force say for clumsy humans
 		if(ishuman(user))
@@ -272,9 +256,9 @@
 		user.apply_damage(stamina_damage, STAMINA)
 		additional_effects_non_cyborg(user, user) // user is the target here
 		if(on_stun_sound)
-			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+			playsound(src, on_stun_sound, on_stun_volume, TRUE, -1)
 
-	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
+	user.apply_damage(2 * force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
 
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
 
@@ -382,8 +366,7 @@
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	active_force = 16
 
-/obj/item/melee/baton/telescopic/contractor_baton/get_wait_description()
-	return span_danger("The baton is still charging!")
+	cooldown_balloon_message = "still charging!"
 
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.set_jitter_if_lower(40 SECONDS)
@@ -412,6 +395,7 @@
 	on_stun_volume = 50
 	active = FALSE
 	context_living_rmb_active = "Harmful Stun"
+	cooldown_balloon_message = "still charging!"
 
 	var/throw_stun_chance = 35
 	var/obj/item/stock_parts/cell/cell
@@ -432,7 +416,6 @@
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
-	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(convert))
 	update_appearance()
 
 /obj/item/melee/baton/security/get_cell()
@@ -448,9 +431,7 @@
 		return OXYLOSS
 
 /obj/item/melee/baton/security/Destroy()
-	if(cell)
-		QDEL_NULL(cell)
-	UnregisterSignal(src, COMSIG_ATOM_ATTACKBY)
+	QDEL_NULL(cell)
 	return ..()
 
 /obj/item/melee/baton/security/proc/convert(datum/source, obj/item/item, mob/user)
@@ -511,6 +492,15 @@
 			cell = item
 			to_chat(user, span_notice("You install a cell in [src]."))
 			update_appearance()
+	else if(istype(item, /obj/item/conversion_kit) &&!convertible)
+		var/turf/source_turf = get_turf(src)
+		var/obj/item/melee/baton/baton = new (source_turf)
+		baton.alpha = 20
+		playsound(source_turf, 'sound/items/drill_use.ogg', 80, TRUE, -1)
+		animate(src, alpha = 0, time = 1 SECONDS)
+		animate(baton, alpha = 255, time = 1 SECONDS)
+		qdel(item)
+		qdel(src)
 	else
 		return ..()
 
@@ -553,21 +543,18 @@
 		SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
 		deductcharge(cell_hit_cost)
 
-/// Handles prodding targets with turned off stunbatons and right clicking stun'n'bash
-/obj/item/melee/baton/security/baton_attack(mob/living/target, mob/living/user, modifiers)
+// Stun N bash
+/obj/item/melee/baton/security/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(. != BATON_DO_NORMAL_ATTACK)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(active && cooldown_check <= world.time)
-			finalize_baton_attack(target, user, modifiers, in_attack_chain = FALSE) // melbert todo : you can't harmbaton
+	if(!proximity_flag || !isliving(target) || !active)
+		return SECONDARY_ATTACK_CALL_NORMAL
 
-	else if(!user.combat_mode)
-		target.visible_message(span_warning("[user] prods [target] with [src]. Luckily it was off."), \
-			span_warning("[user] prods you with [src]. Luckily it was off."))
-		return BATON_ATTACK_DONE
+	finalize_baton_attack(target, user)
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/item/melee/baton/security/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+/obj/item/melee/baton/security/baton_effect(mob/living/target, mob/living/user, stun_override)
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/robot = loc
 		if(!robot || !robot.cell || !robot.cell.use(cell_hit_cost))
@@ -597,9 +584,6 @@
 
 	if(!trait_check)
 		target.Knockdown(knockdown_time)
-
-/obj/item/melee/baton/security/get_wait_description()
-	return span_danger("The baton is still charging!")
 
 /obj/item/melee/baton/security/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
@@ -699,14 +683,13 @@
 	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)
 	user.put_in_hands(brand_new_prod)
 
-/obj/item/melee/baton/security/cattleprod/baton_effect()
+/obj/item/melee/baton/security/cattleprod/baton_effect(mob/living/target, mob/living/user, stun_override)
 	if(!sparkler.activate())
-		return BATON_ATTACK_DONE
+		return FALSE
 	return ..()
 
 /obj/item/melee/baton/security/cattleprod/Destroy()
-	if(sparkler)
-		QDEL_NULL(sparkler)
+	QDEL_NULL(sparkler)
 	return ..()
 
 /obj/item/melee/baton/security/boomerang
@@ -728,14 +711,6 @@
 	. = ..()
 	AddComponent(/datum/component/boomerang, throw_range+2, TRUE)
 
-/obj/item/melee/baton/security/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!active)
-		return ..()
-	var/caught = hit_atom.hitby(src, skipcatch = FALSE, hitpush = FALSE, throwingdatum = throwingdatum)
-	var/mob/thrown_by = thrownby?.resolve()
-	if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
-		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)
-
 /obj/item/melee/baton/security/boomerang/loaded //Same as above, comes with a cell.
 	preload_cell_type = /obj/item/stock_parts/cell/high
 
@@ -754,7 +729,7 @@
 		return
 	do_teleport(user, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE)
 
-/obj/item/melee/baton/security/cattleprod/teleprod/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+/obj/item/melee/baton/security/cattleprod/teleprod/baton_effect(mob/living/target, mob/living/user, stun_override)
 	. = ..()
 	if(!. || target.move_resist >= MOVE_FORCE_OVERPOWERING)
 		return
@@ -776,7 +751,7 @@
 		return
 	do_teleport(src, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE) //Wait, where did it go?
 
-/obj/item/melee/baton/security/cattleprod/telecrystalprod/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+/obj/item/melee/baton/security/cattleprod/telecrystalprod/baton_effect(mob/living/target, mob/living/user, stun_override)
 	. = ..()
 	if(!.)
 		return

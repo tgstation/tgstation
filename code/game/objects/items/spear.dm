@@ -60,7 +60,7 @@
 	)
 	update_appearance()
 
-/obj/item/spear/can_attack_with(mob/living/attacker)
+/obj/item/spear/can_attack_with(mob/living/attacker, params)
 	return ..() && (HAS_TRAIT(src, TRAIT_WIELDED) || attacker.get_inactive_held_item())
 
 /obj/item/spear/update_icon_state()

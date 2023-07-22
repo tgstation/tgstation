@@ -354,36 +354,23 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// Calculates the new armour value after armour penetration. Can return negative values, and those must be caught.
 #define PENETRATE_ARMOUR(armour, penetration) (penetration == 100 ? 0 : 100 * (armour - penetration) / (100 - penetration))
 
-/// Return values used in item/melee/baton/baton_attack.
-/// Does a normal item attack.
-#define BATON_DO_NORMAL_ATTACK 1
-/// The attack has been stopped. Either because the user was clumsy or the attack was blocked.
-#define BATON_ATTACK_DONE 2
-/// The baton attack is still going. baton_effect() is called.
-#define BATON_ATTACKING 3
-
-// Defines for attack_wrapper
-/// Continue with attack
-#define ATTACK_DEFAULT 0
-/// Don't continue with the attack, don't call afterattack
-#define ATTACK_NO_AFTERATTACK 1
-/// Don't continue with the attack but do call afterattack
-#define ATTACK_SKIPPED 2
-
 // Returns for attack style [finalize_attack]
+// These two are for backwards compatibility reasons, do not use them in swing styles
+#define ATTACK_DO_NOTHING FALSE // (1<<0)
+#define ATTACK_NO_AFTERATTACK TRUE // (1<<1) // Accomplishes the same as [ATTACK_SWING_CANCEL] and [ATTACK_SWING_SKIPPED] but less tact
 /// The swing hit some mob in the process
-#define ATTACK_SWING_HIT (1<<1)
+#define ATTACK_SWING_HIT (1<<2)
 /// The swing did not hit a single mob
 /// You don't have to set this one manually, it's set by default if no mobs are affected
-#define ATTACK_SWING_MISSED (1<<2)
+#define ATTACK_SWING_MISSED (1<<3)
 /// The swing was blocked by something in the process, either by a mob or some dense thing
 /// The following turf in the swing will not be hit - the swing stops here
 /// This means very little if the attack only affects a single turf
-#define ATTACK_SWING_BLOCKED (1<<3)
+#define ATTACK_SWING_BLOCKED (1<<4)
 /// Cancels the swing entirely
-#define ATTACK_SWING_CANCEL (1<<4)
+#define ATTACK_SWING_CANCEL (1<<5)
 /// Similar to cancel, but doesn't stop the entire swing
-#define ATTACK_SWING_SKIPPED (1<<5)
+#define ATTACK_SWING_SKIPPED (1<<6)
 
 /// For use in [check_block] primarily, when given a movable it will resolve to whatever is attacking with it
 /// - either the movable itself, if it's a mob, or the movable's loc if it is living

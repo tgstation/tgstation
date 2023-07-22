@@ -314,7 +314,7 @@
 	var/list/modifiers = params2list(params)
 	var/right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/close_enough = CanReach(clicked_on, clicked_with_what)
-	if(close_enough && clicked_with_what.permit_melee_chain_use(src, clicked_on, right_clicking))
+	if(close_enough && clicked_on.permit_melee_chain_use(src, clicked_with_what, right_clicking))
 		clicked_with_what.melee_attack_chain(src, clicked_on, params)
 		return
 
@@ -335,7 +335,7 @@
 		clicked_with_what.afterattack(clicked_on, src, close_enough, params)
 
 /**
- * Determines if this item is permitted to enter melee attack chain rather than swinging
+ * Determines if this atom permits the incoming item to enter melee attack chain rather than swinging
  *
  * In the future, every item should be permitted to go through attack chain so long as they're on non-combat mode
  * and attack chain should be redone to be "non-combat interaction chain" instead
@@ -344,33 +344,36 @@
  *
  * Until this, this proc serves as every edge case we need to handle in one neat place
  */
-/obj/item/proc/permit_melee_chain_use(mob/living/attacker, atom/clicked_on, right_clicking)
-	// No bludgeon prevents using swing styles, good to use for items that require "click on mob" interaction like scanners
-	if(item_flags & NOBLUDGEON)
+/atom/proc/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
+	return TRUE
+
+/area/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
+	CRASH("Attempted to melee attack an area")
+
+/mob/living/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
+	// No bludgeon prevents using swing styles,
+	// good to use for items that require "click on mob" interaction like scanners
+	if(clicked_with_what.item_flags & NOBLUDGEON)
 		return TRUE
-	if(attacker.combat_mode)
-		// must be able to bash tables by clicking on them
-		if(istype(clicked_on, /obj/structure/table) || istype(clicked_on, /obj/structure/rack))
+
+	for(var/datum/surgery/operation as anything in surgeries)
+		if(IS_IN_INVALID_SURGICAL_POSITION(src, operation))
+			continue
+		if((clicked_with_what.item_flags & SURGICAL_TOOL) \
+			|| operation.all_needed_items[clicked_with_what.type] \
+			|| (clicked_with_what.tool_behaviour && operation.all_needed_items[clicked_with_what.tool_behaviour]))
 			return TRUE
+
+	if(attacker.combat_mode)
 		return FALSE
 
-	// Handles non-combat use of items, like a using a screwdriver on a wall
-	if(!isliving(clicked_on))
-		return TRUE
-	// Handle allowing surgical items in
-	var/mob/living/living_clicked = clicked_on
-	for(var/datum/surgery/operation as anything in living_clicked.surgeries)
-		if(IS_IN_INVALID_SURGICAL_POSITION(living_clicked, operation))
-			continue
-		// todo : misses out on generic sharpness / cautery checks related to proc "tool_check"
-		if((item_flags & SURGICAL_TOOL) || operation.all_needed_items[type] || (tool_behaviour && operation.all_needed_items[tool_behaviour]))
-			return TRUE
+	return ..()
 
-	// todo : this is a hack, so people can open up cyborgs.
-	if(tool_behaviour == TOOL_CROWBAR && issilicon(clicked_on))
+/mob/living/silicon/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
+	if(clicked_with_what.tool_behaviour == TOOL_CROWBAR)
 		return TRUE
 
-	return FALSE
+	return ..()
 
 /// Selects what attack style this item is going to use when being used in a swing
 /obj/item/proc/select_attacking_style(mob/living/attacker, atom/clicked_on, right_clicking)

@@ -366,10 +366,10 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			icon_state = "wonderprodProbe"
 			inhand_icon_state = "wonderprodProbe"
 
-/obj/item/melee/baton/abductor/can_attack_with(mob/living/attacker)
+/obj/item/melee/baton/abductor/can_attack_with(mob/living/attacker, params)
 	return AbductorCheck(attacker)
 
-/obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+/obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, stun_override)
 	switch (mode)
 		if(BATON_STUN)
 			target.visible_message(span_danger("[user] stuns [target] with [src]!"),

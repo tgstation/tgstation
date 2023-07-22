@@ -14,7 +14,7 @@
 	if(tool_behaviour && (target.tool_act(user, src, tool_behaviour, is_right_clicking) & TOOL_ACT_MELEE_CHAIN_BLOCKING))
 		return TRUE
 
-	if(isliving(target) && !can_attack_with(user))
+	if(isliving(target) && !can_attack_with(user, params))
 		return TRUE
 
 	var/pre_attack_result
@@ -186,8 +186,8 @@
 		|| !check_block(attacking_item, attacking_item.force, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype) \
 	)
 		var/attack_result = attacking_item.attack_wrapper(src, user, params)
-		if(attack_result != ATTACK_DEFAULT) // True or false means don't play the hitsound or do the attack animation. Null means go ahead. Todo, make these defines instead.
-			return attack_result
+		if(attack_result & ATTACK_NO_AFTERATTACK|ATTACK_SWING_CANCEL|ATTACK_SWING_SKIPPED)
+			return TRUE // end chain
 
 		attacked_by(attacking_item, user)
 
@@ -239,17 +239,19 @@
 
 	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target_mob, user, params) | SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, src, user, params)
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return ATTACK_NO_AFTERATTACK // end chain
+		return ATTACK_SWING_CANCEL // end chain
 	if(signal_return & COMPONENT_SKIP_ATTACK)
-		return ATTACK_SKIPPED // continue chain
+		return ATTACK_SWING_SKIPPED // continue chain
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && force && damtype != STAMINA)
-		return ATTACK_NO_AFTERATTACK // shouldn't happen, but it if does end chain
-	if(attack(target_mob, user, params))
-		return ATTACK_NO_AFTERATTACK // end chain
-	if(item_flags & NOBLUDGEON)
-		return ATTACK_SKIPPED // continue chain
+		return ATTACK_SWING_CANCEL // shouldn't happen, but it if does end chain
 
-	return ATTACK_DEFAULT // do nothing
+	. = attack(target_mob, user, params)
+	if(. & ATTACK_SWING_CANCEL)
+		return ATTACK_SWING_CANCEL // end chain
+	if(item_flags & NOBLUDGEON)
+		return ATTACK_SWING_SKIPPED // continue chain
+
+	return .
 
 /**
  * The item is executing an attack on a living mob target
@@ -284,7 +286,8 @@
 		return
 	if(item_flags & NOBLUDGEON)
 		return
-	user.changeNext_move(attack_style?.cd || CLICK_CD_MELEE)
+	var/item_cd = attack_style?.cd || CLICK_CD_MELEE
+	user.changeNext_move(min(item_cd, CLICK_CD_MELEE * 1.25))
 	user.do_attack_animation(attacked_atom)
 	attacked_atom.attacked_by(src, user)
 
@@ -376,7 +379,7 @@
 		SSblackbox.record_feedback("tally", "zone_targeted", 1, parse_zone(user.zone_selected))
 
 	was_attacked_effects(attacking_item, user, affecting, damage, damage_type, armor_block)
-	return ATTACK_SWING_HIT
+	return TRUE
 
 /mob/living/proc/was_attacked_effects(obj/item/attacking_item, mob/living/user, obj/item/bodypart/hit_limb, damage, damage_type, armor_block)
 	SHOULD_CALL_PARENT(TRUE)

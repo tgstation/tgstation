@@ -751,7 +751,7 @@
 				rev?.remove_revolutionary(user)
 
 		if(BODY_ZONE_CHEST)
-			if(stat == CONSCIOUS && prob(damage))
+			if(stat == CONSCIOUS && prob(damage) && (status_flags & CANKNOCKDOWN) && !IsKnockdown())
 				visible_message(span_danger("[src] is knocked down!"), ignored_mobs = src)
 				to_chat(src, span_userdanger("You're knocked down!"))
 				apply_effect(6 SECONDS, EFFECT_KNOCKDOWN, armor_block)
