@@ -3,6 +3,9 @@
 /datum/attack_style/melee_weapon/baton/check_pacifism(mob/living/attacker, obj/item/weapon)
 	return FALSE // Assume pacifism is fine, check it later in the chain depending on whether it's harmbatonning
 
+/datum/attack_style/melee_weapon/baton/get_hit_sound(obj/item/melee/baton/weapon, attack_result)
+	return (attack_result & ATTACK_SWING_SKIPPED) ? null : ..() // no hitsound on stunning, todo do this better
+
 /obj/item/melee/baton
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."

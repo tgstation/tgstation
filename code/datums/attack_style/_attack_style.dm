@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	right_clicking,
 )
 	SHOULD_CALL_PARENT(TRUE)
-
+	var/attack_result = NONE
 	// Gathers up all mobs in the turf being struck. Each mob will have a priority assigned.
 	// Intuitively an attacker will not want to attack certain mobs, such as their friends, or unconscious people over conscious people.
 	// While this doesn't completley mitigate the chance of friendly fire, it does make it less likely.
@@ -228,12 +228,12 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 	// This is where attack swings enter attack chain.
 	for(var/mob/living/smack_who as anything in foes)
 		already_hit[smack_who] = TRUE
-		. |= finalize_attack(attacker, smack_who, weapon, right_clicking)
-		if(. & ATTACK_SWING_CANCEL)
-			return .
-		if(. & (ATTACK_SWING_MISSED|ATTACK_SWING_SKIPPED))
+		attack_result |= finalize_attack(attacker, smack_who, weapon, right_clicking)
+		if(attack_result & ATTACK_SWING_CANCEL)
+			return attack_result
+		if(attack_result & (ATTACK_SWING_MISSED|ATTACK_SWING_SKIPPED))
 			continue
-		if(. & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT))
+		if(attack_result & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT))
 			total_hit++
 		if(total_hit >= hits_per_turf_allowed)
 			break
@@ -247,19 +247,19 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 			span_warning("[attacker]'s attack collides with [blocking_us]!"),
 			span_warning("[blocking_us] blocks your attack!"),
 		)
-		. |= collide_with_solid_atom(blocking_us, weapon, attacker)
+		attack_result |= collide_with_solid_atom(blocking_us, weapon, attacker)
 
-	if(total_hit > 0 && (. & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT))) // melbert todo check this
-		playsound(attacker, get_hit_sound(weapon), hit_volume, TRUE)
+	if(attack_result & (ATTACK_SWING_BLOCKED|ATTACK_SWING_HIT)) // melbert todo check this
+		playsound(attacker, get_hit_sound(weapon, attack_result), hit_volume, TRUE)
 
-	return .
+	return attack_result
 
 /**
  * Gets the soound to play when the attack successfully hits another mob
  *
  * * weapon - The weapon being used, can be null or a non-held item depending on the attack style
  */
-/datum/attack_style/proc/get_hit_sound(obj/item/weapon)
+/datum/attack_style/proc/get_hit_sound(obj/item/weapon, attack_result)
 	return successful_hit_sound || weapon?.hitsound
 
 /**

@@ -345,6 +345,11 @@
  * Until this, this proc serves as every edge case we need to handle in one neat place
  */
 /atom/proc/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
+	if(clicked_with_what.item_flags & NOBLUDGEON)
+		return TRUE
+	if(attacker.combat_mode)
+		return FALSE
+
 	return TRUE
 
 /area/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
@@ -364,10 +369,7 @@
 			|| (clicked_with_what.tool_behaviour && operation.all_needed_items[clicked_with_what.tool_behaviour]))
 			return TRUE
 
-	if(attacker.combat_mode)
-		return FALSE
-
-	return ..()
+	return FALSE
 
 /mob/living/silicon/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
 	if(clicked_with_what.tool_behaviour == TOOL_CROWBAR)
