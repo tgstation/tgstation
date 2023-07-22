@@ -242,7 +242,7 @@
 	if(!user.transferItemToLoc(src, crusher))
 		return
 	crusher.trophies += src
-	to_chat(user, span_notice("You attach [src] to [crusher]."))
+	crusher.balloon_alert(user, "trophy attached")
 	return TRUE
 
 /obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
