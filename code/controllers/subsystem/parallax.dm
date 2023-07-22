@@ -13,10 +13,10 @@ SUBSYSTEM_DEF(parallax)
 	/// A random parallax layer that we sent to every player
 	var/atom/movable/screen/parallax_layer/random/random_layer
 	/// Weighted list with the parallax layers we could spawn
-	var/random_parallax_weights = list( \
-		/atom/movable/screen/parallax_layer/random/space_gas = 35, \
-		/atom/movable/screen/parallax_layer/random/asteroids = 35, \
-		PARALLAX_NONE = 30, \
+	var/random_parallax_weights = list(
+		/atom/movable/screen/parallax_layer/random/space_gas = 35555,
+		/atom/movable/screen/parallax_layer/random/asteroids = 35,
+		PARALLAX_NONE = 30,
 	)
 
 //These are cached per client so needs to be done asap so people joining at roundstart do not miss these.
@@ -72,6 +72,7 @@ SUBSYSTEM_DEF(parallax)
 		return
 
 	random_layer = new picked_parallax(template = TRUE)
+	RegisterSignal(random_layer, COMSIG_QDELETING, PROC_REF(clear_references))
 	random_layer.get_random_look()
 
 /// Change the random parallax layer after it's already been set. update_player_huds = TRUE will also replace them in the players client images, if it was set
@@ -86,5 +87,10 @@ SUBSYSTEM_DEF(parallax)
 	for(var/client/client as anything in GLOB.clients)
 		client.parallax_layers_cached?.Cut()
 		client.mob?.hud_used?.update_parallax_pref(client.mob)
+
+/datum/controller/subsystem/parallax/proc/clear_references()
+	SIGNAL_HANDLER
+
+	random_layer = null
 
 #undef PARALLAX_NONE
