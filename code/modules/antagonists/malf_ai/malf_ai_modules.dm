@@ -565,7 +565,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	desc = "[desc] It has [uses] use\s remaining."
 
 /datum/action/innate/ai/blackout/Activate()
-	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type(/obj/machinery/power/apc))
+	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(prob(30 * apc.overload))
 			apc.overload_lighting()
 		else

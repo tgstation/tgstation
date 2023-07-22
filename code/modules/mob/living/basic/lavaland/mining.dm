@@ -19,7 +19,7 @@
 	AddElement(/datum/element/mob_killed_tally, "mobs_killed_mining")
 	var/static/list/vulnerable_projectiles
 	if(!vulnerable_projectiles)
-		vulnerable_projectiles = MINING_MOB_PROJECTILE_VULNERABILITY
+		vulnerable_projectiles = string_list(MINING_MOB_PROJECTILE_VULNERABILITY)
 	AddElement(\
 		/datum/element/ranged_armour,\
 		minimum_projectile_force = 30,\
