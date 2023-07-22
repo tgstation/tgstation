@@ -1783,7 +1783,6 @@
 	drink_type = SEAFOOD
 
 /datum/chemical_reaction/food/soup/dashi
-	required_other = FALSE
 	required_reagents = list(
 		/datum/reagent/consumable/dashi_concentrate = 5,
 		/datum/reagent/water = 40,
@@ -1805,7 +1804,6 @@
 	drink_type = VEGETABLES
 
 /datum/chemical_reaction/food/soup/teriyaki
-	required_other = FALSE
 	required_reagents = list(
 		/datum/reagent/consumable/soysauce = 10,
 		/datum/reagent/consumable/ethanol/sake = 10,
@@ -1828,7 +1826,6 @@
 	drink_type = VEGETABLES
 
 /datum/chemical_reaction/food/soup/curry_sauce
-	required_other = FALSE
 	required_reagents = list(
 		/datum/reagent/water = 30,
 		/datum/reagent/consumable/curry_powder = 10,

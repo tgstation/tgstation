@@ -15,6 +15,7 @@
 /obj/item/food/inferno_kimchi
 	name = "inferno kimchi"
 	desc = "For when ordinary kimchi just can't scratch your itch for insane heat, inferno kimchi picks up the slack."
+	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "inferno_kimchi"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 3,
@@ -463,7 +464,7 @@
 	name = "tacoyaki"
 	desc = "Straight outta Mars' most innovative street food stands, it's tacoyaki- trading octopus for taco meat and corn, and worcestershire sauce for queso. ¡Tan sabroso!"
 	icon = 'icons/obj/food/martian.dmi'
-	icon_state = "taco_takoyaki"
+	icon_state = "tacoyaki"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 1,
 		/datum/reagent/consumable/nutriment/protein = 3,
@@ -789,6 +790,7 @@
 /obj/item/food/cakeslice/spekkoek
 	name = "vulgaris spekkoek slice"
 	desc = "A slice of vulgaris spekkoek. If you're Martian, this might remind you of home."
+	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "spekkoek_slice"
 	tastes = list("winter spices" = 2, "ambrosia vulgaris" = 2, "cake" = 5)
 	foodtypes = GRAIN | SUGAR | DAIRY
