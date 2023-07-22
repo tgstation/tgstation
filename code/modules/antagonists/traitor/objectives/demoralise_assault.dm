@@ -18,7 +18,7 @@
 	/// Max attacks required to pass the objective. Picked at random between this and min.
 	var/max_attacks_required = 5
 	/// The random number picked for the number of required attacks to pass this objective.
-	var/chosen_attacks_required = 0
+	var/attacks_required = 0
 	/// Total number of successful attacks recorded.
 	var/attacks_inflicted = 0
 
@@ -98,8 +98,8 @@
 	replace_in_name("%TARGET%", target.real_name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
 
-	chosen_attacks_required = rand(min_attacks_required, max_attacks_required)
-	replace_in_name("%COUNT%", chosen_attacks_required)
+	attacks_required = rand(min_attacks_required, max_attacks_required)
+	replace_in_name("%COUNT%", attacks_required)
 
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death))
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_qdeleted))
