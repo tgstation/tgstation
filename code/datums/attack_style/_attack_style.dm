@@ -420,10 +420,8 @@ GLOBAL_LIST_INIT(attack_styles, init_attack_styles())
 		log_combat(attacker, smacked, "attacked", weapon.name, "(STYLE: [type]) (DAMTYPE: [uppertext(weapon.damtype)])")
 
 		// !! ACTUAL DAMAGE GETS APPLIED HERE !!
-		if(!smacked.attacked_by(weapon, attacker))
-			return attack_result | ATTACK_SWING_SKIPPED // Attack did 0 damage
-
-		attack_result |= ATTACK_SWING_HIT
+		if(smacked.attacked_by(weapon, attacker))
+			attack_result |= ATTACK_SWING_HIT
 
 	if(right_clicking)
 		switch(weapon.afterattack_secondary(smacked, attacker, /* proximity_flag = */TRUE, fake_parms))
