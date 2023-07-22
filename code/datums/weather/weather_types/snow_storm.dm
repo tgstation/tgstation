@@ -62,5 +62,5 @@
 
 	probability = 0
 
-	cooling_lower = 10
-	cooling_upper = 20
+	cooling_lower = 5
+	cooling_upper = 18
