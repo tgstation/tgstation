@@ -11,11 +11,16 @@
 	var/tapped = FALSE
 	/// A weighted list of what minerals are contained in this vent, with weight determining how likely each mineral is to be picked in produced boulders.
 	var/list/mineral_breakdown = list(
-		/datum/material/iron = 50,
-		/datum/material/glass = 35,
+		/datum/material/iron = 30,
+		/datum/material/glass = 30,
+		/datum/material/titanium = 10,
 		/datum/material/silver = 5,
 		/datum/material/gold = 5,
-		/datum/material/plasma = 1,
+		/datum/material/plasma = 5,
+		/datum/material/diamond = 5,
+		/datum/material/uranium = 5,
+		/datum/material/bluespace = 1,
+		/datum/material/plastic = 1,
 	)
 	var/static/list/lavaland_mobs = list(
 		/mob/living/basic/mining/goliath,
@@ -55,6 +60,14 @@
 		///This is where we start spitting out mobs.
 		Shake(duration = 3 SECONDS)
 		node = new /mob/living/basic/node_drone(loc)
+
+		for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
+			for(var/turf/closed/mineral/rock in oview(i))
+				if(!istype(rock, /turf/closed/mineral))
+					continue
+				rock.gets_drilled(user, FALSE)
+			sleep(0.6 SECONDS)
+
 		start_wave_defense()
 		//This vent is going to start generating ore automatically.
 
@@ -63,13 +76,6 @@
  * Then assigns custom_materials based on boulder_size, assigned via the ore_quantity_function
  */
 /obj/structure/ore_vent/proc/create_mineral_contents()
-	// var/list/refined_list = list()
-	// for(var/iteration in 1 to minerals_per_boulder)
-	// 	var/picked_mat = pick_weight(mineral_breakdown) // Material should be picked, weighed by the weights of that vent's output.
-	// 	var/list/quantity_list = list()
-	// 	quantity_list[picked_mat] = ore_quantity_function(iteration)
-	// 	refined_list.Insert(refined_list.len, quantity_list)
-	// return refined_list
 
 	var/list/refined_list = list()
 	for(var/iteration in 1 to minerals_per_boulder)
@@ -96,7 +102,7 @@
 	//faction = FACTION_MINING,	//todo: is there some reason I can't sanity check mob faction?
 	AddComponent(/datum/component/spawner,\
 		spawn_types = lavaland_mobs,\
-		spawn_time = 20 SECONDS,\
+		spawn_time = 15 SECONDS,\
 		max_spawned = 10,\
 		spawn_per_attempt = (1 + (boulder_size/5)),\
 		spawn_text = "emerges to assault",\
@@ -139,6 +145,10 @@
 	name = "active ore vent"
 	desc = "An ore vent, brimming with underground ore. It's already supplying the station with iron and glass."
 	tapped = TRUE
+	mineral_breakdown = list(
+		/datum/material/iron = 50,
+		/datum/material/glass = 50,
+	)
 
 /obj/structure/ore_vent/medium
 	boulder_size = BOULDER_SIZE_MEDIUM

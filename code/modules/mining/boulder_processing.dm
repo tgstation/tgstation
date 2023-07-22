@@ -13,9 +13,11 @@
 	var/boulders_processing = 0
 	/// How many boulders can we process maximum?
 	var/boulders_processing_max = 1
-	///How many boulders are we allowed to store at once?
-	var/boulders_held = 1
-
+	/// How many boulders are we holding?
+	var/boulders_held = 0
+	/// How many boulders can we hold maximum?
+	var/boulders_held_max = 1
+	/// Does this machine have a mineral storage link to the silo?
 	var/holds_minerals = FALSE
 	/// What materials do we accept and process out of boulders? Removing iron from an iron/glass boulder would leave a boulder with glass.
 	var/list/processable_materials = list()
@@ -32,22 +34,20 @@
 
 /obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), attacking_item))
-		return
-
-	if(default_pry_open(attacking_item, close_after_pry = TRUE, closed_density = FALSE))
-		return
-
-	if(default_deconstruction_crowbar(attacking_item))
-		return
 
 	if(holds_minerals && istype(attacking_item, /obj/item/boulder))
 		var/obj/item/boulder/my_boulder = attacking_item
-		accept_boulder(my_boulder)
+		update_boulder_count()
+		if(!accept_boulder(my_boulder))
+			visible_message(span_warning("[my_boulder] is rejected!"))
+			return FALSE
 		visible_message(span_warning("[my_boulder] is accepted into \the [src]"))
 		breakdown_boulder(my_boulder)
 		return FALSE
 
+/obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers) //todo: this probably shouldn't exist? maybe retool elsewhere?
+	. = ..()
+	remove_boulder()
 
 /obj/machinery/bouldertech/deconstruct(disassembled)
 	. = ..()
@@ -55,7 +55,19 @@
 		qdel(silo_materials)
 	if(contents.len)
 		for(var/obj/item/boulder/boulder in contents)
-			forceMove(boulder, loc)
+			remove_boulder(boulder)
+
+/obj/machinery/bouldertech/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
+		return FALSE
+
+/obj/machinery/bouldertech/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_pry_open(tool, close_after_pry = TRUE, closed_density = FALSE))
+		return FALSE
+	if(default_deconstruction_crowbar(tool))
+		return FALSE
 
 /obj/machinery/bouldertech/proc/breakdown_boulder(obj/item/boulder/chosen_boulder)
 	if(!chosen_boulder)
@@ -69,14 +81,21 @@
 		return FALSE
 
 	var/list/remaining_ores = list()
+	var/tripped = FALSE
+	//If a material is in the boulder's custom_materials, but not in the processable_materials list, we add it to the remaining_ores list to add back to a leftover boulder.
 	for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
 		if(!is_type_in_list(possible_mat, processable_materials))
-			remaining_ores.Insert(remaining_ores.len, possible_mat)
-			remaining_ores[remaining_ores.len] = chosen_boulder.custom_materials[possible_mat] //Move over mineral quantity quantity
-			possible_mat = null
-	// if(!chosen_boulder.custom_materials)
-	// 	return FALSE
+			var/quantity = chosen_boulder.custom_materials[possible_mat]
+			visible_message(span_warning("[possible_mat] remains at [quantity] value!"))
+			remaining_ores += possible_mat
+			remaining_ores[possible_mat] = quantity
+			chosen_boulder.custom_materials[possible_mat] = null
+		else
+			tripped = TRUE
 
+	if(!tripped)
+		remove_boulder(chosen_boulder)
+		return FALSE //we shouldn't spend more time processing a boulder with contents we don't care about.
 	silo_materials.mat_container.insert_item(chosen_boulder, refining_efficiency, breakdown_flags = BREAKDOWN_FLAGS_ORM)
 	balloon_alert_to_viewers("Boulder processed!")
 	// playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE) //Maybe look for an industrial sound here instead?
@@ -85,20 +104,25 @@
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return TRUE
 
-	var/obj/item/boulder/new_rock = new (contents)
+	var/obj/item/boulder/new_rock = new (src)
+	// new_rock.custom_materials = remaining_ores //remove
 	new_rock.set_custom_materials(remaining_ores)
 	remove_boulder(new_rock)
+	return TRUE
 
 /obj/machinery/bouldertech/proc/accept_boulder(obj/item/boulder/new_boulder)
 	if(!new_boulder)
 		return FALSE
-	if(boulders_held >= contents.len) //Full already
+	if(boulders_held >= boulders_held_max) //Full already
+		visible_message(span_warning("no space!"))
 		return FALSE
 	if(!new_boulder.custom_materials) //Shouldn't happen, but just in case.
 		qdel(new_boulder)
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
-	new_boulder.forceMove(contents)
+	new_boulder.forceMove(src)
+	boulders_held++
+	return TRUE
 
 /obj/machinery/bouldertech/proc/remove_boulder(obj/item/boulder/specific_boulder)
 	if(!contents.len)
@@ -113,7 +137,15 @@
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
 	possible_boulder.forceMove(drop_location())
+	boulders_held = clamp(boulders_held--, 0, boulders_held_max)
+	visible_message(span_warning("[boulders_held] remaining!"))
+	return TRUE
 
+/obj/machinery/bouldertech/proc/update_boulder_count()
+	boulders_held = 0
+	for(var/obj/item/boulder/boulder in contents)
+		boulders_held++
+	return boulders_held
 
 /obj/machinery/bouldertech/brm
 	name = "boulder retrieval matrix"
@@ -192,7 +224,7 @@
 	boulders_processing_max = manipulator_stack
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
 		matter_bin_stack += ((bin.tier))
-	boulders_held = matter_bin_stack
+	boulders_held_max = matter_bin_stack
 
 
 ///Beacon to launch a new mining setup when activated. For testing and speed!
