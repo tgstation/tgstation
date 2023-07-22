@@ -76,8 +76,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	moles = max(-cached_gas[MOLES], moles)
 	cached_gas[MOLES] += moles
 	heat_capacity += moles * cached_gas[GAS_META][META_GAS_SPECIFIC_HEAT]
-	if(conserve_energy)
-		temperature = temperature * old_heat_capacity / heat_capacity
+	if(conserve_energy && heat_capacity > MINIMUM_HEAT_CAPACITY)
+		temperature = max(temperature * old_heat_capacity / heat_capacity, TCMB)
 
 ///Set the moles of a given gas to moles. Check if the gas exists first before trying to set its mole count!
 ///Automatically adjusts the heat capacity. Conserves energy if conserve_energy is TRUE.
