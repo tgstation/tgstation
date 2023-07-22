@@ -186,20 +186,6 @@
 	hit_mob.adjustFireLoss(5)
 	to_chat(hit_mob, span_danger("You're damaged by [src]!"))
 
-/obj/item/crusher_trophy/brimdemon_fang
-	name = "brimdemon's fang"
-	icon_state = "brimdemon_fang"
-	desc = "A fang from a brimdemon's corpse."
-	denied_type = /obj/item/crusher_trophy/brimdemon_fang
-	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
-
-/obj/item/crusher_trophy/brimdemon_fang/effect_desc()
-	return "mark detonation creates visual and audiosensory effects on the target"
-
-/obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
-	target.balloon_alert_to_viewers("[pick(comic_phrases)]!")
-	playsound(target, 'sound/lavaland/brimdemon_crush.ogg', 100)
-
 /obj/effect/decal/cleanable/brimdust
 	name = "brimdust"
 	desc = "Dust from a brimdemon. It is considered valuable for its' botanical abilities."
