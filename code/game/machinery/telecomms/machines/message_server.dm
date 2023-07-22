@@ -182,9 +182,9 @@
 	var/obj/item/modular_computer/target = target_app.computer
 	return "[target.saved_identification] ([target.saved_job])"
 
-/datum/signal/subspsace/messaging/tablet_msg/proc/format_sender()
-	var/display_name = get_messenger_name(locate(PDAsignal.data["ref"]))
-	return display_name ? display_name : STRINGIFY_PDA_TARGET(signal.data["fakename"], signal.data["fakejob"])
+/datum/signal/subspace/messaging/tablet_msg/proc/format_sender()
+	var/display_name = get_messenger_name(locate(data["ref"]))
+	return display_name ? display_name : STRINGIFY_PDA_TARGET(data["fakename"], data["fakejob"])
 
 /datum/signal/subspace/messaging/tablet_msg/proc/format_message()
 	var/datum/pda_msg/msg = data["message"]
