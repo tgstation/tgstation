@@ -1691,7 +1691,7 @@ FLAG
 		mytray.mutmod = 1
 		myseed.adjust_lifespan(round(chems.get_reagent_amount(type) * 0.15))
 		if(myseed)
-			myseed.adjust_potency(round(chems.get_reagent_amount * 0.1))
+			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.1))
 			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 0.1))
 
 
