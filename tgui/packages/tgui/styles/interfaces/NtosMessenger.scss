@@ -61,18 +61,32 @@ $msgpadding: 0.7rem;
     margin-top: 0.5rem;
     color: lightgrey;
   }
+}
 
-  img {
-    margin-top: 1rem;
-    margin-right: 3rem;
-    max-width: 25rem;
-  }
+.NtosChatMessage__image {
+  align-self: flex-start;
+  margin-top: 1rem;
+  margin-right: 3rem;
+  max-width: 25rem;
 }
 
 .NtosChatLog {
   padding: 1rem;
-  min-height: 99.9%;
+  min-height: 99.5%;
   margin: 0;
+}
+
+.NtosChatLog__ImagePreview {
+  width: fit-content;
+  height: fit-content;
+}
+
+.NtosChatLog__ImagePreview img {
+  height: auto;
+  width: 30rem;
+  margin-right: 1rem;
+  justify-self: center;
+  align-self: center;
 }
 
 .UnreadDivider {

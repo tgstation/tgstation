@@ -1,4 +1,4 @@
-import { Stack, Section, Button, Box, Input } from '../../components';
+import { Stack, Section, Button, Box, Input, Modal } from '../../components';
 import { Component, RefObject, createRef, SFC } from 'inferno';
 import { NtChat, NtMessenger, NtPicture } from './types';
 import { sanitizeText } from '../../sanitize';
@@ -19,6 +19,7 @@ type ChatScreenState = {
   msg: string;
   selectingPhoto: boolean;
   canSend: boolean;
+  previewingImage: string | null;
 };
 
 const READ_UNREADS_TIME_MS = 3000;
@@ -32,6 +33,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     msg: '',
     selectingPhoto: false,
     canSend: true,
+    previewingImage: null,
   };
 
   constructor(props: ChatScreenProps) {
@@ -124,10 +126,9 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   handleSendMessage() {
     if (this.state.msg === '') return;
     const { act } = useBackend(this.context);
+    const { temp_msgr, chat } = this.props;
 
-    let ref = this.props.chat
-      ? this.props.chat.ref
-      : this.props.temp_msgr!.ref!;
+    let ref = chat ? chat.ref : temp_msgr!.ref!;
 
     act('PDA_sendMessage', {
       ref: ref,
@@ -144,8 +145,9 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
   render() {
     const { act } = useBackend(this.context);
-    const { onReturn, chat, temp_msgr } = this.props;
-    const { msg, canSend } = this.state;
+    const { onReturn, chat, temp_msgr, selectedPhoto, storedPhotos } =
+      this.props;
+    const { msg, canSend, previewingImage, selectingPhoto } = this.state;
 
     // one or the other has to exist
     const recp = chat ? chat.recp : temp_msgr!;
@@ -171,6 +173,11 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             msg={message.message}
             everyone={message.everyone}
             photoPath={message.photo_path}
+            onPreviewImage={
+              message.photo_path
+                ? () => this.setState({ previewingImage: message.photo_path! })
+                : undefined
+            }
           />
         </Stack.Item>
       );
@@ -178,12 +185,20 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
     let sendingBar: JSX.Element;
 
-    if (this.state.selectingPhoto) {
-      const photos = this.props.storedPhotos!.map((photo) => (
+    if (chat && !chat.can_reply) {
+      sendingBar = (
+        <Section fill>
+          <Box width="100%" italic color="gray" ml={1}>
+            You cannot reply to this user.
+          </Box>
+        </Section>
+      );
+    } else if (selectingPhoto) {
+      const photos = storedPhotos!.map((photo) => (
         <Stack.Item key={photo.uid}>
           <Button
             pt={1}
-            selected={this.props.selectedPhoto === photo.path}
+            selected={selectedPhoto === photo.path}
             onClick={() => {
               act('PDA_selectPhoto', { uid: photo.uid });
               this.setState({ selectingPhoto: false });
@@ -215,15 +230,14 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
       sendingBar = (
         <Section fill>
           <Stack vertical>
-            {this.props.selectedPhoto && (
+            {selectedPhoto && (
               <Stack.Item>
                 <Button
                   pt={1}
-                  icon="paperclip"
                   onClick={() => act('PDA_clearPhoto')}
                   tooltip="Remove attachment"
                   tooltipPosition="auto-end">
-                  <Box as="img" src={this.props.selectedPhoto} />
+                  <Box as="img" src={selectedPhoto} />
                 </Button>
               </Stack.Item>
             )}
@@ -297,16 +311,37 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             title={`${recp.name} (${recp.job})`}
             scrollableRef={this.scrollRef}>
             <Stack vertical className="NtosChatLog">
-              <Stack.Item textAlign="center" fontSize={1}>
-                This is the beginning of your chat with {recp.name}.
-              </Stack.Item>
-              <Stack.Divider />
+              {!!chat?.can_reply && (
+                <>
+                  <Stack.Item textAlign="center" fontSize={1}>
+                    This is the beginning of your chat with {recp.name}.
+                  </Stack.Item>
+                  <Stack.Divider />
+                </>
+              )}
+
               {filteredMessages}
             </Stack>
           </Section>
         </Stack.Item>
 
         <Stack.Item>{sendingBar}</Stack.Item>
+        {previewingImage && (
+          <Modal className="NtosChatLog__ImagePreview">
+            <Section
+              title="Photo Preview"
+              buttons={
+                <Button
+                  icon="arrow-left"
+                  content="Back"
+                  tooltipPosition="left"
+                  onClick={() => this.setState({ previewingImage: null })}
+                />
+              }>
+              <Box as="img" src={previewingImage} />
+            </Section>
+          </Modal>
+        )}
       </Stack>
     );
   }
@@ -317,10 +352,11 @@ export type ChatMessageProps = {
   msg: string;
   everyone?: BooleanLike;
   photoPath?: string;
+  onPreviewImage?: () => void;
 };
 
 export const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
-  const { msg, everyone, outgoing, photoPath } = props;
+  const { msg, everyone, outgoing, photoPath, onPreviewImage } = props;
   const text = {
     __html: sanitizeText(msg),
   };
@@ -331,7 +367,15 @@ export const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
         className="NtosChatMessage__content"
         dangerouslySetInnerHTML={text}
       />
-      {photoPath !== null && <Box as="img" src={photoPath} />}
+      {photoPath !== null && (
+        <Button
+          tooltip="View image"
+          className="NtosChatMessage__image"
+          color="transparent"
+          onClick={onPreviewImage}>
+          <Box as="img" src={photoPath} mt={1} />
+        </Button>
+      )}
       {!!everyone && (
         <Box className="NtosChatMessage__everyone">Sent to everyone</Box>
       )}
