@@ -4,7 +4,7 @@
 	bodytype_icon_files = list("4" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/feet.dmi',
 		"8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/feet_digi.dmi',
 		"1024" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/teshvali_feet.dmi',
-		"1024" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/avalari_feet.dmi')
+		"2048" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/avalari_feet.dmi')
 
 
 

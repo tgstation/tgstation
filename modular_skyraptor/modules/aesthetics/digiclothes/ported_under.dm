@@ -28,10 +28,11 @@
 
 /obj/item/clothing/under/rank/engineering
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/engineering.dmi'
-	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE, BODYTYPE_TESHVALI)
+	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE, BODYTYPE_TESHVALI, BODYTYPE_AVALARI)
 	bodytype_icon_files = list("4" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/engineering.dmi',
 		"8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/engineering_digi.dmi',
-		"1024" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/under/teshvali_under_engineering.dmi')
+		"1024" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/under/teshvali_under_engineering.dmi',
+		"2048" = 'modular_skyraptor/modules/species_teshvali/icons/clothing/under/avalari_under_engineering.dmi')
 
 /obj/item/clothing/under/rank/rnd
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/rnd.dmi'
