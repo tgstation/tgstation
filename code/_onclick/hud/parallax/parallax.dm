@@ -271,10 +271,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 	screen_loc = "CENTER-7,CENTER-7"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/atom/movable/screen/parallax_layer/Initialize(mapload, datum/hud/hud_owner)
+/atom/movable/screen/parallax_layer/Initialize(mapload, datum/hud/hud_owner, template = FALSE)
 	. = ..()
 	var/client/boss = hud_owner?.mymob?.canon_client
-	if(!boss) // If this typepath all starts to harddel your culprit is likely this
+	if(!boss && !template) // If this typepath all starts to harddel your culprit is likely this
 		return INITIALIZE_HINT_QDEL
 
 	// I do not want to know bestie
