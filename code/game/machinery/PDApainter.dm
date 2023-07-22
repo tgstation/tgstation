@@ -321,7 +321,7 @@
 				return TRUE
 
 			var/selection = params["selection"]
-			var/obj/item/modular_computer/pda/pda_path = /obj/item/modular_computer/pda
+			var/obj/item/modular_computer/pda/pda_path = stored_pda.type
 
 			for(var/path in pda_types)
 				if(pda_types[path] == selection)

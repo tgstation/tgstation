@@ -88,10 +88,10 @@
 	desc = paintjob ? initial(paintjob.desc) : initial(desc)
 
 /obj/item/modular_computer/pda/update_greyscale()
-	. = ..()
 	if(paintjob && initial(paintjob.greyscale_colors) && initial(paintjob.greyscale_config))
 		greyscale_colors = initial(paintjob.greyscale_colors)
 		greyscale_config = initial(paintjob.greyscale_config)
+	return ..()
 
 /obj/item/modular_computer/pda/update_overlays()
 	. = ..()

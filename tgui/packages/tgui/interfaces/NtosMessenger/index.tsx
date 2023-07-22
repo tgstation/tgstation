@@ -183,13 +183,6 @@ const ContactsScreen = (_props: any, context: any) => {
                 content={`Sort by: ${sort_by_job ? 'Job' : 'Name'}`}
                 onClick={() => act('PDA_changeSortStyle')}
               />
-              {!!is_silicon && (
-                <Button
-                  icon="camera"
-                  content="Attach Photo"
-                  onClick={() => act('PDA_selectPhoto')}
-                />
-              )}
               {!!virus_attach && (
                 <Button
                   icon="bug"
