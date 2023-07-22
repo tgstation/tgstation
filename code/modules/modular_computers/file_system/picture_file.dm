@@ -22,9 +22,13 @@ GLOBAL_VAR_INIT(next_ntos_picture_uid, 0)
 	src.stored_picture = stored_picture
 	src.picture_name = picture_name
 
+/datum/computer_file/picture/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+	. = ..()
+	assign_path()
+
 /datum/computer_file/picture/proc/assign_path()
 	if(!isnull(picture_name))
-		stack_trace("we are overriding a picture's asset path, this isn't necessary")
+		return
 	picture_name = get_next_ntos_picture_path()
 	SSassets.transport.register_asset(picture_name, stored_picture.picture_image)
 
