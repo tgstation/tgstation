@@ -101,7 +101,7 @@
 
 	var/obj/machinery/quantum_server/server = find_server()
 	if(server)
-		server.occupant_mind_refs -= occupant_mind_ref
+		SEND_SIGNAL(server, COMSIG_BITMINER_DISCONNECTED, occupant_mind_ref)
 		receiving.UnregisterSignal(server, COMSIG_QSERVER_DISCONNECTED)
 	occupant_mind_ref = null
 
@@ -146,7 +146,7 @@
 
 	var/datum/weakref/neo_mind_ref = WEAKREF(neo.mind)
 	occupant_mind_ref = neo_mind_ref
-	server.occupant_mind_refs += neo_mind_ref
+	SEND_SIGNAL(server, COMSIG_BITMINER_CONNECTED, neo_mind_ref)
 	neo.mind.initial_avatar_connection(
 		occupant = neo,
 		avatar = current_avatar,
@@ -163,6 +163,8 @@
 	server = locate(/obj/machinery/quantum_server) in oview(4, src)
 	if(server)
 		server_ref = WEAKREF(server)
+		server.RegisterSignal(src, COMSIG_BITMINER_CONNECTED, TYPE_PROC_REF(/obj/machinery/quantum_server, on_client_connect))
+		server.RegisterSignal(src, COMSIG_BITMINER_DISCONNECTED, TYPE_PROC_REF(/obj/machinery/quantum_server, on_client_disconnect))
 		return server
 
 	return FALSE

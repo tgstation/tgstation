@@ -7,3 +7,8 @@
 /datum/map_template/virtual_domain/test_only/expensive
 	id = "test_only_expensive"
 	cost = 3
+
+/datum/map_template/virtual_domain/test_only/mobs
+	id = "test_only_mobs"
+	filename = "test_only_mobs.dmm"
+

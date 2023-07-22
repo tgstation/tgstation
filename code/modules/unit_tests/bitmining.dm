@@ -1,5 +1,6 @@
 #define TEST_MAP "test_only"
 #define TEST_MAP_EXPENSIVE "test_only_expensive"
+#define TEST_MAP_MOBS "test_only_mobs"
 
 /// The qserver and qconsole should find each other on init
 /datum/unit_test/quantum_server_find_console/Run()
@@ -245,5 +246,36 @@
 	qdel(server)
 	TEST_ASSERT_EQUAL(received, TRUE, "Signal chain: Didn't receive qserver_disconnected signal from qserver deletion")
 
+/// Tests the server's ability to buff and nerf mobs
+/datum/unit_test/quantum_server_difficulty/Run()
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
+	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
+	server.set_domain(labrat, id = TEST_MAP_MOBS)
+	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
+
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP_MOBS, "Sanity: QServer didn't load test map correctly")
+	var/mob/living/basic/pet/dog/corgi/pupper = locate(/mob/living/basic/pet/dog/corgi) in server.generated_domain.created_atoms
+	TEST_ASSERT_NOTNULL(pupper, "Sanity: Couldn't find mobs in vdom")
+
+	var/base_health = pupper.health
+	server.on_client_connect(labrat.mind, labrat_mind_ref)
+	TEST_ASSERT_EQUAL(pupper.health, base_health, "QServer shouldn't buff mobs on first bitminer connect")
+
+	server.on_client_connect(labrat.mind, labrat_mind_ref)
+	TEST_ASSERT_EQUAL(pupper.health, base_health * server.difficulty_coeff, "QServer should buff mobs 1.5x on second bitminer connect")
+
+	server.on_client_connect(labrat.mind, labrat_mind_ref)
+	TEST_ASSERT_EQUAL(pupper.health, base_health * server.difficulty_coeff * server.difficulty_coeff, "QServer should buff mobs 1.5x on third bitminer connect")
+
+	server.on_client_disconnect(labrat.mind, labrat_mind_ref)
+	TEST_ASSERT_EQUAL(pupper.health, base_health * server.difficulty_coeff, "QServer should nerf mobs 1.5x on first bitminer disconnect")
+
+	server.on_client_disconnect(labrat.mind, labrat_mind_ref)
+	TEST_ASSERT_EQUAL(pupper.health, base_health, "QServer should nerf mobs 1.5x on second bitminer disconnect")
+
+	server.on_client_disconnect(labrat.mind, labrat_mind_ref)
+	TEST_ASSERT_EQUAL(pupper.health, base_health, "QServer should not nerf mobs below base health")
+
 #undef TEST_MAP
 #undef TEST_MAP_EXPENSIVE
+#undef TEST_MAP_MOBS

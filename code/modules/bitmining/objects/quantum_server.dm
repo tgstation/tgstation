@@ -29,6 +29,8 @@
 	var/datum/weakref/vdom_ref
 	/// The connected console
 	var/datum/weakref/console_ref
+	/// The amount to scale (and descale) mob health on connect/disconnect
+	var/difficulty_coeff = 1.5
 	/// Current plugged in users
 	var/list/datum/weakref/occupant_mind_refs = list()
 	/// Currently (un)loading a domain. Prevents multiple user actions.
@@ -254,6 +256,36 @@
 	SIGNAL_HANDLER
 
 	stop_domain()
+
+/// Each time someone connects, mob health jumps 1.5x
+/obj/machinery/quantum_server/proc/on_client_connect(datum/source, datum/weakref/new_mind)
+	SIGNAL_HANDLER
+
+	occupant_mind_refs += new_mind
+	if(length(occupant_mind_refs) == 1)
+		return
+
+	for(var/mob/living/creature as anything in generated_domain.created_atoms)
+		if(is_valid_mob(creature))
+			creature.health *= difficulty_coeff
+			creature.maxHealth *= difficulty_coeff
+
+/// If a client disconnects, remove them from the list & nerf mobs
+/obj/machinery/quantum_server/proc/on_client_disconnect(datum/source, datum/weakref/old_mind)
+	SIGNAL_HANDLER
+
+	occupant_mind_refs -= old_mind
+	if(length(occupant_mind_refs) == 0)
+		return
+
+	for(var/mob/living/creature as anything in generated_domain.created_atoms)
+		if(is_valid_mob(creature))
+			creature.health /= difficulty_coeff
+			creature.maxHealth /= difficulty_coeff
+
+/// Validates target mob as valid to buff/nerf
+/obj/machinery/quantum_server/proc/is_valid_mob(mob/living/creature)
+	return isliving(creature) && isnull(creature.key) && creature.stat != DEAD && creature.health > 10
 
 /// Handles examining the server. Shows cooldown time and efficiency.
 /obj/machinery/quantum_server/proc/on_examine(datum/source, mob/examiner, list/examine_text)
