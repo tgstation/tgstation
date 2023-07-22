@@ -58,7 +58,7 @@
 		return
 	update_pictures_for_all()
 
-/datum/computer_file/program/messenger/proc/check_photo_removed(datum/computer_file/picture/photo_removed)
+/datum/computer_file/program/messenger/proc/check_photo_removed(obj/item/modular_computer/sender, datum/computer_file/picture/photo_removed)
 	SIGNAL_HANDLER
 	if(istype(photo_removed) && selected_image == photo_removed.picture_name)
 		selected_image = null
