@@ -11,10 +11,14 @@
 	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	progression_reward = list(4 MINUTES, 8 MINUTES)
-	telecrystal_reward = 1
+	telecrystal_reward = list(0, 1)
 
-	/// Attacks required to pass the objective.
-	var/attacks_required = 3
+	/// Min attacks required to pass the objective. Picked at random between this and max.
+	var/min_attacks_required = 2
+	/// Max attacks required to pass the objective. Picked at random between this and min.
+	var/max_attacks_required = 5
+	/// The random number picked for the number of required attacks to pass this objective.
+	var/chosen_attacks_required = 0
 	/// Total number of successful attacks recorded.
 	var/attacks_inflicted = 0
 
@@ -89,12 +93,17 @@
 		return FALSE
 
 	var/datum/mind/target_mind = pick(possible_targets)
+
 	target = target_mind.current
 	replace_in_name("%TARGET%", target.real_name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
-	replace_in_name("%COUNT%", attacks_required)
+
+	chosen_attacks_required = rand(min_attacks_required, max_attacks_required)
+	replace_in_name("%COUNT%", chosen_attacks_required)
+
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death))
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_qdeleted))
+
 	return TRUE
 
 /datum/traitor_objective/target_player/assault/proc/on_target_qdeleted()

@@ -43,7 +43,7 @@
 	progression_minimum = 0 MINUTES
 	progression_maximum = 10 MINUTES
 	progression_reward = list(4 MINUTES, 8 MINUTES)
-	telecrystal_reward = 1
+	telecrystal_reward = list(0, 1)
 
 	possible_items = list(
 		/datum/objective_item/steal/traitor/donut_box,
