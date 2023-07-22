@@ -629,7 +629,7 @@
 					comp.explode(usr, from_message_menu = TRUE)
 					return
 				else
-					to_chat(user, span_notice("ERROR: Recipient does not exist."))
+					to_chat(usr, span_notice("ERROR: Recipient does not exist."))
 					return
 
 
