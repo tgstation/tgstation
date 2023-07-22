@@ -273,8 +273,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 
 /atom/movable/screen/parallax_layer/Initialize(mapload, datum/hud/hud_owner, template = FALSE)
 	. = ..()
+
+	if(template)
+		return
+
 	var/client/boss = hud_owner?.mymob?.canon_client
-	if(!boss && !template) // If this typepath all starts to harddel your culprit is likely this
+
+	if(!boss) // If this typepath all starts to harddel your culprit is likely this
 		return INITIALIZE_HINT_QDEL
 
 	// I do not want to know bestie
