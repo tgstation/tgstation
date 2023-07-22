@@ -1,7 +1,7 @@
-/// An element that lets you engrave walls when right click is used
-/datum/element/wall_engraver
+/// An element that lets you engrave walls and statues when right click is used
+/datum/element/engraver
 
-/datum/element/wall_engraver/Attach(datum/target)
+/datum/element/engraver/Attach(datum/target)
 	. = ..()
 
 	if(!isitem(target))
@@ -11,24 +11,24 @@
 	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_item_pre_attack_secondary))
 	RegisterSignal(target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
-/datum/element/wall_engraver/Detach(datum/source)
+/datum/element/engraver/Detach(datum/source)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_PRE_ATTACK_SECONDARY, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
 
 ///signal called on parent being examined
-/datum/element/wall_engraver/proc/on_examine(datum/source, mob/user, list/examine_list)
+/datum/element/engraver/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += span_notice("You can engrave some walls with your secondary attack if you can think of something interesting to engrave.")
 
 ///signal called on parent being used to right click attack something
-/datum/element/wall_engraver/proc/on_item_pre_attack_secondary(datum/source, atom/target, mob/living/user)
+/datum/element/engraver/proc/on_item_pre_attack_secondary(datum/source, atom/target, mob/living/user)
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(try_chisel), source, target, user)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/datum/element/wall_engraver/proc/try_chisel(obj/item/item, turf/closed/wall, mob/living/user)
+/datum/element/engraver/proc/try_chisel(obj/item/item, turf/closed/wall, mob/living/user)
 	if(!istype(wall) || !user.mind)
 		return
 	if(HAS_TRAIT_FROM(wall, TRAIT_NOT_ENGRAVABLE, INNATE_TRAIT))
@@ -75,7 +75,7 @@
 		tattoo_entry["story"] = tattoo_story
 		SSpersistence.prison_tattoos_to_save += list(tattoo_entry)
 
-/datum/element/wall_engraver/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
+/datum/element/engraver/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 
 	if(isclosedturf(source) || istype(source, /obj/structure/statue))
