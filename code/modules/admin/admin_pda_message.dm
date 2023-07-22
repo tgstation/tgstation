@@ -69,15 +69,15 @@
 				to_chat(usr, span_warning("ERROR: Target is unavaiable(or not choosed)."))
 				return
 
+			var/datum/pda_chat/msg = new(params["message"], TRUE)
+
 			var/datum/signal/subspace/messaging/tablet_msg/signal = new(targets[1], list(
-				"name" = params["name"],
-				"job" = params["job"],
+				"fakename" = params["name"],
+				"fakejob" = params["job"],
 				"message" = html_decode(params["message"]),
-				"ref" = FALSE,
+				"ref" = null,
 				"targets" = targets,
-				"emojis" = FALSE,
 				"rigged" = FALSE,
-				"photo" = FALSE,
 				"automated" = FALSE,
 			))
 

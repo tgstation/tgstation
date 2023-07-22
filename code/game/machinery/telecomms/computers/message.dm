@@ -211,15 +211,14 @@
 
 			var/recipient
 			var/list/viewable_tablets = list()
-			var/list/tablet_to_msgr = list()
 			for (var/msgr_ref in GLOB.TabletMessengers)
 				var/datum/computer_file/program/messenger/message_app = GLOB.TabletMessengers[msgr_ref]
 				if(!message_app || message_app.invisible)
 					continue
 				if(!message_app.computer.saved_identification)
 					continue
-				viewable_tablets += message_app.computer
-				tablet_to_msgr[message_app.computer] = message_app
+				viewable_tablets += get_messenger_name(message_app)
+				tablet_to_msgr[get_messenger_name(message_app)] = message_app
 			if(length(viewable_tablets) > 0)
 				recipient = tgui_input_list(usr, "Select a tablet from the list", "Tablet Selection", viewable_tablets)
 			else
@@ -236,10 +235,12 @@
 				notice_message = "NOTICE: No message entered!"
 				return attack_hand(usr)
 
+			var/datum/pda_msg/msg = new(message, TRUE)
+
 			var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
-				"name" = "[sender]",
-				"job" = "[job]",
-				"message" = html_decode(message),
+				"fakename" = "[sender]",
+				"fakejob" = "[job]",
+				"message" = msg,
 				"ref" = REF(src),
 				"targets" = list(tablet_to_msgr[recipient]),
 				"rigged" = FALSE,

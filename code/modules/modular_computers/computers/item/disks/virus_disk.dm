@@ -53,7 +53,7 @@
 		return FALSE
 	user.show_message(span_notice("Success!"))
 	charges--
-	app.alert_silenced = FALSE
+	app.alert_silenced = TRUE
 	app.ringtone = ""
 
 /**
@@ -92,6 +92,7 @@
 	var/reference = REF(src)
 	target.add_traits(list(TRAIT_PDA_CAN_EXPLODE, TRAIT_PDA_MESSAGE_MENU_RIGGED), reference)
 	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_PDA_MESSAGE_MENU_RIGGED, reference), 10 SECONDS)
+	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_PDA_CAN_EXPLODE, reference), 1 MINUTES)
 	return TRUE
 
 /**

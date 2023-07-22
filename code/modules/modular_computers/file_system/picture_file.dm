@@ -16,9 +16,9 @@ GLOBAL_VAR_INIT(next_ntos_picture_uid, 0)
 
 /datum/computer_file/picture/New(datum/picture/stored_picture, picture_name)
 	..()
-	if(isnull(picture))
+	if(isnull(stored_picture))
 		return
-	filename = picture.picture_name
+	src.filename = stored_picture.picture_name
 	src.stored_picture = stored_picture
 	src.picture_name = picture_name
 
@@ -26,7 +26,7 @@ GLOBAL_VAR_INIT(next_ntos_picture_uid, 0)
 	if(!isnull(picture_name))
 		stack_trace("we are overriding a picture's asset path, this isn't necessary")
 	picture_name = get_next_ntos_picture_path()
-	SSassets.transport.register_asset(picture_name, picture.picture_image)
+	SSassets.transport.register_asset(picture_name, stored_picture.picture_image)
 
 /datum/computer_file/picture/clone(rename = FALSE)
 	var/datum/computer_file/picture/temp = ..()

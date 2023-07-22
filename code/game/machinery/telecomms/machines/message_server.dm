@@ -133,7 +133,8 @@
 	// log the signal
 	if(istype(signal, /datum/signal/subspace/messaging/tablet_msg))
 		var/datum/signal/subspace/messaging/tablet_msg/PDAsignal = signal
-		var/datum/data_tablet_msg/msg = new(PDAsignal.format_target(), STRINGIFY_PDA_TARGET(PDAsignal.data["name"], PDAsignal.data["job"]), html_decode(PDAsignal.format_message()), PDAsignal.data["photo"])
+		var/datum/pda_msg/msg = PDAsignal.data["message"]
+		var/datum/data_tablet_msg/msg = new(PDAsignal.format_target(), get_messenger_name(locate(PDAsignal.data["ref"])), html_decode(PDAsignal.format_message()), msg.photo_asset_name)
 		pda_msgs += msg
 		signal.logged = msg
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
@@ -209,7 +210,7 @@
 	var/recipient = "Unspecified"
 	var/message = "Blank"  // transferred message
 	var/datum/picture/picture  // attached photo
-	var/automated = 0 //automated message
+	var/automated = FALSE //automated message
 
 /datum/data_tablet_msg/New(param_rec, param_sender, param_message, param_photo)
 	if(param_rec)

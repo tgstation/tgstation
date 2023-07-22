@@ -41,7 +41,7 @@
 	/// Whether or not we're sending and receiving messages.
 	var/sending_and_receiving = TRUE
 	/// Selected photo for sending purposes.
-	var/saved_image
+	var/selected_image = null
 	// Whether or not we're sending (or trying to send) a virus.
 	var/sending_virus = FALSE
 
@@ -60,8 +60,8 @@
 
 /datum/computer_file/program/messenger/proc/check_photo_removed(datum/computer_file/picture/photo_removed)
 	SIGNAL_HANDLER
-	if(istype(photo_removed) && saved_image == photo_removed.picture_name)
-		saved_image = null
+	if(istype(photo_removed) && selected_image == photo_removed.picture_name)
+		selected_image = null
 
 /datum/computer_file/program/messenger/proc/on_imprint_added()
 	SIGNAL_HANDLER
@@ -156,7 +156,7 @@
 				var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
 				chat.visible_in_recents = TRUE
 
-			saved_image = null
+			selected_image = null
 			return TRUE
 
 		if("PDA_closeMessages")
@@ -264,7 +264,7 @@
 			return send_message(usr, params["msg"], list(target))
 
 		if("PDA_clearPhoto")
-			saved_image = null
+			selected_image = null
 			return TRUE
 
 		if("PDA_toggleVirus")
@@ -282,7 +282,7 @@
 			if(!istype(selected_photo))
 				return FALSE
 
-			saved_image = selected_photo.picture_name
+			selected_image = selected_photo.picture_name
 			return TRUE
 
 		if("PDA_siliconSelectPhoto")
@@ -295,7 +295,7 @@
 			if(!selected_photo)
 				return FALSE
 			SSassets.transport.register_asset(TEMP_IMAGE_PATH, selected_photo)
-			saved_image = TEMP_IMAGE_PATH
+			selected_image = TEMP_IMAGE_PATH
 			return TRUE
 
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
@@ -338,7 +338,7 @@
 				"path" = SSassets.transport.get_asset_url(photo_file.picture_name)
 			))
 		data["stored_photos"] = stored_photos
-	data["selected_photo_path"] = !isnull(saved_image) ? SSassets.transport.get_asset_url(saved_image) : null
+	data["selected_photo_path"] = !isnull(selected_image) ? SSassets.transport.get_asset_url(selected_image) : null
 	data["on_spam_cooldown"] = !can_send_everyone_message()
 
 	var/obj/item/computer_disk/virus/disk = computer.inserted_disk
@@ -353,8 +353,11 @@
 
 /// Brings up the quick reply prompt to send a message.
 /datum/computer_file/program/messenger/proc/quick_reply_prompt(mob/living/user, datum/pda_chat/chat)
+	if(!istype(chat))
+		return
 	var/datum/computer_file/program/messenger/target = chat.recipient.resolve()
 	if(!istype(target) || !istype(target.computer))
+		to_chat(user, span_notice("ERROR: Recipient no longer exists."))
 		return
 	var/target_name = target.computer.saved_identification
 	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]", encode = FALSE)
@@ -428,7 +431,7 @@
 	if(!message)
 		return FALSE
 
-	var/msg_photo_name = saved_image
+	var/msg_photo_name = selected_image
 	if(msg_photo_name == TEMP_IMAGE_PATH)
 		var/datum/asset_cache_item/img_asset = SSassets.cache[msg_photo_name]
 		msg_photo_name = get_next_ntos_picture_path()
@@ -541,7 +544,7 @@
 
 	COOLDOWN_START(src, last_text, 1 SECONDS)
 
-	saved_image = null
+	selected_image = null
 	return TRUE
 
 /datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/tablet_msg/signal)
@@ -582,7 +585,7 @@
 	var/should_ring = !alert_silenced || is_rigged
 
 	if(istype(L) && should_ring && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
-		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
+		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "explode" : "message"];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 		// resolving w/o nullcheck here, assume the messenger exists if they sent a message
 		var/sender_name = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(chat.recipient.resolve())
 		var/hrefstart
@@ -616,14 +619,18 @@
 	if(!(!(computer.enabled || computer.turn_on(usr, open_ui = FALSE)) && !(computer.active_program == src || computer.open_program(usr, src, open_ui = FALSE))))
 		return
 	if(usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
+
 		switch(href_list["choice"])
-			if("Message")
+			if("message")
 				quick_reply_prompt(usr, locate(href_list["target"]) in saved_chats)
-			if("mess_us_up")
+			if("explode")
 				if(HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
 					var/obj/item/modular_computer/pda/comp = computer
 					comp.explode(usr, from_message_menu = TRUE)
+					return
 				else
-					to_chat(usr, span_notice("ERROR: Recipient does not exist."))
+					to_chat(user, span_notice("ERROR: Recipient does not exist."))
+					return
+
 
 #undef TEMP_IMAGE_PATH
