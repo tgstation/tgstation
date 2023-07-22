@@ -63,9 +63,12 @@
 
 		for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
 			for(var/turf/closed/mineral/rock in oview(i))
+				if(istype(rock, /turf/open/misc/asteroid) && prob(45)) // so it's too common
+					new /obj/effect/decal/cleanable/rubble(rock)
 				if(!istype(rock, /turf/closed/mineral))
 					continue
 				rock.gets_drilled(user, FALSE)
+				new /obj/effect/decal/cleanable/rubble(rock)
 			sleep(0.6 SECONDS)
 
 		start_wave_defense()
