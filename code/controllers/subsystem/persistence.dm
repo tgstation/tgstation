@@ -10,6 +10,7 @@ SUBSYSTEM_DEF(persistence)
 	///instantiated wall engraving components
 	var/list/wall_engravings = list()
 	///tattoo stories that we're saving.
+	var/list/statue_engravings = list()
 	var/list/prison_tattoos_to_save = list()
 	///tattoo stories that have been selected for this round.
 	var/list/prison_tattoos_to_use = list()
