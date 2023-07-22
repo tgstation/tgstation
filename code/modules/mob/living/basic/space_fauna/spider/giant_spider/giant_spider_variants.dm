@@ -438,9 +438,9 @@
 	name = "flesh spider"
 	desc = "A odd fleshy creature in the shape of a spider. Its eyes are pitch black and soulless."
 	icon = 'icons/mob/simple/arachnoid.dmi'
-	icon_state = "flesh_spider"
-	icon_living = "flesh_spider"
-	icon_dead = "flesh_spider_dead"
+	icon_state = "flesh"
+	icon_living = "flesh"
+	icon_dead = "flesh_dead"
 	web_speed = 0.7
 	maxHealth = 90
 	health = 90
@@ -482,6 +482,13 @@
  * A spider form for wizards. Has the viper spider's extreme speed and strong venom, with additional health and vent crawling abilities.
  */
 /mob/living/basic/giant_spider/viper/wizard
+	name = "water spider"
+	desc = "Furry and black, it makes you shudder to look at it. This one has effervescent orange eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
+	icon_state = "water"
+	icon_living = "water"
+	icon_dead = "water_dead"
+	web_speed = 0.5
 	maxHealth = 80
 	health = 80
 	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl."
