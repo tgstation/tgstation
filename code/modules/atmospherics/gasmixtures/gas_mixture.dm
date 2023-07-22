@@ -86,8 +86,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/old_heat_capacity = heat_capacity
 	heat_capacity += cached_gas[GAS_META][META_GAS_SPECIFIC_HEAT] * (moles - cached_gas[MOLES])
 	cached_gas[MOLES] = moles
-	if(conserve_energy)
-		temperature = temperature * old_heat_capacity / heat_capacity
+	if(conserve_energy && heat_capacity > MINIMUM_HEAT_CAPACITY)
+		temperature = max(temperature * old_heat_capacity / heat_capacity, TCMB)
 
 ///garbage_collect() - removes any gas list which is empty.
 ///If called with a list as an argument, only removes gas lists with IDs from that list.
