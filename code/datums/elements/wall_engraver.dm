@@ -4,16 +4,16 @@
 /datum/element/wall_engraver/Attach(datum/target)
 	. = ..()
 
-	if (!isitem(target))
+	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_item_pre_attack_secondary))
+	RegisterSignal(target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
 /datum/element/wall_engraver/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, COMSIG_ATOM_EXAMINE)
-	UnregisterSignal(source, COMSIG_ITEM_PRE_ATTACK_SECONDARY)
+	UnregisterSignal(source, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_PRE_ATTACK_SECONDARY, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
 
 ///signal called on parent being examined
 /datum/element/wall_engraver/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -74,3 +74,15 @@
 
 		tattoo_entry["story"] = tattoo_story
 		SSpersistence.prison_tattoos_to_save += list(tattoo_entry)
+
+/datum/element/wall_engraver/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
+	SIGNAL_HANDLER
+
+	if(isclosedturf(source) || istype(source, /obj/structure/statue))
+		if(HAS_TRAIT(source, TRAIT_NOT_ENGRAVABLE))
+			return NONE
+
+		context[SCREENTIP_CONTEXT_RMB] = "Engrave memory"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
