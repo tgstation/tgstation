@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
+import { formatPower } from '../format';
 import { useBackend, useLocalState } from '../backend';
-import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, Dimmer, NumberInput, Flex, AnimatedNumber, Dropdown } from '../components';
+import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, Dimmer, NumberInput, AnimatedNumber, Dropdown, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 type MODsuitData = {
@@ -13,19 +14,57 @@ type MODsuitData = {
   gauntlets: string;
   boots: string;
   // Dynamic
-  interface_break: BooleanLike;
-  malfunctioning: BooleanLike;
-  open: BooleanLike;
+  module_info: Module[];
+  suit_status: SuitStatus;
+  user_status: UserStatus;
+  module_custom_status: ModuleCustomStatus;
+};
+
+type SuitStatus = {
+  core_name: string;
+  cell_charge_current: number;
+  cell_charge_max: number;
   active: BooleanLike;
+  open: BooleanLike;
+  seconds_electrified: number;
+  malfunctioning: BooleanLike;
   locked: BooleanLike;
+  interface_break: BooleanLike;
   complexity: number;
   selected_module: string;
-  wearer_name: string;
-  wearer_job: string;
-  AI: string;
-  core: string;
-  charge: number;
-  modules: Module[];
+  ai_name: string;
+};
+
+type UserStatus = {
+  user_name: string;
+  user_assignment: string;
+};
+
+type ModuleCustomStatus = {
+  health: number;
+  health_max: number;
+  loss_brute: number;
+  loss_fire: number;
+  loss_tox: number;
+  loss_oxy: number;
+  is_user_irradiated: BooleanLike;
+  background_radiation_level: number;
+  display_time: BooleanLike;
+  shift_time: string;
+  shift_id: string;
+  body_temperature: number;
+  nutrition: number;
+  dna_unique_identity: string;
+  dna_unique_enzymes: string;
+  viruses: VirusData[];
+};
+
+type VirusData = {
+  name: string;
+  type: string;
+  stage: number;
+  maxstage: number;
+  cure: string;
 };
 
 type Module = {
@@ -43,10 +82,7 @@ type Module = {
   id: string;
   ref: string;
   configuration_data: ModuleConfig[];
-  userradiated: BooleanLike;
-  usertoxins: number;
-  usermaxtoxins: number;
-  threatlevel: number;
+  selected: BooleanLike;
 };
 
 type ModuleConfig = {
@@ -57,11 +93,12 @@ type ModuleConfig = {
 };
 
 export const MODsuit = (props, context) => {
-  const { act, data } = useBackend<MODsuitData>(context);
-  const { ui_theme, interface_break } = data;
+  const { data } = useBackend<MODsuitData>(context);
+  const { ui_theme } = data;
+  const { interface_break } = data.suit_status;
   return (
     <Window
-      width={800}
+      width={600}
       height={600}
       theme={ui_theme}
       title="MOD Interface Panel"
@@ -74,23 +111,29 @@ export const MODsuit = (props, context) => {
 };
 
 export const MODsuitContent = (props, context) => {
-  const { act, data } = useBackend<MODsuitData>(context);
-  const { ui_theme, interface_break } = data;
+  const { data } = useBackend<MODsuitData>(context);
+  const { interface_break } = data.suit_status;
   return (
     <Box>
       {(!!interface_break && <LockedInterface />) || (
-        <Box>
-          <Stack>
-            <Stack.Item grow>
-              <SuitStatusSection />
-            </Stack.Item>
-            <Stack.Item grow>
-              <UserStatusSection />
-            </Stack.Item>
-          </Stack>
-          <ModuleSection />
-          <HardwareSection />
-        </Box>
+        <Stack vertical>
+          <Stack.Item>
+            <Stack>
+              <Stack.Item grow>
+                <SuitStatusSection />
+              </Stack.Item>
+              <Stack.Item grow>
+                <UserStatusSection />
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+          <Stack.Item>
+            <ModuleSection />
+          </Stack.Item>
+          <Stack.Item>
+            <HardwareSection />
+          </Stack.Item>
+        </Stack>
       )}
     </Box>
   );
@@ -180,290 +223,11 @@ const ConfigureDataEntry = (props, context) => {
     list: <ConfigureListEntry {...props} />,
   };
   return (
-    <Box>
-      {display_name}: {configureEntryTypes[type]}
-    </Box>
+    <Table.Row>
+      <Table.Cell pb={2}>{display_name}</Table.Cell>
+      <Table.Cell pb={2}>{configureEntryTypes[type]}</Table.Cell>
+    </Table.Row>
   );
-};
-
-const RadCounter = (props, context) => {
-  const { active, userradiated, usertoxins, usermaxtoxins, threatlevel } =
-    props;
-  return (
-    <LabeledList>
-      <LabeledList.Item
-        label="Radiation Level"
-        color={active && userradiated ? 'bad' : 'good'}>
-        {active && userradiated ? 'IRRADIATED' : 'RADIATION-FREE'}
-      </LabeledList.Item>
-      <LabeledList.Item label="Toxin Damage">
-        <ProgressBar
-          value={active ? usertoxins / usermaxtoxins : 0}
-          ranges={{
-            good: [-Infinity, 0.2],
-            average: [0.2, 0.5],
-            bad: [0.5, Infinity],
-          }}>
-          <AnimatedNumber value={usertoxins} />
-        </ProgressBar>
-      </LabeledList.Item>
-      <LabeledList.Item
-        label="Hazard Level"
-        color={active && threatlevel ? 'bad' : 'good'}>
-        {active && threatlevel ? threatlevel : 0}
-      </LabeledList.Item>
-    </LabeledList>
-  );
-};
-
-const HealthAnalyzer = (props, context) => {
-  const {
-    active,
-    show_vitals,
-    userhealth,
-    usermaxhealth,
-    userbrute,
-    userburn,
-    usertoxin,
-    useroxy,
-  } = props;
-
-  return (
-    <Section>
-      {show_vitals ? (
-        <Section>
-          <LabeledList>
-            <LabeledList.Item label="Health">
-              <ProgressBar
-                value={active ? userhealth / usermaxhealth : 0}
-                ranges={{
-                  good: [0.5, Infinity],
-                  average: [0.2, 0.5],
-                  bad: [-Infinity, 0.2],
-                }}>
-                <AnimatedNumber value={active ? userhealth : 0} />
-              </ProgressBar>
-            </LabeledList.Item>
-            <LabeledList.Item label="Brute Damage">
-              <ProgressBar
-                value={active ? userbrute / usermaxhealth : 0}
-                ranges={{
-                  good: [-Infinity, 0.2],
-                  average: [0.2, 0.5],
-                  bad: [0.5, Infinity],
-                }}>
-                <AnimatedNumber value={active ? userbrute : 0} />
-              </ProgressBar>
-            </LabeledList.Item>
-            <LabeledList.Item label="Burn Damage">
-              <ProgressBar
-                value={active ? userburn / usermaxhealth : 0}
-                ranges={{
-                  good: [-Infinity, 0.2],
-                  average: [0.2, 0.5],
-                  bad: [0.5, Infinity],
-                }}>
-                <AnimatedNumber value={active ? userburn : 0} />
-              </ProgressBar>
-            </LabeledList.Item>
-            <LabeledList.Item label="Toxin Damage">
-              <ProgressBar
-                value={active ? usertoxin / usermaxhealth : 0}
-                ranges={{
-                  good: [-Infinity, 0.2],
-                  average: [0.2, 0.5],
-                  bad: [0.5, Infinity],
-                }}>
-                <AnimatedNumber value={active ? usertoxin : 0} />
-              </ProgressBar>
-            </LabeledList.Item>
-            <LabeledList.Item label="Suffocation Damage">
-              <ProgressBar
-                value={active ? useroxy / usermaxhealth : 0}
-                ranges={{
-                  good: [-Infinity, 0.2],
-                  average: [0.2, 0.5],
-                  bad: [0.5, Infinity],
-                }}>
-                <AnimatedNumber value={active ? useroxy : 0} />
-              </ProgressBar>
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-      ) : (
-        <Section>
-          {'Health Analyzer Vitals Readout Disabled In Settings'}
-        </Section>
-      )}
-    </Section>
-  );
-};
-
-const StatusReadout = (props, context) => {
-  const {
-    active,
-    show_time,
-    statustime,
-    statusid,
-    statushealth,
-    statusmaxhealth,
-    statusbrute,
-    statusburn,
-    statustoxin,
-    statusoxy,
-    statustemp,
-    statusnutrition,
-    statusfingerprints,
-    statusdna,
-    statusviruses,
-  } = props;
-  return (
-    <>
-      {!!show_time && (
-        <Stack textAlign="center">
-          <Stack.Item grow>
-            <Section title="Operation Time">
-              {active ? statustime : '00:00:00'}
-            </Section>
-          </Stack.Item>
-          <Stack.Item grow>
-            <Section title="Operation Number">
-              {active ? statusid : '???'}
-            </Section>
-          </Stack.Item>
-        </Stack>
-      )}
-
-      <LabeledList>
-        <LabeledList.Item label="Health">
-          <ProgressBar
-            value={active ? statushealth / statusmaxhealth : 0}
-            ranges={{
-              good: [0.5, Infinity],
-              average: [0.2, 0.5],
-              bad: [-Infinity, 0.2],
-            }}>
-            <AnimatedNumber value={active ? statushealth : 0} />
-          </ProgressBar>
-        </LabeledList.Item>
-        <LabeledList.Item label="Brute Damage">
-          <ProgressBar
-            value={active ? statusbrute / statusmaxhealth : 0}
-            ranges={{
-              good: [-Infinity, 0.2],
-              average: [0.2, 0.5],
-              bad: [0.5, Infinity],
-            }}>
-            <AnimatedNumber value={active ? statusbrute : 0} />
-          </ProgressBar>
-        </LabeledList.Item>
-        <LabeledList.Item label="Burn Damage">
-          <ProgressBar
-            value={active ? statusburn / statusmaxhealth : 0}
-            ranges={{
-              good: [-Infinity, 0.2],
-              average: [0.2, 0.5],
-              bad: [0.5, Infinity],
-            }}>
-            <AnimatedNumber value={active ? statusburn : 0} />
-          </ProgressBar>
-        </LabeledList.Item>
-        <LabeledList.Item label="Toxin Damage">
-          <ProgressBar
-            value={active ? statustoxin / statusmaxhealth : 0}
-            ranges={{
-              good: [-Infinity, 0.2],
-              average: [0.2, 0.5],
-              bad: [0.5, Infinity],
-            }}>
-            <AnimatedNumber value={statustoxin} />
-          </ProgressBar>
-        </LabeledList.Item>
-        <LabeledList.Item label="Suffocation Damage">
-          <ProgressBar
-            value={active ? statusoxy / statusmaxhealth : 0}
-            ranges={{
-              good: [-Infinity, 0.2],
-              average: [0.2, 0.5],
-              bad: [0.5, Infinity],
-            }}>
-            <AnimatedNumber value={statusoxy} />
-          </ProgressBar>
-        </LabeledList.Item>
-        <LabeledList.Item label="Body Temperature">
-          {`${active ? Math.round(statustemp) : 0} K`}
-        </LabeledList.Item>
-        <LabeledList.Item label="Nutrition Status">
-          {`${active ? Math.round(statusnutrition) : 0}`}
-        </LabeledList.Item>
-        <LabeledList.Item label="Fingerprints">
-          {active ? statusfingerprints : '???'}
-        </LabeledList.Item>
-        <LabeledList.Item label="Unique Enzymes">
-          {active ? statusdna : '???'}
-        </LabeledList.Item>
-      </LabeledList>
-
-      {!!active && !!statusviruses && (
-        <Section title="Diseases">
-          <Table>
-            <Table.Row header>
-              <Table.Cell textAlign="center">
-                <Button
-                  color="transparent"
-                  icon="signature"
-                  tooltip="Name"
-                  tooltipPosition="top"
-                />
-              </Table.Cell>
-              <Table.Cell textAlign="center">
-                <Button
-                  color="transparent"
-                  icon="wind"
-                  tooltip="Type"
-                  tooltipPosition="top"
-                />
-              </Table.Cell>
-              <Table.Cell textAlign="center">
-                <Button
-                  color="transparent"
-                  icon="bolt"
-                  tooltip="Stage"
-                  tooltipPosition="top"
-                />
-              </Table.Cell>
-              <Table.Cell textAlign="center">
-                <Button
-                  color="transparent"
-                  icon="flask"
-                  tooltip="Cure"
-                  tooltipPosition="top"
-                />
-              </Table.Cell>
-            </Table.Row>
-            {statusviruses.map((virus) => {
-              return (
-                <Table.Row key={virus.name}>
-                  <Table.Cell textAlign="center">{virus.name}</Table.Cell>
-                  <Table.Cell textAlign="center">{virus.type}</Table.Cell>
-                  <Table.Cell textAlign="center">
-                    {virus.stage}/{virus.maxstage}
-                  </Table.Cell>
-                  <Table.Cell textAlign="center">{virus.cure}</Table.Cell>
-                </Table.Row>
-              );
-            })}
-          </Table>
-        </Section>
-      )}
-    </>
-  );
-};
-
-const ID2MODULE = {
-  rad_counter: RadCounter,
-  health_analyzer: HealthAnalyzer,
-  status_readout: StatusReadout,
 };
 
 const LockedInterface = () => (
@@ -489,43 +253,43 @@ const LockedModule = (props, context) => {
 };
 
 const ConfigureScreen = (props, context) => {
-  const { configuration_data, module_ref } = props;
+  const { configuration_data, module_ref, module_name } = props;
   const configuration_keys = Object.keys(configuration_data);
   return (
     <Dimmer backgroundColor="rgba(0, 0, 0, 0.8)">
-      <Stack vertical>
+      <Table maxWidth={12}>
+        <Table.Row>
+          <Table.Cell colspan={2} pb={2}>
+            <h4>{module_name}</h4>
+          </Table.Cell>
+        </Table.Row>
         {configuration_keys.map((key) => {
           const data = configuration_data[key];
           return (
-            <Stack.Item key={data.key}>
-              <ConfigureDataEntry
-                name={key}
-                display_name={data.display_name}
-                type={data.type}
-                value={data.value}
-                values={data.values}
-                module_ref={module_ref}
-              />
-            </Stack.Item>
+            <ConfigureDataEntry
+              key={data.key}
+              name={key}
+              display_name={data.display_name}
+              type={data.type}
+              value={data.value}
+              values={data.values}
+              module_ref={module_ref}
+            />
           );
         })}
-        <Stack.Item>
-          <Box>
-            <Button
-              fluid
-              onClick={props.onExit}
-              icon="times"
-              textAlign="center">
-              Exit
+        <Table.Row>
+          <Table.Cell colspan="2">
+            <Button fluid onClick={props.onExit} textAlign="center">
+              Done
             </Button>
-          </Box>
-        </Stack.Item>
-      </Stack>
+          </Table.Cell>
+        </Table.Row>
+      </Table>
     </Dimmer>
   );
 };
 
-const displayText = (param) => {
+const moduleTypeAction = (param) => {
   switch (param) {
     case 1:
       return 'Use';
@@ -536,291 +300,427 @@ const displayText = (param) => {
   }
 };
 
+const radiationLevels = (param) => {
+  switch (param) {
+    case 1:
+      return 'Low';
+    case 2:
+      return 'Medium';
+    case 3:
+      return 'High';
+    case 4:
+      return 'Extreme';
+  }
+};
+
 const SuitStatusSection = (props, context) => {
   const { act, data } = useBackend<MODsuitData>(context);
   const {
+    core_name,
+    cell_charge_current,
+    cell_charge_max,
     active,
+    open,
+    seconds_electrified,
     malfunctioning,
     locked,
-    open,
-    selected_module,
-    complexity,
-    complexity_max,
-    wearer_name,
-    wearer_job,
-    AI,
-    core,
-    charge,
-  } = data;
+    ai_name,
+  } = data.suit_status;
+  const { display_time, shift_time, shift_id } = data.module_custom_status;
   const status = malfunctioning
     ? 'Malfunctioning'
     : active
       ? 'Active'
       : 'Inactive';
+  const charge_percent = Math.round(
+    (100 * cell_charge_current) / cell_charge_max
+  );
+
   return (
-    <Section title="Suit Status">
+    <Section
+      title="Suit Status"
+      fill
+      buttons={
+        <Button
+          icon="power-off"
+          color={active ? 'good' : 'default'}
+          content={status}
+          onClick={() => act('activate')}
+        />
+      }>
       <LabeledList>
-        <LabeledList.Item label="Cell Charge">
+        <LabeledList.Item label="Charge">
           <ProgressBar
-            value={charge / 100}
-            content={charge + '%'}
-            style={{
-              'text-shadow': '1px 1px 0 black',
-            }}
+            value={cell_charge_current / cell_charge_max}
             ranges={{
               good: [0.6, Infinity],
               average: [0.3, 0.6],
               bad: [-Infinity, 0.3],
             }}
+            style={{
+              'text-shadow': '1px 1px 0 black',
+            }}>
+            {!core_name
+              ? 'No Core Detected'
+              : cell_charge_current === 1e31
+                ? 'Infinite'
+                : `${formatPower(cell_charge_current)} of ${formatPower(
+                  cell_charge_max
+                )} (${charge_percent}%)`}
+          </ProgressBar>
+        </LabeledList.Item>
+        <LabeledList.Item label="ID Lock">
+          <Button
+            icon={locked ? 'lock' : 'lock-open'}
+            color={locked ? 'good' : 'default'}
+            content={locked ? 'Locked' : 'Unlocked'}
+            onClick={() => act('lock')}
           />
         </LabeledList.Item>
-        <LabeledList.Item
-          label="State"
-          buttons={
-            <Button
-              icon="power-off"
-              content={active ? 'Deactivate' : 'Activate'}
-              onClick={() => act('activate')}
-            />
-          }>
-          {status}
+        {!!open && (
+          <LabeledList.Item label="Cover">
+            <Box color="red">Open</Box>
+          </LabeledList.Item>
+        )}
+        {!!seconds_electrified && (
+          <LabeledList.Item label="Circuits">
+            <Box color="red">Shorted</Box>
+          </LabeledList.Item>
+        )}
+        {!!ai_name && (
+          <LabeledList.Item label="AI Core">{ai_name}</LabeledList.Item>
+        )}
+      </LabeledList>
+
+      {!!display_time && (
+        <Section title="Operation" mt={2}>
+          <LabeledList.Item label="Time">
+            {active ? shift_time : '00:00:00'}
+          </LabeledList.Item>
+          <LabeledList.Item label="Number">
+            {active && shift_id ? shift_id : '???'}
+          </LabeledList.Item>
+        </Section>
+      )}
+    </Section>
+  );
+};
+
+const HardwareSection = (context) => {
+  const { data } = useBackend<MODsuitData>(context);
+  const { control, helmet, chestplate, gauntlets, boots } = data;
+  const { ai_name, core_name } = data.suit_status;
+  return (
+    <Section title="Hardware" style={{ 'text-transform': 'capitalize' }}>
+      <LabeledList>
+        <LabeledList.Item label="AI Card">
+          {ai_name || 'No AI Card Detected'}
         </LabeledList.Item>
-        <LabeledList.Item
-          label="ID Lock"
-          buttons={
-            <Button
-              icon={locked ? 'lock-open' : 'lock'}
-              content={locked ? 'Unlock' : 'Lock'}
-              onClick={() => act('lock')}
-            />
-          }>
-          {locked ? 'Locked' : 'Unlocked'}
+        <LabeledList.Item label="Core">
+          {core_name || 'No Core Detected'}
         </LabeledList.Item>
-        <LabeledList.Item label="Cover">
-          {open ? 'Open' : 'Closed'}
+        <LabeledList.Item label="Control Unit">{control}</LabeledList.Item>
+        <LabeledList.Item label="Helmet">{helmet || 'None'}</LabeledList.Item>
+        <LabeledList.Item label="Chestplate">
+          {chestplate || 'None'}
         </LabeledList.Item>
-        <LabeledList.Item label="Selected Module">
-          {selected_module || 'None'}
+        <LabeledList.Item label="Gauntlets">
+          {gauntlets || 'None'}
         </LabeledList.Item>
-        <LabeledList.Item label="Complexity">
-          {complexity} ({complexity_max})
-        </LabeledList.Item>
-        <LabeledList.Item label="Occupant">
-          {wearer_name}, {wearer_job}
-        </LabeledList.Item>
-        <LabeledList.Item label="Onboard AI">{AI || 'None'}</LabeledList.Item>
+        <LabeledList.Item label="Boots">{boots || 'None'}</LabeledList.Item>
       </LabeledList>
     </Section>
   );
 };
 
-const HardwareSection = (props, context) => {
-  const { act, data } = useBackend<MODsuitData>(context);
+const UserStatusSection = (context) => {
+  const { data } = useBackend<MODsuitData>(context);
+  const { active } = data.suit_status;
+  const { user_name, user_assignment } = data.user_status;
   const {
-    active,
-    control,
-    helmet,
-    chestplate,
-    gauntlets,
-    boots,
-    core,
-    charge,
-  } = data;
+    health,
+    health_max,
+    loss_brute,
+    loss_fire,
+    loss_tox,
+    loss_oxy,
+    is_user_irradiated,
+    background_radiation_level,
+    body_temperature,
+    nutrition,
+    dna_unique_identity,
+    dna_unique_enzymes,
+    viruses,
+  } = data.module_custom_status;
   return (
-    <Section title="Hardware">
-      <Collapsible title="Parts">
-        <LabeledList>
-          <LabeledList.Item label="Control Unit">{control}</LabeledList.Item>
-          <LabeledList.Item label="Helmet">{helmet || 'None'}</LabeledList.Item>
-          <LabeledList.Item label="Chestplate">
-            {chestplate || 'None'}
+    <Section title="User Status" fill>
+      {!active && <LockedModule />}
+      <LabeledList>
+        {health !== undefined && (
+          <LabeledList.Item label="Health">
+            <ProgressBar
+              value={active ? health / health_max : 0}
+              ranges={{
+                good: [0.5, Infinity],
+                average: [0.2, 0.5],
+                bad: [-Infinity, 0.2],
+              }}>
+              <AnimatedNumber value={active ? health : 0} />
+            </ProgressBar>
           </LabeledList.Item>
-          <LabeledList.Item label="Gauntlets">
-            {gauntlets || 'None'}
-          </LabeledList.Item>
-          <LabeledList.Item label="Boots">{boots || 'None'}</LabeledList.Item>
-        </LabeledList>
-      </Collapsible>
-      <Collapsible title="Core">
-        {(core && (
-          <LabeledList>
-            <LabeledList.Item label="Core Type">{core}</LabeledList.Item>
-            <LabeledList.Item label="Core Charge">
-              <ProgressBar
-                value={charge / 100}
-                content={charge + '%'}
-                ranges={{
-                  good: [0.6, Infinity],
-                  average: [0.3, 0.6],
-                  bad: [-Infinity, 0.3],
-                }}
-              />
-            </LabeledList.Item>
-          </LabeledList>
-        )) || (
-          <Box color="bad" textAlign="center">
-            No Core Detected
-          </Box>
         )}
-      </Collapsible>
-    </Section>
-  );
-};
-
-const UserStatusSection = (props, context) => {
-  const { act, data } = useBackend<MODsuitData>(context);
-  const { active, modules } = data;
-  const info_modules = modules.filter((module) => !!module.id);
-
-  return (
-    <Section title="User Status">
-      <Stack vertical>
-        {(info_modules.length !== 0 &&
-          info_modules.map((module) => {
-            const Module = ID2MODULE[module.id];
+        {loss_brute !== undefined && (
+          <LabeledList.Item label="Brute Damage">
+            <ProgressBar
+              value={active ? loss_brute / health_max : 0}
+              ranges={{
+                good: [-Infinity, 0.2],
+                average: [0.2, 0.5],
+                bad: [0.5, Infinity],
+              }}>
+              <AnimatedNumber value={active ? loss_brute : 0} />
+            </ProgressBar>
+          </LabeledList.Item>
+        )}
+        {loss_fire !== undefined && (
+          <LabeledList.Item label="Burn Damage">
+            <ProgressBar
+              value={active ? loss_fire / health_max : 0}
+              ranges={{
+                good: [-Infinity, 0.2],
+                average: [0.2, 0.5],
+                bad: [0.5, Infinity],
+              }}>
+              <AnimatedNumber value={active ? loss_fire : 0} />
+            </ProgressBar>
+          </LabeledList.Item>
+        )}
+        {loss_oxy !== undefined && (
+          <LabeledList.Item label="Oxy Damage">
+            <ProgressBar
+              value={active ? loss_oxy / health_max : 0}
+              ranges={{
+                good: [-Infinity, 0.2],
+                average: [0.2, 0.5],
+                bad: [0.5, Infinity],
+              }}>
+              <AnimatedNumber value={active ? loss_oxy : 0} />
+            </ProgressBar>
+          </LabeledList.Item>
+        )}
+        {loss_tox !== undefined && (
+          <LabeledList.Item label="Tox Damage">
+            <ProgressBar
+              value={active ? loss_tox / health_max : 0}
+              ranges={{
+                good: [-Infinity, 0.2],
+                average: [0.2, 0.5],
+                bad: [0.5, Infinity],
+              }}>
+              <AnimatedNumber value={active ? loss_tox : 0} />
+            </ProgressBar>
+          </LabeledList.Item>
+        )}
+        {background_radiation_level !== undefined && (
+          <LabeledList.Item label="Radiation">
+            {active ? (
+              is_user_irradiated ? (
+                <NoticeBox danger>User Irradiated</NoticeBox>
+              ) : background_radiation_level ? (
+                <NoticeBox>
+                  {`Background level: ${radiationLevels(
+                    background_radiation_level
+                  )}`}
+                </NoticeBox>
+              ) : (
+                <NoticeBox info>Not Detected</NoticeBox>
+              )
+            ) : (
+              'Unknown'
+            )}
+          </LabeledList.Item>
+        )}
+        {body_temperature !== undefined && (
+          <LabeledList.Item label="Body Temp">
+            {`${active ? Math.round(body_temperature) : 0} K`}
+          </LabeledList.Item>
+        )}
+        {nutrition !== undefined && (
+          <LabeledList.Item label="Satiety Level">
+            {`${active ? Math.round(nutrition) : 0}`}
+          </LabeledList.Item>
+        )}
+        <LabeledList.Item label="Name">{user_name}</LabeledList.Item>
+        <LabeledList.Item label="Assignment">
+          {user_assignment}
+        </LabeledList.Item>
+        {dna_unique_identity !== undefined && (
+          <LabeledList.Item label="Fingerprints">
+            <Box
+              style={{
+                'word-break': 'break-all',
+                'word-wrap': 'break-word',
+              }}>
+              {active ? dna_unique_identity : '???'}
+            </Box>
+          </LabeledList.Item>
+        )}
+        {dna_unique_enzymes !== undefined && (
+          <LabeledList.Item label="Enzymes">
+            <Box
+              style={{
+                'word-break': 'break-all',
+                'word-wrap': 'break-word',
+              }}>
+              {active ? dna_unique_enzymes : '???'}
+            </Box>
+          </LabeledList.Item>
+        )}
+      </LabeledList>
+      {!!viruses && (
+        <Section title="Diseases">
+          {viruses.map((virus) => {
             return (
-              <Stack.Item key={module.ref}>
-                {!active && <LockedModule />}
-                <Module {...module} active={active} />
-              </Stack.Item>
+              <Collapsible title={virus.name} key={virus.name}>
+                <LabeledList>
+                  <LabeledList.Item label="Spread">
+                    {virus.type}
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Stage">
+                    {virus.stage}/{virus.maxstage}
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Cure">{virus.cure}</LabeledList.Item>
+                </LabeledList>
+              </Collapsible>
             );
-          })) || <Box textAlign="center">No Info Modules Detected</Box>}
-      </Stack>
+          })}
+        </Section>
+      )}
     </Section>
   );
 };
 
 const ModuleSection = (props, context) => {
   const { act, data } = useBackend<MODsuitData>(context);
-  const { complexity_max, modules } = data;
+  const { complexity_max, module_info } = data;
+  const { complexity } = data.suit_status;
   const [configureState, setConfigureState] = useLocalState(
     context,
     'module_configuration',
     ''
   );
   return (
-    <Section title="Modules" fill>
-      <Flex direction="column">
-        {(modules.length !== 0 &&
-          modules.map((module) => {
+    <Section
+      title="Modules"
+      fill
+      buttons={`${complexity} of ${complexity_max} complexity used`}>
+      {(module_info.length !== 0 && (
+        <Table>
+          <Table.Row header>
+            <Table.Cell width={1} />
+            <Table.Cell width={1} />
+            <Table.Cell width={1} />
+            <Table.Cell>Name</Table.Cell>
+            <Table.Cell width={1} textAlign="center">
+              <Button
+                color="transparent"
+                icon="plug"
+                tooltip="Idle Power Cost"
+                tooltipPosition="top"
+              />
+            </Table.Cell>
+            <Table.Cell width={1} textAlign="center">
+              <Button
+                color="transparent"
+                icon="lightbulb"
+                tooltip="Active Power Cost"
+                tooltipPosition="top"
+              />
+            </Table.Cell>
+            <Table.Cell width={1} textAlign="center">
+              <Button
+                color="transparent"
+                icon="bolt"
+                tooltip="Use Power Cost"
+                tooltipPosition="top"
+              />
+            </Table.Cell>
+            <Table.Cell width={1} textAlign="center">
+              <Button
+                color="transparent"
+                icon="save"
+                tooltip="Complexity"
+                tooltipPosition="top"
+              />
+            </Table.Cell>
+          </Table.Row>
+          {module_info.map((module) => {
             return (
-              <Flex.Item key={module.ref}>
-                <Collapsible title={module.module_name}>
-                  <Section>
-                    {configureState === module.ref && (
-                      <ConfigureScreen
-                        configuration_data={module.configuration_data}
-                        module_ref={module.ref}
-                        onExit={() => setConfigureState('')}
-                      />
-                    )}
-                    <Table>
-                      <Table.Row header>
-                        <Table.Cell textAlign="center">
-                          <Button
-                            color="transparent"
-                            icon="save"
-                            tooltip="Complexity"
-                            tooltipPosition="top"
-                          />
-                        </Table.Cell>
-                        <Table.Cell textAlign="center">
-                          <Button
-                            color="transparent"
-                            icon="plug"
-                            tooltip="Idle Power Cost"
-                            tooltipPosition="top"
-                          />
-                        </Table.Cell>
-                        <Table.Cell textAlign="center">
-                          <Button
-                            color="transparent"
-                            icon="lightbulb"
-                            tooltip="Active Power Cost"
-                            tooltipPosition="top"
-                          />
-                        </Table.Cell>
-                        <Table.Cell textAlign="center">
-                          <Button
-                            color="transparent"
-                            icon="bolt"
-                            tooltip="Use Power Cost"
-                            tooltipPosition="top"
-                          />
-                        </Table.Cell>
-                        <Table.Cell textAlign="center">
-                          <Button
-                            color="transparent"
-                            icon="hourglass-half"
-                            tooltip="Cooldown"
-                            tooltipPosition="top"
-                          />
-                        </Table.Cell>
-                        <Table.Cell textAlign="center">
-                          <Button
-                            color="transparent"
-                            icon="tasks"
-                            tooltip="Actions"
-                            tooltipPosition="top"
-                          />
-                        </Table.Cell>
-                      </Table.Row>
-                      <Table.Row>
-                        <Table.Cell textAlign="center">
-                          {module.module_complexity}/{complexity_max}
-                        </Table.Cell>
-                        <Table.Cell textAlign="center">
-                          {module.idle_power}
-                        </Table.Cell>
-                        <Table.Cell textAlign="center">
-                          {module.active_power}
-                        </Table.Cell>
-                        <Table.Cell textAlign="center">
-                          {module.use_power}
-                        </Table.Cell>
-                        <Table.Cell textAlign="center">
-                          {(module.cooldown > 0 && module.cooldown / 10) || '0'}
-                          /{module.cooldown_time / 10}s
-                        </Table.Cell>
-                        <Table.Cell textAlign="center">
-                          <Button
-                            onClick={() => act('select', { 'ref': module.ref })}
-                            icon="bullseye"
-                            selected={module.module_active}
-                            tooltip={displayText(module.module_type)}
-                            tooltipPosition="left"
-                            disabled={!module.module_type}
-                          />
-                          <Button
-                            onClick={() => setConfigureState(module.ref)}
-                            icon="cog"
-                            selected={configureState === module.ref}
-                            tooltip="Configure"
-                            tooltipPosition="left"
-                            disabled={module.configuration_data.length === 0}
-                          />
-                          <Button
-                            onClick={() => act('pin', { 'ref': module.ref })}
-                            icon="thumbtack"
-                            selected={module.pinned}
-                            tooltip="Pin"
-                            tooltipPosition="left"
-                            disabled={!module.module_type}
-                          />
-                        </Table.Cell>
-                      </Table.Row>
-                    </Table>
-                    <Box>{module.description}</Box>
-                  </Section>
-                </Collapsible>
-              </Flex.Item>
+              <Table.Row key={module.ref}>
+                <Table.Cell>
+                  <Button
+                    onClick={() => act('select', { 'ref': module.ref })}
+                    icon={
+                      module.module_type === 3
+                        ? module.module_active
+                          ? 'square-check'
+                          : 'square'
+                        : 'power-off'
+                    }
+                    selected={module.module_active}
+                    tooltip={moduleTypeAction(module.module_type)}
+                    tooltipPosition="left"
+                    disabled={!module.module_type}
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    onClick={() => setConfigureState(module.ref)}
+                    icon="cog"
+                    selected={configureState === module.ref}
+                    tooltip="Configure"
+                    tooltipPosition="left"
+                    disabled={module.configuration_data.length === 0}
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    onClick={() => act('pin', { 'ref': module.ref })}
+                    icon="thumbtack"
+                    selected={module.pinned}
+                    tooltip="Pin"
+                    tooltipPosition="left"
+                    disabled={!module.module_type}
+                  />
+                </Table.Cell>
+                <Table.Cell>
+                  <Collapsible
+                    title={module.module_name}
+                    color={module.module_active ? 'green' : 'default'}>
+                    <Section mr={-19}>{module.description}</Section>
+                  </Collapsible>
+                  {configureState === module.ref && (
+                    <ConfigureScreen
+                      configuration_data={module.configuration_data}
+                      module_ref={module.ref}
+                      module_name={module.module_name}
+                      onExit={() => setConfigureState('')}
+                    />
+                  )}
+                </Table.Cell>
+                <Table.Cell textAlign="center">{module.idle_power}</Table.Cell>
+                <Table.Cell textAlign="center">
+                  {module.active_power}
+                </Table.Cell>
+                <Table.Cell textAlign="center">{module.use_power}</Table.Cell>
+                <Table.Cell textAlign="center">
+                  {module.module_complexity}
+                </Table.Cell>
+              </Table.Row>
             );
-          })) || (
-          <Flex.Item>
-            <Box textAlign="center">No Modules Detected</Box>
-          </Flex.Item>
-        )}
-      </Flex>
+          })}
+        </Table>
+      )) || <NoticeBox>No Modules Detected</NoticeBox>}
     </Section>
   );
 };
