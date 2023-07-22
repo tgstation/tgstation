@@ -83,7 +83,7 @@ const ContactsScreen = (_props: any, context: any) => {
   );
 
   let savedChatsArray = Object.values(saved_chats);
-  savedChatsArray.sort((a, b) => a.unread_messages - b.unread_messages);
+  savedChatsArray.sort((a, b) => b.unread_messages - a.unread_messages);
 
   if (searchUser.length > 0) {
     const chatSearch = createSearch(
