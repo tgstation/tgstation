@@ -545,7 +545,7 @@
 	VAR_PROTECTED/send_care_package_time = 5 MINUTES
 	///The glow of 'fake' radioactive objects in space
 	var/nebula_radglow = "#66ff33"
- 	/// Area's that are part of the radioactive nebula
+	/// Area's that are part of the radioactive nebula
 	var/radioactive_areas = /area/space
 
 /datum/station_trait/nebula/hostile/radiation/New()
