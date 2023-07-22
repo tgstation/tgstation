@@ -1,6 +1,100 @@
+import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, Dimmer, NumberInput, Flex, AnimatedNumber, Dropdown } from '../components';
 import { Window } from '../layouts';
+
+type MODsuitData = {
+  // Static
+  ui_theme: string;
+  control: string;
+  complexity_max: number;
+  helmet: string;
+  chestplate: string;
+  gauntlets: string;
+  boots: string;
+  // Dynamic
+  interface_break: BooleanLike;
+  malfunctioning: BooleanLike;
+  open: BooleanLike;
+  active: BooleanLike;
+  locked: BooleanLike;
+  complexity: number;
+  selected_module: string;
+  wearer_name: string;
+  wearer_job: string;
+  AI: string;
+  core: string;
+  charge: number;
+  modules: Module[];
+};
+
+type Module = {
+  module_name: string;
+  description: string;
+  module_type: number;
+  module_active: BooleanLike;
+  pinned: BooleanLike;
+  idle_power: number;
+  active_power: number;
+  use_power: number;
+  module_complexity: number;
+  cooldown_time: number;
+  cooldown: number;
+  id: string;
+  ref: string;
+  configuration_data: ModuleConfig[];
+  userradiated: BooleanLike;
+  usertoxins: number;
+  usermaxtoxins: number;
+  threatlevel: number;
+};
+
+type ModuleConfig = {
+  display_name: string;
+  type: string;
+  value: number;
+  values: [];
+};
+
+export const MODsuit = (props, context) => {
+  const { act, data } = useBackend<MODsuitData>(context);
+  const { ui_theme, interface_break } = data;
+  return (
+    <Window
+      width={800}
+      height={600}
+      theme={ui_theme}
+      title="MOD Interface Panel"
+      resizable>
+      <Window.Content scrollable={!interface_break}>
+        <MODsuitContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+export const MODsuitContent = (props, context) => {
+  const { act, data } = useBackend<MODsuitData>(context);
+  const { ui_theme, interface_break } = data;
+  return (
+    <Box>
+      {(!!interface_break && <LockedInterface />) || (
+        <Box>
+          <Stack>
+            <Stack.Item grow>
+              <SuitStatusSection />
+            </Stack.Item>
+            <Stack.Item grow>
+              <UserStatusSection />
+            </Stack.Item>
+          </Stack>
+          <ModuleSection />
+          <HardwareSection />
+        </Box>
+      )}
+    </Box>
+  );
+};
 
 const ConfigureNumberEntry = (props, context) => {
   const { name, value, module_ref } = props;
@@ -96,36 +190,29 @@ const RadCounter = (props, context) => {
   const { active, userradiated, usertoxins, usermaxtoxins, threatlevel } =
     props;
   return (
-    <Stack fill textAlign="center">
-      <Stack.Item grow>
-        <Section
-          title="Radiation Level"
-          color={active && userradiated ? 'bad' : 'good'}>
-          {active && userradiated ? 'IRRADIATED' : 'RADIATION-FREE'}
-        </Section>
-      </Stack.Item>
-      <Stack.Item grow>
-        <Section title="Toxins Level">
-          <ProgressBar
-            value={active ? usertoxins / usermaxtoxins : 0}
-            ranges={{
-              good: [-Infinity, 0.2],
-              average: [0.2, 0.5],
-              bad: [0.5, Infinity],
-            }}>
-            <AnimatedNumber value={usertoxins} />
-          </ProgressBar>
-        </Section>
-      </Stack.Item>
-      <Stack.Item grow>
-        <Section
-          title="Hazard Level"
-          color={active && threatlevel ? 'bad' : 'good'}
-          bold>
-          {active && threatlevel ? threatlevel : 0}
-        </Section>
-      </Stack.Item>
-    </Stack>
+    <LabeledList>
+      <LabeledList.Item
+        label="Radiation Level"
+        color={active && userradiated ? 'bad' : 'good'}>
+        {active && userradiated ? 'IRRADIATED' : 'RADIATION-FREE'}
+      </LabeledList.Item>
+      <LabeledList.Item label="Toxin Damage">
+        <ProgressBar
+          value={active ? usertoxins / usermaxtoxins : 0}
+          ranges={{
+            good: [-Infinity, 0.2],
+            average: [0.2, 0.5],
+            bad: [0.5, Infinity],
+          }}>
+          <AnimatedNumber value={usertoxins} />
+        </ProgressBar>
+      </LabeledList.Item>
+      <LabeledList.Item
+        label="Hazard Level"
+        color={active && threatlevel ? 'bad' : 'good'}>
+        {active && threatlevel ? threatlevel : 0}
+      </LabeledList.Item>
+    </LabeledList>
   );
 };
 
@@ -140,76 +227,69 @@ const HealthAnalyzer = (props, context) => {
     usertoxin,
     useroxy,
   } = props;
+
   return (
     <Section>
       {show_vitals ? (
-        <>
-          <Section title="Health">
-            <ProgressBar
-              value={active ? userhealth / usermaxhealth : 0}
-              ranges={{
-                good: [0.5, Infinity],
-                average: [0.2, 0.5],
-                bad: [-Infinity, 0.2],
-              }}>
-              <AnimatedNumber value={active ? userhealth : 0} />
-            </ProgressBar>
-          </Section>
-          <Stack textAlign="center">
-            <Stack.Item grow>
-              <Section title="Brute">
-                <ProgressBar
-                  value={active ? userbrute / usermaxhealth : 0}
-                  ranges={{
-                    good: [-Infinity, 0.2],
-                    average: [0.2, 0.5],
-                    bad: [0.5, Infinity],
-                  }}>
-                  <AnimatedNumber value={active ? userbrute : 0} />
-                </ProgressBar>
-              </Section>
-            </Stack.Item>
-            <Stack.Item grow>
-              <Section title="Burn">
-                <ProgressBar
-                  value={active ? userburn / usermaxhealth : 0}
-                  ranges={{
-                    good: [-Infinity, 0.2],
-                    average: [0.2, 0.5],
-                    bad: [0.5, Infinity],
-                  }}>
-                  <AnimatedNumber value={active ? userburn : 0} />
-                </ProgressBar>
-              </Section>
-            </Stack.Item>
-            <Stack.Item grow>
-              <Section title="Toxin">
-                <ProgressBar
-                  value={active ? usertoxin / usermaxhealth : 0}
-                  ranges={{
-                    good: [-Infinity, 0.2],
-                    average: [0.2, 0.5],
-                    bad: [0.5, Infinity],
-                  }}>
-                  <AnimatedNumber value={active ? usertoxin : 0} />
-                </ProgressBar>
-              </Section>
-            </Stack.Item>
-            <Stack.Item grow>
-              <Section title="Suffocation">
-                <ProgressBar
-                  value={active ? useroxy / usermaxhealth : 0}
-                  ranges={{
-                    good: [-Infinity, 0.2],
-                    average: [0.2, 0.5],
-                    bad: [0.5, Infinity],
-                  }}>
-                  <AnimatedNumber value={active ? useroxy : 0} />
-                </ProgressBar>
-              </Section>
-            </Stack.Item>
-          </Stack>
-        </>
+        <Section>
+          <LabeledList>
+            <LabeledList.Item label="Health">
+              <ProgressBar
+                value={active ? userhealth / usermaxhealth : 0}
+                ranges={{
+                  good: [0.5, Infinity],
+                  average: [0.2, 0.5],
+                  bad: [-Infinity, 0.2],
+                }}>
+                <AnimatedNumber value={active ? userhealth : 0} />
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item label="Brute Damage">
+              <ProgressBar
+                value={active ? userbrute / usermaxhealth : 0}
+                ranges={{
+                  good: [-Infinity, 0.2],
+                  average: [0.2, 0.5],
+                  bad: [0.5, Infinity],
+                }}>
+                <AnimatedNumber value={active ? userbrute : 0} />
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item label="Burn Damage">
+              <ProgressBar
+                value={active ? userburn / usermaxhealth : 0}
+                ranges={{
+                  good: [-Infinity, 0.2],
+                  average: [0.2, 0.5],
+                  bad: [0.5, Infinity],
+                }}>
+                <AnimatedNumber value={active ? userburn : 0} />
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item label="Toxin Damage">
+              <ProgressBar
+                value={active ? usertoxin / usermaxhealth : 0}
+                ranges={{
+                  good: [-Infinity, 0.2],
+                  average: [0.2, 0.5],
+                  bad: [0.5, Infinity],
+                }}>
+                <AnimatedNumber value={active ? usertoxin : 0} />
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item label="Suffocation Damage">
+              <ProgressBar
+                value={active ? useroxy / usermaxhealth : 0}
+                ranges={{
+                  good: [-Infinity, 0.2],
+                  average: [0.2, 0.5],
+                  bad: [0.5, Infinity],
+                }}>
+                <AnimatedNumber value={active ? useroxy : 0} />
+              </ProgressBar>
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
       ) : (
         <Section>
           {'Health Analyzer Vitals Readout Disabled In Settings'}
@@ -253,91 +333,77 @@ const StatusReadout = (props, context) => {
           </Stack.Item>
         </Stack>
       )}
-      <Section title="Health">
-        <ProgressBar
-          value={active ? statushealth / statusmaxhealth : 0}
-          ranges={{
-            good: [0.5, Infinity],
-            average: [0.2, 0.5],
-            bad: [-Infinity, 0.2],
-          }}>
-          <AnimatedNumber value={active ? statushealth : 0} />
-        </ProgressBar>
-      </Section>
-      <Stack textAlign="center">
-        <Stack.Item grow>
-          <Section title="Brute">
-            <ProgressBar
-              value={active ? statusbrute / statusmaxhealth : 0}
-              ranges={{
-                good: [-Infinity, 0.2],
-                average: [0.2, 0.5],
-                bad: [0.5, Infinity],
-              }}>
-              <AnimatedNumber value={active ? statusbrute : 0} />
-            </ProgressBar>
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow>
-          <Section title="Burn">
-            <ProgressBar
-              value={active ? statusburn / statusmaxhealth : 0}
-              ranges={{
-                good: [-Infinity, 0.2],
-                average: [0.2, 0.5],
-                bad: [0.5, Infinity],
-              }}>
-              <AnimatedNumber value={active ? statusburn : 0} />
-            </ProgressBar>
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow>
-          <Section title="Toxin">
-            <ProgressBar
-              value={active ? statustoxin / statusmaxhealth : 0}
-              ranges={{
-                good: [-Infinity, 0.2],
-                average: [0.2, 0.5],
-                bad: [0.5, Infinity],
-              }}>
-              <AnimatedNumber value={statustoxin} />
-            </ProgressBar>
-          </Section>
-        </Stack.Item>
-        <Stack.Item grow>
-          <Section title="Suffocation">
-            <ProgressBar
-              value={active ? statusoxy / statusmaxhealth : 0}
-              ranges={{
-                good: [-Infinity, 0.2],
-                average: [0.2, 0.5],
-                bad: [0.5, Infinity],
-              }}>
-              <AnimatedNumber value={statusoxy} />
-            </ProgressBar>
-          </Section>
-        </Stack.Item>
-      </Stack>
-      <Stack textAlign="center">
-        <Stack.Item grow>
-          <Section title="Body Temperature">{active ? statustemp : 0}</Section>
-        </Stack.Item>
-        <Stack.Item grow>
-          <Section title="Nutrition Status">
-            {active ? statusnutrition : 0}
-          </Section>
-        </Stack.Item>
-      </Stack>
-      <Section title="DNA">
-        <LabeledList>
-          <LabeledList.Item label="Fingerprints">
-            {active ? statusfingerprints : '???'}
-          </LabeledList.Item>
-          <LabeledList.Item label="Unique Enzymes">
-            {active ? statusdna : '???'}
-          </LabeledList.Item>
-        </LabeledList>
-      </Section>
+
+      <LabeledList>
+        <LabeledList.Item label="Health">
+          <ProgressBar
+            value={active ? statushealth / statusmaxhealth : 0}
+            ranges={{
+              good: [0.5, Infinity],
+              average: [0.2, 0.5],
+              bad: [-Infinity, 0.2],
+            }}>
+            <AnimatedNumber value={active ? statushealth : 0} />
+          </ProgressBar>
+        </LabeledList.Item>
+        <LabeledList.Item label="Brute Damage">
+          <ProgressBar
+            value={active ? statusbrute / statusmaxhealth : 0}
+            ranges={{
+              good: [-Infinity, 0.2],
+              average: [0.2, 0.5],
+              bad: [0.5, Infinity],
+            }}>
+            <AnimatedNumber value={active ? statusbrute : 0} />
+          </ProgressBar>
+        </LabeledList.Item>
+        <LabeledList.Item label="Burn Damage">
+          <ProgressBar
+            value={active ? statusburn / statusmaxhealth : 0}
+            ranges={{
+              good: [-Infinity, 0.2],
+              average: [0.2, 0.5],
+              bad: [0.5, Infinity],
+            }}>
+            <AnimatedNumber value={active ? statusburn : 0} />
+          </ProgressBar>
+        </LabeledList.Item>
+        <LabeledList.Item label="Toxin Damage">
+          <ProgressBar
+            value={active ? statustoxin / statusmaxhealth : 0}
+            ranges={{
+              good: [-Infinity, 0.2],
+              average: [0.2, 0.5],
+              bad: [0.5, Infinity],
+            }}>
+            <AnimatedNumber value={statustoxin} />
+          </ProgressBar>
+        </LabeledList.Item>
+        <LabeledList.Item label="Suffocation Damage">
+          <ProgressBar
+            value={active ? statusoxy / statusmaxhealth : 0}
+            ranges={{
+              good: [-Infinity, 0.2],
+              average: [0.2, 0.5],
+              bad: [0.5, Infinity],
+            }}>
+            <AnimatedNumber value={statusoxy} />
+          </ProgressBar>
+        </LabeledList.Item>
+        <LabeledList.Item label="Body Temperature">
+          {`${active ? Math.round(statustemp) : 0} K`}
+        </LabeledList.Item>
+        <LabeledList.Item label="Nutrition Status">
+          {`${active ? Math.round(statusnutrition) : 0}`}
+        </LabeledList.Item>
+        <LabeledList.Item label="Fingerprints">
+          {active ? statusfingerprints : '???'}
+        </LabeledList.Item>
+        <LabeledList.Item label="Unique Enzymes">
+          {active ? statusdna : '???'}
+        </LabeledList.Item>
+      </LabeledList>
+
       {!!active && !!statusviruses && (
         <Section title="Diseases">
           <Table>
@@ -470,8 +536,8 @@ const displayText = (param) => {
   }
 };
 
-const ParametersSection = (props, context) => {
-  const { act, data } = useBackend(context);
+const SuitStatusSection = (props, context) => {
+  const { act, data } = useBackend<MODsuitData>(context);
   const {
     active,
     malfunctioning,
@@ -483,6 +549,8 @@ const ParametersSection = (props, context) => {
     wearer_name,
     wearer_job,
     AI,
+    core,
+    charge,
   } = data;
   const status = malfunctioning
     ? 'Malfunctioning'
@@ -490,10 +558,24 @@ const ParametersSection = (props, context) => {
       ? 'Active'
       : 'Inactive';
   return (
-    <Section title="Parameters">
+    <Section title="Suit Status">
       <LabeledList>
+        <LabeledList.Item label="Cell Charge">
+          <ProgressBar
+            value={charge / 100}
+            content={charge + '%'}
+            style={{
+              'text-shadow': '1px 1px 0 black',
+            }}
+            ranges={{
+              good: [0.6, Infinity],
+              average: [0.3, 0.6],
+              bad: [-Infinity, 0.3],
+            }}
+          />
+        </LabeledList.Item>
         <LabeledList.Item
-          label="Status"
+          label="State"
           buttons={
             <Button
               icon="power-off"
@@ -533,7 +615,7 @@ const ParametersSection = (props, context) => {
 };
 
 const HardwareSection = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<MODsuitData>(context);
   const {
     active,
     control,
@@ -585,13 +667,13 @@ const HardwareSection = (props, context) => {
   );
 };
 
-const InfoSection = (props, context) => {
-  const { act, data } = useBackend(context);
+const UserStatusSection = (props, context) => {
+  const { act, data } = useBackend<MODsuitData>(context);
   const { active, modules } = data;
   const info_modules = modules.filter((module) => !!module.id);
 
   return (
-    <Section title="Info">
+    <Section title="User Status">
       <Stack vertical>
         {(info_modules.length !== 0 &&
           info_modules.map((module) => {
@@ -609,12 +691,12 @@ const InfoSection = (props, context) => {
 };
 
 const ModuleSection = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<MODsuitData>(context);
   const { complexity_max, modules } = data;
   const [configureState, setConfigureState] = useLocalState(
     context,
     'module_configuration',
-    null
+    ''
   );
   return (
     <Section title="Modules" fill>
@@ -629,7 +711,7 @@ const ModuleSection = (props, context) => {
                       <ConfigureScreen
                         configuration_data={module.configuration_data}
                         module_ref={module.ref}
-                        onExit={() => setConfigureState(null)}
+                        onExit={() => setConfigureState('')}
                       />
                     )}
                     <Table>
@@ -740,47 +822,5 @@ const ModuleSection = (props, context) => {
         )}
       </Flex>
     </Section>
-  );
-};
-
-export const MODsuitContent = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { ui_theme, interface_break } = data;
-  return (
-    <Section>
-      {(!!interface_break && <LockedInterface />) || (
-        <Stack vertical fill>
-          <Stack.Item>
-            <ParametersSection />
-          </Stack.Item>
-          <Stack.Item>
-            <HardwareSection />
-          </Stack.Item>
-          <Stack.Item>
-            <InfoSection />
-          </Stack.Item>
-          <Stack.Item grow>
-            <ModuleSection />
-          </Stack.Item>
-        </Stack>
-      )}
-    </Section>
-  );
-};
-
-export const MODsuit = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { ui_theme, interface_break } = data;
-  return (
-    <Window
-      width={400}
-      height={525}
-      theme={ui_theme}
-      title="MOD Interface Panel"
-      resizable>
-      <Window.Content scrollable={!interface_break}>
-        <MODsuitContent />
-      </Window.Content>
-    </Window>
   );
 };
