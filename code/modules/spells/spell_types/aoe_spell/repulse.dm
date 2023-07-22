@@ -1,4 +1,6 @@
 /datum/action/cooldown/spell/aoe/repulse
+	// I find the concept of blowing a locker open with repulse, knocking everything back, amusing
+	coward_casting = TRUE
 	/// The max throw range of the repulsioon.
 	var/max_throw = 5
 	/// A visual effect to be spawned on people who are thrown away.
@@ -24,8 +26,10 @@
 		if(victim_mob.can_block_magic(antimagic_flags))
 			return
 
-	var/turf/throwtarget = get_edge_target_turf(caster, get_dir(caster, get_step_away(victim, caster)))
-	var/dist_from_caster = get_dist(victim, caster)
+	var/atom/truecaster = get_caster_from_cast_on(caster)
+
+	var/turf/throwtarget = get_edge_target_turf(truecaster, get_dir(truecaster, get_step_away(victim, truecaster)))
+	var/dist_from_caster = get_dist(victim, truecaster)
 
 	if(dist_from_caster == 0)
 		if(isliving(victim))
@@ -36,12 +40,16 @@
 	else
 		if(sparkle_path)
 			// Created sparkles will disappear on their own
-			new sparkle_path(get_turf(victim), get_dir(caster, victim))
+			new sparkle_path(get_turf(victim), get_dir(truecaster, victim))
 
 		if(isliving(victim))
 			var/mob/living/victim_living = victim
 			victim_living.Paralyze(4 SECONDS)
 			to_chat(victim, span_userdanger("You're thrown back by [caster]!"))
+
+		if(istype(victim, /obj/structure/closet))
+			var/obj/structure/closet/flying_closet = victim
+			flying_closet.open(force = FALSE)
 
 		// So stuff gets tossed around at the same time.
 		victim.safe_throw_at(throwtarget, ((clamp((max_throw - (clamp(dist_from_caster - 2, 0, dist_from_caster))), 3, max_throw))), 1, caster, force = repulse_force)

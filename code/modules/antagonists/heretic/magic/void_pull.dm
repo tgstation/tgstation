@@ -53,10 +53,10 @@
 // For the actual cast, we microstun people nearby and pull them in
 /datum/action/cooldown/spell/aoe/void_pull/cast_on_thing_in_aoe(mob/living/victim, atom/caster)
 	// If the victim's within the stun radius, they're stunned / knocked down
-	if(get_dist(victim, caster) < stun_radius)
+	if(get_dist(victim, get_caster_from_cast_on(caster)) < stun_radius)
 		victim.AdjustKnockdown(3 SECONDS)
 		victim.AdjustParalyzed(0.5 SECONDS)
 
 	// Otherwise, they take a few steps closer
 	for(var/i in 1 to 3)
-		victim.forceMove(get_step_towards(victim, caster))
+		victim.forceMove(get_step_towards(victim, get_caster_from_cast_on(caster)))

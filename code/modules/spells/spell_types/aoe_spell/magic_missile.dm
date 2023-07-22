@@ -27,7 +27,7 @@
 	return things
 
 /datum/action/cooldown/spell/aoe/magic_missile/cast_on_thing_in_aoe(mob/living/victim, atom/caster)
-	fire_projectile(victim, caster)
+	fire_projectile(victim, get_caster_from_cast_on(caster))
 
 /datum/action/cooldown/spell/aoe/magic_missile/proc/fire_projectile(atom/victim, mob/caster)
 	var/obj/projectile/to_fire = new projectile_type()

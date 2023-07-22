@@ -13,6 +13,8 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 
+	coward_casting = TRUE
+
 	aoe_radius = 2
 
 /datum/action/cooldown/spell/aoe/area_conversion/get_things_to_cast_on(atom/center)
@@ -24,4 +26,4 @@
 
 /datum/action/cooldown/spell/aoe/area_conversion/cast_on_thing_in_aoe(turf/victim, atom/caster)
 	playsound(victim, 'sound/items/welder.ogg', 75, TRUE)
-	victim.narsie_act(FALSE, TRUE, 100 - (get_dist(victim, caster) * 25))
+	victim.narsie_act(FALSE, TRUE, 100 - (get_dist(victim, get_caster_from_cast_on(caster)) * 25))

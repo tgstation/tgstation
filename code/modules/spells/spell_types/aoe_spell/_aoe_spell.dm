@@ -11,13 +11,23 @@
 	var/shuffle_targets_list = FALSE
 	/// The radius of the aoe.
 	var/aoe_radius = 7
+	/// Allows one to cast while hiding inside something.
+	var/coward_casting = FALSE
+
+/datum/action/cooldown/spell/aoe/can_cast_spell(feedback = TRUE)
+	..()
+	var/mob/truecaster = get_caster_from_cast_on(owner)
+	if(!coward_casting && (istype(truecaster.loc, /obj/structure)))
+		to_chat(owner, span_warning("You cannot cast this spell inside something!"))
+		return FALSE
+	return TRUE
 
 // At this point, cast_on == owner. Either works.
 // Don't extend this for your spell! Look at cast_on_thing_in_aoe.
 /datum/action/cooldown/spell/aoe/cast(atom/cast_on)
 	. = ..()
 	// Get every atom around us to our aoe cast on
-	var/cast_turf = get_turf(cast_on)
+	var/cast_turf = get_turf(get_caster_from_cast_on(cast_on))
 	var/list/atom/things_to_cast_on = get_things_to_cast_on(cast_turf)
 	// If set, shuffle the list of things we're going to cast on to remove any existing order
 	if(shuffle_targets_list)

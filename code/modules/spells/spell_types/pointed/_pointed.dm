@@ -133,10 +133,10 @@
 // cast_on is a turf, or atom target, that we clicked on to fire at.
 /datum/action/cooldown/spell/pointed/projectile/cast(atom/cast_on)
 	. = ..()
-	if(!isturf(owner.loc))
-		return FALSE
 
 	var/turf/caster_turf = get_turf(owner)
+	if(!caster_turf)
+		return FALSE
 	// Get the tile infront of the caster, based on their direction
 	var/turf/caster_front_turf = get_step(owner, owner.dir)
 

@@ -13,6 +13,8 @@
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	aoe_radius = 3
 
+	coward_casting = TRUE
+
 /datum/action/cooldown/spell/aoe/knock/get_things_to_cast_on(atom/center)
 	return RANGE_TURFS(aoe_radius, center)
 

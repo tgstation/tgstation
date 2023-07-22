@@ -15,12 +15,21 @@
 	var/summon_respects_density = FALSE
 	/// If TRUE, no two summons can be spawned in the same turf.
 	var/summon_respects_prev_spawn_points = TRUE
+	/// Allows one to cast while hiding inside something.
+	var/coward_casting = FALSE
+
+/datum/action/cooldown/spell/conjure/can_cast_spell(feedback = TRUE)
+	..()
+	var/mob/truecaster = get_caster_from_cast_on(owner)
+	if(!coward_casting && (istype(truecaster.loc, /obj/structure)))
+		to_chat(owner, span_warning("You cannot cast this spell inside something!"))
+		return FALSE
+	return TRUE
 
 /datum/action/cooldown/spell/conjure/cast(atom/cast_on)
 	. = ..()
 	var/list/to_summon_in = list()
-	var/turf/cast_turf = get_turf(cast_on)
-	for(var/turf/summon_turf in range(summon_radius, cast_turf))
+	for(var/turf/summon_turf in range(summon_radius, get_turf(get_caster_from_cast_on(cast_on))))
 		if(summon_respects_density && summon_turf.density)
 			continue
 		to_summon_in += summon_turf

@@ -28,7 +28,8 @@
 		but will knock targets down. Requires both hands free to use. \
 		Learning this spell makes you unable to learn Arcane Barrage."
 	button_icon_state = "bolt_action"
-
+	delete_on_failure = FALSE
+	drop_inhand = TRUE
 	item_type = /obj/item/gun/ballistic/rifle/enchanted
 
 /datum/action/cooldown/spell/conjure_item/infinite_guns/arcane_barrage
@@ -37,5 +38,7 @@
 		Deals much more damage than Lesser Summon Guns, but won't knock targets down. Requires both hands free to use. \
 		Learning this spell makes you unable to learn Lesser Summon Gun."
 	button_icon_state = "arcane_barrage"
+	delete_on_failure = TRUE
+	drop_inhand = TRUE
 
 	item_type = /obj/item/gun/ballistic/rifle/enchanted/arcane_barrage

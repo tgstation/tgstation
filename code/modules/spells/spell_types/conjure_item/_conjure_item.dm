@@ -24,8 +24,6 @@
 
 	return ..()
 
-//datum/action/cooldown/spell/conjure_item/is_valid_target(atom/cast_on)
-//	return iscarbon(cast_on)
 
 /datum/action/cooldown/spell/conjure_item/cast(mob/living/carbon/cast_on)
 	if(delete_old && LAZYLEN(item_refs))
@@ -43,7 +41,7 @@
 	return ..()
 
 /// Instantiates the item we're conjuring and returns it.
-/// Item is made in nullspace and moved out in cast().
+/// Item is made on the owner's turf and moved into the owner's hand if the spell and mob type allows it.
 /datum/action/cooldown/spell/conjure_item/proc/make_item()
 	var/obj/item/made_item = new item_type(get_turf(owner))
 	LAZYADD(item_refs, WEAKREF(made_item))

@@ -7,6 +7,8 @@
 
 	cooldown_time = 1 SECONDS
 	spell_max_level = 1
+	delete_on_failure = TRUE
+	drop_inhand = TRUE
 
 	item_type = /obj/item/spellpacket/lightningbolt
 

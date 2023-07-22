@@ -146,6 +146,22 @@
 
 	return Activate(target)
 
+/**
+ * Returns the 'actual caster', allowing spells to work while the caster is in a locker, a mecha, or 'is' a container, such as pAIs.
+ * Some spells should probably still cancel if the 'true caster' isn't compatible. (such as Smite as a p/AI/posibrain)
+ */
+/datum/action/cooldown/spell/proc/get_caster_from_cast_on(atom/cast_on)
+	var/cast_loc = cast_on.loc
+	if(isturf(cast_loc))
+		return cast_on
+	if(ismecha(cast_loc) && isbrain(cast_on))
+		return cast_loc
+	if(ispAI(cast_on))
+		return istype(cast_loc, /obj/item/pai_card) ? cast_loc : cast_on
+	if(isAI(cast_on))
+		return istype(cast_loc, /obj/item/aicard) ? cast_loc : cast_on
+	return cast_on
+
 /// Checks if the owner of the spell can currently cast it.
 /// Does not check anything involving potential targets.
 /datum/action/cooldown/spell/proc/can_cast_spell(feedback = TRUE)

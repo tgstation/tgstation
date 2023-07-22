@@ -37,7 +37,7 @@
 
 /datum/action/cooldown/spell/aoe/fiery_rebirth/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/carbon/human/caster)
 	new /obj/effect/temp_visual/eldritch_smoke(get_turf(victim))
-	victim.Beam(caster, icon_state = "r_beam", time = 2 SECONDS)
+	victim.Beam(get_caster_from_cast_on(caster), icon_state = "r_beam", time = 2 SECONDS)
 
 	//This is essentially a death mark, use this to finish your opponent quicker.
 	if(CAN_SUCCUMB(victim))
