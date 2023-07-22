@@ -154,6 +154,7 @@
 
 	add_overlay("[icon_base]_wings")
 
+
 /mob/living/basic/bee/proc/pollinate(obj/machinery/hydroponics/hydro)
 	if(!hydro.can_bee_pollinate())
 		return FALSE
