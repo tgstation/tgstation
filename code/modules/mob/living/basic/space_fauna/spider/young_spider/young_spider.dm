@@ -8,6 +8,7 @@
 /mob/living/basic/young_spider
 	name = "young spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_guard"
 	icon_living = "young_guard"
 	icon_dead = "young_guard_dead"
@@ -138,6 +139,10 @@
 	grown.faction = faction.Copy()
 	grown.directive = directive
 	grown.set_name()
+	if(getBruteLoss() - 5 > 0)
+		grown.setBruteLoss(getBruteLoss() - 5)
+	if(getFireLoss() - 5 > 0)
+		grown.setFireLoss(getFireLoss() - 5)
 
 	qdel(src)
 

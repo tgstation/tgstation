@@ -16,6 +16,7 @@
 	grow_as = /mob/living/basic/giant_spider/ambush
 	name = "young ambush spider"
 	desc = "Furry and white, it looks defenseless. This one has sparkling pink eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_ambush"
 	icon_dead = "young_ambush_dead"
 	maxHealth = 55
@@ -34,6 +35,7 @@
 	grow_as = /mob/living/basic/giant_spider/scout
 	name = "young scout spider"
 	desc = "Furry and black, it looks defenseless. This one has sparkling blue eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_scout"
 	icon_dead = "young_scout_dead"
 	maxHealth = 35
@@ -49,6 +51,7 @@
 	grow_as = /mob/living/basic/giant_spider/hunter
 	name = "young hunter spider"
 	desc = "Furry and black, it looks defenseless. This one has sparkling purple eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_hunter"
 	icon_dead = "young_hunter_dead"
 	maxHealth = 45
@@ -63,6 +66,7 @@
 	grow_as = /mob/living/basic/giant_spider/nurse
 	name = "young nurse spider"
 	desc = "Furry and black, it looks defenseless. This one has sparkling green eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_nurse"
 	icon_dead = "young_nurse_dead"
 	maxHealth = 25
@@ -94,6 +98,7 @@
 	grow_as = /mob/living/basic/giant_spider/tangle
 	name = "young tangle spider"
 	desc = "Furry and brown, it looks defenseless. This one has dim brown eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_tangle"
 	icon_dead = "young_tangle_dead"
 	maxHealth = 25
@@ -111,6 +116,7 @@
 	grow_as = /mob/living/basic/giant_spider/midwife
 	name = "youngbroodmother spider"
 	desc = "Furry and black, it looks defenseless. This one has scintillating green eyes. Might also be hiding a real knife somewhere."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_midwife"
 	icon_dead = "young_midwife_dead"
 	maxHealth = 100
@@ -126,6 +132,7 @@
 	grow_as = /mob/living/basic/giant_spider/viper
 	name = "young viper spider"
 	desc = "Furry and black, it looks defenseless. This one has sparkling magenta eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_viper"
 	icon_dead = "young_viper_dead"
 	maxHealth = 25
@@ -141,6 +148,7 @@
 	grow_as = /mob/living/basic/giant_spider/tarantula
 	name = "tarantula_spiderling"
 	desc = "Furry and black, it looks defenseless. This one has abyssal red eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_tarantula"
 	icon_dead = "young_tarantula_dead"
 	maxHealth = 130
@@ -155,6 +163,7 @@
 	grow_as = /mob/living/basic/giant_spider/hunter/flesh
 	name = "young flesh spider"
 	desc = "Furry and red, it looks defenseless. This one has sparkling grey eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_flesh"
 	icon_dead = "young_flesh_dead"
 
