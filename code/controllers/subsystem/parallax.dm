@@ -71,7 +71,7 @@ SUBSYSTEM_DEF(parallax)
 	if(picked_parallax == PARALLAX_NONE)
 		return
 
-	random_layer = new picked_parallax(template = TRUE)
+	random_layer = new picked_parallax(null, null, TRUE)
 	RegisterSignal(random_layer, COMSIG_QDELETING, PROC_REF(clear_references))
 	random_layer.get_random_look()
 
