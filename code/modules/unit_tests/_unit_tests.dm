@@ -146,6 +146,7 @@
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
 #include "language_transfer.dm"
+#include "leash.dm"
 #include "lesserform.dm"
 #include "limbsanity.dm"
 #include "liver.dm"
