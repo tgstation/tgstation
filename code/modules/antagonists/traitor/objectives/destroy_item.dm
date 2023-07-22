@@ -38,7 +38,7 @@
 /datum/traitor_objective/destroy_item/demoralise
 	description = "Find %ITEM% and destroy it using any means necessary. \
 		We believe this luxury item is important for crew morale. \
-		Loss of this items will help our recruitment efforts."
+		Destruction of this item will help our recruitment efforts."
 
 	progression_minimum = 0 MINUTES
 	progression_maximum = 10 MINUTES
