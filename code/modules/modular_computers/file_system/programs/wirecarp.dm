@@ -55,7 +55,8 @@
 		data["ntnetlogs"] += list(list("entry" = i))
 
 	data["tablets"] = list()
-	for(var/datum/computer_file/program/messenger/app as anything in get_messengers_sorted())
+	for(var/msgr_ref in get_messengers_sorted())
+		var/datum/computer_file/program/messenger/app = GLOB.TabletMessengers[msgr_ref]
 		var/obj/item/modular_computer/pda = app.computer
 
 		var/list/tablet_data = list()
