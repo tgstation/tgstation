@@ -17,7 +17,7 @@
 
 /datum/component/engraved/Initialize(engraved_description, persistent_save, story_value)
 	. = ..()
-	if(!isclosedturf(parent))
+	if(!isclosedturf(parent) && !istype(parent, /obj/structure/statue))
 		return COMPONENT_INCOMPATIBLE
 	var/turf/closed/engraved_wall = parent
 
