@@ -18,14 +18,8 @@
 	if(!..() || !user.combat_mode)
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if (body_position == STANDING_UP)
-			if (prob(5))
-				Unconscious(40)
-				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-				log_combat(user, src, "pushed")
-				visible_message(span_danger("[user] pushes [src] down!"), \
-								span_userdanger("[user] pushes you down!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
-				to_chat(user, span_danger("You push [src] down!"))
+		if(stat < UNCONSCIOUS)
+			user.disarm(src)
 		return TRUE
 	var/damage = rand(1, 9)
 	if (prob(90))

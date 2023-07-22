@@ -210,7 +210,8 @@
 		if(isnull(O.refined_type))
 			to_chat(user, span_warning("[O] has already been refined!"))
 			return
-
+		smelt_ore(O)
+		return TRUE
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/AltClick(mob/living/user)

@@ -603,7 +603,7 @@
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/food/egg = 2,
 		/datum/reagent/consumable/coco = 5,
-		/obj/item/food/butter = 1
+		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/raw_brownie_batter
 	category = CAT_PASTRY
@@ -616,7 +616,7 @@
 		/obj/item/food/egg = 2,
 		/datum/reagent/consumable/coco = 5,
 		/datum/reagent/consumable/peanut_butter = 5,
-		/obj/item/food/butter = 1
+		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/peanut_butter_brownie_batter
 	category = CAT_PASTRY

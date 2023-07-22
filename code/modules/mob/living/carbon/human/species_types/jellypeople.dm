@@ -10,10 +10,9 @@
 	name = "\improper Jellyperson"
 	plural_form = "Jellypeople"
 	id = SPECIES_JELLYPERSON
-	species_traits = list(
-		MUTCOLORS,
-	)
+	examine_limb_id = SPECIES_JELLYPERSON
 	inherent_traits = list(
+		TRAIT_MUTANT_COLORS,
 		TRAIT_TOXINLOVER,
 		TRAIT_NOBLOOD,
 	)
@@ -24,9 +23,6 @@
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
 	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER
-	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	liked_food = MEAT | BUGS
-	toxic_food = NONE
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	payday_modifier = 0.75
@@ -43,6 +39,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/jelly,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/jelly,
 	)
+	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species, pref_load)
 	. = ..()
@@ -176,9 +173,6 @@
 	name = "\improper Slimeperson"
 	plural_form = "Slimepeople"
 	id = SPECIES_SLIMEPERSON
-	species_traits = list(
-		MUTCOLORS,
-	)
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	facial_hair_alpha = 150

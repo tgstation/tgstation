@@ -122,6 +122,7 @@
 	icon_state = "latex_black"
 	inhand_icon_state = "greyscale_gloves"
 	greyscale_colors = "#15191a"
+	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FASTMED)
 
 /obj/item/clothing/gloves/latex/coroner/add_blood_DNA(list/blood_DNA_to_add)
 	return FALSE

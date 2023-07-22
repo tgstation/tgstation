@@ -295,6 +295,7 @@
 	playsound(src, 'sound/effects/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
+	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	check_upstairs() //todo at some point flip your screen around
 
@@ -309,6 +310,7 @@
 		playsound(src, 'sound/effects/curseattack.ogg', 50)
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
 	step_count = 0
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
@@ -343,6 +345,10 @@
 
 #undef FLY_TIME
 
+/obj/item/mod/module/atrocinator/proc/on_talk(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	speech_args[SPEECH_SPANS] |= "upside_down"
+
 /obj/item/mod/module/recycler/donk/safe
 	name = "MOD foam dart recycler module"
 	desc = "A mod module that collects and repackages fired foam darts into half-sized ammo boxes. \
@@ -352,6 +358,6 @@
 	overlay_state_active = "module_donk_safe_recycler"
 	complexity = 1
 	efficiency = 1
-	allowed_item_types = list(/obj/item/ammo_casing/caseless/foam_dart)
+	allowed_item_types = list(/obj/item/ammo_casing/foam_dart)
 	ammobox_type = /obj/item/ammo_box/foambox/mini
 	required_amount = SMALL_MATERIAL_AMOUNT*2.5

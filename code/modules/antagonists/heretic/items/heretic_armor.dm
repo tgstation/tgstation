@@ -109,26 +109,23 @@
 	// Let examiners know this works as a focus only if the hood is down
 	. += span_notice("Allows you to cast heretic spells while the hood is down.")
 
-/obj/item/clothing/suit/hooded/cultrobes/void/RemoveHood()
-	// This is before the hood actually goes down
-	// We only make it visible if the hood is being moved from up to down
-	if(hood_up)
-		make_visible()
-
+/obj/item/clothing/suit/hooded/cultrobes/void/on_hood_down(obj/item/clothing/head/hooded/hood)
+	make_visible()
 	return ..()
 
-/obj/item/clothing/suit/hooded/cultrobes/void/MakeHood()
+/obj/item/clothing/suit/hooded/cultrobes/void/can_create_hood()
 	if(!isliving(loc))
 		CRASH("[src] attempted to make a hood on a non-living thing: [loc]")
-
 	var/mob/living/wearer = loc
-	if(!IS_HERETIC_OR_MONSTER(wearer))
-		loc.balloon_alert(loc, "you can't get the hood up!")
-		return
+	if(IS_HERETIC_OR_MONSTER(wearer))
+		return TRUE
 
-	// When we make the hood, that means we're going invisible
+	loc.balloon_alert(loc, "can't get the hood up!")
+	return FALSE
+
+/obj/item/clothing/suit/hooded/cultrobes/void/on_hood_created(obj/item/clothing/head/hooded/hood)
+	. = ..()
 	make_invisible()
-	return ..()
 
 /// Makes our cloak "invisible". Not the wearer, the cloak itself.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()

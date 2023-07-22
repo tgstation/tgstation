@@ -86,11 +86,12 @@
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/jousting)
 	//fast and effective, but as a sword, it might damage the results.
 	AddComponent(/datum/component/butchering, \
-	speed = 3 SECONDS, \
-	effectiveness = 95, \
-	bonus_modifier = 5, \
+		speed = 3 SECONDS, \
+		effectiveness = 95, \
+		bonus_modifier = 5, \
 	)
 	// The weight of authority comes down on the tider's crimes.
 	AddElement(/datum/element/bane, target_type = /mob/living/carbon/human, damage_multiplier = 0.35)
@@ -340,7 +341,7 @@
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"
 	desc = "A telescopic roasting stick with a miniature shield generator designed to ensure entry into various high-tech shielded cooking ovens and firepits."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "roastingstick"
 	inhand_icon_state = null
 	worn_icon_state = "tele_baton"

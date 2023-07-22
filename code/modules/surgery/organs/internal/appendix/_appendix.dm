@@ -28,14 +28,13 @@
 	return ..()
 
 /obj/item/organ/internal/appendix/on_life(seconds_per_tick, times_fired)
-	..()
-	var/mob/living/carbon/organ_owner = owner
-	if(!organ_owner)
+	. = ..()
+	if(!owner)
 		return
 
 	if(organ_flags & ORGAN_FAILING)
 		// forced to ensure people don't use it to gain tox as slime person
-		organ_owner.adjustToxLoss(2 * seconds_per_tick, updating_health = TRUE, forced = TRUE)
+		owner.adjustToxLoss(2 * seconds_per_tick, updating_health = TRUE, forced = TRUE)
 	else if(inflamation_stage)
 		inflamation(seconds_per_tick)
 	else if(SPT_PROB(APPENDICITIS_PROB, seconds_per_tick))

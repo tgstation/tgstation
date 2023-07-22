@@ -4,6 +4,7 @@
 	spread_text = "Unspread Illness"
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	disease_flags = CHRONIC
+	infectable_biotypes = MOB_ORGANIC | MOB_MINERAL | MOB_ROBOTIC
 	process_dead = TRUE
 	stage_prob = 0.25
 	cure_text = "Sansufentanyl"
@@ -13,7 +14,6 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "A disease discovered in an Interdyne laboratory caused by subjection to timesteam correction technology."
 	severity = DISEASE_SEVERITY_UNCURABLE
-	var/heartswap = TRUE
 
 /datum/disease/chronic_illness/stage_act(seconds_per_tick, times_fired)
 	. = ..()
@@ -64,7 +64,7 @@
 			switch(rand(1,2))
 				if(1)
 					to_chat(affected_mob, span_notice("You feel your atoms begin to realign. You're safe. For now."))
-					stage = 1
+					update_stage(1)
 				if(2)
 					to_chat(affected_mob, span_boldwarning("There is no place for you in this timeline."))
 					affected_mob.adjustStaminaLoss(100, forced = TRUE)

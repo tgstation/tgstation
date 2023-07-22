@@ -158,8 +158,8 @@
 	death_cloud_size = 0
 	icon = target.icon
 	icon_state = "zombie"
-	target.hairstyle = null
-	target.update_body_parts()
+	target.set_facial_hairstyle("Shaved", update = FALSE)
+	target.set_hairstyle("Bald", update = TRUE)
 	target.forceMove(src)
 	corpse = target
 	update_icons()

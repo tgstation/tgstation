@@ -246,7 +246,7 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/alien/acid/neurotoxin
 	name = "Spit Neurotoxin"
-	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
+	desc = "Spits neurotoxin at someone, dealing large amounts of stamina damage."
 	button_icon_state = "alien_neurotoxin_0"
 	plasma_cost = 50
 
@@ -351,6 +351,7 @@ Doesn't work on other aliens/AI.*/
 	button_icon_state = "alien_sneak"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
+	sneak_alpha = 25
 
 /datum/action/cooldown/alien/regurgitate
 	name = "Regurgitate"

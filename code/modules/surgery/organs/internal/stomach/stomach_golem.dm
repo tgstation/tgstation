@@ -3,10 +3,9 @@
 	icon_state = "stomach-p"
 	desc = "A rocklike organ which grinds and processes nutrition from minerals."
 	color = COLOR_GOLEM_GRAY
-	status = ORGAN_MINERAL
+	organ_flags = ORGAN_MINERAL
 	organ_traits = list(TRAIT_ROCK_EATER)
-	/// Multiplier for the hunger rate, golems burn fuel quickly
-	var/hunger_mod = 10
+	hunger_modifier = 10 // golems burn fuel quickly
 	/// How slow are you when the "hungry" icon appears?
 	var/min_hunger_slowdown = 0.5
 	/// How slow are you if you have absolutely nothing in the tank?
@@ -15,20 +14,12 @@
 /obj/item/organ/internal/stomach/golem/on_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	RegisterSignal(owner, COMSIG_CARBON_ATTEMPT_EAT, PROC_REF(try_eating))
-	if(!ishuman(organ_owner))
-		return
-	var/mob/living/carbon/human/human_owner = organ_owner
-	human_owner.physiology?.hunger_mod *= hunger_mod
 
 /obj/item/organ/internal/stomach/golem/on_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_CARBON_ATTEMPT_EAT)
 	organ_owner.remove_movespeed_modifier(/datum/movespeed_modifier/golem_hunger)
 	organ_owner.remove_status_effect(/datum/status_effect/golem_statued)
-	if(!ishuman(organ_owner))
-		return
-	var/mob/living/carbon/human/human_owner = organ_owner
-	human_owner.physiology?.hunger_mod /= hunger_mod
 
 /// Reject food, rocks only
 /obj/item/organ/internal/stomach/golem/proc/try_eating(mob/living/carbon/source, atom/eating)
@@ -83,7 +74,7 @@
 	return TRUE
 
 /datum/status_effect/golem_statued/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] are as still as a statue!")
+	return span_warning("[owner.p_They()] are as still as a statue!")
 
 /datum/status_effect/golem_statued/on_remove()
 	owner.visible_message(span_notice("[owner] slowly stirs back into motion!"), span_notice("You have gathered enough strength to move your body once more."))

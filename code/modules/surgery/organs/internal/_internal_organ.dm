@@ -41,7 +41,7 @@
 	on_death(seconds_per_tick, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
 
 /obj/item/organ/internal/on_death(seconds_per_tick, times_fired) //runs decay when outside of a person
-	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
+	if(organ_flags & (ORGAN_ROBOTIC | ORGAN_FROZEN))
 		return
 	apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
 
@@ -57,11 +57,14 @@
 	if(failure_time > 0)
 		failure_time--
 
-	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
+	if(organ_flags & ORGAN_EMP) //Synthetic organ has been emped, is now failing.
 		apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
 		return
 
 	if(!damage) // No sense healing if you're not even hurt bro
+		return
+
+	if(IS_ROBOTIC_ORGAN(src)) // Robotic organs don't naturally heal
 		return
 
 	///Damage decrements by a percent of its maxhealth

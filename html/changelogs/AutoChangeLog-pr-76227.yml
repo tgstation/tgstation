@@ -1,7 +1,0 @@
-author: "Seven"
-delete-after: True
-changes:
-  - balance: "Acid on a turf no longer immediately applies acid to its contents"
-  - bugfix: "Acid applied on a tile will no longer damage pipes below that tile"
-  - bugfix: "Xeno's corrosive acid no longer instakills mobs"
-  - bugfix: "Xenos can now touch acid"

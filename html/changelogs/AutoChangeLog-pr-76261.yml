@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - admin: "The Debug and Admin MODsuits now take a lot less time to (de)activate. 2 and 0.5 seconds respectively, compared to the default of 10s."

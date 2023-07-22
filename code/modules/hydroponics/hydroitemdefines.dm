@@ -383,7 +383,7 @@
 
 /obj/item/reagent_containers/spray/weedspray // -- Skie
 	desc = "It's a toxic mixture, in spray form, to kill small weeds."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	name = "weed spray"
 	icon_state = "weedspray"
 	inhand_icon_state = "spraycan"
@@ -399,7 +399,7 @@
 
 /obj/item/reagent_containers/spray/pestspray // -- Skie
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	name = "pest spray"
 	icon_state = "pestspray"
 	inhand_icon_state = "plantbgone"
@@ -416,7 +416,7 @@
 /obj/item/cultivator
 	name = "cultivator"
 	desc = "It's used for removing weeds or scratching your back."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "cultivator"
 	inhand_icon_state = "cultivator"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
@@ -467,7 +467,7 @@
 /obj/item/hatchet
 	name = "hatchet"
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hatchet"
 	inhand_icon_state = "hatchet"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
@@ -507,23 +507,25 @@
 /obj/item/scythe
 	name = "scythe"
 	desc = "A sharp and curved blade on a long fibremetal handle, this tool makes it easy to reap what you sow."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "scythe0"
 	inhand_icon_state = "scythe0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	force = 13
+	force = 15
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	armour_penetration = 20
+	wound_bonus = 10
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
+	item_flags = CRUEL_IMPLEMENT //maybe they want to use it in surgery
 	var/swiping = FALSE
 
 /obj/item/scythe/Initialize(mapload)
@@ -568,7 +570,7 @@
 	name = "secateurs"
 	desc = "It's a tool for cutting grafts off plants or changing podperson looks."
 	desc_controls = "Right-click to stylize podperson hair or other plant features!"
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "secateurs"
 	inhand_icon_state = null
 	worn_icon_state = "cutters"
@@ -598,7 +600,7 @@
 /obj/item/geneshears
 	name = "Botanogenetic Plant Shears"
 	desc = "A high tech, high fidelity pair of plant shears, capable of cutting genetic traits out of a plant."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "genesheers"
 	inhand_icon_state = null
 	worn_icon_state = "cutters"
