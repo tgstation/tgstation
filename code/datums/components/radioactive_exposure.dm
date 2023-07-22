@@ -30,6 +30,7 @@
 	src.irradiation_interval = irradiation_interval
 	src.source = source
 
+	// We use generally long times, so it's probably easier and more interpretable to just use a timer instead of processing the component
 	addtimer(CALLBACK(src, PROC_REF(attempt_irradiate)), minimum_exposure_time)
 
 	var/mob/living/carbon/human/human_parent = parent
