@@ -579,7 +579,7 @@
 		chat.unread_messages++
 
 		// the recipient (us) currently has a chat with the sender open, so update their ui
-		if(viewing_messages_of == sender_ref)
+		if(!isnull(viewing_messages_of) && viewing_messages_of == sender_ref)
 			viewing_messages_of = REF(chat)
 
 	var/mob/living/L = null
@@ -593,7 +593,9 @@
 	var/should_ring = !alert_silenced || is_rigged
 
 	if(istype(L) && should_ring && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT) && L.is_literate())
-		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "explode" : "message"];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
+		var/reply
+		if(!is_fake_user || is_rigged)
+			reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "explode" : "message"];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 		// resolving w/o nullcheck here, assume the messenger exists if they sent a message
 		var/sender_name = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(chat.recipient.resolve())
 		var/hrefstart
@@ -634,7 +636,7 @@
 				if(href_list["target"] in saved_chats)
 					viewing_messages_of = href_list["target"]
 			if("explode")
-				if(HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
+				if(HAS_TRAIT(computer, TRAIT_PDA_CAN_EXPLODE))
 					var/obj/item/modular_computer/pda/comp = computer
 					comp.explode(usr, from_message_menu = TRUE)
 
