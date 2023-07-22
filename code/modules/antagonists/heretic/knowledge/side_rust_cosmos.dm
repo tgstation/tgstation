@@ -27,7 +27,7 @@
 		/obj/item/trash = 2
 	)
 	cost = 1
-	route = PATH_SIDE
+	route = PATH_RUST
 	var/rusting_range = 4
 
 /datum/heretic_knowledge/entropy_pulse/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
