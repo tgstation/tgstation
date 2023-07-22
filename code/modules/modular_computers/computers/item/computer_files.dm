@@ -89,6 +89,9 @@
 
 /**
  * find_file_by_uid
+ *
+ * Will check all files in this computer and returns the file with the matching uid.
+ * If a computer disk is passed instead, it will check the disk over the computer.
  */
 /obj/item/modular_computer/proc/find_file_by_uid(uid, obj/item/computer_disk/target_disk)
 	if(!isnum(uid))

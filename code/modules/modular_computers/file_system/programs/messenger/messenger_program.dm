@@ -116,7 +116,7 @@
 
 	if(viewing_messages_of in saved_chats)
 		var/datum/pda_chat/chat = saved_chats[viewing_messages_of]
-		for(var/datum/pda_msg/msg in chat.messages)
+		for(var/datum/pda_msg/msg as anything in chat.messages)
 			if(isnull(msg.photo_asset_name))
 				continue
 			data |= msg.photo_asset_name
@@ -130,7 +130,10 @@
 /datum/computer_file/program/messenger/proc/update_pictures_for_all()
 	var/list/data = get_picture_assets()
 
-	for(var/datum/tgui/window in computer.open_uis)
+	if(isnull(computer.open_uis))
+		return
+
+	for(var/datum/tgui/window as anything in computer.open_uis)
 		SSassets.transport.send_assets(window.user, data)
 
 /datum/computer_file/program/messenger/ui_interact(mob/user, datum/tgui/ui)
