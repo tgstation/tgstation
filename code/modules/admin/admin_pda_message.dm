@@ -74,7 +74,7 @@
 			var/datum/signal/subspace/messaging/tablet_msg/signal = new(targets[1], list(
 				"fakename" = params["name"],
 				"fakejob" = params["job"],
-				"message" = html_decode(params["message"]),
+				"message" = msg,
 				"ref" = null,
 				"targets" = targets,
 				"rigged" = FALSE,

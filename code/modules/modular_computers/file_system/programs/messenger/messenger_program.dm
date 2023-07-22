@@ -361,7 +361,7 @@
 		return
 	var/target_name = target.computer.saved_identification
 	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]", encode = FALSE)
-	send_message(user, list(chat), input_message)
+	send_message(user, input_message, list(chat))
 
 /// Helper proc that sends a message to everyone
 /datum/computer_file/program/messenger/proc/send_message_to_all(mob/living/user, message)
@@ -378,10 +378,10 @@
 			chats += chat
 
 	for(var/missing_msgr in msgr_targets)
-		var/datum/pda_chat/new_chat = create_chat(GLOB.TabletMessengers[missing_msgr])
+		var/datum/pda_chat/new_chat = create_chat(missing_msgr)
 		chats += new_chat
 
-	if(send_message(user, chats, message, everyone = TRUE))
+	if(send_message(user, message, chats, everyone = TRUE))
 		COOLDOWN_START(src, last_text_everyone, 2 MINUTES)
 
 /datum/computer_file/program/messenger/proc/create_chat(recp_ref, name, job)
@@ -431,13 +431,14 @@
 	if(!message)
 		return FALSE
 
-	var/msg_photo_name = selected_image
-	if(msg_photo_name == TEMP_IMAGE_PATH)
-		var/datum/asset_cache_item/img_asset = SSassets.cache[msg_photo_name]
-		msg_photo_name = get_next_ntos_picture_path()
-		SSassets.transport.register_asset(msg_photo_name, img_asset.resource, img_asset.hash)
+	// upgrade the image asset to a permanent key
+	var/photo_asset_key = selected_image
+	if(photo_asset_key == TEMP_IMAGE_PATH)
+		var/datum/asset_cache_item/img_asset = SSassets.cache[photo_asset_key]
+		photo_asset_key = get_next_ntos_picture_path()
+		SSassets.transport.register_asset(photo_asset_key, img_asset.resource, img_asset.hash)
 
-	var/datum/pda_msg/message_datum = new(message, TRUE, msg_photo_name, everyone)
+	var/datum/pda_msg/message_datum = new(message, TRUE, photo_asset_key, everyone)
 
 	// our sender targets
 	var/list/datum/computer_file/program/messenger/target_msgrs = list()
@@ -464,14 +465,14 @@
 		return TRUE
 	return FALSE
 
-/datum/computer_file/program/messenger/proc/send_rigged_message(mob/sender, message, list/datum/computer_file/program/messenger/targets, fake_name, fake_job)
+/datum/computer_file/program/messenger/proc/send_rigged_message(mob/sender, message, list/datum/computer_file/program/messenger/targets, fake_name, fake_job, attach_fake_photo)
 	message = sanitize_pda_msg(message, sender)
 
 	// message at this point is not html escaped
 	if(!message)
 		return FALSE
 
-	var/datum/pda_msg/rigged_message = new(message, TRUE)
+	var/datum/pda_msg/rigged_message = new(message, TRUE, attach_fake_photo ? ">:3c" : null)
 
 	return send_msg_signal(sender, rigged_message, targets, FALSE, TRUE, fake_name, fake_job)
 
@@ -553,7 +554,7 @@
 
 	var/is_rigged = signal.data["rigged"]
 	var/is_automated = signal.data["automated"]
-	var/is_fake_user = is_rigged || is_automated
+	var/is_fake_user = is_rigged || is_automated || isnull(signal.data["ref"])
 	var/fake_name = is_fake_user ? signal.data["fakename"] : null
 	var/fake_job = is_fake_user ? signal.data["fakejob"] : null
 
@@ -563,10 +564,10 @@
 	if(!is_rigged)
 		message = message.copy()
 		message.outgoing = FALSE
-		chat = find_chat_by_recp(is_automated ? fake_name : sender_ref, is_automated)
+		chat = find_chat_by_recp(is_fake_user ? fake_name : sender_ref, is_fake_user)
 		if(!istype(chat))
-			chat = create_chat(!is_automated ? sender_ref : null, fake_name, fake_job)
-			chat.can_reply = !is_automated
+			chat = create_chat(!is_fake_user ? sender_ref : null, fake_name, fake_job)
+			chat.can_reply = !is_fake_user
 		chat.add_msg(message)
 		chat.unread_messages++
 
@@ -584,7 +585,7 @@
 
 	var/should_ring = !alert_silenced || is_rigged
 
-	if(istype(L) && should_ring && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
+	if(istype(L) && should_ring && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT) && L.is_literate())
 		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "explode" : "message"];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 		// resolving w/o nullcheck here, assume the messenger exists if they sent a message
 		var/sender_name = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(chat.recipient.resolve())
@@ -594,15 +595,14 @@
 			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(sender_name)]'>"
 			hrefend = "</a>"
 
-		if(signal.data["automated"])
+		if(is_automated)
 			reply = "\[Automated Message\]"
 
 		var/inbound_message = signal.format_message()
 		inbound_message = emoji_parse(inbound_message)
 
-		if(L.is_literate())
-			var/photo_message = message.photo_asset_name ? " (Photo Attached)" : ""
-			to_chat(L, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][sender_name][hrefend], </b>[sanitize(html_decode(inbound_message))][photo_message] [reply]"))
+		var/photo_message = message.photo_asset_name ? " (<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "explode" : "open"];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
+		to_chat(L, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][sender_name][hrefend], </b>[sanitize(html_decode(inbound_message))][photo_message] [reply]"))
 
 	if (should_ring)
 		computer.ring(ringtone)
@@ -616,21 +616,19 @@
 	if(QDELETED(src))
 		return
 	// send an activation message and open the messenger
-	if(!(!(computer.enabled || computer.turn_on(usr, open_ui = FALSE)) && !(computer.active_program == src || computer.open_program(usr, src, open_ui = FALSE))))
+	if(!(computer.enabled || computer.turn_on(usr, open_ui = FALSE)) && !(computer.active_program == src || computer.open_program(usr, src, open_ui = FALSE)))
 		return
 	if(usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
-
 		switch(href_list["choice"])
 			if("message")
 				quick_reply_prompt(usr, locate(href_list["target"]) in saved_chats)
+			if("open")
+				computer.update_tablet_open_uis(usr)
+				if(href_list["target"] in saved_chats)
+					viewing_messages_of = href_list["target"]
 			if("explode")
 				if(HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
 					var/obj/item/modular_computer/pda/comp = computer
 					comp.explode(usr, from_message_menu = TRUE)
-					return
-				else
-					to_chat(usr, span_notice("ERROR: Recipient does not exist."))
-					return
-
 
 #undef TEMP_IMAGE_PATH

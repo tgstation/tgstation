@@ -134,9 +134,9 @@
 	if(istype(signal, /datum/signal/subspace/messaging/tablet_msg))
 		var/datum/signal/subspace/messaging/tablet_msg/PDAsignal = signal
 		var/datum/pda_msg/msg = PDAsignal.data["message"]
-		var/datum/data_tablet_msg/msg = new(PDAsignal.format_target(), get_messenger_name(locate(PDAsignal.data["ref"])), html_decode(PDAsignal.format_message()), msg.photo_asset_name)
-		pda_msgs += msg
-		signal.logged = msg
+		var/datum/data_tablet_msg/logmsg = new(PDAsignal.format_target(), get_messenger_name(locate(PDAsignal.data["ref"])), html_decode(PDAsignal.format_message()), msg.photo_asset_name)
+		pda_msgs += logmsg
+		signal.logged = logmsg
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
 		var/datum/data_rc_msg/msg = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
 		signal.logged = msg

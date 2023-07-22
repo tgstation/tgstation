@@ -127,7 +127,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	var/photo_asset_name
 	var/everyone
 
-/datum/pda_msg/New(message, outgoing, photo_asset_name, everyone = FALSE)
+/datum/pda_msg/New(message, outgoing, photo_asset_name = null, everyone = FALSE)
 	src.message = message
 	src.outgoing = outgoing
 	src.photo_asset_name = photo_asset_name
