@@ -70,7 +70,7 @@
 	facial_hairstyle = human_head_owner.facial_hairstyle
 	facial_hair_alpha = owner_species.facial_hair_alpha
 	facial_hair_color = human_head_owner.facial_hair_color
-	fixed_hair_color = owner_species.fixed_mut_color //Can be null
+	fixed_hair_color = owner_species.fixed_hair_color //Can be null
 	gradient_styles = human_head_owner.grad_style?.Copy()
 	gradient_colors = human_head_owner.grad_color?.Copy()
 

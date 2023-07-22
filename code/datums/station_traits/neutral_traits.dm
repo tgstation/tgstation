@@ -297,14 +297,14 @@
 /obj/item/birthday_invite/proc/setup_card(birthday_name)
 	desc = "A card stating that its [birthday_name]'s birthday today."
 	icon_state = "paperslip_words"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 
 /obj/item/clothing/head/costume/party
 	name = "party hat"
 	desc = "A crappy paper hat that you are REQUIRED to wear."
 	icon_state = "party_hat"
 	greyscale_config =  /datum/greyscale_config/party_hat
-	greyscale_config_worn = /datum/greyscale_config/party_hat_worn
+	greyscale_config_worn = /datum/greyscale_config/party_hat/worn
 	flags_inv = 0
 	armor_type = /datum/armor/none
 	var/static/list/hat_colors = list(
@@ -324,4 +324,4 @@
 	name = "festive paper hat"
 	icon_state = "xmashat_grey"
 	greyscale_config = /datum/greyscale_config/festive_hat
-	greyscale_config_worn = /datum/greyscale_config/festive_hat_worn
+	greyscale_config_worn = /datum/greyscale_config/festive_hat/worn

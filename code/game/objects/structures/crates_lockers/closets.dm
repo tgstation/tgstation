@@ -1052,16 +1052,16 @@
 	)
 	update_appearance()
 
-/obj/structure/closet/emag_act(mob/user)
+/obj/structure/closet/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(secure && !broken)
-		if(user)
-			user.visible_message(span_warning("Sparks fly from [src]!"),
-							span_warning("You scramble [src]'s lock, breaking it open!"),
-							span_hear("You hear a faint electrical spark."))
+		visible_message(span_warning("Sparks fly from [src]!"), blind_message = span_hear("You hear a faint electrical spark."))
+		balloon_alert(user, "lock broken open")
 		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		broken = TRUE
 		locked = FALSE
 		update_appearance()
+		return TRUE
+	return FALSE
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))

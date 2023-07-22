@@ -89,18 +89,6 @@
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
 
-/mob/living/silicon/robot/model/syndicate/Initialize(mapload)
-	. = ..()
-	laws = new /datum/ai_laws/syndicate_override()
-	addtimer(CALLBACK(src, PROC_REF(show_playstyle)), 5)
-
-/mob/living/silicon/robot/model/syndicate/create_modularInterface()
-	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg/syndicate(src)
-		modularInterface.saved_identification = real_name
-		modularInterface.saved_job = "Cyborg"
-	return ..()
-
 /mob/living/silicon/robot/set_suicide(suicide_state)
 	. = ..()
 	if(mmi)
@@ -128,30 +116,12 @@
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
-	var/atom/T = drop_location()//To hopefully prevent run time errors.
-	if(mmi && mind)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
-		if(T)
-			mmi.forceMove(T)
-		if(mmi.brainmob)
-			if(mmi.brainmob.stat == DEAD)
-				mmi.brainmob.set_stat(CONSCIOUS)
-			mind.transfer_to(mmi.brainmob)
-			mmi.update_appearance()
-		else
-			to_chat(src, span_boldannounce("Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug."))
-			ghostize()
-			stack_trace("Borg MMI lacked a brainmob")
-		mmi = null
-	if(modularInterface)
-		QDEL_NULL(modularInterface)
 	if(connected_ai)
 		set_connected_ai(null)
 	if(shell)
 		GLOB.available_ai_shells -= src
-	else
-		if(T && istype(radio) && istype(radio.keyslot))
-			radio.keyslot.forceMove(T)
-			radio.keyslot = null
+
+	QDEL_NULL(modularInterface)
 	QDEL_NULL(wires)
 	QDEL_NULL(model)
 	QDEL_NULL(eye_lights)
@@ -525,30 +495,61 @@
 	lampButton?.update_appearance()
 	update_icons()
 
-/mob/living/silicon/robot/proc/deconstruct()
+/mob/living/silicon/robot/proc/cyborg_deconstruct()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	if(shell)
 		undeploy()
-	var/turf/T = get_turf(src)
+	var/turf/drop_to = drop_location()
 	if (robot_suit)
-		robot_suit.drop_all_parts(T)
+		robot_suit.drop_all_parts(drop_to)
 
 	else
-		new /obj/item/robot_suit(T)
-		new /obj/item/bodypart/leg/left/robot(T)
-		new /obj/item/bodypart/leg/right/robot(T)
-		new /obj/item/stack/cable_coil(T, 1)
-		new /obj/item/bodypart/chest/robot(T)
-		new /obj/item/bodypart/arm/left/robot(T)
-		new /obj/item/bodypart/arm/right/robot(T)
-		new /obj/item/bodypart/head/robot(T)
-		var/b
-		for(b=0, b != 2, b++)
-			var/obj/item/assembly/flash/handheld/F = new /obj/item/assembly/flash/handheld(T)
-			F.burn_out()
+		new /obj/item/robot_suit(drop_to)
+		new /obj/item/bodypart/leg/left/robot(drop_to)
+		new /obj/item/bodypart/leg/right/robot(drop_to)
+		new /obj/item/stack/cable_coil(drop_to, 1)
+		new /obj/item/bodypart/chest/robot(drop_to)
+		new /obj/item/bodypart/arm/left/robot(drop_to)
+		new /obj/item/bodypart/arm/right/robot(drop_to)
+		new /obj/item/bodypart/head/robot(drop_to)
+		for(var/i in 1 to 2)
+			var/obj/item/assembly/flash/handheld/borgeye = new(drop_to)
+			borgeye.burn_out()
 
-	cell?.forceMove(T) // Cell can be null, if removed beforehand
+	cell?.forceMove(drop_to) // Cell can be null, if removed beforehand
+	radio?.keyslot?.forceMove(drop_to)
+	radio?.keyslot = null
+
+	dump_into_mmi(drop_to)
+
 	qdel(src)
+
+
+/// Dumps the current occupant of the cyborg into an MMI at the passed location
+/// Returns the borg's MMI on success
+/mob/living/silicon/robot/proc/dump_into_mmi(atom/at_location = drop_location())
+	if(isnull(mmi))
+		return
+
+	var/obj/item/mmi/removing = mmi
+	mmi.forceMove(at_location) // Nulls it out via exited
+
+	if(isnull(mind)) // no one to transfer, just leave the MMI.
+		return mmi
+
+	if(removing.brainmob)
+		if(removing.brainmob.stat == DEAD)
+			removing.brainmob.set_stat(CONSCIOUS)
+		mind.transfer_to(removing.brainmob)
+		removing.update_appearance()
+
+	else
+		to_chat(src, span_boldannounce("Oops! Something went very wrong, your MMI was unable to receive your mind. \
+			You have been ghosted. Please make a bug report so we can fix this bug."))
+		ghostize()
+		stack_trace("Borg MMI lacked a brainmob")
+
+	return mmi
 
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)
@@ -719,9 +720,6 @@
 
 	return TRUE
 
-/mob/living/silicon/robot/model/syndicate/ResetModel()
-	return
-
 /mob/living/silicon/robot/proc/has_model()
 	if(!model || model.type == /obj/item/robot_model)
 		. = FALSE
@@ -762,6 +760,9 @@
 
 	if(gone == cell)
 		cell = null
+
+	if(gone == mmi)
+		mmi = null
 
 ///Use this to add upgrades to robots. It'll register signals for when the upgrade is moved or deleted, if not single use.
 /mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade, mob/user)

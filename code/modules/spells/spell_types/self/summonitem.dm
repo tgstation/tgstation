@@ -157,7 +157,7 @@
 /datum/action/cooldown/spell/summonitem/abductor
 	name =  "Baton Recall"
 	desc = "Activating this would activate your linked baton emergency teleport protocol and recall it back to your hand, Takes a long time for translocation crystals to be enriched after use. REMINDER: YOU NEED TO LINK YOUR BATON MANUALLY!"
-	button_icon = 'icons/obj/abductor.dmi'
+	button_icon = 'icons/obj/antags/abductor.dmi'
 	button_icon_state = "wonderprodStun"
 
 	cooldown_time = 3.5 MINUTES

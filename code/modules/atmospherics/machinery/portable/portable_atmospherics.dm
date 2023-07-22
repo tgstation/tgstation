@@ -2,7 +2,7 @@
 
 /obj/machinery/portable_atmospherics
 	name = "portable_atmospherics"
-	icon = 'icons/obj/atmospherics/atmos.dmi'
+	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	use_power = NO_POWER_USE
 	max_integrity = 250
 	armor_type = /datum/armor/machinery_portable_atmospherics
