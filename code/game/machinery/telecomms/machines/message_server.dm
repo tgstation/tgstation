@@ -133,8 +133,7 @@
 	// log the signal
 	if(istype(signal, /datum/signal/subspace/messaging/tablet_msg))
 		var/datum/signal/subspace/messaging/tablet_msg/PDAsignal = signal
-		var/datum/pda_msg/msg = PDAsignal.data["message"]
-		var/datum/data_tablet_msg/logmsg = new(PDAsignal.format_target(), get_messenger_name(locate(PDAsignal.data["ref"])), html_decode(PDAsignal.format_message()), msg.photo_asset_name)
+		var/datum/data_tablet_msg/logmsg = new(PDAsignal.format_target(), PDAsignal.format_sender(), html_decode(PDAsignal.format_message()), PDAsignal.format_photo_path())
 		pda_msgs += logmsg
 		signal.logged = logmsg
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
@@ -183,9 +182,17 @@
 	var/obj/item/modular_computer/target = target_app.computer
 	return "[target.saved_identification] ([target.saved_job])"
 
+/datum/signal/subspsace/messaging/tablet_msg/proc/format_sender()
+	var/display_name = get_messenger_name(locate(PDAsignal.data["ref"]))
+	return display_name ? display_name : STRINGIFY_PDA_TARGET(signal.data["fakename"], signal.data["fakejob"])
+
 /datum/signal/subspace/messaging/tablet_msg/proc/format_message()
 	var/datum/pda_msg/msg = data["message"]
 	return "\"[msg.message]\""
+
+/datum/signal/subspace/messaging/tablet_msg/proc/format_photo_path()
+	var/datum/pda_msg/msg = data["message"]
+	return msg.photo_asset_name
 
 /datum/signal/subspace/messaging/tablet_msg/broadcast()
 	if (!logged)  // Can only go through if a message server logs it
@@ -209,8 +216,8 @@
 	var/sender = "Unspecified"
 	var/recipient = "Unspecified"
 	var/message = "Blank"  // transferred message
-	var/datum/picture/picture  // attached photo
-	var/automated = FALSE //automated message
+	var/picture_asset_key  // attached photo path
+	var/automated = FALSE // automated message
 
 /datum/data_tablet_msg/New(param_rec, param_sender, param_message, param_photo)
 	if(param_rec)
@@ -220,7 +227,7 @@
 	if(param_message)
 		message = param_message
 	if(param_photo)
-		picture = param_photo
+		picture_asset_key = param_photo
 
 /datum/data_rc_msg
 	var/rec_dpt = "Unspecified"  // receiving department

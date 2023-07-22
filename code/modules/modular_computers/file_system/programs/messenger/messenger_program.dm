@@ -1,4 +1,4 @@
-#define TEMP_IMAGE_PATH "ntos_temp_image_path.png"
+#define TEMP_IMAGE_PATH(ref) ("ntos_msgr[ref]_temp_image.png")
 
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
@@ -42,7 +42,7 @@
 	var/sending_and_receiving = TRUE
 	/// Selected photo for sending purposes.
 	var/selected_image = null
-	// Whether or not we're sending (or trying to send) a virus.
+	/// Whether or not we're sending (or trying to send) a virus.
 	var/sending_virus = FALSE
 
 /datum/computer_file/program/messenger/on_install()
@@ -113,6 +113,9 @@
 			if(isnull(msg.photo_asset_name))
 				continue
 			data |= msg.photo_asset_name
+
+	if(!isnull(selected_image))
+		data |= selected_image
 
 	return data
 
@@ -196,7 +199,7 @@
 				return FALSE
 
 			if(!spam_mode)
-				to_chat(usr, span_notice("ERROR: Device does not have mass-messaging perms."))
+				to_chat(usr, span_notice("ERROR: This device does not have mass-messaging perms."))
 				return FALSE
 
 			if(!can_send_everyone_message())
@@ -246,8 +249,10 @@
 			else
 				return FALSE
 
-			if(!(target.recipient.reference in GLOB.TabletMessengers))
+			if(!(target.recipient?.reference in GLOB.TabletMessengers))
 				to_chat(usr, span_notice("ERROR: Recipient no longer exists."))
+				target.recipient = null
+				target.can_reply = FALSE
 				return FALSE
 
 			var/datum/computer_file/program/messenger/target_msgr = target.recipient.resolve()
@@ -298,8 +303,9 @@
 			var/datum/picture/selected_photo = user.aicamera.selectpicture(user)
 			if(!selected_photo)
 				return FALSE
-			SSassets.transport.register_asset(TEMP_IMAGE_PATH, selected_photo)
-			selected_image = TEMP_IMAGE_PATH
+			SSassets.transport.register_asset(TEMP_IMAGE_PATH(REF(src)), selected_photo.picture_image)
+			selected_image = TEMP_IMAGE_PATH(REF(src))
+			update_pictures_for_all()
 			return TRUE
 
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
@@ -359,9 +365,11 @@
 /datum/computer_file/program/messenger/proc/quick_reply_prompt(mob/living/user, datum/pda_chat/chat)
 	if(!istype(chat))
 		return
-	var/datum/computer_file/program/messenger/target = chat.recipient.resolve()
+	var/datum/computer_file/program/messenger/target = chat.recipient?.resolve()
 	if(!istype(target) || !istype(target.computer))
 		to_chat(user, span_notice("ERROR: Recipient no longer exists."))
+		chat.recipient = null
+		chat.can_reply = FALSE
 		return
 	var/target_name = target.computer.saved_identification
 	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]", encode = FALSE)
@@ -377,7 +385,7 @@
 
 	for(var/chatref in saved_chats)
 		var/datum/pda_chat/chat = saved_chats[chatref]
-		if(chat.recipient.reference in msgr_targets) // if its in msgr_targets, it's valid
+		if(chat.recipient?.reference in msgr_targets) // if its in msgr_targets, it's valid
 			msgr_targets -= chat.recipient.reference
 			chats += chat
 
@@ -399,10 +407,11 @@
 
 	var/datum/pda_chat/new_chat = new(recipient)
 
-	// this is a chat with a "fake user" (automated or rigged message)
+	// this is a chat with a "fake user" (automated or forged message)
 	if(!istype(recipient))
 		new_chat.cached_name = name
 		new_chat.cached_job = job
+		new_chat.can_reply = FALSE
 
 	saved_chats[REF(new_chat)] = new_chat
 
@@ -414,7 +423,7 @@
 		var/datum/pda_chat/chat = saved_chats[chat_ref]
 		if(fake_user && chat.cached_name == recipient)
 			return chat
-		else if(chat.recipient.reference == recipient)
+		else if(chat.recipient?.reference == recipient)
 			return chat
 	return null
 
@@ -440,7 +449,7 @@
 
 	// upgrade the image asset to a permanent key
 	var/photo_asset_key = selected_image
-	if(photo_asset_key == TEMP_IMAGE_PATH)
+	if(photo_asset_key == TEMP_IMAGE_PATH(REF(src)))
 		var/datum/asset_cache_item/img_asset = SSassets.cache[photo_asset_key]
 		photo_asset_key = get_next_ntos_picture_path()
 		SSassets.transport.register_asset(photo_asset_key, img_asset.resource, img_asset.hash)
@@ -454,7 +463,7 @@
 	for(var/datum/pda_chat/target_chat as anything in targets.Copy())
 		if(!target_chat.can_reply)
 			continue
-		var/datum/computer_file/program/messenger/msgr = target_chat.recipient.resolve()
+		var/datum/computer_file/program/messenger/msgr = target_chat.recipient?.resolve()
 		if(!istype(msgr))
 			targets -= target_chat
 			continue

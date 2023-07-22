@@ -92,15 +92,9 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 
 	var/list/recp_data = list()
 
-	var/datum/computer_file/program/messenger/recp = recipient?.resolve()
-	if(istype(recp))
-		recp_data["name"] = recp.computer.saved_identification
-		recp_data["job"] = recp.computer.saved_job
-		recp_data["ref"] = recipient.reference
-	else
-		recp_data["name"] = cached_name
-		recp_data["job"] = cached_job
-		recp_data["ref"] = null
+	recp_data["name"] = get_recp_name()
+	recp_data["job"] = get_recp_job()
+	recp_data["ref"] = recipient?.reference
 
 	data["ref"] = REF(src)
 	data["recp"] = recp_data
@@ -118,13 +112,13 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	return data
 
 /datum/pda_chat/proc/get_recp_name()
-	var/datum/computer_file/program/messenger/recp = recipient.resolve()
+	var/datum/computer_file/program/messenger/recp = recipient?.resolve()
 	if(istype(recp))
 		cached_name = recp.computer.saved_identification
 	return cached_name
 
 /datum/pda_chat/proc/get_recp_job()
-	var/datum/computer_file/program/messenger/recp = recipient.resolve()
+	var/datum/computer_file/program/messenger/recp = recipient?.resolve()
 	if(istype(recp))
 		cached_job = recp.computer.saved_job
 	return cached_job

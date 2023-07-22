@@ -26,7 +26,7 @@
 	comp_light_luminosity = 2.3 //this is what old PDAs were set to
 	looping_sound = FALSE
 
-	///The current PDA paintjob. Default value of null means the current sprites are used
+	///The current PDA paintjob, uses the typepath. Default value of null means the current sprites are used
 	var/obj/item/modular_computer/pda/paintjob = null
 
 	///The item currently inserted into the PDA, starts with a pen.
