@@ -524,6 +524,8 @@
 	report_message = "This station is located inside a radioactive nebula. Setting up nebula shielding is top-priority."
 	trait_to_give = STATION_TRAIT_RADIOACTIVE_NEBULA
 
+	force = TRUE
+
 	blacklist = list(/datum/station_trait/random_event_weight_modifier/rad_storms)
 	threat_reduction = 30
 	dynamic_threat_id = "Radioactive Nebula"
@@ -545,11 +547,13 @@
 	VAR_PROTECTED/send_care_package_time = 5 MINUTES
 	///The glow of 'fake' radioactive objects in space
 	var/nebula_radglow = "#66ff33"
+ 	/// Area's that are part of the radioactive nebula
+	var/radioactive_areas = /area/space
 
 /datum/station_trait/nebula/hostile/radiation/New()
 	. = ..()
 
-	for(var/area/target as anything in get_areas(/area/space))
+	for(var/area/target as anything in get_areas(radioactive_areas))
 		RegisterSignals(target, list(COMSIG_AREA_ENTERED, COMSIG_AREA_INITIALIZED_IN), PROC_REF(on_entered))
 		RegisterSignal(target, COMSIG_AREA_EXITED, PROC_REF(on_exited))
 
@@ -574,22 +578,36 @@
 	var/datum/round_event_control/modified_event = locate(/datum/round_event_control/radiation_storm) in SSevents.control
 	modified_event.weight = 0
 
-///They entered space? START BOMBING WITH RADS HAHAHAHA
-/datum/station_trait/nebula/hostile/radiation/proc/on_entered(area/space, atom/movable/enterer)
+///They entered space? START BOMBING WITH RADS HAHAHAHA. old_area can be null for new objects
+/datum/station_trait/nebula/hostile/radiation/proc/on_entered(area/space, atom/movable/enterer, area/old_area)
 	SIGNAL_HANDLER
 
-	if(isliving(enterer))//Don't actually make EVERY. SINGLE. THING. RADIOACTIVE. Just irradiate people
-		enterer.AddElement(/datum/element/radioactive, range = 1, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
+	if(iscarbon(enterer))//Don't actually make EVERY. SINGLE. THING. RADIOACTIVE. Just irradiate people
+		if(!istype(old_area, radioactive_areas)) //old area wasnt radioactive
+			enterer.AddComponent( \
+				/datum/component/radioactive_exposure, \
+				minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME, \
+				irradiation_chance_base = RADIATION_EXPOSURE_NEBULA_BASE_CHANCE, \
+				irradiation_chance_increment = RADIATION_EXPOSURE_NEBULA_CHANCE_INCREMENT, \
+				irradiation_interval = RADIATION_EXPOSURE_NEBULA_CHECK_INTERVAL, \
+				source = src, \
+			)
 
 	else if(isobj(enterer)) //and fake the rest
 		//outline clashes too much with other outlines and creates pretty ugly lines
 		enterer.add_filter(GLOW_NEBULA, 2, list("type" = "drop_shadow", "color" = nebula_radglow, "size" = 2))
 
 ///Called when an atom leaves space, so we can remove the radiation effect
-/datum/station_trait/nebula/hostile/radiation/proc/on_exited(area/space, atom/movable/exiter)
+/datum/station_trait/nebula/hostile/radiation/proc/on_exited(area/space, atom/movable/exiter, direction)
 	SIGNAL_HANDLER
 
-	exiter.RemoveElement(/datum/element/radioactive, range = 1, minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME)
+	if(istype(get_area(exiter), radioactive_areas)) //we left to another area that is also radioactive, so dont do anything
+		return
+
+	for(var/datum/component/radioactive_exposure/exposure as anything in exiter.GetComponents(/datum/component/radioactive_exposure))
+		if(exposure.source == src)
+			qdel(exposure)
+
 	exiter.remove_filter(GLOW_NEBULA)
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)

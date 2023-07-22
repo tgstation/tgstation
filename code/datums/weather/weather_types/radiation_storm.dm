@@ -90,8 +90,13 @@
 
 	///Chance we pulse a living during the storm
 	var/radiation_chance = 20
+	/// Chance we call the parent proc (doesn't guarantee a mutation, still some checks and probs there)
+	var/mutation_chance = 5
 
 /datum/weather/rad_storm/nebula/weather_act(mob/living/living)
+	if(prob(mutation_chance))
+		..()
+
 	if(!prob(radiation_chance))
 		return
 
@@ -103,7 +108,6 @@
 		max_range = 0,
 		threshold = RAD_LIGHT_INSULATION,
 		chance = URANIUM_IRRADIATION_CHANCE,
-		minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME,
 	)
 
 /datum/weather/rad_storm/nebula/status_alarm(active)
