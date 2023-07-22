@@ -32,6 +32,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 
 	GLOB.TabletMessengers.Remove(msgr_ref)
 
+/// Gets all messengers, sorted by their job or name
 /proc/get_messengers_sorted(sort_by_job = FALSE)
 	var/sortmode
 	if(sort_by_job)
@@ -41,7 +42,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 
 	return sortTim(GLOB.TabletMessengers.Copy(), sortmode, associative = TRUE)
 
-// Why do we have this?
+/// Get the display name of a messenger instance
 /proc/get_messenger_name(datum/computer_file/program/messenger/msgr)
 	if(!istype(msgr))
 		return null
@@ -50,6 +51,10 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 		return null
 	return STRINGIFY_PDA_TARGET(computer.saved_identification, computer.saved_job)
 
+/**
+ * Chat log data type, stores information about the recipient,
+ * the messages themselves and other metadata.
+ */
 /datum/pda_chat
 	/// The cached name of the recipient, so we can
 	/// identify this chat even after the recipient is deleted
@@ -71,10 +76,13 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 
 /datum/pda_chat/New(datum/computer_file/program/messenger/recp)
 	recipient = WEAKREF(recp)
+	can_reply = !isnull(recipient)
 
+/// Adds a message to the chat log and optionally shows the chat in recents.
+/// Call this instead of adding to messages directly.
 /datum/pda_chat/proc/add_msg(datum/pda_msg/message, show_in_recents = TRUE)
 	messages += message
-	if(!visible_in_recents || show_in_recents)
+	if(!visible_in_recents && show_in_recents)
 		visible_in_recents = TRUE
 	return message
 
@@ -84,7 +92,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 
 	var/list/recp_data = list()
 
-	var/datum/computer_file/program/messenger/recp = recipient.resolve()
+	var/datum/computer_file/program/messenger/recp = recipient?.resolve()
 	if(istype(recp))
 		recp_data["name"] = recp.computer.saved_identification
 		recp_data["job"] = recp.computer.saved_job
@@ -121,6 +129,9 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 		cached_job = recp.computer.saved_job
 	return cached_job
 
+/**
+ * Chat message data type, stores data about messages themselves.
+ */
 /datum/pda_msg
 	var/message
 	var/outgoing
@@ -133,9 +144,11 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	src.photo_asset_name = photo_asset_name
 	src.everyone = everyone
 
+/// Returns a copy of the instance of itself.
 /datum/pda_msg/proc/copy()
 	return new /datum/pda_msg(message = message, outgoing = outgoing, photo_asset_name = photo_asset_name, everyone = everyone)
 
+/// Returns an associative list of the message's data, used for ui_data calls.
 /datum/pda_msg/proc/get_ui_data(mob/user)
 	var/list/data = list()
 	data["message"] = message

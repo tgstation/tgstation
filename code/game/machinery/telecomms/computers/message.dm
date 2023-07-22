@@ -239,13 +239,10 @@
 			var/datum/pda_msg/msg = new(message, TRUE)
 
 			var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
-				"fakename" = "[sender]",
-				"fakejob" = "[job]",
-				"message" = msg,
-				"ref" = REF(src),
-				"targets" = list(tablet_to_msgr[recipient]),
-				"rigged" = FALSE,
-				"automated" = FALSE,
+				fakename = "[sender]",
+				fakejob = "[job]",
+				message = msg,
+				targets = list(tablet_to_msgr[recipient]),
 			))
 			// This will log the signal and transmit it to the target
 			linkedServer.receive_information(signal, null)

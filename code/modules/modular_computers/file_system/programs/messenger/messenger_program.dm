@@ -77,6 +77,7 @@
 	remove_messenger(src)
 	return ..()
 
+/// Gets the list of available messengers
 /datum/computer_file/program/messenger/proc/get_messengers()
 	var/list/dictionary = list()
 
@@ -95,9 +96,11 @@
 
 	return dictionary
 
+/// Checks if the person can send an everyone message
 /datum/computer_file/program/messenger/proc/can_send_everyone_message()
 	return COOLDOWN_FINISHED(src, last_text) && COOLDOWN_FINISHED(src, last_text_everyone)
 
+/// Gets all currently relevant photo asset keys
 /datum/computer_file/program/messenger/proc/get_picture_assets()
 	var/list/data = list()
 
@@ -113,6 +116,7 @@
 
 	return data
 
+/// Sends new datum/picture assets to everyone
 /datum/computer_file/program/messenger/proc/update_pictures_for_all()
 	var/list/data = get_picture_assets()
 
@@ -384,6 +388,7 @@
 	if(send_message(user, message, chats, everyone = TRUE))
 		COOLDOWN_START(src, last_text_everyone, 2 MINUTES)
 
+/// Creates a chat and adds it to saved_chats. Supports fake users. Returns the newly created chat.
 /datum/computer_file/program/messenger/proc/create_chat(recp_ref, name, job)
 	var/datum/computer_file/program/messenger/recipient = null
 
@@ -403,6 +408,7 @@
 
 	return new_chat
 
+/// Gets the chat by the recipient, either by their name or messenger ref
 /datum/computer_file/program/messenger/proc/find_chat_by_recp(recipient, fake_user = FALSE)
 	for(var/chat_ref in saved_chats)
 		var/datum/pda_chat/chat = saved_chats[chat_ref]
@@ -412,6 +418,7 @@
 			return chat
 	return null
 
+/// Returns a message input, sanitized and checked against the filter
 /datum/computer_file/program/messenger/proc/sanitize_pda_msg(message, mob/sender)
 	// check message against filter
 	if(!check_pda_msg_against_filter(message, sender))
@@ -459,12 +466,13 @@
 	if(send_msg_signal(sender, message_datum, target_msgrs, everyone))
 		// Log it in our logs
 		for(var/datum/pda_chat/target_chat as anything in targets)
-			target_chat.add_msg(message_datum, show_in_recents = FALSE)
+			target_chat.add_msg(message_datum, show_in_recents = !everyone)
 			target_chat.unread_messages = 0
 		update_pictures_for_all()
 		return TRUE
 	return FALSE
 
+/// Sends a rigged message that explodes when the recipient tries to reply or look at it.
 /datum/computer_file/program/messenger/proc/send_rigged_message(mob/sender, message, list/datum/computer_file/program/messenger/targets, fake_name, fake_job, attach_fake_photo)
 	message = sanitize_pda_msg(message, sender)
 
@@ -567,7 +575,6 @@
 		chat = find_chat_by_recp(is_fake_user ? fake_name : sender_ref, is_fake_user)
 		if(!istype(chat))
 			chat = create_chat(!is_fake_user ? sender_ref : null, fake_name, fake_job)
-			chat.can_reply = !is_fake_user
 		chat.add_msg(message)
 		chat.unread_messages++
 
