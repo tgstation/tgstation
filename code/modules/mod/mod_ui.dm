@@ -21,7 +21,6 @@
 		"interface_break" = interface_break,
 		// Modules
 		"complexity" = complexity,
-		"selected_module" = selected_module,
 	)
 	data["suit_status"] = suit_status
 	// User information
@@ -47,7 +46,6 @@
 			"module_complexity" = module.complexity,
 			"cooldown_time" = module.cooldown_time,
 			"cooldown" = round(COOLDOWN_TIMELEFT(module, cooldown_timer), 1 SECONDS),
-			"selected" = selected_module == module,
 			"id" = module.tgui_id,
 			"ref" = REF(module),
 			"configuration_data" = module.get_configuration()

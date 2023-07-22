@@ -82,7 +82,6 @@ type Module = {
   id: string;
   ref: string;
   configuration_data: ModuleConfig[];
-  selected: BooleanLike;
 };
 
 type ModuleConfig = {
@@ -617,9 +616,7 @@ const ModuleSection = (props, context) => {
       {(module_info.length !== 0 && (
         <Table>
           <Table.Row header>
-            <Table.Cell width={1} />
-            <Table.Cell width={1} />
-            <Table.Cell width={1} />
+            <Table.Cell colspan={3}>Actions</Table.Cell>
             <Table.Cell>Name</Table.Cell>
             <Table.Cell width={1} textAlign="center">
               <Button
@@ -657,7 +654,7 @@ const ModuleSection = (props, context) => {
           {module_info.map((module) => {
             return (
               <Table.Row key={module.ref}>
-                <Table.Cell>
+                <Table.Cell width={1}>
                   <Button
                     onClick={() => act('select', { 'ref': module.ref })}
                     icon={
@@ -673,7 +670,7 @@ const ModuleSection = (props, context) => {
                     disabled={!module.module_type}
                   />
                 </Table.Cell>
-                <Table.Cell>
+                <Table.Cell width={1}>
                   <Button
                     onClick={() => setConfigureState(module.ref)}
                     icon="cog"
@@ -683,7 +680,7 @@ const ModuleSection = (props, context) => {
                     disabled={module.configuration_data.length === 0}
                   />
                 </Table.Cell>
-                <Table.Cell>
+                <Table.Cell width={1}>
                   <Button
                     onClick={() => act('pin', { 'ref': module.ref })}
                     icon="thumbtack"
