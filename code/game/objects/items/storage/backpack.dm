@@ -740,7 +740,7 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle/PopulateContents()
 	new /obj/item/mod/module/magboot(src)
-	new /obj/item/storage/medkit/tactical(src)
+	new /obj/item/storage/medkit/tactical/premium(src)
 	new /obj/item/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 
