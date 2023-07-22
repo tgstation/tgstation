@@ -1,3 +1,4 @@
+/// Parallax layers that vary between rounds. Has come code to make sure we all have the same one
 /atom/movable/screen/parallax_layer/random
 	blend_mode = BLEND_OVERLAY
 	speed = 3
@@ -44,6 +45,7 @@
 	parallax_color = list(0,0,0,0, 0,2,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //very vibrant green
 	starlight_color = COLOR_VIBRANT_LIME
 
+/// Big asteroid rocks appear in the background
 /atom/movable/screen/parallax_layer/random/asteroids
 	icon_state = "asteroids"
 	layer = 4

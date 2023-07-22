@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(parallax)
 	var/atom/movable/screen/parallax_layer/random/random_layer
 	/// Weighted list with the parallax layers we could spawn
 	var/random_parallax_weights = list( \
-		/atom/movable/screen/parallax_layer/random/space_gas = 35999, \
+		/atom/movable/screen/parallax_layer/random/space_gas = 35, \
 		/atom/movable/screen/parallax_layer/random/asteroids = 35, \
 		PARALLAX_NONE = 30, \
 	)
@@ -86,3 +86,5 @@ SUBSYSTEM_DEF(parallax)
 	for(var/client/client as anything in GLOB.clients)
 		client.parallax_layers_cached?.Cut()
 		client.mob?.hud_used?.update_parallax_pref(client.mob)
+
+#undef PARALLAX_NONE
