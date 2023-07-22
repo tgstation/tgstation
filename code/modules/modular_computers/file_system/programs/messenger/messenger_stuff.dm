@@ -138,7 +138,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	src.photo_asset_name = photo_asset_name
 	src.everyone = everyone
 
-/// Returns a copy of the instance of itself.
+/// Returns a copy of the message.
 /datum/pda_msg/proc/copy()
 	return new /datum/pda_msg(message = message, outgoing = outgoing, photo_asset_name = photo_asset_name, everyone = everyone)
 

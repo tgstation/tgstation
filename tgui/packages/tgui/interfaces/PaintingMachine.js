@@ -38,11 +38,19 @@ export const PaintingMachine = (props, context) => {
               />
               <Button.Confirm
                 disabled={!hasPDA}
-                content="Reset Imprint"
+                content="Reset PDA"
                 confirmContent="Confirm?"
                 onClick={() => {
                   act('reset_pda');
                 }}
+              />
+              <Button
+                icon="question-circle"
+                tooltip={
+                  'WARNING: This is destructive' +
+                  ' and will erase all data from the user.'
+                }
+                tooltipPosition="left"
               />
             </>
           }>

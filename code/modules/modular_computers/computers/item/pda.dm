@@ -72,6 +72,14 @@
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 
+/obj/item/modular_computer/pda/update_appearance(updates)
+	. = ..()
+	var/datum/computer_file/program/messenger/msgr = locate() in stored_files
+	if(istype(paintjob, /obj/item/modular_computer/pda/mime))
+		msgr.mime_mode = TRUE
+	else
+		msgr.mime_mode = FALSE
+
 /obj/item/modular_computer/pda/update_icon_state()
 	. = ..()
 	icon_state = paintjob ? initial(paintjob.icon_state) : initial(icon_state)

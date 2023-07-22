@@ -70,6 +70,13 @@
 /datum/computer_file/program/messenger/proc/on_imprint_reset()
 	SIGNAL_HANDLER
 	remove_messenger(src)
+	saved_chats = list()
+	selected_image = null
+	sending_and_receiving = TRUE
+	spam_mode = FALSE
+	alert_silenced = FALSE
+	ringtone = MESSENGER_RINGTONE_DEFAULT
+	viewing_messages_of = null
 
 /datum/computer_file/program/messenger/Destroy(force)
 	if(!QDELETED(computer))
