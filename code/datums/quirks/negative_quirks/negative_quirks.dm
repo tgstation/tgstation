@@ -383,6 +383,11 @@
 	)
 
 /datum/quirk/lightless/add(client/client_source)
+	var/obj/item/organ/internal/eyes/eyes_of_the_holder = quirk_holder.get_organ_slot(ORGAN_SLOT_EYES)
+	if(istype(eyes_of_the_holder, /obj/item/organ/internal/eyes/moth))
+		eyes_of_the_holder.flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
+	else
+		eyes_of_the_holder.flash_protect = FLASH_PROTECTION_SENSITIVE
 	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
 
 /datum/quirk/lightless/remove()
