@@ -1,8 +1,11 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 //and corresponding datum controller for them
 
+/// A global singleton datum used to store a "summon things controller" for Summon Guns, to grant random guns to stationgoers and latejoiners
 GLOBAL_DATUM(summon_guns, /datum/summon_things_controller/item)
+/// A global singleton datum used to store a "summon things controller" for Summon Magic, to grant random magical items to stationgoers and latejoiners
 GLOBAL_DATUM(summon_magic, /datum/summon_things_controller/item)
+/// A global singleton datum used to store a "summon things controller" for Mass Teaching, to grant a specific spellbook entry to stationgoers and latejoiners
 GLOBAL_DATUM(mass_teaching, /datum/summon_things_controller/spellbook_entry)
 
 // 1 in 50 chance of getting something really special.

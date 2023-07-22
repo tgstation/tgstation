@@ -84,6 +84,8 @@
 	playsound(user, 'sound/magic/mandswap.ogg', 50, TRUE)
 	return ..()
 
+/// A wizard ritual that allows the wizard to teach a specific spellbook enty to everyone on the station.
+/// This includes item entries (which will be given to everyone) but disincludes other rituals like itself
 /datum/spellbook_entry/summon/specific_spell
 	name = "Mass Wizard Teaching"
 	desc = "Teach a specific spell (or give a specific item) to everyone on the station. \
