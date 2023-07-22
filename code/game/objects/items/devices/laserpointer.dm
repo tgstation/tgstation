@@ -193,7 +193,9 @@
 	//human/alien mobs: if we aim for the eyes, chance to flash the target
 	if(iscarbon(target))
 		var/mob/living/carbon/target_humanoid = target
-		if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
+		if(target_humanoid.stat == DEAD)
+			outmsg = span_notice("You point [src] at [target_humanoid], but [target_humanoid.p_they()] appear[target_humanoid.p_s()] to be dead!")
+		else if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
 			//Intensity of the laser dot to pass to flash_act
 			var/severity = pick(0, 1, 2)
 
@@ -208,26 +210,31 @@
 	//borgs: chance to flash and paralyse the target
 	else if(iscyborg(target))
 		var/mob/living/silicon/target_sillycone = target
-		log_combat(user, target_sillycone, "shone in the sensors", src)
 		//chance to actually hit the eyes depends on internal component
+		if(target_sillycone.stat == DEAD)
+			outmsg = span_notice("You point [src] at [target_sillycone], but [target_sillycone.p_they()] appear[target_sillycone.p_s()] to be non-functioning.")
 		if(prob(effectchance * diode.rating) && target_sillycone.flash_act(affect_silicon = TRUE))
 			target_sillycone.Paralyze(rand(10 SECONDS, 20 SECONDS))
 			to_chat(target_sillycone, span_danger("Your sensors were overloaded by a laser!"))
 			outmsg = span_notice("You overload [target_sillycone] by shining [src] at [target_sillycone.p_their()] sensors.")
+			log_combat(user, target_sillycone, "shone in the sensors", src)
 		else
 			outmsg = span_warning("You fail to overload [target_sillycone] by shining [src] at [target_sillycone.p_their()] sensors!")
+			log_combat(user, target_sillycone, "attempted to shine in the sensors", src)
 
 	//cameras: chance to EMP the camera
 	else if(istype(target, /obj/machinery/camera))
 		var/obj/machinery/camera/target_camera = target
-		if(prob(effectchance * diode.rating))
+		if(!target_camera.status && !target_camera.emped)
+			outmsg = span_notice("You point [src] at [target_camera], but it seems to be disabled.")
+		else if(prob(effectchance * diode.rating))
 			target_camera.emp_act(EMP_HEAVY)
 			outmsg = span_notice("You hit the lens of [target_camera] with [src], temporarily disabling the camera!")
 			log_combat(user, target_camera, "EMPed", src)
 		else
 			outmsg = span_warning("You miss the lens of [target_camera] with [src]!")
 
-	//catpeople: make any felinid near the target to face the target, chance for felinids to to pounce at the light, stepping to the target
+	//catpeople: make any felinid near the target to face the target, chance for felinids to pounce at the light, stepping to the target
 	for(var/mob/living/carbon/human/target_felinid in view(1, targloc))
 		if(!isfelinid(target_felinid) || target_felinid.stat == DEAD || target_felinid.is_blind() || target_felinid.incapacitated())
 			continue
