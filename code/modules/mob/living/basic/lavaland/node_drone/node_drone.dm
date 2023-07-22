@@ -2,12 +2,12 @@
 	name = "NODE drone"
 	desc = "Standard in-atmosphere drone, used by Nanotrasen to operate and excavate valuable ore vents."
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "mining_node"
+	icon_state = "mining_node_active"
 	icon_living = "mining_node_active"
 	icon_dead = "mining_node"
 
-	maxHealth = 100
-	health = 100
+	maxHealth = 1000
+	health = 1000
 	density = TRUE
 	pass_flags = PASSTABLE|PASSGRILLE|PASSMOB
 	mob_size = MOB_SIZE_LARGE
@@ -20,7 +20,7 @@
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "clangs"
-	response_harm_simple = "clang"
+	response_harm_simple = "clang against"
 
 	ai_controller = /datum/ai_controller/basic_controller/node_drone
 
@@ -44,11 +44,14 @@
 
 /mob/living/basic/node_drone/death(gibbed)
 	. = ..(TRUE)
+	explosion(src, 0, 0, 1, 0 ,0, smoke = TRUE)
 	say("I'm dead, NOW!")
 	qdel(src)
 
 
+
 /// The node drone AI controller
+//	Generally, this is a very simple AI that will try to find a vent and latch onto it, unless attacked by a lavaland mob, who it will try to flee from.
 /datum/ai_controller/basic_controller/node_drone
 	blackboard = list(
 		BB_BASIC_MOB_FLEEING = FALSE, // Will flee when the vent lies undefended.
@@ -58,17 +61,36 @@
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
+	idle_behavior = null
 	planning_subtrees = list(
-		// Top priority is to look for and execute hunts for cheese even if someone is looking at us
-		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cheese,
-		// Next priority is see if anyone is looking at us
+		// Top priority is to look for and execute hunts for vents, even if we're being attacked.
+		/datum/ai_planning_subtree/find_and_hunt_target/look_for_vent,
+		// Next priority is see if lavaland mobs are looking at us
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
-		// Skedaddle
-		/datum/ai_planning_subtree/flee_target/mouse,
-		// Otherwise, look for and execute hunts for cabling
-		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables,
+		// Fly you feel
+		/datum/ai_planning_subtree/flee_target/node_drone,
+		//Potentially add more behaviors here for herding boulders to the vent if they get displaced.
 	)
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/target_caught(mob/living/hunter, obj/structure/cable/hunted)
 	hunter.UnarmedAttack(hunted, TRUE)
+
+// Mouse subtree to hunt down delicious cheese.
+/datum/ai_planning_subtree/find_and_hunt_target/look_for_vent
+	hunting_behavior = /datum/ai_behavior/hunt_target/latch_onto/node_drone
+	hunt_targets = list(/obj/structure/ore_vent)
+	hunt_range = 7 // Hunt vents to the end of the earth.
+
+// node drone behavior for buckling down on a vent.
+/datum/ai_behavior/hunt_target/latch_onto/node_drone
+	hunt_cooldown = 5 SECONDS
+
+// Evasion behavior.
+/datum/ai_planning_subtree/flee_target/node_drone
+	flee_behaviour = /datum/ai_behavior/run_away_from_target/drone
+
+/datum/ai_behavior/run_away_from_target/drone
+	action_cooldown = 1 SECONDS
+	required_distance = 5
+
+

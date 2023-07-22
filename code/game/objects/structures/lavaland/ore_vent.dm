@@ -6,6 +6,7 @@
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	anchored = TRUE
 	density = TRUE
+	can_buckle = TRUE
 
 	/// Has this vent been tapped to produce boulders? Cannot be untapped.
 	var/tapped = FALSE
@@ -73,6 +74,13 @@
 
 		start_wave_defense()
 		//This vent is going to start generating ore automatically.
+
+/obj/structure/ore_vent/buckle_mob(mob/living/M, force, check_loc)
+	. = ..()
+	if(tapped)
+		return FALSE
+	if(istype(M, /mob/living/basic/node_drone))
+		return TRUE
 
 /**
  * Picks n types materials to pack into a boulder created by this ore vent, where n is this vent's minerals_per_boulder.

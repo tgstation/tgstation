@@ -124,3 +124,10 @@
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/target_caught(mob/living/hunter, obj/structure/cable/hunted)
 	hunter.UnarmedAttack(hunted, TRUE)
+
+/datum/ai_behavior/hunt_target/latch_onto
+
+/datum/ai_behavior/hunt_target/latch_onto/target_caught(mob/living/hunter, obj/hunted)
+	hunted.buckle_mob(hunter, force = TRUE)
+	hunted.visible_message(span_notice("[hunted] has been latched onto by [hunter]!"))
+	
