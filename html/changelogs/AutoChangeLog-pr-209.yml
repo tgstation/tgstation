@@ -1,0 +1,4 @@
+author: "Kat Blu"
+delete-after: True
+changes:
+  - qol: "Removed security goliath"
