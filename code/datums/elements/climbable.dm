@@ -13,10 +13,8 @@
 
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
-	if(climb_time)
-		src.climb_time = climb_time
-	if(climb_stun)
-		src.climb_stun = climb_stun
+	src.climb_time = climb_time
+	src.climb_stun = climb_stun
 
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
