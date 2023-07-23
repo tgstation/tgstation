@@ -274,7 +274,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOCLONELOSS "no_cloneloss"
 /// Mob is immune to toxin damage
 #define TRAIT_TOXIMMUNE "toxin_immune"
-/// Mob is immune to oxygen damage, does not need to breathe
+/// Mob can breath under any circumstances, is NOT immune to oxyloss
 #define TRAIT_NOBREATH "no_breath"
 /// Use when you want a mob to be able to metabolize plasma temporarily (e.g. plasma fixation disease symptom)
 #define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
