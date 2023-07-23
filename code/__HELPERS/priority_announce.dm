@@ -71,13 +71,11 @@
 	if(!players)
 		players = GLOB.player_list
 
-	var/sound/sound_to_play = sound(sound)
 	for(var/mob/target in players)
 		if(!isnewplayer(target) && target.can_hear())
-			sound_to_play.volume = target.client?.prefs.channel_volume["[CHANNEL_VOX]"]
 			to_chat(target, announcement)
 			if(target.client.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-				SEND_SOUND(target, sound_to_play)
+				SEND_SOUND(target, sound(sound, volume = target.client?.prefs.channel_volume["[CHANNEL_VOX]"]))
 
 /proc/print_command_report(text = "", title = null, announce=TRUE)
 	if(!title)
