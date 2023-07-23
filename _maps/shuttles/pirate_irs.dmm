@@ -131,11 +131,12 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/pirate)
 "fb" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "fe" = (
 /obj/machinery/computer/apc_control,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "fm" = (
@@ -157,6 +158,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
@@ -238,6 +240,7 @@
 	name = "recouped gold"
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/machinery/light/directional/south,
 /obj/machinery/door/window/brigdoor/right/directional/north{
 	req_access = list("syndicate")
 	},
@@ -324,6 +327,15 @@
 	dir = 5
 	},
 /turf/open/floor/pod/dark,
+/area/shuttle/pirate)
+"lg" = (
+/obj/effect/turf_decal/tile/dark_blue/half{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/edge{
+	dir = 4
+	},
 /area/shuttle/pirate)
 "lp" = (
 /obj/effect/turf_decal/stripes,
@@ -566,6 +578,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "sb" = (
@@ -656,7 +669,6 @@
 /area/shuttle/pirate)
 "tF" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "uc" = (
@@ -936,16 +948,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/pirate)
-"BY" = (
-/obj/effect/turf_decal/tile/dark_blue/half{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/edge{
-	dir = 8
-	},
+"BM" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/glass,
 /area/shuttle/pirate)
 "Cf" = (
 /obj/machinery/vending/autodrobe{
@@ -972,7 +977,7 @@
 	dir = 4
 	},
 /obj/machinery/iv_drip,
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "Cx" = (
@@ -1035,7 +1040,7 @@
 /obj/effect/turf_decal/box,
 /obj/structure/fluff{
 	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
+	icon = 'icons/obj/lavaland/survival_pod.dmi';
 	icon_state = "fan_tiny";
 	name = "shower drain"
 	},
@@ -1052,6 +1057,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "DV" = (
@@ -1069,8 +1075,8 @@
 /area/shuttle/pirate)
 "Eq" = (
 /obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/light/dim/directional/north,
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "Et" = (
@@ -1080,7 +1086,7 @@
 /area/shuttle/pirate)
 "EJ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/dim/directional/north,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "Fn" = (
@@ -1185,7 +1191,7 @@
 /area/shuttle/pirate)
 "Ic" = (
 /obj/effect/mob_spawn/ghost_role/human/pirate/irs,
-/obj/machinery/light/small/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/pirate)
 "If" = (
@@ -1231,6 +1237,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
@@ -1366,7 +1373,6 @@
 /obj/item/gun/grenadelauncher{
 	pixel_y = 7
 	},
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "KO" = (
@@ -1728,7 +1734,6 @@
 /area/shuttle/pirate)
 "SM" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "SQ" = (
@@ -2176,7 +2181,7 @@ hK
 rN
 KA
 hK
-IZ
+BM
 IZ
 IZ
 IZ
@@ -2225,7 +2230,7 @@ Rh
 RC
 LB
 zh
-hK
+gd
 WA
 Xr
 hK
@@ -2236,7 +2241,7 @@ gY
 vo
 WA
 hK
-hK
+gd
 sg
 BG
 lf
@@ -2256,7 +2261,7 @@ RX
 IS
 nk
 od
-BY
+nk
 nk
 YE
 oo
@@ -2281,7 +2286,7 @@ LR
 sH
 sH
 Vf
-LZ
+lg
 MJ
 If
 No
@@ -2300,7 +2305,7 @@ Rh
 gl
 nA
 nE
-hK
+gd
 hK
 hK
 Uk
@@ -2311,7 +2316,7 @@ hK
 mE
 hK
 hK
-hK
+gd
 SG
 BG
 wl
