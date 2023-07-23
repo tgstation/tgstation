@@ -282,8 +282,4 @@
 	var/O = new P(src)
 	unload_mineral(O)
 
-/obj/machinery/mineral/processing_unit/on_deconstruction()
-	materials.retrieve_all()
-	return ..()
-
 #undef SMELT_AMOUNT

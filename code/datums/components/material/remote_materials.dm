@@ -133,7 +133,6 @@ handles linking back and forth.
 			silo.holds -= src
 			silo.updateUsrDialog()
 		else if (mat_container)
-			mat_container.retrieve_all()
 			qdel(mat_container)
 		silo = M.buffer
 		silo.ore_connected_machines += src
