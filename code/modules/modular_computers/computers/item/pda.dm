@@ -77,7 +77,7 @@
 	var/datum/computer_file/program/messenger/msgr = locate() in stored_files
 	if(!istype(msgr))
 		return
-	if(istype(paintjob, /obj/item/modular_computer/pda/mime))
+	if(ispath(paintjob, /obj/item/modular_computer/pda/mime))
 		msgr.mime_mode = TRUE
 	else
 		msgr.mime_mode = FALSE
