@@ -649,7 +649,7 @@
 	switch(href_list["choice"])
 		if("message")
 			if(!(href_list["target"] in saved_chats))
-				break
+				return
 			quick_reply_prompt(usr, saved_chats[href_list["target"]])
 		if("open")
 			computer.update_tablet_open_uis(usr)
