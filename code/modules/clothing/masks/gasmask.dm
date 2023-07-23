@@ -36,8 +36,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	. = ..()
 	if(!isinhands && cig)
 		. += cig.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
-	else
-		cut_overlays()
 
 /obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
