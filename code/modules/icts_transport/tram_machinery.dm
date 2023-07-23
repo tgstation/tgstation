@@ -48,7 +48,7 @@
 			operating = TRUE
 			playsound(src, doorOpen, vol = 40, vary = FALSE)
 			update_icon(ALL, AIRLOCK_OPENING, TRUE)
-			sleep(0.7 SECONDS)
+			sleep(1.3 SECONDS)
 			set_opacity(FALSE)
 			set_density(FALSE)
 			update_freelook_sight()
