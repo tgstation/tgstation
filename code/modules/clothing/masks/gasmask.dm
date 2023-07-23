@@ -75,13 +75,13 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		. += span_notice("Currently there [LAZYLEN(gas_filters) == 1 ? "is" : "are"] [LAZYLEN(gas_filters)] filter\s with [get_filter_durability()]% durability.")
 		. += span_notice("The filters can be removed by right-clicking with an empty hand on [src].")
 
-/obj/item/clothing/mask/gas/proc/on_cig_destroyed()
-	SIGNAL_HANDLER
-	if(cig)
-		cig = null
-		if(istype(src.loc, /mob))
-			var/mob/wearer = src.loc
-			wearer.update_worn_mask()
+/obj/item/clothing/mask/gas/Exited(atom/movable/gone)
+    . = ..()
+    if(gone == cig)
+        cig = null
+        if(ismob(loc))
+            var/mob/wearer = loc
+            wearer.update_worn_mask()
 
 /obj/item/clothing/mask/gas/attackby(obj/item/tool, mob/user)
 	if(istype(tool, /obj/item/clothing/mask/cigarette))
@@ -102,7 +102,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		cig = tool
 		if(valid_wearer)
 			cig.equipped(src.loc, ITEM_SLOT_MASK)
-		RegisterSignal(cig, COMSIG_QDELETING, PROC_REF(on_cig_destroyed))
 		cig.forceMove(src)
 		var/mob/wearer = src.loc
 		wearer.update_worn_mask()
@@ -126,7 +125,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/attack_hand_secondary(mob/user, list/modifiers)
 	if(cig)
 		user.put_in_hands(cig)
-		UnregisterSignal(cig, COMSIG_QDELETING)
 		cig = null
 		if(ismob(src.loc))
 			var/mob/wearer = src.loc
