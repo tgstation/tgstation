@@ -377,7 +377,7 @@
 	if(!(IS_HERETIC(sac_target)))
 		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/heresy, TRAUMA_RESILIENCE_MAGIC)
 	else
-		ADD_TRAIT(sac_target, TRAIT_BAN_HERETIC_CASTING, source)
+		ADD_TRAIT(sac_target, TRAIT_BAN_HERETIC_CASTING, src)
 		to_chat(sac_target, span_hypnophrase("Your link to the Mansus feels weaker, as if someone stole all of your powers. You dont think you will be able to cast your spells anytime soon."))
 		sac_target.gain_knowledge(/datum/heretic_knowledge/mansus_restoration)
 

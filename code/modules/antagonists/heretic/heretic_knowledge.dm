@@ -727,5 +727,6 @@
 	priority = MAX_KNOWLEDGE_PRIORITY - 4 // below basic rituals so you can see it
 	route = null
 
-/datum/heretic_knowledge/mansus_restoration/on_finished_recipe
-	REMOVE_TRAIT(owner, TRAIT_BAN_HERETIC_CASTING, source)
+/datum/heretic_knowledge/mansus_restoration/on_finished_recipe(mob/living/user)
+	REMOVE_TRAIT(user, TRAIT_BAN_HERETIC_CASTING, src)
+
