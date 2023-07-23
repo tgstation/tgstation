@@ -661,6 +661,7 @@
 
 /obj/item/food/nugget
 	name = "chicken nugget"
+	desc = "A \"chicken\" nugget vaguely shaped like something."
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
 		/datum/reagent/consumable/nutriment/protein = 2,
@@ -817,6 +818,7 @@
 
 /obj/item/food/kebab/fiesta
 	name = "fiesta skewer"
+	desc = "Variety of meats and vegetables on a stick."
 	icon_state = "fiestaskewer"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 12,
