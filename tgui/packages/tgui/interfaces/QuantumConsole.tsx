@@ -4,16 +4,18 @@ import { Button, Collapsible, Icon, LabeledList, NoticeBox, ProgressBar, Section
 import { BooleanLike } from 'common/react';
 import { LoadingScreen } from './common/LoadingToolbox';
 import { TableCell, TableRow } from '../components/Table';
+import { logger } from '../logging';
 
 type Data =
   | {
       available_domains: Domain[];
       avatars: Avatar[];
       connected: 1;
-      generated_domain: string;
-      loading: BooleanLike;
+      generated_domain: string | null;
       occupants: number;
       points: number;
+      randomized: BooleanLike;
+      ready: BooleanLike;
       scanner_tier: number;
     }
   | {
@@ -32,7 +34,7 @@ type Domain = {
   difficulty: number;
   id: string;
   name: string;
-  reward: number;
+  reward: number | string;
 };
 
 type DomainEntryProps = {
@@ -46,7 +48,6 @@ enum Difficulty {
   High,
 }
 
-/** Type guard */
 const isConnected = (data: Data): data is Data & { connected: 1 } =>
   data.connected === 1;
 
@@ -69,7 +70,7 @@ export const QuantumConsole = (props, context) => {
   return (
     <Window title="Quantum Console" width={500} height={500}>
       <Window.Content>
-        {!!data.connected && !!data.loading && <LoadingScreen />}
+        {!!data.connected && !data.ready && <LoadingScreen />}
         <AccessView />
       </Window.Content>
     </Window>
@@ -86,7 +87,7 @@ const AccessView = (props, context) => {
   const {
     available_domains = [],
     generated_domain,
-    loading,
+    ready,
     occupants,
     points,
   } = data;
@@ -98,10 +99,20 @@ const AccessView = (props, context) => {
       <Stack.Item grow>
         <Section
           buttons={
-            <Tooltip content="Accrued points for purchasing domains.">
-              <Icon color="pink" name="star" mr={1} />
-              {points}
-            </Tooltip>
+            <>
+              <Button
+                disabled={!ready || occupants > 0 || !!generated_domain}
+                icon="random"
+                onClick={() => act('random_domain')}
+                mr={1}
+                tooltip="Get a random domain for more rewards. Weighted towards your current points.">
+                Randomize
+              </Button>
+              <Tooltip content="Accrued points for purchasing domains.">
+                <Icon color="pink" name="star" mr={1} />
+                {points}
+              </Tooltip>
+            </>
           }
           fill
           scrollable
@@ -120,12 +131,12 @@ const AccessView = (props, context) => {
             <Stack.Item grow>Loaded: {generated_domain ?? 'None'}</Stack.Item>
             <Stack.Item>
               <Button
-                disabled={!!loading || !generated_domain || occupants > 0}
+                disabled={!ready || !generated_domain || occupants > 0}
                 onClick={() => act('stop_domain')}>
                 Stop Domain
               </Button>
               <Button
-                disabled={!!loading || !generated_domain}
+                disabled={!ready || !generated_domain}
                 onClick={() => act('check_completion')}>
                 Check Completion
               </Button>
@@ -146,35 +157,46 @@ const DomainEntry = (props: DomainEntryProps, context) => {
     return null;
   }
 
-  const { generated_domain, loading, occupants, points, scanner_tier } = data;
+  const { generated_domain, ready, occupants, randomized, points } = data;
 
-  const canView = difficulty <= scanner_tier;
-  const canViewRewards = difficulty <= scanner_tier + 1;
   const current = generated_domain === name;
   const occupied = occupants > 0;
+  let buttonIcon, buttonName;
+  if (randomized) {
+    buttonIcon = 'question';
+    buttonName = '???';
+  } else if (current) {
+    buttonIcon = 'download';
+    buttonName = 'Deployed';
+  } else {
+    buttonIcon = 'coins';
+    buttonName = 'Deploy';
+  }
+
+  logger.log(generated_domain);
 
   return (
     <Collapsible
       buttons={
         <Button
-          disabled={current || !!loading || occupied || points < cost}
-          icon={current ? 'download' : 'coins'}
+          disabled={
+            current || randomized || !ready || occupied || points < cost
+          }
+          icon={buttonIcon}
           onClick={() => act('set_domain', { id })}>
-          Deploy{current && 'ed'}
+          {buttonName}
         </Button>
       }
       color={getColor(difficulty)}
       title={
         <>
-          {canView ? name : '???'}
+          {name}
           {difficulty === Difficulty.High && <Icon name="skull" ml={1} />}
         </>
       }>
       <Stack height={5}>
         <Stack.Item color="label" grow={2}>
-          {canView
-            ? desc
-            : 'Limited scanning capabilities. Cannot infer domain details.'}
+          {desc}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>
@@ -185,11 +207,9 @@ const DomainEntry = (props: DomainEntryProps, context) => {
             <LabeledList.Item label="Difficulty">
               <DisplayDetails amount={difficulty} icon="skull" />
             </LabeledList.Item>
-            {canViewRewards && (
-              <LabeledList.Item label="Reward">
-                <DisplayDetails amount={reward} icon="star" />
-              </LabeledList.Item>
-            )}
+            <LabeledList.Item label="Reward">
+              <DisplayDetails amount={reward} icon="star" />
+            </LabeledList.Item>
           </LabeledList>
         </Stack.Item>
       </Stack>
@@ -240,11 +260,20 @@ const AvatarDisplay = (props, context) => {
   );
 };
 
-const DisplayDetails = (props, context) => {
+type DisplayDetailsProps = {
+  amount: number | string;
+  icon: string;
+};
+
+const DisplayDetails = (props: DisplayDetailsProps, context) => {
   const { amount = 0, icon = 'star' } = props;
 
   if (amount === 0) {
     return <>None</>;
+  }
+
+  if (typeof amount === 'string') {
+    return <>{String(amount)}</>; // don't ask
   }
 
   return (

@@ -1,4 +1,5 @@
 #define ONLY_TURF 1 // There should only ever be one turf at the bottom left of the map.
+#define REDACTED "???"
 
 /**
  * ### Quantum Server
@@ -29,6 +30,8 @@
 	var/datum/weakref/vdom_ref
 	/// The connected console
 	var/datum/weakref/console_ref
+	/// If the current domain was a random selection
+	var/domain_randomized = FALSE
 	/// The amount to scale (and descale) mob health on connect/disconnect
 	var/difficulty_coeff = 1.5
 	/// Current plugged in users
@@ -223,6 +226,60 @@
 
 	return hosted_avatars
 
+/// Compiles a list of available domains.
+/obj/machinery/quantum_server/proc/get_available_domains()
+	var/list/levels = list()
+
+	for(var/datum/map_template/virtual_domain/domain as anything in subtypesof(/datum/map_template/virtual_domain))
+		if(initial(domain.test_only))
+			continue
+		var/can_view = initial(domain.difficulty) <= scanner_tier
+		var/can_view_reward = initial(domain.difficulty) <= (scanner_tier + 1)
+
+		levels += list(list(
+			"cost" = initial(domain.cost),
+			"desc" = can_view ? initial(domain.desc) : "Limited scanning capabilities. Cannot infer domain details.",
+			"difficulty" = initial(domain.difficulty),
+			"id" = initial(domain.id),
+			"name" = can_view ? initial(domain.name) : REDACTED,
+			"reward" = can_view_reward ? initial(domain.reward_points) : REDACTED,
+		))
+
+	return levels
+
+/// Returns the current domain name if the server has the proper tier scanner and it isn't randomized
+/obj/machinery/quantum_server/proc/get_current_domain_name()
+	if(isnull(generated_domain))
+		return null
+
+	if(scanner_tier < generated_domain.difficulty || domain_randomized)
+		return REDACTED
+
+	return generated_domain.name
+
+/// Gets a random available domain given the current points. Weighted towards higher cost domains.
+/obj/machinery/quantum_server/proc/get_random_domain_id()
+	var/list/available_domains = list()
+	var/total_cost = 0
+
+	for(var/datum/map_template/virtual_domain/available as anything in subtypesof(/datum/map_template/virtual_domain))
+		if(!initial(available.test_only) && initial(available.cost) <= points)
+			available_domains += list(list(
+				cost = initial(available.cost),
+				id = initial(available.id),
+			))
+
+	var/random_value = rand(0, total_cost)
+	var/accumulated_cost = 0
+
+	for(var/available as anything in available_domains)
+		accumulated_cost += available["cost"]
+		if(accumulated_cost >= random_value)
+			domain_randomized = TRUE
+			return available["id"]
+
+	return FALSE
+
 /// Returns if the server is busy via loading or cooldown states
 /obj/machinery/quantum_server/proc/get_ready_status()
 	return !loading && COOLDOWN_FINISHED(src, cooling_off)
@@ -318,6 +375,8 @@
 	for(var/datum/map_template/virtual_domain/available as anything in subtypesof(/datum/map_template/virtual_domain))
 		if(id == initial(available.id) && initial(available.cost) <= points)
 			to_generate = new available
+			if(domain_randomized)
+				to_generate.reward_points += 1
 			break
 
 	loading = FALSE
@@ -341,6 +400,7 @@
 		playsound(src, 'sound/machines/terminal_off.ogg', 40, 2)
 
 	loading = TRUE
+	domain_randomized = FALSE
 	SEND_SIGNAL(src, COMSIG_QSERVER_DISCONNECTED)
 	COOLDOWN_START(src, cooling_off, min(server_cooldown_time * server_cooldown_efficiency))
 
@@ -355,3 +415,4 @@
 	loading = FALSE
 
 #undef ONLY_TURF
+#undef REDACTED

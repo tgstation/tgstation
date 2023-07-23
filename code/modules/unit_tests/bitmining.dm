@@ -276,6 +276,21 @@
 	server.on_client_disconnect(labrat.mind, labrat_mind_ref)
 	TEST_ASSERT_EQUAL(pupper.health, base_health, "QServer should not nerf mobs below base health")
 
+/// Server side randomization of domains
+/datum/unit_test/quantum_server_get_random_domain_id/Run()
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
+	var/datum/map_template/virtual_domain/selected
+
+	var/id = server.get_random_domain_id()
+	TEST_ASSERT_NOTNULL(id, "QServer should return a random domain")
+
+	for(var/datum/map_template/virtual_domain/domain as anything in subtypesof(/datum/map_template/virtual_domain))
+		if(!initial(domain.test_only) && initial(domain.id) == id)
+			selected = new domain
+	TEST_ASSERT_EQUAL(selected.cost, 0, "QServer should only return free domains with no points")
+
+	/// Can't truly test the randomization past this
+
 #undef TEST_MAP
 #undef TEST_MAP_EXPENSIVE
 #undef TEST_MAP_MOBS

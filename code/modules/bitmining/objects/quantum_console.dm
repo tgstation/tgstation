@@ -42,11 +42,11 @@
 		return data
 
 	data["connected"] = TRUE
-
-	data["generated_domain"] = server.generated_domain?.name
-	data["loading"] = !server.get_ready_status()
+	data["generated_domain"] = server.get_current_domain_name()
 	data["occupants"] = length(server.occupant_mind_refs)
 	data["points"] = server.points
+	data["randomized"] = server.domain_randomized
+	data["ready"] = server.get_ready_status()
 	data["scanner_tier"] = server.scanner_tier
 
 	return data
@@ -58,7 +58,7 @@
 	if(isnull(server))
 		return data
 
-	data["available_domains"] = get_available_domains()
+	data["available_domains"] = server.get_available_domains()
 	data["avatars"] = server.get_avatar_data()
 
 	return data
@@ -80,15 +80,21 @@
 				return TRUE
 			server.stop_domain(usr)
 			return TRUE
+		if("random_domain")
+			var/id = server.get_random_domain_id()
+			if(!id)
+				return FALSE
+			server.set_domain(usr, id, TRUE)
+			return TRUE
 		if("refresh")
 			ui.send_full_update()
 			return TRUE
 		if("set_domain")
-			if(server.set_domain(usr, params["id"]))
-				return TRUE
+			server.set_domain(usr, params["id"])
+			return TRUE
 		if("stop_domain")
-			if(server.stop_domain(usr))
-				return TRUE
+			server.stop_domain(usr)
+			return TRUE
 
 	return FALSE
 
@@ -106,22 +112,3 @@
 			return nearby_server
 
 	return FALSE
-
-/// Compiles a list of available domains.
-/obj/machinery/computer/quantum_console/proc/get_available_domains()
-	var/list/levels = list()
-
-	for(var/datum/map_template/virtual_domain/domain as anything in subtypesof(/datum/map_template/virtual_domain))
-		if(initial(domain.test_only))
-			continue
-
-		levels += list(list(
-			"cost" = initial(domain.cost),
-			"desc" = initial(domain.desc),
-			"difficulty" = initial(domain.difficulty),
-			"id" = initial(domain.id),
-			"name" = initial(domain.name),
-			"reward" = initial(domain.reward_points),
-		))
-
-	return levels
