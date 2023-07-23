@@ -468,7 +468,7 @@
 				expire_timestamp,
 				severity,
 				playtime,
-				round_id,
+				round_id
 			FROM [format_table_name("messages")]
 			WHERE type <> 'memo' AND targetckey = :targetckey AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)
 			ORDER BY timestamp DESC
