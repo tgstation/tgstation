@@ -383,16 +383,36 @@
 	)
 
 /datum/quirk/lightless/add(client/client_source)
-	var/obj/item/organ/internal/eyes/eyes_of_the_holder = quirk_holder.get_organ_slot(ORGAN_SLOT_EYES)
-	if(istype(eyes_of_the_holder, /obj/item/organ/internal/eyes/moth))
-		eyes_of_the_holder.flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
-	else
-		eyes_of_the_holder.flash_protect = FLASH_PROTECTION_SENSITIVE
-	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
+  RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(check_eyes))
+  RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(restore_eyes))
+  RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
+  update_eyes(quirk_holder.get_organ_slot(ORGAN_SLOT_EYES))
 
 /datum/quirk/lightless/remove()
-	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
-	quirk_holder.clear_mood_event("lightless")
+  UnregisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN)
+  UnregisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN)
+  UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
+  quirk_holder.clear_mood_event("lightless")
+
+/datum/quirk/lightless/proc/check_eyes(obj/item/organ/internal/eyes/sensitive_eyes)
+  SIGNAL_HANDLER
+  if(!istype(sensitive_eyes))
+    return
+  update_eyes(sensitive_eyes)
+
+/datum/quirk/lightless/proc/update_eyes(obj/item/organ/internal/eyes/target_eyes)
+  if(!istype(target_eyes))
+    return
+  if(istype(target_eyes, /obj/item/organ/internal/eyes/moth))
+    target_eyes.flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
+  else
+    target_eyes.flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/datum/quirk/lightless/proc/restore_eyes(obj/item/organ/internal/eyes/normal_eyes)
+  SIGNAL_HANDLER
+  if(!istype(normal_eyes))
+    return
+  normal_eyes.flash_protect = initial(normal_eyes.flash_protect)
 
 /datum/quirk/lightless/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
