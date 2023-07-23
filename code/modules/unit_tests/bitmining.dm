@@ -108,7 +108,7 @@
 	TEST_ASSERT_EQUAL(labrat, labrat_resolved, "Netchair did not set occupant_ref correctly")
 
 /// Tests the netchair's ability to disconnect
-/datum/unit_test/nerchair_disconnect/Run()
+/datum/unit_test/netchair_disconnect/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	var/obj/structure/netchair/chair = allocate(/obj/structure/netchair, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
@@ -148,6 +148,35 @@
 	chair.disconnect_occupant(labrat.mind , forced = TRUE)
 	TEST_ASSERT_NOTNULL(chair.server_ref, "Sanity: Chair didn't set server")
 	TEST_ASSERT_EQUAL(occupant.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Should've taken brain damage on force disconn")
+
+/// Tests cases where the netchair is destroyed or the occupant unbuckled
+/datum/unit_test/netchair_unbuckle_or_qdel/Run()
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
+	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	var/obj/structure/netchair/chair = allocate(/obj/structure/netchair, locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
+	labrat.mind_initialize()
+	labrat.mock_client = new()
+	labrat.mind.key = "fake_mind"
+	var/datum/weakref/real_mind = WEAKREF(labrat.mind)
+
+	server.set_domain(labrat, id = TEST_MAP)
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: QServer did not load test map correctly")
+
+	chair.buckle_mob(labrat, check_loc = FALSE)
+	UNTIL(!isnull(chair.occupant_mind_ref))
+	TEST_ASSERT_EQUAL(chair.occupant_mind_ref, real_mind, "Sanity: Chair didn't set mind")
+
+	chair.unbuckle_mob(labrat)
+	TEST_ASSERT_NULL(chair.occupant_ref, "Should've cleared occupant_ref")
+	TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Should have taken brain damage on unbuckle")
+
+	labrat.fully_heal()
+	chair.buckle_mob(labrat, check_loc = FALSE)
+	UNTIL(!isnull(chair.occupant_mind_ref))
+	TEST_ASSERT_EQUAL(chair.occupant_mind_ref, real_mind, "Sanity: Chair didn't set mind")
+
+	qdel(chair)
+	TEST_ASSERT_EQUAL(labrat.get_organ_loss(ORGAN_SLOT_BRAIN), 60, "Should have taken brain damage on chair deletion")
 
 /// Tests the connection between avatar and pilot
 /datum/unit_test/avatar_connection/Run()

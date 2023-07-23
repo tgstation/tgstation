@@ -41,7 +41,7 @@
 /datum/mind/proc/connect_avatar_signals(mob/living/target)
 	var/obj/structure/netchair/hosting_chair = netchair_ref?.resolve()
 	if(isnull(hosting_chair))
-		sever_avatar(forced = TRUE)
+		current.dust()
 		return
 
 	hosting_chair.avatar_ref = WEAKREF(target) // we need to set this just in case there's a subsequent hop
@@ -96,10 +96,11 @@
 	sever_avatar(forced = TRUE)
 
 /// Disconnects the avatar and returns the mind to the pilot.
-/datum/mind/proc/sever_avatar(forced = FALSE)
+/// Handles case where the chair is destroyed via broken_chair
+/datum/mind/proc/sever_avatar(forced = FALSE, obj/structure/netchair/broken_chair)
 	var/mob/living/pilot = pilot_ref?.resolve()
-	var/obj/structure/netchair/chair = netchair_ref?.resolve()
-	if(isnull(chair) || isnull(pilot))
+	var/obj/structure/netchair/chair = netchair_ref?.resolve() || broken_chair
+	if(isnull(chair)  || isnull(pilot))
 		current.dust()
 
 	disconnect_avatar_signals()

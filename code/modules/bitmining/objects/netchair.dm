@@ -28,7 +28,7 @@
 	/// The selected outfit for the gamer chair.
 	var/datum/outfit/netsuit = /datum/outfit/job/miner
 	/// Static list of outfits to select from
-	var/static/list/cached_outfits
+	var/list/cached_outfits = list()
 
 /obj/structure/netchair/Initialize(mapload)
 	. = ..()
@@ -163,8 +163,8 @@
 	server = locate(/obj/machinery/quantum_server) in oview(4, src)
 	if(server)
 		server_ref = WEAKREF(server)
-		server.RegisterSignal(src, COMSIG_BITMINER_CONNECTED, TYPE_PROC_REF(/obj/machinery/quantum_server, on_client_connect))
-		server.RegisterSignal(src, COMSIG_BITMINER_DISCONNECTED, TYPE_PROC_REF(/obj/machinery/quantum_server, on_client_disconnect))
+		server.RegisterSignal(src, COMSIG_BITMINER_CONNECTED, TYPE_PROC_REF(/obj/machinery/quantum_server, on_client_connect), override = TRUE)
+		server.RegisterSignal(src, COMSIG_BITMINER_DISCONNECTED, TYPE_PROC_REF(/obj/machinery/quantum_server, on_client_disconnect), override = TRUE)
 		return server
 
 	return FALSE
@@ -230,13 +230,13 @@
 	occupant_ref = WEAKREF(mob_to_buckle)
 	INVOKE_ASYNC(src, PROC_REF(enter_matrix), mob_to_buckle)
 
-/// On unbuckle, make sure the occupant ref is null
+/// On unbuckle or break, make sure the occupant ref is null
 /obj/structure/netchair/proc/on_sever()
 	SIGNAL_HANDLER
 
 	var/datum/mind/hosted_mind = occupant_mind_ref?.resolve()
 	if(hosted_mind)
-		disconnect_occupant(hosted_mind, forced = TRUE)
+		hosted_mind.sever_avatar(forced = TRUE, broken_chair = src)
 
 	occupant_ref = null
 
