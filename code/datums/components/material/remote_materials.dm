@@ -39,7 +39,7 @@ handles linking back and forth.
 		connecting = TRUE
 
 /datum/component/remote_materials/RegisterWithParent()
-	if(connecting)
+	if (connecting)
 		silo = GLOB.ore_silo_default
 		if (silo)
 			silo.ore_connected_machines += src
