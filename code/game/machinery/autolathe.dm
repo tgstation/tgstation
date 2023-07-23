@@ -41,6 +41,7 @@
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe]
 
 /obj/machinery/autolathe/Destroy()
+	materials.retrieve_all()
 	materials = null
 	QDEL_NULL(wires)
 	return ..()
@@ -195,8 +196,7 @@
 		var/total_amount = 0
 		for(var/material in being_built.materials)
 			total_amount += being_built.materials[material]
-		var/power = max(active_power_usage, (total_amount) * multiplier / 5) // Change this to use all materials
-		use_power(power)
+		use_power(max(active_power_usage, (total_amount) * multiplier / 5))
 
 		//use materials
 		materials.use_materials(materials_used, coeff, multiplier)
@@ -209,9 +209,6 @@
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/autolathe, make_item), custom_materials, multiplier, is_stack, usr), time)
 
 		return TRUE
-
-/obj/machinery/autolathe/on_deconstruction()
-	materials.retrieve_all()
 
 /obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(busy)
