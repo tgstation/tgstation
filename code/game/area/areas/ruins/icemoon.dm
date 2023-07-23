@@ -63,5 +63,5 @@
 /area/ruin/powered/hermit
 	name = "\improper Hermit's Cabin"
 
-/area/ruin/unpowered/comms_agent
+/area/ruin/powered/comms_agent
 	name = "\improper Listening Post"
