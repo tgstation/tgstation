@@ -90,7 +90,8 @@
 
 	for(var/messenger_ref in messengers_sorted)
 		var/datum/computer_file/program/messenger/msgr = messengers_sorted[messenger_ref]
-		if(msgr == src || msgr.invisible) continue
+		if(msgr == src || msgr.invisible)
+			continue
 
 		var/list/data = list()
 		data["name"] = msgr.computer.saved_identification
@@ -437,14 +438,14 @@
 
 /// Returns a message input, sanitized and checked against the filter
 /datum/computer_file/program/messenger/proc/sanitize_pda_msg(message, mob/sender)
-	// check message against filter
-	if(!check_pda_msg_against_filter(message, sender))
-		return null
+	message = sanitize(message)
 
 	if(mime_mode)
 		message = emoji_sanitize(message)
 
-	message = html_encode(message)
+	// check message against filter
+	if(!check_pda_msg_against_filter(message, sender))
+		return null
 
 	return message
 
@@ -493,7 +494,6 @@
 /datum/computer_file/program/messenger/proc/send_rigged_message(mob/sender, message, list/datum/computer_file/program/messenger/targets, fake_name, fake_job, attach_fake_photo)
 	message = sanitize_pda_msg(message, sender)
 
-	// message at this point is not html escaped
 	if(!message)
 		return FALSE
 
@@ -599,17 +599,17 @@
 		if(!isnull(viewing_messages_of) && viewing_messages_of == sender_ref)
 			viewing_messages_of = REF(chat)
 
-	var/mob/living/L = null
+	var/mob/living/receiver_mob = null
 	//Check our immediate loc
 	if(isliving(computer.loc))
-		L = computer.loc
+		receiver_mob = computer.loc
 	//Maybe they are a silicon!
 	else
-		L = get(computer, /mob/living/silicon)
+		receiver_mob = get(computer, /mob/living/silicon)
 
 	var/should_ring = !alert_silenced || is_rigged
 
-	if(istype(L) && should_ring && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT) && L.is_literate())
+	if(istype(receiver_mob) && should_ring && (receiver_mob.stat == CONSCIOUS || receiver_mob.stat == SOFT_CRIT) && receiver_mob.is_literate())
 		var/reply
 		if(!is_fake_user || is_rigged)
 			reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "explode" : "message"];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
@@ -617,8 +617,8 @@
 		var/sender_name = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(chat.recipient.resolve())
 		var/hrefstart
 		var/hrefend
-		if (isAI(L))
-			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(sender_name)]'>"
+		if (isAI(receiver_mob))
+			hrefstart = "<a href='?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>"
 			hrefend = "</a>"
 
 		if(is_automated)
@@ -628,7 +628,7 @@
 		inbound_message = emoji_parse(inbound_message)
 
 		var/photo_message = message.photo_asset_name ? " (<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "explode" : "open"];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
-		to_chat(L, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][sender_name][hrefend], </b>[sanitize(html_decode(inbound_message))][photo_message] [reply]"))
+		to_chat(receiver_mob, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][sender_name][hrefend], </b>[sanitize(html_decode(inbound_message))][photo_message] [reply]"))
 
 	if (should_ring)
 		computer.ring(ringtone)

@@ -77,8 +77,10 @@
 	var/datum/computer_file/program/messenger/msgr = locate() in stored_files
 	if(!istype(msgr))
 		return
+	// enforce sweet *silence*
 	if(ispath(paintjob, /obj/item/modular_computer/pda/mime))
 		msgr.mime_mode = TRUE
+		msgr.alert_silenced = TRUE
 	else
 		msgr.mime_mode = FALSE
 
