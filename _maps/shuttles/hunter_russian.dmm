@@ -9,18 +9,6 @@
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
-"bg" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/closet/crate/secure/weapon{
-	name = "surplus crate"
-	},
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter/russian)
 "bi" = (
 /obj/machinery/computer/shuttle/hunter{
 	dir = 8
@@ -89,20 +77,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
-"fa" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/structure/sign/poster/contraband/communist_state/directional/west,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter/russian)
-"fN" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/fugitive_capture,
-/obj/structure/sign/poster/contraband/bountyhunters/directional/west,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter/russian)
 "gp" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/all_access,
@@ -123,28 +97,37 @@
 /obj/structure/sign/poster/contraband/soviet_propaganda/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/russian)
-"gU" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "russia_ship_bolt_n"
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/pod/light,
+"hm" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/fugitive_capture,
+/obj/structure/sign/poster/contraband/bountyhunters/directional/west,
+/turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "ho" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/russian)
+"iM" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/cardboard,
+/obj/item/storage/box/drinkingglasses,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/obj/item/crowbar/large/old,
+/obj/item/lighter/greyscale,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter/russian)
 "iV" = (
 /turf/template_noop,
 /area/template_noop)
-"jL" = (
-/obj/machinery/light/small/directional/south,
+"ke" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -158,25 +141,6 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/hunter/russian)
-"jO" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Ship Support Systems"
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/pod/light,
-/area/shuttle/hunter/russian)
-"kL" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/west,
-/obj/structure/kitchenspike,
-/turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "lx" = (
 /obj/structure/table,
@@ -204,15 +168,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/russian)
-"pB" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "russia_ship_bolt_s"
+"pg" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/secure/weapon{
+	name = "surplus crate"
 	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/pod/light,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "qF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -222,6 +187,17 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/meter,
 /turf/open/floor/pod/dark,
+/area/shuttle/hunter/russian)
+"rB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/airlock/security/glass{
+	name = "Cockpit Access"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "sR" = (
 /obj/structure/cable,
@@ -235,16 +211,24 @@
 "tj" = (
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/russian)
-"uc" = (
+"tm" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Cargo Hold Access"
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/machinery/door/airlock/security/glass{
-	name = "Cockpit Access"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
+/area/shuttle/hunter/russian)
+"uT" = (
+/obj/machinery/suit_storage_unit/standard_unit{
+	mask_type = /obj/item/clothing/mask/gas;
+	storage_type = /obj/item/tank/internals/oxygen/yellow
+	},
+/obj/effect/turf_decal/siding/red,
+/turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "vZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -253,11 +237,16 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter/russian)
-"wz" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/reagent_dispensers/watertank,
-/obj/machinery/light/small/directional/west,
-/obj/item/soap,
+"wB" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 1
+	},
+/obj/structure/mirror/directional/south,
+/obj/structure/dresser,
+/obj/item/razor{
+	pixel_x = 5;
+	pixel_y = 8
+	},
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "wF" = (
@@ -274,9 +263,20 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
-"ya" = (
+"xf" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Cargo Hold Access"
+	name = "Crew Storage"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter/russian)
+"xE" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Cockpit Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -306,23 +306,17 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
-"zr" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/stripes/line{
+"zk" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "russia_ship_bolt_n"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/structure/rack,
-/obj/item/wrench,
-/obj/item/crowbar,
-/obj/machinery/button/door/directional/north{
-	id = "russia_ship_bolt_n";
-	name = "External Bolt Control";
-	normaldoorcontrol = 1;
-	req_access = list("hunter");
-	specialfunctions = 4
-	},
-/turf/open/floor/mineral/plastitanium,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "zQ" = (
 /obj/machinery/atmospherics/components/tank/air,
@@ -337,18 +331,7 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter/russian)
-"CB" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/red{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter/russian)
-"Dh" = (
-/obj/machinery/light/small/directional/north,
+"Cu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -366,25 +349,56 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/russian)
+"CB" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/red{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter/russian)
 "Dr" = (
 /obj/effect/turf_decal/siding/red/corner{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium/survival,
 /area/shuttle/hunter/russian)
-"DK" = (
+"Du" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/wrench,
+/obj/item/crowbar,
+/obj/machinery/button/door/directional/north{
+	id = "russia_ship_bolt_n";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	req_access = list("hunter");
+	specialfunctions = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/russian)
+"Dw" = (
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/crate,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/cardboard,
-/obj/item/storage/box/drinkingglasses,
-/obj/machinery/light/small/directional/west,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/cup/glass/bottle/vodka,
-/obj/item/reagent_containers/cup/glass/bottle/vodka,
-/obj/item/reagent_containers/cup/glass/bottle/vodka,
-/obj/item/reagent_containers/cup/glass/bottle/vodka,
-/obj/item/crowbar/large/old,
-/obj/item/lighter/greyscale,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "Ej" = (
@@ -416,24 +430,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/hunter/russian)
-"FG" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/closet/crate,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/crowbar,
-/obj/item/crowbar,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter/russian)
 "FK" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/stripes/line,
@@ -452,6 +448,12 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter/russian)
+"GF" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/soap,
+/turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "IV" = (
 /obj/structure/table,
@@ -494,50 +496,12 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter/russian)
-"JS" = (
-/obj/docking_port/mobile{
-	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
-	name = "hunter shuttle";
-	rechargeTime = 1800;
-	shuttle_id = "huntership"
-	},
-/obj/docking_port/stationary{
-	dwidth = 11;
-	height = 16;
-	name = "Deep Space";
-	shuttle_id = "pirate_home";
-	width = 17
-	},
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "russia_ship_bolt_s"
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/plating,
-/area/shuttle/hunter/russian)
 "JU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/hunter/russian)
-"Ke" = (
-/obj/effect/turf_decal/siding/red{
-	dir = 1
-	},
-/obj/structure/mirror/directional/south,
-/obj/structure/dresser,
-/obj/item/razor{
-	pixel_x = 5;
-	pixel_y = 8
-	},
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "Lg" = (
 /obj/structure/chair/comfy/shuttle{
@@ -553,10 +517,28 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
+"LD" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/kitchenspike,
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter/russian)
 "LQ" = (
 /obj/effect/turf_decal/siding/red,
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/pod/dark,
+/area/shuttle/hunter/russian)
+"LT" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Ship Support Systems"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "LW" = (
 /obj/effect/spawner/structure/window/survival_pod,
@@ -574,7 +556,17 @@
 /obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
-"Nr" = (
+"Nk" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "russia_ship_bolt_n"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/plating,
+/area/shuttle/hunter/russian)
+"Rg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -584,16 +576,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/pod/light,
-/area/shuttle/hunter/russian)
-"QG" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "russia_ship_bolt_n"
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/plating,
 /area/shuttle/hunter/russian)
 "Se" = (
 /obj/effect/turf_decal/stripes/line{
@@ -620,17 +602,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/kss13/directional/south,
 /turf/open/floor/pod/dark,
-/area/shuttle/hunter/russian)
-"Ut" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Crew Storage"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/pod/light,
 /area/shuttle/hunter/russian)
 "Uu" = (
 /obj/effect/turf_decal/siding/red{
@@ -666,13 +637,22 @@
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter/russian)
-"Ww" = (
-/obj/machinery/suit_storage_unit/standard_unit{
-	mask_type = /obj/item/clothing/mask/gas;
-	storage_type = /obj/item/tank/internals/oxygen/yellow
+"Vu" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "russia_ship_bolt_s"
 	},
-/obj/effect/turf_decal/siding/red,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/pod/light,
+/area/shuttle/hunter/russian)
+"VA" = (
 /obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/sign/poster/contraband/communist_state/directional/west,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "WG" = (
@@ -689,17 +669,6 @@
 /obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/plating,
 /area/shuttle/hunter/russian)
-"WL" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Cockpit Access"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/pod/light,
-/area/shuttle/hunter/russian)
 "Xu" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/medical,
@@ -713,6 +682,31 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter/russian)
+"Ym" = (
+/obj/docking_port/mobile{
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "hunter shuttle";
+	rechargeTime = 1800;
+	shuttle_id = "huntership"
+	},
+/obj/docking_port/stationary{
+	dwidth = 11;
+	height = 16;
+	name = "Deep Space";
+	shuttle_id = "pirate_home";
+	width = 17
+	},
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "russia_ship_bolt_s"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/plating,
 /area/shuttle/hunter/russian)
 "Ys" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -785,12 +779,12 @@ EK
 EK
 Me
 Me
-fa
-DK
+VA
+iM
 Xu
-FG
-bg
-fN
+Dw
+pg
+hm
 Me
 Me
 EK
@@ -802,14 +796,14 @@ Me
 zQ
 qF
 LW
-kL
+LD
 tj
 Gh
 Zf
 Gh
 ho
 JU
-wz
+GF
 LW
 xd
 yr
@@ -819,7 +813,7 @@ Me
 Me
 Fy
 sR
-jO
+LT
 Gu
 Gu
 bK
@@ -828,7 +822,7 @@ XW
 cZ
 XW
 XW
-Ut
+xf
 SL
 eQ
 Me
@@ -857,12 +851,12 @@ Jh
 LQ
 Me
 Me
-ya
+tm
 Me
 LW
 LW
 Me
-Nr
+Rg
 Me
 Me
 MO
@@ -874,14 +868,14 @@ Me
 Me
 Me
 Me
-Dh
+Cu
 XW
 Me
 iV
 iV
 Me
 XW
-jL
+ke
 Me
 Me
 Me
@@ -889,9 +883,9 @@ Me
 "}
 (9,1,1) = {"
 iV
-QG
+Nk
 Se
-gU
+zk
 Aq
 cU
 LW
@@ -900,9 +894,9 @@ iV
 LW
 cU
 vZ
-pB
+Vu
 bO
-JS
+Ym
 iV
 "}
 (10,1,1) = {"
@@ -910,7 +904,7 @@ iV
 Me
 Me
 Me
-zr
+Du
 UV
 Me
 iV
@@ -929,12 +923,12 @@ iV
 iV
 Me
 Me
-WL
+xE
 Me
 LW
 LW
 Me
-uc
+rB
 Me
 Me
 iV
@@ -946,14 +940,14 @@ iV
 iV
 iV
 Me
-Ww
+uT
 XW
 Ys
 pa
 pa
 gv
 XW
-Ke
+wB
 Me
 iV
 iV

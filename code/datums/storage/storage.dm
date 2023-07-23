@@ -328,6 +328,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 
 	if(locked > force)
+		user.balloon_alert(user, "closed!")
 		return FALSE
 
 	if((to_insert == resolve_parent) || (to_insert == real_location))
@@ -336,16 +337,16 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(to_insert.w_class > max_specific_storage)
 		if(!is_type_in_typecache(to_insert, exception_hold))
 			if(messages && user)
-				to_chat(user, span_warning("\The [to_insert] is too big for \the [resolve_parent]!"))
+				user.balloon_alert(user, "too big!")
 			return FALSE
 		if(exception_max != INFINITE && exception_max <= exception_count())
 			if(messages && user)
-				to_chat(user, span_warning("Too many large items already in \the [resolve_parent], can't fit \the [to_insert]!"))
+				user.balloon_alert(user, "no room!")
 			return FALSE
 
 	if(resolve_location.contents.len >= max_slots)
 		if(messages && user && !silent_for_user)
-			to_chat(user, span_warning("\The [to_insert] can't fit into \the [resolve_parent]! Make some space!"))
+			user.balloon_alert(user, "no room!")
 		return FALSE
 
 	var/total_weight = to_insert.w_class
@@ -355,37 +356,37 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(total_weight > max_total_storage)
 		if(messages && user && !silent_for_user)
-			to_chat(user, span_warning("\The [to_insert] can't fit into \the [resolve_parent]! Make some space!"))
+			user.balloon_alert(user, "no room!")
 		return FALSE
 
 	if(length(can_hold))
 		if(!is_type_in_typecache(to_insert, can_hold))
 			if(messages && user)
-				to_chat(user, span_warning("\The [resolve_parent] cannot hold \the [to_insert]!"))
+				user.balloon_alert(user, "can't hold!")
 			return FALSE
 
 	if(is_type_in_typecache(to_insert, cant_hold) || HAS_TRAIT(to_insert, TRAIT_NO_STORAGE_INSERT) || (can_hold_trait && !HAS_TRAIT(to_insert, can_hold_trait)))
 		if(messages && user)
-			to_chat(user, span_warning("\The [resolve_parent] cannot hold \the [to_insert]!"))
+			user.balloon_alert(user, "can't hold!")
 		return FALSE
 
 	if(HAS_TRAIT(to_insert, TRAIT_NODROP))
 		if(messages)
-			to_chat(user, span_warning("\The [to_insert] is stuck on your hand!"))
+			user.balloon_alert(user, "stuck on your hand!")
 		return FALSE
 
 	var/datum/storage/biggerfish = resolve_parent.loc.atom_storage // this is valid if the container our resolve_parent is being held in is a storage item
 
 	if(biggerfish && biggerfish.max_specific_storage < max_specific_storage)
 		if(messages && user)
-			to_chat(user, span_warning("[to_insert] can't fit in [resolve_parent] while [resolve_parent.loc] is in the way!"))
+			user.balloon_alert(user, "[lowertext(resolve_parent.loc.name)] is in the way!")
 		return FALSE
 
 	if(istype(resolve_parent))
 		var/datum/storage/item_storage = to_insert.atom_storage
 		if((to_insert.w_class >= resolve_parent.w_class) && item_storage && !allow_big_nesting)
 			if(messages && user)
-				to_chat(user, span_warning("[resolve_parent] cannot hold [to_insert] as it's a storage item of the same size!"))
+				user.balloon_alert(user, "too big!")
 			return FALSE
 
 	return TRUE
@@ -756,6 +757,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/obj/item/resolve_location = real_location.resolve()
 
 	if(locked)
+		user.balloon_alert(user, "closed!")
 		return
 	if(!user.CanReach(resolve_parent) || !user.CanReach(dest_object))
 		return
@@ -987,7 +989,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(locked)
 		if(!silent)
-			resolve_parent.balloon_alert(to_show, "locked!")
+			resolve_parent.balloon_alert(to_show, "closed!")
 		return FALSE
 
 	// If we're quickdrawing boys

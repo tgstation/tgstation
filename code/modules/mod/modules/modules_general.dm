@@ -249,8 +249,8 @@
 /obj/item/mod/module/mouthhole/on_install()
 	former_flags = mod.helmet.flags_cover
 	former_visor_flags = mod.helmet.visor_flags_cover
-	mod.helmet.flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
-	mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
+	mod.helmet.flags_cover &= ~(HEADCOVERSMOUTH|PEPPERPROOF)
+	mod.helmet.visor_flags_cover &= ~(HEADCOVERSMOUTH|PEPPERPROOF)
 
 /obj/item/mod/module/mouthhole/on_uninstall(deleting = FALSE)
 	if(deleting)
@@ -557,7 +557,7 @@
 /obj/item/mod/module/hat_stabilizer
 	name = "MOD hat stabilizer module"
 	desc = "A simple set of deployable stands, directly atop one's head; \
-		these will deploy under a select few hats to keep them from falling off, allowing them to be worn atop the sealed helmet. \
+		these will deploy under a hat to keep it from falling off, allowing them to be worn atop the sealed helmet. \
 		You still need to take the hat off your head while the helmet deploys, though. \
 		This is a must-have for Nanotrasen Captains, enabling them to show off their authoritative hat even while in their MODsuit."
 	icon_state = "hat_holder"
@@ -566,36 +566,9 @@
 	even though it comes inbuilt into the Magnate/Corporate MODS and spawns in maints, I like the idea of stealing them*/
 	/// Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
 	var/obj/item/clothing/head/attached_hat
-	/// Whitelist of attachable hats, read note in Initialize() below this line
-	var/static/list/attachable_hats_list
-
-/obj/item/mod/module/hat_stabilizer/Initialize(mapload)
-	. = ..()
-	attachable_hats_list = typecacheof(
-	//List of attachable hats. Make sure these and their subtypes are all tested, so they dont appear janky.
-	//This list should also be gimmicky, so captains can have fun. I.E. the Santahat, Pirate hat, Tophat, Chefhat...
-	//Yes, I said it, the captain should have fun.
-		list(
-			/obj/item/clothing/head/hats/caphat,
-			/obj/item/clothing/head/costume/crown,
-			/obj/item/clothing/head/hats/centhat,
-			/obj/item/clothing/head/hats/centcom_cap,
-			/obj/item/clothing/head/costume/pirate,
-			/obj/item/clothing/head/costume/santa,
-			/obj/item/clothing/head/utility/hardhat/reindeer,
-			/obj/item/clothing/head/costume/sombrero/green,
-			/obj/item/clothing/head/costume/kitty,
-			/obj/item/clothing/head/costume/rabbitears,
-			/obj/item/clothing/head/costume/festive,
-			/obj/item/clothing/head/costume/powdered_wig,
-			/obj/item/clothing/head/costume/weddingveil,
-			/obj/item/clothing/head/hats/tophat,
-			/obj/item/clothing/head/costume/nursehat,
-			/obj/item/clothing/head/utility/chefhat,
-			/obj/item/clothing/head/costume/papersack,
-			/obj/item/clothing/head/caphat/beret,
-			/obj/item/clothing/head/helmet/space/beret,
-			))
+	/// Original cover flags for the MOD helmet, before a hat is placed
+	var/former_flags
+	var/former_visor_flags
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
 	RegisterSignal(mod.helmet, COMSIG_ATOM_EXAMINE, PROC_REF(add_examine))
@@ -625,14 +598,15 @@
 	if(!mod.active)
 		balloon_alert(user, "suit must be active!")
 		return
-	if(!is_type_in_typecache(hitting_item, attachable_hats_list))
-		balloon_alert(user, "this hat won't fit!")
-		return
 	if(attached_hat)
 		balloon_alert(user, "hat already attached!")
 		return
 	if(mod.wearer.transferItemToLoc(hitting_item, src, force = FALSE, silent = TRUE))
 		attached_hat = hitting_item
+		former_flags = mod.helmet.flags_cover
+		former_visor_flags = mod.helmet.visor_flags_cover
+		mod.helmet.flags_cover |= attached_hat.flags_cover
+		mod.helmet.visor_flags_cover |= attached_hat.visor_flags_cover
 		balloon_alert(user, "hat attached, right-click to remove")
 		mod.wearer.update_clothing(mod.slot_flags)
 
@@ -652,6 +626,8 @@
 	else
 		balloon_alert_to_viewers("the hat falls to the floor!")
 	attached_hat = null
+	mod.helmet.flags_cover = former_flags
+	mod.helmet.visor_flags_cover = former_visor_flags
 	mod.wearer.update_clothing(mod.slot_flags)
 
 ///Sign Language Translator - allows people to sign over comms using the modsuit's gloves.
