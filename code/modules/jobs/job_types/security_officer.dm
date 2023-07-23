@@ -161,19 +161,23 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		partners += partner.real_name
 
 	if (partners.len)
-		for (var/obj/item/modular_computer/pda as anything in GLOB.TabletMessengers)
-			if (pda.saved_identification in partners)
-				targets += pda
+		for(var/msgr_ref in GLOB.TabletMessengers)
+			var/datum/computer_file/program/messenger/msgr = GLOB.TabletMessengers[msgr_ref]
+			if(!(msgr.computer?.saved_identification in partners))
+				continue
+			targets += msgr
 
 	if (!targets.len)
 		return
 
+	var/datum/pda_msg/msg = new("Officer [officer.real_name] has been assigned to your department, [department].", TRUE)
+
 	var/datum/signal/subspace/messaging/tablet_msg/signal = new(announcement_system, list(
-		"name" = "Security Department Update",
-		"job" = "Automated Announcement System",
-		"message" = "Officer [officer.real_name] has been assigned to your department, [department].",
-		"targets" = targets,
-		"automated" = TRUE,
+		fakename = "Security Department Update",
+		fakejob = "Automated Announcement System",
+		message = msg,
+		targets = targets,
+		automated = TRUE,
 	))
 
 	signal.send_to_receivers()
