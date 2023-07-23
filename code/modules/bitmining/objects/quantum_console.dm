@@ -81,16 +81,24 @@
 			server.stop_domain(usr)
 			return TRUE
 		if("random_domain")
-			var/id = server.get_random_domain_id()
-			if(!id)
-				return FALSE
-			server.set_domain(usr, id, TRUE)
-			return TRUE
+			var/map_id = server.get_random_domain_id()
+			if(!map_id)
+				return TRUE
+
+			server.fresh_start(usr, map_id)
 		if("refresh")
 			ui.send_full_update()
 			return TRUE
 		if("set_domain")
-			server.set_domain(usr, params["id"])
+			var/map_id
+			for(var/map_template/virtual_domain/domain in subtypesof(/datum/map_template/virtual_domain))
+				if(!domain.testing_only && domain.id == params["id"])
+					map_id = domain.id
+					break
+			if(isnull(map_id))
+				return TRUE
+
+			server.fresh_start(usr, map_id)
 			return TRUE
 		if("stop_domain")
 			server.stop_domain(usr)
