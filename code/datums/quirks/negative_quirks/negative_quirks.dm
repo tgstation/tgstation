@@ -397,21 +397,21 @@
 /datum/quirk/lightless/proc/check_eyes(obj/item/organ/internal/eyes/sensitive_eyes)
   SIGNAL_HANDLER
   if(!istype(sensitive_eyes))
-    return
+	return
   update_eyes(sensitive_eyes)
 
 /datum/quirk/lightless/proc/update_eyes(obj/item/organ/internal/eyes/target_eyes)
   if(!istype(target_eyes))
-    return
+	return
   if(istype(target_eyes, /obj/item/organ/internal/eyes/moth))
-    target_eyes.flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
+	target_eyes.flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
   else
-    target_eyes.flash_protect = FLASH_PROTECTION_SENSITIVE
+	target_eyes.flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /datum/quirk/lightless/proc/restore_eyes(obj/item/organ/internal/eyes/normal_eyes)
   SIGNAL_HANDLER
   if(!istype(normal_eyes))
-    return
+	return
   normal_eyes.flash_protect = initial(normal_eyes.flash_protect)
 
 /datum/quirk/lightless/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
