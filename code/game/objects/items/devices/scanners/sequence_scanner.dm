@@ -20,6 +20,7 @@
 	var/list/buffer
 	var/ready = TRUE
 	var/cooldown = 200
+	/// genetic makeup data that's scanned
 	var/list/genetic_makeup_buffer = list()
 
 /obj/item/sequence_scanner/examine(mob/user)
@@ -38,10 +39,10 @@
 	else
 		user.visible_message(span_notice("[user] fails to analyze [target]'s genetic sequence."), span_warning("[target] has no readable genetic sequence!"))
 
-/obj/item/sequence_scanner/attack_secondary(mob/living/target, mob/living/carbon/human/user, max_interact_count=1)
+/obj/item/sequence_scanner/attack_secondary(mob/living/target, mob/living/carbon/human/user, max_interact_count = 1)
 	add_fingerprint(user)
-	//no scanning if its a husk or DNA-less Species
-	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
+	//no scanning if its a husk, DNA-less Species or DNA from a changeling/disease
+	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA) && !HAS_TRAIT(target, TRAIT_NO_DNA_COPY))
 		user.visible_message(span_warning("[user] is scanning [target]'s genetic makeup."))
 		if(!do_after(user, 3 SECONDS))
 			balloon_alert(user, "scan failed!")
@@ -82,6 +83,7 @@
 		else
 			to_chat(user,span_warning("No database to update from."))
 
+///proc for scanning someone's mutations
 /obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/target, mob/living/user)
 	if(!iscarbon(target) || !target.has_dna())
 		return
@@ -102,6 +104,7 @@
 		else
 			to_chat(user, span_notice("[get_display_name(mutation)]"))
 
+///proc for scanning someone's genetic makeup
 /obj/item/sequence_scanner/proc/makeup_scan(mob/living/carbon/target, mob/living/user)
 	if(!iscarbon(target) || !target.has_dna())
 		return
