@@ -508,7 +508,8 @@
 
 	var/lums = holder_turf.get_lumcount()
 
-	if(lums < LIGHTING_TILE_IS_DARK)
+	var/eye_protection = quirk_holder.get_eye_protection()
+	if(lums < LIGHTING_TILE_IS_DARK || eye_protection >= FLASH_PROTECTION_NONE)
 		quirk_holder.clear_mood_event(MOOD_CATEGORY_PHOTOPHOBIA)
 		return
 	quirk_holder.add_mood_event(MOOD_CATEGORY_PHOTOPHOBIA, /datum/mood_event/photophobia)
