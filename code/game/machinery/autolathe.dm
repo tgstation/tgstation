@@ -41,7 +41,6 @@
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe]
 
 /obj/machinery/autolathe/Destroy()
-	materials.retrieve_all()
 	materials = null
 	QDEL_NULL(wires)
 	return ..()

@@ -51,8 +51,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		mats.disconnect_from(src)
 
 	ore_connected_machines = null
-
-	materials.retrieve_all()
 	materials = null
 
 	return ..()

@@ -96,7 +96,7 @@
 	//maximum stocking amount (default 300000, 600000 at T4)
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		T += matter_bin.tier
-	rmat.set_local_size(((100*SHEET_MATERIAL_AMOUNT) + (T * (25*SHEET_MATERIAL_AMOUNT))))
+	rmat.set_local_size(((100 * SHEET_MATERIAL_AMOUNT) + (T * (25 * SHEET_MATERIAL_AMOUNT))))
 
 	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
 	T = 1.15
@@ -370,7 +370,7 @@
 /obj/machinery/mecha_part_fabricator/ui_data(mob/user)
 	var/list/data = list()
 
-	data["materials"] = rmat.mat_container?.ui_data()
+	data["materials"] = rmat.mat_container.ui_data()
 	data["queue"] = list()
 	data["processing"] = process_queue
 

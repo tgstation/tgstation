@@ -10,9 +10,16 @@ handles linking back and forth.
 	// 1. silo exists, materials is parented to silo
 	// 2. silo is null, materials is parented to parent
 	// 3. silo is null, materials is null
+
+	/// The silo machine this container is connected to
 	var/obj/machinery/ore_silo/silo
+	//material container. the value is either the silo or local
 	var/datum/component/material_container/mat_container
+	//should we create a local storage if we can't connect to silo
 	var/allow_standalone
+	//are we trying to connect to the silo
+	var/connecting
+	//local size of container when silo = null
 	var/local_size = INFINITY
 	///Flags used when converting inserted materials into their component materials.
 	var/mat_container_flags = NONE
@@ -30,10 +37,10 @@ handles linking back and forth.
 	var/turf/T = get_turf(parent)
 	if(force_connect || (mapload && is_station_level(T.z)))
 		addtimer(CALLBACK(src, PROC_REF(LateInitialize)))
-		src.allow_standalone = FALSE
+		connecting = TRUE
 
 /datum/component/remote_materials/RegisterWithParent()
-	if(allow_standalone)
+	if(!connecting && allow_standalone)
 		_MakeLocal()
 
 /datum/component/remote_materials/proc/LateInitialize()
@@ -43,6 +50,7 @@ handles linking back and forth.
 		mat_container = silo.GetComponent(/datum/component/material_container)
 	else
 		_MakeLocal()
+	connecting = FALSE
 
 /datum/component/remote_materials/Destroy()
 	if (silo)
@@ -50,11 +58,7 @@ handles linking back and forth.
 		silo.holds -= src
 		silo.updateUsrDialog()
 		silo = null
-		mat_container = null
-	else if (mat_container)
-		// specify explicitly in case the other component is deleted first
-		mat_container.retrieve_all()
-		QDEL_NULL(mat_container)
+	mat_container = null
 	return ..()
 
 /datum/component/remote_materials/proc/_MakeLocal()
@@ -72,9 +76,15 @@ handles linking back and forth.
 		/datum/material/titanium,
 		/datum/material/bluespace,
 		/datum/material/plastic,
-		)
+	)
 
-	mat_container = parent.AddComponent(/datum/component/material_container, allowed_mats, local_size, mat_container_flags, allowed_items=/obj/item/stack)
+	mat_container = parent.AddComponent( \
+		/datum/component/material_container, \
+		allowed_mats, \
+		local_size, \
+		mat_container_flags, \
+		allowed_items = /obj/item/stack \
+	)
 
 /datum/component/remote_materials/proc/toggle_holding(force_hold = FALSE)
 	if(isnull(silo))

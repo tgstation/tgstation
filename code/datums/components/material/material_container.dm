@@ -72,6 +72,7 @@
 	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
 /datum/component/material_container/Destroy(force, silent)
+	retrieve_all()
 	materials = null
 	allowed_materials = null
 	return ..()

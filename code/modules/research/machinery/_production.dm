@@ -159,7 +159,7 @@
 /obj/machinery/rnd/production/ui_data(mob/user)
 	var/list/data = list()
 
-	data["materials"] = materials.mat_container?.ui_data()
+	data["materials"] = materials.mat_container.ui_data()
 	data["onHold"] = materials.on_hold()
 	data["busy"] = busy
 	data["materialMaximum"] = materials.local_size
