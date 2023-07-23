@@ -81,6 +81,13 @@
 	var/atom/movable/speaker = parent
 	speaker.say(get_warning_message())
 	speaker.update_appearance(UPDATE_ICON)
+	switch(warning_level)
+		if(WEATHER_ALERT_CLEAR)
+			speaker.set_light_color(LIGHT_COLOR_GREEN)
+		if(WEATHER_ALERT_INCOMING)
+			speaker.set_light_color(LIGHT_COLOR_DIM_YELLOW)
+		if(WEATHER_ALERT_IMMINENT_OR_ACTIVE)
+			speaker.set_light_color(LIGHT_COLOR_INTENSE_RED)
 
 /// Returns a string we should display to communicate what you should be doing
 /datum/component/weather_announcer/proc/get_warning_message()
@@ -140,15 +147,16 @@
 		for(var/mining_level in mining_z_levels)
 			if(mining_level in check_weather.impacted_z_levels)
 				is_weather_dangerous = !check_weather.aesthetic
-			return
+				return
 
 /datum/component/weather_announcer/proc/on_examine(atom/radio, mob/examiner, list/examine_texts)
 	var/time_until_next = time_till_storm()
 	if(isnull(time_until_next))
 		return
-		examine_texts += span_notice("The next storm is inbound in [DisplayTimeText(time_until_next)] seconds.")
-	if (time_until_next = 0)
-	examine_texts += "A storm is currently active."
+	if (time_until_next == 0)
+		examine_texts += span_warning ("A storm is currently active, please seek shelter.")
+	else
+		examine_texts += span_notice("The next storm is inbound in [DisplayTimeText(time_until_next)].")
 
 /datum/component/weather_announcer/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
