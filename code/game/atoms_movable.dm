@@ -1166,7 +1166,7 @@
 
 		if(update_on_z)
 			// I so much wish this could be somewhere else. alas, no.
-			for(var/image/update in update_on_z)
+			for(var/image/update as anything in update_on_z)
 				SET_PLANE(update, PLANE_TO_TRUE(update.plane), new_turf)
 		if(update_overlays_on_z)
 			// This EVEN more so

@@ -81,3 +81,6 @@
 
 /// global signal when a global nullrod type is picked
 #define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"
+
+/// Global signal when light debugging is canceled
+#define COMSIG_LIGHT_DEBUG_DISABLED "!light_debug_disabled"

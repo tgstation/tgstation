@@ -211,7 +211,7 @@
 	var/list/possible_symptoms = list()
 	for(var/symp in SSdisease.list_symptoms)
 		var/datum/symptom/S = new symp
-		if(S.naturally_occuring && S.level >= level_min && S.level <= level_max)
+		if(S.can_generate_randomly() && S.level >= level_min && S.level <= level_max)
 			if(!HasSymptom(S))
 				possible_symptoms += S
 
