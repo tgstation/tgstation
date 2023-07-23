@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 
 		cig = tool
 		if(valid_wearer)
-			cig.equipped(loc, ITEM_SLOT_MASK)
+			cig.equipped(loc, loc.get_slot_by_item(cig))
 		cig.forceMove(src)
 		var/mob/wearer = loc
 		wearer.update_worn_mask()
