@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Stack, Button, Section, Box, ProgressBar, LabeledList } from '../../components';
+import { ByondUi, Stack, Button, Section, Box, ProgressBar, LabeledList } from '../../components';
 import { KelvinZeroCelcius, OperatorData } from './data';
 import { toFixed } from 'common/math';
 
@@ -17,14 +17,23 @@ export const MechStatPane = (props, context) => {
     mecha_flags,
     mechflag_keys,
     port_connected,
+    mech_view,
   } = data;
   return (
     <Stack fill vertical>
       <Stack.Item>
         <Section
           title={name}
-          buttons={<Button onClick={() => act('changename')}>Rename</Button>}
-        />
+          buttons={<Button onClick={() => act('changename')}>Rename</Button>}>
+          <ByondUi
+            height="170px"
+            params={{
+              id: mech_view,
+              zoom: 5,
+              type: 'map',
+            }}
+          />
+        </Section>
       </Stack.Item>
       <Stack.Item>
         <Section title="Status">

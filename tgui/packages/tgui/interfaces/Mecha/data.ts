@@ -86,9 +86,10 @@ export type OperatorData = {
   right_arm_weapon: MechWeapon | null;
   left_arm_weapon: MechWeapon | null;
   weapons_safety: boolean;
-  mech_equipment: string[];
+  mech_equipment: MechEquipment;
   mech_view: string;
   sheet_material_amount: number;
+  modules: MechModule[];
 };
 
 export type MechaUtility = {
@@ -96,4 +97,39 @@ export type MechaUtility = {
   name: string;
   ref: string;
   snowflake: any;
+};
+
+export type MechModule = {
+  type: string;
+  icon: string;
+  name: string;
+  activated: boolean;
+  ref: string;
+  integrity: number;
+  isballisticweapon: boolean;
+  energy_per_use: number;
+  snowflake: Snowflake;
+};
+
+export type MechEquipment = {
+  utility: MechUtilityModule[];
+  power: MechUtilityModule[];
+  armor: MechArmorModule[];
+};
+
+export type MechUtilityModule = {
+  name: string;
+  activated: boolean;
+  ref: string;
+  snowflake: Snowflake;
+};
+
+export type MechArmorModule = {
+  protect_name: string;
+  iconstate_name: string;
+  ref: string;
+};
+
+export type Snowflake = {
+  snowflake_id: string;
 };

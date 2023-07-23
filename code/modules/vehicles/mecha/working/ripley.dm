@@ -216,6 +216,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 
 /obj/item/mecha_parts/mecha_equipment/ejector
 	name = "Cargo compartment"
+	icon_state = "bin"
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
 

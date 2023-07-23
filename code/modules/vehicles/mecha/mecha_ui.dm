@@ -24,7 +24,7 @@
 	)
 
 /obj/vehicle/sealed/mecha/ui_assets(mob/user)
-	return list(get_asset_datum(/datum/asset/spritesheet/mechaarmor))
+	return list(get_asset_datum(/datum/asset/spritesheet/mecha_equipment))
 
 /obj/vehicle/sealed/mecha/ui_static_data(mob/user)
 	var/list/data = list()
@@ -168,6 +168,7 @@
 			"iconstate_name" = armor.iconstate_name,
 			"ref" = REF(armor),
 		))
+	data["modules"] = get_module_ui_data()
 	return data
 
 /obj/vehicle/sealed/mecha/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -302,3 +303,116 @@
 			var/obj/item/mecha_parts/mecha_equipment/gear = locate(params["ref"]) in flat_equipment
 			return gear?.ui_act(params["gear_action"], params, ui, state)
 	return TRUE
+
+/obj/vehicle/sealed/mecha/proc/get_module_ui_data()
+	var/list/data = list()
+
+	if(equip_by_category[MECHA_L_ARM])
+		var/obj/item/mecha_parts/mecha_equipment/l_gun = equip_by_category[MECHA_L_ARM]
+		var/isballisticweapon = istype(l_gun, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic)
+		var/left_arm_weapon = list(
+			"type" = MECHA_L_ARM,
+			"icon" = l_gun.icon_state,
+			"name" = l_gun.name,
+			"desc" = l_gun.desc,
+			"ref" = REF(l_gun),
+			"integrity" = (l_gun.get_integrity()/l_gun.max_integrity),
+			"isballisticweapon" = isballisticweapon,
+			"energy_per_use" = l_gun.energy_drain,
+			"snowflake" = l_gun.get_snowflake_data(),
+		)
+		if(isballisticweapon)
+			var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/weapon = l_gun
+			left_arm_weapon += list(
+				"projectiles" = weapon.projectiles,
+				"max_magazine" = initial(weapon.projectiles),
+				"projectiles_cache" = weapon.projectiles_cache,
+				"projectiles_cache_max" = weapon.projectiles_cache_max,
+				"disabledreload" = weapon.disabledreload,
+				"ammo_type" = weapon.ammo_type,
+			)
+		data += list(left_arm_weapon)
+	else
+		data += list(list(
+			"type" = MECHA_L_ARM
+		))
+
+	if(equip_by_category[MECHA_R_ARM])
+		var/obj/item/mecha_parts/mecha_equipment/r_gun = equip_by_category[MECHA_R_ARM]
+		var/isballisticweapon = istype(r_gun, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic)
+		var/right_arm_weapon = list(
+			"type" = MECHA_R_ARM,
+			"icon" = r_gun.icon_state,
+			"name" = r_gun.name,
+			"desc" = r_gun.desc,
+			"ref" = REF(r_gun),
+			"integrity" = (r_gun.get_integrity()/r_gun.max_integrity),
+			"isballisticweapon" = isballisticweapon,
+			"energy_per_use" = r_gun.energy_drain,
+			"snowflake" = r_gun.get_snowflake_data(),
+		)
+		if(isballisticweapon)
+			var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/weapon = r_gun
+			right_arm_weapon += list(
+				"projectiles" = weapon.projectiles,
+				"max_magazine" = initial(weapon.projectiles),
+				"projectiles_cache" = weapon.projectiles_cache,
+				"projectiles_cache_max" = weapon.projectiles_cache_max,
+				"disabledreload" = weapon.disabledreload,
+				"ammo_type" = weapon.ammo_type,
+			)
+		data += list(right_arm_weapon)
+	else
+		data += list(list(
+			"type" = MECHA_R_ARM
+		))
+
+	for(var/obj/item/mecha_parts/mecha_equipment/utility as anything in equip_by_category[MECHA_UTILITY])
+		data += list(list(
+			"type" = MECHA_UTILITY,
+			"icon" = utility.icon_state,
+			"name" = utility.name,
+			"activated" = utility.activated,
+			"snowflake" = utility.get_snowflake_data(),
+			"ref" = REF(utility),
+		))
+	var/free_utility_slots = max_equip_by_category[MECHA_UTILITY] - length(equip_by_category[MECHA_UTILITY])
+	while(free_utility_slots > 0)
+		data += list(list(
+			"type" = MECHA_UTILITY
+		))
+		free_utility_slots--
+
+	for(var/obj/item/mecha_parts/mecha_equipment/power as anything in equip_by_category[MECHA_POWER])
+		data += list(list(
+			"type" = MECHA_POWER,
+			"icon" = power.icon_state,
+			"name" = power.name,
+			"activated" = power.activated,
+			"snowflake" = power.get_snowflake_data(),
+			"ref" = REF(power),
+		))
+	var/free_power_slots = max_equip_by_category[MECHA_POWER] - length(equip_by_category[MECHA_POWER])
+	while(free_power_slots > 0)
+		data += list(list(
+			"type" = MECHA_POWER
+		))
+		free_power_slots--
+
+	for(var/obj/item/mecha_parts/mecha_equipment/armor/armor as anything in equip_by_category[MECHA_ARMOR])
+		data += list(list(
+			"type" = MECHA_ARMOR,
+			"icon" = armor.icon_state,
+			"name" = armor.name,
+			"protect_name" = armor.protect_name,
+			"iconstate_name" = armor.iconstate_name,
+			"ref" = REF(armor),
+		))
+	var/free_armor_slots = max_equip_by_category[MECHA_ARMOR] - length(equip_by_category[MECHA_ARMOR])
+	while(free_armor_slots > 0)
+		data += list(list(
+			"type" = MECHA_ARMOR
+		))
+		free_armor_slots--
+
+	return data
