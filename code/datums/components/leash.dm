@@ -169,7 +169,7 @@
 /// A debug spawner that will create a corgi leashed to a bike horn, plus a beam
 /obj/effect/spawner/debug_leash
 
-/obj/effect/spawner/debug_leash/Initialize()
+/obj/effect/spawner/debug_leash/Initialize(mapload)
 	. = ..()
 
 	var/obj/item/bikehorn/bike_horn = new(loc)
