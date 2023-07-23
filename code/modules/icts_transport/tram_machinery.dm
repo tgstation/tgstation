@@ -232,3 +232,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/icts/tram, 32)
 #undef AIRLOCK_DENY
 #undef AIRLOCK_EMAG
 #undef AIRLOCK_SECURITY_TRAM
+
+/obj/machinery/button/icts/tram/estop
+	name = "tram request"
+	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
+	base_icon_state = "tram"
+	icon_state = "tram"
+	light_color = LIGHT_COLOR_DARK_BLUE
+	can_alter_skin = FALSE
+	device_type = /obj/item/assembly/control/icts_call
+	req_access = list()
+	specific_transport_id = TRAMSTATION_LINE_1
+	id = 0

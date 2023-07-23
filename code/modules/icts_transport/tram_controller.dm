@@ -145,12 +145,11 @@
 	START_PROCESSING(SSicts_transport, src)
 
 /datum/transport_controller/linear/tram/process(seconds_per_tick)
+	if(controller_status & EMERGENCY_STOP)
+		estop()
 	if(!travel_remaining)
 		cycle_doors(OPEN_DOORS)
-		if(controller_status & EMERGENCY_STOP)
-			idle_platform = null
-		else
-			idle_platform = destination_platform
+		idle_platform = destination_platform
 		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
 		return PROCESS_KILL
 	else if(world.time >= scheduled_move)
@@ -205,6 +204,18 @@
 	controller_active = new_status
 	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
 
+/datum/transport_controller/linear/tram/proc/set_status_code(code, value)
+	switch(value)
+		if(TRUE)
+			controller_status |= code
+		if(FALSE)
+			controller_status &= ~code
+		else
+			stack_trace("Transport controller received invalid status code request [code]/[value]")
+			return
+
+	SEND_ICTS_SIGNAL(COMSIG_ICTS_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+
 /datum/transport_controller/linear/tram/proc/update_status()
 	controller_status &= ~DOORS_OPEN
 	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
@@ -219,7 +230,11 @@
 		update_status()
 
 /datum/transport_controller/linear/tram/proc/estop()
-	controller_status |= EMERGENCY_STOP
 	if(!travel_remaining)
 		return
+	var/throw_direction = travel_direction
 	travel_remaining = 0
+	set_status_code(SYSTEM_FAULT, TRUE)
+	idle_platform = null
+	for(var/obj/structure/transport/linear/tram/module in transport_modules)
+		module.estop_throw(throw_direction)

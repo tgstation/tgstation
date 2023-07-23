@@ -21,6 +21,9 @@
 	///cooldown for the remote
 	COOLDOWN_DECLARE(tram_remote)
 
+/obj/item/tram_remote/estop
+	name = "debug tram remote"
+
 /obj/item/tram_remote/Initialize(mapload)
 	. = ..()
 	register_context()
@@ -131,26 +134,39 @@
 				tram_part.dispatch_transport(destination_platform)
 		balloon_alert(user, "tram dispatched")
 		return TRUE
-/*
+
 /obj/item/tram_remote/afterattack(atom/target, mob/user)
 	link_tram(user, target)
 
-
 /obj/item/tram_remote/proc/link_tram(mob/user, atom/target)
-	var/obj/machinery/button/tram/smacked_device = target
-	if(!istype(smacked_device, /obj/machinery/button/tram))
+	var/datum/transport_controller/linear/tram/smacked_device = target
+	if(!istype(smacked_device, /obj/machinery/button/icts))
 		return
 	tram_ref = null
-	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
-		if(lift.specific_lift_id == smacked_device.lift_id)
-			tram_ref = WEAKREF(lift)
+	for(var/datum/transport_controller/linear/tram/transport as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
+		if(transport.specific_transport_id == smacked_device.specific_transport_id)
+			tram_ref = WEAKREF(transport)
 			break
 	if(tram_ref)
 		balloon_alert(user, "tram linked")
 	else
 		balloon_alert(user, "link failed!")
 	update_appearance()
-*/
+
+
+/obj/item/tram_remote/estop/attack_self(mob/user)
+	tram_estop(user)
+
+/obj/item/tram_remote/estop/proc/tram_estop(mob/user)
+	var/datum/transport_controller/linear/tram/tram_part = tram_ref?.resolve()
+	if(!tram_part)
+		balloon_alert(user, "no tram linked!")
+		return FALSE
+	balloon_alert(user, "emergency!")
+	tram_part.estop()
+	return TRUE
+
+
 
 #undef TRAMCTRL_INBOUND
 #undef TRAMCTRL_OUTBOUND

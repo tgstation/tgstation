@@ -113,6 +113,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 /datum/controller/subsystem/processing/icts_transport/proc/halt_and_catch_fire(datum/transport_controller/linear/tram/transport_controller)
 	transport_controller.travel_remaining = 0
 	transport_controller.set_active(FALSE)
+	transport_controller.controller_status |= SYSTEM_FAULT
 	message_admins("ICTS: Transport Controller Failed!")
 	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
 		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/airlock/tram, cycle_tram_doors), OPEN_DOORS)
