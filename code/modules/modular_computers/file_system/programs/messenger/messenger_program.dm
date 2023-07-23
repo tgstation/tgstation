@@ -644,17 +644,20 @@
 	// send an activation message and open the messenger
 	if(!(computer.enabled || computer.turn_on(usr, open_ui = FALSE)) && !(computer.active_program == src || computer.open_program(usr, src, open_ui = FALSE)))
 		return
-	if(usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
-		switch(href_list["choice"])
-			if("message")
-				quick_reply_prompt(usr, locate(href_list["target"]) in saved_chats)
-			if("open")
-				computer.update_tablet_open_uis(usr)
-				if(href_list["target"] in saved_chats)
-					viewing_messages_of = href_list["target"]
-			if("explode")
-				if(HAS_TRAIT(computer, TRAIT_PDA_CAN_EXPLODE))
-					var/obj/item/modular_computer/pda/comp = computer
-					comp.explode(usr, from_message_menu = TRUE)
+	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
+		return
+	switch(href_list["choice"])
+		if("message")
+			if(!(href_list["target"] in saved_chats))
+				break
+			quick_reply_prompt(usr, saved_chats[href_list["target"]])
+		if("open")
+			computer.update_tablet_open_uis(usr)
+			if(href_list["target"] in saved_chats)
+				viewing_messages_of = href_list["target"]
+		if("explode")
+			if(HAS_TRAIT(computer, TRAIT_PDA_CAN_EXPLODE))
+				var/obj/item/modular_computer/pda/comp = computer
+				comp.explode(usr, from_message_menu = TRUE)
 
 #undef TEMP_IMAGE_PATH

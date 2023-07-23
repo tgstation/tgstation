@@ -147,6 +147,6 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	var/list/data = list()
 	data["message"] = message
 	data["outgoing"] = outgoing
-	data["photo_path"] = SSassets.transport.get_asset_url(photo_asset_name)
+	data["photo_path"] = photo_asset_name ? SSassets.transport.get_asset_url(photo_asset_name) : null
 	data["everyone"] = everyone
 	return data
