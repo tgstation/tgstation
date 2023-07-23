@@ -288,6 +288,10 @@
 /obj/machinery/quantum_server/proc/get_ready_status()
 	return !loading && COOLDOWN_FINISHED(src, cooling_off)
 
+/// Validates target mob as valid to buff/nerf
+/obj/machinery/quantum_server/proc/is_valid_mob(mob/living/creature)
+	return isliving(creature) && isnull(creature.key) && creature.stat != DEAD && creature.health > 10
+
 /// Generates the virtual template around the safehouse
 /obj/machinery/quantum_server/proc/load_domain(mob/user, datum/map_template/virtual_domain/to_generate)
 	if(isnull(to_generate?.id) || !get_ready_status())
@@ -343,10 +347,6 @@
 		if(is_valid_mob(creature))
 			creature.health /= difficulty_coeff
 			creature.maxHealth /= difficulty_coeff
-
-/// Validates target mob as valid to buff/nerf
-/obj/machinery/quantum_server/proc/is_valid_mob(mob/living/creature)
-	return isliving(creature) && isnull(creature.key) && creature.stat != DEAD && creature.health > 10
 
 /// Handles examining the server. Shows cooldown time and efficiency.
 /obj/machinery/quantum_server/proc/on_examine(datum/source, mob/examiner, list/examine_text)

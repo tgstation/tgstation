@@ -36,7 +36,20 @@
 /area/station/virtual_domain/safehouse/exit
 	name = "Safe House: Escape"
 	icon_state = "bit_exit"
-
 /area/station/virtual_domain/safehouse/send
 	name = "Safe House: Transfer"
 	icon_state = "bit_send"
+	desc
+
+/area/station/virtual_domain/safehouse/send/LateInitialize()
+	. = ..()
+
+	for(var/turf/tile in get_area_turfs(type, z))
+		RegisterSignal(tile, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
+/// Handles examining the server. Shows cooldown time and efficiency.
+/area/station/virtual_domain/safehouse/send/proc/on_examine(datum/source, mob/examiner, list/examine_text)
+	SIGNAL_HANDLER
+
+	examine_text += span_info("Beneath your gaze, the floor pulses subtly with streams of encoded data.")
+	examine_text += span_info("It seems to be part of the location designated for retrieving encrypted payloads.")

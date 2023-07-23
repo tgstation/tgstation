@@ -6,11 +6,11 @@
 /turf/open/indestructible/hotelwood,
 /area/station/virtual_domain/safehouse)
 "p" = (
-/obj/machinery/light/small/blacklight/directional/east,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet/green,
 /area/station/virtual_domain/safehouse/send)
 "q" = (
-/obj/machinery/light/small/blacklight/directional/west,
+/obj/machinery/light/small/directional/west,
 /turf/open/indestructible/hotelwood,
 /area/station/virtual_domain/safehouse)
 "v" = (
@@ -39,7 +39,7 @@
 /turf/closed/wall/mineral/wood,
 /area/station/virtual_domain/safehouse)
 "V" = (
-/obj/machinery/light/floor,
+/obj/machinery/light/small/directional/east,
 /turf/open/indestructible/hotelwood,
 /area/station/virtual_domain/safehouse)
 
@@ -56,14 +56,14 @@ K
 q
 j
 j
-j
+q
 K
 "}
 (3,1,1) = {"
 O
 j
 j
-V
+j
 a
 O
 "}
@@ -79,7 +79,7 @@ O
 O
 A
 B
-V
+j
 a
 O
 "}
@@ -88,7 +88,7 @@ K
 p
 B
 v
-j
+V
 K
 "}
 (7,1,1) = {"
