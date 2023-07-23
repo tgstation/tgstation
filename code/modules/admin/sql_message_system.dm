@@ -468,7 +468,7 @@
 				expire_timestamp,
 				severity,
 				playtime,
-				round_id
+				round_id,
 			FROM [format_table_name("messages")]
 			WHERE type <> 'memo' AND targetckey = :targetckey AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)
 			ORDER BY timestamp DESC
@@ -501,11 +501,23 @@
 			var/severity = query_get_messages.item[12]
 			var/playtime = query_get_messages.item[13]
 			var/round_id = query_get_messages.item[14]
+			var/playage = usr.client.get_exp_living(pure_numeric = TRUE) - query_get_messages.item[15]
 			var/alphatext = ""
-			var/nsd = CONFIG_GET(number/note_stale_days)
-			var/nfd = CONFIG_GET(number/note_fresh_days)
-			if (agegate && type == "note" && isnum(nsd) && isnum(nfd) && nsd > nfd)
-				var/alpha = clamp(100 - (age - nfd) * (85 / (nsd - nfd)), 15, 100)
+			var/notestale = CONFIG_GET(number/note_stale_time)
+			var/notefresh = CONFIG_GET(number/note_fresh_time)
+			var/notetype = CONFIG_GET(string/note_fade_type)
+			if(notetype == "time" && agegate && type == "note" && isnum(notestale) && isnum(notefresh) && notestale > notefresh)
+				var/alpha = clamp(100 - (age - notefresh) * (85 / (notestale - notefresh)), 15, 100)
+				if (alpha < 100)
+					if (alpha <= 15)
+						if (skipped)
+							skipped++
+							continue
+						alpha = 10
+						skipped = TRUE
+					alphatext = "filter: alpha(opacity=[alpha]); opacity: [alpha/100];"
+			if(notetype == "playtime" && agegate && type == "note" && isnum(notestale) && isnum(notefresh) && notestale > notefresh)
+				var/alpha = clamp(100 - (playage - notefresh * 60) * (85 / (notestale * 60 - notefresh * 60)), 15, 100)
 				if (alpha < 100)
 					if (alpha <= 15)
 						if (skipped)

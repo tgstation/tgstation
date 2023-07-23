@@ -375,12 +375,15 @@
 
 /datum/config_entry/flag/see_own_notes //Can players see their own admin notes
 
-/datum/config_entry/number/note_fresh_days
+/datum/config_entry/string/note_fade_type
+	default = null
+
+/datum/config_entry/number/note_fresh_time
 	default = null
 	min_val = 0
 	integer = FALSE
 
-/datum/config_entry/number/note_stale_days
+/datum/config_entry/number/note_stale_time
 	default = null
 	min_val = 0
 	integer = FALSE
