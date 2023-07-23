@@ -32292,6 +32292,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/mining_weather_monitor/directional/east,
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/entry)
 "lRS" = (
@@ -48886,7 +48887,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/mining_weather_monitor/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "rMp" = (
