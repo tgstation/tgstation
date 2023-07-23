@@ -69,15 +69,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
-"o" = (
-/obj/machinery/conveyor{
-	dir = 5;
-	id = "QMLoad2"
-	},
-/obj/effect/turf_decal/stripes/box,
-/obj/machinery/light/cold/directional/north,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
 "t" = (
 /turf/closed/wall/mineral/titanium/nosmooth,
 /area/shuttle/supply)
@@ -85,15 +76,6 @@
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/conveyor{
 	dir = 9;
-	id = "QMLoad"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
-"y" = (
-/obj/effect/turf_decal/stripes/box,
-/obj/machinery/light/cold/directional/south,
-/obj/machinery/conveyor{
-	dir = 10;
 	id = "QMLoad"
 	},
 /turf/open/floor/mineral/titanium,
@@ -156,6 +138,15 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
+"J" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad"
+	},
+/obj/machinery/light/cold/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
 "K" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/conveyor/inverted{
@@ -204,28 +195,19 @@
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
-"S" = (
-/obj/effect/turf_decal/stripes/box,
-/obj/machinery/light/cold/directional/south,
-/obj/machinery/conveyor{
-	dir = 9;
-	id = "QMLoad"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
 "T" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "U" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/supply)
-"V" = (
+"W" = (
 /obj/machinery/conveyor{
-	dir = 6;
+	dir = 1;
 	id = "QMLoad2"
 	},
 /obj/effect/turf_decal/stripes/box,
-/obj/machinery/light/cold/directional/north,
+/obj/machinery/light/cold/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
 "X" = (
@@ -262,13 +244,13 @@ a
 (2,1,1) = {"
 T
 T
-o
-Z
+X
+W
 Z
 t
 M
-M
-S
+J
+w
 T
 T
 b
@@ -304,13 +286,13 @@ a
 (5,1,1) = {"
 T
 T
-V
+R
 m
 i
 t
 P
 e
-y
+I
 T
 T
 b

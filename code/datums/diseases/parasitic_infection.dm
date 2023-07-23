@@ -11,9 +11,8 @@
 	severity = DISEASE_SEVERITY_HARMFUL
 	disease_flags = CAN_CARRY|CAN_RESIST
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
-	required_organs = list(/obj/item/organ/internal/liver)
+	required_organ = ORGAN_SLOT_LIVER
 	bypasses_immunity = TRUE
-
 
 /datum/disease/parasite/stage_act(seconds_per_tick, times_fired)
 	. = ..()

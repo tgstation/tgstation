@@ -74,7 +74,7 @@ export const MaterialCostSequence = (
             <Flex.Item>
               <MaterialIcon
                 materialName={material}
-                amount={(amount || 1) * quantity}
+                sheets={((amount || 1) * quantity) / 100}
               />
             </Flex.Item>
             <Flex.Item
@@ -88,7 +88,7 @@ export const MaterialCostSequence = (
                         : '#db2828',
                 }
               }>
-              {formatSiUnit((amount || 1) * quantity, 0)}
+              {formatSiUnit(((amount || 1) * quantity) / 100, 0)}
             </Flex.Item>
           </Flex>
         </Flex.Item>

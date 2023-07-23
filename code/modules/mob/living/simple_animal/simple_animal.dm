@@ -251,6 +251,8 @@
  * Reduces the stamina loss by stamina_recovery
  */
 /mob/living/simple_animal/update_stamina()
+	if(damage_coeff[STAMINA] <= 0) //we shouldn't reset our speed to its initial value if we don't need to, as that can mess with things like mulebot motor wires
+		return
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
 /mob/living/simple_animal/proc/handle_automated_action()
@@ -462,7 +464,7 @@
 		icon_state = icon_dead
 		if(flip_on_death)
 			transform = transform.Turn(180)
-		set_density(FALSE)
+		ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
@@ -490,7 +492,7 @@
 	if(!.)
 		return
 	icon_state = icon_living
-	set_density(initial(density))
+	REMOVE_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())

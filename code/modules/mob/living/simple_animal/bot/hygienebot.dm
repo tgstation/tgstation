@@ -15,7 +15,7 @@
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service
-	bot_mode_flags = ~BOT_MODE_GHOST_CONTROLLABLE
+	bot_mode_flags = ~BOT_MODE_CAN_BE_SAPIENT
 	bot_type = HYGIENE_BOT
 	hackables = "cleaning service protocols"
 	path_image_color = "#993299"

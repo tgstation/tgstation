@@ -842,7 +842,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter
 	name = "flyswatter"
 	desc = "Useful for killing pests of all sizes."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "flyswatter"
 	inhand_icon_state = "flyswatter"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -1107,7 +1107,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	bare_wound_bonus = 25
 
 /obj/item/highfrequencyblade/wizard/attack_self(mob/user, modifiers)
-	if(!IS_WIZARD(user))
+	if(!HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED))
 		balloon_alert(user, "you're too weak!")
 		return
 	return ..()
