@@ -118,6 +118,9 @@
 /// when the timestop ability effect ends on the atom: (datum/proximity_monitor/advanced/timestop)
 #define COMSIG_ATOM_TIMESTOP_UNFREEZE "atom_timestop_unfreeze"
 
+/// Called on [/atom/SpinAnimation()] : (speed, loops, segments, angle)
+#define COMSIG_ATOM_SPIN_ANIMATION "atom_spin_animation"
+
 /// when atom falls onto the floor and become exposed to germs: (datum/component/germ_exposure)
 #define COMSIG_ATOM_GERM_EXPOSED "atom_germ_exposed"
 /// when atom is picked up from the floor or moved to an elevated structure: (datum/component/germ_exposure)

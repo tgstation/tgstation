@@ -75,5 +75,38 @@
 	else
 		signal.data["command"] = "shuttle"
 
-	var/atom/movable/virtualspeaker/virt = new(null)
-	frequency.post_signal(virt, signal)
+	var/atom/movable/virtualspeaker/virtual_speaker = new(null)
+	frequency.post_signal(virtual_speaker, signal)
+
+/// Used by the radioactive nebula when the station doesnt have enough shielding
+/datum/weather/rad_storm/nebula
+	protected_areas = list(/area/shuttle)
+
+	weather_overlay = "nebula_radstorm"
+	weather_duration_lower = 100 HOURS
+	weather_duration_upper = 100 HOURS
+
+	end_message = null
+
+	///Chance we pulse a living during the storm
+	var/radiation_chance = 20
+
+/datum/weather/rad_storm/nebula/weather_act(mob/living/living)
+	if(!prob(radiation_chance))
+		return
+
+	if(!SSradiation.can_irradiate_basic(living) || SSradiation.wearing_rad_protected_clothing(living))
+		return
+
+	radiation_pulse(
+		source = living,
+		max_range = 0,
+		threshold = RAD_LIGHT_INSULATION,
+		chance = URANIUM_IRRADIATION_CHANCE,
+		minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME,
+	)
+
+/datum/weather/rad_storm/nebula/status_alarm(active)
+	if(!active) //we stay on
+		return
+	..()

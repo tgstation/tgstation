@@ -464,7 +464,7 @@
 		icon_state = icon_dead
 		if(flip_on_death)
 			transform = transform.Turn(180)
-		set_density(FALSE)
+		ADD_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
@@ -492,7 +492,7 @@
 	if(!.)
 		return
 	icon_state = icon_living
-	set_density(initial(density))
+	REMOVE_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
