@@ -154,12 +154,12 @@
 	SSblackbox.record_feedback("tally", "leash_force_teleport_back", 1, reason)
 
 	if (force_teleport_out_effect)
-		new /obj/effect/temp_visual/guardian/phase/out(movable_parent.loc)
+		new force_teleport_out_effect(movable_parent.loc)
 
 	movable_parent.forceMove(get_turf(owner))
 
 	if (force_teleport_in_effect)
-		new /obj/effect/temp_visual/guardian/phase(movable_parent.loc)
+		new force_teleport_in_effect(movable_parent.loc)
 
 	if (ismob(movable_parent))
 		movable_parent.balloon_alert(movable_parent, "moved out of range!")
