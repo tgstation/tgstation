@@ -116,11 +116,11 @@
  * Called whenever the knowledge's associated ritual is completed successfully.
  *
  * Creates atoms from types in result_atoms.
- * Override this is you want something else to happen.
+ * Override this if you want something else to happen.
  * This CAN sleep, such as for summoning rituals which poll for ghosts.
  *
  * Arguments
- * * user - the mob who did the  ritual
+ * * user - the mob who did the ritual
  * * selected_atoms - an list of atoms chosen as a part of this ritual.
  * * loc - the turf the ritual's occuring on
  *
@@ -714,3 +714,18 @@
 		sacrifice.gib()
 
 	return ..()
+
+/datum/heretic_knowledge/mansus_restoration
+	name = "Mansus returnal" // sounds awful
+	desc = "Sacrifice lungs, potted plant and a radio to restore your link to the Mansus."
+	gain_text = "A way to return my powers, at any cost..."
+	required_atoms = list(
+		/obj/item/kirbyplants,
+		/obj/item/organ/internal/ears,
+		/obj/item/radio,
+	)
+	priority = MAX_KNOWLEDGE_PRIORITY - 4 // below basic rituals so you can see it
+	route = null
+
+/datum/heretic_knowledge/mansus_restoration/on_finished_recipe
+	REMOVE_TRAIT(owner, TRAIT_BAN_HERETIC_CASTING, source)

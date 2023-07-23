@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(phobia_types, sort_list(list(
 	"spiders",
 	"strangers",
 	"the supernatural",
+	"heresy",
 )))
 
 GLOBAL_LIST_INIT(phobia_regexes, list(
@@ -47,7 +48,8 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 	"space" = construct_phobia_regex("space"),
 	"spiders" = construct_phobia_regex("spiders"),
 	"strangers" = construct_phobia_regex("strangers"),
-	"the supernatural" = construct_phobia_regex("the supernatural"),
+	"the supernatural" = construct_phobia_regex("the supernatural"),,
+	"heresy" = construct_phobia_regex("heresy"),
 ))
 
 GLOBAL_LIST_INIT(phobia_mobs, list(
@@ -99,6 +101,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/simple_animal/revenant,
 		/mob/living/simple_animal/shade,
 	)),
+	"heresy" = typecacheof(list(/mob/living/simple_animal/hostile/heretic_summon))
 ))
 
 GLOBAL_LIST_INIT(phobia_objs, list(
@@ -453,6 +456,26 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/structure/destructible/cult,
 		/obj/structure/destructible/eldritch_crucible,
 		/obj/structure/spirit_board,
+	)),
+	"heresy" = typecacheof(list(
+		/obj/effect/floating_blade,
+		/obj/effect/heretic_influence,
+		/obj/effect/heretic_rune,
+		/obj/effect/rune,
+		/obj/effect/visible_heretic_influence,
+		/obj/item/clothing/mask/madness_mask,
+		/obj/item/clothing/neck/heretic_focus,
+		/obj/item/clothing/neck/eldritch_amulet,
+		/obj/item/clothing/suit/hooded/cultrobes/eldritch,
+		/obj/item/codex_cicatrix,
+		/obj/item/reagent_containers/cup/beaker/eldritch,
+		/obj/item/melee/rune_carver,
+		/obj/item/melee/sickly_blade,
+		/obj/item/melee/touch_attack/mansus_fist,
+		/obj/item/toy/eldritch_book,
+		/obj/item/toy/reality_pierce,
+		/obj/structure/destructible/eldritch_crucible,
+		/obj/projectile/curse_hand,
 	)),
 ))
 

@@ -242,6 +242,10 @@
 	if(spell.school != SCHOOL_FORBIDDEN)
 		return
 
+	if(HAS_TRAIT(source, TRAIT_BAN_HERETIC_CASTING))
+		source.balloon_alert(source, "you dont have enough powers!")
+		return SPELL_CANCEL_CAST
+
 	// If we've got the trait, we don't care
 	if(HAS_TRAIT(source, TRAIT_ALLOW_HERETIC_CASTING))
 		return
