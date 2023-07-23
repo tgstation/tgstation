@@ -2,13 +2,17 @@
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
 	argument_hash_start_idx = 2
 	///Time it takes to climb onto the object
-	var/climb_time = (2 SECONDS)
+	var/climb_time
 	///Stun duration for when you get onto the object
-	var/climb_stun = (2 SECONDS)
+	var/climb_stun
 	///Assoc list of object being climbed on - climbers.  This allows us to check who needs to be shoved off a climbable object when its clicked on.
 	var/list/current_climbers
 
-/datum/element/climbable/Attach(datum/target, climb_time, climb_stun)
+/datum/element/climbable/Attach(
+	datum/target,
+	climb_time = 2 SECONDS,
+	climb_stun = 2 SECONDS,
+)
 	. = ..()
 
 	if(!isatom(target) || isarea(target))
