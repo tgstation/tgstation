@@ -3,7 +3,7 @@
 	set name = "Request Internet Sound"
 
 	if(usr == null)
-		to_chat(src, "An Error Occured, this might be because round just started. If so try again.", confidential = TRUE)
+		to_chat(src, span_boldwarning("An Error Occured, this might be because round just started. If so try again."), confidential = TRUE)
 		return
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
