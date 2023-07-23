@@ -33,7 +33,7 @@
 /obj/structure/netchair/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_BUCKLE, PROC_REF(on_buckle))
-	RegisterSignal(src, COMSIG_MOVABLE_UNBUCKLE, PROC_REF(on_unbuckle))
+	RegisterSignals(src, list(COMSIG_MOVABLE_UNBUCKLE, COMSIG_QDELETING), PROC_REF(on_sever))
 
 /obj/structure/netchair/Destroy()
 	. = ..()
@@ -231,14 +231,14 @@
 	INVOKE_ASYNC(src, PROC_REF(enter_matrix), mob_to_buckle)
 
 /// On unbuckle, make sure the occupant ref is null
-/obj/structure/netchair/proc/on_unbuckle(datum/source, mob/living/mob_to_unbuckle, force)
+/obj/structure/netchair/proc/on_sever()
 	SIGNAL_HANDLER
-
-	occupant_ref = null
 
 	var/datum/mind/hosted_mind = occupant_mind_ref?.resolve()
 	if(hosted_mind)
 		disconnect_occupant(hosted_mind, forced = TRUE)
+
+	occupant_ref = null
 
 /// Resolves a path to an outfit.
 /obj/structure/netchair/proc/resolve_outfit(text)

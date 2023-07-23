@@ -101,7 +101,9 @@ const AccessView = (props, context) => {
           buttons={
             <>
               <Button
-                disabled={!ready || occupants > 0 || !!generated_domain}
+                disabled={
+                  !ready || occupants > 0 || points < 1 || !!generated_domain
+                }
                 icon="random"
                 onClick={() => act('random_domain')}
                 mr={1}
@@ -163,7 +165,7 @@ const DomainEntry = (props: DomainEntryProps, context) => {
   const occupied = occupants > 0;
   let buttonIcon, buttonName;
   if (randomized) {
-    buttonIcon = 'question';
+    buttonIcon = '';
     buttonName = '???';
   } else if (current) {
     buttonIcon = 'download';
