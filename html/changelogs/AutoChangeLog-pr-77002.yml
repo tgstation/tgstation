@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixed a bug that would cause you to be unable to lean again if you tried leaning while facing the wrong direction"
