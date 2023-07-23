@@ -135,10 +135,8 @@
 		var/datum/signal/subspace/messaging/tablet_msg/PDAsignal = signal
 		var/datum/data_tablet_msg/logmsg = new(PDAsignal.format_target(), PDAsignal.format_sender(), html_decode(PDAsignal.format_message()), PDAsignal.format_photo_path())
 		pda_msgs += logmsg
-		signal.logged = logmsg
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
 		var/datum/data_rc_msg/msg = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
-		signal.logged = msg
 		if(signal.data["send_dpt"]) // don't log messages not from a department but allow them to work
 			rc_msgs += msg
 	signal.data["reject"] = FALSE
@@ -158,7 +156,6 @@
 /datum/signal/subspace/messaging
 	frequency = FREQ_COMMON
 	server_type = /obj/machinery/telecomms/message_server
-	var/datum/logged
 
 /datum/signal/subspace/messaging/New(init_source, init_data)
 	source = init_source
@@ -195,8 +192,6 @@
 	return msg.photo_asset_name
 
 /datum/signal/subspace/messaging/tablet_msg/broadcast()
-	if (!logged)  // Can only go through if a message server logs it
-		return
 	for (var/datum/computer_file/program/messenger/app in data["targets"])
 		if(!QDELETED(app))
 			app.receive_message(src)
@@ -204,8 +199,6 @@
 
 // Request Console signal datum
 /datum/signal/subspace/messaging/rc/broadcast()
-	if (!logged)  // Like /pda, only if logged
-		return
 	var/recipient_department = ckey(data["recipient_department"])
 	for (var/obj/machinery/requests_console/console in GLOB.req_console_all)
 		if(ckey(console.department) == recipient_department || (data["ore_update"] && console.receive_ore_updates))
