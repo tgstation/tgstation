@@ -123,11 +123,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	has_filter = TRUE
 	return TRUE
 
-/obj/item/clothing/mask/gas/equipped(mob/M, slot)
-	. = ..()
-	if(cig)
-		cig.equipped(M, slot)
-
 /obj/item/clothing/mask/gas/attack_hand_secondary(mob/user, list/modifiers)
 	if(cig)
 		user.put_in_hands(cig)
