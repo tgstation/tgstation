@@ -462,16 +462,16 @@
 	)
 
 /datum/quirk/photophobia/add(client/client_source)
-  RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(check_eyes))
-  RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(restore_eyes))
-  RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
-  update_eyes(quirk_holder.get_organ_slot(ORGAN_SLOT_EYES))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(check_eyes))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(restore_eyes))
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
+	update_eyes(quirk_holder.get_organ_slot(ORGAN_SLOT_EYES))
 
 /datum/quirk/photophobia/remove()
-  UnregisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN)
-  UnregisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN)
-  UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
-  quirk_holder.clear_mood_event("photophobia")
+	UnregisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN)
+	UnregisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN)
+	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
+	quirk_holder.clear_mood_event("photophobia")
 
 /datum/quirk/photophobia/proc/check_eyes(obj/item/organ/internal/eyes/sensitive_eyes)
 	SIGNAL_HANDLER
