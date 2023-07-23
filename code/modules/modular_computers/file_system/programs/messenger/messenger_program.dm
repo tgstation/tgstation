@@ -18,8 +18,6 @@
 
 	/// Whether the user is invisible to the message list.
 	var/invisible = FALSE
-	// Whether or not this device is currently hidden from the message monitor.
-	var/monitor_hidden = FALSE
 	/// great wisdom from PDA.dm - "no spamming" (prevents people from spamming the same message over and over)
 	COOLDOWN_DECLARE(last_text)
 	/// even more wisdom from PDA.dm - "no everyone spamming" (prevents people from spamming the same message over and over)
@@ -92,7 +90,7 @@
 
 	for(var/messenger_ref in messengers_sorted)
 		var/datum/computer_file/program/messenger/msgr = messengers_sorted[messenger_ref]
-		if(msgr == src || msgr.monitor_hidden || msgr.invisible) continue
+		if(msgr == src || msgr.invisible) continue
 
 		var/list/data = list()
 		data["name"] = msgr.computer.saved_identification
