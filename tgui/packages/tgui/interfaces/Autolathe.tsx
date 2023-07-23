@@ -56,7 +56,7 @@ export const Autolathe = (props, context) => {
                     {materialtotal / SHEET_MATERIAL_AMOUNT +
                       '/' +
                       materialsmax / SHEET_MATERIAL_AMOUNT +
-                      ' cm³'}
+                      ' sheets'}
                   </ProgressBar>
                 </LabeledList.Item>
                 <LabeledList.Item>
@@ -77,7 +77,7 @@ export const Autolathe = (props, context) => {
                               color="black">
                               <div style={{ transform: 'scaleX(-1)' }}>
                                 {material.amount / SHEET_MATERIAL_AMOUNT +
-                                  ' cm³'}
+                                  ' sheets'}
                               </div>
                             </ProgressBar>
                           </LabeledList.Item>
