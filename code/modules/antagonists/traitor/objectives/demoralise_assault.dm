@@ -22,6 +22,12 @@
 	/// Total number of successful attacks recorded.
 	var/attacks_inflicted = 0
 
+/datum/traitor_objective/target_player/assault/on_objective_taken(mob/user)
+	. = ..()
+
+	target.AddElement(/datum/element/relay_attackers)
+	RegisterSignal(target, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+
 /datum/traitor_objective/target_player/assault/proc/on_attacked(mob/source, mob/living/attacker, attack_flags)
 	SIGNAL_HANDLER
 
@@ -37,12 +43,6 @@
 
 	if(attacks_inflicted == attacks_required)
 		succeed_objective()
-
-/datum/traitor_objective/target_player/assault/on_objective_taken(mob/user)
-	. = ..()
-
-	target.AddElement(/datum/element/relay_attackers)
-	RegisterSignal(target, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
 /datum/traitor_objective/target_player/assault/ungenerate_objective()
 	UnregisterSignal(target, COMSIG_ATOM_WAS_ATTACKED)
