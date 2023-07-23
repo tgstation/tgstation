@@ -367,75 +367,6 @@
 	hardcore_value = 3
 	mail_goodies = list(/obj/item/reagent_containers/cup/glass/waterbottle)
 
-/datum/quirk/lightless
-	name = "Light Sensitivity"
-	desc = "Bright lights irritate you. Your eyes start to water and burn when exposed to light. Maybe it's a medical condition."
-	icon = FA_ICON_ARROWS_TO_EYE
-	value = -4
-	gain_text = span_danger("The safety of light feels off...")
-	lose_text = span_notice("Enlightening.")
-	medical_record_text = "Patient has acute phobia of light, and insists it is physically harmful."
-	hardcore_value = 4
-	mail_goodies = list(
-		/obj/item/flashlight/flashdark,
-		/obj/item/food/grown/mushroom/glowshroom/shadowshroom,
-		/obj/item/skillchip/light_remover,
-	)
-
-/datum/quirk/lightless/add(client/client_source)
-  RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(check_eyes))
-  RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(restore_eyes))
-  RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
-  update_eyes(quirk_holder.get_organ_slot(ORGAN_SLOT_EYES))
-
-/datum/quirk/lightless/remove()
-  UnregisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN)
-  UnregisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN)
-  UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
-  quirk_holder.clear_mood_event("lightless")
-
-/datum/quirk/lightless/proc/check_eyes(obj/item/organ/internal/eyes/sensitive_eyes)
-  SIGNAL_HANDLER
-  if(!istype(sensitive_eyes))
-	return
-  update_eyes(sensitive_eyes)
-
-/datum/quirk/lightless/proc/update_eyes(obj/item/organ/internal/eyes/target_eyes)
-  if(!istype(target_eyes))
-	return
-  if(istype(target_eyes, /obj/item/organ/internal/eyes/moth))
-	target_eyes.flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
-  else
-	target_eyes.flash_protect = FLASH_PROTECTION_SENSITIVE
-
-/datum/quirk/lightless/proc/restore_eyes(obj/item/organ/internal/eyes/normal_eyes)
-  SIGNAL_HANDLER
-  if(!istype(normal_eyes))
-	return
-  normal_eyes.flash_protect = initial(normal_eyes.flash_protect)
-
-/datum/quirk/lightless/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
-	SIGNAL_HANDLER
-
-	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
-		return
-
-	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
-		return
-
-	var/mob/living/carbon/human/human_holder = quirk_holder
-
-	if((human_holder.sight & SEE_TURFS) == SEE_TURFS)
-		return
-
-	var/turf/holder_turf = get_turf(quirk_holder)
-
-	var/lums = holder_turf.get_lumcount()
-
-	if(lums < LIGHTING_TILE_IS_DARK)
-		quirk_holder.clear_mood_event("lightless")
-		return
-	quirk_holder.add_mood_event("lightless", /datum/mood_event/lightless)
 
 /datum/quirk/item_quirk/nearsighted
 	name = "Nearsighted"
@@ -514,6 +445,73 @@
 		to_chat(quirk_holder, span_warning("Easy, easy, take it slow... you're in the dark..."))
 		quirk_holder.toggle_move_intent()
 	quirk_holder.add_mood_event("nyctophobia", /datum/mood_event/nyctophobia)
+
+/datum/quirk/photophobia
+	name = "Photophobia"
+	desc = "Bright lights irritate you. Your eyes start to water and burn when exposed to light. Maybe it's a medical condition."
+	icon = FA_ICON_ARROWS_TO_EYE
+	value = -4
+	gain_text = span_danger("The safety of light feels off...")
+	lose_text = span_notice("Enlightening.")
+	medical_record_text = "Patient has acute phobia of light, and insists it is physically harmful."
+	hardcore_value = 4
+	mail_goodies = list(
+		/obj/item/flashlight/flashdark,
+		/obj/item/food/grown/mushroom/glowshroom/shadowshroom,
+		/obj/item/skillchip/light_remover,
+	)
+
+/datum/quirk/photophobia/add(client/client_source)
+  RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(check_eyes))
+  RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(restore_eyes))
+  RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
+  update_eyes(quirk_holder.get_organ_slot(ORGAN_SLOT_EYES))
+
+/datum/quirk/photophobia/remove()
+  UnregisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN)
+  UnregisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN)
+  UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
+  quirk_holder.clear_mood_event("photophobia")
+
+/datum/quirk/photophobia/proc/check_eyes(obj/item/organ/internal/eyes/sensitive_eyes)
+	SIGNAL_HANDLER
+	if(!istype(sensitive_eyes))
+		return
+	update_eyes(sensitive_eyes)
+
+/datum/quirk/photophobia/proc/update_eyes(obj/item/organ/internal/eyes/target_eyes)
+	if(!istype(target_eyes))
+		return
+	target_eyes.flash_protect = max(target_eyes.flash_protect - 1, FLASH_PROTECTION_HYPER_SENSITIVE)
+
+/datum/quirk/photophobia/proc/restore_eyes(obj/item/organ/internal/eyes/normal_eyes)
+	SIGNAL_HANDLER
+	if(!istype(normal_eyes))
+		return
+	normal_eyes.flash_protect = initial(normal_eyes.flash_protect)
+
+/datum/quirk/photophobia/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
+		return
+
+	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	if(human_holder.sight & SEE_TURFS)
+		return
+
+	var/turf/holder_turf = get_turf(quirk_holder)
+
+	var/lums = holder_turf.get_lumcount()
+
+	if(lums < LIGHTING_TILE_IS_DARK)
+		quirk_holder.clear_mood_event("photophobia")
+		return
+	quirk_holder.add_mood_event("photophobia", /datum/mood_event/photophobia)
 
 /datum/quirk/softspoken
 	name = "Soft-Spoken"

@@ -128,7 +128,7 @@
 	mood_change = -3
 	timeout = 5 MINUTES
 
-/datum/mood_event/lightless
+/datum/mood_event/photophobia
 	description = "The lights are too bright..."
 	mood_change = -3
 
