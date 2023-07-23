@@ -89,7 +89,7 @@
 				signal.levels = SSmapping.levels_by_trait(ZTRAIT_STATION)
 				signal.send_to_receivers()
 
-			if(!force && signal.data["reject"])
+			if(!(force || signal.data["reject"]))
 				to_chat(usr, span_warning("ERROR: PDA message was rejected by the telecomms setup."))
 				return FALSE
 
