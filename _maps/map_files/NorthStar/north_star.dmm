@@ -20081,9 +20081,6 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/stamp/head/hop{
-	pixel_y = 7
-	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "fmE" = (
@@ -28426,7 +28423,14 @@
 /obj/machinery/button/ticket_machine{
 	pixel_x = -32
 	},
-/obj/item/flashlight/lamp,
+/obj/item/stamp/head/hop{
+	pixel_y = 5;
+	pixel_x = 8
+	},
+/obj/item/flashlight/lamp{
+	pixel_x = -4;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "hxy" = (
