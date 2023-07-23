@@ -117,11 +117,7 @@
 		ui.open()
 
 /obj/machinery/rnd/production/ui_static_data(mob/user)
-	var/list/data
-	if(isnull(materials.mat_container))
-		data = list()
-	else
-		data = materials.mat_container.ui_static_data()
+	var/list/data = materials.mat_container.ui_static_data()
 
 	var/list/designs = list()
 
@@ -179,7 +175,7 @@
 		if("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 
-			if(!materials.can_hold_material(material))
+			if(!materials.mat_container.can_hold_material(material))
 				// I don't know who you are or what you want, but whatever it is,
 				// we don't have it.
 				return

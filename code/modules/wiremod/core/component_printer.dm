@@ -163,11 +163,8 @@
 	return data
 
 /obj/machinery/component_printer/ui_static_data(mob/user)
-	var/list/data
-	if(isnull(materials.mat_container))
-		data = list()
-	else
-		data = materials.mat_container.ui_static_data()
+	var/list/data = materials.mat_container.ui_static_data()
+
 	var/list/designs = list()
 
 	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
@@ -487,11 +484,7 @@
 	return data
 
 /obj/machinery/module_duplicator/ui_static_data(mob/user)
-	var/list/data
-	if(isnull(materials.mat_container))
-		data = list()
-	else
-		data = materials.mat_container.ui_static_data()
+	var/list/data = materials.mat_container.ui_static_data()
 
 	var/list/designs = list()
 

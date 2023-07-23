@@ -335,11 +335,7 @@
 		ui.open()
 
 /obj/machinery/mecha_part_fabricator/ui_static_data(mob/user)
-	var/list/data
-	if(isnull(rmat.mat_container))
-		data = list()
-	else
-		data = rmat.mat_container.ui_static_data()
+	var/list/data = rmat.mat_container.ui_static_data()
 
 	var/list/designs = list()
 
