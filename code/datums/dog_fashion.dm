@@ -218,7 +218,7 @@
 	obj_icon_state = "butter"
 	speak = list() //they're very patient and focused on holding the butter on 'em
 	emote_see = list("shakes a little.", "looks around.")
-	emote_hear = list("licks a trickle of the butter up.")
+	emote_hear = list("licks a trickle of the butter up.", "smiles.")
 
 /datum/dog_fashion/head/butter/New(mob/M)
 	desc = "NAME. [M.real_name] with the butter. NAME. [M.real_name] with a butter on 'em."
