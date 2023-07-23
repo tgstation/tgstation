@@ -93,7 +93,7 @@
 	cost = PAYCHECK_CREW * 8
 	contains = list(/obj/item/clothing/gloves/color/yellow)
 
-/datum/supply_pack/goody/gorrilla_single
+/datum/supply_pack/goody/gorilla_single
 	name = "Gorilla Gloves Single-Pack"
 	desc = "A spare pair of gorilla gloves. Better for tackles than grippers from the security vendor."
 	cost = PAYCHECK_COMMAND * 6
