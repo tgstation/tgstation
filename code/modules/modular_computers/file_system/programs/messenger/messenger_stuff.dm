@@ -113,13 +113,13 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 
 /datum/pda_chat/proc/get_recp_name()
 	var/datum/computer_file/program/messenger/recp = recipient?.resolve()
-	if(istype(recp))
+	if(istype(recp) && (recipient.reference in GLOB.TabletMessengers))
 		cached_name = recp.computer.saved_identification
 	return cached_name
 
 /datum/pda_chat/proc/get_recp_job()
 	var/datum/computer_file/program/messenger/recp = recipient?.resolve()
-	if(istype(recp))
+	if(istype(recp) && (recipient.reference in GLOB.TabletMessengers))
 		cached_job = recp.computer.saved_job
 	return cached_job
 
