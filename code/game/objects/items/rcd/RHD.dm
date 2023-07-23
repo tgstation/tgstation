@@ -173,7 +173,8 @@
 				balloon_alert(user, "silo on hold!")
 			return FALSE
 		if(!silo_mats.mat_container)
-			balloon_alert(user, "no silo detected!")
+			if(user)
+				balloon_alert(user, "no silo detected!")
 			return FALSE
 		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount))
 			if(user)

@@ -48,7 +48,7 @@ handles linking back and forth.
 	if (silo)
 		silo.ore_connected_machines += src
 		mat_container = silo.GetComponent(/datum/component/material_container)
-	else
+	else if (allow_standalone)
 		_MakeLocal()
 	connecting = FALSE
 
