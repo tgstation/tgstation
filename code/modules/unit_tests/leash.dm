@@ -94,6 +94,7 @@
 	leash_wait.wait()
 	TEST_ASSERT(forcibly_teleported, "Pet should have been forcibly teleported, since they are too far away with no valid path")
 
+/// Validates that the leashed object cannot move outside of the max distance from owner
 /datum/unit_test/leash/limit_range
 
 /datum/unit_test/leash/limit_range/Run()
