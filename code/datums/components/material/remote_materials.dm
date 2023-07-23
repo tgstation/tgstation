@@ -36,21 +36,17 @@ handles linking back and forth.
 
 	var/turf/T = get_turf(parent)
 	if(force_connect || (mapload && is_station_level(T.z)))
-		addtimer(CALLBACK(src, PROC_REF(LateInitialize)))
 		connecting = TRUE
 
 /datum/component/remote_materials/RegisterWithParent()
-	if(!connecting && allow_standalone)
+	if(connecting)
+		silo = GLOB.ore_silo_default
+		if (silo)
+			silo.ore_connected_machines += src
+			mat_container = silo.GetComponent(/datum/component/material_container)
+		connecting = FALSE
+	if (!mat_container && allow_standalone)
 		_MakeLocal()
-
-/datum/component/remote_materials/proc/LateInitialize()
-	silo = GLOB.ore_silo_default
-	if (silo)
-		silo.ore_connected_machines += src
-		mat_container = silo.GetComponent(/datum/component/material_container)
-	else if (allow_standalone)
-		_MakeLocal()
-	connecting = FALSE
 
 /datum/component/remote_materials/Destroy()
 	if (silo)
