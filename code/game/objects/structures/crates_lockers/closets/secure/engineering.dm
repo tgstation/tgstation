@@ -85,7 +85,7 @@
 /obj/structure/closet/secure_closet/atmospherics/PopulateContents()
 	..()
 	new /obj/item/radio/headset/headset_eng(src)
-	new /obj/item/pipe_dispenser(src)
+
 	new /obj/item/storage/toolbox/mechanical(src)
 	new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/holosign_creator/atmos(src)
@@ -96,3 +96,8 @@
 	new /obj/item/clothing/head/utility/hardhat/welding/atmos(src)
 	new /obj/item/clothing/glasses/meson/engine/tray(src)
 	new /obj/item/extinguisher/advanced(src)
+
+/obj/structure/closet/secure_closet/atmospherics/populate_contents_immediate()
+	. = ..()
+
+	new /obj/item/pipe_dispenser(src)
