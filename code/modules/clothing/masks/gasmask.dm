@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 
 	if(cig)
 		var/cig_attackby = cig.attackby(tool, user)
-		var/mob/wearer = src.loc
+		var/mob/wearer = loc
 		wearer.update_worn_mask()
 		return cig_attackby
 	if(!istype(tool, /obj/item/gas_filter))
