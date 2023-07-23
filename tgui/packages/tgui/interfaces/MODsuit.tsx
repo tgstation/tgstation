@@ -525,9 +525,7 @@ const UserStatusSection = (props, context) => {
               <NoticeBox danger>User Irradiated</NoticeBox>
             ) : background_radiation_level ? (
               <NoticeBox>
-                {`Background level: ${radiationLevels(
-                  background_radiation_level
-                )}`}
+                {`Background: ${radiationLevels(background_radiation_level)}`}
               </NoticeBox>
             ) : (
               <NoticeBox info>Not Detected</NoticeBox>
