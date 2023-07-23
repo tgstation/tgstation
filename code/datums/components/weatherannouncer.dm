@@ -36,6 +36,7 @@
 	src.state_danger = state_danger
 	var/atom/speaker = parent
 	speaker.update_appearance(UPDATE_ICON)
+	update_light_color()
 
 /datum/component/weather_announcer/Destroy(force, silent)
 	STOP_PROCESSING(SSprocessing, src)
@@ -81,13 +82,18 @@
 	var/atom/movable/speaker = parent
 	speaker.say(get_warning_message())
 	speaker.update_appearance(UPDATE_ICON)
+	update_light_color()
+
+/datum/component/weather_announcer/proc/update_light_color()
+	var/atom/movable/light = parent
 	switch(warning_level)
 		if(WEATHER_ALERT_CLEAR)
-			speaker.set_light_color(LIGHT_COLOR_GREEN)
+			light.set_light_color(LIGHT_COLOR_GREEN)
 		if(WEATHER_ALERT_INCOMING)
-			speaker.set_light_color(LIGHT_COLOR_DIM_YELLOW)
+			light.set_light_color(LIGHT_COLOR_DIM_YELLOW)
 		if(WEATHER_ALERT_IMMINENT_OR_ACTIVE)
-			speaker.set_light_color(LIGHT_COLOR_INTENSE_RED)
+			light.set_light_color(LIGHT_COLOR_INTENSE_RED)
+	light.update_light()
 
 /// Returns a string we should display to communicate what you should be doing
 /datum/component/weather_announcer/proc/get_warning_message()
@@ -113,7 +119,6 @@
 			continue
 		for (var/mining_level in mining_z_levels)
 			if(mining_level in check_weather.impacted_z_levels)
-				is_weather_dangerous = !check_weather.aesthetic
 				warning_level = WEATHER_ALERT_IMMINENT_OR_ACTIVE
 				return 0
 
