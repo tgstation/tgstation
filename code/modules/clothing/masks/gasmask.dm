@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 			return ..()
 
 		if(max_filters <= 0 || cig)
-			balloon_alert(user, "can't hold filters!")
+			balloon_alert(user, "can't hold that!")
 			return ..()
 
 		if(has_filter)
