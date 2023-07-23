@@ -41,7 +41,7 @@
 
 /obj/item/sequence_scanner/attack_secondary(mob/living/target, mob/living/carbon/human/user, max_interact_count = 1)
 	add_fingerprint(user)
-	//no scanning if its a husk, DNA-less Species or DNA from a changeling/disease
+	//no scanning if its a husk, DNA-less Species or DNA that isn't able to be copied by a changeling/disease
 	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA) && !HAS_TRAIT(target, TRAIT_NO_DNA_COPY))
 		user.visible_message(span_warning("[user] is scanning [target]'s genetic makeup."))
 		if(!do_after(user, 3 SECONDS))
