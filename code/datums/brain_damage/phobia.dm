@@ -219,10 +219,12 @@
 	phobia_type = "space"
 	random_gain = FALSE
 
-<<<<<<< HEAD
 /datum/brain_trauma/mild/phobia/spiders
 	phobia_type = "spiders"
-
+	random_gain = FALSE
+/datum/brain_trauma/mild/phobia/strangers
+	phobia_type = "strangers"
+	random_gain = FALSE
 /datum/brain_trauma/mild/phobia/supernatural
 	phobia_type = "the supernatural"
 	random_gain = FALSE
