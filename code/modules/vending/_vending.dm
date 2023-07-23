@@ -159,9 +159,9 @@
 	var/default_price = 25
 	///Default price of premium items if not overridden
 	var/extra_price = 50
-
+	///fontawesome icon name to use in to display the user's balance in the vendor UI
 	var/displayed_currency_icon = "coins"
-
+	///String of the used currency to display in the vendor UI
 	var/displayed_currency_name = " cr"
 	///Whether our age check is currently functional
 	var/age_restrictions = TRUE
