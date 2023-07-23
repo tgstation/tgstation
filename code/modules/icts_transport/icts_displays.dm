@@ -1,7 +1,7 @@
 /obj/machinery/destination_sign
 	name = "destination sign"
 	desc = "A display to show you what direction the tram is travelling."
-	icon = 'icons/obj/machines/tram_display.dmi'
+	icon = 'icons/obj/machines/tram/tram_display.dmi'
 	icon_state = "desto_off"
 	base_icon_state = "desto_"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.2
@@ -10,7 +10,6 @@
 	density = FALSE
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	layer = SIGN_LAYER
-	bound_width = 64
 
 	/// The ID of the tram we're indicating
 	var/tram_id = TRAMSTATION_LINE_1

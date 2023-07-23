@@ -6201,7 +6201,8 @@
 /obj/structure/transport/linear/tram/grey,
 /obj/structure/window/reinforced/tram/split,
 /obj/machinery/destination_sign{
-	dir = 1
+	dir = 1;
+	pixel_x = 8
 	},
 /turf/open/openspace,
 /area/station/tram)
@@ -41284,7 +41285,9 @@
 "nKp" = (
 /obj/structure/transport/linear/tram/grey,
 /obj/structure/window/reinforced/tram/split,
-/obj/machinery/destination_sign,
+/obj/machinery/destination_sign{
+	pixel_x = -8
+	},
 /turf/open/openspace,
 /area/station/tram)
 "nKu" = (
@@ -167690,11 +167693,11 @@ aEl
 rOu
 umT
 ykP
-nKp
+rZD
 ffU
 gIm
 jUw
-rZD
+aMY
 ykP
 lej
 jeW
@@ -167951,7 +167954,7 @@ rZD
 xXU
 oZC
 ycE
-aMY
+rZD
 jEO
 jHR
 dWi
@@ -168204,7 +168207,7 @@ aEk
 rOu
 umT
 ykP
-rZD
+nKp
 hio
 uAE
 aEq
