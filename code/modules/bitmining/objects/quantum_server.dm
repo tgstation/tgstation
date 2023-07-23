@@ -259,13 +259,17 @@
 
 /// Gets a random available domain given the current points. Weighted towards higher cost domains.
 /obj/machinery/quantum_server/proc/get_random_domain_id()
+	if(points < 1)
+		return FALSE
+
 	var/list/available_domains = list()
 	var/total_cost = 0
 
 	for(var/datum/map_template/virtual_domain/available as anything in subtypesof(/datum/map_template/virtual_domain))
-		if(!initial(available.test_only) && initial(available.cost) <= points)
+		var/init_cost = initial(available.cost)
+		if(!initial(available.test_only) && init_cost > 0 && init_cost <= points)
 			available_domains += list(list(
-				cost = initial(available.cost),
+				cost = init_cost,
 				id = initial(available.id),
 			))
 
