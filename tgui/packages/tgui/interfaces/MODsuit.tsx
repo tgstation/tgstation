@@ -1,5 +1,5 @@
 import { BooleanLike } from 'common/react';
-import { formatPower } from '../format';
+import { formatSiUnit } from '../format';
 import { useBackend, useLocalState } from '../backend';
 import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, Dimmer, NumberInput, AnimatedNumber, Dropdown, NoticeBox } from '../components';
 import { Window } from '../layouts';
@@ -114,7 +114,9 @@ export const MODsuitContent = (props, context) => {
   const { interface_break } = data.suit_status;
   return (
     <Box>
-      {(!!interface_break && <LockedInterface />) || (
+      {interface_break ? (
+        <LockedInterface />
+      ) : (
         <Stack vertical>
           <Stack.Item>
             <Stack>
@@ -222,10 +224,9 @@ const ConfigureDataEntry = (props, context) => {
     list: <ConfigureListEntry {...props} />,
   };
   return (
-    <Table.Row>
-      <Table.Cell pb={2}>{display_name}</Table.Cell>
-      <Table.Cell pb={2}>{configureEntryTypes[type]}</Table.Cell>
-    </Table.Row>
+    <LabeledList.Item label={display_name}>
+      {configureEntryTypes[type]}
+    </LabeledList.Item>
   );
 };
 
@@ -255,13 +256,8 @@ const ConfigureScreen = (props, context) => {
   const { configuration_data, module_ref, module_name } = props;
   const configuration_keys = Object.keys(configuration_data);
   return (
-    <Dimmer backgroundColor="rgba(0, 0, 0, 0.8)">
-      <Table maxWidth={12}>
-        <Table.Row>
-          <Table.Cell colspan={2} pb={2}>
-            <h4>{module_name}</h4>
-          </Table.Cell>
-        </Table.Row>
+    <Box pb={1}>
+      <LabeledList>
         {configuration_keys.map((key) => {
           const data = configuration_data[key];
           return (
@@ -276,15 +272,8 @@ const ConfigureScreen = (props, context) => {
             />
           );
         })}
-        <Table.Row>
-          <Table.Cell colspan="2">
-            <Button fluid onClick={props.onExit} textAlign="center">
-              Done
-            </Button>
-          </Table.Cell>
-        </Table.Row>
-      </Table>
-    </Dimmer>
+      </LabeledList>
+    </Box>
   );
 };
 
@@ -361,11 +350,19 @@ const SuitStatusSection = (props, context) => {
             }}>
             {!core_name
               ? 'No Core Detected'
-              : cell_charge_current === 1e31
-                ? 'Infinite'
-                : `${formatPower(cell_charge_current)} of ${formatPower(
-                  cell_charge_max
-                )} (${charge_percent}%)`}
+              : cell_charge_max === 1
+                ? 'Power Cell Missing'
+                : cell_charge_current === 1e31
+                  ? 'Infinite'
+                  : `${formatSiUnit(
+                    cell_charge_current * 1000,
+                    0,
+                    'J'
+                  )} of ${formatSiUnit(
+                    cell_charge_max * 1000,
+                    0,
+                    'J'
+                  )} (${charge_percent}%)`}
           </ProgressBar>
         </LabeledList.Item>
         <LabeledList.Item label="ID Lock">
@@ -522,20 +519,18 @@ const UserStatusSection = (props, context) => {
         )}
         {background_radiation_level !== undefined && (
           <LabeledList.Item label="Radiation">
-            {active ? (
-              is_user_irradiated ? (
-                <NoticeBox danger>User Irradiated</NoticeBox>
-              ) : background_radiation_level ? (
-                <NoticeBox>
-                  {`Background level: ${radiationLevels(
-                    background_radiation_level
-                  )}`}
-                </NoticeBox>
-              ) : (
-                <NoticeBox info>Not Detected</NoticeBox>
-              )
-            ) : (
+            {!active ? (
               'Unknown'
+            ) : is_user_irradiated ? (
+              <NoticeBox danger>User Irradiated</NoticeBox>
+            ) : background_radiation_level ? (
+              <NoticeBox>
+                {`Background level: ${radiationLevels(
+                  background_radiation_level
+                )}`}
+              </NoticeBox>
+            ) : (
+              <NoticeBox info>Not Detected</NoticeBox>
             )}
           </LabeledList.Item>
         )}
@@ -613,7 +608,9 @@ const ModuleSection = (props, context) => {
       title="Modules"
       fill
       buttons={`${complexity} of ${complexity_max} complexity used`}>
-      {(module_info.length !== 0 && (
+      {!module_info.length ? (
+        <NoticeBox>No Modules Detected</NoticeBox>
+      ) : (
         <Table>
           <Table.Row header>
             <Table.Cell colspan={3}>Actions</Table.Cell>
@@ -660,8 +657,8 @@ const ModuleSection = (props, context) => {
                     icon={
                       module.module_type === 3
                         ? module.module_active
-                          ? 'square-check'
-                          : 'square'
+                          ? 'check-square-o'
+                          : 'square-o'
                         : 'power-off'
                     }
                     selected={module.module_active}
@@ -672,7 +669,11 @@ const ModuleSection = (props, context) => {
                 </Table.Cell>
                 <Table.Cell width={1}>
                   <Button
-                    onClick={() => setConfigureState(module.ref)}
+                    onClick={() =>
+                      setConfigureState(
+                        configureState === module.ref ? '' : module.ref
+                      )
+                    }
                     icon="cog"
                     selected={configureState === module.ref}
                     tooltip="Configure"
@@ -701,7 +702,6 @@ const ModuleSection = (props, context) => {
                       configuration_data={module.configuration_data}
                       module_ref={module.ref}
                       module_name={module.module_name}
-                      onExit={() => setConfigureState('')}
                     />
                   )}
                 </Table.Cell>
@@ -717,7 +717,7 @@ const ModuleSection = (props, context) => {
             );
           })}
         </Table>
-      )) || <NoticeBox>No Modules Detected</NoticeBox>}
+      )}
     </Section>
   );
 };
