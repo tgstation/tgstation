@@ -26,7 +26,7 @@
 	result = /obj/item/reagent_containers/crackbrick
 	reqs = list(/obj/item/reagent_containers/crack = 4)
 	parts = list(/obj/item/reagent_containers/crack = 4)
-	time = 20
+	time = 2 SECONDS
 	category = CAT_CHEMISTRY //i might just make a crafting category for drugs at some point
 
 // Should probably give this the edible component at some point
@@ -99,7 +99,7 @@
 	result = /obj/item/reagent_containers/cocainebrick
 	reqs = list(/obj/item/reagent_containers/cocaine = 5)
 	parts = list(/obj/item/reagent_containers/cocaine = 5)
-	time = 20
+	time = 2 SECONDS
 	category = CAT_CHEMISTRY //i might just make a crafting category for drugs at some point
 
 //if you want money, convert it into crackbricks
