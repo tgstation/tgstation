@@ -1,5 +1,5 @@
 //predominantly negative traits
-
+#define MOOD_CATEGORY_PHOTOPHOBIA "photophobia"
 /datum/quirk/badback
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evenly weighted objects are fine, though."
@@ -471,7 +471,7 @@
 	UnregisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN)
 	UnregisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN)
 	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
-	quirk_holder.clear_mood_event("photophobia")
+	quirk_holder.clear_mood_event(MOOD_CATEGORY_PHOTOPHOBIA)
 
 /datum/quirk/photophobia/proc/check_eyes(obj/item/organ/internal/eyes/sensitive_eyes)
 	SIGNAL_HANDLER
@@ -509,9 +509,9 @@
 	var/lums = holder_turf.get_lumcount()
 
 	if(lums < LIGHTING_TILE_IS_DARK)
-		quirk_holder.clear_mood_event("photophobia")
+		quirk_holder.clear_mood_event(MOOD_CATEGORY_PHOTOPHOBIA)
 		return
-	quirk_holder.add_mood_event("photophobia", /datum/mood_event/photophobia)
+	quirk_holder.add_mood_event(MOOD_CATEGORY_PHOTOPHOBIA, /datum/mood_event/photophobia)
 
 /datum/quirk/softspoken
 	name = "Soft-Spoken"
@@ -1486,3 +1486,4 @@
 
 /datum/quirk/cursed/add(client/client_source)
 	quirk_holder.AddComponent(/datum/component/omen/quirk)
+#undef MOOD_CATEGORY_PHOTOPHOBIA
