@@ -6,7 +6,8 @@
 	obj/machinery/quantum_server/server,
 	help_text,
 )
-	if(!locate(/datum/action/avatar_domain_info) in occupant.actions)
+
+	if(!locate(/datum/action/avatar_domain_info) in avatar.actions)
 		var/datum/avatar_help_text/help_datum = new(help_text)
 		var/datum/action/avatar_domain_info/action = new(help_datum)
 		action.Grant(avatar)

@@ -81,7 +81,12 @@
 
 	return FALSE
 
-/// If this goes smoothly, should reconnect a receiving mind to the occupant's body
+/**
+ * ### Disconnect occupant
+ * If this goes smoothly, should reconnect a receiving mind to the occupant's body
+ *
+ * This is the second stage of the process -  if you want to disconn avatars start at the mind first
+ */
 /obj/structure/netchair/proc/disconnect_occupant(datum/mind/receiving, forced = FALSE)
 	var/mob/living/occupant = occupant_ref?.resolve()
 	var/datum/mind/hosted_mind = occupant_mind_ref?.resolve()
