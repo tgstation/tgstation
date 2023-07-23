@@ -222,14 +222,6 @@
 <<<<<<< HEAD
 /datum/brain_trauma/mild/phobia/spiders
 	phobia_type = "spiders"
-=======
-/datum/brain_trauma/mild/phobia/doctors
-	phobia_type = "doctors"
-	random_gain = FALSE
-
-/datum/brain_trauma/mild/phobia/authority
-	phobia_type = "authority"
-	random_gain = FALSE
 
 /datum/brain_trauma/mild/phobia/supernatural
 	phobia_type = "the supernatural"

@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 	"space" = construct_phobia_regex("space"),
 	"spiders" = construct_phobia_regex("spiders"),
 	"strangers" = construct_phobia_regex("strangers"),
-	"the supernatural" = construct_phobia_regex("the supernatural"),,
+	"the supernatural" = construct_phobia_regex("the supernatural"),
 	"heresy" = construct_phobia_regex("heresy"),
 ))
 
