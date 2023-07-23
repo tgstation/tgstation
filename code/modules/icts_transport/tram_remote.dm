@@ -3,7 +3,7 @@
 #define TRAMCTRL_FAST 1
 #define TRAMCTRL_SAFE 0
 
-/obj/item/tram_remote
+/obj/item/assembly/control/icts/remote
 	icon_state = "tramremote_nis"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -12,71 +12,82 @@
 	name = "tram remote"
 	desc = "A remote control that can be linked to a tram. This can only go well."
 	w_class = WEIGHT_CLASS_TINY
-	///desired tram direction
-	var/direction = TRAMCTRL_INBOUND
+	///desired tram destination
+	var/destination
+	///current tram direction
+	var/direction
 	///fast and fun, or safe and boring
-	var/mode = TRAMCTRL_FAST
-	///weakref to the tram piece we control
-	var/datum/weakref/tram_ref
-	///cooldown for the remote
-	COOLDOWN_DECLARE(tram_remote)
+	options = RAPID_MODE
 
-/obj/item/tram_remote/estop
-	name = "debug tram remote"
-
-/obj/item/tram_remote/Initialize(mapload)
+/obj/item/assembly/control/icts/remote/Initialize(mapload)
 	. = ..()
+	SSicts_transport.hello(src)
+	RegisterSignal(SSicts_transport, COMSIG_ICTS_RESPONSE, PROC_REF(call_response))
 	register_context()
 
-/obj/item/tram_remote/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(!tram_ref)
+/obj/item/assembly/control/icts/remote/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!specific_transport_id)
 		context[SCREENTIP_CONTEXT_LMB] = "Link tram"
 		return CONTEXTUAL_SCREENTIP_SET
 	context[SCREENTIP_CONTEXT_LMB] = "Dispatch tram"
-	context[SCREENTIP_CONTEXT_RMB] = "Change direction"
+	context[SCREENTIP_CONTEXT_RMB] = "Select destination"
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle door safeties"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Change tram"
 	return CONTEXTUAL_SCREENTIP_SET
 
 ///set tram control direction
-/obj/item/tram_remote/attack_self_secondary(mob/user)
-	switch(direction)
-		if(TRAMCTRL_INBOUND)
-			direction = TRAMCTRL_OUTBOUND
-		if(TRAMCTRL_OUTBOUND)
-			direction = TRAMCTRL_INBOUND
+/obj/item/assembly/control/icts/remote/attack_self_secondary(mob/user)
+	//var/datum/transport_controller/linear/tram/tram_controller = tram_ref?.resolve()
+	if(!specific_transport_id)
+		balloon_alert(user, "no tram linked!")
+		return
+
+	destination = null
+	var/obj/effect/landmark/icts/nav_beacon/tram/requested_destination = tgui_input_list(user, "Available destinations", "Where to?", get_destinations())
+	destination = requested_destination
 	update_appearance()
-	balloon_alert(user, "[direction ? "< inbound" : "outbound >"]")
+	// balloon_alert(user, "[direction ? "< inbound" : "outbound >"]")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-///set safety bypass
-/obj/item/tram_remote/CtrlClick(mob/user)
-	switch(mode)
-		if(TRAMCTRL_SAFE)
-			mode = TRAMCTRL_FAST
-		if(TRAMCTRL_FAST)
-			mode = TRAMCTRL_SAFE
-	update_appearance()
-	balloon_alert(user, "mode: [mode ? "fast" : "safe"]")
+/obj/item/assembly/control/icts/proc/get_destinations()
+	. = list()
+	for(var/obj/effect/landmark/icts/nav_beacon/tram/destination as anything in SSicts_transport.nav_beacons[specific_transport_id])
+		var/list/this_destination = list()
+		this_destination["name"] = destination.name
+		this_destination["dest_icons"] = destination.tgui_icons
+		this_destination["id"] = destination.platform_code
+		LAZYADDASSOCLIST(., destination.name, destination.platform_code)
 
-/obj/item/tram_remote/examine(mob/user)
+///set safety bypass
+/obj/item/assembly/control/icts/remote/CtrlClick(mob/user)
+	switch(options)
+		if(!RAPID_MODE)
+			options |= RAPID_MODE
+		if(RAPID_MODE)
+			options &= ~RAPID_MODE
+	update_appearance()
+	balloon_alert(user, "mode: [options ? "fast" : "safe"]")
+
+/obj/item/assembly/control/icts/remote/examine(mob/user)
 	. = ..()
-	if(!tram_ref)
+	if(!specific_transport_id)
 		. += "There is an X showing on the display."
-		. += "Left-click a tram request button to link."
+		. += "Left-click to link to a tram."
 		return
 	. += "The arrow on the display is pointing [direction ? "inbound" : "outbound"]."
-	. += "The rapid mode light is [mode ? "on" : "off"]."
-	if (!COOLDOWN_FINISHED(src, tram_remote))
-		. += "The number on the display shows [DisplayTimeText(COOLDOWN_TIMELEFT(src, tram_remote), 1)]."
+	. += "The rapid mode light is [options ? "on" : "off"]."
+	if(cooldown)
+		. += "The number on the display shows [DisplayTimeText(cooldown, 1)]."
 	else
 		. += "The display indicates ready."
 	. += "Left-click to dispatch tram."
-	. += "Right-click to toggle direction."
+	. += "Right-click to set destination."
 	. += "Ctrl-click to toggle safety bypass."
 
-/obj/item/tram_remote/update_icon_state()
+/obj/item/assembly/control/icts/remote/update_icon_state()
 	. = ..()
-	if(!tram_ref)
+
+	if(!specific_transport_id)
 		icon_state = "tramremote_nis"
 		return
 	switch(direction)
@@ -85,88 +96,51 @@
 		if(TRAMCTRL_OUTBOUND)
 			icon_state = "tramremote_ob"
 
-/obj/item/tram_remote/update_overlays()
+/obj/item/assembly/control/icts/remote/update_overlays()
 	. = ..()
-	if(mode == TRAMCTRL_FAST)
+	if(options & RAPID_MODE)
 		. += mutable_appearance(icon, "tramremote_emag")
 
-/obj/item/tram_remote/attack_self(mob/user)
-	if (!COOLDOWN_FINISHED(src, tram_remote))
-		balloon_alert(user, "cooldown: [DisplayTimeText(COOLDOWN_TIMELEFT(src, tram_remote), 1)]")
-		return FALSE
-	if(try_force_tram(user))
-		COOLDOWN_START(src, tram_remote, 2 MINUTES)
+/obj/item/assembly/control/icts/remote/attack_self(mob/user)
+	if(!specific_transport_id)
+		link_tram(user)
+		return
+
+	if(cooldown)
+		balloon_alert(user, "cooldown: [DisplayTimeText(cooldown, 1)]")
+		return
+
+	activate(user)
+	//	COOLDOWN_START(src, tram_remote, 2 MINUTES)
 
 ///send our selected commands to the tram
-/obj/item/tram_remote/proc/try_force_tram(mob/user)
-	var/datum/transport_controller/linear/tram/tram_part = tram_ref?.resolve()
-	if(!tram_part)
+/obj/item/assembly/control/icts/remote/activate(mob/user)
+	if(!specific_transport_id)
 		balloon_alert(user, "no tram linked!")
-		return FALSE
-	if(tram_part.controller_status & CONTROLS_LOCKED || tram_part.controller_active) // someone else started already
-		balloon_alert(user, "tram busy!")
-		return FALSE
-	var/tram_id = tram_part.specific_transport_id
-	var/destination_platform = null
-	var/platform = 0
-	switch(direction)
-		if(TRAMCTRL_INBOUND)
-			platform = clamp(tram_part.idle_platform.platform_code - 1, 1, INFINITY)
-		if(TRAMCTRL_OUTBOUND)
-			platform = clamp(tram_part.idle_platform.platform_code + 1, 1, INFINITY)
-	if(platform == tram_part.idle_platform.platform_code)
-		balloon_alert(user, "invalid command!")
-		return FALSE
-	for (var/obj/effect/landmark/icts/nav_beacon/tram/destination as anything in SSicts_transport.transports_by_type[tram_id])
-		if(destination.platform_code == platform)
-			destination_platform = destination
-			break
-	if(!destination_platform)
-		balloon_alert(user, "invalid command!")
-		return FALSE
-	else
-		switch(mode)
-			if(TRAMCTRL_FAST)
-				//tram_part.dispatch_transport(destination_platform, rapid = TRUE)
-				tram_part.dispatch_transport(destination_platform)
-			if(TRAMCTRL_SAFE)
-				//tram_part.dispatch_transport(destination_platform, rapid = FALSE)
-				tram_part.dispatch_transport(destination_platform)
-		balloon_alert(user, "tram dispatched")
-		return TRUE
-
-/obj/item/tram_remote/afterattack(atom/target, mob/user)
-	link_tram(user, target)
-
-/obj/item/tram_remote/proc/link_tram(mob/user, atom/target)
-	var/datum/transport_controller/linear/tram/smacked_device = target
-	if(!istype(smacked_device, /obj/machinery/button/icts))
 		return
-	tram_ref = null
-	for(var/datum/transport_controller/linear/tram/transport as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
-		if(transport.specific_transport_id == smacked_device.specific_transport_id)
-			tram_ref = WEAKREF(transport)
-			break
-	if(tram_ref)
+	if(!destination)
+		balloon_alert(user, "no destination!")
+		return
+
+	SEND_SIGNAL(src, COMSIG_ICTS_REQUEST, specific_transport_id, destination, options)
+
+/obj/item/assembly/control/icts/remote/AltClick(mob/user)
+	link_tram(user)
+
+/obj/item/assembly/control/icts/remote/proc/link_tram(mob/user)
+	specific_transport_id = null
+	var/list/transports_available
+	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
+		LAZYADD(transports_available, tram.specific_transport_id)
+
+	specific_transport_id = tgui_input_list(user, "Available transports", "Select a transport", transports_available)
+
+	if(specific_transport_id)
 		balloon_alert(user, "tram linked")
 	else
 		balloon_alert(user, "link failed!")
+
 	update_appearance()
-
-
-/obj/item/tram_remote/estop/attack_self(mob/user)
-	tram_estop(user)
-
-/obj/item/tram_remote/estop/proc/tram_estop(mob/user)
-	var/datum/transport_controller/linear/tram/tram_part = tram_ref?.resolve()
-	if(!tram_part)
-		balloon_alert(user, "no tram linked!")
-		return FALSE
-	balloon_alert(user, "emergency!")
-	tram_part.estop()
-	return TRUE
-
-
 
 #undef TRAMCTRL_INBOUND
 #undef TRAMCTRL_OUTBOUND

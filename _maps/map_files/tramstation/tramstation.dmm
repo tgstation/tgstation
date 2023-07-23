@@ -9381,6 +9381,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/drone_bay)
+"bQI" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/transport/linear/tram/grey,
+/obj/structure/window/reinforced/tram,
+/obj/machinery/light/tram/exterior/directional/west,
+/turf/open/openspace,
+/area/station/tram)
 "bQQ" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -20017,6 +20026,7 @@
 /obj/structure/fluff/tram_rail,
 /obj/structure/transport/linear/tram/grey,
 /obj/structure/window/reinforced/tram,
+/obj/machinery/light/tram/exterior/red/directional/east,
 /turf/open/openspace,
 /area/station/tram)
 "fNx" = (
@@ -24418,6 +24428,7 @@
 	},
 /obj/structure/transport/linear/tram/grey,
 /obj/structure/window/reinforced/tram,
+/obj/machinery/light/tram/exterior/red/directional/east,
 /turf/open/openspace,
 /area/station/tram)
 "hCv" = (
@@ -64288,6 +64299,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"vQR" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/transport/linear/tram/grey,
+/obj/structure/window/reinforced/tram,
+/obj/machinery/light/tram/exterior/directional/west,
+/turf/open/openspace,
+/area/station/tram)
 "vQT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -69601,6 +69619,9 @@
 /obj/structure/fluff/tram_rail,
 /obj/structure/transport/linear/tram/grey,
 /obj/structure/chair/sofa/bench/tram/left,
+/obj/machinery/light/tram/interior/directional/north{
+	icon_state = "tram8"
+	},
 /turf/open/openspace,
 /area/station/tram)
 "xXZ" = (
@@ -69899,6 +69920,7 @@
 /obj/structure/chair/sofa/bench/tram/left{
 	dir = 1
 	},
+/obj/machinery/light/tram/interior/directional/south,
 /turf/open/openspace,
 /area/station/tram)
 "ycI" = (
@@ -169236,9 +169258,9 @@ aEm
 oRs
 izU
 gjM
-fNs
+vQR
 poE
-hCt
+bQI
 cNT
 izU
 vvz

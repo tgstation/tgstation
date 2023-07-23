@@ -157,20 +157,23 @@
 		return // we're already animating, don't reset that
 	open(forced = BYPASS_DOOR_CHECKS) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
 	return
-
-/obj/item/assembly/control/icts_call
+/obj/item/assembly/control/icts
+	///the transport ID we're making requests about
+	var/specific_transport_id = TRAMSTATION_LINE_1
+	///options to be passed with the requests
+	var/options = NONE
+/obj/item/assembly/control/icts/call_button
 	name = "tram call button"
 	desc = "A small device used to bring trams to you."
 	///ID to link to allow us to link to one specific tram in the world
-	var/specific_transport_id = TRAMSTATION_LINE_1
 	id = 0
 
-/obj/item/assembly/control/icts_call/Initialize(mapload)
+/obj/item/assembly/control/icts/call_button/Initialize(mapload)
 	..()
 	SSicts_transport.hello(src)
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_RESPONSE, PROC_REF(call_response))
 
-/obj/item/assembly/control/icts_call/proc/call_response(controller, list/relevant, response_code, response_info)
+/obj/item/assembly/control/icts/proc/call_response(controller, list/relevant, response_code, response_info)
 	SIGNAL_HANDLER
 	if(!LAZYFIND(relevant, src))
 		return
@@ -194,7 +197,7 @@
 				else
 					say("Tram controller error. Please contact the nearest engineer.")
 
-/obj/item/assembly/control/icts_call/activate()
+/obj/item/assembly/control/icts/call_button/activate()
 	if(cooldown)
 		return
 	cooldown = TRUE
@@ -210,13 +213,13 @@
 	icon_state = "tram"
 	light_color = LIGHT_COLOR_DARK_BLUE
 	can_alter_skin = FALSE
-	device_type = /obj/item/assembly/control/icts_call
+	device_type = /obj/item/assembly/control/icts/call_button
 	req_access = list()
 	var/specific_transport_id = TRAMSTATION_LINE_1
 	id = 0
 
 /obj/machinery/button/icts/tram/setup_device()
-	var/obj/item/assembly/control/icts_call/icts_device = device
+	var/obj/item/assembly/control/icts/call_button/icts_device = device
 	icts_device.id = id
 	icts_device.specific_transport_id = specific_transport_id
 	return ..()
@@ -242,7 +245,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/icts/tram, 32)
 	icon_state = "tram"
 	light_color = LIGHT_COLOR_DARK_BLUE
 	can_alter_skin = FALSE
-	device_type = /obj/item/assembly/control/icts_call
+	device_type = /obj/item/assembly/control/icts/call_button
 	req_access = list()
 	specific_transport_id = TRAMSTATION_LINE_1
 	id = 0
