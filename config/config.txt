@@ -252,11 +252,11 @@ TICKLAG 0.5
 
 ### Comment these three out to prevent notes fading out over time for admins.
 ## Sets how admin notes are faded, either by time elapsed (calculated in days), or playtime (calculated in hours). ('time' for time elapsed, 'playtime' for playtime elapsed)
-NOTE_FADE_TYPE playtime
+NOTE_FADE_TYPE time
 ## Notes older then this will start fading out.
 NOTE_FRESH_TIME 91.31055
 ## Notes older then this will be completely faded out.
-NOTE_STALE_TIME 365.2422
+NOTE_STALE_TIMES 365.2422
 
 ## Uncomment to allow drastic performence enhancemet measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
 #AUTO_LAG_SWITCH_POP 75
