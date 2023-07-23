@@ -940,3 +940,19 @@
   - bugfix: removed a false silly tip about blob taking damage from flashbangs
   scriptis:
   - rscadd: ponies
+2023-07-23:
+  Inari-Whitebear:
+  - bugfix: Cable connections on various structures including electrified grilles,
+      APC terminals, and SMES terminals have been rectified and will shock as expected
+      again.
+  - bugfix: Gas miners draw power properly again.
+  JohnFulpWillard:
+  - qol: The TTS and TTS Blips option is now one choiced preference.
+  Melbert:
+  - rscadd: 'Wizards have a new Right and Wrong: Mass Teaching, allowing them to grant
+      everyone on the station one spell or relic of their choice!'
+  Thebleh:
+  - bugfix: Fixed several APC related issues.
+  vinylspiders:
+  - bugfix: fixed a bug that would cause you to be unable to lean again if you tried
+      leaning while facing the wrong direction
