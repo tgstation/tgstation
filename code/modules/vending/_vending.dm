@@ -159,6 +159,10 @@
 	var/default_price = 25
 	///Default price of premium items if not overridden
 	var/extra_price = 50
+
+	var/displayed_currency_icon = "coins"
+
+	var/displayed_currency_name = " cr"
 	///Whether our age check is currently functional
 	var/age_restrictions = TRUE
 	/**
@@ -893,6 +897,8 @@
 	data["department"] = payment_department
 	data["jobDiscount"] = DEPARTMENT_DISCOUNT
 	data["product_records"] = list()
+	data["displayed_currency_icon"] = displayed_currency_icon
+	data["displayed_currency_name"] = displayed_currency_name
 
 	var/list/categories = list()
 
