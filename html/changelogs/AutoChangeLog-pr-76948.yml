@@ -1,4 +1,0 @@
-author: "Sapphoqueer"
-delete-after: True
-changes:
-  - bugfix: "fixes a bug where borgs and TK users could effectively break ID's by removing them from modular computers."

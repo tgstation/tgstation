@@ -900,3 +900,59 @@
   JohnFulpWillard:
   - bugfix: '[Birdshot] Xenos can no longer immediately destroy the shield wall generator
       to break out.'
+2023-07-22:
+  CoiledLamb, RyeRice:
+  - image: cleans up shading on plasmatank sprite, gives it a cool new symbol.
+  Ghommie:
+  - image: walking on water will now immerse you in it... visually, at least.
+  Improvedname:
+  - bugfix: Brings security berets down to softcap armor values also softcaps get
+      wound armor
+  JohnFulpWillard:
+  - spellcheck: Silicons using weight machines are now told how pointless the task
+      was.
+  - spellcheck: Weight machine tooltips no longer lie about using LMB to use the machine.
+  Justice12354:
+  - qol: The word "chemical" has been removed from "chemical patch" when printing
+      patches
+  Melbert:
+  - bugfix: Once again you can award people medals.
+  Momo8289:
+  - qol: You can now use any hat with the hat stabilizer MOD
+  - bugfix: The MOD eating apparatus module now properly disables pepper spray protection
+  Sapphoqueer:
+  - bugfix: fixes a bug where borgs and TK users could effectively break ID's by removing
+      them from modular computers.
+  Sealed101:
+  - bugfix: fixed silicon alarm reports displaying power alarms as ALARM_ALARM_POWER
+  Senefi:
+  - rscadd: MetaStation Chemical Storage now has its own APC
+  - rscadd: MetaStation Chemical Storage is slightly larger than before
+  - rscadd: Ice Box Station Chemical Storage now has its own APC
+  itseasytosee:
+  - rscadd: You can now lean against walls! Simply turn your back to the wall and
+      clickdrag yourself onto it.
+  - bugfix: There should no longer be any instances of spacemen being able to run
+      straight through eachother as if they weren't even there.
+  - spellcheck: Added more variance to item throwing text.
+  - refactor: Mob density has been refactored
+  jughu:
+  - bugfix: removed a false silly tip about blob taking damage from flashbangs
+  scriptis:
+  - rscadd: ponies
+2023-07-23:
+  Inari-Whitebear:
+  - bugfix: Cable connections on various structures including electrified grilles,
+      APC terminals, and SMES terminals have been rectified and will shock as expected
+      again.
+  - bugfix: Gas miners draw power properly again.
+  JohnFulpWillard:
+  - qol: The TTS and TTS Blips option is now one choiced preference.
+  Melbert:
+  - rscadd: 'Wizards have a new Right and Wrong: Mass Teaching, allowing them to grant
+      everyone on the station one spell or relic of their choice!'
+  Thebleh:
+  - bugfix: Fixed several APC related issues.
+  vinylspiders:
+  - bugfix: fixed a bug that would cause you to be unable to lean again if you tried
+      leaning while facing the wrong direction
