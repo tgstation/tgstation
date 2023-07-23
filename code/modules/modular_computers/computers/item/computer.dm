@@ -505,14 +505,14 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
 	else if(device_theme == PDA_THEME_RETRO)
-		//playsound(src, 'sound/machines/imrcv.ogg', 50) // don't vary
+		playsound(src, 'sound/machines/imrcv.ogg', 50) // don't vary
 	else
 		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 	audible_message("*[ringtone]*")
 
 /obj/item/modular_computer/proc/send_sound()
 	if(device_theme == PDA_THEME_RETRO)
-		//playsound(src, 'sound/machines/imsnd.ogg', 15)
+		playsound(src, 'sound/machines/imsend.ogg', 15)
 	else
 		playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
 
