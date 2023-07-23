@@ -338,7 +338,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 		// If it is, check if that mob is actually wearing the mask
 		var/mob/living/carbon/mask_holder = potential_smoker
-		if(!mask_holder.wear_mask == smoker)
+		if(mask_holder.wear_mask != smoker)
 			reagents.remove_any(to_smoke)
 			return
 

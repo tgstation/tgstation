@@ -55,8 +55,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	return..()
 
 /obj/item/clothing/mask/gas/equipped(mob/equipee, slot)
-	if(cig)
-		cig.equipped(equipee, slot)
+	cig?.equipped(equipee, slot)
 	return ..()
 
 /obj/item/clothing/mask/gas/adjustmask(mob/living/carbon/user)
@@ -85,7 +84,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 
 /obj/item/clothing/mask/gas/attackby(obj/item/tool, mob/user)
 	if(istype(tool, /obj/item/clothing/mask/cigarette))
-		var/valid_wearer = ismob(src.loc)
+		var/valid_wearer = ismob(loc)
 
 		if(flags_cover & MASKCOVERSMOUTH)
 			balloon_alert(user, "mask's mouth is covered!")
@@ -101,9 +100,9 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 
 		cig = tool
 		if(valid_wearer)
-			cig.equipped(src.loc, ITEM_SLOT_MASK)
+			cig.equipped(loc, ITEM_SLOT_MASK)
 		cig.forceMove(src)
-		var/mob/wearer = src.loc
+		var/mob/wearer = loc
 		wearer.update_worn_mask()
 		return TRUE
 
@@ -126,8 +125,8 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	if(cig)
 		user.put_in_hands(cig)
 		cig = null
-		if(ismob(src.loc))
-			var/mob/wearer = src.loc
+		if(ismob(loc))
+			var/mob/wearer = loc
 			wearer.update_worn_mask()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!has_filter || !max_filters)
