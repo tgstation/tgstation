@@ -16,4 +16,5 @@
 #define COMSIG_OOZE_EAT_ATOM "ooze_eat_atom"
 	#define COMPONENT_ATOM_EATEN  (1<<0)
 
-#define COMSIG_FOUND_TARGET "comsig_found_target"
+///Called when a /mob/living/simple_animal/hostile fines a new target: (atom/source, new_target)
+#define COMSIG_HOSTILE_FOUND_TARGET "comsig_hostile_found_target"

@@ -787,3 +787,4 @@ Difficulty: Hard
 	falloff_exponent = 12
 	falloff_distance = 12
 	pressure_affected = FALSE
+	use_reverb = FALSE
