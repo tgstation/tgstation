@@ -102,10 +102,11 @@
 	extended_desc = theme.extended_desc
 	slowdown_inactive = theme.slowdown_inactive
 	slowdown_active = theme.slowdown_active
+	activation_step_time = theme.activation_step_time
 	complexity_max = theme.complexity_max
 	ui_theme = theme.ui_theme
 	charge_drain = theme.charge_drain
-	wires = new /datum/wires/mod(src)
+	set_wires(new /datum/wires/mod(src))
 	if(length(req_access))
 		locked = TRUE
 	new_core?.install(src)
@@ -400,9 +401,10 @@
 	else
 		return ..()
 
-/obj/item/mod/control/emag_act(mob/user)
+/obj/item/mod/control/emag_act(mob/user, obj/item/card/emag/emag_card)
 	locked = !locked
 	balloon_alert(user, "suit access [locked ? "locked" : "unlocked"]")
+	return TRUE
 
 /obj/item/mod/control/emp_act(severity)
 	. = ..()
@@ -422,6 +424,7 @@
 		set_wearer(user)
 
 /obj/item/mod/control/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	. = ..()
 	quick_activation()
 
 /obj/item/mod/control/doStrip(mob/stripper, mob/owner)

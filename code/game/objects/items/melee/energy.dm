@@ -84,7 +84,7 @@
 		var/mob/living/carbon/carbon_user = user
 		if(carbon_user.wear_mask)
 			in_mouth = ", barely missing [carbon_user.p_their()] nose"
-	. = span_warning("[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [atom.name] in the process.")
+	. = span_warning("[user] swings [user.p_their()] [name][in_mouth]. [user.p_They()] light[user.p_s()] [user.p_their()] [atom.name] in the process.")
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
 
@@ -250,6 +250,7 @@
 
 /obj/item/melee/energy/sword/saber/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/jousting, damage_boost_per_tile = 1, knockdown_chance_per_tile = 10)
 	if(!sword_color_icon && LAZYLEN(possible_sword_colors))
 		sword_color_icon = pick(possible_sword_colors)
 

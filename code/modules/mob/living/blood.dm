@@ -322,7 +322,7 @@
 		return
 	if(!T)
 		T = get_turf(src)
-	if(isclosedturf(T) || (isgroundlessturf(T) && !SSmapping.get_turf_below(T)))
+	if(isclosedturf(T) || (isgroundlessturf(T) && !GET_TURF_BELOW(T)))
 		return
 
 	var/list/temp_blood_DNA

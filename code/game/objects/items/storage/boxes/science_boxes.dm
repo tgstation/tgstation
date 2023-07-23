@@ -112,6 +112,13 @@
 	name = "box of stabilized extracts"
 	icon_state = "syndiebox"
 
+/obj/item/storage/box/stabilized/Initialize(mapload)
+	. = ..()
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.max_slots = 99
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	atom_storage.max_total_storage = 99
+
 /obj/item/storage/box/stabilized/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/slimecross/stabilized/adamantine=1,

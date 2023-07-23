@@ -58,7 +58,7 @@
 /obj/machinery/roulette/Initialize(mapload)
 	. = ..()
 	jackpot_loop = new(src, FALSE)
-	wires = new /datum/wires/roulette(src)
+	set_wires(new /datum/wires/roulette(src))
 
 /obj/machinery/roulette/Destroy()
 	QDEL_NULL(jackpot_loop)
@@ -439,7 +439,7 @@
 /obj/item/roulette_wheel_beacon
 	name = "roulette wheel beacon"
 	desc = "N.T. approved roulette wheel beacon, toss it down and you will have a complementary roulette wheel delivered to you."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "floor_beacon"
 	var/used
 

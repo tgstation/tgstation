@@ -136,7 +136,7 @@
 /obj/item/paper/report
 	name = "encrypted station inspection"
 	desc = "Contains no information about the station's current status."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "slip"
 	///What area the inspector scanned when the report was made. Used to verify the security bounty.
 	var/area/scanned_area
@@ -334,7 +334,7 @@
 /obj/item/paper/fake_report
 	name = "encrypted station inspection"
 	desc = "Contains no information about the station's current status."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "slip"
 	show_written_words = FALSE
 	///What area the inspector scanned when the report was made. Used to generate the examine text of the report

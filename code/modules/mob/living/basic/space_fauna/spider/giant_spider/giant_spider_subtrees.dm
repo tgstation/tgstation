@@ -27,21 +27,30 @@
 		finish_action(controller, succeeded = TRUE)
 		return
 
-	var/list/potential_turfs = list()
-	for(var/turf/turf_in_view in oview(scan_range, our_turf))
+	var/list/turfs_by_range = list()
+	for (var/i in 1 to scan_range)
+		turfs_by_range["[i]"] = list()
+	for (var/turf/turf_in_view in oview(scan_range, our_turf))
 		if (!is_valid_web_turf(turf_in_view))
 			continue
-		potential_turfs += turf_in_view
+		turfs_by_range["[get_dist(our_turf, turf_in_view)]"] += turf_in_view
 
-	if (!length(potential_turfs))
+	var/list/final_turfs
+	for (var/list/turf_list as anything in turfs_by_range)
+		if (length(turfs_by_range[turf_list]))
+			final_turfs = turfs_by_range[turf_list]
+			break
+	if (!length(final_turfs))
 		finish_action(controller, succeeded = FALSE)
 		return
 
-	controller.set_blackboard_key(target_key, get_closest_atom(/turf/, potential_turfs, our_turf))
+	controller.set_blackboard_key(target_key, pick(final_turfs))
 	finish_action(controller, succeeded = TRUE)
 
 /datum/ai_behavior/find_unwebbed_turf/proc/is_valid_web_turf(turf/target_turf, mob/living/spider)
 	if (locate(/obj/structure/spider/stickyweb) in target_turf)
+		return FALSE
+	if (HAS_TRAIT(target_turf, TRAIT_SPINNING_WEB_TURF))
 		return FALSE
 	return !target_turf.is_blocked_turf(source_atom = spider)
 

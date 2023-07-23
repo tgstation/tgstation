@@ -1,7 +1,7 @@
 /obj/item/reagent_containers/spray/waterflower/lube
 	name = "water flower"
 	desc = "A seemingly innocent sunflower...with a twist. A <i>slippery</i> twist."
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	inhand_icon_state = "sunflower"
 	amount_per_transfer_from_this = 3

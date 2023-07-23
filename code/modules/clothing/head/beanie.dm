@@ -9,12 +9,12 @@
 	icon = 'icons/obj/clothing/head/beanie.dmi'
 	worn_icon = 'icons/mob/clothing/head/beanie.dmi'
 	icon_state = "beanie"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "beanie_cloth"
 	custom_price = PAYCHECK_CREW * 1.2
 	greyscale_colors = "#EEEEEE#EEEEEE"
 	greyscale_config = /datum/greyscale_config/beanie
-	greyscale_config_worn = /datum/greyscale_config/beanie_worn
+	greyscale_config_worn = /datum/greyscale_config/beanie/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/beanie/black
@@ -44,7 +44,7 @@
 /obj/item/clothing/head/beanie/durathread
 	name = "durathread beanie"
 	desc = "A beanie made from durathread, its resilient fibres provide some protection to the wearer."
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "beanie_durathread"
 	greyscale_colors = "#8291A1#8291A1"
 	armor_type = /datum/armor/beanie_durathread
