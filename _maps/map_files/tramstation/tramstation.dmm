@@ -18866,9 +18866,7 @@
 /area/station/security/execution/transfer)
 "fqv" = (
 /obj/structure/transport/linear/tram/grey,
-/obj/machinery/door/airlock/tram{
-	dir = 8
-	},
+/obj/machinery/door/airlock/tram,
 /turf/open/openspace,
 /area/station/tram)
 "fqM" = (
@@ -61202,9 +61200,6 @@
 /area/station/maintenance/tram/right)
 "uOL" = (
 /obj/structure/transport/linear/tram/grey,
-/obj/machinery/door/airlock/tram{
-	dir = 4
-	},
 /turf/open/openspace,
 /area/station/tram)
 "uOZ" = (

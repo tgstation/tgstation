@@ -35,6 +35,7 @@
 	/// Are the doors in a malfunctioning state (dangerous)
 	var/malfunctioning = FALSE
 	var/attempt = 0
+	bound_width = 64
 
 /obj/machinery/door/airlock/tram/proc/cycle_tram_doors(command, rapid)
 	switch(command)
@@ -53,6 +54,7 @@
 			update_freelook_sight()
 			flags_1 &= ~PREVENT_CLICK_UNDER_1
 			air_update_turf(TRUE, FALSE)
+			sleep(0.4 SECONDS)
 			layer = OPEN_DOOR_LAYER
 			update_icon(ALL, AIRLOCK_OPEN, TRUE)
 			operating = FALSE
@@ -97,7 +99,7 @@
 	operating = TRUE
 	layer = CLOSED_DOOR_LAYER
 	update_icon(ALL, AIRLOCK_CLOSING, 1)
-	sleep(1.4 SECONDS)
+	sleep(1.3 SECONDS)
 	if(!hungry_door)
 		for(var/atom/movable/blocker in get_turf(src))
 			if(blocker.density && blocker != src) //something is blocking the door
@@ -107,14 +109,14 @@
 				update_icon(ALL, AIRLOCK_OPEN, 1)
 				operating = FALSE
 				return FALSE
-	sleep(0.6 SECONDS)
+	sleep(0.7 SECONDS)
 	set_density(TRUE)
 	set_opacity(TRUE)
 	update_freelook_sight()
 	flags_1 |= PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, TRUE)
 	crush()
-	sleep(0.7 SECONDS)
+	sleep(0.4 SECONDS)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	attempt = 0
