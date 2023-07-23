@@ -1,5 +1,6 @@
 //predominantly negative traits
 #define MOOD_CATEGORY_PHOTOPHOBIA "photophobia"
+
 /datum/quirk/badback
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evenly weighted objects are fine, though."
