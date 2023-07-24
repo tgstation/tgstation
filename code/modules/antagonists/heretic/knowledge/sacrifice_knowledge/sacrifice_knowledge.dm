@@ -195,7 +195,7 @@
 		feedback += " <i>graciously</i>"
 
 	if(IS_HERETIC(sacrifice))
-		explosion(sacrifice, devastation_range = 10)
+		explosion(sacrifice, devastation_range = 10) // it's a placeholder where you most probably should to place your proc to not break everything
 
 	to_chat(user, span_hypnophrase("[feedback]."))
 	heretic_datum.total_sacrifices++
