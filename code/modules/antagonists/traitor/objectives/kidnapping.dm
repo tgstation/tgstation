@@ -35,7 +35,7 @@
 	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	progression_reward = list(4 MINUTES, 8 MINUTES)
-	telecrystal_reward = list(2)
+	telecrystal_reward = 2
 	target_jobs = list(
 		// Cargo
 		/datum/job/cargo_technician,
@@ -90,7 +90,7 @@
 	progression_minimum = 15 MINUTES
 	progression_maximum = 60 MINUTES
 	progression_reward = list(8 MINUTES, 12 MINUTES)
-	telecrystal_reward = list(4)
+	telecrystal_reward = list(2, 3)
 	target_jobs = list(
 		// Heads of staff
 		/datum/job/chief_engineer,
@@ -108,7 +108,7 @@
 /datum/traitor_objective/target_player/kidnapping/captain
 	progression_minimum = 30 MINUTES
 	progression_reward = list(12 MINUTES, 16 MINUTES)
-	telecrystal_reward = list(5)
+	telecrystal_reward = list(2, 3)
 	target_jobs = list(
 		/datum/job/captain,
 		/datum/job/head_of_security,
