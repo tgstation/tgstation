@@ -105,10 +105,10 @@
 							src.lock_unlock_borg(R, src.loc.loc.name)
 							R.ai_lockdown = FALSE //Just in case I'm stupid
 							locked_down_borg = R
-							RegisterSignal(R, COMSIG_PARENT_QDELETING, PROC_REF(borg_destroyed))
+							RegisterSignal(R, COMSIG_QDELETING, PROC_REF(borg_destroyed))
 						else if(locked_down_borg == R) //If the borg locked down by the console is the same as the one we're trying to unlock
 							src.lock_unlock_borg(R)
-							UnregisterSignal(R, COMSIG_PARENT_QDELETING)
+							UnregisterSignal(R, COMSIG_QDELETING)
 							locked_down_borg = null
 						else if(R.lockcharge&&R.ai_lockdown)
 							R.ai_lockdown = FALSE
@@ -189,14 +189,14 @@
 /obj/machinery/computer/robotics/atom_break() // This shouldnt be needed, but hitting console doesnt trigger destroy apparently
 	if(!isnull(locked_down_borg))
 		src.lock_unlock_borg(locked_down_borg)
-		UnregisterSignal(locked_down_borg, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(locked_down_borg, COMSIG_QDELETING)
 		locked_down_borg = null
 	return ..()
 
 /obj/machinery/computer/robotics/Destroy()
 	if(!isnull(locked_down_borg))
 		src.lock_unlock_borg(locked_down_borg)
-		UnregisterSignal(locked_down_borg, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(locked_down_borg, COMSIG_QDELETING)
 		locked_down_borg = null
 	return ..()
 
