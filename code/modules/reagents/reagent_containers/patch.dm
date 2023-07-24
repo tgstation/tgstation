@@ -1,5 +1,5 @@
 /obj/item/reagent_containers/pill/patch
-	name = "chemical patch"
+	name = "patch"
 	desc = "A chemical patch for touch based applications."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "bandaid_blank"

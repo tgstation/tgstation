@@ -129,10 +129,10 @@
 
 /datum/status_effect/fire_blasted/on_apply()
 	if(owner.on_fire && animate_duration > 0 SECONDS)
-		var/image/warning_sign = image(icon = 'icons/effects/effects.dmi', icon_state = "blessed", layer = BELOW_MOB_LAYER, loc = owner)
-		owner.flick_overlay_view(warning_sign, initial(duration))
-		warning_sign.alpha = 50
-		animate(warning_sign, alpha = 255, time = animate_duration)
+		var/mutable_appearance/warning_sign = mutable_appearance('icons/effects/effects.dmi', "blessed", BELOW_MOB_LAYER)
+		var/atom/movable/flick_visual/warning = owner.flick_overlay_view(warning_sign, initial(duration))
+		warning.alpha = 50
+		animate(warning, alpha = 255, time = animate_duration)
 
 	return TRUE
 

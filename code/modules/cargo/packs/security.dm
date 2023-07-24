@@ -316,3 +316,11 @@
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/storage/belt/holster/energy/thermal = 2)
 	crate_name = "thermal pistol crate"
+
+/datum/supply_pack/security/sunglasses
+	name = "Sunglasses Crate"
+	desc = "A single pair of flash-proof sunglasses."
+	cost = CARGO_CRATE_VALUE * 2
+	access_view = ACCESS_SECURITY
+	contains = list(/obj/item/clothing/glasses/sunglasses = 1)
+	crate_name = "sunglasses crate"
