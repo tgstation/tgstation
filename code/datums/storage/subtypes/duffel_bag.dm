@@ -14,8 +14,6 @@
 	. = ..()
 
 	var/static/list/exception_type_list = list(
-		// Most Important Item On List
-		/obj/item/greentext,
 		// Gun and gun-related accessories
 		/obj/item/gun,
 		/obj/item/pneumatic_cannon,
