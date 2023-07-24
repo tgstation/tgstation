@@ -102,7 +102,7 @@
 	explanation_text = "Murder and replace [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]. Remember, your mission is to blend in, do not kill anyone else unless you have to!"
 
 
-/datum/antagonist/paradox_clone/antag_token(datum/mind/hosts_mind)
+/datum/antagonist/paradox_clone/antag_token(datum/mind/hosts_mind, mob/spender)
 	hosts_mind.current.unequip_everything()
 	new /obj/effect/holy(hosts_mind.current.loc)
 	QDEL_IN(hosts_mind.current, 20)

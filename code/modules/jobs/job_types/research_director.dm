@@ -75,6 +75,7 @@
 
 	chameleon_extras = /obj/item/stamp/rd
 	skillchips = list(/obj/item/skillchip/job/research_director)
+	implants = list(/obj/item/implant/mindshield)
 
 /datum/outfit/job/rd/mod
 	name = "Research Director (MODsuit)"

@@ -1,0 +1,6 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - qol: "added mass composting by clicking the composter with a bag"
+  - balance: "made EZ-nutriment and robust harvest worth using again"
+  - bugfix: "fixed the bio cubes smashing together"

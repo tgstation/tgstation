@@ -250,15 +250,13 @@
 
 			needs_update = TRUE
 			growth += 3
-
-		if(self_sustaining && self_growing)
-			if(myseed.potency < 50)
-				myseed.adjust_potency(2)
-			if(myseed.yield < 5)
-				myseed.adjust_yield(1)
-			if(myseed.lifespan < 70)
-				myseed.adjust_lifespan(2)
-
+			if(self_sustaining && self_growing)
+				if(myseed.potency < 50)
+					myseed.adjust_potency(2)
+				if(myseed.yield < 5)
+					myseed.adjust_yield(1)
+				if(myseed.lifespan < 70)
+					myseed.adjust_lifespan(2)
 /**
  * Nutrients
  */

@@ -983,7 +983,7 @@
 	if(!owner)
 		return
 
-	if(HAS_TRAIT(owner, TRAIT_NOBLOOD) || !IS_ORGANIC_LIMB(src))
+	if(HAS_TRAIT(owner, TRAIT_NOBLOOD) || (!IS_ORGANIC_LIMB(src) && !HAS_TRAIT(src.owner, TRAIT_ROBOT_CAN_BLEED)))
 		if(cached_bleed_rate != old_bleed_rate)
 			update_part_wound_overlay()
 		return

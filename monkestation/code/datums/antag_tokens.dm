@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 		return FALSE
 	if(!GLOB.used_monthly_token.len)
 		var/json_file = file("data/monthly_tokens.json")
-		if(!json_file)
+		if(!fexists(json_file))
 			return TRUE
 		GLOB.used_monthly_token = json_decode(file2text(json_file))
 	if(owner.ckey in GLOB.used_monthly_token)
@@ -103,7 +103,9 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	to_chat(owner, "Your request to play as [in_queue] has been approved.")
 
 	spend_token(in_queued_tier, queued_donor)
-	in_queue.antag_token(owner.mob.mind)
+	if(!owner.mob.mind)
+		owner.mob.mind_initialize()
+	in_queue.antag_token(owner.mob.mind, owner.mob)
 
 	qdel(in_queue)
 	in_queue = null
