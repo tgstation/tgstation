@@ -132,7 +132,7 @@
 		if(!DF.obj_color)
 			DF.obj_color = inventory_head.color
 
-		if(health <= 0 || !isnull(fakedeath))
+		if(health <= 0)
 			head_icon = DF.get_overlay(dir = EAST)
 			head_icon.pixel_y = -8
 			head_icon.transform = head_icon.transform.Turn(180)
@@ -152,7 +152,7 @@
 		if(!DF.obj_color)
 			DF.obj_color = inventory_back.color
 
-		if(health <= 0 || !isnull(fakedeath))
+		if(health <= 0)
 			back_icon = DF.get_overlay(dir = EAST)
 			back_icon.pixel_y = -11
 			back_icon.transform = back_icon.transform.Turn(180)
