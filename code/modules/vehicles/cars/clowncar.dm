@@ -124,8 +124,8 @@
 						/datum/wound/blunt/moderate,
 						/datum/wound/blunt/severe,
 						))
-						head_to_wound.force_wound_upwards(type_wound)
-						carbon_occupant.playsound_local(src, 'sound/weapons/flash_ring.ogg', 75)
+						head_to_wound.force_wound_upwards(type_wound, wound_source = src)
+						carbon_occupant.playsound_local(src, 'sound/weapons/flash_ring.ogg', 50)
 						carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
 
 			hittarget_living.adjustBruteLoss(200)
