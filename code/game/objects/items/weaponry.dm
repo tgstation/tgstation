@@ -867,7 +867,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
 		/mob/living/basic/spiderling,
-		/mob/living/simple_animal/hostile/bee,
+		/mob/living/basic/bee,
 		/obj/effect/decal/cleanable/ants,
 		/obj/item/queen_bee,
 	))
