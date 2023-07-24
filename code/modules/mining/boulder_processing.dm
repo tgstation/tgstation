@@ -42,6 +42,7 @@
 			visible_message(span_warning("[my_boulder] is rejected!"))
 			return FALSE
 		visible_message(span_warning("[my_boulder] is accepted into \the [src]"))
+		START_PROCESSING(SSmachines, src)
 		breakdown_boulder(my_boulder)
 		return FALSE
 
@@ -68,6 +69,19 @@
 		return FALSE
 	if(default_deconstruction_crowbar(tool))
 		return FALSE
+
+/obj/machinery/bouldertech/process()
+	. = ..()
+	// We want to loop boulder_processing_max number of times and process a boulder each time asynchronously.
+	if(contents.len <= 0)
+		STOP_PROCESSING(SSmachines, src) //Shut it down holmes
+		return
+	for(var/i in 1 to boulders_processing_max)
+		var/obj/item/boulder/boulder = pick(contents)
+		if(!boulder)
+			STOP_PROCESSING(SSmachines, src)
+			return
+		INVOKE_ASYNC(src, PROC_REF(breakdown_boulder), boulder)
 
 /obj/machinery/bouldertech/proc/breakdown_boulder(obj/item/boulder/chosen_boulder)
 	if(!chosen_boulder)
@@ -221,7 +235,7 @@
 	var/matter_bin_stack = 0
 	for(var/datum/stock_part/servo/servo in component_parts)
 		manipulator_stack += ((servo.tier - 1))
-	boulders_processing_max = manipulator_stack
+	boulders_processing_max = clamp(manipulator_stack, 1, 6)
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
 		matter_bin_stack += ((bin.tier))
 	boulders_held_max = matter_bin_stack

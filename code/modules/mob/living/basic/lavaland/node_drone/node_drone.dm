@@ -92,5 +92,3 @@
 /datum/ai_behavior/run_away_from_target/drone
 	action_cooldown = 1 SECONDS
 	required_distance = 5
-
-

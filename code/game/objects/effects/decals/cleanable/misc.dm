@@ -477,6 +477,7 @@
 	beauty = -10
 
 /obj/effect/decal/cleanable/rubble/Initialize(mapload)
+	. = ..()
 	flick("rubble_bounce", src)
 	icon_state = "rubble"
 	update_appearance(UPDATE_ICON_STATE)

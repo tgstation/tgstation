@@ -184,3 +184,4 @@
 /obj/item/boulder/Destroy(force)
 	. = ..()
 	SSore_generation.available_boulders -= src
+	processed_by = null
