@@ -1,8 +1,8 @@
 //A mob with this compoent will heal on its life() if standing on the given turfs
 /datum/component/turf_healing
-	//what damage types to heal and how much to heal for
+	///what damage types to heal with a key of how much to heal for
 	var/list/healing_types = list()
-	//what turfs to heal on
+	///typecache of what turfs to heal on
 	var/list/healing_turfs
 
 /datum/component/turf_healing/Initialize(list/healing_types, list/healing_turfs)

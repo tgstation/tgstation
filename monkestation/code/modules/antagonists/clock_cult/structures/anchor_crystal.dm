@@ -1,7 +1,7 @@
 GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 
 #define CRYSTAL_SHIELD_DELAY 50 SECONDS //how long until shields start to recharge
-#define CRYSTAL_CHARGE_TIMER 300 //how long do crystals take to charge, 5 MINTUES
+#define CRYSTAL_CHARGE_TIMER 300 //how long in seconds do crystals take to charge, 5 MINTUES
 #define CRYSTAL_CHARGING 0 //crystal is currently charging
 #define CRYSTAL_LOCATION_ANNOUNCED 1 //the location of the crystal has been anouced to the crew
 #define FULLY_CHARGED 2 //the crystal is fully charged
@@ -21,20 +21,20 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 	can_rotate = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	armor_type = /datum/armor/anchoring_crystal
-	max_integrity = 300 //pretty hard to break
-	//how many hits this can take before taking structure damage, not using the component as its only for items/mobs
+	max_integrity = 400 //pretty hard to break
+	///how many hits this can take before taking structure damage, not using the component as its only for items/mobs
 	var/shields = 3
-	//what charge state is this crystal
+	///what charge state is this crystal
 	var/charge_state = CRYSTAL_CHARGING
-	//what area is this in
+	///what area is this in
 	var/area/crystal_area
-	//theme for transforming the area
+	///theme for transforming the area
 	var/static/datum/dimension_theme/clock_theme
-	//timer var for charging
+	///timer var for charging
 	var/charging_for = 0
-	//due to the way overlays are handled we have to handle everything for them within a single SIGNAL_HANDLER proc, this var is used for keeping track of what to set our overlay state to next
+	///due to the way overlays are handled we have to handle everything for them within a single SIGNAL_HANDLER proc, this var is used for keeping track of what to set our overlay state to next
 	var/overlay_state = SHIELD_ACTIVE
-	//cooldown for when we were last hit
+	///cooldown for when we were last hit
 	COOLDOWN_DECLARE(recently_hit_cd)
 
 /datum/armor/anchoring_crystal
@@ -43,8 +43,9 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 	energy = 100
 	fire = 100
 	acid = 100
-	melee = -10 //weak to melee, subject to change
+	melee = -15 //weak to melee, subject to change
 	laser = 60 //resistant to lasers
+	bullet = 30
 
 /obj/structure/destructible/clockwork/anchoring_crystal/Initialize(mapload)
 	. = ..()

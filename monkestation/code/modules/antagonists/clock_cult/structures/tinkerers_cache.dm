@@ -112,6 +112,12 @@
 	item_path = /obj/item/clockwork/replica_fabricator
 	power_use = 400
 
+/datum/tinker_cache_item/clockwork_slab
+	name = "Clockwork Slab"
+	item_path = /obj/item/clockwork/clockwork_slab
+	power_use = 100
+	time_delay_mult = 0.5
+
 /datum/tinker_cache_item/tools
 	name = "Equipped Toolbelt"
 	item_path = /obj/item/storage/belt/utility/clock

@@ -1,7 +1,7 @@
 /datum/scripture/slab/sentinels_compromise
 	name = "Sentinel's Compromise"
 	desc = "Heals a large amount of non-toxin damage on a target then converts 50% of it back as toxin damage to you."
-	tip = "Works well with a Properity Prism. Can only be used by human servants."
+	tip = "Works well with Properity Prisms. Cannot be used by cogscarabs."
 	power_cost = 80
 	cogs_required = 1
 	invocation_time = 1 SECONDS //short invocation but using it also takes some time afterwards
@@ -43,7 +43,7 @@
 	healed_mob.reagents.remove_reagent(/datum/reagent/water/holywater, 100) //if you have over 100 units of holy water then it should take multiple to purge
 	healed_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -50)
 
-	new /obj/effect/temp_visual/heal(get_turf(healed_mob), LIGHT_COLOR_CLOCKWORK)
+	new /obj/effect/temp_visual/heal(get_turf(healed_mob), "#1E8CE1")
 
 	invoker.adjustToxLoss(min(total_damage * 0.5, 80), forced = TRUE)
 	return TRUE

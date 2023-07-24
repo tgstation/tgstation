@@ -5,7 +5,7 @@
 	button_icon_state = "Spatial Gateway"
 	power_cost = 5000
 	invocation_time = 14 SECONDS
-	invocation_text = list("Oh great Engine, take my soul...", "it is time for you to rise...", "through rifts you shall come...", "to rise among the stars again!")
+	invocation_text = list("Oh bright Eng'ine, take my soul...", "to complete, our great goal...", "through the rifts you shall come...", "they will see where the light is from!")
 	invokers_required = 6
 	category = SPELLTYPE_PRESERVATION
 	recital_sound = 'sound/magic/clockwork/narsie_attack.ogg'
@@ -26,7 +26,7 @@
 		return FALSE
 
 	if(!get_charged_anchor_crystals())
-		to_chat(invoker, span_warning("Reebe is not yet anchored enough to this realm, summon and protect an anchoring crystal."))
+		to_chat(invoker, span_brass("Reebe is not yet anchored enough to this realm, summon and protect an anchoring crystal."))
 		return FALSE
 
 	return TRUE

@@ -352,12 +352,10 @@
 	var/list/phrase_list
 	if(IS_CULTIST(affected_mob)) //snowflakey but it works
 		var/datum/antagonist/cult/cult_datum = affected_mob.mind.has_antag_datum(/datum/antagonist/cult)
-		if(cult_datum)
-			phrase_list = cult_datum.cultist_deconversion_phrases
+		phrase_list = cult_datum?.cultist_deconversion_phrases
 	else if(IS_CLOCK(affected_mob))
 		var/datum/antagonist/clock_cultist/servant_datum = affected_mob.mind.has_antag_datum(/datum/antagonist/clock_cultist)
-		if(servant_datum)
-			phrase_list = servant_datum.servant_deconversion_phrases
+		phrase_list = servant_datum?.servant_deconversion_phrases
 
 	if(data["misc"] >= (25 SECONDS)) // 10 units
 		affected_mob.adjust_stutter_up_to(4 SECONDS * seconds_per_tick, 20 SECONDS)

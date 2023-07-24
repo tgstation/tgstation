@@ -17,9 +17,9 @@
 
 /datum/armor/suit_clockwork
 	melee = 50
-	bullet = 60
-	laser = 30
-	energy = 80
+	bullet = 65
+	laser = 35
+	energy = 75
 	bomb = 80
 	bio = 100
 	fire = 100
@@ -41,8 +41,8 @@
 
 /datum/armor/clockwork_speed
 	melee = 40
-	bullet = 30
-	laser = 10
+	bullet = 40
+	laser = 20
 	energy = -20
 	bomb = 60
 	bio = 100
@@ -61,14 +61,14 @@
 	var/shroud_active = FALSE
 	/// Previous alpha value of the user when removing/disabling the jacket
 	var/previous_alpha = 255
-	/// Weakref to who is wearing this
+	/// Ref to who is wearing this
 	var/mob/living/wearer
 
 /datum/armor/clockwork_cloak
 	melee = 10
 	bullet = 60
 	laser = 40
-	energy = 20
+	energy = 25
 	bomb = 40
 	bio = 100
 	fire = 100
@@ -112,7 +112,7 @@
 /obj/item/clothing/suit/clockwork/cloak/proc/enable()
 	shroud_active = TRUE
 	previous_alpha = wearer.alpha
-	animate(wearer, alpha = 90, time = 3 SECONDS)
+	animate(wearer, alpha = 80, time = 3 SECONDS)
 	apply_wibbly_filters(wearer)
 	ADD_TRAIT(wearer, TRAIT_UNKNOWN, CLOTHING_TRAIT)
 
@@ -244,16 +244,15 @@
 			var/wearer_data = damaged_mobs[wearer]
 			wearer_data["damage"] = min(wearer_data["damage"] + delt_damage, 70)
 
-	if(damaged_mobs.len)
-		for(var/mob_entry in damaged_mobs)
-			if(enabled && mob_entry == wearer)
-				continue
-			var/mob_data = damaged_mobs[mob_entry]
-			mob_data["timer"] += seconds_per_tick
-			if(mob_data["timer"] >= SECONDS_FOR_EYE_HEAL)
-				var/mob/living/living_healed = mob_entry
-				living_healed.adjustOrganLoss(ORGAN_SLOT_EYES, -mob_data["damage"])
-				damaged_mobs -= mob_entry
+	for(var/mob_entry in damaged_mobs)
+		if(enabled && mob_entry == wearer)
+			continue
+		var/mob_data = damaged_mobs[mob_entry]
+		mob_data["timer"] += seconds_per_tick
+		if(mob_data["timer"] >= SECONDS_FOR_EYE_HEAL)
+			var/mob/living/living_healed = mob_entry
+			living_healed.adjustOrganLoss(ORGAN_SLOT_EYES, -mob_data["damage"])
+			damaged_mobs -= mob_entry
 
 	if(!damaged_mobs.len)
 		STOP_PROCESSING(SSobj, src)
@@ -407,9 +406,9 @@
 
 /datum/armor/helmet_clockwork
 	melee = 50
-	bullet = 60
-	laser = 30
-	energy = 80
+	bullet = 65
+	laser = 35
+	energy = 75
 	bomb = 80
 	bio = 100
 	fire = 100
@@ -427,6 +426,17 @@
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_garb.dmi'
 	worn_icon = 'monkestation/icons/mob/clock_cult/clockwork_garb_worn.dmi'
 	icon_state = "clockwork_treads"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/datum/armor/boots_clockwork
+	melee = 0
+	bullet = 0
+	laser = 0
+	energy = 0
+	bomb = 0
+	bio = 100
+	fire = 0
+	acid = 0
 
 /obj/item/clothing/shoes/clockwork/Initialize(mapload)
 	. = ..()
@@ -445,7 +455,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	resistance_flags = NONE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor_type = /datum/armor/gloves_clockwork
 
 /datum/armor/gloves_clockwork

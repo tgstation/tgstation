@@ -32,7 +32,7 @@
 	)
 
 /datum/armor/mecha_steam_helios
-	melee = 45
+	melee = 35
 	bullet = 40
 	laser = 35
 	energy = 30
@@ -143,10 +143,6 @@
 	button_icon_state = "Judicial Marker"
 	build_all_button_icons()
 
-//may reality break and bend
-//may space and time never mend
-//may the world be protected from the night
-//may the world know enternal light
 /datum/action/vehicle/sealed/mecha/steam_discharge
 	name = "Steam Discharge"
 	button_icon = 'icons/effects/effects.dmi'

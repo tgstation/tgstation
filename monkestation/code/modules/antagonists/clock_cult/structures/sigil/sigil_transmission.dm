@@ -1,5 +1,6 @@
-#define POWER_GIVE 40
-#define POWER_SIPHON 20
+//these are not actually the amount given and taken but are instead the amount GLOB.clock_power is adjusted by
+#define POWER_GIVE 5
+#define POWER_SIPHON 5
 
 /obj/structure/destructible/clockwork/sigil/transmission
 	name = "sigil of transmission"

@@ -5,8 +5,8 @@
 	cooldown_time = 4 MINUTES
 
 /datum/action/cooldown/eminence/linked_abscond/Activate(atom/target)
-	if(!iseminence(usr))
-		to_chat(usr, span_boldwarning("You are not an eminence and should not have this! Please report this as a bug."))
+	. = ..()
+	if(!.)
 		return FALSE
 
 	var/mob/living/eminence/em_user = usr

@@ -25,7 +25,7 @@
 	var/mutable_appearance/stab_overlay
 
 
-/// Stab any mobs (even other clock cultists) who stood on the tile
+/// Stab any non-clock mobs who stood on the tile
 /obj/structure/destructible/clockwork/trap/skewer/proc/stab()
 	if(extended)
 		retract()
@@ -43,6 +43,10 @@
 
 	for(var/mob/living/stabbed_mob in get_turf(src))
 		if(stabbed_mob.incorporeal_move || (stabbed_mob.movement_type & (FLOATING|FLYING)))
+			continue
+
+		if(IS_CLOCK(stabbed_mob))
+			to_chat(stabbed_mob, span_warning("You dodge out of the way of [src]!"))
 			continue
 
 		if(!buckle_mob(stabbed_mob, TRUE))

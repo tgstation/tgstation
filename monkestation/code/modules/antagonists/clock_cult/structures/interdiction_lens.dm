@@ -1,5 +1,5 @@
 #define INTERDICTION_LENS_RANGE 4
-#define POWER_PER_PERSON 5
+#define POWER_PER_PERSON 4
 
 /obj/structure/destructible/clockwork/gear_base/powered/interdiction_lens
 	name = "interdiction lens"

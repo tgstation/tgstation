@@ -4,7 +4,7 @@
 	desc = "Shows infomation about the Ark of the Clockwork Justicar"
 	icon = 'monkestation/icons/hud/screen_alert.dmi'
 	icon_state = "clockinfo"
-//	alerttooltipstyle = "clockwork" //clockwork tooltips are current broken, this is a known issue on TG
+//	alerttooltipstyle = "clockwork" //clockwork tooltips are currently broken, this is a known issue on TG
 
 /atom/movable/screen/alert/clockwork/clocksense/Initialize(mapload)
 	. = ..()

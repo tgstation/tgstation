@@ -48,8 +48,7 @@
 		//Update the cog counts
 		for(var/obj/item/clockwork/clockwork_slab/slab as anything in GLOB.clockwork_slabs)
 			slab.cogs++
-		if(GLOB.current_eminence)
-			GLOB.current_eminence.cogs++
+		GLOB.current_eminence?.cogs++
 
 
 /obj/machinery/power/apc

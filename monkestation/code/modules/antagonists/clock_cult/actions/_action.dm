@@ -63,3 +63,9 @@
 	button_icon = 'monkestation/icons/mob/clock_cult/actions_clock.dmi'
 	background_icon = 'monkestation/icons/mob/clock_cult/background_clock.dmi'
 	background_icon_state = "bg_clock"
+
+/datum/action/cooldown/eminence/Activate(atom/target)
+	. = ..()
+	if(!iseminence(usr))
+		to_chat(usr, span_boldwarning("You are not an eminence and should not have this! Please report this as a bug."))
+		return FALSE

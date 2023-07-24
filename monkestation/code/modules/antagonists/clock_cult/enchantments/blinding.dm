@@ -14,4 +14,4 @@
 		return
 	var/obj/item/parent_item = parent
 	parent_item.visible_message(span_danger("\The [parent_item] emits a blinding light!"))
-	target.flash_act(4, affect_silicon = TRUE, length = 3 SECONDS) //might want to make this not effect borgs
+	target.flash_act(2, affect_silicon = TRUE, length = 3 SECONDS) //might want to make this not effect borgs

@@ -90,7 +90,7 @@
 	duration = 2 SECONDS
 
 
-/obj/effect/temp_visual/ratvar/belligerent_cast/Initialize(mapload)
+/obj/effect/temp_visual/ratvar/belligerent/Initialize(mapload)
 	. = ..()
 	animate(src, alpha = 0, time = duration, easing = EASE_OUT)
 

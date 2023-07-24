@@ -509,7 +509,7 @@
 		return FALSE
 	if(IS_HERETIC_OR_MONSTER(target))
 		return FALSE
-	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || isbot(target)) //monkestation edit: moved isdrone() as well as issilicon to the next check down
+	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || isbot(target)) //monkestation edit: moved isdrone() as well as issilicon() to the next check down
 		return FALSE //can't convert machines, shielded, or braindead
 	if((isdrone(target) || issilicon(target)) && !for_clock_cult) //monkestation edit: clock cult converts them into cogscarabs and clock borgs
 		return FALSE //monkestation edit

@@ -52,7 +52,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	. = ..()
 	desc = "[text2ratvar("That's Ratvar, the Clockwork Justicar. The great one has risen.")]"
 	SEND_SOUND(world, 'monkestation/sound/effects/ratvar_reveal.ogg')
-	send_to_playing_players(span_ratvar("The bluespace veil gives way to Ratvar, his light shall shine upon all mortals!"))
+	send_to_playing_players(span_reallybig(span_ratvar("The bluespace veil gives way to Rat'var, his light shall shine upon all mortals!")))
 	UnregisterSignal(src, COMSIG_ATOM_BSA_BEAM)
 	SSshuttle.registerHostileEnvironment(src)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clockcult_ending_start)), 5 SECONDS)

@@ -16,12 +16,14 @@
 		for(var/obj/effect/landmark/late_cog_portals/portal_mark in GLOB.landmarks_list)
 			possible_targets += portal_mark
 
-	var/static/times_warned_admins = 0 //we spawn a massive amount of these normally so we dont want to warn admins for every single one if something breaks
+	var/static/times_warned_admins //we spawn a massive amount of these normally so we dont want to warn admins for every single one if something breaks
 	if(possible_targets.len)
 		hard_target = get_turf(pick(possible_targets))
-	else if(times_warned_admins < 5)
-		message_admins("No possible_targets for clock cult portals.")
-		times_warned_admins++
+		return
+	else if(!times_warned_admins)
+		times_warned_admins = 0
+	message_admins("No possible_targets for clock cult portals.")
+	times_warned_admins++
 
 /obj/effect/portal/clockcult/Bumped(atom/movable/bumper)
 	. = ..()

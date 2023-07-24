@@ -40,13 +40,12 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	if(!GLOB.current_eminence)
 		GLOB.current_eminence = src
 	cogs = GLOB.clock_installed_cogs
-//	remove_from_all_data_huds() //seeing a flying health HUD miiiiiiight be a bit of a giveaway
 	AddElement(/datum/element/simple_flying)
 	internal_radio = new /obj/item/radio/borg/eminence(src)
 
 /mob/living/eminence/Destroy()
 	if(GLOB.current_eminence == src)
-		GLOB.current_eminence = FALSE
+		GLOB.current_eminence = null
 	return ..()
 
 /mob/living/eminence/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
@@ -79,7 +78,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 
 	if(COOLDOWN_FINISHED(src, command_sound_cooldown))
 		send_clock_message(src, span_bigbrass(message), sent_sound = 'monkestation/sound/effects/eminence_command.ogg')
-		COOLDOWN_START(src, command_sound_cooldown, 20 SECONDS)
+		COOLDOWN_START(src, command_sound_cooldown, 40 SECONDS)
 	else
 		send_clock_message(src, span_bigbrass(message))
 
@@ -100,7 +99,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	z_move_flags |= ZMOVE_IGNORE_OBSTACLES
 	return ..()
 
-/mob/living/eminence/rad_act(intensity) //theradiationdemonisnotrealtheradiationdemoncannotgetyou
+/mob/living/eminence/rad_act(intensity) //theradiationdemonisnotrealtheradiationdemoncannothurtyou
 	return
 
 /mob/living/eminence/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
@@ -123,6 +122,8 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 
 /obj/machinery/door/airlock/eminence_act(mob/living/eminence/user)
 	. = ..()
+	if(!do_after(user, 5 SECONDS, src))
+		return
 	if(seal)
 		to_chat(user, span_warning("The [src] has been sealed and wont open!"))
 		return
@@ -132,14 +133,10 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	if(welded)
 		to_chat(user, span_warning("It's welded, it won't budge!"))
 		return
-	if(!hasPower())
-		to_chat(user, span_warning("The [src] has no power and wont open!"))
-		return
 	if(!density)
 		return
 
-	if(do_after(user, 5 SECONDS, src))
-		open(BYPASS_DOOR_CHECKS)
+	open(BYPASS_DOOR_CHECKS)
 
 /obj/machinery/door/window/eminence_act(mob/living/eminence/user)
 	. = ..()

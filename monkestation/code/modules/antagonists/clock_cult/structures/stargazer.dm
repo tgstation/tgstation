@@ -37,7 +37,7 @@
 		light_effect.close()
 
 /obj/structure/destructible/clockwork/gear_base/stargazer/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(user.istate) //test if this is correct
+	if(user.istate)
 		. = ..()
 		return
 

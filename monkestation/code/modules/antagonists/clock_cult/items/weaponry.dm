@@ -61,8 +61,8 @@
 	armour_penetration = 24
 	block_chance = 35
 	clockwork_desc = "Can be summoned back to its last holder every 10 seconds if they are standing on bronze."
-	///our recall spell
-	var/datum/action/cooldown/spell/summon_spear/our_summon = new //making this a spell for things like antimagic blocking
+	///ref to our recall spell
+	var/datum/action/cooldown/spell/summon_spear/our_summon = new
 	///weakref to our current holder
 	var/datum/weakref/current_holder
 
@@ -74,7 +74,7 @@
 
 /obj/item/clockwork/weapon/brass_spear/Destroy(force)
 	UnregisterSignal(src, COMSIG_ITEM_PICKUP)
-	qdel(our_summon)
+	QDEL_NULL(our_summon)
 	return ..()
 
 /obj/item/clockwork/weapon/brass_spear/proc/on_pickup(picked_up, mob/taker)

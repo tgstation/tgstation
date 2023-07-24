@@ -21,7 +21,8 @@
 /datum/scripture/create_structure/anchoring_crystal/process(seconds_per_tick)
 	time_until_invokable = time_until_invokable - seconds_per_tick
 	if(time_until_invokable <= 0)
-		STOP_PROCESSING(SSprocessing, src)
+		var/datum/scripture/create_structure/anchoring_crystal/global_datum = GLOB.clock_scriptures_by_type[/datum/scripture/create_structure/anchoring_crystal]
+		STOP_PROCESSING(SSprocessing, global_datum)
 		time_until_invokable = 0
 
 /datum/scripture/create_structure/anchoring_crystal/check_special_requirements(mob/user)
@@ -54,7 +55,8 @@
 	if(time_until_invokable) //check again in case they try and make two at once
 		to_chat(invoker, span_warning("Another Anchoring Crystal has already been created!"))
 		return
-	START_PROCESSING(SSprocessing, src)
+	var/datum/scripture/create_structure/anchoring_crystal/global_datum = GLOB.clock_scriptures_by_type[/datum/scripture/create_structure/anchoring_crystal]
+	START_PROCESSING(SSprocessing, global_datum)
 	. = ..()
 
 /datum/scripture/create_structure/anchoring_crystal/invoke_success()

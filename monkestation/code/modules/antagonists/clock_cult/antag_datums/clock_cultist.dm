@@ -8,8 +8,6 @@
 	ui_name = "AntagInfoClock"
 	show_to_ghosts = TRUE //to make testing easier
 	antag_hud_name = "clockwork"
-	/// If this one has access to conversion scriptures
-	var/can_convert = TRUE
 	/// Ref to the cultist's communication ability
 	var/datum/action/innate/clockcult/comm/communicate = new
 	/// Ref to the cultist's slab recall ability
@@ -79,11 +77,9 @@
 		RegisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED, PROC_REF(switch_recall_slab))
 		handle_clown_mutation(current, mob_override ? null : "The light of Rat'var allows you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		ADD_TRAIT(current, TRAIT_KNOW_ENGI_WIRES, CULT_TRAIT)
-	if(ishuman(current) && GLOB.clock_ark)
-		var/obj/structure/destructible/clockwork/the_ark/ark = GLOB.clock_ark
-		if(ark.current_state >= 2) //active state value
-			forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
-			current.add_overlay(forbearance)
+	if(ishuman(current) && GLOB.clock_ark?.current_state >= 2) //active state value
+		forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
+		current.add_overlay(forbearance)
 
 /datum/antagonist/clock_cultist/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -97,7 +93,7 @@
 		UnregisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED)
 		QDEL_NULL(owner_turf_healing)
 		handle_clown_mutation(current, removing = FALSE)
-		ADD_TRAIT(current, TRAIT_KNOW_ENGI_WIRES, CULT_TRAIT)
+		REMOVE_TRAIT(current, TRAIT_KNOW_ENGI_WIRES, CULT_TRAIT)
 	if(forbearance)
 		current.cut_overlay(list(forbearance))
 
@@ -108,8 +104,8 @@
 
 /datum/antagonist/clock_cultist/on_removal()
 	if(!silent)
-		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!"), ignored_mobs = owner.current)
-		to_chat(owner.current, span_userdanger("As the ticking fades from the back of your mind, you forget all memories you had as a servant of Rat'var."))
+		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!"), \
+									  span_userdanger("As the ticking fades from the back of your mind, you forget all memories you had as a servant of Rat'var."))
 	owner.current.log_message("has renounced the cult of Rat'var!", LOG_ATTACK, color="#960000")
 	return ..()
 
@@ -121,6 +117,10 @@
 	if(!silent)
 		to_chat(owner.current, span_warning("You feel something pushing away the light of Rat'var, but you resist it!"))
 	return
+
+/datum/antagonist/clock_cultist/antag_token(datum/mind/hosts_mind)
+	. = ..()
+	hosts_mind.add_antag_datum(/datum/antagonist/clock_cultist)
 
 /datum/antagonist/clock_cultist/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.add_antag_datum(src)
@@ -255,7 +255,6 @@
 
 /datum/antagonist/clock_cultist/solo
 	name = "Clock Cultist (Solo)"
-	can_convert = FALSE
 
 //putting this here to avoid extra edits to the main file
 /datum/antagonist/cult

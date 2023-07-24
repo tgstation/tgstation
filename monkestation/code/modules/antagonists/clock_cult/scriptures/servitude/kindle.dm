@@ -1,7 +1,6 @@
 #define EFFECT_TIME (6.5 SECONDS)
 
 // Clock cult's version of the "bullshit stun hand"
-// Reworked to be a slightly stronger version of the mansus hand, except with the 1s windup required to invoke.
 
 /datum/scripture/slab/kindle
 	name = "Kindle"

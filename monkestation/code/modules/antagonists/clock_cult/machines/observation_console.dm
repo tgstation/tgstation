@@ -24,7 +24,7 @@
 		playsound(get_turf(src), 'sound/machines/beep.ogg', 20, TRUE)
 
 /obj/machinery/computer/camera_advanced/ratvar/can_use(mob/living/user)
-	if(!IS_CLOCK(user) || istype(user, /mob/living/simple_animal/drone/cogscarab))
+	if(!IS_CLOCK(user) || iscogscarab(user))
 		return FALSE
 	return ..()
 

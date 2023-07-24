@@ -16,7 +16,7 @@
 		JOB_WARDEN,
 	)
 	required_candidates = 3
-	weight = 4 //boosted by 1 for testing
+	weight = 3
 	cost = 20
 	requirements = list(100,90,80,60,40,30,10,10,10,10)
 	flags = HIGH_IMPACT_RULESET

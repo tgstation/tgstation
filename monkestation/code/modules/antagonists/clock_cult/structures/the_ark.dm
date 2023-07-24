@@ -1,5 +1,5 @@
 GLOBAL_DATUM(clock_ark, /obj/structure/destructible/clockwork/the_ark) //set to be equal to the ark on creation if none
-GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checking but im making this global as it will be used for blood cult interaction
+GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 
 #define ARK_STATE_BASE 0 //base state the ark is created in, any state besides this will be a hostile environment
 #define ARK_STATE_CHARGING 1 //state for the grace period after the cult has reached its member count max and have an active anchor crystal
@@ -54,42 +54,41 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 		GLOB.clock_ark = null
 	if(GLOB.ratvar_risen)
 		return ..()
+
+	current_state = ARK_STATE_FINAL
+	resistance_flags |= INDESTRUCTIBLE
+	visible_message(span_userdanger("[src] begins to pulse uncontrollably... you might want to run!"))
+	sound_to_playing_players(volume = 50, S = sound('sound/effects/clockcult_gateway_disrupted.ogg'))
+	sleep(2.5 SECONDS)
+	sound_to_playing_players('sound/machines/clockcult/ark_deathrattle.ogg', 50)
+	sleep(2.7 SECONDS)
+	explosion(src, 1, 3, 8, 8)
+	sound_to_playing_players('sound/effects/explosion_distant.ogg', 50)
+	for(var/obj/effect/portal/clockcult/portal in GLOB.portals)
+		qdel(portal)
+
+	SSshuttle.clearHostileEnvironment(src)
+	SSsecurity_level.set_level(2)
 	STOP_PROCESSING(SSprocessing, src)
 	send_clock_message(null, span_bigbrass("The Ark has been destroyed, Reebe is becoming unstable!"))
 	for(var/mob/living/current_mob in GLOB.player_list)
 		if(!on_reebe(current_mob))
 			continue
 		if(IS_CLOCK(current_mob))
-			to_chat(current_mob, span_reallybig(span_ratvar("Your mind is distorted by the distant sound of a thousand screams. <i>YOU HAVE FAILED TO PROTECT MY ARK. \
-																  YOU WILL BE TRAPPED HERE WITH ME TO SUFFER FOREVER...</i>")))
+			to_chat(current_mob, span_ratvar("Your mind is distorted by the distant sound of a thousand screams. [span_reallybig("<i>YOU HAVE FAILED TO PROTECT MY ARK. \
+											  YOU WILL BE TRAPPED HERE WITH ME TO SUFFER FOREVER...</i>")]"))
 			continue
 		current_mob.SetSleeping(5 SECONDS)
-		to_chat(current_mob, span_reallybig(span_ratvar("Your mind is distorted by the distant sound of a thousand screams before suddenly everything falls silent.")))
+		to_chat(current_mob, span_ratvar("Your mind is distorted by the distant sound of a thousand screams before suddenly everything falls silent."))
 		to_chat(current_mob, span_hypnophrase("The only thing you remember is suddenly feeling hard ground beneath you and the safety of home."))
 		current_mob.forceMove(find_safe_turf())
-	INVOKE_ASYNC(src, PROC_REF(explode_reebe))
+	explode_reebe()
 	return ..()
 
 /obj/structure/destructible/clockwork/the_ark/deconstruct(disassembled = TRUE)
 	if(current_state >= ARK_STATE_FINAL)
 		return
-	ASYNC
-		if(!(flags_1 & NODECONSTRUCT_1))
-			if(!disassembled)
-				current_state = ARK_STATE_FINAL
-				resistance_flags |= INDESTRUCTIBLE
-				visible_message(span_userdanger("[src] begins to pulse uncontrollably... you might want to run!"))
-				sound_to_playing_players(volume = 50, S = sound('sound/effects/clockcult_gateway_disrupted.ogg'))
-				sleep(2.5 SECONDS)
-				sound_to_playing_players('sound/machines/clockcult/ark_deathrattle.ogg', 50)
-				sleep(2.7 SECONDS)
-				explosion(src, 1, 3, 8, 8)
-				sound_to_playing_players('sound/effects/explosion_distant.ogg', 50)
-				for(var/obj/effect/portal/clockcult/portal in GLOB.portals)
-					qdel(portal)
-				SSshuttle.clearHostileEnvironment(src)
-				SSsecurity_level.set_level(2)
-		qdel(src)
+	qdel(src)
 
 /obj/structure/destructible/clockwork/the_ark/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	. = ..()
@@ -115,7 +114,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 		icon_state = "clockwork_gateway_closing"
 		sound_to_playing_players(volume = 30, vary = TRUE, S = sound('monkestation/sound/effects/clockcult_gateway_closing.ogg'))
 
-	if(current_state >= ARK_STATE_SUMMONING && prob(5))
+	if(current_state >= ARK_STATE_SUMMONING && SPT_PROB(4))
 		send_to_playing_players(span_warning("[pick(list("You feel the fabric of reality twist and bend.", \
 											  "Your mind buzzes with fear.", \
 											  "You hear otherworldly screams from all around you.", \
@@ -143,7 +142,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 	addtimer(CALLBACK(src, PROC_REF(announce_gateway)), 27 SECONDS)
 
 /obj/structure/destructible/clockwork/the_ark/proc/announce_gateway()
-	send_clock_message(null, span_ratvar("DESTROY THEM."), sent_sound = 'monkestation/sound/machines/clockcult/ark_recall.ogg')
+	send_clock_message(null, span_ratvar("DESTROY THE HERETICS."), sent_sound = 'monkestation/sound/machines/clockcult/ark_recall.ogg')
 
 	sleep(3 SECONDS)
 
@@ -222,7 +221,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE) //currently only used for objective checkin
 	sleep(3)
 	new /obj/ratvar(get_random_station_turf())
 
-/obj/structure/destructible/clockwork/the_ark/proc/explode_reebe()
+/proc/explode_reebe()
 	var/list/reebe_area_list = get_area_turfs(/area/ruin/powered/reebe/city)
 	if(reebe_area_list.len)
 		for(var/i in 1 to 30)

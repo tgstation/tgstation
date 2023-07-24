@@ -5,12 +5,12 @@
 	icon_state = "soul_vessel"
 	base_icon_state = "soul_vessel"
 	req_access = list()
-	begin_activation_message = "<span class='notice'>You start spinning the gears of the Soul Vessel.</span>"
-	success_message = "<span class='notice'>The gears of the Soul Vessel start spinning at a steady rate, it looks as though it has found a willing soul!</span>"
-	fail_message = "<span class='notice'>The gears of the Soul Vessel stop spinning. It looks as though it has run out of energy for now, but you could grant it more.</span>"
-	new_mob_message = "<span class='notice'>The Soul Vessel starts making a steady ticking sound.</span>"
-	dead_message = "<span class='deadsay'>It's gears are not moving.</span>"
-	recharge_message = "<span class='warning'>The gears of the Soul Vessel are already spinning.</span>"
+	begin_activation_message = span_notice("You start spinning the gears of the Soul Vessel.")
+	success_message = span_notice("The gears of the Soul Vessel start spinning at a steady rate, it looks as though it has found a willing soul!")
+	fail_message = span_notice("The gears of the Soul Vessel stop spinning. It looks as though it has run out of energy for now, but you could grant it more.")
+	new_mob_message = span_notice("The Soul Vessel starts making a steady ticking sound.")
+	dead_message = span_deadsay("It's gears are not moving.")
+	recharge_message = span_warning("The gears of the Soul Vessel are already spinning.")
 
 /obj/item/mmi/posibrain/soul_vessel/Initialize(mapload, autoping)
 	. = ..()

@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 	prompt_name = "a cogscarab"
 	you_are_text = "You are a cogscarab!"
 	flavour_text = "You are a cogscarab, a tiny building construct of Ratvar. While you're weak and can't leave Reebe, \
-	you have a set of quick tools, as well as a replica fabricator that can create brass for construction. Work with the servants of Ratvar \
+	you have a set of quick tools, as well as a replica fabricator that can create brass for construction. Work with the servants of Rat'var \
 	to construct and maintain defenses at the City of Cogs."
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab/special(mob/living/spawned_mob, mob/mob_possessor)

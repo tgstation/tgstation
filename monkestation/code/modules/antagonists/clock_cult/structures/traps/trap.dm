@@ -1,3 +1,4 @@
+//might be able to refactor these into mech comp stuff
 //Thing that you stick on the floor
 /obj/item/clockwork/trap_placer
 	name = "trap"

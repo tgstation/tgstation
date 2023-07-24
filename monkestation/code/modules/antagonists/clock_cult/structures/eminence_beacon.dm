@@ -5,17 +5,16 @@
 	resistance_flags = INDESTRUCTIBLE
 	///are we currently holding a vote for an eminence
 	var/vote_active = FALSE
-	///ref to our vote timer
-	var/vote_timer
+	///weakref to our vote timer
+	var/datum/weakref/vote_timer
 
 /obj/structure/destructible/clockwork/eminence_beacon/attack_hand(mob/user)
 	. = ..()
 	if(!IS_CLOCK(user))
 		return
 	if(vote_active)
-		var/our_timer = vote_timer //just to be sure we can clear the ref
-		vote_timer = null
-		deltimer(our_timer)
+		if(vote_timer)
+			deltimer(vote_timer?.resolve())
 		vote_active = FALSE
 		send_clock_message(null, "[user] has cancelled the Eminence vote.")
 		return
@@ -26,11 +25,11 @@
 	var/option = tgui_alert(user, "Becoming the Eminence is not an easy task, be sure you will be able to lead the servants. \
 								   If you choose to do so, your old form with be destroyed.", "Who shall control the Eminence?", list("Yourself", "A ghost", "Cancel"))
 	if(option == "Yourself")
-		send_clock_message(null, "[user] has elected themselves to become the Eminence. Interact with \the [src] to object.", "<span class='big_brass'>")
-		vote_timer = addtimer(CALLBACK(src, PROC_REF(vote_succeed), user), 60 SECONDS, TIMER_STOPPABLE)
+		send_clock_message(null, span_bigbrass("[user] has elected themselves to become the Eminence. Interact with \the [src] to object."))
+		vote_timer = WEAKREF(addtimer(CALLBACK(src, PROC_REF(vote_succeed), user), 60 SECONDS, TIMER_STOPPABLE))
 	else if(option == "A ghost")
-		send_clock_message(null, "[user] has elected for a ghost to become the Eminence. Interact with \the [src] to object.", "<span class='big_brass'>")
-		vote_timer = addtimer(CALLBACK(src, PROC_REF(vote_succeed)), 60 SECONDS, TIMER_STOPPABLE)
+		send_clock_message(null, span_bigbrass("[user] has elected for a ghost to become the Eminence. Interact with \the [src] to object."))
+		vote_timer = WEAKREF(addtimer(CALLBACK(src, PROC_REF(vote_succeed)), 60 SECONDS, TIMER_STOPPABLE))
 	else
 		return
 	vote_active = TRUE
@@ -57,7 +56,7 @@
 		servant_datum.on_removal()
 	eminence.mind.transfer_to(new_mob, TRUE)
 	new_mob.mind.add_antag_datum(/datum/antagonist/clock_cultist/eminence)
-	send_clock_message(null, "The Eminence has risen!", "<span class='big_brass'>")
+	send_clock_message(null, span_bigbrass("The Eminence has risen!"))
 
 	if(isliving(eminence))
 		var/mob/living/living_eminence = eminence

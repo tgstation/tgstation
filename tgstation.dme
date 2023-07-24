@@ -5433,6 +5433,7 @@
 #include "monkestation\code\modules\antagonists\clock_cult\structures\_structure.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\structures\airlock.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\structures\anchor_crystal.dm"
+#include "monkestation\code\modules\antagonists\clock_cult\structures\brass_window.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\structures\eminence_beacon.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\structures\gear_base.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\structures\interdiction_lens.dm"
