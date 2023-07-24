@@ -67,32 +67,6 @@
 		if(OFFSET_HELD)
 			update_held_items()
 
-//IMPORTANT: Multiple animate() calls do not stack well, so try to do them all at once if you can.
-/mob/living/carbon/perform_update_transform(resize = RESIZE_DEFAULT_SIZE)
-	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	var/final_pixel_y = pixel_y
-	var/final_dir = dir
-	var/changed = 0
-
-	if(lying_angle != lying_prev && rotate_on_lying)
-		changed++
-		ntransform.TurnTo(lying_prev , lying_angle)
-		if(lying_angle && lying_prev == 0 && dir & (EAST|WEST)) //Standing to lying and facing east or west
-			final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
-		final_pixel_y = base_pixel_y + body_position_pixel_y_offset
-
-	if(resize != RESIZE_DEFAULT_SIZE)
-		changed++
-		ntransform.Scale(resize)
-		//Update final_pixel_y so our mob doesn't go out of the southern bounds of the tile when standing
-		if(!lying_angle || !rotate_on_lying) //But not if the mob is lying, its sprite rotated.
-			final_pixel_y += (current_size * resize - current_size) * world.icon_size/2
-		current_size *= resize
-
-	if(changed)
-		SEND_SIGNAL(src, COMSIG_PAUSE_FLOATING_ANIM, 0.3 SECONDS)
-		animate(src, transform = ntransform, time = (lying_prev == 0 || lying_angle == 0) ? 2 : 0, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT))
-
 /mob/living/carbon
 	var/list/overlays_standing[TOTAL_LAYERS]
 

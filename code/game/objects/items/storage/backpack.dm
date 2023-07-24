@@ -428,6 +428,7 @@
 	playsound(src, 'sound/items/un_zip.ogg', 100, FALSE)
 	var/datum/callback/can_unzip = CALLBACK(src, PROC_REF(zipper_matches), TRUE)
 	if(!do_after(user, 2.1 SECONDS, src, extra_checks = can_unzip))
+		user.balloon_alert(user, "unzip failed!")
 		return
 	balloon_alert(user, "unzipped")
 	set_zipper(FALSE)
@@ -444,6 +445,7 @@
 	playsound(src, 'sound/items/zip_up.ogg', 100, FALSE)
 	var/datum/callback/can_zip = CALLBACK(src, PROC_REF(zipper_matches), FALSE)
 	if(!do_after(user, 0.5 SECONDS, src, extra_checks = can_zip))
+		user.balloon_alert(user, "zip failed!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	balloon_alert(user, "zipped")
 	set_zipper(TRUE)

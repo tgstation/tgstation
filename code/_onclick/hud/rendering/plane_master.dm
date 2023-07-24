@@ -244,7 +244,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	multiz_scaled = FALSE
 	critical = PLANE_CRITICAL_DISPLAY
 
-/atom/movable/screen/plane_master/clickcatcher/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/clickcatcher/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(offset_increased))
 	offset_increased(SSmapping, 0, SSmapping.max_plane_offset)
@@ -265,7 +265,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_relay_planes = list(RENDER_PLANE_GAME, LIGHT_MASK_PLANE)
 	critical = PLANE_CRITICAL_FUCKO_PARALLAX // goes funny when touched. no idea why I don't trust byond
 
-/atom/movable/screen/plane_master/parallax_white/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/parallax_white/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_SPACE_LAYER)
 
@@ -282,7 +282,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	multiz_scaled = FALSE
 
-/atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	if(offset != 0)
 		// You aren't the source? don't change yourself
@@ -360,7 +360,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	// Needs to be critical or it uh, it'll look white
 	critical = PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_RELAY
 
-/atom/movable/screen/plane_master/floor/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/floor/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_FLOOR_LAYER, relay_color = GLOB.em_block_color)
 
@@ -370,7 +370,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = WALL_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD, LIGHT_MASK_PLANE)
 
-/atom/movable/screen/plane_master/wall/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/wall/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_WALL_LAYER, relay_color = GLOB.em_block_color)
 
@@ -406,7 +406,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	// This is safe because we will ALWAYS be on the top z layer, so it DON'T MATTER
 	multiz_scaled = FALSE
 
-/atom/movable/screen/plane_master/field_of_vision_blocker/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/field_of_vision_blocker/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	mirror_parent_hidden()
 
@@ -423,7 +423,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = WALL_PLANE_UPPER
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD, LIGHT_MASK_PLANE)
 
-/atom/movable/screen/plane_master/wall_upper/Initialize(mapload, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/wall_upper/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_WALL_LAYER, relay_color = GLOB.em_block_color)
 

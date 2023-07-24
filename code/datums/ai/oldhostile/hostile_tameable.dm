@@ -96,7 +96,7 @@
 
 	var/mob/living/living_pawn = pawn
 	if(!IS_DEAD_OR_INCAP(living_pawn))
-		examine_text += span_notice("[pawn.p_they(TRUE)] seem[pawn.p_s()] happy to see you!")
+		examine_text += span_notice("[pawn.p_They()] seem[pawn.p_s()] happy to see you!")
 
 // next section is regarding commands
 
