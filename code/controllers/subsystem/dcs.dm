@@ -6,9 +6,8 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 	var/list/elements_by_type = list()
 
 	/**
-	 * A nested assoc list of bespoke element types as key, and a superlist of all instances of lists
-	 * that have been used as arguments, with their contents sorted alpha-numerically, as assoc value.
-	 * Within the super list, the sorted lists are key, while the original unsorted lists are values.
+	 * A nested assoc list of bespoke element types (keys) and superlists containing all lists used as arguments (values).
+	 * Inside the superlists, lists that've been sorted alphabetically are keys, while the original unsorted lists are values.
 	 *
 	 * e.g. list(
 	 *	/datum/element/first = list(list(A, B, C) = list(B, A, C), list(A, B) = list(A, B)),
@@ -18,6 +17,16 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 	 * Used by the dcs_check_list_arguments unit test.
 	 */
 	var/list/arguments_that_are_lists_by_element = list()
+	/**
+	 * An assoc list of list instances and their sorted counterparts.
+	 *
+	 * e.g. list(
+	 *	list(B, A, C) = list(A, B, C),
+	 *	list(C, B) = list(B, C),
+	 * )
+	 *
+	 * Used to make sure each list instance is sorted no more than once, or the unit test won't work.
+	 */
 	var/list/sorted_arguments_that_are_lists = list()
 
 /datum/controller/subsystem/processing/dcs/Recover()
