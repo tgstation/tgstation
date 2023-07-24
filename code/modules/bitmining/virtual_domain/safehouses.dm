@@ -23,6 +23,9 @@
 /datum/map_template/safehouse/dig
 	filename = "dig.dmm"
 
+/datum/map_template/safehouse/shuttle
+	filename = "shuttle.dmm"
+
 /**
  * Your safehouse here
  * /datum/map_template/safehouse/your_type
