@@ -1,0 +1,5 @@
+author: "dwasint"
+delete-after: True
+changes:
+  - rscadd: "bloodsuckers"
+  - rscadd: "monster hunters"
