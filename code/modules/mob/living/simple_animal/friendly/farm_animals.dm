@@ -38,6 +38,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize(mapload)
 	AddComponent(/datum/component/udder)
+	ADD_TRAIT(src, TRAIT_CLIFF_WALKER, INNATE_TRAIT) //we walk the cliff
 	. = ..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life(seconds_per_tick = SSMOBS_DT, times_fired)
