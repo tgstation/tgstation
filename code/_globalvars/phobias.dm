@@ -51,7 +51,6 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 	"spiders" = construct_phobia_regex("spiders"),
 	"strangers" = construct_phobia_regex("strangers"),
 	"the supernatural" = construct_phobia_regex("the supernatural"),
-	"heresy" = construct_phobia_regex("heresy"),
 ))
 
 GLOBAL_LIST_INIT(phobia_mobs, list(
