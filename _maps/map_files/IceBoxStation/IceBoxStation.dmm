@@ -68256,7 +68256,7 @@
 	},
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "publicElevator";
-	preset_destination_names = list("3"="Icemoon    Level","4"="Station    Level")
+	preset_destination_names = list("3"="Icemoon        Level","4"="Station        Level")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
@@ -213870,7 +213870,7 @@ xDQ
 xDQ
 xDQ
 xDQ
-xDQ
+bln
 wNO
 wNO
 wNO
@@ -214127,7 +214127,7 @@ rPp
 rPp
 rPp
 rPp
-rPp
+bln
 wNO
 wNO
 wNO
@@ -244196,7 +244196,7 @@ xDQ
 xDQ
 xDQ
 xDQ
-xDQ
+bln
 khz
 wNO
 wNO
@@ -244453,7 +244453,7 @@ wUD
 wUD
 wUD
 wUD
-wUD
+bln
 wNO
 wNO
 wNO
@@ -244710,7 +244710,7 @@ wUD
 wUD
 wUD
 wUD
-wUD
+bln
 wNO
 wNO
 wNO
@@ -244967,7 +244967,7 @@ wUD
 wUD
 wUD
 wUD
-wUD
+bln
 wNO
 wNO
 wNO
@@ -245224,7 +245224,7 @@ rPp
 rPp
 rPp
 rPp
-rPp
+bln
 wNO
 wNO
 wNO
@@ -257046,7 +257046,7 @@ xDQ
 xDQ
 xDQ
 xDQ
-xDQ
+bln
 wNO
 wNO
 wNO
@@ -257303,7 +257303,7 @@ wUD
 wUD
 wUD
 wUD
-wUD
+bln
 wNO
 wNO
 wNO
@@ -257560,7 +257560,7 @@ rPp
 rPp
 rPp
 rPp
-rPp
+bln
 wNO
 wNO
 wNO
@@ -270153,7 +270153,7 @@ xDQ
 xDQ
 xDQ
 xDQ
-xDQ
+bln
 wNO
 wNO
 wNO
@@ -270410,7 +270410,7 @@ wUD
 wUD
 wUD
 wUD
-wUD
+bln
 wNO
 wNO
 wNO
@@ -270667,7 +270667,7 @@ rPp
 rPp
 rPp
 rPp
-rPp
+bln
 wNO
 wNO
 wNO
