@@ -24,7 +24,7 @@
 
 /obj/item/borg/stun/attack(mob/living/attacked_mob, mob/living/user)
 	if(cooldown_check > world.time)
-		to_chat(user, span_warning("The arm is still recharging!"))
+		user.balloon_alert(user, "still recharging!")
 		return
 	if(ishuman(attacked_mob))
 		var/mob/living/carbon/human/human = attacked_mob
@@ -42,7 +42,7 @@
 	attacked_mob.adjust_stutter(20 SECONDS)
 	attacked_mob.set_jitter_if_lower(5 SECONDS)
 	if(issilicon(attacked_mob))
-		attacked_mob.emp_act(1)
+		attacked_mob.emp_act(EMP_HEAVY)
 		attacked_mob.visible_message(span_danger("[user] shocks [attacked_mob] with [src]!"), \
 					span_userdanger("[user] shocks you with [src]!"))
 	else
