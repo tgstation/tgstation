@@ -13,16 +13,28 @@
 	abstract_type = /datum/traitor_objective/destroy_item
 
 /datum/traitor_objective/destroy_item/low_risk
-	progression_minimum = 10 MINUTES
+	progression_minimum = 5 MINUTES
+	progression_maximum = 25 MINUTES
+	progression_reward = list(5 MINUTES, 10 MINUTES)
+	telecrystal_reward = list(1, 2)
+
+	possible_items = list(
+		/datum/objective_item/steal/traitor/cargo_budget,
+		/datum/objective_item/steal/traitor/clown_shoes,
+	)
+
+/datum/traitor_objective/destroy_item/high_risk
+	progression_minimum = 20 MINUTES
 	progression_maximum = 35 MINUTES
 	progression_reward = list(5 MINUTES, 10 MINUTES)
-	telecrystal_reward = 1
+	telecrystal_reward = list(3, 4)
 
 	possible_items = list(
 		/datum/objective_item/steal/traitor/bartender_shotgun,
 		/datum/objective_item/steal/traitor/fireaxe,
 		/datum/objective_item/steal/traitor/nullrod,
 		/datum/objective_item/steal/traitor/big_crowbar,
+		/datum/objective_item/steal/blackbox,
 	)
 
 /datum/traitor_objective/destroy_item/very_risky
@@ -31,7 +43,8 @@
 	telecrystal_reward = list(6, 9)
 
 	possible_items = list(
-		/datum/objective_item/steal/blackbox,
+		/datum/objective_item/steal/traitor/captain_spare,
+		/datum/objective_item/steal/caplaser
 	)
 
 /datum/traitor_objective/destroy_item/generate_objective(datum/mind/generating_for, list/possible_duplicates)
@@ -50,7 +63,7 @@
 	if(target_item.exists_on_map)
 		var/list/items = GLOB.steal_item_handler.objectives_by_path[target_item.targetitem]
 		for(var/obj/item/item as anything in items)
-			AddComponent(/datum/component/traitor_objective_register, item, succeed_signals = list(COMSIG_PARENT_QDELETING))
+			AddComponent(/datum/component/traitor_objective_register, item, succeed_signals = list(COMSIG_QDELETING))
 			tracked_items += item
 	if(length(target_item.special_equipment))
 		special_equipment = target_item.special_equipment
@@ -80,7 +93,7 @@
 /datum/traitor_objective/destroy_item/proc/on_item_pickup(datum/source, obj/item/item, slot)
 	SIGNAL_HANDLER
 	if(istype(item, target_item.targetitem) && !(item in tracked_items))
-		AddComponent(/datum/component/traitor_objective_register, item, succeed_signals = list(COMSIG_PARENT_QDELETING))
+		AddComponent(/datum/component/traitor_objective_register, item, succeed_signals = list(COMSIG_QDELETING))
 		tracked_items += item
 
 /datum/traitor_objective/destroy_item/ungenerate_objective()
