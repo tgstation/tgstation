@@ -372,7 +372,19 @@
 	return FALSE
 
 /mob/living/silicon/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
-	if(clicked_with_what.tool_behaviour == TOOL_CROWBAR)
+	if(clicked_with_what.tool_behaviour == TOOL_CROWBAR \
+		|| clicked_with_what.tool_behaviour == TOOL_WRENCH \
+		|| clicked_with_what.tool_behaviour == TOOL_SCREWDRIVER \
+		|| clicked_with_what.tool_behaviour == TOOL_WELDER)
+		return TRUE
+
+	return ..()
+
+/mob/living/simple_animal/bot/permit_melee_chain_use(mob/living/attacker, obj/item/clicked_with_what, right_clicking)
+	if(clicked_with_what.tool_behaviour == TOOL_CROWBAR \
+		|| clicked_with_what.tool_behaviour == TOOL_WRENCH \
+		|| clicked_with_what.tool_behaviour == TOOL_SCREWDRIVER \
+		|| clicked_with_what.tool_behaviour == TOOL_WELDER)
 		return TRUE
 
 	return ..()

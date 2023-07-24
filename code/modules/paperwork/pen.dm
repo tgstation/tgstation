@@ -19,6 +19,7 @@
 	worn_icon_state = "pen"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
 	item_flags = NOBLUDGEON
+	attack_style_path = /datum/attack_style/melee_weapon/stab_out
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
@@ -314,6 +315,7 @@
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 		embedding = list(embed_chance = 100) // Rule of cool
+		item_flags &= ~NOBLUDGEON
 	else
 		name = initial(name)
 		desc = initial(desc)
@@ -322,6 +324,8 @@
 		lefthand_file = initial(lefthand_file)
 		righthand_file = initial(righthand_file)
 		embedding = list(embed_chance = EMBED_CHANCE)
+		if(initial(item_flags) & NOBLUDGEON)
+			item_flags |= NOBLUDGEON
 
 	updateEmbedding()
 	if(user)

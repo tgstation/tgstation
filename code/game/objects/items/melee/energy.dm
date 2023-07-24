@@ -70,9 +70,6 @@
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/melee/energy/can_attack_with(mob/living/attacker, params)
-	return ..() && HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
-
 /obj/item/melee/energy/describe_blocking()
 	var/all_blockables = english_list(bitfield_to_list(can_block_flags, BLOCKABLE_FLAGS), and_text = " or ")
 	return "[p_They()] can flawlessly block all laser and energy [all_blockables]. Otherwise, \
@@ -211,6 +208,9 @@
 	armour_penetration = 35
 	block_sound = 'sound/weapons/block_blade.ogg'
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
+
+/obj/item/melee/energy/sword/can_attack_with(mob/living/attacker, params)
+	return ..() && HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
 
 /obj/item/melee/energy/sword/cyborg
 	name = "cyborg energy sword"

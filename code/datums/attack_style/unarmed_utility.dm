@@ -7,6 +7,8 @@
 		return ATTACK_SWING_CANCEL
 	if(attacker.loc in affected_turfs)
 		return ATTACK_SWING_CANCEL
+	if(!attacker.combat_mode)
+		return ATTACK_SWING_CANCEL
 
 	return ..()
 

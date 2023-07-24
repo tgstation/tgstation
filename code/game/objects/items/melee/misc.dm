@@ -206,7 +206,7 @@
 /datum/attack_style/melee_weapon/swing/sm_sword
 	cd = CLICK_CD_MELEE
 	slowdown = 0
-	time_per_turf = 0 SECONDS
+	time_per_turf = 0.3 SECONDS
 
 /obj/item/melee/supermatter_sword
 	name = "supermatter sword"
