@@ -62,6 +62,11 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 		notify_ghosts("Rat'var has risen in [area]. Reach out to the Justicar to be given a new shell for your soul.", source = src, action = NOTIFY_ATTACK)
 //	check_gods_battle() todo
 
+/obj/ratvar/Destroy(force, ...)
+	if(GLOB.cult_ratvar == src)
+		GLOB.cult_ratvar = null
+	return ..()
+
 /obj/ratvar/proc/consume(atom/consumed)
 	consumed.ratvar_act()
 
