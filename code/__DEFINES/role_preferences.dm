@@ -16,6 +16,7 @@
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
+#define ROLE_CLOCK_CULTIST "Clock Cultist"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -98,7 +99,6 @@
 #define ROLE_BATTLECRUISER_CREW "Battlecruiser Crew"
 #define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
 #define ROLE_VENUSHUMANTRAP "Venus Human Trap"
-#define ROLE_CLOCK_CULTIST "Clock Cultist"
 
 
 
