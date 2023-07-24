@@ -187,13 +187,15 @@
 		LAZYADD(target_blacklist, sacrifice.mind)
 	heretic_datum.remove_sacrifice_target(sacrifice)
 
-
 	var/feedback = "Your patrons accept your offer"
 	var/sac_department_flag = sacrifice.mind?.assigned_role?.departments_bitflags | sacrifice.last_mind?.assigned_role?.departments_bitflags
 	if(sac_department_flag & DEPARTMENT_BITFLAG_COMMAND)
 		heretic_datum.knowledge_points++
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
+
+	if(IS_HERETIC(sacrifice))
+		explosion(sacrifice, devastation_range = 10) // it's a placeholder where you most probably should to place your proc to not break everything
 
 	to_chat(user, span_hypnophrase("[feedback]."))
 	heretic_datum.total_sacrifices++
@@ -374,12 +376,9 @@
 	sac_target.remove_status_effect(/datum/status_effect/unholy_determination)
 	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp/heretic)
 	sac_target.clear_mood_event("shadow_realm")
-	if(!(IS_HERETIC(sac_target)))
+  
+	if(!IS_HERETIC(sac_target))
 		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/heresy, TRAUMA_RESILIENCE_MAGIC)
-	else
-		ADD_TRAIT(sac_target, TRAIT_BAN_HERETIC_CASTING, src)
-		to_chat(sac_target, span_hypnophrase("Your link to the Mansus feels weaker, as if someone stole all of your powers. You dont think you will be able to cast your spells anytime soon."))
-		sac_target.gain_knowledge(/datum/heretic_knowledge/mansus_restoration)
 
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)

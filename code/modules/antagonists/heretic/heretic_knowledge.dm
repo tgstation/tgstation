@@ -714,19 +714,3 @@
 		sacrifice.gib()
 
 	return ..()
-
-/datum/heretic_knowledge/mansus_restoration
-	name = "Mansus returnal" // sounds awful
-	desc = "Sacrifice lungs, potted plant and a radio to restore your link to the Mansus."
-	gain_text = "A way to return my powers, at any cost..."
-	required_atoms = list(
-		/obj/item/kirbyplants,
-		/obj/item/organ/internal/ears,
-		/obj/item/radio,
-	)
-	priority = MAX_KNOWLEDGE_PRIORITY - 4 // below basic rituals so you can see it
-	route = null
-
-/datum/heretic_knowledge/mansus_restoration/on_finished_recipe(mob/living/user)
-	REMOVE_TRAIT(user, TRAIT_BAN_HERETIC_CASTING, src)
-
