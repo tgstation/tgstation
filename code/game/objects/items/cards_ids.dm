@@ -436,7 +436,7 @@
 
 	context[SCREENTIP_CONTEXT_LMB] = "Show ID"
 	context[SCREENTIP_CONTEXT_RMB] = "Project pay stand"
-	if(!registered_account || registered_account.replaceable) //Same check we use when we check if we can assign an account
+	if(isnull(registered_account) || registered_account.replaceable) //Same check we use when we check if we can assign an account
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Assign account"
 	else
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Withdraw credits"
