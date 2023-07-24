@@ -589,6 +589,7 @@
 				irradiation_chance_increment = RADIATION_EXPOSURE_NEBULA_CHANCE_INCREMENT, \
 				irradiation_interval = RADIATION_EXPOSURE_NEBULA_CHECK_INTERVAL, \
 				source = src, \
+				radioactive_areas = radioactive_areas, \
 			)
 
 	else if(isobj(enterer)) //and fake the rest
@@ -599,14 +600,8 @@
 /datum/station_trait/nebula/hostile/radiation/proc/on_exited(area/space, atom/movable/exiter, direction)
 	SIGNAL_HANDLER
 
-	if(istype(get_area(exiter), radioactive_areas)) //we left to another area that is also radioactive, so dont do anything
-		return
-
-	for(var/datum/component/radioactive_exposure/exposure as anything in exiter.GetComponents(/datum/component/radioactive_exposure))
-		if(exposure.source == src)
-			qdel(exposure)
-
 	exiter.remove_filter(GLOW_NEBULA)
+	// The component handles its own removal
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
 	//big bombad now
