@@ -76,6 +76,7 @@
 	box = /obj/item/storage/box/survival/engineer
 	chameleon_extras = /obj/item/stamp/ce
 	skillchips = list(/obj/item/skillchip/job/engineer)
+	implants = list(/obj/item/implant/mindshield)
 	pda_slot = ITEM_SLOT_LPOCKET
 
 /datum/outfit/job/ce/mod
