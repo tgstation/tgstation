@@ -225,6 +225,3 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 #define NAVBEACON_PATROL_NEXT "next_patrol"
 #define NAVBEACON_DELIVERY_MODE "delivery"
 #define NAVBEACON_DELIVERY_DIRECTION "dir"
-
-
-
