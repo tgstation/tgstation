@@ -90,15 +90,7 @@
 			ui.send_full_update()
 			return TRUE
 		if("set_domain")
-			var/map_id
-			for(var/map_template/virtual_domain/domain in subtypesof(/datum/map_template/virtual_domain))
-				if(!domain.testing_only && domain.id == params["id"])
-					map_id = domain.id
-					break
-			if(isnull(map_id))
-				return TRUE
-
-			server.fresh_start(usr, map_id)
+			server.fresh_start(usr, params["id"])
 			return TRUE
 		if("stop_domain")
 			server.stop_domain(usr)
