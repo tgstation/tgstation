@@ -119,6 +119,48 @@
 	// Stop all automated behavior.
 	QDEL_NULL(ai_controller)
 
+/mob/living/basic/pet/dog/corgi/update_overlays()
+	. = ..()
+	if(inventory_head)
+		var/image/head_icon
+		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
+
+		if(!DF.obj_icon_state)
+			DF.obj_icon_state = inventory_head.icon_state
+		if(!DF.obj_alpha)
+			DF.obj_alpha = inventory_head.alpha
+		if(!DF.obj_color)
+			DF.obj_color = inventory_head.color
+
+		if(health <= 0 || !isnull(fakedeath))
+			head_icon = DF.get_overlay(dir = EAST)
+			head_icon.pixel_y = -8
+			head_icon.transform = head_icon.transform.Turn(180)
+		else
+			head_icon = DF.get_overlay()
+
+		. += head_icon
+
+	if(inventory_back)
+		var/image/back_icon
+		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
+
+		if(!DF.obj_icon_state)
+			DF.obj_icon_state = inventory_back.icon_state
+		if(!DF.obj_alpha)
+			DF.obj_alpha = inventory_back.alpha
+		if(!DF.obj_color)
+			DF.obj_color = inventory_back.color
+
+		if(health <= 0 || !isnull(fakedeath))
+			back_icon = DF.get_overlay(dir = EAST)
+			back_icon.pixel_y = -11
+			back_icon.transform = back_icon.transform.Turn(180)
+		else
+			back_icon = DF.get_overlay()
+
+		. += back_icon
+
 ///Deadchat bark.
 /mob/living/basic/pet/dog/corgi/proc/bork()
 	var/emote = pick("barks!", "woofs!", "yaps.","pants.")
@@ -153,7 +195,7 @@
 	inventory_head.forceMove(drop_location())
 	inventory_head = null
 	update_corgi_fluff()
-	regenerate_icons()
+	update_icon(UPDATE_OVERLAYS)
 
 ///Turn AI back on.
 /mob/living/basic/pet/dog/corgi/proc/stop_deadchat_plays()
@@ -165,11 +207,11 @@
 	if(A == inventory_head)
 		inventory_head = null
 		update_corgi_fluff()
-		regenerate_icons()
+		update_icon(UPDATE_OVERLAYS)
 	if(A == inventory_back)
 		inventory_back = null
 		update_corgi_fluff()
-		regenerate_icons()
+		update_icon(UPDATE_OVERLAYS)
 	return ..()
 
 /mob/living/basic/pet/dog/pug
@@ -227,7 +269,7 @@
 
 /mob/living/basic/pet/dog/corgi/Initialize(mapload)
 	. = ..()
-	regenerate_icons()
+	update_icon()
 	AddElement(/datum/element/strippable, GLOB.strippable_corgi_items)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
@@ -247,7 +289,7 @@
 
 /mob/living/basic/pet/dog/corgi/death(gibbed)
 	..(gibbed)
-	regenerate_icons()
+	update_icon()
 
 GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	/datum/strippable_item/corgi_head,
@@ -281,7 +323,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	user.put_in_hands(corgi_source.inventory_head)
 	corgi_source.inventory_head = null
 	corgi_source.update_corgi_fluff()
-	corgi_source.regenerate_icons()
+	corgi_source.update_icon(UPDATE_OVERLAYS)
 
 /datum/strippable_item/pet_collar
 	key = STRIPPABLE_ITEM_PET_COLLAR
@@ -353,7 +395,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	equipping.forceMove(corgi_source)
 	corgi_source.inventory_back = equipping
 	corgi_source.update_corgi_fluff()
-	corgi_source.regenerate_icons()
+	corgi_source.update_icon(UPDATE_OVERLAYS)
 
 /datum/strippable_item/corgi_back/finish_unequip(atom/source, mob/user)
 	var/mob/living/basic/pet/dog/corgi/corgi_source = source
@@ -363,7 +405,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	user.put_in_hands(corgi_source.inventory_back)
 	corgi_source.inventory_back = null
 	corgi_source.update_corgi_fluff()
-	corgi_source.regenerate_icons()
+	corgi_source.update_icon(UPDATE_OVERLAYS)
 
 /datum/strippable_item/corgi_id
 	key = STRIPPABLE_ITEM_ID
@@ -402,7 +444,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	user.put_in_hands(corgi_source.access_card)
 	corgi_source.access_card = null
 	corgi_source.update_corgi_fluff()
-	corgi_source.regenerate_icons()
+	corgi_source.update_icon(UPDATE_OVERLAYS)
 
 /mob/living/basic/pet/dog/corgi/getarmor(def_zone, type)
 	var/armorval = 0
@@ -482,7 +524,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		item_to_add.forceMove(src)
 		src.inventory_head = item_to_add
 		update_corgi_fluff()
-		regenerate_icons()
+		update_icon(UPDATE_OVERLAYS)
 	else
 		to_chat(user, span_warning("You set [item_to_add] on [src]'s head, but it falls off!"))
 		item_to_add.forceMove(drop_location())
@@ -668,50 +710,6 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 /mob/living/basic/pet/dog/corgi/narsie/narsie_act()
 	adjustBruteLoss(-maxHealth)
 
-
-/mob/living/basic/pet/dog/corgi/regenerate_icons()
-	..()
-	cut_overlays() //we are redrawing the mob after all
-	if(inventory_head)
-		var/image/head_icon
-		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
-
-		if(!DF.obj_icon_state)
-			DF.obj_icon_state = inventory_head.icon_state
-		if(!DF.obj_alpha)
-			DF.obj_alpha = inventory_head.alpha
-		if(!DF.obj_color)
-			DF.obj_color = inventory_head.color
-
-		if(health <= 0)
-			head_icon = DF.get_overlay(dir = EAST)
-			head_icon.pixel_y = -8
-			head_icon.transform = turn(head_icon.transform, 180)
-		else
-			head_icon = DF.get_overlay()
-
-		add_overlay(head_icon)
-
-	if(inventory_back)
-		var/image/back_icon
-		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
-
-		if(!DF.obj_icon_state)
-			DF.obj_icon_state = inventory_back.icon_state
-		if(!DF.obj_alpha)
-			DF.obj_alpha = inventory_back.alpha
-		if(!DF.obj_color)
-			DF.obj_color = inventory_back.color
-
-		if(health <= 0)
-			back_icon = DF.get_overlay(dir = EAST)
-			back_icon.pixel_y = -11
-			back_icon.transform = turn(back_icon.transform, 180)
-		else
-			back_icon = DF.get_overlay()
-		add_overlay(back_icon)
-
-	return
 
 
 

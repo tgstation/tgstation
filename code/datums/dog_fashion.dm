@@ -1,16 +1,26 @@
 /datum/dog_fashion
-	var/name
-	var/desc
-	var/emote_see
-	var/emote_hear
-	var/speak
-	var/speak_emote
+	///Name modifier for the dog that we're dressing up
+	var/name = null
+	///Description modifier for the dog that we're dressing up
+	var/desc = null
+	///Hearable emotes modifier for the dog that we're dressing up
+	var/list/emote_hear = list()
+	///Visible emotes modifier for the dog that we're dressing up
+	var/list/emote_see = list()
+	///Speech modifier for the dog that we're dressing up
+	var/list/speak = list()
+	///Speech verb modifier for the dog that we're dressing up
+	var/list/speak_emote = list()
 
 	// This isn't applied to the dog, but stores the icon_state of the
 	// sprite that the associated item uses
-	var/icon_file
-	var/obj_icon_state
+	///Icon path for the fashion item
+	var/icon_file = null
+	///Icon state for the fashion item
+	var/obj_icon_state = null
+	///Alpha level (opacity) modifier of the fashion item
 	var/obj_alpha
+	///Color modifier of the fasion item
 	var/obj_color
 
 /datum/dog_fashion/New(mob/M)
@@ -21,14 +31,16 @@
 	//replace the placeholder for the real unmodified name in the description of the dog
 	desc = replacetext(desc, "%REAL_NAME%", M.real_name)
 
-/datum/dog_fashion/proc/apply(mob/living/basic/pet/dog/D)
+///Applies the name, description and speak emote modifiers to the dog
+/datum/dog_fashion/proc/apply(mob/living/basic/pet/dog/dressup_doggy)
 	if(name)
-		D.name = name
+		dressup_doggy.name = name
 	if(desc)
-		D.desc = desc
+		dressup_doggy.desc = desc
 	if(speak_emote)
-		D.speak_emote = string_list(speak_emote)
+		dressup_doggy.speak_emote = string_list(speak_emote)
 
+///Applies random speech modifiers to the dog
 /datum/dog_fashion/proc/apply_to_speech(datum/ai_planning_subtree/random_speech/speech)
 	if(emote_see)
 		speech.emote_see = string_list(emote_see)
@@ -37,9 +49,13 @@
 	if(speak)
 		speech.speak = string_list(speak)
 
+/**
+ * Generates the icon overlay for the equipped item
+ * dir: passed direction for the sprite, e.g. to apply to a dead dog, we use the EAST dir and just flip it 180.
+ */
 /datum/dog_fashion/proc/get_overlay(dir)
 	if(icon_file && obj_icon_state)
-		var/image/corgI = image(icon_file, obj_icon_state, dir = dir)
+		var/image/corgI = image(icon_file, icon_state = obj_icon_state, dir = dir)
 		corgI.alpha = obj_alpha
 		corgI.color = obj_color
 		return corgI
@@ -66,17 +82,16 @@
 	name = "Sous chef %REAL_NAME%"
 	desc = "Your food will be taste-tested. All of it."
 
-
 /datum/dog_fashion/head/captain
 	name = "Captain %REAL_NAME%"
 	desc = "Probably better than the last captain."
 
 /datum/dog_fashion/head/kitty
 	name = "Runtime"
+	desc = "They're a cute little kitty-cat! ... wait ... what the hell?"
 	emote_see = list("coughs up a furball", "stretches")
 	emote_hear = list("purrs")
 	speak = list("Purrr", "Meow!", "MAOOOOOW!", "HISSSSS", "MEEEEEEW")
-	desc = "They're a cute little kitty-cat! ... wait ... what the hell?"
 
 /datum/dog_fashion/head/rabbit
 	name = "Hoppy"
@@ -89,12 +104,10 @@
 	speak = list("le woof!", "le bark!", "JAPPE!!")
 	emote_see = list("cowers in fear.", "surrenders.", "plays dead.","looks as though there is a wall in front of them.")
 
-
 /datum/dog_fashion/head/detective
 	name = "Detective %REAL_NAME%"
 	desc = "%NAME% sees through your lies..."
 	emote_see = list("investigates the area.","sniffs around for clues.","searches for scooby snacks.","takes a candycorn from the hat.")
-
 
 /datum/dog_fashion/head/nurse
 	name = "Nurse %REAL_NAME%"
@@ -122,13 +135,13 @@
 
 /datum/dog_fashion/head/warden
 	name = "Officer %REAL_NAME%"
-	emote_see = list("drools.","looks for donuts.")
 	desc = "Stop right there criminal scum!"
+	emote_see = list("drools.","looks for donuts.")
 
 /datum/dog_fashion/head/warden_red
 	name = "Officer %REAL_NAME%"
-	emote_see = list("drools.","looks for donuts.")
 	desc = "Stop right there criminal scum!"
+	emote_see = list("drools.","looks for donuts.")
 
 /datum/dog_fashion/head/blue_wizard
 	name = "Grandwizard %REAL_NAME%"
@@ -140,23 +153,23 @@
 
 /datum/dog_fashion/head/cardborg
 	name = "Borgi"
+	desc = "Result of robotics budget cuts."
 	speak = list("Ping!","Beep!","Woof!")
 	emote_see = list("goes rogue.", "sniffs out non-humans.")
-	desc = "Result of robotics budget cuts."
 
 /datum/dog_fashion/head/ghost
 	name = "\improper Ghost"
+	desc = "Spooky!"
+	obj_icon_state = "sheet"
 	speak = list("WoooOOOooo~","AUUUUUUUUUUUUUUUUUU")
 	emote_see = list("stumbles around.", "shivers.")
 	emote_hear = list("howls!","groans.")
-	desc = "Spooky!"
-	obj_icon_state = "sheet"
 
 /datum/dog_fashion/head/santa
 	name = "Santa's Corgi Helper"
+	desc = "They're very fond of milk and cookies."
 	emote_hear = list("barks Christmas songs.", "yaps merrily!")
 	emote_see = list("looks for presents.", "checks their list.")
-	desc = "They're very fond of milk and cookies."
 
 /datum/dog_fashion/head/cargo_tech
 	name = "Corgi Tech %REAL_NAME%"
@@ -164,8 +177,8 @@
 
 /datum/dog_fashion/head/reindeer
 	name = "%REAL_NAME% the red-nosed Corgi"
-	emote_hear = list("lights the way!", "illuminates.", "yaps!")
 	desc = "They have a very shiny nose."
+	emote_hear = list("lights the way!", "illuminates.", "yaps!")
 
 /datum/dog_fashion/head/sombrero
 	name = "Segnor %REAL_NAME%"
