@@ -184,7 +184,7 @@
 	return display_name ? display_name : STRINGIFY_PDA_TARGET(data["fakename"], data["fakejob"])
 
 /datum/signal/subspace/messaging/tablet_msg/proc/format_message()
-	return "\"[data["message"]]\""
+	return "[data["message"]]"
 
 /datum/signal/subspace/messaging/tablet_msg/proc/format_photo_path()
 	return data["photo"]

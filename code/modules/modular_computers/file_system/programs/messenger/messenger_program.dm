@@ -549,10 +549,15 @@
 			playsound(computer, 'sound/machines/terminal_error.ogg', 15, TRUE)
 		return FALSE
 
-	msg.message = emoji_parse(msg.message) //already sent- this just shows the sent emoji as one to the sender in the to_chat
+	// Log in the talk log
+	sender.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [computer.saved_identification] to [signal.format_target()]")
+	if(rigged)
+		log_bomber(sender, "sent a rigged PDA message (Name: [fake_name]. Job: [fake_job]) to [english_list(stringified_targets)] [!is_special_character(sender) ? "(SENT BY NON-ANTAG)" : ""]")
+
+	message = emoji_parse(message) //already sent- this just shows the sent emoji as one to the sender in the to_chat
 
 	// Show it to ghosts
-	var/ghost_message = span_name("[rigged ? "Rigged" : ""] PDA Message --> [span_name("[signal.format_target()]")]: [signal.format_message()]")
+	var/ghost_message = span_name("[rigged ? "Rigged" : ""] PDA Message --> [span_name("[signal.format_target()]")]: \"[signal.format_message()]\"")
 	for(var/mob/player_mob as anything in GLOB.current_observers_list)
 		if(player_mob.client && !player_mob.client?.prefs)
 			stack_trace("[player_mob] ([player_mob.ckey]) had null prefs, which shouldn't be possible!")
@@ -561,11 +566,7 @@
 		if(isobserver(player_mob) && (player_mob.client?.prefs.chat_toggles & CHAT_GHOSTPDA))
 			to_chat(player_mob, "[FOLLOW_LINK(player_mob, sender)] [ghost_message]")
 
-	// Log in the talk log
-	sender.log_talk(msg.message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [computer.saved_identification] to [signal.format_target()]")
-	if(rigged)
-		log_bomber(sender, "sent a rigged PDA message (Name: [fake_name]. Job: [fake_job]) to [english_list(stringified_targets)] [!is_special_character(sender) ? "(SENT BY NON-ANTAG)" : ""]")
-	to_chat(sender, span_info("PDA message sent to [signal.format_target()]: [sanitize(html_decode(signal.format_message()))]"))
+	to_chat(sender, span_info("PDA message sent to [signal.format_target()]: \"[signal.format_message()]\""))
 
 	if (!alert_silenced)
 		computer.send_sound()
@@ -624,11 +625,11 @@
 		if (isAI(receiver_mob))
 			sender_name = "<a href='?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>[sender_name]</a>"
 
-		var/inbound_message = "[sanitize(signal.format_message())]"
+		var/inbound_message = "[signal.format_message()]"
 		inbound_message = emoji_parse(inbound_message)
 
 		var/photo_message = message.photo_asset_name ? "(<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
-		to_chat(receiver_mob, span_infoplain("[icon2html(computer)] <b>PDA message from [sender_name], </b>[inbound_message] [photo_message] [reply]"))
+		to_chat(receiver_mob, span_infoplain("[icon2html(computer)] <b>PDA message from [sender_name], </b>\"[inbound_message]\" [photo_message] [reply]"))
 
 	if (should_ring)
 		computer.ring(ringtone)
