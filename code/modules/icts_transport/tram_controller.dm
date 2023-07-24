@@ -42,10 +42,47 @@
 	///how many times we moved while costing less than 0.5 * SSicts_transport.max_time milliseconds per movement
 	var/recovery_clear_count = 0
 
+	var/datum/tram_mfg_info/tram_registration
+
+/datum/tram_mfg_info
+	var/serial_number
+	var/mfg_date
+	var/install_location
+	var/distance_travelled = 0
+	var/collisions = 0
+
+/datum/tram_mfg_info/New(specific_transport_id)
+	if(GLOB.round_id)
+		serial_number = "LT306TG[add_leading(GLOB.round_id, 6, 0)]"
+	else
+		serial_number = "LT306TG[rand(000000, 999999)]"
+	mfg_date = world.realtime
+	install_location = specific_transport_id
+
+/datum/tram_mfg_info/proc/load_data(list/tram_data)
+	serial_number = text2path(tram_data["serial_number"])
+	mfg_date = text2path(tram_data["mfg_date"])
+	install_location = text2path(tram_data["install_location"])
+	distance_travelled = text2path(tram_data["distance_travelled"])
+	collisions = text2path(tram_data["collisions"])
+	return TRUE
+
+/datum/transport_controller/linear/tram/proc/get_json_data()
+	. = list()
+	.["serial_number"] = tram_registration.serial_number
+	.["mfg_date"] = tram_registration.mfg_date
+	.["install_location"] = tram_registration.install_location
+	.["distance_travelled"] = tram_registration.distance_travelled
+	.["collisions"] = tram_registration.collisions
+
 /datum/transport_controller/linear/tram/New(obj/structure/transport/linear/tram/transport_module)
 	. = ..()
 	speed_limiter = transport_module.speed_limiter
 	base_speed_limiter = transport_module.speed_limiter
+	tram_registration = SSpersistence.load_tram_stats(specific_transport_id)
+
+	if(!tram_registration)
+		tram_registration = new /datum/tram_mfg_info(specific_transport_id)
 
 	check_starting_landmark()
 	INVOKE_ASYNC(src, PROC_REF(cycle_doors), OPEN_DOORS)

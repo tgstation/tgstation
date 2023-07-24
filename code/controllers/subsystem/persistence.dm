@@ -53,7 +53,8 @@ SUBSYSTEM_DEF(persistence)
 	save_scars()
 	save_custom_outfits()
 	save_delamination_counter()
-	if(SStramprocess.can_fire)
+	if(SSicts_transport.can_fire)
+		save_tram_stats()
 		save_tram_counter()
 
 ///Loads up Poly's speech buffer.
@@ -562,6 +563,45 @@ SUBSYSTEM_DEF(persistence)
 	if(!fexists(TRAM_COUNT_FILEPATH))
 		return
 	tram_hits_last_round = text2num(file2text(TRAM_COUNT_FILEPATH))
+
+#define TRAM_STATS_SAVE_FILE "data/trams/[SSmapping.config.map_name]_trams.json"
+#define TRAM_PERSISTENCE_VERSION 0
+
+/datum/controller/subsystem/persistence/proc/load_tram_stats(specific_transport_id)
+	var/json_file = file(TRAM_STATS_SAVE_FILE)
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+
+	if(!islist(json))
+		return
+
+	for(var/tram_data in json)
+		if(!islist(tram_data))
+			continue
+
+		if(tram_data["install_location"] == specific_transport_id)
+			return tram_data
+
+///Saves each admin's custom outfit list
+/datum/controller/subsystem/persistence/proc/save_tram_stats()
+	var/json_file = file(TRAM_STATS_SAVE_FILE)
+	fdel(json_file)
+
+	var/list/tram_data = list()
+	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
+		tram_data += list(tram.get_json_data())
+
+	var/json_data = json_encode(tram_data)
+	rustg_file_write(json_data, TRAM_STATS_SAVE_FILE)
+
+///This proc can update entries if the format has changed at some point.
+/datum/controller/subsystem/persistence/proc/update_tram_stats_version(json)
+
+	for(var/installed_tram in json["install_location"])
+		continue //no versioning yet
 
 /datum/controller/subsystem/persistence/proc/save_tram_counter()
 		rustg_file_write("[tram_hits_this_round]", TRAM_COUNT_FILEPATH)

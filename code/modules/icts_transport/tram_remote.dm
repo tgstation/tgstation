@@ -43,8 +43,10 @@
 		return
 
 	destination = null
-	var/obj/effect/landmark/icts/nav_beacon/tram/requested_destination = tgui_input_list(user, "Available destinations", "Where to?", get_destinations())
-	destination = requested_destination
+	var/list/potential_destinations = get_destinations()
+	var/list/requested_destination = list()
+	requested_destination = tgui_input_list(user, "Available destinations", "Where to?", potential_destinations)
+	destination = requested_destination["platform_code"]
 	update_appearance()
 	// balloon_alert(user, "[direction ? "< inbound" : "outbound >"]")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -56,7 +58,7 @@
 		this_destination["name"] = destination.name
 		this_destination["dest_icons"] = destination.tgui_icons
 		this_destination["id"] = destination.platform_code
-		LAZYADDASSOCLIST(., destination.name, destination.platform_code)
+		. += list(this_destination)
 
 ///set safety bypass
 /obj/item/assembly/control/icts/remote/CtrlClick(mob/user)
