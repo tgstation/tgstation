@@ -609,26 +609,26 @@
 
 	var/should_ring = !alert_silenced || is_rigged
 
-	if(istype(receiver_mob) && should_ring && (receiver_mob.stat == CONSCIOUS || receiver_mob.stat == SOFT_CRIT) && receiver_mob.is_literate())
+	if(should_ring && istype(receiver_mob) && receiver_mob.is_literate() && (receiver_mob.stat == CONSCIOUS || receiver_mob.stat == SOFT_CRIT))
+		var/reply_href = signal.data["rigged"] ? "explode" : "message"
+		var/photo_href = signal.data["rigged"] ? "explode" : "open"
 		var/reply
-		if(!is_fake_user || is_rigged)
-			reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "explode" : "message"];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
-		// resolving w/o nullcheck here, assume the messenger exists if they sent a message
-		var/sender_name = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(chat.recipient.resolve())
-		var/hrefstart
-		var/hrefend
-		if (isAI(receiver_mob))
-			hrefstart = "<a href='?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>"
-			hrefend = "</a>"
-
 		if(is_automated)
 			reply = "\[Automated Message\]"
+		else
+			reply = "(<a href='byond://?src=[REF(src)];choice=[reply_href];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 
-		var/inbound_message = signal.format_message()
+		// resolving w/o nullcheck here, assume the messenger exists if they sent a message
+		var/sender_name = is_fake_user ? STRINGIFY_PDA_TARGET(fake_name, fake_job) : get_messenger_name(chat.recipient.resolve())
+
+		if (isAI(receiver_mob))
+			sender_name = "<a href='?src=[REF(receiver_mob)];track=[html_encode(sender_name)]'>[sender_name]</a>"
+
+		var/inbound_message = "[sanitize(signal.format_message())]"
 		inbound_message = emoji_parse(inbound_message)
 
-		var/photo_message = message.photo_asset_name ? " (<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "explode" : "open"];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
-		to_chat(receiver_mob, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][sender_name][hrefend], </b>[sanitize(html_decode(inbound_message))][photo_message] [reply]"))
+		var/photo_message = message.photo_asset_name ? "(<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
+		to_chat(receiver_mob, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][sender_name][hrefend], </b>[inbound_message] [photo_message] [reply]"))
 
 	if (should_ring)
 		computer.ring(ringtone)
@@ -656,8 +656,10 @@
 			if(href_list["target"] in saved_chats)
 				viewing_messages_of = href_list["target"]
 		if("explode")
-			if(HAS_TRAIT(computer, TRAIT_PDA_CAN_EXPLODE))
-				var/obj/item/modular_computer/pda/comp = computer
-				comp.explode(usr, from_message_menu = TRUE)
+			if(!HAS_TRAIT(computer, TRAIT_PDA_CAN_EXPLODE))
+				return
+
+			var/obj/item/modular_computer/pda/comp = computer
+			comp.explode(usr, from_message_menu = TRUE)
 
 #undef TEMP_IMAGE_PATH
