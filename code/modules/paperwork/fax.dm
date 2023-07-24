@@ -131,6 +131,14 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	return TRUE
 
 /**
+ * Deconstruct with crowbar
+ */
+/obj/machinery/fax/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_deconstruction_crowbar(tool)
+	return TRUE
+
+/**
  * Using the multi-tool with the panel closed causes the fax network name to be renamed.
  */
 /obj/machinery/fax/multitool_act(mob/living/user, obj/item/I)
@@ -584,3 +592,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 /obj/machinery/fax/service
 	fax_name = "Service Hallway"
 	name = "Service Fax Machine"
+
+/obj/machinery/fax/trial
+	fax_name = "Pre-Trial"
+	name = "Pre-Trial Fax Machine"
