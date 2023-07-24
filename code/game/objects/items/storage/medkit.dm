@@ -418,6 +418,8 @@
 		medbot_assembly.set_skin("brute")
 	else if (istype(src, /obj/item/storage/medkit/advanced))
 		medbot_assembly.set_skin("advanced")
+	else if (istype(src, /obj/item/storage/medkit/tactical))
+		medbot_assembly.set_skin("bezerk")
 	user.put_in_hands(medbot_assembly)
 	medbot_assembly.balloon_alert(user, "arm added")
 	medbot_assembly.robot_arm = bodypart.type
