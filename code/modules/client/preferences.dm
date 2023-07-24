@@ -449,8 +449,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
  * returns client.prefs.read_preference(prefs_to_read) or FALSE if something went wrong.
  *
  * Arguments:
- * * client/prefs_holder - the client to read the prefs from
- * * datum/preference/pref_to_read - the type of preference datum to read
+ * * client/prefs_holder - the client to read the pref from
+ * * datum/preference/pref_to_read - the type of preference datum to read.
  */
 /proc/safe_read_pref(client/prefs_holder, datum/preference/pref_to_read)
 	if(!prefs_holder)
@@ -471,7 +471,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
  * returns client.prefs.chat_toggles or FALSE if something went wrong.
  *
  * Arguments:
- * * client/prefs_holder - the client to read the prefs from
+ * * client/prefs_holder - the client to get the chat_toggles pref from.
  */
 /proc/get_chat_toggles(client/prefs_holder)
 	if(!prefs_holder)
