@@ -8234,6 +8234,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"bxb" = (
+/obj/machinery/guideway_sensor{
+	link_direction = 4;
+	pairing_direction = 2
+	},
+/turf/closed/wall,
+/area/station/hallway/primary/tram/right)
 "bxd" = (
 /obj/structure/table,
 /obj/item/radio/intercom/directional/east{
@@ -22859,6 +22866,13 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"gTj" = (
+/obj/machinery/guideway_sensor{
+	link_direction = 4;
+	pairing_direction = 2
+	},
+/turf/closed/wall,
+/area/station/hallway/primary/tram/center)
 "gTu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -25068,6 +25082,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"hOS" = (
+/obj/machinery/guideway_sensor{
+	link_direction = 8;
+	pairing_direction = 1
+	},
+/turf/closed/wall,
+/area/station/hallway/primary/tram/left)
 "hPs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -30233,6 +30254,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
+"jLb" = (
+/obj/machinery/guideway_sensor{
+	link_direction = 8;
+	pairing_direction = 2
+	},
+/turf/closed/wall,
+/area/station/hallway/primary/tram/left)
 "jLf" = (
 /turf/open/floor/iron/chapel,
 /area/station/service/chapel)
@@ -32000,6 +32028,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"ksh" = (
+/obj/machinery/guideway_sensor{
+	link_direction = 4;
+	pairing_direction = 1
+	},
+/turf/closed/wall,
+/area/station/hallway/primary/tram/right)
 "ksk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -35954,6 +35989,13 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/white/side,
 /area/station/service/kitchen)
+"lMs" = (
+/obj/machinery/guideway_sensor{
+	link_direction = 8;
+	pairing_direction = 1
+	},
+/turf/closed/wall,
+/area/station/hallway/primary/tram/center)
 "lMw" = (
 /obj/machinery/door/airlock{
 	id_tag = "Toilet3";
@@ -37472,6 +37514,13 @@
 /obj/effect/landmark/atmospheric_sanity/mark_all_station_areas_as_goal,
 /turf/open/space/basic,
 /area/space)
+"mmn" = (
+/obj/machinery/guideway_sensor{
+	link_direction = 8;
+	pairing_direction = 2
+	},
+/turf/closed/wall,
+/area/station/hallway/primary/tram/center)
 "mmv" = (
 /obj/structure/table/glass,
 /obj/item/folder/red,
@@ -37747,6 +37796,13 @@
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"mrq" = (
+/obj/machinery/guideway_sensor{
+	link_direction = 4;
+	pairing_direction = 1
+	},
+/turf/closed/wall,
+/area/station/hallway/primary/tram/center)
 "mrr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
@@ -63726,6 +63782,11 @@
 	},
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
+"vFX" = (
+/obj/structure/lattice,
+/obj/machinery/guideway_sensor,
+/turf/open/openspace,
+/area/station/tram)
 "vGi" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -158205,13 +158266,13 @@ kOE
 yiM
 aEh
 iPy
-yiM
-afX
+jLb
+vFX
 afS
 wJq
 afY
-afX
-yiM
+vFX
+hOS
 iPy
 tBu
 yiM
@@ -164116,13 +164177,13 @@ aaa
 izU
 vMI
 nEl
-izU
+gTj
 afX
 afV
 wJq
 aga
 afX
-izU
+mrq
 nEl
 dnp
 izU
@@ -171826,13 +171887,13 @@ aaa
 izU
 eqK
 nEl
-izU
+mmn
 afX
 afS
 wJq
 afY
 afX
-izU
+lMs
 nEl
 mhE
 izU
@@ -177737,13 +177798,13 @@ aaa
 bMb
 lyt
 ghV
-bMb
+bxb
 afX
-afS
+afV
 wJq
-afY
+aga
 afX
-bMb
+ksh
 ghV
 bXG
 lVi

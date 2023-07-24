@@ -39,7 +39,7 @@
 
 /datum/round_event/tram_malfunction/start()
 	for(var/obj/machinery/crossing_signal/signal as anything in SSicts_transport.crossing_signals)
-		signal.start_malfunction()
+		signal.start_event_malfunction()
 
 	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
 		door.malfunctioning = TRUE
@@ -53,7 +53,7 @@
 
 /datum/round_event/tram_malfunction/end()
 	for(var/obj/machinery/crossing_signal/signal as anything in SSicts_transport.crossing_signals)
-		signal.end_malfunction()
+		signal.end_event_malfunction()
 
 	for(var/obj/machinery/door/airlock/tram/door as anything in SSicts_transport.doors)
 		door.malfunctioning = FALSE

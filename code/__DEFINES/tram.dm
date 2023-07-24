@@ -12,6 +12,11 @@
 
 #define XING_DEFAULT_TRAM_LENGTH 10
 
+#define XING_NORMAL_OPERATION 0
+#define XING_SENSOR_FAULT 1
+#define XING_TRANSPORT_FAULT 2
+#define XING_SIGNAL_EMAG 3
+
 /// Tram destinations/platforms
 #define TRAMSTATION_WEST 1
 #define TRAMSTATION_CENTRAL 2

@@ -564,8 +564,10 @@ SUBSYSTEM_DEF(persistence)
 		return
 	tram_hits_last_round = text2num(file2text(TRAM_COUNT_FILEPATH))
 
+/datum/controller/subsystem/persistence/proc/save_tram_counter()
+		rustg_file_write("[tram_hits_this_round]", TRAM_COUNT_FILEPATH)
+
 #define TRAM_STATS_SAVE_FILE "data/trams/[SSmapping.config.map_name]_trams.json"
-#define TRAM_PERSISTENCE_VERSION 0
 
 /datum/controller/subsystem/persistence/proc/load_tram_stats(specific_transport_id)
 	var/json_file = file(TRAM_STATS_SAVE_FILE)
@@ -585,7 +587,6 @@ SUBSYSTEM_DEF(persistence)
 		if(tram_data["install_location"] == specific_transport_id)
 			return tram_data
 
-///Saves each admin's custom outfit list
 /datum/controller/subsystem/persistence/proc/save_tram_stats()
 	var/json_file = file(TRAM_STATS_SAVE_FILE)
 	fdel(json_file)
@@ -597,17 +598,9 @@ SUBSYSTEM_DEF(persistence)
 	var/json_data = json_encode(tram_data)
 	rustg_file_write(json_data, TRAM_STATS_SAVE_FILE)
 
-///This proc can update entries if the format has changed at some point.
-/datum/controller/subsystem/persistence/proc/update_tram_stats_version(json)
-
-	for(var/installed_tram in json["install_location"])
-		continue //no versioning yet
-
-/datum/controller/subsystem/persistence/proc/save_tram_counter()
-		rustg_file_write("[tram_hits_this_round]", TRAM_COUNT_FILEPATH)
-
 #undef DELAMINATION_COUNT_FILEPATH
 #undef DELAMINATION_HIGHSCORE_FILEPATH
 #undef TRAM_COUNT_FILEPATH
 #undef FILE_RECENT_MAPS
 #undef KEEP_ROUNDS_MAP
+#undef TRAM_STATS_SAVE_FILE
