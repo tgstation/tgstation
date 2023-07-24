@@ -21,8 +21,8 @@
 
 	var/list/using_materials
 	var/starting_amount = 0
-	var/iron_cost =HALF_SHEET_MATERIAL_AMOUNT
-	var/glass_cost =HALF_SHEET_MATERIAL_AMOUNT
+	var/iron_cost = HALF_SHEET_MATERIAL_AMOUNT
+	var/glass_cost = HALF_SHEET_MATERIAL_AMOUNT
 	var/power_used = 1000
 
 	var/mode = DRONE_READY
@@ -48,16 +48,28 @@
 	var/break_message = "lets out a tinny alarm before falling dark."
 	var/break_sound = 'sound/machines/warning-buzzer.ogg'
 
+	var/datum/component/material_container/materials
+
 /obj/machinery/drone_dispenser/Initialize(mapload)
 	. = ..()
-	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_DRONE_DISPENSER, allowed_items=/obj/item/stack)
+	materials = AddComponent( \
+		/datum/component/material_container, \
+		list(/datum/material/iron, /datum/material/glass), \
+		SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, \
+		MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_DRONE_DISPENSER, \
+		allowed_items=/obj/item/stack \
+	)
 	materials.insert_amount_mat(starting_amount)
 	materials.precise_insertion = TRUE
 	using_materials = list(/datum/material/iron = iron_cost, /datum/material/glass = glass_cost)
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
+/obj/machinery/drone_dispenser/Destroy()
+	materials = null
+	return ..()
+
 /obj/machinery/drone_dispenser/preloaded
-	starting_amount = 5000
+	starting_amount = SHEET_MATERIAL_AMOUNT * 2.5
 
 /obj/machinery/drone_dispenser/syndrone //Please forgive me
 	name = "syndrone shell dispenser"
@@ -66,7 +78,7 @@
 	//If we're gonna be a jackass, go the full mile - 10 second recharge timer
 	cooldownTime = 100
 	end_create_message = "dispenses a suspicious drone shell."
-	starting_amount = 25000
+	starting_amount = SHEET_MATERIAL_AMOUNT * 12.5
 
 /obj/machinery/drone_dispenser/syndrone/badass //Please forgive me
 	name = "badass syndrone shell dispenser"
@@ -81,10 +93,10 @@
 	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/snowflake
 	end_create_message = "dispenses a snowflake drone shell."
 	// Those holoprojectors aren't cheap
-	iron_cost =SHEET_MATERIAL_AMOUNT
-	glass_cost =SHEET_MATERIAL_AMOUNT
+	iron_cost = SHEET_MATERIAL_AMOUNT
+	glass_cost = SHEET_MATERIAL_AMOUNT
 	power_used = 2000
-	starting_amount = 10000
+	starting_amount = SHEET_MATERIAL_AMOUNT * 5
 
 // If the derelict gets lonely, make more friends.
 /obj/machinery/drone_dispenser/derelict
@@ -92,8 +104,8 @@
 	desc = "A rusty machine that, when supplied with iron and glass, will periodically create a derelict drone shell. Does not need to be manually operated."
 	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/derelict
 	end_create_message = "dispenses a derelict drone shell."
-	iron_cost = 10000
-	glass_cost = 5000
+	iron_cost = SHEET_MATERIAL_AMOUNT * 5
+	glass_cost = SHEET_MATERIAL_AMOUNT * 2.5
 	starting_amount = 0
 	cooldownTime = 600
 
@@ -128,11 +140,11 @@
 	. = ..()
 	var/material_requirement_string = "It needs "
 	if (iron_cost > 0)
-		material_requirement_string += "[iron_cost] iron "
+		material_requirement_string += "[iron_cost / SHEET_MATERIAL_AMOUNT] iron sheets "
 		if (glass_cost > 0)
 			material_requirement_string += "and "
 	if (glass_cost > 0)
-		material_requirement_string += "[glass_cost] glass "
+		material_requirement_string += "[glass_cost / SHEET_MATERIAL_AMOUNT] glass sheets "
 	if (iron_cost > 0 || glass_cost > 0)
 		material_requirement_string += "to produce one drone shell."
 		. += span_notice(material_requirement_string)
@@ -144,7 +156,6 @@
 	if((machine_stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(!materials.has_materials(using_materials))
 		return // We require more minerals
 
@@ -212,7 +223,6 @@
 
 /obj/machinery/drone_dispenser/attackby(obj/item/I, mob/living/user)
 	if(I.tool_behaviour == TOOL_CROWBAR)
-		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		materials.retrieve_all()
 		I.play_tool_sound(src)
 		to_chat(user, span_notice("You retrieve the materials from [src]."))
