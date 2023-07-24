@@ -75,6 +75,13 @@
 
 	storage_type = /datum/storage/backpack/santabag
 
+/obj/item/storage/backpack/santabag
+	name = "Santa's Gift Bag"
+	desc = "Space Santa uses this to deliver presents to all the nice children in space in Christmas! Wow, it's pretty big!"
+	icon_state = "giftbag0"
+	inhand_icon_state = "giftbag"
+	w_class = WEIGHT_CLASS_BULKY
+
 /obj/item/storage/backpack/santabag/Initialize(mapload)
 	. = ..()
 	regenerate_presents()
