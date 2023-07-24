@@ -16,7 +16,7 @@
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
-#define ROLE_CLOCK_CULTIST "Clock Cultist" //e
+#define ROLE_CLOCK_CULTIST "Clock Cultist"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
