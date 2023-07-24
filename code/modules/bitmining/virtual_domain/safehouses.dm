@@ -17,6 +17,12 @@
 /// The default safehouse map template.
 /datum/map_template/safehouse/wood
 
+/datum/map_template/safehouse/den
+	filename = "den.dmm"
+
+/datum/map_template/safehouse/dig
+	filename = "dig.dmm"
+
 /**
  * Your safehouse here
  * /datum/map_template/safehouse/your_type
