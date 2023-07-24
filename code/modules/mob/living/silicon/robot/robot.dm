@@ -411,8 +411,7 @@
 	// They stay locked down if their wire is cut.
 	if(wires?.is_cut(WIRE_LOCKDOWN))
 		state = TRUE
-	else
-		if(!ai_lockdown)
+	else if(!ai_lockdown)
 			addtimer(CALLBACK(src,PROC_REF(lockdown_override), FALSE), 10 MINUTES)
 			to_chat(src, "<br><br>[span_alert("ALERT - Remote system lockdown engaged. Trying to hack the lockdown subsystem...")]<br>")
 	if(state)
@@ -423,7 +422,9 @@
 
 /// Allows the borg to unlock themselves after a lenghty period of time.
 /mob/living/silicon/robot/proc/lockdown_override()
-	if(!ai_lockdown)
+	if(ai_lockdown)
+		to_chat(src, "<br><br>[span_alert("ALERT - Remote system lockdown override failed.")]<br>")
+		return
 		set_lockcharge(FALSE)
 		to_chat(src, "<br><br>[span_notice("ALERT - Remote system lockdown override successful.")]<br>")
 		if(connected_ai)

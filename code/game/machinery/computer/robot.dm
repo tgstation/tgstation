@@ -101,7 +101,7 @@
 							R.ai_lockdown = TRUE
 							src.lock_unlock_borg(R)
 					else
-						if(isnull( locked_down_borg)&& !R.lockcharge) //If there is no borg locked down by the console yet
+						if(isnull(locked_down_borg) && !R.lockcharge) //If there is no borg locked down by the console yet
 							src.lock_unlock_borg(R, src.loc.loc.name)
 							R.ai_lockdown = FALSE //Just in case I'm stupid
 							locked_down_borg = R
@@ -170,7 +170,7 @@
 	log_silicon("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)]!")
 	log_combat(usr, R, "[!R.lockcharge ? "locked down" : "released"] cyborg")
 	R.SetLockdown(!R.lockcharge)
-	to_chat(R, !R.lockcharge ? span_notice("Your lockdown has been lifted!") : span_alert("You have been locked down!")	)
+	to_chat(R, !R.lockcharge ? span_notice("Your lockdown has been lifted!") : span_alert("You have been locked down!"))
 	if(!isnull(console_location))
 		to_chat(R, span_alert("The approximate location of the console that is keeping you locked down is [console_location]"))
 	if(R.connected_ai)
