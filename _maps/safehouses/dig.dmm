@@ -1,0 +1,27 @@
+"a" = (/obj/structure/railing{dir = 4},/obj/effect/turf_decal/loading_area,/obj/effect/turf_decal/box/corners,/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating,/area/station/virtual_domain/safehouse/send)
+"e" = (/obj/effect/turf_decal/loading_area,/obj/effect/turf_decal/box/corners{dir = 8},/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating,/area/station/virtual_domain/safehouse/send)
+"h" = (/obj/effect/turf_decal/sand/plating,/obj/effect/turf_decal/sand/plating,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/plating,/area/station/virtual_domain/safehouse)
+"k" = (/obj/effect/turf_decal/siding/yellow/corner{dir = 8},/turf/open/misc/asteroid,/area/station/virtual_domain/safehouse)
+"n" = (/obj/effect/turf_decal/siding/yellow{dir = 8},/turf/open/misc/asteroid,/area/station/virtual_domain/safehouse)
+"p" = (/turf/open/misc/asteroid,/area/station/virtual_domain/safehouse)
+"t" = (/obj/structure/table,/obj/item/coin/gold{pixel_x = -6; pixel_y = 2},/obj/item/flashlight/lantern{pixel_y = 8; pixel_x = 4; on = 1},/turf/open/misc/asteroid,/area/station/virtual_domain/safehouse)
+"u" = (/obj/effect/turf_decal/siding/yellow{dir = 8},/obj/effect/turf_decal/siding/yellow,/obj/effect/decal/cleanable/oil/streak,/turf/open/misc/asteroid,/area/station/virtual_domain/safehouse)
+"v" = (/obj/effect/turf_decal/siding/yellow{dir = 8},/obj/effect/decal/remains/xeno/larva,/turf/open/misc/asteroid,/area/station/virtual_domain/safehouse)
+"x" = (/turf/closed/mineral/asteroid,/area/template_noop)
+"z" = (/obj/effect/turf_decal/sand/plating,/obj/machinery/door/airlock/maintenance/glass,/turf/open/floor/plating,/area/station/virtual_domain/safehouse)
+"B" = (/turf/closed/mineral/asteroid,/area/station/virtual_domain/safehouse)
+"E" = (/turf/open/misc/asteroid,/area/station/virtual_domain/safehouse/exit)
+"K" = (/turf/closed/wall/rock,/area/station/virtual_domain/safehouse)
+"M" = (/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating,/area/station/virtual_domain/safehouse)
+"S" = (/obj/effect/turf_decal/siding/yellow{dir = 8},/obj/effect/decal/cleanable/dirt/dust,/turf/open/misc/asteroid,/area/station/virtual_domain/safehouse)
+"U" = (/obj/effect/turf_decal/siding/yellow,/obj/structure/railing/corner,/obj/effect/decal/remains/xeno,/turf/open/misc/asteroid,/area/station/virtual_domain/safehouse)
+"Z" = (/obj/effect/turf_decal/sand/plating,/obj/effect/turf_decal/siding/yellow/corner,/obj/effect/turf_decal/sand/plating,/obj/item/flashlight/glowstick{on = 1},/turf/open/floor/plating,/area/station/virtual_domain/safehouse)
+
+(1,1,1) = {"
+BKKzKKB
+BhvptKK
+KMnppEB
+KZuUkEB
+BBeaSEK
+xKKKBKK
+"}
