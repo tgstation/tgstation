@@ -662,7 +662,7 @@ const ModuleSection = (props, context) => {
                     selected={module.module_active}
                     tooltip={moduleTypeAction(module.module_type)}
                     tooltipPosition="left"
-                    disabled={!module.module_type}
+                    disabled={!module.module_type || module.cooldown > 0}
                   />
                 </Table.Cell>
                 <Table.Cell width={1}>
