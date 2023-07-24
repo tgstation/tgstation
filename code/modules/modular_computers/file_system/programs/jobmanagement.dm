@@ -26,6 +26,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		JOB_AI,
 		JOB_CYBORG,
 		JOB_ASSISTANT,
+		JOB_PRISONER,
 	)
 
 	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
