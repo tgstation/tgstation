@@ -92,27 +92,26 @@
 				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
 				if(can_control(usr, R) && !..())
 					if(isAI(usr))
-						if(R.ai_lockdown && R.lockcharge)
-							R.ai_lockdown = FALSE
-							lock_unlock_borg(R)
-						else if(!R.ai_lockdown && R.lockcharge)
-							to_chat(usr, span_danger("Cyborg locked by an user with superior permissions."))
-						else if(!R.lockcharge)
+						if(R.lockcharge)
+							if(R.ai_lockdown)
+								R.ai_lockdown = FALSE
+								lock_unlock_borg(R)
+							else
+								to_chat(usr, span_danger("Cyborg locked by an user with superior permissions."))
+						else
 							R.ai_lockdown = TRUE
-							src.lock_unlock_borg(R)
+							lock_unlock_borg(R)
 					else
 						if(isnull( locked_down_borg)&& !R.lockcharge) //If there is no borg locked down by the console yet
-							src.lock_unlock_borg(R, src.loc.loc.name)
+							lock_unlock_borg(R, src.loc.loc.name)
 							R.ai_lockdown = FALSE //Just in case I'm stupid
 							locked_down_borg = R
 							RegisterSignal(R, COMSIG_QDELETING, PROC_REF(borg_destroyed))
 						else if(locked_down_borg == R) //If the borg locked down by the console is the same as the one we're trying to unlock
-							src.lock_unlock_borg(R)
-							UnregisterSignal(R, COMSIG_QDELETING)
-							locked_down_borg = null
+							lock_unlock_borg(R)
 						else if(R.lockcharge&&R.ai_lockdown)
 							R.ai_lockdown = FALSE
-							src.lock_unlock_borg(R)
+							lock_unlock_borg(R)
 						else if(R.lockcharge&&locked_down_borg!=R)
 							to_chat(usr, span_danger("The cyborg was locked by a different console."))
 						else
@@ -166,6 +165,9 @@
 
 // I feel like this should be changed, but I have no idea in what way exactly, so I just extracted it to make the code less of a mess
 /obj/machinery/computer/robotics/proc/lock_unlock_borg(mob/living/silicon/robot/R, console_location = null)
+	if(R.lockcharge && locked_down_borg == R)
+		UnregisterSignal(locked_down_borg, COMSIG_QDELETING)
+		locked_down_borg = null
 	message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] [!R.lockcharge ? "locked down" : "released"] [ADMIN_LOOKUPFLW(R)]!"))
 	log_silicon("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)]!")
 	log_combat(usr, R, "[!R.lockcharge ? "locked down" : "released"] cyborg")
@@ -188,16 +190,15 @@
 
 /obj/machinery/computer/robotics/atom_break() // This shouldnt be needed, but hitting console doesnt trigger destroy apparently
 	if(!isnull(locked_down_borg))
-		src.lock_unlock_borg(locked_down_borg)
-		UnregisterSignal(locked_down_borg, COMSIG_QDELETING)
-		locked_down_borg = null
+		lock_unlock_borg(locked_down_borg)
 	return ..()
 
 /obj/machinery/computer/robotics/Destroy()
 	if(!isnull(locked_down_borg))
-		src.lock_unlock_borg(locked_down_borg)
-		UnregisterSignal(locked_down_borg, COMSIG_QDELETING)
-		locked_down_borg = null
+		lock_unlock_borg(locked_down_borg)
 	return ..()
+
+
+
 
 
