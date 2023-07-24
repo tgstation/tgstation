@@ -84,9 +84,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ep" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/effect/decal/cleanable/blood,
-/turf/open/floor/mineral/plastitanium/red,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/fakebasalt,
 /area/shuttle/escape/brig)
 "et" = (
 /obj/structure/chair{
@@ -125,12 +124,11 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "gE" = (
-/obj/machinery/computer/pod/old/mass_driver_controller{
-	id = "shuttle_trash";
-	pixel_x = 26
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
 	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/fakebasalt,
 /area/shuttle/escape/brig)
 "gI" = (
 /obj/effect/turf_decal/siding/wood{
@@ -151,15 +149,9 @@
 /turf/open/floor/mineral/silver,
 /area/shuttle/escape)
 "iz" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/sign/warning/vacuum/external/directional/north,
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "shuttle_trash"
-	},
-/turf/open/floor/iron/dark,
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/fakebasalt,
 /area/shuttle/escape/brig)
 "iN" = (
 /turf/open/floor/catwalk_floor,
@@ -240,12 +232,6 @@
 	},
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
-"ly" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/effect/turf_decal/delivery/white,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
 "lA" = (
 /obj/structure/table/wood,
 /obj/item/storage/fancy/cigarettes/cigars/havana{
@@ -272,8 +258,21 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/escape)
 "mm" = (
+/obj/item/storage/toolbox/emergency,
+/obj/item/crowbar,
+/obj/item/wrench,
+/obj/item/flashlight/flare{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/flashlight/flare{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/radio,
+/obj/item/radio,
+/obj/structure/closet,
 /obj/effect/turf_decal/bot_white,
-/obj/structure/closet/toolcloset,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -297,23 +296,11 @@
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
 "mx" = (
-/obj/item/storage/toolbox/emergency,
-/obj/item/crowbar,
-/obj/item/wrench,
-/obj/item/flashlight/flare{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
 	},
-/obj/item/flashlight/flare{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/radio,
-/obj/item/radio,
-/obj/structure/closet,
-/obj/effect/turf_decal/bot_white,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "mz" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
@@ -364,8 +351,11 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "oz" = (
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/mineral/plastitanium/red,
+/obj/machinery/door/window/brigdoor/security/holding/left/directional/west,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/fakebasalt,
 /area/shuttle/escape/brig)
 "oB" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -504,7 +494,7 @@
 /turf/open/floor/mineral/silver,
 /area/shuttle/escape)
 "wI" = (
-/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "wK" = (
@@ -520,8 +510,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "xg" = (
-/obj/structure/reagent_dispensers/water_cooler,
-/turf/open/floor/mineral/plastitanium/red,
+/mob/living/basic/cockroach,
+/turf/open/floor/fakebasalt,
 /area/shuttle/escape/brig)
 "xl" = (
 /obj/structure/chair/comfy/shuttle{
@@ -555,11 +545,9 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "yo" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/poddoor/massdriver_trash{
-	id = "shuttle_trash"
-	},
-/turf/open/floor/plating,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/fakebasalt,
 /area/shuttle/escape/brig)
 "yy" = (
 /obj/machinery/light/directional/north,
@@ -636,9 +624,10 @@
 /turf/template_noop,
 /area/template_noop)
 "BY" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/east,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/fakebasalt,
+/area/shuttle/escape/brig)
 "Cg" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 8
@@ -657,11 +646,10 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "DA" = (
-/obj/machinery/door/window{
-	dir = 4;
-	name = "Trash Disposal"
-	},
-/turf/open/floor/mineral/plastitanium/red,
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/fakebasalt,
 /area/shuttle/escape/brig)
 "DO" = (
 /obj/structure/bed,
@@ -669,84 +657,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Ec" = (
-/obj/item/clothing/suit/hazardvest{
-	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
-	name = "emergency lifejacket"
-	},
-/obj/item/clothing/suit/hazardvest{
-	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
-	name = "emergency lifejacket"
-	},
-/obj/item/clothing/suit/hazardvest{
-	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
-	name = "emergency lifejacket"
-	},
-/obj/item/clothing/suit/hazardvest{
-	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
-	name = "emergency lifejacket"
-	},
-/obj/item/clothing/suit/hazardvest{
-	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
-	name = "emergency lifejacket"
-	},
-/obj/item/tank/internals/emergency_oxygen{
-	pixel_x = 3
-	},
-/obj/item/tank/internals/emergency_oxygen{
-	pixel_x = 3
-	},
-/obj/item/tank/internals/emergency_oxygen{
-	pixel_x = 3
-	},
-/obj/item/tank/internals/emergency_oxygen{
-	pixel_x = 3
-	},
-/obj/item/tank/internals/emergency_oxygen{
-	pixel_x = 3
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/clothing/head/utility/hardhat/orange{
-	name = "protective hat";
-	pixel_y = 9
-	},
-/obj/item/clothing/head/utility/hardhat/orange{
-	name = "protective hat";
-	pixel_y = 9
-	},
-/obj/item/clothing/head/utility/hardhat/orange{
-	name = "protective hat";
-	pixel_y = 9
-	},
-/obj/item/clothing/head/utility/hardhat/orange{
-	name = "protective hat";
-	pixel_y = 9
-	},
-/obj/item/clothing/head/utility/hardhat/orange{
-	name = "protective hat";
-	pixel_y = 9
-	},
-/obj/structure/closet/crate{
-	name = "lifejackets"
-	},
+/obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -1273,7 +1184,7 @@ aI
 (7,1,1) = {"
 Oa
 Oa
-mx
+LR
 Bf
 mm
 Ec
@@ -1325,9 +1236,9 @@ qM
 Oa
 aX
 Uu
-BY
-BY
-ly
+Uu
+Uu
+Uu
 Oa
 vi
 ok
@@ -1353,7 +1264,7 @@ NV
 xl
 xl
 xl
-mz
+Oa
 cu
 cu
 Yp
@@ -1361,7 +1272,7 @@ Xl
 Yp
 cu
 cu
-mz
+Oa
 cu
 cu
 cu
@@ -1566,7 +1477,7 @@ mz
 Bj
 mz
 Ru
-oz
+dy
 Lv
 mz
 "}
@@ -1615,7 +1526,7 @@ wv
 Ab
 yc
 Ws
-ep
+dy
 dy
 Hy
 Ws
@@ -1666,7 +1577,7 @@ mz
 Bj
 mz
 Ru
-dy
+wI
 Lv
 mz
 "}
@@ -1691,7 +1602,7 @@ Bj
 Bj
 Oa
 so
-dy
+mx
 Ny
 Oa
 "}
@@ -1715,9 +1626,9 @@ Bj
 Bj
 Bj
 Oa
-wI
-dy
-xg
+yJ
+mx
+yH
 Oa
 "}
 (25,1,1) = {"
@@ -1740,9 +1651,9 @@ YF
 YF
 yc
 mz
-dy
-dy
-yH
+yo
+oz
+ep
 Oa
 "}
 (26,1,1) = {"
@@ -1767,7 +1678,7 @@ yc
 mz
 DA
 gE
-yJ
+xg
 Oa
 "}
 (27,1,1) = {"
@@ -1791,7 +1702,7 @@ Bj
 Bj
 Oa
 iz
-Oa
+BY
 Oa
 Uu
 "}
@@ -1815,8 +1726,8 @@ Uu
 Bj
 Bj
 Uu
-yo
-Uu
+Oa
+Oa
 Uu
 Bj
 "}
