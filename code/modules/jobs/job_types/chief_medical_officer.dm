@@ -73,6 +73,7 @@
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
+	implants = list(/obj/item/implant/mindshield)
 
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = list(

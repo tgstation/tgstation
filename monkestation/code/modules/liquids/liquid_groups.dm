@@ -447,7 +447,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 /datum/liquid_group/proc/process_fire()
 	get_group_burn()
 
-	var/reagents_to_remove = group_burn_rate * (burning_members.len)
+	var/reagents_to_remove = group_burn_rate * (length(burning_members))
 
 	if(!group_burn_power)
 		extinguish_all()
@@ -455,9 +455,9 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 
 	remove_any(amount = reagents_to_remove)
 
-	if(group_burn_rate >= reagents_per_turf * 0.2)
+	if(group_burn_rate >= reagents_per_turf)
 		var/list/removed_turf = list()
-		for(var/num = 1, num < (burning_members.len * 0.2), num++)
+		for(var/num = 1, num < round(group_burn_rate / reagents_per_turf))
 			var/turf/picked_turf = burning_members[1]
 			extinguish(picked_turf)
 			remove_from_group(picked_turf)

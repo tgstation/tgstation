@@ -64,6 +64,7 @@
 	head = /obj/item/clothing/head/hats/hopcap
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/armor/vest/hop
+	implants = list(/obj/item/implant/mindshield)
 
 	chameleon_extras = list(
 		/obj/item/gun/energy/e_gun,

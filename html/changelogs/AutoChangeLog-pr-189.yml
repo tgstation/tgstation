@@ -1,0 +1,6 @@
+author: "KittyNoodle"
+delete-after: True
+changes:
+  - rscadd: "Laser Muskets and Smoothbore Disablers as craftable weapons"
+  - rscadd: "The Syndicate Laser Musket, for when you need a reliable but still high damage weapon, at the cost of two hand slots."
+  - qol: "Added the recipe granters for advanced improvised guns to black market"
