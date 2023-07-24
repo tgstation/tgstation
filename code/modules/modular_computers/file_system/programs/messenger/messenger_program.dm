@@ -641,10 +641,12 @@
 	..()
 	if(QDELETED(src))
 		return
-	// send an activation message and open the messenger
-	if(!(computer.enabled || computer.turn_on(usr, open_ui = FALSE)) && !(computer.active_program == src || computer.open_program(usr, src, open_ui = FALSE)))
-		return
 	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
+		return
+	// send an activation message and open the messenger
+	if(!(computer.enabled || computer.turn_on(usr, open_ui = FALSE)))
+		return
+	if(!(computer.active_program == src || computer.open_program(usr, src, open_ui = FALSE)))
 		return
 	switch(href_list["choice"])
 		if("message")
