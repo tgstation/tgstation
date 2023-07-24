@@ -52,14 +52,12 @@
 		if(msgr.computer.saved_identification != target_name)
 			continue
 
-		var/datum/pda_msg/msg = new(message, TRUE)
-
 		var/datum/signal/subspace/messaging/tablet_msg/signal = new(source, list(
-			fakename = "Security Citation",
-			fakejob = "Citation Server",
-			message = msg,
-			targets = list(msgr),
-			automated = TRUE
+			"fakename" = "Security Citation",
+			"fakejob" = "Citation Server",
+			"message" = message,
+			"targets" = list(msgr),
+			"automated" = TRUE
 		))
 		signal.send_to_receivers()
 		sender.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)

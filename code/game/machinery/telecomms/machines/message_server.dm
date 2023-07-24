@@ -133,7 +133,7 @@
 	// log the signal
 	if(istype(signal, /datum/signal/subspace/messaging/tablet_msg))
 		var/datum/signal/subspace/messaging/tablet_msg/PDAsignal = signal
-		var/datum/data_tablet_msg/logmsg = new(PDAsignal.format_target(), PDAsignal.format_sender(), html_decode(PDAsignal.format_message()), PDAsignal.format_photo_path())
+		var/datum/data_tablet_msg/logmsg = new(PDAsignal.format_target(), PDAsignal.format_sender(), PDAsignal.format_message(), PDAsignal.format_photo_path())
 		pda_msgs += logmsg
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
 		var/datum/data_rc_msg/msg = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
@@ -184,12 +184,10 @@
 	return display_name ? display_name : STRINGIFY_PDA_TARGET(data["fakename"], data["fakejob"])
 
 /datum/signal/subspace/messaging/tablet_msg/proc/format_message()
-	var/datum/pda_msg/msg = data["message"]
-	return "\"[msg.message]\""
+	return "\"[data["message"]]\""
 
 /datum/signal/subspace/messaging/tablet_msg/proc/format_photo_path()
-	var/datum/pda_msg/msg = data["message"]
-	return msg.photo_asset_name
+	return data["photo"]
 
 /datum/signal/subspace/messaging/tablet_msg/broadcast()
 	for (var/datum/computer_file/program/messenger/app in data["targets"])

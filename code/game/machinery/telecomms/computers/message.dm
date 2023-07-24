@@ -236,13 +236,11 @@
 				notice_message = "NOTICE: No message entered!"
 				return attack_hand(usr)
 
-			var/datum/pda_msg/msg = new(message, TRUE)
-
 			var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
-				fakename = "[sender]",
-				fakejob = "[job]",
-				message = msg,
-				targets = list(tablet_to_msgr[recipient]),
+				"fakename" = "[sender]",
+				"fakejob" = "[job]",
+				"message" = message,
+				"targets" = list(tablet_to_msgr[recipient]),
 			))
 			// This will log the signal and transmit it to the target
 			linkedServer.receive_information(signal, null)

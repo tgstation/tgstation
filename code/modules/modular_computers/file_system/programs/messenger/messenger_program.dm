@@ -481,7 +481,7 @@
 			continue
 		target_msgrs += msgr
 
-	if(send_msg_signal(sender, message_datum, target_msgrs, everyone))
+	if(send_msg_signal(sender, message, target_msgrs, photo_asset_key, everyone))
 		// Log it in our logs
 		for(var/datum/pda_chat/target_chat as anything in targets)
 			target_chat.add_msg(message_datum, show_in_recents = !everyone)
@@ -497,11 +497,11 @@
 	if(!message)
 		return FALSE
 
-	var/datum/pda_msg/rigged_message = new(message, TRUE, attach_fake_photo ? ">:3c" : null)
+	var/fake_photo = attach_fake_photo ? ">:3c" : null
 
-	return send_msg_signal(sender, rigged_message, targets, FALSE, TRUE, fake_name, fake_job)
+	return send_msg_signal(sender, message, targets, fake_photo, FALSE, TRUE, fake_name, fake_job)
 
-/datum/computer_file/program/messenger/proc/send_msg_signal(mob/sender, datum/pda_msg/msg, list/datum/computer_file/program/messenger/targets, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
+/datum/computer_file/program/messenger/proc/send_msg_signal(mob/sender, message, list/datum/computer_file/program/messenger/targets, photo_path = null, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
 	if(!sender.can_perform_action(computer))
 		return FALSE
 
@@ -527,9 +527,11 @@
 
 	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(
 		"ref" = REF(src),
-		"message" = msg,
+		"message" = message,
 		"targets" = targets,
 		"rigged" = rigged,
+		"everyone" = everyone,
+		"photo" = photo_path
 		"automated" = FALSE,
 	))
 	if(rigged) //Will skip the message server and go straight to the hub so it can't be cheesed by disabling the message server machine
@@ -574,7 +576,7 @@
 	return TRUE
 
 /datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/tablet_msg/signal)
-	var/datum/pda_msg/message = signal.data["message"]
+	var/datum/pda_msg/message = new(signal.data["message"], FALSE, signal.data["photo"], signal.data["everyone"])
 	var/datum/pda_chat/chat = null
 
 	var/is_rigged = signal.data["rigged"]
@@ -587,8 +589,6 @@
 
 	// don't create a new chat for rigged messages, make it a one off notif
 	if(!is_rigged)
-		message = message.copy()
-		message.outgoing = FALSE
 		chat = find_chat_by_recp(is_fake_user ? fake_name : sender_ref, is_fake_user)
 		if(!istype(chat))
 			chat = create_chat(!is_fake_user ? sender_ref : null, fake_name, fake_job)

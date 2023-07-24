@@ -100,7 +100,7 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	data["recp"] = recp_data
 
 	var/list/messages_data = list()
-	for(var/datum/pda_msg/message in messages)
+	for(var/datum/pda_msg/message as anything in messages)
 		messages_data += list(message.get_ui_data(user))
 	data["messages"] = messages_data
 	data["message_draft"] = message_draft
@@ -137,10 +137,6 @@ GLOBAL_LIST_EMPTY_TYPED(TabletMessengers, /datum/computer_file/program/messenger
 	src.outgoing = outgoing
 	src.photo_asset_name = photo_asset_name
 	src.everyone = everyone
-
-/// Returns a copy of the message.
-/datum/pda_msg/proc/copy()
-	return new /datum/pda_msg(message = message, outgoing = outgoing, photo_asset_name = photo_asset_name, everyone = everyone)
 
 /// Returns an associative list of the message's data, used for ui_data calls.
 /datum/pda_msg/proc/get_ui_data(mob/user)

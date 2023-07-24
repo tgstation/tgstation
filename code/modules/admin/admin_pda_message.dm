@@ -71,12 +71,11 @@
 				to_chat(usr, span_warning("ERROR: Target is unavailable."))
 				return FALSE
 
-			var/datum/pda_msg/msg = new(params["message"], TRUE, everyone = spam)
-
 			var/datum/signal/subspace/messaging/tablet_msg/signal = new(null, list(
 				"fakename" = params["name"],
 				"fakejob" = params["job"],
-				"message" = msg,
+				"message" = params["message"],
+				"everyone" = spam
 				"ref" = null,
 				"targets" = targets,
 				"rigged" = FALSE,
