@@ -94,7 +94,7 @@
 					if(isAI(usr))
 						if(R.ai_lockdown && R.lockcharge)
 							R.ai_lockdown = FALSE
-							src.lock_unlock_borg(R)
+							lock_unlock_borg(R)
 						else if(!R.ai_lockdown && R.lockcharge)
 							to_chat(usr, span_danger("Cyborg locked by an user with superior permissions."))
 						else if(!R.lockcharge)
