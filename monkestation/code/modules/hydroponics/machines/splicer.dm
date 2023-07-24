@@ -19,8 +19,8 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			seed_1 = I
-			return
-		if(!seed_2)
+
+		else if(!seed_2)
 			if(!user.transferItemToLoc(I, src))
 				return
 			seed_2 = I
@@ -101,7 +101,15 @@
 	new_seed.growthstages = first_seed.growthstages
 	new_seed.growing_icon = first_seed.growing_icon
 
-	new_seed.reagents_add = first_seed.reagents_add.Copy() + second_seed.reagents_add.Copy()
+	new_seed.reagents_add = first_seed.reagents_add.Copy()
+
+	for(var/datum/reagent/reag as anything in second_seed.reagents_add)
+		if(reag in new_seed.reagents_add)
+			if(first_seed.plantname != second_seed.plantname)
+				new_seed.reagents_add[reag] += second_seed.reagents_add[reag]
+		else
+			new_seed.reagents_add += reag
+			new_seed.reagents_add[reag] = second_seed.reagents_add[reag]
 
 	if(!istype(first_seed, /obj/item/seeds/spliced))
 		var/obj/first_produced = first_seed.product
