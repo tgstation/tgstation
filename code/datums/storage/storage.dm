@@ -139,6 +139,8 @@
 
 	RegisterSignal(resolve_parent, COMSIG_TOPIC, PROC_REF(topic_handle))
 
+	RegisterSignal(resolve_parent, COMSIG_ATOM_EXAMINE, PROC_REF(handle_examination))
+
 	orient_to_hud()
 
 /datum/storage/Destroy()
@@ -232,6 +234,12 @@
 	SIGNAL_HANDLER
 
 	if(href_list["show_valid_pocket_items"])
+		handle_show_valid_items(source, user)
+
+/datum/storage/proc/handle_examination(datum/source, user)
+	SIGNAL_HANDLER
+
+	if(!isnull(can_hold_description))
 		handle_show_valid_items(source, user)
 
 /datum/storage/proc/handle_show_valid_items(datum/source, user)
