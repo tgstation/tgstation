@@ -730,7 +730,7 @@
 		// Healing eye damage will cure nearsightedness and blindness from ... eye damage
 		eyes.apply_organ_damage(-2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)
 		// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
-		if(eyes.damaged && SPT_PROB(16 - min(normalized_purity * 6, 12), seconds_per_tick))
+		if(eyes.damaged && IS_ORGANIC_ORGAN(eyes) && SPT_PROB(16 - min(normalized_purity * 6, 12), seconds_per_tick))
 			// While healing, gives some eye blur
 			if(affected_mob.is_blind_from(EYE_DAMAGE))
 				to_chat(affected_mob, span_warning("Your vision slowly returns..."))
@@ -1715,3 +1715,20 @@
 	required_drink_type = /datum/reagent/medicine/coagulant/seraka_extract
 	name = "glass of seraka extract"
 	desc = "Deeply savoury, bitter, and makes your blood clot up in your veins. A great drink, all things considered."
+
+/datum/reagent/medicine/ondansetron
+	name = "Ondansetron"
+	description = "Prevents nausea and vomiting. May cause drowsiness and wear."
+	reagent_state = LIQUID
+	color = "#74d3ff"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	ph = 10.6
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/medicine/ondansetron/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	. = ..()
+	if(SPT_PROB(8, seconds_per_tick))
+		M.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
+	if(SPT_PROB(15, seconds_per_tick) && !M.getStaminaLoss())
+		M.adjustStaminaLoss(10)
+	M.adjust_disgust(-10 * REM * seconds_per_tick)

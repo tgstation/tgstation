@@ -4,6 +4,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
+"ai" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Gear Storage"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
 "am" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/effect/decal/cleanable/dirt,
@@ -40,6 +49,12 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/engine,
 /area/shuttle/hunter)
+"ch" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/structure/bedsheetbin,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
 "cp" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -55,18 +70,33 @@
 	dir = 4
 	},
 /area/shuttle/hunter)
-"dq" = (
-/obj/effect/mob_spawn/ghost_role/human/fugitive/psyker/seer{
-	dir = 8
+"dy" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/binoculars{
+	pixel_x = -1
 	},
-/turf/open/floor/engine,
+/obj/item/knife/hunting{
+	pixel_y = 3
+	},
+/obj/item/megaphone,
+/obj/item/pinpointer/shuttle{
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/thermal/monocle{
+	pixel_y = 2
+	},
+/turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)
-"eq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/structure/bedsheetbin,
-/obj/machinery/light/dim/directional/south,
-/turf/open/floor/iron/grimy,
+"ek" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/gun/ballistic/revolver/c38{
+	pixel_y = 3
+	},
+/obj/item/gun/ballistic/revolver/c38,
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)
 "eO" = (
 /obj/machinery/light/cold/directional/west,
@@ -86,6 +116,15 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/engine,
 /area/shuttle/hunter)
+"fp" = (
+/obj/machinery/power/smes/engineering{
+	charge = 1e+006
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
 "gj" = (
 /obj/structure/table/wood/fancy/blue,
 /obj/item/book/codex_gigas{
@@ -98,12 +137,13 @@
 /obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/hunter)
-"gA" = (
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
+"gB" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Intelligence Training Room"
 	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "gE" = (
@@ -145,16 +185,6 @@
 	shuttle_id = "huntership"
 	},
 /turf/open/floor/catwalk_floor,
-/area/shuttle/hunter)
-"gY" = (
-/obj/structure/curtain/bounty,
-/turf/open/floor/grass,
-/area/shuttle/hunter)
-"ht" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 1
-	},
-/turf/open/floor/grass,
 /area/shuttle/hunter)
 "hE" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -200,6 +230,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
+"kl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
 "kN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
@@ -227,6 +266,10 @@
 "lu" = (
 /turf/open/floor/iron/kitchen/small,
 /area/shuttle/hunter)
+"lA" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
 "lD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/computer/slot_machine,
@@ -241,6 +284,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/etherealball,
 /turf/open/floor/engine,
+/area/shuttle/hunter)
+"mK" = (
+/obj/machinery/button/door/directional/west{
+	id = "psyker_bridge";
+	name = "Blast Door Control";
+	req_access = list("hunter")
+	},
+/turf/open/floor/iron/kitchen/small,
 /area/shuttle/hunter)
 "mP" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -273,15 +324,6 @@
 "nq" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
-/area/shuttle/hunter)
-"nB" = (
-/obj/machinery/door/airlock/grunge{
-	name = "Intelligence Training Room"
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/plating,
 /area/shuttle/hunter)
 "oL" = (
 /obj/structure/lattice,
@@ -322,14 +364,6 @@
 	},
 /turf/open/floor/glass,
 /area/shuttle/hunter)
-"rn" = (
-/obj/machinery/door/airlock/grunge{
-	name = "Sanctuary In The Garden Of Mind"
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/plating,
-/area/shuttle/hunter)
 "rF" = (
 /obj/structure/chair/office/light,
 /turf/open/floor/iron/kitchen/small,
@@ -337,12 +371,6 @@
 "rS" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
-/area/shuttle/hunter)
-"sn" = (
-/obj/machinery/door/airlock/grunge{
-	name = "Fortune Telling"
-	},
-/turf/open/floor/carpet/black,
 /area/shuttle/hunter)
 "sB" = (
 /obj/machinery/light/small/directional/north,
@@ -353,12 +381,6 @@
 /area/shuttle/hunter)
 "sW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/iron/grimy,
-/area/shuttle/hunter)
-"td" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/directional/east,
-/obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/iron/grimy,
 /area/shuttle/hunter)
 "tH" = (
@@ -376,6 +398,16 @@
 /obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/hunter)
+"ud" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/grunge{
+	name = "Office"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
 "ug" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/departments/restroom/directional/west,
@@ -390,14 +422,10 @@
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/carpet/black,
 /area/shuttle/hunter)
-"vu" = (
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/machinery/door/airlock/grunge{
-	name = "Bridge"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/iron,
+"vv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/vacuum/external/directional/east,
+/turf/open/floor/iron/grimy,
 /area/shuttle/hunter)
 "vw" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -424,6 +452,11 @@
 	pixel_y = 4
 	},
 /turf/open/floor/iron/white/diagonal,
+/area/shuttle/hunter)
+"wG" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/psyker,
+/obj/structure/curtain/bounty,
+/turf/open/floor/engine,
 /area/shuttle/hunter)
 "xa" = (
 /obj/structure/cable,
@@ -461,14 +494,9 @@
 	},
 /turf/open/floor/glass,
 /area/shuttle/hunter)
-"xt" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance"
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/plating,
+"xF" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/kitchen/small,
 /area/shuttle/hunter)
 "yd" = (
 /turf/template_noop,
@@ -513,11 +541,6 @@
 	pixel_y = 6
 	},
 /turf/open/floor/glass,
-/area/shuttle/hunter)
-"zX" = (
-/obj/structure/tank_dispenser/oxygen,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/plating,
 /area/shuttle/hunter)
 "zY" = (
 /obj/effect/turf_decal/box/white,
@@ -584,18 +607,6 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/carpet/black,
 /area/shuttle/hunter)
-"Di" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "psykerexternal"
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/plating,
-/area/shuttle/hunter)
 "Dw" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -606,28 +617,36 @@
 	},
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)
-"Ea" = (
+"El" = (
+/obj/machinery/suit_storage_unit/pirate,
+/obj/effect/turf_decal/box/white,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/hunter)
+"Fc" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Gear Storage"
+	name = "Sanctuary In The Garden Of Mind"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"FN" = (
+/obj/item/storage/pill_bottle,
+/obj/structure/closet/crate/bin,
+/obj/effect/decal/cleanable/plastic,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
+"Gj" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Freezer"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/iron/grimy,
-/area/shuttle/hunter)
-"En" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/syringe/contraband,
-/obj/machinery/light/broken/directional/east,
-/turf/open/floor/iron,
-/area/shuttle/hunter)
-"EM" = (
-/obj/machinery/door/airlock/grunge{
-	name = "Gear Storage"
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/iron/grimy,
+/turf/open/floor/iron/freezer,
 /area/shuttle/hunter)
 "Gv" = (
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -667,6 +686,15 @@
 "Hq" = (
 /obj/structure/chair/comfy/carp,
 /turf/open/floor/glass,
+/area/shuttle/hunter)
+"HH" = (
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/machinery/door/airlock/grunge{
+	name = "Bridge"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/iron,
 /area/shuttle/hunter)
 "HI" = (
 /obj/effect/decal/cleanable/dirt,
@@ -713,14 +741,24 @@
 /obj/machinery/iv_drip,
 /turf/open/floor/iron,
 /area/shuttle/hunter)
-"Jz" = (
+"Js" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Freezer"
+	name = "Fortune Telling"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/button/curtain{
+	id = "fortune_tell";
+	name = "Fortune Telling Curtains";
+	pixel_x = -24;
+	req_access = list("hunter")
+	},
 /obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/iron/freezer,
+/turf/open/floor/carpet/black,
+/area/shuttle/hunter)
+"JZ" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/psyker/captain,
+/obj/structure/curtain/bounty,
+/turf/open/floor/engine,
 /area/shuttle/hunter)
 "Kp" = (
 /obj/structure/billboard/fortune_telling{
@@ -733,21 +771,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/hunter)
-"LI" = (
-/obj/structure/rack,
-/obj/item/megaphone,
-/obj/item/storage/box/bodybags,
-/obj/item/stack/package_wrap,
-/obj/effect/turf_decal/box/white,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/dark/textured,
-/area/shuttle/hunter)
-"Mc" = (
-/obj/item/storage/pill_bottle,
-/obj/structure/closet/crate/bin,
-/obj/effect/decal/cleanable/plastic,
-/turf/open/floor/iron/grimy,
 /area/shuttle/hunter)
 "Me" = (
 /obj/structure/flora/bush/flowers_br/style_random,
@@ -788,12 +811,6 @@
 /obj/structure/sign/departments/engineering/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/hunter)
-"NO" = (
-/obj/effect/mob_spawn/ghost_role/human/fugitive/psyker,
-/obj/machinery/light/floor,
-/obj/structure/curtain/bounty,
-/turf/open/floor/engine,
-/area/shuttle/hunter)
 "Oa" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -811,29 +828,6 @@
 /turf/open/floor/iron/stairs{
 	dir = 4
 	},
-/area/shuttle/hunter)
-"OS" = (
-/obj/machinery/door/airlock/grunge{
-	name = "Fortune Telling"
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/machinery/button/curtain{
-	id = "fortune_tell";
-	name = "Fortune Telling Curtains";
-	pixel_x = -24;
-	req_access = list("hunter")
-	},
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/carpet/black,
-/area/shuttle/hunter)
-"Ph" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance"
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/plating,
 /area/shuttle/hunter)
 "Pv" = (
 /obj/machinery/suit_storage_unit/pirate,
@@ -853,6 +847,14 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
+/area/shuttle/hunter)
+"PC" = (
+/obj/structure/rack,
+/obj/item/megaphone,
+/obj/item/storage/box/bodybags,
+/obj/item/stack/package_wrap,
+/obj/effect/turf_decal/box/white,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/hunter)
 "PD" = (
 /obj/structure/rack,
@@ -893,11 +895,12 @@
 /obj/effect/decal/cleanable/robot_debris/up,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
-"RA" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
-/obj/machinery/light/cold/directional/south,
-/obj/item/statuebust,
-/turf/open/floor/iron/white/diagonal,
+"RK" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/grass,
 /area/shuttle/hunter)
 "RZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -921,11 +924,10 @@
 /obj/item/multitool,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
-"Te" = (
-/obj/machinery/suit_storage_unit/pirate,
-/obj/effect/turf_decal/box/white,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/textured,
+"SX" = (
+/obj/structure/curtain/bounty,
+/obj/machinery/light/floor,
+/turf/open/floor/grass,
 /area/shuttle/hunter)
 "Tj" = (
 /obj/effect/decal/cleanable/vomit/old,
@@ -938,6 +940,18 @@
 /obj/effect/decal/cleanable/garbage,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
+"Tp" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "psykerexternal"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
 "Tw" = (
 /obj/effect/turf_decal/arrows{
 	dir = 4;
@@ -945,25 +959,20 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/hunter)
-"TL" = (
-/obj/machinery/button/door/directional/east{
-	id = "psykerexternal";
-	name = "External Bolt Control";
-	normaldoorcontrol = 1;
-	req_access = list("hunter");
-	specialfunctions = 4
+"UI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance"
 	},
-/obj/effect/decal/cleanable/generic,
-/turf/open/floor/iron/grimy,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
-"Ui" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
-/obj/structure/table/reinforced/plasmarglass,
-/obj/item/gun/ballistic/revolver/c38{
-	pixel_y = 3
+"Vc" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Fortune Telling"
 	},
-/obj/item/gun/ballistic/revolver/c38,
-/turf/open/floor/iron/white/diagonal,
+/turf/open/floor/carpet/black,
 /area/shuttle/hunter)
 "Vi" = (
 /obj/effect/decal/cleanable/food/egg_smudge,
@@ -988,12 +997,6 @@
 /obj/machinery/light/floor,
 /turf/open/floor/catwalk_floor,
 /area/shuttle/hunter)
-"Wy" = (
-/obj/effect/mob_spawn/ghost_role/human/fugitive/psyker/captain,
-/obj/machinery/light/floor,
-/obj/structure/curtain/bounty,
-/turf/open/floor/engine,
-/area/shuttle/hunter)
 "WL" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 1
@@ -1009,13 +1012,17 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/hunter)
-"Xa" = (
-/obj/machinery/button/door/directional/west{
-	id = "psyker_bridge";
-	name = "Blast Door Control";
-	req_access = list("hunter")
+"WV" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "psykerexternal"
 	},
-/turf/open/floor/iron/kitchen/small,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/plating,
 /area/shuttle/hunter)
 "Xk" = (
 /obj/structure/closet/crate/cardboard,
@@ -1029,6 +1036,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer,
 /area/shuttle/hunter)
+"Xy" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Gear Storage"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/turf/open/floor/iron/grimy,
+/area/shuttle/hunter)
 "XX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/kitchen/small,
@@ -1038,50 +1053,27 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
-"Ys" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/grunge{
-	name = "Office"
+"Yy" = (
+/obj/machinery/button/door/directional/east{
+	id = "psykerexternal";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	req_access = list("hunter");
+	specialfunctions = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/decal/cleanable/generic,
 /turf/open/floor/iron/grimy,
-/area/shuttle/hunter)
-"Zb" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	id_tag = "psykerexternal"
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/access/all/hunter,
-/turf/open/floor/plating,
 /area/shuttle/hunter)
 "ZC" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /obj/item/statuebust,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)
-"ZW" = (
-/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
-/obj/structure/table/reinforced/plasmarglass,
-/obj/item/binoculars{
-	pixel_x = -1
+"ZK" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/psyker/seer{
+	dir = 8
 	},
-/obj/item/knife/hunting{
-	pixel_y = 3
-	},
-/obj/item/megaphone,
-/obj/item/pinpointer/shuttle{
-	pixel_y = 7
-	},
-/obj/item/clothing/glasses/thermal/monocle{
-	pixel_y = 2
-	},
-/turf/open/floor/iron/white/diagonal,
+/turf/open/floor/engine,
 /area/shuttle/hunter)
 
 (1,1,1) = {"
@@ -1199,7 +1191,7 @@ yd
 CW
 Tw
 lu
-Xa
+mK
 bK
 XX
 CW
@@ -1225,9 +1217,9 @@ Nw
 oL
 CW
 zY
+xF
 lu
-lu
-LI
+PC
 XX
 CW
 am
@@ -1255,13 +1247,13 @@ CW
 CW
 CW
 CW
-vu
+HH
 na
 Ne
 Mk
 QI
 CW
-ZW
+dy
 ZC
 ws
 CW
@@ -1284,13 +1276,13 @@ kN
 mP
 Vw
 na
-Jz
+Gj
 na
 na
 CW
 lI
 yg
-RA
+ZC
 CW
 yd
 Pz
@@ -1317,7 +1309,7 @@ bV
 CW
 GT
 Dw
-Ui
+ek
 CW
 yd
 Pz
@@ -1341,10 +1333,10 @@ PT
 Oa
 bx
 fd
-Ea
+ai
 Id
 yg
-RA
+ZC
 CW
 oL
 Pz
@@ -1361,14 +1353,14 @@ yd
 CW
 HO
 PS
-En
+Ja
 Vi
 cp
 aV
 Ja
 Ss
 HI
-EM
+Xy
 mR
 lI
 gE
@@ -1390,9 +1382,9 @@ na
 na
 na
 na
-nB
+gB
 na
-dq
+ZK
 BZ
 CW
 CW
@@ -1439,7 +1431,7 @@ oL
 Nw
 CW
 Nn
-NO
+wG
 qa
 nq
 Nn
@@ -1466,8 +1458,8 @@ pO
 Nw
 CW
 Nn
-Wy
-ht
+JZ
+RK
 Me
 Nn
 na
@@ -1475,13 +1467,13 @@ Hd
 na
 sB
 RZ
-OS
+Js
 qz
 Hq
 xs
 oN
 qz
-sn
+Vc
 Ck
 Ck
 De
@@ -1493,7 +1485,7 @@ gW
 Nw
 CW
 Nn
-NO
+wG
 no
 ys
 Nn
@@ -1522,12 +1514,12 @@ CW
 Nn
 Nn
 Nn
-gY
+SX
 Nn
 na
 jB
 na
-Ys
+ud
 na
 na
 Nn
@@ -1549,13 +1541,13 @@ CW
 CW
 CW
 CW
-rn
+Fc
 na
 na
 cM
 gl
 sW
-eq
+ch
 na
 na
 na
@@ -1583,7 +1575,7 @@ Tj
 cM
 uy
 Ik
-Te
+El
 NL
 na
 Gv
@@ -1605,17 +1597,17 @@ yd
 CW
 Oc
 nk
-xt
+UI
 Ik
 AZ
 lD
 sW
 sW
 uy
-Ph
+kl
 js
 nc
-gA
+fp
 CW
 Ww
 Nw
@@ -1633,14 +1625,14 @@ CW
 AH
 SI
 na
-Mc
-td
+FN
+vv
 Ik
-TL
+Yy
 Ik
 Pv
 na
-zX
+lA
 pf
 xa
 CW
@@ -1662,9 +1654,9 @@ xp
 CW
 CW
 CW
-Di
+WV
 CW
-Di
+WV
 CW
 CW
 xp
@@ -1716,9 +1708,9 @@ yd
 yd
 Nw
 CW
-Zb
+Tp
 CW
-Zb
+Tp
 CW
 Nw
 yd

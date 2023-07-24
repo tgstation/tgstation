@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/trinary
-	icon = 'icons/obj/atmospherics/components/trinary_devices.dmi'
+	icon = 'icons/obj/machines/atmospherics/trinary_devices.dmi'
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
 	use_power = IDLE_POWER_USE

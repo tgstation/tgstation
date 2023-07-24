@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_master
 	/// Icons for different percentages of buffer reagents
-	var/fill_icon = 'icons/obj/reagentfillings.dmi'
+	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	var/fill_icon_state = "chemmaster"
 	var/list/fill_icon_thresholds = list(10,20,30,40,50,60,70,80,90,100)
 	/// Inserted reagent container

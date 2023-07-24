@@ -28,8 +28,7 @@
 		magician.visible_message(span_danger("[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bu- wait, those are bees!"), span_danger("You tap [src] with your [hitby_wand.name] and pull out... <b>BEES!</b>"))
 		var/wait_how_many_bees_did_that_guy_pull_out_of_his_hat = rand(4, 8)
 		for(var/b in 1 to wait_how_many_bees_did_that_guy_pull_out_of_his_hat)
-			var/mob/living/simple_animal/hostile/bee/barry = new(get_turf(magician))
-			barry.GiveTarget(magician)
+			var/mob/living/basic/bee/barry = new(get_turf(magician))
 			if(prob(20))
 				barry.say(pick("BUZZ BUZZ", "PULLING A RABBIT OUT OF A HAT IS A TIRED TROPE", "I DIDN'T ASK TO BEE HERE"), forced = "bee hat")
 	else

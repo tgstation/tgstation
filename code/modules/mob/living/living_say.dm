@@ -340,7 +340,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		// actually have a define, nor does the range for whispers
 		is_speaker_whispering = TRUE
 
-	var/list/in_view = dview(message_range + whisper_range, get_turf(source))
+	var/list/in_view = hearers(message_range + whisper_range, get_turf(source))
 	var/list/listening = get_hearers(message_range + whisper_range, source)
 
 	// Pre-process listeners to account for line-of-sight

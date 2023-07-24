@@ -1,6 +1,0 @@
-author: "Archimus12"
-delete-after: True
-changes:
-  - rscadd: "Adds latex gloves and medical headsets to the MediDrobe."
-  - rscadd: "Adds pyjamas, nightcaps and white shoes to the ClothesMate."
-  - rscadd: "Adds science backpack, duffel bag and satchel to the RoboDrobe."
