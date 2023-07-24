@@ -275,7 +275,7 @@
 
 		// Check tables on these turfs
 		for(var/turf in turfs_ordered)
-			if(locate(/obj/structure/table) in turf)
+			if(locate(/obj/structure/table) in turf || locate(/obj/structure/rack) in turf || locate(/obj/machinery/icecream_vat) in turf)
 				location = turf
 				break
 

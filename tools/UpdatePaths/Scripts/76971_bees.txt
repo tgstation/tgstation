@@ -1,0 +1,4 @@
+/mob/living/simple_animal/hostile/bee : /mob/living/basic/bee{@OLD}
+/mob/living/simple_animal/hostile/bee/queen : /mob/living/basic/bee/queen{@OLD}
+/mob/living/simple_animal/hostile/bee/short : /mob/living/basic/bee/short{@OLD}
+/mob/living/simple_animal/hostile/bee/toxin : /mob/living/basic/bee/toxin{@OLD}
