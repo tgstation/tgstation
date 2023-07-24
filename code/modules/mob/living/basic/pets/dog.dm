@@ -1,307 +1,5 @@
 //Dogs.
 
-// Add 'walkies' as valid input
-/datum/pet_command/follow/dog
-	speech_commands = list("heel", "follow", "walkies")
-
-// Add 'good dog' as valid input
-/datum/pet_command/good_boy/dog
-	speech_commands = list("good dog")
-
-// Set correct attack behaviour
-/datum/pet_command/point_targetting/attack/dog
-	attack_behaviour = /datum/ai_behavior/basic_melee_attack/dog
-
-/datum/pet_command/point_targetting/attack/dog/set_command_active(mob/living/parent, mob/living/commander)
-	. = ..()
-	parent.ai_controller.set_blackboard_key(BB_DOG_HARASS_HARM, TRUE)
-
-/mob/living/basic/pet/dog
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "bops"
-	response_disarm_simple = "bop"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	speak_emote = list("barks", "woofs")
-	faction = list(FACTION_NEUTRAL)
-	can_be_held = TRUE
-	ai_controller = /datum/ai_controller/basic_controller/dog
-	// The dog attack pet command can raise melee attack above 0
-	attack_verb_continuous = "bites"
-	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
-	attack_vis_effect = ATTACK_EFFECT_BITE
-	/// Instructions you can give to dogs
-	var/static/list/pet_commands = list(
-		/datum/pet_command/idle,
-		/datum/pet_command/free,
-		/datum/pet_command/good_boy/dog,
-		/datum/pet_command/follow/dog,
-		/datum/pet_command/point_targetting/attack/dog,
-		/datum/pet_command/point_targetting/fetch,
-		/datum/pet_command/play_dead,
-	)
-
-/mob/living/basic/pet/dog/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/pet_bonus, "woofs happily!")
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
-	AddElement(/datum/element/unfriend_attacker, untamed_reaction = "%SOURCE% fixes %TARGET% with a look of betrayal.")
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat/slab/human/mutant/skeleton, /obj/item/stack/sheet/bone), tame_chance = 30, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)), unique = FALSE)
-	AddComponent(/datum/component/obeys_commands, pet_commands)
-
-/mob/living/basic/pet/dog/proc/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
-	speech.speak = string_list(list("YAP", "Woof!", "Bark!", "AUUUUUU"))
-	speech.emote_hear = string_list(list("barks!", "woofs!", "yaps.","pants."))
-	speech.emote_see = string_list(list("shakes [p_their()] head.", "chases [p_their()] tail.","shivers."))
-
-/mob/living/basic/pet/dog/proc/tamed(mob/living/tamer)
-	visible_message(span_notice("[src] licks at [tamer] in a friendly manner!"))
-
-//Corgis and pugs are now under one dog subtype
-
-/mob/living/basic/pet/dog/corgi
-	name = "\improper corgi"
-	real_name = "corgi"
-	desc = "They're a corgi."
-	icon_state = "corgi"
-	icon_living = "corgi"
-	icon_dead = "corgi_dead"
-	held_state = "corgi"
-	butcher_results = list(/obj/item/food/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
-	gold_core_spawnable = FRIENDLY_SPAWN
-	collar_icon_state = "corgi"
-	ai_controller = /datum/ai_controller/basic_controller/dog/corgi
-	///Access card for Ian.
-	var/obj/item/card/id/access_card = null
-	///Can this corgi be shaved by an electric razor?
-	var/can_be_shaved = FALSE
-	///Did this corgi get mutilated and has had their fur shaved by an electric razor, oh the humanity?
-	var/shaved = FALSE
-	///Currently worn item on the head slot
-	var/obj/item/inventory_head = null
-	///Currently worn item on the back slot
-	var/obj/item/inventory_back = null
-	///Is this corgi physically slow due to age, etc?
-	var/is_slow = FALSE
-	///Item slots that are available for this corgi to equip stuff into
-	var/list/strippable_inventory_slots = list()
-
-/mob/living/basic/pet/dog/corgi/Initialize(mapload)
-	. = ..()
-	if(!length(strippable_inventory_slots)) //default to the full loadout
-		strippable_inventory_slots = GLOB.strippable_corgi_items
-	update_appearance()
-	AddElement(/datum/element/strippable, strippable_inventory_slots)
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
-	RegisterSignals(src, list(COMSIG_BASICMOB_LOOK_ALIVE, COMSIG_BASICMOB_LOOK_DEAD), PROC_REF(on_appearance_change))
-
-/mob/living/basic/pet/dog/corgi/examine(mob/user)
-	. = ..()
-	if(access_card)
-		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
-
-/mob/living/basic/pet/dog/corgi/Destroy()
-	QDEL_NULL(inventory_head)
-	QDEL_NULL(inventory_back)
-	QDEL_NULL(access_card)
-	UnregisterSignal(src, list(COMSIG_BASICMOB_LOOK_ALIVE, COMSIG_BASICMOB_LOOK_DEAD))
-	return ..()
-
-/mob/living/basic/pet/dog/corgi/gib()
-	if(inventory_head)
-		inventory_head.forceMove(drop_location())
-		inventory_head = null
-	if(inventory_back)
-		inventory_back.forceMove(drop_location())
-		inventory_back = null
-	if(access_card)
-		access_card.forceMove(drop_location())
-		access_card = null
-	return ..()
-
-/mob/living/basic/pet/dog/corgi/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
-	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
-		"speak" = CALLBACK(src, PROC_REF(bork)),
-		"wear_hat" = CALLBACK(src, PROC_REF(find_new_hat)),
-		"drop_hat" = CALLBACK(src, PROC_REF(drop_hat)),
-		"spin" = CALLBACK(src, TYPE_PROC_REF(/mob, emote), "spin")), cooldown, CALLBACK(src, PROC_REF(stop_deadchat_plays)))
-
-	if(. == COMPONENT_INCOMPATIBLE)
-		return
-
-	// Stop all automated behavior.
-	QDEL_NULL(ai_controller)
-
-/mob/living/basic/pet/dog/corgi/update_overlays()
-	. = ..()
-	if(inventory_head)
-		var/image/head_icon
-		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
-
-		if(!DF.obj_icon_state)
-			DF.obj_icon_state = inventory_head.icon_state
-		if(!DF.obj_alpha)
-			DF.obj_alpha = inventory_head.alpha
-		if(!DF.obj_color)
-			DF.obj_color = inventory_head.color
-
-		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
-			head_icon = DF.get_overlay(dir = EAST)
-			head_icon.pixel_y = -8
-			head_icon.transform = head_icon.transform.Turn(180)
-		else
-			head_icon = DF.get_overlay()
-
-		. += head_icon
-
-	if(inventory_back)
-		var/image/back_icon
-		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
-
-		if(!DF.obj_icon_state)
-			DF.obj_icon_state = inventory_back.icon_state
-		if(!DF.obj_alpha)
-			DF.obj_alpha = inventory_back.alpha
-		if(!DF.obj_color)
-			DF.obj_color = inventory_back.color
-
-		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
-			back_icon = DF.get_overlay(dir = EAST)
-			back_icon.pixel_y = -11
-			back_icon.transform = back_icon.transform.Turn(180)
-		else
-			back_icon = DF.get_overlay()
-
-		. += back_icon
-
-///Handles updating any existing overlays for the corgi (such as fashion items) when it changes how it appears, as in, dead or alive.
-/mob/living/basic/pet/dog/corgi/proc/on_appearance_change()
-	SIGNAL_HANDLER
-	update_appearance(UPDATE_OVERLAYS)
-
-///Deadchat bark.
-/mob/living/basic/pet/dog/corgi/proc/bork()
-	var/emote = pick("barks!", "woofs!", "yaps.","pants.")
-
-	manual_emote(emote)
-
-///Deadchat plays command that picks a new hat for Ian.
-/mob/living/basic/pet/dog/corgi/proc/find_new_hat()
-	if(!isturf(loc))
-		return
-	var/list/possible_headwear = list()
-	for(var/obj/item/item in loc)
-		if(ispath(item.dog_fashion, /datum/dog_fashion/head))
-			possible_headwear += item
-	if(!length(possible_headwear))
-		for(var/obj/item/item in orange(1))
-			if(ispath(item.dog_fashion, /datum/dog_fashion/head) && CanReach(item))
-				possible_headwear += item
-	if(!length(possible_headwear))
-		return
-	if(inventory_head)
-		inventory_head.forceMove(drop_location())
-		inventory_head = null
-	place_on_head(pick(possible_headwear))
-	visible_message(span_notice("[src] puts [inventory_head] on [p_their()] own head, somehow."))
-
-///Deadchat plays command that drops the current hat off Ian.
-/mob/living/basic/pet/dog/corgi/proc/drop_hat()
-	if(!inventory_head)
-		return
-	visible_message(span_notice("[src] vigorously shakes [p_their()] head, dropping [inventory_head] to the ground."))
-	inventory_head.forceMove(drop_location())
-	inventory_head = null
-	update_corgi_fluff()
-	update_appearance(UPDATE_OVERLAYS)
-
-///Turn AI back on.
-/mob/living/basic/pet/dog/corgi/proc/stop_deadchat_plays()
-	var/controller_type = initial(ai_controller)
-	ai_controller = new controller_type(src)
-	ai_controller?.set_blackboard_key(BB_DOG_IS_SLOW, is_slow)
-
-/mob/living/basic/pet/dog/corgi/handle_atom_del(atom/A)
-	if(A == inventory_head)
-		inventory_head = null
-		update_corgi_fluff()
-		update_appearance(UPDATE_OVERLAYS)
-	if(A == inventory_back)
-		inventory_back = null
-		update_corgi_fluff()
-		update_appearance(UPDATE_OVERLAYS)
-	return ..()
-
-/mob/living/basic/pet/dog/pug
-	name = "\improper pug"
-	real_name = "pug"
-	desc = "They're a pug."
-	icon = 'icons/mob/simple/pets.dmi'
-	icon_state = "pug"
-	icon_living = "pug"
-	icon_dead = "pug_dead"
-	butcher_results = list(/obj/item/food/meat/slab/pug = 3)
-	gold_core_spawnable = FRIENDLY_SPAWN
-	collar_icon_state = "pug"
-	held_state = "pug"
-
-/mob/living/basic/pet/dog/pug/Initialize(mapload)
-	. = ..()
-
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PUG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-
-/mob/living/basic/pet/dog/pug/mcgriff
-	name = "McGriff"
-	desc = "This dog can tell something smells around here, and that something is CRIME!"
-	gold_core_spawnable = NO_SPAWN
-	unique_pet = TRUE
-
-/mob/living/basic/pet/dog/bullterrier
-	name = "\improper bull terrier"
-	real_name = "bull terrier"
-	desc = "They're a bull terrier."
-	icon = 'icons/mob/simple/pets.dmi'
-	icon_state = "bullterrier"
-	icon_living = "bullterrier"
-	icon_dead = "bullterrier_dead"
-	butcher_results = list(/obj/item/food/meat/slab/corgi = 3) // Would feel redundant to add more new dog meats.
-	gold_core_spawnable = FRIENDLY_SPAWN
-	collar_icon_state = "bullterrier"
-	held_state = "bullterrier"
-
-/mob/living/basic/pet/dog/corgi/exoticcorgi
-	name = "Exotic Corgi"
-	desc = "As cute as they are colorful!"
-	icon = 'icons/mob/simple/pets.dmi'
-	icon_state = "corgigrey"
-	icon_living = "corgigrey"
-	icon_dead = "corgigrey_dead"
-	can_be_shaved = TRUE
-
-/mob/living/basic/pet/dog/Initialize(mapload)
-	. = ..()
-	var/dog_area = get_area(src)
-	for(var/obj/structure/bed/dogbed/D in dog_area)
-		if(D.update_owner(src)) //No muscling in on my turf you fucking parrot
-			break
-
-/**
- * Handler for COMSIG_MOB_TRIED_ACCESS
- */
-/mob/living/basic/pet/dog/corgi/proc/on_tried_access(mob/accessor, obj/locked_thing)
-	SIGNAL_HANDLER
-
-	return locked_thing?.check_access(access_card) ? ACCESS_ALLOWED : ACCESS_DISALLOWED
-
-/mob/living/basic/pet/dog/corgi/exoticcorgi/Initialize(mapload)
-	. = ..()
-	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
-
 GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	/datum/strippable_item/corgi_head,
 	/datum/strippable_item/corgi_back,
@@ -457,6 +155,131 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	corgi_source.update_corgi_fluff()
 	corgi_source.update_appearance(UPDATE_OVERLAYS)
 
+// Add 'walkies' as valid input
+/datum/pet_command/follow/dog
+	speech_commands = list("heel", "follow", "walkies")
+
+// Add 'good dog' as valid input
+/datum/pet_command/good_boy/dog
+	speech_commands = list("good dog")
+
+// Set correct attack behaviour
+/datum/pet_command/point_targetting/attack/dog
+	attack_behaviour = /datum/ai_behavior/basic_melee_attack/dog
+
+/datum/pet_command/point_targetting/attack/dog/set_command_active(mob/living/parent, mob/living/commander)
+	. = ..()
+	parent.ai_controller.set_blackboard_key(BB_DOG_HARASS_HARM, TRUE)
+
+/mob/living/basic/pet/dog
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "bops"
+	response_disarm_simple = "bop"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	speak_emote = list("barks", "woofs")
+	faction = list(FACTION_NEUTRAL)
+	can_be_held = TRUE
+	ai_controller = /datum/ai_controller/basic_controller/dog
+	// The dog attack pet command can raise melee attack above 0
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
+	attack_sound = 'sound/weapons/bite.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
+	/// Instructions you can give to dogs
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/good_boy/dog,
+		/datum/pet_command/follow/dog,
+		/datum/pet_command/point_targetting/attack/dog,
+		/datum/pet_command/point_targetting/fetch,
+		/datum/pet_command/play_dead,
+	)
+
+/mob/living/basic/pet/dog/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/pet_bonus, "woofs happily!")
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/unfriend_attacker, untamed_reaction = "%SOURCE% fixes %TARGET% with a look of betrayal.")
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat/slab/human/mutant/skeleton, /obj/item/stack/sheet/bone), tame_chance = 30, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)), unique = FALSE)
+	AddComponent(/datum/component/obeys_commands, pet_commands)
+	var/dog_area = get_area(src)
+	for(var/obj/structure/bed/dogbed/D in dog_area)
+		if(D.update_owner(src)) //No muscling in on my turf you fucking parrot
+			break
+
+/mob/living/basic/pet/dog/proc/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
+	speech.speak = string_list(list("YAP", "Woof!", "Bark!", "AUUUUUU"))
+	speech.emote_hear = string_list(list("barks!", "woofs!", "yaps.","pants."))
+	speech.emote_see = string_list(list("shakes [p_their()] head.", "chases [p_their()] tail.","shivers."))
+
+/mob/living/basic/pet/dog/proc/tamed(mob/living/tamer)
+	visible_message(span_notice("[src] licks at [tamer] in a friendly manner!"))
+
+//CORGIS!
+/mob/living/basic/pet/dog/corgi
+	name = "\improper corgi"
+	real_name = "corgi"
+	desc = "They're a corgi."
+	icon_state = "corgi"
+	icon_living = "corgi"
+	icon_dead = "corgi_dead"
+	held_state = "corgi"
+	butcher_results = list(/obj/item/food/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
+	gold_core_spawnable = FRIENDLY_SPAWN
+	collar_icon_state = "corgi"
+	ai_controller = /datum/ai_controller/basic_controller/dog/corgi
+	///Access card for Ian.
+	var/obj/item/card/id/access_card = null
+	///Can this corgi be shaved by an electric razor?
+	var/can_be_shaved = FALSE
+	///Did this corgi get mutilated and has had their fur shaved by an electric razor, oh the humanity?
+	var/shaved = FALSE
+	///Currently worn item on the head slot
+	var/obj/item/inventory_head = null
+	///Currently worn item on the back slot
+	var/obj/item/inventory_back = null
+	///Is this corgi physically slow due to age, etc?
+	var/is_slow = FALSE
+	///Item slots that are available for this corgi to equip stuff into
+	var/list/strippable_inventory_slots = list()
+
+/mob/living/basic/pet/dog/corgi/Initialize(mapload)
+	. = ..()
+	if(!length(strippable_inventory_slots)) //default to the full loadout
+		strippable_inventory_slots = GLOB.strippable_corgi_items
+	update_appearance()
+	AddElement(/datum/element/strippable, strippable_inventory_slots)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
+	RegisterSignals(src, list(COMSIG_BASICMOB_LOOK_ALIVE, COMSIG_BASICMOB_LOOK_DEAD), PROC_REF(on_appearance_change))
+
+/mob/living/basic/pet/dog/corgi/examine(mob/user)
+	. = ..()
+	if(access_card)
+		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
+
+/mob/living/basic/pet/dog/corgi/Destroy()
+	QDEL_NULL(inventory_head)
+	QDEL_NULL(inventory_back)
+	QDEL_NULL(access_card)
+	UnregisterSignal(src, list(COMSIG_BASICMOB_LOOK_ALIVE, COMSIG_BASICMOB_LOOK_DEAD))
+	return ..()
+
+/mob/living/basic/pet/dog/corgi/handle_atom_del(atom/A)
+	if(A == inventory_head)
+		inventory_head = null
+		update_corgi_fluff()
+		update_appearance(UPDATE_OVERLAYS)
+	if(A == inventory_back)
+		inventory_back = null
+		update_corgi_fluff()
+		update_appearance(UPDATE_OVERLAYS)
+	return ..()
+
 /mob/living/basic/pet/dog/corgi/getarmor(def_zone, type)
 	var/armorval = 0
 
@@ -497,6 +320,84 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		return
 	..()
 	update_corgi_fluff()
+
+/mob/living/basic/pet/dog/corgi/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
+	..()
+
+	if(inventory_head?.dog_fashion)
+		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
+		DF.apply_to_speech(speech)
+
+	if(inventory_back?.dog_fashion)
+		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
+		DF.apply_to_speech(speech)
+
+/mob/living/basic/pet/dog/corgi/gib()
+	if(inventory_head)
+		inventory_head.forceMove(drop_location())
+		inventory_head = null
+	if(inventory_back)
+		inventory_back.forceMove(drop_location())
+		inventory_back = null
+	if(access_card)
+		access_card.forceMove(drop_location())
+		access_card = null
+	return ..()
+
+/mob/living/basic/pet/dog/corgi/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
+	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
+		"speak" = CALLBACK(src, PROC_REF(bork)),
+		"wear_hat" = CALLBACK(src, PROC_REF(find_new_hat)),
+		"drop_hat" = CALLBACK(src, PROC_REF(drop_hat)),
+		"spin" = CALLBACK(src, TYPE_PROC_REF(/mob, emote), "spin")), cooldown, CALLBACK(src, PROC_REF(stop_deadchat_plays)))
+
+	if(. == COMPONENT_INCOMPATIBLE)
+		return
+
+	// Stop all automated behavior.
+	QDEL_NULL(ai_controller)
+
+/mob/living/basic/pet/dog/corgi/update_overlays()
+	. = ..()
+	if(inventory_head)
+		var/image/head_icon
+		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
+
+		if(!DF.obj_icon_state)
+			DF.obj_icon_state = inventory_head.icon_state
+		if(!DF.obj_alpha)
+			DF.obj_alpha = inventory_head.alpha
+		if(!DF.obj_color)
+			DF.obj_color = inventory_head.color
+
+		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
+			head_icon = DF.get_overlay(dir = EAST)
+			head_icon.pixel_y = -8
+			head_icon.transform = head_icon.transform.Turn(180)
+		else
+			head_icon = DF.get_overlay()
+
+		. += head_icon
+
+	if(inventory_back)
+		var/image/back_icon
+		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
+
+		if(!DF.obj_icon_state)
+			DF.obj_icon_state = inventory_back.icon_state
+		if(!DF.obj_alpha)
+			DF.obj_alpha = inventory_back.alpha
+		if(!DF.obj_color)
+			DF.obj_color = inventory_back.color
+
+		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
+			back_icon = DF.get_overlay(dir = EAST)
+			back_icon.pixel_y = -11
+			back_icon.transform = back_icon.transform.Turn(180)
+		else
+			back_icon = DF.get_overlay()
+
+		. += back_icon
 
 //Corgis are supposed to be simpler, so only a select few objects can actually be put
 //to be compatible with them. The objects are below.
@@ -562,16 +463,75 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
 		DF.apply(src)
 
-/mob/living/basic/pet/dog/corgi/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
-	..()
+/**
+ * Handler for COMSIG_MOB_TRIED_ACCESS
+ */
+/mob/living/basic/pet/dog/corgi/proc/on_tried_access(mob/accessor, obj/locked_thing)
+	SIGNAL_HANDLER
+	return locked_thing?.check_access(access_card) ? ACCESS_ALLOWED : ACCESS_DISALLOWED
 
-	if(inventory_head?.dog_fashion)
-		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
-		DF.apply_to_speech(speech)
+///Handles updating any existing overlays for the corgi (such as fashion items) when it changes how it appears, as in, dead or alive.
+/mob/living/basic/pet/dog/corgi/proc/on_appearance_change()
+	SIGNAL_HANDLER
+	update_appearance(UPDATE_OVERLAYS)
 
-	if(inventory_back?.dog_fashion)
-		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
-		DF.apply_to_speech(speech)
+///Deadchat bark.
+/mob/living/basic/pet/dog/corgi/proc/bork()
+	var/emote = pick("barks!", "woofs!", "yaps.","pants.")
+
+	manual_emote(emote)
+
+///Deadchat plays command that picks a new hat for Ian.
+/mob/living/basic/pet/dog/corgi/proc/find_new_hat()
+	if(!isturf(loc))
+		return
+	var/list/possible_headwear = list()
+	for(var/obj/item/item in loc)
+		if(ispath(item.dog_fashion, /datum/dog_fashion/head))
+			possible_headwear += item
+	if(!length(possible_headwear))
+		for(var/obj/item/item in orange(1))
+			if(ispath(item.dog_fashion, /datum/dog_fashion/head) && CanReach(item))
+				possible_headwear += item
+	if(!length(possible_headwear))
+		return
+	if(inventory_head)
+		inventory_head.forceMove(drop_location())
+		inventory_head = null
+	place_on_head(pick(possible_headwear))
+	visible_message(span_notice("[src] puts [inventory_head] on [p_their()] own head, somehow."))
+
+///Deadchat plays command that drops the current hat off Ian.
+/mob/living/basic/pet/dog/corgi/proc/drop_hat()
+	if(!inventory_head)
+		return
+	visible_message(span_notice("[src] vigorously shakes [p_their()] head, dropping [inventory_head] to the ground."))
+	inventory_head.forceMove(drop_location())
+	inventory_head = null
+	update_corgi_fluff()
+	update_appearance(UPDATE_OVERLAYS)
+
+///Turn AI back on.
+/mob/living/basic/pet/dog/corgi/proc/stop_deadchat_plays()
+	var/controller_type = initial(ai_controller)
+	ai_controller = new controller_type(src)
+	ai_controller?.set_blackboard_key(BB_DOG_IS_SLOW, is_slow)
+
+//SUBTYPES!
+
+/mob/living/basic/pet/dog/corgi/exoticcorgi
+	name = "Exotic Corgi"
+	desc = "As cute as they are colorful!"
+	icon = 'icons/mob/simple/pets.dmi'
+	icon_state = "corgigrey"
+	icon_living = "corgigrey"
+	icon_dead = "corgigrey_dead"
+	can_be_shaved = TRUE
+
+/mob/living/basic/pet/dog/corgi/exoticcorgi/Initialize(mapload)
+	. = ..()
+	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
 //IAN! SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/ian
@@ -679,6 +639,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	investigate_log("has been gibbed by Nar'Sie.", INVESTIGATE_DEATHS)
 	gib()
 
+//NARS-IAN! %place a SQUEEEEEEEEE~ passed through blood cult speech here ya daft cunt%
 /mob/living/basic/pet/dog/corgi/narsie
 	name = "Nars-Ian"
 	desc = "Ia! Ia!"
@@ -721,9 +682,27 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 /mob/living/basic/pet/dog/corgi/narsie/narsie_act()
 	adjustBruteLoss(-maxHealth)
 
+//LISA! SQUEEEEEEEEE~
+/mob/living/basic/pet/dog/corgi/lisa
+	name = "Lisa"
+	real_name = "Lisa"
+	gender = FEMALE
+	desc = "She's tearing you apart."
+	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
+	icon_state = "lisa"
+	icon_living = "lisa"
+	icon_dead = "lisa_dead"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "bops"
+	response_disarm_simple = "bop"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	held_state = "lisa"
+	strippable_inventory_slots = list(/datum/strippable_item/corgi_back, /datum/strippable_item/pet_collar, /datum/strippable_item/corgi_id) //Lisa already has a cute bow!
 
-
-
+//PUPPIES! SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/puppy
 	name = "\improper corgi puppy"
 	real_name = "corgi"
@@ -744,7 +723,6 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	gender = MALE
 	desc = "He's the HoP's beloved corgi puppy."
 
-
 /mob/living/basic/pet/dog/corgi/puppy/void //Tribute to the corgis born in nullspace
 	name = "\improper void puppy"
 	real_name = "voidy"
@@ -764,26 +742,44 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	//void puppies can spacewalk and can harass people from within a container because they're void puppies
 	add_traits(list(TRAIT_AI_BAGATTACK, TRAIT_SPACEWALK), INNATE_TRAIT)
 
-//LISA! SQUEEEEEEEEE~
-/mob/living/basic/pet/dog/corgi/lisa
-	name = "Lisa"
-	real_name = "Lisa"
-	gender = FEMALE
-	desc = "She's tearing you apart."
+//Less exciting dog species
+
+/mob/living/basic/pet/dog/pug
+	name = "\improper pug"
+	real_name = "pug"
+	desc = "They're a pug."
+	icon = 'icons/mob/simple/pets.dmi'
+	icon_state = "pug"
+	icon_living = "pug"
+	icon_dead = "pug_dead"
+	butcher_results = list(/obj/item/food/meat/slab/pug = 3)
+	gold_core_spawnable = FRIENDLY_SPAWN
+	collar_icon_state = "pug"
+	held_state = "pug"
+
+/mob/living/basic/pet/dog/pug/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PUG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/mob/living/basic/pet/dog/pug/mcgriff
+	name = "McGriff"
+	desc = "This dog can tell something smells around here, and that something is CRIME!"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
-	icon_state = "lisa"
-	icon_living = "lisa"
-	icon_dead = "lisa_dead"
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "bops"
-	response_disarm_simple = "bop"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
-	held_state = "lisa"
-	strippable_inventory_slots = list(/datum/strippable_item/corgi_back, /datum/strippable_item/pet_collar, /datum/strippable_item/corgi_id) //Lisa already has a cute bow!
-	var/puppies = 0
+
+/mob/living/basic/pet/dog/bullterrier
+	name = "\improper bull terrier"
+	real_name = "bull terrier"
+	desc = "They're a bull terrier."
+	icon = 'icons/mob/simple/pets.dmi'
+	icon_state = "bullterrier"
+	icon_living = "bullterrier"
+	icon_dead = "bullterrier_dead"
+	butcher_results = list(/obj/item/food/meat/slab/corgi = 3) // Would feel redundant to add more new dog meats.
+	gold_core_spawnable = FRIENDLY_SPAWN
+	collar_icon_state = "bullterrier"
+	held_state = "bullterrier"
 
 /mob/living/basic/pet/dog/breaddog //Most of the code originates from Cak
 	name = "Kobun"
