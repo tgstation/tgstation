@@ -21,6 +21,10 @@
 	possible_items = list(
 		/datum/objective_item/steal/traitor/cargo_budget,
 		/datum/objective_item/steal/traitor/clown_shoes,
+		/datum/objective_item/steal/traitor/bartender_shotgun,
+		/datum/objective_item/steal/traitor/fireaxe,
+		/datum/objective_item/steal/traitor/nullrod,
+		/datum/objective_item/steal/traitor/big_crowbar,
 	)
 
 /datum/traitor_objective/destroy_item/high_risk
@@ -30,10 +34,6 @@
 	telecrystal_reward = list(4,5)
 
 	possible_items = list(
-		/datum/objective_item/steal/traitor/bartender_shotgun,
-		/datum/objective_item/steal/traitor/fireaxe,
-		/datum/objective_item/steal/traitor/nullrod,
-		/datum/objective_item/steal/traitor/big_crowbar,
 		/datum/objective_item/steal/blackbox,
 	)
 
