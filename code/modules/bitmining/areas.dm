@@ -1,23 +1,26 @@
 /area/station/bitminer_den
-	name = "Bitmining Den"
+	name = "Bitmining: Den"
 	desc = "Office of bitminers, houses their equipment."
 	icon_state = "bit_den"
 
 /area/station/bitminer_den/receive
-	name = "Bit Receiving"
+	name = "Bitmining: Receiving"
 	desc = "Receives shipments from the virtual domain."
 	icon_state = "bit_receive"
 
 /area/station/virtual_domain
 	name = "Virtual Domain"
-	area_flags = UNIQUE_AREA | FLORA_ALLOWED
-	flags_1 = NONE
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
 	has_gravity = STANDARD_GRAVITY
 	static_lighting = TRUE
 
-/area/station/virtual_domain/generate_point
-	name = "Virtual Domain: Generation"
+/area/station/virtual_domain/bottom_left
 	icon_state = "bit_gen_map"
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
+
+/// Using this to get turfs on the z-level then deleting contents
+/area/station/virtual_domain/to_delete
+	icon_state = "bit_gen_del"
 
 /area/station/virtual_domain/ruin
 	name = "Virtual Domain: Ruins"
@@ -25,21 +28,20 @@
 	requires_power = FALSE
 
 /area/station/virtual_domain/safehouse
-	name = "Safe House"
-	icon_state = "bit_safe"
+	name = "Virtual Domain: Safehouse"
 	requires_power = FALSE
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED | HIDDEN_AREA
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 
-/area/station/virtual_domain/safehouse/generate_point
-	name = "Safe House: Generation"
+/area/station/virtual_domain/safehouse/bottom_left
 	icon_state = "bit_gen_safe"
+
 /area/station/virtual_domain/safehouse/exit
-	name = "Safe House: Escape"
+	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
 	icon_state = "bit_exit"
+
 /area/station/virtual_domain/safehouse/send
-	name = "Safe House: Transfer"
 	icon_state = "bit_send"
-	desc
 
 /area/station/virtual_domain/safehouse/send/LateInitialize()
 	. = ..()

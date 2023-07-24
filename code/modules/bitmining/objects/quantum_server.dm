@@ -15,18 +15,20 @@
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "hub"
 	/// The area type used as a reference to load templates
-	var/area/preset_mapload_area = /area/station/virtual_domain/generate_point
+	var/area/preset_mapload_area = /area/station/virtual_domain/bottom_left
 	/// The area type used as a reference to load the safehouse
-	var/area/preset_safehouse_area = /area/station/virtual_domain/safehouse/generate_point
+	var/area/preset_safehouse_area = /area/station/virtual_domain/safehouse/bottom_left
 	/// The area type used in vdom to send loot and mark completion
 	var/area/preset_send_area = /area/station/virtual_domain/safehouse/send
+	/// The area type used to delete objects in the vdom
+	var/area/preset_delete_area = /area/station/virtual_domain/to_delete
 	/// The area type to receive loot after a domain is completed
 	var/area/receive_area = /area/station/bitminer_den/receive
 	/// The loaded map template, map_template/virtual_domain
 	var/datum/map_template/virtual_domain/generated_domain
 	/// The loaded safehouse, map_template/safehouse
 	var/datum/map_template/safehouse/generated_safehouse
-	/// The generated space level to spawn other presets onto, datum/space_level
+	/// The generated z level to spawn other presets onto, datum/space_level
 	var/datum/weakref/vdom_ref
 	/// The connected console
 	var/datum/weakref/console_ref
@@ -152,6 +154,9 @@
 		return FALSE
 
 	loading = TRUE
+	balloon_alert(user, "initializing virtual domain...")
+	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
+
 	var/datum/map_template/virtual_domain/to_generate = set_domain(map_id)
 	if(isnull(to_generate))
 		balloon_alert(user, "invalid domain specified.")
@@ -164,9 +169,8 @@
 		loading = FALSE
 		return
 
-	balloon_alert(user, "initializing virtual domain...")
-	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
-	if(!initialize_virtual_domain())
+	var/datum/space_level/loaded_zlevel = vdom_ref?.resolve()
+	if(isnull(loaded_zlevel) && !initialize_virtual_domain())
 		loading = FALSE
 		return FALSE
 
@@ -174,9 +178,9 @@
 		loading = FALSE
 		return FALSE
 
+	loading = FALSE
 	balloon_alert(user, "virtual domain generated.")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
-	loading = FALSE
 
 	return TRUE
 
@@ -305,16 +309,17 @@
 /// Generates a new virtual domain
 /obj/machinery/quantum_server/proc/initialize_virtual_domain()
 	var/datum/map_template/virtual_domain/base_map = new()
-	var/datum/space_level/loaded_map = base_map.load_new_z()
-	if(!loaded_map)
+	var/datum/space_level/loaded_zlevel = base_map.load_new_z()
+
+	if(isnull(loaded_zlevel))
 		log_game("The virtual domain z-level failed to load.")
 		message_admins("The virtual domain z-level failed to load. Hackers won't be teleported to the netverse.")
 		CRASH("Failed to initialize virtual domain z-level!")
 
-	vdom_ref = WEAKREF(loaded_map)
+	vdom_ref = WEAKREF(loaded_zlevel)
 
-	map_load_turf = get_area_turfs(preset_mapload_area, loaded_map.z_value)
-	safehouse_load_turf = get_area_turfs(preset_safehouse_area, loaded_map.z_value)
+	map_load_turf = get_area_turfs(preset_mapload_area, loaded_zlevel.z_value)
+	safehouse_load_turf = get_area_turfs(preset_safehouse_area, loaded_zlevel.z_value)
 
 	return TRUE
 
@@ -338,7 +343,7 @@
 /obj/machinery/quantum_server/proc/on_broken(datum/source)
 	SIGNAL_HANDLER
 
-	stop_domain()
+	INVOKE_ASYNC(src, PROC_REF(stop_domain))
 
 /// Each time someone connects, mob health jumps 1.5x
 /obj/machinery/quantum_server/proc/on_client_connect(datum/source, datum/weakref/new_mind)
@@ -401,12 +406,25 @@
 	COOLDOWN_START(src, cooling_off, min(server_cooldown_time * server_cooldown_efficiency))
 
 	var/datum/space_level/vdom = vdom_ref?.resolve()
-	if(vdom)
-		qdel(vdom)
-	vdom_ref = null
+	if(isnull(vdom) || isnull(user))
+		loading = FALSE
+		return
+
+	var/datum/map_template/virtual_domain/fresh_map = new()
+	fresh_map.load(map_load_turf[ONLY_TURF])
+
+	for(var/turf/tile in get_area_turfs(preset_delete_area, vdom.z_value))
+		for(var/thing in tile.contents)
+			if(!isobserver(thing))
+				qdel(thing)
+
+	for(var/turf/tile in safehouse_load_turf)
+		for(var/thing in tile.contents)
+			if(!isobserver(thing))
+				qdel(thing)
+
 	generated_domain = null
 	generated_safehouse = null
-
 	loading = FALSE
 
 #undef ONLY_TURF
