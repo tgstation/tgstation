@@ -3,6 +3,7 @@
 	desc = "Your cells take up more space than others', giving you a larger appearance. You find it difficult to avoid looking down on others. Literally."
 	value = 0
 	icon = FA_ICON_CHEVRON_CIRCLE_UP
+	quirk_flags = QUIRK_CHANGES_APPEARANCE
 
 /datum/quirk/gigantism/add()
 	. = ..()
