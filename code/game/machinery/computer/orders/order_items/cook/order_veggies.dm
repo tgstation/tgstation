@@ -26,7 +26,7 @@
 	name = "Cabbage"
 	item_path = /obj/item/food/grown/cabbage
 
-/datum/orderable_item/veggies/beets
+/datum/orderable_item/veggies/onion
 	name = "Onion"
 	item_path = /obj/item/food/grown/onion
 

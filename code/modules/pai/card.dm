@@ -66,9 +66,20 @@
 
 /obj/item/pai_card/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/track_hierarchical_movement)
+
+	var/static/list/containers_connections = list(COMSIG_MOVABLE_MOVED = PROC_REF(card_moved))
+	AddComponent(/datum/component/connect_containers, tracked = src, connections = containers_connections)
 	update_appearance()
 	SSpai.pai_card_list += src
+
+/obj/item/pai_card/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	card_moved()
+
+/// Called when we, our loc, or our loc's loc, or our loc's loc's loc, or etc has moved
+/obj/item/pai_card/proc/card_moved()
+	SIGNAL_HANDLER
+	pai?.check_distance()
 
 /obj/item/pai_card/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_They()] can't keep living without real human intimacy!"))

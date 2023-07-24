@@ -20,14 +20,15 @@ and your disease can spread via people walking on vomit.
 	base_message_chance = 100
 	symptom_delay_min = 25
 	symptom_delay_max = 80
-	var/vomit_nebula = FALSE
-	var/vomit_blood = FALSE
-	var/proj_vomit = 0
+	required_organ = ORGAN_SLOT_STOMACH
 	threshold_descs = list(
 		"Resistance 7" = "Host will vomit blood, causing internal damage.",
 		"Transmission 7" = "Host will projectile vomit, increasing vomiting range.",
 		"Stealth 4" = "The symptom remains hidden until active."
 	)
+	var/vomit_nebula = FALSE
+	var/vomit_blood = FALSE
+	var/proj_vomit = 0
 
 /datum/symptom/vomit/Start(datum/disease/advance/A)
 	. = ..()

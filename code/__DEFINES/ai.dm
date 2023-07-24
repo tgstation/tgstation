@@ -331,3 +331,9 @@
 #define BB_GOLIATH_TENTACLES "BB_goliath_tentacles"
 /// Key where goliath stores a hole it wants to get into
 #define BB_GOLIATH_HOLE_TARGET "BB_goliath_hole"
+
+///bee keys
+///the bee hive we live inside
+#define BB_CURRENT_HOME "BB_current_home"
+///the hydro we will pollinate
+#define BB_TARGET_HYDRO "BB_target_hydro"

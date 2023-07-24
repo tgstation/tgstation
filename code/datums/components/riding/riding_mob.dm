@@ -186,7 +186,7 @@
 		human_parent.buckle_lying = 0
 		// the riding mob is made nondense so they don't bump into any dense atoms the carrier is pulling,
 		// since pulled movables are moved before buckled movables
-		riding_mob.set_density(FALSE)
+		ADD_TRAIT(riding_mob, TRAIT_UNDENSE, VEHICLE_TRAIT)
 	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
 		human_parent.buckle_lying = 90
 
@@ -210,7 +210,7 @@
 	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
-	former_rider.set_density(!former_rider.body_position)
+	REMOVE_TRAIT(H, TRAIT_UNDENSE, VEHICLE_TRAIT)
 	return ..()
 
 /// If the carrier shoves the person they're carrying, force the carried mob off
@@ -329,6 +329,31 @@
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/pony/handle_specials()
+	. = ..()
+	vehicle_move_delay = 1.5
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 9), TEXT_SOUTH = list(0, 9), TEXT_EAST = list(-2, 9), TEXT_WEST = list(2, 9)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/pony
+	COOLDOWN_DECLARE(pony_trot_cooldown)
+
+/datum/component/riding/creature/pony/driver_move(atom/movable/movable_parent, mob/living/user, direction)
+	. = ..()
+
+	if (. == COMPONENT_DRIVER_BLOCK_MOVE || !COOLDOWN_FINISHED(src, pony_trot_cooldown))
+		return
+
+	var/mob/living/carbon/human/human_user = user
+
+	if(human_user && is_clown_job(human_user.mind?.assigned_role))
+		// there's a new sheriff in town
+		playsound(movable_parent, 'sound/creatures/pony/clown_gallup.ogg', 50)
+		COOLDOWN_START(src, pony_trot_cooldown, 500 MILLISECONDS)
 
 /datum/component/riding/creature/bear/handle_specials()
 	. = ..()

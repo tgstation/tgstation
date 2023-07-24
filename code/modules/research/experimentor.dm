@@ -639,6 +639,7 @@
 	to_chat(user, message)
 
 	var/static/list/valid_animals = list(
+		/mob/living/basic/bee,
 		/mob/living/basic/butterfly,
 		/mob/living/basic/carp,
 		/mob/living/basic/lizard,
@@ -648,7 +649,6 @@
 		/mob/living/basic/pet/fox,
 		/mob/living/simple_animal/crab,
 		/mob/living/simple_animal/hostile/bear,
-		/mob/living/simple_animal/hostile/bee,
 		/mob/living/simple_animal/parrot/natural,
 		/mob/living/simple_animal/pet/cat,
 	)
