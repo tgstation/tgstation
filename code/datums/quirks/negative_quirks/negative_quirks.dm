@@ -1,6 +1,4 @@
 //predominantly negative traits
-#define MOOD_CATEGORY_PHOTOPHOBIA "photophobia"
-
 /datum/quirk/badback
 	name = "Bad Back"
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evenly weighted objects are fine, though."
@@ -447,9 +445,11 @@
 		quirk_holder.toggle_move_intent()
 	quirk_holder.add_mood_event("nyctophobia", /datum/mood_event/nyctophobia)
 
+#define MOOD_CATEGORY_PHOTOPHOBIA "photophobia"
+
 /datum/quirk/photophobia
 	name = "Photophobia"
-	desc = "Bright lights irritate you. Your eyes start to water and burn when exposed to light. Maybe it's a medical condition."
+	desc = "Bright lights seem to bother you more than others. Maybe it's a medical condition."
 	icon = FA_ICON_ARROWS_TO_EYE
 	value = -4
 	gain_text = span_danger("The safety of light feels off...")
@@ -514,6 +514,8 @@
 		quirk_holder.clear_mood_event(MOOD_CATEGORY_PHOTOPHOBIA)
 		return
 	quirk_holder.add_mood_event(MOOD_CATEGORY_PHOTOPHOBIA, /datum/mood_event/photophobia)
+
+	#undef MOOD_CATEGORY_PHOTOPHOBIA
 
 /datum/quirk/softspoken
 	name = "Soft-Spoken"
@@ -1488,5 +1490,3 @@
 
 /datum/quirk/cursed/add(client/client_source)
 	quirk_holder.AddComponent(/datum/component/omen/quirk)
-	
-#undef MOOD_CATEGORY_PHOTOPHOBIA
