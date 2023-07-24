@@ -13,7 +13,7 @@
 	maximum_objectives_in_period = 1
 	progression_minimum = 30 MINUTES
 
-	progression_reward = list(8 MINUTES, 14 MINUTES)
+	progression_reward = list(4 MINUTES, 7 MINUTES)
 	telecrystal_reward = 1
 
 
