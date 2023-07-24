@@ -74,17 +74,29 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_icon_state = "corgi"
 	ai_controller = /datum/ai_controller/basic_controller/dog/corgi
-	var/obj/item/inventory_head
-	var/obj/item/inventory_back
-	/// Access card for Ian.
+	///Access card for Ian.
 	var/obj/item/card/id/access_card = null
+	///Can this corgi be shaved by an electric razor?
+	var/can_be_shaved = FALSE
+	///Did this corgi get mutilated and has had their fur shaved by an electric razor, oh the humanity?
 	var/shaved = FALSE
-	var/nofur = FALSE //Corgis that have risen past the material plane of existence.
-	/// Is this corgi physically slow due to age, etc?
+	///Currently worn item on the head slot
+	var/obj/item/inventory_head = null
+	///Currently worn item on the back slot
+	var/obj/item/inventory_back = null
+	///Is this corgi physically slow due to age, etc?
 	var/is_slow = FALSE
+	///Item slots that are available for this corgi to equip stuff into
+	var/list/strippable_inventory_slots = list()
 
 /mob/living/basic/pet/dog/corgi/Initialize(mapload)
 	. = ..()
+	if(!length(strippable_inventory_slots)) //default to the full loadout
+		strippable_inventory_slots = GLOB.strippable_corgi_items
+	update_appearance()
+	AddElement(/datum/element/strippable, strippable_inventory_slots)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
 	RegisterSignals(src, list(COMSIG_BASICMOB_LOOK_ALIVE, COMSIG_BASICMOB_LOOK_DEAD), PROC_REF(on_appearance_change))
 
 /mob/living/basic/pet/dog/corgi/examine(mob/user)
@@ -169,7 +181,7 @@
 ///Handles updating any existing overlays for the corgi (such as fashion items) when it changes how it appears, as in, dead or alive.
 /mob/living/basic/pet/dog/corgi/proc/on_appearance_change()
 	SIGNAL_HANDLER
-	update_icon(UPDATE_OVERLAYS)
+	update_appearance(UPDATE_OVERLAYS)
 
 ///Deadchat bark.
 /mob/living/basic/pet/dog/corgi/proc/bork()
@@ -205,7 +217,7 @@
 	inventory_head.forceMove(drop_location())
 	inventory_head = null
 	update_corgi_fluff()
-	update_icon(UPDATE_OVERLAYS)
+	update_appearance(UPDATE_OVERLAYS)
 
 ///Turn AI back on.
 /mob/living/basic/pet/dog/corgi/proc/stop_deadchat_plays()
@@ -217,11 +229,11 @@
 	if(A == inventory_head)
 		inventory_head = null
 		update_corgi_fluff()
-		update_icon(UPDATE_OVERLAYS)
+		update_appearance(UPDATE_OVERLAYS)
 	if(A == inventory_back)
 		inventory_back = null
 		update_corgi_fluff()
-		update_icon(UPDATE_OVERLAYS)
+		update_appearance(UPDATE_OVERLAYS)
 	return ..()
 
 /mob/living/basic/pet/dog/pug
@@ -268,7 +280,7 @@
 	icon_state = "corgigrey"
 	icon_living = "corgigrey"
 	icon_dead = "corgigrey_dead"
-	nofur = TRUE
+	can_be_shaved = TRUE
 
 /mob/living/basic/pet/dog/Initialize(mapload)
 	. = ..()
@@ -276,13 +288,6 @@
 	for(var/obj/structure/bed/dogbed/D in dog_area)
 		if(D.update_owner(src)) //No muscling in on my turf you fucking parrot
 			break
-
-/mob/living/basic/pet/dog/corgi/Initialize(mapload)
-	. = ..()
-	update_icon()
-	AddElement(/datum/element/strippable, GLOB.strippable_corgi_items)
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(on_tried_access))
 
 /**
  * Handler for COMSIG_MOB_TRIED_ACCESS
@@ -293,9 +298,9 @@
 	return locked_thing?.check_access(access_card) ? ACCESS_ALLOWED : ACCESS_DISALLOWED
 
 /mob/living/basic/pet/dog/corgi/exoticcorgi/Initialize(mapload)
-		. = ..()
-		var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
+	. = ..()
+	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
 GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	/datum/strippable_item/corgi_head,
@@ -329,7 +334,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	user.put_in_hands(corgi_source.inventory_head)
 	corgi_source.inventory_head = null
 	corgi_source.update_corgi_fluff()
-	corgi_source.update_icon(UPDATE_OVERLAYS)
+	corgi_source.update_appearance(UPDATE_OVERLAYS)
 
 /datum/strippable_item/pet_collar
 	key = STRIPPABLE_ITEM_PET_COLLAR
@@ -401,7 +406,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	equipping.forceMove(corgi_source)
 	corgi_source.inventory_back = equipping
 	corgi_source.update_corgi_fluff()
-	corgi_source.update_icon(UPDATE_OVERLAYS)
+	corgi_source.update_appearance(UPDATE_OVERLAYS)
 
 /datum/strippable_item/corgi_back/finish_unequip(atom/source, mob/user)
 	var/mob/living/basic/pet/dog/corgi/corgi_source = source
@@ -411,7 +416,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	user.put_in_hands(corgi_source.inventory_back)
 	corgi_source.inventory_back = null
 	corgi_source.update_corgi_fluff()
-	corgi_source.update_icon(UPDATE_OVERLAYS)
+	corgi_source.update_appearance(UPDATE_OVERLAYS)
 
 /datum/strippable_item/corgi_id
 	key = STRIPPABLE_ITEM_ID
@@ -450,7 +455,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	user.put_in_hands(corgi_source.access_card)
 	corgi_source.access_card = null
 	corgi_source.update_corgi_fluff()
-	corgi_source.update_icon(UPDATE_OVERLAYS)
+	corgi_source.update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/pet/dog/corgi/getarmor(def_zone, type)
 	var/armorval = 0
@@ -471,11 +476,11 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	return armorval*0.5
 
 /mob/living/basic/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
-	if (istype(O, /obj/item/razor))
+	if(istype(O, /obj/item/razor))
 		if (shaved)
 			to_chat(user, span_warning("You can't shave this corgi, [p_they()] has already been shaved!"))
 			return
-		if (nofur)
+		if(can_be_shaved)
 			to_chat(user, span_warning("You can't shave this corgi, [p_they()] [p_do()]n't have a fur coat!"))
 			return
 		user.visible_message(span_notice("[user] starts to shave [src] using \the [O]."), span_notice("You start to shave [src] using \the [O]..."))
@@ -530,7 +535,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		item_to_add.forceMove(src)
 		inventory_head = item_to_add
 		update_corgi_fluff()
-		update_icon(UPDATE_OVERLAYS)
+		update_appearance(UPDATE_OVERLAYS)
 	else
 		to_chat(user, span_warning("You set [item_to_add] on [src]'s head, but it falls off!"))
 		item_to_add.forceMove(drop_location())
@@ -682,7 +687,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	icon_dead = "narsian_dead"
 	faction = list(FACTION_NEUTRAL, FACTION_CULT)
 	gold_core_spawnable = NO_SPAWN
-	nofur = TRUE
+	can_be_shaved = TRUE
 	unique_pet = TRUE
 	held_state = "narsian"
 
@@ -730,13 +735,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	collar_icon_state = "puppy"
-
-//puppies cannot wear anything.
-/mob/living/basic/pet/dog/corgi/puppy/Topic(href, href_list)
-	if(href_list["remove_inv"] || href_list["add_inv"])
-		to_chat(usr, span_warning("You can't fit this on [src], [p_they()] [p_are()] too small!"))
-		return
-	..()
+	strippable_inventory_slots = list(/datum/strippable_item/pet_collar, /datum/strippable_item/corgi_id) //puppies are too small to handle hats and back slot items
 
 //PUPPY IAN! SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/puppy/ian
@@ -754,7 +753,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	icon_state = "void_puppy"
 	icon_living = "void_puppy"
 	icon_dead = "void_puppy_dead"
-	nofur = TRUE
+	can_be_shaved = TRUE
 	held_state = "void_puppy"
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = TCMB
@@ -762,10 +761,8 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /mob/living/basic/pet/dog/corgi/puppy/void/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_AI_BAGATTACK, INNATE_TRAIT)
-
-/mob/living/basic/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
-	return 1 //Void puppies can navigate space.
+	//void puppies can spacewalk and can harass people from within a container because they're void puppies
+	add_traits(list(TRAIT_AI_BAGATTACK, TRAIT_SPACEWALK), INNATE_TRAIT)
 
 //LISA! SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/lisa
@@ -785,14 +782,8 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	held_state = "lisa"
+	strippable_inventory_slots = list(/datum/strippable_item/corgi_back, /datum/strippable_item/pet_collar, /datum/strippable_item/corgi_id) //Lisa already has a cute bow!
 	var/puppies = 0
-
-//Lisa already has a cute bow!
-/mob/living/basic/pet/dog/corgi/lisa/Topic(href, href_list)
-	if(href_list["remove_inv"] || href_list["add_inv"])
-		to_chat(usr, span_warning("[src] already has a cute bow!"))
-		return
-	..()
 
 /mob/living/basic/pet/dog/breaddog //Most of the code originates from Cak
 	name = "Kobun"

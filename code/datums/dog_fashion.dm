@@ -26,10 +26,14 @@
 /datum/dog_fashion/New(mob/M)
 	//replace the placeholder for the real unmodified name in the name of the dog
 	name = replacetext(name, "%REAL_NAME%", M.real_name)
+	//replace the placeholder for the capitalized real unmodified name in the name of the dog
+	name = replacetext(name, "%CAPITAL_REAL_NAME%", capitalize(M.real_name))
 	//replace the placeholder for the current full name, which includes our name modifiers
 	desc = replacetext(desc, "%NAME%", name)
 	//replace the placeholder for the real unmodified name in the description of the dog
 	desc = replacetext(desc, "%REAL_NAME%", M.real_name)
+	//replace the placeholder for the capitalized real unmodified name in the description of the dog
+	desc = replacetext(name, "%CAPITAL_REAL_NAME%", capitalize(M.real_name))
 
 ///Applies the name, description and speak emote modifiers to the dog
 /datum/dog_fashion/proc/apply(mob/living/basic/pet/dog/dressup_doggy)
