@@ -1,0 +1,6 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - bugfix: "Removed duplicate and incorrect Yaki Imo recipe"
+  - qol: "Swapped out the flour in Ælosterrmæsch with two dough slices, to avoid competing reactions while preparing or cooking"
+  - spellcheck: "Chicken nugget will have a description in the craft menu, and fiesta skewers will have a description in general"
