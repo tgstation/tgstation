@@ -54,29 +54,14 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 		GLOB.clock_ark = null
 	if(GLOB.ratvar_risen)
 		return ..()
-
-	current_state = ARK_STATE_FINAL
-	resistance_flags |= INDESTRUCTIBLE
-	visible_message(span_userdanger("[src] begins to pulse uncontrollably... you might want to run!"))
-	sound_to_playing_players(volume = 50, S = sound('sound/effects/clockcult_gateway_disrupted.ogg'))
-	sleep(2.5 SECONDS)
-	sound_to_playing_players('sound/machines/clockcult/ark_deathrattle.ogg', 50)
-	sleep(2.7 SECONDS)
-	explosion(src, 1, 3, 8, 8)
-	sound_to_playing_players('sound/effects/explosion_distant.ogg', 50)
-	for(var/obj/effect/portal/clockcult/portal in GLOB.portals)
-		qdel(portal)
-
-	SSshuttle.clearHostileEnvironment(src)
-	SSsecurity_level.set_level(2)
 	STOP_PROCESSING(SSprocessing, src)
 	send_clock_message(null, span_bigbrass("The Ark has been destroyed, Reebe is becoming unstable!"))
 	for(var/mob/living/current_mob in GLOB.player_list)
 		if(!on_reebe(current_mob))
 			continue
 		if(IS_CLOCK(current_mob))
-			to_chat(current_mob, span_ratvar("Your mind is distorted by the distant sound of a thousand screams. [span_reallybig("<i>YOU HAVE FAILED TO PROTECT MY ARK. \
-											  YOU WILL BE TRAPPED HERE WITH ME TO SUFFER FOREVER...</i>")]"))
+			to_chat(current_mob, span_reallybig(span_ratvar("Your mind is distorted by the distant sound of a thousand screams. [span_reallybig("<i>YOU HAVE FAILED TO PROTECT MY ARK. \
+																  YOU WILL BE TRAPPED HERE WITH ME TO SUFFER FOREVER...</i>")]")))
 			continue
 		current_mob.SetSleeping(5 SECONDS)
 		to_chat(current_mob, span_ratvar("Your mind is distorted by the distant sound of a thousand screams before suddenly everything falls silent."))
@@ -88,7 +73,23 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 /obj/structure/destructible/clockwork/the_ark/deconstruct(disassembled = TRUE)
 	if(current_state >= ARK_STATE_FINAL)
 		return
-	qdel(src)
+	ASYNC
+		if(!(flags_1 & NODECONSTRUCT_1))
+			if(!disassembled)
+				current_state = ARK_STATE_FINAL
+				resistance_flags |= INDESTRUCTIBLE
+				visible_message(span_userdanger("[src] begins to pulse uncontrollably... you might want to run!"))
+				sound_to_playing_players(volume = 50, S = sound('sound/effects/clockcult_gateway_disrupted.ogg'))
+				sleep(2.5 SECONDS)
+				sound_to_playing_players('sound/machines/clockcult/ark_deathrattle.ogg', 50)
+				sleep(2.7 SECONDS)
+				explosion(src, 1, 3, 8, 8)
+				sound_to_playing_players('sound/effects/explosion_distant.ogg', 50)
+				for(var/obj/effect/portal/clockcult/portal in GLOB.portals)
+					qdel(portal)
+				SSshuttle.clearHostileEnvironment(src)
+				SSsecurity_level.set_level(2)
+		qdel(src)
 
 /obj/structure/destructible/clockwork/the_ark/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	. = ..()
@@ -114,7 +115,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 		icon_state = "clockwork_gateway_closing"
 		sound_to_playing_players(volume = 30, vary = TRUE, S = sound('monkestation/sound/effects/clockcult_gateway_closing.ogg'))
 
-	if(current_state >= ARK_STATE_SUMMONING && SPT_PROB(4))
+	if(current_state >= ARK_STATE_SUMMONING && SPT_PROB(4, seconds_per_tick))
 		send_to_playing_players(span_warning("[pick(list("You feel the fabric of reality twist and bend.", \
 											  "Your mind buzzes with fear.", \
 											  "You hear otherworldly screams from all around you.", \
