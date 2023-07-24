@@ -376,7 +376,6 @@
 	sac_target.remove_status_effect(/datum/status_effect/unholy_determination)
 	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp/heretic)
 	sac_target.clear_mood_event("shadow_realm")
-  
 	if(!IS_HERETIC(sac_target))
 		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/heresy, TRAUMA_RESILIENCE_MAGIC)
 
