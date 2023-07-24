@@ -2217,6 +2217,7 @@
 #include "code\game\objects\structures\dresser.dm"
 #include "code\game\objects\structures\electricchair.dm"
 #include "code\game\objects\structures\extinguisher.dm"
+#include "code\game\objects\structures\fake_stairs.dm"
 #include "code\game\objects\structures\false_walls.dm"
 #include "code\game\objects\structures\fans.dm"
 #include "code\game\objects\structures\fence.dm"
