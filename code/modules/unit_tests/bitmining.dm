@@ -15,72 +15,92 @@
 	TEST_ASSERT_EQUAL(connected_console, console, "Quantum console did not set server_ref correctly")
 	TEST_ASSERT_EQUAL(connected_server, server, "Quantum server did not set console_ref correctly")
 
-/// Loading virtual domain
-/datum/unit_test/quantum_server_generate_vdom/Run()
+/// Initializing virtual domain
+/datum/unit_test/quantum_server_initialize_vdom/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
-	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
-	labrat.mock_client = new()
-	var/obj/machinery/computer/quantum_console/console = allocate(/obj/machinery/computer/quantum_console, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
-	TEST_ASSERT_NOTNULL(server.console_ref, "Sanity: QServer did not find the console")
-
-	server.generate_virtual_domain(labrat)
-	TEST_ASSERT_NOTNULL(server.vdom_ref, "QServer did not generate vdom")
+	server.initialize_virtual_domain()
+	TEST_ASSERT_NOTNULL(server.vdom_ref, "QServer did not initialize vdom")
 	TEST_ASSERT_EQUAL(length(server.map_load_turf), 1, "There should only ever be ONE turf, the bottom left, in the map_load_turf list")
 	TEST_ASSERT_EQUAL(length(server.safehouse_load_turf), 1, "There should only ever be ONE turf, the bottom left, in the safehouse_load_turf list")
 
-/// Handles cases with loading domains
+/// Setting domains
 /datum/unit_test/quantum_server_set_domain/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
-	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
-	var/obj/machinery/computer/quantum_console/console = allocate(/obj/machinery/computer/quantum_console, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	labrat.mock_client = new()
 
-	server.set_domain(labrat, id = TEST_MAP)
-	TEST_ASSERT_NOTNULL(server.vdom_ref, "QServer did not initialize vdom_ref")
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "QServer did not load generated_domain correctly")
+	var/datum/map_template/virtual_domain/domain = server.set_domain(TEST_MAP)
+	TEST_ASSERT_EQUAL(domain.id, TEST_MAP, "QServer did not load test map correctly")
 
-	server.set_domain(labrat, TEST_MAP_EXPENSIVE)
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "QServer should prevent loading multiple domains")
+/// Loading maps onto the vdom
+/datum/unit_test/quantum_server_load_domain/Run()
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
+	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent, locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
-	server.stop_domain()
-	COOLDOWN_RESET(server, cooling_off)
-	var/datum/weakref/fake_mind_ref = WEAKREF(labrat)
-	server.occupant_mind_refs += fake_mind_ref
-	server.set_domain(labrat, id = TEST_MAP)
-	TEST_ASSERT_NULL(server.generated_domain, "QServer should prevent setting a domain with occupants")
+	server.initialize_virtual_domain(labrat)
+	TEST_ASSERT_NOTNULL(server.vdom_ref, "Sanity: QServer did not initialize vdom_ref")
 
-	server.occupant_mind_refs -= fake_mind_ref
-	server.points = 3
-	server.set_domain(labrat, id = TEST_MAP_EXPENSIVE)
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP_EXPENSIVE, "Sanity: Qserver should've loaded expensive test map")
-	TEST_ASSERT_EQUAL(server.points, 0, "QServer should've spent 3 points on loading a 3 point domain")
+	var/datum/map_template/virtual_domain/domain = server.set_domain(labrat, map_id = TEST_MAP)
+	TEST_ASSERT_EQUAL(domain.id, TEST_MAP, "Sanity: QServer did not load test map correctly")
+
+	server.load_domain(labrat, domain)
+	TEST_ASSERT_NOTNULL(server.generated_safehouse, "QServer did not load generated_safehouse correctly")
+	TEST_ASSERT_NOTNULL(server.generated_domain, "QServer did not load generated_domain correctly")
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "QServer did not load the correct domain")
 
 /// Handles cases with stopping domains. The server should cool down & prevent stoppage with active mobs
 /datum/unit_test/quantum_server_stop_domain/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
-	labrat.mock_client = new()
 
-	server.set_domain(labrat, id = TEST_MAP)
-	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: QServer should've loaded test_only map")
+	server.cold_boot_map(labrat, TEST_MAP)
+	TEST_ASSERT_NOTNULL(server.vdom_ref, "Sanity: QServer did not initialize vdom_ref")
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: QServer did not load test map correctly")
 
 	server.stop_domain()
-	TEST_ASSERT_NOTNULL(server.vdom_ref, "QServer erased vdom_ref on stop_domain()")
+	TEST_ASSERT_NULL(server.vdom_ref, "QServer should erase vdom_ref on stop_domain()")
 	TEST_ASSERT_NULL(server.generated_domain, "QServer did not stop domain")
+	TEST_ASSERT_NULL(server.generated_safehouse, "QServer did not stop safehouse")
 	TEST_ASSERT_EQUAL(server.get_ready_status(), FALSE, "QServer should cool down, but did not set ready status to FALSE")
 
-	server.set_domain(labrat, id = TEST_MAP)
-	TEST_ASSERT_NULL(server.generated_domain, "QServer should prevent loading a new domain while cooling down")
+	server.cold_boot_map(labrat, TEST_MAP)
+	TEST_ASSERT_NULL(server.vdom_ref, "QServer should prevent loading a new domain while cooling down")
 
 	COOLDOWN_RESET(server, cooling_off)
-	server.set_domain(labrat, id = TEST_MAP)
+	server.cold_boot_map(labrat, TEST_MAP)
 	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "QServer should load a new domain after cooldown")
 
 	var/datum/weakref/fake_mind_ref = WEAKREF(labrat)
 	server.occupant_mind_refs += fake_mind_ref
 	server.stop_domain()
 	TEST_ASSERT_NULL(server.generated_domain, "QServer should force stop a domain even with occupants")
+
+/// Handles the linking process to boot a domain from scratch
+/datum/unit_test/quantum_server_cold_boot_map/Run()
+	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
+	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
+	labrat.mind_initialize()
+	labrat.mock_client = new()
+
+	server.cold_boot_map(labrat, TEST_MAP)
+	TEST_ASSERT_NOTNULL(server.generated_domain, "Did not cold boot generated_domain correctly")
+
+	server.cold_boot_map(labrat, map_id = TEST_MAP_EXPENSIVE)
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Should prevent loading multiple domains")
+
+	server.stop_domain()
+	COOLDOWN_RESET(server, cooling_off)
+	var/datum/weakref/fake_mind_ref = WEAKREF(labrat)
+	server.occupant_mind_refs += fake_mind_ref
+	server.cold_boot_map(labrat, map_id = TEST_MAP)
+	TEST_ASSERT_NULL(server.vdom_ref, "Should prevent setting domains with occupants")
+
+	server.stop_domain()
+	COOLDOWN_RESET(server, cooling_off)
+	server.occupant_mind_refs -= fake_mind_ref
+	server.points = 3
+	server.cold_boot_map(labrat, map_id = TEST_MAP_EXPENSIVE)
+	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP_EXPENSIVE, "Sanity: Should've loaded expensive test map")
+	TEST_ASSERT_EQUAL(server.points, 0, "Should've spent 3 points on loading a 3 point domain")
 
 /// Tests the netchair's ability to buckle in and set refs
 /datum/unit_test/netchair_buckle/Run()
@@ -96,7 +116,7 @@
 	var/obj/machinery/quantum_server/connected_server = chair.server_ref.resolve()
 	TEST_ASSERT_EQUAL(connected_server, server, "Netchair did not set server_ref correctly")
 
-	server.set_domain(labrat, id = TEST_MAP)
+	server.set_domain(labrat, map_id = TEST_MAP)
 	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: QServer did not load test map correctly")
 
 	chair.buckle_mob(labrat, check_loc = FALSE)
@@ -159,7 +179,7 @@
 	labrat.mind.key = "fake_mind"
 	var/datum/weakref/real_mind = WEAKREF(labrat.mind)
 
-	server.set_domain(labrat, id = TEST_MAP)
+	server.set_domain(labrat, map_id = TEST_MAP)
 	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP, "Sanity: QServer did not load test map correctly")
 
 	chair.buckle_mob(labrat, check_loc = FALSE)
@@ -279,7 +299,7 @@
 /datum/unit_test/quantum_server_difficulty/Run()
 	var/obj/machinery/quantum_server/server = allocate(/obj/machinery/quantum_server)
 	var/mob/living/carbon/human/labrat = allocate(/mob/living/carbon/human/consistent)
-	server.set_domain(labrat, id = TEST_MAP_MOBS)
+	server.set_domain(labrat, map_id = TEST_MAP_MOBS)
 	var/datum/weakref/labrat_mind_ref = WEAKREF(labrat.mind)
 
 	TEST_ASSERT_EQUAL(server.generated_domain.id, TEST_MAP_MOBS, "Sanity: QServer didn't load test map correctly")

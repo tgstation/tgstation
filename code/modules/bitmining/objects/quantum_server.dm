@@ -133,6 +133,53 @@
 
 	return FALSE
 
+/**
+ * ### Quantum Server Cold Boot
+ * Procedurally links the 3 booting processes together.
+ *
+ * This is the starting point if you have an id. Does validation and feedback on steps
+ */
+/obj/machinery/quantum_server/proc/cold_boot_map(mob/user, map_id)
+	if(!get_ready_status())
+		return FALSE
+
+	if(isnull(map_id))
+		balloon_alert(user, "no domain specified.")
+		return FALSE
+
+	if(generated_domain)
+		balloon_alert(user, "stop the current domain first.")
+		return FALSE
+
+	loading = TRUE
+	var/datum/map_template/virtual_domain/to_generate = set_domain(map_id)
+	if(isnull(to_generate))
+		balloon_alert(user, "invalid domain specified.")
+		loading = FALSE
+		return FALSE
+
+	points -= to_generate.cost
+	if(points < 0)
+		balloon_alert(user, "not enough points.")
+		loading = FALSE
+		return
+
+	balloon_alert(user, "initializing virtual domain...")
+	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
+	if(!initialize_virtual_domain())
+		loading = FALSE
+		return FALSE
+
+	if(!load_domain(to_generate))
+		loading = FALSE
+		return FALSE
+
+	balloon_alert(user, "virtual domain generated.")
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
+	loading = FALSE
+
+	return TRUE
+
 /// Attempts to connect to a quantum console
 /obj/machinery/quantum_server/proc/find_console()
 	var/obj/machinery/computer/quantum_console/console = console_ref?.resolve()
@@ -148,22 +195,6 @@
 
 	return FALSE
 
-/// Links the booting processes together
-/obj/machinery/quantum_server/proc/fresh_start(mob/user, map_id)
-	if(!get_ready_status())
-		return FALSE
-
-	var/datum/map_template/virtual_domain/to_generate = set_domain(usr, map_id, TRUE)
-	if(!isnull(to_generate))
-		return FALSE
-
-	if(!initialize_virtual_domain(user))
-		return FALSE
-
-	if(!load_domain(user, to_generate))
-		return FALSE
-
-	return TRUE
 
 /// Generates a reward based on the given domain
 /obj/machinery/quantum_server/proc/generate_loot(mob/user)
@@ -269,19 +300,12 @@
 
 /// Returns if the server is busy via loading or cooldown states
 /obj/machinery/quantum_server/proc/get_ready_status()
-	return !loading && COOLDOWN_FINISHED(src, cooling_off)
+	return !loading && COOLDOWN_FINISHED(src, cooling_off) && !length(occupant_mind_refs)
 
 /// Generates a new virtual domain
-/obj/machinery/quantum_server/proc/initialize_virtual_domain(mob/user)
-	if(loading)
-		return FALSE
-
-	balloon_alert(user, "initializing virtual domain...")
-	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
-	loading = TRUE
-
-	var/datum/map_template/virtual_domain/base_zone = new()
-	var/datum/space_level/loaded_map = base_zone.load_new_z()
+/obj/machinery/quantum_server/proc/initialize_virtual_domain()
+	var/datum/map_template/virtual_domain/base_map = new()
+	var/datum/space_level/loaded_map = base_map.load_new_z()
 	if(!loaded_map)
 		log_game("The virtual domain z-level failed to load.")
 		message_admins("The virtual domain z-level failed to load. Hackers won't be teleported to the netverse.")
@@ -292,8 +316,6 @@
 	map_load_turf = get_area_turfs(preset_mapload_area, loaded_map.z_value)
 	safehouse_load_turf = get_area_turfs(preset_safehouse_area, loaded_map.z_value)
 
-	loading = FALSE
-
 	return TRUE
 
 /// Validates target mob as valid to buff/nerf
@@ -301,9 +323,7 @@
 	return isliving(creature) && isnull(creature.key) && creature.stat != DEAD && creature.health > 10
 
 /// Generates the virtual template around the safehouse
-/obj/machinery/quantum_server/proc/load_domain(mob/user, datum/map_template/virtual_domain/to_generate)
-	loading = TRUE
-
+/obj/machinery/quantum_server/proc/load_domain(datum/map_template/virtual_domain/to_generate)
 	var/datum/map_template/safehouse/safehouse = new to_generate.safehouse_path
 	// We need to reload the safehouse so things don't carry over
 	safehouse.load(safehouse_load_turf[ONLY_TURF])
@@ -311,9 +331,6 @@
 
 	generated_domain = to_generate
 	generated_safehouse = safehouse
-	balloon_alert(user, "virtual domain generated.")
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, 2)
-	loading = FALSE
 
 	return TRUE
 
@@ -361,39 +378,14 @@
 		examine_text += span_notice("Its coolant capacity reduces cooldown time by [(1 - server_cooldown_efficiency) * 100]%.")
 
 /// Sets the current virtual domain to the given map template
-/obj/machinery/quantum_server/proc/set_domain(mob/user, id)
-	if(isnull(id))
-		balloon_alert(user, "no domain specified.")
-		return
-
-	if(length(occupant_mind_refs))
-		balloon_alert(user, "error: connected clients!")
-		return
-
-	if(generated_domain)
-		balloon_alert(user, "stop the current domain first.")
-		return
-
-	loading = TRUE
-
+/obj/machinery/quantum_server/proc/set_domain(map_id)
 	var/datum/map_template/virtual_domain/to_generate
 	for(var/datum/map_template/virtual_domain/available as anything in subtypesof(/datum/map_template/virtual_domain))
-		if(id == initial(available.id) && initial(available.cost) <= points)
+		if(map_id == initial(available.id) && initial(available.cost) <= points)
 			to_generate = new available
 			if(domain_randomized)
 				to_generate.reward_points += 1
 			break
-
-	loading = FALSE
-
-	if(!to_generate)
-		balloon_alert(user, "invalid domain specified.")
-		return
-
-	points -= to_generate.cost
-	if(points < 0)
-		balloon_alert(user, "not enough points.")
-		return
 
 	return to_generate
 
@@ -408,19 +400,13 @@
 	SEND_SIGNAL(src, COMSIG_QSERVER_DISCONNECTED)
 	COOLDOWN_START(src, cooling_off, min(server_cooldown_time * server_cooldown_efficiency))
 
-	if(generated_domain)
-		generated_domain.clear_atoms()
-		generated_domain = null
-
-	if(generated_safehouse)
-		generated_safehouse.clear_atoms()
-		generated_safehouse = null
-
 	var/datum/space_level/vdom = vdom_ref?.resolve()
-	if(isnull(vdom))
-		CRASH("Failed to find virtual domain z-level.")
+	if(vdom)
+		qdel(vdom)
+	vdom_ref = null
+	generated_domain = null
+	generated_safehouse = null
 
-	qdel(vdom)
 	loading = FALSE
 
 #undef ONLY_TURF

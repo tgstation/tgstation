@@ -85,12 +85,12 @@
 			if(!map_id)
 				return TRUE
 
-			server.fresh_start(usr, map_id)
+			server.cold_boot_map(usr, map_id)
 		if("refresh")
 			ui.send_full_update()
 			return TRUE
 		if("set_domain")
-			server.fresh_start(usr, params["id"])
+			server.cold_boot_map(usr, params["id"])
 			return TRUE
 		if("stop_domain")
 			server.stop_domain(usr)
