@@ -1,7 +1,7 @@
 /datum/traitor_objective/target_player/kidnapping
 	name = "Kidnap %TARGET% the %JOB TITLE% and deliver them to %AREA%"
 	description = "%TARGET% holds extremely important information regarding secret NT projects - and you'll need to kidnap and deliver them to %AREA%, where our transport pod will be waiting. \
-		You'll get additional reward if %TARGET% is delivered alive."
+	If %TARGET% is delivered alive, you will be rewarded with an additional %TC% telecrystals."
 
 	abstract_type = /datum/traitor_objective/target_player/kidnapping
 
@@ -34,8 +34,8 @@
 /datum/traitor_objective/target_player/kidnapping/common
 	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
-	progression_reward = list(2 MINUTES, 4 MINUTES)
-	telecrystal_reward = list(1, 2)
+	progression_reward = list(4 MINUTES, 8 MINUTES)
+	telecrystal_reward = list(2, 3)
 	target_jobs = list(
 		// Cargo
 		/datum/job/cargo_technician,
@@ -74,7 +74,7 @@
 	progression_minimum = 0 MINUTES
 	progression_maximum = 45 MINUTES
 	progression_reward = list(4 MINUTES, 8 MINUTES)
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = list(3, 4)
 
 	target_jobs = list(
 		// Cargo
@@ -90,7 +90,7 @@
 	progression_minimum = 15 MINUTES
 	progression_maximum = 60 MINUTES
 	progression_reward = list(8 MINUTES, 12 MINUTES)
-	telecrystal_reward = list(2, 3)
+	telecrystal_reward = list(4, 5)
 	target_jobs = list(
 		// Heads of staff
 		/datum/job/chief_engineer,
@@ -108,7 +108,7 @@
 /datum/traitor_objective/target_player/kidnapping/captain
 	progression_minimum = 30 MINUTES
 	progression_reward = list(12 MINUTES, 16 MINUTES)
-	telecrystal_reward = list(2, 3)
+	telecrystal_reward = list(5, 6)
 	target_jobs = list(
 		/datum/job/captain,
 		/datum/job/head_of_security,
@@ -158,7 +158,7 @@
 
 	var/datum/mind/target_mind = pick(possible_targets)
 	target = target_mind.current
-	AddComponent(/datum/component/traitor_objective_register, target, fail_signals = list(COMSIG_PARENT_QDELETING))
+	AddComponent(/datum/component/traitor_objective_register, target, fail_signals = list(COMSIG_QDELETING))
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
 		if(ispath(possible_area, /area/station/hallway) || ispath(possible_area, /area/station/security) || initial(possible_area.outdoors))
@@ -168,6 +168,7 @@
 	replace_in_name("%TARGET%", target_mind.name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
 	replace_in_name("%AREA%", initial(dropoff_area.name))
+	replace_in_name("%TC%", alive_bonus)
 	return TRUE
 
 /datum/traitor_objective/target_player/kidnapping/ungenerate_objective()
@@ -309,8 +310,9 @@
 	sent_mob.flash_act()
 	sent_mob.adjust_confusion(10 SECONDS)
 	sent_mob.adjust_dizzy(10 SECONDS)
-	sent_mob.set_eye_blur_if_lower(100 SECONDS)
+	sent_mob.set_eye_blur_if_lower(50 SECONDS)
 	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
+	to_chat(sent_mob, span_hypnophrase(span_reallybig("You can't remember a thing leading up to the kidnapping, and your head hurts like hell...")))
 
 	new /obj/effect/pod_landingzone(pick(possible_turfs), return_pod)
 
