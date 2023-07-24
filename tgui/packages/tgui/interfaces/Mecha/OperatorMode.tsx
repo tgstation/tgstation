@@ -14,7 +14,7 @@ export const OperatorMode = (props, context) => {
   const { left_arm_weapon, right_arm_weapon, mech_view } = data;
   return (
     <Stack fill>
-      <Stack.Item grow>
+      <Stack.Item width="200px">
         <Stack fill vertical>
           <Stack.Item grow>
             <Section fill>
@@ -26,7 +26,7 @@ export const OperatorMode = (props, context) => {
       <Stack.Item grow>
         <ModulesPane />
       </Stack.Item>
-      <Stack.Item grow>
+      <Stack.Item width="200px">
         <Stack fill vertical>
           <Stack.Item grow>
             <Section fill>
@@ -45,7 +45,7 @@ export const OperatorMode = (props, context) => {
           </Stack.Item>
         </Stack>
       </Stack.Item>
-      <Stack.Item grow>
+      <Stack.Item width="200px">
         <Stack fill vertical>
           <Stack.Item grow>
             <Section fill>

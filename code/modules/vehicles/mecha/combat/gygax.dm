@@ -16,7 +16,9 @@
 	wreckage = /obj/structure/mecha_wreckage/gygax
 	mech_type = EXOSUIT_MODULE_GYGAX
 	max_equip_by_category = list(
-		MECHA_UTILITY = 1,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 2,
 	)
@@ -73,7 +75,9 @@
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark
 	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	max_equip_by_category = list(
-		MECHA_UTILITY = 2,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 4,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 3,
 	)

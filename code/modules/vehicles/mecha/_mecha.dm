@@ -122,9 +122,11 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
-	///assoc list: max equips for non-arm modules key-count
+	///assoc list: max equips for modules key-count
 	var/list/max_equip_by_category = list(
-		MECHA_UTILITY = 0,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 2,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 0,
 	)

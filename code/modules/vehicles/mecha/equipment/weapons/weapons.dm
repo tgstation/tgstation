@@ -75,6 +75,13 @@
 			chassis.newtonian_move(newtonian_target)
 	chassis.log_message("[key_name(source)] fired [src], targeting [target].", LOG_ATTACK)
 
+/obj/item/mecha_parts/mecha_equipment/weapon/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_WEAPON,
+		"integrity" = (get_integrity()/max_integrity),
+		"energy_per_use" = energy_drain,
+	)
+
 //Base energy weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
 	name = "general energy weapon"
@@ -226,6 +233,19 @@
 	var/projectiles_cache_max
 	var/disabledreload //For weapons with no cache (like the rockets) which are reloaded by hand
 	var/ammo_type
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC,
+		"integrity" = (get_integrity()/max_integrity),
+		"energy_per_use" = energy_drain,
+		"projectiles" = projectiles,
+		"max_magazine" = initial(projectiles),
+		"projectiles_cache" = projectiles_cache,
+		"projectiles_cache_max" = projectiles_cache_max,
+		"disabledreload" = disabledreload,
+		"ammo_type" = ammo_type,
+	)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action_checks(target)
 	if(!..())

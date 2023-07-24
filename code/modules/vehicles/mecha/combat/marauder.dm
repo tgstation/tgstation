@@ -17,7 +17,9 @@
 	mech_type = EXOSUIT_MODULE_MARAUDER
 	force = 45
 	max_equip_by_category = list(
-		MECHA_UTILITY = 3,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 5,
 		MECHA_POWER = 2,
 		MECHA_ARMOR = 3,
 	)
@@ -95,7 +97,9 @@
 	wreckage = /obj/structure/mecha_wreckage/seraph
 	force = 55
 	max_equip_by_category = list(
-		MECHA_UTILITY = 3,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 5,
 		MECHA_POWER = 2,
 		MECHA_ARMOR = 3,
 	)
@@ -116,7 +120,9 @@
 	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/mauler
 	max_equip_by_category = list(
-		MECHA_UTILITY = 3,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 5,
 		MECHA_POWER = 2,
 		MECHA_ARMOR = 4,
 	)

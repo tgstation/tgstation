@@ -103,12 +103,11 @@ export type MechModule = {
   type: string;
   icon: string;
   name: string;
+  detachable: boolean;
   activated: boolean;
-  ref: string;
-  integrity: number;
-  isballisticweapon: boolean;
   energy_per_use: number;
   snowflake: Snowflake;
+  ref: string;
 };
 
 export type MechEquipment = {
@@ -131,5 +130,10 @@ export type MechArmorModule = {
 };
 
 export type Snowflake = {
+  snowflake_id: string;
+  integrity: number;
+};
+
+export type SnowflakeWeapon = {
   snowflake_id: string;
 };

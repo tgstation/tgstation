@@ -170,7 +170,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster
-	name = "armor booster module (Close Combat Weaponry)"
+	name = "Impact Cushion Plates"
 	desc = "Boosts exosuit armor against melee attacks"
 	icon_state = "mecha_abooster_ccw"
 	iconstate_name = "melee"
@@ -181,8 +181,8 @@
 	melee = 15
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
-	name = "armor booster module (Ranged Weaponry)"
-	desc = "Boosts exosuit armor against ranged attacks. Completely blocks taser shots."
+	name = "Projectile Shielding"
+	desc = "Boosts exosuit armor against ranged kinetic and energy projectiles. Completely blocks taser shots."
 	icon_state = "mecha_abooster_proj"
 	iconstate_name = "range"
 	protect_name = "Ranged Armor"
@@ -528,3 +528,125 @@
 	mech.chassis_camera = new /obj/machinery/camera/exosuit (mech)
 	mech.chassis_camera.update_c_tag(mech)
 	mech.diag_hud_set_camera()
+
+//////////////////////////// RADIO MODULE //////////////////////////////////////////////////////////
+/obj/item/mecha_parts/mecha_equipment/radio
+	name = "mech radio"
+	desc = "A basic component of every vehicle."
+	icon_state = "mecha_radio"
+	equipment_slot = MECHA_UTILITY
+	/// Typepath of radio item
+	var/obj/item/radio/mech/radio
+
+/obj/item/mecha_parts/mecha_equipment/radio/Initialize(mapload)
+	. = ..()
+	radio = new(src)
+
+/obj/item/mecha_parts/mecha_equipment/radio/Destroy()
+	qdel(radio)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/radio/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_RADIO,
+		"microphone" = radio.get_broadcasting(),
+		"speaker" = radio.get_listening(),
+		"frequency" = radio.get_frequency(),
+		"minFrequency" = radio.freerange ? MIN_FREE_FREQ : MIN_FREQ,
+		"maxFrequency" = radio.freerange ? MAX_FREE_FREQ : MAX_FREQ,
+	)
+
+/obj/item/mecha_parts/mecha_equipment/radio/ui_act(action, list/params)
+	. = ..()
+	switch(action)
+		if("toggle_microphone")
+			radio.set_broadcasting(!radio.get_broadcasting())
+			return TRUE
+		if("toggle_speaker")
+			radio.set_listening(!radio.get_listening())
+			return TRUE
+		if("set_frequency")
+			var/new_frequency = text2num(params["new_frequency"])
+			radio.set_frequency(sanitize_frequency(new_frequency, radio.freerange, radio.syndie))
+			return TRUE
+		else
+			return FALSE
+
+//////////////////////////// AIR TANK MODULE //////////////////////////////////////////////////////////
+/obj/item/mecha_parts/mecha_equipment/air_tank
+	name = "mech air tank"
+	desc = "An internal air tank used to pressurize mech cockpit and RCS thrusters. Comes with a set of sensors."
+	icon_state = "mecha_air_tank"
+	equipment_slot = MECHA_UTILITY
+	///////////ATMOS
+	///Whether we are currrently drawing from the internal tank
+	var/use_internal_tank = FALSE
+	///The setting of the valve on the internal tank
+	var/internal_tank_valve = ONE_ATMOSPHERE
+	///The internal air tank obj of the mech
+	var/obj/machinery/portable_atmospherics/canister/air/internal_tank
+	///The connected air port, if we have one
+	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
+
+/obj/item/mecha_parts/mecha_equipment/air_tank/Initialize(mapload)
+	. = ..()
+	internal_tank = new(src)
+	RegisterSignal(chassis, COMSIG_MOVABLE_PRE_MOVE , PROC_REF(disconnect_air))
+
+/obj/item/mecha_parts/mecha_equipment/air_tank/Destroy()
+	qdel(internal_tank)
+	UnregisterSignal(chassis, COMSIG_MOVABLE_PRE_MOVE)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/air_tank/proc/disconnect_air()
+	SIGNAL_HANDLER
+	if(internal_tank.disconnect())
+		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Air port connection has been severed!")]")
+		log_message("Lost connection to gas port.", LOG_MECHA)
+
+/obj/item/mecha_parts/mecha_equipment/air_tank/get_snowflake_data()
+	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_AIR_TANK,
+		"air_source" = use_internal_tank ? "Internal Airtank" : "Environment",
+		"airtank_pressure" = int_tank_air ? round(int_tank_air.return_pressure(), 0.01) : null,
+		"airtank_temp" = int_tank_air?.temperature,
+		"port_connected" = internal_tank?.connected_port ? TRUE : FALSE,
+		"cabin_pressure" = round(chassis.return_pressure(), 0.01),
+		"cabin_temp" = chassis.return_temperature(),
+	)
+
+/obj/item/mecha_parts/mecha_equipment/air_tank/ui_act(action, list/params)
+	. = ..()
+	switch(action)
+		if("set_pressure")
+			var/new_pressure = tgui_input_number(usr, "Enter new pressure", "Cabin pressure change", internal_tank_valve)
+			if(isnull(new_pressure) || !chassis.construction_state)
+				return
+			internal_tank_valve = new_pressure
+			to_chat(usr, span_notice("The internal pressure valve has been set to [internal_tank_valve]kPa."))
+			return TRUE
+		if("toggle_airsource")
+			if(!internal_tank)
+				return FALSE
+			use_internal_tank = !use_internal_tank
+			balloon_alert(usr, "taking air from [use_internal_tank ? "internal airtank" : "environment"]")
+			log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].", LOG_MECHA)
+			return TRUE
+		if("toggle_port")
+			if(internal_tank.connected_port)
+				if(internal_tank.disconnect())
+					to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Disconnected from the air system port.")]")
+					log_message("Disconnected from gas port.", LOG_MECHA)
+					return TRUE
+				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Unable to disconnect from the air system port!")]")
+				return
+			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
+			if(internal_tank.connect(possible_port))
+				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Connected to the air system port.")]")
+				log_message("Connected to gas port.", LOG_MECHA)
+				return TRUE
+			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Unable to connect with air system port!")]")
+			return FALSE
+		else
+			return FALSE

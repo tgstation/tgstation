@@ -14,7 +14,9 @@
 	wreckage = /obj/structure/mecha_wreckage/durand
 	mech_type = EXOSUIT_MODULE_DURAND
 	max_equip_by_category = list(
-		MECHA_UTILITY = 1,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 3,
 	)

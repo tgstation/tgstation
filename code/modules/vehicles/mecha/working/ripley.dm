@@ -11,7 +11,9 @@
 	lights_power = 7
 	armor_type = /datum/armor/mecha_ripley
 	max_equip_by_category = list(
-		MECHA_UTILITY = 2,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 4,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
@@ -216,7 +218,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 
 /obj/item/mecha_parts/mecha_equipment/ejector
 	name = "Cargo compartment"
-	icon_state = "bin"
+	icon_state = "mecha_bin"
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
 
