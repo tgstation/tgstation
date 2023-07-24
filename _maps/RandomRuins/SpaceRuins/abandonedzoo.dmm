@@ -297,7 +297,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/abandonedzoo)
 "gE" = (
-/mob/living/simple_animal/hostile/bee,
+/mob/living/basic/bee,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "ib" = (
@@ -358,7 +358,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "nY" = (
 /obj/structure/flora/bush/leavy/style_random,
-/mob/living/simple_animal/hostile/bee,
+/mob/living/basic/bee,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "oS" = (
@@ -438,12 +438,12 @@
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "Mb" = (
-/mob/living/simple_animal/hostile/bee,
-/mob/living/simple_animal/hostile/bee,
-/mob/living/simple_animal/hostile/bee,
-/mob/living/simple_animal/hostile/bee,
-/mob/living/simple_animal/hostile/bee,
-/mob/living/simple_animal/hostile/bee,
+/mob/living/basic/bee,
+/mob/living/basic/bee,
+/mob/living/basic/bee,
+/mob/living/basic/bee,
+/mob/living/basic/bee,
+/mob/living/basic/bee,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "Ng" = (
@@ -467,6 +467,12 @@
 /obj/machinery/light/directional/south,
 /mob/living/simple_animal/hostile/bee,
 /mob/living/simple_animal/hostile/bee,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/basic/bee,
+/mob/living/basic/bee,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/abandonedzoo)
 "Rh" = (
