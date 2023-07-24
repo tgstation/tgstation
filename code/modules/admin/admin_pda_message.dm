@@ -75,7 +75,7 @@
 				"fakename" = params["name"],
 				"fakejob" = params["job"],
 				"message" = params["message"],
-				"everyone" = spam
+				"everyone" = spam,
 				"ref" = null,
 				"targets" = targets,
 				"rigged" = FALSE,
@@ -92,7 +92,9 @@
 				to_chat(usr, span_warning("ERROR: PDA message was rejected by the telecomms setup."))
 				return FALSE
 
-			message_admins("[key_name_admin(usr)] sent a custom PDA message to [spam ? "everyone" : get_messenger_name(GLOB.TabletMessengers[params["ref"]])].")
-			log_admin("[key_name(usr)] sent a custom PDA message to [spam ? "everyone" : get_messenger_name(GLOB.TabletMessengers[params["ref"]])]. Message: [params["message"]].")
-			log_pda("[key_name(usr)] sent an admin custom PDA message to [spam ? "everyone" : get_messenger_name(GLOB.TabletMessengers)]. Message: [params["message"]]")
+			var/recipient = spam ? "everyone" : get_messenger_name(targets[1])
+
+			message_admins("[key_name_admin(usr)] sent a custom PDA message to [recipient].")
+			log_admin("[key_name(usr)] sent a custom PDA message to [recipient]. Message: [params["message"]].")
+			log_pda("[key_name(usr)] sent an admin custom PDA message to [recipient]. Message: [params["message"]]")
 			return TRUE
