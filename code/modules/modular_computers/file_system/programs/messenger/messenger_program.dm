@@ -49,32 +49,38 @@
 	RegisterSignal(computer, COMSIG_MODULAR_COMPUTER_FILE_DELETE, PROC_REF(check_photo_removed))
 	RegisterSignal(computer, COMSIG_MODULAR_PDA_IMPRINT_UPDATED, PROC_REF(on_imprint_added))
 	RegisterSignal(computer, COMSIG_MODULAR_PDA_IMPRINT_RESET, PROC_REF(on_imprint_reset))
+	RegisterSignal(computer, COMSIG_MODULAR_PDA_PAINTJOB_UPDATE, PROC_REF(on_paintjob_update))
 
-/datum/computer_file/program/messenger/proc/check_new_photo(obj/item/modular_computer/sender, datum/computer_file/picture/storing_picture)
+/datum/computer_file/program/messenger/proc/check_new_photo(sender, datum/computer_file/picture/storing_picture)
 	SIGNAL_HANDLER
 	if(!istype(storing_picture))
 		return
 	update_pictures_for_all()
 
-/datum/computer_file/program/messenger/proc/check_photo_removed(obj/item/modular_computer/sender, datum/computer_file/picture/photo_removed)
+/datum/computer_file/program/messenger/proc/check_photo_removed(sender, datum/computer_file/picture/photo_removed)
 	SIGNAL_HANDLER
 	if(istype(photo_removed) && selected_image == photo_removed.picture_name)
 		selected_image = null
 
-/datum/computer_file/program/messenger/proc/on_imprint_added()
+/datum/computer_file/program/messenger/proc/on_imprint_added(sender)
 	SIGNAL_HANDLER
 	add_messenger(src)
 
-/datum/computer_file/program/messenger/proc/on_imprint_reset()
+/datum/computer_file/program/messenger/proc/on_imprint_reset(sender)
 	SIGNAL_HANDLER
 	remove_messenger(src)
 	saved_chats = list()
 	selected_image = null
-	sending_and_receiving = TRUE
-	spam_mode = FALSE
-	alert_silenced = FALSE
-	ringtone = MESSENGER_RINGTONE_DEFAULT
 	viewing_messages_of = null
+
+/datum/computer_file/program/messenger/proc/on_paintjob_update(sender, paintjob)
+	SIGNAL_HANDLER
+	if(ispath(paintjob, /obj/item/modular_computer/pda/mime))
+		mime_mode = TRUE
+		alert_able = FALSE
+	else
+		mime_mode = FALSE
+		alert_able = TRUE
 
 /datum/computer_file/program/messenger/Destroy(force)
 	if(!QDELETED(computer))
@@ -322,6 +328,7 @@
 
 	static_data["can_spam"] = spam_mode
 	static_data["is_silicon"] = issilicon(user)
+	static_data["alert_able"] = alert_able
 
 	return static_data
 
@@ -515,7 +522,7 @@
 	if(is_within_jammer_range(src) && !rigged)
 		// different message so people know it's a radio jammer
 		to_chat(sender, span_notice("ERROR: Network unavailable, please try again later."))
-		if(!alert_silenced)
+		if(alert_able && !alert_silenced)
 			playsound(computer, 'sound/machines/terminal_error.ogg', 15, TRUE)
 		return FALSE
 
@@ -545,7 +552,7 @@
 	// If it didn't reach, note that fact
 	if (!signal.data["done"])
 		to_chat(sender, span_notice("ERROR: Server is not responding."))
-		if(!alert_silenced)
+		if(alert_able && !alert_silenced)
 			playsound(computer, 'sound/machines/terminal_error.ogg', 15, TRUE)
 		return FALSE
 
@@ -568,7 +575,7 @@
 
 	to_chat(sender, span_info("PDA message sent to [signal.format_target()]: \"[signal.format_message()]\""))
 
-	if (!alert_silenced)
+	if (alert_able && !alert_silenced)
 		computer.send_sound()
 
 	COOLDOWN_START(src, last_text, 1 SECONDS)
@@ -577,7 +584,6 @@
 	return TRUE
 
 /datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/tablet_msg/signal)
-	var/datum/pda_msg/message = new(signal.data["message"], FALSE, signal.data["photo"], signal.data["everyone"])
 	var/datum/pda_chat/chat = null
 
 	var/is_rigged = signal.data["rigged"]
@@ -590,6 +596,8 @@
 
 	// don't create a new chat for rigged messages, make it a one off notif
 	if(!is_rigged)
+		var/datum/pda_msg/message = new(signal.data["message"], FALSE, signal.data["photo"], signal.data["everyone"])
+
 		chat = find_chat_by_recp(is_fake_user ? fake_name : sender_ref, is_fake_user)
 		if(!istype(chat))
 			chat = create_chat(!is_fake_user ? sender_ref : null, fake_name, fake_job)
@@ -628,10 +636,10 @@
 		var/inbound_message = "[signal.format_message()]"
 		inbound_message = emoji_parse(inbound_message)
 
-		var/photo_message = message.photo_asset_name ? "(<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
-		to_chat(receiver_mob, span_infoplain("[icon2html(computer)] <b>PDA message from [sender_name], </b>\"[inbound_message]\" [photo_message] [reply]"))
+		var/photo_message = signal.data["photo"] ? " (<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
+		to_chat(receiver_mob, span_infoplain("[icon2html(computer)] <b>PDA message from [sender_name], </b>\"[inbound_message]\"[photo_message] [reply]"))
 
-	if (should_ring)
+	if (alert_able && should_ring)
 		computer.ring(ringtone)
 
 	SStgui.update_uis(computer)
@@ -640,24 +648,31 @@
 /// topic call that answers to people pressing "(Reply)" in chat
 /datum/computer_file/program/messenger/Topic(href, href_list)
 	..()
+
 	if(QDELETED(src))
 		return
 	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
 		return
+
 	// send an activation message and open the messenger
 	if(!(computer.enabled || computer.turn_on(usr, open_ui = FALSE)))
 		return
 	if(!(computer.active_program == src || computer.open_program(usr, src, open_ui = FALSE)))
 		return
+
+	var/target_href = href_list["target"]
+
 	switch(href_list["choice"])
 		if("message")
-			if(!(href_list["target"] in saved_chats))
+			if(!(target_href in saved_chats))
 				return
-			quick_reply_prompt(usr, saved_chats[href_list["target"]])
+			quick_reply_prompt(usr, saved_chats[target_href])
+
 		if("open")
+			if(target_href in saved_chats)
+				viewing_messages_of = target_href
 			computer.update_tablet_open_uis(usr)
-			if(href_list["target"] in saved_chats)
-				viewing_messages_of = href_list["target"]
+
 		if("explode")
 			if(!HAS_TRAIT(computer, TRAIT_PDA_CAN_EXPLODE))
 				return

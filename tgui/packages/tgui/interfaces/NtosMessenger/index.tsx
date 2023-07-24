@@ -16,6 +16,7 @@ type NtosMessengerData = {
   messengers: Record<string, NtMessenger>;
   sort_by_job: BooleanLike;
   alert_silenced: BooleanLike;
+  alert_able: BooleanLike;
   sending_and_receiving: BooleanLike;
   open_chat: string;
   stored_photos?: NtPicture[];
@@ -64,6 +65,7 @@ const ContactsScreen = (_props: any, context: any) => {
   const {
     owner,
     alert_silenced,
+    alert_able,
     sending_and_receiving,
     saved_chats,
     messengers,
@@ -161,7 +163,10 @@ const ContactsScreen = (_props: any, context: any) => {
             <Box>
               <Button
                 icon="bell"
-                content={alert_silenced ? 'Ringer: On' : 'Ringer: Off'}
+                disabled={!alert_able}
+                content={
+                  alert_able && !alert_silenced ? 'Ringer: On' : 'Ringer: Off'
+                }
                 onClick={() => act('PDA_toggleAlerts')}
               />
               <Button

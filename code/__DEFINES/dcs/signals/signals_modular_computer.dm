@@ -13,3 +13,6 @@
 #define COMSIG_MODULAR_PDA_IMPRINT_UPDATED "comsig_modular_pda_imprint_updated"
 /// from /obj/item/modular_computer/reset_id(): ()
 #define COMSIG_MODULAR_PDA_IMPRINT_RESET "comsig_modular_pda_imprint_reset"
+
+/// from /obj/item/modular_computer/pda/update_appearance(): (paintjob)
+#define COMSIG_MODULAR_PDA_PAINTJOB_UPDATE "comsig_modular_pda_paintjob_update"
