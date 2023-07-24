@@ -47,10 +47,10 @@
 		"8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/civilian_digi.dmi')
 
 /obj/item/clothing/under/suit
-	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/suit.dmi'
+	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/suits.dmi'
 	supported_bodytypes = list(BODYTYPE_HUMANOID, BODYTYPE_DIGITIGRADE)
-	bodytype_icon_files = list("4" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/suit.dmi',
-		"8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/suit_digi.dmi')
+	bodytype_icon_files = list("4" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/suits.dmi',
+		"8" = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/suits_digi.dmi')
 
 /obj/item/clothing/under/costume
 	worn_icon = 'modular_skyraptor/modules/aesthetics/digiclothes/skyrat_inherited/under/costume.dmi'
