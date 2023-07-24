@@ -140,6 +140,7 @@
 	RegisterSignal(resolve_parent, COMSIG_TOPIC, PROC_REF(topic_handle))
 
 	RegisterSignal(resolve_parent, COMSIG_ATOM_EXAMINE, PROC_REF(handle_examination))
+	RegisterSignal(resolve_parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(handle_extra_examination))
 
 	orient_to_hud()
 
@@ -236,11 +237,17 @@
 	if(href_list["show_valid_pocket_items"])
 		handle_show_valid_items(source, user)
 
-/datum/storage/proc/handle_examination(datum/source, user)
+/datum/storage/proc/handle_examination(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	if(!isnull(can_hold_description))
-		handle_show_valid_items(source, user)
+		examine_list += span_notice("You can examine this further to check what kind of extra items it can hold.")
+
+/datum/storage/proc/handle_extra_examination(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(!isnull(can_hold_description))
+		examine_list += handle_show_valid_items(source, user)
 
 /datum/storage/proc/handle_show_valid_items(datum/source, user)
 	to_chat(user, span_notice("[source] can hold: [can_hold_description]"))

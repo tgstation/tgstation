@@ -13,7 +13,7 @@
 /datum/storage/duffel/syndicate/New()
 	. = ..()
 
-	var/static/list/exception_cache = typecacheof(list(
+	var/static/list/exception_type_list = list(
 		// Most Important Item On List
 		/obj/item/greentext,
 		// Gun and gun-related accessories
@@ -57,7 +57,11 @@
 		/obj/item/storage/bag/money,
 		// Heads!
 		/obj/item/bodypart/head,
-	))
+	)
+
+	// We keep the type list and the typecache list separate...
+	var/static/list/exception_cache = typecacheof(exception_type_list)
 	exception_hold = exception_cache
 
-	generate_hold_desc(exception_cache)
+	//...So we can run this without it generating a line for every subtype.
+	can_hold_description = generate_hold_desc(exception_type_list)
