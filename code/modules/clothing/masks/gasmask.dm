@@ -73,12 +73,12 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		. += span_notice("The filters can be removed by right-clicking with an empty hand on [src].")
 
 /obj/item/clothing/mask/gas/Exited(atom/movable/gone)
-    . = ..()
-    if(gone == cig)
-        cig = null
-        if(ismob(loc))
-            var/mob/wearer = loc
-            wearer.update_worn_mask()
+	. = ..()
+	if(gone == cig)
+		cig = null
+		if(ismob(loc))
+			var/mob/wearer = loc
+			wearer.update_worn_mask()
 
 /obj/item/clothing/mask/gas/attackby(obj/item/tool, mob/user)
 	if(istype(tool, /obj/item/clothing/mask/cigarette))
