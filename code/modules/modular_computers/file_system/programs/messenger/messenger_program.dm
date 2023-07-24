@@ -531,7 +531,7 @@
 		"targets" = targets,
 		"rigged" = rigged,
 		"everyone" = everyone,
-		"photo" = photo_path
+		"photo" = photo_path,
 		"automated" = FALSE,
 	))
 	if(rigged) //Will skip the message server and go straight to the hub so it can't be cheesed by disabling the message server machine
@@ -628,7 +628,7 @@
 		inbound_message = emoji_parse(inbound_message)
 
 		var/photo_message = message.photo_asset_name ? "(<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
-		to_chat(receiver_mob, span_infoplain("[icon2html(computer)] <b>PDA message from [hrefstart][sender_name][hrefend], </b>[inbound_message] [photo_message] [reply]"))
+		to_chat(receiver_mob, span_infoplain("[icon2html(computer)] <b>PDA message from [sender_name], </b>[inbound_message] [photo_message] [reply]"))
 
 	if (should_ring)
 		computer.ring(ringtone)
