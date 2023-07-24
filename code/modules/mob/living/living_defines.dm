@@ -5,8 +5,8 @@
 
 	hud_type = /datum/hud/living
 
-	///Badminnery resize
-	var/resize = 1
+	///Tracks the current size of the mob in relation to its original size. Use update_transform(resize) to change it.
+	var/current_size = RESIZE_DEFAULT_SIZE
 	var/lastattacker = null
 	var/lastattackerckey = null
 
@@ -61,6 +61,8 @@
 	VAR_PROTECTED/lying_angle = 0
 	/// Value of lying lying_angle before last change. TODO: Remove the need for this.
 	var/lying_prev = 0
+	/// Does the mob rotate when lying
+	var/rotate_on_lying = FALSE
 	///Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/last_special = 0
 	var/timeofdeath = 0

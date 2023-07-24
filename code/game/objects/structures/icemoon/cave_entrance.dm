@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/ice_whelp)
 
 /obj/structure/spawner/ice_moon/demonic_portal/snowlegion
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow)
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow/portal)
 
 /obj/effect/collapsing_demonic_portal
 	name = "collapsing demonic portal"

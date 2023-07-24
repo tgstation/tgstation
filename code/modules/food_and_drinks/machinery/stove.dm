@@ -14,7 +14,7 @@
 	active_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.8
 
 	// Stove icon is 32x48, we'll use a Range for preview instead
-	icon_preview = 'icons/obj/machines/kitchenmachines.dmi'
+	icon_preview = 'icons/obj/machines/kitchen.dmi'
 	icon_state_preview = "range_off"
 
 /obj/machinery/stove/Initialize(mapload)
@@ -28,13 +28,12 @@
 /obj/item/reagent_containers/cup/soup_pot
 	name = "soup pot"
 	desc = "A tall soup designed to mix and cook all kinds of soup."
-	icon = 'icons/obj/soup_pot.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "pot"
 	base_icon_state = "pot"
 	volume = 200
 	possible_transfer_amounts = list(20, 50, 100, 200)
 	amount_per_transfer_from_this = 50
-	amount_list_position = 2
 	reagent_flags = REFILLABLE | DRAINABLE
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5)
 	w_class = WEIGHT_CLASS_BULKY
@@ -49,7 +48,7 @@
 /obj/item/reagent_containers/cup/soup_pot/Initialize(mapload, vol)
 	. = ..()
 	RegisterSignal(reagents, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_cleared))
-	RegisterSignal(src, COMSIG_PARENT_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
+	RegisterSignal(src, COMSIG_ATOM_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
 	register_context()
 
 /obj/item/reagent_containers/cup/soup_pot/add_context(atom/source, list/context, obj/item/held_item, mob/user)

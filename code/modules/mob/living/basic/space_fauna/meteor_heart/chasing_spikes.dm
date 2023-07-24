@@ -12,9 +12,9 @@
 /datum/action/cooldown/chasing_spikes/Activate(atom/target)
 	. = ..()
 	playsound(owner, 'sound/magic/demon_attack1.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
-	var/obj/effect/temp_visual/spike_chaser/chaser = new(get_turf(owner), target)
+	var/obj/effect/temp_visual/effect_trail/spike_chaser/chaser = new(get_turf(owner), target)
 	LAZYADD(active_chasers, WEAKREF(chaser))
-	RegisterSignal(chaser, COMSIG_PARENT_QDELETING, PROC_REF(on_chaser_destroyed))
+	RegisterSignal(chaser, COMSIG_QDELETING, PROC_REF(on_chaser_destroyed))
 
 /// Remove a spike trail from our list of active trails
 /datum/action/cooldown/chasing_spikes/proc/on_chaser_destroyed(atom/chaser)
@@ -27,42 +27,9 @@
 	return ..()
 
 /// An invisible effect which chases a target, spawning spikes every so often.
-/obj/effect/temp_visual/spike_chaser
+/obj/effect/temp_visual/effect_trail/spike_chaser
 	name = "spike chaser"
-	desc = "An invisible effect, how did you examine this?"
-	icon = 'icons/mob/silicon/cameramob.dmi'
-	icon_state = "marker"
-	duration = 15 SECONDS
-	invisibility = INVISIBILITY_ABSTRACT
-	/// Speed at which we chase target
-	var/move_speed = 3
-	/// What are we chasing?
-	var/datum/weakref/target
-	/// Handles chasing the target
-	var/datum/move_loop/movement
-
-/obj/effect/temp_visual/spike_chaser/Initialize(mapload, atom/target)
-	. = ..()
-	if (!target)
-		return INITIALIZE_HINT_QDEL
-
-	AddElement(/datum/element/floor_loving)
-	AddComponent(/datum/component/spawner, spawn_types = list(/obj/effect/temp_visual/emerging_ground_spike), spawn_time = 0.5 SECONDS)
-	src.target = WEAKREF(target)
-	movement = SSmove_manager.move_towards(src, chasing = target, delay = move_speed, home = TRUE, timeout = duration, flags = MOVEMENT_LOOP_START_FAST)
-
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_target_invalid))
-	if (isliving(target))
-		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_target_invalid))
-
-/// Destroy ourselves if the target is no longer valid
-/obj/effect/temp_visual/spike_chaser/proc/on_target_invalid()
-	SIGNAL_HANDLER
-	qdel(src)
-
-/obj/effect/temp_visual/spike_chaser/Destroy()
-	QDEL_NULL(movement)
-	return ..()
+	spawned_effect = /obj/effect/temp_visual/emerging_ground_spike
 
 /// A spike comes out of the ground, dealing damage after a short delay
 /obj/effect/temp_visual/emerging_ground_spike

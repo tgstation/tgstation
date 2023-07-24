@@ -42,7 +42,7 @@
 			return
 		to_chat(user, span_notice("You hook the trashbag onto [src]."))
 		trash_bag = I
-		RegisterSignal(trash_bag, COMSIG_PARENT_QDELETING, PROC_REF(bag_deleted))
+		RegisterSignal(trash_bag, COMSIG_QDELETING, PROC_REF(bag_deleted))
 		SEND_SIGNAL(src, COMSIG_VACUUM_BAG_ATTACH, I)
 		update_appearance()
 	else if(istype(I, /obj/item/janicart_upgrade))
@@ -105,7 +105,7 @@
 	if (remover)
 		trash_bag.forceMove(get_turf(remover))
 		remover.put_in_hands(trash_bag)
-	UnregisterSignal(trash_bag, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(trash_bag, COMSIG_QDELETING)
 	trash_bag = null
 	SEND_SIGNAL(src, COMSIG_VACUUM_BAG_DETACH)
 	update_appearance()
@@ -126,7 +126,7 @@
 /obj/item/janicart_upgrade
 	name = "base upgrade"
 	desc = "An abstract upgrade for mobile janicarts."
-	icon = 'icons/obj/janicart_upgrade.dmi'
+	icon = 'icons/obj/service/janicart_upgrade.dmi'
 	icon_state = "janicart_upgrade"
 	greyscale_config = /datum/greyscale_config/janicart_upgrade
 	/// The greyscale config for the on-cart installed upgrade overlay

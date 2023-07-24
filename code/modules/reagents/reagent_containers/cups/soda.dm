@@ -9,6 +9,7 @@
 /obj/item/reagent_containers/cup/soda_cans
 	name = "soda can"
 	icon = 'icons/obj/drinks/soda.dmi'
+	icon_state = "cola"
 	icon_state_preview = "cola"
 	reagent_flags = NONE
 	spillable = FALSE
@@ -249,6 +250,14 @@
 	desc = "~Shake me up some of that Shambler's Juice!~"
 	icon_state = "shamblers"
 	list_reagents = list(/datum/reagent/consumable/shamblers = 30)
+	drink_type = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/cup/soda_cans/shamblers/eldritch
+	name = "Shambler's juice Eldritch Energy!"
+	desc = "~J'I'CE!~"
+	icon_state = "shamblerseldritch"
+	volume = 40
+	list_reagents = list(/datum/reagent/consumable/shamblers = 30, /datum/reagent/eldritch = 5)
 	drink_type = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/cup/soda_cans/grey_bull

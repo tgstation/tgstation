@@ -55,7 +55,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 
 /// Marks a given machine as our target
 /datum/traitor_objective/sabotage_machinery/proc/prepare_machine(obj/machinery/machine)
-	AddComponent(/datum/component/traitor_objective_register, machine, succeed_signals = list(COMSIG_PARENT_QDELETING))
+	AddComponent(/datum/component/traitor_objective_register, machine, succeed_signals = list(COMSIG_QDELETING))
 
 // Destroy machines which are in annoying locations, are annoying when destroyed, and aren't directly interacted with
 /datum/traitor_objective/sabotage_machinery/destroy
@@ -98,8 +98,8 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	var/bonus_tc = 2
 	/// Bonus progression to grant if you booby trap successfully
 	var/bonus_progression = 5 MINUTES
-	/// The trap device we give out
-	var/obj/item/traitor_machine_trapper/tool
+	/// Have we given out a traitor trap item?
+	var/traitor_trapper_given = FALSE
 
 /datum/traitor_objective/sabotage_machinery/trap/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	. = ..()
@@ -122,7 +122,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 
 /datum/traitor_objective/sabotage_machinery/trap/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
-	if(!tool)
+	if(!traitor_trapper_given)
 		buttons += add_ui_button("", "Pressing this will materialize an explosive trap in your hand, which you can conceal within the target machine", "wifi", "summon_gear")
 	return buttons
 
@@ -130,9 +130,10 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 	. = ..()
 	switch(action)
 		if("summon_gear")
-			if(tool)
+			if(traitor_trapper_given)
 				return
-			tool = new(user.drop_location())
+			traitor_trapper_given = TRUE
+			var/obj/item/traitor_machine_trapper/tool = new(user.drop_location())
 			user.put_in_hands(tool)
 			tool.balloon_alert(user, "a booby trap materializes in your hand")
 			tool.target_machine_path = applicable_jobs[chosen_job]
@@ -176,7 +177,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 		on_triggered_callback = CALLBACK(src, PROC_REF(on_triggered)),\
 		on_defused_callback = CALLBACK(src, PROC_REF(on_defused)),\
 	)
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, GLOBAL_PROC_REF(qdel), src)
+	RegisterSignal(target, COMSIG_QDELETING, GLOBAL_PROC_REF(qdel), src)
 	moveToNullspace()
 
 /// Called when applied trap is triggered, mark success
@@ -186,7 +187,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 
 /// Called when applied trap has been defused, retrieve this item from nullspace
 /obj/item/traitor_machine_trapper/proc/on_defused(atom/machine, mob/defuser, obj/item/tool)
-	UnregisterSignal(machine, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(machine, COMSIG_QDELETING)
 	playsound(machine, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
 	forceMove(get_turf(machine))
 	visible_message(span_warning("A [src] falls out from the [machine]!"))
@@ -215,7 +216,7 @@ GLOBAL_DATUM_INIT(objective_machine_handler, /datum/objective_target_machine_han
 			if(!place || !is_station_level(place.z))
 				machine_instances_by_path[machine_type] -= machine
 				continue
-			RegisterSignal(machine, COMSIG_PARENT_QDELETING, PROC_REF(machine_destroyed))
+			RegisterSignal(machine, COMSIG_QDELETING, PROC_REF(machine_destroyed))
 	UnregisterSignal(SSdcs, COMSIG_GLOB_NEW_MACHINE)
 
 /datum/objective_target_machine_handler/proc/machine_destroyed(atom/machine)

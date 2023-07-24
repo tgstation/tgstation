@@ -16,7 +16,7 @@
 		rust_overlay = image(rust_icon, rust_icon_state)
 	ADD_TRAIT(target, TRAIT_RUSTY, ELEMENT_TRAIT(type))
 	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_rust_overlay))
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(handle_examine))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(handle_examine))
 	RegisterSignals(target, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), PROC_REF(secondary_tool_act))
 	// Unfortunately registering with parent sometimes doesn't cause an overlay update
 	target.update_appearance()
@@ -24,7 +24,7 @@
 /datum/element/rust/Detach(atom/source)
 	. = ..()
 	UnregisterSignal(source, COMSIG_ATOM_UPDATE_OVERLAYS)
-	UnregisterSignal(source, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(source, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(source, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)))
 	REMOVE_TRAIT(source, TRAIT_RUSTY, ELEMENT_TRAIT(type))
 	source.update_appearance()
@@ -51,7 +51,7 @@
 /datum/element/rust/proc/handle_tool_use(atom/source, mob/user, obj/item/item)
 	switch(item.tool_behaviour)
 		if(TOOL_WELDER)
-			if(!item.tool_start_check(user, amount=5))
+			if(!item.tool_start_check(user, amount=1))
 				return
 
 			user.balloon_alert(user, "burning off rust...")

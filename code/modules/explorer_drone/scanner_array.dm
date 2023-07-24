@@ -77,6 +77,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 
 /obj/machinery/computer/exoscanner_control
 	name = "Scanner Array Control Console"
+	circuit = /obj/item/circuitboard/computer/exoscanner_console
 	/// If scan was interrupted show a popup until dismissed.
 	var/failed_popup = FALSE
 	/// Site we're configuring targeted scans for.
@@ -263,7 +264,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	if(length(GLOB.exoscanner_controller.tracked_dishes) <= 0 || (target && GLOB.exoscanner_controller.get_scan_power(target) <= 0))
 		return
 	current_scan = new(scan_type,target)
-	RegisterSignal(current_scan,COMSIG_PARENT_QDELETING, PROC_REF(cleanup_current_scan))
+	RegisterSignal(current_scan,COMSIG_QDELETING, PROC_REF(cleanup_current_scan))
 	SEND_SIGNAL(src,COMSIG_EXOSCAN_STARTED,current_scan)
 	return current_scan
 

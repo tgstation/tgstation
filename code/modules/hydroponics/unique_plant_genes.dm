@@ -267,7 +267,7 @@
 		return
 
 	our_chili = WEAKREF(our_plant)
-	RegisterSignals(our_plant, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(stop_backfire_effect))
+	RegisterSignals(our_plant, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(stop_backfire_effect))
 
 /*
  * Begin processing the trait on backfire.
@@ -462,7 +462,7 @@
 
 /// Walking Mushroom's transformation gene
 /datum/plant_gene/trait/mob_transformation/shroom
-	killer_plant = /mob/living/simple_animal/hostile/mushroom
+	killer_plant = /mob/living/basic/mushroom
 	mob_health_multiplier = 0.25
 	mob_melee_multiplier = 0.05
 	mob_speed_multiplier = 0.02
@@ -630,11 +630,11 @@
 /datum/plant_gene/trait/gas_production/on_new_seed(obj/item/seeds/new_seed)
 	RegisterSignal(new_seed, COMSIG_SEED_ON_PLANTED, PROC_REF(set_home_tray))
 	RegisterSignal(new_seed, COMSIG_SEED_ON_GROW, PROC_REF(try_release_gas))
-	RegisterSignal(new_seed, COMSIG_PARENT_QDELETING, PROC_REF(stop_gas))
+	RegisterSignal(new_seed, COMSIG_QDELETING, PROC_REF(stop_gas))
 	stinky_seed = WEAKREF(new_seed)
 
 /datum/plant_gene/trait/gas_production/on_removed(obj/item/seeds/old_seed)
-	UnregisterSignal(old_seed, list(COMSIG_PARENT_QDELETING, COMSIG_SEED_ON_PLANTED, COMSIG_SEED_ON_GROW))
+	UnregisterSignal(old_seed, list(COMSIG_QDELETING, COMSIG_SEED_ON_PLANTED, COMSIG_SEED_ON_GROW))
 	stop_gas()
 
 /*

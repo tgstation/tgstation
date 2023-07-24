@@ -270,7 +270,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			spawned -= holo_atom
 			continue
 
-		RegisterSignal(holo_atom, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_holo_lists))
+		RegisterSignal(holo_atom, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
 		holo_atom.flags_1 |= HOLOGRAM_1
 
 		if(isholoeffect(holo_atom))//activates holo effects and transfers them from the spawned list into the effects list
@@ -280,10 +280,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			var/atom/holo_effect_product = holo_effect.activate(src)//change name
 			if(istype(holo_effect_product))
 				spawned += holo_effect_product // we want mobs or objects spawned via holoeffects to be tracked as objects
-				RegisterSignal(holo_effect_product, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_holo_lists))
+				RegisterSignal(holo_effect_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
 			if(islist(holo_effect_product))
 				for(var/atom/atom_product as anything in holo_effect_product)
-					RegisterSignal(atom_product, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_holo_lists))
+					RegisterSignal(atom_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
 			continue
 
 		if(isobj(holo_atom))
@@ -310,14 +310,14 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	spawned -= holo_atom
 	if(!holo_atom)
 		return
-	UnregisterSignal(holo_atom, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(holo_atom, COMSIG_QDELETING)
 	var/turf/target_turf = get_turf(holo_atom)
 	for(var/atom/movable/atom_contents as anything in holo_atom) //make sure that things inside of a holoitem are moved outside before destroying it
 		atom_contents.forceMove(target_turf)
 
-	if(istype(holo_atom, /obj/item/clothing/under/rank))
+	if(istype(holo_atom, /obj/item/clothing/under))
 		var/obj/item/clothing/under/holo_clothing = holo_atom
-		holo_clothing.dump_attachment()
+		holo_clothing.dump_attachments()
 
 	if(!silent)
 		visible_message(span_notice("[holo_atom] fades away!"))
@@ -329,7 +329,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 /obj/machinery/computer/holodeck/proc/remove_from_holo_lists(datum/to_remove, _forced)
 	SIGNAL_HANDLER
 	spawned -= to_remove
-	UnregisterSignal(to_remove, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(to_remove, COMSIG_QDELETING)
 
 /obj/machinery/computer/holodeck/process(seconds_per_tick)
 	if(damaged && SPT_PROB(5, seconds_per_tick))
@@ -399,19 +399,23 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		holo_effect.safety(nerf_this)
 
-/obj/machinery/computer/holodeck/emag_act(mob/user)
+/obj/machinery/computer/holodeck/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	if(!LAZYLEN(emag_programs))
-		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
-		return
+		balloon_alert(user, "no card swipe port!")
+		return FALSE
 	playsound(src, SFX_SPARKS, 75, TRUE)
 	obj_flags |= EMAGGED
-	to_chat(user, span_warning("You vastly increase projector power and override the safety and security protocols."))
+	if (user)
+		balloon_alert(user, "safety protocols destroyed") // im gonna keep this once since this perfectly describes it, and the to_chat is just flavor
+		to_chat(user, span_warning("You vastly increase projector power and override the safety and security protocols."))
+		user.log_message("emagged the Holodeck Control Console.", LOG_GAME)
+		message_admins("[ADMIN_LOOKUPFLW(user)] emagged the Holodeck Control Console.")
+
 	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
-	user.log_message("emagged the Holodeck Control Console.", LOG_GAME)
-	message_admins("[ADMIN_LOOKUPFLW(user)] emagged the Holodeck Control Console.")
 	nerf(!(obj_flags & EMAGGED),FALSE)
+	return TRUE
 
 /obj/machinery/computer/holodeck/emp_act(severity)
 	. = ..()

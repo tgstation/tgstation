@@ -3,9 +3,9 @@
 // All signals send the source datum of the signal as the first argument
 
 ///from base of atom/attackby(): (/obj/item, /mob/living, params)
-#define COMSIG_PARENT_ATTACKBY "atom_attackby"
+#define COMSIG_ATOM_ATTACKBY "atom_attackby"
 /// From base of [atom/proc/attacby_secondary()]: (/obj/item/weapon, /mob/user, params)
-#define COMSIG_PARENT_ATTACKBY_SECONDARY "atom_attackby_secondary"
+#define COMSIG_ATOM_ATTACKBY_SECONDARY "atom_attackby_secondary"
 ///from [/item/afterattack()], sent by an atom which was just attacked by an item: (/obj/item/weapon, /mob/user, proximity_flag, click_parameters)
 #define COMSIG_ATOM_AFTER_ATTACKEDBY "atom_after_attackby"
 /// From base of [/atom/proc/attack_hand_secondary]: (mob/user, list/modifiers) - Called when the atom receives a secondary unarmed attack.
@@ -50,5 +50,9 @@
 #define COMSIG_ATOM_ATTACK_ROBOT "atom_attack_robot"
 /// from base of atom/attack_robot_secondary(): (mob/user)
 #define COMSIG_ATOM_ATTACK_ROBOT_SECONDARY "atom_attack_robot_secondary"
-///from relay_attackers element: (atom/attacker)
+///from relay_attackers element: (atom/attacker, attack_flags)
 #define COMSIG_ATOM_WAS_ATTACKED "atom_was_attacked"
+	///The damage type of the weapon projectile is non-lethal stamina
+	#define ATTACKER_STAMINA_ATTACK (1<<0)
+	///the attacker is shoving the source
+	#define ATTACKER_SHOVING (1<<1)

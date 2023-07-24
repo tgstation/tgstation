@@ -22,15 +22,15 @@
 /datum/action/cooldown/spell/summonitem/proc/mark_item(obj/to_mark)
 	name = "Recall [to_mark]"
 	marked_item = to_mark
-	RegisterSignal(marked_item, COMSIG_PARENT_QDELETING, PROC_REF(on_marked_item_deleted))
+	RegisterSignal(marked_item, COMSIG_QDELETING, PROC_REF(on_marked_item_deleted))
 
 /// Unset our current marked item
 /datum/action/cooldown/spell/summonitem/proc/unmark_item()
 	name = initial(name)
-	UnregisterSignal(marked_item, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(marked_item, COMSIG_QDELETING)
 	marked_item = null
 
-/// Signal proc for COMSIG_PARENT_QDELETING on our marked item, unmarks our item if it's deleted
+/// Signal proc for COMSIG_QDELETING on our marked item, unmarks our item if it's deleted
 /datum/action/cooldown/spell/summonitem/proc/on_marked_item_deleted(datum/source)
 	SIGNAL_HANDLER
 
@@ -157,7 +157,7 @@
 /datum/action/cooldown/spell/summonitem/abductor
 	name =  "Baton Recall"
 	desc = "Activating this would activate your linked baton emergency teleport protocol and recall it back to your hand, Takes a long time for translocation crystals to be enriched after use. REMINDER: YOU NEED TO LINK YOUR BATON MANUALLY!"
-	button_icon = 'icons/obj/abductor.dmi'
+	button_icon = 'icons/obj/antags/abductor.dmi'
 	button_icon_state = "wonderprodStun"
 
 	cooldown_time = 3.5 MINUTES

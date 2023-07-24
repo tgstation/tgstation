@@ -32,7 +32,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 /obj/effect/abstract/elevator_music_zone/proc/link_to_panel(atom/elevator_panel)
 	RegisterSignal(elevator_panel, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(on_panel_powered))
 	RegisterSignal(elevator_panel, COMSIG_MACHINERY_POWER_LOST, PROC_REF(on_panel_depowered))
-	RegisterSignal(elevator_panel, COMSIG_PARENT_QDELETING, PROC_REF(on_panel_destroyed))
+	RegisterSignal(elevator_panel, COMSIG_QDELETING, PROC_REF(on_panel_destroyed))
 
 /// Start sound loops when power is restored
 /obj/effect/abstract/elevator_music_zone/proc/on_panel_powered()
@@ -78,7 +78,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 		tracked_mobs[entered] = new soundloop_type(_parent = entered, _direct = TRUE, start_immediately = enabled)
 	else
 		tracked_mobs[entered] = null // Still add it to the list so we don't keep making this check
-	RegisterSignal(entered, COMSIG_PARENT_QDELETING, PROC_REF(mob_destroyed))
+	RegisterSignal(entered, COMSIG_QDELETING, PROC_REF(mob_destroyed))
 
 /datum/proximity_monitor/advanced/elevator_music_area/field_turf_uncrossed(mob/exited, turf/location)
 	if (!(exited in tracked_mobs))
@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 		return
 	qdel(tracked_mobs[exited])
 	tracked_mobs -= exited
-	UnregisterSignal(exited, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(exited, COMSIG_QDELETING)
 
 /// Remove references on mob deletion
 /datum/proximity_monitor/advanced/elevator_music_area/proc/mob_destroyed(mob/former_mob)

@@ -34,7 +34,7 @@
 		if(WIRE_INTERFACE)
 			mod.interface_break = !mod.interface_break
 
-/datum/wires/mod/on_cut(wire, mend)
+/datum/wires/mod/on_cut(wire, mend, source)
 	var/obj/item/mod/control/mod = holder
 	switch(wire)
 		if(WIRE_HACK)

@@ -5,7 +5,7 @@
 	name = "drink"
 	desc = "yummy"
 	icon = 'icons/obj/drinks/drinks.dmi'
-	icon_state = null
+	icon_state = "glass_empty"
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	resistance_flags = NONE
 
@@ -49,7 +49,7 @@
 	throwforce = 1
 	amount_per_transfer_from_this = 5
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
-	possible_transfer_amounts = list(5)
+	has_variable_transfer_amount = FALSE
 	volume = 5
 	flags_1 = CONDUCT_1
 	spillable = TRUE

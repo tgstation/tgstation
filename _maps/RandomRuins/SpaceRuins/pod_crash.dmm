@@ -40,7 +40,7 @@
 /obj/effect/decal/cleanable/glass/titanium,
 /obj/item/modular_computer/pda/cargo,
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/red/dim/directional/south,

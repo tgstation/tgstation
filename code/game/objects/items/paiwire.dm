@@ -1,7 +1,7 @@
 /obj/item/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
 	name = "data cable"
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "wire1"
 	item_flags = NOBLUDGEON
 	var/obj/machinery/machine //what machine we're currently hacking.

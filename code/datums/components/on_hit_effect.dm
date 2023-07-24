@@ -43,7 +43,7 @@
 		return
 
 	if(extra_check_callback)
-		if(!extra_check_callback.Invoke(user, target))
+		if(!extra_check_callback.Invoke(user, target, source))
 			return
 	on_hit_callback.Invoke(source, user, target, user.zone_selected)
 	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
@@ -59,18 +59,18 @@
 			return
 	on_hit_callback.Invoke(attacker, attacker, target, attacker.zone_selected)
 
-/datum/component/on_hit_effect/proc/on_projectile_hit(datum/fired_from, atom/movable/firer, atom/target, angle, obj/item/bodypart/hit_limb)
+/datum/component/on_hit_effect/proc/on_projectile_hit(datum/fired_from, atom/movable/firer, atom/target, angle, body_zone)
 	SIGNAL_HANDLER
 
 	if(extra_check_callback)
 		if(!extra_check_callback.Invoke(firer, target))
 			return
-	on_hit_callback.Invoke(fired_from, firer, target, hit_limb.body_zone)
+	on_hit_callback.Invoke(fired_from, firer, target, body_zone)
 
-/datum/component/on_hit_effect/proc/on_projectile_self_hit(datum/source, mob/firer, atom/target, angle, obj/item/bodypart/hit_limb)
+/datum/component/on_hit_effect/proc/on_projectile_self_hit(datum/source, mob/firer, atom/target, angle, body_zone)
 	SIGNAL_HANDLER
 
 	if(extra_check_callback)
 		if(!extra_check_callback.Invoke(firer, target))
 			return
-	on_hit_callback.Invoke(source, firer, target, hit_limb.body_zone)
+	on_hit_callback.Invoke(source, firer, target, body_zone)

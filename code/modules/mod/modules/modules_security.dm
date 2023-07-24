@@ -365,7 +365,7 @@
 	icon_state = "active_sonar"
 	module_type = MODULE_USABLE
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 4
-	complexity = 3
+	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/active_sonar)
 	cooldown_time = 15 SECONDS
 
@@ -385,3 +385,116 @@
 		creatures_detected++
 	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE) // Should be audible for the radius of the sonar
 	to_chat(mod.wearer, span_notice("You slam your fist into the ground, sending out a sonic wave that detects [creatures_detected] living beings nearby!"))
+
+#define SHOOTING_ASSISTANT_OFF "Currently Off"
+#define STORMTROOPER_MODE "Quick Fire Stormtrooper"
+#define SHARPSHOOTER_MODE "Slow Ricochet Sharpshooter"
+
+/**
+ * A module that enhances the user's ability with firearms, with a couple drawbacks:
+ * In 'Stormtrooper' mode, the user will be given faster firerate, but lower accuracy.
+ * In 'Sharpshooter' mode, the user will have better accuracy and ricochet to his shots, but slower movement speed.
+ * Both modes prevent the user from dual wielding guns.
+ */
+/obj/item/mod/module/shooting_assistant
+	name = "MOD shooting assistant module"
+	desc = "A botched prototype meant to boost the TGMC crayon eaters' ability with firearms. \
+		It has only two modes available in its configurations: \
+		'Quick Fire Stormtrooper' and 'Slow Ricochet Sharpshooter', \
+		both incompatible with dual wielding firearms."
+	icon_state = "shooting_assistant"
+	module_type = MODULE_PASSIVE
+	complexity = 3
+	incompatible_modules = list(/obj/item/mod/module/shooting_assistant)
+	var/selected_mode = SHOOTING_ASSISTANT_OFF
+	///Association list, the assoc values are the balloon alerts shown to the user when the mode is set.
+	var/static/list/available_modes = list(
+		SHOOTING_ASSISTANT_OFF = "assistant off",
+		STORMTROOPER_MODE = "stormtrooper mode",
+		SHARPSHOOTER_MODE = "sharpshooter mode",
+	)
+
+/obj/item/mod/module/shooting_assistant/get_configuration()
+	. = ..()
+	.["shooting_mode"] = add_ui_configuration("Mode", "list", selected_mode, assoc_to_keys(available_modes))
+
+/obj/item/mod/module/shooting_assistant/configure_edit(key, value)
+	switch(key)
+		if("shooting_mode")
+			set_shooting_mode(value)
+
+/obj/item/mod/module/shooting_assistant/proc/set_shooting_mode(new_mode)
+	if(new_mode == selected_mode || !mod.active)
+		return
+	if(new_mode != SHOOTING_ASSISTANT_OFF && !mod.get_charge())
+		balloon_alert(mod.wearer, "no charge!")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return
+
+	//Remove the effects of the previously selected mode
+	if(mod.active)
+		remove_mode_effects()
+
+	balloon_alert(mod.wearer, available_modes[new_mode])
+	selected_mode = new_mode
+
+	//Apply the effects of the new mode
+	if(mod.active)
+		apply_mode_effects()
+
+/obj/item/mod/module/shooting_assistant/proc/apply_mode_effects()
+	switch(selected_mode)
+		if(SHOOTING_ASSISTANT_OFF)
+			idle_power_cost = 0
+		if(STORMTROOPER_MODE)
+			idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.4
+			mod.wearer.add_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_DOUBLE_TAP), MOD_TRAIT)
+			RegisterSignal(mod.wearer, COMSIG_MOB_FIRED_GUN, PROC_REF(stormtrooper_fired_gun))
+		if(SHARPSHOOTER_MODE)
+			idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.6
+			mod.wearer.add_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_NICE_SHOT), MOD_TRAIT)
+			RegisterSignal(mod.wearer, COMSIG_MOB_FIRED_GUN, PROC_REF(sharpshooter_fired_gun))
+			RegisterSignal(mod.wearer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, PROC_REF(apply_ricochet))
+			mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/shooting_assistant)
+
+/obj/item/mod/module/shooting_assistant/proc/remove_mode_effects()
+	switch(selected_mode)
+		if(STORMTROOPER_MODE)
+			UnregisterSignal(mod.wearer, COMSIG_MOB_FIRED_GUN)
+			mod.wearer.remove_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_DOUBLE_TAP), MOD_TRAIT)
+		if(SHARPSHOOTER_MODE)
+			UnregisterSignal(mod.wearer, list(COMSIG_MOB_FIRED_GUN, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE))
+			mod.wearer.remove_traits(list(TRAIT_NO_GUN_AKIMBO, TRAIT_NICE_SHOT), MOD_TRAIT)
+			mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/shooting_assistant)
+
+/obj/item/mod/module/shooting_assistant/drain_power(amount)
+	. = ..()
+	if(!.)
+		set_shooting_mode(SHOOTING_ASSISTANT_OFF)
+
+/obj/item/mod/module/shooting_assistant/on_suit_activation()
+	apply_mode_effects()
+
+/obj/item/mod/module/shooting_assistant/on_suit_deactivation(deleting = FALSE)
+	remove_mode_effects()
+
+/obj/item/mod/module/shooting_assistant/proc/stormtrooper_fired_gun(mob/user, obj/item/gun/gun_fired, target, params, zone_override, list/bonus_spread_values)
+	SIGNAL_HANDLER
+	bonus_spread_values[MIN_BONUS_SPREAD_INDEX] += 15
+	bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += 25
+
+/obj/item/mod/module/shooting_assistant/proc/sharpshooter_fired_gun(mob/user, obj/item/gun/gun_fired, target, params, zone_override, list/bonus_spread_values)
+	SIGNAL_HANDLER
+	bonus_spread_values[MIN_BONUS_SPREAD_INDEX] -= 20
+	bonus_spread_values[MAX_BONUS_SPREAD_INDEX] -= 10
+
+/obj/item/mod/module/shooting_assistant/proc/apply_ricochet(mob/user, obj/projectile/projectile, datum/fired_from, atom/clicked_atom)
+	SIGNAL_HANDLER
+	projectile.ricochets_max += 1
+	projectile.min_ricochets += 1
+	projectile.ricochet_incidence_leeway = 0 //allows the projectile to bounce at any angle.
+	ADD_TRAIT(projectile, TRAIT_ALWAYS_HIT_ZONE, MOD_TRAIT)
+
+#undef SHOOTING_ASSISTANT_OFF
+#undef STORMTROOPER_MODE
+#undef SHARPSHOOTER_MODE

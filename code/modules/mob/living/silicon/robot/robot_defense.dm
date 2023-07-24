@@ -234,7 +234,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		cell.add_fingerprint(user)
 		user.put_in_active_hand(cell)
 		to_chat(user, span_notice("You remove \the [cell]."))
-		cell = null
 		update_icons()
 		diag_hud_set_borgcell()
 
@@ -306,9 +305,9 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		spark_system.start()
 		return
 	to_chat(user, span_notice("You start to unfasten [src]'s securing bolts..."))
-	if(tool.use_tool(src, user, 50, volume=50) && !cell)
+	if(tool.use_tool(src, user, 5 SECONDS, volume = 50) && !cell)
 		user.visible_message(span_notice("[user] deconstructs [src]!"), span_notice("You unfasten the securing bolts, and [src] falls to pieces!"))
-		deconstruct()
+		cyborg_deconstruct()
 		return
 
 /mob/living/silicon/robot/fire_act()
@@ -325,25 +324,27 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(2)
 			Stun(60)
 
-/mob/living/silicon/robot/emag_act(mob/user)
+/mob/living/silicon/robot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(user == src)//To prevent syndieborgs from emagging themselves
-		return
+		return FALSE
 	if(!opened)//Cover is closed
 		if(locked)
-			to_chat(user, span_notice("You emag the cover lock."))
+			balloon_alert(user, "cover lock destroyed")
 			locked = FALSE
 			if(shell) //A warning to Traitors who may not know that emagging AI shells does not slave them.
+				balloon_alert(user, "shells cannot be subverted!")
 				to_chat(user, span_boldwarning("[src] seems to be controlled remotely! Emagging the interface may not work as expected."))
+			return TRUE
 		else
-			to_chat(user, span_warning("The cover is already unlocked!"))
-		return
+			balloon_alert(user, "cover already unlocked!")
+			return FALSE
 	if(world.time < emag_cooldown)
-		return
+		return FALSE
 	if(wiresexposed)
-		to_chat(user, span_warning("You must unexpose the wires first!"))
-		return
+		balloon_alert(user, "expose the fires first!")
+		return FALSE
 
-	to_chat(user, span_notice("You emag [src]'s interface."))
+	balloon_alert(user, "interface hacked")
 	emag_cooldown = world.time + 100
 
 	if(connected_ai && connected_ai.mind && connected_ai.mind.has_antag_datum(/datum/antagonist/malf_ai))
@@ -351,13 +352,13 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		logevent("ALERT: Foreign software execution prevented.")
 		to_chat(connected_ai, span_danger("ALERT: Cyborg unit \[[src]\] successfully defended against subversion."))
 		log_silicon("EMAG: [key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")
-		return
+		return TRUE // emag succeeded, it was just counteracted
 
 	if(shell) //AI shells cannot be emagged, so we try to make it look like a standard reset. Smart players may see through this, however.
 		to_chat(user, span_danger("[src] is remotely controlled! Your emag attempt has triggered a system reset instead!"))
 		log_silicon("EMAG: [key_name(user)] attempted to emag an AI shell belonging to [key_name(src) ? key_name(src) : connected_ai]. The shell has been reset as a result.")
 		ResetModel()
-		return
+		return TRUE
 
 	SetEmagged(1)
 	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
@@ -370,6 +371,12 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 	else
 		GLOB.lawchanges.Add("[time] <B>:</B> [name]([key]) emagged by external event.")
+
+	INVOKE_ASYNC(src, PROC_REF(borg_emag_end), user)
+	return TRUE
+
+/// A async proc called from [emag_act] that gives the borg a lot of flavortext, and applies the syndicate lawset after a delay.
+/mob/living/silicon/robot/proc/borg_emag_end(mob/user)
 	to_chat(src, span_danger("ALERT: Foreign software detected."))
 	logevent("ALERT: Foreign software detected.")
 	sleep(0.5 SECONDS)
@@ -393,7 +400,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		set_zeroth_law("Only [user.real_name] and people [user.p_they()] designate[user.p_s()] as being such are Syndicate Agents.")
 	laws.associate(src)
 	update_icons()
-
 
 /mob/living/silicon/robot/blob_act(obj/structure/blob/B)
 	if(stat != DEAD)

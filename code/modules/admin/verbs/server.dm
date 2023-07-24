@@ -202,20 +202,21 @@
 	set name = "Delay Pre-Game"
 
 	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(SSticker.GetTimeLeft()/10)) as num|null
+	if(!newtime)
+		return
 	if(SSticker.current_state > GAME_STATE_PREGAME)
 		return tgui_alert(usr, "Too late... The game has already started!")
-	if(newtime)
-		newtime = newtime*10
-		SSticker.SetTimeLeft(newtime)
-		SSticker.start_immediately = FALSE
-		if(newtime < 0)
-			to_chat(world, "<span class='infoplain'><b>The game start has been delayed.</b></span>", confidential = TRUE)
-			log_admin("[key_name(usr)] delayed the round start.")
-		else
-			to_chat(world, "<span class='infoplain'><b>The game will start in [DisplayTimeText(newtime)].</b></span>", confidential = TRUE)
-			SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
-			log_admin("[key_name(usr)] set the pre-game delay to [DisplayTimeText(newtime)].")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delay Game Start") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	newtime = newtime*10
+	SSticker.SetTimeLeft(newtime)
+	SSticker.start_immediately = FALSE
+	if(newtime < 0)
+		to_chat(world, "<span class='infoplain'><b>The game start has been delayed.</b></span>", confidential = TRUE)
+		log_admin("[key_name(usr)] delayed the round start.")
+	else
+		to_chat(world, "<span class='infoplain'><b>The game will start in [DisplayTimeText(newtime)].</b></span>", confidential = TRUE)
+		SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
+		log_admin("[key_name(usr)] set the pre-game delay to [DisplayTimeText(newtime)].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Delay Game Start") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 /datum/admins/proc/set_admin_notice()
 	set category = "Server"

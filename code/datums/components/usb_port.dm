@@ -48,7 +48,7 @@
 /datum/component/usb_port/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, PROC_REF(on_atom_usb_cable_try_attach))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, PROC_REF(on_load))
 
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
@@ -58,7 +58,7 @@
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_MOVABLE_CIRCUIT_LOADED,
 	))
 
@@ -104,7 +104,7 @@
 
 	UnregisterSignal(attached_circuit, list(
 		COMSIG_CIRCUIT_SHELL_REMOVED,
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 		COMSIG_CIRCUIT_SET_SHELL,
 	))
 
@@ -114,7 +114,7 @@
 
 	UnregisterSignal(physical_object, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 	))
 
 /datum/component/usb_port/proc/attach_circuit_components(obj/item/integrated_circuit/circuitboard)
@@ -133,7 +133,7 @@
 /datum/component/usb_port/proc/on_examine_shell(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 
-	examine_text += span_notice("[source.p_they(TRUE)] [source.p_are()] attached to [parent] with a USB cable.")
+	examine_text += span_notice("[source.p_They()] [source.p_are()] attached to [parent] with a USB cable.")
 
 /datum/component/usb_port/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/connecting_cable, mob/user)
 	SIGNAL_HANDLER
@@ -175,7 +175,7 @@
 		new_physical_object = attached_circuit
 
 	RegisterSignal(attached_circuit, COMSIG_CIRCUIT_SHELL_REMOVED, PROC_REF(on_circuit_shell_removed))
-	RegisterSignal(attached_circuit, COMSIG_PARENT_QDELETING, PROC_REF(on_circuit_deleting))
+	RegisterSignal(attached_circuit, COMSIG_QDELETING, PROC_REF(on_circuit_deleting))
 	RegisterSignal(attached_circuit, COMSIG_CIRCUIT_SET_SHELL, PROC_REF(on_set_shell))
 	set_physical_object(new_physical_object)
 
@@ -188,10 +188,10 @@
 		QDEL_NULL(usb_cable_beam)
 
 	var/atom/atom_parent = parent
-	usb_cable_beam = atom_parent.Beam(new_physical_object, "usb_cable_beam", 'icons/obj/wiremod.dmi')
+	usb_cable_beam = atom_parent.Beam(new_physical_object, "usb_cable_beam", 'icons/obj/science/circuits.dmi')
 
 	RegisterSignal(new_physical_object, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	RegisterSignal(new_physical_object, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine_shell))
+	RegisterSignal(new_physical_object, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine_shell))
 	physical_object = new_physical_object
 
 // Adds support for loading circuits without shells but with usb cables, or loading circuits with shells because the shells might not load first.

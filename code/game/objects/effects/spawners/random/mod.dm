@@ -12,7 +12,8 @@
 		/obj/item/mod/module/balloon = 1,
 		/obj/item/mod/module/paper_dispenser = 1,
 		/obj/item/mod/module/hat_stabilizer = 2,
-		/obj/item/mod/module/stamp = 1
+		/obj/item/mod/module/stamp = 1,
+		/obj/item/mod/module/recycler/donk/safe = 1,
 	)
 
 /obj/effect/spawner/random/mod/maint/Initialize(mapload)

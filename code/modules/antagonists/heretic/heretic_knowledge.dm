@@ -116,11 +116,11 @@
  * Called whenever the knowledge's associated ritual is completed successfully.
  *
  * Creates atoms from types in result_atoms.
- * Override this is you want something else to happen.
+ * Override this if you want something else to happen.
  * This CAN sleep, such as for summoning rituals which poll for ghosts.
  *
  * Arguments
- * * user - the mob who did the  ritual
+ * * user - the mob who did the ritual
  * * selected_atoms - an list of atoms chosen as a part of this ritual.
  * * loc - the turf the ritual's occuring on
  *
@@ -503,6 +503,8 @@
 	abstract_parent_type = /datum/heretic_knowledge/summon
 	/// Typepath of a mob to summon when we finish the recipe.
 	var/mob/living/mob_to_summon
+	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
+	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
 
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/mob/living/summoned = new mob_to_summon(loc)
@@ -514,7 +516,7 @@
 	animate(summoned, 10 SECONDS, alpha = 155)
 
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.real_name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.real_name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned, poll_ignore_define)
 	if(!LAZYLEN(candidates))
 		loc.balloon_alert(user, "ritual failed, no ghosts!")
 		animate(summoned, 0.5 SECONDS, alpha = 0)
@@ -712,3 +714,19 @@
 		sacrifice.gib()
 
 	return ..()
+
+/datum/heretic_knowledge/mansus_restoration
+	name = "Mansus returnal" // sounds awful
+	desc = "Sacrifice lungs, potted plant and a radio to restore your link to the Mansus."
+	gain_text = "A way to return my powers, at any cost..."
+	required_atoms = list(
+		/obj/item/kirbyplants,
+		/obj/item/organ/internal/ears,
+		/obj/item/radio,
+	)
+	priority = MAX_KNOWLEDGE_PRIORITY - 4 // below basic rituals so you can see it
+	route = null
+
+/datum/heretic_knowledge/mansus_restoration/on_finished_recipe(mob/living/user)
+	REMOVE_TRAIT(user, TRAIT_BAN_HERETIC_CASTING, src)
+

@@ -31,8 +31,8 @@
 	add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, PROC_REF(on_painted))
 
-/obj/effect/decal/cleanable/crayon/NeverShouldHaveComeHere(turf/T)
-	return isgroundlessturf(T)
+/obj/effect/decal/cleanable/crayon/NeverShouldHaveComeHere(turf/here_turf)
+	return isgroundlessturf(here_turf)
 
 /obj/effect/decal/cleanable/crayon/proc/on_painted(datum/source, mob/user, obj/item/toy/crayon/spraycan/spraycan, is_dark_color)
 	SIGNAL_HANDLER

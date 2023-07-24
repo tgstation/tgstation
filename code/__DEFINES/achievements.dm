@@ -46,6 +46,7 @@
 #define MEDAL_SPRINGLOCK "The Man Inside the Modsuit"
 #define MEDAL_HEALTHY "Heart Healthy"
 #define MEDAL_GODS_WRATH "God's Wrath"
+#define MEDAL_EARTHQUAKE_VICTIM "Earthquake Victim"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"

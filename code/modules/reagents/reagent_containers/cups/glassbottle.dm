@@ -4,6 +4,18 @@
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
 //Bottles now knockdown and break when smashed on people's heads. - Giacom
 
+/// Initializes GLOB.alcohol_containers, only containers that actually have reagents are added to the list.
+/proc/init_alcohol_containers()
+	var/list/containers = subtypesof(/obj/item/reagent_containers/cup/glass/bottle)
+	for(var/typepath in containers)
+		containers -= typepath
+		var/obj/item/reagent_containers/cup/glass/bottle/instance = new typepath
+		if(!length(instance.list_reagents))
+			qdel(instance)
+			continue
+		containers[typepath] = instance
+	return containers
+
 /obj/item/reagent_containers/cup/glass/bottle
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
@@ -216,11 +228,13 @@
 /obj/item/reagent_containers/cup/glass/bottle/beer/light
 	name = "Carp Lite"
 	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
+	icon_state = "litebeer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
 
 /obj/item/reagent_containers/cup/glass/bottle/rootbeer
 	name = "Two-Time root beer"
 	desc = "A popular, old-fashioned brand of root beer, known for its extremely sugary formula. Might make you want a nap afterwards."
+	icon_state = "twotime"
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/rootbeer = 30)
 	drink_type = SUGAR | JUNKFOOD
@@ -528,7 +542,7 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic
 	name = "Voltaic Yellow Wine"
-	desc = "Electrically infused wine! Recharges etherials, safe for consumption."
+	desc = "Electrically infused wine! Recharges ethereals, safe for consumption."
 	custom_price = PAYCHECK_CREW
 	icon_state = "wine_voltaic_bottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/wine_voltaic = 100)
@@ -643,14 +657,14 @@
 	update_appearance()
 	make_froth(offset_x = 0, offset_y = sabraged ? 13 : 15, intensity = froth_severity) //the y offset for sabraged is lower because the bottle's lip is smashed
 	///Type of cork to fire away
-	var/obj/projectile/bullet/reusable/cork_to_fire = sabraged ? /obj/projectile/bullet/reusable/champagne_cork/sabrage : /obj/projectile/bullet/reusable/champagne_cork
+	var/obj/projectile/bullet/cork_to_fire = sabraged ? /obj/projectile/bullet/champagne_cork/sabrage : /obj/projectile/bullet/champagne_cork
 	///Our resulting cork projectile
-	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new cork_to_fire (drop_location())
+	var/obj/projectile/bullet/champagne_cork/popped_cork = new cork_to_fire (drop_location())
 	popped_cork.firer = user
 	popped_cork.fired_from = src
 	popped_cork.fire(dir2angle(user.dir) + rand(-30, 30))
 
-/obj/projectile/bullet/reusable/champagne_cork
+/obj/projectile/bullet/champagne_cork
 	name = "champagne cork"
 	icon = 'icons/obj/drinks/drink_effects.dmi'
 	icon_state = "champagne_cork"
@@ -664,14 +678,18 @@
 	ricochet_incidence_leeway = 0
 	range = 7
 	knockdown = 2 SECONDS
-	ammo_type = /obj/item/trash/champagne_cork
+	var/drop_type = /obj/item/trash/champagne_cork
 
-/obj/projectile/bullet/reusable/champagne_cork/sabrage
+/obj/projectile/bullet/champagne_cork/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/projectile_drop, drop_type)
+
+/obj/projectile/bullet/champagne_cork/sabrage
 	icon_state = "champagne_cork_sabrage"
 	damage = 12
 	ricochets_max = 2 //bit heavier
 	range = 6
-	ammo_type = /obj/item/trash/champagne_cork/sabrage
+	drop_type = /obj/item/trash/champagne_cork/sabrage
 
 /obj/item/trash/champagne_cork
 	name = "champagne cork"
@@ -794,7 +812,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/pruno
 	name = "pruno mix"
 	desc = "A trash bag filled with fruit, sugar, yeast, and water, pulped together into a pungent slurry to be fermented in an enclosed space, traditionally the toilet. Security would love to confiscate this, one of the many things wrong with them."
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "trashbag"
 	list_reagents = list(/datum/reagent/consumable/prunomix = 50)
 	var/fermentation_time = 30 SECONDS /// time it takes to ferment
@@ -873,6 +891,22 @@
 	icon_state = "cream"
 	list_reagents = list(/datum/reagent/consumable/cream = 100)
 	drink_type = DAIRY
+
+/obj/item/reagent_containers/cup/glass/bottle/juice/eggnog
+	name = "eggnog"
+	desc = "For enjoying the most wonderful time of the year."
+	icon = 'icons/obj/drinks/boxes.dmi'
+	icon_state = "nog2"
+	list_reagents = list(/datum/reagent/consumable/ethanol/eggnog = 100)
+	drink_type = FRUIT
+
+/obj/item/reagent_containers/cup/glass/bottle/juice/dreadnog
+	name = "eggnog"
+	desc = "For when you want some nondescript soda inside of your eggnog!"
+	icon = 'icons/obj/drinks/boxes.dmi'
+	icon_state = "dreadnog"
+	list_reagents = list(/datum/reagent/consumable/ethanol/dreadnog = 100)
+	drink_type = FRUIT | GROSS
 
 /obj/item/reagent_containers/cup/glass/bottle/juice/tomatojuice
 	name = "tomato juice"

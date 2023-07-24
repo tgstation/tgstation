@@ -81,14 +81,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"aH" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/herringbone,
-/area/shuttle/escape)
-"aI" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/herringbone,
-/area/shuttle/escape)
 "aU" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs{
@@ -108,6 +100,36 @@
 /area/shuttle/escape)
 "bx" = (
 /turf/open/floor/iron/white,
+/area/shuttle/escape)
+"dz" = (
+/obj/structure/closet{
+	anchorable = 0;
+	anchored = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"dT" = (
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue/anticorner{
+	dir = 1
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "dU" = (
 /obj/machinery/door/airlock/public/glass{
@@ -152,16 +174,6 @@
 	},
 /turf/open/floor/iron/herringbone,
 /area/shuttle/escape)
-"hY" = (
-/obj/structure/table,
-/obj/item/storage/fancy/donut_box,
-/obj/structure/extinguisher_cabinet/directional/north,
-/obj/structure/sign/poster/official/random/directional/east,
-/obj/effect/turf_decal/tile/dark_blue/anticorner{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "ij" = (
 /obj/structure/table/reinforced/rglass,
 /obj/effect/spawner/random/bureaucracy/crayon,
@@ -175,25 +187,12 @@
 "iD" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"iJ" = (
-/obj/machinery/stasis,
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "jj" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"jn" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/light/directional/west,
-/obj/item/radio/intercom/directional/west,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
 "jv" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
@@ -274,21 +273,6 @@
 	},
 /turf/open/floor/iron/herringbone,
 /area/shuttle/escape)
-"mu" = (
-/obj/structure/table,
-/obj/machinery/recharger{
-	pixel_x = 7;
-	pixel_y = 2
-	},
-/obj/item/paper_bin{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/tile/dark_blue/anticorner{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "mD" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -334,12 +318,6 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/large,
 /area/shuttle/escape)
-"pX" = (
-/obj/structure/table,
-/obj/effect/spawner/random/bureaucracy/pen,
-/obj/effect/spawner/random/bureaucracy/paper,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "qo" = (
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -350,20 +328,6 @@
 "qZ" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/paper_bin,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"ra" = (
-/obj/structure/closet{
-	anchorable = 0;
-	anchored = 1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/loading_area{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
-	dir = 1
-	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "rh" = (
@@ -395,6 +359,14 @@
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"tE" = (
+/obj/structure/bed/roller,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "tY" = (
 /obj/structure/table,
 /obj/item/scalpel{
@@ -414,6 +386,12 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"ui" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/delivery,
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
 "uR" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
@@ -432,20 +410,10 @@
 "vX" = (
 /turf/open/floor/iron/herringbone,
 /area/shuttle/escape)
-"wf" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/east,
+"wc" = (
+/obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"wY" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "xD" = (
@@ -459,14 +427,6 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"xW" = (
-/obj/machinery/light/directional/north,
-/obj/structure/chair/comfy/shuttle,
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron,
 /area/shuttle/escape)
 "xZ" = (
 /obj/structure/table,
@@ -482,12 +442,18 @@
 /obj/effect/spawner/random/bureaucracy/folder,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"yk" = (
-/obj/structure/bed/roller,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+"yo" = (
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/iron/white,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"zt" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/emergency,
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "zB" = (
 /obj/structure/chair/comfy/shuttle{
@@ -523,11 +489,6 @@
 	dir = 6
 	},
 /turf/open/floor/iron/herringbone,
-/area/shuttle/escape)
-"CF" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/emergency,
-/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "CO" = (
 /obj/effect/turf_decal/stripes/line,
@@ -566,6 +527,25 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
+"EB" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/toxin{
+	pixel_x = -3
+	},
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/structure/sign/poster/official/moth_epi/directional/south,
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "EL" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/delivery,
@@ -603,13 +583,6 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
-"Gj" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
 "Gq" = (
 /obj/machinery/shower/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -618,6 +591,17 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white,
+/area/shuttle/escape)
+"Gr" = (
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/structure/sign/poster/official/random/directional/east,
+/obj/effect/turf_decal/tile/dark_blue/anticorner{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Gt" = (
 /obj/structure/chair/comfy/shuttle,
@@ -655,6 +639,12 @@
 	},
 /turf/open/floor/iron/herringbone,
 /area/shuttle/escape)
+"IC" = (
+/obj/effect/turf_decal/tile/dark_blue/half{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "Jz" = (
 /obj/structure/tank_dispenser/oxygen{
 	layer = 2.7;
@@ -670,6 +660,16 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
+"Lc" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Lw" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -678,25 +678,6 @@
 /area/shuttle/escape/brig)
 "LE" = (
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
-"LO" = (
-/obj/structure/table,
-/obj/item/storage/medkit/regular{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/toxin{
-	pixel_x = -3
-	},
-/obj/item/storage/medkit/o2{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/structure/sign/poster/official/moth_epi/directional/south,
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Me" = (
 /obj/structure/chair/comfy/shuttle,
@@ -716,6 +697,13 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"MJ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "Ng" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/item/radio/intercom/directional/east,
@@ -760,13 +748,6 @@
 "Qq" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
-"QU" = (
-/obj/machinery/light/directional/south,
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "Rq" = (
 /obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/mineral/titanium/yellow,
@@ -778,17 +759,15 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"RB" = (
+/obj/machinery/stasis,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "RL" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"Sv" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "SG" = (
@@ -866,35 +845,59 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"Vx" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "VQ" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"VS" = (
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/dark_blue/half{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "VU" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape/brig)
+"Wg" = (
+/obj/structure/table,
+/obj/effect/spawner/random/bureaucracy/pen,
+/obj/effect/spawner/random/bureaucracy/paper,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Wy" = (
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"WF" = (
+/obj/machinery/light/small/directional/north,
+/obj/structure/closet{
+	anchorable = 0;
+	anchored = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "WL" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"XM" = (
-/obj/structure/closet/crate/bin,
-/obj/effect/turf_decal/tile/green/anticorner/contrasted,
-/turf/open/floor/iron,
+"Xa" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "YG" = (
 /obj/machinery/computer/security{
@@ -905,20 +908,13 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"Za" = (
-/obj/structure/closet{
-	anchorable = 0;
-	anchored = 1
-	},
-/obj/machinery/light/small/directional/east,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/loading_area{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron,
+"YN" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Zq" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ZI" = (
 /obj/machinery/door/airlock/public/glass{
@@ -966,7 +962,7 @@ rh
 jv
 TS
 sN
-jn
+ui
 Jz
 AC
 ai
@@ -981,7 +977,7 @@ AC
 mD
 lW
 mD
-WL
+Xa
 AC
 LE
 rh
@@ -1002,7 +998,7 @@ mD
 mD
 UL
 AC
-wY
+Vx
 ij
 fX
 AC
@@ -1021,7 +1017,7 @@ rh
 (4,1,1) = {"
 Qq
 Qq
-CF
+zt
 iD
 Wy
 AC
@@ -1038,7 +1034,7 @@ pn
 mD
 mD
 mD
-Sv
+Fk
 AC
 AC
 uR
@@ -1068,7 +1064,7 @@ mD
 mD
 Fk
 AC
-mu
+dT
 SG
 YG
 uR
@@ -1083,7 +1079,7 @@ AC
 Gt
 mD
 mD
-mD
+Zq
 ZI
 jA
 kw
@@ -1096,7 +1092,7 @@ dU
 uR
 AC
 AC
-VS
+IC
 Uw
 zF
 Ds
@@ -1111,14 +1107,14 @@ AC
 rR
 mD
 mD
-QU
+Fk
 AC
-xW
-pX
+BP
+Wg
 Ea
 tg
 lT
-aH
+vX
 vX
 vX
 vX
@@ -1167,14 +1163,14 @@ AC
 OS
 mD
 mD
-QU
+Fk
 AC
-xW
+BP
 ye
 Ea
 tg
 NH
-aI
+vX
 vX
 vX
 vX
@@ -1195,7 +1191,7 @@ AC
 Me
 mD
 mD
-mD
+YN
 ZI
 GM
 Ea
@@ -1208,7 +1204,7 @@ vf
 FW
 Uf
 Uf
-VS
+IC
 ZX
 Pu
 aU
@@ -1228,7 +1224,7 @@ AC
 FF
 Fm
 Dv
-XM
+wc
 Uf
 TK
 lB
@@ -1236,7 +1232,7 @@ lB
 lB
 NR
 Uf
-hY
+Gr
 lE
 hn
 uR
@@ -1245,7 +1241,7 @@ uR
 (12,1,1) = {"
 Qq
 Qq
-yk
+tE
 Hq
 Ru
 Uz
@@ -1279,18 +1275,18 @@ bx
 bx
 bx
 bx
-LO
+EB
 AC
-ra
+WF
 kw
 Uj
-oJ
+Lc
 Uf
 iq
 lB
 lB
 lB
-Gj
+jj
 Uf
 rh
 rh
@@ -1304,20 +1300,20 @@ TS
 sg
 NO
 NO
-iJ
+RB
 qo
 Dx
 tY
 AC
-Za
+dz
 Hd
 Hd
-wf
+yo
 Uf
 Lw
 Oa
 zB
-zB
+MJ
 Uf
 VU
 rh

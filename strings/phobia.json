@@ -183,7 +183,28 @@
 		"virology"
 	],
 
-	"falling": [
+"heresy": [
+		"eldritch",
+		"heretic",
+		"mansus",
+		"Rust",
+		"Flesh",
+		"Ash",
+		"Void",
+		"Blade",
+		"Armsy",
+		"Worm",
+		"Raw Prophet",
+		"Rust Walker",
+		"Stalker",
+		"Ghoul",
+		"Pierced Reality",
+		"Maid in the Mirror",
+		"Hand",
+		"Void Storm"
+	],
+
+"falling": [
 		"chasm",
 		"fall",
 		"fell",

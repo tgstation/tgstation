@@ -90,7 +90,7 @@
 		speech_action_icon = 'icons/mob/actions/actions_space_dragon.dmi', \
 		speech_action_icon_state = "wavespeak", \
 	)
-	RegisterSignal(wavespeak, COMSIG_PARENT_QDELETING, PROC_REF(clear_wavespeak))
+	RegisterSignal(wavespeak, COMSIG_QDELETING, PROC_REF(clear_wavespeak))
 
 /datum/antagonist/space_dragon/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/antag = mob_override || owner.current

@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - bugfix: "[MetaStation] - Secured some walls in science that weren't secured properly (reinforced)."

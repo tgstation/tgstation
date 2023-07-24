@@ -551,7 +551,10 @@
 	drink_type = VEGETABLES | FRUIT // ??
 
 /datum/chemical_reaction/food/soup/tomatosoup
-	required_reagents = list(/datum/reagent/water = 50)
+	required_reagents = list(
+		/datum/reagent/water = 50,
+		/datum/reagent/consumable/cream = 5
+	)
 	required_ingredients = list(
 		/obj/item/food/grown/tomato = 2,
 	)
@@ -1120,7 +1123,7 @@
 		/obj/item/food/grown/onion = 2,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/garlic = 1,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 1,
 		/obj/item/food/boiledrice = 1,
 	)
 	results = list(
@@ -1472,7 +1475,7 @@
 	)
 	required_ingredients = list(
 		/obj/item/food/cheese/wedge = 2,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 1,
 		/obj/item/food/grown/potato/sweet = 1,
 	)
 	results = list(
@@ -1683,7 +1686,7 @@
 	required_ingredients = list(
 		/obj/item/food/cheese/firm_cheese_slice = 1,
 		/obj/item/food/cheese/curd_cheese = 1,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 1,
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/cheese_porridge = 30,

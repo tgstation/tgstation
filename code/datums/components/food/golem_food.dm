@@ -23,10 +23,10 @@
 /datum/component/golem_food/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_attack))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/golem_food/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ATOM_EXAMINE))
 	return ..()
 
 /datum/component/golem_food/Destroy(force, silent)
@@ -43,7 +43,7 @@
 		source.balloon_alert(user, "not edible!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if (!snack_type.can_consume(target))
-		source.balloon_alert(user, "incompatible mineral!")
+		source.balloon_alert(user, "can't consume!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if (!golem_snack)
 		golem_snack = new(
@@ -53,7 +53,7 @@
 			/* food_buff = */ snack_type,
 			/* owner = */ parent,
 		)
-		RegisterSignal(golem_snack, COMSIG_PARENT_QDELETING, PROC_REF(on_food_destroyed))
+		RegisterSignal(golem_snack, COMSIG_QDELETING, PROC_REF(on_food_destroyed))
 	golem_snack.attack(target, user, click_parameters)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -90,7 +90,7 @@
 	src.food_buff = food_buff
 	src.owner = owner
 
-	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_destroyed))
+	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(on_parent_destroyed))
 
 /// Clean ourselves up if our parent dies
 /obj/item/food/golem_food/proc/on_parent_destroyed(datum/destroyed_thing)
