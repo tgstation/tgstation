@@ -83,6 +83,10 @@
 	/// Is this corgi physically slow due to age, etc?
 	var/is_slow = FALSE
 
+/mob/living/basic/pet/dog/corgi/Initialize(mapload)
+	. = ..()
+	RegisterSignals(src, list(COMSIG_BASICMOB_LOOK_ALIVE, COMSIG_BASICMOB_LOOK_DEAD), PROC_REF(on_appearance_change))
+
 /mob/living/basic/pet/dog/corgi/examine(mob/user)
 	. = ..()
 	if(access_card)
@@ -92,6 +96,7 @@
 	QDEL_NULL(inventory_head)
 	QDEL_NULL(inventory_back)
 	QDEL_NULL(access_card)
+	UnregisterSignal(src, list(COMSIG_BASICMOB_LOOK_ALIVE, COMSIG_BASICMOB_LOOK_DEAD))
 	return ..()
 
 /mob/living/basic/pet/dog/corgi/gib()
@@ -132,7 +137,7 @@
 		if(!DF.obj_color)
 			DF.obj_color = inventory_head.color
 
-		if(health <= 0)
+		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
 			head_icon = DF.get_overlay(dir = EAST)
 			head_icon.pixel_y = -8
 			head_icon.transform = head_icon.transform.Turn(180)
@@ -152,7 +157,7 @@
 		if(!DF.obj_color)
 			DF.obj_color = inventory_back.color
 
-		if(health <= 0)
+		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
 			back_icon = DF.get_overlay(dir = EAST)
 			back_icon.pixel_y = -11
 			back_icon.transform = back_icon.transform.Turn(180)
@@ -160,6 +165,11 @@
 			back_icon = DF.get_overlay()
 
 		. += back_icon
+
+///Handles updating any existing overlays for the corgi (such as fashion items) when it changes how it appears, as in, dead or alive.
+/mob/living/basic/pet/dog/corgi/proc/on_appearance_change()
+	SIGNAL_HANDLER
+	update_icon(UPDATE_OVERLAYS)
 
 ///Deadchat bark.
 /mob/living/basic/pet/dog/corgi/proc/bork()
@@ -286,10 +296,6 @@
 		. = ..()
 		var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
-
-/mob/living/basic/pet/dog/corgi/death(gibbed)
-	..(gibbed)
-	update_icon()
 
 GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	/datum/strippable_item/corgi_head,
@@ -515,14 +521,14 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a hat is removed.
 
 	if(valid)
-		if(health <= 0)
-			to_chat(user, span_notice("There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on [p_them()]."))
+		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
+			to_chat(user, span_notice("There is merely a dull, lifeless look in [real_name]'s eyes as you put \the [item_to_add] on [p_them()]."))
 		else if(user)
 			user.visible_message(span_notice("[user] puts [item_to_add] on [real_name]'s head. [src] looks at [user] and barks once."),
 				span_notice("You put [item_to_add] on [real_name]'s head. [src] gives you a peculiar look, then wags [p_their()] tail once and barks."),
 				span_hear("You hear a friendly-sounding bark."))
 		item_to_add.forceMove(src)
-		src.inventory_head = item_to_add
+		inventory_head = item_to_add
 		update_corgi_fluff()
 		update_icon(UPDATE_OVERLAYS)
 	else
