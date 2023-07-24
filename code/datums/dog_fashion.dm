@@ -33,7 +33,7 @@
 	//replace the placeholder for the real unmodified name in the description of the dog
 	desc = replacetext(desc, "%REAL_NAME%", M.real_name)
 	//replace the placeholder for the capitalized real unmodified name in the description of the dog
-	desc = replacetext(name, "%CAPITAL_REAL_NAME%", capitalize(M.real_name))
+	desc = replacetext(desc, "%CAPITAL_REAL_NAME%", capitalize(M.real_name))
 
 ///Applies the name, description and speak emote modifiers to the dog
 /datum/dog_fashion/proc/apply(mob/living/basic/pet/dog/dressup_doggy)
@@ -231,7 +231,7 @@
 
 /datum/dog_fashion/head/butter
 	name = "Butter %REAL_NAME%"
-	desc = "%NAME%. %REAL_NAME% with the butter. %NAME%. %REAL_NAME% with a butter on 'em."
+	desc = "%NAME%. %CAPITAL_REAL_NAME% with the butter. %NAME%. %CAPITAL_REAL_NAME% with a butter on 'em."
 	obj_icon_state = "butter"
 	speak = list() //they're very patient and focused on holding the butter on 'em
 	emote_see = list("shakes a little.", "looks around.")
