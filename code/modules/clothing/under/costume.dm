@@ -90,7 +90,7 @@
 
 /obj/item/clothing/under/costume/kilt/highlander/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
 /obj/item/clothing/under/costume/gladiator
 	name = "gladiator uniform"
@@ -247,15 +247,14 @@
 	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
 	alt_covers_chest = TRUE
-	armor_type = /datum/armor/costume_russian_officer
+	armor_type = /datum/armor/clothing_under/costume_russian_officer
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 	can_adjust = FALSE
 
-/datum/armor/costume_russian_officer
+/datum/armor/clothing_under/costume_russian_officer
 	melee = 10
-	bio = 10
 	fire = 30
 	acid = 30
 
@@ -273,7 +272,7 @@
 	desc = "A fancy buttondown shirt with slacks."
 	icon_state = "buttondown_slacks"
 	greyscale_config = /datum/greyscale_config/buttondown_slacks
-	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks_worn
+	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks/worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -282,7 +281,7 @@
 	desc = "A fancy buttondown shirt with shorts."
 	icon_state = "buttondown_shorts"
 	greyscale_config = /datum/greyscale_config/buttondown_shorts
-	greyscale_config_worn = /datum/greyscale_config/buttondown_shorts_worn
+	greyscale_config_worn = /datum/greyscale_config/buttondown_shorts/worn
 	greyscale_colors = "#EEEEEE#EE8E2E#222227#D8D39C"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -304,7 +303,7 @@
 	icon_state = "football_suit"
 	can_adjust = FALSE
 	greyscale_config = /datum/greyscale_config/football_suit
-	greyscale_config_worn = /datum/greyscale_config/football_suit_worn
+	greyscale_config_worn = /datum/greyscale_config/football_suit/worn
 	greyscale_colors = "#D74722"
 	flags_1 = IS_PLAYER_COLORABLE_1
 

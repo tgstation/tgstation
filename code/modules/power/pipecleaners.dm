@@ -26,7 +26,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/pipe_cleaner
 	name = "pipe cleaner"
 	desc = "A bendable piece of wire covered in fuzz. Fun for arts and crafts!"
-	icon = 'icons/obj/power_cond/pipe_cleaner.dmi'
+	icon = 'icons/obj/pipes_n_cables/pipe_cleaner.dmi'
 	icon_state = "0-1"
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
@@ -183,7 +183,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	desc = "A coil of pipe cleaners. Good for arts and crafts, not to build with."
 	custom_price = PAYCHECK_CREW * 0.5
 	gender = NEUTER //That's a pipe_cleaner coil sounds better than that's some pipe_cleaner coils
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "pipecleaner"
 	inhand_icon_state = "coil_red"
 	worn_icon_state = "coil"
@@ -196,14 +196,14 @@ By design, d1 is the smallest direction and d2 is the highest
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	mats_per_unit = list(/datum/material/iron=10, /datum/material/glass=5)
+	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines", "flogs")
 	attack_verb_simple = list("whip", "lash", "discipline", "flog")
 	singular_name = "pipe cleaner piece"
 	full_w_class = WEIGHT_CLASS_SMALL
-	grind_results = list("copper" = 2) //2 copper per pipe_cleaner in the coil
+	grind_results = list(/datum/reagent/copper = 2) //2 copper per pipe_cleaner in the coil
 	usesound = 'sound/items/deconstruct.ogg'
 	cost = 1
 	source = /datum/robot_energy_storage/pipe_cleaner

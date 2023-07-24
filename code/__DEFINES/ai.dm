@@ -16,14 +16,16 @@
 
 ///Does this task require movement from the AI before it can be performed?
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
+///Does this require the current_movement_target to be adjacent and in reach?
+#define AI_BEHAVIOR_REQUIRE_REACH (1<<1)
 ///Does this task let you perform the action while you move closer? (Things like moving and shooting)
-#define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
+#define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<2)
 ///Does finishing this task not null the current movement target?
-#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<2)
+#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<3)
 ///Does finishing this task make the AI stop moving towards the target?
-#define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH (1<<3)
+#define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH (1<<4)
 ///Does this behavior NOT block planning?
-#define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<4)
+#define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<5)
 
 ///AI flags
 /// Don't move if being pulled
@@ -282,6 +284,14 @@
 ///Current partner target
 #define BB_BABIES_TARGET "BB_babies_target"
 
+///Finding adult mob
+///key holds the adult we found
+#define BB_FOUND_MOM "BB_found_mom"
+///list of types of mobs we will look for
+#define BB_FIND_MOM_TYPES "BB_find_mom_types"
+///list of types of mobs we must ignore
+#define BB_IGNORE_MOM_TYPES "BB_ignore_mom_types"
+
 // Bileworm AI keys
 
 #define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
@@ -307,3 +317,23 @@
 //Festivus AI keys
 /// Key where we store the charging apc ability
 #define BB_FESTIVE_APC "BB_festive_apc"
+
+//Paperwizard AI keys
+/// Key where we store the summon minions ability
+#define BB_WIZARD_SUMMON_MINIONS "BB_summon_minions"
+/// Key where we store the mimics ability
+#define BB_WIZARD_MIMICS "BB_summon_mimics"
+/// Key where we store the paper target
+#define BB_FOUND_PAPER "BB_found_paper"
+/// Key where we store the list of things we can write on a paper
+#define BB_WRITING_LIST "BB_writing_list"
+/// Key where we store the tentacleing ability
+#define BB_GOLIATH_TENTACLES "BB_goliath_tentacles"
+/// Key where goliath stores a hole it wants to get into
+#define BB_GOLIATH_HOLE_TARGET "BB_goliath_hole"
+
+///bee keys
+///the bee hive we live inside
+#define BB_CURRENT_HOME "BB_current_home"
+///the hydro we will pollinate
+#define BB_TARGET_HYDRO "BB_target_hydro"

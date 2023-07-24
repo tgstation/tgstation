@@ -1,10 +1,10 @@
 
 /mob/living/carbon/human/Stun(amount, ignore_canstun = FALSE)
-	amount = dna.species.spec_stun(src,amount)
+	amount = dna.species.spec_stun(src, amount)
 	return ..()
 
 /mob/living/carbon/human/Knockdown(amount, ignore_canstun = FALSE)
-	amount = dna.species.spec_stun(src,amount)
+	amount = dna.species.spec_stun(src, amount) * physiology.knockdown_mod
 	return ..()
 
 /mob/living/carbon/human/Paralyze(amount, ignore_canstun = FALSE)
@@ -16,7 +16,7 @@
 	return ..()
 
 /mob/living/carbon/human/Unconscious(amount, ignore_canstun = FALSE)
-	amount = dna.species.spec_stun(src,amount)
+	amount = dna.species.spec_stun(src, amount)
 	if(HAS_TRAIT(src, TRAIT_HEAVY_SLEEPER))
 		amount *= (rand(125, 130) * 0.01)
 	return ..()

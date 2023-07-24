@@ -104,6 +104,8 @@
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = ""
 	anchored = TRUE
+	// Unless otherwise specified, layer above everything
+	layer = ABOVE_ALL_MOB_LAYER
 	var/late = FALSE
 
 /obj/effect/mapping_helpers/Initialize(mapload)
@@ -153,6 +155,7 @@
 				return
 			if(9 to 11)
 				airlock.lights = FALSE
+				// These do not use airlock.bolt() because we want to pretend it was always locked. That means no sound effects.
 				airlock.locked = TRUE
 			if(12 to 15)
 				airlock.locked = TRUE
@@ -201,6 +204,7 @@
 	if(airlock.locked)
 		log_mapping("[src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
 	else
+		// Used instead of bolt so that we can pretend it was always locked, i.e. no sound effects on init.
 		airlock.locked = TRUE
 
 /obj/effect/mapping_helpers/airlock/unres
@@ -253,7 +257,6 @@
 //air alarm helpers
 /obj/effect/mapping_helpers/airalarm
 	desc = "You shouldn't see this. Report it please."
-	layer = ABOVE_OBJ_LAYER
 	late = TRUE
 
 /obj/effect/mapping_helpers/airalarm/Initialize(mapload)
@@ -413,7 +416,6 @@
 //apc helpers
 /obj/effect/mapping_helpers/apc
 	desc = "You shouldn't see this. Report it please."
-	layer = DOOR_HELPER_LAYER
 	late = TRUE
 
 /obj/effect/mapping_helpers/apc/Initialize(mapload)
@@ -1188,7 +1190,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/broken_machine
 	name = "broken machine helper"
 	icon_state = "broken_machine"
-	layer = ABOVE_OBJ_LAYER
 	late = TRUE
 
 /obj/effect/mapping_helpers/broken_machine/Initialize(mapload)
@@ -1227,7 +1228,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/damaged_window
 	name = "damaged window helper"
 	icon_state = "damaged_window"
-	layer = ABOVE_OBJ_LAYER
 	late = TRUE
 	/// Minimum roll of integrity damage in percents needed to show cracks
 	var/integrity_damage_min = 0.25
@@ -1265,7 +1265,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 //requests console helpers
 /obj/effect/mapping_helpers/requests_console
 	desc = "You shouldn't see this. Report it please."
-	layer = DOOR_HELPER_LAYER
 	late = TRUE
 
 /obj/effect/mapping_helpers/requests_console/Initialize(mapload)

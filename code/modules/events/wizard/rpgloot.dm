@@ -14,7 +14,7 @@
 /obj/item/upgradescroll
 	name = "item fortification scroll"
 	desc = "Somehow, this piece of paper can be applied to items to make them \"better\". Apparently there's a risk of losing the item if it's already \"too good\". <i>This all feels so arbitrary...</i>"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/scrolls.dmi'
 	icon_state = "scroll"
 	worn_icon_state = "scroll"
 	w_class = WEIGHT_CLASS_TINY
@@ -96,7 +96,7 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 			var/datum/storage/storage_component = storage_item.atom_storage
 			if(prob(upgrade_scroll_chance) && storage_item.contents.len < storage_component.max_slots && !storage_item.invisibility)
 				var/obj/item/upgradescroll/scroll = new(get_turf(storage_item))
-				storage_item.atom_storage?.attempt_insert(scroll, override = TRUE)
+				storage_item.atom_storage?.attempt_insert(scroll, override = TRUE, force = STORAGE_SOFT_LOCKED)
 				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
 				if(isturf(scroll.loc))
 					qdel(scroll)

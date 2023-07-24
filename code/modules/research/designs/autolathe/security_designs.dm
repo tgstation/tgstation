@@ -155,7 +155,7 @@
 	id = "riot_dart"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT) //Discount for making individually - no box = less iron!
-	build_path = /obj/item/ammo_casing/caseless/foam_dart/riot
+	build_path = /obj/item/ammo_casing/foam_dart/riot
 	category = list(
 		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,

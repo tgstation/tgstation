@@ -21,7 +21,9 @@
 /datum/progressbar/New(mob/User, goal_number, atom/target)
 	. = ..()
 	if (!istype(target))
-		EXCEPTION("Invalid target given")
+		stack_trace("Invalid target [target] passed in")
+		qdel(src)
+		return
 	if(QDELETED(User) || !istype(User))
 		stack_trace("/datum/progressbar created with [isnull(User) ? "null" : "invalid"] user")
 		qdel(src)
@@ -45,7 +47,7 @@
 		user_client = user.client
 		add_prog_bar_image_to_client()
 
-	RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(on_user_delete))
+	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(on_user_delete))
 	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(clean_user_client))
 	RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(on_user_login))
 

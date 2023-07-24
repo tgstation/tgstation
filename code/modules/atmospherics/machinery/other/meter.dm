@@ -1,7 +1,7 @@
 /obj/machinery/meter
 	name = "gas flow meter"
 	desc = "It measures something."
-	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
+	icon = 'icons/obj/pipes_n_cables/meter.dmi'
 	icon_state = "meter"
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
@@ -62,8 +62,8 @@
 	return target?.return_air() || ..()
 
 /obj/machinery/meter/process_atmos()
-	var/datum/gas_mixture/pipe_air = target.return_air()
-	if(!pipe_air)
+	var/datum/gas_mixture/pipe_air = target?.return_air()
+	if(isnull(pipe_air))
 		icon_state = "meter0"
 		return FALSE
 

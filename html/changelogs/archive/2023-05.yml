@@ -1060,3 +1060,136 @@
   - spellcheck: fixed a typo in custom item description in northstar
   mc-oofert:
   - bugfix: soap suicide
+2023-05-29:
+  FeudeyTF:
+  - code_imp: Updated the UI of the console for viewing message logs and console for
+      view server communications
+  Guillaume Prata:
+  - rscadd: Air alarms will now talk about their atmospheric problems (low/high pressure/temperature)
+      so players can understand what is the room's issue easier.
+  HWSensum:
+  - rscadd: added a mail counterfeit device that can make custom (and also armed)
+      mails. Traitors have those devices in their uplinks.
+  - rscadd: added new kit for QM and Cargo Technicians that have multiple mail counterfeit
+      devices for neat price.
+  - bugfix: fixed envelopes that were giving only their first item, even tho they
+      had two items insede.
+  - image: added new icon for mail counterfeit device.
+  JohnFulpWillard:
+  - balance: Newly created areas in Icemoon and Space are no longer valid Cult areas
+      for Runes and such.
+  LT3:
+  - qol: Being connected to an IV now has a visual indicator
+  MTandi:
+  - qol: dead potted plant can be revived with a seed
+  - qol: Solar control console now shows power generation history
+  Melbert:
+  - qol: Gun Flipping is now done by right clicking the gun when it's in your active
+      hand ("use secondary"), meaning you should be less likely to accidentally spin
+      your gun instead of ejecting rounds / racking / etc.
+  - qol: You can gun flip all guns, instead of just ballistics. This includes stuff
+      like wands.
+  Sealed101:
+  - bugfix: exorcised a ghost of the gang gamemode from graffiti
+  SethLafuente:
+  - rscadd: Added 3 new spider types
+  - rscadd: Added more spider abilities
+  - balance: Rebalanced spiders
+  - bugfix: Fixes spiderlings having density
+  Seven:
+  - bugfix: Fixes epipens, pillbottles, and test tubes missing texture when put into
+      suit storage
+  - bugfix: A paper hat no longer appears on your head when putting paper into suit
+      storage
+  - rscadd: The paper hat is now a craftable item
+  - image: Pills and patches are no longer visible on a person when put into suit
+      storage
+  SyncIt21:
+  - bugfix: stabilized metal slime extract properly increments stacks so that it's
+      appearance & weight are updated correctly & is picked up by material sniffers.
+  axietheaxolotl / viro:
+  - image: new medkit sprites, again.
+  mikederkan:
+  - rscadd: Made disposals outlets launch with more range depending on the setting
+      used
+  - rscadd: Made disposals outlets emag effect irreversible without reconstruction
+2023-05-30:
+  Cheshify:
+  - rscadd: The North Star's medbay has been fully renovated.
+  - bugfix: The CMO's office ceiling is now properly protected on the North Star.
+  MTandi, Krysonism:
+  - rscadd: Added Spess Knife with many tool behaviours
+  SyncIt21:
+  - bugfix: fix "none" gas names in gas filter
+  - bugfix: precise insertion of sheets into material container (e.g. drone dispenser)
+      works again
+  - bugfix: recycler properly recycles all contents inside a storage medium like a
+      backpack & even inert bag of holding
+  - bugfix: gaining extra metal after recycling ammo boxes
+  - qol: recycler consumes only half the power when recycling item's that has no material
+  - qol: you can fill up your bag with iron, glass, whatever material and attack the
+      autolathe/ore silo with it to transfer all it's contents into it
+  - refactor: '`/datum/component/material_container/insert_item()` now splits stack,
+      deletes the inserted item & calls the
+
+      `after_insert` callback'
+  - refactor: '`/datum/component/material_container/user_insert()` now extracts material
+      from all the contents of an atom reccursively'
+  TheVekter:
+  - rscadd: As a result of a recent safety lawsuit, Nanotrasen has mandated the return
+      of anesthetic canisters and masks to robotics research on all stations that
+      are not currently equipped with them.
+  - balance: Syndicate corpses dropped from killing a Legion no longer come with a
+      MODSuit.
+2023-05-31:
+  Epoc:
+  - bugfix: Speaking in sign language no longer reveals your identity
+  FlufflesTheDog:
+  - bugfix: Anomalies shouldn't spawn with frequencies that can't be selected on signalers
+      anymore
+  Ghommie:
+  - bugfix: basic mobs & co no longer indiscriminately perform close-range actions
+      in the presence of obstacles such as directional windows between them and their
+      target.
+  - bugfix: Doggos should look at you with longing eyes once again if you dare pick
+      up an edible they are trying to eat.
+  Guillaume Prata:
+  - bugfix: Air Alarms will properly shut up when atmos is fixed.
+  Helg2:
+  - bugfix: Syndicate mod-suit in Tactical NukeOps Metagame Syndi-kit (the one with
+      bulldog shotgun) now doesn't require any access, so you don't need to buy agent
+      card to simply use it.
+  JohnFulpWillard:
+  - balance: Golems' 55% species innate armor has been lowered to 10%
+  Kubisopplay:
+  - qol: Admins can make a portal not spark when teleporting
+  Licks-the-Crystal:
+  - bugfix: Stops grilles from electrocuting or tesla-ing when there's a floor between
+      the grille and the cable.
+  MTandi:
+  - image: Resprited many condiment containers
+  - image: Added a sprite for cooking oil / corn oil container
+  - image: Replaced old condiment bottles with the newer bottles in Condi Master
+  Pickle-Coding:
+  - balance: Engineering, janitor and medical holosign projector projection time reduced
+      to 1 second.
+  - balance: Engineering, janitor, and medical holosign integrity reduced to 1.
+  - balance: Engineering holosign projector max capacity increased to 12.
+  - balance: Medical holosign projector max capacity increased to 6.
+  Time-Green:
+  - bugfix: Hardcore random pays your score again as non-antag
+  ZephyrTFA:
+  - admin: new log viewer, try it out. (View Round Logs)
+  moocowswag:
+  - bugfix: You can no longer pulse the wire on an unpowered shield generator to activate
+      shields
+  - bugfix: External only setting on modular shield generators now properly uses terrestrial
+      turfs such as lavawastes.
+  nikothedude:
+  - code_imp: Modularized plasmamen plasma breathing species trait code to automatically
+      apply to all species
+  - code_imp: Liver shrugging differences/Alcohol tolerance differences now displayed
+      in the species trait panel
+  - code_imp: Nobreath and Nogenes now accounted for in species trait code
+  - rscadd: Podpeople now have species traits
+  - rscadd: Plasmamen genelessness is now displayed in their species panel

@@ -156,6 +156,7 @@
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
 	if(ammo_type.len > 1 && can_select)
 		select_fire(user)
+	return ..()
 
 /obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
@@ -190,7 +191,7 @@
 		process_chamber() // If the gun was drained and then recharged, load a new shot.
 	return ..()
 
-/obj/item/gun/energy/process_burst(mob/living/user, atom/target, message = TRUE, params = null, zone_override="", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
+/obj/item/gun/energy/process_burst(mob/living/user, atom/target, message = TRUE, params = null, zone_override="", randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
 	if(!chambered && can_shoot())
 		process_chamber() // Ditto.
 	return ..()

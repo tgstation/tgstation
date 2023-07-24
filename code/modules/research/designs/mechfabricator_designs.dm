@@ -1171,7 +1171,7 @@
 	)
 
 /datum/design/borg_upgrade_silicon_knife
-	name = "Kitchen toolset"
+	name = "Kitchen Toolset"
 	id = "borg_upgrade_silicon_knife"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/silicon_knife
@@ -1182,11 +1182,22 @@
 	)
 
 /datum/design/borg_upgrade_service_apparatus
-	name = "Service apparatus"
+	name = "Service Apparatus"
 	id = "borg_upgrade_service_apparatus"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/service_apparatus
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2.5)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+/datum/design/borg_upgrade_service_cookbook
+	name = "Service Cookbook"
+	id = "borg_upgrade_service_cookbook"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/service_cookbook
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT)
 	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
@@ -1897,6 +1908,19 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
 
+/datum/design/module/statusreadout
+	name = "Status Readout Module"
+	id = "mod_statusreadout"
+	materials = list(
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2,
+	)
+	build_path = /obj/item/mod/module/status_readout
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
+	)
+
 /datum/design/module/patienttransport
 	name = "Patient Transport Module"
 	id = "mod_patienttransport"
@@ -1923,6 +1947,33 @@
 	build_path = /obj/item/mod/module/disposal_connector
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
+	)
+
+/datum/design/module/joint_torsion
+	name = "Joint Torsion Ratchet Module"
+	id = "mod_joint_torsion"
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT*2.5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/mod/module/joint_torsion
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUITS_MISC
+	)
+
+/datum/design/module/recycler
+	name = "Recycler Module"
+	id = "mod_recycler"
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT*2)
+	build_path = /obj/item/mod/module/recycler
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SERVICE
+	)
+
+/datum/design/module/shooting_assistant
+	name = "Shooting Assistant Module"
+	id = "mod_shooting"
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/silver = SMALL_MATERIAL_AMOUNT*2, /datum/material/gold = SMALL_MATERIAL_AMOUNT, /datum/material/diamond = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/mod/module/shooting_assistant
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)
 
 //MODsuit anomalock modules

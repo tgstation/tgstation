@@ -98,6 +98,10 @@
 	SIGNAL_HANDLER
 	if(!isliving(arrived))
 		return
+	if(lube_flags & SLIPPERY_TURF)
+		var/turf/turf = get_turf(source)
+		if(HAS_TRAIT(turf, TRAIT_TURF_IGNORE_SLIPPERY))
+			return
 	var/mob/living/victim = arrived
 	if((victim.movement_type & (FLYING | FLOATING)))
 		return
@@ -122,7 +126,7 @@
 		holder = equipper
 		qdel(GetComponent(/datum/component/connect_loc_behalf))
 		AddComponent(/datum/component/connect_loc_behalf, holder, holder_connections)
-		RegisterSignal(holder, COMSIG_PARENT_QDELETING, PROC_REF(holder_deleted))
+		RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(holder_deleted))
 
 /*
  * Detects if the holder mob is deleted.
@@ -147,7 +151,7 @@
 /datum/component/slippery/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(user, COMSIG_QDELETING)
 
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
 	add_connect_loc_behalf_to_parent()

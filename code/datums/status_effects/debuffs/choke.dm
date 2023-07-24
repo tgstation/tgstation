@@ -49,7 +49,7 @@
 	RegisterSignal(owner, COMSIG_CARBON_PRE_HELP, PROC_REF(helped))
 	RegisterSignal(owner, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(shook))
 
-	RegisterSignal(choking_on, COMSIG_PARENT_QDELETING, PROC_REF(remove_choke))
+	RegisterSignal(choking_on, COMSIG_QDELETING, PROC_REF(remove_choke))
 	RegisterSignal(choking_on, COMSIG_MOVABLE_MOVED, PROC_REF(hazard_moved))
 	ADD_TRAIT(owner, TRAIT_MUTE, CHOKING_TRAIT)
 
@@ -122,7 +122,7 @@
 		choking_on.throw_at(target, distance, 1, source)
 
 /datum/status_effect/choke/get_examine_text()
-	return span_boldwarning("[owner.p_they(TRUE)] [owner.p_are()] choking!")
+	return span_boldwarning("[owner.p_They()] [owner.p_are()] choking!")
 
 /datum/status_effect/choke/proc/remove_choke(datum/source)
 	SIGNAL_HANDLER

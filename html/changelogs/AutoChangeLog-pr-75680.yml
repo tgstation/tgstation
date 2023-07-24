@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Gun Flipping is now done by right clicking the gun when it's in your active hand (\"use secondary\"), meaning you should be less likely to accidentally spin your gun instead of ejecting rounds / racking / etc."
-  - qol: "You can gun flip all guns, instead of just ballistics. This includes stuff like wands."

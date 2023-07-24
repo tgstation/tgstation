@@ -24,7 +24,7 @@
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/powered/aesthetic)
 "h" = (
-/obj/effect/overlay/palmtree_r,
+/obj/structure/flora/tree/palm,
 /turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav/powered/aesthetic)
 "i" = (
@@ -60,10 +60,6 @@
 "o" = (
 /obj/structure/window/spawner/directional/east,
 /turf/open/floor/iron/vaporwave,
-/area/ruin/space/has_grav/powered/aesthetic)
-"p" = (
-/obj/effect/overlay/palmtree_l,
-/turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav/powered/aesthetic)
 "q" = (
 /turf/open/floor/holofloor/beach,
@@ -160,7 +156,7 @@
 	},
 /area/ruin/space)
 "H" = (
-/obj/effect/overlay/palmtree_l,
+/obj/structure/flora/tree/palm,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "I" = (
@@ -185,10 +181,6 @@
 /turf/open/floor/iron/airless{
 	icon_state = "stairs-r"
 	},
-/area/ruin/space)
-"M" = (
-/obj/effect/overlay/palmtree_r,
-/turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "O" = (
 /obj/structure/chair/comfy/black{
@@ -431,7 +423,7 @@ o
 o
 f
 G
-M
+H
 d
 d
 "}
@@ -441,9 +433,9 @@ a
 d
 d
 g
-p
+h
 t
-p
+h
 u
 y
 g

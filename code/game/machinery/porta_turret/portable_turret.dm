@@ -183,7 +183,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		turret_gun.forceMove(src)
 		stored_gun = turret_gun
 
-	RegisterSignal(stored_gun, COMSIG_PARENT_QDELETING, PROC_REF(null_gun))
+	RegisterSignal(stored_gun, COMSIG_QDELETING, PROC_REF(null_gun))
 	var/list/gun_properties = stored_gun.get_turret_properties()
 
 	//required properties
@@ -355,10 +355,10 @@ DEFINE_BITFIELD(turret_flags, list(
 	else
 		return ..()
 
-/obj/machinery/porta_turret/emag_act(mob/user)
+/obj/machinery/porta_turret/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
-	to_chat(user, span_warning("You short out [src]'s threat assessment circuits."))
+		return FALSE
+	balloon_alert(user, "threat assessment circuits shorted")
 	audible_message(span_hear("[src] hums oddly..."))
 	obj_flags |= EMAGGED
 	controllock = TRUE
@@ -367,6 +367,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	//6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
 	addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), 6 SECONDS)
 	//turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
+	return TRUE
 
 /obj/machinery/porta_turret/emp_act(severity)
 	. = ..()
@@ -785,6 +786,14 @@ DEFINE_BITFIELD(turret_flags, list(
 	stun_projectile = /obj/projectile/bullet/syndicate_turret
 	lethal_projectile = /obj/projectile/bullet/syndicate_turret
 
+/obj/machinery/porta_turret/syndicate/irs
+	lethal_projectile = /obj/projectile/bullet/c10mm/ap
+	lethal_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
+	stun_projectile = /obj/projectile/bullet/c10mm/ap
+	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
+	armor_type = /datum/armor/syndicate_turret
+	faction = list(FACTION_PIRATE)
+
 /obj/machinery/porta_turret/syndicate/shuttle
 	scan_range = 9
 	shot_delay = 3
@@ -966,12 +975,13 @@ DEFINE_BITFIELD(turret_flags, list(
 		else
 			to_chat(user, span_alert("Access denied."))
 
-/obj/machinery/turretid/emag_act(mob/user)
+/obj/machinery/turretid/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
-	to_chat(user, span_notice("You short out the turret controls' access analysis module."))
+		return FALSE
+	balloon_alert(user, "access analysis module shorted")
 	obj_flags |= EMAGGED
 	locked = FALSE
+	return TRUE
 
 /obj/machinery/turretid/attack_ai(mob/user)
 	if(!ailock || isAdminGhostAI(user))
@@ -1020,20 +1030,29 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/turretid/proc/toggle_lethal(mob/user)
 	lethal = !lethal
-	add_hiddenprint(user)
-	log_combat(user, src, "[lethal ? "enabled" : "disabled"] lethals on")
+	if (user)
+		var/enabled_or_disabled = lethal ? "disabled" : "enabled"
+		balloon_alert(user, "safeties [enabled_or_disabled]")
+		add_hiddenprint(user)
+		log_combat(user, src, "[enabled_or_disabled] lethals on")
 	updateTurrets()
 
 /obj/machinery/turretid/proc/toggle_on(mob/user)
 	enabled = !enabled
-	add_hiddenprint(user)
-	log_combat(user, src, "[enabled ? "enabled" : "disabled"]")
+	if (user)
+		var/enabled_or_disabled = enabled ? "enabled" : "disabled"
+		balloon_alert(user, "[enabled_or_disabled]")
+		add_hiddenprint(user)
+		log_combat(user, src, "[enabled ? "enabled" : "disabled"]")
 	updateTurrets()
 
 /obj/machinery/turretid/proc/shoot_silicons(mob/user)
 	shoot_cyborgs = !shoot_cyborgs
-	add_hiddenprint(user)
-	log_combat(user, src, "[shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"]")
+	if (user)
+		var/status = shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"
+		balloon_alert(user, lowertext(status))
+		add_hiddenprint(user)
+		log_combat(user, src, "[status]")
 	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()

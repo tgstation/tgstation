@@ -130,7 +130,7 @@
 	else if(href_list["import"])
 		var/t = ""
 		do
-			t = html_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
+			t = html_encode(input(usr, "Please paste the entire song, formatted:", name, t) as message)
 			if(!in_range(parent, usr))
 				return
 

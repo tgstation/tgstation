@@ -48,9 +48,9 @@
 
 /datum/wound/slash/proc/set_highest_scar(datum/scar/new_scar)
 	if(highest_scar)
-		UnregisterSignal(highest_scar, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(highest_scar, COMSIG_QDELETING)
 	if(new_scar)
-		RegisterSignal(new_scar, COMSIG_PARENT_QDELETING, PROC_REF(clear_highest_scar))
+		RegisterSignal(new_scar, COMSIG_QDELETING, PROC_REF(clear_highest_scar))
 	highest_scar = new_scar
 
 /datum/wound/slash/proc/clear_highest_scar(datum/source)
@@ -63,7 +63,7 @@
 		highest_scar.lazy_attach(limb)
 	return ..()
 
-/datum/wound/slash/get_examine_description(mob/user)
+/datum/wound/slash/get_wound_description(mob/user)
 	if(!limb.current_gauze)
 		return ..()
 
@@ -227,8 +227,15 @@
 	var/improv_penalty_mult = (I.tool_behaviour == TOOL_CAUTERY ? 1 : 1.25) // 25% longer and less effective if you don't use a real cautery
 	var/self_penalty_mult = (user == victim ? 1.5 : 1) // 50% longer and less effective if you do it to yourself
 
-	user.visible_message(span_danger("[user] begins cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
-	if(!do_after(user, base_treat_time * self_penalty_mult * improv_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	var/treatment_delay = base_treat_time * self_penalty_mult * improv_penalty_mult
+
+	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		treatment_delay *= 0.5
+		user.visible_message(span_danger("[user] begins expertly cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I], keeping the holo-image indications in mind..."))
+	else
+		user.visible_message(span_danger("[user] begins cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
+
+	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 	var/bleeding_wording = (no_bleeding ? "cuts" : "bleeding")
 	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
@@ -246,9 +253,15 @@
 /// If someone is using a suture to close this cut
 /datum/wound/slash/proc/suture(obj/item/stack/medical/suture/I, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.4 : 1)
-	user.visible_message(span_notice("[user] begins stitching [victim]'s [limb.plaintext_zone] with [I]..."), span_notice("You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
+	var/treatment_delay = base_treat_time * self_penalty_mult
 
-	if(!do_after(user, base_treat_time * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		treatment_delay *= 0.5
+		user.visible_message(span_notice("[user] begins expertly stitching [victim]'s [limb.plaintext_zone] with [I]..."), span_notice("You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I], keeping the holo-image information in mind..."))
+	else
+		user.visible_message(span_notice("[user] begins stitching [victim]'s [limb.plaintext_zone] with [I]..."), span_notice("You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
+
+	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 	var/bleeding_wording = (no_bleeding ? "cuts" : "bleeding")
 	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))

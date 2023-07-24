@@ -82,7 +82,7 @@
 /obj/machinery/light/broken{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/cup/glass/coffee_cup{
 	pixel_x = 8;
 	pixel_y = 9
@@ -107,7 +107,7 @@
 "lB" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wideplating_new,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
@@ -155,7 +155,7 @@
 /obj/machinery/light/broken{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "vJ" = (
@@ -165,7 +165,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/full,
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
@@ -242,7 +242,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "HB" = (
@@ -270,16 +270,16 @@
 /turf/template_noop,
 /area/template_noop)
 "Lk" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Mn" = (
 /obj/effect/decal/cleanable/robot_debris/up,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "NG" = (
-/obj/vehicle/sealed/mecha/working/ripley,
+/obj/vehicle/sealed/mecha/ripley,
 /turf/open/floor/iron/recharge_floor/Airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Oh" = (
@@ -307,7 +307,7 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "Ry" = (
 /obj/structure/closet/crate/secure/loot,
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Te" = (
@@ -342,7 +342,7 @@
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "WX" = (
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
@@ -350,7 +350,7 @@
 /obj/machinery/computer/mecha{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wideplating_new,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav/powered/mechtransport)

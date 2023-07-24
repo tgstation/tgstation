@@ -2,14 +2,8 @@
 /datum/species/golem
 	name = "Golem"
 	id = SPECIES_GOLEM
-	species_traits = list(
-		NO_DNA_COPY,
-		NOTRANSSTING,
-		NO_UNDERWEAR,
-		NOEYEHOLES,
-		NOAUGMENTS,
-	)
 	inherent_traits = list(
+		TRAIT_NO_UNDERWEAR,
 		TRAIT_GENELESS,
 		TRAIT_LAVA_IMMUNE,
 		TRAIT_NOBREATH,
@@ -18,13 +12,15 @@
 		TRAIT_NOFIRE,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_NO_AUGMENTS,
 	)
 	mutantheart = null
 	mutantlungs = null
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
-	liked_food = STONE
+	damage_modifier = 10 //golem is stronk
 	payday_modifier = 0.75
-	armor = 55
 	siemens_coeff = 0
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
@@ -40,6 +36,7 @@
 	mutantbrain = /obj/item/organ/internal/brain/golem
 	mutanttongue = /obj/item/organ/internal/tongue/golem
 	mutantstomach = /obj/item/organ/internal/stomach/golem
+	mutantliver = /obj/item/organ/internal/liver/golem
 	mutantappendix = /obj/item/organ/internal/appendix/golem
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem,
@@ -95,10 +92,3 @@
 	))
 
 	return to_add
-
-/// Remove nutrient value from non-mineral food, wish this was on an organ and not species but such is life
-/datum/species/golem/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
-	if (istype(chem, /datum/reagent/consumable) && !istype(chem, /datum/reagent/consumable/nutriment/mineral))
-		var/datum/reagent/consumable/yummy_chem = chem
-		yummy_chem.nutriment_factor = 0
-	return ..()

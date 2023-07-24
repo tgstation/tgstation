@@ -11,6 +11,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floodlight_c1"
 	density = TRUE
+
 	var/state = FLOODLIGHT_NEEDS_WIRES
 
 /obj/structure/floodlight_frame/Initialize(mapload)
@@ -117,13 +118,6 @@
 		else //A minute of silence for all the accidentally broken light tubes.
 			balloon_alert(user, "light tube is broken!")
 			return
-	if(istype(O, /obj/item/lightreplacer))
-		var/obj/item/lightreplacer/L = O
-		if(state == FLOODLIGHT_NEEDS_LIGHTS && L.can_use(user))
-			L.Use(user)
-			new /obj/machinery/power/floodlight(loc)
-			qdel(src)
-			return
 	..()
 
 /obj/machinery/power/floodlight
@@ -138,6 +132,8 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	anchored = FALSE
 	light_power = 1.75
+	can_change_cable_layer = TRUE
+
 	/// List of power usage multipliers
 	var/list/light_setting_list = list(0, 5, 10, 15)
 	/// Constant coeff. for power usage
@@ -243,6 +239,12 @@
 			setting_text = "high power"
 	if(user)
 		to_chat(user, span_notice("You set [src] to [setting_text]."))
+
+/obj/machinery/power/floodlight/cable_layer_change_checks(mob/living/user, obj/item/tool)
+	if(anchored)
+		balloon_alert(user, "unanchor first!")
+		return FALSE
+	return TRUE
 
 /obj/machinery/power/floodlight/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

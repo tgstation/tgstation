@@ -21,7 +21,7 @@
 /datum/element/organ_set_bonus/Detach(obj/item/organ/target)
 	UnregisterSignal(target, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED))
 	if(target.owner)
-		UnregisterSignal(target.owner, COMSIG_PARENT_EXAMINE)
+		UnregisterSignal(target.owner, COMSIG_ATOM_EXAMINE)
 	return ..()
 
 /datum/element/organ_set_bonus/proc/on_implanted(obj/item/organ/target, mob/living/carbon/receiver)

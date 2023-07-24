@@ -15,7 +15,7 @@
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
-	dna_cost = -1
+	dna_cost = CHANGELING_POWER_UNOBTAINABLE
 
 	var/silent = FALSE
 	var/weapon_type
@@ -88,7 +88,7 @@
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
 	chemical_cost = 1000
-	dna_cost = -1
+	dna_cost = CHANGELING_POWER_UNOBTAINABLE
 
 	var/helmet_type = /obj/item
 	var/suit_type = /obj/item
@@ -467,7 +467,7 @@
 	if(ismob(loc))
 		loc.visible_message(span_warning("The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!"), span_warning("We inflate our hand into a strong shield."), span_hear("You hear organic matter ripping and tearing!"))
 
-/obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc

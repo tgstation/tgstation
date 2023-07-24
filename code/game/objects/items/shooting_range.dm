@@ -1,7 +1,7 @@
 /obj/item/target
 	name = "shooting target"
 	desc = "A shooting target."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "target_h"
 	density = FALSE
 	var/hp = 1800
@@ -43,7 +43,7 @@
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 
 /obj/item/target/bullet_act(obj/projectile/P)
-	if(istype(P, /obj/projectile/bullet/reusable)) // If it's a foam dart, don't bother with any of this other shit
+	if(istype(P, /obj/projectile/bullet)) // If it's a foam dart, don't bother with any of this other shit
 		return P.on_hit(src, 0)
 	var/p_x = P.p_x + pick(0,0,0,0,0,-1,1) // really ugly way of coding "sometimes offset P.p_x!"
 	var/p_y = P.p_y + pick(0,0,0,0,0,-1,1)

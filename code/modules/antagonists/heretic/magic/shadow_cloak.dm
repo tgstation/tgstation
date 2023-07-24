@@ -73,12 +73,12 @@
 	)
 
 	active_cloak = cast_on.apply_status_effect(/datum/status_effect/shadow_cloak)
-	RegisterSignal(active_cloak, COMSIG_PARENT_QDELETING, PROC_REF(on_early_cloak_loss))
+	RegisterSignal(active_cloak, COMSIG_QDELETING, PROC_REF(on_early_cloak_loss))
 	RegisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 
 /datum/action/cooldown/spell/shadow_cloak/proc/uncloak_mob(mob/living/cast_on, show_message = TRUE)
 	if(!QDELETED(active_cloak))
-		UnregisterSignal(active_cloak, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(active_cloak, COMSIG_QDELETING)
 		qdel(active_cloak)
 	active_cloak = null
 
@@ -94,7 +94,7 @@
 	deltimer(uncloak_timer)
 	uncloak_timer = null
 
-/// Signal proc for [COMSIG_PARENT_QDELETING], if our cloak is deleted early, impart negative effects
+/// Signal proc for [COMSIG_QDELETING], if our cloak is deleted early, impart negative effects
 /datum/action/cooldown/spell/shadow_cloak/proc/on_early_cloak_loss(datum/status_effect/source)
 	SIGNAL_HANDLER
 

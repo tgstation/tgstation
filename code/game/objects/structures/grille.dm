@@ -325,6 +325,8 @@
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
 		return FALSE
 	var/turf/T = get_turf(src)
+	if(T.overfloor_placed)//cant be a floor in the way!
+		return FALSE
 	var/obj/structure/cable/C = T.get_cable_node()
 	if(C)
 		if(electrocute_mob(user, C, src, 1, TRUE))
@@ -348,6 +350,8 @@
 			var/obj/O = AM
 			if(O.throwforce != 0)//don't want to let people spam tesla bolts, this way it will break after time
 				var/turf/T = get_turf(src)
+				if(T.overfloor_placed)
+					return FALSE
 				var/obj/structure/cable/C = T.get_cable_node()
 				if(C)
 					playsound(src, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)

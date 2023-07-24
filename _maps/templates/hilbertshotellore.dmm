@@ -5,14 +5,6 @@
 "ab" = (
 /turf/closed/indestructible/hotelwall,
 /area/misc/hilbertshotel)
-"ac" = (
-/obj/structure/table/wood/fancy,
-/obj/structure/mirror/directional/north{
-	broken = 1;
-	icon_state = "mirror_broke"
-	},
-/turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
 "ad" = (
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
@@ -150,11 +142,6 @@
 /obj/structure/sink/directional/east,
 /turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
-"aJ" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
-/obj/structure/window/reinforced/tinted/spawner/directional/north,
-/turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
 "aK" = (
 /obj/machinery/shower/directional/west,
 /turf/open/indestructible/hoteltile,
@@ -167,18 +154,6 @@
 /obj/structure/table/wood/poker,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
-"aN" = (
-/obj/structure/toilet{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted/spawner/directional/north,
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
-/turf/open/indestructible/hoteltile,
-/area/misc/hilbertshotel)
-"aO" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
-/turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "aP" = (
 /obj/item/bikehorn/rubberducky,
@@ -193,11 +168,6 @@
 "aR" = (
 /obj/machinery/smartfridge/food,
 /turf/open/indestructible/hotelwood,
-/area/misc/hilbertshotel)
-"aS" = (
-/obj/structure/window/reinforced/tinted/spawner/directional/west,
-/obj/structure/window/reinforced/tinted/spawner/directional/south,
-/turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 "aT" = (
 /obj/structure/table/reinforced,
@@ -296,10 +266,37 @@
 /obj/item/paper/crumpled/ruins/hotel_note,
 /turf/open/indestructible/hotelwood,
 /area/misc/hilbertshotel)
+"ej" = (
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/turf/open/indestructible/hoteltile,
+/area/misc/hilbertshotel)
+"tf" = (
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/turf/open/indestructible/hoteltile,
+/area/misc/hilbertshotel)
+"Gk" = (
+/obj/structure/table/wood/fancy,
+/obj/structure/mirror/broken/directional/north,
+/turf/open/indestructible/hotelwood,
+/area/misc/hilbertshotel)
 "Mn" = (
 /obj/structure/table/wood/fancy,
 /obj/machinery/light/small/directional/north,
 /turf/open/indestructible/hotelwood,
+/area/misc/hilbertshotel)
+"XX" = (
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
+/turf/open/indestructible/hoteltile,
+/area/misc/hilbertshotel)
+"Yw" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/turf/open/indestructible/hoteltile,
 /area/misc/hilbertshotel)
 
 (1,1,1) = {"
@@ -475,7 +472,7 @@ aa
 (11,1,1) = {"
 aa
 ab
-ac
+Gk
 ad
 ad
 aL
@@ -483,7 +480,7 @@ av
 ap
 aD
 aC
-aN
+Yw
 bi
 aV
 ab
@@ -499,9 +496,9 @@ ad
 aw
 ab
 aE
-aJ
-aO
-aS
+XX
+ej
+tf
 aE
 ab
 aa

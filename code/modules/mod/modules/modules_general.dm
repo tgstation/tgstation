@@ -19,17 +19,17 @@
 	. = ..()
 	create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
 	atom_storage.allow_big_nesting = TRUE
-	atom_storage.locked = TRUE
+	atom_storage.locked = STORAGE_FULLY_LOCKED
 
 /obj/item/mod/module/storage/on_install()
 	var/datum/storage/modstorage = mod.create_storage(max_specific_storage = max_w_class, max_total_storage = max_combined_w_class, max_slots = max_items)
 	modstorage.set_real_location(src)
-	atom_storage.locked = FALSE
+	atom_storage.locked = STORAGE_NOT_LOCKED
 	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
 	var/datum/storage/modstorage = mod.atom_storage
-	atom_storage.locked = TRUE
+	atom_storage.locked = STORAGE_FULLY_LOCKED
 	qdel(modstorage)
 	if(!deleting)
 		atom_storage.remove_all(get_turf(src))
@@ -38,9 +38,12 @@
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
 		return
-	to_chat(mod.wearer, span_notice("[src] tries to store [mod.wearer.s_store] inside itself."))
-	if(atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE))
-		mod.wearer.temporarilyRemoveItemFromInventory(mod.wearer.s_store)
+	if(!atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE))
+		balloon_alert(mod.wearer, "storage failed!")
+		to_chat(mod.wearer, span_warning("[src] fails to store [mod.wearer.s_store] inside itself!"))
+		return
+	to_chat(mod.wearer, span_notice("[src] stores [mod.wearer.s_store] inside itself."))
+	mod.wearer.temporarilyRemoveItemFromInventory(mod.wearer.s_store)
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
@@ -96,32 +99,38 @@
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_jetpack"
 	overlay_state_active = "module_jetpack_on"
-	/// Do we stop the wearer from gliding in space.
-	var/stabilizers = FALSE
 	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
-	var/datum/callback/get_mover
-	var/datum/callback/check_on_move
+	var/stabilize = FALSE
+	var/thrust_callback
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
-	get_mover = CALLBACK(src, PROC_REF(get_user))
-	check_on_move = CALLBACK(src, PROC_REF(allow_thrust))
-	refresh_jetpack()
+	thrust_callback = CALLBACK(src, PROC_REF(allow_thrust))
+	configure_jetpack(stabilize)
 
 /obj/item/mod/module/jetpack/Destroy()
-	get_mover = null
-	check_on_move = null
+	thrust_callback = null
 	return ..()
 
-/obj/item/mod/module/jetpack/proc/refresh_jetpack()
-	AddComponent(/datum/component/jetpack, stabilizers, COMSIG_MODULE_TRIGGERED, COMSIG_MODULE_DEACTIVATED, MOD_ABORT_USE, get_mover, check_on_move, /datum/effect_system/trail_follow/ion/grav_allowed)
+/**
+ * configures/re-configures the jetpack component
+ *
+ * Arguments
+ * stabilize - Should this jetpack be stabalized
+ */
+/obj/item/mod/module/jetpack/proc/configure_jetpack(stabilize)
+	src.stabilize = stabilize
 
-/obj/item/mod/module/jetpack/proc/set_stabilizers(new_stabilizers)
-	if(stabilizers == new_stabilizers)
-		return
-	stabilizers = new_stabilizers
-	refresh_jetpack()
+	AddComponent( \
+		/datum/component/jetpack, \
+		src.stabilize, \
+		COMSIG_MODULE_TRIGGERED, \
+		COMSIG_MODULE_DEACTIVATED, \
+		MOD_ABORT_USE, \
+		thrust_callback, \
+		/datum/effect_system/trail_follow/ion/grav_allowed \
+	)
 
 /obj/item/mod/module/jetpack/on_activation()
 	. = ..()
@@ -137,12 +146,12 @@
 
 /obj/item/mod/module/jetpack/get_configuration()
 	. = ..()
-	.["stabilizers"] = add_ui_configuration("Stabilizers", "bool", stabilizers)
+	.["stabilizers"] = add_ui_configuration("Stabilizers", "bool", stabilize)
 
 /obj/item/mod/module/jetpack/configure_edit(key, value)
 	switch(key)
 		if("stabilizers")
-			set_stabilizers(text2num(value))
+			configure_jetpack(text2num(value))
 
 /obj/item/mod/module/jetpack/proc/allow_thrust(use_fuel = TRUE)
 	if(!use_fuel)
@@ -150,9 +159,6 @@
 	if(!drain_power(use_power_cost))
 		return FALSE
 	return TRUE
-
-/obj/item/mod/module/jetpack/proc/get_user()
-	return mod.wearer
 
 /obj/item/mod/module/jetpack/advanced
 	name = "MOD advanced ion jetpack module"
@@ -162,6 +168,68 @@
 	overlay_state_inactive = "module_jetpackadv"
 	overlay_state_active = "module_jetpackadv_on"
 	full_speed = TRUE
+
+///Status Readout - Puts a lot of information including health, nutrition, fingerprints, temperature to the suit TGUI.
+/obj/item/mod/module/status_readout
+	name = "MOD status readout module"
+	desc = "A once-common module, this technology unfortunately went out of fashion in the safer regions of space; \
+		and found new life in the research networks of the Periphery. This particular unit hooks into the suit's spine, \
+		capable of capturing and displaying all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
+		and even useful information such as their overall health and wellness. The vitals monitor also comes with a speaker, loud enough \
+		to alert anyone nearby that someone has, in fact, died."
+	icon_state = "status"
+	complexity = 1
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
+	incompatible_modules = list(/obj/item/mod/module/status_readout)
+	tgui_id = "status_readout"
+	/// Does this show the round ID and shift time?
+	var/show_time = FALSE
+	/// Death sound. May or may not be funny. Vareditable at your own risk.
+	var/death_sound = 'sound/effects/flatline3.ogg'
+	/// Death sound volume. Please be responsible with this.
+	var/death_sound_volume = 50
+
+/obj/item/mod/module/status_readout/add_ui_data()
+	. = ..()
+	.["show_time"] = show_time
+	.["statustime"] = station_time_timestamp()
+	.["statusid"] = GLOB.round_id
+	.["statushealth"] = mod.wearer?.health || 0
+	.["statusmaxhealth"] = mod.wearer?.getMaxHealth() || 0
+	.["statusbrute"] = mod.wearer?.getBruteLoss() || 0
+	.["statusburn"] = mod.wearer?.getFireLoss() || 0
+	.["statustoxin"] = mod.wearer?.getToxLoss() || 0
+	.["statusoxy"] = mod.wearer?.getOxyLoss() || 0
+	.["statustemp"] = mod.wearer?.bodytemperature || 0
+	.["statusnutrition"] = mod.wearer?.nutrition || 0
+	.["statusfingerprints"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
+	.["statusdna"] = mod.wearer?.dna.unique_enzymes
+	.["statusviruses"] = null
+	if(!length(mod.wearer?.diseases))
+		return .
+	var/list/viruses = list()
+	for(var/datum/disease/virus as anything in mod.wearer.diseases)
+		var/list/virus_data = list()
+		virus_data["name"] = virus.name
+		virus_data["type"] = virus.spread_text
+		virus_data["stage"] = virus.stage
+		virus_data["maxstage"] = virus.max_stages
+		virus_data["cure"] = virus.cure_text
+		viruses += list(virus_data)
+	.["statusviruses"] = viruses
+
+	return .
+
+/obj/item/mod/module/status_readout/on_suit_activation()
+	RegisterSignal(mod.wearer, COMSIG_LIVING_DEATH, PROC_REF(death_sound))
+
+/obj/item/mod/module/status_readout/on_suit_deactivation(deleting)
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_DEATH)
+
+/obj/item/mod/module/status_readout/proc/death_sound(mob/living/carbon/human/wearer)
+	SIGNAL_HANDLER
+	if(death_sound && death_sound_volume)
+		playsound(wearer, death_sound, death_sound_volume, FALSE)
 
 ///Eating Apparatus - Lets the user eat/drink with the suit on.
 /obj/item/mod/module/mouthhole
@@ -181,8 +249,8 @@
 /obj/item/mod/module/mouthhole/on_install()
 	former_flags = mod.helmet.flags_cover
 	former_visor_flags = mod.helmet.visor_flags_cover
-	mod.helmet.flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
-	mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
+	mod.helmet.flags_cover &= ~(HEADCOVERSMOUTH|PEPPERPROOF)
+	mod.helmet.visor_flags_cover &= ~(HEADCOVERSMOUTH|PEPPERPROOF)
 
 /obj/item/mod/module/mouthhole/on_uninstall(deleting = FALSE)
 	if(deleting)
@@ -358,7 +426,7 @@
 		ensuring they're comfortable; even if they're some that like it hot."
 	icon_state = "regulator"
 	module_type = MODULE_TOGGLE
-	complexity = 2
+	complexity = 1
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/thermal_regulator)
 	cooldown_time = 0.5 SECONDS
@@ -389,7 +457,7 @@
 		however, this incredibly sensitive module is shorted out by EMPs. Luckily, cloning has been outlawed."
 	icon_state = "dnalock"
 	module_type = MODULE_USABLE
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/dna_lock, /obj/item/mod/module/eradication_lock)
 	cooldown_time = 0.5 SECONDS
@@ -424,7 +492,7 @@
 
 /obj/item/mod/module/dna_lock/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
-	on_emag(src, user, emag_card)
+	return on_emag(src, user, emag_card)
 
 /obj/item/mod/module/dna_lock/proc/dna_check(mob/user)
 	if(!iscarbon(user))
@@ -444,6 +512,7 @@
 	SIGNAL_HANDLER
 
 	dna = null
+	return TRUE
 
 /obj/item/mod/module/dna_lock/proc/on_mod_activation(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -471,6 +540,11 @@
 	incompatible_modules = list(/obj/item/mod/module/plasma_stabilizer)
 	overlay_state_inactive = "module_plasma"
 
+/obj/item/mod/module/plasma_stabilizer/generate_worn_overlay()
+	if(locate(/obj/item/mod/module/infiltrator) in mod.modules)
+		return list()
+	return ..()
+
 /obj/item/mod/module/plasma_stabilizer/on_equip()
 	ADD_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
 
@@ -483,7 +557,7 @@
 /obj/item/mod/module/hat_stabilizer
 	name = "MOD hat stabilizer module"
 	desc = "A simple set of deployable stands, directly atop one's head; \
-		these will deploy under a select few hats to keep them from falling off, allowing them to be worn atop the sealed helmet. \
+		these will deploy under a hat to keep it from falling off, allowing them to be worn atop the sealed helmet. \
 		You still need to take the hat off your head while the helmet deploys, though. \
 		This is a must-have for Nanotrasen Captains, enabling them to show off their authoritative hat even while in their MODsuit."
 	icon_state = "hat_holder"
@@ -492,40 +566,13 @@
 	even though it comes inbuilt into the Magnate/Corporate MODS and spawns in maints, I like the idea of stealing them*/
 	/// Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
 	var/obj/item/clothing/head/attached_hat
-	/// Whitelist of attachable hats, read note in Initialize() below this line
-	var/static/list/attachable_hats_list
-
-/obj/item/mod/module/hat_stabilizer/Initialize(mapload)
-	. = ..()
-	attachable_hats_list = typecacheof(
-	//List of attachable hats. Make sure these and their subtypes are all tested, so they dont appear janky.
-	//This list should also be gimmicky, so captains can have fun. I.E. the Santahat, Pirate hat, Tophat, Chefhat...
-	//Yes, I said it, the captain should have fun.
-		list(
-			/obj/item/clothing/head/hats/caphat,
-			/obj/item/clothing/head/costume/crown,
-			/obj/item/clothing/head/hats/centhat,
-			/obj/item/clothing/head/hats/centcom_cap,
-			/obj/item/clothing/head/costume/pirate,
-			/obj/item/clothing/head/costume/santa,
-			/obj/item/clothing/head/utility/hardhat/reindeer,
-			/obj/item/clothing/head/costume/sombrero/green,
-			/obj/item/clothing/head/costume/kitty,
-			/obj/item/clothing/head/costume/rabbitears,
-			/obj/item/clothing/head/costume/festive,
-			/obj/item/clothing/head/costume/powdered_wig,
-			/obj/item/clothing/head/costume/weddingveil,
-			/obj/item/clothing/head/hats/tophat,
-			/obj/item/clothing/head/costume/nursehat,
-			/obj/item/clothing/head/utility/chefhat,
-			/obj/item/clothing/head/costume/papersack,
-			/obj/item/clothing/head/caphat/beret,
-			/obj/item/clothing/head/helmet/space/beret,
-			))
+	/// Original cover flags for the MOD helmet, before a hat is placed
+	var/former_flags
+	var/former_visor_flags
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
-	RegisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE, PROC_REF(add_examine))
-	RegisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY, PROC_REF(place_hat))
+	RegisterSignal(mod.helmet, COMSIG_ATOM_EXAMINE, PROC_REF(add_examine))
+	RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACKBY, PROC_REF(place_hat))
 	RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(remove_hat))
 
 /obj/item/mod/module/hat_stabilizer/on_suit_deactivation(deleting = FALSE)
@@ -533,8 +580,8 @@
 		return
 	if(attached_hat)	//knock off the helmet if its on their head. Or, technically, auto-rightclick it for them; that way it saves us code, AND gives them the bubble
 		remove_hat(src, mod.wearer)
-	UnregisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE)
-	UnregisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(mod.helmet, COMSIG_ATOM_EXAMINE)
+	UnregisterSignal(mod.helmet, COMSIG_ATOM_ATTACKBY)
 	UnregisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
 
 /obj/item/mod/module/hat_stabilizer/proc/add_examine(datum/source, mob/user, list/base_examine)
@@ -551,14 +598,15 @@
 	if(!mod.active)
 		balloon_alert(user, "suit must be active!")
 		return
-	if(!is_type_in_typecache(hitting_item, attachable_hats_list))
-		balloon_alert(user, "this hat won't fit!")
-		return
 	if(attached_hat)
 		balloon_alert(user, "hat already attached!")
 		return
 	if(mod.wearer.transferItemToLoc(hitting_item, src, force = FALSE, silent = TRUE))
 		attached_hat = hitting_item
+		former_flags = mod.helmet.flags_cover
+		former_visor_flags = mod.helmet.visor_flags_cover
+		mod.helmet.flags_cover |= attached_hat.flags_cover
+		mod.helmet.visor_flags_cover |= attached_hat.visor_flags_cover
 		balloon_alert(user, "hat attached, right-click to remove")
 		mod.wearer.update_clothing(mod.slot_flags)
 
@@ -578,6 +626,8 @@
 	else
 		balloon_alert_to_viewers("the hat falls to the floor!")
 	attached_hat = null
+	mod.helmet.flags_cover = former_flags
+	mod.helmet.visor_flags_cover = former_visor_flags
 	mod.wearer.update_clothing(mod.slot_flags)
 
 ///Sign Language Translator - allows people to sign over comms using the modsuit's gloves.
@@ -596,3 +646,181 @@
 
 /obj/item/mod/module/signlang_radio/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
+
+///A module that recharges the suit by an itsy tiny bit whenever the user takes a step. Originally called "magneto module" but the videogame reference sounds cooler.
+/obj/item/mod/module/joint_torsion
+	name = "MOD joint torsion ratchet module"
+	desc = "A compact, weak AC generator that charges the suit's internal cell through the power of deambulation. It doesn't work in zero G."
+	icon_state = "joint_torsion"
+	complexity = 1
+	incompatible_modules = list(/obj/item/mod/module/joint_torsion)
+	var/power_per_step = DEFAULT_CHARGE_DRAIN * 0.3
+
+/obj/item/mod/module/joint_torsion/on_suit_activation()
+	if(!(mod.wearer.movement_type & (FLOATING|FLYING)))
+		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	/// This way we don't even bother to call on_moved() while flying/floating
+	RegisterSignal(mod.wearer, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_movetype_flag_enabled))
+	RegisterSignal(mod.wearer, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_movetype_flag_disabled))
+
+/obj/item/mod/module/joint_torsion/on_suit_deactivation(deleting = FALSE)
+	UnregisterSignal(mod.wearer, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVETYPE_FLAG_ENABLED, COMSIG_MOVETYPE_FLAG_DISABLED))
+
+/obj/item/mod/module/joint_torsion/proc/on_movetype_flag_enabled(datum/source, flag, old_state)
+	SIGNAL_HANDLER
+	if(!(old_state & (FLOATING|FLYING)) && flag & (FLOATING|FLYING))
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+
+/obj/item/mod/module/joint_torsion/proc/on_movetype_flag_disabled(datum/source, flag, old_state)
+	SIGNAL_HANDLER
+	if(old_state & (FLOATING|FLYING) && !(mod.wearer.movement_type & (FLOATING|FLYING)))
+		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+
+/obj/item/mod/module/joint_torsion/proc/on_moved(mob/living/carbon/human/wearer, atom/old_loc, movement_dir, forced)
+	SIGNAL_HANDLER
+	//Shouldn't work if the wearer isn't really walking/running around.
+	if(forced || wearer.throwing || wearer.body_position == LYING_DOWN || wearer.buckled || CHECK_MOVE_LOOP_FLAGS(wearer, MOVEMENT_LOOP_OUTSIDE_CONTROL))
+		return
+	mod.core.add_charge(power_per_step)
+
+/// Module that shoves garbage inside its material container when the user crosses it, and eject the recycled material with MMB.
+/obj/item/mod/module/recycler
+	name = "MOD recycler module"
+	desc = "An innovative garbage collection module that recycles gathered trash into usable material. \
+		Doesn't work on debris and some items. May recycle live ammunition. \
+		Activate on a nearby turf or storage to unload stored material."
+	icon_state = "recycler"
+	module_type = MODULE_ACTIVE
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	complexity = 2
+	incompatible_modules = list(/obj/item/mod/module/recycler)
+	overlay_state_inactive = "module_recycler"
+	overlay_state_active = "module_recycler"
+	/// A multiplier of the amount of material extracted from the item
+	var/efficiency = 1
+	/// Items that will be collected
+	var/list/allowed_item_types = list(
+		/obj/item/trash,
+		/obj/item/shard,
+		/obj/item/light,
+		/obj/item/broken_bottle,
+		/obj/item/ammo_casing,
+		/obj/item/cigbutt,
+	)
+	/// Materials that will be extracted.
+	var/list/accepted_mats = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/silver,
+		/datum/material/plasma,
+		/datum/material/gold,
+		/datum/material/diamond,
+		/datum/material/plastic,
+		/datum/material/uranium,
+		/datum/material/bananium,
+		/datum/material/titanium,
+		/datum/material/bluespace,
+	)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_obj_entered),
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_atom_initialized_on),
+	)
+	var/datum/component/connect_loc_behalf/connector
+
+/obj/item/mod/module/recycler/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/material_container, accepted_mats, 50 * SHEET_MATERIAL_AMOUNT, MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, _after_retrieve=CALLBACK(src, PROC_REF(attempt_insert_storage)))
+
+/obj/item/mod/module/recycler/on_activation()
+	. = ..()
+	if(!.)
+		return
+	connector = AddComponent(/datum/component/connect_loc_behalf, mod.wearer, loc_connections)
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
+
+/obj/item/mod/module/recycler/on_deactivation(display_message, deleting = FALSE)
+	. = ..()
+	if(!.)
+		return
+	QDEL_NULL(connector)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
+
+/obj/item/mod/module/recycler/proc/on_wearer_moved(datum/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+	for(var/obj/item/item in mod.wearer.loc)
+		if(!is_type_in_list(item, allowed_item_types))
+			return
+		insert_trash(item)
+
+/obj/item/mod/module/recycler/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
+	SIGNAL_HANDLER
+	if(!is_type_in_list(arrived, allowed_item_types))
+		return
+	insert_trash(arrived)
+
+/obj/item/mod/module/recycler/proc/on_atom_initialized_on(atom/loc, atom/new_atom)
+	SIGNAL_HANDLER
+	if(!is_type_in_list(new_atom, allowed_item_types))
+		return
+	//Give the new atom the time to fully initialize and maybe live if the wearer moves away.
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/mod/module/recycler, insert_trash_if_nearby), new_atom), 0.5 SECONDS)
+
+/obj/item/mod/module/recycler/proc/insert_trash_if_nearby(atom/new_atom)
+	if(new_atom && mod?.wearer && new_atom.loc == mod.wearer.loc)
+		insert_trash(new_atom)
+
+/obj/item/mod/module/recycler/proc/insert_trash(obj/item/item)
+	var/datum/component/material_container/container = GetComponent(/datum/component/material_container)
+	var/retrieved = container.insert_item(item, multiplier = efficiency, breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
+	if(retrieved == MATERIAL_INSERT_ITEM_NO_MATS) //even if it doesn't have any material to give, trash is trash.
+		qdel(item)
+	playsound(src, SFX_RUSTLE, 50, TRUE, -5)
+
+/obj/item/mod/module/recycler/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	if(!target?.atom_storage)
+		target = get_turf(target)
+		if(!isopenturf(target) || !mod.wearer.Adjacent(target))
+			return FALSE
+	dispense(target)
+
+/obj/item/mod/module/recycler/proc/dispense(atom/target)
+	var/datum/component/material_container/container = GetComponent(/datum/component/material_container)
+	if(container.retrieve_all(target))
+		balloon_alert(mod.wearer, "material dispensed")
+		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
+		return
+	balloon_alert(mod.wearer, "not enough material")
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+
+/obj/item/mod/module/recycler/proc/attempt_insert_storage(obj/item/to_drop)
+	if(!isturf(to_drop.loc) && !to_drop.loc.atom_storage?.attempt_insert(to_drop, mod.wearer, override = TRUE))
+		to_drop.forceMove(to_drop.loc.drop_location())
+
+///A black market variant of the above that dispenses riot foam dart boxes
+/obj/item/mod/module/recycler/donk
+	name = "MOD riot foam dart recycler module"
+	desc = "A mod module collects and repackages fired foam darts (and garbage) into half-sized boxes of riot foam darts. \
+		Activate on a nearby turf or storage to unload stored ammo boxes."
+	icon_state = "donk_recycler"
+	overlay_state_inactive = "module_donk_recycler"
+	overlay_state_active = "module_donk_recycler"
+	efficiency = 0.7 // Stops getting as many riot foam darts as one consumes.
+	accepted_mats = list(/datum/material/iron)
+	///The type of ammo box that it dispenses
+	var/ammobox_type = /obj/item/ammo_box/foambox/riot/mini
+	///The cost of each dispensed ammo box
+	var/required_amount = SHEET_MATERIAL_AMOUNT*12.5
+
+/obj/item/mod/module/recycler/donk/dispense(atom/target)
+	var/datum/component/material_container/container = GetComponent(/datum/component/material_container)
+	if(!container.use_amount_mat(required_amount, /datum/material/iron))
+		balloon_alert(mod.wearer, "not enough material")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+		return
+	var/obj/item/ammo_box/product = new ammobox_type(target)
+	attempt_insert_storage(product)
+	balloon_alert(mod.wearer, "ammo box dispensed.")
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)

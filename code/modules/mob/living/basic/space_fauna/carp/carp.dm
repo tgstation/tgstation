@@ -78,30 +78,12 @@
 		/obj/machinery/vending,
 		/obj/structure/window,
 	))
-	/// Weighted list of colours a carp can be
-	/// Weighted list of usual carp colors
-	var/static/list/carp_colors = list(
-		COLOR_CARP_PURPLE = 7,
-		COLOR_CARP_PINK = 7,
-		COLOR_CARP_GREEN = 7,
-		COLOR_CARP_GRAPE = 7,
-		COLOR_CARP_SWAMP = 7,
-		COLOR_CARP_TURQUOISE = 7,
-		COLOR_CARP_BROWN = 7,
-		COLOR_CARP_TEAL = 7,
-		COLOR_CARP_LIGHT_BLUE = 7,
-		COLOR_CARP_RUSTY = 7,
-		COLOR_CARP_RED = 7,
-		COLOR_CARP_YELLOW = 7,
-		COLOR_CARP_BLUE = 7,
-		COLOR_CARP_PALE_GREEN = 7,
-		COLOR_CARP_SILVER = 1, // The rare silver carp
-	)
 
 /mob/living/basic/carp/Initialize(mapload, mob/tamer)
+	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT) //Need to set before init cause if we init in hyperspace we get dragged before the trait can be added
 	. = ..()
 	apply_colour()
-	add_traits(list(TRAIT_HEALS_FROM_CARP_RIFTS, TRAIT_SPACEWALK, TRAIT_FREE_HYPERSPACE_MOVEMENT), INNATE_TRAIT)
+	add_traits(list(TRAIT_HEALS_FROM_CARP_RIFTS, TRAIT_SPACEWALK), INNATE_TRAIT)
 
 	if (cell_line)
 		AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -109,6 +91,7 @@
 	AddElement(/datum/element/ai_flee_while_injured)
 	setup_eating()
 
+	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	if (tamer)
 		on_tamed(tamer, feedback = FALSE)
@@ -136,7 +119,7 @@
 /mob/living/basic/carp/proc/apply_colour()
 	if (!greyscale_config)
 		return
-	set_greyscale(colors = list(pick_weight(carp_colors)))
+	set_greyscale(colors = list(pick_weight(GLOB.carp_colors)))
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
 /mob/living/basic/carp/proc/on_tamed(mob/tamer, feedback = TRUE)
@@ -162,6 +145,16 @@
 		actual_points += point_resolved
 
 	ai_controller.set_blackboard_key(BB_CARP_MIGRATION_PATH, actual_points)
+
+/mob/living/basic/carp/death(gibbed)
+	. = ..()
+
+	REMOVE_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
+
+/mob/living/basic/carp/revive(full_heal_flags, excess_healing, force_grab_ghost)
+	. = ..()
+
+	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
 
 /**
  * Holographic carp from the holodeck
@@ -256,4 +249,41 @@
 		disk_overlay = mutable_appearance('icons/mob/simple/carp.dmi', "disk_overlay")
 	new_overlays += disk_overlay
 
+/mob/living/basic/carp/advanced
+	health = 40
+	obj_damage = 15
+
 #undef RARE_CAYENNE_CHANCE
+
+///Carp-parasite from carpellosis disease
+/mob/living/basic/carp/ella
+	name = "Ella"
+	real_name = "Ella"
+	desc = "It came out of someone."
+	gold_core_spawnable = NO_SPAWN
+
+/mob/living/basic/carp/ella/Initialize(mapload)
+	. = ..()
+	death() // It comes into the world dead when the disease is cured
+
+///Wild carp that just vibe ya know
+/mob/living/basic/carp/passive
+	name = "passive carp"
+	desc = "A timid, sucker-bearing creature that resembles a fish. "
+
+	icon_state = "base_friend"
+	icon_living = "base_friend"
+	icon_dead = "base_friend_dead"
+	greyscale_config = /datum/greyscale_config/carp_friend
+
+	attack_verb_continuous = "suckers"
+	attack_verb_simple = "suck"
+
+	melee_damage_lower = 4
+	melee_damage_upper = 4
+	ai_controller = /datum/ai_controller/basic_controller/carp/passive
+
+/mob/living/basic/carp/passive/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/pet_bonus, "bloops happily!")

@@ -1,0 +1,10 @@
+/obj/item/food/cheese_sandwich : /obj/item/food/sandwich/cheese{@OLD}
+/obj/item/food/grilled_cheese_sandwich : /obj/item/food/sandwich/cheese/grilled{@OLD}
+/obj/item/food/jellysandwich/@SUBTYPES : /obj/item/food/sandwich/jelly/@SUBTYPES{@OLD}
+/obj/item/food/notasandwich : /obj/item/food/sandwich/notasandwich{@OLD}
+/obj/item/food/blt : /obj/item/food/sandwich/blt{@OLD}
+/obj/item/food/peanut_butter_jelly_sandwich : /obj/item/food/sandwich/peanut_butter_jelly{@OLD}
+/obj/item/food/peanut_butter_banana_sandwich : /obj/item/food/sandwich/peanut_butter_banana{@OLD}
+/obj/item/food/philly_cheesesteak : /obj/item/food/sandwich/philly_cheesesteak{@OLD}
+/obj/item/food/toast_sandwich : /obj/item/food/sandwich/toast_sandwich{@OLD}
+/obj/item/food/death_sandwich : /obj/item/food/sandwich/death{@OLD}

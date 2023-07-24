@@ -37,7 +37,7 @@
 		qdel(desired_mob)
 		return
 
-	if( istext(new_name) )
+	if(istext(new_name))
 		desired_mob.name = new_name
 		desired_mob.real_name = new_name
 	else
@@ -48,12 +48,12 @@
 		var/mob/living/carbon/old_mob = src
 		var/mob/living/carbon/new_mob = desired_mob
 		old_mob.dna.transfer_identity(new_mob, transfer_species = FALSE)
-		new_mob.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
+		new_mob.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	else if(ishuman(desired_mob) && (!ismonkey(desired_mob)))
 		var/mob/living/carbon/human/new_human = desired_mob
 		client?.prefs.safe_transfer_prefs_to(new_human)
 		new_human.dna.update_dna_identity()
-		new_human.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
+		new_human.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 
 	//Ghosts have copys of their minds, but if an admin put somebody else in their og body, the mind will have a new mind.key
 	//	and transfer_to will transfer the wrong person since it uses mind.key

@@ -420,7 +420,7 @@ SUBSYSTEM_DEF(timer)
 		CRASH("Invalid timer state: Timer created that would require a backtrack to run (addtimer would never let this happen): [SStimer.get_timer_debug_string(src)]")
 
 	if (callBack.object != GLOBAL_PROC && !QDESTROYING(callBack.object))
-		LAZYADD(callBack.object.active_timers, src)
+		LAZYADD(callBack.object._active_timers, src)
 
 	bucketJoin()
 
@@ -429,9 +429,9 @@ SUBSYSTEM_DEF(timer)
 	if (flags & TIMER_UNIQUE && hash)
 		timer_subsystem.hashes -= hash
 
-	if (callBack && callBack.object && callBack.object != GLOBAL_PROC && callBack.object.active_timers)
-		callBack.object.active_timers -= src
-		UNSETEMPTY(callBack.object.active_timers)
+	if (callBack && callBack.object && callBack.object != GLOBAL_PROC && callBack.object._active_timers)
+		callBack.object._active_timers -= src
+		UNSETEMPTY(callBack.object._active_timers)
 
 	callBack = null
 
@@ -503,11 +503,18 @@ SUBSYSTEM_DEF(timer)
  * If the timed event is tracking client time, it will be added to a special bucket.
  */
 /datum/timedevent/proc/bucketJoin()
-	// Generate debug-friendly name for timer
+#if defined(TIMER_DEBUG)
+	// Generate debug-friendly name for timer, more complex but also more expensive
 	var/static/list/bitfield_flags = list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT", "TIMER_LOOP")
 	name = "Timer: [id] ([text_ref(src)]), TTR: [timeToRun], wait:[wait] Flags: [jointext(bitfield_to_list(flags, bitfield_flags), ", ")], \
 		callBack: [text_ref(callBack)], callBack.object: [callBack.object][text_ref(callBack.object)]([getcallingtype()]), \
 		callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""]), source: [source]"
+#else
+	// Generate a debuggable name for the timer, simpler but wayyyy cheaper, string generation is a bitch and this saves a LOT of time
+	name = "Timer: [id] ([text_ref(src)]), TTR: [timeToRun], wait:[wait] Flags: [flags], \
+		callBack: [text_ref(callBack)], callBack.object: [callBack.object]([getcallingtype()]), \
+		callBack.delegate:[callBack.delegate], source: [source]"
+#endif
 
 	if (bucket_joined)
 		stack_trace("Bucket already joined! [name]")

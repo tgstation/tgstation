@@ -21,6 +21,8 @@
 	var/thankscount = 0
 	///Current status of the cannon, alternates between CLOWN_CANNON_INACTIVE, CLOWN_CANNON_BUSY and CLOWN_CANNON_READY
 	var/cannonmode = CLOWN_CANNON_INACTIVE
+	///Does the driver require the clown role to drive it
+	var/enforce_clown_role = TRUE
 
 /datum/armor/car_clowncar
 	melee = 70
@@ -48,7 +50,7 @@
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(is_clown_job(H.mind?.assigned_role)) //Ensures only clowns can drive the car. (Including more at once)
+		if(is_clown_job(H.mind?.assigned_role) || !enforce_clown_role) //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(H, VEHICLE_CONTROL_DRIVE)
 			RegisterSignal(H, COMSIG_MOB_CLICKON, PROC_REF(fire_cannon_at))
 			M.log_message("has entered [src] as a possible driver", LOG_GAME)
@@ -145,14 +147,16 @@
 	playsound(target_pancake, 'sound/effects/cartoon_splat.ogg', 75)
 	log_combat(src, crossed, "ran over")
 
-/obj/vehicle/sealed/car/clowncar/emag_act(mob/user)
+/obj/vehicle/sealed/car/clowncar/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
+	balloon_alert(user, "fun mode engaged")
 	to_chat(user, span_danger("You scramble [src]'s child safety lock, and a panel with six colorful buttons appears!"))
 	initialize_controller_action_type(/datum/action/vehicle/sealed/roll_the_dice, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/cannon, VEHICLE_CONTROL_DRIVE)
 	AddElement(/datum/element/waddling)
+	return TRUE
 
 /obj/vehicle/sealed/car/clowncar/atom_destruction(damage_flag)
 	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
@@ -189,7 +193,7 @@
 			foam.start(log = TRUE)
 		if(3)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car turns on its singularity disguise system."))
-			icon = 'icons/obj/engine/singularity.dmi'
+			icon = 'icons/obj/machines/engine/singularity.dmi'
 			icon_state = "singularity_s1"
 			addtimer(CALLBACK(src, PROC_REF(reset_icon)), 10 SECONDS)
 		if(4)

@@ -269,7 +269,7 @@
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
 	desc = "Made by Nerd. Co."
-	icon_state = "glasses"
+	icon_state = "glasses_regular"
 	inhand_icon_state = "glasses"
 	clothing_traits = list(TRAIT_NEARSIGHTED_CORRECTED)
 
@@ -305,7 +305,7 @@
 		return
 	if(!I.tool_start_check(user, amount=1))
 		return
-	if(I.use_tool(src, user, 10, volume=30, amount=1))
+	if(I.use_tool(src, user, 10, volume=30))
 		user.visible_message(span_notice("[user] welds [src] back together."),\
 					span_notice("You weld [src] back together."))
 		repair()
@@ -323,19 +323,19 @@
 /obj/item/clothing/glasses/regular/jamjar
 	name = "jamjar glasses"
 	desc = "Also known as Virginity Protectors."
-	icon_state = "jamjar_glasses"
-	inhand_icon_state = "jamjar_glasses"
+	icon_state = "glasses_jamjar"
+	inhand_icon_state = "glasses_jamjar"
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "prescription glasses"
 	desc = "Made by Uncool. Co."
-	icon_state = "hipster_glasses"
+	icon_state = "glasses_hipster"
 	inhand_icon_state = null
 
 /obj/item/clothing/glasses/regular/circle
 	name = "circle glasses"
 	desc = "Why would you wear something so controversial yet so brave?"
-	icon_state = "circle_glasses"
+	icon_state = "glasses_circle"
 	inhand_icon_state = null
 
 //Here lies green glasses, so ugly they died. RIP
@@ -396,6 +396,29 @@
 	icon_state = "gigagar_red"
 	inhand_icon_state = "gar"
 	glass_colour_type = /datum/client_colour/glass_colour/red
+
+///Syndicate item that upgrades the flash protection of your eyes.
+/obj/item/syndicate_contacts
+	name = "suspicious contact lens case"
+	desc = "A sinister red case that contains two shiny black contact lenses."
+	w_class = WEIGHT_CLASS_TINY
+	icon = 'icons/obj/device.dmi'
+	icon_state = "contacts"
+
+/obj/item/syndicate_contacts/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!user.get_organ_slot(ORGAN_SLOT_EYES))
+		to_chat(user, span_warning("You have no eyes to apply the contacts to!"))
+		return
+	var/obj/item/organ/internal/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
+
+	to_chat(user, span_notice("You begin applying the contact lenses to your eyes..."))
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	to_chat(user, span_notice("The contacts seamlessly merge with your iris."))
+	eyes.flash_protect += FLASH_PROTECTION_WELDER
+	to_chat(user, span_warning("\The [src] disintegrates into nothing."))
+	qdel(src)
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -624,19 +647,19 @@
 	. = ..()
 	if(ishuman(user))
 		if(xray)
-			vision_flags -= SEE_MOBS|SEE_OBJS
+			vision_flags &= ~SEE_MOBS|SEE_OBJS
 			REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		else
-			vision_flags += SEE_MOBS|SEE_OBJS
+			vision_flags |= SEE_MOBS|SEE_OBJS
 			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		xray = !xray
-		var/mob/living/carbon/human/H = user
-		H.update_sight()
+		var/mob/living/carbon/human/human_user = user
+		human_user.update_sight()
 
 /obj/item/clothing/glasses/regular/kim
 	name = "binoclard lenses"
 	desc = "Shows you know how to sew a lapel and center a back vent."
-	icon_state = "binoclard_lenses"
+	icon_state = "glasses_binoclard"
 	inhand_icon_state = null
 
 /obj/item/clothing/glasses/salesman
@@ -679,6 +702,33 @@
 	inhand_icon_state = "glasses"
 	glass_colour_type = /datum/client_colour/glass_colour/nightmare
 	forced_glass_color = TRUE
+	lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
+	/// Hallucination datum currently being used for seeing mares
+	var/datum/hallucination/stored_hallucination
+
+/obj/item/clothing/glasses/nightmare_vision/Destroy()
+	QDEL_NULL(stored_hallucination)
+	return ..()
+
+/obj/item/clothing/glasses/nightmare_vision/equipped(mob/living/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_EYES))
+		return
+	//5% chance to get mare vision
+	if(prob(5))
+		stored_hallucination = 	user.cause_hallucination( \
+			/datum/hallucination/delusion/preset/mare, \
+			src.name, \
+			duration = 0, \
+			affects_us = TRUE, \
+			affects_others = TRUE, \
+			skip_nearby = FALSE, \
+			play_wabbajack = FALSE, \
+		)
+
+/obj/item/clothing/glasses/nightmare_vision/dropped(mob/living/user)
+	. = ..()
+	QDEL_NULL(stored_hallucination)
 
 /obj/item/clothing/glasses/osi
 	name = "O.S.I. Sunglasses"

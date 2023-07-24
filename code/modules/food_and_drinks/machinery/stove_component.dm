@@ -37,13 +37,14 @@
 		add_container(spawn_container)
 
 /datum/component/stove/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_attack_hand_secondary))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ROBOT_SECONDARY, PROC_REF(on_attack_robot_secondary))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlay_update))
 	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstructed))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_MACHINERY_REFRESH_PARTS, PROC_REF(on_refresh_parts))
 
 	var/obj/machinery/real_parent = parent
@@ -62,8 +63,8 @@
 		COMSIG_ATOM_EXITED,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
-		COMSIG_PARENT_ATTACKBY,
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_ATTACKBY,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_MACHINERY_REFRESH_PARTS,
 	))
 
@@ -97,13 +98,25 @@
 /datum/component/stove/proc/on_attack_hand_secondary(obj/machinery/source)
 	SIGNAL_HANDLER
 
+	toggle_mode()
+
+	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
+
+/datum/component/stove/proc/on_attack_robot_secondary(obj/machinery/source)
+	SIGNAL_HANDLER
+
+	toggle_mode()
+
+	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
+
+/datum/component/stove/proc/toggle_mode()
 	var/obj/machinery/real_parent = parent
 	if(on)
 		turn_off()
 
 	else if(real_parent.machine_stat & (BROKEN|NOPOWER))
 		real_parent.balloon_alert_to_viewers("no power!")
-		return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
+		return
 
 	else
 		turn_on()
@@ -111,8 +124,6 @@
 	real_parent.balloon_alert_to_viewers("burners [on ? "on" : "off"]")
 	playsound(real_parent, 'sound/machines/click.ogg', 30, TRUE)
 	playsound(real_parent, on ? 'sound/items/welderactivate.ogg' : 'sound/items/welderdeactivate.ogg', 15, TRUE)
-
-	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
 /datum/component/stove/proc/on_attackby(obj/machinery/source, obj/item/attacking_item, mob/user, params)
 	SIGNAL_HANDLER

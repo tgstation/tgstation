@@ -1,0 +1,5 @@
+bow_draw.ogg adapted from SonoFxAudio on Freesound
+https://freesound.org/people/SonoFxAudio/sounds/649337/
+
+bow_fire.ogg adapted from SonoFxAudio on Freesound
+https://freesound.org/people/SonoFxAudio/sounds/649334/

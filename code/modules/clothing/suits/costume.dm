@@ -42,7 +42,7 @@
 	icon_state = "hgpirate"
 	inhand_icon_state = null
 
-/obj/item/clothing/suit/costume/pirate/armored
+/obj/item/clothing/suit/costume/pirate/captain/armored
 	armor_type = /datum/armor/pirate_armored
 	strip_delay = 40
 	equip_delay_other = 20
@@ -519,8 +519,12 @@
 /obj/item/clothing/suit/costume/hawaiian
 	name = "hawaiian overshirt"
 	desc = "A cool shirt for chilling on the beach."
-	icon_state = "hawaiian_blue"
+	icon_state = "hawaiian_shirt"
 	inhand_icon_state = null
+	greyscale_config = /datum/greyscale_config/hawaiian_shirt
+	greyscale_config_worn = /datum/greyscale_config/hawaiian_shirt/worn
+	greyscale_colors = "#313B82#CCCFF0"
+	flags_1 = IS_PLAYER_COLORABLE_1
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/costume/football_armor
@@ -529,7 +533,7 @@
 	icon_state = "football_armor"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	greyscale_config = /datum/greyscale_config/football_armor
-	greyscale_config_worn = /datum/greyscale_config/football_armor_worn
+	greyscale_config_worn = /datum/greyscale_config/football_armor/worn
 	greyscale_colors = "#D74722"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -572,6 +576,14 @@
 	name = "powder ganger jacket"
 	desc = "Remind Security of their mistakes in giving prisoners blasting charges."
 	icon_state = "pg_suit"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/costume/irs
+	name = "internal revenue service jacket"
+	desc = "I'm crazy enough to take on The Owl, but the IRS? Nooo thank you!"
+	icon_state = "irs_suit"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON

@@ -13,7 +13,7 @@
 	production = 4
 	yield = 3
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/kronkus

@@ -40,11 +40,11 @@
 		attach_circuit(starting_circuit)
 
 /datum/component/shell/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, PROC_REF(on_attack_ghost))
 	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNMODIFIABLE))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool_act))
-		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attack_by))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attack_by))
 	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(on_screwdriver_act))
 		RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_object_deconstruct))
@@ -88,12 +88,12 @@
 
 /datum/component/shell/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_ATTACKBY,
 		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
 		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
 		COMSIG_OBJ_DECONSTRUCT,
 		COMSIG_MOVABLE_SET_ANCHORED,
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_ATTACK_GHOST,
 		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
 		COMSIG_MOVABLE_CIRCUIT_LOADED,
@@ -309,7 +309,7 @@
 		RegisterSignal(circuitboard, COMSIG_MOVABLE_MOVED, PROC_REF(on_circuit_moved))
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		RegisterSignal(circuitboard, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(override_power_usage))
-	RegisterSignal(circuitboard, COMSIG_PARENT_QDELETING, PROC_REF(on_circuit_delete))
+	RegisterSignal(circuitboard, COMSIG_QDELETING, PROC_REF(on_circuit_delete))
 	for(var/obj/item/circuit_component/to_add as anything in unremovable_circuit_components)
 		to_add.forceMove(attached_circuit)
 		attached_circuit.add_component(to_add)
@@ -335,7 +335,7 @@
 	attached_circuit.remove_current_shell()
 	UnregisterSignal(attached_circuit, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 		COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY,
 		COMSIG_CIRCUIT_PRE_POWER_USAGE,
 	))

@@ -75,9 +75,6 @@
 	if(gathered_ore.refined_type == null)
 		return
 
-	if(gathered_ore?.refined_type)
-		points += gathered_ore.points * point_upgrade * gathered_ore.amount
-
 	var/material_amount = mat_container.get_item_material_amount(gathered_ore, BREAKDOWN_FLAGS_ORM)
 
 	if(!material_amount)
@@ -89,10 +86,14 @@
 	else
 		var/list/stack_mats = gathered_ore.get_material_composition(BREAKDOWN_FLAGS_ORM)
 		var/mats = stack_mats & mat_container.materials
-		var/amount = gathered_ore.amount
-		mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags=BREAKDOWN_FLAGS_ORM) //insert it
-		materials.silo_log(src, "smelted", amount, gathered_ore.name, mats)
-		qdel(gathered_ore)
+		var/ore_amount = gathered_ore.amount
+		var/ore_points= gathered_ore.points
+		var/ore_name = gathered_ore.name
+		var/refined_type = gathered_ore?.refined_type
+		if(mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags = BREAKDOWN_FLAGS_ORM) > 0) //increase points only if insertion was successfull
+			if(refined_type)
+				points += ore_points * point_upgrade * ore_amount
+			materials.silo_log(src, "smelted", ore_amount, ore_name, mats)
 
 	SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
 
@@ -209,7 +210,8 @@
 		if(isnull(O.refined_type))
 			to_chat(user, span_warning("[O] has already been refined!"))
 			return
-
+		smelt_ore(O)
+		return TRUE
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/AltClick(mob/living/user)

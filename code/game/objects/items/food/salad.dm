@@ -178,7 +178,7 @@
 
 /obj/item/reagent_containers/cup/bowl/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_PARENT_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
+	RegisterSignal(src, COMSIG_ATOM_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
 	AddElement(/datum/element/foodlike_drink)
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
 	AddComponent( \
