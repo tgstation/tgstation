@@ -1269,12 +1269,6 @@
 	if (!target || speed <= 0)
 		return
 
-	if(throwing) //we were already being thrown
-		if(force >= throwing.force) //so the strongest wins!
-			throwing.finalize()
-		else
-			return
-
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, args) & COMPONENT_CANCEL_THROW)
 		return
 
