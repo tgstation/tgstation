@@ -1,8 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - rscadd: "Bounty pads can now be upgraded, to reduce the time until you can pick a new bounty"
-  - rscadd: "Sunglasses can now be bought from cargo if you have security access."
-  - balance: "Gripper gloves single-pack is now gorilla gloves singlepack"
-  - rscdel: "Removed shady jims bounty"
-  - qol: "Bounty pads can now be screwdrivered/crowbarred with left click like every other machine"
