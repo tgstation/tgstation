@@ -67,7 +67,7 @@ GLOBAL_VAR_INIT(ratvar_risen, FALSE)
 		to_chat(current_mob, span_ratvar("Your mind is distorted by the distant sound of a thousand screams before suddenly everything falls silent."))
 		to_chat(current_mob, span_hypnophrase("The only thing you remember is suddenly feeling hard ground beneath you and the safety of home."))
 		current_mob.forceMove(find_safe_turf())
-	explode_reebe()
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(explode_reebe))
 	return ..()
 
 /obj/structure/destructible/clockwork/the_ark/deconstruct(disassembled = TRUE)
