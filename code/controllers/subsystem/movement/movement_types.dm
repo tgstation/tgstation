@@ -123,7 +123,7 @@
 		SEND_SIGNAL(moving, COMSIG_MOVABLE_MOVED_FROM_LOOP, src, old_dir, direction)
 	owner?.processing_move_loop_flags = NONE
 
-	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, result, delay * visual_delay, flags, old_dir)
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, result, delay * visual_delay)
 
 	if(QDELETED(src) || result != MOVELOOP_SUCCESS) //Can happen
 		return
