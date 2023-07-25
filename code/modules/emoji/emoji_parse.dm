@@ -17,8 +17,8 @@
 			search = findtext(text, ":", pos + length(text[pos]))
 			if(search)
 				emoji = lowertext(copytext(text, pos + length(text[pos]), search))
-				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/emoji)
-				var/tag = sheet.icon_tag(emoji)
+				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
+				var/tag = sheet.icon_tag("emoji-[emoji]")
 				if(tag)
 					parsed += tag
 					pos = search + length(text[pos])

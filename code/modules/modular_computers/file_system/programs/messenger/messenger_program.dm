@@ -1,4 +1,3 @@
-/// Used to define a temporary image asset name for images that haven't been sent yet
 #define TEMP_IMAGE_PATH(ref) ("ntos_msgr[ref]_temp_image.png")
 /// Purpose is evident by the name, hopefully.
 #define MAX_PDA_MSG_LEN 1024
@@ -134,7 +133,7 @@
 
 	return data
 
-/// Sends new assets of /datum/picture to everyone
+/// Sends new datum/picture assets to everyone
 /datum/computer_file/program/messenger/proc/update_pictures_for_all()
 	var/list/data = get_picture_assets()
 
@@ -325,7 +324,7 @@
 
 /datum/computer_file/program/messenger/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/emoji)
+		get_asset_datum(/datum/asset/spritesheet/emojipedia)
 	)
 
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
@@ -647,7 +646,7 @@
 
 	// don't create a new chat for rigged messages, make it a one off notif
 	if(!is_rigged)
-		var/datum/pda_msg/message = new(emoji_parse(signal.data["message"]), FALSE, signal.data["photo"], signal.data["everyone"])
+		var/datum/pda_msg/message = new(signal.data["message"], FALSE, signal.data["photo"], signal.data["everyone"])
 
 		chat = find_chat_by_recp(is_fake_user ? fake_name : sender_ref, is_fake_user)
 		if(!istype(chat))

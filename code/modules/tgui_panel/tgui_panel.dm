@@ -49,7 +49,6 @@
 		))
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/fontawesome))
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/tgfont))
-	window.send_asset(get_asset_datum(/datum/asset/spritesheet/emoji))
 	window.send_asset(get_asset_datum(/datum/asset/spritesheet/chat))
 	// Other setup
 	request_telemetry()
