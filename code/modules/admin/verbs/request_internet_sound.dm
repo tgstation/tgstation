@@ -2,10 +2,6 @@
 	set category = "OOC"
 	set name = "Request Internet Sound"
 
-	if(usr == null)
-		to_chat(src, span_boldwarning("An Error Occured, this might be because round just started. If so try again."), confidential = TRUE)
-		return
-
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."), confidential = TRUE)
 		return
@@ -40,6 +36,10 @@
 			return
 		if(src.client.handle_spam_prevention(request_url,MUTE_INTERNET_REQUEST))
 			return
+
+	if(usr?.client == null)
+		to_chat(src, span_boldwarning("An error occured, please try again."), confidential = TRUE)
+		return
 
 	GLOB.requests.music_request(usr.client, request_url, credit)
 	to_chat(usr, span_info("You requested: \"[request_url]\" to be played."), confidential = TRUE)
