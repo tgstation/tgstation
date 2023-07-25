@@ -38,7 +38,7 @@ export const PaintingMachine = (props, context) => {
               />
               <Button.Confirm
                 disabled={!hasPDA}
-                content="Reset PDA"
+                content="Reset Imprint"
                 confirmContent="Confirm?"
                 onClick={() => {
                   act('reset_pda');
