@@ -39,6 +39,7 @@
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five)
 	crate_name = "Replacement Service Techfab"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/secfab
 	name = "Security Techfab Replacement"
@@ -53,6 +54,7 @@
 					/obj/item/stack/cable_coil/five
 					)
 	crate_name = "Replacement Security Techfab"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/cargofab
 	name = "Cargo Techfab Replacement"
@@ -66,6 +68,7 @@
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five)
 	crate_name = "Replacement Cargo Techfab"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/medfab
 	name = "Medical Techfab Replacement"
@@ -79,6 +82,7 @@
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five)
 	crate_name = "Replacement Medical Techfab"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/engilathe
 	name = "Engineering Protolathe Replacement"
@@ -92,6 +96,7 @@
 					/obj/item/stack/sheet/iron/five,
 					/obj/item/stack/cable_coil/five)
 	crate_name = "Replacement Engineering Protolathe"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/scilathe
 	name = "Science Protolathe Replacement"
@@ -106,3 +111,4 @@
 					/obj/item/stack/cable_coil/five
 					)
 	crate_name = "Replacement Science Protolathe"
+	crate_type = /obj/structure/closet/crate/secure/engineering
