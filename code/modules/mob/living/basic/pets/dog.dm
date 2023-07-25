@@ -1,5 +1,3 @@
-//Dogs.
-
 GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	/datum/strippable_item/corgi_head,
 	/datum/strippable_item/corgi_back,
@@ -12,21 +10,21 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /datum/strippable_item/corgi_head/get_item(atom/source)
 	var/mob/living/basic/pet/dog/corgi/corgi_source = source
-	if (!istype(corgi_source))
+	if(!istype(corgi_source))
 		return
 
 	return corgi_source.inventory_head
 
 /datum/strippable_item/corgi_head/finish_equip(atom/source, obj/item/equipping, mob/user)
 	var/mob/living/basic/pet/dog/corgi/corgi_source = source
-	if (!istype(corgi_source))
+	if(!istype(corgi_source))
 		return
 
 	corgi_source.place_on_head(equipping, user)
 
 /datum/strippable_item/corgi_head/finish_unequip(atom/source, mob/user)
 	var/mob/living/basic/pet/dog/corgi/corgi_source = source
-	if (!istype(corgi_source))
+	if(!istype(corgi_source))
 		return
 
 	user.put_in_hands(corgi_source.inventory_head)
@@ -39,17 +37,17 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /datum/strippable_item/pet_collar/get_item(atom/source)
 	var/mob/living/basic/pet/pet_source = source
-	if (!istype(pet_source))
+	if(!istype(pet_source))
 		return
 
 	return pet_source.collar
 
 /datum/strippable_item/pet_collar/try_equip(atom/source, obj/item/equipping, mob/user)
 	. = ..()
-	if (!.)
+	if(!.)
 		return FALSE
 
-	if (!istype(equipping, /obj/item/clothing/neck/petcollar))
+	if(!istype(equipping, /obj/item/clothing/neck/petcollar))
 		to_chat(user, span_warning("That's not a collar."))
 		return FALSE
 
@@ -57,14 +55,14 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /datum/strippable_item/pet_collar/finish_equip(atom/source, obj/item/equipping, mob/user)
 	var/mob/living/basic/pet/pet_source = source
-	if (!istype(pet_source))
+	if(!istype(pet_source))
 		return
 
 	pet_source.add_collar(equipping, user)
 
 /datum/strippable_item/pet_collar/finish_unequip(atom/source, mob/user)
 	var/mob/living/basic/pet/pet_source = source
-	if (!istype(pet_source))
+	if(!istype(pet_source))
 		return
 
 	var/obj/collar = pet_source.remove_collar(user.drop_location())
@@ -75,20 +73,20 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /datum/strippable_item/corgi_back/get_item(atom/source)
 	var/mob/living/basic/pet/dog/corgi/corgi_source = source
-	if (!istype(corgi_source))
+	if(!istype(corgi_source))
 		return
 
 	return corgi_source.inventory_back
 
 /datum/strippable_item/corgi_back/try_equip(atom/source, obj/item/equipping, mob/user)
 	. = ..()
-	if (!.)
+	if(!.)
 		return FALSE
 
-	if (!ispath(equipping.dog_fashion, /datum/dog_fashion/back))
+	if(!ispath(equipping.dog_fashion, /datum/dog_fashion/back))
 		to_chat(user, span_warning("You set [equipping] on [source]'s back, but it falls off!"))
 		equipping.forceMove(source.drop_location())
-		if (prob(25))
+		if(prob(25))
 			step_rand(equipping)
 		dance_rotate(source, set_original_dir = TRUE)
 
@@ -98,7 +96,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /datum/strippable_item/corgi_back/finish_equip(atom/source, obj/item/equipping, mob/user)
 	var/mob/living/basic/pet/dog/corgi/corgi_source = source
-	if (!istype(corgi_source))
+	if(!istype(corgi_source))
 		return
 
 	equipping.forceMove(corgi_source)
@@ -108,7 +106,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /datum/strippable_item/corgi_back/finish_unequip(atom/source, mob/user)
 	var/mob/living/basic/pet/dog/corgi/corgi_source = source
-	if (!istype(corgi_source))
+	if(!istype(corgi_source))
 		return
 
 	user.put_in_hands(corgi_source.inventory_back)
@@ -121,17 +119,17 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /datum/strippable_item/corgi_id/get_item(atom/source)
 	var/mob/living/basic/pet/dog/corgi/corgi_source = source
-	if (!istype(corgi_source))
+	if(!istype(corgi_source))
 		return
 
 	return corgi_source.access_card
 
 /datum/strippable_item/corgi_id/try_equip(atom/source, obj/item/equipping, mob/user)
 	. = ..()
-	if (!.)
+	if(!.)
 		return FALSE
 
-	if (!isidcard(equipping))
+	if(!isidcard(equipping))
 		to_chat(user, span_warning("You can't pin [equipping] to [source]!"))
 		return FALSE
 
@@ -139,7 +137,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /datum/strippable_item/corgi_id/finish_equip(atom/source, obj/item/equipping, mob/user)
 	var/mob/living/basic/pet/dog/corgi/corgi_source = source
-	if (!istype(corgi_source))
+	if(!istype(corgi_source))
 		return
 
 	equipping.forceMove(source)
@@ -147,7 +145,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /datum/strippable_item/corgi_id/finish_unequip(atom/source, mob/user)
 	var/mob/living/basic/pet/dog/corgi/corgi_source = source
-	if (!istype(corgi_source))
+	if(!istype(corgi_source))
 		return
 
 	user.put_in_hands(corgi_source.access_card)
@@ -170,6 +168,8 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 /datum/pet_command/point_targetting/attack/dog/set_command_active(mob/living/parent, mob/living/commander)
 	. = ..()
 	parent.ai_controller.set_blackboard_key(BB_DOG_HARASS_HARM, TRUE)
+
+//Dogs.
 
 /mob/living/basic/pet/dog
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -292,7 +292,11 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	if(access_card)
 		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
 
-//Corgis get half of the armor you put on them in the back slot
+/**
+ * Corgis get full protection from their equipped fashion items if attacked in a way that passes def_zone,
+ * which usually means any direct attack like melee or gunshot. Anything abstract like a bomb or acid or something
+ * will instead give half the armor value.
+ */
 /mob/living/basic/pet/dog/corgi/getarmor(def_zone, type)
 	var/armorval = 0
 
@@ -320,9 +324,9 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 			to_chat(user, span_warning("You can't shave this corgi, [p_they()] [p_do()]n't have a fur coat!"))
 			return
 		user.visible_message(span_notice("[user] starts to shave [src] using \the [attacking_item]."), span_notice("You start to shave [src] using \the [attacking_item]..."))
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			user.visible_message(span_notice("[user] shaves [src]'s hair using \the [attacking_item]."))
-			playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
+			playsound(get_turf(src), 'sound/items/welder2.ogg', 20, TRUE)
 			shaved = TRUE
 			icon_living = "[initial(icon_living)]_shaved"
 			icon_dead = "[initial(icon_living)]_shaved_dead"
@@ -447,7 +451,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		item_to_add.forceMove(drop_location())
 		if(prob(25))
 			step_rand(item_to_add)
-		dance_rotate(src, set_original_dir=TRUE)
+		dance_rotate(src, set_original_dir = TRUE)
 
 	return valid
 
@@ -461,12 +465,12 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	set_light(0)
 
 	if(inventory_head?.dog_fashion)
-		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
-		DF.apply(src)
+		var/datum/dog_fashion/equipped_head_fashion_item = new inventory_head.dog_fashion(src)
+		equipped_head_fashion_item.apply(src)
 
 	if(inventory_back?.dog_fashion)
-		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
-		DF.apply(src)
+		var/datum/dog_fashion/equipped_back_fashion_item = new inventory_back.dog_fashion(src)
+		equipped_back_fashion_item.apply(src)
 
 ///Handler for COMSIG_MOB_TRIED_ACCESS
 /mob/living/basic/pet/dog/corgi/proc/on_tried_access(mob/accessor, obj/locked_thing)
@@ -588,6 +592,11 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	i_will_survive = CALLBACK(src, PROC_REF(check_Ian_survival))
 	SSticker.OnRoundend(i_will_survive)
 
+/mob/living/basic/pet/dog/corgi/ian/Destroy()
+	LAZYREMOVE(SSticker.round_end_events, i_will_survive) //cleanup the survival callback
+	QDEL_NULL(i_will_survive)
+	return ..()
+
 /mob/living/basic/pet/dog/corgi/ian/death()
 	if(!memory_saved)
 		Write_Memory(TRUE)
@@ -655,6 +664,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 //NARS-IAN! SQ-Q-QooEglor-r'EEn-nl-luEEEf-f-fth-h
 /mob/living/basic/pet/dog/corgi/narsie
 	name = "Nars-Ian"
+	real_name = "Nars-Ian"
 	desc = "Ia! Ia!"
 	icon_state = "narsian"
 	icon_living = "narsian"

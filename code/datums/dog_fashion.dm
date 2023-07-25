@@ -23,17 +23,17 @@
 	///Color modifier of the fasion item
 	var/obj_color
 
-/datum/dog_fashion/New(mob/M)
+/datum/dog_fashion/New(mob/fashionable_mob)
 	//replace the placeholder for the real unmodified name in the name of the dog
-	name = replacetext(name, "%REAL_NAME%", M.real_name)
+	name = replacetext(name, "%REAL_NAME%", fashionable_mob.real_name)
 	//replace the placeholder for the capitalized real unmodified name in the name of the dog
-	name = replacetext(name, "%CAPITAL_REAL_NAME%", capitalize(M.real_name))
+	name = replacetext(name, "%CAPITAL_REAL_NAME%", capitalize(fashionable_mob.real_name))
 	//replace the placeholder for the current full name, which includes our name modifiers
 	desc = replacetext(desc, "%NAME%", name)
 	//replace the placeholder for the real unmodified name in the description of the dog
-	desc = replacetext(desc, "%REAL_NAME%", M.real_name)
+	desc = replacetext(desc, "%REAL_NAME%", fashionable_mob.real_name)
 	//replace the placeholder for the capitalized real unmodified name in the description of the dog
-	desc = replacetext(desc, "%CAPITAL_REAL_NAME%", capitalize(M.real_name))
+	desc = replacetext(desc, "%CAPITAL_REAL_NAME%", capitalize(fashionable_mob.real_name))
 
 ///Applies the name, description and speak emote modifiers to the dog
 /datum/dog_fashion/proc/apply(mob/living/basic/pet/dog/dressup_doggy)
@@ -41,16 +41,16 @@
 		dressup_doggy.name = name
 	if(desc)
 		dressup_doggy.desc = desc
-	if(speak_emote)
+	if(length(speak_emote))
 		dressup_doggy.speak_emote = string_list(speak_emote)
 
 ///Applies random speech modifiers to the dog
 /datum/dog_fashion/proc/apply_to_speech(datum/ai_planning_subtree/random_speech/speech)
-	if(emote_see)
+	if(length(emote_see))
 		speech.emote_see = string_list(emote_see)
-	if(emote_hear)
+	if(length(emote_hear))
 		speech.emote_hear = string_list(emote_hear)
-	if(speak)
+	if(length(speak))
 		speech.speak = string_list(speak)
 
 /**
