@@ -1,7 +1,6 @@
 import { Stack, Section, Button, Box, Input, Modal } from '../../components';
 import { Component, RefObject, createRef, SFC } from 'inferno';
 import { NtChat, NtMessenger, NtPicture } from './types';
-import { sanitizeText } from '../../sanitize';
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../../backend';
 
@@ -377,16 +376,10 @@ type ChatMessageProps = {
 
 const ChatMessage: SFC<ChatMessageProps> = (props: ChatMessageProps) => {
   const { msg, everyone, outgoing, photoPath, onPreviewImage } = props;
-  const text = {
-    __html: sanitizeText(msg),
-  };
 
   return (
     <Box className={`NtosChatMessage${outgoing ? '_outgoing' : ''}`}>
-      <Box
-        className="NtosChatMessage__content"
-        dangerouslySetInnerHTML={text}
-      />
+      <Box className="NtosChatMessage__content">{msg}</Box>
       {photoPath !== null && (
         <Button
           tooltip="View image"

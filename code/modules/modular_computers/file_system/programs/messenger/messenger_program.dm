@@ -322,11 +322,6 @@
 			update_pictures_for_all()
 			return TRUE
 
-/datum/computer_file/program/messenger/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet/emojipedia)
-	)
-
 /datum/computer_file/program/messenger/ui_static_data(mob/user)
 	var/list/static_data = list()
 
@@ -532,7 +527,7 @@
 		return FALSE
 
 	// Log it in our logs
-	var/datum/pda_msg/message_datum = new(emoji_parse(message), TRUE, photo_asset_key, everyone)
+	var/datum/pda_msg/message_datum = new(message, TRUE, photo_asset_key, everyone)
 	for(var/datum/pda_chat/target_chat as anything in target_chats)
 		target_chat.add_msg(message_datum, show_in_recents = !everyone)
 		target_chat.unread_messages = 0
