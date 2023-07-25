@@ -328,8 +328,8 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 			user.visible_message(span_notice("[user] shaves [src]'s hair using \the [attacking_item]."))
 			playsound(get_turf(src), 'sound/items/welder2.ogg', 20, TRUE)
 			shaved = TRUE
-			icon_living = "[initial(icon_living)]_shaved"
-			icon_dead = "[initial(icon_living)]_shaved_dead"
+			icon_living = "[icon_living]_shaved"
+			icon_dead = "[icon_living]_shaved_dead"
 			if(stat == CONSCIOUS)
 				icon_state = icon_living
 			else
