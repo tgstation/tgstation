@@ -100,7 +100,7 @@
 	required_tool = EXODRONE_TOOL_TRANSLATOR
 	deep_scan_description = "Automated security measures of unknown origin detected on site."
 	description = "A dangerous looking machine slides out the floor and start flashing strange glyphs while emitting a high-pitched sound!"
-	has_tool_description = "Your translator recognizes the glyphs as security hail and suggests identyfing yourself as guest."
+	has_tool_description = "Your translator recognizes the glyphs as security hail and suggests identyfing yourself as a guest."
 	no_tool_description = "The machine start shooting soon after."
 	has_tool_action_text = "Identify yourself"
 	no_tool_action_text = "Escape"
