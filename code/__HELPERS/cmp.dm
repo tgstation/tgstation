@@ -179,4 +179,4 @@
 /proc/cmp_award_priority(type_a, type_b)
 	var/datum/award/award_a = SSachievements.awards[type_a]
 	var/datum/award/award_b = SSachievements.awards[type_b]
-	return award_b.load_priority - award_a.load_priority
+	return award_b?.load_priority - award_a?.load_priority
