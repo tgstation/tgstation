@@ -683,18 +683,20 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	//consume simple_animal pets
 	for(var/mob/living/simple_animal/pet/simple_pet in range(1, src))
 		if(simple_pet != src && !istype(simple_pet, /mob/living/basic/pet/dog/corgi/narsie))
-			visible_message(span_warning("[src] devours [simple_pet]!"), \
+			visible_message(span_warning("Dark magic resonating from [src] devours [simple_pet]!"), \
 			"<span class='cult big bold'>DELICIOUS SOULS</span>")
 			playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
+			new /obj/effect/temp_visual/cult/sac(get_turf(simple_pet))
 			narsie_act()
 			simple_pet.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			simple_pet.gib()
 	//consume basic pets
 	for(var/mob/living/basic/pet/basic_pet in range(1, src))
 		if(basic_pet != src && !istype(basic_pet, /mob/living/basic/pet/dog/corgi/narsie))
-			visible_message(span_warning("[src] devours [basic_pet]!"), \
+			visible_message(span_warning("Dark magic resonating from [src] devours [basic_pet]!"), \
 			"<span class='cult big bold'>DELICIOUS SOULS</span>")
 			playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
+			new /obj/effect/temp_visual/cult/sac(get_turf(basic_pet))
 			narsie_act()
 			basic_pet.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			basic_pet.gib()
@@ -709,6 +711,10 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	speech.emote_see = string_list(list("communes with the unnameable.", "ponders devouring some souls.", "shakes."))
 
 /mob/living/basic/pet/dog/corgi/narsie/narsie_act()
+	if(stat == DEAD) //Nar'Sie loves her doggy
+		visible_message(span_warning("[src] arises again, revived by the dark magicks!"), \
+		span_cultlarge("RISE"))
+		revive(ADMIN_HEAL_ALL) //also means that a dead Nars-Ian can consume a pet and revive
 	adjustBruteLoss(-maxHealth)
 
 //LISA! SQUEEEEEEEEE~
