@@ -173,7 +173,7 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/modular_shield/module/node
 	req_components = list(
-		/obj/item/stack/cable_coil = 15,
+		/obj/item/stack/cable_coil = 3, //monke edit 15 to 3
 		/obj/item/stack/sheet/plasteel = 2,)
 
 /obj/item/circuitboard/machine/modular_shield_well

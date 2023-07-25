@@ -7,6 +7,16 @@
 	circuit = /obj/item/circuitboard/machine/modular_shield_generator
 	processing_flags = START_PROCESSING_ON_INIT
 
+/*
+Monkestation edits:
+changed innate radius to 5
+increased capacitor and manip benifts by 25%
+added indicators that the shield is taking damage when hitting it
+interacts with explosions
+shields now deploy on walls(they wouldn't autogenerate if wall was removed and it looks nicer)
+the modular shield components(not generator) are climbable
+*/
+
 	///Doesnt actually control it, just tells us if its running or not, you can control by calling procs activate_shields and deactivate_shields
 	var/active = FALSE
 
@@ -177,7 +187,7 @@
 		LAZYADD(list_of_turfs, get_perimeter(src, radius))
 
 		if(exterior_only)
-			for(var/turf/open/target_tile in list_of_turfs)
+			for(var/turf/target_tile in list_of_turfs)
 				if(isfloorturf(target_tile))
 					continue
 				if(locate(/obj/structure/emergency_shield/modular) in target_tile)
@@ -190,7 +200,7 @@
 			calculate_regeneration()
 			return
 
-		for(var/turf/open/target_tile in list_of_turfs)
+		for(var/turf/target_tile in list_of_turfs)
 			if(locate(/obj/structure/emergency_shield/modular) in target_tile)
 				continue
 			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
@@ -204,7 +214,7 @@
 	//this code only runs on radius less than 10 and gives us a more accurate circle that is more compatible with decimal values
 	LAZYADD(inside_shield, circle_range_turfs(src, radius - 1))//in the future we might want to apply an effect to the turfs inside the shield
 	if(exterior_only)
-		for(var/turf/open/target_tile in circle_range_turfs(src, radius))
+		for(var/turf/target_tile in circle_range_turfs(src, radius))
 			if(isfloorturf(target_tile))
 				continue
 			if(target_tile in inside_shield)
@@ -219,7 +229,7 @@
 		calculate_regeneration()
 		return
 
-	for(var/turf/open/target_tile in circle_range_turfs(src, radius))
+	for(var/turf/target_tile in circle_range_turfs(src, radius))
 		if(target_tile in inside_shield)
 			continue
 		if(locate(/obj/structure/emergency_shield/modular) in target_tile)
@@ -396,6 +406,7 @@
 /obj/machinery/modular_shield/module/Initialize(mapload)
 	. = ..()
 
+	AddElement(/datum/element/climbable, climb_time = 1 SECONDS)
 	connected_turf = get_step(loc, dir)
 
 /obj/machinery/modular_shield/module/Destroy()
