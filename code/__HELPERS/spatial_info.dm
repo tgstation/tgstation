@@ -146,7 +146,7 @@
 	if(!length(hearables_from_grid))//we know that something is returned by the grid, but we dont know if we need to actually filter down the output
 		return .
 
-	for(var/obj/hearable in hearables_from_grid)
+	for(var/atom/movable/hearable as anything in hearables_from_grid)
 		if (get_dist(center_turf, hearable) <= range)
 			. += hearable
 
