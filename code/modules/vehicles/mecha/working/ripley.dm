@@ -7,7 +7,6 @@
 	movedelay = 1.5 //Move speed, lower is faster.
 	max_temperature = 20000
 	max_integrity = 200
-	ui_x = 1200
 	lights_power = 7
 	armor_type = /datum/armor/mecha_ripley
 	max_equip_by_category = list(

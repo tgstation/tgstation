@@ -199,10 +199,6 @@
 	///Bool for whether this mech can only be used on lavaland
 	var/lavaland_only = FALSE
 
-	/// Ui size, so you can make the UI bigger if you let it load a lot of stuff
-	var/ui_x = 1100
-	/// Ui size, so you can make the UI bigger if you let it load a lot of stuff
-	var/ui_y = 600
 	/// ref to screen object that displays in the middle of the UI
 	var/atom/movable/screen/map_view/ui_view
 

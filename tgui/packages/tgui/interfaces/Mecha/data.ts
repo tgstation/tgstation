@@ -105,6 +105,7 @@ export type MechModule = {
   name: string;
   detachable: boolean;
   activated: boolean;
+  equip_cooldown: number;
   energy_per_use: number;
   snowflake: Snowflake;
   ref: string;

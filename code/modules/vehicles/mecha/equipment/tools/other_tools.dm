@@ -641,7 +641,7 @@
 					return TRUE
 				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Unable to disconnect from the air system port!")]")
 				return
-			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
+			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in chassis.loc
 			if(internal_tank.connect(possible_port))
 				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Connected to the air system port.")]")
 				log_message("Connected to gas port.", LOG_MECHA)

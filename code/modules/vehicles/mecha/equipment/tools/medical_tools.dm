@@ -18,8 +18,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper
 	name = "mounted sleeper"
 	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents in the exosuit's reserves."
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
+	icon_state = "mecha_sleeper"
 	energy_drain = 20
 	range = MECHA_MELEE
 	equip_cooldown = 20
@@ -244,8 +243,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun
 	name = "exosuit syringe gun"
 	desc = "Equipment for medical exosuits. A chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	icon_state = "syringegun"
+	icon_state = "mecha_syringegun"
 	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 10
 	energy_drain = 10

@@ -2,6 +2,7 @@ import { useBackend } from '../../backend';
 import { ByondUi, Stack, Button, Section, Box, ProgressBar, LabeledList } from '../../components';
 import { KelvinZeroCelcius, OperatorData } from './data';
 import { toFixed } from 'common/math';
+import { AlertPane } from './AlertPane';
 
 export const MechStatPane = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
@@ -20,11 +21,19 @@ export const MechStatPane = (props, context) => {
     mech_view,
   } = data;
   return (
-    <Stack fill vertical>
-      <Stack.Item>
-        <Section
-          title={name}
-          buttons={<Button onClick={() => act('changename')}>Rename</Button>}>
+    <Section
+      fill
+      title={name}
+      buttons={
+        <Button
+          icon="edit"
+          tooltip="Rename"
+          tooltipPosition="left"
+          onClick={() => act('changename')}
+        />
+      }>
+      <Stack fill vertical>
+        <Stack.Item>
           <ByondUi
             height="170px"
             params={{
@@ -33,10 +42,8 @@ export const MechStatPane = (props, context) => {
               type: 'map',
             }}
           />
-        </Section>
-      </Stack.Item>
-      <Stack.Item>
-        <Section title="Status">
+        </Stack.Item>
+        <Stack.Item>
           <LabeledList>
             <LabeledList.Item label="Integrity">
               <ProgressBar
@@ -51,62 +58,10 @@ export const MechStatPane = (props, context) => {
             <LabeledList.Item label="Power">
               <PowerBar />
             </LabeledList.Item>
-            <LabeledList.Item label="Safety">
-              <Button
-                color={weapons_safety ? 'red' : ''}
-                onClick={() => act('toggle_safety')}>
-                {weapons_safety ? 'Dis' : 'En'}able
-              </Button>
+            <LabeledList.Item label="DNA Lock">
+              <DNABody />
             </LabeledList.Item>
-          </LabeledList>
-        </Section>
-      </Stack.Item>
-      <Stack.Item>
-        <Section title="Enviromental Data">
-          <LabeledList>
-            <LabeledList.Item label="Air Source">
-              <Button
-                disabled={!airtank_present}
-                onClick={() => act('toggle_airsource')}>
-                {air_source}
-              </Button>
-            </LabeledList.Item>
-            <LabeledList.Item label="Cabin pressure">
-              <Box
-                color={
-                  cabin_pressure > cabin_dangerous_highpressure ? 'red' : null
-                }>
-                {cabin_pressure} kPa
-              </Box>
-            </LabeledList.Item>
-            <LabeledList.Item label="Cabin temperature">
-              <Box>{GetTempFormat(cabin_temp)}</Box>
-            </LabeledList.Item>
-            <EnviromentalAir />
-          </LabeledList>
-        </Section>
-      </Stack.Item>
-      <Stack.Item>
-        <Section title="DNA lock">
-          <DNABody />
-        </Section>
-      </Stack.Item>
-      <Stack.Item>
-        <Section title="Maintenance">
-          <LabeledList>
-            <LabeledList.Item label="Maintenance mode">
-              <Button
-                onClick={() => act('toggle_maintenance')}
-                selected={
-                  mecha_flags & mechflag_keys['ADDING_MAINT_ACCESS_POSSIBLE']
-                }>
-                {mecha_flags & mechflag_keys['ADDING_MAINT_ACCESS_POSSIBLE']
-                  ? 'En'
-                  : 'Dis'}
-                abled
-              </Button>
-            </LabeledList.Item>
-            <LabeledList.Item label="ID reader panel">
+            <LabeledList.Item label="ID reader">
               <Button
                 onClick={() => act('toggle_id_panel')}
                 selected={
@@ -118,17 +73,27 @@ export const MechStatPane = (props, context) => {
                 abled
               </Button>
             </LabeledList.Item>
-            <LabeledList.Item label="Port connection">
+            <LabeledList.Item label="Maintenance">
               <Button
-                onClick={() => act('toggle_port')}
-                selected={port_connected}>
-                {port_connected ? 'C' : 'Disc'}onnected
+                onClick={() => act('toggle_maintenance')}
+                selected={
+                  mecha_flags & mechflag_keys['ADDING_MAINT_ACCESS_POSSIBLE']
+                }>
+                {mecha_flags & mechflag_keys['ADDING_MAINT_ACCESS_POSSIBLE']
+                  ? 'En'
+                  : 'Dis'}
+                abled
               </Button>
             </LabeledList.Item>
           </LabeledList>
-        </Section>
-      </Stack.Item>
-    </Stack>
+        </Stack.Item>
+        <Stack.Item>
+          <Section title="Alerts">
+            <AlertPane />
+          </Section>
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 
@@ -160,37 +125,30 @@ const EnviromentalAir = (props, context) => {
 const DNABody = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
   const { dna_lock } = data;
-  if (dna_lock === null) {
-    return (
-      <LabeledList>
-        <LabeledList.Item label="DNA Enzymes">
-          <Button onClick={() => act('dna_lock')} icon={'syringe'}>
-            Set new DNA key
-          </Button>
-        </LabeledList.Item>
-      </LabeledList>
-    );
-  } else {
-    return (
-      <LabeledList>
-        <LabeledList.Item label="DNA Enzymes">
-          <Button onClick={() => act('dna_lock')} icon={'syringe'}>
-            Set new DNA key
-          </Button>
-        </LabeledList.Item>
-        <LabeledList.Item label="Enzymes">
-          <Button onClick={() => act('view_dna')} icon={'list'}>
-            View enzyme list
-          </Button>
-        </LabeledList.Item>
-        <LabeledList.Item label="Reset DNA">
-          <Button onClick={() => act('reset_dna')} icon={'ban'}>
-            Reset DNA lock
-          </Button>
-        </LabeledList.Item>
-      </LabeledList>
-    );
-  }
+  return (
+    <Box>
+      <Button
+        onClick={() => act('dna_lock')}
+        icon={'syringe'}
+        tooltip="Set new DNA key"
+        tooltipPosition="top"
+      />
+      <Button
+        onClick={() => act('view_dna')}
+        icon={'list'}
+        tooltip="View enzyme list"
+        tooltipPosition="top"
+        disabled={!dna_lock}
+      />
+      <Button
+        onClick={() => act('reset_dna')}
+        icon={'ban'}
+        tooltip="Reset DNA lock"
+        tooltipPosition="top"
+        disabled={!dna_lock}
+      />
+    </Box>
+  );
 };
 
 const PowerBar = (props, context) => {

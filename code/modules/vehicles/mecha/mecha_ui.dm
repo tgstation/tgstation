@@ -5,7 +5,7 @@
 /obj/vehicle/sealed/mecha/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Mecha", name, ui_x, ui_y)
+		ui = new(user, src, "Mecha", name)
 		ui.open()
 		ui_view.display_to(user)
 
@@ -236,7 +236,7 @@
 	//usr is in occupants
 	switch(action)
 		if("changename")
-			var/userinput = tgui_input_text(usr, "Choose a new exosuit name", "Rename exosuit", max_length = MAX_NAME_LEN)
+			var/userinput = tgui_input_text(usr, "Choose a new exosuit name", "Rename exosuit", max_length = MAX_NAME_LEN, default = name)
 			if(!userinput)
 				return
 			if(is_ic_filtered(userinput) || is_soft_ic_filtered(userinput))
@@ -324,6 +324,7 @@
 					"desc" = module.desc,
 					"detachable" = module.detachable,
 					"activated" = module.activated,
+					"equip_cooldown" = module.equip_cooldown,
 					"energy_per_use" = module.energy_drain,
 					"snowflake" = module.get_snowflake_data(),
 					"ref" = REF(module),
