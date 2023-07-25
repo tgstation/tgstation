@@ -81,13 +81,6 @@
 	. = ..()
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(set_spoiler))
 
-/obj/structure/tram/spoiler/proc/find_tram()
-	for(var/datum/transport_controller/linear/tram/tram as anything in SSicts_transport.transports_by_type[ICTS_TYPE_TRAM])
-		if(tram.specific_transport_id != tram_id)
-			continue
-		tram_ref = WEAKREF(tram)
-		break
-
 /obj/structure/tram/spoiler/proc/set_spoiler(source, controller, controller_active, controller_status, travel_direction)
 	SIGNAL_HANDLER
 

@@ -8,6 +8,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 	var/list/transports_by_type = list()
 	var/list/nav_beacons = list()
 	var/list/crossing_signals = list()
+	var/list/sensors = list()
 	var/list/doors = list()
 	var/list/displays = list()
 	///how much time a tram can take per movement before we notify admins and slow down the tram. in milliseconds
@@ -24,11 +25,11 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 /datum/controller/subsystem/processing/icts_transport/Recover()
 	_listen_lookup = SSicts_transport._listen_lookup
 
-/datum/controller/subsystem/processing/icts_transport/proc/incoming_request(source, obj/effect/landmark/icts/nav_beacon/tram/transport_network, platform, options = NONE)
+/datum/controller/subsystem/processing/icts_transport/proc/incoming_request(source, obj/effect/landmark/icts/nav_beacon/tram/transport_network, platform, request_flags)
 	SIGNAL_HANDLER
 
 	var/relevant
-	var/request_flags = options
+	// var/request_flags = options
 	var/datum/transport_controller/linear/tram/transport_controller
 	var/obj/effect/landmark/icts/nav_beacon/tram/destination
 	for(var/datum/transport_controller/linear/tram/candidate_controller as anything in transports_by_type[ICTS_TYPE_TRAM])
@@ -100,6 +101,7 @@ PROCESSING_SUBSYSTEM_DEF(icts_transport)
 
 	if(current_attempt >= 4)
 		halt_and_catch_fire(transport_controller)
+		return
 
 	current_attempt++
 

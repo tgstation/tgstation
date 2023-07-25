@@ -124,13 +124,10 @@
 /obj/machinery/crossing_signal/LateInitialize(mapload)
 	. = ..()
 	find_tram()
-	link_sensor()
+	link_sensor(src)
 
 /obj/machinery/crossing_signal/Destroy()
 	SSicts_transport.crossing_signals -= src
-	if(linked_sensor)
-		linked_sensor.uplink = null
-		linked_sensor = null
 	. = ..()
 
 /obj/machinery/crossing_signal/emag_act(mob/living/user)
@@ -166,25 +163,7 @@
 		break
 
 /obj/machinery/crossing_signal/proc/link_sensor()
-	if(linked_sensor)
-		linked_sensor.uplink = null
-		linked_sensor = null
-	if(!signal_direction)
-		return
-	var/limit = XING_DEFAULT_TRAM_LENGTH
-	var/turf/my_turf = get_turf(src)
-	var/obj/machinery/guideway_sensor/found_sensor
-	do
-		my_turf = get_step(my_turf, signal_direction)
-		found_sensor = locate() in my_turf
-		if(found_sensor && found_sensor.link_direction != get_dir(found_sensor, src))
-			found_sensor = null
-		limit--
-	while(!found_sensor && limit)
-	if(!found_sensor)
-		return FALSE
-	found_sensor.uplink = src
-	linked_sensor = found_sensor
+	linked_sensor = return_closest_sensor(src)
 
 /obj/machinery/crossing_signal/proc/wake_sensor()
 	if(operating_status > XING_SENSOR_FAULT)
@@ -194,7 +173,7 @@
 		message_admins("Crossing signal: Sensor fault")
 		operating_status = XING_SENSOR_FAULT
 
-	if(linked_sensor.check_connection())
+	if(linked_sensor.trigger_sensor())
 		message_admins("Crossing signal: Sensor connected")
 		operating_status = XING_NORMAL_OPERATION
 
@@ -208,6 +187,9 @@
 /obj/machinery/crossing_signal/proc/wake_up(datum/source, transport_controller, controller_active)
 	SIGNAL_HANDLER
 
+	if(!linked_sensor)
+		link_sensor()
+	wake_sensor()
 	update_operating()
 
 /obj/machinery/crossing_signal/on_set_is_operational()
@@ -223,7 +205,6 @@
 /obj/machinery/crossing_signal/proc/update_operating()
 
 	use_power(idle_power_usage)
-	wake_sensor()
 	// Immediately process for snappy feedback
 	var/should_process = process() != PROCESS_KILL
 	if(should_process)
@@ -367,76 +348,132 @@
 	/// Keeps track of the signal's scanning equipment
 	var/obj/item/stock_parts/scanning_module/attached_scanner = new /obj/item/stock_parts/scanning_module/adv()
 	/// Sensors work in a married pair
-	var/obj/machinery/guideway_sensor/paired_sensor
-	var/link_direction
-	var/pairing_direction
-	/// The crossing signal we report to
-	var/obj/machinery/crossing_signal/uplink
+	var/datum/weakref/paired_sensor
 
 /obj/machinery/guideway_sensor/Initialize(mapload)
 	. = ..()
+	SSicts_transport.sensors += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/guideway_sensor/LateInitialize(mapload)
 	. = ..()
 	pair_sensor()
+	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(wake_up))
 
 /obj/machinery/guideway_sensor/proc/pair_sensor()
+	set_machine_stat(machine_stat | MAINT)
 	if(paired_sensor)
-		paired_sensor.paired_sensor = null
+		var/obj/machinery/guideway_sensor/divorcee = paired_sensor?.resolve()
+		divorcee.set_machine_stat(machine_stat | MAINT)
+		divorcee.paired_sensor = null
+		divorcee.update_appearance()
 		paired_sensor = null
-	if (!pairing_direction)
-		return
-	var/limit = XING_DEFAULT_TRAM_LENGTH
-	var/turf/my_turf = get_turf(src)
-	var/obj/machinery/guideway_sensor/found_sensor
-	do
-		my_turf = get_step(my_turf, pairing_direction)
-		found_sensor = locate() in my_turf
-		if (found_sensor && found_sensor.pairing_direction != get_dir(found_sensor, src))
-			found_sensor = null
-		limit--
-	while(!found_sensor && limit)
-	if(!found_sensor)
-		return FALSE
-	found_sensor.paired_sensor = src
-	paired_sensor = found_sensor
-	icon_state = "airlock_sensor_cycle"
-	update_appearance()
-	paired_sensor.icon_state = "airlock_sensor_cycle"
-	paired_sensor.update_appearance()
-
-/obj/machinery/guideway_sensor/proc/check_connection()
-	if(attached_scanner.rating > 2)
-		icon_state = "airlock_sensor_standby"
-		set_is_operational(FALSE)
 		update_appearance()
-		return FALSE
 
-	if(is_operational && paired_sensor.is_operational)
-		icon_state = "airlock_sensor_cycle"
-		update_appearance()
-		return TRUE
+	for(var/obj/machinery/guideway_sensor/potential_sensor in SSicts_transport.sensors)
+		if(potential_sensor == src)
+			continue
+		if((potential_sensor.x == src.x && potential_sensor.dir & NORTH|SOUTH) || (potential_sensor.y == src.y && potential_sensor.dir & EAST|WEST))
+			paired_sensor = WEAKREF(potential_sensor)
+			set_machine_stat(machine_stat & ~MAINT)
+			break
 
-	icon_state = "airlock_sensor_standby"
 	update_appearance()
-	return FALSE
+
+	var/obj/machinery/guideway_sensor/new_partner = paired_sensor?.resolve()
+	new_partner.paired_sensor = WEAKREF(src)
+	new_partner.set_machine_stat(machine_stat & ~MAINT)
+	new_partner.update_appearance()
 
 /obj/machinery/guideway_sensor/Destroy()
+	SSicts_transport.sensors -= src
 	if(paired_sensor)
-		paired_sensor.paired_sensor = null
-		paired_sensor.update_appearance()
+		var/obj/machinery/guideway_sensor/divorcee = paired_sensor?.resolve()
+		divorcee.set_machine_stat(machine_stat & ~MAINT)
+		divorcee.paired_sensor = null
+		divorcee.update_appearance()
 		paired_sensor = null
-		update_appearance()
-	if(uplink)
-		uplink.linked_sensor = null
-		uplink = null
 	. = ..()
 
 /obj/machinery/guideway_sensor/update_appearance()
 	. = ..()
+	if(machine_stat & BROKEN)
+		icon_state = "airlock_sensor_off"
+		return
 
-	if(!paired_sensor)
+	if(machine_stat & MAINT)
 		icon_state = "airlock_sensor_standby"
-	else if(!paired_sensor.check_connection())
-		icon_state = "airlock_sensor_alert"
+		return
+
+	var/obj/machinery/guideway_sensor/buddy = paired_sensor?.resolve()
+	if(buddy)
+		if(!buddy.is_operational)
+			icon_state = "airlock_sensor_alert"
+		else
+			icon_state = "airlock_sensor_cycle"
+			return
+
+	icon_state = "airlock_sensor_standby"
+
+/obj/machinery/guideway_sensor/proc/trigger_sensor()
+	var/obj/machinery/guideway_sensor/buddy = paired_sensor?.resolve()
+	if(!buddy)
+		return FALSE
+
+	if(!is_operational || !buddy.is_operational)
+		return FALSE
+
+	return TRUE
+
+/obj/machinery/guideway_sensor/proc/wake_up()
+	var/obj/machinery/guideway_sensor/buddy = paired_sensor?.resolve()
+	if(!buddy)
+		pair_sensor()
+	if(!attached_scanner)
+		set_machine_stat(machine_stat | BROKEN)
+		return
+	if(attached_scanner.rating < 2)
+		set_machine_stat(machine_stat | BROKEN)
+		return
+
+	set_machine_stat(machine_stat & ~BROKEN)
+
+	if(buddy)
+		if(!buddy.is_operational)
+			set_machine_stat(machine_stat | MAINT)
+		else
+			set_machine_stat(machine_stat & ~MAINT)
+
+/obj/machinery/crossing_signal/proc/return_closest_sensor(obj/machinery/crossing_signal/comparison, allow_multiple_answers = FALSE)
+	if(!istype(comparison) || !comparison.z)
+		return FALSE
+
+	var/list/obj/machinery/guideway_sensor/candidate_sensors = list()
+
+	for(var/obj/machinery/guideway_sensor/sensor in SSicts_transport.sensors)
+		if(sensor.z == comparison.z)
+			if((sensor.x == comparison.x && sensor.dir & NORTH|SOUTH) || (sensor.y == comparison.y && sensor.dir & EAST|WEST))
+				candidate_sensors += sensor
+
+	var/obj/machinery/guideway_sensor/winner = candidate_sensors[1]
+	var/winner_distance = get_dist(comparison, winner)
+
+	var/list/tied_winners = list(winner)
+
+	for(var/obj/machinery/guideway_sensor/sensor_to_sort as anything in candidate_sensors)
+		var/sensor_distance = get_dist(comparison, sensor_to_sort)
+
+		if(sensor_distance < winner_distance)
+			winner = sensor_to_sort
+			winner_distance = sensor_distance
+
+			if(allow_multiple_answers)
+				tied_winners = list(winner)
+
+		else if(sensor_distance == winner_distance && allow_multiple_answers)
+			tied_winners += sensor_to_sort
+
+	if(allow_multiple_answers)
+		return tied_winners
+
+	return winner
