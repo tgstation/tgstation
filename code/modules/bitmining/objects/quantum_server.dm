@@ -135,6 +135,29 @@
 
 	return FALSE
 
+
+/// Each time someone connects, mob health jumps 1.5x
+/obj/machinery/quantum_server/proc/client_connect(datum/weakref/new_mind)
+	occupant_mind_refs += new_mind
+	if(length(occupant_mind_refs) == 1)
+		return
+
+	for(var/mob/living/creature as anything in generated_domain.created_atoms)
+		if(is_valid_mob(creature))
+			creature.health *= difficulty_coeff
+			creature.maxHealth *= difficulty_coeff
+
+/// If a client disconnects, remove them from the list & nerf mobs
+/obj/machinery/quantum_server/proc/client_disconnect(datum/weakref/old_mind)
+	occupant_mind_refs -= old_mind
+	if(length(occupant_mind_refs) == 0)
+		return
+
+	for(var/mob/living/creature as anything in generated_domain.created_atoms)
+		if(is_valid_mob(creature))
+			creature.health /= difficulty_coeff
+			creature.maxHealth /= difficulty_coeff
+
 /**
  * ### Quantum Server Cold Boot
  * Procedurally links the 3 booting processes together.
@@ -151,6 +174,10 @@
 
 	if(generated_domain)
 		balloon_alert(user, "stop the current domain first.")
+		return FALSE
+
+	if(length(occupant_mind_refs))
+		balloon_alert(user, "all clients must disconnect!")
 		return FALSE
 
 	loading = TRUE
@@ -198,7 +225,6 @@
 			return nearby_console
 
 	return FALSE
-
 
 /// Generates a reward based on the given domain
 /obj/machinery/quantum_server/proc/generate_loot(mob/user)
@@ -304,7 +330,7 @@
 
 /// Returns if the server is busy via loading or cooldown states
 /obj/machinery/quantum_server/proc/get_ready_status()
-	return !loading && COOLDOWN_FINISHED(src, cooling_off) && !length(occupant_mind_refs)
+	return !loading && COOLDOWN_FINISHED(src, cooling_off)
 
 /// Generates a new virtual domain
 /obj/machinery/quantum_server/proc/initialize_virtual_domain()
@@ -344,32 +370,6 @@
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(stop_domain))
-
-/// Each time someone connects, mob health jumps 1.5x
-/obj/machinery/quantum_server/proc/on_client_connect(datum/source, datum/weakref/new_mind)
-	SIGNAL_HANDLER
-
-	occupant_mind_refs += new_mind
-	if(length(occupant_mind_refs) == 1)
-		return
-
-	for(var/mob/living/creature as anything in generated_domain.created_atoms)
-		if(is_valid_mob(creature))
-			creature.health *= difficulty_coeff
-			creature.maxHealth *= difficulty_coeff
-
-/// If a client disconnects, remove them from the list & nerf mobs
-/obj/machinery/quantum_server/proc/on_client_disconnect(datum/source, datum/weakref/old_mind)
-	SIGNAL_HANDLER
-
-	occupant_mind_refs -= old_mind
-	if(length(occupant_mind_refs) == 0)
-		return
-
-	for(var/mob/living/creature as anything in generated_domain.created_atoms)
-		if(is_valid_mob(creature))
-			creature.health /= difficulty_coeff
-			creature.maxHealth /= difficulty_coeff
 
 /// Handles examining the server. Shows cooldown time and efficiency.
 /obj/machinery/quantum_server/proc/on_examine(datum/source, mob/examiner, list/examine_text)

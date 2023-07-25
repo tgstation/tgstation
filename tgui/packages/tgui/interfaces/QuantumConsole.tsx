@@ -4,7 +4,6 @@ import { Button, Collapsible, Icon, LabeledList, NoticeBox, ProgressBar, Section
 import { BooleanLike } from 'common/react';
 import { LoadingScreen } from './common/LoadingToolbox';
 import { TableCell, TableRow } from '../components/Table';
-import { logger } from '../logging';
 
 type Data =
   | {
@@ -39,6 +38,11 @@ type Domain = {
 
 type DomainEntryProps = {
   domain: Domain;
+};
+
+type DisplayDetailsProps = {
+  amount: number | string;
+  icon: string;
 };
 
 enum Difficulty {
@@ -175,8 +179,6 @@ const DomainEntry = (props: DomainEntryProps, context) => {
     buttonName = 'Deploy';
   }
 
-  logger.log(generated_domain);
-
   return (
     <Collapsible
       buttons={
@@ -234,7 +236,7 @@ const AvatarDisplay = (props, context) => {
         <Button
           icon="sync"
           onClick={() => act('refresh')}
-          tooltip="Refresh avatar data">
+          tooltip="Refresh avatar data.">
           Refresh
         </Button>
       }>
@@ -260,11 +262,6 @@ const AvatarDisplay = (props, context) => {
       </Table>
     </Section>
   );
-};
-
-type DisplayDetailsProps = {
-  amount: number | string;
-  icon: string;
 };
 
 const DisplayDetails = (props: DisplayDetailsProps, context) => {

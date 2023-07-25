@@ -887,5 +887,65 @@
 		return pick(possible_targets)
 	return FALSE
 
+/datum/dynamic_ruleset/midround/from_ghosts/void_sentinel
+	name = "Void Sentinel"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/void_sentinel
+	antag_flag = ROLE_VOID_SENTINEL
+	antag_flag_override = ROLE_ALIEN
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 3
+	cost = 5
+	minimum_players = 5
+	repeatable = TRUE
+	/// Target mobs able to be mutated into a void sentinel
+	var/list/mutation_candidates = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/void_sentinel/acceptable(population = 0, threat = 0)
+	generate_candidates()
+	if(!length(mutation_candidates))
+		return FALSE
+
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/void_sentinel/generate_ruleset_body(mob/applicant)
+	var/datum/mind/player_mind = new /datum/mind(applicant.key)
+	player_mind.active = TRUE
+
+	var/mob/living/target = pick(mutation_candidates)
+	if(isnull(target))
+		return
+
+	var/mob/living/carbon/human/new_sentinel = new(target.loc)
+	target.gib()
+
+	new_sentinel.equipOutfit(/datum/outfit/void_sentinel)
+	new_sentinel.fully_replace_character_name(new_sentinel.name, pick(GLOB.sentinel_names))
+
+	player_mind.transfer_to(new_sentinel)
+	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/void_sentinel))
+	player_mind.special_role = ROLE_VOID_SENTINEL
+	player_mind.add_antag_datum(/datum/antagonist/void_sentinel)
+
+	playsound(new_sentinel, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	message_admins("[ADMIN_LOOKUPFLW(new_sentinel)] has been made into a Void Sentinel by the midround ruleset.")
+	log_dynamic("[key_name(new_sentinel)] was spawned as a Void Sentinel by the midround ruleset.")
+
+	return new_sentinel
+
+/datum/dynamic_ruleset/midround/from_ghosts/void_sentinel/proc/generate_candidates()
+	mutation_candidates.Cut()
+
+	for(var/obj/machinery/quantum_server/server as anything in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))
+		if(!length(server.occupant_mind_refs) || isnull(server.generated_domain))
+			continue
+
+		for(var/mob/living/creature as anything in server.generated_domain.created_atoms)
+			if(QDELETED(creature) || !isliving(creature) || creature.key)
+				continue
+
+			mutation_candidates += creature
+
 #undef MALF_ION_PROB
 #undef REPLACE_LAW_WITH_ION_PROB

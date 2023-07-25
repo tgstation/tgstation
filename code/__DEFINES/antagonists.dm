@@ -322,6 +322,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_NINJAS "Ninja Clan"
 #define ANTAG_GROUP_OVERGROWTH "Invasive Overgrowth"
 #define ANTAG_GROUP_PIRATES "Pirate Crew"
+#define ANTAG_GROUP_SENTINELS "Cyber Authority"
 #define ANTAG_GROUP_SYNDICATE "Syndicate"
 #define ANTAG_GROUP_WIZARDS "Wizard Federation"
 #define ANTAG_GROUP_XENOS "Xenomorph Infestation"

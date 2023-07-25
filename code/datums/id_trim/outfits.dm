@@ -55,3 +55,14 @@
 	subdepartment_color = COLOR_PRISONER_BLACK
 
 	access = list(ACCESS_HUNTER)
+
+/// Trim for Void Sentinels in the Virtual Domain.
+/datum/id_trim/void_sentinel
+	assignment = "Void Sentinel"
+	trim_state = "trim_deathcommando"
+	department_color = COLOR_BLACK
+	subdepartment_color = COLOR_BIOLUMINESCENCE_GREEN
+
+/datum/id_trim/void_sentinel/New()
+	. = ..()
+	access |= SSid_access.get_region_access_list(list(REGION_ACCESS_ALL_GLOBAL))

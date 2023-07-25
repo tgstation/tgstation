@@ -12,7 +12,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	desc = "A link to the netverse. It has an assortment of cables to connect yourself to a virtual domain."
 	icon = 'icons/obj/chairs.dmi'
-	icon_state = "echair0"
+	icon_state = "netchair"
 	integrity_failure = 0.1
 	layer = OBJ_LAYER
 	max_integrity = 250
@@ -151,7 +151,7 @@
 
 	var/datum/weakref/neo_mind_ref = WEAKREF(neo.mind)
 	occupant_mind_ref = neo_mind_ref
-	SEND_SIGNAL(server, COMSIG_BITMINER_CONNECTED, neo_mind_ref)
+	SEND_SIGNAL(src, COMSIG_BITMINER_CONNECTED, neo_mind_ref)
 	neo.mind.initial_avatar_connection(
 		occupant = neo,
 		avatar = current_avatar,
@@ -168,8 +168,8 @@
 	server = locate(/obj/machinery/quantum_server) in oview(4, src)
 	if(server)
 		server_ref = WEAKREF(server)
-		server.RegisterSignal(src, COMSIG_BITMINER_CONNECTED, TYPE_PROC_REF(/obj/machinery/quantum_server, on_client_connect), override = TRUE)
-		server.RegisterSignal(src, COMSIG_BITMINER_DISCONNECTED, TYPE_PROC_REF(/obj/machinery/quantum_server, on_client_disconnect), override = TRUE)
+		RegisterSignal(src, COMSIG_BITMINER_CONNECTED, PROC_REF(on_connected))
+		RegisterSignal(src, COMSIG_BITMINER_DISCONNECTED, PROC_REF(on_disconnected))
 		return server
 
 	return FALSE
@@ -234,6 +234,24 @@
 
 	occupant_ref = WEAKREF(mob_to_buckle)
 	INVOKE_ASYNC(src, PROC_REF(enter_matrix), mob_to_buckle)
+
+/obj/structure/netchair/proc/on_connected(datum/source, datum/weakref/new_mind)
+	SIGNAL_HANDLER
+
+	var/obj/machinery/quantum_server/server = find_server()
+	if(isnull(server))
+		return
+
+	server.client_connect(new_mind)
+
+/obj/structure/netchair/proc/on_disconnected(datum/source, datum/weakref/old_mind)
+	SIGNAL_HANDLER
+
+	var/obj/machinery/quantum_server/server = find_server()
+	if(isnull(server))
+		return
+
+	server.client_disconnect(old_mind)
 
 /// On unbuckle or break, make sure the occupant ref is null
 /obj/structure/netchair/proc/on_sever()
