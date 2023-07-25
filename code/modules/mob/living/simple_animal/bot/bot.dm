@@ -973,6 +973,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		data["settings"]["pai_inserted"] = !!paicard
 		data["settings"]["allow_possession"] = bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT
 		data["settings"]["possession_enabled"] = can_be_possessed
+		data["settings"]["possession_locked"] = bot_cover_flags & BOT_COVER_EMAGGED
 		data["settings"]["airplane_mode"] = !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
 		data["settings"]["maintenance_lock"] = !(bot_cover_flags & BOT_COVER_OPEN)
 		data["settings"]["power"] = bot_mode_flags & BOT_MODE_ON

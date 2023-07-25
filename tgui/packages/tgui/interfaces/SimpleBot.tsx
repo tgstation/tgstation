@@ -19,6 +19,7 @@ type Settings = {
   patrol_station: number;
   allow_possession: number;
   possession_enabled: number;
+  possession_locked: number;
   has_personality: number;
   pai_inserted: boolean;
 };
@@ -144,6 +145,7 @@ const SettingsDisplay = (props, context) => {
     maintenance_lock,
     allow_possession,
     possession_enabled,
+    possession_locked,
   } = settings;
 
   return (
@@ -203,14 +205,18 @@ const SettingsDisplay = (props, context) => {
         <LabeledControls.Item label="Personality">
           <Tooltip
             content={
-              possession_enabled
-                ? 'Resets personality to factory default.'
-                : 'Enables download of a unique personality.'
+              possession_locked
+                ? 'Error.'
+                : possession_enabled
+                  ? 'Resets personality to factory default.'
+                  : 'Enables download of a unique personality.'
             }>
             <Icon
               size={2}
               name="robot"
-              color={possession_enabled ? 'good' : 'gray'}
+              color={
+                possession_locked ? 'red' : possession_enabled ? 'good' : 'gray'
+              }
               onClick={() => act('toggle_personality')}
             />
           </Tooltip>
