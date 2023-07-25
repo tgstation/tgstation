@@ -164,21 +164,28 @@
 
 /obj/machinery/crossing_signal/proc/link_sensor()
 	linked_sensor = return_closest_sensor(src)
+	RegisterSignal(linked_sensor, COMSIG_QDELETING, PROC_REF(unlink_sensor))
+
+/obj/machinery/crossing_signal/proc/unlink_sensor()
+	SIGNAL_HANDLER
+
+	linked_sensor = null
 
 /obj/machinery/crossing_signal/proc/wake_sensor()
 	if(operating_status > XING_SENSOR_FAULT)
+		balloon_alert_to_viewers("malfunctioning!", vision_distance = 15)
 		return
 
 	if(isnull(linked_sensor))
-		message_admins("Crossing signal: Sensor fault")
+		balloon_alert_to_viewers("sensor fault!", vision_distance = 15)
 		operating_status = XING_SENSOR_FAULT
 
 	if(linked_sensor.trigger_sensor())
-		message_admins("Crossing signal: Sensor connected")
+		balloon_alert_to_viewers("sensor okay!", vision_distance = 15)
 		operating_status = XING_NORMAL_OPERATION
 
 	else
-		message_admins("Crossing signal: Sensor fault")
+		balloon_alert_to_viewers("sensor fault!", vision_distance = 15)
 		operating_status = XING_SENSOR_FAULT
 
 /**
@@ -345,6 +352,7 @@
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "airlock_sensor_standby"
 	layer = TRAM_RAIL_LAYER
+	use_power = 0
 	/// Keeps track of the signal's scanning equipment
 	var/obj/item/stock_parts/scanning_module/attached_scanner = new /obj/item/stock_parts/scanning_module/adv()
 	/// Sensors work in a married pair
@@ -361,6 +369,7 @@
 	RegisterSignal(SSicts_transport, COMSIG_ICTS_TRANSPORT_ACTIVE, PROC_REF(wake_up))
 
 /obj/machinery/guideway_sensor/proc/pair_sensor()
+	balloon_alert_to_viewers("pairing...", vision_distance = 15)
 	set_machine_stat(machine_stat | MAINT)
 	if(paired_sensor)
 		var/obj/machinery/guideway_sensor/divorcee = paired_sensor?.resolve()
@@ -384,6 +393,8 @@
 	new_partner.paired_sensor = WEAKREF(src)
 	new_partner.set_machine_stat(machine_stat & ~MAINT)
 	new_partner.update_appearance()
+	new_partner.balloon_alert_to_viewers("paired!", vision_distance = 15)
+	balloon_alert_to_viewers("paired!", vision_distance = 15)
 
 /obj/machinery/guideway_sensor/Destroy()
 	SSicts_transport.sensors -= src
@@ -392,6 +403,7 @@
 		divorcee.set_machine_stat(machine_stat & ~MAINT)
 		divorcee.paired_sensor = null
 		divorcee.update_appearance()
+		divorcee.balloon_alert_to_viewers("divorced!", vision_distance = 15)
 		paired_sensor = null
 	. = ..()
 
@@ -418,9 +430,11 @@
 /obj/machinery/guideway_sensor/proc/trigger_sensor()
 	var/obj/machinery/guideway_sensor/buddy = paired_sensor?.resolve()
 	if(!buddy)
+		balloon_alert_to_viewers("no buddy!", vision_distance = 15)
 		return FALSE
 
 	if(!is_operational || !buddy.is_operational)
+		balloon_alert_to_viewers("scanner fail!", vision_distance = 15)
 		return FALSE
 
 	return TRUE
@@ -428,11 +442,13 @@
 /obj/machinery/guideway_sensor/proc/wake_up()
 	var/obj/machinery/guideway_sensor/buddy = paired_sensor?.resolve()
 	if(!buddy)
-		pair_sensor()
+		balloon_alert_to_viewers("no buddy!", vision_distance = 15)
 	if(!attached_scanner)
+		balloon_alert_to_viewers("no scanner!", vision_distance = 15)
 		set_machine_stat(machine_stat | BROKEN)
 		return
 	if(attached_scanner.rating < 2)
+		balloon_alert_to_viewers("no scanner!", vision_distance = 15)
 		set_machine_stat(machine_stat | BROKEN)
 		return
 
@@ -440,9 +456,13 @@
 
 	if(buddy)
 		if(!buddy.is_operational)
+			balloon_alert_to_viewers("buddy inop!", vision_distance = 15)
 			set_machine_stat(machine_stat | MAINT)
 		else
+			balloon_alert_to_viewers("buddy okay", vision_distance = 15)
 			set_machine_stat(machine_stat & ~MAINT)
+
+	update_appearance()
 
 /obj/machinery/crossing_signal/proc/return_closest_sensor(obj/machinery/crossing_signal/comparison, allow_multiple_answers = FALSE)
 	if(!istype(comparison) || !comparison.z)
@@ -458,8 +478,6 @@
 	var/obj/machinery/guideway_sensor/winner = candidate_sensors[1]
 	var/winner_distance = get_dist(comparison, winner)
 
-	var/list/tied_winners = list(winner)
-
 	for(var/obj/machinery/guideway_sensor/sensor_to_sort as anything in candidate_sensors)
 		var/sensor_distance = get_dist(comparison, sensor_to_sort)
 
@@ -467,13 +485,7 @@
 			winner = sensor_to_sort
 			winner_distance = sensor_distance
 
-			if(allow_multiple_answers)
-				tied_winners = list(winner)
+	if(winner_distance <= XING_DEFAULT_TRAM_LENGTH)
+		return winner
 
-		else if(sensor_distance == winner_distance && allow_multiple_answers)
-			tied_winners += sensor_to_sort
-
-	if(allow_multiple_answers)
-		return tied_winners
-
-	return winner
+	return FALSE
