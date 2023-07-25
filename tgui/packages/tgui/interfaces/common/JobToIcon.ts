@@ -6,6 +6,7 @@ export const JOB2ICON = {
   'Assistant': 'toolbox',
   'Atmospheric Technician': 'fan',
   'Bartender': 'cocktail',
+  'Bit Avatar': 'code',
   'Bitminer': 'gamepad',
   'Botanist': 'seedling',
   'Captain': 'crown',
@@ -23,6 +24,7 @@ export const JOB2ICON = {
   'Cook': 'utensils',
   'Coroner': 'skull',
   'Curator': 'book',
+  'Cyber Police': 'qrcode',
   'Cyborg': 'robot',
   'Detective': 'user-secret',
   'Geneticist': 'dna',
@@ -49,6 +51,5 @@ export const JOB2ICON = {
   'Station Engineer': 'gears',
   'Syndicate Operative': 'dragon',
   'Virologist': 'virus',
-  'Void Sentinel': 'qrcode',
   'Warden': 'handcuffs',
 } as const;

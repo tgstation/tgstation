@@ -135,7 +135,6 @@
 
 	return FALSE
 
-
 /// Each time someone connects, mob health jumps 1.5x
 /obj/machinery/quantum_server/proc/client_connect(datum/weakref/new_mind)
 	occupant_mind_refs += new_mind

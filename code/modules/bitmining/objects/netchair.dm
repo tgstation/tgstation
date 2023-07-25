@@ -7,7 +7,7 @@
 	name = "net chair"
 
 	anchored = TRUE
-	buckle_lying = 0 //you sit in a chair, not lay
+	buckle_lying = 270
 	can_buckle = TRUE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	desc = "A link to the netverse. It has an assortment of cables to connect yourself to a virtual domain."
@@ -25,7 +25,7 @@
 	var/datum/weakref/occupant_mind_ref
 	/// The linked quantum server
 	var/datum/weakref/server_ref
-	/// The selected outfit for the gamer chair.
+	/// A player selected outfit by clicking the netchair
 	var/datum/outfit/netsuit = /datum/outfit/job/miner
 	/// Static list of outfits to select from
 	var/list/cached_outfits = list()
@@ -81,6 +81,14 @@
 
 	return FALSE
 
+/obj/structure/netchair/buckle_mob(mob/living/buckled_mob, force = FALSE, check_loc = TRUE)
+	if(..())
+		buckled_mob.pixel_y += 8
+
+/obj/structure/netchair/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
+	if(..())
+		buckled_mob.pixel_y -= 8
+
 /**
  * ### Disconnect occupant
  * If this goes smoothly, should reconnect a receiving mind to the occupant's body
@@ -106,7 +114,7 @@
 
 	var/obj/machinery/quantum_server/server = find_server()
 	if(server)
-		SEND_SIGNAL(server, COMSIG_BITMINER_DISCONNECTED, occupant_mind_ref)
+		SEND_SIGNAL(src, COMSIG_BITMINER_DISCONNECTED, occupant_mind_ref)
 		receiving.UnregisterSignal(server, COMSIG_QSERVER_DISCONNECTED)
 	occupant_mind_ref = null
 
@@ -179,8 +187,13 @@
 	var/mob/living/carbon/human/avatar = new(wayout.loc)
 
 	var/datum/outfit/to_wear = generated_domain.forced_outfit || netsuit
-	avatar.equipOutfit(to_wear, visualsOnly = TRUE)
-	avatar.job = "Bit Avatar"
+	avatar.equipOutfit(to_wear)
+
+	var/obj/item/card/id/outfit_id = avatar.wear_id
+	if(outfit_id)
+		outfit_id.assignment = "Bit Avatar"
+		outfit_id.registered_name = avatar.real_name
+		SSid_access.apply_trim_to_card(outfit_id, /datum/id_trim/bit_avatar)
 
 	return avatar
 
@@ -235,6 +248,7 @@
 	occupant_ref = WEAKREF(mob_to_buckle)
 	INVOKE_ASYNC(src, PROC_REF(enter_matrix), mob_to_buckle)
 
+/// Inserts the mind ref into the server occupant_mind_refs
 /obj/structure/netchair/proc/on_connected(datum/source, datum/weakref/new_mind)
 	SIGNAL_HANDLER
 
@@ -244,6 +258,7 @@
 
 	server.client_connect(new_mind)
 
+/// Removes the mind ref from the server occupant_mind_refs
 /obj/structure/netchair/proc/on_disconnected(datum/source, datum/weakref/old_mind)
 	SIGNAL_HANDLER
 
@@ -270,3 +285,5 @@
 		return path
 
 	return FALSE
+
+

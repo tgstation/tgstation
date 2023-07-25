@@ -29,6 +29,14 @@
 	disconnect(user)
 
 /obj/structure/hololadder/proc/disconnect(mob/user)
+	if(isnull(user.mind))
+		return
+
+	var/datum/mind/mob_mind = user.mind
+	if(isnull(mob_mind.pilot_ref))
+		balloon_alert(user, "no connection detected.")
+		return
+
 	balloon_alert(user, "disconnecting...")
 	if(do_after(user, travel_time, src))
 		user.mind.sever_avatar()

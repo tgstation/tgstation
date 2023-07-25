@@ -34,7 +34,7 @@
 
 /datum/round_event/ghost_role/cyber_police
 	minimum_required = 1
-	role_name = "cyber_police"
+	role_name = "Cyber Police"
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/cyber_police/spawn_role()

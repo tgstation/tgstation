@@ -25,7 +25,7 @@ export const AntagInfoCyberAuth = (props, context) => {
     <Window width={300} height={370} theme="ntos_terminal">
       <Window.Content>
         <Section scrollable fill>
-          <Stack vertical>
+          <Stack fill vertical>
             <Stack.Item fontSize="20px">
               FN CYBER AUTHORITY UNIT (REF)
             </Stack.Item>
@@ -33,6 +33,7 @@ export const AntagInfoCyberAuth = (props, context) => {
             <Stack.Item grow>
               <ObjectivePrintout objectives={objectives} />
             </Stack.Item>
+            <Divider />
             <Stack.Item>
               const <span style={textStyles.variable}>TARGETS</span> ={' '}
             </Stack.Item>
@@ -48,7 +49,7 @@ export const AntagInfoCyberAuth = (props, context) => {
               <span style={textStyles.variable}>action.</span>
               <span style={textStyles.danger}>KILL()</span>
             </Stack.Item>
-            <Divider />
+
             <Stack.Item>cyber_authority_unit([0x70cf4020])</Stack.Item>
           </Stack>
         </Section>

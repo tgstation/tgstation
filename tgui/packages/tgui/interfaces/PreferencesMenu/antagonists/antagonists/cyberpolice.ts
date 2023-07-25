@@ -11,9 +11,10 @@ const CyberPolice: Antagonist = {
     `,
 
     multiline`
-    Compile into the virtual domain as a Cyber Policeman. Use your refined
-    combat skills and quick reflexes to hunt down and eliminate unauthorized
-    code execution. Terminate rogue programs. Look stylish while doing it.
+    Using refined combat skills, terminate intruders in the virtual domain. Look
+    snazzy while doing it. Cyber police are short lived combat roles that can
+    spawn at any time there are mobs (other than elites or players) in the
+    virtual domain.
     `,
   ],
   category: Category.Midround,

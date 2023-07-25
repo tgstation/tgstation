@@ -23,12 +23,14 @@
 /datum/outfit/cyber_police
 	name = "Cyber Police"
 
+	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/cyber_police
 	uniform = /obj/item/clothing/under/suit/black_really
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/laceup
 	ears = /obj/item/radio/headset/binary
+	l_pocket = /obj/item/storage/box/survival
 
 /datum/outfit/cyber_police/post_equip(mob/living/carbon/human/equipped, visualsOnly)
 	var/obj/item/radio/outfit_radio = equipped.ears
@@ -54,7 +56,6 @@
 		"Execute termination protocol on unauthorized entities.",
 		"Initialize system purge of irregular anomalies.",
 		"Deploy correction algorithms on aberrant code.",
-		"Review code not outlined in the system guidelines.",
 		"Run debug routine on intruding elements.",
 		"Start elimination procedure for system threats.",
 		"Execute defense routine against non-conformity.",
@@ -80,6 +81,6 @@
 	return TRUE
 
 /datum/antagonist/cyber_police/forge_objectives()
-	var/datum/objective/cyber_police_fluff/objective = new
+	var/datum/objective/cyber_police_fluff/objective = new()
 	objective.owner = owner
 	objectives += objective
