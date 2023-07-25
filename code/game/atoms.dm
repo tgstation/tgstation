@@ -833,11 +833,6 @@
 		. |= UPDATE_OVERLAYS
 
 	// extra check to avoid the proc overhead
-	// extra check to avoid the proc overhead
-	if(updates & UPDATE_GREYSCALE && greyscale_colors && greyscale_config)
-		update_greyscale(updates)
-		. |= UPDATE_GREYSCALE
-
 	if(updates & UPDATE_GREYSCALE && greyscale_colors && greyscale_config)
 		update_greyscale(updates)
 		. |= UPDATE_GREYSCALE
@@ -889,8 +884,10 @@
 	update_greyscale()
 
 /// Checks if this atom uses the GAGS system and if so updates the icon
-		SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_GREYSCALE)
-		SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_GREYSCALE)
+/atom/proc/update_greyscale()
+	SHOULD_CALL_PARENT(TRUE)
+	if(greyscale_colors && greyscale_config)
+		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
 
 /**
  * An atom we are buckled or is contained within us has tried to move
