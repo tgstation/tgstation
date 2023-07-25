@@ -37,7 +37,7 @@
  * Has special internal uses for e.g. by the material container
  *
  * Arguments:
- * - [target][obj/item]: the stack to splot
+ * - [target][obj/item/stack]: the stack to split
  * - [amount]: amount to split by
  */
 /proc/fast_split_stack(obj/item/stack/target, amount)
