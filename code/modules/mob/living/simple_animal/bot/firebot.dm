@@ -23,13 +23,13 @@
 	possessed_message = "You are a firebot! Protect the station from fires to the best of your ability!"
 
 	automated_announcements = list(
-		"Fire detected!" = 'sound/voice/firebot/detected.ogg',
-		"Stop, drop and roll!" = 'sound/voice/firebot/stopdropnroll.ogg',
-		"Extinguishing!" = 'sound/voice/firebot/extinguishing.ogg',
-		"No fires detected." = 'sound/voice/firebot/nofires.ogg',
-		"Only you can prevent station fires." = 'sound/voice/firebot/onlyyou.ogg',
-		"Temperature nominal." = 'sound/voice/firebot/tempnominal.ogg',
-		"Keep it cool." = 'sound/voice/firebot/keepitcool.ogg',
+		FIREBOT_VOICED_FIRE_DETECTED = 'sound/voice/firebot/detected.ogg',
+		FIREBOT_VOICED_STOP_DROP = 'sound/voice/firebot/stopdropnroll.ogg',
+		FIREBOT_VOICED_EXTINGUISHING = 'sound/voice/firebot/extinguishing.ogg',
+		FIREBOT_VOICED_NO_FIRES = 'sound/voice/firebot/nofires.ogg',
+		FIREBOT_VOICED_ONLY_YOU = 'sound/voice/firebot/onlyyou.ogg',
+		FIREBOT_VOICED_TEMPERATURE_NOMINAL = 'sound/voice/firebot/tempnominal.ogg',
+		FIREBOT_VOICED_KEEP_COOL = 'sound/voice/firebot/keepitcool.ogg',
 	)
 
 	var/atom/target_fire
@@ -185,13 +185,13 @@
 		return
 
 	if(prob(1) && target_fire == null)
-		var/list/messagevoice = list("No fires detected." = 'sound/voice/firebot/nofires.ogg',
-		"Only you can prevent station fires." = 'sound/voice/firebot/onlyyou.ogg',
-		"Temperature nominal." = 'sound/voice/firebot/tempnominal.ogg',
-		"Keep it cool." = 'sound/voice/firebot/keepitcool.ogg')
-		var/message = pick(messagevoice)
-		speak(message)
-		playsound(src, messagevoice[message], 50)
+		var/static/list/idle_line = list(
+			FIREBOT_VOICED_NO_FIRES,
+			FIREBOT_VOICED_ONLY_YOU,
+			FIREBOT_VOICED_TEMPERATURE_NOMINAL,
+			FIREBOT_VOICED_KEEP_COOL,
+		)
+		speak(pick(idle_line))
 
 	// Couldn't reach the target, reset and try again ignoring the old one
 	if(frustration > 8)
@@ -217,11 +217,9 @@
 	if(target_fire && (get_dist(src, target_fire) <= (bot_cover_flags & BOT_COVER_EMAGGED ? 1 : 2))) // Make the bot spray water from afar when not emagged
 		if((speech_cooldown + SPEECH_INTERVAL) < world.time)
 			if(ishuman(target_fire))
-				speak("Stop, drop and roll!")
-				playsound(src, 'sound/voice/firebot/stopdropnroll.ogg', 50, FALSE)
+				speak(FIREBOT_VOICED_STOP_DROP)
 			else
-				speak("Extinguishing!")
-				playsound(src, 'sound/voice/firebot/extinguishing.ogg', 50, FALSE)
+				speak(FIREBOT_VOICED_EXTINGUISHING)
 			speech_cooldown = world.time
 
 			flick("firebot1_use", src)
@@ -270,8 +268,7 @@
 		return null
 
 	if((detected_cooldown + DETECTED_VOICE_INTERVAL) < world.time)
-		speak("Fire detected!")
-		playsound(src, 'sound/voice/firebot/detected.ogg', 50, FALSE)
+		speak(FIREBOT_VOICED_FIRE_DETECTED)
 		detected_cooldown = world.time
 		return scan_target
 

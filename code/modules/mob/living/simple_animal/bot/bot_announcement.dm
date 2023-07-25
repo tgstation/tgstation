@@ -29,7 +29,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/cooldown/bot_announcement/Trigger(trigger_flags, atom/target)
+/datum/action/cooldown/bot_announcement/Activate(trigger_flags, atom/target)
 	var/picked
 	if (length(automated_announcements) > 1)
 		picked = tgui_input_list(owner, message = "Choose announcement to make.", title = "Select announcement", items = automated_announcements)
@@ -37,8 +37,19 @@
 		picked = pick(automated_announcements)
 	if (isnull(picked))
 		return
-	var/mob/living/simple_animal/bot/bot_owner = owner
-	bot_owner.speak(picked)
-	if (!isnull(automated_announcements[picked]))
-		playsound(bot_owner, automated_announcements[picked], vol = 50, vary = FALSE)
+	announce(picked)
 	return ..()
+
+/// Speak the provided line on the provided radio channel
+/datum/action/cooldown/bot_announcement/proc/announce(var/line, var/channel)
+	var/mob/living/simple_animal/bot/bot_owner = owner
+	if (!(bot_owner.bot_mode_flags & BOT_MODE_ON))
+		return
+
+	if (channel && bot_owner.internal_radio.channels[channel])
+		bot_owner.internal_radio.talk_into(bot_owner, message = line, channel = channel)
+	else
+		bot_owner.say(line)
+
+	if (length(automated_announcements) && !isnull(automated_announcements[line]))
+		playsound(bot_owner, automated_announcements[line], vol = 50, vary = FALSE)

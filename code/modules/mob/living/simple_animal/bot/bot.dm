@@ -114,6 +114,8 @@
 	var/possessed_message = "You're a generic bot. How did one of these even get made?"
 	/// List of strings to sound effects corresponding to automated messages the bot can play
 	var/list/automated_announcements
+	/// Action we use to say voice lines out loud, also we just pass anything we try to say through here just in case it plays a voice line
+	var/datum/action/cooldown/bot_announcement/pa_system
 
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
@@ -197,14 +199,14 @@
 	if(mapload && is_station_level(z) && bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT && bot_mode_flags & BOT_MODE_ROUNDSTART_POSSESSION)
 		enable_possession(mapload = mapload)
 
-	if(length(automated_announcements))
-		var/datum/action/cooldown/bot_announcement/pa_system = new(src, automated_announcements = automated_announcements)
-		pa_system.Grant(src)
+	pa_system = new(src, automated_announcements = automated_announcements)
+	pa_system.Grant(src)
 
 /mob/living/simple_animal/bot/Destroy()
 	if(paicard)
 		ejectpai()
 	GLOB.bots_list -= src
+	QDEL_NULL(pa_system)
 	QDEL_NULL(personality_download)
 	QDEL_NULL(internal_radio)
 	QDEL_NULL(access_card)
@@ -532,15 +534,14 @@
 	if(was_on)
 		turn_on()
 
-/// Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
-/mob/living/simple_animal/bot/proc/speak(message,channel)
-	if((!(bot_mode_flags & BOT_MODE_ON)) || (!message))
+/**
+ * Pass a message to have the bot say() it, passing through our announcement action to potentially also play a sound.
+ * Optionally pass a frequency to say it on the radio.
+ */
+/mob/living/simple_animal/bot/proc/speak(message, channel)
+	if(!message)
 		return
-
-	if(channel && internal_radio.channels[channel])// Use radio if we have channel key
-		internal_radio.talk_into(src, message = message, channel = channel)
-	else
-		say(message)
+	pa_system.announce(message, channel)
 
 /mob/living/simple_animal/bot/radio(message, list/message_mods = list(), list/spans, language)
 	. = ..()
