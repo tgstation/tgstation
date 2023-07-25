@@ -227,8 +227,9 @@
 	required_tool = EXODRONE_TOOL_MULTITOOL
 	discovery_log = "Discovered a derelict communication satellite."
 	description = "You discover a derelict communication satellite. Its encryption key is intact, but has a complicated electronic lock."
-	no_tool_description = "You'll need a multiool tp retrieve the encryption key."
-	success_log = "Retrieved encryption keys from derelict satellite."
+	no_tool_description = "You'll need a multiool to retrieve the encryption key."
+	has_tool_description = "You can disable the lock to retrieve the key with your multitool!"
+	success_log = "Retrieved an encryption key from a derelict satellite."
 	delay_message = "Hacking..."
 	action_text = "Hack lock"
 	loot_type = /obj/item/encryptionkey/heads/captain
@@ -237,9 +238,10 @@
 	name = "welded locker"
 	required_site_traits = list(EXPLORATION_SITE_SPACE)
 	required_tool = EXODRONE_TOOL_WELDER
-	discovery_log = "You discovered a welded shut locker."
-	description = "You discover a welded shut locker floating through space. What could be inside ?"
-	success_log = "Retrieved bones of unfortunate spaceman from a welded locker."
+	discovery_log = "You discovered a hastily welded locker."
+	description = "You discover a welded locker floating through space. What could be inside...?"
+	no_tool_description = "You'll need a welding tool to take the contents of the locker."
+	success_log = "Retrieved... a severed head."
 	delay_message = "Welding open..."
 	action_text = "Weld open"
 	loot_type = /obj/item/bodypart/head
@@ -259,11 +261,11 @@
 	required_site_traits = list(EXPLORATION_SITE_SURFACE)
 	band_values = list(EXOSCANNER_BAND_PLASMA=3)
 	required_tool = EXODRONE_TOOL_DRILL
-	discovery_log = "Discovered a sizeable plasma deposit"
-	success_log = "Extracted plasma."
+	discovery_log = "Discovered a sizeable plasma deposit."
+	success_log = "Extracted the plasma from the deposit."
 	description = "You locate a rich surface deposit of plasma."
-	no_tool_description = "You'll need to come back with a drill to mine it."
-	has_tool_description = ""
+	no_tool_description = "You'll need a drill to take anything from the deposit."
+	has_tool_description = "Your drill will allow you to extract the deposit!"
 	action_text = "Mine"
 	delay_message = "Mining..."
 	loot_type = /obj/item/stack/sheet/mineral/plasma/thirty
@@ -273,11 +275,11 @@
 	required_site_traits = list(EXPLORATION_SITE_SURFACE)
 	band_values = list(EXOSCANNER_BAND_DENSITY=3)
 	required_tool = EXODRONE_TOOL_DRILL
-	discovery_log = "Discovered a sizeable MATRIAL deposit"
-	success_log = "Extracted MATERIAL."
+	discovery_log = "Discovered a sizeable MATRIAL deposit."
+	success_log = "Extracted the MATERIAL from the deposit."
 	description = "You locate a rich surface deposit of MATERIAL."
-	no_tool_description = "You'll need to come back with a drill to mine it."
-	has_tool_description = ""
+	no_tool_description = "You'll need a drill to take anything from the deposit."
+	has_tool_description = "Your drill will allow you to extract the deposit!"
 	action_text = "Mine"
 	delay_message = "Mining..."
 	var/static/list/possible_materials = list(/datum/material/silver,/datum/material/bananium,/datum/material/pizza) //only add materials with sheet type here
