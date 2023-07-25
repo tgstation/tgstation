@@ -12,7 +12,7 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		var/turf/vent_turf = get_turf(vent)
 		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded)
 			return TRUE //make sure we have a valid vent to spawn from.
@@ -89,7 +89,7 @@
 
 /datum/round_event/vent_clog/proc/get_vent()
 	var/list/vent_list = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in GLOB.machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		var/turf/vent_turf = get_turf(vent)
 		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded && !vent_turf.is_blocked_turf_ignore_climbable())
 			vent_list += vent
@@ -220,10 +220,10 @@
 
 /datum/round_event/vent_clog/major/get_mob()
 	var/static/list/mob_list = list(
-		/mob/living/basic/mouse/rat,
-		/mob/living/simple_animal/hostile/bee,
-		/mob/living/basic/giant_spider,
+		/mob/living/basic/bee,
 		/mob/living/basic/cockroach/hauberoach,
+		/mob/living/basic/giant_spider,
+		/mob/living/basic/mouse/rat,
 	)
 	return pick(mob_list)
 
@@ -255,8 +255,8 @@
 
 /datum/round_event/vent_clog/critical/get_mob()
 	var/static/list/mob_list = list(
+		/mob/living/basic/bee/toxin,
 		/mob/living/basic/carp,
-		/mob/living/simple_animal/hostile/bee/toxin,
 		/mob/living/basic/cockroach/glockroach,
 	)
 	return pick(mob_list)

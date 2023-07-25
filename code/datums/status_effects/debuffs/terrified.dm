@@ -82,7 +82,7 @@
 
 /datum/status_effect/terrified/get_examine_text()
 	if(terror_buildup > DARKNESS_TERROR_CAP) //If we're approaching a heart attack
-		return span_boldwarning("[owner.p_they(TRUE)] [owner.p_are()] seizing up, about to collapse in fear!")
+		return span_boldwarning("[owner.p_They()] [owner.p_are()] seizing up, about to collapse in fear!")
 
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD)
 		return span_boldwarning("[owner] is visibly trembling and twitching. It looks like [owner.p_theyre()] freaking out!")
@@ -90,7 +90,7 @@
 	if(terror_buildup >= TERROR_FEAR_THRESHOLD)
 		return span_warning("[owner] looks very worried about something. [owner.p_are(TRUE)] [owner.p_they()] alright?")
 
-	return span_notice("[owner] looks rather anxious. [owner.p_they(TRUE)] could probably use a hug...")
+	return span_notice("[owner] looks rather anxious. [owner.p_They()] could probably use a hug...")
 
 /// If we get a hug from a friend, we calm down! If we get a hug from a nightmare, we FREAK OUT.
 /datum/status_effect/terrified/proc/comfort_owner(datum/source, mob/living/hugger)

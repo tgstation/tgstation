@@ -316,8 +316,7 @@
 			chest.cell.forceMove(O)
 
 			W.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
-			if(O.mmi) //we delete the mmi created by robot/New()
-				qdel(O.mmi)
+			QDEL_NULL(O.mmi)  //we delete the mmi created by robot/New()
 			O.mmi = W //and give the real mmi to the borg.
 			O.updatename(brainmob.client)
 			// This canonizes that MMI'd cyborgs have memories of their previous life

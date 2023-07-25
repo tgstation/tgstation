@@ -202,6 +202,8 @@
 #define LIGHT_COLOR_DEFAULT "#f3fffa"
 /// Bright but quickly dissipating neon green. rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
+/// Bright, pale "nuclear" green. rgb(120, 255, 120)
+#define LIGHT_COLOR_NUCLEAR "#78FF78"
 /// Vivid, slightly blue green. rgb(60, 240, 70)
 #define LIGHT_COLOR_VIVID_GREEN "#3CF046"
 /// Electric green. rgb(0, 255, 0)
@@ -321,6 +323,7 @@
 #define COLOR_CARP_PALE_GREEN "#7ef099"
 #define COLOR_CARP_SILVER "#fdfbf3"
 #define COLOR_CARP_DARK_BLUE "#3a384d"
+#define COLOR_CARP_DARK_GREEN "#358102"
 
 #define COLOR_GNOME_RED_ONE "#f10b0b"
 #define COLOR_GNOME_RED_TWO "#bc5347"
