@@ -170,17 +170,19 @@
 	SIGNAL_HANDLER
 
 	linked_sensor = null
+	if(operating_status < XING_SENSOR_FAULT)
+		operating_status = XING_SENSOR_FAULT
 
 /obj/machinery/crossing_signal/proc/wake_sensor()
 	if(operating_status > XING_SENSOR_FAULT)
 		balloon_alert_to_viewers("malfunctioning!", vision_distance = 15)
 		return
 
-	if(isnull(linked_sensor))
+	if(!linked_sensor)
 		balloon_alert_to_viewers("sensor fault!", vision_distance = 15)
 		operating_status = XING_SENSOR_FAULT
 
-	if(linked_sensor.trigger_sensor())
+	else if(linked_sensor.trigger_sensor())
 		balloon_alert_to_viewers("sensor okay!", vision_distance = 15)
 		operating_status = XING_NORMAL_OPERATION
 
@@ -382,10 +384,17 @@
 	for(var/obj/machinery/guideway_sensor/potential_sensor in SSicts_transport.sensors)
 		if(potential_sensor == src)
 			continue
-		if((potential_sensor.x == src.x && potential_sensor.dir & NORTH|SOUTH) || (potential_sensor.y == src.y && potential_sensor.dir & EAST|WEST))
-			paired_sensor = WEAKREF(potential_sensor)
-			set_machine_stat(machine_stat & ~MAINT)
-			break
+		switch(potential_sensor.dir)
+			if(NORTH, SOUTH)
+				if(potential_sensor.x == src.x)
+					paired_sensor = WEAKREF(potential_sensor)
+					set_machine_stat(machine_stat & ~MAINT)
+					break
+			if(EAST, WEST)
+				if(potential_sensor.y == src.y)
+					paired_sensor = WEAKREF(potential_sensor)
+					set_machine_stat(machine_stat & ~MAINT)
+					break
 
 	update_appearance()
 
