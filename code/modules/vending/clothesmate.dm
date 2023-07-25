@@ -34,6 +34,8 @@
 				/obj/item/clothing/head/cowboy/white = 1,
 				/obj/item/clothing/head/cowboy/grey = 1,
 				/obj/item/clothing/head/costume/sombrero/green = 1,
+				/obj/item/clothing/head/costume/nightcap/blue = 2,
+				/obj/item/clothing/head/costume/nightcap/red = 2,
 			),
 		),
 
@@ -79,6 +81,8 @@
 				/obj/item/clothing/under/dress/sailor = 1,
 				/obj/item/clothing/under/dress/redeveninggown = 1,
 				/obj/item/clothing/suit/apron/purple_bartender = 2,
+				/obj/item/clothing/under/misc/pj/blue = 2,
+				/obj/item/clothing/under/misc/pj/red = 2,
 			),
 		),
 
@@ -118,6 +122,7 @@
 			"icon" = "socks",
 			"products" = list(
 				/obj/item/clothing/shoes/sneakers/black = 4,
+				/obj/item/clothing/shoes/sneakers/white = 4,
 				/obj/item/clothing/shoes/sandal = 2,
 				/obj/item/clothing/shoes/laceup = 2,
 				/obj/item/clothing/shoes/winterboots = 2,
@@ -144,6 +149,7 @@
 				/obj/item/clothing/under/ethereal_tunic = 3,
 
 				/obj/item/clothing/suit/costume/ianshirt = 1,
+				/obj/item/clothing/suit/costume/irs = 20,
 				/obj/item/clothing/head/costume/irs = 20,
 				/obj/item/clothing/head/costume/tmc = 20,
 				/obj/item/clothing/head/costume/deckers = 20,

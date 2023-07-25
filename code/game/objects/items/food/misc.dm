@@ -145,7 +145,7 @@
 /obj/item/food/spiderling
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
-	icon = 'icons/mob/simple/animal.dmi'
+	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "spiderling_dead"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
@@ -264,6 +264,7 @@
 	icon_state = "butteronastick"
 	trash_type = /obj/item/stack/rods
 	food_flags = FOOD_FINGER_FOOD
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/butter/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/butterslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")

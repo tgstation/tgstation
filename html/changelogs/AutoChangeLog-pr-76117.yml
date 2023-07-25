@@ -1,6 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - rscadd: "A really old data disk with the MOD module designs for the status readout was recovered, and has been haphazardly hotpatched into the research networks."
-  - rscadd: "Also, the status readout module now plays a sound on death."
-  - qol: "The MODsuit health analyzer's info tab health readout can now be disabled in its settings."

@@ -289,14 +289,14 @@
 	color = COLOR_DARK_ORANGE
 
 /obj/effect/temp_visual/lava_safe
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "trap-earth"
 	layer = BELOW_MOB_LAYER
 	light_range = 2
 	duration = 13
 
 /obj/effect/temp_visual/fireball
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/effects/magic.dmi'
 	icon_state = "fireball"
 	name = "fireball"
 	desc = "Get out of the way!"

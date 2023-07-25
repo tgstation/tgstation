@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - image: "More maptext and font tweaks"
-  - spellcheck: "Context tooltips too small, too big... just right?"

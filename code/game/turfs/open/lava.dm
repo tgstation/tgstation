@@ -134,12 +134,13 @@
 
 /turf/open/lava/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(isliving(gone))
-		var/mob/living/leaving_mob = gone
-		if(!islava(leaving_mob.loc))
-			REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-		if(!leaving_mob.on_fire)
-			leaving_mob.update_fire()
+	if(isliving(gone) && !islava(gone.loc))
+		REMOVE_TRAIT(gone, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+
+/turf/open/lava/Destroy()
+	for(var/mob/living/leaving_mob in contents)
+		REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+	return ..()
 
 /turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
@@ -216,13 +217,9 @@
 		return TRUE
 
 /turf/open/lava/proc/is_safe()
-	//if anything matching this typecache is found in the lava, we don't burn things
-	var/static/list/lava_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk, /obj/structure/stone_tile, /obj/structure/lattice/lava))
-	var/list/found_safeties = typecache_filter_list(contents, lava_safeties_typecache)
-	for(var/obj/structure/stone_tile/S in found_safeties)
-		if(S.fallen)
-			LAZYREMOVE(found_safeties, S)
-	return LAZYLEN(found_safeties)
+	if(HAS_TRAIT(src, TRAIT_LAVA_STOPPED))
+		return TRUE
+	return FALSE
 
 ///Generic return value of the can_burn_stuff() proc. Does nothing.
 #define LAVA_BE_IGNORING 0

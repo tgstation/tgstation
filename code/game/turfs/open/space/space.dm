@@ -1,3 +1,6 @@
+///The color of light space emits
+GLOBAL_VAR_INIT(starlight_color, COLOR_STARLIGHT)
+
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
@@ -21,7 +24,6 @@
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
 	light_power = 0.75
-	light_color = COLOR_STARLIGHT
 	space_lit = TRUE
 	bullet_bounce_sound = null
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
@@ -54,6 +56,7 @@
 			stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
+	light_color = GLOB.starlight_color
 
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
 	if(SSmapping.max_plane_offset)
@@ -251,6 +254,8 @@
 
 /turf/open/space/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
+	if(PERFORM_ALL_TESTS(focus_only/openspace_clear) && !GET_TURF_BELOW(src))
+		stack_trace("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
 	icon_state = "pure_white"
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
 	if(SSmapping.max_plane_offset)
@@ -260,6 +265,13 @@
 /turf/open/space/openspace/LateInitialize()
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
+
+/turf/open/space/openspace/Destroy()
+	// Signals persist through destroy, GO HOME
+	var/turf/below = GET_TURF_BELOW(src)
+	if(below)
+		UnregisterSignal(below, COMSIG_TURF_CHANGE)
+	return ..()
 
 /turf/open/space/openspace/zAirIn()
 	return TRUE

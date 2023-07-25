@@ -42,6 +42,9 @@
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
 
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA))
+		new /obj/item/storage/pill_bottle/potassiodide(src)
+
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
@@ -62,6 +65,7 @@
 /obj/item/storage/box/survival/mining/PopulateContents()
 	..()
 	new /obj/item/crowbar/red(src)
+	new /obj/item/healthanalyzer/simple/miner(src)
 
 // Engineer survival box
 /obj/item/storage/box/survival/engineer

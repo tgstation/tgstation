@@ -65,4 +65,4 @@
 	var/list/spawning_list_copy = spawning_list.Copy()
 	spawning_list.Cut()
 	for(var/i in 1 to max_carp_spawns)
-		spawning_list.Add(pick_weight(spawning_list_copy))
+		spawning_list[pick_weight(spawning_list_copy)] += 1
