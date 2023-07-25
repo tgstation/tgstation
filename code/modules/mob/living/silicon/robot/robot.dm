@@ -426,12 +426,10 @@
 	if(ai_lockdown)
 		to_chat(src, "<br><br>[span_alert("ALERT - Remote system lockdown override failed.")]<br>")
 		return
-		set_lockcharge(FALSE)
-		to_chat(src, "<br><br>[span_notice("ALERT - Remote system lockdown override successful.")]<br>")
-		if(connected_ai)
-			to_chat(connected_ai, "<br><br>[span_notice("ALERT - Cyborg [name] succesfully overriden the lockdown system")]<br>")
-	else
-		to_chat(src, "<br><br>[span_alert("ALERT - Remote system lockdown override failed.")]<br>")
+	set_lockcharge(FALSE)
+	to_chat(src, "<br><br>[span_notice("ALERT - Remote system lockdown override successful.")]<br>")
+	if(connected_ai)
+		to_chat(connected_ai, "<br><br>[span_notice("ALERT - Cyborg [name] succesfully overriden the lockdown system")]<br>")
 
 ///Reports the event of the change in value of the lockcharge variable.
 /mob/living/silicon/robot/proc/set_lockcharge(new_lockcharge)
