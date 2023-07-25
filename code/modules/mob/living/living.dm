@@ -1414,7 +1414,7 @@
 				/mob/living/basic/statue,
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
-				/mob/living/simple_animal/crab,
+				/mob/living/basic/crab,
 				/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 				/mob/living/simple_animal/hostile/bear,
 				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
