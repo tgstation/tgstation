@@ -122,7 +122,7 @@
 	color = EM_BLOCK_COLOR
 	appearance_flags = EMISSIVE_APPEARANCE_FLAGS
 
-/atom/movable/Initialize(mapload)
+/atom/movable/Initialize(mapload, ...)
 	. = ..()
 #ifdef UNIT_TESTS
 	if(explosion_block && !HAS_TRAIT(src, TRAIT_BLOCKING_EXPLOSIVES))
@@ -1166,7 +1166,7 @@
 
 		if(update_on_z)
 			// I so much wish this could be somewhere else. alas, no.
-			for(var/image/update in update_on_z)
+			for(var/image/update as anything in update_on_z)
 				SET_PLANE(update, PLANE_TO_TRUE(update.plane), new_turf)
 		if(update_overlays_on_z)
 			// This EVEN more so

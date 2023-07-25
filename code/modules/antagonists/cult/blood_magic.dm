@@ -18,7 +18,7 @@
 
 /datum/action/innate/cult/blood_magic/proc/Positioning()
 	for(var/datum/hud/hud as anything in viewers)
-		var/our_view = hud.mymob?.client?.view || "15x15"
+		var/our_view = hud.mymob?.canon_client?.view || "15x15"
 		var/atom/movable/screen/movable/action_button/button = viewers[hud]
 		var/position = screen_loc_to_offset(button.screen_loc)
 		var/list/position_list = list()
@@ -83,7 +83,7 @@
 		if(ishuman(owner))
 			var/mob/living/carbon/human/human_owner = owner
 			human_owner.bleed(40 - rune*32)
-		var/datum/action/innate/cult/blood_spell/new_spell = new BS(owner)
+		var/datum/action/innate/cult/blood_spell/new_spell = new BS(owner.mind)
 		new_spell.Grant(owner, src)
 		spells += new_spell
 		Positioning()
@@ -593,7 +593,6 @@
 					user.visible_message(span_danger("The dark cloud recedes from what was formerly [candidate], revealing a\n [construct_class]!"))
 					make_new_construct_from_class(construct_class, THEME_CULT, candidate, user, FALSE, T)
 					uses--
-					candidate.mmi = null
 					qdel(candidate)
 					channeling = FALSE
 				else
@@ -721,10 +720,10 @@
 					user.Beam(human_bloodbag, icon_state="sendbeam", time = 15)
 			else
 				if(human_bloodbag.stat == DEAD)
-					to_chat(user,span_warning("[human_bloodbag.p_their(TRUE)] blood has stopped flowing, you'll have to find another way to extract it."))
+					to_chat(user,span_warning("[human_bloodbag.p_Their()] blood has stopped flowing, you'll have to find another way to extract it."))
 					return
 				if(human_bloodbag.has_status_effect(/datum/status_effect/speech/slurring/cult))
-					to_chat(user,span_danger("[human_bloodbag.p_their(TRUE)] blood has been tainted by an even stronger form of blood magic, it's no use to us like this!"))
+					to_chat(user,span_danger("[human_bloodbag.p_Their()] blood has been tainted by an even stronger form of blood magic, it's no use to us like this!"))
 					return
 				if(human_bloodbag.blood_volume > BLOOD_VOLUME_SAFE)
 					human_bloodbag.blood_volume -= 100
@@ -735,7 +734,7 @@
 					to_chat(user,span_cultitalic("Your blood rite gains 50 charges from draining [human_bloodbag]'s blood."))
 					new /obj/effect/temp_visual/cult/sparks(get_turf(human_bloodbag))
 				else
-					to_chat(user,span_warning("[human_bloodbag.p_theyre(TRUE)] missing too much blood - you cannot drain [human_bloodbag.p_them()] further!"))
+					to_chat(user,span_warning("[human_bloodbag.p_Theyre()] missing too much blood - you cannot drain [human_bloodbag.p_them()] further!"))
 					return
 		if(isconstruct(target))
 			var/mob/living/simple_animal/construct_thing = target

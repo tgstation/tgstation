@@ -276,7 +276,7 @@
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/scope, range_modifier = 7) //enough range to at least make extremely good use of the penetrator rounds
+	AddComponent(/datum/component/scope, range_modifier = 4) //enough range to at least make extremely good use of the penetrator rounds
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/reset_semicd()
 	. = ..()
