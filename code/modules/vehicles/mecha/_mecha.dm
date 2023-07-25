@@ -73,14 +73,8 @@
 	///////////ATMOS
 	///Whether we are currrently drawing from the internal tank
 	var/use_internal_tank = FALSE
-	///The setting of the valve on the internal tank
-	var/internal_tank_valve = ONE_ATMOSPHERE
-	///The internal air tank obj of the mech
-	var/obj/machinery/portable_atmospherics/canister/air/internal_tank
 	///Internal air mix datum
 	var/datum/gas_mixture/cabin_air
-	///The connected air port, if we have one
-	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
 
 	///Special version of the radio, which is unsellable
 	var/obj/item/radio/mech/radio
@@ -150,7 +144,7 @@
 	var/exit_delay = 2 SECONDS
 	///Time you get slept for if you get forcible ejected by the mech exploding
 	var/destruction_sleep_duration = 2 SECONDS
-	///Whether outside viewers can see the pilot inside
+	///Whether outside viewers can see the pilot inside and whether the cabin is sealed
 	var/enclosed = TRUE
 	///In case theres a different iconstate for AI/MMI pilot(currently only used for ripley)
 	var/silicon_icon_state = null
@@ -209,16 +203,10 @@
 	fire = 100
 	acid = 100
 
-/obj/item/radio/mech //this has to go somewhere
-	subspace_transmission = TRUE
-
 /obj/vehicle/sealed/mecha/Initialize(mapload)
 	. = ..()
 	ui_view = new()
 	ui_view.generate_view("mech_view_[REF(src)]")
-	if(enclosed)
-		internal_tank = new (src)
-		RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE , PROC_REF(disconnect_air))
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 
@@ -230,15 +218,7 @@
 	smoke_system.set_up(3, holder = src, location = src)
 	smoke_system.attach(src)
 
-	radio = new(src)
-	radio.name = "[src] radio"
-
-	cabin_air = new
-	cabin_air.volume = 200
-	cabin_air.temperature = T20C
-	cabin_air.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	cabin_air.gases[/datum/gas/oxygen][MOLES] = O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
-	cabin_air.gases[/datum/gas/nitrogen][MOLES] = N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
+	cabin_air = new(200)
 
 	add_cell()
 	add_scanmod()
@@ -281,7 +261,6 @@
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
 			equip.detach(loc)
 			qdel(equip)
-	radio = null
 
 	STOP_PROCESSING(SSobj, src)
 	LAZYCLEARLIST(flat_equipment)
@@ -291,7 +270,6 @@
 	QDEL_NULL(cell)
 	QDEL_NULL(scanmod)
 	QDEL_NULL(capacitor)
-	QDEL_NULL(internal_tank)
 	QDEL_NULL(cabin_air)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(smoke_system)
@@ -481,8 +459,14 @@
 
 	return examine_text
 
+//locate internal tack in the utility modules
+/obj/vehicle/sealed/mecha/proc/get_internal_tank()
+	var/obj/item/mecha_parts/mecha_equipment/air_tank/module = locate(/obj/item/mecha_parts/mecha_equipment/air_tank) in equip_by_category[MECHA_UTILITY]
+	return module.internal_tank
+
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/vehicle/sealed/mecha/process(seconds_per_tick)
+	var/obj/machinery/portable_atmospherics/canister/internal_tank = get_internal_tank()
 	if(internal_damage)
 		if(internal_damage & MECHA_INT_FIRE)
 			if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && SPT_PROB(2.5, seconds_per_tick))
@@ -522,7 +506,7 @@
 	if(internal_tank)
 		var/datum/gas_mixture/tank_air = internal_tank.return_air()
 
-		var/release_pressure = internal_tank_valve
+		var/release_pressure = internal_tank.release_pressure
 		var/cabin_pressure = cabin_air.return_pressure()
 		var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.return_pressure() - cabin_pressure)/2)
 		var/transfer_moles = 0

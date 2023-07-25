@@ -38,7 +38,9 @@
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 
-	if(!chassis.internal_tank) //Just in case.
+	var/obj/machinery/portable_atmospherics/canister/internal_tank = chassis.get_internal_tank()
+
+	if(!internal_tank) //Just in case.
 		chassis.use_internal_tank = FALSE
 		chassis.balloon_alert(owner, "no tank available!")
 		chassis.log_message("Switch to internal tank failed. No tank available.", LOG_MECHA)

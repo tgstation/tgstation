@@ -57,7 +57,6 @@
 	if(!isoperator)
 		data["name"] = name
 		data["mecha_flags"] = mecha_flags
-		data["internal_tank_valve"] = internal_tank_valve
 		data["cell"] = cell?.name
 		data["scanning"] = scanmod?.name
 		data["capacitor"] = capacitor?.name
@@ -80,18 +79,13 @@
 			data["idcard_access"] += list(list("name" = accessname, "number" = idcode))
 		return data
 	ui_view.appearance = appearance
-	var/datum/gas_mixture/int_tank_air = internal_tank?.return_air()
 	data["name"] = name
 	data["integrity"] = atom_integrity/max_integrity
 	data["power_level"] = cell?.charge
 	data["power_max"] = cell?.maxcharge
 	data["mecha_flags"] = mecha_flags
 	data["internal_damage"] = internal_damage
-	data["airtank_present"] = !!internal_tank
 	data["air_source"] = use_internal_tank ? "Internal Airtank" : "Environment"
-	data["airtank_pressure"] = int_tank_air ? round(int_tank_air.return_pressure(), 0.01) : null
-	data["airtank_temp"] = int_tank_air?.temperature
-	data["port_connected"] = internal_tank?.connected_port ? TRUE : FALSE
 	data["cabin_pressure"] = round(return_pressure(), 0.01)
 	data["cabin_temp"] = return_temperature()
 	data["dna_lock"] = dna_lock
@@ -208,12 +202,6 @@
 					return
 				usr.put_in_hands(capacitor)
 				capacitor = null
-			if("set_pressure")
-				var/new_pressure = tgui_input_number(usr, "Enter new pressure", "Cabin pressure change", internal_tank_valve)
-				if(isnull(new_pressure) || !construction_state)
-					return
-				internal_tank_valve = new_pressure
-				to_chat(usr, span_notice("The internal pressure valve has been set to [internal_tank_valve]kPa."))
 			if("add_req_access")
 				if(!(mecha_flags & ADDING_ACCESS_POSSIBLE))
 					return
@@ -262,26 +250,6 @@
 		if("view_dna")
 			tgui_alert(usr, "Enzymes detected: " + dna_lock)
 			return FALSE
-		if("toggle_airsource")
-			if(!internal_tank)
-				return
-			use_internal_tank = !use_internal_tank
-			balloon_alert(usr, "taking air from [use_internal_tank ? "internal airtank" : "environment"]")
-			log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].", LOG_MECHA)
-		if("toggle_port")
-			if(internal_tank.connected_port)
-				if(internal_tank.disconnect())
-					to_chat(occupants, "[icon2html(src, occupants)][span_notice("Disconnected from the air system port.")]")
-					log_message("Disconnected from gas port.", LOG_MECHA)
-					return TRUE
-				to_chat(occupants, "[icon2html(src, occupants)][span_warning("Unable to disconnect from the air system port!")]")
-				return
-			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
-			if(internal_tank.connect(possible_port))
-				to_chat(occupants, "[icon2html(src, occupants)][span_notice("Connected to the air system port.")]")
-				log_message("Connected to gas port.", LOG_MECHA)
-				return TRUE
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Unable to connect with air system port!")]")
 		if("toggle_maintenance")
 			if(construction_state)
 				to_chat(occupants, "[icon2html(src, occupants)][span_danger("Maintenance protocols in effect")]")

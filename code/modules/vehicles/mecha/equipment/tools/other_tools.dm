@@ -304,7 +304,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/get_snowflake_data()
 	return list(
-		"active" = activated,
 		"fuel" = fuel.amount,
 	)
 
@@ -437,16 +436,13 @@
 	effect_type = /obj/effect/particle_effect/fluid/smoke
 	var/move_cost = 20 //moles per step
 
-/obj/item/mecha_parts/mecha_equipment/thrusters/gas/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	if(!M.internal_tank)
-		to_chat(user, span_warning("[M] does not have an internal tank and cannot support this upgrade!"))
-		return FALSE
-	return ..()
-
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas/thrust(movement_dir)
-	if(!chassis || !chassis.internal_tank)
+	if(!chassis)
 		return FALSE
-	var/datum/gas_mixture/our_mix = chassis.internal_tank.return_air()
+	var/obj/machinery/portable_atmospherics/canister/internal_tank = chassis.get_internal_tank()
+	if(!internal_tank)
+		return FALSE
+	var/datum/gas_mixture/our_mix = internal_tank.return_air()
 	var/moles = our_mix.total_moles()
 	if(moles < move_cost)
 		our_mix.remove(moles)
@@ -530,6 +526,9 @@
 	mech.diag_hud_set_camera()
 
 //////////////////////////// RADIO MODULE //////////////////////////////////////////////////////////
+/obj/item/radio/mech //this has to go somewhere
+	subspace_transmission = TRUE
+
 /obj/item/mecha_parts/mecha_equipment/radio
 	name = "mounted radio"
 	desc = "A basic component of every vehicle."
@@ -578,19 +577,25 @@
 	desc = "An internal air tank used to pressurize mech cabin and RCS thrusters. Comes with a set of sensors."
 	icon_state = "mecha_air_tank"
 	equipment_slot = MECHA_UTILITY
-	///////////ATMOS
 	///Whether we are currrently drawing from the internal tank
 	var/use_internal_tank = FALSE
-	///The setting of the valve on the internal tank
-	var/internal_tank_valve = ONE_ATMOSPHERE
 	///The internal air tank obj of the mech
-	var/obj/machinery/portable_atmospherics/canister/air/internal_tank
+	var/obj/machinery/portable_atmospherics/canister/internal_tank
 	///The connected air port, if we have one
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
+	///Volume of this air tank (half the volume of regular canister)
+	var/volume = 1000
+	///Whether the tank starts pressurized
+	var/start_full = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/Initialize(mapload)
 	. = ..()
-	internal_tank = new(src)
+	internal_tank = new(volume)
+	internal_tank.air_contents.volume = volume
+	if(start_full)
+		internal_tank.air_contents.temperature = T20C
+		internal_tank.air_contents.add_gases(/datum/gas/oxygen)
+		internal_tank.air_contents.gases[/datum/gas/oxygen][MOLES] = (internal_tank.maximum_pressure * filled) * volume / (R_IDEAL_GAS_EQUATION * internal_tank.air_contents.temperature)
 	RegisterSignal(chassis, COMSIG_MOVABLE_PRE_MOVE , PROC_REF(disconnect_air))
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/Destroy()
@@ -620,11 +625,11 @@
 	. = ..()
 	switch(action)
 		if("set_pressure")
-			var/new_pressure = tgui_input_number(usr, "Enter new pressure", "Cabin pressure change", internal_tank_valve)
+			var/new_pressure = tgui_input_number(usr, "Enter new pressure", "Cabin pressure change", internal_tank.release_pressure)
 			if(isnull(new_pressure) || !chassis.construction_state)
 				return
-			internal_tank_valve = new_pressure
-			to_chat(usr, span_notice("The internal pressure valve has been set to [internal_tank_valve]kPa."))
+			internal_tank.release_pressure = new_pressure
+			to_chat(usr, span_notice("The internal pressure valve has been set to [internal_tank.release_pressure]kPa."))
 			return TRUE
 		if("toggle_airsource")
 			if(!internal_tank)
@@ -650,3 +655,6 @@
 			return FALSE
 		else
 			return FALSE
+
+/obj/item/mecha_parts/mecha_equipment/air_tank/full
+	start_full = TRUE
