@@ -358,6 +358,12 @@
 		/datum/computer_file/program/emojipedia,
 	)
 
+/obj/item/modular_computer/pda/mime/Initialize(mapload)
+	. = ..()
+	for(var/datum/computer_file/program/messenger/msg in stored_files)
+		msg.mime_mode = TRUE
+		msg.alert_silenced = TRUE
+
 /obj/item/modular_computer/pda/curator
 	name = "curator PDA"
 	desc = "A small experimental microcomputer."

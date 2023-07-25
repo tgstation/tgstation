@@ -126,7 +126,7 @@
 
 	/// custom ringtone for this job
 	var/job_tone
-	
+
 	/// Minimal character age for this job
 	var/required_character_age
 

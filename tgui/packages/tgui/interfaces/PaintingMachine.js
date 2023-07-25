@@ -44,14 +44,6 @@ export const PaintingMachine = (props, context) => {
                   act('reset_pda');
                 }}
               />
-              <Button
-                icon="question-circle"
-                tooltip={
-                  'WARNING: This is destructive' +
-                  ' and will erase all data from the user.'
-                }
-                tooltipPosition="left"
-              />
             </>
           }>
           <Stack vertical>

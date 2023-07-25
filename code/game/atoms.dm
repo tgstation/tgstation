@@ -251,8 +251,7 @@
 
 	SET_PLANE_IMPLICIT(src, plane)
 
-	//we'll check again at item/init for inhand/belt/worn configs.
-	if(greyscale_config && greyscale_colors)
+	if(greyscale_config && greyscale_colors) //we'll check again at item/init for inhand/belt/worn configs.
 		update_greyscale()
 
 	//atom color stuff

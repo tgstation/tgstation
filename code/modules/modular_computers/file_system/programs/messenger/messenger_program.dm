@@ -51,7 +51,6 @@
 	RegisterSignal(computer, COMSIG_MODULAR_COMPUTER_FILE_DELETE, PROC_REF(check_photo_removed))
 	RegisterSignal(computer, COMSIG_MODULAR_PDA_IMPRINT_UPDATED, PROC_REF(on_imprint_added))
 	RegisterSignal(computer, COMSIG_MODULAR_PDA_IMPRINT_RESET, PROC_REF(on_imprint_reset))
-	RegisterSignal(computer, COMSIG_MODULAR_PDA_PAINTJOB_UPDATE, PROC_REF(on_paintjob_update))
 
 /datum/computer_file/program/messenger/proc/check_new_photo(sender, datum/computer_file/picture/storing_picture)
 	SIGNAL_HANDLER

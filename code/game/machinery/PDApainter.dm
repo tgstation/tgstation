@@ -321,15 +321,19 @@
 				return TRUE
 
 			var/selection = params["selection"]
-			var/obj/item/modular_computer/pda/pda_path = stored_pda.type
+			var/obj/item/modular_computer/pda/pda_path = /obj/item/modular_computer/pda
 
 			for(var/path in pda_types)
 				if(pda_types[path] == selection)
 					pda_path = path
 					break
 
-			stored_pda.paintjob = pda_path
-			stored_pda.update_appearance()
+			if(initial(pda_path.greyscale_config) && initial(pda_path.greyscale_colors))
+				stored_pda.set_greyscale(initial(pda_path.greyscale_colors), initial(pda_path.greyscale_config))
+			else
+				stored_pda.icon = initial(pda_path.icon)
+			stored_pda.icon_state = initial(pda_path.icon_state)
+			stored_pda.desc = initial(pda_path.desc)
 
 			return TRUE
 		if("reset_pda")

@@ -67,10 +67,6 @@
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 
-/obj/item/modular_computer/pda/update_name()
-	. = ..()
-	name = "[saved_identification] ([saved_job])"
-
 /obj/item/modular_computer/pda/update_overlays()
 	. = ..()
 	if(computer_id_slot)
@@ -191,7 +187,7 @@
 		balloon_alert(user, "removed [inserted_item]")
 		user.put_in_hands(inserted_item)
 		inserted_item = null
-		update_appearance(UPDATE_OVERLAYS)
+		update_appearance()
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
 
 /obj/item/modular_computer/pda/proc/explode(mob/target, mob/bomber, from_message_menu = FALSE)

@@ -12,6 +12,11 @@
 	///The modular computer MACHINE that hosts us.
 	var/obj/machinery/modular_computer/machinery_computer
 
+/obj/item/modular_computer/processor/UpdateDisplay()
+	. = ..()
+	//update our name to match the computer's
+	name = machinery_computer.name
+
 /obj/item/modular_computer/processor/Initialize(mapload)
 	if(!istype(loc, /obj/machinery/modular_computer))
 		CRASH("A non '/obj/machinery/modular_computer' had a [src] initialized in it!")
