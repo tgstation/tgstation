@@ -235,7 +235,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     } else {
       const attachmentButton = sendingVirus ? (
         <Button
-          tooltip="WARNING: File attachment signature is unverified. Please contact support."
+          tooltip="ERROR: File signature is unverified. Please contact an NT support intern."
           icon="triangle-exclamation"
           color="red"
         />
