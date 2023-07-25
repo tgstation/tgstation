@@ -14,7 +14,6 @@
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_MUTANT_COLORS,
 		TRAIT_FIXED_MUTANT_COLORS,
-		TRAIT_FIXED_HAIRCOLOR,
 		TRAIT_AGENDER,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
@@ -61,7 +60,6 @@
 		return
 	var/mob/living/carbon/human/ethereal = new_ethereal
 	default_color = ethereal.dna.features["ethcolor"]
-	fixed_hair_color = default_color
 	r1 = GETREDPART(default_color)
 	g1 = GETGREENPART(default_color)
 	b1 = GETBLUEPART(default_color)
@@ -121,18 +119,11 @@
 		ethereal_light.set_light_range_power_color(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
 		ethereal_light.set_light_on(TRUE)
 		fixed_mut_color = current_color
-		fixed_hair_color = current_color
-		ethereal.update_body()
-		ethereal.set_facial_haircolor(current_color, override = TRUE, update = FALSE)
-		ethereal.set_haircolor(current_color, override = TRUE,  update = TRUE)
 	else
 		ethereal_light.set_light_on(FALSE)
-		var/dead_color = rgb(128,128,128)
-		fixed_mut_color = dead_color
-		fixed_hair_color = dead_color
-		ethereal.update_body()
-		ethereal.set_facial_haircolor(dead_color, override = TRUE, update = FALSE)
-		ethereal.set_haircolor(dead_color, override = TRUE, update = TRUE)
+		fixed_mut_color = rgb(128,128,128)
+	ethereal.set_facial_haircolor(current_color, update = FALSE)
+	ethereal.set_haircolor(current_color, update = TRUE)
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity)
 	SIGNAL_HANDLER
@@ -148,14 +139,13 @@
 /datum/species/ethereal/proc/on_emag_act(mob/living/carbon/human/H, mob/user)
 	SIGNAL_HANDLER
 	if(emageffect)
-		return FALSE
+		return
 	emageffect = TRUE
 	if(user)
 		to_chat(user, span_notice("You tap [H] on the back with your card."))
 	H.visible_message(span_danger("[H] starts flickering in an array of colors!"))
 	handle_emag(H)
 	addtimer(CALLBACK(src, PROC_REF(stop_emag), H), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
-	return TRUE
 
 /// Special handling for getting hit with a light eater
 /datum/species/ethereal/proc/on_light_eater(mob/living/carbon/human/source, datum/light_eater)
@@ -256,7 +246,6 @@
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_MUTANT_COLORS,
 		TRAIT_FIXED_MUTANT_COLORS,
-		TRAIT_FIXED_HAIRCOLOR,
 		TRAIT_AGENDER,
 		TRAIT_TENACIOUS,
 		TRAIT_NOBREATH,
@@ -281,6 +270,6 @@
 	)
 
 /datum/species/ethereal/lustrous/on_species_gain(mob/living/carbon/new_lustrous, datum/species/old_species, pref_load)
-	..()
 	default_color = new_lustrous.dna.features["ethcolor"]
 	new_lustrous.dna.features["ethcolor"] = GLOB.color_list_lustrous[pick(GLOB.color_list_lustrous)] //Picks one of 5 lustrous-specific colors.
+	return ..()
