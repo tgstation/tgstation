@@ -5,12 +5,15 @@
 /obj/structure/fireplace
 	name = "fireplace"
 	desc = "A large stone brick fireplace."
-	icon = 'icons/obj/fireplace.dmi'
+	icon = 'icons/obj/fluff/fireplace.dmi'
 	icon_state = "fireplace"
 	density = FALSE
 	anchored = TRUE
 	pixel_x = -16
 	resistance_flags = FIRE_PROOF
+	light_color = LIGHT_COLOR_FIRE
+	light_angle = 170
+	light_flags = LIGHT_IGNORE_OFFSET
 	var/lit = FALSE
 
 	var/fuel_added = 0
@@ -23,6 +26,18 @@
 /obj/structure/fireplace/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
+
+/obj/structure/fireplace/setDir(newdir)
+	. = ..()
+	set_light(l_dir = dir)
+
+/// We're offset back into the wall, account for that
+/obj/structure/fireplace/get_light_offset()
+	var/list/hand_back = ..()
+	var/list/dir_offset = dir2offset(turn(dir, 180))
+	hand_back[1] += dir_offset[1] * 0.5
+	hand_back[2] += dir_offset[2] * 0.5
+	return hand_back
 
 /obj/structure/fireplace/proc/try_light(obj/item/O, mob/user)
 	if(lit)

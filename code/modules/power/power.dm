@@ -8,7 +8,7 @@
 
 /obj/machinery/power
 	name = null
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/engine/other.dmi'
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
 	use_power = NO_POWER_USE
@@ -459,7 +459,7 @@
 ///////////////////////////////////////////////
 
 // return a cable able connect to machinery on layer if there's one on the turf, null if there isn't one
-/turf/proc/get_cable_node(cable_layer = CABLE_LAYER_1)
+/turf/proc/get_cable_node(cable_layer = CABLE_LAYER_ALL)
 	if(!can_have_cabling())
 		return null
 	for(var/obj/structure/cable/C in src)

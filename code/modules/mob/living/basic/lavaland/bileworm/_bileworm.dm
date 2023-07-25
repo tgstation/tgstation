@@ -5,7 +5,6 @@
 	icon_state = "bileworm"
 	icon_living = "bileworm"
 	icon_dead = "bileworm_dead"
-	mob_size = MOB_SIZE_LARGE
 	mob_biotypes = MOB_BUG
 	maxHealth = 100
 	health = 100

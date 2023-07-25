@@ -59,18 +59,18 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	"birds" = typecacheof(list(
 		/mob/living/basic/chick,
 		/mob/living/basic/chicken,
+		/mob/living/basic/pet/penguin,
 		/mob/living/simple_animal/parrot,
-		/mob/living/simple_animal/pet/penguin,
 	)),
 	"conspiracies" = typecacheof(list(
 		/mob/living/simple_animal/bot/secbot,
 		/mob/living/simple_animal/drone,
-		/mob/living/simple_animal/pet/penguin,
+		/mob/living/basic/pet/penguin,
 	)),
 	"doctors" = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
 	"insects" = typecacheof(list(
 		/mob/living/basic/cockroach,
-		/mob/living/simple_animal/hostile/bee,
+		/mob/living/basic/bee,
 	)),
 	"lizards" = typecacheof(list(/mob/living/basic/lizard)),
 	"robots" = typecacheof(list(
@@ -235,7 +235,9 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/mask/gas/clown_hat,
 		/obj/item/clothing/shoes/clown_shoes,
 		/obj/item/clothing/suit/chaplainsuit/clownpriest,
+		/obj/item/clothing/head/helmet/space/plasmaman/clown,
 		/obj/item/clothing/under/plasmaman/clown,
+		/obj/item/clothing/gloves/color/plasmaman/clown,
 		/obj/item/clothing/under/rank/civilian/clown,
 		/obj/item/food/cheesiehonkers,
 		/obj/item/food/pie/cream,

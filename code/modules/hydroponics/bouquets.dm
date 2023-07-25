@@ -2,7 +2,7 @@
 /obj/item/bouquet
 	name = "mixed bouquet"
 	desc = "A bouquet of sunflowers, lilies, and geraniums. How delightful."
-	icon = 'icons/obj/hydroponics/bouquet.dmi'
+	icon = 'icons/obj/service/hydroponics/bouquet.dmi'
 	icon_state = "mixedbouquet"
 
 /obj/item/bouquet/sunflower

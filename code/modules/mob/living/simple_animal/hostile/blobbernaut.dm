@@ -71,13 +71,13 @@
 		return FALSE
 
 	adjustHealth(maxHealth * BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * damagesources * seconds_per_tick) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
-	var/image/image = new('icons/mob/nonhuman-player/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
-	image.appearance_flags = RESET_COLOR
+	var/mutable_appearance/healing = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "nautdamage", MOB_LAYER+0.01)
+	healing.appearance_flags = RESET_COLOR
 
 	if(overmind)
-		image.color = overmind.blobstrain.complementary_color
+		healing.color = overmind.blobstrain.complementary_color
 
-	flick_overlay_view(image, 8)
+	flick_overlay_view(healing, 0.8 SECONDS)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	. = ..()

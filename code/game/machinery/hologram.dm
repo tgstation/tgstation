@@ -36,6 +36,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad
 	name = "holopad"
 	desc = "It's a floor-mounted device for projecting holographic images."
+	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "holopad0"
 	base_icon_state = "holopad"
 	layer = LOW_OBJ_LAYER
@@ -101,6 +102,14 @@ Possible to do for anyone motivated enough:
 	/// We set the plane on mapload such that we can see the holopad render over atmospherics pipe and cabling in a map editor (without initialization), but so it gets that "inset" look in the floor in-game.
 	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 	update_appearance()
+
+	AddElement( \
+		/datum/element/contextual_screentip_mob_typechecks, \
+		list(/mob/living/silicon = list( \
+				SCREENTIP_CONTEXT_ALT_LMB = "Disconnect all active calls" \
+			) \
+		) \
+	)
 
 /obj/machinery/holopad/secure
 	name = "secure holopad"

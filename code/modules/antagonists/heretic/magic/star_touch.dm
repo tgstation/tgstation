@@ -230,7 +230,7 @@
 /// What to add when the beam connects to a target
 /datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target)
 	if(!istype(target, /mob/living/basic/star_gazer))
-		target.AddElement(/datum/element/effect_trail/cosmic_trail)
+		target.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	return
 
 /// What to process when the beam is connected to a target
@@ -242,5 +242,5 @@
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
 	if(!istype(target, /mob/living/basic/star_gazer))
-		target.RemoveElement(/datum/element/effect_trail/cosmic_trail)
+		target.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 	return

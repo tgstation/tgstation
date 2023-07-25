@@ -398,7 +398,7 @@
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
 	desc = "A wooden contraption, used to dry plant products, food and hide."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "drying_rack"
 	resistance_flags = FLAMMABLE
 	visible_contents = FALSE
@@ -597,8 +597,11 @@
 		repair_rate = max(0, STANDARD_ORGAN_HEALING * (matter_bin.tier - 1) * 0.5)
 
 /obj/machinery/smartfridge/organ/process(seconds_per_tick)
-	for(var/obj/item/organ/organ in contents)
-		organ.apply_organ_damage(-repair_rate * organ.maxHealth * seconds_per_tick)
+	for(var/obj/item/organ/target_organ in contents)
+		if(!target_organ.damage)
+			continue
+
+		target_organ.apply_organ_damage(-repair_rate * target_organ.maxHealth * seconds_per_tick, required_organ_flag = ORGAN_ORGANIC)
 
 /obj/machinery/smartfridge/organ/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -680,7 +683,7 @@
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
 	icon_state = "disktoaster"
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machines/vending.dmi'
 	pass_flags = PASSTABLE
 	can_atmos_pass = ATMOS_PASS_YES
 	visible_contents = FALSE
