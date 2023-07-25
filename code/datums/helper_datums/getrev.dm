@@ -37,7 +37,7 @@
 	else if(!originmastercommit)
 		msg += "No commit information"
 
-	msg += "Currently running rust-g [rustg_get_version()]"
+	msg += "Running rust-g version [rustg_get_version()]"
 
 	return msg.Join("\n")
 
