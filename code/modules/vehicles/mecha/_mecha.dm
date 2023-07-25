@@ -196,6 +196,9 @@
 	/// ref to screen object that displays in the middle of the UI
 	var/atom/movable/screen/map_view/ui_view
 
+	/// Theme of the mech TGUI
+	var/ui_theme = "ntos"
+
 /datum/armor/sealed_mecha
 	melee = 20
 	bullet = 10

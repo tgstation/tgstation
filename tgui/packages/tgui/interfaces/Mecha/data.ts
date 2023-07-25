@@ -50,6 +50,7 @@ export type MechWeapon = {
 
 export type MainData = {
   isoperator: boolean;
+  ui_theme: string;
 };
 
 export type MaintData = {

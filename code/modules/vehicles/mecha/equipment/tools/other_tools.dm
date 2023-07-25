@@ -590,22 +590,31 @@
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/Initialize(mapload)
 	. = ..()
-	internal_tank = new(volume)
+	internal_tank = new(src)
 	internal_tank.air_contents.volume = volume
 	if(start_full)
 		internal_tank.air_contents.temperature = T20C
 		internal_tank.air_contents.add_gases(/datum/gas/oxygen)
-		internal_tank.air_contents.gases[/datum/gas/oxygen][MOLES] = (internal_tank.maximum_pressure * filled) * volume / (R_IDEAL_GAS_EQUATION * internal_tank.air_contents.temperature)
-	RegisterSignal(chassis, COMSIG_MOVABLE_PRE_MOVE , PROC_REF(disconnect_air))
+		internal_tank.air_contents.gases[/datum/gas/oxygen][MOLES] = internal_tank.maximum_pressure * volume / (R_IDEAL_GAS_EQUATION * internal_tank.air_contents.temperature)
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/Destroy()
 	qdel(internal_tank)
+	if(chassis)
+		UnregisterSignal(chassis, COMSIG_MOVABLE_PRE_MOVE)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/air_tank/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
+	. = ..()
+	RegisterSignal(new_mecha, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(disconnect_air))
+
+/obj/item/mecha_parts/mecha_equipment/air_tank/detach(atom/moveto)
+	disconnect_air()
 	UnregisterSignal(chassis, COMSIG_MOVABLE_PRE_MOVE)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/air_tank/proc/disconnect_air()
 	SIGNAL_HANDLER
-	if(internal_tank.disconnect())
+	if(connected_port && internal_tank.disconnect())
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_warning("Air port connection has been severed!")]")
 		log_message("Lost connection to gas port.", LOG_MECHA)
 

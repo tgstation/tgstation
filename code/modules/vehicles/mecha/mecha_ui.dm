@@ -28,6 +28,7 @@
 
 /obj/vehicle/sealed/mecha/ui_static_data(mob/user)
 	var/list/data = list()
+	data["ui_theme"] = ui_theme
 	data["cabin_dangerous_highpressure"] = WARNING_HIGH_PRESSURE
 	data["sheet_material_amount"] = SHEET_MATERIAL_AMOUNT
 	//map of relevant flags to check tgui side, not every flag needs to be here
