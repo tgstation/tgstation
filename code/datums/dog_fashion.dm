@@ -99,8 +99,8 @@
 
 /datum/dog_fashion/head/rabbit
 	name = "Hoppy"
-	emote_see = list("twitches their nose", "hops around a bit")
 	desc = "This is Hoppy. They're a corgi-...urmm... bunny rabbit."
+	emote_see = list("twitches their nose", "hops around a bit")
 
 /datum/dog_fashion/head/beret
 	name = "Yann"
