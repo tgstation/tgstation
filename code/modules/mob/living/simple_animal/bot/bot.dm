@@ -323,7 +323,7 @@
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 		to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
-		possessed_message = 'You are a malfunctioning bot! Disrupt everyone and cause chaos!'
+		possessed_message = "You are a malfunctioning bot! Disrupt everyone and cause chaos!"
 		to_chat(src, span_boldnotice(possessed_message))
 		if(user)
 			log_combat(user, src, "emagged")
