@@ -54404,9 +54404,8 @@
 /obj/machinery/atmospherics/pipe/smart/simple/pink/visible/layer4{
 	dir = 4
 	},
-/obj/machinery/airalarm/directional/north{
-	req_access = list("engineering")
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/engine_access,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
 "obT" = (
@@ -74920,7 +74919,7 @@
 	dir = 4
 	},
 /obj/item/paper{
-	default_raw_text = "Once you have gas coming in from the SM to the containment chamber, you'll need to cool it.<br> In this order:<br> 1. Wrench in the plasma can. <br> 2. Turn on the Waste Cooling Gas pump and turn the thermomachines to cold. <br> 3. Set up the scrubbers in the  chamber using the air alarm. <br> 4. Turn on/replace the filter to the canisters. <br> 5. Decide if you want to send the gas to atmos with the Supermatter Waste To Port pump, or waste it by sending it to space with the Emergency Release Valve.";
+	default_raw_text = "Once you have gas coming in from the SM to the containment chamber, you'll need to cool it.<br>To set up the waste gas cooling loop, follow these steps:<br> 1. Wrench in the plasma can.<br> 2. Turn on the Waste Cooling Gas pump and set the thermomachines to cold.<br> 3. Set up the scrubbers in the chamber using the air alarm.<br> 4. Turn on the filter to the canisters or replace it.<br> 5. Turn on the Supermatter Waste To Port pump.";
 	name = "HOW TO SET UP THE SM WASTE"
 	},
 /turf/open/floor/iron/dark,
