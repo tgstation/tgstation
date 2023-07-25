@@ -55,9 +55,8 @@
 	. += mutable_appearance(icon, "[collar_icon_state][stat_tag]tag")
 
 /mob/living/basic/pet/gib()
-	. = ..()
-
 	remove_collar(drop_location(), update_visuals = FALSE)
+	return ..()
 
 /mob/living/basic/pet/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
