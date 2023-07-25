@@ -1,0 +1,6 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - bugfix: "Makes radiation nebula space work on high-pop by applying the radiation more directly"
+  - balance: "Internal nebula storm no longer gives 10 seconds of immunity and has a very, very small chance to apply mutations"
+  - balance: "Rudes nebula rad immunity from 10 seconds to 6 seconds (shouldn't differ too much since we use a different system now)"
