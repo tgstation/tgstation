@@ -219,7 +219,8 @@
 	SIGNAL_HANDLER
 	for(var/atom/movable/hit_object as anything in falling_movables)
 		if(hit_object == source)
-			continue
+			return
+
 		bumped_hit(parent, hit_object)
 	return FALL_INTERCEPTED | FALL_NO_MESSAGE
 
