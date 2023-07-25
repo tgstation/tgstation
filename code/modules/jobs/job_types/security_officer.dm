@@ -170,14 +170,12 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	if (!targets.len)
 		return
 
-	var/datum/pda_msg/msg = new("Officer [officer.real_name] has been assigned to your department, [department].", TRUE)
-
 	var/datum/signal/subspace/messaging/tablet_msg/signal = new(announcement_system, list(
-		fakename = "Security Department Update",
-		fakejob = "Automated Announcement System",
-		message = msg,
-		targets = targets,
-		automated = TRUE,
+		"fakename" = "Security Department Update",
+		"fakejob" = "Automated Announcement System",
+		"message" = "Officer [officer.real_name] has been assigned to your department, [department].",
+		"targets" = targets,
+		"automated" = TRUE,
 	))
 
 	signal.send_to_receivers()
