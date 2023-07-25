@@ -363,7 +363,7 @@
 /obj/item/clothing/under/costume/traditional
 	name = "Traditional Suit"
 	desc = "A full, vibrantly coloured suit. Likely with traditional purposes. Maybe the colours represent a familly, clan, or rank, who knows."
-	icon_state = "traditional"
+	icon_state = "tradition"
 	inhand_icon_state = null
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
