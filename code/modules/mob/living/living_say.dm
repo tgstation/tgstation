@@ -335,13 +335,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/whisper_range = 0
 	var/is_speaker_whispering = FALSE
 	if(message_mods[WHISPER_MODE]) //If we're whispering
-		whisper_range = 6 // Needed for good hearing trait. The actual filtering for whispers happens at the /mob/living/Hear proc
-		// 6 is the value needed to allow people with GOOD_HEARING to hear at the default message range of 7. This range doesn't
-		// actually have a define, nor does the range for whispers
+		// Needed for good hearing trait. The actual filtering for whispers happens at the /mob/living/Hear proc
+		whisper_range = MESSAGE_RANGE - WHISPER_RANGE
 		is_speaker_whispering = TRUE
 
-	var/list/in_view = hearers(message_range + whisper_range, get_turf(source))
-	var/list/listening = get_hearers(message_range + whisper_range, source)
+	var/list/in_view = get_hearers_in_view(message_range + whisper_range, source)
+	var/list/listening = get_hearers_in_range(message_range + whisper_range, source)
 
 	// Pre-process listeners to account for line-of-sight
 	for(var/atom/movable/listening_movable as anything in listening)
