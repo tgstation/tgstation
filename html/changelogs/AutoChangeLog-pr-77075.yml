@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Prisoner slots can no longer be controlled by Plexagon HR Core. (special things to distributivgesetz)"
+  - bugfix: "HoPs can open more assistant job slots if a non-assistant job is the overflow role"
+  - code_imp: "Dehardcode the HR core blacklist for jobs which cannot have more slots opened by the HoP"
