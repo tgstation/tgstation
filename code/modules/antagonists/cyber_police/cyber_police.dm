@@ -1,18 +1,18 @@
-/datum/antagonist/void_sentinel
-	name = "Void Sentinel"
-	antagpanel_category = ANTAG_GROUP_SENTINELS
-	job_rank = ROLE_VOID_SENTINEL
+/datum/antagonist/cyber_police
+	name = "Cyber Police"
+	antagpanel_category = ANTAG_GROUP_CYBERAUTH
+	job_rank = ROLE_CYBER_POLICE
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
-	ui_name = "AntagInfoSentinel"
+	ui_name = "AntagInfoCyberAuth"
 	suicide_cry = "ALT F4!"
-	preview_outfit = /datum/outfit/void_sentinel
+	preview_outfit = /datum/outfit/cyber_police
 
-/datum/antagonist/void_sentinel/greet()
+/datum/antagonist/cyber_police/greet()
 	. = ..()
 	owner.announce_objectives()
 
-/datum/antagonist/void_sentinel/on_gain()
+/datum/antagonist/cyber_police/on_gain()
 	forge_objectives()
 
 	var/datum/martial_art/the_sleeping_carp/carp = new()
@@ -20,17 +20,17 @@
 
 	return ..()
 
-/datum/outfit/void_sentinel
-	name = "Void Sentinel"
+/datum/outfit/cyber_police
+	name = "Cyber Police"
 
-	id_trim = /datum/id_trim/void_sentinel
+	id_trim = /datum/id_trim/cyber_police
 	uniform = /obj/item/clothing/under/suit/black_really
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/laceup
 	ears = /obj/item/radio/headset/binary
 
-/datum/outfit/void_sentinel/post_equip(mob/living/carbon/human/equipped, visualsOnly)
+/datum/outfit/cyber_police/post_equip(mob/living/carbon/human/equipped, visualsOnly)
 	var/obj/item/radio/outfit_radio = equipped.ears
 	if(outfit_radio)
 		outfit_radio.set_broadcasting(FALSE)
@@ -49,7 +49,7 @@
 		sentinel_uniform.sensor_mode = SENSOR_OFF
 		equipped.update_suit_sensors()
 
-/datum/objective/void_sentinel_fluff/New()
+/datum/objective/cyber_police_fluff/New()
 	var/list/explanation_texts = list(
 		"Execute termination protocol on unauthorized entities.",
 		"Initialize system purge of irregular anomalies.",
@@ -67,7 +67,7 @@
 	explanation_text = pick(explanation_texts)
 	..()
 
-/datum/objective/void_sentinel_fluff/check_completion()
+/datum/objective/cyber_police_fluff/check_completion()
 	var/list/servers = SSmachines.get_machines_by_type(/obj/machinery/quantum_server)
 	if(!length(servers))
 		return TRUE
@@ -79,7 +79,7 @@
 
 	return TRUE
 
-/datum/antagonist/void_sentinel/forge_objectives()
-	var/datum/objective/void_sentinel_fluff/objective = new
+/datum/antagonist/cyber_police/forge_objectives()
+	var/datum/objective/cyber_police_fluff/objective = new
 	objective.owner = owner
 	objectives += objective

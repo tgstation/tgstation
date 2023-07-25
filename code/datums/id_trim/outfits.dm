@@ -56,13 +56,13 @@
 
 	access = list(ACCESS_HUNTER)
 
-/// Trim for Void Sentinels in the Virtual Domain.
-/datum/id_trim/void_sentinel
-	assignment = "Void Sentinel"
+/// Trim for cyber police in the Virtual Domain.
+/datum/id_trim/cyber_police
+	assignment = "Cyber Police"
 	trim_state = "trim_deathcommando"
 	department_color = COLOR_BLACK
 	subdepartment_color = COLOR_BIOLUMINESCENCE_GREEN
 
-/datum/id_trim/void_sentinel/New()
+/datum/id_trim/cyber_police/New()
 	. = ..()
 	access |= SSid_access.get_region_access_list(list(REGION_ACCESS_ALL_GLOBAL))

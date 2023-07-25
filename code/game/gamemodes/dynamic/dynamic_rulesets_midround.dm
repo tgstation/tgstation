@@ -887,11 +887,11 @@
 		return pick(possible_targets)
 	return FALSE
 
-/datum/dynamic_ruleset/midround/from_ghosts/void_sentinel
-	name = "Void Sentinel"
+/datum/dynamic_ruleset/midround/from_ghosts/cyber_police
+	name = "Cyber Police"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
-	antag_datum = /datum/antagonist/void_sentinel
-	antag_flag = ROLE_VOID_SENTINEL
+	antag_datum = /datum/antagonist/cyber_police
+	antag_flag = ROLE_CYBER_POLICE
 	antag_flag_override = ROLE_ALIEN
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
@@ -899,17 +899,17 @@
 	cost = 5
 	minimum_players = 5
 	repeatable = TRUE
-	/// Target mobs able to be mutated into a void sentinel
+	/// Target mobs able to be mutated into a sentinel
 	var/list/mutation_candidates = list()
 
-/datum/dynamic_ruleset/midround/from_ghosts/void_sentinel/acceptable(population = 0, threat = 0)
+/datum/dynamic_ruleset/midround/from_ghosts/cyber_police/acceptable(population = 0, threat = 0)
 	generate_candidates()
 	if(!length(mutation_candidates))
 		return FALSE
 
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/void_sentinel/generate_ruleset_body(mob/applicant)
+/datum/dynamic_ruleset/midround/from_ghosts/cyber_police/generate_ruleset_body(mob/applicant)
 	var/datum/mind/player_mind = new /datum/mind(applicant.key)
 	player_mind.active = TRUE
 
@@ -917,24 +917,24 @@
 	if(isnull(target))
 		return
 
-	var/mob/living/carbon/human/new_sentinel = new(target.loc)
+	var/mob/living/carbon/human/new_agent = new(target.loc)
 	target.gib()
 
-	new_sentinel.equipOutfit(/datum/outfit/void_sentinel)
-	new_sentinel.fully_replace_character_name(new_sentinel.name, pick(GLOB.sentinel_names))
+	new_agent.equipOutfit(/datum/outfit/cyber_police)
+	new_agent.fully_replace_character_name(new_agent.name, pick(GLOB.cyberauth_names))
 
-	player_mind.transfer_to(new_sentinel)
-	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/void_sentinel))
-	player_mind.special_role = ROLE_VOID_SENTINEL
-	player_mind.add_antag_datum(/datum/antagonist/void_sentinel)
+	player_mind.transfer_to(new_agent)
+	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/cyber_police))
+	player_mind.special_role = ROLE_CYBER_POLICE
+	player_mind.add_antag_datum(/datum/antagonist/cyber_police)
 
-	playsound(new_sentinel, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
-	message_admins("[ADMIN_LOOKUPFLW(new_sentinel)] has been made into a Void Sentinel by the midround ruleset.")
-	log_dynamic("[key_name(new_sentinel)] was spawned as a Void Sentinel by the midround ruleset.")
+	playsound(new_agent, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	message_admins("[ADMIN_LOOKUPFLW(new_agent)] has been made into a Cyber Police by the midround ruleset.")
+	log_dynamic("[key_name(new_agent)] was spawned as a Cyber Police by the midround ruleset.")
 
-	return new_sentinel
+	return new_agent
 
-/datum/dynamic_ruleset/midround/from_ghosts/void_sentinel/proc/generate_candidates()
+/datum/dynamic_ruleset/midround/from_ghosts/cyber_police/proc/generate_candidates()
 	mutation_candidates.Cut()
 
 	for(var/obj/machinery/quantum_server/server as anything in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))

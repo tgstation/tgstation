@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { Objective } from './common/Objectives';
+import { Objective, ObjectivePrintout } from './common/Objectives';
 
 type Info = {
   antag_name: string;
@@ -17,7 +17,7 @@ const textStyles = {
   },
 } as const;
 
-export const AntagInfoSentinel = (props, context) => {
+export const AntagInfoCyberAuth = (props, context) => {
   const { data } = useBackend<Info>(context);
   const { objectives = [] } = data;
 
@@ -30,22 +30,21 @@ export const AntagInfoSentinel = (props, context) => {
               FN CYBER AUTHORITY UNIT (REF)
             </Stack.Item>
             <Divider />
-            <Stack.Item>
-              const <span style={textStyles.variable}>OBJECTIVE</span> =
+            <Stack.Item grow>
+              <ObjectivePrintout objectives={objectives} />
             </Stack.Item>
-            <Stack.Item>&apos;{objectives[0].explanation}&apos;;</Stack.Item>{' '}
-            <Stack.Item mt={4}>
+            <Stack.Item>
               const <span style={textStyles.variable}>TARGETS</span> ={' '}
             </Stack.Item>
             <Stack.Item>
               <span style={textStyles.variable}>system.</span>
               <span style={textStyles.danger}>INTRUDERS</span>;
             </Stack.Item>
-            <Stack.Item mt={4}>
+            <Stack.Item>
               while <span style={textStyles.variable}>TARGETS</span>.LIFE !={' '}
               <span style={textStyles.variable}>stat.</span>DEAD
             </Stack.Item>
-            <Stack.Item mb={4}>
+            <Stack.Item>
               <span style={textStyles.variable}>action.</span>
               <span style={textStyles.danger}>KILL()</span>
             </Stack.Item>
