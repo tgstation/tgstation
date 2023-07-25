@@ -134,11 +134,7 @@
  * Returns a string of flavor text for emagged bots as defined by policy.
  */
 /mob/living/simple_animal/bot/proc/get_emagged_message()
-	var/emagged_message = "You are a malfunctioning bot! Disrupt everyone and cause chaos!"
-	var/policy = get_policy(ROLE_EMAGGED_BOT)
-	if (policy)
-		emagged_message = policy
-	return emagged_message
+	return get_policy(ROLE_EMAGGED_BOT) || "You are a malfunctioning bot! Disrupt everyone and cause chaos!"
 
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)
