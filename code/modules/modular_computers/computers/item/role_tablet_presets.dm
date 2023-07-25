@@ -380,7 +380,7 @@
 /obj/item/modular_computer/pda/curator/Initialize(mapload)
 	. = ..()
 	for(var/datum/computer_file/program/messenger/msg in stored_files)
-		msg.alert_silenced = FALSE
+		msg.alert_silenced = TRUE
 
 /obj/item/modular_computer/pda/psychologist
 	name = "psychologist PDA"
