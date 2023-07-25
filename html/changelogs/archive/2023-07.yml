@@ -969,3 +969,68 @@
   - bugfix: fixed third person throw verbs displaying as just an s
   Singul0:
   - rscadd: You can now use the genetic sequencer secondary click (RMB) to scan someone
+2023-07-25:
+  ArcaneMusic:
+  - qol: ID cards tooltips now show how to assign a new account.
+  Ben10Omintrix:
+  - balance: the bee now can fly over the machines so its easy for him to go to the
+      hydroponics machine
+  - bugfix: player bees now will not be stuck inside the hive if he entered it, they
+      can now leave it
+  - bugfix: fixed a har deleted when the hive is deleted all the bees still have a
+      refence to the hive now its fixed
+  - bugfix: now when a player interacted with the bee hive the bees will now leave
+      the hive to defend the hive (it was glitched)
+  - refactor: the bees now are a basic insect.
+  Cheshify:
+  - image: Railing ends now exist.
+  Comxy:
+  - balance: Changes some cooldowns and upgrades of spells.
+  Hatterhat:
+  - qol: Ice cream vats now count as elevated surfaces for preventing germs from getting
+      onto germ-sensitive items (food).
+  - qol: Ice cream vats now dispense cones into your hands first, if possible.
+  - bugfix: Germ-sensitive items that fail to be placed in-hand now check for all
+      elevated surfaces, not just tables.
+  JohnFulpWillard:
+  - bugfix: Crates no longer stun you when you climb onto them.
+  Profakos:
+  - bugfix: Removed duplicate and incorrect Yaki Imo recipe
+  - qol: "Swapped out the flour in \xC6losterrm\xE6sch with two dough slices, to avoid\
+      \ competing reactions while preparing or cooking"
+  - spellcheck: Chicken nugget will have a description in the craft menu, and fiesta
+      skewers will have a description in general
+  Sealed101:
+  - bugfix: fixed possessed sword spirits summoned during destruction of the sword
+      spawning in the error room. those fellas are in godmode, and y'all don't need
+      an immortal spirit haunting your station, m'kay?
+  Senefi:
+  - rscadd: Some Metastation Medbay lights have been moved and adjusted.
+  SyncIt21:
+  - bugfix: items can be printed from autolathe & protolathe when the exact material
+      amounts are present in them after upgrading
+  - bugfix: max printable amount now shows the correct value & updates when items
+      are printed, materials are removed in the autolathe & protolathe
+  - bugfix: component printer material bar is not greyed out when there are sufficient
+      materials to eject
+  - bugfix: rcd and other devices that uses the silo link upgrade now have the correct
+      material usages
+  - bugfix: silo hold actually works
+  - bugfix: machines using local storage to hold materials will eject it's materials
+      as sheets when deconstructed/destroyed
+  - refactor: Autolathe Material bars now display number of sheets available
+  - refactor: printing an item that does not have enough materials will fail silently
+      with no error messages
+  - refactor: Drone dispenser will eject sheets upon deconstruction
+  - refactor: all things that store materials will auto ejects its sheets(if there
+      is sufficient material) when destroyed
+  - refactor: inserting an item into the material container will display the units
+      consumed as sheets not absolute units
+  - refactor: removed x25 & x50 print buttons from the autolathe
+  Thebleh:
+  - bugfix: South Bronx Paradise Bars are once again the best weight loss aid on station
+  YakumoChen:
+  - bugfix: Dish drive no longer spams the bar/kitchen/etc when its idle with empty
+      messages.
+  kawoppi:
+  - rscdel: removed floating light fixture from the Deltastation security hallway
