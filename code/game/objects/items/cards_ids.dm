@@ -1577,7 +1577,7 @@
 	if(selected_trim_path)
 		SSid_access.apply_trim_to_chameleon_card(src, trim_list[selected_trim_path])
 	if(target_occupation)
-		assignment = trim(sanitize(target_occupation), MAX_NAME_LEN)
+		assignment = sanitize(target_occupation)
 	if(new_age)
 		registered_age = new_age
 	if(wallet_spoofing  == "Yes")
@@ -1733,7 +1733,7 @@
 			var/input_assignment = tgui_input_text(user, "What assignment would you like to put on this card?", "Cardboard card job ssignment", scribbled_assignment || "Assistant", MAX_NAME_LEN)
 			if(!after_input_check(user, item, input_assignment, scribbled_assignment))
 				return
-			scribbled_assignment = input_assignment
+			scribbled_assignment = sanitize(input_assignment)
 			var/list/details = item.get_writing_implement_details()
 			details_colors[INDEX_ASSIGNMENT_COLOR] = details["color"] || "#000000"
 		if("Trim")
