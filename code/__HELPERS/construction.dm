@@ -40,7 +40,7 @@
  * - [target][obj/item]: the stack to splot
  * - [amount]: amount to split by
  */
-/datum/component/material_container/proc/fast_split_stack(obj/item/stack/target, amount)
+/proc/fast_split_stack(obj/item/stack/target, amount)
 	if(!target.use(amount, TRUE, FALSE))
 		return null
 
