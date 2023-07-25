@@ -256,13 +256,19 @@
 
 /datum/outfit/consumed_ice_settler
 	name = "Legion-Consumed Settler"
+	under = /obj/item/clothing/under/costume/traditional
 	suit = /obj/item/clothing/suit/hooded/wintercoat
 	shoes = /obj/item/clothing/shoes/winterboots
 	mask = /obj/item/clothing/mask/breath
 
 /datum/outfit/consumed_ice_settler/pre_equip(mob/living/carbon/human/ice_settler, visualsOnly = FALSE)
-	if(prob(30))
-		r_pocket = /obj/item/coin/silver
+	if(prob(40))
+		r_pocket = pick_weight(list(
+			/obj/item/coin/silver = 5,
+			/obj/item/fishing_hook = 2,
+			/obj/item/fishing_line = 2,
+			/obj/item/fishing_hook/shiny = 1,
+		))
 	if(prob(30))
 		back = pick_weight(list(
 			/obj/item/pickaxe = 4,
@@ -333,6 +339,7 @@
 
 /datum/outfit/consumed_heremoth
 	name = "Legion-Consumed Tribal Mothman"
+	under = /obj/item/clothing/under/costume/loincloth
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 
