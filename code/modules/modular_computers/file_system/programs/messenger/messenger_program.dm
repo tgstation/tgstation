@@ -1,5 +1,7 @@
 /// Used to define a temporary image asset name for images that haven't been sent yet
 #define TEMP_IMAGE_PATH(ref) ("ntos_msgr[ref]_temp_image.png")
+/// Purpose is evident by the name, hopefully.
+#define MAX_PDA_MSG_LEN 1024
 
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
@@ -449,7 +451,7 @@
 
 /// Returns a message input, sanitized and checked against the filter
 /datum/computer_file/program/messenger/proc/sanitize_pda_msg(message, mob/sender)
-	message = sanitize(message)
+	message = sanitize(trim(message, MAX_PDA_MSG_LEN))
 
 	if(mime_mode)
 		message = emoji_sanitize(message)
@@ -729,4 +731,5 @@
 			var/obj/item/modular_computer/pda/comp = computer
 			comp.explode(usr, from_message_menu = TRUE)
 
+#undef MAX_PDA_MSG_LEN
 #undef TEMP_IMAGE_PATH
