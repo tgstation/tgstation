@@ -35,6 +35,7 @@ export const NtosMessenger = (_props: any, context: any) => {
     selected_photo_path,
     open_chat,
     messengers,
+    sending_virus,
   } = data;
 
   let content: JSX.Element;
@@ -47,6 +48,7 @@ export const NtosMessenger = (_props: any, context: any) => {
         selectedPhoto={selected_photo_path}
         onReturn={() => act('PDA_viewMessages', { ref: null })}
         isSilicon={is_silicon}
+        sendingVirus={sending_virus}
       />
     );
   } else {

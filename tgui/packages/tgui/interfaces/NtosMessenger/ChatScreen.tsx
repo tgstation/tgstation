@@ -13,6 +13,7 @@ type ChatScreenProps = {
   storedPhotos?: NtPicture[];
   selectedPhoto: string | null;
   isSilicon: BooleanLike;
+  sendingVirus: BooleanLike;
 };
 
 type ChatScreenState = {
@@ -145,8 +146,14 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
   render() {
     const { act } = useBackend(this.context);
-    const { onReturn, chat, temp_msgr, selectedPhoto, storedPhotos } =
-      this.props;
+    const {
+      onReturn,
+      chat,
+      temp_msgr,
+      selectedPhoto,
+      storedPhotos,
+      sendingVirus,
+    } = this.props;
     const { msg, canSend, previewingImage, selectingPhoto } = this.state;
 
     // one or the other has to exist
@@ -221,12 +228,43 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             </Section>
           ) : (
             <Box as="span" ml={1}>
-              No pictures found
+              No photos found
             </Box>
           )}
         </Section>
       );
     } else {
+      const attachmentButton = sendingVirus ? (
+        <Button
+          tooltip="WARNING: File attachment signature is unverified. Please contact support."
+          icon="triangle-exclamation"
+          color="red"
+        />
+      ) : (
+        <Button
+          tooltip="Add attachment"
+          icon="image"
+          onClick={this.handleSelectPicture}
+        />
+      );
+
+      const buttons =
+        temp_msgr || chat?.can_reply ? (
+          <>
+            <Stack.Item>{attachmentButton}</Stack.Item>
+            <Stack.Item>
+              <Button
+                tooltip="Send"
+                icon="arrow-right"
+                onClick={this.handleSendMessage}
+                disabled={!canSend}
+              />
+            </Stack.Item>
+          </>
+        ) : (
+          ''
+        );
+
       sendingBar = (
         <Section fill>
           <Stack vertical>
@@ -257,25 +295,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
                     onEnter={this.handleSendMessage}
                   />
                 </Stack.Item>
-                {(temp_msgr || chat?.can_reply) && (
-                  <>
-                    <Stack.Item>
-                      <Button
-                        tooltip="Add attachment"
-                        icon="image"
-                        onClick={this.handleSelectPicture}
-                      />
-                    </Stack.Item>
-                    <Stack.Item>
-                      <Button
-                        tooltip="Send"
-                        icon="arrow-right"
-                        onClick={this.handleSendMessage}
-                        disabled={!canSend}
-                      />
-                    </Stack.Item>
-                  </>
-                )}
+                {buttons}
               </Stack>
             </Stack.Item>
           </Stack>
