@@ -57,7 +57,7 @@
 	if(equipped_slot != ITEM_SLOT_ICLOTHING)
 		return FALSE
 
-	return wielder.shoes != null
+	return !isnull(wielder.shoes)
 
 /**
  * Run to update the icon of the parent
