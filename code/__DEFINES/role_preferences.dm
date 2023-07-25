@@ -60,6 +60,7 @@
 #define ROLE_MIND_TRANSFER "Mind Transfer Potion"
 #define ROLE_POSIBRAIN "Posibrain"
 #define ROLE_DRONE "Drone"
+#define ROLE_EMAGGED_BOT "Malfunctioning Bot"
 #define ROLE_DEATHSQUAD "Deathsquad"
 #define ROLE_LAVALAND "Lavaland"
 
