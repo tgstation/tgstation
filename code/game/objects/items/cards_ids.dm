@@ -1658,7 +1658,7 @@
  */
 /obj/item/card/cardboard
 	name = "cardboard identification card"
-	desc = "A card used to provice ID and det- Heeeey, wait a second, this is just a piece of cut cardboard!"
+	desc = "A card used to provide ID and det- Heeeey, wait a second, this is just a piece of cut cardboard!"
 	icon_state = "cardboard_id"
 	inhand_icon_state = "cardboard-id"
 	worn_icon_state = "nothing"
